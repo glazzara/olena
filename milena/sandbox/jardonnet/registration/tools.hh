@@ -11,19 +11,24 @@ namespace mln
 {
 
   template <typename P>
-  struct c_point
+  struct closest_point
   {
     typedef P input;
     typedef P result;
     
-    c_point(const p_array<P>& X)
-      : X(X)
+    closest_point(const p_array<P>& X, const box_<P>& box)
+      : X(X), box(box), i(0)
     { }
 
     result
     //inline
     operator () (const P& Ck)
     {
+      
+#ifndef NDEBUG
+      ++i;
+#endif
+      
       algebra::vec<P::dim,float> Cki = Ck;
       algebra::vec<P::dim,float> best_x = X[0];
       float best_d = norm::l2(Cki - best_x);
@@ -40,12 +45,14 @@ namespace mln
       return algebra::to_point<P>(best_x);
     }
 
-    const box_<P> domain()
+    const box_<P>& domain()
     {
-      return X.bbox();
+      return box;
     }
     
     const p_array<P>& X;
+    const box_<P>     box;
+    mutable unsigned i;
   };
   
 
@@ -56,29 +63,32 @@ namespace mln
   { 
     // Fun is potentially an image.
     lazy_image(F& fun)
-      : value(fun.domain()), is_known(fun.domain()), functor(fun)
+      : value(fun.domain()), is_known(fun.domain()), fun(fun)
     {
     }
 
-    // FIXME: remove this constructor
-    lazy_image(const F& fun, int nrows, int ncols)
-      : value(nrows, ncols), is_known(nrows,ncols), functor(fun)
+    // FIXME: hack, remove this constructor
+    lazy_image(F& fun, int nrows, int ncols, int nslis)
+      : value(nrows, ncols,1), is_known(nrows,ncols,1), fun(fun)
     { }
 
     const mln_result(F)
     //inline
     operator() (const typename F::input& p)
     {
+      mln_precondition(fun.domain().has(p));
+      //FIXME: What about domain?
       if (is_known(p))
         return value(p);
-      value(p) = functor(p);
+      value(p)    = fun(p);
+      is_known(p) = true;
       return value(p);
     }
 
     //FIXME: 3d -> //mln_dim(ml_input(input))
     image3d<mln_result(F)> value;
     image3d<bool>          is_known;
-    F&               functor;
+    F&                     fun;
   };
 
 
@@ -165,26 +175,27 @@ namespace mln
         }
     }
     */
-    
+
+    //const return a const
     template <typename T>
     inline
     const image3d<T>&
-    to_image_3d(const image3d<T>& img)
+    to_image3d(const image3d<T>& img)
     {
       return img;
     }
-      
+    //non const return non const
     template <typename T>
     image3d<T>&
-    to_image_3d(image3d<T>& img)
+    to_image3d(image3d<T>& img)
     {
       return img;
     }
-    
+
     template <typename T>
     inline
     image3d<T>
-    to_image_3d(const image2d<T>& img)
+    to_image3d(const image2d<T>& img)
     {
       point3d pmin(img.domain().pmin()[0], img.domain().pmin()[1], 0);
       point3d pmax(img.domain().pmax()[0], img.domain().pmax()[1], 0);

@@ -149,7 +149,7 @@ namespace mln
       p_array<mln_point(I3d)> c   = convert::to_p_array(cloud);
       p_array<mln_point(I3d)> x   = convert::to_p_array(surface);
 
-      //init qk
+      //init rigid transform qk
       quat7<3> qk;
 
       //create subsampled p_array

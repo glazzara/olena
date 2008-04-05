@@ -1,3 +1,14 @@
+2008-04-05  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Remove intermediate p_array Xk.
+
+	* sandbox/jardonnet/test/icp.cc: Move a big part of icp.hh here.
+	* sandbox/jardonnet/test/Makefile (icp++): Add rule.
+	* sandbox/jardonnet/registration/quat7.hh: Add direct access to the map.
+	* sandbox/jardonnet/registration/icp.hh: Remove Xk.
+	* sandbox/jardonnet/registration/tools.hh: Improve lazy_image interface
+	and checks.
+
 2008-04-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add file for refactoring.

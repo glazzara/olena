@@ -16,8 +16,11 @@ gau:
 run:
 	time ./+sub.exe . . ; time ./+gsub.exe . .
 
+
 icp:
 	g++ icp.cc -I../../.. -g -o '+icp.exe'
+icp++:
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -o '+icp.exe'
 
 icp_max++:
 	g++ icp_max.cc -I../../.. -O3 -DNDEBUG -pg  -o '+icp_map.exe'

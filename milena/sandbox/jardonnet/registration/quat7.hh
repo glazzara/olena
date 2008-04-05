@@ -59,10 +59,7 @@ namespace mln
     template <typename P>
     void apply_on(const p_array<P>& input, p_array<P>& output) const
     {
-      assert(input.npoints() == output.npoints());
-
-      std::cout << _qR << std::endl;
-      
+      assert(input.npoints() == output.npoints()); 
       assert(_qR.is_unit());
 
       for (size_t i = 0; i < input.npoints(); i++)
@@ -92,21 +89,28 @@ namespace mln
   }
 
 
-  template <typename P>
+  template <typename P, typename M>
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
-                      const p_array<P>& Xk,
-                      const algebra::vec<P::dim,float>& mu_Xk)
+                      const p_array<P>& Ck,
+                      M& map)
   {
-    assert(C.npoints() == Xk.npoints());
+    //mu_Xk = center map(Ck)
+    algebra::vec<P::dim,float> mu_Xk(literal::zero);
+    for (size_t i = 0; i < Ck.npoints(); ++i)
+      {
+        algebra::vec<P::dim,float> xki = map(Ck[i]);
+        mu_Xk += xki;
+      }
+    mu_Xk /= Ck.npoints();
+      
     
     // qR
-
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
     for (size_t i = 0; i < C.npoints(); ++i)
       {
-        algebra::vec<P::dim,float> Ci = C[i];
-        algebra::vec<P::dim,float> Xki = Xk[i];
+        algebra::vec<P::dim,float> Ci  = C[i];
+        algebra::vec<P::dim,float> Xki = map(Ck[i]);
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= C.npoints();

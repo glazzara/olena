@@ -51,6 +51,10 @@ namespace mln
   namespace registration
   {
 
+#ifndef NDEBUG
+    static unsigned pts = 0;
+#endif
+    
     /*! Registration FIXME : doxy
      *
      *
@@ -69,45 +73,52 @@ namespace mln
       template <typename P, typename M>
       inline
       p_array<P>
-      icp_(p_array<P>& C,
-           const p_array<P>&,
-           M& map)
+      icp_(const p_array<P>& C,
+           M& map,
+           quat7<P::dim>& qk)
       {
 	trace::entering("registration::impl::icp_");
 
+#ifndef NDEBUG
+        //display registred points
+        std::cout << "Register "
+                  << C.npoints() << " points" << std::endl;
+        std::cout << "k\terror\tdqk" << std::endl;
+#endif
+        
         unsigned int  k;
-        quat7<P::dim> old_qk, qk;
+        quat7<P::dim> old_qk;
         float         err;
         //float         err_bis;
         p_array<P>    Ck(C), Xk(C); //FIXME: Xk copy C
 
         algebra::vec<P::dim,float> mu_C = center(C), mu_Xk;
-
+     
         const float epsilon = 1;//1e-3;
 
         //// step 1
         k = 0;
 
         do {
-
-          //// step 2
-          //projection::fill_Xk(Ck, map, Xk);
-          //projection::de_base(Ck, X, Xk, err_bis);
-          projection::memo(Ck, Xk, map);
-          
-          mu_Xk = center(Xk);
-
-          //// step 3
+          //compute qk
           old_qk = qk;
-          qk = match(C, mu_C, Xk, mu_Xk);
+          qk = match(C, mu_C, Ck, map);
 
-          //// step 4
-          qk.apply_on(C, Ck); // Ck+1 = qk(C)
+          //Ck+1 = qk(C)
+          qk.apply_on(C, Ck);
 
-          //// err = d(Ck+1,Xk)
+          //err = d(Ck+1,Xk)
           err = rms(Ck, Xk);
-          std::cout << k << ' ' << err << ' ' << (qk - old_qk).sqr_norm() << std::endl; //plot file
 
+#ifndef NDEBUG
+          //plot file
+          std::cout << k << '\t' << err << '\t'
+                    << (qk - old_qk).sqr_norm() << '\t'
+                    << std::endl;
+          //count the number of points processed
+          pts += Ck.npoints();
+#endif
+          
           ++k;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
 
@@ -117,50 +128,28 @@ namespace mln
 
     } // end of namespace mln::registration::impl
 
-    
-    //Only for 2d and 3d image
-    template <typename I, typename J>
+
+    // Only for 3d images
+    template <typename P, typename M>
     inline
-    mln_concrete(I) //FIXME: should return something else ? qk ?
-    icp(const Image<I>& cloud_,
-        const Image<J>& surface_)
+    quat7<P::dim>
+    icp(const p_array<P>& cloud,
+        M& map)
     {
       trace::entering("registration::icp");
-      mln_precondition(exact(cloud_).has_data());
-      mln_precondition(exact(surface_).has_data());
-
-      //convert to image: time consuming
-      typedef image3d<mln_value(I)> I3d;
-      I3d cloud = convert::to_image_3d(exact(cloud_));
-      const I3d surface = convert::to_image_3d(exact(surface_));
-     
-      //build p_arrays.
-      p_array<mln_point(I3d)> c = convert::to_p_array(cloud);
-      p_array<mln_point(I3d)> x = convert::to_p_array(surface);
-
-      //build closest point map
-      //lazy_map<I3d> map(enlarge(bigger(c.bbox(),x.bbox()),50));
-      //lazy_map<I3d> map(1000,1000,50);
-
-      c_point<mln_point(I3d)> fun(x);
-      //Make via function
-      lazy_image< c_point<mln_point(I3d)> >  map(fun);
       
-      p_array<mln_point(I3d)> res = impl::icp_(c, x, map);
+      mln_precondition(cloud.npoints() != 0);
+      mln_precondition(P::dim == 3);
 
-      //to 2d : projection (FIXME:if 3d)
-      //mln_concrete(I) output = convert::to_image<I>(res)?
-      mln_concrete(I) output(exact(cloud_).domain());
-      for (size_t i = 0; i < res.npoints(); i++)
-        {
-          point2d p(res[i][0], res[i][1]);
-          //FIXME: not necessary if output(res.bbox())
-          if (output.has(p))
-            output(p) = true;
-        }
+      //init rigid transform qk
+      quat7<P::dim> qk;
+      
+      //run icp
+      p_array<P> res = impl::icp_(cloud, map, qk);
 
       trace::exiting("registration::icp");
-      return output;
+      
+      return qk;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
