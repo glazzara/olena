@@ -1,3 +1,9 @@
+2008-04-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add file for refactoring.
+
+	* sandbox/jardonnet/registration/icp.hh: New file for the refactored version.
+
 2008-04-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Improve lazy_image implementation.
