@@ -1,3 +1,9 @@
+2008-04-07  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	PSN algorithm.
+	* sandbox/folio/chamfer.cc: Debug using an image to compare with PSN.
+	* sandbox/folio/psn.cc: Propagation using a single neighborhood.
+
 2008-04-05  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Remove intermediate p_array Xk.
