@@ -1,3 +1,9 @@
+2008-04-07  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add mln::make::image1d.
+	* mln/make/image1d.hh: New, create an image1d with a array of values.
+	* mln/core/image1d.hh: Add include.
+
 2008-04-07  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	PSN algorithm.

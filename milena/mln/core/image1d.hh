@@ -560,5 +560,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/make/image1d.hh>
 
 #endif // ! MLN_CORE_IMAGE1D_HH
