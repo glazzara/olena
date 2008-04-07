@@ -1,5 +1,15 @@
 2008-04-07  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add pixter for p_image2d.
+
+	* mln/core/p_image2d_pixter.hh: New, a pixter to optimize iteration on
+	p_image2d.
+	* mln/core/p_image2d.hh: Update, optimize clear and the number of
+	update of bb_.
+	* tests/core/p_image2d.cc: More tests on the clean method.
+
+2008-04-07  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add mln::make::image1d.
 	* mln/make/image1d.hh: New, create an image1d with a array of values.
 	* mln/core/image1d.hh: Add include.

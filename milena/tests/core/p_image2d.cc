@@ -36,6 +36,7 @@ int main()
 {
   using namespace mln;
 
+  trace::quiet = false;
   p_image2d<point2d> ps(20,20);
   ps
     .insert(make::point2d(6, 9))
@@ -52,5 +53,18 @@ int main()
 
   mln_assertion(ps.npoints() == 0);
   mln_assertion(ps.is_empty());
+
+  std::cout << ps << std::endl;
+
+  mln_fwd_piter_(box2d) p(inplace(make::box2d(13,13,19,15)));
+  for_all(p)
+  {
+    ps.insert(p);
+  }
+  ps.clear();
+  for_all(p)
+  {
+    mln_assertion(!ps.has(p));
+  }
 
 }

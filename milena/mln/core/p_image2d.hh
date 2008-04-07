@@ -37,8 +37,14 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/box2d.hh>
 # include <mln/core/image2d.hh>
+# include <mln/core/sub_image.hh>
+
+# include <mln/accu/bbox.hh>
+# include <mln/geom/ncols.hh>
+# include <mln/accu/bbox.hh>
 # include <mln/level/fill.hh>
 
+# include <mln/level/memset_.hh>
 
 namespace mln
 {
@@ -52,6 +58,8 @@ namespace mln
   class p_image2d : public internal::point_set_base_<P, p_image2d<P> >
   {
   public:
+
+    typedef image2d<bool> image_type;
 
     /// Forward Point_Iterator associated type.
     typedef p_image2d_fwd_piter_<P> fwd_piter;
@@ -90,6 +98,7 @@ namespace mln
 
     /// Hook to the image2d
     const image2d<bool>& image() const;
+    image2d<bool>& image_non_const();
   private:
     image2d<bool> points_;
     unsigned npoints_;
@@ -102,11 +111,10 @@ namespace mln
 
   template <typename P>
   p_image2d<P>::p_image2d(int nrows, int ncols)
-    : points_(nrows, ncols),
+    : points_(nrows, ncols, 0),
       npoints_(0),
       bb_need_update_(false)
   {
-
     level::fill(points_, false);
   }
 
@@ -153,8 +161,16 @@ namespace mln
     if (points_(p) == true)
     {
       points_(p) = false;
-      bb_need_update_ = true;
       npoints_--;
+
+      if (npoints_ == 0)
+      {
+	bb_.init();
+	bb_need_update_ = false;
+      }
+      else
+	bb_need_update_ = true;
+
     }
     return *this;
   }
@@ -171,6 +187,7 @@ namespace mln
     for_all(p)
       if (this->points_.has(p))
 	this->remove(p);
+
     return *this;
   }
 
@@ -205,7 +222,6 @@ namespace mln
     if (bb_need_update_)
     {
       bb_.init();
-
       mln_fwd_piter(p_image2d<P>) p(*this);
       for_all(p)
 	bb_.take(p);
@@ -215,11 +231,30 @@ namespace mln
     return bb_.to_result();
   }
 
+
   template <typename P>
   void
   p_image2d<P>::clear()
   {
-    level::fill(points_, false);
+    if (npoints_ == 0)
+      return;
+
+    unsigned bb_nrows  = geom::nrows(bb_.to_result());
+    unsigned ima_nrows = geom::nrows(points_);
+
+    if (bb_nrows * 3 < ima_nrows * 2)
+    {
+      unsigned bb_ncols = geom::ncols(bb_.to_result());
+      mln_line_piter_(image2d<bool>) p(bb_.to_result());
+      for_all(p)
+      {
+	level::memset_(points_, p, false, bb_ncols);
+      }
+    }
+    else
+      level::fill(inplace(points_), false);
+
+    npoints_ = 0;
     bb_.init();
     bb_need_update_ = false;
   }
@@ -231,12 +266,20 @@ namespace mln
     return points_;
   }
 
+  template <typename P>
+  image2d<bool>&
+  p_image2d<P>::image_non_const()
+  {
+    return points_;
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
 # include <mln/core/p_image2d_piter.hh>
+# include <mln/core/p_image2d_pixter.hh>
 
 
 #endif // ! MLN_CORE_P_IMAGE2D_HH
