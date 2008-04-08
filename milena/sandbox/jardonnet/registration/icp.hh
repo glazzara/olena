@@ -33,6 +33,9 @@
  * \brief image registration
  */
 
+# include <iostream>
+# include <string>
+
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/make/w_window.hh>
@@ -111,6 +114,15 @@ namespace mln
           err = rms(Ck, Xk);
 
 #ifndef NDEBUG
+
+          {
+            using namespace std;
+            image2d<bool> img = convert::to_image2d(Ck);
+            stringstream oss;
+            oss << "reg" << k << ".pbm";
+            io::pbm::save(img, oss.str());
+          }
+                  
           //plot file
           std::cout << k << '\t' << err << '\t'
                     << (qk - old_qk).sqr_norm() << '\t'
@@ -138,8 +150,8 @@ namespace mln
     {
       trace::entering("registration::icp");
       
-      mln_precondition(cloud.npoints() != 0);
       mln_precondition(P::dim == 3);
+      mln_precondition(cloud.npoints() != 0);
 
       //init rigid transform qk
       quat7<P::dim> qk;

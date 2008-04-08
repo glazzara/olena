@@ -17,12 +17,17 @@ namespace mln
     typedef P result;
     
     closest_point(const p_array<P>& X, const box_<P>& box)
-      : X(X), box(box), i(0)
+      : X(X), box(box)
+        
+#ifndef NDEBUG
+      , i(0)
+#endif
+
     { }
 
     result
     //inline
-    operator () (const P& Ck)
+    operator () (const P& Ck) const
     {
       
 #ifndef NDEBUG
@@ -45,14 +50,17 @@ namespace mln
       return algebra::to_point<P>(best_x);
     }
 
-    const box_<P>& domain()
+    const box_<P>& domain() const
     {
       return box;
     }
     
     const p_array<P>& X;
     const box_<P>     box;
+
+#ifndef NDEBUG
     mutable unsigned i;
+#endif 
   };
   
 
@@ -74,7 +82,7 @@ namespace mln
 
     const mln_result(F)
     //inline
-    operator() (const typename F::input& p)
+    operator () (const typename F::input& p) const
     {
       mln_precondition(fun.domain().has(p));
       //FIXME: What about domain?
@@ -86,29 +94,10 @@ namespace mln
     }
 
     //FIXME: 3d -> //mln_dim(ml_input(input))
-    image3d<mln_result(F)> value;
-    image3d<bool>          is_known;
-    F&                     fun;
+    mutable image3d<mln_result(F)> value;
+    mutable image3d<bool>          is_known;
+    F&                             fun;
   };
-
-
-//   // Point
-  
-//   template <typename P>
-//   P min(const P& a, const P& b)
-//   {
-//     if (a > b)
-//       return b;
-//     return a;
-//   }
-
-//   template <typename P>
-//   P max(const P& a, const P& b)
-//   {
-//     if (a < b)
-//       return b;
-//     return a;
-//   }
 
   
   // Box
@@ -142,6 +131,7 @@ namespace mln
   namespace convert
   {
 
+    // to_p_array
     template <typename I>
     inline
     p_array<mln_point(I)>
@@ -158,24 +148,75 @@ namespace mln
       return a;
     }
 
-    //FIXME: to write
-    /*
-    template <typename A>
+    template < typename P >
     inline
-    image2d<mln_value(A)>
-    to_image2d(const A& a)
+    box_<point2d>
+    to_box2d(const box_<P>& b)
     {
-      image2d<mln_value(A)> img(a.bbox());
+      point2d pmin(b.pmin()[0], b.pmin()[1]);
+      point2d pmax(b.pmax()[0], b.pmax()[1]);
+
+      return box_<point2d>(pmin, pmax);
+    }
+
+    
+    //FIXME: to write
+    template <typename P>
+    inline
+    image2d<bool>
+    to_image2d(const p_array<P>& a)
+    {
+      image2d<bool> output (to_box2d(a.bbox()), 0);
       for (size_t i = 0; i < a.npoints(); i++)
         {
-          point2d p(res[i][0], res[i][1]);
-          //FIXME: BOF
-          //if (output.has(p))
-          output(p) = true;
+          point2d p(a[i][0], a[i][1]);
+          if (output.has(p))
+            output(p) = true;
         }
+      return output;
     }
-    */
 
+    // to_pointNd
+
+    //FIXME: Should we really provide this
+    //point3d -> point2d
+    template <typename T>
+    inline
+    point_<grid::square, T>
+    to_point2d(const point_<grid::cube, T>& p)
+    {
+      return point_<grid::square, T>(p[0], p[1]);
+    }
+    //point2d -> point2d
+    template <typename T>
+    inline
+    point_<grid::square, T>&
+    to_point2d(const point_<grid::square, T>& p)
+    {
+      return p;
+    }
+
+    //point2d -> point3d
+    template <typename T>
+    inline
+    point_<grid::cube, T>
+    to_point3d(const point_<grid::square, T>& p)
+    {
+      return point_<grid::cube, T>(p[0], p[1], 0);
+    }
+    //point3d -> point3d
+    template <typename T>
+    inline
+    point_<grid::cube, T>&
+    to_point3d(const point_<grid::cube, T>& p)
+    {
+      return p;
+    }
+
+    
+    // to_imageNd
+
+    
     //const return a const
     template <typename T>
     inline

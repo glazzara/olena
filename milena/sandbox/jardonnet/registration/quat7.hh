@@ -10,6 +10,8 @@
 
 # include "rotation.hh"
 # include "jacobi.hh"
+# include "power_it.hh"
+# include "frankel_young.hh"
 
 # include <mln/norm/l2.hh>
 
@@ -76,7 +78,7 @@ namespace mln
   
 
   // very usefull routine
-  
+    
   template <unsigned p, unsigned q, unsigned n, unsigned m>
   void put(const algebra::mat<p,q,float>& in, // a matrix to put into...
            unsigned row, unsigned col,        // top-left location
@@ -87,7 +89,7 @@ namespace mln
       for (unsigned j = 0; j < q; ++j)
         inout(row + i, col + j) = in(i,j);
   }
-
+  
 
   template <typename P, typename M>
   quat7<P::dim> match(const p_array<P>& C,
@@ -114,7 +116,9 @@ namespace mln
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= C.npoints();
-    
+
+
+    /*  
     const algebra::mat<P::dim,P::dim,float> Ak = Mk - trans(Mk);
 
     const float v[3] = {Ak(1,2), Ak(2,0), Ak(0,1)};
@@ -127,14 +131,42 @@ namespace mln
     put(D, 1,0, Qk);
     
     put(Mk + trans(Mk) - algebra::mat<P::dim,P::dim,float>::identity() * tr(Mk), 1,1, Qk);
+    */
+    
+    algebra::vec<3,float> a;
+    a[0] = Mk(1,2) - Mk(2,1);
+    a[1] = Mk(2,0) - Mk(0,2);
+    a[2] = Mk(0,1) - Mk(1,0);
+
+    algebra::mat<4,4,float> Qk(literal::zero);
+    float t = tr(Mk);
+    
+    Qk(0,0) = t;
+    for (int i = 1; i < 4; i++)
+      {
+        Qk(i,0) = a[i - 1];
+        Qk(0,i) = a[i - 1];
+        for (int j = 1; j < 4; j++)
+          if (i == j)
+            Qk(i,j) = 2 * Mk(i - 1,i - 1) - t;
+      }
+      
+    Qk(1,2) = Mk(0,1) + Mk(1,0);
+    Qk(2,1) = Mk(0,1) + Mk(1,0);
+    
+    Qk(1,3) = Mk(0,2) + Mk(2,0);
+    Qk(3,1) = Mk(0,2) + Mk(2,0);
+    
+    Qk(2,3) = Mk(1,2) + Mk(2,1);
+    Qk(3,2) = Mk(1,2) + Mk(2,1);
     
     algebra::quat qR(literal::zero);
-
+    qR = jacobi(Qk);
     //std::cout << qR << std::endl;
-    jacobi(Qk, qR);
+    //qR = power_it(Qk);
+    //std::cout << qR << std::endl;
     
     // qT
-    
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
     
     return quat7<P::dim>(qR, qT);

@@ -186,7 +186,7 @@ namespace mln
       quat conj() const;
 
       /// Give the invert.
-      quat inv() const; // FIXME: Rename inv as invert. 
+      quat inv() const; //FIXME: rename invert.
 
       /// Transform into unit quaternion.
       quat& set_unit();

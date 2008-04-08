@@ -17,7 +17,7 @@ namespace mln
 #define rotateJacobi(a,i,j,k,l) g=a(i,j);h=a(k,l);a(i,j)=g-s*(h+g*tau); \
   a(k,l)=h+s*(g-h*tau);
 
-  void jacobi(algebra::mat<4,4,float> a, algebra::quat& q)
+  algebra::quat jacobi(algebra::mat<4,4,float> a)
   {
     float dd, d[4];
     algebra::mat<4,4,float> v(literal::zero);
@@ -46,12 +46,12 @@ namespace mln
             iq = ip;
             dd = d[ip];
           }
-        q = algebra::quat(v(0,iq),
-                          v(1,iq),
-                          v(2,iq),
-                          v(3,iq));
+        algebra::quat q(v(0,iq),
+                        v(1,iq),
+                        v(2,iq),
+                        v(3,iq));
         q.set_unit();
-        return;
+        return q;
       }
       if (i < 4) {
         i++;

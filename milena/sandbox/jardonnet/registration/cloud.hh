@@ -56,7 +56,7 @@ namespace mln
         {
           algebra::vec<3,float> a1f = a1[i];
           algebra::vec<3,float> a2f = a2[i];
-          f += norm::l2_distance(a1f,a2f);
+          f += norm::l2(a1f - a2f);
         }
       return f / a1.npoints();
     }

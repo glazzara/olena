@@ -1,3 +1,24 @@
+2008-04-08  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: various tools and improvments.
+
+	* sandbox/jardonnet/test/icp.cc: Fix regression (output registred.pbm).
+
+	* sandbox/jardonnet/registration/tools.hh:
+	 Add multiple 2d to 3d and 3d to 2d conversion .
+
+	* sandbox/jardonnet/registration/quat7.hh:
+	Rewrite Covariance matrix computation.
+
+	* sandbox/jardonnet/registration/frankel_young.hh:
+	 New, resolve linear equation Ax = b. Useless for icp.
+
+	* sandbox/jardonnet/registration/power_it.hh:
+	Find greatest eigen value, should be more efficient than jacobi ?.
+
+	* sandbox/jardonnet/registration/icp.hh:
+	 Add intermediate image outputs.
+
 2008-04-07  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add pixter for p_image2d.
