@@ -65,29 +65,37 @@ namespace mln
     mln_piter(I) p(irm.domain());
     for_all(p)
       m[lbl(p)].take(irm(p));
+      
+    I carte;
+    initialize(carte, irm);
     
-//     for (unsigned l = 1; l <= nlabels; ++l)
-//       std::cout << l << ":" << m[l] << "  ";
-//     std::cout << std::endl;
+    for_all(p)
+    {
+      carte(p) = m[lbl(p)].to_result();
+    }
+   
+     
+    io::pgm::save(carte, "tmp_carte.pgm");
+    
 
-    accu::mean_<unsigned> mm;
-    mm.take(m[70]);
-    mm.take(m[77]);
-    mm.take(m[80]);
-    mm.take(m[82]);
-    mm.take(m[99]);
-    std::cout << mm.to_result() << std::endl;
+//    accu::mean_<unsigned> mm;
+//    mm.take(m[70]);
+//    mm.take(m[77]);
+//    mm.take(m[80]);
+//    mm.take(m[82]);
+//    mm.take(m[99]);
+//    std::cout << mm.to_result() << std::endl;
   }
 
 
-  /*template <typename I, typename N>
+  template <typename I, typename N>
   void mk_graph(const I& lbl,
 		N nbh,
 		unsigned nlabels)
   {
     std::vector< std::vector<bool> > adja(nlabels + 1);
-    for (unsigned l = 1; l <= nlabels; ++l)
-      adja[l].resize(l, false);
+    for (unsigned l = 0; l <= nlabels; ++l)
+      adja[l].resize(nlabels + 1, false);
 
     mln_piter(I) p(lbl.domain());
     mln_niter(N) n(nbh, p);
@@ -113,13 +121,13 @@ namespace mln
 	    {
 	      l2 = l1;
 	      for (++l2; l2 != s.end(); ++l2)
-		adja[*l2][*l1] = true;
+		adja[*l1][*l2] = true;
 	    }
 	}
 
     unsigned count = 0;
-    for (unsigned l1 = 2; l1 <= nlabels; ++l1)
-      for (unsigned l2 = 1; l2 < l1; ++l2)
+    for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+      for (unsigned l2 = 1; l2 <= nlabels; ++l2)
 	if (adja[l1][l2])
 	  ++count;
     std::cout << "link count = " << count << std::endl;
@@ -128,15 +136,15 @@ namespace mln
     util::graph<> g;
     // Nodes.
     for (unsigned i = 0; i <= nlabels; ++i)
+    	
       g.add_node();
     // Edges.
     for (unsigned l1 = 1; l1 <= nlabels; ++l1)
       for (unsigned l2 = l1 + 1; l2 <= nlabels; ++l2)
 	if (adja[l1][l2])
 	  g.add_edge(l1, l2);
-    g.print_debug (std::cout);
-
-  }*/
+  //  g.print_debug (std::cout);
+  }
 
 } // end of namespace mln
 
@@ -147,7 +155,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> irm;
-  io::pgm::load(irm, "./+irm6cut.pgm");
+  io::pgm::load(irm, "./+irm6.pgm");
 
 //   io::pgm::save( morpho::gradient(irm, win::rectangle2d(3,3)),
 //                  "tmp_grad_3x3.pgm" );
@@ -161,7 +169,7 @@ int main()
   image2d<int_u8> clo;
   initialize(clo, irm);
 
-  morpho::closing_area(grad, c4(), 100, clo);
+  morpho::closing_area(grad, c4(), 50, clo);
   io::pgm::save( clo, "tmp_clo_a100.pgm" );
 
   unsigned nbasins;
@@ -170,8 +178,8 @@ int main()
   io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
 		 "tmp_wshed.pgm" );
 
-//   doit(irm, wshed, nbasins);
-//   mk_graph(wshed, c4(), nbasins);
+//  doit(irm, wshed, nbasins);
+  mk_graph(wshed, c4(), nbasins);
 
 //   std::vector< accu::mean_<unsigned> >
 

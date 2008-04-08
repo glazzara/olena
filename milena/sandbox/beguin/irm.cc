@@ -41,10 +41,71 @@ mln::value::int_u8 foo(unsigned u)
 
 
 namespace mln
-{
 
+{
+//  using value::int_u8;
+  template <typename N>
+  void segm_to_pregraph(const image2d<unsigned>& lbl, 
+                        const N& nbh, 
+                        int nbasins)
+  {
+    mln_piter(image2d<unsigned>) p(lbl.domain());
+    mln_niter(N) n(nbh, p);
+    
+//    typedef metal::vec<3,mln_value(I)> V;
+    
+//    typedef Image<V> J;
+    
+    image2d<unsigned> retour;
+    initialize(retour, lbl);
+    
+    int n_seuil = ((nbasins/10)+1)*10;
+    
+    std::cout << "Nbasins = " << nbasins << std::endl
+              << "n_seuil = " << n_seuil << std::endl;
+     
+    for_all(p)
+    {
+      if(lbl(p) == 0)
+      {
+        std::set<unsigned> s;  //Set of neighbouring values of p
+        for_all(n) if (lbl.has(n))
+        {
+          if (lbl(n) == 0)
+            continue;
+          s.insert(lbl(n));
+        }
+        if (s.size() < 2 )
+          std::cout << "#" << std::endl;
+        if (s.size() == 2 ) 
+        {
+        	std::set<unsigned>::const_iterator l1, l2;
+          l1 = s.begin();
+          l2 = s.begin();
+          l2++;
+          
+          retour(p) = *l1 * n_seuil + *l2;
+
+        }
+        if (s.size() > 2 )
+          retour(p) = 0;        
+      }
+      else
+      {
+       // retour(p) = make::vec(0,0,lbl(p));
+        retour(p) = lbl(p);
+      }
+    }  
+    //io::pgm::save(retour, "tmp_pregraphe.pgm");
+    io::pgm::save( level::transform(retour, convert::to_fun(foo)),
+		 "tmp_pregraph.pgm" );
+    //return retour;
+  }               
+                  
+   
+  
   template <typename I>
-  void doit(const I& irm,
+  void puzzle(const I& irm,
 	    const image2d<unsigned>& lbl,
 	    unsigned nlabels)
   {
@@ -66,28 +127,37 @@ namespace mln
     for_all(p)
       m[lbl(p)].take(irm(p));
     
-//     for (unsigned l = 1; l <= nlabels; ++l)
-//       std::cout << l << ":" << m[l] << "  ";
-//     std::cout << std::endl;
+    I carte;
+    initialize(carte, irm);
+    
+    for_all(p)
+    {
+      carte(p) = m[lbl(p)].to_result();
+    }
+   
+     
+    io::pgm::save(carte, "tmp_puzzle.pgm");
 
-    accu::mean_<unsigned> mm;
-    mm.take(m[70]);
-    mm.take(m[77]);
-    mm.take(m[80]);
-    mm.take(m[82]);
-    mm.take(m[99]);
-    std::cout << mm.to_result() << std::endl;
+//    accu::mean_<unsigned> mm;
+//    mm.take(m[70]);
+//    mm.take(m[77]);
+//    mm.take(m[80]);
+//    mm.take(m[82]);
+//    mm.take(m[99]);
+//    std::cout << mm.to_result() << std::endl;
+
   }
 
 
-  /*template <typename I, typename N>
+  template <typename I, typename J, typename N>
   void mk_graph(const I& lbl,
+  		const J& irm,
 		N nbh,
 		unsigned nlabels)
   {
     std::vector< std::vector<bool> > adja(nlabels + 1);
-    for (unsigned l = 1; l <= nlabels; ++l)
-      adja[l].resize(l, false);
+    for (unsigned l = 0; l <= nlabels; ++l)
+      adja[l].resize(nlabels + 1, false);
 
     mln_piter(I) p(lbl.domain());
     mln_niter(N) n(nbh, p);
@@ -113,30 +183,36 @@ namespace mln
 	    {
 	      l2 = l1;
 	      for (++l2; l2 != s.end(); ++l2)
-		adja[*l2][*l1] = true;
+		adja[*l1][*l2] = true;
 	    }
 	}
 
     unsigned count = 0;
-    for (unsigned l1 = 2; l1 <= nlabels; ++l1)
-      for (unsigned l2 = 1; l2 < l1; ++l2)
+    for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+      for (unsigned l2 = 1; l2 <= nlabels; ++l2)
 	if (adja[l1][l2])
 	  ++count;
     std::cout << "link count = " << count << std::endl;
 
     // Graph.
-    util::graph<> g;
+    util::graph<float> g;
     // Nodes.
     for (unsigned i = 0; i <= nlabels; ++i)
-      g.add_node();
+    {
+      accu::mean_<unsigned> m;
+      level::take(irm | (pw::value(lbl) == pw::cst(i)), m);
+      g.add_node(m.to_result());
+    }
     // Edges.
     for (unsigned l1 = 1; l1 <= nlabels; ++l1)
       for (unsigned l2 = l1 + 1; l2 <= nlabels; ++l2)
 	if (adja[l1][l2])
 	  g.add_edge(l1, l2);
-    g.print_debug (std::cout);
-
-  }*/
+    //g.print_debug (std::cout);
+    for( int i = 0 ; i < g.nnodes() ; ++i)
+      std::cout << "[" << i << " : " << g.node_data(i) << " ] ";
+    std::cout << std::endl;
+  }
 
 } // end of namespace mln
 
@@ -147,7 +223,7 @@ int main()
   using value::int_u8;
 
   image2d<int_u8> irm;
-  io::pgm::load(irm, "./+irm6cut.pgm");
+  io::pgm::load(irm, "./+irm6.pgm");
 
 //   io::pgm::save( morpho::gradient(irm, win::rectangle2d(3,3)),
 //                  "tmp_grad_3x3.pgm" );
@@ -170,9 +246,10 @@ int main()
   io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
 		 "tmp_wshed.pgm" );
 
-//   doit(irm, wshed, nbasins);
-//   mk_graph(wshed, c4(), nbasins);
+   puzzle(irm, wshed, nbasins);
+   
+//   mk_graph(wshed, irm, c4(), nbasins);
 
 //   std::vector< accu::mean_<unsigned> >
-
+  segm_to_pregraph(wshed, c8(), nbasins);
 }
