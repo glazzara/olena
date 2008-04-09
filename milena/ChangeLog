@@ -81,6 +81,13 @@
 
 	* sandbox/jardonnet/registration/projection.hh: Use virtual length.
 
+2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a log version of front-based distance computation.
+
+	* sandbox/folio/psn_log.cc: New.  Derived from psn.cc to
+	trace the behavior of the algorithm in the non-convex case.
+
 2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	* img/quite-small.pgm: New image.
@@ -98,6 +105,14 @@
 	instead of edges_ to test the presence of an edge in the graph.
 	* mln/util/graph.hh (mln::util::graph<void, void>::add_edge): Add
 	missing preconditions.
+
+2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Delay construction of pw::value.
+
+	* mln/pw/value.hh (value): New overload.  Such function
+	shall have a delayed construction mechanism so that 'initialize'
+	can work.
 
 2008-04-09  Etienne FOLIO  <folio@lrde.epita.fr>
 
@@ -516,6 +531,12 @@
 	* tests/core/line_graph_elt_window.cc: Update test.
 	* tests/core/line_graph_elt_neighborhood.cc: New test.
 
+2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix naive DT in Etienne's sandbox.
+
+	* sandbox/folio/naive.cc: Fix.
+
 2008-03-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: use of projection maps.
@@ -526,6 +547,12 @@
 	* sandbox/jardonnet/test/icp.cc: Update: maps.
 	* sandbox/jardonnet/registration/icp.hh: .
 	* sandbox/jardonnet/registration/projection.hh: .
+
+2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment doc about image types.
+
+	* doc/tutorial/image_types.txt: Augment.
 
 2008-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -627,6 +654,21 @@
 	New methods.
 	* tests/core/graph_elt_window.cc: Exercise more features of the
 	elementary window, and piters.
+
+2008-03-25  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	gradation for image valued by integers.
+	* mln/fun/v2v/rgb_to_hsi.hh: Added in milena.
+	* mln/value/hsi.hh: Added in milena.
+	* sandbox/vigouroux/color.cc: New test.
+	* sandbox/vigouroux/color/my_hsi.hh: changed.
+	* sandbox/vigouroux/color/rgb_to_hsi.hh: changed.
+	* sandbox/vigouroux/gradation.hh: New gradation.
+	* sandbox/vigouroux/lap.cc: New gradation test.
+	* sandbox/vigouroux/lap.hh: New lap filter.
+	* sandbox/vigouroux/moyenne.cc: .
+	* tests/fun/v2v/Makefile.am: .
+	* tests/fun/v2v/rgb_hsi_conversion.cc: New test.
 
 2008-03-25  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -869,6 +911,14 @@
 	p_array and n dim (not ready yet).
 	* sandbox/jardonnet/registration/quat/interpol.hh: Remove.
 	Provided by qut.hh
+
+2008-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update test on rgb/hsi conversion.
+
+	* doc/tutorial/image_types.txt: Augment.
+	* mln/value/rgb.hh (red_t, green_t, blue_t): New.
+	* sandbox/vigouroux/moyenne.cc: Update.
 
 2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
 
@@ -1188,31 +1238,31 @@
 
 	Add to sanbox an image type maped on the hard disk.
 
-	* milena/sandbox/garrigues/tiled_image2d: New.
-	* milena/sandbox/garrigues/tiled_image2d/tiled_image2d.cc: New.
-	* milena/sandbox/garrigues/tiled_image2d/tiled_image2d.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/backend/file.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/backend/ios.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/backend/mmap.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/backend: New.
-	* milena/sandbox/garrigues/tiled_image2d/block.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/context.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/all.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/all.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/lrtb.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/image2d/tblr.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/image2d: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/layout2d.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/all.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/lrtb.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/page2d/tblr.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout/page2d: New.
-	* milena/sandbox/garrigues/tiled_image2d/layout: New.
-	* milena/sandbox/garrigues/tiled_image2d/page.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/paged_image.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/support/lru.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/support/simple.hh: New.
-	* milena/sandbox/garrigues/tiled_image2d/support: New.
+	* sandbox/garrigues/tiled_image2d: New.
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.cc: New.
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh: New.
+	* sandbox/garrigues/tiled_image2d/backend/file.hh: New.
+	* sandbox/garrigues/tiled_image2d/backend/ios.hh: New.
+	* sandbox/garrigues/tiled_image2d/backend/mmap.hh: New.
+	* sandbox/garrigues/tiled_image2d/backend: New.
+	* sandbox/garrigues/tiled_image2d/block.hh: New.
+	* sandbox/garrigues/tiled_image2d/context.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/all.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/image2d/all.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/image2d/lrtb.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/image2d/tblr.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/image2d: New.
+	* sandbox/garrigues/tiled_image2d/layout/layout2d.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/page2d/all.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/page2d/lrtb.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/page2d/tblr.hh: New.
+	* sandbox/garrigues/tiled_image2d/layout/page2d: New.
+	* sandbox/garrigues/tiled_image2d/layout: New.
+	* sandbox/garrigues/tiled_image2d/page.hh: New.
+	* sandbox/garrigues/tiled_image2d/paged_image.hh: New.
+	* sandbox/garrigues/tiled_image2d/support/lru.hh: New.
+	* sandbox/garrigues/tiled_image2d/support/simple.hh: New.
+	* sandbox/garrigues/tiled_image2d/support: New.
 
 2008-03-12  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -1557,6 +1607,12 @@
 	* mln/core/p_bgraph.hh,
 	* mln/core/bgraph_psite.hh: fix the bug (thanks to Theo).
 
+2008-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment tutorial on image types.
+
+	* doc/tutorial/image_types.txt: Augment.
+
 2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Root Mean Square of error.
@@ -1593,6 +1649,12 @@
 	* load.cc: New loader.
 	* tests.cc: New tests.
 
+2008-02-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start a description of image types.
+
+	* doc/tutorial/image_types.txt: New.
+
 2008-02-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	sandbox:Subsampling function.
@@ -1606,6 +1668,15 @@
 	* sandbox/jardonnet/test/Makefile: New.
      	* tests/subsampling: New.
 	* tests/subsampling/type.cc: New.
+
+2008-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New sample code for Caroline (hsi and conversion).
+
+	* sandbox/vigouroux/color/my_hsi.hh: .
+	* sandbox/vigouroux/color/is_HSI.cc: New.
+	* sandbox/vigouroux/color/rgb_to_hsi.hh
+	(fun::v2v::f_rgb_to_hsi_): New.
 
 2008-02-27  Nicolas Ballas  <ballas@lrde.epita.fr>
 
@@ -1622,6 +1693,17 @@
 	Sample code for IRM segmentation.
 
 	* sandbox/geraud/irm.cc: New.
+
+2008-02-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the pretty-printer of util::internal::graph_base.
+
+	* mln/util/internal/graph_base.hh (node<void>::edges):
+	Use a std::vector (as in node<T>), not a std::list.
+	(util::internal::graph_base<N, E>::print_debug): Fix the iteration
+	on the edges adjacent to a vertex.
+	* tests/core/graph_image.cc: Exercise
+	util::internal::graph_base<N, E>::print_debug
 
 2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -3469,7 +3551,7 @@
 2007-12-17  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Add a missing include.
-	* milena/mln/accu/max.hh: Here.
+	* mln/accu/max.hh: Here.
 
 2007-12-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
 
@@ -3574,7 +3656,7 @@
 	documentation.
 	Update source for distinction between the user and developper
 	documentation.
-	
+
 	* mln/accu/all.hh,
 	* mln/accu/internal/base.hh,
 	* mln/arith/all.hh,
@@ -4123,435 +4205,435 @@
 
 	Replace exported global variables with static ones.
 	This allows for separate compilation.
-	* milena/mln/border/thickness.hh,
-	* milena/mln/literal/black.hh,
-	* milena/mln/literal/colors.hh,
-	* milena/mln/literal/grays.hh,
-	* milena/mln/literal/one.hh,
-	* milena/mln/literal/origin.hh,
-	* milena/mln/literal/white.hh,
-	* milena/mln/literal/zero.hh,
-	* milena/mln/tag/init.hh: Here.
-	* milena/mln/trace/entering.hh: Add a missing `inline'.
-	* milena/mln/trace/exiting.hh: Kill trailing whitespaces.
+	* mln/border/thickness.hh,
+	* mln/literal/black.hh,
+	* mln/literal/colors.hh,
+	* mln/literal/grays.hh,
+	* mln/literal/one.hh,
+	* mln/literal/origin.hh,
+	* mln/literal/white.hh,
+	* mln/literal/zero.hh,
+	* mln/tag/init.hh: Here.
+	* mln/trace/entering.hh: Add a missing `inline'.
+	* mln/trace/exiting.hh: Kill trailing whitespaces.
 
 2007-11-28  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Add the missing inline keywords.
-	* milena/mln/accu/bbox.hh,
-	* milena/mln/accu/compute.hh,
-	* milena/mln/accu/count.hh,
-	* milena/mln/accu/histo.hh,
-	* milena/mln/accu/internal/base.hh,
-	* milena/mln/accu/max.hh,
-	* milena/mln/accu/max_h.hh,
-	* milena/mln/accu/mean.hh,
-	* milena/mln/accu/median.hh,
-	* milena/mln/accu/median_alt.hh,
-	* milena/mln/accu/min.hh,
-	* milena/mln/accu/min_h.hh,
-	* milena/mln/accu/nil.hh,
-	* milena/mln/accu/p.hh,
-	* milena/mln/accu/pair.hh,
-	* milena/mln/accu/sum.hh,
-	* milena/mln/accu/take.hh,
-	* milena/mln/accu/v.hh,
-	* milena/mln/arith/min.hh,
-	* milena/mln/arith/min.spe.hh,
-	* milena/mln/arith/minus.hh,
-	* milena/mln/arith/plus.hh,
-	* milena/mln/arith/revert.hh,
-	* milena/mln/arith/revert.spe.hh,
-	* milena/mln/arith/times.hh,
-	* milena/mln/arith/times.spe.hh,
-	* milena/mln/border/adjust.hh,
-	* milena/mln/border/duplicate.hh,
-	* milena/mln/border/equalize.hh,
-	* milena/mln/border/fill.hh,
-	* milena/mln/border/find.hh,
-	* milena/mln/border/get.hh,
-	* milena/mln/border/mirror.hh,
-	* milena/mln/border/resize.hh,
-	* milena/mln/canvas/browsing/dir_struct_elt_incr_update.hh,
-	* milena/mln/canvas/browsing/directional.hh,
-	* milena/mln/canvas/browsing/fwd.hh,
-	* milena/mln/canvas/browsing/snake_fwd.hh,
-	* milena/mln/convert/to_dpoint.hh,
-	* milena/mln/convert/to_fun.hh,
-	* milena/mln/convert/to_image.hh,
-	* milena/mln/convert/to_p_array.hh,
-	* milena/mln/convert/to_p_set.hh,
-	* milena/mln/convert/to_rgb.hh,
-	* milena/mln/convert/to_std_set.hh,
-	* milena/mln/convert/to_tiles.hh,
-	* milena/mln/convert/to_w_window.hh,
-	* milena/mln/convert/to_window.hh,
-	* milena/mln/core/a_point_of.hh,
-	* milena/mln/core/box.hh,
-	* milena/mln/core/box_piter.hh,
-	* milena/mln/core/cast_image.hh,
-	* milena/mln/core/clock_neighb.hh,
-	* milena/mln/core/clock_neighb2d.hh,
-	* milena/mln/core/clone.hh,
-	* milena/mln/core/concept/accumulator.hh,
-	* milena/mln/core/concept/box.hh,
-	* milena/mln/core/concept/browsing.hh,
-	* milena/mln/core/concept/delta_point_site.hh,
-	* milena/mln/core/concept/dpoint.hh,
-	* milena/mln/core/concept/function.hh,
-	* milena/mln/core/concept/generalized_pixel.hh,
-	* milena/mln/core/concept/image.hh,
-	* milena/mln/core/concept/iterator.hh,
-	* milena/mln/core/concept/literal.hh,
-	* milena/mln/core/concept/mesh.hh,
-	* milena/mln/core/concept/meta_accumulator.hh,
-	* milena/mln/core/concept/neighborhood.hh,
-	* milena/mln/core/concept/object.hh,
-	* milena/mln/core/concept/pixel_iterator.hh,
-	* milena/mln/core/concept/point.hh,
-	* milena/mln/core/concept/point_iterator.hh,
-	* milena/mln/core/concept/point_set.hh,
-	* milena/mln/core/concept/point_site.hh,
-	* milena/mln/core/concept/regular_grid.hh,
-	* milena/mln/core/concept/value.hh,
-	* milena/mln/core/concept/value_iterator.hh,
-	* milena/mln/core/concept/value_set.hh,
-	* milena/mln/core/concept/weighted_window.hh,
-	* milena/mln/core/concept/window.hh,
-	* milena/mln/core/decorated_image.hh,
-	* milena/mln/core/dpoint.hh,
-	* milena/mln/core/dpoints_piter.hh,
-	* milena/mln/core/dpoints_pixter.hh,
-	* milena/mln/core/exact.hh,
-	* milena/mln/core/h_mat.hh,
-	* milena/mln/core/h_vec.hh,
-	* milena/mln/core/hexa.hh,
-	* milena/mln/core/hexa_piter.hh,
-	* milena/mln/core/image1d.hh,
-	* milena/mln/core/image2d.hh,
-	* milena/mln/core/image2d_h.hh,
-	* milena/mln/core/image3d.hh,
-	* milena/mln/core/image_if.hh,
-	* milena/mln/core/image_if_interval.hh,
-	* milena/mln/core/image_if_value.hh,
-	* milena/mln/core/init.hh,
-	* milena/mln/core/inplace.hh,
-	* milena/mln/core/internal/box_impl.hh,
-	* milena/mln/core/internal/check/image_fastest.hh,
-	* milena/mln/core/internal/coord_impl.hh,
-	* milena/mln/core/internal/dpoints_base.hh,
-	* milena/mln/core/internal/exact.hh,
-	* milena/mln/core/internal/image_base.hh,
-	* milena/mln/core/internal/image_domain_morpher.hh,
-	* milena/mln/core/internal/image_identity.hh,
-	* milena/mln/core/internal/image_if_base.hh,
-	* milena/mln/core/internal/image_morpher.hh,
-	* milena/mln/core/internal/image_primary.hh,
-	* milena/mln/core/internal/image_value_morpher.hh,
-	* milena/mln/core/internal/piter_adaptor.hh,
-	* milena/mln/core/internal/pixel_impl.hh,
-	* milena/mln/core/internal/pixel_iterator_base.hh,
-	* milena/mln/core/internal/point_iterator_base.hh,
-	* milena/mln/core/internal/point_set_base.hh,
-	* milena/mln/core/internal/run_image.hh,
-	* milena/mln/core/internal/run_psite.hh,
-	* milena/mln/core/internal/set_of.hh,
-	* milena/mln/core/interpolated.hh,
-	* milena/mln/core/line2d.hh,
-	* milena/mln/core/line_piter.hh,
-	* milena/mln/core/mesh_image.hh,
-	* milena/mln/core/mesh_p.hh,
-	* milena/mln/core/mesh_p_piter.hh,
-	* milena/mln/core/mesh_psite.hh,
-	* milena/mln/core/neighb.hh,
-	* milena/mln/core/neighb1d.hh,
-	* milena/mln/core/neighb2d.hh,
-	* milena/mln/core/neighb3d.hh,
-	* milena/mln/core/ops.hh,
-	* milena/mln/core/p_array.hh,
-	* milena/mln/core/p_array_piter.hh,
-	* milena/mln/core/p_priority_queue.hh,
-	* milena/mln/core/p_priority_queue_fast.hh,
-	* milena/mln/core/p_priority_queue_fast_with_array.hh,
-	* milena/mln/core/p_queue.hh,
-	* milena/mln/core/p_queue_fast.hh,
-	* milena/mln/core/p_run.hh,
-	* milena/mln/core/p_run_piter.hh,
-	* milena/mln/core/p_runs.hh,
-	* milena/mln/core/p_set.hh,
-	* milena/mln/core/pixel.hh,
-	* milena/mln/core/pixter1d.hh,
-	* milena/mln/core/pixter2d.hh,
-	* milena/mln/core/pixter3d.hh,
-	* milena/mln/core/plain.hh,
-	* milena/mln/core/point.hh,
-	* milena/mln/core/pset_if.hh,
-	* milena/mln/core/pset_if_piter.hh,
-	* milena/mln/core/rle_encode.hh,
-	* milena/mln/core/rle_image.hh,
-	* milena/mln/core/safe.hh,
-	* milena/mln/core/sparse_encode.hh,
-	* milena/mln/core/sparse_image.hh,
-	* milena/mln/core/sub_image.hh,
-	* milena/mln/core/t_image.hh,
-	* milena/mln/core/tr_image.hh,
-	* milena/mln/core/translate_image.hh,
-	* milena/mln/core/w_window.hh,
-	* milena/mln/core/window.hh,
-	* milena/mln/debug/format.hh,
-	* milena/mln/debug/iota.hh,
-	* milena/mln/debug/iota.spe.hh,
-	* milena/mln/debug/println.hh,
-	* milena/mln/debug/println.spe.hh,
-	* milena/mln/debug/println_with_border.hh,
-	* milena/mln/debug/println_with_border.spe.hh,
-	* milena/mln/display/color_pretty.hh,
-	* milena/mln/display/remove.hh,
-	* milena/mln/display/save.hh,
-	* milena/mln/display/save_and_show.hh,
-	* milena/mln/display/show.hh,
-	* milena/mln/draw/line.hh,
-	* milena/mln/draw/mesh.hh,
-	* milena/mln/estim/mean.hh,
-	* milena/mln/estim/min_max.hh,
-	* milena/mln/estim/sum.hh,
-	* milena/mln/fun/c.hh,
-	* milena/mln/fun/cast.hh,
-	* milena/mln/fun/i2v/all_to.hh,
-	* milena/mln/fun/internal/x2x_linear_impl.hh,
-	* milena/mln/fun/p2b/chess.hh,
-	* milena/mln/fun/p2v/elifs.hh,
-	* milena/mln/fun/p2v/iota.hh,
-	* milena/mln/fun/p2v/ternary.hh,
-	* milena/mln/fun/v2v/abs.hh,
-	* milena/mln/fun/v2v/cast.hh,
-	* milena/mln/fun/v2v/enc.hh,
-	* milena/mln/fun/v2v/id.hh,
-	* milena/mln/fun/v2v/linear.hh,
-	* milena/mln/fun/v2v/norm.hh,
-	* milena/mln/fun/v2v/saturate.hh,
-	* milena/mln/fun/x2x/composed.hh,
-	* milena/mln/fun/x2x/rotation.hh,
-	* milena/mln/fun/x2x/translation.hh,
-	* milena/mln/geom/bbox.hh,
-	* milena/mln/geom/chamfer.hh,
-	* milena/mln/geom/max_col.hh,
-	* milena/mln/geom/max_ind.hh,
-	* milena/mln/geom/max_row.hh,
-	* milena/mln/geom/max_sli.hh,
-	* milena/mln/geom/min_col.hh,
-	* milena/mln/geom/min_ind.hh,
-	* milena/mln/geom/min_row.hh,
-	* milena/mln/geom/min_sli.hh,
-	* milena/mln/geom/ncols.hh,
-	* milena/mln/geom/ninds.hh,
-	* milena/mln/geom/nrows.hh,
-	* milena/mln/geom/nslis.hh,
-	* milena/mln/geom/pmin_pmax.hh,
-	* milena/mln/geom/seeds2tiling.hh,
-	* milena/mln/geom/seeds2tiling_roundness.hh,
-	* milena/mln/geom/shift.hh,
-	* milena/mln/geom/sym.hh,
-	* milena/mln/histo/compute.hh,
-	* milena/mln/histo/compute.spe.hh,
-	* milena/mln/histo/data.hh,
-	* milena/mln/io/abort.hh,
-	* milena/mln/io/fits/load.hh,
-	* milena/mln/io/pbm/load.hh,
-	* milena/mln/io/pbm/save.hh,
-	* milena/mln/io/pfm/load.hh,
-	* milena/mln/io/pfm/save.hh,
-	* milena/mln/io/pgm/load.hh,
-	* milena/mln/io/pgm/save.hh,
-	* milena/mln/io/pnm/load.hh,
-	* milena/mln/io/pnm/load_header.hh,
-	* milena/mln/io/pnm/max_component.hh,
-	* milena/mln/io/pnm/save.hh,
-	* milena/mln/io/pnm/save_header.hh,
-	* milena/mln/io/ppm/load.hh,
-	* milena/mln/io/ppm/save.hh,
-	* milena/mln/labeling/background.hh,
-	* milena/mln/labeling/base.hh,
-	* milena/mln/labeling/blobs.hh,
-	* milena/mln/labeling/estimate.hh,
-	* milena/mln/labeling/flat_zones.hh,
-	* milena/mln/labeling/foreground.hh,
-	* milena/mln/labeling/level.hh,
-	* milena/mln/labeling/regional_maxima.hh,
-	* milena/mln/labeling/regional_minima.hh,
-	* milena/mln/level/abs.hh,
-	* milena/mln/level/apply.hh,
-	* milena/mln/level/apply.spe.hh,
-	* milena/mln/level/approx/median.hh,
-	* milena/mln/level/assign.hh,
-	* milena/mln/level/assign.spe.hh,
-	* milena/mln/level/compare.hh,
-	* milena/mln/level/compute.hh,
-	* milena/mln/level/fast_median.hh,
-	* milena/mln/level/fill.hh,
-	* milena/mln/level/fill.spe.hh,
-	* milena/mln/level/median.hh,
-	* milena/mln/level/memcpy_.hh,
-	* milena/mln/level/memset_.hh,
-	* milena/mln/level/naive/median.hh,
-	* milena/mln/level/paste.hh,
-	* milena/mln/level/paste.spe.hh,
-	* milena/mln/level/saturate.hh,
-	* milena/mln/level/sort_points.hh,
-	* milena/mln/level/stretch.hh,
-	* milena/mln/level/take.hh,
-	* milena/mln/level/take.spe.hh,
-	* milena/mln/level/to_enc.hh,
-	* milena/mln/level/transform.hh,
-	* milena/mln/level/transform.spe.hh,
-	* milena/mln/linear/convolve.hh,
-	* milena/mln/linear/gaussian.hh,
-	* milena/mln/linear/lap.hh,
-	* milena/mln/linear/line_convolve.hh,
-	* milena/mln/linear/line_x2_convolve.hh,
-	* milena/mln/linear/local/convolve.hh,
-	* milena/mln/linear/log.hh,
-	* milena/mln/linear/sobel.hh,
-	* milena/mln/literal/one.hh,
-	* milena/mln/literal/ops.hh,
-	* milena/mln/literal/zero.hh,
-	* milena/mln/logical/and.hh,
-	* milena/mln/logical/and.spe.hh,
-	* milena/mln/logical/and_not.hh,
-	* milena/mln/logical/and_not.spe.hh,
-	* milena/mln/logical/not.hh,
-	* milena/mln/logical/not.spe.hh,
-	* milena/mln/logical/or.hh,
-	* milena/mln/logical/or.spe.hh,
-	* milena/mln/make/box1d.hh,
-	* milena/mln/make/box2d.hh,
-	* milena/mln/make/box2d_h.hh,
-	* milena/mln/make/box3d.hh,
-	* milena/mln/make/dpoint1d.hh,
-	* milena/mln/make/dpoint2d.hh,
-	* milena/mln/make/dpoint2d_h.hh,
-	* milena/mln/make/dpoint3d.hh,
-	* milena/mln/make/image2d.hh,
-	* milena/mln/make/mat.hh,
-	* milena/mln/make/pix.hh,
-	* milena/mln/make/pixel.hh,
-	* milena/mln/make/point1d.hh,
-	* milena/mln/make/point2d.hh,
-	* milena/mln/make/point2d_h.hh,
-	* milena/mln/make/point3d.hh,
-	* milena/mln/make/vec.hh,
-	* milena/mln/make/voronoi.hh,
-	* milena/mln/make/w_window.hh,
-	* milena/mln/make/w_window1d.hh,
-	* milena/mln/make/w_window1d_int.hh,
-	* milena/mln/make/w_window2d.hh,
-	* milena/mln/make/w_window2d_int.hh,
-	* milena/mln/make/w_window3d.hh,
-	* milena/mln/make/w_window3d_int.hh,
-	* milena/mln/make/w_window_line.hh,
-	* milena/mln/make/window1d.hh,
-	* milena/mln/make/window2d.hh,
-	* milena/mln/make/window3d.hh,
-	* milena/mln/math/abs.hh,
-	* milena/mln/math/max.hh,
-	* milena/mln/math/min.hh,
-	* milena/mln/math/round.hh,
-	* milena/mln/math/round_sat.hh,
-	* milena/mln/math/sign.hh,
-	* milena/mln/math/sqr.hh,
-	* milena/mln/math/sqrt.hh,
-	* milena/mln/metal/bool.hh,
-	* milena/mln/metal/int.hh,
-	* milena/mln/metal/mat.hh,
-	* milena/mln/metal/vec.hh,
-	* milena/mln/morpho/Rd.hh,
-	* milena/mln/morpho/closing.hh,
-	* milena/mln/morpho/complementation.hh,
-	* milena/mln/morpho/contrast.hh,
-	* milena/mln/morpho/dilation.hh,
-	* milena/mln/morpho/dilation_fast.hh,
-	* milena/mln/morpho/erosion.hh,
-	* milena/mln/morpho/erosion.spe.hh,
-	* milena/mln/morpho/erosion_fast.hh,
-	* milena/mln/morpho/gradient.hh,
-	* milena/mln/morpho/hit_or_miss.hh,
-	* milena/mln/morpho/laplacian.hh,
-	* milena/mln/morpho/min.hh,
-	* milena/mln/morpho/minus.hh,
-	* milena/mln/morpho/opening.hh,
-	* milena/mln/morpho/opening_area.hh,
-	* milena/mln/morpho/opening_attribute.hh,
-	* milena/mln/morpho/plus.hh,
-	* milena/mln/morpho/thick_miss.hh,
-	* milena/mln/morpho/thickening.hh,
-	* milena/mln/morpho/thin_fit.hh,
-	* milena/mln/morpho/thinning.hh,
-	* milena/mln/morpho/top_hat.hh,
-	* milena/mln/norm/l1.hh,
-	* milena/mln/norm/l2.hh,
-	* milena/mln/norm/linfty.hh,
-	* milena/mln/pw/cst.hh,
-	* milena/mln/pw/image.hh,
-	* milena/mln/pw/value.hh,
-	* milena/mln/pw/var.hh,
-	* milena/mln/set/diff.hh,
-	* milena/mln/set/inter.hh,
-	* milena/mln/set/sym_diff.hh,
-	* milena/mln/set/uni.hh,
-	* milena/mln/test/positive.hh,
-	* milena/mln/test/predicate.hh,
-	* milena/mln/trace/exiting.hh,
-	* milena/mln/trait/image/print.hh,
-	* milena/mln/trait/value/print.hh,
-	* milena/mln/util/branch_iter.hh,
-	* milena/mln/util/branch_iter_ind.hh,
-	* milena/mln/util/eat.hh,
-	* milena/mln/util/graph.hh,
-	* milena/mln/util/ignore.hh,
-	* milena/mln/util/lazy_set.hh,
-	* milena/mln/util/nil.hh,
-	* milena/mln/util/ordpair.hh,
-	* milena/mln/util/pix.hh,
-	* milena/mln/util/tracked_ptr.hh,
-	* milena/mln/util/tree.hh,
-	* milena/mln/util/tree_fast.hh,
-	* milena/mln/util/tree_fast_to_image.hh,
-	* milena/mln/util/tree_to_fast.hh,
-	* milena/mln/util/tree_to_image.hh,
-	* milena/mln/value/cast.hh,
-	* milena/mln/value/concept/scalar.hh,
-	* milena/mln/value/equiv.hh,
-	* milena/mln/value/float01.hh,
-	* milena/mln/value/float01_.hh,
-	* milena/mln/value/float01_f.hh,
-	* milena/mln/value/gray.hh,
-	* milena/mln/value/graylevel.hh,
-	* milena/mln/value/int_s.hh,
-	* milena/mln/value/int_u.hh,
-	* milena/mln/value/int_u_sat.hh,
-	* milena/mln/value/internal/convert.hh,
-	* milena/mln/value/internal/iterable_set.hh,
-	* milena/mln/value/internal/value_like.hh,
-	* milena/mln/value/interval.hh,
-	* milena/mln/value/label.hh,
-	* milena/mln/value/lut_vec.hh,
-	* milena/mln/value/ops.hh,
-	* milena/mln/value/other.hh,
-	* milena/mln/value/proxy.hh,
-	* milena/mln/value/quat.hh,
-	* milena/mln/value/rgb.hh,
-	* milena/mln/value/rgb8_non_templated.hh,
-	* milena/mln/value/scalar.hh,
-	* milena/mln/value/set.hh,
-	* milena/mln/value/stack.hh,
-	* milena/mln/value/viter.hh,
-	* milena/mln/win/backdiag2d.hh,
-	* milena/mln/win/cube3d.hh,
-	* milena/mln/win/diag2d.hh,
-	* milena/mln/win/disk2d.hh,
-	* milena/mln/win/line.hh,
-	* milena/mln/win/octagon2d.hh,
-	* milena/mln/win/rectangle2d.hh: Here.
+	* mln/accu/bbox.hh,
+	* mln/accu/compute.hh,
+	* mln/accu/count.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/internal/base.hh,
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/take.hh,
+	* mln/accu/v.hh,
+	* mln/arith/min.hh,
+	* mln/arith/min.spe.hh,
+	* mln/arith/minus.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/arith/times.hh,
+	* mln/arith/times.spe.hh,
+	* mln/border/adjust.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/equalize.hh,
+	* mln/border/fill.hh,
+	* mln/border/find.hh,
+	* mln/border/get.hh,
+	* mln/border/mirror.hh,
+	* mln/border/resize.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/convert/to_dpoint.hh,
+	* mln/convert/to_fun.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_rgb.hh,
+	* mln/convert/to_std_set.hh,
+	* mln/convert/to_tiles.hh,
+	* mln/convert/to_w_window.hh,
+	* mln/convert/to_window.hh,
+	* mln/core/a_point_of.hh,
+	* mln/core/box.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/clock_neighb.hh,
+	* mln/core/clock_neighb2d.hh,
+	* mln/core/clone.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/browsing.hh,
+	* mln/core/concept/delta_point_site.hh,
+	* mln/core/concept/dpoint.hh,
+	* mln/core/concept/function.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/iterator.hh,
+	* mln/core/concept/literal.hh,
+	* mln/core/concept/mesh.hh,
+	* mln/core/concept/meta_accumulator.hh,
+	* mln/core/concept/neighborhood.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/pixel_iterator.hh,
+	* mln/core/concept/point.hh,
+	* mln/core/concept/point_iterator.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/concept/regular_grid.hh,
+	* mln/core/concept/value.hh,
+	* mln/core/concept/value_iterator.hh,
+	* mln/core/concept/value_set.hh,
+	* mln/core/concept/weighted_window.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/dpoint.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/exact.hh,
+	* mln/core/h_mat.hh,
+	* mln/core/h_vec.hh,
+	* mln/core/hexa.hh,
+	* mln/core/hexa_piter.hh,
+	* mln/core/image1d.hh,
+	* mln/core/image2d.hh,
+	* mln/core/image2d_h.hh,
+	* mln/core/image3d.hh,
+	* mln/core/image_if.hh,
+	* mln/core/image_if_interval.hh,
+	* mln/core/image_if_value.hh,
+	* mln/core/init.hh,
+	* mln/core/inplace.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/internal/dpoints_base.hh,
+	* mln/core/internal/exact.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/image_domain_morpher.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/image_morpher.hh,
+	* mln/core/internal/image_primary.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/internal/pixel_iterator_base.hh,
+	* mln/core/internal/point_iterator_base.hh,
+	* mln/core/internal/point_set_base.hh,
+	* mln/core/internal/run_image.hh,
+	* mln/core/internal/run_psite.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/line2d.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/mesh_image.hh,
+	* mln/core/mesh_p.hh,
+	* mln/core/mesh_p_piter.hh,
+	* mln/core/mesh_psite.hh,
+	* mln/core/neighb.hh,
+	* mln/core/neighb1d.hh,
+	* mln/core/neighb2d.hh,
+	* mln/core/neighb3d.hh,
+	* mln/core/ops.hh,
+	* mln/core/p_array.hh,
+	* mln/core/p_array_piter.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_priority_queue_fast_with_array.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/p_queue_fast.hh,
+	* mln/core/p_run.hh,
+	* mln/core/p_run_piter.hh,
+	* mln/core/p_runs.hh,
+	* mln/core/p_set.hh,
+	* mln/core/pixel.hh,
+	* mln/core/pixter1d.hh,
+	* mln/core/pixter2d.hh,
+	* mln/core/pixter3d.hh,
+	* mln/core/plain.hh,
+	* mln/core/point.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/pset_if_piter.hh,
+	* mln/core/rle_encode.hh,
+	* mln/core/rle_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/sparse_encode.hh,
+	* mln/core/sparse_image.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/t_image.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/translate_image.hh,
+	* mln/core/w_window.hh,
+	* mln/core/window.hh,
+	* mln/debug/format.hh,
+	* mln/debug/iota.hh,
+	* mln/debug/iota.spe.hh,
+	* mln/debug/println.hh,
+	* mln/debug/println.spe.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/debug/println_with_border.spe.hh,
+	* mln/display/color_pretty.hh,
+	* mln/display/remove.hh,
+	* mln/display/save.hh,
+	* mln/display/save_and_show.hh,
+	* mln/display/show.hh,
+	* mln/draw/line.hh,
+	* mln/draw/mesh.hh,
+	* mln/estim/mean.hh,
+	* mln/estim/min_max.hh,
+	* mln/estim/sum.hh,
+	* mln/fun/c.hh,
+	* mln/fun/cast.hh,
+	* mln/fun/i2v/all_to.hh,
+	* mln/fun/internal/x2x_linear_impl.hh,
+	* mln/fun/p2b/chess.hh,
+	* mln/fun/p2v/elifs.hh,
+	* mln/fun/p2v/iota.hh,
+	* mln/fun/p2v/ternary.hh,
+	* mln/fun/v2v/abs.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/enc.hh,
+	* mln/fun/v2v/id.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/fun/v2v/saturate.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/geom/bbox.hh,
+	* mln/geom/chamfer.hh,
+	* mln/geom/max_col.hh,
+	* mln/geom/max_ind.hh,
+	* mln/geom/max_row.hh,
+	* mln/geom/max_sli.hh,
+	* mln/geom/min_col.hh,
+	* mln/geom/min_ind.hh,
+	* mln/geom/min_row.hh,
+	* mln/geom/min_sli.hh,
+	* mln/geom/ncols.hh,
+	* mln/geom/ninds.hh,
+	* mln/geom/nrows.hh,
+	* mln/geom/nslis.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/geom/shift.hh,
+	* mln/geom/sym.hh,
+	* mln/histo/compute.hh,
+	* mln/histo/compute.spe.hh,
+	* mln/histo/data.hh,
+	* mln/io/abort.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/load.hh,
+	* mln/io/pnm/load_header.hh,
+	* mln/io/pnm/max_component.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnm/save_header.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* mln/labeling/background.hh,
+	* mln/labeling/base.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/estimate.hh,
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/level/abs.hh,
+	* mln/level/apply.hh,
+	* mln/level/apply.spe.hh,
+	* mln/level/approx/median.hh,
+	* mln/level/assign.hh,
+	* mln/level/assign.spe.hh,
+	* mln/level/compare.hh,
+	* mln/level/compute.hh,
+	* mln/level/fast_median.hh,
+	* mln/level/fill.hh,
+	* mln/level/fill.spe.hh,
+	* mln/level/median.hh,
+	* mln/level/memcpy_.hh,
+	* mln/level/memset_.hh,
+	* mln/level/naive/median.hh,
+	* mln/level/paste.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/saturate.hh,
+	* mln/level/sort_points.hh,
+	* mln/level/stretch.hh,
+	* mln/level/take.hh,
+	* mln/level/take.spe.hh,
+	* mln/level/to_enc.hh,
+	* mln/level/transform.hh,
+	* mln/level/transform.spe.hh,
+	* mln/linear/convolve.hh,
+	* mln/linear/gaussian.hh,
+	* mln/linear/lap.hh,
+	* mln/linear/line_convolve.hh,
+	* mln/linear/line_x2_convolve.hh,
+	* mln/linear/local/convolve.hh,
+	* mln/linear/log.hh,
+	* mln/linear/sobel.hh,
+	* mln/literal/one.hh,
+	* mln/literal/ops.hh,
+	* mln/literal/zero.hh,
+	* mln/logical/and.hh,
+	* mln/logical/and.spe.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/and_not.spe.hh,
+	* mln/logical/not.hh,
+	* mln/logical/not.spe.hh,
+	* mln/logical/or.hh,
+	* mln/logical/or.spe.hh,
+	* mln/make/box1d.hh,
+	* mln/make/box2d.hh,
+	* mln/make/box2d_h.hh,
+	* mln/make/box3d.hh,
+	* mln/make/dpoint1d.hh,
+	* mln/make/dpoint2d.hh,
+	* mln/make/dpoint2d_h.hh,
+	* mln/make/dpoint3d.hh,
+	* mln/make/image2d.hh,
+	* mln/make/mat.hh,
+	* mln/make/pix.hh,
+	* mln/make/pixel.hh,
+	* mln/make/point1d.hh,
+	* mln/make/point2d.hh,
+	* mln/make/point2d_h.hh,
+	* mln/make/point3d.hh,
+	* mln/make/vec.hh,
+	* mln/make/voronoi.hh,
+	* mln/make/w_window.hh,
+	* mln/make/w_window1d.hh,
+	* mln/make/w_window1d_int.hh,
+	* mln/make/w_window2d.hh,
+	* mln/make/w_window2d_int.hh,
+	* mln/make/w_window3d.hh,
+	* mln/make/w_window3d_int.hh,
+	* mln/make/w_window_line.hh,
+	* mln/make/window1d.hh,
+	* mln/make/window2d.hh,
+	* mln/make/window3d.hh,
+	* mln/math/abs.hh,
+	* mln/math/max.hh,
+	* mln/math/min.hh,
+	* mln/math/round.hh,
+	* mln/math/round_sat.hh,
+	* mln/math/sign.hh,
+	* mln/math/sqr.hh,
+	* mln/math/sqrt.hh,
+	* mln/metal/bool.hh,
+	* mln/metal/int.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/closing.hh,
+	* mln/morpho/complementation.hh,
+	* mln/morpho/contrast.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/erosion.spe.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/gradient.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/laplacian.hh,
+	* mln/morpho/min.hh,
+	* mln/morpho/minus.hh,
+	* mln/morpho/opening.hh,
+	* mln/morpho/opening_area.hh,
+	* mln/morpho/opening_attribute.hh,
+	* mln/morpho/plus.hh,
+	* mln/morpho/thick_miss.hh,
+	* mln/morpho/thickening.hh,
+	* mln/morpho/thin_fit.hh,
+	* mln/morpho/thinning.hh,
+	* mln/morpho/top_hat.hh,
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh,
+	* mln/norm/linfty.hh,
+	* mln/pw/cst.hh,
+	* mln/pw/image.hh,
+	* mln/pw/value.hh,
+	* mln/pw/var.hh,
+	* mln/set/diff.hh,
+	* mln/set/inter.hh,
+	* mln/set/sym_diff.hh,
+	* mln/set/uni.hh,
+	* mln/test/positive.hh,
+	* mln/test/predicate.hh,
+	* mln/trace/exiting.hh,
+	* mln/trait/image/print.hh,
+	* mln/trait/value/print.hh,
+	* mln/util/branch_iter.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/util/eat.hh,
+	* mln/util/graph.hh,
+	* mln/util/ignore.hh,
+	* mln/util/lazy_set.hh,
+	* mln/util/nil.hh,
+	* mln/util/ordpair.hh,
+	* mln/util/pix.hh,
+	* mln/util/tracked_ptr.hh,
+	* mln/util/tree.hh,
+	* mln/util/tree_fast.hh,
+	* mln/util/tree_fast_to_image.hh,
+	* mln/util/tree_to_fast.hh,
+	* mln/util/tree_to_image.hh,
+	* mln/value/cast.hh,
+	* mln/value/concept/scalar.hh,
+	* mln/value/equiv.hh,
+	* mln/value/float01.hh,
+	* mln/value/float01_.hh,
+	* mln/value/float01_f.hh,
+	* mln/value/gray.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/int_s.hh,
+	* mln/value/int_u.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/value/internal/convert.hh,
+	* mln/value/internal/iterable_set.hh,
+	* mln/value/internal/value_like.hh,
+	* mln/value/interval.hh,
+	* mln/value/label.hh,
+	* mln/value/lut_vec.hh,
+	* mln/value/ops.hh,
+	* mln/value/other.hh,
+	* mln/value/proxy.hh,
+	* mln/value/quat.hh,
+	* mln/value/rgb.hh,
+	* mln/value/rgb8_non_templated.hh,
+	* mln/value/scalar.hh,
+	* mln/value/set.hh,
+	* mln/value/stack.hh,
+	* mln/value/viter.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/disk2d.hh,
+	* mln/win/line.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/rectangle2d.hh: Here.
 
 2007-11-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
@@ -4607,7 +4689,7 @@
 2007-11-28  Benoit Sigoure  <tsuna@lrde.epita.fr>
 
 	Fix various typos.
-	* milena/doc/tutorial/slides.tex: Here.
+	* doc/tutorial/slides.tex: Here.
 
 2007-11-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
 

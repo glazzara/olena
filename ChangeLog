@@ -1,18 +1,3 @@
-2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Add a log version of front-based distance computation.
-
-	* milena/sandbox/folio/psn_log.cc: New.  Derived from psn.cc to
-	trace the behavior of the algorithm in the non-convex case.
-
-2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Delay construction of pw::value.
-
-	* milena/mln/pw/value.hh (value): New overload.  Such function
-	shall have a delayed construction mechanism so that 'initialize'
-	can work.
-
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Take milena/tools/ into account in configure.ac.
@@ -20,73 +5,6 @@
 	* configure.ac: Configure milena/tools/Makefile
 	(TESTS_CXXFLAGS): Adjust these flags.
 	(TOOLS_CXXFLAGS): New.
-
-2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Fix naive DT in Etienne's sandbox.
-
-	* milena/sandbox/folio/naive.cc: Fix.
-
-2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Augment doc about image types.
-
-	* milena/doc/tutorial/image_types.txt: Augment.
-
-2008-03-25  Caroline Vigouroux  <vigour_c@epita.fr>
-
-	gradation for image valued by integers.
-	* milena/mln/fun/v2v/rgb_to_hsi.hh: Added in milena.
-	* milena/mln/value/hsi.hh: Added in milena.
-	* milena/sandbox/vigouroux/color.cc: New test.
-	* milena/sandbox/vigouroux/color/my_hsi.hh: changed.
-	* milena/sandbox/vigouroux/color/rgb_to_hsi.hh: changed.
-	* milena/sandbox/vigouroux/gradation.hh: New gradation.
-	* milena/sandbox/vigouroux/lap.cc: New gradation test.
-	* milena/sandbox/vigouroux/lap.hh: New lap filter.
-	* milena/sandbox/vigouroux/moyenne.cc: .
-	* milena/tests/fun/v2v/Makefile.am: .
-	* milena/tests/fun/v2v/rgb_hsi_conversion.cc: New test.
-
-2008-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Update test on rgb/hsi conversion.
-
-	* milena/doc/tutorial/image_types.txt: Augment.
-	* milena/mln/value/rgb.hh (red_t, green_t, blue_t): New.
-	* milena/sandbox/vigouroux/moyenne.cc: Update.
-
-2008-03-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Augment tutorial on image types.
-
-	* milena/doc/tutorial/image_types.txt: Augment.
-
-2008-02-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Start a description of image types.
-
-	* milena/doc/tutorial/image_types.txt: New.
-
-2008-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	New sample code for Caroline (hsi and conversion).
-
-	* milena/sandbox/vigouroux/color/my_hsi.hh: .
-	* milena/sandbox/vigouroux/color/is_HSI.cc: New.
-	* milena/sandbox/vigouroux/color/rgb_to_hsi.hh
-	(fun::v2v::f_rgb_to_hsi_): New.
-
-2008-02-27  Roland Levillain  <roland@lrde.epita.fr>
-
-	Fix the pretty-printer of util::internal::graph_base.
-
-	* milena/mln/util/internal/graph_base.hh (node<void>::edges):
-	Use a std::vector (as in node<T>), not a std::list.
-	(util::internal::graph_base<N, E>::print_debug): Fix the iteration
-	on the edges adjacent to a vertex.
-	* milena/tests/core/graph_image.cc: Exercise
-	util::internal::graph_base<N, E>::print_debug
 
 2008-02-20  Roland Levillain  <roland@lrde.epita.fr>
 
