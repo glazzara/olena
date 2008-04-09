@@ -29,7 +29,7 @@
 # define MLN_CORE_LINE_GRAPH_ELT_NEIGHBORHOOD_HH
 
 /// \file mln/core/line_graph_elt_neighborhood.hh
-/// \brief Definition of the elementary ``window'' on a line graph.
+/// \brief Definition of the elementary ``neighborhood'' on a line graph.
 
 /* FIXME: Have a consistent naming: we have window (without '_') but
    point_, neighb_, etc.  */
@@ -39,6 +39,8 @@
    - mln::graph_elt_neighborhood
    - mln::line_graph_elt_window
    - mln::line_graph_elt_neighborhood.  */
+
+# include <set>
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/line_graph_psite.hh>
@@ -66,6 +68,9 @@ namespace mln
     typedef P point;
     /// The type of psite corresponding to the neighborhood.
     typedef line_graph_psite<P> psite;
+    // The type of the set of neighbors (edge ids adjacent to the
+    // reference psite).
+    typedef std::set<util::edge_id> neighbors_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -84,14 +89,12 @@ namespace mln
 
     /// Services for iterators.
     /// \{
-    /// Move \a piter to the beginning of the iteration on this neighborhood.
     template <typename Piter>
-    void start(Point_Iterator<Piter>& piter) const;
-    /// Move \a piter to the next site on this neighborhood.
-    template <typename Piter>
-    void next_(Point_Iterator<Piter>& piter) const;
+    void compute_neighbors_(Point_Iterator<Piter>& piter) const;
     /// \}
   };
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -99,28 +102,31 @@ namespace mln
   template <typename Piter>
   inline
   void
-  line_graph_elt_neighborhood<P>::start(Point_Iterator<Piter>& piter_) const
+  line_graph_elt_neighborhood<P>::compute_neighbors_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    piter.first_();
-    if (!piter.adjacent_or_equal_to_p_ref_())
-      next_(piter);
-  }
-
-  template <typename P>
-  template <typename Piter>
-  inline
-  void
-  line_graph_elt_neighborhood<P>::next_(Point_Iterator<Piter>& piter_) const
-  {
-    Piter& piter = exact(piter_);
-    /* FIXME: This is inefficient.  The graph structure should be able
-       to produce the set of adjacent nodes fast.  Boost Graphs
-       probably provides adequates structures to fetch these
-       neighbors in constant time.  */
-    do
-      piter.step_();
-    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+    neighbors_t& neighbors = piter.neighbors();
+    neighbors.clear();
+    // Add the reference piter itself.  We might reconsider this, or
+    // create an elementary neighbors without the reference point.
+    neighbors.insert(piter.p_ref().id());
+    /* FIXME: Move this computation out of the window. In fact,
+       this should be a service of the graph, also proposed by the
+       p_line_graph.  */
+    // Ajacent edges connected through node 1.
+    // FIXME: Far too low-level.
+    util::node_id id1 = piter.p_ref().first_id();
+    const util::node<P>& node1 = piter.plg().gr_->node(id1);
+    for (std::vector<util::edge_id>::const_iterator e =
+	   node1.edges.begin(); e != node1.edges.end(); ++e)
+      neighbors.insert(*e);
+    // Ajacent edges connected through node 2.
+    // FIXME: Likewise.
+    util::node_id id2 = piter.p_ref().second_id();
+    const util::node<P>& node2 = piter.plg().gr_->node(id2);
+    for (std::vector<util::edge_id>::const_iterator e =
+	   node2.edges.begin(); e != node2.edges.end(); ++e)
+      neighbors.insert(*e);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

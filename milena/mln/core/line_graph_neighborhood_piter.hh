@@ -42,6 +42,8 @@
    - mln::line_graph_window_bkd_piter
    - mln::line_graph_neighborhood_bkd_piter.  */
 
+# include <set>
+
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>
@@ -80,6 +82,9 @@ namespace mln
     // FIXME: Dummy typedef.
     typedef void mesh;
 
+    // The type of the set of neighbors (adjacent edge ids).
+    typedef std::set<util::edge_id> neighbors_t;
+
   public:
     /// Construction.
     /// \{
@@ -114,21 +119,16 @@ namespace mln
     /// Convert the iterator into a line graph psite.
     operator psite() const;
 
+    /// Return the reference psite.
+    const psite& p_ref() const;
+    /// Return the mln::p_line_graph corresponding to this piter.
+    const p_line_graph<P>& plg() const; 
+    /// Return the set of neighbors (adjacent edge ids).
+    neighbors_t& neighbors();
+
     /// Read-only access to the \a i-th coordinate.
     // FIXME: Dummy.
     coord operator[](unsigned i) const;
-    /// \}
-
-    /// Internals, used by the neighborhood.
-    /// \{
-  public:
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-
-    /// An internal iterator on the set of edges of the underlying graph.
-    util::edge_id id_;
     /// \}
 
   private:
@@ -136,6 +136,14 @@ namespace mln
     const N& nbh_;
     /// The ``central'' psite of the neighborhood.
     const psite& p_ref_;
+
+    /// The last reference psite whose ajacent psites have been computed.
+    psite saved_p_ref_;
+    /// The set of edge ids adjacent to the reference psite.
+    neighbors_t neighbors_;
+    /// An iterator on the set of adjacent edges.
+    neighbors_t::const_iterator i_; 
+
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -178,6 +186,9 @@ namespace mln
     // FIXME: Dummy typedef.
     typedef void mesh;
 
+    // The type of the set of neighbors (adjacent edge ids).
+    typedef std::set<util::edge_id> neighbors_t;
+
   public:
     /// Construction.
     /// \{
@@ -212,21 +223,16 @@ namespace mln
     /// Convert the iterator into a line graph psite.
     operator psite() const;
 
+    /// Return the reference psite.
+    const psite& p_ref() const;
+    /// Return the mln::p_line_graph corresponding to this piter.
+    const p_line_graph<P>& plg() const;
+    /// Return the set of neighbors (adjacent edge ids).
+    neighbors_t& neighbors();
+
     /// Read-only access to the \a i-th coordinate.
     // FIXME: Dummy.
     coord operator[](unsigned i) const;
-    /// \}
-
-    /// Internals, used by the neighborhood.
-    /// \{
-  public:
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-
-    /// An internal iterator on the set of edges of the underlying graph.
-    util::edge_id id_;
     /// \}
 
   private:
@@ -234,6 +240,14 @@ namespace mln
     const N& nbh_;
     /// The ``central'' psite of the neighborhood.
     const psite& p_ref_;
+
+    /// The last reference psite whose ajacent psites have been computed.
+    psite saved_p_ref_;
+    /// The set of edge ids adjacent to the reference psite.
+    neighbors_t neighbors_;
+    /// An iterator on the set of adjacent edges.
+    neighbors_t::const_reverse_iterator i_; 
+
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -260,7 +274,6 @@ namespace mln
   | line_graph_neighborhood_fwd_piter<P, N>.  |
   `------------------------------------------*/
 
-  // FIXME: Currently, argument nbh is ignored.
   template <typename P, typename N>
   template <typename Pref>
   inline
@@ -271,7 +284,7 @@ namespace mln
       // Initialize psite_ to a dummy value.
       psite_()
   {
-    // Invalidate id_.
+    // Invalidate i_.
     invalidate();
   }
 
@@ -280,10 +293,14 @@ namespace mln
   bool
   line_graph_neighborhood_fwd_piter<P, N>::is_valid() const
   {
-    // FIXME: We depend too much on the implementation of util::graph
-    // here.  The util::graph should provide the service to abstract
-    // these manipulations.
-    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
+    return
+      // The reference point must be valid...
+      p_ref_.is_valid()
+      // ...and must not have changed since the neighborhood has been
+      // computed...
+      && p_ref_ == saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != neighbors_.end();
   }
 
   template <typename P, typename N>
@@ -291,7 +308,7 @@ namespace mln
   void
   line_graph_neighborhood_fwd_piter<P, N>::invalidate()
   {
-    id_ = -1;
+    i_ = neighbors_.end();
   }
 
   template <typename P, typename N>
@@ -299,7 +316,15 @@ namespace mln
   void
   line_graph_neighborhood_fwd_piter<P, N>::start()
   {
-    nbh_.start(*this);
+    mln_precondition(p_ref_.is_valid());
+    // Update the neighbors, if needed.
+    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+      {
+	saved_p_ref_ = p_ref_;
+	nbh_.compute_neighbors_(*this);
+      }
+    i_ = neighbors_.begin();
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
   }
@@ -309,59 +334,12 @@ namespace mln
   void
   line_graph_neighborhood_fwd_piter<P, N>::next_()
   {
-    nbh_.next_(*this);
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(p_ref_ == saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  line_graph_neighborhood_fwd_piter<P, N>::first_()
-  {
-    id_ = 0;
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  line_graph_neighborhood_fwd_piter<P, N>::step_()
-  {
-    ++id_;
-  }
-
-
-  template <typename P, typename N>
-  inline
-  bool
-  line_graph_neighborhood_fwd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
-  {
-    // Check wether the iterator points to P_REF_.
-    if (id_ == p_ref_.id())
-      return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    {
-      // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
-      /* FIXME: We should have a convenient shortcut for these
-	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
-	 or g() in this class.  */
-      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
-	p_ref_.plg().gr_;
-      // Check whether the edge this iterator points to is adjacent to
-      // the one p_ref points to, by comparing their ajacent nodes.
-      /* FIXME: This is too low-level.  Yet another service the graph
-      // should provide.  */
-      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
-	return true;
-    }
-
-    // Otherwise, the iterator is not adjacent to P_REF_.
-    return false;
   }
 
   template <typename P, typename N>
@@ -370,7 +348,7 @@ namespace mln
   line_graph_neighborhood_fwd_piter<P, N>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
+    psite_ = line_graph_psite<P>(plg(), *i_);
   }
 
   template <typename P, typename N>
@@ -399,6 +377,30 @@ namespace mln
 
   template <typename P, typename N>
   inline
+  const line_graph_psite<P>&
+  line_graph_neighborhood_fwd_piter<P, N>::p_ref() const
+  {
+    return p_ref_;
+  }
+
+  template <typename P, typename N>
+  inline
+  const p_line_graph<P>&
+  line_graph_neighborhood_fwd_piter<P, N>::plg() const
+  {
+    return p_ref_.plg();
+  }
+
+  template <typename P, typename N>
+  inline
+  std::set<util::edge_id>&
+  line_graph_neighborhood_fwd_piter<P, N>::neighbors()
+  {
+    return neighbors_;
+  }
+
+  template <typename P, typename N>
+  inline
   mln_coord(P)
   line_graph_neighborhood_fwd_piter<P, N>::operator[](unsigned i) const
   {
@@ -420,7 +422,6 @@ namespace mln
   | line_graph_neighborhood_bkd_piter<P, N>.  |
   `------------------------------------------*/
 
-  // FIXME: Currently, argument nbh is ignored.
   template <typename P, typename N>
   template <typename Pref>
   inline
@@ -431,7 +432,7 @@ namespace mln
       // Initialize psite_ to a dummy value.
       psite_()
   {
-    // Invalidate id_.
+    // Invalidate i_.
     invalidate();
   }
 
@@ -440,10 +441,14 @@ namespace mln
   bool
   line_graph_neighborhood_bkd_piter<P, N>::is_valid() const
   {
-    // FIXME: We depend too much on the implementation of util::graph
-    // here.  The util::graph should provide the service to abstract
-    // these manipulations.
-    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
+    return
+      // The reference point must be valid...
+      p_ref_.is_valid()
+      // ...and must not have changed since the neighborhood has been
+      // computed...
+      && p_ref_ == saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != neighbors_.rend();
   }
 
   template <typename P, typename N>
@@ -451,7 +456,7 @@ namespace mln
   void
   line_graph_neighborhood_bkd_piter<P, N>::invalidate()
   {
-    id_ = -1;
+    i_ = neighbors_.rend();
   }
 
   template <typename P, typename N>
@@ -459,7 +464,15 @@ namespace mln
   void
   line_graph_neighborhood_bkd_piter<P, N>::start()
   {
-    nbh_.start(*this);
+    mln_precondition(p_ref_.is_valid());
+    // Update the neighbors, if needed.
+    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+      {
+	saved_p_ref_ = p_ref_;
+	nbh_.compute_neighbors_(*this);
+      }
+    i_ = neighbors_.rbegin();
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
   }
@@ -469,59 +482,12 @@ namespace mln
   void
   line_graph_neighborhood_bkd_piter<P, N>::next_()
   {
-    nbh_.next_(*this);
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(p_ref_ == saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  line_graph_neighborhood_bkd_piter<P, N>::first_()
-  {
-    id_ = p_ref_.plg().gr_->nedges() - 1;
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  line_graph_neighborhood_bkd_piter<P, N>::step_()
-  {
-    --id_;
-  }
-
-
-  template <typename P, typename N>
-  inline
-  bool
-  line_graph_neighborhood_bkd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
-  {
-    // Check wether the iterator points to P_REF_.
-    if (id_ == p_ref_.id())
-      return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    {
-      // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
-      /* FIXME: We should have a convenient shortcut for these
-	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
-	 or g() in this class.  */
-      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
-	p_ref_.plg().gr_;
-      // Check whether the edge this iterator points to is adjacent to
-      // the one p_ref points to, by comparing their ajacent nodes.
-      /* FIXME: This is too low-level.  Yet another service the graph
-      // should provide.  */
-      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
-	return true;
-    }
-
-    // Otherwise, the iterator is not adjacent to P_REF_.
-    return false;
   }
 
   template <typename P, typename N>
@@ -530,7 +496,7 @@ namespace mln
   line_graph_neighborhood_bkd_piter<P, N>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
+    psite_ = line_graph_psite<P>(plg(), *i_);
   }
 
   template <typename P, typename N>
@@ -555,6 +521,30 @@ namespace mln
   {
     mln_precondition(is_valid());
     return psite_;
+  }
+
+  template <typename P, typename N>
+  inline
+  const line_graph_psite<P>&
+  line_graph_neighborhood_bkd_piter<P, N>::p_ref() const
+  {
+    return p_ref_;
+  }
+
+  template <typename P, typename N>
+  inline
+  const p_line_graph<P>&
+  line_graph_neighborhood_bkd_piter<P, N>::plg() const
+  {
+    return p_ref_.plg();
+  }
+
+  template <typename P, typename N>
+  inline
+  std::set<util::edge_id>&
+  line_graph_neighborhood_bkd_piter<P, N>::neighbors()
+  {
+    return neighbors_;
   }
 
   template <typename P, typename N>

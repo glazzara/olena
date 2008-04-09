@@ -1,3 +1,62 @@
+2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up iterations on line graph neighborhoods.
+
+	* mln/core/line_graph_neighborhood_piter.hh
+	(mln::line_graph_neighborhood_fwd_piter::neighbors_t)
+	(mln::line_graph_neighborhood_bkd_piter::neighbors_t):
+	New typedefs.
+	(mln::line_graph_neighborhood_fwd_piter::first_)
+	(mln::line_graph_neighborhood_fwd_piter::step_)
+	(mln::line_graph_neighborhood_fwd_piter::adjacent_or_equal_to_p_ref_)
+	(mln::line_graph_neighborhood_bkd_piter::first_)
+	(mln::line_graph_neighborhood_bkd_piter::step_)
+	(mln::line_graph_neighborhood_bkd_piter::adjacent_or_equal_to_p_ref_):
+	Remove methods.
+	(mln::line_graph_neighborhood_fwd_piter::id_)
+	(mln::line_graph_neighborhood_bkd_piter::id_):
+	Remove attributes.
+	(mln::line_graph_neighborhood_fwd_piter::saved_p_ref_)
+	(mln::line_graph_neighborhood_fwd_piter::neighbors_)
+	(mln::line_graph_neighborhood_fwd_piter::i_)
+	(mln::line_graph_neighborhood_bkd_piter::saved_p_ref_)
+	(mln::line_graph_neighborhood_bkd_piter::neighbors_)
+	(mln::line_graph_neighborhood_bkd_piter::i_):
+	New attributes.
+	(line_graph_neighborhood_fwd_piter)
+	(line_graph_neighborhood_bkd_piter):
+	Adjust ctors.
+	(mln::line_graph_neighborhood_fwd_piter::p_ref)
+	(mln::line_graph_neighborhood_fwd_piter::plg)
+	(mln::line_graph_neighborhood_fwd_piter::neighbors)
+	(mln::line_graph_neighborhood_bkd_piter::p_ref)
+	(mln::line_graph_neighborhood_bkd_piter::plg)
+	(mln::line_graph_neighborhood_bkd_piter::neighbors):
+	New accessors.
+	(mln::line_graph_neighborhood_fwd_piter::is_valid)
+	(mln::line_graph_neighborhood_fwd_piter::invalidate)
+	(mln::line_graph_neighborhood_fwd_piter::start)
+	(mln::line_graph_neighborhood_fwd_piter::next_)
+	(mln::line_graph_neighborhood_bkd_piter::is_valid)
+	(mln::line_graph_neighborhood_bkd_piter::invalidate)
+	(mln::line_graph_neighborhood_bkd_piter::start)
+	(mln::line_graph_neighborhood_bkd_piter::next_):
+	Change the algorithms used in these routines, so that they use a
+	list of computed neighbors (new member neighbors_) instead of
+	iterating over the whole set of edges.
+	(mln::line_graph_neighborhood_fwd_piter::update_)
+	(mln::line_graph_neighborhood_bkd_piter::update_):
+	Adjust.
+	* mln/core/line_graph_elt_neighborhood.hh: Catch up with the new
+	interface of piters on line graph neighborhoods.
+	(mln::line_graph_elt_neighborhood::neighbors_t):
+	New typedef.
+	(mln::line_graph_elt_neighborhood::start)
+	(mln::line_graph_elt_neighborhood::next_):
+	Remove methods.
+	(mln::line_graph_elt_neighborhood::compute_neighbors_):
+	New method.
+
 2008-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add multi-scale registration.
