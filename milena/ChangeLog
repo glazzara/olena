@@ -1,3 +1,10 @@
+2008-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add commandline parameters q and e.
+
+	* sandbox/jardonnet/test/icp.cc: Read q and e on the command line.
+	* sandbox/jardonnet/registration/icp.hh: Add Fixme for Ck printing.
+
 2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Speed up iterations on line graph neighborhoods.

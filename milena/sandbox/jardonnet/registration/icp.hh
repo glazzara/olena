@@ -116,7 +116,8 @@ namespace mln
 #ifndef NDEBUG
           {
             using namespace std;
-            
+
+            //FIXME: Should use Ck box but Ck.bbox() is not correct for c_length
             image2d<bool> img(box2d(500,800), 0);
             for (size_t i = 0; i < c_length; i++)
               {
@@ -124,7 +125,8 @@ namespace mln
                 if (img.has(p))
                   img(p) = true;
               }
-            
+
+            //FIXME: Good but put point qfter c_length
             //image2d<bool> img = convert::to_image2d(Ck);
             stringstream oss;
             static int pimp = 0;
@@ -156,6 +158,7 @@ namespace mln
     quat7<P::dim>
     icp(p_array<P> cloud,
         M& map,
+        const float q,
         const unsigned nb_it)
     {
       trace::entering("registration::icp");
@@ -177,10 +180,11 @@ namespace mln
       quat7<P::dim> qk;
       
       //run icp
-      for (int i = nb_it; i >= 0; i--)
+      for (int e = nb_it-1; e >= 0; e--)
         {
-          size_t l = cloud.npoints() / std::pow(2., i); // 3 is arbitrary fixed
-          impl::icp_(cloud, map, qk, l, i + 1e-3);
+          size_t l = cloud.npoints() / std::pow(q, e); // 3 is arbitrary fixed
+          l = (l<1) ? 1 : l;
+          impl::icp_(cloud, map, qk, l, e + 1e-1);
         }
 
       trace::exiting("registration::icp");

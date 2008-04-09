@@ -9,15 +9,18 @@
 void usage(char *argv[])
 {
   std::cout << "usage : " << argv[0]
-            << " cloud.pbm surface.pbm" << std::endl;
+            << " cloud.pbm surface.pbm q e" << std::endl;
   exit(1);
 }
 
 
 int main(int argc, char* argv[])
 {
-  if (argc != 3)
+  if (argc != 5)
     usage(argv);
+
+  float q = std::atof(argv[3]);
+  int   e = std::atoi(argv[4]);
   
   using namespace mln;
   typedef image3d< bool > I3d;
@@ -41,7 +44,7 @@ int main(int argc, char* argv[])
   closest_point<mln_point_(I3d)> fun(x, box_<point3d>(1000,1000,1));
   lazy_image< closest_point<mln_point_(I3d)> > map(fun);
 
-  quat7<3> q = registration::icp(c, map, 2);
+  quat7<3> qk = registration::icp(c, map, q, e);
 
 #ifndef NDEBUG
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
@@ -54,9 +57,9 @@ int main(int argc, char* argv[])
   //FIXME: Should be
   //mln_concrete(I) output(res.bbox()) = convert::to_image<I>(res)?
 
-  q.apply_on(c, c, c.npoints());
+  qk.apply_on(c, c, c.npoints());
               
-  const box_<point2d> box2d(1000,1000);
+  const box_<point2d> box2d(600,600);
   image2d<bool> output(box2d, 1);
   
   //to 2d : projection (FIXME:if 3d)
