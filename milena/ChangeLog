@@ -1,3 +1,17 @@
+2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up edge insertion into graphs.
+
+	* mln/util/internal/graph_base.hh: Stick to the coding style
+	w.r.t. spaces.
+	(mln::util::internal::graph_base<N, E>::edges_set_t): New typedef.
+	(mln::util::internal::graph_base<N, E>::edges_set_): New member.
+	(mln::util::internal::graph_base<N, E>::graph_base): Adjust ctor.
+	(mln::util::internal::graph_base<N, E>::add_edge_): Use edges_set_
+	instead of edges_ to test the presence of an edge in the graph.
+	* mln/util/graph.hh (mln::util::graph<void, void>::add_edge): Add
+	missing preconditions.
+
 2008-04-09  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Some stuff for tests.

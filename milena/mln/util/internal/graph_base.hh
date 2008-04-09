@@ -31,12 +31,15 @@
 /// \file mln/util/internal/graph.hh
 /// \brief Factored implementation of undirected graphs.
 
-# include <mln/core/concept/object.hh>
 # include <cstddef>
-# include <ostream>
-# include <vector>
-# include <list>
+
 # include <algorithm>
+
+# include <vector>
+# include <set>
+# include <ostream>
+
+# include <mln/core/concept/object.hh>
 # include <mln/util/ordpair.hh>
 
 // FIXME: Rename node(s) as vertex (vertices).
@@ -97,13 +100,13 @@ namespace mln
     struct edge
     {
       edge(node_id n1, node_id n2)
-	: pair_node_ (n1, n2)
+	: pair_node_(n1, n2)
       {}
 
       /// Return the lowest node id adjacent to this edge.
-      node_id n1 () const { return pair_node_.first; }
+      node_id n1() const { return pair_node_.first; }
       /// Return the highest node id adjacent to this edge.
-      node_id n2 () const { return pair_node_.second; }
+      node_id n2() const { return pair_node_.second; }
 
       T	data;
       ordpair_<node_id> pair_node_;
@@ -115,13 +118,13 @@ namespace mln
     struct edge <void>
     {
       edge(node_id n1, node_id n2)
-	: pair_node_ (n1, n2)
+	: pair_node_(n1, n2)
       {}
 
       /// Return the lowest node id adjacent to this edge.
-      node_id n1 () const { return pair_node_.first; }
+      node_id n1() const { return pair_node_.first; }
       /// Return the highest node id adjacent to this edge.
-      node_id n2 () const { return pair_node_.second; }
+      node_id n2() const { return pair_node_.second; }
 
       ordpair_<node_id> pair_node_;
     };
@@ -156,6 +159,9 @@ namespace mln
 	typedef std::vector< node<N>* > nodes_t;
 	/// The type of the set of edges.
 	typedef std::vector< edge<E>* > edges_t;
+	/// A set to test the presence of a given edge.
+	typedef std::set< edge<E>* > edges_set_t;
+
 
 	/// Constructor.
 	graph_base();
@@ -176,14 +182,14 @@ namespace mln
 
 	/// Return the whole nodes of the graph.
 	/// \{
-	nodes_t& nodes ();
-	const nodes_t& nodes () const;
+	nodes_t& nodes();
+	const nodes_t& nodes() const;
 	/// \}
 
 	/// Return the whole edges of the graph.
 	/// \{
-	edges_t& edges ();
-	const edges_t& edges () const;
+	edges_t& edges();
+	const edges_t& edges() const;
 	/// \}
 
 	/// \brief Return the number of nodes in the graph.
@@ -196,13 +202,13 @@ namespace mln
 	/** \brief Print on \p ostr the graph.
 
 	    \param[in] ostr  The output stream.  */
-	void print_debug (std::ostream& ostr) const;
+	void print_debug(std::ostream& ostr) const;
 
       protected:
 	/// Shortcuts factoring the insertion of nodes and edges.
 	/// \{
-	void add_node_ (util::node<N>* node);
-	void add_edge_ (util::edge<E>* edge);
+	void add_node_(util::node<N>* node);
+	void add_edge_(util::edge<E>* edge);
 	/// \}
 
       protected:
@@ -210,6 +216,8 @@ namespace mln
 	nodes_t nodes_;
 	/// The edges.
 	edges_t edges_;
+	/// An index of the set of edges, for fast-access purpose.
+	edges_set_t edges_set_;
       };
 
     } // end of namespace mln::util::internal
@@ -242,7 +250,7 @@ namespace mln
       template<typename N, typename E>
       inline
       graph_base<N, E>::graph_base()
-	: nodes_(), edges_()
+	: nodes_(), edges_(), edges_set_()
       {
       }
 
@@ -354,22 +362,27 @@ namespace mln
 	nodes_.push_back (node);
       }
 
+      // FIXME: Return the (new) edge id.
       template<typename N, typename E>
       inline
       void
       graph_base<N, E>::add_edge_(util::edge<E>* edge)
       {
 	// Does this edge already exist in the graph?
-	if (std::find(edges_.begin(), edges_.end(), edge) != edges_.end ())
+	if (edges_set_.find(edge) != edges_set_.end ())
 	  {
+	    // Remove the previously allocated data for EDGE.
 	    delete edge;
 	    edge = 0;
 	  }
 	else
 	  {
-	    edges_.push_back (edge);
-	    nodes_[edge->n1()]->edges.push_back(edge->n2());
-	    nodes_[edge->n2()]->edges.push_back(edge->n1());
+	    // Otherwise insert it into the graph.
+	    edges_.push_back(edge);
+	    edge_id id = edges_.size() - 1;
+	    edges_set_.insert(edge);
+	    nodes_[edge->n1()]->edges.push_back(id);
+	    nodes_[edge->n2()]->edges.push_back(id);
 	  }
       }
 

@@ -162,6 +162,8 @@ namespace mln
     void
     graph<void, void>::add_edge(node_id n1, node_id n2)
     {
+      mln_assertion(n1 < this->nnodes());
+      mln_assertion(n2 < this->nnodes());
       super::add_edge_(new util::edge<void>(n1, n2));
     }
 
