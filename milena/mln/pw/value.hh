@@ -54,8 +54,10 @@ namespace mln
       typedef mln_value(I) result;
       value_(const I& ima);
       mln_rvalue(I) operator()(const mln_psite(I)& p) const;
+
+      value_(); // A function should have a ctor without arg so that "initialize" can work.
     protected:
-      const I& ima_;
+      const I* ima_;
     };
 
 
@@ -74,7 +76,14 @@ namespace mln
     template <typename I>
     inline
     value_<I>::value_(const I& ima)
-      : ima_(ima)
+      : ima_(&ima)
+    {
+    }
+
+    template <typename I>
+    inline
+    value_<I>::value_()
+      : ima_(0)
     {
     }
 
@@ -83,8 +92,9 @@ namespace mln
     mln_rvalue(I)
     value_<I>::operator()(const mln_psite(I)& p) const
     {
-      mln_precondition(ima_.owns_(p));
-      return ima_(p);
+      mln_precondition(ima_ != 0);
+      mln_precondition(ima_->owns_(p));
+      return (*ima_)(p);
     }
 
     // pw::value(ima)
