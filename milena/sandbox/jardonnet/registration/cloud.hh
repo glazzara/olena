@@ -18,16 +18,16 @@ namespace mln
   {
   
     template <typename P>
-    P center(const p_array<P>& a)
+    P center(const p_array<P>& a, size_t length)
     {
       algebra::vec<P::dim,float> c(literal::zero);
-      for (size_t i = 0; i < a.npoints(); ++i)
+      for (size_t i = 0; i < length; ++i)
         {
           algebra::vec<P::dim,float> ai = a[i];
           c += ai;
         }
       
-      return algebra::to_point<P>(c / a.npoints());
+      return algebra::to_point<P>(c / length);
     }
 
     
@@ -43,16 +43,19 @@ namespace mln
 
     template <typename P>
     float rms(const p_array<P>& a1,
-              const p_array<P>& a2)
+              const p_array<P>& a2,
+              const size_t length)
     {
-      assert(a1.npoints() == a2.npoints());
+      assert(length <= a1.npoints());
+      assert(length <= a2.npoints());
       /*
       float f = 0.f;
       for (size_t i = 0; i < a1.npoints(); ++i)
         f += sqr_norm(a1[i] - a2[i]);
       return f / a1.npoints();*/
+      
       float f = 0.f;
-      for (size_t i = 0; i < a1.npoints(); ++i)
+      for (size_t i = 0; i < length; ++i)
         {
           algebra::vec<3,float> a1f = a1[i];
           algebra::vec<3,float> a2f = a2[i];

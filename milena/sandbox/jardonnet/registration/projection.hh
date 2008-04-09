@@ -70,11 +70,12 @@ namespace mln
     template <typename P, typename T>
     void memo(const p_array<P>& Ck,
               p_array<P>& Xk,
-              lazy_image<T>& map) // first: closest points, second: is_computed
+              lazy_image<T>& map,
+              const size_t c_length) // first: closest points, second: is_computed
     {
-      assert(Ck.npoints() == Xk.npoints());
+      //assert(Ck.npoints() == Xk.npoints()); //FIXME:
 
-      for (size_t i = 0; i < Ck.npoints(); ++i)
+      for (size_t i = 0; i < c_length; ++i)
         Xk.hook_()[i] = map(Ck[i]);
     }
     

@@ -10,6 +10,7 @@
 namespace mln
 {
 
+  //FIXME: groe length
   template <typename P>
   struct closest_point
   {
@@ -17,14 +18,12 @@ namespace mln
     typedef P result;
     
     closest_point(const p_array<P>& X, const box_<P>& box)
-      : X(X), box(box)
-        
+      : X(X), box(box)     
 #ifndef NDEBUG
       , i(0)
 #endif
-
     { }
-
+    
     result
     //inline
     operator () (const P& Ck) const
@@ -80,6 +79,7 @@ namespace mln
       : value(nrows, ncols,1), is_known(nrows,ncols,1), fun(fun)
     { }
 
+    // FIXME: gore length
     const mln_result(F)
     //inline
     operator () (const typename F::input& p) const
@@ -252,28 +252,6 @@ namespace mln
     }
     
   } // end of namespace convert
-
-
-  
-  namespace fun
-  {
-    //FIXME: temporary
-    template <typename C, typename T= float>
-    struct cham : public Function_p2v< cham<C,T> >
-    {
-      typedef T result;
-      //bad
-      T operator()(dpoints_fwd_piter<mln::dpoint_<mln::grid::cube, int> >& v) const
-      {
-        C o = C::origin;
-        if (v < o)
-          return 1.;
-        else
-          return 0.;
-      }
-    };
-  } // end of namespace fun
-
 
   
   namespace algebra

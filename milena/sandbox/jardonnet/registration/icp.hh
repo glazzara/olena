@@ -35,6 +35,7 @@
 
 # include <iostream>
 # include <string>
+# include <cmath>
 
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
@@ -78,60 +79,68 @@ namespace mln
       p_array<P>
       icp_(const p_array<P>& C,
            M& map,
-           quat7<P::dim>& qk)
+           quat7<P::dim>& qk,
+           const size_t c_length,
+           const float  epsilon = 1e-3)
       {
 	trace::entering("registration::impl::icp_");
 
 #ifndef NDEBUG
         //display registred points
         std::cout << "Register "
-                  << C.npoints() << " points" << std::endl;
+                  << c_length << " points" << std::endl;
         std::cout << "k\terror\tdqk" << std::endl;
 #endif
-        
-        unsigned int  k;
         quat7<P::dim> old_qk;
         float         err;
-        //float         err_bis;
+        //float       err_bis;
         p_array<P>    Ck(C), Xk(C); //FIXME: Xk copy C
 
-        algebra::vec<P::dim,float> mu_C = center(C), mu_Xk;
-     
-        const float epsilon = 1;//1e-3;
+        algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
-        //// step 1
-        k = 0;
+        qk.apply_on(C, Ck, c_length);
+
+        unsigned int k = 0;
 
         do {
           //compute qk
           old_qk = qk;
-          qk = match(C, mu_C, Ck, map);
-
+          qk = match(C, mu_C, Ck, map, c_length);
+          
           //Ck+1 = qk(C)
-          qk.apply_on(C, Ck);
-
+          qk.apply_on(C, Ck, c_length);
+          
           //err = d(Ck+1,Xk)
-          err = rms(Ck, Xk);
+          err = rms(Ck, Xk, c_length);
 
 #ifndef NDEBUG
-
           {
             using namespace std;
-            image2d<bool> img = convert::to_image2d(Ck);
+            
+            image2d<bool> img(box2d(500,800), 0);
+            for (size_t i = 0; i < c_length; i++)
+              {
+                point2d p = convert::to_point2d(Ck[i]);
+                if (img.has(p))
+                  img(p) = true;
+              }
+            
+            //image2d<bool> img = convert::to_image2d(Ck);
             stringstream oss;
-            oss << "reg" << k << ".pbm";
+            static int pimp = 0;
+            oss << "i_" << pimp++ << ".pbm";
             io::pbm::save(img, oss.str());
           }
-                  
+          
           //plot file
           std::cout << k << '\t' << err << '\t'
                     << (qk - old_qk).sqr_norm() << '\t'
                     << std::endl;
           //count the number of points processed
-          pts += Ck.npoints();
+          pts += c_length;
 #endif
-          
-          ++k;
+
+          k++;
         } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
@@ -145,19 +154,34 @@ namespace mln
     template <typename P, typename M>
     inline
     quat7<P::dim>
-    icp(const p_array<P>& cloud,
-        M& map)
+    icp(p_array<P> cloud,
+        M& map,
+        const unsigned nb_it)
     {
       trace::entering("registration::icp");
       
       mln_precondition(P::dim == 3);
       mln_precondition(cloud.npoints() != 0);
 
+      // Shuffle cloud
+      for (size_t i = 0; i < cloud.npoints(); i++)
+        {
+          size_t r = rand() % cloud.npoints();
+          P tmp;
+          tmp = cloud[i];
+          cloud.hook_()[i] = cloud[r];
+          cloud.hook_()[r] = tmp;
+        }
+      
       //init rigid transform qk
       quat7<P::dim> qk;
       
       //run icp
-      p_array<P> res = impl::icp_(cloud, map, qk);
+      for (int i = nb_it; i >= 0; i--)
+        {
+          size_t l = cloud.npoints() / std::pow(2., i); // 3 is arbitrary fixed
+          impl::icp_(cloud, map, qk, l, i + 1e-3);
+        }
 
       trace::exiting("registration::icp");
       

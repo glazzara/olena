@@ -59,12 +59,15 @@ namespace mln
     }
 
     template <typename P>
-    void apply_on(const p_array<P>& input, p_array<P>& output) const
+    void apply_on(const p_array<P>& input,
+                  p_array<P>& output,
+                  const size_t c_length) const
     {
-      assert(input.npoints() == output.npoints()); 
+      assert(c_length <= input.npoints());
+      assert(c_length <= output.npoints());
       assert(_qR.is_unit());
 
-      for (size_t i = 0; i < input.npoints(); i++)
+      for (size_t i = 0; i < c_length; i++)
         output.hook_()[i] = algebra::to_point<P>((*this)(input[i]));
     }
     
@@ -95,27 +98,30 @@ namespace mln
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
                       const p_array<P>& Ck,
-                      M& map)
+                      M& map,
+                      size_t c_length)
   {
+    //FIXME: mix mu_Xk and qk loop
+    
+    
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);
-    for (size_t i = 0; i < Ck.npoints(); ++i)
+    for (size_t i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> xki = map(Ck[i]);
         mu_Xk += xki;
       }
-    mu_Xk /= Ck.npoints();
-      
+    mu_Xk /= c_length;
     
     // qR
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-    for (size_t i = 0; i < C.npoints(); ++i)
+    for (size_t i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
-    Mk /= C.npoints();
+    Mk /= c_length;
 
 
     /*  

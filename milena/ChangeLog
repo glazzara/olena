@@ -1,3 +1,27 @@
+2008-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add multi-scale registration.
+
+	* sandbox/jardonnet/test/icp.cc: Add nb_it as argument for a
+	  registration.
+
+	* sandbox/jardonnet/test/Makefile: Remove icp_lazy test.
+
+	Add parameter for multi-scale icp:
+	* sandbox/jardonnet/registration/tools.hh: Update.
+	* sandbox/jardonnet/registration/quat7.hh: Use virtual length (c_length)
+	  for p_array.
+	* sandbox/jardonnet/registration/cloud.hh: Use virtual length.
+	* sandbox/jardonnet/registration/icp.hh: Use virtual length.
+
+	Following files now exist eleswhere (registration/)
+	* sandbox/jardonnet/registration/quat: Remove.
+	* sandbox/jardonnet/registration/quat/all.hh: Remove.
+	* sandbox/jardonnet/registration/quat/misc.hh: Remove.
+	* sandbox/jardonnet/registration/quat/rotation.hh: Remove.
+
+	* sandbox/jardonnet/registration/projection.hh: Use virtual length.
+
 2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	* img/quite-small.pgm: New image.
