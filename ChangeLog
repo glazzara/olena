@@ -1,5 +1,12 @@
 2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a log version of front-based distance computation.
+
+	* milena/sandbox/folio/psn_log.cc: New.  Derived from psn.cc to
+	trace the behavior of the algorithm in the non-convex case.
+
+2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Delay construction of pw::value.
 
 	* milena/mln/pw/value.hh (value): New overload.  Such function
