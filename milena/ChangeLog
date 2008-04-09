@@ -1,5 +1,9 @@
 2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* img/quite-small.pgm: New image.
+
+2008-04-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Speed up edge insertion into graphs.
 
 	* mln/util/internal/graph_base.hh: Stick to the coding style
