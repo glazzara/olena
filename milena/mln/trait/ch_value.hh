@@ -133,6 +133,13 @@ namespace mln
 	typedef typename image_from_mesh< mesh, V >::ret ret;
       };
 
+      template < template <class, class> class M, typename I, typename F,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I>, tag::function_<F> >,  V  >
+      {
+	typedef M< mln_ch_value(I, V), F > ret;
+      };
+
     } // end of namespace mln::trait::impl
 
 

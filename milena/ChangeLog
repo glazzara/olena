@@ -1,3 +1,9 @@
+2008-04-09  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Some stuff for tests.
+	* mln/trait/ch_value.hh: New specialization for functions.
+	* sandbox/folio/psn.cc: Some test stuff.
+
 2008-04-08  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: various tools and improvments.

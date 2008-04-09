@@ -182,6 +182,10 @@ namespace mln
 #include <mln/level/stretch.hh>
 #include <mln/value/int_u8.hh>
 
+#include <mln/core/sub_image.hh>
+#include <mln/core/image_if.hh>
+#include <mln/pw/value.hh>
+
 int main()
 {
   using namespace mln;
@@ -193,19 +197,28 @@ int main()
 // 		  0, 0, 0, 0, 0,
 // 		  0, 0, 0, 0, 0 };
 
-//   level::fill(ima, vals);
-//   debug::println(ima);
+  image2d<bool> ima(3,3);
+  bool vals[] = { 1, 0, 0,
+		  0, 0, 0,
+		  0, 0, 0};
+  level::fill(ima, vals);
 
-  image2d<bool> ima = io::pbm::load("../../img/c01.pbm");
+  image2d<bool> msk(3,3);
+  bool rest[] = { 1, 0, 1,
+		  1, 0, 1,
+		  1, 1, 1};
+  level::fill(msk, rest);
 
   image2d<unsigned> out;
-  out = dt::psn(ima, c4());
+  out = dt::psn(ima | pw::value(msk), c4());
 
-  image2d<value::int_u8> out2(out.domain());
-  level::stretch(out, out2);
+  debug::println(ima | pw::value(msk));
+  debug::println(out);
 
-  io::pgm::save(out2, "out.pgm");
+//  image2d<bool> ima = io::pbm::load("../../img/c01.pbm");
 
-//   std::cerr << "Distance:" << std::endl;
-//   debug::println(out);
+//  image2d<value::int_u8> out2(out.domain());
+//  level::stretch(out, out2);
+
+//  io::pgm::save(out2, "out.pgm");
 }
