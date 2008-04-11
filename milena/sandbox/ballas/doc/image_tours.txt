@@ -46,8 +46,8 @@ Properties are a way to classify the images depends or their type.
 
 *** Static Checking
 
-  Some operators are only define in special cases. Properties provide a way to
-check that the operator input type respect the operator requirement.
+  Some operators are only defined in special cases. Properties provide a way to
+check that the operator's input types respect the operator requirements.
 
 *** Specialization of an Algorithm
   (ex: dilatation/erosion).
@@ -60,6 +60,8 @@ It is possible to get a special behavior (not describe in the Image Concept)
 depends on the property define in the property associated for the image
 type. So, it is possible to recover some piece of interface depending on the
 image type properties.
+
+//FIXME Bad example
 For instance an Image2d has the bi-dimensional, and random value access.
  properties. Hence, Image2d automatically provides a row/column access:
 V at(Point2d<T>::coord x, Point2d<T>::coord y).
@@ -159,7 +161,7 @@ V at(Point2d<T>::coord x, Point2d<T>::coord y).
 
 ** Primitive Image
 
-Primitive image are image which are not based on another image type.
+Primitive image are images which are not based on another image type.
 
 A primitive image type property can be either declared or automatically get
 back with the help of associated types.
@@ -341,6 +343,7 @@ and a addition with an integer.
 
 
 
+
 *** RLE Image
 
 A RLE image can be defined as the following:
@@ -413,6 +416,8 @@ FIXME: See with roland
 **** Connectivity based on a graph.
 
 
+** Image based on Lut
+
 ** Morpher (Derived Image)
 
 Mopher are Image types which transform an Image type into a new type. So, they
@@ -424,6 +429,8 @@ the help of the associated type or be a transformation of a property of the
 input image type.
 
 *** Identity morpher
+
+  No change in the property.
 
 *** Domain morpher
 
