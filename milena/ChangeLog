@@ -1,3 +1,16 @@
+2008-04-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add bench script and clean testes up.
+
+	* sandbox/jardonnet/test/bench.rb: New ruby bench script.
+	* sandbox/jardonnet/test/plotscript: Usefull generated file.
+	* sandbox/jardonnet/test/Makefile: Clean rules up.
+
+	Remove useless files, now supported by icp.hh
+	* sandbox/jardonnet/test/icp_subsampled.cc: Remove.
+	* sandbox/jardonnet/test/icp_check.sh: Remove.
+	* sandbox/jardonnet/test/icp_lazy.cc: Remove.
+
 2008-04-11  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Continue documentation about image types and properties.

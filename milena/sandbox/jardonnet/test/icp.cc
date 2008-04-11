@@ -9,7 +9,8 @@
 void usage(char *argv[])
 {
   std::cout << "usage : " << argv[0]
-            << " cloud.pbm surface.pbm q e" << std::endl;
+            << " cloud.pbm surface.pbm q e" << std::endl
+            << " q >= 1 and e >= 1" << std::endl;
   exit(1);
 }
 
@@ -21,6 +22,9 @@ int main(int argc, char* argv[])
 
   float q = std::atof(argv[3]);
   int   e = std::atoi(argv[4]);
+
+  if (q < 1 or e < 1)
+    usage(argv);
   
   using namespace mln;
   typedef image3d< bool > I3d;
