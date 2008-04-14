@@ -1,3 +1,9 @@
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix TOOLS_CXXFLAGS.
+
+	* configure.ac (TOOLS_CXXFLAGS): s/-NDEBUG/-DNDEBUG/.
+
 2008-04-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Take milena/tools/ into account in configure.ac.

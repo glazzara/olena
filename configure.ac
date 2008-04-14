@@ -49,7 +49,7 @@ fi
 AC_ARG_VAR([TOOLS_CXXFLAGS])
 # On the contrary, we want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
-  TOOLS_CXXFLAGS="-O3 -NDEBUG -ggdb"
+  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb"
 fi
 
 
