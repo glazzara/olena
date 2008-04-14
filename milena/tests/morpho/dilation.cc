@@ -48,9 +48,6 @@
 #include <mln/pw/cst.hh>
 #include <mln/fun/ops.hh>
 
-#include <mln/convert/to_p_array.hh>
-#include <mln/convert/to_window.hh>
-
 #include <mln/core/neighb2d.hh>
 #include <mln/neighb/image.hh>
 
@@ -62,18 +59,14 @@ int main()
   using namespace mln;
   using value::int_u8;
 
+  // FIXME: Do we really need such a high value?
   border::thickness = 66;
-
-  // FIXME: Maybe we should split all these tests cases into severals
-  // files.  Sure it's a pain to create, but we want to be able to
-  // choose the granularity of the executed test suite (fast,
-  // comprehensive, etc.).
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+  win::rectangle2d rec(5, 3);
 
   { 
-    win::rectangle2d rec(5, 3);
     image2d<int_u8> out = morpho::dilation(lena, rec);
     io::pgm::save(out, "out1.pgm");
   }
@@ -85,35 +78,29 @@ int main()
   }
 
   {
+    image2d<bool> bin(lena.domain()), out(lena.domain());
+    level::fill(bin, pw::value(lena) > pw::cst(127u));
+    morpho::dilation(bin, rec, out);
+
+    image2d<int_u8> test(lena.domain());
+    image2d<int_u8>::fwd_piter p(lena.domain());
+    for_all(p)
+      test(p) = out(p) ? 255 : 0;
+    io::pgm::save(test, "out3.pgm");
+  }
+
+  /* FIXME: Re-enable these tests for Olena 1.1, when associated
+     neighborhoods (i.e., the neighb::image morpher) are supported and
+     shipped.  */
+#if 0
+  {
     image2d<int_u8> out = morpho::dilation(lena + c4());
-    io::pgm::save(out, "out3.pgm");
+    io::pgm::save(out, "out4.pgm");
   }
 
   {
     image2d<int_u8> out = morpho::dilation(lena + c8());
-    io::pgm::save(out, "out4.pgm");
+    io::pgm::save(out, "out5.pgm");
   }
-
-//   { 
-//     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);
-//     window2d win = convert::to_window(vec);
-
-//     image2d<int_u8> out(lena.domain());
-//     level::ero(lena, win, out);
-//     morpho::dilation(lena, win, out);
-//     io::pgm::save(out, "out5.pgm");
-//   }
-
-//   {
-//     image2d<bool> bin(lena.domain()), out(lena.domain());
-//     level::fill(bin, pw::value(lena) > pw::cst(127));
-//     morpho::dilation(bin, rec, out);
-
-//     image2d<int_u8> test(lena.domain());
-//     image2d<int_u8>::fwd_piter p(lena.domain());
-//     for_all(p)
-//       test(p) = out(p) ? 255 : 0;
-//     io::pgm::save(test, "out6.pgm");
-//   }
-
+#endif
 }

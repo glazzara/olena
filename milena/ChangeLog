@@ -1,3 +1,14 @@
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up tests/morpho/dilation a bit.
+
+	* tests/morpho/dilation.cc: Reorganize.
+	Disable neigh::image-related tests.
+	Remove outdated tests.
+	* tests/morpho/Makefile.am (CXXFLAGS_SPEED): Remove variable.
+	s/CXXFLAGS_SPEED/TESTS_CXXFLAGS_SPEED/.
+	(dilation_CXXFLAGS): New.  Set to $(TESTS_CXXFLAGS_SPEED).
+
 2008-04-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add bench script and clean testes up.

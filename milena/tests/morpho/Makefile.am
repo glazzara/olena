@@ -19,7 +19,11 @@ check_PROGRAMS =				\
   opening_area					\
   thinning
 
-dilation_SOURCES = dilation.cc
+# -------------- #
+# Normal tests.  #
+# -------------- #
+
+# FIXME: Have erosion and dilation perform symmetric tests.
 erosion_SOURCES = erosion.cc
 
 dilation_max_h_SOURCES = dilation_max_h.cc
@@ -36,14 +40,21 @@ thinning_SOURCES = thinning.cc
 
 meyer_wst_SOURCES = meyer_wst.cc
 
-# FIXME: We should isolate those tests, as they take a long time to
-# execute.
-CXXFLAGS_SPEED = -O3 -ggdb -DNDEBUG
+# --------------- #
+# Complex tests.  #
+# --------------- #
+
+dilation_SOURCES = dilation.cc
+dilation_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
+
 lena_line_graph_image_wst1_SOURCES = lena_line_graph_image_wst1.cc
-lena_line_graph_image_wst1_CXXFLAGS = $(CXXFLAGS_SPEED)
+lena_line_graph_image_wst1_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
+
 lena_line_graph_image_wst2_SOURCES = lena_line_graph_image_wst2.cc
-lena_line_graph_image_wst2_CXXFLAGS = $(CXXFLAGS_SPEED)
+lena_line_graph_image_wst2_CXXFLAGS = $(TESTSCXXFLAGS_SPEED)
+
 meyer_wst_long_SOURCES = meyer_wst_long.cc
-meyer_wst_long_CXXFLAGS = $(CXXFLAGS_SPEED)
+meyer_wst_long_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
+
 
 TESTS = $(check_PROGRAMS)
