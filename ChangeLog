@@ -1,5 +1,13 @@
 2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a test on regular neighborhoods.
+
+	* milena/tests/core/neighb.cc: New.
+	* milena/tests/core/Makefile.am (check_PROGRAMS): Add neighb.
+	(neighb_SOURCES): New.
+
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix TOOLS_CXXFLAGS.
 
 	* configure.ac (TOOLS_CXXFLAGS): s/-NDEBUG/-DNDEBUG/.

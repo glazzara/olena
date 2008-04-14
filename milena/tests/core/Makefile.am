@@ -17,6 +17,7 @@ check_PROGRAMS =				\
   line_graph_image_wst				\
   mono_obased_rle_image				\
   mono_rle_image				\
+  neighb					\
   obased_rle_image				\
   p_priority_queue				\
   p_priority_queue_fast				\
@@ -44,6 +45,7 @@ line_graph_image_SOURCES = line_graph_image.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
+neighb_SOURCES = neighb.cc
 obased_rle_image_SOURCES = obased_rle_image.cc
 p_priority_queue_SOURCES = p_priority_queue.cc
 p_priority_queue_fast_SOURCES = p_priority_queue_fast.cc
