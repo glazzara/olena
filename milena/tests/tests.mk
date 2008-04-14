@@ -13,6 +13,4 @@ AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_builddir)/milena
 TESTS_CXXFLAGS = @TESTS_CXXFLAGS@
 AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
-# FIXME: Likewise, we should compute these values at configure time.
-# Hard-code them for the moment.
-LONG_TESTS_CXXFLAGS = -O3
+TESTS_CXXFLAGS_SPEED = @TESTS_CXXFLAGS_SPEED@

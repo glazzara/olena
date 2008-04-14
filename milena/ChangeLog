@@ -1,5 +1,12 @@
 2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update tests/tests.mk.
+
+	* tests/tests.mk (LONG_TESTS_CXXFLAGS): Remove.
+	(TESTS_CXXFLAGS_SPEED): New.  Set to @TESTS_CXXFLAGS_SPEED@.
+
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up tests/morpho/dilation a bit.
 
 	* tests/morpho/dilation.cc: Reorganize.
