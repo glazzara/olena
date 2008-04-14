@@ -1,5 +1,12 @@
 2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	More on CXXFLAGS in configure.ac.
+
+	* configure.ac (TESTS_CXXFLAGS_SPEED): New variable.
+	(TOOLS_CXXFLAGS): Append `-Wall -W'.
+
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a test on regular neighborhoods.
 
 	* milena/tests/core/neighb.cc: New.

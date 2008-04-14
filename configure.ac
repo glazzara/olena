@@ -33,23 +33,32 @@ fi
 AC_LANG([C++])
 AC_PROG_CXX
 
-# Speed the compilation up.
+# Speed up compiling times.
 if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
 fi
 
 # C++ compiler flags for tests.
 AC_ARG_VAR([TESTS_CXXFLAGS])
-# We want no optimization for the tests (too slow), and a lot of debugging.
+# We want no optimization for the tests (it slows down compiling
+# times), and a lot of debugging.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
   TESTS_CXXFLAGS="-O0 -ggdb -Wall -W"
+fi
+
+# C++ compiler flags for complex tests.
+AC_ARG_VAR([TESTS_CXXFLAGS_SPEED])
+# We want optimization for complex tests, and keep debugging flags
+# (still useful).
+if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
+  TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
 
 # C++ compiler flags for tools.
 AC_ARG_VAR([TOOLS_CXXFLAGS])
 # On the contrary, we want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
-  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb"
+  TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
 
 
