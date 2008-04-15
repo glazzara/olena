@@ -432,20 +432,87 @@ input image type.
 
   No change in the property.
 
+FIXME: Is there any property define for these types?
+
+**** decorated_image
+  templated image: I (image), D (decorator).
+Image that can have additional features.
+
+
+**** plain
+  Prevent an image from sharing data.
+
+**** safe
+  Make an image accessible at undefined location.
+
+
+**** interpolated
+  Make an image readable with float coordinates.
+
+**** neigh::image
+  Add a neighbohood to an image.
+
+Changed properties:
+category -> morpher
+neighb -> some
+
+
 *** Domain morpher
+
+**** sub_image
+
+Make image restricted to a given pset.
+
+Changed Properties:
+  category -> domain_morpher
+  border -> none
+
+**** hexa
+
+ Make an hexagonal Mesh of the image.
+(work only with 2D image).
+
+Changed Properties:
+  category -> domain_morpher
+  grid -> regular
+
+**** Image_if
+ Parameter I, F
+ Make an image which has its domain restricted to a function.
+
+Changed Properties:
+  category -> domain_morpher
+  io -> read_only if I is cont, trait::image_<I>::io otherwise
+  data -> if the data property of I is linear then stored (FIXME why?)
+          else like I
+
+
+
+**** Image_if_interval
+ Image which domain is restricted by an interval
+
+Changed Property:
+  Same as image_if
+
+
+
+**** translate
+ Translate an Image with a delta point.
+Changed Property:
+   category -> domain_morpher_category.
 
 *** Value morpher
 
-*** Image_if
+**** cast_image
+Make the user see the same image but with another data type.
 
-???
+Changed properties:
+   io -> read_only
 
+**** value::stack_image
+ Represent a Stack of image.
 
-
-
-Note:
-The different grid (retrieve from point_ class):
- - tick,
- - square,
- - hexa,
- - cube
+Changed properties:
+   category -> value_morpher
+   value -> value::vectorial
+   speed -> fast

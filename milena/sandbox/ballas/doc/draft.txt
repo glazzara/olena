@@ -315,6 +315,16 @@ Do we need a property to specify the access permission and access type from
 the value.
 We can access directly to the value of an image image.value
 
+      values_access: none,
+                     random,
+                     browsing
+
+      values_io:  read,
+             	  write,
+      		  read_only < read,// This is dummy
+		  write_only < write,
+		  read_write < both read'n write
+
 
 
 

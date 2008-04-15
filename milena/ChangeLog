@@ -1,3 +1,10 @@
+2008-04-15  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update documentation about image types and properties.
+
+	* sandbox/ballas/doc/image_tours.txt: add the morpher types.
+	* sandbox/ballas/doc/draft.txt: update.
+
 2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update tests/tests.mk.
