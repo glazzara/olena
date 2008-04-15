@@ -1,3 +1,22 @@
+2008-04-15  Type Your Name Here  <your.mail.here@FIXME.com>
+
+	Add red getter.
+	* cmy/fun.hh, hsi/fun.hh, yiq/fun.hh, yuv/fun.hh :
+                       New red getter.
+	* cmy/my_cmy.hh, hsi/my_hsi.hh, yiq/my_yiq.hh, yuv/my_yuv.hh: 
+                       Added inheritance from value.
+	* cmy/rgb_to_cmy.hh, hsi/rgb_to_hsi.hh, yiq/rgb_to_yiq.hh, 
+          yuv/rgb_to_yuv.hh: 
+                       Added inheritance from function_v2v.
+	* cmy/test.cc, yiq/test.cc, yuv/test.cc : New test.
+	* cmy/testfun.cc, yiq/testfun.cc, yuv/testfun.cc: New test.
+	* cmy, hsi, yiq, yuv: New folder.
+	* color/is_HSI.cc: change.
+	* color/my_hsi.hh: change.
+	* color/rgb_to_hsi.hh: change.
+	* function.hh: New getter.
+	* testfun.cc: New test.
+
 2008-04-15  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update documentation about image types and properties.
