@@ -11,3 +11,11 @@ Check gaussian
 
 adapt test for threshold (old thresholding)
 - -
+
+La translation est mauvaise car certain point de Xk sont compté plusieurs fois. /bof
+
+- -
+write
+trans : vec  -->    quat
+         v   |->  m = trans(t)
+

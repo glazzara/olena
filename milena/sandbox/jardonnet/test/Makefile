@@ -13,17 +13,27 @@ gsub:
 gau:
 	g++ gaussian.cc $(FLAG) -o 'gau'
 
-icpD: icp.cc
+icpD: icp.cc +depend
 	g++ icp.cc -I../../.. -g -o 'icpD'
-icp: icp.cc
-	g++ icp.cc -I../../.. -O3 -DNDEBUG -o 'icp'
+
+icp: icp.cc +depend icp.o
+	g++ icp.o -I../../.. -O3 -DNDEBUG -o 'icp'
+
+icp.o:
+	g++ -c icp.cc -I../../.. -O3 -DNDEBUG 
 
 bench:
-	./check.rb
+	ruby bench.rb
 
 clean:
 	rm -f -- ./bin/*
 	rm -f sub gsub gau icpD icp
 	rm -f log.dat registred.pbm
+	rm -f i_*
 
-.PHONY: check
+.PHONY: check bench icpD
+
++depend:
+	g++ -M icp.cc $(FLAG) > +depend
+
+include +depend

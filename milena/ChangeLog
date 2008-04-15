@@ -1,3 +1,16 @@
+2008-04-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Qk driving.
+
+	* sandbox/jardonnet/test/Makefile: Add rules.
+	* sandbox/jardonnet/TODO: Update.
+	* sandbox/jardonnet/registration/interpolation.hh: give coef of the
+	  interpolated polynome.
+	* sandbox/jardonnet/registration/quat7.hh: Update interface */-+.
+	* sandbox/jardonnet/registration/cloud.hh: Update center.
+	* sandbox/jardonnet/registration/icp.hh: Add Optimization on qk.
+	* sandbox/jardonnet/registration/update_qk.hh: Optimization on qk.
+
 2008-04-15  Type Your Name Here  <your.mail.here@FIXME.com>
 
 	Add red getter.

@@ -41,24 +41,18 @@ namespace mln
       return tmp;
     }
 
-    template <typename P>
+    template <typename P, typename M>
     float rms(const p_array<P>& a1,
-              const p_array<P>& a2,
+              M& map,
               const size_t length)
     {
       assert(length <= a1.npoints());
-      assert(length <= a2.npoints());
-      /*
-      float f = 0.f;
-      for (size_t i = 0; i < a1.npoints(); ++i)
-        f += sqr_norm(a1[i] - a2[i]);
-      return f / a1.npoints();*/
-      
+     
       float f = 0.f;
       for (size_t i = 0; i < length; ++i)
         {
           algebra::vec<3,float> a1f = a1[i];
-          algebra::vec<3,float> a2f = a2[i];
+          algebra::vec<3,float> a2f = map(a1[i]);
           f += norm::l2(a1f - a2f);
         }
       return f / a1.npoints();

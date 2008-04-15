@@ -46,7 +46,7 @@
 
 # include "cloud.hh"
 # include "quat7.hh"
-# include "projection.hh"
+# include "update_qk.hh"
 # include "chamfer.hh"
 
 namespace mln
@@ -91,10 +91,13 @@ namespace mln
                   << c_length << " points" << std::endl;
         std::cout << "k\terror\tdqk" << std::endl;
 #endif
-        quat7<P::dim> old_qk;
+        
+        quat7<P::dim> buf_qk[3];
+        float         buf_dk[3];
+        
         float         err;
         //float       err_bis;
-        p_array<P>    Ck(C), Xk(C); //FIXME: Xk copy C
+        p_array<P>    Ck(C); //FIXME: Xk copy C
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
@@ -103,28 +106,40 @@ namespace mln
         unsigned int k = 0;
 
         do {
+          //update buff dk
+          buf_dk[2] = buf_dk[1];
+          buf_dk[1] = buf_dk[0];
+          buf_dk[0] = err;
+
           //compute qk
-          old_qk = qk;
           qk = match(C, mu_C, Ck, map, c_length);
+          
+          //update buff qk
+          buf_qk[2] = buf_qk[1];
+          buf_qk[1] = buf_qk[0];
+          buf_qk[0] = qk;
+          
+          //update qk
+          qk = update_qk(buf_qk, buf_dk);
           
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
           
           //err = d(Ck+1,Xk)
-          err = rms(Ck, Xk, c_length);
+          err = rms(Ck, map, c_length);
 
 #ifndef NDEBUG
           {
             using namespace std;
 
             //FIXME: Should use Ck box but Ck.bbox() is not correct for c_length
-            image2d<bool> img(box2d(500,800), 0);
-            for (size_t i = 0; i < c_length; i++)
-              {
-                point2d p = convert::to_point2d(Ck[i]);
-                if (img.has(p))
-                  img(p) = true;
-              }
+             image2d<bool> img(box2d(500,800), 0);
+             for (size_t i = 0; i < c_length; i++)
+               {
+                 point2d p = convert::to_point2d(Ck[i]);
+                 if (img.has(p))
+                   img(p) = true;
+               }
 
             //FIXME: Good but put point qfter c_length
             //image2d<bool> img = convert::to_image2d(Ck);
@@ -141,9 +156,8 @@ namespace mln
           //count the number of points processed
           pts += c_length;
 #endif
-
           k++;
-        } while (k < 3 || (qk - old_qk).sqr_norm() > epsilon);
+        } while (k < 3 || (qk - buf_qk[0]).sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
         return Ck;

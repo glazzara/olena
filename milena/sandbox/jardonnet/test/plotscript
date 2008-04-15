@@ -2,4 +2,4 @@ set xlabel "q"
 set ylabel "e"
 set zlabel "time"
 splot "log.dat"
-pause 10
+pause -1

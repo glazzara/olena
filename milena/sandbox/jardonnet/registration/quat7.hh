@@ -13,7 +13,7 @@
 # include "power_it.hh"
 # include "frankel_young.hh"
 
-# include <mln/norm/l2.hh>
+# include <mln/norm/all.hh>
 
 # include <mln/trait/all.hh>
 
@@ -45,11 +45,12 @@ namespace mln
     {
       return norm::l2(_qR.to_vec()) + norm::l2(_qT);
     }
-    
-    quat7 operator-(const quat7& rhs) const
+
+    float norm() const
     {
-      return quat7(_qR - rhs._qR, _qT - rhs._qT);
+      return norm::l1(_qR.to_vec()) + norm::l1(_qT);
     }
+    
     
     // quat7 is an object-function
     
@@ -76,6 +77,26 @@ namespace mln
       std::cout << q._qR << std::endl;
       std::cout << q._qT << std::endl;
       return os;
+    }
+
+    quat7 operator*(float f)
+    {
+      return quat7(_qR * f, _qT * f);
+    }
+    
+    quat7 operator/(float f)
+    {
+      return quat7(_qR / f, _qT / f);
+    }
+
+    quat7 operator-(const quat7& rhs) const
+    {
+      return quat7(_qR - rhs._qR, _qT - rhs._qT);
+    }
+
+    quat7 operator+(const quat7& rhs) const
+    {
+      return quat7(_qR + rhs._qR, _qT + rhs._qT);
     }
   };
   
