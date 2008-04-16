@@ -17,21 +17,13 @@ int main ()
   using namespace mln;
   using value::int_u8;
 
-  // component_tree< image2d<int_u8> > c;
-
   using namespace mln;
   using value::int_u8;
 
   image2d<int_u8> input;
   io::pgm::load(input, "./images/test_component_tree.pgm");
 
-
-  for(unsigned int i = 0; i < input.domain().len(0); ++i)
-  for(unsigned int j = 0; j < input.domain().len(1); ++j)
-    input.at(i, j) = 255 - input.at(i, j);
-
-
-  morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c8());
+  morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c4());
   n.image_output(input);
   n.go();
   n.image_output(n.Par_tree);
@@ -42,7 +34,10 @@ int main ()
   std::cout << " --------------------------- " << std::endl;
   n.image_output(n.Rnk_node);
   std::cout << " --------------------------- " << std::endl;
-  n.print_sup_tree();
+  n.print_tree(n.Root);
+  std::cout << " --------------------------- " << std::endl;
+
+  n.m_watershed();
 
   // image2d<int_u8> output = morpho::topo_wst(input, c4());
   //  io::pgm::save(output, "out.pgm");

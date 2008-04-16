@@ -1,3 +1,31 @@
+2008-04-16  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add functional M-Watershed algorithm and tests.
+
+	* sandbox/abraham/morpho/basic_najman.hh
+	(mln::morpho::basic_najman::lca)
+	(mln::morpho::basic_najman::highest_fork)
+	(mln::morpho::basic_najman::m-destructible)
+	(mln::morpho::basic_najman::w-destructible)
+	(mln::morpho::basic_najman::m-watershed)
+	(mln::morpho::basic_najman::w-watershed):
+	New methods.
+	* sandbox/abraham/morpho/test.cc: Add debug tests.
+	* sandbox/abraham/morpho/test_component_tree.cc: New,
+	Add tests for component tree algorithms.
+	* sandbox/abraham/morpho/images/result_m_watershed.pgm: New,
+	Reference for m-watershed algorithm.
+	* sandbox/abraham/morpho/images/result_topo_watershed.pgm: New,
+	Reference for w-watershed algorithm.
+	* sandbox/abraham/morpho/images/test_watershed.pgm: New,
+	Test image for watershed algorithms.
+	* sandbox/abraham/morpho/images/test_component_mapping.pgm: New,
+	Reference image for component mapping.
+	* sandbox/abraham/morpho/test_watershed.cc: New,
+	Add tests for watershed algorithms.
+	* sandbox/abraham/morpho/Makefile:
+	Add rules to compile new tests.
+
 2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Commit my last version of fllt.
