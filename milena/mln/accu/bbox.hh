@@ -60,6 +60,7 @@ namespace mln
       void take_as_init(const P& p);
       void take(const P& p);
       void take(const bbox<P>& other);
+      void take(const box_<P>& other);
 
       const box_<P>& to_result() const;
 
@@ -142,6 +143,29 @@ namespace mln
 	  b_.pmin()[i] = o_b.pmin()[i];
 	else if (o_b.pmax()[i] > b_.pmax()[i])
 	  b_.pmax()[i] = o_b.pmax()[i];
+    }
+
+    template <typename P>
+    inline
+    void
+    bbox<P>::take(const box_<P>& other)
+    {
+      if (other.npoints() == 0)
+	{
+	  // no-op
+	  return;
+	}
+      if (! this->is_valid_)
+	{
+	  b_ = other;
+	  return;
+	}
+      // both are valids so:
+      for (unsigned i = 0; i < P::dim; ++i)
+	if (other.pmin()[i] < b_.pmin()[i])
+	  b_.pmin()[i] = other.pmin()[i];
+	else if (other.pmax()[i] > b_.pmax()[i])
+	  b_.pmax()[i] = other.pmax()[i];
     }
 
     template <typename P>

@@ -1,3 +1,10 @@
+2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add a new level set computation.
+
+	* sandbox/garrigues/fllt/fllt_theo.cc: New.
+	* mln/accu/bbox.hh: Add a method to add a box to an accu::bbox.
+
 2008-04-16  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add functional M-Watershed algorithm and tests.
