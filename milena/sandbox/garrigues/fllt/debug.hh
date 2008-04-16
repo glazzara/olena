@@ -35,6 +35,12 @@
  *
  */
 
+# include <iomanip>
+# include <iostream>
+# include <sstream>
+# include "mln/core/p_image2d.hh"
+# include "mln/literal/all.hh"
+# include "mln/io/ppm/save.hh"
 # include "types.hh"
 
 namespace mln
@@ -111,6 +117,83 @@ namespace mln
       	  debug::println(ima | (*p).elt().points);
       	  std::cout << std::endl;
       	}
+    }
+
+    template <typename P, typename V>
+    void
+    debug(const image2d<V>& ima,
+	  fllt_tree(P, V)& result_tree)
+    {
+      std::cout << "4/ Generate outputs." << std::endl;
+
+      image2d<value::int_u8> output (ima.domain ());
+      util::tree_to_image (result_tree, output);
+
+
+      //       io::pgm::save(output, "out_final.pgm");
+      //       std::cout << "out_final.pgm generate"
+      // 		<< std::endl;
+
+
+      //      util::display_tree(ima, lower_tree);
+      draw_tree(ima, result_tree);
+
+      //       debug::println(ima);
+      //       debug::println(output);
+
+      //       if (output != ima)
+      //       {
+      //       	std::cerr << "BUG!!!" << std::endl;
+      //       	abort();
+      //       }
+
+      image2d<value::int_u8> viz(ima.domain());
+      //       image2d<value::int_u8> viz2(ima.domain());
+
+      //       visualize_deepness(viz, lower_tree);
+      //       level::stretch(viz, viz2);
+      //       debug::println(viz);
+      //       debug::println(viz2);
+      //       io::pgm::save(viz2, "fllt.pgm");
+
+      visualize_bounds(viz, result_tree, 200);
+      //debug::println(viz);
+      io::pgm::save(viz, "fllt_bounds_200.pgm");
+
+      visualize_bounds(viz, result_tree, 100);
+      io::pgm::save(viz, "fllt_bounds_100.pgm");
+
+      visualize_bounds(viz, result_tree, 50);
+      io::pgm::save(viz, "fllt_bounds_50.pgm");
+
+      visualize_bounds(viz, result_tree, 20);
+      io::pgm::save(viz, "fllt_bounds_20.pgm");
+
+    }
+
+    template <typename P, typename V>
+    void save_state(const image2d<V>& ima,
+		    const p_image2d<P>& R,
+		    const p_image2d<P>& A,
+		    const p_image2d<P>& N)
+    {
+      static int id = 0;
+      std::stringstream filename;
+      filename << "fllt_trace_" << std::setw(5) << std::setfill('0')
+	       << std::right << id++ << ".ppm";
+
+      image2d<value::rgb8> out(ima.domain());
+
+      level::fill(out, literal::white);
+
+      if (R.npoints() != 0)
+	level::fill(inplace(out | R), literal::green);
+      if (A.npoints() != 0)
+	level::fill(inplace(out | A), literal::blue);
+      if (N.npoints() != 0)
+	level::fill(inplace(out | N), literal::red);
+
+      io::ppm::save(out, filename.str());
     }
 
   } // end of namespace mln::fllt

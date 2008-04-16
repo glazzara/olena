@@ -36,6 +36,7 @@
  */
 
 # include <mln/core/neighb2d.hh>
+# include <mln/core/clock_neighb2d.hh>
 # include <mln/labeling/regional_minima.hh>
 # include <mln/accu/min.hh>
 
@@ -74,6 +75,9 @@ namespace mln
 
       static const neighb2d& bdr_nbh() { return c8(); }
       static const neighb2d& reg_nbh() { return c4(); }
+
+      static const clock_neighb2d bdr_c_nbh(dpoint2d& dp) { return cc8(dp); }
+      static const clock_neighb2d reg_c_nbh(dpoint2d& dp) { return cc4(dp); }
 
     };
 

@@ -39,6 +39,12 @@
 # include <mln/util/tree.hh>
 # include <mln/util/branch_iter_ind.hh>
 
+
+# define fllt_tree(P, V)  mln::util::tree< mln::fllt::fllt_node_elt<P, V> >
+# define fllt_node(P, V)  mln::util::tree_node< mln::fllt::fllt_node_elt<P, V> >
+# define fllt_branch(P, V)  mln::util::branch< mln::fllt::fllt_node_elt<P, V> >
+# define fllt_branch_iter_ind(P, V)  mln::util::branch_iter_ind< mln::fllt::fllt_node_elt<P, V> >
+
 namespace mln
 {
   namespace fllt
@@ -55,12 +61,146 @@ namespace mln
       bool brighter;
     };
 
-# define fllt_tree(P, V)  util::tree< fllt_node_elt<P, V> >
-# define fllt_node(P, V)  util::tree_node< fllt_node_elt<P, V> >
-# define fllt_branch(P, V)  util::branch< fllt_node_elt<P, V> >
-# define fllt_branch_iter_ind(P, V)  util::branch_iter_ind< fllt_node_elt<P, V> >
-
     //    # define fllt_node(P, V)  typename fllt_tree(P, V)::node_t
+
+
+    class ran_domains
+    {
+    public:
+
+      /// Forward Point_Iterator associated type.
+      typedef mln_fwd_piter_(box2d) fwd_piter;
+
+      /// Backward Point_Iterator associated type.
+      typedef mln_bkd_piter_(box2d) bkd_piter;
+
+      /// Constructor.
+      ran_domains(const box2d& b);
+
+      /// Add a point to a domain.
+      template <char domain>
+      ran_domains& add_to(const point2d& p);
+
+      /// Test if a point belong to a domain.
+      template <char domain>
+      bool belongs_to(const point2d& p) const;
+
+      /// Move a point from a domain to another domain.
+      template <char src, char dest>
+      ran_domains& move_to(const point2d& p);
+
+      /// Clear the image.
+      void clear();
+
+      /// Give the exact bounding box.
+      const box2d& bbox() const;
+
+      /// Give the number of points.
+      unsigned npoints() const;
+
+      /// Hook to the image2d containing the points.
+      sub_image<image2d<value::int_u8>, box2d> image();
+
+    private:
+      image2d<value::int_u8> ima_;
+      unsigned npoints_;
+      accu::bbox<point2d> bb_;
+    };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    inline
+    ran_domains::ran_domains(const box2d& b)
+      : ima_(b)
+    {
+      bb_.init();
+      npoints_ = 0;
+
+      level::fill(ima_, false);
+    }
+
+    template <char domain>
+    inline
+    ran_domains&
+    ran_domains::add_to(const point2d& p)
+    {
+      bb_.take(p);
+      ima_(p) = domain;
+      npoints_++;
+      return *this;
+    }
+
+
+    template <char src, char dest>
+    ran_domains&
+    ran_domains::move_to(const point2d& p)
+    {
+      mln_assertion(ima_(p) == src);
+      ima_(p) += dest - src;
+      return *this;
+    }
+
+    template <char domain>
+    inline
+    bool
+    ran_domains::belongs_to(const point2d& p) const
+    {
+      return ima_(p) == domain;
+    }
+
+
+    void
+    ran_domains::clear()
+    {
+      if (npoints_ == 0)
+	return;
+
+      //       unsigned bb_nrows  = geom::nrows(bb_.to_result());
+      //       unsigned ima_nrows = geom::nrows(points_);
+
+      //       if (bb_nrows * 3 < ima_nrows * 2)
+      //       {
+      // 	unsigned bb_ncols = geom::ncols(bb_.to_result());
+      // 	mln_line_piter_(image2d<value::int_u8>) p(bb_.to_result());
+      // 	for_all(p)
+      // 	{
+      // 	  level::memset_(ima_, p, false, bb_ncols);
+      // 	}
+      //       }
+      //       else
+      level::fill(ima_, false);
+
+      npoints_ = 0;
+      bb_.init();
+    }
+
+
+    inline
+    const box2d&
+    ran_domains::bbox() const
+    {
+      mln_precondition(npoints_ != 0);
+      return bb_.to_result();
+    }
+
+    inline
+    unsigned
+    ran_domains::npoints() const
+    {
+      return npoints_;
+    }
+
+    inline
+    sub_image<image2d<value::int_u8>, box2d>
+    ran_domains::image()
+    {
+      mln_precondition(npoints_ > 0);
+      mln_assertion(ima_.has_data());
+      return ima_ | bb_.to_result();
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::fllt
 

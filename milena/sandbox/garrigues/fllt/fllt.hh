@@ -94,7 +94,7 @@ namespace mln
 
     template <typename V>
     // Fixme : return type
-    void
+    fllt_tree(point2d, V)
     fllt(const image2d<V>& ima)
     {
       typedef point2d P;
@@ -124,52 +124,7 @@ namespace mln
       //fllt_tree(P, V) result_tree = merge_trees(upper_tree, lower_tree, upp_reg, low_reg, ima);
       fllt_tree(P, V) result_tree = merge_trees(lower_tree, upper_tree, low_reg, upp_reg, ima);
 
-
-      std::cout << "4/ Generate outputs." << std::endl;
-
-      image2d<value::int_u8> output (ima.domain ());
-      util::tree_to_image (result_tree, output);
-
-
-      //       io::pgm::save(output, "out_final.pgm");
-      //       std::cout << "out_final.pgm generate"
-      // 		<< std::endl;
-
-
-      //      util::display_tree(ima, lower_tree);
-      draw_tree(ima, result_tree);
-
-      //       debug::println(ima);
-      //       debug::println(output);
-
-      //       if (output != ima)
-      //       {
-      //       	std::cerr << "BUG!!!" << std::endl;
-      //       	abort();
-      //       }
-
-      image2d<value::int_u8> viz(ima.domain());
-      //       image2d<value::int_u8> viz2(ima.domain());
-
-      //       visualize_deepness(viz, lower_tree);
-      //       level::stretch(viz, viz2);
-      //       debug::println(viz);
-      //       debug::println(viz2);
-      //       io::pgm::save(viz2, "fllt.pgm");
-
-      visualize_bounds(viz, result_tree, 200);
-      //debug::println(viz);
-      io::pgm::save(viz, "fllt_bounds_200.pgm");
-
-      visualize_bounds(viz, result_tree, 100);
-      io::pgm::save(viz, "fllt_bounds_100.pgm");
-
-      visualize_bounds(viz, result_tree, 50);
-      io::pgm::save(viz, "fllt_bounds_50.pgm");
-
-      visualize_bounds(viz, result_tree, 20);
-      io::pgm::save(viz, "fllt_bounds_20.pgm");
-
+      return result_tree;
     }
 
   } // end of namespace mln::fllt

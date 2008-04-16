@@ -1,4 +1,4 @@
-# include "fllt_optimized.hh"
+# include "fllt.hh"
 # include <mln/core/image2d.hh>
 # include <mln/core/clone.hh>
 # include <mln/value/int_u8.hh>
@@ -29,5 +29,5 @@ int main()
   image2d<int> ima = convert::to_image(w_win);
 
   fllt_tree(point2d, int) t = fllt::fllt(ima);
-  fllt::debug(ima, t);
+  fllt::draw_tree(ima, t);
 }

@@ -58,6 +58,7 @@ namespace mln
     // gn <- min u(x) x belongs to N.
     // R <- R union A
     // tag the pixels of A.
+    // Update the number of holes of R.
 
     // 4)
     // IF g < gn

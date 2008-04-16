@@ -1,5 +1,22 @@
 2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Commit my last version of fllt.
+
+	* sandbox/garrigues/fllt/compute_level_set_fast.hh: New.
+	* sandbox/garrigues/fllt/compute_level_set_fast2.hh: New.
+	* sandbox/garrigues/fllt/debug.hh: .
+	* sandbox/garrigues/fllt/doc.hh: .
+	* sandbox/garrigues/fllt/fllt.hh: .
+	* sandbox/garrigues/fllt/give_confs.cc: New.
+	* sandbox/garrigues/fllt/local_configurations.hh: New.
+	* sandbox/garrigues/fllt/lower.hh: .
+	* sandbox/garrigues/fllt/test.cc: New.
+	* sandbox/garrigues/fllt/test_fllt2.cc: .
+	* sandbox/garrigues/fllt/types.hh: .
+	* sandbox/garrigues/fllt/upper.hh: .
+
+2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	* sandbox/garrigues/fllt/essai.cc: New, Problems on
 	image_if_value<sub_image>.
 
