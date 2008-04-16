@@ -59,11 +59,11 @@ int main(int argc, char* argv[])
   
   //init output image
   //FIXME: Should be
-  //mln_concrete(I) output(res.bbox()) = convert::to_image<I>(res)?
-
+  //mln_concrete(I) output(res.bbox()) = convert::to_image<I>(res) ?
+  
   qk.apply_on(c, c, c.npoints());
               
-  const box_<point2d> box2d(600,600);
+  const box_<point2d> box2d(400,700);
   image2d<bool> output(box2d, 1);
   
   //to 2d : projection (FIXME:if 3d)
@@ -75,5 +75,6 @@ int main(int argc, char* argv[])
     }
   
   io::pbm::save(output, "registred.pbm");
+  
 }
 

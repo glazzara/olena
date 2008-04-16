@@ -79,6 +79,28 @@ namespace mln
       return os;
     }
 
+    float operator[](int i)
+    {
+      if (i < n)
+        return _qT[i];
+      else
+        return _qR.to_vec()[i - n];
+    }
+
+    algebra::vec<7,float> to_vec()
+    {
+      algebra::vec<7,float> v;
+
+      for (int i = 0; i < 7; i++)
+        {
+          if (i < n)
+            v[i] = _qT[i];
+          else
+            v[i] = _qR.to_vec()[i - n];
+        }
+      return v;
+    }
+    
     quat7 operator*(float f)
     {
       return quat7(_qR * f, _qT * f);
@@ -100,21 +122,6 @@ namespace mln
     }
   };
   
-
-  // very usefull routine
-    
-  template <unsigned p, unsigned q, unsigned n, unsigned m>
-  void put(const algebra::mat<p,q,float>& in, // a matrix to put into...
-           unsigned row, unsigned col,        // top-left location
-           algebra::mat<n,m,float>& inout)    // ...a matrix to modify
-  {
-    assert(row + p <= n && col + q <= m);
-    for (unsigned i = 0; i < p; ++i)
-      for (unsigned j = 0; j < q; ++j)
-        inout(row + i, col + j) = in(i,j);
-  }
-  
-
   template <typename P, typename M>
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
@@ -122,8 +129,7 @@ namespace mln
                       M& map,
                       size_t c_length)
   {
-    //FIXME: mix mu_Xk and qk loop
-    
+    //FIXME: mix mu_Xk and qk loop 
     
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);
@@ -143,23 +149,7 @@ namespace mln
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= c_length;
-
-
-    /*  
-    const algebra::mat<P::dim,P::dim,float> Ak = Mk - trans(Mk);
-
-    const float v[3] = {Ak(1,2), Ak(2,0), Ak(0,1)};
-    const algebra::mat<3,1,float> D = make::mat<3,1,3,float>(v);
-
-    
-    algebra::mat<4,4,float> Qk(literal::zero);
-    Qk(0,0) = tr(Mk);
-    put(trans(D), 0,1, Qk);
-    put(D, 1,0, Qk);
-    
-    put(Mk + trans(Mk) - algebra::mat<P::dim,P::dim,float>::identity() * tr(Mk), 1,1, Qk);
-    */
-    
+  
     algebra::vec<3,float> a;
     a[0] = Mk(1,2) - Mk(2,1);
     a[1] = Mk(2,0) - Mk(0,2);

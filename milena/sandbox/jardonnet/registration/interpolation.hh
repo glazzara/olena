@@ -10,8 +10,8 @@ namespace mln
   {
     int k,j,i;
     float phi,ff,b;
-    std::vector<float> s(n,0);
-
+    std::vector<float> s(n);
+    
     for (i = 0; i <= n; i++)
       s[i] = cof[i] = 0.0;
     s[n] = -x[0];

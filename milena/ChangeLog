@@ -1,3 +1,12 @@
+2008-04-16  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Fix Qk driving.
+
+	* sandbox/jardonnet/test/bench: Add Qk driving log.
+	* sandbox/jardonnet/registration/quat7.hh (to_vec): Add function.
+	* sandbox/jardonnet/registration/icp.hh: Add qk/dk buffers.
+	* sandbox/jardonnet/registration/update_qk.hh: Fix.
+
 2008-04-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Qk driving.

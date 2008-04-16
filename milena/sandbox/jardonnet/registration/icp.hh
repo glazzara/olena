@@ -92,10 +92,10 @@ namespace mln
         std::cout << "k\terror\tdqk" << std::endl;
 #endif
         
-        quat7<P::dim> buf_qk[3];
+        quat7<P::dim> buf_qk[4];
         float         buf_dk[3];
         
-        float         err;
+        float         err = 100;
         //float       err_bis;
         p_array<P>    Ck(C); //FIXME: Xk copy C
 
@@ -106,21 +106,25 @@ namespace mln
         unsigned int k = 0;
 
         do {
-          //update buff dk
+          //update buff dk //FIXME: rewrite it
           buf_dk[2] = buf_dk[1];
           buf_dk[1] = buf_dk[0];
           buf_dk[0] = err;
 
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
-          
-          //update buff qk
+
+          //update buff qk //FIXME: rewrite it
+          buf_qk[3] = buf_qk[2];
           buf_qk[2] = buf_qk[1];
           buf_qk[1] = buf_qk[0];
           buf_qk[0] = qk;
-          
+
           //update qk
-          qk = update_qk(buf_qk, buf_dk);
+          if (k > 3)
+            qk = update_qk(buf_qk, buf_dk);
+          qk._qR.set_unit();
+          buf_qk[0] = qk;
           
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
@@ -151,13 +155,13 @@ namespace mln
           
           //plot file
           std::cout << k << '\t' << err << '\t'
-                    << (qk - old_qk).sqr_norm() << '\t'
+                    << (qk - buf_qk[1]).sqr_norm() << '\t'
                     << std::endl;
           //count the number of points processed
           pts += c_length;
 #endif
           k++;
-        } while (k < 3 || (qk - buf_qk[0]).sqr_norm() > epsilon);
+        } while (k < 3 || (qk - buf_qk[1]).sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
         return Ck;
