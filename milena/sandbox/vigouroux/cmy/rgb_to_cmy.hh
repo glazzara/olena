@@ -12,6 +12,9 @@
 
 #include "my_cmy.hh"
 
+#ifndef MLN_RGB_TO_CMY_HH
+# define MLN_RGB_TO_CMY_HH
+
 namespace mln
 {
 
@@ -39,6 +42,7 @@ namespace mln
         };
         
         typedef f_rgb_to_cmy_< mln::value::cmy_<double, double, double> > f_rgb_to_cmy_d;
+        typedef f_rgb_to_cmy_< mln::value::cmy_<float, float, float> > f_rgb_to_cmy_f;
         
         template <typename T_rgb>
         struct f_cmy_to_rgb_ : public Function_v2v< f_cmy_to_rgb_<T_rgb> >
@@ -70,3 +74,5 @@ namespace mln
   } // end of namespace fun
 
 } // end of namespace mln
+
+#endif // ! MLN_RGB_TO_CMY_HH

@@ -9,10 +9,10 @@
 #include <mln/level/fill.hh>
 #include <mln/math/round.hh>
 
-#include "my_yuv.hh"
+#include "my_xyz.hh"
 
-#ifndef MLN_YUV_FUN_HH
-# define MLN_YUV_FUN_HH
+#ifndef MLN_XYZ_FUN_HH
+# define MLN_XYZ_FUN_HH
 
 namespace mln
 {
@@ -24,30 +24,24 @@ namespace mln
     namespace v2v
     {
       template <typename T_rgb>
-      struct f_yuv_ : public Function_v2v< f_yuv_<T_rgb> >
+      struct f_xyz_ : public Function_v2v< f_xyz_<T_rgb> >
       {
 	typedef T_rgb result;
 
-	template <typename T_yuv>
-	T_rgb operator()(const T_yuv& yuv) const
+	template <typename T_xyz>
+	T_rgb operator()(const T_xyz& xyz) const
 	{
            int r;
-           int g;
-           int b;
            
-           r = int(yuv.y() + 1.13983 * yuv.v());
-           g = int(yuv.y() - 0.39465 * yuv.u() - 0.58060 * yuv.v());
-           b = int(yuv.y() + 2.03211 * yuv.u());
+           r = int(xyz.y() + 1.13983 * xyz.y());
              
-           struct value::rgb<8> rgb(r, g, b); 
+           struct value::rgb<8> rgb(r, 0, 0); 
            
-           return (rgb);
+           return rgb;
 	}
       };
 
-      typedef f_yuv_<value::rgb8> f_yuv_3x8_t;
-
-      f_yuv_3x8_t f_yuv_3x8;
+      typedef f_xyz_<value::rgb8> f_xyz_get_red;
 
     } // end of namespace fun::v2v
 
@@ -55,4 +49,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_VALUE_YUV_HH
+#endif // ! MLN_VALUE_XYZ_HH

@@ -12,6 +12,9 @@
 
 #include "my_yiq.hh"
 
+#ifndef MLN_RGB_TO_YIQ_HH
+# define MLN_RGB_TO_YIQ_HH
+
 namespace mln
 {
 
@@ -72,5 +75,4 @@ namespace mln
 
 } // end of namespace mln
 
-     
-  
+#endif // ! MLN_RGB_TO_YIQ_HH

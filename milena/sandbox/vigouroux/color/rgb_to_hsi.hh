@@ -12,11 +12,8 @@
 
 #include "my_hsi.hh"
 
-
-
 namespace mln
 {
-
 
   namespace fun
   {

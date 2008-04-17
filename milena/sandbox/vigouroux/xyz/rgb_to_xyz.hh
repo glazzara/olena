@@ -29,9 +29,9 @@ namespace mln
 	{
 	  T_xyz xyz;
 
-	  xyz.x(0.490 * rgb.red() + 0.310 * rgb.green() + 0.200 * rgb.blue());
-	  xyz.y(0.177 * rgb.red() + 0.812 * rgb.green() + 0.011 * rgb.blue());
-	  xyz.z(0.010 * rgb.green() + 0.990 * rgb.blue());
+	  xyz.x() = 0.490 * rgb.red() + 0.310 * rgb.green() + 0.200 * rgb.blue();
+	  xyz.y() = 0.177 * rgb.red() + 0.812 * rgb.green() + 0.011 * rgb.blue();
+	  xyz.z() = 0.010 * rgb.green() + 0.990 * rgb.blue();
 	  
 	  return xyz;
 	}
@@ -39,7 +39,7 @@ namespace mln
 
       typedef f_rgb_to_xyz_<value::xyz_f> f_rgb_to_xyz_f_t;
       
-      f_rgb_to_xyz_f_t f_rgb_to_xyz_f;
+//       f_rgb_to_xyz_f_t f_rgb_to_xyz_f;
 
       template <typename T_rgb>
       struct f_xyz_to_rgb_ : public Function_v2v< f_xyz_to_rgb_<T_rgb> >

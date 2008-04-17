@@ -12,18 +12,20 @@
 #include <mln/level/transform.hh>
 
 #include "function.hh"
+#include "yuv/my_yuv.hh"
+#include "yuv/fun.hh"
+#include "yuv/rgb_to_yuv.hh"
 
 int main()
 {
-//    typedef mln::value::hsi_d Col;
-   using namespace mln::fun::v2v;
+  using namespace mln::fun::v2v;
 
    mln::value::hsi_d col;
    mln::image2d<mln::value::rgb8> lena;
    mln::io::ppm::load(lena, "../../img/lena.ppm");
 
-  mln::image2d<mln::value::hsi_f> lena_hsi = mln::level::transform(lena,
-						    mln::fun::v2v::f_rgb_to_hsi_f);
+  mln::image2d<mln::value::yuv_f> lena_hsi = mln::level::transform(lena,
+								   mln::fun::v2v::f_rgb_to_yuv_f());
 
   mln::image2d<mln::value::rgb8> lena_rgb = mln::level::transform(lena_hsi,
 						  f_get_red_<mln::value::rgb8>());

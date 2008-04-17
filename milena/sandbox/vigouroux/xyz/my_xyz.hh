@@ -6,8 +6,8 @@
 
 #include <mln/value/float01_8.hh>
 
-#ifndef MLN_VALUE_YUV_HH
-# define MLN_VALUE_YUV_HH
+#ifndef MLN_VALUE_XYZ_HH
+# define MLN_VALUE_XYZ_HH
 
 namespace mln
 {
@@ -15,77 +15,79 @@ namespace mln
   {
 
     template <typename E>
-    struct YUV
+    struct XYZ
       :
       public internal::value_like_< algebra::vec< 3, float01_8 >, // Equivalent.
 				    algebra::vec< 3, float01_8 >, // Encoding.
 				    algebra::vec< 3, float01_8 >,      // Interoperation.
-				    YUV<E> >
+				    XYZ<E> >
     {
     };
 
-    template <typename Y, typename U, typename V>
-    class yuv_ : public YUV< yuv_<Y,U,V> >
+    template <typename X, typename Y, typename Z>
+    class xyz_ : public XYZ< xyz_<X,Y,Z> >
     {
     public:
 
+      typedef X x_type;
       typedef Y y_type;
-      typedef U u_type;
-      typedef V v_type;
+      typedef Z z_type;
 
       /// Constructor without argument.
-      yuv_()
+      xyz_()
       {
       }
 
       /// Constructor from component values.
-      yuv_(const Y& y, const U& u, const V& v)
-	: y_(y),
-	  u_(u),
-	  v_(v)
+      xyz_(const X& x, const Y& y, const Z& z)
+	: x_(x),
+	  y_(y),
+	  z_(z)
       {
       }
 
-      /// Read-only access to the y component.
+      /// Read-only access to the x component.
+      const X& x() const
+      {
+	return this->x_;
+      }
       const Y& y() const
       {
 	return this->y_;
       }
-      const U& u() const
+      const Z& z() const
       {
-	return this->u_;
-      }
-      const V& v() const
-      {
-	return this->v_;
+	return this->z_;
       }
 
-      /// Read-write access to the y component.
+      /// Read-write access to the x component.
+      X& x()
+      {
+	return this->x_;
+      }
       Y& y()
       {
 	return this->y_;
       }
-      U& u()
+      Z& z()
       {
-	return this->u_;
-      }
-      V& v()
-      {
-	return this->v_;
+	return this->z_;
       }
 
     private:
+      X x_;
       Y y_;
-      U u_;
-      V v_;
+      Z z_;
     };
 
-    typedef yuv_<float, float, float> yuv_f;
+    typedef xyz_<float, float, float> xyz_f;
 
-    typedef yuv_<double, double, double> yuv_d;
+    typedef xyz_<double, double, double> xyz_d;
 
   } // end of namespace mln::value
 
 } // end of namespace mln
 
-#endif // ! MLN_VALUE_YUV_HH
+
+
+#endif // ! MLN_VALUE_XYZ_HH

@@ -12,6 +12,9 @@
 
 #include "my_yuv.hh"
 
+#ifndef MLN_RGB_TO_YUV_HH
+# define MLN_RGB_TO_YUV_HH
+
 namespace mln 
 {
 
@@ -39,6 +42,7 @@ namespace mln
         };
 
         typedef f_rgb_to_yuv_< mln::value::yuv_<double, double, double> > f_rgb_to_yuv_d;
+        typedef f_rgb_to_yuv_< mln::value::yuv_<float, float, float> > f_rgb_to_yuv_f;
         
         template <typename T_rgb>
         struct f_yuv_to_rgb_ : public Function_v2v< f_yuv_to_rgb_<T_rgb> >
@@ -72,3 +76,4 @@ namespace mln
 
 } // end of namespace mln
 
+#endif // ! MLN_RGB_TO_YUV_HH

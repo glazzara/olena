@@ -1,5 +1,5 @@
-#include "my_yiq.hh"
-#include "rgb_to_yiq.hh"
+#include "my_cmy.hh"
+#include "rgb_to_cmy.hh"
 
 #include <cmath>
 
@@ -18,11 +18,11 @@ int main()
   image2d<value::rgb8> lena;
   io::ppm::load(lena, "../../../img/lena.ppm");
 
-  image2d< value::yiq_<double, double, double> > lena_hsi 
+  image2d< value::cmy_<float, float, float> > lena_hsi 
      = level::transform(lena,
-                        fun::v2v::f_rgb_to_yiq_d());
+                        fun::v2v::f_rgb_to_cmy_f());
 
   image2d<value::rgb8> lena_rgb = level::transform(lena_hsi,
-						   fun::v2v::f_yiq_to_rgb_3x8);
+						   fun::v2v::f_cmy_to_rgb_3x8);
 }
 

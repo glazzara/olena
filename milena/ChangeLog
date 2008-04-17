@@ -1,3 +1,26 @@
+2008-04-17  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	red getters.
+	* cmy/fun.hh, hsi/fun.hh, xyz/fun.hh, yiq/fun.hh, yuv/fun.hh: 
+	  	      red getters.
+	* cmy/my_cmy.hh, xyz/my_xyz.hh, yiq/my_yiq.hh, cmy/my_yuv.hh: 
+	  		 color space updated.
+	* cmy/rgb_to_cmy.hh, hsi/rgb_to_hsi.hh, xyz/rgb_to_xyz.hh, 
+	yiq/rgb_to_yiq.hh, yuv/rgb_to_yuv.hh: conversion updated.
+	* cmy/test.cc, xyz/test.cc: .
+	* color/my_hsl.hh: .
+	* color/my_hsv.hh: .
+	* color/my_xyz.hh: .
+	* color/rgb_to_hsi.hh: .
+	* color/rgb_to_hsl.hh: .
+	* color/rgb_to_xyz.hh: .
+	* function.hh: .
+	* testfun.cc: .
+	* xyz/testfun.cc: New test.
+	* xyz: New folder.
+
+	* yuv/test.cc: .
+
 2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add a new level set computation.

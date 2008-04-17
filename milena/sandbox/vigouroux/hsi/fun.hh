@@ -11,7 +11,8 @@
 
 #include "../color/my_hsi.hh"
 
-
+#ifndef MLN_HSI_FUN_HH
+# define MLN_HSI_FUN_HH
 
 namespace mln
 {
@@ -62,3 +63,5 @@ namespace mln
   } // end of namespace fun
 
 } // end of namespace mln
+
+#endif // ! MLN_HSI_FUN_HH

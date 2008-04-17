@@ -1,4 +1,3 @@
-
 #include <cmath>
 
 #include <mln/core/image_if_value.hh>
@@ -12,7 +11,8 @@
 
 #include "my_yiq.hh"
 
-
+#ifndef MLN_YIQ_FUN_HH
+# define MLN_YIQ_FUN_HH
 
 namespace mln
 {
@@ -50,3 +50,5 @@ namespace mln
   } // end of namespace fun
 
 } // end of namespace mln
+
+#endif // ! MLN_YIQ_FUN_HH
