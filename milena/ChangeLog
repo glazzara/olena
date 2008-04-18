@@ -1,5 +1,14 @@
 2008-04-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Improve fllt.
+
+	* sandbox/geraud/fllt.svg.2.cc: New.
+	* sandbox/geraud/fllt.svg.3.cc: New.
+	* sandbox/geraud/fllt.cc (fllt): Get rid of 'is'.
+	* sandbox/geraud/fllt.svg.4.cc: New.
+
+2008-04-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix accu::bbox and new fllt try in sandbox.
 
 	* mln/core/p_array.hh (append): New overload for p_array.

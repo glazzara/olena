@@ -64,7 +64,7 @@ namespace mln
     void update_gN(const N_t& N, G& gN)
     {
       for (unsigned g = 0; g < 256; ++g)
-	if (N[g]->npoints() != 0)
+	if (N[g].npoints() != 0)
 	  {
 	    gN = g;
 	    return;
@@ -79,9 +79,9 @@ namespace mln
     {
       for (unsigned i = 0; i < 256; ++i)
 	{
-	  if (N[i]->npoints() == 0)
+	  if (N[i].npoints() == 0)
 	    continue;
-	  std::cout << i << ": " << *N[i] << std::endl;
+	  std::cout << i << ": " << N[i] << std::endl;
 	}
     }
 
@@ -89,7 +89,7 @@ namespace mln
     void clear_N(N_t& N)
     {
       for (unsigned i = 0; i < 256; ++i)
-	N[i]->clear();
+	N[i].clear();
     }
 
 
@@ -168,10 +168,8 @@ namespace mln
       level::fill(deja_vu, false);
 
       typedef p_array<mln_point(I)> arr_t;
-      arr_t* A = new arr_t();
-      arr_t* N[256];
-      for (unsigned i = 0; i < 256; ++i)
-	N[i] = new arr_t();
+      arr_t A;
+      arr_t N[256];
       accu::bbox<mln_point(I)> N_box;
 
       unsigned n_step_1 = 0, n_step_3 = 0;
@@ -204,8 +202,8 @@ namespace mln
 	N_box.init();
 
 	// A <- { x0 }
-	A->clear();
-	A->append(x0);
+	A.clear();
+	A.append(x0);
 // 	is(x0) = in_A;
 	deja_vu(x0) = true;
       }
@@ -215,7 +213,7 @@ namespace mln
       {
 	++n_step_3;
 
-	mln_piter(arr_t) a(*A);
+	mln_piter(arr_t) a(A);
 	mln_niter(Nbh) x(nbh, a);
 
 
@@ -223,7 +221,7 @@ namespace mln
 
 
 	// R <- R U A
-	if (A->npoints() == 0)
+	if (A.npoints() == 0)
 	  goto the_end;
 
 // 	for_all(a)
@@ -242,7 +240,7 @@ namespace mln
   	    //if (u.has(x) && is(x) == in_O)
   	    if (u.has(x) && !deja_vu(x))
 	      {
-		N[u(x)]->append(x);
+		N[u(x)].append(x);
 // 		is(x) = in_N;
 		N_box.take(x);
 		deja_vu(x) = true;
@@ -262,9 +260,7 @@ namespace mln
 	  {
 	    g = gN;
 	    // FIXME: DO the hole thing.
-	    arr_t* tmp = A;
 	    A = N[g];
-	    N[g] = tmp;
 // 	    mln_piter(arr_t) a(A);
 // 	    for_all(a)
 // 	    {
@@ -273,22 +269,20 @@ namespace mln
 // 	      // N_box is not re-computed so that we save time;
 // 	      // N_box is always growing while looping from step 3.
 // 	    }
-	    N[g]->clear();
+	    N[g].clear();
 	    goto step_3;
 	  }
 	// b)
 	else if (g == gN)
 	  {
-	    arr_t* tmp = A;
 	    A = N[g];
-	    N[g] = tmp;
 // 	    mln_piter(arr_t) a(A);
 // 	    for_all(a)
 // 	    {
 // 	      mln_invariant(is(a) == in_N);
 // 	      is(a) = in_A;
 // 	    }
-	    N[g]->clear();
+	    N[g].clear();
 	    goto step_3;
 	  }
 	// c)
@@ -301,9 +295,14 @@ namespace mln
 	    //   so this test is ok: mln_invariant((is | in_A).npoints() == 0);
 
 	    for (unsigned i = 0; i < 256; ++i)
-	      if (N[i]->npoints())
-		level::fill(inplace(deja_vu | *N[i]), false);
-		
+	      if (N[i].npoints())
+		level::fill(inplace(deja_vu | N[i]), false);
+// 		{
+// 		  mln_piter(arr_t) p(N[i]);
+// 		  for_all(p)
+// 		    deja_vu(p) = false;
+// 		}
+
 // 	    mln_invariant(deja_vu == ((pw::value(is) == pw::cst(in_R)) | input.domain()));
 
 // 	    mln_piter(I) r(N_box);
