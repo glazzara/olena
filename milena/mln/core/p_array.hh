@@ -93,6 +93,9 @@ namespace mln
     /// Append a point \p p.
     p_array<P>& append(const P& p);
 
+    /// Append an array \p other of points.
+    p_array<P>& append(const p_array<P>& other);
+
     /// Clear this set.
     void clear();
 
@@ -197,6 +200,18 @@ namespace mln
   p_array<P>::append(const P& p)
   {
     vect_.push_back(p);
+    if (! bb_needs_update_)
+      bb_needs_update_ = true;
+    return *this;
+  }
+
+  template <typename P>
+  inline
+  p_array<P>&
+  p_array<P>::append(const p_array<P>& other)
+  {
+    vect_.insert(vect_.end(),
+		 other.vect().begin(), other.vect().end());
     if (! bb_needs_update_)
       bb_needs_update_ = true;
     return *this;

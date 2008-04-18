@@ -134,15 +134,18 @@ namespace mln
 	{
 	  // 'other' makes '*this' valid
 	  *this = other;
+	  is_valid_ = true;
 	  return;
 	}
       // both are valids so:
       const box_<P>& o_b = other.b_;
       for (unsigned i = 0; i < P::dim; ++i)
-	if (o_b.pmin()[i] < b_.pmin()[i])
-	  b_.pmin()[i] = o_b.pmin()[i];
-	else if (o_b.pmax()[i] > b_.pmax()[i])
-	  b_.pmax()[i] = o_b.pmax()[i];
+	{
+	  if (o_b.pmin()[i] < b_.pmin()[i])
+	    b_.pmin()[i] = o_b.pmin()[i];
+	  if (o_b.pmax()[i] > b_.pmax()[i])
+	    b_.pmax()[i] = o_b.pmax()[i];
+	}
     }
 
     template <typename P>
@@ -158,14 +161,17 @@ namespace mln
       if (! this->is_valid_)
 	{
 	  b_ = other;
+	  is_valid_ = true;
 	  return;
 	}
       // both are valids so:
       for (unsigned i = 0; i < P::dim; ++i)
-	if (other.pmin()[i] < b_.pmin()[i])
-	  b_.pmin()[i] = other.pmin()[i];
-	else if (other.pmax()[i] > b_.pmax()[i])
-	  b_.pmax()[i] = other.pmax()[i];
+	{
+	  if (other.pmin()[i] < b_.pmin()[i])
+	    b_.pmin()[i] = other.pmin()[i];
+	  if (other.pmax()[i] > b_.pmax()[i])
+	    b_.pmax()[i] = other.pmax()[i];
+	}
     }
 
     template <typename P>
