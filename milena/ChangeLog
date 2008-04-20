@@ -1,5 +1,21 @@
 2008-04-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Test a simple fllt.
+
+	* sandbox/garrigues/fllt/fllt_simple.cc: Start to construct
+	shapes by browsing level lines in interpixels.
+	* sandbox/garrigues/fllt/fllt_simple.svg.1.cc: New, just browse the
+	c4 connected component of an image.
+	* sandbox/garrigues/fllt/fllt_simple.svg.2.cc: New, just browse the
+	c6 connected component of an image.
+	* sandbox/garrigues/fllt/fllt_simple.svg.3.cc: New, build a tree where
+	a connected component is parent of the shapes contained in its
+	holes. It give the same representation than fllt only on simple images.
+	* sandbox/garrigues/fllt/fllt_theo.cc: Old work, a faster version is
+	in sandbox/geraud/fllt.cc
+
+2008-04-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Start to test another algorithm for FLLT.
 
 	* sandbox/garrigues/fllt/fllt_simple.cc: New.
