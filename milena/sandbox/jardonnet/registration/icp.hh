@@ -97,7 +97,7 @@ namespace mln
         
         float         err = 100;
         //float       err_bis;
-        p_array<P>    Ck(C); //FIXME: Xk copy C
+        p_array<P>    Ck(C);
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
@@ -134,8 +134,8 @@ namespace mln
 
 #ifndef NDEBUG
           {
+            /*
             using namespace std;
-
             //FIXME: Should use Ck box but Ck.bbox() is not correct for c_length
              image2d<bool> img(box2d(500,800), 0);
              for (size_t i = 0; i < c_length; i++)
@@ -145,8 +145,9 @@ namespace mln
                    img(p) = true;
                }
 
-            //FIXME: Good but put point qfter c_length
+             //FIXME: Good but put point after c_length
             //image2d<bool> img = convert::to_image2d(Ck);
+            */
             stringstream oss;
             static int pimp = 0;
             oss << "i_" << pimp++ << ".pbm";

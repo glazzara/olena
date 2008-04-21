@@ -1,3 +1,13 @@
+2008-04-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Cleanup directory. Fix comments.
+
+	* sandbox/jardonnet/registration/cross_cov.hh: New: to be filled.
+	* sandbox/jardonnet/registration/icp_lazy.hh: Remove.
+	* sandbox/jardonnet/registration/icp_subsampled.hh: Remove.
+
+	* sandbox/jardonnet/registration/icp.hh: Fix comments.
+
 2008-04-21  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Clean up the line piter code.
