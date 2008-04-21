@@ -46,12 +46,13 @@ namespace mln
    * The parameter \c P is the type of points.
    */
   template <typename P>
-  class line_piter_ : public internal::point_iterator_base_< P, line_piter_<P> >
+  class line_piter_ :
+    public internal::point_iterator_base_< P, line_piter_<P> >
   {
     typedef line_piter_<P> self_;
     typedef internal::point_iterator_base_< P, self_ > super_;
   public:
-    
+
     // Make definitions from super class available.
     enum { dim = super_::dim };
 
@@ -81,10 +82,11 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    
+
   private:
     const box_<P>& b_;
-    P p_, nop_;
+    P p_;
+    bool is_valid_;
   };
 
 
@@ -98,14 +100,6 @@ namespace mln
   line_piter_<P>::line_piter_(const box_<P>& b)
     : b_(b)
   {
-    nop_ = b_.pmax();
-    if (dim == 1)
-      ++nop_[0];
-    else
-    {
-      nop_[0] = 0;
-      ++nop_[1];
-    }
     invalidate();
   }
 
@@ -113,7 +107,7 @@ namespace mln
   inline
   line_piter_<P>::operator P() const
   {
-    return p_;
+    return to_point();
   }
 
   template <typename P>
@@ -121,6 +115,7 @@ namespace mln
   const P&
   line_piter_<P>::to_point() const
   {
+    mln_precondition(is_valid());
     return p_;
   }
 
@@ -129,8 +124,10 @@ namespace mln
   mln_coord(P)
   line_piter_<P>::operator[](unsigned i) const
   {
+    mln_precondition(is_valid());
+    mln_precondition(i < dim);
+
     mln_invariant(p_[dim - 1] == b_.pmin()[dim - 1]);
-    assert(i < dim);
     return p_[i];
   }
 
@@ -139,7 +136,7 @@ namespace mln
   bool
   line_piter_<P>::is_valid() const
   {
-    return p_ != nop_;
+    return is_valid_;
   }
 
   template <typename P>
@@ -147,7 +144,7 @@ namespace mln
   void
   line_piter_<P>::invalidate()
   {
-    p_ = nop_;
+    is_valid_= false;
   }
 
   template <typename P>
@@ -156,6 +153,7 @@ namespace mln
   line_piter_<P>::start()
   {
     p_ = b_.pmin();
+    is_valid_ = true;
   }
 
   template <typename P>
@@ -163,19 +161,20 @@ namespace mln
   void
   line_piter_<P>::next_()
   {
+    mln_precondition(is_valid());
+
+    // Do we want this run for image in 3d?
     for (int c = dim - 2; c >= 0; --c)
     {
       if (p_[c] != b_.pmax()[c])
-      {
 	++p_[c];
-	break;
-      }
-      p_[c] = b_.pmin()[c];
+      else
+	p_[c] = b_.pmin()[c];
     }
     if (p_ == b_.pmin())
-      p_ = nop_;
+      invalidate();
   }
-  
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

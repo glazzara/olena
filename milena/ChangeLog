@@ -1,5 +1,12 @@
 2008-04-21  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Clean up the line piter code.
+
+	* tests/line_piter.cc: Update the test.
+	* mln/core/line_piter.hh: Clean up.
+
+2008-04-21  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Continue documentation.
 
 	* sandbox/ballas/doc/image_tours.txt: Add run and lut image definition.

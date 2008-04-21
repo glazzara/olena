@@ -30,22 +30,62 @@
  * \brief Tests on mln::line_piter.
  */
 
+//FIXME: replace by the necessary include
+#include <mln/core/image1d.hh>
 #include <mln/core/image2d.hh>
+#include <mln/core/image3d.hh>
 #include <mln/core/line_piter.hh>
 
 int main()
 {
   using namespace mln;
 
-  box2d b(make::point2d(1,2), make::point2d(5,8));
   const unsigned border = 2;
-  image2d<int> f(b, border);
 
-  image2d<int>::line_piter p(f.domain());
-  int i = 1;
-  for_all(p)
+  /// Test with image 1d
   {
-    mln_assertion(p[1] == 0 && p[0] == i++);
-    std::cout << p <<std::endl;
+    box1d b1(make::point1d(5), make::point1d(42));
+    image1d<int> f1(b1, border);
+    image1d<int>::line_piter p1(f1.domain());
+    for_all(p1)
+    {
+      mln_assertion(p1[0] == 5);
+      std::cout << p1 <<std::endl;
+    }
   }
+
+
+  /// Test with image 2d
+  {
+    box2d b2(make::point2d(1,2), make::point2d(5,8));
+    image2d<int> f2(b2, border);
+
+    image2d<int>::line_piter p2(f2.domain());
+    int i = 1;
+    for_all(p2)
+    {
+      mln_assertion(p2[1] == 2 && p2[0] == i++);
+      std::cout << p2 <<std::endl;
+    }
+  }
+
+  /// Test with image 3d
+  {
+    box3d b3(make::point3d(1,2,3), make::point3d(5,8,7));
+    image3d<int> f3(b3, border);
+
+    image3d<int>::line_piter p3(f3.domain());
+    int i = 1;
+    int j = 2;
+    for_all(p3)
+    {
+      mln_assertion( p3[0] == i && p3[1] == j && p3[2] == 3);
+      std::cout << p3 << std::endl;
+      if (i++ == 5)
+	i = 1;
+      if (j++ == 8)
+	j = 2;
+    }
+  }
+
 }
