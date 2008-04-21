@@ -1,3 +1,10 @@
+2008-04-21  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Continue documentation.
+
+	* sandbox/ballas/doc/image_tours.txt: Add run and lut image definition.
+	* sandbox/ballas/doc/draft.txt: Update.
+
 2008-04-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Test a simple fllt.

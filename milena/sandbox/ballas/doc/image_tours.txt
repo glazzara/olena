@@ -282,11 +282,6 @@ data = computed // computed => read_only!
 io = read_only
 speed = fast
 
---> properties related to values
-
-kind =??
-quant =??
-value = fixme
 
 --> properties related to the pset
 
@@ -308,40 +303,188 @@ lvalue just for image with stored//read_only data?
 
 All the run based encoded images have their definition domains encoded by runs.
 These images types are not morpher types since these do not lie on another
-image type.A run is a "continuous" (note this is wrong, cf graph index) set of
-sites.It is define by a site start, and a length. All the run based encoded
-image are templated by P, T where P is a site type and T a value type.
+image type.
+All the run based encoded images are templated by P, T where P is a site type
+and T a value type.
 
 Note:
 type one shot (const)!!!
 Do we store the the null value in the rle encoding.
-(Do we compress all the images values, or only the image objects...)
+( <=> Do we compress all the images values, or only the image objects...)
 Is there any restriction on P and T?
 
-How the properties are setted and to which values?
+*** Notation used:
+  (a, b) represents a pair composed by two elements..
+  {a, b, c...} represents a list of elements.
+
+*** What is a run?
+
+**** Definition
+
+// FIXME choose a better word than continuous.
+A run is a "continuous" succession of sites.
+All the sites encoded in a same run have the same value in the corresponding
+image.
+
+It is defined by a site "start", and a length.
+
+ex:
+        start    length of
+        site     the run
+      ((1, 2),      6  )
 
 
-*** Criteria needed by images to be encoded in runs
+  see the image:
 
-Can we compress all the image types or only the piece wise image type
-(cf the on_the_same_line in the encode algorithm).
+    1 - 1 - 2
+    |   |   |
+    2 - 2 - 2
+    |   |   |
+    3 - 3 - 3
 
-Currently, *encode function just work with image based on a **Point** set.
-cf:
-for (unsigned n = 0; same_line && n < dim - 1; ++n)
-    same_line = (p1[n] == p2[n]);
+Its corresponding runs are:
+{
+  ( (0, 0), 2 ),
+  ( (0, 2), 1 ),
+  ( (1, 0), 3 ),
+  ( (2, 0), 3 ),
+}
 
-Problem generalization:
-  A p_run take a Site as a parameter.
-  a p_run must be able to be casted into the Site (actually, const Site).
-  The only information that we have in the p_run is a len (integer).
-  So we must be able to refind all the site in the run from the site start,
-and a addition with an integer.
+Note: there is two different runs for the value 2:
+  ( (0, 2), 1 ),
+  ( (1, 0), 3 ).
 
-  How do we name this property?
+Indeed the points (0, 2) and (1, 0) are not "continuous".
 
 
 
+**** Difference between data stored in a linear way and runs.
+
+A run doesn't represent only a continuous memory zone.
+A run has also a localization aspect.
+From a run, we can get all the points which compose it.
+
+For instance, look at the following run:
+
+
+  i_run:  0 1 2 3
+         +-+-+-+-+
+ (0, 4)  |1|1|1|1|  <=> ( (0, 4), 4 )
+         +-+-+-+-+
+
+The points composing this run are:
+(0, 4), (0, 5), (0, 6), (0, 7)
+
+This property is really important to guarantee the interoperability
+between the different image types.
+
+**** PieceWise property
+
+The run is templated by a site type.
+But does we have any restriction on the type of site?
+
+The answer seems to be yes, the run must have a localization aspect.
+To allow this localization, we must be able to convert a p_run into its
+corresponding sites.
+So we must be able to convert a site and i_run index to another site.
+
+ex:
+
+(0, 4) + 3 give us the site (0, 7).
+
+It has two consequences:
+- a site must be convertible into a vector of coordinates
+- We must a know to which coordinate we add the i_run index to compute another
+  site. We will choose the coordinate which vary the most.
+
+This lead us to the PieceWise property:
+  The site can be represented by a vector of coordinates, and this vector has a
+coordinate which vary more than the other. (And we have an access to these
+coordinates).
+
+
+
+**** Why a run has to be a "continuous" succession of sites?
+
+We can imagine that a run is a succession of noncontinuous sites.
+For instance look at the following image:
+
+  1 - 1 - 2
+  |   |   |
+  2 - 2 - 2  This image is based on a grid which has its deltaX equal to 10
+  |   |   |  and its deltaY equal to 30.
+  1 - 1 - 1
+
+So the points localized on the grid are:
+
+ (0, 0)  - (10, 0)  - (20, 0)
+   |         |         |
+ (0, 30) - (10, 30) - (20, 30)
+   |         |         |
+ (0, 60) - (10, 60) - (20, 60)
+
+
+The corresponding encoded image with "noncontinuous" runs will be:
+
+  { ((a,1), 2), ((b,2), 1), ((c,2), 3), ((c,3), 3) }
+
+with a = (0, 0), b = (20, 0), c = (0, 30), d = (0, 60).
+
+Another representation of the encoded image is:
+
+  i_run:  0 1 2
+         +-+-+
+ (0, 0)  |1|1|
+         +-+-+
+ (20, 0) |2|
+         +-+-+-+
+ (0, 30) |2|2|2|
+         +-+-+-+
+ (0, 60) |1|1|1|
+         +-+-+-+
+
+Here, we loose the localization aspect of the psite.
+Indeed a psite (p_run) is represented by a site (pstart), and an integer
+(i_run). With these information, we can access to all the value in the encoded
+image. However we can not convert a psite (p_run) into a site (point2d).
+For instance:
+
+      psite                 ->   site
+ (pstart: (0, 60) i_run: 2) ->  (2, 60)
+
+However, the point (2, 60) doesn't belong to the image pset.
+The expected result here is (20, 60).
+This problem is an outcome of the holes present in the original image grid.
+So, this is an outcome of the "noncontinuous" aspect of the run.
+
+This approach implies one direct drawback: we loose the interoperability
+between the encoded image type and other image  types (We cannot convert a
+p_run into the corresponding site).
+So, a run has to be a continuous succession set of points.
+
+Another solution is to store the deltaX of the grid inside the psite.
+This way, we have enough information to convert a p_run into a point2d.
+But encoding a graph image  will not work either, even with the second
+solution. Indeed, nothing assure us that the site on a graph are "continuous".
+
+Do we need a property for that?.
+
+Another problem with "noncontinuous" run is the index access ambiguity.
+If the image provide an index access, the point represented by the indexes i,j
+is not necessarily the same point represented by the indexes i,j in the
+encoded image.
+
+
+**** Which kind of image can be encoded? / Conclusion
+
+We need two condition to encode an image type into a run encoded types.
+First the image psite type must be piece wise.
+Furthermore, the image must be based on a (regular) grid without any "holes".
+
+All image{1, 2, 3}d types can be encoded.
+Image based on a lut can be encoded too.
+Function image with a regular grid can be encoded.
+And morphers types based on a regular grid can be encoded too.
 
 
 *** RLE Image
@@ -353,7 +496,6 @@ A RLE image can be defined as the following:
 **** Associated types:
 
 value = T
-
 site  = P
 psite = runs_psite<P>
 pset = p_runs_<P>
@@ -384,7 +526,31 @@ size = regular  // Should we say compressed?
 support = depend on P // The property setted in the milena code is wrong
 
 
+
+**** Example:
+
+Consider the following image on regular grid.
+
+  1 - 1 - 2
+  |   |   |
+  2 - 2 - 2
+  |   |   |
+  1 - 1 - 1
+
+The encoded image is:
+
+{
+        psite    value
+    ( ((0, 0), 2), 1 ),
+    ( ((0, 2), 1), 2 ),
+    ( ((1, 0), 3), 2 ),
+    ( ((2, 0), 3), 1 ),
+}
+
+
 *** Compact RLE
+
+FIXME
 
 *** Sparse Image
 
@@ -396,7 +562,6 @@ array of size p.length().
 **** Associated types:
 
 value = T
-
 site  = P
 psite = runs_psite<P>
 pset = p_runs_<P>
@@ -405,8 +570,156 @@ pset = p_runs_<P>
 
 Same properties than the RLE Image type.
 
+**** Examples:
+
+Consider the following images:
+
+The empty case denote there is no data at this coordinate.
+
+  1 - 2 - 3 -   -   -
+  |   |   |   |   |   |
+    -   -   - 2 - 2 - 2
+  |   |   |   |   |   |
+    -   -   - 4 - 5 - 8
+  |   |   |   |   |   |
+    -   -   -   -   -
+
+
+Its sparse encoding is:
+
+{    psite         values
+   ( ((0, 0), 3), {1, 2, 3}),
+   ( ((1, 3), 3), {2, 2, 2}),
+   ( ((2, 3), 3), {4, 5, 6}),
+}
+
+
 
 *** Value encoded image
+
+**** Definition:
+
+A value image is an image which associate a value to its corresponding psite.
+So, we can easily get all the psites/site which have their (in O(1) complexity)
+
+{
+  (v, {runs})
+}
+
+**** Associate types:
+
+value = T
+site  = P
+psite = runs_psite<P>
+pset = p_runs_<P>
+
+**** Properties:
+  Same as rle image.
+
+**** Example:
+
+
+See
+  1 - 1 - 1 -   -   -
+  |   |   |   |   |   |
+    -   -   - 2 - 2 - 2
+  |   |   |   |   |   |
+    -   -   - 2 - 2 - 2
+  |   |   |   |   |   |
+  3 - 3 - 3 - 4 - 4 - 4
+
+The corresponding encoded image is:
+
+
+{
+  (1, {((0, 0), 3)} ),
+
+  (2, {((1, 3), 3),
+       ((2, 3), 3)} ),
+
+  (3, {((3, 0), 3)} ),
+
+  (4, {((3, 3), 3)} )
+}
+
+
+*** Image based on Lut
+
+**** Definition
+
+An image based on a lut is primitive image type.
+This kind of image use a look up table to retrieve a value
+associated to an image site.
+
+It can be defines as followed:
+
+  ({values}, {lut_values})
+
+
+FIXME: How do we deal with the dimensions of the images?
+
+
+
+**** Associated type
+
+site=P
+psite=P
+value=V
+pset=pset<P>
+
+
+**** Property:
+
+--> global properties
+
+category = primary
+border = none
+neighb: none
+data = stored
+io = read_write
+speed = fast
+
+--> properties related to values
+
+kind =
+quant =small
+value = V
+
+--> properties related to the pset
+
+access = browsing // Why the access property is set to browsing?
+space = pset<P>::space
+size = regular
+support = pset<P>::supper
+
+
+**** Example:
+
+Consider this image type:
+
+{ data =
+    +-----------+
+    | 0 2 1 0 2 |
+    | 0 0 3 2 1 |
+    | 2 1 2 2 0 |
+    +-----------+;
+  lut =
+    +---+---------------+
+    | 0 | (255,  0,  0) |  red (r)
+    | 1 | (127,127,127) |  medium grey (m)
+    | 2 | (  0,  0,255) |  blue (b)
+    | 3 | (127,127,127) |  medium grey (m) again
+    +---+---------------+
+}
+
+This image is defined with a look-up table; its external
+representation actually is:
+
+    +-----------+
+    | r b m r b |
+    | r r m b m |
+    | b m b b r |
+    +-----------+
 
 
 ** Graph Image
@@ -414,9 +727,6 @@ Same properties than the RLE Image type.
 FIXME: See with roland
 
 **** Connectivity based on a graph.
-
-
-** Image based on Lut
 
 ** Morpher (Derived Image)
 

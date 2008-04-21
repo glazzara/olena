@@ -45,7 +45,7 @@ As we can imagine, access to a "huge" image is slower than accessing
 to a "regular" image. Indeed, to access to "huge" image, we first need to
 load in the ram a part of the image, from the hard drive.
 So, with this property, we can handle huge image in a different way in
-the algorithms. (do inplace modification instead of create a new image for
+the algorithms. (do in place modification instead of create a new image for
 instance, forbid the launch algorithm which create temporary image with huge
 image...).
 
@@ -246,9 +246,6 @@ We also have to choose which property of the grid are relevant, and which
 property of the grid are useless.
 
 
-
-
-
 * Property that we need?
 ** has(p)
 
@@ -299,7 +296,7 @@ This function will basically count all the sites of the pset:
 
 This function can be specialize for image/pset types that provide an access
 time in O(1).
-In this case a method nsite will be present in the pset inteface:
+In this case a method nsite will be present in the pset interface:
   return ima.pset().nsites();
 
 So we need a pset property to define the complexity of accessing to the number
@@ -345,7 +342,7 @@ If the image is based on a regular grid, it can return a gbox (box based on a
 regular grid). An gbox is composed by point2d.
 If the image is based on a grid, it can return a ibox. We can access to the
 image values through a couple (i, j). But each couple (i, j) doesn't represent
-necessary a point2d (anystrope, unaligned grid...).
+necessary a point2d (anisotropic, unaligned grid...).
 If the image localization is space, we can return a xbox (box which is not
 based on a grid).
 
@@ -367,3 +364,7 @@ So we need a property to get these information.
 idea:
    boxed : true,
            false
+
+** pieceWise property
+
+see the image tours files.
