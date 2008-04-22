@@ -1,3 +1,14 @@
+2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add green and blue getters.
+	* cmy/get_blue.hh, cmy/get_green.hh,
+	  hsi/get_blue.hh, hsi/get_green.hh,
+	  xyz/get_blue.hh, xyz/get_green.hh,
+	  yiq/get_blue.hh, yiq/get_green.hh,
+	  yuv/get_blue.hh, yuv/get_green.hh: New green and blue getters.
+	* yuv/get_red.hh: New red getter.
+	* yuv/fun.hh: Remove.
+
 2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Address memory leaks in graphs.
