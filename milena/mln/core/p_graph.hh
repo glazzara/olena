@@ -94,12 +94,19 @@ namespace mln
     /// to the edge  id \a e.
     const P& node2(const util::edge_id& e) const;
 
+    /// Adjacency tests.
+    /// \{
+    /// Return true if the psites lhs and rhs are adjacent.
+    bool adjacent(const psite& lhs, const psite& rhs) const;
+    /// Return true if the nodes lhs and rhs are adjacent.
+    bool adjacent(const util::node_id& lhs, const util::node_id& rhs) const;
+
     /// Return true if the psites lhs and rhs are adjacent, or equal.
     bool adjacent_or_equal(const psite& lhs, const psite& rhs) const;
-
     /// Return true if the nodes lhs and rhs are adjacent, or equal
     bool adjacent_or_equal(const util::node_id& lhs,
 			   const util::node_id& rhs) const;
+    /// \}
 
     /// Return the graph associated to the p_graph domain:
     const graph& to_graph() const;
@@ -231,9 +238,42 @@ namespace mln
   template <typename P>
   inline
   bool
+  p_graph<P>::adjacent(const psite& lhs, const psite& rhs) const
+  {
+    mln_assertion(&lhs.pg() == this && rhs.pg() == this);
+    return adjacent(lhs.id(), rhs.id());
+  }
+
+  /* FIXME: This could be more efficient, if the graph structure had a
+     richer interface.  */
+  template <typename P>
+  inline
+  bool
+  p_graph<P>::adjacent(const util::node_id& lhs,
+		       const util::node_id& rhs) const
+  {
+    mln_assertion(lhs < this->npoints());
+    mln_assertion(rhs < this->npoints());
+
+    // Check whether RHS and LHS are adjacent (i.e., whether RHS is
+    // among the neighbors of LHS).
+    typedef std::vector<util::edge_id> edges_t;
+    const edges_t& lhs_neighbs = gr_->nodes()[lhs]->edges;
+    for (edges_t::const_iterator e = lhs_neighbs.begin();
+	 e != lhs_neighbs.end(); ++e)
+      if (gr_->edges()[*e]->n1() == rhs ||
+	  gr_->edges()[*e]->n2() == rhs)
+	return true;
+
+    return false;
+  }
+
+  template <typename P>
+  inline
+  bool
   p_graph<P>::adjacent_or_equal(const psite& lhs, const psite& rhs) const
   {
-    assert (&lhs.pg() == this && rhs.pg() == this);
+    mln_assertion(&lhs.pg() == this && rhs.pg() == this);
     return adjacent_or_equal(lhs.id(), rhs.id());
   }
 
@@ -243,24 +283,14 @@ namespace mln
   p_graph<P>::adjacent_or_equal(const util::node_id& lhs,
 				const util::node_id& rhs) const
   {
-    // FIXME: This is inefficient.
+    mln_assertion(lhs < this->npoints());
+    mln_assertion(rhs < this->npoints());
 
-    assert (lhs < this->npoints());
-    assert (rhs < this->npoints());
-
+    // Check whether LHS and RHS are equal.
     if (rhs == lhs)
       return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    typedef std::vector<util::node_id> adjacency_type;
-    const adjacency_type& lhs_neighbs = gr_->nodes()[lhs]->edges;
-
-    adjacency_type::const_iterator j =
-      std::find (lhs_neighbs.begin(), lhs_neighbs.end(), rhs);
-    if (j != lhs_neighbs.end())
-      return true;
-
-    return false;
+    // Check whether RHS and LHS are adjacent.
+    return adjacent(rhs, lhs);
   }
 
   template <typename P>

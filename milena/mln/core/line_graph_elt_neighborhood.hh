@@ -107,9 +107,6 @@ namespace mln
     Piter& piter = exact(piter_);
     neighbors_t& neighbors = piter.neighbors();
     neighbors.clear();
-    // Add the reference piter itself.  We might reconsider this, or
-    // create an elementary neighbors without the reference point.
-    neighbors.insert(piter.p_ref().id());
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */

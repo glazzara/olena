@@ -104,7 +104,7 @@ namespace mln
   {
     Piter& piter = exact(piter_);
     piter.first_();
-    if (!piter.adjacent_or_equal_to_p_ref_())
+    if (!piter.adjacent_to_p_ref_())
       next_(piter);
   }
 
@@ -121,7 +121,7 @@ namespace mln
        neighbors in constant time.  */
     do
       piter.step_();
-    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+    while (piter.is_valid() && !piter.adjacent_to_p_ref_());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

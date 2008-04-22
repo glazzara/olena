@@ -39,6 +39,8 @@
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
 
+// FIXME: We should move the `adjacent_or_equal method' from
+// iterators into this class.
 
 /// \file mln/core/p_line_graph.hh
 /// \brief Definition of a point set based on line graph.

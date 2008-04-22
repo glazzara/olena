@@ -98,8 +98,8 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
+    /// Is the piter adjacent to the reference point?
+    bool adjacent_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}
@@ -180,8 +180,8 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
+    /// Is the piter adjacent to the reference point?
+    bool adjacent_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}
@@ -302,9 +302,9 @@ namespace mln
   template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_fwd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
+  graph_neighborhood_fwd_piter<P, N>::adjacent_to_p_ref_() const
   {
-    return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
+    return p_ref_.pg().adjacent(p_ref_.id(), id_);
   }
 
   template <typename P, typename N>
@@ -430,9 +430,9 @@ namespace mln
   template <typename P, typename N>
   inline
   bool
-  graph_neighborhood_bkd_piter<P, N>::adjacent_or_equal_to_p_ref_() const
+  graph_neighborhood_bkd_piter<P, N>::adjacent_to_p_ref_() const
   {
-    return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
+    return p_ref_.pg().adjacent(p_ref_.id(), id_);
   }
 
   template <typename P, typename N>

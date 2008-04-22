@@ -1,5 +1,24 @@
 2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the definitions of graph-related neighborhoods.
+
+	* mln/core/line_graph_elt_neighborhood.hh:
+	(mln::line_graph_elt_neighborhood<P>::compute_neighbors_):
+	Don't add the reference (central) point to its own neighborhood.
+	* mln/core/p_line_graph.hh: Add a FIXME.
+
+	* mln/core/p_graph.hh (mln::p_graph<P>::adjacent): New methods.
+	Use them to factor
+	(mln::p_graph<P>::adjacent_or_equal(const node_id&, const node_id&)):
+	...this method.
+	* mln/core/graph_neighborhood_piter.hh,
+	* mln/core/graph_elt_neighborhood.hh
+	(mln::graph_elt_neighborhood<P>::start)
+	(mln::graph_elt_neighborhood<P>::next_):
+	s/adjacent_or_equal/adjacent/.
+
+2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove a name clash ambiguity detected by g++ 4.3.
 
 	* mln/core/point.hh (mln::internal::point_to_<M, C>::h_vec):
