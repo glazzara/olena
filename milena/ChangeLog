@@ -1,3 +1,20 @@
+2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Address memory leaks in graphs.
+
+	* mln/util/internal/graph_base.hh
+	(mln::util::internal::graph_base<N, E>::self_t): New typedef.
+	(mln::util::internal::graph_base<N, E>::nodes_t)
+	(mln::util::internal::graph_base<N, E>::edges_t)
+	(mln::util::internal::graph_base<N, E>::edges_set_t):
+	Help the compiler find types util::node and util::egde.
+	(mln::util::internal::graph_base<N, E>::graph_base(const self_t&)):
+	New copy ctor.
+	(mln::util::internal::graph_base<N, E>::operator=(const self_t&)):
+	New assignment operator.
+	(mln::util::internal::graph_base<N, E>::~graph_base):
+	Remove dynamically allocated data.
+
 2008-04-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Cleanup directory. Fix comments.

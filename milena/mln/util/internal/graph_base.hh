@@ -84,7 +84,7 @@ namespace mln
 
     /// \brief Specialization of mln::util::node for nodes with no
     /// associated value.
-    template<>
+    template <>
     struct node<void>
     {
       std::vector<edge_id> edges;
@@ -114,8 +114,8 @@ namespace mln
 
     /// \brief Specialization of mln::util::node for edges with no
     /// associated value.
-    template<>
-    struct edge <void>
+    template <>
+    struct edge<void>
     {
       edge(node_id n1, node_id n2)
 	: pair_node_(n1, n2)
@@ -151,22 +151,26 @@ namespace mln
       template<typename N, typename E>
       class graph_base
       {
+	typedef graph_base<N, E> self_t;
+
       public:
 	/* FIXME: Do we really want handle nodes and edges through
 	   pointers?  In my (Roland) opinion, this is just a drawback,
 	   here.  */
 	/// The type of the set of nodes.
-	typedef std::vector< node<N>* > nodes_t;
+	typedef std::vector< util::node<N>* > nodes_t;
 	/// The type of the set of edges.
-	typedef std::vector< edge<E>* > edges_t;
+	typedef std::vector< util::edge<E>* > edges_t;
 	/// A set to test the presence of a given edge.
-	typedef std::set< edge<E>* > edges_set_t;
+	typedef std::set< util::edge<E>* > edges_set_t;
 
-
-	/// Constructor.
+	/// Construction, assignments and destruction.
+	/// \{
 	graph_base();
-	/// Destructor.
+	graph_base(const self_t& rhs);
+	self_t& operator=(const self_t& rhs);
 	~graph_base();
+	/// \}
 
 	/// Return the node whose id is \a n.
 	/// \{
@@ -243,9 +247,9 @@ namespace mln
     namespace internal
     {
 
-      /*----------------.
-      | Ctor and dtor.  |
-      `----------------*/
+      /*--------------------------------------------.
+      | Construction, assignments and destruction.  |
+      `--------------------------------------------*/
 
       template<typename N, typename E>
       inline
@@ -256,10 +260,64 @@ namespace mln
 
       template<typename N, typename E>
       inline
+      graph_base<N, E>::graph_base(const graph_base<N, E>& rhs)
+	: nodes_(), edges_(), edges_set_()
+      {
+	nodes_.reserve(rhs.nodes_.size());
+	edges_.reserve(rhs.edges_.size());
+	for (typename nodes_t::const_iterator n = rhs.nodes_.begin();
+	     n != rhs.nodes_.end(); ++n)
+	  nodes_.push_back(new util::node<N>(**n));
+	for (typename edges_t::const_iterator e = rhs.edges_.begin();
+	     e != rhs.edges_.end(); ++e)
+	  edges_.push_back(new util::edge<E>(**e));
+	std::copy(edges_.begin(), edges_.end(),
+		  std::insert_iterator<edges_set_t>(edges_set_,
+						    edges_set_.begin()));
+      }
+
+      template<typename N, typename E>
+      inline
+      graph_base<N, E>&
+      graph_base<N, E>::operator=(const graph_base<N, E>& rhs)
+      {
+	if (this != &rhs)
+	  {
+	    /// Free previous nodes and edges.
+	    for (typename nodes_t::iterator n = nodes_.begin();
+		 n != nodes_.end(); ++n)
+	      delete *n;
+	    for (typename edges_t::iterator e = edges_.begin(); 
+		 e != edges_.end(); ++e)
+	      delete *e;
+	    edges_set_.clear();
+	    /// Assign values from RHS.
+	    nodes_.reserve(rhs.nodes_.size());
+	    edges_.reserve(rhs.edges_.size());
+	    for (typename nodes_t::const_iterator n = rhs.nodes_.begin();
+		 n != rhs.nodes_.end(); ++n)
+	      nodes_.push_back(new util::node<N>(**n));
+	    for (typename edges_t::const_iterator e = rhs.edges_.begin();
+		 e != rhs.edges_.end(); ++e)
+	      edges_.push_back(new util::edge<E>(**e));
+	    std::copy(edges_.begin(), edges_.end(),
+		      std::insert_iterator<edges_set_t>(edges_set_,
+							edges_set_.begin()));
+	  }
+	return *this;
+      }
+
+      template<typename N, typename E>
+      inline
       graph_base<N, E>::~graph_base()
       {
-	// FIXME: Delete data dynamically allocated in nodes_ and
-	// edges_.
+	for (typename nodes_t::iterator n = nodes_.begin(); n != nodes_.end();
+	     ++n)
+	  delete *n;
+	for (typename edges_t::iterator e = edges_.begin(); e != edges_.end();
+	     ++e)
+	  delete *e;
+	edges_set_.clear();
       }
 
       /*------------.
