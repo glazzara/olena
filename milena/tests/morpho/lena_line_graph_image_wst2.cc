@@ -37,12 +37,12 @@
     The scenario is as follows:
     \li load a 2-D, gray-level image from a PGM file;
     \li convert this 2-D image into a line graph-based one, where values
-        on edges are computed as the absolute value f the difference
+        on edges are computed as the absolute value of the difference
         between the values on the nodes	adjacent to the edge, so as to
-        create a (norm of the gradient) ``between the pixels'' of the
+        create a (norm of the) gradient ``between the pixels'' of the
         input image;
-    \li reduce the number of minima using an area opening (computing the
-        area using the vertices, not the edges);
+    \li reduce the number of minima using an area opening (counting the
+        vertices to compute the area, not the edges);
     \li perform a WST on this simplified line graph image;
     \li reduce the quantification of the result of the WST;
     \li create an 2-D, color output image with height and width double

@@ -1,5 +1,17 @@
 2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Miscellaneous clean up in tests.
+
+	* tests/core/graph_image.cc,
+	* tests/core/line_graph_image.cc:
+	Aesthetics changes.
+	Remove dead code.
+	* tests/morpho/lena_line_graph_image_wst2.cc: Typos.
+	* mln/util/graph.hh: Remove old FIXME.
+	* doc/Makefile.am: Add a FIXME.
+
+2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the definitions of graph-related neighborhoods.
 
 	* mln/core/line_graph_elt_neighborhood.hh:

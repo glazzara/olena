@@ -33,11 +33,7 @@
 
 # include <mln/util/internal/graph_base.hh>
 
-
-// FIXME: More doc!
-
 // FIXME: Rename node(s) as vertex (vertices).
-
 
 namespace mln
 {

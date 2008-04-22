@@ -136,9 +136,9 @@ int main()
   }
   std::cout << std::endl;
 
-  /*-------------------------.
+  /*--------------------------.
   | Processing graph images.  |
-  `-------------------------*/
+  `--------------------------*/
 
   graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
   draw::graph(ima_rep, ima_dil, 9);

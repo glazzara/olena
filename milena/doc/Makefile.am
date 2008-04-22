@@ -1,4 +1,5 @@
 # FIXME: To be overhauled! (See ticket #134).
+# FIXME: Rename `internal' as `all' or `complete'.
 
 DOXYGEN = doxygen
 

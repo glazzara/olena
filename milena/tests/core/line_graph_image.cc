@@ -118,9 +118,9 @@ int main()
   }
   std::cout << std::endl;
 
-  /*-------------------------.
+  /*--------------------------.
   | Processing graph images.  |
-  `-------------------------*/
+  `--------------------------*/
 
   line_graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.
@@ -134,26 +134,4 @@ int main()
   mln_piter_(ima_t) p_ero(ima_ero.domain());
   for_all (p_ero)
     std::cout << "ima_ero (" << p_ero << ") = " << ima_ero(p_ero) << std::endl;
-
-
-//   /* FIXME: When implementing convert::to_line_graph_image, don't
-//      forget to give a second argument defaulting to something like
-//      fun::vv2v::max().  This second argument is a functor used to
-//      compute the values of the edges of the line graph image.  */
-//   image2d ima; // = ...
-//   lg_ima_t lg_ima = convert::to_line_graph_image (ima);
-
-//   // Image2d representation.
-//   image2d<value_t> out = convert::to_image2d (lg_ima);
-//   io::pgm::save(out, "out.pgm");
-
-//   /* FIXME: Then, add some real processing on the line graph image
-//      before converting to an image2d:
-//      - erosion/dilation,
-//      - Beucher's gradient,
-//      - Meyer's WST (on the gradient of LG_IMA?),
-//      - attribute filters (see my notes on Laurent's remarks about
-//        attributes),
-//      - etc.
-//      Creating seperate tests for all these would be wise.  */
 }
