@@ -63,7 +63,7 @@ namespace mln
     struct point_to_
     {
       typedef algebra::vec<M::dim, C> metal_vec;
-      typedef h_vec<M::dim, C> h_vec;
+      typedef mln::h_vec<M::dim, C> h_vec;
     };
 
   } // end of namespace mln::internal

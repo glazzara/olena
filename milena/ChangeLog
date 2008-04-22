@@ -1,3 +1,10 @@
+2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove a name clash ambiguity detected by g++ 4.3.
+
+	* mln/core/point.hh (mln::internal::point_to_<M, C>::h_vec):
+	Use a fully qualified name to please g++ 4.3.
+
 2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Add green and blue getters.
