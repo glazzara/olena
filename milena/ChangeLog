@@ -1,3 +1,16 @@
+2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add literals.
+	* literal/brown.hh,     literal/cyan.hh,
+	  literal/darkgray.hh,  literal/gray.hh,
+	  literal/lightgray.hh, literal/lime.hh,
+	  literal/magenta.hh,   literal/olive.hh,
+	  literal/orange.hh,    literal/pink.hh,
+	  literal/purple.hh,    literal/teal.hh,
+	  literal/violet.hh,    literal/yellow.hh: New literals.
+
+	* literal: New folder.
+
 2008-04-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Miscellaneous clean up in tests.
