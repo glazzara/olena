@@ -11,6 +11,6 @@ test_watershed: test_watershed.o
 
 all: tree
 
-test_watershed.o: basic_najman.hh
+test_watershed.o: basic_najman.hh tikz.h
 test_component_tree.o: basic_najman.hh
 test.o: basic_najman.hh

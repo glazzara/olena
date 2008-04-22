@@ -6,6 +6,9 @@
 #include <queue>
 #include <set>
 
+#define MOINS_UN
+
+
 namespace mln
 {
 
@@ -19,7 +22,7 @@ namespace mln
       typedef mln_psite(I) psite;
 
       struct node {
-	int level;
+	mln_value(I) level;
 	int area;
 	int highest;
 	p_array<mln_psite(I)> children;
@@ -349,8 +352,8 @@ namespace mln
 	p_set<psite> v;
 
 	for_all(q)
-	  if (exact(ima)(q) < exact(ima)(p))
-	    v.append(Par_node(q));
+	  if (exact(pima).has(q) && exact(pima)(q) < exact(pima)(p))
+	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
 	  return psite(-1, -1);
@@ -372,7 +375,7 @@ namespace mln
 	p_set<psite> v;
 
 	for_all(q)
-	  if (exact(ima)(q) < exact(ima)(p))
+	  if (exact(pima).has(q) && exact(pima)(q) < exact(pima)(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
@@ -422,12 +425,12 @@ namespace mln
 
 	    if (i != psite(-1, -1))
 	      {
-		pima(p) = nodes(i).level ;
+		pima(p) = nodes(i).level MOINS_UN ;
 		Par_node(p) = i;
 		mln_niter(N) q(nbh, p);
 
 		for_all(q)
-		  if (!isproc(q))
+		  if (exact(pima).has(q) && !isproc(q))
 		    if (m_destructible(q) != psite(-1, -1))
 		      {
 			l.push(q);
@@ -439,12 +442,14 @@ namespace mln
 
       void w_watershed()
       {
-	p_array< p_set<psite> > L;
+	std::vector< std::set<psite> > L(255);
 	// TODO : replace int with the type of value
-	mln_ch_value(I,  int) K;
-	mln_ch_value(I,  psite) H;
+	I K(exact(ima).domain(), exact(ima).border());
+	mln_ch_value(I,  psite) H(exact(ima).domain(), exact(ima).border());
 
 	mln_piter(I) it(exact(ima).domain());
+
+	//	mln_value(I) max = 0;
 
 	psite i;
 	for_all(it)
@@ -454,47 +459,54 @@ namespace mln
 	  i = w_destructible(p);
 	  if (i != psite(-1, -1))
 	    {
-	      L[nodes(i).level].insert(p);
-	      K(p) = nodes(i).level;
+	      //	      if (max < nodes(i).level)
+	      //		max = nodes(i).level;
+	      L[nodes(i).level MOINS_UN].insert(p);
+	      K(p) = nodes(i).level MOINS_UN;
 	      H(p) = i;
-
-	      typename p_array< p_set<psite> >::fwd_piter n(L);
-	      for_all(n)
-	      {
-		while (!n.empty())
-		  {
-		    psite p = *n.begin();
-		    n.erase(p);
-		    // TODO : replace int with the type of value
-		    int k = nodes(p).level + 1;
-		    if (K(p) == k)
-		      {
-			pima(p) = k;
-			Par_node(p) = H(p);
-
-			mln_niter(N) q(nbh, p);
-			for_all(q)
-			  if (k < pima(q))
-			    {
-			      psite j = w_destructible(q);
-			      if (j != psite(-1, -1))
-				K(q) = -1;
-			      else
-				if (K(q) != nodes(j).level)
-				  {
-				    n.insert(q);
-				    K(q) = i-1;
-				    H(q) = j;
-				  }
-			    }
-		      }
-		  }
-	      }
 	    }
 	}
 
-      }
+	mln_value(I) k = 0;
 
+	typename std::vector< std::set<psite> >::iterator n;
+	for( n = L.begin(); n != L.end(); n++, k++ )
+	  {
+
+	    // to avoid looping on max
+	    //	    if (k + 1 == max)
+	    //	      break;
+
+	    while (!n->empty())
+	      {
+		psite p = *(n->begin());
+		n->erase(p);
+		// mln_value(I) k = nodes(p).level;
+
+		if (K(p) == k)
+		  {
+		    pima(p) = k;
+		    Par_node(p) = H(p);
+
+		    mln_niter(N) q(nbh, p);
+		    for_all(q)
+		      if (exact(pima).has(q) && k < pima(q))
+			{
+			  psite j = w_destructible(q);
+			  if (j == psite(-1, -1))
+			    K(q) = 255;
+			  else
+			    if (K(q) != nodes(j).level MOINS_UN)
+			      {
+				n->insert(q);
+				K(q) = nodes(j).level MOINS_UN;
+				H(q) = j;
+			      }
+			}
+		  }
+	      }
+	  }
+      }
 
     }; // struct basic_najman
 
