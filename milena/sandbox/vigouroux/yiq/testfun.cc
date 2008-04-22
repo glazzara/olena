@@ -11,7 +11,7 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include "fun.hh"
+#include "get_red.hh"
 
 int main()
 {
