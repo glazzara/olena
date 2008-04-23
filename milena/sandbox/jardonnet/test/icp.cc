@@ -2,6 +2,8 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
+#include <mln/io/ppm/save.hh>
+#include <mln/norm/l2.hh>
 
 #include <sandbox/jardonnet/registration/icp.hh>
 #include <sandbox/jardonnet/registration/tools.hh>
@@ -64,17 +66,46 @@ int main(int argc, char* argv[])
   qk.apply_on(c, c, c.npoints());
               
   const box_<point2d> box2d(400,700);
-  image2d<bool> output(box2d, 1);
+  image2d<value::rgb8> output(box2d, 1);
+
+
+  
+  std::vector<float> length(c.npoints());
+  //mean + length
+  float mean = 0;
+  for (size_t i = 0; i < c.npoints(); i++)
+    {
+      float f = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));;
+      length[i] = f;
+      mean += f;
+    }
+  mean /= c.npoints();
+  std::cout << mean << std::endl;
+  
+  //standar variation
+  float stdev = 0;
+  for (size_t i = 0; i < c.npoints(); i++)
+    stdev += (length[i] - mean) * (length[i] - mean);
+  stdev /= c.npoints();
+  stdev = math::sqrt(stdev);
+  std::cout << stdev << std::endl;
   
   //to 2d : projection (FIXME:if 3d)
   for (size_t i = 0; i < c.npoints(); i++)
     {
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
-        output(p) = true;
+        {
+          if (length[i] > 2 * stdev)
+            output(p) = value::rgb8(255,0,0);
+          else if (length[i] > stdev)
+            output(p) = value::rgb8(255,200,0);
+          else
+            output(p) = value::rgb8(255,255,255);
+        }
     }
   
-  io::pbm::save(output, "registred.pbm");
+  io::ppm::save(output, "registred.ppm");
   
 }
 

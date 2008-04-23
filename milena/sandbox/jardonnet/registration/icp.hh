@@ -125,10 +125,10 @@ namespace mln
             qk = update_qk(buf_qk, buf_dk);
           qk._qR.set_unit();
           buf_qk[0] = qk;
-          
+
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
-          
+
           //err = d(Ck+1,Xk)
           err = rms(Ck, map, c_length);
 

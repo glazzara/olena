@@ -39,7 +39,6 @@
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 
-
 namespace mln
 {
 

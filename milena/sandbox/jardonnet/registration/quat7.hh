@@ -129,8 +129,6 @@ namespace mln
                       M& map,
                       size_t c_length)
   {
-    //FIXME: mix mu_Xk and qk loop 
-    
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);
     for (size_t i = 0; i < c_length; ++i)
@@ -149,7 +147,7 @@ namespace mln
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= c_length;
-  
+
     algebra::vec<3,float> a;
     a[0] = Mk(1,2) - Mk(2,1);
     a[1] = Mk(2,0) - Mk(0,2);
@@ -157,7 +155,7 @@ namespace mln
 
     algebra::mat<4,4,float> Qk(literal::zero);
     float t = tr(Mk);
-    
+
     Qk(0,0) = t;
     for (int i = 1; i < 4; i++)
       {
@@ -167,16 +165,16 @@ namespace mln
           if (i == j)
             Qk(i,j) = 2 * Mk(i - 1,i - 1) - t;
       }
-      
+
     Qk(1,2) = Mk(0,1) + Mk(1,0);
     Qk(2,1) = Mk(0,1) + Mk(1,0);
-    
+
     Qk(1,3) = Mk(0,2) + Mk(2,0);
     Qk(3,1) = Mk(0,2) + Mk(2,0);
-    
+
     Qk(2,3) = Mk(1,2) + Mk(2,1);
     Qk(3,2) = Mk(1,2) + Mk(2,1);
-    
+
     algebra::quat qR(literal::zero);
     qR = jacobi(Qk);
     //std::cout << qR << std::endl;

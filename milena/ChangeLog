@@ -1,3 +1,14 @@
+2008-04-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: ck point to xk point distance.
+
+	* sandbox/jardonnet/test/icp.cc: Ck point color depends on the distance
+	with its closest point.
+	* sandbox/jardonnet/test/length.ppm: Result image.
+	* sandbox/jardonnet/TODO: Update.
+	* sandbox/jardonnet/registration/quat7.hh: Minor fix.
+	* sandbox/jardonnet/registration/icp.hh: Minor fix.
+
 2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Add literals.

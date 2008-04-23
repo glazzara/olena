@@ -19,3 +19,5 @@ write
 trans : vec  -->    quat
          v   |->  m = trans(t)
 
+- -
+io/all.hh cassé
