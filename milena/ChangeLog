@@ -1,3 +1,19 @@
+2008-04-24  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Clean and comment code.
+
+	* sandbox/abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman::go) Increment image before
+	computing component tree;
+	(mln::morpho::basic_najman::BuildComponentTree) Remove
+	useless brackets
+	(mln::morpho::basic_najman::highest_fork) Really look
+	for the min at beginning
+	(mln::morpho::basic_najman::w_watershed) Really compute
+	min and max, add comments.
+	* sandbox/abraham/morpho/images/test_watershed.pgm: .
+	* sandbox/abraham/morpho/test_watershed.cc: .
+
 2008-04-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: ck point to xk point distance.

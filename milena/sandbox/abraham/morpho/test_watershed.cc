@@ -30,10 +30,10 @@ int main ()
 
   image2dint input, mverif, wverif;
 
- #define TEST
+  // #define TEST
 
-   io::pgm::load(input, "./images/test_watershed.pgm");
-   //    io::pgm::load(input, "./images/test_3.pgm");
+  // io::pgm::load(input, "./images/test_watershed.pgm");
+         io::pgm::load(input, "./images/test_2.pgm");
  //   io::pgm::load(input, "./images/lena_light.pgm");
   io::pgm::load(mverif, "./images/result_m_watershed.pgm");
   io::pgm::load(wverif, "./images/result_topo_watershed.pgm");
@@ -57,7 +57,7 @@ int main ()
 
   std::cout << "M-Watershed" << std::endl;
 
-  n.m_watershed();
+ n.m_watershed();
 
    io::tikz::save(n.pima, "step.tex");
 

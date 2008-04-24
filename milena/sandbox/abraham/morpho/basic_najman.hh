@@ -2,12 +2,10 @@
 #include <mln/level/fill.hh>
 #include <mln/core/image2d.hh>
 #include <mln/core/p_set.hh>
-//#include <mln/util/greater_psite.hh>
+#include <mln/estim/min_max.hh>
+
 #include <queue>
 #include <set>
-
-#define MOINS_UN
-
 
 namespace mln
 {
@@ -43,7 +41,6 @@ namespace mln
       }; // struct node
 
       I pima;
-      const Image<I>& ima;
       const Neighborhood<N>& nbh;
       mln_ch_value(I, psite) Par_node;
       mln_ch_value(I, psite) Par_tree;
@@ -57,10 +54,10 @@ namespace mln
       p_array<mln_psite(I)> S;
       // std::map<psite,psite> M; // to keep the root of any point.
 
+      // Ctor
       basic_najman(const Image<I>& i,
 		   const Neighborhood<N>& n)
 	: pima(exact(i)),
-	  ima(i),
 	  nbh(n),
 	  Par_node(exact(i).domain(), exact(i).border()),
 	  Par_tree(exact(i).domain(), exact(i).border()),
@@ -71,7 +68,6 @@ namespace mln
 	  isproc(exact(i).domain(), exact(i).border())
       {
       }
-
 
       void MakeSet_tree(psite x)
       {
@@ -108,15 +104,24 @@ namespace mln
 
       void go()
       {
+	mln_piter(I) p (pima.domain());
+	for_all(p)
+	  pima(p) = pima(p) + 1;
+
 	init();
+
 	BuildComponentTree();
+
+	for_all(p)
+	  pima(p) = pima(p) - 1;
+
       }
 
 
       void init()
       {
 	// Sort the points in increasing order
-	S = level::sort_psites_increasing(ima);
+	S = level::sort_psites_increasing(pima);
 
 	// Clear the marker map
 	level::fill(isproc, false);
@@ -128,42 +133,39 @@ namespace mln
 	    // 	      if (subtreeRoot.hold(p))
 	    subtreeRoot(p) = p;
 	    // 	      if (nodes.hold(p))
-	    nodes(p) = MakeNode(exact(ima)(p));
+	    nodes(p) = MakeNode(pima(p));
 	  }
       }
 
 
       void BuildComponentTree()
       {
-	for (int ip = 0; ip < int(S.npoints()); ++ip)
+	p_array<mln_psite(I)>::fwd_piter ip(S);
+	for_all(ip)
 	  {
-	    psite p = S[ip];
+	    psite p = ip.to_point();
 
-	    psite curTree = Find_tree(p);
-	    psite curNode = Find_node(subtreeRoot(curTree));
+	    psite curCanonicalElt = Find_tree(p);
+	    psite curNode = Find_node(subtreeRoot(curCanonicalElt));
 
 	    mln_niter(N) q(nbh, p);
-
 	    for_all(q)
-	      if (exact(ima).has(q) and isproc(q) and exact(ima)(q) <= exact(ima)(p))
+	      if (pima.has(q) and isproc(q) and pima(q) <= pima(p))
 		{
-		  psite adjTree = Find_tree(q);
-		  psite adjNode = Find_node(subtreeRoot(adjTree));
+		  psite adjCanonicalElt = Find_tree(q);
+		  psite adjNode = Find_node(subtreeRoot(adjCanonicalElt));
 		  if (curNode != adjNode)
-		    {
-		      if (nodes(curNode).level == nodes(adjNode).level)
-			{
-			  curNode = MergeNode(adjNode, curNode);
-			}
-		      else
-			{
-			  nodes(curNode).addChild(adjNode);
-			  nodes(curNode).area += nodes(adjNode).area;
-			  nodes(curNode).highest += nodes(adjNode).highest;
-			}
-		    }
-		  curTree = Link_tree(adjTree, curTree);
-		  subtreeRoot(curTree) = curNode;
+		    if (nodes(curNode).level == nodes(adjNode).level)
+		      curNode = MergeNode(adjNode, curNode);
+		    else
+		      {
+			nodes(curNode).addChild(adjNode);
+			nodes(curNode).area += nodes(adjNode).area;
+			nodes(curNode).highest += nodes(adjNode).highest;
+		      }
+
+		  curCanonicalElt = Link_tree(adjCanonicalElt, curCanonicalElt);
+		  subtreeRoot(curCanonicalElt) = curNode;
 		}
 	    isproc(p) = true;
 	  }
@@ -323,7 +325,8 @@ namespace mln
 	psite min = components[0];
 
 	for_all(it)
-	  if (nodes(it.to_point()).level > nodes(min).level)
+	  //	  if (nodes(it.to_point()).level < nodes(min).level)
+	  if (pima(it.to_point()) < pima(min))
 	    min = it.to_point();
 
 	return min;
@@ -332,15 +335,20 @@ namespace mln
       psite highest_fork (p_set<psite>& components)
       {
 	if (components.npoints() == 0)
-	  return psite(-1, -1);
+	  {
+	    std::cerr << "highest fork : empty set" << std::endl;
+	    return psite(-1, -1);
+	  }
 
-	psite hfork = components[0], min = hfork;
+	psite
+	  hfork = components[0],
+	  m = min(components);
+
 	typename p_set<psite>::fwd_piter it(components);
-
 	for_all(it)
 	  hfork = lca(hfork, it.to_point());
 
-	if (nodes(min).level == nodes(hfork).level)
+	if (nodes(m).level == nodes(hfork).level)
 	 return psite(-1, -1);
 
 	return hfork;
@@ -352,7 +360,7 @@ namespace mln
 	p_set<psite> v;
 
 	for_all(q)
-	  if (exact(pima).has(q) && exact(pima)(q) < exact(pima)(p))
+	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
@@ -363,7 +371,7 @@ namespace mln
 	if (hf == psite(-1, -1))
 	  return min(v);
 
-	if (nodes(hf).level <= exact(ima)(p))
+	if (nodes(hf).level <= pima(p))
 	  return hf;
 
 	return psite(-1, -1);
@@ -375,7 +383,7 @@ namespace mln
 	p_set<psite> v;
 
 	for_all(q)
-	  if (exact(pima).has(q) && exact(pima)(q) < exact(pima)(p))
+	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
@@ -405,7 +413,7 @@ namespace mln
 
 	// Clear the marker map
 	level::fill(isproc, false);
-	mln_piter(I) it(exact(ima).domain());
+	mln_piter(I) it(pima.domain());
 
 	for_all(it)
 	  if (m_destructible(it.to_point()) != psite(-1, -1))
@@ -417,23 +425,30 @@ namespace mln
 	psite p, i;
 	while (!l.empty())
 	  {
+	    // Extract priority queue
 	    p = l.top();
 	    l.pop();
+
+	    // unmark p
 	    isproc(p) = false;
 
 	    i = m_destructible(p);
 
 	    if (i != psite(-1, -1))
 	      {
-		pima(p) = nodes(i).level MOINS_UN ;
+		pima(p) = nodes(i).level - 1 ;
 		Par_node(p) = i;
-		mln_niter(N) q(nbh, p);
+		// isproc(p) = true;
 
+		mln_niter(N) q(nbh, p);
 		for_all(q)
-		  if (exact(pima).has(q) && !isproc(q))
+		  if (pima.has(q) && !isproc(q))
 		    if (m_destructible(q) != psite(-1, -1))
 		      {
+			// Add priority queue
 			l.push(q);
+
+			// mark q
 			isproc(q) = true;
 		      }
 	      }
@@ -442,67 +457,89 @@ namespace mln
 
       void w_watershed()
       {
-	std::vector< std::set<psite> > L(255);
-	// TODO : replace int with the type of value
-	I K(exact(ima).domain(), exact(ima).border());
-	mln_ch_value(I,  psite) H(exact(ima).domain(), exact(ima).border());
+	std::map< mln_value(I), std::set<psite> > L;
 
-	mln_piter(I) it(exact(ima).domain());
+	// Setting the min and the max of the image
+	mln_value(I) k, kmin, kmax;
+	mln::estim::min_max(pima, kmin, kmax);
 
-	//	mln_value(I) max = 0;
+	// For k From kmin to kmax - 1 Do Lk <- <empty set>
+	for (k = kmin; k < kmax; k++)
+	  L[k] = std::set<psite>();
 
-	psite i;
+	// I K(pima.domain(), pima.border());
+	mln_ch_value(I, int) K(pima.domain(), pima.border());
+	mln_ch_value(I, psite) H(pima.domain(), pima.border());
+
+	// For All p of E do
+	mln_piter(I) it(pima.domain());
 	for_all(it)
 	{
 	  psite p = it.to_point();
 
-	  i = w_destructible(p);
+	  // i <- W-Destructible(p)
+	  psite i = w_destructible(p);
+
+	  // If i != inf then
 	  if (i != psite(-1, -1))
 	    {
-	      //	      if (max < nodes(i).level)
-	      //		max = nodes(i).level;
-	      L[nodes(i).level MOINS_UN].insert(p);
-	      K(p) = nodes(i).level MOINS_UN;
+	      L[nodes(i).level - 1].insert(p);
+	      K(p) = nodes(i).level - 1;
 	      H(p) = i;
 	    }
 	}
 
-	mln_value(I) k = 0;
-
-	typename std::vector< std::set<psite> >::iterator n;
-	for( n = L.begin(); n != L.end(); n++, k++ )
+	for (k = kmin; k < kmax; k++)
 	  {
+	    std::set<psite>& Lk = L[k];
 
-	    // to avoid looping on max
-	    //	    if (k + 1 == max)
-	    //	      break;
-
-	    while (!n->empty())
+	    while (!Lk.empty())
 	      {
-		psite p = *(n->begin());
-		n->erase(p);
-		// mln_value(I) k = nodes(p).level;
+		psite p = *(Lk.begin());
+		Lk.erase(p);
 
-		if (K(p) == k)
+		if (K(p) == (int) k)
 		  {
 		    pima(p) = k;
 		    Par_node(p) = H(p);
 
 		    mln_niter(N) q(nbh, p);
 		    for_all(q)
-		      if (exact(pima).has(q) && k < pima(q))
+		      if (pima.has(q) && k < pima(q))
 			{
-			  psite j = w_destructible(q);
-			  if (j == psite(-1, -1))
-			    K(q) = 255;
+			  psite i = w_destructible(q);
+			  if (i == psite(-1, -1))
+			    K(q) = 10000;
 			  else
-			    if (K(q) != nodes(j).level MOINS_UN)
+			    if (K(q) != nodes(i).level - 1)
 			      {
-				n->insert(q);
-				K(q) = nodes(j).level MOINS_UN;
-				H(q) = j;
+				L[nodes(i).level - 1].insert(q);
+				K(q) = nodes(i).level - 1;
+				H(q) = i;
 			      }
 			}
+
+
+
+		      if (pima.has(p) && k < pima(p))
+			{
+
+			  std::cout << "cas improbable" << std::endl;
+
+			  psite i = w_destructible(p);
+			  if (i == psite(-1, -1))
+			    K(p) = 255;
+			  else
+			    if (K(p) != nodes(i).level - 1)
+			      {
+				L[nodes(i).level - 1].insert(p);
+				K(p) = nodes(i).level - 1;
+				H(p) = i;
+			      }
+			}
+
+
+
 		  }
 	      }
 	  }
@@ -513,3 +550,4 @@ namespace mln
   }; // namespace morpho
 
 }; // namespace mln
+
