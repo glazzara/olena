@@ -120,7 +120,10 @@ int main ()
   io::pgm::load(verif, "./images/test_component_mapping.pgm");
 
   morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c4());
-  n.go();
+
+  n.init();
+
+  n.BuildComponentTree();
 
   /*
     Component mapping :

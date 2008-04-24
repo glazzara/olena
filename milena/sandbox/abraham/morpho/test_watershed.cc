@@ -35,8 +35,8 @@ int main ()
   // io::pgm::load(input, "./images/test_watershed.pgm");
          io::pgm::load(input, "./images/test_2.pgm");
  //   io::pgm::load(input, "./images/lena_light.pgm");
-  io::pgm::load(mverif, "./images/result_m_watershed.pgm");
-  io::pgm::load(wverif, "./images/result_topo_watershed.pgm");
+ // io::pgm::load(mverif, "./images/result_m_watershed.pgm");
+ // io::pgm::load(wverif, "./images/result_topo_watershed.pgm");
 
   morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c4());
 
@@ -49,7 +49,7 @@ int main ()
   }
   */
 
-    io::tikz::save(input, "start.tex");
+  //  io::tikz::save(input, "start.tex");
 
   std::cout << "Building Component tree..." << std::endl;
 
@@ -59,7 +59,7 @@ int main ()
 
  n.m_watershed();
 
-   io::tikz::save(n.pima, "step.tex");
+ //   io::tikz::save(n.pima, "step.tex");
 
 #ifdef TEST
 
@@ -84,7 +84,6 @@ int main ()
   // for_all(it)
   //   n.pima(it) = n.pima(it) * 17;
 
-
 #ifdef TEST
   equal = n.pima == wverif;
 
@@ -97,7 +96,7 @@ int main ()
     std::cout << "W-Watershed good as chocolate ice cream" << std::endl;
 #endif
 
-    io::tikz::save(n.pima, "end.tex");
+  // io::tikz::save(n.pima, "end.tex");
 
   //  n.image_output(n.pima);
 

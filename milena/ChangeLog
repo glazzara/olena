@@ -1,3 +1,12 @@
+2008-04-25  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add comments and a max function.
+
+	* sandbox/abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman::max) New .
+	* sandbox/abraham/morpho/test_component_tree.cc: .
+	* sandbox/abraham/morpho/test_watershed.cc: .
+
 2008-04-24  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Clean and comment code.

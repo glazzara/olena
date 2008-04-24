@@ -140,7 +140,7 @@ namespace mln
 
       void BuildComponentTree()
       {
-	p_array<mln_psite(I)>::fwd_piter ip(S);
+	typename p_array<mln_psite(I)>::fwd_piter ip(S);
 	for_all(ip)
 	  {
 	    psite p = ip.to_point();
@@ -278,11 +278,16 @@ namespace mln
       {
 	// FIXME : naive implementation, make something better
 
+	// If we found one of the point, we return it so ti can be caught in
+	// the loop
+
 	if (cur == a)
 	  return a;
 
 	if (cur == b)
 	  return b;
+
+	// We're on a leaf, the point has not been found
 
 	if (nodes(cur).children.npoints() == 0)
 	  return psite (-1, -1);
@@ -295,6 +300,8 @@ namespace mln
 	  tmp = lca_rec(it.to_psite(), a, b);
 	  if (tmp != psite(-1, -1))
 	    {
+
+	      // On of the point has been encountered in a child branch
 	      if (tmp == a)
 		{
 		  acc = tmp;
@@ -307,9 +314,14 @@ namespace mln
 		  n++;
 		  continue;
 		}
+
+	      // If the lca has already been found, it would be returned
+	      // so we just have to return it
 	      return tmp;
 	    }
 	}
+
+	// The two points had been spotted in the children, cur is the LCA
 	if (n == 2)
 	  return cur;
 
@@ -325,12 +337,27 @@ namespace mln
 	psite min = components[0];
 
 	for_all(it)
-	  //	  if (nodes(it.to_point()).level < nodes(min).level)
 	  if (pima(it.to_point()) < pima(min))
 	    min = it.to_point();
 
 	return min;
       }
+
+      psite max (p_set<psite>& components)
+      {
+	if (components.npoints() == 0)
+	  return psite(-1, -1);
+
+	typename p_set<psite>::fwd_piter it(components);
+	psite max = components[0];
+
+	for_all(it)
+	  if (pima(it.to_point()) > pima(max))
+	    max = it.to_point();
+
+	return max;
+      }
+
 
       psite highest_fork (p_set<psite>& components)
       {
@@ -340,16 +367,28 @@ namespace mln
 	    return psite(-1, -1);
 	  }
 
+	 if (components.npoints() == 1)
+	  return components[0];
+
 	psite
-	  hfork = components[0],
-	  m = min(components);
+	  m = min(components),
+	  hfork = m;
 
 	typename p_set<psite>::fwd_piter it(components);
 	for_all(it)
-	  hfork = lca(hfork, it.to_point());
+	{
+	  // Can't remove the point from the set
+	  if (it.to_point() == m)
+	    continue;
+
+	  psite c = lca(hfork, it.to_point());
+	  if (c != it.to_point())
+	     hfork = it.to_point();
+	  // hfork = c;
+	}
 
 	if (nodes(m).level == nodes(hfork).level)
-	 return psite(-1, -1);
+	  return psite(-1, -1);
 
 	return hfork;
       }
@@ -480,7 +519,7 @@ namespace mln
 	  // i <- W-Destructible(p)
 	  psite i = w_destructible(p);
 
-	  // If i != inf then
+	  // If i != infinity then
 	  if (i != psite(-1, -1))
 	    {
 	      L[nodes(i).level - 1].insert(p);
@@ -528,7 +567,7 @@ namespace mln
 
 			  psite i = w_destructible(p);
 			  if (i == psite(-1, -1))
-			    K(p) = 255;
+			    K(p) = 10000;
 			  else
 			    if (K(p) != nodes(i).level - 1)
 			      {
