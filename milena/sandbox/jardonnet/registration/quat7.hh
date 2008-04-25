@@ -137,13 +137,15 @@ namespace mln
         mu_Xk += xki;
       }
     mu_Xk /= c_length;
-    
+
+   
     // qR
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
     for (size_t i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
+           
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
       }
     Mk /= c_length;

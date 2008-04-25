@@ -1,3 +1,13 @@
+2008-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Icp Final Translation.
+
+	This patch allows icp to neglect errors due to ¨noise¨ in the image
+	registarted.
+
+	* sandbox/jardonnet/test/icp.cc: Add final translation.
+	* sandbox/jardonnet/test/length.ppm: Add Xk points (green).
+
 2008-04-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor iterators on p_graph neighborhoods and windows.

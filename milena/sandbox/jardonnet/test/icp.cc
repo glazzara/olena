@@ -68,8 +68,6 @@ int main(int argc, char* argv[])
   const box_<point2d> box2d(400,700);
   image2d<value::rgb8> output(box2d, 1);
 
-
-  
   std::vector<float> length(c.npoints());
   //mean + length
   float mean = 0;
@@ -89,10 +87,42 @@ int main(int argc, char* argv[])
   stdev /= c.npoints();
   stdev = math::sqrt(stdev);
   std::cout << stdev << std::endl;
+
+  //final translate translate using point only separated less than 2*stdev
+  //mu_Xk = center map(Ck)
+  algebra::vec<3,float> mu_Xk(literal::zero);
+  algebra::vec<3,float> mu_C(literal::zero);
+  float nb_point = 0;
+  for (size_t i = 0; i < c.npoints(); ++i)
+    {       
+      if (length[i] > 2 * stdev)
+      {
+        algebra::vec<3,float> xki = map(c[i]);
+        algebra::vec<3,float> ci = c[i];
+        mu_C += ci;
+        
+        mu_Xk += xki;
+        nb_point++;
+      }
+    }
+  mu_C  /= nb_point;
+  mu_Xk /= nb_point;
+  
+  // qT
+  const algebra::vec<3,float> qT = mu_Xk - mu_C;
+
+  //translate
+  for (size_t i = 0; i < c.npoints(); ++i)
+    {
+      algebra::vec<3,float> ci = c[i];
+      ci  -= qT;
+      c.hook_()[i] = algebra::to_point<point3d>(ci);
+    }
   
   //to 2d : projection (FIXME:if 3d)
   for (size_t i = 0; i < c.npoints(); i++)
     {
+      //Ck points
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
         {
@@ -103,6 +133,10 @@ int main(int argc, char* argv[])
           else
             output(p) = value::rgb8(255,255,255);
         }
+      //Xk points
+      point2d x(map(c[i])[0], map(c[i])[1]);
+      if (output.has(x))
+        output(x) = value::rgb8(0,255,0);
     }
   
   io::ppm::save(output, "registred.ppm");
