@@ -1,3 +1,20 @@
+2008-04-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor iterators on p_graph neighborhoods and windows.
+
+	* mln/core/internal/graph_vicinity_piter.hh: New file.
+	Use it to factor...
+	* mln/core/graph_neighborhood_piter.hh,
+	* mln/core/graph_window_piter.hh
+	(mln::graph_neighborhood_fwd_piter<P, N>)
+	(mln::graph_neighborhood_bkd_piter<P, N>)
+	(mln::graph_window_fwd_piter<P, W>)
+	(mln::graph_window_bkd_piter<P, W>):
+	...these iterators.
+	(mln::internal::graph_neighborhood_piter_<P, N, E>)
+	(mln::internal::graph_window_piter_<P, W, E>):
+	New classes.
+
 2008-04-25  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add comments and a max function.

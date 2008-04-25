@@ -42,9 +42,7 @@
    - mln::line_graph_window_bkd_piter
    - mln::line_graph_neighborhood_bkd_piter.  */
 
-# include <mln/core/concept/point_iterator.hh>
-# include <mln/core/p_graph.hh>
-# include <mln/core/graph_psite.hh>
+# include <mln/core/internal/graph_vicinity_piter.hh>
 
 /* FIXME: Due to the poor interface of mln::p_graph and
    mln::util::graph, we show to much implementation details here.
@@ -52,9 +50,34 @@
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P> class p_graph;
-  template <typename P> class graph_psite;
+
+  /*-----------------------------------------.
+  | internal::graph_window_piter_<P, W, E>.  |
+  `-----------------------------------------*/
+
+  namespace internal
+  {
+
+    /// \brief Base for iterator on a graph window.
+    template <typename P, typename W, typename E>
+    class graph_window_piter_ : public graph_vicinity_piter_<P, E>
+    {
+      typedef graph_window_piter_<P, W, E> self_;
+      typedef graph_vicinity_piter_<P, E> super_;
+
+    public:
+      /// Construction.
+      /// \{
+      template <typename Pref>
+      graph_window_piter_(const Window<W>& win, const Point_Site<Pref>& p_ref);
+      /// \}
+
+    protected:
+      /// The window.
+      const W& win_;
+    };
+
+  } // end of namespace mln::internal
 
 
   /*-------------------------------.
@@ -64,21 +87,10 @@ namespace mln
   /// \brief Forward iterator on graph window.
   template <typename P, typename W>
   class graph_window_fwd_piter :
-    public Point_Iterator< graph_window_fwd_piter<P, W> >
+    public internal::graph_window_piter_< P, W, graph_window_fwd_piter<P, W> >
   {
     typedef graph_window_fwd_piter<P, W> self_;
-    typedef Point_Iterator< self_ > super_;
-
-  public:
-    enum { dim = P::dim };
-
-    typedef graph_psite<P> psite;
-    typedef P point;
-    typedef mln_coord(P) coord;
-    // FIXME: Dummy typedef.
-    typedef void dpoint;
-    // FIXME: Dummy value.
-    typedef void mesh;
+    typedef internal::graph_window_piter_<P, W, self_> super_;
 
   public:
     /// Construction.
@@ -89,55 +101,19 @@ namespace mln
 
     /// Manipulation.
     /// \{
-    /// Test if the iterator is valid.
-    bool is_valid() const;
-    /// Invalidate the iterator.
-    void invalidate();
     /// Start an iteration.
     void start();
-
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
-    /// Update the internal data of the iterator.
-    void update_();
-    /// \}
-
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding point.
-    const point& to_point() const;
-    /// Reference to the corresponding point site.
-    const psite& to_psite() const;
-    /// Convert the iterator into a line graph psite.
-    operator psite() const;
-
-    /// Read-only access to the \a i-th coordinate.
-    coord operator[](unsigned i) const;
     /// \}
 
     /// Internals, used by the window.
     /// \{
-  public:
     /// Set the iterator to the first site of the graph.
     void first_();
     /// Advance the position of the iterator by one step.
     void step_();
-
-    /// An internal iterator on the set of nodes of the underlying graph.
-    util::node_id id_;
     /// \}
-
-  private:
-    /// The window.
-    const W& win_;
-    /// The ``central'' psite of the window.
-    const psite& p_ref_;
-    /// The psite corresponding to this iterator.
-    psite psite_;
-    /// The point corresponding to this iterator.
-    point p_;
   };
 
 
@@ -148,21 +124,10 @@ namespace mln
   /// \brief Backward iterator on graph window.
   template <typename P, typename W>
   class graph_window_bkd_piter :
-    public Point_Iterator< graph_window_bkd_piter<P, W> >
+    public internal::graph_window_piter_< P, W, graph_window_bkd_piter<P, W> >
   {
     typedef graph_window_bkd_piter<P, W> self_;
-    typedef Point_Iterator< self_ > super_;
-
-  public:
-    enum { dim = P::dim };
-
-    typedef graph_psite<P> psite;
-    typedef P point;
-    typedef mln_coord(P) coord;
-    // FIXME: Dummy typedef.
-    typedef void dpoint;
-    // FIXME: Dummy value.
-    typedef void mesh;
+    typedef internal::graph_window_piter_<P, W, self_> super_;
 
   public:
     /// Construction.
@@ -173,60 +138,44 @@ namespace mln
 
     /// Manipulation.
     /// \{
-    /// Test if the iterator is valid.
-    bool is_valid() const;
-    /// Invalidate the iterator.
-    void invalidate();
     /// Start an iteration.
     void start();
-
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
-    /// Update the internal data of the iterator.
-    void update_();
-    /// \}
-
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding point.
-    const point& to_point() const;
-    /// Reference to the corresponding point site.
-    const psite& to_psite() const;
-    /// Convert the iterator into a line graph psite.
-    operator psite() const;
-
-    /// Read-only access to the \a i-th coordinate.
-    coord operator[](unsigned i) const;
     /// \}
 
     /// Internals, used by the window.
     /// \{
-  public:
     /// Set the iterator to the first site of the graph.
     void first_();
     /// Advance the position of the iterator by one step.
     void step_();
-
-    /// An internal iterator on the set of nodes of the underlying graph.
-    util::node_id id_;
     /// \}
-
-  private:
-    /// The window.
-    const W& win_;
-    /// The ``central'' psite of the window.
-    const psite& p_ref_;
-    /// The psite corresponding to this iterator.
-    psite psite_;
-    /// The point corresponding to this iterator.
-    point p_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  /*-----------------------------------------.
+  | internal::graph_window_piter_<P, W, E>.  |
+  `-----------------------------------------*/
+
+  namespace internal
+  {
+
+    template <typename P, typename W, typename E>
+    template <typename Pref>
+    inline
+    graph_window_piter_<P, W, E>::graph_window_piter_(const Window<W>& win,
+						      const Point_Site<Pref>& p_ref)
+      : super_(p_ref),
+	win_(exact(win))
+    {
+    }
+
+  } // end of namespace mln::internal
+
 
   /*-------------------------------.
   | graph_window_fwd_piter<P, W>.  |
@@ -237,30 +186,8 @@ namespace mln
   inline
   graph_window_fwd_piter<P, W>::graph_window_fwd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
-    : win_(exact(win)),
-      p_ref_(exact(p_ref).to_psite()),
-      // Initialize psite_ to a dummy value.
-      psite_(),
-      p_()
+    : super_(win, p_ref)
   {
-    // Invalidate id_.
-    invalidate();
-  }
-
-  template <typename P, typename W>
-  inline
-  bool
-  graph_window_fwd_piter<P, W>::is_valid() const
-  {
-    return p_ref_.is_valid() && id_ < p_ref_.pg().npoints();
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  graph_window_fwd_piter<P, W>::invalidate()
-  {
-    id_ = -1;
   }
 
   template <typename P, typename W>
@@ -268,9 +195,9 @@ namespace mln
   void
   graph_window_fwd_piter<P, W>::start()
   {
-    win_.start(*this);
-    if (is_valid())
-      update_();
+    this->win_.start(*this);
+    if (this->is_valid())
+      this->update_();
   }
 
   template <typename P, typename W>
@@ -278,9 +205,9 @@ namespace mln
   void
   graph_window_fwd_piter<P, W>::next_()
   {
-    win_.next_(*this);
-    if (is_valid())
-      update_();
+    this->win_.next_(*this);
+    if (this->is_valid())
+      this->update_();
   }
 
   template <typename P, typename W>
@@ -288,7 +215,7 @@ namespace mln
   void
   graph_window_fwd_piter<P, W>::first_()
   {
-    id_ = 0;
+    this->id_ = 0;
   }
 
   template <typename P, typename W>
@@ -296,60 +223,7 @@ namespace mln
   void
   graph_window_fwd_piter<P, W>::step_()
   {
-    ++id_;
-  }
-
-
-  template <typename P, typename W>
-  inline
-  bool
-  graph_window_fwd_piter<P, W>::adjacent_or_equal_to_p_ref_() const
-  {
-    return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  graph_window_fwd_piter<P, W>::update_()
-  {
-    // Update psite_.
-    psite_ = graph_psite<P>(p_ref_.pg(), id_);
-    // Update p_.
-    p_ = p_ref_.pg().point_from_id(id_);
-  }
-
-  template <typename P, typename W>
-  inline
-  const P&
-  graph_window_fwd_piter<P, W>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const graph_psite<P>&
-  graph_window_fwd_piter<P, W>::to_psite() const
-  {
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  graph_window_fwd_piter<P, W>::operator graph_psite<P>() const
-  {
-    mln_precondition(is_valid());
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  mln_coord(P)
-  graph_window_fwd_piter<P, W>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
+    ++this->id_;
   }
 
 
@@ -362,30 +236,8 @@ namespace mln
   inline
   graph_window_bkd_piter<P, W>::graph_window_bkd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
-    : win_(exact(win)),
-      p_ref_(exact(p_ref).to_psite()),
-      // Initialize psite_ to a dummy value.
-      psite_(),
-      p_()
+    : super_(win, p_ref)
   {
-    // Invalidate id_.
-    invalidate();
-  }
-
-  template <typename P, typename W>
-  inline
-  bool
-  graph_window_bkd_piter<P, W>::is_valid() const
-  {
-    return p_ref_.is_valid() && id_ < p_ref_.pg().npoints();
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  graph_window_bkd_piter<P, W>::invalidate()
-  {
-    id_ = -1;
   }
 
   template <typename P, typename W>
@@ -393,9 +245,9 @@ namespace mln
   void
   graph_window_bkd_piter<P, W>::start()
   {
-    win_.start(*this);
-    if (is_valid())
-      update_();
+    this->win_.start(*this);
+    if (this->is_valid())
+      this->update_();
   }
 
   template <typename P, typename W>
@@ -403,9 +255,9 @@ namespace mln
   void
   graph_window_bkd_piter<P, W>::next_()
   {
-    win_.next_(*this);
-    if (is_valid())
-      update_();
+    this->win_.next_(*this);
+    if (this->is_valid())
+      this->update_();
   }
 
   template <typename P, typename W>
@@ -413,7 +265,7 @@ namespace mln
   void
   graph_window_bkd_piter<P, W>::first_()
   {
-    id_ = p_ref_.pg().gr_->nnodes() - 1;
+    this->id_ = this->p_ref_.pg().gr_->nnodes() - 1;
   }
 
   template <typename P, typename W>
@@ -421,60 +273,7 @@ namespace mln
   void
   graph_window_bkd_piter<P, W>::step_()
   {
-    --id_;
-  }
-
-
-  template <typename P, typename W>
-  inline
-  bool
-  graph_window_bkd_piter<P, W>::adjacent_or_equal_to_p_ref_() const
-  {
-    return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  graph_window_bkd_piter<P, W>::update_()
-  {
-    // Update psite_.
-    psite_ = graph_psite<P>(p_ref_.pg(), id_);
-    // Update p_.
-    p_ = p_ref_.pg().point_from_id(id_);
-  }
-
-  template <typename P, typename W>
-  inline
-  const P&
-  graph_window_bkd_piter<P, W>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const graph_psite<P>&
-  graph_window_bkd_piter<P, W>::to_psite() const
-  {
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  graph_window_bkd_piter<P, W>::operator graph_psite<P>() const
-  {
-    mln_precondition(is_valid());
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  mln_coord(P)
-  graph_window_bkd_piter<P, W>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
+    --this->id_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
