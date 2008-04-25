@@ -35,6 +35,11 @@
 #include <mln/core/p_array.hh>
 #include <mln/core/clone.hh>
 
+#include <mln/core/cast_image.hh>
+#include <mln/core/p_queue_fast.hh>
+
+#include <mln/core/dp_array.hh>
+
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -51,8 +56,6 @@
 #include <mln/util/tree_to_image.hh>
 #include <mln/util/branch_iter_ind.hh>
 
-#include <mln/core/cast_image.hh>
-#include <mln/core/p_queue_fast.hh>
 
 namespace mln
 {
@@ -142,6 +145,146 @@ namespace mln
 
     };
 
+    struct c6_neighb
+    {
+      // C6 neigboohood.
+      //static std::vector<dpoint2d> nbhs[2];
+      static dp_array<dpoint2d> nbhs[2];
+
+      static inline const dp_array<dpoint2d>& get(point2d p)
+      {
+	static bool toto = false;
+
+	if (!toto)
+	{
+	  toto = true;
+	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,-1));
+	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,0));
+	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,1));
+	  c6_neighb::nbhs[0].append(make::dpoint2d(0,1));
+	  c6_neighb::nbhs[0].append(make::dpoint2d(1,0));
+	  c6_neighb::nbhs[0].append(make::dpoint2d(0,-1));
+
+	  c6_neighb::nbhs[1].append(make::dpoint2d(-1,0));
+	  c6_neighb::nbhs[1].append(make::dpoint2d(0,1));
+	  c6_neighb::nbhs[1].append(make::dpoint2d(1,1));
+	  c6_neighb::nbhs[1].append(make::dpoint2d(1,0));
+	  c6_neighb::nbhs[1].append(make::dpoint2d(1,-1));
+	  c6_neighb::nbhs[1].append(make::dpoint2d(0,-1));
+	}
+
+	return nbhs[abs(p[1] % 2)];
+      }
+    };
+    dp_array<dpoint2d> c6_neighb::nbhs[2];
+
+
+    struct c6_interpixel
+    {
+      c6_interpixel() {}
+
+      c6_interpixel(point2d pt1, point2d pt2,
+		    unsigned i1, unsigned i2)
+	: pt1(pt1), pt2(pt2),
+	  i1(i1), i2(i2)
+      {
+	mln_assertion(pt1 + c6_neighb::get(pt1)[i1] == pt2);
+	mln_assertion(pt2 + c6_neighb::get(pt2)[i2] == pt1);
+      }
+
+      bool is_valid()
+      {
+	return (pt1 + c6_neighb::get(pt1)[i1] == pt2) &&
+	  (pt2 + c6_neighb::get(pt2)[i2] == pt1);
+      }
+
+      point2d pt1, pt2;
+      unsigned i1, i2;
+    };
+
+    template <typename I>
+    inline bool is_level_line_in_ip(const Image<I>& ima,
+				    const c6_interpixel& ip,
+				    const mln_value(I)& v)
+    {
+      mln_value(I) v1, v2;
+      v1 = ima(ip.pt1);
+      v2 = ima(ip.pt2);
+
+      return v1 != v2 && ((v1 >= v && v2 <= v) || (v1 <= v && v2 >= v));
+    }
+
+    class c6_interpixel_niter
+    {
+    public:
+      c6_interpixel_niter(const c6_interpixel& ip)
+	: ip_ref_(ip)
+      {
+      }
+
+      bool is_valid() const
+      {
+	i_ >= 4;
+      }
+
+      void invalidate()
+      {
+	i_ = 4;
+      }
+
+      void start()
+      {
+	i_ = 0;
+	ip_.pt1 = ip_ref_.pt1 + c6_neighb::get(ip_ref_.pt1)[ip_ref_.i1 + 1];
+	ip_.pt2 = ip_ref_.pt2;
+	ip_.i1 = ip_ref_.i1 + 1;
+	ip_.i2 = ip_ref_.i2 - 1;
+	mln_assertion(ip_.is_valid());
+      }
+
+      void next_()
+      {
+	mln_assertion(is_valid() && i_ > 0);
+	i_++;
+	switch (i_)
+	{
+	  case 1:
+	    ip_.pt1 = ip_ref_.pt1 + c6_neighb::get(ip_ref_.pt1)[ip_ref_.i1 - 1];
+	    mln_assertion(ip_.pt2 == ip_ref_.pt2);
+	    ip_.i1 = ip_ref_.i1 - 1;
+	    ip_.i2 = ip_ref_.i2 + 1;
+	    break;
+	  case 2:
+	    ip_.pt1 = ip_ref_.pt1;
+	    ip_.pt2 = ip_ref_.pt2 + c6_neighb::get(ip_ref_.pt2)[ip_.i2 + 1];
+	    ip_.i1 = ip_ref_.i1 - 1;
+	    ip_.i2 = ip_ref_.i2 + 1;
+	    break;
+	  case 3:
+	    mln_assertion(ip_.pt1 == ip_ref_.pt1);
+	    ip_.pt1 = ip_ref_.pt2 + c6_neighb::get(ip_ref_.pt2)[ip_.i2 - 1];
+	    ip_.i1 = ip_ref_.i1 + 1;
+	    ip_.i2 = ip_ref_.i2 - 1;
+	    break;
+	}
+	mln_assertion(ip_.is_valid());
+      }
+
+    private:
+      unsigned i_;
+      c6_interpixel ip_;
+      const c6_interpixel& ip_ref_;
+    };
+
+    struct c6_niter : public dpoints_fwd_piter<dpoint2d>
+    {
+      typedef dpoints_fwd_piter<dpoint2d> super;
+
+      c6_niter(const point2d& p)
+	: super(c6_neighb::get(p), p)
+      {}
+    };
+
     template <typename P, typename V>
     void add_npoints_to(fllt_node(P, V)* node, unsigned npoints)
     {
@@ -151,7 +294,6 @@ namespace mln
       if (node->parent())
 	add_npoints_to(node->parent(), npoints);
     }
-
 
     template <typename R>
     struct map_cell
@@ -171,8 +313,6 @@ namespace mln
 	border_of_hole_of = b;
       }
     };
-
-
 
     template <typename P, typename V>
     void
@@ -195,7 +335,6 @@ namespace mln
       	  std::cout << std::endl;
       	}
     }
-
 
     template <typename P, typename V>
     void
@@ -246,7 +385,6 @@ namespace mln
       N = tmp;
     }
 
-
     template <typename N_t>
     void clear_N(N_t& N)
     {
@@ -255,7 +393,7 @@ namespace mln
     }
 
     template <typename I, typename CC>
-    void erase_exterior_border(I& map, const box2d& bbox, const CC& current_cc, const std::vector<dpoint2d> nbh[])
+    void erase_exterior_border(I& map, const box2d& bbox, const CC& current_cc)
     {
       typedef const std::vector<dpoint2d> arr_dp_t;
       typedef std::vector<dpoint2d>::const_iterator arr_dp_t_it;
@@ -276,21 +414,17 @@ namespace mln
       {
 	mln_point(I) a = qu.pop_front();
 	//map(a).border_of_hole_of = 0;
-	arr_dp_t* n_dp = &nbh[abs(a[1] % 2 > 0)];
 
-// 	unsigned i = 0;
-	for(arr_dp_t_it x = n_dp->begin(); x != n_dp->end(); x++)
+
+
+	c6_niter n(a);
+	for_all(n)
 	{
-	  mln_point(I) n = mln_point(I)(a) + mln_dpoint(I)(*x);
-
 	  if(!map.has(n))
 	    continue;
 	  if (map(n).border_of_hole_of == current_cc &&
 	      map(n).belongs_to != current_cc)
 	  {
-// 	    i++;
-// 	    std::cout << i << std::endl;
-// 	    mln_assertion(i <= 2);
 	    map(n).restore_border();
 	    qu.push(n);
 	    break;
@@ -309,22 +443,6 @@ namespace mln
       typedef std::vector<dpoint2d>::const_iterator arr_dp_t_it;
       typedef fllt_node(mln_point(I), mln_value(I)) node_type;
       typedef fllt_tree(mln_point(I), mln_value(I)) tree_type;
-
-      // C6 neigboohood.
-      arr_dp_t neighb_c6[2];
-      neighb_c6[0].push_back(make::dpoint2d(-1,-1));
-      neighb_c6[0].push_back(make::dpoint2d(-1,0));
-      neighb_c6[0].push_back(make::dpoint2d(-1,1));
-      neighb_c6[0].push_back(make::dpoint2d(0,1));
-      neighb_c6[0].push_back(make::dpoint2d(1,0));
-      neighb_c6[0].push_back(make::dpoint2d(0,-1));
-
-      neighb_c6[1].push_back(make::dpoint2d(-1,0));
-      neighb_c6[1].push_back(make::dpoint2d(0,1));
-      neighb_c6[1].push_back(make::dpoint2d(1,1));
-      neighb_c6[1].push_back(make::dpoint2d(1,0));
-      neighb_c6[1].push_back(make::dpoint2d(1,-1));
-      neighb_c6[1].push_back(make::dpoint2d(0,-1));
 
       // Variables.
       image2d<map_cell<node_type> > map(input.domain().to_larger(1));
@@ -454,37 +572,37 @@ namespace mln
 #endif
 	for_all(a)
 	  {
-	    arr_dp_t* nbh = &neighb_c6[a[1] % 2];
-	    for(arr_dp_t_it x = nbh->begin(); x != nbh->end(); x++)
+
+ 	    c6_niter n(a);
+ 	    for_all(n)
+	    {
+	      if (is(n) == in_O)
 	      {
-		mln_point(I) n = mln_point(I)(a) + mln_dpoint(I)(*x);
-		if (is(n) == in_O)
+		if (!current_parent)
 		{
-		  if (!current_parent)
+		  if (map(n).border_of_hole_of != 0 &&
+		      map(n).border_of_hole_of != map(n).belongs_to)
 		  {
-		    if (map(n).border_of_hole_of != 0 &&
-			map(n).border_of_hole_of != map(n).belongs_to)
-		    {
-		      mln_assertion(map(n).border_of_hole_of != current_cc);
-		      current_parent = map(n).border_of_hole_of;
-// 		      std::cout << "propagation : " << n << std::endl;
-		    }
-		    else if (map(n).belongs_to)
-		    {
-		      current_parent = map(n).belongs_to->parent();
-		      mln_assertion(current_parent != current_cc);
-		    }
+		    mln_assertion(map(n).border_of_hole_of != current_cc);
+		    current_parent = map(n).border_of_hole_of;
+		    // 		      std::cout << "propagation : " << n << std::endl;
 		  }
-		  map(n).set_border_of_hole_of(current_cc);
-		  N_box.take(n);
-		  is(n) = in_N;
-		  if (u.has(n))
-		    N[u(n)]->append(n);
-#ifdef FLLTDEBUG
-		  std::cout << n;
-#endif
+		  else if (map(n).belongs_to)
+		  {
+		    current_parent = map(n).belongs_to->parent();
+		    mln_assertion(current_parent != current_cc);
+		  }
 		}
+		map(n).set_border_of_hole_of(current_cc);
+		N_box.take(n);
+		is(n) = in_N;
+		if (u.has(n))
+		  N[u(n)]->append(n);
+#ifdef FLLTDEBUG
+		std::cout << n;
+#endif
 	      }
+	    }
 	  }
 #ifdef FLLTDEBUG
 	std::cout << std::endl;
@@ -500,7 +618,7 @@ namespace mln
 	  add_npoints_to(current_parent, current_cc->elt().npoints);
 	  // Was : current_parent->elt().npoints += current_cc->elt().npoints;
 	  current_cc->set_parent(current_parent);
-	  erase_exterior_border(map, N_box, current_cc, neighb_c6);
+	  erase_exterior_border(map, N_box, current_cc);
 	  goto step_1;
 	}
 	else
@@ -537,9 +655,9 @@ int main()
   typedef fllt_node(mln_point_(I), mln_value_(I)) node_type;
   typedef fllt_tree(mln_point_(I), mln_value_(I)) tree_type;
 
-//   image2d<int_u8> ima;
-//   //io::pgm::load(ima, "../../../img/lena.pgm");
-//   io::pgm::load(ima, "../tapis.pgm");
+  image2d<int_u8> ima;
+  //io::pgm::load(ima, "../../../img/lena.pgm");
+  io::pgm::load(ima, "../tapis.pgm");
 
 
   //   int_u8 vs[9][9] = {
@@ -568,15 +686,15 @@ int main()
 //                    {100, 200, 255, 200, 100},
 //                    {100, 100, 100, 100, 100} };
 
-  int vs[9][9] = { {2,2,2,2,2,2,2,2,2},
-		   {2,2,2,2,2,2,2,2,2},
-		   {2,1,1,1,1,1,1,1,2},
-		   {2,1,2,2,1,0,0,1,2},
-		   {2,1,2,2,1,0,0,1,2},
-		   {2,1,2,2,1,0,0,1,2},
-		   {2,1,1,1,1,1,1,1,2},
-		   {2,1,1,1,1,1,1,1,2},
-		   {2,2,2,2,2,2,2,2,2} };
+//   int vs[9][9] = { {2,2,2,2,2,2,2,2,2},
+// 		   {2,2,2,2,2,2,2,2,2},
+// 		   {2,1,1,1,1,1,1,1,2},
+// 		   {2,1,2,2,1,0,0,1,2},
+// 		   {2,1,2,2,1,0,0,1,2},
+// 		   {2,1,2,2,1,0,0,1,2},
+// 		   {2,1,1,1,1,1,1,1,2},
+// 		   {2,1,1,1,1,1,1,1,2},
+// 		   {2,2,2,2,2,2,2,2,2} };
 
 //   int vs[7[7] = { {101, 101, 101, 191, 204, 255, 191},
 // 		  {101, 101, 191, 204, 204, 204, 204},
@@ -589,14 +707,14 @@ int main()
 
 //   int vs[2][1] = { {121}, {101} };
 
-  image2d<int> ima_(make::image2d(vs));
-  image2d<int_u8> ima(ima_.domain());
-  level::fill(ima, ima_);
+//   image2d<int> ima_(make::image2d(vs));
+//   image2d<int_u8> ima(ima_.domain());
+//   level::fill(ima, ima_);
 
   tree_type tree = my::fllt(ima);
 
 
-  draw_tree(ima, tree);
+//   draw_tree(ima, tree);
 
 
 
