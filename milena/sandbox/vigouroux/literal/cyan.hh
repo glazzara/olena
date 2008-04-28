@@ -7,6 +7,9 @@
  */
 
 # include <mln/core/concept/literal.hh>
+# include <mln/value/rgb8.hh>
+# include "../cmy/my_cmy.hh"
+# include "../cmy/rgb_to_cmy.hh"
 
 namespace mln
 {
@@ -17,6 +20,13 @@ namespace mln
     /// Type of literal cyan.
     struct cyan_t : public Literal<cyan_t>
     {
+      value::rgb8 operator()() const
+      {
+	const value::cmy_f cmy(255,0,0);
+	value::rgb8 rgb = fun::v2v::f_rgb_to_cmy_f(fun::v2v::f_rgb_to_cmy_f(cmy));
+
+	return rgb;
+      }
     };
 
 

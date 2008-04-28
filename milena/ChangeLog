@@ -1,3 +1,11 @@
+2008-04-28  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Upgrade literals.
+	* color/my_cmy.hh: .
+	* literal/black.hh, literal/blue.hh,
+	  literal/cyan.hh, literal/green.hh,
+	  literal/red.hh, literal/white.hh: New literal.
+
 2008-04-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add delta points array and use it in fllt.
