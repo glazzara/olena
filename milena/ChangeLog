@@ -1,5 +1,39 @@
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify the hierarchy of piters on graph windows and
+	neighborhoods.
+
+	* mln/core/graph_window_piter.hh
+	(mln::internal::graph_window_piter_<P, W, E>): Remove class.
+	(mln::graph_window_fwd_piter<P, W>)
+	(mln::graph_window_bkd_piter<P, W>):
+	Inherit from internal::graph_vicinity_piter_ directly.
+	(mln::graph_window_fwd_piter<P, W>::super_)
+	(mln::graph_window_bkd_piter<P, W>::super_):
+	Adjust typedefs.
+	(mln::graph_window_fwd_piter<P, W>::win_)
+	(mln::graph_window_bkd_piter<P, W>::win_):
+	New members.
+	(mln::graph_window_fwd_piter<P, W>::graph_window_fwd_piter)
+	(mln::graph_window_bkd_piter<P, W>::graph_window_bkd_piter):
+	Adjust ctors.
+	* mln/core/graph_neighborhood_piter.hh
+	(mln::internal::graph_neighborhood_piter_<P, N, E>): Remove class.
+	(mln::graph_neighborhood_fwd_piter<P, N>)
+	(mln::graph_neighborhood_bkd_piter<P, N>):
+	Inherit from internal::graph_vicinity_piter_ directly.
+	(mln::graph_neighborhood_fwd_piter<P, N>::super_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::super_):
+	Adjust typedefs.
+	(mln::graph_neighborhood_fwd_piter<P, N>::nbh_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::nbh_):
+	New members.
+	(mln::graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter)
+	(mln::graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter):
+	Adjust ctors.
+
+2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Speed up iterations on line graph windows.
 
 	* mln/core/line_graph_window_piter.hh

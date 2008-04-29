@@ -51,47 +51,17 @@
 namespace mln
 {
 
-  /*-----------------------------------------------.
-  | internal::graph_neighborhood_piter_<P, N, E>.  |
-  `-----------------------------------------------*/
-
-  namespace internal
-  {
-
-    /// \brief Base for iterator on a graph neighborhood.
-    template <typename P, typename N, typename E>
-    class graph_neighborhood_piter_ : public graph_vicinity_piter_<P, E>
-    {
-      typedef graph_neighborhood_piter_<P, N, E> self_;
-      typedef graph_vicinity_piter_<P, E> super_;
-
-    public:
-      /// Construction.
-      /// \{
-      template <typename Pref>
-      graph_neighborhood_piter_(const Neighborhood<N>& nbh,
-				const Point_Site<Pref>& p_ref);
-      /// \}
-
-    protected:
-      /// The neighborhood.
-      const N& nbh_;
-    };
-
-  } // end of namespace mln::internal
-
-
   /*-------------------------------------.
   | graph_neighborhood_fwd_piter<P, N>.  |
   `-------------------------------------*/
 
   template <typename P, typename N>
   class graph_neighborhood_fwd_piter :
-    public internal::graph_neighborhood_piter_< P, N,
-						graph_neighborhood_fwd_piter<P, N> >
+    public internal::graph_vicinity_piter_< P,
+					    graph_neighborhood_fwd_piter<P, N> >
   {
     typedef graph_neighborhood_fwd_piter<P, N> self_;
-    typedef internal::graph_neighborhood_piter_<P, N, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.
@@ -116,6 +86,10 @@ namespace mln
     /// Advance the position of the iterator by one step.
     void step_();
     /// \}
+
+    private:
+      /// The neighborhood.
+      const N& nbh_;
   };
 
 
@@ -125,11 +99,11 @@ namespace mln
 
   template <typename P, typename N>
   class graph_neighborhood_bkd_piter :
-    public internal::graph_neighborhood_piter_< P, N,
-						graph_neighborhood_bkd_piter<P, N> >
+    public internal::graph_vicinity_piter_< P,
+					    graph_neighborhood_bkd_piter<P, N> >
   {
     typedef graph_neighborhood_bkd_piter<P, N> self_;
-    typedef internal::graph_neighborhood_piter_<P, N, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.
@@ -154,31 +128,15 @@ namespace mln
     /// Advance the position of the iterator by one step.
     void step_();
     /// \}
+
+    private:
+      /// The neighborhood.
+      const N& nbh_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-  /*-----------------------------------------------.
-  | internal::graph_neighborhood_piter_<P, N, E>.  |
-  `-----------------------------------------------*/
-
-  namespace internal
-  {
-
-    template <typename P, typename N, typename E>
-    template <typename Pref>
-    inline
-    graph_neighborhood_piter_<P, N, E>::graph_neighborhood_piter_(const Neighborhood<N>& nbh,
-								  const Point_Site<Pref>& p_ref)
-      : super_(p_ref),
-	nbh_(exact(nbh))
-    {
-    }
-
-  } // end of namespace mln::internal
-
 
   /*-------------------------------------.
   | graph_neighborhood_fwd_piter<P, N>.  |
@@ -189,7 +147,8 @@ namespace mln
   inline
   graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
 								   const Point_Site<Pref>& p_ref)
-    : super_(nbh, p_ref)
+    : super_(p_ref),
+      nbh_(exact(nbh))
   {
   }
 
@@ -239,7 +198,8 @@ namespace mln
   inline
   graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
 								   const Point_Site<Pref>& p_ref)
-    : super_(nbh, p_ref)
+    : super_(p_ref),
+      nbh_(exact(nbh))
   {
   }
 

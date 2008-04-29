@@ -51,35 +51,6 @@
 namespace mln
 {
 
-  /*-----------------------------------------.
-  | internal::graph_window_piter_<P, W, E>.  |
-  `-----------------------------------------*/
-
-  namespace internal
-  {
-
-    /// \brief Base for iterator on a graph window.
-    template <typename P, typename W, typename E>
-    class graph_window_piter_ : public graph_vicinity_piter_<P, E>
-    {
-      typedef graph_window_piter_<P, W, E> self_;
-      typedef graph_vicinity_piter_<P, E> super_;
-
-    public:
-      /// Construction.
-      /// \{
-      template <typename Pref>
-      graph_window_piter_(const Window<W>& win, const Point_Site<Pref>& p_ref);
-      /// \}
-
-    protected:
-      /// The window.
-      const W& win_;
-    };
-
-  } // end of namespace mln::internal
-
-
   /*-------------------------------.
   | graph_window_fwd_piter<P, W>.  |
   `-------------------------------*/
@@ -87,10 +58,10 @@ namespace mln
   /// \brief Forward iterator on graph window.
   template <typename P, typename W>
   class graph_window_fwd_piter :
-    public internal::graph_window_piter_< P, W, graph_window_fwd_piter<P, W> >
+    public internal::graph_vicinity_piter_< P, graph_window_fwd_piter<P, W> >
   {
     typedef graph_window_fwd_piter<P, W> self_;
-    typedef internal::graph_window_piter_<P, W, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.
@@ -114,6 +85,10 @@ namespace mln
     /// Advance the position of the iterator by one step.
     void step_();
     /// \}
+
+    private:
+      /// The window.
+      const W& win_;
   };
 
 
@@ -124,10 +99,10 @@ namespace mln
   /// \brief Backward iterator on graph window.
   template <typename P, typename W>
   class graph_window_bkd_piter :
-    public internal::graph_window_piter_< P, W, graph_window_bkd_piter<P, W> >
+    public internal::graph_vicinity_piter_< P, graph_window_bkd_piter<P, W> >
   {
     typedef graph_window_bkd_piter<P, W> self_;
-    typedef internal::graph_window_piter_<P, W, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.
@@ -151,31 +126,15 @@ namespace mln
     /// Advance the position of the iterator by one step.
     void step_();
     /// \}
+
+    private:
+      /// The window.
+      const W& win_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-  /*-----------------------------------------.
-  | internal::graph_window_piter_<P, W, E>.  |
-  `-----------------------------------------*/
-
-  namespace internal
-  {
-
-    template <typename P, typename W, typename E>
-    template <typename Pref>
-    inline
-    graph_window_piter_<P, W, E>::graph_window_piter_(const Window<W>& win,
-						      const Point_Site<Pref>& p_ref)
-      : super_(p_ref),
-	win_(exact(win))
-    {
-    }
-
-  } // end of namespace mln::internal
-
 
   /*-------------------------------.
   | graph_window_fwd_piter<P, W>.  |
@@ -186,7 +145,8 @@ namespace mln
   inline
   graph_window_fwd_piter<P, W>::graph_window_fwd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
-    : super_(win, p_ref)
+    : super_(p_ref),
+      win_(exact(win))
   {
   }
 
@@ -236,7 +196,8 @@ namespace mln
   inline
   graph_window_bkd_piter<P, W>::graph_window_bkd_piter(const Window<W>& win,
 						       const Point_Site<Pref>& p_ref)
-    : super_(win, p_ref)
+    : super_(p_ref),
+      win_(exact(win))
   {
   }
 
