@@ -25,58 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/image3d.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on Image3d pixter
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-#include <mln/level/compare.hh>
+#include <mln/core/image3d.hh>
+#include <mln/core/image2d.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-
 
 int main()
 {
   using namespace mln;
 
-  // tests in two dimension
-  {
-    box2d b(make::point2d(1,2), make::point2d(2,4));
-    image2d<int> ima(b, 2);
-    debug::iota(ima);
 
-    box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-    image2d<int> ima2(b2, 0);
-    debug::iota(ima2);
-
-    level::paste(ima, ima2); // Fast version.
-    assert(ima == (ima2 | b));
-
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
-  }
-
-  // tests in three dimension
+  // Working test
   {
     box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
     image3d<int> ima(b, 2);
+
+    mln_pixter_(image3d<int>) p(ima);
+    for_all(p)
+      std::cout << p << std::endl;
+  }
+
+
+  {
+    box3d b(make::point3d(1,2, 1), make::point3d(3,6, 3));
+    image3d<int> ima(b, 0);
+
+    mln_piter_(image3d<int>) pi(ima.domain());
+    mln_pixter_(image3d<int>) p(ima);
+
     debug::iota(ima);
 
-    box3d b2(make::point3d(-1,-2, -1), make::point3d(3,6, 3));
-    image3d<int> ima2(b2, 2);
-    debug::iota(ima2);
-
-    level::paste(ima, ima2); // Fast version.
-    assert(ima == (ima2 | b));
-
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
+    pi.start();
+    p.start();
+    while (pi.is_valid())
+    {
+      assert(ima(pi) == p.val());
+      pi.next();
+      p.next();
+    }
   }
 }

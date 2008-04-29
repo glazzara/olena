@@ -42,7 +42,7 @@ Here, we get the image properties from the image associated type
 
 ** Semantic
 
-Properties are a way to classify the images depends or their type.
+Properties are a way to classify the images depends or their types.
 
 *** Static Checking
 
@@ -50,14 +50,66 @@ Properties are a way to classify the images depends or their type.
 check that the operator's input types respect the operator requirements.
 
 *** Specialization of an Algorithm
-  (ex: dilatation/erosion).
-TODO: detail the example.
+
+Example:
+
+Here are the differents method which implement the morphologic erosion
+in Milena.
+
+All these functions implements the erosion in different ways.
+Each implemtation of the erosion is dedicated to image
+
+
+
+This is the generic implementation of the erosion.
+It works with all the image types.
+Indeed, this function works with all the image types which have their traits
+kind and speed set to the value any. And any is a superclass of all the values
+for these traits. So, it works with all the image types.
+However, this is not the most efficient implementation of the erosion.
+
+template <typename I, typename W>
+inline
+mln_concrete(I)
+erosion_iterative_(trait::image::kind::any,
+		   trait::image::speed::any,
+		   const I& input, const W& win);
+
+
+
+This version of the erosion is dedicated to image types which have their
+traits speed set to fastest.
+This implementation is more efficient than the previous one, however
+the image must specific caracteristics (like a border...),
+
+So it only work with image the "fastest" image types.
+
+
+template <typename I, typename W>
+mln_concrete(I)
+erosion_iterative_(trait::image::kind::any,
+                   trait::image::speed::fastest,
+	           const I& input, const W& win);
+
+
+
+This function automatically call the erosion function which is the more
+adapted to the erosion.
+So the efficient erosion will be automatically called for the fastest image
+types.
+This function act likes a facade, and hide the implementation details from
+an user point of view.
+
+template <typename I, typename W>
+mln_concrete(I)
+erosion_iterative_(const I& input, const W& win);
+
 
 *** Implementation inheritance
 
 Milena image types are property driven.
 It is possible to get a special behavior (not describe in the Image Concept)
-depends on the property define in the property associated for the image
+depends on the property defined in the property associated to the image
 type. So, it is possible to recover some piece of interface depending on the
 image type properties.
 
@@ -163,17 +215,20 @@ V at(Point2d<T>::coord x, Point2d<T>::coord y).
 
 Primitive image are images which are not based on another image type.
 
-A primitive image type property can be either declared or automatically get
-back with the help of associated types.
-
+A primitive image type property can be either declared or automatically deduce
+from the help of associated types.
 
 FIXME: find a good notation...
 
 ** Image nD
 
-Image on regular grid where grid nodes are points.
-To gain efficiency, Images nD have a virtual borders.
+Image based on a regular grid where the grid nodes are points.
+To gain efficiency, Images nD have a virtual border.
 All these image are templated by T, the image value type.
+
+**** Specific interface:
+
+  Image nd is a able to provide index access through its interfaces.
 
 
 *** Common Associated type//properties between imageND
@@ -219,8 +274,6 @@ pset = box1d
 space = one_d
 
 
-**** Specific interface:
-  FIXME....
 
 *** Image2d<T>
 
@@ -247,10 +300,6 @@ value = T
 **** Properties:
 
 space = three_d
-
-**** Specific interface:
-  FIXME....
-
 
 
 ** Image based on function
@@ -296,12 +345,9 @@ How to deal with the lvalue??
 Is there any lvalue for image with computed data?
 lvalue just for image with stored//read_only data?
 
-**** Specific interface:
-  FIXME....
-
 ** Run based Encoded image
 
-All the run based encoded images have their definition domains encoded by runs.
+All the run encoded images have their definition domains encoded by runs.
 These images types are not morpher types since these do not lie on another
 image type.
 All the run based encoded images are templated by P, T where P is a site type
@@ -311,7 +357,6 @@ Note:
 type one shot (const)!!!
 Do we store the the null value in the rle encoding.
 ( <=> Do we compress all the images values, or only the image objects...)
-Is there any restriction on P and T?
 
 *** Notation used:
   (a, b) represents a pair composed by two elements..
@@ -389,7 +434,6 @@ corresponding sites.
 So we must be able to convert a site and i_run index to another site.
 
 ex:
-
 (0, 4) + 3 give us the site (0, 7).
 
 It has two consequences:
@@ -642,6 +686,15 @@ The corresponding encoded image is:
   (4, {((3, 3), 3)} )
 }
 
+**** Specific Methods:
+
+With this type of image, we can easily access to all the site corresponding
+to a value (method site_from_values(V value) : p_runs?).
+
+Furthermore, we can easily change the value of all the
+site which share the same value in a constant time.
+(method: cell(V value) : V&).
+
 
 *** Image based on Lut
 
@@ -658,6 +711,11 @@ It can be defines as followed:
 
 FIXME: How do we deal with the dimensions of the images?
 
+
+**** Specific Method:
+
+As value encoded image, here we can easily change the value of all
+the site which share the same value (method: cell(V value) : V&).
 
 
 **** Associated type

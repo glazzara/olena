@@ -78,31 +78,28 @@ namespace mln
 
 	typedef mln_image(Pd) Id;
 	typedef mln_image(Ps) Is;
-
 	if (n == 0)
-	  {
-	    return; // no-op
-	  }
+	  return; // no-op
 
 	if (n == 1)
-	  {
-	    dest.val() = src.val(); // one assignment
-	    return;
-	  }
+	{
+	  dest.val() = src.val(); // one assignment
+	  return;
+	}
 
 	if (sizeof(mln_value(Id)) == 1)
-	  {
-	    std::memcpy((      void*)(& dest.val()), // violent casts
-			(const void*)(&  src.val()),
-			n);
-	  }
+	{
+	  std::memcpy((void*) (&dest.val()), // violent casts
+		      (const void*) (&src.val()),
+		      n);
+	}
 	else
-	  {
-	    mln_value(Id)* p_d = & dest.val();
-	    const mln_value(Is)* p_s = & src.val();
-	    for (std::size_t i = 0; i < n; ++i)
-	      *p_d++ = *p_s++;
-	  }
+	{
+	  mln_value(Id)* p_d = &dest.val();
+	  const mln_value(Is)* p_s = &src.val();
+	  for (std::size_t i = 0; i < n; ++i)
+	    *p_d++ = *p_s++;
+	}
 
 	trace::exiting("level::impl::memcpy__");
       }
@@ -111,7 +108,8 @@ namespace mln
 
     template <typename Pd, typename Ps>
     inline
-    void memcpy_(Generalized_Pixel<Pd>& dest_, const Generalized_Pixel<Ps>& src_,
+    void memcpy_(Generalized_Pixel<Pd>& dest_,
+		 const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {
       trace::entering("level::memcpy_");
@@ -126,13 +124,13 @@ namespace mln
       mln_precondition(dest.ima().has_data());
       mln_precondition(src.ima().has_data());
 
-      mln_precondition(& dest.val() >= & dest.ima()[0]);
-      mln_precondition(& dest.val() < & dest.ima()[0] + dest.ima().ncells());
-      mln_precondition(& dest.val() + n <= & dest.ima()[0] + dest.ima().ncells());
+      mln_precondition(&dest.val() >= &dest.ima()[0]);
+      mln_precondition(&dest.val() < &dest.ima()[0] + dest.ima().ncells());
+      mln_precondition(&dest.val() + n <= &dest.ima()[0] + dest.ima().ncells());
 
-      mln_precondition(& src.val() >= & src.ima()[0]);
-      mln_precondition(& src.val() < & src.ima()[0] + src.ima().ncells());
-      mln_precondition(& src.val() + n <= & src.ima()[0] + src.ima().ncells());
+      mln_precondition(&src.val() >= &src.ima()[0]);
+      mln_precondition(&src.val() < &src.ima()[0] + src.ima().ncells());
+      mln_precondition(&src.val() + n <= &src.ima()[0] + src.ima().ncells());
 
       impl::memcpy__(dest, src, n);
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -269,15 +269,19 @@ namespace mln
     /// Access to the current point coordinates.
     mln_coord(P) operator[](unsigned i) const;
 
+    /// Assign a new pset to the iterator
+    void assign(const p_runs_<P>& pset);
+
   protected:
 
     /// Current point.
     P p_;
 
     /// Point set container.
-    const p_runs_<P>& con_;
+    const p_runs_<P>* con_;
 
     p_runs_piter_(const p_runs_<P>& pset);
+    p_runs_piter_();
   };
 
 
@@ -286,7 +290,14 @@ namespace mln
   template <typename P, typename E>
   inline
   p_runs_piter_<P, E>::p_runs_piter_(const p_runs_<P>& pset) :
-    con_(pset)
+    con_(&pset)
+  {
+  }
+
+  template <typename P, typename E>
+  inline
+  p_runs_piter_<P, E>::p_runs_piter_() :
+    con_(0)
   {
   }
 
@@ -315,6 +326,14 @@ namespace mln
     return p_[i];
   }
 
+  template <typename P, typename E>
+  inline
+  void
+  p_runs_piter_<P, E>::assign(const p_runs_<P>& pset)
+  {
+    con_ = &pset;
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 
@@ -328,6 +347,7 @@ namespace mln
     typedef p_runs_piter_<P, p_runs_fwd_piter_<P> > super;
   public:
 
+    p_runs_fwd_piter_();
     p_runs_fwd_piter_(const p_runs_<P>& pset);
 
     /// Test the iterator validity.
@@ -357,6 +377,12 @@ namespace mln
 
   template <typename P>
   inline
+  p_runs_fwd_piter_<P>::p_runs_fwd_piter_()
+  {
+  }
+
+  template <typename P>
+  inline
   p_runs_fwd_piter_<P>::p_runs_fwd_piter_(const p_runs_<P>& pset) :
     super(pset)
   {
@@ -368,7 +394,7 @@ namespace mln
   bool
   p_runs_fwd_piter_<P>::is_valid() const
   {
-    return i_ < this->con_.nruns();
+    return this->con_ != 0 && i_ < this->con_->nruns();
   }
 
   template <typename P>
@@ -376,7 +402,9 @@ namespace mln
   void
   p_runs_fwd_piter_<P>::invalidate()
   {
-    i_ = this->con_.nruns();
+    mln_precondition(this->con_ != 0);
+
+    i_ = this->con_->nruns();
   }
 
   template <typename P>
@@ -384,8 +412,10 @@ namespace mln
   void
   p_runs_fwd_piter_<P>::start()
   {
+    mln_precondition(this->con_ != 0);
+
     i_ = 0;
-    it_.assign_run(this->con_[i_]);
+    it_.assign_run((*this->con_)[i_]);
     it_.start();
     this->p_ = it_;
   }
@@ -396,13 +426,15 @@ namespace mln
   p_runs_fwd_piter_<P>::next_()
   {
     mln_precondition(this->is_valid());
+    mln_precondition(this->con_ != 0);
+
     it_.next();
     if (!it_.is_valid())
     {
       ++i_;
       if (is_valid())
       {
-	it_.assign_run(this->con_[i_]);
+	it_.assign_run( (*this->con_)[i_]);
 	it_.start();
       }
       else
@@ -414,7 +446,9 @@ namespace mln
   template <typename P>
   p_runs_fwd_piter_<P>::operator runs_psite<P> () const
   {
-    return runs_psite<P>(this->con_, it_.ind(), i_);
+    mln_precondition(this->con_ != 0);
+
+    return runs_psite<P>(*this->con_, it_.ind(), i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -430,6 +464,7 @@ namespace mln
     typedef p_runs_piter_<P, p_runs_bkd_piter_<P> > super;
   public:
 
+    p_runs_bkd_piter_();
     p_runs_bkd_piter_(const p_runs_<P>& pset);
 
     /// Test the iterator validity.
@@ -458,6 +493,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  template <typename P>
+  inline
+  p_runs_bkd_piter_<P>::p_runs_bkd_piter_()
+  {
+  }
+
   template <typename P>
   inline
   p_runs_bkd_piter_<P>::p_runs_bkd_piter_(const p_runs_<P>& pset) :
@@ -471,7 +513,7 @@ namespace mln
   bool
   p_runs_bkd_piter_<P>::is_valid() const
   {
-    return i_ < this->con_.nruns();
+    return this->con_ != 0 &&i_ < this->con_->nruns();
   }
 
   template <typename P>
@@ -479,7 +521,9 @@ namespace mln
   void
   p_runs_bkd_piter_<P>::invalidate()
   {
-    i_ = this->con_.nruns();
+    mln_precondition(this->con_ != 0);
+
+    i_ = this->con_->nruns();
   }
 
   template <typename P>
@@ -487,8 +531,10 @@ namespace mln
   void
   p_runs_bkd_piter_<P>::start()
   {
-    i_ = this->con_.nruns() - 1;
-    it_.assign_run(this->con_[i_]);
+    mln_precondition(this->con_ != 0);
+
+    i_ = this->con_->nruns() - 1;
+    it_.assign_run((*this->con_)[i_]);
     it_.start();
     this->p_ = it_;
   }
@@ -499,13 +545,15 @@ namespace mln
   p_runs_bkd_piter_<P>::next_()
   {
     mln_precondition(this->is_valid());
+    mln_precondition(this->con_ != 0);
+
     it_.next();
     if (!it_.is_valid())
     {
       --i_;
       if (is_valid())
       {
-	it_.assign_run(this->con_[i_]);
+	it_.assign_run((*this->con_)[i_]);
 	it_.start();
       }
       else
@@ -517,7 +565,8 @@ namespace mln
   template <typename P>
   p_runs_bkd_piter_<P>::operator runs_psite<P> () const
   {
-    return runs_psite<P>(this->con_, it_.ind(), i_);
+    mln_precondition(this->con_ != 0);
+    return runs_psite<P>((*this->con_), it_.ind(), i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

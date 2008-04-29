@@ -1,3 +1,19 @@
+2008-04-29  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add pset_array class for image encoded by values.
+
+	* tests/level/paste.cc: Add tests.
+	* tests/core/image3d.cc,
+	* tests/core/pset_array.cc: New tests.
+	* tests/core/Makefile.am: Add the new tests.
+	* mln/core/pset_array.hh: pset_array class.
+	* mln/core/rle_image.hh,
+	* mln/core/p_runs.hh,
+	* mln/core/runs_psite.hh: Update the license..
+	* mln/core/pset_array_psite.hh: Psite associated to the pset_arry.
+	* mln/level/memcpy_.hh: Clean up.
+	* sandbox/ballas/doc/image_tours.txt: Update Documentation.
+
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor implementation of piters on line graph neighborhoods.

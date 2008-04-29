@@ -25,58 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file mln/core/pset_array.hh
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests for the pset array.
  */
 
+#include <mln/core/pset_array.hh>
 #include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/p_runs.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-#include <mln/level/compare.hh>
-
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-
+#include <iostream>
 
 int main()
 {
   using namespace mln;
 
-  // tests in two dimension
+  typedef p_runs_<point2d> runs;
+
+  p_runs_<point2d> pruns0;
+  p_runs_<point2d> pruns1;
+  p_runs_<point2d> pruns2;
+
+  pruns0.insert(p_run<point2d>(make::point2d(0, 0), 2));
+
+  pruns2.insert(p_run<point2d>(make::point2d(10,10), 5));
+
+  pruns1.insert(p_run<point2d>(make::point2d(2, 4), 7));
+  pruns1.insert(p_run<point2d>(make::point2d(18, 42), 5));
+  pruns1.insert(p_run<point2d>(make::point2d(50, 76), 2));
+  pruns1.insert(p_run<point2d>(make::point2d(17,40), 6));
+
+
+
+  /// Declare the pset_array
+  pset_array<runs> array;
+
+  /// Add elements in the array
+  assert(array.npsets() == 0);
+  array.insert(pruns0);
+  assert(array.npsets() == 1);
+  assert(array.npoints() == 2);
+
+  array.insert(pruns2);
+  assert(array.npsets() == 2);
+  assert(array.npoints() == 7);
+
+  array.insert(pruns1);
+
+  /// Psite tests
+  typedef pset_array<runs>::psite psite;
+  runs_psite<point2d> run_psite1(pruns0, 1, 0);
+  runs_psite<point2d> run_psite2(pruns1, 5, 1);
+
+  psite ps(run_psite1, 0);
+  assert(array.has(ps));
+
+  psite ps2(run_psite2, 2);
+  assert(array.has(ps2));
+
+  // Iterator test:
+  pset_array<runs>::fwd_piter piter(array);
+
+  for (piter.start(); piter.is_valid(); piter.next())
   {
-    box2d b(make::point2d(1,2), make::point2d(2,4));
-    image2d<int> ima(b, 2);
-    debug::iota(ima);
-
-    box2d b2(make::point2d(-1,-2), make::point2d(3,6));
-    image2d<int> ima2(b2, 0);
-    debug::iota(ima2);
-
-    level::paste(ima, ima2); // Fast version.
-    assert(ima == (ima2 | b));
-
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
-  }
-
-  // tests in three dimension
-  {
-    box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
-    image3d<int> ima(b, 2);
-    debug::iota(ima);
-
-    box3d b2(make::point3d(-1,-2, -1), make::point3d(3,6, 3));
-    image3d<int> ima2(b2, 2);
-    debug::iota(ima2);
-
-    level::paste(ima, ima2); // Fast version.
-    assert(ima == (ima2 | b));
-
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
+    std::cout << piter << std::endl;
   }
 }

@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   exact						\
   h_vec						\
   initialize					\
+  image3d					\
   graph_elt_neighborhood			\
   graph_elt_window				\
   graph_image					\
@@ -26,6 +27,7 @@ check_PROGRAMS =				\
   p_queue_fast					\
   p_runs					\
   point_set_compatibility			\
+  pset_array                                    \
   rle_image					\
   sparse_image					\
   t_image					\
