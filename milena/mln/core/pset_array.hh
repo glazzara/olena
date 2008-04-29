@@ -129,8 +129,8 @@ namespace mln
   bool
   pset_array<Pset>::has(const typename pset_array<Pset>::psite& ps) const
   {
-    mln_precondition(ps.to_index() < con_.size());
-    return con_[ps.to_index()].has(ps.to_psite());
+    return ps.to_index() < con_.size() &&
+      con_[ps.to_index()].has(ps.to_psite());
   }
 
   template <typename Pset>

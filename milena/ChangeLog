@@ -1,3 +1,11 @@
+2008-04-29  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add run image type encoded by image type.
+
+	* tests/core/value_enc_image.cc: tests.
+	* mln/core/pset_array.hh: Fix a mistake.
+	* mln/core/value_enc_image.hh: New image type.
+
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Speed up iterations on graph windows and neighborhoods.
