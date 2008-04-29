@@ -31,20 +31,7 @@
 /// \file   mln/core/line_graph_window_piter.hh
 /// \brief  Definition of a point iterator on a line_graph window.
 
-/* FIXME: Factor those classes:
-
-   - mln::graph_window_fwd_piter
-   - mln::graph_neighborhood_fwd_piter
-   - mln::line_graph_window_fwd_piter
-   - mln::line_graph_neighborhood_fwd_piter.
-   - mln::graph_window_bkd_piter
-   - mln::graph_neighborhood_bkd_piter
-   - mln::line_graph_window_bkd_piter
-   - mln::line_graph_neighborhood_bkd_piter.  */
-
-# include <mln/core/concept/point_iterator.hh>
-# include <mln/core/p_line_graph.hh>
-# include <mln/core/line_graph_psite.hh>
+# include <mln/core/internal/line_graph_vicinity_piter.hh>
 
 /* FIXME: Due to the poor interface of mln::p_line_graph and
    mln::util::graph, we show to much implementation details here.
@@ -52,10 +39,6 @@
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P> class p_line_graph;
-  template <typename P> class line_graph_psite;
-
 
   /*------------------------------------.
   | line_graph_window_fwd_piter<P, W>.  |
@@ -63,25 +46,11 @@ namespace mln
 
   /// \brief Forward iterator on line graph window.
   template <typename P, typename W>
-  class line_graph_window_fwd_piter :
-    public Point_Iterator< line_graph_window_fwd_piter<P, W> >
+  class line_graph_window_fwd_piter
+    : public internal::line_graph_vicinity_piter_<P, line_graph_window_fwd_piter<P, W> >
   {
     typedef line_graph_window_fwd_piter<P, W> self_;
-    typedef Point_Iterator< self_ > super_;
-
-  public:
-    enum { dim = P::dim };
-
-    typedef line_graph_psite<P> psite;
-    typedef P point;
-    typedef mln_coord(point) coord;
-    // FIXME: Dummy typedef.
-    typedef void dpoint;
-    // FIXME: Dummy typedef.
-    typedef void mesh;
-
-    // The type of the set of window sites (adjacent edge ids).
-    typedef std::set<util::edge_id> sites_t;
+    typedef internal::line_graph_vicinity_piter_<P, self_ > super_;
 
   public:
     /// Construction.
@@ -106,55 +75,13 @@ namespace mln
     void update_();
     /// \}
 
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding point.
-    const point& to_point() const;
-    /// Reference to the corresponding point site.
-    const psite& to_psite() const;
-    /// Convert the iterator into a line graph psite.
-    operator psite() const;
-
-    /// Return the reference psite.
-    const psite& p_ref() const;
-    /// Return the mln::p_line_graph corresponding to this piter.
-    const p_line_graph<P>& plg() const; 
-    /// Return the set of sites (adjacent edge ids).
-    sites_t& sites();
-
-    /// Read-only access to the \a i-th coordinate.
-    coord operator[](unsigned i) const;
-    /// \}
-
   private:
     /// The window.
     const W& win_;
-    /// The ``central'' psite of the window.
-    const psite& p_ref_;
 
-    /// The last reference psite whose ajacent psites have been computed.
-    psite saved_p_ref_;
-    /// The set of edge ids adjacent to the reference psite.
-    sites_t sites_;
     /// An iterator on the set of adjacent edges.
-    sites_t::const_iterator i_; 
-
-    /// The psite corresponding to this iterator.
-    psite psite_;
-    /// The point corresponding to this iterator.
-    /* FIXME: Dummy value.  To be removed as soon as the conversion
-       from psite to point is no longer mandatory.  */
-    point p_;
+    typename super_::sites_t::const_iterator i_; 
   };
-
-  /* FIXME: This hand-made delegation is painful.  We should rely on
-     the general mechanism provided by Point_Site.  But then again, we
-     need to refine/adjust the interface of Point_Site w.r.t. the
-     mandatory conversions to points.  */
-  template <typename P, typename W>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const line_graph_window_fwd_piter<P, W>& p);
 
 
   /*------------------------------------.
@@ -163,25 +90,11 @@ namespace mln
 
   /// \brief Backward iterator on line graph window.
   template <typename P, typename W>
-  class line_graph_window_bkd_piter :
-    public Point_Iterator< line_graph_window_bkd_piter<P, W> >
+  class line_graph_window_bkd_piter
+    : public internal::line_graph_vicinity_piter_<P, line_graph_window_bkd_piter<P, W> >
   {
     typedef line_graph_window_bkd_piter<P, W> self_;
-    typedef Point_Iterator< self_ > super_;
-
-  public:
-    enum { dim = P::dim };
-
-    typedef line_graph_psite<P> psite;
-    typedef P point;
-    typedef mln_coord(point) coord;
-    // FIXME: Dummy typedef.
-    typedef void dpoint;
-    // FIXME: Dummy typedef.
-    typedef void mesh;
-
-    // The type of the set of window sites (adjacent edge ids).
-    typedef std::set<util::edge_id> sites_t;
+    typedef internal::line_graph_vicinity_piter_<P, self_ > super_;
 
   public:
     /// Construction.
@@ -206,55 +119,13 @@ namespace mln
     void update_();
     /// \}
 
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding point.
-    const point& to_point() const;
-    /// Reference to the corresponding point site.
-    const psite& to_psite() const;
-    /// Convert the iterator into a line graph psite.
-    operator psite() const;
-
-    /// Return the reference psite.
-    const psite& p_ref() const;
-    /// Return the mln::p_line_graph corresponding to this piter.
-    const p_line_graph<P>& plg() const; 
-    /// Return the set of sites (adjacent edge ids).
-    sites_t& sites();
-
-    /// Read-only access to the \a i-th coordinate.
-    coord operator[](unsigned i) const;
-    /// \}
-
   private:
     /// The window.
     const W& win_;
-    /// The ``central'' psite of the window.
-    const psite& p_ref_;
 
-    /// The last reference psite whose ajacent psites have been computed.
-    psite saved_p_ref_;
-    /// The set of edge ids adjacent to the reference psite.
-    sites_t sites_;
     /// An iterator on the set of adjacent edges.
-    sites_t::const_reverse_iterator i_; 
-
-    /// The psite corresponding to this iterator.
-    psite psite_;
-    /// The point corresponding to this iterator.
-    /* FIXME: Dummy value.  To be removed as soon as the conversion
-       from psite to point is no longer mandatory.  */
-    point p_;
+    typename super_::sites_t::const_reverse_iterator i_; 
   };
-
-  /* FIXME: This hand-made delegation is painful.  We should rely on
-     the general mechanism provided by Point_Site.  But then again, we
-     need to refine/adjust the interface of Point_Site w.r.t. the
-     mandatory conversions to points.  */
-  template <typename P, typename W>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const line_graph_window_bkd_piter<P, W>& p);
 
 
 
@@ -269,12 +140,10 @@ namespace mln
   inline
   line_graph_window_fwd_piter<P, W>::line_graph_window_fwd_piter(const Window<W>& win,
 								 const Point_Site<Pref>& p_ref)
-    : win_(exact(win)),
-      p_ref_(exact(p_ref).to_psite()),
-      // Initialize psite_ to a dummy value.
-      psite_()
+    : super_(p_ref),
+      win_(exact(win))
   {
-    // Invalidate id_.
+    // Invalidate i_.
     invalidate();
   }
 
@@ -285,11 +154,11 @@ namespace mln
   {
     return
       // The reference point must be valid...
-      p_ref_.is_valid()
+      this->p_ref_.is_valid()
       // ...and must not have changed since the window has been computed...
-      && p_ref_ == saved_p_ref_
+      && this->p_ref_ == this->saved_p_ref_
       // ...and the iterator i_ must point a valid value.
-      && i_ != sites_.end();
+      && i_ != this->sites_.end();
   }
 
   template <typename P, typename W>
@@ -297,7 +166,7 @@ namespace mln
   void
   line_graph_window_fwd_piter<P, W>::invalidate()
   {
-    i_ = sites_.end();
+    i_ = this->sites_.end();
   }
 
   template <typename P, typename W>
@@ -305,14 +174,14 @@ namespace mln
   void
   line_graph_window_fwd_piter<P, W>::start()
   {
-    mln_precondition(p_ref_.is_valid());
+    mln_precondition(this->p_ref_.is_valid());
     // Update the sites, if needed.
-    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
       {
-	saved_p_ref_ = p_ref_;
+	this->saved_p_ref_ = this->p_ref_;
 	win_.compute_sites_(*this);
       }
-    i_ = sites_.begin();
+    i_ = this->sites_.begin();
     // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
@@ -324,7 +193,7 @@ namespace mln
   line_graph_window_fwd_piter<P, W>::next_()
   {
     // Ensure the p_ref_ has not changed.
-    mln_precondition(p_ref_ == saved_p_ref_);
+    mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
     // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
@@ -337,72 +206,7 @@ namespace mln
   line_graph_window_fwd_piter<P, W>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(plg(), *i_);
-  }
-
-  template <typename P, typename W>
-  inline
-  const P&
-  line_graph_window_fwd_piter<P, W>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const line_graph_psite<P>&
-  line_graph_window_fwd_piter<P, W>::to_psite() const
-  {
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  line_graph_window_fwd_piter<P, W>::operator line_graph_psite<P> () const
-  {
-    mln_precondition(is_valid());
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const line_graph_psite<P>&
-  line_graph_window_fwd_piter<P, W>::p_ref() const
-  {
-    return p_ref_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const p_line_graph<P>&
-  line_graph_window_fwd_piter<P, W>::plg() const
-  {
-    return p_ref_.plg();
-  }
-
-  template <typename P, typename W>
-  inline
-  std::set<util::edge_id>&
-  line_graph_window_fwd_piter<P, W>::sites()
-  {
-    return sites_;
-  }
-
-  template <typename P, typename W>
-  inline
-  mln_coord(P)
-  line_graph_window_fwd_piter<P, W>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
-  }
-
-  template <typename P, typename W>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const line_graph_window_fwd_piter<P, W>& p)
-  {
-    return ostr << p.to_psite();
+    this->psite_ = line_graph_psite<P>(this->plg(), *i_);
   }
 
 
@@ -410,18 +214,15 @@ namespace mln
   | line_graph_window_bkd_piter<P, W>.  |
   `------------------------------------*/
 
-  // FIXME: Currently, argument win is ignored.
   template <typename P, typename W>
   template <typename Pref>
   inline
   line_graph_window_bkd_piter<P, W>::line_graph_window_bkd_piter(const Window<W>& win,
 								 const Point_Site<Pref>& p_ref)
-    : win_(exact(win)),
-      p_ref_(exact(p_ref).to_psite()),
-      // Initialize psite_ to a dummy value.
-      psite_()
+    : super_(p_ref),
+      win_(exact(win))
   {
-    // Invalidate id_.
+    // Invalidate i_.
     invalidate();
   }
 
@@ -432,11 +233,11 @@ namespace mln
   {
     return
       // The reference point must be valid...
-      p_ref_.is_valid()
+      this->p_ref_.is_valid()
       // ...and must not have changed since the window has been computed...
-      && p_ref_ == saved_p_ref_
+      && this->p_ref_ == this->saved_p_ref_
       // ...and the iterator i_ must point a valid value.
-      && i_ != sites_.rend();
+      && i_ != this->sites_.rend();
   }
 
   template <typename P, typename W>
@@ -444,7 +245,7 @@ namespace mln
   void
   line_graph_window_bkd_piter<P, W>::invalidate()
   {
-    i_ = sites_.rend();
+    i_ = this->sites_.rend();
   }
 
   template <typename P, typename W>
@@ -452,14 +253,14 @@ namespace mln
   void
   line_graph_window_bkd_piter<P, W>::start()
   {
-    mln_precondition(p_ref_.is_valid());
+    mln_precondition(this->p_ref_.is_valid());
     // Update the sites, if needed.
-    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
       {
-	saved_p_ref_ = p_ref_;
+	this->saved_p_ref_ = this->p_ref_;
 	win_.compute_sites_(*this);
       }
-    i_ = sites_.rbegin();
+    i_ = this->sites_.rbegin();
     // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
@@ -471,7 +272,7 @@ namespace mln
   line_graph_window_bkd_piter<P, W>::next_()
   {
     // Ensure the p_ref_ has not changed.
-    mln_precondition(p_ref_ == saved_p_ref_);
+    mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
     // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
@@ -484,72 +285,7 @@ namespace mln
   line_graph_window_bkd_piter<P, W>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(plg(), *i_);
-  }
-
-  template <typename P, typename W>
-  inline
-  const P&
-  line_graph_window_bkd_piter<P, W>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const line_graph_psite<P>&
-  line_graph_window_bkd_piter<P, W>::to_psite() const
-  {
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  line_graph_window_bkd_piter<P, W>::operator line_graph_psite<P> () const
-  {
-    mln_precondition(is_valid());
-    return psite_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const line_graph_psite<P>&
-  line_graph_window_bkd_piter<P, W>::p_ref() const
-  {
-    return p_ref_;
-  }
-
-  template <typename P, typename W>
-  inline
-  const p_line_graph<P>&
-  line_graph_window_bkd_piter<P, W>::plg() const
-  {
-    return p_ref_.plg();
-  }
-
-  template <typename P, typename W>
-  inline
-  std::set<util::edge_id>&
-  line_graph_window_bkd_piter<P, W>::sites()
-  {
-    return sites_;
-  }
-
-  template <typename P, typename W>
-  inline
-  mln_coord(P)
-  line_graph_window_bkd_piter<P, W>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
-  }
-
-  template <typename P, typename W>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const line_graph_window_bkd_piter<P, W>& p)
-  {
-    return ostr << p.to_psite();
+    this->psite_ = line_graph_psite<P>(this->plg(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
