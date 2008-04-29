@@ -40,6 +40,10 @@
    - mln::line_graph_elt_window
    - mln::line_graph_elt_neighborhood.  */
 
+/* FIXME: Due to the poor interface of mln::p_line_graph and
+   mln::util::graph, we show to much implementation details here.
+   Enrich their interfaces to avoid that.  */
+
 # include <mln/core/concept/window.hh>
 # include <mln/core/graph_psite.hh>
 # include <mln/core/graph_window_piter.hh>
@@ -65,6 +69,9 @@ namespace mln
     typedef P point;
     /// The type of psite corresponding to the window.
     typedef graph_psite<P> psite;
+    // The type of the set of window sites (node ids adjacent to the
+    // reference psite).
+    typedef std::set<util::node_id> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -81,17 +88,11 @@ namespace mln
     typedef fwd_qiter qiter;
     /// \}
 
-    /// Construct an elementary graph window.
-    graph_elt_window();
-
     /// Services for iterators.
     /// \{
-    /// Move \a piter to the beginning of the iteration on this window.
+    /// Compute the set of sites for this window around \a piter.
     template <typename Piter>
-    void start(Point_Iterator<Piter>& piter) const;
-    /// Move \a piter to the next site on this window.
-    template <typename Piter>
-    void next_(Point_Iterator<Piter>& piter) const;
+    void compute_sites_(Point_Iterator<Piter>& piter) const;
     /// \}
 
     /// Interface of the concept Window.
@@ -125,37 +126,32 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  inline
-  graph_elt_window<P>::graph_elt_window()
-  {
-  }
-
-  template <typename P>
   template <typename Piter>
   inline
   void
-  graph_elt_window<P>::start(Point_Iterator<Piter>& piter_) const
+  graph_elt_window<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    piter.first_();
-    if (!piter.adjacent_or_equal_to_p_ref_())
-      next_(piter);
-  }
-
-  template <typename P>
-  template <typename Piter>
-  inline
-  void
-  graph_elt_window<P>::next_(Point_Iterator<Piter>& piter_) const
-  {
-    Piter& piter = exact(piter_);
-    /* FIXME: This is inefficient.  The graph structure should be able
-       to produce the set of adjacent nodes fast.  Boost Graphs
-       probably provides adequates structures to fetch these
-       neighbors in constant time.  */
-    do
-      piter.step_();
-    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+    util::node_id ref_node_id = piter.p_ref().id();
+    const util::node<P>& ref_node = piter.pg().gr_->node(ref_node_id);
+    sites_t& sites = piter.sites();
+    sites.clear();
+    /* FIXME: Move this computation out of the window. In fact,
+       this should be a service of the graph, also proposed by the
+       p_line_graph.  */
+    // Adjacent vertices.
+    /* We don't need to explicitely insert the reference piter (node
+       id) itself into SITES, since it is part of the set of nodes
+       adjacent to NODE1 and NODE2, and will therefore be
+       automatically added.  */
+    for (std::vector<util::edge_id>::const_iterator e = ref_node.edges.begin();
+	 e != ref_node.edges.end(); ++e)
+      {
+	util::node_id n1 = piter.pg().gr_->edges()[*e]->n1();
+	sites.insert(n1);
+	util::node_id n2 = piter.pg().gr_->edges()[*e]->n2();
+	sites.insert(n2);
+      }
   }
 
   template <typename P>

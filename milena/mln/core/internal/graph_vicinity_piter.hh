@@ -32,6 +32,11 @@
 /// \brief  Factored implementation for point iterators on a graph windows
 /// and graph neighborhoods, called "vicinities".
 
+/* FIXME: Factor those classes:
+
+   - mln::internal::graph_vicinity_piter.hh
+   - mln::internal::line_graph_vicinity_piter.hh  */
+
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/p_graph.hh>
 # include <mln/core/graph_psite.hh>
@@ -72,28 +77,10 @@ namespace mln
       // FIXME: Dummy value.
       typedef void mesh;
 
+      // The type of the set of vicinity sites (adjacent vertex ids).
+      typedef std::set<util::node_id> sites_t;
+
     public:
-      /// Construction.
-      /// \{
-      template <typename Pref>
-      graph_vicinity_piter_(const Point_Site<Pref>& p_ref);
-      /// \}
-
-      /// Manipulation.
-      /// \{
-      /// Test if the iterator is valid.
-      bool is_valid() const;
-      /// Invalidate the iterator.
-      void invalidate();
-
-      /// Is the piter adjacent to the reference point?
-      bool adjacent_to_p_ref_() const;
-      /// Is the piter adjacent or equal to the reference point?
-      bool adjacent_or_equal_to_p_ref_() const;
-      /// Update the internal data of the iterator.
-      void update_();
-      /// \}
-
       /// Conversion and accessors.
       /// \{
       /// Reference to the corresponding point.
@@ -103,8 +90,22 @@ namespace mln
       /// Convert the iterator into a line graph psite.
       operator psite() const;
 
+      /// Return the reference psite.
+      const psite& p_ref() const;
+      /// Return the mln::p_graph corresponding to this piter.
+      const p_graph<P>& pg() const; 
+      /// Return the set of sites (adjacent vertex ids).
+      sites_t& sites();
+
       /// Read-only access to the \a i-th coordinate.
       coord operator[](unsigned i) const;
+      /// \}
+
+    protected:
+      /// Construction.
+      /// \{
+      template <typename Pref>
+      graph_vicinity_piter_(const Point_Site<Pref>& p_ref);
       /// \}
 
       /// Internals, used by the vicinity.
@@ -120,7 +121,11 @@ namespace mln
       /// piter).
       const psite& p_ref_;
 
-    private:
+      /// The last reference psite whose ajacent psites have been computed.
+      psite saved_p_ref_;
+      /// The set of edge ids adjacent to the reference psite.
+      sites_t sites_;
+
       /// The psite corresponding to this iterator.
       psite psite_;
       /// The point corresponding to this iterator.
@@ -140,54 +145,6 @@ namespace mln
 	psite_(),
 	p_()
     {
-      // Invalidate id_.
-      invalidate();
-    }
-
-    template <typename P, typename E>
-    inline
-    bool
-    graph_vicinity_piter_<P, E>::is_valid() const
-    {
-      /* FIXME: We depend too much on the implementation of
-	 util::graph here.  The util::graph should provide the service
-	 to abstract these manipulations.  */
-      return p_ref_.is_valid() && id_ < p_ref_.pg().npoints();
-    }
-
-    template <typename P, typename E>
-    inline
-    void
-    graph_vicinity_piter_<P, E>::invalidate()
-    {
-      id_ = -1;
-    }
-
-    template <typename P, typename E>
-    inline
-    bool
-    graph_vicinity_piter_<P, E>::adjacent_to_p_ref_() const
-    {
-      return p_ref_.pg().adjacent(p_ref_.id(), id_);
-    }
-
-    template <typename P, typename E>
-    inline
-    bool
-    graph_vicinity_piter_<P, E>::adjacent_or_equal_to_p_ref_() const
-    {
-      return p_ref_.pg().adjacent_or_equal(p_ref_.id(), id_);
-    }
-
-    template <typename P, typename E>
-    inline
-    void
-    graph_vicinity_piter_<P, E>::update_()
-    {
-      // Update psite_.
-      psite_ = graph_psite<P>(p_ref_.pg(), id_);
-      // Update p_.
-      p_ = p_ref_.pg().point_from_id(id_);
     }
 
     template <typename P, typename E>
@@ -210,8 +167,32 @@ namespace mln
     inline
     graph_vicinity_piter_<P, E>::operator graph_psite<P>() const
     {
-      mln_precondition(is_valid());
+      mln_precondition(exact(*this).is_valid());
       return psite_;
+    }
+
+    template <typename P, typename E>
+    inline
+    const graph_psite<P>&
+    graph_vicinity_piter_<P, E>::p_ref() const
+    {
+      return p_ref_;
+    }
+
+    template <typename P, typename E>
+    inline
+    const p_graph<P>&
+    graph_vicinity_piter_<P, E>::pg() const
+    {
+      return p_ref_.pg();
+    }
+
+    template <typename P, typename E>
+    inline
+    std::set<util::node_id>&
+    graph_vicinity_piter_<P, E>::sites()
+    {
+      return sites_;
     }
 
     template <typename P, typename E>

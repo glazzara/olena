@@ -31,17 +31,6 @@
 /// \file   mln/core/graph_neighborhood_piter.hh
 /// \brief  Definition of a point iterator on a graph neighborhood.
 
-/* FIXME: Factor those classes:
-
-   - mln::graph_window_fwd_piter
-   - mln::graph_neighborhood_fwd_piter
-   - mln::line_graph_window_fwd_piter
-   - mln::line_graph_neighborhood_fwd_piter.
-   - mln::graph_window_bkd_piter
-   - mln::graph_neighborhood_bkd_piter
-   - mln::line_graph_window_bkd_piter
-   - mln::line_graph_neighborhood_bkd_piter.  */
-
 # include <mln/core/internal/graph_vicinity_piter.hh>
 
 /* FIXME: Due to the poor interface of mln::p_graph and
@@ -73,23 +62,25 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Test if the iterator is valid.
+    bool is_valid() const;
+    /// Invalidate the iterator.
+    void invalidate();
     /// Start an iteration.
     void start();
+
     /// Go to the next point.
     void next_();
+    /// Update the internal data of the iterator.
+    void update_();
     /// \}
 
-    /// Internals, used by the neighborhood.
-    /// \{
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-    /// \}
+  private:
+    /// The neighborhood.
+    const N& nbh_;
 
-    private:
-      /// The neighborhood.
-      const N& nbh_;
+    /// An iterator on the set of adjacent edges.
+    typename super_::sites_t::const_iterator i_; 
   };
 
 
@@ -115,23 +106,25 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Test if the iterator is valid.
+    bool is_valid() const;
+    /// Invalidate the iterator.
+    void invalidate();
     /// Start an iteration.
     void start();
+
     /// Go to the next point.
     void next_();
+    /// Update the internal data of the iterator.
+    void update_();
     /// \}
 
-    /// Internals, used by the neighborhood.
-    /// \{
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-    /// \}
+  private:
+    /// The neighborhood.
+    const N& nbh_;
 
-    private:
-      /// The neighborhood.
-      const N& nbh_;
+    /// An iterator on the set of adjacent edges.
+    typename super_::sites_t::const_reverse_iterator i_; 
   };
 
 
@@ -150,6 +143,31 @@ namespace mln
     : super_(p_ref),
       nbh_(exact(nbh))
   {
+    // Invalidate i_.
+    invalidate();
+  }
+
+  template <typename P, typename N>
+  inline
+  bool
+  graph_neighborhood_fwd_piter<P, N>::is_valid() const
+  {
+    return
+      // The reference point must be valid...
+      this->p_ref_.is_valid()
+      // ...and must not have changed since the neighborhood has been
+      // computed...
+      && this->p_ref_ == this->saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != this->sites_.end();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_fwd_piter<P, N>::invalidate()
+  {
+    i_ = this->sites_.end();
   }
 
   template <typename P, typename N>
@@ -157,9 +175,17 @@ namespace mln
   void
   graph_neighborhood_fwd_piter<P, N>::start()
   {
-    this->nbh_.start(*this);
-    if (this->is_valid())
-      this->update_();
+    mln_precondition(this->p_ref_.is_valid());
+    // Update the neighbors, if needed.
+    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
+      {
+	this->saved_p_ref_ = this->p_ref_;
+	nbh_.compute_sites_(*this);
+      }
+    i_ = this->sites_.begin();
+    // FIXME: We might move the is_valid condition within update_.
+    if (is_valid())
+      update_();
   }
 
   template <typename P, typename N>
@@ -167,25 +193,21 @@ namespace mln
   void
   graph_neighborhood_fwd_piter<P, N>::next_()
   {
-    this->nbh_.next_(*this);
-    if (this->is_valid())
-      this->update_();
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(this->p_ref_ == this->saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
+    if (is_valid())
+      update_();
   }
 
   template <typename P, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P, N>::first_()
+  graph_neighborhood_fwd_piter<P, N>::update_()
   {
-    this->id_ = 0;
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  graph_neighborhood_fwd_piter<P, N>::step_()
-  {
-    ++this->id_;
+    // Update psite_.
+    this->psite_ = graph_psite<P>(this->pg(), *i_);
   }
 
 
@@ -201,6 +223,31 @@ namespace mln
     : super_(p_ref),
       nbh_(exact(nbh))
   {
+    // Invalidate i_.
+    invalidate();
+  }
+
+  template <typename P, typename N>
+  inline
+  bool
+  graph_neighborhood_bkd_piter<P, N>::is_valid() const
+  {
+    return
+      // The reference point must be valid...
+      this->p_ref_.is_valid()
+      // ...and must not have changed since the neighborhood has been
+      // computed...
+      && this->p_ref_ == this->saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != this->sites_.rend();
+  }
+
+  template <typename P, typename N>
+  inline
+  void
+  graph_neighborhood_bkd_piter<P, N>::invalidate()
+  {
+    i_ = this->sites_.rend();
   }
 
   template <typename P, typename N>
@@ -208,9 +255,17 @@ namespace mln
   void
   graph_neighborhood_bkd_piter<P, N>::start()
   {
-    this->nbh_.start(*this);
-    if (this->is_valid())
-      this->update_();
+    mln_precondition(this->p_ref_.is_valid());
+    // Update the neighbors, if needed.
+    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
+      {
+	this->saved_p_ref_ = this->p_ref_;
+	nbh_.compute_sites_(*this);
+      }
+    i_ = this->sites_.rbegin();
+    // FIXME: We might move the is_valid condition within update_.
+    if (is_valid())
+      update_();
   }
 
   template <typename P, typename N>
@@ -218,25 +273,21 @@ namespace mln
   void
   graph_neighborhood_bkd_piter<P, N>::next_()
   {
-    this->nbh_.next_(*this);
-    if (this->is_valid())
-      this->update_();
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(this->p_ref_ == this->saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
+    if (is_valid())
+      update_();
   }
 
   template <typename P, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P, N>::first_()
+  graph_neighborhood_bkd_piter<P, N>::update_()
   {
-    this->id_ = this->p_ref_.pg().gr_->nnodes() - 1;
-  }
-
-  template <typename P, typename N>
-  inline
-  void
-  graph_neighborhood_bkd_piter<P, N>::step_()
-  {
-    --this->id_;
+    // Update psite_.
+    this->psite_ = graph_psite<P>(this->pg(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

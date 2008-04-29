@@ -1,3 +1,95 @@
+2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up iterations on graph windows and neighborhoods.
+
+	* mln/core/internal/graph_vicinity_piter.hh
+	(mln::internal::graph_vicinity_piter_<P, E>::graph_vicinity_piter_):
+	Make this ctor protected.
+	No longer invalidate the iterator.
+	(mln::internal::graph_vicinity_piter_<P, E>::is_valid)
+	(mln::internal::graph_vicinity_piter_<P, E>::invalidate)
+	(mln::internal::graph_vicinity_piter_<P, E>::adjacent_to_p_ref_)
+	(mln::internal::graph_vicinity_piter_<P, E>::adjacent_or_equal_to_p_ref_)
+	(mln::internal::graph_vicinity_piter_<P, E>::update_):
+	Remove.
+	(mln::internal::graph_vicinity_piter_<P, E>::p_ref)
+	(mln::internal::graph_vicinity_piter_<P, E>::pg)
+	(mln::internal::graph_vicinity_piter_<P, E>::sites):
+	New accessors.
+	(mln::internal::graph_vicinity_piter_<P, E>::saved_p_ref_)
+	(mln::internal::graph_vicinity_piter_<P, E>::p_ref_):
+	New members.
+	* mln/core/graph_window_piter.hh
+	(mln::graph_window_fwd_piter<P>::is_valid)
+	(mln::graph_window_fwd_piter<P>::invalidate)
+	(mln::graph_window_fwd_piter<P>::update)
+	(mln::graph_window_bkd_piter<P>::is_valid)
+	(mln::graph_window_bkd_piter<P>::invalidate)
+	(mln::graph_window_bkd_piter<P>::update):
+	New methods.
+	(mln::graph_window_fwd_piter<P>::first_)
+	(mln::graph_window_fwd_piter<P>::step_)
+	(mln::graph_window_bkd_piter<P>::first_)
+	(mln::graph_window_bkd_piter<P>::step_):
+	Remove methods.
+	(mln::graph_window_fwd_piter<P>::i_)
+	(mln::graph_window_bkd_piter<P>::i_):
+	New members.
+	(mln::graph_window_fwd_piter<P>::graph_window_fwd_piter)
+	(mln::graph_window_bkd_piter<P>::graph_window_bkd_piter):
+	Invalidate member i_.
+	(mln::graph_window_fwd_piter<P>::start)
+	(mln::graph_window_fwd_piter<P>::next)
+	(mln::graph_window_bkd_piter<P>::start)
+	(mln::graph_window_bkd_piter<P>::next):
+	Change the algorithms used in these routines, so that they use a
+	list of computed sites (super member sites_) instead of iterating
+	over the whole set of vertices.
+	* mln/core/graph_neighborhood_piter.hh:
+	(mln::graph_neighborhood_fwd_piter<P>::is_valid)
+	(mln::graph_neighborhood_fwd_piter<P>::invalidate)
+	(mln::graph_neighborhood_fwd_piter<P>::update)
+	(mln::graph_neighborhood_bkd_piter<P>::is_valid)
+	(mln::graph_neighborhood_bkd_piter<P>::invalidate)
+	(mln::graph_neighborhood_bkd_piter<P>::update):
+	New methods.
+	(mln::graph_neighborhood_fwd_piter<P>::first_)
+	(mln::graph_neighborhood_fwd_piter<P>::step_)
+	(mln::graph_neighborhood_bkd_piter<P>::first_)
+	(mln::graph_neighborhood_bkd_piter<P>::step_):
+	Remove methods.
+	(mln::graph_neighborhood_fwd_piter<P>::i_)
+	(mln::graph_neighborhood_bkd_piter<P>::i_):
+	New members.
+	(mln::graph_neighborhood_fwd_piter<P>::graph_neighborhood_fwd_piter)
+	(mln::graph_neighborhood_bkd_piter<P>::graph_neighborhood_bkd_piter):
+	Invalidate member i_.
+	(mln::graph_neighborhood_fwd_piter<P>::start)
+	(mln::graph_neighborhood_fwd_piter<P>::next)
+	(mln::graph_neighborhood_bkd_piter<P>::start)
+	(mln::graph_neighborhood_bkd_piter<P>::next):
+	Change the algorithms used in these routines, so that they use a
+	list of computed sites (super member sites_) instead of iterating
+	over the whole set of vertices.
+	* mln/core/graph_elt_window.hh: Catch up with the new
+	interface of piters on line graph windows.
+	(mln::graph_elt_window<P>::sites_t): New typedef.
+	(mln::graph_elt_window<P>::graph_elt_window): Remove useless ctor.
+	(mln::graph_elt_window<P>::start)
+	(mln::graph_elt_window<P>::next_):
+	Remove methods.
+	(mln::graph_elt_window<P>::compute_sites_):
+	New method.
+	* mln/core/graph_elt_neighborhood.hh: Catch up with the new
+	interface of piters on line graph neighborhoods.
+	(mln::graph_elt_neighborhood::neighbors_t):
+	New typedef.
+	(mln::graph_elt_neighborhood::start)
+	(mln::graph_elt_neighborhood::next_):
+	Remove methods.
+	(mln::graph_elt_neighborhood<P>::compute_sites_):
+	New method.
+
 2008-04-29  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add pset_array class for image encoded by values.
