@@ -65,6 +65,9 @@ namespace mln
     typedef P point;
     /// The type of psite corresponding to the window.
     typedef line_graph_psite<P> psite;
+    // The type of the set of window sites (edge ids adjacent to the
+    // reference psite).
+    typedef std::set<util::edge_id> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -81,17 +84,10 @@ namespace mln
     typedef fwd_qiter qiter;
     /// \}
 
-    /// Construct an elementary line_graph window.
-    line_graph_elt_window();
-
     /// Services for iterators.
     /// \{
-    /// Move \a piter to the beginning of the iteration on this window.
     template <typename Piter>
-    void start(Point_Iterator<Piter>& piter) const;
-    /// Move \a piter to the next site on this window.
-    template <typename Piter>
-    void next_(Point_Iterator<Piter>& piter) const;
+    void compute_sites_(Point_Iterator<Piter>& piter) const;
     /// \}
 
     /// Interface of the concept Window.
@@ -125,37 +121,33 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
-  inline
-  line_graph_elt_window<P>::line_graph_elt_window()
-  {
-  }
-
-  template <typename P>
   template <typename Piter>
   inline
   void
-  line_graph_elt_window<P>::start(Point_Iterator<Piter>& piter_) const
+  line_graph_elt_window<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    piter.first_();
-    if (!piter.adjacent_or_equal_to_p_ref_())
-      next_(piter);
-  }
-
-  template <typename P>
-  template <typename Piter>
-  inline
-  void
-  line_graph_elt_window<P>::next_(Point_Iterator<Piter>& piter_) const
-  {
-    Piter& piter = exact(piter_);
-    /* FIXME: This is inefficient.  The graph structure should be able
-       to produce the set of adjacent nodes fast.  Boost Graphs
-       probably provides adequates structures to fetch these
-       neighbors in constant time.  */
-    do
-      piter.step_();
-    while (piter.is_valid() && !piter.adjacent_or_equal_to_p_ref_());
+    sites_t& sites = piter.sites();
+    sites.clear();
+    /* FIXME: Move this computation out of the window. In fact,
+       this should be a service of the graph, also proposed by the
+       p_line_graph.  */
+    // Add the reference piter itself.
+    sites.insert(piter.p_ref().id()); 
+    // Ajacent edges connected through node 1.
+    // FIXME: Far too low-level.
+    util::node_id id1 = piter.p_ref().first_id();
+    const util::node<P>& node1 = piter.plg().gr_->node(id1);
+    for (std::vector<util::edge_id>::const_iterator e =
+	   node1.edges.begin(); e != node1.edges.end(); ++e)
+      sites.insert(*e);
+    // Ajacent edges connected through node 2.
+    // FIXME: Likewise.
+    util::node_id id2 = piter.p_ref().second_id();
+    const util::node<P>& node2 = piter.plg().gr_->node(id2);
+    for (std::vector<util::edge_id>::const_iterator e =
+	   node2.edges.begin(); e != node2.edges.end(); ++e)
+      sites.insert(*e);
   }
 
   template <typename P>

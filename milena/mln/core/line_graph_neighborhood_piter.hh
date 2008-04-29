@@ -104,8 +104,6 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}
@@ -208,8 +206,6 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}

@@ -1,3 +1,63 @@
+2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up iterations on line graph windows.
+
+	* mln/core/line_graph_window_piter.hh
+	(mln::line_graph_window_fwd_piter<P>::sites_t)
+	(mln::line_graph_window_bkd_piter<P>::sites_t):
+	New typedefs.
+	(mln::line_graph_window_fwd_piter<P>::adjacent_or_equal_to_p_ref_)
+	(mln::line_graph_window_bkd_piter<P>::adjacent_or_equal_to_p_ref_)
+	(mln::line_graph_window_fwd_piter<P>::first_)
+	(mln::line_graph_window_bkd_piter<P>::first_)
+	(mln::line_graph_window_fwd_piter<P>::step_)
+	(mln::line_graph_window_bkd_piter<P>::step_)
+	(mln::line_graph_window_fwd_piter<P>::id_)
+	(mln::line_graph_window_bkd_piter<P>::id_):
+	Remove.
+	(mln::line_graph_window_fwd_piter<P>::p_ref)
+	(mln::line_graph_window_bkd_piter<P>::p_ref)
+	(mln::line_graph_window_fwd_piter<P>::plg)
+	(mln::line_graph_window_bkd_piter<P>::plg)
+	(mln::line_graph_window_fwd_piter<P>::sites)
+	(mln::line_graph_window_bkd_piter<P>::sites):
+	New accessors.
+	(mln::line_graph_window_fwd_piter<P>::saved_p_ref_)
+	(mln::line_graph_window_bkd_piter<P>::saved_p_ref_)
+	(mln::line_graph_window_fwd_piter<P>::sites_)
+	(mln::line_graph_window_bkd_piter<P>::sites_)
+	(mln::line_graph_window_fwd_piter<P>::i_)
+	(mln::line_graph_window_bkd_piter<P>::i_):
+	New attributes.
+	(mln::line_graph_window_fwd_piter<P, W>::is_valid)
+	(mln::line_graph_window_bkd_piter<P, W>::is_valid)
+	(mln::line_graph_window_fwd_piter<P, W>::invalidate)
+	(mln::line_graph_window_bkd_piter<P, W>::invalidate)
+	(mln::line_graph_window_fwd_piter<P, W>::start)
+	(mln::line_graph_window_bkd_piter<P, W>::start)
+	(mln::line_graph_window_fwd_piter<P, W>::next)
+	(mln::line_graph_window_bkd_piter<P, W>::next):
+	Change the algorithms used in these routines, so that they use a
+	list of computed window sites (new member sites_) instead of
+	iterating over the whole set of edges.
+	(mln::line_graph_window_fwd_piter<P, W>::update_)
+	(mln::line_graph_window_bkd_piter<P, W>::update_):
+	Adjust.
+	* mln/core/line_graph_elt_window.hh: Catch up with the new
+	interface of piters on line graph windows.
+	(mln::line_graph_elt_window<P>::sites_t): New typedef.
+	(mln::line_graph_elt_window<P>::line_graph_elt_window): Remove
+	useless ctor.
+	(mln::line_graph_elt_window<P>::start)
+	(mln::line_graph_elt_window<P>::next_):
+	Remove methods.
+	(mln::line_graph_elt_window<P>::compute_sites_):
+	New method.
+	* mln/core/line_graph_neighborhood_piter.hh
+	(line_graph_neighborhood_fwd_piter<P, N>::adjacent_or_equal_to_p_ref_)
+	(line_graph_neighborhood_bkd_piter<P, N>::adjacent_or_equal_to_p_ref_):
+	Remove spurious method declarations.
+
 2008-04-28  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Upgrade literals.

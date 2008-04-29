@@ -80,6 +80,9 @@ namespace mln
     // FIXME: Dummy typedef.
     typedef void mesh;
 
+    // The type of the set of window sites (adjacent edge ids).
+    typedef std::set<util::edge_id> sites_t;
+
   public:
     /// Construction.
     /// \{
@@ -99,8 +102,6 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}
@@ -114,20 +115,15 @@ namespace mln
     /// Convert the iterator into a line graph psite.
     operator psite() const;
 
+    /// Return the reference psite.
+    const psite& p_ref() const;
+    /// Return the mln::p_line_graph corresponding to this piter.
+    const p_line_graph<P>& plg() const; 
+    /// Return the set of sites (adjacent edge ids).
+    sites_t& sites();
+
     /// Read-only access to the \a i-th coordinate.
     coord operator[](unsigned i) const;
-    /// \}
-
-    /// Internals, used by the window.
-    /// \{
-  public:
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-
-    /// An internal iterator on the set of edges of the underlying graph.
-    util::edge_id id_;
     /// \}
 
   private:
@@ -135,6 +131,14 @@ namespace mln
     const W& win_;
     /// The ``central'' psite of the window.
     const psite& p_ref_;
+
+    /// The last reference psite whose ajacent psites have been computed.
+    psite saved_p_ref_;
+    /// The set of edge ids adjacent to the reference psite.
+    sites_t sites_;
+    /// An iterator on the set of adjacent edges.
+    sites_t::const_iterator i_; 
+
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -176,6 +180,9 @@ namespace mln
     // FIXME: Dummy typedef.
     typedef void mesh;
 
+    // The type of the set of window sites (adjacent edge ids).
+    typedef std::set<util::edge_id> sites_t;
+
   public:
     /// Construction.
     /// \{
@@ -195,8 +202,6 @@ namespace mln
 
     /// Go to the next point.
     void next_();
-    /// Is the piter adjacent or equal to the reference point?
-    bool adjacent_or_equal_to_p_ref_() const;
     /// Update the internal data of the iterator.
     void update_();
     /// \}
@@ -210,20 +215,15 @@ namespace mln
     /// Convert the iterator into a line graph psite.
     operator psite() const;
 
+    /// Return the reference psite.
+    const psite& p_ref() const;
+    /// Return the mln::p_line_graph corresponding to this piter.
+    const p_line_graph<P>& plg() const; 
+    /// Return the set of sites (adjacent edge ids).
+    sites_t& sites();
+
     /// Read-only access to the \a i-th coordinate.
     coord operator[](unsigned i) const;
-    /// \}
-
-    /// Internals, used by the window.
-    /// \{
-  public:
-    /// Set the iterator to the first site of the graph.
-    void first_();
-    /// Advance the position of the iterator by one step.
-    void step_();
-
-    /// An internal iterator on the set of edges of the underlying graph.
-    util::edge_id id_;
     /// \}
 
   private:
@@ -231,6 +231,14 @@ namespace mln
     const W& win_;
     /// The ``central'' psite of the window.
     const psite& p_ref_;
+
+    /// The last reference psite whose ajacent psites have been computed.
+    psite saved_p_ref_;
+    /// The set of edge ids adjacent to the reference psite.
+    sites_t sites_;
+    /// An iterator on the set of adjacent edges.
+    sites_t::const_reverse_iterator i_; 
+
     /// The psite corresponding to this iterator.
     psite psite_;
     /// The point corresponding to this iterator.
@@ -275,10 +283,13 @@ namespace mln
   bool
   line_graph_window_fwd_piter<P, W>::is_valid() const
   {
-    // FIXME: We depend too much on the implementation of util::graph
-    // here.  The util::graph should provide the service to abstract
-    // these manipulations.
-    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
+    return
+      // The reference point must be valid...
+      p_ref_.is_valid()
+      // ...and must not have changed since the window has been computed...
+      && p_ref_ == saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != sites_.end();
   }
 
   template <typename P, typename W>
@@ -286,7 +297,7 @@ namespace mln
   void
   line_graph_window_fwd_piter<P, W>::invalidate()
   {
-    id_ = -1;
+    i_ = sites_.end();
   }
 
   template <typename P, typename W>
@@ -294,7 +305,15 @@ namespace mln
   void
   line_graph_window_fwd_piter<P, W>::start()
   {
-    win_.start(*this);
+    mln_precondition(p_ref_.is_valid());
+    // Update the sites, if needed.
+    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+      {
+	saved_p_ref_ = p_ref_;
+	win_.compute_sites_(*this);
+      }
+    i_ = sites_.begin();
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
   }
@@ -304,59 +323,12 @@ namespace mln
   void
   line_graph_window_fwd_piter<P, W>::next_()
   {
-    win_.next_(*this);
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(p_ref_ == saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  line_graph_window_fwd_piter<P, W>::first_()
-  {
-    id_ = 0;
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  line_graph_window_fwd_piter<P, W>::step_()
-  {
-    ++id_;
-  }
-
-
-  template <typename P, typename W>
-  inline
-  bool
-  line_graph_window_fwd_piter<P, W>::adjacent_or_equal_to_p_ref_() const
-  {
-    // Check wether the iterator points to P_REF_.
-    if (id_ == p_ref_.id())
-      return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    {
-      // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
-      /* FIXME: We should have a convenient shortcut for these
-	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
-	 or g() in this class.  */
-      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
-	p_ref_.plg().gr_;
-      // Check whether the edge this iterator points to is adjacent to
-      // the one p_ref points to, by comparing their ajacent nodes.
-      /* FIXME: This is too low-level.  Yet another service the graph
-      // should provide.  */
-      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
-	return true;
-    }
-
-    // Otherwise, the iterator is not adjacent to P_REF_.
-    return false;
   }
 
   template <typename P, typename W>
@@ -365,7 +337,7 @@ namespace mln
   line_graph_window_fwd_piter<P, W>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
+    psite_ = line_graph_psite<P>(plg(), *i_);
   }
 
   template <typename P, typename W>
@@ -390,6 +362,30 @@ namespace mln
   {
     mln_precondition(is_valid());
     return psite_;
+  }
+
+  template <typename P, typename W>
+  inline
+  const line_graph_psite<P>&
+  line_graph_window_fwd_piter<P, W>::p_ref() const
+  {
+    return p_ref_;
+  }
+
+  template <typename P, typename W>
+  inline
+  const p_line_graph<P>&
+  line_graph_window_fwd_piter<P, W>::plg() const
+  {
+    return p_ref_.plg();
+  }
+
+  template <typename P, typename W>
+  inline
+  std::set<util::edge_id>&
+  line_graph_window_fwd_piter<P, W>::sites()
+  {
+    return sites_;
   }
 
   template <typename P, typename W>
@@ -434,10 +430,13 @@ namespace mln
   bool
   line_graph_window_bkd_piter<P, W>::is_valid() const
   {
-    // FIXME: We depend too much on the implementation of util::graph
-    // here.  The util::graph should provide the service to abstract
-    // these manipulations.
-    return p_ref_.is_valid() && id_ < p_ref_.plg().gr_->nedges();
+    return
+      // The reference point must be valid...
+      p_ref_.is_valid()
+      // ...and must not have changed since the window has been computed...
+      && p_ref_ == saved_p_ref_
+      // ...and the iterator i_ must point a valid value.
+      && i_ != sites_.rend();
   }
 
   template <typename P, typename W>
@@ -445,7 +444,7 @@ namespace mln
   void
   line_graph_window_bkd_piter<P, W>::invalidate()
   {
-    id_ = -1;
+    i_ = sites_.rend();
   }
 
   template <typename P, typename W>
@@ -453,7 +452,15 @@ namespace mln
   void
   line_graph_window_bkd_piter<P, W>::start()
   {
-    win_.start(*this);
+    mln_precondition(p_ref_.is_valid());
+    // Update the sites, if needed.
+    if (!saved_p_ref_.is_valid() || p_ref_ != saved_p_ref_)
+      {
+	saved_p_ref_ = p_ref_;
+	win_.compute_sites_(*this);
+      }
+    i_ = sites_.rbegin();
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
   }
@@ -463,59 +470,12 @@ namespace mln
   void
   line_graph_window_bkd_piter<P, W>::next_()
   {
-    win_.next_(*this);
+    // Ensure the p_ref_ has not changed.
+    mln_precondition(p_ref_ == saved_p_ref_);
+    ++i_;
+    // FIXME: We might move the is_valid condition within update_.
     if (is_valid())
       update_();
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  line_graph_window_bkd_piter<P, W>::first_()
-  {
-    id_ = p_ref_.plg().gr_->nedges() - 1;
-  }
-
-  template <typename P, typename W>
-  inline
-  void
-  line_graph_window_bkd_piter<P, W>::step_()
-  {
-    --id_;
-  }
-
-
-  template <typename P, typename W>
-  inline
-  bool
-  line_graph_window_bkd_piter<P, W>::adjacent_or_equal_to_p_ref_() const
-  {
-    // Check wether the iterator points to P_REF_.
-    if (id_ == p_ref_.id())
-      return true;
-
-    // Check whether the iterator is among the neighbors of P_REF_.
-    {
-      // Paranoid assertion.
-      assert (p_ref_.id() < p_ref_.plg().gr_->nedges());
-      /* FIXME: We should have a convenient shortcut for these
-	 repetitive accesses to p_ref_.plg().gr_ (e.g., a method gr()
-	 or g() in this class.  */
-      const util::tracked_ptr<typename p_line_graph<P>::graph>& gr =
-	p_ref_.plg().gr_;
-      // Check whether the edge this iterator points to is adjacent to
-      // the one p_ref points to, by comparing their ajacent nodes.
-      /* FIXME: This is too low-level.  Yet another service the graph
-      // should provide.  */
-      if (gr->edge(id_).n1() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n1() == gr->edge(p_ref_.id()).n2() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n1() ||
-	  gr->edge(id_).n2() == gr->edge(p_ref_.id()).n2())
-	return true;
-    }
-
-    // Otherwise, the iterator is not adjacent to P_REF_.
-    return false;
   }
 
   template <typename P, typename W>
@@ -524,7 +484,7 @@ namespace mln
   line_graph_window_bkd_piter<P, W>::update_()
   {
     // Update psite_.
-    psite_ = line_graph_psite<P>(p_ref_.plg(), id_);
+    psite_ = line_graph_psite<P>(plg(), *i_);
   }
 
   template <typename P, typename W>
@@ -549,6 +509,30 @@ namespace mln
   {
     mln_precondition(is_valid());
     return psite_;
+  }
+
+  template <typename P, typename W>
+  inline
+  const line_graph_psite<P>&
+  line_graph_window_bkd_piter<P, W>::p_ref() const
+  {
+    return p_ref_;
+  }
+
+  template <typename P, typename W>
+  inline
+  const p_line_graph<P>&
+  line_graph_window_bkd_piter<P, W>::plg() const
+  {
+    return p_ref_.plg();
+  }
+
+  template <typename P, typename W>
+  inline
+  std::set<util::edge_id>&
+  line_graph_window_bkd_piter<P, W>::sites()
+  {
+    return sites_;
   }
 
   template <typename P, typename W>
