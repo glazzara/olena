@@ -1,3 +1,11 @@
+2008-04-29  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Modifie literals.
+	* cmy/rgb_to_cmy.hh: .
+	* literal/black.hh, literal/blue.hh
+	  literal/cyan.hh, literal/green.hh
+	  literal/red.hh, literal/white.hh: modifications.
+
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify the hierarchy of piters on graph windows and

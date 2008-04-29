@@ -23,7 +23,8 @@ namespace mln
       value::rgb8 operator()() const
       {
 	const value::cmy_f cmy(255,0,0);
-	value::rgb8 rgb = fun::v2v::f_rgb_to_cmy_f(fun::v2v::f_rgb_to_cmy_f(cmy));
+	value::rgb8 rgb;
+	rgb = fun::v2v::f_cmy_to_rgb_3x8_t(cmy);
 
 	return rgb;
       }

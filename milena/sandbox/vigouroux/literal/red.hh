@@ -7,6 +7,7 @@
  */
 
 # include <mln/core/concept/literal.hh>
+# include <mln/value/rgb8.hh>
 
 namespace mln
 {
@@ -17,7 +18,7 @@ namespace mln
     /// Type of literal red.
     struct red_t : public Literal<red_t>
     {
-      T_rgb operator()() const
+      value::rgb8 operator()() const
       {
 	return value::rgb8(255,0,0);
       }

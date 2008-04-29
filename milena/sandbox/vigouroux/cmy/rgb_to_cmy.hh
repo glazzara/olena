@@ -65,7 +65,7 @@ namespace mln
           }
         };
     
-      typedef f_cmy_to_rgb_<value::rgb8> f_cmy_to_rgb_3x8_t;
+      typedef f_cmy_to_rgb_<value::cmy_f> f_cmy_to_rgb_3x8_t;
 
       f_cmy_to_rgb_3x8_t f_cmy_to_rgb_3x8;
 
