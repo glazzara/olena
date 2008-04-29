@@ -1,5 +1,13 @@
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the computation of neighbors in mln::line_graph_elt_neighborhood.
+
+	* mln/core/line_graph_elt_neighborhood.hh
+	(compute_neighbors_): Don't add the reference point to the set of
+	neighbors.
+
+2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor implementation of piters on line graph windows.
 
 	* mln/core/internal/line_graph_vicinity_piter.hh: New.

@@ -40,6 +40,10 @@
    - mln::line_graph_elt_window
    - mln::line_graph_elt_neighborhood.  */
 
+/* FIXME: Due to the poor interface of mln::p_line_graph and
+   mln::util::graph, we show to much implementation details here.
+   Enrich their interfaces to avoid that.  */
+
 # include <set>
 
 # include <mln/core/concept/neighborhood.hh>
@@ -105,6 +109,7 @@ namespace mln
   line_graph_elt_neighborhood<P>::compute_neighbors_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
+    util::edge_id ref_edge_id = piter.p_ref().id();
     neighbors_t& neighbors = piter.neighbors();
     neighbors.clear();
     /* FIXME: Move this computation out of the window. In fact,
@@ -116,14 +121,19 @@ namespace mln
     const util::node<P>& node1 = piter.plg().gr_->node(id1);
     for (std::vector<util::edge_id>::const_iterator e =
 	   node1.edges.begin(); e != node1.edges.end(); ++e)
-      neighbors.insert(*e);
+      /* We explicitely enforce that the reference piter edge id is
+	 not inserted into NEIGHBORS.  */
+      if (*e != ref_edge_id)
+	neighbors.insert(*e);
     // Ajacent edges connected through node 2.
     // FIXME: Likewise.
     util::node_id id2 = piter.p_ref().second_id();
     const util::node<P>& node2 = piter.plg().gr_->node(id2);
     for (std::vector<util::edge_id>::const_iterator e =
 	   node2.edges.begin(); e != node2.edges.end(); ++e)
-      neighbors.insert(*e);
+      // Same remark as above.
+      if (*e != ref_edge_id)
+	neighbors.insert(*e);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
