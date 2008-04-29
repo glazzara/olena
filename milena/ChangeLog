@@ -1,3 +1,20 @@
+2008-04-29  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add beta tikz saving and tests.
+
+	* sandbox/abraham/tests: New.
+	* sandbox/abraham/tests/tikz.cc: New
+	Basic test for tikz saving.
+	* sandbox/abraham/tests/Makefile: New.
+	* sandbox/abraham/io: New.
+	* sandbox/abraham/io/tikz: New.
+	* sandbox/abraham/io/tikz/save.hh: New
+	(mln::io::tikz::save) Save an image to tikz.
+	* sandbox/abraham/img: New.
+	* sandbox/abraham/img/test.pgm: New.
+	* sandbox/abraham/img/lena.pgm: New.
+	* sandbox/abraham/img/lena.ppm: New.
+
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix adjacency test in p_graph.
