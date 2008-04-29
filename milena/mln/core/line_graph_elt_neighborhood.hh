@@ -74,7 +74,7 @@ namespace mln
     typedef line_graph_psite<P> psite;
     // The type of the set of neighbors (edge ids adjacent to the
     // reference psite).
-    typedef std::set<util::edge_id> neighbors_t;
+    typedef std::set<util::edge_id> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -94,7 +94,7 @@ namespace mln
     /// Services for iterators.
     /// \{
     template <typename Piter>
-    void compute_neighbors_(Point_Iterator<Piter>& piter) const;
+    void compute_sites_(Point_Iterator<Piter>& piter) const;
     /// \}
   };
 
@@ -106,12 +106,12 @@ namespace mln
   template <typename Piter>
   inline
   void
-  line_graph_elt_neighborhood<P>::compute_neighbors_(Point_Iterator<Piter>& piter_) const
+  line_graph_elt_neighborhood<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
     util::edge_id ref_edge_id = piter.p_ref().id();
-    neighbors_t& neighbors = piter.neighbors();
-    neighbors.clear();
+    sites_t& sites = piter.sites();
+    sites.clear();
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
@@ -122,9 +122,9 @@ namespace mln
     for (std::vector<util::edge_id>::const_iterator e =
 	   node1.edges.begin(); e != node1.edges.end(); ++e)
       /* We explicitely enforce that the reference piter edge id is
-	 not inserted into NEIGHBORS.  */
+	 not inserted into SITES.  */
       if (*e != ref_edge_id)
-	neighbors.insert(*e);
+	sites.insert(*e);
     // Ajacent edges connected through node 2.
     // FIXME: Likewise.
     util::node_id id2 = piter.p_ref().second_id();
@@ -133,7 +133,7 @@ namespace mln
 	   node2.edges.begin(); e != node2.edges.end(); ++e)
       // Same remark as above.
       if (*e != ref_edge_id)
-	neighbors.insert(*e);
+	sites.insert(*e);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

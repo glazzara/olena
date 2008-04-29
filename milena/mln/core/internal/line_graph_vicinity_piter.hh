@@ -37,6 +37,8 @@
    - mln::internal::graph_vicinity_piter.hh
    - mln::internal::line_graph_vicinity_piter.hh  */
 
+# include <set>
+
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>
