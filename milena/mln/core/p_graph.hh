@@ -255,6 +255,9 @@ namespace mln
     mln_assertion(lhs < this->npoints());
     mln_assertion(rhs < this->npoints());
 
+    // Ensure LHS and RHS are *not* equal.
+    if (rhs == lhs)
+      return false;
     // Check whether RHS and LHS are adjacent (i.e., whether RHS is
     // among the neighbors of LHS).
     typedef std::vector<util::edge_id> edges_t;

@@ -1,5 +1,12 @@
 2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix adjacency test in p_graph.
+
+	* mln/core/p_graph.hh (mln::p_graph<P>::adjacent): Don't return
+	true when arguments (rhs and lhs) are equal.
+
+2008-04-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the computation of neighbors in mln::line_graph_elt_neighborhood.
 
 	* mln/core/line_graph_elt_neighborhood.hh
