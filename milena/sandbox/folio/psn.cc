@@ -33,8 +33,11 @@
 # include <cmath>
 
 # include <mln/core/concept/image.hh>
+# include <mln/make/w_window.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/literal/zero.hh>
+
+# include <iostream>
 
 namespace mln
 {
@@ -45,14 +48,15 @@ namespace mln
     /*! Propagation using a single neighborhood (PSN).
      *
      * \param[in]  input_   The input image.
-     * \param[in]  chamfer  The chamfer window to use for distance calcul.
-     * \return              A pair <distance map, closest point map>.
+     * \param[in]  nbh      The chamfer window to use for distance calcul.
+     * \param[in]  max      Max value of the output image.
+     * \return              A distance map.
      *
      * \pre \p img has to be initialized.
      */
     template<typename I, typename N>
     mln_ch_value(I, unsigned)
-    psn(const Image<I>& input_, const N& nbh);
+    psn(const Image<I>& input_, const N& nbh, unsigned max);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,31 +64,6 @@ namespace mln
 
     namespace impl
     {
-
-      template <typename BP>
-      class compare
-      {
-      public:
-	bool
-	operator()(const BP& lhs, const BP& rhs) const
-	{
-	  return lhs.second > rhs.second;
-	}
-      };
-
-      template <typename D>
-      unsigned
-      sq(const D& dp)
-      {
-	unsigned res = 0;
-
-	for (unsigned i = 0; i < D::dim; ++i)
-	  res += std::abs(dp[i]); // FIXME: dp[i] * dp[i];
-
-	return res;
-      }
-
-
     } // end of namespace mln::dt::impl
 
 
@@ -94,72 +73,72 @@ namespace mln
     template<typename I, typename N>
     inline
     mln_ch_value(I, unsigned)
-    psn(const Image<I>& input_, const N& nbh)
+    psn(const Image<I>& input_, const N& nbh, unsigned max)
     {
+      // Preconditions.
       const I& input = exact(input_);
       mln_precondition(input.has_data());
 
-      mln_ch_value(I, unsigned) D;
-      initialize(D, input);
+      // Types.
+      typedef mln_point(I) point;
 
-      static const unsigned M = 666; // FIXME
+      // Initialization of output.
+      mln_ch_value(I, unsigned) output;
+      initialize(output, input);
 
       // Initialization.
-      typedef mln_point(I) point;
-      typedef mln_dpoint(I) dpoint;
-      typedef std::pair<point, dpoint> BP;
+      // {
 
-      std::map<unsigned, std::queue<BP> > bucket;
+      std::map<unsigned, std::queue<point> > bucket;
       unsigned bucket_size = 0;
 
       mln_fwd_piter(I) p(input.domain());
       for_all(p)
 	if (input(p))
 	{
-	  D(p) = literal::zero;
-	  bucket[0].push(BP(p, literal::zero));
+	  output(p) = literal::zero;
+	  bucket[0].push(p);
 	  ++bucket_size;
 	}
 	else
-	  D(p) = M;
+	  output(p) = max;
 
       unsigned d = 0;
 
+      // }
+
       while (bucket_size != 0)
       {
-	std::queue<BP>& bucket_d = bucket[d];
-
+	std::queue<point> bucket_d = bucket[d];
 	while (! bucket_d.empty())
 	{
-	  point p = bucket_d.front().first;
-	  dpoint dp = bucket_d.front().second;
-
+	  point p = bucket_d.front();
 	  bucket_d.pop();
 	  --bucket_size;
 
-	  if (D(p) == d)
+	  if (output(p) == d)
 	  {
-	    mln_niter(N) n_(nbh, p);
+	    mln_qiter(N) n(nbh, p);
 
-	    for_all(n_)
-	      if (D.has(n_))
+	    for_all(n)
+	      if (output.has(n))
 	      {
-		dpoint n = n_ - p;
-		unsigned newD = impl::sq(dp + n);
+		unsigned newOut = output(p) + n.w();
 
-		if (newD < D(p + n)) // p + n = p + n_ - p = n_
+		if (newOut < output(n))
 		{
-		  D(n_) = newD;
-		  bucket[newD].push(BP(p + n, dp + n));
+		  output(n) = newOut;
+		  bucket[newOut].push(n);
 		  ++bucket_size;
 		}
 	      }
 	  }
 	}
+	bucket.erase(d);
 	++d;
       }
 
-      return D;
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -190,27 +169,27 @@ int main()
 {
   using namespace mln;
 
-//   image2d<bool> ima(5,5);
-//   bool vals[] = { 1, 1, 1, 0, 0,
-// 		  0, 0, 1, 0, 0,
-// 		  0, 0, 1, 0, 0,
-// 		  0, 0, 0, 0, 0,
-// 		  0, 0, 0, 0, 0 };
-
-  image2d<bool> ima(3,3);
-  bool vals[] = { 1, 0, 0,
-		  0, 0, 0,
-		  0, 0, 0};
+  image2d<bool> ima(5,5);
+  bool vals[] = { 1, 0, 0, 1, 1,
+		  0, 0, 0, 0, 0,
+		  0, 0, 0, 0, 0,
+		  0, 0, 0, 1, 0,
+		  0, 0, 0, 0, 0};
   level::fill(ima, vals);
 
-  image2d<bool> msk(3,3);
-  bool rest[] = { 1, 0, 1,
-		  1, 0, 1,
-		  1, 1, 1};
+  image2d<bool> msk(5,5);
+  bool rest[] = { 1, 0, 1, 1, 1,
+		  1, 0, 1, 1, 1,
+		  1, 1, 0, 0, 0,
+		  1, 1, 0, 1, 1,
+		  1, 1, 1, 1, 1};
   level::fill(msk, rest);
 
+  int ws[] = { 2, 1, 2,
+	       1, 0, 1,
+	       2, 1, 2 };
   image2d<unsigned> out;
-  out = dt::psn(ima | pw::value(msk), c4());
+  out = dt::psn(ima | pw::value(msk), make::w_window2d(ws), 50);
 
   debug::println(ima | pw::value(msk));
   debug::println(out);

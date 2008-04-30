@@ -1,3 +1,13 @@
+2008-04-30  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	DT in canevas word plus some addons in original psn.
+	* sandbox/folio/canevas_dt.hh: Canevas for DT algorithm.
+	* sandbox/folio/dt.cc: Main test file.
+	* sandbox/folio/dt.hh: DT using canevas
+	(two algorithms currently identical).
+	* sandbox/folio/dt.spe.hh: DT using canevas spe file.
+	* sandbox/folio/psn.cc: Some addons (max value...).
+
 2008-04-30  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Run image encoded by values: fix some mistakes.
