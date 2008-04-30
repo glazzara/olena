@@ -32,16 +32,46 @@
 
 #include <mln/core/image2d.hh>
 #include <mln/core/value_enc_image.hh>
+#include <iostream>
 
 
 int main()
 {
   using namespace mln;
 
-  /// Basic tests
+  /// Basic test
   {
     typedef value_enc_image<point2d, int> ima_type;
+    typedef p_runs_<point2d> runs;
 
-    ima_type ima();
+    p_runs_<point2d> pruns0;
+    p_runs_<point2d> pruns1;
+    p_runs_<point2d> pruns2;
+
+    pruns0.insert(p_run<point2d>(make::point2d(0, 0), 2));
+    pruns1.insert(p_run<point2d>(make::point2d(2, 4), 7));
+    pruns1.insert(p_run<point2d>(make::point2d(18, 42), 5));
+    pruns1.insert(p_run<point2d>(make::point2d(50, 76), 2));
+    pruns1.insert(p_run<point2d>(make::point2d(17,40), 6));
+    pruns2.insert(p_run<point2d>(make::point2d(10,10), 5));
+
+    ima_type ima;
+    ima.insert(pruns0, 0);
+    ima.insert(pruns2, 2);
+    ima.insert(pruns1, 1);
+
+    mln_piter_(ima_type) piter (ima.domain());
+    int i = 0;
+    int nb = 0;
+    for_all(piter)
+    {
+      assert(ima(piter) == i);
+
+      ++nb;
+      if (nb == 2)
+	i = 2;
+      if (nb == 7)
+	i = 1;
+    }
   }
 }

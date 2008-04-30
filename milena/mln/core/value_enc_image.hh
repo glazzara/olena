@@ -72,7 +72,7 @@ namespace mln
 
     template <typename P, typename T>
     struct image_< value_enc_image<P,T> > :
-      default_image_< T, rle_image<P,T> >
+      default_image_< T, value_enc_image<P,T> >
     {
       typedef trait::image::category::primary category;
 
@@ -98,7 +98,7 @@ namespace mln
    */
   template <typename P, typename T>
   class value_enc_image :
-    public internal::image_primary_< pset_array_psite< runs_psite<P> >,
+    public internal::image_primary_< pset_array< p_runs_<P> >,
 				     value_enc_image<P, T> >
   {
   public:
@@ -115,7 +115,6 @@ namespace mln
 
     /// Skeleton.
     typedef value_enc_image< tag::psite_<P>, tag::value_<T> > skeleton;
-
 
     value_enc_image();
 
@@ -202,7 +201,7 @@ namespace mln
   bool
   value_enc_image<P, T>::has(const typename value_enc_image<P, T>::psite& site) const
   {
-    return this->data_.domain_.has(site);
+    return this->data_->domain_.has(site);
   }
 
   template <typename P, typename T>

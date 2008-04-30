@@ -1,3 +1,10 @@
+2008-04-30  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Run image encoded by values: fix some mistakes.
+
+	* tests/core/value_enc_image.cc: Update.
+	* mln/core/value_enc_image.hh: Fix mistakes.
+
 2008-04-29  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add run image type encoded by image type.
