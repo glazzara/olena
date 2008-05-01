@@ -110,7 +110,7 @@ int main()
   mln_qiter_(win_t) q(win, p);
   for_all (p)
   {
-    std::cout << "neighbors of " << p << " (" << ima(p) << "), "
+    std::cout << "sites adjacent to " << p << " (" << ima(p) << "), "
 	      << "including the site itself:" << std::endl;
     for_all (q)
       std::cout << "  " << q << " (level = " << ima(q) << ")"

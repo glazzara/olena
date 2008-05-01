@@ -40,6 +40,10 @@
    - mln::line_graph_elt_window
    - mln::line_graph_elt_neighborhood.  */
 
+/* FIXME: Due to the poor interface of mln::p_line_graph and
+   mln::util::graph, we show to much implementation details here.
+   Enrich their interfaces to avoid that.  */
+
 # include <mln/core/concept/window.hh>
 # include <mln/core/line_graph_psite.hh>
 # include <mln/core/line_graph_window_piter.hh>
@@ -86,6 +90,7 @@ namespace mln
 
     /// Services for iterators.
     /// \{
+    /// Compute the set of sites for this window around \a piter.
     template <typename Piter>
     void compute_sites_(Point_Iterator<Piter>& piter) const;
     /// \}
@@ -132,17 +137,17 @@ namespace mln
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
-    // Add the reference piter itself.
-    sites.insert(piter.p_ref().id()); 
     // Ajacent edges connected through node 1.
-    // FIXME: Far too low-level.
+    /* We don't need to explicitely insert the reference piter (edge
+       id) itself into SITES, since it is part of the set of edges
+       adjacent to NODE1 and NODE2, and will therefore be
+       automatically added.  */
     util::node_id id1 = piter.p_ref().first_id();
     const util::node<P>& node1 = piter.plg().gr_->node(id1);
     for (std::vector<util::edge_id>::const_iterator e =
 	   node1.edges.begin(); e != node1.edges.end(); ++e)
       sites.insert(*e);
     // Ajacent edges connected through node 2.
-    // FIXME: Likewise.
     util::node_id id2 = piter.p_ref().second_id();
     const util::node<P>& node2 = piter.plg().gr_->node(id2);
     for (std::vector<util::edge_id>::const_iterator e =

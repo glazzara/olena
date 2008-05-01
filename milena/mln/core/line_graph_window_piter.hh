@@ -50,7 +50,7 @@ namespace mln
     : public internal::line_graph_vicinity_piter_<P, line_graph_window_fwd_piter<P, W> >
   {
     typedef line_graph_window_fwd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, self_ > super_;
+    typedef internal::line_graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.
@@ -94,7 +94,7 @@ namespace mln
     : public internal::line_graph_vicinity_piter_<P, line_graph_window_bkd_piter<P, W> >
   {
     typedef line_graph_window_bkd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, self_ > super_;
+    typedef internal::line_graph_vicinity_piter_<P, self_> super_;
 
   public:
     /// Construction.

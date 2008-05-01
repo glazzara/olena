@@ -93,6 +93,7 @@ namespace mln
 
     /// Services for iterators.
     /// \{
+    /// Compute the set of sites for this neighborhood around \a piter.
     template <typename Piter>
     void compute_sites_(Point_Iterator<Piter>& piter) const;
     /// \}
@@ -112,21 +113,19 @@ namespace mln
     util::edge_id ref_edge_id = piter.p_ref().id();
     sites_t& sites = piter.sites();
     sites.clear();
-    /* FIXME: Move this computation out of the window. In fact,
+    /* FIXME: Move this computation out of the neighborhood. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
     // Ajacent edges connected through node 1.
-    // FIXME: Far too low-level.
     util::node_id id1 = piter.p_ref().first_id();
     const util::node<P>& node1 = piter.plg().gr_->node(id1);
     for (std::vector<util::edge_id>::const_iterator e =
 	   node1.edges.begin(); e != node1.edges.end(); ++e)
-      /* We explicitely enforce that the reference piter edge id is
-	 not inserted into SITES.  */
+      // We explicitly enforce that the reference piter edge id is
+      // *not* inserted into SITES.
       if (*e != ref_edge_id)
 	sites.insert(*e);
     // Ajacent edges connected through node 2.
-    // FIXME: Likewise.
     util::node_id id2 = piter.p_ref().second_id();
     const util::node<P>& node2 = piter.plg().gr_->node(id2);
     for (std::vector<util::edge_id>::const_iterator e =
