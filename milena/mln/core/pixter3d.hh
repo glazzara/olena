@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,8 @@ namespace mln
 {
 
   template <typename I>
-  class fwd_pixter3d : public internal::pixel_iterator_base_< I, fwd_pixter3d<I> >
+  class fwd_pixter3d
+    : public internal::pixel_iterator_base_< I, fwd_pixter3d<I> >
   {
     typedef internal::pixel_iterator_base_< I, fwd_pixter3d<I> > super_;
 
@@ -72,16 +73,16 @@ namespace mln
     /// End of the current row.
     mln_qlf_value(I)* eor_;
 
-    ///Next Slide offset for row.
-    const unsigned next_srow_offset_;
-
-    /// Next Slide offset.
+    /// Next slice offset.
     const unsigned next_sli_offset_;
 
-    /// Slide offset.
+    /// Next slice offset for row.
+    const unsigned next_srow_offset_;
+
+    /// Slice offset.
     const unsigned sli_offset_;
 
-    /// End of the current slide.
+    /// End of the current slice.
     mln_qlf_value(I)* eos_;
   };
 
@@ -97,11 +98,16 @@ namespace mln
     : super_(image),
       border_x2_ (2 * image.border()),
       row_offset_ (image.bbox().ncols() + border_x2_),
-      eor_ (& image.at(geom::min_sli(image), geom::min_row(image), geom::max_col(image)) + 1),
-      next_srow_offset_ ((image.bbox().ncols() + border_x2_) * border_x2_ ),
-      next_sli_offset_ (row_offset_ * border_x2_),
-      sli_offset_ ((image.bbox().ncols() + border_x2_) * (image.bbox().nrows() + border_x2_)),
-      eos_ (& image.at(geom::min_sli(image), geom::max_row(image) + 1, geom::min_col(image)))
+      eor_ (& image.at(geom::min_sli(image),
+		       geom::min_row(image),
+		       geom::max_col(image)) + 1),
+      next_sli_offset_ (row_offset_ * border_x2_ + border_x2_),
+      next_srow_offset_ (next_sli_offset_ + image.bbox().ncols()),
+      sli_offset_ ((image.bbox().ncols() + border_x2_) *
+		   (image.bbox().nrows() + border_x2_)),
+      eos_ (& image.at(geom::min_sli(image),
+		       geom::max_row(image),
+		       geom::max_col(image)) + 1)
   {
     mln_precondition(image.has_data());
   }
@@ -112,16 +118,16 @@ namespace mln
   fwd_pixter3d<I>::next_()
   {
     ++this->value_ptr_;
-    if (this->value_ptr_ == eor_ && this->value_ptr_ != this->eoi_)
-    {
-      this->value_ptr_ += border_x2_;
-      eor_ += row_offset_;
-    }
     if (this->value_ptr_ == eos_ && this->value_ptr_ != this->eoi_)
     {
       this->value_ptr_ += next_sli_offset_;
       eos_ += sli_offset_;
       eor_ += next_srow_offset_;
+    }
+    else if (this->value_ptr_ == eor_ && this->value_ptr_ != this->eoi_)
+    {
+      this->value_ptr_ += border_x2_;
+      eor_ += row_offset_;
     }
   }
 

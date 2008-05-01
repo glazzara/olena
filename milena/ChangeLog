@@ -1,5 +1,22 @@
 2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::fwd_pixter3d.
+
+	* mln/core/pixter3d.hh: s/slide/slice/.
+	Wrap long lines
+	(mln::fwd_pixter3d<I>::next_sli_offset_)
+	(mln::fwd_pixter3d<I>::next_srow_offset_):
+	Switch positions of members.
+	(mln::fwd_pixter3d<I>::fwd_pixter3d): Fix initializations of
+	members next_sli_offset_, next_srow_offset_ and eos_.
+	(mln::fwd_pixter3d<I>::next_): Catch up with these new definitions
+	of members.
+	* tests/core/image3d.cc: Check the number of iterations.
+	* tests/core/Makefile.am (image3d_SOURCES, pset_array_SOURCES):
+	New (missing variables).
+
+2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Misc. clean-up in line graph-related entities.
 
 	* mln/core/line_graph_elt_window.hh: Don't insert the reference

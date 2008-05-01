@@ -56,18 +56,22 @@ int main()
     box3d b(make::point3d(1,2, 1), make::point3d(3,6, 3));
     image3d<int> ima(b, 0);
 
-    mln_piter_(image3d<int>) pi(ima.domain());
-    mln_pixter_(image3d<int>) p(ima);
-
     debug::iota(ima);
 
-    pi.start();
-    p.start();
-    while (pi.is_valid())
     {
-      assert(ima(pi) == p.val());
-      pi.next();
-      p.next();
+      mln_fwd_piter_(image3d<int>) pi(ima.domain());
+      mln_fwd_pixter_(image3d<int>) p(ima);
+      pi.start();
+      p.start();
+      unsigned i = 0;
+      while (pi.is_valid())
+	{
+	  mln_assertion(ima(pi) == p.val());
+	  pi.next();
+	  p.next();
+	  ++i;
+	}
+      mln_assertion(i == b.npoints());
     }
   }
 }
