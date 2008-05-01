@@ -28,86 +28,120 @@
 #ifndef MLN_CORE_PIXTER3D_HH
 # define MLN_CORE_PIXTER3D_HH
 
-/*! \file mln/core/pixter3d.hh
- *
- * \brief Pixel iterator class on a image 3d with border.
- */
+/// \file mln/core/pixter3d.hh
+/// \brief Pixel iterators on a 3-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/point3d.hh>
 # include <mln/geom/size3d.hh>
 
-
-
 namespace mln
 {
 
+  /*------------------.
+  | fwd_pixter3d<I>.  |
+  `------------------*/
+
+  /// Forward pixel iterator on a 3-D image with border.
   template <typename I>
   class fwd_pixter3d
-    : public internal::pixel_iterator_base_< I, fwd_pixter3d<I> >
+    : public internal::forward_pixel_iterator_base_< I, fwd_pixter3d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, fwd_pixter3d<I> > super_;
+    typedef internal::forward_pixel_iterator_base_< I, fwd_pixter3d<I> > super_;
 
   public:
-
     /// Image type.
     typedef I image;
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image to iterate over its pixels.
-     */
+    /// \brief Constructor.
+    /// \param[in] image The image this pixel iterator is bound to.
     fwd_pixter3d(I& image);
 
     /// Go to the next pixel.
     void next_();
 
   private:
-
     /// Twice the size of the image border.
     const unsigned border_x2_;
-
     /// Row offset.
     const unsigned row_offset_;
-
     /// End of the current row.
     mln_qlf_value(I)* eor_;
 
     /// Next slice offset.
     const unsigned next_sli_offset_;
-
     /// Next slice offset for row.
     const unsigned next_srow_offset_;
-
     /// Slice offset.
     const unsigned sli_offset_;
-
     /// End of the current slice.
     mln_qlf_value(I)* eos_;
   };
 
 
-  // FIXME: bkd_pixter3d
+  /*------------------.
+  | bkd_pixter3d<I>.  |
+  `------------------*/
+
+  /// Backward pixel iterator on a 3-D image with border.
+  template <typename I>
+  class bkd_pixter3d
+    : public internal::backward_pixel_iterator_base_< I, bkd_pixter3d<I> >
+  {
+    typedef internal::backward_pixel_iterator_base_< I, bkd_pixter3d<I> > super_;
+
+  public:
+    /// Image type.
+    typedef I image;
+
+    /// \brief Constructor.
+    /// \param[in] image The image this pixel iterator is bound to.
+    bkd_pixter3d(I& image);
+
+    /// Go to the next pixel.
+    void next_();
+
+  private:
+    /// Twice the size of the image border.
+    const unsigned border_x2_;
+    /// Row offset.
+    const unsigned row_offset_;
+    /// Beginning of the current row.
+    mln_qlf_value(I)* bor_;
+
+    /// Next slice offset.
+    const unsigned next_sli_offset_;
+    /// Next slice offset for row.
+    const unsigned next_srow_offset_;
+    /// Slice offset.
+    const unsigned sli_offset_;
+    /// Beginning of the current slice.
+    mln_qlf_value(I)* bos_;
+  };
 
 
 #ifndef MLN_INCLUDE_ONLY
+
+  /*------------------.
+  | fwd_pixter3d<I>.  |
+  `------------------*/
 
   template <typename I>
   inline
   fwd_pixter3d<I>::fwd_pixter3d(I& image)
     : super_(image),
-      border_x2_ (2 * image.border()),
-      row_offset_ (image.bbox().ncols() + border_x2_),
-      eor_ (& image.at(geom::min_sli(image),
-		       geom::min_row(image),
-		       geom::max_col(image)) + 1),
-      next_sli_offset_ (row_offset_ * border_x2_ + border_x2_),
-      next_srow_offset_ (next_sli_offset_ + image.bbox().ncols()),
-      sli_offset_ ((image.bbox().ncols() + border_x2_) *
-		   (image.bbox().nrows() + border_x2_)),
-      eos_ (& image.at(geom::min_sli(image),
-		       geom::max_row(image),
-		       geom::max_col(image)) + 1)
+      border_x2_(2 * image.border()),
+      row_offset_(image.bbox().ncols() + border_x2_),
+      eor_(& image.at(geom::min_sli(image),
+		      geom::min_row(image),
+		      geom::max_col(image)) + 1),
+      next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
+      next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
+      sli_offset_((image.bbox().ncols() + border_x2_) *
+		  (image.bbox().nrows() + border_x2_)),
+      eos_(& image.at(geom::min_sli(image),
+		      geom::max_row(image),
+		      geom::max_col(image)) + 1)
   {
     mln_precondition(image.has_data());
   }
@@ -128,6 +162,50 @@ namespace mln
     {
       this->value_ptr_ += border_x2_;
       eor_ += row_offset_;
+    }
+  }
+
+
+  /*------------------.
+  | bkd_pixter3d<I>.  |
+  `------------------*/
+
+  template <typename I>
+  inline
+  bkd_pixter3d<I>::bkd_pixter3d(I& image)
+    : super_(image),
+      border_x2_(2 * image.border()),
+      row_offset_(image.bbox().ncols() + border_x2_),
+      bor_(& image.at(geom::max_sli(image),
+		      geom::max_row(image),
+		      geom::min_col(image)) - 1),
+      next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
+      next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
+      sli_offset_((image.bbox().ncols() + border_x2_) *
+		  (image.bbox().nrows() + border_x2_)),
+      bos_(& image.at(geom::max_sli(image),
+		      geom::min_row(image),
+		      geom::min_col(image)) - 1)
+  {
+    mln_precondition(image.has_data());
+  }
+
+  template <typename I>
+  inline
+  void
+  bkd_pixter3d<I>::next_()
+  {
+    --this->value_ptr_;
+    if (this->value_ptr_ == bos_ && this->value_ptr_ != this->boi_)
+    {
+      this->value_ptr_ -= next_sli_offset_;
+      bos_ -= sli_offset_;
+      bor_ -= next_srow_offset_;
+    }
+    else if (this->value_ptr_ == bor_ && this->value_ptr_ != this->boi_)
+    {
+      this->value_ptr_ -= border_x2_;
+      bor_ -= row_offset_;
     }
   }
 

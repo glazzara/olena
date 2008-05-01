@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,49 +28,51 @@
 #ifndef MLN_CORE_P_IMAGE2D_PIXTER_HH
 # define MLN_CORE_P_IMAGE2D_PIXTER_HH
 
-/*! \file mln/core/p_image2d_pixter.hh
- *
- * \brief Pixel iterator class on a image 2d with border.
- */
+/// \file mln/core/p_image2d_pixter.hh
+/// \brief Pixel iterators on a mln::p_image2d.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/point2d.hh>
 # include <mln/geom/size2d.hh>
 
-
-
 namespace mln
 {
 
+  /*--------------------------.
+  | p_image2d_fwd_pixter<P>.  |
+  `--------------------------*/
+
   template <typename P>
-  class p_image2d_fwd_pixter : public internal::pixel_iterator_base_< typename p_image2d<P>::image_type, p_image2d_fwd_pixter<P> >
+  class p_image2d_fwd_pixter
+    : public internal::forward_pixel_iterator_base_<
+        typename p_image2d<P>::image_type,
+        p_image2d_fwd_pixter<P>
+      >
   {
-    typedef internal::pixel_iterator_base_< typename p_image2d<P>::image_type, p_image2d_fwd_pixter<P> > super_;
+    typedef internal::forward_pixel_iterator_base_<
+      typename p_image2d<P>::image_type,
+      p_image2d_fwd_pixter<P>
+    > super_;
 
   public:
-
     /// Image type.
     typedef typename p_image2d<P>::image_type image;
-
     /// Point type.
     typedef point2d point;
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image to iterate over its pixels.
-     */
+    /// \brief Constructor.
+    /// \param[in] image The mln::p_image2d this pixel iterator is bound to.
     p_image2d_fwd_pixter(p_image2d<P>& s);
+
+    /// Start an iteration.
+    void start();
+    /// Go to the next pixel.
+    void next_();
 
     /// Reference of the corresponding point.
     const point to_point() const;
 
-    /// Go to the next pixel.
-    void next_();
-
-    void start();
-
   private:
-
     /// Row offset.
     unsigned row_offset_;
     /// End of the current row.
@@ -78,66 +80,74 @@ namespace mln
   };
 
 
+  /*--------------------------.
+  | p_image2d_bkd_pixter<P>.  |
+  `--------------------------*/
 
   template <typename P>
-  class p_image2d_bkd_pixter : public internal::pixel_iterator_base_< typename image2d<P>::image_type, p_image2d_bkd_pixter<P> >
+  class p_image2d_bkd_pixter
+    : public internal::backward_pixel_iterator_base_<
+        typename image2d<P>::image_type,
+        p_image2d_bkd_pixter<P>
+      >
   {
-    typedef internal::pixel_iterator_base_< typename image2d<P>::image_type, p_image2d_bkd_pixter<P> > super_;
+    typedef internal::backward_pixel_iterator_base_<
+      typename image2d<P>::image_type,
+      p_image2d_bkd_pixter<P>
+    > super_;
 
   public:
-
     /// Image type.
     typedef typename p_image2d<P>::image_type image;
-
     /// Point type.
     typedef point2d point;
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image to iterate over its pixels.
-     */
+    /// \brief Constructor.
+    /// \param[in] image The mln::p_image2d this pixel iterator is bound to.
     p_image2d_bkd_pixter(p_image2d<P>& s);
 
+    /// Start an iteration.
+    void start();
     /// Go to the next pixel.
     void next_();
-
-    void start();
 
     /// Reference of the corresponding point.
     const point to_point() const;
 
   private:
-
     /// Row offset.
     unsigned row_offset_;
-
     /// Beginning of the current row.
     mln_qlf_value(image)* bor_;
   };
 
 
 
-
 #ifndef MLN_INCLUDE_ONLY
 
-  // Fwd.
+  /*--------------------------.
+  | p_image2d_fwd_pixter<P>.  |
+  `--------------------------*/
 
   template <typename P>
   inline
-  p_image2d_fwd_pixter<P>::p_image2d_fwd_pixter(p_image2d<P>& s) :
-    super_(s.image_non_const())
+  p_image2d_fwd_pixter<P>::p_image2d_fwd_pixter(p_image2d<P>& s)
+    : super_(s.image_non_const())
   {
     mln_precondition(this->image_.has_data());
     row_offset_ = geom::max_col(this->image_) - geom::min_col(this->image_) + 1;
-    eor_ = & this->image_.at(geom::min_row(this->image_), geom::max_col(this->image_)) + 1;
+    eor_ = & this->image_.at(geom::min_row(this->image_),
+			     geom::max_col(this->image_)) + 1;
   }
 
   template <typename P>
   inline
-  const typename p_image2d_fwd_pixter<P>::point
-  p_image2d_fwd_pixter<P>::to_point() const
+  void
+  p_image2d_fwd_pixter<P>::start()
   {
-    return this->image_.point_at_offset(*this);
+    this->value_ptr_ = this->boi_ + 1;
+    while(this->is_valid() && !(*this->value_ptr_))
+      ++this->value_ptr_;
   }
 
   template <typename P>
@@ -150,35 +160,38 @@ namespace mln
       ++this->value_ptr_;
   }
 
+  template <typename P>
+  inline
+  const typename p_image2d_fwd_pixter<P>::point
+  p_image2d_fwd_pixter<P>::to_point() const
+  {
+    return this->image_.point_at_offset(*this);
+  }
+
+
+  /*--------------------------.
+  | p_image2d_bkd_pixter<P>.  |
+  `--------------------------*/
+
+  template <typename P>
+  inline
+  p_image2d_bkd_pixter<P>::p_image2d_bkd_pixter(p_image2d<P>& s)
+    : super_(s.image_non_const())
+  {
+    mln_precondition(this->image_.has_data());
+    row_offset_ = geom::max_col(this->image_) - geom::min_col(this->image_) + 1;
+    bor_ = & this->image_.at(geom::max_row(this->image_),
+			     geom::min_col(this->image_)) - 1;
+  }
 
   template <typename P>
   inline
   void
-  p_image2d_fwd_pixter<P>::start()
+  p_image2d_bkd_pixter<P>::start()
   {
-    this->value_ptr_ = this->boi_ + 1;
+    this->value_ptr_ = this->eoi_ - 1;
     while(this->is_valid() && !(*this->value_ptr_))
-      ++this->value_ptr_;
-  }
-
-  // Bkd.
-
-  template <typename P>
-  inline
-  p_image2d_bkd_pixter<P>::p_image2d_bkd_pixter(p_image2d<P>& s) :
-    super_(s.image_non_const())
-  {
-    mln_precondition(this->image_.has_data());
-    row_offset_ = geom::max_col(this->image_) - geom::min_col(this->image_) + 1;
-    bor_ = & this->image_.at(geom::max_row(this->image_), geom::min_col(this->image_)) - 1;
-  }
-
-  template <typename P>
-  inline
-  const typename p_image2d_bkd_pixter<P>::point
-  p_image2d_bkd_pixter<P>::to_point() const
-  {
-    return this->image_.point_at_offset(*this);
+      --this->value_ptr_;
   }
 
   template <typename P>
@@ -193,12 +206,10 @@ namespace mln
 
   template <typename P>
   inline
-  void
-  p_image2d_bkd_pixter<P>::start()
+  const typename p_image2d_bkd_pixter<P>::point
+  p_image2d_bkd_pixter<P>::to_point() const
   {
-    this->value_ptr_ = this->eoi_ - 1;
-    while(this->is_valid() && !(*this->value_ptr_))
-      --this->value_ptr_;
+    return this->image_.point_at_offset(*this);
   }
 
 #endif // ! MLN_INCLUDE_ONLY

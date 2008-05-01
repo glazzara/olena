@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,102 +28,97 @@
 #ifndef MLN_CORE_PIXTER2D_HH
 # define MLN_CORE_PIXTER2D_HH
 
-/*! \file mln/core/pixter2d.hh
- *
- * \brief Pixel iterator class on a image 2d with border.
- */
+/// \file mln/core/pixter2d.hh
+/// \brief Pixel iterators on a 2-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/point2d.hh>
 # include <mln/geom/size2d.hh>
 
-
-
 namespace mln
 {
 
+  /*------------------.
+  | fwd_pixter2d<I>.  |
+  `------------------*/
+
+  /// Forward pixel iterator on a 2-D image with border.
   template <typename I>
-  class fwd_pixter2d : public internal::pixel_iterator_base_< I, fwd_pixter2d<I> >
+  class fwd_pixter2d
+    : public internal::forward_pixel_iterator_base_< I, fwd_pixter2d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, fwd_pixter2d<I> > super_;
+    typedef internal::forward_pixel_iterator_base_< I, fwd_pixter2d<I> > super_;
 
   public:
-
     /// Image type.
     typedef I image;
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image to iterate over its pixels.
-     */
+    /// \brief Constructor.
+    /// \param[in] image The image this pixel iterator is bound to.
     fwd_pixter2d(I& image);
 
     /// Go to the next pixel.
     void next_();
 
   private:
-
     /// Twice the size of the image border.
     unsigned border_x2_;
-
     /// Row offset.
     unsigned row_offset_;
-
     /// End of the current row.
     mln_qlf_value(I)* eor_;
   };
 
 
+  /*------------------.
+  | bkd_pixter2d<I>.  |
+  `------------------*/
 
+  /// Backward pixel iterator on a 2-D image with border.
   template <typename I>
-  class bkd_pixter2d : public internal::pixel_iterator_base_< I, bkd_pixter2d<I> >
+  class bkd_pixter2d
+    : public internal::backward_pixel_iterator_base_< I, bkd_pixter2d<I> >
   {
-    typedef internal::pixel_iterator_base_< I, bkd_pixter2d<I> > super_;
+    typedef internal::backward_pixel_iterator_base_< I, bkd_pixter2d<I> > super_;
 
   public:
-
     /// Image type.
     typedef I image;
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image to iterate over its pixels.
-     */
+    /// \brief Constructor.
+    /// \param[in] image The image this pixel iterator is bound to.
     bkd_pixter2d(I& image);
 
     /// Go to the next pixel.
     void next_();
 
-    void start();
-
   private:
 
     /// Twice the size of the image border.
     unsigned border_x2_;
-
     /// Row offset.
     unsigned row_offset_;
-
     /// Beginning of the current row.
     mln_qlf_value(I)* bor_;
   };
 
 
 
-
 #ifndef MLN_INCLUDE_ONLY
 
-  // Fwd.
+  /*------------------.
+  | fwd_pixter2d<I>.  |
+  `------------------*/
 
   template <typename I>
   inline
-  fwd_pixter2d<I>::fwd_pixter2d(I& image) :
-    super_(image)
+  fwd_pixter2d<I>::fwd_pixter2d(I& image)
+    : super_(image),
+      border_x2_(2 * image.border()),
+      row_offset_(image.bbox().ncols() + border_x2_),
+      eor_(& image.at(geom::min_row(image), geom::max_col(image)) + 1)
   {
     mln_precondition(image.has_data());
-    border_x2_ = 2 * image.border();
-    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
-    eor_ = & image.at(geom::min_row(image), geom::max_col(image)) + 1;
   }
 
   template <typename I>
@@ -139,17 +134,20 @@ namespace mln
     }
   }
 
-  // Bkd.
+
+  /*------------------.
+  | fwd_pixter2d<I>.  |
+  `------------------*/
 
   template <typename I>
   inline
-  bkd_pixter2d<I>::bkd_pixter2d(I& image) :
-    super_(image)
+  bkd_pixter2d<I>::bkd_pixter2d(I& image)
+    : super_(image),
+      border_x2_(2 * image.border()),
+      row_offset_(image.bbox().ncols() + border_x2_),
+      bor_(& image.at(geom::max_row(image), geom::min_col(image)) - 1)
   {
     mln_precondition(image.has_data());
-    border_x2_ = 2 * image.border();
-    row_offset_ = geom::max_col(image) - geom::min_col(image) + 1 + border_x2_;
-    bor_ = & image.at(geom::max_row(image), geom::min_col(image)) - 1;
   }
 
   template <typename I>
@@ -163,14 +161,6 @@ namespace mln
       this->value_ptr_ -= border_x2_;
       bor_ -= row_offset_;
     }
-  }
-
-  template <typename I>
-  inline
-  void
-  bkd_pixter2d<I>::start()
-  {
-    this->value_ptr_ = this->eoi_ - 1;
   }
 
 #endif // ! MLN_INCLUDE_ONLY

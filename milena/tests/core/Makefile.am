@@ -8,7 +8,6 @@ check_PROGRAMS =				\
   exact						\
   h_vec						\
   initialize					\
-  image3d					\
   graph_elt_neighborhood			\
   graph_elt_window				\
   graph_image					\
@@ -26,6 +25,9 @@ check_PROGRAMS =				\
   p_queue					\
   p_queue_fast					\
   p_runs					\
+  pixter1d					\
+  pixter2d					\
+  pixter3d					\
   point_set_compatibility			\
   pset_array                                    \
   rle_image					\
@@ -38,7 +40,6 @@ clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 h_vec_SOURCES = h_vec.cc
 initialize_SOURCES = initialize.cc
-image3d_SOURCES = image3d.cc
 graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
 graph_image_SOURCES = graph_image.cc
@@ -56,6 +57,9 @@ p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc
 p_queue_SOURCES = p_priority_queue_fast.cc
 p_queue_fast_SOURCES = p_priority_queue_fast.cc
 p_runs_SOURCES = p_runs.cc
+pixter1d_SOURCES = pixter1d.cc
+pixter2d_SOURCES = pixter2d.cc
+pixter3d_SOURCES = pixter3d.cc
 point_set_compatibility_SOURCES = point_set_compatibility.cc
 pset_array_SOURCES = pset_array.cc
 rle_image_SOURCES = rle_image.cc

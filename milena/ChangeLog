@@ -1,5 +1,55 @@
 2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul 1-D, 2-D and 3-D pixters.
+
+	* mln/core/macros.hh (mln_bkd_pixter_): New macro.
+	* mln/core/internal/pixel_iterator_base.hh
+	(mln::pixel_iterator_base_<I, E>::start)
+	(mln::pixel_iterator_base_<I, E>::invalidate)
+	(mln::pixel_iterator_base_<I, E>::is_valid):
+	Remove methods.
+	(mln::forward_pixel_iterator_base_<I, E>)
+	(mln::backward_pixel_iterator_base_<I, E>):
+	New classes.
+	* mln/core/pixter1d.hh
+	(mln::fwd_pixter1d<I>): Inherit from
+	mln::internal::forward_pixel_iterator_base_.
+	(mln::bkd_pixter1d<I>): New class.
+	* mln/core/pixter2d.hh
+	(mln::fwd_pixter2d<I>): Inherit from
+	mln::internal::forward_pixel_iterator_base_.
+	(mln::bkd_pixter2d<I>): Inherit from
+	mln::internal::backward_pixel_iterator_base_.
+	(mln::bkd_pixter2d<I>::start): Remove method.
+	(mln::fwd_pixter2d<I>::fwd_pixter2d)
+	(mln::bkd_pixter2d<I>::bkd_pixter2d):
+	Use initialization lists instead of assignments.
+	* mln/core/pixter3d.hh
+	(mln::fwd_pixter3d<I>): Inherit from
+	mln::internal::forward_pixel_iterator_base_.
+	(mln::bkd_pixter3d<I>): New class.
+	* mln/core/p_image2d_pixter.hh
+	(mln::p_image2d_fwd_pixter<P>): Inherit from
+	mln::internal::forward_pixel_iterator_base_.
+	(mln::p_image2d_bkd_pixter<P>): Inherit from
+	mln::internal::backward_pixel_iterator_base_.
+	* mln/core/image1d.hh (mln::trait::bkd_pixter< image1d<T> >::ret):
+	Set to bkd_pixter1d< const image1d<T> >.
+	* mln/core/image2d.hh: Add FIXMEs.
+	* mln/core/image3d.hh (mln::trait::bkd_pixter< image3d<T> >::ret):
+	Set to bkd_pixter3d< const image3d<T> >.
+	* tests/core/pixter1d.cc, tests/core/pixter2d.cc:
+	New tests.
+	* tests/core/image3d.cc: Rename as...
+	* tests/core/pixter3d.cc: ...this.
+	Exercise bkd_pixter3d.
+	* tests/core/Makefile.am (check_PROGRAMS): Remove image3d.
+	Add pixter1d, pixter2d and pixter3d.
+	(image3d_SOURCES): Remove.
+	(pixter1d_SOURCES, pixter2d_SOURCES, pixter3d_SOURCES): New.
+
+2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix mln::fwd_pixter3d.
 
 	* mln/core/pixter3d.hh: s/slide/slice/.

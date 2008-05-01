@@ -581,6 +581,7 @@ namespace mln
     template <typename T, typename W>
     struct bkd_qixter< image2d<T>, W >
     {
+      // FIXME: Implement dpoints_bkd_pixter.
       typedef mln::internal::fixme ret;
     };
 
@@ -601,6 +602,7 @@ namespace mln
     template <typename T, typename N>
     struct bkd_nixter< image2d<T>, N >
     {
+      // FIXME: Implement dpoints_bkd_pixter.
       typedef mln::internal::fixme ret;
     };
 

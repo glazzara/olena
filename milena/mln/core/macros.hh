@@ -286,6 +286,8 @@
 # define mln_fwd_pixter_(I)          mln::trait::fwd_pixter< I >::ret
 
 # define mln_bkd_pixter(I) typename mln::trait::bkd_pixter< I >::ret
+# define mln_bkd_pixter_(I)         mln::trait::bkd_pixter< I >::ret
+
 # define mln_pixter(I)  mln_fwd_pixter(I)
 # define mln_pixter_(I) mln_fwd_pixter_(I)
 

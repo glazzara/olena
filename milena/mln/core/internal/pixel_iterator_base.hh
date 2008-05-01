@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,12 @@
 #ifndef MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/pixel_iterator_base.hh
- *
- * \brief Base class to factor code for pixel iterator classes.
- */
+/// \file mln/core/internal/pixel_iterator_base.hh
+/// \brief Base classes factoring code for pixel iterator classes.
 
 # include <mln/core/concept/pixel_iterator.hh>
 # include <mln/core/internal/pixel_impl.hh>
 # include <mln/core/trait/qlf_value.hh>
-
 
 namespace mln
 {
@@ -44,41 +41,88 @@ namespace mln
   namespace internal
   {
 
+    /*---------------------------------------.
+    | internal::pixel_iterator_base_<I, E>.  |
+    `---------------------------------------*/
 
-    /*! \internal A base class for pixel iterators.
-     *
-     */
+    /// \internal A base class for pixel iterators.
     template <typename I, typename E>
     class pixel_iterator_base_ : public Pixel_Iterator<E>,
 				 public internal::pixel_impl_<I, E>
     {
       typedef internal::pixel_impl_<I, E> super_;
 
-    public:
-
-      /// Start an iteration.
-      void start();
-
-      /// Invalidate the iterator.
-      void invalidate();
-
-      /// Test if the iterator is valid.
-      bool is_valid() const;
-
     protected:
-
-      /// Beginning of the image.
-      mln_qlf_value(I)* boi_;
-
-      /// End of the image (past-the-end).
-      mln_qlf_value(I)* eoi_;
-
       /// Constructor.
       pixel_iterator_base_(I& image);
+
+    protected:
+      /// Beginning of the image.
+      mln_qlf_value(I)* boi_;
+      /// End of the image (past-the-end).
+      mln_qlf_value(I)* eoi_;
+    };
+
+
+    /*-----------------------------------------------.
+    | internal::forward_pixel_iterator_base_<I, E>.  |
+    `-----------------------------------------------*/
+
+    /// \internal A base class for forward pixel iterators.
+    template <typename I, typename E>
+    class forward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
+    {
+      typedef pixel_iterator_base_<I, E> super_;
+
+    public:
+      /// Manipulation
+      /// \{
+      /// Start an iteration.
+      void start();
+      /// Invalidate the iterator.
+      void invalidate();
+      /// Test if the iterator is valid.
+      bool is_valid() const;
+      /// \}
+
+    protected:
+      /// Constructor.
+      forward_pixel_iterator_base_(I& image);
+    };
+
+
+    /*------------------------------------------------.
+    | internal::backward_pixel_iterator_base_<I, E>.  |
+    `------------------------------------------------*/
+
+    /// \internal A base class for backward pixel iterators.
+    template <typename I, typename E>
+    class backward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
+    {
+      typedef pixel_iterator_base_<I, E> super_;
+
+    public:
+      /// Manipulation
+      /// \{
+      /// Start an iteration.
+      void start();
+      /// Invalidate the iterator.
+      void invalidate();
+      /// Test if the iterator is valid.
+      bool is_valid() const;
+      /// \}
+
+    protected:
+      /// Constructor.
+      backward_pixel_iterator_base_(I& image);
     };
 
 
 #ifndef MLN_INCLUDE_ONLY
+
+    /*---------------------------------------.
+    | internal::pixel_iterator_base_<I, E>.  |
+    `---------------------------------------*/
 
     template <typename I, typename E>
     inline
@@ -89,33 +133,79 @@ namespace mln
       I& ima = this->image_;
       boi_ = & ima( ima.domain().pmin() ) - 1;
       eoi_ = & ima( ima.domain().pmax() ) + 1;
-      invalidate();
+      exact(*this).invalidate();
     }
 
-    // FIXME: Remove cause dangerous when bkd!!!
-    template <typename I, typename E>
-    inline
-    void
-    pixel_iterator_base_<I, E>::start()
-    {
-      this->value_ptr_ = boi_ + 1;
-    }
+
+    /*-----------------------------------------------.
+    | internal::forward_pixel_iterator_base_<I, E>.  |
+    `-----------------------------------------------*/
 
     template <typename I, typename E>
     inline
-    void
-    pixel_iterator_base_<I, E>::invalidate()
+    forward_pixel_iterator_base_<I, E>::forward_pixel_iterator_base_(I& image)
+      : super_(image)
     {
-      this->value_ptr_ = eoi_;
     }
 
-    // FIXME: Remove casue not optimal!!!
+    template <typename I, typename E>
+    inline
+    void
+    forward_pixel_iterator_base_<I, E>::start()
+    {
+      this->value_ptr_ = this->boi_ + 1;
+    }
+
+    template <typename I, typename E>
+    inline
+    void
+    forward_pixel_iterator_base_<I, E>::invalidate()
+    {
+      this->value_ptr_ = this->eoi_;
+    }
+
     template <typename I, typename E>
     inline
     bool
-    pixel_iterator_base_<I, E>::is_valid() const
+    forward_pixel_iterator_base_<I, E>::is_valid() const
     {
-      return this->value_ptr_ != eoi_ && this->value_ptr_ != boi_;
+      return this->value_ptr_ != this->eoi_;
+    }
+
+
+    /*------------------------------------------------.
+    | internal::backward_pixel_iterator_base_<I, E>.  |
+    `------------------------------------------------*/
+
+    template <typename I, typename E>
+    inline
+    backward_pixel_iterator_base_<I, E>::backward_pixel_iterator_base_(I& image)
+      : super_(image)
+    {
+    }
+
+    template <typename I, typename E>
+    inline
+    void
+    backward_pixel_iterator_base_<I, E>::start()
+    {
+      this->value_ptr_ = this->eoi_ - 1;
+    }
+
+    template <typename I, typename E>
+    inline
+    void
+    backward_pixel_iterator_base_<I, E>::invalidate()
+    {
+      this->value_ptr_ = this->boi_;
+    }
+
+    template <typename I, typename E>
+    inline
+    bool
+    backward_pixel_iterator_base_<I, E>::is_valid() const
+    {
+      return this->value_ptr_ != this->boi_;
     }
 
 #endif // ! MLN_INCLUDE_ONLY

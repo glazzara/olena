@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/image3d.cc
- *
- * \brief Tests on Image3d pixter
- */
+/// \file tests/level/pixter2d.cc
+/// \brief Tests on 2-D image pixters.
 
-
-#include <mln/core/image3d.hh>
 #include <mln/core/image2d.hh>
 
 #include <mln/debug/iota.hh>
@@ -40,27 +36,39 @@ int main()
 {
   using namespace mln;
 
-
-  // Working test
   {
-    box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
-    image3d<int> ima(b, 2);
+    box2d b(make::point2d(2, 1), make::point2d(4, 3));
+    image2d<int> ima(b, 2);
 
-    mln_pixter_(image3d<int>) p(ima);
+    mln_pixter_(image2d<int>) p(ima);
     for_all(p)
       std::cout << p << std::endl;
   }
 
-
   {
-    box3d b(make::point3d(1,2, 1), make::point3d(3,6, 3));
-    image3d<int> ima(b, 0);
-
+    box2d b(make::point2d(2, 1), make::point2d(6, 3));
+    image2d<int> ima(b, 1);
     debug::iota(ima);
 
     {
-      mln_fwd_piter_(image3d<int>) pi(ima.domain());
-      mln_fwd_pixter_(image3d<int>) p(ima);
+      mln_fwd_piter_(image2d<int>) pi(ima.domain());
+      mln_fwd_pixter_(image2d<int>) p(ima);
+      pi.start();
+      p.start();
+      unsigned i = 0;
+      while (pi.is_valid())
+	{
+	  mln_assertion(ima(pi) == p.val());
+	  pi.next();
+	  p.next();
+	  ++i;
+	}
+      mln_assertion(i == b.npoints());
+    }
+
+    {
+      mln_bkd_piter_(image2d<int>) pi(ima.domain());
+      mln_bkd_pixter_(image2d<int>) p(ima);
       pi.start();
       p.start();
       unsigned i = 0;
