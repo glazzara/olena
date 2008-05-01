@@ -50,6 +50,19 @@ int main()
   | Graph.  |
   `--------*/
 
+  /* The graph and its corresponding line graph are as follows:
+
+            0 1 2 3 4               0 1 2 3 4
+         .-----------	         .-----------
+         |		         |	     
+       0 |  0       2	       0 |  *       *
+       1 |    \   / |	       1 |    0   1 |
+       2 |      1   |	       2 |      *   4
+       3 |       \  |	       3 |       2  |
+       4 |        3-4	       4 |        *3*
+
+  */
+
   // Points associated to nodes.
   std::vector<point2d> points;
   points.push_back(make::point2d(0,0)); // Point associated to node 0.
@@ -70,11 +83,18 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  /*-------.
-  | Graph.  |
-  `-------*/
+  /*---------------------------.
+  | Line graph image support.  |
+  `---------------------------*/
 
   p_line_graph<point2d> plg(g);
+
+  // Check adjacencies of edge 1.
+  mln_assertion( plg.adjacent(1, 0));
+  mln_assertion(!plg.adjacent(1, 1));
+  mln_assertion( plg.adjacent(1, 2));
+  mln_assertion(!plg.adjacent(1, 3));
+  mln_assertion( plg.adjacent(1, 4));
 
   /*-------------------.
   | Line graph image.  |

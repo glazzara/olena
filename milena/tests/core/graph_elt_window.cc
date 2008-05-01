@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/graph_elt_window.cc
- *
- *  \brief Tests on mln::graph_elt_window.
- */
+/// \file tests/core/graph_elt_window.cc
+/// \brief Tests on mln::graph_elt_window.
 
 #include <iostream>
 

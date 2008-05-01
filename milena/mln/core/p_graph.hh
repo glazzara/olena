@@ -96,14 +96,16 @@ namespace mln
 
     /// Adjacency tests.
     /// \{
-    /// Return true if the psites lhs and rhs are adjacent.
+    /// Return true if the psites \a lhs and \a rhs are adjacent.
+    /// (If \a lhs and \a rhs are equal, return false).
     bool adjacent(const psite& lhs, const psite& rhs) const;
-    /// Return true if the nodes lhs and rhs are adjacent.
+    /// Return true if the nodes \a lhs and \a rhs are adjacent.
+    /// (If \a lhs and \a rhs are equal, return false).
     bool adjacent(const util::node_id& lhs, const util::node_id& rhs) const;
 
-    /// Return true if the psites lhs and rhs are adjacent, or equal.
+    /// Return true if the psites \a lhs and \a rhs are adjacent, or equal.
     bool adjacent_or_equal(const psite& lhs, const psite& rhs) const;
-    /// Return true if the nodes lhs and rhs are adjacent, or equal
+    /// Return true if the nodes \a lhs and \a rhs are adjacent, or equal
     bool adjacent_or_equal(const util::node_id& lhs,
 			   const util::node_id& rhs) const;
     /// \}
@@ -151,10 +153,9 @@ namespace mln
   template<typename P>
   inline
   p_graph<P>::p_graph (const util::graph<P>& gr)
+    // Create a deep, managed copy of GR.
     : gr_ (new util::graph<P>(gr))
   {
-    // FIXME: Warning: if the underlying graph is updated later, this
-    // won't be taken into account by this p_graph!
     accu::bbox<P> a;
     for (unsigned i = 0; i < npoints(); ++i)
       a.take(gr_->node_data(i));
@@ -258,7 +259,8 @@ namespace mln
     // Ensure LHS and RHS are *not* equal.
     if (rhs == lhs)
       return false;
-    // Check whether RHS and LHS are adjacent (i.e., whether RHS is
+
+    // Check whether LHS and RHS are adjacent (i.e., whether RHS is
     // among the neighbors of LHS).
     typedef std::vector<util::edge_id> edges_t;
     const edges_t& lhs_neighbs = gr_->nodes()[lhs]->edges;
@@ -290,10 +292,10 @@ namespace mln
     mln_assertion(rhs < this->npoints());
 
     // Check whether LHS and RHS are equal.
-    if (rhs == lhs)
+    if (lhs == rhs)
       return true;
-    // Check whether RHS and LHS are adjacent.
-    return adjacent(rhs, lhs);
+    // Check whether LHS and RHS are adjacent.
+    return adjacent(lhs, rhs);
   }
 
   template <typename P>

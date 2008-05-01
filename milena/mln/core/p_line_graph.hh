@@ -89,6 +89,22 @@ namespace mln
 
     bool has(const psite& p) const;
 
+    /// Adjacency tests.
+    /// \{
+    /// Return true if the psites \a lhs and \a rhs are adjacent.
+    /// (If \a lhs and \a rhs are equal, return false).
+    bool adjacent(const psite& lhs, const psite& rhs) const;
+    /// Return true if the edges \a lhs and \a rhs are adjacent.
+    /// (If \a lhs and \a rhs are equal, return false).
+    bool adjacent(const util::edge_id& lhs, const util::edge_id& rhs) const;
+
+    /// Return true if the psites \a lhs and \a rhs are adjacent, or equal.
+    bool adjacent_or_equal(const psite& lhs, const psite& rhs) const;
+    /// Return true if the edges \a lhs and \a rhs are adjacent, or equal
+    bool adjacent_or_equal(const util::edge_id& lhs,
+			   const util::edge_id& rhs) const;
+    /// \}
+
     // FIXME: Should be private.
     util::tracked_ptr<graph> gr_;
     // FIXME: (Roland) Is it really useful/needed?
@@ -125,10 +141,9 @@ namespace mln
   template<typename P>
   inline
   p_line_graph<P>::p_line_graph (const util::graph<P>& gr)
+    // Create a deep, managed copy of GR.
     : gr_ (new util::graph<P>(gr))
   {
-    // FIXME: Warning: if the underlying graph is updated later, this
-    // won't be taken into account by this p_line_graph!
     accu::bbox<P> a;
     for (unsigned i = 0; i < nnodes(); ++i)
       a.take(gr_->node_data(i));
@@ -177,6 +192,68 @@ namespace mln
       (&p.plg() == this) &&
       // Check that the edge id of P belongs to the range of valid edge ids.
       (p.id() < gr_->nedges());
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_line_graph<P>::adjacent(const psite& lhs, const psite& rhs) const
+  {
+    mln_assertion(&lhs.plg() == this && rhs.plg() == this);
+    return adjacent(lhs.id(), rhs.id());
+  }
+
+  /* FIXME: This could be more efficient, if the graph structure had a
+     richer interface.  */
+  template <typename P>
+  inline
+  bool
+  p_line_graph<P>::adjacent(const util::edge_id& lhs,
+			    const util::edge_id& rhs) const
+  {
+    mln_assertion(lhs < this->npoints());
+    mln_assertion(rhs < this->npoints());
+
+    // Ensure LHS and RHS are *not* equal.
+    if (lhs == rhs)
+      return false;
+
+    // Check whether LHS and RHS are adjacent (i.e., whether LHS and
+    // RHS share a common vertex.
+    /* FIXME: This is too low-level.  Yet another service the graph
+       should provide.  */
+    if (gr_->edge(lhs).n1() == gr_->edge(rhs).n1() ||
+	gr_->edge(lhs).n1() == gr_->edge(rhs).n2() ||
+	gr_->edge(lhs).n2() == gr_->edge(rhs).n1() ||
+	gr_->edge(lhs).n2() == gr_->edge(rhs).n2())
+      return true;
+
+    return false;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_line_graph<P>::adjacent_or_equal(const psite& lhs, const psite& rhs) const
+  {
+    mln_assertion(&lhs.pg() == this && rhs.pg() == this);
+    return adjacent_or_equal(lhs.id(), rhs.id());
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_line_graph<P>::adjacent_or_equal(const util::edge_id& lhs,
+				     const util::edge_id& rhs) const
+  {
+    mln_assertion(lhs < this->npoints());
+    mln_assertion(rhs < this->npoints());
+
+    // Check whether LHS and RHS are equal.
+    if (lhs == rhs)
+      return true;
+    // Check whether RHS and LHS are adjacent.
+    return adjacent(lhs, rhs);
   }
 
 

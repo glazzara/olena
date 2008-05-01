@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/line_graph_elt_window.cc
- *
- *  \brief Tests on mln::line_graph_elt_window.
- */
+/// \file tests/core/line_graph_elt_window.cc
+/// \brief Tests on mln::line_graph_elt_window.
 
 #include <vector>
 
@@ -49,8 +47,7 @@ int main()
   | Graph.  |
   `--------*/
 
-  /* The graph is as follows and its corresponding line graph are as
-     follows:
+  /* The graph and its corresponding line graph are as follows:
 
             0 1 2 3 4               0 1 2 3 4
          .-----------	         .-----------

@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/graph_elt_neighborhood.cc
- *
- *  \brief Tests on mln::graph_elt_neighborhood.
- */
+/// \file tests/core/graph_elt_neighborhood.cc
+/// \brief Tests on mln::graph_elt_neighborhood.
 
 #include <iostream>
 

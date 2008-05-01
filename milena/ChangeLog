@@ -1,5 +1,25 @@
 2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add adjaceny tests for mln::p_line_graph.
+
+	* mln/core/p_line_graph.hh
+	(mln::p_line_graph<P>::adjacent)
+	(mln::p_line_graph<P>::adjacent_or_equal):
+	New methods.
+	(mln::p_line_graph<P>::p_line_graph): Remove outdated FIXME.
+	* mln/core/p_graph.hh: Improve documentation.
+	(mln::p_graph<P>::p_graph): Remove outdated FIXME.
+	* tests/core/graph_image.cc, tests/core/line_graph_image.cc:
+	Exercise adjacency tests.
+	* tests/core/line_graph_elt_neighborhood.cc,
+	* tests/core/line_graph_elt_window.cc:
+	Typos in documentation.
+	* tests/core/graph_elt_neighborhood.cc,
+	* tests/core/graph_elt_window.cc:
+	Aesthetic changes.
+
+2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul 1-D, 2-D and 3-D pixters.
 
 	* mln/core/macros.hh (mln_bkd_pixter_): New macro.
