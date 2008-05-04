@@ -51,7 +51,6 @@ check_PROGRAMS =				\
   dpoint1d					\
   dpoint2d					\
   dpoint3d					\
-  dpoints_pixter				\
 						\
   estim_mean					\
 						\
@@ -141,7 +140,6 @@ decorated_image_SOURCES = decorated_image.cc
 dpoint1d_SOURCES = dpoint1d.cc
 dpoint2d_SOURCES = dpoint2d.cc
 dpoint3d_SOURCES = dpoint3d.cc
-dpoints_pixter_SOURCES = dpoints_pixter.cc
 
 estim_mean_SOURCES = estim_mean.cc
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,10 @@
 #ifndef MLN_CORE_DPOINTS_PIXTER_HH
 # define MLN_CORE_DPOINTS_PIXTER_HH
 
-/*! \file mln/core/dpoints_pixter.hh
- *
- * \brief Definition of forward and backward mln::dpoint_ based
- * iterators for pixels iterations.
- */
+/// \file mln/core/dpoints_pixter.hh
+/// 
+/// \brief Definition of forward and backward mln::dpoint-based
+/// iterators for pixels iterations.
 
 # include <cassert>
 # include <vector>
@@ -42,88 +41,183 @@
 # include <mln/core/internal/pixel_impl.hh>
 
 
-
 namespace mln
 {
 
-  /*! \brief A generic forward iterator on pixels of windows and of
-   *  neighborhoods.
-   *
-   * The parameter \c I is the image type.
-   */
+  /*------------------------.
+  | dpoints_fwd_pixter<I>.  |
+  `------------------------*/
+
+  /// \brief A generic forward iterator on the pixels of a
+  /// dpoint-based window or neighborhood.
+  /// 
+  /// Parameter \c I is the image type.
   template <typename I>
-  class dpoints_fwd_pixter : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
-			     public internal::pixel_impl_< I, dpoints_fwd_pixter<I> >
+  class dpoints_fwd_pixter
+    : public Pixel_Iterator< dpoints_fwd_pixter<I> >,
+      public internal::pixel_impl_< I, dpoints_fwd_pixter<I> >
   {
     typedef typename internal::pixel_impl_< I, dpoints_fwd_pixter<I> > super_;
-  public:
 
-    /*! \brief Constructor.
-     *
-     * \param[in] image Image subject to iteration.
-     * \param[in] dps   Object that can provide a set of delta-points.
-     * \param[in] p_ref Center point to iterate around.
-     */
+  public:
+    /// \brief Constructor (using an image).
+    /// 
+    /// \param[in] image The image to iterate over.
+    /// \param[in] dps   An object (neighborhood or window) that can
+    ///                  provide a set of delta-points.
+    /// \param[in] p_ref Center (resp. reference) point of the
+    ///                  neighborhood (resp. window).
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
 		       const Point_Site<Pref>& p_ref);
 
-    /*! \brief Constructor.
-     *
-     * \param[in] pxl_ref Center (generalized) pixel to iterate around.
-     * \param[in] dps     Object that can provide a set of delta-points.
-     */
+    /// \brief Constructor (using a generalized pixel).
+    /// 
+    /// \param[in] pxl_ref Center (generalized) pixel to iterate around.
+    /// \param[in] dps     An object (neighborhood or window) that can
+    ///                    provide a set of delta-points.
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(const Generalized_Pixel<Pref>& pxl_ref,
 		       const Dps& dps);
 
+    /// Manipulation.
+    /// \{
     /// Start an iteration.
     void start();
-
     /// Go to the next pixel.
     void next_();
 
     /// Invalidate the iterator.
     void invalidate();
-
     /// Test the iterator validity.
     bool is_valid() const;
 
     /// Force this iterator to update its location to take into
     /// account that its center point may have moved.
     void update();
+    /// \}
 
     /// The value around which this iterator moves.
     const mln_value(I)& center_val() const;
 
   private:
-
-    /// offset of each dpoints
-    std::vector<int> offset_;
-
-    /// current offset
-    unsigned i_;
-
-    /// reference pixel / point in the image
-    mln_qlf_value(I)** value_ref_;
-    //    or:
-    const mln_point(I)* p_ref_;
-
-
     template <typename Dps>
     void init_(const Dps& dps);
+
+  private:
+    /// \brief Offset of each delta-point.
+    ///
+    /// offset_[0] is absolute, while other offsets are relative
+    /// (i.e., offset_[i] is the memory difference to go from pixel
+    /// i-1 to pixel i.
+    std::vector<int> offset_;
+    /// Current offset.
+    // FIXME: Why not an iterator on vector offset_?
+    unsigned i_;
+
+    /// \brief Reference value or pixel.
+    ///
+    /// One and only one of these pointers should be non-null.
+    /// \{
+    /// Reference value the image
+    mln_qlf_value(I)** value_ref_;
+    /// Reference pixel / point in the image
+    const mln_point(I)* p_ref_;
+    /// \}
   };
 
 
-  // FIXME: dpoints_bkd_pixter<I>
+  /*------------------------.
+  | dpoints_bkd_pixter<I>.  |
+  `------------------------*/
+
+  /// \brief A generic backward iterator on the pixels of a
+  /// dpoint-based window or neighborhood.
+  /// 
+  /// Parameter \c I is the image type.
+  template <typename I>
+  class dpoints_bkd_pixter
+    : public Pixel_Iterator< dpoints_bkd_pixter<I> >,
+      public internal::pixel_impl_< I, dpoints_bkd_pixter<I> >
+  {
+    typedef typename internal::pixel_impl_< I, dpoints_bkd_pixter<I> > super_;
+
+  public:
+    /// \brief Constructor (using an image).
+    /// 
+    /// \param[in] image The image to iterate over.
+    /// \param[in] dps   An object (neighborhood or window) that can
+    ///                  provide a set of delta-points.
+    /// \param[in] p_ref Center (resp. reference) point of the
+    ///                  neighborhood (resp. window).
+    template <typename Dps, typename Pref>
+    dpoints_bkd_pixter(I& image,
+		       const Dps& dps,
+		       const Point_Site<Pref>& p_ref);
+
+    /// \brief Constructor (using a generalized pixel).
+    /// 
+    /// \param[in] pxl_ref Center (generalized) pixel to iterate around.
+    /// \param[in] dps     An object (neighborhood or window) that can
+    ///                    provide a set of delta-points.
+    template <typename Dps, typename Pref>
+    dpoints_bkd_pixter(const Generalized_Pixel<Pref>& pxl_ref,
+		       const Dps& dps);
+
+    /// Manipulation.
+    /// \{
+    /// Start an iteration.
+    void start();
+    /// Go to the next pixel.
+    void next_();
+
+    /// Invalidate the iterator.
+    void invalidate();
+    /// Test the iterator validity.
+    bool is_valid() const;
+
+    /// Force this iterator to update its location to take into
+    /// account that its center point may have moved.
+    void update();
+    /// \}
+
+    /// The value around which this iterator moves.
+    const mln_value(I)& center_val() const;
+
+  private:
+    template <typename Dps>
+    void init_(const Dps& dps);
+
+  private:
+    /// \brief Offset of each delta-point.
+    ///
+    /// offset_[dps.ndpoints() - 1] is absolute, while other offsets
+    /// are relative (i.e., offset_[i] is the memory difference to go
+    /// from pixel i+1 to pixel i.
+    std::vector<int> offset_;
+    /// Current offset.
+    // FIXME: Why not an iterator on vector offset_?
+    int i_;
+
+    /// \brief Reference value or pixel.
+    ///
+    /// One and only one of these pointers should be non-null.
+    /// \{
+    /// Reference value the image
+    mln_qlf_value(I)** value_ref_;
+    /// Reference pixel / point in the image
+    const mln_point(I)* p_ref_;
+    /// \}
+  };
 
 
 
 #ifndef MLN_INCLUDE_ONLY
 
-
-  // dpoints_fwd_pixter<I>
+  /*------------------------.
+  | dpoints_fwd_pixter<I>.  |
+  `------------------------*/
 
   template <typename I>
   template <typename Dps, typename Pref>
@@ -149,8 +243,8 @@ namespace mln
     const Pref& pxl_ref = internal::force_exact<Pref>(pxl_ref_);
     mln_precondition(pxl_ref.ima().has_data());
     p_ref_ = 0;
-    // potential promotion from (T**) to (const T**) shall be forced:
-    value_ref_ = (mln_qlf_value(I)**)(void*)(pxl_ref.address_());
+    // Potential promotion from (T**) to (const T**) shall be forced.
+    value_ref_ = const_cast<mln_qlf_value(I)**>(pxl_ref.address_());
     init_(dps);
   }
 
@@ -163,7 +257,7 @@ namespace mln
     if (p_ref_)
       return image_(*p_ref_);
     else
-      return ** value_ref_;
+      return **value_ref_;
   }
 
   template <typename I>
@@ -229,6 +323,117 @@ namespace mln
   dpoints_fwd_pixter<I>::invalidate()
   {
     i_ = offset_.size();
+  }
+
+
+  /*------------------------.
+  | dpoints_bkd_pixter<I>.  |
+  `------------------------*/
+
+  template <typename I>
+  template <typename Dps, typename Pref>
+  inline
+  dpoints_bkd_pixter<I>::dpoints_bkd_pixter(I& image,
+					    const Dps& dps,
+					    const Point_Site<Pref>& p_ref)
+    : super_(image)
+  {
+    mln_precondition(image.has_data());
+    p_ref_ = & exact(p_ref).to_point();
+    value_ref_ = 0;
+    init_(dps);
+  }
+
+  template <typename I>
+  template <typename Dps, typename Pref>
+  inline
+  dpoints_bkd_pixter<I>::dpoints_bkd_pixter(const Generalized_Pixel<Pref>& pxl_ref_,
+					    const Dps& dps)
+    : super_(internal::force_exact<Pref>(pxl_ref_).ima())
+  {
+    const Pref& pxl_ref = internal::force_exact<Pref>(pxl_ref_);
+    mln_precondition(pxl_ref.ima().has_data());
+    p_ref_ = 0;
+    // Potential promotion from (T**) to (const T**) shall be forced.
+    value_ref_ = const_cast<mln_qlf_value(I)**>(pxl_ref.address_());
+    init_(dps);
+  }
+
+  template <typename I>
+  inline
+  const mln_value(I)&
+  dpoints_bkd_pixter<I>::center_val() const
+  {
+    mln_invariant(value_ref_ != 0 || p_ref_ != 0);
+    if (p_ref_)
+      return image_(*p_ref_);
+    else
+      return **value_ref_;
+  }
+
+  template <typename I>
+  template <typename Dps>
+  inline
+  void
+  dpoints_bkd_pixter<I>::init_(const Dps& dps)
+  {
+    for (unsigned i = 0; i < dps.ndpoints(); ++i)
+      offset_.push_back(this->image_.offset(dps.dp(i)));
+    // offset_[ndpoints() - 1] is absolute
+    // other offsets are relative:
+    if (dps.ndpoints() > 1)
+      for (unsigned i = 0; i < dps.ndpoints() - 1; ++i)
+	offset_[i] -= offset_[i + 1];
+    invalidate();
+  }
+
+  template <typename I>
+  inline
+  void
+  dpoints_bkd_pixter<I>::update()
+  {
+    if (is_valid())
+      {
+	if (p_ref_)
+	  this->value_ptr_ = & image_(*p_ref_) + offset_[i_];
+	else
+	  this->value_ptr_ = * value_ref_ + offset_[i_];
+      }
+  }
+
+  template <typename I>
+  inline
+  void
+  dpoints_bkd_pixter<I>::start()
+  {
+    i_ = offset_.size() - 1;
+    update();
+  }
+
+  template <typename I>
+  inline
+  void
+  dpoints_bkd_pixter<I>::next_()
+  {
+    --i_;
+    if (is_valid())
+      this->value_ptr_ += offset_[i_];
+  }
+
+  template <typename I>
+  inline
+  bool
+  dpoints_bkd_pixter<I>::is_valid() const
+  {
+    return i_ >= 0;
+  }
+
+  template <typename I>
+  inline
+  void
+  dpoints_bkd_pixter<I>::invalidate()
+  {
+    i_ = -1;
   }
 
 #endif // ! MLN_INCLUDE_ONLY

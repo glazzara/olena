@@ -74,7 +74,6 @@ namespace mln
   pixel<I>::pixel(I& image)
     : super(image)
   {
-    this->value_ptr_ = 0;
   }
 
   template <typename I>

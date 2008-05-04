@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,8 @@
 #ifndef MLN_CORE_IMAGE2D_HH
 # define MLN_CORE_IMAGE2D_HH
 
-/*! \file mln/core/image2d.hh
- *
- * \brief Definition of the basic mln::image2d class.
- */
+/// \file mln/core/image2d.hh
+/// \brief Definition of the basic mln::image2d class.
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
@@ -581,8 +579,13 @@ namespace mln
     template <typename T, typename W>
     struct bkd_qixter< image2d<T>, W >
     {
-      // FIXME: Implement dpoints_bkd_pixter.
-      typedef mln::internal::fixme ret;
+      typedef dpoints_bkd_pixter< image2d<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct bkd_qixter< const image2d<T>, W >
+    {
+      typedef dpoints_bkd_pixter< const image2d<T> > ret;
     };
 
     // nixter
@@ -602,8 +605,13 @@ namespace mln
     template <typename T, typename N>
     struct bkd_nixter< image2d<T>, N >
     {
-      // FIXME: Implement dpoints_bkd_pixter.
-      typedef mln::internal::fixme ret;
+      typedef dpoints_bkd_pixter< image2d<T> > ret;
+    };
+
+    template <typename T, typename N>
+    struct bkd_nixter< const image2d<T>, N >
+    {
+      typedef dpoints_bkd_pixter< const image2d<T> > ret;
     };
 
   } // end of namespace mln::trait

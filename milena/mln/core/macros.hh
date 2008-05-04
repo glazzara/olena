@@ -293,15 +293,23 @@
 
 
 # define mln_fwd_qixter(I, W) typename mln::trait::fwd_qixter< I, W >::ret
+# define mln_fwd_qixter_(I, W)         mln::trait::fwd_qixter< I, W >::ret
+
 # define mln_bkd_qixter(I, W) typename mln::trait::bkd_qixter< I, W >::ret
-# define mln_qixter(I, W) mln_fwd_qixter(I, W)
+# define mln_bkd_qixter_(I, W)         mln::trait::bkd_qixter< I, W >::ret
+
+# define mln_qixter(I, W)  mln_fwd_qixter(I, W)
+# define mln_qixter_(I, W) mln_fwd_qixter_(I, W)
 
 
 # define mln_fwd_nixter(I, N) typename mln::trait::fwd_nixter< I, N >::ret
+# define mln_fwd_nixter_(I, N)         mln::trait::fwd_nixter< I, N >::ret
+
 # define mln_bkd_nixter(I, N) typename mln::trait::bkd_nixter< I, N >::ret
-# define mln_nixter(I, N) mln_fwd_nixter(I, N)
+# define mln_bkd_nixter_(I, N)         mln::trait::bkd_nixter< I, N >::ret
 
-
+# define mln_nixter(I, N)  mln_fwd_nixter(I, N)
+# define mln_nixter_(I, N) mln_fwd_nixter_(I, N)
 
 
 #endif // ! MLN_CORE_MACROS_HH

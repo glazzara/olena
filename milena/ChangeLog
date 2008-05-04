@@ -1,3 +1,50 @@
+2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Complete delta-point pixel iterators.
+
+	* mln/core/dpoints_pixter.hh: Aesthetic changes.
+	Add some more documentation.
+	(dpoints_fwd_pixter(const Generalized_Pixel<Pref>& const Dps&)):
+	Use const_cast instead of legacy casts.
+	(mln::dpoints_bkd_pixter<I>): New pixel iterator class.
+	* mln/core/pixel.hh (mln::pixel<I>::pixel (I&)): Don't set member
+	value_ptr_ to 0, since the super class' ctor already takes care of
+	this.
+	* mln/core/image1d.hh
+	(mln::trait::bkd_qixter< image1d<T>, W >)
+	(mln::trait::bkd_qixter< const image1d<T>, W >)
+	(mln::trait::fwd_nixter< image1d<T>, W >)
+	(mln::trait::fwd_nixter< const image1d<T>, W >)
+	(mln::trait::bkd_nixter< image1d<T>, W >)
+	(mln::trait::bkd_nixter< const image1d<T>, W >)
+	* mln/core/image2d.hh
+	(mln::trait::bkd_qixter< image2d<T>, W >)
+	(mln::trait::bkd_qixter< const image2d<T>, W >)
+	(mln::trait::bkd_nixter< image2d<T>, W >)
+	(mln::trait::bkd_nixter< const image2d<T>, W >)
+	* mln/core/image3d.hh
+	(mln::trait::bkd_qixter< image3d<T>, W >)
+	(mln::trait::bkd_qixter< const image3d<T>, W >)
+	(mln::trait::fwd_nixter< image3d<T>, W >)
+	(mln::trait::fwd_nixter< const image3d<T>, W >)
+	(mln::trait::bkd_nixter< image3d<T>, W >)
+	(mln::trait::bkd_nixter< const image3d<T>, W >):
+	Define these specialisations.
+	* mln/core/internal/force_exact.hh (mln::internal::force_exact):
+	Use ptrdiff_t instead of int to store the pointer difference.
+	Remove dead code.
+	* mln/core/macros.hh
+	(mln_fwd_qixter_, mln_bkd_qixter_, mln_qixter_)
+	(mln_fwd_nixter_, mln_bkd_nixter_, mln_nixter_):
+	New macros.
+	* tests/dpoints_pixter.cc: Move...
+	* tests/core/dpoints_pixter.cc: ...here.
+	Exercise mln::dpoints_bkd_pixter as well.
+	* tests/Makefile.am (check_PROGRAMS): Remove dpoints_pixter.
+	(dpoints_pixter_SOURCES): Move...
+	* tests/core/Makefile.am: ...here.
+	(check_PROGRAMS): Add dpoints_pixter.
+
 2008-05-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add adjaceny tests for mln::p_line_graph.

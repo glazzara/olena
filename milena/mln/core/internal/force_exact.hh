@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,10 @@
 #ifndef MLN_CORE_INTERNAL_FORCE_EXACT_HH
 # define MLN_CORE_INTERNAL_FORCE_EXACT_HH
 
-/*! \file mln/core/internal/force_exact.hh
- *
- * \brief Definition of a violent cast for internal use only.
- *
- */
+/// \file mln/core/internal/force_exact.hh
+/// \brief Definition of a violent cast for internal use only.
 
+#include <cstddef>
 
 
 namespace mln
@@ -42,29 +40,22 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal Violent cast.
-     * This cast is an alternative to the mln::exact cast.
-     * It is used for objects that do not derive from
-     * mln::Object.
-     * Warning Do not to use this cast!
-     * see mln::exact
-     */
+    /** \internal Violent cast.
+
+	This cast is an alternative to the mln::exact cast.  It is
+	used for objects that do not derive from mln::Object.
+	Warning: Do not use this cast, unless you know what you are
+	doing.
+
+	\see mln::exact.  */
     template <typename E, typename T>
     E& force_exact(const T& ref)
     {
-      /*
-	static const E exact_obj;
-	static const Type& exact_obj_ref = exact_obj;
-	static const int exact_offset =
-	(const char*)(void*)(&exact_obj_ref)
-	- (const char*)(void*)(&exact_obj);
-	return *(E*)((char*)(this_) - exact_offset);
-      */
       static const E* exact_obj;
       static const T& exact_obj_ref = *exact_obj;
-      static const int exact_offset =
+      static const ptrdiff_t exact_offset =
 	(const char*)(void*)(&exact_obj_ref)
-	- (const char*)(void*)( exact_obj);
+	- (const char*)(void*)(exact_obj);
       return *(E*)((char*)(&ref) - exact_offset);
     }
 

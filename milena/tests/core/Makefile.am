@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   category					\
   clone						\
+  dpoints_pixter				\
   exact						\
   h_vec						\
   initialize					\
@@ -37,6 +38,7 @@ check_PROGRAMS =				\
 
 category_SOURCES = category.cc
 clone_SOURCES = clone.cc
+dpoints_pixter_SOURCES = dpoints_pixter.cc
 exact_SOURCES = exact.cc
 h_vec_SOURCES = h_vec.cc
 initialize_SOURCES = initialize.cc

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,44 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/dpoints_pixter.cc
- *
- * \brief Test on mln::dpoints_fwd_pixter.
- */
+/// \file tests/dpoints_pixter.cc
+/// \brief Test on mln::dpoints_fwd_pixter and mln::dpoints_bkd_pixter.
 
 #include <mln/core/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/make/pixel.hh>
 
 
-
 template <typename I, typename W>
 void test_fill(I& ima, const W& win)
 {
   mln_piter(I) p(ima.domain());
-  mln_qixter(I, W) q(ima, win, p);
+  mln_fwd_qixter(I, W) fq(ima, win, p);
   for_all(p)
-    {
-      unsigned i = 0;
-      for_all(q)
-	++i, q.val() = 51;
-      mln_assertion(i == 9);
-    }
+  {
+    unsigned i = 0;
+    for_all(fq)
+      ++i, fq.val() = 51;
+    mln_assertion(i == 9);
+  }
+  mln_bkd_qixter(I, W) bq(ima, win, p);
+  for_all(p)
+  {
+    unsigned i = 0;
+    for_all(bq)
+      ++i, bq.val() = 42;
+    mln_assertion(i == 9);
+  }
 }
 
-
-// FIXME: test promotion and other constructions
-
+// FIXME: Test promotion and other constructions.
 
 template <typename P, typename W>
 void test_pixel(const P& pxl, const W& win)
 {
-  mln_qixter(mln_image(P), W) q(pxl, win);
-  for_all(q)
-    q.val() = 2 * q.val();
+  mln_fwd_qixter(mln_image(P), W) fq(pxl, win);
+  for_all(fq)
+    fq.val() = 2 * fq.val();
+  mln_bkd_qixter(mln_image(P), W) bq(pxl, win);
+  for_all(bq)
+    bq.val() = bq.val() + 1;
 }
-
-
 
 int main()
 {
@@ -76,5 +80,5 @@ int main()
   point2d p = make::point2d(1, 1);
 
   test_fill(ima, rect);
-  test_pixel(make::pixel(ima, p), rect); 
+  test_pixel(make::pixel(ima, p), rect);
 }

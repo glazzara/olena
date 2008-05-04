@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,8 @@
 #ifndef MLN_CORE_IMAGE3D_HH
 # define MLN_CORE_IMAGE3D_HH
 
-/*! \file mln/core/image3d.hh
- *
- * \brief Definition of the basic mln::image3d class.
- */
+/// \file mln/core/image3d.hh
+/// \brief Definition of the basic mln::image3d class.
 
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -593,11 +591,40 @@ namespace mln
     template <typename T, typename W>
     struct bkd_qixter< image3d<T>, W >
     {
-      // FIXME: Implement dpoints_bkd_pixter.
-      typedef mln::internal::fixme ret;
+      typedef dpoints_bkd_pixter< image3d<T> > ret;
     };
 
-    // FIXME: Nixters (see in image2d.hh)
+    template <typename T, typename W>
+    struct bkd_qixter< const image3d<T>, W >
+    {
+      typedef dpoints_bkd_pixter< const image3d<T> > ret;
+    };
+
+    // nixter
+
+    template <typename T, typename W>
+    struct fwd_nixter< image3d<T>, W >
+    {
+      typedef dpoints_fwd_pixter< image3d<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct fwd_nixter< const image3d<T>, W >
+    {
+      typedef dpoints_fwd_pixter< const image3d<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct bkd_nixter< image3d<T>, W >
+    {
+      typedef dpoints_bkd_pixter< image3d<T> > ret;
+    };
+
+    template <typename T, typename W>
+    struct bkd_nixter< const image3d<T>, W >
+    {
+      typedef dpoints_bkd_pixter< const image3d<T> > ret;
+    };
 
   } // end of namespace mln::trait
 
