@@ -1,5 +1,25 @@
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete the overhauling of delta-point pixel iterators.
+
+	* mln/core/dpoints_pixter.hh
+	(mln::dpoints_fwd_pixter<I>::i_)
+	(mln::dpoints_bkd_pixter<I>::i_): Turn indices into iterators.
+	(mln::dpoints_fwd_pixter<I>::update)
+	(mln::dpoints_fwd_pixter<I>::start)
+	(mln::dpoints_fwd_pixter<I>::next_)
+	(mln::dpoints_fwd_pixter<I>::is_valid)
+	(mln::dpoints_fwd_pixter<I>::invalidate)
+	(mln::dpoints_bkd_pixter<I>::update)
+	(mln::dpoints_bkd_pixter<I>::start)
+	(mln::dpoints_bkd_pixter<I>::next_)
+	(mln::dpoints_bkd_pixter<I>::is_valid)
+	(mln::dpoints_bkd_pixter<I>::invalidate):
+	Adjust.
+	* mln/make/pixel.hh: Typos in documentation.
+
+2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with the new name of mln::util::tree_node.
 
 	* mln/util/tree_to_fast.hh,

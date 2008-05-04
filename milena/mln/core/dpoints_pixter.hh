@@ -113,8 +113,7 @@ namespace mln
     /// i-1 to pixel i.
     std::vector<int> offset_;
     /// Current offset.
-    // FIXME: Why not an iterator on vector offset_?
-    unsigned i_;
+    typename std::vector<int>::const_iterator i_;
 
     /// \brief Reference value or pixel.
     ///
@@ -197,8 +196,7 @@ namespace mln
     /// from pixel i+1 to pixel i.
     std::vector<int> offset_;
     /// Current offset.
-    // FIXME: Why not an iterator on vector offset_?
-    int i_;
+    typename std::vector<int>::const_reverse_iterator i_;
 
     /// \brief Reference value or pixel.
     ///
@@ -284,9 +282,9 @@ namespace mln
     if (is_valid())
       {
 	if (p_ref_)
-	  this->value_ptr_ = & image_(*p_ref_) + offset_[i_];
+	  this->value_ptr_ = & image_(*p_ref_) + *i_;
 	else
-	  this->value_ptr_ = * value_ref_ + offset_[i_];
+	  this->value_ptr_ = * value_ref_ + *i_;
       }
   }
 
@@ -295,7 +293,7 @@ namespace mln
   void
   dpoints_fwd_pixter<I>::start()
   {
-    i_ = 0;
+    i_ = offset_.begin();
     update();
   }
 
@@ -306,7 +304,7 @@ namespace mln
   {
     ++i_;
     if (is_valid())
-      this->value_ptr_ += offset_[i_];
+      this->value_ptr_ += *i_;
   }
 
   template <typename I>
@@ -314,7 +312,7 @@ namespace mln
   bool
   dpoints_fwd_pixter<I>::is_valid() const
   {
-    return i_ != offset_.size();
+    return i_ != offset_.end();
   }
 
   template <typename I>
@@ -322,7 +320,7 @@ namespace mln
   void
   dpoints_fwd_pixter<I>::invalidate()
   {
-    i_ = offset_.size();
+    i_ = offset_.end();
   }
 
 
@@ -395,9 +393,9 @@ namespace mln
     if (is_valid())
       {
 	if (p_ref_)
-	  this->value_ptr_ = & image_(*p_ref_) + offset_[i_];
+	  this->value_ptr_ = & image_(*p_ref_) + *i_;
 	else
-	  this->value_ptr_ = * value_ref_ + offset_[i_];
+	  this->value_ptr_ = * value_ref_ + *i_;
       }
   }
 
@@ -406,7 +404,7 @@ namespace mln
   void
   dpoints_bkd_pixter<I>::start()
   {
-    i_ = offset_.size() - 1;
+    i_ = offset_.rbegin();
     update();
   }
 
@@ -415,9 +413,9 @@ namespace mln
   void
   dpoints_bkd_pixter<I>::next_()
   {
-    --i_;
+    ++i_;
     if (is_valid())
-      this->value_ptr_ += offset_[i_];
+      this->value_ptr_ += *i_;
   }
 
   template <typename I>
@@ -425,7 +423,7 @@ namespace mln
   bool
   dpoints_bkd_pixter<I>::is_valid() const
   {
-    return i_ >= 0;
+    return i_ != offset_.rend();
   }
 
   template <typename I>
@@ -433,7 +431,7 @@ namespace mln
   void
   dpoints_bkd_pixter<I>::invalidate()
   {
-    i_ = -1;
+    i_ = offset_.rend();
   }
 
 #endif // ! MLN_INCLUDE_ONLY

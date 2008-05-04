@@ -28,10 +28,8 @@
 #ifndef MLN_MAKE_PIXEL_HH
 # define MLN_MAKE_PIXEL_HH
 
-/*! \file mln/make/pixel.hh
- *
- * \brief Routine to construct an mln::pixel.
- */
+/// \file mln/make/pixel.hh
+/// \brief Routine to construct an mln::pixel.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
@@ -43,11 +41,11 @@ namespace mln
   namespace make
   {
 
-    /// Create an mln::pixel from a constant image \p ima and a point \p p.
+    /// Create a mln::pixel from a constant image \p ima and a point \p p.
     template <typename I>
     mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p);
 
-    /// Create an mln::pixel from a mutable image \p ima and a point \p p.
+    /// Create a mln::pixel from a mutable image \p ima and a point \p p.
     template <typename I>
     mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p);
 
