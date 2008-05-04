@@ -68,10 +68,11 @@ namespace mln
       template<typename T>
       inline
       void
-      tree_to_fast_(node<T>* input, tree_fast<T>& tree, unsigned p, unsigned& i)
+      tree_to_fast_(tree_node<T>* input, tree_fast<T>& tree,
+		    unsigned p, unsigned& i)
       {
-	typename node<T>::children_t child = input->children ();
-	typename node<T>::children_t::iterator it = child.begin ();
+	typename tree_node<T>::children_t child = input->children ();
+	typename tree_node<T>::children_t::iterator it = child.begin ();
 
 	for (; it != child.end (); ++it)
 	  {

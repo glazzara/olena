@@ -40,10 +40,10 @@ int main()
 {
   using namespace mln;
 
-  util::node<int> n(11);
+  util::tree_node<int> n(11);
   util::tree<int> t(&n);
-  util::node<int>* f = n.add_child(21);
-  util::node<int>* g = f->add_child(31);
+  util::tree_node<int>* f = n.add_child(21);
+  util::tree_node<int>* g = f->add_child(31);
 
   f->add_child(32);
   g->add_child(41)->add_child(51)->add_child(61)->add_child(71)
@@ -55,16 +55,16 @@ int main()
 
   util::branch<int> b(t, n);
 
-  std::vector< util::node<int>* >::iterator it;
+  std::vector< util::tree_node<int>* >::iterator it;
   util::branch_iter_ind<int> p(b);
 
   int prev;
   int current;
-  for(p.start(), prev = util::node<int>(p).elt(), p.next();
+  for(p.start(), prev = util::tree_node<int>(p).elt(), p.next();
       p.is_valid();
-      prev = util::node<int>(p).elt(), p.next())
+      prev = util::tree_node<int>(p).elt(), p.next())
     {
-      current = util::node<int>(p).elt ();
+      current = util::tree_node<int>(p).elt ();
 
       // children
       if (prev + 10 == current)

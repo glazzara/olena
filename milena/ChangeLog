@@ -1,5 +1,17 @@
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Catch up with the new name of mln::util::tree_node.
+
+	* mln/util/tree_to_fast.hh,
+	* tests/util/branch_iter.cc,
+	* tests/util/branch_iter_ind.cc,
+	* tests/util/tree.cc,
+	* tests/util/tree_to_fast.cc,
+	* tests/util/tree_to_image.cc:
+	s/util::node/util::tree_node/.
+
+2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete delta-point pixel iterators.
 
 	* mln/core/dpoints_pixter.hh: Aesthetic changes.

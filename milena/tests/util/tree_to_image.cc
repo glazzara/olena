@@ -101,7 +101,7 @@ int main (void)
       s7.points.insert(point2d(i, j));
   s7.value = 10;
 
-  util::node<I> node(s1);
+  util::tree_node<I> node(s1);
   node.add_child(s2);
   node.add_child(s3);
   node.add_child(s4);
