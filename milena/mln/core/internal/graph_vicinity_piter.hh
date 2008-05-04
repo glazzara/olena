@@ -132,6 +132,15 @@ namespace mln
       point p_;
     };
 
+    /* FIXME: This hand-made delegation is painful.  We should rely on
+       the general mechanism provided by Point_Site.  But then again, we
+       need to refine/adjust the interface of Point_Site w.r.t. the
+       mandatory conversions to points.  */
+    template <typename P, typename E>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const graph_vicinity_piter_<P, E>& p);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -202,6 +211,15 @@ namespace mln
     {
       assert(i < dim);
       return p_[i];
+    }
+
+
+    template <typename P, typename E>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const graph_vicinity_piter_<P, E>& p)
+    {
+      return ostr << p.to_psite();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

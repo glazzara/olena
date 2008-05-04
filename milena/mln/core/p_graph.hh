@@ -152,7 +152,7 @@ namespace mln
 
   template<typename P>
   inline
-  p_graph<P>::p_graph (const util::graph<P>& gr)
+  p_graph<P>::p_graph(const util::graph<P>& gr)
     // Create a deep, managed copy of GR.
     : gr_ (new util::graph<P>(gr))
   {
