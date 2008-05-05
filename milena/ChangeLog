@@ -660,6 +660,20 @@
 	* sandbox/jardonnet/registration/quat7.hh: Minor fix.
 	* sandbox/jardonnet/registration/icp.hh: Minor fix.
 
+2008-04-22  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	W-watershed implemented, dummy tikz output.
+
+	* sandbox/abraham/morpho/basic_najman.hh: Fix bugs.
+	* sandbox/abraham/morpho/images/test_2.pgm: New.
+	* sandbox/abraham/morpho/images/test_3.pgm: New.
+	* sandbox/abraham/morpho/images/test_4.pgm: New.
+	* sandbox/abraham/morpho/tikz.h: New
+	(mln::io::tikz::save) New, working on 2d grayscale images.
+	* sandbox/abraham/morpho/test_watershed.cc:
+	Add tikz output.
+	* sandbox/abraham/morpho/Makefile: .
+
 2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Add literals.

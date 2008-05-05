@@ -1,17 +1,3 @@
-2008-04-22  Alexandre Abraham  <abraham@lrde.epita.fr>
-
-	W-watershed implemented, dummy tikz output.
-
-	* milena/sandbox/abraham/morpho/basic_najman.hh: Fix bugs.
-	* milena/sandbox/abraham/morpho/images/test_2.pgm: New.
-	* milena/sandbox/abraham/morpho/images/test_3.pgm: New.
-	* milena/sandbox/abraham/morpho/images/test_4.pgm: New.
-	* milena/sandbox/abraham/morpho/tikz.h: New
-	(mln::io::tikz::save) New, working on 2d grayscale images.
-	* milena/sandbox/abraham/morpho/test_watershed.cc:
-	Add tikz output.
-	* milena/sandbox/abraham/morpho/Makefile: .
-
 2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	More on CXXFLAGS in configure.ac.
