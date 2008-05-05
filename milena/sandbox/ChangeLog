@@ -1,0 +1,2442 @@
+2008-04-30  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	DT in canevas word plus some addons in original psn.
+	* folio/canevas_dt.hh: Canevas for DT algorithm.
+	* folio/dt.cc: Main test file.
+	* folio/dt.hh: DT using canevas
+	(two algorithms currently identical).
+	* folio/dt.spe.hh: DT using canevas spe file.
+	* folio/psn.cc: Some addons (max value...).
+
+2008-04-29  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add pset_array class for image encoded by values.
+
+	* ballas/doc/image_tours.txt: Update Documentation.
+
+2008-04-29  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add beta tikz saving and tests.
+
+	* abraham/tests: New.
+	* abraham/tests/tikz.cc: New
+	Basic test for tikz saving.
+	* abraham/tests/Makefile: New.
+	* abraham/io: New.
+	* abraham/io/tikz: New.
+	* abraham/io/tikz/save.hh: New
+	(mln::io::tikz::save) Save an image to tikz.
+	* abraham/img: New.
+	* abraham/img/test.pgm: New.
+	* abraham/img/lena.pgm: New.
+	* abraham/img/lena.ppm: New.
+
+2008-04-29  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Modifie literals.
+	* vigouroux/cmy/rgb_to_cmy.hh: .
+	* vigouroux/literal/black.hh,
+	* vigouroux/literal/blue.hh,
+	* vigouroux/literal/cyan.hh,
+	* vigouroux/literal/green.hh
+	* vigouroux/literal/red.hh,
+	* vigouroux/literal/white.hh: modifications.
+
+2008-04-28  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Upgrade literals.
+	* vigouroux/color/my_cmy.hh: .
+	* vigouroux/literal/black.hh,
+	* vigouroux/literal/blue.hh,
+	* vigouroux/literal/cyan.hh,
+	* vigouroux/literal/green.hh,
+	* vigouroux/literal/red.hh,
+	* vigouroux/literal/white.hh: New literal.
+
+2008-04-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add delta points array and use it in fllt.
+
+	* garrigues/fllt/fllt_simple.cc: Use dp_array for c6
+	neighborhood. Start a test with interpixel browsing.
+
+2008-04-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Icp Final Translation.
+
+	This patch allows icp to neglect errors due to ¨noise¨ in the image
+	registarted.
+
+	* jardonnet/test/icp.cc: Add final translation.
+	* jardonnet/test/length.ppm: Add Xk points (green).
+
+2008-04-25  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add comments and a max function.
+
+	* abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman::max) New .
+	* abraham/morpho/test_component_tree.cc: .
+	* abraham/morpho/test_watershed.cc: .
+
+2008-04-24  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Clean and comment code.
+
+	* abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman::go) Increment image before
+	computing component tree;
+	(mln::morpho::basic_najman::BuildComponentTree) Remove
+	useless brackets
+	(mln::morpho::basic_najman::highest_fork) Really look
+	for the min at beginning
+	(mln::morpho::basic_najman::w_watershed) Really compute
+	min and max, add comments.
+	* abraham/morpho/images/test_watershed.pgm: .
+	* abraham/morpho/test_watershed.cc: .
+
+2008-04-23  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: ck point to xk point distance.
+
+	* jardonnet/test/icp.cc: Ck point color depends on the distance
+	with its closest point.
+	* jardonnet/test/length.ppm: Result image.
+	* jardonnet/TODO: Update.
+	* jardonnet/registration/quat7.hh: Minor fix.
+	* jardonnet/registration/icp.hh: Minor fix.
+
+2008-04-22  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	W-watershed implemented, dummy tikz output.
+
+	* abraham/morpho/basic_najman.hh: Fix bugs.
+	* abraham/morpho/images/test_2.pgm: New.
+	* abraham/morpho/images/test_3.pgm: New.
+	* abraham/morpho/images/test_4.pgm: New.
+	* abraham/morpho/tikz.h: New
+	(mln::io::tikz::save) New, working on 2d grayscale images.
+	* abraham/morpho/test_watershed.cc:
+	Add tikz output.
+	* abraham/morpho/Makefile: .
+
+2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add literals.
+	* vigouroux/literal/brown.hh,
+	* vigouroux/literal/cyan.hh,
+	* vigouroux/literal/darkgray.hh,
+	* vigouroux/literal/gray.hh,
+	* vigouroux/literal/lightgray.hh,
+	* vigouroux/literal/lime.hh,
+	* vigouroux/literal/magenta.hh,
+	* vigouroux/literal/olive.hh,
+	* vigouroux/literal/orange.hh,
+	* vigouroux/literal/pink.hh,
+	* vigouroux/literal/purple.hh,
+	* vigouroux/literal/teal.hh,
+	* vigouroux/literal/violet.hh,
+	* vigouroux/literal/yellow.hh: New literals.
+
+	* vigouroux/literal: New folder.
+
+2008-04-22  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add green and blue getters.
+	* vigouroux/cmy/get_blue.hh,
+	* vigouroux/cmy/get_green.hh,
+	* vigouroux/hsi/get_blue.hh,
+	* vigouroux/hsi/get_green.hh,
+	* vigouroux/xyz/get_blue.hh,
+	* vigouroux/xyz/get_green.hh,
+	* vigouroux/yiq/get_blue.hh,
+	* vigouroux/yiq/get_green.hh,
+	* vigouroux/yuv/get_blue.hh,
+	* vigouroux/yuv/get_green.hh: New green and blue getters.
+	* vigouroux/yuv/get_red.hh: New red getter.
+	* vigouroux/yuv/fun.hh: Remove.
+
+2008-04-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Cleanup directory. Fix comments.
+
+	* jardonnet/registration/cross_cov.hh: New: to be filled.
+	* jardonnet/registration/icp_lazy.hh: Remove.
+	* jardonnet/registration/icp_subsampled.hh: Remove.
+
+	* jardonnet/registration/icp.hh: Fix comments.
+
+2008-04-21  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Continue documentation.
+
+	* ballas/doc/image_tours.txt: Add run and lut image definition.
+	* ballas/doc/draft.txt: Update.
+
+2008-04-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Test a simple fllt.
+
+	* garrigues/fllt/fllt_simple.cc: Start to construct
+	shapes by browsing level lines in interpixels.
+	* garrigues/fllt/fllt_simple.svg.1.cc: New, just browse the
+	c4 connected component of an image.
+	* garrigues/fllt/fllt_simple.svg.2.cc: New, just browse the
+	c6 connected component of an image.
+	* garrigues/fllt/fllt_simple.svg.3.cc: New, build a tree where
+	a connected component is parent of the shapes contained in its
+	holes. It give the same representation than fllt only on simple images.
+	* garrigues/fllt/fllt_theo.cc: Old work, a faster version is
+	in geraud/fllt.cc
+
+2008-04-20  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Start to test another algorithm for FLLT.
+
+	* garrigues/fllt/fllt_simple.cc: New.
+
+2008-04-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Improve fllt.
+
+	* geraud/fllt.svg.2.cc: New.
+	* geraud/fllt.svg.3.cc: New.
+	* geraud/fllt.cc (fllt): Get rid of 'is'.
+	* geraud/fllt.svg.4.cc: New.
+
+2008-04-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix accu::bbox and new fllt try in sandbox.
+
+	* geraud/fllt.svg.1.cc: New.
+	* geraud/fllt.cc: New.
+
+2008-04-17  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	red getters.
+	* vigouroux/cmy/fun.hh, vigouroux/hsi/fun.hh,
+	* vigouroux/xyz/fun.hh, vigouroux/yiq/fun.hh,
+	* vigouroux/yuv/fun.hh:
+	red getters.
+	* vigouroux/cmy/my_cmy.hh,
+	* vigouroux/xyz/my_xyz.hh,
+	* vigouroux/yiq/my_yiq.hh,
+	* vigouroux/cmy/my_yuv.hh:
+	color space updated.
+	* vigouroux/cmy/rgb_to_cmy.hh,
+	* vigouroux/hsi/rgb_to_hsi.hh,
+	* vigouroux/xyz/rgb_to_xyz.hh,
+	* vigouroux/yiq/rgb_to_yiq.hh,
+	* vigouroux/yuv/rgb_to_yuv.hh: conversion updated.
+	* vigouroux/cmy/test.cc, vigouroux/xyz/test.cc: .
+	* vigouroux/color/my_hsl.hh: .
+	* vigouroux/color/my_hsv.hh: .
+	* vigouroux/color/my_xyz.hh: .
+	* vigouroux/color/rgb_to_hsi.hh: .
+	* vigouroux/color/rgb_to_hsl.hh: .
+	* vigouroux/color/rgb_to_xyz.hh: .
+	* vigouroux/function.hh: .
+	* vigouroux/testfun.cc: .
+	* vigouroux/xyz/testfun.cc: New test.
+	* vigouroux/xyz: New folder.
+
+	* vigouroux/yuv/test.cc: .
+
+2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add a new level set computation.
+
+	* garrigues/fllt/fllt_theo.cc: New.
+
+2008-04-16  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add functional M-Watershed algorithm and tests.
+
+	* abraham/morpho/basic_najman.hh
+	(mln::morpho::basic_najman::lca)
+	(mln::morpho::basic_najman::highest_fork)
+	(mln::morpho::basic_najman::m-destructible)
+	(mln::morpho::basic_najman::w-destructible)
+	(mln::morpho::basic_najman::m-watershed)
+	(mln::morpho::basic_najman::w-watershed):
+	New methods.
+	* abraham/morpho/test.cc: Add debug tests.
+	* abraham/morpho/test_component_tree.cc: New,
+	Add tests for component tree algorithms.
+	* abraham/morpho/images/result_m_watershed.pgm: New,
+	Reference for m-watershed algorithm.
+	* abraham/morpho/images/result_topo_watershed.pgm: New,
+	Reference for w-watershed algorithm.
+	* abraham/morpho/images/test_watershed.pgm: New,
+	Test image for watershed algorithms.
+	* abraham/morpho/images/test_component_mapping.pgm: New,
+	Reference image for component mapping.
+	* abraham/morpho/test_watershed.cc: New,
+	Add tests for watershed algorithms.
+	* abraham/morpho/Makefile:
+	Add rules to compile new tests.
+
+2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Commit my last version of fllt.
+
+	* garrigues/fllt/compute_level_set_fast.hh: New.
+	* garrigues/fllt/compute_level_set_fast2.hh: New.
+	* garrigues/fllt/debug.hh: .
+	* garrigues/fllt/doc.hh: .
+	* garrigues/fllt/fllt.hh: .
+	* garrigues/fllt/give_confs.cc: New.
+	* garrigues/fllt/local_configurations.hh: New.
+	* garrigues/fllt/lower.hh: .
+	* garrigues/fllt/test.cc: New.
+	* garrigues/fllt/test_fllt2.cc: .
+	* garrigues/fllt/types.hh: .
+	* garrigues/fllt/upper.hh: .
+
+2008-04-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* garrigues/fllt/essai.cc: New, Problems on
+	image_if_value<sub_image>.
+
+2008-04-16  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Fix Qk driving.
+
+	* jardonnet/test/bench: Add Qk driving log.
+	* jardonnet/registration/quat7.hh (to_vec): Add function.
+	* jardonnet/registration/icp.hh: Add qk/dk buffers.
+	* jardonnet/registration/update_qk.hh: Fix.
+
+2008-04-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Qk driving.
+
+	* jardonnet/test/Makefile: Add rules.
+	* jardonnet/TODO: Update.
+	* jardonnet/registration/interpolation.hh: give coef of the
+	  interpolated polynome.
+	* jardonnet/registration/quat7.hh: Update interface */-+.
+	* jardonnet/registration/cloud.hh: Update center.
+	* jardonnet/registration/icp.hh: Add Optimization on qk.
+	* jardonnet/registration/update_qk.hh: Optimization on qk.
+
+2008-04-15  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add red getter.
+	* vigouroux/cmy/fun.hh, vigouroux/hsi/fun.hh,
+	* vigouroux/yiq/fun.hh, vigouroux/yuv/fun.hh :
+	New red getter.
+	* vigouroux/cmy/my_cmy.hh,
+	* vigouroux/hsi/my_hsi.hh,
+	* vigouroux/yiq/my_yiq.hh,
+	* vigouroux/yuv/my_yuv.hh:
+	Added inheritance from value.
+	* vigouroux/cmy/rgb_to_cmy.hh,
+	* vigouroux/hsi/rgb_to_hsi.hh,
+	* vigouroux/yiq/rgb_to_yiq.hh,
+	* vigouroux/yuv/rgb_to_yuv.hh:
+	Added inheritance from function_v2v.
+	* vigouroux/cmy/test.cc, vigouroux/yiq/test.cc,
+	* vigouroux/yuv/test.cc : New test.
+	* vigouroux/cmy/testfun.cc,
+	* vigouroux/yiq/testfun.cc,
+	* vigouroux/yuv/testfun.cc: New test.
+	* vigouroux/cmy, vigouroux/hsi,
+	* vigouroux/yiq, vigouroux/yuv: New folder.
+	* vigouroux/color/is_HSI.cc: change.
+	* vigouroux/color/my_hsi.hh: change.
+	* vigouroux/color/rgb_to_hsi.hh: change.
+	* vigouroux/function.hh: New getter.
+	* vigouroux/testfun.cc: New test.
+
+2008-04-15  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update documentation about image types and properties.
+
+	* ballas/doc/image_tours.txt: add the morpher types.
+	* ballas/doc/draft.txt: update.
+
+2008-04-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add bench script and clean testes up.
+
+	* jardonnet/test/bench.rb: New ruby bench script.
+	* jardonnet/test/plotscript: Usefull generated file.
+	* jardonnet/test/Makefile: Clean rules up.
+
+	Remove useless files, now supported by icp.hh
+	* jardonnet/test/icp_subsampled.cc: Remove.
+	* jardonnet/test/icp_check.sh: Remove.
+	* jardonnet/test/icp_lazy.cc: Remove.
+
+2008-04-11  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Continue documentation about image types and properties.
+
+	* ballas/doc/image_tours.txt,
+	* ballas/doc/draft.txt: update documentation.
+
+2008-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add commandline parameters q and e.
+
+	* jardonnet/test/icp.cc: Read q and e on the command line.
+	* jardonnet/registration/icp.hh: Add Fixme for Ck printing.
+
+2008-04-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add multi-scale registration.
+
+	* jardonnet/test/icp.cc: Add nb_it as argument for a
+	  registration.
+
+	* jardonnet/test/Makefile: Remove icp_lazy test.
+
+	Add parameter for multi-scale icp:
+	* jardonnet/registration/tools.hh: Update.
+	* jardonnet/registration/quat7.hh: Use virtual length (c_length)
+	  for p_array.
+	* jardonnet/registration/cloud.hh: Use virtual length.
+	* jardonnet/registration/icp.hh: Use virtual length.
+
+	Following files now exist eleswhere (registration/)
+	* jardonnet/registration/quat: Remove.
+	* jardonnet/registration/quat/all.hh: Remove.
+	* jardonnet/registration/quat/misc.hh: Remove.
+	* jardonnet/registration/quat/rotation.hh: Remove.
+
+	* jardonnet/registration/projection.hh: Use virtual length.
+
+2008-04-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a log version of front-based distance computation.
+
+	* folio/psn_log.cc: New.  Derived from psn.cc to
+	trace the behavior of the algorithm in the non-convex case.
+
+2008-04-09  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Some stuff for tests.
+	* folio/psn.cc: Some test stuff.
+
+2008-04-08  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: various tools and improvments.
+
+	* jardonnet/test/icp.cc: Fix regression (output registred.pbm).
+
+	* jardonnet/registration/tools.hh:
+	 Add multiple 2d to 3d and 3d to 2d conversion .
+
+	* jardonnet/registration/quat7.hh:
+	Rewrite Covariance matrix computation.
+
+	* jardonnet/registration/frankel_young.hh:
+	 New, resolve linear equation Ax = b. Useless for icp.
+
+	* jardonnet/registration/power_it.hh:
+	Find greatest eigen value, should be more efficient than jacobi ?.
+
+	* jardonnet/registration/icp.hh:
+	 Add intermediate image outputs.
+
+2008-04-07  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	PSN algorithm.
+	* folio/chamfer.cc: Debug using an image to compare with PSN.
+	* folio/psn.cc: Propagation using a single neighborhood.
+
+2008-04-05  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Remove intermediate p_array Xk.
+
+	* jardonnet/test/icp.cc: Move a big part of icp.hh here.
+	* jardonnet/test/Makefile (icp++): Add rule.
+	* jardonnet/registration/quat7.hh: Add direct access to the map.
+	* jardonnet/registration/icp.hh: Remove Xk.
+	* jardonnet/registration/tools.hh: Improve lazy_image interface
+	and checks.
+
+2008-04-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add file for refactoring.
+
+	* jardonnet/registration/icp.hh: New file for the refactored version.
+
+2008-04-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Improve lazy_image implementation.
+
+	* jardonnet/test/Makefile: Add rules for the lazy version.
+	* jardonnet/registration/icp_map.hh:
+	  New dedicated version to map.
+
+	* jardonnet/registration/icp_lazy.hh:
+	  Rename lazy_map as lazy_image. Improve implementation.
+
+	* jardonnet/registration/icp.hh (icp_): Refactoring.
+	* jardonnet/registration/projection.hh (memo):
+	   Make a projection using the new lazy_image interface.
+
+	* jardonnet/registration/tools.hh (c_point): Add functor.
+
+2008-04-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: Continue documentation about image types and properties.
+
+	* ballas/doc/image_tours.txt: update documentation.
+	* ballas/doc/draft.txt: New file about the images properties.
+
+2008-04-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandboc : ICP: Update check script (gprof).
+
+	* jardonnet/test/bench: Add info.
+	* jardonnet/test/icp_check.sh: Update testes.
+	* jardonnet/test/Makefile: Update rule for gprof.
+
+2008-04-03  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix a bug in basic_najman.
+
+	* abraham/morpho/basic_najman.hh:
+	(mln::morpho::basic_najman<I,N>::BuildComponentTree):
+	Fix a bug, the algorithm is still bugged but now gives a nice
+	tree.
+	* abraham/morpho/test.cc: Add picture inversion for test
+	purpose.
+
+2008-04-03  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add icp_subsampled.
+
+	* jardonnet/test/bench: New info file.
+
+	* jardonnet/test/icp_check.sh: Update.
+	* jardonnet/test/Makefile: Add rules icp_sub.
+	* jardonnet/test/icp_subsampled.cc: New icp_sub.
+	* jardonnet/registration/icp_subsampled.hh: New. Registers, at
+	first, a subset of the cloud.
+
+	* jardonnet/TODO: Update.
+	* jardonnet/registration/quat7.hh: Fix vec initialisation.
+	* jardonnet/registration/cloud.hh: Fix vec initialisation.
+
+2008-04-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Fix quaternion computation.
+
+	* jardonnet/test/Makefile: Add rules for ICP.
+	* jardonnet/registration/quat7.hh (match): Fix matrix instantiation.
+	* jardonnet/registration/cloud.hh (rms): Make it use norm::l2.
+	* jardonnet/registration/jacobi.hh: Add safer checks, on float values.
+
+2008-04-02  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Make check.
+
+	* jardonnet/test/icp_check.sh: New Check Script.
+	* jardonnet/test/bin: New Bin directory.
+	* jardonnet/test/Makefile: Update for testes.
+
+	* jardonnet/test/icp_lazy.cc: New dedicated to lazy_map.
+	* jardonnet/registration/icp_lazy.hh: New dedicated to
+	lazy map.
+	* jardonnet/registration/quat7.hh: Update.
+	* jardonnet/registration/chamfer.hh: Update.
+	* jardonnet/registration/icp.hh: Update (dedicated to
+	distance_map).
+
+	* jardonnet/registration/misc.hh: Move outside quat/
+	(removed).
+	* jardonnet/registration/rotation.hh: Move outside quat/
+	(removed).
+
+	* jardonnet/test/check: Remove old test script.
+
+2008-04-02  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Change RGB encoding from int_u to float01_.
+	* vigouroux/color/my_hsi.hh: plug HSI on value.
+	* vigouroux/color/rgb_to_hsi.hh: .
+	* vigouroux/moyenne.cc: test new HSI and RGB.
+
+2008-04-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Fix distance map version: 0.5s for 01.pbm over 02.pbm.
+
+	* jardonnet/test/plotscript: Add gnuplot script.
+	* jardonnet/test/Makefile: Add g++ flags: Unexpected
+	behavior disappear with -ffloat-store (float are not stored in
+	register).
+	* jardonnet/test/check: Update test script.
+	* jardonnet/registration/quat7.hh: .
+	* jardonnet/registration/icp.hh: .
+	* jardonnet/registration/projection.hh: .
+	* jardonnet/registration/tools.hh: .
+
+2008-04-01  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add personal folder in sandbox with prototype of najman component tree.
+
+	* abraham: New.
+	* abraham/morpho: New.
+	* abraham/morpho/basic_najman.hh: New, contains Najman
+	component tree.
+	* abraham/morpho/test.cc: New.
+	* abraham/morpho/images: New.
+	* abraham/morpho/images/test_component_tree.pgm: New.
+	* abraham/morpho/topo_wst.hh: New, draft of topological
+	watershed.
+	* abraham/morpho/Makefile: New.
+
+2008-03-31  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Start a doc about the Milena images types and their properties.
+
+	* ballas/doc: New.
+	* ballas/doc/image_tours.txt: New.
+
+2008-03-31  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: 'lazy'_map.
+
+	* jardonnet/test/icp.cc: Update.
+	* jardonnet/test/reduce.cc: New: image scaling.
+	* jardonnet/test/01.pbm,
+	* jardonnet/test/02.pbm: New: test images.
+	* jardonnet/registration/icp.hh: Use type lazy_map instead
+	of std::pair, in order to use spécific constructors.
+	* jardonnet/registration/projection.hh: update.
+	* jardonnet/registration/tools.hh: Add tools for boxes (to
+	include in Milena?).
+
+2008-03-29  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP : projection::memo.
+
+	* jardonnet/test/icp.cc: Update.
+	* jardonnet/test/check: Test projection techniques.
+	* jardonnet/TODO: Update.
+	* jardonnet/registration/quat7.hh: Correction.
+	* jardonnet/registration/cloud.hh: Correction.
+	* jardonnet/registration/jacobi.hh: Add FIXME (nD).
+	* jardonnet/registration/icp.hh: Improvment.
+	* jardonnet/registration/projection.hh: Add a projection
+	technique "memo" computing closest point only if needed.
+	* jardonnet/registration/tools.hh: Gather together tools
+	to add  to milena.
+
+2008-03-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix naive DT in Etienne's sandbox.
+
+	* folio/naive.cc: Fix.
+
+2008-03-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: use of projection maps.
+
+	* jardonnet/test/icp.cc: Update: maps.
+	* jardonnet/registration/icp.hh: .
+	* jardonnet/registration/projection.hh: .
+
+2008-03-26  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: draft improvment.
+
+	* jardonnet/test/Makefile: -O3 version.
+	* jardonnet/test/icp.cc: image loading.
+	* jardonnet/registration/quat7.hh: Update.
+	* jardonnet/registration/chamfer.hh: Etienne's.
+	* jardonnet/registration/cloud.hh: Correction.
+	* jardonnet/registration/icp.hh: Update.
+	* jardonnet/registration/projection.hh: To be removed.
+	* jardonnet/registration/quat/rotation.hh: s/3/n/.
+
+2008-03-25  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	gradation for image valued by integers.
+	* vigouroux/color.cc: New test.
+	* vigouroux/color/my_hsi.hh: changed.
+	* vigouroux/color/rgb_to_hsi.hh: changed.
+	* vigouroux/gradation.hh: New gradation.
+	* vigouroux/lap.cc: New gradation test.
+	* vigouroux/lap.hh: New lap filter.
+	* vigouroux/moyenne.cc: .
+
+2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Cleanup of the sandbox.
+	* folio/chamfer_dt.cc: Remove.
+	* folio/dmap.cc: Remove.
+	* folio/dt_naive.cc: Remove.
+	* folio/dt_naive.hh: Remove.
+	* folio/exercices/heritage_conditionnel.cc: New.
+	* folio/exercices/heritage_conditionnel.hh: New.
+	* folio/exercices: New.
+	* folio/heritage_conditionnel.cc: Remove.
+	* folio/heritage_conditionnel.hh: Remove.
+
+2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Naive DT rebuilt. Does not compile.
+	* folio/naive.cc: Uses a given function to calculate the norm.
+
+2008-03-22  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT with nearest point calculus.
+	* folio/chamfer.cc: Returns a pair containing the two maps.
+
+2008-03-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Debug tiled_image2d.
+	* garrigues/tiled_image2d/block.hh: Remove the union, to use a
+	block with a value type of milena.
+	* garrigues/tiled_image2d/layout/image2d/lrtb.hh: in a
+	milena's point2d, we have p[0] = row index, p[1] = col index, update
+	to respect this.
+	* garrigues/tiled_image2d/layout/page2d/lrtb.hh: likewise,
+	(unsigned image2d_lrtb::size(unsigned nrows, unsigned ncols)) New.
+	* garrigues/tiled_image2d/tiled_image2d.cc: Test the type with
+	a big image.
+	* garrigues/tiled_image2d/tiled_image2d.hh: Allocate enough
+	space for the image. Fixme : some debug will be removed later.
+
+2008-03-21  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Fix some typos, add existant tests.
+	* pellegrin/set/Makefile: Remove.
+	* pellegrin/set/core/concept/point_set.hh: Modified.
+	* pellegrin/set/core/internal/multi_set.hh,
+	* pellegrin/set/core/internal/uni_set.hh: New.
+	* pellegrin/set/core/line2d.hh,
+	* pellegrin/set/core/p_array.hh,
+	* pellegrin/set/core/p_bgraph.hh,
+	* pellegrin/set/core/p_graph.hh,
+	* pellegrin/set/core/p_line_graph.hh,
+	* pellegrin/set/core/p_priority_queue.hh,
+	* pellegrin/set/core/p_priority_queue_fast.hh,
+	* pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* pellegrin/set/core/p_queue.hh,
+	* pellegrin/set/core/p_queue_fast.hh,
+	* pellegrin/set/core/p_run.hh,
+	* pellegrin/set/core/p_runs.hh,
+	* pellegrin/set/core/p_set.hh,
+	* pellegrin/set/core/pset_if.hh: Modify an #include and add a
+	  semi-colon after the trait struct.
+	* pellegrin/set/multi_set.hh: Remove.
+	* pellegrin/set/test: New folder containing tests.
+	* pellegrin/set/test/Makefile,
+	* pellegrin/set/test/test.sh,
+	* pellegrin/set/test/detest.sh: New, for the compilation.
+	* pellegrin/set/test/p_bgraph.cc,
+	* pellegrin/set/test/p_priority_queue.cc,
+	* pellegrin/set/test/p_priority_queue_fast.cc,
+	* pellegrin/set/test/p_priority_queue_fast_with_array.cc,
+	* pellegrin/set/test/p_queue.cc,
+	* pellegrin/set/test/p_queue_fast.cc,
+	* pellegrin/set/test/p_runs.cc,
+	* pellegrin/set/test/p_set.cc,
+	* pellegrin/set/test/pset_if.cc: New tests.
+	* pellegrin/set/test_set.cc: Remove.
+	* pellegrin/set/trait/point_set.hh: Minor fix.
+	* pellegrin/set/uni_set.hh: Remove.
+
+2008-03-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Icp : n dim, refactored, uses p_array, vec -> rounded point proc.
+
+	* jardonnet/test/icp.cc,
+	* jardonnet/registration/quat7.hh,
+	* jardonnet/registration/cloud.hh,
+	* jardonnet/registration/jacobi.hh,
+	* jardonnet/registration/icp.hh,
+	* jardonnet/registration/projection.hh,
+	* jardonnet/registration/quat/all.hh,
+	* jardonnet/registration/quat/rotation.hh: Update for
+	p_array and n dim (not ready yet).
+	* jardonnet/registration/quat/interpol.hh: Remove.
+	Provided by qut.hh
+
+2008-03-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update test on rgb/hsi conversion.
+
+	* vigouroux/moyenne.cc: Update.
+
+2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Fix some mistakes, Add.
+	* pellegrin/set/core/line2d.hh,
+	* pellegrin/set/core/p_array.hh,
+	* pellegrin/set/core/p_bgraph.hh,
+	* pellegrin/set/core/p_graph.hh,
+	* pellegrin/set/core/p_line_graph.hh,
+	* pellegrin/set/core/p_priority_queue.hh,
+	* pellegrin/set/core/p_priority_queue_fast.hh,
+	* pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* pellegrin/set/core/p_queue.hh,
+	* pellegrin/set/core/p_queue_fast.hh,
+	* pellegrin/set/core/p_set.hh,
+	* pellegrin/set/core/pset_if.hh: traits are up-to-date
+	 (or not, i have to check it with theo) and add the fwd decls.
+	* pellegrin/set/core/p_run.hh: New.
+	* pellegrin/set/core/p_runs.hh: New.
+	* pellegrin/set/core/runs_psite.hh: Remove (not a point_set).
+
+2008-03-19  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	rms.
+	* vigouroux/moyenne.cc: rms.
+
+2008-03-19  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Commit of Sandbox.
+	* pellegrin/cond_inheritance/Makefile: .
+	* pellegrin/cond_inheritance/concept/point_set.hh: .
+	* pellegrin/cond_inheritance/internal/multi_set.hh: .
+	* pellegrin/cond_inheritance/internal/point_set_base.hh: .
+	* pellegrin/cond_inheritance/internal/uni_set.hh: .
+	* pellegrin/cond_inheritance/p_array.hh: .
+	* pellegrin/cond_inheritance/p_set.hh: .
+	* pellegrin/cond_inheritance/test_cond_inherit.cc: .
+	* pellegrin/first_test.cc: .
+	* pellegrin/set/Makefile: .
+	* pellegrin/set/core/concept/point_set.hh: New.
+	* pellegrin/set/core/concept: New.
+	* pellegrin/set/core/internal: New.
+	* pellegrin/set/core/line2d.hh: New.
+	* pellegrin/set/core/p_array.hh: New.
+	* pellegrin/set/core/p_bgraph.hh: New.
+	* pellegrin/set/core/p_graph.hh: New.
+	* pellegrin/set/core/p_line_graph.hh: New.
+	* pellegrin/set/core/p_priority_queue.hh: New.
+	* pellegrin/set/core/p_priority_queue_fast.hh: New.
+	* pellegrin/set/core/p_priority_queue_fast_with_array.hh: New.
+	* pellegrin/set/core/p_queue.hh: New.
+	* pellegrin/set/core/p_queue_fast.hh: New.
+	* pellegrin/set/core/p_set.hh: New.
+	* pellegrin/set/core/pset_if.hh: New.
+	* pellegrin/set/core/runs_psite.hh: New.
+	* pellegrin/set/core: New.
+	* pellegrin/set/multi_set.hh: .
+	* pellegrin/set/test_set.cc: .
+	* pellegrin/set/trait/point_set.hh: New.
+	* pellegrin/set/trait: New.
+	* pellegrin/set/types_de_points.txt: New.
+	* pellegrin/set/uni_set.hh: .
+
+2008-03-19  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	correct structures.
+	* vigouroux/color/my_cmy.hh: correction.
+	* vigouroux/color/my_hsi.hh: correction.
+	* vigouroux/color/my_hsl.hh: correction.
+	* vigouroux/color/my_hsv.hh: correction.
+	* vigouroux/color/my_xyz.hh: correction.
+	* vigouroux/color/my_yiq.hh: correction.
+	* vigouroux/color/my_yuv.hh: correction.
+	* vigouroux/color/rgb_to_hsi.hh: correction.
+
+2008-03-18  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Sandbox: Site/Psite refactorization: finalize the example.
+
+	* ballas/refactorization/test/test.cc: Remove this tes.
+	* ballas/refactorization/test/rle.cc,
+	* ballas/refactorization/test/image2d.cc: update tests.
+	* ballas/refactorization/image2d.hh: update values_.
+	* ballas/refactorization/concept.hh: u.
+	* ballas/refactorization/internal/impl.hh,
+	* ballas/refactorization/internal/force_exact.hh,
+	* ballas/refactorization/internal/piter_base.hh,
+	* ballas/refactorization/internal/psite_base.hh,
+	* ballas/refactorization/point2d_impl.hh: Impl recovering.
+
+2008-03-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Icp legacy. algebra:: now contains types vec, mat and quat.
+
+	* duhamel/slow_seed2tiling.cc: .
+	* duhamel/labeling_algo.hh: .
+	* duhamel/mesh_image.hh: .
+	* jardonnet/test/icp.cc: New.
+	* jardonnet/test/gaussian_subsampling.cc: .
+	* jardonnet/test/Makefile: .
+	* jardonnet/subsampling/gaussian_subsampling.hh: .
+	* jardonnet/subsampling/sub_sampled_image.hh: .
+	* jardonnet/TODO: .
+	* jardonnet/registration/quat7.hh: New.
+	* jardonnet/registration/cloud.hh: New.
+	* jardonnet/registration/jacobi.hh: New.
+	* jardonnet/registration/icp.hh: .
+	* jardonnet/registration/projection.hh: New.
+	* jardonnet/registration/quat: New.
+	* jardonnet/registration/quat/all.hh: New.
+	* jardonnet/registration/quat/misc.hh: New.
+	* jardonnet/registration/quat/interpol.hh: New.
+	* jardonnet/registration/quat/rotation.hh: New.
+	* vigouroux/color/my_yuv.hh: .
+	* vigouroux/color/my_hsi.hh: .
+	* vigouroux/color/my_hsl.hh: .
+	* vigouroux/color/my_xyz.hh: .
+	* vigouroux/color/my_hsv.hh: .
+	* vigouroux/color/my_yiq.hh: .
+	* folio/dmap.cc: .
+	* garrigues/image_identity/interpolated.hh: .
+	* garrigues/image_identity/interpolated.cc: .
+
+2008-03-17  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: psite/site refactorization: add the rle image type.
+
+	* ballas/refactorization/test/rle.cc: New tests.
+	* ballas/refactorization/p_run.hh,
+	* ballas/refactorization/rle_pset.hh,
+	* ballas/refactorization/rle_psite.hh,
+	* ballas/refactorization/rle_image.hh: New, rle image type.
+	* ballas/refactorization/internal/pset_base.hh,
+	* ballas/refactorization/internal/image_base.hh,
+	* ballas/refactorization/internal/piter_base.hh,
+	* ballas/refactorization/internal/psite_base.hh,
+	* ballas/refactorization/box2d.hh,
+	* ballas/refactorization/point2d.hh: update
+
+2008-03-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	sandbox: continuing the psite/site factorization example.
+
+	* ballas/refactorization/test/box2d.cc,
+	* ballas/refactorization/test/image2d.cc,
+	* ballas/refactorization/test/test.cc: tests.
+	* ballas/refactorization/internal/impl.hh: New,base impl class.
+	* ballas/refactorization/box2d.hh,
+	* ballas/refactorization/point2d.hh,
+	* ballas/refactorization/point2d_impl.hh,
+	* ballas/refactorization/image2d.hh: New, add a light image2d.
+	* ballas/refactorization/concept.hh:,
+	* ballas/refactorization/internal/pset_base.hh:,
+	* ballas/refactorization/internal/image_base.hh:,
+	* ballas/refactorization/internal/piter_base.hh:,
+	* ballas/refactorization/internal/psite_base.hh: Update.
+
+2008-03-12  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Make the gaussian filter work using algebra::vec.
+
+	* jardonnet/test/Makefile: test.
+	* jardonnet/test/gaussian.cc: test.
+	* jardonnet/TODO: New.
+	* jardonnet/icc.txt: New.
+
+2008-03-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add to sanbox an image type maped on the hard disk.
+
+	* garrigues/tiled_image2d: New.
+	* garrigues/tiled_image2d/tiled_image2d.cc: New.
+	* garrigues/tiled_image2d/tiled_image2d.hh: New.
+	* garrigues/tiled_image2d/backend/file.hh: New.
+	* garrigues/tiled_image2d/backend/ios.hh: New.
+	* garrigues/tiled_image2d/backend/mmap.hh: New.
+	* garrigues/tiled_image2d/backend: New.
+	* garrigues/tiled_image2d/block.hh: New.
+	* garrigues/tiled_image2d/context.hh: New.
+	* garrigues/tiled_image2d/layout/all.hh: New.
+	* garrigues/tiled_image2d/layout/image2d/all.hh: New.
+	* garrigues/tiled_image2d/layout/image2d/lrtb.hh: New.
+	* garrigues/tiled_image2d/layout/image2d/tblr.hh: New.
+	* garrigues/tiled_image2d/layout/image2d: New.
+	* garrigues/tiled_image2d/layout/layout2d.hh: New.
+	* garrigues/tiled_image2d/layout/page2d/all.hh: New.
+	* garrigues/tiled_image2d/layout/page2d/lrtb.hh: New.
+	* garrigues/tiled_image2d/layout/page2d/tblr.hh: New.
+	* garrigues/tiled_image2d/layout/page2d: New.
+	* garrigues/tiled_image2d/layout: New.
+	* garrigues/tiled_image2d/page.hh: New.
+	* garrigues/tiled_image2d/paged_image.hh: New.
+	* garrigues/tiled_image2d/support/lru.hh: New.
+	* garrigues/tiled_image2d/support/simple.hh: New.
+	* garrigues/tiled_image2d/support: New.
+
+2008-03-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Start a site/psite refactorization example.
+
+	* ballas/refactorization: New.
+	* ballas/refactorization/test: New.
+	* ballas/refactorization/test/test.cc: New.
+	* ballas/refactorization/metal: New.
+	* ballas/refactorization/metal/equal.hh: New.
+	* ballas/refactorization/metal/bool.hh: New.
+	* ballas/refactorization/metal/bexpr.hh: New.
+	* ballas/refactorization/exact.hh: New.
+	* ballas/refactorization/concept.hh: New.
+	* ballas/refactorization/internal: New.
+	* ballas/refactorization/internal/exact.hh: New.
+	* ballas/refactorization/internal/pset_base.hh: New.
+	* ballas/refactorization/internal/image_base.hh: New.
+	* ballas/refactorization/internal/piter_base.hh: New.
+	* ballas/refactorization/internal/site_base.hh: New.
+	* ballas/refactorization/internal/psite_base.hh: New.
+
+2008-03-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Subsampling. Draft icp.
+
+	* jardonnet/test/gaussian_subsampling.cc: New Test.
+	* jardonnet/subsampling/subsampling_2d.hh: Remove.
+	* jardonnet/subsampling/gaussian_subsampling.hh: New.
+	* jardonnet/registration: New.
+	* jardonnet/registration/icp.hh: Draft.
+
+2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Root Mean Square of error.
+	* vigouroux/load.cc: .
+	* vigouroux/moyenne.cc: New Root Mean Square function.
+
+2008-03-04  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	test conversion with lena image.
+	* vigouroux/color/rgb_to_hsi.hh: .
+	* vigouroux/load.cc: test.
+
+2008-03-03  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	loading image and convertion in new color mode test.
+	* vigouroux/color/is_HSI.cc: test conversion.
+	* vigouroux/color/my_hsi.hh: correct a bug.
+	* vigouroux/color/rgb_to_hsi.hh: correct a bug.
+	* vigouroux/color/rgb_to_xyz.hh: correct a bug.
+	* vigouroux/color/tests.cc: test conversion.
+	* vigouroux/load.cc: New loader.
+	* vigouroux/tests.cc: New tests.
+
+2008-02-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	sandbox:Subsampling function.
+
+	* jardonnet/subsampling: New.
+	* jardonnet/subsampling/subsampling_2d.hh: Subsamples 2d image.
+	* jardonnet/subsampling/sub_sampled_image.hh: Draft morpher.
+	* jardonnet/test: New temporary test directory.
+	* jardonnet/test/test.cc: Base.
+	* jardonnet/test/subsampling.cc: Subsampling test.
+	* jardonnet/test/Makefile: New.
+
+2008-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New sample code for Caroline (hsi and conversion).
+
+	* vigouroux/color/my_hsi.hh: .
+	* vigouroux/color/is_HSI.cc: New.
+	* vigouroux/color/rgb_to_hsi.hh
+	(fun::v2v::f_rgb_to_hsi_): New.
+
+2008-02-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Sample code for IRM segmentation.
+
+	* geraud/irm.cc: New.
+
+2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Split fllt.hh in my sanbox.
+
+	* garrigues/fllt/compute_level_set.hh: New, compute the
+	level sets.
+	* garrigues/fllt/debug.hh: New, debug routines for FLLT.
+	* garrigues/fllt/doc.hh: New, some comments from
+	Monasse's paper.
+	* garrigues/fllt/lower.hh: New, the struct used to compute the
+	lower level set.
+	* garrigues/fllt/upper.hh: New, the struct used to compute the
+	upper level set.
+	* garrigues/fllt/types.hh: New, type defined for FLLT.
+	* garrigues/fllt/merge.hh: New, routines to merge the lower
+	level set and the upper level set.
+	* garrigues/fllt/fllt.hh: Split this file.
+	* garrigues/fllt/test_fllt10.cc: Update includes.
+
+2008-02-26  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT visual tests (beautiful images inside !).
+	* folio/chamfer_dt.cc: New visual tests inside
+	(Beware! There's a picasso painting here !).
+
+2008-02-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Make FLLT compile.
+
+	* garrigues/fllt/fllt2.hh: Update due to the new tree_node
+	name and the update of labeling algorithms.
+
+2008-02-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Create FLLT directory in my sandbox and move fllt related
+	files into it.
+
+	* garrigues/fllt: New.
+
+	* garrigues/fllt.hh: Remove.
+	* garrigues/fllt/fllt.hh: New.
+	* garrigues/fllt/fllt2.hh: New.
+	* garrigues/fllt/fllt_doc.hh: New.
+	* garrigues/fllt/fllt_merge.hh: New.
+	* garrigues/fllt/fllt_optimized.hh: New.
+	* garrigues/fllt/fllt_types.hh: New.
+	* garrigues/fllt/test_fllt.cc: New.
+	* garrigues/fllt/test_fllt10.cc: New.
+	* garrigues/fllt/test_fllt10_inv.cc: New.
+	* garrigues/fllt/test_fllt12.cc: New.
+	* garrigues/fllt/test_fllt13.cc: New.
+	* garrigues/fllt/test_fllt15.cc: New.
+	* garrigues/fllt/test_fllt2.cc: New.
+	* garrigues/fllt/test_fllt3.cc: New.
+	* garrigues/fllt/test_fllt3_inv.cc: New.
+	* garrigues/fllt/test_fllt4.cc: New.
+	* garrigues/fllt/test_fllt5.cc: New.
+	* garrigues/fllt/test_fllt6.cc: New.
+	* garrigues/fllt/test_fllt7.cc: New.
+	* garrigues/fllt/test_fllt7_inv.cc: New.
+	* garrigues/fllt/test_fllt8.cc: New.
+	* garrigues/fllt/test_fllt9.cc: New.
+	* garrigues/fllt/test_fllt_lena.cc: New.
+	* garrigues/fllt/test_fllt_lena_tiles.cc: New.
+	* garrigues/fllt/test_fllt_tiny.cc: New.
+	* garrigues/fllt/test_flltb.cc: New.
+	* garrigues/fllt2.hh: Remove.
+	* garrigues/fllt_doc.hh: Remove.
+	* garrigues/fllt_merge.hh: Remove.
+	* garrigues/fllt_optimized.hh: Remove.
+	* garrigues/fllt_types.hh: Remove.
+	* garrigues/test_fllt.cc: Remove.
+	* garrigues/test_fllt10.cc: Remove.
+	* garrigues/test_fllt10_inv.cc: Remove.
+	* garrigues/test_fllt12.cc: Remove.
+	* garrigues/test_fllt13.cc: Remove.
+	* garrigues/test_fllt15.cc: Remove.
+	* garrigues/test_fllt2.cc: Remove.
+	* garrigues/test_fllt3.cc: Remove.
+	* garrigues/test_fllt3_inv.cc: Remove.
+	* garrigues/test_fllt4.cc: Remove.
+	* garrigues/test_fllt5.cc: Remove.
+	* garrigues/test_fllt6.cc: Remove.
+	* garrigues/test_fllt7.cc: Remove.
+	* garrigues/test_fllt7_inv.cc: Remove.
+	* garrigues/test_fllt8.cc: Remove.
+	* garrigues/test_fllt9.cc: Remove.
+	* garrigues/test_fllt_lena.cc: Remove.
+	* garrigues/test_fllt_lena_tiles.cc: Remove.
+	* garrigues/test_fllt_tiny.cc: Remove.
+	* garrigues/test_flltb.cc: Remove.
+
+2008-02-21  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Chamfer DT algorithm.
+	* folio/chamfer_dt.cc: Chamfer DT algorithm (with test).
+	* folio/dmap.cc: Unsignificative modification.
+
+2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Dmap naive algorithm from Theo.
+	* folio/dmap.cc: Dmap naive algorithm.
+
+2008-02-19  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Conditionnal heritage exercice.
+	* folio/heritage_conditionnel.cc: Test file.
+	* folio/heritage_conditionnel.hh: Exercice implementation.
+
+2008-02-19  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Corrections.
+	* vigouroux/color/rgb_to_hsi.hh: Correction.
+	* vigouroux/color/rgb_to_hsl.hh: New.
+	* vigouroux/color/rgb_to_hsv.hh: New.
+	* vigouroux/color/rgb_to_xyz.hh: New.
+	* vigouroux/color/rgb_to_yiq.hh: New.
+
+2008-02-18  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Work on conditional inheritance done.
+	* pellegrin/cond_inheritance: Folder containing my work.
+	* pellegrin/cond_inheritance/Makefile: Compile the test.
+	* pellegrin/cond_inheritance/concept: New.
+	* pellegrin/cond_inheritance/concept/point_set.hh: New.
+	* pellegrin/cond_inheritance/internal: New.
+	* pellegrin/cond_inheritance/internal/multi_set.hh: New.
+	* pellegrin/cond_inheritance/internal/point_set_base.hh: New.
+	* pellegrin/cond_inheritance/internal/uni_set.hh: New.
+	* pellegrin/cond_inheritance/p_array.hh: Definition of a
+	  p_array.
+	* pellegrin/cond_inheritance/p_set.hh: Definition of a p_set.
+	* pellegrin/cond_inheritance/test_cond_inherit.cc: Test file.
+
+2008-02-17  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	New structures.
+	* vigouroux/color/my_hsl.hh: New.
+	* vigouroux/color/my_hsv.hh: New.
+	* vigouroux/color/my_xyz.hh: New.
+	* vigouroux/color/my_yiq.hh: New.
+	* vigouroux/color/rgb_to_hsi.hh: .
+
+2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	corrections for compilation.
+	* vigouroux/color/my_cmy.hh: .
+	* vigouroux/color/rgb_to_cmy.hh: .
+	* vigouroux/color/rgb_to_hsi.hh: .
+	* vigouroux/color/tests.cc: .
+
+2008-02-14  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	First work on naive dt.
+	* folio/dt_naive.cc: Test file, in progress
+	* folio/dt_naive.hh: Algorithm
+
+2008-02-14  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Corrections on color structures.
+	* vigouroux/color/my_cmy.hh: corrections.
+	* vigouroux/color/my_hsi.hh: corrections.
+	* vigouroux/color/rgb_to_cmy.hh: corrections.
+	* vigouroux/color/rgb_to_yuv.hh: corrections.
+	* vigouroux/color/tests.cc: corrections.
+
+2008-02-13  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	color structures.
+	* vigouroux/color/my_cmy.hh: CMY struct.
+	* vigouroux/color/my_hsi.hh: HSI struct.
+	* vigouroux/color/my_yuv.hh: YUV struct.
+	* vigouroux/color/rgb_to_cmy.hh: transform equations.
+	* vigouroux/color/rgb_to_hsi.hh: transform equations.
+	* vigouroux/color/rgb_to_yuv.hh: transform equations.
+	* vigouroux/color/tests.cc: New test.
+
+2008-02-13  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Commit of personnal work in my sandbox.
+	* pellegrin/Makefile: New.
+	* pellegrin/first_test.cc: New.
+	* pellegrin/set/Makefile: New.
+	* pellegrin/set/multi_set.hh: New.
+	* pellegrin/set/test_set.cc: New.
+	* pellegrin/set/uni_set.hh: New.
+	* pellegrin/set: New.
+
+2008-02-05  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Added personal folder and color files in sandbox.
+	* vigouroux/color.hh: New.
+	* vigouroux/color/color.hh: New.
+	* vigouroux/color/hsi.hh: New.
+	* vigouroux/color/hsl.hh: New.
+	* vigouroux/color/hsv.hh: New.
+	* vigouroux/color/nrgb.hh: New.
+	* vigouroux/color/rgb.hh: New.
+	* vigouroux/color/xyz.hh: New.
+	* vigouroux/color/yiq.hh: New.
+	* vigouroux/color/yuv.hh: New.
+	* vigouroux/color: New.
+	* vigouroux/convert/abstract/colorconv.hh: New.
+	* vigouroux/convert/abstract/conversion.hh: New.
+	* vigouroux/convert/abstract: New.
+	* vigouroux/convert/basics.hh: New.
+	* vigouroux/convert/bound.hh: New.
+	* vigouroux/convert/cast.hh: New.
+	* vigouroux/convert/conversion.hh: New.
+	* vigouroux/convert/conversion_ng_se.hh: New.
+	* vigouroux/convert/force.hh: New.
+	* vigouroux/convert/nrgbxyz.hh: New.
+	* vigouroux/convert/rgbhsi.hh: New.
+	* vigouroux/convert/rgbhsl.hh: New.
+	* vigouroux/convert/rgbhsv.hh: New.
+	* vigouroux/convert/rgbnrgb.hh: New.
+	* vigouroux/convert/rgbxyz.hh: New.
+	* vigouroux/convert/rgbyiq.hh: New.
+	* vigouroux/convert/rgbyuv.hh: New.
+	* vigouroux/convert/stretch.hh: New.
+	* vigouroux/convert/value_to_point.hh: New.
+	* vigouroux/convert: New folder.
+	* vigouroux: New folder.
+
+2008-02-05  Michel Pellegrin  <pellegrin@lrde.epita.fr>
+
+	Add my personnal folder in sandbox.
+	* pellegrin: New sandbox directory.
+
+2008-02-05  Etienne FOLIO  <folio_e@epita.fr>
+
+	add folio sandbox folder.
+	* folio: New personal sandbox folder.
+
+2008-01-28  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add thresholding and a generalisation of accu::pair.
+
+	Add features for thresholding an image.
+
+	* nivault/extract_score.cc: Begin stats.
+
+2008-01-18  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update processing of scores.
+
+	* nivault/extract_score.cc: Update, processing and
+	labelling of big connected components, closing for highlight
+	notes and getting of an horizontal projection of image for
+	highlight lines.
+
+2008-01-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* garrigues/factures/array_global.cc: Remove.
+	* garrigues/factures/facture.pgm: Remove.
+
+2008-01-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update graph.
+	* nivault/extract_character.cc: Update.
+
+2008-01-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Highlight hlives and vlines in extract_array.
+
+	* garrigues/factures/extract_array_highlight.cc: New.
+	Highlight hlives and vlines in extract_array.
+	* garrigues/factures/array_global.cc: Rename as...
+	* garrigues/factures/extract_array.cc: this.
+
+2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract_character.
+
+	* nivault/extract_character.cc: Update.
+
+2008-01-15  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add processing pipeline for recognize scores.
+	* nivault/extract_score.cc: New.
+
+2008-01-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix bug in extract_character.
+	* nivault/extract_character.cc: Fix.
+
+2008-01-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Begin a process to extract arrays.
+	* garrigues/factures/array_global.cc: New.
+	* garrigues/factures/facture.pgm: An receipt image.
+	* garrigues/factures: New.
+
+2008-01-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Clean input image for extract character.
+
+	* nivault/extract_character.cc: Remove noise on input
+	image.
+
+2008-01-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract character.
+	* nivault/extract_character.cc:  The lines of text have a
+	green bbox in out.ppm.
+
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add extract array example.
+
+	* duhamel/extract_array.cc: New example of extract array.
+
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update and clean extract character example.
+	* nivault/extract_character.cc: Clean and update.
+
+2008-01-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update example character extraction.
+
+	* nivault/extract_character.cc: Update.
+
+2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract character.
+	* nivault/extract_character.cc: Update.
+
+2008-01-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update extract character.
+
+	* nivault/extract_character.cc: Update.
+
+2008-01-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add file for example of character extraction.
+
+	* nivault/extract_character.cc: New example.
+
+2007-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Moves the io's tests.
+	* garrigues/io_fits.cc: Remove.
+
+2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix doxygen expressions.
+	* duhamel/color_sub.cc,
+	* duhamel/labeling_algo.cc,
+	* duhamel/labeling_level.hh,
+	* duhamel/labeling_level_fast.cc,
+	* duhamel/labeling_level_fast_10000x1000.cc,
+	* duhamel/labeling_level_generic_10000x1000.cc,
+	* garrigues/fllt2.hh: Fix.
+
+2007-11-13  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Plugin gimp support the undo system.
+	* nivault/plugin-gimp/src/build-image.hh,
+	* nivault/plugin-gimp/src/build-image.hxx,
+	* nivault/plugin-gimp/src/main.cc: Use two image for reading
+	and writing.
+
+2007-11-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Plug-in gimp works and compute images.
+	* nivault/plugin-gimp/src/build-image.hh,
+	* nivault/plugin-gimp/src/build-image.hxx,
+	* nivault/plugin-gimp/src/gimp-image.hh,
+	* nivault/plugin-gimp/src/main.cc: Update.
+
+2007-11-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Clean and optimise FLLT.
+
+	* garrigues/fllt_doc.hh: New, Notes for FLLT.
+	* garrigues/fllt_merge.hh: New, merge algorithm.
+	* garrigues/fllt_optimized.hh: Update.
+	* garrigues/fllt_types.hh: New, types used in FLLT.
+	* garrigues/level_set.hh: New, compute lower/upper level set
+	  algorithm
+	* garrigues/lower.hh: New, informations about how to compute
+	  the lower level set.
+	* garrigues/upper.hh: New, informations about how to compute
+	  the lower level set.
+
+	* garrigues/test_fllt12.cc: Cleaning, (fllt2.hh) replaced by...
+	(fllt_optimized.hh) ...this.
+	* garrigues/test_fllt13.cc: Likewise.
+	* garrigues/test_fllt2.cc: Likewise.
+	* garrigues/test_fllt3.cc: Likewise.
+	* garrigues/test_fllt_lena_tiles.cc: Likewise.
+
+	* garrigues/fllt2.hh: (set_p) replaced by...
+	{p_set} ...this.
+
+2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Bad plugin for debugging a segfault.
+	* nivault/plugin-gimp/src/build-image.hh,
+	* nivault/plugin-gimp/src/build-image.hxx,
+	* nivault/plugin-gimp/src/gimp-image.hh,
+	* nivault/plugin-gimp/src/interface.hxx: Some code commented.
+
+2007-11-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add gimp-image adapter and use it.
+	* nivault/plugin-gimp/src/Makefile.am: Add gimp-image.hh.
+	* nivault/plugin-gimp/src/imagegimp.hh: Rename as...
+	* nivault/plugin-gimp/src/gimp-image.hh: ...this. Milena
+	image that encapsulate GimpPixelRgn.
+	* nivault/plugin-gimp/src/build-image.hh,
+	* nivault/plugin-gimp/src/build-image.hxx,
+	* nivault/plugin-gimp/src/main.cc: Use gimp-image.
+
+2007-11-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add an faster FLLT algorithm implementation.
+
+	* garrigues/fllt_optimized.hh: New, same
+	implementation of FLLT algorithm, expect we avoid calling
+	labeling::level to determine the holes of a each shape.
+
+2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update test_fllt15 smaller.
+	* garrigues/test_fllt15.cc: Update.
+
+2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add new test for fllt debug.
+	* garrigues/test_fllt15.cc: New test form lena_7_5.
+
+2007-11-07  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	New test for fllt debugging.
+
+	* garrigues/test_fllt13.cc: New test file from lena_tiles_3_9.
+
+2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Reduce a test for FLLT.
+	* garrigues/test_flltb.cc: Reduce a FLLT test to reveal a bug.
+
+2007-11-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add draft for imagegimp.
+	* nivault/plugin-gimp/src/imagegimp.hh: New.
+
+2007-11-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for fllt from lena_0_1.
+	* garrigues/test_flltb.cc: New test for fllt with
+	smaller domain from lena_0_1.
+
+2007-11-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add tests for FLLT.
+	* garrigues/test_fllt10.cc: New,
+	* garrigues/test_fllt10_inv.cc: New,
+	* garrigues/test_fllt3_inv.cc: New,
+	* garrigues/test_fllt7_inv.cc: New, test FLLT algorithm.
+
+2007-11-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Improve plug-in display.
+
+	* nivault/plugin-gimp/src/Makefile.am: Include milena.
+	* nivault/plugin-gimp/src/build-image.hxx: Display
+	images faster.
+	* nivault/plugin-gimp/src/interface.hxx: Update widgets.
+
+	Cleaning repository.
+
+	* nivault/plugin-gimp/Makefile.in,
+	* nivault/plugin-gimp/aclocal.m4,
+	* nivault/plugin-gimp/autom4te.cache/output.0,
+	* nivault/plugin-gimp/autom4te.cache/output.1,
+	* nivault/plugin-gimp/autom4te.cache/output.2,
+	* nivault/plugin-gimp/autom4te.cache/output.3,
+	* nivault/plugin-gimp/autom4te.cache/requests,
+	* nivault/plugin-gimp/autom4te.cache/traces.0,
+	* nivault/plugin-gimp/autom4te.cache/traces.1,
+	* nivault/plugin-gimp/autom4te.cache/traces.2,
+	* nivault/plugin-gimp/autom4te.cache/traces.3,
+	* nivault/plugin-gimp/autom4te.cache,
+	* nivault/plugin-gimp/autoscan-2.61.log,
+	* nivault/plugin-gimp/config.guess,
+	* nivault/plugin-gimp/config.h.in,
+	* nivault/plugin-gimp/config.sub,
+	* nivault/plugin-gimp/configure.scan,
+	* nivault/plugin-gimp/configure,
+	* nivault/plugin-gimp/depcomp,
+	* nivault/plugin-gimp/help/Makefile.in,
+	* nivault/plugin-gimp/help/en/Makefile.in,
+	* nivault/plugin-gimp/help/images/Makefile.in,
+	* nivault/plugin-gimp/install-sh,
+	* nivault/plugin-gimp/intltool-extract.in,
+	* nivault/plugin-gimp/intltool-merge.in,
+	* nivault/plugin-gimp/intltool-update.in,
+	* nivault/plugin-gimp/missing,
+	* nivault/plugin-gimp/mkinstalldirs,
+	* nivault/plugin-gimp/po/Makefile.in.in,
+	* nivault/plugin-gimp/po/POTFILES.in,
+	* nivault/plugin-gimp/src/Makefile.in: Remove.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Choice a good root of the merged tree in FLLT.
+
+	* garrigues/fllt2.hh: (merge_trees) Choose a good root between
+	  the upper tree's one and the lower tree's one in order to keep the
+	  good values of the input image.
+	  (fllt) add a second call to merge_trees to test the contrast
+	  invariant of the algorithm. FIXME : In some test, we get a segv when
+	  calling merge_trees swapping the upper_tree and lower_tree
+	  arguments. Add some debug too.
+
+	Update include of test_fllt4
+
+	* garrigues/test_fllt4.cc,
+	* garrigues/test_fllt5.cc,
+	* garrigues/test_fllt_lena_tiles.cc: Update.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Remove dead code, Update the tests to use fllt2.hh.
+	* garrigues/test_fllt.cc,
+	* garrigues/test_fllt2.cc,
+	* garrigues/test_fllt3.cc,
+	* garrigues/test_fllt_tiny.cc: likewise, Update include to
+	  test fllt2.hh.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Start a second version of merging trees in FLLT.
+
+	* garrigues/fllt2.hh: New, looks like fllt.hh but differs in
+	  merge trees. We keep the old file fllt.hh to avoid regression.
+
+2007-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add more tests for FLLT.
+
+	* garrigues/test_fllt6.cc: New,
+	* garrigues/test_fllt7.cc: New,
+	* garrigues/test_fllt8.cc: New,
+	* garrigues/test_fllt9.cc: New,
+	* garrigues/test_fllt_lena.cc: New,
+	* garrigues/test_fllt_lena_tiles.cc: New, test FLLT with
+	  differents 2d images.
+
+2007-11-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add the gimp plugin.
+
+	* nivault/plugin-gimp/AUTHORS,
+	* nivault/plugin-gimp/COPYING,
+	* nivault/plugin-gimp/ChangeLog,
+	* nivault/plugin-gimp/HACKING,
+	* nivault/plugin-gimp/INSTALL,
+	* nivault/plugin-gimp/Makefile.am,
+	* nivault/plugin-gimp/Makefile.in,
+	* nivault/plugin-gimp/TODO,
+	* nivault/plugin-gimp/aclocal.m4,
+	* nivault/plugin-gimp/autogen.sh,
+	* nivault/plugin-gimp/autom4te.cache/output.0,
+	* nivault/plugin-gimp/autom4te.cache/output.1,
+	* nivault/plugin-gimp/autom4te.cache/output.2,
+	* nivault/plugin-gimp/autom4te.cache/output.3,
+	* nivault/plugin-gimp/autom4te.cache/requests,
+	* nivault/plugin-gimp/autom4te.cache/traces.0,
+	* nivault/plugin-gimp/autom4te.cache/traces.1,
+	* nivault/plugin-gimp/autom4te.cache/traces.2,
+	* nivault/plugin-gimp/autom4te.cache/traces.3,
+	* nivault/plugin-gimp/autom4te.cache,
+	* nivault/plugin-gimp/autoscan-2.61.log,
+	* nivault/plugin-gimp/config.guess,
+	* nivault/plugin-gimp/config.h.in,
+	* nivault/plugin-gimp/config.sub,
+	* nivault/plugin-gimp/configure.ac,
+	* nivault/plugin-gimp/configure.scan,
+	* nivault/plugin-gimp/configure,
+	* nivault/plugin-gimp/depcomp,
+	* nivault/plugin-gimp/help/Makefile.am,
+	* nivault/plugin-gimp/help/Makefile.in,
+	* nivault/plugin-gimp/help/en/Makefile.am,
+	* nivault/plugin-gimp/help/en/Makefile.in,
+	* nivault/plugin-gimp/help/en/gimp-help.xml,
+	* nivault/plugin-gimp/help/en/index.html,
+	* nivault/plugin-gimp/help/en,
+	* nivault/plugin-gimp/help/images/Makefile.am,
+	* nivault/plugin-gimp/help/images/Makefile.in,
+	* nivault/plugin-gimp/help/images/wilber.png,
+	* nivault/plugin-gimp/help/images,
+	* nivault/plugin-gimp/help,
+	* nivault/plugin-gimp/install-sh,
+	* nivault/plugin-gimp/intltool-extract.in,
+	* nivault/plugin-gimp/intltool-merge.in,
+	* nivault/plugin-gimp/intltool-update.in,
+	* nivault/plugin-gimp/missing,
+	* nivault/plugin-gimp/mkinstalldirs,
+	* nivault/plugin-gimp/po/ChangeLog,
+	* nivault/plugin-gimp/po/Makefile.in.in,
+	* nivault/plugin-gimp/po/POTFILES.in,
+	* nivault/plugin-gimp/po/az.po,
+	* nivault/plugin-gimp/po/de.po,
+	* nivault/plugin-gimp/po/fr.po,
+	* nivault/plugin-gimp/po/sk.po,
+	* nivault/plugin-gimp/po/sv.po,
+	* nivault/plugin-gimp/po/zh_TW.po,
+	* nivault/plugin-gimp/po,
+	* nivault/plugin-gimp/src/Makefile.am,
+	* nivault/plugin-gimp/src/Makefile.in,
+	* nivault/plugin-gimp/src/build-image.hh,
+	* nivault/plugin-gimp/src/build-image.hxx,
+	* nivault/plugin-gimp/src/interface.hh,
+	* nivault/plugin-gimp/src/interface.hxx,
+	* nivault/plugin-gimp/src/main.cc,
+	* nivault/plugin-gimp/src/plugin-intl.hh,
+	* nivault/plugin-gimp/src,
+	* nivault/plugin-gimp: New.
+
+2007-10-30  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add debug display tools for fllt.
+
+	* garrigues/fllt.hh: Use display_tree for a better view of the
+	situation and so for the debbuging.
+	* garrigues/test_fllt.cc: Fix the beggining of loop (1 -> 0).
+
+2007-10-29  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update test for fllt.
+
+	* garrigues/test_fllt.cc: Update.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: More output. FIXME : optimize.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve fllt. Add more tests.
+
+	* garrigues/fllt.hh: Improve fllt.
+	* garrigues/test_fllt.cc: Update
+	* garrigues/test_fllt2.cc,
+	* garrigues/test_fllt3.cc,
+	* garrigues/test_fllt4.cc,
+	* garrigues/test_fllt5.cc,
+	* garrigues/test_fllt_tiny.cc: New, differents cases of tests
+	  for fllt.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix use of tree.
+	* garrigues/fllt.hh: Fix.
+
+2007-10-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add iterator for branches.
+	* garrigues/fllt.hh: Update.
+
+2007-10-26  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix in fllt.
+	* garrigues/fllt.hh: Fix.
+
+2007-10-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update fllt.
+	* garrigues/fllt.hh,
+	* garrigues/test_fllt.cc: Update.
+
+2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: (border_neighb and region_neighb) Rename
+	  as...
+	  (border_neighb and region_neighb) ...this.
+
+2007-10-24  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Now compute lower and upper level set.
+
+	* garrigues/test_fllt.cc: Update the test.
+
+2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Rename abr into tree.
+	* garrigues/fllt.hh: .
+
+2007-10-23  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+	* garrigues/fllt.hh: Update fllt.
+	* garrigues/test_fllt.cc: Update.
+
+2007-10-23  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add a function which transform a tree into an image in sandbox.
+	* duhamel/abr_to_image.cc: New function abr_to_image.
+
+2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Update.
+
+2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Update.
+
+2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update fllt and add conversion and set_p routines.
+	* garrigues/fllt.hh: Update.
+
+2007-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Update.
+
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Sandbox.
+	* duhamel/abr.hh: Update.
+
+2007-10-22  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Update.
+
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix for handle non-const.
+
+	* duhamel/abr.cc: Update.
+	* duhamel/abr.hh: Fix.
+
+2007-10-22  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add a structure of tree in sandbox.
+
+	* duhamel/abr.cc: New test file for mln::util::abr.
+	* duhamel/abr.hh: New structure for tree.
+
+2007-10-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update fllt.
+	* sanbox/garrigues/fllt.hh: Update.
+
+2007-10-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update fllt.
+	* sanbox/garrigues/fllt.hh: Update.
+
+2007-10-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+
+	* garrigues/fllt.hh: Update.
+
+2007-10-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update fllt.
+	* garrigues/fllt.hh: Update.
+
+2007-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Starts with FLLT.
+
+	* garrigues/fllt.hh: Try to implement FLLT.
+	* garrigues/test_fllt.cc: a test for FLLT.
+
+2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix slow_seed2tiling.
+	* duhamel/slow_seed2tiling.cc: Fix for compiling.
+
+2007-10-15  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add slow version of seed2tiling.
+	* duhamel/slow_seed2tiling.cc: New.
+
+2007-10-12  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update queue_p_priority.
+	* duhamel/queue_p_priority.hh: Update.
+
+2007-10-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add queue with priority in sandbox.
+
+	* duhamel/queue_p_priority.cc: New test for queue with priority.
+	* duhamel/queue_p_priority.hh: New queue with priority.
+
+
+	* duhamel/queue_p_fast.hh,
+	* duhamel/translate_image.cc,
+	* duhamel/translate_image.hh,
+	* duhamel/log.txt: Update.
+
+2007-10-09  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add translate image in sandbox.
+
+	* duhamel/translate_image.cc: New test for translate image.
+	* duhamel/translate_image.hh: New image : translate image.
+
+	* duhamel/color_sub.cc: Update.
+
+2007-10-09  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Refactoring : move mln/core/win to mln/win.
+
+	* nivault/dyn_line.hh,
+	* nivault/median.hh,
+	* nivault/tests/pouet.cc: Update according to the
+	refactoring.
+
+2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update test for color.
+
+	* duhamel/color_sub.cc: Upadte.
+
+2007-10-08  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update color for image_if and subimage.
+
+	* duhamel/color_sub.cc,
+	* duhamel/color_sub.hh: Update, uncomment FIXME when
+	level::paste ready.
+
+	Update chamfer.
+	* duhamel/canvas_chamfer.hh: New.
+	* duhamel/chamfer.cc,
+	* duhamel/chamfer.hh: Update.
+
+2007-10-08  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fix line for -O3 -DNDEBUG compilation.
+	* nivault/dyn_line.hh: Line with dynamic direction.
+	* nivault/tests/pouet.cc: Test for the file above.
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix chamfer.
+
+	* duhamel/chamfer.hh: Update.
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update chamfer.
+
+	* duhamel/chamfer.cc: Test for chamfer.
+	* duhamel/chamfer.hh: New split of old version.
+
+
+	* duhamel/color_sub.cc,
+	* duhamel/color_sub.hh,
+	* duhamel/main.cc: Update.
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix chamfer.
+
+	* duhamel/chamfer.cc: .
+
+2007-10-04  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add chamfer in sadbox.
+
+	* duhamel/chamfer.cc: New.
+
+
+	* duhamel/color_sub.cc: .
+	* duhamel/color_sub.hh: New : split ols version.
+	* duhamel/labeling_algo.cc: .
+	* duhamel/labeling_level_fast.cc: .
+
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add color sub_image in sandbox.
+
+	* duhamel/color_sub.cc: New.
+
+	Update
+	* duhamel/labeling_algo.cc,
+	* duhamel/labeling_level_fast.cc: Update.
+
+2007-10-03  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update labeling_algo.
+
+	* duhamel/labeling_algo.cc,
+	* duhamel/labeling_algo.hh: Update.
+
+2007-10-02  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add lebeling algo in sandbox.
+
+	* labeling_algo.cc: Test file.
+	* labeling_algo.hh: Convert a binary image into mesh_image.
+
+2007-10-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	My log.
+
+	* garrigues/log: List all my tasks in milena.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add algorithm for extend labeling (slow 3min for this test).
+
+	* duhamel/labeling_algo.cc: New.
+	* duhamel/labeling_algo.hh: New.
+
+	Update.
+	* duhamel/graph_labeling.hh: Update.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add log file.
+
+	* duhamel/log.txt: New.
+
+	* duhamel/graph_labeling.hh: Update.
+
+2007-10-01  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add Simon's abilities.
+	* nivault/log: New.
+
+2007-10-01  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add graph_labeling in sandbox.
+	* duhamel/graph_labeling.hh: New make_graph : convert a labeled image
+	into mesh_p.
+	* duhamel/graph_labeling.cc: New test for graph labeling.
+	* duhamel/graph_labeling2.cc: New test for graph labeling.
+
+	Update
+	* duhamel/draw_mesh.hh,
+	* duhamel/graph.hh,
+	* duhamel/main.cc,
+	* duhamel/main_mesh_image.cc,
+	* duhamel/mesh_p.hh: Update.
+
+2007-09-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fixes.
+
+	* duhamel/main_mesh_image.cc,
+	* duhamel/mesh_image.hh,
+	* duhamel/mesh_psite.hh,
+	* duhamel/draw_mesh.hh,
+	* duhamel/mesh_p.hh: Fix and update.
+
+2007-09-28  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update mesh_image.
+
+	* duhamel/main_mesh_image.cc,
+	* duhamel/mesh_image.hh,
+	* duhamel/mesh_p.hh,
+	* duhamel/mesh_psite.hh: Update.
+
+2007-09-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Put init_ outside of namespace impl.
+
+	* garrigues/TODO: Update.
+
+2007-09-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for draw mesh_image and update mesh_image.
+
+	Draw mesh.
+	* duhamel/main_mesh_image.cc: New test draw_mesh.
+
+	Update.
+	* duhamel/draw_mesh.hh,
+	* duhamel/mesh_image.hh,
+	* duhamel/main.cc: Update.
+
+2007-09-27  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update mesh_psite.
+
+	* duhamel/draw_mesh.hh,
+	* duhamel/graph.hh,
+	* duhamel/graph.hxx,
+	* duhamel/main.cc,
+	* duhamel/mesh_image.hh,
+	* duhamel/mesh_p.hh,
+	* duhamel/mesh_psite.hh: Update.
+
+2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update mesh_image.
+
+	* duhamel/draw_mesh.hh,
+	* duhamel/main.cc,
+	* duhamel/mesh_image.hh,
+	* duhamel/mesh_p.hh: Update.
+
+2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add mesh_image.
+
+	* duhamel/draw_mesh.hh: Update.
+	* duhamel/mesh_image.hh: New.
+
+2007-09-26  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update draw bresenham.
+
+	* duhamel/draw_mesh.hh: Update.
+
+	* duhamel/main.cc: Update.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update draw mesh.
+
+	* duhamel/draw_mesh.hh,
+	* duhamel/main.cc: Update.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add draw mesh in sandbox.
+
+	* duhamel/draw_mesh.hh: New.
+
+	* duhamel/graph.hh,
+	* duhamel/main.cc,
+	* duhamel/mesh_p.hh,
+	* duhamel/mesh_psite.hh: Update.
+
+2007-09-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Test a diamond inherance for image_identity
+
+	* garrigues/image_identity/image_domain_morpher.hh: New.
+	* garrigues/image_identity/image_identity.cc: New.
+	* garrigues/image_identity/image_identity.hh: New.
+	* garrigues/image_identity/image_value_morpher.hh: New.
+	* garrigues/image_identity/interpolated.cc: New.
+	* garrigues/image_identity/interpolated.hh: New.
+	* garrigues/image_identity: New.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add mesh_p in sandbox.
+
+	* duhamel/main.cc: Update.
+	* duhamel/mesh_p.hh: New.
+	* duhamel/mesh_psite.hh: New.
+
+2007-09-25  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update Graph.
+
+	* duhamel/graph.hh,
+	* duhamel/graph.hxx,
+	* duhamel/main.cc: Update.
+
+2007-09-24  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add graph in sandbox.
+
+	* duhamel/graph.hh: New.
+	* duhamel/graph.hxx: New.
+
+	* duhamel/main.cc: Update for graph.
+	* duhamel/test_debug_iota_3d.cc: Update.
+
+2007-09-24  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add test of rotation and fix.
+	* nivault/rotation.cc: Experimentation on rotation.
+
+2007-09-21  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Update tests with new println.
+
+	* duhamel/labeling_level.hh,
+	* duhamel/labeling_level_fast_10000x1000.cc,
+	* duhamel/labeling_level_generic_10000x1000.cc,
+	* duhamel/test_border_duplicate_image3d_1.cc,
+	* duhamel/test_border_duplicate_image3d_2.cc,
+	* duhamel/test_border_duplicate_image3d_3.cc,
+	* duhamel/test_border_duplicate_image3d_4.cc,
+	* duhamel/test_border_fill_image3d_1.cc,
+	* duhamel/test_border_fill_image3d_2.cc,
+	* duhamel/test_border_fill_image3d_3.cc,
+	* duhamel/test_border_fill_image3d_4.cc,
+	* duhamel/test_debug_iota_3d.cc: Update.
+
+2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add tests for duplicate border and debug print with border for 3d.
+
+	Tests for duplicate.
+	* duhamel/test_border_duplicate_image1d_1.cc,
+	* duhamel/test_border_duplicate_image1d_2.cc,
+	* duhamel/test_border_duplicate_image1d_3.cc,
+	* duhamel/test_border_duplicate_image1d_4.cc,
+	* duhamel/test_border_duplicate_image1d_5.cc,
+	* duhamel/test_border_duplicate_image2d_1.cc,
+	* duhamel/test_border_duplicate_image2d_2.cc,
+	* duhamel/test_border_duplicate_image2d_3.cc,
+	* duhamel/test_border_duplicate_image2d_4.cc,
+	* duhamel/test_border_duplicate_image3d_1.cc,
+	* duhamel/test_border_duplicate_image3d_2.cc,
+	* duhamel/test_border_duplicate_image3d_3.cc,
+	* duhamel/test_border_duplicate_image3d_4.cc: New tests.
+
+	New print for 3d with border.
+	* duhamel/debug_print_3d_with_border.hh: New.
+
+	Update.
+	* duhamel/test_border_fill_image3d_2.cc,
+	* duhamel/test_border_fill_image3d_3.cc,
+	* duhamel/test_border_fill_image3d_4.cc,
+	* duhamel/test_border_fill_image3d_1.cc,
+	* duhamel/border_duplicate.hh: Update.
+
+	New iota
+	* duhamel/test_debug_iota_3d.cc: New iota debug for 3d.
+
+2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add test for border fill.
+
+	* duhamel/test_border_fill_image1d_1.cc,
+	* duhamel/test_border_fill_image1d_2.cc,
+	* duhamel/test_border_fill_image1d_3.cc,
+	* duhamel/test_border_fill_image1d_4.cc,
+	* duhamel/test_border_fill_image1d_5.cc,
+	* duhamel/test_border_fill_image2d_1.cc,
+	* duhamel/test_border_fill_image2d_2.cc,
+	* duhamel/test_border_fill_image2d_3.cc,
+	* duhamel/test_border_fill_image2d_4.cc,
+	* duhamel/test_border_fill_image3d_1.cc,
+	* duhamel/test_border_fill_image3d_2.cc,
+	* duhamel/test_border_fill_image3d_3.cc,
+	* duhamel/test_border_fill_image3d_4.cc: New tests.
+
+	* duhamel/border_fill.cc: Update.
+
+2007-09-20  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix duplicate border.
+
+	* duhamel/border_duplicate.cc: Test for duplicate 3d.
+	* duhamel/border_duplicate.hh: Fix for 1d and 3d.
+
+
+	* duhamel/labeling_level_fast.cc: Update.
+
+2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix to_upper_window in convert.
+
+	* duhamel/labeling_level.hh: Update to_upper_window.
+
+2007-09-19  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix fill border in sandbox.
+
+	* duhamel/border_fill.cc,
+	* duhamel/border_fill.hh: Update.
+
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add tests for labeling level.
+
+	* duhamel/labeling_level_fast_10000x1000.cc: Test labeling::level with
+	fast version.
+	* duhamel/labeling_level_generic_10000x1000.cc:  Test
+	labeling::level with generic version.
+	* duhamel/labeling_level_fast.cc,
+	* duhamel/labeling_level.hh,
+	* duhamel/border_fill.hh: Update.
+
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fast pixel iterators on neighbors.
+
+	* duhamel/labeling_level.hh,
+	* duhamel/labeling_level_fast.cc,
+	* duhamel/canvas_labeling.hh: Update.
+
+2007-09-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make pixels convertible to offsets.
+
+	* duhamel/canvas_labeling.hh
+	(labeling_fast_try2): New.
+
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add labeling and update border.
+
+	* duhamel/canvas_labeling.hh: Copy from mln/canvas/labeling.hh.
+	* duhamel/labeling_level.hh: Specialize with fast image.
+
+	* duhamel/border_duplicate.cc,
+	* duhamel/border_duplicate.hh,
+	* duhamel/border_fill.cc,
+	* duhamel/border_fill.hh: Update.
+
+2007-09-18  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix a bug in mirroring.
+
+	* duhamel/border_mirror.hh: Fix.
+
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add mirroring for borders.
+
+	* duhamel/border_mirror.cc: Test file for border mirroring.
+	* duhamel/border_mirror.hh: Fix border mirroring.
+
+2007-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve pnm support.
+
+	* garrigues/io_fits.cc: start debuging io fits
+
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix duplicate for border in sandbox.
+
+	* duhamel/border_duplicate.cc: Test for duplicate border.
+	* duhamel/border_duplicate.hh: Fix duplicate border.
+	* duhamel/border_fill.hh: .
+
+2007-09-17  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Fix fill for border in sandbox.
+
+	* duhamel/border_fill.cc: Test file of fill border with
+	println_with_border.
+	* duhamel/border_fill.hh: Fix fill for border, but need to be optimize.
+
+2007-09-17  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add vector and trait for binary
+	* nivault/binary_arith.hh: New.
+	* nivault/tests/test.cc: Update.
+	* nivault/vec.hh: New.
+
+2007-09-14  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	labeling and level for fast image in sandboy but need to fix.
+	* duhamel/fill.hh: .
+	* duhamel/labeling.hh: New.
+	* duhamel/labeling_cpy_from_mln.hh: New.
+	* duhamel/labeling_level_fast.cc: New.
+	* duhamel/level.hh: New.
+	* duhamel/level_cpy_from_mln.hh: New.
+	* duhamel/main.cc: .
+	* duhamel/paste.hh: .
+
+2007-09-12  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	add sym for weighted windows and beginning of dmap feature
+	* nivault/dmap.hh: New.
+	* nivault/dmap.hxx: New.
+
+2007-09-11  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add fill, paste for fast_image and FIXME rle and sparse image.
+	* duhamel/fill.hh: New.
+	* duhamel/fills_test.cc: .
+	* duhamel/main.cc: New.
+	* duhamel/mem.hh: New.
+	* duhamel/paste.hh: New.
+
+2007-09-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update level median filter with directional cases.
+
+	* nivault/dirbrowsing.hh: Rename as...
+	* nivault/median.hh: Update.
+
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Some fix for compiling
+	* nivault/dirbrowsing.hh: .
+	* nivault/median.hh: .
+	* nivault/tests/test: .
+
+2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	fix compil in value_behavior.cc
+	* garrigues/value_behavior.cc: some fixes
+
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	New canvas for line processing, and median_dir use it now
+	* nivault/dirbrowsing.hh: New.
+	* nivault/median.hh: Use dirbrowsing.hh
+
+2007-09-07  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	add behavior to value types
+	* garrigues/value_behavior.cc: try to implement behaviors
+
+2007-09-07  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Median can be processed for any direction
+	* nivault/median.hh: .
+	* nivault/tests/test.cc: Test on lena for median_dir
+
+2007-09-06  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add imaset_ and imacpy_ in sandbox.
+	* duhamel/fills_test.cc: Do it.
+
+2007-09-06  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Median specialized for fast image
+	* nivault/median.hh: New.
+
+2007-09-05  Guillaume Duhamel  <guillaume.duhamel@lrde.epita.fr>
+
+	Add fill optimized.
+	* duhamel/compil.cmd: Compile fills_test.cc.
+	* duhamel/fills_test.cc: Here.
+
+2007-09-05  Matthieu Garrigues  <garrigues.matthieu@lrde.epita.fr>
+
+	* garrigues/TODO: New.
+
+2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Fast gaussian works on 2d images
+	* nivault/fast_gaussian.hh: .
+	* nivault/tests/test.cc: .
+
+2007-09-05  Simon Nivault  <simon.nivault@lrde.epita.fr>
+
+	Add fast-gaussian
+	* nivault/fast_gaussian.hh: New.
+	* nivault/tests/test.cc: New.
+	* nivault/tests/test: New.
+	* nivault/tests: New.
+
+2007-09-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add room in sandbox.
+
+	* duhamel: New.
+	* levillain: New.
+	* nivault: New.
+	* jardonnet: New.
+	* geraud: New.
+	* garrigues: New.
+	* cxxcompilation: Rename as...
+	* ballas: ...this.
+
+2007-07-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	* cxxcompilation/test.cc: Add copyright.
+
+2007-07-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add benchmark about C++ compilation time.
+
+	* cxxcompilation: New.
+	* cxxcompilation/compilation_unit.rb: Tools used to create
+	compilation unit file for benchmark.
+	* cxxcompilation/test.cc: Test file used in benchmark.
+	* cxxcompilation/methods: Describes some existing method
+	which improve compilation time.
+	* cxxcompilation/vaucanson_bench: Benchmark on Vaucanson
+	method.
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:
