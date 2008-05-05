@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_super.cc
+/*! \file tests/trait/super.cc
  *
  * \brief Tests on mln::trait::solve.
  */

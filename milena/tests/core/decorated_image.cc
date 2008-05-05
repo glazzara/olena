@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/decorated_image.cc
+/*! \file tests/core/decorated_image.cc
  *
  * \brief Tests on mln::decorated_image.
  * \todo Make this test work.

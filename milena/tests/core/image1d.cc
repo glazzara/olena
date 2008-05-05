@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image1d.cc
+/*! \file tests/core/image1d.cc
  *
  * \brief Tests on mln::image1d.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_value.cc
+/*! \file tests/trait/value/values.cc
  *
  * \brief Tests on mln::trait::ch_value.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal_is.cc
+/*! \file tests/metal/is.cc
  *
  * \brief Test on mln::metal::is.
  */

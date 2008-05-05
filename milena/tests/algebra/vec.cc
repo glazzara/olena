@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal_vec.cc
+/*! \file tests/algebra/vec.cc
  *
  * \brief Test on mln::algebra::vec.
  */

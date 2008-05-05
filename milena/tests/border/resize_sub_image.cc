@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_resize_sub_image.cc
+/*! \file tests/border/resize_sub_image.cc
  *
  * \brief Tests on mln::border::resize.
  */

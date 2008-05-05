@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image3d.cc
+/*! \file tests/core/image3d.cc
  *
  * \brief Tests on mln::image3d.
  */

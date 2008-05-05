@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_op_uminus.cc
+/*! \file tests/trait/op/uminus.cc
  *
  * \brief Tests on mln::trait::op::uminus.
  */

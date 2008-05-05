@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pixter2d.cc
+/*! \file tests/core/pixter2d.cc
  *
  * \brief Tests on mln::fwd_pixter2d.
  */

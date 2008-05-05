@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert_to_tiles.cc
+/*! \file tests/convert/to_tiles.cc
  *
  * \brief Tests on mln::convert::to_tiles.
  */

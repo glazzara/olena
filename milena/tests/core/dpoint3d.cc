@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/dpoint3d.cc
+/*! \file tests/core/dpoint3d.cc
  *
  * \brief Tests on mln::dpoint3d.
  */

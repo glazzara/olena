@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert_to_p_set.cc
+/*! \file tests/convert/to_p_set.cc
  *
  * \brief Tests on mln::convert::to_p_set.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/box2d.cc
+/*! \file tests/core/box2d.cc
  *
  * \brief Tests on mln::box2d.
  */

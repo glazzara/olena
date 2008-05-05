@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear_gaussian.cc
+/*! \file tests/linear/gaussian.cc
  *
  * \brief Test on mln::linear::gaussian.
  */

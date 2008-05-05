@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/histo_to_image1d.cc
+/*! \file tests/histo/to_image1d.cc
  *
  * \brief Tests on mln::accu::histo and mln::histo::data.
  */

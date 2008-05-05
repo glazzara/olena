@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/image_if.cc
+/*! \file tests/core/image_if.cc
  *
  * \brief Tests on mln::image_if.
  */

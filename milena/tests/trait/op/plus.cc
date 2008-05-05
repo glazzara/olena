@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait_op_plus.cc
+/*! \file tests/trait/op/plus.cc
  *
  * \brief Tests on mln::trait::op::plus.
  */

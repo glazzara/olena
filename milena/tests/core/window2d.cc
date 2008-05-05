@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/window2d.cc
+/*! \file tests/core/window2d.cc
  *
  * \brief Tests on mln::window2d.
  */

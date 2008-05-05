@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/estim_mean.cc
+/*! \file tests/estim/mean.cc
  *
  * \brief Tests on mln::estim::mean.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level_sort_points.cc
+/*! \file tests/level/sort_points.cc
  *
  * \brief Tests on mln::level::sort_points.
  */

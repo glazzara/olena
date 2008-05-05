@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/translate_image.cc
+/*! \file tests/core/translate_image.cc
  *
  * \brief Tests on mln::core::translate_image.hh.
  */

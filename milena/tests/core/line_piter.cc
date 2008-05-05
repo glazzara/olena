@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/line_piter.cc
+/*! \file tests/core/line_piter.cc
  *
  * \brief Tests on mln::line_piter.
  */

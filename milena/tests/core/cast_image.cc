@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/cast_image.cc
+/*! \file tests/core/cast_image.cc
  *
  * \brief Tests on mln::cast_image.
  */

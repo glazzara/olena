@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/seed2tiling.cc
+/*! \file tools/seed2tiling.cc
  *
- * \brief Tests on mln::geom::seed2tiling.
+ * \brief Tool using mln::geom::seed2tiling.
  */
 
 

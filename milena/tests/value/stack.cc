@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/stack.cc
+/*! \file tests/value/stack.cc
  *
  * \brief Tests on mln::value::stack.
  */

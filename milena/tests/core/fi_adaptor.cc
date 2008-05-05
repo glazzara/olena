@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fi_adaptor.cc
+/*! \file tests/core/fi_adaptor.cc
  *
  * \brief Test on mln::fi_adaptor.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border_resize_image2d_1.cc
+/*! \file tests/border/resize_image2d_1.cc
  *
  * \brief Tests on mln::border::resize.
  */

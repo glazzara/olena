@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal_pow.cc
+/*! \file tests/metal/math/pow.cc
  *
- * \brief Test on mln::metal::math.
+ * \brief Test on mln::metal::math::pow.
  */
 
 #include <iostream>

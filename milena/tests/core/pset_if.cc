@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_pset_if.cc
+/*! \file tests/core/pset_if.cc
  *
  * \brief Tests on mln::pset_if.
  */

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/hexa.cc
+/*! \file tests/core/hexa.cc
  *
  * \brief Tests on mln::hexa
  */
