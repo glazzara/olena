@@ -99,12 +99,14 @@ AC_CONFIG_FILES([
 # data (images) from tests.
 AC_CONFIG_FILES([milena/tests/data.hh])
 
-# FIXME: Should be performed through oln.m4 macros, as we did in Olena 0.11?
 # Ask for the creation of tests' Makefiles.
+# FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
 AC_CONFIG_FILES([
   milena/tests/Makefile
     milena/tests/accu/Makefile
+    milena/tests/algebra/Makefile
     milena/tests/arith/Makefile
+    milena/tests/binarization/Makefile
     milena/tests/border/Makefile
     milena/tests/canvas/Makefile
       milena/tests/canvas/browsing/Makefile
@@ -148,7 +150,9 @@ AC_CONFIG_FILES([
     milena/tests/norm/Makefile
     milena/tests/pw/Makefile
     milena/tests/set/Makefile
+    milena/tests/subsampling/Makefile
     milena/tests/tag/Makefile
+    milena/tests/test/Makefile
     milena/tests/trace/Makefile
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
