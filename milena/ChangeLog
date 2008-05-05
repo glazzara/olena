@@ -964,6 +964,14 @@
 	s/CXXFLAGS_SPEED/TESTS_CXXFLAGS_SPEED/.
 	(dilation_CXXFLAGS): New.  Set to $(TESTS_CXXFLAGS_SPEED).
 
+2008-04-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a test on regular neighborhoods.
+
+	* milena/tests/core/neighb.cc: New.
+	* milena/tests/core/Makefile.am (check_PROGRAMS): Add neighb.
+	(neighb_SOURCES): New.
+
 2008-04-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add bench script and clean testes up.
