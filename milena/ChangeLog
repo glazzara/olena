@@ -1,5 +1,16 @@
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests/fun/v2v/.
+
+	* tests/fun/v2v/rgb_hsi_conversion.cc: Add copyright header.
+	Don't use hard-coded paths for I/O operations.
+	* tests/fun/v2v/Makefile.am (check_PROGRAMS): Add
+	rgb_hsi_conversion.
+	(norm_SOURCES): Remove rgb_hsi_conversion.cc.
+	(rgb_hsi_conversion_SOURCES): New.
+
+2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix pretty printing of graph vicinity piters.
 
 	* mln/core/internal/graph_vicinity_piter.hh
