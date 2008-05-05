@@ -57,8 +57,6 @@
 
 int main(int argc, char* argv[])
 {
-  // FIXME: A test should not be interactive.  Maybe this program
-  // should be moved elsewehere.
   if (argc < 2)
     {
       std::cerr << "missing argument: "

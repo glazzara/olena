@@ -7,47 +7,57 @@ full-check: check
 ## ...
 
 SUBDIRS =					\
-  concept					\
-  builtin
+  builtin					\
+  concept
 
 check_PROGRAMS =				\
   bool						\
   equiv						\
-  float01_bis					\
   float01					\
+  float01_bis					\
   float01_f					\
   graylevel					\
-  interop					\
-  int_s16					\
+  graylevel_f					\
   int_s						\
+  int_s16					\
   int_u8					\
+  interop					\
   label						\
+  macros					\
   quat						\
   rgb8						\
   scalar					\
-  set
+  set						\
+  stack
 
 # FIXME: Enable when make check_full works.
 # check_full_PROGRAMS =				\
+#   graylevel_full				\
+#   graylevel_f_full				\
 #   rgb_full
 
 bool_SOURCES = bool.cc
 equiv_SOURCES = equiv.cc
-float01_bis_SOURCES = float01_bis.cc
 float01_SOURCES = float01.cc
+float01_bis_SOURCES = float01_bis.cc
 float01_f_SOURCES = float01_f.cc
 graylevel_SOURCES = graylevel.cc
+graylevel_f_SOURCES = graylevel_f.cc
 interop_SOURCES = interop.cc
-int_s16_SOURCES = int_s16.cc
 int_s_SOURCES = int_s.cc
+int_s16_SOURCES = int_s16.cc
 int_u8_SOURCES = int_u8.cc
 label_SOURCES = label.cc
+macros_SOURCES = macros.cc
 quat_SOURCES = quat.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
+stack_SOURCES = stack.cc
 
 # FIXME: Enable when make check_full works.
+# graylevel_f_full_SOURCES = graylevel_f_full.cc
+# graylevel_full_SOURCES = graylevel_full.cc
 # rgb_full_SOURCES = rgb_full.cc
 
 TESTS = $(check_PROGRAMS)

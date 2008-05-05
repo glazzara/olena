@@ -1,8 +1,8 @@
 ## Process this file through Automake to create Makefile.in -*- Makefile -*-
 
-SUBDIRS = approx naive
-
 include $(top_srcdir)/milena/tests/tests.mk
+
+SUBDIRS = approx naive
 
 check_PROGRAMS =				\
   abs						\
@@ -20,6 +20,7 @@ check_PROGRAMS =				\
   memset_					\
   paste						\
   saturate					\
+  sort_points					\
   sort_psites					\
   sort_psites_full				\
   stretch					\
@@ -41,6 +42,7 @@ memcpy__SOURCES = memcpy_.cc
 memset__SOURCES = memset_.cc
 paste_SOURCES = paste.cc
 saturate_SOURCES = saturate.cc
+sort_points_SOURCES = sort_points.cc
 sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc
 take_SOURCES = take.cc

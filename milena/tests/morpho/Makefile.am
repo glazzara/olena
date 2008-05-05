@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   closing_area					\
+  combined					\
   contrast					\
   dilation					\
   dilation_max_h				\
@@ -39,6 +40,8 @@ laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc
 
 meyer_wst_SOURCES = meyer_wst.cc
+
+combined_SOURCES = combined.cc
 
 # --------------- #
 # Complex tests.  #

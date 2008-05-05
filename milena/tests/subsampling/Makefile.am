@@ -3,8 +3,8 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  values
+  type
 
-values_SOURCES = values.cc
+type_SOURCES = type.cc
 
 TESTS = $(check_PROGRAMS)

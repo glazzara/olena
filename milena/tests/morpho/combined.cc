@@ -25,15 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// FIXME: Rename (and possibly move) this file.
-
-/*!
- * \file   tests/main.cc
- *
- * \brief  Test on mln::morpho.
- *
- *
- */
+/// \file  tests/morpho/combined.cc
+/// \brief Test on several mln::morpho entities.
 
 #include <cmath>
 

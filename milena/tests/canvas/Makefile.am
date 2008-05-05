@@ -2,7 +2,7 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS = browsing
+SUBDIRS = browsing morpho
 
 check_PROGRAMS =				\
   chamfer
