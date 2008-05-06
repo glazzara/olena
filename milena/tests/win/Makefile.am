@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   backdiag2d					\
   cube3d					\
+  cuboid3d					\
   diag2d					\
   disk2d					\
   hline2d					\
@@ -15,6 +16,7 @@ check_PROGRAMS =				\
 
 backdiag2d_SOURCES = backdiag2d.cc
 cube3d_SOURCES = cube3d.cc
+cuboid3d_SOURCES = cuboid3d.cc
 diag2d_SOURCES = diag2d.cc
 disk2d_SOURCES = disk2d.cc
 hline2d_SOURCES = hline2d.cc
