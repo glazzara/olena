@@ -1,5 +1,21 @@
 2008-05-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Small fixes in tests/win/.
+
+	* tests/win/backdiag2d.cc,
+	* tests/win/cube3d.cc,
+	* tests/win/diag2d.cc,
+	* tests/win/disk2d.cc,
+	* tests/win/octagon2d.cc,
+	* tests/win/rectangle2d.cc:
+	Substitute some identifiers to have (more) sensible assertions.
+	* tests/win/hline2d.cc,
+	* tests/win/vline2d.cc:
+	Likewise.
+	Remove spurious parts of assertions.
+
+2008-05-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise 1-D and 3-D delta-point pixel iterators.
 
 	* tests/core/dpoints_pixter.cc (test_fill): Add a third argument

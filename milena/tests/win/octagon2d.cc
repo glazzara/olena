@@ -51,9 +51,9 @@ int main()
     for (int y = -16; y <= 16; ++y)
     {
       mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) ||
-		    !oct.has(dpoint2d(y, x)));
+		    !oct.has(dpoint2d(x, y)));
       mln_assertion((abs(x) + abs(y) <= static_cast<int>(l / 2 + l / 6)) ==
-		    (oct.has(dpoint2d(y, x))) ||
+		    (oct.has(dpoint2d(x, y))) ||
 		    abs(x) > 2 ||
 		    abs(y) > 2);
     }

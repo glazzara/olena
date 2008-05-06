@@ -55,7 +55,7 @@ int main()
   for (int x = -5; x <= 5; ++x)
     for (int y = -5; y <= 5; ++y)
     {
-      mln_assertion((abs(y) <= 1 && abs(x) <= 2) == (rec.has(dpoint2d(y, x))));
+      mln_assertion((abs(x) <= 1 && abs(y) <= 2) == (rec.has(dpoint2d(x, y))));
     }
   
   debug::println(convert::to_image(rec));

@@ -47,14 +47,14 @@ int main()
 
   mln_assertion(cube.delta() == 2);
 
-  for (int x = -5; x <= 5; ++x)
-    for (int y = -5; y <= 5; ++y)
-      for (int z = -5; z <= 5; ++z)
+  for (int s = -5; s <= 5; ++s)
+    for (int x = -5; x <= 5; ++x)
+      for (int y = -5; y <= 5; ++y)
       {
-	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(z) <= 2)) ||
-		      !cube.has(dpoint3d(z, y, x)));
-	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(z) <= 2) ==
-		      (cube.has(dpoint3d(z, y, x))));
+	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(s) <= 2)) ||
+		      !cube.has(dpoint3d(s, y, x)));
+	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(s) <= 2) ==
+		      (cube.has(dpoint3d(s, y, x))));
       }
 
   debug::println(convert::to_image(cube));

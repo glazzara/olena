@@ -54,7 +54,7 @@ int main()
       mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) ||
 		    !disk.has(dpoint2d(y, x)));
       mln_assertion(((x * x + y * y) <= static_cast<int>(l2)) ==
-		    (disk.has(dpoint2d(y, x))) ||
+		    (disk.has(dpoint2d(x, y))) ||
 		    abs(x) > 27 ||
 		    abs(y) > 27);
     }

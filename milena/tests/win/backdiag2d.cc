@@ -52,7 +52,7 @@ int main()
     {
       mln_assertion(((abs(x) <= 4) && (abs(y) <= 4)) ||
 		    !diag.has(dpoint2d(y, x)));
-      mln_assertion((x == y) == (diag.has(dpoint2d(y, x))) ||
+      mln_assertion((x == y) == (diag.has(dpoint2d(x, y))) ||
 		    abs(x) > 4 ||
 		    abs(y) > 4);
     }

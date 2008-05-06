@@ -52,8 +52,7 @@ int main()
     {
       mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) ||
 		    !hline.has(dpoint2d(x, y)));
-      mln_assertion((0 == y) == (hline.has(dpoint2d(y, x))) ||
-		    abs(x) > 2 ||
+      mln_assertion((0 == x) == (hline.has(dpoint2d(x, y))) ||
 		    abs(y) > 2);
     }
 
