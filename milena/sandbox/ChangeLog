@@ -1,3 +1,10 @@
+2008-05-06  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	Add new conversion functions.
+	* conv/rgbto.hh, conv/torgb.hh: New conversions functions.
+	* conv/test.cc: New test on conversions.
+	* conv: New folder.
+
 2008-04-30  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	DT in canevas word plus some addons in original psn.
