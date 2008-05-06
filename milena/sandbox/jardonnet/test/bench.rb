@@ -20,14 +20,20 @@ end
 plot_qe.close
 
 
-plotscipt = File.new("plotscript", "w+")
-plotscipt.puts "set xlabel \"q\""
-plotscipt.puts "set ylabel \"e\""
-plotscipt.puts "set zlabel \"time\""
-plotscipt.puts "splot \"log.dat\""
-plotscipt.puts "pause -1"
-plotscipt.close
+plotscript = File.new("plotscript", "w+")
+plotscript.puts "set xlabel \"q\""
+plotscript.puts "set ylabel \"e\""
+plotscript.puts "set zlabel \"time\""
+plotscript.puts "splot \"log.dat\""
+plotscript.puts "set terminal png nocrop enhanced size 800,600"
+plotscript.puts "set output \"bench_qe.png\""
+plotscript.puts "replot"
+plotscript.puts "set output"
+plotscript.puts "set terminal x11"
+plotscript.close
 
 exec("gnuplot plotscript")
+
+
 
 

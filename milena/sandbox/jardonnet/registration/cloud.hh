@@ -11,6 +11,8 @@
 # include <mln/core/p_array.hh>
 # include <mln/norm/l2.hh>
 
+#include "quat7.hh"
+
 namespace mln
 {
 
@@ -43,6 +45,7 @@ namespace mln
 
     template <typename P, typename M>
     float rms(const p_array<P>& a1,
+              quat7<P::dim>& qk,
               M& map,
               const size_t length)
     {
@@ -51,11 +54,30 @@ namespace mln
       float f = 0.f;
       for (size_t i = 0; i < length; ++i)
         {
-          algebra::vec<3,float> a1f = a1[i];
-          algebra::vec<3,float> a2f = map(a1[i]);
+          algebra::vec<3,float> a1f = qk(a1[i]);
+          algebra::vec<3,float> a2f = map(algebra::to_point<P>(qk(a1[i])));
           f += norm::l2(a1f - a2f);
         }
-      return f / a1.npoints();
+      return f / length;
+    }
+
+    template <typename P, typename M>
+    float rms(const p_array<P>& a1,
+              M& map,
+              const size_t length,
+              quat7<P::dim>& q1,
+              quat7<P::dim>& q2)
+    {
+      assert(length <= a1.npoints());
+     
+      float f = 0.f;
+      for (size_t i = 0; i < length; ++i)
+        {
+          algebra::vec<3,float> a2f = q2(a1[i]);
+          algebra::vec<3,float> a1f = map(algebra::to_point<P>(q1(a1[i])));
+          f += norm::l2(a1f - a2f);
+        }
+      return f / length;
     }
 
   } // end of namespace registration

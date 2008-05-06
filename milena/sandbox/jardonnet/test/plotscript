@@ -1,5 +1,11 @@
+set title "Bench : q, e" 
+
 set xlabel "q"
 set ylabel "e"
 set zlabel "time"
+
 splot "log.dat"
-pause -1
+
+save "plot.gp"
+
+#pause(-1)

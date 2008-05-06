@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
   closest_point<mln_point_(I3d)> fun(x, box_<point3d>(1000,1000,1));
   lazy_image< closest_point<mln_point_(I3d)> > map(fun);
 
-  quat7<3> qk = registration::icp(c, map, q, e);
+  quat7<3> qk = registration::icp(c, map, q, e, x);
 
 #ifndef NDEBUG
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
@@ -78,7 +78,10 @@ int main(int argc, char* argv[])
       mean += f;
     }
   mean /= c.npoints();
-  std::cout << mean << std::endl;
+#ifndef NDEBUG
+  std::cout << "mean : " << mean << std::endl;
+#endif
+
   
   //standar variation
   float stdev = 0;
@@ -86,7 +89,9 @@ int main(int argc, char* argv[])
     stdev += (length[i] - mean) * (length[i] - mean);
   stdev /= c.npoints();
   stdev = math::sqrt(stdev);
-  std::cout << stdev << std::endl;
+#ifndef NDEBUG
+  std::cout << "stddev : " << stdev << std::endl;
+#endif
 
   //final translate translate using point only separated less than 2*stdev
   //mu_Xk = center map(Ck)
