@@ -28,13 +28,19 @@
 /// \file tests/dpoints_pixter.cc
 /// \brief Test on mln::dpoints_fwd_pixter and mln::dpoints_bkd_pixter.
 
+#include <mln/core/image1d.hh>
 #include <mln/core/image2d.hh>
+#include <mln/core/image3d.hh>
+
+#include <mln/win/segment1d.hh>
 #include <mln/win/rectangle2d.hh>
+#include <mln/win/cuboid3d.hh>
+
 #include <mln/make/pixel.hh>
 
 
 template <typename I, typename W>
-void test_fill(I& ima, const W& win)
+void test_fill(I& ima, const W& win, unsigned npoints)
 {
   mln_piter(I) p(ima.domain());
   mln_fwd_qixter(I, W) fq(ima, win, p);
@@ -43,7 +49,7 @@ void test_fill(I& ima, const W& win)
     unsigned i = 0;
     for_all(fq)
       ++i, fq.val() = 51;
-    mln_assertion(i == 9);
+    mln_assertion(i == npoints);
   }
   mln_bkd_qixter(I, W) bq(ima, win, p);
   for_all(p)
@@ -51,7 +57,7 @@ void test_fill(I& ima, const W& win)
     unsigned i = 0;
     for_all(bq)
       ++i, bq.val() = 42;
-    mln_assertion(i == 9);
+    mln_assertion(i == npoints);
   }
 }
 
@@ -73,12 +79,41 @@ int main()
   using namespace mln;
 
   border::thickness = 1;
-  typedef image2d<int> I;
-  I ima(5, 5);
 
-  win::rectangle2d rect(3, 3);
-  point2d p = make::point2d(1, 1);
+  // 1-D case.
+  {
+    typedef image1d<int> I;
+    I ima(6);
 
-  test_fill(ima, rect);
-  test_pixel(make::pixel(ima, p), rect);
+    win::segment1d seg(3);
+    point1d p = make::point1d(3);
+
+    test_fill(ima, seg, 3);
+    test_pixel(make::pixel(ima, p), seg);
+  }
+
+  // 2-D case.
+  {
+    typedef image2d<int> I;
+    I ima(5, 5);
+
+    win::rectangle2d rect(3, 3);
+    point2d p = make::point2d(1, 1);
+
+    test_fill(ima, rect, 3 * 3);
+    test_pixel(make::pixel(ima, p), rect);
+  }
+
+  // 3-D case.
+  {
+    typedef image3d<int> I;
+    I ima(3, 4, 5);
+
+    win::cuboid3d cuboid(3, 3, 3);
+    point3d p = make::point3d(2, 1, 3);
+
+    test_fill(ima, cuboid, 3 * 3 * 3);
+    test_pixel(make::pixel(ima, p), cuboid);
+  }
+
 }

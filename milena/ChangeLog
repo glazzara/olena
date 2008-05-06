@@ -1,5 +1,14 @@
 2008-05-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise 1-D and 3-D delta-point pixel iterators.
+
+	* tests/core/dpoints_pixter.cc (test_fill): Add a third argument
+	to pass the number of expected iterated delta-points.
+	(main): Adjust.
+	Add 1-D and 3-D test cases.
+
+2008-05-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a 3-D cuboid window type.
 
 	* mln/win/cuboid3d.hh: New.
