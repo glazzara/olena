@@ -1,3 +1,13 @@
+2008-05-06  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make Tikz output able to valuate pixels.
+
+	* sandbox/abraham/io/tikz/save_header.hh: New
+	(mln::io::tikz::save_header) Write the header of the LaTeX file.
+	* sandbox/abraham/io/tikz/save.hh:
+	(mln::io::tikz::save) Can now take another image in argument to put
+	values on pixels.
+
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix Doxygen documentation after the reorganization of tests/.

@@ -49,8 +49,8 @@
 
 # include <mln/metal/templated_by.hh>
 
-# include <mln/io/pnm/save_header.hh>
-# include <mln/io/pnm/macros.hh>
+// # include <mln/io/tikz/save_header.hh>
+# include "save_header.hh"
 
 # include <mln/geom/size2d.hh>
 
@@ -70,6 +70,15 @@ namespace mln
        */
       template <typename I>
       void save(const Image<I>& ima_, const std::string& filename);
+
+      /*! Save a milena image as a tikz image with values.
+       *
+       * \param[in] ima_ The image to save.
+       * \param[in,out] filename the destination.
+       * \param[in] val_ An Image containing values to print.
+       */
+      template <typename I, typename V>
+      void save(const Image<I>& ima_, const std::string& filename, const Image<V>& val_);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -157,11 +166,37 @@ namespace mln
 	      {
 		file << "\\path (" << p.col() << "," << max_row - p.row() << ") node[fill=";
 		write_value(file, ima(p));
-		file << "] (p_" << p.row() << "_" << p.col() << ") { \\scriptsize \\color{";
+		file << "] (p_" << p.row() << "_" << p.col() << ") { \\color{";
 		file << "black";
-		file << "}" << ima(p) << "};" << std::endl;
+		file << "}" << "};" << std::endl;
 	      }
 	}
+
+	// Save data
+	template <typename I, typename V>
+	inline
+	void save_data_with_values_(std::ofstream& file,
+				    const I& ima,
+				    const V& val)
+	{
+	  const int
+	    min_row = geom::min_row(ima),
+	    max_row = geom::max_row(ima),
+	    min_col = geom::min_col(ima),
+	    max_col = geom::max_col(ima);
+
+	  point2d p;
+	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
+	      {
+		file << "\\path (" << p.col() << "," << max_row - p.row() << ") node[fill=";
+		write_value(file, ima(p));
+		file << "] (p_" << p.row() << "_" << p.col() << ") { \\color{";
+		file << "black";
+		file << "}" << val(p) << "};" << std::endl;
+	      }
+	}
+
 
       } // end of namespace mln::io::pnm::impl
 
@@ -174,14 +209,8 @@ namespace mln
       {
 	const I& ima = exact(ima_);
 	std::ofstream file(filename.c_str());
-	//	io::tikz::save_header(ima, file);
 
-	file << "\\documentclass[12pt,a4paper]{article}" << std::endl;
-	file << "\\usepackage{tikz}" << std::endl;
-
-	file << "\\begin{document}" << std::endl;
-	file << "\\begin{tikzpicture}" << std::endl;
-	file << "\\tikzstyle{every node}=[draw,shape=rectangle, minimum width=1cm, minimum height=1cm]" << std::endl;
+	io::tikz::save_header(ima, filename, file);
 
 	impl::save_data_(file,
 			 ima);
@@ -189,6 +218,25 @@ namespace mln
 	file << "\\end{tikzpicture}" << std::endl;
 	file << "\\end{document}" << std::endl;
       }
+
+      template <typename I, typename V>
+      inline
+      void save(const Image<I>& ima_, const std::string& filename, const Image<V>& val_)
+      {
+	const I& ima = exact(ima_);
+	const V& val = exact(val_);
+	std::ofstream file(filename.c_str());
+
+	io::tikz::save_header(ima, filename, file);
+
+	impl::save_data_with_values_(file,
+				     ima,
+				     val);
+
+	file << "\\end{tikzpicture}" << std::endl;
+	file << "\\end{document}" << std::endl;
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
