@@ -1,3 +1,62 @@
+2008-05-07  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make some cleaning, better makefiles, nicer tree.
+
+	* abraham/tests/morpho: New.
+	* abraham/tests/morpho/ref: New
+	Najman topological watershed for reference.
+	* abraham/tests/morpho/ref/test: New.
+	* abraham/tests/morpho/ref/test/UrOx.pgm: New.
+	* abraham/tests/morpho/ref/include: New.
+	* abraham/tests/morpho/ref/include/mcunionfind.h: New.
+	* abraham/tests/morpho/ref/include/mclifo.h: New.
+	* abraham/tests/morpho/ref/include/lattribheight.h: New.
+	* abraham/tests/morpho/ref/include/mcutil.h: New.
+	* abraham/tests/morpho/ref/include/mccomptree.h: New.
+	* abraham/tests/morpho/ref/include/mcimage.h: New.
+	* abraham/tests/morpho/ref/include/mcfahsalembier.h: New.
+	* abraham/tests/morpho/ref/include/mcindic.h: New.
+	* abraham/tests/morpho/ref/include/mccodimage.h: New.
+	* abraham/tests/morpho/ref/include/lwshedtopo.h: New.
+	* abraham/tests/morpho/ref/src: New.
+	* abraham/tests/morpho/ref/src/lib: New.
+	* abraham/tests/morpho/ref/src/lib/mccomptree.c: New.
+	* abraham/tests/morpho/ref/src/lib/lattrib.c: New.
+	* abraham/tests/morpho/ref/src/lib/mcimage.c: New.
+	* abraham/tests/morpho/ref/src/lib/mcfahsalembier.c: New.
+	* abraham/tests/morpho/ref/src/lib/mcindic.c: New.
+	* abraham/tests/morpho/ref/src/lib/mccodimage.c: New.
+	* abraham/tests/morpho/ref/src/lib/lwshedtopo.c: New.
+	* abraham/tests/morpho/ref/src/lib/mcunionfind.c: New.
+	* abraham/tests/morpho/ref/src/lib/mclifo.c: New.
+	* abraham/tests/morpho/ref/src/lib/lattribheight.c: New.
+	* abraham/tests/morpho/ref/src/com: New.
+	* abraham/tests/morpho/ref/src/com/wshedtopo.c: New.
+	* abraham/tests/morpho/ref/bin: New.
+	* abraham/tests/morpho/ref/obj: New.
+	* abraham/tests/morpho/ref/Makefile: New.
+	* abraham/tests/morpho/Makefile: New.
+	* abraham/tests/tikz.cc: Remove.
+	* abraham/tests/io: New.
+	* abraham/tests/io/tikz: New.
+	* abraham/tests/io/tikz/tikz.cc: New.
+	* abraham/tests/io/tikz/Makefile: New.
+	* abraham/tests/Makefile: Remove.
+	* abraham/mln: New.
+	* abraham/mln/morpho: New.
+	* abraham/mln/morpho/basic_najman.hh: .
+	* abraham/mln/morpho/test.cc: Remove.
+	* abraham/mln/morpho/test_component_tree.cc: .
+	* abraham/mln/morpho/tikz.h: Remove.
+	* abraham/mln/morpho/test_watershed.cc: .
+	* abraham/mln/morpho/test_watershed_topo.cc: New.
+	* abraham/mln/morpho/topo_wst.hh: Remove.
+	* abraham/mln/morpho/Makefile: .
+	* abraham/mln/io: New.
+	* abraham/mln/io/tikz/save_header.hh: .
+	* abraham/mln/io/tikz/save.hh: .
+	* abraham/img/little_test.pgm: New.
+
 2008-05-07  Caroline Vigouroux  <vigour_c@epita.fr>
 
 	Add values of literals.
