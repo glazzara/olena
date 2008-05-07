@@ -25,30 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_RLE_ENCODE_HH
-# define MLN_CORE_RLE_ENCODE_HH
+#ifndef MLN_CORE_VALUE_ENCODE_HH_
+# define MLN_CORE_VALUE_ENCODE_HH_
 
-/*! \file mln/core/rle_encode.hh
+/*! \file mln/core/value_encode.hh
  *
- * \brief Definintion of function which encodes an image in rle_image.
+ * \brief Definition of function which encodes an image in value_enc_image.
  */
 
-# include <mln/core/rle_image.hh>
+# include <mln/core/value_enc_image.hh>
 
 namespace mln
 {
 
   /*!
-  ** encode an image class to a rle_image
+  ** encode an image class to a value_enc_image
   **
-  ** @param input has to respect the Image concept
+  ** @param input has to respect the Image concept.
+  **        The input image must be based on a regular grid.
   ** @param ignore_zero says if zero has to be considered as a valid value
   **
-  ** @return rle_image
+  ** @return value_enc_image
   */
   template <typename I>
-  rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input, bool ignore_zero = true);
+  value_enc_image<mln_point(I), mln_value(I)>
+  value_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
   /*!
@@ -69,14 +70,13 @@ namespace mln
 
   template <typename I>
   inline
-  rle_image<mln_point(I), mln_value(I)>
-  rle_encode(const Image<I>& input, bool ignore_zero)
+  value_enc_image<mln_point(I), mln_value(I)>
+  value_encode(const Image<I>& input, bool ignore_zero)
   {
-    typedef mln_point(I) P;
-
-    rle_image<mln_point(I), mln_value(I)> output;
+    value_enc_image<mln_point(I), mln_value(I)> output;
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
+
     unsigned len = 0;
     mln_point(I) rstart;
     mln_value(I) rvalue;
@@ -96,7 +96,8 @@ namespace mln
 	    ++len;
 	  else
 	  {
-	    output.insert(p_run<P>(rstart, len), rvalue);
+	    //FIXME is it right??
+	    output.insert(p_run<mln_point(I)>(rstart, len), rvalue);
 	    if ((len = (!ignore_zero || ima(p) != literal::zero)))
 	    {
 	      rstart = p;
@@ -104,7 +105,6 @@ namespace mln
 	    }
 	  }
       }
-    output.finalize();
     return output;
   }
 
@@ -112,4 +112,4 @@ namespace mln
 
 }
 
-#endif // ! MLN_CORE_RLE_ENCODE_HH
+#endif // ! MLN_CORE_VALUE_ENCODE_HH_

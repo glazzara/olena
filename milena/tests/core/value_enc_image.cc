@@ -32,8 +32,32 @@
 
 #include <mln/core/image2d.hh>
 #include <mln/core/value_enc_image.hh>
-#include <iostream>
 
+#include <mln/value/int_u8.hh>
+#include <mln/io/pgm/load.hh>
+#include <mln/pw/all.hh>
+#include <mln/core/neighb2d.hh>
+
+#include <mln/labeling/blobs.hh>
+#include <mln/level/transform.hh>
+#include <mln/level/paste.hh>
+#include <mln/level/compare.hh>
+#include <mln/io/pgm/save.hh>
+
+#include "tests/data.hh"
+
+#include <mln/core/value_encode.hh>
+
+struct fold_t : public mln::Function_v2v< fold_t >
+{
+
+  typedef mln::value::int_u8 result;
+  result operator()(unsigned i) const
+  {
+    return i == 0 ? 0 : (i - 1) % 255 + 1;
+  }
+
+};
 
 int main()
 {
@@ -49,10 +73,12 @@ int main()
     p_runs_<point2d> pruns2;
 
     pruns0.insert(p_run<point2d>(make::point2d(0, 0), 2));
+
     pruns1.insert(p_run<point2d>(make::point2d(2, 4), 7));
     pruns1.insert(p_run<point2d>(make::point2d(18, 42), 5));
     pruns1.insert(p_run<point2d>(make::point2d(50, 76), 2));
     pruns1.insert(p_run<point2d>(make::point2d(17,40), 6));
+
     pruns2.insert(p_run<point2d>(make::point2d(10,10), 5));
 
     ima_type ima;
@@ -73,5 +99,59 @@ int main()
       if (nb == 7)
 	i = 1;
     }
+  }
+
+  /// Basic test two
+  {
+    typedef value_enc_image<point2d, int> ima_type;
+    ima_type ima;
+
+     ima.insert(p_run<point2d>(make::point2d(0, 0), 2), 0);
+     ima.insert(p_run<point2d>(make::point2d(10,10), 5), 2);
+
+    ima.insert(p_run<point2d>(make::point2d(2, 4), 7), 1);
+    ima.insert(p_run<point2d>(make::point2d(18, 42), 5), 1);
+    ima.insert(p_run<point2d>(make::point2d(50, 76), 2), 1);
+    ima.insert(p_run<point2d>(make::point2d(17,40), 6), 1);
+
+
+       mln_piter_(ima_type) piter (ima.domain());
+    int i = 0;
+    int nb = 0;
+    for_all(piter)
+    {
+      assert(ima(piter) == i);
+
+      ++nb;
+      if (nb == 2)
+	i = 2;
+      if (nb == 7)
+	i = 1;
+    }
+  }
+
+  /// A third test
+  {
+    using value::int_u8;
+
+    image2d<int_u8> lena;
+    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+    image2d<int_u8> cmp(lena.domain());
+
+    unsigned n;
+    image2d<unsigned> labels =
+      labeling::blobs((pw::value(lena) > pw::cst(172u)) | lena.domain(),
+		      c4(), n);
+
+    value_enc_image<point2d, int_u8> val_enc =
+      value_encode(level::transform(labels, fold_t()));
+
+    level::fill(cmp, literal::zero);
+    level::paste(val_enc, cmp);
+    std::cout << val_enc.values().size() << std::endl;
+
+    mln_assertion(cmp == level::transform(labels, fold_t()));
+    //io::pgm::save(cmp, "output.pgm");
+    //io::pgm::save(level::transform(labels, fold_t()), "output2.pgm");
   }
 }

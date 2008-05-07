@@ -181,6 +181,14 @@ namespace mln
     return con_[i];
   }
 
+  template <typename Pset>
+  inline
+  Pset&
+  pset_array<Pset>::operator[](unsigned i)
+  {
+    return con_[i];
+  }
+
 # endif // ! MLN_INCLUDE_ONLY
 
 
@@ -235,7 +243,6 @@ namespace mln
   private:
 
     typedef typename Pset::fwd_piter pset_fwd_piter_;
-
 
     const pset_array<Pset>* pset_;
     pset_fwd_piter_ piter_;

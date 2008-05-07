@@ -1,5 +1,15 @@
 2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	value_enc_image: Add a value encode procedure.
+
+	* tests/core/value_enc_image.cc: Update tests.
+	* mln/core/pset_array.hh: Add a missing methods.
+	* mln/core/value_encode.hh: New, encode an image into a value_enc ima.
+	* mln/core/value_enc_image.hh: Add range insertion method.
+	* mln/core/rle_encode.hh: Update the Copyright.
+
+2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Update the quick image tours.
 
 	* doc/tutorial/images_tour.txt: update documentation.
