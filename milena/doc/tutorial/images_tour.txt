@@ -81,7 +81,7 @@ A run_psite is the couple (p_start, i).
 A "runs" is a set of runs which are sorted with the default ordering
 of points.  For instance, this "runs" point-set:
 .b**.....
-c*...a*** 
+c*...a***
 is: {(b,3), (c,2), (a,4)}.
 
 A runs_psite is a (i_of_run, i_in_run, ptr towards the "runs").  To
@@ -104,7 +104,7 @@ name short description ima(p)
 ---------------------------------------------------------------------------------------------------------
 
 image2d<T>		rectangle image on 2d integer grid;			= .data[p.row][p.col]
-			data in RAM; outer border 								
+			data in RAM; outer border
 
 mmap_image2d<T>		likewise but data are "memory mapped"
 
@@ -141,7 +141,7 @@ rle_image<P,T>		encoded by runs, a value is associated with		-> .val[p.r]
 sparse_image<P, T>	encoded by runs, a value is associated with		-> .val[p.r][p.i]
 			each point composing a run.
 			for short: image = { [[val]i]r, [run]r } where
-			the i-th point of run[r] has the value val[r][i] 
+			the i-th point of run[r] has the value val[r][i]
 
 value_enc_image<P, T>	encoded by runs, this image associates an array	 	-> .data[p.r]
 			of runs with every value.  This is a value-driven image.
@@ -167,7 +167,7 @@ fwd_piter:
 
 ** domain morpher
 
-name			short description					ima(p) 
+name			short description					ima(p)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -185,7 +185,7 @@ ima(p) : if (ima1.has(p)) -> ima1(p) else ima2(p)
 
 ** value morpher
 
-name			short description					ima(p) 
+name			short description					ima(p)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -240,7 +240,7 @@ to this point is depicted by '.'
 pointer arithmetics is possible to improve algorithm efficiency
 
 *** example
-
+g
 .dom = bb
 .border = 1
 
@@ -361,6 +361,28 @@ where p.len -> p.runs[p.i].len
 *** specialization
 
 compact_rle<P, T> FIXME
+
+** value_enc_image<P, T>
+
+*** big issue
+
+We have two apparent solutions for the image structure.
+Either:
+  - image = { [val -> [run]] }
+ or
+  - image = { [val]i, [[run]]i }
+
+In the first solution, we use a dictionary to relate a value to its
+runs. But, with this approach, we can't change directly the value of the image
+(we must use  a lut table).
+
+In the second solution, we use two vectors. The first one store all the values.
+The second one is a vector of runs. A value at an index i of the values
+vector has it related runs stores in the run vector at the index i.
+With this second approach, the image is value-wise writable. However, we must
+handle the problem of value unicity.
+
+
 
 ** f_image<F,I>
 
