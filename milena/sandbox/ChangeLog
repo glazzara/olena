@@ -1,3 +1,10 @@
+2008-05-07  Caroline Vigouroux  <vigour_c@epita.fr>
+
+	New red getter.
+	* conv/getred.hh: New red getter for all color spaces.
+	* conv/tored.hh: New function that takes a color as argument
+	  		 and return red part in rgb.
+
 2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Sandbox: Add a document which describes the images types in milena.
