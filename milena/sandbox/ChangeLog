@@ -1,3 +1,13 @@
+2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Sandbox: Add a document which describes the images types in milena.
+
+	* ballas/doc/image_types,
+	* ballas/doc/image_types/include: New repository.
+	* ballas/doc/image_types/include/image_tour.tex,
+	* ballas/doc/image_types/doc.tex: New document describing the images.
+	* ballas/doc/image_tours.txt: update.
+
 2008-05-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Bench + Mean error varation problem.

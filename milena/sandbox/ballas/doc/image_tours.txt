@@ -31,7 +31,6 @@ Here, we get the image properties from the image associated type
 
    ----------
  /            \
- |            |
  | Image Type |
  |     and    |   automatic ----->       Props
  |  associated|
@@ -48,7 +47,7 @@ Properties are a way to classify the images depends or their types.
 
   Some operators are only defined in special cases. Properties provide a way to
 check that the operator's input types respect the operator requirements.
-
+frf
 *** Specialization of an Algorithm
 
 Example:
@@ -598,7 +597,7 @@ FIXME
 
 *** Sparse Image
 
-A RLE image can be defined as the following:
+A Sparse image can be defined as the following:
 {(p, [v])} where p is a run of P and v is a value of type T, and [v] is an
 array of size p.length().
 
