@@ -1,5 +1,32 @@
 2008-05-07  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Clean some files.
+
+	* abraham/morpho,
+	* abraham/morpho/basic_najman.hh,
+	* abraham/morpho/test.cc,
+	* abraham/morpho/test_component_tree.cc,
+	* abraham/morpho/images,
+	* abraham/morpho/images/result_m_watershed.pgm,
+	* abraham/morpho/images/test_component_tree.pgm,
+	* abraham/morpho/images/test_2.pgm,
+	* abraham/morpho/images/test_3.pgm,
+	* abraham/morpho/images/test_4.pgm,
+	* abraham/morpho/images/test_watershed.pgm,
+	* abraham/morpho/images/result_topo_watershed.pgm,
+	* abraham/morpho/images/test_component_mapping.pgm,
+	* abraham/morpho/tikz.h,
+	* abraham/morpho/test_watershed.cc,
+	* abraham/morpho/topo_wst.hh,
+	* abraham/morpho/Makefile,
+	* abraham/io,
+	* abraham/io/tikz,
+	* abraham/io/tikz/save_header.hh,
+	* abraham/io/tikz/save.hh:
+	moved to abraham/mln/.
+
+2008-05-07  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Make some cleaning, better makefiles, nicer tree.
 
 	* abraham/tests/morpho: New.
