@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal pink.
     struct pink_t : public Literal<pink_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(250,218,221);
+      }
     };
 
 

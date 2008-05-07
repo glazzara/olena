@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal purple.
     struct purple_t : public Literal<purple_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(128,0,128);
+      }
     };
 
 

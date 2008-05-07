@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal teal.
     struct teal_t : public Literal<teal_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(0,128,128);
+      }
     };
 
 

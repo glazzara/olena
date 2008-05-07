@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal brown.
     struct brown_t : public Literal<brown_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(150,75,0);
+      }
     };
 
 

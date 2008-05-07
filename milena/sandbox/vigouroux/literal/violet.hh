@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal violet.
     struct violet_t : public Literal<violet_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(0,255,0);
+      }
     };
 
 

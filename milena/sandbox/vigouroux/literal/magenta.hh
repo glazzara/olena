@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal magenta.
     struct magenta_t : public Literal<magenta_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(255, 0, 255);
+      }
     };
 
 

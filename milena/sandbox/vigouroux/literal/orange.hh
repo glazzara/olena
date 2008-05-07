@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal orange.
     struct orange_t : public Literal<orange_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(255,127,0);
+      }
     };
 
 

@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal lime.
     struct lime_t : public Literal<lime_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(50,205,50);
+      }
     };
 
 

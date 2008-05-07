@@ -17,6 +17,10 @@ namespace mln
     /// Type of literal yellow.
     struct yellow_t : public Literal<yellow_t>
     {
+      value::rgb8 operator()() const
+      {
+	return value::rgb8(255,255,0);
+      }
     };
 
 
