@@ -1,0 +1,415 @@
+
+	-*- outline -*-
+
+file images_tour.txt
+
+
+* forewords
+
+** caption
+
+*** parameters
+
+name	type of
+
+T	every value
+S	domain (site set)
+F	function
+FIXME: ...
+
+*** morpher
+
+when a morpher is defined on a single image, this image
+is called "ref"
+
+FIXME: when multiple images...
+
+** site sets
+
+*** multiplicity of sites in a set
+
+many set types are uni-sets: box2d, p_set (IDEA: unique<S>...)
+
+for some other set types, one cannot ensure unicity while keeping
+acceptable performance.  For instance, p_array<P>, p_runs<P>.
+
+IDEA: unique<S> is a site-set morpher that first tests that the
+reference set does not have any element with multiplicity and then
+statically change the multiplicity property to "unique".  For
+instance, an object of type unique< p_array<P> > is ensured to have no
+element with multiplicity---as a consequence, such an object neither
+features an imperative "op[i]" nor an "append(p)" method.
+
+Having site-sets with multiplicity can result in weird definitions of
+images.  Imagine a contour like an '8' encoded from a p_array<P>; for
+the same site, but two different psites, we can have two different
+values:
+
+   a
+ h   b
+  c/g  <-  same point, say p, but both psites c and g
+ d   f
+   e
+
+In that particular example, ima(c) can be different from ima(g); of
+course, we cannot write ima(p) since its data are not point-wise
+accessible.
+
+*** boxes
+
+Boxes are defined on grids.  A n-d box is a pair (p_min, p_max).  A
+n-d point is (coord_0, .., coord_(n-1)).  A DEFAULT ordering
+relationship is defined to be used with containers of points; it
+relies on the lexicographic ordering of the coordinates.  This default
+ordering is also the box2d.is_forward_before(p1, p2).
+
+
+*** run-based point-sets
+
+**** run
+
+A run is a couple (p_start, len); it contains the set of points browse
+by: for i from 0 to len-1, p = p_start + i * d, where d = (0,..,0, 1).
+Remark: the last coordinate of points and dpoints, whatever the
+dimension is, is the one that changes the most often when browsing a
+box.
+
+A run_psite is the couple (p_start, i).
+
+**** runs
+
+A "runs" is a set of runs which are sorted with the default ordering
+of points.  For instance, this "runs" point-set:
+.b**.....
+c*...a*** 
+is: {(b,3), (c,2), (a,4)}.
+
+A runs_psite is a (i_of_run, i_in_run, ptr towards the "runs").  To
+access the data of an image encoded by runs, the ptr can be null; in
+that case, we cannot test if this psite matches the image domain.
+
+Please note that a runs_psite p can NOT be (p_start, i) because, in
+that case, the .has(p) method has the O(N) complexity since browsing
+the array of runs is required.
+
+
+
+* tour
+
+
+** primary images
+
+name short description ima(p)
+
+---------------------------------------------------------------------------------------------------------
+
+image2d<T>		rectangle image on 2d integer grid;			= .data[p.row][p.col]
+			data in RAM; outer border 								
+
+mmap_image2d<T>		likewise but data are "memory mapped"
+
+file_image2d<T>		likewise but data are stored in a file
+			and border is fixed
+
+tiled_image		FIXME: ...
+			say that piter (for_all tile, for_all p of tile) is different from fwd_piter
+
+fun_image<S,F>		defined by a domain and a function : p -> v		-> .f(p)
+
+flat_image<S,T>		defined by a domain with the same value for all p	= .val
+
+pkey_image<P,T>		defined by couples (p,v) where p is a key    		r: assert(.data.has_key(p)); -> .data[p]
+			to retrieve v  	   					w: .data[p] <- v
+
+pvkeys_image<P,T> 	defined by couples (p,v), p being the key, and at
+ 			the same time, coherently maintaining couples
+ 			(v,[p]) where v is the key.
+
+---------------------------------------------------------------------------------------------------------
+			graph-based images
+
+			FIXME: Cf. Roland
+
+---------------------------------------------------------------------------------------------------------
+			rle-based images
+
+rle_image<P,T>		encoded by runs, a value is associated with		-> .val[p.r]
+			each run (every point of a run has the same value)
+			for short: image = { [val]r, [run]r }
+			    	   	 FIXME:  , dom=[run]r  to make clearer(?)
+
+sparse_image<P, T>	encoded by runs, a value is associated with		-> .val[p.r][p.i]
+			each point composing a run.
+			for short: image = { [[val]i]r, [run]r } where
+			the i-th point of run[r] has the value val[r][i] 
+
+value_enc_image<P, T>	encoded by runs, this image associates an array	 	-> .data[p.r]
+			of runs with every value.  This is a value-driven image.
+
+			FIXME:
+			either:
+			  for short: image = { [val -> [run]] }
+			or:
+			  for short: image = { [val]i, [[run]]i }
+
+psite = { val, i_of_run (r), i_in_run (i) }
+ima.runs[val.index][r][i]
+
+fwd_piter:
+  for_all val
+    for_all run in ima[val]
+      for_all p in run
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+** domain morpher
+
+name			short description					ima(p) 
+
+---------------------------------------------------------------------------------------------------------
+
+FIXME
+
+---------------------------------------------------------------------------------------------------------
+
+
+*** FIXME: name it
+
+ima = { ima1, ima2 }
+ima(p) : if (ima1.has(p)) -> ima1(p) else ima2(p)
+
+
+
+** value morpher
+
+name			short description					ima(p) 
+
+---------------------------------------------------------------------------------------------------------
+
+f_image<F,I>		image values are viewed through a "function"		if I is read-only or .f pure:
+
+										* direct-way only:
+										  -> .f(ref(p))
+
+										if I is writable:
+
+										* .f bijective (reverse is f_):
+										  -> .f(ref(p))
+										  ima(p) <- v  =>  ref(p) <- f_(v)
+
+										* .f "pseudo-bijective":
+										  -> .f(ref(p))
+										  ima(p) <- v  =>  f_(in-out ref(p), v)
+
+f_images<F,n,I>		values from n images are viewed thru a function		like above with ref#i instead of only 1 ref
+
+lut_image<I,T>		binding between ref image values and "viewed" values	-> .lut[.ref(p).index]
+			remarkable feature: value iterable and writable
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+** FIXME: other kinds of morphers
+
+hexa<I>
+ex: hexa< image2d<int> > and hexa< sub_image<I,S> >
+this last type is easier to handle than sub_image< hexa<I>, hexa<S> >
+
+
+
+* extra information
+
+
+
+** forewords
+
+bb : 2x2 box starting from (0,0)
+
+when a point does not belong to a domain, the image value associated
+to this point is depicted by '.'
+
+
+** image2d<T>
+
+*** comments
+
+pointer arithmetics is possible to improve algorithm efficiency
+
+*** example
+
+.dom = bb
+.border = 1
+
+.data =
+ 0 0 0 0 \
+ 0 1 2 0 \
+ 0 3 4 0 \
+ 0 0 0 0
+
+ima =
+ 1 2
+ 3 4
+
+*** related image types
+
+image1d, image3d
+
+
+
+** mmap_image2d<T>
+
+FIXME: like image2d<T>
+
+
+
+** file_image2d<T>
+
+FIXME: like image2d<T>
+
+
+
+** fun_image<S,F>
+
+*** comments
+
+.f is a pure function
+
+*** example
+
+.f = p -> p.row + p.col
+.dom = bb
+
+ima =
+ 0 1
+ 1 2
+
+*** related image types
+
+flat_image<S,T>
+
+
+
+** flat_image<S,T>
+
+*** comments
+
+struct = { dom : S, val : T }
+
+this is not a specialization of fun_image (such as .f is p -> .val,
+for all p) because:
+- it allows value iteration (conversely to fun_image)
+- it is writable (change of .val)
+
+*** example
+
+.dom = bb
+.val = 9
+
+ima =
+ 9 9
+ 9 9
+
+
+
+** pkey_image<P,T>
+
+*** naming
+
+rename as pv_image, p_image(?)
+
+*** big issue
+
+when is an entry created?  related question: what about reading a
+value with no entry for the p key?
+
+*** comments
+
+at writing (ima(p) <- v) an entry for key p is implicitly created if
+it does not already exist (an alternative solution is to create
+explicitly an entry before assigning a value; rejected cause too
+verbose, no so intuitive).
+
+slow image type because data are encoded by a red-black tree to
+retrieve v from (the key) p; testing that this image has p is costly.
+
+*** example
+
+ima.at(0,0) := 5
+ima.at(1,1) := 7
+ima =
+ 5 .
+ . 7
+
+*** related image types
+
+rle_sparse_image (because it also allows to create images with few
+data and free-form domains)
+
+
+** rle_image<P,T>
+
+*** comments
+
+the precondition of "ima(p)" is:
+  assert(p.r < ima.n_runs and p.i < p.len);
+where p.len -> p.runs[p.i].len
+
+*** specialization
+
+compact_rle<P, T> FIXME
+
+** f_image<F,I>
+
+*** comments
+
+FIXME
+
+*** example
+
+FIXME
+
+*** specializations
+
+cast_image<I,T>
+
+*** related image types
+
+FIXME
+
+
+
+
+** f_images<F,n,I>
+
+*** alternative naming
+
+f_n_image<F,n,I>
+f_mult_image<F,n,I>
+...
+
+*** comments
+
+FIXME
+
+*** example
+
+FIXME
+
+*** specializations
+
+stack_images<n,I> where .f is p -> make::algebra::vec(ref_1(p)...ref_n(p))
+
+*** related image types
+
+FIXME
+
+
+
+
+ LocalWords:  rle morphers mmap im val col ima int hexa dom bb vec lut iterable
+ LocalWords:  len enc uniset unisets unicity op psites min dpoints psite ptr
+ LocalWords:  coord pkey pvkeys
