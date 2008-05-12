@@ -185,6 +185,7 @@ namespace mln
     
     // qT
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
+
     
     return quat7<P::dim>(qR, qT);
   }

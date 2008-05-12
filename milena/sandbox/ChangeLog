@@ -1,3 +1,13 @@
+2008-05-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: final_qk.
+
+	final_qk build a final quat7 qk considering the stddev
+
+	* jardonnet/test/icp.cc: Refactoring.
+	* jardonnet/test/plotscript: Auto update.
+	* jardonnet/registration/tools.hh: Add final_qk 1 and 2.
+
 2008-05-07  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Clean some files.
