@@ -1,3 +1,10 @@
+2008-05-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add and optimize blob labeling to FLLT.
+
+	* geraud/fllt.cc: Fllt with blob labeling.
+	* geraud/fllt.svg.5.cc: New, version before adding blob labeling.
+
 2008-05-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: final_qk.

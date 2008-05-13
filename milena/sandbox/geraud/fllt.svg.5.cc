@@ -25,18 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <iomanip>
-
 #include <mln/core/image2d.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/core/p_array.hh>
 #include <mln/core/clone.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/core/sub_image.hh>
-#include <mln/core/p_queue_fast.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/rgb8.hh>
+# include <mln/value/rgb8.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -54,8 +51,6 @@
 #include <mln/literal/white.hh>
 #include <mln/literal/colors.hh>
 
-#include <mln/util/tree.hh>
-
 #include <sstream>
 
 
@@ -64,23 +59,6 @@ namespace mln
 
   namespace my
   {
-
-# define fllt_tree(P, V)  mln::util::tree< fllt_node_elt<P, V> >
-# define fllt_node(P, V)  mln::util::tree_node< fllt_node_elt<P, V> >
-# define fllt_branch(P, V)  mln::util::branch< fllt_node_elt<P, V> >
-# define fllt_branch_iter_ind(P, V)  mln::util::branch_iter_ind< fllt_node_elt<P, V> >
-
-    template <typename P, typename V>
-    struct fllt_node_elt
-    {
-      V	value;
-      p_array<P> points;
-      p_array<P> holes;
-      /// Tell if his parent if brighter or not.  Nb : if the parent
-      /// if brighter, the node come from the lower level set
-      bool brighter;
-      unsigned npoints;
-    };
 
     template <typename N_t, typename G>
     void update_gN(const N_t& N, G& gN)
@@ -115,7 +93,7 @@ namespace mln
     }
 
 
-
+    
     template <typename T>
     image2d<T> enlarge(const image2d<T>& input, unsigned coef)
     {
@@ -130,32 +108,8 @@ namespace mln
     }
 
 
-    void save_u(const image2d<value::int_u8>& u,
-		const image2d<int>& is,
-		box2d R_box,
-		int in_R)
-    {
-      static int id = 0;
-      std::stringstream filename;
-      filename << "fllt_trace_" << std::setw(5) << std::setfill('0')
-	       << std::right << id++ << ".ppm";
-
-      image2d<value::int_u8> out = clone(u);
-
-      mln_assertion(R_box.is_valid());
-      mln_piter_(box2d) p(R_box);
-      for_all(p)
-	if (is(p) == in_R)
-	  out(p) = 255;
-// 	else if (is(p) == in_N)
-// 	  out(p) = literal::green;
-
-      io::pgm::save(out, filename.str());
-      //io::pgm::save(out, filename.str());
-    }
-
     template <typename I>
-    void save(const I& is, unsigned in_N, unsigned in_R, const std::string& name = "")
+    void save(const I& is, const std::string& name = "")
     {
       static unsigned counter = 0;
       using value::rgb8;
@@ -165,14 +119,17 @@ namespace mln
 
       mln_piter(I) p(is.domain());
       for_all(p)
-	if (is(p) == in_R)
+	switch (is(p)) {
+	case 1: // R
 	  temp(p) = literal::red;
-	else if (is(p) == in_N) // N
+	  break;
+	case 2: // N
 	  temp(p) = literal::green;
-	else if (is(p) < in_N)
+	  break;
+	case 3: // A
 	  temp(p) = literal::blue;
-	else
-	  temp(p) = literal::white;
+	  break;
+	}
 
       if (name == "")
 	{
@@ -185,78 +142,9 @@ namespace mln
     }
 
 
-    template <typename I, typename V>
-    void blob(const I& is,
-	      p_array<mln_point(I)>* N[256],
-	      unsigned in_N,
-	      fllt_node(mln_point(I), V)* current_cc)
-    {
-      typedef p_array<mln_point(I)> arr_t;
-
-//       std::cout << ">>>>>>>enter blob." << std::endl;
-      bool flower = true;
-      unsigned ncc = 0;
-      static image2d<unsigned> is_labeled(is.domain());
-      static unsigned label = 0;
-
-      if (label == 0)
-      {
-	level::fill(is_labeled, 0);
-	label++;
-      }
-
-      typedef mln_psite(I) P;
-      P cur;
-      mln_niter(neighb2d) n(c8(), cur);
-      p_queue_fast<P> qu;
-      p_array<P>& holes = current_cc->elt().holes;
-
-
-      for (unsigned i = 0; i < 256; ++i)
-      {
-	mln_piter(arr_t) p(*N[i]);
-	for_all(p)
-	{
-	  mln_assertion(is(p) == in_N);
-	  if (is_labeled(p) != label)
-	  {
-	    if (flower == false)
-	      holes.append(p);
-	    else
-	      flower = false;
-	    qu.push(p);
-	    is_labeled(p) = label;
-	    do
-	    {
-	      cur = qu.front();
-	      qu.pop();
-	      for_all(n) if (is.has(n))
-		if (is(n) == in_N && is_labeled(n) != label)
-		{
-		  qu.push(n);
-		  is_labeled(n) = label;
-		}
-	    }
-	    while (! qu.is_empty());
-	  }
-	}
-      }
-
-      ++label;
-
-//       if (holes.size() == 2)
-// 	std::cout << holes[0] << holes[1] << std::endl;
-//       std::cout << " <<<<<<<exiting blob." << std::endl;
-    }
-
-
     template <typename I, typename Nbh>
-    fllt_tree(mln_point(I), mln_value(I))&
-      fllt(const Image<I>& input_, const Neighborhood<Nbh>& nbh_)
+    void fllt(const Image<I>& input_, const Neighborhood<Nbh>& nbh_)
     {
-      typedef fllt_node(mln_point(I), mln_value(I)) node_type;
-      typedef fllt_tree(mln_point(I), mln_value(I)) tree_type;
-
       const I& input = exact(input_);
       const Nbh& nbh = exact(nbh_);
 
@@ -272,12 +160,12 @@ namespace mln
       mln_fwd_piter(I) p(input.domain());
       p.start();
 
-
-      node_type* current_cc;
-      unsigned in_N = 1, in_R = 2;
-
-      image2d<int> deja_vu(input.domain().to_larger(1));
-      level::fill(deja_vu, 0);
+//       image2d<unsigned char> is(input.domain());
+//       const unsigned in_R = 1, in_N = 2, in_A = 3, in_O = 0;
+//       level::fill(is, in_O);
+      
+      image2d<bool> deja_vu(input.domain());
+      level::fill(deja_vu, false);
 
       typedef p_array<mln_point(I)> arr_t;
       arr_t* A = new arr_t();
@@ -286,8 +174,8 @@ namespace mln
 	N[i] = new arr_t();
       accu::bbox<mln_point(I)> N_box;
 
-      unsigned n_step_1 = 0, n_step_3 = 0, n_comps = 0, n_holes = 0;
-
+      unsigned n_step_1 = 0, n_step_3 = 0;
+      
       // Step 1.
     step_1:
       {
@@ -297,30 +185,31 @@ namespace mln
 	  tag[reg_min(p)] = true; // To be processed.
 	else
 	  goto the_end;
-
+	
 	++n_step_1;
 	x0 = p;
 	g = input(x0);
-	current_cc = new node_type();
       }
 
       // Step 2.
     step_2:
       {
-	in_N += 2;
-	in_R = in_N + 1;
 	// R <- 0 and N <- 0
+	if (N_box.is_valid() != 0)
+	  {
+// 	    level::fill(inplace(is | N_box.to_result()), in_O);
+	    level::fill(inplace(deja_vu | N_box.to_result()), false);
+	  }
 	clear_N(N);
 	N_box.init();
 
 	// A <- { x0 }
 	A->clear();
 	A->append(x0);
-	N_box.take(x0);
-
-	deja_vu(x0) = in_R;
+// 	is(x0) = in_A;
+	deja_vu(x0) = true;
       }
-
+      
       // Step 3.
     step_3:
       {
@@ -330,22 +219,33 @@ namespace mln
 	mln_niter(Nbh) x(nbh, a);
 
 
+//   	my::save(is);
+
+
 	// R <- R U A
 	if (A->npoints() == 0)
 	  goto the_end;
+
+// 	for_all(a)
+// 	{
+// 	  mln_invariant(is(a) == in_A);
+// 	  is(a) = in_R;
+// 	}
 
 	// N <- N U { x in nbh of A and not in R }
 	for_all(a)
 	  for_all(x)
 	  {
-  	    if (deja_vu.has(x) && deja_vu(x) < in_N)
+// 	    if (u.has(x))
+// 	      mln_invariant(is(x) != in_O || deja_vu(x) == false);
+
+  	    //if (u.has(x) && is(x) == in_O)
+  	    if (u.has(x) && !deja_vu(x))
 	      {
-		if (u.has(x))
-		{
-		  N[u(x)]->append(x);
-		  N_box.take(x);
-		}
-		deja_vu(x) = in_N;
+		N[u(x)]->append(x);
+// 		is(x) = in_N;
+		N_box.take(x);
+		deja_vu(x) = true;
 	      }
 	  }
 	// gN = min u(x) for all x in N
@@ -361,27 +261,19 @@ namespace mln
 	if (g < gN)
 	  {
 	    g = gN;
-
-	    ++n_comps;
-	    blob(deja_vu, N, in_N, current_cc);
-	    node_type* parent = current_cc;
-
-    	    n_holes += current_cc->elt().holes.npoints();
-	    save_u(u, deja_vu, N_box, in_R);
-
+	    // FIXME: DO the hole thing.
 	    arr_t* tmp = A;
 	    A = N[g];
 	    N[g] = tmp;
+// 	    mln_piter(arr_t) a(A);
+// 	    for_all(a)
+// 	    {
+// 	      mln_invariant(is(a) == in_N);
+// 	      is(a) = in_A;
+// 	      // N_box is not re-computed so that we save time;
+// 	      // N_box is always growing while looping from step 3.
+// 	    }
 	    N[g]->clear();
-	    mln_piter(arr_t) a(*A);
-	    for_all(a)
-	    {
-	      mln_invariant(deja_vu(a) == in_N);
-	      deja_vu(a) = in_R;
-	      current_cc->elt().points.append(a);
-	      // N_box is not re-computed so that we save time;
-	      // N_box is always growing while looping from step 3.
-	    }
 	    goto step_3;
 	  }
 	// b)
@@ -390,23 +282,38 @@ namespace mln
 	    arr_t* tmp = A;
 	    A = N[g];
 	    N[g] = tmp;
+// 	    mln_piter(arr_t) a(A);
+// 	    for_all(a)
+// 	    {
+// 	      mln_invariant(is(a) == in_N);
+// 	      is(a) = in_A;
+// 	    }
 	    N[g]->clear();
-	    mln_piter(arr_t) a(*A);
-	    for_all(a)
-	    {
-	      mln_invariant(deja_vu(a) == in_N);
-	      deja_vu(a) = in_R;
-	      current_cc->elt().points.append(a);
-	    }
 	    goto step_3;
 	  }
 	// c)
 	else
 	  {
-	    // FIXME: IDEA: this change might be performed while R is constructed(?)
+	    // Here deja_vu is (R U N U A)
+	    // we only want R
+
+	    // yet A is empty (cause included in R)
+	    //   so this test is ok: mln_invariant((is | in_A).npoints() == 0);
+
+	    for (unsigned i = 0; i < 256; ++i)
+	      if (N[i]->npoints())
+		level::fill(inplace(deja_vu | *N[i]), false);
+		
+// 	    mln_invariant(deja_vu == ((pw::value(is) == pw::cst(in_R)) | input.domain()));
+
+// 	    mln_piter(I) r(N_box);
+// 	    for_all(r)
+// 	      if (is(r) == in_R)
+// 		u(r) = g;
+
 	    mln_piter(I) r(N_box);
 	    for_all(r)
-	      if (deja_vu(r) == in_R)
+	      if (deja_vu(r))
 		u(r) = g;
 
 	    goto step_1;
@@ -415,9 +322,7 @@ namespace mln
 
     the_end:
       std::cout << n_step_1 << ' ' << n_step_3 << std::endl;
-      std::cout << "n comps = " << n_comps << "  n holes = " << n_holes << std::endl;
 
-      return *new tree_type(current_cc);
     }
 
   } // end of namespace mln::my
@@ -443,15 +348,3 @@ int main(int argc, char* argv[])
   io::pgm::save(lena, "./out.pgm");
 
 }
-
-// 16891 99970
-// ./a.out ../../img/lena.pgm  1.17s user 0.06s system 93% cpu 1.318 total
-// matt @ ..k/lrde/oln/trunk/milena/sandbox/geraud $ time ./a.out ../../img/lena.pgm                                                                                                                          12:50:12
-// 16891 99970
-// ./a.out ../../img/lena.pgm  1.22s user 0.02s system 87% cpu 1.413 total
-// matt @ ..k/lrde/oln/trunk/milena/sandbox/geraud $ time ./a.out ../../img/lena.pgm                                                                                                                          12:50:16
-// 16891 99970
-// ./a.out ../../img/lena.pgm  1.14s user 0.09s system 92% cpu 1.336 total
-// matt @ ..k/lrde/oln/trunk/milena/sandbox/geraud $ time ./a.out ../../img/lena.pgm                                                                                                                          12:50:18
-// 16891 99970
-// ./a.out ../../img/lena.pgm  1.20s user 0.04s system 92% cpu 1.329 total
