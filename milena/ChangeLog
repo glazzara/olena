@@ -1,3 +1,12 @@
+2008-05-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have tools compile again.
+
+	* tools/seed2tiling.cc: Don't include mln/draw/mesh.hh.
+	* mln/make/voronoi.hh: s/mln::mesh_p/p_graph/.
+	* mln/core/ops.hh: Add a FIXME about a warning on an uninitialized
+	value.
+
 2008-05-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a max tree node counter for Mathhieu.
