@@ -1,3 +1,8 @@
+2008-05-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: make the two level set trees and
+	start to merge it.
+
 2008-05-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add and optimize blob labeling to FLLT.

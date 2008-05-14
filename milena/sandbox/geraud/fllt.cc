@@ -46,6 +46,7 @@
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
+#include <mln/labeling/regional_maxima.hh>
 #include <mln/accu/bbox.hh>
 #include <mln/geom/bbox.hh>
 #include <mln/pw/all.hh>
@@ -55,6 +56,7 @@
 #include <mln/literal/colors.hh>
 
 #include <mln/util/tree.hh>
+#include <mln/util/branch_iter_ind.hh>
 
 #include <sstream>
 
@@ -67,8 +69,15 @@ namespace mln
 
 # define fllt_tree(P, V)  mln::util::tree< fllt_node_elt<P, V> >
 # define fllt_node(P, V)  mln::util::tree_node< fllt_node_elt<P, V> >
+# define fllt_tree_ptr(P, V)  mln::util::tree< fllt_node_elt<P, V>* >
+# define fllt_node_ptr(P, V)  mln::util::tree_node< fllt_node_elt<P, V>* >
 # define fllt_branch(P, V)  mln::util::branch< fllt_node_elt<P, V> >
 # define fllt_branch_iter_ind(P, V)  mln::util::branch_iter_ind< fllt_node_elt<P, V> >
+
+
+    //Fwd declarations.
+    template <typename V> struct lower;
+    template <typename V> struct upper;
 
     template <typename P, typename V>
     struct fllt_node_elt
@@ -80,10 +89,16 @@ namespace mln
       /// if brighter, the node come from the lower level set
       bool brighter;
       unsigned npoints;
+      bool tagged;
+
+      fllt_node_elt() : npoints(0), tagged(false) {}
     };
 
-    template <typename N_t, typename G>
-    void update_gN(const N_t& N, G& gN)
+    template <typename N_t, typename G, typename Set>
+    void update_gN(const N_t& N, G& gN);
+
+    template <typename N_t, typename G, typename V>
+    void update_gN(const N_t& N, G& gN, lower<V>)
     {
       for (unsigned g = 0; g < 256; ++g)
 	if (N[g]->npoints() != 0)
@@ -93,6 +108,21 @@ namespace mln
 	  }
       // if N is empty, gN is the max value.
       gN = 255;
+    }
+
+    template <typename N_t, typename G, typename V>
+    void update_gN(const N_t& N, G& gN, upper<V>)
+    {
+      for (int g = 255; g >= 0; --g)
+      {
+	if (N[g]->npoints() != 0)
+	  {
+	    gN = g;
+	    return;
+	  }
+      }
+      // if N is empty, gN is the min value.
+      gN = 0;
     }
 
 
@@ -142,7 +172,7 @@ namespace mln
 
       image2d<value::int_u8> out = clone(u);
 
-      mln_assertion(R_box.is_valid());
+      mln_assertion(R_box.npoints() > 0);
       mln_piter_(box2d) p(R_box);
       for_all(p)
 	if (is(p) == in_R)
@@ -249,42 +279,136 @@ namespace mln
 //       std::cout << " <<<<<<<exiting blob." << std::endl;
     }
 
-
-    template <typename I, typename Nbh>
-    fllt_tree(mln_point(I), mln_value(I))&
-      fllt(const Image<I>& input_, const Neighborhood<Nbh>& nbh_)
+    template <typename P, typename V>
+    void
+    move_A_to_R(p_array<P>& A,
+		image2d<int>& deja_vu,
+		fllt_node(P, V)* current_cc,
+		image2d< fllt_node(P, V)* >& smallest_shapes,
+		int in_R,
+		int in_N,
+		const V& g)
     {
-      typedef fllt_node(mln_point(I), mln_value(I)) node_type;
-      typedef fllt_tree(mln_point(I), mln_value(I)) tree_type;
+      typedef p_array<P> arr_t;
+
+      mln_piter(arr_t) a(A);
+      for_all(a)
+      {
+	mln_invariant(deja_vu(a) == in_N);
+	mln_invariant(smallest_shapes(a) != current_cc);
+
+	deja_vu(a) = in_R;
+	current_cc->elt().npoints++;
+	if (!smallest_shapes(a))
+	{
+	  smallest_shapes(a) = current_cc;
+	  current_cc->elt().points.append(a);
+	}
+	else
+	  if (!smallest_shapes(a)->parent())
+	    if (smallest_shapes(a)->elt().value == g)
+	    {
+	      mln_piter(arr_t) p(smallest_shapes(a)->elt().points);
+	      // Todo optimization here.
+	      for_all(p)
+		smallest_shapes(p) = 0;
+
+	      delete smallest_shapes(a);
+	      smallest_shapes(a) = current_cc;
+	      current_cc->elt().points.append(a);
+	    }
+	    else
+	      smallest_shapes(a)->set_parent(current_cc);
+	// N_box is not re-computed so that we save time;
+	// N_box is always growing while looping from step 3.
+      }
+    }
+
+    //   LOWER LEVEL SET : region = c4, border = c8
+    template <typename V>
+    struct lower
+    {
+      typedef upper<V> opposite;
+      static bool
+      compare(const V& u, const V& v)
+      {
+	return u < v;
+      }
+
+      template <typename I, typename N, typename L>
+      static mln_ch_value(I, L)
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
+      {
+	return labeling::regional_minima(input, nbh, nlabels);
+      }
+
+      static const bool parent_is_brighter = true;
+
+      static const neighb2d& bdr_nbh() { return c8(); }
+      static const neighb2d& reg_nbh() { return c4(); }
+    };
+
+
+    //   UPPER LEVEL SET : region = c8, border = c4
+    template <typename V>
+    struct upper
+    {
+      typedef lower<V> opposite;
+
+      static bool
+      compare(const V& u, const V& v)
+      { return u > v; }
+
+      template <typename I, typename N, typename L>
+      static mln_ch_value(I, L)
+      regional_extremum(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
+      {	return labeling::regional_maxima(input, nbh, nlabels); }
+
+      static const bool parent_is_brighter = false;
+      static const neighb2d& bdr_nbh() { return c4(); }
+      static const neighb2d& reg_nbh() { return c8(); }
+    };
+
+    template <typename I, typename Set>
+    fllt_tree(mln_point(I), mln_value(I))&
+      level_set(const Image<I>& input_,
+		image2d< fllt_node(mln_point(I), mln_value(I))* >& smallest_shapes)
+    {
+
+      typedef mln_point(I) P;
+      typedef mln_value(I) V;
+      typedef fllt_node(P, V) node_type;
+      typedef fllt_tree(P, V) tree_type;
 
       const I& input = exact(input_);
-      const Nbh& nbh = exact(nbh_);
+
+      mln_assertion(input.domain() == smallest_shapes.domain());
 
       unsigned l = 0, l_max;
-      mln_ch_value(I, unsigned) reg_min = labeling::regional_minima(input, nbh, l_max);
+      mln_ch_value(I, unsigned) reg_min = Set::regional_extremum(input, Set::reg_nbh(), l_max);
       std::vector<bool> tag(l_max + 1, false);
       tag[0] = true;
 
       // Variables.
       I u = mln::clone(input);
-      mln_point(I) x0;
-      mln_value(I) g, gN;
+      P x0;
+      V g, gN;
       mln_fwd_piter(I) p(input.domain());
       p.start();
-
-
+      level::fill(smallest_shapes, 0);
       node_type* current_cc;
+
       unsigned in_N = 1, in_R = 2;
 
       image2d<int> deja_vu(input.domain().to_larger(1));
       level::fill(deja_vu, 0);
 
-      typedef p_array<mln_point(I)> arr_t;
+      typedef p_array<P> arr_t;
       arr_t* A = new arr_t();
       arr_t* N[256];
       for (unsigned i = 0; i < 256; ++i)
 	N[i] = new arr_t();
-      accu::bbox<mln_point(I)> N_box;
+      accu::bbox<P> N_box;
 
       unsigned n_step_1 = 0, n_step_3 = 0, n_comps = 0, n_holes = 0;
 
@@ -302,6 +426,8 @@ namespace mln
 	x0 = p;
 	g = input(x0);
 	current_cc = new node_type();
+	current_cc->elt().value = g;
+
       }
 
       // Step 2.
@@ -319,15 +445,20 @@ namespace mln
 	N_box.take(x0);
 
 	deja_vu(x0) = in_R;
+	smallest_shapes(x0) = current_cc;
+	current_cc->elt().points.append(x0);
+	current_cc->elt().npoints++;
+
       }
 
       // Step 3.
     step_3:
       {
+// 	save_u(u, deja_vu, N_box, in_R);
 	++n_step_3;
 
 	mln_piter(arr_t) a(*A);
-	mln_niter(Nbh) x(nbh, a);
+	mln_niter(neighb2d) x(Set::reg_nbh(), a);
 
 
 	// R <- R U A
@@ -349,7 +480,7 @@ namespace mln
 	      }
 	  }
 	// gN = min u(x) for all x in N
-	update_gN(N, gN);
+	update_gN(N, gN, Set());
 
 	// FIXME: update the number of CC of the border of R
       }
@@ -358,30 +489,24 @@ namespace mln
     step_4:
       {
 	// a)
-	if (g < gN)
+	if (Set::compare(g, gN))
 	  {
 	    g = gN;
 
 	    ++n_comps;
 	    blob(deja_vu, N, in_N, current_cc);
-	    node_type* parent = current_cc;
+	    node_type* child = current_cc;
+	    current_cc = new node_type();
+	    current_cc->elt().value = g;
+	    child->set_parent(current_cc);
 
     	    n_holes += current_cc->elt().holes.npoints();
-	    save_u(u, deja_vu, N_box, in_R);
 
 	    arr_t* tmp = A;
 	    A = N[g];
 	    N[g] = tmp;
 	    N[g]->clear();
-	    mln_piter(arr_t) a(*A);
-	    for_all(a)
-	    {
-	      mln_invariant(deja_vu(a) == in_N);
-	      deja_vu(a) = in_R;
-	      current_cc->elt().points.append(a);
-	      // N_box is not re-computed so that we save time;
-	      // N_box is always growing while looping from step 3.
-	    }
+	    move_A_to_R(*A, deja_vu, current_cc, smallest_shapes, in_R, in_N, g);
 	    goto step_3;
 	  }
 	// b)
@@ -391,13 +516,7 @@ namespace mln
 	    A = N[g];
 	    N[g] = tmp;
 	    N[g]->clear();
-	    mln_piter(arr_t) a(*A);
-	    for_all(a)
-	    {
-	      mln_invariant(deja_vu(a) == in_N);
-	      deja_vu(a) = in_R;
-	      current_cc->elt().points.append(a);
-	    }
+	    move_A_to_R(*A, deja_vu, current_cc, smallest_shapes, in_R, in_N, g);
 	    goto step_3;
 	  }
 	// c)
@@ -420,6 +539,101 @@ namespace mln
       return *new tree_type(current_cc);
     }
 
+
+    template <typename I>
+    fllt_tree_ptr(mln_point(I), mln_value(I))
+      merge_trees(fllt_tree(mln_point(I), mln_value(I))& lower_tree,
+		  fllt_tree(mln_point(I), mln_value(I))& upper_tree,
+		  const image2d<fllt_node(mln_point(I), mln_value(I))*>& low_reg,
+		  const image2d<fllt_node(mln_point(I), mln_value(I))*>& upp_reg,
+		  const Image<I>& input_)
+    {
+
+      const I& input = exact(input_);
+      typedef mln_point(I) P;
+      typedef mln_value(I) V;
+
+      typedef fllt_node_ptr(P, V) node_ptr_type;
+      typedef fllt_tree_ptr(P, V) tree_ptr_type;
+      typedef p_array<P> arr_t;
+
+      fllt_node_ptr(P, V)* root = new node_ptr_type();
+      fllt_node_ptr(P, V)* n = root;
+      root->elt() = &(lower_tree.root()->elt());
+
+//       fllt_branch_iter_ind(P, V) p(lower_tree.main_branch());
+//       for_all(p)
+//       {
+// 	if (p->elt().tagged)
+// 	  continue;
+
+// 	p->elt().tagged = true;
+// 	fllt_node_ptr(P, V)* node = new node_ptr_type();
+// 	node->elt() = &(p->elt());
+
+// 	mln_piter(arr_t) hole(p->elt().holes);
+// 	for_all(hole)
+// 	{
+
+// 	}
+//       }
+
+      return tree_ptr_type(root);
+    }
+
+    template <typename I>
+    fllt_tree(mln_point(I), mln_value(I))
+      fllt(const Image<I>& input_)
+    {
+      typedef mln_point(I) P;
+      typedef mln_value(I) V;
+
+      const I& input = exact(input_);
+
+      fllt_tree(P, V) upper_tree;
+      fllt_tree(P, V) lower_tree;
+      image2d<fllt_node(P, V)*> low_reg(input.domain());
+      image2d<fllt_node(P, V)*> upp_reg(input.domain());
+
+      std::cout << "1/ Compute the lower level set." << std::endl;
+      lower_tree = level_set<I, lower<V> >(input, low_reg);
+//       draw_tree(input, lower_tree);
+
+      std::cout << "2/ Compute the upper level set." << std::endl;
+      upper_tree = level_set<I, upper<V> >(input, upp_reg);
+//       draw_tree(input, upper_tree);
+
+      fllt_tree_ptr(P, V) result_tree = merge_trees(lower_tree, upper_tree, low_reg, upp_reg, input);
+
+//   draw_tree(lena, tree);
+
+//       return fllt_tree(lower_tree);
+    }
+
+    template <typename P, typename V>
+    void
+    draw_tree(const image2d<V>& ima,
+	      fllt_tree(P, V)& tree)
+    {
+      fllt_branch_iter_ind(P, V) p(tree.main_branch());
+      for_all(p)
+      {
+	std::cout << "region mere : " << (*p).parent() << std::endl;
+	std::cout << "               ^" << std::endl;
+	std::cout << "               |" << std::endl;
+	std::cout << "region : " << &*p
+		  << " value = " << (*p).elt().value << std::endl
+		  << " npoints = " << (*p).elt().npoints << std::endl
+		  << " holes = " << (*p).elt().holes << std::endl;
+
+	std::cout << std::endl;
+
+	if ((*p).elt().points.npoints() > 0)
+	  debug::println(ima | (*p).elt().points);
+	std::cout << std::endl;
+      }
+    }
+
   } // end of namespace mln::my
 
 } // end of namespace mln
@@ -427,21 +641,38 @@ namespace mln
 
 int main(int argc, char* argv[])
 {
+  using namespace mln;
+  using namespace mln::my;
+  using value::int_u8;
+
+  typedef fllt_tree(point2d, int_u8) tree_type;
+
   if (argc != 2)
     {
       std::cerr << "usage: " << argv[0] << " filename" << std::endl;
       return 1;
     }
 
-  using namespace mln;
-  using value::int_u8;
-
   image2d<int_u8> lena;
   io::pgm::load(lena, argv[1]);
 
-  my::fllt(lena, c4());
-  io::pgm::save(lena, "./out.pgm");
 
+//   int vs[8][9] = { {0,0,0,0,0,0,0,0,0},
+// 		   {0,0,0,0,0,0,0,0,0},
+// 		   {0,1,1,1,1,1,1,1,0},
+// 		   {0,1,0,0,1,3,3,1,0},
+// 		   {0,1,0,0,1,3,3,1,0},
+// 		   {0,1,0,0,1,3,3,1,0},
+// 		   {0,1,1,1,1,1,1,1,0},
+// 		   {0,0,0,0,0,0,0,0,0} };
+
+//   image2d<int> lena_(make::image2d(vs));
+//   image2d<int_u8> lena(lena_.domain());
+//   level::fill(lena, lena_);
+
+  tree_type tree = my::fllt(lena);
+
+  io::pgm::save(lena, "./out.pgm");
 }
 
 // 16891 99970
