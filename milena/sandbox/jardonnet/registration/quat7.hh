@@ -126,7 +126,7 @@ namespace mln
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
                       const p_array<P>& Ck,
-                      M& map,
+                      const M& map,
                       size_t c_length)
   {
     //mu_Xk = center map(Ck)

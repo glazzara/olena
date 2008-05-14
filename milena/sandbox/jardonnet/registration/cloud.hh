@@ -46,7 +46,7 @@ namespace mln
     template <typename P, typename M>
     float rms(const p_array<P>& a1,
               quat7<P::dim>& qk,
-              M& map,
+              const M& map,
               const size_t length)
     {
       assert(length <= a1.npoints());

@@ -11,105 +11,47 @@
 
 namespace mln
 {
-
-  namespace registration
+ 
+  template <typename P>
+  void shuffle(p_array<P>& a)
   {
-    
-    template <typename P, typename M>
-    void mean_stddev(const p_array<P>& c,
-		     const M&          map,
-		     float& mean,
-		     float& stddev)
-    {
-      //mean + length
-      std::vector<float> length(c.npoints());
-      mean = 0;
-
-      for (size_t i = 0; i < c.npoints(); i++)
-	{
-	  float f = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
-	  length[i] = f;
-	  mean += f;
-	}
-      mean /= c.npoints();
+    for (unsigned int i = 0; i < a.npoints(); i++)
+      {
+        unsigned int r = rand() % a.npoints();
+        P tmp;
+        tmp = a[i];
+        a.hook_()[i] = a[r];
+        a.hook_()[r] = tmp;
+      }
+  }
   
-      //standar variation
-      stddev = 0;
-      for (size_t i = 0; i < c.npoints(); i++)
-	stddev += (length[i] - mean) * (length[i] - mean);
-      stddev /= c.npoints();
-      stddev = math::sqrt(stddev);
-    }
-
-
-    //final qk : only use point less than nstddev (2*stddev);
-    template <typename P, typename M>
-    quat7<P::dim>
-    final_qk(const p_array<P>& c,
-	     const M&    map,
-	     float       nstddev)
+  template <unsigned int n, typename T>
+  struct buffer
+  {
+    buffer()
+      : setted(0)
     {
-      p_array<P> newc;
-      algebra::vec<3,float> mu_newc(literal::zero);
-
-      for (size_t i = 0; i < c.npoints(); ++i)
-	{
-	  algebra::vec<3,float> xki = map(c[i]);
-	  algebra::vec<3,float> ci = c[i];
-
-	  if (norm::l2(ci - xki) > nstddev)
-	    {
-	      newc.append(c[i]);
-	      mu_newc += ci;
-	    }
-	}
-      mu_newc /= newc.npoints();
-
-      quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.npoints());
-
-      return qk;
-    }
-
-    //final > nstddev for translation; < nstddev for rotation
-    template <typename P, typename M>
-    quat7<P::dim>
-    final_qk2(const p_array<P>& c,
-	      const M&    map,
-	      float       nstddev)
-    {
-      //mu_Xk = center map(Ck)
-      algebra::vec<3,float> mu_Xk(literal::zero);
-      algebra::vec<3,float> mu_C(literal::zero);
-      
-      float nb_point = 0;
-      for (size_t i = 0; i < c.npoints(); ++i)
-	{
-	  algebra::vec<3,float> xki = map(c[i]);
-	  algebra::vec<3,float> ci = c[i];
-	  
-	  if (norm::l2(ci - xki) > nstddev)
-	    {
-	      mu_C += ci;
-	      mu_Xk += xki;
-	      nb_point++;
-	    }
-	}
-      mu_C  /= nb_point;
-      mu_Xk /= nb_point;
-
-      // qT
-      const algebra::vec<3,float> qT = mu_C - mu_Xk;
-
-      // qR
-      quat7<P::dim> qk = final_qk(c, map, nstddev);
-      qk._qT = qT;
-
-      return qk;
     }
     
-    
-  } // end of namespace mln::registration
+    void add(T e)
+    {
+      for (int i = 0; i < n-1; i++)
+        buf[i+1] = buf[i];
+      buf[0] = e;
 
+      setted++;
+    }
+    
+    T& operator[](unsigned int i)
+    {
+      assert(i < n && i < setted);
+      return buf[i];
+    }
+
+  private:
+    T buf[n];
+    unsigned int setted;
+  };
   
   //FIXME: groe length
   template <typename P>
@@ -127,7 +69,7 @@ namespace mln
     
     result
     //inline
-    operator () (const P& Ck) const
+    operator () (const input& Ck) const
     {
       
 #ifndef NDEBUG
@@ -163,20 +105,20 @@ namespace mln
 #endif 
   };
   
-
+  
   // FIXME: Should be a morpher ?
   // we could acces domain of a lazy map, iterator etc...
   template < typename F>
   struct lazy_image
   { 
     // Fun is potentially an image.
-    lazy_image(F& fun)
+    lazy_image(const F& fun)
       : value(fun.domain()), is_known(fun.domain()), fun(fun)
     {
     }
 
     // FIXME: hack, remove this constructor
-    lazy_image(F& fun, int nrows, int ncols, int nslis)
+    lazy_image(const F& fun, int nrows, int ncols, int nslis)
       : value(nrows, ncols,1), is_known(nrows,ncols,1), fun(fun)
     { }
 
@@ -193,11 +135,11 @@ namespace mln
       is_known(p) = true;
       return value(p);
     }
-
+    
     //FIXME: 3d -> //mln_dim(ml_input(input))
     mutable image3d<mln_result(F)> value;
     mutable image3d<bool>          is_known;
-    F&                             fun;
+    const F&                       fun;
   };
 
   

@@ -19,6 +19,9 @@ icpD: icp.cc +depend
 icp: icp.cc +depend icp.o
 	g++ icp.o -I../../.. -O3 -DNDEBUG -o 'icp'
 
+icp_ref:
+	g++ icp_ref.cc -I../../.. -g -o 'icp_ref'
+
 icp.o:
 	g++ -c icp.cc -I../../.. -O3 -DNDEBUG 
 
@@ -30,6 +33,7 @@ clean:
 	rm -f sub gsub gau icpD icp
 	rm -f log.dat registred.pbm
 	rm -f i_*
+	rm -f tmp.ppm registred.ppm semantic.cache
 
 .PHONY: check bench icpD
 

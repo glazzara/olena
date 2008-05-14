@@ -100,7 +100,7 @@ namespace mln
                   << c_length << " points" << std::endl;
         std::cout << "k\t\te_k >=\td_k\tdqk" << std::endl;
 #endif
-        
+
         quat7<P::dim> buf_qk[4];
         float         buf_dk[3];
         
@@ -131,7 +131,6 @@ namespace mln
           buf_qk[1] = buf_qk[0];
           buf_qk[0] = qk;
 
-          
           //update qk
           /*
           if (k > 3)
@@ -168,7 +167,7 @@ namespace mln
           pts += c_length;
 #endif
           k++;
-        } while (/*k < 3 ||*/ (qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
       }
@@ -180,7 +179,7 @@ namespace mln
     template <typename P, typename M>
     inline
     quat7<P::dim>
-    icp(p_array<P> cloud, //here reference implies low efficiency (FIXME:check again)
+    icp(p_array<P> cloud, // FIXME : is almost const (shuffled)
         const M& map,
         const float q,
         const unsigned nb_it,
@@ -191,20 +190,10 @@ namespace mln
       mln_precondition(P::dim == 3);
       mln_precondition(cloud.npoints() != 0);
 
-      // Shuffle cloud
-      for (size_t i = 0; i < cloud.npoints(); i++)
-        {
-          size_t r = rand() % cloud.npoints();
-          P tmp;
-          tmp = cloud[i];
-          cloud.hook_()[i] = cloud[r];
-          cloud.hook_()[r] = tmp;
-        }
-      
-      //init rigid transform qk
+      shuffle(cloud);
+     
+      //init rigid transform qk 
       quat7<P::dim> qk;
-
-
 
 #ifndef NDEBUG       // FIXME: theo
       image2d<value::rgb8> tmp(500,800);

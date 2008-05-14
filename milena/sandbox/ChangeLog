@@ -1,3 +1,19 @@
+2008-05-14  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: icp_ref + cleanup.
+
+	icp_ref uses no rounding.
+
+	* jardonnet/test/icp_ref.cc: New.
+	* jardonnet/registration/icp_ref.hh: New.
+
+	* jardonnet/test/icp.cc: clean up.
+	* jardonnet/test/Makefile: Update.
+	* jardonnet/registration/final_qk.hh: Put final_qk functions in a
+	  dedicated file.
+	* jardonnet/registration/tools.hh: Add buffer and shuffle.
+	* jardonnet/registration/icp.hh: Minor fix.
+
 2008-05-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* geraud/fllt.cc: make the two level set trees and
