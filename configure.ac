@@ -16,7 +16,7 @@ AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
 # 1.9.4 because of changelog vs. ChangeLog on Darwin.
-AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 -Wall])
+AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 nostdinc -Wall])
 
 
 ## --------------------- ##

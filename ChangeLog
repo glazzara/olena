@@ -1,3 +1,11 @@
+2008-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Pass option nostdinc to Automake.
+
+	* configure.ac: Do it, to avoid inclusion problems in test
+	directories hosting binaries with standard header names (e.g.,
+	``set'' or ``list'').
+
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update the list of Makefiles to be configured.
