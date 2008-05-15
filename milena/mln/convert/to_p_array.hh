@@ -45,7 +45,7 @@ namespace mln
 
     /// Convert a point set \p pset into a p_array (point set vector).
     template <typename S>
-    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset);
+    p_array<mln_psite(S)> to_p_array(const Site_Set<S>& pset);
 
 
     /// Convert a window \p win centered at point \p p into a p_array
@@ -60,7 +60,7 @@ namespace mln
 
     template <typename S>
     inline
-    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset_)
+    p_array<mln_psite(S)> to_p_array(const Site_Set<S>& pset_)
     {
       const S& pset = exact(pset_);
       p_array<mln_psite(S)> v;

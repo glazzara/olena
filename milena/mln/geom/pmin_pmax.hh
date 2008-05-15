@@ -51,14 +51,14 @@ namespace mln
     /// Compute the minimum and maximum points of point set \p s.
     template <typename S>
     std::pair<mln_point(S), mln_point(S)>
-    pmin_pmax(const Point_Set<S>& s);
+    pmin_pmax(const Site_Set<S>& s);
 
 
     /// Compute the minimum and maximum points, \p pmin and \p max,
     /// of point set \p s.
     template <typename S>
     void
-    pmin_pmax(const Point_Set<S>& s,  mln_point(S)& pmin, mln_point(S)& pmax);
+    pmin_pmax(const Site_Set<S>& s,  mln_point(S)& pmin, mln_point(S)& pmax);
 
 
     /// Compute the minimum and maximum points when browsing with
@@ -125,7 +125,7 @@ namespace mln
       template <typename S>
       inline
       void
-      pmin_pmax_(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+      pmin_pmax_(const Site_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
       {
 	mln_piter(S) it(exact(s));
 	pmin_pmax(it, pmin, pmax);
@@ -148,7 +148,7 @@ namespace mln
     template <typename S>
     inline
     void
-    pmin_pmax(const Point_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+    pmin_pmax(const Site_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
     {
       mln_precondition(exact(s).npoints() != 0);
       impl::pmin_pmax_(exact(s), pmin, pmax);
@@ -157,7 +157,7 @@ namespace mln
     template <typename S>
     inline
     std::pair<mln_point(S), mln_point(S)>
-    pmin_pmax(const Point_Set<S>& s)
+    pmin_pmax(const Site_Set<S>& s)
     {
       mln_precondition(exact(s).npoints() != 0);
       typedef mln_point(S) P;

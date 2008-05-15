@@ -56,11 +56,11 @@ namespace mln
 
     /*! \brief Set theoretic symmetrical difference of \p lhs and \p rhs.
      *
-     * \relates mln::Point_Set
+     * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
     p_set<mln_point(Wl)>
-    sym_diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
+    sym_diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -86,7 +86,7 @@ namespace mln
     template <typename Wl, typename Wr>
     inline
     p_set<mln_point(Wl)>
-    sym_diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    sym_diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
       trace::entering("set::sym_diff");
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();

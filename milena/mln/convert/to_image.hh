@@ -106,7 +106,7 @@ namespace mln
     /// Convert a point set \p pset into a binary image. Width of the
     /// converted image will be pset.bbox + 2 * \p border.
     template <typename S>
-    mln_image_from(S, bool) to_image(const Point_Set<S>& pset, unsigned border = 1);
+    mln_image_from(S, bool) to_image(const Site_Set<S>& pset, unsigned border = 1);
 
     /// Convert a window \p win into a binary image.
     template <typename W>
@@ -130,7 +130,7 @@ namespace mln
 
     template <typename S>
     inline
-    mln_image_from(S, bool) to_image(const Point_Set<S>& pset_, unsigned border)
+    mln_image_from(S, bool) to_image(const Site_Set<S>& pset_, unsigned border)
     {
       const S& pset = exact(pset_);
       mln_image_from(S, bool) ima(pset.bbox().to_larger(border));

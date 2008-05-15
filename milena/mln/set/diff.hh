@@ -33,7 +33,7 @@
  * \brief Set theoretic difference (non-symmetrical) of a couple of
  * sets.
  *
- * \todo Add a diff(Point_Set& in_place, Function_p2b).
+ * \todo Add a diff(Site_Set& in_place, Function_p2b).
  */
 
 # include <mln/convert/to_std_set.hh>
@@ -59,11 +59,11 @@ namespace mln
 
     /*! \brief Set theoretic difference of \p lhs and \p rhs.
      *
-     * \relates mln::Point_Set
+     * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
     p_set<mln_point(Wl)>
-    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
+    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -90,7 +90,7 @@ namespace mln
     template <typename Wl, typename Wr>
     inline
     p_set<mln_point(Wl)>
-    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
+    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
       trace::entering("set::diff");
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();

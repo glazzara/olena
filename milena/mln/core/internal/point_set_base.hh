@@ -47,7 +47,7 @@ namespace mln
      * \p P is a point site type.
      */
     template <typename P, typename E>
-    struct point_set_base_ : public Point_Set<E>
+    struct point_set_base_ : public Site_Set<E>
     {
       /// Point_Site associated type.
       typedef P psite;

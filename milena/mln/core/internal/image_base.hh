@@ -97,7 +97,7 @@ namespace mln
       public image_checked_<E>
 
     {
-      /// Point_Set associated type.
+      /// Site_Set associated type.
       typedef S pset;
 
 

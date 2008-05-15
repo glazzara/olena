@@ -74,12 +74,12 @@ namespace mln
     /// Insert a point \p p.
     p_image2d<P>& insert(const P p);
     template <typename S>
-    p_image2d<P>& insert(const Point_Set<S>& set);
+    p_image2d<P>& insert(const Site_Set<S>& set);
 
     /// Remove a point \p p.
     p_image2d<P>& remove(const P p);
     template <typename S>
-    p_image2d<P>& remove(const Point_Set<S>& set);
+    p_image2d<P>& remove(const Site_Set<S>& set);
 
     /// Give the number of points.
     unsigned npoints() const;
@@ -144,7 +144,7 @@ namespace mln
   template <typename P>
   template <typename S>
   p_image2d<P>&
-  p_image2d<P>::insert(const Point_Set<S>& set_)
+  p_image2d<P>::insert(const Site_Set<S>& set_)
   {
     const S& set = exact(set_);
     mln_fwd_piter(S) p(set);
@@ -178,7 +178,7 @@ namespace mln
   template <typename P>
   template <typename S>
   p_image2d<P>&
-  p_image2d<P>::remove(const Point_Set<S>& set_)
+  p_image2d<P>::remove(const Site_Set<S>& set_)
   {
     const S& set = exact(set_);
     if (this->is_empty())

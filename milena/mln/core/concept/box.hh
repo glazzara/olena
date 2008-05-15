@@ -47,7 +47,7 @@ namespace mln
    * contents.
    */
   template <typename E>
-  struct Box : public Point_Set<E>
+  struct Box : public Site_Set<E>
   {
     /*
       const point& pmin() const;
@@ -65,7 +65,7 @@ namespace mln
     /*! \brief Give the bounding box of this point set.
      *
      * Return the bounding box of this point set, so that is itself.
-     * This method is declared by the mln::Point_Set concept.
+     * This method is declared by the mln::Site_Set concept.
      *
      * \warning This method is final for all box classes.
      */
@@ -74,7 +74,7 @@ namespace mln
     /*! \brief Give the number of points of this box.
      *
      * Return the number of points of this box.  This method is
-     * declared by the mln::Point_Set concept.
+     * declared by the mln::Site_Set concept.
      *
      * \warning This method is final for all box classes.
      */

@@ -52,7 +52,7 @@ namespace mln
 
     /// Convert a point set \p pset into a std::set of points.
     template <typename W>
-    std::set<mln_point(W)> to_std_set(const Point_Set<W>& setp);
+    std::set<mln_point(W)> to_std_set(const Site_Set<W>& setp);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -71,7 +71,7 @@ namespace mln
 
     template <typename W>
     inline
-    std::set<mln_point(W)> to_std_set(const Point_Set<W>& setp)
+    std::set<mln_point(W)> to_std_set(const Site_Set<W>& setp)
     {
       typedef mln_point(W) P;
       std::set<P> s;

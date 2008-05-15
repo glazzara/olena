@@ -30,7 +30,7 @@
 
 /*! \file mln/core/concept/point_set.hh
  *
- * \brief Definition of the concept of mln::Point_Set.
+ * \brief Definition of the concept of mln::Site_Set.
  *
  * \todo Think about adding an 'insert' method (not so easy because of
  * pset_if...)
@@ -46,12 +46,12 @@ namespace mln
 {
 
   // Fwd decl.
-  template <typename E> struct Point_Set;
+  template <typename E> struct Site_Set;
 
 
-  /// Point_Set category flag type.
+  /// Site_Set category flag type.
   template <>
-  struct Point_Set<void>
+  struct Site_Set<void>
   {
     typedef Object<void> super;
   };
@@ -59,13 +59,13 @@ namespace mln
 
   /*! \brief Base class for implementation classes of point sets.
    *
-   * \see mln::doc::Point_Set for a complete documentation of this
+   * \see mln::doc::Site_Set for a complete documentation of this
    * class contents.
    */
   template <typename E>
-  struct Point_Set : public Object<E>
+  struct Site_Set : public Object<E>
   {
-    typedef Point_Set<void> category;
+    typedef Site_Set<void> category;
 
     /*
       typedef mesh;
@@ -84,7 +84,7 @@ namespace mln
      */
 
   protected:
-    Point_Set();
+    Site_Set();
   };
 
 
@@ -93,10 +93,10 @@ namespace mln
    * \param[in] lhs A point set.
    * \param[in] rhs Another point set.
    *
-   * \relates mln::Point_Set
+   * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator==(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+  bool operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -105,10 +105,10 @@ namespace mln
    * \param[in] lhs A point set (included?).
    * \param[in] rhs Another point set (includer?).
    *
-   * \relates mln::Point_Set
+   * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator<=(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+  bool operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -118,10 +118,10 @@ namespace mln
    * \param[in] lhs A point set (strictly included?).
    * \param[in] rhs Another point set (includer?).
    *
-   * \relates mln::Point_Set
+   * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator<(const Point_Set<Sl>& lhs, const Point_Set<Sr>& rhs);
+  bool operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -133,10 +133,10 @@ namespace mln
    *
    * \return The modified output stream \p ostr.
    *
-   * \relates mln::Point_Set
+   * \relates mln::Site_Set
    */
   template <typename S>
-  std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset);
+  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& pset);
 
 
 
@@ -147,7 +147,7 @@ namespace mln
 
   template <typename E>
   inline
-  Point_Set<E>::Point_Set()
+  Site_Set<E>::Site_Set()
   {
     typedef mln_mesh(E) mesh;
 
@@ -172,7 +172,7 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  bool operator==(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  bool operator==(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
@@ -199,7 +199,7 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  bool operator<=(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  bool operator<=(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
@@ -221,7 +221,7 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  bool operator<(const Point_Set<Sl>& lhs_, const Point_Set<Sr>& rhs_)
+  bool operator<(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
@@ -232,7 +232,7 @@ namespace mln
 
   template <typename S>
   inline
-  std::ostream& operator<<(std::ostream& ostr, const Point_Set<S>& pset_)
+  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& pset_)
   {
     const S& pset = exact(pset_);
     ostr << '{';

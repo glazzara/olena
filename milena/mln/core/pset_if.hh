@@ -55,7 +55,7 @@ namespace mln
    */
   template <typename S, typename F>
   pset_if<S, F>
-  operator | (const Point_Set<S>& pset, const Function_p2b<F>& f);
+  operator | (const Site_Set<S>& pset, const Function_p2b<F>& f);
 
 
 
@@ -119,7 +119,7 @@ namespace mln
   template <typename S, typename F>
   inline
   pset_if<S, F>
-  operator | (const Point_Set<S>& pset, const Function_p2b<F>& f)
+  operator | (const Site_Set<S>& pset, const Function_p2b<F>& f)
   {
     pset_if<S, F> tmp(exact(pset), exact(f));
     return tmp;

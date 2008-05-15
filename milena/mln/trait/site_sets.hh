@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,55 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/point_set.hh
- * \brief This file documents the concept of mln::Site_Set.
+#ifndef MLN_TRAIT_SITE_SETS_HH
+# define MLN_TRAIT_SITE_SETS_HH
+
+/*! \file mln/trait/site_sets.hh
+ *
+ * \brief Some base trait types for site sets.
  */
+
+# include <mln/trait/undef.hh>
+# include <mln/trait/site_set/props.hh>
+
+
+# define mln_trait_site_set_nsites(S)   typename mln::trait::site_set_< S >::nsites
+# define mln_trait_site_set_bbox(S)     typename mln::trait::site_set_< S >::bbox
+# define mln_trait_site_set_contents(S) typename mln::trait::site_set_< S >::contents
+# define mln_trait_site_set_arity(S)    typename mln::trait::site_set_< S >::arity
+
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace trait
   {
 
-    /*! \brief Documentation class for mln::Site_Set.
-     *
-     * \see mln::Site_Set
-     */
-    template <typename E>
-    struct Site_Set : public Object<E>
+    template <typename I>
+    struct undefined_site_set_
     {
-      /*! \brief Point associated type.
-       */
-      typedef void point;
-
-      /*! \brief Point_Site associated type.
-       */
-      typedef void psite;
-
-      /*! \brief Forward Point_Iterator associated type.
-       */
-      typedef void fwd_piter;
-
-      /*! \brief Backward Point_Iterator associated type.
-       */
-      typedef void bkd_piter;
-
-      /*! \brief Test if \p p belongs to this point set. 
-       *
-       * \param[in] p A point site.
-       * \return True if \p p is an element of the point set.
-       */
-      bool has(const psite& p) const;
-
-      /*! \brief Give the bounding box of this point set.
-       */
-      const box_<point>& bbox() const;
-
-      /*! \brief Give the number of points of this point set.
-       */
-      std::size_t npoints() const;
+      typedef undef nsites;   // Known or unknown.
+      typedef undef bbox;     // Unknown, lazy, or straight.
+      typedef undef contents; // Fixed, growing, or free.
+      typedef undef arity;    // Unique or multiple.
     };
 
-  } // end of namespace mln::doc
+    template <typename I>
+    struct site_set_ : undefined_site_set_<I>
+    {
+    };
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
+
+
+# include <mln/trait/site_set/print.hh>
+
+
+#endif // ! MLN_TRAIT_SITE_SETS_HH

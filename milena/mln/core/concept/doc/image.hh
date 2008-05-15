@@ -117,7 +117,7 @@ namespace mln
 
 
       /*! \brief Point set associated type.
-       * \invariant This type has to derive from mln::Point_Set.
+       * \invariant This type has to derive from mln::Site_Set.
        */
       typedef void pset;
 

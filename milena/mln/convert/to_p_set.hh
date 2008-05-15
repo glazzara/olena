@@ -69,7 +69,7 @@ namespace mln
 
     /// Convert any point set \p ps into a 'mln::p_set' point set.
     template <typename S>
-    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps);
+    p_set<mln_psite(S)> to_p_set(const Site_Set<S>& ps);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -135,7 +135,7 @@ namespace mln
 
     template <typename S>
     inline
-    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps_)
+    p_set<mln_psite(S)> to_p_set(const Site_Set<S>& ps_)
     {
       const S& ps = exact(ps_);
       p_set<mln_psite(S)> tmp;

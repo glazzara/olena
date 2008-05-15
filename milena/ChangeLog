@@ -1,3 +1,92 @@
+2008-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Rename Point_Set as Site_Set.
+
+	* .,
+	* tools,
+	* tests,
+	* tests/trait,
+	* tests/trait/image,
+	* tests/trait/value,
+	* tests/trait/op,
+	* tests/subsampling,
+	* tests/debug,
+	* tests/histo,
+	* tests/core,
+	* tests/literal,
+	* tests/neighb,
+	* tests/draw,
+	* tests/metal,
+	* tests/metal/math,
+	* tests/level,
+	* tests/level/approx,
+	* tests/level/naive,
+	* tests/arith,
+	* tests/linear,
+	* tests/linear/local,
+	* tests/accu,
+	* tests/value,
+	* tests/value/builtin,
+	* tests/border,
+	* tests/test,
+	* tests/convert,
+	* tests/estim,
+	* tests/pw,
+	* tests/geom,
+	* tests/fun/x2x,
+	* tests/fun/vv2v,
+	* tests/fun/v2v,
+	* tests/binarization,
+	* tests/set,
+	* tests/win,
+	* tests/algebra,
+	* tests/morpho,
+	* tests/display,
+	* tests/io/pgm,
+	* tests/io/fits,
+	* tests/io/ppm,
+	* tests/io/pbm,
+	* tests/logical,
+	* tests/canvas,
+	* tests/canvas/browsing,
+	* tests/norm,
+	* tests/util,
+	* tests/labeling,
+	* mln/core/internal/point_set_base.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/p_array_piter.hh,
+	* mln/core/p_image2d.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/point_set.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/box.hh: Ignore .deps.
+
+	* mln/core/concept/doc/point_set.hh,
+	* mln/neighb/image.hh,
+	* mln/value/stack.hh,
+	* mln/test/predicate.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_std_set.hh,
+	* mln/convert/to_window.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_p_array.hh,
+	* mln/pw/image.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/bbox.hh,
+	* mln/set/inter.hh,
+	* mln/set/is_subset_of.hh,
+	* mln/set/diff.hh,
+	* mln/set/uni.hh,
+	* mln/set/sym_diff.hh (Point_Set): Rename as...
+	(Site_Set): ...this.
+
+	* mln/trait/site_set: New directory.
+	* mln/trait/site_set/props.hh: New.
+	* mln/trait/site_set/print.hh: New.
+	* mln/trait/site_sets.hh: New.
+
 2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	value_enc_image: Add a value encode procedure.

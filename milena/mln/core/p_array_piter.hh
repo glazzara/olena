@@ -55,7 +55,7 @@ namespace mln
 
     /// Coordinate associated type.
     template <typename S>
-    p_array_fwd_piter_(const Point_Set<S>& s);
+    p_array_fwd_piter_(const Site_Set<S>& s);
 
     /// Reference of the corresponding psite.
     const psite& to_psite() const;
@@ -108,7 +108,7 @@ namespace mln
 
     /// Coordinate associated type.
     template <typename S>
-    p_array_bkd_piter_(const Point_Set<S>& s);
+    p_array_bkd_piter_(const Site_Set<S>& s);
 
     /// Reference of the corresponding psite.
     const psite& to_psite() const;
@@ -157,7 +157,7 @@ namespace mln
   template <typename P>
   template <typename S>
   inline
-  p_array_fwd_piter_<P>::p_array_fwd_piter_(const Point_Set<S>& s)
+  p_array_fwd_piter_<P>::p_array_fwd_piter_(const Site_Set<S>& s)
     : vect_(exact(s).vect())
   {
     invalidate();
@@ -241,7 +241,7 @@ namespace mln
   template <typename P>
   template <typename S>
   inline
-  p_array_bkd_piter_<P>::p_array_bkd_piter_(const Point_Set<S>& s)
+  p_array_bkd_piter_<P>::p_array_bkd_piter_(const Site_Set<S>& s)
     : vect_(exact(s).vect())
   {
     invalidate();

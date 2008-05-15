@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,55 +25,69 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/point_set.hh
- * \brief This file documents the concept of mln::Site_Set.
+#ifndef MLN_TRAIT_SITE_SET_PRINT_HH
+# define MLN_TRAIT_SITE_SET_PRINT_HH
+
+/*! \file mln/trait/site_set/print.hh
+ *
+ * \brief Print the collection of traits for a site set type.
  */
+
+# include <iostream>
+# include <mln/trait/site_sets.hh>
+# include <mln/metal/is_a.hh>
+
+
 
 namespace mln
 {
 
-  namespace doc
+  // Fwd decl.
+  template <typename E> struct Site_Set;
+
+
+  namespace trait
   {
 
-    /*! \brief Documentation class for mln::Site_Set.
-     *
-     * \see mln::Site_Set
-     */
-    template <typename E>
-    struct Site_Set : public Object<E>
+    namespace site_set
     {
-      /*! \brief Point associated type.
-       */
-      typedef void point;
 
-      /*! \brief Point_Site associated type.
-       */
-      typedef void psite;
+      template <typename S>
+      void print(std::ostream& ostr);
 
-      /*! \brief Forward Point_Iterator associated type.
-       */
-      typedef void fwd_piter;
+      template <typename S>
+      void print(const Site_Set<S>& ima, std::ostream& ostr);
 
-      /*! \brief Backward Point_Iterator associated type.
-       */
-      typedef void bkd_piter;
 
-      /*! \brief Test if \p p belongs to this point set. 
-       *
-       * \param[in] p A point site.
-       * \return True if \p p is an element of the point set.
-       */
-      bool has(const psite& p) const;
+# ifndef MLN_INCLUDE_ONLY
 
-      /*! \brief Give the bounding box of this point set.
-       */
-      const box_<point>& bbox() const;
+      template <typename S>
+      inline
+      void print(std::ostream& ostr)
+      {
+	mlc_is_a(S, Site_Set)::check();
+	typedef mln::trait::site_set_<S> the;
+	ostr << "{ "
+	     << typename the::nsites()  .name() << ", "
+	     << typename the::bbox()    .name() << ", "
+	     << typename the::contents().name() << ", "
+	     << typename the::arity()   .name() << " }" << std::endl;
+      }
 
-      /*! \brief Give the number of points of this point set.
-       */
-      std::size_t npoints() const;
-    };
+      template <typename S>
+      inline
+      void print(const Site_Set<S>&, std::ostream& ostr)
+      {
+	print<S>(ostr);
+      }
 
-  } // end of namespace mln::doc
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::trait::site_set
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
+
+
+#endif // ! MLN_TRAIT_SITE_SET_PRINT_HH

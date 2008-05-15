@@ -42,17 +42,17 @@ namespace mln
   {
     /*! \brief Test if a point set is a subset of another point set.
      *
-     * \relates mln::Point_Set
+     * \relates mln::Site_Set
      */
     template <typename Pl, typename Pr>
     bool
-    is_subset_of(const Point_Set<Pl>& lhs, const Point_Set<Pr>& rhs);
+    is_subset_of(const Site_Set<Pl>& lhs, const Site_Set<Pr>& rhs);
 
 # ifndef MLN_INCLUDE_ONL
 
     template <typename Pl, typename Pr>
     bool
-    is_subset_of(const Point_Set<Pl>& lhs_, const Point_Set<Pr>& rhs_)
+    is_subset_of(const Site_Set<Pl>& lhs_, const Site_Set<Pr>& rhs_)
     {
       trace::entering("set::is_subset_of");
       Pl lhs = exact(lhs_);

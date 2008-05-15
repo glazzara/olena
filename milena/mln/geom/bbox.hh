@@ -63,7 +63,7 @@ namespace mln
 
     /// Compute the precise bounding box of a point set \p pset.
     template <typename S>
-    box_<mln_point(S)> bbox(const Point_Set<S>& pset);
+    box_<mln_point(S)> bbox(const Site_Set<S>& pset);
 
 
     /// Compute the precise bounding box of an image \p ima.
@@ -102,7 +102,7 @@ namespace mln
 
       template <typename S>
       inline
-      box_<mln_point(S)> bbox_(const Point_Set<S>& pset_)
+      box_<mln_point(S)> bbox_(const Site_Set<S>& pset_)
       {
 	const S& pset = exact(pset_);
 	typedef mln_point(S) P;
@@ -122,7 +122,7 @@ namespace mln
 
     template <typename S>
     inline
-    box_<mln_point(S)> bbox(const Point_Set<S>& pset)
+    box_<mln_point(S)> bbox(const Site_Set<S>& pset)
     {
       mln_precondition(exact(pset).npoints() != 0);
       box_<mln_point(S)> tmp = impl::bbox_(exact(pset));

@@ -52,7 +52,7 @@ namespace mln
    */
   template <typename F, typename S>
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps);
+  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps);
 
 
 
@@ -128,7 +128,7 @@ namespace mln
       image();
 
       /// Constructor.
-      image(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      image(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
 
       /// Test if a pixel value is accessible at \p p.
@@ -158,7 +158,7 @@ namespace mln
   template <typename F, typename S>
   inline
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
+  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps)
   {
     pw::image<F,S> tmp(f, ps);
     return tmp;
@@ -192,7 +192,7 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
+    image<F,S>::image(const Function_p2v<F>& f, const Site_Set<S>& ps)
     {
       this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
     }
