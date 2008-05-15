@@ -1,3 +1,7 @@
+2008-05-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: Merge upper and lower level set in fllt.
+
 2008-05-14  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: icp_ref + cleanup.
