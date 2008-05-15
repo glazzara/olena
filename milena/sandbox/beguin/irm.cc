@@ -1,7 +1,7 @@
-
 #include <iterator>
 #include <iostream>
 #include <algorithm>
+#include <map>
 
 #include <mln/core/image2d.hh>
 
@@ -31,6 +31,8 @@
 
 #include <mln/debug/println.hh>
 
+//#include <segm_to_pregraph.hh>
+#include <fusion_graph.hh>
 
 mln::value::int_u8 foo(unsigned u)
 {
@@ -43,73 +45,38 @@ mln::value::int_u8 foo(unsigned u)
 namespace mln
 
 {
-//  using value::int_u8;
-  template <typename N>
-  void segm_to_pregraph(const image2d<unsigned>& lbl, 
-                        const N& nbh, 
-                        int nbasins)
+  
+  template <typename I>
+  void region_10(const I& lbl)
   {
-    mln_piter(image2d<unsigned>) p(lbl.domain());
-    mln_niter(N) n(nbh, p);
-    
-//    typedef metal::vec<3,mln_value(I)> V;
-    
-//    typedef Image<V> J;
-    
-    image2d<unsigned> retour;
-    initialize(retour, lbl);
-    
-    int n_seuil = ((nbasins/10)+1)*10;
-    
-    std::cout << "Nbasins = " << nbasins << std::endl
-              << "n_seuil = " << n_seuil << std::endl;
-     
+    mln_piter(I) p(lbl.domain());
+
+    I carte;
+    initialize(carte, lbl);
+
     for_all(p)
     {
-      if(lbl(p) == 0)
+      if (lbl(p) == 10)
       {
-        std::set<unsigned> s;  //Set of neighbouring values of p
-        for_all(n) if (lbl.has(n))
-        {
-          if (lbl(n) == 0)
-            continue;
-          s.insert(lbl(n));
-        }
-        if (s.size() < 2 )
-          std::cout << "#" << std::endl;
-        if (s.size() == 2 ) 
-        {
-        	std::set<unsigned>::const_iterator l1, l2;
-          l1 = s.begin();
-          l2 = s.begin();
-          l2++;
-          
-          retour(p) = *l1 * n_seuil + *l2;
-
-        }
-        if (s.size() > 2 )
-          retour(p) = 0;        
+        carte(p) = 0;
       }
       else
       {
-       // retour(p) = make::vec(0,0,lbl(p));
-        retour(p) = lbl(p);
+        carte(p) = 255;
       }
-    }  
-    //io::pgm::save(retour, "tmp_pregraphe.pgm");
-    io::pgm::save( level::transform(retour, convert::to_fun(foo)),
-		 "tmp_pregraph.pgm" );
-    //return retour;
-  }               
-                  
-   
+    }
+
+    io::pgm::save(level::transform(carte, convert::to_fun(foo)),
+                  "tmp_region_10.pgm");
+
+  }
   
   template <typename I>
   void puzzle(const I& irm,
 	    const image2d<unsigned>& lbl,
 	    unsigned nlabels)
   {
-    {
+//  {
 //     accu::mean_<unsigned> m;
 
 //     mln_piter(I) p(irm.domain());
@@ -120,22 +87,22 @@ namespace mln
 //     level::take(irm | (pw::value(lbl) == pw::cst(82)), m);
 
 //     std::cout << "reg 82 has mean = " << m << std::endl;
-    }
+//  }
 
     std::vector< accu::mean_<unsigned> > m(nlabels + 1);
     mln_piter(I) p(irm.domain());
     for_all(p)
       m[lbl(p)].take(irm(p));
-    
+
     I carte;
     initialize(carte, irm);
-    
+
     for_all(p)
     {
       carte(p) = m[lbl(p)].to_result();
     }
    
-     
+
     io::pgm::save(carte, "tmp_puzzle.pgm");
 
 //    accu::mean_<unsigned> mm;
@@ -214,8 +181,35 @@ namespace mln
     std::cout << std::endl;
   }
 
-} // end of namespace mln
 
+  template <typename I, typename J, typename N>
+  void mk2_graph(const I& lbl , const J& irm , const N&
+                 nbh, int nbasins)
+    {
+      typedef mln::p_set<mln_point(I)> R;
+      std::map<int, R > regions;
+      
+      mln_piter(I) p(lbl.domain());
+      for_all(p)
+      {
+        if (unsigned int i = lbl(p))
+          regions[i].insert(p);
+      }
+
+      std::cout << "Boite englobante de la région 10 : " << regions[10].bbox() << std::endl;
+
+      /*
+      for (unsigned i = 0 ; i<nbasins ; ++i)
+      {
+        
+      }
+      for (unsigned i = 0 ; i<regions.size() ; ++i)
+        g.add_node(regions[]);
+      */
+    }
+   
+  
+} // end of namespace mln
 
 int main()
 {
@@ -244,12 +238,9 @@ int main()
   image2d<unsigned> wshed = morpho::meyer_wst(clo, c4(), nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
   io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
-		 "tmp_wshed.pgm" );
+                  "tmp_wshed.pgm" );
 
-   puzzle(irm, wshed, nbasins);
-   
-//   mk_graph(wshed, irm, c4(), nbasins);
-
-//   std::vector< accu::mean_<unsigned> >
-  segm_to_pregraph(wshed, c8(), nbasins);
+  typedef fusion_graph<unsigned int, void> _fg;
+  _fg fg(wshed , irm , c8() , nbasins);
+  
 }
