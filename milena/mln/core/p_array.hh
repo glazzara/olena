@@ -57,7 +57,7 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    */
   template <typename P>
-  class p_array : public internal::point_set_base_< P, p_array<P> >
+  class p_array : public internal::site_set_base_< P, p_array<P> >
   {
   public:
     /// The associated psite type.

@@ -53,7 +53,7 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class p_run : public internal::point_set_base_< P, p_run<P> >
+  class p_run : public internal::site_set_base_< P, p_run<P> >
   {
   public:
 

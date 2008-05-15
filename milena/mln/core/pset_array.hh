@@ -67,7 +67,7 @@ namespace mln
   */
   template <typename Pset>
   class pset_array:
-    public internal::point_set_base_<pset_array_psite<Pset>, pset_array<Pset> >
+    public internal::site_set_base_<pset_array_psite<Pset>, pset_array<Pset> >
   {
   public:
 

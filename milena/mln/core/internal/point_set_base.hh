@@ -30,7 +30,7 @@
 
 /*! \file mln/core/internal/point_set_base.hh
  *
- * \brief Definition of a base class for point set classes.
+ * \brief Definition of a base class for site set classes.
  */
 
 # include <mln/core/concept/point_set.hh>
@@ -43,26 +43,20 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for point set classes.
-     * \p P is a point site type.
+    /*! \internal A base class for site set classes.
+     * \p P is a psite type.
      */
     template <typename P, typename E>
-    struct point_set_base_ : public Site_Set<E>
+    struct site_set_base_ : public Site_Set<E>
     {
-      /// Point_Site associated type.
+      /// PSite associated type.
       typedef P psite;
 
-      /// Mesh associated type.
-      typedef mln_mesh(P) mesh;
-
-      /// Point associated type.
-      typedef mln_point(P) point;
-
-      /// Dpoint associated type.
-      typedef mln_dpoint(point) dpoint;
+      /// Site associated type.
+      typedef mln_site(P) site;
 
     protected:
-      point_set_base_();
+      site_set_base_();
     };
 
 
@@ -70,7 +64,7 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    point_set_base_<S,E>::point_set_base_()
+    site_set_base_<S,E>::site_set_base_()
     {
     }
 

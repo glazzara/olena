@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -239,6 +240,15 @@
 /// \{
 # define mln_rvalue(T)     typename T::rvalue
 # define mln_rvalue_(T)             T::rvalue
+/// \}
+
+
+// s
+
+/// Shortcuts to access the site type associated to T.
+/// \{
+# define mln_site(T)      typename T::site
+# define mln_site_(T)              T::site
 /// \}
 
 

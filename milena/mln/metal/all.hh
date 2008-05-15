@@ -56,6 +56,7 @@ namespace mln
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/bool.hh>
 # include <mln/metal/equal.hh>
+# include <mln/metal/not_equal.hh>
 # include <mln/metal/if.hh>
 
 # include <mln/metal/converts_to.hh>

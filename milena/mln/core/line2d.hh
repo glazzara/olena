@@ -47,7 +47,7 @@ namespace mln
 
   /*! \brief 2D line point set class.
    */
-  class line2d : public internal::point_set_base_< point2d, line2d >
+  class line2d : public internal::site_set_base_< point2d, line2d >
   {
   public:
 

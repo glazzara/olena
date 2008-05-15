@@ -42,12 +42,29 @@
 namespace mln
 {
 
-  // fwd decl
+  // Fwd decls.
+  template <typename P> struct box_;
   template <typename P> struct box_fwd_piter_;
   template <typename P> struct box_bkd_piter_;
 
 
-  /*! \brief Generic box class.
+  namespace trait
+  {
+
+    template <typename P>
+    struct site_set_< box_<P> >
+    {
+      typedef trait::site_set::nsites::known   nsites;
+      typedef trait::site_set::bbox::straight  bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef trait::site_set::arity::unique   arity;
+    };
+
+  } // end of namespace trait
+
+
+  /*! \brief Generic box class: site set containing points of a
+   *   regular grid.
    *
    * Parameter \c P is the corresponding type of point.
    */
@@ -58,22 +75,16 @@ namespace mln
     /// Dimension.
     enum { dim = P::dim };
 
-    /// Mesh associated type.
-    typedef mln_mesh(P) mesh;
-
-    /// Point_Site associated type.
+    /// PSite associated type.
     typedef P psite;
 
-    /// Point associated type.
-    typedef P point;
+    /// Site associated type.
+    typedef P site;
 
-    /// Dpoint associated type.
-    typedef mln_dpoint(P) dpoint;
-
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef box_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef box_bkd_piter_<P> bkd_piter;
 
     /// Minimum point.
@@ -92,7 +103,7 @@ namespace mln
     box_();
 
     /// Constructor of a box going from \p pmin to \p pmax.
-    box_(const point& pmin, const point& pmax);
+    box_(const site& pmin, const site& pmax);
 
     /// \{ Constructors with different numbers of arguments
     /// (sizes) w.r.t. the dimension.
@@ -173,7 +184,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_<P>::box_(const point& pmin, const point& pmax)
+  box_<P>::box_(const site& pmin, const site& pmax)
     : pmin_(pmin),
       pmax_(pmax)
   {

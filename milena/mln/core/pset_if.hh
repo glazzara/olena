@@ -65,10 +65,10 @@ namespace mln
    * from point to Boolean.
    */
   template <typename S, typename F>
-  class pset_if : public internal::point_set_base_< mln_psite(S), pset_if<S,F> >
+  class pset_if : public internal::site_set_base_< mln_psite(S), pset_if<S,F> >
   {
     typedef pset_if<S,F> self_;
-    typedef internal::point_set_base_<mln_psite(S), self_> super_;
+    typedef internal::site_set_base_<mln_psite(S), self_> super_;
   public:
 
     typedef mln_psite(super_) psite;

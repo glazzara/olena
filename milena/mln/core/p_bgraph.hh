@@ -49,7 +49,7 @@ namespace mln
 
   template<typename P>
   struct p_bgraph
-    : public internal::point_set_base_< graph_psite<P>, p_bgraph<P> >
+    : public internal::site_set_base_< graph_psite<P>, p_bgraph<P> >
   {
     typedef util::internal::boost_graph<P, util::empty> graph;
 

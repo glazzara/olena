@@ -57,7 +57,7 @@ namespace mln
    * Parameter \c P is the type of the image point.
    */
   template <typename P>
-  class p_runs_ : public internal::point_set_base_< runs_psite<P>, p_runs_<P> >
+  class p_runs_ : public internal::site_set_base_< runs_psite<P>, p_runs_<P> >
   {
   public:
 

@@ -50,7 +50,7 @@ namespace mln
    * \todo Test if \p P being a Point_Site is ok.
    */
   template <typename P>
-  class p_set : public internal::point_set_base_< P, p_set<P> >,
+  class p_set : public internal::site_set_base_< P, p_set<P> >,
 		private internal::set_of_<P>
   {
     typedef internal::set_of_<P> super_;

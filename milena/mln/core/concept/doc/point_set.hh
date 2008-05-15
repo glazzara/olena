@@ -42,36 +42,28 @@ namespace mln
     template <typename E>
     struct Site_Set : public Object<E>
     {
-      /*! \brief Point associated type.
+      /*! \brief Site associated type.
        */
-      typedef void point;
+      typedef void site;
 
-      /*! \brief Point_Site associated type.
+      /*! \brief PSite associated type.
        */
       typedef void psite;
 
-      /*! \brief Forward Point_Iterator associated type.
+      /*! \brief Forward Site_Iterator associated type.
        */
       typedef void fwd_piter;
 
-      /*! \brief Backward Point_Iterator associated type.
+      /*! \brief Backward Site_Iterator associated type.
        */
       typedef void bkd_piter;
 
-      /*! \brief Test if \p p belongs to this point set. 
+      /*! \brief Test if \p p belongs to this site set. 
        *
-       * \param[in] p A point site.
-       * \return True if \p p is an element of the point set.
+       * \param[in] p A psite.
+       * \return True if \p p is an element of the site set.
        */
       bool has(const psite& p) const;
-
-      /*! \brief Give the bounding box of this point set.
-       */
-      const box_<point>& bbox() const;
-
-      /*! \brief Give the number of points of this point set.
-       */
-      std::size_t npoints() const;
     };
 
   } // end of namespace mln::doc

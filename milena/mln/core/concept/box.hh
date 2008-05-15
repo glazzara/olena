@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +29,7 @@
 # define MLN_CORE_CONCEPT_BOX_HH
 
 /*! \file mln/core/concept/box.hh
+ *
  * \brief Definition of the concept of mln::Box.
  */
 
@@ -40,8 +41,8 @@ namespace mln
 
   /*! \brief Base class for implementation classes of boxes.
    *
-   * Boxes are particular point sets useful to bound any set of
-   * points.
+   * Boxes are particular site sets useful to bound any set of
+   * sites defined on a regular grid.
    *
    * \see mln::doc::Box for a complete documentation of this class
    * contents.
@@ -50,35 +51,35 @@ namespace mln
   struct Box : public Site_Set<E>
   {
     /*
-      const point& pmin() const;
-      const point& pmax() const;
+      const site& pmin() const;
+      const site& pmax() const;
     */
 
     /*! \brief Give the length of the \p i-th side of the box.
      *
-     * \pre i < point::dim
+     * \pre i < site::dim
      *
      * \warning This method is final for all box classes.
      */
     unsigned len(unsigned i) const;
 
-    /*! \brief Give the bounding box of this point set.
+    /*! \brief Give the bounding box of this site set.
      *
-     * Return the bounding box of this point set, so that is itself.
+     * Return the bounding box of this site set, so that is itself.
      * This method is declared by the mln::Site_Set concept.
      *
      * \warning This method is final for all box classes.
      */
     const E& bbox() const;
 
-    /*! \brief Give the number of points of this box.
+    /*! \brief Give the number of sites of this box.
      *
-     * Return the number of points of this box.  This method is
+     * Return the number of sites of this box.  This method is
      * declared by the mln::Site_Set concept.
      *
      * \warning This method is final for all box classes.
      */
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
   protected:
     Box();
@@ -144,20 +145,20 @@ namespace mln
   inline
   Box<E>::Box()
   {
-    typedef mln_point(E) point;
-    point (E::*m1)() const = & E::pmin;
+    typedef mln_site(E) site;
+    site (E::*m1)() const = & E::pmin;
     m1 = 0;
-    point (E::*m2)() const = & E::pmax;
+    site (E::*m2)() const = & E::pmax;
     m2 = 0;
   }
 
   template <typename E>
   inline
   std::size_t
-  Box<E>::npoints() const
+  Box<E>::nsites() const
   {
     std::size_t count = 1;
-    typedef mln_point(E) P; // helps g++-3.3.5
+    typedef mln_site(E) P; // helps g++-3.3.5
     for (unsigned i = 0; i < P::dim; ++i)
       count *= exact(this)->len(i);
     return count;
@@ -183,7 +184,7 @@ namespace mln
     // FIXME: Same grid!
     const Bl& lhs = exact(lhs_);
     const Br& rhs = exact(rhs_);
-    typedef mln_point(Bl) P;
+    typedef mln_site(Bl) P;
     for (unsigned i = 0; i < P::dim; ++i)
       if (lhs.pmin()[i] < rhs.pmin()[i] ||
 	  lhs.pmax()[i] > rhs.pmax()[i])

@@ -1,5 +1,52 @@
 2008-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update site set concepts and generic box.
+
+	* mln/trait/site_set/print.hh (ostr): Add default.
+	* mln/core/macros.hh (mln_site, mln_site_): New.
+	* mln/core/internal/point_set_base.hh
+	(mesh, dpoint): Remove.
+	(point): Rename as...
+	(site): ...this.
+	Update.
+	* mln/core/box.hh: Likewise.
+	(trait::site_set_): New.
+	* mln/core/concept/box.hh (point): Rename as...
+	(site): ...this.
+	* mln/core/concept/point_set.hh: Likewise.
+	Remove npoints and bbox from comments.
+	(point_set): Add props check in ctor.
+	(operator==, operator <=): Remove test over npoints.
+	(operator <): Rely on != instead of npoints.
+	* mln/core/concept/doc/box.hh (point): Rename as...
+	(site): ...this.
+	* mln/core/concept/doc/point_set.hh: Likewise.
+	(bbox, npoints): Remove.
+	* tests/core/box2d.cc: Add print props test.
+
+	* mln/core/pset_array.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_priority_queue_fast_with_array.hh,
+	* mln/core/p_queue_fast.hh,
+	* mln/core/p_image2d.hh,
+	* mln/core/p_line_graph.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/p_graph.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_set.hh,
+	* mln/core/line2d.hh,
+	* mln/core/p_bgraph.hh,
+	* mln/core/p_run.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/p_array.hh,
+	* mln/core/p_runs.hh (point_set_base_): Rename as...
+	(site_set_base_): ...this.
+
+	* mln/metal/not_equal.hh: New.
+	* mln/metal/all.hh: Include not_equal.
+
+2008-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rename Point_Set as Site_Set.
 
 	* .,

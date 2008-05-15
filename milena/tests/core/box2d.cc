@@ -43,4 +43,6 @@ int main()
 
   box2d b_(2, 3);
   mln_assertion(b == b_);
+
+  // trait::site_set::print(b);
 }

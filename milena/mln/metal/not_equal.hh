@@ -25,69 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_SITE_SET_PRINT_HH
-# define MLN_TRAIT_SITE_SET_PRINT_HH
+#ifndef MLN_METAL_NOT_EQUAL_HH
+# define MLN_METAL_NOT_EQUAL_HH
 
-/*! \file mln/trait/site_set/print.hh
+/*!
+ * \file  mln/metal/not_equal.hh
  *
- * \brief Print the collection of traits for a site set type.
+ * \brief FIXME.
  */
 
-# include <iostream>
-# include <mln/trait/site_sets.hh>
-# include <mln/metal/is_a.hh>
+# include <mln/metal/bool.hh>
 
+
+# define mlc_not_equal(T1, T2) mln::metal::not_equal< T1, T2 >
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename E> struct Site_Set;
-
-
-  namespace trait
+  namespace metal
   {
 
-    namespace site_set
-    {
+    template <typename T1, typename T2>
+    struct not_equal : true_
+    {};
 
-      template <typename S>
-      void print(std::ostream& ostr = std::cout);
-
-      template <typename S>
-      void print(const Site_Set<S>& ima, std::ostream& ostr = std::cout);
+    template <typename T>
+    struct not_equal< T, T > : false_
+    {};
 
 
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename S>
-      inline
-      void print(std::ostream& ostr)
-      {
-	mlc_is_a(S, Site_Set)::check();
-	typedef mln::trait::site_set_<S> the;
-	ostr << "{ "
-	     << typename the::nsites()  .name() << ", "
-	     << typename the::bbox()    .name() << ", "
-	     << typename the::contents().name() << ", "
-	     << typename the::arity()   .name() << " }" << std::endl;
-      }
-
-      template <typename S>
-      inline
-      void print(const Site_Set<S>&, std::ostream& ostr)
-      {
-	print<S>(ostr);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::trait::site_set
-
-  } // end of namespace mln::trait
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRAIT_SITE_SET_PRINT_HH
+#endif // ! MLN_METAL_NOT_EQUAL_HH

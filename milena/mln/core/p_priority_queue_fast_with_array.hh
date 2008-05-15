@@ -63,7 +63,7 @@ namespace mln
    * a call to npoints() when this container is multiple.
    */
   template <typename P, typename T, unsigned S>
-  class p_priority_queue_fast_with_array : public internal::point_set_base_< P, p_priority_queue_fast_with_array<P, T, S> >
+  class p_priority_queue_fast_with_array : public internal::site_set_base_< P, p_priority_queue_fast_with_array<P, T, S> >
   {
   public:
 

@@ -32,14 +32,13 @@
  *
  * \brief Definition of the concept of mln::Site_Set.
  *
- * \todo Think about adding an 'insert' method (not so easy because of
- * pset_if...)
- *
  * \todo Move out the ops.
  */
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/point_iterator.hh>
+# include <mln/trait/site_sets.hh>
+# include <mln/metal/not_equal.hh>
 
 
 namespace mln
@@ -57,7 +56,7 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation classes of point sets.
+  /*! \brief Base class for implementation classes of site sets.
    *
    * \see mln::doc::Site_Set for a complete documentation of this
    * class contents.
@@ -68,19 +67,13 @@ namespace mln
     typedef Site_Set<void> category;
 
     /*
-      typedef mesh;
-
-      typedef point;
+      typedef site;
       typedef psite;
 
       typedef fwd_piter;
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      std::size_t npoints() const;
-
-      // FIXME: No longer required (at least, not this way).
-      const box_<point>& bbox() const;
      */
 
   protected:
@@ -88,10 +81,10 @@ namespace mln
   };
 
 
-  /*! \brief Equality test between point sets \p lhs and \p rhs.
+  /*! \brief Equality test between site sets \p lhs and \p rhs.
    *
-   * \param[in] lhs A point set.
-   * \param[in] rhs Another point set.
+   * \param[in] lhs A site set.
+   * \param[in] rhs Another site set.
    *
    * \relates mln::Site_Set
    */
@@ -100,10 +93,10 @@ namespace mln
 
 
 
-  /*! \brief Inclusion test between point sets \p lhs and \p rhs.
+  /*! \brief Inclusion test between site sets \p lhs and \p rhs.
    *
-   * \param[in] lhs A point set (included?).
-   * \param[in] rhs Another point set (includer?).
+   * \param[in] lhs A site set (included?).
+   * \param[in] rhs Another site set (includer?).
    *
    * \relates mln::Site_Set
    */
@@ -112,11 +105,11 @@ namespace mln
 
 
 
-  /*! \brief Strict inclusion test between point sets \p lhs and \p
+  /*! \brief Strict inclusion test between site sets \p lhs and \p
    *  rhs.
    *
-   * \param[in] lhs A point set (strictly included?).
-   * \param[in] rhs Another point set (includer?).
+   * \param[in] lhs A site set (strictly included?).
+   * \param[in] rhs Another site set (includer?).
    *
    * \relates mln::Site_Set
    */
@@ -125,18 +118,18 @@ namespace mln
 
 
 
-  /*! \brief Print a point set \p pset into the output stream \p
+  /*! \brief Print a site set \p set into the output stream \p
    *  ostr.
    *
    * \param[in,out] ostr An output stream.
-   * \param[in] pset A point set.
+   * \param[in] set A site set.
    *
    * \return The modified output stream \p ostr.
    *
    * \relates mln::Site_Set
    */
   template <typename S>
-  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& pset);
+  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& set);
 
 
 
@@ -149,21 +142,21 @@ namespace mln
   inline
   Site_Set<E>::Site_Set()
   {
-    typedef mln_mesh(E) mesh;
+    // Check properties.
+    mlc_not_equal( mln_trait_site_set_nsites(E),   mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_site_set_bbox(E),     mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_site_set_contents(E), mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_site_set_arity(E),    mln::trait::undef )::check();
 
-    typedef mln_point(E) point;
+    // Check associated types.
+    typedef mln_site(E)  site;
     typedef mln_psite(E) psite;
-
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
-    
-    bool (E::*m1)(const psite& p) const = & E::has;
-    m1 = 0;
-      // FIXME: No longer required (at least, not this way).
-//     const box_<point>& (E::*m2)() const = & E::bbox;
-//     m2 = 0;
-    std::size_t (E::*m3)() const = & E::npoints;
-    m3 = 0;
+
+    // Check methods.
+    bool (E::*m)(const psite& p) const = & E::has;
+    m = 0;
   }
 
 
@@ -177,10 +170,6 @@ namespace mln
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
     const Sr& rhs = exact(rhs_);
-
-    // easy test:
-    if (lhs.npoints() != rhs.npoints())
-      return false;
 
     // exhaustive test:
     mln_fwd_piter(Sl) pl(lhs);
@@ -205,10 +194,6 @@ namespace mln
     const Sl& lhs = exact(lhs_);
     const Sr& rhs = exact(rhs_);
 
-    // easy test:
-    if (lhs.npoints() > rhs.npoints())
-      return false;
-
     // exhaustive test:
     mln_piter(Sl) pl(lhs);
     for_all(pl)
@@ -226,17 +211,17 @@ namespace mln
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
     const Sr& rhs = exact(rhs_);
-    return lhs <= rhs && lhs.npoints() != rhs.npoints();
+    return lhs <= rhs && lhs != rhs;
   }
 
 
   template <typename S>
   inline
-  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& pset_)
+  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& set_)
   {
-    const S& pset = exact(pset_);
+    const S& set = exact(set_);
     ostr << '{';
-    mln_piter(S) p(pset);
+    mln_piter(S) p(set);
     for_all(p)
       ostr << p;
     return ostr << '}';

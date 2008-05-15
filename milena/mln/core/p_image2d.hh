@@ -55,7 +55,7 @@ namespace mln
   template <typename P> struct p_image2d_bkd_piter_;
 
   template <typename P>
-  class p_image2d : public internal::point_set_base_<P, p_image2d<P> >
+  class p_image2d : public internal::site_set_base_<P, p_image2d<P> >
   {
   public:
 

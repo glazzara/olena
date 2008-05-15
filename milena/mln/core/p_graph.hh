@@ -47,7 +47,7 @@ namespace mln
 
   template<typename P>
   struct p_graph
-    : public internal::point_set_base_< graph_psite<P>, p_graph<P> >
+    : public internal::site_set_base_< graph_psite<P>, p_graph<P> >
   {
     typedef util::graph<P> graph;
 
