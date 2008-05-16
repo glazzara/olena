@@ -32,16 +32,19 @@
 
 #include <iostream>
 
-#include <mln/value/quat.hh>
+#include <mln/core/contract.hh>
+
+#include <mln/algebra/quat.hh>
+#include <mln/norm/l2.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  value::quat q1(3.f, 4.f, 1.6f, 0.5f);
-  value::quat q2(1.2, make::vec(3, 6, 4));
-  value::quat q3(make::vec(1.3, 3., -6., 4.));
+  algebra::quat q1(3.f, 4.f, 1.6f, 0.5f);
+  algebra::quat q2(1.2, make::vec(3, 6, 4));
+  algebra::quat q3(make::vec(1.3, 3., -6., 4.));
 
   std::cout << q1 << std::endl;
   std::cout << q2 << std::endl;

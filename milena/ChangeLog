@@ -1,3 +1,52 @@
+2008-05-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have most of the test suite compile again.
+
+	* mln/draw/graph.hh: Catch up with the interface of
+	mln::p_graph<P>.
+	* mln/metal/math/pow.hh (mln::metal::math::impl::pow_int_)
+	* mln/value/float01_.hh (mln::trait::value_< mln::value::float01_<n> >)
+	* mln/value/int_s.hh (mln::trait::value_< mln::value::int_s<n> >)
+	* mln/value/int_u.hh (mln::trait::value_< mln::value::int_u<n> >):
+	Give a name to the enum to pacify the compiler.
+	* mln/value/graylevel.hh (mln::value::graylevel<n>::graylevel):
+	Explicitly call the ctor of the first super class, as recommended
+	by g++ 4.0.1.
+	* mln/value/internal/integer.hh:
+	s|mln/value/internal/scalar.hh|mln/value/concept/scalar.hh|
+	* mln/metal/math/sqrt.hh (mln::metal::math::impl::sqrt<N>): Fix
+	the number of template parameters.
+	* mln/canvas/all.hh:
+	s|mln/canvas/champfer.hh|mln/canvas/chamfer.hh|.
+	* mln/canvas/browsing/all.hh:
+	s|dir_ricard51.hh|dir_struct_elt_incr_update.hh|.
+	* mln/win/line.hh (mln::win::line<M, i C>::psite): New typedef.
+	* mln/labeling/all.hh: No longer include the (missing) header
+	mln/labeling/estimate.hh.
+	* tests/level/sort_points.cc: Remove this outdated test.
+	* tests/level/Makefile.am (check_PROGRAMS): Remove sort_points.
+	(sort_points_SOURCES): Remove.
+	* tests/subsampling/type.cc: Move...
+	* sandbox/jardonnet/test/type.cc: ...here.
+	This test depends on files located in sandbox/jardonnet/.
+	* tests/subsampling/Makefile.am (check_PROGRAMS, type_SOURCES)
+	(TESTS): Remove.
+	* tests/level/naive/Makefile.am (median_CXXFLAGS): Set to
+	(TESTS_CXXFLAGS_SPEED), to speed up test execution.
+	* tests/literal/medium_gray.cc: Add missing header inclusions.
+	* tests/value/quat.cc: Likewise.
+	Catch up with the new location of quat (algebra::, instead of
+	value::).
+	* tests/algebra/mat.cc: Likewise.
+	* tests/value/Makefile.am (check_PROGRAMS): Remove macros.
+	(macros_SOURCES): Remove.
+	(EXTRA_DIST): New.
+	Set to macros.hh.
+	* tests/binarization/thresholding.cc: s/thresholding/threshold/.
+	Don't use hard-coded paths for images.
+	* tests/display/Makefile.am (TESTS): Disable tests show and
+	save_and_show.
+
 2008-05-14  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have tools compile again.

@@ -95,16 +95,16 @@ namespace mln
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
-      for (size_t l = 0; l < pg.nlines(); ++l)
+      for (size_t l = 0; l < pg.nedges(); ++l)
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
 	      // in mln/core/graph_image.hh
-	      pg.gr_.node_data(pg.gr_.edge(l).n1()),
-	      pg.gr_.node_data(pg.gr_.edge(l).n2()),
+	      pg.gr_->node_data(pg.gr_->edge(l).n1()),
+	      pg.gr_->node_data(pg.gr_->edge(l).n2()),
 	      link_v);
       // Draw the points (nodes).
       for (size_t p = 0; p < pg.npoints(); ++p)
- 	exact(ima)(pg.gr_.node_data(p)) = node_v;
+ 	exact(ima)(pg.gr_->node_data(p)) = node_v;
     }
 
     template <typename I,  typename P, typename V>

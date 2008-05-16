@@ -75,7 +75,7 @@ namespace mln
       typedef mln::value::int_s<n> self_;
     public:
 
-      enum {
+      enum constants_ {
 	nbits = n,
 	card  = mln_value_card_from_(n) - 1
       };

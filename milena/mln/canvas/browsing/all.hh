@@ -46,7 +46,7 @@ namespace mln
 }
 
 # include <mln/canvas/browsing/directional.hh>
-# include <mln/canvas/browsing/dir_ricard51.hh>
+# include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
 # include <mln/canvas/browsing/fwd.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
 

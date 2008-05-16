@@ -25,23 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/binarization/thresholding.cc
- *
- * \brief Test on mln::binarization::thresholding
- */
-
-// FIXME for make check
-
+/// \file tests/binarization/thresholding.cc
+/// \brief Test on mln::binarization::threshold.
 
 #include <mln/core/image2d.hh>
-#include <mln/binarization/thresholding.hh>
+#include <mln/binarization/threshold.hh>
 #include <mln/level/all.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pbm/save.hh>
 
-//#include "tests/data.hh"
+#include "tests/data.hh"
 
 int main(int argc, char **)
 {
@@ -50,17 +45,19 @@ int main(int argc, char **)
  
   { 
     image2d<int_u8> lena;
-    io::pgm::load(lena, "../../img/lena.pgm");
-    io::pbm::save(binarization::thresholding(lena, argc), "out1.pgm");
+    io::pgm::load(lena, MLN_IMG_DIR "lena.pgm");
+    // FIXME: argc?  Weird.
+    io::pbm::save(binarization::threshold(lena, argc), "out1.pgm");
   }
 
   {
     image2d<int_u8> l;
     image2d<int> lena;
-    io::pgm::load(l, "../../img/lena.pgm");
+    io::pgm::load(l, MLN_IMG_DIR "img/lena.pgm");
     
     level::paste(l, lena);
     
-    io::pbm::save(binarization::thresholding(lena, argc), "out2.pgm");
+    // FIXME: argc?  Weird.
+    io::pbm::save(binarization::threshold(lena, argc), "out2.pgm");
   }
 }

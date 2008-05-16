@@ -48,7 +48,7 @@ namespace mln
 
 # include <mln/canvas/browsing/all.hh>
 # include <mln/canvas/morpho/all.hh>
-# include <mln/canvas/champfer.hh>
+# include <mln/canvas/chamfer.hh>
 # include <mln/canvas/labeling.hh>
 
 #endif // ! MLN_CANVAS_ALL_HH

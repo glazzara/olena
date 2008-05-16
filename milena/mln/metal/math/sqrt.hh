@@ -46,7 +46,7 @@ namespace mln
     namespace math
     {
 
-      // sqrt_int<x, n>
+      // sqrt_int<x>
 
       namespace impl
       {
@@ -92,7 +92,7 @@ namespace mln
 
       // sqrt<N>
 
-      template <typename X, typename N>
+      template <typename N>
       struct sqrt;
 
       template <int n>

@@ -460,7 +460,8 @@ namespace mln
 
     template <unsigned n>
     inline
-    graylevel<n>::graylevel(const graylevel<n>& rhs)
+    graylevel<n>::graylevel(const graylevel<n>& rhs) :
+      Integer< graylevel<n> >()
     {
       this->v_ = rhs.v_;
     }

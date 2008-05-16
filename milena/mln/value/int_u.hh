@@ -81,7 +81,7 @@ namespace mln
       typedef typename mln::value::internal::encoding_unsigned_<n>::ret enc_;
     public:
 
-      enum {
+      enum constants_ {
 	nbits = n,
 	card  = mln_value_card_from_(n)
       };

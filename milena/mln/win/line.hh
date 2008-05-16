@@ -63,6 +63,9 @@ namespace mln
       /// Point associated type.
       typedef point_<M, int> point;
 
+      /// Psite associated type.
+      typedef point psite;
+
       /// Dpoint associated type.
       typedef dpoint_<M, int> dpoint;
 

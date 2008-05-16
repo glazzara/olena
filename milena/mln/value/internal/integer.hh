@@ -33,7 +33,7 @@
  * \brief Define a generic class for integer values.
  */
 
-# include <mln/value/internal/scalar.hh>
+# include <mln/value/concept/scalar.hh>
 
 namespace mln
 {

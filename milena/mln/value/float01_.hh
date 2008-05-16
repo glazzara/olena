@@ -62,7 +62,7 @@ namespace mln
     template <unsigned n>
     struct value_< mln::value::float01_<n> >
     {
-      enum {
+      enum constants_ {
 	nbits = n,
 	card  = mln_value_card_from_(nbits)
       };

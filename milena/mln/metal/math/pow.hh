@@ -59,13 +59,13 @@ namespace mln
 	template <int x, int n>
 	struct pow_int_
 	{
-	  enum { value = x * pow_int_<x, n-1>::value };
+	  enum res_ { value = x * pow_int_<x, n-1>::value };
 	};
 
 	template <int x>
 	struct pow_int_< x, 0 >
 	{
-	  enum { value = 1 };
+	  enum res_ { value = 1 };
 	};
 
 	template <>
