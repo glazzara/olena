@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DT_DMAP_HH
-# define MLN_DT_DMAP_HH
+#ifndef MLN_DT_RAW_DMAP_FAST_HH
+# define MLN_DT_RAW_DMAP_FAST_HH
 
 # include <queue>
 # include <map>
@@ -161,4 +161,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_DT_DMAP_HH
+#endif // ! MLN_DT_RAW_DMAP_FAST_HH

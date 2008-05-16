@@ -46,21 +46,22 @@ namespace mln
       // Ctor.
       dt(F& f);
 
+      typedef typename F::I I;
+      typedef typename F::N N;
+      typedef mln_point(I) point;
+
+      mln_ch_value(I, unsigned) distance;
+
     private:
 
       // Functor.
       F f;
-
-      typedef typename F::I I;
-      typedef typename F::N N;
-      typedef mln_point(I) point;
 
       void init();
       void run();
 
       std::vector< std::vector<point> > bucket;
       unsigned bucket_size;
-      mln_ch_value(I, unsigned) distance;
       unsigned mod;
     };
 
@@ -96,14 +97,14 @@ namespace mln
       initialize(distance, f.input);
 
       // Mod determination.
-      mln_accu_with_(accu::max, unsigned) accu;
+      mln::accu::max_<unsigned> accu;
       mln_fwd_piter(I) p(f.input.domain());
-      mln_qiter(N) n(f.nbh, p); // FIXME
+      mln_qiter(N) n(f.nbh, p);
       for_all(n)
 	accu.take(n.w());
       mod = accu.to_result() + 1;
 
-      bucket.reserve(mod);
+      bucket.resize(mod);
 
       // Initialization
       for_all(p)
@@ -137,12 +138,12 @@ namespace mln
 	std::vector<point>& bucket_d = bucket[d % mod];
 	for (unsigned i = 0; i < bucket_d.size(); ++i)
 	{
-	  point p = bucket_d.front();
 	  p = bucket_d[i];
 
-	  // FIXME: Draw...
+	  /* |00|    |00|    insert "a" in bucket 1    |00|
+	     |ab| -> |12| -> insert "b" in bucket 1 -> |11| -> then in bucket 2.
+	     when d = 2, "b" has already been processed when d = 1. */
 	  if (distance(p) < d)
-	    // p has already been processed, having a distance less than d.
 	    continue;
 
 	  for_all(n)

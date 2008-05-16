@@ -46,7 +46,7 @@ namespace mln
      * \pre \p img has to be initialized.
      */
     template<typename I, typename N>
-    mln_ch_value(I, mln_point(I))
+    mln_ch_value(I, unsigned)
     dmap(const Image<I>& input_, const N& nbh, unsigned max);
 
 
@@ -73,18 +73,19 @@ namespace mln
 	    max(max)
 	{}
 
-	mln_ch_value(I, mln_point(I)) output;
-
 	void init()
 	{
 	}
 
 	void init_in_for(const mln_point(I)& p)
 	{
+	  (void) p;
 	}
 
 	void run_in_for(const mln_point(I)& p, const mln_point(I)& n)
 	{
+	  (void) p;
+	  (void) n;
 	}
       };
 
@@ -95,7 +96,7 @@ namespace mln
 
     template<typename I, typename N>
     inline
-    mln_ch_value(I, mln_point(I))
+    mln_ch_value(I, unsigned)
     dmap(const Image<I>& input, const N& nbh, unsigned max)
     {
       trace::entering("dt::dmap");

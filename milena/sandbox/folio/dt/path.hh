@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DT_IZ_HH
-# define MLN_DT_IZ_HH
+#ifndef MLN_DT_PATH_HH
+# define MLN_DT_PATH_HH
 
 # include "canvas_dt.hh"
 
@@ -47,7 +47,7 @@ namespace mln
      */
     template<typename I, typename N>
     mln_ch_value(I, mln_point(I))
-    iz(const Image<I>& input_, const N& nbh, unsigned max);
+    path(const Image<I>& input_, const N& nbh, unsigned max);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,7 +58,7 @@ namespace mln
       // Generic functor.
 
       template <typename I_, typename N_>
-      struct iz_functor
+      struct path_functor
       {
 	typedef I_ I;
 	typedef N_ N;
@@ -67,7 +67,7 @@ namespace mln
 	const N& nbh;
 	unsigned max;
 
-	iz_functor(const I& input, const N& nbh, unsigned max)
+	path_functor(const I& input, const N& nbh, unsigned max)
 	  : input(input),
 	    nbh(nbh),
 	    max(max)
@@ -99,16 +99,16 @@ namespace mln
     template<typename I, typename N>
     inline
     mln_ch_value(I, mln_point(I))
-    iz(const Image<I>& input, const N& nbh, unsigned max)
+    path(const Image<I>& input, const N& nbh, unsigned max)
     {
-      trace::entering("dt::iz");
+      trace::entering("dt::path");
       mln_precondition(exact(input).has_data());
 
-      typedef impl::iz_functor<I, N> F;
+      typedef impl::path_functor<I, N> F;
       F f(exact(input), nbh, max);
       mln::canvas::dt<F> call(f);
 
-      trace::exiting("dt::iz");
+      trace::exiting("dt::path");
       return f.output;
     }
 
@@ -118,4 +118,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_DT_IZ_HH
+#endif // ! MLN_DT_PATH_HH

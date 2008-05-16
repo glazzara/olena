@@ -1,3 +1,19 @@
+2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Maze test.
+	* folio/dt/canvas_dt.hh: Debug.
+	* folio/dt/dmap.hh: Debug.
+	* folio/dt/iz.hh: Remove.
+	* folio/dt/path.hh: New (rename).
+	* folio/dt/raw_dmap_fast.hh: Debug.
+	* folio/dt/raw_iz_fast.hh: Remove.
+	* folio/dt/raw_iz_slow.hh: Remove.
+	* folio/dt/raw_path_fast.hh: New (rename).
+	* folio/dt/raw_path_slow.hh: New (rename).
+	* folio/img/monkeys_april.ppm: Test image.
+	* folio/test/dt.cc: Tests.
+	* folio/test/dt_maze.cc: Tests.
+
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Add few results about final_qk.

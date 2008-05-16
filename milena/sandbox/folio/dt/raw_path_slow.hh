@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public unsignedicense.
 
-#ifndef MLN_DT_RAW_IZ_SLOW_HH
-# define MLN_DT_RAW_IZ_SLOW_HH
+#ifndef MLN_DT_RAW_PATH_SLOW_HH
+# define MLN_DT_RAW_PATH_SLOW_HH
 
 # include <queue>
 # include <map>
@@ -56,7 +56,7 @@ namespace mln
      */
     template<typename I, typename N>
     mln_ch_value(I, mln_point(I))
-    raw_iz_slow(const Image<I>& input_, const N& nbh, unsigned max);
+    raw_path_slow(const Image<I>& input_, const N& nbh, unsigned max);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,7 +73,7 @@ namespace mln
     template<typename I, typename N>
     inline
     mln_ch_value(I, mln_point(I))
-    raw_iz_slow(const Image<I>& input_, const N& nbh, unsigned max)
+    raw_path_slow(const Image<I>& input_, const N& nbh, unsigned max)
     {
       // Preconditions.
       const I& input = exact(input_);
@@ -152,4 +152,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_DT_RAW_IZ_SLOW_HH
+#endif // ! MLN_DT_RAW_PATH_SLOW_HH

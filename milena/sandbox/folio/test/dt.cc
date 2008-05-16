@@ -20,15 +20,15 @@
 #include <mln/core/image_if.hh>
 #include <mln/pw/value.hh>
 
-// #include "../dt/dmap.hh"
+#include "../dt/dmap.hh"
 // #include "../dt/raw_dmap_fast.hh"
 // #include "../dt/raw_dmap_slow.hh"
 
-// #include "../dt/iz.hh"
-// #include "../dt/raw_iz_fast.hh"
-// #include "../dt/raw_iz_slow.hh"
+// #include "../dt/path.hh"
+// #include "../dt/raw_path_fast.hh"
+// #include "../dt/raw_path_slow.hh"
 
-#include "../dt/cp.hh"
+// #include "../dt/cp.hh"
 // #include "../dt/raw_cp_fast.hh"
 // #include "../dt/raw_cp_slow.hh"
 
@@ -44,24 +44,23 @@ int main()
 		  0, 0, 0, 0, 0};
   level::fill(ima, vals);
 
-//   image2d<bool> msk(5,5);
-//   bool rest[] = { 1, 0, 1, 1, 1,
-// 		  1, 0, 1, 1, 1,
-// 		  1, 1, 0, 0, 0,
-// 		  1, 1, 0, 1, 1,
-// 		  1, 1, 1, 1, 1};
-//   level::fill(msk, rest);
+  image2d<bool> msk(5,5);
+  bool rest[] = { 1, 0, 1, 1, 1,
+		  1, 0, 1, 1, 1,
+		  1, 1, 0, 0, 0,
+		  1, 1, 0, 1, 1,
+		  1, 1, 1, 1, 1};
+  level::fill(msk, rest);
 
   int ws[] = { 3, 2, 3,
 	       2, 0, 2,
 	       3, 2, 3 };
 
-  image2d<mln_point_(image2d<bool>)> out;
-//  image2d<unsigned> out;
-  out = dt::cp(ima, make::w_window2d(ws), 50);
+//  image2d<mln_point_(image2d<bool>)> out;
+  image2d<unsigned> out;
+  out = dt::dmap(ima | pw::value(msk), make::w_window2d(ws), 50);
 
-
-  debug::println(ima);
-//  debug::println(ima | pw::value(msk));
+//  debug::println(ima);
+  debug::println(ima | pw::value(msk));
   debug::println(out);
 }
