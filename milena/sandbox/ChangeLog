@@ -1,3 +1,21 @@
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add a bunch of files for testes.
+
+	Home-made:
+
+	* jardonnet/test/img: New.
+	* jardonnet/test/img/c1.pbm: New.
+	* jardonnet/test/img/c2.pbm: New.
+	* jardonnet/test/img/c3.pbm: New.
+	* jardonnet/test/img/c4.pbm: New.
+	* jardonnet/test/img/x1.pbm: New.
+	* jardonnet/test/img/x2.pbm: New.
+	* jardonnet/test/img/x3.pbm: New.
+	* jardonnet/test/img/x4.pbm: New.
+	* jardonnet/test/img/01.pbm: New.
+	* jardonnet/test/img/02.pbm: New.
+
 2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Slow, fast and canvatized cp, dmap and iz algorithms. Cleaning.
