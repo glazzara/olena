@@ -1,5 +1,13 @@
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
+	Really fix binarization testes.
+
+	* tests/binarization/threshold.cc (paste): Destination domain must be
+	big enough.
+	* tests/binarization/Makefile.am: Fix.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
 	Fix threshold testes.
 
 	* mln/binarization/threshold.hh: Make argument's name more explicit.

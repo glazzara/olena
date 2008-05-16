@@ -38,25 +38,27 @@
 
 #include "tests/data.hh"
 
-int main(int argc, char **)
+int main()
 {
   using namespace mln;
   using value::int_u8;
  
   { 
     image2d<int_u8> lena;
-    io::pgm::load(lena, MLN_IMG_DIR "lena.pgm");
+    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
     
     io::pbm::save(binarization::threshold(lena, 50), "out1.pgm");
   }
-
+  
   {
     image2d<int_u8> l;
-    image2d<int> lena;
-    io::pgm::load(l, MLN_IMG_DIR "img/lena.pgm");
+    io::pgm::load(l, MLN_IMG_DIR "/lena.pgm");
+
+    image2d<int> lena(l.domain(), 0);
     
     level::paste(l, lena);
     
     io::pbm::save(binarization::threshold(lena, 50), "out2.pgm");
   }
+  
 }
