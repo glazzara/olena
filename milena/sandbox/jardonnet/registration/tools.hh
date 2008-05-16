@@ -147,25 +147,30 @@ namespace mln
 
   template <typename P>
   inline
-  const box_<P>&            //dif
+  box_<P>            //dif
   enlarge(const box_<P>& box, unsigned b)
   {
+    box_<P> nbox(box);
+
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      box.pmin()[i] -= b;
-      box.pmax()[i] += b;
+      nbox.pmin()[i] -= b;
+      nbox.pmax()[i] += b;
     }
-    return box;
+    return nbox;
   }
   
   template <typename P>
   box_<P> bigger(box_<P> a, box_<P> b)
   {
     P pmin,pmax;
-    
-    pmin = min(a.pmin(), b.pmin());
-    pmax = max(a.pmax(), b.pmax());
-    
+
+    for (unsigned i = 0; i < P::dim; i++)
+      {
+        pmin[i] = (a.pmin()[i] < b.pmin()[i]) ? a.pmin()[i] : b.pmin()[i];
+        pmax[i] = (a.pmax()[i] > b.pmax()[i]) ? a.pmax()[i] : b.pmax()[i];
+      }  
+
     return box_<P>(pmin, pmax);
   }
 
@@ -221,7 +226,7 @@ namespace mln
 
     // to_pointNd
 
-    //FIXME: Should we really provide this
+    //FIXME: Should be call projection
     //point3d -> point2d
     template <typename T>
     inline
@@ -230,6 +235,7 @@ namespace mln
     {
       return point_<grid::square, T>(p[0], p[1]);
     }
+    
     //point2d -> point2d
     template <typename T>
     inline
@@ -287,10 +293,8 @@ namespace mln
         
       mln_piter(image3d<T>) p(img3d.domain());
       for_all(p)
-      {
-        if (p[2] == 0)
-          img3d(p) = exact(img)(point2d(p[0],p[1]));
-      }
+        img3d(p) = exact(img)(point2d(p[0],p[1]));
+
       return img3d;
     }
     
@@ -298,7 +302,8 @@ namespace mln
   
   namespace algebra
   {
-      
+    
+    // transpose
     template<unsigned n, unsigned m, typename T>
     mat<m,n,T>
     trans(const mat<n,m,T>& matrice)
@@ -311,7 +316,6 @@ namespace mln
     }
     
     // trace
-    
     template<unsigned n, typename T> inline
     float tr(const mat<n,n,T>& m)
     {

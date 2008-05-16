@@ -1,5 +1,12 @@
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
+	Add functions on box : enlarge and bigger.
+
+	* jardonnet/registration/tools.hh (enlarge,bigger): Add.
+	* jardonnet/test/icp.cc: Update: use enlarge and bigger.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
 	Add a bunch of files for testes.
 
 	Home-made:

@@ -45,10 +45,13 @@ int main(int argc, char* argv[])
   
   //build p_arrays.
   p_array<mln_point_(I3d)> c = convert::to_p_array(cloud);
-  p_array<mln_point_(I3d)> x = convert::to_p_array(surface);
+  p_array<mln_point_(I3d)> x = convert::to_p_array(surface); 
 
+  //working box
+  const box_<mln_point_(I3d)> working_box = enlarge(bigger(c.bbox(),x.bbox()),100);
+  
   //Make a lazy_image map via function closest_point
-  closest_point<mln_point_(I3d)> fun(x, box_<point3d>(1000,1000,1));
+  closest_point<mln_point_(I3d)> fun(x, working_box);
   lazy_image< closest_point<mln_point_(I3d)> > map(fun);
 
   quat7<3> qk = registration::icp(c, map, q, e, x);
@@ -60,13 +63,8 @@ int main(int argc, char* argv[])
 
   qk.apply_on(c, c, c.npoints());
   
-  //init output image
-  //FIXME: Should be like
-  //mln_concrete(I) output(res.bbox()) = convert::to_image<I>(res) ?
-
-              
-  const box_<point2d> box2d(400,700);
-  image2d<value::rgb8> output(box2d, 1);
+  //init output image             
+  image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
 
   float stddev, mean;
   registration::mean_stddev(c, map, mean, stddev);
