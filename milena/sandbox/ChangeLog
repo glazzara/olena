@@ -1,3 +1,33 @@
+2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Slow, fast and canvatized cp, dmap and iz algorithms. Cleaning.
+	* folio/dt/canvas_dt.hh: New canvas for DT. Not	compiling yet.
+	* folio/dt/chamfer.hh: Old chamfer algorithm. Last version.
+	* folio/dt/cp.hh: Cp algorithm using canvas.
+	* folio/dt/dmap.hh: Dmap algorithm using canvas.
+	* folio/dt/iz.hh: Iz algorithm using canvas.
+	* folio/dt/raw_cp_fast.hh: Cp algorithm, last version.
+	* folio/dt/raw_cp_slow.hh: Cp algorithm, old version.
+	* folio/dt/raw_dmap_fast.hh: Dmap algorithm, last version.
+	* folio/dt/raw_dmap_slow.hh: Dmap algorithm, old version.
+	* folio/dt/raw_iz_fast.hh: Iz algorithm, last version.
+	* folio/dt/raw_iz_slow.hh: Iz algorithm, old version.
+	* folio/dt: Folder containing DT algorithms.
+	* folio/img: Folder containing test images (content not versionned).
+	* folio/papers/dt_resume.txt: Resume for seminar.
+	* folio/papers/examples.txt: Examples of resumes for seminar.
+	* folio/papers: Folder for papers.
+	* folio/test/canvas/dt.hh: Old test for canvas.
+	* folio/test/canvas/dt.spe.hh: Old test for canvas spe.
+	* folio/test/canvas: Old test for canvas.
+	* folio/test/chamfer.cc: Test file for chamfer.
+	* folio/test/dt.cc: Test file for DT algorithms.
+	* folio/test/dt_bench.cc: Test file for benching DT algorithms.
+	* folio/test/naive.cc: Naive testing DT version.
+	* folio/test/psn.cc: First DT algorithm using PSN.
+	* folio/test/psn_log.cc: PSN algorithm with debug structures.
+	* folio/test: Folder for test files.
+
 2008-05-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* geraud/fllt.cc: Merge upper and lower level set in fllt.
