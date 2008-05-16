@@ -1,3 +1,13 @@
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix threshold testes.
+
+	* mln/binarization/threshold.hh: Make argument's name more explicit.
+
+	* tests/binarization/thresholding.cc: Rename as ...
+	* tests/binarization/threshold.cc: ... this.
+	* tests/binarization/Makefile.am: Update makefile rule.
+
 2008-05-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have most of the test suite compile again.

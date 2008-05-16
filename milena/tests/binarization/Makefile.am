@@ -5,6 +5,6 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   thresholding
 
-thresholding_SOURCES = thresholding.cc
+threshold_SOURCES = threshold.cc
 
 TESTS = $(check_PROGRAMS)

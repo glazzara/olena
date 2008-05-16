@@ -63,7 +63,7 @@ namespace mln
     template <typename I>
     inline
     mln_concrete_ch_value(I, bool)
-    threshold(const Image<I>& input, const mln_value(I) value)
+    threshold(const Image<I>& input, const mln_value(I) threshold_value)
     {
       trace::entering("binarization::threshold");
   
@@ -73,7 +73,9 @@ namespace mln
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
       
-      fun::v2b::threshold< mln_value(I) > f(value);
+      // FIXME : threshold value should be a percentage.
+      fun::v2b::threshold< mln_value(I) > f(threshold_value);
+      
       output = binarization::binarization(exact(input), f);
      
       trace::exiting("binarization::threshold");

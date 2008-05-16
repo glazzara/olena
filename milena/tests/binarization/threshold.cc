@@ -46,8 +46,8 @@ int main(int argc, char **)
   { 
     image2d<int_u8> lena;
     io::pgm::load(lena, MLN_IMG_DIR "lena.pgm");
-    // FIXME: argc?  Weird.
-    io::pbm::save(binarization::threshold(lena, argc), "out1.pgm");
+    
+    io::pbm::save(binarization::threshold(lena, 50), "out1.pgm");
   }
 
   {
@@ -57,7 +57,6 @@ int main(int argc, char **)
     
     level::paste(l, lena);
     
-    // FIXME: argc?  Weird.
-    io::pbm::save(binarization::threshold(lena, argc), "out2.pgm");
+    io::pbm::save(binarization::threshold(lena, 50), "out2.pgm");
   }
 }
