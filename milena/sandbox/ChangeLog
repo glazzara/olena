@@ -1,3 +1,7 @@
+2008-05-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: FLLT : Finalize merge.
+
 2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
 
 	Maze test.
