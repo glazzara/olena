@@ -59,6 +59,8 @@ namespace mln
 
       quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.npoints());
 
+      qk._qT = - qk._qT; // FIXME : why?
+
       return qk;
     }
 

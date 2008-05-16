@@ -192,18 +192,10 @@ namespace mln
       mln_precondition(cloud.npoints() != 0);
 
       // Shuffle cloud
-      for (size_t i = 0; i < cloud.npoints(); i++)
-        {
-          size_t r = rand() % cloud.npoints();
-          P tmp;
-          tmp = cloud[i];
-          cloud.hook_()[i] = cloud[r];
-          cloud.hook_()[r] = tmp;
-        }
-      
+      shuffle(cloud);
+            
       //init rigid transform qk
       quat7<P::dim> qk;
-
 
 
 #ifndef NDEBUG       // FIXME: theo
@@ -244,7 +236,7 @@ namespace mln
               if (tmp.has(qp))
                 tmp(qp) = c;
             }
-            if (e == 0)
+            //if (e == 0)
               io::ppm::save(tmp, "tmp.ppm");
           }
 #endif 

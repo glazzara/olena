@@ -1,5 +1,21 @@
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
+	Add few results about final_qk.
+
+	bunch of results : _1 and _2 means using stddev 1 or 2 times.
+
+	* jardonnet/test/final: New.
+	* jardonnet/test/final/final_qk_1.ppm: New.
+	* jardonnet/test/final/no_final.ppm: New.
+	* jardonnet/test/final/final_qk_2.ppm: New.
+	* jardonnet/test/final/final_qk2_1.ppm: New.
+	* jardonnet/test/final/final_qk2_2.ppm: New.
+
+	* jardonnet/registration/final_qk.hh: Update, inverse translation.
+	* jardonnet/registration/icp.hh: Update, cleanup.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
 	Add functions on box : enlarge and bigger.
 
 	* jardonnet/registration/tools.hh (enlarge,bigger): Add.
