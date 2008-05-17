@@ -1,3 +1,18 @@
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add results about final_qk.
+
+	fun_k_cn_xn.ppm
+	fun : final_qk v1 or v2
+	k : nstddev == k * stdddev
+	cn,xn : images from img/
+
+	* jardonnet/test/final/final_qk_1.ppm: .
+	* jardonnet/test/final/final_qk_3.ppm: New.
+	* jardonnet/test/final/final_qk_1_c1_x1.ppm: New.
+	* jardonnet/test/final/final_qk_2_c1_x1.ppm: New.
+	* jardonnet/test/final/no_final_1_c1_x1.ppm: New.
+
 2008-05-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* geraud/fllt.cc: FLLT : Finalize merge.
