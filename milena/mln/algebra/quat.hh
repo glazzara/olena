@@ -410,6 +410,9 @@ namespace mln
     quat& quat::set_unit()
     {
       v_.normalize();
+
+      assert(this->is_unit());
+      
       return *this;
     }
 
@@ -554,10 +557,7 @@ namespace mln
     inline
     bool about_equal(const T& f, const T& q)
     {
-      // FIXME: Use abs!
-      if (f > q)
-	return (f - q ) < mln_epsilon(T);
-      return (q - f) < mln_epsilon(T);
+      return math::abs(q - f) <= mln_epsilon(T);
     }
 
     inline

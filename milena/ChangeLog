@@ -1,3 +1,21 @@
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix algebra::about_equal.
+
+	if abs(a-b) < mln_epsilon(T), a and b are about_equal.
+	becomes
+	if abs(a-b) <= mln_epsilon(T), a and b are about_equal.
+
+	In particular, this update fix the following bug:
+
+	quat q; q.set_unit(); assert(q.is_unit())
+	could fail even if q != 0;
+
+	set_unit() now has is_unit() as postcondition.
+	I realize that it has to be fix also since q could be equal 0;
+
+	* mln/algebra/quat.hh: .
+
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Really fix binarization testes.
