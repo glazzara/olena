@@ -1,5 +1,16 @@
 2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
+	Fix algebra::quat::set_unit.
+
+	set_unit(q):
+	if q != 0
+	  set_unit; postcondition(is_unit)
+	else return
+
+	* mln/algebra/quat.hh: .
+
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
 	Fix algebra::about_equal.
 
 	if abs(a-b) < mln_epsilon(T), a and b are about_equal.

@@ -409,9 +409,11 @@ namespace mln
     inline
     quat& quat::set_unit()
     {
+      if (about_equal(norm::l2(this->to_vec()), 0.f))
+        return *this;
+      
       v_.normalize();
-
-      assert(this->is_unit());
+      mln_postcondition(this->is_unit());
       
       return *this;
     }
