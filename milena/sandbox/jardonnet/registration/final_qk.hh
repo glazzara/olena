@@ -46,10 +46,10 @@ namespace mln
 
       for (size_t i = 0; i < c.npoints(); ++i)
 	{
+          algebra::vec<3,float> ci = c[i];
 	  algebra::vec<3,float> xki = map(c[i]);
-	  algebra::vec<3,float> ci = c[i];
 
-	  if (norm::l2(ci - xki) > nstddev)
+	  if (norm::l2(ci - xki) < nstddev)
 	    {
 	      newc.append(c[i]);
 	      mu_newc += ci;
@@ -59,7 +59,7 @@ namespace mln
 
       quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.npoints());
 
-      qk._qT = - qk._qT; // FIXME : why?
+      //qk._qT = - qk._qT; // FIXME : why?
 
       return qk;
     }

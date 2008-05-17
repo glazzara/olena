@@ -1,5 +1,17 @@
 2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
+	Update final_qk.
+
+	Final_qk didn't use correct points.        
+
+	* jardonnet/test/icp.cc: .
+	* jardonnet/registration/final_qk.hh: .
+	* jardonnet/registration/icp.hh: .
+
+	* jardonnet/test/no_final.ppm: New.
+
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
 	Up and add test files.
 
 	Add test 5

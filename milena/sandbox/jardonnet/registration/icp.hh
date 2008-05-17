@@ -133,12 +133,10 @@ namespace mln
 
           
           //update qk
-          /*
           if (k > 3)
             qk = update_qk(buf_qk, buf_dk);
           qk._qR.set_unit();
           buf_qk[0] = qk;
-          */
           
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
@@ -180,7 +178,7 @@ namespace mln
     template <typename P, typename M>
     inline
     quat7<P::dim>
-    icp(p_array<P> cloud, //here reference implies low efficiency (FIXME:check again)
+    icp(p_array<P> cloud, // More efficient without reference
         const M& map,
         const float q,
         const unsigned nb_it,
@@ -199,7 +197,7 @@ namespace mln
 
 
 #ifndef NDEBUG       // FIXME: theo
-      image2d<value::rgb8> tmp(500,800);
+      image2d<value::rgb8> tmp(500,500); // FIXME :
       level::fill(tmp, literal::black);
       //write X
       mln_piter(p_array<P>) p(x);
@@ -207,7 +205,7 @@ namespace mln
       {
         point2d qp = make::point2d(p[0], p[1]);
         if (tmp.has(qp))
-          tmp(qp) = literal::white;
+          tmp(qp) = literal::green;
       }
 #endif
 
@@ -224,7 +222,7 @@ namespace mln
           {
             value::rgb8 c;
             switch (e) {
-            case 2: c = literal::green; break;
+            case 2: c = literal::white; break;
             case 1: c = literal::blue; break;
             case 0: c = literal::red; break;
             }
@@ -236,8 +234,7 @@ namespace mln
               if (tmp.has(qp))
                 tmp(qp) = c;
             }
-            //if (e == 0)
-              io::ppm::save(tmp, "tmp.ppm");
+            io::ppm::save(tmp, "tmp.ppm");
           }
 #endif 
         }

@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 
   qk.apply_on(c, c, c.npoints());
   
-  //init output image             
+  //init output image
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
 
   float stddev, mean;
@@ -77,10 +77,10 @@ int main(int argc, char* argv[])
   std::vector<float> length(c.npoints());
   for (size_t i = 0; i < c.npoints(); i++)
     length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
-
   
   // final transform
   quat7<3> fqk = registration::final_qk(c, map, 2 * stddev);
+  std::cout << fqk << std::endl; 
   fqk.apply_on(c, c, c.npoints());
 
   //to 2d : projection (FIXME:if 3d)
