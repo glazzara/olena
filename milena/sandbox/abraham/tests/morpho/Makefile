@@ -16,4 +16,6 @@ distclean: clean
 .PHONY: clean distclean
 
 ## Depedencies
-tikz.o: ../../../mln/io/tikz/save.hh
+test_watershed_topo.cc: ../../mln/morpho/basic_najman.hh
+test_watershed.cc: ../../mln/morpho/basic_najman.hh
+test_componenet_tree.cc: ../../mln/morpho/basic_najman.hh

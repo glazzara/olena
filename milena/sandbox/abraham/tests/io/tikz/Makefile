@@ -21,7 +21,6 @@ clean:
 	rm -rf *~
 	rm -rf *.log
 	rm -rf *.aux
-	rm -rf
 
 distclean: clean
 	rm -rf $(EXEC)

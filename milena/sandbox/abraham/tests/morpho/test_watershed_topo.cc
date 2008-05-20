@@ -9,7 +9,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include "basic_najman.hh"
+#include <mln/morpho/basic_najman.hh>
 #include <string>
 #include <iostream>
 
@@ -30,10 +30,11 @@ int main ()
 
   // #define TEST
 
-  //   io::pgm::load(input, "./images/test_watershed.pgm");
+  //  io::pgm::load(input, "./images/test_watershed.pgm");
   // io::pgm::load(input, "./images/little_test.pgm");
-  io::pgm::load(input, "./images/test_2.pgm");
-  // io::pgm::load(input, "./images/+irm6.pgm");
+    io::pgm::load(input, "./images/test_4.pgm");
+  // io::pgm::load(input, "../../img/dots.pgm");
+  //io::pgm::load(input, "./images/+irm6.pgm");
 
  //   io::pgm::load(input, "./images/lena_light.pgm");
  // io::pgm::load(mverif, "./images/result_m_watershed.pgm");

@@ -8,7 +8,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include "basic_najman.hh"
+#include <mln/morpho/basic_najman.hh>
 #include <string>
 #include <iostream>
 

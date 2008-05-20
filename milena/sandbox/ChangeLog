@@ -1,3 +1,35 @@
+2008-05-20  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add a new Watershed algorithm.
+
+	* abraham/tests/morpho/test_component_tree.cc: New.
+	* abraham/tests/morpho/images: New (test images).
+	* abraham/tests/morpho/images/+test_watershed.pgm: New.
+	* abraham/tests/morpho/images/result_m_watershed.pgm: New.
+	* abraham/tests/morpho/images/test_component_tree.pgm: New.
+	* abraham/tests/morpho/images/test_2.pgm: New.
+	* abraham/tests/morpho/images/test_3.pgm: New.
+	* abraham/tests/morpho/images/test_4.pgm: New.
+	* abraham/tests/morpho/images/result_topo_watershed.pgm: New.
+	* abraham/tests/morpho/images/test_watershed.pgm: New.
+	* abraham/tests/morpho/images/+irm6.pgm: New.
+	* abraham/tests/morpho/images/test_component_mapping.pgm: New.
+	* abraham/tests/morpho/test_watershed.cc: New.
+	* abraham/tests/morpho/test_watershed_topo.cc: New.
+	* abraham/tests/morpho/ref/src/lib/lwshedtopo.c:
+	uncomment specific pieces of code to show debug.
+	* abraham/tests/morpho/Makefile: Fix.
+	* abraham/tests/io/tikz/Makefile: Fix.
+	* abraham/mln/morpho/basic_najman.hh:
+	Add the new watershed from Pink library.
+	* abraham/mln/morpho/test_component_tree.cc: Remove.
+	* abraham/mln/morpho/test_watershed.cc: Remove.
+	* abraham/mln/morpho/test_watershed_topo.cc: Remove.
+	* abraham/mln/morpho/Makefile: Remove.
+	* abraham/mln/io/tikz/save.hh:
+	Add the ability to tag values on images.
+	* abraham/img/dots.pgm: New.
+
 2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Update final_qk.

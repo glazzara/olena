@@ -165,9 +165,7 @@ namespace mln
 	      {
 		file << "\\path (" << p.col() << "," << max_row - p.row() << ") node[fill=";
 		write_value(file, ima(p));
-		file << "] (p_" << p.row() << "_" << p.col() << ") { \\color{";
-		file << "black";
-		file << "}" << "};" << std::endl;
+		file << "] (p_" << p.row() << "_" << p.col() << ") { }" << "};" << std::endl;
 	      }
 	}
 
@@ -184,6 +182,10 @@ namespace mln
 	    min_col = geom::min_col(ima),
 	    max_col = geom::max_col(ima);
 
+	  typedef mln_value(I) ival;
+	  ival mid = (mln_max(ival) - mln_min(ival)) / 2;
+	  mid += mln_min(ival);
+
 	  point2d p;
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    for (p.col() = min_col; p.col() <= max_col; ++p.col())
@@ -191,7 +193,10 @@ namespace mln
 		file << "\\path (" << p.col() << "," << max_row - p.row() << ") node[fill=";
 		write_value(file, ima(p));
 		file << "] (p_" << p.row() << "_" << p.col() << ") { \\color{";
-		file << "black";
+		if (ima(p) > mid)
+		  file << "black";
+		else
+		  file << "white";
 		file << "}" << val(p) << "};" << std::endl;
 	      }
 	}
