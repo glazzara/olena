@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,56 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-# define MLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#ifndef MLN_CORE_CONCEPT_PSEUDO_SITE_HH
+# define MLN_CORE_CONCEPT_PSEUDO_SITE_HH
 
-/*! \file mln/core/internal/point_set_base.hh
+/*! \file mln/core/concept/pseudo_site.hh
  *
- * \brief Definition of a base class for site set classes.
+ * \brief Definition of the concept of mln::Pseudo_Site.
  */
 
-# include <mln/core/concept/point_set.hh>
 # include <mln/core/concept/site_proxy.hh>
-# include <mln/core/grids.hh>
 # include <mln/metal/is_a.hh>
-# include <mln/metal/if.hh>
+
 
 
 namespace mln
 {
 
-  namespace internal
+  // Fwd decl.
+  template <typename E> struct Pseudo_Site;
+
+
+
+  /// Pseudo_Site category flag type.
+  template <>
+  struct Pseudo_Site<void>
   {
+    typedef Site_Proxy<void> super;
+  };
 
 
-    /*! \internal A base class for site set classes.
-     * \p P is a psite type.
-     */
-    template <typename P, typename E>
-    struct site_set_base_ : public Site_Set<E>
-    {
+  /*! \brief Base class for implementation classes of the notion of
+   *  "pseudo site".
+   *
+   * FIXME: Explain...
+   */
+  template <typename E>
+  struct Pseudo_Site : public Site_Proxy<E>
+  {
+    typedef Pseudo_Site<void> category;
 
-      /// Site associated type.
-      typedef typename internal::site_from<P>::ret site;
 
-    protected:
-      site_set_base_();
-    };
+  protected:
+    Pseudo_Site();
+  };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
-    inline
-    site_set_base_<S,E>::site_set_base_()
-    {
-    }
+  template <typename E>
+  Pseudo_Site<E>::Pseudo_Site()
+  {
+    // FIXME
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#endif // ! MLN_CORE_CONCEPT_PSEUDO_SITE_HH

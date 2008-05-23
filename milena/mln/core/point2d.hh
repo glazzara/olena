@@ -35,10 +35,61 @@
  */
 
 # include <mln/core/point.hh>
+# include <mln/core/concept/site_proxy.hh> // For site_const_impl and site_mutable_impl.
+# include <mln/core/internal/force_exact.hh>
 
 
 namespace mln
 {
+
+  namespace internal
+  {
+
+    // Specialization.
+
+    template <typename C, typename E>
+    struct site_const_impl< point_<grid::square, C>, E >
+    {
+      // Either unproxy() or to_site() can be used below.  In the
+      // former case, the unproxied features ind() because it is a
+      // point_ or another proxy to a point_.
+      C row() const
+      {
+	return internal::force_exact<const E>(*this).to_site().row();
+      }
+      C col() const
+      {
+	return internal::force_exact<const E>(*this).to_site().col();
+      }
+    };
+
+
+    // Specialization for point_<M,C>.
+
+    template <typename C, typename E>
+    struct site_mutable_impl< point_<grid::square, C>, E > :
+           site_const_impl  < point_<grid::square, C>, E >
+    {
+    private:
+      typedef site_const_impl< point_<grid::square, C>, E > super;
+    public:
+
+      using super::row;
+      using super::col;
+
+      C& row()
+      {
+	return internal::force_exact<E>(*this).to_site().row();
+      }
+      C& col()
+      {
+	return internal::force_exact<E>(*this).to_site().col();
+      }
+    };
+
+  } // end of namespace mln::internal
+
+
 
   /*! \brief Type alias for a point defined on the 2D square grid with
    * integer coordinates.

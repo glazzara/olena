@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,56 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-# define MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-
-/*! \file mln/core/internal/point_set_base.hh
+/*! \file tests/core/p_array.cc
  *
- * \brief Definition of a base class for site set classes.
+ * \brief Tests on mln::p_array.
  */
 
-# include <mln/core/concept/point_set.hh>
-# include <mln/core/concept/site_proxy.hh>
-# include <mln/core/grids.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/metal/if.hh>
+#include <iterator>
+
+#include <mln/core/point2d.hh>
+#include <mln/core/p_array.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace internal
-  {
+  typedef p_array<point2d> Arr;
 
+  Arr pa;
+  pa
+    .append(make::point2d(6, 9))
+    .append(make::point2d(4, 2))
+    .append(make::point2d(4, 2))
+    .append(make::point2d(5, 1));
+  mln_assertion(pa.nsites() == 4);
 
-    /*! \internal A base class for site set classes.
-     * \p P is a psite type.
-     */
-    template <typename P, typename E>
-    struct site_set_base_ : public Site_Set<E>
-    {
+  mlc_equal( mln_psite_(Arr)::site, point2d )::check();
 
-      /// Site associated type.
-      typedef typename internal::site_from<P>::ret site;
+  mln_psite_(Arr) p(pa, 0);
+  std::cout << p.to_site() << ' '
+ 	    << p.row()     << ' '
+	    << point2d(p)  << ' '
+	    << std::endl;
 
-    protected:
-      site_set_base_();
-    };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename S, typename E>
-    inline
-    site_set_base_<S,E>::site_set_base_()
-    {
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_POINT_SET_BASE_HH
+  std::copy(pa.vect().begin(), pa.vect().end(),
+	    std::ostream_iterator<point2d>(std::cout, " "));
+  std::cout << std::endl;
+}

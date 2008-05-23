@@ -39,6 +39,7 @@
 # include <mln/core/concept/point_iterator.hh>
 # include <mln/trait/site_sets.hh>
 # include <mln/metal/not_equal.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
@@ -147,6 +148,8 @@ namespace mln
     mlc_not_equal( mln_trait_site_set_bbox(E),     mln::trait::undef )::check();
     mlc_not_equal( mln_trait_site_set_contents(E), mln::trait::undef )::check();
     mlc_not_equal( mln_trait_site_set_arity(E),    mln::trait::undef )::check();
+    // FIXME: also test something like
+    //        mlc_is_a( mln_trait_site_set_nsites(E),   mln::trait::site_set::nsites::any   )::check();
 
     // Check associated types.
     typedef mln_site(E)  site;

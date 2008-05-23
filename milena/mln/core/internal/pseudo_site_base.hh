@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-# define MLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#ifndef MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
+# define MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
 
-/*! \file mln/core/internal/point_set_base.hh
+/*! \file mln/core/internal/pseudo_site_base.hh
  *
- * \brief Definition of a base class for site set classes.
+ * \brief Base class to factor code for pseudo site classes.
  */
 
-# include <mln/core/concept/point_set.hh>
-# include <mln/core/concept/site_proxy.hh>
-# include <mln/core/grids.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/metal/if.hh>
+# include <mln/core/concept/pseudo_site.hh>
 
 
 namespace mln
@@ -46,35 +42,41 @@ namespace mln
   namespace internal
   {
 
-
-    /*! \internal A base class for site set classes.
-     * \p P is a psite type.
+    /*! \internal A base class for pseudo sites.
+     *
+     * Parameter \c P is FIXME: a point site type.
      */
-    template <typename P, typename E>
-    struct site_set_base_ : public Site_Set<E>
+    template <bool is_mutable, typename P, typename E>
+    struct pseudo_site_base_ : Pseudo_Site<E>,
+
+                               proxy_impl<P, E>,
+
+                               site_impl< is_mutable,
+					  typename site_from<P>::ret,
+					  E >
     {
 
-      /// Site associated type.
+      // The associated site type.
       typedef typename internal::site_from<P>::ret site;
 
     protected:
-      site_set_base_();
+      pseudo_site_base_();
     };
 
 
-# ifndef MLN_INCLUDE_ONLY
+#ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <bool is_mutable, typename P, typename E>
     inline
-    site_set_base_<S,E>::site_set_base_()
+    pseudo_site_base_<is_mutable, P, E>::pseudo_site_base_()
     {
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+#endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::internal
+  } // end of namespace internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_POINT_SET_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH

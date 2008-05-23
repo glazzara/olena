@@ -1,3 +1,30 @@
+2008-05-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add the basics for pseudo sites; test on p_array.
+
+	* tests/core/p_array.cc: New.
+	* doc/technical: New.
+	* doc/technical/designs: New.
+	* doc/technical/designs/site_psite_piter: New.
+	* doc/technical/designs/site_psite_piter/README: New.
+	* mln/core/macros.hh (mln_subject, mln_subject_): New.
+	* mln/core/point.hh: New comment.
+	* mln/core/internal/point_set_base.hh: .
+	* mln/core/internal/pseudo_site_base.hh: New.
+	* mln/core/p_array_bb.hh: New.
+	* mln/core/point2d.hh
+	(site_const_impl, site_mutable_impl): New specialization.
+	* mln/core/p_array.hh (p_array_psite): New.
+	(npoints): Rename as...
+	(nsites): ...this.
+	(bbox, bb_, bb_needs_update_, hook_): Remove.
+	(has): Update sig with the new psite type; adapt body.
+	* mln/core/concept/proxy.hh: New.
+	* mln/core/concept/point_set.hh: .
+	* mln/core/concept/site_proxy.hh: New.
+	* mln/core/concept/pseudo_site.hh: New.
+	* mln/core/concept/site_iterator.hh: New.
+
 2008-05-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update site set concepts and generic box.

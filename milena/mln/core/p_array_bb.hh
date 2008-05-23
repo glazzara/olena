@@ -36,7 +36,6 @@
 # include <vector>
 
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/accu/bbox.hh>
 
 
@@ -44,116 +43,28 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> class p_array;
   template <typename P> struct p_array_fwd_piter_;
   template <typename P> struct p_array_bkd_piter_;
 
 
-  // HOT...
-
-  template <typename P>
-  class p_array_psite : public internal::pseudo_site_base_< true, // Mutable.
-							    P,
-							    p_array_psite<P> >
-  {
-    typedef p_array_psite<P> self;
-    typedef internal::pseudo_site_base_<true, P, self> super;
-
-  public:
-
-    // As a Proxy:
-
-    typedef P subject;
-    typedef const P& q_subject;
-    q_subject unproxy() const;
-    P& unproxy();
-
-    // As a Site_Proxy:
-
-    typedef typename super::site site;
-
-    const site& to_site() const
-    {
-      const site* s;
-      internal::get_adr(s, *this);
-      return *s;
-    }
-
-    site& to_site()
-    {
-      site* s;
-      internal::get_adr(s, *this);
-      return *s;
-    }
-
-    // As Itself.
-
-    p_array_psite()
-      : arr_(0),
-	i_(0)
-    {
-    }
-
-    p_array_psite(p_array<P>& arr, unsigned i)
-      : arr_(&arr),
-	i_(int(i))
-    {
-    }
-
-    int index() const
-    {
-      return i_;
-    }
-
-    const p_array<P>* target() const
-    {
-      return arr_;
-    }
-
-    void print() const
-    {
-      std::cout << i_ << "-th site of " << arr_ << " => site " << to_site() << std::endl;
-    }
-
-    p_array<P>* arr_; // FIXME: Or const!
-    int i_;
-  };
-
-
-
-
-  namespace trait
-  {
-
-    template <typename P>
-    struct site_set_< p_array<P> >
-    {
-      typedef trait::site_set::nsites::known   nsites;
-      typedef trait::site_set::bbox::unknown   bbox;
-      typedef trait::site_set::contents::free  contents;
-      typedef trait::site_set::arity::multiple arity;
-    };
-
-  } // end of namespace trait
-
-
-
-
-  /*! \brief Site set class based on std::vector.
+  /*! \brief Point set class based on std::vector.
    *
-   * This is a multi-set of sites.
+   * This is a multi-set of points.
+   *
+   * \warning We have some troubles with point set comparison based on
+   * a call to npoints().  FIXME: Explain!
+   *
+   * \todo Make it work with P being a Point_Site.
    */
   template <typename P>
   class p_array : public internal::site_set_base_< P, p_array<P> >
   {
-    typedef internal::site_set_base_< P, p_array<P> > super;
   public:
-
     /// The associated psite type.
-    typedef p_array_psite<P> psite;
+    typedef P psite;
 
-    /// The associated site type.
-    typedef typename super::site site;
+    /// The associated point type.
+    typedef mln_point(P) point;
 
     /// Forward Point_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
@@ -170,13 +81,14 @@ namespace mln
     /// Reserve \p n cells.
     void reserve(std::size_t n);
 
-    /// Test is \p p belongs to this site set.
+    /// Test is \p p belongs to this point set.
     bool has(const psite& p) const;
 
-    // FIXME: Add an overload "has(index)".
+    /// Give the number of points.
+    std::size_t npoints() const;
 
-    /// Give the number of sites.
-    std::size_t nsites() const;
+    /// Give the exact bounding box.
+    const box_<point>& bbox() const;
 
     /// Append a point \p p.
     p_array<P>& append(const P& p);
@@ -190,28 +102,31 @@ namespace mln
     /// Return the corresponding std::vector of points.
     const std::vector<P>& vect() const;
 
-    /// Return the \p i-th site (constant).
+    /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
 
-    /// Return the \p i-th site (mutable).
-    P& operator[](unsigned i);
+    /// Hook to data.
+    std::vector<P>& hook_();
 
   protected:
 
     std::vector<P> vect_;
+    mutable accu::bbox<point> bb_;
+    mutable bool bb_needs_update_;
+
+    void update_bb_() const;
+    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-  // p_array<P>
-
   template <typename P>
   inline
   p_array<P>::p_array()
   {
+    bb_needs_update_ = false;
   }
 
   template <typename P>
@@ -219,6 +134,7 @@ namespace mln
   p_array<P>::p_array(const std::vector<P>& vect)
     : vect_(vect)
   {
+    bb_needs_update_ = true;
   }
 
   template <typename P>
@@ -231,23 +147,51 @@ namespace mln
 
   template <typename P>
   inline
-  bool
-  p_array<P>::has(const psite& p) const
+  std::vector<P>&
+  p_array<P>::hook_()
   {
-    mln_precondition(p.target() == this); // FIXME: Refine.
-    if (p.index() < 0 || p.index() >= vect_.size())
-      return false;
-    site s_ = (*this)[p.index()];
-    mln_invariant(p.to_site() == s_);
-    return true;
+    return vect_;
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array<P>::update_bb_() const
+  {
+    bb_.init();
+    for (unsigned i = 0; i < vect_.size(); ++i)
+      bb_.take(vect_[i]);
+    bb_needs_update_ = false;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_array<P>::has(const P& p) const
+  {
+    for (unsigned i = 0; i < vect_.size(); ++i)
+      if (vect_[i] == p)
+	return true;
+    return false;
   }
 
   template <typename P>
   inline
   std::size_t
-  p_array<P>::nsites() const
+  p_array<P>::npoints() const
   {
     return vect_.size();
+  }
+
+  template <typename P>
+  inline
+  const box_<mln_point(P)>&
+  p_array<P>::bbox() const
+  {
+    mln_precondition(npoints() != 0);
+    if (bb_needs_update_)
+      update_bb_();
+    return bb_.to_result();
   }
 
   template <typename P>
@@ -256,6 +200,8 @@ namespace mln
   p_array<P>::append(const P& p)
   {
     vect_.push_back(p);
+    if (! bb_needs_update_)
+      bb_needs_update_ = true;
     return *this;
   }
 
@@ -266,6 +212,8 @@ namespace mln
   {
     vect_.insert(vect_.end(),
 		 other.vect().begin(), other.vect().end());
+    if (! bb_needs_update_)
+      bb_needs_update_ = true;
     return *this;
   }
 
@@ -275,6 +223,7 @@ namespace mln
   p_array<P>::clear()
   {
     vect_.clear();
+    bb_needs_update_ = false;
   }
 
   template <typename P>
@@ -290,38 +239,8 @@ namespace mln
   const P&
   p_array<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < nsites());
+    mln_precondition(i < npoints());
     return vect_[i];
-  }
-
-  template <typename P>
-  inline
-  P&
-  p_array<P>::operator[](unsigned i)
-  {
-    mln_precondition(i < nsites());
-    return vect_[i];
-  }
-
-
-  // p_array_psite<P>
-
-  template <typename P>
-  inline
-  const P&
-  p_array_psite<P>::unproxy() const
-  {
-    mln_precondition(arr_ != 0);
-    return (*arr_)[i_];
-  }
-
-  template <typename P>
-  inline
-  P&
-  p_array_psite<P>::unproxy()
-  {
-    mln_precondition(arr_ != 0);
-    return (*arr_)[i_];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

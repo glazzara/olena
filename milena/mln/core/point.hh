@@ -59,6 +59,8 @@ namespace mln
   namespace internal
   {
 
+    // Helper point_to_.
+
     template <typename M, typename C>
     struct point_to_
     {

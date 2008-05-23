@@ -251,6 +251,12 @@
 # define mln_site_(T)              T::site
 /// \}
 
+/// Shortcuts to access the subject type associated to T.
+/// \{
+# define mln_subject(T)      typename T::subject
+# define mln_subject_(T)              T::subject
+/// \}
+
 
 // v
 
