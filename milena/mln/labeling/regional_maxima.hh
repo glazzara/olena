@@ -105,9 +105,9 @@ namespace mln
 	regional_maxima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_psites_decreasing(input)),
-	    attr(input.domain())
+	    s(level::sort_psites_decreasing(input))
 	{
+	  initialize(attr, input);
 	}
       };
 

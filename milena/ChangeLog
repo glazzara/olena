@@ -1,3 +1,16 @@
+2008-05-23  Thierry Géraud  <theo@lrde.epita.fr>
+
+	Fix some details in morpho and labeling.
+
+	* mln/morpho/erosion.hh
+	(erosion_on_function_, erosion_on_set_): Change 'has' to 'owns_'.
+	* mln/morpho/dilation.hh
+	(dilation_on_function_, dilation_on_set_): Likewise.	
+	* mln/labeling/regional_minima.hh
+	(regional_minima_functor): Fix initialization of 'attr'; use
+	the proper command instead of ctor call.
+	* mln/labeling/regional_maxima.hh: Likewise.
+
 2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix algebra::quat::set_unit.

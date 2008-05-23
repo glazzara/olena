@@ -117,7 +117,7 @@ namespace mln
 	for_all(p)
 	  {
 	    max.init();
-	    for_all(q) if (input.has(q))
+	    for_all(q) if (input.owns_(q))
 	      max.take(input(q));
 	    output(p) = max.to_result();
 	  }
@@ -140,7 +140,7 @@ namespace mln
 	mln_qiter(W) q(win, p);
 	for_all(p)
 	  if (!input(p))
-	    for_all(q) if (input.has(q))
+	    for_all(q) if (input.owns_(q))
 	      if (input(q))
 		{
 		  output(p) = true;

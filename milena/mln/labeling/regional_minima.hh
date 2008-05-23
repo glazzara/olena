@@ -104,9 +104,9 @@ namespace mln
 	regional_minima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_psites_increasing(input)),
-	    attr(input.domain())
+	    s(level::sort_psites_increasing(input))
 	{
+	  initialize(attr, input);
 	}
       };
 
