@@ -1,3 +1,9 @@
+2008-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a sandbox directory for Aroune Aroumougame.
+
+	* aroumougame/: New directory.
+
 2008-05-20  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add a new Watershed algorithm.
