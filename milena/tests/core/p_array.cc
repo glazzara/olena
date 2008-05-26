@@ -59,7 +59,15 @@ int main()
 	    << point2d(p)  << ' '
 	    << std::endl;
 
+
   std::copy(pa.vect().begin(), pa.vect().end(),
 	    std::ostream_iterator<point2d>(std::cout, " "));
   std::cout << std::endl;
+
+  {
+    mln_piter_(Arr) p(pa);
+    for_all(p)
+      std::cout << p << ' ';
+    std::cout << std::endl;
+  }
 }

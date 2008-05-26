@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
-# define MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
+#ifndef MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
+# define MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/pseudo_site_base.hh
+/*! \file mln/core/internal/site_iterator_base.hh
  *
- * \brief Base class to factor code for pseudo site classes.
+ * \brief Base class to factor code for site iterator classes.
  */
 
-# include <mln/core/concept/pseudo_site.hh>
+# include <mln/core/concept/site_iterator.hh>
 
 
 namespace mln
@@ -42,18 +42,18 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for pseudo sites.
+    /*! \internal A base class for site iterators.
      *
      * Parameter \c P is FIXME: a point site type.
      */
-    template <bool is_mutable, typename P, typename E>
-    struct pseudo_site_base_ : Pseudo_Site<E>,
+    template <typename P, typename E>
+    struct site_iterator_base_ : Site_Iterator<E>,
 
-                               proxy_impl<P, E>,
+                                 proxy_impl<P, E>,
 
-                               site_impl< is_mutable,
-					  typename site_from<P>::ret,
-					  E >
+                                 site_impl< false, // Constant access to site / subject.
+					    typename site_from<P>::ret,
+					    E >
     {
 
       // The associated site type.
@@ -65,17 +65,35 @@ namespace mln
       // The associated q_subject type (as a Proxy).
       typedef const P& q_subject;
 
+      /*! \brief Conversion towards the site it designates.
+       *
+       * \warning This is a final method; iterator classes should not
+       * re-defined this method.
+       *
+       * \pre The iterator is valid.
+       */ 
+      operator site() const;
+
     protected:
-      pseudo_site_base_();
+      site_iterator_base_();
     };
 
 
 #ifndef MLN_INCLUDE_ONLY
 
-    template <bool is_mutable, typename P, typename E>
+    template <typename P, typename E>
     inline
-    pseudo_site_base_<is_mutable, P, E>::pseudo_site_base_()
+    site_iterator_base_<P, E>::site_iterator_base_()
     {
+    }
+
+    template <typename P, typename E>
+    inline
+    site_iterator_base_<P, E>::operator site() const
+    {
+      typedef proxy_impl<P, E> super;
+      mln_precondition(exact(this)->is_valid());
+      return this->super::operator site();
     }
 
 #endif // ! MLN_INCLUDE_ONLY
@@ -85,4 +103,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_PSEUDO_SITE_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH

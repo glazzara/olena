@@ -1,3 +1,21 @@
+2008-05-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle fwd iterations on p_array.
+
+	* tests/core/p_array.cc: Add iteration test.
+	* mln/core/internal/site_iterator_base.hh: New; based upon...
+	* mln/core/internal/pseudo_site_base.hh: ...this.
+	* mln/core/internal/pseudo_site_base.hh
+	(subject, q_subject): New; factor those definitions.
+	* mln/core/p_array_piter.hh (p_array_fwd_piter_): Update.
+	(p_array_bkd_piter_): Deactivate.
+	* mln/core/p_array.hh
+	(p_array): Change into constant proxy; move defs into guards.
+	(to_site): Delete mutable version.
+	(change_target): New.
+	* mln/core/concept/site_iterator.hh (operator site): Remove;
+	that was obsolete code.
+
 2008-05-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the basics for pseudo sites; test on p_array.

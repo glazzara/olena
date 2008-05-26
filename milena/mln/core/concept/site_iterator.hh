@@ -71,18 +71,6 @@ namespace mln
      */ 
     void next(); // final
 
-    using Site_Proxy<E>::site;
-
-    /*! \brief Go to the next element.
-     *
-     * \warning This is a final method; iterator classes should not
-     * re-defined this method.  The actual "next" operation has to be
-     * defined through the \em next_ method.
-     *
-     * \pre The iterator is valid.
-     */ 
-    operator site() const;
-
   protected:
     Site_Iterator();
   };
@@ -97,14 +85,6 @@ namespace mln
   {
     mln_precondition(exact(this)->is_valid());
     exact(this)->next_();
-  }
-
-  template <typename E>
-  inline
-  Site_Iterator<E>::operator site() const
-  {
-    mln_precondition(exact(this)->is_valid());
-    return exact(this)->to_site();
   }
 
   template <typename E>

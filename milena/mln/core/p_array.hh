@@ -49,10 +49,10 @@ namespace mln
   template <typename P> struct p_array_bkd_piter_;
 
 
-  // HOT...
+  // p_array_psite<P>
 
   template <typename P>
-  class p_array_psite : public internal::pseudo_site_base_< true, // Mutable.
+  class p_array_psite : public internal::pseudo_site_base_< false, // Not mutable.
 							    P,
 							    p_array_psite<P> >
   {
@@ -63,59 +63,33 @@ namespace mln
 
     // As a Proxy:
 
-    typedef P subject;
-    typedef const P& q_subject;
-    q_subject unproxy() const;
-    P& unproxy();
+    const P& unproxy() const;
 
     // As a Site_Proxy:
 
     typedef typename super::site site;
 
-    const site& to_site() const
-    {
-      const site* s;
-      internal::get_adr(s, *this);
-      return *s;
-    }
-
-    site& to_site()
-    {
-      site* s;
-      internal::get_adr(s, *this);
-      return *s;
-    }
+    const site& to_site() const;
 
     // As Itself.
 
-    p_array_psite()
-      : arr_(0),
-	i_(0)
-    {
-    }
+    p_array_psite();
 
-    p_array_psite(p_array<P>& arr, unsigned i)
-      : arr_(&arr),
-	i_(int(i))
-    {
-    }
+    p_array_psite(const p_array<P>& arr, int i);
 
-    int index() const
-    {
-      return i_;
-    }
+    int index() const;
 
-    const p_array<P>* target() const
-    {
-      return arr_;
-    }
+    int& index();
 
-    void print() const
-    {
-      std::cout << i_ << "-th site of " << arr_ << " => site " << to_site() << std::endl;
-    }
+    const p_array<P>* target() const;
 
-    p_array<P>* arr_; // FIXME: Or const!
+    void change_target(const p_array<P>& arr);
+
+    void print() const;
+
+  private:
+
+    const p_array<P>* arr_;
     int i_;
   };
 
@@ -159,7 +133,7 @@ namespace mln
     typedef p_array_fwd_piter_<P> fwd_piter;
 
     /// Backward Point_Iterator associated type.
-    typedef p_array_bkd_piter_<P> bkd_piter;
+    typedef p_array_fwd_piter_<P> bkd_piter; // HOT: FIXME
 
     /// Constructor.
     p_array();
@@ -235,7 +209,7 @@ namespace mln
   p_array<P>::has(const psite& p) const
   {
     mln_precondition(p.target() == this); // FIXME: Refine.
-    if (p.index() < 0 || p.index() >= vect_.size())
+    if (p.index() < 0 || p.index() >= int(vect_.size()))
       return false;
     site s_ = (*this)[p.index()];
     mln_invariant(p.to_site() == s_);
@@ -308,17 +282,74 @@ namespace mln
 
   template <typename P>
   inline
-  const P&
-  p_array_psite<P>::unproxy() const
+  p_array_psite<P>::p_array_psite()
+    : arr_(0),
+      i_(0)
   {
-    mln_precondition(arr_ != 0);
-    return (*arr_)[i_];
   }
 
   template <typename P>
   inline
-  P&
-  p_array_psite<P>::unproxy()
+  p_array_psite<P>::p_array_psite(const p_array<P>& arr, int i)
+    : arr_(&arr),
+      i_(i)
+  {
+  }
+
+  template <typename P>
+  inline
+  const typename p_array_psite<P>::site&
+  p_array_psite<P>::to_site() const
+  {
+    const site* s;
+    internal::get_adr(s, *this);
+    return *s;
+  }
+
+  template <typename P>
+  inline
+  int
+  p_array_psite<P>::index() const
+  {
+    return i_;
+  }
+
+  template <typename P>
+  inline
+  int&
+  p_array_psite<P>::index()
+  {
+    return i_;
+  }
+
+  template <typename P>
+  inline
+  const p_array<P>*
+  p_array_psite<P>::target() const
+  {
+    return arr_;
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array_psite<P>::change_target(const p_array<P>& arr)
+  {
+    arr_ = & arr;
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array_psite<P>::print() const
+  {
+    std::cout << i_ << "-th site of " << arr_ << " => site " << to_site() << std::endl;
+  }
+
+  template <typename P>
+  inline
+  const P&
+  p_array_psite<P>::unproxy() const
   {
     mln_precondition(arr_ != 0);
     return (*arr_)[i_];
