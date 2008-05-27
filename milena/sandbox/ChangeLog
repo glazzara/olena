@@ -1,3 +1,16 @@
+2008-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add 3-D models.
+
+	* aroumougame/test/m0.wrl,
+	* aroumougame/test/m05.wrl,
+	* aroumougame/test/m9l0.wrl,
+	* aroumougame/test/ml0.wrl,
+	* aroumougame/test/ml09.wrl,
+	* aroumougame/test/test.off,
+	* aroumougame/test/test.ply:
+	New.
+
 2008-05-27  Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Remove output file from Aroune's sandbox.
