@@ -61,12 +61,15 @@ namespace mln
       /// The super class.
       typedef internal::graph_base<void, void> super;
 
-      // FIXME: We should return the id of the newly created node.
       /// \brief Add a node.
-      void add_node();
-      // FIXME: We should return the id of the newly created edge.
+      ///
+      /// \return The id of the new node.
+      node_id add_node();
       /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      void add_edge(node_id n1, node_id n2);
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(node_id n1, node_id n2);
     };
 
     /*-----------------.
@@ -81,12 +84,15 @@ namespace mln
       /// The super class.
       typedef internal::graph_base<N, void> super;
 
-      // FIXME: We should return the id of the newly created node.
       /// \brief Add a node.
-      void add_node(const N& data);
-      // FIXME: We should return the id of the newly created edge.
+      ///
+      /// \return The id of the new node.
+      node_id add_node(const N& data);
       /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      void add_edge(node_id n1, node_id n2);
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(node_id n1, node_id n2);
 
       /// Return the data associated to node with id \a n.
       /// \{
@@ -108,12 +114,15 @@ namespace mln
       /// The super class.
       typedef internal::graph_base<N, E> super;
 
-      // FIXME: We should return the id of the newly created node.
       /// \brief Add a node.
-      void add_node(const N& data);
+      ///
+      /// \return The id of the new node.
+      node_id add_node(const N& data);
       /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      // FIXME: We should return the id of the newly created edge.
-      void add_edge(node_id n1, node_id n2, const E& data);
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(node_id n1, node_id n2, const E& data);
 
       /// Return the data associated to node with id \a n.
       /// \{
@@ -146,21 +155,21 @@ namespace mln
     /* Note that ddefinition of members from fully specialized
        template classes are not preceded by `template<>'.  */
     inline
-    void
+    node_id
     graph<void, void>::add_node()
     {
-      super::add_node_(new util::node<void>);
+      return super::add_node_(new util::node<void>);
     }
 
     /* Note that ddefinition of members from fully specialized
        template classes are not preceded by `template<>'.  */
     inline
-    void
+    edge_id
     graph<void, void>::add_edge(node_id n1, node_id n2)
     {
       mln_assertion(n1 < this->nnodes());
       mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<void>(n1, n2));
+      return super::add_edge_(new util::edge<void>(n1, n2));
     }
 
     /*-----------------.
@@ -169,20 +178,20 @@ namespace mln
 
     template<typename N>
     inline
-    void
+    node_id
     graph<N, void>::add_node(const N& data)
     {
-      super::add_node_(new util::node<N>(data));
+      return super::add_node_(new util::node<N>(data));
     }
 
     template<typename N>
     inline
-    void
+    edge_id
     graph<N, void>::add_edge(node_id n1, node_id n2)
     {
       mln_assertion(n1 < this->nnodes());
       mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<void>(n1, n2));
+      return super::add_edge_(new util::edge<void>(n1, n2));
     }
 
     template <class N>
@@ -210,20 +219,20 @@ namespace mln
 
     template<typename N, typename E>
     inline
-    void
+    node_id
     graph<N, E>::add_node(const N& data)
     {
-      super::add_node_(new util::node<N>(data));
+      return super::add_node_(new util::node<N>(data));
     }
 
     template<typename N, typename E>
     inline
-    void
+    edge_id
     graph<N, E>::add_edge(node_id n1, node_id n2, const E& data)
     {
       mln_assertion(n1 < this->nnodes());
       mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<E>(n1, n2, data));
+      return super::add_edge_(new util::edge<E>(n1, n2, data));
     }
 
     template<typename N, typename E>

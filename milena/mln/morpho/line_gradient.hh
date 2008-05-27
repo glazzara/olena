@@ -73,20 +73,15 @@ namespace mln
 	 missing tool) regarding the retrieval of nodes' ids from
 	 points.  */
       std::map<mln::point2d, util::node_id> points;
-      util::node_id id = 0;
 
       // Nodes.
       std::vector<value_t> node_values;
       mln_fwd_piter(image2d<value_t>) p(ima.domain());
       for_all (p)
       {
-	g.add_node (p);
+	util::node_id id = g.add_node (p);
 	node_values.push_back (ima(p));
-	/* FIXME: ``Guessing'' the id of the point just being inserted
-	   is bad.  util:graph<N,E>::add_node should return this
-	   id.  */
 	points[p] = id;
-	++id;
       }
 
       // Edges.
@@ -99,9 +94,10 @@ namespace mln
 	for_all (q)
 	if (ima.has(q))
 	  {
-	    g.add_edge(points[p], points[q]);
+	    util::edge_id id = g.add_edge(points[p], points[q]);
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
+	    assert(id != mln_max(util::edge_id));
 	  }
 
       // Line graph point set.

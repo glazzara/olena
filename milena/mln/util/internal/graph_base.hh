@@ -53,7 +53,14 @@ namespace mln
        (not just typedefs), at least to prevent the user from using a
        node_id where an edge_id is expected (and vice versa).
        Conversion to and from unsigned would still be useful, but it
-       might be safer to turn them into explicit ones.  */
+       might be safer to turn them into explicit ones.
+
+       See what the Vaucanson team did for the handles of
+       vertices/states in their graphs/automata implemenations here:
+
+       https://trac.lrde.org/vaucanson/browser/trunk/include/vaucanson/automata/concept/handlers.hh
+
+       We /might/ want to integrate this into Milena's value system.  */
 
     /// \brief The type used to identify nodes.
     ///
@@ -211,8 +218,15 @@ namespace mln
       protected:
 	/// Shortcuts factoring the insertion of nodes and edges.
 	/// \{
-	void add_node_(util::node<N>* node);
-	void add_edge_(util::edge<E>* edge);
+	/// \brief Add a node.
+	///
+	/// \return The id of the new node.
+	node_id add_node_(util::node<N>* node);
+	/// \brief Add an edge.
+	///
+	/// \return The id of the new edge if it does not exist yet;
+	/// otherwise, return <tt>mln_max(edge_id)</tt>.
+	edge_id add_edge_(util::edge<E>* edge);
 	/// \}
 
       protected:
@@ -414,16 +428,18 @@ namespace mln
 
       template<typename N, typename E>
       inline
-      void
+      node_id
       graph_base<N, E>::add_node_(util::node<N>* node)
       {
+	/* FIXME: This is not thread-proof (these two lines should
+	   form an atomic section).  */
 	nodes_.push_back (node);
+	return nodes_.size() - 1;
       }
 
-      // FIXME: Return the (new) edge id.
       template<typename N, typename E>
       inline
-      void
+      edge_id
       graph_base<N, E>::add_edge_(util::edge<E>* edge)
       {
 	// Does this edge already exist in the graph?
@@ -432,15 +448,23 @@ namespace mln
 	    // Remove the previously allocated data for EDGE.
 	    delete edge;
 	    edge = 0;
+	    // Return the erroneous value.
+	    return mln_max(edge_id);
 	  }
 	else
 	  {
 	    // Otherwise insert it into the graph.
+	    /* FIXME: This is not thread-proof (these two lines should
+	       form an atomic section).  */
 	    edges_.push_back(edge);
 	    edge_id id = edges_.size() - 1;
+
+	    // Update the set of edges.
 	    edges_set_.insert(edge);
 	    nodes_[edge->n1()]->edges.push_back(id);
 	    nodes_[edge->n2()]->edges.push_back(id);
+
+	    return id;
 	  }
       }
 

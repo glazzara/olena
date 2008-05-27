@@ -1,3 +1,21 @@
+2008-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have graph vertex and edge creation return the created identifier.
+
+	* mln/util/internal/graph_base.hh: 
+	(mln::util::internal::graph_base<N, E>::add_node_)
+	(mln::util::internal::graph_base<N, E>::add_edge_)
+	* mln/util/graph.hh
+	(mln::util::graph<void, void>::add_node)
+	(mln::util::graph<void, void>::add_edge)
+	(mln::util::graph<N, void>::add_node)
+	(mln::util::graph<N, void>::add_edge)
+	(mln::util::graph<N, E>::add_node)
+	(mln::util::graph<N, E>::add_edge):
+	Return the id of the newly created node or edge.
+	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient):
+	Adjust.
+
 2008-05-23  Thierry Géraud  <theo@lrde.epita.fr>
 
 	Fix some details in morpho and labeling.
