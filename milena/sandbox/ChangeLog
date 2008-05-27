@@ -1,5 +1,11 @@
 2008-05-27  Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
+	Remove output file from Aroune's sandbox.
+
+	* aroumougame/test/out.txt: Remove.
+
+2008-05-27  Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
 	Add Aroune's work on statues.
 
 	* aroumougame/retin/headers/Trimesh/Color.h,
