@@ -17,9 +17,9 @@ namespace mln
   }
 
   
-  quat7<3> update_qk(quat7<3> qk[4],
-                     float    dk[3])
-  {
+  quat7<3> update_qk(const quat7<3> qk[4],
+                     const float    dk[3])
+  {   
     quat7<3> dqk_2 = qk[2] - qk[3];
     quat7<3> dqk_1 = qk[1] - qk[2];
     quat7<3> dqk   = qk[0] - qk[1];
@@ -30,24 +30,25 @@ namespace mln
     if (tetak < 10 and tetak_1 < 10) //10 degrees
     {
       float vk[3];
-      float dk[3];
       float coef[3];
 
       vk[0] = 0;
       vk[1] = - dqk.sqr_norm();
       vk[2] = - dqk_1.sqr_norm() + vk[1];
 
+      // FIXME: check again.
       float a1 = (dk[2] + dk[0]) / (vk[2] - vk[0]);
       float b1 = dk[1] - ((dk[2] + dk[0]) / (vk[2] - vk[0])) * vk[1];
       float v1 = math::abs(- b1 / a1); // > 0
-     
+
+      // FIXME: compute inline;
       polcoe(vk, dk, 2, coef);
       float a2 = coef[0];
       float b2 = coef[1];
       float v2 = - b2 / (2. * a2);
 
       float vmax = 25 * dqk.sqr_norm();
-      
+     
       if ((0 < v2 and v2 < v1 and v1 < vmax) or
           (0 < v2 and v2 < vmax and vmax < v1))
         return qk[0] + (dqk / dqk.sqr_norm()) * v2;
@@ -59,8 +60,6 @@ namespace mln
 
       if (v1 > vmax and v2 > vmax)
         return qk[0] + (dqk / dqk.sqr_norm()) * vmax;
-
-      std::cout << "echec" << std::endl;
     }
     
     return qk[0];

@@ -100,66 +100,51 @@ namespace mln
                   << c_length << " points" << std::endl;
         std::cout << "k\t\te_k >=\td_k\tdqk" << std::endl;
 #endif
-        
-        quat7<P::dim> buf_qk[4];
-        float         buf_dk[3];
-        
-        float         err = 100;
-        //float       err_bis;
+
+        buffer<4,quat7<P::dim> > buf_qk;
+        buffer<3,float>          buf_dk;
+
+        float         d_k = 10000;
         p_array<P>    Ck(C);
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
-        buf_qk[0] = qk;
-        
+        buf_qk.store(qk);
+
         qk.apply_on(C, Ck, c_length);
+
+        //buf_dk[0] = rms(C, map, c_length, buf_qk[1], qk);
 
         unsigned int k = 0;
 
         do {
-          //update buff dk //FIXME: rewrite it
-          buf_dk[2] = buf_dk[1];
-          buf_dk[1] = buf_dk[0];
-          buf_dk[0] = err;
+          buf_dk.store(d_k);
 
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
 
-          //update buff qk //FIXME: rewrite it
-          buf_qk[3] = buf_qk[2];
-          buf_qk[2] = buf_qk[1];
-          buf_qk[1] = buf_qk[0];
-          buf_qk[0] = qk;
+          buf_qk.store(qk);
 
-          
           //update qk
-          if (k > 3)
-            qk = update_qk(buf_qk, buf_dk);
+          if (k > 2)
+            qk = update_qk(buf_qk.get_array(), buf_dk.get_array());
           qk._qR.set_unit();
           buf_qk[0] = qk;
-          
+
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
 
-          // e_k = d(Yk, Pk)
-          //     = d(closest(Pk), Pk)
-          //     = d(closest(qk-1(P)), qk-1(P))
-          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-          
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
-          float d_k = rms(C, map, c_length, buf_qk[1], qk);
+          d_k = rms(C, map, c_length, buf_qk[1], qk);
 
-          
-          //err = d(Ck+1,Xk) = d_k
-          err = rms(C, qk, map, c_length);
+#ifndef NDEBUG         
+          // e_k = d(closest(qk-1(P)), qk-1(P))
+          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
 
-          //err = d(Ck,Xk) = e_k
-          float err_bis = rms(C, buf_qk[1], map, c_length);
-
-#ifndef NDEBUG              
           //plot file
-          std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
+          std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-')
+                    << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
                     << std::endl;
           //count the number of points processed

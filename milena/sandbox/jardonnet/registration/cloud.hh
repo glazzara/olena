@@ -16,6 +16,26 @@
 namespace mln
 {
 
+  namespace geom
+  {
+    template <typename P>
+    P center(const p_array<P>& a)
+    {
+      if (a.npoints() == 0)
+        return P();
+      
+      algebra::vec<P::dim,float> c(literal::zero);
+      for (unsigned i = 0; i < a.npoints(); ++i)
+        {
+          // FIXME : Ugly.
+          algebra::vec<P::dim,float> ai = a[i];
+          c += ai;
+        }
+      
+      return algebra::to_point<P>(c / a.npoints());
+    }
+  }
+  
   namespace registration
   {
   
@@ -23,8 +43,9 @@ namespace mln
     P center(const p_array<P>& a, size_t length)
     {
       algebra::vec<P::dim,float> c(literal::zero);
-      for (size_t i = 0; i < length; ++i)
+      for (unsigned i = 0; i < length; ++i)
         {
+          // FIXME : Ugly.
           algebra::vec<P::dim,float> ai = a[i];
           c += ai;
         }

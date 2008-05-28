@@ -48,7 +48,6 @@
 # include <mln/level/fill.hh>
 # include <mln/io/ppm/save.hh>
 
-
 # include "tools.hh"
 
 # include "cloud.hh"
@@ -101,64 +100,37 @@ namespace mln
         std::cout << "k\t\te_k >=\td_k\tdqk" << std::endl;
 #endif
 
-        quat7<P::dim> buf_qk[4];
-        float         buf_dk[3];
-        
-        float         err = 100;
-        //float       err_bis;
-        p_array<P>    Ck(C);
+        buffer<4,quat7<P::dim> > buf_qk;
+
+        p_array<P>    Ck(C), Xk(C);
+        float d_k = 1000, d_k_1 = 1000;
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
-        buf_qk[0] = qk;
+        buf_qk.store(qk);
         
         qk.apply_on(C, Ck, c_length);
 
         unsigned int k = 0;
 
         do {
-          //update buff dk //FIXME: rewrite it
-          buf_dk[2] = buf_dk[1];
-          buf_dk[1] = buf_dk[0];
-          buf_dk[0] = err;
-
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
 
-          //update buff qk //FIXME: rewrite it
-          buf_qk[3] = buf_qk[2];
-          buf_qk[2] = buf_qk[1];
-          buf_qk[1] = buf_qk[0];
-          buf_qk[0] = qk;
-
-          //update qk
-          /*
-          if (k > 3)
-            qk = update_qk(buf_qk, buf_dk);
-          qk._qR.set_unit();
-          buf_qk[0] = qk;
-          */
-          
+          buf_qk.store(qk);
+         
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
 
-          // e_k = d(Yk, Pk)
-          //     = d(closest(Pk), Pk)
-          //     = d(closest(qk-1(P)), qk-1(P))
-          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-          
+          d_k_1 = d_k;
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
-          float d_k = rms(C, map, c_length, buf_qk[1], qk);
-
+          d_k = rms(C, map, c_length, buf_qk[1], qk);
           
-          //err = d(Ck+1,Xk) = d_k
-          err = rms(C, qk, map, c_length);
+#ifndef NDEBUG
+          // e_k = d(closest(qk-1(P)), qk-1(P))
+          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
 
-          //err = d(Ck,Xk) = e_k
-          float err_bis = rms(C, buf_qk[1], map, c_length);
-
-#ifndef NDEBUG              
           //plot file
           std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
@@ -167,7 +139,7 @@ namespace mln
           pts += c_length;
 #endif
           k++;
-        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+        } while (d_k_1 - d_k > epsilon);
 
         trace::exiting("registration::impl::icp_");
       }

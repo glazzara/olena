@@ -64,7 +64,8 @@ int main(int argc, char* argv[])
   qk.apply_on(c, c, c.npoints());
   
   //init output image
-  image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
+  image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
+  level::fill(output, literal::white);
 
   float stddev, mean;
   registration::mean_stddev(c, map, mean, stddev);
@@ -79,10 +80,18 @@ int main(int argc, char* argv[])
     length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
   
   // final transform
-  quat7<3> fqk = registration::final_qk(c, map, 2 * stddev);
-  std::cout << fqk << std::endl; 
+  quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
   fqk.apply_on(c, c, c.npoints());
 
+  //print x
+  for (size_t i = 0; i < x.npoints(); i++)
+    {
+      //Xk points
+      point2d px(x[i][0], x[i][1]);
+      if (output.has(px))
+        output(px) = literal::green;
+    }
+  
   //to 2d : projection (FIXME:if 3d)
   for (size_t i = 0; i < c.npoints(); i++)
     {
@@ -98,19 +107,10 @@ int main(int argc, char* argv[])
           else if (length[i] > stddev)
             output(p) = value::rgb8(255,200,0);
           else
-            output(p) = literal::white;
+          output(p) = literal::black;
         }
     }
 
-  // print surface
-  for (size_t i = 0; i < c.npoints(); i++)
-    {
-      //Xk points
-      point2d x(map(c[i])[0], map(c[i])[1]);
-      if (output.has(x))
-        output(x) = literal::green;
-    }
-      
   io::ppm::save(output, "registred.ppm");
   
 }

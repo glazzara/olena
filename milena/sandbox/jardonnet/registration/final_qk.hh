@@ -55,6 +55,8 @@ namespace mln
 	      mu_newc += ci;
 	    }
 	}
+      if (newc.npoints() == 0)
+        return quat7<P::dim>();
       mu_newc /= newc.npoints();
 
       quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.npoints());

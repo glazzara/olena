@@ -33,7 +33,7 @@ namespace mln
     {
     }
     
-    void add(T e)
+    void store(T e)
     {
       for (int i = 0; i < n-1; i++)
         buf[i+1] = buf[i];
@@ -46,6 +46,11 @@ namespace mln
     {
       assert(i < n && i < setted);
       return buf[i];
+    }
+
+    const T * get_array()
+    {
+      return buf;
     }
 
   private:
@@ -122,7 +127,6 @@ namespace mln
       : value(nrows, ncols,1), is_known(nrows,ncols,1), fun(fun)
     { }
 
-    // FIXME: gore length
     const mln_result(F)
     //inline
     operator () (const typename F::input& p) const

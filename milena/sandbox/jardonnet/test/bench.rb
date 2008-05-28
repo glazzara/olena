@@ -8,7 +8,7 @@ for q in 1..10 do
   for e in 1..10 do
 
     t1 = Time.new
-    system("./icp 01.pbm 02.pbm #{q} #{e}")
+    system("./icp img/01.pbm img/02.pbm #{q} #{e}")
     t2 = Time.new
     
     print        "#{q} #{e} #{t2-t1}\n"

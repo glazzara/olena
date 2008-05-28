@@ -1,3 +1,51 @@
+2008-05-28  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Materials for report.
+
+	Add/Update scripts:
+
+	* jardonnet/test/bench.rb: Minor fix.
+	* jardonnet/test/test.rb: New: Bench times.
+	* jardonnet/test/plotscript: Auto Update.
+	* jardonnet/test/script_latex.plot: Latex output.
+	* jardonnet/test/Makefile: Add test rule.
+
+
+	Add few images to the test set:
+
+	* jardonnet/test/img/c4.pbm,
+	* jardonnet/test/img/c6.pbm,
+	* jardonnet/test/img/c7.pbm,
+	* jardonnet/test/img/c8.pbm,
+	* jardonnet/test/img/c9.pbm,
+	* jardonnet/test/img/x3.pbm,
+	* jardonnet/test/img/x6.pbm,
+	* jardonnet/test/img/x7.pbm,
+	* jardonnet/test/img/x8.pbm,
+	* jardonnet/test/img/x9.pbm: New.
+
+
+	Update test set:
+
+	* jardonnet/test/img/01.pbm: Rename as ...
+	* jardonnet/test/img/c0.pbm ... this.
+	* jardonnet/test/img/02.pbm: Rename as ...
+	* jardonnet/test/img/x0.pbm: ... this.
+
+	Update code so as to produce report's results.
+
+	* jardonnet/test/icp_ref.cc: Modify output image.
+	* jardonnet/test/icp.cc: Modify output image.
+	* jardonnet/registration/final_qk.hh: Cleanup.
+	* jardonnet/registration/interpolation.hh: Update (const).
+	* jardonnet/registration/tools.hh: Fix buffer.
+	* jardonnet/registration/cloud.hh: Cleanup.
+	* jardonnet/registration/icp_ref.hh: Fix.
+	* jardonnet/registration/icp.hh: Minor Fix, Make use of buffer.
+	* jardonnet/registration/update_qk.hh: Cleanup code.
+
+	* jardonnet/registration/icp_map.hh: Remove.
+
 2008-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add 3-D models.
