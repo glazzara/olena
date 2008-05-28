@@ -38,7 +38,7 @@
 	  set_unit; postcondition(is_unit)
 	else return
 
-	* mln/algebra/quat.hh: .
+	* mln/algebra/quat.hh (set_unit): Fix.
 
 2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
@@ -54,9 +54,8 @@
 	could fail even if q != 0;
 
 	set_unit() now has is_unit() as postcondition.
-	I realize that it has to be fix also since q could be equal 0;
 
-	* mln/algebra/quat.hh: .
+	* mln/algebra/quat.hh (about_equal, set_unit): Fix.
 
 2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
