@@ -1,3 +1,26 @@
+2008-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a tutorial example of use of p_array.
+
+	* tests/core/p_array.cc: Clean up (no more stdout).
+	* doc/tutorial/examples: New directory.
+	* doc/tutorial/examples/p_array.cc: New.
+	* mln/core/internal/image_base.hh (mesh, bbox): Remove.
+	(point, npoints): Rename as...
+	(site, nsites): ...these.
+	* mln/core/concept/image.hh: Likewise.
+	* mln/core/p_array_piter.hh (index): New method.
+	(index_of_in): New overload.
+	* mln/core/concept/proxy.hh
+	(get_adr): Make it work when no match is found.
+	(operator Subject): Change into a more reliable version.
+	* mln/core/p_array.hh (index_of_in): New procedures.
+	(insert, change): New methods.
+	(print): Remove.
+	* mln/core/image2d.hh (bbox): New.
+	(npoints): Rename as...
+	(nsites): ...this.
+
 2008-05-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Handle fwd iterations on p_array.

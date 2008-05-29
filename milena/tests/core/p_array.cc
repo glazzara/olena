@@ -30,11 +30,8 @@
  * \brief Tests on mln::p_array.
  */
 
-#include <iterator>
-
 #include <mln/core/point2d.hh>
 #include <mln/core/p_array.hh>
-
 
 
 int main()
@@ -43,31 +40,16 @@ int main()
 
   typedef p_array<point2d> Arr;
 
-  Arr pa;
-  pa
-    .append(make::point2d(6, 9))
-    .append(make::point2d(4, 2))
-    .append(make::point2d(4, 2))
-    .append(make::point2d(5, 1));
-  mln_assertion(pa.nsites() == 4);
+  point2d x(5, 1);
+
+  Arr arr;
+  arr.append(x).append(x);
+  mln_assertion(arr.nsites() == 2);
 
   mlc_equal( mln_psite_(Arr)::site, point2d )::check();
 
-  mln_psite_(Arr) p(pa, 0);
-  std::cout << p.to_site() << ' '
- 	    << p.row()     << ' '
-	    << point2d(p)  << ' '
-	    << std::endl;
-
-
-  std::copy(pa.vect().begin(), pa.vect().end(),
-	    std::ostream_iterator<point2d>(std::cout, " "));
-  std::cout << std::endl;
-
-  {
-    mln_piter_(Arr) p(pa);
-    for_all(p)
-      std::cout << p << ' ';
-    std::cout << std::endl;
-  }
+  mln_psite_(Arr) p(arr, 0);
+  mln_assertion(p.to_site() == x);
+  mln_assertion(p.row() == 5);
+  mln_assertion(point2d(p) == x);
 }

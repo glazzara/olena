@@ -85,8 +85,6 @@ namespace mln
 
     void change_target(const p_array<P>& arr);
 
-    void print() const;
-
   private:
 
     const p_array<P>* arr_;
@@ -94,6 +92,11 @@ namespace mln
   };
 
 
+  template <typename P, typename A>
+  int index_of_in(const P&, const A&);
+
+  template <typename P, typename A>
+  int index_of_in(const p_array_psite<P>& p, const A& arr);
 
 
   namespace trait
@@ -149,6 +152,9 @@ namespace mln
 
     // FIXME: Add an overload "has(index)".
 
+    /// Change site \p p into \p new_p.
+    void change(const psite& p, const P& new_p);
+
     /// Give the number of sites.
     std::size_t nsites() const;
 
@@ -157,6 +163,9 @@ namespace mln
 
     /// Append an array \p other of points.
     p_array<P>& append(const p_array<P>& other);
+
+    /// Insert a point \p p (equivalent as 'append').
+    void insert(const P& p);
 
     /// Clear this set.
     void clear();
@@ -235,6 +244,14 @@ namespace mln
 
   template <typename P>
   inline
+  void
+  p_array<P>::insert(const P& p)
+  {
+    vect_.push_back(p);
+  }
+
+  template <typename P>
+  inline
   p_array<P>&
   p_array<P>::append(const p_array<P>& other)
   {
@@ -277,6 +294,14 @@ namespace mln
     return vect_[i];
   }
 
+  template <typename P>
+  inline
+  void
+  p_array<P>::change(const psite& p, const P& new_p)
+  {
+    mln_precondition(has(p));
+    vect_[p.index()] = new_p;
+  }
 
   // p_array_psite<P>
 
@@ -340,19 +365,29 @@ namespace mln
 
   template <typename P>
   inline
-  void
-  p_array_psite<P>::print() const
-  {
-    std::cout << i_ << "-th site of " << arr_ << " => site " << to_site() << std::endl;
-  }
-
-  template <typename P>
-  inline
   const P&
   p_array_psite<P>::unproxy() const
   {
     mln_precondition(arr_ != 0);
     return (*arr_)[i_];
+  }
+
+
+  // Procedures
+
+  template <typename P, typename A>
+  int index_of_in(const P&, const A&)
+  {
+    return -1;
+  }
+
+  template <typename P, typename A>
+  int index_of_in(const p_array_psite<P>& p, const A& arr)
+  {
+    if ((void*)(p.target()) == (void*)(&arr))
+	return p.index();
+      else
+	return index_of_in(p.unproxy(), arr);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

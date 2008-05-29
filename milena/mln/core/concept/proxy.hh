@@ -150,12 +150,15 @@ namespace mln
     // Case 3: Fail to found!
 
     template <typename T, typename O>
-    void get_adr(const T *& ptr, const Object<O>& obj);
+    void get_adr(const T *& ptr, const Object<O>& obj)
+    {
+      ptr = 0;
+    }
 
     template <typename T, typename O>
     void get_adr(      T *& ptr,       Object<O>& obj)
     {
-      return 0;
+      ptr = 0;
     }
 
 
@@ -183,9 +186,13 @@ namespace mln
     {
       operator Subject() const
       {
-	const Subject* adr;
-	get_adr(adr, mln::internal::force_exact<const E>(*this));
-	return *adr;
+ 	return mln::internal::force_exact<const E>(*this).unproxy();
+	// The code above seems more effective than the one below:
+	//
+	// 	const Subject* adr;
+	// 	get_adr(adr, mln::internal::force_exact<const E>(*this));
+	// 	mln_postcondition(adr != 0);
+	// 	return *adr;
       }
     };
 

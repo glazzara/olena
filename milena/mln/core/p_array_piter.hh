@@ -75,14 +75,24 @@ namespace mln
     const p_array_psite<P>& unproxy() const;
 
     // As a Site_Proxy:
+
     typedef typename super::site site;
     const site& to_site() const;
+
+    /// Return the current index.
+    int index() const;
 
   protected:
 
     p_array_psite<P> p_;
   };
 
+
+  template <typename P, typename A>
+  int index_of_in(const p_array_fwd_piter_<P>& p, const A& arr)
+  {
+    return index_of_in(p.unproxy(), arr);
+  }
 
 
 //   /// \brief Backward iterator on points of a p_array<P>.
@@ -220,6 +230,15 @@ namespace mln
   {
     mln_precondition(p_.target() != 0);
     return p_.to_site();
+  }
+
+  template <typename P>
+  inline
+  int
+  p_array_fwd_piter_<P>::index() const
+  {
+    mln_precondition(p_.target() != 0);
+    return p_.index();
   }
 
   /*------------------------.

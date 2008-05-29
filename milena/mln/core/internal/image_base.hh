@@ -100,27 +100,23 @@ namespace mln
       /// Site_Set associated type.
       typedef S pset;
 
-
-      /// Mesh associated type.
-      typedef mln_mesh(S) mesh;
-
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
       /// Point associated type.
-      typedef mln_point(S) point;
+      typedef mln_site(S) site;
 
       /// Dpoint associated type.
-      typedef mln_dpoint(point) dpoint;
+      typedef mln_dpoint(site) dpoint;
 
       /// Coordinate associated type.
-      typedef mln_coord(point) coord;
+      typedef mln_coord(site) coord;
 
 
-      /// Forward Point_Iterator associated type.
+      /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
-      /// Backward Point_Iterator associated type.
+      /// Backward Site_Iterator associated type.
       typedef mln_bkd_piter(S) bkd_piter;
 
 
@@ -131,10 +127,10 @@ namespace mln
       bool owns_(const psite& p) const;
 
       /// Give a bounding box of the image domain.
-      const box_<point>& bbox() const;
+      const box_<site>& bbox() const;
 
-      /// Give the number of points of the image domain.
-      std::size_t npoints() const;
+      /// Give the number of sites of the image domain.
+      std::size_t nsites() const;
 
       /// Test if this image has been initialized; default impl.
       bool has_data() const;
@@ -221,20 +217,11 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    const box_<mln_point(S)>&
-    image_base_<S,E>::bbox() const
-    {
-      mln_precondition(exact(this)->has_data());
-      return exact(this)->domain().bbox();
-    }
-
-    template <typename S, typename E>
-    inline
     std::size_t
-    image_base_<S,E>::npoints() const
+    image_base_<S,E>::nsites() const
     {
       mln_precondition(exact(this)->has_data());
-      return exact(this)->domain().npoints();
+      return exact(this)->domain().nsites();
     }
 
     template <typename S, typename E>

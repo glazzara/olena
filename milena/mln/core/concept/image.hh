@@ -106,8 +106,7 @@ namespace mln
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      const box_<point>& bbox() const;
-      std::size_t npoints() const;
+      std::size_t nsites() const;
 
       bool has_data() const;
      */
@@ -137,13 +136,8 @@ namespace mln
 
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
-    const box_<point>& (E::*m2)() const = & E::bbox;
-    m2 = 0;
 
     // to be provided in concrete image classes:
-
-    typedef mln_mesh(E) mesh;
-    metal::is_a<mesh, Mesh>::check(); // FIXME: Add other checks.
 
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;

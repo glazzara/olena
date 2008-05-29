@@ -168,6 +168,9 @@ namespace mln
     /// Give the definition domain.
     const box2d& domain() const;
 
+    /// Give the bounding box domain.
+    const box2d& bbox() const;
+
     /// Give the border thickness.
     unsigned border() const;
 
@@ -391,6 +394,15 @@ namespace mln
 
   template <typename T>
   inline
+  const box2d&
+  image2d<T>::bbox() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->b_;
+  }
+
+  template <typename T>
+  inline
   unsigned
   image2d<T>::border() const
   {
@@ -404,7 +416,7 @@ namespace mln
   image2d<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    return this->data_->vb_.npoints();
+    return this->data_->vb_.nsites();
   }
 
   template <typename T>
