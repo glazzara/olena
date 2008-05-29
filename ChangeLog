@@ -1,3 +1,9 @@
+2008-05-29  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Test (sorry).
+
+	* milena/sandbox/geraud/toto: New.
+
 2008-05-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Pass option nostdinc to Automake.
