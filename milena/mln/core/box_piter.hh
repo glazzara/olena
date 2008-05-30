@@ -47,14 +47,16 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public internal::site_iterator_base_< P, box_fwd_piter_<P> >
+  class box_fwd_piter_ : public internal::site_iterator_base_< box_<P>,
+							       box_fwd_piter_<P> >
   {
     typedef box_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< box_<P>, self_ > super_;
+
   public:
 
     // Make definitions from super class available.
-    enum { dim = super_::dim };
+    enum { dim = P::dim };
 
     /*! \brief Constructor.
      *
@@ -62,30 +64,25 @@ namespace mln
      */
     box_fwd_piter_(const box_<P>& b);
 
-    /// Conversion to point.
-    operator P() const;
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
-
-    /// Give the i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
-
     /// Test the iterator validity.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
+    /// Give the site set target address.
+    const box_<P>*& target_();
+
   private:
-    const box_<P>& b_;
-    P p_, nop_;
+
+    using super_::p_;
+    const box_<P>* b_;
   };
 
 
@@ -97,14 +94,16 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public internal::site_iterator_base_< P, box_bkd_piter_<P> >
+  class box_bkd_piter_ : public internal::site_iterator_base_< box_<P>,
+							       box_bkd_piter_<P> >
   {
     typedef box_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< box_<P>, self_ > super_;
+
   public:
 
     // Make definitions from super class available.
-    enum { dim = super_::dim };
+    enum { dim = P::dim };
 
     /*! \brief Constructor.
      *
@@ -112,83 +111,25 @@ namespace mln
      */
     box_bkd_piter_(const box_<P>& b);
 
-    /// Conversion to point.
-    operator P() const;
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
-
-    /// Give the i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
-
     /// Test the iterator validity.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
-  private:
-    const box_<P>& b_;
-    P p_, nop_;
-  };
-
-
-  /*! \brief A iterator on points of bounds of a boxes 2d.
-   *
-   * The parameter \c P is the type of points.
-   *
-   * \see mln::box_
-   *
-   * \todo change it to n dimensions
-   */
-
-  template <typename P>
-  class box_bounds_piter_ : public internal::site_iterator_base_< P, box_bounds_piter_<P> >
-  {
-    typedef box_bounds_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
-  public:
-
-    // Make definitions from super class available.
-    enum { dim = super_::dim };
-
-    /*! \brief Constructor.
-     *
-     * \param[in] b A box.
-     */
-    box_bounds_piter_(const box_<P>& b);
-
-    /// Conversion to point.
-    operator P() const;
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
-
-    /// Give the i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
-
-    /// Test the iterator validity.
-    bool is_valid() const;
-
-    /// Invalidate the iterator.
-    void invalidate();
-
-    /// Start an iteration.
-    void start();
-
-    /// Go to the next point.
-    void next_();
+    /// Give the site set target address.
+    const box_<P>*& target_();
 
   private:
-    const box_<P>& b_;
-    P p_, nop_;
-    unsigned step_;
+
+    using super_::p_;
+    const box_<P>* b_;
   };
 
 
@@ -202,59 +143,32 @@ namespace mln
   template <typename P>
   inline
   box_fwd_piter_<P>::box_fwd_piter_(const box_<P>& b)
-    : b_(b)
   {
-    nop_ = b_.pmax();
-    ++nop_[0];
-    invalidate();
-  }
-
-  template <typename P>
-  inline
-  box_fwd_piter_<P>::operator P() const
-  {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  const P&
-  box_fwd_piter_<P>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  box_fwd_piter_<P>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
+    change_target(b);
   }
 
   template <typename P>
   inline
   bool
-  box_fwd_piter_<P>::is_valid() const
+  box_fwd_piter_<P>::is_valid_() const
   {
-    return p_ != nop_;
+    return p_[0] != b_->pmax()[0] + 1;
   }
 
   template <typename P>
   inline
   void
-  box_fwd_piter_<P>::invalidate()
+  box_fwd_piter_<P>::invalidate_()
   {
-    p_ = nop_;
+    p_[0] = b_->pmax()[0] + 1;
   }
 
   template <typename P>
   inline
   void
-  box_fwd_piter_<P>::start()
+  box_fwd_piter_<P>::start_()
   {
-    p_ = b_.pmin();
+    p_ = b_->pmin();
   }
 
   template <typename P>
@@ -263,15 +177,23 @@ namespace mln
   box_fwd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == b_.pmax()[i])
-	p_[i] = b_.pmin()[i];
+      if (p_[i] == b_->pmax()[i])
+	p_[i] = b_->pmin()[i];
       else
 	{
 	  ++p_[i];
 	  break;
 	}
-    if (p_ == b_.pmin())
-      p_ = nop_;
+    if (p_ == b_->pmin())
+      invalidate_();
+  }
+
+  template <typename P>
+  inline
+  const box_<P>*&
+  box_fwd_piter_<P>::target_()
+  {
+    return b_;
   }
 
 
@@ -280,60 +202,32 @@ namespace mln
   template <typename P>
   inline
   box_bkd_piter_<P>::box_bkd_piter_(const box_<P>& b)
-    : b_(b)
   {
-    nop_ = b_.pmin();
-    --nop_[0];
-    invalidate();
-  }
-
-  template <typename P>
-  inline
-  box_bkd_piter_<P>::operator P() const
-  {
-    return p_;
-  }
-
-
-  template <typename P>
-  inline
-  const P&
-  box_bkd_piter_<P>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  box_bkd_piter_<P>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
+    change_target(&b);
   }
 
   template <typename P>
   inline
   bool
-  box_bkd_piter_<P>::is_valid() const
+  box_bkd_piter_<P>::is_valid_() const
   {
-    return p_ != nop_;
+    return p_[0] != b_->pmin()[0] - 1;
   }
 
   template <typename P>
   inline
   void
-  box_bkd_piter_<P>::invalidate()
+  box_bkd_piter_<P>::invalidate_()
   {
-    p_ = nop_;
+    p_[0] = b_->pmin()[0] - 1;
   }
 
   template <typename P>
   inline
   void
-  box_bkd_piter_<P>::start()
+  box_bkd_piter_<P>::start_()
   {
-    p_ = b_.pmax();
+    p_ = b_->pmax();
   }
 
   template <typename P>
@@ -342,99 +236,23 @@ namespace mln
   box_bkd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == b_.pmin()[i])
-	p_[i] = b_.pmax()[i];
+      if (p_[i] == b_->pmin()[i])
+	p_[i] = b_->pmax()[i];
       else
 	{
 	  --p_[i];
 	  break;
 	}
-    if (p_ == b_.pmax())
-      p_ = nop_;
-  }
-
-
-  // box_bounds_piter_<P>
-
-  template <typename P>
-  inline
-  box_bounds_piter_<P>::box_bounds_piter_(const box_<P>& b)
-    : b_(b)
-  {
-    nop_ = b_.pmax();
-    ++nop_[0];
-    invalidate();
+    if (p_ == b_->pmax())
+      invalidate_();
   }
 
   template <typename P>
   inline
-  box_bounds_piter_<P>::operator P() const
+  const box_<P>*&
+  box_bkd_piter_<P>::target_()
   {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  const P&
-  box_bounds_piter_<P>::to_point() const
-  {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  box_bounds_piter_<P>::operator[](unsigned i) const
-  {
-    assert(i < dim);
-    return p_[i];
-  }
-
-  template <typename P>
-  inline
-  bool
-  box_bounds_piter_<P>::is_valid() const
-  {
-    return p_ != nop_;
-  }
-
-  template <typename P>
-  inline
-  void
-  box_bounds_piter_<P>::invalidate()
-  {
-    p_ = nop_;
-  }
-
-  template <typename P>
-  inline
-  void
-  box_bounds_piter_<P>::start()
-  {
-    p_ = b_.pmin();
-    step_ = 1;
-  }
-
-  template <typename P>
-  inline
-  void
-  box_bounds_piter_<P>::next_()
-  {
-    if (step_ <= 2)
-      p_[step_ - 1]++;
-    if (step_ > 2)
-      p_[step_ - 3]--;
-
-    if (step_ > 2)
-      if (p_[step_ - 3] == b_.pmin()[step_ - 3])
-	step_++;
-
-    if (step_ <= 2)
-      if (p_[step_ - 1] == b_.pmax()[step_ - 1])
-	step_++;
-
-    if (step_ == 5)
-      invalidate();
+    return b_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

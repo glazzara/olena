@@ -107,6 +107,12 @@ namespace mln
     };
 
 
+    // Access to site reference.
+
+    template <typename P>
+    const typename site_from<P>::ret&
+    to_site(const Object<P>& p);
+
 
   } // end of namespace internal
 
@@ -132,13 +138,13 @@ namespace mln
     typedef Site_Proxy<void> category;
 
     /*
-    typedef site;
+      typedef site;
 
-    const site& to_site() const;
-    operator site() const;
+      const site& to_site() const;
+      operator site() const;
 
-    FIXME: Add if possible a mutable version of to_site().
-    FIXME: Or (?) just remove this method (!)
+      FIXME: Add if possible a mutable version of to_site().
+      FIXME: Or (?) just remove this method (!)
     */
 
   protected:
@@ -159,6 +165,39 @@ namespace mln
     site (E::*m2)() const = & E::operator site;
     m2 = 0;
   }
+
+  namespace internal
+  {
+
+    // Access to site reference.
+
+    namespace deep
+    {
+
+      template <typename P>
+      const typename site_from<P>::ret&
+      to_site(const Site_Proxy<P>& p)
+      {
+	return exact(p).to_site();
+      }
+
+      template <typename P>
+      const typename site_from<P>::ret&
+      to_site(const Object<P>& p)
+      {
+	return exact(p);
+      }
+
+    }  // end of namespace internal::deep
+
+    template <typename P>
+    const typename site_from<P>::ret&
+    to_site(const Object<P>& p)
+    {
+      return deep::to_site(exact(p));
+    }
+
+  } // end of namespace mln::internal
 
 # endif // ! MLN_INCLUDE_ONLY
 

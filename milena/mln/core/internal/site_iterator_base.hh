@@ -44,56 +44,94 @@ namespace mln
 
     /*! \internal A base class for site iterators.
      *
-     * Parameter \c P is FIXME: a point site type.
+     * Parameter \c S is the targeted site set type.
      */
-    template <typename P, typename E>
+    template <typename S, typename E>
     struct site_iterator_base_ : Site_Iterator<E>,
 
-                                 proxy_impl<P, E>,
+                                 proxy_impl< mln_psite(S), E>,
 
                                  site_impl< false, // Constant access to site / subject.
-					    typename site_from<P>::ret,
+					    mln_site(S), // HOT: typename site_from< >::ret,
 					    E >
     {
 
-      // The associated site type.
-      typedef typename internal::site_from<P>::ret site;
+      /// The associated site type (as a Site_Proxy).
+      typedef mln_site(S) site; // typename internal::site_from<P>::ret site;
 
-      // The associated subject type (as a Proxy).
-      typedef P subject;
+      /// Return the site it points to (as a Site_Proxy).
+      const mln_site(S)& to_site() const;
 
-      // The associated q_subject type (as a Proxy).
-      typedef const P& q_subject;
-
-      /*! \brief Conversion towards the site it designates.
+      /*! \brief Conversion towards the site it designates (as a Site_Proxy).
        *
        * \warning This is a final method; iterator classes should not
        * re-defined this method.
        *
        * \pre The iterator is valid.
        */ 
-      operator site() const;
+      operator mln_site(S)() const;
+
+      /// The associated subject type (as a Proxy).
+      typedef mln_psite(S) subject;
+
+      /// The associated q_subject type (as a Proxy).
+      typedef const mln_psite(S)& q_subject;
+
+      /// Give the subject (required by the Proxy interface).
+      const mln_psite(S)& unproxy() const;
+
+      /// Access to the target address; default impl.
+      const S*& target_();
 
     protected:
+
       site_iterator_base_();
+
+      /// The site designated by this iterator.
+      mln_psite(S) p_;
     };
 
 
 #ifndef MLN_INCLUDE_ONLY
 
-    template <typename P, typename E>
+    template <typename S, typename E>
     inline
-    site_iterator_base_<P, E>::site_iterator_base_()
+    site_iterator_base_<S, E>::site_iterator_base_()
     {
     }
 
-    template <typename P, typename E>
+    template <typename S, typename E>
     inline
-    site_iterator_base_<P, E>::operator site() const
+    site_iterator_base_<S, E>::operator mln_site(S)() const
     {
-      typedef proxy_impl<P, E> super;
+      typedef proxy_impl<mln_psite(S), E> super;
       mln_precondition(exact(this)->is_valid());
-      return this->super::operator site();
+      return this->super::operator site(); // Featured by internal::proxy_impl<*>.
+    }
+
+    template <typename S, typename E>
+    inline
+    const mln_site(S)&
+    site_iterator_base_<S, E>::to_site() const
+    {
+      mln_precondition(exact(*this).is_valid()); // FIXME: OK?
+      return internal::to_site(p_);
+    }
+
+    template <typename S, typename E>
+    inline
+    const mln_psite(S)&
+    site_iterator_base_<S, E>::unproxy() const
+    {
+      return p_;
+    }
+
+    template <typename S, typename E>
+    inline
+    const S*&
+    site_iterator_base_<S, E>::target_()
+    {
+      return this->p_.target();
     }
 
 #endif // ! MLN_INCLUDE_ONLY

@@ -55,10 +55,11 @@ namespace mln
   struct Site_Iterator : public Site_Proxy<E>
   {
     /*
-      bool is_valid() const;
-      void invalidate();
-      void start();
+      bool is_valid_() const;
+      void invalidate_();
+      void start_();
       void next_();
+      const ..& target_() const;
     */
 
     /*! \brief Go to the next element.
@@ -71,6 +72,15 @@ namespace mln
      */ 
     void next(); // final
 
+    // FIXME: Doc!!!
+    bool is_valid() const;
+    void invalidate();
+    void start();
+
+    /// Change of site set target.
+    template <typename T>
+    void change_target(const T& the);
+
   protected:
     Site_Iterator();
   };
@@ -80,8 +90,9 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   void
-  Site_Iterator<E>::next() // final
+  Site_Iterator<E>::next()
   {
     mln_precondition(exact(this)->is_valid());
     exact(this)->next_();
@@ -89,13 +100,55 @@ namespace mln
 
   template <typename E>
   inline
+  bool
+  Site_Iterator<E>::is_valid() const
+  {
+    E *const this_ = const_cast<E*const>(exact(this)); // Unconst.
+    if (this_->target_() == 0)
+      return false;
+    return exact(this)->is_valid_();
+  }
+
+  template <typename E>
+  inline
+  void
+  Site_Iterator<E>::invalidate()
+  {
+    if (exact(this)->target_() == 0)
+      return; // No-op.
+    exact(this)->invalidate_();
+  }
+
+  template <typename E>
+  inline
+  void
+  Site_Iterator<E>::start()
+  {
+    mln_precondition(exact(this)->target_() != 0);
+    exact(this)->start_();
+  }
+
+  template <typename E>
+  template <typename T>
+  inline
+  void
+  Site_Iterator<E>::change_target(const T& the)
+  {
+    exact(this)->target_() = & the;
+    exact(this)->invalidate_();
+  }
+
+  template <typename E>
+  inline
   Site_Iterator<E>::Site_Iterator()
   {
-    bool (E::*m1)() const = & E::is_valid;
+    bool m0 = (& E::target_) == (& E::target_); // FIXME: Find a better test.
+    m0 = 0;
+    bool (E::*m1)() const = & E::is_valid_;
     m1 = 0;
-    void (E::*m2)() = & E::invalidate;
+    void (E::*m2)() = & E::invalidate_;
     m2 = 0;
-    void (E::*m3)() = & E::start;
+    void (E::*m3)() = & E::start_;
     m3 = 0;
     void (E::*m4)() = & E::next_;
     m4 = 0;

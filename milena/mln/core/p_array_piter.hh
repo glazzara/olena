@@ -38,15 +38,18 @@
 namespace mln
 {
 
-  /// \brief Forward iterator on points of a p_array<P>.
+  /// \brief Forward iterator on sites of a p_array<P>.
   template <typename P>
   class p_array_fwd_piter_
     :
-    public internal::site_iterator_base_< p_array_psite<P>,
+    public internal::site_iterator_base_< p_array<P>,
 					  p_array_fwd_piter_<P> >
   {
     typedef p_array_fwd_piter_<P> self;
-    typedef internal::site_iterator_base_<p_array_psite<P>, self> super;
+    typedef internal::site_iterator_base_<p_array<P>, self> super;
+
+  protected:
+    using super::p_;
 
   public:
 
@@ -56,101 +59,68 @@ namespace mln
     /// Constructor.
     p_array_fwd_piter_(const p_array<P>& arr);
 
-    /// Change of site set target.
-    void change_target(const p_array<P>& arr);
-
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
-    /// Return the subject.
-    const p_array_psite<P>& unproxy() const;
-
-    // As a Site_Proxy:
-
-    typedef typename super::site site;
-    const site& to_site() const;
-
     /// Return the current index.
     int index() const;
-
-  protected:
-
-    p_array_psite<P> p_;
   };
 
 
   template <typename P, typename A>
-  int index_of_in(const p_array_fwd_piter_<P>& p, const A& arr)
+  int index_of_in(const p_array_fwd_piter_<P>& p, const A& arr);
+
+
+
+  /// \brief Backward iterator on sites of a p_array<P>.
+  template <typename P>
+  class p_array_bkd_piter_
+    :
+    public internal::site_iterator_base_< p_array<P>,
+					  p_array_bkd_piter_<P> >
   {
-    return index_of_in(p.unproxy(), arr);
-  }
+    typedef p_array_bkd_piter_<P> self;
+    typedef internal::site_iterator_base_<p_array<P>, self> super;
+
+  protected:
+    using super::p_;
+
+  public:
+
+    /// Constructor with no argument.
+    p_array_bkd_piter_();
+
+    /// Constructor.
+    p_array_bkd_piter_(const p_array<P>& arr);
+
+    /// Test if the iterator is valid.
+    bool is_valid_() const;
+
+    /// Invalidate the iterator.
+    void invalidate_();
+
+    /// Start an iteration.
+    void start_();
+
+    /// Go to the next point.
+    void next_();
+
+    /// Return the current index.
+    int index() const;
+  };
 
 
-//   /// \brief Backward iterator on points of a p_array<P>.
-//   template <typename P>
-//   struct p_array_bkd_piter_
-//     : public internal::site_iterator_base_< P, p_array_bkd_piter_<P> >
-//   {
-//     typedef p_array_bkd_piter_<P> self_;
-//     typedef internal::site_iterator_base_< P, self_ > super_;
-//   public:
-//     /// The associated psite type.
-//     typedef P psite;
-
-//     /// The associated point type.
-//     typedef mln_point(P) point;
-
-//     enum { dim = super_::dim };
-
-//     /// Coordinate associated type.
-//     template <typename S>
-//     p_array_bkd_piter_(const Site_Set<S>& s);
-
-//     /// Reference of the corresponding psite.
-//     const psite& to_psite() const;
-
-//     /// Reference of the corresponding point.
-//     const point& to_point() const;
-
-//     /// Read-only access to the \p i-th coordinate.
-//     mln_coord(point) operator[](unsigned i) const;
-
-//     /// Test if the iterator is valid.
-//     bool is_valid() const;
-
-//     /// Invalidate the iterator.
-//     void invalidate();
-
-//     /// Start an iteration.
-//     void start();
-
-//     /// Go to the next point.
-//     void next_();
-
-//     /// Convert the iterator into a psite.
-//     operator psite() const;
-
-//   protected:
-//     const std::vector<P>& vect_;
-//     /* FIXME: See the comment on p_array_fwd_piter_<P>::i_ above.  We
-//        could turn this `int' into an `unsigned'.  Then,
-//        - setting the value of i_ to -1 (== UINT_MAX) in invalidate(),
-//        - and having valid() test whether i_ is strictly smaller than
-//          vect_.size()
-//        should work in both iterators (fwd and bkd).  */
-//     int i_;
-//     psite p_;
-//   };
-
+  template <typename P, typename A>
+  int index_of_in(const p_array_bkd_piter_<P>& p, const A& arr);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -169,41 +139,31 @@ namespace mln
   inline
   p_array_fwd_piter_<P>::p_array_fwd_piter_(const p_array<P>& arr)
   {
-    change_target(arr);
-  }
-
-  template <typename P>
-  inline
-  void
-  p_array_fwd_piter_<P>::change_target(const p_array<P>& arr)
-  {
-    p_.change_target(arr);
-    invalidate();
+    this->change_target(arr);
   }
 
   template <typename P>
   inline
   bool
-  p_array_fwd_piter_<P>::is_valid() const
+  p_array_fwd_piter_<P>::is_valid_() const
   {
-    return p_.target() != 0 && p_.index() < int(p_.target()->nsites());
+    mln_invariant(p_.index() >= 0);
+    return p_.index() < int(p_.target()->nsites());
   }
 
   template <typename P>
   inline
   void
-  p_array_fwd_piter_<P>::invalidate()
+  p_array_fwd_piter_<P>::invalidate_()
   {
-    if (p_.target() != 0)
-      p_.index() = p_.target()->nsites();
+    p_.index() = int(p_.target()->nsites());
   }
 
   template <typename P>
   inline
   void
-  p_array_fwd_piter_<P>::start()
+  p_array_fwd_piter_<P>::start_()
   {
-    mln_precondition(p_.target() != 0);
     p_.index() = 0;
   }
 
@@ -217,112 +177,87 @@ namespace mln
 
   template <typename P>
   inline
-  const p_array_psite<P>&
-  p_array_fwd_piter_<P>::unproxy() const
-  {
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  const typename p_array_fwd_piter_<P>::site&
-  p_array_fwd_piter_<P>::to_site() const
-  {
-    mln_precondition(p_.target() != 0);
-    return p_.to_site();
-  }
-
-  template <typename P>
-  inline
   int
   p_array_fwd_piter_<P>::index() const
   {
-    mln_precondition(p_.target() != 0);
     return p_.index();
   }
+
 
   /*------------------------.
   | p_array_bkd_piter_<P>.  |
   `------------------------*/
 
-//   template <typename P>
-//   template <typename S>
-//   inline
-//   p_array_bkd_piter_<P>::p_array_bkd_piter_(const Site_Set<S>& s)
-//     : vect_(exact(s).vect())
-//   {
-//     invalidate();
-//   }
+  template <typename P>
+  inline
+  p_array_bkd_piter_<P>::p_array_bkd_piter_()
+  {
+  }
 
-//   template <typename P>
-//   inline
-//   const P&
-//   p_array_bkd_piter_<P>::to_psite() const
-//   {
-//     return p_;
-//   }
+  template <typename P>
+  inline
+  p_array_bkd_piter_<P>::p_array_bkd_piter_(const p_array<P>& arr)
+  {
+    this->change_target(arr);
+  }
 
-//   template <typename P>
-//   inline
-//   const mln_point(P)&
-//   p_array_bkd_piter_<P>::to_point() const
-//   {
-//     return p_.to_point();
-//   }
+  template <typename P>
+  inline
+  bool
+  p_array_bkd_piter_<P>::is_valid_() const
+  {
+    mln_invariant(p_.index() < int(p_.target()->nsites()));
+    return p_.index() >= 0;
+  }
 
-//   template <typename P>
-//   inline
-//   mln_coord(mln_point_(P))
-//   p_array_bkd_piter_<P>::operator[](unsigned i) const
-//   {
-//     mln_precondition(i < dim);
-//     mln_precondition(is_valid());
-//     return p_.to_point()[i];
-//   }
+  template <typename P>
+  inline
+  void
+  p_array_bkd_piter_<P>::invalidate_()
+  {
+    p_.index() = -1;
+  }
 
-//   template <typename P>
-//   inline
-//   bool
-//   p_array_bkd_piter_<P>::is_valid() const
-//   {
-//     return i_ >= 0;
-//   }
+  template <typename P>
+  inline
+  void
+  p_array_bkd_piter_<P>::start_()
+  {
+    p_.index() = int(p_.target()->nsites()) - 1;
+  }
 
-//   template <typename P>
-//   inline
-//   void
-//   p_array_bkd_piter_<P>::invalidate()
-//   {
-//     i_ = -1;
-//   }
+  template <typename P>
+  inline
+  void
+  p_array_bkd_piter_<P>::next_()
+  {
+    --p_.index();
+  }
 
-//   template <typename P>
-//   inline
-//   void
-//   p_array_bkd_piter_<P>::start()
-//   {
-//     i_ = vect_.size() - 1;
-//     if (is_valid())
-//       p_ = vect_[i_];
-//   }
+  template <typename P>
+  inline
+  int
+  p_array_bkd_piter_<P>::index() const
+  {
+    return p_.index();
+  }
 
-//   template <typename P>
-//   inline
-//   void
-//   p_array_bkd_piter_<P>::next_()
-//   {
-//     --i_;
-//     if (is_valid())
-//       p_ = vect_[i_];
-//   }
 
-//   template <typename P>
-//   inline
-//   p_array_bkd_piter_<P>::operator P() const
-//   {
-//     mln_precondition(is_valid());
-//     return p_;
-//   }
+  // Procedure.
+
+  template <typename P, typename A>
+  int
+  index_of_in(const p_array_fwd_piter_<P>& p, const A& arr)
+  {
+    return index_of_in(p.unproxy(), arr);
+  }
+
+  template <typename P, typename A>
+  int
+  index_of_in(const p_array_bkd_piter_<P>& p, const A& arr)
+  {
+    return index_of_in(p.unproxy(), arr);
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

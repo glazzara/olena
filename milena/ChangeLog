@@ -1,5 +1,44 @@
 2008-05-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Clean Site_Iterator design and propagate to p_array and box.
+
+	* doc/tutorial/examples/box.cc: New.
+	* mln/core/internal/site_iterator_base.hh (P): Change into...
+	(S): ...this; it is now a site set type (no more a psite).
+	(site): Change into...
+	(mln_site(S)): ...this; more readable.
+	(unproxy, target_): New.
+	* mln/core/concept/site_iterator.hh
+	(is_valid, invalidate, start): New methods.  Now concrete classes
+	should implement the 'underscored' version.
+	(target_): New expected method in concrete classes.
+	(change_target): New.
+	(Site_Iterator): Update the constructor.
+	* mln/core/box_piter.hh: Update inheritance.
+	(operator P, to_point, operator[]): Remove; obsolete.
+	(is_valid, invalidate, start): Rename as...
+	(is_valid_, invalidate_, start_): ...these and update.
+	(p_): Change from attribute to 'using' (thru inheritance). 
+	(b_): Turn into a pointer.
+	(nop_): Remove; it was overkill.
+	(target_): New.
+	(dim): Rely on P.
+	(box_bounds_piter_): Remove this dead class.
+	* mln/core/p_array_piter.hh
+	(is_valid, invalidate, start): Rename as...
+	(is_valid_, invalidate_, start_): ...these and update.
+	(p_): Change from attribute to 'using' (thru inheritance). 
+	(unproxy, site, to_site): Remove; now inherited.
+	(index_of_in): New overload for bkd piter.
+	(p_array_bkd_piter_): Uncomment and update likewise.
+	* mln/core/point2d.hh (operator[]): New.
+	* mln/core/concept/site_proxy.hh (to_site): New.
+	For use in site_iterator_base_<S, E>::to_site().
+	* mln/core/p_array.hh (target): New method in psite.
+	(bkd_piter): Reactivate.
+
+2008-05-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Change 'point' into 'site' in point-set-related tokens.
 
 	Get rid of obsolete files / filenames.

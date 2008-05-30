@@ -83,7 +83,7 @@ namespace mln
 
     const p_array<P>* target() const;
 
-    void change_target(const p_array<P>& arr);
+    const p_array<P>*& target();
 
   private:
 
@@ -136,7 +136,7 @@ namespace mln
     typedef p_array_fwd_piter_<P> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_array_fwd_piter_<P> bkd_piter; // HOT: FIXME
+    typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
     p_array();
@@ -357,10 +357,10 @@ namespace mln
 
   template <typename P>
   inline
-  void
-  p_array_psite<P>::change_target(const p_array<P>& arr)
+  const p_array<P>*&
+  p_array_psite<P>::target()
   {
-    arr_ = & arr;
+    return arr_;
   }
 
   template <typename P>

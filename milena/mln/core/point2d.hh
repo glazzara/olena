@@ -61,6 +61,11 @@ namespace mln
       {
 	return internal::force_exact<const E>(*this).to_site().col();
       }
+      C operator[](unsigned i) const
+      {
+	mln_precondition(i < 2);
+	return internal::force_exact<const E>(*this).to_site()[i];
+      }
     };
 
 
