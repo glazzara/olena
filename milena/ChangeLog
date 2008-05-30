@@ -1,3 +1,13 @@
+2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add some comments on mln::canvas::morpho::algebraic_union_find<F>.
+
+	* mln/canvas/morpho/algebraic_union_find.hh
+	(mln::canvas::morpho::algebraic_union_find<F>::make_set)
+	(mln::canvas::morpho::algebraic_union_find<F>::do_union): Add
+	FIXMEs on the non genericity of this canvas w.r.t. the type of the
+	attribute.
+
 2008-05-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have graph vertex and edge creation return the created identifier.
