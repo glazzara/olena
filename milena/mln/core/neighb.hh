@@ -61,12 +61,12 @@ namespace mln
     /// Point associated type.
     typedef mln_point(D) point;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
+    /*! \brief Site_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the ordering of delta-points.
      */
     typedef dpoints_fwd_piter<D> fwd_niter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
+    /*! \brief Site_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the reverse ordering of delta-points.
      */
     typedef dpoints_bkd_piter<D> bkd_niter;

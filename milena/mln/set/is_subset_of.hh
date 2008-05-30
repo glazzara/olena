@@ -33,7 +33,7 @@
  * \brief Routine to test if a set is a subset of another.
  */
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 
 namespace mln
 {

@@ -34,8 +34,8 @@
  * \brief Definition of the pset array class.
  */
 
-# include <mln/core/internal/point_set_base.hh>
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_set_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 
 # include <vector>
 # include <mln/accu/bbox.hh>
@@ -198,7 +198,7 @@ namespace mln
   */
   template <typename Pset>
   class pset_array_fwd_piter_ : public
-  internal::point_iterator_base_<pset_array_psite<typename Pset::psite>,
+  internal::site_iterator_base_<pset_array_psite<typename Pset::psite>,
 				 pset_array_fwd_piter_<Pset> >
   {
   public:

@@ -80,10 +80,10 @@ namespace mln
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.

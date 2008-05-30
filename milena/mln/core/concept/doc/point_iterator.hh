@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/point_iterator.hh
- * \brief This file documents the concept of mln::Point_Iterator.
+/*! \file mln/core/concept/doc/site_iterator.hh
+ * \brief This file documents the concept of mln::Site_Iterator.
  */
 
 namespace mln
@@ -35,12 +35,12 @@ namespace mln
   namespace doc
   {
 
-    /*! \brief Documentation class for mln::Point_Iterator.
+    /*! \brief Documentation class for mln::Site_Iterator.
      *
-     * \see mln::Point_Iterator
+     * \see mln::Site_Iterator
      */
     template <typename E>
-    struct Point_Iterator : public Iterator<E>,
+    struct Site_Iterator : public Iterator<E>,
 		   public Generalized_Point<E>
     {
       /*! \brief Point_Site associated type.

@@ -29,7 +29,7 @@
 # define MLN_CORE_LINE_GRAPH_P_HH
 
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
@@ -68,10 +68,10 @@ namespace mln
     /// Point_Site associated type.
     typedef line_graph_psite<P> psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_line_graph_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_line_graph_bkd_piter_<P> bkd_piter;
 
     /// Return The number of points (sites) of the set, i.e., the

@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/box.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>

@@ -68,10 +68,10 @@ namespace mln
     {
     public:
 
-      /// Forward Point_Iterator associated type.
+      /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter_(box2d) fwd_piter;
 
-      /// Backward Point_Iterator associated type.
+      /// Backward Site_Iterator associated type.
       typedef mln_bkd_piter_(box2d) bkd_piter;
 
       /// Constructor.

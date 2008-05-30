@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_POINT_SET_HH
-# define MLN_CORE_CONCEPT_POINT_SET_HH
+#ifndef MLN_CORE_CONCEPT_SITE_SET_HH
+# define MLN_CORE_CONCEPT_SITE_SET_HH
 
-/*! \file mln/core/concept/point_set.hh
+/*! \file mln/core/concept/site_set.hh
  *
  * \brief Definition of the concept of mln::Site_Set.
  *
@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/site_iterator.hh>
 # include <mln/trait/site_sets.hh>
 # include <mln/metal/not_equal.hh>
 # include <mln/metal/is_a.hh>
@@ -238,4 +238,4 @@ namespace mln
 # include <mln/core/ops.hh>
 
 
-#endif // ! MLN_CORE_CONCEPT_POINT_SET_HH
+#endif // ! MLN_CORE_CONCEPT_SITE_SET_HH

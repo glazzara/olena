@@ -43,10 +43,10 @@ namespace mln
    *
    */
   template <typename P>
-  struct p_run_fwd_piter_ : public internal::point_iterator_base_< P, p_run_fwd_piter_<P> >
+  struct p_run_fwd_piter_ : public internal::site_iterator_base_< P, p_run_fwd_piter_<P> >
   {
     typedef p_run_fwd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
     
     // Make definitions from super class available.
@@ -98,10 +98,10 @@ namespace mln
    *
    */
   template <typename P>
-  struct p_run_bkd_piter_ : public internal::point_iterator_base_< P, p_run_bkd_piter_<P> >
+  struct p_run_bkd_piter_ : public internal::site_iterator_base_< P, p_run_bkd_piter_<P> >
   {
     typedef p_run_bkd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
     
     // Make definitions from super class available.

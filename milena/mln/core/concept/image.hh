@@ -32,7 +32,7 @@
  * \brief Definition of the concept of mln::Image.
  */
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/mesh.hh>
 
 # include <mln/core/trait/all.hh> // FIXME: Move out of core!

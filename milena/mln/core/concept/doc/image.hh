@@ -143,12 +143,12 @@ namespace mln
 
 
       /*! \brief Forward point iterator associated type.
-       * \invariant This type has to derive from mln::Point_Iterator.
+       * \invariant This type has to derive from mln::Site_Iterator.
        */
       typedef void fwd_piter;
 
       /*! \brief Backward point iterator associated type.
-       * \invariant This type has to derive from mln::Point_Iterator.
+       * \invariant This type has to derive from mln::Site_Iterator.
        */
       typedef void bkd_piter;
 

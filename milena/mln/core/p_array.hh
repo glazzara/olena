@@ -35,7 +35,7 @@
 
 # include <vector>
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/accu/bbox.hh>
 
@@ -132,10 +132,10 @@ namespace mln
     /// The associated site type.
     typedef typename super::site site;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> bkd_piter; // HOT: FIXME
 
     /// Constructor.

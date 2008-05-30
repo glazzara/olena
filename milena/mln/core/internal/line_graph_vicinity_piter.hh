@@ -39,7 +39,7 @@
 
 # include <set>
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/site_iterator.hh>
 # include <mln/core/p_line_graph.hh>
 # include <mln/core/line_graph_psite.hh>
 
@@ -59,10 +59,10 @@ namespace mln
 
     /// \brief Base for iterator on a line graph vicinity.
     template <typename P, typename E>
-    class line_graph_vicinity_piter_ : public Point_Iterator< E >
+    class line_graph_vicinity_piter_ : public Site_Iterator< E >
     {
       typedef line_graph_vicinity_piter_<P, E> self_;
-      typedef Point_Iterator< self_ > super_;
+      typedef Site_Iterator< self_ > super_;
 
     public:
       enum { dim = P::dim };

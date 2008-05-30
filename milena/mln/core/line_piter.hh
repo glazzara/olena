@@ -35,7 +35,7 @@
  * \todo Rename as box_line_piter.
  */
 
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/box.hh>
 
 namespace mln
@@ -47,10 +47,10 @@ namespace mln
    */
   template <typename P>
   class line_piter_ :
-    public internal::point_iterator_base_< P, line_piter_<P> >
+    public internal::site_iterator_base_< P, line_piter_<P> >
   {
     typedef line_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
 
     // Make definitions from super class available.

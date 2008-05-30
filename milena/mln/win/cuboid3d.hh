@@ -86,12 +86,12 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint3d dpoint;
 
-      /// \brief Point_Iterator type to browse a cuboid such as: "for
+      /// \brief Site_Iterator type to browse a cuboid such as: "for
       /// each slice (increasing), for each row (increasing), for each
       /// column (increasing)."
       typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
 
-      /// \brief Point_Iterator type to browse a cuboid such as: "for
+      /// \brief Site_Iterator type to browse a cuboid such as: "for
       /// each slice (decreasing), for each row (decreasing), for each
       /// column (decreasing)."
       typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;

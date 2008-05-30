@@ -175,7 +175,7 @@ namespace mln
      *
      * \relates mln::internal::set_of_
      */
-    // FIXME : ambiguous with point_set operator <<
+    // FIXME : ambiguous with site_set operator <<
     //     template <typename E>
     //     std::ostream& operator<<(std::ostream& ostr, const set_of_<E>& s);
 
@@ -285,7 +285,7 @@ namespace mln
       needs_update_ = false;
     }
 
-    // FIXME : ambiguous with point_set operator <<
+    // FIXME : ambiguous with site_set operator <<
     //     template <typename E>
     //     std::ostream& operator<<(std::ostream& ostr,
     // 			     const set_of_<E>& s)

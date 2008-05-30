@@ -37,7 +37,7 @@
  */
 
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/site_iterator.hh>
 # include <trait/point_set.hh>
 
 

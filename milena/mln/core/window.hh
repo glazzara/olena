@@ -67,12 +67,12 @@ namespace mln
     typedef internal::dpoints_base_<D, window<D> > super_;
   public:
 
-    /*! \brief Point_Iterator type to browse the points of a generic window
+    /*! \brief Site_Iterator type to browse the points of a generic window
      * w.r.t. the ordering of delta-points.
      */
     typedef dpoints_fwd_piter<D> fwd_qiter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic window
+    /*! \brief Site_Iterator type to browse the points of a generic window
      * w.r.t. the reverse ordering of delta-points.
      */
     typedef dpoints_bkd_piter<D> bkd_qiter;

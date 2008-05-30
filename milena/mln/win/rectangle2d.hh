@@ -68,12 +68,12 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint2d dpoint;
 
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
+      /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
        * (increasing), for each column (increasing)."
        */
       typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
 
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
+      /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
       typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;

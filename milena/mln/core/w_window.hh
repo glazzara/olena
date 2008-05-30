@@ -69,10 +69,10 @@ namespace mln
     typedef mln::window<D> window;
 
 
-    /// Point_Iterator type to browse (forward) the points of a generic w_window.
+    /// Site_Iterator type to browse (forward) the points of a generic w_window.
     typedef with_w_< dpoints_fwd_piter<D>, W > fwd_qiter;
 
-    /// Point_Iterator type to browse (backward) the points of a generic w_window.
+    /// Site_Iterator type to browse (backward) the points of a generic w_window.
     typedef with_w_< dpoints_bkd_piter<D>, W > bkd_qiter;
 
 

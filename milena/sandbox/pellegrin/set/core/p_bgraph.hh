@@ -70,10 +70,10 @@ namespace mln
     /// Point_Site associated type.
     typedef bgraph_psite<P> psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> bkd_piter;
 
     /// Graph vertex/edge identifier

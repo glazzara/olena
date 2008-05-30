@@ -84,10 +84,10 @@ namespace mln
 
     typedef mln_psite(super_) psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef pset_if_fwd_piter_<S,F> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef mln::internal::fixme bkd_piter;
 
 

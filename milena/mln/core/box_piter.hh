@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -47,10 +47,10 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public internal::point_iterator_base_< P, box_fwd_piter_<P> >
+  class box_fwd_piter_ : public internal::site_iterator_base_< P, box_fwd_piter_<P> >
   {
     typedef box_fwd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
 
     // Make definitions from super class available.
@@ -97,10 +97,10 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public internal::point_iterator_base_< P, box_bkd_piter_<P> >
+  class box_bkd_piter_ : public internal::site_iterator_base_< P, box_bkd_piter_<P> >
   {
     typedef box_bkd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
 
     // Make definitions from super class available.
@@ -149,10 +149,10 @@ namespace mln
    */
 
   template <typename P>
-  class box_bounds_piter_ : public internal::point_iterator_base_< P, box_bounds_piter_<P> >
+  class box_bounds_piter_ : public internal::site_iterator_base_< P, box_bounds_piter_<P> >
   {
     typedef box_bounds_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
 
     // Make definitions from super class available.

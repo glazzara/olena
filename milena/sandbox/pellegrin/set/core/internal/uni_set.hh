@@ -55,9 +55,9 @@ namespace mln
     typedef internal::set_of_<P> super_;
 
   public:
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef uni_set_fwd_piter_<P> fwd_piter;
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef uni_set_bkd_piter_<P> bkd_piter;
 
     /// Constructor.

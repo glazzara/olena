@@ -33,7 +33,7 @@
  * \brief Definition of a point set class based on std::set.
  */
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/core/p_array.hh>
@@ -57,10 +57,10 @@ namespace mln
 
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.

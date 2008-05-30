@@ -76,11 +76,11 @@ namespace mln
     // FIXME: This is a dummy value.
     typedef void dpoint;
 
-    /// \brief Point_Iterator type to browse the psites of the window
+    /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of edges.
     typedef line_graph_window_fwd_piter<P, self_> fwd_qiter;
 
-    /// \brief Point_Iterator type to browse the psites of the window
+    /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of edges.
     typedef line_graph_window_bkd_piter<P, self_> bkd_qiter;
 
@@ -92,7 +92,7 @@ namespace mln
     /// \{
     /// Compute the set of sites for this window around \a piter.
     template <typename Piter>
-    void compute_sites_(Point_Iterator<Piter>& piter) const;
+    void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
 
     /// Interface of the concept Window.
@@ -129,7 +129,7 @@ namespace mln
   template <typename Piter>
   inline
   void
-  line_graph_elt_window<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
+  line_graph_elt_window<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
     sites_t& sites = piter.sites();

@@ -66,10 +66,10 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint_<M, int> dpoint;
 
-      /// Point_Iterator type to browse a line forward
+      /// Site_Iterator type to browse a line forward
       typedef dpoints_fwd_piter<dpoint> fwd_qiter;
 
-      /// Point_Iterator type to browse a line backward
+      /// Site_Iterator type to browse a line backward
       typedef dpoints_bkd_piter<dpoint> bkd_qiter;
 
       /// Same as fwd_qiter

@@ -34,8 +34,8 @@
  * (for internal use only).
  */
 
-# include <mln/core/internal/point_set_base.hh>
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_set_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/runs_psite.hh>
 # include <mln/core/p_run.hh>
 # include <mln/accu/bbox.hh>
@@ -256,7 +256,7 @@ namespace mln
    * Parameter \c E is the exact type of the iterator
    */
   template <typename P, typename E>
-  class p_runs_piter_ : public internal::point_iterator_base_< runs_psite<P>, E >
+  class p_runs_piter_ : public internal::site_iterator_base_< runs_psite<P>, E >
   {
   public:
 

@@ -33,7 +33,7 @@
  * \brief Definition of the restriction of a point set w.r.t. a predicate.
  */
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/core/concept/function.hh>
 
 
@@ -73,10 +73,10 @@ namespace mln
 
     typedef mln_psite(super_) psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef pset_if_fwd_piter_<S,F> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef mln::internal::fixme bkd_piter;
 
 

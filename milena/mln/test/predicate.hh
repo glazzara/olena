@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 
 
 namespace mln

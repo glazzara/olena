@@ -33,7 +33,7 @@
  * \brief Definition of the concept of mln::Box.
  */
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 
 
 namespace mln

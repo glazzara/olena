@@ -37,7 +37,7 @@
 # include <mln/core/image2d.hh>
 # include <mln/core/image3d.hh>
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/concept/neighborhood.hh>

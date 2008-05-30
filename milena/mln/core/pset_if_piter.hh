@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of pset_ifes.
  */
 
-# include <mln/core/concept/point_iterator.hh>
+# include <mln/core/concept/site_iterator.hh>
 # include <mln/core/internal/piter_adaptor.hh>
 # include <mln/core/pset_if.hh>
 

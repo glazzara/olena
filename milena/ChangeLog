@@ -1,3 +1,115 @@
+2008-05-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Change 'point' into 'site' in point-set-related tokens.
+
+	Get rid of obsolete files / filenames.
+
+	* mln/core/internal/point_iterator_base.hh: Remove.
+	* mln/core/internal/point_set_base.hh: Rename as...
+	* mln/core/internal/site_set_base.hh: ...this.
+	* mln/core/concept/point_set.hh: Remove.
+	* mln/core/concept/doc/point_set.hh: Rename as...
+	* mln/core/concept/doc/site_set.hh: ...this.
+	* mln/core/concept/point_iterator.hh: Rename as...
+	* mln/core/concept/site_set.hh: ...this.
+
+	Rename 'point' as 'site' in some tokens.
+
+	* mln/core/line_graph_elt_neighborhood.hh,
+	* mln/core/window.hh,
+	* mln/core/pset_array.hh,
+	* mln/core/internal/graph_vicinity_piter.hh,
+	* mln/core/internal/line_graph_vicinity_piter.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/p_priority_queue_fast.hh,
+	* mln/core/p_bgraph_piter.hh,
+	* mln/core/neighb.hh,
+	* mln/core/p_priority_queue_fast_with_array.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/dp_array.hh,
+	* mln/core/p_queue_fast.hh,
+	* mln/core/p_graph_piter.hh,
+	* mln/core/graph_elt_window.hh,
+	* mln/core/pset_if_piter.hh,
+	* mln/core/p_array_bb.hh,
+	* mln/core/p_array_piter.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/p_line_graph.hh,
+	* mln/core/p_image2d.hh,
+	* mln/core/p_image2d_piter.hh,
+	* mln/core/p_line_graph_piter.hh,
+	* mln/core/w_window.hh,
+	* mln/core/line_graph_elt_window.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/clock_neighb.hh,
+	* mln/core/p_graph.hh,
+	* mln/core/hexa.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/graph_elt_neighborhood.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_set.hh,
+	* mln/core/line2d.hh,
+	* mln/core/p_bgraph.hh,
+	* mln/core/p_run.hh,
+	* mln/core/p_run_piter.hh,
+	* mln/core/pset_if.hh,
+	* mln/core/p_array.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/weighted_window.hh,
+	* mln/core/concept/doc/point_iterator.hh,
+	* mln/core/concept/doc/window.hh,
+	* mln/core/concept/doc/neighborhood.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/p_runs.hh,
+	* mln/test/predicate.hh,
+	* mln/convert/to_image.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/bbox.hh,
+	* mln/set/is_subset_of.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/line.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/cuboid3d.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/disk2d.hh,
+	* mln/util/lazy_set.hh,
+	* sandbox/duhamel/mesh_p.hh,
+	* sandbox/duhamel/queue_p_fast.hh,
+	* sandbox/duhamel/queue_p_priority.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh,
+	* sandbox/pellegrin/set/core/p_bgraph.hh,
+	* sandbox/pellegrin/set/core/p_run.hh,
+	* sandbox/pellegrin/set/core/p_line_graph.hh,
+	* sandbox/pellegrin/set/core/pset_if.hh,
+	* sandbox/pellegrin/set/core/concept/point_set.hh,
+	* sandbox/pellegrin/set/core/p_array.hh,
+	* sandbox/pellegrin/set/core/p_queue.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue.hh,
+	* sandbox/pellegrin/set/core/p_runs.hh,
+	* sandbox/pellegrin/set/core/p_set.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* sandbox/pellegrin/set/core/line2d.hh,
+	* sandbox/pellegrin/set/core/internal/multi_set.hh,
+	* sandbox/pellegrin/set/core/internal/uni_set.hh,
+	* sandbox/pellegrin/set/core/p_graph.hh,
+	* sandbox/pellegrin/set/core/p_queue_fast.hh,
+	* sandbox/nivault/dyn_line.hh,
+	* sandbox/garrigues/fllt/types.hh
+	(Point_Iterator, point_iterator_base_): Rename as...
+	(Site_Iterator, site_iterator_base_): ...these.
+	(Point_Set, point_set_base_): Rename as...
+	(Site_Set, site_set_base_): ...these.
+
+	Clean-up.
+
+	* doc/tutorial/examples/p_array.cc (ima): Remove; unused.
+	Swap two lines.
+
 2008-05-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a tutorial example of use of p_array.

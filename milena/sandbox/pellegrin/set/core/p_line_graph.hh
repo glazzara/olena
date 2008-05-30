@@ -86,10 +86,10 @@ namespace mln
     /// Point associated type.
     typedef point_pair<P> point;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_line_graph_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_line_graph_piter_<P> bkd_piter;
 
     /// Return The number of points (i.e., nodes) in the graph.

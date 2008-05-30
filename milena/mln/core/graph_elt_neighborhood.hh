@@ -77,11 +77,11 @@ namespace mln
     // FIXME: This is a dummy value.
     typedef void dpoint;
 
-    /// \brief Point_Iterator type to browse the psites of the
+    /// \brief Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of vertices.
     typedef graph_neighborhood_fwd_piter<P, self_> fwd_niter;
 
-    /// \brief Point_Iterator type to browse the psites of the
+    /// \brief Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the reverse ordering of vertices.
     typedef graph_neighborhood_bkd_piter<P, self_> bkd_niter;
 
@@ -93,7 +93,7 @@ namespace mln
     /// \{
     /// Compute the set of sites for this neighborhood around \a piter.
     template <typename Piter>
-    void compute_sites_(Point_Iterator<Piter>& piter) const;
+    void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
   };
 
@@ -104,7 +104,7 @@ namespace mln
   template <typename Piter>
   inline
   void
-  graph_elt_neighborhood<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
+  graph_elt_neighborhood<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
     util::node_id ref_node_id = piter.p_ref().id();

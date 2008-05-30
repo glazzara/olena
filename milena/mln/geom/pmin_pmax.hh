@@ -36,7 +36,7 @@
 
 # include <utility>
 
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -65,14 +65,14 @@ namespace mln
     /// iterator \p p.
     template <typename I>
     std::pair<mln_point(I), mln_point(I)>
-    pmin_pmax(const Point_Iterator<I>& p);
+    pmin_pmax(const Site_Iterator<I>& p);
 
 
     /// Compute the minimum and maximum points, \p pmin and \p max,
     /// when browsing with iterator \p p.
     template <typename I>
     void
-    pmin_pmax(const Point_Iterator<I>& p,  mln_point(I)& pmin, mln_point(I)& pmax);
+    pmin_pmax(const Site_Iterator<I>& p,  mln_point(I)& pmin, mln_point(I)& pmax);
 
 
 
@@ -84,7 +84,7 @@ namespace mln
     template <typename I>
     inline
     void
-    pmin_pmax(const Point_Iterator<I>& p_, mln_point(I)& pmin, mln_point(I)& pmax)
+    pmin_pmax(const Site_Iterator<I>& p_, mln_point(I)& pmin, mln_point(I)& pmax)
     {
       I p = exact(p_); // a copy of p_
 
@@ -106,7 +106,7 @@ namespace mln
     template <typename I>
     inline
     std::pair<mln_point(I), mln_point(I)>
-    pmin_pmax(const Point_Iterator<I>& p)
+    pmin_pmax(const Site_Iterator<I>& p)
     {
       typedef mln_point(I) P;
       std::pair<P, P> tmp;

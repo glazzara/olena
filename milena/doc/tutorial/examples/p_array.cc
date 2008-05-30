@@ -2,7 +2,6 @@
 # include <mln/core/p_array.hh>
 # include <mln/debug/println.hh>
 # include <mln/level/fill.hh>
-# include <mln/value/int_u8.hh>
 
 
 template <typename A>
@@ -30,12 +29,10 @@ int main()
   typedef p_array<point2d> Arr1;
   Arr1 arr1;
 
-  image2d<value::int_u8> ima(5, 5);
-
   {
     point2d p(1,1);
-    dpoint2d dp[] = { right, right, down, down, left, left, up };
     arr1.append(p);
+    dpoint2d dp[] = { right, right, down, down, left, left, up };
     for (unsigned i = 0; i < 7;  ++i)
       p += dp[i], arr1.append(p);
 

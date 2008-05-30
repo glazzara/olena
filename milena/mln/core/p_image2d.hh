@@ -34,7 +34,7 @@
  * \brief Definition of a point set class based on a image of booleans.
  */
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/core/box2d.hh>
 # include <mln/core/image2d.hh>
 # include <mln/core/sub_image.hh>
@@ -61,10 +61,10 @@ namespace mln
 
     typedef image2d<bool> image_type;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_image2d_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_image2d_bkd_piter_<P> bkd_piter;
 
     /// Constructor.

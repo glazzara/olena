@@ -31,7 +31,7 @@
 # include <utility>
 
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/bgraph_psite.hh>
@@ -56,10 +56,10 @@ namespace mln
     /// Point_Site associated type.
     typedef bgraph_psite<P> psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> bkd_piter;
 
     /// Graph vertex/edge identifier

@@ -25,47 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/point_set.hh
- * \brief This file documents the concept of mln::Site_Set.
+#ifndef MLN_CORE_INTERNAL_SITE_SET_BASE_HH
+# define MLN_CORE_INTERNAL_SITE_SET_BASE_HH
+
+/*! \file mln/core/internal/site_set_base.hh
+ *
+ * \brief Definition of a base class for site set classes.
  */
+
+# include <mln/core/concept/site_set.hh>
+# include <mln/core/concept/site_proxy.hh>
+# include <mln/core/grids.hh>
+# include <mln/metal/is_a.hh>
+# include <mln/metal/if.hh>
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace internal
   {
 
-    /*! \brief Documentation class for mln::Site_Set.
-     *
-     * \see mln::Site_Set
+
+    /*! \internal A base class for site set classes.
+     * \p P is a psite type.
      */
-    template <typename E>
-    struct Site_Set : public Object<E>
+    template <typename P, typename E>
+    struct site_set_base_ : public Site_Set<E>
     {
-      /*! \brief Site associated type.
-       */
-      typedef void site;
 
-      /*! \brief PSite associated type.
-       */
-      typedef void psite;
+      /// Site associated type.
+      typedef typename internal::site_from<P>::ret site;
 
-      /*! \brief Forward Site_Iterator associated type.
-       */
-      typedef void fwd_piter;
-
-      /*! \brief Backward Site_Iterator associated type.
-       */
-      typedef void bkd_piter;
-
-      /*! \brief Test if \p p belongs to this site set. 
-       *
-       * \param[in] p A psite.
-       * \return True if \p p is an element of the site set.
-       */
-      bool has(const psite& p) const;
+    protected:
+      site_set_base_();
     };
 
-  } // end of namespace mln::doc
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename S, typename E>
+    inline
+    site_set_base_<S,E>::site_set_base_()
+    {
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::internal
 
 } // end of namespace mln
+
+
+#endif // ! MLN_CORE_INTERNAL_SITE_SET_BASE_HH

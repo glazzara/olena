@@ -134,11 +134,11 @@ namespace mln
     typedef point2d_h psite;
 
     /// FIXME : should it be in box2d_h?
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef hexa_fwd_piter_<box2d> fwd_piter;
 
     /// FIXME : should it be in box2d_h?
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef hexa_bkd_piter_<box2d> bkd_piter;
 
 

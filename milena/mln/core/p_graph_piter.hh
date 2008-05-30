@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_P_GRAPH_PITER_HH
 # define MLN_CORE_P_GRAPH_PITER_HH
 
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/p_graph.hh>
 # include <mln/core/graph_psite.hh>
 
@@ -49,10 +49,10 @@ namespace mln
   /// \brief Forward iterator on point sites of a mln::p_graph<P>.
   template<typename P>
   class p_graph_fwd_piter_
-    : public internal::point_iterator_base_< P, p_graph_fwd_piter_<P> >
+    : public internal::site_iterator_base_< P, p_graph_fwd_piter_<P> >
   {
     typedef p_graph_fwd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
 
   public:
     // Make definitions from super class available.
@@ -125,10 +125,10 @@ namespace mln
   /// \brief Backward iterator on point sites of a mln::p_graph<P>.
   template<typename P>
   class p_graph_bkd_piter_
-    : public internal::point_iterator_base_< P, p_graph_bkd_piter_<P> >
+    : public internal::site_iterator_base_< P, p_graph_bkd_piter_<P> >
   {
     typedef p_graph_bkd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
 
   public:
     // Make definitions from super class available.

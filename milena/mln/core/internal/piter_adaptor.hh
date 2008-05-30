@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -48,9 +48,9 @@ namespace mln
      * parameter E is the exact type.
      */
     template <typename Pi, typename E>
-    class piter_adaptor_ : public internal::point_iterator_base_< mln_psite(Pi), E >
+    class piter_adaptor_ : public internal::site_iterator_base_< mln_psite(Pi), E >
     {
-      typedef internal::point_iterator_base_< mln_psite(Pi), E > super_;
+      typedef internal::site_iterator_base_< mln_psite(Pi), E > super_;
     public:
 
       // Make dim definition from super class available.

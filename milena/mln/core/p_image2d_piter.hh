@@ -41,10 +41,10 @@ namespace mln
   /// \brief Forward iterator on points of a p_array<P>.
   template <typename P>
   struct p_image2d_fwd_piter_
-    : public internal::point_iterator_base_< P, p_image2d_fwd_piter_<P> >
+    : public internal::site_iterator_base_< P, p_image2d_fwd_piter_<P> >
   {
     typedef p_image2d_fwd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
     /// The associated psite type.
     typedef P psite;
@@ -92,10 +92,10 @@ namespace mln
   /// \brief Backward iterator on points of a p_array<P>.
   template <typename P>
   struct p_image2d_bkd_piter_
-    : public internal::point_iterator_base_< P, p_image2d_bkd_piter_<P> >
+    : public internal::site_iterator_base_< P, p_image2d_bkd_piter_<P> >
   {
     typedef p_image2d_bkd_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
   public:
     /// The associated psite type.
     typedef P psite;

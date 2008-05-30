@@ -25,56 +25,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-# define MLN_CORE_INTERNAL_POINT_SET_BASE_HH
-
-/*! \file mln/core/internal/point_set_base.hh
- *
- * \brief Definition of a base class for site set classes.
+/*! \file mln/core/concept/doc/site_set.hh
+ * \brief This file documents the concept of mln::Site_Set.
  */
-
-# include <mln/core/concept/point_set.hh>
-# include <mln/core/concept/site_proxy.hh>
-# include <mln/core/grids.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/metal/if.hh>
-
 
 namespace mln
 {
 
-  namespace internal
+  namespace doc
   {
 
-
-    /*! \internal A base class for site set classes.
-     * \p P is a psite type.
+    /*! \brief Documentation class for mln::Site_Set.
+     *
+     * \see mln::Site_Set
      */
-    template <typename P, typename E>
-    struct site_set_base_ : public Site_Set<E>
+    template <typename E>
+    struct Site_Set : public Object<E>
     {
+      /*! \brief Site associated type.
+       */
+      typedef void site;
 
-      /// Site associated type.
-      typedef typename internal::site_from<P>::ret site;
+      /*! \brief PSite associated type.
+       */
+      typedef void psite;
 
-    protected:
-      site_set_base_();
+      /*! \brief Forward Site_Iterator associated type.
+       */
+      typedef void fwd_piter;
+
+      /*! \brief Backward Site_Iterator associated type.
+       */
+      typedef void bkd_piter;
+
+      /*! \brief Test if \p p belongs to this site set. 
+       *
+       * \param[in] p A psite.
+       * \return True if \p p is an element of the site set.
+       */
+      bool has(const psite& p) const;
     };
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename S, typename E>
-    inline
-    site_set_base_<S,E>::site_set_base_()
-    {
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::internal
+  } // end of namespace mln::doc
 
 } // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_POINT_SET_BASE_HH
