@@ -1,3 +1,12 @@
+<2008>-<05>-<30> Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
+	Test files.
+	* makefile1: Remove. old file
+	* makefile: . up to date
+	* mmake.sh: .
+	* sources/test_graph.cpp: .
+	* test.ply: Remove. output file
+
 2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add some morphological routines to Roland's sandbox.

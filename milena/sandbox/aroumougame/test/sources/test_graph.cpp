@@ -16,7 +16,8 @@
 #include <mln/core/line_graph_elt_neighborhood.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/meyer_wst.hh>
-#include <mln/morpho/closing_area_on_vertices.hh>
+#include <mln/morpho/closing_area.hh>
+#include <mln/math/abs.hh>
 
 #define NEXT(i) ((i)<2 ? (i)+1 : (i)-2)
 #define PREV(i) ((i)>0 ? (i)-1 : (i)+2)
@@ -25,10 +26,10 @@
 int main()
 {
   float x0,y0,z0,x1,x2,y1,y2,z1,z2;
-  int n=0;
+//  int n=0;
   SoDB::init();
   WRL* Vrml = new WRL();
-  const string& my_filespec = "ml0.wrl";
+  const string& my_filespec = "m9l0.wrl";
 
 // permet la lecture d'un fichier vrml
   objet3D *Obj = Vrml->lire(my_filespec);
@@ -126,15 +127,16 @@ int main()
 
   for (int i = 0; i < nbF; i++)
   {
-    curv.push_back(int(min(max(double(256.0/PI*fcurv[i]),0.0), 255.99)));
-//     std::cout << "curv: " << fcurv[i] << std::endl;
+    curv.push_back(int(fcurv[i]*100));
+//    curv.push_back(int(min(max(double(256.0/PI*fcurv[i]),0.0), 255.99)));
+//     std::cout << "curv: " << curv[i] << std::endl;
   }
   
   double milieuX = 0;
   double milieuY = 0;
   double milieuZ = 0;
    double val = 0;
-  std::vector<int> col;
+  std::vector<double> col;
   
   for(int i=0; i < nbF; i++)
   {
@@ -170,11 +172,8 @@ int main()
   
   }
   
-  SoMFInt32 * colorFace = Vrml -> coloriserFaces(curv);
-  objet3D * object = Vrml->creerObjet( ptsObj,  mailles, colorFace,0);
 //  objet3D * object = Vrml->creerObjet( ptsObj,  mailles, true);
-  std::string nom("test.wrl");
-  Vrml->ecrire(nom,  object);
+
 //   std::cout << (Vrml->checkVRML(nom)) << std::endl;
   
   for(int i=0; i < nbF; i++)
@@ -189,7 +188,7 @@ int main()
           g.add_edge(i,j);
 //           t_pair p(i,j);
 //           tmpEdge.push_back(p);
-          edge_values.push_back(max(col[i], col[j]));
+          edge_values.push_back(math::abs(col[i]-col[j]));
         }
       }
     }
@@ -201,7 +200,7 @@ int main()
   typedef line_graph_image < point3d, int > gimage;
 
   p_line_graph<point3d> plg(g);
-  line_graph_image<point3d, double> lgi(plg,values,edge_values);
+  line_graph_image<point3d, double> lgi(plg,col,edge_values);
 // int i=5;
 //  mln_piter_(gimage ) p(lgi.domain());
 //   for_all (p)
@@ -218,20 +217,46 @@ for(int i=0; i < lgi.edge_values().size(); i++)
 }*/
 
 
-  std::cout << "nb pt graph: " << lgi.domain().npoints() << std::endl;
-  std::cout << "nb pt values: " << values.size() << std::endl;
-  std::cout << "nb pt edge_values: " << edge_values.size() << std::endl;
+//  std::cout << "nb pt values: " << values.size() << std::endl;
+  std::cout << "nb arrete: " << edge_values.size() << std::endl;
   
   
   line_graph_elt_neighborhood<point3d> lgen;
   value::int_u16 nb_bassin;
   line_graph_image<point3d, value::int_u16> output;
 
-  output = morpho::meyer_wst(lgi,lgen,nb_bassin);
+//////////////////////////////////
+  typedef line_graph_image<point3d, value::int_u16> ima_t;
+  ima_t closed_lg_ima(lgi.domain());
+  morpho::closing_area(lgi,lgen,2,closed_lg_ima);
+  output = morpho::meyer_wst(closed_lg_ima,lgen,nb_bassin);  
+/////////////////////////////////
+//  output = morpho::meyer_wst(lgi,lgen,nb_bassin);
 
   std::cout << "nombre de bassin: " << nb_bassin << std::endl;
+  std::vector<int> valcol;
+  
+  typedef line_graph_image<point3d,value::int_u16> out_t;
+  
+   mln_piter_(out_t) pout(output.domain());
+   for_all(pout)
+   {
+   valcol.push_back(output(pout));
+   std::cout << output(pout) << std::endl;
+   }
 
-//   Vrml->detruireObjet(Obj);
+  std::cout << "taille valcol: " << valcol.size() << std::endl;
+  std::cout << "nombre points: " << nbP << std::endl;
+  std::cout << "nombre faces: " << nbF << std::endl;
+
+
+
+  SoMFInt32 * colorFace = Vrml -> coloriserFaces(valcol);
+  objet3D * object = Vrml->creerObjet( ptsObj,  mailles, colorFace,nb_bassin);
+  std::string nom("test.wrl");
+  Vrml->ecrire(nom,  object);
+
+  Vrml->detruireObjet(Obj);
   delete ptsObj;
   delete mailles;
 
