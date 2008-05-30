@@ -1,5 +1,17 @@
 2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add an extra test on Meyer's WST on a synthetic line graph image.
+
+	* tests/morpho/artificial_line_graph_image_wst.cc: New test.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add
+	artificial_line_graph_image_wst.
+	(artificial_line_graph_image_wst_SOURCES)
+	(artificial_line_graph_image_wst_CXXFLAGS):
+	New.
+	(lena_line_graph_image_wst2_CXXFLAGS): Typo.
+
+2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add some comments on mln::canvas::morpho::algebraic_union_find<F>.
 
 	* mln/canvas/morpho/algebraic_union_find.hh

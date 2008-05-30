@@ -3,6 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  artificial_line_graph_image_wst		\
   closing_area					\
   combined					\
   contrast					\
@@ -47,6 +48,9 @@ combined_SOURCES = combined.cc
 # Complex tests.  #
 # --------------- #
 
+artificial_line_graph_image_wst_SOURCES = artificial_line_graph_image_wst.cc
+artificial_line_graph_image_wst_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
+
 dilation_SOURCES = dilation.cc
 dilation_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
@@ -54,7 +58,7 @@ lena_line_graph_image_wst1_SOURCES = lena_line_graph_image_wst1.cc
 lena_line_graph_image_wst1_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 lena_line_graph_image_wst2_SOURCES = lena_line_graph_image_wst2.cc
-lena_line_graph_image_wst2_CXXFLAGS = $(TESTSCXXFLAGS_SPEED)
+lena_line_graph_image_wst2_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 meyer_wst_long_SOURCES = meyer_wst_long.cc
 meyer_wst_long_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
