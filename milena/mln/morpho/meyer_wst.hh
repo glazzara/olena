@@ -113,7 +113,7 @@ namespace mln
       const marker unmarked = mln_min(marker);
 
       // Initialize the output with the markers (minima components).
-      mln_ch_value(I, marker) markers =
+      mln_ch_value(I, marker) output =
 	labeling::regional_minima (input, nbh, nbasins);
 
       typedef mln_psite(I) psite;
@@ -130,12 +130,12 @@ namespace mln
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
       // the grey level input(P).
-      mln_piter(I) p(markers.domain());
+      mln_piter(I) p(output.domain());
       mln_niter(N) n(nbh, p);
       for_all (p)
-	if (markers(p) == unmarked)
+	if (output(p) == unmarked)
 	  for_all(n)
-	    if (markers.has(n) && markers(n) != unmarked)
+	    if (output.has(n) && output(n) != unmarked)
 	      {
 		queue.push(p);
 		break;
@@ -154,14 +154,14 @@ namespace mln
 	  bool single_adjacent_marker_p = true;
 	  mln_niter(N) n(nbh, p);
 	  for_all(n)
-	    if (markers.has(n) && markers(n) != unmarked)
+	    if (output.has(n) && output(n) != unmarked)
 	      if (adjacent_marker == unmarked)
 		{
-		  adjacent_marker = markers(n);
+		  adjacent_marker = output(n);
 		  single_adjacent_marker_p = true;
 		}
 	      else
-		if (adjacent_marker != markers(n))
+		if (adjacent_marker != output(n))
 		  {
 		    single_adjacent_marker_p = false;
 		    break;
@@ -172,13 +172,13 @@ namespace mln
 	     hierarchical queue.  */
 	  if (single_adjacent_marker_p)
 	    {
-	      markers(p) = adjacent_marker;
+	      output(p) = adjacent_marker;
 	      for_all(n)
-		if (markers.has(n) && markers(n) == unmarked)
+		if (output.has(n) && output(n) == unmarked)
 		  queue.push(n);
 	    }
 	}
-      return markers;
+      return output;
     }
 
     template <typename L, typename I, typename N>

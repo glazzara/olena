@@ -1,3 +1,19 @@
+2008-06-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Misc. morpho-related fixes.
+
+	* mln/morpho/line_gradient.hh
+	(mln::morpho::line_gradient) [!NDEBUG]: Avoid a warning in debug
+	mode.
+	* mln/morpho/meyer_wst.hh: s/markers/output/.
+	* mln/level/sort_psites.hh: Remove outdated FIXME.
+	* mln/convert/to_p_array.hh
+	(mln::convert::to_p_array(const Point_Set<S>&)): Add a FIXME.
+	* tests/morpho/lena_line_graph_image_wst2.cc: Encode the number of
+	regions on an `unsigned' value.
+	Don't re-quantize the watershed result to 8 bits before processing
+	it, as it could merge bassins.
+
 2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add an extra test on Meyer's WST on a synthetic line graph image.

@@ -34,6 +34,8 @@
 # include <map>
 # include <vector>
 
+# include <mln/math/abs.hh>
+
 # include <mln/core/image2d.hh>
 # include <mln/core/window2d.hh>
 # include <mln/core/line_graph_image.hh>
@@ -94,10 +96,16 @@ namespace mln
 	for_all (q)
 	if (ima.has(q))
 	  {
+	    // Avoid a warning about an undefined variable when the
+	    // NDEBUG is not defined.
+#ifdef NDEBUG
+	    g.add_edge(points[p], points[q]);
+#else // !NDEBUG
 	    util::edge_id id = g.add_edge(points[p], points[q]);
+#endif //!NDEBUG
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
-	    assert(id != mln_max(util::edge_id));
+	    mln_assertion(id != mln_max(util::edge_id));
 	  }
 
       // Line graph point set.

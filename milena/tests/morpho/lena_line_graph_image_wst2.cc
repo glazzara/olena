@@ -44,8 +44,7 @@
     \li reduce the number of minima using an area opening (counting the
         vertices to compute the area, not the edges);
     \li perform a WST on this simplified line graph image;
-    \li reduce the quantification of the result of the WST;
-    \li create an 2-D, color output image with height and width double
+    \li create a 2-D, color output image with height and width double
         the size the original one, and copy the data of the input image
         in it, interpolating inter-pixel points;
     \li print the watershed on lines into that same image, and save it.  */
@@ -120,18 +119,11 @@ int main()
   `------*/
 
   // Perform a Watershed Transform.
-  typedef int_u16 wst_full_val_t;
-  wst_full_val_t nbasins;
-  typedef line_graph_image<point2d, wst_full_val_t> wst_full_ima_t;
-  wst_full_ima_t wshed_full = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
-  std::cout << "nbasins = " << nbasins << std::endl;
-
-  // Reduce the value set to 8-bit.
-  typedef int_u8 wst_val_t;
+  typedef unsigned wst_val_t;
+  wst_val_t nbasins;
   typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed;
-  initialize(wshed, wshed_full);
-  level::stretch(wshed_full, wshed);
+  wst_ima_t wshed = morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
+  std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.
   | Output.  |

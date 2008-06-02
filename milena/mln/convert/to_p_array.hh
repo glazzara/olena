@@ -28,10 +28,8 @@
 #ifndef MLN_CONVERT_TO_P_ARRAY_HH
 # define MLN_CONVERT_TO_P_ARRAY_HH
 
-/*! \file mln/convert/to_p_array.hh
- *
- * \brief Conversions to mln::p_array.
- */
+/// \file mln/convert/to_p_array.hh
+/// \brief Conversions to mln::p_array.
 
 # include <mln/core/p_array.hh>
 # include <mln/core/concept/window.hh>
@@ -65,6 +63,7 @@ namespace mln
       const S& pset = exact(pset_);
       p_array<mln_psite(S)> v;
       v.reserve(pset.npoints());
+      // FIXME: Why mln_fwd_piter and not mln_piter?
       mln_fwd_piter(S) p(pset);
       for_all(p)
 	v.append(p);
