@@ -72,17 +72,17 @@ namespace mln
       // Points.
       /* FIXME: The need for such a structure during the conversion
 	 exhibits the lack of a service from util::graph (or a another,
-	 missing tool) regarding the retrieval of nodes' ids from
+	 missing tool) regarding the retrieval of vertices' ids from
 	 points.  */
-      std::map<mln::point2d, util::node_id> points;
+      std::map<mln::point2d, util::vertex_id> points;
 
-      // Nodes.
-      std::vector<value_t> node_values;
+      // Vertices.
+      std::vector<value_t> vertex_values;
       mln_fwd_piter(image2d<value_t>) p(ima.domain());
       for_all (p)
       {
-	util::node_id id = g.add_node (p);
-	node_values.push_back (ima(p));
+	util::vertex_id id = g.add_vertex (p);
+	vertex_values.push_back (ima(p));
 	points[p] = id;
       }
 
@@ -113,7 +113,7 @@ namespace mln
 
       // Line graph image.
       typedef line_graph_image<mln::point2d, value_t> ima_t;
-      ima_t lg_ima(plg, node_values, edge_values);
+      ima_t lg_ima(plg, vertex_values, edge_values);
       return lg_ima;
     }
 

@@ -62,19 +62,19 @@ int main()
 
   */
 
-  // Points associated to nodes.
+  // Points associated to vertices.
   std::vector<p_t> points;
-  points.push_back(make::point2d(0,0)); // Point associated to node 0.
-  points.push_back(make::point2d(2,2)); // Point associated to node 1.
-  points.push_back(make::point2d(0,4)); // Point associated to node 2.
-  points.push_back(make::point2d(4,3)); // Point associated to node 3.
-  points.push_back(make::point2d(4,4)); // Point associated to node 4.
+  points.push_back(make::point2d(0,0)); // Point associated to vertex 0.
+  points.push_back(make::point2d(2,2)); // Point associated to vertex 1.
+  points.push_back(make::point2d(0,4)); // Point associated to vertex 2.
+  points.push_back(make::point2d(4,3)); // Point associated to vertex 3.
+  points.push_back(make::point2d(4,4)); // Point associated to vertex 4.
 
   // Edges.
   mln::util::graph<p_t> g;
-  // Populate the graph with nodes.
+  // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_node (points[i]);
+    g.add_vertex (points[i]);
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);

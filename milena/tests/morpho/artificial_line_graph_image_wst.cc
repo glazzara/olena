@@ -38,7 +38,7 @@
     \li create an artificial (checkboard) 2-D image ;
     \li convert this 2-D image into a line graph-based one, where values
         on edges are computed as the absolute value of the difference
-        between the values on the nodes	adjacent to the edge, so as to
+        between the values on the vertices	adjacent to the edge, so as to
         create a (norm of the) gradient ``between the pixels'' of the
         input image;
     \li perform a WST on this line graph image;
@@ -198,7 +198,7 @@ int main()
      We should probably solve this when we ``paint'' the watershed
      over the ``doubled'' image.
 
-     A better approach is probably to iterate over the set of nodes,
+     A better approach is probably to iterate over the set of vertices,
      and ``connect'' edges according to patterns (vertically or
      horizontally connected egdes member of the watershed, etc.).  */
   // Reuse the piter on OUTPUT.

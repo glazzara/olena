@@ -50,7 +50,7 @@ int main()
   | Line graph.  |
   `-------------*/
 
-  /* Actually this graph is from Jean Cousty's PhD dissertation, page 76.
+  /* Actually this graph is from Jean Cousty's PhD thesis, page 76.
 
                0     1     2     3  (rows)
          ,------------------------
@@ -63,23 +63,23 @@ int main()
                   3     5     2
     (cols)
 
-    In G, nodes and egdes are numbered following in the classical
+    In G, vertices and egdes are numbered following in the classical
     foward order.  */
   util::graph<point2d> g;
 
-  // Nodes.
-  std::vector<int> node_values;
-  // We don't really care about values on nodes, because the algorithm
+  // Vertices.
+  std::vector<int> vertex_values;
+  // We don't really care about values on vertices, because the algorithm
   // won't see them.  So all are set to 0.
-  g.add_node (make::point2d(0, 0)); node_values.push_back (0); // Node 0.
-  g.add_node (make::point2d(0, 1)); node_values.push_back (0); // Node 1.
-  g.add_node (make::point2d(0, 2)); node_values.push_back (0); // Node 2.
-  g.add_node (make::point2d(0, 3)); node_values.push_back (0); // Node 3.
+  g.add_vertex (make::point2d(0, 0)); vertex_values.push_back (0); // Vertex 0.
+  g.add_vertex (make::point2d(0, 1)); vertex_values.push_back (0); // Vertex 1.
+  g.add_vertex (make::point2d(0, 2)); vertex_values.push_back (0); // Vertex 2.
+  g.add_vertex (make::point2d(0, 3)); vertex_values.push_back (0); // Vertex 3.
 
-  g.add_node (make::point2d(1, 0)); node_values.push_back (0); // Node 4.
-  g.add_node (make::point2d(1, 1)); node_values.push_back (0); // Node 5.
-  g.add_node (make::point2d(1, 2)); node_values.push_back (0); // Node 6.
-  g.add_node (make::point2d(1, 3)); node_values.push_back (0); // Node 7.
+  g.add_vertex (make::point2d(1, 0)); vertex_values.push_back (0); // Vertex 4.
+  g.add_vertex (make::point2d(1, 1)); vertex_values.push_back (0); // Vertex 5.
+  g.add_vertex (make::point2d(1, 2)); vertex_values.push_back (0); // Vertex 6.
+  g.add_vertex (make::point2d(1, 3)); vertex_values.push_back (0); // Vertex 7.
 
   // Edges.
   std::vector<int> edge_values;
@@ -103,7 +103,7 @@ int main()
   /* FIXME: We probably don't want to build line_graph_images by hand;
      provide helpers and/or conversion functions.  */
   typedef line_graph_image<point2d, int> ima_t;
-  ima_t ima(plg, node_values, edge_values);
+  ima_t ima(plg, vertex_values, edge_values);
 
   /*------------.
   | Iterators.  |

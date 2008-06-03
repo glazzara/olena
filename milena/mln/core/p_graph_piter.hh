@@ -100,7 +100,7 @@ namespace mln
   private:
     /// The p_graph this point site belongs to.
     const p_graph<P>* pg_;
-    /// The id of the node this psite is pointing towards.
+    /// The id of the vertex this psite is pointing towards.
     unsigned id_;
     /// The psite corresponding to this iterator.
     psite psite_;
@@ -176,7 +176,7 @@ namespace mln
   private:
     /// The p_graph this point site belongs to.
     const p_graph<P>* pg_;
-    /// The id of the node this psite is pointing towards.
+    /// The id of the vertex this psite is pointing towards.
     unsigned id_;
     /// The psite corresponding to this iterator.
     psite psite_;
@@ -249,7 +249,7 @@ namespace mln
   bool
   p_graph_fwd_piter_<P>::is_valid() const
   {
-    return pg_ && id_ < pg_->nnodes();
+    return pg_ && id_ < pg_->nvertices();
   }
 
   template<typename P>
@@ -401,7 +401,7 @@ namespace mln
   bool
   p_graph_bkd_piter_<P>::is_valid() const
   {
-    return pg_ && id_ < pg_->nnodes();
+    return pg_ && id_ < pg_->nvertices();
   }
 
   template<typename P>
@@ -417,7 +417,7 @@ namespace mln
   void
   p_graph_bkd_piter_<P>::start()
   {
-    id_ = pg_->nnodes() - 1;
+    id_ = pg_->nvertices() - 1;
     if (is_valid())
       update_();
   }

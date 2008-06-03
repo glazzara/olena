@@ -63,19 +63,19 @@ int main()
 
   */
 
-  // Points associated to nodes.
+  // Points associated to vertices.
   std::vector<point2d> points;
-  points.push_back(make::point2d(0,0)); // Point associated to node 0.
-  points.push_back(make::point2d(2,2)); // Point associated to node 1.
-  points.push_back(make::point2d(0,4)); // Point associated to node 2.
-  points.push_back(make::point2d(4,3)); // Point associated to node 3.
-  points.push_back(make::point2d(4,4)); // Point associated to node 4.
+  points.push_back(make::point2d(0,0)); // Point associated to vertex 0.
+  points.push_back(make::point2d(2,2)); // Point associated to vertex 1.
+  points.push_back(make::point2d(0,4)); // Point associated to vertex 2.
+  points.push_back(make::point2d(4,3)); // Point associated to vertex 3.
+  points.push_back(make::point2d(4,4)); // Point associated to vertex 4.
 
   // Edges.
   util::graph<point2d> g;
-  // Populate the graph with nodes.
+  // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_node (points[i]);
+    g.add_vertex (points[i]);
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -101,11 +101,11 @@ int main()
   `-------------------*/
 
   // Values ("empty" vectors).
-  std::vector<int> node_values(5);
+  std::vector<int> vertex_values(5);
   std::vector<int> edge_values(5);
   // FIXME: hand-made iota's.
-  for (unsigned i = 0; i < node_values.size(); ++i)
-    node_values[i] = i;
+  for (unsigned i = 0; i < vertex_values.size(); ++i)
+    vertex_values[i] = i;
   for (unsigned i = 0; i < edge_values.size(); ++i)
     edge_values[i] = i;
 
@@ -113,7 +113,7 @@ int main()
   /* FIXME: We probably don't want to build line_graph_images by hand;
      provide helpers and/or conversion functions.  */
   typedef line_graph_image<point2d, int> ima_t;
-  ima_t ima(plg, node_values, edge_values);
+  ima_t ima(plg, vertex_values, edge_values);
 
   /*------------.
   | Iterators.  |

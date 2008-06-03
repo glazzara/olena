@@ -70,9 +70,9 @@ namespace mln
     typedef P point;
     /// The type of psite corresponding to the neighborhood.
     typedef graph_psite<P> psite;
-    // The type of the set of neighbors (node ids adjacent to the
+    // The type of the set of neighbors (vertex ids adjacent to the
     // reference psite).
-    typedef std::set<util::node_id> sites_t;
+    typedef std::set<util::vertex_id> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -107,26 +107,27 @@ namespace mln
   graph_elt_neighborhood<P>::compute_sites_(Point_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::node_id ref_node_id = piter.p_ref().id();
-    const util::node<P>& ref_node = piter.pg().gr_->node(ref_node_id);
+    util::vertex_id ref_vertex_id = piter.p_ref().id();
+    const util::vertex<P>& ref_vertex = piter.pg().gr_->vertex(ref_vertex_id);
     sites_t& sites = piter.sites();
     sites.clear();
     /* FIXME: Move this computation out of the neighborhood. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
     // Adjacent vertices.
-    for (std::vector<util::edge_id>::const_iterator e = ref_node.edges.begin();
-	 e != ref_node.edges.end(); ++e)
+    for (std::vector<util::edge_id>::const_iterator e =
+	   ref_vertex.edges.begin();
+	 e != ref_vertex.edges.end(); ++e)
       {
-	util::node_id n1 = piter.pg().gr_->edges()[*e]->n1();
-	// We explicitly enforce that the reference piter node id is
+	util::vertex_id v1 = piter.pg().gr_->edges()[*e]->v1();
+	// We explicitly enforce that the reference piter vertex id is
 	// *not* inserted into SITES.
-	if (n1 != ref_node_id)
-	  sites.insert(n1);
-	util::node_id n2 = piter.pg().gr_->edges()[*e]->n2();
+	if (v1 != ref_vertex_id)
+	  sites.insert(v1);
+	util::vertex_id v2 = piter.pg().gr_->edges()[*e]->v2();
 	// Likewise.
-	if (n2 != ref_node_id)
-	  sites.insert(n2);
+	if (v2 != ref_vertex_id)
+	  sites.insert(v2);
       }
   }
 

@@ -86,9 +86,9 @@ namespace mln
     P second() const;
 
     /// Return the id of the first associated vertex.
-    util::node_id first_id() const;
+    util::vertex_id first_id() const;
     /// Return the id of the second associated vertex.
-    util::node_id second_id() const;
+    util::vertex_id second_id() const;
 
     /// Is this psite valid?
     bool is_valid() const;
@@ -103,7 +103,7 @@ namespace mln
         Contrary to mln::graph_psite, this information is actually
         stored in the mln::line_graph_psite.  In mln::graph_psite, the
         point is retrieved from the data associated with the
-        corresponding node in the graph.  We cannot do this here,
+        corresponding vertex in the graph.  We cannot do this here,
         since points associated to edges are computed on the fly
         (storing them in the graph could be possible, but too costly
         in space).  */
@@ -224,7 +224,7 @@ namespace mln
 
   template<typename P>
   inline
-  util::node_id
+  util::vertex_id
   line_graph_psite<P>::id() const
   {
     return id_;
@@ -236,7 +236,7 @@ namespace mln
   line_graph_psite<P>::first() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->node_data(first_id());
+    return plg().gr_->vertex_data(first_id());
   }
 
   template<typename P>
@@ -245,26 +245,26 @@ namespace mln
   line_graph_psite<P>::second() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->node_data(second_id());
+    return plg().gr_->vertex_data(second_id());
   }
 
 
   template<typename P>
   inline
-  util::node_id
+  util::vertex_id
   line_graph_psite<P>::first_id() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->edge(id_).n1();
+    return plg().gr_->edge(id_).v1();
   }
 
   template<typename P>
   inline
-  util::node_id
+  util::vertex_id
   line_graph_psite<P>::second_id() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->edge(id_).n2();
+    return plg().gr_->edge(id_).v2();
   }
 
 

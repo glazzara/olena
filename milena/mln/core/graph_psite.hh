@@ -74,8 +74,8 @@ namespace mln
 
     /// Return the p_graph this point site belongs to.
     const p_graph<P>& pg() const;
-    /// Return the node id of this point site.
-    util::node_id id() const;
+    /// Return the vertex id of this point site.
+    util::vertex_id id() const;
 
     /// Is this psite valid?
     bool is_valid() const;
@@ -83,8 +83,8 @@ namespace mln
   private:
     /// The p_graph this point site belongs to.
    const p_graph<P>* pg_;
-    /// The id of the node this psite is pointing towards.
-    util::node_id id_;
+    /// The id of the vertex this psite is pointing towards.
+    util::vertex_id id_;
   };
 
   /// Compare two mln::graph_psite<P> instances.
@@ -109,7 +109,7 @@ namespace mln
 
   template<typename P>
   inline
-  graph_psite<P>::graph_psite(const p_graph<P>& g, util::node_id id)
+  graph_psite<P>::graph_psite(const p_graph<P>& g, util::vertex_id id)
     : super_(),
       pg_(&g),
       id_(id)
@@ -142,7 +142,7 @@ namespace mln
   bool
   graph_psite<P>::is_valid() const
   {
-    return pg_ && id_ < pg_->gr_->nnodes();
+    return pg_ && id_ < pg_->gr_->nvertices();
   }
 
   template<typename P>
@@ -181,7 +181,7 @@ namespace mln
 
   template<typename P>
   inline
-  util::node_id
+  util::vertex_id
   graph_psite<P>::id() const
   {
     return id_;

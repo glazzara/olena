@@ -79,8 +79,8 @@ namespace mln
     /// graph.
     std::size_t npoints() const;
 
-    /// Return The number of nodes (vertices) in the graph.
-    std::size_t nnodes() const;
+    /// Return The number of vertices (vertices) in the graph.
+    std::size_t nvertices() const;
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
 
@@ -145,8 +145,8 @@ namespace mln
     : gr_ (new util::graph<P>(gr))
   {
     accu::bbox<P> a;
-    for (unsigned i = 0; i < nnodes(); ++i)
-      a.take(gr_->node_data(i));
+    for (unsigned i = 0; i < nvertices(); ++i)
+      a.take(gr_->vertex_data(i));
     bb_ = a.to_result();
   }
 
@@ -161,9 +161,9 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_line_graph<P>::nnodes() const
+  p_line_graph<P>::nvertices() const
   {
-    return this->gr_->nnodes();
+    return this->gr_->nvertices();
   }
 
   template<typename P>
@@ -222,10 +222,10 @@ namespace mln
     // RHS share a common vertex.
     /* FIXME: This is too low-level.  Yet another service the graph
        should provide.  */
-    if (gr_->edge(lhs).n1() == gr_->edge(rhs).n1() ||
-	gr_->edge(lhs).n1() == gr_->edge(rhs).n2() ||
-	gr_->edge(lhs).n2() == gr_->edge(rhs).n1() ||
-	gr_->edge(lhs).n2() == gr_->edge(rhs).n2())
+    if (gr_->edge(lhs).v1() == gr_->edge(rhs).v1() ||
+	gr_->edge(lhs).v1() == gr_->edge(rhs).v2() ||
+	gr_->edge(lhs).v2() == gr_->edge(rhs).v1() ||
+	gr_->edge(lhs).v2() == gr_->edge(rhs).v2())
       return true;
 
     return false;

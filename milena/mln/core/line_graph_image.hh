@@ -44,14 +44,14 @@
    possible.  */
 
 /* FIXME: This is only a very naive prototype.  For instance, this
-   image associates values to both the nodes and the edges of the
+   image associates values to both the vertices and the edges of the
    graph, but only values on edges are accessible.  We probably want
    to fork this class to have a pure image of line graph (with no data
-   on nodes) and one having data on both nodes and edges.
+   on vertices) and one having data on both vertices and edges.
 
    Moreover, in the current implementation, the type of values on
-   nodes and edges is necessarily the same (V).  We should allow
-   different data types for nodes and edges.  */
+   vertices and edges is necessarily the same (V).  We should allow
+   different data types for vertices and edges.  */
 
 
 namespace mln
@@ -68,9 +68,9 @@ namespace mln
     struct data_< line_graph_image<P, V> >
     {
       data_(const p_line_graph<P>& g,
-	    const std::vector<V>& node_val, const std::vector<V>& edge_val);
+	    const std::vector<V>& vertex_val, const std::vector<V>& edge_val);
 
-      std::vector<V> node_val_;
+      std::vector<V> vertex_val_;
       std::vector<V> edge_val_;
       const p_line_graph<P> plg_;
     };
@@ -139,13 +139,13 @@ namespace mln
     line_graph_image();
     line_graph_image(const p_line_graph<P>& g);
     line_graph_image(const p_line_graph<P>& g,
-		     const std::vector<V>& node_val,
+		     const std::vector<V>& vertex_val,
 		     const std::vector<V>& edge_val);
     /// \}
 
     /// Initialize an empty image.
     void init_(const p_line_graph<P>& g,
-	       const std::vector<V>& node_val,
+	       const std::vector<V>& vertex_val,
 	       const std::vector<V>& edge_val);
 
     /// Read-only access of pixel value at point site \p p.
@@ -163,19 +163,19 @@ namespace mln
 
     /// Return the array of values associated to the edges.
     const std::vector<V>& edge_values() const;
-    /// Return the array of values associated to the nodes.
-    const std::vector<V>& node_values() const;
+    /// Return the array of values associated to the vertices.
+    const std::vector<V>& vertex_values() const;
     /// \}
 
     /* FIXME: Do we want to provide these two methods? (at least, in
        the interface of the class?  */
 
-    /// Return the point of the first node adjacent to the edge with
+    /// Return the point of the first vertex adjacent to the edge with
     /// id \a e.
-    const P& node1(const util::edge_id& e) const;
-    /// Return the point of the second node adjacent to the edge with
+    const P& vertex1(const util::edge_id& e) const;
+    /// Return the point of the second vertex adjacent to the edge with
     /// id \a e.
-    const P& node2(const util::edge_id& e) const;
+    const P& vertex2(const util::edge_id& e) const;
 };
 
   // Fwd decl.
@@ -198,7 +198,7 @@ namespace mln
 	     const line_graph_image<P, W>& model)
   {
     target.init_(model.domain(),
-		 std::vector<V>(model.node_values().size()),
+		 std::vector<V>(model.vertex_values().size()),
 		 std::vector<V>(model.edge_values().size()));
   }
 
@@ -211,9 +211,9 @@ namespace mln
     template <typename P, typename V>
     inline
     data_< line_graph_image<P, V> >::data_(const p_line_graph<P>& g,
-					   const std::vector<V>& node_val,
+					   const std::vector<V>& vertex_val,
 					   const std::vector<V>& edge_val)
-      : node_val_(node_val),
+      : vertex_val_(vertex_val),
 	edge_val_(edge_val),
 	plg_(g)
     {
@@ -235,28 +235,28 @@ namespace mln
   inline
   line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g)
   {
-    init_(g, std::vector<V>(g.nnodes()), std::vector<V>(g.nedges()));
+    init_(g, std::vector<V>(g.nvertices()), std::vector<V>(g.nedges()));
   }
 
   template <typename P, typename V>
   inline
   line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g,
-					   const std::vector<V>& node_val,
+					   const std::vector<V>& vertex_val,
 					   const std::vector<V>& edge_val) 
   {
-    init_(g, node_val, edge_val);
+    init_(g, vertex_val, edge_val);
   }
 
   template <typename P, typename V>
   inline
   void
   line_graph_image<P, V>::init_(const p_line_graph<P>& g,
-				const std::vector<V>& node_val,
+				const std::vector<V>& vertex_val,
 				const std::vector<V>& edge_val)
   {
     mln_precondition(! this->has_data());
     this->data_ =
-      new internal::data_< line_graph_image<P, V> >(g, node_val, edge_val);
+      new internal::data_< line_graph_image<P, V> >(g, vertex_val, edge_val);
   }
 
   /*---------------.
@@ -302,9 +302,9 @@ namespace mln
   template <typename P, typename V>
   inline
   const std::vector<V>&
-  line_graph_image<P, V>::node_values() const
+  line_graph_image<P, V>::vertex_values() const
   {
-    return this->data_->node_val_;
+    return this->data_->vertex_val_;
   }
 
   template <typename P, typename V>
@@ -319,23 +319,23 @@ namespace mln
   template <typename P, typename V>
   inline
   const P&
-  line_graph_image<P, V>::node1(const util::edge_id& e) const
+  line_graph_image<P, V>::vertex1(const util::edge_id& e) const
   {
     // FIXME: Improve the interface of graph to avoid these low-level
     // manipulations.
-    util::node_id n1 = this->domain().gr_.edge(e).n1();
-    return this->domain().gr_.node_data(n1);
+    util::vertex_id v1 = this->domain().gr_.edge(e).v1();
+    return this->domain().gr_.vertex_data(v1);
   }
 
   template <typename P, typename V>
   inline
   const P&
-  line_graph_image<P, V>::node2(const util::edge_id& e) const
+  line_graph_image<P, V>::vertex2(const util::edge_id& e) const
   {
     // FIXME: Improve the interface of graph to avoid these low-level
     // manipulations.
-    util::node_id n2 = this->domain().gr_.edge(e).n2();
-    return this->domain().gr_.node_data(n2);
+    util::vertex_id v2 = this->domain().gr_.edge(e).v2();
+    return this->domain().gr_.vertex_data(v2);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

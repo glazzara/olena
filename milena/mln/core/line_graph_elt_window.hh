@@ -137,21 +137,21 @@ namespace mln
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
-    // Ajacent edges connected through node 1.
+    // Ajacent edges connected through vertex 1.
     /* We don't need to explicitely insert the reference piter (edge
        id) itself into SITES, since it is part of the set of edges
-       adjacent to NODE1 and NODE2, and will therefore be
+       adjacent to VERTEX1 and VERTEX2, and will therefore be
        automatically added.  */
-    util::node_id id1 = piter.p_ref().first_id();
-    const util::node<P>& node1 = piter.plg().gr_->node(id1);
+    util::vertex_id id1 = piter.p_ref().first_id();
+    const util::vertex<P>& vertex1 = piter.plg().gr_->vertex(id1);
     for (std::vector<util::edge_id>::const_iterator e =
-	   node1.edges.begin(); e != node1.edges.end(); ++e)
+	   vertex1.edges.begin(); e != vertex1.edges.end(); ++e)
       sites.insert(*e);
-    // Ajacent edges connected through node 2.
-    util::node_id id2 = piter.p_ref().second_id();
-    const util::node<P>& node2 = piter.plg().gr_->node(id2);
+    // Ajacent edges connected through vertex 2.
+    util::vertex_id id2 = piter.p_ref().second_id();
+    const util::vertex<P>& vertex2 = piter.plg().gr_->vertex(id2);
     for (std::vector<util::edge_id>::const_iterator e =
-	   node2.edges.begin(); e != node2.edges.end(); ++e)
+	   vertex2.edges.begin(); e != vertex2.edges.end(); ++e)
       sites.insert(*e);
   }
 

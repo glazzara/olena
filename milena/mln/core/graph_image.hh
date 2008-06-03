@@ -139,19 +139,19 @@ namespace mln
     /// Return the domain of values of the image.
     const vset& values() const;
 
-    /// Return the array of values associated to the nodes.
-    const std::vector<V>& node_values() const;
+    /// Return the array of values associated to the vertices.
+    const std::vector<V>& vertex_values() const;
     /// \}
 
     /* FIXME: Do we want to provide these two methods? (at least, in
        the interface of the class?  */
 
-    /// Return the point of the first node adjacent to the edge with
+    /// Return the point of the first vertex adjacent to the edge with
     /// id \a e.
-    const P& node1(const util::edge_id& e) const;
-    /// Return the point of the second node adjacent to the edge with
+    const P& vertex1(const util::edge_id& e) const;
+    /// Return the point of the second vertex adjacent to the edge with
     /// id \a e.
-    const P& node2(const util::edge_id& e) const;
+    const P& vertex2(const util::edge_id& e) const;
 };
 
   // Fwd decl.
@@ -172,7 +172,7 @@ namespace mln
 	     graph_image<P, V>& target, const graph_image<P, W>& model)
   {
     target.init_(model.domain(),
-		 std::vector<V>(model.node_values().size()));
+		 std::vector<V>(model.vertex_values().size()));
   }
 
   /*-------.
@@ -206,7 +206,7 @@ namespace mln
   inline
   graph_image<P, V>::graph_image(const p_graph<P>& g)
   {
-    init_(g, std::vector<V>(g.nnodes()));
+    init_(g, std::vector<V>(g.nvertices()));
   }
 
   template <typename P, typename V>
@@ -260,7 +260,7 @@ namespace mln
   template <typename P, typename V>
   inline
   const std::vector<V>&
-  graph_image<P, V>::node_values() const
+  graph_image<P, V>::vertex_values() const
   {
     return this->data_->val_;
   }
@@ -277,17 +277,17 @@ namespace mln
   template <typename P, typename V>
   inline
   const P&
-  graph_image<P, V>::node1(const util::edge_id& e) const
+  graph_image<P, V>::vertex1(const util::edge_id& e) const
   {
-    return this->domain().node1(e);
+    return this->domain().vertex1(e);
   }
 
   template <typename P, typename V>
   inline
   const P&
-  graph_image<P, V>::node2(const util::edge_id& e) const
+  graph_image<P, V>::vertex2(const util::edge_id& e) const
   {
-    return this->domain().node2(e);
+    return this->domain().vertex2(e);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

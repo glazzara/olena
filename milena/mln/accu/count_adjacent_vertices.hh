@@ -82,7 +82,7 @@ namespace mln
       /// The value of the counter.
       std::size_t count__;
       /// The set of adjacent vertices.
-      std::set<util::node_id> vertices_;
+      std::set<util::vertex_id> vertices_;
     };
 
 
