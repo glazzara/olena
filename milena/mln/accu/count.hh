@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +28,11 @@
 #ifndef MLN_ACCU_COUNT_HH
 # define MLN_ACCU_COUNT_HH
 
-/*! \file mln/accu/count.hh
- *
- * \brief Define an accumulator that counts.
- */
+/// \file mln/accu/count.hh
+/// \brief Define an accumulator that counts.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-
 
 namespace mln
 {
@@ -43,37 +40,35 @@ namespace mln
   namespace accu
   {
 
-
-    /*!
-     * \brief Generic counter accumulator class.
-     *
-     * The parameter \a T is the type to be count.
-     */
+    /// \brief Generic counter accumulator class.
+    /// The parameter \a T is the type to be count.
     template <typename T>
     struct count_ : public mln::accu::internal::base_< std::size_t , count_<T> >
     {
       typedef T argument;
-      typedef std::size_t result; // FIXME: Up in Accumulator.
 
       count_();
 
+      /// Manipulators.
+      /// \{
       void init();
-      // FIXME : should we add a take() without argument?
       void take(const argument&);
       void take(const count_<T>& other);
 
-      std::size_t to_result() const;
+      /// Force the value of the counter to \a c. 
       void set_value(std::size_t c);
+      /// \}
+
+      /// Get the value of the accumulator.
+      std::size_t to_result() const;
 
     protected:
-
+      /// The value of the counter.
       std::size_t count__;
     };
 
 
-    /*!
-     * \brief Meta accumulator for count.
-     */
+    /// \brief Meta accumulator for count.
     struct count : public Meta_Accumulator< count >
     {
       template <typename T>

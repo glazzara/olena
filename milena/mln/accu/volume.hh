@@ -33,7 +33,7 @@
     component through one of its pixels.
 
     This accumulator uses an mln::util::pix (pixel) to update the
-    height, area and volume information of the component.
+    reference level, area and volume information of the component.
 
     The class mln/accu/volume_ is not a general-purpose accumulator;
     it is used to implement volume-based connected filters.
@@ -67,20 +67,30 @@ namespace mln
       /// mln::morpho::opening_volume for actual uses of this
       /// accumulator.
       typedef util::pix<I> argument;
-      typedef std::size_t result; // FIXME: Up in Accumulator.
+      /// The value type associated to the pixel type.
+      typedef typename argument::value value;
 
       volume_();
 
+      /// Manipulators.
+      /// \{
       void init();
-      void take(const argument&);
+      void take(const argument& pixel);
       void take(const volume_<I>& other);
 
+      /// Force the value of the counter to \a v.
+      void set_value(std::size_t v);
+      /// \}
+
+      /// Get the value of the accumulator.
       std::size_t to_result() const;
-      void set_value(std::size_t c);
 
     protected:
-      typename argument::value height__;
+      /// The reference level (the level of the component's root).
+      value ref_level__;
+      /// The area of the component.
       std::size_t area__;
+      /// The volume of the component.
       std::size_t volume__;
     };
 
@@ -110,17 +120,30 @@ namespace mln
     void
     volume_<I>::init()
     {
-      height__ = literal::zero;
+      ref_level__ = literal::zero;
       volume__ = 0;
-      volume__ = 0;
+      area__ = 0;
     }
 
     template <typename I>
     inline
     void
-    volume_<I>::take(const argument& t)
+    volume_<I>::take(const argument& pixel)
     {
-      height__ = t.v();
+      /* FIXME: Growing a component using this particular `take'
+         routine won't work, since the update does not take care of
+         the reference level to compute the new volume.  Maybe we
+         could distinguish two cases:
+
+         1. the empty accumulator case (which corresponds to the
+            following code);
+         2. the non-empty accumulator case (which sohuld act as in
+           `take(const volume_<I>& other)').
+
+         Currently, the implementation is only valid if the
+         accumulator was initialy empty before the call to
+        `take(const argument&)'.  */
+      ref_level__ = pixel.v();
       ++area__;
       ++volume__;
     }
@@ -135,8 +158,9 @@ namespace mln
 	 the latter, but both the ISMM 2005 paper and Olena 0.11 use
 	 the former.  */
       volume__ +=
-	other.volume__ + other.area__ * math::abs(other.height__ - height__);
-      // Member height__ is not touched.
+	other.volume__  +
+	other.area__ * math::abs(other.ref_level__ - ref_level__);
+      // Member ref_level__ is not touched.
     }
 
     template <typename I>
@@ -150,10 +174,12 @@ namespace mln
     template <typename I>
     inline
     void
-    volume_<I>::set_value(std::size_t c)
+    volume_<I>::set_value(std::size_t v)
     {
-      volume__ = c;
-      // FIXME: What about area__ and height__ ?
+      volume__ = v;
+      // Reset the other members.
+      ref_level__ = literal::zero;
+      area__ = 0;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

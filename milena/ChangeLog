@@ -1,5 +1,30 @@
 2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up accumulators related to connected filters.
+
+	* mln/accu/count.hh,
+	* mln/accu/volume.hh:
+	Add more documentation.
+	Aesthetic changes.
+	(mln::accu::count_<T>::result)
+	(mln::accu::volume_<I>::result): 
+	Remove useless typedef.
+	* mln/accu/volume.hh:
+	(mln::accu::volume_<I>::height__): Rename member as...
+	(mln::accu::volume_<I>::ref_level__): ...this.
+	(mln::accu::volume_<I>::take)
+	(mln::accu::volume_<I>::set_value):
+	Adjust.
+	(mln::accu::volume_<I>::init): Likewise.
+	Actually initialize all members.
+	(mln::accu::count_adjacent_vertices_<P, V>::set_value): Reset
+	member ref_level__ and area__. 
+	* mln/accu/count_adjacent_vertices.hh
+	(mln::accu::count_adjacent_vertices_<P, V>::set_value): Reset
+	member vertices_.
+
+2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add height closing and opening.
 
 	* mln/accu/height.hh: New.

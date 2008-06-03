@@ -149,6 +149,8 @@ namespace mln
     count_adjacent_vertices_<P, V>::set_value(std::size_t c)
     {
       count__ = c;
+      /// Reset the other member.
+      vertices_.clear();
     }
 
     template <typename P, typename V>
