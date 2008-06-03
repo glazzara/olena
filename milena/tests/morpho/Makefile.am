@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   artificial_line_graph_image_wst		\
   closing_area					\
+  closing_height				\
   closing_volume				\
   combined					\
   contrast					\
@@ -20,6 +21,7 @@ check_PROGRAMS =				\
   meyer_wst					\
   meyer_wst_long				\
   opening_area					\
+  opening_height				\
   opening_volume				\
   thinning
 
@@ -35,7 +37,8 @@ erosion_min_h_SOURCES = erosion_min_h.cc
 
 opening_area_SOURCES = opening_area.cc
 closing_area_SOURCES = closing_area.cc
-
+closing_height_SOURCES = closing_height.cc
+opening_height_SOURCES = opening_height.cc
 closing_volume_SOURCES = closing_volume.cc
 opening_volume_SOURCES = opening_volume.cc
 

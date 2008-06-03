@@ -1,5 +1,20 @@
 2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add height closing and opening.
+
+	* mln/accu/height.hh: New.
+	* mln/morpho/closing_height.hh,
+	* mln/morpho/opening_height.hh:
+	New.
+	* tests/morpho/closing_height.cc,
+	* tests/morpho/opening_height.cc:
+	New tests.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add closing_height
+	and opening_height.
+	(closing_height_SOURCES, opening_height_SOURCES): New.
+
+2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp and specialize mln::accu::volume_.
 
 	* mln/accu/volume.hh (mln::accu::volume_<I>): Take an image
