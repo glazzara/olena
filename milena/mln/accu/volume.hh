@@ -29,14 +29,21 @@
 # define MLN_ACCU_VOLUME_HH
 
 /** \file mln/accu/volume.hh
-    \brief Define an accumulator that computes a volume.
-   
+    \brief Define an accumulator that computes the volume of a
+    component through one of its pixels.
+
+    This accumulator uses an mln::util::pix (pixel) to update the
+    height, area and volume information of the component.
+
+    The class mln/accu/volume_ is not a general-purpose accumulator;
+    it is used to implement volume-based connected filters.
     \see mln::morpho::closing_volume
     \see mln::morpho::opening_volume  */
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 
+# include <mln/util/pix.hh>
 # include <mln/literal/zero.hh>
 
 namespace mln
@@ -45,33 +52,33 @@ namespace mln
   namespace accu
   {
 
-
-    /* FIXME: We should probably ``inline'' the parameter T of the
-       sole use of accu::volume_ (in volume closing and opening, where
-       T = util::pix<I>), since volume is not as generic as
-       accu::count_, for instance.  Hence, we would get rid of the
-       FIXME of this file on the constraints on T.  */
-
-    /// \brief Generic volume accumulator class.
-    /// The parameter \p T is the type of value whose volume is computed.
-    template <typename T>
+    /// \brief Volume accumulator class.
+    ///
+    /// The parameter \p I is the image type on which the accumulator
+    /// of pixels is built.
+    template <typename I>
     struct volume_
-      : public mln::accu::internal::base_< std::size_t , volume_<T> >
+      : public mln::accu::internal::base_< std::size_t , volume_<I> >
     {
-      typedef T argument;
+      /// \brief The accumulated data type.
+      ///
+      /// The volume of component is represented by the volume of its
+      /// root pixel.  See mln::morpho::closing_volume and
+      /// mln::morpho::opening_volume for actual uses of this
+      /// accumulator.
+      typedef util::pix<I> argument;
       typedef std::size_t result; // FIXME: Up in Accumulator.
 
       volume_();
 
       void init();
       void take(const argument&);
-      void take(const volume_<T>& other);
+      void take(const volume_<I>& other);
 
       std::size_t to_result() const;
       void set_value(std::size_t c);
 
     protected:
-      // FIXME: This attributes expects a typedef `value' from T.
       typename argument::value height__;
       std::size_t area__;
       std::size_t volume__;
@@ -81,74 +88,69 @@ namespace mln
     /// \brief Meta accumulator for volume.
     struct volume : public Meta_Accumulator< volume >
     {
-      template <typename T>
+      template <typename I>
       struct with
       {
-	typedef volume_<T> ret;
+	typedef volume_<I> ret;
       };
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
+    template <typename I>
     inline
-    volume_<T>::volume_()
+    volume_<I>::volume_()
     {
       init();
     }
 
-    template <typename T>
+    template <typename I>
     inline
     void
-    volume_<T>::init()
+    volume_<I>::init()
     {
       height__ = literal::zero;
       volume__ = 0;
       volume__ = 0;
     }
 
-    template <typename T>
+    template <typename I>
     inline
     void
-    volume_<T>::take(const argument& t)
+    volume_<I>::take(const argument& t)
     {
-      /* FIXME: This accumulator will only work with types T providing
-	 a method v() (e.g., a util::pix<I>).  */
       height__ = t.v();
       ++area__;
       ++volume__;
     }
 
-    template <typename T>
+    template <typename I>
     inline
     void
-    volume_<T>::take(const volume_<T>& other)
+    volume_<I>::take(const volume_<I>& other)
     {
-      // Member height__ is not touched.
-
-      /* FIXME: This accumulator will only work with types T providing
-	 a method v() (e.g., a util::pix<I>).  */
       area__ += other.area__;
       /* FIXME: Is it `t.area__' or `area__' ? Théo said it was
 	 the latter, but both the ISMM 2005 paper and Olena 0.11 use
 	 the former.  */
       volume__ +=
 	other.volume__ + other.area__ * math::abs(other.height__ - height__);
+      // Member height__ is not touched.
     }
 
-    template <typename T>
+    template <typename I>
     inline
     std::size_t
-    volume_<T>::to_result() const
+    volume_<I>::to_result() const
     {
       return volume__;
     }
 
-    template <typename T>
+    template <typename I>
     inline
     void
-    volume_<T>::set_value(std::size_t c)
+    volume_<I>::set_value(std::size_t c)
     {
       volume__ = c;
       // FIXME: What about area__ and height__ ?

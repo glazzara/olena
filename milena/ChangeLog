@@ -1,5 +1,26 @@
 2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Revamp and specialize mln::accu::volume_.
+
+	* mln/accu/volume.hh (mln::accu::volume_<I>): Take an image
+	instead of a data type as parameter, and always work with a
+	mln::util::pix<I> instead of a free type.
+	(mln::accu::volume_<I>::argument): Change typedef from `T' to
+	`mln::util::pix<I>'.
+	(mln::accu::volume)
+	(mln::accu::volume<I>_::volume_)
+	(mln::accu::volume<I>_::take (const argument&))
+	(mln::accu::volume<I>_::take (const volume_<I>&))
+	(mln::accu::volume<I>_::init)
+	(mln::accu::volume<I>_::to_result)
+	(mln::accu::volume<I>_::set_value):
+	Adjust.
+	* mln/morpho/closing_volume.hh (mln::morpho::opening_volume)
+	* mln/morpho/opening_volume.hh (mln::morpho::closing_volume):
+	Adjust.
+
+2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add volume closing and opening.
 
 	* mln/accu/volume.hh: New.

@@ -55,9 +55,8 @@ namespace mln
 			std::size_t lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
       // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::volume_<pix_t> >(input, nbh, lambda, output);
+      closing_attribute< accu::volume_<I> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
