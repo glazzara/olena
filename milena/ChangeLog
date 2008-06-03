@@ -1,3 +1,20 @@
+2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add volume closing and opening.
+
+	* mln/accu/volume.hh: New.
+	* mln/morpho/closing_volume.hh,
+	* mln/morpho/opening_volume.hh:
+	New.
+	* mln/morpho/closing_attribute.hh
+	(mln::morho::impl::closing_attribute_tinit): Add a FIXME.
+	* mln/morpho/opening_attribute.hh: Aesthetic changes.
+	* tests/morpho/closing_volume.cc,
+	* tests/morpho/opening_volume.cc:
+	New tests.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add closing_volume.
+	(closing_volume_SOURCES): New.
+
 2008-06-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Misc. morpho-related fixes.

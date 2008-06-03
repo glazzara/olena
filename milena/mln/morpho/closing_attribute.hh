@@ -28,10 +28,8 @@
 #ifndef MLN_MORPHO_CLOSING_ATTRIBUTE_HH
 # define MLN_MORPHO_CLOSING_ATTRIBUTE_HH
 
-/*! \file mln/morpho/closing_attribute.hh
- *
- * \brief Morphological attribute closing.
- */
+/// \file mln/morpho/closing_attribute.hh
+/// \brief Morphological attribute closing.
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
@@ -83,6 +81,11 @@ namespace mln
 	void init()
 	{
 	  // FIXME: border::fill(input, mln_max(mln_value(I)));
+	  /* FIXME: Shouldn't it be
+
+	       border::fill(input, mln_max(mln_value(I)))
+
+	     instead?  */
 	}
 
 	inline
