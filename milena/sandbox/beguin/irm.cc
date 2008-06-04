@@ -32,7 +32,7 @@
 #include <mln/debug/println.hh>
 
 //#include <segm_to_pregraph.hh>
-#include <fusion_graph.hh>
+#include <fusion_graph2.hh>
 
 mln::value::int_u8 foo(unsigned u)
 {
@@ -116,71 +116,135 @@ namespace mln
   }
 
 
-  template <typename I, typename J, typename N>
-  void mk_graph(const I& lbl,
-  		const J& irm,
-		N nbh,
-		unsigned nlabels)
-  {
-    std::vector< std::vector<bool> > adja(nlabels + 1);
-    for (unsigned l = 0; l <= nlabels; ++l)
-      adja[l].resize(nlabels + 1, false);
+//   template <typename I, typename J, typename N>
+//   void mk_graph(const I& lbl,
+//   		const J& irm,
+// 		N nbh,
+// 		unsigned nlabels)
+//   {
+//     std::vector< std::vector<bool> > adja(nlabels + 1);
+//     for (unsigned l = 0; l <= nlabels; ++l)
+//       adja[l].resize(nlabels + 1, false);
+// 
+//     mln_piter(I) p(lbl.domain());
+//     mln_niter(N) n(nbh, p);
+// 
+//     // We compute the adjacency matrix of the RAG.
+//     for_all(p)
+//       if (lbl(p) == 0) // wshed
+// 	{
+// 	  std::set<unsigned> s;
+// 	  for_all(n) if (lbl.has(n))
+// 	    {
+// 	      if (lbl(n) == 0)
+// 		continue;
+// 	      s.insert(lbl(n));
+// 	    }
+// 	  if (s.size() < 2)
+// 	    {
+// 	      std::cout << "#" << std::endl;
+// 	      continue;
+// 	    }
+// 	  std::set<unsigned>::const_iterator l1, l2;
+// 	  for (l1 = s.begin(); l1 != s.end(); ++l1)
+// 	    {
+// 	      l2 = l1;
+// 	      for (++l2; l2 != s.end(); ++l2)
+// 		adja[*l1][*l2] = true;
+// 	    }
+// 	}
+// 
+//     unsigned count = 0;
+//     for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+//       for (unsigned l2 = 1; l2 <= nlabels; ++l2)
+// 	if (adja[l1][l2])
+// 	  ++count;
+//     std::cout << "link count = " << count << std::endl;
+// 
+//     // Graph.
+//     util::graph<float> g;
+//     // Nodes.
+//     for (unsigned i = 0; i <= nlabels; ++i)
+//     {
+//       accu::mean_<unsigned> m;
+//       level::take(irm | (pw::value(lbl) == pw::cst(i)), m);
+//       g.add_node(m.to_result());
+//     }
+//     // Edges.
+//     for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+//       for (unsigned l2 = l1 + 1; l2 <= nlabels; ++l2)
+// 	if (adja[l1][l2])
+// 	  g.add_edge(l1, l2);
+//     //g.print_debug (std::cout);
+//     for( int i = 0 ; i < g.nnodes() ; ++i)
+//       std::cout << "[" << i << " : " << g.node_data(i) << " ] ";
+//     std::cout << std::endl;
+//   }
 
-    mln_piter(I) p(lbl.domain());
-    mln_niter(N) n(nbh, p);
+  /// Build a region adjacency graph.
+  template <typename I, typename J, typename N>
+  util::graph< accu::mean_<mln_value(J)> >
+  make_rag(const I& label, const J& input, N nbh, unsigned nlabels)
+      {
+        std::vector< std::vector<bool> > adja(nlabels + 1);
+        for (unsigned l = 0; l <= nlabels; ++l)
+          adja[l].resize(nlabels + 1, false);
+
+        mln_piter(I) p(lbl.domain());
+        mln_niter(N) n(nbh, p);
 
     // We compute the adjacency matrix of the RAG.
-    for_all(p)
-      if (lbl(p) == 0) // wshed
-	{
-	  std::set<unsigned> s;
-	  for_all(n) if (lbl.has(n))
-	    {
-	      if (lbl(n) == 0)
-		continue;
-	      s.insert(lbl(n));
-	    }
-	  if (s.size() < 2)
-	    {
-	      std::cout << "#" << std::endl;
-	      continue;
-	    }
-	  std::set<unsigned>::const_iterator l1, l2;
-	  for (l1 = s.begin(); l1 != s.end(); ++l1)
-	    {
-	      l2 = l1;
-	      for (++l2; l2 != s.end(); ++l2)
-		adja[*l1][*l2] = true;
-	    }
-	}
+        for_all(p)
+          if (lbl(p) == 0) // wshed
+        {
+          std::set<unsigned> s;
+          for_all(n) if (lbl.has(n))
+          {
+            if (lbl(n) == 0)
+              continue;
+            s.insert(lbl(n));
+          }
+          if (s.size() < 2)
+          {
+            std::cout << "#" << std::endl;
+            continue;
+          }
+          std::set<unsigned>::const_iterator l1, l2;
+          for (l1 = s.begin(); l1 != s.end(); ++l1)
+          {
+            l2 = l1;
+            for (++l2; l2 != s.end(); ++l2)
+              adja[*l1][*l2] = true;
+          }
+        }
 
-    unsigned count = 0;
-    for (unsigned l1 = 1; l1 <= nlabels; ++l1)
-      for (unsigned l2 = 1; l2 <= nlabels; ++l2)
-	if (adja[l1][l2])
-	  ++count;
-    std::cout << "link count = " << count << std::endl;
+        unsigned count = 0;
+        for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+          for (unsigned l2 = 1; l2 <= nlabels; ++l2)
+            if (adja[l1][l2])
+              ++count;
+        std::cout << "link count = " << count << std::endl;
 
     // Graph.
-    util::graph<float> g;
+        util::graph< accu::mean_<mln_value(J)> > g;
     // Nodes.
-    for (unsigned i = 0; i <= nlabels; ++i)
-    {
-      accu::mean_<unsigned> m;
-      level::take(irm | (pw::value(lbl) == pw::cst(i)), m);
-      g.add_node(m.to_result());
-    }
+        for (unsigned i = 0; i <= nlabels; ++i)
+        {
+          accu::mean_<mln_value(J)> m;
+          level::take(irm | (pw::value(lbl) == pw::cst(i)), m);
+          g.add_node(m);
+        }
     // Edges.
-    for (unsigned l1 = 1; l1 <= nlabels; ++l1)
-      for (unsigned l2 = l1 + 1; l2 <= nlabels; ++l2)
-	if (adja[l1][l2])
-	  g.add_edge(l1, l2);
+        for (unsigned l1 = 1; l1 <= nlabels; ++l1)
+          for (unsigned l2 = l1 + 1; l2 <= nlabels; ++l2)
+            if (adja[l1][l2])
+              g.add_edge(l1, l2);
     //g.print_debug (std::cout);
-    for( int i = 0 ; i < g.nnodes() ; ++i)
-      std::cout << "[" << i << " : " << g.node_data(i) << " ] ";
-    std::cout << std::endl;
-  }
-
+        for( int i = 0 ; i < g.nnodes() ; ++i)
+          std::cout << "[" << i << " : " << g.node_data(i) << " ] ";
+        std::cout << std::endl;
+        return g;
+      }
 
   template <typename I, typename J, typename N>
   void mk2_graph(const I& lbl , const J& irm , const N&
@@ -211,6 +275,15 @@ namespace mln
   
 } // end of namespace mln
 
+template <typename A>
+struct region_data
+{
+  // The subregions composing the region.
+  std::set<util::vertex_id> subregions;
+  // An accumulator.
+  A a;
+}
+
 int main()
 {
   using namespace mln;
@@ -240,7 +313,25 @@ int main()
   io::pgm::save( level::transform(wshed, convert::to_fun(foo)),
                   "tmp_wshed.pgm" );
 
-  typedef fusion_graph<unsigned int, void> _fg;
-  _fg fg(wshed , irm , c8() , nbasins);
+  //typedef fusion_graph<unsigned int, void> _fg;
+  //_fg fg(wshed , irm , c8() , nbasins);
   
+//   fusion_graph fg(lbl&, irm&, c4(), nbasins);
+//   std::cout << "nnodes = " << fg.nnodes() << std::endl
+//             << "nregions = " << fg.nn() << std::endl;
+
+  // Region adjacency graph.
+  util::graph< accu::mean_<int_u8> > rag = make_rag(wshed, irm, c4(), nbasins);
+  
+  // Fusion graph.
+  
+  typedef util::graph< region_data< accu::mean<int_u8> > fusion_graph;
+  
+  fusion_graph output;
+  fusion_graph work;
+  do
+    work = output;
+    output = merge(work);
+  while (work.nvertices() != output.nvertices());
+
 }

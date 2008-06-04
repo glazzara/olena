@@ -1,3 +1,9 @@
+2008-06-04  Géraud Béguin  <geraud.beguin@lrde.epita.fr>
+
+	Continue the work on fusion graphs..
+
+	* beguin/fusion_graph.hh, beguin/irm.cc: Do it.
+
 <2008>-<05>-<30> Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Test files.
