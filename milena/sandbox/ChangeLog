@@ -1,3 +1,16 @@
+2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Finish the computation of the fusion graph test.
+
+	* beguin/irm.cc: s/node/vertex/.
+	(my_mln::mk2_graph): Disable.
+	(my_mln::region_data, my_mln::abs_diff_threshold): New structs.
+	(my_mln::make_fg, my_mln::merge_fg): New routines.
+	(my_mln::main): Adjust.
+	Compute the fusion graphs and output a result.
+	* beguin/+irm6.pgm: Rename image as...
+	* beguin/irm6.pgm: ...this.
+
 2008-06-04  Géraud Béguin  <geraud.beguin@lrde.epita.fr>
 
 	Continue the work on fusion graphs..
