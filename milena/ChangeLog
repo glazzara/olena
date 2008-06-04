@@ -1,3 +1,7 @@
+2008-06-04  GÃraud BÃguin  <geraud.beguin@lrde.epita.fr>
+
+	* mln/util/graph.hh: Typo.
+
 2008-06-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename graphs' « nodes » as « vertices ».

@@ -150,7 +150,7 @@ namespace mln
     | graph<void, void>.  |
     `--------------------*/
 
-    /* Note that ddefinition of members from fully specialized
+    /* Note that definition of members from fully specialized
        template classes are not preceded by `template<>'.  */
     inline
     vertex_id
