@@ -1,3 +1,15 @@
+2008-06-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a 2D simplicial complex (toy code) + a double-window type.
+
+	* sandbox/geraud/cs2d: New directory.
+	* sandbox/geraud/cs2d/cs2d.cc: New.
+	* sandbox/geraud/cs2d/dbl_neighb.cc: New.
+	* sandbox/geraud/cs2d/cs2d.hh: New.
+	* sandbox/geraud/cs2d/cs2d_utils.hh: New.
+	* sandbox/geraud/cs2d/dbl_neighb.hh: New.
+	* sandbox/geraud/cs2d/cs2d_morpho.hh: New.
+
 2008-05-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean Site_Iterator design and propagate to p_array and box.
