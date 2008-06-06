@@ -549,7 +549,7 @@ namespace mln
       return tmp;
     }
 
-    
+
     template <typename P>
     inline
     P
@@ -557,9 +557,9 @@ namespace mln
     {
       P tmp;
       for (unsigned i = 0; i < P::dim; ++i)
-        tmp[i] = round(v[i]);
+        tmp[i] = typename P::coord(v[i]);//round(v[i]);
       return tmp;
-    }  
+    }
     
 # endif // MLN_INCLUDE_ONLY
 

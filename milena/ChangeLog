@@ -1,3 +1,10 @@
+2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix mln/algebra/vec.hh (to_point).
+
+	* mln/algebra/vec.hh (to_point): Fix. Coord conversions now use cast
+	operator (It wasn't the case! argg).
+
 2008-06-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix tests/util/graph.
