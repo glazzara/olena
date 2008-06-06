@@ -200,6 +200,7 @@ namespace mln
       return a;
     }
 
+
     template < typename P >
     inline
     box_<point2d>

@@ -1,3 +1,11 @@
+2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Make icp stop if e_k < d_k (errors).
+
+	* jardonnet/test/icp_ref.cc: Fix p_array initialisation.
+	* jardonnet/registration/icp_ref.hh (impl::icp) : Update :
+	Stop if e_k < d_k.
+
 2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	Finish the computation of the fusion graph test.

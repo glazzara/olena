@@ -103,7 +103,7 @@ namespace mln
         buffer<4,quat7<P::dim> > buf_qk;
 
         p_array<P>    Ck(C), Xk(C);
-        float d_k = 1000, d_k_1 = 1000;
+        float d_k = 1000, d_k_1 = 1000, e_k = 1000;
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
@@ -126,11 +126,11 @@ namespace mln
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
           d_k = rms(C, map, c_length, buf_qk[1], qk);
+
+          // e_k = d(closest(qk-1(P)), qk-1(P))
+          e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
           
 #ifndef NDEBUG
-          // e_k = d(closest(qk-1(P)), qk-1(P))
-          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-
           //plot file
           std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
@@ -139,7 +139,8 @@ namespace mln
           pts += c_length;
 #endif
           k++;
-        } while (d_k_1 - d_k > epsilon);
+        } while (e_k >= d_k && d_k_1 - d_k > epsilon);
+        // FIXME : test (e_k >= d_k) seems to be a bad idea.
 
         trace::exiting("registration::impl::icp_");
       }
@@ -200,7 +201,7 @@ namespace mln
             mln_piter(p_array<P>) p(cloud);
             for_all(p)
             {
-              algebra::vec<3,float> p_ = point3d(p), qp_ = qk(p_);
+              algebra::vec<3,float> p_ = P(p), qp_ = qk(p_);
               point2d qp = make::point2d(int(qp_[0]), int(qp_[1]));
               if (tmp.has(qp))
                 tmp(qp) = c;
