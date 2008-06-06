@@ -1,5 +1,13 @@
 2008-06-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix tests/util/graph.
+
+	* tests/util/graph.cc: Catch up with the new interface of
+	mln::util::graph<V, E>.
+	s/add_node/add_vertex/.
+
+2008-06-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln:p_set be able to erase its elements.
 
 	* mln/core/p_set.hh (mln::p_set<P>::remove): Enable this method.
