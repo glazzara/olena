@@ -78,9 +78,8 @@ namespace mln
     /// Insert a point \p p.
     p_set<P>& insert(const P& p);
 
-    // FIXME : doesn't compile
-    //     /// Remove a point \p p.
-    //     p_set<P>& remove(P& p);
+    /// Remove a point \p p.
+    p_set<P>& remove(const P& p);
 
     /// Return the \p i-th point.
     const P& operator[](unsigned i) const;
@@ -132,17 +131,19 @@ namespace mln
     return *this;
   }
 
-
-  // FIXME : finish it.
-  //   template <typename P>
-  //   p_set<P>&
-  //   p_set<P>::remove(P& p)
-  //   {
-  //     this->super_::remove(p);
-  //     // FIXME: need to rebuild bb_ ?
-  //     //bb_.untake(p);
-  //     return *this;
-  //   }
+  template <typename P>
+  inline
+  p_set<P>&
+  p_set<P>::remove(const P& p)
+  {
+    this->super_::remove(p);
+    // Rebuild the bounding box.
+    bb_.init();
+    for (typename std::set<P>::const_iterator i = this->s_.begin();
+	 i != this->s_.end(); ++i)
+      bb_.take(*i);
+    return *this;
+  }
 
   template <typename P>
   inline

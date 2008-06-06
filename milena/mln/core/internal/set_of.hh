@@ -147,13 +147,14 @@ namespace mln
        */
       mutable std::vector<E> v_;
 
+    protected:
       /*! \brief Set of elements.
        *
        * This structure is always up-to-date w.r.t. the set contents.
        */
       std::set<E> s_;
 
-
+    private:
       /*! \brief Update \a v_ from \a s_.
        *
        * FIXME: explain.
@@ -206,8 +207,7 @@ namespace mln
     set_of_<E>&
     set_of_<E>::remove(const E& elt)
     {
-      // FIXME : doesn't compile
-      std::remove(s_.begin(), s_.end(), elt);
+      s_.erase(elt);
       if (needs_update_ == false)
 	needs_update_ = true;
       return internal::force_exact< set_of_<E> >(*this);
