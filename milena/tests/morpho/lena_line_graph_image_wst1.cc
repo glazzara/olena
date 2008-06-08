@@ -126,7 +126,7 @@ int main()
        is bad.  util:graph<N,E>::add_vertex should return this
        id.  */
     points[p] = id;
-    ++id;
+    ++id.to_equiv();
   }
 
   // Edges.

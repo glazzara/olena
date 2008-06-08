@@ -58,7 +58,7 @@ namespace mln
     /// Construction and assignment.
     /// \{
     graph_psite();
-    graph_psite(const p_graph<P>& pg_, unsigned id);
+    graph_psite(const p_graph<P>& pg_, util::vertex_id id);
     graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}

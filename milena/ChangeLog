@@ -1,3 +1,32 @@
+2008-06-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have mln::util::vertex_id and mln::util::edge_id be distinct types.
+
+	* mln/util/internal/graph_base.hh
+	(mln::util::gen_id<Tag, Typename>): New class.
+	(mln::util::vertex_tag, mln::util::edge_tag): New tags
+	(mln::util::vertex_id, mln::util::edge_id): Define these typedefs
+	as specializations of mln::util::gen_id instead of unsigned.
+	(mln::util::graph_base<V, E>::add_edge_): Adjust.
+	(operator==(const edge<E>&, const edge<E>&))
+	(operator< (const edge<E>&, const edge<E>&)):
+	Add missing an inline qualifier.
+	(mln::util::graph_base<V, E>::vertex(vertex_id)): Have the
+	declarations and definitions of thee methods have the exact same
+	signature.
+	* mln/core/line_graph_psite.hh
+	(line_graph_psite(const p_line_graph<P>&, util::edge_id))
+	(mln::util::line_graph_psite<P>::id):
+	Likewise.
+	* mln/core/graph_psite.hh
+	(graph_psite(const p_graph<P>&, util::vertex_id)):
+	Likewise.
+	* mln/core/p_line_graph_piter.hh
+	(p_line_graph_fwd_piter_<P>::next_): 
+	(p_line_graph_bkd_piter_<P>::next_):
+	Adjust.
+	* tests/morpho/lena_line_graph_image_wst1.cc: Adjust. 
+
 2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix mln/algebra/vec.hh (to_point).

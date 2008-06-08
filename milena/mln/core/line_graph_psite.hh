@@ -61,7 +61,7 @@ namespace mln
     /// Construction and assignment.
     /// \{
     line_graph_psite();
-    line_graph_psite(const p_line_graph<P>& plg, unsigned id);
+    line_graph_psite(const p_line_graph<P>& plg, util::edge_id id);
     line_graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
@@ -224,7 +224,7 @@ namespace mln
 
   template<typename P>
   inline
-  util::vertex_id
+  util::edge_id
   line_graph_psite<P>::id() const
   {
     return id_;

@@ -281,7 +281,7 @@ namespace mln
   void 
   p_line_graph_fwd_piter_<P>::next_()
   {
-    ++id_;
+    ++id_.to_equiv();
     if (is_valid())
       update_();
   }
@@ -422,7 +422,7 @@ namespace mln
   void 
   p_line_graph_bkd_piter_<P>::next_()
   {
-    --id_;
+    --id_.to_equiv();
     if (is_valid())
       update_();
   }

@@ -40,35 +40,79 @@
 # include <ostream>
 
 # include <mln/core/concept/object.hh>
+
 # include <mln/util/ordpair.hh>
+# include <mln/value/builtin/integers.hh>
 
 namespace mln
 {
 
   namespace util
   {
-    /* FIXME: We should create actual types for vertex_id and edge_id,
-       (not just typedefs), at least to prevent the user from using a
-       vertex_id where an edge_id is expected (and vice versa).
-       Conversion to and from unsigned would still be useful, but it
-       might be safer to turn them into explicit ones.
+    /*--------------.
+    | Identifiers.  |
+    `--------------*/
 
-       See what the Vaucanson team did for the handles of
-       vertices/states in their graphs/automata implemenations here:
+    /// \brief Generic identifier/handler.
+    ///
+    /// Inspired by Vaucansons's handlers for automata.
+    ///
+    /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hh
+    /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hxx
+    //
+    // \todo We /might/ want to integrate this into Milena's value system.
 
-       https://trac.lrde.org/vaucanson/browser/trunk/include/vaucanson/automata/concept/handlers.hh
+    template <typename Tag, typename Equiv>
+    class gen_id
+    {
+      typedef gen_id<Tag, Equiv> self_t;
 
-       We /might/ want to integrate this into Milena's value system.  */
+    public:
+      typedef Equiv equiv;
+
+      gen_id();
+      gen_id(const Equiv& e);
+      self_t& operator=(const Equiv& e);
+
+      const equiv& to_equiv() const;
+      equiv& to_equiv();
+      operator const equiv() const;
+      operator equiv();
+
+    private:
+      equiv e_;
+    };
+    
+    /// Compare two identifiers.
+    /// \{
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j);
+
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const Equiv& i, const gen_id<Tag, Equiv>& j);
+
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const Equiv j);
+    /// \}
+
+    /// Tags.
+    /// \{
+    struct vertex_tag;
+    struct edge_tag;
+    /// \}
 
     /// \brief The type used to identify vertices.
     ///
     /// Used internally as a key to manipulate vertices.
-    typedef unsigned vertex_id;
+    typedef gen_id<vertex_tag, unsigned> vertex_id;
 
     /// \brief The type used to identify edges.
     ///
     /// Used internally as a key to manipulate edges.
-    typedef unsigned edge_id;
+    typedef gen_id<edge_tag, unsigned> edge_id;
 
 
     /*---------.
@@ -180,7 +224,7 @@ namespace mln
 	/// Return the vertex whose id is \a v.
 	/// \{
 	util::vertex<V>& vertex(vertex_id v);
-	const util::vertex<V>& vertex(edge_id v) const;
+	const util::vertex<V>& vertex(vertex_id v) const;
 	/// \}
 
 	/// Return the edge whose id is \a e.
@@ -242,7 +286,93 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /*--------------.
+    | Identifiers.  |
+    `--------------*/
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::gen_id()
+    {
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::gen_id(const Equiv& e)
+      : e_ (e)
+    {
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>&
+    gen_id<Tag, Equiv>::operator=(const Equiv& e)
+    {
+      e_ = e;
+      return *this;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    const Equiv&
+    gen_id<Tag, Equiv>::to_equiv() const
+    {
+      return e_;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    Equiv& 
+    gen_id<Tag, Equiv>::to_equiv()
+    {
+      return e_;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::operator const Equiv() const
+    {
+      return to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::operator Equiv()
+    {
+      return to_equiv();
+    }
+
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i.to_equiv() == j.to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const Equiv& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i == j.to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const Equiv j)
+    {
+      return i.to_equiv() == j;
+    }
+
+    /*---------------------.
+    | Operators on edges.  |
+    `---------------------*/
+
     template <typename E>
+    inline
     bool
     operator==(const edge<E>& lhs, const edge<E>& rhs)
     {
@@ -250,6 +380,7 @@ namespace mln
     }
 
     template <typename E>
+    inline
     bool
     operator< (const edge<E>& lhs, const edge<E>& rhs)
     {
@@ -447,7 +578,10 @@ namespace mln
 	    delete edge;
 	    edge = 0;
 	    // Return the erroneous value.
-	    return mln_max(edge_id);
+	    /* FIXME: We have to explicitly extract the numerical
+	       equivalent type here, because mln::util::gen_id<T, E>
+	       is not compatible with Milena's value system (yet).  */
+	    return mln_max(edge_id::equiv);
 	  }
 	else
 	  {
