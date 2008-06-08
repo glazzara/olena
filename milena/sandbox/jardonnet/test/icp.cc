@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
   std::cout << "Pts processed        = " << registration::pts << std::endl;
 #endif
-
+  
   qk.apply_on(c, c, c.npoints());
   
   //init output image
@@ -78,11 +78,12 @@ int main(int argc, char* argv[])
   std::vector<float> length(c.npoints());
   for (size_t i = 0; i < c.npoints(); i++)
     length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
+
   
   // final transform
-  quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
+  quat7<3> fqk = registration::final_qk(c, map, 2*stddev);
   fqk.apply_on(c, c, c.npoints());
-
+  
   //print x
   for (size_t i = 0; i < x.npoints(); i++)
     {
@@ -91,6 +92,7 @@ int main(int argc, char* argv[])
       if (output.has(px))
         output(px) = literal::green;
     }
+  
   
   //to 2d : projection (FIXME:if 3d)
   for (size_t i = 0; i < c.npoints(); i++)

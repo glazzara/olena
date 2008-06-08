@@ -1,3 +1,13 @@
+2008-06-08  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Points escaping during multi-scale registration.
+
+	* jardonnet/test/test.rb: Fix: Change parameters e and q.
+	* jardonnet/test/icp.cc: Fix: Make use of update_qk[1].
+	* jardonnet/registration/icp_ref.hh: Fix: Remove useless Xk array.
+	* jardonnet/registration/icp.hh: Update: Escape points during
+	registration steps.
+
 2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Make icp stop if e_k < d_k (errors).

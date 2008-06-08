@@ -130,7 +130,7 @@ namespace mln
             qk = update_qk(buf_qk.get_array(), buf_dk.get_array());
           qk._qR.set_unit();
           buf_qk[0] = qk;
-
+          
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
 
@@ -151,7 +151,7 @@ namespace mln
           pts += c_length;
 #endif
           k++;
-        } while (/*k < 3 ||*/ (qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
       }
@@ -202,6 +202,20 @@ namespace mln
           size_t l = cloud.npoints() / std::pow(q, e);
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, 1e-3);
+
+          //remove points
+          p_array<P> tmp;
+          tmp.reserve(cloud.npoints());
+          qk.apply_on(cloud,tmp, cloud.npoints());
+          float stddev, mean;
+          mean_stddev(tmp, map, mean, stddev);
+          for (unsigned i = 0; i < cloud.npoints(); i++)
+          {
+            algebra::vec<3,float> qci = tmp[i];
+            algebra::vec<3,float> xi  = x[i];
+            if (norm::l2(qci - xi) < 2 * stddev)
+              cloud.hook_()[i] = cloud[(i+1) % cloud.npoints()];
+          }
 
 #ifndef NDEBUG
           {

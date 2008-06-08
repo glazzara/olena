@@ -3,8 +3,8 @@
 print "#  icp_ref \t icp\n"
 print "-------------------------\n"
 
-q = 1
-e = 1
+q = 4
+e = 5
 
 for i in 0..9 do
 

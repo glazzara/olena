@@ -102,7 +102,7 @@ namespace mln
 
         buffer<4,quat7<P::dim> > buf_qk;
 
-        p_array<P>    Ck(C), Xk(C);
+        p_array<P>    Ck(C);
         float d_k = 1000, d_k_1 = 1000, e_k = 1000;
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
