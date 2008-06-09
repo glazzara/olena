@@ -1,3 +1,22 @@
+2008-06-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Deactivate site set inclusion tests.
+
+	Operators that test inclusion relationships between a couple of
+	site sets are not always correct as is.  Yet they are widely used
+	thru the library.  They are temporarily deactivated thanks to
+	their return value.
+
+	* mln/util/yes.hh: New utility class that always responds yes,
+	i.e., converts to 'true'.
+	* tests/util/yes.cc: New.
+
+	* mln/core/concept/site_set.hh (operator==): Deactivate body and
+	return yes.
+	(operator <=): Likewise.
+	(operator <): Likewise.
+	* doc/tutorial/examples/p_array.cc: Add a test of inclusion.
+
 2008-06-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a 2D simplicial complex (toy code) + a double-window type.

@@ -59,7 +59,8 @@ int main()
 		  << index_of_in(p, arr2) << " in arr2, #"
 		  << index_of_in(p, arr1)  << " in arr1" << std::endl;
     }
-    
+
+    mln_invariant(arr2 < arr1);
   }
 
 }

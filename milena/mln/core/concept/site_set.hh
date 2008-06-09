@@ -41,6 +41,8 @@
 # include <mln/metal/not_equal.hh>
 # include <mln/metal/is_a.hh>
 
+# include <mln/util/yes.hh> // Temporary include.
+
 
 namespace mln
 {
@@ -90,7 +92,7 @@ namespace mln
    * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  util::yes operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -102,7 +104,7 @@ namespace mln
    * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  util::yes operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -115,7 +117,7 @@ namespace mln
    * \relates mln::Site_Set
    */
   template <typename Sl, typename Sr>
-  bool operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  util::yes operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -168,40 +170,41 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  bool operator==(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
+  util::yes operator==(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
-    // FIXME: Same grid!
-    const Sl& lhs = exact(lhs_);
-    const Sr& rhs = exact(rhs_);
+//     // FIXME: Same grid!
+//     const Sl& lhs = exact(lhs_);
+//     const Sr& rhs = exact(rhs_);
 
-    // exhaustive test:
-    mln_fwd_piter(Sl) pl(lhs);
-    mln_fwd_piter(Sr) pr(rhs);
-    for (pl.start(),      pr.start();
-	 pl.is_valid() && pr.is_valid();
-	 pl.next(),       pr.next())
-      if (pl != pr)
-	return false; // difference found
+//     // exhaustive test:
+//     mln_fwd_piter(Sl) pl(lhs);
+//     mln_fwd_piter(Sr) pr(rhs);
+//     for (pl.start(),      pr.start();
+// 	 pl.is_valid() && pr.is_valid();
+// 	 pl.next(),       pr.next())
+//       if (pl != pr)
+// 	return false; // difference found
 
-    // both sets are equal only if both browsings are completed
-    // at the same time:
-    return ! pl.is_valid() && ! pr.is_valid();
+//     // both sets are equal only if both browsings are completed
+//     // at the same time:
+//     return ! pl.is_valid() && ! pr.is_valid();
+    return true;
   }
 
 
   template <typename Sl, typename Sr>
   inline
-  bool operator<=(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
+  util::yes operator<=(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
-    // FIXME: Same grid!
-    const Sl& lhs = exact(lhs_);
-    const Sr& rhs = exact(rhs_);
+//     // FIXME: Same grid!
+//     const Sl& lhs = exact(lhs_);
+//     const Sr& rhs = exact(rhs_);
 
-    // exhaustive test:
-    mln_piter(Sl) pl(lhs);
-    for_all(pl)
-      if (! rhs.has(pl))
-	return false;
+//     // exhaustive test:
+//     mln_piter(Sl) pl(lhs);
+//     for_all(pl)
+//       if (! rhs.has(pl))
+// 	return false;
 
     return true;
   }
@@ -209,12 +212,13 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  bool operator<(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
+  util::yes operator<(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
   {
-    // FIXME: Same grid!
-    const Sl& lhs = exact(lhs_);
-    const Sr& rhs = exact(rhs_);
-    return lhs <= rhs && lhs != rhs;
+//     // FIXME: Same grid!
+//     const Sl& lhs = exact(lhs_);
+//     const Sr& rhs = exact(rhs_);
+//     return lhs <= rhs && lhs != rhs;
+    return true;
   }
 
 
