@@ -1,3 +1,13 @@
+<2008>-<06>-<09> aroune aroumougame  <aroune.aroumougame@gmail.com>
+
+	Thinning test files.
+	* skeleton/test.cc: New.
+	* skeleton/test.pbm: New. 
+	* skeleton/test.pgm: New.
+	* skeleton/test1.pbm: New.
+	* skeleton/test1.pgm: New.
+	* skeleton: New.
+
 2008-06-08  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Points escaping during multi-scale registration.
