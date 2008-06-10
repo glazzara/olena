@@ -37,6 +37,43 @@
 # include <mln/trait/undef.hh>
 
 
+
+//  Properties of site sets.
+//  ========================
+
+//  nsites:   /any/
+//              |
+//              + -- unknown
+//              |
+//              + -- known
+
+//  bbox:     /any/
+//              |
+//              + -- unknown
+//              |
+//              + -- /known/
+//                     |
+//                     + -- lazy
+//                     |
+//                     + -- straight
+
+//  contents: /any/
+//              |
+//              + -- fixed
+//              |
+//              + -- /dynamic/
+//                     |
+//                     + -- growing
+//                     |
+//                     + -- free
+
+//  arity:    /any/
+//              |
+//              + -- unique
+//              |
+//              + -- multiple
+
+
 namespace mln
 {
 
@@ -46,34 +83,73 @@ namespace mln
     namespace site_set
     {
 
+
+      /// Site set property about the 'nsites' method presence.
       struct nsites
       {
-	struct any {};
+	/// Base class for the site set 'nsites' property.
+	struct any { protected: any() {} };
+
+	/// Property that states that the number of sites cannot be
+	/// retrieved from a site set in O(1) complexity so the site
+	/// set does not feature the 'nsites' methods.
 	struct unknown : any { std::string name() const { return "nsites::unknown"; } };
+
+	/// Property that states that a site set features the method
+	/// 'nsites' because the number of sites is known so its
+	/// retrieval has O(1) complexity.
 	struct known   : any { std::string name() const { return "nsites::known"; } };
       };
 
+
+      /// Site set property about the 'bbox' method presence.
       struct bbox
       {
-	struct any {};
+	/// Base class for the site set 'bbox' property.
+	struct any { protected: any() {} };
+
+	/// Property that states that the bounding box of a site set
+	/// is not featured as a method.  This is either because the
+	/// notion of bounding box is meaningless for the site set
+	/// type, or because the bounding box cannot be retrieved in
+	/// O(1) complexity.
 	struct unknown : any { std::string name() const { return "bbox::unknown"; } };
-	struct known   : any {};
+
+	/// Property that states that the bounding box of a site set
+	/// is featured by the 'bbox' method.  It means that the
+	/// notion of bounding box makes sense and that such a piece
+	/// of information can be retrieved in O(1) complexity.
+	/// Warning: this property is pseudo-abstract.  The more
+	/// precise properties are 'lazy' and 'straight'.
+	struct known   : any { protected: known() {} };
+
+	/// Property that states that the bounding box of a site set
+	/// is computed by the site set in a lazy way.
 	struct lazy     : known { std::string name() const { return "bbox::lazy"; } };
+
+	/// Property that states that the bounding box of a site set
+	/// is always kept up to date by the site set.
 	struct straight : known { std::string name() const { return "bbox::straight"; } };
       };
 
+
+      /// Site set property about how the contents can evolve.
       struct contents
       {
-	struct any {};
+	/// Base class for the site set 'contents' property.
+	struct any { protected: any() {} };
 	struct fixed   : any { std::string name() const { return "contents::fixed"; } };
-	struct dynamic : any {};
+	struct dynamic : any { protected: dynamic() {} };
 	struct growing : dynamic { std::string name() const { return "contents::growing"; } };
 	struct free    : dynamic { std::string name() const { return "contents::dynamic"; } };
       };
 
+      /// Site set property about the unicity or multiplicity of its
+      /// elements.
       struct arity
       {
-	struct any {};
+	/// Base class for the site set 'arity' property.
+	struct any { protected: any() {} };
 	struct unique   : any { std::string name() const { return "arity::unique"; } };
 	struct multiple : any { std::string name() const { return "arity::multiple"; } };
       };

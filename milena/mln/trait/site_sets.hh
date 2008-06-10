@@ -37,9 +37,20 @@
 # include <mln/trait/site_set/props.hh>
 
 
+/// Shortcut to the site set property about the 'nsites' method
+/// presence.
 # define mln_trait_site_set_nsites(S)   typename mln::trait::site_set_< S >::nsites
+
+/// Shortcut to the site set property about the 'bbox' method
+/// presence.
 # define mln_trait_site_set_bbox(S)     typename mln::trait::site_set_< S >::bbox
+
+/// Shortcut to the site set property about how the contents can
+/// evolve.
 # define mln_trait_site_set_contents(S) typename mln::trait::site_set_< S >::contents
+
+/// Shortcut to the site set property about the unicity or
+/// multiplicity of its elements.
 # define mln_trait_site_set_arity(S)    typename mln::trait::site_set_< S >::arity
 
 
@@ -50,6 +61,7 @@ namespace mln
   namespace trait
   {
 
+    /// Pack of 'undefined' type values for properties of site sets.
     template <typename I>
     struct undefined_site_set_
     {
@@ -59,6 +71,15 @@ namespace mln
       typedef undef arity;    // Unique or multiple.
     };
 
+
+    /*! \brief The trait pack structure for properties of site sets.
+     *
+     * This structure is specialized for every concrete class of site
+     * set so that properties are properly defined.
+     *
+     * \see mln::doc::Site_Set for the documentation of the "site set"
+     * concept.
+     */
     template <typename I>
     struct site_set_ : undefined_site_set_<I>
     {

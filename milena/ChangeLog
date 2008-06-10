@@ -1,5 +1,12 @@
 2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add some documentation about site set properties.
+
+	* mln/trait/site_set/props.hh: Add some doc.
+	* mln/trait/site_sets.hh: Likewise.
+
+2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add some tutorial-like files about cubical complex.
 
 	* sandbox/geraud/cs2d/tuto.cc: New.
