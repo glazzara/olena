@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,9 @@
  *
  * \brief Definition of the concept of mln::Site_Set.
  *
- * \todo Move out the ops.
+ * \todo Rewrite and move out the ops.
+ *
+ * \todo Check optional methods s.a. nsites and bbox.
  */
 
 # include <mln/core/concept/point_site.hh>

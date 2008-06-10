@@ -1,5 +1,15 @@
 2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	New files to keep track of site set and image types status.
+
+	* mln/trait/site_set/status.txt: New.
+	* mln/trait/image/status.txt: New.
+	* mln/core/internal/site_iterator_base.hh: Remove dead comment.
+	* mln/core/concept/site_set.hh: Fix (c).
+	Add a todo.
+
+2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add some documentation about site set properties.
 
 	* mln/trait/site_set/props.hh: Add some doc.

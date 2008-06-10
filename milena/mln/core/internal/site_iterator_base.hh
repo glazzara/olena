@@ -52,7 +52,7 @@ namespace mln
                                  proxy_impl< mln_psite(S), E>,
 
                                  site_impl< false, // Constant access to site / subject.
-					    mln_site(S), // HOT: typename site_from< >::ret,
+					    mln_site(S),
 					    E >
     {
 
