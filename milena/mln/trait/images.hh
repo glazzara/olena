@@ -47,6 +47,21 @@
 # include <mln/metal/if.hh>
 # include <mln/metal/is_const.hh>
 
+// category
+// speed
+// size
+// value_access
+// value_storage
+// value_browsing
+// value_io
+// localization
+// dimension
+// ext_domain
+// ext_value
+// ext_io
+// kind
+// nature
+// quant
 
 # define mln_trait_image_category(I) typename mln::trait::image_< I >::category
 
@@ -107,28 +122,30 @@ namespace mln
     template <typename I>
     struct undefined_image_
     {
-      typedef undef category; // primary, domain_morpher, value_morpher,
-                              // or identity_morpher < morpher
+      // misc
+      typedef undef category;
+      typedef undef speed;
+      typedef undef size;
 
-      // related to I::value
-      typedef undef kind;     // color, gray, binary < logic < label, data
-      typedef undef quant;    // low or high
-      typedef undef value;    // scalar, vectorial, structed, pointer
-      // FIXME: Make the difference between homogeneous and heterogeneous vectors...
+      // value
+      typedef undef value_access;
+      typedef undef value_storage;
+      typedef undef value_browsing;
+      typedef undef value_io;
 
-      // related to I::pset
-      typedef undef access;   // random, browsing
-      // FIXME: Wouldn't it be nicer to use metal::int_<DIM>?
-      typedef undef space;    // one_d, two_d, three_d
-      typedef undef size;     // huge or regular
-      typedef undef support;  // irregular, aligned < regular
+      // site
+      typedef undef localization;
+      typedef undef dimension;
 
-      // global
-      typedef undef border;   // none, { stored, computed } < some
-      typedef undef neighb;   // none, some
-      typedef undef data;     // raw < linear < stored, computed
-      typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
-      typedef undef speed;    // slow, fast, or fastest
+      // extended domain
+      typedef undef ext_domain;
+      typedef undef ext_value;
+      typedef undef ext_io;
+
+      // data (I::value)
+      typedef undef kind;
+      typedef undef nature;
+      typedef undef quant;
     };
 
 
@@ -160,31 +177,34 @@ namespace mln
 
       // speed is fast by default (neither "fastest" nor "slow")
       typedef trait::image::speed::fast speed;
-
-      // neighb is absent by default.
-      typedef trait::image::neighb::none neighb;
     };
 
 
     template <typename D, typename T, typename I>
     struct default_image_morpher_ : default_image_<T, I>
     {
-      // value-related => delegation
-      typedef typename image_<D>::kind  kind;
-      typedef typename image_<D>::quant quant;
-      typedef typename image_<D>::value value;
+      // misc => NO delegation
+      //         for category, speed, and size
 
-      // domain-related => delegation
-      typedef typename image_<D>::access  access;
-      typedef typename image_<D>::space   space;
-      typedef typename image_<D>::size    size;
-      typedef typename image_<D>::support support;
+      // value => delegation
+      typedef typename image_<D>::value_access value_access;
+      typedef typename image_<D>::value_storage value_storage;
+      typedef typename image_<D>::value_browsing value_browsing;
+      typedef typename image_<D>::value_io value_io;
 
-      // mostly global-related => delegation
-      typedef typename image_<D>::border border;
-      typedef typename image_<D>::neighb neighb;
-      typedef typename image_<D>::data   data;
-      typedef typename image_<D>::io     io;
+      // site => delegation
+      typedef typename image_<D>::localization localization;
+      typedef typename image_<D>::dimension dimension;
+
+      // extended domain => delegation
+      typedef typename image_<D>::ext_domain ext_domain;
+      typedef typename image_<D>::ext_value ext_value;
+      typedef typename image_<D>::ext_io ext_io;
+
+      // data (I::value) => delegation
+      typedef typename image_<D>::nature nature;
+      typedef typename image_<D>::kind   kind;
+      typedef typename image_<D>::quant  quant;
     };
 
 

@@ -68,18 +68,21 @@ namespace mln
 	mlc_is_a(I, Image)::check();
 	typedef mln::trait::image_<I> the;
 	ostr << "{ "
-	     << typename the::category().name() << ", "
-	     << typename the::data()    .name() << ", "
-	     << typename the::kind()    .name() << ", "
-	     << typename the::quant()   .name() << ", "
-	     << typename the::value()   .name() << ", "
-	     << typename the::access()  .name() << ", "
-	     << typename the::space()   .name() << ", "
-	     << typename the::size()    .name() << ", "
-	     << typename the::support() .name() << ", "
-	     << typename the::border()  .name() << ", "
-	     << typename the::io()      .name() << ", "
-	     << typename the::speed()   .name() << " }" << std::endl;
+	     << typename the::category.name() << ", "
+	     << typename the::speed.name() << ", "
+	     << typename the::size.name() << ", "
+	     << typename the::value_access.name() << ", "
+	     << typename the::value_storage.name() << ", "
+	     << typename the::value_browsing.name() << ", "
+	     << typename the::value_io.name() << ", "
+	     << typename the::localization.name() << ", "
+	     << typename the::dimension.name() << ", "
+	     << typename the::ext_domain.name() << ", "
+	     << typename the::ext_value.name() << ", "
+	     << typename the::ext_io.name() << ", "
+	     << typename the::kind.name() << ", "
+	     << typename the::nature.name() << ", "
+	     << typename the::quant.name() << " }" << std::endl;
       }
 
       template <typename I>

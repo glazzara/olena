@@ -1,5 +1,13 @@
 2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Introduce the new set of image properties.
+
+	* mln/trait/image/props.hh: New set of image properties.
+	* mln/trait/image/print.hh: Update.
+	* mln/trait/images.hh: Update.
+
+2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	New files to keep track of site set and image types status.
 
 	* mln/trait/site_set/status.txt: New.
