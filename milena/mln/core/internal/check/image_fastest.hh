@@ -32,6 +32,8 @@
  *
  * \brief Class that statically checks the interface of fastest
  * images.
+ *
+ * \todo Check and convert p in offset_at towards E::psite.
  */
 
 # include <mln/core/internal/force_exact.hh>
@@ -52,9 +54,9 @@ namespace mln
       struct image_fastest_
       {
 
-	/*! \brief Give the offset of the point \p p.
+	/*! \brief Give the offset of the site \p p.
 	 *
-	 * \param[in] p A generalized point.
+	 * \param[in] p A site.
 	 *
 	 * \warning This method is final.
 	 *
@@ -62,8 +64,8 @@ namespace mln
 	 * \post p == point_at_offset(result)
 	 */
 	template <typename P>
-	unsigned
-	offset_at(const Point_Site<P>& p) const;
+	std::size_t
+	offset_at(const P& p) const;
 
       protected:
 	image_fastest_();
@@ -84,15 +86,15 @@ namespace mln
       inline
       image_fastest_<E,B>::image_fastest_()
       {
-	typedef mln_point(E)   point;
-	typedef mln_dpoint(E) dpoint;
+	typedef mln_site(E)   site;
+ 	typedef mln_dpsite(E) dpsite;
 
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
-	int (E::*m1)(const dpoint&) const = & E::offset;
+	int (E::*m1)(const dpsite&) const = & E::offset;
 	m1 = 0;
-	point (E::*m2)(unsigned) const = & E::point_at_offset;
+	site (E::*m2)(unsigned) const = & E::point_at_offset;
 	m2 = 0;
 	unsigned (E::*m3)() const = & E::border;
 	m3 = 0;
@@ -121,12 +123,10 @@ namespace mln
       template <typename E, typename B>
       template <typename P>
       inline
-      unsigned // FIXME: std::size_t?
-      image_fastest_<E,B>::offset_at(const Point_Site<P>& p_) const
+      std::size_t
+      image_fastest_<E,B>::offset_at(const P& p) const
       {
-	// FIXME: check that P is mln_point(E)
 	const E* this_ = & internal::force_exact<E>(*this);
-	const P& p = exact(p_);
 	mln_precondition(this_->has_data());
 	mln_precondition(this_->owns_(p));
 	

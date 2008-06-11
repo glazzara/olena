@@ -106,13 +106,6 @@ namespace mln
       /// Point associated type.
       typedef mln_site(S) site;
 
-      /// Dpoint associated type.
-      typedef mln_dpoint(site) dpoint;
-
-      /// Coordinate associated type.
-      typedef mln_coord(site) coord;
-
-
       /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
@@ -122,12 +115,6 @@ namespace mln
 
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;
-
-      // FIXME: Keep this default (owns_ is based on has)?
-      bool owns_(const psite& p) const;
-
-      /// Give a bounding box of the image domain.
-      const box_<site>& bbox() const;
 
       /// Give the number of sites of the image domain.
       std::size_t nsites() const;
@@ -208,18 +195,11 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    bool
-    image_base_<S,E>::owns_(const psite& p) const
-    {
-      mln_precondition(exact(this)->has_data());
-      return exact(this)->has(p);
-    }
-
-    template <typename S, typename E>
-    inline
     std::size_t
     image_base_<S,E>::nsites() const
     {
+      mlc_equal(mln_trait_site_set_nsites(S),
+		mln::trait::site_set::nsites::known)::check();
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().nsites();
     }

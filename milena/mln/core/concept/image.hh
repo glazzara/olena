@@ -73,42 +73,35 @@ namespace mln
     typedef Image<void> category;
 
     /*
-      // to be provided in concrete image classes:
-
-      typedef mesh;
-
-      typedef value;
-      typedef rvalue;
-      typedef lvalue;
-      typedef vset;
-
-      const vset& values() const;
-
-      bool owns_(const psite& p) const;
-      const pset& domain() const;
-
-      rvalue operator()(const psite& p) const;
-      lvalue operator()(const psite& p);
-
-      typedef skeleton;
-
-
       // provided by internal::image_base_:
 
       typedef pset;
-      typedef point;
+      typedef site;
       typedef psite;
-
-      typedef coord;
-      typedef dpoint;
 
       typedef fwd_piter;
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      std::size_t nsites() const;
+      std::size_t nsites() const; // If relevant.
 
       bool has_data() const;
+
+      // to be provided in concrete image classes:
+
+      typedef value;
+
+      typedef vset;
+      const vset& values() const;
+
+      typedef rvalue;
+      typedef lvalue;
+      rvalue operator()(const psite& p) const;
+      lvalue operator()(const psite& p);
+
+      const pset& domain() const;
+
+      typedef skeleton;
      */
 
   protected:
@@ -125,17 +118,18 @@ namespace mln
     // provided by internal::image_base_:
 
     typedef mln_pset(E)  pset;
-    typedef mln_point(E) point;
+    typedef mln_site(E)  site;
     typedef mln_psite(E) psite;
-
-    typedef mln_coord(E)  coord;
-    typedef mln_dpoint(E) dpoint;
 
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
 
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
+    std::size_t (E::*m2)() const = & E::nsites;
+    m2 = 0;
+    bool (E::*m3)() const = & E::has_data;
+    m3 = 0;
 
     // to be provided in concrete image classes:
 
@@ -143,13 +137,8 @@ namespace mln
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
 
-    typedef typename E::skeleton skeleton;
-
-    bool (E::*m3)() const = & E::has_data;
-    m3 = 0;
-    bool (E::*m4)(const psite& p) const = & E::owns_;
-    m4 = 0;
-    const pset& (E::*m5)() const = & E::domain;
+    typedef mln_vset(E) vset;
+    const vset& (E::*m5)() const = & E::values;
     m5 = 0;
 
     rvalue (E::*m6)(const psite& p) const = & E::operator();
@@ -157,9 +146,10 @@ namespace mln
     lvalue (E::*m7)(const psite& p) = & E::operator();
     m7 = 0;
 
-    typedef mln_vset(E) vset;
-    const vset& (E::*m8)() const = & E::values;
+    const pset& (E::*m8)() const = & E::domain;
     m8 = 0;
+
+    typedef typename E::skeleton skeleton;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

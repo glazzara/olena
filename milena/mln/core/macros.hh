@@ -94,6 +94,12 @@
 # define mln_dpoint_(T)             T::dpoint
 /// \}
 
+/// Shortcuts to access the dpsite type associated to T.
+/// \{
+# define mln_dpsite(T)     typename T::dpsite
+# define mln_dpsite_(T)             T::dpsite
+/// \}
+
 
 // e
 

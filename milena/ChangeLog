@@ -1,3 +1,31 @@
+2008-06-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update image2d with new image properties.
+
+	* doc/tutorial/examples/image2d.cc: New.
+	* mln/trait/image/props.hh (localization): Fix missing types.
+	(space_from_point): Update.
+	* mln/trait/image/print.hh: Fix missing brackets.
+	* mln/trait/images.hh: Update macros.
+	(mln_trait_image_io_from_): Update.
+	(mln_trait_image_data_from_): Remove; obsolete.
+	* mln/core/macros.hh (mln_dpsite, mln_dpsite_): New.
+	* mln/core/internal/image_base.hh
+	(dpoint, coord, bbox): Remove cause not general.
+	(owns_): Remove; it is obsolete/replaced by 'has'.
+	* mln/core/internal/check/image_fastest.hh
+	(offset_at): Return std::size_t; now accept more types for
+	the p argument.
+	(image_fastest_): Update ctor.
+	* mln/core/concept/image.hh: Layout doc.
+	(mln_point, point): Rename as...
+	(mln_site, site): ...these.
+	(coord, dpoint): Remove; obsolete.
+	* mln/core/image2d.hh: Likewise.
+	(image_): Update traits.
+	(owns_): Rename as...
+	(has): ...this.
+
 2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Introduce the new set of image properties.

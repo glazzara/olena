@@ -47,52 +47,33 @@
 # include <mln/metal/if.hh>
 # include <mln/metal/is_const.hh>
 
-// category
-// speed
-// size
-// value_access
-// value_storage
-// value_browsing
-// value_io
-// localization
-// dimension
-// ext_domain
-// ext_value
-// ext_io
-// kind
-// nature
-// quant
+
 
 # define mln_trait_image_category(I) typename mln::trait::image_< I >::category
-
-# define mln_trait_image_kind(I)     typename mln::trait::image_< I >::kind
-# define mln_trait_image_quant(I)    typename mln::trait::image_< I >::quant
-# define mln_trait_image_value(I)    typename mln::trait::image_< I >::value
-
-# define mln_trait_image_access(I)   typename mln::trait::image_< I >::access
-# define mln_trait_image_space(I)    typename mln::trait::image_< I >::space
-# define mln_trait_image_size(I)     typename mln::trait::image_< I >::size
-# define mln_trait_image_support(I)  typename mln::trait::image_< I >::support
-
-# define mln_trait_image_border(I)   typename mln::trait::image_< I >::border
-# define mln_trait_image_neighb(I)   typename mln::trait::image_< I >::neighb
-# define mln_trait_image_data(I)     typename mln::trait::image_< I >::data
-# define mln_trait_image_io(I)       typename mln::trait::image_< I >::io
 # define mln_trait_image_speed(I)    typename mln::trait::image_< I >::speed
+# define mln_trait_image_size(I)     typename mln::trait::image_< I >::size
+
+# define mln_trait_image_value_access(I)   typename mln::trait::image_< I >::value_access
+# define mln_trait_image_value_storage(I)  typename mln::trait::image_< I >::value_storage
+# define mln_trait_image_value_browsing(I) typename mln::trait::image_< I >::value_browsing
+# define mln_trait_image_value_io(I)       typename mln::trait::image_< I >::value_io
+
+# define mln_trait_image_localization(I) typename mln::trait::image_< I >::localization
+# define mln_trait_image_dimension(I)    typename mln::trait::image_< I >::dimension
+
+# define mln_trait_image_ext_domain(I) typename mln::trait::image_< I >::ext_domain
+# define mln_trait_image_ext_value(I)  typename mln::trait::image_< I >::ext_value
+# define mln_trait_image_ext_io(I)     typename mln::trait::image_< I >::ext_io
+
+# define mln_trait_image_kind(I)   typename mln::trait::image_< I >::kind
+# define mln_trait_image_nature(I) typename mln::trait::image_< I >::nature
+# define mln_trait_image_quant(I)  typename mln::trait::image_< I >::quant
 
 
 // for io: I const => read_only, otherwise like I
 # define mln_trait_image_io_from_(I) \
-mlc_if( mlc_is_const(I), mln::trait::image::io::read_only, mln_trait_image_io(I) )
+mlc_if( mlc_is_const(I), mln::trait::image::value_io::read_only, mln_trait_image_value_io(I) )
 
-// for data: if raw or linear => stored, otherwise like I (i.e., either stored or computed)
-#define mln_trait_image_data_from_(I) typename							\
-mln::metal::if_< mln::metal::or_< mlc_equal( mln_trait_image_data(I),				\
-					     mln::trait::image::data::raw),			\
-                                  mlc_equal( mln_trait_image_data(I),				\
-					     mln::trait::image::data::linear) >,		\
-	         mln::trait::image::data::stored,						\
-                 mln_trait_image_data(I) >::ret
 
 
 namespace mln
@@ -187,19 +168,19 @@ namespace mln
       //         for category, speed, and size
 
       // value => delegation
-      typedef typename image_<D>::value_access value_access;
-      typedef typename image_<D>::value_storage value_storage;
+      typedef typename image_<D>::value_access   value_access;
+      typedef typename image_<D>::value_storage  value_storage;
       typedef typename image_<D>::value_browsing value_browsing;
-      typedef typename image_<D>::value_io value_io;
+      typedef typename image_<D>::value_io       value_io;
 
       // site => delegation
       typedef typename image_<D>::localization localization;
-      typedef typename image_<D>::dimension dimension;
+      typedef typename image_<D>::dimension    dimension;
 
       // extended domain => delegation
       typedef typename image_<D>::ext_domain ext_domain;
-      typedef typename image_<D>::ext_value ext_value;
-      typedef typename image_<D>::ext_io ext_io;
+      typedef typename image_<D>::ext_value  ext_value;
+      typedef typename image_<D>::ext_io     ext_io;
 
       // data (I::value) => delegation
       typedef typename image_<D>::nature nature;

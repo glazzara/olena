@@ -88,17 +88,25 @@ namespace mln
     template <typename T>
     struct image_< image2d<T> > : default_image_< T, image2d<T> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fastest    speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::access::random   access;
-      typedef trait::image::space::two_d     space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
+      // value
+      typedef trait::image::value_access::direct           value_access;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
 
-      typedef trait::image::border::stored   border;
-      typedef trait::image::data::raw        data;
-      typedef trait::image::io::read_write   io;
-      typedef trait::image::speed::fastest   speed;
+      // site / domain
+      typedef trait::image::localization::basic_grid localization;
+      typedef trait::image::dimension::two_d         dimension;
+
+      // extended domain
+      typedef trait::image::ext_domain::extendable ext_domain;
+      typedef trait::image::ext_value::multiple    ext_value;
+      typedef trait::image::ext_io::read_write     ext_io;
     };
 
   } // end of namespace mln::trait
@@ -115,13 +123,16 @@ namespace mln
   struct image2d : public internal::image_primary_< box2d, image2d<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
-    typedef box2d   pset;
-    typedef point2d psite;
-    typedef point2d point;
-    typedef dpoint2d dpoint;
+    typedef box2d      pset;
+
+    typedef point2d   psite;
+    typedef point2d    site;
+    typedef dpoint2d dpsite;
+
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
-    typedef line_piter_<point> line_piter;
+
+    typedef line_piter_<point2d> line_piter;
     // End of warning.
 
 
@@ -160,7 +171,7 @@ namespace mln
 
 
     /// Test if \p p is valid.
-    bool owns_(const point2d& p) const;
+    bool has(const point2d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -422,7 +433,7 @@ namespace mln
   template <typename T>
   inline
   bool
-  image2d<T>::owns_(const point2d& p) const
+  image2d<T>::has(const point2d& p) const
   {
     mln_precondition(this->has_data());
     return this->data_->vb_.has(p);
@@ -433,7 +444,7 @@ namespace mln
   const T&
   image2d<T>::operator()(const point2d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
   }
 
@@ -442,7 +453,7 @@ namespace mln
   T&
   image2d<T>::operator()(const point2d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return this->data_->array_[p.row()][p.col()];
   }
 
@@ -469,7 +480,7 @@ namespace mln
   const T&
   image2d<T>::at(int row, int col) const
   {
-    mln_precondition(this->owns_(make::point2d(row, col)));
+    mln_precondition(this->has(make::point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
@@ -478,7 +489,7 @@ namespace mln
   T&
   image2d<T>::at(int row, int col)
   {
-    mln_precondition(this->owns_(make::point2d(row, col)));
+    mln_precondition(this->has(make::point2d(row, col)));
     return this->data_->array_[row][col];
   }
 

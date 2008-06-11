@@ -379,7 +379,14 @@ namespace mln
 	struct none  : any { std::string name() const { return "localization::none"; } };
 	struct space : any { std::string name() const { return "localization::space"; } };
 	struct grid  : space { protected: grid() {} };
+	struct isotropic_grid
+	  : grid { std::string name() const { return "localization::isotropic_grid"; } };
+	struct basic_grid
+	  : isotropic_grid { std::string name() const { return "localization::basic_grid"; } };
+	struct anisotropic_grid
+	  : grid { std::string name() const { return "localization::anisotropic_grid"; } };
       };
+
 
 // dimension:    /any/
 //                 |
@@ -566,15 +573,15 @@ namespace mln
 
       template <>
       struct space_from_point<point1d>
-      { typedef trait::image::space::one_d ret; };
+      { typedef trait::image::dimension::one_d ret; };
 
       template <>
       struct space_from_point<point2d>
-      { typedef trait::image::space::two_d ret; };
+      { typedef trait::image::dimension::two_d ret; };
 
       template <>
       struct space_from_point<point3d>
-      { typedef trait::image::space::three_d ret; };
+      { typedef trait::image::dimension::three_d ret; };
       /// \}
 
     } // end of namespace mln::trait::image
