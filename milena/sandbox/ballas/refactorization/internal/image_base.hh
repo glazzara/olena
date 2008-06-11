@@ -38,7 +38,7 @@ namespace mln
     bool
     image_base_<S, E>::has(const psite& ps) const
     {
-      return exact(this)->owns_(ps);
+      return exact(this)->has(ps);
     }
 
 

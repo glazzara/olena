@@ -111,10 +111,10 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    using super_::owns_;
+    using super_::has;
 
     /// Test if a pixel value is accessible at \p v.
-    bool owns_(const mln::algebra::vec<I::point::dim, float>& v) const;
+    bool has(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     using super_::has;
 
@@ -173,13 +173,13 @@ namespace mln
 
   template <typename T, typename I>
   inline
-  bool tr_image<T,I>::owns_(const algebra::vec<I::point::dim, float>& v) const
+  bool tr_image<T,I>::has(const algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
-    return this->delegatee_().owns_(p);
+    return this->delegatee_().has(p);
   }
 
   template <typename T, typename I>
@@ -202,7 +202,7 @@ namespace mln
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
-    mln_assertion(this->delegatee_()->owns_(p));
+    mln_assertion(this->delegatee_()->has(p));
     return (*this->delegatee_())(p);
   }
 

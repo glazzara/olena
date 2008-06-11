@@ -96,10 +96,10 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    using super_::owns_;
+    using super_::has;
 
     /// Test if a pixel value is accessible at \p v.
-    bool owns_(const mln::algebra::vec<I::point::dim, float>& v) const;
+    bool has(const mln::algebra::vec<I::point::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
@@ -149,12 +149,12 @@ namespace mln
   }
 
   template <typename I>
-  bool interpolated<I>::owns_(const mln::algebra::vec<I::point::dim, float>& v) const
+  bool interpolated<I>::has(const mln::algebra::vec<I::point::dim, float>& v) const
   {
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
-    return this->data_->ima_.owns_(p);
+    return this->data_->ima_.has(p);
   }
 
   template <typename I>
@@ -164,7 +164,7 @@ namespace mln
     mln_point(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
-    mln_assertion(this->data_->ima_.owns_(p));
+    mln_assertion(this->data_->ima_.has(p));
     return this->data_->ima_(p);
   }
 

@@ -27,7 +27,7 @@ namespace mln
     p_run(const P& start, std::size_t len);
     void set_run(const P& start, std::size_t len);
 
-    bool owns_(const P& p) const;
+    bool has(const P& p) const;
     std::size_t nsites() const;
     std::size_t length() const;
 
@@ -87,7 +87,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_run<P>::owns_(const P& p) const
+  p_run<P>::has(const P& p) const
   {
     assert(is_valid_);
     bool res = true;

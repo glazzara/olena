@@ -109,7 +109,7 @@ namespace mln
 
       /// Test if the image owns the point site \p p.
       /// The result is the same than over the underlying image.
-      bool owns_(const mln_psite(I)& p) const; // Overload the def "owns_ -> has".
+      bool has(const mln_psite(I)& p) const;
 
     protected:
 
@@ -169,10 +169,10 @@ namespace mln
     template <typename I, typename F, typename E>
     inline
     bool
-    image_if_base_<I,F,E>::owns_(const mln_psite(I)& p) const
+    image_if_base_<I,F,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->has_data());
-      return this->data_->ima_.owns_(p);
+      return this->data_->ima_.has(p);
     }
 
     template <typename I, typename F, typename E>

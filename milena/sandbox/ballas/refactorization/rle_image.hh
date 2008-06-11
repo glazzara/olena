@@ -35,7 +35,7 @@ namespace mln
     lvalue operator() (const rle_psite<P>& psite);
     bool has_data() const;
 
-    bool owns_(const rle_psite<P>& ps) const;
+    bool has(const rle_psite<P>& ps) const;
     const pset& domain() const;
 
   protected:
@@ -75,7 +75,7 @@ namespace mln
   rle_image<P, T>::operator() (const rle_psite<P>& psite)
     const
   {
-    assert(this->owns_(psite));
+    assert(this->has(psite));
     return this->values_[psite.p_of_run()];
   }
 
@@ -84,7 +84,7 @@ namespace mln
   typename rle_image<P, T>::lvalue
   rle_image<P, T>::operator() (const rle_psite<P>& psite)
   {
-    assert(this->owns_(psite));
+    assert(this->has(psite));
     return this->values_[psite.p_of_run()];
   }
 
@@ -99,7 +99,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  rle_image<P, T>::owns_(const rle_psite<P>& ps) const
+  rle_image<P, T>::has(const rle_psite<P>& ps) const
   {
     if (!this->has_data())
       return false;

@@ -5,7 +5,7 @@ KO  fi_adaptor
 KO  graph_image
 KO  hexa
 KO  image1d
-KO  image2d
+ok  image2d
 KO  image3d
 KO  image_if
 KO  image_if_interval

@@ -108,7 +108,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_psite(I)& ) const;
+    bool has(const mln_psite(I)& ) const;
 
     /// Read-only access of pixel value at point site \p p.
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
@@ -156,17 +156,17 @@ namespace mln
   }
 
   template <typename I>
-  bool translate_image<I>::owns_(const mln_psite(I)& p) const
+  bool translate_image<I>::has(const mln_psite(I)& p) const
   {
     mln_point(I) np = p - this->data_->dp_;
-    return this->data_->ima_.owns_(np);
+    return this->data_->ima_.has(np);
   }
 
   template <typename I>
   mln_rvalue(I)
   translate_image<I>::operator()(const mln_psite(I)& p) const
   {
-    mln_assertion(this->owns_(p));
+    mln_assertion(this->has(p));
     mln_point(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }
@@ -176,7 +176,7 @@ namespace mln
   typename translate_image<I>::lvalue
   translate_image<I>::operator()(const mln_psite(I)& p)
   {
-    mln_assertion(this->owns_(p));
+    mln_assertion(this->has(p));
     mln_point(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }

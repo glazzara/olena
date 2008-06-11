@@ -71,7 +71,7 @@ int main()
   my_box2d f_b(b);
   image_if<I, my_box2d> imaif(ima, f_b);
   mln_assertion( imaif.has  (point2d(2,2)) == false && 
-		 imaif.owns_(point2d(2,2)) == true );
+		 imaif.has(point2d(2,2)) == true );
 
 
   mln_assertion(border::get(imaif) == border);

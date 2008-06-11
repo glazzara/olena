@@ -56,7 +56,7 @@ namespace mln
     public:
 
       const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
+      bool has(const mln_psite(I)& p) const;
 
     protected:
       image_value_morpher_();
@@ -83,10 +83,10 @@ namespace mln
     template <typename I, typename E>
     inline
     bool
-    image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
+    image_value_morpher_<I,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
+      return this->delegatee_()->has(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

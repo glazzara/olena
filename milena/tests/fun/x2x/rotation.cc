@@ -60,7 +60,7 @@ int main()
   for_all(p)
     {
       algebra::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
-      if (inter.owns_(v))
+      if (inter.has(v))
 	out(p) = inter(v);
       else
 	out(p) = 255;

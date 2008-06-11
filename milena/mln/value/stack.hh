@@ -259,7 +259,7 @@ namespace mln
     algebra::vec<n, mln_value(I)>
     stack_image<n,I>::read_(const psite& p) const
     {
-      mln_precondition(this->owns_(p));
+      mln_precondition(this->has(p));
       algebra::vec<n, mln_value(I)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = this->data_->imas_[i].operator()(p);
@@ -279,7 +279,7 @@ namespace mln
     void
     stack_image<n,I>::write_(const psite& p, const value& v)
     {
-      mln_precondition(this->owns_(p));
+      mln_precondition(this->has(p));
       // FIXME!!!
       for (unsigned i = 0; i < n; ++i)
 	this->data_->imas_[i].operator()(p) = v[i];

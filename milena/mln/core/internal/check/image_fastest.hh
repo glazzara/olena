@@ -128,7 +128,7 @@ namespace mln
       {
 	const E* this_ = & internal::force_exact<E>(*this);
 	mln_precondition(this_->has_data());
-	mln_precondition(this_->owns_(p));
+	mln_precondition(this_->has(p));
 	
 	unsigned o = & this_->operator()(p) - this_->buffer();
 	mln_postcondition(p == this_->point_at_offset(o));

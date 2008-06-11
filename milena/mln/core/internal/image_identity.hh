@@ -76,7 +76,7 @@ namespace mln
 
       // FIXME Matthieu: Doc!  Cf. core/concept/doc/image
       const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
+      bool has(const mln_psite(I)& p) const;
 
     protected:
 
@@ -132,10 +132,10 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     bool
-    image_identity_<I,S,E>::owns_(const mln_psite(I)& p) const
+    image_identity_<I,S,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
+      return this->delegatee_()->has(p);
     }
 # endif // ! MLN_INCLUDE_ONLY
 

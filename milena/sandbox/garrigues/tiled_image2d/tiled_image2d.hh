@@ -178,7 +178,7 @@ namespace mln
 
 
     /// Test if \p p is valid.
-    bool owns_(const point2d& p) const;
+    bool has(const point2d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -329,7 +329,7 @@ namespace mln
   template <typename T>
   inline
   bool
-  tiled_image2d<T>::owns_(const point2d& p) const
+  tiled_image2d<T>::has(const point2d& p) const
   {
     mln_precondition(this->has_data());
     return this->data_->b_.has(p);
@@ -340,7 +340,7 @@ namespace mln
   const T&
   tiled_image2d<T>::operator()(const point2d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     unsigned page_n = layout::image_layout::page_at(*this, p);
     // note: although the page instance goes
     // out of scope, the reference stays valid
@@ -354,7 +354,7 @@ namespace mln
   T&
   tiled_image2d<T>::operator()(const point2d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     unsigned page_n = layout::image_layout::page_at(*this, p);
     // note: although the page instance goes
     // out of scope, the reference stays valid

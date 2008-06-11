@@ -1,5 +1,56 @@
 2008-06-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Get rid of owns_.
+
+	* tests/border/resize_sub_image.cc,
+	* tests/border/get.cc,
+	* tests/border/resize_image_if.cc,
+	* tests/fun/x2x/rotation.cc,
+	* mln/core/translate_image.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/pixel.hh,
+	* mln/core/t_image.hh,
+	* mln/core/image1d.hh,
+	* mln/core/fi_adaptor.hh,
+	* mln/core/image3d.hh,
+	* mln/core/hexa.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/level/memset_.hh,
+	* mln/value/stack.hh,
+	* mln/pw/image.hh,
+	* mln/pw/value.hh,
+	* sandbox/duhamel/translate_image.hh,
+	* sandbox/nivault/rotation.cc,
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh,
+	* sandbox/jardonnet/subsampling/sub_sampled_image.hh,
+	* sandbox/geraud/cs2d/cs2d_morpho.hh,
+	* sandbox/garrigues/level_set.hh,
+	* sandbox/garrigues/fllt/compute_level_set_fast2.hh,
+	* sandbox/garrigues/fllt/compute_level_set_fast.hh,
+	* sandbox/garrigues/fllt/compute_level_set.hh,
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh,
+	* sandbox/garrigues/image_identity/image_value_morpher.hh,
+	* sandbox/garrigues/image_identity/interpolated.hh,
+	* sandbox/ballas/refactorization/p_run.hh,
+	* sandbox/ballas/refactorization/rle_image.hh,
+	* sandbox/ballas/refactorization/image2d.hh,
+	* sandbox/ballas/refactorization/concept.hh,
+	* sandbox/ballas/refactorization/rle_pset.hh,
+	* sandbox/ballas/refactorization/internal/pset_base.hh,
+	* sandbox/ballas/refactorization/internal/image_base.hh,
+	* sandbox/ballas/refactorization/box2d.hh (owns_): Rename as...
+	(has): ...this.
+	* mln/trait/image/status.txt (image2d): Set OK.
+
+2008-06-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update image2d with new image properties.
 
 	* doc/tutorial/examples/image2d.cc: New.

@@ -182,7 +182,7 @@ namespace mln
     void init_(box2d box);
 
     /// Test if \p p is valid.
-    bool owns_(const point2d& p) const;
+    bool has(const point2d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -399,7 +399,7 @@ namespace mln
   
   template <GimpImageType t>
   bool
-  gimp_image<t>::owns_(const point2d& p) const
+  gimp_image<t>::has(const point2d& p) const
   {
      mln_precondition(this->has_data());
      return this->data_->b_.has(p);
@@ -410,7 +410,7 @@ namespace mln
   const mln_value(gimp_image<t>)&
   gimp_image<t>::operator()(const point& p) const
   {
-    // mln_precondition(this->owns_(p));
+    // mln_precondition(this->has(p));
      // FIXME HERE value*) this->data_->rgn->data
 
     static mln::value::rgb8 c;
@@ -424,7 +424,7 @@ namespace mln
   mln_value(gimp_image<t>)&
   gimp_image<t>::operator()(const point& p)
   {
-    // mln_precondition(this->owns_(p));
+    // mln_precondition(this->has(p));
     static mln::value::rgb8 c;
     gimp_pixel_rgn_get_pixel(this->data_->rgn_,
 			     (guchar *) &c,
@@ -456,7 +456,7 @@ namespace mln
 //   const mln_value(gimp_image<t>)&
 //   gimp_image<t>::at(int row, int col) const
 //   {
-//     mln_precondition(this->owns_(make::point2d(row, col)));
+//     mln_precondition(this->has(make::point2d(row, col)));
 //     return this->data_->array_[row][col];
 //   }
 
@@ -465,7 +465,7 @@ namespace mln
 //   mln_value(gimp_image<t>)&
 //   gimp_image<t>::at(int row, int col)
 //   {
-//     mln_precondition(this->owns_(make::point2d(row, col)));
+//     mln_precondition(this->has(make::point2d(row, col)));
 //     return this->data_->array_[row][col];
 //   }
 

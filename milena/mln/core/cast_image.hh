@@ -159,7 +159,7 @@ namespace mln
   T
   cast_image_<T,I>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(this->data_->ima_.owns_(p));
+    mln_precondition(this->data_->ima_.has(p));
     return mln::value::cast<T>( this->data_->ima_(p) );
   }
 

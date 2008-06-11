@@ -60,7 +60,7 @@ namespace mln
     rle_pset();
 
     /// Test is \p p belongs to this point set.
-    bool owns_(const rle_psite<P>& ps) const;
+    bool has(const rle_psite<P>& ps) const;
 
     typename std::size_t nsites() const;
     void insert(const p_run<P>& pr);
@@ -92,7 +92,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  rle_pset<P>::owns_(const rle_psite<P>& ps) const
+  rle_pset<P>::has(const rle_psite<P>& ps) const
   {
     if (ps.p_of_run() < nruns()
 	&& ps.p_in_run() < con_[ps.p_of_run()].length())

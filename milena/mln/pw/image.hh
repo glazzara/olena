@@ -132,7 +132,7 @@ namespace mln
 
 
       /// Test if a pixel value is accessible at \p p.
-      bool owns_(const mln_psite(S)& p) const;
+      bool has(const mln_psite(S)& p) const;
 
       /// Give the definition domain.
       const S& domain() const;
@@ -199,7 +199,7 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    bool image<F,S>::owns_(const mln_psite(S)& p) const
+    bool image<F,S>::has(const mln_psite(S)& p) const
     {
       return this->data_->pset_.has(p);
     }

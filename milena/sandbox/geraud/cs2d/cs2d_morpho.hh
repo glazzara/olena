@@ -52,7 +52,7 @@ namespace mln
       for_all(p)
 	{
 	  m.init();
-	  for_all(n) if (input.owns_(n))
+	  for_all(n) if (input.has(n))
 	    m.take(input(n));
 	  output(p) = m.second() - m.first();
 	}

@@ -147,7 +147,7 @@ namespace mln
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       mln_precondition(input.has_data());
-      mln_precondition(input.owns_(p));
+      mln_precondition(input.has(p));
       mln_precondition(input.offset_at(p) + n <= input.ncells());
 
       pixel<I> pix(input, p);

@@ -80,7 +80,7 @@ namespace mln
        * \return True if accessing the image value at \p p is
        * possible, that is, does not abort the execution.
        */
-      bool owns_(const psite& p) const;
+      bool has(const psite& p) const;
 
       /*! \brief Give the definition domain of the image.
        *
@@ -159,7 +159,7 @@ namespace mln
        *
        * \return True if \p p belongs to the image domain.
        *
-       * \invariant has(p) is true => owns_(p) is also true.
+       * \invariant has(p) is true => has(p) is also true.
        */
       bool has(const psite& p) const;
 

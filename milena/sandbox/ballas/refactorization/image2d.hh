@@ -32,7 +32,7 @@ namespace mln
     //  const vset& values() const;
     bool is_ready() const;
 
-    bool owns_(const point2d<int>& p) const;
+    bool has(const point2d<int>& p) const;
     const box2d<int>& domain() const;
 
     const T& operator()(const point2d<int>& p) const;

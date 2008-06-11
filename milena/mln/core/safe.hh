@@ -135,7 +135,7 @@ namespace mln
   mln_rvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
-    if (! this->owns_(p))
+    if (! this->has(p))
       return this->data_->default_value_;
     return this->data_->ima_(p);
   }
@@ -146,7 +146,7 @@ namespace mln
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
     static mln_value(I) forget_it_;
-    if (! this->owns_(p))
+    if (! this->has(p))
       // so data_->default_value_ is returned but cannot be modified
       return forget_it_ = this->data_->default_value_;
     return this->data_->ima_(p);

@@ -81,7 +81,7 @@ namespace mln
   pixel<I>::pixel(I& image, const mln_point(I)& p)
     : super(image)
   {
-    mln_precondition(this->image_.owns_(p));
+    mln_precondition(this->image_.has(p));
     change_to(p);
   }
 
@@ -90,7 +90,7 @@ namespace mln
   void
   pixel<I>::change_to(const mln_point(I)& p)
   {
-    mln_precondition(this->image_.owns_(p));
+    mln_precondition(this->image_.has(p));
     this->value_ptr_ = & this->image_(p);
   }
 
@@ -103,7 +103,7 @@ namespace mln
       return false;
     int o = this->value_ptr_ - this->image_.buffer();
     mln_point(I) p = this->image_.point_at_offset(o);
-    return this->image_.owns_(p);
+    return this->image_.has(p);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -326,7 +326,7 @@ namespace mln
   const mln_value(I)&
   fi_adaptor<I>::operator()(const point2d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
 
     // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - p.row()][p.col()];
@@ -336,7 +336,7 @@ namespace mln
   mln_value(I)&
   fi_adaptor<I>::operator()(const point2d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
 
     // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - p.row()][p.col()];
@@ -362,7 +362,7 @@ namespace mln
   const mln_value(I)&
   fi_adaptor<I>::at(int row, int col) const
   {
-    mln_precondition(this->owns_(make::point2d(row, col)));
+    mln_precondition(this->has(make::point2d(row, col)));
 
     // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - row][col];
@@ -372,7 +372,7 @@ namespace mln
   mln_value(I)&
   fi_adaptor<I>::at(int row, int col)
   {
-    mln_precondition(this->owns_(make::point2d(row, col)));
+    mln_precondition(this->has(make::point2d(row, col)));
 
     // Because Freeimage stores lena upside down.
     return this->data_->array_[this->domain().len(0) - 1 - row][col];

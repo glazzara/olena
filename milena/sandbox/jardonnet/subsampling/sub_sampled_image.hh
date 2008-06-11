@@ -101,7 +101,7 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_point(I)& p) const;
+    bool has(const mln_point(I)& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -184,10 +184,10 @@ namespace mln
   template <typename I>
   inline
   bool
-  sub_sampled_image<I>::owns_(const mln_point(I)& p) const
+  sub_sampled_image<I>::has(const mln_point(I)& p) const
   {
     mln_precondition(this->has_data());
-    return this->delegatee_()->owns_(translate_coords_(p));
+    return this->delegatee_()->has(translate_coords_(p));
   }
   
   template <typename I>
@@ -195,7 +195,7 @@ namespace mln
   mln_rvalue(I)
   sub_sampled_image<I>::operator()(const mln_point(I)& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(translate_coords_(p));
   }
   
@@ -204,7 +204,7 @@ namespace mln
   typename internal::morpher_lvalue_<I>::ret
   sub_sampled_image<I>::operator()(const mln_point(I)& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(translate_coords_(p));
   }
 

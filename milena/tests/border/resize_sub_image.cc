@@ -68,7 +68,7 @@ int main()
   mln_assertion(border::get(ima) == border);
   sub_image<I, box2d> sub(ima, b);
   mln_assertion( sub.has  (point2d(2,2)) == false &&
-		 sub.owns_(point2d(2,2)) == false );
+		 sub.has(point2d(2,2)) == false );
 
   // A subimage has no border so it cannot be resized => we get a compilation error as expected.
   // border::resize(sub, new_border);

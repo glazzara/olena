@@ -159,7 +159,7 @@ namespace mln
 
 
     /// Test if \p p is valid.
-    bool owns_(const point1d& p) const;
+    bool has(const point1d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -389,7 +389,7 @@ namespace mln
   template <typename T>
   inline
   bool
-  image1d<T>::owns_(const point1d& p) const
+  image1d<T>::has(const point1d& p) const
   {
     mln_precondition(this->has_data());
     return this->data_->vb_.has(p);
@@ -400,7 +400,7 @@ namespace mln
   const T&
   image1d<T>::operator()(const point1d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return this->data_->array_[p.ind()];
   }
 
@@ -409,7 +409,7 @@ namespace mln
   T&
   image1d<T>::operator()(const point1d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return this->data_->array_[p.ind()];
   }
 
@@ -436,7 +436,7 @@ namespace mln
   const T&
   image1d<T>::at(int ind) const
   {
-    mln_precondition(this->owns_(make::point1d(ind)));
+    mln_precondition(this->has(make::point1d(ind)));
     return this->data_->array_[ind];
   }
 
@@ -445,7 +445,7 @@ namespace mln
   T&
   image1d<T>::at(int ind)
   {
-    mln_precondition(this->owns_(make::point1d(ind)));
+    mln_precondition(this->has(make::point1d(ind)));
     return this->data_->array_[ind];
   }
 

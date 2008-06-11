@@ -93,7 +93,7 @@ namespace mln
     value_<I>::operator()(const mln_psite(I)& p) const
     {
       mln_precondition(ima_ != 0);
-      mln_precondition(ima_->owns_(p));
+      mln_precondition(ima_->has(p));
       return (*ima_)(p);
     }
 

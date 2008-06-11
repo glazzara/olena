@@ -60,7 +60,7 @@ int main()
     {
       q0 = cos10 * p[0] - sin10 * p[1];
       q1 = sin10 * p[0] + cos10 * p[1];
-      if (inter.owns_(make::vec(q0, q1)))
+      if (inter.has(make::vec(q0, q1)))
       {
 	out(p) = inter(make::vec(q0, q1));
 //	std::cout << "GOOD" << std::endl;

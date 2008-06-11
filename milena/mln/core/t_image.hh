@@ -127,7 +127,7 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_point(I)& p) const;
+    bool has(const mln_point(I)& p) const;
 
     /// Give the definition domain.
     const box_<mln_point(I)>& domain() const;
@@ -210,10 +210,10 @@ namespace mln
   template <typename I>
   inline
   bool
-  t_image<I>::owns_(const mln_point(I)& p) const
+  t_image<I>::has(const mln_point(I)& p) const
   {
     mln_precondition(this->has_data());
-    return this->delegatee_()->owns_(transpose_(p));
+    return this->delegatee_()->has(transpose_(p));
   }
 
   template <typename I>
@@ -251,7 +251,7 @@ namespace mln
   mln_rvalue(I)
   t_image<I>::operator()(const mln_point(I)& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(transpose_(p));
   }
 
@@ -260,7 +260,7 @@ namespace mln
   typename internal::morpher_lvalue_<I>::ret
   t_image<I>::operator()(const mln_point(I)& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(transpose_(p));
   }
 

@@ -164,7 +164,7 @@ namespace mln
 
 
     /// Test if \p p is valid.
-    bool owns_(const point3d& p) const;
+    bool has(const point3d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -427,7 +427,7 @@ namespace mln
   template <typename T>
   inline
   bool
-  image3d<T>::owns_(const point3d& p) const
+  image3d<T>::has(const point3d& p) const
   {
     mln_precondition(this->has_data());
     return data_->vb_.has(p);
@@ -438,7 +438,7 @@ namespace mln
   const T&
   image3d<T>::operator()(const point3d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return data_->array_[p.sli()][p.row()][p.col()];
   }
 
@@ -447,7 +447,7 @@ namespace mln
   T&
   image3d<T>::operator()(const point3d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return data_->array_[p.sli()][p.row()][p.col()];
   }
 
@@ -474,7 +474,7 @@ namespace mln
   const T&
   image3d<T>::at(int sli, int row, int col) const
   {
-    mln_precondition(this->owns_(make::point3d(sli, row, col)));
+    mln_precondition(this->has(make::point3d(sli, row, col)));
     return data_->array_[sli][row][col];
   }
 
@@ -483,7 +483,7 @@ namespace mln
   T&
   image3d<T>::at(int sli, int row, int col)
   {
-    mln_precondition(this->owns_(make::point3d(sli, row, col)));
+    mln_precondition(this->has(make::point3d(sli, row, col)));
     return data_->array_[sli][row][col];
   }
 

@@ -156,7 +156,7 @@ namespace mln
 
     /// Test if \p p belongs to the image domain.
     bool has(const psite& p) const;
-    bool owns_(const psite& p) const;
+    bool has(const psite& p) const;
 
     /// Read-only access of pixel value at hexa point site \p p.
     rvalue operator()(const point2d_h& p) const;
@@ -269,7 +269,7 @@ namespace mln
   template <typename I>
   inline
   bool
-  hexa<I>::owns_(const psite& p) const
+  hexa<I>::has(const psite& p) const
   {
     return this->has(p);
   }

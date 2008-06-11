@@ -250,7 +250,7 @@ namespace mln
 // 	mln_piter(p_image2d<P>) z(N);
 // 	for_all(z)
 // 	  {
-// 	    mln_assertion(border_ima.owns_(z));
+// 	    mln_assertion(border_ima.has(z));
 // 	    border_ima(z) = true;
 // 	  }
 // 	unsigned n;

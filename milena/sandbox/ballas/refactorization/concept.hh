@@ -141,7 +141,7 @@ namespace mln
       typedef psite;
       rvalue operator() (const psite&) const;
       lvalue operator() (const psite);
-      bool owns_(const psite&) const;
+      bool has(const psite&) const;
       bool has(const psite&) const;
 
       typedef pset;
