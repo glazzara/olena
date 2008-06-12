@@ -23,7 +23,7 @@ icp_refD: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ icp_ref.cc -I../../.. -g -o 'icp_refD'
 
 icp_ref: icp_ref.cc ../registration/icp_ref.hh +depend
-	g++ icp_ref.cc -I../../.. -pg -O3 -DNDEBUG -o 'icp_ref'
+	g++ icp_ref.cc -I../../.. -O3 -DNDEBUG -o 'icp_ref'
 
 icp.o:
 	g++ -c icp.cc -I../../.. -O3 -DNDEBUG 

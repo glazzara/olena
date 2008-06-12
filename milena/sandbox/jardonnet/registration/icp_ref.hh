@@ -57,8 +57,12 @@
 
 # include "save.hh"
 
+
+
 namespace mln
 {
+
+
   
   namespace registration
   {
@@ -89,6 +93,7 @@ namespace mln
            const M& map,
            quat7<P::dim>& qk,
            const size_t c_length,
+           const p_array<P>& X,
            const float  epsilon = 1e-3)
       {
 	trace::entering("registration::impl::icp_");
@@ -131,7 +136,9 @@ namespace mln
           e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
           
 #ifndef NDEBUG
-          //plot file
+          //save file
+          save_(qk,C,X,5);
+          //print info
           std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
                     << std::endl;
@@ -139,8 +146,8 @@ namespace mln
           pts += c_length;
 #endif
           k++;
-        } while (e_k >= d_k && d_k_1 - d_k > epsilon);
-        // FIXME : test (e_k >= d_k) seems to be a bad idea.
+        } while (d_k_1 - d_k > epsilon);
+        // FIXME : test (e_k >= d_k) but seems to be a bad idea.
 
         trace::exiting("registration::impl::icp_");
       }
@@ -188,7 +195,7 @@ namespace mln
           
           size_t l = cloud.npoints() / std::pow(q, e);
           l = (l<1) ? 1 : l;
-          impl::icp_(cloud, map, qk, l, 1e-3);
+          impl::icp_(cloud, map, qk, l, x, 1e-3);
 
 #ifndef NDEBUG
           {

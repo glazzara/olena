@@ -11,7 +11,15 @@
 
 namespace mln
 {
- 
+
+  namespace registration
+  {
+    
+
+    
+  }
+  
+  
   template <typename P>
   void shuffle(p_array<P>& a)
   {
@@ -331,7 +339,7 @@ namespace mln
     }
       
   } // end of namespace algebra
-    
+
 } // end of namespace mln
 
 #endif // REGISTRATION_TOOLS_HH

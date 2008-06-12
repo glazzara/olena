@@ -1,3 +1,19 @@
+2008-06-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandox: ICP: Make it save images of every step of the registration.
+
+	* jardonnet/test/icp_ref.cc,
+	* jardonnet/test/icp.cc: Cleanup output image.
+	* jardonnet/test/Makefile: Remove gprof option.
+	* jardonnet/registration/save.hh: Add proper saving.
+	* jardonnet/registration/icp_ref.hh: Add step loggin.
+
+	Add images for test and slides.
+	* jardonnet/test/img/x10.pbm,
+	* jardonnet/test/img/x11.pbm,
+	* jardonnet/test/img/c10.pbm,
+	* jardonnet/test/img/c11.pbm: New test images.
+
 <2008>-<06>-<09> aroune aroumougame  <aroune.aroumougame@gmail.com>
 
 	Thinning test files.

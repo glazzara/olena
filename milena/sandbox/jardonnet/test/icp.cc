@@ -63,10 +63,6 @@ int main(int argc, char* argv[])
   
   qk.apply_on(c, c, c.npoints());
   
-  //init output image
-  image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
-  level::fill(output, literal::white);
-
   float stddev, mean;
   registration::mean_stddev(c, map, mean, stddev);
   
@@ -83,6 +79,12 @@ int main(int argc, char* argv[])
   // final transform
   quat7<3> fqk = registration::final_qk(c, map, 2*stddev);
   fqk.apply_on(c, c, c.npoints());
+
+
+  //init output image
+  image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
+  level::fill(output, literal::white);
+ 
   
   //print x
   for (size_t i = 0; i < x.npoints(); i++)

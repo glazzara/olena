@@ -82,17 +82,18 @@ int main(int argc, char* argv[])
   qk.apply_on(c, c, c.npoints());
   
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
+  level::fill(output, literal::white);
 
   //to 2d : projection (FIXME:if 3d)
-  for (size_t i = 0; i < c.npoints(); i++)
+  for (unsigned i = 0; i < c.npoints(); i++)
     {
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
-        output(p) = literal::white;
+        output(p) = literal::black;
     }
 
   //ref image
-  for (size_t i = 0; i < x.npoints(); i++)
+  for (unsigned i = 0; i < x.npoints(); i++)
     {
       point2d px(x[i][0], x[i][1]);
       if (output.has(px))
