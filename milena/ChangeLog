@@ -1,3 +1,42 @@
+2008-06-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp design of Neighborhood and Window.
+
+	Add a new utility set whose behavior is transparent for the client
+	(conversely to util::lazy_set_) and memory saving (conversely to
+	internal::set_of_).
+
+	* mln/util/set.hh: New.
+	* tests/util/set.cc: New.
+
+	Revamp design of Neighborhood and Window.
+
+	* doc/tutorial/examples/image2d.cc: Use window2d.
+	* mln/core/point.hh (dpsite): New associated type.
+	* mln/core/window.hh: Update inheritance.
+	(is_centered): Move here from dpoints_base_; such a method
+	is not featured by neighborhoods so it cannot be factored in
+	window_base.
+	(fwd_qiter, bkd_qiter, insert): Move in impl super class.
+	(operator<<): Split decl and def; update.
+	(window): Now rely on...
+	* mln/core/internal/basic_window_impl.hh: ...this new class.
+	(set_of_): Replace inheritance by delegation to util::set.
+	(fwd_qiter, bkd_qiter, insert): New factor defs; they were in
+	window class.  Now delegate code to insert_.
+	(insert_): New default impl; such method can be overridden.
+	* mln/core/internal/window_base.hh: New; for consistency
+	purpose.
+	* mln/core/dpoint.hh (psite, site): New.
+	* mln/core/concept/neighborhood.hh: Layout.
+	(Neighborhood): Change inheritance to Window.
+	(dpoint, point): Remove cause not general.
+	* mln/core/concept/window.hh (point, dpoint): Rename as...
+	(psite, dpsite): ...these.
+	(site): New associated type.
+	(is_empty, is_centered, is_symmetric, sym): Remove; not general.
+	* mln/core/concept/doc/window.hh: Update.
+
 2008-06-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Get rid of owns_.

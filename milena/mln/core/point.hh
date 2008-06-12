@@ -93,6 +93,9 @@ namespace mln
     /// Dpoint associated type.
     typedef dpoint_<M,C> dpoint;
 
+    /// DPsite associated type.
+    typedef dpoint_<M,C> dpsite;
+
     /// Coordinate associated type.
     typedef C coord;
 

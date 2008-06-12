@@ -72,6 +72,12 @@ namespace mln
     /// Point associated type.
     typedef point_<M,C> point;
 
+    /// Psite associated type.
+    typedef point_<M,C> psite;
+
+    /// Site associated type.
+    typedef point_<M,C> site;
+
     /// Coordinate associated type.
     typedef C coord;
 

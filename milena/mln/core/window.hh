@@ -36,9 +36,8 @@
  * point_, neighb_, etc.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/point_site.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/window_base.hh>
+# include <mln/core/internal/basic_window_impl.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/box.hh>
 
@@ -50,33 +49,16 @@
 namespace mln
 {
 
-  // fwd decls
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
- 
-
   /*! \brief Generic window class.
    *
    * This type of window is just like a set of delta-points.  The
    * parameter is \c D, type of delta-point.
    */
   template <typename D>
-  class window : public Window< window<D> >,
-		 public internal::dpoints_base_<D, window<D> >
+  class window : public internal::window_base< D, window<D> >,
+		 public internal::basic_window_impl< D, window<D> >
   {
-    typedef internal::dpoints_base_<D, window<D> > super_;
   public:
-
-    /*! \brief Site_Iterator type to browse the points of a generic window
-     * w.r.t. the ordering of delta-points.
-     */
-    typedef dpoints_fwd_piter<D> fwd_qiter;
-
-    /*! \brief Site_Iterator type to browse the points of a generic window
-     * w.r.t. the reverse ordering of delta-points.
-     */
-    typedef dpoints_bkd_piter<D> bkd_qiter;
-
 
     /*! \brief Constructor without argument.
      *
@@ -85,24 +67,16 @@ namespace mln
     window();
 
 
+    /*! \brief Test if the window is centered.
+     *
+     * \return True if the delta-point 0 belongs to the window.
+     */
+    bool is_centered() const;
+
     /*! \brief Test if the window is symmetric.
      */
     bool is_symmetric() const;
 
-    /// Insert a delta-point \p dp.
-    window<D>& insert(const D& dp);
-
-    /// \{ Insertion of a delta-point with different numbers of
-    /// arguments (coordinates) w.r.t. the dimension.
-    window<D>& insert(const mln_coord(D)& dind); // For 1D.
-
-    window<D>& insert(const mln_coord(D)& drow,
-		      const mln_coord(D)& dcol); // For 2D.
-
-    window<D>& insert(const mln_coord(D)& dsli,
-		      const mln_coord(D)& drow,
-		      const mln_coord(D)& dcol); // For 3D.
-    /// \}
 
     /// Apply a central symmetry to the target window.
     window<D>& sym();
@@ -113,15 +87,9 @@ namespace mln
   };
 
 
-  // FIXME: Move code at EOF + doc.
+  // FIXME: Doc!
   template <typename D>
-  std::ostream& operator<<(std::ostream& ostr, const window<D>& win)
-  {
-    // FIXME
-    for (unsigned i = 0; i < win.ndpoints(); ++i)
-      ostr << win.dp(i);
-    return ostr;
-  }
+  std::ostream& operator<<(std::ostream& ostr, const window<D>& win);
 
 
 
@@ -134,7 +102,7 @@ namespace mln
   window<D>::window()
   {
     // FIXME HERE: Was: mln::metal::is_a<D, Dpoint>::check();
-    mln::metal::is_a<D, Delta_Point_Site>::check();
+    // mln::metal::is_a<D, Delta_Point_Site>::check();
   }
 
   template <typename D>
@@ -146,42 +114,10 @@ namespace mln
 
   template <typename D>
   inline
-  window<D>&
-  window<D>::insert(const D& dp)
+  bool window<D>::is_centered() const
   {
-    mln_precondition(! has(dp));
-    this->super_::insert(dp);
-    return *this;
-  }
-
-  template <typename D>
-  inline
-  window<D>&
-  window<D>::insert(const mln_coord(D)& dind)
-  {
-    D dp(dind);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
-  }
-
-  template <typename D>
-  inline
-  window<D>&
-  window<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
-  {
-    D dp(drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
-  }
-
-  template <typename D>
-  inline
-  window<D>&
-  window<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
-  {
-    D dp(dsli, drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
+    static const D origin = all_to(0);
+    return this->dps_.has(origin); // FIXME: Use literal::origin.
   }
 
   template <typename D>
@@ -195,6 +131,12 @@ namespace mln
       tmp.insert(- this->dp(i));
     *this = tmp;
     return *this;
+  }
+
+  template <typename D>
+  std::ostream& operator<<(std::ostream& ostr, const window<D>& win)
+  {
+    return ostr << win.dps_hook();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

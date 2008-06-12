@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/window.hh
- * \brief This file documents the concept of mln::Window.
+#ifndef MLN_CORE_INTERNAL_WINDOW_BASE_HH
+# define MLN_CORE_INTERNAL_WINDOW_BASE_HH
+
+/*! \file mln/core/internal/window_base.hh
+ *
+ * \brief Definition of a base class for site set classes.
  */
+
+# include <mln/core/concept/window.hh>
+
 
 namespace mln
 {
 
-  namespace doc
+  namespace internal
   {
 
-    /*! \brief Documentation class for mln::Window.
+
+    /*! \internal A base class for window classes.
      *
-     * A window is the definition of a set of points located around a
-     * central point.
-     *
-     * \see mln::Window
+     * \p D is a dpsite type.
      */
-    template <typename E>
-    struct Window : public Object<E>
+    template <typename D, typename E>
+    struct window_base : public Window<E>
     {
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points.
-       */
-      typedef void qiter;
 
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points in a forward way.
-       */
-      typedef void fwd_qiter;
+      /// DPsite associated type.
+      typedef D dpsite;
 
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points in a backward way.
-       */
-      typedef void bkd_qiter;
+      /// Psite associated type.
+      typedef mln_psite(D) psite;
+
+      /// Site associated type.
+      typedef mln_site(D) site;
+
+    protected:
+      window_base();
     };
 
-  } // end of namespace mln::doc
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename S, typename E>
+    inline
+    window_base<S,E>::window_base()
+    {
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::internal
 
 } // end of namespace mln
+
+
+#endif // ! MLN_CORE_INTERNAL_WINDOW_BASE_HH

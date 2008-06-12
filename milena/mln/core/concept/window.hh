@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,20 +61,13 @@ namespace mln
     typedef Window<void> category;
 
     /*
-      typedef point;
-      typedef dpoint;
+      typedef   site;
+      typedef  psite;
+      typedef dpsite;
 
-      typedef qiter;
+      typedef     qiter;
       typedef fwd_qiter;
       typedef bkd_qiter;
-
-      bool is_empty() const;
-      bool is_centered() const;
-      bool is_symmetric() const;
-
-      unsigned delta() const;
-
-      E& sym();
     */
 
   protected:
@@ -99,23 +92,13 @@ namespace mln
   inline
   Window<E>::Window()
   {
-    typedef  mln_point(E)  point;
-    typedef mln_dpoint(E) dpoint;
+    typedef   mln_site(E)   site;
+    typedef  mln_psite(E)  psite;
+    typedef mln_dpsite(E) dpsite;
 
     typedef     mln_qiter(E)     qiter;
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
-
-    bool (E::*m1)() const = & E::is_empty;
-    m1 = 0;
-    bool (E::*m2)() const = & E::is_centered;
-    m2 = 0;
-    bool (E::*m3)() const = & E::is_symmetric;
-    m3 = 0;
-    unsigned (E::*m4)() const = & E::delta;
-    m4 = 0;
-    E& (E::*m5)() = & E::sym;
-    m5 = 0;
   }
 
   template <typename Wl, typename Wr>

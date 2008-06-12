@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,42 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/concept/doc/window.hh
- * \brief This file documents the concept of mln::Window.
+/*!
+ *  \file   tests/util/set.cc
+ *
+ *  \brief  test of mln::util::set
+ *
  */
 
-namespace mln
+#include <mln/util/set.hh>
+
+int main ()
 {
-
-  namespace doc
-  {
-
-    /*! \brief Documentation class for mln::Window.
-     *
-     * A window is the definition of a set of points located around a
-     * central point.
-     *
-     * \see mln::Window
-     */
-    template <typename E>
-    struct Window : public Object<E>
-    {
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points.
-       */
-      typedef void qiter;
-
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points in a forward way.
-       */
-      typedef void fwd_qiter;
-
-      /*! \brief Site_Iterator type associated to this window to browse its
-       * points in a backward way.
-       */
-      typedef void bkd_qiter;
-    };
-
-  } // end of namespace mln::doc
-
-} // end of namespace mln
+  using namespace mln;
+  util::set<int> s;
+  s.insert(1).insert(6).insert(6).insert(4);
+  mln_assertion(s.nelements() == 3);
+  s.remove(6);
+  mln_assertion(s.nelements() == 2);
+  mln_assertion(! s.has(6)); // not frozen
+  s.insert(6);
+  mln_assertion(s[2] == 6);
+  mln_assertion(s.has(6)); // frozen
+  s.clear();
+  mln_assertion(s.is_empty());
+}

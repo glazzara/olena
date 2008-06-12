@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
  * \brief Definition of the concept of mln::Neighborhood.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/window.hh>
 
 
 namespace mln
@@ -55,17 +55,14 @@ namespace mln
    * class contents.
    */
   template <typename E>
-  struct Neighborhood : public Object<E>
+  struct Neighborhood : public Window<E>
   {
     typedef Neighborhood<void> category;
 
     /*
-      typedef niter;
+      typedef     niter;
       typedef fwd_niter;
       typedef bkd_niter;
-
-      typedef dpoint;
-      typedef  point;
     */
 
   protected:
@@ -79,11 +76,9 @@ namespace mln
   inline
   Neighborhood<E>::Neighborhood()
   {
-    typedef mln_niter(E) niter;
+    typedef mln_niter(E)         niter;
     typedef mln_fwd_niter(E) fwd_niter;
     typedef mln_bkd_niter(E) bkd_niter;
-    typedef mln_dpoint(E) dpoint;
-    typedef mln_point(E)   point;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
