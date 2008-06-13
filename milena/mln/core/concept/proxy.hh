@@ -148,6 +148,12 @@ namespace mln
       ptr = & exact(obj);
     }
 
+    template <typename T>
+    void get_adr(      T *& ptr,       T& obj)
+    {
+      ptr = & obj;
+    }
+
     // Case 3: Fail to found!
 
     template <typename T, typename O>

@@ -99,16 +99,69 @@ namespace mln
   namespace if_possible
   {
 
-    template <typename P>
-    void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target)
+    namespace internal
     {
-      exact(p).target() = & new_target;
-    }
+
+      template <bool b> struct helper;
+
+      template <>
+      struct helper< /* is an Object */ true >
+      {
+
+	template <typename P>
+	void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target) const
+	{
+	  exact(p).target() = & new_target;
+	}
+
+	template <typename O, typename D>
+	void change_target(Object<O>&, const D&) const
+	{
+	  // No-op.
+	}
+	
+      };
+
+      template <>
+      struct helper< /* NOT an Object */ false >
+      {
+	template <typename O, typename D>
+	void change_target(O&, const D&) const
+	{
+	  // No-op.
+	}
+      };
+      
+    } // namespace mln::if_possible::internal
+
+
+
+    // FIXME: Was:
+
+//     template <typename P>
+//     void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target)
+//     {
+//       exact(p).target() = & new_target;
+//     }
+
+//     template <typename O, typename D>
+//     void change_target(Object<O>&, const D&)
+//     {
+//       // No-op.
+//     }
+
+//     template <typename P>
+//     void change_target(P& p, const typename P::target_t& new_target)
+//     {
+//       exact(p).target() = & new_target;
+//     }
+
 
     template <typename O, typename D>
-    void change_target(Object<O>&, const D&)
+    void change_target(O& o, const D& d)
     {
-      // No-op.
+      enum { is_object = mlc_is_a(O, Object)::value };
+      mln::if_possible::internal::helper< is_object >().change_target(o, d);
     }
 
   } // end of namespace mln::if_possible

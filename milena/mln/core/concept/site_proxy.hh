@@ -109,9 +109,9 @@ namespace mln
 
     // Access to site reference.
 
-    template <typename P>
-    const typename site_from<P>::ret&
-    to_site(const Object<P>& p);
+    template <typename O>
+    const typename site_from<O>::ret&
+    to_site(const O& obj);
 
 
   } // end of namespace internal
@@ -174,27 +174,54 @@ namespace mln
     namespace deep
     {
 
-      template <typename P>
-      const typename site_from<P>::ret&
-      to_site(const Site_Proxy<P>& p)
-      {
-	return exact(p).to_site();
-      }
+      template <bool b> struct to_site_;
 
-      template <typename P>
-      const typename site_from<P>::ret&
-      to_site(const Object<P>& p)
+      template <>
+      struct to_site_< /* is proxy = */ true >
       {
-	return exact(p);
-      }
+	template <typename P>
+	const typename site_from<P>::ret&
+	doit(const Site_Proxy<P>& p) const
+	{
+	  return exact(p).to_site();
+	}
+      };
+
+      template <>
+      struct to_site_< /* is proxy = */ false >
+      {
+	template <typename O>
+	const O&
+	doit(const O& obj) const
+	{
+	  return obj;
+	}
+      };
+
+      // FIXME: was:
+
+//       template <typename P>
+//       const typename site_from<P>::ret&
+//       to_site(const Site_Proxy<P>& p)
+//       {
+// 	return exact(p).to_site();
+//       }
+
+//       template <typename P>
+//       const typename site_from<P>::ret&
+//       to_site(const Object<P>& p)
+//       {
+// 	return exact(p);
+//       }
 
     }  // end of namespace internal::deep
 
-    template <typename P>
-    const typename site_from<P>::ret&
-    to_site(const Object<P>& p)
+    template <typename O>
+    const typename site_from<O>::ret&
+    to_site(const O& obj)
     {
-      return deep::to_site(exact(p));
+      enum { is_proxy = mlc_is_a(O, Site_Proxy)::value };
+      return deep::to_site_< is_proxy >().doit(obj);
     }
 
   } // end of namespace mln::internal

@@ -1,5 +1,19 @@
 2008-06-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make windows work with index; test on p_array.
+
+	* doc/tutorial/examples/p_array.2.cc: New.
+	* mln/core/p_array.hh (has): New overload for index.
+	(operator[]): Likewise.
+	* mln/core/concept/proxy.hh (get_adr): New overload to handle
+	identity.
+	* mln/core/concept/pseudo_site.hh (change_target): Upgrade.
+	Now it can handle non-Objects.
+	* mln/core/concept/site_proxy.hh: Likewise.
+	* mln/util/index.hh: New.
+
+2008-06-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make relative iterators---qiter and niter---work.
 
 	* doc/tutorial/examples/image2d.cc (picture): New display proc.

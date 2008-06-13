@@ -38,6 +38,7 @@
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/accu/bbox.hh>
+# include <mln/util/index.hh>
 
 
 namespace mln
@@ -93,6 +94,9 @@ namespace mln
     const p_array<P>*& target();
 
     bool is_valid() const;
+
+    operator util::index() const { return i_; }
+    
 
   private:
 
@@ -161,6 +165,19 @@ namespace mln
 
     /// Test is \p p belongs to this site set.
     bool has(const psite& p) const;
+
+    /// Test is \p i belongs to this site set.
+    bool has(const util::index& i) const
+    {
+      return i >= 0 && i < int(vect_.size());
+    }
+
+    /// Give the i-th element.
+    const P& operator[](const util::index& i) const
+    {
+      mln_precondition(has(i));
+      return vect_[i];
+    }
 
     /// Test is index \p i belongs to this site set.
     // FIXME: Add an overload "has(index)".
