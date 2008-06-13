@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,59 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_MIN_ROW_HH
-# define MLN_GEOM_MIN_ROW_HH
+#ifndef MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
+# define MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
 
-/*! \file mln/geom/min_row.hh
+/*! \file mln/core/internal/site_set_iterator_base.hh
  *
- * \brief Give the minimum row of an image.
+ * \brief Base class to factor code for iterator classes directly
+ * working on site sets.
  */
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 
-# include <mln/metal/bexpr.hh>
-# include <mln/metal/int.hh>
-# include <mln/metal/equal.hh>
 
 namespace mln
 {
 
-  namespace geom
+  namespace internal
   {
 
-    /// Give the minimum row of an image.
-    template <typename I>
-    mln_deduce(I, site, coord) min_row(const Image<I>& ima);
-
-    /// Give the minimum row of an box 2d or 3d.
-    template <typename B>
-    mln_coord(B::point) min_row(const Box<B>& b);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    inline
-    mln_deduce(I, site, coord) min_row(const Image<I>& ima)
+    /*! \internal A base class for site iterators.
+     *
+     * Parameter \c S is the targeted site set type.
+     */
+    template <typename S, typename E>
+    struct site_set_iterator_base : site_iterator_base<S, E>
     {
-      mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmin().row();
+
+      /// Give the site set that this iterator browses.
+      const S& site_set() const;
+
+    protected:
+
+      site_set_iterator_base();
+    };
+
+
+#ifndef MLN_INCLUDE_ONLY
+
+    template <typename S, typename E>
+    inline
+    site_set_iterator_base<S, E>::site_set_iterator_base()
+    {
     }
 
-
-    template <typename B>
+    template <typename S, typename E>
     inline
-    mln_coord(B::point) min_row(const Box<B>& b)
+    const S&
+    site_set_iterator_base<S, E>::site_set() const
     {
-      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
-      return exact(b).pmin().row();
+      mln_precondition(this->s_ != 0);
+      return *this->s_;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+#endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::geom
+  } // end of namespace internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_MIN_ROW_HH
+#endif // ! MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH

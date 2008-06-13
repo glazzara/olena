@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/internal/site_iterator_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -47,11 +47,11 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public internal::site_iterator_base_< box_<P>,
-							       box_fwd_piter_<P> >
+  class box_fwd_piter_ : public internal::site_set_iterator_base< box_<P>,
+								  box_fwd_piter_<P> >
   {
     typedef box_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base_< box_<P>, self_ > super_;
+    typedef internal::site_iterator_base< box_<P>, self_ > super_;
 
   public:
 
@@ -76,13 +76,10 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Give the site set target address.
-    const box_<P>*& target_();
-
-  private:
+  protected:
 
     using super_::p_;
-    const box_<P>* b_;
+    using super_::s_;
   };
 
 
@@ -94,11 +91,11 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public internal::site_iterator_base_< box_<P>,
-							       box_bkd_piter_<P> >
+  class box_bkd_piter_ : public internal::site_iterator_base< box_<P>,
+							      box_bkd_piter_<P> >
   {
     typedef box_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base_< box_<P>, self_ > super_;
+    typedef internal::site_iterator_base< box_<P>, self_ > super_;
 
   public:
 
@@ -123,13 +120,10 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Give the site set target address.
-    const box_<P>*& target_();
-
-  private:
+  protected:
 
     using super_::p_;
-    const box_<P>* b_;
+    using super_::s_;
   };
 
 
@@ -144,7 +138,7 @@ namespace mln
   inline
   box_fwd_piter_<P>::box_fwd_piter_(const box_<P>& b)
   {
-    change_target(b);
+    this->change_target(b);
   }
 
   template <typename P>
@@ -152,7 +146,7 @@ namespace mln
   bool
   box_fwd_piter_<P>::is_valid_() const
   {
-    return p_[0] != b_->pmax()[0] + 1;
+    return p_[0] != s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -160,7 +154,7 @@ namespace mln
   void
   box_fwd_piter_<P>::invalidate_()
   {
-    p_[0] = b_->pmax()[0] + 1;
+    p_[0] = s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -168,7 +162,7 @@ namespace mln
   void
   box_fwd_piter_<P>::start_()
   {
-    p_ = b_->pmin();
+    p_ = s_->pmin();
   }
 
   template <typename P>
@@ -177,23 +171,15 @@ namespace mln
   box_fwd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == b_->pmax()[i])
-	p_[i] = b_->pmin()[i];
+      if (p_[i] == s_->pmax()[i])
+	p_[i] = s_->pmin()[i];
       else
 	{
 	  ++p_[i];
 	  break;
 	}
-    if (p_ == b_->pmin())
+    if (p_ == s_->pmin())
       invalidate_();
-  }
-
-  template <typename P>
-  inline
-  const box_<P>*&
-  box_fwd_piter_<P>::target_()
-  {
-    return b_;
   }
 
 
@@ -203,7 +189,7 @@ namespace mln
   inline
   box_bkd_piter_<P>::box_bkd_piter_(const box_<P>& b)
   {
-    change_target(&b);
+    this->change_target(b);
   }
 
   template <typename P>
@@ -211,7 +197,7 @@ namespace mln
   bool
   box_bkd_piter_<P>::is_valid_() const
   {
-    return p_[0] != b_->pmin()[0] - 1;
+    return p_[0] != s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -219,7 +205,7 @@ namespace mln
   void
   box_bkd_piter_<P>::invalidate_()
   {
-    p_[0] = b_->pmin()[0] - 1;
+    p_[0] = s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -227,7 +213,7 @@ namespace mln
   void
   box_bkd_piter_<P>::start_()
   {
-    p_ = b_->pmax();
+    p_ = s_->pmax();
   }
 
   template <typename P>
@@ -236,23 +222,15 @@ namespace mln
   box_bkd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == b_->pmin()[i])
-	p_[i] = b_->pmax()[i];
+      if (p_[i] == s_->pmin()[i])
+	p_[i] = s_->pmax()[i];
       else
 	{
 	  --p_[i];
 	  break;
 	}
-    if (p_ == b_->pmax())
+    if (p_ == s_->pmax())
       invalidate_();
-  }
-
-  template <typename P>
-  inline
-  const box_<P>*&
-  box_bkd_piter_<P>::target_()
-  {
-    return b_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

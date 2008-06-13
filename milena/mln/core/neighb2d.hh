@@ -45,7 +45,7 @@ namespace mln
   /*! \brief Type alias for a neighborhood defined on the 2D square
    * grid with integer coordinates.
    */
-  typedef neighb_<dpoint2d> neighb2d;
+  typedef neighb<dpoint2d> neighb2d;
 
 
   /*! \brief 4-connectivity neighborhood on the 2D grid.

@@ -35,6 +35,9 @@
  */
 
 
+# define mln_deduce(T, A1, A2) typename T::A1::A2
+
+
 // a
 
 /// Shortcuts to access the argument type associated to T.

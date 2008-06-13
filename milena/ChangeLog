@@ -1,3 +1,64 @@
+2008-06-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make relative iterators---qiter and niter---work.
+
+	* doc/tutorial/examples/image2d.cc (picture): New display proc.
+	(fill_null): New to illustrate a double loop.
+	(main): Add a test of window browsing from every array point.
+	Add a test about updating a relative site iterator.
+	* mln/core/macros.hh (mln_deduce): New.
+	* mln/core/window.hh (b_): Remove; it was useless and unused.
+	(sym): Remove return value to disambiguate w.r.t. geom::sym.
+	(include): Remove obsolete dpoints_piter.
+	* mln/core/internal/basic_window_impl.hh (vect): Rename as...
+	(std_vector): ...this.
+	(fwd_qiter, bkd_qiter): Update.
+	(include): New for iterators.
+	* mln/core/internal/neighborhood_impl_mixin.hh: New.
+	* mln/core/internal/site_relative_iterator_base.hh: New.
+	* mln/core/internal/site_iterator_base.hh: Add documentation.
+	(site_iterator_base_): Rename as...
+	(site_iterator_base): ...this.
+	(change_target, s_): New to factor code.
+	* mln/core/internal/site_set_iterator_base.hh: New.
+	* mln/core/internal/window_base.hh: Fix doc.
+	* mln/core/internal/neighborhood_base.hh: New; created from
+	window_base.
+	(is_centered, is_symmetric, sym): New factored code.
+	* mln/core/neighb.hh (neighb_): Rename as...
+	(neighb): ...this.
+	Update; that means remove about everything, now factored in
+	super classes.
+	(insert): Rename as...
+	(insert_): ...this.
+	* mln/core/box_piter.hh: Update inheritance.
+	(b_, target_): Remove cause factored; b_ is now s_.
+	(box_bkd_piter_): Fix ctor.
+	* mln/core/p_array_piter.hh: Likewise.
+	* mln/core/dpsites_piter.hh: New from dpoints_piter.
+	(start, next): Rename as...
+	(do_start_, do_next_): ...these.
+	Now rely on internal::site_relative_iterator_base.
+	(dps_, p_ref_, p_): Remove; obsolete cause factored.
+	(operator[]): Remove; now obsolete thanks to proxy_impl.
+	(compute_p_, update): New.
+	* mln/core/neighb2d.hh: Update.
+	* mln/core/p_array.hh (target_t): New type in psite.
+	(is_valid, p_, update_p_, has_index): New.
+	* mln/core/concept/pseudo_site.hh (change_target): New.
+	Add doc.
+	* mln/core/concept/site_iterator.hh (change_target): Move...
+	* mln/core/internal/site_iterator_base.hh: ...here.
+	* mln/core/concept/site_set.hh (insert_all): New.
+	* mln/core/image2d.hh (point): Re-new; to compile more easily.
+	(line_piter): Remove; it shall be re-inserted somewhere else.
+	(coord): Remove; useless.
+	(include): Remove dependance upon w_window which is not updated
+	yet.
+	* mln/level/fill.hh: Update.
+	* mln/geom/max_col.hh: Update.
+	* mln/geom/min_row.hh: Update.
+
 2008-06-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Revamp design of Neighborhood and Window.

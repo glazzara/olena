@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_WINDOW_BASE_HH
-# define MLN_CORE_INTERNAL_WINDOW_BASE_HH
+#ifndef MLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
+# define MLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH
 
-/*! \file mln/core/internal/window_base.hh
+/*! \file mln/core/internal/neighborhood_base.hh
  *
- * \brief Definition of a base class for window classes.
+ * \brief Definition of a base class for neighborhood classes.
  */
 
-# include <mln/core/concept/window.hh>
+# include <mln/core/concept/neighborhood.hh>
 
 
 namespace mln
@@ -43,12 +43,12 @@ namespace mln
   {
 
 
-    /*! \internal A base class for window classes.
+    /*! \internal A base class for neighborhood classes.
      *
      * \p D is a dpsite type.
      */
     template <typename D, typename E>
-    struct window_base : public Window<E>
+    struct neighborhood_base : public Neighborhood<E>
     {
 
       /// DPsite associated type.
@@ -60,17 +60,61 @@ namespace mln
       /// Site associated type.
       typedef mln_site(D) site;
 
+
+      /*! \brief Test (as a window) if it is centered so (as a
+       *  neighborhood) return false.
+       *
+       * \return Always false.
+       */
+      bool is_centered() const;
+      
+      /*! \brief Test (as a window) if it is symmetric so (as a
+       *  neighborhood) return true.
+       *
+       * \return Always true.
+       */
+      bool is_symmetric() const;
+      
+      /*! Apply (as a window) a central symmetry so (as a
+	neighborhood) it is a no-op.
+      */
+      void sym();
+
     protected:
-      window_base();
+      neighborhood_base();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename D, typename E>
     inline
-    window_base<S,E>::window_base()
+    neighborhood_base<D,E>::neighborhood_base()
     {
+    }
+
+    template <typename D, typename E>
+    inline
+    bool
+    neighborhood_base<D,E>::is_centered() const
+    {
+      return false;
+    }
+
+    template <typename D, typename E>
+    inline
+    bool
+    neighborhood_base<D,E>::is_symmetric() const
+    {
+      return true;
+    }
+
+    template <typename D, typename E>
+    inline
+    void
+    neighborhood_base<D,E>::sym()
+    {
+      // No-op.
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -80,4 +124,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_WINDOW_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_NEIGHBORHOOD_BASE_HH

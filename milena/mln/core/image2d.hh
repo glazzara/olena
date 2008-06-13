@@ -39,7 +39,7 @@
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all_to.hh>
-# include <mln/core/line_piter.hh>
+// # include <mln/core/line_piter.hh> // FIXME
 
 
 // FIXME:
@@ -122,7 +122,11 @@ namespace mln
   template <typename T>
   struct image2d : public internal::image_primary_< box2d, image2d<T> >
   {
+    typedef point2d point; // FIXME: HOT: to be removed.
+
+
     // Warning: just to make effective types appear in Doxygen:
+
     typedef box2d      pset;
 
     typedef point2d   psite;
@@ -132,7 +136,6 @@ namespace mln
     typedef mln_fwd_piter(box2d) fwd_piter;
     typedef mln_bkd_piter(box2d) bkd_piter;
 
-    typedef line_piter_<point2d> line_piter;
     // End of warning.
 
 
@@ -550,7 +553,7 @@ namespace mln
 # include <mln/core/trait/pixter.hh>
 # include <mln/core/dpoints_pixter.hh>
 # include <mln/core/pixter2d.hh>
-# include <mln/core/w_window.hh>
+// # include <mln/core/w_window.hh>
 
 
 namespace mln

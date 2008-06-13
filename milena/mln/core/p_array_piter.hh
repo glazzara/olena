@@ -32,7 +32,7 @@
 /// \brief Definition of point iterators on mln::p_array.
 
 # include <mln/core/p_array.hh>
-# include <mln/core/internal/site_iterator_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 
 
 namespace mln
@@ -42,14 +42,11 @@ namespace mln
   template <typename P>
   class p_array_fwd_piter_
     :
-    public internal::site_iterator_base_< p_array<P>,
-					  p_array_fwd_piter_<P> >
+    public internal::site_set_iterator_base< p_array<P>,
+					     p_array_fwd_piter_<P> >
   {
     typedef p_array_fwd_piter_<P> self;
-    typedef internal::site_iterator_base_<p_array<P>, self> super;
-
-  protected:
-    using super::p_;
+    typedef internal::site_set_iterator_base<p_array<P>, self> super;
 
   public:
 
@@ -73,6 +70,11 @@ namespace mln
 
     /// Return the current index.
     int index() const;
+
+  protected:
+
+    using super::p_;
+    using super::s_;
   };
 
 
@@ -85,14 +87,11 @@ namespace mln
   template <typename P>
   class p_array_bkd_piter_
     :
-    public internal::site_iterator_base_< p_array<P>,
-					  p_array_bkd_piter_<P> >
+    public internal::site_set_iterator_base< p_array<P>,
+					     p_array_bkd_piter_<P> >
   {
     typedef p_array_bkd_piter_<P> self;
-    typedef internal::site_iterator_base_<p_array<P>, self> super;
-
-  protected:
-    using super::p_;
+    typedef internal::site_set_iterator_base<p_array<P>, self> super;
 
   public:
 
@@ -116,6 +115,11 @@ namespace mln
 
     /// Return the current index.
     int index() const;
+
+  protected:
+
+    using super::p_;
+    using super::s_;
   };
 
 
@@ -148,7 +152,7 @@ namespace mln
   p_array_fwd_piter_<P>::is_valid_() const
   {
     mln_invariant(p_.index() >= 0);
-    return p_.index() < int(p_.target()->nsites());
+    return p_.index() < int(s_->nsites());
   }
 
   template <typename P>
@@ -156,7 +160,7 @@ namespace mln
   void
   p_array_fwd_piter_<P>::invalidate_()
   {
-    p_.index() = int(p_.target()->nsites());
+    p_.change_index(s_->nsites());
   }
 
   template <typename P>
@@ -164,7 +168,7 @@ namespace mln
   void
   p_array_fwd_piter_<P>::start_()
   {
-    p_.index() = 0;
+    p_.change_index(0);
   }
 
   template <typename P>
@@ -172,7 +176,7 @@ namespace mln
   void
   p_array_fwd_piter_<P>::next_()
   {
-    ++p_.index();
+    p_.inc_index();
   }
 
   template <typename P>
@@ -206,7 +210,7 @@ namespace mln
   bool
   p_array_bkd_piter_<P>::is_valid_() const
   {
-    mln_invariant(p_.index() < int(p_.target()->nsites()));
+    mln_invariant(p_.index() < int(s_->nsites()));
     return p_.index() >= 0;
   }
 
@@ -215,7 +219,7 @@ namespace mln
   void
   p_array_bkd_piter_<P>::invalidate_()
   {
-    p_.index() = -1;
+    p_.change_index(-1);
   }
 
   template <typename P>
@@ -223,7 +227,7 @@ namespace mln
   void
   p_array_bkd_piter_<P>::start_()
   {
-    p_.index() = int(p_.target()->nsites()) - 1;
+    p_.change_index(s_->nsites() - 1);
   }
 
   template <typename P>
@@ -231,7 +235,7 @@ namespace mln
   void
   p_array_bkd_piter_<P>::next_()
   {
-    --p_.index();
+    p_.dec_index();
   }
 
   template <typename P>

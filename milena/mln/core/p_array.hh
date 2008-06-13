@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,6 +61,11 @@ namespace mln
 
   public:
 
+    // This associated type is important to know that this particular
+    // pseudo site knows the site set it refers to.
+    typedef p_array<P> target_t;
+
+
     // As a Proxy:
 
     const P& unproxy() const;
@@ -79,16 +84,23 @@ namespace mln
 
     int index() const;
 
-    int& index();
+    void change_index(int i);
+    void inc_index();
+    void dec_index();
 
     const p_array<P>* target() const;
 
     const p_array<P>*& target();
 
+    bool is_valid() const;
+
   private:
 
     const p_array<P>* arr_;
     int i_;
+    mutable P p_;
+
+    void update_p_() const;
   };
 
 
@@ -150,7 +162,9 @@ namespace mln
     /// Test is \p p belongs to this site set.
     bool has(const psite& p) const;
 
+    /// Test is index \p i belongs to this site set.
     // FIXME: Add an overload "has(index)".
+    bool has_index(int i) const;
 
     /// Change site \p p into \p new_p.
     void change(const psite& p, const P& new_p);
@@ -223,6 +237,14 @@ namespace mln
     site s_ = (*this)[p.index()];
     mln_invariant(p.to_site() == s_);
     return true;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_array<P>::has_index(int i) const
+  {
+    return i >= 0 && i < int(vect_.size());
   }
 
   template <typename P>
@@ -303,6 +325,7 @@ namespace mln
     vect_[p.index()] = new_p;
   }
 
+
   // p_array_psite<P>
 
   template <typename P>
@@ -315,10 +338,21 @@ namespace mln
 
   template <typename P>
   inline
+  void
+  p_array_psite<P>::update_p_() const
+  {
+    if (arr_ == 0 || ! arr_->has_index(i_))
+      return;
+    p_ = (*arr_)[i_];
+  }
+
+  template <typename P>
+  inline
   p_array_psite<P>::p_array_psite(const p_array<P>& arr, int i)
     : arr_(&arr),
       i_(i)
   {
+    update_p_();
   }
 
   template <typename P>
@@ -341,10 +375,29 @@ namespace mln
 
   template <typename P>
   inline
-  int&
-  p_array_psite<P>::index()
+  void
+  p_array_psite<P>::change_index(int i)
   {
-    return i_;
+    i_ = i;
+    update_p_();
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array_psite<P>::dec_index()
+  {
+    --i_;
+    update_p_();
+  }
+
+  template <typename P>
+  inline
+  void
+  p_array_psite<P>::inc_index()
+  {
+    ++i_;
+    update_p_();
   }
 
   template <typename P>
@@ -369,7 +422,8 @@ namespace mln
   p_array_psite<P>::unproxy() const
   {
     mln_precondition(arr_ != 0);
-    return (*arr_)[i_];
+    update_p_();
+    return p_;
   }
 
 

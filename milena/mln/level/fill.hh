@@ -164,7 +164,8 @@ namespace mln
     {
       trace::entering("level::fill");
 
-      mlc_is(mln_trait_image_io(I), trait::image::io::write)::check(); // FIXME: Only the upcoming general facade!!! 
+      mlc_is(mln_trait_image_value_io(I),
+	     trait::image::value_io::read_write)::check(); // FIXME: Only the upcoming general facade!!! 
       mln_precondition(exact(ima).has_data());
       impl::fill_with_value(mln_trait_image_speed(I)(), exact(ima),
 			    value);

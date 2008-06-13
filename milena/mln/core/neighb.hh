@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,20 +30,16 @@
 
 /*! \file mln/core/neighb.hh
  *
- * \brief Definition of the generic neighborhood class mln::neighb_.
+ * \brief Definition of the generic neighborhood class mln::neighb.
  */
 
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint.hh>
+# include <mln/core/internal/neighborhood_base.hh>
+# include <mln/core/internal/basic_window_impl.hh>
+# include <mln/core/internal/neighborhood_impl_mixin.hh>
 
 
 namespace mln
 {
-
-  // fwd decls
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
  
 
   /*! \brief Generic neighborhood class.
@@ -52,58 +48,20 @@ namespace mln
    * The parameter is \c D, type of delta-point.
    */
   template <typename D>
-  struct neighb_ : public Neighborhood< neighb_<D> >,
-		   public internal::dpoints_base_<D, neighb_<D> >
+  struct neighb : internal::neighborhood_base< D, neighb<D> >,
+		  internal::neighborhood_impl_mixin< internal::basic_window_impl< D, neighb<D> >,
+						     neighb<D> >
   {
-    /// Dpoint associated type.
-    typedef D dpoint;
-
-    /// Point associated type.
-    typedef mln_point(D) point;
-
-    /*! \brief Site_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
-     */
-    typedef dpoints_fwd_piter<D> fwd_niter;
-
-    /*! \brief Site_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
-     */
-    typedef dpoints_bkd_piter<D> bkd_niter;
-
-    /*! \brief Same as fwd_niter.
-     */
-    typedef fwd_niter niter;
-
     /*! \brief Constructor without argument.
      *
      * The constructed neighborhood is empty. You have to use insert()
      * to proceed to the neighborhood definition.
      */
-    neighb_();
+    neighb();
 
-    /*! \brief Insert a delta-point \p dp in the neighborhood
-     *  definition.
-     *
-     * \param[in] dp The delta-point to insert.
-     *
-     * This method also insert the symmetrical delta-point, - \p dp,
-     * in the neighborhood definition; thus the client has not to
-     * ensure the symmetry property; that is automatic.
-     */
-    neighb_<D>& insert(const D& dp);
-
-    /// \{ Insertion of a delta-point with different numbers of
-    /// arguments (coordinates) w.r.t. the dimension.
-    neighb_<D>& insert(const mln_coord(D)& dind); // For 1D.
-
-    neighb_<D>& insert(const mln_coord(D)& drow,
-		       const mln_coord(D)& dcol); // For 2D.
-
-    neighb_<D>& insert(const mln_coord(D)& dsli,
-		       const mln_coord(D)& drow,
-		       const mln_coord(D)& dcol); // For 3D.
-    /// \}
+    // Overridden from internal::basic_window_impl so that it also
+    // inserts \a -dp.
+    neighb<D>& insert_(const D& dp);
   };
  
 
@@ -111,58 +69,26 @@ namespace mln
 
   template <typename D>
   inline
-  neighb_<D>::neighb_()
+  neighb<D>::neighb()
   {
   }
 
   template <typename D>
   inline
-  neighb_<D>&
-  neighb_<D>::insert(const D& dp)
+  neighb<D>&
+  neighb<D>::insert_(const D& dp)
   {
-    mln_precondition(! has(dp));
-    typedef internal::set_of_<D> super;
-    this->super::insert( dp);
-    this->super::insert(-dp);
+    typedef neighb<D> self;
+    typedef internal::basic_window_impl< D, neighb<D> > win_impl;
+    typedef internal::neighborhood_impl_mixin< win_impl, neighb<D> > super_;
+    this->super_::insert_( dp);
+    this->super_::insert_(-dp);
     return *this;
-  }
-
-  template <typename D>
-  inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& dind)
-  {
-    D dp(dind);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
-  }
-
-  template <typename D>
-  inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
-  {
-    D dp(drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
-  }
-
-  template <typename D>
-  inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
-  {
-    D dp(dsli, drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
-
-# include <mln/core/dpoints_piter.hh>
 
 
 #endif // ! MLN_CORE_NEIGHB_HH

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +44,7 @@ namespace mln
 
     /// Give the maximum column of an image.
     template <typename I>
-    mln_coord(I) max_col(const Image<I>& ima);
+    mln_deduce(I, site, coord) max_col(const Image<I>& ima);
 
     /// Give the maximum col of an box 2d or 3d.
     template <typename B>
@@ -54,7 +54,7 @@ namespace mln
 
     template <typename I>
     inline
-    mln_coord(I) max_col(const Image<I>& ima)
+    mln_deduce(I, site, coord) max_col(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
       return exact(ima).bbox().pmax().col();

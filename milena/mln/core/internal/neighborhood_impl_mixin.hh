@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,59 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_MIN_ROW_HH
-# define MLN_GEOM_MIN_ROW_HH
+#ifndef MLN_CORE_INTERNAL_NEIGHBORHOOD_IMPL_MIXIN_HH
+# define MLN_CORE_INTERNAL_NEIGHBORHOOD_IMPL_MIXIN_HH
 
-/*! \file mln/geom/min_row.hh
+/*! \file mln/core/internal/neighborhood_impl_mixin.hh
  *
- * \brief Give the minimum row of an image.
+ * \brief Definition of a mixin to turn a window implementation class
+ * into a neighborhood impl class.
  */
 
-# include <mln/core/concept/image.hh>
-
-# include <mln/metal/bexpr.hh>
-# include <mln/metal/int.hh>
-# include <mln/metal/equal.hh>
 
 namespace mln
 {
 
-  namespace geom
+  namespace internal
   {
 
-    /// Give the minimum row of an image.
-    template <typename I>
-    mln_deduce(I, site, coord) min_row(const Image<I>& ima);
-
-    /// Give the minimum row of an box 2d or 3d.
-    template <typename B>
-    mln_coord(B::point) min_row(const Box<B>& b);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    inline
-    mln_deduce(I, site, coord) min_row(const Image<I>& ima)
+    template <typename W_impl, typename E>
+    struct neighborhood_impl_mixin : W_impl
     {
-      mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmin().row();
-    }
+      /// Site_Iterator type to browse the neighborhood sites.
+      typedef typename W_impl::qiter niter;
 
+      /// Site_Iterator type to browse the neighborhood sites in the
+      /// forward way.
+      typedef typename W_impl::fwd_qiter fwd_niter;
+      
+      /// Site_Iterator type to browse the neighborhood sites in the
+      /// backward way.
+      typedef typename W_impl::bkd_qiter bkd_niter;
+    };
 
-    template <typename B>
-    inline
-    mln_coord(B::point) min_row(const Box<B>& b)
-    {
-      metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
-      return exact(b).pmin().row();
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::geom
+  } // end of namespace internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_MIN_ROW_HH
+#endif // ! MLN_CORE_INTERNAL_NEIGHBORHOOD_IMPL_MIXIN_HH

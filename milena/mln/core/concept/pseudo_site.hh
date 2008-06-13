@@ -64,10 +64,28 @@ namespace mln
   {
     typedef Pseudo_Site<void> category;
 
+    // When a pseudo site features this associated type...
+    // typedef target_t;
+
+    // ...then it also features the method:
+    // const target_t* target();
 
   protected:
     Pseudo_Site();
   };
+
+
+  namespace if_possible
+  {
+    // Nota: This procedure is used in internal::site_iterator_base.
+
+    template <typename P>
+    void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target);
+
+    template <typename O, typename T>
+    void change_target(Object<O>&, const T&);
+
+  } // end of namespace mln::if_possible
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,6 +95,23 @@ namespace mln
   {
     // FIXME
   }
+
+  namespace if_possible
+  {
+
+    template <typename P>
+    void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target)
+    {
+      exact(p).target() = & new_target;
+    }
+
+    template <typename O, typename D>
+    void change_target(Object<O>&, const D&)
+    {
+      // No-op.
+    }
+
+  } // end of namespace mln::if_possible
 
 # endif // ! MLN_INCLUDE_ONLY
 

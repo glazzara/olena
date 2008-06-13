@@ -42,8 +42,8 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
+  template <typename V> class dpsites_fwd_piter;
+  template <typename V> class dpsites_bkd_piter;
  
 
   namespace internal
@@ -59,20 +59,21 @@ namespace mln
 
     public:
 
-      /*! \brief Site_Iterator type to browse the points of a basic window
-       * whatever the ordering of delta-points.
-       */
-      typedef dpoints_fwd_piter<D> qiter;
 
       /*! \brief Site_Iterator type to browse the points of a basic window
        * w.r.t. the ordering of delta-points.
        */
-      typedef dpoints_fwd_piter<D> fwd_qiter;
+      typedef dpsites_fwd_piter<E> fwd_qiter;
       
       /*! \brief Site_Iterator type to browse the points of a basic window
        * w.r.t. the reverse ordering of delta-points.
        */
-      typedef dpoints_bkd_piter<D> bkd_qiter;
+      typedef dpsites_bkd_piter<E> bkd_qiter;
+
+      /*! \brief Site_Iterator type to browse the points of a basic window
+       * whatever the ordering of delta-points.
+       */
+      typedef fwd_qiter qiter;
 
 
       /*! \brief Test if the window is empty (null size; no delta-point).
@@ -126,7 +127,6 @@ namespace mln
     };
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename D, typename E>
@@ -178,7 +178,7 @@ namespace mln
     template <typename D, typename E>
     inline
     const std::vector<D>&
-    basic_window_impl<D,E>::vect() const
+    basic_window_impl<D,E>::std_vector() const
     {
       return dps_.vect();
     }
@@ -253,6 +253,9 @@ namespace mln
   } // end of namespace internal
 
 } // end of namespace mln
+
+
+# include <mln/core/dpsites_piter.hh>
 
 
 #endif // ! MLN_CORE_INTERNAL_BASIC_WINDOW_IMPLHH

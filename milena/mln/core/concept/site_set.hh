@@ -81,6 +81,9 @@ namespace mln
       bool has(const psite& p) const;
      */
 
+    template <typename S>
+    E& insert_all(const Site_Set<S>& other);
+
   protected:
     Site_Set();
   };
@@ -166,6 +169,18 @@ namespace mln
     m = 0;
   }
 
+
+  template <typename E>
+  template <typename S>
+  inline
+  E& Site_Set<E>::insert_all(const Site_Set<S>& other)
+  {
+    E& self = exact(*this);
+    mln_fwd_piter(S) p(exact(other));
+    for_all(p)
+      self.insert(p);
+    return self;
+  }
 
   // operators
 

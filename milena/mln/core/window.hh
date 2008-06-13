@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -77,13 +77,9 @@ namespace mln
      */
     bool is_symmetric() const;
 
-
-    /// Apply a central symmetry to the target window.
-    window<D>& sym();
-
-  protected:
-    
-    box_<mln_point(D)> b_;
+    /*! Apply a central symmetry to the target window.
+     */
+    void sym();
   };
 
 
@@ -122,7 +118,7 @@ namespace mln
 
   template <typename D>
   inline
-  window<D>&
+  void
   window<D>::sym()
   {
     window<D> tmp;
@@ -130,7 +126,6 @@ namespace mln
     for (unsigned i = 0; i < n; ++i)
       tmp.insert(- this->dp(i));
     *this = tmp;
-    return *this;
   }
 
   template <typename D>
@@ -142,9 +137,6 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
-
-# include <mln/core/dpoints_piter.hh>
 
 
 #endif // ! MLN_CORE_WINDOW_HH

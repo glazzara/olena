@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/site_iterator.hh>
+# include <mln/core/concept/pseudo_site.hh> // Use of if_possible::change_target.
 
 
 namespace mln
@@ -44,20 +45,25 @@ namespace mln
 
     /*! \internal A base class for site iterators.
      *
+     * NEVER DIRECTLY DERIVE FROM THIS CLASS.
+     *
+     * Instead derive from EITHER site_set_iterator_base OR
+     * site_relative_iterator_base.
+     *
      * Parameter \c S is the targeted site set type.
      */
     template <typename S, typename E>
-    struct site_iterator_base_ : Site_Iterator<E>,
+    struct site_iterator_base : Site_Iterator<E>,
 
-                                 proxy_impl< mln_psite(S), E>,
+                                proxy_impl< mln_psite(S), E>,
 
-                                 site_impl< false, // Constant access to site / subject.
-					    mln_site(S),
-					    E >
+                                site_impl< false, // Constant access to site / subject.
+					   mln_site(S),
+					   E >
     {
 
       /// The associated site type (as a Site_Proxy).
-      typedef mln_site(S) site; // typename internal::site_from<P>::ret site;
+      typedef mln_site(S) site;
 
       /// Return the site it points to (as a Site_Proxy).
       const mln_site(S)& to_site() const;
@@ -80,14 +86,20 @@ namespace mln
       /// Give the subject (required by the Proxy interface).
       const mln_psite(S)& unproxy() const;
 
-      /// Access to the target address; default impl.
+      /// Give the target address.  It might be 0.
       const S*& target_();
+
+      /// Change the iterator target.
+      void change_target(const S& s);
 
     protected:
 
-      site_iterator_base_();
+      site_iterator_base();
 
-      /// The site designated by this iterator.
+      /// The target.
+      const S* s_;
+
+      /// The psite designated by this iterator.
       mln_psite(S) p_;
     };
 
@@ -96,13 +108,13 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    site_iterator_base_<S, E>::site_iterator_base_()
+    site_iterator_base<S, E>::site_iterator_base()
     {
     }
 
     template <typename S, typename E>
     inline
-    site_iterator_base_<S, E>::operator mln_site(S)() const
+    site_iterator_base<S, E>::operator mln_site(S)() const
     {
       typedef proxy_impl<mln_psite(S), E> super;
       mln_precondition(exact(this)->is_valid());
@@ -112,16 +124,16 @@ namespace mln
     template <typename S, typename E>
     inline
     const mln_site(S)&
-    site_iterator_base_<S, E>::to_site() const
+    site_iterator_base<S, E>::to_site() const
     {
       mln_precondition(exact(*this).is_valid()); // FIXME: OK?
-      return internal::to_site(p_);
+      return internal::to_site( exact(this)->unproxy() );
     }
 
     template <typename S, typename E>
     inline
     const mln_psite(S)&
-    site_iterator_base_<S, E>::unproxy() const
+    site_iterator_base<S, E>::unproxy() const
     {
       return p_;
     }
@@ -129,9 +141,22 @@ namespace mln
     template <typename S, typename E>
     inline
     const S*&
-    site_iterator_base_<S, E>::target_()
+    site_iterator_base<S, E>::target_()
     {
-      return this->p_.target();
+      return s_;
+    }
+
+    template <typename S, typename E>
+    inline
+    void
+    site_iterator_base<S, E>::change_target(const S& s)
+    {
+      s_ = & s;
+      // p_ might be also updated since it can hold a pointer towards
+      // the set it designates, so:
+      if_possible::change_target(p_, s);
+      // Last:
+      this->invalidate();
     }
 
 #endif // ! MLN_INCLUDE_ONLY

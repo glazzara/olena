@@ -77,9 +77,8 @@ namespace mln
     void invalidate();
     void start();
 
-    /// Change of site set target.
-    template <typename T>
-    void change_target(const T& the);
+    // Defined in site_iterator_base:
+    // void change_target(s);
 
   protected:
     Site_Iterator();
@@ -94,7 +93,7 @@ namespace mln
   void
   Site_Iterator<E>::next()
   {
-    mln_precondition(exact(this)->is_valid());
+    mln_precondition(is_valid());
     exact(this)->next_();
   }
 
@@ -117,6 +116,7 @@ namespace mln
     if (exact(this)->target_() == 0)
       return; // No-op.
     exact(this)->invalidate_();
+    mln_postcondition(is_valid() == false);
   }
 
   template <typename E>
@@ -126,16 +126,6 @@ namespace mln
   {
     mln_precondition(exact(this)->target_() != 0);
     exact(this)->start_();
-  }
-
-  template <typename E>
-  template <typename T>
-  inline
-  void
-  Site_Iterator<E>::change_target(const T& the)
-  {
-    exact(this)->target_() = & the;
-    exact(this)->invalidate_();
   }
 
   template <typename E>
@@ -152,6 +142,8 @@ namespace mln
     m3 = 0;
     void (E::*m4)() = & E::next_;
     m4 = 0;
+    bool m5 = (& E::change_target) == (& E::change_target);
+    m5 = 0;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
