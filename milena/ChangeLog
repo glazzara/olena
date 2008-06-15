@@ -1,5 +1,26 @@
 2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a missing operator< on (line-)graph psites, so that sorting
+	them works, as well as storing them in a sorted container (like
+	std::set).
+
+	* mln/core/graph_psite.hh
+	(operator==(const graph_psite<P>&, const graph_psite<P>&)):
+	Ensure psites have the same p_graph.
+	(operator< (const graph_psite<P>&, const graph_psite<P>&)):
+	New operator.
+	(graph_psite<P>::graph_psite): Pass RHS to the copy ctor
+	of the super class.
+	* mln/core/line_graph_psite.hh
+	(operator==(const line_graph_psite<P>&, const line_graph_psite<P>&)):
+	Ensure psites have the same p_line_graph.
+	(operator< (const line_graph_psite<P>&, const line_graph_psite<P>&)):
+	New operator.
+	(line_graph_psite<P>::line_graph_psite): Pass RHS to the copy ctor
+	of the super class.
+
+2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the graph pretty-printer.
 
 	* mln/util/internal/graph_base.hh

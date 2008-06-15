@@ -87,12 +87,30 @@ namespace mln
     util::vertex_id id_;
   };
 
-  /// Compare two mln::graph_psite<P> instances.
-  /* FIXME: Shouldn't this comparison be part of a much general
+
+  /// Comparison of two mln::graph_psite<P> instances.
+  /// \{
+  /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
+
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_graph.
   template <typename P>
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs);
+
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting psites.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_graph.
+  template <typename P>
+  bool
+  operator< (const graph_psite<P>& lhs, const graph_psite<P>& rhs);
+  /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -119,7 +137,7 @@ namespace mln
   template<typename P>
   inline
   graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
-    : super_(),
+    : super_(rhs),
       pg_(rhs.pg_),
       id_(rhs.id_)
   {
@@ -187,11 +205,25 @@ namespace mln
     return id_;
   }
 
+
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
+
   template <typename P>
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs)
   {
-    return &lhs.pg() == &rhs.pg() && lhs.id() == rhs.id();
+    mln_assertion(&lhs.pg() == &rhs.pg());
+    return lhs.id() == rhs.id();
+  }
+
+  template <typename P>
+  bool
+  operator< (const graph_psite<P>& lhs, const graph_psite<P>& rhs)
+  {
+    mln_assertion(&lhs.pg() == &rhs.pg());
+    return lhs.id() < rhs.id();
   }
 
 

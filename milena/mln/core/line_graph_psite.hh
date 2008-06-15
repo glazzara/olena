@@ -111,12 +111,31 @@ namespace mln
     point p_;
   };
 
-  /// Compare two mln::line_graph_psite<P> instances.
-  /* FIXME: Shouldn't this comparison be part of a much general
+
+  /// Comparison of two mln::line_graph_psite<P> instances.
+  /// \{
+  /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
+
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_line_graph.
   template <typename P>
   bool
   operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs);
+
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting psites.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_line_graph.
+  template <typename P>
+  bool
+  operator< (const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs);
+  /// \}
+
 
   /* FIXME: This hand-made delegation is painful.  We should rely on
      the general mechanism provided by Point_Site.  But then again, we
@@ -160,7 +179,7 @@ namespace mln
   template<typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const line_graph_psite<P>& rhs)
-    : super_(),
+    : super_(rhs),
       plg_(rhs.plg_),
       id_(rhs.id_),
       p_()
@@ -268,13 +287,30 @@ namespace mln
   }
 
 
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
+
   template <typename P>
   bool
   operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
   {
-    return &lhs.plg() == &rhs.plg() && lhs.id() == rhs.id();
+    mln_assertion(&lhs.plg() == &rhs.plg());
+    return lhs.id() == rhs.id();
   }
 
+  template <typename P>
+  bool
+  operator< (const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
+  {
+    mln_assertion(&lhs.plg() == &rhs.plg());
+    return lhs.id() < rhs.id();
+  }
+
+
+  /*------------------.
+  | Pretty-printing.  |
+  `------------------*/
 
   template <typename P>
   inline
