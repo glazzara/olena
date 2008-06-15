@@ -1,5 +1,13 @@
 2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the graph pretty-printer.
+
+	* mln/util/internal/graph_base.hh
+	(mln::util::internal::graph_base<V, E>::print_debug): Print the
+	adjacent vertices, not the adjacent edges.
+
+2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the insertion of edges into a graph.
 
 	* mln/util/internal/graph_base.hh

@@ -626,17 +626,18 @@ namespace mln
       graph_base<V, E>::print_debug (std::ostream& ostr) const
       {
 	ostr << "graph: "	<< std::endl;
-	int i = 0;
-	for (typename vertices_t::const_iterator v = vertices_.begin ();
-	     v != vertices_.end (); ++v, ++i)
+	for (unsigned v = 0; v < vertices_.size(); ++v)
 	  {
-	    ostr << "vertex: " << i << std::endl << " -- adjacent vertices: ";
+	    ostr << "vertex: " << v << std::endl << " -- adjacent vertices: ";
 	    /* FIXME: We shouldn't manipulate std::vector<edge_id>
 	       directly, but use a typedef instead.  */
 	    for (typename std::vector<util::edge_id>::const_iterator e =
-		   (*v)->edges.begin();
-		 e != (*v)->edges.end(); ++e)
-	      ostr << *e << " ";
+		   vertices_[v]->edges.begin(); e != vertices_[v]->edges.end();
+		 ++e)
+	      if (v == edges_[*e]->v1())
+		ostr << edges_[*e]->v2() << " ";
+	      else
+		ostr << edges_[*e]->v1() << " ";
 	    ostr << std::endl;
 	  }
 	ostr << std::endl;
