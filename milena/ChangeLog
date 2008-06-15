@@ -1,3 +1,14 @@
+2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the insertion of edges into a graph.
+
+	* mln/util/internal/graph_base.hh
+	(mln::util::internal::less_ptr<T>): New functor.
+	Use it...
+	(mln::util::internal::graph_base<V, E>::edges_set_t): ...here, to
+	fix the comparison of edges, and have the search for an existing
+	edge in graph_base<V, E>::add_edge_ work.
+
 2008-06-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have mln::util::vertex_id and mln::util::edge_id be distinct types.

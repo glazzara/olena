@@ -196,6 +196,21 @@ namespace mln
 
     namespace internal
     {
+      // FIXME: This should be no longer useful once vertices and edges
+      // are handled without pointers and dynamic allocation.
+      template <typename T>
+      struct less_ptr
+      {
+	bool
+	operator()(const T& a, const T& b)
+	{
+	  mln_assertion(a);
+	  mln_assertion(b);
+	  return (*a < *b);
+	}
+      };
+
+
       /// \brief Base class for undirected graphs.
       template<typename V, typename E>
       class graph_base
@@ -211,7 +226,8 @@ namespace mln
 	/// The type of the set of edges.
 	typedef std::vector< util::edge<E>* > edges_t;
 	/// A set to test the presence of a given edge.
-	typedef std::set< util::edge<E>* > edges_set_t;
+	typedef std::set< util::edge<E>*,
+			  less_ptr< util::edge<E>* > > edges_set_t;
 
 	/// Construction, assignments and destruction.
 	/// \{
