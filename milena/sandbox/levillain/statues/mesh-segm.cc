@@ -25,6 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+#include <cstdlib>
 #include <cmath>
 
 #include <utility>
@@ -44,117 +45,45 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
+#include "io.hh"
+
 
 // Doesn't C++ have a better way to express Pi ?
 const float pi = 4 * atanf(1);
 
 
-// -------------------------------------------------------------------
-// Taken from TriMesh_io.cc
-// -------------------------------------------------------------------
-// Convert colors float -> uchar
-static unsigned char color2uchar(float p)
-{
-	return min(max(int(255.0f * p + 0.5f), 0), 255);
-}
-
-// Write a bunch of vertices to an ASCII file
-static void write_verts_asc(TriMesh *mesh, FILE *f,
-			    const char *before_vert,
-			    const char *before_norm,
-			    const char *before_color,
-			    bool float_color,
-			    const char *before_conf,
-			    const char *after_line)
-{
-    for (int i = 0; i < mesh->vertices.size(); i++) {
-		fprintf(f, "%s%.7g %.7g %.7g", before_vert,
-				mesh->vertices[i][0],
-				mesh->vertices[i][1],
-				mesh->vertices[i][2]);
-		if (!mesh->normals.empty() && before_norm)
-			fprintf(f, "%s%.7g %.7g %.7g", before_norm,
-				mesh->normals[i][0],
-				mesh->normals[i][1],
-				mesh->normals[i][2]);
-		if (!mesh->colors.empty() && before_color && float_color)
-			fprintf(f, "%s%.7g %.7g %.7g", before_color,
-				mesh->colors[i][0],
-				mesh->colors[i][1],
-				mesh->colors[i][2]);
-		if (!mesh->colors.empty() && before_color && !float_color)
-			fprintf(f, "%s%d %d %d", before_color,
-				color2uchar(mesh->colors[i][0]),
-				color2uchar(mesh->colors[i][1]),
-				color2uchar(mesh->colors[i][2]));
-		if (!mesh->confidences.empty() && before_conf)
-			fprintf(f, "%s%.7g", before_conf, mesh->confidences[i]);
-		fprintf(f, "%s\n", after_line);
-	}
-}
-// -------------------------------------------------------------------
-
-
-// -------------------------------------------------------------------
-// Taken and adapted from TriMesh_io.cc
-// -------------------------------------------------------------------
-// Write a bunch of faces to an ASCII file with colors.
-static void write_faces_asc_colored(TriMesh *mesh,
-				    const std::vector<mln::value::rgb8>& colors,
-				    FILE *f,
-				    const char *before_face,
-				    const char *after_line)
-{
-  mesh->need_faces();
-  for (int i = 0; i < mesh->faces.size(); i++)
-    {
-      fprintf(f, "%s%d %d %d %d %d %d%s\n",
-	      before_face,
-	      mesh->faces[i][0], mesh->faces[i][1], mesh->faces[i][2],
-	      int(colors[i].red()),
-	      int(colors[i].green()),
-	      int(colors[i].blue()),
-	      after_line);
-    }
-}
-
-/// Write an off file with colors.
-static void write_off_colored(TriMesh *mesh,
-			      const std::vector<mln::value::rgb8>& colors,
-			      FILE *f)
-{
-  fprintf(f, "OFF\n");
-  mesh->need_faces();
-  fprintf(f, "%lu %lu 0\n", (unsigned long) mesh->vertices.size(),
-	  (unsigned long) mesh->faces.size());
-  write_verts_asc(mesh, f, "", 0, 0, false, 0, "");
-  write_faces_asc_colored(mesh, colors, f, "3 ", "");
-}
-// -------------------------------------------------------------------
-
-
 int main(int argc, char* argv[])
 {
+  if (argc != 4)
+    {
+      std::cerr << "usage: " << argv[1] << " input.off lambda output.off";
+      exit(1);
+    }
+
+  std::string input_filename = argv[1];
+  unsigned lambda = atoi(argv[2]);
+  std::string output_filename = argv[3];
+
+
   /*-------.
   | Mesh.  |
   `-------*/
 
-//   std::string filename = "../../aroumougame/test/test.off";
-  std::string filename = "bunny-holefilled.off";
-
-  // TriMesh is a pain: it systematically allocate on the heap.
-  TriMesh* mesh_ptr = TriMesh::read(filename.c_str());
+  // TriMesh is a pain: it systematically allocates on the heap.
+  // Introduce another name to manipulate the mesh as a (non-pointer)
+  // object.
+  TriMesh* mesh_ptr = TriMesh::read(input_filename.c_str());
   if (!mesh_ptr)
-    exit(1);
+    exit(2);
   TriMesh& mesh = *mesh_ptr;
 
   // Computes faces (triangles).
   mesh.need_faces();
-
   // Computation of the mean curvature on each vertex of the mesh.
   mesh.need_curvatures();
-  // FIXME: Our implementation of the WST doesn't work well with floats.
-  // Convert to a proportional integer value for the moment.
+  /* FIXME: Our implementation of the WST doesn't work well with
+     floats.  Convert floating point values to a proportional integer
+     value for the moment.  */
   typedef int curv_t;
   std::vector<float> vertex_h_inv(mesh.vertices.size(), 0.f);
   for (unsigned v = 0; v < mesh.vertices.size(); ++v)
@@ -162,8 +91,9 @@ int main(int argc, char* argv[])
       float h = (mesh.curv1[v] + mesh.curv2[v]) / 2;
       float h_inv = 1 / pi * atan(-h) + pi / 2;
       /* FIXME: This coefficient is used to distinguish small
-         curvature values.  We sould get rid of it as soon as
-         meyer_wst works correctly on image of float values.  */
+         curvature values.  We should get rid of it as soon as
+         morpho::meyer_wst works correctly on images of float
+         values.  */
       vertex_h_inv[v] = 1000 * h_inv;
     }
 
@@ -202,7 +132,7 @@ int main(int argc, char* argv[])
 		// Find the edge (i.e., the two vertices) common to faces
 		// F and F_ADJ.
 		/* FIXME: We lack a proper interface from the TriMesh
-		   strucure to do this elegantly.  */
+		   structure to do this elegantly.  */
 		std::vector<int> adj_vertices;
 		adj_vertices.reserve(2);
 		for (unsigned i = 0; i < 3; ++i)
@@ -239,22 +169,21 @@ int main(int argc, char* argv[])
   nbh_t nbh;
 
   ima_t closed_lg_ima (lg_ima.domain());
-  mln::morpho::closing_area(lg_ima, nbh, 500, closed_lg_ima);
+  mln::morpho::closing_area(lg_ima, nbh, lambda, closed_lg_ima);
 
   /*------.
   | WST.  |
   `------*/
 
-  // Perform a Watershed Transform.
   typedef unsigned wst_val_t;
   wst_val_t nbasins;
   typedef mln::line_graph_image<mln::point3d, wst_val_t> wst_ima_t;
   wst_ima_t wshed = mln::morpho::meyer_wst(closed_lg_ima, nbh, nbasins);
   std::cout << "nbasins = " << nbasins << std::endl;
 
-  /*------------------------------------.
-  | Label graph vertices (mesh faces).  |
-  `------------------------------------*/
+  /*------------------------------------------.
+  | Label graph vertices (i.e., mesh faces).  |
+  `------------------------------------------*/
 
   /* FIXME: We should be using wshed.vertex_values_ if
      mln::line_graph_image were fully functional...  */
@@ -272,30 +201,26 @@ int main(int argc, char* argv[])
   | Output.  |
   `---------*/
 
-  // Get random colors for each basin.
+  // Choose random colors for each basin number.
   std::vector<mln::value::rgb8> basin_color (nbasins + 1);
   for (unsigned i = 0; i <= nbasins; ++i)
     basin_color[i] = mln::value::rgb8(random() % 256,
 				      random() % 256,
 				      random() % 256);
-  
 
-  // Assign colors to faces.
+  // Assign colors to graph vertices (mesh faces).
   std::vector<mln::value::rgb8> face_color (vertex_label.size());
   for (unsigned i = 0; i < vertex_label.size() ; ++i)
     face_color[i] = basin_color[vertex_label[i]];
 
-  // FIXME: This is ugly; convert to C++ code ASAP.
   // Taken and adapted from TriMesh_io.cc
-  const char* out_filename = "out.off";
-  FILE* f_out = fopen(out_filename, "wb");
+  FILE* f_out = fopen(output_filename.c_str(), "wb");
   if (!f_out)
     {
-      perror("fopen");
-      fprintf(stderr, "Error opening %s for writing.\n", out_filename);
-      exit(1);
+      std::cerr << "Error opening " << output_filename.c_str()
+		<< " for writing." << std::endl;
+      exit(2);
     }
-
   write_off_colored(mesh_ptr, face_color, f_out);
   fclose(f_out);
 

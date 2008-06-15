@@ -1,3 +1,19 @@
+2008-06-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start to clean up levillain/statues/.
+
+	* levillain/statues/mesh-segm.cc (main): Process command line
+	arguments.
+	Typos and aesthetic changes.
+	(color2uchar, write_verts_asc, write_faces_asc_colored)
+	(write_off_colored): Move these I/O
+	routines... 
+	* levillain/statues/io.hh: ...here.
+	* levillain/statues/test: New test.
+	* levillain/statues/Makefile (mesh-segm.o): Depend on io.hh
+	(check): Depend on test.
+	Run `test' instead of `mesh-segm'.
+
 2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a test on curvature-based, 3-D mesh segmentation.

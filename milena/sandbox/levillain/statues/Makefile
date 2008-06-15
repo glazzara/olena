@@ -19,11 +19,12 @@ LDFLAGS = -L$(TRIMESH)/lib.Darwin -ltrimesh
 
 all: mesh-segm
 
+mesh-segm.o: mesh-segm.cc io.hh
 mesh-segm: mesh-segm.o
 	$(CXX) -o $@ $(LDFLAGS) $<
 
-check: mesh-segm
-	./mesh-segm
+check: mesh-segm test
+	./test
 
 CLEANFILES = mesh-segm.o mesh-segm
 clean:
