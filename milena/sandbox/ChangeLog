@@ -7,7 +7,7 @@
 	Typos and aesthetic changes.
 	(color2uchar, write_verts_asc, write_faces_asc_colored)
 	(write_off_colored): Move these I/O
-	routines... 
+	routines...
 	* levillain/statues/io.hh: ...here.
 	* levillain/statues/test: New test.
 	* levillain/statues/Makefile (mesh-segm.o): Depend on io.hh
@@ -40,11 +40,11 @@
 	* jardonnet/test/img/c10.pbm,
 	* jardonnet/test/img/c11.pbm: New test images.
 
-<2008>-<06>-<09> aroune aroumougame  <aroune.aroumougame@gmail.com>
+2008-06-09 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Thinning test files.
 	* skeleton/test.cc: New.
-	* skeleton/test.pbm: New. 
+	* skeleton/test.pbm: New.
 	* skeleton/test.pgm: New.
 	* skeleton/test1.pbm: New.
 	* skeleton/test1.pgm: New.
@@ -87,7 +87,7 @@
 
 	* beguin/fusion_graph.hh, beguin/irm.cc: Do it.
 
-<2008>-<05>-<30> Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+2008-05-30 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Test files.
 	* makefile1: Remove. old file
@@ -396,7 +396,7 @@
 
 	Update final_qk.
 
-	Final_qk didn't use correct points.        
+	Final_qk didn't use correct points.
 
 	* jardonnet/test/icp.cc: .
 	* jardonnet/registration/final_qk.hh: .
@@ -666,7 +666,7 @@
 	New red getter.
 	* conv/getred.hh: New red getter for all color spaces.
 	* conv/tored.hh: New function that takes a color as argument
-	  		 and return red part in rgb.
+			 and return red part in rgb.
 
 2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
