@@ -1,3 +1,21 @@
+2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a default ordering (util::less); update (d)points and vec.
+
+	* mln/core/point.hh (todo): New in doc.
+	(to_vec): New; was missing.
+	(less_than): New specialization.
+	* mln/core/dpoint.hh (to_vec): Avoid copy at return.
+	(less_than): New specialization.
+	* mln/core/box.hh: Rely on util::less.
+	(is_valid): New.
+	(contract): Add pre- and post-conditions.
+	* mln/core/concept/point_site.hh (operator<): Remove.
+	* mln/algebra/vec.hh (less_than): New.
+	* mln/util/set.hh: Rely on util::less.
+	* mln/util/less.hh: New.
+	* mln/util/less_than.hh: New.
+
 2008-06-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make windows work with index; test on p_array.

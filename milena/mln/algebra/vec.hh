@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,6 +42,7 @@
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
+# include <mln/util/less_than.hh>
 # include <mln/debug/format.hh>
 
 # include <mln/value/ops.hh>
@@ -62,6 +63,19 @@ namespace mln
   }
   template <unsigned d, typename C> struct h_vec;
 
+
+  namespace util
+  {
+
+    template <unsigned n, typename Tl, typename Tr>
+    struct less_than< algebra::vec<n,Tl>,
+		      algebra::vec<n,Tr> > 
+    {
+      bool operator()(const algebra::vec<n,Tl>& lhs,
+		      const algebra::vec<n,Tr>& rhs) const;
+    };
+
+  } // end of namespace mln::util
 
 
   namespace trait
@@ -326,8 +340,15 @@ namespace mln
     vec<3, mln_trait_op_times(T,U)> // FIXME: Sum of product...
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
 
+  } // end of namespace mln::algebra
+
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace algebra
+  {
 
     template <unsigned n, typename T>
     inline
@@ -560,10 +581,33 @@ namespace mln
         tmp[i] = round(v[i]);
       return tmp;
     }  
-    
-# endif // MLN_INCLUDE_ONLY
+
 
   } // end of namespace mln::algebra
+
+
+  namespace util
+  {
+
+    template <unsigned n, typename Tl, typename Tr>
+    bool
+    less_than< algebra::vec<n,Tl>,
+	       algebra::vec<n,Tr> >::operator()(const algebra::vec<n,Tl>& lhs,
+						const algebra::vec<n,Tr>& rhs) const
+    {
+      for (unsigned i = 0; i < n; ++i)
+	{
+	  if (lhs[i] == rhs[i])
+	    continue;
+	  return lhs[i] < rhs[i];
+	}
+      return false;
+    }
+
+  } // end of namespace mln::util
+
+    
+# endif // MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

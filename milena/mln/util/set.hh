@@ -42,6 +42,7 @@
 # include <iostream>
 
 # include <mln/core/contract.hh>
+# include <mln/util/less.hh>
 
 
 namespace mln
@@ -66,7 +67,12 @@ namespace mln
      * The parameter \c T is the element type, which shall not be
      * const-qualified.
      *
+     * The unicity of set elements is handled by the mln::util::less
+     * function-object.
+     *
      * \todo Add a remove method.
+     *
+     * \see mln::util::less
      */
     template <typename T>
     class set
@@ -174,7 +180,7 @@ namespace mln
        *
        * This structure is always up-to-date w.r.t. the set contents.
        */
-      mutable std::set<T> s_;
+      mutable std::set< T, mln::util::less<T> > s_;
 
 
       /*! \brief Freeze the contents of the set (update \a v_ from \a

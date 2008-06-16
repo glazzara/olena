@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,7 @@
 # include <mln/core/internal/box_impl.hh>
 # include <mln/core/point.hh>
 # include <mln/literal/origin.hh>
+# include <mln/util/less.hh>
 
 
 namespace mln
@@ -124,7 +125,12 @@ namespace mln
     /// Give a larger box.
     box_<P> to_larger(unsigned b) const;
 
+    /// Test that the box owns valid data, i.e., pmin is 'less-than'
+    /// pmax.
+    bool is_valid() const;
+
   protected:
+
     P pmin_, pmax_;
   };
 
@@ -146,9 +152,20 @@ namespace mln
 
   template <typename P>
   inline
+  bool
+  box_<P>::is_valid() const
+  {
+    typedef util::less<P> less_t;
+    static const less_t op = less_t();
+    return op(pmin_, pmax_);
+  }
+
+  template <typename P>
+  inline
   P
   box_<P>::pmin() const
   {
+    mln_precondition(is_valid());
     return pmin_;
   }
 
@@ -165,6 +182,7 @@ namespace mln
   P
   box_<P>::pmax() const
   {
+    mln_precondition(is_valid());
     return pmax_;
   }
 
@@ -188,7 +206,7 @@ namespace mln
     : pmin_(pmin),
       pmax_(pmax)
   {
-
+    mln_precondition(is_valid());
   }
 
   template <typename P>
@@ -207,6 +225,7 @@ namespace mln
     metal::bool_<(dim == 2)>::check();
     pmin_ = literal::origin;
     pmax_ = P(nrows - 1, ncols - 1);
+    mln_postcondition(is_valid());
   }
 
   template <typename P>
@@ -216,6 +235,7 @@ namespace mln
     metal::bool_<(dim == 3)>::check();
     pmin_ = literal::origin;
     pmax_ = P(nslis - 1, nrows - 1, ncols - 1);
+    mln_postcondition(is_valid());
   }
 
   template <typename P>
@@ -223,6 +243,7 @@ namespace mln
   bool
   box_<P>::has(const P& p) const
   {
+    mln_precondition(is_valid());
     for (unsigned i = 0; i < P::dim; ++i)
       if (p[i] < pmin_[i] || p[i] > pmax_[i])
 	return false;
@@ -234,11 +255,13 @@ namespace mln
   void
   box_<P>::enlarge(unsigned b)
   {
+    mln_precondition(is_valid());
     for (unsigned i = 0; i < P::dim; ++i)
     {
       pmin_[i] -= b;
       pmax_[i] += b;
     }
+    mln_postcondition(is_valid());
   }
 
 
@@ -247,6 +270,7 @@ namespace mln
   box_<P>
   box_<P>::to_larger(unsigned b) const
   {
+    mln_precondition(is_valid());
     box_<P> tmp(*this);
 
     for (unsigned i = 0; i < P::dim; ++i)
@@ -254,6 +278,7 @@ namespace mln
       tmp.pmin_[i] -= b;
       tmp.pmax_[i] += b;
     }
+    mln_postcondition(tmp.is_valid());
     return tmp;
   }
 
@@ -261,6 +286,7 @@ namespace mln
   inline
   std::ostream& operator<<(std::ostream& ostr, const box_<P>& b)
   {
+    mln_precondition(b.is_valid());
     return ostr << "[" << b.pmin() << ".." << b.pmax() << ']';
   }
 

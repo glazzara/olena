@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -123,11 +123,39 @@ namespace mln
     operator algebra::vec<M::dim, Q>() const;
 
     /// Explicit conversion.
-    algebra::vec<M::dim, C> to_vec() const;
+    const algebra::vec<M::dim, C>& to_vec() const;
 
   protected:
     algebra::vec<M::dim, C> coord_;
   };
+
+
+  namespace util
+  {
+
+    /*! \brief Ordering "less than" comparison between a couple of
+     *  delta-points.
+     *
+     * The ordering is based on a lexicographical ordering over
+     * coordinates.
+     *
+     * Both delta-points have to be defined on the same topology.
+     */
+    template <typename M, typename Cl, typename Cr>
+    struct less_than< dpoint_<M,Cl>,
+		      dpoint_<M,Cr> > 
+    {
+      /*! \brief Comparison between a couple of delta-points \a lhs
+       *  and \a rhs.
+       *
+       * \return True if \p lhs is before \p rhs in the sense of the
+       * coordinates lexicographic comparison, otherwise false.
+       */
+      bool operator()(const dpoint_<M,Cl>& lhs,
+		      const dpoint_<M,Cr>& rhs) const;
+    };
+
+  } // end of namespace mln::util
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -244,11 +272,28 @@ namespace mln
 
   template <typename M, typename C>
   inline
-  algebra::vec<M::dim, C>
+  const algebra::vec<M::dim, C>&
   dpoint_<M,C>::to_vec() const
   {
     return coord_;
   }
+
+  namespace util
+  {
+
+    template <typename M, typename Cl, typename Cr>
+    bool
+    less_than< dpoint_<M,Cl>,
+	       dpoint_<M,Cr> >::operator()(const dpoint_<M,Cl>& lhs,
+					   const dpoint_<M,Cr>& rhs) const
+    {
+      enum { n = M::dim };
+      typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
+      static const less_t op = less_t();
+      return op(lhs.to_vec(), rhs.to_vec());
+    }
+
+  } // end of namespace mln::util
 
 # endif // ! MLN_INCLUDE_ONLY
 

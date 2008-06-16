@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/core/point.hh
  *
  * \brief Definition of the generic point class mln::point_.
+ *
+ * \todo Try to generalize less_than with Ml and Mr.
  */
 
 # include <mln/core/concept/point.hh>
@@ -47,6 +49,7 @@ namespace mln
 {
 
   /// \{ Fwd decls.
+  template <typename M, typename C> struct  point_;
   template <typename M, typename C> struct dpoint_;
   namespace literal {
     struct zero_t;
@@ -154,12 +157,47 @@ namespace mln
     operator typename internal::point_to_<M, C>::metal_vec () const;
     operator algebra::vec<M::dim, float> () const;
 
+    /// Explicit conversion towards mln::algebra::vec.
+    const algebra::vec<M::dim, C>& to_vec() const;
+
     /// Transform to point in homogene coordinate system.
     h_vec<M::dim, C> to_h_vec() const;
 
   protected:
     algebra::vec<M::dim, C> coord_;
   };
+
+
+  namespace util
+  {
+
+    /*! \brief Ordering "less than" comparison between a couple of
+     *  points.
+     *
+     * The ordering is based on a lexicographical ordering over
+     * coordinates.
+     *
+     * Both points have to be defined on the same topology.
+     *
+     * \warning In the general case this ordering relationship is \em
+     * not bound to the way of browsing a domain with a forward point
+     * iterator.
+     */
+    template <typename M, typename Cl, typename Cr>
+    struct less_than< point_<M,Cl>,
+		      point_<M,Cr> > 
+    {
+      /*! \brief Comparison between a couple of points \a lhs and \a
+       *  rhs.
+       *
+       * \return True if \p lhs is before \p rhs in the sense of the
+       * coordinates lexicographic comparison, otherwise false.
+       */
+      bool operator()(const point_<M,Cl>& lhs,
+		      const point_<M,Cr>& rhs) const;
+    };
+
+  } // end of namespace mln::util
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -324,6 +362,14 @@ namespace mln
       tmp[i] = coord_[i];
     return tmp;
   }
+
+  template <typename M, typename C>
+  inline
+  const algebra::vec<M::dim, C>&
+  point_<M,C>::to_vec() const
+  {
+    return coord_;
+  }
   
   template <typename M, typename C>
   inline
@@ -335,6 +381,24 @@ namespace mln
     tmp[M::dim] = 1;
     return tmp;
   }
+
+
+  namespace util
+  {
+
+    template <typename M, typename Cl, typename Cr>
+    bool
+    less_than< point_<M,Cl>,
+	       point_<M,Cr> >::operator()(const point_<M,Cl>& lhs,
+					  const point_<M,Cr>& rhs) const
+    {
+      enum { n = M::dim };
+      typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
+      static const less_t op = less_t();
+      return op(lhs.to_vec(), rhs.to_vec());
+    }
+
+  } // end of namespace mln::util
 
 # endif // ! MLN_INCLUDE_ONLY
   
