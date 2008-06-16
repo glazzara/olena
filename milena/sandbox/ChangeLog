@@ -105,6 +105,12 @@
 	* levillain/morpho/shortest_path_watershed.hh:
 	New (imported from Olena proto-1.0).
 
+2008-05-29  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Test (sorry).
+
+	* geraud/toto: New.
+
 2008-05-28  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Materials for report.
