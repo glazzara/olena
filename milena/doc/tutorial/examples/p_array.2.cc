@@ -62,7 +62,8 @@ int main()
 
   util::index i;
   mln_qiter_(W) j(win, i);
-  for (i = 0; i < arr.nsites(); i = i + 1)
+  int n = arr.nsites();
+  for (i = 0; i < n; i = i + 1)
     {
       std::cout << "i=" << i << ": ";
       for_all(j)

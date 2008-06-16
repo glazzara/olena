@@ -1,5 +1,16 @@
 2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Preparing cleanup and update of trait::solve_unary.
+
+	* mln/trait/solve.hh: Split this file contents into...
+	* mln/trait/solve_binary.hh,
+	* mln/trait/solve_unary.hh: ... these new files.
+	* doc/tutorial/examples/p_array.2.cc,
+	* mln/trait/image/props.hh,
+	* mln/core/concept/site_set.hh: Fix warning.
+
+2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a default ordering (util::less); update (d)points and vec.
 
 	* mln/core/point.hh (todo): New in doc.

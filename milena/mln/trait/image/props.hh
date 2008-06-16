@@ -94,11 +94,11 @@
 //                 |
 //                 + -- site_wise_only
 //                 |
-//                 + ------- cell_wise
-//                 |                \
-//                 + -- value_wise   \
-//                              \     \
-//                                ---- + -- cell_and_value_wise
+//                 + -------- cell_wise
+//                 |                 |
+//                 + -- value_wise   |
+//                              \    |
+//                                -- + -- cell_and_value_wise
 
 // value_io:     /any/
 //                 |
@@ -321,11 +321,11 @@ namespace mln
 //                 |
 //                 + -- site_wise_only
 //                 |
-//                 + ------- cell_wise
-//                 |                \
-//                 + -- value_wise   \
-//                              \     \
-//                                ---- + -- cell_and_value_wise
+//                 + -------- cell_wise
+//                 |                 |
+//                 + -- value_wise   |
+//                              \    |
+//                                -- + -- cell_and_value_wise
 
       struct value_browsing
       {
