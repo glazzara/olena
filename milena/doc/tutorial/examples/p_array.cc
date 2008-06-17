@@ -55,9 +55,12 @@ int main()
     {
       mln_piter_(Arr2) p(arr2);
       for_all(p)
-	std::cout << "point " << p << ": #"
-		  << index_of_in(p, arr2) << " in arr2, #"
-		  << index_of_in(p, arr1)  << " in arr1" << std::endl;
+	{
+// 	  mln_assertion(make::point2d(p.row(), p.col()) == p); // FIXME: Make it work.
+	  std::cout << "point " << p << ": #"
+		    << index_of_in(p, arr2) << " in arr2, #"
+		    << index_of_in(p, arr1)  << " in arr1" << std::endl;
+	}
     }
 
     mln_invariant(arr2 < arr1);

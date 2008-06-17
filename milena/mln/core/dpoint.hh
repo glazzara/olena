@@ -33,7 +33,7 @@
  * \brief Definition of the generic delta-point class mln::dpoint_.
  */
 
-# include <mln/core/concept/dpoint.hh>
+# include <mln/core/concept/gdpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all.hh>
 # include <mln/algebra/vec.hh>
@@ -43,7 +43,7 @@ namespace mln
 {
 
   /// \{ Fwd decls.
-  template <typename M, typename C> struct point_;
+  template <typename G, typename C> struct point_;
   namespace literal {
     struct zero_t;
     struct one_t;
@@ -53,33 +53,36 @@ namespace mln
 
   /*! \brief Generic delta-point class.
    *
-   * Parameters are \c M the dimension of the space and \c C the
+   * Parameters are \c G the dimension of the space and \c C the
    * coordinate type in this space.
    */
-  template <typename M, typename C>
-  struct dpoint_ : public Dpoint< dpoint_<M,C> >,
-		   public internal::mutable_coord_impl_< M::dim, C, dpoint_<M,C> >
+  template <typename G, typename C>
+  struct dpoint_ : public Gdpoint< dpoint_<G,C> >,
+		   public internal::mutable_coord_impl_< G::dim, C, dpoint_<G,C> >
   {
     /*! \var dim
      * \brief Dimension of the space.
      * \invariant dim > 0
      */
-    enum { dim = M::dim };
+    enum { dim = G::dim };
 
-    /// Mesh associated type.
-    typedef M mesh;
+    /// Grid associated type.
+    typedef G grid;
 
     /// Point associated type.
-    typedef point_<M,C> point;
+    typedef point_<G,C> point;
 
     /// Psite associated type.
-    typedef point_<M,C> psite;
+    typedef point_<G,C> psite;
 
     /// Site associated type.
-    typedef point_<M,C> site;
+    typedef point_<G,C> site;
 
     /// Coordinate associated type.
     typedef C coord;
+
+    /// Algebra vector (vec) associated type.
+    typedef algebra::vec<G::dim, C> vec;
 
     /*! \brief Read-only access to the \p i-th coordinate value.
      * \param[in] i The coordinate index.
@@ -96,6 +99,10 @@ namespace mln
     /// Constructor without argument.
     dpoint_();
 
+    /// Constructor from an algebra vector.
+    template <typename C2>
+    dpoint_(const algebra::vec<dim,C2>& v);
+
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
     dpoint_(C ind);
@@ -105,10 +112,10 @@ namespace mln
 
     /// \{ Constructors/assignments with literals.
     dpoint_(const literal::zero_t&);
-    dpoint_<M,C>& operator=(const literal::zero_t&);
+    dpoint_<G,C>& operator=(const literal::zero_t&);
     // Works only in 1D:
     dpoint_(const literal::one_t&);
-    dpoint_<M,C>& operator=(const literal::one_t&);
+    dpoint_<G,C>& operator=(const literal::one_t&);
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
@@ -120,13 +127,13 @@ namespace mln
 
     /// Conversion towards a algebra::vec.
     template <typename Q>
-    operator algebra::vec<M::dim, Q>() const;
+    operator algebra::vec<G::dim, Q>() const;
 
     /// Explicit conversion.
-    const algebra::vec<M::dim, C>& to_vec() const;
+    const algebra::vec<G::dim, C>& to_vec() const;
 
   protected:
-    algebra::vec<M::dim, C> coord_;
+    algebra::vec<G::dim, C> coord_;
   };
 
 
@@ -141,9 +148,9 @@ namespace mln
      *
      * Both delta-points have to be defined on the same topology.
      */
-    template <typename M, typename Cl, typename Cr>
-    struct less_than< dpoint_<M,Cl>,
-		      dpoint_<M,Cr> > 
+    template <typename G, typename Cl, typename Cr>
+    struct less_than< dpoint_<G,Cl>,
+		      dpoint_<G,Cr> > 
     {
       /*! \brief Comparison between a couple of delta-points \a lhs
        *  and \a rhs.
@@ -151,8 +158,8 @@ namespace mln
        * \return True if \p lhs is before \p rhs in the sense of the
        * coordinates lexicographic comparison, otherwise false.
        */
-      bool operator()(const dpoint_<M,Cl>& lhs,
-		      const dpoint_<M,Cr>& rhs) const;
+      bool operator()(const dpoint_<G,Cl>& lhs,
+		      const dpoint_<G,Cr>& rhs) const;
     };
 
   } // end of namespace mln::util
@@ -160,48 +167,56 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  C dpoint_<M,C>::operator[](unsigned i) const
+  C dpoint_<G,C>::operator[](unsigned i) const
   {
     assert(i < dim);
     return coord_[i];
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  C& dpoint_<M,C>::operator[](unsigned i)
+  C& dpoint_<G,C>::operator[](unsigned i)
   {
     assert(i < dim);
     return coord_[i];
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>::dpoint_()
+  dpoint_<G,C>::dpoint_()
   {
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
+  template <typename C2>
   inline
-  dpoint_<M,C>::dpoint_(C ind)
+  dpoint_<G,C>::dpoint_(const algebra::vec<dim,C2>& v)
+  {
+    coord_ = v;
+  }
+
+  template <typename G, typename C>
+  inline
+  dpoint_<G,C>::dpoint_(C ind)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = ind;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>::dpoint_(C row, C col)
+  dpoint_<G,C>::dpoint_(C row, C col)
   {
     metal::bool_<(dim == 2)>::check();
     coord_[0] = row;
     coord_[1] = col;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>::dpoint_(C sli, C row, C col)
+  dpoint_<G,C>::dpoint_(C sli, C row, C col)
   {
     metal::bool_<(dim == 3)>::check();
     coord_[0] = sli;
@@ -209,44 +224,44 @@ namespace mln
     coord_[2] = col;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>::dpoint_(const literal::zero_t&)
+  dpoint_<G,C>::dpoint_(const literal::zero_t&)
   {
     coord_.set_all(0);
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>&
-  dpoint_<M,C>::operator=(const literal::zero_t&)
+  dpoint_<G,C>&
+  dpoint_<G,C>::operator=(const literal::zero_t&)
   {
     coord_.set_all(0);
     return *this;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>::dpoint_(const literal::one_t&)
+  dpoint_<G,C>::dpoint_(const literal::one_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  dpoint_<M,C>&
-  dpoint_<M,C>::operator=(const literal::one_t&)
+  dpoint_<G,C>&
+  dpoint_<G,C>::operator=(const literal::one_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
     return *this;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   template <typename F>
   inline
-  dpoint_<M,C>::dpoint_(const Function_i2v<F>& f_)
+  dpoint_<G,C>::dpoint_(const Function_i2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
@@ -254,26 +269,26 @@ namespace mln
       coord_[i] = f(i);
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  void dpoint_<M,C>::set_all(C c)
+  void dpoint_<G,C>::set_all(C c)
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] = c;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   template <typename Q>
   inline
-  dpoint_<M,C>::operator algebra::vec<M::dim, Q> () const
+  dpoint_<G,C>::operator algebra::vec<G::dim, Q> () const
   {
     return coord_;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  const algebra::vec<M::dim, C>&
-  dpoint_<M,C>::to_vec() const
+  const algebra::vec<G::dim, C>&
+  dpoint_<G,C>::to_vec() const
   {
     return coord_;
   }
@@ -281,13 +296,13 @@ namespace mln
   namespace util
   {
 
-    template <typename M, typename Cl, typename Cr>
+    template <typename G, typename Cl, typename Cr>
     bool
-    less_than< dpoint_<M,Cl>,
-	       dpoint_<M,Cr> >::operator()(const dpoint_<M,Cl>& lhs,
-					   const dpoint_<M,Cr>& rhs) const
+    less_than< dpoint_<G,Cl>,
+	       dpoint_<G,Cr> >::operator()(const dpoint_<G,Cl>& lhs,
+					   const dpoint_<G,Cr>& rhs) const
     {
-      enum { n = M::dim };
+      enum { n = G::dim };
       typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
       static const less_t op = less_t();
       return op(lhs.to_vec(), rhs.to_vec());

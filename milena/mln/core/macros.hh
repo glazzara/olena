@@ -91,6 +91,12 @@
 
 // d
 
+/// Shortcuts to access the delta type associated to T.
+/// \{
+# define mln_delta(T)      typename T::delta
+# define mln_delta_(T)              T::delta
+/// \}
+
 /// Shortcuts to access the dpoint type associated to T.
 /// \{
 # define mln_dpoint(T)     typename T::dpoint
@@ -144,6 +150,16 @@
 # define mln_fwd_viter(T)  typename T::fwd_viter
 # define mln_fwd_viter_(T)          T::fwd_viter
 /// \}
+
+
+// g
+
+/// Shortcuts to access the grid type associated to T.
+/// \{
+# define mln_grid(T)      typename T::grid
+# define mln_grid_(T)              T::grid
+/// \}
+
 
 // i
 
@@ -273,6 +289,12 @@
 /// \{
 # define mln_value(T)      typename T::value
 # define mln_value_(T)              T::value
+/// \}
+
+/// Shortcuts to access the algebra::vector (vec) type associated to T.
+/// \{
+# define mln_vec(T)        typename T::vec
+# define mln_vec_(T)                T::vec
 /// \}
 
 /// Shortcuts to access the type of value set (vset) associated to T.

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,6 +42,12 @@
 namespace mln
 {
 
+  /*! \brief Type alias for a point defined on the 2D square grid with
+   * integer coordinates.
+   */
+  typedef point_<grid::square, int> point2d;
+
+
   namespace internal
   {
 
@@ -50,22 +56,11 @@ namespace mln
     template <typename C, typename E>
     struct site_const_impl< point_<grid::square, C>, E >
     {
-      // Either unproxy() or to_site() can be used below.  In the
-      // former case, the unproxied features ind() because it is a
-      // point_ or another proxy to a point_.
-      C row() const
-      {
-	return internal::force_exact<const E>(*this).to_site().row();
-      }
-      C col() const
-      {
-	return internal::force_exact<const E>(*this).to_site().col();
-      }
-      C operator[](unsigned i) const
-      {
-	mln_precondition(i < 2);
-	return internal::force_exact<const E>(*this).to_site()[i];
-      }
+      C row() const;
+      C col() const;
+      C operator[](unsigned i) const;
+    private:
+      const E& exact_() const;
     };
 
 
@@ -75,32 +70,88 @@ namespace mln
     struct site_mutable_impl< point_<grid::square, C>, E > :
            site_const_impl  < point_<grid::square, C>, E >
     {
+      C& row();
+      C& col();
+      C& operator[](unsigned i);
     private:
       typedef site_const_impl< point_<grid::square, C>, E > super;
-    public:
-
-      using super::row;
-      using super::col;
-
-      C& row()
-      {
-	return internal::force_exact<E>(*this).to_site().row();
-      }
-      C& col()
-      {
-	return internal::force_exact<E>(*this).to_site().col();
-      }
+      E& exact_();
     };
 
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    // Either unproxy() or to_site() can be used below.  In the
+    // former case, the unproxied features ind() because it is a
+    // point_ or another proxy to a point_.
+
+    // site_const_impl
+
+    template <typename C, typename E>
+    C
+    site_const_impl< point_<grid::square, C>, E >::row() const
+    {
+      return exact_().to_site().row();
+    }
+
+    template <typename C, typename E>
+    C
+    site_const_impl< point_<grid::square, C>, E >::col() const
+    {
+      return exact_().to_site().col();
+    }
+
+    template <typename C, typename E>
+    C
+    site_const_impl< point_<grid::square, C>, E >::operator[](unsigned i) const
+    {
+      mln_precondition(i < 2);
+      return exact_().to_site()[i];
+    }
+
+    template <typename C, typename E>
+    const E&
+    site_const_impl< point_<grid::square, C>, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    // site_mutable_impl
+
+    template <typename C, typename E>
+    C&
+    site_mutable_impl< point_<grid::square, C>, E >::row()
+    {
+      return exact_().to_site().row();
+    }
+
+    template <typename C, typename E>
+    C&
+    site_mutable_impl< point_<grid::square, C>, E >::col()
+    {
+      return exact_().to_site().col();
+    }
+
+    template <typename C, typename E>
+    C&
+    site_mutable_impl< point_<grid::square, C>, E >::operator[](unsigned i)
+    {
+      mln_precondition(i < 2);
+      return exact_().to_site()[i];
+    }
+    
+    template <typename C, typename E>
+    E&
+    site_mutable_impl< point_<grid::square, C>, E >::exact_()
+    {
+      return internal::force_exact<E>(*this);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
   } // end of namespace mln::internal
-
-
-
-  /*! \brief Type alias for a point defined on the 2D square grid with
-   * integer coordinates.
-   */
-  typedef point_<grid::square, int> point2d;
-
+  
 
 } // end of namespace mln
 

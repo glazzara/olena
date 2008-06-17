@@ -1,5 +1,31 @@
 2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Introduce Gpoint and Gdpoint.
+
+	The concepts of Point_Site and Delta_Point_Site
+	are made obsolete.  They are replaced by Gpoint and
+	Gdpoint ('G' meaning "grid" for short).  As a
+	consequence, the concept of Point is also obsolete.
+
+	* doc/tutorial/examples/p_array.cc: Add an assertion.
+	* mln/core/macros.hh (mln_delta, mln_vec): New.
+	* mln/core/point.hh (M): Rename parameter as...
+	(G): ...this; it is a Grid type (not a mesh).
+	(point_): Change inheritance to Gpoint.
+	(grid, vec, delta): New.
+	(point_): New overload ctor for vec.
+	* mln/core/dpoint.hh: Likewise.
+	* mln/core/point2d.hh: Layout.
+	* mln/core/concept/status.txt: New.
+	* mln/core/concept/point.hh: Copy to...
+	* mln/core/concept/gpoint.hh: ...this new file.
+	(operator): Now rely on to_vec, no more on [i].
+	* mln/core/concept/delta_point_site.hh: Copy to...
+	* mln/core/concept/gdpoint.hh: ...this new file.
+	(operator): Now rely on to_vec, no more on [i].
+
+2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Cleanup site proxy materials.
 
 	* TODO: Remove; obsolete.
