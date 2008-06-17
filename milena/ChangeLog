@@ -1,3 +1,10 @@
+2008-06-18  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add the ability to plot a point (small cross).
+
+	* mln/draw/plot.hh: New. Plot a point.
+	* mln/draw/all.hh: Update. Add plot.hh.
+
 2008-06-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Remove (empty) rapports/.
