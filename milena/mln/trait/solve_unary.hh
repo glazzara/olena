@@ -37,6 +37,7 @@
  */
 
 # include <mln/core/category.hh>
+# include <mln/core/exact.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/ret.hh>
@@ -166,9 +167,12 @@ namespace mln
     // FIXME: Postfix solve_unary with a '-'(?)
     template < template <class> class Name,
 	       typename T >
-    struct solve_unary : internal::helper_solve_unary_< Name,
-							typename mln::category<T>::ret, T > // FIXME: typedef!
+    struct solve_unary
     {
+      typedef mln_exact(T) E;
+      typedef typename mln::category<E>::ret Cat;
+      typedef internal::helper_solve_unary_< Name, Cat, E > meta_code;
+      typedef typename meta_code::ret ret;
     };
 
   } // end of namespace mln::trait

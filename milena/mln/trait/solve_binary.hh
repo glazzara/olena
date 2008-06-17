@@ -37,6 +37,7 @@
  */
 
 # include <mln/core/category.hh>
+# include <mln/core/exact.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/ret.hh>
@@ -294,12 +295,15 @@ namespace mln
     template < template <class, class> class Name,
 	       typename L,
 	       typename R >
-    struct solve_binary : internal::helper_solve_binary_< Name,
-							  typename mln::category<L>::ret, L,
-							  typename mln::category<R>::ret, R >
+    struct solve_binary
     {
+      typedef mln_exact(L) L_;
+      typedef mln_exact(R) R_;
+      typedef typename mln::category<L_>::ret CatL;
+      typedef typename mln::category<R_>::ret CatR;
+      typedef internal::helper_solve_binary_< Name, CatL, L, CatR, R > meta_code;
+      typedef typename meta_code::ret ret;
     };
-
 
   } // end of namespace mln::trait
 

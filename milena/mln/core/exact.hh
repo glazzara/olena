@@ -36,7 +36,7 @@
 
 
 /// FIXME: Doc!
-#define mln_exact(T) typename internal::exact_<T>::ret
+#define mln_exact(T) typename mln::internal::exact_<T>::ret
 
 
 
@@ -57,12 +57,10 @@ namespace mln
   /// \{
 
   template <typename T>
-  typename internal::exact_<T>::ret*
-  exact(T* ptr);
+  mln_exact(T)* exact(T* ptr);
 
   template <typename T>
-  typename internal::exact_<T>::ret&
-  exact(T& ref);
+  mln_exact(T)& exact(T& ref);
 
   /// \}
 
@@ -73,16 +71,14 @@ namespace mln
 
   template <typename T>
   inline
-  typename internal::exact_<T>::ret*
-  exact(T* ptr)
+  mln_exact(T)* exact(T* ptr)
   {
     return internal::exact_<T>::run(ptr);
   }
 
   template <typename T>
   inline
-  typename internal::exact_<T>::ret&
-  exact(T& ref)
+  mln_exact(T)& exact(T& ref)
   {
     return *exact(&ref);
   }

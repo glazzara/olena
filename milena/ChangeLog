@@ -1,3 +1,15 @@
+2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleanup site proxy materials.
+
+	* TODO: Remove; obsolete.
+	* mln/trait/solve_binary.hh: Use exact.
+	* mln/trait/solve_unary.hh: Likewise.
+	* mln/core/exact.hh (mln_exact): Disambiguate.
+	(exact): Use macro as return.
+	* mln/core/concept/site_proxy.hh: Remove redundant code,
+	use exact and cleanup. 
+
 2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Preparing cleanup and update of trait::solve_unary.
