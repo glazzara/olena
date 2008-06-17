@@ -1,3 +1,16 @@
+2008-06-18  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add material for slides illustration.
+
+	* jardonnet/test/icp_ref.cc: Update. Mark centers of mass.
+	* jardonnet/registration/save.hh: Update. Mark center of mass and
+	orientation.
+	* jardonnet/registration/power_it.hh: Update. Now works in n-D.
+	* jardonnet/registration/quat7.hh: Update. Cosmetic change.
+
+	* jardonnet/TODO: Update.
+	* jardonnet/test/Makefile: Fix clean rule.
+
 2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Sample code for Roland.

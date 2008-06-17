@@ -43,27 +43,20 @@ int main(int argc, char* argv[])
   I3d surface = convert::to_image3d(img2);
   
   //build p_arrays.
-  p_array< point_<grid::cube, float> > c;
+  typedef point_<grid::cube,float> point3df;
+  p_array<point3df> c;
   {
     mln_piter_(I3d) p(cloud.domain());
     for_all(p)
       if (cloud(p))
-        {
-          point_<grid::cube,float> p_;
-          p_[0] = p[0]; p_[1] = p[1]; p_[2] = p[2];
-          c.append(p_);
-        }
+        c.append(algebra::to_point<point3df>(point3d(p)));
   }
-  p_array< point_<grid::cube, float> > x;
+  p_array<point3df> x;
   {
     mln_piter_(I3d) p(surface.domain());
     for_all(p)
       if (surface(p))
-        {
-          point_<grid::cube,float> p_;
-          p_[0] = p[0]; p_[1] = p[1]; p_[2] = p[2];
-          x.append(p_);
-        }
+        x.append(algebra::to_point<point3df>(point3d(p)));
   }
   
   //working box
@@ -84,23 +77,31 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
   level::fill(output, literal::white);
 
+  //plot mu_Ck
+  point3df mu_Ck = registration::center(c, c.npoints());
+  draw::plot(output, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
+
+  //plot mu_X
+  point3df mu_X = registration::center(x, x.npoints());
+  draw::plot(output, point2d(mu_X[0], mu_X[1]), literal::black);
+
   //to 2d : projection (FIXME:if 3d)
   for (unsigned i = 0; i < c.npoints(); i++)
     {
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
-        output(p) = literal::black;
+        output(p) = literal::green;
     }
 
-  //ref image
+  //ref image (black)
   for (unsigned i = 0; i < x.npoints(); i++)
     {
       point2d px(x[i][0], x[i][1]);
       if (output.has(px))
-        output(px) = literal::green;
+        output(px) = literal::black;
     }
-      
-  io::ppm::save(output, "registred.ppm");
   
+  io::ppm::save(output, "registred.ppm");
+
 }
 

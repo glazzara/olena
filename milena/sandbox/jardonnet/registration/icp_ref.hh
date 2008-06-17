@@ -61,8 +61,6 @@
 
 namespace mln
 {
-
-
   
   namespace registration
   {
@@ -128,6 +126,7 @@ namespace mln
           qk.apply_on(C, Ck, c_length);
 
           d_k_1 = d_k;
+          
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
           d_k = rms(C, map, c_length, buf_qk[1], qk);
@@ -136,8 +135,7 @@ namespace mln
           e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
           
 #ifndef NDEBUG
-          //save file
-          save_(qk,C,X,5);
+          save_(qk,C,X,2);
           //print info
           std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'

@@ -12,29 +12,27 @@
 namespace mln
 {
 
-  algebra::quat power_it(algebra::mat<4,4,float> A)
+  template <uint n>
+  algebra::vec<n,float> power_it(algebra::mat<n,n,float> A)
   {
     float    normex = 1.;
 
-    algebra::vec<4,float> x0(literal::zero);
-    algebra::vec<4,float> b(literal::zero);
+    algebra::vec<n,float> x0(literal::zero);
+    algebra::vec<n,float> b(literal::zero);
 
-    algebra::vec<4,float> x(literal::zero);
-    for (int i = 0; i < 4; i++)
+    algebra::vec<n,float> x(literal::zero);
+    for (int i = 0; i < n; i++)
       x[i] = 1.;
 
-    while (fabs(norm::l2(x) - norm::l2(x0)) > 1e-6)
+    //FIXME: infinit loop.
+    while (about_equal(norm::l2(x),norm::l2(x0)))
       {
         x0 = x;
         normex = norm::l2(x);
         b = x / normex;
         x = A * b;
       }
-    normex = norm::l2(x);
-    
-    algebra::quat q(x / normex);
-    q.set_unit();
-    return q;
+    return x.normalize();
   }
 }
 

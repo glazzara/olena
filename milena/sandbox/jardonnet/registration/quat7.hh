@@ -131,17 +131,16 @@ namespace mln
   {
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);
-    for (size_t i = 0; i < c_length; ++i)
+    for (unsigned i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> xki = map(Ck[i]);
         mu_Xk += xki;
       }
     mu_Xk /= c_length;
-
    
     // qR
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-    for (size_t i = 0; i < c_length; ++i)
+    for (unsigned i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);

@@ -4,10 +4,12 @@
 # include <mln/convert/to_image.hh>
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/save.hh>
+# include <mln/draw/all.hh>
 # include <string>
 
 # include "quat7.hh"
 # include "tools.hh"
+# include "power_it.hh"
 
 namespace mln
 {
@@ -21,7 +23,7 @@ namespace mln
       {
         mln_precondition(P::dim == 2);
         
-        image2d out = convert::to_image(a);
+        image2d<bool> out = convert::to_image(a);
         save(out, filename);
       }
     }
@@ -42,7 +44,7 @@ namespace mln
 
       if (++i % every != 0)
         return;
-      
+
       //build ck: apply transform
       p_array<P> ck(c);
       qk.apply_on(c, ck, c.npoints());
@@ -50,8 +52,28 @@ namespace mln
       const box_<P> working_box = enlarge(bigger(ck.bbox(),x.bbox()),100);
       image2d<value::rgb8> out(convert::to_box2d(working_box), 1);
       level::fill(out, literal::white);
+
+      //plot mu_Ck
+      algebra::vec<P::dim,float> mu_Ck = center(ck, ck.npoints());
+      draw::plot(out, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
+      //shape orientation
+      algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
+      for (unsigned i = 0; i < ck.npoints(); ++i)
+        {
+          algebra::vec<P::dim,float> Cki  = ck[i];
+          Mk += make::mat(Cki - mu_Ck) * trans(make::mat(Cki - mu_Ck));
+        }
+      Mk /= c.npoints();
+      algebra::vec<3,float> vck = power_it(Mk);
+      draw::line(out, point2d(mu_Ck[0], mu_Ck[1]),
+                 point2d(mu_Ck[0]+vck[0]*10, mu_Ck[1]+vck[1]*10),
+                 literal::red);
       
-      //x in green
+      //plot mu_X
+      P mu_X = center(x, x.npoints());
+      draw::plot(out, point2d(mu_X[0], mu_X[1]), literal::black);
+      
+      //ck in green
       for (unsigned i = 0; i < ck.npoints(); i++)
         {
           point2d p(ck[i][0], ck[i][1]);

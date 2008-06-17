@@ -12,8 +12,6 @@ Check gaussian
 adapt test for threshold (old thresholding)
 - -
 
-La translation est mauvaise car certain point de Xk sont compté plusieurs fois. /bof
-
 - -
 write
 trans : vec  -->    quat
@@ -21,3 +19,15 @@ trans : vec  -->    quat
 
 - -
 io/all.hh cassé
+
+- -
+Mettre au clair center, mean ...
+
+- -
+
+algebra::to_point<P> ne devrait pas etre dans algebra puisqu'il
+ est utile pour passer d'un point<int> vers point<float>
+move it in convert
+
+- -
+ecrire cov.hh. quoi en argument (p_array, std::set, std::vector?)

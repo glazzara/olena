@@ -36,12 +36,13 @@ test: icp icp_ref
 
 clean:
 	rm -f -- ./bin/*
-	rm -f sub gsub gau icpD icp icp_refD icp_ref
+	rm -f sub gsub gau icpD icp icp_refD icp_ref *.o
 	rm -f log.dat registred.pbm
 	rm -f i_*
 	rm -f tmp.ppm registred.ppm semantic.cache
+	rm -f step_*
 
-.PHONY: check bench test icpD
+.PHONY: check bench test icpD icp_refD icp icp_ref
 
 +depend:
 	g++ -M icp.cc $(FLAG) > +depend
