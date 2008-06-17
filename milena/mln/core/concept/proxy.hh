@@ -46,39 +46,74 @@ namespace mln
   template <typename E> struct Proxy;
 
 
-  /*
-    FIXME: Re-activate.
+  namespace internal
+  {
+
+    template <bool b, typename P> struct unproxy_if;
+
+    template <typename P>
+    struct unproxy_if< true, P >
+    {
+      typedef mln_subject(P) ret;
+      static typename P::q_subject on(const Proxy<P>& p) { return exact(p).unproxy(); }
+    };
+
+    template <typename P>
+    struct unproxy_if< false, P >
+    {
+      typedef P ret;
+      static const P& on(const Proxy<P>& p) { return exact(p); }
+    };
+
+    template <typename L, typename R>
+    struct unproxy_couple
+    {
+      enum { L_level = L::proxy_level,
+	     R_level = R::proxy_level }; // To prevent a weird g++ warning.
+      typedef internal::unproxy_if<(L_level >= R_level), L> L_helper;
+      typedef internal::unproxy_if<(R_level >= L_level), R> R_helper;
+      typedef typename L_helper::ret L_ret;
+      typedef typename R_helper::ret R_ret;
+    };
+
+  } // end of namespace mln::internal
+
+
 
   namespace trait
   {
 
-    template < typename Op, typename P1, typename P2 >
-    struct set_binary_< Op, mln::Proxy, P1, mln::Proxy, P2 >
+    template < template <class, class> class Op,
+	       typename L, typename R >
+    struct set_binary_< Op, mln::Proxy, L, mln::Proxy, R >
     {
-      typedef mln_trait_binary(Op, mln_subject(P1), mln_subject(P2)) ret;
+      typedef mln::internal::unproxy_couple<L, R> helper;
+      typedef mln_trait_binary(Op,
+			       typename helper::L_ret,
+			       typename helper::R_ret) ret;
     };
 
-    template < typename Op, typename P, typename O >
+    template < template <class, class> class Op,
+	       typename P, typename O >
     struct set_binary_< Op, mln::Proxy, P, mln::Object, O >
     {
       typedef mln_trait_binary(Op, mln_subject(P), O) ret;
     };
 
-    template < typename Op, typename E, typename P >
-    struct set_binary_< Op, mln::Object, E, mln::Proxy, P  >
+    template < template <class, class> class Op,
+	       typename O, typename P >
+    struct set_binary_< Op, mln::Object, O, mln::Proxy, P  >
     {
       typedef mln_trait_binary(Op, O, mln_subject(P)) ret;
     };
 
-    template < typename Op, typename P >
-    struct set_binary_< Op, mln::Proxy, P >
+    template < template <class> class Op, typename P >
+    struct set_unary_< Op, mln::Proxy, P >
     {
       typedef mln_trait_unary(Op, mln_subject(P)) ret;
     };
 
   } // end of namespace mln::trait
-
-  */
 
 
 
@@ -99,6 +134,7 @@ namespace mln
     typedef Proxy<void> category;
 
     /*
+      enum { proxy_level };
       typedef subject;
       typedef q_subject;
       q_subject unproxy() const;
@@ -111,6 +147,63 @@ namespace mln
   protected:
     Proxy();
   };
+
+
+
+  template <typename L, typename R>
+  inline
+  mln_trait_op_minus(L, R)
+  operator-(const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)
+  {
+    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;
+    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;
+    return L_unproxy::on(lhs) - R_unproxy::on(rhs);
+  }
+
+  template <typename P, typename O>
+  inline
+  mln_trait_op_minus(P, O)
+  operator-(const Proxy<P>& p, const Object<O>& o)
+  {
+    return exact(p).unproxy() - exact(o);
+  }
+  
+  template <typename O, typename P>
+  inline
+  mln_trait_op_minus(O, P)
+  operator-(const Object<O>& o, const Proxy<P>& p)
+  {
+    return exact(o) - exact(p).unproxy();
+  }
+
+
+
+  template <typename L, typename R>
+  inline
+  mln_trait_op_eq(L, R)
+  operator==(const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)
+  {
+    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;
+    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;
+    return L_unproxy::on(lhs) == R_unproxy::on(rhs);
+  }
+
+  template <typename P, typename O>
+  inline
+  mln_trait_op_eq(P, O)
+  operator==(const Proxy<P>& p, const Object<O>& o)
+  {
+    return exact(p).unproxy() == exact(o);
+  }
+  
+  template <typename O, typename P>
+  inline
+  mln_trait_op_eq(O, P)
+  operator==(const Object<O>& o, const Proxy<P>& p)
+  {
+    return exact(o) == exact(p).unproxy();
+  }
+
 
 
   namespace internal
@@ -181,11 +274,15 @@ namespace mln
 
     template <typename Subject, typename E, bool rec = true>
     struct helper_proxy_impl : proxy_impl< mln_subject(Subject), E > // Rec.
-    {};
+    {
+      enum { proxy_level = Subject::proxy_level + 1};
+    };
 
     template <typename Subject, typename E>
     struct helper_proxy_impl< Subject, E, false > // Stop rec.
-    {};
+    {
+      enum { proxy_level = 1 };
+    };
 
     template <typename Subject, typename E>
     struct proxy_impl : helper_proxy_impl< Subject, E,
@@ -224,6 +321,8 @@ namespace mln
   inline
   Proxy<E>::Proxy()
   {
+    enum { proxy_level = E::proxy_level }; // FIXME: Check that it is >= 0...
+
     typedef mln_subject(E) subject;
     typedef typename E::q_subject q_subject;
 

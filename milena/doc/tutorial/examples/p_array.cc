@@ -27,8 +27,17 @@ int main()
   using namespace mln;
 
   typedef p_array<point2d> Arr1;
-  Arr1 arr1;
+  typedef p_array<mln_psite_(Arr1)> Arr2;
+  
+  {
+    mln_assertion(mln_psite_(Arr1)::proxy_level == 1);
+    mln_assertion(mln_piter_(Arr1)::proxy_level == 2);
+    mln_assertion(mln_psite_(Arr2)::proxy_level == 2);
+    mln_assertion(mln_piter_(Arr2)::proxy_level == 3);
+  }
 
+  Arr1 arr1;
+  
   {
     point2d p(1,1);
     arr1.append(p);
@@ -41,22 +50,26 @@ int main()
   }
 
   {
-    typedef p_array< mln_psite_(Arr1) > Arr2;
+
     Arr2 arr2;
 
-    mln_piter_(Arr1) p(arr1);
-    for_all(p)
-      if (p.row() % 2 && p.col() % 2)
- 	arr2.append(p);
+    // Fill arr2 from arr1 contents.
+    {
+      mln_piter_(Arr1) p(arr1);
+      for_all(p)
+	if (p.row() % 2 && p.col() % 2)
+	  arr2.append(p);
+    }
 
     std::cout << "arr2 = " << arr2 << std::endl;
     picture(arr2);
 
+    // Display indices.
     {
       mln_piter_(Arr2) p(arr2);
       for_all(p)
 	{
-// 	  mln_assertion(make::point2d(p.row(), p.col()) == p); // FIXME: Make it work.
+ 	  mln_assertion(make::point2d(p.row(), p.col()) == p);
 	  std::cout << "point " << p << ": #"
 		    << index_of_in(p, arr2) << " in arr2, #"
 		    << index_of_in(p, arr1)  << " in arr1" << std::endl;
@@ -64,6 +77,17 @@ int main()
     }
 
     mln_invariant(arr2 < arr1);
+
+    {
+      mln_piter_(Arr1) p1(arr1);
+      mln_piter_(Arr2) p2(arr2);
+      for_all_2(p1, p2)
+	{
+ 	  mln_assertion(p2 == p1); // same as: p2.to_site() == p1.to_site()
+	  p1.next(); // p1 goes twice fast as p2.
+	}
+    }
+
   }
 
 }

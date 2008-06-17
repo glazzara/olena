@@ -1,5 +1,19 @@
 2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Equip proxies to transparently handle operators.
+
+	* doc/tutorial/examples/p_array.cc: Add tests on proxy_level and
+	on op== applied on proxies.
+	* mln/core/concept/proxy.hh (internal): New meta-code.
+	(set_binary_, set_unary_): Re-activate and make it work.
+	(operator==): New; it is only a start.
+	(operator-): Likewise.
+	(proxy_level): New in Proxy requirements.
+	(helper_proxy_impl): Define proxy_level.
+	* mln/core/concept/gpoint.hh: .
+
+2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Introduce Gpoint and Gdpoint.
 
 	The concepts of Point_Site and Delta_Point_Site

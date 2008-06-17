@@ -92,6 +92,8 @@ namespace mln
   template <typename E>
   struct Gpoint : public Object<E>
   {
+    typedef Gpoint<void> category;
+
     /*
       typedef grid;
       typedef delta;
