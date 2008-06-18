@@ -30,6 +30,7 @@ namespace mln
     S s;
     mln_ch_value(I, bool)  deja_vu;
     mln_ch_value(I, point) parent;
+    mln_ch_value(I, point) neighb;
     mln_ch_value(I, point) zpar;
 
     max_tree_(const I& f, const N& nbh)
@@ -44,6 +45,7 @@ namespace mln
       // init
       {
 	initialize(deja_vu, f);
+	initialize(neighb, f);
 	mln::level::fill(deja_vu, false);
 	initialize(parent, f);
 	initialize(zpar, f);
@@ -90,7 +92,7 @@ namespace mln
 
     bool is_node(const point& p) const
     {
-      return is_root(p) || f(parent(p)) < f(p);
+      return is_root(p) || f(parent(p)) != f(p);
     }
 
     point find_root(const point& x)
@@ -147,5 +149,5 @@ int main(int argc, char* argv[])
   image2d<int_u8> f;
   io::pgm::load(f, argv[1]);
 
-  std::cout << "n nodes = " << mln::max_tree(f, c4()) << std::endl;
+  std::cout << "n nodes = " << mln::max_tree(f, c8()) << std::endl;
 }

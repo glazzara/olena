@@ -1,3 +1,41 @@
+2008-06-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+
+	Add a working FLLT and tests of some connecter filters. Put together
+	in a directory the files related to the FLLT.
+
+	* geraud/fllt.svg.7.hh: New. A working version of the milena's FLLT.
+
+	* geraud/fllt/compute_fllt.cc: New.
+	* geraud/fllt.cc: .
+	* geraud/fllt.svg.1.cc: Rename as...
+	* geraud/fllt/fllt.svg.1.cc: ... this.
+	* geraud/fllt.svg.2.cc: Rename as...
+	* geraud/fllt/fllt.svg.2.cc: ... this.
+	* geraud/fllt.svg.3.cc: Rename as...
+	* geraud/fllt/fllt.svg.3.cc: ... this.
+	* geraud/fllt.svg.4.cc: Rename as...
+	* geraud/fllt/fllt.svg.4.cc: ... this.
+	* geraud/fllt.svg.5.cc: Rename as...
+	* geraud/fllt/fllt.svg.5.cc: ... this.
+	* geraud/fllt.svg.6.cc: New.
+	* geraud/fllt/fllt.svg.6.cc: New.
+	* geraud/fllt/fllt.hh: New.
+	* geraud/fllt/fllt.svg.7.hh: New.
+	* geraud/fllt/fllt_test.hh: New.
+	* geraud/fllt/fllt_tree_to_image.hh: New.
+	* geraud/fllt/simple_tests.cc: New.
+	* geraud/fllt: New.
+	* max_tree_nnodes.cc: .
+
+	Try some connected filters on the tree given by the fllt.
+
+	* geraud/fllt/connected_filters/area_filter.cc: New.
+	* geraud/fllt/connected_filters/area_filter.hh: New.
+	* geraud/fllt/connected_filters/canonize_tree.hh: New.
+	* geraud/fllt/connected_filters/pseudo_flat_zones.cc: New.
+	* geraud/fllt/connected_filters: New.
+
 2008-06-18  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Add material for slides illustration.
