@@ -2,7 +2,7 @@
 
 set -ex
 
-mesh_dir=../../../mesh
+mesh_dir=@top_srcdir@/milena/mesh
 
 time ./mesh-segm $mesh_dir/socket.off 25 socket-segm.off
 time ./mesh-segm $mesh_dir/teapot.off 50 teapot-segm.off

@@ -1,5 +1,18 @@
 2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add support for Autotools in apps/statues/.
+
+	* Makefile.am (SUBDIRS): Add apps.
+	* apps/Makefile.am: New.
+	* apps/statues/test: Rename as...
+	* apps/statues/test.in: ...this.
+	(mesh_dir): Depend on @top_srcdir@.
+	* apps/statues/Makefile: Rename as...
+	* apps/statues/Makefile.am: ...this.
+	Convert this Makefile to Automake.
+
+2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move the application on the segmentation of statues into Milena.
 
 	* apps/: New directory.
