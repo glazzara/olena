@@ -1,3 +1,11 @@
+2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move the application on the segmentation of statues into Milena.
+
+	* apps/: New directory.
+	* sandbox/levillain/statues/: Move...
+	* apps/statues/: ...here.
+
 2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix priority queue-based point sets.
