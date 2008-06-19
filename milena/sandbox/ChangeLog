@@ -1,3 +1,20 @@
+2008-06-20  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: clean-up before milena update.
+
+	Prepare patch for math and geom modules.
+	* jardonnet/registration/power_it.hh: Add comment .
+	* jardonnet/registration/cov.hh: New: clean math::covariance.
+	* jardonnet/registration/variance.hh: New: clean math::variance.
+	* jardonnet/registration/exp_val.hh: New: clean math::expected value.
+	* jardonnet/registration/cross_cov.hh: Update: clean cross covariance.
+	* jardonnet/registration/center.hh: New: clean geom::center.
+
+	Update rendering for seminar.
+	* jardonnet/registration/save.hh: Update rendering.
+	* jardonnet/test/img/c5.pbm,
+	* jardonnet/test/img/x5.pbm: Update images .
+
 2008-06-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: Update step by step rendering.

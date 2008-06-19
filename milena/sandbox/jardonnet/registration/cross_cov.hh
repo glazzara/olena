@@ -1,5 +1,5 @@
-#ifndef MLN_ACCU_CROSS_COV_HH_HH
-# define MLN_ACCU_CROSS_COV_HH_HH
+#ifndef MLN_ACCU_CROSS_COV_HH
+# define MLN_ACCU_CROSS_COV_HH
 
 
 namespace mln
@@ -15,4 +15,4 @@ namespace mln
 }
 
 
-#endif // ! MLN_ACCU_CROSS_COV_HH_HH
+#endif // ! MLN_ACCU_CROSS_COV_HH

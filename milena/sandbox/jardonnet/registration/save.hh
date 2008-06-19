@@ -5,11 +5,16 @@
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pbm/save.hh>
 # include <mln/draw/all.hh>
+# include <mln/morpho/erosion.hh>
+# include <mln/make/window2d.hh>
 # include <string>
 
 # include "quat7.hh"
 # include "tools.hh"
 # include "power_it.hh"
+# include "center.hh"
+# include "cov.hh"
+
 
 namespace mln
 {
@@ -55,17 +60,11 @@ namespace mln
       level::fill(out, literal::white);
 
       //plot mu_Ck
-      algebra::vec<P::dim,float> mu_Ck = center(ck, ck.npoints());
+      algebra::vec<P::dim,float> mu_Ck = geom::center(ck);
       draw::plot(out, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
       
       //Ck orientation
-      algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-      for (unsigned i = 0; i < ck.npoints(); ++i)
-        {
-          algebra::vec<P::dim,float> Cki  = ck[i];
-          Mk += make::mat(Cki - mu_Ck) * trans(make::mat(Cki - mu_Ck));
-        }
-      Mk /= c.npoints();
+      algebra::mat<P::dim,P::dim,float> Mk = math::cov(ck,ck);
       algebra::vec<3,float> vck = power_it(Mk);
       draw::line(out, point2d(mu_Ck[0], mu_Ck[1]),
                  point2d(mu_Ck[0]+vck[0]*10, mu_Ck[1]+vck[1]*10),
@@ -77,22 +76,31 @@ namespace mln
         xk.append(map(ck[i]));
       
       //plot mu_Xk
-      algebra::vec<P::dim,float> mu_Xk = center(xk, xk.npoints());
+      algebra::vec<P::dim,float> mu_Xk = geom::center(xk);
       draw::plot(out, point2d(mu_Xk[0], mu_Xk[1]), literal::blue);
 
       //Xk orientation
-      algebra::mat<P::dim,P::dim,float> Mxk(literal::zero);
-      for (unsigned i = 0; i < xk.npoints(); ++i)
-        {
-          algebra::vec<P::dim,float> Xki  = xk[i];
-          Mxk += make::mat(Xki - mu_Xk) * trans(make::mat(Xki - mu_Xk));
-        }
-      Mxk /= c.npoints();
+      algebra::mat<P::dim,P::dim,float> Mxk = math::cov(xk,xk);
       algebra::vec<3,float> vxk = power_it(Mxk);
       draw::line(out, point2d(mu_Xk[0], mu_Xk[1]),
                  point2d(mu_Xk[0]+vxk[0]*10, mu_Xk[1]+vxk[1]*10),
                  literal::red);
+          
+      //x in black
+      for (unsigned i = 0; i < x.npoints(); i++)
+        {
+          point2d p(x[i][0], x[i][1]);
+          if (out.has(p))
+            out(p) = literal::black;
+        }
       
+      //xk in red
+      for (unsigned i = 0; i < xk.npoints(); i++)
+        {
+          point2d p(xk[i][0], xk[i][1]);
+          if (out.has(p))
+            out(p) = literal::red;
+        }
       
       //ck in green
       for (unsigned i = 0; i < ck.npoints(); i++)
@@ -102,22 +110,14 @@ namespace mln
             out(p) = literal::green;
         }
 
-      //x in black
-      for (unsigned i = 0; i < x.npoints(); i++)
-        {
-          point2d p(x[i][0], x[i][1]);
-          if (out.has(p))
-            out(p) = literal::black;
-        }
+      /*
+        FIXME:
+      bool vals[] = {1, 1, 1,
+                     1, 1, 1,
+                     1, 1, 1};
+      morpho::erosion(out, make::window2d(vals));
+      */
       
-      //xk in blue
-      for (unsigned i = 0; i < xk.npoints(); i++)
-        {
-          point2d p(xk[i][0], xk[i][1]);
-          if (out.has(p))
-            out(p) = literal::red;
-        }  
-
       //save
       std::stringstream oss;
       oss << "step_" << id++ << ".ppm";

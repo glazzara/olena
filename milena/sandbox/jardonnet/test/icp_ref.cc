@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   }
   
   //working box
-  const box_< point_<grid::cube, float> > working_box = enlarge(bigger(c.bbox(),x.bbox()),100);
+  const box_< point_<grid::cube, float> > working_box = enlarge(bigger(c.bbox(),x.bbox()),50);
 
   // FIXME : TODO : map : vec<3,float> -> point
   closest_point< point_<grid::cube, float> > map(x, working_box);

@@ -12,6 +12,9 @@
 namespace mln
 {
 
+  /**
+   * Return the biggest eigen vector.
+   */
   template <uint n>
   algebra::vec<n,float> power_it(algebra::mat<n,n,float>& A)
   {
