@@ -1,5 +1,18 @@
 2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Autoconfiscate trimesh2.
+
+	* configure.ac: Require Autoconf 2.16 and Automake 1.10.
+	Configure external/Makefile.
+	Configure subdirectory external/trimesh/.
+	Fix the definition of TESTS_CXXFLAGS_DEBUG.
+	* Makefile.am (SUBDIR): Add external.
+	* external/Makefile.am: New.
+	* external/README: Update.
+	* external/trimesh/ChangeLog: New.
+
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add the trimesh2 library (version 2.8) as an external dependency.
 
 	* external/: New directory.

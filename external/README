@@ -17,8 +17,8 @@ According to the author, ``The various libraries distributed with
 trimesh2 are open source, and are believed to be covered by
 GPL-compatible licenses. Please see the COPYING file.''
 
-This version of trimesh2 shipped with Olena no longer contains the
-following files and directories:
+This version of trimesh2 shipped with Olena has been autoconfiscated,
+and no longer contains the following files and directories:
 
   bin.Linux/
     mesh_align

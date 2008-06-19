@@ -1,0 +1,21 @@
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Autoconfiscate the package.
+
+	* configure.ac: New.
+	* Makefile, gluit/Makefile, include/Makefile,
+	* libsrc/Makefile, utilsrc/Makefile:
+	Rename as...
+	* Makefile.am, gluit/Makefile.am, libsrc/Makefile.am,
+	* include/Makefile.am, utilsrc/Makefile.am:
+	...these.
+	Convert these Makefiles to Automake.
+
+
+Local Variables:
+ispell-local-dictionary: "american"
+End:
+
+$Rev$
+$Id$
+$Date$

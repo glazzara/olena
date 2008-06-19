@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.59])
+AC_PREREQ([2.61])
 
 
 ## ---------------- ##
@@ -15,8 +15,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
-# 1.9.4 because of changelog vs. ChangeLog on Darwin.
-AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 nostdinc -Wall])
+AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 nostdinc -Wall])
 
 
 ## --------------------- ##
@@ -69,8 +68,7 @@ AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG])
 # * GNU C++ Library Compile Time Checks (a.k.a. concept checking):
 #   http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt12ch29.html
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
-  TESTS_CXXFLAGS_DEBUG=\
-    "-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+  TESTS_CXXFLAGS_DEBUG="-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
 fi
 
 # ----------------- #
@@ -84,9 +82,12 @@ if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
 fi
 
 
-## -------------- ##
-## Dependencies.  ##
-## -------------- ##
+## ----------- ##
+## Libraries.  ##
+## ----------- ##
+
+# (Bundled) trimesh2 library.
+AC_CONFIG_SUBDIRS([external/trimesh])
 
 # FreeImage library.
 OLN_WITH_FREEIMAGEPLUS
@@ -107,6 +108,7 @@ AM_CONFIG_HEADER([config.h])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
+    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/tools/Makefile
