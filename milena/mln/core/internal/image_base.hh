@@ -78,6 +78,7 @@ namespace mln
     };
 
 
+
     template <typename E>
     struct image_checked_
       :
@@ -85,6 +86,7 @@ namespace mln
       public Image<E>
     {
     };
+
 
 
     /*! \internal A base class for images.
@@ -106,11 +108,17 @@ namespace mln
       /// Point associated type.
       typedef mln_site(S) site;
 
+
       /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
       /// Backward Site_Iterator associated type.
       typedef mln_bkd_piter(S) bkd_piter;
+
+
+      /// Site_Iterator associated type; default definition is
+      /// fwd_piter.
+      typedef fwd_piter        piter;
 
 
       /// Test if \p p belongs to the image domain.

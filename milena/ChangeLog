@@ -1,5 +1,20 @@
 2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make sub_image work again.
+
+	* doc/tutorial/examples/sub_image.cc: New.
+	* mln/trait/image/props.hh (ext_io): Fix missing subtype.
+	* mln/debug/println.hh: Update; now rely on geom::bbox.
+	* mln/core/macros.hh (mln_piter, mln_piter_): Fix definition.
+	Now rely on piter, no more on fwd_piter.
+	* mln/core/p_array.hh (mln_piter): New.
+	* mln/core/internal/image_base.hh (piter): New.
+	* mln/core/internal/check/image_fastest.hh: Update.
+	* mln/core/sub_image.hh (border, data): Update in props.
+	* mln/core/image2d.hh (typedef): Remove dangerous copy.
+
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Starting the migration point -> site.
 
 	This patch is a start to fix the point / site ambiguity due to

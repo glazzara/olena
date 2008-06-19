@@ -198,8 +198,8 @@
 
 /// Shortcuts to access the type of point iterator (piter) associated to T.
 /// \{
-# define mln_piter(T)      typename T::fwd_piter
-# define mln_piter_(T)              T::fwd_piter
+# define mln_piter(T)      typename T::piter
+# define mln_piter_(T)              T::piter
 /// \}
 
 /// Shortcuts to access the type of point by line iterator

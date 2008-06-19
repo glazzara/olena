@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
+# include <mln/geom/bbox.hh>
 # include <mln/debug/format.hh>
 
 // Specializations are in:
@@ -78,7 +79,8 @@ namespace mln
     void
     println(const Image<I>& input)
     {
-      impl::println(exact(input).bbox(), exact(input));
+      impl::println(geom::bbox(exact(input).domain()),
+		    exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

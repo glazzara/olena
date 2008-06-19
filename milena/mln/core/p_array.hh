@@ -148,6 +148,9 @@ namespace mln
     /// The associated site type.
     typedef typename super::site site;
 
+    /// Site_Iterator associated type.
+    typedef p_array_fwd_piter_<P> piter;
+
     /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 

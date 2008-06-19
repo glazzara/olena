@@ -122,23 +122,6 @@ namespace mln
   template <typename T>
   struct image2d : public internal::image_primary_< box2d, image2d<T> >
   {
-    typedef point2d point; // FIXME: HOT: to be removed.
-
-
-    // Warning: just to make effective types appear in Doxygen:
-
-    typedef box2d      pset;
-
-    typedef point2d   psite;
-    typedef point2d    site;
-    typedef dpoint2d dpsite;
-
-    typedef mln_fwd_piter(box2d) fwd_piter;
-    typedef mln_bkd_piter(box2d) bkd_piter;
-
-    // End of warning.
-
-
     /// Value associated type.
     typedef T         value;
 

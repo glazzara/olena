@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -86,8 +86,9 @@ namespace mln
       inline
       image_fastest_<E,B>::image_fastest_()
       {
-	typedef mln_site(E)   site;
- 	typedef mln_dpsite(E) dpsite;
+	typedef mln_site(E)        site;
+ 	typedef mln_psite(E)      psite;
+ 	typedef mln_delta(psite) dpsite;
 
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;

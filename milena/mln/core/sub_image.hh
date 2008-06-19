@@ -78,14 +78,14 @@ namespace mln
 
       typedef trait::image::category::domain_morpher category;
 
-      typedef trait::image::border::none border;  // no more accessible border
+      typedef trait::image::ext_domain::none      ext_domain;  // No extension of domain.
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
 
       typedef mln_trait_image_io_from_(I) io; // un-write when I const
 
-      typedef mln_trait_image_data_from_(I) data;
-//       typedef mlc_if( I_data_are_linear_,
-// 		      trait::data::stored, // if linear then just stored
-// 		      I_data_ ) data;      // otherwise like I
+      typedef trait::image::value_storage::disrupted value_storage;
+      // HOT FIXME: except if S is a Box
     };
 
   } // end of namespace mln::trait
