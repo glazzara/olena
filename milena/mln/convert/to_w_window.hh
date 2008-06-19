@@ -45,19 +45,19 @@ namespace mln
 
     /// Convert an image \p input into a weighted window.
     template <typename I>
-    w_window<mln_dpoint(I), mln_value(I)> to_w_window(const Image<I>& input);
+    w_window<mln_dpsite(I), mln_value(I)> to_w_window(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    w_window<mln_dpoint(I), mln_value(I)> to_w_window(const Image<I>& input_)
+    w_window<mln_dpsite(I), mln_value(I)> to_w_window(const Image<I>& input_)
     {
       const I& input = exact(input_);
       mln_precondition(input.has_data());
       // FIXME: Check that input is scalar?
-      typedef mln_dpoint(I) D;
+      typedef mln_dpsite(I) D;
       typedef mln_point(D) P;
       w_window<D, mln_value(I)> w_win;
       mln_piter(I) p(input.domain());

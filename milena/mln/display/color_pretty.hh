@@ -82,9 +82,9 @@ namespace mln
     template <typename I>
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const p_set<mln_point(I) >& s1_,
-		     const p_set<mln_point(I) >& s2_,
-		     const p_set<mln_point(I) >& s3_);
+		     const p_set<mln_psite(I) >& s1_,
+		     const p_set<mln_psite(I) >& s2_,
+		     const p_set<mln_psite(I) >& s3_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -142,9 +142,9 @@ namespace mln
       inline
       typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
       color_pretty_rgb(const Image<I>& input_,
-		       const p_set<mln_point(I) >& s1_,
-		       const p_set<mln_point(I) >& s2_,
-		       const p_set<mln_point(I) >& s3_)
+		       const p_set<mln_psite(I) >& s1_,
+		       const p_set<mln_psite(I) >& s2_,
+		       const p_set<mln_psite(I) >& s3_)
       {
 	trace::entering("display::impl::color_pretty_rgb");
 
@@ -154,21 +154,21 @@ namespace mln
 	level::fill(output, value::rgb8(0, 0, 0));
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s1_);
+	  mln_piter(p_set<mln_psite(I) >) p(s1_);
 
 	  for_all(p)
 	    output(p).red() = 255;
 	}
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s2_);
+	  mln_piter(p_set<mln_psite(I) >) p(s2_);
 
 	  for_all(p)
 	    output(p).green() = 255;
 	}
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s3_);
+	  mln_piter(p_set<mln_psite(I) >) p(s3_);
 
 	  for_all(p)
 	    output(p).blue() = 255;
@@ -207,9 +207,9 @@ namespace mln
     inline
     typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const p_set<mln_point(I) >& s1_,
-		     const p_set<mln_point(I) >& s2_,
-		     const p_set<mln_point(I) >& s3_)
+		     const p_set<mln_psite(I) >& s1_,
+		     const p_set<mln_psite(I) >& s2_,
+		     const p_set<mln_psite(I) >& s3_)
     {
       trace::entering("display::color_pretty_rgb");
 

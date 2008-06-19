@@ -1,5 +1,108 @@
 2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Starting the migration point -> site.
+
+	This patch is a start to fix the point / site ambiguity due to
+	genericity.  The main idea is to deactivate the point-related
+	macros so that a lot of "non-generic" code does not work anymore.
+	We change mln_[d]point(I) into mln_[d]psite(I) in order to have
+	"probably-generic" code work again.  Then fix code from the
+	doc tutorial examples.
+
+	Step 1.
+
+	* mln/core/macros.hh (mln_point, mln_point_): Deactivate.
+	(mln_dpoint, mln_dpoint_): Likewise.
+
+	Step 2.
+
+	* mln/subsampling/subsampling.hh,
+	* mln/subsampling/gaussian_subsampling.hh,
+	* mln/debug/println_with_border.spe.hh,
+	* mln/core/translate_image.hh,
+	* mln/core/sparse_encode.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/value_encode.hh,
+	* mln/core/mono_obased_rle_encode.hh,
+	* mln/core/pixel.hh,
+	* mln/core/t_image.hh,
+	* mln/core/mono_rle_encode.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/init.hh,
+	* mln/core/obased_rle_encode.hh,
+	* mln/core/rle_encode.hh,
+	* mln/core/a_point_of.hh,
+	* mln/draw/line.hh,
+	* mln/draw/box.hh,
+	* mln/level/fill.hh,
+	* mln/level/memset_.hh,
+	* mln/level/median.hh,
+	* mln/level/paste.spe.hh,
+	* mln/linear/line_convolve.hh,
+	* mln/linear/gaussian.hh,
+	* mln/make/pixel.hh,
+	* mln/make/voronoi.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* mln/convert/to_window.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_w_window.hh,
+	* mln/geom/pmin_pmax.hh,
+	* mln/geom/resize.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/rank_filter.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/display/color_pretty.hh,
+	* mln/canvas/chamfer.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/labeling.hh,
+	* mln/util/greater_point.hh,
+	* mln/util/lemmings.hh,
+	* sandbox/duhamel/translate_image.hh,
+	* sandbox/duhamel/canvas_chamfer.hh,
+	* sandbox/duhamel/canvas_labeling.hh,
+	* sandbox/duhamel/labeling_algo.hh,
+	* sandbox/duhamel/border_duplicate.hh,
+	* sandbox/duhamel/draw_mesh.hh,
+	* sandbox/duhamel/debug_print_3d_with_border.hh,
+	* sandbox/duhamel/labeling_cpy_from_mln.hh,
+	* sandbox/duhamel/border_fill.hh,
+	* sandbox/duhamel/labeling_level.hh,
+	* sandbox/duhamel/labeling.hh,
+	* sandbox/nivault/median.hh,
+	* sandbox/jardonnet/subsampling/gaussian_subsampling.hh,
+	* sandbox/jardonnet/subsampling/sub_sampled_image.hh,
+	* sandbox/jardonnet/registration/tools.hh,
+	* sandbox/jardonnet/registration/chamfer.hh,
+	* sandbox/geraud/cs2d/cs2d_morpho.hh,
+	* sandbox/garrigues/image_identity/interpolated.hh,
+	* sandbox/folio/canevas_dt.hh (mln_point(I)): Rename as...
+	(mln_psite(I)): ...this.
+	(mln_dpoint(I)): Rename as...
+	(mln_dpsite(I)): ...this.
+
+	Step 3.
+
+	* doc/tutorial/examples/p_array.2.cc: New test; == on window<D>.
+	* mln/core/window.hh (operator==): New.
+	(is_symmetric): Rewrite.
+	(include): Remove dependencies to box, dpoint, and sym.
+	(todo): New one.
+	* mln/core/dpoints_pixter.hh (point_site): Remove dependency.
+	* mln/core/concept/value_iterator.hh: Likewise.
+	* mln/core/concept/site_set.hh: Likewise.
+	* mln/core/concept/window.hh (operator==): Remove; this operator
+	cannot be general.
+	* mln/geom/bbox.hh (bbox): Remove all overloads except...
+	(bbox): ...this and rewrite it.
+	* mln/util/set.hh: Add inheritance from Object.
+	(operator): New bunch of operators.
+
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Minor cleaning.
 
 	* mln/core/concept/proxy.hh (todo): New.

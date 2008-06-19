@@ -97,11 +97,11 @@
 # define mln_delta_(T)              T::delta
 /// \}
 
-/// Shortcuts to access the dpoint type associated to T.
-/// \{
-# define mln_dpoint(T)     typename T::dpoint
-# define mln_dpoint_(T)             T::dpoint
-/// \}
+// /// Shortcuts to access the dpoint type associated to T.
+// /// \{
+// # define mln_dpoint(T)     typename T::dpoint
+// # define mln_dpoint_(T)             T::dpoint
+// /// \}
 
 /// Shortcuts to access the dpsite type associated to T.
 /// \{
@@ -221,11 +221,11 @@
 # define mln_psite_(T)              T::psite
 /// \}
 
-/// Shortcuts to access the point type associated to T.
-/// \{
-# define mln_point(T)      typename T::point
-# define mln_point_(T)              T::point
-/// \}
+// /// Shortcuts to access the point type associated to T.
+// /// \{
+// # define mln_point(T)      typename T::point
+// # define mln_point_(T)              T::point
+// /// \}
 
 
 // q

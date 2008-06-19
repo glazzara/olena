@@ -46,7 +46,7 @@ namespace mln
 
       typedef typename F::I I;
       typedef typename F::W W;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       chamfer(F& f)
 	: f(f)

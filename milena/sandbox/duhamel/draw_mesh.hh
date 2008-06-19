@@ -20,7 +20,7 @@ namespace mln
 	     point2d p2,
 	     mln_value(I) link_v)
     {
-      mln_dpoint(I) d = p1 - p2;
+      mln_dpsite(I) d = p1 - p2;
 
       std::cout << "dx = "
 		<< d[0]

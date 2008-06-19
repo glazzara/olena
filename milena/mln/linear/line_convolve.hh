@@ -71,7 +71,7 @@ namespace mln
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       linear::convolve(input,
-		       make::w_window_line<mln_dpoint(I)>(weights),
+		       make::w_window_line<mln_dpsite(I)>(weights),
 		       output);
     }
 

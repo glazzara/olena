@@ -68,7 +68,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	std::size_t border = ima.border ();
 	std::size_t len = exact(ima).bbox().len(P::dim - 1);
 
@@ -87,7 +87,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	std::size_t border = ima.border ();
 	std::size_t len = exact(ima).bbox().len(P::dim - 1);
 	std::size_t i = 0;
@@ -106,7 +106,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 
 	std::size_t border = ima.border ();
 	std::size_t border_2x = 2 * border;
@@ -139,7 +139,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 
 	std::size_t border = ima.border ();
 	std::size_t border_2x = 2 * border;
@@ -169,7 +169,7 @@ namespace mln
 // 	const I& ima = exact(ima_);
 // 	mln_precondition(ima.has_data());
 
-//  	typedef mln_point(I) P;
+//  	typedef mln_psite(I) P;
 
 // 	std::size_t border = ima.border ();
 //  	std::size_t border_2x = 2 * border;
@@ -222,9 +222,9 @@ namespace mln
       template <typename I>
       void fill_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	const I& ima = exact(ima_);
- 	typedef mln_point(I) P;
+ 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
  	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
 	std::size_t st = 0;
@@ -245,9 +245,9 @@ namespace mln
       template <typename I>
       void fill_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	const I& ima = exact(ima_);
- 	typedef mln_point(I) P;
+ 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
  	std::size_t len_r = exact(ima).bbox().len(P::dim - 1);
 	std::size_t st = 0;
@@ -270,7 +270,7 @@ namespace mln
     template <typename I>
     void fill(const Fast_Image<I>& ima_, const mln_value(I)& v)
     {
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
 

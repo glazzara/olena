@@ -91,10 +91,10 @@ namespace mln
      * \todo Take benefit from quantization when possible.
      */
     template <typename I>
-    void fill(Image<I>& ima,  mln_value(I) (*(&f))(const mln_point(I)& p));
+    void fill(Image<I>& ima,  mln_value(I) (*(&f))(const mln_psite(I)& p));
 
     template <typename I>
-    void fill_f(Image<I>& ima,  mln_value(I) (*f)(const mln_point(I)& p));
+    void fill_f(Image<I>& ima,  mln_value(I) (*f)(const mln_psite(I)& p));
 
 
     /*! Fill the image \p ima with the values given by the array \p arr.
@@ -198,7 +198,7 @@ namespace mln
     template <typename I>
     inline
     void fill_f(Image<I>& ima_,
-		mln_value(I) (*f)(const mln_point(I)& p))
+		mln_value(I) (*f)(const mln_psite(I)& p))
     {
       trace::entering("level::fill_f");
 

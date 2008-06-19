@@ -170,7 +170,7 @@ namespace mln
       typedef typename F::N N;
       typedef typename F::O O;
       typedef typename F::S S;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       // aux:
       mln_ch_value(O, bool)  deja_vu;
@@ -294,7 +294,7 @@ namespace mln
       typedef typename F::N N;
       typedef typename F::O O;
       typedef typename F::S S;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       labeling_fast(F& f)
 	: f(f)

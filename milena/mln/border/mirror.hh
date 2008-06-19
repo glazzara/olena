@@ -198,7 +198,7 @@ namespace mln
       mln_precondition(ima.has_data());
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
 
       if (!ima.border ())
 	return;

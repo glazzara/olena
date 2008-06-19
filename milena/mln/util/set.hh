@@ -41,7 +41,7 @@
 # include <algorithm>
 # include <iostream>
 
-# include <mln/core/contract.hh>
+# include <mln/core/concept/object.hh>
 # include <mln/util/less.hh>
 
 
@@ -75,7 +75,7 @@ namespace mln
      * \see mln::util::less
      */
     template <typename T>
-    class set
+    class set : public Object< mln::util::set<T> >
     {
     public:
 
@@ -195,6 +195,19 @@ namespace mln
       /// Tell if the set is frozen.
       mutable bool frozen_;
     };
+
+
+    template <typename T>
+    bool operator == (const set<T>& lhs, const set<T>& rhs);
+
+
+    template <typename T>
+    bool operator <  (const set<T>& lhs, const set<T>& rhs);
+
+
+    template <typename T>
+    bool operator <= (const set<T>& lhs, const set<T>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -324,6 +337,43 @@ namespace mln
     	ostr << s[i]
     	     << (i == n - 1 ? ']' : ',');
       return ostr;
+    }
+
+    template <typename T>
+    bool operator == (const set<T>& lhs, const set<T>& rhs)
+    {
+      const unsigned n = lhs.nelements();
+      if (rhs.nelements() != n)
+	return false;
+      for (unsigned i = 0; i < n; ++i)
+	if (lhs[i] != rhs[i])
+	  return false;
+      return true;
+    }
+
+    template <typename T>
+    bool operator <  (const set<T>& lhs, const set<T>& rhs)
+    {
+      return lhs.nelements() < rhs.nelements() && lhs <= rhs;
+    }
+
+    template <typename T>
+    bool operator <= (const set<T>& lhs, const set<T>& rhs)
+    {
+      const unsigned
+	nl = lhs.nelements(),
+	nr = rhs.nelements();
+      if (nl > nr)
+	return false;
+      // Every element of lhs can be found in rhs.
+      for (unsigned l = 0, r = 0; l < nl; ++l, ++r)
+	{
+	  while (rhs[r] != lhs[l] && r < nr)
+	    ++r;
+	  if (r == nr)
+	    return false; // lhs[l] has not been found in rhs.
+	}
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

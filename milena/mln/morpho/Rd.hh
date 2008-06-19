@@ -77,7 +77,7 @@ namespace mln
 
       template <typename I>
       inline
-      std::vector<mln_point(I)> histo_reverse_sort(const I& ima)
+      std::vector<mln_psite(I)> histo_reverse_sort(const I& ima)
       {
 	std::vector<unsigned> h = compute_histo(ima);
 	// preparing output data
@@ -85,7 +85,7 @@ namespace mln
 	loc[255] = 0;
 	for (int l = 254; l >= 0; --l)
 	  loc[l] = loc[l+1] + h[l+1];
-	std::vector<mln_point(I)> vec(ima.domain().npoints());
+	std::vector<mln_psite(I)> vec(ima.domain().npoints());
 	// storing output data
 	mln_piter(I) p(ima.domain());
 	for_all(p)
@@ -97,7 +97,7 @@ namespace mln
       template <typename I, typename N>
       struct Rd
       {
-	typedef mln_point(I) point;
+	typedef mln_psite(I) point;
 	typedef mln_value(I) value;
 
 	// in:

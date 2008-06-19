@@ -64,7 +64,7 @@ namespace mln
     /// Compute the minimum and maximum points when browsing with
     /// iterator \p p.
     template <typename I>
-    std::pair<mln_point(I), mln_point(I)>
+    std::pair<mln_psite(I), mln_psite(I)>
     pmin_pmax(const Site_Iterator<I>& p);
 
 
@@ -72,7 +72,7 @@ namespace mln
     /// when browsing with iterator \p p.
     template <typename I>
     void
-    pmin_pmax(const Site_Iterator<I>& p,  mln_point(I)& pmin, mln_point(I)& pmax);
+    pmin_pmax(const Site_Iterator<I>& p,  mln_psite(I)& pmin, mln_psite(I)& pmax);
 
 
 
@@ -84,7 +84,7 @@ namespace mln
     template <typename I>
     inline
     void
-    pmin_pmax(const Site_Iterator<I>& p_, mln_point(I)& pmin, mln_point(I)& pmax)
+    pmin_pmax(const Site_Iterator<I>& p_, mln_psite(I)& pmin, mln_psite(I)& pmax)
     {
       I p = exact(p_); // a copy of p_
 
@@ -94,7 +94,7 @@ namespace mln
       pmin = pmax = p;
 
       // update with remaining points
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       for_all_remaining(p)
 	for (unsigned i = 0; i < P::dim; ++i)
 	  if (p[i] < pmin[i])
@@ -105,10 +105,10 @@ namespace mln
 
     template <typename I>
     inline
-    std::pair<mln_point(I), mln_point(I)>
+    std::pair<mln_psite(I), mln_psite(I)>
     pmin_pmax(const Site_Iterator<I>& p)
     {
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       std::pair<P, P> tmp;
       pmin_pmax(p, tmp.first, tmp.second); // Calls the previous version.
       return tmp;

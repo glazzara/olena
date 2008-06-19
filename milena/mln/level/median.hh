@@ -97,8 +97,8 @@ namespace mln
       template <typename I, typename W, typename O>
       struct median_t
       { 
-	typedef mln_point(I)  P;
-	typedef mln_dpoint(I) D;
+	typedef mln_psite(I)  P;
+	typedef mln_dpsite(I) D;
 
 	// i/o
 
@@ -195,7 +195,7 @@ namespace mln
 	O& output;
 
 	// aux data
-	mln_point(I) p;
+	mln_psite(I) p;
 	accu::median<mln_vset(I)> med;
 
 	// ctor
@@ -224,13 +224,13 @@ namespace mln
 	}
 
 	inline
-	void add_point(mln_point(I) pt)
+	void add_point(mln_psite(I) pt)
 	{
 	  med.take(input(pt));
 	}
 
 	inline
-	void remove_point(mln_point(I) pu)
+	void remove_point(mln_psite(I) pu)
 	{
 	  med.untake(input(pu));
 	}
@@ -308,7 +308,7 @@ namespace mln
       mlc_converts_to(mln_value(I), mln_value(O))::check();
 
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       mln_precondition(dir < P::dim);
       mln_precondition(length % 2 == 1);
 

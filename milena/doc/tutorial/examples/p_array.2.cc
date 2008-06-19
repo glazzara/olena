@@ -60,6 +60,8 @@ int main()
   std::cout << "win = " << win << std::endl
 	    << std::endl;
 
+  mln_assertion(win == win);
+
   util::index i;
   mln_qiter_(W) j(win, i);
   int n = arr.nsites();

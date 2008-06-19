@@ -57,7 +57,7 @@ namespace mln
       /// \param dim2 The second dimension to be swapped.
       /// \param box  The bounding box (domain) of the morphed image.
       data_(I& ima, unsigned dim1, unsigned dim2,
-	    mln::box_<mln_point(I)>& box);
+	    mln::box_<mln_psite(I)>& box);
 
       /// Underlying image.
       I ima_;
@@ -67,7 +67,7 @@ namespace mln
       unsigned dim2_;
       /// \}
       /// The bounding box of the morphed image.
-      mln::box_<mln_point(I)> box_;
+      mln::box_<mln_psite(I)> box_;
     };
 
   } // end of namespace mln::internal
@@ -127,25 +127,25 @@ namespace mln
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool has(const mln_point(I)& p) const;
+    bool has(const mln_psite(I)& p) const;
 
     /// Give the definition domain.
-    const box_<mln_point(I)>& domain() const;
+    const box_<mln_psite(I)>& domain() const;
 
     /// Read-only access of pixel value at point site \p p.
-    mln_rvalue(I) operator()(const mln_point(I)& p) const;
+    mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
     /// Read-write access of pixel value at point site \p p.
-    lvalue operator()(const mln_point(I)& p);
+    lvalue operator()(const mln_psite(I)& p);
 
     /// Give the set of values of the image.
     const vset& values() const;
 
   protected:
     /// Exchange components \a dim1_ and \a dim2_ of point \a p.
-    mln_point(I) transpose_(const mln_point(I)& p) const;
+    mln_psite(I) transpose_(const mln_psite(I)& p) const;
     /// Exchange components \a dim1 and \a dim2 of point \a p.
-    mln_point(I) exchange_coords_(const mln_point(I)& p,
+    mln_psite(I) exchange_coords_(const mln_psite(I)& p,
 				  unsigned dim1, unsigned dim2) const;
   };
 
@@ -174,7 +174,7 @@ namespace mln
     inline
     data_< t_image<I> >::data_(I& ima,
 			       unsigned dim1, unsigned dim2,
-			       mln::box_<mln_point(I)>& box)
+			       mln::box_<mln_psite(I)>& box)
       : ima_(ima),
 	dim1_(dim1), dim2_(dim2),
 	box_(box)
@@ -194,7 +194,7 @@ namespace mln
     // We don't use mln::t_image::transpose here, since one its
     // prerequisite is that data_ is initialized, which is not done
     // yet at this point.
-    box_<mln_point(I)> box(exchange_coords_(ima.bbox().pmin(), dim1, dim2),
+    box_<mln_psite(I)> box(exchange_coords_(ima.bbox().pmin(), dim1, dim2),
 			   exchange_coords_(ima.bbox().pmax(), dim1, dim2));
     this->data_ = new internal::data_< t_image<I> >(ima, dim1, dim2, box);
   }
@@ -210,7 +210,7 @@ namespace mln
   template <typename I>
   inline
   bool
-  t_image<I>::has(const mln_point(I)& p) const
+  t_image<I>::has(const mln_psite(I)& p) const
   {
     mln_precondition(this->has_data());
     return this->delegatee_()->has(transpose_(p));
@@ -218,8 +218,8 @@ namespace mln
 
   template <typename I>
   inline
-  mln_point(I)
-  t_image<I>::transpose_(const mln_point(I)& p) const
+  mln_psite(I)
+  t_image<I>::transpose_(const mln_psite(I)& p) const
   {
     mln_precondition(this->has_data());
     return exchange_coords_(p, this->data_->dim1_, this->data_->dim2_);
@@ -227,11 +227,11 @@ namespace mln
 
   template <typename I>
   inline
-  mln_point(I)
-  t_image<I>::exchange_coords_(const mln_point(I)& p,
+  mln_psite(I)
+  t_image<I>::exchange_coords_(const mln_psite(I)& p,
 			       unsigned dim1, unsigned dim2) const
   {
-    mln_point(I) tmp(p);
+    mln_psite(I) tmp(p);
     tmp[dim1] = p[dim2];
     tmp[dim2] = p[dim1];
     return tmp;
@@ -239,7 +239,7 @@ namespace mln
 
   template <typename I>
   inline
-  const box_<mln_point(I)>&
+  const box_<mln_psite(I)>&
   t_image<I>::domain() const
   {
     mln_precondition(this->has_data());
@@ -249,7 +249,7 @@ namespace mln
   template <typename I>
   inline
   mln_rvalue(I)
-  t_image<I>::operator()(const mln_point(I)& p) const
+  t_image<I>::operator()(const mln_psite(I)& p) const
   {
     mln_precondition(this->has(p));
     return (*this->delegatee_())(transpose_(p));
@@ -258,7 +258,7 @@ namespace mln
   template <typename I>
   inline
   typename internal::morpher_lvalue_<I>::ret
-  t_image<I>::operator()(const mln_point(I)& p)
+  t_image<I>::operator()(const mln_psite(I)& p)
   {
     mln_precondition(this->has(p));
     return (*this->delegatee_())(transpose_(p));
@@ -279,7 +279,7 @@ namespace mln
   t_image<I>
   swap_coords(Image<I>& ima, unsigned dim1, unsigned dim2)
   {
-    typedef mln_point(I) P;
+    typedef mln_psite(I) P;
     mln_precondition(dim1 != dim2);
     mln_precondition(dim1 <= P::dim && dim2 <= P::dim);
     t_image<I> tmp(exact(ima), dim1, dim2);
@@ -291,7 +291,7 @@ namespace mln
   t_image<const I>
   swap_coords(const Image<I>& ima, unsigned dim1, unsigned dim2)
   {
-    typedef mln_point(I) P;
+    typedef mln_psite(I) P;
     mln_precondition(dim1 != dim2);
     mln_precondition(dim1 <= P::dim && dim2 <= P::dim);
     t_image<const I> tmp(exact(ima), dim1, dim2);

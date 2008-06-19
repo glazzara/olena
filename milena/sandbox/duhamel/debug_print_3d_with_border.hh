@@ -43,7 +43,7 @@ namespace mln
       const I& ima = exact(input_);
       mln_precondition(ima.has_data());
       
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       
       std::size_t len_s = exact(ima).bbox().len(P::dim - 3);
       std::size_t len_r = exact(ima).bbox().len(P::dim - 2);

@@ -70,7 +70,7 @@ namespace mln
      * \pre \p p + \p n is <= \p input size.
      */
     template <typename I>
-    void memset_(I& input, const mln_point(I)& p,
+    void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n);
 
 
@@ -139,7 +139,7 @@ namespace mln
 
     template <typename I>
     inline
-    void memset_(I& input, const mln_point(I)& p,
+    void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
       trace::entering("level::memset_");

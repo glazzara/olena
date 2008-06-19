@@ -282,7 +282,7 @@ namespace mln
     {
       mln_bkd_pixter(const I) p(f.input);
 
-      typedef window<mln_dpoint(I)> W;
+      typedef window<mln_dpsite(I)> W;
       W win = mln::convert::to_upper_window(f.nbh);
       mln_qixter(const I, W) n(p, win);
 

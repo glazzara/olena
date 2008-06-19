@@ -105,7 +105,7 @@ namespace mln
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
-	const mln_point(I)
+	const mln_psite(I)
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
 
@@ -115,7 +115,7 @@ namespace mln
 	  pmin_dir_plus_half_length = pmin_dir + f.length / 2,
 	  pmax_dir_minus_half_length = pmax_dir - f.length / 2;
 
-	mln_point(I) pt, pu;
+	mln_psite(I) pt, pu;
 	
 	typedef mln_coord(I)& coord_ref;
 	coord_ref

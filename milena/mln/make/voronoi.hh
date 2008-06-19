@@ -94,7 +94,7 @@ namespace mln
 	  {
 	    if (orig(p) != 0)
 	      {
-		X x = mln_point(I)(p);
+		X x = mln_psite(I)(p);
 		tab_mean[orig(p) - min].take(x);
 	      }
 	  }

@@ -47,7 +47,7 @@ namespace mln
   ** @return mono_obased_rle_image.
   */
   template <typename I>
-  mono_obased_rle_image<mln_point(I), mln_value(I)>
+  mono_obased_rle_image<mln_psite(I), mln_value(I)>
   mono_obased_rle_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,15 +69,15 @@ namespace mln
 
   template <typename I>
   inline
-  mono_obased_rle_image<mln_point(I), mln_value(I)>
+  mono_obased_rle_image<mln_psite(I), mln_value(I)>
   mono_obased_rle_encode(const Image<I>& input, bool ignore_zero)
   {
-    typedef mln_point(I) P;
+    typedef mln_psite(I) P;
 
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
     unsigned len = 0;
-    mln_point(I) rstart;
+    mln_psite(I) rstart;
     mln_value(I) rvalue;
     std::set< mln_value(I) > sv;
 
@@ -87,7 +87,7 @@ namespace mln
 	sv.insert(ima(p));
     }
 
-    mono_obased_rle_image<mln_point(I), mln_value(I)> output(sv);
+    mono_obased_rle_image<mln_psite(I), mln_value(I)> output(sv);
     for_all(p)
       if (!ignore_zero || ima(p) != literal::zero || len)
       {
@@ -99,7 +99,7 @@ namespace mln
 	}
 	else
 	  if (rvalue == ima(p)
-	      && on_the_same_line(rstart, mln_point(I)(p)))
+	      && on_the_same_line(rstart, mln_psite(I)(p)))
 	    ++len;
 	  else
 	  {

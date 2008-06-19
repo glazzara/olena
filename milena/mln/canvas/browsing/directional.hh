@@ -94,7 +94,7 @@ namespace mln
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
-	mln_point(I)
+	mln_psite(I)
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
 	

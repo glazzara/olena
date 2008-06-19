@@ -134,12 +134,12 @@ namespace mln
     // to_p_array
     template <typename I>
     inline
-    p_array<mln_point(I)>
+    p_array<mln_psite(I)>
     to_p_array(const Image<I>& img_)
     {
       const I& img = exact(img_);
       
-      p_array<mln_point(I)> a;
+      p_array<mln_psite(I)> a;
         
       mln_piter(I) p(img.domain());
       for_all(p)

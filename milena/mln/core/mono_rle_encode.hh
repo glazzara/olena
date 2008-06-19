@@ -47,7 +47,7 @@ namespace mln
   ** @return mono_rle_image
   */
   template <typename I>
-  mono_rle_image<mln_point(I), mln_value(I)>
+  mono_rle_image<mln_psite(I), mln_value(I)>
   mono_rle_encode(const Image<I>& input, mln_value(I) val);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,16 +69,16 @@ namespace mln
 
   template <typename I>
   inline
-  mono_rle_image<mln_point(I), mln_value(I)>
+  mono_rle_image<mln_psite(I), mln_value(I)>
   mono_rle_encode(const Image<I>& input, mln_value(I) val)
   {
-    typedef mln_point(I) P;
+    typedef mln_psite(I) P;
 
-    mono_rle_image<mln_point(I), mln_value(I)> output(val);
+    mono_rle_image<mln_psite(I), mln_value(I)> output(val);
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
     unsigned len = 0;
-    mln_point(I) rstart;
+    mln_psite(I) rstart;
 
     for_all(p)
       if (ima(p) == val || len)
@@ -90,7 +90,7 @@ namespace mln
 	}
 	else
 	  if (val == ima(p)
-	      && on_the_same_line(rstart, mln_point(I)(p)))
+	      && on_the_same_line(rstart, mln_psite(I)(p)))
 	    ++len;
 	  else
 	  {

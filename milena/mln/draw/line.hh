@@ -61,7 +61,7 @@ namespace mln
      */
     template <typename I>
     void line(Image<I>& ima,
-	      const mln_point(I)& beg, const mln_point(I)& end,
+	      const mln_psite(I)& beg, const mln_psite(I)& end,
 	      const mln_value(I)& v);
 
 
@@ -70,7 +70,7 @@ namespace mln
     template <typename I>
     inline
     void line(Image<I>& ima,
-	      const mln_point(I)& beg, const mln_point(I)& end,
+	      const mln_psite(I)& beg, const mln_psite(I)& end,
 	      const mln_value(I)& v)
     {
       mln_precondition(exact(ima).has_data());

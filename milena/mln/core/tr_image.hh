@@ -175,7 +175,7 @@ namespace mln
   inline
   bool tr_image<T,I>::has(const algebra::vec<I::point::dim, float>& v) const
   {
-    mln_point(I) p;
+    mln_psite(I) p;
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
@@ -186,7 +186,7 @@ namespace mln
   inline
   bool tr_image<T,I>::has(const algebra::vec<I::point::dim, float>& v) const
   {
-    mln_point(I) p;
+    mln_psite(I) p;
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));
@@ -198,7 +198,7 @@ namespace mln
   mln_value(I)
   tr_image<T,I>::operator()(const algebra::vec<I::point::dim, float>& v) const
   {
-    mln_point(I) p;
+    mln_psite(I) p;
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v2[i]));

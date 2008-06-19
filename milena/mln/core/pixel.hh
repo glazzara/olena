@@ -54,10 +54,10 @@ namespace mln
     pixel(I& image);
 
     /// Constructor.
-    pixel(I& image, const mln_point(I)& p);
+    pixel(I& image, const mln_psite(I)& p);
 
     /// Change the pixel to the one at point \p p.
-    void change_to(const mln_point(I)& p);
+    void change_to(const mln_psite(I)& p);
 
     /// Test if this pixel is valid.
     bool is_valid() const;
@@ -78,7 +78,7 @@ namespace mln
 
   template <typename I>
   inline
-  pixel<I>::pixel(I& image, const mln_point(I)& p)
+  pixel<I>::pixel(I& image, const mln_psite(I)& p)
     : super(image)
   {
     mln_precondition(this->image_.has(p));
@@ -88,7 +88,7 @@ namespace mln
   template <typename I>
   inline
   void
-  pixel<I>::change_to(const mln_point(I)& p)
+  pixel<I>::change_to(const mln_psite(I)& p)
   {
     mln_precondition(this->image_.has(p));
     this->value_ptr_ = & this->image_(p);
@@ -102,7 +102,7 @@ namespace mln
     if (this->value_ptr_ == 0 || ! this->image_.has_data())
       return false;
     int o = this->value_ptr_ - this->image_.buffer();
-    mln_point(I) p = this->image_.point_at_offset(o);
+    mln_psite(I) p = this->image_.point_at_offset(o);
     return this->image_.has(p);
   }
 

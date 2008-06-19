@@ -57,7 +57,7 @@ namespace mln
 
     /// Convert a binary image \p ima into a point set.
     template <typename I>
-    p_set<mln_point(I)> to_p_set(const Image<I>& ima);
+    p_set<mln_psite(I)> to_p_set(const Image<I>& ima);
 
     /// Convert a Window \p win into a point set.
     template <typename W>
@@ -90,7 +90,7 @@ namespace mln
 
     template <typename I>
     inline
-    p_set<mln_point(I)> to_p_set(const Image<I>& ima_)
+    p_set<mln_psite(I)> to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -98,8 +98,8 @@ namespace mln
       // FIXME: Check that ima is binary!
 //       mln::metal::templated_by<mln_value(I), bool >::check();
 
-      typedef mln_dpoint(I) D;
-      typedef mln_point(I) P;
+      typedef mln_dpsite(I) D;
+      typedef mln_psite(I) P;
       p_set<P> pset;
       mln_piter(I) p(ima.domain());
       for_all(p)

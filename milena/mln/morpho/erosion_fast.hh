@@ -79,8 +79,8 @@ namespace mln
       template <typename I, typename W, typename O>
       struct erosion_fast_t
       { 
-	typedef mln_point(I)  P;
-	typedef mln_dpoint(I) D;
+	typedef mln_psite(I)  P;
+	typedef mln_dpsite(I) D;
 
 	// i/o
 

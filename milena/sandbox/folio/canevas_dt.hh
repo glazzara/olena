@@ -31,7 +31,7 @@ namespace mln
       typedef typename F::I I;
       typedef typename F::N N;
       typedef typename F::L L;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       mln_ch_value(I, L) output;
 
@@ -56,7 +56,7 @@ namespace mln
       typedef typename F::I I;
       typedef typename F::N N;
       typedef typename F::L L;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       mln_ch_value(I, L) output;
 

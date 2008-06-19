@@ -79,7 +79,7 @@ namespace mln
       void
       println_with_border(const box3d& b, const I& input)
       {
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 
 	std::size_t len_s = b.len(P::dim - 3);
 	std::size_t len_r = b.len(P::dim - 2);

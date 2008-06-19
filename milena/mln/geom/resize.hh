@@ -149,7 +149,7 @@ namespace mln
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       I output;
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
 
       /// FIXME : Find a better way for the disjunction.
 

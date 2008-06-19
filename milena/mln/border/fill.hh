@@ -66,8 +66,8 @@ namespace mln
       {
 	trace::entering("border::impl::fill_size_1_");
 
-	typedef mln_point(I) P;
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
+	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
 	std::size_t len_r = ima.bbox().len(P::dim - 1);
 	std::size_t st = 0;
@@ -93,7 +93,7 @@ namespace mln
       {
 	trace::entering("border::impl::fill_size_n_");
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
 	std::size_t len_r = ima.bbox().len(P::dim - 1);
 	std::size_t st = 0;
@@ -121,7 +121,7 @@ namespace mln
     {
       trace::entering("border::fill");
 
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       const I& ima = exact(ima_);
 
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();

@@ -53,7 +53,7 @@ namespace mln
     template <typename I>
     struct data_< translate_image<I> >
     {
-      data_(I& ima, const mln_dpoint(I) dp);
+      data_(I& ima, const mln_dpsite(I) dp);
 
       I			    ima_;
 
@@ -61,7 +61,7 @@ namespace mln
       box2d		    bb_;
 
       /// Delta point of translation.
-      const mln_dpoint(I)   dp_;
+      const mln_dpsite(I)   dp_;
     };
 
   } // end of namespace mln::internal
@@ -114,7 +114,7 @@ namespace mln
     using super_::has_data;
 
     /// Constructors.
-    translate_image(I& ima, const mln_dpoint(I) dp);
+    translate_image(I& ima, const mln_dpsite(I) dp);
     translate_image();
 
     /// Return domain of translated_image.
@@ -141,7 +141,7 @@ namespace mln
 
     template <typename I>
     inline
-    data_< translate_image<I> >::data_(I& ima, const mln_dpoint(I) dp)
+    data_< translate_image<I> >::data_(I& ima, const mln_dpsite(I) dp)
       : ima_ (ima),
 	dp_ (dp)
     {
@@ -159,7 +159,7 @@ namespace mln
 
   template <typename I>
   inline
-  translate_image<I>::translate_image(I& ima, const mln_dpoint(I) dp)
+  translate_image<I>::translate_image(I& ima, const mln_dpsite(I) dp)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data_< translate_image<I> >(ima, dp);
@@ -175,7 +175,7 @@ namespace mln
   inline
   bool translate_image<I>::has(const mln_psite(I)& p) const
   {
-    mln_point(I) np = p - this->data_->dp_;
+    mln_psite(I) np = p - this->data_->dp_;
     return this->data_->ima_.has(np);
   }
 
@@ -185,7 +185,7 @@ namespace mln
   translate_image<I>::operator()(const mln_psite(I)& p) const
   {
     mln_assertion(this->has(p));
-    mln_point(I) np = p - this->data_->dp_;
+    mln_psite(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }
 
@@ -196,7 +196,7 @@ namespace mln
   translate_image<I>::operator()(const mln_psite(I)& p)
   {
     mln_assertion(this->has(p));
-    mln_point(I) np = p - this->data_->dp_;
+    mln_psite(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }
 

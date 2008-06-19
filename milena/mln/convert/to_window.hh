@@ -73,7 +73,7 @@ namespace mln
 
     /// Convert a binary image \p ima into a window.
     template <typename I>
-    window<mln_dpoint(I)> to_window(const Image<I>& ima);
+    window<mln_dpsite(I)> to_window(const Image<I>& ima);
 
     /// Convert a point set \p pset into a window.
     template <typename S>
@@ -141,12 +141,12 @@ namespace mln
        depth in milena/core/concepts/README.  */
     template <typename I>
     inline
-    window<mln_dpoint(I)> to_window(const Image<I>& ima_)
+    window<mln_dpsite(I)> to_window(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
-      typedef mln_dpoint(I) D;
+      typedef mln_dpsite(I) D;
       typedef mln_point(D) P;
       window<D> win;
       mln_piter(I) p(ima.domain());

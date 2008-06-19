@@ -47,7 +47,7 @@ namespace mln
   ** @return sparse_image
   */
   template <typename I>
-  sparse_image<mln_point(I), mln_value(I)>
+  sparse_image<mln_psite(I), mln_value(I)>
   sparse_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,16 +69,16 @@ namespace mln
 
   template <typename I>
   inline
-  sparse_image<mln_point(I), mln_value(I)>
+  sparse_image<mln_psite(I), mln_value(I)>
   sparse_encode(const Image<I>& input, bool ignore_zero)
   {
-    typedef mln_point(I) P;
+    typedef mln_psite(I) P;
 
-    sparse_image<mln_point(I), mln_value(I)> output;
+    sparse_image<mln_psite(I), mln_value(I)> output;
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
     unsigned len = 0;
-    mln_point(I) rstart;
+    mln_psite(I) rstart;
     std::vector< mln_value(I) > rvalue;
     rvalue.clear();
 
@@ -93,7 +93,7 @@ namespace mln
 	}
 	else
 	  if ((!ignore_zero || ima(p) != literal::zero) &&
-	      on_the_same_line(rstart, mln_point(I)(p), len))
+	      on_the_same_line(rstart, mln_psite(I)(p), len))
 	  {
 	    ++len;
 	    rvalue.push_back(ima(p));

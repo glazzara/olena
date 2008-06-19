@@ -44,7 +44,7 @@ namespace mln {
     class greater_point
     {
     public:
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       greater_point(const Image<I>& ima);
 
@@ -73,7 +73,7 @@ namespace mln {
 
     template <typename I>
     bool
-    greater_point<I>::operator()(const mln_point(I)& x, const mln_point(I)& y)
+    greater_point<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
     {
       return ima_(x) > ima_(y);
     }

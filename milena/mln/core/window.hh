@@ -34,15 +34,13 @@
  *
  * \todo Make naming coherent: we have window (without '_') but
  * point_, neighb_, etc.
+ *
+ * \todo Code other comparisons (< and <=).
  */
 
 # include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/basic_window_impl.hh>
-# include <mln/core/dpoint.hh>
-# include <mln/core/box.hh>
 
-# include <mln/convert/to_dpoint.hh>
-# include <mln/geom/sym.hh>
 # include <mln/metal/is_a.hh>
 
 
@@ -89,6 +87,15 @@ namespace mln
 
 
 
+  /*! \brief Equality comparison between windows \p lhs and \p rhs.
+   *
+   * \relates mln::window<D>
+   */
+  template <typename D>
+  bool operator==(const window<D>& lhs, const window<D>& rhs);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   // window<D>
@@ -105,7 +112,8 @@ namespace mln
   inline
   bool window<D>::is_symmetric() const
   {
-    return geom::sym(*this) == *this;
+    window<D> cpy = *this;
+    return cpy.sym() == *this;
   }
 
   template <typename D>
@@ -132,6 +140,12 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const window<D>& win)
   {
     return ostr << win.dps_hook();
+  }
+
+  template <typename D>
+  bool operator==(const window<D>& lhs, const window<D>& rhs)
+  {
+    return lhs.dps_hook() == rhs.dps_hook();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

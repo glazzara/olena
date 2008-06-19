@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
+# include <mln/core/p_array.hh>
 
 
 namespace mln
@@ -75,16 +76,6 @@ namespace mln
   };
 
 
-  /*! \brief Equality comparison between windows \p lhs and \p rhs.
-   *
-   * \relates mln::Window
-   *
-   * \todo Move into mln/set/compare.hh and delegate to replace this special impl.
-   */
-  template <typename Wl, typename Wr>
-  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -99,27 +90,6 @@ namespace mln
     typedef     mln_qiter(E)     qiter;
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
-  }
-
-  template <typename Wl, typename Wr>
-  inline
-  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
-  {
-    // FIXME: Same grid!
-    typedef mln_point(Wl) P;
-
-    mln_fwd_qiter(Wl) ql(exact(lhs), P::origin);
-    mln_fwd_qiter(Wr) qr(exact(rhs), P::origin);
-
-    for (ql.start(),      qr.start();
-	 ql.is_valid() && qr.is_valid();
-	 ql.next(),       qr.next())
-      if (ql != qr)
-	return false; // difference found
-
-    // both windows are equal only if both browsings are completed at
-    // the same time:
-    return ! ql.is_valid() && ! qr.is_valid();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

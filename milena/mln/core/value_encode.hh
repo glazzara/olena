@@ -48,7 +48,7 @@ namespace mln
   ** @return value_enc_image
   */
   template <typename I>
-  value_enc_image<mln_point(I), mln_value(I)>
+  value_enc_image<mln_psite(I), mln_value(I)>
   value_encode(const Image<I>& input, bool ignore_zero = true);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,15 +70,15 @@ namespace mln
 
   template <typename I>
   inline
-  value_enc_image<mln_point(I), mln_value(I)>
+  value_enc_image<mln_psite(I), mln_value(I)>
   value_encode(const Image<I>& input, bool ignore_zero)
   {
-    value_enc_image<mln_point(I), mln_value(I)> output;
+    value_enc_image<mln_psite(I), mln_value(I)> output;
     const I& ima = exact(input);
     mln_piter(I) p (exact(input).domain());
 
     unsigned len = 0;
-    mln_point(I) rstart;
+    mln_psite(I) rstart;
     mln_value(I) rvalue;
 
     for_all(p)
@@ -92,12 +92,12 @@ namespace mln
 	}
 	else
 	  if (rvalue == ima(p)
-	      && on_the_same_line(rstart, mln_point(I)(p)))
+	      && on_the_same_line(rstart, mln_psite(I)(p)))
 	    ++len;
 	  else
 	  {
 	    //FIXME is it right??
-	    output.insert(p_run<mln_point(I)>(rstart, len), rvalue);
+	    output.insert(p_run<mln_psite(I)>(rstart, len), rvalue);
 	    if ((len = (!ignore_zero || ima(p) != literal::zero)))
 	    {
 	      rstart = p;

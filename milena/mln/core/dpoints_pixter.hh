@@ -37,7 +37,6 @@
 # include <vector>
 
 # include <mln/core/concept/pixel_iterator.hh>
-# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/pixel_impl.hh>
 
 
@@ -70,7 +69,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
-		       const Point_Site<Pref>& p_ref);
+		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
     /// 
@@ -122,7 +121,7 @@ namespace mln
     /// Reference value the image
     mln_qlf_value(I)** value_ref_;
     /// Reference pixel / point in the image
-    const mln_point(I)* p_ref_;
+    const mln_psite(I)* p_ref_;
     /// \}
   };
 
@@ -153,7 +152,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_bkd_pixter(I& image,
 		       const Dps& dps,
-		       const Point_Site<Pref>& p_ref);
+		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
     /// 
@@ -205,7 +204,7 @@ namespace mln
     /// Reference value the image
     mln_qlf_value(I)** value_ref_;
     /// Reference pixel / point in the image
-    const mln_point(I)* p_ref_;
+    const mln_psite(I)* p_ref_;
     /// \}
   };
 
@@ -222,11 +221,11 @@ namespace mln
   inline
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
-					    const Point_Site<Pref>& p_ref)
+					    const Pref& p_ref)
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_point();
+    p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }
@@ -333,11 +332,11 @@ namespace mln
   inline
   dpoints_bkd_pixter<I>::dpoints_bkd_pixter(I& image,
 					    const Dps& dps,
-					    const Point_Site<Pref>& p_ref)
+					    const Pref& p_ref)
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_point();
+    p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }

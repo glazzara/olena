@@ -78,7 +78,7 @@ namespace mln
   inline
   void init_(tag::bbox_t, B& b, const Image<I>& ima)
   {
-    b = geom::bbox(ima);
+    b = geom::bbox(ima.domain());
   }
 
   template <typename I>

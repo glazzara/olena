@@ -37,7 +37,6 @@
  * \todo Check optional methods s.a. nsites and bbox.
  */
 
-# include <mln/core/concept/point_site.hh>
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/trait/site_sets.hh>
 # include <mln/metal/not_equal.hh>

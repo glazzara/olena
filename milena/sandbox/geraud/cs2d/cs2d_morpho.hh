@@ -23,7 +23,7 @@ namespace mln
       mln_piter(I) p(input.domain());
       for_all(p)
 	{
-	  mln_point(I) p_ = p;
+	  mln_psite(I) p_ = p;
 	  input(p) =
 	    p_.row() % 2 ?
 	    // Odd so horizontal edge and vertical cells.

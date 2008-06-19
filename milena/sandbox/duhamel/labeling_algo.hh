@@ -82,7 +82,7 @@ namespace mln
 
       for_all(p)
 	{
-	  X x = mln_point(I)(p);
+	  X x = mln_psite(I)(p);
 	  tab_mean[ima(p) - min].take(x);
 	  for_all (n) if (ima.has(n))
 	    if (ima(p) != ima(n))
@@ -132,7 +132,7 @@ namespace mln
 	  {
 	    if (orig(p) != 0)
 	      {
-		X x = mln_point(I)(p);
+		X x = mln_psite(I)(p);
 		tab_mean[orig(p) - min].take(x);
 	      }
 	  }

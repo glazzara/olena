@@ -151,7 +151,7 @@ namespace mln
   template <typename I>
   bool interpolated<I>::has(const mln::algebra::vec<I::point::dim, float>& v) const
   {
-    mln_point(I) p;
+    mln_psite(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     return this->data_->ima_.has(p);
@@ -161,7 +161,7 @@ namespace mln
   mln_value(I)
   interpolated<I>::operator()(const mln::algebra::vec<I::point::dim, float>& v) const
   {
-    mln_point(I) p;
+    mln_psite(I) p;
     for (unsigned i = 0; i < I::point::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     mln_assertion(this->data_->ima_.has(p));

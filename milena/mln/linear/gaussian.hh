@@ -157,10 +157,10 @@ namespace mln
       void
       recursivefilter_(I& ima,
 		       const recursivefilter_coef_& c,
-		       const mln_point(I)& start,
-		       const mln_point(I)& finish,
+		       const mln_psite(I)& start,
+		       const mln_psite(I)& finish,
 		       int len,
-		       const mln_dpoint(I)& d)
+		       const mln_dpsite(I)& d)
       {
 	std::vector<WorkType>	tmp1(len);
 	std::vector<WorkType>	tmp2(len);
@@ -195,7 +195,7 @@ namespace mln
 	  - c.d[1] * tmp1[2] - c.d[2]*tmp1[1]
 	  - c.d[3] * tmp1[0];
 
-	mln_point(I) current(start + d + d + d + d);
+	mln_psite(I) current(start + d + d + d + d);
 	for (mln_coord(I) i = 4; i < len; ++i)
 	  {
 	    tmp1[i] =
