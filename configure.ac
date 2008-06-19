@@ -38,15 +38,21 @@ if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
 fi
 
-# C++ compiler flags for tests.
+# ------------------------------ #
+# C++ compiler flags for tests.  #
+# ------------------------------ #
+
+# FIXME: We might want to write an Autoconf macro to factor this.
+
+# Standard flas for tests.
 AC_ARG_VAR([TESTS_CXXFLAGS])
 # We want no optimization for the tests (it slows down compiling
-# times), and a lot of debugging.
+# times), and debugging information.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
   TESTS_CXXFLAGS="-O0 -ggdb -Wall -W"
 fi
 
-# C++ compiler flags for complex tests.
+# Flags for complex tests.
 AC_ARG_VAR([TESTS_CXXFLAGS_SPEED])
 # We want optimization for complex tests, and keep debugging flags
 # (still useful).
@@ -54,9 +60,25 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
   TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
 
-# C++ compiler flags for tools.
+# Flags for tests with with all debugging features turned on.
+AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG])
+# We want no optimization for the tests (it slows down compiling
+# times), and a lot of debugging features.
+# * GNU C++ Library Debug Mode:
+#   http://gcc.gnu.org/onlinedocs/libstdc++/manual/debug_mode.html
+# * GNU C++ Library Compile Time Checks (a.k.a. concept checking):
+#   http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt12ch29.html
+if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
+  TESTS_CXXFLAGS_DEBUG=\
+    "-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+fi
+
+# ----------------- #
+# Flags for tools.  #
+# ----------------- #
+
 AC_ARG_VAR([TOOLS_CXXFLAGS])
-# On the contrary, we want fast binaries for tools.
+# We want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
   TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
