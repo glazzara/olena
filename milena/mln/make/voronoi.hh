@@ -116,7 +116,7 @@ namespace mln
       /// Compute the center of label.
       for (unsigned i = 0; i < nb; ++i)
 	{
-	  gr.add_node ();
+	  gr.add_vertex();
 
 	  /// FIXME
  	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],

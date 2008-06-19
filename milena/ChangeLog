@@ -1,5 +1,12 @@
 2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix compilation of tools/.
+
+	* mln/make/voronoi.hh (mln::make::voronoi): Catch up with the new
+	interface of mln::util::graph.
+
+2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for Autotools in apps/statues/.
 
 	* Makefile.am (SUBDIRS): Add apps.
