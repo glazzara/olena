@@ -33,10 +33,11 @@ namespace mln
   namespace registration
   {
 
-    template<typename P>
+    template<typename P, typename M>
     void save_(const quat7<3>& qk,
                const p_array<P>& c,
                const p_array<P>& x,
+               const M& map,
                int every)
     {
       static int id = 0;
@@ -49,14 +50,15 @@ namespace mln
       p_array<P> ck(c);
       qk.apply_on(c, ck, c.npoints());
 
-      const box_<P> working_box = enlarge(bigger(ck.bbox(),x.bbox()),100);
+      const box_<P> working_box = enlarge(bigger(ck.bbox(),x.bbox()),5);
       image2d<value::rgb8> out(convert::to_box2d(working_box), 1);
       level::fill(out, literal::white);
 
       //plot mu_Ck
       algebra::vec<P::dim,float> mu_Ck = center(ck, ck.npoints());
       draw::plot(out, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
-      //shape orientation
+      
+      //Ck orientation
       algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
       for (unsigned i = 0; i < ck.npoints(); ++i)
         {
@@ -68,10 +70,29 @@ namespace mln
       draw::line(out, point2d(mu_Ck[0], mu_Ck[1]),
                  point2d(mu_Ck[0]+vck[0]*10, mu_Ck[1]+vck[1]*10),
                  literal::red);
+
+      //build xk : project ck
+      p_array<P> xk;
+      for (unsigned i = 0; i < ck.npoints(); ++i)
+        xk.append(map(ck[i]));
       
-      //plot mu_X
-      P mu_X = center(x, x.npoints());
-      draw::plot(out, point2d(mu_X[0], mu_X[1]), literal::black);
+      //plot mu_Xk
+      algebra::vec<P::dim,float> mu_Xk = center(xk, xk.npoints());
+      draw::plot(out, point2d(mu_Xk[0], mu_Xk[1]), literal::blue);
+
+      //Xk orientation
+      algebra::mat<P::dim,P::dim,float> Mxk(literal::zero);
+      for (unsigned i = 0; i < xk.npoints(); ++i)
+        {
+          algebra::vec<P::dim,float> Xki  = xk[i];
+          Mxk += make::mat(Xki - mu_Xk) * trans(make::mat(Xki - mu_Xk));
+        }
+      Mxk /= c.npoints();
+      algebra::vec<3,float> vxk = power_it(Mxk);
+      draw::line(out, point2d(mu_Xk[0], mu_Xk[1]),
+                 point2d(mu_Xk[0]+vxk[0]*10, mu_Xk[1]+vxk[1]*10),
+                 literal::red);
+      
       
       //ck in green
       for (unsigned i = 0; i < ck.npoints(); i++)
@@ -89,6 +110,14 @@ namespace mln
             out(p) = literal::black;
         }
       
+      //xk in blue
+      for (unsigned i = 0; i < xk.npoints(); i++)
+        {
+          point2d p(xk[i][0], xk[i][1]);
+          if (out.has(p))
+            out(p) = literal::red;
+        }  
+
       //save
       std::stringstream oss;
       oss << "step_" << id++ << ".ppm";

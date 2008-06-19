@@ -79,7 +79,7 @@ namespace mln
       return os;
     }
 
-    float operator[](int i)
+    float operator[](unsigned i)
     {
       if (i < n)
         return _qT[i];
@@ -146,6 +146,7 @@ namespace mln
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
            
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
+        // or Mk += make::mat(Ci) * trans(make::mat(Xki)) - make::mat(mu_C) * trans(make::mat(mu_Xk))
       }
     Mk /= c_length;
 
@@ -184,8 +185,7 @@ namespace mln
     
     // qT
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
-
-    
+  
     return quat7<P::dim>(qR, qT);
   }
   

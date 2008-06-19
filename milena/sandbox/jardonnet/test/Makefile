@@ -20,7 +20,7 @@ icp: icp.o +depend
 	g++ icp.o -I../../.. -O3 -DNDEBUG -o 'icp'
 
 icp_refD: icp_ref.cc ../registration/icp_ref.hh +depend
-	g++ icp_ref.cc -I../../.. -g -o 'icp_refD'
+	g++ -Wall -W icp_ref.cc -I../../.. -g -o 'icp_refD'
 
 icp_ref: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ icp_ref.cc -I../../.. -O3 -DNDEBUG -o 'icp_ref'
@@ -40,11 +40,12 @@ clean:
 	rm -f log.dat registred.pbm
 	rm -f i_*
 	rm -f tmp.ppm registred.ppm semantic.cache
+	rm +depend
 	rm -f step_*
 
 .PHONY: check bench test icpD icp_refD icp icp_ref
 
 +depend:
-	g++ -M icp.cc $(FLAG) > +depend
+	g++ -MM icp.cc $(FLAG) > +depend
 
 include +depend

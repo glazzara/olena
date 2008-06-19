@@ -43,7 +43,7 @@ namespace mln
     
     void store(T e)
     {
-      for (int i = 0; i < n-1; i++)
+      for (unsigned i = 0; i < n-1; i++)
         buf[i+1] = buf[i];
       buf[0] = e;
 
@@ -70,7 +70,7 @@ namespace mln
   template <typename P>
   struct closest_point
   {
-    typedef P input;
+    typedef algebra::vec<P::dim, float> input;
     typedef P result;
     
     closest_point(const p_array<P>& X, const box_<P>& box)
@@ -84,7 +84,7 @@ namespace mln
     //inline
     operator () (const input& Ck) const
     {
-      
+
 #ifndef NDEBUG
       ++i;
 #endif
@@ -137,8 +137,10 @@ namespace mln
 
     const mln_result(F)
     //inline
-    operator () (const typename F::input& p) const
+    operator () (const typename F::input& p_) const
     {
+      point3d p = algebra::to_point<point3d>(p_);
+      
       mln_precondition(fun.domain().has(p));
       //FIXME: What about domain?
       if (is_known(p))
@@ -205,6 +207,7 @@ namespace mln
       for_all(p)
         if (img(p))
           a.append(p);
+
       return a;
     }
 

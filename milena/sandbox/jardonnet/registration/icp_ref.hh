@@ -43,8 +43,7 @@
 # include <mln/make/w_window3d.hh>
 
 # include <mln/value/rgb8.hh>
-# include <mln/literal/colors.hh>
-# include <mln/literal/black.hh>
+# include <mln/literal/all.hh>
 # include <mln/level/fill.hh>
 # include <mln/io/ppm/save.hh>
 
@@ -111,11 +110,15 @@ namespace mln
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
         buf_qk.store(qk);
-        
+
+        save_(qk,C,X,map,2);
+      
         qk.apply_on(C, Ck, c_length);
 
-        unsigned int k = 0;
+        save_(qk,C,X,map,2);
 
+        unsigned int k = 0;
+       
         do {
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
@@ -135,7 +138,7 @@ namespace mln
           e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
           
 #ifndef NDEBUG
-          save_(qk,C,X,2);
+          save_(qk,C,X,map,2);
           //print info
           std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
@@ -169,7 +172,7 @@ namespace mln
       mln_precondition(cloud.npoints() != 0);
 
       shuffle(cloud);
-     
+
       //init rigid transform qk 
       quat7<P::dim> qk;
 
@@ -185,8 +188,7 @@ namespace mln
           tmp(qp) = literal::white;
       }
 #endif
-
-      
+     
       //run icp
       for (int e = nb_it-1; e >= 0; e--)
         {

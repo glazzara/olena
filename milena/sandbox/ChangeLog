@@ -1,3 +1,20 @@
+2008-06-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Update step by step rendering.
+
+	Update example:
+	* jardonnet/test/img/c5.pbm,
+	* jardonnet/test/img/x5.pbm: Update .
+
+	* jardonnet/test/Makefile: Add few warnings.
+
+	* jardonnet/registration/jacobi.hh: Update: thresold e-6->e-12.
+	* jardonnet/registration/power_it.hh: Fix.
+	* jardonnet/registration/save.hh: Save Xk.
+	* jardonnet/registration/tools.hh: Fix: signed -> unsigned.
+	* jardonnet/registration/quat7.hh: Fix: signed -> unsigned.
+	* jardonnet/registration/icp_ref.hh: Add saving before start.
+
 2008-06-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 
