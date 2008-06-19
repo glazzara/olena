@@ -1,5 +1,13 @@
 2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Minor cleaning.
+
+	* mln/core/concept/proxy.hh (todo): New.
+	* mln/core/concept/accumulator.hh: Better doc.
+	(operator): Update check.
+
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add operators to Proxy and make Accumulator inherit from Proxy.
 
 	* doc/tutorial/examples/accu.cc: New.

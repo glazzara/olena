@@ -33,6 +33,8 @@
  * \brief Definition of the concept of mln::Proxy.
  *
  * \todo preinc and predec are not tested; post-like ops are not handled.
+ *
+ * \todo add op=(Literal) when possible, so add a constness property.
  */
 
 # include <mln/core/concept/object.hh>

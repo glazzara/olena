@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/proxy.hh>
+# include <mln/metal/unqualif.hh>
 
 
 namespace mln
@@ -71,7 +72,7 @@ namespace mln
       void take(const E& other);
 
       result to_result() const;
-      operator result_() const;
+      operator mlc_unqualif(result) const;
      */
 
     // Default impl.
@@ -101,7 +102,9 @@ namespace mln
 
     result (E::*m4)() const = & E::to_result;
     m4 = 0;
-    result (E::*m5)() const = & E::operator result;
+
+    typedef mlc_unqualif(result) result_;
+    result_ (E::*m5)() const = & E::operator result_;
     m5 = 0;
   }
 
