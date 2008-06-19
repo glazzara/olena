@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,11 @@
 /*!
  * \file  mln/metal/unqualif.hh
  *
- * \brief FIXME.
+ * \brief Suppress possible 'const' and/or '&' (reference) from a
+ * qualified type.
  */
 
 # include <mln/metal/unconst.hh>
-# include <mln/metal/unptr.hh>
 # include <mln/metal/unref.hh>
 
 
@@ -49,14 +49,10 @@ namespace mln
   namespace metal
   {
 
-    // FIXME: May be recursive!
-
     template <typename T>
     struct unqualif
     {
-      typedef mlc_unref(T)      tmp1;
-      typedef mlc_unconst(tmp1) tmp2;
-      typedef mlc_unptr(tmp2)   ret;
+      typedef mlc_unconst( mlc_unref(T) ) ret;
     };
     
   } // end of namespace mln::metal

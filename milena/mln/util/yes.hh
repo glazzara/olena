@@ -71,7 +71,7 @@ namespace mln
     struct yes : public Object< yes >
     {
       yes();
-      yes(bool);
+      explicit yes(bool);
       operator bool() const;
     };
 
@@ -132,25 +132,25 @@ namespace mln
   inline
   util::yes operator == (const util::yes&, bool)
   {
-    return true;
+    return util::yes(true);
   }
 
   inline
   util::yes operator != (const util::yes&, bool)
   {
-    return true;
+    return util::yes(true);
   }
 
   inline
   util::yes operator && (const util::yes&, bool)
   {
-    return true;
+    return util::yes(true);
   }
 
   inline
   util::yes operator || (const util::yes&, bool)
   {
-    return true;
+    return util::yes(true);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

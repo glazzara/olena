@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,51 @@
 /*! \file mln/core/ops.hh
  *
  * \brief Definitions of some default implementations for operators.
+ *
+ * The set of operators defined in this file is:
+ *
+ * \code
+
+   l += r  :  l = l + r, -> l&
+   l -= r  :  l = l - r, -> l&  
+   l *= r  :  l = l * r, -> l& 
+   l /= r  :  l = l / r, -> l&  
+   l %= r  :  l = l % r, -> l&  
+   
+   + r     :  -> r
+   - r     :  -> (0 - r)
+   
+   l ++    :  t = l, ++l, -> t
+   l --    :  t = l, --l, -> t
+   
+   ++ r    :  r += 1, -> r&
+   -- r    :  r -= 1, -> r&
+   
+   l != r  :  -> ! (l == r)
+   
+   l >  r  :  -> (r < l)
+   l >= r  :  -> (r <= l)
+   l <= r  :  -> ! (r < l)   warning: re-define when partial ordering
+
+ * \endcode
+ *
+ *
+ * As a consequence, the set of operators to be defined along with a
+ * client class is:
+ *
+ * \code
+
+   l + r
+   l - r
+   l * r
+   l / r
+
+   l == r
+
+   l < r
+   l <= r  in case of partial ordering
+
+ * \endcode
  *
  * \todo Complete those definitions (...) + Overload for const (?)
  */
@@ -220,7 +265,7 @@ namespace mln
    * It relies on the definition of the pre-incrementation operator.
    */
   template <typename O>
-  O operator++(Object<O>& rhs, int);
+  O operator++(Object<O>& lhs, int);
   
 
   /* \brief Default definition of the post-decrementation operator.
@@ -228,7 +273,7 @@ namespace mln
    * It relies on the definition of the pre-decrementation operator.
    */
   template <typename O>
-  O operator--(Object<O>& rhs, int);
+  O operator--(Object<O>& lhs, int);
 
 
   /* \brief Default definition of the pre-incrementation operator.
@@ -422,11 +467,11 @@ namespace mln
   template <typename O>
   inline
   O
-  operator++(Object<O>& rhs, int)
+  operator++(Object<O>& lhs, int)
   {
-    O tmp(exact(rhs)); // Copy.
-    ++exact(rhs);      // Pre-inc.
-    // FIXME: Activate: mln_postcondition(exact(rhs) == tmp + literal::one);
+    O tmp(exact(lhs)); // Copy.
+    ++exact(lhs);      // Pre-inc.
+    // FIXME: Activate: mln_postcondition(exact(lhs) == tmp + literal::one);
     return tmp;
   }
 
@@ -435,11 +480,11 @@ namespace mln
   template <typename O>
   inline
   O
-  operator--(Object<O>& rhs, int)
+  operator--(Object<O>& lhs, int)
   {
-    O tmp(exact(rhs)); // Copy.
-    --exact(rhs);      // Pre-dec.
-    // FIXME: Activate: mln_postcondition(exact(rhs) == tmp - literal::one);
+    O tmp(exact(lhs)); // Copy.
+    --exact(lhs);      // Pre-dec.
+    // FIXME: Activate: mln_postcondition(exact(lhs) == tmp - literal::one);
     return tmp;
   }
 

@@ -1,3 +1,32 @@
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add operators to Proxy and make Accumulator inherit from Proxy.
+
+	* doc/tutorial/examples/accu.cc: New.
+	* mln/core/ops.hh: Add doc.
+	(operator++, operator--): Rename rhs as lhs.
+	* mln/core/concept/proxy.hh (include): Add mln/value/ops.hh.  This
+	is required for the client to transparently handle builtins,
+	scalars, and objects.
+	(mln_decl_unop_proxy, mln_def_unop_proxy): New macros.
+	(mln_decl_binop_proxy, mln_def_binop_proxy): New macros.
+	(operator): Add unary and binary operators for proxies.
+	(operator-, operator==): Remove test versions.
+	* mln/core/concept/accumulator.hh (Accumulator): Change
+	inheritance from Object to Proxy.
+	(operator<<): Remove; obsolete cause already in Proxy.
+	* mln/metal/unqualif.hh (unqualif): Fix bug; it does not has to
+	rely on unptr.
+	Add doc.
+	* mln/metal/bool.hh (mlc_bool): New useful macro.
+	* mln/accu/sum.hh: Cleanup includes and add some comments.
+	* mln/accu/internal/base.hh (base_): Inherit from proxy_impl.
+	(subject, q_subject, unproxy): New to conform to Proxy.
+	(operator result_): Remove cause obsolete.
+	* mln/util/yes.hh (yes): Turn explicit the ctor.
+	(operator): Update.
+	* mln/core/concept/site_set.hh: Propagate util::yes update.
+
 2008-06-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Equip proxies to transparently handle operators.

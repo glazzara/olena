@@ -205,7 +205,7 @@ namespace mln
 //     // both sets are equal only if both browsings are completed
 //     // at the same time:
 //     return ! pl.is_valid() && ! pr.is_valid();
-    return true;
+    return util::yes(true);
   }
 
 
@@ -223,7 +223,7 @@ namespace mln
 //       if (! rhs.has(pl))
 // 	return false;
 
-    return true;
+    return util::yes(true);
   }
 
 
@@ -235,7 +235,7 @@ namespace mln
 //     const Sl& lhs = exact(lhs_);
 //     const Sr& rhs = exact(rhs_);
 //     return lhs <= rhs && lhs != rhs;
-    return true;
+    return util::yes(true);
   }
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,11 +32,15 @@
  *
  * \brief Define a base class for implementation of accumulator
  * classes.
+ *
+ * \todo Cf. mln/core/pseudo_site_base.hh we get some impl from
+ * site_impl; we want here the same effect except that the subject is
+ * not always a site.  Maybe we actually need a more generic mechanism
+ * s.a. subject_impl...
  */
 
 # include <mln/core/concept/accumulator.hh>
-# include <mln/metal/unconst.hh>
-# include <mln/metal/unref.hh>
+# include <mln/metal/unqualif.hh>
 
 
 namespace mln
@@ -52,15 +56,20 @@ namespace mln
        * Base class for implementation of accumulator classes.
        */
       template <typename R, typename E>
-      struct base_ : public Accumulator<E>
+      class base_ : public Accumulator<E>,
+		    public mln::internal::proxy_impl< mlc_unqualif(R), E >
       {
 	typedef mlc_unconst(R)  tmp_;
 	typedef mlc_unref(tmp_) result_;
       public:
 
-	typedef R result;
+	// As a proxy:
+	typedef R               q_subject;
+	typedef mlc_unqualif(R)   subject;
+	R unproxy() const;
 
-	operator result_() const;
+	// As an accumulator:
+	typedef R result;
 
       protected:
 	base_();
@@ -77,7 +86,8 @@ namespace mln
 
       template <typename R, typename E>
       inline
-      base_<R,E>::operator typename base_<R,E>::result_ () const
+      R
+      base_<R,E>::unproxy() const
       {
 	return exact(this)->to_result();
       }

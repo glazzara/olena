@@ -34,11 +34,13 @@
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
-
 # include <mln/accu/internal/base.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
-# include <mln/literal/zero.hh>
+
+# include <mln/util/pix.hh> // To prevent accu::sum to work on pixels (ambiguous).
+
+# include <mln/trait/value_.hh>      // For mln_sum.
+# include <mln/value/builtin/all.hh> // In the case of summing builtin values.
+# include <mln/literal/zero.hh>      // For initialization.
 
 
 namespace mln

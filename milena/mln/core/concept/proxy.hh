@@ -31,11 +31,89 @@
 /*! \file mln/core/concept/proxy.hh
  *
  * \brief Definition of the concept of mln::Proxy.
+ *
+ * \todo preinc and predec are not tested; post-like ops are not handled.
  */
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/internal/force_exact.hh>
-# include <mln/trait/all.hh>
+# include <mln/value/ops.hh> // So that we can handle builtins, scalars, and objects.
+
+
+
+# define mln_decl_unop_proxy(Name, Symb)	\
+						\
+  template <typename P>				\
+  mln_trait_op_##Name(P)			\
+  operator Symb (const Proxy<P>& rhs);		\
+						\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
+# define mln_def_unop_proxy(Name, Symb)		\
+						\
+  template <typename P>				\
+  inline					\
+  mln_trait_op_##Name(P)			\
+  operator Symb (const mln::Proxy<P>& rhs)	\
+  {						\
+    return Symb exact(rhs).unproxy();		\
+  }						\
+						\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
+
+
+
+# define mln_decl_binop_proxy(Name, Symb)			\
+								\
+  template <typename L, typename R>				\
+  mln_trait_op_##Name(L, R)					\
+  operator Symb (const Proxy<L>& lhs, const Proxy<R>& rhs);	\
+								\
+  template <typename P, typename O>				\
+  mln_trait_op_##Name(P, O)					\
+  operator Symb (const Proxy<P>& p, const Object<O>& o);	\
+								\
+  template <typename O, typename P>				\
+  mln_trait_op_##Name(O, P)					\
+  operator Symb (const Object<O>& o, const Proxy<P>& p);	\
+								\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
+
+
+# define mln_def_binop_proxy(Name, Symb)					\
+										\
+  template <typename L, typename R>						\
+  inline									\
+  mln_trait_op_##Name(L, R)							\
+  operator Symb (const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)		\
+  {										\
+    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;	\
+    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;	\
+    return L_unproxy::on(lhs) Symb R_unproxy::on(rhs);				\
+  }										\
+										\
+  template <typename P, typename O>						\
+  inline									\
+  mln_trait_op_##Name(P, O)							\
+  operator Symb (const Proxy<P>& p, const Object<O>& o)				\
+  {										\
+    return exact(p).unproxy() Symb exact(o);					\
+  }										\
+  										\
+  template <typename O, typename P>						\
+  inline									\
+  mln_trait_op_##Name(O, P)							\
+  operator Symb (const Object<O>& o, const Proxy<P>& p)				\
+  {										\
+    return exact(o) Symb exact(p).unproxy();					\
+  }										\
+										\
+  struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
+
 
 
 
@@ -83,6 +161,16 @@ namespace mln
   namespace trait
   {
 
+    // Unary ops.
+
+    template < template <class> class Op, typename P >
+    struct set_unary_< Op, mln::Proxy, P >
+    {
+      typedef mln_trait_unary(Op, mln_subject(P)) ret;
+    };
+
+    // Binary ops.
+
     template < template <class, class> class Op,
 	       typename L, typename R >
     struct set_binary_< Op, mln::Proxy, L, mln::Proxy, R >
@@ -107,13 +195,8 @@ namespace mln
       typedef mln_trait_binary(Op, O, mln_subject(P)) ret;
     };
 
-    template < template <class> class Op, typename P >
-    struct set_unary_< Op, mln::Proxy, P >
-    {
-      typedef mln_trait_unary(Op, mln_subject(P)) ret;
-    };
-
   } // end of namespace mln::trait
+
 
 
 
@@ -150,59 +233,33 @@ namespace mln
 
 
 
-  template <typename L, typename R>
-  inline
-  mln_trait_op_minus(L, R)
-  operator-(const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)
-  {
-    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;
-    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;
-    return L_unproxy::on(lhs) - R_unproxy::on(rhs);
-  }
-
-  template <typename P, typename O>
-  inline
-  mln_trait_op_minus(P, O)
-  operator-(const Proxy<P>& p, const Object<O>& o)
-  {
-    return exact(p).unproxy() - exact(o);
-  }
-  
-  template <typename O, typename P>
-  inline
-  mln_trait_op_minus(O, P)
-  operator-(const Object<O>& o, const Proxy<P>& p)
-  {
-    return exact(o) - exact(p).unproxy();
-  }
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const Proxy<P>& p);
 
 
+  mln_decl_unop_proxy(uplus,  + );
+  mln_decl_unop_proxy(uminus, - );
+  mln_decl_unop_proxy(preinc, ++ );
+  mln_decl_unop_proxy(predec, -- );
+  mln_decl_unop_proxy(not,    ! );
 
-  template <typename L, typename R>
-  inline
-  mln_trait_op_eq(L, R)
-  operator==(const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)
-  {
-    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;
-    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;
-    return L_unproxy::on(lhs) == R_unproxy::on(rhs);
-  }
+  mln_decl_binop_proxy(plus,  + );
+  mln_decl_binop_proxy(minus, - );
+  mln_decl_binop_proxy(times, * );
+  mln_decl_binop_proxy(div,   / );
+  mln_decl_binop_proxy(mod,   % );
 
-  template <typename P, typename O>
-  inline
-  mln_trait_op_eq(P, O)
-  operator==(const Proxy<P>& p, const Object<O>& o)
-  {
-    return exact(p).unproxy() == exact(o);
-  }
-  
-  template <typename O, typename P>
-  inline
-  mln_trait_op_eq(O, P)
-  operator==(const Object<O>& o, const Proxy<P>& p)
-  {
-    return exact(o) == exact(p).unproxy();
-  }
+  mln_decl_binop_proxy(eq,  == );
+  mln_decl_binop_proxy(neq, != );
+
+  mln_decl_binop_proxy(less,    <  );
+  mln_decl_binop_proxy(leq,     <= );
+  mln_decl_binop_proxy(geq,     >= );
+  mln_decl_binop_proxy(greater, >  );
+
+  mln_decl_binop_proxy(and, && );
+  mln_decl_binop_proxy(or,  || );
+  mln_decl_binop_proxy(xor, ^  );
 
 
 
@@ -291,8 +348,10 @@ namespace mln
       operator Subject() const
       {
  	return mln::internal::force_exact<const E>(*this).unproxy();
-	// The code above seems more effective than the one below:
+
+	// Technical note:
 	//
+	// The code above seems more effective than the one below:
 	// 	const Subject* adr;
 	// 	get_adr(adr, mln::internal::force_exact<const E>(*this));
 	// 	mln_postcondition(adr != 0);
@@ -302,15 +361,6 @@ namespace mln
 
 
   } // end of namespace mln::internal
-
-
-  // FIXME:...
-
-//   template <typename L, typename R>
-//   bool operator==(const Proxy<L>& lhs, const Proxy<R>& rhs);
-
-  template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const Proxy<P>& p);
 
 
 
@@ -336,7 +386,36 @@ namespace mln
     return ostr << exact(p).unproxy();
   }
 
-  // FIXME: Code operators...
+
+  // Unary operators.
+
+  mln_def_unop_proxy(uplus,  + );
+  mln_def_unop_proxy(uminus, - );
+  mln_def_unop_proxy(preinc, ++ );
+  mln_def_unop_proxy(predec, -- );
+  mln_def_unop_proxy(not,    ! );
+
+
+  // Binary operators.
+
+  mln_def_binop_proxy(plus,  + );
+  mln_def_binop_proxy(minus, - );
+  mln_def_binop_proxy(times, * );
+  mln_def_binop_proxy(div,   / );
+  mln_def_binop_proxy(mod,   % );
+
+  mln_def_binop_proxy(eq,  == );
+  mln_def_binop_proxy(neq, != );
+
+  mln_def_binop_proxy(less,    <  );
+  mln_def_binop_proxy(leq,     <= );
+  mln_def_binop_proxy(geq,     >= );
+  mln_def_binop_proxy(greater, >  );
+
+  mln_def_binop_proxy(and, && );
+  mln_def_binop_proxy(or,  || );
+  mln_def_binop_proxy(xor, ^  );
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
