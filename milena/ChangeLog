@@ -1,3 +1,22 @@
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix priority queue-based point sets.
+	These problems were spotted using TESTS_CXXFLAGS_DEBUG.
+
+	* mln/core/p_priority_queue.hh: 
+	(mln::p_priority_queue<P, T>::queue_map_t): New typedef.
+	Use it...
+	(mln::p_priority_queue<P, T>::q_): ...here, and fix the type
+	of this member.
+	(mln::p_priority_queue<P, T>): Adjust users.
+	* mln/core/p_priority_queue_fast.hh
+	(mln::p_priority_queue_fast<P, T>::queue_map_t): New typedef.
+	Use it...
+	(mln::p_priority_queue_fast<P, T>::q_): ...here, and fix the type
+	of this member.
+	(mln::p_priority_queue_fast<P, T>): Adjust users.
+	* tests/tests.mk (TESTS_CXXFLAGS_DEBUG): New.
+
 2008-06-18  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Add the ability to plot a point (small cross).
