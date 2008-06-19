@@ -1,3 +1,7 @@
+2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure files in milena/apps/.
+
 2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Autoconfiscate trimesh2.
