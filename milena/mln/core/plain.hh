@@ -99,7 +99,7 @@ namespace mln
     plain& operator=(const I& rhs);
 
 
-    /// Convertion into an I image
+    /// Conversion into an I image
     operator I () const;
   };
 

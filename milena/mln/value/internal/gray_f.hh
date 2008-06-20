@@ -177,15 +177,15 @@ namespace mln
 	gray_f& operator=(const graylevel_f& val);
 	/// \}
 
-	/// Convertion to graylevel<n>
+	/// Conversion to graylevel<n>
 	template <unsigned m>
 	operator graylevel<m>() const;
 
-	/// Convertion to gray_<n>
+	/// Conversion to gray_<n>
 	template <unsigned m>
 	operator gray_<m>() const;
 
-	/// Convertion to graylevel_f
+	/// Conversion to graylevel_f
 	operator graylevel_f() const;
 
 	/// Access to std type.

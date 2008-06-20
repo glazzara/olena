@@ -260,7 +260,7 @@ namespace mln
   {
   public:
 
-    /// Convertion into a point.
+    /// Conversion into a point.
     operator P () const;
 
     /// Reference to the corresponding point.
@@ -362,7 +362,7 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convertion into a point-site.
+    /// Conversion into a point-site.
     operator runs_psite<P> () const;
 
   protected:
@@ -479,7 +479,7 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convertion into a point-site.
+    /// Conversion into a point-site.
     operator runs_psite<P> () const;
 
   protected:

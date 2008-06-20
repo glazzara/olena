@@ -62,7 +62,7 @@ namespace mln
      */
     line_piter_(const box_<P>& b);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator P() const;
 
     /// Reference to the corresponding point.

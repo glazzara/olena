@@ -61,7 +61,7 @@ namespace mln
     dpoints_fwd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
 		      const Point_Site<Pref>& p_ref);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator mln_point(D) () const;
 
     /// Reference to the corresponding point.
@@ -119,7 +119,7 @@ namespace mln
     dpoints_bkd_piter(const Dps& dps, // FIXME: explicitly set_of_<D>?
 		      const Point_Site<Pref>& p_ref);
 
-    /// Convertion to point.
+    /// Conversion to point.
     operator mln_point(D) () const;
 
     /// Reference to the corresponding point.

@@ -56,7 +56,7 @@ namespace mln
     public:
       branch_iter(branch<T> branch);
 
-      /// Convertion to node.
+      /// Conversion to node.
       operator util::tree_node<T>&() const;
       util::tree_node<T>& operator *();
 

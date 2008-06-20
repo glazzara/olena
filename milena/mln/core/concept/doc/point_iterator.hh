@@ -48,7 +48,7 @@ namespace mln
        */
       typedef void psite;
 
-      /*! \brief Convertion into a point-site.
+      /*! \brief Conversion into a point-site.
        *
        * \return A point site.
        */

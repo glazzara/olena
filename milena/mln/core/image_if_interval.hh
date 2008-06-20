@@ -100,7 +100,7 @@ namespace mln
     /// Constructor without argument.
     image_if_interval();
 
-    /// Const promotion via convertion.
+    /// Const promotion via conversion.
     operator image_if_interval<const I>() const;
   };
 

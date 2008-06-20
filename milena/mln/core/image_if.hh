@@ -107,7 +107,7 @@ namespace mln
     /// Give the definition domain.
     const pset_if<mln_pset(I), F>& domain() const;
 
-    /// Const promotion via convertion.
+    /// Const promotion via conversion.
     operator image_if<const I, F>() const;
   };
 

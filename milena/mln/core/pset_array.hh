@@ -223,13 +223,13 @@ namespace mln
     void next_();
 
 
-    /// Convertion into a point.
+    /// Conversion into a point.
     operator point () const;
 
     /// Reference to the corresponding point.
     const point& to_point() const;
 
-    /// Convertion into a point-site.
+    /// Conversion into a point-site.
     operator psite () const;
 
     /// Access to the current point coordinates.

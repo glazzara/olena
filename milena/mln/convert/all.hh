@@ -30,13 +30,13 @@
 
 /*! \file mln/convert/all.hh
  *
- * \brief File that includes all convertion-related routines.
+ * \brief File that includes all conversion-related routines.
  */
 
 
 namespace mln
 {
-  /// Namespace of convertion routines.
+  /// Namespace of conversion routines.
   namespace convert {}
 }
 

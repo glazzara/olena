@@ -170,11 +170,11 @@ namespace mln
 	template <unsigned m>
 	operator gray_<m>() const;
 
-	/// Convertion to graylevel.
+	/// Conversion to graylevel.
 	template <unsigned m>
 	operator graylevel<m>() const;
 
-	/// Convertion to graylevel_f.
+	/// Conversion to graylevel_f.
  	operator graylevel_f() const;
 
       };

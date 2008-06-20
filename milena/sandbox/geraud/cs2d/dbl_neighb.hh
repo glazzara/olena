@@ -91,7 +91,7 @@ namespace mln
       invalidate();
     }
       
-    /// Convertion to point.
+    /// Conversion to point.
     operator point () const
     {
       mln_precondition(is_valid());

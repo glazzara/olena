@@ -236,7 +236,7 @@ namespace mln
     //     |gray||              |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
 
-    //     Valid Convertions are :
+    //     Valid Conversions are :
 
 //     gray_f -> gray_<n>
 //     gray_f -> graylevel<n>

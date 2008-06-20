@@ -107,7 +107,7 @@ namespace mln
 
     mln_value(I) read_(const mln_psite(I)& p) const;
 
-    /// Const promotion via convertion.
+    /// Const promotion via conversion.
     operator decorated_image<const I, D>() const;
 
     /// Give the decoration.

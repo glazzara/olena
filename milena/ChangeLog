@@ -1,5 +1,35 @@
 2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix typo.
+
+	* mln/core/pset_array.hh,
+	* mln/core/dpoints_piter.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/image_if.hh,
+	* mln/core/line_piter.hh,
+	* mln/core/image_if_interval.hh,
+	* mln/core/safe.hh,
+	* mln/core/concept/doc/value_iterator.hh,
+	* mln/core/concept/doc/point_iterator.hh,
+	* mln/core/plain.hh,
+	* mln/core/p_runs.hh,
+	* mln/value/proxy.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/graylevel_f.hh,
+	* mln/value/internal/gray_.hh,
+	* mln/value/internal/gray_f.hh,
+	* mln/value/viter.hh,
+	* mln/value/float01.hh,
+	* mln/value/label.hh,
+	* mln/convert/all.hh,
+	* mln/util/branch_iter_ind.hh,
+	* mln/util/branch_iter.hh,
+	* sandbox/pellegrin/set/core/p_runs.hh,
+	* sandbox/geraud/cs2d/dbl_neighb.hh,
+	* sandbox/geraud/cs2d/cs2d_morpho.hh (convertion): Fix typo.
+
+2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make sub_image, image_if, and pw::image work again.
 
 	* doc/tutorial/examples/sub_image.cc: Augment.

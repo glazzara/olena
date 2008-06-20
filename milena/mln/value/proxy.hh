@@ -102,11 +102,11 @@ namespace mln
       template <typename II>
       proxy<I>& operator=(const proxy<II>& rhs);
 
-      /// Convertion (read access); general version.
+      /// Conversion (read access); general version.
       template <typename V>
       operator V() const;
 
-      /// Convertion (read access); precise version.
+      /// Conversion (read access); precise version.
       operator mln_value(I)() const;
 
       /// Explicit read access.
@@ -140,11 +140,11 @@ namespace mln
       /// Destructor.
       ~proxy();
 
-      /// Convertion (read access); general version.
+      /// Conversion (read access); general version.
       template <typename V>
       operator V() const;
 
-      /// Convertion (read access); precise version.
+      /// Conversion (read access); precise version.
       operator mln_value(I)() const;
 
       /// Explicit read access.

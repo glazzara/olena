@@ -82,7 +82,7 @@ namespace mln
     typedef typename super_::lvalue lvalue;
     lvalue operator()(const mln_psite(I)& p);
 
-    /// Const promotion via convertion.
+    /// Const promotion via conversion.
     operator safe_image<const I>() const;
   };
 

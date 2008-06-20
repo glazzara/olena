@@ -93,7 +93,7 @@ namespace mln
       /// Return an equivalent gray encoded on \p nbits bits.
       const float01 to_nbits(unsigned nbits) const;
 
-      /// Convertion to float.
+      /// Conversion to float.
       operator float() const;
 
 //       template <unsigned n>
