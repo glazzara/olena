@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,62 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
-# define MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
+#ifndef MLN_CORE_ALIAS_HH
+# define MLN_CORE_ALIAS_HH
 
-/*! \file mln/core/internal/site_set_iterator_base.hh
+/*! \file mln/core/alias.hh
  *
- * \brief Base class to factor code for iterator classes directly
- * working on site sets.
+ * \brief Definition of FIXME
  */
 
-# include <mln/core/internal/site_iterator_base.hh>
+
+#define mln_alias(Var, Expr)			\
+						\
+  typeof(Expr) Var = Expr;			\
+  typedef typeof(Expr) Var##_t
 
 
-namespace mln
-{
-
-  namespace internal
-  {
-
-    /*! \internal A base class for site iterators.
-     *
-     * Parameter \c S is the targeted site set type.
-     */
-    template <typename S, typename E>
-    struct site_set_iterator_base : site_iterator_base<S, E>
-    {
-      /// Give the site set that this iterator browses.
-      const S& site_set() const;
-
-    protected:
-
-      site_set_iterator_base();
-    };
-
-
-#ifndef MLN_INCLUDE_ONLY
-
-    template <typename S, typename E>
-    inline
-    site_set_iterator_base<S, E>::site_set_iterator_base()
-    {
-    }
-
-    template <typename S, typename E>
-    inline
-    const S&
-    site_set_iterator_base<S, E>::site_set() const
-    {
-      mln_precondition(this->s_ != 0);
-      return *this->s_;
-    }
-
-#endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace internal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
+#endif // ! MLN_CORE_ALIAS_HH

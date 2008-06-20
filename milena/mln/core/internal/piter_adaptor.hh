@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,7 @@
  * \brief Definition of iterators on points of boxes.
  */
 
-# include <mln/core/internal/site_iterator_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/concept/box.hh>
 
 
@@ -48,34 +48,21 @@ namespace mln
      * parameter E is the exact type.
      */
     template <typename Pi, typename E>
-    class piter_adaptor_ : public internal::site_iterator_base_< mln_psite(Pi), E >
+    class piter_adaptor_ : public internal::site_set_iterator_base< mln_pset(Pi), E >
     {
-      typedef internal::site_iterator_base_< mln_psite(Pi), E > super_;
     public:
-
-      // Make dim definition from super class available.
-      enum { dim = super_::dim };
 
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
 
-      /// Convertion to point.
-      operator mln_point(Pi) () const;
-
-      /// Reference to the corresponding point.
-      const mln_point(Pi)& to_point() const;
-
-      /// Give the i-th coordinate.
-      mln_coord(Pi) operator[](unsigned i) const;
-
       /// Test the iterator validity.
-      bool is_valid() const;
+      bool is_valid_() const;
 
       /// Invalidate the iterator.
-      void invalidate();
+      void invalidate_();
 
       /// Start an iteration.
-      void start();
+      void start_();
 
       /// Go to the next point.
       void next_();
@@ -95,37 +82,13 @@ namespace mln
     piter_adaptor_<Pi,E>::piter_adaptor_(const Pi& piter)
       : piter_(piter)
     {
-      invalidate();
-    }
-
-    template <typename Pi, typename E>
-    inline
-    piter_adaptor_<Pi,E>::operator mln_point(Pi) () const
-    {
-      return piter_;
-    }
-
-    template <typename Pi, typename E>
-    inline
-    const mln_point(Pi)&
-    piter_adaptor_<Pi,E>::to_point() const
-    {
-      return piter_.to_point();
-    }
-
-    template <typename Pi, typename E>
-    inline
-    mln_coord(Pi)
-    piter_adaptor_<Pi,E>::operator[](unsigned i) const
-    {
-      assert(i < dim);
-      return piter_[i];
+      invalidate_();
     }
 
     template <typename Pi, typename E>
     inline
     bool
-    piter_adaptor_<Pi,E>::is_valid() const
+    piter_adaptor_<Pi,E>::is_valid_() const
     {
       return piter_.is_valid();
     }
@@ -133,7 +96,7 @@ namespace mln
     template <typename Pi, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::invalidate()
+    piter_adaptor_<Pi,E>::invalidate_()
     {
       piter_.invalidate();
     }
@@ -141,7 +104,7 @@ namespace mln
     template <typename Pi, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::start()
+    piter_adaptor_<Pi,E>::start_()
     {
       piter_.start();
     }

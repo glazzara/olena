@@ -33,7 +33,7 @@
  * \brief Definition of the concept of mln::Gpoint.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/site.hh>
 # include <mln/core/concept/gdpoint.hh>
 # include <mln/value/concept/scalar.hh>
 
@@ -78,7 +78,7 @@ namespace mln
   template <>
   struct Gpoint<void>
   {
-    typedef Object<void> super;
+    typedef Site<void> super;
   };
 
 
@@ -90,7 +90,7 @@ namespace mln
    * discrete square grid of the 2D plane.
    */
   template <typename E>
-  struct Gpoint : public Object<E>
+  struct Gpoint : public Site<E>
   {
     typedef Gpoint<void> category;
 

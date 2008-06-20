@@ -31,6 +31,11 @@
 /*! \file mln/core/internal/site_iterator_base.hh
  *
  * \brief Base class to factor code for site iterator classes.
+ *
+ * \todo Make p_ private and add a p() method that can be overridden
+ * so that a subclass can use some other info than this attribute.
+ * See for instance start_ and next_ in pset_if_piter.hh: we have
+ * both pi_ and p_ to designate the current site. 
  */
 
 # include <mln/core/concept/site_iterator.hh>
@@ -61,7 +66,6 @@ namespace mln
 					   mln_site(S),
 					   E >
     {
-
       /// The associated site type (as a Site_Proxy).
       typedef mln_site(S) site;
 

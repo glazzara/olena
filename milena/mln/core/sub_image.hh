@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +33,6 @@
  *
  * \brief Definition of morpher that makes an image become restricted
  * given by a point set.
- *
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
@@ -68,7 +67,8 @@ namespace mln
   {
 
     template <typename I, typename S>
-    struct image_< sub_image<I,S> > : default_image_morpher_< I, mln_value(I),
+    struct image_< sub_image<I,S> > : default_image_morpher_< I,
+							      mln_value(I),
 							      sub_image<I,S> >
     {
 //     private:
@@ -82,8 +82,6 @@ namespace mln
       typedef trait::image::ext_value::irrelevant ext_value;
       typedef trait::image::ext_io::irrelevant    ext_io;
 
-      typedef mln_trait_image_io_from_(I) io; // un-write when I const
-
       typedef trait::image::value_storage::disrupted value_storage;
       // HOT FIXME: except if S is a Box
     };
@@ -95,7 +93,9 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I, typename S>
-  struct sub_image : public internal::image_domain_morpher_< I, S, sub_image<I,S> >
+  struct sub_image : public internal::image_domain_morpher_< I,
+							     S,
+							     sub_image<I,S> >
   {
     /// Skeleton.
     typedef sub_image< tag::image_<I>, tag::pset_<S> > skeleton;
@@ -112,7 +112,7 @@ namespace mln
     /// Give the definition domain.
     const S& domain() const;
 
-    /// Const promotion via convertion.
+    /// Const promotion via conversion.
     operator sub_image<const I, S>() const;
   };
 
@@ -120,10 +120,12 @@ namespace mln
 
 
   template <typename I, typename S>
-  sub_image<const I, S> operator|(const Image<I>& ima, const Site_Set<S>& pset);
+  sub_image<const I, S>
+  operator|(const Image<I>& ima, const Site_Set<S>& pset);
 
   template <typename I, typename S>
-  sub_image<I, S> operator|(Image<I>& ima, const Site_Set<S>& pset);
+  sub_image<I, S>
+  operator|(Image<I>& ima, const Site_Set<S>& pset);
 
 
 

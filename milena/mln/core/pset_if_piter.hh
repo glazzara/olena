@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,11 +30,12 @@
 
 /*! \file mln/core/pset_if_piter.hh
  *
- * \brief Definition of iterators on points of pset_ifes.
+ * \brief Definition of iterators on pset_if<S,F>.
+ *
+ * \todo See todo in site_iterator_base.hh
  */
 
-# include <mln/core/concept/site_iterator.hh>
-# include <mln/core/internal/piter_adaptor.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/pset_if.hh>
 
 
@@ -50,27 +51,34 @@ namespace mln
    */
   template <typename S, typename F>
   class pset_if_fwd_piter_
-    : public internal::piter_adaptor_< mln_fwd_piter(S),
-				       pset_if_fwd_piter_<S,F> >
+    : public internal::site_set_iterator_base< pset_if<S,F>,
+					       pset_if_fwd_piter_<S,F> >
   {
-    typedef mln_fwd_piter(S) adaptee_;
-    typedef pset_if_fwd_piter_<S,F> self_;
-    typedef internal::piter_adaptor_<adaptee_, self_> super_;
-
   public:
 
-    /// Constructor from a subset of points.
-    pset_if_fwd_piter_(const pset_if<S,F>& subset);
+    /// Constructor without argument.
+    pset_if_fwd_piter_();
+
+    /// Constructor from a site set.
+    pset_if_fwd_piter_(const pset_if<S,F>& s);
+
+    /// Test if the iterator is valid.
+    bool is_valid_() const;
+
+    /// Invalidate the iterator.
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
+    mln_fwd_piter(S)& hook_pi_() { return pi_; }
+
   private:
 
-    const pset_if<S,F>& subset_;
+    mln_fwd_piter(S) pi_;
   };
 
 
@@ -90,20 +98,44 @@ namespace mln
 
   template <typename S, typename F>
   inline
-  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_(const pset_if<S,F>& subset)
-    : super_(adaptee_(subset.overset())),
-      subset_(subset)
+  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_()
   {
   }
 
   template <typename S, typename F>
   inline
-  void
-  pset_if_fwd_piter_<S,F>::start()
+  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_(const pset_if<S,F>& s)
   {
-    this->piter_.start();
-    while (this->piter_.is_valid() && ! subset_.pred(this->piter_))
-      this->piter_.next();
+    pi_.change_target(s.overset());
+    this->change_target(s);
+  }
+
+  template <typename S, typename F>
+  inline
+  bool
+  pset_if_fwd_piter_<S,F>::is_valid_() const
+  {
+    return pi_.is_valid();
+  }
+
+  template <typename S, typename F>
+  inline
+  void
+  pset_if_fwd_piter_<S,F>::invalidate_()
+  {
+    pi_.invalidate();
+  }
+
+  template <typename S, typename F>
+  inline
+  void
+  pset_if_fwd_piter_<S,F>::start_()
+  {
+    pi_.start();
+    while (pi_.is_valid() && ! this->s_->pred(pi_))
+      pi_.next();
+    if (is_valid_())
+      this->p_ = pi_;
   }
 
   template <typename S, typename F>
@@ -112,8 +144,10 @@ namespace mln
   pset_if_fwd_piter_<S,F>::next_()
   {
     do
-      this->piter_.next();
-    while (this->piter_.is_valid() && ! subset_.pred(this->piter_));
+      pi_.next();
+    while (pi_.is_valid() && ! this->s_->pred(pi_));
+    if (is_valid_())
+      this->p_ = pi_;
   }
   
 

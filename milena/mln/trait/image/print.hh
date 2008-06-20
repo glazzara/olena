@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,10 +53,10 @@ namespace mln
     {
 
       template <typename I>
-      void print(std::ostream& ostr);
+      void print(std::ostream& ostr = std::cout);
 
       template <typename I>
-      void print(const Image<I>& ima, std::ostream& ostr);
+      void print(const Image<I>& ima, std::ostream& ostr = std::cout);
 
 
 # ifndef MLN_INCLUDE_ONLY

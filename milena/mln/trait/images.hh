@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,6 +33,8 @@
  * \brief Some base trait types for images.
  *
  * \todo Split this file into many.
+ *
+ * \todo the 'nature' prop is not set yet in image types.
  */
 
 # include <iostream>
@@ -70,9 +72,20 @@
 # define mln_trait_image_quant(I)  typename mln::trait::image_< I >::quant
 
 
-// for io: I const => read_only, otherwise like I
-# define mln_trait_image_io_from_(I) \
-mlc_if( mlc_is_const(I), mln::trait::image::value_io::read_only, mln_trait_image_value_io(I) )
+// For value_io: I const => read_only, otherwise like I
+
+# define mln_internal_trait_image_value_io_from(I)	\
+							\
+  mlc_if( mlc_is_const(I),				\
+	  mln::trait::image::value_io::read_only,	\
+	  mln_trait_image_value_io(I) )
+
+
+# define mln_internal_trait_image_speed_from(I)						\
+											\
+  mlc_if( mlc_equal( mln_trait_image_speed(I), mln::trait::image::speed::fastest ),	\
+	  mln::trait::image::speed::fast,						\
+	  mln_trait_image_speed(I) )
 
 
 
@@ -164,14 +177,15 @@ namespace mln
     template <typename D, typename T, typename I>
     struct default_image_morpher_ : default_image_<T, I>
     {
-      // misc => NO delegation
-      //         for category, speed, and size
+      // misc => delegation except for 'category'
+      typedef typename image_<D>::size  size;
+      typedef mln_internal_trait_image_speed_from(D) speed; // un-fastest
 
       // value => delegation
       typedef typename image_<D>::value_access   value_access;
       typedef typename image_<D>::value_storage  value_storage;
       typedef typename image_<D>::value_browsing value_browsing;
-      typedef typename image_<D>::value_io       value_io;
+      typedef mln_internal_trait_image_value_io_from(D) value_io; // un-write when D is const
 
       // site => delegation
       typedef typename image_<D>::localization localization;

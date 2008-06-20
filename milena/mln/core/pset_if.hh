@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,6 +45,19 @@ namespace mln
   template <typename S, typename F> struct pset_if_fwd_piter_;
   template <typename S, typename F> struct pset_if_bkd_piter_;
 
+  namespace trait
+  {
+
+    template <typename S, typename F>
+    struct site_set_< pset_if<S,F> >
+    {
+      typedef trait::site_set::nsites::unknown nsites;
+      typedef trait::site_set::bbox::unknown   bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef mln_trait_site_set_arity(S)      arity;
+    };
+
+  } // end of namespace trait
 
 
   /*! \brief Restrict a point set \p pset to points that verify \p f.
@@ -71,10 +84,14 @@ namespace mln
     typedef internal::site_set_base_<mln_psite(S), self_> super_;
   public:
 
-    typedef mln_psite(super_) psite;
+    typedef mln_psite(S) psite;
+
 
     /// Forward Site_Iterator associated type.
     typedef pset_if_fwd_piter_<S,F> fwd_piter;
+
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
 
     /// Backward Site_Iterator associated type.
     typedef mln::internal::fixme bkd_piter;
@@ -89,12 +106,6 @@ namespace mln
 
     /// Test if \p p belongs to the subset. 
     bool has(const psite& p) const;
-
-    /// Give a bounding box of the subset. 
-    const box_<mln_point(S)>& bbox() const;
-
-    /// Give the number of points of the subset.
-    std::size_t npoints() const;
 
     /// Give the primary overset.
     const S& overset() const;
@@ -134,14 +145,6 @@ namespace mln
   pset_if<S,F>::has(const psite& p) const
   {
     return pset_.has(p) && f_(p);
-  }
-
-  template <typename S, typename F>
-  inline
-  const box_<mln_point(S)>&
-  pset_if<S,F>::bbox() const
-  {
-    return pset_.bbox();
   }
 
   template <typename S, typename F>
@@ -190,27 +193,6 @@ namespace mln
 
 # include <mln/core/pset_if_piter.hh>
 
-
-
-namespace mln
-{
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename S, typename F>
-  std::size_t
-  pset_if<S,F>::npoints() const
-  {
-    std::size_t n = 0;
-    fwd_piter p(*this);
-    for_all(p)
-      ++n;
-    return n;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-} // end of namespace mln
 
 
 #endif // ! MLN_CORE_PSET_IF_HH

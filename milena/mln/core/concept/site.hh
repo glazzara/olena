@@ -25,62 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
-# define MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
+#ifndef MLN_CORE_CONCEPT_SITE_HH
+# define MLN_CORE_CONCEPT_SITE_HH
 
-/*! \file mln/core/internal/site_set_iterator_base.hh
+/*! \file mln/core/concept/site.hh
  *
- * \brief Base class to factor code for iterator classes directly
- * working on site sets.
+ * \brief Definition of the concept of mln::Site.
  */
 
-# include <mln/core/internal/site_iterator_base.hh>
+# include <mln/core/concept/object.hh>
 
 
 namespace mln
 {
 
-  namespace internal
+  // Fwd decl.
+  template <typename E> struct Site;
+
+
+  /// Site category flag type.
+  template <>
+  struct Site<void>
   {
-
-    /*! \internal A base class for site iterators.
-     *
-     * Parameter \c S is the targeted site set type.
-     */
-    template <typename S, typename E>
-    struct site_set_iterator_base : site_iterator_base<S, E>
-    {
-      /// Give the site set that this iterator browses.
-      const S& site_set() const;
-
-    protected:
-
-      site_set_iterator_base();
-    };
+    typedef Object<void> super;
+  };
 
 
-#ifndef MLN_INCLUDE_ONLY
+  /*! \brief Base class for classes that are explicitly sites.
+   */
+  template <typename E>
+  struct Site : public Object<E>
+  {
+    typedef Site<void> category;
 
-    template <typename S, typename E>
-    inline
-    site_set_iterator_base<S, E>::site_set_iterator_base()
-    {
-    }
+  protected:
+    Site();
+  };
 
-    template <typename S, typename E>
-    inline
-    const S&
-    site_set_iterator_base<S, E>::site_set() const
-    {
-      mln_precondition(this->s_ != 0);
-      return *this->s_;
-    }
 
-#endif // ! MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
-  } // end of namespace internal
+  template <typename E>
+  inline
+  Site<E>::Site()
+  {
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_SITE_SET_ITERATOR_BASE_HH
+#endif // ! MLN_CORE_CONCEPT_SITE_HH

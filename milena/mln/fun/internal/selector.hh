@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,8 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/point_site.hh>
+# include <mln/core/concept/site.hh>
+# include <mln/core/concept/pseudo_site.hh>
 # include <mln/metal/unqualif.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/is_a.hh>
@@ -160,7 +161,7 @@ namespace mln
       template <typename T>
       struct tag_
       {
-	enum { value = mlc_is_a(T, Point_Site)::value
+	enum { value = (mlc_is_a(T, Site)::value || mlc_is_a(T, Pseudo_Site)::value)
 	       ? p_
 	       : v_ };
       };

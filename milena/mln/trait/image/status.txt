@@ -5,22 +5,22 @@ KO  fi_adaptor
 KO  graph_image
 KO  hexa
 KO  image1d
-ok  image2d
+ ok image2d
 KO  image3d
-KO  image_if
-KO  image_if_interval
-KO  image_if_value
+ ok image_if
+ rm image_if_interval
+ rm image_if_value
 KO  interpolated
 KO  line_graph_image
 KO  mono_obased_rle_image
 KO  mono_rle_image
 KO  obased_rle_image
 KO  plain
-KO  pw::image
+ ok pw::image
 KO  rle_image
 KO  safe
 KO  sparse_image
-KO  sub_image
+ ok sub_image
 KO  t_image
 KO  tr_image
 KO  translate_image

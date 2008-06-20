@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/pw/image.hh
  *
  * \brief FIXME.
+ *
+ * \todo Relax Function_p2v into Function_v2v.
  */
 
 # include <mln/core/internal/image_primary.hh>
@@ -81,18 +83,25 @@ namespace mln
     struct image_< pw::image<F,S> > : default_image_< mlc_unqualif(mln_result(F)),
 						      pw::image<F,S> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fastest    speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::value::fixme     value;
+      // value
+      typedef trait::image::value_access::computed         value_access;
+      typedef trait::image::value_storage::disrupted       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_only            value_io;
 
-      typedef trait::image::access::browsing access;
-      typedef trait::image::space::fixme_    space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::fixme_  support;
+      // site / domain
+      typedef /* FIXME: depends on S */  undef  localization;
+      typedef /* FIXME: depends on S */  undef  dimension;
 
-      typedef trait::image::border::none     border;
-      typedef trait::image::data::computed   data;
-      typedef trait::image::io::read_only    io;
+      // extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
@@ -130,9 +139,7 @@ namespace mln
       /// Constructor.
       image(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
-
-      /// Test if a pixel value is accessible at \p p.
-      bool has(const mln_psite(S)& p) const;
+      // No init_ method here since this image type is not "concrete".
 
       /// Give the definition domain.
       const S& domain() const;
@@ -195,13 +202,6 @@ namespace mln
     image<F,S>::image(const Function_p2v<F>& f, const Site_Set<S>& ps)
     {
       this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
-    }
-
-    template <typename F, typename S>
-    inline
-    bool image<F,S>::has(const mln_psite(S)& p) const
-    {
-      return this->data_->pset_.has(p);
     }
 
     template <typename F, typename S>

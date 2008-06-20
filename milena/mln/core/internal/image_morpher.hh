@@ -68,7 +68,7 @@ namespace mln
        */
       bool has_data() const;
 
-      /// Convertion to the underlying (morphed) image.
+      /// Conversion to the underlying (morphed) image.
       operator I() const; // FIXME: Very dangerous? Remove?
 
     protected:

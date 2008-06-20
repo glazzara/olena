@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,13 +33,12 @@
  * \brief Definition of a image which domain is restricted by a
  * function.
  *
- * \todo FIXME for theo : add image_if_great_than / less_than
+ * \todo Relax Function_p2v into Function_v2v.
  */
 
-# include <mln/core/internal/image_if_base.hh>
-
-
-# define  Super  mln::internal::image_if_base_< I, F, image_if<I,F> >
+# include <mln/core/internal/image_domain_morpher.hh>
+# include <mln/core/pset_if.hh>
+# include <mln/pw/all.hh>
 
 
 namespace mln
@@ -54,9 +53,12 @@ namespace mln
 
     /// \internal Data structure for \c mln::image_if<I,F>.
     template <typename I, typename F>
-    struct data_< image_if<I,F> > : data_< Super >
+    struct data_< image_if<I,F> >
     {
       data_(I& ima, const F& f);
+
+      I ima_;
+      pset_if<mln_pset(I), F> pset_;
     };
 
   } // end of namespace mln::internal
@@ -66,8 +68,17 @@ namespace mln
   {
 
     template <typename I, typename F>
-    struct image_< image_if<I,F> > : trait::image_< Super >
+    struct image_< image_if<I,F> > : default_image_morpher_< I,
+							     mln_value(I),
+							     image_if<I,F> >
     {
+      typedef trait::image::category::domain_morpher category;
+
+      typedef trait::image::ext_domain::none      ext_domain;  // No extension of domain.
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
+
+      typedef trait::image::value_storage::disrupted value_storage;
     };
 
   } // end of namespace mln::trait
@@ -78,16 +89,23 @@ namespace mln
    *
    */
   template <typename I, typename F>
-  struct image_if : public Super
+  struct image_if : public internal::image_domain_morpher_< I,
+							    pset_if<mln_pset(I), F>,
+							    image_if<I, F> >
   {
     /// Skeleton.
     typedef image_if< tag::image_<I>, tag::function_<F> > skeleton;
 
+    /// Constructor without argument.
+    image_if();
+
     /// Constructor from an image \p ima and a predicate \p f.
     image_if(I& ima, const F& f);
 
-    /// Constructor without argument.
-    image_if();
+    void init_(I& ima, const F& f);
+
+    /// Give the definition domain.
+    const pset_if<mln_pset(I), F>& domain() const;
 
     /// Const promotion via convertion.
     operator image_if<const I, F>() const;
@@ -130,9 +148,10 @@ namespace mln
   operator | (const Image<I>& ima, const Function_p2b<F>& f);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-  /// \internal internal::data_
+  // internal::data_< image_if<I,F> >
 
   namespace internal
   {
@@ -140,11 +159,13 @@ namespace mln
     template <typename I, typename F>
     inline
     data_< image_if<I,F> >::data_(I& ima, const F& f)
-      : data_< Super >(ima, f)
+      : ima_(ima),
+	pset_(ima.domain() | f)
     {
     }
 
   }
+
 
   // image_if<I,F>
 
@@ -158,7 +179,25 @@ namespace mln
   inline
   image_if<I,F>::image_if(I& ima, const F& f)
   {
-    this->init_(ima, f);
+    init_(ima, f);
+  }
+
+  template <typename I, typename F>
+  inline
+  void
+  image_if<I,F>::init_(I& ima, const F& f)
+  {
+    mln_precondition(! this->has_data());
+    this->data_ = new internal::data_< image_if<I,F> >(ima, f);
+  }
+
+  template <typename I, typename F>
+  inline
+  const pset_if<mln_pset(I), F>&
+  image_if<I,F>::domain() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->pset_;
   }
 
   template <typename I, typename F>
@@ -170,6 +209,7 @@ namespace mln
 			    this->data_->pset_.predicate());
     return tmp;
   }
+
 
   // Operators.
 

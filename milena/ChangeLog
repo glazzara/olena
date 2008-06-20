@@ -1,3 +1,38 @@
+2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make sub_image, image_if, and pw::image work again.
+
+	* doc/tutorial/examples/sub_image.cc: Augment.
+	* doc/tutorial/examples/image_if.cc: New.
+	* mln/trait/image/status.txt: Update.
+	* mln/trait/image/print.hh: Add default arg.
+	* mln/trait/images.hh (todo): New; about 'nature'.
+	(mln_trait_image_io_from_): Rename as...
+	(mln_internal_trait_image_value_io_from): ...this.
+	(mln_internal_trait_image_speed_from): New.
+	(default_image_morpher_): Add size and speed.
+	* mln/core/internal/site_iterator_base.hh (todo): New.
+	* mln/core/internal/image_morpher.hh: Typo.
+	* mln/core/internal/site_set_iterator_base.hh: Layout.
+	* mln/core/internal/piter_adaptor.hh: Update.
+	Though this class seems useless.
+	* mln/core/box_piter.hh: Overload ctor without arg.
+	* mln/core/sub_image.hh: Typo, layout, and update.
+	* mln/core/pset_if_piter.hh: Update.
+	* mln/core/image_if.hh: Fetch impl from base.
+	Update.
+	* mln/core/alias.hh: New.
+	* mln/core/pset_if.hh (trait): New specialization.
+	(pset_if): Update; remove bbox and npoints.
+	* mln/core/concept/image.hh (nsites): Deactivate check line.
+	* mln/core/concept/gpoint.hh: Inherit from Site.
+	* mln/core/concept/site.hh: New.
+	* mln/pw/image.hh (trait): Update.
+	(has): Remove; it is factored.
+	* mln/fun/internal/selector.hh (point_site): Remove dep.
+	Use both Site and Pseudo_Site.  Yet it is not enough since
+	many types can be sites.
+
 2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make sub_image work again.

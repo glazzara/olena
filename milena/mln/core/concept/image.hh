@@ -126,8 +126,11 @@ namespace mln
 
     bool (E::*m1)(const psite& p) const = & E::has;
     m1 = 0;
-    std::size_t (E::*m2)() const = & E::nsites;
-    m2 = 0;
+
+    // Only some image types feature the 'nsites' method.
+//     std::size_t (E::*m2)() const = & E::nsites;
+//     m2 = 0;
+
     bool (E::*m3)() const = & E::has_data;
     m3 = 0;
 
