@@ -79,9 +79,9 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-  protected:
+    using super_::p;
 
-    using super_::p_;
+  protected:
     using super_::s_;
   };
 
@@ -126,9 +126,9 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-  protected:
+    using super_::p;
 
-    using super_::p_;
+  protected:
     using super_::s_;
   };
 
@@ -158,7 +158,7 @@ namespace mln
   bool
   box_fwd_piter_<P>::is_valid_() const
   {
-    return p_[0] != s_->pmax()[0] + 1;
+    return p()[0] != s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -166,7 +166,7 @@ namespace mln
   void
   box_fwd_piter_<P>::invalidate_()
   {
-    p_[0] = s_->pmax()[0] + 1;
+    p()[0] = s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -174,7 +174,7 @@ namespace mln
   void
   box_fwd_piter_<P>::start_()
   {
-    p_ = s_->pmin();
+    p() = s_->pmin();
   }
 
   template <typename P>
@@ -183,14 +183,14 @@ namespace mln
   box_fwd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == s_->pmax()[i])
-	p_[i] = s_->pmin()[i];
+      if (p()[i] == s_->pmax()[i])
+	p()[i] = s_->pmin()[i];
       else
 	{
-	  ++p_[i];
+	  ++p()[i];
 	  break;
 	}
-    if (p_ == s_->pmin())
+    if (p() == s_->pmin())
       invalidate_();
   }
 
@@ -215,7 +215,7 @@ namespace mln
   bool
   box_bkd_piter_<P>::is_valid_() const
   {
-    return p_[0] != s_->pmin()[0] - 1;
+    return p()[0] != s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -223,7 +223,7 @@ namespace mln
   void
   box_bkd_piter_<P>::invalidate_()
   {
-    p_[0] = s_->pmin()[0] - 1;
+    p()[0] = s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -231,7 +231,7 @@ namespace mln
   void
   box_bkd_piter_<P>::start_()
   {
-    p_ = s_->pmax();
+    p() = s_->pmax();
   }
 
   template <typename P>
@@ -240,14 +240,14 @@ namespace mln
   box_bkd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == s_->pmin()[i])
-	p_[i] = s_->pmax()[i];
+      if (p()[i] == s_->pmin()[i])
+	p()[i] = s_->pmax()[i];
       else
 	{
-	  --p_[i];
+	  --p()[i];
 	  break;
 	}
-    if (p_ == s_->pmax())
+    if (p() == s_->pmax())
       invalidate_();
   }
 

@@ -41,6 +41,13 @@
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/concept/pseudo_site.hh> // Use of if_possible::change_target.
 
+// site_iterator_base<S>  where S is a Site_Set
+// {
+//   s_ : const S*
+// }
+
+
+
 
 namespace mln
 {
@@ -96,6 +103,12 @@ namespace mln
       /// Change the iterator target.
       void change_target(const S& s);
 
+            mln_psite(S)& p()        { return exact(this)->current_p_(); }
+      const mln_psite(S)& p() const  { return exact(this)->current_p_(); }
+
+            mln_psite(S)& current_p_()       { return p_; }
+      const mln_psite(S)& current_p_() const { return p_; }
+      
     protected:
 
       site_iterator_base();
@@ -103,6 +116,8 @@ namespace mln
       /// The target.
       const S* s_;
 
+    private:
+      
       /// The psite designated by this iterator.
       mln_psite(S) p_;
     };
@@ -131,7 +146,7 @@ namespace mln
     site_iterator_base<S, E>::to_site() const
     {
       mln_precondition(exact(*this).is_valid()); // FIXME: OK?
-      return internal::to_site( exact(this)->unproxy() );
+      return internal::to_site( p() );
     }
 
     template <typename S, typename E>
@@ -139,7 +154,7 @@ namespace mln
     const mln_psite(S)&
     site_iterator_base<S, E>::unproxy() const
     {
-      return p_;
+      return p();
     }
 
     template <typename S, typename E>
@@ -156,9 +171,9 @@ namespace mln
     site_iterator_base<S, E>::change_target(const S& s)
     {
       s_ = & s;
-      // p_ might be also updated since it can hold a pointer towards
+      // p might be also updated since it can hold a pointer towards
       // the set it designates, so:
-      if_possible::change_target(p_, s);
+      if_possible::change_target(p(), s);
       // Last:
       this->invalidate();
     }

@@ -76,6 +76,9 @@ namespace mln
 
     mln_fwd_piter(S)& hook_pi_() { return pi_; }
 
+          mln_psite(S)& current_p_()       { return pi_.p(); }
+    const mln_psite(S)& current_p_() const { return pi_.p(); }
+
   private:
 
     mln_fwd_piter(S) pi_;
@@ -134,8 +137,8 @@ namespace mln
     pi_.start();
     while (pi_.is_valid() && ! this->s_->pred(pi_))
       pi_.next();
-    if (is_valid_())
-      this->p_ = pi_;
+//     if (is_valid_())
+//       this->p_ = pi_;
   }
 
   template <typename S, typename F>
@@ -146,8 +149,8 @@ namespace mln
     do
       pi_.next();
     while (pi_.is_valid() && ! this->s_->pred(pi_));
-    if (is_valid_())
-      this->p_ = pi_;
+//     if (is_valid_())
+//       this->p_ = pi_;
   }
   
 

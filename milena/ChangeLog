@@ -1,5 +1,19 @@
 2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Prefer p() than p_ in site iterators.
+
+	For optimization purpose, we can have in site iterators a couple
+	of current location (see, e.g., in pset_if_piter.hh we have
+	this->p_ inherited plus the local pi_ attribute).
+
+	* mln/core/internal/site_iterator_base.hh (p): New.
+	(current_p_): New; can be overridden.
+	* mln/core/box_piter.hh: Update.
+	* mln/core/pset_if_piter.hh: Update.
+	* mln/core/box.hh: Update.
+
+2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix typo.
 
 	* mln/core/pset_array.hh,

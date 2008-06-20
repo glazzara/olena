@@ -85,6 +85,9 @@ namespace mln
     /// Forward Site_Iterator associated type.
     typedef box_fwd_piter_<P> fwd_piter;
 
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+
     /// Backward Site_Iterator associated type.
     typedef box_bkd_piter_<P> bkd_piter;
 
