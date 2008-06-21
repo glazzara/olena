@@ -6,7 +6,7 @@
 
 	Autoconfiscate trimesh2.
 
-	* configure.ac: Require Autoconf 2.16 and Automake 1.10.
+	* configure.ac: Require Autoconf 2.61 and Automake 1.10.
 	Configure external/Makefile.
 	Configure subdirectory external/trimesh/.
 	Fix the definition of TESTS_CXXFLAGS_DEBUG.
@@ -22,7 +22,7 @@
 	* external/: New directory.
 	* external/README: New.
 
-	* external/trimesh/
+	* external/trimesh/,
 	* external/trimesh/COPYING,
 	* external/trimesh/Makedefs.Darwin,
 	* external/trimesh/Makedefs.Linux,

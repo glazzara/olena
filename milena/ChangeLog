@@ -31,7 +31,7 @@
 	Fix priority queue-based point sets.
 	These problems were spotted using TESTS_CXXFLAGS_DEBUG.
 
-	* mln/core/p_priority_queue.hh: 
+	* mln/core/p_priority_queue.hh:
 	(mln::p_priority_queue<P, T>::queue_map_t): New typedef.
 	Use it...
 	(mln::p_priority_queue<P, T>::q_): ...here, and fix the type
@@ -134,10 +134,10 @@
 	(graph_psite(const p_graph<P>&, util::vertex_id)):
 	Likewise.
 	* mln/core/p_line_graph_piter.hh
-	(p_line_graph_fwd_piter_<P>::next_): 
+	(p_line_graph_fwd_piter_<P>::next_):
 	(p_line_graph_bkd_piter_<P>::next_):
 	Adjust.
-	* tests/morpho/lena_line_graph_image_wst1.cc: Adjust. 
+	* tests/morpho/lena_line_graph_image_wst1.cc: Adjust.
 
 2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
@@ -214,7 +214,7 @@
 	Add more documentation.
 	Aesthetic changes.
 	(mln::accu::count_<T>::result)
-	(mln::accu::volume_<I>::result): 
+	(mln::accu::volume_<I>::result):
 	Remove useless typedef.
 	* mln/accu/volume.hh:
 	(mln::accu::volume_<I>::height__): Rename member as...
@@ -225,7 +225,7 @@
 	(mln::accu::volume_<I>::init): Likewise.
 	Actually initialize all members.
 	(mln::accu::count_adjacent_vertices_<P, V>::set_value): Reset
-	member ref_level__ and area__. 
+	member ref_level__ and area__.
 	* mln/accu/count_adjacent_vertices.hh
 	(mln::accu::count_adjacent_vertices_<P, V>::set_value): Reset
 	member vertices_.
@@ -325,7 +325,7 @@
 
 	Have graph vertex and edge creation return the created identifier.
 
-	* mln/util/internal/graph_base.hh: 
+	* mln/util/internal/graph_base.hh:
 	(mln::util::internal::graph_base<N, E>::add_node_)
 	(mln::util::internal::graph_base<N, E>::add_edge_)
 	* mln/util/graph.hh
@@ -346,7 +346,7 @@
 	* mln/morpho/erosion.hh
 	(erosion_on_function_, erosion_on_set_): Change 'has' to 'owns_'.
 	* mln/morpho/dilation.hh
-	(dilation_on_function_, dilation_on_set_): Likewise.	
+	(dilation_on_function_, dilation_on_set_): Likewise.
 	* mln/labeling/regional_minima.hh
 	(regional_minima_functor): Fix initialization of 'attr'; use
 	the proper command instead of ctor call.
