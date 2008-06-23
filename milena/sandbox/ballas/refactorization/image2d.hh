@@ -9,7 +9,7 @@ namespace mln
 {
 
   template <typename T>
-  class image2d : public internal::image_base_< box2d<int>, image2d<T> >
+  class image2d : public internal::image_base< box2d<int>, image2d<T> >
   {
   public:
 

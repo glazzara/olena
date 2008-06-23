@@ -53,9 +53,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::image_if<I,F>.
     template <typename I, typename F>
-    struct data_< image_if<I,F> >
+    struct data< image_if<I,F> >
     {
-      data_(I& ima, const F& f);
+      data(I& ima, const F& f);
 
       I ima_;
       pset_if<mln_pset(I), F> pset_;
@@ -89,7 +89,7 @@ namespace mln
    *
    */
   template <typename I, typename F>
-  struct image_if : public internal::image_domain_morpher_< I,
+  struct image_if : public internal::image_domain_morpher< I,
 							    pset_if<mln_pset(I), F>,
 							    image_if<I, F> >
   {
@@ -151,14 +151,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // internal::data_< image_if<I,F> >
+  // internal::data< image_if<I,F> >
 
   namespace internal
   {
 
     template <typename I, typename F>
     inline
-    data_< image_if<I,F> >::data_(I& ima, const F& f)
+    data< image_if<I,F> >::data(I& ima, const F& f)
       : ima_(ima),
 	pset_(ima.domain() | f)
     {
@@ -188,7 +188,7 @@ namespace mln
   image_if<I,F>::init_(I& ima, const F& f)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< image_if<I,F> >(ima, f);
+    this->data_ = new internal::data< image_if<I,F> >(ima, f);
   }
 
   template <typename I, typename F>

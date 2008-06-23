@@ -99,7 +99,7 @@ namespace mln
    */
   template <typename P, typename T>
   class value_enc_image :
-    public internal::image_primary_< pset_array< p_runs_<P> >,
+    public internal::image_primary< pset_array< p_runs_<P> >,
 				     value_enc_image<P, T> >
   {
   public:

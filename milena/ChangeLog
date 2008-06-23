@@ -1,3 +1,66 @@
+2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Remove the '_' postfix in some core internals.
+
+	* mln/core/internal/image_base.hh (image_base_): Rename as...
+	(image_base_): ...this.
+	(internal::data_): Rename as...
+	(internal::data): ...this.
+	* mln/core/internal/image_morpher.hh
+	(image_morpher_): Rename as...
+	(image_morpher): ...this.
+	* mln/core/internal/image_primary.hh
+	(image_primary_): Rename as...
+	(image_primary): ...this.
+	* mln/core/internal/image_identity.hh: .
+	(image_identity_): Rename as...
+	(image_identity): ...this.
+	* mln/core/internal/image_domain_morpher.hh: .
+	(image_domain_morpher_): Rename as...
+	(image_domain_morpher): ...this.
+	* mln/core/internal/image_value_morpher.hh
+	(image_value_morpher_): Rename as...
+	(image_value_morpher): ...this.
+
+	Propagate renaming.
+
+	* mln/core/translate_image.hh,
+	* mln/core/line_graph_image.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/run_image.hh,
+	* mln/core/interpolated.hh,
+	* mln/core/bgraph_image.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/graph_image.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/image1d.hh,
+	* mln/core/fi_adaptor.hh,
+	* mln/core/image3d.hh,
+	* mln/core/decorated_image.hh,
+	* mln/core/image_if.hh,
+	* mln/core/value_enc_image.hh,
+	* mln/core/hexa.hh,
+	* mln/core/tr_image.hh,
+	* mln/core/safe.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/plain.hh,
+	* mln/core/image2d.hh,
+	* mln/neighb/image.hh,
+	* mln/value/stack.hh,
+	* mln/border/find.hh,
+	* mln/pw/image.hh,
+	* sandbox/duhamel/translate_image.hh,
+	* sandbox/duhamel/mesh_image.hh,
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh,
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh,
+	* sandbox/garrigues/image_identity/image_domain_morpher.hh,
+	* sandbox/garrigues/image_identity/image_value_morpher.hh,
+	* sandbox/garrigues/image_identity/interpolated.hh,
+	* sandbox/garrigues/image_identity/image_identity.hh,
+	* sandbox/ballas/refactorization/rle_image.hh,
+	* sandbox/ballas/refactorization/image2d.hh,
+	* sandbox/ballas/refactorization/internal/image_base.hh: Update.
+
 2008-06-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Prefer p() than p_ in site iterators.

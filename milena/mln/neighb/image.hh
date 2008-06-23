@@ -93,7 +93,7 @@ namespace mln
     /// \pre The domains of \c I and \c N must be compatible.
     template <typename I, typename N>
     struct image
-      : public internal::image_identity_ < I, mln_pset(I), image <I, N> >
+      : public internal::image_identity < I, mln_pset(I), image <I, N> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;

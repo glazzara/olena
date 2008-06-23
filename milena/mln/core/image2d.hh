@@ -60,10 +60,10 @@ namespace mln
 
     /// \internal Data structure for \c mln::image2d<T>.
     template <typename T>
-    struct data_< image2d<T> >
+    struct data< image2d<T> >
     {
-      data_(const box2d& b, unsigned bdr);
-      ~data_();
+      data(const box2d& b, unsigned bdr);
+      ~data();
 
       T*  buffer_;
       T** array_;
@@ -75,7 +75,7 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
-      void swap_(data_< image2d<T> >& other_);
+      void swap_(data< image2d<T> >& other_);
       void reallocate_(unsigned new_border);
     };
 
@@ -120,7 +120,7 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d : public internal::image_primary_< box2d, image2d<T> >
+  struct image2d : public internal::image_primary< box2d, image2d<T> >
   {
     /// Value associated type.
     typedef T         value;
@@ -247,13 +247,13 @@ namespace mln
   }
 
 
-  // internal::data_< image2d<T> >
+  // internal::data< image2d<T> >
 
   namespace internal
   {
     template <typename T>
     inline
-    data_< image2d<T> >::data_(const box2d& b, unsigned bdr)
+    data< image2d<T> >::data(const box2d& b, unsigned bdr)
       : buffer_(0),
 	array_ (0),
 	b_     (b),
@@ -264,7 +264,7 @@ namespace mln
 
     template <typename T>
     inline
-    data_< image2d<T> >::~data_()
+    data< image2d<T> >::~data()
     {
       deallocate_();
     }
@@ -272,7 +272,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image2d<T> >::update_vb_()
+    data< image2d<T> >::update_vb_()
     {
       vb_.pmin() = b_.pmin() - dpoint2d(all_to(bdr_));
       vb_.pmax() = b_.pmax() + dpoint2d(all_to(bdr_));
@@ -281,7 +281,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image2d<T> >::allocate_()
+    data< image2d<T> >::allocate_()
     {
       update_vb_();
       unsigned
@@ -303,7 +303,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image2d<T> >::deallocate_()
+    data< image2d<T> >::deallocate_()
     {
       if (buffer_)
 	{
@@ -321,9 +321,9 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image2d<T> >::swap_(data_< image2d<T> >& other_)
+    data< image2d<T> >::swap_(data< image2d<T> >& other_)
     {
-      data_< image2d<T> > self_ = *this;
+      data< image2d<T> > self_ = *this;
       *this = other_;
       other_ = self_;
     }
@@ -331,9 +331,9 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image2d<T> >::reallocate_(unsigned new_border)
+    data< image2d<T> >::reallocate_(unsigned new_border)
     {
-      data_< image2d<T> >& tmp = *(new data_< image2d<T> >(this->b_, new_border));
+      data< image2d<T> >& tmp = *(new data< image2d<T> >(this->b_, new_border));
       this->swap_(tmp);
     }
 
@@ -369,7 +369,7 @@ namespace mln
   image2d<T>::init_(const box2d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< image2d<T> >(b, bdr);
+    this->data_ = new internal::data< image2d<T> >(b, bdr);
   }
 
   template <typename T>

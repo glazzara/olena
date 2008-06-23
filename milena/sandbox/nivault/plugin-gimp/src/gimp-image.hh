@@ -131,7 +131,7 @@ namespace mln
    *
    */
   template <GimpImageType t>
-  struct gimp_image : public internal::image_primary_< box2d, gimp_image<t> >
+  struct gimp_image : public internal::image_primary< box2d, gimp_image<t> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;

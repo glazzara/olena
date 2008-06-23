@@ -73,7 +73,7 @@ namespace mln
     typedef Image<void> category;
 
     /*
-      // provided by internal::image_base_:
+      // provided by internal::image_base:
 
       typedef pset;
       typedef site;
@@ -115,7 +115,7 @@ namespace mln
   inline
   Image<E>::Image()
   {
-    // provided by internal::image_base_:
+    // provided by internal::image_base:
 
     typedef mln_pset(E)  pset;
     typedef mln_site(E)  site;

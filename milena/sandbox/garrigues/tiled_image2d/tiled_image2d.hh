@@ -122,7 +122,7 @@ namespace mln
    * FIXME
    */
   template <typename T>
-  struct tiled_image2d : public internal::image_primary_< box2d, tiled_image2d<T> >
+  struct tiled_image2d : public internal::image_primary< box2d, tiled_image2d<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;

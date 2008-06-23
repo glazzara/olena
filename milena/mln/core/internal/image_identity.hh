@@ -48,7 +48,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_identity_ : public image_morpher_<I, S, E>
+    class image_identity : public image_morpher_<I, S, E>
     {
     public:
 
@@ -81,7 +81,7 @@ namespace mln
     protected:
 
       /// Constructor.
-      image_identity_();
+      image_identity();
     };
 
 
@@ -89,14 +89,14 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    image_identity_<I,S,E>::image_identity_()
+    image_identity<I,S,E>::image_identity()
     {
     }
 
     template <typename I, typename S, typename E>
     inline
     const mln_vset(I)&
-    image_identity_<I,S,E>::values() const
+    image_identity<I,S,E>::values() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->values();
@@ -105,7 +105,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     mln_rvalue(I)
-    image_identity_<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_identity<I,S,E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -113,8 +113,8 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    typename image_identity_<I,S,E>::lvalue
-    image_identity_<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_identity<I,S,E>::lvalue
+    image_identity<I,S,E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -123,7 +123,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     const mln_pset(I)&
-    image_identity_<I,S,E>::domain() const
+    image_identity<I,S,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
@@ -132,11 +132,12 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     bool
-    image_identity_<I,S,E>::has(const mln_psite(I)& p) const
+    image_identity<I,S,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->has(p);
     }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::internal

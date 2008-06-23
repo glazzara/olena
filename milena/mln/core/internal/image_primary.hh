@@ -47,10 +47,10 @@ namespace mln
      *
      */
     template <typename S, typename E>
-    struct image_primary_ : public image_base_<S, E>
+    struct image_primary : public image_base<S, E>
     {
     protected:
-      image_primary_();
+      image_primary();
     };
 
 
@@ -58,7 +58,7 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    image_primary_<S,E>::image_primary_()
+    image_primary<S,E>::image_primary()
     {
     }
 

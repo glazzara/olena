@@ -68,7 +68,7 @@ namespace mln
 
       template <typename S, typename E>
       inline
-      unsigned find__(const mln::internal::image_base_<S,E>&)
+      unsigned find__(const mln::internal::image_base<S,E>&)
       {
 	return 0;
       }

@@ -91,10 +91,10 @@ namespace mln
   /// Values are stored on the edges of the graph, not on its vertices.
   template <typename P, typename V>
   struct graph_image :
-    public internal::image_primary_< p_graph<P>, graph_image<P, V> >
+    public internal::image_primary< p_graph<P>, graph_image<P, V> >
   {
     /// Super type.
-    typedef mln::internal::image_base_< p_graph<P>, graph_image<P, V> > super_;
+    typedef mln::internal::image_base< p_graph<P>, graph_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;

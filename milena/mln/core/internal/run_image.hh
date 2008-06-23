@@ -49,7 +49,7 @@ namespace mln
      * Parameter \c E is the Exact type of the image.
      */
     template <typename T, typename P, typename E>
-    class run_image_ : public internal::image_primary_< p_runs_<P>, E >
+    class run_image_ : public internal::image_primary< p_runs_<P>, E >
     {
     protected:
       run_image_();

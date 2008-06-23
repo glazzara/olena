@@ -63,9 +63,9 @@ namespace mln
 
     /// \internal Data structure for mln::pw::image
     template <typename F, typename S>
-    struct data_< mln::pw::image<F,S> >
+    struct data< mln::pw::image<F,S> >
     {
-      data_(const F& f, const S& ps);
+      data(const F& f, const S& ps);
       F f_;
       S pset_;
     };
@@ -114,7 +114,7 @@ namespace mln
      *
      */
     template <typename F, typename S>
-    struct image : public internal::image_primary_< S, image<F,S> >
+    struct image : public internal::image_primary< S, image<F,S> >
     {
       /// Skeleton.
       typedef image< tag::function_<F>, tag::pset_<S> > skeleton;
@@ -171,14 +171,14 @@ namespace mln
     return tmp;
   }
 
-  // internal::data_< pw::image<F,S> >
+  // internal::data< pw::image<F,S> >
 
   namespace internal
   {
     /// \internal
     template <typename F, typename S>
     inline
-    data_< pw::image<F,S> >::data_(const F& f, const S& ps)
+    data< pw::image<F,S> >::data(const F& f, const S& ps)
       : f_(f),
 	pset_(ps)
     {
@@ -201,7 +201,7 @@ namespace mln
     inline
     image<F,S>::image(const Function_p2v<F>& f, const Site_Set<S>& ps)
     {
-      this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
+      this->data_ = new internal::data< pw::image<F,S> >(exact(f), exact(ps));
     }
 
     template <typename F, typename S>

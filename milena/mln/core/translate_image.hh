@@ -98,7 +98,7 @@ namespace mln
    * 
    */
   template <typename I>
-  struct translate_image : public mln::internal::image_identity_< I, mln_pset(I), translate_image<I> >
+  struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
   {
 
     typedef mln::internal::image_morpher_< I, mln_pset(I), translate_image<I> > super_;

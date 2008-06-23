@@ -48,7 +48,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_domain_morpher_ : public image_morpher_<I, S, E>
+    class image_domain_morpher : public image_morpher_<I, S, E>
     {
     public:
 
@@ -75,7 +75,7 @@ namespace mln
       lvalue operator()(const mln_psite(S)& p);
 
     protected:
-      image_domain_morpher_();
+      image_domain_morpher();
     };
 
 
@@ -83,14 +83,14 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    image_domain_morpher_<I,S,E>::image_domain_morpher_()
+    image_domain_morpher<I,S,E>::image_domain_morpher()
     {
     }
 
     template <typename I, typename S, typename E>
     inline
     const mln_vset(I)&
-    image_domain_morpher_<I,S,E>::values() const
+    image_domain_morpher<I,S,E>::values() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->values();
@@ -99,7 +99,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     mln_rvalue(I)
-    image_domain_morpher_<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -107,8 +107,8 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    typename image_domain_morpher_<I,S,E>::lvalue
-    image_domain_morpher_<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_domain_morpher<I,S,E>::lvalue
+    image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);

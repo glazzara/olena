@@ -49,7 +49,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_morpher_ : public image_base_<S, E>
+    class image_morpher_ : public image_base<S, E>
     {
     public:
 
@@ -64,7 +64,7 @@ namespace mln
       /* \brief Test if this image has been initialized; default impl.
        *
        * This default impl is stronger than the one inherited from
-       * image_base_.
+       * image_base.
        */
       bool has_data() const;
 

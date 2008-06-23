@@ -40,6 +40,18 @@
 # include <mln/util/tracked_ptr.hh>
 
 
+//              image_base
+//                   ^
+//                   |
+//       ---------------------------
+//      |                           |
+// image_primary               image_morpher
+//                                  ^
+//                                  |
+//              -----------------------------------------
+//             |                    |                    |
+//     image_domain_morpher  image_value_morpher   image_identity
+
 
 namespace mln
 {
@@ -52,7 +64,7 @@ namespace mln
     /// FIXME: Say more about it!
 
     template <typename I>
-    struct data_;
+    struct data;
 
   } // end of namespace mln::internal
 
@@ -94,7 +106,7 @@ namespace mln
      *
      */
     template <typename S, typename E>
-    struct image_base_
+    struct image_base
       :
       public image_checked_<E>
 
@@ -134,23 +146,23 @@ namespace mln
 
 
       /// Assignment operator.
-      image_base_& operator=(const image_base_& rhs);
+      image_base& operator=(const image_base& rhs);
 
       /// Copy constructor.
-      image_base_(const image_base_& rhs);
+      image_base(const image_base& rhs);
 
       /// Detach data from an image (free it if nobody else hold it).
       void destroy();
 
-      const util::tracked_ptr< internal::data_<E> >& hook_data_() const { return data_; }
+      const util::tracked_ptr< internal::data<E> >& hook_data_() const { return data_; }
 
       const void* id_() const { return data_.ptr_; }
 
     protected:
-      image_base_();
+      image_base();
 
       // Internal data, sharable by several images.
-      util::tracked_ptr< internal::data_<E> > data_;
+      util::tracked_ptr< internal::data<E> > data_;
     };
 
 
@@ -159,13 +171,13 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    image_base_<S,E>::image_base_()
+    image_base<S,E>::image_base()
     {
     }
 
     template <typename S, typename E>
     inline
-    image_base_<S,E>::image_base_(const image_base_& rhs)
+    image_base<S,E>::image_base(const image_base& rhs)
       : image_checked_<E>()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
@@ -174,8 +186,8 @@ namespace mln
 
     template <typename S, typename E>
     inline
-    image_base_<S,E>&
-    image_base_<S,E>::operator=(const image_base_<S,E>& rhs)
+    image_base<S,E>&
+    image_base<S,E>::operator=(const image_base<S,E>& rhs)
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       if (& rhs == this) // || ! exact(rhs).has_data())
@@ -187,7 +199,7 @@ namespace mln
     template <typename S, typename E>
     inline
     bool
-    image_base_<S,E>::has_data() const
+    image_base<S,E>::has_data() const
     {
       return data_ != 0;
     }
@@ -195,7 +207,7 @@ namespace mln
     template <typename S, typename E>
     inline
     bool
-    image_base_<S,E>::has(const psite& p) const
+    image_base<S,E>::has(const psite& p) const
     {
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().has(p);
@@ -204,7 +216,7 @@ namespace mln
     template <typename S, typename E>
     inline
     std::size_t
-    image_base_<S,E>::nsites() const
+    image_base<S,E>::nsites() const
     {
       mlc_equal(mln_trait_site_set_nsites(S),
 		mln::trait::site_set::nsites::known)::check();
@@ -215,7 +227,7 @@ namespace mln
     template <typename S, typename E>
     inline
     void
-    image_base_<S,E>::destroy()
+    image_base<S,E>::destroy()
     {
       data_.clean_();
     }

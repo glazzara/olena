@@ -146,7 +146,7 @@ namespace mln
      */
     template <unsigned n, typename I>
     struct stack_image
-      : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
+      : public mln::internal::image_value_morpher< I, stack_image<n,I> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;

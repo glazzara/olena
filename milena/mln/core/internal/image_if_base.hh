@@ -99,7 +99,7 @@ namespace mln
      *
      */
     template <typename I, typename F, typename E>
-    struct image_if_base_ : public internal::image_domain_morpher_< I, pset_if<mln_pset(I),F>, E >
+    struct image_if_base_ : public internal::image_domain_morpher< I, pset_if<mln_pset(I),F>, E >
     {
 
       /// Give the definition domain.

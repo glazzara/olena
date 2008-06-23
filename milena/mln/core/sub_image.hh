@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::sub_image<I,S>.
     template <typename I, typename S>
-    struct data_< sub_image<I,S> >
+    struct data< sub_image<I,S> >
     {
-      data_(I& ima, const S& pset);
+      data(I& ima, const S& pset);
 
       I ima_;
       S pset_;
@@ -93,7 +93,7 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I, typename S>
-  struct sub_image : public internal::image_domain_morpher_< I,
+  struct sub_image : public internal::image_domain_morpher< I,
 							     S,
 							     sub_image<I,S> >
   {
@@ -150,14 +150,14 @@ namespace mln
   }
 
 
-  // internal::data_< sub_image<I,S> >
+  // internal::data< sub_image<I,S> >
 
   namespace internal
   {
 
     template <typename I, typename S>
     inline
-    data_< sub_image<I,S> >::data_(I& ima, const S& pset)
+    data< sub_image<I,S> >::data(I& ima, const S& pset)
       : ima_(ima),
 	pset_(pset)
     {
@@ -187,7 +187,7 @@ namespace mln
   sub_image<I,S>::init_(I& ima, const S& pset)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< sub_image<I,S> >(ima, pset);
+    this->data_ = new internal::data< sub_image<I,S> >(ima, pset);
   }
 
   template <typename I, typename S>

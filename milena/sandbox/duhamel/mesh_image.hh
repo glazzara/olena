@@ -67,10 +67,10 @@ namespace mln
    *
    */
   template <typename P, typename V>
-  struct mesh_image  : public internal::image_primary_< mesh_p<P>, mesh_image<P, V> >
+  struct mesh_image  : public internal::image_primary< mesh_p<P>, mesh_image<P, V> >
   {
 
-    typedef mln::internal::image_base_< mesh_p<P>, mesh_image<P, V> > super_;
+    typedef mln::internal::image_base< mesh_p<P>, mesh_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;

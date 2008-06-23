@@ -94,10 +94,10 @@ namespace mln
    */
   template <typename P, typename V>
   struct bgraph_image :
-    public internal::image_primary_< p_bgraph<P>, bgraph_image<P, V> >
+    public internal::image_primary< p_bgraph<P>, bgraph_image<P, V> >
   {
 
-    typedef mln::internal::image_base_< p_bgraph<P>, bgraph_image<P, V> >
+    typedef mln::internal::image_base< p_bgraph<P>, bgraph_image<P, V> >
     super_;
 
     /// Value associated type.

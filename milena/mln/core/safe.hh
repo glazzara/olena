@@ -66,9 +66,9 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I>
-  class safe_image : public internal::image_identity_< I, mln_pset(I), safe_image<I> >
+  class safe_image : public internal::image_identity< I, mln_pset(I), safe_image<I> >
   {
-    typedef internal::image_identity_< I, mln_pset(I), safe_image<I> > super_;
+    typedef internal::image_identity< I, mln_pset(I), safe_image<I> > super_;
   public:
 
     /// Skeleton.

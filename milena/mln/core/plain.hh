@@ -66,10 +66,10 @@ namespace mln
    *
    */
   template <typename I>
-  struct plain : public mln::internal::image_identity_< I, mln_pset(I), plain<I> >
+  struct plain : public mln::internal::image_identity< I, mln_pset(I), plain<I> >
   {
 
-    typedef mln::internal::image_identity_< I, mln_pset(I), plain<I> > super_;
+    typedef mln::internal::image_identity< I, mln_pset(I), plain<I> > super_;
 
     /// Point_Site associated type.
     typedef mln_psite(I) psite;

@@ -11,7 +11,7 @@ namespace mln
   // note P must be a point
   template <typename P, typename T>
   class rle_image :
-    public internal::image_base_<rle_pset<P>, rle_image<P, T> >
+    public internal::image_base<rle_pset<P>, rle_image<P, T> >
   {
   public:
 
