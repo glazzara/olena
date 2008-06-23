@@ -44,7 +44,7 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P> struct box_;
+  template <typename P> struct box;
   template <typename P> struct box_fwd_piter_;
   template <typename P> struct box_bkd_piter_;
 
@@ -53,7 +53,7 @@ namespace mln
   {
 
     template <typename P>
-    struct site_set_< box_<P> >
+    struct site_set_< box<P> >
     {
       typedef trait::site_set::nsites::known   nsites;
       typedef trait::site_set::bbox::straight  bbox;
@@ -70,8 +70,8 @@ namespace mln
    * Parameter \c P is the corresponding type of point.
    */
   template <typename P>
-  struct box_ : public Box< box_<P> >,
-		public internal::box_impl_< P::dim, mln_coord(P), box_<P> >
+  struct box : public Box< box<P> >,
+		public internal::box_impl_< P::dim, mln_coord(P), box<P> >
   {
     /// Dimension.
     enum { dim = P::dim };
@@ -104,16 +104,16 @@ namespace mln
     P& pmax();
 
     /// Constructor without argument.
-    box_();
+    box();
 
     /// Constructor of a box going from \p pmin to \p pmax.
-    box_(const site& pmin, const site& pmax);
+    box(const site& pmin, const site& pmax);
 
     /// \{ Constructors with different numbers of arguments
     /// (sizes) w.r.t. the dimension.
-    explicit box_(mln_coord(P) ninds);
-    box_(mln_coord(P) nrows, mln_coord(P) ncols);
-    box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
+    explicit box(mln_coord(P) ninds);
+    box(mln_coord(P) nrows, mln_coord(P) ncols);
+    box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols);
     /// \}
 
     /*! \brief Test if \p p belongs to the box.
@@ -126,7 +126,7 @@ namespace mln
     void enlarge(unsigned b);
 
     /// Give a larger box.
-    box_<P> to_larger(unsigned b) const;
+    box<P> to_larger(unsigned b) const;
 
     /// Test that the box owns valid data, i.e., pmin is 'less-than'
     /// pmax.
@@ -145,10 +145,10 @@ namespace mln
    *
    * \return The modified output stream \p ostr.
    *
-   * \relates mln::box_
+   * \relates mln::box<P>
    */
   template <typename P>
-  std::ostream& operator<<(std::ostream& ostr, const box_<P>& b);
+  std::ostream& operator<<(std::ostream& ostr, const box<P>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -156,7 +156,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  box_<P>::is_valid() const
+  box<P>::is_valid() const
   {
     typedef util::less<P> less_t;
     static const less_t op = less_t();
@@ -166,7 +166,7 @@ namespace mln
   template <typename P>
   inline
   P
-  box_<P>::pmin() const
+  box<P>::pmin() const
   {
     mln_precondition(is_valid());
     return pmin_;
@@ -175,7 +175,7 @@ namespace mln
   template <typename P>
   inline
   P&
-  box_<P>::pmin()
+  box<P>::pmin()
   {
     return pmin_;
   }
@@ -183,7 +183,7 @@ namespace mln
   template <typename P>
   inline
   P
-  box_<P>::pmax() const
+  box<P>::pmax() const
   {
     mln_precondition(is_valid());
     return pmax_;
@@ -192,20 +192,20 @@ namespace mln
   template <typename P>
   inline
   P&
-  box_<P>::pmax()
+  box<P>::pmax()
   {
     return pmax_;
   }
 
   template <typename P>
   inline
-  box_<P>::box_()
+  box<P>::box()
   {
   }
 
   template <typename P>
   inline
-  box_<P>::box_(const site& pmin, const site& pmax)
+  box<P>::box(const site& pmin, const site& pmax)
     : pmin_(pmin),
       pmax_(pmax)
   {
@@ -214,7 +214,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_<P>::box_(mln_coord(P) ninds)
+  box<P>::box(mln_coord(P) ninds)
   {
     metal::bool_<(dim == 1)>::check();
     pmin_ = literal::origin;
@@ -223,7 +223,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_<P>::box_(mln_coord(P) nrows, mln_coord(P) ncols)
+  box<P>::box(mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 2)>::check();
     pmin_ = literal::origin;
@@ -233,7 +233,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_<P>::box_(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
+  box<P>::box(mln_coord(P) nslis, mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 3)>::check();
     pmin_ = literal::origin;
@@ -244,7 +244,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  box_<P>::has(const P& p) const
+  box<P>::has(const P& p) const
   {
     mln_precondition(is_valid());
     for (unsigned i = 0; i < P::dim; ++i)
@@ -256,7 +256,7 @@ namespace mln
   template <typename P>
   inline
   void
-  box_<P>::enlarge(unsigned b)
+  box<P>::enlarge(unsigned b)
   {
     mln_precondition(is_valid());
     for (unsigned i = 0; i < P::dim; ++i)
@@ -270,11 +270,11 @@ namespace mln
 
   template <typename P>
   inline
-  box_<P>
-  box_<P>::to_larger(unsigned b) const
+  box<P>
+  box<P>::to_larger(unsigned b) const
   {
     mln_precondition(is_valid());
-    box_<P> tmp(*this);
+    box<P> tmp(*this);
 
     for (unsigned i = 0; i < P::dim; ++i)
     {
@@ -287,7 +287,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::ostream& operator<<(std::ostream& ostr, const box_<P>& b)
+  std::ostream& operator<<(std::ostream& ostr, const box<P>& b)
   {
     mln_precondition(b.is_valid());
     return ostr << "[" << b.pmin() << ".." << b.pmax() << ']';

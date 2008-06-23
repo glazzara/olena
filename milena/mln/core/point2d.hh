@@ -45,7 +45,7 @@ namespace mln
   /*! \brief Type alias for a point defined on the 2D square grid with
    * integer coordinates.
    */
-  typedef point_<grid::square, int> point2d;
+  typedef point<grid::square, int> point2d;
 
 
   namespace internal
@@ -54,7 +54,7 @@ namespace mln
     // Specialization.
 
     template <typename C, typename E>
-    struct site_const_impl< point_<grid::square, C>, E >
+    struct site_const_impl< point<grid::square, C>, E >
     {
       C row() const;
       C col() const;
@@ -64,17 +64,17 @@ namespace mln
     };
 
 
-    // Specialization for point_<M,C>.
+    // Specialization for point<M,C>.
 
     template <typename C, typename E>
-    struct site_mutable_impl< point_<grid::square, C>, E > :
-           site_const_impl  < point_<grid::square, C>, E >
+    struct site_mutable_impl< point<grid::square, C>, E > :
+           site_const_impl  < point<grid::square, C>, E >
     {
       C& row();
       C& col();
       C& operator[](unsigned i);
     private:
-      typedef site_const_impl< point_<grid::square, C>, E > super;
+      typedef site_const_impl< point<grid::square, C>, E > super;
       E& exact_();
     };
 
@@ -90,21 +90,21 @@ namespace mln
 
     template <typename C, typename E>
     C
-    site_const_impl< point_<grid::square, C>, E >::row() const
+    site_const_impl< point<grid::square, C>, E >::row() const
     {
       return exact_().to_site().row();
     }
 
     template <typename C, typename E>
     C
-    site_const_impl< point_<grid::square, C>, E >::col() const
+    site_const_impl< point<grid::square, C>, E >::col() const
     {
       return exact_().to_site().col();
     }
 
     template <typename C, typename E>
     C
-    site_const_impl< point_<grid::square, C>, E >::operator[](unsigned i) const
+    site_const_impl< point<grid::square, C>, E >::operator[](unsigned i) const
     {
       mln_precondition(i < 2);
       return exact_().to_site()[i];
@@ -112,7 +112,7 @@ namespace mln
 
     template <typename C, typename E>
     const E&
-    site_const_impl< point_<grid::square, C>, E >::exact_() const
+    site_const_impl< point<grid::square, C>, E >::exact_() const
     {
       return internal::force_exact<const E>(*this);
     }
@@ -121,21 +121,21 @@ namespace mln
 
     template <typename C, typename E>
     C&
-    site_mutable_impl< point_<grid::square, C>, E >::row()
+    site_mutable_impl< point<grid::square, C>, E >::row()
     {
       return exact_().to_site().row();
     }
 
     template <typename C, typename E>
     C&
-    site_mutable_impl< point_<grid::square, C>, E >::col()
+    site_mutable_impl< point<grid::square, C>, E >::col()
     {
       return exact_().to_site().col();
     }
 
     template <typename C, typename E>
     C&
-    site_mutable_impl< point_<grid::square, C>, E >::operator[](unsigned i)
+    site_mutable_impl< point<grid::square, C>, E >::operator[](unsigned i)
     {
       mln_precondition(i < 2);
       return exact_().to_site()[i];
@@ -143,7 +143,7 @@ namespace mln
     
     template <typename C, typename E>
     E&
-    site_mutable_impl< point_<grid::square, C>, E >::exact_()
+    site_mutable_impl< point<grid::square, C>, E >::exact_()
     {
       return internal::force_exact<E>(*this);
     }

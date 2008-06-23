@@ -31,6 +31,8 @@
 /*! \file mln/trait/image/props.hh
  *
  * \brief Properties of image classes.
+ *
+ * \todo Remove space_from_point and fwd decls at EOF.
  */
 
 # include <string>
@@ -556,11 +558,11 @@ namespace mln
     struct cube;
   }
 
-  template <typename M, typename C> struct point_;
-  typedef point_<grid::tick, int> point1d;
-  typedef point_<grid::square, int> point2d;
-  typedef point_<grid::hexa, int> point2d_h;
-  typedef point_<grid::cube, int> point3d;
+  template <typename M, typename C> struct point;
+  typedef point<grid::tick, int> point1d;
+  typedef point<grid::square, int> point2d;
+  typedef point<grid::hexa, int> point2d_h;
+  typedef point<grid::cube, int> point3d;
 
   namespace trait
   {

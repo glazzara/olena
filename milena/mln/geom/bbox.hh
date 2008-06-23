@@ -50,7 +50,7 @@ namespace mln
 
     /// Compute the precise bounding box of a point set \p pset.
     template <typename S>
-    box_<mln_site(S)> bbox(const Site_Set<S>& pset);
+    box<mln_site(S)> bbox(const Site_Set<S>& pset);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -59,15 +59,15 @@ namespace mln
     {
 
       template <typename S>
-      box_<mln_site(S)> bbox_(trait::site_set::bbox::known,
-			      const S& pset)
+      box<mln_site(S)> bbox_(trait::site_set::bbox::known,
+			     const S& pset)
       {
 	return pset.bbox();
       }
 
       template <typename S>
-      box_<mln_site(S)> bbox_(trait::site_set::bbox::unknown,
-			      const S& pset)
+      box<mln_site(S)> bbox_(trait::site_set::bbox::unknown,
+			     const S& pset)
       {
 	typedef mln_site(S) P;
 	P pmin, pmax;
@@ -87,7 +87,7 @@ namespace mln
 	      if (p[i] > pmax[i])
 		pmax[i] = p[i];
 
-	box_<P> bb(pmin, pmax);
+	box<P> bb(pmin, pmax);
 	return bb;
       }
 
@@ -98,13 +98,13 @@ namespace mln
 
     template <typename S>
     inline
-    box_<mln_site(S)> bbox(const Site_Set<S>& pset)
+    box<mln_site(S)> bbox(const Site_Set<S>& pset)
     {
       trace::entering("geom::bbox");
 //       mln_precondition(set::is_empty(pset) != 0);
 
-      box_<mln_site(S)> b = impl::bbox_(mln_trait_site_set_bbox(S)(),
-					exact(pset));
+      box<mln_site(S)> b = impl::bbox_(mln_trait_site_set_bbox(S)(),
+				       exact(pset));
 
       trace::exiting("geom::bbox");
       return b;

@@ -47,11 +47,11 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_fwd_piter_ : public internal::site_set_iterator_base< box_<P>,
+  class box_fwd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_fwd_piter_<P> >
   {
     typedef box_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base< box_<P>, self_ > super_;
+    typedef internal::site_iterator_base< box<P>, self_ > super_;
 
   public:
 
@@ -65,7 +65,7 @@ namespace mln
      *
      * \param[in] b A box.
      */
-    box_fwd_piter_(const box_<P>& b);
+    box_fwd_piter_(const box<P>& b);
 
     /// Test the iterator validity.
     bool is_valid_() const;
@@ -94,11 +94,11 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public internal::site_iterator_base< box_<P>,
+  class box_bkd_piter_ : public internal::site_iterator_base< box<P>,
 							      box_bkd_piter_<P> >
   {
     typedef box_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base< box_<P>, self_ > super_;
+    typedef internal::site_iterator_base< box<P>, self_ > super_;
 
   public:
 
@@ -112,7 +112,7 @@ namespace mln
      *
      * \param[in] b A box.
      */
-    box_bkd_piter_(const box_<P>& b);
+    box_bkd_piter_(const box<P>& b);
 
     /// Test the iterator validity.
     bool is_valid_() const;
@@ -148,7 +148,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_fwd_piter_<P>::box_fwd_piter_(const box_<P>& b)
+  box_fwd_piter_<P>::box_fwd_piter_(const box<P>& b)
   {
     this->change_target(b);
   }
@@ -205,7 +205,7 @@ namespace mln
 
   template <typename P>
   inline
-  box_bkd_piter_<P>::box_bkd_piter_(const box_<P>& b)
+  box_bkd_piter_<P>::box_bkd_piter_(const box<P>& b)
   {
     this->change_target(b);
   }

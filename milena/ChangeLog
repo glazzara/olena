@@ -1,5 +1,26 @@
 2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Get rid of '_' at end of point_, dpoint_, and box_.
+
+	* mln/core/point.hh (dpoint): Remove this typedef.
+	(operator+=, operator-=): Use delta in sig.
+	(point_): Rename as...
+	(point): ...this.
+	* mln/core/dpoint.hh (point): Remove this typedef.
+	(dpoint_): Rename as...
+	(dpoint): ...this.
+	* mln/core/box.hh (box_): Rename as...
+	(box): ...this.
+
+	* mln/trait/image/props.hh,
+	* mln/core/dpoint2d.hh,
+	* mln/core/box_piter.hh,
+	* mln/core/point2d.hh,
+	* mln/core/box2d.hh,
+	* mln/geom/bbox.hh: Propagate renaming.
+
+2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Remove the final '_' in image_morpher.
 
 	* mln/core/internal/image_morpher.hh

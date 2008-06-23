@@ -49,8 +49,8 @@ namespace mln
 {
 
   /// \{ Fwd decls.
-  template <typename G, typename C> struct  point_;
-  template <typename G, typename C> struct dpoint_;
+  template <typename G, typename C> struct  point;
+  template <typename G, typename C> struct dpoint;
   namespace literal {
     struct zero_t;
     struct one_t;
@@ -81,8 +81,8 @@ namespace mln
    * coordinate type in this space.
    */
   template <typename G, typename C>
-  struct point_ : public Gpoint< point_<G,C> >,
-		  public internal::mutable_coord_impl_< G::dim, C, point_<G,C> >
+  struct point : public Gpoint< point<G,C> >,
+		  public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
   {
     /*! \var dim
      * \brief Dimension of the space.
@@ -93,14 +93,11 @@ namespace mln
     /// Grid associated type.
     typedef G grid;
 
-    /// Dpoint associated type.
-    typedef dpoint_<G,C> dpoint;
-
     /// Delta associated type.
-    typedef dpoint_<G,C> delta;
+    typedef dpoint<G,C> delta;
 
     /// DPsite associated type.
-    typedef dpoint_<G,C> dpsite;
+    typedef dpoint<G,C> dpsite;
 
     /// Coordinate associated type.
     typedef C coord;
@@ -121,44 +118,44 @@ namespace mln
     C& operator[](unsigned i);
 
     /// Constructor without argument.
-    point_();
+    point();
 
     /// Constructor from an algebra vector.
     template <typename C2>
-    point_(const algebra::vec<dim,C2>& v);
+    point(const algebra::vec<dim,C2>& v);
 
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
-    point_(C ind);
-    point_(C row, C col);
-    point_(C sli, C row, C col);
+    point(C ind);
+    point(C row, C col);
+    point(C sli, C row, C col);
     /// \}
 
     /// \{ Constructors/assignments with literals.
-    point_(const literal::origin_t&);
-    point_<G,C>& operator=(const literal::origin_t&);
+    point(const literal::origin_t&);
+    point<G,C>& operator=(const literal::origin_t&);
     // Works only in 1D:
-    point_(const literal::zero_t&);
-    point_<G,C>& operator=(const literal::zero_t&);
-    point_(const literal::one_t&);
-    point_<G,C>& operator=(const literal::one_t&);
+    point(const literal::zero_t&);
+    point<G,C>& operator=(const literal::zero_t&);
+    point(const literal::one_t&);
+    point<G,C>& operator=(const literal::one_t&);
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
-    point_(const Function_i2v<F>& f);
+    point(const Function_i2v<F>& f);
 
     /// Set all coordinates to the value \p c.
     void set_all(C c);
 
     /// Origin point (all coordinates are 0).
-    static const point_<G,C> origin;
+    static const point<G,C> origin;
 
     /// Shifting by \p dp.
-    point_<G,C>& operator+=(const dpoint& dp);
+    point<G,C>& operator+=(const delta& dp);
 
     /// Shifting by \p the inverse of dp.
-    point_<G,C>& operator-=(const dpoint& dp);
+    point<G,C>& operator-=(const delta& dp);
 
     /// Hook to coordinates.
     operator typename internal::point_to_<G, C>::metal_vec () const;
@@ -191,8 +188,8 @@ namespace mln
      * iterator.
      */
     template <typename G, typename Cl, typename Cr>
-    struct less_than< point_<G,Cl>,
-		      point_<G,Cr> > 
+    struct less_than< point<G,Cl>,
+		      point<G,Cr> > 
     {
       /*! \brief Comparison between a couple of points \a lhs and \a
        *  rhs.
@@ -200,8 +197,8 @@ namespace mln
        * \return True if \p lhs is before \p rhs in the sense of the
        * coordinates lexicographic comparison, otherwise false.
        */
-      bool operator()(const point_<G,Cl>& lhs,
-		      const point_<G,Cr>& rhs) const;
+      bool operator()(const point<G,Cl>& lhs,
+		      const point<G,Cr>& rhs) const;
     };
 
   } // end of namespace mln::util
@@ -211,7 +208,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  C point_<G,C>::operator[](unsigned i) const
+  C point<G,C>::operator[](unsigned i) const
   {
     assert(i < dim);
     return this->coord_[i];
@@ -219,7 +216,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  C& point_<G,C>::operator[](unsigned i)
+  C& point<G,C>::operator[](unsigned i)
   {
     assert(i < dim);
     return this->coord_[i];
@@ -229,21 +226,21 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_()
+  point<G,C>::point()
   {
   }
 
   template <typename G, typename C>
   template <typename C2>
   inline
-  point_<G,C>::point_(const algebra::vec<dim,C2>& v)
+  point<G,C>::point(const algebra::vec<dim,C2>& v)
   {
     coord_ = v;
   }
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_(C ind)
+  point<G,C>::point(C ind)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = ind;
@@ -251,7 +248,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_(C row, C col)
+  point<G,C>::point(C row, C col)
   {
     metal::bool_<(dim == 2)>::check();
     coord_[0] = row;
@@ -260,7 +257,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_(C sli, C row, C col)
+  point<G,C>::point(C sli, C row, C col)
   {
     metal::bool_<(dim == 3)>::check();
     coord_[0] = sli;
@@ -271,7 +268,7 @@ namespace mln
   template <typename G, typename C>
   template <typename F>
   inline
-  point_<G,C>::point_(const Function_i2v<F>& f_)
+  point<G,C>::point(const Function_i2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
@@ -281,15 +278,15 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_(const literal::origin_t&)
+  point<G,C>::point(const literal::origin_t&)
   {
     coord_.set_all(0);
   }
 
   template <typename G, typename C>
   inline
-  point_<G,C>&
-  point_<G,C>::operator=(const literal::origin_t&)
+  point<G,C>&
+  point<G,C>::operator=(const literal::origin_t&)
   {
     coord_.set_all(0);
     return *this;
@@ -297,7 +294,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::point_(const literal::zero_t&)
+  point<G,C>::point(const literal::zero_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
@@ -305,26 +302,8 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>&
-  point_<G,C>::operator=(const literal::zero_t&)
-  {
-    metal::bool_<(dim == 1)>::check();
-    coord_[0] = 1;
-    return *this;
-  }
-
-  template <typename G, typename C>
-  inline
-  point_<G,C>::point_(const literal::one_t&)
-  {
-    metal::bool_<(dim == 1)>::check();
-    coord_[0] = 1;
-  }
-
-  template <typename G, typename C>
-  inline
-  point_<G,C>&
-  point_<G,C>::operator=(const literal::one_t&)
+  point<G,C>&
+  point<G,C>::operator=(const literal::zero_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
@@ -333,18 +312,36 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  void point_<G,C>::set_all(C c)
+  point<G,C>::point(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+  }
+
+  template <typename G, typename C>
+  inline
+  point<G,C>&
+  point<G,C>::operator=(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+    return *this;
+  }
+
+  template <typename G, typename C>
+  inline
+  void point<G,C>::set_all(C c)
   {
     coord_.set_all(c);
   }
 
   template <typename G, typename C>
-  const point_<G,C> point_<G,C>::origin = all_to(0);
+  const point<G,C> point<G,C>::origin = all_to(0);
 
   template <typename G, typename C>
   inline
-  point_<G,C>&
-  point_<G,C>::operator+=(const dpoint& dp)
+  point<G,C>&
+  point<G,C>::operator+=(const delta& dp)
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] += dp[i];
@@ -353,8 +350,8 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>&
-  point_<G,C>::operator-=(const dpoint& dp)
+  point<G,C>&
+  point<G,C>::operator-=(const delta& dp)
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] -= dp[i];
@@ -363,14 +360,14 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  point_<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
+  point<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
   {
     return coord_; // FIXGE: Is-it OK?
   }
   
   template <typename G, typename C>
   inline
-  point_<G,C>::operator algebra::vec<G::dim, float> () const
+  point<G,C>::operator algebra::vec<G::dim, float> () const
   {
     algebra::vec<dim, float> tmp;
     for (unsigned i = 0; i < dim; ++i)
@@ -381,14 +378,14 @@ namespace mln
   template <typename G, typename C>
   inline
   const algebra::vec<G::dim, C>&
-  point_<G,C>::to_vec() const
+  point<G,C>::to_vec() const
   {
     return coord_;
   }
   
   template <typename G, typename C>
   inline
-  h_vec<G::dim, C> point_<G,C>::to_h_vec() const
+  h_vec<G::dim, C> point<G,C>::to_h_vec() const
   {
     h_vec<G::dim, C> tmp;
     for (unsigned i = 0; i < dim; ++i)
@@ -403,9 +400,9 @@ namespace mln
 
     template <typename G, typename Cl, typename Cr>
     bool
-    less_than< point_<G,Cl>,
-	       point_<G,Cr> >::operator()(const point_<G,Cl>& lhs,
-					  const point_<G,Cr>& rhs) const
+    less_than< point<G,Cl>,
+	       point<G,Cr> >::operator()(const point<G,Cl>& lhs,
+					 const point<G,Cr>& rhs) const
     {
       enum { n = G::dim };
       typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
