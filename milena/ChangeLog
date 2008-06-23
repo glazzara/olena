@@ -1,5 +1,13 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the labeling in Meyer's WST algorithm.
+
+	* mln/morpho/meyer_wst.hh: Use 0 for the label of the watershed,
+	to be consistent with other labeling algorithms (computation of
+	regional minima, for instance).
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	More checks in the construction of graph-based images.
 
 	* mln/core/graph_image.hh

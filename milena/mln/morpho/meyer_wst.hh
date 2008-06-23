@@ -110,7 +110,8 @@ namespace mln
       /* FIXME: Ensure the input image has scalar values.  */
 
       typedef L marker;
-      const marker unmarked = mln_min(marker);
+      // FIXME: Use literal::zero.
+      const marker unmarked = 0;
 
       // Initialize the output with the markers (minima components).
       mln_ch_value(I, marker) output =
