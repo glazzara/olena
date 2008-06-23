@@ -25,10 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef SANDBOX_LEVILLAIN_IO_HH
-# define SANDBOX_LEVILLAIN_IO_HH
+#ifndef APPS_STATUES_IO_HH
+# define APPS_STATUES_IO_HH
 
+/// \file apps/statues/io.hh
 /// \brief I/O routines adapted from TriMesh's ones.
+
+#include <algorithm>
+
+#include <TriMesh.h>
+
 
 /// Taken from TriMesh_io.cc
 /// \{
@@ -112,4 +118,40 @@ inline void write_off_colored(TriMesh *mesh,
 /// \}
 
 
-#endif // ! SANDBOX_LEVILLAIN_IO_HH
+/// Taken and adapted from TriMesh_io.cc
+/// \{
+/// Write a bunch of faces to an ASCII file, removing the ones tagged
+/// as ``false'' in \a face_value.
+inline void write_faces_asc_binary(TriMesh *mesh,
+				   const std::vector<bool>& face_value,
+				   FILE *f,
+				   const char *before_face,
+				   const char *after_line)
+{
+  mesh->need_faces();
+  for (int i = 0; i < mesh->faces.size(); i++)
+    if (face_value[i])
+    {
+      fprintf(f, "%s%d %d %d%s\n",
+	      before_face,
+	      mesh->faces[i][0], mesh->faces[i][1], mesh->faces[i][2],
+	      after_line);
+    }
+}
+
+/// Write an off file, removing faces tagged as ``false'' in \a face_value.
+inline void write_off_binary(TriMesh *mesh,
+			     const std::vector<bool>& face_value,
+			     FILE *f)
+{
+  fprintf(f, "OFF\n");
+  mesh->need_faces();
+  unsigned long nfaces =
+    std::count(face_value.begin(), face_value.end(), true);
+  fprintf(f, "%lu %lu 0\n", (unsigned long) mesh->vertices.size(), nfaces);
+  write_verts_asc(mesh, f, "", 0, 0, false, 0, "");
+  write_faces_asc_binary(mesh, face_value, f, "3 ", "");
+}
+/// \}
+
+#endif // ! APPS_STATUES_IO_HH

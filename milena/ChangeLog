@@ -1,5 +1,16 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start a 3-D mesh surface skeletonization tool.
+
+	* apps/statues/mesh-skel.cc: New.
+	* apps/statues/io.hh: Update header guards.
+	(write_faces_asc_binary, write_off_binary): New functions.
+	* apps/statues/Makefile.am (bin_PROGRAMS): Add mesh-skel.
+	(mesh_skel_SOURCES): New.
+	Add mesh-skel.cc and io.hh.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix apps/statues/mesh-segm.
 
 	* apps/statues/mesh-segm.cc (main): Actually use a vector of

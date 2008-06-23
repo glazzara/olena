@@ -7,7 +7,8 @@ AM_CXXFLAGS = -O3 -DNDEBUG -ggdb
 # Find trimesh archive.
 AM_LDFLAGS = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh
 
-bin_PROGRAMS = mesh-segm
+bin_PROGRAMS = mesh-segm mesh-skel
 mesh_segm_SOURCES = mesh-segm.cc io.hh
+mesh_skel_SOURCES = mesh-skel.cc io.hh
 
 TESTS = test
