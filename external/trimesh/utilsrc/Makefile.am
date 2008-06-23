@@ -1,13 +1,14 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
-AM_LDFLAGS = -L$(top_builddir)/libsrc -L$(top_builddir)/gluit -lm -ltrimesh
+LDADD = -L$(top_builddir)/libsrc -L$(top_builddir)/gluit -ltrimesh -lm
 
 # FIXME: Handle other OSes as well (Win32, SunOS, etc.)
 if DARWIN
-# LIBS += -lobjc
-  GLLIBS = -framework GLUT -framework OpenGL -lgluit
+  GLFLAGS = -framework GLUT -framework OpenGL
+  GLLIBS = -lgluit
 else !DARWIN
+  GLFLAGS =
   GLLIBS = -lgluit -lGL -lGLU -lX11 -lXmu -lXi
 endif !DARWIN
 
@@ -28,4 +29,5 @@ mesh_make_SOURCES = mesh_make.cc
 mesh_shade_SOURCES = mesh_shade.cc
 
 mesh_view_SOURCES = mesh_view.cc
-mesh_view_LDFLAGS = $(AM_LDFLAGS) $(GLLIBS)
+mesh_view_LDFLAGS = $(AM_LDFLAGS) $(GLFLAGS)
+mesh_view_LDADD = $(LDADD) $(GLLIBS)

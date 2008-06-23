@@ -1,3 +1,17 @@
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the linkage of trimesh utilities on GNU/Linux.
+
+	* utilsrc/Makefile.am (AM_LDFLAGS): Rename as..
+	(LDADD): ...this.
+	Put `-lm' after `-ltrimesh'.
+	(GLFLAGS): New.
+	(GLLIBS) [DARWIN]: Move `-framework GLUT -framework OpenGL'...
+	(GLFLAGS) [DARWIN]: ...here.
+	(mesh_view_LDFLAGS): s/GLLIBS/GLFLAGS/.
+	(mesh_view_LDADD): New.
+	Set to $(LDADD) $(GLLIBS).
+
 2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
 
 	Autoconfiscate the package.
