@@ -4,8 +4,8 @@
 AM_CPPFLAGS = -I$(top_srcdir)/milena -I$(top_srcdir)/external/trimesh/include
 # Produce fast code.
 AM_CXXFLAGS = -O3 -DNDEBUG -ggdb
-# Find trimesh archive.
-AM_LDFLAGS = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh
+# Find the trimesh archive.
+LDADD = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh
 
 bin_PROGRAMS = mesh-segm mesh-skel
 mesh_segm_SOURCES = mesh-segm.cc io.hh

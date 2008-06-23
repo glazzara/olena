@@ -1,5 +1,12 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the linkage of tools from apps/statues/ on GNU/Linux.
+
+	* apps/statues/Makefile.am (AM_LDFLAGS): Rename as...
+	(LDADD): ...this.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have most of the test suite compile again.
 
 	* mln/algebra/quat.hh: Include missing header for mln/math/abs.hh.
