@@ -218,7 +218,7 @@ namespace mln
 	plg_(g)
     {
       mln_precondition(g.nvertices() == vertex_val.size());
-      mln_precondition(g.edges() == edge_val.size());
+      mln_precondition(g.nedges() == edge_val.size());
     }
 
   } // end of namespace mln::internal

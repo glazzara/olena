@@ -1,5 +1,13 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a precondition in the construction of mln::line_graph_image.
+
+	* mln/core/line_graph_image.hh
+	(mln::internal::data_< line_graph_image<P, V> >::data_):
+	Fix the second precondition.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the labeling in Meyer's WST algorithm.
 
 	* mln/morpho/meyer_wst.hh: Use 0 for the label of the watershed,
