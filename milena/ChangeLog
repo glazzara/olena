@@ -1,5 +1,36 @@
 2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Remove the final '_' in image_morpher.
+
+	* mln/core/internal/image_morpher.hh
+	(image_morpher_): Rename as...
+	(image_morpher): ...this.
+
+	* mln/trait/images.hh,
+	* mln/core/translate_image.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_domain_morpher.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/cast_image.hh,
+	* mln/core/sub_image.hh,
+	* mln/core/t_image.hh,
+	* mln/core/image_if.hh,
+	* mln/core/hexa.hh,
+	* mln/neighb/image.hh,
+	* mln/value/stack.hh,
+	* mln/border/find.hh,
+	* sandbox/duhamel/translate_image.hh,
+	* sandbox/jardonnet/subsampling/sub_sampled_image.hh,
+	* sandbox/garrigues/image_identity/image_domain_morpher.hh,
+	* sandbox/garrigues/image_identity/image_value_morpher.hh:
+	Propagate renaming.
+
+	* mln/core/internal/image_base.hh (data): Move into...
+	* mln/core/internal/data.hh: ...this new file.
+
+2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Remove the '_' postfix in some core internals.
 
 	* mln/core/internal/image_base.hh (image_base_): Rename as...

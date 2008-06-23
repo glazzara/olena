@@ -68,7 +68,7 @@ namespace mln
   {
 
     template <typename I, typename F, typename E>
-    struct image_< mln::internal::image_if_base_<I,F,E> > : default_image_morpher_< I, mln_value(I), E >
+    struct image_< mln::internal::image_if_base_<I,F,E> > : default_image_morpher< I, mln_value(I), E >
     {
     private:
       typedef mln_trait_image_data(I) I_data_;

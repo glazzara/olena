@@ -67,7 +67,7 @@ namespace mln
   {
 
     template <typename I>
-    struct image_< hexa<I> > : default_image_morpher_< I, mln_value(I),
+    struct image_< hexa<I> > : default_image_morpher< I, mln_value(I),
 						       hexa<I> >
     {
       //     private:

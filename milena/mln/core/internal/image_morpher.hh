@@ -49,7 +49,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_morpher_ : public image_base<S, E>
+    class image_morpher : public image_base<S, E>
     {
     public:
 
@@ -72,7 +72,7 @@ namespace mln
       operator I() const; // FIXME: Very dangerous? Remove?
 
     protected:
-      image_morpher_();
+      image_morpher();
     };
 
   } // end of namespace mln::internal
@@ -87,7 +87,7 @@ namespace mln
 //     template <typename Subject, typename T,
 // 	      typename I, typename S, typename E>
 //     void init_(Subject s, T& target,
-// 	       const internal::image_morpher_<I,S,E>& model);
+// 	       const internal::image_morpher<I,S,E>& model);
 
 // FIXME: Lines above have been inactivated because they are either
 // prioritary or ambiguous.
@@ -108,14 +108,14 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    image_morpher_<I,S,E>::image_morpher_()
+    image_morpher<I,S,E>::image_morpher()
     {
     }
 
     template <typename I, typename S, typename E>
     inline
     mlc_const(I)*
-    image_morpher_<I,S,E>::delegatee_() const
+    image_morpher<I,S,E>::delegatee_() const
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
@@ -123,14 +123,14 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     I*
-    image_morpher_<I,S,E>::delegatee_()
+    image_morpher<I,S,E>::delegatee_()
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
     template <typename I, typename S, typename E>
     inline
-    image_morpher_<I,S,E>::operator I() const
+    image_morpher<I,S,E>::operator I() const
     {
       mln_precondition(exact(this)->has_data());
       return * this->delegatee_();
@@ -139,7 +139,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     bool
-    image_morpher_<I,S,E>::has_data() const
+    image_morpher<I,S,E>::has_data() const
     {
       return
 	this->data_ != 0 &&
@@ -154,7 +154,7 @@ namespace mln
 //   template <typename Subject, typename T,
 // 	    typename I, typename S, typename E>
 //   void init_(Subject s, T& target,
-// 	     const internal::image_morpher_<I,S,E>& model)
+// 	     const internal::image_morpher<I,S,E>& model)
 //   {
 //     std::cout << "deleg... ";
 //     // FIXME: Precondition.
@@ -167,7 +167,7 @@ namespace mln
     void init_(Subject s, T& target, const Image<J>& model_)
     {
       // FIXME: Precondition.
-      // FIXME: Properly check that J is an internal::image_morpher_.
+      // FIXME: Properly check that J is an internal::image_morpher.
       const J& model = exact(model_);
       init_(s, target, * model.delegatee_());
     }

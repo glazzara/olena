@@ -68,12 +68,12 @@ namespace mln
 
   template <typename I>
   class sub_sampled_image
-    : public internal::image_morpher_< I, mln_pset(I), sub_sampled_image<I> >
+    : public internal::image_morpher< I, mln_pset(I), sub_sampled_image<I> >
   {
   public:
     /// Super type.
     typedef
-    internal::image_morpher_< I, mln_pset(I), sub_sampled_image<I> > super_;
+    internal::image_morpher< I, mln_pset(I), sub_sampled_image<I> > super_;
     
     /// Point_Site associated type.
     typedef mln_psite(I) psite;

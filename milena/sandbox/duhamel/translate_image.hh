@@ -66,7 +66,7 @@ namespace mln
   {
 
     template <typename I>
-    struct image_< translate_image<I> > : default_image_morpher_< I, mln_value(I),
+    struct image_< translate_image<I> > : default_image_morpher< I, mln_value(I),
 								  translate_image<I> >
     {
 
@@ -89,7 +89,7 @@ namespace mln
   struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
   {
 
-    typedef mln::internal::image_morpher_< I, mln_pset(I), translate_image<I> > super_;
+    typedef mln::internal::image_morpher< I, mln_pset(I), translate_image<I> > super_;
 
     /// Return type of read-write access.
     typedef typename internal::morpher_lvalue_<I>::ret lvalue;

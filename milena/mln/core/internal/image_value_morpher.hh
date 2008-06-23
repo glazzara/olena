@@ -51,7 +51,7 @@ namespace mln
      *
      */
     template <typename I, typename E>
-    class image_value_morpher : public image_morpher_<I, mln_pset(I), E>
+    class image_value_morpher : public image_morpher<I, mln_pset(I), E>
     {
     public:
 

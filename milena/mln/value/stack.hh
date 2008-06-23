@@ -101,7 +101,7 @@ namespace mln
 
     template <unsigned n, typename I>
     struct image_< mln::value::stack_image<n, I> >
-      : default_image_morpher_< I,
+      : default_image_morpher< I,
 				algebra::vec<n, mln_value(I)>,
 				mln::value::stack_image<n, I> >
     {

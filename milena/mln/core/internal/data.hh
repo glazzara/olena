@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
-# define MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#ifndef MLN_CORE_INTERNAL_DATA_HH
+# define MLN_CORE_INTERNAL_DATA_HH
 
-/*! \file mln/core/internal/image_value_morpher.hh
+/*! \file mln/core/internal/data.hh
  *
- * \brief Definition of a base class for image morphers w.r.t. value.
+ * \brief Declaration of the type of image data.
  */
-
-# include <mln/core/internal/image_morpher.hh>
 
 
 namespace mln
@@ -42,54 +40,15 @@ namespace mln
   namespace internal
   {
 
+    /// \internal Class of image internal data.
+    /// It has to be specialized for every image type.
 
-    /*! \brief A base class for image morphers w.r.t. value.
-     *
-     * Parameter \p S is a point set type.
-     *
-     * \internal
-     */
-    template <typename I, typename E>
-    class image_value_morpher : public virtual image_morpher<I, mln_pset(I), E>
-    {
-    public:
-
-      const mln_pset(I)& domain() const;
-      bool has(const mln_psite(I)& p) const;
-
-    protected:
-      image_value_morpher();
-    };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename E>
-    image_value_morpher<I,E>::image_value_morpher()
-    {
-    }
-
-    template <typename I, typename E>
-    const mln_pset(I)&
-    image_value_morpher<I,E>::domain() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->domain();
-    }
-
-    template <typename I, typename E>
-    bool
-    image_value_morpher<I,E>::has(const mln_psite(I)& p) const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->has(p);
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
+    template <typename I>
+    struct data;
 
   } // end of namespace mln::internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_IMAGE_VALUE_MORPHER_HH
+#endif // ! MLN_CORE_INTERNAL_DATA_HH

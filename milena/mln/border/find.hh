@@ -61,7 +61,7 @@ namespace mln
 
       template <typename I, typename S, typename E>
       inline
-      unsigned find__(const mln::internal::image_morpher_<I,S,E>& ima)
+      unsigned find__(const mln::internal::image_morpher<I,S,E>& ima)
       {
 	return border::find(*ima.delegatee_());
       }

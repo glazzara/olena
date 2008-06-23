@@ -50,7 +50,7 @@ namespace mln
      * \internal
      */
     template <typename I, typename S, typename E>
-    class image_domain_morpher : public virtual image_morpher_<I, S, E>
+    class image_domain_morpher : public virtual image_morpher<I, S, E>
     {
     public:
 

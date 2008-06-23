@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,7 @@
 # include <mln/core/grids.hh>
 # include <mln/core/trait/qlf_value.hh>
 # include <mln/core/internal/check/image_all.hh>
+# include <mln/core/internal/data.hh>
 # include <mln/util/tracked_ptr.hh>
 
 
@@ -55,20 +56,6 @@
 
 namespace mln
 {
-
-
-  namespace internal
-  {
-
-    /// \internal Class of image internal data.
-    /// FIXME: Say more about it!
-
-    template <typename I>
-    struct data;
-
-  } // end of namespace mln::internal
-
-
 
   namespace internal
   {

@@ -71,7 +71,7 @@ namespace mln
 
     template <typename I, typename N>
     struct image_< neighb::image<I, N> >
-      : public default_image_morpher_< I, mln_value(I), neighb::image<I, N> >
+      : public default_image_morpher< I, mln_value(I), neighb::image<I, N> >
       
     {
       typedef trait::image::category::morpher category;

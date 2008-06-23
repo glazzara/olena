@@ -48,7 +48,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_identity : public image_morpher_<I, S, E>
+    class image_identity : public image_morpher<I, S, E>
     {
     public:
 

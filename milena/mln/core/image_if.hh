@@ -68,7 +68,7 @@ namespace mln
   {
 
     template <typename I, typename F>
-    struct image_< image_if<I,F> > : default_image_morpher_< I,
+    struct image_< image_if<I,F> > : default_image_morpher< I,
 							     mln_value(I),
 							     image_if<I,F> >
     {

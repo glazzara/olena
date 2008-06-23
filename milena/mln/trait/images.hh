@@ -175,7 +175,7 @@ namespace mln
 
 
     template <typename D, typename T, typename I>
-    struct default_image_morpher_ : default_image_<T, I>
+    struct default_image_morpher : default_image_<T, I>
     {
       // misc => delegation except for 'category'
       typedef typename image_<D>::size  size;
