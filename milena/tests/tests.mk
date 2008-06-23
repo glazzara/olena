@@ -1,4 +1,4 @@
-## FIXME: Revamp (see Olena 0.11's test suite).
+## FIXME: Revamp (see Olena 0.11's test suite).		-*- Automake -*-
 
 # Look for Milena header in srcdir and for (generated) test headers
 # (like data.hh) in builddir.
@@ -15,3 +15,6 @@ AM_CXXFLAGS = $(TESTS_CXXFLAGS)
 
 TESTS_CXXFLAGS_SPEED = @TESTS_CXXFLAGS_SPEED@
 TESTS_CXXFLAGS_DEBUG = @TESTS_CXXFLAGS_DEBUG@
+
+# Inject rules to compile tests (recursively), without running them.
+include $(top_srcdir)/milena/tests/tests-recursive.mk

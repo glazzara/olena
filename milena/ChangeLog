@@ -1,5 +1,13 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a tests target to Makefiles of tests/.
+
+	* tests/tests-recursive.mk: New file.
+	Include it...
+	* tests/tests.mk: ...here.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a precondition in the construction of mln::line_graph_image.
 
 	* mln/core/line_graph_image.hh
