@@ -188,6 +188,7 @@ namespace mln
       : val_ (val),
 	pg_ (g)
     {
+      mln_precondition(g.nvertices() == val.size());
     }
 
   } // end of namespace mln::internal

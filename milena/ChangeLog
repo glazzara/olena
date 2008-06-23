@@ -1,5 +1,15 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	More checks in the construction of graph-based images.
+
+	* mln/core/graph_image.hh
+	(mln::internal::data_< graph_image<P, V> >::data_)
+	* mln/core/line_graph_image.hh
+	(mln::internal::data_< line_graph_image<P, V> >::data_):
+	Ensure the graph pset and its associated data are consistent.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Start a 3-D mesh surface skeletonization tool.
 
 	* apps/statues/mesh-skel.cc: New.
