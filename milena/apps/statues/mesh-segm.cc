@@ -25,6 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/// \file apps/statues/mesh-segm.cc
+/// \brief A program performing a WST-based segmentation of the
+/// surface of the (triangle) mesh of a statue.
+
+// FIXME: Factor commons parts between mesh-segm and mesh-skel.
+
 #include <cstdlib>
 #include <cmath>
 
@@ -82,10 +88,10 @@ int main(int argc, char* argv[])
   // Computation of the mean curvature on each vertex of the mesh.
   mesh.need_curvatures();
   /* FIXME: Our implementation of the WST doesn't work well with
-     floats.  Convert floating point values to a proportional integer
-     value for the moment.  */
+     floats (yet).  Convert floating point values to a proportional
+     integer value for the moment.  */
   typedef int curv_t;
-  std::vector<float> vertex_h_inv(mesh.vertices.size(), 0.f);
+  std::vector<curv_t> vertex_h_inv(mesh.vertices.size(), 0.f);
   for (unsigned v = 0; v < mesh.vertices.size(); ++v)
     {
       float h = (mesh.curv1[v] + mesh.curv2[v]) / 2;

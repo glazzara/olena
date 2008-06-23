@@ -1,3 +1,10 @@
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix apps/statues/mesh-segm.
+
+	* apps/statues/mesh-segm.cc (main): Actually use a vector of
+	curv_t (int) instead of a vector of floats.
+
 2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix compilation of tools/.
