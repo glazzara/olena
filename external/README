@@ -20,6 +20,7 @@ GPL-compatible licenses. Please see the COPYING file.''
 This version of trimesh2 shipped with Olena has been autoconfiscated,
 and no longer contains the following files and directories:
 
+  Makefile
   bin.Linux/
     mesh_align
     mesh_cat
@@ -44,6 +45,7 @@ and no longer contains the following files and directories:
     mesh_make.exe
     mesh_shade.exe
     mesh_view.exe
+  gluit/Makefile
   lib.Linux/
     libgluit.a
     libtrimesh.a
@@ -53,8 +55,17 @@ and no longer contains the following files and directories:
   lib.Win32/
     libgluit.a
     libtrimesh.a
+  libsrc/Makefile
+  utilsrc/Makefile
+
+(Old Makefiles have been converted to Automake's Makefile.am's.)
+
 
 
 Local Variables:
 ispell-local-dictionary: "american"
 End:
+
+ LocalWords:  trimesh Szymon Rusinkiewicz GPL autoconfiscated Makefile exe
+ LocalWords:  gluit libgluit libtrimesh libsrc utilsrc Makefiles Automake's
+ LocalWords:  ispell american
