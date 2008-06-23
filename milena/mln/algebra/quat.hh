@@ -42,9 +42,10 @@
 # include <mln/trait/value_.hh>
 
 # include <mln/algebra/vec.hh>
+# include <mln/math/abs.hh>
 # include <mln/norm/l2.hh>
 
-//FIXME: pow, exp etc... are def here and in value::...
+// FIXME: pow, exp etc... are def here and in value::...
 
 namespace mln
 {
@@ -186,7 +187,7 @@ namespace mln
       quat conj() const;
 
       /// Give the invert.
-      quat inv() const; //FIXME: rename invert.
+      quat inv() const; // FIXME: rename invert.
 
       /// Transform into unit quaternion.
       quat& set_unit();

@@ -99,8 +99,8 @@ namespace mln
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
 	      // in mln/core/graph_image.hh
-	      pg.gr_->vertex_data(pg.gr_->edge(l).n1()),
-	      pg.gr_->vertex_data(pg.gr_->edge(l).n2()),
+	      pg.gr_->vertex_data(pg.gr_->edge(l).v1()),
+	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
 	      edge_v);
       // Draw the points (vertices).
       for (size_t p = 0; p < pg.npoints(); ++p)

@@ -1,5 +1,16 @@
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have most of the test suite compile again.
+
+	* mln/algebra/quat.hh: Include missing header for mln/math/abs.hh.
+	* mln/draw/graph.hh
+	(graph(Image<I>&, const p_graph<P>&, mln_value(I), mln_value(I))): 
+	s/n1/v1/.
+	s/n2/v2/.
+	* tests/draw/graph.cc (test): s/add_node/add_vertex/.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a tests target to Makefiles of tests/.
 
 	* tests/tests-recursive.mk: New file.
