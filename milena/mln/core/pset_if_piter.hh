@@ -31,8 +31,6 @@
 /*! \file mln/core/pset_if_piter.hh
  *
  * \brief Definition of iterators on pset_if<S,F>.
- *
- * \todo pset_if_bkd_piter_.
  */
 
 # include <mln/core/internal/piter_adaptor.hh>
@@ -43,26 +41,24 @@ namespace mln
 {
 
 
-  /*! \brief A generic forward iterator on points of subsets.
+  /*! \brief Iterator on site sets conditionned by a function.
    *
-   * Parameter \c S is a point set type; parameter F is a function
+   * Parameter \c S is a site set type; parameter F is a function
    * from point to Boolean.
    *
    * \see mln::pset_if
    */
-  template <typename S, typename F>
-  class pset_if_fwd_piter_
-    : public internal::piter_adaptor_< mln_fwd_piter(S),         // Adaptee.
+  template <typename Pi, typename S, typename F>
+  struct pset_if_piter_
+    : public internal::piter_adaptor_< Pi,                       // Adaptee.
 				       pset_if<S,F>,             // Site_Set.
-				       pset_if_fwd_piter_<S,F> > // Exact.
+				       pset_if_piter_<Pi,S,F> >  // Exact.
   {
-  public:
-
     /// Constructor without argument.
-    pset_if_fwd_piter_();
+    pset_if_piter_();
 
     /// Constructor from a site set.
-    pset_if_fwd_piter_(const pset_if<S,F>& s);
+    pset_if_piter_(const pset_if<S,F>& s);
 
     /// Start an iteration.
     void start_();
@@ -75,63 +71,49 @@ namespace mln
   };
 
 
-  // FIXME:
-  template <typename S, typename F>
-  class pset_if_bkd_piter_
-    :
-    public mln::internal::fixme
-  {};
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-  // pset_if_fwd_piter_<S,F>
-
-  template <typename S, typename F>
+  template <typename Pi, typename S, typename F>
   inline
-  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_()
+  pset_if_piter_<Pi,S,F>::pset_if_piter_()
   {
   }
 
-  template <typename S, typename F>
+  template <typename Pi, typename S, typename F>
   inline
-  pset_if_fwd_piter_<S,F>::pset_if_fwd_piter_(const pset_if<S,F>& s)
+  pset_if_piter_<Pi,S,F>::pset_if_piter_(const pset_if<S,F>& s)
   {
     this->change_target(s);
   }
 
-  template <typename S, typename F>
+  template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_fwd_piter_<S,F>::start_()
+  pset_if_piter_<Pi,S,F>::start_()
   {
     this->pi_.start();
     while (this->pi_.is_valid() && ! this->s_->pred(this->pi_))
       this->pi_.next();
   }
 
-  template <typename S, typename F>
+  template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_fwd_piter_<S,F>::next_()
+  pset_if_piter_<Pi,S,F>::next_()
   {
     do
       this->pi_.next();
     while (this->pi_.is_valid() && ! this->s_->pred(this->pi_));
   }
   
-  template <typename S, typename F>
+  template <typename Pi, typename S, typename F>
   inline
   const S&
-  pset_if_fwd_piter_<S,F>::pi_set_from_(const pset_if<S,F>& s) const
+  pset_if_piter_<Pi,S,F>::pi_set_from_(const pset_if<S,F>& s) const
   {
     return s.overset();
   }
-
-  // FIXME: pset_if_bkd_piter_<S,F>
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

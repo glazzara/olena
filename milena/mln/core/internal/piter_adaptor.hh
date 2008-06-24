@@ -84,7 +84,7 @@ namespace mln
     protected:
 
       /// The adaptee site iterator.
-      Pi pi_; // own copy
+      Pi pi_;
     };
 
 

@@ -1,5 +1,18 @@
 2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Factor code for pset_if piters and add bkd iterations.
+
+	* mln/core/internal/piter_adaptor.hh (comment): Remove.
+	* mln/core/pset_if_piter.hh (todo): Remove.
+	(pset_if_fwd_piter_): Rename as...
+	(pset_if_piter_): ...this.
+	(Pi): New parameter.
+	Update.
+	(pset_if_bkd_piter_): Remove; obsolete.
+	* mln/core/pset_if.hh (fwd_piter, bkd_piter): Update.
+
+2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update iterator base classes and  make image_if fully work.
 
 	* doc/tutorial/examples/image_if.cc (change_target): Test it.

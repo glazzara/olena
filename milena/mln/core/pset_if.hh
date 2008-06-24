@@ -42,8 +42,8 @@ namespace mln
 
   // Fwd decls.
   template <typename S, typename F> struct pset_if;
-  template <typename S, typename F> struct pset_if_fwd_piter_;
-  template <typename S, typename F> struct pset_if_bkd_piter_;
+  template <typename Pi, typename S, typename F> struct pset_if_piter_;
+
 
   namespace trait
   {
@@ -88,13 +88,13 @@ namespace mln
 
 
     /// Forward Site_Iterator associated type.
-    typedef pset_if_fwd_piter_<S,F> fwd_piter;
+    typedef pset_if_piter_<mln_fwd_piter(S), S, F> fwd_piter;
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
 
     /// Backward Site_Iterator associated type.
-    typedef mln::internal::fixme bkd_piter;
+    typedef pset_if_piter_<mln_bkd_piter(S), S, F> bkd_piter;
 
 
     /// Constructor with a point set \p pset and a predicate \p f.
