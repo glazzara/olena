@@ -51,7 +51,7 @@ namespace mln
 								  box_fwd_piter_<P> >
   {
     typedef box_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base< box<P>, self_ > super_;
+    typedef internal::site_set_iterator_base< box<P>, self_ > super_;
 
   public:
 
@@ -79,9 +79,8 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    using super_::p;
-
   protected:
+    using super_::p_;
     using super_::s_;
   };
 
@@ -94,11 +93,11 @@ namespace mln
    * \see mln::box_
    */
   template <typename P>
-  class box_bkd_piter_ : public internal::site_iterator_base< box<P>,
-							      box_bkd_piter_<P> >
+  class box_bkd_piter_ : public internal::site_set_iterator_base< box<P>,
+								  box_bkd_piter_<P> >
   {
     typedef box_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base< box<P>, self_ > super_;
+    typedef internal::site_set_iterator_base< box<P>, self_ > super_;
 
   public:
 
@@ -126,9 +125,8 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    using super_::p;
-
   protected:
+    using super_::p_;
     using super_::s_;
   };
 
@@ -158,7 +156,7 @@ namespace mln
   bool
   box_fwd_piter_<P>::is_valid_() const
   {
-    return p()[0] != s_->pmax()[0] + 1;
+    return p_[0] != s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -166,7 +164,7 @@ namespace mln
   void
   box_fwd_piter_<P>::invalidate_()
   {
-    p()[0] = s_->pmax()[0] + 1;
+    p_[0] = s_->pmax()[0] + 1;
   }
 
   template <typename P>
@@ -174,7 +172,7 @@ namespace mln
   void
   box_fwd_piter_<P>::start_()
   {
-    p() = s_->pmin();
+    p_ = s_->pmin();
   }
 
   template <typename P>
@@ -183,14 +181,14 @@ namespace mln
   box_fwd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p()[i] == s_->pmax()[i])
-	p()[i] = s_->pmin()[i];
+      if (p_[i] == s_->pmax()[i])
+	p_[i] = s_->pmin()[i];
       else
 	{
-	  ++p()[i];
+	  ++p_[i];
 	  break;
 	}
-    if (p() == s_->pmin())
+    if (p_ == s_->pmin())
       invalidate_();
   }
 
@@ -215,7 +213,7 @@ namespace mln
   bool
   box_bkd_piter_<P>::is_valid_() const
   {
-    return p()[0] != s_->pmin()[0] - 1;
+    return p_[0] != s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -223,7 +221,7 @@ namespace mln
   void
   box_bkd_piter_<P>::invalidate_()
   {
-    p()[0] = s_->pmin()[0] - 1;
+    p_[0] = s_->pmin()[0] - 1;
   }
 
   template <typename P>
@@ -231,7 +229,7 @@ namespace mln
   void
   box_bkd_piter_<P>::start_()
   {
-    p() = s_->pmax();
+    p_ = s_->pmax();
   }
 
   template <typename P>
@@ -240,14 +238,14 @@ namespace mln
   box_bkd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p()[i] == s_->pmin()[i])
-	p()[i] = s_->pmax()[i];
+      if (p_[i] == s_->pmin()[i])
+	p_[i] = s_->pmax()[i];
       else
 	{
-	  --p()[i];
+	  --p_[i];
 	  break;
 	}
-    if (p() == s_->pmax())
+    if (p_ == s_->pmax())
       invalidate_();
   }
 

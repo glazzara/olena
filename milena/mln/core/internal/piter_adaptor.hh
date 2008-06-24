@@ -31,10 +31,14 @@
 /*! \file mln/core/internal/piter_adaptor.hh
  *
  * \brief Definition of iterators on points of boxes.
+ *
+ * \todo Rename as site_iterator_adaptor_base.
+ *
+ * \todo Distinguish between adaptors of site_set_iterator,
+ * site_relative_iterator, etc. (?)
  */
 
-# include <mln/core/internal/site_set_iterator_base.hh>
-# include <mln/core/concept/box.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 
 
 namespace mln
@@ -44,13 +48,17 @@ namespace mln
   {
 
     /*! \internal A base class for point iterator adaptors.
+     *
      * Parameter \c Pi is the type of the point iterator adaptee;
      * parameter E is the exact type.
      */
-    template <typename Pi, typename E>
-    class piter_adaptor_ : public internal::site_set_iterator_base< mln_pset(Pi), E >
+    template <typename Pi, typename S, typename E>
+    class piter_adaptor_ : public internal::site_iterator_base< S, E >
     {
     public:
+
+      /// Constructor without argument.
+      piter_adaptor_();
 
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
@@ -67,54 +75,86 @@ namespace mln
       /// Go to the next point.
       void next_();
 
+      /// Hook to the current location.
+      const mln_psite(S)& p_hook_() const;
+
+      /// Change the site set targeted by this iterator. 
+      void change_target(const S& s);
+
     protected:
 
-      Pi piter_; // own copy
+      /// The adaptee site iterator.
+      Pi pi_; // own copy
     };
-
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
-    piter_adaptor_<Pi,E>::piter_adaptor_(const Pi& piter)
-      : piter_(piter)
+    piter_adaptor_<Pi,S,E>::piter_adaptor_()
+    {
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    piter_adaptor_<Pi,S,E>::piter_adaptor_(const Pi& pi)
+      : pi_(pi)
     {
       invalidate_();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     bool
-    piter_adaptor_<Pi,E>::is_valid_() const
+    piter_adaptor_<Pi,S,E>::is_valid_() const
     {
-      return piter_.is_valid();
+      return pi_.is_valid();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::invalidate_()
+    piter_adaptor_<Pi,S,E>::invalidate_()
     {
-      piter_.invalidate();
+      pi_.invalidate();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::start_()
+    piter_adaptor_<Pi,S,E>::start_()
     {
-      piter_.start();
+      pi_.start();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::next_()
+    piter_adaptor_<Pi,S,E>::next_()
     {
-      piter_.next();
+      pi_.next();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    const mln_psite(S)&
+    piter_adaptor_<Pi,S,E>::p_hook_() const
+    {
+      return pi_.p_hook_();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    void
+    piter_adaptor_<Pi,S,E>::change_target(const S& s)
+    {
+      this->s_ = & s;
+      // p might be also updated since it can hold a pointer towards
+      // the set it designates, so:
+      pi_.change_target( exact(this)->pi_set_from_(s) );
+      // Last:
+      this->invalidate();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

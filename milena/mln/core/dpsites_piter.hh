@@ -76,8 +76,6 @@ namespace mln
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
 
-    dpsites_fwd_piter<V>& update();
-
   protected:
 
     unsigned i_;
@@ -118,8 +116,6 @@ namespace mln
 
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
-
-    dpsites_fwd_piter<V>& update();
 
   protected:
 
@@ -183,17 +179,6 @@ namespace mln
     return *this->c_ + this->s_->std_vector()[i_];
   }
 
-  template <typename V>
-  inline
-  dpsites_fwd_piter<V>&
-  dpsites_fwd_piter<V>::update()
-  {
-    mln_precondition(this->s_ && this->c_);
-    this->p_ = compute_p_();
-    mln_postcondition(this->is_valid());
-    return *this;
-  }
-
 
   // Backward.
 
@@ -245,17 +230,6 @@ namespace mln
   dpsites_bkd_piter<V>::compute_p_() const
   {
     return *this->c_ + this->s_->std_vector()[i_];
-  }
-
-  template <typename V>
-  inline
-  dpsites_fwd_piter<V>&
-  dpsites_bkd_piter<V>::update()
-  {
-    mln_precondition(this->s_ && this->c_);
-    this->p_ = compute_p_();
-    mln_postcondition(this->is_valid());
-    return *this;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

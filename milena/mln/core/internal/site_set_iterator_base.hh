@@ -48,13 +48,25 @@ namespace mln
      * Parameter \c S is the targeted site set type.
      */
     template <typename S, typename E>
-    struct site_set_iterator_base : site_iterator_base<S, E>
+    class site_set_iterator_base : public site_iterator_base<S, E>
     {
+    public:
+
       /// Give the site set that this iterator browses.
       const S& site_set() const;
 
-    protected:
+      /// Hook to the current location.
+      const mln_psite(S)& p_hook_() const;
 
+      /// Change the site set targeted by this iterator. 
+      void change_target(const S& s);
+
+    protected:
+      
+      /// The psite designated by this iterator.
+      mln_psite(S) p_;
+
+      /// Constructor without argument.
       site_set_iterator_base();
     };
 
@@ -74,6 +86,27 @@ namespace mln
     {
       mln_precondition(this->s_ != 0);
       return *this->s_;
+    }
+
+    template <typename S, typename E>
+    inline
+    void
+    site_set_iterator_base<S, E>::change_target(const S& s)
+    {
+      this->s_ = & s;
+      // p might be also updated since it can hold a pointer towards
+      // the set it designates, so:
+      if_possible::change_target(p_, s);
+      // Last:
+      this->invalidate();
+    }
+
+    template <typename S, typename E>
+    inline
+    const mln_psite(S)&
+    site_set_iterator_base<S, E>::p_hook_() const
+    {
+      return p_;
     }
 
 #endif // ! MLN_INCLUDE_ONLY

@@ -7,6 +7,12 @@
 # include <mln/fun/p2b/chess.hh>
 
 
+template <typename It, typename S>
+void ch_target(It it, const S& s)
+{
+  it.change_target(s);
+}
+
 
 int main()
 {
@@ -20,4 +26,9 @@ int main()
   debug::println(ima | fun::p2b::chess);
 
   trait::image::print(ima | fun::p2b::chess);
+
+  typedef pset_if<box2d, fun::p2b::chess_t> S;
+
+  ch_target(mln_fwd_piter_(S)(),
+	    (ima | fun::p2b::chess).domain());
 }

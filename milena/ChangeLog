@@ -1,3 +1,41 @@
+2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update iterator base classes and  make image_if fully work.
+
+	* doc/tutorial/examples/image_if.cc (change_target): Test it.
+	* doc/tutorial/examples/window.cc: New.
+	* mln/core/window.hh (window): New ctor from util::set.
+	* mln/core/internal/basic_window_impl.hh (dps_): Move from
+	private to protected.
+	(basic_window_impl): New ctor from util::set.
+	* mln/core/dpsites_piter.hh (update): Move...
+	* mln/core/internal/site_relative_iterator_base.hh: ...here so
+	it is factored.
+	(p_, p_hook_, change_target): New.
+	* mln/core/internal/site_iterator_base.hh (todo): Update.
+	(p): Remove.
+	(current_p_, p_): Remove as is; those entities are now defined
+	in sub-classes as respectively p_hook_ and p_ (if needed).
+	* mln/core/internal/site_set_iterator_base.hh
+	(site_set_iterator_base): Change from struct to class.
+	(p_, p_hook_, change_target): New.
+	* mln/core/internal/piter_adaptor.hh (todo): Update.
+	(piter_adaptor_): Fix inheritance.
+	(S): New parameter.
+	(p_hook_, change_target): New.
+	(piter_): Rename as...
+	(pi_): ...this.
+	* mln/core/concept/neighborhood.hh (window, to_window): New.
+	* mln/core/neighb.hh: Likewise.
+	* mln/core/box_piter.hh (super_): Fix type definition.
+	* mln/core/pset_if_piter.hh (pset_if_piter_): Inherit from
+	piter_adaptor_.
+	(is_valid_, invalidate_): Remove; now factored in super class.
+	(pi_set_from_): New method required for adapters.
+	(start_, next_): Update.
+	* mln/core/p_array_piter.hh: Layout.
+	* mln/morpho/dilation_elementary.hh: New.
+
 2008-06-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Get rid of '_' at end of point_, dpoint_, and box_.

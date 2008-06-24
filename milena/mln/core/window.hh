@@ -64,6 +64,10 @@ namespace mln
      */
     window();
 
+    window(const util::set<D>& s)
+    {
+      this->dps_ = s;
+    }
 
     /*! \brief Test if the window is centered.
      *

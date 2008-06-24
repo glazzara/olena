@@ -86,9 +86,24 @@ namespace mln
       /// changed.
       const mln_psite(S)& unproxy() const;
 
+      /// Hook to the current location.
+      const mln_psite(S)& p_hook_() const;
+
+      /// Change the site set targeted by this iterator. 
+      void change_target(const S& s);
+
+      /// FIXME: import doc from home.
+      E& update();
+
     protected:
 
+      /// A pointer to the center psite.
       const mln_psite(S)* c_;
+
+    private:
+      
+      /// The psite designated by this iterator.
+      mln_psite(S) p_;
     };
 
 
@@ -125,7 +140,7 @@ namespace mln
     {
       exact(this)->do_start_();
       if (this->is_valid())
-	this->p_ = exact(this)->compute_p_();
+	p_ = exact(this)->compute_p_();
     }
 
     template <typename S, typename E>
@@ -135,7 +150,7 @@ namespace mln
     {
       exact(this)->do_next_();
       if (this->is_valid())
-	this->p_ = exact(this)->compute_p_();
+	p_ = exact(this)->compute_p_();
     }
 
     template <typename S, typename E>
@@ -153,8 +168,40 @@ namespace mln
     site_relative_iterator_base<S,E>::unproxy() const
     {
       mln_psite(S) p_now = exact(this)->compute_p_();
-      mln_assertion(p_now == this->p_);
-      return this->p_;
+      mln_assertion(p_now == p_);
+      return p_;
+    }
+
+    template <typename S, typename E>
+    inline
+    const mln_psite(S)&
+    site_relative_iterator_base<S,E>::p_hook_() const
+    {
+      return p_;
+    }
+
+    template <typename S, typename E>
+    inline
+    void
+    site_relative_iterator_base<S,E>::change_target(const S& s)
+    {
+      this->s_ = & s;
+      // p might be also updated since it can hold a pointer towards
+      // the set it designates, so:
+      if_possible::change_target(p_, s);
+      // Last:
+      this->invalidate();
+    }
+
+    template <typename S, typename E>
+    inline
+    E&
+    site_relative_iterator_base<S,E>::update()
+    {
+      mln_precondition(this->s_ && c_);
+      p_ = exact(this)->compute_p_();
+      mln_postcondition(this->is_valid());
+      return exact(*this);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -72,7 +72,6 @@ namespace mln
     int index() const;
 
   protected:
-
     using super::p_;
     using super::s_;
   };
@@ -117,7 +116,6 @@ namespace mln
     int index() const;
 
   protected:
-
     using super::p_;
     using super::s_;
   };

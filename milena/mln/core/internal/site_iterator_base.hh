@@ -32,20 +32,14 @@
  *
  * \brief Base class to factor code for site iterator classes.
  *
- * \todo Make p_ private and add a p() method that can be overridden
- * so that a subclass can use some other info than this attribute.
- * See for instance start_ and next_ in pset_if_piter.hh: we have
- * both pi_ and p_ to designate the current site. 
+ * \todo Import tech doc from home.
  */
 
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/concept/pseudo_site.hh> // Use of if_possible::change_target.
 
-// site_iterator_base<S>  where S is a Site_Set
-// {
-//   s_ : const S*
-// }
 
+// FIXME: See todo.
 
 
 
@@ -99,15 +93,6 @@ namespace mln
 
       /// Give the target address.  It might be 0.
       const S*& target_();
-
-      /// Change the iterator target.
-      void change_target(const S& s);
-
-            mln_psite(S)& p()        { return exact(this)->current_p_(); }
-      const mln_psite(S)& p() const  { return exact(this)->current_p_(); }
-
-            mln_psite(S)& current_p_()       { return p_; }
-      const mln_psite(S)& current_p_() const { return p_; }
       
     protected:
 
@@ -115,11 +100,6 @@ namespace mln
 
       /// The target.
       const S* s_;
-
-    private:
-      
-      /// The psite designated by this iterator.
-      mln_psite(S) p_;
     };
 
 
@@ -146,7 +126,7 @@ namespace mln
     site_iterator_base<S, E>::to_site() const
     {
       mln_precondition(exact(*this).is_valid()); // FIXME: OK?
-      return internal::to_site( p() );
+      return internal::to_site( exact(this)->p_hook_() );
     }
 
     template <typename S, typename E>
@@ -154,7 +134,7 @@ namespace mln
     const mln_psite(S)&
     site_iterator_base<S, E>::unproxy() const
     {
-      return p();
+      return exact(this)->p_hook_();
     }
 
     template <typename S, typename E>
@@ -163,19 +143,6 @@ namespace mln
     site_iterator_base<S, E>::target_()
     {
       return s_;
-    }
-
-    template <typename S, typename E>
-    inline
-    void
-    site_iterator_base<S, E>::change_target(const S& s)
-    {
-      s_ = & s;
-      // p might be also updated since it can hold a pointer towards
-      // the set it designates, so:
-      if_possible::change_target(p(), s);
-      // Last:
-      this->invalidate();
     }
 
 #endif // ! MLN_INCLUDE_ONLY

@@ -55,8 +55,6 @@ namespace mln
     template <typename D, typename E>
     class basic_window_impl
     {
-      util::set<D> dps_;
-
     public:
 
 
@@ -119,7 +117,13 @@ namespace mln
 
     protected:
 
+      util::set<D> dps_;
+
+      /// Constructor without argument.
       basic_window_impl();
+
+      /// Constructor from an util::set.
+      basic_window_impl(const util::set<D>& s);
 
       void insert_(const D& dp); // The only routine to effectively insert a dp.
       // This is a default implementation.  This routine can be
@@ -133,6 +137,21 @@ namespace mln
     inline
     basic_window_impl<D,E>::basic_window_impl()
     {
+    }
+
+    template <typename D, typename E>
+    inline
+    basic_window_impl<D,E>::basic_window_impl(const util::set<D>& s)
+    {
+      bool is_sym = true;
+      for (unsigned i = 0; s.nelements(); ++i)
+	if (! s.has(-s[i]))
+	  {
+	    is_sym = false;
+	    break;
+	  }
+      mln_precondition(is_sym);
+      dps_ = s;
     }
 
     template <typename D, typename E>

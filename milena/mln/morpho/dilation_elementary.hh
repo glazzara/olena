@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,72 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
-# define MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#ifndef MLN_MORPHO_DILATION_ELEMENTARY_HH
+# define MLN_MORPHO_DILATION_ELEMENTARY_HH
 
-/*! \file mln/core/concept/neighborhood.hh
- * \brief Definition of the concept of mln::Neighborhood.
- */
+/// \file mln/morpho/dilation_elementary.hh
+/// \brief Morphological elementary dilation.
 
-# include <mln/core/concept/object.hh>
+# include <mln/morpho/dilation.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename E> struct Neighborhood;
-
-  // Neighborhood category flag type.
-  template <>
-  struct Neighborhood<void>
+  namespace morpho
   {
-    typedef Object<void> super;
-  };
 
-
-  /*! \brief Base class for implementation classes that are neighborhoods.
-   *
-   * \see mln::doc::Neighborhood for a complete documentation of this
-   * class contents.
-   */
-  template <typename E>
-  struct Neighborhood : public Object<E>
-  {
-    typedef Neighborhood<void> category;
-
-    /*
-      typedef     niter;
-      typedef fwd_niter;
-      typedef bkd_niter;
-
-      typedef window;
-      window to_window() const;
-    */
-
-  protected:
-    Neighborhood();
-  };
+    /// Morphological elementary dilation.
+    ///
+    /// \param[in] input The image to be dilated.
+    /// \param[in] nbh The neighborhood to consider.
+    ///
+    /// The structuring element is the neighborhood + the center site.
+    ///
+    /// \{
+    template <typename I, typename N>
+    mln_concrete(I)
+    dilation_elementary(const Image<I>& input, const Neighborhood<N>& nbh);
+    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
-  inline
-  Neighborhood<E>::Neighborhood()
-  {
-    typedef mln_niter(E)         niter;
-    typedef mln_fwd_niter(E) fwd_niter;
-    typedef mln_bkd_niter(E) bkd_niter;
+    template <typename I, typename N>
+    mln_concrete(I)
+    dilation_elementary(const Image<I>& input, const Neighborhood<N>& nbh)
+    {
+      trace::entering("morpho::dilation_elementary");
+      mln_precondition(exact(input).has_data());
+      // FIXME: mln_precondition(! exact(nbh).is_empty());
 
-    typedef mln_window(E) window;
-    window (E::*m)() const = & E::to_window;
-    m = 0;
-  }
+      mln_concrete(I) output = dilation(input, nbh.to_window());
+
+      trace::exiting("morpho::dilation_elementary");
+      return output;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
+#endif // ! MLN_MORPHO_DILATION_ELEMENTARY_HH

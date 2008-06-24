@@ -37,6 +37,9 @@
 # include <mln/core/internal/basic_window_impl.hh>
 # include <mln/core/internal/neighborhood_impl_mixin.hh>
 
+# include <mln/core/window.hh>
+# include <mln/literal/zero.hh>
+
 
 namespace mln
 {
@@ -62,6 +65,16 @@ namespace mln
     // Overridden from internal::basic_window_impl so that it also
     // inserts \a -dp.
     neighb<D>& insert_(const D& dp);
+
+    typedef mln::window<D> window;
+
+    window to_window() const
+    {
+      window tmp(this->dps_);
+      D zero = literal::zero;
+      tmp.insert(zero);
+      return tmp;
+    }
   };
  
 
