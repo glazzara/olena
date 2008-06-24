@@ -53,10 +53,11 @@ namespace mln
      *
      * NEVER DIRECTLY DERIVE FROM THIS CLASS.
      *
-     * Instead derive from EITHER site_set_iterator_base OR
-     * site_relative_iterator_base.
+     * Instead derive EITHER from site_set_iterator_base OR from
+     * site_relative_iterator_base OR from piter_adaptor_.
      *
-     * Parameter \c S is the targeted site set type.
+     * Parameter \c S is the targeted "site set definition" type.  It
+     * can be either a Site_Set, a Window, or a Neighborhood.
      */
     template <typename S, typename E>
     struct site_iterator_base : Site_Iterator<E>,

@@ -50,8 +50,11 @@ namespace mln
     /*! \brief A generic forward iterator on points of windows and of
      *  neighborhoods.
      *
-     * The parameter \c S is the type of std::vector enclosing
-     * structure.
+     * Parameter \c S is the targeted "site set definition" type.  It
+     * can be either a Window, or a Neighborhood.
+     *
+     * IMPORTANT: Sub-classes have to define do_start_, do_next_, and
+     * compute_p_.  They shall define NEITHER start_ NOR next_.
      */
     template <typename S, typename E>
     class site_relative_iterator_base : public site_iterator_base< S, E >
@@ -79,11 +82,11 @@ namespace mln
       /// The psite around which this iterator moves.
       const mln_psite(S)& center() const;
 
-      /// Overriding that adds a test to prevent getting an invalid
-      /// iterator when its center has moved.  Some sub-classes
-      /// provide an update() method for the client to say that she
-      /// really want to read the iterator just after the center has
-      /// changed.
+      /// This overriding is very useful: it adds a test to prevent
+      /// getting an invalid iterator when its center has moved.  Some
+      /// sub-classes provide an update() method for the client to say
+      /// that she really want to read the iterator just after the
+      /// center has changed.
       const mln_psite(S)& unproxy() const;
 
       /// Hook to the current location.
@@ -92,12 +95,17 @@ namespace mln
       /// Change the site set targeted by this iterator. 
       void change_target(const S& s);
 
-      /// FIXME: import doc from home.
+      /// Warning: this method is an advanced tool provided for very
+      /// special occasions; if you are a regular user, you should
+      /// never use it!  Calling this method forces this relative
+      /// iterator to synchronize with its center when it has just
+      /// moved and when the relative iterator still makes sense.
       E& update();
 
     protected:
 
-      /// A pointer to the center psite.
+      /// A pointer to the center psite around which this iterator
+      /// moves.
       const mln_psite(S)* c_;
 
     private:

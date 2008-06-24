@@ -1,3 +1,11 @@
+2008-06-24  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some technical documentation to iterator base classes.
+
+	* mln/core/internal/site_relative_iterator_base.hh: Add some
+	documentation.
+	* mln/core/internal/site_iterator_base.hh: Likewise.
+
 2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Prefer delegation to impl inheritance for neighborhood.
