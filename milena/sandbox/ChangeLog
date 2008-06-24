@@ -1,3 +1,16 @@
+2008-06-24  aroune aroumougame <aroune.aroumougame@gmail.com>
+
+	thinning test files.
+	* aroumougame/skeleton/neighborhood1.hh: functions to get the
+	* complementary of neighborhoods (draft version)
+	* aroumougame/skeleton/test.pbm: Remove.
+	* aroumougame/skeleton/test.pgm: Remove.
+	* aroumougame/skeleton/test1.pbm: Remove.
+	* aroumougame/skeleton/test1.pgm: Remove.
+	* aroumougame/skeleton/test_image2d.cc: New.
+	* aroumougame/skeleton/test_image3d.cc: New.
+	* aroumougame/skeleton/thinning.hh: New.
+
 2008-06-20  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: ICP: clean-up before milena update.
