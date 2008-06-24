@@ -1,5 +1,27 @@
 2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Prefer delegation to impl inheritance for neighborhood.
+
+	* doc/tutorial/examples/window.cc: Test make.
+	* mln/core/internal/basic_window_impl.hh: Remove; its contents
+	is now directly handled by...
+	* mln/core/window.hh: ...this class.
+	* mln/core/internal/neighborhood_impl_mixin.hh: Remove.
+	* mln/core/internal/neighborhood_base.hh
+	(is_centered, is_symmetric, sym): Remove; meaningless.
+	* mln/core/pset_if_piter.hh: Use using and update.
+	* mln/core/neighb2d.hh (neighb2d): Rely on neighborhood.
+	Clean code.
+	* mln/core/neighborhood.hh: New; use delegation to window.
+	* mln/metal/math/sqrt.hh (mlc_sqrt_int): New.
+	(sqrt_int_): Help compiler.
+	(sqrt): Fix params.
+	* mln/make/neighb2d.hh: New.
+	* mln/make/window2d.hh: New overload.
+	* mln/morpho/dilation_elementary.hh (todo): New.
+
+2008-06-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Factor code for pset_if piters and add bkd iterations.
 
 	* mln/core/internal/piter_adaptor.hh (comment): Remove.

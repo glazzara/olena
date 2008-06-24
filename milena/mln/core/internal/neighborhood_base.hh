@@ -60,26 +60,6 @@ namespace mln
       /// Site associated type.
       typedef mln_site(D) site;
 
-
-      /*! \brief Test (as a window) if it is centered so (as a
-       *  neighborhood) return false.
-       *
-       * \return Always false.
-       */
-      bool is_centered() const;
-      
-      /*! \brief Test (as a window) if it is symmetric so (as a
-       *  neighborhood) return true.
-       *
-       * \return Always true.
-       */
-      bool is_symmetric() const;
-      
-      /*! Apply (as a window) a central symmetry so (as a
-	neighborhood) it is a no-op.
-      */
-      void sym();
-
     protected:
       neighborhood_base();
     };
@@ -91,30 +71,6 @@ namespace mln
     inline
     neighborhood_base<D,E>::neighborhood_base()
     {
-    }
-
-    template <typename D, typename E>
-    inline
-    bool
-    neighborhood_base<D,E>::is_centered() const
-    {
-      return false;
-    }
-
-    template <typename D, typename E>
-    inline
-    bool
-    neighborhood_base<D,E>::is_symmetric() const
-    {
-      return true;
-    }
-
-    template <typename D, typename E>
-    inline
-    void
-    neighborhood_base<D,E>::sym()
-    {
-      // No-op.
     }
 
 # endif // ! MLN_INCLUDE_ONLY

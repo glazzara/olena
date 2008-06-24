@@ -30,6 +30,8 @@
 
 /// \file mln/morpho/dilation_elementary.hh
 /// \brief Morphological elementary dilation.
+///
+/// \todo Write specific code.
 
 # include <mln/morpho/dilation.hh>
 

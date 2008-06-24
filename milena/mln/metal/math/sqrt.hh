@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,6 +37,9 @@
 # include <mln/metal/int.hh>
 
 
+# define mlc_sqrt_int(N) mln::metal::math::sqrt_int<( N )>::value
+
+
 namespace mln
 {
 
@@ -54,11 +57,12 @@ namespace mln
 	template <int n, int lo = 1, int hi = n>
 	struct sqrt_int_
 	{
-	  enum { mid = (lo + hi + 1) / 2 };
-
-	  enum { value = n < mid * mid
-                         ? sqrt_int_<n, lo, mid-1>::value
-		         : sqrt_int_<n, mid, hi>::result };
+	  enum {
+	    mid = (lo + hi + 1) / 2,
+	    val_lo = sqrt_int_<n, lo, mid-1>::value,
+	    val_hi = sqrt_int_<n, mid, hi>::value
+	  };
+	  enum { value = n < mid * mid ? val_lo : val_hi };
 	};
 
 	template<int n, int m>
@@ -92,7 +96,7 @@ namespace mln
 
       // sqrt<N>
 
-      template <typename X, typename N>
+      template <typename N>
       struct sqrt;
 
       template <int n>

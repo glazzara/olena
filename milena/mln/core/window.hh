@@ -36,16 +36,25 @@
  * point_, neighb_, etc.
  *
  * \todo Code other comparisons (< and <=).
+ *
+ * \todo Add static checks in insert methods.
  */
 
 # include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/basic_window_impl.hh>
 
 # include <mln/metal/is_a.hh>
+# include <mln/util/set.hh>
+# include <mln/fun/i2v/all_to.hh>
+# include <mln/norm/linfty.hh>
 
 
 namespace mln
 {
+
+  // Fwd decls.
+  template <typename V> class dpsites_fwd_piter;
+  template <typename V> class dpsites_bkd_piter;
+
 
   /*! \brief Generic window class.
    *
@@ -53,8 +62,7 @@ namespace mln
    * parameter is \c D, type of delta-point.
    */
   template <typename D>
-  class window : public internal::window_base< D, window<D> >,
-		 public internal::basic_window_impl< D, window<D> >
+  class window : public internal::window_base< D, window<D> >
   {
   public:
 
@@ -63,11 +71,6 @@ namespace mln
      * The constructed window is empty. 
      */
     window();
-
-    window(const util::set<D>& s)
-    {
-      this->dps_ = s;
-    }
 
     /*! \brief Test if the window is centered.
      *
@@ -82,6 +85,65 @@ namespace mln
     /*! Apply a central symmetry to the target window.
      */
     void sym();
+
+
+    /*! \brief Site_Iterator type to browse the points of a basic window
+     * w.r.t. the ordering of delta-points.
+     */
+    typedef dpsites_fwd_piter< window<D> > fwd_qiter;
+      
+    /*! \brief Site_Iterator type to browse the points of a basic window
+     * w.r.t. the reverse ordering of delta-points.
+     */
+    typedef dpsites_bkd_piter< window<D> > bkd_qiter;
+
+    /*! \brief Site_Iterator type to browse the points of a basic window
+     * whatever the ordering of delta-points.
+     */
+    typedef fwd_qiter qiter;
+
+
+    /// Give the window size, i.e., the number of delta-sites.
+    unsigned size() const;
+
+    /*! \brief Test if the window is empty (null size; no delta-point).
+     */
+    bool is_empty() const;
+
+    /*! \brief Give the maximum coordinate gap between the window
+      center and a window point.
+    */
+    unsigned delta() const;
+
+    // Give the \p i-th delta-point.
+    const D& dp(unsigned i) const;
+
+
+
+    /// Insert a delta-point \p dp.
+    window<D>& insert(const D& dp);
+
+    /// \{ Insertion of a delta-point with different numbers of
+    /// arguments (coordinates) w.r.t. the dimension.
+    window<D>& insert(const mln_coord(D)& dind); // For 1D.
+      
+    window<D>& insert(const mln_coord(D)& drow,
+		      const mln_coord(D)& dcol); // For 2D.
+      
+    window<D>& insert(const mln_coord(D)& dsli,
+		      const mln_coord(D)& drow,
+		      const mln_coord(D)& dcol); // For 3D.
+    /// \}
+
+    /// Give the vector of delta-points.
+    const std::vector<D>& std_vector() const;
+
+    /// Hook to the set of D.
+    const util::set<D>& dps_hook_() const;
+
+  private:
+
+    util::set<D> dps_;
   };
 
 
@@ -114,7 +176,8 @@ namespace mln
 
   template <typename D>
   inline
-  bool window<D>::is_symmetric() const
+  bool
+  window<D>::is_symmetric() const
   {
     window<D> cpy = *this;
     return cpy.sym() == *this;
@@ -122,7 +185,8 @@ namespace mln
 
   template <typename D>
   inline
-  bool window<D>::is_centered() const
+  bool
+  window<D>::is_centered() const
   {
     static const D origin = all_to(0);
     return this->dps_.has(origin); // FIXME: Use literal::origin.
@@ -134,27 +198,135 @@ namespace mln
   window<D>::sym()
   {
     window<D> tmp;
-    const unsigned n = this->ndpoints();
+    const unsigned n = size();
     for (unsigned i = 0; i < n; ++i)
       tmp.insert(- this->dp(i));
     *this = tmp;
   }
 
+
   template <typename D>
-  std::ostream& operator<<(std::ostream& ostr, const window<D>& win)
+  inline
+  bool
+  window<D>::is_empty() const
   {
-    return ostr << win.dps_hook();
+    return dps_.is_empty();
   }
 
   template <typename D>
-  bool operator==(const window<D>& lhs, const window<D>& rhs)
+  inline
+  unsigned
+  window<D>::delta() const
   {
-    return lhs.dps_hook() == rhs.dps_hook();
+    // FIXME: Is-it correct?
+    unsigned d = 0;
+    const unsigned n = size();
+    for (unsigned i = 0; i < n; ++i)
+      {
+	unsigned dd = norm::linfty(dp(i).to_vec());
+	if (dd > d)
+	  d = dd;
+      }
+    return d;
+  }
+
+  template <typename D>
+  inline
+  unsigned
+  window<D>::size() const
+  {
+    return dps_.nelements();
+  }
+
+  template <typename D>
+  inline
+  const D&
+  window<D>::dp(unsigned i) const
+  {
+    mln_precondition(i < size());
+    return dps_[i];
+  }
+
+  template <typename D>
+  inline
+  const std::vector<D>&
+  window<D>::std_vector() const
+  {
+    return dps_.vect();
+  }
+
+  template <typename D>
+  inline
+  window<D>&
+  window<D>::insert(const D& dp)
+  {
+    dps_.insert(dp);
+    return *this;
+  }
+
+  template <typename D>
+  inline
+  window<D>&
+  window<D>::insert(const mln_coord(D)& dind)
+  {
+    mlc_bool(D::dim == 1)::check();
+    D dp(dind);
+    return insert(dp);
+  }
+
+  template <typename D>
+  inline
+  window<D>&
+  window<D>::insert(const mln_coord(D)& drow,
+		    const mln_coord(D)& dcol)
+  {
+    mlc_bool(D::dim == 2)::check();
+    D dp(drow, dcol);
+    return insert(dp);
+  }
+
+  template <typename D>
+  inline
+  window<D>&
+  window<D>::insert(const mln_coord(D)& dsli,
+		    const mln_coord(D)& drow,
+		    const mln_coord(D)& dcol)
+  {
+    mlc_bool(D::dim == 3)::check();
+    D dp(dsli, drow, dcol);
+    return insert(dp);
+  }
+
+  template <typename D>
+  inline
+  const util::set<D>&
+  window<D>::dps_hook_() const
+  {
+    return dps_;
+  }
+
+  // Operators.
+
+  template <typename D>
+  std::ostream&
+  operator<<(std::ostream& ostr, const window<D>& win)
+  {
+    return ostr << win.dps_hook_();
+  }
+
+  template <typename D>
+  bool
+  operator==(const window<D>& lhs, const window<D>& rhs)
+  {
+    return lhs.dps_hook_() == rhs.dps_hook_();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
+
+# include <mln/core/dpsites_piter.hh>
 
 
 #endif // ! MLN_CORE_WINDOW_HH

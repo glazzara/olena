@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
  */
 
 # include <cmath>
-# include <mln/core/neighb.hh>
+# include <mln/core/neighborhood.hh>
 # include <mln/core/dpoint2d.hh>
 
 
@@ -45,8 +45,16 @@ namespace mln
   /*! \brief Type alias for a neighborhood defined on the 2D square
    * grid with integer coordinates.
    */
-  typedef neighb<dpoint2d> neighb2d;
+  typedef neighborhood<dpoint2d> neighb2d;
 
+}
+
+
+# include <mln/make/neighb2d.hh>
+
+
+namespace mln
+{
 
   /*! \brief 4-connectivity neighborhood on the 2D grid.
    *
@@ -104,8 +112,8 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(make::dpoint2d(0, 1));
-	it.insert(make::dpoint2d(1, 0));
+	it.insert(0, 1)
+	  .insert(1, 0);
 	flower = false;
       }
     return it;
@@ -118,10 +126,10 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(make::dpoint2d(0, 1));
-	it.insert(make::dpoint2d(1,-1));
-	it.insert(make::dpoint2d(1, 0));
-	it.insert(make::dpoint2d(1, 1));
+	it.insert(0, 1)
+	  .insert(1,-1)
+	  .insert(1, 0)
+	  .insert(1, 1);
 	flower = false;
       }
     return it;
@@ -134,7 +142,7 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(make::dpoint2d(0, 1));
+	it.insert(0, 1);
 	flower = false;
       }
     return it;
@@ -147,7 +155,7 @@ namespace mln
     static neighb2d it;
     if (flower)
       {
-	it.insert(make::dpoint2d(1, 0));
+	it.insert(1, 0);
 	flower = false;
       }
     return it;
@@ -156,6 +164,7 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
 
 
 #endif // ! MLN_CORE_NEIGHB2D_HH

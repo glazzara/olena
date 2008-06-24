@@ -53,6 +53,17 @@ int main()
   std::cout << win << std::endl;
 
   {
+    bool b[9] = { 1, 1, 0,
+		  1, 0, 0,
+		  0, 0, 0 };
+    bool b2[3][3] = { { 1, 1, 0 },
+		      { 1, 0, 0 },
+		      { 0, 0, 0 } };
+    mln_assertion(make::window2d(b) == make::window2d(b2));
+    mln_assertion(make::window2d(b) == win);
+  }
+
+  {
     mln_fwd_piter_(I) p(ima.domain());
     for_all(p)
       picture(ima, win, p);

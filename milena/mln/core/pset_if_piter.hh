@@ -68,6 +68,14 @@ namespace mln
 
     /// The set site targeted by pi_.
     const S& pi_set_from_(const pset_if<S,F>& s) const;
+
+  private:
+    typedef pset_if_piter_<Pi,S,F> self_;
+    typedef internal::piter_adaptor_<Pi, pset_if<S,F>, self_> super_;
+
+  protected:
+    using super_::s_;
+    using super_::pi_;
   };
 
 
@@ -92,9 +100,9 @@ namespace mln
   void
   pset_if_piter_<Pi,S,F>::start_()
   {
-    this->pi_.start();
-    while (this->pi_.is_valid() && ! this->s_->pred(this->pi_))
-      this->pi_.next();
+    pi_.start();
+    while (pi_.is_valid() && ! s_->pred(pi_))
+      pi_.next();
   }
 
   template <typename Pi, typename S, typename F>
@@ -103,8 +111,8 @@ namespace mln
   pset_if_piter_<Pi,S,F>::next_()
   {
     do
-      this->pi_.next();
-    while (this->pi_.is_valid() && ! this->s_->pred(this->pi_));
+      pi_.next();
+    while (pi_.is_valid() && ! s_->pred(pi_));
   }
   
   template <typename Pi, typename S, typename F>

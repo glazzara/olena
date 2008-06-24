@@ -25,16 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_WINDOW2D_HH
-# define MLN_MAKE_WINDOW2D_HH
+#ifndef MLN_MAKE_NEIGHB2D_HH
+# define MLN_MAKE_NEIGHB2D_HH
 
-/*! \file mln/make/window2d.hh
+/*! \file mln/make/neighb2d.hh
  *
- * \brief Routine to create an mln::window2d.
+ * \brief Routine to create an mln::neighb2d.
  */
 
-# include <mln/core/window2d.hh>
-# include <mln/metal/math/sqrt.hh>
+# include <mln/make/window2d.hh>
 
 
 namespace mln
@@ -43,53 +42,53 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an mln::window2d.
+    /*! \brief Create a mln::neighb2d.
      *
      * \param[in] values Array of Booleans.
      *
      * \pre The array size, \c S, has to be a square of an odd integer.
      *
-     * \return A 2D window.
+     * \return A 2D neighborhood.
      */
     template <unsigned S>
-    mln::window2d window2d(bool (&values)[S]);
+    mln::neighb2d neighb2d(bool (&values)[S]);
 
 
+    /*! \brief Create a mln::neighb2d.
+     *
+     * \param[in] values Double-array of Booleans.
+     *
+     * \pre \c R and \c C, defining the array size, have to be odd.
+     *
+     * \return A 2D neighborhood.
+     */
     template <unsigned R, unsigned C>
-    mln::window2d window2d(bool (&values)[R][C]);
+    mln::neighb2d neighb2d(bool (&values)[R][C]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <unsigned S>
     inline
-    mln::window2d
-    window2d(bool (&values)[S])
+    mln::neighb2d
+    neighb2d(bool (&values)[S])
     {
       enum { h = mlc_sqrt_int(S) / 2 };
       mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
-      mln::window2d tmp;
-      unsigned i = 0;
-      for (int row = - h; row <= h; ++row)
-	for (int col = - h; col <= h; ++col)
-	  if (values[i++])
-	    tmp.insert(row, col);
+      mln::window2d win = make::window2d(values);
+      neighb2d tmp(win);
       return tmp;
     }
 
     template <unsigned R, unsigned C>
     inline
-    mln::window2d
-    window2d(bool (&values)[R][C])
+    mln::neighb2d
+    neighb2d(bool (&values)[R][C])
     {
       mlc_bool(R % 2 == 1)::check();
       mlc_bool(C % 2 == 1)::check();
-      const int drow = int(R) / 2, dcol = int(C) / 2;
-      mln::window2d tmp;
-      for (int row = - drow; row <= drow; ++row)
-	for (int col = - dcol; col <= dcol; ++col)
-	  if (values[row + drow][col + dcol])
-	    tmp.insert(row, col);
+      mln::window2d win = make::window2d(values);
+      neighb2d tmp(win);
       return tmp;
     }
 
@@ -100,4 +99,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_WINDOW2D_HH
+#endif // ! MLN_MAKE_NEIGHB2D_HH
