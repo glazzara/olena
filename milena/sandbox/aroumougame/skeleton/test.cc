@@ -6,70 +6,6 @@
 
 using namespace mln;
 
-template <typename P>
-    int nb_composant_connexe(graph_image<P, bool> gi, bool object, const P& p_ref, bool local)
-{
-  int T;
-  p_set< P > done;
-  p_set< P > neighbors;
-  p_set< P > composant;
-  
-  done.insert(p_ref);
-  graph_elt_neighborhood< P > nbh;
-  mln_niter(graph_elt_neighborhood< P >) fq(nbh, p_ref);
-  for_all(fq)
-  {
-    if (gi(fq)&&!done.has(fq))
-    {
-      neighbors.insert(fq);
-    }
-  }
-//   std::cout << "nb_composant_connexe: neighbors " << neighbors.npoints() <<std::endl; 
-  if(neighbors.npoints()<=1)
-  {
-    return neighbors.npoints();
-  }
-  else
-    T=0;
-    
-  while(neighbors.npoints()!=0)
-  {
-    T++;
-    done.insert(neighbors[0]);
-    mln_niter(graph_elt_neighborhood< P >) t(nbh, neighbors[0]);
-    neighbors.remove(neighbors[0]);
-    for_all(t)
-    {
-      if (gi(t)&&!done.has(t))
-      {
-        composant.insert(t);
-      }
-    }
-     
-    while(composant.npoints()!=0)
-    {
-      done.insert(composant[0]);
-      if(neighbors.has(composant[0]))
-      {
-        neighbors.remove(composant[0]);
-        if(neighbors.npoints()==0)
-          return T;
-      }
-      
-      mln_niter(graph_elt_neighborhood< P >) r(nbh, composant[0]);
-      composant.remove(composant[0]);
-      for_all(r)
-      {
-        if (gi(r) && !done.has(r))
-        {
-          composant.insert(r);
-        }
-      }
-    }
-  }
-  return T;
-}
-
 int main()
 {
   util::graph<point3d> g;
@@ -153,9 +89,9 @@ int main()
   {
     int T;
     p_set< point3d > done;
-    p_set< point3d > neighbors;
-    p_set< point3d > composant;
-  
+    p_set< graph_psite<point3d> > neighbors;
+    p_set< graph_psite<point3d> > composant;
+    
     done.insert(p_ref.to_point());
     graph_elt_neighborhood< point3d > nbh;
     mln_niter_(graph_elt_neighborhood< point3d >) fq(nbh, p_ref);
@@ -163,7 +99,7 @@ int main()
     {
       if (gi(fq)&&!done.has(fq.to_point()))
       {
-        neighbors.insert(fq.to_point());
+        neighbors.insert(fq);
       }
     }
 //   std::cout << "nb_composant_connexe: neighbors " << neighbors.npoints() <<std::endl; 
@@ -177,20 +113,20 @@ int main()
     while(neighbors.npoints()!=0)
     {
       T++;
-      done.insert(neighbors[0]);
+      done.insert(neighbors[0].to_point());
       mln_niter_(graph_elt_neighborhood< point3d >) t(nbh, neighbors[0]);
       neighbors.remove(neighbors[0]);
       for_all(t)
       {
         if (gi(t)&&!done.has(t.to_point()))
         {
-          composant.insert(t.to_point());
+          composant.insert(t);
         }
       }
      
       while(composant.npoints()!=0)
       {
-        done.insert(composant[0]);
+        done.insert(composant[0].to_point());
         if(neighbors.has(composant[0]))
         {
           neighbors.remove(composant[0]);
@@ -204,7 +140,7 @@ int main()
         {
           if (gi(r) && !done.has(r.to_point()))
           {
-            composant.insert(r.to_point());
+            composant.insert(r);
           }
         }
       }
@@ -212,3 +148,69 @@ int main()
     std::cout << "gi (" << p_ref << ") = " << T << std::endl;
   }
 }
+
+
+template <typename P>
+    int nb_composant_connexe(graph_image<P, bool> gi, bool object, const graph_psite<P>& p_ref, bool local)
+{
+  int T;
+  p_set< graph_psite<P> > done;
+  p_set< graph_psite<P> > neighbors;
+  p_set< graph_psite<P> > composant;
+  
+  done.insert(p_ref);
+  graph_elt_neighborhood< graph_psite<P> > nbh;
+  mln_niter(graph_elt_neighborhood< graph_psite<P> >) fq(nbh, p_ref);
+  for_all(fq)
+  {
+    if (gi(fq)&&!done.has(fq))
+    {
+      neighbors.insert(fq);
+    }
+  }
+
+  if(neighbors.npoints()<=1)
+  {
+    return neighbors.npoints();
+  }
+  else
+    T=0;
+    
+  while(neighbors.npoints()!=0)
+  {
+    T++;
+    done.insert(neighbors[0]);
+    mln_niter(graph_elt_neighborhood< P >) t(nbh, neighbors[0]);
+    neighbors.remove(neighbors[0]);
+    for_all(t)
+    {
+      if (gi(t)&&!done.has(t))
+      {
+        composant.insert(t);
+      }
+    }
+     
+    while(composant.npoints()!=0)
+    {
+      done.insert(composant[0]);
+      if(neighbors.has(composant[0]))
+      {
+        neighbors.remove(composant[0]);
+        if(neighbors.npoints()==0)
+          return T;
+      }
+      
+      mln_niter(graph_elt_neighborhood< P >) r(nbh, composant[0]);
+      composant.remove(composant[0]);
+      for_all(r)
+      {
+        if (gi(r) && !done.has(r))
+        {
+          composant.insert(r);
+        }
+      }
+    }
+  }
+  return T;
+}
+

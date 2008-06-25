@@ -1,3 +1,8 @@
+2008-06-25 aroune aroumougame  <aroune.aroumougame@gmail.com>
+
+	problems with types selection.
+	* aroumougame/skeleton/test.cc: compilation error.
+
 2008-06-24  aroune aroumougame  <aroune.aroumougame@gmail.com>
 
 	dd graph thinning test file.
