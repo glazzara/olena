@@ -314,7 +314,7 @@ namespace my_mln
     fusion_graph fg;
 
     // Vertices.
-    for (util::vertex_id i = 0; i < rag.nvertices(); ++i)
+    for (util::vertex_id i = 0; i < rag.nvertices(); ++i.to_equiv())
       {
 	// The singleton subregion: { I }.
 	std::set<util::vertex_id> sr;
@@ -350,7 +350,7 @@ namespace my_mln
     // A disjoint set of vertices represented as a forest of rooted
     // trees (disjoint set forest).
     std::vector<util::vertex_id> parent(input.nvertices());
-    for (util::vertex_id i = 0; i < parent.size(); ++i)
+    for (util::vertex_id i = 0; i < parent.size(); ++i.to_equiv())
       // « make_set ».
       parent[i] = i;
     
@@ -370,7 +370,7 @@ namespace my_mln
     // Children.
     typedef std::multimap<util::vertex_id, util::vertex_id> children_t;
     children_t children;
-    for (typename util::vertex_id i = 0; i < parent.size(); ++i)
+    for (util::vertex_id i = 0; i < parent.size(); ++i.to_equiv())
       {
 	// « find ».
 	util::vertex_id r = i;
@@ -507,7 +507,7 @@ int main()
 
   // Compute the values (means) for the output image.
   std::map<util::vertex_id, int_u8> region_value;
-  for (util::vertex_id v = 0; v < fg.nvertices(); ++v)
+  for (util::vertex_id v = 0; v < fg.nvertices(); ++v.to_equiv())
     {
       // FIXME: Implicit cast.  We should rather change the type of
       // the accumulator instead.

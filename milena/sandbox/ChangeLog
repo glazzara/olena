@@ -1,3 +1,11 @@
+2008-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have beguin/irm compile again.
+
+	* beguin/irm.cc: Catch up with the interface of
+	mln::util::vertex_id.
+	(my_mln::merge_fg): Remove a useless `typename'.
+
 2008-06-25 aroune aroumougame  <aroune.aroumougame@gmail.com>
 
 	problems with types selection.
