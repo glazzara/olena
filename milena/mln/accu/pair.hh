@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,6 +74,9 @@ namespace mln
 
       result to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
+
+      result_1 first() const;
+      result_2 second() const;
 
     protected:
 
@@ -155,10 +158,26 @@ namespace mln
     inline
     void
     pair_<A1,A2,T>::get_result(result_1& r1,
-			    result_2& r2) const
+			       result_2& r2) const
     {
       r1 = a1_.to_result();
       r2 = a2_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    result_1
+    pair_<A1,A2,T>::first()const
+    {
+      return a1_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    result_2
+    pair_<A1,A2,T>::second() const
+    {
+      return a2_.to_result();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

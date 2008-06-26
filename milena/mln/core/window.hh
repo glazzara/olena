@@ -78,12 +78,14 @@ namespace mln
      */
     bool is_centered() const;
 
-    /*! \brief Test if the window is symmetric.
+    /*!  Test if the window is symmetric.
+     *
+     * \return True if for every dp of this window, -dp is also in
+     * this window.
      */
     bool is_symmetric() const;
 
-    /*! Apply a central symmetry to the target window.
-     */
+    /// Apply a central symmetry to the target window.
     void sym();
 
 
@@ -125,7 +127,7 @@ namespace mln
 
     /// \{ Insertion of a delta-point with different numbers of
     /// arguments (coordinates) w.r.t. the dimension.
-    window<D>& insert(const mln_coord(D)& dind); // For 1D.
+    window<D>& insert(const mln_coord(D)& dind); // For 1D or index access.
       
     window<D>& insert(const mln_coord(D)& drow,
 		      const mln_coord(D)& dcol); // For 2D.
@@ -135,7 +137,8 @@ namespace mln
 		      const mln_coord(D)& dcol); // For 3D.
     /// \}
 
-    /// Give the vector of delta-points.
+
+    /// Give the std vector of delta-points.
     const std::vector<D>& std_vector() const;
 
     /// Hook to the set of D.

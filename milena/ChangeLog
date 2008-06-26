@@ -1,5 +1,27 @@
 2008-06-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Misc fixes.
+
+	* mln/core/window.hh: Layout doc.
+	* mln/core/internal/window_base.hh: Typo.
+	* mln/core/internal/site_relative_iterator_base.hh
+	(is_valid_, invalidate_): Remove decls; meaningless.
+	* mln/core/internal/site_iterator_base.hh
+	(s_): Fix missing initialization in ctor without arg.
+	* mln/core/dpsites_piter.hh
+	(dpsites_fwd_piter, dpsites_bkd_piter): New ctor overload.
+	* mln/core/init.hh: Fix missing exact.
+	* mln/core/image2d.hh (coord): Reactivate.
+	* mln/accu/pair.hh (first, second): New methods.
+	* mln/make/neighb2d.hh: Fix missing mln::.
+	* mln/pw/var.hh (var_): New ctor overload.
+	* mln/win/rectangle2d.hh: Revamp.
+	* mln/util/index.hh (dim): New; required for window<D>.
+	* sandbox/geraud/win_fun.hh: New.
+	* sandbox/geraud/win_fun.cc: New.
+
+2008-06-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Allow delayed construction of function expressions.
 
 	* mln/trait/ch_value.hh (mln_ch_value_): New.

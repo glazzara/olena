@@ -67,12 +67,6 @@ namespace mln
       template <typename P>
       void center_at(const P& c);
 
-      /// Test the iterator validity.
-      bool is_valid_() const;
-
-      /// Invalidate the iterator.
-      void invalidate_();
-
       /// Start an iteration.
       void start_();
 

@@ -122,6 +122,9 @@ namespace mln
   template <typename T>
   struct image2d : public internal::image_primary< box2d, image2d<T> >
   {
+    /// Coordinate associated type.
+    typedef int coord;
+
     /// Value associated type.
     typedef T         value;
 

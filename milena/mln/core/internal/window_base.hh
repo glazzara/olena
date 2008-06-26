@@ -67,9 +67,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename D, typename E>
     inline
-    window_base<S,E>::window_base()
+    window_base<D,E>::window_base()
     {
     }
 

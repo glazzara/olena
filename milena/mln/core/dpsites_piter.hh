@@ -61,6 +61,9 @@ namespace mln
     template <typename P>
     dpsites_fwd_piter(const V& v, const P& c);
 
+    /// Constructor without argument.
+    dpsites_fwd_piter();
+
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -102,6 +105,9 @@ namespace mln
     template <typename P>
     dpsites_bkd_piter(const V& v, const P& c);
 
+    /// Constructor without argument.
+    dpsites_bkd_piter();
+
     /// Test the iterator validity.
     bool is_valid_() const;
 
@@ -129,6 +135,11 @@ namespace mln
 
   // Forward.
 
+  template <typename V>
+  inline
+  dpsites_fwd_piter<V>::dpsites_fwd_piter()
+  {
+  }
 
   template <typename V>
   template <typename P>
@@ -182,6 +193,11 @@ namespace mln
 
   // Backward.
 
+  template <typename V>
+  inline
+  dpsites_bkd_piter<V>::dpsites_bkd_piter()
+  {
+  }
 
   template <typename V>
   template <typename P>

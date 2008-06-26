@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,12 +31,11 @@
 /*! \file mln/win/rectangle2d.hh
  *
  * \brief Definition of the mln::win::rectangle2d window.
+ *
+ * \todo Reactivate includes at EOF.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/window.hh>
 
 
 namespace mln
@@ -56,28 +55,21 @@ namespace mln
      *  o o o o o \n
      * is defined with height = 3 and width = 5.
      */
-    struct rectangle2d : public Window< rectangle2d >,
-			 public internal::dpoints_base_< dpoint2d, rectangle2d >
+    struct rectangle2d : public internal::window_base< dpoint2d, rectangle2d >
     {
-      /// Point Site associated type.
-      typedef point2d psite;
-
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
 
       /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
        * (increasing), for each column (increasing)."
        */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
+      typedef dpsites_fwd_piter<rectangle2d> fwd_qiter;
 
       /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
        * (decreasing), for each column (decreasing)."
        */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
+      typedef dpsites_fwd_piter<rectangle2d> bkd_qiter;
 
+      typedef fwd_qiter qiter;
+      
 
       /*! \brief Constructor.
        *
@@ -101,16 +93,13 @@ namespace mln
        */
       bool is_symmetric() const;
 
-      /*! \brief Give the rectangle height.
-       */
+      /// Give the rectangle height.
       unsigned height() const;
 
-      /*! \brief Give the rectangle width.
-       */
+      /// Give the rectangle width.
       unsigned width() const;
 
-      /*! \brief Give the rectangle area.
-       */
+      /// Give the rectangle area.
       unsigned area() const;
 
       /*! \brief Give the maximum coordinate gap between the window
@@ -118,11 +107,17 @@ namespace mln
        */
       unsigned delta() const;
 
-      /// Apply a central symmetry to the target window.
-      rectangle2d& sym();
+      /// Apply a central symmetry to the target window; a no-op here.
+      void sym();
+
+
+      /// Give the std vector of delta-points.
+      const std::vector<dpoint2d>& std_vector() const;
 
     protected:
+
       unsigned height_, width_;
+      window2d win_;
     };
 
 
@@ -151,7 +146,7 @@ namespace mln
       const int drow = height / 2, dcol = width / 2;
       for (int row = - drow; row <= drow; ++row)
 	for (int col = - dcol; col <= dcol; ++col)
-	  insert(make::dpoint2d(row, col));
+	  win_.insert(row, col);
     }
 
     inline
@@ -191,9 +186,17 @@ namespace mln
     }
 
     inline
-    rectangle2d& rectangle2d::sym()
+    void
+    rectangle2d::sym()
     {
-      return *this;
+      // No-op.
+    }
+
+    inline
+    const std::vector<dpoint2d>&
+    rectangle2d::std_vector() const
+    {
+      return win_.std_vector();
     }
 
     inline
@@ -212,8 +215,8 @@ namespace mln
 
 
 // When rectangle2d is involved, one surely also wants:
-# include <mln/win/hline2d.hh>
-# include <mln/win/vline2d.hh>
+// # include <mln/win/hline2d.hh>
+// # include <mln/win/vline2d.hh>
 
 
 #endif // ! MLN_WIN_RECTANGLE2D_HH

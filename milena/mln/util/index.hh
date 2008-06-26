@@ -31,6 +31,9 @@
 /*! \file mln/util/index.hh
  *
  * \brief Definition of an "index" type.
+ *
+ * \todo Remove coord and dim, then make window<dindex> work.
+
  */
 
 # include <mln/core/concept/object.hh>
@@ -53,7 +56,9 @@ namespace mln
     struct index_ // : public Object< index_<Tag> >
     {
       typedef dindex_<Tag> dpsite;
+
       typedef int coord;
+      enum { dim = 1 };
 
       int i_;
 
@@ -71,7 +76,9 @@ namespace mln
     {
       typedef index_<Tag> psite;
       typedef index_<Tag> site;
+
       typedef int coord;
+      enum { dim = 1 };
 
       int i_;
 

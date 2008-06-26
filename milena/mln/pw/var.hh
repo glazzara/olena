@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,13 +49,15 @@ namespace mln
     {
       typedef V result;
 
+      var_();
+
       var_(const V& v);
 
       template <typename P>
       const V& operator()(const P&) const;
 
     private:
-      const V& v_;
+      const V* v_;
     };
 
 
@@ -69,8 +71,15 @@ namespace mln
 
     template <typename V>
     inline
+    var_<V>::var_()
+      : v_(0)
+    {
+    }
+
+    template <typename V>
+    inline
     var_<V>::var_(const V& v)
-      : v_(v)
+      : v_(&v)
     {
     }
 
@@ -80,7 +89,8 @@ namespace mln
     const V&
     var_<V>::operator()(const P&) const
     {
-      return v_;
+      mln_precondition(v_ != 0);
+      return *v_;
     }
 
     // pw::var(v)

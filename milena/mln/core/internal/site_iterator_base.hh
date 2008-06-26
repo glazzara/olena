@@ -109,6 +109,7 @@ namespace mln
     template <typename S, typename E>
     inline
     site_iterator_base<S, E>::site_iterator_base()
+      : s_(0)
     {
     }
 

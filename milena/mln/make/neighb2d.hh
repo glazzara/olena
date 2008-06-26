@@ -76,7 +76,7 @@ namespace mln
       enum { h = mlc_sqrt_int(S) / 2 };
       mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
       mln::window2d win = make::window2d(values);
-      neighb2d tmp(win);
+      mln::neighb2d tmp(win);
       return tmp;
     }
 
@@ -88,7 +88,7 @@ namespace mln
       mlc_bool(R % 2 == 1)::check();
       mlc_bool(C % 2 == 1)::check();
       mln::window2d win = make::window2d(values);
-      neighb2d tmp(win);
+      mln::neighb2d tmp(win);
       return tmp;
     }
 
