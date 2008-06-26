@@ -1,5 +1,17 @@
 2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move a morpho-related test in the right directory.
+
+	* tests/core/line_graph_image_wst.cc: Move...
+	* tests/morpho/line_graph_image_wst.cc: ...here.
+	* tests/core/Makefile.am (check_PROGRAMS): Remove
+	line_graph_image_wst.
+	(line_graph_image_wst_SOURCES): Move...
+	* tests/morpho/Makefile.am: ...here.
+	(check_PROGRAMS): Add line_graph_image_wst.
+
+2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Misc. fixes in mln::p_array<P>.
 
 	* mln/core/p_array.hh: Update documentation.

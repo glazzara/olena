@@ -18,6 +18,7 @@ check_PROGRAMS =				\
   laplacian					\
   lena_line_graph_image_wst1			\
   lena_line_graph_image_wst2			\
+  line_graph_image_wst				\
   meyer_wst					\
   meyer_wst_long				\
   opening_area					\
@@ -48,6 +49,7 @@ hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc
 
+line_graph_image_wst_SOURCES = line_graph_image_wst.cc
 meyer_wst_SOURCES = meyer_wst.cc
 
 combined_SOURCES = combined.cc
