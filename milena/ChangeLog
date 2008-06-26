@@ -9,7 +9,7 @@
 	image types can be delayed.
 	(mln_decl_unary_expr_): Likewise.
 
-2008-06-24  Thierry GÃ©raud  <thierry.geraud@lrde.epita.fr>
+2008-06-24  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some technical documentation to iterator base classes.
 
@@ -13739,10 +13739,11 @@
 	* vcs/milena.rb: New file.
 
 
-Local Variables:
-ispell-local-dictionary: "american"
-End:
-
 $Rev$
 $Id$
 $Date$
+
+Local Variables:
+ispell-local-dictionary: "american"
+coding: iso-latin-1
+End:
