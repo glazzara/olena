@@ -1,5 +1,9 @@
 2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/concept/point_site.hh: Add FIXMEs.
+
+2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	More uses of literal::zero in mln::labeling and mln::morpho.
 
 	* mln/canvas/labeling.hh (mln::canvas::labeling<F>::init)

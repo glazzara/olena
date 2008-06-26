@@ -266,6 +266,8 @@ namespace mln
 
   // Operators.
 
+  // FIXME: Remove, or factor in a lower class (Théo removed it from
+  // the cleanup-2008 branch).
   template <typename L, typename R>
   inline
   bool operator==(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
@@ -279,6 +281,8 @@ namespace mln
     return true;
   }
 
+  // FIXME: Remove, or factor in a lower class (Théo removed it from
+  // the cleanup-2008 branch).
   template <typename L, typename R>
   inline
   bool operator<(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
