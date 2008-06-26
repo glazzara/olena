@@ -1,5 +1,18 @@
 2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc. fixes in mln::p_array<P>.
+
+	* mln/core/p_array.hh: Update documentation.
+	Aesthetic changes.
+	(mln::p_array<P>::p_array ())
+	(mln::p_array<P>::p_array (const std::vector<P>&)):
+	Initialize mln::p_array<P>::bb_needs_update_ using the
+	initialization list of the ctor.
+	(mln::p_array<P>::clear): Don't forget to initialize
+	mln::p_array<P>::bb_.
+
+2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make the computation of the bbox of an mln::p_set<P> lazy.
 
 	* mln/core/p_set.hh (mln::p_set<P>::point): New typedef.

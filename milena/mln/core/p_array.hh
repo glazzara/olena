@@ -28,10 +28,8 @@
 #ifndef MLN_CORE_P_ARRAY_HH
 # define MLN_CORE_P_ARRAY_HH
 
-/*! \file mln/core/p_array.hh
- *
- * \brief Definition of a point set class based on std::vector.
- */
+/// \file mln/core/p_array.hh
+/// \brief Definition of a point set class based on std::vector.
 
 # include <vector>
 
@@ -47,15 +45,17 @@ namespace mln
   template <typename P> struct p_array_bkd_piter_;
 
 
-  /*! \brief Point set class based on std::vector.
-   *
-   * This is a multi-set of points.
-   *
-   * \warning We have some troubles with point set comparison based on
-   * a call to npoints().  FIXME: Explain!
-   *
-   * \todo Make it work with P being a Point_Site.
-   */
+  /// \brief Point set class based on std::vector.
+  /// 
+  /// This is a multi-set of points.  The parameter \p P shall be a
+  /// Point type or a Point_Site.
+  /// 
+  /// FIXME: If \p P is a Point_Site, but not a Point, the method
+  /// mln::p_array<P>::bbox will not compile (see below).  (Will be
+  /// fixed with the merge with branch cleanup-2008.)
+  ///
+  /// \warning We have some troubles with point set comparison based on
+  /// a call to npoints().  FIXME: Explain!
   template <typename P>
   class p_array : public internal::point_set_base_< P, p_array<P> >
   {
@@ -87,6 +87,8 @@ namespace mln
     /// Give the number of points.
     std::size_t npoints() const;
 
+    /* FIXME: Won't work if P is not (implicitly) convertible to
+       mln_point(P).  */
     /// Give the exact bounding box.
     const box_<point>& bbox() const;
 
@@ -125,16 +127,16 @@ namespace mln
   template <typename P>
   inline
   p_array<P>::p_array()
+    : bb_needs_update_(false)
   {
-    bb_needs_update_ = false;
   }
 
   template <typename P>
   inline
   p_array<P>::p_array(const std::vector<P>& vect)
-    : vect_(vect)
+    : vect_(vect),
+      bb_needs_update_(true)
   {
-    bb_needs_update_ = true;
   }
 
   template <typename P>
@@ -223,6 +225,7 @@ namespace mln
   p_array<P>::clear()
   {
     vect_.clear();
+    bb_.init();
     bb_needs_update_ = false;
   }
 
