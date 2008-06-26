@@ -28,10 +28,9 @@
 #ifndef MLN_CORE_P_SET_HH
 # define MLN_CORE_P_SET_HH
 
-/*! \file mln/core/p_set.hh
- *
- * \brief Definition of a point set class based on std::set.
- */
+/// \file mln/core/p_set.hh
+/// \brief Definition of a point set class based on std::set, that can
+/// behave also as a vector.
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
@@ -42,13 +41,14 @@
 namespace mln
 {
 
-  /*! \brief Point set class based on std::set.
-   *
-   * This is a mathematical set of points (not a multi-set).  The
-   * parameter \p P shall be a Point type.
-   *
-   * \todo Test if \p P being a Point_Site is ok.
-   */
+  /// \brief Point set class based on std::set.
+  ///
+  /// This is a mathematical set of points (not a multi-set).  The
+  /// parameter \p P shall be a Point type or a Point_Site.
+  ///
+  /// FIXME: If \p is a Point_Site, but not a Point, the method
+  /// mln::p_set<P>::bbox will not compile (see below).  (Will be fixed
+  /// with the merge with branch cleanup-2008.)
   template <typename P>
   class p_set : public internal::point_set_base_< P, p_set<P> >,
 		private internal::set_of_<P>
@@ -56,6 +56,16 @@ namespace mln
     typedef internal::set_of_<P> super_;
 
   public:
+    /* FIXME: Should be removed as soon as branch cleanup-2008 is
+       merged with the trunk.  */
+    typedef mln_point(P) point;
+
+    /* FIXME: mln::p_set uses the same iterators as mln::p_array,
+       because mln::p_set also have the interface of an array.  We
+       might want to keep this, but we should change the name of the
+       iterator, either by using an alias (typedef), of by giving them
+       their own type (which could share code with
+       mln::p_array_{fwd,bkd}_piter_, of course).  */
 
     /// Forward Point_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
@@ -87,12 +97,16 @@ namespace mln
     /// Clear this set.
     void clear();
 
+    /* FIXME: Won't work if P is not (implicitly) convertible to
+       mln_point(P).  */
     /// Give the exact bounding box.
-    const box_<mln_point(P)>& bbox() const;
+    const box_<point>& bbox() const;
 
   protected:
+    mutable accu::bbox<point> bb_;
+    mutable bool bb_needs_update_;
 
-    accu::bbox<P> bb_;
+    void update_bb_() const;
     // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
   };
 
@@ -101,8 +115,21 @@ namespace mln
 
   template <typename P>
   inline
-  p_set<P>::p_set()
+  p_set<P>::p_set() 
+    : bb_needs_update_(false)
   {
+  }
+
+  template <typename P>
+  inline
+  void
+  p_set<P>::update_bb_() const
+  {
+    bb_.init();
+    for (typename std::set<P>::const_iterator i = this->s_.begin();
+	 i != this->s_.end(); ++i)
+      bb_.take(*i);
+    bb_needs_update_ = false;
   }
 
   template <typename P>
@@ -127,7 +154,8 @@ namespace mln
   p_set<P>::insert(const P& p)
   {
     this->super_::insert(p);
-    bb_.take(p);
+    if (! bb_needs_update_)
+      bb_needs_update_ = true;
     return *this;
   }
 
@@ -137,11 +165,8 @@ namespace mln
   p_set<P>::remove(const P& p)
   {
     this->super_::remove(p);
-    // Rebuild the bounding box.
-    bb_.init();
-    for (typename std::set<P>::const_iterator i = this->s_.begin();
-	 i != this->s_.end(); ++i)
-      bb_.take(*i);
+    if (! bb_needs_update_)
+      bb_needs_update_ = true;
     return *this;
   }
 
@@ -161,6 +186,7 @@ namespace mln
   {
     this->super_::clear();
     bb_.init();
+    bb_needs_update_ = false;
   }
 
   template <typename P>
@@ -169,6 +195,8 @@ namespace mln
   p_set<P>::bbox() const
   {
     mln_precondition(npoints() != 0);
+    if (bb_needs_update_)
+      update_bb_();
     return bb_.to_result();
   }
 

@@ -32,6 +32,7 @@
 #include <mln/core/point2d.hh>
 
 #include <mln/core/p_array.hh>
+#include <mln/core/p_set.hh>
 #include <mln/core/graph_psite.hh>
 #include <mln/core/p_graph_piter.hh>
 
@@ -69,21 +70,41 @@ int main()
 
 
   // Graph point set.
+  typedef p_graph<point2d> pg_t;
   p_graph<point2d> pg(g);
-
-
-  // Array of graph point sites.
   typedef graph_psite<point2d> gpsite_t;
-  p_array<gpsite_t> pa;
 
-  
-  // Tests: copying all psites from PG to PA.
-  p_graph_fwd_piter_<point2d> p(pg);
-  for_all (p)
-    pa.append (p);
+  {
+    // Array of graph point sites.
+    typedef p_array<gpsite_t> pa_t;
+    pa_t pa;
 
-  // Test: create and use an iterator over PA.
-  p_array_fwd_piter_<gpsite_t> p2(pa);
-  for_all (p2)
-    std::cout << p2 << std::endl;
+    // Tests: copying all psites from PG to PA.
+    mln_piter_(pg_t) p(pg);
+    for_all (p)
+      pa.append(p);
+
+    // Test: create and use an iterator over PA.
+    mln_piter_(pa_t) p2(pa);
+    for_all (p2)
+      std::cout << p2 << ' ';
+    std::cout << std::endl;
+  }
+
+  {
+    // Set of graph point sites.
+    typedef p_set<gpsite_t> ps_t;
+    ps_t ps;
+
+    // Tests: copying all psites from PG to PS.
+    mln_piter_(pg_t) p(pg);
+    for_all (p)
+      ps.insert(p);
+
+    // Test: create and use an iterator over PS.
+    mln_piter_(ps_t) p2(ps);
+    for_all (p2)
+      std::cout << p2 << ' ';
+    std::cout << std::endl;
+  }
 }

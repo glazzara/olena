@@ -1,3 +1,23 @@
+2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make the computation of the bbox of an mln::p_set<P> lazy.
+
+	* mln/core/p_set.hh (mln::p_set<P>::point): New typedef.
+	Use it...
+	(mln::p_set<P>::bbox): ...in the declaration of this method.
+	(mln::p_set<P>::bb_): Make it mutable.
+	Change type from `accu::bbox<P>' to `accu::bbox<point>'.
+	(mln::p_set<P>::bb_needs_update_): New attribute.
+	(mln::p_set<P>::update_bb_): New method.
+	(p_set<P>::p_set): Adjust ctor.
+	(mln::p_set<P>::insert)
+	(mln::p_set<P>::remove)
+	(mln::p_set<P>::clear)
+	(mln::p_set<P>::bbox):
+	Adjust methods.
+	* tests/core/point_set_compatibility.cc: Exercise
+	p_set< graph_psite<point2d> >.
+
 2008-06-26  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
 
 	Allow delayed construction of function expressions.
