@@ -46,8 +46,8 @@
 // FIXME: See below.
 # include <mln/util/greater_psite.hh>
 # include <mln/morpho/includes.hh>
+# include <mln/literal/zero.hh>
 # include <mln/labeling/regional_minima.hh>
-
 
 
 namespace mln
@@ -110,8 +110,7 @@ namespace mln
       /* FIXME: Ensure the input image has scalar values.  */
 
       typedef L marker;
-      // FIXME: Use literal::zero.
-      const marker unmarked = 0;
+      const marker unmarked = literal::zero;
 
       // Initialize the output with the markers (minima components).
       mln_ch_value(I, marker) output =

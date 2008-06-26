@@ -28,14 +28,13 @@
 #ifndef MLN_CANVAS_LABELING_HH
 # define MLN_CANVAS_LABELING_HH
 
-/*! \file mln/canvas/labeling.hh
- *
- * \brief Connected component labeling of the object part in a binary
- * image.
- */
+/// \file mln/canvas/labeling.hh
+/// \brief Connected component labeling of the object part in a binary
+/// image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/level/fill.hh>
+# include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
 
 
@@ -160,7 +159,7 @@ namespace mln
       mln::level::fill(deja_vu, false);
       initialize(parent, f.input);
       initialize(output, f.input);
-      mln::level::fill(output, 0); // FIXME: Use literal::zero.
+      mln::level::fill(output, literal::zero);
       nlabels = 0;
     }
 

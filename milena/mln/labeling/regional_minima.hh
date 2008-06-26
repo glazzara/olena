@@ -28,11 +28,9 @@
 #ifndef MLN_LABELING_REGIONAL_MINIMA_HH
 # define MLN_LABELING_REGIONAL_MINIMA_HH
 
-/*! \file mln/labeling/regional_minima.hh
- *
- * \brief Connected component labeling of the regional minima of an
- * image.
- */
+/// \file mln/labeling/regional_minima.hh
+/// \brief Connected component labeling of the regional minima of an
+/// image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -121,6 +119,9 @@ namespace mln
 	regional_minima_(const I& input, const N& nbh, L& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::regional_minima_");
+
+	  // FIXME: abort if L is not wide enough to encode the set of
+	  // minima.
 
 	  typedef impl::regional_minima_functor<I,N,L> F;
 	  F f(input, nbh);

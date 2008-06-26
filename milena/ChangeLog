@@ -1,5 +1,16 @@
 2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	More uses of literal::zero in mln::labeling and mln::morpho.
+
+	* mln/canvas/labeling.hh (mln::canvas::labeling<F>::init)
+	* mln/morpho/meyer_wst.hh (mln::morpho::meyer_wst):
+	Use mln::literal::zero instead of plain 0.
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/regional_minima.hh:
+	Add a FIXME (see https://trac.lrde.org/olena/ticket/146).
+
+2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move a morpho-related test in the right directory.
 
 	* tests/core/line_graph_image_wst.cc: Move...
