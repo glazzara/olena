@@ -1,3 +1,14 @@
+2008-06-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Allow delayed construction of function expressions.
+
+	* mln/trait/ch_value.hh (mln_ch_value_): New.
+	* mln/pw/cst.hh (cst_): New ctor without arg.
+	* mln/fun/ops.hh (mln_decl_binary_expr_): New ctor wihtout arg
+	so that the definition of expr template functions involved in
+	image types can be delayed.
+	(mln_decl_unary_expr_): Likewise.
+
 2008-06-24  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some technical documentation to iterator base classes.

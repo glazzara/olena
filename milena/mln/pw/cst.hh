@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,6 +50,8 @@ namespace mln
     {
       typedef T result;
 
+      cst_();
+
       cst_(const T& t);
 
       template <typename P>
@@ -69,6 +71,12 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     // pw::cst_<T>
+
+    template <typename T>
+    inline
+    cst_<T>::cst_()
+    {
+    }
 
     template <typename T>
     inline

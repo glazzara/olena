@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,6 +51,10 @@
       typedef typename mln::trait::op:: Name < mln_result(L),			\
 					       mln_result(R) >::ret result;	\
 										\
+      Name##_##Out##_expr_()							\
+      {										\
+      }										\
+										\
       Name##_##Out##_expr_(const L& l, const R& r)				\
 	: l_(l), r_(r)								\
       {										\
@@ -63,8 +67,8 @@
       }										\
 										\
     protected:									\
-      const L l_;								\
-      const R r_;								\
+      L l_;									\
+      R r_;									\
     };										\
 										\
   }										\
@@ -103,6 +107,10 @@
     {										\
       typedef typename mln::trait::op:: Name < mln_result(F) >::ret result;	\
 										\
+      Name##_##Out##_expr_()							\
+      {										\
+      }										\
+										\
       Name##_##Out##_expr_(const F& f)						\
 	: f_(f)									\
       {										\
@@ -115,7 +123,7 @@
       }										\
 										\
     protected:									\
-      const F f_;								\
+      F f_;									\
     };										\
 										\
   }										\
