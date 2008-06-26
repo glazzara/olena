@@ -1,3 +1,17 @@
+2008-06-26  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Allow delayed construction of function expressions.
+
+	* mln/trait/ch_value.hh (mln_ch_value_): New.
+	* mln/pw/cst.hh (cst_): New ctor without arg.
+	* mln/fun/ops.hh (mln_decl_binary_expr_): New ctor wihtout arg
+	so that the definition of expr template functions involved in
+	image types can be delayed.
+	(mln_decl_unary_expr_): Likewise.
+	* sandbox/folio/test/dt_maze.cc: Use...
+	* sandbox/folio/test/tmp.ppm: ...this new file.
+	* sandbox/folio/dt/canvas_dt.hh (f): Change to reference.
+
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the linkage of tools from apps/statues/ on GNU/Linux.

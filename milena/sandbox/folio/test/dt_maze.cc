@@ -20,7 +20,7 @@
 
 #include <mln/core/sub_image.hh>
 #include <mln/core/image_if.hh>
-#include <mln/pw/value.hh>
+#include <mln/pw/all.hh>
 
 #include "../dt/path.hh"
 // #include "../dt/raw_path_fast.hh"
@@ -35,7 +35,7 @@ int main()
   point start;
   point end;
 
-  I ima = io::ppm::load<value::rgb8>("../img/monkeys_april.ppm");
+  I ima = io::ppm::load<value::rgb8>("tmp.ppm"); // "../img/monkeys_april.ppm");
   mln_fwd_piter_(I) p(ima.domain());
   mln_bkd_piter_(I) pp(ima.domain());
 
@@ -92,7 +92,8 @@ int main()
   std::cout << "  => done !" << std::endl << std::endl;
 
   std::cout << "call path algorithm..." << std::endl;
-  out = dt::path(input | pw::value(mask), make::w_window2d(ws), mln_max(unsigned));
+  out = dt::path(input | (pw::value(mask) == pw::cst(true)),
+		 make::w_window2d(ws), mln_max(unsigned));
   std::cout << "  => done !" << std::endl << std::endl;
 
   // Create output

@@ -50,6 +50,7 @@ namespace mln
     {
       typedef T result;
 
+      cst_();
       cst_(const T& t);
 
       template <typename P>
@@ -74,6 +75,12 @@ namespace mln
     inline
     cst_<T>::cst_(const T& t)
       : t_(t)
+    {
+    }
+
+    template <typename T>
+    inline
+    cst_<T>::cst_()
     {
     }
 

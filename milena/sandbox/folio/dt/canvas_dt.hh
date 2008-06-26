@@ -55,7 +55,7 @@ namespace mln
     private:
 
       // Functor.
-      F f;
+      F& f;
 
       void init();
       void run();

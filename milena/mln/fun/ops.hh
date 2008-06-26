@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -56,6 +56,10 @@
       {										\
       }										\
 										\
+      Name##_##Out##_expr_()							\
+      {										\
+      }										\
+										\
       template <typename P>							\
       result operator()(const P& p) const					\
       {										\
@@ -63,8 +67,8 @@
       }										\
 										\
     protected:									\
-      const L l_;								\
-      const R r_;								\
+      L l_;									\
+      R r_;									\
     };										\
 										\
   }										\
@@ -108,6 +112,10 @@
       {										\
       }										\
 										\
+      Name##_##Out##_expr_()							\
+      {										\
+      }										\
+										\
       template <typename P>							\
       result operator()(const P& p) const					\
       {										\
@@ -115,7 +123,7 @@
       }										\
 										\
     protected:									\
-      const F f_;								\
+      F f_;									\
     };										\
 										\
   }										\

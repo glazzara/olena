@@ -37,7 +37,8 @@
 # include <mln/trait/image_from_mesh.hh>
 
 
-# define mln_ch_value(I, V) typename mln::trait::ch_value< I, V >::ret
+# define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
+# define mln_ch_value_(I, V)          mln::trait::ch_value< I, V >::ret
 
 
 
