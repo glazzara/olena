@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   erosion					\
   erosion_min_h					\
   gradient					\
+  gradient_elementary				\
   hit_or_miss					\
   laplacian					\
   lena_line_graph_image_wst1			\
@@ -35,6 +36,7 @@ closing_area_SOURCES = closing_area.cc
 
 contrast_SOURCES = contrast.cc
 gradient_SOURCES = gradient.cc
+gradient_elementary_SOURCES = gradient_elementary.cc
 hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc

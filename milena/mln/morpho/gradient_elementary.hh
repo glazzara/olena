@@ -31,11 +31,12 @@
 /// \file mln/morpho/gradient_elementary.hh
 /// \brief Morphological elementary gradient.
 ///
-/// \todo Write specific code.
+/// \todo Handle border + add fastest versions.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/accu/min_max.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
@@ -68,10 +69,9 @@ namespace mln
 
 	template <typename I, typename N>
 	mln_concrete(I)
-	gradient_elementary_(const mln::trait::image::kind::any&,
-			     const I& input, const N& nbh)
+	gradient_elementary_on_function(const I& input, const N& nbh)
 	{
-	  trace::entering("morpho::impl::generic::gradient_elementary_");
+	  trace::entering("morpho::impl::generic::gradient_elementary_on_function");
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -87,15 +87,76 @@ namespace mln
 	      output(p) = m.second() - m.first();
 	    }
 
-	  trace::exiting("morpho::impl::generic::gradient_elementary_");
+	  trace::exiting("morpho::impl::generic::gradient_elementary_on_function");
 	  return output;
-	  
 	}
 
-      } // end of namespace mln::internal::generic
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_elementary_on_set(const I& input, const N& nbh)
+	{
+	  trace::entering("morpho::impl::generic::gradient_elementary_on_set");
 
-    } // end of namespace mln::internal
+	  mln_concrete(I) output;
+	  initialize(output, input);
+	  level::fill(output, false);
 
+	  mln_piter(I) p(input.domain());
+	  mln_niter(N) n(nbh, p);
+	  for_all(p)
+	    {
+	      bool b = input(p);
+	      for_all(n) if (input.has(n))
+		if (input(n) != b)
+		  {
+		    output(p) = true;
+		    break;
+		  }
+	    }
+
+	  trace::exiting("morpho::impl::generic::gradient_elementary_on_set");
+	  return output;
+	}
+
+      } // end of namespace mln::impl::generic
+
+
+      // Different cases.
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const mln::trait::image::kind::any&,
+			     const mln::trait::image::speed::any&,
+			     const I& input, const N& nbh)
+      {
+	return generic::gradient_elementary_on_function(input, nbh);
+      }
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const mln::trait::image::kind::logic&,
+			     const mln::trait::image::speed::any&,
+			     const I& input, const N& nbh)
+      {
+	return generic::gradient_elementary_on_set(input, nbh);
+      }
+
+
+      // Selector.
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const I& input, const N& nbh)
+      {
+	return gradient_elementary_(mln_trait_image_kind(I)(),
+				    mln_trait_image_speed(I)(),
+				    input, nbh);
+      }
+
+    } // end of namespace mln::impl
+
+
+    // Facade.
 
     template <typename I, typename N>
     mln_concrete(I)
@@ -108,8 +169,7 @@ namespace mln
       mln_precondition(input.has_data());
       // FIXME: mln_precondition(! nbh.is_empty());
 
-      mln_concrete(I) output = impl::generic::gradient_elementary_(mln_trait_image_kind(I)(),
-								   input, nbh);
+      mln_concrete(I) output = impl::gradient_elementary_(input, nbh);
 
       trace::exiting("morpho::gradient_elementary");
       return output;
