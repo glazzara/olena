@@ -1,5 +1,17 @@
 2008-06-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Start cleaning up level::fill.
+
+	* tests/level/fill_with_value.cc: New.
+	* tests/level/Makefile.am: Update.
+	* mln/level/fill_with_image.hh: New.
+	* mln/level/fill.hh (generic): Remove.
+	(fill): Use fill_with_value and fill_with_image.
+	* mln/level/fill.spe.hh: Deactivate obsolete contents.
+	* mln/level/fill_with_value.hh: New.
+
+2008-06-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rename the methods of fastest images.
 
 	* mln/core/internal/check/image_fastest.hh

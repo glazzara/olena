@@ -25,44 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_FILL_SPE_HH
-# define MLN_LEVEL_FILL_SPE_HH
-
-/*! \file mln/level/fill.spe.hh
+/*! \file tests/level/fill_with_value.cc
  *
- * \brief Specializations for mln::level::fill.
- *
+ * \brief Tests on mln::level::fill_with_value
  */
 
-# ifndef MLN_LEVEL_FILL_HH
-#  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_FILL_HH
-
-# include <cstring>
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/function.hh>
-# include <mln/core/inplace.hh>
+#include <mln/core/image2d.hh>
+#include <mln/level/fill_with_value.hh>
 
 
-# ifndef MLN_INCLUDE_ONLY
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace level
-  {
+  const unsigned size = 100;
 
-    namespace impl
-    {
-
-
-    } // end of namespace mln::level::impl
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
-
-# endif // ! MLN_INCLUDE_ONLY
-
-#endif // ! MLN_LEVEL_FILL_SPE_HH
+  image2d<unsigned char> ima(size, size);
+  level::fill_with_value(ima, 51);
+  box2d::piter p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == 51);
+}

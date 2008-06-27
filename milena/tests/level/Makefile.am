@@ -12,6 +12,7 @@ check_PROGRAMS =				\
   compare					\
   compute					\
   fill						\
+  fill_with_value				\
   median					\
   median_dir					\
   median_fast					\
@@ -34,6 +35,7 @@ assign_SOURCES = assign.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
 fill_SOURCES = fill.cc
+fill_with_value_SOURCES = fill_with_value.cc
 median_SOURCES = median.cc
 median_dir_SOURCES = median_dir.cc
 median_fast_SOURCES = median_fast.cc

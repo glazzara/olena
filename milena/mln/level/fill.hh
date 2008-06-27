@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,16 +35,14 @@
  * \todo Re-organize this file contents + Overload for fastest images.
  */
 
-# include <cstring>
-
-# include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/inplace.hh>
-# include <mln/level/memset_.hh>
 
+# include <mln/level/fill_with_value.hh>
+# include <mln/level/fill_with_image.hh>
 
 // Specializations are in:
-# include <mln/level/fill.spe.hh>
+// # include <mln/level/fill.spe.hh>
+
 
 namespace mln
 {
@@ -55,7 +53,7 @@ namespace mln
     /*! Fill the whole image \p ima with the single value \p v.
      *
      * \param[in,out] ima The image to be filled.
-     * \param[in] v The value to assign to all pixels.
+     * \param[in] v The value to assign to all sites.
      *
      * \pre \p ima has to be initialized.
      *
@@ -132,44 +130,27 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
 
-      namespace generic
-      {
-	template <typename I>
-	inline
-	void fill_with_value(I& ima, const mln_value(I)& value)
-	{
-	  trace::entering("level::impl::generic::fill_with_value");
-
-	  mln_piter(I) p(ima.domain());
-	  for_all(p)
-	    ima(p) = value;
-
-	  trace::exiting("level::impl::generic::fill_with_value");
-	}
-
-      } // end if namespace mln::level::impl::generic
-
-    } // end of namespace mln::level::impl
-
-
-
-    // with: value
+    // With: value
 
     template <typename I>
     inline
     void fill(Image<I>& ima, const mln_value(I)& value)
     {
       trace::entering("level::fill");
+      fill_with_value(ima, value);
+      trace::exiting("level::fill");
+    }
 
-      mlc_is(mln_trait_image_value_io(I),
-	     trait::image::value_io::read_write)::check(); // FIXME: Only the upcoming general facade!!! 
-      mln_precondition(exact(ima).has_data());
-      impl::fill_with_value(mln_trait_image_speed(I)(), exact(ima),
-			    value);
 
+    // with: Image<J>
+
+    template <typename I, typename J>
+    inline
+    void fill(Image<I>& ima, const Image<J>& data)
+    {
+      trace::entering("level::fill");
+      fill_with_image(ima, data);
       trace::exiting("level::fill");
     }
 
@@ -232,25 +213,6 @@ namespace mln
       trace::exiting("level::fill");
     }
 
-
-    // with: Image<J>
-
-    template <typename I, typename J>
-    inline
-    void fill(Image<I>& ima_, const Image<J>& data_)
-    {
-      trace::entering("level::fill");
-
-      I&        ima = exact(ima_);
-      const J& data = exact(data_);
-      mln_precondition(ima.domain() <= data.domain());
-
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	ima(p) = data(p);
-
-      trace::exiting("level::fill");
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 
