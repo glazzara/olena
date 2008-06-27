@@ -1,3 +1,11 @@
+2008-06-27  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Add morpho elementary gradient and test.
+
+	* doc/tutorial/examples/sub_image.cc: Use an IP operator.
+	* mln/accu/pair.hh (first, second): Fix return type.
+	* mln/morpho/gradient_elementary.hh: New.
+
 2008-06-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Misc fixes.

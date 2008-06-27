@@ -75,8 +75,8 @@ namespace mln
       result to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
 
-      result_1 first() const;
-      result_2 second() const;
+      mln_result(A1) first() const;
+      mln_result(A2) second() const;
 
     protected:
 
@@ -166,15 +166,15 @@ namespace mln
 
     template <typename A1, typename A2, typename T>
     inline
-    result_1
-    pair_<A1,A2,T>::first()const
+    mln_result(A1)
+    pair_<A1,A2,T>::first() const
     {
       return a1_.to_result();
     }
 
     template <typename A1, typename A2, typename T>
     inline
-    result_2
+    mln_result(A2)
     pair_<A1,A2,T>::second() const
     {
       return a2_.to_result();
