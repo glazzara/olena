@@ -60,7 +60,7 @@ namespace mln
 
       template <typename I>
       inline
-      unsigned get_(trait::image::border::some, trait::image::category::primary,
+      unsigned get_(trait::image::ext_domain::some, trait::image::category::primary,
 		    const I& ima)
       {
 	return ima.border();
@@ -68,7 +68,7 @@ namespace mln
 
       template <typename I>
       inline
-      unsigned get_(trait::image::border::some, trait::image::category::morpher,
+      unsigned get_(trait::image::ext_domain::some, trait::image::category::morpher,
 		    const I& ima)
       {
 	return border::get( *ima.delegatee_() );
@@ -77,7 +77,7 @@ namespace mln
 
       template <typename I>
       inline
-      unsigned get_(trait::image::border::none, trait::image::category::any,
+      unsigned get_(trait::image::ext_domain::none, trait::image::category::any,
 		    const I&)
       {
 	return 0;
@@ -95,7 +95,8 @@ namespace mln
       trace::entering("border::get");
 
       mln_precondition(exact(ima).has_data());
-      unsigned res = border::impl::get_(mln_trait_image_border(I)(), mln_trait_image_category(I)(),
+      unsigned res = border::impl::get_(mln_trait_image_ext_domain(I)(),
+					mln_trait_image_category(I)(),
 					exact(ima));
 
       trace::exiting("border::get");

@@ -108,12 +108,12 @@ namespace mln
       const I& data  = exact(data_);
       J& destination = exact(destination_);
 
-      mlc_is(mln_trait_image_io(J), trait::image::io::write)::check();
+      mlc_is(mln_trait_image_value_io(J), trait::image::value_io::read_write)::check();
       mlc_converts_to(mln_value(I), mln_value(J))::check();
       mln_precondition(data.domain() <= destination.domain());
 
-      impl::paste_(mln_trait_image_data(I)(), data,
-		   mln_trait_image_data(J)(), destination);
+      impl::paste_(mln_trait_image_value_storage(I)(), data,
+		   mln_trait_image_value_storage(J)(), destination);
 
       trace::exiting("level::paste");
     }

@@ -64,8 +64,8 @@ namespace mln
 	 * \post p == point_at_offset(result)
 	 */
 	template <typename P>
-	std::size_t
-	offset_at(const P& p) const;
+	unsigned
+	index_of_point(const P& p) const;
 
       protected:
 	image_fastest_();
@@ -93,9 +93,9 @@ namespace mln
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
-	int (E::*m1)(const dpsite&) const = & E::offset;
+	int (E::*m1)(const dpsite&) const = & E::delta_index;
 	m1 = 0;
-	site (E::*m2)(unsigned) const = & E::point_at_offset;
+	site (E::*m2)(unsigned) const = & E::point_at_index;
 	m2 = 0;
 	unsigned (E::*m3)() const = & E::border;
 	m3 = 0;
@@ -110,12 +110,12 @@ namespace mln
 	typedef mln_rvalue(E) rvalue;
 	typedef mln_lvalue(E) lvalue;
 
-	rvalue (E::*m6)(unsigned) const = & E::operator[];
+	rvalue (E::*m6)(unsigned) const = & E::element;
 	m6 = 0;
-	lvalue (E::*m7)(unsigned) = & E::operator[];
+	lvalue (E::*m7)(unsigned) = & E::element;
 	m7 = 0;
 
-	std::size_t (E::*m8)() const = & E::ncells;
+	unsigned (E::*m8)() const = & E::nelements;
 	m8 = 0;
 
 	// FIXME: how to check that qixter are defined when W is unknown!
@@ -124,16 +124,16 @@ namespace mln
       template <typename E, typename B>
       template <typename P>
       inline
-      std::size_t
-      image_fastest_<E,B>::offset_at(const P& p) const
+      unsigned
+      image_fastest_<E,B>::index_of_point(const P& p) const
       {
 	const E* this_ = & internal::force_exact<E>(*this);
 	mln_precondition(this_->has_data());
 	mln_precondition(this_->has(p));
 	
-	unsigned o = & this_->operator()(p) - this_->buffer();
-	mln_postcondition(p == this_->point_at_offset(o));
-	return o;
+	unsigned i = & this_->operator()(p) - this_->buffer();
+	mln_postcondition(p == this_->point_at_index(i));
+	return i;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

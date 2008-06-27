@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -120,8 +121,11 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d : public internal::image_primary< box2d, image2d<T> >
+  class image2d : public internal::image_primary< box2d, image2d<T> >
   {
+    typedef internal::image_primary< box2d, image2d<T> > super_;
+  public:
+
     /// Coordinate associated type.
     typedef int coord;
 
@@ -171,23 +175,15 @@ namespace mln
     /// Give the bounding box domain.
     const box2d& bbox() const;
 
-    /// Give the border thickness.
-    unsigned border() const;
-
-    /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
-
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
 
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point2d& p);
 
-    /// Read-only access to the image value located at offset \p o.
-    const T& operator[](unsigned o) const;
 
-    /// Read-write access to the image value located at offset \p o.
-    T& operator[](unsigned o);
+    // Specific methods:
+    // -----------------
 
     /// Read-only access to the image value located at (\p row, \p col).
     const T& at(int row, int col) const;
@@ -195,14 +191,36 @@ namespace mln
     /// Read-write access to the image value located at (\p row, \p col).
     T& at(int row, int col);
 
+    /// Give the number of rows.
+    unsigned nrows() const;
 
-    /// Fast Image method
+    /// Give the number of columns.
+    unsigned ncols() const;
 
-    /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint2d& dp) const;
 
-    /// Give the point corresponding to the offset \p o.
-    point2d point_at_offset(unsigned o) const;
+    // As a fastest image:
+    // -------------------
+
+    // Give the index of a point.
+    using super_::index_of_point;
+
+    /// Give the border thickness.
+    unsigned border() const;
+
+    /// Give the number of elements (points including border ones).
+    unsigned nelements() const;
+
+    /// Read-only access to the image value located at index \p i.
+    const T& element(unsigned i) const;
+
+    /// Read-write access to the image value located at index \p i.
+    T& element(unsigned i);
+
+    /// Give the delta-index corresponding to the delta-point \p dp.
+    int delta_index(const dpoint2d& dp) const;
+
+    /// Give the point corresponding to the index \p i.
+    point2d point_at_index(unsigned i) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -403,24 +421,6 @@ namespace mln
 
   template <typename T>
   inline
-  unsigned
-  image2d<T>::border() const
-  {
-    mln_precondition(this->has_data());
-    return this->data_->bdr_;
-  }
-
-  template <typename T>
-  inline
-  std::size_t
-  image2d<T>::ncells() const
-  {
-    mln_precondition(this->has_data());
-    return this->data_->vb_.nsites();
-  }
-
-  template <typename T>
-  inline
   bool
   image2d<T>::has(const point2d& p) const
   {
@@ -446,23 +446,8 @@ namespace mln
     return this->data_->array_[p.row()][p.col()];
   }
 
-  template <typename T>
-  inline
-  const T&
-  image2d<T>::operator[](unsigned o) const
-  {
-    mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
-  }
 
-  template <typename T>
-  inline
-  T&
-  image2d<T>::operator[](unsigned o)
-  {
-    mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
-  }
+  // Specific methods:
 
   template <typename T>
   inline
@@ -480,6 +465,63 @@ namespace mln
   {
     mln_precondition(this->has(make::point2d(row, col)));
     return this->data_->array_[row][col];
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image2d<T>::nrows() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->b_.len(0);
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image2d<T>::ncols() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->b_.len(1);
+  }
+
+
+  // As a fastest image:
+
+  template <typename T>
+  inline
+  unsigned
+  image2d<T>::border() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->bdr_;
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image2d<T>::nelements() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->vb_.nsites();
+  }
+
+  template <typename T>
+  inline
+  const T&
+  image2d<T>::element(unsigned i) const
+  {
+    mln_precondition(i < nelements());
+    return *(this->data_->buffer_ + i);
+  }
+
+  template <typename T>
+  inline
+  T&
+  image2d<T>::element(unsigned i)
+  {
+    mln_precondition(i < nelements());
+    return *(this->data_->buffer_ + i);
   }
 
   template <typename T>
@@ -503,7 +545,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image2d<T>::offset(const dpoint2d& dp) const
+  image2d<T>::delta_index(const dpoint2d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0] * this->data_->vb_.len(1) + dp[1];
@@ -513,20 +555,23 @@ namespace mln
   template <typename T>
   inline
   point2d
-  image2d<T>::point_at_offset(unsigned o) const
+  image2d<T>::point_at_index(unsigned i) const
   {
-    mln_precondition(o < ncells());
-    point2d p = make::point2d(o / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
-			      o % this->data_->vb_.len(1) + this->data_->vb_.min_col());
-    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
+    mln_precondition(i < nelements());
+    point2d p = make::point2d(i / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
+			      i % this->data_->vb_.len(1) + this->data_->vb_.min_col());
+    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }
+
+  // Extra.
 
   template <typename T>
   inline
   void
   image2d<T>::resize_(unsigned new_border)
   {
+    mln_precondition(this->has_data());
     this->data_->reallocate_(new_border);
   }
 

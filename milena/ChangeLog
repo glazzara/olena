@@ -1,5 +1,27 @@
 2008-06-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename the methods of fastest images.
+
+	* mln/core/internal/check/image_fastest.hh
+	(offset_at, offset, point_at_offset: Rename as...
+	(index_of_point, delta_index, point_at_index): ...these.
+	(operator[], ncells): Rename as...
+	(element, nelements): ...these.
+	(size_t): Replace by...
+	(unsigned): ...this to handle indices.
+	* mln/core/image2d.hh: Likewise.
+	(super_): New.
+	(nrows, ncols): New.
+	Layout.
+	* mln/level/paste.spe.hh: Update with new properties.
+	* mln/level/paste.hh: Likewise.
+	* mln/border/get.hh: Likewise.
+	* mln/border/resize.hh: Revamp.
+	* tests/core/image2d.cc: Update.
+	Make tests silent.
+
+2008-06-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment gradient_elementary; it is a sample code.
 
 	* tests/morpho/gradient_elementary.cc: New.

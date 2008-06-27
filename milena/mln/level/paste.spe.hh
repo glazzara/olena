@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/level/paste.spe.hh
  *
  * \brief Specializations for mln::level::paste.
+ *
+ * \todo Rewrite the dispatch!!!
  */
 
 # ifndef MLN_LEVEL_PASTE_HH
@@ -84,16 +86,16 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      void paste_(trait::image::data::any, const I& data,
-		  trait::image::data::any, J& destination)
+      void paste_(trait::image::value_storage::any, const I& data,
+		  trait::image::value_storage::any, J& destination)
       {
 	generic::paste_(data, destination);
       }
 
       template <typename I, typename J>
       inline
-      void paste_(trait::image::data::raw, const I& data,
-		  trait::image::data::raw, J& destination)
+      void paste_(trait::image::value_storage::one_block, const I& data,
+		  trait::image::value_storage::one_block, J& destination)
       {
 	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
 	  paste_lines_(data, destination);

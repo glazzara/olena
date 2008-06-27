@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,18 +45,22 @@ int main()
   const unsigned nrows = 1;
   const unsigned ncols = 66;
   const unsigned border = 4;
+  const unsigned new_border = 3;
 
   image2d<int> f(nrows, ncols, border);
 
+  mln_assertion(f.nrows() == nrows);
+  mln_assertion(f.ncols() == ncols);
+
   {
-    std::cout << f.id_() << std::endl;
+    const void* f_id = f.id_();
     image2d<int> g;
-    std::cout << g.id_() << std::endl;
+    mln_assertion(g.id_() == 0);
     g = f;
-    //    border::resize (g, 2);
-    std::cout << g.id_() << std::endl;
+    border::resize(g, new_border);
+    mln_assertion(g.id_() == f_id);
   }
 
-  mln_assertion(f.npoints() == geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == (nrows + 2 * border) * (ncols + 2 * border));
+  mln_assertion(f.nsites() == geom::nrows(f) * geom::ncols(f));
+  mln_assertion(f.nelements()  == (nrows + 2 * new_border) * (ncols + 2 * new_border));
 }
