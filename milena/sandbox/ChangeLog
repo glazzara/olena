@@ -1,3 +1,11 @@
+2008-07-02  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix a first bug in the watershed.
+
+	* abraham/tests/morpho/test_watershed.cc: .
+	* abraham/tests/morpho/Makefile: remove Werror.
+	* abraham/mln/morpho/basic_najman.hh: fix bug.
+
 2008-06-25  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have beguin/irm compile again.

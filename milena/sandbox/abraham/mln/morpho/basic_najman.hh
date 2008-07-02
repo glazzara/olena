@@ -113,14 +113,14 @@ namespace mln
     // Priority function for the second wateshed
 
     template <typename I>
-    class lesser_psite
+    class lower_psite
     {
     public:
       typedef mln_psite(I) psite;
 
-      lesser_psite(const Image<I>& ima);
+      lower_psite(const Image<I>& ima);
 
-      /// Is \a x lesser than \a y?
+      /// Is \a x lower than \a y?
       bool operator()(const psite& x, const psite& y);
 
     private:
@@ -128,31 +128,31 @@ namespace mln
     };
 
     template <typename I>
-    lesser_psite<I>
-    make_lesser_psite(const Image<I>& ima);
+    lower_psite<I>
+    make_lower_psite(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    lesser_psite<I>::lesser_psite(const Image<I>& ima)
+    lower_psite<I>::lower_psite(const Image<I>& ima)
       : ima_ (exact(ima))
     {
     }
 
     template <typename I>
     bool
-    lesser_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    lower_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
     {
       return ima_(x) < ima_(y);
     }
 
 
     template <typename I>
-    lesser_psite<I>
-    make_lesser_psite(const Image<I>& ima)
+    lower_psite<I>
+    make_lower_psite(const Image<I>& ima)
     {
-      return lesser_psite<I>(ima);
+      return lower_psite<I>(ima);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -160,16 +160,16 @@ namespace mln
 
 
     template <typename I, typename N, typename B>
-    class my_lesser_psite
+    class my_lower_psite
     {
     public:
       typedef mln_psite(I) psite;
 
-      my_lesser_psite(const Image<I>& ima,
+      my_lower_psite(const Image<I>& ima,
 		      const Neighborhood<N>& nbh,
 		      const Image<B>& enqueued);
 
-      /// Is \a x lesser than \a y?
+      /// Is \a x lower than \a y?
       bool operator()(const psite& x, const psite& y);
 
     private:
@@ -180,8 +180,8 @@ namespace mln
 
 
     template <typename I, typename N, typename B>
-    my_lesser_psite<I, N, B>
-    make_my_lesser_psite(const Image<I>& ima,
+    my_lower_psite<I, N, B>
+    make_my_lower_psite(const Image<I>& ima,
 			 const Neighborhood<N>& nbh,
 			 const Image<B>& enqueued);
 
@@ -189,7 +189,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename N, typename B>
-    my_lesser_psite<I, N, B>::my_lesser_psite(const Image<I>& ima,
+    my_lower_psite<I, N, B>::my_lower_psite(const Image<I>& ima,
 					      const Neighborhood<N>& nbh,
 					      const Image<B>& enqueued)
       : ima_ (exact(ima)), nbh_(exact(nbh)), enqueued_(exact(enqueued))
@@ -198,7 +198,7 @@ namespace mln
 
     template <typename I, typename N, typename B>
     bool
-    my_lesser_psite<I, N, B>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    my_lower_psite<I, N, B>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
     {
 
 #if 0
@@ -269,12 +269,12 @@ namespace mln
 
 
     template <typename I, typename N, typename B>
-    my_lesser_psite<I, N, B>
-    make_my_lesser_psite(const Image<I>& ima,
+    my_lower_psite<I, N, B>
+    make_my_lower_psite(const Image<I>& ima,
 			 const Neighborhood<N>& nbh,
 			 const Image<B>& enqueued)
     {
-      return my_lesser_psite<I, N, B>(ima, nbh, enqueued);
+      return my_lower_psite<I, N, B>(ima, nbh, enqueued);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -576,14 +576,16 @@ namespace mln
 		  psite adjCanonicalElt = Find_tree(q);
 		  psite adjNode = Find_node(subtreeRoot(adjCanonicalElt));
 		  if (curNode != adjNode)
-		    if (nodes(curNode).level == nodes(adjNode).level)
-		      curNode = MergeNode(adjNode, curNode);
-		    else
-		      {
-			nodes(curNode).addChild(adjNode);
-			nodes(curNode).area += nodes(adjNode).area;
-			nodes(curNode).highest += nodes(adjNode).highest;
-		      }
+		    {
+		      if (nodes(curNode).level == nodes(adjNode).level)
+			curNode = MergeNode(adjNode, curNode);
+		      else
+			{
+			  nodes(curNode).addChild(adjNode);
+			  nodes(curNode).area += nodes(adjNode).area;
+			  nodes(curNode).highest += nodes(adjNode).highest;
+			}
+		    }
 
 		  curCanonicalElt = Link_tree(adjCanonicalElt, curCanonicalElt);
 		  subtreeRoot(curCanonicalElt) = curNode;
@@ -884,7 +886,11 @@ namespace mln
 	  return psite(-1, -1);
 
 	if (v.npoints() == 1)
-	  return v[0];
+	  {
+	    if (nodes(v[0]).children.npoints() == 1)
+	      std::cout << "SINGL QUI MERDE" << std::endl;
+	    return v[0];
+	  }
 
 	psite
 	  c = max(v),
@@ -898,6 +904,47 @@ namespace mln
 	    continue;
 
 	  psite c1 = lca_opt(c, it.to_point());
+	  if (c1 != it.to_point())
+	    c = c1;
+	}
+
+	if (nodes(c).level <= pima(p))
+	  return psite(-1, -1);
+
+	if (nodes(c).children.npoints() == 1)
+	  std::cout << "LCA QUI MERDE" << std::endl;
+
+	return c;
+      }
+
+
+      psite w_constructible_slow(psite p)
+      {
+	mln_niter(N) q(nbh, p);
+	p_set<psite> v;
+
+	for_all(q)
+	  if (pima.has(q) && pima(q) > pima(p))
+	    v.insert(Par_node(q));
+
+	if (v.npoints() == 0)
+	  return psite(-1, -1);
+
+	if (v.npoints() == 1)
+	  return v[0];
+
+	psite
+	  c = max(v),
+	  cmax = c;
+
+	typename p_set<psite>::fwd_piter it(v);
+	for_all(it)
+	{
+	  // Can't remove the point from the set
+	  if (it.to_point() == cmax)
+	    continue;
+
+	  psite c1 = lca(c, it.to_point());
 	  if (c1 != it.to_point())
 	    c = c1;
 	}
@@ -1154,6 +1201,10 @@ namespace mln
 	    enqueued(x) = false;
 
 	    psite c = w_constructible(x);
+	    //	    psite d = w_constructible_slow(x);
+
+	    //if (c != d)
+	    // std::cerr << "COUILLE AVEC LE LCA : " << x << " donne " << c << " au lieu de " << d << std::endl;
 
 
 	    if (c != psite(-1, -1))
@@ -1169,7 +1220,10 @@ namespace mln
 		    {
 		    }
 		  else
-		    std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.npoints() << std::endl;
+		    {
+		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.npoints() << std::endl;
+		    }
+
 
 		mln_niter(N) q(nbh, x);
 		for_all(q)
@@ -1216,7 +1270,7 @@ namespace mln
 	repr[position] = p;
 	depth[position] = d;
 	euler[position] = pos[p];
-	position++;
+	++position;
 	node& n = nodes(p);
 
 	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
@@ -1225,7 +1279,8 @@ namespace mln
 	  build_euler_tour_rec(it.to_point(), position, d+1);
 	  depth[position] = d; // Not optimized
 	  euler[position] = pos[p];
-	  position++;
+	  repr[position] = p; // Pas necessaire?
+	  ++position;
 	}
 
       }
@@ -1265,7 +1320,7 @@ namespace mln
 	    Minim[0][i] = i+1;
 	  }
 
-	Minim[0][size - 1] = size - 1;
+	//	Minim[0][size - 1] = size - 1;
 
 	int k;
 	for (int j = 1; j < logn; j++) {
@@ -1273,7 +1328,7 @@ namespace mln
 	  Minim[j] = &minim[j * size];
 	  for (int i = 0; i < size; i++) {
 	    if ((i + (k << 1)) >= size) {
-	      Minim[j][i] = size - 1;
+	      //Minim[j][i] = size - 1;
 	    }
 	    else {
 	      if (depth[euler[Minim[j - 1][i]]] <= depth[euler[Minim[j - 1][i + k]]])

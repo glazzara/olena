@@ -22,9 +22,9 @@ int main ()
 
   // #define TEST
 
-  //   io::pgm::load(input, "./images/test_watershed.pgm");
+     io::pgm::load(input, "./images/test_watershed.pgm");
   // io::pgm::load(input, "./images/little_test.pgm");
-    io::pgm::load(input, "./images/test_2.pgm");
+  //  io::pgm::load(input, "./images/test_2.pgm");
 
  //   io::pgm::load(input, "./images/lena_light.pgm");
  // io::pgm::load(mverif, "./images/result_m_watershed.pgm");
