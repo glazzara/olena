@@ -1,3 +1,9 @@
+2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add matrix trace and transposition.
+
+	* mln/algebra/mat.hh (transpose,trace): Add.
+
 2008-06-26  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/core/concept/point_site.hh: Add FIXMEs.

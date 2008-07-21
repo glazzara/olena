@@ -256,6 +256,16 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const mat<n,m,T>& v);
 
+    // transpose
+
+    template<unsigned n, unsigned m, typename T>
+    mat<m,n,T>
+    trans(const mat<n,m,T>& matrix);
+
+    // trace
+    
+    template<unsigned n, typename T> inline
+    float tr(const mat<n,n,T>& m);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -487,6 +497,27 @@ namespace mln
 	  ostr << std::endl;
 	}
       return ostr;
+    }
+
+
+    template<unsigned n, unsigned m, typename T>
+    mat<m,n,T>
+    trans(const mat<n,m,T>& matrix)
+    {
+      mat<m,n,T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+        for (unsigned j = 0; j < m; ++j)
+          tmp(j,i) = matrix(i,j);
+      return tmp;
+    }
+
+    template<unsigned n, typename T> inline
+    float tr(const mat<n,n,T>& m)
+    {
+      float f = 0.f;
+      for (unsigned i = 0; i < n; ++i)
+        f += m(i,i);
+      return f;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
