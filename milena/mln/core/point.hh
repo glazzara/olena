@@ -38,6 +38,7 @@
 # include <mln/fun/i2v/all_to.hh>
 
 # include <mln/metal/bool.hh>
+# include <mln/metal/is_not.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/core/h_vec.hh>
@@ -62,7 +63,7 @@ namespace mln
     template <typename M, typename C>
     struct point_to_
     {
-      typedef algebra::vec<M::dim, C> metal_vec;
+      typedef algebra::vec<M::dim, C> algebra_vec;
       typedef mln::h_vec<M::dim, C> h_vec;
     };
 
@@ -146,7 +147,7 @@ namespace mln
     typedef algebra::vec<M::dim, C> vec_t;
 
     /// Hook to coordinates.
-    operator typename internal::point_to_<M, C>::metal_vec () const;
+    operator typename internal::point_to_<M, C>::algebra_vec () const;
     operator algebra::vec<M::dim, float> () const;
 
     /// Transform to point in homogene coordinate system.
@@ -302,20 +303,23 @@ namespace mln
       coord_[i] -= dp[i];
     return *this;
   }
-
+  
+  
   template <typename M, typename C>
   inline
-  point_<M,C>::operator typename internal::point_to_<M, C>::metal_vec () const
+  point_<M,C>::operator typename internal::point_to_<M, C>::algebra_vec () const
   {
     return coord_; // FIXME: Is-it OK?
   }
+  
   
   template <typename M, typename C>
   inline
   point_<M,C>::operator algebra::vec<M::dim, float> () const
   {
+    mlc_is_not(C,float)::check();
     algebra::vec<dim, float> tmp;
-    for (unsigned i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
     return tmp;
   }

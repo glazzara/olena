@@ -1,5 +1,12 @@
 2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Fix conflict in point.hh.
+
+	* mln/core/point.hh (operator algebra::vec<M,float>:
+	Fail if point coordinate type is already float.
+
+2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Add matrix trace and transposition.
 
 	* mln/algebra/mat.hh (transpose,trace): Add.
