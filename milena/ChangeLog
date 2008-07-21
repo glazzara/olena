@@ -1,5 +1,11 @@
 2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Add image conversion to p_array.
+
+	* mln/convert/to_p_array.hh (to_p_array): Add.
+
+2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Fix conflict in point.hh.
 
 	* mln/core/point.hh (operator algebra::vec<M,float>:

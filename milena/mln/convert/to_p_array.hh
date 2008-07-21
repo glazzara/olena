@@ -52,6 +52,11 @@ namespace mln
     p_array<mln_psite(W)> to_p_array(const Window<W>& win,
 				     const mln_psite(W)& p);
 
+    /// Convert an image \p img into a p_array.
+    template <typename I>
+    p_array<mln_point(I)>
+    to_p_array(const Image<I>& img);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -81,6 +86,23 @@ namespace mln
       for_all(q)
 	v.append(q);
       return v;
+    }
+
+    template <typename I>
+    inline
+    p_array<mln_point(I)>
+    to_p_array(const Image<I>& img_)
+    {
+      const I& img = exact(img_);
+
+      p_array<mln_point(I)> a;
+
+      mln_piter(I) p(img.domain());
+      for_all(p)
+        if (img(p))
+          a.append(p);
+
+      return a;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
