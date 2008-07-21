@@ -1,5 +1,12 @@
 2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Add lazy_image type.
+
+	* mln/core/lazy_image.hh: New Image type.
+	Compute values on the fly.
+
+2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Add image conversion to p_array.
 
 	* mln/convert/to_p_array.hh (to_p_array): Add.
