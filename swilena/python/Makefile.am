@@ -23,8 +23,11 @@ AM_LDFLAGS = -avoid-version -module -shared
 	  rm -f "$(DEPDIR)/$*-wrap.Tcc"; exit 1;\
 	fi
 
+
 # ltihooks.py: Python import hooks that understand Libtool libraries.
 python_PYTHON = ltihooks.py
+# swilena.py: The whole Swilena suite.
+python_PYTHON += swilena.py
 
 
 ## ----------------- ##
@@ -51,8 +54,7 @@ nodist_python_PYTHON = image2d.py
 ## ---------------------------- ##
 
 # FIXME: We might want to rename this shell as something else.
-
-python_PYTHON += swilena.py
+python_PYTHON += sps.py
 
 # The script to be used in installed distributions.
 bin_SCRIPTS = sps

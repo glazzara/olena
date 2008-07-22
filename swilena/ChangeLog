@@ -1,5 +1,16 @@
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve sps.
+
+	* python/sps-common.in: Move the lines printing information at
+	the startup of the shell...
+	* python/sps.py: ...here (new file).
+	Use this script instead of swilena.py for sps...
+	* python/sps.in, python/sps-local.in: ...here.
+	* python/Makefile.am (python_PYTHON): Add sps.py.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add the Swilena Python Shell (sps).
 
 	* python/sps-common.in, python/sps.in, python/sps-local.in: New.

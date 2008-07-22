@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /usr/bin/env python
 
 # Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 #
@@ -27,6 +27,28 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-# The Swilena Python Shell.
+from swilena import *
 
-# FIXME: We might want to add some option processing here.
+# FIXME: See if could use cmd.Cmd here
+# (http://docs.huihoo.com/pydoc/python/2.5/stdlib/cmd.Cmd-class.html).
+class Example:
+  def __init__(self, message):
+    self.message = message
+  def __repr__(self):
+    return self.message
+
+example = Example('''\
+The following example creates a 2-d image of integers with 3 rows and
+3 columns, then fills its cells with the value `42' and prints it:
+
+  ima = image2d.image2d_int(3, 3)
+  image2d.fill_image2d_int(ima, 42)
+  image2d.println_image2d_int(ima)
+
+You can try it by copying and pasting each line on the following prompt.
+''')
+
+print '''The Swilena Python Shell (sps).
+Type "help", "copyright", "credits" or "license" for more information on Python
+Type "example" for a short example.
+Type "quit()" or ^D (Ctrl-D) to quit.'''
