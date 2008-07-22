@@ -1,3 +1,37 @@
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve classical points typedefs.
+
+	* milena/mln/core/point1d.hh,
+	* milena/mln/core/point2d.hh,
+	* milena/mln/core/point2d_h.hh,
+	* milena/mln/core/point3d.hh:
+	Include mln/core/grids.hh.
+	Use fully qualified type names to help swig wrap these typedefs.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+A      build-aux/pypath.m4
+A      build-aux/swig.m4
+A      build-aux/with-swilena.m4
+A      swilena
+A      swilena/Makefile.am
+A      swilena/image2d.i
+A      swilena/python
+A      swilena/python/Makefile.am
+A      swilena/python/ltihooks.py
+A      swilena/python/test.py
+A      swilena/run.in
+A      swilena/run.mk
+M      Makefile.am
+M      configure.ac
+	
+M      milena/mln/core/point1d.hh
+M      milena/mln/core/point2d.hh
+M      milena/mln/core/point2d_h.hh
+M      milena/mln/core/point3d.hh
+
+
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update external/README.

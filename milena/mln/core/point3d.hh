@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,21 +28,19 @@
 #ifndef MLN_CORE_POINT3D_HH
 # define MLN_CORE_POINT3D_HH
 
-/*! \file mln/core/point3d.hh
- *
- * \brief Definition of the mln::point3d alias and of its construction
- * routine.
- */
+/// \file mln/core/point3d.hh
+/// \brief Definition of the mln::point3d alias and of its construction
+/// routine.
 
 # include <mln/core/point.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 3D square grid with
-   * integer coordinates.
-   */
+  /// \brief Type alias for a point defined on the 3D square grid with
+  /// integer coordinates.
   typedef point_<grid::cube, int> point3d;
 
 

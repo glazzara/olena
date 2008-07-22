@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,22 +28,20 @@
 #ifndef MLN_CORE_POINT2D_HH
 # define MLN_CORE_POINT2D_HH
 
-/*! \file mln/core/point2d.hh
- *
- * \brief Definition of the mln::point2d alias and of its construction
- * routine.
- */
+/// \file mln/core/point2d.hh
+/// \brief Definition of the mln::point2d alias and of its construction
+/// routine.
 
 # include <mln/core/point.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 2D square grid with
-   * integer coordinates.
-   */
-  typedef point_<grid::square, int> point2d;
+  /// \brief Type alias for a point defined on the 2D square grid with
+  /// integer coordinates.
+  typedef point_<mln::grid::square, int> point2d;
 
 
 } // end of namespace mln
