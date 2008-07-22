@@ -1,5 +1,18 @@
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add the Swilena Python Shell (sps).
+
+	* python/sps-common.in, python/sps.in, python/sps-local.in: New.
+	* python/swilena.py: New.
+	Use it...
+	* python/test.py: ...here, to factor imports.
+	* python/Makefile.am (python_PYTHON): Add swilena.py.
+	(bin_SCRIPTS): New.  Add sps
+	(noinst_SCRIPTS): New.  Add sps-local.
+	(CLEANFILES): Add $(bin_SCRIPTS) and $(noinst_SCRIPTS).
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revive Swilena.
 
 	* swilena/image2d.i: New SWIG wrapper.

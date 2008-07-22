@@ -46,6 +46,22 @@ CLEANFILES += $(nodist__image2d_la_SOURCES) image2d.py image2d.py[co]
 nodist_python_PYTHON = image2d.py
 
 
+## ---------------------------- ##
+## Swilena Python Shell (sps).  ##
+## ---------------------------- ##
+
+# FIXME: We might want to rename this shell as something else.
+
+python_PYTHON += swilena.py
+
+# The script to be used in installed distributions.
+bin_SCRIPTS = sps
+# The script to be used in non-installed distributions.
+noinst_SCRIPTS = sps-local
+
+CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
+
+
 ## ------- ##
 ## Tests.  ##
 ## ------- ##

@@ -1,0 +1,6 @@
+								# -*- sh -*-
+
+# sps, for use from an installed distribution.
+PYTHONPATH='@pythondir@':"$PYTHONPATH" \
+DYLD_LIBRARY_PATH='@pythondir@:@libdir@' \
+exec @PYTHON@ -i @pythondir@/swilena.py "$@"
