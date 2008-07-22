@@ -1,3 +1,14 @@
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve classical points typedefs.
+
+	* mln/core/point1d.hh,
+	* mln/core/point2d.hh,
+	* mln/core/point2d_h.hh,
+	* mln/core/point3d.hh:
+	Include mln/core/grids.hh.
+	Use fully qualified type names to help swig wrap these typedefs.
+
 2008-07-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add lazy_image type.
