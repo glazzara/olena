@@ -1,5 +1,12 @@
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Configure the Swilena Python Shell (sps).
+
+	* configure.ac: Configure swilena/python/sps and
+	swilena/python/sps-local.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revive Swilena.
 
 	* build-aux/pypath.m4, build-aux/swig.m4: New, imported.

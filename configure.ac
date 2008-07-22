@@ -107,8 +107,20 @@ AC_PROG_LIBTOOL
 OLN_WITH_SWILENA([with_swilena=yes], [with_swilena=no])
 AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
 
-AC_CONFIG_FILES([swilena/Makefile swilena/python/Makefile])
+AC_CONFIG_FILES([swilena/Makefile
+                 swilena/python/Makefile])
+
 AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
+
+AC_CONFIG_FILES(m4_do([swilena/python/sps],
+	              [:swilena/python/sps-common.in],
+                      [:swilena/python/sps.in]),
+                [chmod +x swilena/python/sps])
+AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
+                      [:swilena/python/sps-common.in],
+                      [:swilena/python/sps-local.in]),
+                [chmod +x swilena/python/sps-local])
+
 
 
 ## --------------- ##
