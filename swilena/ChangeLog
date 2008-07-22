@@ -1,0 +1,23 @@
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive Swilena.
+
+	* swilena/image2d.i: New SWIG wrapper.
+	* swilena/run.in: New helper, imported from TC.
+	* swilena/Makefile.am: New.
+	* swilena/run.mk: New, imported from TC and adjusted.
+
+	* swilena/python/: New directory.
+	* swilena/python/ltihooks.py: New, imported.
+	* swilena/python/test.py: New test.
+	* swilena/python/Makefile.am: New.
+
+
+$Rev$
+$Id$
+$Date$
+
+Local Variables:
+ispell-local-dictionary: "american"
+coding: iso-latin-1
+End:

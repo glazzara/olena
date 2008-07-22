@@ -1,3 +1,13 @@
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive Swilena.
+
+	* build-aux/pypath.m4, build-aux/swig.m4: New, imported.
+	* build-aux/with-swilena.m4: New, imported from TC and adjusted.
+	* configure.ac: Add support for Libtool, SWIG and Swilena.
+	* Makefile.am (SUBDIRS): Append swilena.
+	* swilena/: New directory.
+
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update external/README.

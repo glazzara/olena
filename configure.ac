@@ -98,6 +98,19 @@ OLN_WITH_CFITSIO
 AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
 
 
+## --------- ##
+## Swilena.  ##
+## --------- ##
+
+AC_PROG_LIBTOOL
+
+OLN_WITH_SWILENA([with_swilena=yes], [with_swilena=no])
+AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
+
+AC_CONFIG_FILES([swilena/Makefile swilena/python/Makefile])
+AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
+
+
 ## --------------- ##
 ## Configuration.  ##
 ## --------------- ##
