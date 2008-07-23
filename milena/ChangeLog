@@ -1,3 +1,16 @@
+2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve classical dpoints typedefs.
+
+	* mln/core/dpoint.hh: Use fully qualified type names to help swig
+	wrap these typedefs.
+	* mln/core/dpoint1d.hh,
+	* mln/core/dpoint2d.hh,
+	* mln/core/dpoint2d_h.hh,
+	* mln/core/dpoint3d.hh:
+	Likewise.
+	Include mln/core/grids.hh.
+
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve classical points typedefs.

@@ -114,13 +114,13 @@ namespace mln
 
     /// Conversion towards a algebra::vec.
     template <typename Q>
-    operator algebra::vec<M::dim, Q>() const;
+    operator mln::algebra::vec<M::dim, Q>() const;
 
     /// Explicit conversion.
-    algebra::vec<M::dim, C> to_vec() const;
+    mln::algebra::vec<M::dim, C> to_vec() const;
 
   protected:
-    algebra::vec<M::dim, C> coord_;
+    mln::algebra::vec<M::dim, C> coord_;
   };
 
 
@@ -231,14 +231,14 @@ namespace mln
   template <typename M, typename C>
   template <typename Q>
   inline
-  dpoint_<M,C>::operator algebra::vec<M::dim, Q> () const
+  dpoint_<M,C>::operator mln::algebra::vec<M::dim, Q> () const
   {
     return coord_;
   }
 
   template <typename M, typename C>
   inline
-  algebra::vec<M::dim, C>
+  mln::algebra::vec<M::dim, C>
   dpoint_<M,C>::to_vec() const
   {
     return coord_;
