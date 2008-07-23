@@ -1,3 +1,17 @@
+2008-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Break Swilena's image2d into modules.
+
+	* image2d.i: Rename as...
+	* image2d.ixx: ...this.
+	Move parts not directly related to mln::image2d<T>...
+	* intpx.ixx, point2d.ixx, fill.ixx, println.ixx, image2d_int.i:
+	...here (new files).
+	* python/swilena.py: Adjust.
+	Inject the contents of module point2d.
+	* python/sps.py, python/test.py: Adjust.
+	* python/Makefile.am: Handle module point2d.
+
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve sps.

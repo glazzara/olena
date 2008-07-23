@@ -27,63 +27,11 @@
 // Public License.
 
 /// \file image2d.i
-/// \brief A simple wrapping of mln::image2d<int> along with some
-/// algorithms.
-
+/// \brief A wrapper of mln::image2d<T>.
 
 %module image2d
 
-
-/*------.
-| int.  |
-`------*/
-
-%include "cpointer.i"
-// Wrap a class interface around an "int *" (see
-// // http://www.swig.org/Doc1.3/Library.html#Library_nn4).
-// %pointer_class(int, intp);
-/* Create some functions for working with "int *" */
-%pointer_functions(int, intp);
-
-
-/*---------------.
-| mln::point2d.  |
-`---------------*/
-
-%{
-#include "mln/core/point.hh"
-#include "mln/core/point2d.hh"
-%}
-
-%include "mln/core/point.hh";
-%include "mln/core/point2d.hh";
-/* FIXME: Ignore `mln::point_<M,C>::origin' to circumvent a swig bug.
-   Without this ignore clause, the generated code would trigger this
-   error :
-
-     image2d-wrap.cc:3115:144: error: macro "SWIG_as_voidptr" passed 2
-     arguments, but takes just 1
-     image2d-wrap.cc: In function 'PyObject* point2d_origin_get()':
-     image2d-wrap.cc:3115: error: 'SWIG_as_voidptr' was not declared in this
-     scope
-
-   Check whether this bug has been fixed in a recent release of SWIG
-   or if it has been reported.  */
-%ignore mln::point_<mln::grid::square,int>::origin;
-// Ignoring to_h_vec saves us the wrapping of 
-%ignore mln::point_<mln::grid::square,int>::to_h_vec;
-// Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a point2d).
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::zero_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::one_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(int);
-%ignore mln::point_<mln::grid::square,int>::point_(int, int, int);
-// point2d.
-%template(point2d) mln::point_<mln::grid::square,int>;
-
-/*--------------------.
-| mln::image2d<int>.  |
-`--------------------*/
+%import "point2d.i"
 
 %{
 #include "mln/core/image2d.hh"
@@ -208,41 +156,3 @@ namespace mln
   };
 
 } // end of namespace mln
-
-%template(image2d_int) mln::image2d<int>;
-
-
-/*-------------------.
-| mln::level::fill.  |
-`-------------------*/
-
-%{
-#include "mln/level/fill.hh"
-%}
-
-// FIXME: Wrap mln::level::fill by hand, for mln_value(I) disturbs
-// swig.  Annotate the original source code instead?
-namespace mln
-{
-  namespace level
-  {
-    template <typename I>
-    void fill(mln::Image<I>& ima, const typename I::value& v);
-  } // end of namespace mln::level
-
-} // end of namespace mln
-
-%template(fill_image2d_int) mln::level::fill< mln::image2d<int> >;
-
-
-/*----------------------.
-| mln::debug::println.  |
-`----------------------*/
-
-%{
-  #include "mln/debug/println.hh"
-%}
-
-%include "mln/debug/println.hh"
-
-%template(println_image2d_int) mln::debug::println< mln::image2d<int> >;

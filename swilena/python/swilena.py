@@ -28,4 +28,6 @@
 # Public License.
 
 import ltihooks
-import image2d
+
+from point2d import *
+import image2d_int

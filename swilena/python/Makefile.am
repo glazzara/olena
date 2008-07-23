@@ -37,16 +37,28 @@ python_PYTHON += swilena.py
 ## FIXME: All of this should be generated.
 ## Don't forget to add a `deps-reset' target as in TC.
 
-## image2d.
-pyexec_LTLIBRARIES = _image2d.la
-nodist__image2d_la_SOURCES = image2d-wrap.cc
-_image2d_la_LIBADD = $(AM_LIBADD)
-CLEANFILES += $(nodist__image2d_la_SOURCES) image2d.py image2d.py[co]
+nodist_python_PYTHON =
+pyexec_LTLIBRARIES =
+
+## point2d.
+pyexec_LTLIBRARIES += _point2d.la
+nodist__point2d_la_SOURCES = point2d-wrap.cc
+_point2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__point2d_la_SOURCES) point2d.py point2d.py[co]
 ## Include the dependency files.  Copied from Automake's generated
 ## case for C++.
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d-wrap.Pcc@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_point2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += point2d.py
 
-nodist_python_PYTHON = image2d.py
+## image2d_int.
+pyexec_LTLIBRARIES += _image2d_int.la
+nodist__image2d_int_la_SOURCES = image2d_int-wrap.cc
+_image2d_int_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__image2d_int_la_SOURCES) image2d_int.py image2d_int.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int-wrap.Pcc@am__quote@
+nodist_python_PYTHON += image2d_int.py
 
 
 ## ---------------------------- ##

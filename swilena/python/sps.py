@@ -41,9 +41,9 @@ example = Example('''\
 The following example creates a 2-d image of integers with 3 rows and
 3 columns, then fills its cells with the value `42' and prints it:
 
-  ima = image2d.image2d_int(3, 3)
-  image2d.fill_image2d_int(ima, 42)
-  image2d.println_image2d_int(ima)
+  ima = image2d_int.image2d_int(3, 3)
+  image2d_int.fill(ima, 42)
+  image2d_int.println(ima)
 
 You can try it by copying and pasting each line on the following prompt.
 ''')
