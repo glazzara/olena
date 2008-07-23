@@ -50,6 +50,26 @@ CLEANFILES += $(nodist__point2d_la_SOURCES) point2d.py point2d.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_point2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += point2d.py
 
+## dpoint2d.
+pyexec_LTLIBRARIES += _dpoint2d.la
+nodist__dpoint2d_la_SOURCES = dpoint2d-wrap.cc
+_dpoint2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__dpoint2d_la_SOURCES) dpoint2d.py dpoint2d.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_dpoint2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += dpoint2d.py
+
+## window2d.
+pyexec_LTLIBRARIES += _window2d.la
+nodist__window2d_la_SOURCES = window2d-wrap.cc
+_window2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__window2d_la_SOURCES) window2d.py window2d.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_window2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += window2d.py
+
 ## image2d_int.
 pyexec_LTLIBRARIES += _image2d_int.la
 nodist__image2d_int_la_SOURCES = image2d_int-wrap.cc

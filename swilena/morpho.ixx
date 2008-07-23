@@ -26,38 +26,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file point2d.i
-/// \brief A wrapper of mln::point2d.
+/// \file fill.i
+/// \brief Wrappers of morphological algorithms from mln::morpho.
 
-%module point2d
+%module morpho
 
 %{
-#include "mln/core/point.hh"
-#include "mln/core/point2d.hh"
+#include "mln/morpho/erosion.hh"
 %}
 
-%include "mln/core/point.hh";
-%include "mln/core/point2d.hh";
-/* FIXME: Ignore `mln::point_<M,C>::origin' to circumvent a swig bug.
-   Without this ignore clause, the generated code would trigger this
-   error :
+// FIXME: Wrap mln::morpho::erosion by hand, for mln_concrete(I)
+// disturbs swig.  Annotate the original source code instead?
+namespace mln
+{
+  namespace morpho
+  {
 
-     image2d-wrap.cc:3115:144: error: macro "SWIG_as_voidptr" passed 2
-     arguments, but takes just 1
-     image2d-wrap.cc: In function 'PyObject* point2d_origin_get()':
-     image2d-wrap.cc:3115: error: 'SWIG_as_voidptr' was not declared in this
-     scope
+    template <typename I, typename W>
+    /* FIXME: How can we handle concrete in Swilena?  Simplify this
+     for the moment, and use I directly.  */
+//     typename mln::trait::concrete< I >::ret
+    I
+    erosion(const Image<I>& input, const Window<W>& win);
 
-   Check whether this bug has been fixed in a recent release of SWIG
-   or if it has been reported.  */
-%ignore mln::point_<mln::grid::square,int>::origin;
-// Ignoring to_h_vec saves us the wrapping of h_vec.
-%ignore mln::point_<mln::grid::square,int>::to_h_vec;
-// Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a point2d).
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::zero_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(const literal::one_t&);
-%ignore mln::point_<mln::grid::square,int>::point_(int);
-%ignore mln::point_<mln::grid::square,int>::point_(int, int, int);
+  } // end of namespace mln::morpho
 
-%template(point2d) mln::point_<mln::grid::square, int>;
+} // end of namespace mln

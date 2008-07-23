@@ -53,5 +53,27 @@ for i in range(0, 3):
     v = image2d_int.intp_value(ima(p))
     print "ima(" + str(i) + ", " + str(j) + ") = " + str(v)
 
+# FIXME: This is too complicated.  We should be able to write
+# 
+#   ima(1,1) = 51
+#
+# or at least
+#
+#  ima.set(1, 1, 51)
+#
+image2d_int.intp_assign(ima(point2d(1,1)), 10)
+
 print
 image2d_int.println(ima)
+
+# Elementary erosion in 4-connectivity using win_c4p.
+eroded = image2d_int.erosion (ima, win_c4p())
+image2d_int.println(eroded)
+
+# Erosion using a custom window.
+w = window2d()
+w.insert(-1, 0)
+w.insert( 0, 0)
+w.insert(+1, 0)
+eroded = image2d_int.erosion (ima, w)
+image2d_int.println(eroded)

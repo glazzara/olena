@@ -41,8 +41,10 @@ namespace mln
 {
   namespace level
   {
+
     template <typename I>
     void fill(mln::Image<I>& ima, const typename I::value& v);
+
   } // end of namespace mln::level
 
 } // end of namespace mln

@@ -37,10 +37,10 @@
 #include "mln/core/image2d.hh"
 %}
 
-%include "mln/core/box2d.hh";
-%include "mln/core/dpoint2d.hh";
+%include "mln/core/box2d.hh"
+%include "mln/core/dpoint2d.hh"
 
-%include "mln/core/concept/image.hh";
+%include "mln/core/concept/image.hh"
 
 // FIXME: Wrap mln::image2d by hand, for Milena macros disturb swig.
 // Annotate the original source code instead?
@@ -48,10 +48,8 @@ namespace mln
 {
   template <typename T>
   struct image2d
-  /* FIXME: This is a simple wrapping; ignore the base class (for the
-     moment). */
-  // : public internal::image_primary_< box2d, image2d<T> >
   /* FIXME: Cheat, so that generic algorithms can use mln::image2d. */
+  // : public internal::image_primary_< box2d, image2d<T> >
     :  public Image< image2d<T> >
   {
     // Warning: just to make effective types appear in Doxygen:

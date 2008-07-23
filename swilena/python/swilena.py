@@ -30,4 +30,6 @@
 import ltihooks
 
 from point2d import *
+from dpoint2d import *
+from window2d import *
 import image2d_int

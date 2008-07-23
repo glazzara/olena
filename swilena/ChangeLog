@@ -1,3 +1,19 @@
+2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add preliminary support for windows and morpho in Swilena.
+
+	* dpoint2d.i, window2d.i, morpho.ixx: New wrappers.
+	* image2d.ixx, point2d.i, fill.ixx: Aesthetic changes.
+	* image2d_int.i: Likewise.
+	Use window2d and morpho::erosion.
+	* python/swilena.py: Inject the contents of modules dpoint2d and
+	window2d.
+	* python/test.py: Exercise window2d and morpho::erosion.
+	* python/Makefile.am: Handle modules dpoint2d and window2d.
+	* Makefile.am (EXTRA_DIST): Remove image2d.i
+	Add fill.ixx, image2d.ixx, intp.ixx, morpho.ixx, println.ixx,
+	dpoint2d.i, image2d_int.i, point2d.i and window2d.i.
+
 2008-07-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Break Swilena's image2d into modules.

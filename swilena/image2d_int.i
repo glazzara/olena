@@ -32,12 +32,21 @@
 
 %module image2d_int
 
-%include intp.ixx
-%include image2d.ixx
+%include "intp.ixx"
+%include "image2d.ixx"
 %template(image2d_int) mln::image2d<int>;
 
-%include fill.ixx
+%include "fill.ixx"
 %template(fill) mln::level::fill< mln::image2d<int> >;
 
-%include println.ixx
+%include "println.ixx"
 %template(println) mln::debug::println< mln::image2d<int> >;
+
+%import "window2d.i"
+// FIXME: The import directive does not import the `%{ ... %}' clauses.
+%{
+#include "mln/core/window2d.hh"
+%}
+
+%include "morpho.ixx"
+%template(erosion) mln::morpho::erosion< mln::image2d<int>, mln::window2d >;
