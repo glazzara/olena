@@ -28,11 +28,9 @@
 #ifndef MLN_CORE_WINDOW3D_HH
 # define MLN_CORE_WINDOW3D_HH
 
-/*! \file mln/core/window3d.hh
- *
- * \brief Definition of the mln::window3d alias and of a construction
- * routine.
- */
+/// \file mln/core/window3d.hh
+/// \brief Definition of the mln::window3d alias and of a construction
+/// routine.
 
 # include <mln/core/window.hh>
 # include <mln/core/dpoint3d.hh>
@@ -41,10 +39,9 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 3D square grid with integer coordinates.
-   */
-  typedef window<dpoint3d> window3d;
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 3D square grid with integer coordinates.
+  typedef window<mln::dpoint3d> window3d;
 
 
 } // end of namespace mln

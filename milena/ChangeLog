@@ -1,5 +1,14 @@
 2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve classical windows typedefs and add a win_c4p generator.
+
+	* mln/core/window1d.hh, mln/core/window3d.hh:
+	Use fully qualified type names to help swig wrap these typedefs.
+	* mln/core/window2d.hh: Likewise.
+	(mln::win_c4p): New function.
+
+2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve classical dpoints typedefs.
 
 	* mln/core/dpoint.hh: Use fully qualified type names to help swig
