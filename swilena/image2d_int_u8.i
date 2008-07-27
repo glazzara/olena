@@ -26,25 +26,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file fill.ixx
-/// \brief A wrapper of mln::level::fill.
+/// \file image2d.i
+/// \brief A simple wrapping of mln::image2d<mln::value::int_u8> along
+/// with some algorithms.
 
-%module fill
+%module image2d_int_u8
 
+%import "int_u8.i"
+// FIXME: The import directive does not include the `%{ ... %}' clauses.
+// %{
+// #include "mln/value/int_u8.hh"
+// %}
+// 
+%include "image2d.ixx"
+%template(image2d_int_u8) mln::image2d< mln::value::int_u<8> >;
+
+%include "pgm.ixx"
+%template(load) mln::io::pgm::load< mln::value::int_u<8> >;
+%template(save) mln::io::pgm::save< mln::image2d< mln::value::int_u<8> > >;
+
+%include "fill.ixx"
+%template(fill) mln::level::fill< mln::image2d< mln::value::int_u<8> > >;
+
+%include "println.ixx"
+%template(println) mln::debug::println< mln::image2d< mln::value::int_u<8> > >;
+
+%import "window2d.i"
+// FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
-#include "mln/level/fill.hh"
+#include "mln/core/window2d.hh"
 %}
 
-// FIXME: Wrap mln::level::fill by hand, for mln_value(I) disturbs
-// swig.  Annotate the original source code instead?
-namespace mln
-{
-  namespace level
-  {
-
-    template <typename I>
-    void fill(mln::Image<I>& ima, const typename I::value& v);
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
+%include "morpho.ixx"
+%template(erosion) mln::morpho::erosion< mln::image2d< mln::value::int_u<8> >,
+					 mln::window2d >;

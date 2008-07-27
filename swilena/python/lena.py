@@ -27,10 +27,13 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-import ltihooks
+import os
+from swilena import *
 
-from point2d import *
-from dpoint2d import *
-from window2d import *
-import image2d_int
-import image2d_int_u8
+top_srcdir = os.environ["top_srcdir"]
+img_dir = os.path.join(top_srcdir, "milena", "img")
+lena = os.path.join (img_dir, "lena.pgm")
+
+ima = image2d_int_u8.load(lena)
+eroded = image2d_int_u8.erosion (ima, win_c4p())
+image2d_int_u8.save(eroded, "out.pgm")

@@ -26,25 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file fill.ixx
-/// \brief A wrapper of mln::level::fill.
+/// \file int_u8.i
+/// \brief A wrapper of mln::value::int_u8.
 
-%module fill
+%module int_u8
 
 %{
-#include "mln/level/fill.hh"
+#include "mln/value/int_u8.hh"
 %}
 
-// FIXME: Wrap mln::level::fill by hand, for mln_value(I) disturbs
-// swig.  Annotate the original source code instead?
-namespace mln
-{
-  namespace level
-  {
-
-    template <typename I>
-    void fill(mln::Image<I>& ima, const typename I::value& v);
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
+%include "mln/value/int_u8.hh"

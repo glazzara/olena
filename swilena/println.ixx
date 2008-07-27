@@ -26,7 +26,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file println.i
+/// \file println.ixx
 /// \brief A wrapper of mln::debug::println.
 
 %{

@@ -50,6 +50,16 @@ CLEANFILES += $(nodist__point2d_la_SOURCES) point2d.py point2d.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_point2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += point2d.py
 
+## int_u8.
+pyexec_LTLIBRARIES += _int_u8.la
+nodist__int_u8_la_SOURCES = int_u8-wrap.cc
+_int_u8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__int_u8_la_SOURCES) int_u8.py int_u8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_int_u8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += int_u8.py
+
 ## dpoint2d.
 pyexec_LTLIBRARIES += _dpoint2d.la
 nodist__dpoint2d_la_SOURCES = dpoint2d-wrap.cc
@@ -80,6 +90,16 @@ CLEANFILES += $(nodist__image2d_int_la_SOURCES) image2d_int.py image2d_int.py[co
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int-wrap.Pcc@am__quote@
 nodist_python_PYTHON += image2d_int.py
 
+## image2d_int_u8.
+pyexec_LTLIBRARIES += _image2d_int_u8.la
+nodist__image2d_int_u8_la_SOURCES = image2d_int_u8-wrap.cc
+_image2d_int_u8_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__image2d_int_u8_la_SOURCES) image2d_int_u8.py image2d_int_u8.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int_u8-wrap.Pcc@am__quote@
+nodist_python_PYTHON += image2d_int_u8.py
+
 
 ## ---------------------------- ##
 ## Swilena Python Shell (sps).  ##
@@ -103,9 +123,8 @@ CLEANFILES += $(bin_SCRIPTS) $(noinst_SCRIPTS)
 include $(top_srcdir)/swilena/run.mk
 
 ## FIXME: Do we really need to pass top_srcdir and top_builddir to run?
-##TESTS_ENVIRONMENT = \
-##  top_srcdir="$(top_srcdir)" top_builddir="$(top_builddir)" $(RUN)
-TESTS_ENVIRONMENT = $(RUN)
+TESTS_ENVIRONMENT = \
+  top_srcdir="$(top_srcdir)" top_builddir="$(top_builddir)" $(RUN)
 # Ensure `run' is rebuilt before the tests are run.
 $(TESTS): $(srcdir)/run.stamp
 # The dependency is on `run.in' and not `run', since `run' is
@@ -119,5 +138,5 @@ $(srcdir)/run.stamp: $(RUN_IN)
 	$(MAKE) $(AM_MAKEFLAGS) $(RUN)
 	@mv -f $@.tmp $@
 
-TESTS = test.py
+TESTS = test.py lena.py
 EXTRA_DIST += $(TESTS)

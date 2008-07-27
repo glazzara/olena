@@ -1,3 +1,19 @@
+2008-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap mln::image2d<int_u8> as well as I/O routines.
+
+	* pgm.ixx, int_u8.i, image2d_int_u8.i: New.
+	* Makefile.am (EXTRA_DIST): Add pgm.ixx, image2d_int_u8.i and
+	int_u8.i.
+	* fill.ixx, println.ixx: Fix doxygen headers.
+	* image2d_int.i: Typo.
+	* python/lena.py: New test.
+	* python/Makefile.am: Handle modules int_u8 and image2d_int_u8.
+	(top_srcdir): Add top_srcdir and top_builddir into the
+	environment.
+	(TESTS): Add lena.py.
+	* python/swilena.py: Import image2d_int_u8.
+
 2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add preliminary support for windows and morpho in Swilena.

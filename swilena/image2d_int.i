@@ -43,7 +43,7 @@
 %template(println) mln::debug::println< mln::image2d<int> >;
 
 %import "window2d.i"
-// FIXME: The import directive does not import the `%{ ... %}' clauses.
+// FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
 #include "mln/core/window2d.hh"
 %}

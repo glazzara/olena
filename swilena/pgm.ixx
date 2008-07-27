@@ -26,25 +26,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file fill.ixx
-/// \brief A wrapper of mln::level::fill.
+/// \file pgm.ixx
+/// \brief A wrapper of mln::io::pgm::load and mln::io::pgm::save
 
-%module fill
+%module pgm
+
+%include std_string.i
 
 %{
-#include "mln/level/fill.hh"
+#include "mln/io/pgm/load.hh"
+#include "mln/io/pgm/save.hh"
 %}
 
-// FIXME: Wrap mln::level::fill by hand, for mln_value(I) disturbs
-// swig.  Annotate the original source code instead?
+// Wrap mln::io::pgm::load(const std::string&) by hand, to force swig
+// to choose this overloading.
 namespace mln
 {
-  namespace level
+  namespace io
   {
+    namespace pgm
+    {
 
-    template <typename I>
-    void fill(mln::Image<I>& ima, const typename I::value& v);
+      template <typename V>
+      mln::image2d<V> load(const std::string& filename);
 
-  } // end of namespace mln::level
+    } // end of namespace mln::io::pgm
+
+  } // end of namespace mln::io
 
 } // end of namespace mln
+
+%include "mln/io/pgm/save.hh"
