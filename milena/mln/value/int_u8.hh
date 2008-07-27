@@ -44,7 +44,7 @@ namespace mln
 
 
     /// Alias for unsigned 8 bit integers.
-    typedef int_u<8> int_u8;
+    typedef mln::value::int_u<8> int_u8;
 
 
   } // end of namespace mln::value

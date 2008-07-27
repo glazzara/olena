@@ -1,3 +1,16 @@
+2008-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the ability to load images of built-in (POD) values.
+
+	* mln/io/pnm/load.hh
+	(mln::io::pnm::read_value(std::ifstream&, V&): Turn into...
+	(mln::io::pnm::read_value(std::ifstream&, value::Scalar<V>&)):
+	...this.
+	(mln::io::pnm::read_value(std::ifstream&, V&): New overload.
+	* mln/value/int_u8.hh (mln::io::pnm::int_u8): Use a fully
+	qualified type name to help swig wrap this typedef.
+	* mln/io/pgm/save.hh: Typo in comment.
+
 2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/core/dpoint.hh,
