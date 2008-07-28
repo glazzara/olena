@@ -32,6 +32,7 @@
 %module morpho
 
 %{
+#include "mln/morpho/dilation.hh"
 #include "mln/morpho/erosion.hh"
 %}
 
@@ -42,10 +43,14 @@ namespace mln
   namespace morpho
   {
 
-    template <typename I, typename W>
     /* FIXME: How can we handle concrete in Swilena?  Simplify this
-     for the moment, and use I directly.  */
-//     typename mln::trait::concrete< I >::ret
+     for the moment, and use I directly as return type.  */
+
+    template <typename I, typename W>
+    I
+    dilation(const Image<I>& input, const Window<W>& win);
+
+    template <typename I, typename W>
     I
     erosion(const Image<I>& input, const Window<W>& win);
 

@@ -49,4 +49,5 @@
 %}
 
 %include "morpho.ixx"
+%template(dilation) mln::morpho::dilation< mln::image2d<int>, mln::window2d >;
 %template(erosion) mln::morpho::erosion< mln::image2d<int>, mln::window2d >;

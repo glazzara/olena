@@ -35,5 +35,9 @@ img_dir = os.path.join(top_srcdir, "milena", "img")
 lena = os.path.join (img_dir, "lena.pgm")
 
 ima = image2d_int_u8.load(lena)
+
 eroded = image2d_int_u8.erosion (ima, win_c4p())
-image2d_int_u8.save(eroded, "out.pgm")
+image2d_int_u8.save(eroded, "eroded.pgm")
+
+dilated = image2d_int_u8.dilation (ima, win_c4p())
+image2d_int_u8.save(dilated, "dilated.pgm")

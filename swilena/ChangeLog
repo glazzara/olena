@@ -1,3 +1,11 @@
+2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap mln::morpho::dilation.
+
+	* morpho.ixx: Wrap mln::morpho::dilation.
+	* image2d_int.i, image2d_int_u8.i: Instantiate it.
+	* python/lena.py: Exercise it.
+
 2008-07-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap mln::image2d<int_u8> as well as I/O routines.
