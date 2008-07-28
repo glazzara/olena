@@ -8,6 +8,8 @@
 
 CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
+TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
+AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
 AM_SWIGFLAGS = -c++ -python -I$(top_srcdir)/milena
 ## We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared

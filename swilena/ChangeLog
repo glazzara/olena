@@ -1,5 +1,12 @@
 2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
+	Speed up Swilena.
+
+	* python/Makefile.am (TOOLS_CXXFLAGS, AM_CXXFLAGS): New.
+	Use flags for tools, that use optimization options.
+
+2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap mln::morpho::dilation.
 
 	* morpho.ixx: Wrap mln::morpho::dilation.
