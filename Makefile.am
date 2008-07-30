@@ -4,5 +4,6 @@ ACLOCAL_AMFLAGS = -I build-aux
 
 SUBDIRS = build-aux external milena
 
-# FIXME: Make Swilena optional (see TC's equipment).
-SUBDIRS += swilena
+if ENABLE_SWILENA
+  SUBDIRS += swilena
+endif ENABLE_SWILENA

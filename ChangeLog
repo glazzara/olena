@@ -1,5 +1,11 @@
 2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make Swilena actually optional.
+
+	* Makefile.am: Compile Swilena only when asked for.
+
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Handle Darwin, in order to use trimesh's gluit.mk.
 
 	* configure.ac: Add a new conditional for Darwin-based hosts.
