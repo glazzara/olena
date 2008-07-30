@@ -1,3 +1,13 @@
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix external libraries linkage in apps/statues/ on GNU/Linux.
+
+	* apps/statues/Makefile.am: Include trimesh's gluit.mk to link
+	with gluit/OpenGL/GLUT.
+	(AM_LDFLAGS): New.
+	Set to `$(GLFLAGS)'.
+	(LDADD): Append `$(GLLIBS)'.
+
 2008-07-27  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add the ability to load images of built-in (POD) values.
