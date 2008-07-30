@@ -6,6 +6,7 @@ ICP.cc
 Routines for doing ICP.
 */
 
+#include <cstring>
 #include <cmath>
 #include <algorithm>
 #include <stdio.h>

@@ -1,5 +1,11 @@
 2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a compilation bug on GNU/Linux.
+
+	* libsrc/ICP.cc: Include cstring.
+
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Libtoolize trimesh.
 
 	* configure.ac: Check for Libtool.
