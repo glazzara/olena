@@ -12,6 +12,7 @@ check_PROGRAMS =				\
   clock_neighb2d				\
   clock_test					\
   clone						\
+  complex					\
 						\
   decorated_image				\
   dpoint1d					\
@@ -98,6 +99,7 @@ category_SOURCES = category.cc
 clock_neighb2d_SOURCES = clock_neighb2d.cc
 clock_test_SOURCES = clock_test.cc
 clone_SOURCES = clone.cc
+complex_SOURCES = complex.cc
 
 decorated_image_SOURCES = decorated_image.cc
 dpoint1d_SOURCES = dpoint1d.cc

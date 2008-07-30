@@ -1,5 +1,14 @@
 2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a first implementation of general complexes.
+
+	* mln/core/complex.hh, mln/core/face.hh: New.
+	* tests/core/complex.cc: New test.
+	* tests/core/Makefile.am (check_PROGRAMS): Add complex.
+	(complex_SOURCES): New.  Set to complex.cc.
+
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix external libraries linkage in apps/statues/ on GNU/Linux.
 
 	* apps/statues/Makefile.am: Include trimesh's gluit.mk to link
