@@ -3,9 +3,9 @@
 AM_CPPFLAGS = -I$(top_srcdir)/include
 
 # FIXME: We should use Libtool instead.
-lib_LIBRARIES = libtrimesh.a
+lib_LTLIBRARIES = libtrimesh.la
 
-libtrimesh_a_SOURCES = 				\
+libtrimesh_la_SOURCES =				\
   TriMesh_bounding.cc				\
   TriMesh_connectivity.cc			\
   TriMesh_curvature.cc				\

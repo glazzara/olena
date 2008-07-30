@@ -4,10 +4,9 @@
 AM_CPPFLAGS = -I$(top_builddir)
 AM_CPPFLAGS += -I$(top_srcdir)/include -I$(top_srcdir)/include/GL
 
-# FIXME: We should use Libtool instead.
-lib_LIBRARIES = libgluit.a
+lib_LTLIBRARIES = libgluit.la
 
-libgluit_a_SOURCES =				\
+libgluit_la_SOURCES =				\
   glui_algebra3.h				\
   glui_arcball.h				\
   glui_quaternion.h				\
@@ -64,7 +63,7 @@ noinst_HEADERS =				\
 
 # These files are not needed on Darwin (Mac OS X).
 if ! DARWIN
-  libgluit_a_SOURCES +=				\
+  libgluit_la_SOURCES +=			\
     freeglut_internal.h				\
     freeglut_teapot_data.h			\
 						\

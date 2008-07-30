@@ -41,6 +41,9 @@ fi
 ## Libraries set up.  ##
 ## ------------------ ##
 
+# Use Libtool.
+AC_PROG_LIBTOOL
+
 # Check for Darwin.
 AC_CANONICAL_HOST
 AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])

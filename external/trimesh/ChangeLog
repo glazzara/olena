@@ -1,3 +1,18 @@
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Libtoolize trimesh.
+
+	* configure.ac: Check for Libtool.
+	* utilsrc/Makefile.am (LDADD): Remove `-L$(top_builddir)/gluit'.
+	(GLFLAGS, GLLIBS): Move gluit-related link variables...
+	* gluit/gluit.mk: ...here (new file).
+	* gluit/Makefile.am (lib_LIBRARIES, libgluit_a_SOURCES)
+	* libsrc/Makefile.am (lib_LIBRARIES, libtrimesh_a_SOURCES):
+	Turn into...
+	* gluit/Makefile.am (lib_LTLIBRARIES, libgluit_la_SOURCES)
+	* libsrc/Makefile.am (lib_LTLIBRARIES, libtrimesh_la_SOURCES):
+	...these.
+
 2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix the linkage of trimesh utilities on GNU/Linux.

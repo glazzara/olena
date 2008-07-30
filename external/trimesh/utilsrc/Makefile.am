@@ -1,16 +1,13 @@
 ## Process this file through Automake to produce Makefile.in -*- Makefile -*-
 
-AM_CPPFLAGS = -I$(top_srcdir)/include
-LDADD = -L$(top_builddir)/libsrc -L$(top_builddir)/gluit -ltrimesh -lm
+# Linking with gluit and GLUT/OpenGL.
+gluit_builddir = $(top_builddir)/gluit
+include $(top_srcdir)/gluit/gluit.mk
 
-# FIXME: Handle other OSes as well (Win32, SunOS, etc.)
-if DARWIN
-  GLFLAGS = -framework GLUT -framework OpenGL
-  GLLIBS = -lgluit
-else !DARWIN
-  GLFLAGS =
-  GLLIBS = -lgluit -lGL -lGLU -lX11 -lXmu -lXi
-endif !DARWIN
+
+AM_CPPFLAGS = -I$(top_srcdir)/include
+LDADD = -L$(top_builddir)/libsrc -ltrimesh -lm
+
 
 bin_PROGRAMS =					\
   mesh_align					\
