@@ -82,9 +82,17 @@ if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
 fi
 
 
-## ----------- ##
-## Libraries.  ##
-## ----------- ##
+## ------------------ ##
+## Libraries set up.  ##
+## ------------------ ##
+
+# Use Libtool.
+AC_PROG_LIBTOOL
+
+# Check for Darwin.
+AC_CANONICAL_HOST
+AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
+
 
 # (Bundled) trimesh2 library.
 AC_CONFIG_SUBDIRS([external/trimesh])
@@ -102,11 +110,11 @@ AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
 ## Swilena.  ##
 ## --------- ##
 
-AC_PROG_LIBTOOL
-
 OLN_WITH_SWILENA([with_swilena=yes], [with_swilena=no])
 AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
 
+# FIXME: Should we still configure these files if ENABLE_SWILENA is
+# false?
 AC_CONFIG_FILES([swilena/Makefile
                  swilena/python/Makefile])
 

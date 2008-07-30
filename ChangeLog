@@ -1,3 +1,9 @@
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Handle Darwin, in order to use trimesh's gluit.mk.
+
+	* configure.ac: Add a new conditional for Darwin-based hosts.
+
 2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Configure the Swilena Python Shell (sps).
