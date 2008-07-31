@@ -1,5 +1,11 @@
 2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix std::memcpy usage.
+
+	* mln/level/memcpy_.hh: Include `cstring'.
+
+2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	More on the documnention of the test on complexes.
 
 	* tests/core/complex.cc: Add the adjacent graph of the complex in
