@@ -37,19 +37,22 @@ int main()
 {
   using namespace mln;
 
-  /* A 2-d (simplicial) complex.
+  /* A 2-d (simplicial) complex and its adjacency graph.
 
               v0      e3     v3
-                o-----------o
-               / \         /
-              /   \  t2   /
-          e0 /     \     / e4
-            /  t1   \e1 /
-           /         \ /
-          o-----------o
+                o-----------o                v0----e3----v3      
+               / \ ,-----. /                / \    |    /   
+              / . \ \ t2/ /                /   \   t2  /    
+          e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
+            / /t1 \ \ ' /                /   t1  \   /      
+           / `-----' \ /                /    |    \ /       
+          o-----------o                v1----e2----v2
        v1      e2      v2
 
-   */
+       v = vertex
+       e = edge
+       t = triangle
+  */
 
 
   complex<2> c;
