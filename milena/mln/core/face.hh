@@ -30,8 +30,6 @@
 
 /// \file mln/core/face.hh
 /// \brief Face of a complex.
-///
-/// FIXME: More.
 
 #include <vector>
 
@@ -41,13 +39,20 @@
 namespace mln
 {
 
-  // Forward declarations.
+  // Forward declarations (external).
   template <unsigned D> class complex;
+  namespace internal
+  {
+    template <unsigned N, unsigned D> struct lower_dim_faces_set_mixin;
+    template <unsigned N, unsigned D> struct higher_dim_faces_set_mixin;
+  }
+
+  // Forward declarations (internal).
   template <unsigned N, unsigned D> class face_handle;
   namespace internal
   {
-    template <unsigned N, unsigned D>
-    struct faces_set_mixin;
+    template <unsigned N, unsigned D> class lower_dim_faces_mixin;
+    template <unsigned N, unsigned D> class higher_dim_faces_mixin;
   }
 
 
@@ -55,53 +60,28 @@ namespace mln
   | Face.  |
   `-------*/
 
-  /* FIXME: we might want to factor connect_{higher,lower}_dim_cell
-     and {higher,lower_dim_faces_} as member of super classes.  */
+  /// \p N-face of a \p D-complex.
+  template <unsigned N, unsigned D> class face;
 
-  template <unsigned N, unsigned D>
-  class face
+
+  // Specialization for the faces of highest dimension (D).
+  template <unsigned D>
+  class face<D, D> : public internal::lower_dim_faces_mixin<D, D>
   {
-  public:
-    void connect_higher_dim_face(const face_handle<N + 1, D>& f);
-    void connect_lower_dim_face (const face_handle<N - 1, D>& f);
+  };
 
-  private:
-    friend class mln::internal::faces_set_mixin<N, D>;
-
-    // FIXME: Provide accessors instead of using `friend' if there are
-    // clients other than mln::internal::faces_set_mixin<N, D>.
-    std::vector< face_handle<N + 1, D> > higher_dim_faces_;
-    std::vector< face_handle<N - 1, D> > lower_dim_faces_;
+  // Specialization for the faces of intermediate dimension (greater
+  // than 0, lower than \p D).
+  template <unsigned N, unsigned D>
+  class face : public internal::lower_dim_faces_mixin<N, D>,
+	       public internal::higher_dim_faces_mixin<N, D>
+  {
   };
 
   // Specialization for the faces of lowest dimension (0).
   template <unsigned D>
-  class face<0u, D>
+  class face<0u, D> : public internal::higher_dim_faces_mixin<0u, D>
   {
-  public:
-    void connect_higher_dim_face(const face_handle<1u, D>& f);
-
-  private:
-    friend class mln::internal::faces_set_mixin<0, D>;
-
-    // FIXME: Provide accessors instead of using `friend; if there are
-    // clients other than mln::internal::faces_set_mixin<0, D>.
-    std::vector< face_handle<1u, D> > higher_dim_faces_;
-  };
-
-  // Specialization for the faces of highest dimension (D).
-  template <unsigned D>
-  class face<D, D>
-  {
-  public:
-    void connect_lower_dim_face(const face_handle<1u, D>& f);
-
-  private:
-    friend class mln::internal::faces_set_mixin<D, D>;
-
-    // FIXME: Provide accessors instead of using `friend; if there are
-    // clients other than mln::internal::faces_set_mixin<0, D>.
-    std::vector< face_handle<1u, D> > lower_dim_faces_;
   };
 
   // Specialization for the case of a 0-complex.
@@ -109,6 +89,36 @@ namespace mln
   class face<0u, 0u>
   {
   };
+
+
+  namespace internal
+  {
+
+    /// Factored implementation of faces.
+    /// \{
+    template <unsigned N, unsigned D>
+    class lower_dim_faces_mixin
+    {
+    public:
+      void connect_lower_dim_face (const face_handle<N - 1, D>& f);
+    private:
+      friend class mln::internal::lower_dim_faces_set_mixin<N, D>;
+      std::vector< face_handle<N - 1, D> > lower_dim_faces_;
+    };  
+
+    template <unsigned N, unsigned D>
+    class higher_dim_faces_mixin
+    {
+    public:
+      void connect_higher_dim_face(const face_handle<N + 1, D>& f);
+    private:
+      friend class mln::internal::higher_dim_faces_set_mixin<N, D>;      
+      std::vector< face_handle<N + 1, D> > higher_dim_faces_;
+    };
+    /// \}
+
+  } // end of namespace mln::internal
+
 
 
   /*--------------.
@@ -233,33 +243,23 @@ namespace mln
   | Faces.  |
   `--------*/
 
-  template <unsigned N, unsigned D>
-  void
-  face<N, D>::connect_higher_dim_face(const face_handle<N + 1, D>& f)
+  namespace internal
   {
-    higher_dim_faces_.push_back(f); 
-  }
+    template <unsigned N, unsigned D>
+    void
+    lower_dim_faces_mixin<N, D>::connect_lower_dim_face(const face_handle<N - 1, D>& f)
+    {
+      lower_dim_faces_.push_back(f);
+    }
 
-  template <unsigned N, unsigned D>
-  void
-  face<N, D>::connect_lower_dim_face(const face_handle<N - 1, D>& f)
-  {
-    lower_dim_faces_.push_back(f); 
-  }
+    template <unsigned N, unsigned D>
+    void
+    higher_dim_faces_mixin<N, D>::connect_higher_dim_face(const face_handle<N + 1, D>& f)
+    {
+      higher_dim_faces_.push_back(f);
+    }
 
-  template <unsigned D>
-  void
-  face<0u, D>::connect_higher_dim_face(const face_handle<1u, D>& f)
-  {
-    higher_dim_faces_.push_back(f);
-  }
-
-  template <unsigned D>
-  void
-  face<D, D>::connect_lower_dim_face(const face_handle<1u, D>& f)
-  {
-    lower_dim_faces_.push_back(f);
-  }
+  } // end of namespace mln::internal
 
 
   /*---------------.

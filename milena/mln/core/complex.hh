@@ -110,7 +110,6 @@ namespace mln
   };
 
 
-  // FIXME: Move and renamed as mln::debug::println?
   /// Pretty print a complex.
   template <unsigned D>
   std::ostream&
@@ -126,12 +125,39 @@ namespace mln
   namespace internal
   {
 
-    // FIXME: Factor common things here.
+    // Forward declarations.
+    template <unsigned N, unsigned D> struct lower_dim_faces_set_mixin;
+    template <unsigned N, unsigned D> struct higher_dim_faces_set_mixin;
+
+
+    /*---------------------------------.
+    | mln::internal::faces_set_mixin.  |
+    `---------------------------------*/
 
     /// \brief Recursive mixins of set of faces.
     /// \{
+    template <unsigned N, unsigned D> struct faces_set_mixin;
+
+    /// Faces of highest dimension (\p D).
+    template <unsigned D>
+    struct faces_set_mixin<D, D> : faces_set_mixin<D - 1, D>,
+                                   lower_dim_faces_set_mixin<D, D>
+    {
+      std::vector< face<D, D> > faces_;
+
+      /// Pretty-printing.
+      /// \{
+      /// Print the faces of dimension \p D.
+      void print(std::ostream& ostr) const;
+      void print_rec_asc(std::ostream& ostr) const;
+      /// \}
+    };
+
+    /// Faces of intermediate dimension (greater than 0, lower than \p D).
     template <unsigned N, unsigned D>
-    struct faces_set_mixin : faces_set_mixin<N - 1, D>
+    struct faces_set_mixin : faces_set_mixin<N - 1, D>,
+                             lower_dim_faces_set_mixin<N, D>,
+                             higher_dim_faces_set_mixin<N, D>
     {
       std::vector< face<N, D> > faces_;
 
@@ -145,8 +171,9 @@ namespace mln
       /// \}
     };
 
+    /// Faces of lowest dimension (0).
     template <unsigned D>
-    struct faces_set_mixin<0u, D>
+    struct faces_set_mixin<0u, D> : higher_dim_faces_set_mixin<0u, D>
     {
       std::vector< face<0u, D> > faces_;
 
@@ -158,19 +185,7 @@ namespace mln
       /// \}
     };
 
-    template <unsigned D>
-    struct faces_set_mixin<D, D> : faces_set_mixin<D - 1, D>
-    {
-      std::vector< face<D, D> > faces_;
-
-      /// Pretty-printing.
-      /// \{
-      /// Print the faces of dimension \p D.
-      void print(std::ostream& ostr) const;
-      void print_rec_asc(std::ostream& ostr) const;
-      /// \}
-    };
-
+    /// Faces of a 0-complex.
     template <>
     struct faces_set_mixin<0u, 0u>
     {
@@ -182,6 +197,27 @@ namespace mln
       void print(std::ostream& ostr) const;
       void print_rec_asc(std::ostream& ostr) const;
       /// \}
+    };
+    /// \}
+
+
+    /*--------------------------------------------.
+    | mln::internal::lower_dim_faces_set_mixin.   |
+    | mln::internal::higher_dim_faces_set_mixin.  |
+    `--------------------------------------------*/
+
+    /// Mixins of mixin mln::faces_set_mixin.
+    /// \{
+    template <unsigned N, unsigned D>
+    struct lower_dim_faces_set_mixin
+    {
+      void print(std::ostream& ostr, const face<N, D>& f) const;
+    };
+
+    template <unsigned N, unsigned D>
+    struct higher_dim_faces_set_mixin
+    {
+      void print(std::ostream& ostr, const face<N, D>& f) const;
     };
     /// \}
 
@@ -291,8 +327,6 @@ namespace mln
   namespace internal
   {
 
-    // FIXME: Factor common things here.
-
     template <unsigned N, unsigned D>
     void
     faces_set_mixin<N, D>::print_rec_asc(std::ostream& ostr) const
@@ -322,6 +356,7 @@ namespace mln
       print(ostr);
     }
 
+
     template <unsigned N, unsigned D>
     void
     faces_set_mixin<N, D>::print(std::ostream& ostr) const
@@ -333,19 +368,10 @@ namespace mln
       for (unsigned f = 0; f < faces_.size(); ++f)
 	{
 	  ostr << "  " << f << ":  dim " << N - 1 << ": { ";
-	  for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
-		 faces_[f].lower_dim_faces_.begin();
-	       l != faces_[f].lower_dim_faces_.end();
-	       ++l)
-	    ostr << l->face_id_ << " ";
+	  lower_dim_faces_set_mixin<N, D>::print(ostr, faces_[f]);
 	  ostr << "},  dim " << N + 1 << ": { ";
-	  for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
-		 faces_[f].higher_dim_faces_.begin();
-	       h != faces_[f].higher_dim_faces_.end();
-	       ++h)
-	    ostr << h->face_id_ << " ";
-	  ostr << "}";
-	  ostr << std::endl;
+	  higher_dim_faces_set_mixin<N, D>::print(ostr, faces_[f]);
+	  ostr << "}" << std::endl;
 	}
     }
 
@@ -353,7 +379,6 @@ namespace mln
     void
     faces_set_mixin<0u, D>::print(std::ostream& ostr) const
     {
-      // FIXME: Much could be factored with the previous routine.
       const unsigned N = 0u;
       ostr << "Faces of dimension " << N
 	   << " and their ajacent faces of dimension "
@@ -361,13 +386,8 @@ namespace mln
       for (unsigned f = 0; f < faces_.size(); ++f)
 	{
 	  ostr << "  " << f << ":  dim " << N + 1 << ": { ";
-	  for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
-		 faces_[f].higher_dim_faces_.begin();
-	       h != faces_[f].higher_dim_faces_.end();
-	       ++h)
-	    ostr << h->face_id_ << " ";
-	  ostr << "}";
-	  ostr << std::endl;
+	  higher_dim_faces_set_mixin<N, D>::print(ostr, faces_[f]);
+	  ostr << "}" << std::endl;
 	}
     }
 
@@ -375,7 +395,6 @@ namespace mln
     void
     faces_set_mixin<D, D>::print(std::ostream& ostr) const
     {
-      // FIXME: Much could be factored with the previous routines.
       const unsigned N = D;
       ostr << "Faces of dimension " << N
 	   << " and their ajacent faces of dimension "
@@ -383,24 +402,39 @@ namespace mln
       for (unsigned f = 0; f < faces_.size(); ++f)
 	{
 	  ostr << "  " << f << ":  dim " << N - 1 << ": { ";
-	  for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
-		 faces_[f].lower_dim_faces_.begin();
-	       l != faces_[f].lower_dim_faces_.end();
-	       ++l)
-	    ostr << l->face_id_ << " ";
-	  ostr << "}";
-	  ostr << std::endl;
+	  lower_dim_faces_set_mixin<N, D>::print(ostr, faces_[f]);
+	  ostr << "}" << std::endl;
 	}
     }
 
     void
     faces_set_mixin<0u, 0u>::print(std::ostream& ostr) const
     {
-      // FIXME: Much could be factored with the previous routines.
       const unsigned N = 0u;
       ostr << "Faces of dimension " << N << std::endl;
       for (unsigned f = 0; f < faces_.size(); ++f)
 	ostr << "  " << f << std::endl;
+    }
+
+
+    template <unsigned N, unsigned D>
+    void
+    lower_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
+					   const face<N, D>& f) const
+    {
+      for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
+	     f.lower_dim_faces_.begin(); l != f.lower_dim_faces_.end(); ++l)
+	ostr << l->face_id_ << " ";
+    }
+
+    template <unsigned N, unsigned D>
+    void
+    higher_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
+					    const face<N, D>& f) const
+    {
+      for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
+	     f.higher_dim_faces_.begin(); h != f.higher_dim_faces_.end(); ++h)
+	ostr << h->face_id_ << " ";
     }
 
   } // end of namespace mln::internal

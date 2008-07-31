@@ -1,5 +1,32 @@
 2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor complex and face implementation.
+
+	* mln/core/face.hh
+	(mln::internal::lower_dim_faces_mixin<N, D>)
+	(mln::internal::higher_dim_faces_mixin<N, D>):
+	New classes.
+	Use them...
+	(mln::face<N, D>): ...here, as mixins.
+	(mln::face<N, D>::connect_lower_dim_face)
+	(mln::face<N, D>::connect_higher_dim_face)
+	(mln::face<D, D>::connect_lower_dim_face)
+	(mln::face<0, D>::connect_higher_dim_face):
+	Remove, and turn into...
+	(mln::internal::lower_dim_faces_mixin<N, D>::connect_lower_dim_face)
+	(mln::internal::higher_dim_faces_mixin<N, D>::connect_higher_dim_face):
+	...these (new methods).
+	* mln/core/complex.hh
+	(mln::internal::lower_dim_faces_set_mixin<N, D>)
+	(mln::internal::higher_dim_faces_set_mixin<N, D>):
+	New classes.
+	Use them...
+	(mln::internal::faces_set_mixin<N, D>): ...here, as mixins, and
+	(mln::internal::faces_set_mixin<N, D>::print): Factor using these
+	mixins.
+
+2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve handling of faces (of complexes) of lowest and highest
 	dimensions.
 
