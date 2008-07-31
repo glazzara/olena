@@ -74,6 +74,7 @@ namespace mln
     std::vector< face_handle<N - 1, D> > lower_dim_faces_;
   };
 
+  // Specialization for the faces of lowest dimension (0).
   template <unsigned D>
   class face<0u, D>
   {
@@ -88,7 +89,26 @@ namespace mln
     std::vector< face_handle<1u, D> > higher_dim_faces_;
   };
 
-  // FIXME: Handle face<0u, 0u>.
+  // Specialization for the faces of highest dimension (D).
+  template <unsigned D>
+  class face<D, D>
+  {
+  public:
+    void connect_lower_dim_face(const face_handle<1u, D>& f);
+
+  private:
+    friend class mln::internal::faces_set_mixin<D, D>;
+
+    // FIXME: Provide accessors instead of using `friend; if there are
+    // clients other than mln::internal::faces_set_mixin<0, D>.
+    std::vector< face_handle<1u, D> > lower_dim_faces_;
+  };
+
+  // Specialization for the case of a 0-complex.
+  template <>
+  class face<0u, 0u>
+  {
+  };
 
 
   /*--------------.
@@ -232,6 +252,13 @@ namespace mln
   face<0u, D>::connect_higher_dim_face(const face_handle<1u, D>& f)
   {
     higher_dim_faces_.push_back(f);
+  }
+
+  template <unsigned D>
+  void
+  face<D, D>::connect_lower_dim_face(const face_handle<1u, D>& f)
+  {
+    lower_dim_faces_.push_back(f);
   }
 
 

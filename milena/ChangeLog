@@ -1,5 +1,16 @@
 2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve handling of faces (of complexes) of lowest and highest
+	dimensions.
+
+	* mln/core/face.hh (mln::face<D, D>, mln::face<0u, 0u>): New.
+	* mln/core/complex.hh
+	(mln::internal::faces_set_mixin<D, D>)
+	(mln::internal::faces_set_mixin<0u, 0u>): New.
+	(mln::internal::faces_set_mixin<0u, D>::print): Aesthetic change.
+
+2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix std::memcpy usage.
 
 	* mln/level/memcpy_.hh: Include `cstring'.
