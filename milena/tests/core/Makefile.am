@@ -51,6 +51,7 @@ check_PROGRAMS =				\
 						\
   obased_rle_image				\
 						\
+  p_complex					\
   p_priority_queue				\
   p_priority_queue_fast				\
   p_priority_queue_fast_with_array		\
@@ -138,6 +139,7 @@ neighb_SOURCES = neighb.cc
 
 obased_rle_image_SOURCES = obased_rle_image.cc
 
+p_complex_SOURCES = p_complex.cc
 p_priority_queue_SOURCES = p_priority_queue.cc
 p_priority_queue_fast_SOURCES = p_priority_queue_fast.cc
 p_priority_queue_fast_with_array_SOURCES = p_priority_queue_fast.cc

@@ -1,5 +1,17 @@
 2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add complex-based psite and pset.
+
+	* mln/core/complex_psite.hh, mln/core/p_complex.hh: New.
+	* mln/core/face.hh: s/mln_assertion/mln_precondition/.
+	(mln::face_handle<N, D>::face_handle): Statically ensure N is
+	compatible with D in ctors.
+	* tests/core/p_complex.cc: New test.
+	* tests/core/Makefile.am (check_PROGRAMS): Add p_complex.
+	(p_complex_SOURCES): New.
+
+2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Check more preconditions in mln::complex<D>.
 
 	* mln/core/complex.hh

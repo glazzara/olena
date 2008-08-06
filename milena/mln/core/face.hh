@@ -150,7 +150,6 @@ namespace mln
     /// Accessors.
     /// \{
     /// Return the complex the face belongs to.
-    // FIXME: Rename to complex()?
     complex<D>& cplx() const;
     /// Return the id of the face.
     unsigned face_id() const;
@@ -269,18 +268,24 @@ namespace mln
   face_handle<N, D>::face_handle()
     : cplx_(0), face_id_(UINT_MAX)
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle(complex<D>& c, unsigned face_id)
     : cplx_(&c), face_id_(face_id)
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle(const face_handle<N, D>& rhs)
     : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
   template <unsigned N, unsigned D>
@@ -306,7 +311,7 @@ namespace mln
   complex<D>&
   face_handle<N, D>::cplx() const
   {
-    mln_assertion(cplx_);
+    mln_precondition(cplx_);
     return *cplx_;
   }
 
@@ -321,7 +326,7 @@ namespace mln
   face<N, D>&
   face_handle<N, D>::to_face() const
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     return cplx_->template face_<N>(face_id_);
   }
 
@@ -337,7 +342,7 @@ namespace mln
   bool
   operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
   {
-    mln_assertion(&lhs.face.cplx() == &rhs.face.cplx());
+    mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
     return lhs.face().id() == rhs.face().id();
   }
 
@@ -345,7 +350,7 @@ namespace mln
   bool
   operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
   {
-    mln_assertion(&lhs.face.cplx() == &rhs.face.cplx());
+    mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
     return lhs.face().id() < rhs.face().id();
   }
 
@@ -360,7 +365,7 @@ namespace mln
   {
     // Check consistency.
     if (!faces_.empty())
-      mln_assertion(&faces_.front().cplx() == &f.cplx());
+      mln_precondition(&faces_.front().cplx() == &f.cplx());
     faces_.push_back(f);
   }
 
