@@ -10,14 +10,6 @@
 
 2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
 
-	* mln/core/graph_psite.hh, mln/core/line_graph_psite.hh,
-	* mln/core/p_graph_piter.hh, mln/core/p_line_graph_piter.hh:
-	Fix spacing in template definitions.
-	* mln/core/p_graph.hh, mln/core/p_line_graph.hh: Likewise.
-	Fix documentation.
-
-2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
-
 	Add complex-based psite and pset.
 
 	* mln/core/complex_psite.hh, mln/core/p_complex.hh: New.
