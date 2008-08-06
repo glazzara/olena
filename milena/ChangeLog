@@ -1,5 +1,13 @@
 2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Check more preconditions in mln::complex<D>.
+
+	* mln/core/complex.hh
+	(mln::complex<D>::add_face(const faces_set<N, D>&)): Ensure
+	arguments are consistent with the complex.
+
+2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add more services to complexes and faces.
 
 	* mln/core/complex.hh (mln::complex<D>::nfaces<N>): New.
