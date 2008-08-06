@@ -288,8 +288,8 @@ namespace mln
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
 
-    f1.get().connect_higher_dim_face(f2);
-    f2.get().connect_lower_dim_face(f1);
+    f1.to_face().connect_higher_dim_face(f2);
+    f2.to_face().connect_lower_dim_face(f1);
   }
 
 
@@ -424,7 +424,7 @@ namespace mln
     {
       for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
 	     f.lower_dim_faces_.begin(); l != f.lower_dim_faces_.end(); ++l)
-	ostr << l->face_id_ << " ";
+	ostr << l->face_id() << " ";
     }
 
     template <unsigned N, unsigned D>
@@ -434,7 +434,7 @@ namespace mln
     {
       for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
 	     f.higher_dim_faces_.begin(); h != f.higher_dim_faces_.end(); ++h)
-	ostr << h->face_id_ << " ";
+	ostr << h->face_id() << " ";
     }
 
   } // end of namespace mln::internal

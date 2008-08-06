@@ -1,3 +1,29 @@
+2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Allow non-initialized faces.
+
+	* mln/core/face.hh (mln::face_handle<N, D>::face_handle): New ctor.
+	(mln::face_handle<N, D>::is_valid): New method.
+	Use it...
+	(mln::face_handle<N, D>::get): ...here.
+	Rename as...
+	(mln::face_handle<N, D>::to_face): ...this.
+	(mln::face_handle<N, D>::face_id_): Make this attribute private.
+	(mln::face_handle<N, D>::c_): Likewise.
+	Turn this reference into a pointer.
+	(mln::face_handle<N, D>::face_handle)
+	(mln::face_handle<N, D>::to_face)
+	(mln::make_face_handle<N, D>):
+	Adjust.
+	(mln::faces_set<N, D>::add): Likewise.
+	Remove spurious FIXME.
+	(mln::face_handle<N, D>::c, mln::face_handle<N, D>::face_id):
+	New accessors.
+	* mln/core/complex.hh (mln::complex<D>::connect_)
+	(mln::internal::lower_dim_faces_set_mixin<N, D>::print)
+	(mln::internal::higher_dim_faces_set_mixin<N, D>::print):
+	Adjust.
+
 2008-07-31  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor complex and face implementation.

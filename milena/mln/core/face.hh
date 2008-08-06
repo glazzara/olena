@@ -31,6 +31,8 @@
 /// \file mln/core/face.hh
 /// \brief Face of a complex.
 
+#include <climits>
+
 #include <vector>
 
 #include <mln/core/contract.hh>
@@ -129,6 +131,9 @@ namespace mln
   template <unsigned N, unsigned D>
   struct face_handle
   {
+    /// Build a non-initialized face handle.
+    face_handle();
+    /// Build a face handle from \a complex and \a face_id.
     face_handle(complex<D>& complex, unsigned face_id);
 
     /// Copy and assignment.
@@ -137,15 +142,26 @@ namespace mln
     face_handle<N, D>& operator=(const face_handle<N, D>& rhs);
     /// \}
 
+    /// Is this handle valid?
+    bool is_valid() const;
+
     /// Accessors.
     /// \{
+    /// Return the complex the face belongs to.
+    complex<D>& c() const;
+    /// Return the id of the face.
+    unsigned face_id() const;
+
     /// Return the mln::face pointed by this handle.
-    face<N, D>& get() const;
+    face<N, D>& to_face() const;
     /// \}
 
-    /* FIXME: Hide data.  */
-    // A const face_handle can be used to modify a complex.
-    mutable complex<D>& c_;
+  private:
+    /// \brief The complex the face belongs to.
+    ///
+    /// A const face_handle can be used to modify a complex.
+    mutable complex<D>* c_;
+    /// \brief The id of the face.
     unsigned face_id_;
   };
 
@@ -195,50 +211,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /*--------------.
-  | Face handle.  |
-  `--------------*/
-
-  template <unsigned N, unsigned D>
-  face_handle<N, D>::face_handle(complex<D>& c, unsigned face_id)
-    : c_(c), face_id_(face_id)
-  {
-  }
-
-  template <unsigned N, unsigned D>
-  face_handle<N, D>::face_handle(const face_handle<N, D>& rhs)
-    : c_(rhs.c_), face_id_(rhs.face_id_)
-  {
-  }
-
-  template <unsigned N, unsigned D>
-  face_handle<N, D>&
-  face_handle<N, D>::operator=(const face_handle<N, D>& rhs)
-  {
-    if (&rhs != this)
-      {
-	c_ = rhs.c_;
-	face_id_ = rhs.face_id_;
-      }
-    return *this;
-  }
-
-  template <unsigned N, unsigned D>
-  face<N, D>&
-  face_handle<N, D>::get() const
-  {
-    return c_.template face_<N>(face_id_);
-  }
-
-
-  template <unsigned N, unsigned D>
-  face_handle<N, D>
-  make_face_handle(const complex<D>& c, unsigned face_id)
-  {
-    return face_handle<N, D>(c, face_id);
-  }
-
-
   /*--------.
   | Faces.  |
   `--------*/
@@ -262,6 +234,79 @@ namespace mln
   } // end of namespace mln::internal
 
 
+  /*--------------.
+  | Face handle.  |
+  `--------------*/
+
+  template <unsigned N, unsigned D>
+  face_handle<N, D>::face_handle()
+    : c_(0), face_id_(UINT_MAX)
+  {
+  }
+
+  template <unsigned N, unsigned D>
+  face_handle<N, D>::face_handle(complex<D>& c, unsigned face_id)
+    : c_(&c), face_id_(face_id)
+  {
+  }
+
+  template <unsigned N, unsigned D>
+  face_handle<N, D>::face_handle(const face_handle<N, D>& rhs)
+    : c_(rhs.c_), face_id_(rhs.face_id_)
+  {
+  }
+
+  template <unsigned N, unsigned D>
+  face_handle<N, D>&
+  face_handle<N, D>::operator=(const face_handle<N, D>& rhs)
+  {
+    if (&rhs != this)
+      {
+	c_ = rhs.c_;
+	face_id_ = rhs.face_id_;
+      }
+    return *this;
+  }
+
+  template <unsigned N, unsigned D>
+  bool
+  face_handle<N, D>::is_valid() const
+  {
+    return c_ != 0 && face_id_ != UINT_MAX;
+  }
+
+  template <unsigned N, unsigned D>
+  complex<D>&
+  face_handle<N, D>::c() const
+  {
+    mln_assertion(c_);
+    return *c_;
+  }
+
+  template <unsigned N, unsigned D>
+  unsigned
+  face_handle<N, D>::face_id() const
+  {
+    return face_id_;
+  }
+
+  template <unsigned N, unsigned D>
+  face<N, D>&
+  face_handle<N, D>::to_face() const
+  {
+    mln_assertion(is_valid());
+    return c_->template face_<N>(face_id_);
+  }
+
+
+  template <unsigned N, unsigned D>
+  face_handle<N, D>
+  make_face_handle(const complex<D>& c, unsigned face_id)
+  {
+    return face_handle<N, D>(&c, face_id);
+  }
+
+
   /*---------------.
   | Set of faces.  |
   `---------------*/
@@ -272,10 +317,7 @@ namespace mln
   {
     // Check consistency.
     if (!faces_.empty())
-      mln_assertion(&faces_.front().c_ == &f.c_);
-
-    /* FIXME: This is not thread-proof (these two lines should
-       form an atomic section).  */
+      mln_assertion(&faces_.front().c() == &f.c());
     faces_.push_back (f);
   }
 
