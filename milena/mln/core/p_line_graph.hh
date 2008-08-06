@@ -74,12 +74,14 @@ namespace mln
     /// Backward Point_Iterator associated type.
     typedef p_line_graph_bkd_piter_<P> bkd_piter;
 
-    /// Return The number of points (sites) of the set, i.e., the
-    /// number of \em edges, since this is a point set based on a line
-    /// graph.
+    /// \brief Return The number of points (sites) of the set, i.e.,
+    /// the number of \em edges, since this is a point set based on a
+    /// line graph.
+    ///
+    /// Required by the mln::Point_Set concept.
     std::size_t npoints() const;
 
-    /// Return The number of vertices (vertices) in the graph.
+    /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
@@ -138,7 +140,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template<typename P>
+  template <typename P>
   inline
   p_line_graph<P>::p_line_graph(const util::graph<P>& gr)
     // Create a deep, managed copy of GR.
@@ -150,7 +152,7 @@ namespace mln
     bb_ = a.to_result();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_line_graph<P>::npoints() const
@@ -158,7 +160,7 @@ namespace mln
     return nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_line_graph<P>::nvertices() const
@@ -166,7 +168,7 @@ namespace mln
     return this->gr_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_line_graph<P>::nedges() const
@@ -174,7 +176,7 @@ namespace mln
     return this->gr_->nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const box_<P>&
   p_line_graph<P>::bbox() const
@@ -182,7 +184,7 @@ namespace mln
     return bb_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   p_line_graph<P>::has(const psite& p) const

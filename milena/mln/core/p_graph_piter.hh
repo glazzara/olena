@@ -38,8 +38,8 @@
 namespace mln
 {
   // Fwd decls.
-  template<typename P> class p_graph;
-  template<typename P> class graph_psite;
+  template <typename P> class p_graph;
+  template <typename P> class graph_psite;
 
 
   /*------------------------.
@@ -47,7 +47,7 @@ namespace mln
   `------------------------*/
 
   /// \brief Forward iterator on point sites of a mln::p_graph<P>.
-  template<typename P>
+  template <typename P>
   class p_graph_fwd_piter_
     : public internal::point_iterator_base_< P, p_graph_fwd_piter_<P> >
   {
@@ -123,7 +123,7 @@ namespace mln
   `------------------------*/
 
   /// \brief Backward iterator on point sites of a mln::p_graph<P>.
-  template<typename P>
+  template <typename P>
   class p_graph_bkd_piter_
     : public internal::point_iterator_base_< P, p_graph_bkd_piter_<P> >
   {
@@ -201,7 +201,7 @@ namespace mln
   | p_graph_fwd_piter_<P>.  |
   `------------------------*/
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_fwd_piter_<P>::p_graph_fwd_piter_(const p_graph<P>& pg)
     : pg_(&pg),
@@ -212,7 +212,7 @@ namespace mln
     invalidate();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_fwd_piter_<P>::p_graph_fwd_piter_(const p_graph_fwd_piter_<P>& rhs)
     : pg_(rhs.pg_),
@@ -222,7 +222,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_fwd_piter_<P>&
   p_graph_fwd_piter_<P>::operator=(const p_graph_fwd_piter_<P>& rhs)
@@ -236,7 +236,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   p_graph_fwd_piter_<P>::operator[](unsigned i) const
@@ -244,7 +244,7 @@ namespace mln
     return p_[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   p_graph_fwd_piter_<P>::is_valid() const
@@ -252,7 +252,7 @@ namespace mln
     return pg_ && id_ < pg_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_fwd_piter_<P>::invalidate()
@@ -260,7 +260,7 @@ namespace mln
     id_ = -1;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_fwd_piter_<P>::start()
@@ -270,7 +270,7 @@ namespace mln
       update_();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_fwd_piter_<P>::next_()
@@ -280,7 +280,7 @@ namespace mln
       update_();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_fwd_piter_<P>::update_()
@@ -291,7 +291,7 @@ namespace mln
     p_ = pg_->point_from_id(id_);
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   p_graph_fwd_piter_<P>::to_point() const
@@ -310,7 +310,7 @@ namespace mln
     return p_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const graph_psite<P>&
   p_graph_fwd_piter_<P>::to_psite() const
@@ -329,7 +329,7 @@ namespace mln
     return psite_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_fwd_piter_<P>::operator graph_psite<P>() const
   {
@@ -353,7 +353,7 @@ namespace mln
   | p_graph_bkd_piter_<P>.  |
   `------------------------*/
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_bkd_piter_<P>::p_graph_bkd_piter_(const p_graph<P>& pg)
     : pg_(&pg),
@@ -364,7 +364,7 @@ namespace mln
     invalidate();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_bkd_piter_<P>::p_graph_bkd_piter_(const p_graph_bkd_piter_<P>& rhs)
     : pg_(rhs.pg_),
@@ -374,7 +374,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_bkd_piter_<P>&
   p_graph_bkd_piter_<P>::operator=(const p_graph_bkd_piter_<P>& rhs)
@@ -388,7 +388,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   p_graph_bkd_piter_<P>::operator[](unsigned i) const
@@ -396,7 +396,7 @@ namespace mln
     return p_[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   p_graph_bkd_piter_<P>::is_valid() const
@@ -404,7 +404,7 @@ namespace mln
     return pg_ && id_ < pg_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_bkd_piter_<P>::invalidate()
@@ -412,7 +412,7 @@ namespace mln
     id_ = -1;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_bkd_piter_<P>::start()
@@ -422,7 +422,7 @@ namespace mln
       update_();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_bkd_piter_<P>::next_()
@@ -432,7 +432,7 @@ namespace mln
       update_();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   void
   p_graph_bkd_piter_<P>::update_()
@@ -443,7 +443,7 @@ namespace mln
     p_ = pg_->point_from_id(id_);
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   p_graph_bkd_piter_<P>::to_point() const
@@ -462,7 +462,7 @@ namespace mln
     return p_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const graph_psite<P>&
   p_graph_bkd_piter_<P>::to_psite() const
@@ -481,7 +481,7 @@ namespace mln
     return psite_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph_bkd_piter_<P>::operator graph_psite<P>() const
   {

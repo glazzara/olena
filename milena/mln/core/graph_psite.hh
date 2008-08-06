@@ -31,18 +31,20 @@
 /// \file mln/core/graph_psite.hh
 /// \brief Definition of a graph-based point site.
 
+# include <mln/core/concept/point_site.hh>
+
 # include <mln/core/p_graph.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template<typename P> class p_graph;
+  // Forward declaration.
+  template <typename P> class p_graph;
 
 
   /// \brief Point site associated to a mln::graph_image.
-  template<typename P>
+  template <typename P>
   class graph_psite : public Point_Site< graph_psite<P> >
   {
     typedef graph_psite<P> self_;
@@ -113,9 +115,10 @@ namespace mln
   /// \}
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>::graph_psite()
     // Dummy initializations.
@@ -125,7 +128,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>::graph_psite(const p_graph<P>& g, util::vertex_id id)
     : super_(),
@@ -134,7 +137,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
     : super_(rhs),
@@ -143,7 +146,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>&
   graph_psite<P>::operator= (const graph_psite<P>& rhs)
@@ -155,7 +158,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   graph_psite<P>::is_valid() const
@@ -163,7 +166,7 @@ namespace mln
     return pg_ && id_ < pg_->gr_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const graph_psite<P>&
   graph_psite<P>::to_psite() const
@@ -171,7 +174,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   graph_psite<P>::to_point() const
@@ -179,7 +182,7 @@ namespace mln
     return pg().point_from_id(id_);
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   graph_psite<P>::operator[](unsigned i) const
@@ -188,7 +191,7 @@ namespace mln
     return to_point()[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const p_graph<P>&
   graph_psite<P>::pg() const
@@ -197,7 +200,7 @@ namespace mln
     return *pg_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   util::vertex_id
   graph_psite<P>::id() const

@@ -28,16 +28,18 @@
 #ifndef MLN_CORE_P_GRAPH_HH
 # define MLN_CORE_P_GRAPH_HH
 
-# include <mln/core/concept/point_site.hh>
+/// \file mln/core/p_graph.hh
+/// \brief Definition of a point set based on graph.
+
 # include <mln/core/internal/point_set_base.hh>
+
 # include <mln/accu/bbox.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/graph.hh>
+
 # include <mln/core/graph_psite.hh>
 # include <mln/core/p_graph_piter.hh>
 
-/// \file mln/core/p_graph.hh
-/// \brief Definition of a point set based on graph.
 
 namespace mln
 {
@@ -45,7 +47,7 @@ namespace mln
      is expected to be a point, not a psite!!  We should have a
      uniform scheme for point site sets.  */
 
-  template<typename P>
+  template <typename P>
   struct p_graph
     : public internal::point_set_base_< graph_psite<P>, p_graph<P> >
   {
@@ -68,11 +70,13 @@ namespace mln
     /// Backward Point_Iterator associated type.
     typedef p_graph_bkd_piter_<P> bkd_piter;
 
-    /// Return The number of points (sites) of the set, i.e., the
-    /// number of \em vertices.
+    /// \brief Return The number of points (sites) of the set, i.e.,
+    /// the number of \em vertices.
+    ///
+    /// Required by the mln::Point_Set concept.
     std::size_t npoints() const;
 
-    /// Return The number of vertices (vertices) in the graph.
+    /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
@@ -110,7 +114,8 @@ namespace mln
 			   const util::vertex_id& rhs) const;
     /// \}
 
-    /// Return the graph associated to the p_graph domain:
+    /// Return the graph associated to the p_graph domain.
+    // FIXME: Rename as something else (graph() ?).
     const graph& to_graph() const;
     graph& to_graph();
 
@@ -138,7 +143,7 @@ namespace mln
   /// \brief Inclusion of a mln::p_graph in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
-  /// infrastrure for graphs i simple: a mln::p_graph is included
+  /// infrastrure for graphs is simple: a mln::p_graph is included
   /// in another one if their are equal.
   ///
   /// \todo Refine this later, when we are able to express subgraph
@@ -148,9 +153,10 @@ namespace mln
   operator<=(const p_graph<P>& lhs, const p_graph<P>& rhs);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph<P>::p_graph(const util::graph<P>& gr)
     // Create a deep, managed copy of GR.
@@ -162,7 +168,7 @@ namespace mln
     bb_ = a.to_result();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_graph<P>::npoints() const
@@ -170,7 +176,7 @@ namespace mln
     return nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_graph<P>::nvertices() const
@@ -178,7 +184,7 @@ namespace mln
     return this->gr_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_graph<P>::nedges() const
@@ -186,7 +192,7 @@ namespace mln
     return this->gr_->nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const box_<P>&
   p_graph<P>::bbox() const
@@ -194,7 +200,7 @@ namespace mln
     return bb_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   p_graph<P>::has(const psite& p) const

@@ -41,11 +41,11 @@ namespace mln
 {
 
   // Fwd decl.
-  template<typename P> class p_line_graph;
+  template <typename P> class p_line_graph;
 
 
   /// \brief Point site associated to a mln::graph_image.
-  template<typename P>
+  template <typename P>
   class line_graph_psite : public Point_Site< line_graph_psite<P> >
   {
     typedef line_graph_psite<P> self_;
@@ -154,7 +154,7 @@ namespace mln
      bounds).  Actually, p_line_graph_piters *do* create ill-formed
      psites at their initialization.  */
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite()
     // Dummy initializations.
@@ -165,7 +165,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& plg,
 					util::edge_id id)
@@ -176,7 +176,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const line_graph_psite<P>& rhs)
     : super_(rhs),
@@ -186,7 +186,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>&
   line_graph_psite<P>::operator=(const line_graph_psite<P>& rhs)
@@ -198,7 +198,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   line_graph_psite<P>::is_valid() const
@@ -206,7 +206,7 @@ namespace mln
     return plg_ && id_ < plg_->gr_->nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const line_graph_psite<P>&
   line_graph_psite<P>::to_psite() const
@@ -214,7 +214,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   line_graph_psite<P>::to_point() const
@@ -223,7 +223,7 @@ namespace mln
     return p_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   line_graph_psite<P>::operator[](unsigned i) const
@@ -232,7 +232,7 @@ namespace mln
     return to_point()[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const p_line_graph<P>&
   line_graph_psite<P>::plg() const
@@ -241,7 +241,7 @@ namespace mln
     return *plg_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   util::edge_id
   line_graph_psite<P>::id() const
@@ -249,7 +249,7 @@ namespace mln
     return id_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   P
   line_graph_psite<P>::first() const
@@ -258,7 +258,7 @@ namespace mln
     return plg().gr_->vertex_data(first_id());
   }
 
-  template<typename P>
+  template <typename P>
   inline
   P
   line_graph_psite<P>::second() const
@@ -268,7 +268,7 @@ namespace mln
   }
 
 
-  template<typename P>
+  template <typename P>
   inline
   util::vertex_id
   line_graph_psite<P>::first_id() const
@@ -277,7 +277,7 @@ namespace mln
     return plg().gr_->edge(id_).v1();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   util::vertex_id
   line_graph_psite<P>::second_id() const
