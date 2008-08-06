@@ -1,5 +1,22 @@
 2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more services to complexes and faces.
+
+	* mln/core/complex.hh (mln::complex<D>::nfaces<N>): New.
+	Use it...
+	(mln::complex<D>::add_face): ...here.
+	* mln/core/face.hh
+	(mln::face_handle<N, D>::c, mln::face_handle<N, D>::c_):
+	Rename as...
+	(mln::face_handle<N, D>::cplx, mln::face_handle<N, D>::cplx_):
+	...these.
+	Adjust users.
+	(operator==(const face_handle<N, D>&, const face_handle<N, D>&))
+	(operator< (const face_handle<N, D>&, const face_handle<N, D>&)):
+	New.
+
+2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow non-initialized faces.
 
 	* mln/core/face.hh (mln::face_handle<N, D>::face_handle): New ctor.

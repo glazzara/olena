@@ -58,6 +58,8 @@ namespace mln
   }
 
 
+  // FIXME: Rename `face' as `face_data' and `face_handle' as face.
+
   /*-------.
   | Face.  |
   `-------*/
@@ -66,7 +68,7 @@ namespace mln
   template <unsigned N, unsigned D> class face;
 
 
-  // Specialization for the faces of highest dimension (D).
+  // Specialization for the faces of highest dimension (\p D).
   template <unsigned D>
   class face<D, D> : public internal::lower_dim_faces_mixin<D, D>
   {
@@ -148,7 +150,8 @@ namespace mln
     /// Accessors.
     /// \{
     /// Return the complex the face belongs to.
-    complex<D>& c() const;
+    // FIXME: Rename to complex()?
+    complex<D>& cplx() const;
     /// Return the id of the face.
     unsigned face_id() const;
 
@@ -160,14 +163,38 @@ namespace mln
     /// \brief The complex the face belongs to.
     ///
     /// A const face_handle can be used to modify a complex.
-    mutable complex<D>* c_;
+    mutable complex<D>* cplx_;
     /// \brief The id of the face.
     unsigned face_id_;
   };
 
+
+  /// Create a handle for \p N-face of a \p D-complex.
   template <unsigned N, unsigned D>
   face_handle<N, D>
   make_face_handle(const complex<D>& c, unsigned face_id);
+
+
+  /// Comparison of two instances of mln::face_handle.
+  /// \{
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::complex.
+  template <unsigned N, unsigned D>
+  bool
+  operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
+
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting face handles.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::complex.
+  template <unsigned N, unsigned D>
+  bool
+  operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
+  /// \}
 
 
   /*----------------------.
@@ -240,19 +267,19 @@ namespace mln
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle()
-    : c_(0), face_id_(UINT_MAX)
+    : cplx_(0), face_id_(UINT_MAX)
   {
   }
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle(complex<D>& c, unsigned face_id)
-    : c_(&c), face_id_(face_id)
+    : cplx_(&c), face_id_(face_id)
   {
   }
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle(const face_handle<N, D>& rhs)
-    : c_(rhs.c_), face_id_(rhs.face_id_)
+    : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
   {
   }
 
@@ -262,7 +289,7 @@ namespace mln
   {
     if (&rhs != this)
       {
-	c_ = rhs.c_;
+	cplx_ = rhs.cplx_;
 	face_id_ = rhs.face_id_;
       }
     return *this;
@@ -272,15 +299,15 @@ namespace mln
   bool
   face_handle<N, D>::is_valid() const
   {
-    return c_ != 0 && face_id_ != UINT_MAX;
+    return cplx_ != 0 && face_id_ < cplx_->template nfaces<N>();
   }
 
   template <unsigned N, unsigned D>
   complex<D>&
-  face_handle<N, D>::c() const
+  face_handle<N, D>::cplx() const
   {
-    mln_assertion(c_);
-    return *c_;
+    mln_assertion(cplx_);
+    return *cplx_;
   }
 
   template <unsigned N, unsigned D>
@@ -295,7 +322,7 @@ namespace mln
   face_handle<N, D>::to_face() const
   {
     mln_assertion(is_valid());
-    return c_->template face_<N>(face_id_);
+    return cplx_->template face_<N>(face_id_);
   }
 
 
@@ -304,6 +331,22 @@ namespace mln
   make_face_handle(const complex<D>& c, unsigned face_id)
   {
     return face_handle<N, D>(&c, face_id);
+  }
+
+  template <unsigned N, unsigned D>
+  bool
+  operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
+  {
+    mln_assertion(&lhs.face.cplx() == &rhs.face.cplx());
+    return lhs.face().id() == rhs.face().id();
+  }
+
+  template <unsigned N, unsigned D>
+  bool
+  operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
+  {
+    mln_assertion(&lhs.face.cplx() == &rhs.face.cplx());
+    return lhs.face().id() < rhs.face().id();
   }
 
 
@@ -317,8 +360,8 @@ namespace mln
   {
     // Check consistency.
     if (!faces_.empty())
-      mln_assertion(&faces_.front().c() == &f.c());
-    faces_.push_back (f);
+      mln_assertion(&faces_.front().cplx() == &f.cplx());
+    faces_.push_back(f);
   }
 
   template <unsigned N, unsigned D>

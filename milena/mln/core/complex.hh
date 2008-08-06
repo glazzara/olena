@@ -36,6 +36,8 @@
 ///
 /// FIXME: More.
 
+# include <cstddef>
+
 # include <iosfwd>
 
 # include <mln/metal/bool.hh>
@@ -76,6 +78,10 @@ namespace mln
     template <unsigned N>
     face_handle<N + 1, D> add_face(const faces_set<N, D>& adjacent_faces);
     /// \}
+
+    /// \brief Return the number of \p N-faces.
+    template <unsigned N>
+    std::size_t nfaces() const;
 
     /// Pretty-printing.
     /// \{
@@ -234,7 +240,7 @@ namespace mln
     /* FIXME: This is not thread-proof (these two lines should
        form an atomic section).  */
     internal::faces_set_mixin<0u, D>::faces_.push_back(face<0u, D>());
-    unsigned id = internal::faces_set_mixin<0u, D>::faces_.size() - 1;
+    unsigned id = nfaces<0u>() - 1;
 
     return face_handle<0u, D>(*this, id);
   }
@@ -250,7 +256,7 @@ namespace mln
     /* FIXME: This is not thread-proof (these two lines should
        form an atomic section).  */
     internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
-    unsigned id = internal::faces_set_mixin<N + 1, D>::faces_.size() - 1;
+    unsigned id = nfaces<N + 1>() - 1;
 
     face_handle<N + 1, D> fh(*this, id);
     // Connect F and its ADJACENT_FACES.
@@ -261,6 +267,14 @@ namespace mln
       connect_(*a, fh);
 
     return fh;
+  }
+
+  template <unsigned D>
+  template <unsigned N>
+  std::size_t
+  complex<D>::nfaces() const
+  {
+    return internal::faces_set_mixin<N, D>::faces_.size();
   }
 
   template <unsigned D>
