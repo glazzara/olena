@@ -1,3 +1,21 @@
+2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
+
+	Follow g++ 4.3 advice w.r.t. ignored type qualifiers on function
+	return types.
+
+	* mln/util/tracked_ptr.hh
+	(mln::util::tracked_ptr<T>::operator->() const)
+	(mln::util::tracked_ptr<T>::operator->()):
+	Remove useless `const' qualifier on return type.
+	* mln/value/builtin/floatings.hh
+	(mln::trait::value_<float>::min)
+	(mln::trait::value_<float>::max)
+	(mln::trait::value_<float>::epsilon)
+	(mln::trait::value_<double>::min)
+	(mln::trait::value_<double>::max)
+	(mln::trait::value_<double>::epsilon):
+	Likewise.
+
 2008-08-06  Roland Levillain  <roland@lrde.epita.fr>
 
 	Misc. fixes in graph and line graph entities.
