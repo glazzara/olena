@@ -31,12 +31,24 @@
 /// \file mln/core/face.hh
 /// \brief Face of a complex.
 
-#include <climits>
+#include <limits>
 
 #include <vector>
 
 #include <mln/core/contract.hh>
 
+/* FIXME: Suggestions:
+
+   - rename `face' as `face_data', and move it into complex.hh or its
+     own file;
+   - rename `face_handle' as `face', and move it to its own file;
+   - rename `any_face_handle' as `any_face', and move it to its own file.
+
+   Anyway, whatever the decision, splitting `face', `face_handle' and
+   `any_face_handle' seems to be sound.
+
+   (And what about `faces_set'? Should we move it to its own file as
+   well?)  */
 
 namespace mln
 {
@@ -57,8 +69,6 @@ namespace mln
     template <unsigned N, unsigned D> class higher_dim_faces_mixin;
   }
 
-
-  // FIXME: Rename `face' as `face_data' and `face_handle' as face.
 
   /*-------.
   | Face.  |
@@ -234,6 +244,78 @@ namespace mln
   /// \}
 
 
+  /*----------------------.
+  | ``Any-face'' handle.  |
+  `----------------------*/
+
+  // Face handle in a complex, where the dimension is dynamic.
+  template <unsigned D>
+  struct any_face_handle
+  {
+    /// Build a non-initialized face handle.
+    any_face_handle();
+    /// Build a face handle from \a complex and \a face_id.
+    any_face_handle(complex<D>& complex, unsigned n, unsigned face_id);
+
+    /// Copy and assignment.
+    /// \{
+    any_face_handle(const any_face_handle<D>& rhs);
+    any_face_handle<D>& operator=(const any_face_handle<D>& rhs);
+    /// \}
+
+    /// Is this handle valid?
+    bool is_valid() const;
+
+    /// Accessors.
+    /// \{
+    /// Return the complex the face belongs to.
+    complex<D>& cplx() const;
+    /// Return the dimension of the face.
+    unsigned n() const;
+    /// Return the id of the face.
+    unsigned face_id() const;
+
+    // FIXME: Implement.
+//     /// Return the mln::face pointed by this handle.
+//     template <unsigned N>
+//     face<N, D>& to_face() const;
+    /// \}
+
+  private:
+    /// \brief The complex the face belongs to.
+    ///
+    /// A const any_face_handle can be used to modify a complex.
+    mutable complex<D>* cplx_;
+    /// The dimension of the face.
+    unsigned n_;
+    /// \brief The id of the face.
+    unsigned face_id_;
+  };
+
+
+  /// Comparison of two instances of mln::any_face_handle.
+  /// \{
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::complex.
+  template <unsigned D>
+  bool
+  operator==(const any_face_handle<D>& lhs, const any_face_handle<D>& rhs);
+
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting face handles.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::complex.
+  /// \pre Arguments \a lhs and \a rhs must have the same dimension.
+  template <unsigned D>
+  bool
+  operator< (const any_face_handle<D>& lhs, const any_face_handle<D>& rhs);
+  /// \}
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -266,7 +348,7 @@ namespace mln
 
   template <unsigned N, unsigned D>
   face_handle<N, D>::face_handle()
-    : cplx_(0), face_id_(UINT_MAX)
+    : cplx_(0), face_id_(std::numeric_limits<unsigned>::max())
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
@@ -342,6 +424,7 @@ namespace mln
   bool
   operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
   {
+    // Ensure LHS and RHS belong to the same complex.
     mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
     return lhs.face().id() == rhs.face().id();
   }
@@ -350,6 +433,7 @@ namespace mln
   bool
   operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
   {
+    // Ensure LHS and RHS belong to the same complex.
     mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
     return lhs.face().id() < rhs.face().id();
   }
@@ -394,6 +478,108 @@ namespace mln
     faces_set<N, D> fs2(fs);
     fs2.add(f);
     return fs2;
+  }
+
+
+  /*----------------------.
+  | ``Any-face'' handle.  |
+  `----------------------*/
+
+  template <unsigned D>
+  any_face_handle<D>::any_face_handle()
+    : cplx_(0),
+      n_(std::numeric_limits<unsigned>::max()),
+      face_id_(std::numeric_limits<unsigned>::max())
+  {
+  }
+
+  template <unsigned D>
+  any_face_handle<D>::any_face_handle(complex<D>& c, unsigned n,
+				      unsigned face_id)
+    : cplx_(&c), n_(n), face_id_(face_id)
+  {
+    // Ensure N is compatible with D.
+  }
+
+  template <unsigned D>
+  any_face_handle<D>::any_face_handle(const any_face_handle<D>& rhs)
+    : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
+  {
+  }
+
+  template <unsigned D>
+  any_face_handle<D>&
+  any_face_handle<D>::operator=(const any_face_handle<D>& rhs)
+  {
+    if (&rhs != this)
+      {
+	cplx_ = rhs.cplx_;
+	n_ = rhs.n_;
+	face_id_ = rhs.face_id_;
+      }
+    return *this;
+  }
+
+  template <unsigned D>
+  bool
+  any_face_handle<D>::is_valid() const
+  {
+    return cplx_ != 0 && face_id_ < cplx_->nfaces(n_);
+  }
+
+  template <unsigned D>
+  complex<D>&
+  any_face_handle<D>::cplx() const
+  {
+    mln_precondition(cplx_);
+    return *cplx_;
+  }
+
+  template <unsigned D>
+  unsigned
+  any_face_handle<D>::n() const
+  {
+    return n_;
+  }
+
+  template <unsigned D>
+  unsigned
+  any_face_handle<D>::face_id() const
+  {
+    return face_id_;
+  }
+
+//   template <unsigned D>
+//   template <unsigned n>
+//   face<N, D>&
+//   any_face_handle<D>::to_face() const
+//   {
+//     // FIXME: Adjust.
+// //     mln_precondition(is_valid());
+// //     return cplx_->template face_<N>(face_id_);
+//   }
+
+
+  template <unsigned D>
+  bool
+  operator==(const any_face_handle<D>& lhs, const any_face_handle<D>& rhs)
+  {
+    // Ensure LHS and RHS belong to the same complex.
+    mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
+    return
+      lhs.face().n() == rhs.face().n() &&
+      lhs.face().id() == rhs.face().id();
+  }
+
+  template <unsigned D>
+  bool
+  operator< (const any_face_handle<D>& lhs, const any_face_handle<D>& rhs)
+  {
+    // Ensure LHS and RHS belong to the same complex.
+    mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
+    // Ensure LHS and RHS have the same dimension.
+    mln_precondition(lhs.face().n() == rhs.face().n());
+    return lhs.face().id() < rhs.face().id();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

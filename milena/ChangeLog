@@ -1,5 +1,16 @@
 2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a dimension-agnostic face handle.
+
+	* mln/core/face.hh (mln::any_face_handle<D>): New class.
+	(operator==(const any_face_handle<D>&, const any_face_handle<D>&))
+	(operator< (const any_face_handle<D>&, const any_face_handle<D>&)):
+	New.
+	(mln::face_handle<N, D>::face_handle): Use std::numeric_limits
+	instead of UINT_MAX.
+
+2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add more services to complexes.
 
 	* mln/core/complex.hh
