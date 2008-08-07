@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_COMPLEX_HH
-# define MLN_CORE_P_COMPLEX_HH
+#ifndef MLN_CORE_P_FACES_HH
+# define MLN_CORE_P_FACES_HH
 
-/// \file mln/core/p_complex.hh
-/// \brief Definition of a point set based on a complex.
+/// \file mln/core/p_faces.hh
+/// \brief Definition of a point set based on the set of n-faces of a
+/// complex.
 
 # include <mln/core/internal/point_set_base.hh>
 
@@ -37,13 +38,11 @@
 # include <mln/util/tracked_ptr.hh>
 # include <mln/core/complex.hh>
 
-# include <mln/core/complex_psite.hh>
+# include <mln/core/faces_psite.hh>
 
 
 namespace mln
 {
-
-  // FIXME: Rename as p_faces.
 
   /* FIXME: For compatibility reasons with mln::Point_Set, a point
      type \P is attached to this complex-based pset (but it is not
@@ -56,10 +55,10 @@ namespace mln
 
   /// A complex psite set based on a the \N-faces of a complex of
   /// dimension \p D (a \p D-complex).
-  template <unsigned D, typename P>
-  struct p_complex
-    : public internal::point_set_base_< complex_psite<D, P>,
-					p_complex<D, P> >
+  template <unsigned N, unsigned D, typename P>
+  struct p_faces
+    : public internal::point_set_base_< faces_psite<N, D, P>,
+					p_faces<N, D, P> >
   {
     /// \brief Construct a complex psite set from a complex.
     ///
@@ -67,10 +66,10 @@ namespace mln
     ///
     /// \a gr is \em copied internally, so that the complex psite set is
     /// still valid after the initial complex has been removed.
-    p_complex (const complex<D>& cplx);
+    p_faces (const complex<D>& cplx);
 
     /// Point_Site associated type.
-    typedef complex_psite<D, P> psite;
+    typedef faces_psite<N, D, P> psite;
 
     // FIXME: Fake.
     typedef void fwd_piter;
@@ -90,7 +89,7 @@ namespace mln
 
     bool has(const psite& p) const;
 
-    /// Return the complex associated to the p_complex domain.
+    /// Return the complex associated to the p_faces domain.
     const complex<D>& cplx() const;
 
   private:
@@ -101,36 +100,39 @@ namespace mln
   };
 
 
-  /// \brief Comparison between two mln::p_complex's.
+  /// \brief Comparison between two mln::p_faces's.
   ///
-  /// Two mln::p_complex's are considered equal if they share the
+  /// Two mln::p_faces's are considered equal if they share the
   /// same complex.
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator==(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs);
+  operator==(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs);
 
-  /// \brief Inclusion of a mln::p_complex in another one.
+  /// \brief Inclusion of a mln::p_faces in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
-  /// infrastrure for complexs is simple: a mln::p_complex is included
+  /// infrastrure for complexs is simple: a mln::p_faces is included
   /// in another one if their are equal.
   ///
   /// \todo Refine this later, when we are able to express subcomplex
   /// relations.
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator<=(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs);
+  operator<=(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  p_complex<D, P>::p_complex(const complex<D>& cplx)
+  p_faces<N, D, P>::p_faces(const complex<D>& cplx)
     // Create a deep, managed copy of CPLX.
     : cplx_(new complex<D>(cplx))
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
+
     // FIXME: Dummy initialization.
     accu::bbox<P> a;
     for (unsigned i = 0; i < npoints(); ++i)
@@ -138,35 +140,35 @@ namespace mln
     bb_ = a.to_result();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   std::size_t
-  p_complex<D, P>::npoints() const
+  p_faces<N, D, P>::npoints() const
   {
     return nfaces();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   std::size_t
-  p_complex<D, P>::nfaces() const
+  p_faces<N, D, P>::nfaces() const
   {
-    return cplx_->nfaces();
+    return cplx_->template nfaces<N>();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   const box_<P>&
-  p_complex<D, P>::bbox() const
+  p_faces<N, D, P>::bbox() const
   {
     // FIXME: Dummy value.
     return bb_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   bool
-  p_complex<D, P>::has(const psite& p) const
+  p_faces<N, D, P>::has(const psite& p) const
   {
     return
       // Check whether P's complex is compatible with this pset's complex.
@@ -176,25 +178,25 @@ namespace mln
   }
 
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   const complex<D>&
-  p_complex<D, P>::cplx() const
+  p_faces<N, D, P>::cplx() const
   {
     mln_precondition(cplx_);
     return *cplx_.ptr_;
   }
 
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator==(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
+  operator==(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs)
   {
     return lhs.cplx_.ptr_ == rhs.cplx_.ptr_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator<=(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
+  operator<=(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs)
   {
     return lhs == rhs;
   }
@@ -204,4 +206,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_COMPLEX_HH
+#endif // MLN_CORE_P_FACES_HH

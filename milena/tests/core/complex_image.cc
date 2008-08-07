@@ -25,16 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/p_complex.cc
-/// \brief Test of mln::p_complex.
+/// \file tests/core/complex_image.cc
+/// \brief Test of mln::complex_image.
 
 #include <iostream>
 
-#include <mln/core/p_complex.hh>
 #include <mln/core/point2d.hh>
 
+// #include <mln/core/complex_image.hh>
+#include <mln/core/p_faces.hh>
+#include <mln/core/p_complex.hh>
 
-// FIXME: Extend this test and rename it as complex_image.cc.
+
 
 int main()
 {
@@ -62,34 +64,71 @@ int main()
   */
 
 
-  complex<2> c;
+  const unsigned D = 2;
+
+  complex<D> c;
 
   // 0-faces (points).
-  face_handle<0, 2> v0 = c.add_face();
-  face_handle<0, 2> v1 = c.add_face();
-  face_handle<0, 2> v2 = c.add_face();
-  face_handle<0, 2> v3 = c.add_face();
+  face_handle<0, D> v0 = c.add_face();
+  face_handle<0, D> v1 = c.add_face();
+  face_handle<0, D> v2 = c.add_face();
+  face_handle<0, D> v3 = c.add_face();
  
   // 1-faces (segments).
-  face_handle<1, 2> e0 = c.add_face(v0 + v1);
-  face_handle<1, 2> e1 = c.add_face(v0 + v2);
-  face_handle<1, 2> e2 = c.add_face(v1 + v2);
-  face_handle<1, 2> e3 = c.add_face(v0 + v3);
-  face_handle<1, 2> e4 = c.add_face(v2 + v3);
+  face_handle<1, D> e0 = c.add_face(v0 + v1);
+  face_handle<1, D> e1 = c.add_face(v0 + v2);
+  face_handle<1, D> e2 = c.add_face(v1 + v2);
+  face_handle<1, D> e3 = c.add_face(v0 + v3);
+  face_handle<1, D> e4 = c.add_face(v2 + v3);
 
   // 2-faces (triangles).
-  face_handle<2, 2> t0 = c.add_face(e0 + e1 + e2);
-  face_handle<2, 2> t1 = c.add_face(e1 + e3 + e4);
+  face_handle<2, D> t0 = c.add_face(e0 + e1 + e2);
+  face_handle<2, D> t1 = c.add_face(e1 + e3 + e4);
 
   
-  /*----------------------.
-  | Complex-based psets.  |
-  `----------------------*/
+  /*---------------------.
+  | Complex-based pset.  |
+  `---------------------*/
+
+  // A pset.
+  p_complex<D, point2d> pc0(c);
+  // An any-face handle (on E0)
+  any_face_handle<D> af(c, 1, 0);
+  // An associated psite.
+  complex_psite<D, point2d> cs(af);
+
+
+  /*--------------------.
+  | Faces-based psets.  |
+  `--------------------*/
 
   // Pset of 0-faces.
-  p_complex<point2d, 0, 2> pc0(c);
+  p_faces<0, D, point2d> pf0(c);
   // Pset of 1-faces.
-  p_complex<point2d, 1, 2> pc1(c);
+  p_faces<1, D, point2d> pf1(c);
   // Pset of 2-faces.
-  p_complex<point2d, 2, 2> pc2(c);
+  p_faces<2, D, point2d> pf2(c);
+
+  // Some psites on faces.
+  faces_psite<0, D, point2d> fs0(v0);
+  faces_psite<1, D, point2d> fs1(e0);
+  faces_psite<2, D, point2d> fs2(t0);
+
+
+  // FIXME: Enable when complex_image is available.
+#if 0
+  /*----------------------.
+  | Complex-based image.  |
+  `----------------------*/
+
+  // An image type built on a 2-complex with mln::int_u8 values on
+  // each face.
+  typedef ima_t complex_image< p_complex<D, point2d>, int_u8>;
+
+  // FIXME: Create and init IMA.
+  // ...
+  ima_t ima(pc2);
+
+  mln_piter_(ima_t) p(ima.domain());
+#endif
 }

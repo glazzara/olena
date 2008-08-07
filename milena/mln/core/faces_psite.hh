@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_COMPLEX_PSITE_HH
-# define MLN_CORE_COMPLEX_PSITE_HH
+#ifndef MLN_CORE_FACES_PSITE_HH
+# define MLN_CORE_FACES_PSITE_HH
 
-/// \file mln/core/complex_psite.hh
-/// \brief Definition of a complex-based point site.
+/// \file mln/core/faces_psite.hh
+/// \brief Definition of a point site based on the n-faces of a
+/// complex.
 
 # include <mln/core/concept/point_site.hh>
 
@@ -38,16 +39,18 @@
 
 namespace mln
 {
-  /* FIXME: Get rid of P?  */
+  /* FIXME: Currently, P and N are free variables; we might want to
+     relate them, e.g., have P::dim == N.  Or even get rid of P.  */
 
-  /// \brief Point site associated to a mln::p_complex.
+  /// \brief Point site associated to a mln::p_faces.
   ///
+  /// \arg \p N The dimension of the face associated to this psite.
   /// \arg \p D The dimension of the complex this psite belongs to.
   /// \arg \p P The type of point associated to this psite.
-  template <unsigned D, typename P>
-  class complex_psite : public Point_Site< complex_psite<D, P> >
+  template <unsigned N, unsigned D, typename P>
+  class faces_psite : public Point_Site< faces_psite<N, D, P> >
   {
-    typedef complex_psite<D, P> self_;
+    typedef faces_psite<N, D, P> self_;
     typedef Point_Site<self_> super_;
 
   public:
@@ -59,9 +62,9 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
-    complex_psite();
-    complex_psite(const any_face_handle<D>& face);
-    complex_psite(const self_& rhs);
+    faces_psite();
+    faces_psite(const face_handle<N, D>& face);
+    faces_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
 
@@ -77,7 +80,7 @@ namespace mln
     /// \}
 
     /// Return the face handle of this point site.
-    any_face_handle<D> face() const;
+    face_handle<N, D> face() const;
     /// Return the complex on which this site is built.
     const complex<D>& cplx() const;
 
@@ -86,13 +89,13 @@ namespace mln
 
   private:
     /// The handle of the face this psite is pointing towards.
-    any_face_handle<D> face_;
+    face_handle<N, D> face_;
     // FIXME: Actually, this is a dummy value!
     point p_;
   };
 
 
-  /// Comparison of two instances of mln::complex_psite.
+  /// Comparison of two instances of mln::faces_psite.
   /// \{
   /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
@@ -101,10 +104,10 @@ namespace mln
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
   /// mln::complex.
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator==(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs);
+  operator==(const faces_psite<N, D, P>& lhs,
+	     const faces_psite<N, D, P>& rhs);
 
   /// \brief Is \a lhs ``less'' than \a rhs?
   ///
@@ -112,45 +115,51 @@ namespace mln
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
   /// mln::complex.
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator< (const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs);
+  operator< (const faces_psite<N, D, P>& lhs,
+	     const faces_psite<N, D, P>& rhs);
   /// \}
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  complex_psite<D, P>::complex_psite()
+  faces_psite<N, D, P>::faces_psite()
     : super_(),
       // Dummy initializations.
       face_(), p_()
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  complex_psite<D, P>::complex_psite(const any_face_handle<D>& face)
+  faces_psite<N, D, P>::faces_psite(const face_handle<N, D>& face)
     : super_(),
       face_(face), p_()
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  complex_psite<D, P>::complex_psite(const complex_psite<D, P>& rhs)
+  faces_psite<N, D, P>::faces_psite(const faces_psite<N, D, P>& rhs)
     : super_(rhs),
       face_(rhs.face_), p_()
   {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  complex_psite<D, P>&
-  complex_psite<D, P>::operator= (const complex_psite<D, P>& rhs)
+  faces_psite<N, D, P>&
+  faces_psite<N, D, P>::operator= (const faces_psite<N, D, P>& rhs)
   {
     if (&rhs == this)
       return *this;
@@ -158,52 +167,52 @@ namespace mln
     return *this;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   bool
-  complex_psite<D, P>::is_valid() const
+  faces_psite<N, D, P>::is_valid() const
   {
     return face_.is_valid();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  const complex_psite<D, P>&
-  complex_psite<D, P>::to_psite() const
+  const faces_psite<N, D, P>&
+  faces_psite<N, D, P>::to_psite() const
   {
     return *this;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   const P&
-  complex_psite<D, P>::to_point() const
+  faces_psite<N, D, P>::to_point() const
   {
     // FIXME: Dummy value.
     return p_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   mln_coord(P)
-  complex_psite<D, P>::operator[](unsigned i) const
+  faces_psite<N, D, P>::operator[](unsigned i) const
   {
     mln_precondition(is_valid());
     return to_point()[i];
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
-  any_face_handle<D>
-  complex_psite<D, P>::face() const
+  face_handle<N, D>
+  faces_psite<N, D, P>::face() const
   {
     return face_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   inline
   const complex<D>&
-  complex_psite<D, P>::cplx() const
+  faces_psite<N, D, P>::cplx() const
   {
     return face_.cplx();
   }
@@ -212,19 +221,19 @@ namespace mln
   | Comparisons.  |
   `--------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator==(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs)
+  operator==(const faces_psite<N, D, P>& lhs,
+	     const faces_psite<N, D, P>& rhs)
   {
     mln_precondition(&lhs.cplx() == &rhs.cplx());
     return lhs.face() == rhs.face();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned N, unsigned D, typename P>
   bool
-  operator< (const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs)
+  operator< (const faces_psite<N, D, P>& lhs,
+	     const faces_psite<N, D, P>& rhs)
   {
     mln_precondition(&lhs.cplx() == &rhs.cplx());
     return lhs.face() < rhs.face();
@@ -235,4 +244,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_COMPLEX_PSITE_HH
+#endif // MLN_CORE_FACES_PSITE_HH

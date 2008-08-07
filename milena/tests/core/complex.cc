@@ -75,4 +75,17 @@ int main()
   face_handle<2, 2> t1 = c.add_face(e1 + e3 + e4);
 
   std::cout << c << std::endl;
+
+  std::cout << "``Static'' manipulators." << std::endl;
+  std::cout << "  number of 0-faces: " << c.nfaces<0>() << std::endl;
+  std::cout << "  number of 1-faces: " << c.nfaces<1>() << std::endl;
+  std::cout << "  number of 2-faces: " << c.nfaces<2>() << std::endl;
+  std::cout << "  total number of faces: " << c.nfaces() << std::endl;
+
+  std::cout << std::endl;
+
+  std::cout << "``Dynamic'' manipulators." << std::endl;
+  std::cout << "  number of 0-faces: " << c.nfaces(0) << std::endl;
+  std::cout << "  number of 1-faces: " << c.nfaces(1) << std::endl;
+  std::cout << "  number of 2-faces: " << c.nfaces(2) << std::endl;
 }

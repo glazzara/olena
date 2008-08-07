@@ -1,5 +1,30 @@
 2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add actual complex-based psite and pset and give new names to
+	faces-related entities.
+
+	* mln/core/complex_psite.hh: Rename as...
+	* mln/core/faces_psite.hh: ...this.
+	(mln::complex_psite<P, N, D>): Turn into...
+	(mln::faces_psite<N, D, P>): ...this.
+	* mln/core/p_complex.hh: Rename as...
+	* mln/core/p_faces.hh: ...this.
+	(mln::p_complex<P, N, D>): Turn into...
+	(mln::p_faces<N, D, P>): ...this.
+	* mln/core/complex_psite.hh, mln/core/p_complex.hh: New.
+	* tests/core/complex.cc: Exercise the variants of
+	mln::complex<D>::nfaces().
+	* tests/core/p_complex.cc: Rename as...
+	* tests/core/complex_image.cc: ...this.
+	Exercise mln::p_complex, mln::complex_psite, and mln::faces_psite.
+	* tests/core/Makefile.am (check_PROGRAMS):
+	s/p_complex/complex_image/.
+	(p_complex_SOURCES): Likewise.
+	Rename as...
+	(complex_image_SOURCES): ...this.
+
+2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a dimension-agnostic face handle.
 
 	* mln/core/face.hh (mln::any_face_handle<D>): New class.
