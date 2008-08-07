@@ -1,5 +1,22 @@
 2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more services to complexes.
+
+	* mln/core/complex.hh
+	(mln::complex<D>::nfaces())
+	(mln::complex<D>::nfaces(unsigned)):
+	New methods.
+	(mln::complex<D>::fold_left_)
+	(mln::complex<D>::apply_if_dim_matches_)
+	(mln::internal::faces_set_mixin<N, D>::fold_left_):
+	(mln::internal::faces_set_mixin<N, D>::apply_if_dim_matches_):
+	New methods.
+	(mln::internal::add_size)
+	(mln::internal::get_size):
+	New meta-functors.
+
+2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
+
 	Follow g++ 4.3 advice w.r.t. ignored type qualifiers on function
 	return types.
 
