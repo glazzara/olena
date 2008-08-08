@@ -37,17 +37,17 @@
 #include "mln/core/window2d.hh"
 %}
 
+// FIXME: Move mln::window to its own file.
+
 %include "mln/core/concept/window.hh"
 
-// FIXME: Wrap mln::image2d by hand, for Milena macros disturb swig.
+// FIXME: Wrap mln::window by hand, for Milena macros disturb swig.
 // Annotate the original source code instead?
 namespace mln
 {
   template <typename D>
-  class window
-  /* FIXME: Simplify, so as to minimize the work.  */
-    : public Window< window<D> >
-    , public internal::dpoints_base_<D, window<D> >
+  class window : public Window< window<D> >,
+		 public internal::dpoints_base_<D, window<D> >
   {
     typedef internal::dpoints_base_<D, window<D> > super_;
   public:
@@ -103,6 +103,7 @@ namespace mln
 //     box_<mln_point(D)> b_;
     box_<typename D::point> b_;
   };
+
 } // end of namespace mln
 
 %include "mln/core/window2d.hh"

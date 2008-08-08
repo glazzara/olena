@@ -57,8 +57,40 @@
 #include "mln/core/window2d.hh"
 %}
 
+%import "neighb2d.i"
+// FIXME: The import directive does not include the `%{ ... %}' clauses.
+%{
+#include "mln/core/neighb2d.hh"
+%}
+
 %include "morpho.ixx"
+/* FIXME: Can't we use `mln::value::int8' directlt here (as we can
+   use `mln::window2d', which is a really just typedef for
+   `mln::window< mln::dpoint_<mln::grid::square, int> >')?  */
 %template(dilation) mln::morpho::dilation< mln::image2d< mln::value::int_u<8> >,
 					   mln::window2d >;
 %template(erosion) mln::morpho::erosion< mln::image2d< mln::value::int_u<8> >,
 					 mln::window2d >;
+
+// Explicit instantiation of this trait for the return type of
+// mln::morpho::meyer_wst.
+%template() mln::trait::ch_value< mln::image2d< mln::value::int_u<8> >,
+				  mln::value::int_u<32> >;
+%template(meyer_wst) mln::morpho::meyer_wst<
+  mln::value::int_u<32>,
+  mln::image2d< mln::value::int_u<8> >,
+  mln::neighb2d
+  >;
+
+
+/*-------------------.
+| image2d<int_u32>.  |
+`-------------------*/
+
+// FIXME: Rearrange and move this elsewhere.
+
+%template(image2d_int_u32) mln::image2d< mln::value::int_u<32> >;
+
+%template(println32) mln::debug::println<
+  mln::image2d< mln::value::int_u<32> >
+  >;

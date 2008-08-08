@@ -26,59 +26,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file fill.i
-/// \brief Wrappers of morphological algorithms from mln::morpho.
+/// \file ch_value.i
+/// \brief A wrapper of mln::trait::ch_value.
 
-%module morpho
+%module ch_value
 
-/*---------------------------.
-| Dilation and erxrebosion.  |
-`---------------------------*/
+/* FIXME: Use this very limited workaround instead of
+   mln/trait/ch_value.hh or even a subset of it for the moment. */
 
 %{
-#include "mln/morpho/dilation.hh"
-#include "mln/morpho/erosion.hh"
+#include "mln/trait/ch_value.hh"
 %}
 
-// FIXME: Wrap mln::morpho::erosion by hand, for mln_concrete(I)
-// disturbs swig.  Annotate the original source code instead?
+# define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
+# define mln_ch_value_(I, V)          mln::trait::ch_value< I, V >::ret
+
 namespace mln
 {
-  namespace morpho
+  namespace trait
   {
 
-    /* FIXME: How can we handle concrete in Swilena?  Simplify this
-       for the moment, and use I directly as return type.
+    template <typename I, typename L>
+    struct ch_value
+    {
+      // Nothing by default.
+    };
 
-       2008-08-08: Actualy, it's very simple: just ask swig to wrap
-       the macro `mln_concrete'.  See how we did it with
-       `mln_ch_value'.
+    /* Swig is not powerful enough to parse difficult templates.  For
+       instance, it won't match this specialization.
 
-       We should apply this to as many wrappers as we can: we have
-       inlined many `mln_*' macros so far, and it is a pain to
-       maintain.  */
+         template <typename T, typename U>
+         struct ch_value< mln::image2d< T >, U >
+         {
+           typedef mln::image2d< U > ret;
+         };
 
-    template <typename I, typename W>
-    I
-    dilation(const Image<I>& input, const Window<W>& win);
+       (which is even simpler than what mln/trait/ch_value.hh contains!)
 
-    template <typename I, typename W>
-    I
-    erosion(const Image<I>& input, const Window<W>& win);
+       So we just give it simple ``inlined'' equivalent traits that
+       are compatible with the ones in mln/trait/ch_value.hh.  */
+
+    template <>
+    struct ch_value< mln::image2d< mln::value::int_u<8> >,
+		     mln::value::int_u<32> >
+    {
+      typedef mln::image2d< mln::value::int_u<32> > ret;
+    };
 
   } // end of namespace mln::morpho
 
 } // end of namespace mln
-
-
-/*------------------------------------.
-| Meyer's Watershed Transform (WST).  |
-`------------------------------------*/
-
-%include "ch_value.ixx"
-
-%{
-#include "mln/morpho/meyer_wst.hh"
-%}
-
-%include "mln/morpho/meyer_wst.hh"

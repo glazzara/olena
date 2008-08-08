@@ -30,14 +30,33 @@
 import os
 from swilena import *
 
+# Factor this part in a shared test Python file.
 top_srcdir = os.environ["top_srcdir"]
 img_dir = os.path.join(top_srcdir, "milena", "img")
 lena = os.path.join (img_dir, "lena.pgm")
 
-ima = image2d_int_u8.load(lena)
+# Module alias.
+image = image2d_int_u8
 
-eroded = image2d_int_u8.erosion (ima, win_c4p())
-image2d_int_u8.save(eroded, "eroded.pgm")
+ima = image.load(lena)
 
-dilated = image2d_int_u8.dilation (ima, win_c4p())
-image2d_int_u8.save(dilated, "dilated.pgm")
+eroded = image.erosion (ima, win_c4p())
+image.save(eroded, "eroded.pgm")
+
+dilated = image.dilation (ima, win_c4p())
+image.save(dilated, "dilated.pgm")
+
+# Watershed Transform.
+# FIXME: Run a gradient and an area closing first.
+nbasins = int_u32();
+ws = image.meyer_wst (ima, c4(), nbasins)
+print (type (ws))
+# FIXME: Ugly name; move int_u32 methods outside image2d_int_u8.
+image.println32(ws)
+# FIXME: Actualy print the number of basins; for the moment, thus
+# statement outputs something like
+#
+#   <int_u32.int_u32; proxy of <Swig Object of type 'mln::value::int_u< 32 > *'
+#    at 0x816e160> >
+#
+print nbasins

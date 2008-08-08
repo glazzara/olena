@@ -26,17 +26,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file int_u8.i
-/// \brief A wrapper of mln::value::int_u8.
+/// \file int_u32.i
+/// \brief A wrapper of mln::value::int_u32.
 
-%module int_u8
+%module int_u32
 
 %include "int_u.ixx"
 
 %{
-#include "mln/value/int_u8.hh"
+#include "mln/value/int_u32.hh"
 %}
 
-%include "mln/value/int_u8.hh"
+%include "mln/value/int_u32.hh"
 
-%template (int_u8) mln::value::int_u<8>;
+%template (int_u32) mln::value::int_u<32>;

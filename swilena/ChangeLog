@@ -1,3 +1,25 @@
+2008-08-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap meyer_wst for image2d<int_u8>.
+
+	* int_u.ixx: New.
+	Use it...
+	* int_u8.i: ...here.
+	Actually instantiate and wrap int_u8.
+	* int_u32.i: New.
+	* ch_value.ixx: New.
+	Use it...
+	* morpho.ixx: ...here.
+	Wrap meyer_wst for image2d<int_u8>.
+	* neighb2d.i: New.
+	* image2d_int_u8.i: Add support for meyer_wst.
+	* window2d.i: Aesthetic changes.
+	* Makefile.am (EXTRA_DIST): Add ch_value.ixx, int_u.ixx, int_u32.i
+	and neighb2d.i.
+	* python/lena.py: Exercise meyer_wst.
+	* python/Makefile.am: Handle modules int_u32 and neighb2d.
+	* python/swilena.py: Import neighb2d, int_u8 and int_u32.
+
 2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
 
 	Speed up Swilena.

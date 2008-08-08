@@ -31,6 +31,11 @@ import ltihooks
 
 from point2d import *
 from dpoint2d import *
+from neighb2d import *
 from window2d import *
+
+from int_u8 import *
+from int_u32 import *
+
 import image2d_int
 import image2d_int_u8

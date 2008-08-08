@@ -62,6 +62,16 @@ CLEANFILES += $(nodist__int_u8_la_SOURCES) int_u8.py int_u8.py[co]
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_int_u8-wrap.Pcc@am__quote@
 nodist_python_PYTHON += int_u8.py
 
+## int_u32.
+pyexec_LTLIBRARIES += _int_u32.la
+nodist__int_u32_la_SOURCES = int_u32-wrap.cc
+_int_u32_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__int_u32_la_SOURCES) int_u32.py int_u32.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_int_u32-wrap.Pcc@am__quote@
+nodist_python_PYTHON += int_u32.py
+
 ## dpoint2d.
 pyexec_LTLIBRARIES += _dpoint2d.la
 nodist__dpoint2d_la_SOURCES = dpoint2d-wrap.cc
@@ -71,6 +81,16 @@ CLEANFILES += $(nodist__dpoint2d_la_SOURCES) dpoint2d.py dpoint2d.py[co]
 ## case for C++.
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_dpoint2d-wrap.Pcc@am__quote@
 nodist_python_PYTHON += dpoint2d.py
+
+## neighb2d.
+pyexec_LTLIBRARIES += _neighb2d.la
+nodist__neighb2d_la_SOURCES = neighb2d-wrap.cc
+_neighb2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__neighb2d_la_SOURCES) neighb2d.py neighb2d.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_neighb2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += neighb2d.py
 
 ## window2d.
 pyexec_LTLIBRARIES += _window2d.la
