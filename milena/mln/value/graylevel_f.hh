@@ -221,16 +221,16 @@ namespace mln
 
       /// Ctors with literals.
       /// \{
-      graylevel_f(const literal::black_t&);
-      graylevel_f(const literal::medium_gray_t&);
-      graylevel_f(const literal::white_t&);
+      graylevel_f(const mln::literal::black_t&);
+      graylevel_f(const mln::literal::medium_gray_t&);
+      graylevel_f(const mln::literal::white_t&);
       /// \}
 
       /// Assigment with literals.
       /// \{
-      graylevel_f& operator=(const literal::black_t&);
-      graylevel_f& operator=(const literal::medium_gray_t&);
-      graylevel_f& operator=(const literal::white_t&);
+      graylevel_f& operator=(const mln::literal::black_t&);
+      graylevel_f& operator=(const mln::literal::medium_gray_t&);
+      graylevel_f& operator=(const mln::literal::white_t&);
       /// \}
 
       /// Convertion to graylevel<n>.
@@ -397,42 +397,42 @@ namespace mln
     }
 
     inline
-    graylevel_f::graylevel_f(const literal::black_t&)
+    graylevel_f::graylevel_f(const mln::literal::black_t&)
     {
       this->v_ = 0.0f;
     }
 
     inline
     graylevel_f&
-    graylevel_f::operator=(const literal::black_t&)
+    graylevel_f::operator=(const mln::literal::black_t&)
     {
       this->v_ = 0.0f;
       return *this;
     }
 
     inline
-    graylevel_f::graylevel_f(const literal::medium_gray_t&)
+    graylevel_f::graylevel_f(const mln::literal::medium_gray_t&)
     {
       this->v_ = 0.5f;
     }
 
     inline
     graylevel_f&
-    graylevel_f::operator=(const literal::medium_gray_t&)
+    graylevel_f::operator=(const mln::literal::medium_gray_t&)
     {
       this->v_ = 0.5f;
       return *this;
     }
 
     inline
-    graylevel_f::graylevel_f(const literal::white_t&)
+    graylevel_f::graylevel_f(const mln::literal::white_t&)
     {
       this->v_ = 1.0f;
     }
 
     inline
     graylevel_f&
-    graylevel_f::operator=(const literal::white_t&)
+    graylevel_f::operator=(const mln::literal::white_t&)
     {
       this->v_ = 1.0f;
       return *this;

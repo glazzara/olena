@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /// Alias for unsigned 16 bit integers.
+    /// Alias for unsigned 16-bit integers.
     typedef int_u<16> int_u16;
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_INT_S16_HH
-# define MLN_VALUE_INT_S16_HH
+#ifndef MLN_VALUE_INT_S32_HH
+# define MLN_VALUE_INT_S32_HH
 
-/*! \file mln/value/int_s16.hh
+/*! \file mln/value/int_s32.hh
  *
- * \brief Define the alias value::int_s16.
+ * \brief Define the alias value::int_s32.
  */
 
 # include <mln/value/int_s.hh>
@@ -43,8 +43,8 @@ namespace mln
   {
 
 
-    /// Alias for signed 16-bit integers.
-    typedef int_s<16> int_s16;
+    /// Alias for signed 32-bit integers.
+    typedef int_s<32> int_s32;
 
 
   } // end of namespace mln::value
@@ -52,4 +52,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_INT_S16_HH
+#endif // ! MLN_VALUE_INT_S32_HH

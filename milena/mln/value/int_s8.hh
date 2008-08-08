@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /// Alias for signed 8 bit integers.
+    /// Alias for signed 8-bit integers.
     typedef int_s<8> int_s8;
 
 

@@ -1,3 +1,16 @@
+2008-08-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Misc clean up in mln::value::.
+
+	* mln/value/graylevel.hh, mln/value/graylevel_f.hh,
+	* mln/value/int_s.hh, mln/value/int_u.hh,
+	* mln/value/rgb.hh:
+	Use fully qualified type names to help swig wrap typedefs (later).
+	* mln/value/int_s8.hh, mln/value/int_s16.hh,
+	* mln/value/int_u8.hh, mln/value/int_u16.hh:
+	Typos in comments.
+	* mln/value/int_s32.hh, mln/value/int_u32.hh: New files.
+
 2008-08-07  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add actual complex-based psite and pset and give new names to

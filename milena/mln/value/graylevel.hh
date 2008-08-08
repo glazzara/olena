@@ -285,17 +285,17 @@ namespace mln
 
       /// Ctors with literals.
       /// \{
-      graylevel(const literal::black_t&);
-      graylevel(const literal::medium_gray_t&);
-      graylevel(const literal::white_t&);
+      graylevel(const mln::literal::black_t&);
+      graylevel(const mln::literal::medium_gray_t&);
+      graylevel(const mln::literal::white_t&);
       /// \}
 
 
       /// Assigment with literals.
       /// \{
-      graylevel<n>& operator=(const literal::black_t&);
-      graylevel<n>& operator=(const literal::medium_gray_t&);
-      graylevel<n>& operator=(const literal::white_t&);
+      graylevel<n>& operator=(const mln::literal::black_t&);
+      graylevel<n>& operator=(const mln::literal::medium_gray_t&);
+      graylevel<n>& operator=(const mln::literal::white_t&);
       /// \}
 
 
@@ -496,7 +496,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    graylevel<n>::graylevel(const literal::black_t&)
+    graylevel<n>::graylevel(const mln::literal::black_t&)
     {
       this->v_ = 0;
     }
@@ -504,7 +504,7 @@ namespace mln
     template <unsigned n>
     inline
     graylevel<n>&
-    graylevel<n>::operator=(const literal::black_t&)
+    graylevel<n>::operator=(const mln::literal::black_t&)
     {
       this->v_ = 0;
       return *this;
@@ -512,7 +512,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    graylevel<n>::graylevel(const literal::medium_gray_t&)
+    graylevel<n>::graylevel(const mln::literal::medium_gray_t&)
     {
       this->v_ = metal::math::pow_int<2, n - 1>::value;
     }
@@ -520,7 +520,7 @@ namespace mln
     template <unsigned n>
     inline
     graylevel<n>&
-    graylevel<n>::operator=(const literal::medium_gray_t&)
+    graylevel<n>::operator=(const mln::literal::medium_gray_t&)
     {
       this->v_ = metal::math::pow_int<2, n - 1>::value;
       return *this;
@@ -529,7 +529,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    graylevel<n>::graylevel(const literal::white_t&)
+    graylevel<n>::graylevel(const mln::literal::white_t&)
     {
       this->v_ = mln_max(mln_enc(int_u<n>));
     }
@@ -537,7 +537,7 @@ namespace mln
     template <unsigned n>
     inline
     graylevel<n>&
-    graylevel<n>::operator=(const literal::white_t&)
+    graylevel<n>::operator=(const mln::literal::white_t&)
     {
       this->v_ = mln_max(mln_enc(int_u<n>));
       return *this;

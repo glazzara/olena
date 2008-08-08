@@ -131,10 +131,10 @@ namespace mln
       int_u(int i);
 
       /// \{ Constructors/assignments with literals.
-      int_u(const literal::zero_t&);
-      int_u& operator=(const literal::zero_t&);
-      int_u(const literal::one_t&);
-      int_u& operator=(const literal::one_t&);
+      int_u(const mln::literal::zero_t&);
+      int_u& operator=(const mln::literal::zero_t&);
+      int_u(const mln::literal::one_t&);
+      int_u& operator=(const mln::literal::one_t&);
       /// \}
 
       /// Conversion to an unsigned integer.
@@ -189,7 +189,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    int_u<n>::int_u(const literal::zero_t&)
+    int_u<n>::int_u(const mln::literal::zero_t&)
     {
       this->v_ = 0;
     }
@@ -197,7 +197,7 @@ namespace mln
     template <unsigned n>
     inline
     int_u<n>&
-    int_u<n>::operator=(const literal::zero_t&)
+    int_u<n>::operator=(const mln::literal::zero_t&)
     {
       this->v_ = 0;
       return *this;
@@ -205,7 +205,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    int_u<n>::int_u(const literal::one_t&)
+    int_u<n>::int_u(const mln::literal::one_t&)
     {
       this->v_ = 1;
     }
@@ -213,7 +213,7 @@ namespace mln
     template <unsigned n>
     inline
     int_u<n>&
-    int_u<n>::operator=(const literal::one_t&)
+    int_u<n>::operator=(const mln::literal::one_t&)
     {
       this->v_ = 1;
       return *this;

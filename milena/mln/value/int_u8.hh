@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /// Alias for unsigned 8 bit integers.
+    /// Alias for unsigned 8-bit integers.
     typedef mln::value::int_u<8> int_u8;
 
 
