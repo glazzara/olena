@@ -1,3 +1,15 @@
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Remove overloads of mln::morpho::dilation taking their output as
+	argument.
+
+	* mln/morpho/dilation.hh (mln::morpho::dilation<I, O>)
+	(mln::morpho::dilation<I, W, O>): Remove.
+	(mln::morpho::dilation<I>): Adjust.
+	Disable.
+	(mln::morpho::dilation<I, W>): Adjust.
+	* tests/morpho/dilation.cc: Adjust test.
+
 2008-08-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Misc clean up in mln::value::.

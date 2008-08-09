@@ -43,21 +43,10 @@ namespace mln
     /// Morphological dilation using the neighborhood bound to an image.
     ///
     /// \{
-
-    /* FIXME: We'll probably get rid of the neighborhood-based
-       versions for Olena 1.0, and try to re-introduce them for
-       Olena 1.1.  */
-
-    /* FIXME: Unless there's a good reason, we should get rid of this
-       version.  */
-//     /// Perform a morphological dilation of \a input using its
-//     /// neighborhood and store the result into \a output.
-//     ///
-//     /// \pre \a input must be an image with a neighborhood.
-//     template <typename I, typename O>
-//     void
-//     dilation(const Image<I>& input, Image<O>& output);
-
+    /* FIXME: Re-enable this routine for Olena 1.1, when associated
+       neighborhoods (i.e., the neighb::image morpher) are supported
+       and shipped.  */
+#if 0
     /// Perform a morphological dilation of \a input using its
     /// neighborhood and return the result.
     ///
@@ -66,6 +55,7 @@ namespace mln
     mln_concrete(I)
     dilation(const Image<I>& input);
     /// \}
+#endif
 
     /// Morphological dilation using windows.
     ///
@@ -73,14 +63,6 @@ namespace mln
     /// images.
     ///
     /// \{
-    /* FIXME: Unless there's a good reason, we should get rid of this
-       version.  */
-//     /// Perform a morphological dilation of \a input using \a win and
-//     /// store the result into \a output.
-//     template <typename I, typename W, typename O>
-//     void
-//     dilation(const Image<I>& input, const Window<W>& win, Image<O>& output);
-
     /// Perform a morphological dilation of \a input using \a win and
     /// return the result.
     template <typename I, typename W>
@@ -248,6 +230,8 @@ namespace mln
       | Neighborhood-based.  |
       `---------------------*/
 
+    // FIXME: Disabled (see above).
+#if 0
       /* FIXME: We might want to move this function into the body of
 	 the facade (see at the bottom of the file.  */
       // Sole case.  Convert the neighborhood into a window, and
@@ -267,6 +251,7 @@ namespace mln
 	   dpoint-set-based neighborhood.  */
 	dilation_wrt_win(input, convert::to_window(nbh), output);
       }
+#endif
 
     } // end of namespace mln::morpho::impl
 
@@ -275,62 +260,33 @@ namespace mln
     | Facades.  |
     `----------*/
 
-    // ------------------------------------------------ //
-    // Facades for neighborhood-based implementations.  //
-    // ------------------------------------------------ //
+    // ----------------------------------------------- //
+    // Facade for neighborhood-based implementations.  //
+    // ----------------------------------------------- //
 
-    template <typename I, typename O>
-    void
-    dilation(const Image<I>& input, Image<O>& output)
-    {
-      trace::entering("morpho::dilation");
-
-      metal::has_neighborhood<I>::check();
-
-      mln_precondition(exact(output).domain() == exact(input).domain());
-
-      typedef mln_neighb(I) neighb;
-
-      impl::dilation_wrt_nbh(input, exact(input).neighborhood(), output);
-
-      trace::exiting("morpho::dilation");
-    }
-
+    // FIXME: Disabled (see above).
+#if 0
     template <typename I>
     mln_concrete(I)
     dilation(const Image<I>& input)
     {
       trace::entering("morpho::dilation");
 
+      metal::has_neighborhood<I>::check();
+      typedef mln_neighb(I) neighb;
+
       mln_concrete(I) output;
       initialize(output, input);
-      dilation(input, output);
+      impl::dilation_wrt_nbh(input, exact(input).neighborhood(), output);
 
       trace::exiting("morpho::dilation");
       return output;
     }
+#endif
 
-
-    // ------------------------------------------ //
-    // Facades for window-based implementations.  //
-    // ------------------------------------------ //
-
-    template <typename I, typename W, typename O>
-    void
-    dilation(const Image<I>& input, const Window<W>& win, Image<O>& output)
-    {
-      trace::entering("morpho::dilation");
-
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      mln_precondition(! exact(win).is_empty());
-
-      impl::dilation_wrt_win(input, exact(win), output);
-
-      if (exact(win).is_centered())
-	mln_postcondition(output >= input);
-
-      trace::exiting("morpho::dilation");
-    }
+    // ----------------------------------------- //
+    // Facade for window-based implementations.  //
+    // ----------------------------------------- //
 
     template <typename I, typename W>
     mln_concrete(I)
@@ -342,8 +298,10 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      dilation(input, win, output);
+      impl::dilation_wrt_win(input, exact(win), output);
 
+      if (exact(win).is_centered())
+	mln_postcondition(output >= input);
       trace::exiting("morpho::dilation");
       return output;
     }
