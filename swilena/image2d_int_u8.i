@@ -64,6 +64,10 @@
 %}
 
 %include "morpho.ixx"
+
+// Explicit instantiation of this trait for the return type of
+// mln::morpho::dilation and mln::morpho::erosion.
+%template() mln::trait::concrete< mln::image2d< mln::value::int_u<8> > >;
 /* FIXME: Can't we use `mln::value::int8' directlt here (as we can
    use `mln::window2d', which is a really just typedef for
    `mln::window< mln::dpoint_<mln::grid::square, int> >')?  */

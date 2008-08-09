@@ -26,49 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file fill.i
+/// \file morpho.i
 /// \brief Wrappers of morphological algorithms from mln::morpho.
 
 %module morpho
 
-/*---------------------------.
-| Dilation and erxrebosion.  |
-`---------------------------*/
+/*-----------------------.
+| Dilation and erosion.  |
+`-----------------------*/
+
+%include "concrete.ixx"
 
 %{
 #include "mln/morpho/dilation.hh"
 #include "mln/morpho/erosion.hh"
 %}
 
-// FIXME: Wrap mln::morpho::erosion by hand, for mln_concrete(I)
-// disturbs swig.  Annotate the original source code instead?
-namespace mln
-{
-  namespace morpho
-  {
-
-    /* FIXME: How can we handle concrete in Swilena?  Simplify this
-       for the moment, and use I directly as return type.
-
-       2008-08-08: Actualy, it's very simple: just ask swig to wrap
-       the macro `mln_concrete'.  See how we did it with
-       `mln_ch_value'.
-
-       We should apply this to as many wrappers as we can: we have
-       inlined many `mln_*' macros so far, and it is a pain to
-       maintain.  */
-
-    template <typename I, typename W>
-    I
-    dilation(const Image<I>& input, const Window<W>& win);
-
-    template <typename I, typename W>
-    I
-    erosion(const Image<I>& input, const Window<W>& win);
-
-  } // end of namespace mln::morpho
-
-} // end of namespace mln
+%include "mln/morpho/dilation.hh"
+%include "mln/morpho/erosion.hh"
 
 
 /*------------------------------------.

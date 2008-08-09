@@ -26,51 +26,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file ch_value.i
-/// \brief A wrapper of mln::trait::ch_value.
+/// \file concrete.i
+/// \brief A wrapper of mln::trait::concrete.
 ///
 /// This is a very limited workaround for the difficult wrapping of
-/// mln::trait::ch_value (or even of a subset of it).
+/// mln::trait::concrete.
 
-%module ch_value
+%module concrete
 
 %{
-#include "mln/trait/ch_value.hh"
+#include "mln/trait/concrete.hh"
 %}
 
-# define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
-# define mln_ch_value_(I, V)          mln::trait::ch_value< I, V >::ret
+# define mln_concrete(I)  typename mln::trait::concrete< I >::ret
 
 namespace mln
 {
   namespace trait
   {
-
-    template <typename I, typename L>
-    struct ch_value
-    {
-      // Nothing by default.
-    };
-
     /* Swig is not powerful enough to parse difficult templates.  For
        instance, it won't match this specialization.
 
-         template <typename T, typename U>
-         struct ch_value< mln::image2d< T >, U >
-         {
-           typedef mln::image2d< U > ret;
-         };
+       mln::trait::concrete depends on mln::trait::ch_value.ixx that
+       swig cannot wrap yet (see ch_value.ixx).  So we just give it
+       simple ``inlined'' equivalent traits that are compatible with
+       the ones in mln/trait/ch_value.hh.  */
 
-       (which is even simpler than what mln/trait/ch_value.hh contains!)
-
-       So we just give it simple ``inlined'' equivalent traits that
-       are compatible with the ones in mln/trait/ch_value.hh.  */
-
-    template <>
-    struct ch_value< mln::image2d< mln::value::int_u<8> >,
-		     mln::value::int_u<32> >
+    // By default, assume the concrete type is the paramater itself.
+    template <typename I>
+    struct concrete
     {
-      typedef mln::image2d< mln::value::int_u<32> > ret;
+      typedef I ret;
     };
 
   } // end of namespace mln::morpho

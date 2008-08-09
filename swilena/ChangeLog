@@ -1,3 +1,23 @@
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add support for mln_concrete in Swilena.
+
+	* concrete.ixx: New.
+	Use it...
+	* morpho.ixx: ...here.
+	Wrap mln::morpho::dilation.hh and mln::morpho::erosion directly,
+	instead of using a simplified declaration (previously used to
+	circumvent the lack of support of mln_concrete).
+	Fix documentation.
+	* image2d_int.i, image2d_int_u8.i: Instantiate
+	mln::trait::concrete to have swig understand the return types of
+	mln::morpho::dilation.hh and mln::morpho::erosion.
+	* ch_value.ixx: Adjust documentation.
+	* Makefile.am (meta_wrappers, wrappers): New variables.
+	Use them...
+	(EXTRA_DIST): ...here.
+	(meta_wrappers): Add concrete.ixx.
+
 2008-08-08  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap meyer_wst for image2d<int_u8>.
