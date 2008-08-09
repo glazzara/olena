@@ -112,7 +112,7 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  struct image2d : public internal::image_primary_< box2d, image2d<T> >
+  struct image2d : public internal::image_primary_< mln::box2d, image2d<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;

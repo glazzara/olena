@@ -1,5 +1,10 @@
 2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/box2d.hh, mln/core/image2d.hh: Use fully qualified type
+	names to help swig wrap these types.
+
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove overloads of mln::morpho::dilation taking their output as
 	argument.
 
