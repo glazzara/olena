@@ -1,5 +1,20 @@
 2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify the wrapping of mln::image2d and make it (more) generic.
+
+	* box2d.i: New.
+	* image2d.ixx: Import dpoint2d.i and box2d.i.
+	Wrap mln::image2d directly, instead of using a simplified,
+	inlined declaration.
+	(instantiate_image2d): New macro.
+	Use it...
+	* image2d_int.i, image2d_int_u8.i: ...here.
+	* Makefile.am (wrappers): Add box2d.i.
+	* python/swilena.py: Import box2d.
+	* python/Makefile.am: Build module box2d.
+
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add support for mln_concrete in Swilena.
 
 	* concrete.ixx: New.

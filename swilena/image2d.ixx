@@ -32,125 +32,50 @@
 %module image2d
 
 %import "point2d.i"
+%import "dpoint2d.i"
+%import "box2d.i"
 
 %{
 #include "mln/core/image2d.hh"
 %}
 
-%include "mln/core/box2d.hh"
-%include "mln/core/dpoint2d.hh"
+// Shortcuts macros.
+%include "mln/core/macros.hh"
 
+// Associated types.
+// %include "mln/core/box2d.hh"
+// %include "mln/core/dpoint2d.hh"
+
+// Meta-expressions used in traits.
+// %include "mln/metal/bexpr.hh"
+%include "mln/metal/equal.hh"
+%include "mln/metal/if.hh"
+%include "mln/metal/is_const.hh"
+
+// Traits.
+%include "mln/trait/value_.hh"
+// %include "mln/trait/image/props.hh"
+%include "mln/trait/images.hh"
+
+// Concept.
 %include "mln/core/concept/image.hh"
 
-// FIXME: Wrap mln::image2d by hand, for Milena macros disturb swig.
-// Annotate the original source code instead?
-namespace mln
-{
-  template <typename T>
-  struct image2d
-  /* FIXME: Cheat, so that generic algorithms can use mln::image2d. */
-  // : public internal::image_primary_< box2d, image2d<T> >
-    :  public Image< image2d<T> >
-  {
-    // Warning: just to make effective types appear in Doxygen:
-    typedef box2d   pset;
-    typedef point2d psite;
-    typedef point2d point;
-    typedef dpoint2d dpoint;
-// FIXME: Those typedefs disturb swig.
-//     typedef mln_fwd_piter(box2d) fwd_piter;
-//     typedef mln_bkd_piter(box2d) bkd_piter;
-    typedef line_piter_<point> line_piter;
-    // End of warning.
+// Base classes.
+%include "mln/core/internal/check/image_fastest.hh"
+%include "mln/core/internal/check/image_all.hh"
+%include "mln/core/internal/image_base.hh"
+%include "mln/core/internal/image_primary.hh"
 
+// mln::image2d definition.
+%include "mln/core/image2d.hh"
 
-    /// Value associated type.
-    typedef T         value;
-
-    /// Return type of read-only access.
-    typedef const T& rvalue;
-
-    /// Return type of read-write access.
-    typedef T&       lvalue;
-
-
-    /// Skeleton.
-    typedef image2d< tag::value_<T> > skeleton;
-
-
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-
-    /// Constructor without argument.
-    image2d();
-
-    /// Constructor with the numbers of rows and columns and the
-    /// border thickness.
-    image2d(int nrows, int ncols, unsigned bdr = border::thickness);
-
-    /// Constructor with a box and the border thickness (default is
-    /// 3).
-    image2d(const box2d& b, unsigned bdr = border::thickness);
-
-
-    /// Initialize an empty image.
-    void init_(const box2d& b, unsigned bdr = border::thickness);
-
-
-    /// Test if \p p is valid.
-    bool owns_(const point2d& p) const;
-
-    /// Give the set of values of the image.
-    const vset& values() const;
-
-    /// Give the definition domain.
-    const box2d& domain() const;
-
-    /// Give the border thickness.
-    unsigned border() const;
-
-    /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
-
-    /// Read-only access to the image value located at point \p p.
-    const T& operator()(const point2d& p) const;
-
-    /// Read-write access to the image value located at point \p p.
-    T& operator()(const point2d& p);
-
-// FIXME: swig won't wrap this operator.
-//     /// Read-only access to the image value located at offset \p o.
-//     const T& operator[](unsigned o) const;
-
-// FIXME: swig won't wrap this operator.
-//     /// Read-write access to the image value located at offset \p o.
-//     T& operator[](unsigned o);
-
-    /// Read-only access to the image value located at (\p row, \p col).
-    const T& at(int row, int col) const;
-
-    /// Read-write access to the image value located at (\p row, \p col).
-    T& at(int row, int col);
-
-
-    /// Fast Image method
-
-    /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint2d& dp) const;
-
-    /// Give the point corresponding to the offset \p o.
-    point2d point_at_offset(unsigned o) const;
-
-    /// Give a hook to the value buffer.
-    const T* buffer() const;
-
-    /// Give a hook to the value buffer.
-    T* buffer();
-
-
-    /// Resize image border with new_border.
-    void resize_(unsigned new_border);
-  };
-
-} // end of namespace mln
+// FIXME: Doc.
+%define instantiate_image2d(I, T)
+// Instantiate base classes of mln::image2d<T> so that swig knows it
+// derives from mln::Image.
+%template() mln::internal::image_primary_< mln::box2d, mln::image2d< T > >;
+%template() mln::internal::image_base_< mln::box2d, mln::image2d< T > >;
+%template() mln::internal::image_checked_< mln::image2d< T > >;
+// Instantiate mln::image2d<T>
+%template(I) mln::image2d< T >;
+%enddef

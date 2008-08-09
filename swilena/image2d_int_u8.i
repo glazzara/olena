@@ -33,13 +33,8 @@
 %module image2d_int_u8
 
 %import "int_u8.i"
-// FIXME: The import directive does not include the `%{ ... %}' clauses.
-// %{
-// #include "mln/value/int_u8.hh"
-// %}
-// 
 %include "image2d.ixx"
-%template(image2d_int_u8) mln::image2d< mln::value::int_u<8> >;
+instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
 
 %include "pgm.ixx"
 %template(load) mln::io::pgm::load< mln::value::int_u<8> >;
@@ -92,8 +87,7 @@
 `-------------------*/
 
 // FIXME: Rearrange and move this elsewhere.
-
-%template(image2d_int_u32) mln::image2d< mln::value::int_u<32> >;
+instantiate_image2d(image2d_int_u32, mln::value::int_u<32>)
 
 %template(println32) mln::debug::println<
   mln::image2d< mln::value::int_u<32> >

@@ -31,6 +31,7 @@ import ltihooks
 
 from point2d import *
 from dpoint2d import *
+from box2d import *
 from neighb2d import *
 from window2d import *
 

@@ -26,31 +26,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file image2d.i
-/// \brief A simple wrapping of mln::image2d<int> along with some
-/// algorithms.
+/// \file box2d.i
+/// \brief A wrapper of mln::box2d.
 
-%module image2d_int
+%module box2d
 
-%include "intp.ixx"
-%include "image2d.ixx"
-instantiate_image2d(image2d_int, int)
-
-%include "fill.ixx"
-%template(fill) mln::level::fill< mln::image2d<int> >;
-
-%include "println.ixx"
-%template(println) mln::debug::println< mln::image2d<int> >;
-
-%import "window2d.i"
-// FIXME: The import directive does not include the `%{ ... %}' clauses.
 %{
-#include "mln/core/window2d.hh"
+#include "mln/core/box.hh"
+#include "mln/core/box2d.hh"
 %}
 
-%include "morpho.ixx"
-// Explicit instantiation of this trait for the return type of
-// mln::morpho::dilation and mln::morpho::erosion.
-%template() mln::trait::concrete< mln::image2d< int > >;
-%template(dilation) mln::morpho::dilation< mln::image2d<int>, mln::window2d >;
-%template(erosion) mln::morpho::erosion< mln::image2d<int>, mln::window2d >;
+%include "mln/core/macros.hh";
+
+// %include "mln/core/grids.hh";
+
+// %include "mln/core/point.hh";
+// %include "mln/core/point2d.hh";
+
+%include "mln/core/box.hh";
+%include "mln/core/box2d.hh";
+
+// Swig tries to wrap everything by default; prevent it from wrapping
+// invalid methods (1D and 3D ctors for a box2d).
+/* FIXME: Can't we simplify these directives, i.e. use `point2d' and
+   `int' directly?  */
+%ignore mln::box_< mln::point_<mln::grid::square, int> >::box_(
+  typename mln::point_<mln::grid::square, int>::coord
+);
+%ignore mln::box_< mln::point_<mln::grid::square, int> >::box_(
+  typename mln::point_<mln::grid::square, int>::coord,
+  typename mln::point_<mln::grid::square, int>::coord,
+  typename mln::point_<mln::grid::square, int>::coord
+);
+
+%template(box2d) mln::box_< mln::point_<mln::grid::square, int> >;
