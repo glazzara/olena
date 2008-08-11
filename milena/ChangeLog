@@ -1,5 +1,28 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a complex-base image type.
+
+	* mln/core/complex_image.hh: New.
+	* mln/trait/ch_value.hh
+	(mln::trait::impl::ch_value_<M<D, tag::psite_<P>, tag::value_<T> >, V>):
+	New specialization for mln::complex_image<D, P, T>.
+	* mln/core/p_complex.hh (mln::p_complex<D, P>::cplx):
+	New mutable accessor.
+	* mln/core/complex_psite.hh
+	(mln::complex_psite<D, P>::n)
+	(mln::complex_psite<D, P>::face_id):
+	New accessors.
+	* mln/core/face.hh
+	(any_face_handle<D>::any_face_handle(const face_handle<N, D>&)):
+	New ctor.
+	(any_face_handle<D>::any_face_handle(const any_face_handle<D>&)):
+	Don't forget to initialize n_.
+	(any_face_handle<D>::any_face_handle(complex<D>&, unsigned, unsigned)):
+	Ensure N is compatible with D.
+	* tests/core/complex_image.cc: Exercise mln::complex_image.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes w.r.t. domain names in graph-based images.
 
 	* mln/core/graph_image.hh: s/g/pg/.

@@ -76,10 +76,18 @@ namespace mln
     coord operator[](unsigned face) const;
     /// \}
 
+    /// Accessors
+    /// \{
     /// Return the face handle of this point site.
     any_face_handle<D> face() const;
     /// Return the complex on which this site is built.
     const complex<D>& cplx() const;
+
+    /// Return the dimension of the face of this psite.
+    unsigned n() const;
+    /// Return the id of the face of this psite.
+    unsigned face_id() const;
+    /// \}
 
     /// Is this psite valid?
     bool is_valid() const;
@@ -206,6 +214,22 @@ namespace mln
   complex_psite<D, P>::cplx() const
   {
     return face_.cplx();
+  }
+
+  template <unsigned D, typename P>
+  inline
+  unsigned
+  complex_psite<D, P>::n() const
+  {
+    return face_.n();
+  }
+
+  template <unsigned D, typename P>
+  inline
+  unsigned
+  complex_psite<D, P>::face_id() const
+  {
+    return face_.face_id();
   }
 
   /*--------------.

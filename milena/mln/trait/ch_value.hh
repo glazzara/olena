@@ -110,6 +110,14 @@ namespace mln
 	typedef mln_ch_value(I, V) ret;
       };
 
+      // For mln::complex_image<D, P, T>.
+      template < template <unsigned, class, class> class M,
+		 unsigned D, typename P, typename T, typename V >
+      struct ch_value_<  M< D, tag::psite_<P>, tag::value_<T> >,  V  >
+      {
+	typedef M< D, P, V > ret;
+      };
+
       // For mln::neighb::image<I, N>.
       template < template <class, class> class M, typename I, typename N,
 		 typename V >

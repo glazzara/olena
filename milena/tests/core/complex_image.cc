@@ -30,12 +30,11 @@
 
 #include <iostream>
 
+#include <mln/value/int_u8.hh>
 #include <mln/core/point2d.hh>
 
-// #include <mln/core/complex_image.hh>
 #include <mln/core/p_faces.hh>
-#include <mln/core/p_complex.hh>
-
+#include <mln/core/complex_image.hh>
 
 
 int main()
@@ -91,9 +90,61 @@ int main()
   `---------------------*/
 
   // A pset.
-  p_complex<D, point2d> pc0(c);
-  // An any-face handle (on E0)
-  any_face_handle<D> af(c, 1, 0);
+  p_complex<D, point2d> pc(c);
+  /* An any-face handle (on E0).
+
+     Note that AF is built on `e0_', not `e0' (e0_ is built on
+     `pc.cplx()', not `c'), since the p_complex `pc' makes a copy of
+     the complex `c', and crossed-ownership tests doesn't work.  I.e.,
+
+       pc.has(e0);
+
+     is false.
+
+
+     FIXME: This might be a problem, since `pc.cplx()' and `c'
+     represent the same complex, in two different memory location (but
+     the former is controlled by PC, while the latter can be modified,
+     or even destroyed).  This is a common problem for ``big'' values
+     that we don't want to manipulate by value (copy), or when we
+     don't want to use expensive, deep comparisons of pset to ensure
+     consistency.  Here (and in graph-based images), we choose to
+     create a copy of the pset once, and manipulate it with a
+     tracked_ptr, to ensure both
+
+     1. perfect control of the lifetime of the pset (here, you can
+        delete `c', and `pc' will still be valid);
+
+     2. no pset duplication when creating new images based on it.
+
+
+     I (Roland) don't see elegant solutions here.  A possiblity would
+     be to disconnect a face_handle from its complex (currently, a
+     face_handle is a bit like a Trivial Iterator from the C++
+     Standard Library), but this means relaxed dynamic checks, and
+     more obscure errors.
+
+     At least, we could have better error messages, i.e., something
+     like
+
+       mln/core/complex_image.hh 267:
+       mln::complex_image<D, P, V>::operator(): Uncompatible p_complex.
+
+     instead of
+
+       mln/core/complex_image.hh:267:
+       typename mln::complex_image<D, P, V>::lvalue
+       mln::complex_image<D, P, V>::operator()(const mln::complex_psite<D, P>&)
+         [with unsigned int D = 2u,
+                            P = mln::point_<mln::grid::square, int>,
+                            V = mln::value::int_u<8u>]:
+       Assertion `this->data_->pc_.has(p)' failed.
+
+     (which looks even uglier in the original, non-indented version).
+
+     Ask Akim for his improved versions of abort() and assert().  */
+  face_handle<1, D> e0_(pc.cplx(), 0);
+  any_face_handle<D> af(e0_);
   // An associated psite.
   complex_psite<D, point2d> cs(af);
 
@@ -115,20 +166,36 @@ int main()
   faces_psite<2, D, point2d> fs2(t0);
 
 
-  // FIXME: Enable when complex_image is available.
-#if 0
   /*----------------------.
   | Complex-based image.  |
   `----------------------*/
 
+  using mln::value::int_u8;
+
   // An image type built on a 2-complex with mln::int_u8 values on
   // each face.
-  typedef ima_t complex_image< p_complex<D, point2d>, int_u8>;
+  typedef complex_image<D, point2d, int_u8> ima_t;
 
-  // FIXME: Create and init IMA.
-  // ...
-  ima_t ima(pc2);
+  // Values.
+  metal::vec<D + 1, std::vector< int_u8 > > values;
+  // Assign 0 to 0-faces, 1 to 1-faces and 2 to 2-faces.
+  for (unsigned d = 0; d < D; ++d)
+    for (unsigned n = 0; n < pc.cplx().nfaces(d); ++n)
+      values[d].push_back(d);
 
+  // Create and init an image based on PC.
+  ima_t ima(pc, values);
+
+  // Check the value associated to edge E0_ (through complex psite CS).
+  mln_assertion(ima(cs) == 1u);
+
+
+  /*--------------------------------.
+  | Complex-based image iterators.  |
+  `--------------------------------*/
+
+  // FIXME: Enable when iterators are available.
+#if 0
   mln_piter_(ima_t) p(ima.domain());
 #endif
 }

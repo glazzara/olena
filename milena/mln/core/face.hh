@@ -257,6 +257,10 @@ namespace mln
     /// Build a face handle from \a complex and \a face_id.
     any_face_handle(complex<D>& complex, unsigned n, unsigned face_id);
 
+    /// Build a face handle from a face_handle.
+    template <unsigned N>
+    any_face_handle(const face_handle<N, D>& f);
+
     /// Copy and assignment.
     /// \{
     any_face_handle(const any_face_handle<D>& rhs);
@@ -499,11 +503,22 @@ namespace mln
     : cplx_(&c), n_(n), face_id_(face_id)
   {
     // Ensure N is compatible with D.
+    mln_precondition(n <= D);
+  }
+
+  template <unsigned D>
+  template <unsigned N>
+  any_face_handle<D>::any_face_handle(const face_handle<N, D>& f)
+    : cplx_(&f.cplx()), n_(N), face_id_(f.face_id())
+  {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
+    
   }
 
   template <unsigned D>
   any_face_handle<D>::any_face_handle(const any_face_handle<D>& rhs)
-    : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
+    : cplx_(rhs.cplx_), n_(rhs.n_), face_id_(rhs.face_id_)
   {
   }
 

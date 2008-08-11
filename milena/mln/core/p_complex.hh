@@ -85,13 +85,22 @@ namespace mln
     /// Return The number of faces in the complex.
     std::size_t nfaces() const;
 
-    /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    // FIXME: Add nfaces(unsigned) routines?
 
     bool has(const psite& p) const;
 
-    /// Return the complex associated to the p_complex domain.
+    /// Accessors.
+    /// \{
+    /// Return the complex associated to the p_complex domain (const
+    /// version)
     const complex<D>& cplx() const;
+    /// Return the complex associated to the p_complex domain (mutable
+    /// version).
+    complex<D>& cplx();
+
+    /// Give the exact bounding box.
+    const box_<P>& bbox() const;
+    /// \}
 
   private:
     /// The complex on which this pset is built.
@@ -156,15 +165,6 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  const box_<P>&
-  p_complex<D, P>::bbox() const
-  {
-    // FIXME: Dummy value.
-    return bb_;
-  }
-
-  template <unsigned D, typename P>
-  inline
   bool
   p_complex<D, P>::has(const psite& p) const
   {
@@ -175,13 +175,29 @@ namespace mln
       p.face().is_valid();
   }
 
-
   template <unsigned D, typename P>
   const complex<D>&
   p_complex<D, P>::cplx() const
   {
     mln_precondition(cplx_);
     return *cplx_.ptr_;
+  }
+
+  template <unsigned D, typename P>
+  complex<D>&
+  p_complex<D, P>::cplx()
+  {
+    mln_precondition(cplx_);
+    return *cplx_.ptr_;
+  }
+
+  template <unsigned D, typename P>
+  inline
+  const box_<P>&
+  p_complex<D, P>::bbox() const
+  {
+    // FIXME: Dummy value.
+    return bb_;
   }
 
 
