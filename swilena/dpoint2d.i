@@ -38,24 +38,9 @@
 
 %include "mln/core/dpoint.hh";
 %include "mln/core/dpoint2d.hh";
-/* FIXME: Ignore `mln::dpoint_<M,C>::origin' to circumvent a swig bug.
-   Without this ignore clause, the generated code would trigger this
-   error :
 
-     image2d-wrap.cc:3115:144: error: macro "SWIG_as_voidptr" passed 2
-     arguments, but takes just 1
-     image2d-wrap.cc: In function 'PyObject* dpoint2d_origin_get()':
-     image2d-wrap.cc:3115: error: 'SWIG_as_voidptr' was not declared in this
-     scope
-
-   Check whether this bug has been fixed in a recent release of SWIG
-   or if it has been reported.  */
-// %ignore mln::dpoint_<mln::grid::square,int>::origin;
-// Ignoring to_h_vec saves us the wrapping of h_vec.
-// %ignore mln::dpoint_<mln::grid::square,int>::to_h_vec;
 // Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a dpoint2d).
-// %ignore mln::dpoint_<mln::grid::square,int>::dpoint_(const literal::zero_t&);
+// invalid methods (1D and 3D ctors for a point2d).
 %ignore mln::dpoint_<mln::grid::square,int>::dpoint_(const literal::one_t&);
 %ignore mln::dpoint_<mln::grid::square,int>::operator=(const literal::one_t&);
 %ignore mln::dpoint_<mln::grid::square,int>::dpoint_(int);

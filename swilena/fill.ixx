@@ -35,15 +35,18 @@
 #include "mln/level/fill.hh"
 %}
 
-// FIXME: Wrap mln::level::fill by hand, for mln_value(I) disturbs
-// swig.  Annotate the original source code instead?
+%include "mln/core/macros.hh"
+
+/* FIXME: Wrap mln::level::fill by hand to help swig choose the right
+   overload of the algorithm.  We might just try to use %ignore
+   statements instead.  */
 namespace mln
 {
   namespace level
   {
 
     template <typename I>
-    void fill(mln::Image<I>& ima, const typename I::value& v);
+    void fill(mln::Image<I>& ima, const mln_value(I)& v);
 
   } // end of namespace mln::level
 

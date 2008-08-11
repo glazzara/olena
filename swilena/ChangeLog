@@ -1,3 +1,20 @@
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Swilena a bit.
+
+	* box2d.i, dpoint2d.i: Remove dead code.
+	* image2d.ixx: Likewise.
+	(instantiate_image2d): Indent.
+	* intp.ixx: Add missing `module' statement.
+	* fill.ixx: Use macro mln_value() in fill()'s signature, as in the
+	original one.
+	* ch_value.ixx
+	(ch_value< image2d< int_u<8> >, int_u<32> >): Turn into...
+	(ch_value< image2d< int_u<8> >, V >): ...this.
+	Adjust documentation.
+	* image2d_int.i: Add a FIXME.
+	* point2d.i: Aesthetic change.
+
 2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
 
 	Simplify the wrapping of mln::image2d and make it (more) generic.

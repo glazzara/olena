@@ -32,6 +32,11 @@
 
 %module image2d_int
 
+/* FIXME: Shouldn't it be
+
+     %include "intp.i"
+
+   instead?  After all, module `intp' generates wrappers too.  */
 %include "intp.ixx"
 %include "image2d.ixx"
 instantiate_image2d(image2d_int, int)

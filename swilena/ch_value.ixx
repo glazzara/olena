@@ -52,8 +52,8 @@ namespace mln
       // Nothing by default.
     };
 
-    /* Swig is not powerful enough to parse difficult templates.  For
-       instance, it won't match this specialization.
+    /* Swig is not powerful enough to parse difficult templates (yet).
+       For instance, it won't match this specialization:
 
          template <typename T, typename U>
          struct ch_value< mln::image2d< T >, U >
@@ -61,16 +61,15 @@ namespace mln
            typedef mln::image2d< U > ret;
          };
 
-       (which is even simpler than what mln/trait/ch_value.hh contains!)
+       which is even simpler than what mln/trait/ch_value.hh contains.
 
-       So we just give it simple ``inlined'' equivalent traits that
+       Hence we just give it simple ``inlined'' equivalent traits that
        are compatible with the ones in mln/trait/ch_value.hh.  */
 
-    template <>
-    struct ch_value< mln::image2d< mln::value::int_u<8> >,
-		     mln::value::int_u<32> >
+    template <typename V>
+    struct ch_value< mln::image2d< mln::value::int_u<8> >, V >
     {
-      typedef mln::image2d< mln::value::int_u<32> > ret;
+      typedef mln::image2d< V > ret;
     };
 
   } // end of namespace mln::morpho

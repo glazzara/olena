@@ -42,19 +42,13 @@
 // Shortcuts macros.
 %include "mln/core/macros.hh"
 
-// Associated types.
-// %include "mln/core/box2d.hh"
-// %include "mln/core/dpoint2d.hh"
-
 // Meta-expressions used in traits.
-// %include "mln/metal/bexpr.hh"
 %include "mln/metal/equal.hh"
 %include "mln/metal/if.hh"
 %include "mln/metal/is_const.hh"
 
 // Traits.
 %include "mln/trait/value_.hh"
-// %include "mln/trait/image/props.hh"
 %include "mln/trait/images.hh"
 
 // Concept.
@@ -71,11 +65,11 @@
 
 // FIXME: Doc.
 %define instantiate_image2d(I, T)
-// Instantiate base classes of mln::image2d<T> so that swig knows it
-// derives from mln::Image.
-%template() mln::internal::image_primary_< mln::box2d, mln::image2d< T > >;
-%template() mln::internal::image_base_< mln::box2d, mln::image2d< T > >;
-%template() mln::internal::image_checked_< mln::image2d< T > >;
-// Instantiate mln::image2d<T>
-%template(I) mln::image2d< T >;
+  // Instantiate base classes of mln::image2d<T> so that swig knows it
+  // derives from mln::Image.
+  %template() mln::internal::image_primary_< mln::box2d, mln::image2d< T > >;
+  %template() mln::internal::image_base_< mln::box2d, mln::image2d< T > >;
+  %template() mln::internal::image_checked_< mln::image2d< T > >;
+  // Instantiate mln::image2d<T>
+  %template(I) mln::image2d< T >;
 %enddef

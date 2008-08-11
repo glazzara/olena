@@ -38,6 +38,7 @@
 
 %include "mln/core/point.hh";
 %include "mln/core/point2d.hh";
+
 /* FIXME: Ignore `mln::point_<M,C>::origin' to circumvent a swig bug.
    Without this ignore clause, the generated code would trigger this
    error :

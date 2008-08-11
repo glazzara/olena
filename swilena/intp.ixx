@@ -26,8 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file intp.i
+/// \file intp.ixx
 /// \brief A wrapper of int pointers.
+
+%module intp
 
 %include "cpointer.i"
 // Wrap a class interface around an "int *" (see

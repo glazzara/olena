@@ -38,11 +38,6 @@
 
 %include "mln/core/macros.hh";
 
-// %include "mln/core/grids.hh";
-
-// %include "mln/core/point.hh";
-// %include "mln/core/point2d.hh";
-
 %include "mln/core/box.hh";
 %include "mln/core/box2d.hh";
 
