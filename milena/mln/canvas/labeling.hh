@@ -174,10 +174,12 @@ namespace mln
 	  make_set(p);
 	  for_all(n)
 	    if (f.input.has(n) && deja_vu(n))
-	      if (f.equiv(n, p))
-		do_union(n, p);
-	      else
-		f.do_no_union(n, p);
+	      {
+		if (f.equiv(n, p))
+		  do_union(n, p);
+		else
+		  f.do_no_union(n, p);
+	      }
 	  deja_vu(p) = true;
 	}
     }

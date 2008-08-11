@@ -155,17 +155,19 @@ namespace mln
 	  mln_niter(N) n(nbh, p);
 	  for_all(n)
 	    if (output.has(n) && output(n) != unmarked)
-	      if (adjacent_marker == unmarked)
-		{
-		  adjacent_marker = output(n);
-		  single_adjacent_marker_p = true;
-		}
-	      else
-		if (adjacent_marker != output(n))
+	      {
+		if (adjacent_marker == unmarked)
 		  {
-		    single_adjacent_marker_p = false;
-		    break;
+		    adjacent_marker = output(n);
+		    single_adjacent_marker_p = true;
 		  }
+		else
+		  if (adjacent_marker != output(n))
+		    {
+		      single_adjacent_marker_p = false;
+		      break;
+		    }
+	      }
 	  /* If the neighborhood of P contains only psites with the
 	     same label, then P is marked with this label, and its
 	     neighbors that are not yet marked are put into the
