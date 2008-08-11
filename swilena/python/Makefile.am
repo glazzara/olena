@@ -30,6 +30,8 @@ AM_LDFLAGS = -avoid-version -module -shared
 python_PYTHON = ltihooks.py
 # swilena.py: The whole Swilena suite.
 python_PYTHON += swilena.py
+# data.py: Access to the data of the distribution (images, meshes, etc.)
+python_PYTHON += data.py
 
 
 ## ----------------- ##
@@ -170,5 +172,5 @@ $(srcdir)/run.stamp: $(RUN_IN)
 	$(MAKE) $(AM_MAKEFLAGS) $(RUN)
 	@mv -f $@.tmp $@
 
-TESTS = test.py lena.py
+TESTS = image2d-misc.py morpho-fun.py morpho-segm.py
 EXTRA_DIST += $(TESTS)

@@ -27,19 +27,34 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-# \file swilena.py
-# \brief The whole Swilena suite.
+# \file python/morpho-segm.py
+# \brief Test on watershed transform-based segmentation.
 
-import ltihooks
+import data
+from swilena import *
 
-from point2d import *
-from dpoint2d import *
-from box2d import *
-from neighb2d import *
-from window2d import *
+# Module alias.
+image = image2d_int_u8
 
-from int_u8 import *
-from int_u32 import *
+ima = image.load(data.lena)
 
-import image2d_int
-import image2d_int_u8
+# Gradient.
+gradient = image.gradient(ima, win_c4p())
+image.save(gradient, "gradient.pgm")
+# Area closing of the gradient.
+closed_gradient = image.image2d_int_u8(gradient.domain())
+image.closing_area(ima, c4(), 50, closed_gradient)
+# Watershed transform.
+nbasins = int_u8();
+ws = image.meyer_wst (closed_gradient, c4(), nbasins)
+# FIXME: Actualy print the number of basins; for the moment, this
+# statement outputs something like
+#
+#   <int_u32.int_u32; proxy of <Swig Object of type 'mln::value::int_u< 32 > *'
+#    at 0x816e160> >
+#
+print nbasins
+image.save(ws, "segm.pgm")
+
+# FIXME: Also re-enable the naive segmentation with no gradient
+# simplification, and an output on an image2d<int_u32>.

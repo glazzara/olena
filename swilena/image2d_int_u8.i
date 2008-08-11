@@ -68,8 +68,7 @@ instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
    then.  */
 instantiate_morpho(mln::image2d< mln::value::int_u<8> >,
 		   mln::window2d,
-		   mln::neighb2d,
-		   mln::value::int_u<8>)
+		   mln::neighb2d)
 
 /*---------------------------------------.
 | image2d<int_u8> and image2d<int_u32>.  |

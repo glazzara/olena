@@ -54,8 +54,5 @@ instantiate_image2d(image2d_int, int)
 %}
 
 %include "morpho.ixx"
-// Explicit instantiation of this trait for the return type of
-// mln::morpho::dilation and mln::morpho::erosion.
-%template() mln::trait::concrete< mln::image2d< int > >;
-%template(dilation) mln::morpho::dilation< mln::image2d<int>, mln::window2d >;
-%template(erosion) mln::morpho::erosion< mln::image2d<int>, mln::window2d >;
+instantiate_erosion(erosion, mln::image2d<int>, mln::window2d)
+instantiate_dilation(dilation, mln::image2d<int>, mln::window2d)

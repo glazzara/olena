@@ -27,38 +27,11 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-import os
-from swilena import *
+# \file python/data.py
+# \brief Access to the data of the distribution (images, meshes, etc.).
 
-# Factor this part in a shared test Python file.
+import os
+
 top_srcdir = os.environ["top_srcdir"]
 img_dir = os.path.join(top_srcdir, "milena", "img")
 lena = os.path.join (img_dir, "lena.pgm")
-
-# Module alias.
-image = image2d_int_u8
-
-ima = image.load(lena)
-
-eroded = image.erosion(ima, win_c4p())
-image.save(eroded, "eroded.pgm")
-
-dilated = image.dilation(ima, win_c4p())
-image.save(dilated, "dilated.pgm")
-
-# Gradient.
-gradient = image.gradient(ima, win_c4p())
-# Area closing.
-closed_gradient = image.image2d_int_u8(gradient.domain())
-image.closing_area(ima, c4(), 50, closed_gradient)
-# Watershed transform.
-nbasins = int_u8();
-ws = image.meyer_wst (closed_gradient, c4(), nbasins)
-# FIXME: Actualy print the number of basins; for the moment, this
-# statement outputs something like
-#
-#   <int_u32.int_u32; proxy of <Swig Object of type 'mln::value::int_u< 32 > *'
-#    at 0x816e160> >
-#
-print nbasins
-image.save(ws, "ws.pgm")

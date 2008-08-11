@@ -31,11 +31,12 @@
 
 %module morpho
 
+%include "concrete.ixx"
+%include "ch_value.ixx"
+
 /*-----------------------------------.
 | Morphological dilation & erosion.  |
 `-----------------------------------*/
-
-%include "concrete.ixx"
 
 %{
 #include "mln/morpho/dilation.hh"
@@ -52,21 +53,38 @@
 %enddef
 
 %define instantiate_erosion(Name, I, W)
+  // Explicit instantiation of this trait for the return type.
   %template() mln::trait::concrete< I >;
   %template(Name) mln::morpho::erosion< I, W >;
 %enddef
 
 /*----------------------------------.
-| Morphological opening & closing.  |
+| Morphological closing & opening.  |
 `----------------------------------*/
 
-// FIXME: Add them.
+%{
+#include "mln/morpho/closing.hh"
+#include "mln/morpho/opening.hh"
+%}
+
+%include "mln/morpho/closing.hh"
+%include "mln/morpho/opening.hh"
+
+%define instantiate_closing(Name, I, W)
+  // Explicit instantiation of this trait for the return type.
+  %template() mln::trait::concrete< I >;
+  %template(Name) mln::morpho::closing< I, W >;
+%enddef
+
+%define instantiate_opening(Name, I, W)
+  // Explicit instantiation of this trait for the return type.
+  %template() mln::trait::concrete< I >;
+  %template(Name) mln::morpho::opening< I, W >;
+%enddef
 
 /*------------.
 | Gradients.  |
 `------------*/
-
-// FIXME: Add other gradient.
 
 %{
 #include "mln/morpho/gradient.hh"
@@ -80,27 +98,41 @@
   %template(Name) mln::morpho::gradient< I, W >;
 %enddef
 
+%define instantiate_gradient_internal(Name, I, W)
+  // Explicit instantiation of this trait for the return type.
+  %template() mln::trait::concrete< I >;
+  %template(Name) mln::morpho::gradient_internal< I, W >;
+%enddef
+
+%define instantiate_gradient_external(Name, I, W)
+  // Explicit instantiation of this trait for the return type.
+  %template() mln::trait::concrete< I >;
+  %template(Name) mln::morpho::gradient_external< I, W >;
+%enddef
+
 /*-------------------------.
 | Area closing & opening.  |
 `-------------------------*/
 
-// FIXME: Add area opening.
-
 %{
 #include "mln/morpho/closing_area.hh"
+#include "mln/morpho/opening_area.hh"
 %}
 
 %include "mln/morpho/closing_area.hh"
+%include "mln/morpho/opening_area.hh"
 
 %define instantiate_closing_area(Name, I, N)
   %template(Name) mln::morpho::closing_area< I, N, I >;
 %enddef
 
+%define instantiate_opening_area(Name, I, N)
+  %template(Name) mln::morpho::opening_area< I, N, I >;
+%enddef
+
 /*------------------------------------.
 | Meyer's Watershed Transform (WST).  |
 `------------------------------------*/
-
-%include "ch_value.ixx"
 
 %{
 #include "mln/morpho/meyer_wst.hh"
@@ -118,12 +150,19 @@
 | Instantiate everything.  |
 `-------------------------*/
 
-%define instantiate_morpho(I, W, N, L)
+%define instantiate_morpho(I, W, N)
   instantiate_dilation(dilation, I, W)
   instantiate_erosion(erosion, I, W)
+
+  instantiate_closing(closing, I, W)
+  instantiate_opening(opening, I, W)
+
   instantiate_gradient(gradient, I, W)
+  instantiate_gradient_internal(gradient_internal, I, W)
+  instantiate_gradient_external(gradient_external, I, W)
+
   instantiate_closing_area(closing_area, I, N)
-  // FIXME: Could we used `typename I::value' instead of `L' here, and
-  // remove L from the list of arguments?
-  instantiate_meyer_wst(meyer_wst, L, I, N)
+  instantiate_opening_area(opening_area, I, N)
+
+  instantiate_meyer_wst(meyer_wst, mln_value(I), I, N)
 %enddef

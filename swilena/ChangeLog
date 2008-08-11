@@ -1,5 +1,38 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap more morphological filters.
+
+	* morpho.ixx: Wrap mln::morpho::closing, mln::morpho::opening
+	mln::morpho::gradient_internal, mln::morpho::gradient_external,
+	mln::morpho::opening_area.
+	(instantiate_closing, instantiate_opening)
+	(instantiate_gradient_internal, instantiate_gradient_external)
+	(instantiate_opening_area):
+	New macros.
+	Use them...
+	(instantiate_morpho): ...here.
+	Deduce the previous `L' parameter from `mln_value(I)', and remove
+	it from the list of parameters of the macro.
+	* image2d_int_u8.i: Adjust.
+	* image2d_int.i: Use macros instantiate_erosion and
+	instantiate_dilation.
+
+	* python/data.py: New.
+	* python/test.py: Rename as...
+	* python/image2d-misc.py: ...this.
+	* python/lena.py: Rename as...
+	* python/morpho-fun.py: ...this.
+	Exercise more morphological filters.
+	Move WST-based segmentation tests...
+	* python/morpho-segm.py: ...here (new test).
+	* python/swilena.py: Add documentation header.
+	* python/Makefile.am (python_PYTHON): Add data.py.
+	(TESTS): Add morpho-segm.py.
+	s/test.py/image2d-misc.py/
+	s/lena.py/morpho-fun.py/
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Provide instantiation macros for module `morpho'.
 
 	* morpho.ixx (instantiate_dilation, instantiate_erosion)

@@ -27,19 +27,36 @@
 # reasons why the executable file might be covered by the GNU General
 # Public License.
 
-# \file swilena.py
-# \brief The whole Swilena suite.
+# \file python/morpho-fun.py
+# \brief Test on mathematical morphology on functions (scalar images).
 
-import ltihooks
+import data
+from swilena import *
 
-from point2d import *
-from dpoint2d import *
-from box2d import *
-from neighb2d import *
-from window2d import *
+# Module alias.
+image = image2d_int_u8
 
-from int_u8 import *
-from int_u32 import *
+ima = image.load(data.lena)
 
-import image2d_int
-import image2d_int_u8
+dilated = image.dilation(ima, win_c4p())
+image.save(dilated, "dilation.pgm")
+
+eroded = image.erosion(ima, win_c4p())
+image.save(eroded, "erosion.pgm")
+
+image.save(image.opening(ima, win_c4p()), "opening.pgm")
+image.save(image.closing(ima, win_c4p()), "closing.pgm")
+
+image.save(image.gradient(ima, win_c4p()), "gradient.pgm")
+image.save(image.gradient_internal(ima, win_c4p()), "gradient_internal.pgm")
+image.save(image.gradient_external(ima, win_c4p()), "gradient_external.pgm")
+
+# FIXME: The interface of closing_area/opening_area is a pain: the
+# output should be returned, not taken as argument.
+closed_ima = image.image2d_int_u8(ima.domain())
+image.closing_area(ima, c4(), 50, closed_ima)
+image.save(closed_ima, "closing_area.pgm")
+
+opened_ima = image.image2d_int_u8(ima.domain())
+image.closing_area(ima, c4(), 50, opened_ima)
+image.save(opened_ima, "opening_area.pgm")
