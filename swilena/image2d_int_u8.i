@@ -1,4 +1,4 @@
-//						       		-*- C++ -*-
+//								-*- C++ -*-
 // Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -60,46 +60,25 @@ instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
 
 %include "morpho.ixx"
 
-// Explicit instantiation of this trait for the return type of
-// mln::morpho::dilation, mln::morpho::erosion and mln::morpho::gradient.
-%template() mln::trait::concrete< mln::image2d< mln::value::int_u<8> > >;
-
-/* FIXME: Can't we use `mln::value::int8' directlt here (as we can
+/* FIXME: Can't we use `mln::value::int8' directly here (as we can
    use `mln::window2d', which is a really just typedef for
-   `mln::window< mln::dpoint_<mln::grid::square, int> >')?  */
-%template(dilation) mln::morpho::dilation< mln::image2d< mln::value::int_u<8> >,
-					   mln::window2d >;
-%template(erosion) mln::morpho::erosion< mln::image2d< mln::value::int_u<8> >,
-					 mln::window2d >;
+   `mln::window< mln::dpoint_<mln::grid::square, int> >')?
 
-%template(gradient) mln::morpho::gradient< mln::image2d< mln::value::int_u<8> >,
-					   mln::window2d >;
-
-%template(closing_area)
-mln::morpho::closing_area< mln::image2d< mln::value::int_u<8> >,
-			   mln::neighb2d,
-			   mln::image2d< mln::value::int_u<8> > >;
-
-%template() mln::trait::ch_value< mln::image2d< mln::value::int_u<8> >,
-				  mln::value::int_u<8> >;
-%template(meyer_wst) mln::morpho::meyer_wst<
-  mln::value::int_u<8>,
-  mln::image2d< mln::value::int_u<8> >,
-  mln::neighb2d
-  >;
+   2008-08-11: Probably, but we should %include "mln/value/int_u8.hh"
+   then.  */
+instantiate_morpho(mln::image2d< mln::value::int_u<8> >,
+		   mln::window2d,
+		   mln::neighb2d,
+		   mln::value::int_u<8>)
 
 /*---------------------------------------.
 | image2d<int_u8> and image2d<int_u32>.  |
 `---------------------------------------*/
 
-// Explicit instantiation of this trait for the return type of meyer_wst32.
-%template() mln::trait::ch_value< mln::image2d< mln::value::int_u<8> >,
-				  mln::value::int_u<32> >;
-%template(meyer_wst32) mln::morpho::meyer_wst<
-  mln::value::int_u<32>,
-  mln::image2d< mln::value::int_u<8> >,
-  mln::neighb2d
-  >;
+instantiate_meyer_wst(meyer_wst32,
+		      mln::value::int_u<32>,
+		      mln::image2d< mln::value::int_u<8> >,
+		      mln::neighb2d)
 
 // FIXME: Rearrange and move this elsewhere.
 instantiate_image2d(image2d_int_u32, mln::value::int_u<32>)

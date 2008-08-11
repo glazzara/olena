@@ -1,5 +1,18 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Provide instantiation macros for module `morpho'.
+
+	* morpho.ixx (instantiate_dilation, instantiate_erosion)
+	(instantiate_gradient, instantiate_closing_area)
+	(instantiate_meyer_wst):
+	New SWIG macros.
+	(instantiate_morpho): Likewise.
+	Use it...
+	* image2d_int_u8.i: ...here, to simplify the wrapping of morpho
+	routines.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Wrap morphological gradient and area closing.
 
 	* morpho.ixx: Wrap mln::morpho::gradient and
