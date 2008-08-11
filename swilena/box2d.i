@@ -45,13 +45,11 @@
 // invalid methods (1D and 3D ctors for a box2d).
 /* FIXME: Can't we simplify these directives, i.e. use `point2d' and
    `int' directly?  */
-%ignore mln::box_< mln::point_<mln::grid::square, int> >::box_(
-  typename mln::point_<mln::grid::square, int>::coord
-);
-%ignore mln::box_< mln::point_<mln::grid::square, int> >::box_(
-  typename mln::point_<mln::grid::square, int>::coord,
-  typename mln::point_<mln::grid::square, int>::coord,
-  typename mln::point_<mln::grid::square, int>::coord
-);
+%ignore mln::box_< mln::point_<mln::grid::square, int> >::
+box_(typename mln::point_<mln::grid::square, int>::coord);
+%ignore mln::box_< mln::point_<mln::grid::square, int> >::
+box_(typename mln::point_<mln::grid::square, int>::coord,
+     typename mln::point_<mln::grid::square, int>::coord,
+     typename mln::point_<mln::grid::square, int>::coord);
 
 %template(box2d) mln::box_< mln::point_<mln::grid::square, int> >;

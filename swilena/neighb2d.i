@@ -37,89 +37,20 @@
 #include "mln/core/neighb2d.hh"
 %}
 
-// FIXME: Move mln::neighb_ to its own file.
+%include "mln/core/macros.hh"
 
 %include "mln/core/concept/neighborhood.hh"
-
-// FIXME: Wrap mln::neighb by hand, for Milena macros disturb swig.
-// Annotate the original source code instead?
-namespace mln
-{
-
-  // fwd decls
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
- 
-
-  /*! \brief Generic neighborhood class.
-   *
-   * This neighborhood of window is just like a set of delta-points.
-   * The parameter is \c D, type of delta-point.
-   */
-  template <typename D>
-  struct neighb_ : public Neighborhood< neighb_<D> >,
-		   public internal::dpoints_base_<D, neighb_<D> >
-  {
-    /// Dpoint associated type.
-    typedef D dpoint;
-
-// FIXME: The macro mln_point disturbs swig.
-//     /// Point associated type.
-//     typedef mln_point(D) point;
-    typedef typename D::point point;
-
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
-     */
-    typedef dpoints_fwd_piter<D> fwd_niter;
-
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
-     */
-    typedef dpoints_bkd_piter<D> bkd_niter;
-
-    /*! \brief Same as fwd_niter.
-     */
-    typedef fwd_niter niter;
-
-    /*! \brief Constructor without argument.
-     *
-     * The constructed neighborhood is empty. You have to use insert()
-     * to proceed to the neighborhood definition.
-     */
-    neighb_();
-
-    /*! \brief Insert a delta-point \p dp in the neighborhood
-     *  definition.
-     *
-     * \param[in] dp The delta-point to insert.
-     *
-     * This method also insert the symmetrical delta-point, - \p dp,
-     * in the neighborhood definition; thus the client has not to
-     * ensure the symmetry property; that is automatic.
-     */
-    neighb_<D>& insert(const D& dp);
-
-// FIXME: Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a point2d).
-    /// \{ Insertion of a delta-point with different numbers of
-    /// arguments (coordinates) w.r.t. the dimension.
-//     neighb_<D>& insert(const mln_coord(D)& dind); // For 1D.
-
-// FIXME: The macro mln_coord disturbs swig.
-//     neighb_<D>& insert(const mln_coord(D)& drow,
-// 		       const mln_coord(D)& dcol); // For 2D.
-    neighb_<D>& insert(const typename D::coord& drow,
-		       const typename D::coord& dcol); // For 2D.
-
-//     neighb_<D>& insert(const mln_coord(D)& dsli,
-// 		       const mln_coord(D)& drow,
-// 		       const mln_coord(D)& dcol); // For 3D.
-    /// \}
-  };
- 
-} // end of namespace mln
+%include "mln/core/neighb.hh"
 
 %include "mln/core/neighb2d.hh"
+
+// Swig tries to wrap everything by default; prevent it from wrapping
+// invalid methods (1D and 3D insertions for a neighb2d).
+%ignore mln::neighb_< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&);
+%ignore mln::neighb_< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&);
 
 %template(neighb2d) mln::neighb_< mln::dpoint_<mln::grid::square, int > >;

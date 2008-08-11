@@ -1,5 +1,13 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify the wrappings of mln::neighb2d and mln::window2d.
+
+	* neighb2d.i, window2d.i: Wrap the classes directly, instead of
+	using simplified, inlined declarations.
+	* box2d.i: Aesthetic changes.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up Swilena a bit.
 
 	* box2d.i, dpoint2d.i: Remove dead code.

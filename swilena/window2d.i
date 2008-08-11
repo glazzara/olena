@@ -37,75 +37,20 @@
 #include "mln/core/window2d.hh"
 %}
 
-// FIXME: Move mln::window to its own file.
+%include "mln/core/macros.hh"
 
 %include "mln/core/concept/window.hh"
-
-// FIXME: Wrap mln::window by hand, for Milena macros disturb swig.
-// Annotate the original source code instead?
-namespace mln
-{
-  template <typename D>
-  class window : public Window< window<D> >,
-		 public internal::dpoints_base_<D, window<D> >
-  {
-    typedef internal::dpoints_base_<D, window<D> > super_;
-  public:
-
-    /*! \brief Point_Iterator type to browse the points of a generic window
-     * w.r.t. the ordering of delta-points.
-     */
-    typedef dpoints_fwd_piter<D> fwd_qiter;
-
-    /*! \brief Point_Iterator type to browse the points of a generic window
-     * w.r.t. the reverse ordering of delta-points.
-     */
-    typedef dpoints_bkd_piter<D> bkd_qiter;
-
-
-    /*! \brief Constructor without argument.
-     *
-     * The constructed window is empty. 
-     */
-    window();
-
-
-    /*! \brief Test if the window is symmetric.
-     */
-    bool is_symmetric() const;
-
-    /// Insert a delta-point \p dp.
-    window<D>& insert(const D& dp);
-
-// FIXME: Swig tries to wrap everything by default; prevent it from wrapping
-// invalid methods (1D and 3D ctors for a point2d).
-    /// \{ Insertion of a delta-point with different numbers of
-    /// arguments (coordinates) w.r.t. the dimension.
-//     window<D>& insert(const mln_coord(D)& dind); // For 1D.
-
-// FIXME: The macro mln_coord disturbs swig.
-//     window<D>& insert(const mln_coord(D)& drow,
-// 		      const mln_coord(D)& dcol); // For 2D.
-    window<D>& insert(const typename D::coord& drow,
- 		      const typename D::coord& dcol); // For 2D.
-
-//     window<D>& insert(const mln_coord(D)& dsli,
-// 		      const mln_coord(D)& drow,
-// 		      const mln_coord(D)& dcol); // For 3D.
-//     /// \}
-
-    /// Apply a central symmetry to the target window.
-    window<D>& sym();
-
-  protected:
-    
-// FIXME: The macro used here disturbs swig.
-//     box_<mln_point(D)> b_;
-    box_<typename D::point> b_;
-  };
-
-} // end of namespace mln
+%include "mln/core/window.hh"
 
 %include "mln/core/window2d.hh"
+
+// Swig tries to wrap everything by default; prevent it from wrapping
+// invalid methods (1D and 3D insertions for a window2d).
+%ignore mln::window< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&);
+%ignore mln::window< mln::dpoint_<mln::grid::square, int > >::
+insert(const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&,
+       const typename mln::dpoint_<mln::grid::square, int>::coord&);
 
 %template(window2d) mln::window< mln::dpoint_<mln::grid::square, int > >;
