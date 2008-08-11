@@ -1,5 +1,12 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes w.r.t. domain names in graph-based images.
+
+	* mln/core/graph_image.hh: s/g/pg/.
+	* mln/core/line_graph_image.hh: s/g/plg/.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Follow g++ 4.3 advice w.r.t. nested `if' statements.
 
 	* mln/canvas/labeling.hh (mln::canvas::labeling<F>::pass_1())

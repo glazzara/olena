@@ -67,7 +67,7 @@ namespace mln
     template <typename P, typename V>
     struct data_< line_graph_image<P, V> >
     {
-      data_(const p_line_graph<P>& g,
+      data_(const p_line_graph<P>& plg,
 	    const std::vector<V>& vertex_val, const std::vector<V>& edge_val);
 
       std::vector<V> vertex_val_;
@@ -105,7 +105,7 @@ namespace mln
 
   /// \brief Image based on a graph.
   ///
-  /// Values are stored on the vertices of the graph.
+  /// Values are stored on the edges of the graph.
   template <typename P, typename V>
   struct line_graph_image :
     public internal::image_primary_< p_line_graph<P>, line_graph_image<P, V> >
@@ -137,14 +137,14 @@ namespace mln
     /// Constructors.
     /// \{
     line_graph_image();
-    line_graph_image(const p_line_graph<P>& g);
-    line_graph_image(const p_line_graph<P>& g,
+    line_graph_image(const p_line_graph<P>& plg);
+    line_graph_image(const p_line_graph<P>& plg,
 		     const std::vector<V>& vertex_val,
 		     const std::vector<V>& edge_val);
     /// \}
 
     /// Initialize an empty image.
-    void init_(const p_line_graph<P>& g,
+    void init_(const p_line_graph<P>& plg,
 	       const std::vector<V>& vertex_val,
 	       const std::vector<V>& edge_val);
 
@@ -210,15 +210,15 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< line_graph_image<P, V> >::data_(const p_line_graph<P>& g,
+    data_< line_graph_image<P, V> >::data_(const p_line_graph<P>& plg,
 					   const std::vector<V>& vertex_val,
 					   const std::vector<V>& edge_val)
       : vertex_val_(vertex_val),
 	edge_val_(edge_val),
-	plg_(g)
+	plg_(plg)
     {
-      mln_precondition(g.nvertices() == vertex_val.size());
-      mln_precondition(g.nedges() == edge_val.size());
+      mln_precondition(plg.nvertices() == vertex_val.size());
+      mln_precondition(plg.nedges() == edge_val.size());
     }
 
   } // end of namespace mln::internal
@@ -235,30 +235,30 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g)
+  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& plg)
   {
-    init_(g, std::vector<V>(g.nvertices()), std::vector<V>(g.nedges()));
+    init_(plg, std::vector<V>(plg.nvertices()), std::vector<V>(plg.nedges()));
   }
 
   template <typename P, typename V>
   inline
-  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& g,
+  line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& plg,
 					   const std::vector<V>& vertex_val,
 					   const std::vector<V>& edge_val) 
   {
-    init_(g, vertex_val, edge_val);
+    init_(plg, vertex_val, edge_val);
   }
 
   template <typename P, typename V>
   inline
   void
-  line_graph_image<P, V>::init_(const p_line_graph<P>& g,
+  line_graph_image<P, V>::init_(const p_line_graph<P>& plg,
 				const std::vector<V>& vertex_val,
 				const std::vector<V>& edge_val)
   {
     mln_precondition(! this->has_data());
     this->data_ =
-      new internal::data_< line_graph_image<P, V> >(g, vertex_val, edge_val);
+      new internal::data_< line_graph_image<P, V> >(plg, vertex_val, edge_val);
   }
 
   /*---------------.

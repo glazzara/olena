@@ -53,7 +53,7 @@ namespace mln
     template <typename P, typename V>
     struct data_< graph_image<P, V> >
     {
-      data_(const p_graph<P>& g, const std::vector<V>& val);
+      data_(const p_graph<P>& pg, const std::vector<V>& val);
 
       std::vector<V> val_;
       const p_graph<P> pg_;
@@ -119,12 +119,12 @@ namespace mln
     /// Constructors.
     /// \{
     graph_image();
-    graph_image(const p_graph<P>& g);
-    graph_image(const p_graph<P>& g, const std::vector<V>& val);
+    graph_image(const p_graph<P>& pg);
+    graph_image(const p_graph<P>& pg, const std::vector<V>& val);
     /// \}
 
     /// Initialize an empty image.
-    void init_(const p_graph<P>& g, const std::vector<V>& val);
+    void init_(const p_graph<P>& pg, const std::vector<V>& val);
 
     /// Read-only access of pixel value at point site \p p.
     rvalue operator()(const graph_psite<P>& p) const;
@@ -183,12 +183,12 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< graph_image<P, V> >::data_(const p_graph<P>& g,
+    data_< graph_image<P, V> >::data_(const p_graph<P>& pg,
 				      const std::vector<V>& val)
       : val_ (val),
-	pg_ (g)
+	pg_ (pg)
     {
-      mln_precondition(g.nvertices() == val.size());
+      mln_precondition(pg.nvertices() == val.size());
     }
 
   } // end of namespace mln::internal
@@ -205,25 +205,26 @@ namespace mln
 
   template <typename P, typename V>
   inline
-  graph_image<P, V>::graph_image(const p_graph<P>& g)
+  graph_image<P, V>::graph_image(const p_graph<P>& pg)
   {
-    init_(g, std::vector<V>(g.nvertices()));
+    init_(pg, std::vector<V>(pg.nvertices()));
   }
 
   template <typename P, typename V>
   inline
-  graph_image<P, V>::graph_image(const p_graph<P>& g, const std::vector<V>& val)
+  graph_image<P, V>::graph_image(const p_graph<P>& pg,
+				 const std::vector<V>& val)
   {
-    init_(g, val);
+    init_(pg, val);
   }
 
   template <typename P, typename V>
   inline
   void
-  graph_image<P, V>::init_(const p_graph<P>& g, const std::vector<V>& val)
+  graph_image<P, V>::init_(const p_graph<P>& pg, const std::vector<V>& val)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< graph_image<P, V> > (g, val);
+    this->data_ = new internal::data_< graph_image<P, V> > (pg, val);
   }
 
   /*---------------.
