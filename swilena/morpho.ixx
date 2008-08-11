@@ -31,9 +31,9 @@
 
 %module morpho
 
-/*-----------------------.
-| Dilation and erosion.  |
-`-----------------------*/
+/*---------------------.
+| Dilation & erosion.  |
+`---------------------*/
 
 %include "concrete.ixx"
 
@@ -45,6 +45,31 @@
 %include "mln/morpho/dilation.hh"
 %include "mln/morpho/erosion.hh"
 
+// FIXME: Add morphological opening & closing.
+
+/*------------.
+| Gradients.  |
+`------------*/
+
+// FIXME: Add other gradient.
+
+%{
+#include "mln/morpho/gradient.hh"
+%}
+
+%include "mln/morpho/gradient.hh"
+
+/*-------------------------.
+| Area closing & opening.  |
+`-------------------------*/
+
+// FIXME: Add area opening.
+
+%{
+#include "mln/morpho/closing_area.hh"
+%}
+
+%include "mln/morpho/closing_area.hh"
 
 /*------------------------------------.
 | Meyer's Watershed Transform (WST).  |

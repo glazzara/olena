@@ -1,5 +1,17 @@
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Wrap morphological gradient and area closing.
+
+	* morpho.ixx: Wrap mln::morpho::gradient and
+	mln::morpho::closing_area.
+	* image2d_int_u8.i (meyer_wst): Rename as...
+	(meyer_wst32): ...this.
+	(gradient, closing_area, meyer_wst): New wrappings.
+	* python/lena.py: Exercise gradient and area closing (along with
+	Meyer's watershed transform).
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify the wrappings of mln::neighb2d and mln::window2d.
 
 	* neighb2d.i, window2d.i: Wrap the classes directly, instead of
