@@ -194,18 +194,34 @@ int main()
   | Complex-based image iterators.  |
   `--------------------------------*/
 
-  mln_piter_(ima_t) p(ima.domain());
-  for_all(p)
-    std::cout << "ima(" << p << ") = " << ima(p) << std::endl;
+  mln_fwd_piter_(ima_t) fp(ima.domain());
+  for_all(fp)
+    std::cout << "ima(" << fp << ") = " << ima(fp) << std::endl;
+
+  std::cout << std::endl;
+
+  mln_bkd_piter_(ima_t) bp(ima.domain());
+  for_all(bp)
+    std::cout << "ima(" << bp << ") = " << ima(bp) << std::endl;
 
 
-  /* FIXME: Implement windows (and neighborhoods) for complex-images.
+  /* FIXME: Implement other psite iterators, for instance:
+
+     - iterators on N-faces with N fixed in [0, D] (using p_faces
+       and faces_psite?)
+     - iterators on N-faces with N in a subset of [0, D];
+     - etc.  */
+
+  /* FIXME: Implement windows (and neighborhoods) and corresponding
+     iterators for complex-based images.
 
      For a given (fixed) dimension N and a psite P on a N-face,
      implement windows returning
 
-     - the set of (N-1)-faces adjacent to P;
-     - the set of (N+1)-faces adjacent to P;
+     - the set of (N-1)-faces adjacent to P (using p_faces and
+       faces_psite?);
+     - the set of (N+1)-faces adjacent to P (using p_faces and
+       faces_psite?);
 
      - the set of N-faces sharing a (N-1)-face with P;
      - the set of N-faces sharing a (N-1)-face or (N-2)-face (by

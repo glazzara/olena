@@ -73,9 +73,10 @@ namespace mln
     /// Point_Site associated type.
     typedef complex_psite<D, P> psite;
 
-    // FIXME: Fake.
+    /// Forward Point_Iterator associated type.
     typedef p_complex_fwd_piter_<D, P> fwd_piter;
-    typedef void bkd_piter;
+    /// Backward Point_Iterator associated type.
+    typedef p_complex_bkd_piter_<D, P> bkd_piter;
 
     /// \brief Return The number of points (sites) of the set, i.e., the
     /// number of \em faces.

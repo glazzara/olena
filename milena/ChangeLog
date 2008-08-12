@@ -1,5 +1,19 @@
 2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a backward iterator on complex-based images.
+
+	* mln/core/p_complex_piter.hh (mln::p_complex_bkd_piter_<D, P>):
+	(operator<<(std::ostream&, const p_complex_bkd_piter_<D, P>&)):
+	New.
+	(mln::p_complex_fwd_piter_<D, P>::next_): Reimplement to make it
+	symmetric to mln::p_complex_bkd_piter_<D, P>::next_.
+	* mln/core/p_complex.hh (mln::p_complex<D, P>::bkd_piter): Set
+	typedef to p_complex_bkd_piter_<D, P>.
+	* mln/core/p_complex_piter.hh: Test the backward iterator on
+	complex_image.
+
+2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a forward iterator on complex-based images.
 
 	* mln/core/p_complex_piter.hh: New.
