@@ -5,6 +5,7 @@
 	* mln/core/complex_psite.hh
 	(operator<<(std::ostream&, const complex_psite<D, P>&)):
 	New operator.
+	Exercice it...
 	* tests/core/complex_image.cc: ...here.
 
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
@@ -269,7 +270,7 @@
 	More on the documnention of the test on complexes.
 
 	* tests/core/complex.cc: Add the adjacent graph of the complex in
-	comment.	
+	comment.
 
 2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -460,7 +461,7 @@
 
 	* mln/algebra/quat.hh: Include missing header for mln/math/abs.hh.
 	* mln/draw/graph.hh
-	(graph(Image<I>&, const p_graph<P>&, mln_value(I), mln_value(I))): 
+	(graph(Image<I>&, const p_graph<P>&, mln_value(I), mln_value(I))):
 	s/n1/v1/.
 	s/n2/v2/.
 	* tests/draw/graph.cc (test): s/add_node/add_vertex/.
