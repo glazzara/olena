@@ -49,43 +49,64 @@ int main()
           o-----------o                v1----e2----v2
        v1      e2      v2
 
-       v = vertex
-       e = edge
-       t = triangle
+       v = vertex   (0-face)
+       e = edge     (1-face)
+       t = triangle (2-face)
   */
 
 
-  complex<2> c;
+  const unsigned D = 2;
+
+  /*-----------------------.
+  | Complex construction.  |
+  `-----------------------*/
+
+  complex<D> c;
 
   // 0-faces (points).
-  face_handle<0, 2> v0 = c.add_face();
-  face_handle<0, 2> v1 = c.add_face();
-  face_handle<0, 2> v2 = c.add_face();
-  face_handle<0, 2> v3 = c.add_face();
+  face_handle<0, D> v0 = c.add_face();
+  face_handle<0, D> v1 = c.add_face();
+  face_handle<0, D> v2 = c.add_face();
+  face_handle<0, D> v3 = c.add_face();
  
   // 1-faces (segments).
-  face_handle<1, 2> e0 = c.add_face(v0 + v1);
-  face_handle<1, 2> e1 = c.add_face(v0 + v2);
-  face_handle<1, 2> e2 = c.add_face(v1 + v2);
-  face_handle<1, 2> e3 = c.add_face(v0 + v3);
-  face_handle<1, 2> e4 = c.add_face(v2 + v3);
+  face_handle<1, D> e0 = c.add_face(v0 + v1);
+  face_handle<1, D> e1 = c.add_face(v0 + v2);
+  face_handle<1, D> e2 = c.add_face(v1 + v2);
+  face_handle<1, D> e3 = c.add_face(v0 + v3);
+  face_handle<1, D> e4 = c.add_face(v2 + v3);
 
   // 2-faces (triangles).
-  face_handle<2, 2> t0 = c.add_face(e0 + e1 + e2);
-  face_handle<2, 2> t1 = c.add_face(e1 + e3 + e4);
+  face_handle<2, D> t0 = c.add_face(e0 + e1 + e2);
+  face_handle<2, D> t1 = c.add_face(e1 + e3 + e4);
 
   std::cout << c << std::endl;
 
-  std::cout << "``Static'' manipulators." << std::endl;
-  std::cout << "  number of 0-faces: " << c.nfaces<0>() << std::endl;
-  std::cout << "  number of 1-faces: " << c.nfaces<1>() << std::endl;
-  std::cout << "  number of 2-faces: " << c.nfaces<2>() << std::endl;
-  std::cout << "  total number of faces: " << c.nfaces() << std::endl;
+  std::cout
+    << "Using ``static'' manipulators." << std::endl
+    << "  number of 0-faces: c.nfaces<0>() = " << c.nfaces<0>() << std::endl
+    << "  number of 1-faces: c.nfaces<1>() = " << c.nfaces<1>() << std::endl
+    << "  number of 2-faces: c.nfaces<2>() = " << c.nfaces<2>() << std::endl
+    << "  total number of faces: c.nfaces() = " << c.nfaces() << std::endl
+    << std::endl;
 
-  std::cout << std::endl;
+  std::cout
+    << "Using ``dynamic'' manipulators." << std::endl
+    << "  number of 0-faces: c.nfaces(0) = " << c.nfaces(0) << std::endl
+    << "  number of 1-faces: c.nfaces(1) = " << c.nfaces(1) << std::endl
+    << "  number of 2-faces: c.nfaces(2) = " << c.nfaces(2) << std::endl;
 
-  std::cout << "``Dynamic'' manipulators." << std::endl;
-  std::cout << "  number of 0-faces: " << c.nfaces(0) << std::endl;
-  std::cout << "  number of 1-faces: " << c.nfaces(1) << std::endl;
-  std::cout << "  number of 2-faces: " << c.nfaces(2) << std::endl;
+  /*-------------------.
+  | Handles and data.  |
+  `-------------------*/
+
+  // Get the face data from (``static'') face handle E0.
+  const face<1, D>& face1 = e0.to_face();
+
+  // Any-face handle.
+  any_face_handle<D> af(e0);
+  // Get the face data from (``dynamic'') face handle AF.
+  const face<1, D>& face2 = af.to_face<1>();
+
+  mln_assertion(&face1 == &face2);
 }

@@ -279,10 +279,9 @@ namespace mln
     /// Return the id of the face.
     unsigned face_id() const;
 
-    // FIXME: Implement.
-//     /// Return the mln::face pointed by this handle.
-//     template <unsigned N>
-//     face<N, D>& to_face() const;
+    /// Return the mln::face pointed by this handle.
+    template <unsigned N>
+    face<N, D>& to_face() const;
     /// \}
 
   private:
@@ -564,15 +563,15 @@ namespace mln
     return face_id_;
   }
 
-//   template <unsigned D>
-//   template <unsigned n>
-//   face<N, D>&
-//   any_face_handle<D>::to_face() const
-//   {
-//     // FIXME: Adjust.
-// //     mln_precondition(is_valid());
-// //     return cplx_->template face_<N>(face_id_);
-//   }
+  template <unsigned D>
+  template <unsigned N>
+  face<N, D>&
+  any_face_handle<D>::to_face() const
+  {
+    mln_precondition(n_ == N);
+    mln_precondition(is_valid());
+    return cplx_->template face_<N>(face_id_);
+  }
 
 
   template <unsigned D>

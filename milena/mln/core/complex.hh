@@ -118,6 +118,7 @@ namespace mln
     /// Accessors.
     /// \{
     template <unsigned N, unsigned D_> friend class face_handle;
+    template <unsigned D_> friend class any_face_handle;
 
     template <unsigned N>
     face<N, D>& face_(unsigned face_id);

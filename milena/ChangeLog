@@ -1,5 +1,18 @@
 2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a missing (disabled) conversion method to
+	mln::any_face_handle.
+
+	* mln/core/complex.hh: Make mln::any_face_handle a friend of
+	mln::complex.
+	* mln/core/face.hh (mln::any_face_handle<D>::to_face<N>):
+	New method.
+	Exercise it...
+	* tests/core/complex.cc: ...here.
+	Check conversion from handles to face data.
+
+2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a printing operator for mln::complex_psite.
 
 	* mln/core/complex_psite.hh
