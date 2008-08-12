@@ -38,6 +38,7 @@
 # include <mln/core/complex.hh>
 
 # include <mln/core/complex_psite.hh>
+# include <mln/core/p_complex_piter.hh>
 
 
 namespace mln
@@ -73,7 +74,7 @@ namespace mln
     typedef complex_psite<D, P> psite;
 
     // FIXME: Fake.
-    typedef void fwd_piter;
+    typedef p_complex_fwd_piter_<D, P> fwd_piter;
     typedef void bkd_piter;
 
     /// \brief Return The number of points (sites) of the set, i.e., the
@@ -93,7 +94,9 @@ namespace mln
     /// \{
     /// Return the complex associated to the p_complex domain (const
     /// version)
-    const complex<D>& cplx() const;
+    /* FIXME: Move back the const qualifier on this return type (see
+       comment below on cplx_). */
+    complex<D>& cplx() const;
     /// Return the complex associated to the p_complex domain (mutable
     /// version).
     complex<D>& cplx();
@@ -104,7 +107,22 @@ namespace mln
 
   private:
     /// The complex on which this pset is built.
-    util::tracked_ptr< complex<D> > cplx_;
+    /* FIXME:Get rid of this `mutable' qualifier.  This is needed for
+       compatiblity reasons with any_face_handle (see p_complex_piter)
+
+       We should either
+
+       - do not use any_face_handle in the implementation of
+         p_complex_piter;
+
+       - have an additional version of any_face_handles holding a
+         const (not mutable) complex;
+
+       - or even have face_handle and any_face_handle do not hold a
+         reference on a complex, leading to a design of complexes
+         similar to graphs, where vertex and edge handles (named `id's)
+         are not tied to a specific graph.  */
+    mutable util::tracked_ptr< complex<D> > cplx_;
     // FIXME: Remove as soon as bbox become optional.
     box_<P> bb_;
   };
@@ -176,7 +194,7 @@ namespace mln
   }
 
   template <unsigned D, typename P>
-  const complex<D>&
+  complex<D>&
   p_complex<D, P>::cplx() const
   {
     mln_precondition(cplx_);

@@ -147,7 +147,6 @@ int main()
   any_face_handle<D> af(e0_);
   // An associated psite.
   complex_psite<D, point2d> cs(af);
-  std::cout << cs << std::endl;
 
 
   /*--------------------.
@@ -180,7 +179,7 @@ int main()
   // Values.
   metal::vec<D + 1, std::vector< int_u8 > > values;
   // Assign 0 to 0-faces, 1 to 1-faces and 2 to 2-faces.
-  for (unsigned d = 0; d < D; ++d)
+  for (unsigned d = 0; d <= D; ++d)
     for (unsigned n = 0; n < pc.cplx().nfaces(d); ++n)
       values[d].push_back(d);
 
@@ -195,8 +194,36 @@ int main()
   | Complex-based image iterators.  |
   `--------------------------------*/
 
-  // FIXME: Enable when iterators are available.
-#if 0
   mln_piter_(ima_t) p(ima.domain());
-#endif
+  for_all(p)
+    std::cout << "ima(" << p << ") = " << ima(p) << std::endl;
+
+
+  /* FIXME: Implement windows (and neighborhoods) for complex-images.
+
+     For a given (fixed) dimension N and a psite P on a N-face,
+     implement windows returning
+
+     - the set of (N-1)-faces adjacent to P;
+     - the set of (N+1)-faces adjacent to P;
+
+     - the set of N-faces sharing a (N-1)-face with P;
+     - the set of N-faces sharing a (N-1)-face or (N-2)-face (by
+       transitivity) with P (is it useful?);
+
+     - the set of the ``cell'' including P (named ``P-hat'' in
+       couprie.08.pami), i.e., the set of all M-faces adjacent to P,
+       where M is in [0, N-1].
+
+       In that definition, P is said adjacent to an M-face Q if
+       if there is a sequence (M1, M2, ..., Mn) of faces so that
+       - M1 is an (M+1)-face adjacent to M ;
+       - M2 is an (M+2)-face adjacent to M1 ;
+       - and so on;
+       - Mn is an (N-1)-face adjacent to N.
+
+     - what else?
+
+     We might want to look at operators on (simplicial?) complexes
+     like star, link, etc. and possibly implement them.  */
 }

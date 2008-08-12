@@ -162,6 +162,7 @@ namespace mln
     /// Return the complex the face belongs to.
     complex<D>& cplx() const;
     /// Return the id of the face.
+    // FIXME: Rename as `id'?
     unsigned face_id() const;
 
     /// Return the mln::face pointed by this handle.
@@ -174,6 +175,7 @@ namespace mln
     /// A const face_handle can be used to modify a complex.
     mutable complex<D>* cplx_;
     /// \brief The id of the face.
+    // FIXME: Rename as `id_'?
     unsigned face_id_;
   };
 
@@ -275,9 +277,18 @@ namespace mln
     /// Return the complex the face belongs to.
     complex<D>& cplx() const;
     /// Return the dimension of the face.
+    // FIXME: Rename as `dim'?
     unsigned n() const;
     /// Return the id of the face.
+    // FIXME: Rename as `id'?
     unsigned face_id() const;
+
+    /// Set the complex the face belongs to.
+    void set_cplx(complex<D>& cplx);
+    /// Set the dimension of the face.
+    void set_n(unsigned n);
+    /// Set the id of the face.
+    void set_face_id(unsigned face_id);
 
     /// Return the mln::face pointed by this handle.
     template <unsigned N>
@@ -290,8 +301,10 @@ namespace mln
     /// A const any_face_handle can be used to modify a complex.
     mutable complex<D>* cplx_;
     /// The dimension of the face.
+    // FIXME: Rename as `dim_'?
     unsigned n_;
     /// \brief The id of the face.
+    // FIXME: Rename as `id_'?
     unsigned face_id_;
   };
 
@@ -538,7 +551,7 @@ namespace mln
   bool
   any_face_handle<D>::is_valid() const
   {
-    return cplx_ != 0 && face_id_ < cplx_->nfaces(n_);
+    return cplx_ != 0 && n_ <= D && face_id_ < cplx_->nfaces(n_);
   }
 
   template <unsigned D>
@@ -561,6 +574,27 @@ namespace mln
   any_face_handle<D>::face_id() const
   {
     return face_id_;
+  }
+
+  template <unsigned D>
+  void
+  any_face_handle<D>::set_cplx(complex<D>& cplx)
+  {
+    cplx_ = &cplx;
+  }
+
+  template <unsigned D>
+  void
+  any_face_handle<D>::set_n(unsigned n)
+  {
+    n_ = n;
+  }
+
+  template <unsigned D>
+  void
+  any_face_handle<D>::set_face_id(unsigned face_id)
+  {
+    face_id_ = face_id;
   }
 
   template <unsigned D>
