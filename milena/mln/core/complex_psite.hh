@@ -127,6 +127,16 @@ namespace mln
   /// \}
 
 
+  /* FIXME: This hand-made delegation is painful.  We should rely on
+     the general mechanism provided by Point_Site.  But then again, we
+     need to refine/adjust the interface of Point_Site w.r.t. the
+     mandatory conversions to points.  */
+  template <unsigned D, typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const complex_psite<D, P>& p);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -252,6 +262,15 @@ namespace mln
   {
     mln_precondition(&lhs.cplx() == &rhs.cplx());
     return lhs.face() < rhs.face();
+  }
+
+
+  template <unsigned D, typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const complex_psite<D, P>& p)
+  {
+        return ostr << "(dim = " << p.n() << ", id = " << p.face_id() << ')';
   }
 
 # endif // ! MLN_INCLUDE_ONLY

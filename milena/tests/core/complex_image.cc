@@ -147,6 +147,7 @@ int main()
   any_face_handle<D> af(e0_);
   // An associated psite.
   complex_psite<D, point2d> cs(af);
+  std::cout << cs << std::endl;
 
 
   /*--------------------.

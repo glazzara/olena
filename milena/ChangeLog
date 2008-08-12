@@ -1,3 +1,12 @@
+2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a printing operator for mln::complex_psite.
+
+	* mln/core/complex_psite.hh
+	(operator<<(std::ostream&, const complex_psite<D, P>&)):
+	New operator.
+	* tests/core/complex_image.cc: ...here.
+
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a complex-base image type.
