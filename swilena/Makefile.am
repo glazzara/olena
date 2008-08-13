@@ -10,8 +10,10 @@ meta_wrappers =							\
 
 # Wrappers (generating actual modules).
 wrappers =							\
- box2d.i dpoint2d.i image2d_int.i image2d_int_u8.i int_u8.i	\
- int_u32.i neighb2d.i point2d.i window2d.i
+  box2d.i dpoint2d.i image2d_int.i image2d_int_u8.i int_u8.i	\
+  int_u32.i neighb2d.i point2d.i window2d.i			\
+								\
+  dynamic_image2d.i
 
 EXTRA_DIST = $(meta_wrappers) $(wrappers)
 

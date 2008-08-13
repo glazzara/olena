@@ -1,3 +1,16 @@
+2008-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a C++ image type extensible in Python.
+
+	* dynamic_image2d.i: New.
+	* Makefile.am: Add dynamic_image2d.i.
+	* point2d.i: Add row() and col() accessors.
+	* box2d.i: Add nrows() and ncols() accessors.
+	* python/dynamic-image2d-misc.py: New test.
+	* python/Makefile.am (AM_SWIGFLAGS): Add `-Wall'
+	Handle module dynamic_image2d.
+	(TESTS): Add dynamic-image2d-misc.py.
+
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Wrap more morphological filters.

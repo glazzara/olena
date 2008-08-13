@@ -1,4 +1,4 @@
-//						       		-*- C++ -*-
+//								-*- C++ -*-
 // Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -51,5 +51,21 @@ box_(typename mln::point_<mln::grid::square, int>::coord);
 box_(typename mln::point_<mln::grid::square, int>::coord,
      typename mln::point_<mln::grid::square, int>::coord,
      typename mln::point_<mln::grid::square, int>::coord);
+
+%extend mln::box_
+{
+  unsigned nrows() const
+  {
+    // FIXME: This is the exact content of box_impl_<2, C, E>::nrows.
+    return mln::internal::force_exact<mln::box2d>(*$self).bbox().len(0);
+  }
+
+  unsigned ncols() const
+  {
+    // FIXME: This is the exact content of box_impl_<2, C, E>::ncols.
+    return mln::internal::force_exact<mln::box2d>(*$self).bbox().len(1);
+  }
+}
+
 
 %template(box2d) mln::box_< mln::point_<mln::grid::square, int> >;

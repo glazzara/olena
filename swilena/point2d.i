@@ -61,4 +61,13 @@
 %ignore mln::point_<mln::grid::square,int>::point_(int);
 %ignore mln::point_<mln::grid::square,int>::point_(int, int, int);
 
+/* FIXME: Swig doesn't wrap operator[]...  Provide row() and col()
+   accessors instead (we should wrap internal::mutable_coord_impl_
+   instead). */
+%extend mln::point_
+{
+  int row() const { return $self->operator[](0); }
+  int col() const { return $self->operator[](1); }
+}
+
 %template(point2d) mln::point_<mln::grid::square, int>;

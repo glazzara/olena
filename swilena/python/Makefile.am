@@ -10,7 +10,7 @@ CLEANFILES =
 AM_CPPFLAGS = -I$(PYTHONINC) -I$(top_srcdir)/milena
 TOOLS_CXXFLAGS = @TOOLS_CXXFLAGS@
 AM_CXXFLAGS = $(TOOLS_CXXFLAGS)
-AM_SWIGFLAGS = -c++ -python -I$(top_srcdir)/milena
+AM_SWIGFLAGS = -Wall -c++ -python -I$(top_srcdir)/milena
 ## We build modules, not plain libs.
 AM_LDFLAGS = -avoid-version -module -shared
 #### All the modules depend on libhw.
@@ -134,6 +134,16 @@ CLEANFILES += $(nodist__image2d_int_u8_la_SOURCES) image2d_int_u8.py image2d_int
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_image2d_int_u8-wrap.Pcc@am__quote@
 nodist_python_PYTHON += image2d_int_u8.py
 
+## dynamic_image2d.
+pyexec_LTLIBRARIES += _dynamic_image2d.la
+nodist__dynamic_image2d_la_SOURCES = dynamic_image2d-wrap.cc
+_dynamic_image2d_la_LIBADD = $(AM_LIBADD)
+CLEANFILES += $(nodist__dynamic_image2d_la_SOURCES) dynamic_image2d.py dynamic_image2d.py[co]
+## Include the dependency files.  Copied from Automake's generated
+## case for C++.
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/_dynamic_image2d-wrap.Pcc@am__quote@
+nodist_python_PYTHON += dynamic_image2d.py
+
 
 ## ---------------------------- ##
 ## Swilena Python Shell (sps).  ##
@@ -172,5 +182,5 @@ $(srcdir)/run.stamp: $(RUN_IN)
 	$(MAKE) $(AM_MAKEFLAGS) $(RUN)
 	@mv -f $@.tmp $@
 
-TESTS = image2d-misc.py morpho-fun.py morpho-segm.py
+TESTS = image2d-misc.py morpho-fun.py morpho-segm.py dynamic-image2d-misc.py
 EXTRA_DIST += $(TESTS)
