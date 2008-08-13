@@ -33,6 +33,11 @@
 %module image2d_int_u8
 
 %import "int_u8.i"
+// FIXME: The import directive does not include the `%{ ... %}' clauses.
+%{
+#include "mln/value/int_u8.hh"
+%}
+
 %include "image2d.ixx"
 instantiate_image2d(image2d_int_u8, mln::value::int_u<8>)
 

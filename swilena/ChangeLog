@@ -1,5 +1,12 @@
 2008-08-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the use of int_u8 in image2d_int_u8.i.
+
+	* image2d_int_u8.i: Inject #include "mln/value/int_u8.hh" into the
+	header of the generated wrapper.
+
+2008-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a C++ image type extensible in Python.
 
 	* dynamic_image2d.i: New.
