@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -101,11 +101,13 @@ namespace mln
 
 	      mln_niter(N) n(nbh, p);
 	      for_all(n) if (ima.has(n))
-		if (out(n) != 0)
-		  out(p) = out(n);
-		else
-		  q.push_force(n); // n may already be in the queue,
-				   // yet we then queue again this psite
+		{
+		  if (out(n) != 0)
+		    out(p) = out(n);
+		  else
+		    q.push_force(n); // n may already be in the queue,
+				     // yet we then queue again this psite
+		}
 	    }
 	}
 

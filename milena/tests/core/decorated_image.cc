@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,11 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/decorated_image.cc
- *
- * \brief Tests on mln::decorated_image.
- * \todo Make this test work.
- */
+/// \file tests/core/decorated_image.cc
+/// \brief Tests on mln::decorated_image.
 
 #include <mln/core/image2d.hh>
 #include <mln/core/decorated_image.hh>
@@ -65,4 +62,14 @@ int main()
 
   const I& imac = ima;
   decorated_image< const I, counter<I> > cima_ = decorate(imac, counter<I>());
+  /* Note that the statement
+    
+       cima_(p);
+    
+     alone would *not* trigger a read.  It seems the compiler
+     optimizes in our back...  */
+  int v = cima_(p);
+  // Avoid a warning on unused value V.
+  v = v;
+  mln_assertion(count_read == 2 && count_write == 2);
 }

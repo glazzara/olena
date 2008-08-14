@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/w_window1d_int.cc
- *
- * \brief Tests on mln::w_window1d_int.
- */
+/// \file tests/core/w_window1d_int.cc
+/// \brief Tests on mln::w_window1d_int.
 
 #include <mln/core/w_window1d_int.hh>
 #include <mln/win/segment1d.hh>
@@ -51,9 +49,7 @@ int main()
   using namespace mln;
 
   {
-    int ws[] = { -1, 0, 1,
-		 -2, 0, 2,
-		 -1, 0, 1 };
+    int ws[] = { -1, 0, 1 };
     w_window1d_int w_win = make::w_window1d(ws);
 
     image1d<int> ima = convert::to_image(w_win);
@@ -64,9 +60,7 @@ int main()
   {
     w_window1d_int w_win = make::w_window(win::segment1d(3),
 					  convert::to_fun(f));
-    //  -3 -2 -1  0 +1
-    //  -2 -1  0 +1 +2
-    //  -1  0 +1 +2 +3
+    //  -1  0 +1
     image1d<int> ima = convert::to_image(w_win);
     mln_assertion(estim::sum(ima) == 0);
   }

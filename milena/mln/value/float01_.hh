@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -71,9 +72,9 @@ namespace mln
       typedef trait::value::kind::data       kind;
       typedef mln_value_quant_from_(card)    quant;
 
-      static const float min() { return 0.f; }
-      static const float max() { return 1.f; }
-      static const float epsilon() { return 0.f; }
+      static float min() { return 0.f; }
+      static float max() { return 1.f; }
+      static float epsilon() { return 0.f; }
 
       typedef float sum;
     };

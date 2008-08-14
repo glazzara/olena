@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -65,9 +66,9 @@ namespace mln
 	card  = 0
       };
 
-      static const float min() { return 0; }
-      static const float max() { return 1; }
-      static const float epsilon() { return mln_epsilon(float); }
+      static float min() { return 0; }
+      static float max() { return 1; }
+      static float epsilon() { return mln_epsilon(float); }
 
       typedef float sum;
     };

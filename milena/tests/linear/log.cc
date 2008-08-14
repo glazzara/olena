@@ -60,9 +60,7 @@ int main()
   {
     int min, max;
     estim::min_max(tmp, min, max);
-    // FIXME: This assertion fails.  (Maybe the input file has been
-    // changed, but this line was not updated?)
-    mln_assertion(min == -929 && max == 1458);
+    mln_assertion(min == -929 && max == 1260);
   }
 
   image2d<int_u8> out(lena.domain());

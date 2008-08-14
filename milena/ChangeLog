@@ -1,3 +1,82 @@
+2008-08-14  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix many tests.
+
+	* mln/core/decorated_image.hh
+	(mln::decorated_image<I, D>::rvalue): New typedef.
+	(mln::decorated_image<I, D>::lvalue): Set to impl_::lvalue.
+	(mln::decorated_image<I, D>::read_): Have it return a rvalue, not
+	a value.
+	(mln::decorated_image<I, D>::operator()(const psite&) const)
+	(mln::decorated_image<I, D>::operator()(const psite&)):
+	New operators
+	(mln::internal::decorated_image_impl_<I, E>::write_): Fix access
+	to delegatee's data.
+	* mln/math/abs.hh (mln::level::abs(const value::int_u<n>&)):
+	Declare this overload.
+	(mln::math::abs(int))
+	(mln::math::abs(long))
+	(mln::math::abs(float))
+	(mln::math::abs(double))
+	(mln::math::abs(long double)):
+	New overloads.
+	* mln/border/fill.hh,
+	* mln/level/memset_.hh:
+	Include header cstring for std::memset.
+	* mln/make/w_window.hh: Wrap long lines.
+	* mln/convert/to_image.hh: Likewise.
+	(mln::convert::to_image(const Weighted_Window<W>&)): Fill the
+	image with zeros before copying weights.
+	* mln/convert/to_p_array.hh: Include missing header
+	mln/core/concept/image.hh for mln::Image.
+	* mln/win/line.hh (mln::win::line<M,i,C>::line): Replace a dynamic
+	assertion by a static one.
+	* mln/value/float01_.hh
+	(mln::trait::value< mln::value::float01_<n> >::min)
+	(mln::trait::value< mln::value::float01_<n> >::max)
+	(mln::trait::value< mln::value::float01_<n> >::epsilon)
+	* mln/value/float01_f.hh
+	(mln::trait::value< mln::value::float01_f >::min)
+	(mln::trait::value< mln::value::float01_f >::max)
+	(mln::trait::value< mln::value::float01_f >::epsilon)
+	* mln/value/internal/gray_.hh
+	(mln::trait::value< mln::value::internal::gray_<n> >::min)
+	(mln::trait::value< mln::value::internal::gray_<n> >::max)
+	(mln::trait::value< mln::value::internal::gray_<n> >::epsilon)
+	* mln/value/internal/gray_f.hh
+	(mln::trait::value< mln::value::internal::gray_f >::min)
+	(mln::trait::value< mln::value::internal::gray_f >::max)
+	(mln::trait::value< mln::value::internal::gray_f >::epsilon):
+	Remove useless `const' qualifier on return type.
+	* mln/value/proxy.hh
+	(mln::value::proxy<I>::~proxy)
+	(mln::value::proxy<const I>::~proxy):
+	Change the return type of checked `read_' routine to
+	mln_rvalue(I).
+	* mln/value/stack.hh
+	(mln::value::stack_image<n, I>::read_)
+	(mln::value::stack_image<n, I>::operator()(const psite&)):
+	Set return type to rvalue.
+	* mln/fun/v2v/rgb_to_hsi.hh: Add missing copyright header.
+	Add missing header guards.
+	Wrap long lines.
+	(mln::fun::v2v::f_rgb_to_hsi_<T_hsi>): Remove useless variable.
+	* mln/geom/seeds2tiling.hh (mln::geom::impl::seeds2tiling): Add
+	braces around inner `if' to avoid (visual) ambiguity w.r.t. a 
+	dangling `else'.
+	* mln/core/fi_adaptor.hh (mln::fi_adaptor<I>::load): Ensure the
+	image is correctly loaded.
+
+	* tests/core/decorated_image.cc: Exercise
+	mln::decorated_image< const I, D >.
+	* tests/core/fi_adaptor.cc: Use a smaller kernel for the median
+	filter.
+	Use tests/data.hh and MLN_IMG_DIR to find the img/ dir.
+	Don't call display::show.
+	* tests/core/w_window1d_int.cc: Use meaninful input.
+	Update documentation.
+	* tests/linear/log.cc: Update expected values.
+
 2008-08-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a backward iterator on complex-based images.

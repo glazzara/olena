@@ -158,6 +158,9 @@ namespace mln
       typedef algebra::vec<n, mln_value(I)> value;
 
       /// Return type of read-only access.
+      ///
+      /// The rvalue type is not a const reference, since the value
+      /// type is built on the fly, and return by value (copy).
       typedef value rvalue;
 
       /// Return type of read-write access.
@@ -183,7 +186,7 @@ namespace mln
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
-      value read_(const psite& p) const;
+      rvalue read_(const psite& p) const;
 
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const psite&);
@@ -256,7 +259,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    algebra::vec<n, mln_value(I)>
+    typename stack_image<n,I>::rvalue
     stack_image<n,I>::read_(const psite& p) const
     {
       mln_precondition(this->owns_(p));
@@ -268,7 +271,7 @@ namespace mln
 
     template <unsigned n, typename I>
     inline
-    algebra::vec<n, mln_value(I)>
+    typename stack_image<n,I>::rvalue
     stack_image<n,I>::operator()(const psite& p) const
     {
       return read_(p);
