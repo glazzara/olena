@@ -147,10 +147,12 @@ namespace mln
 	    {
 	      point p = S[i];
 	      if (parent(p) == p)
-		if (o(p) == mln_max(value))
-		  o(p) = g(p);
-	      else
-		o(p) = o(parent(p));
+		{
+		  if (o(p) == mln_max(value))
+		    o(p) = g(p);
+		  else
+		    o(p) = o(parent(p));
+		}
 	      is_proc(p) = true;
 	    }
 

@@ -62,6 +62,8 @@ namespace mln
 
       mln_concrete(I) output = dilation(erosion(input, win), geom::sym(win));
 
+      // FIXME: Is this postcondition always true, even if the
+      // structuring element is not centered?
       mln_postcondition(output <= input);
       trace::exiting("morpho::opening");
       return output;

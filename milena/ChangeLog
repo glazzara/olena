@@ -1,5 +1,15 @@
 2008-08-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Kill more warnings in tests.
+
+	* mln/morpho/Rd.hh (mln::morpho::impl::Rd::Rd): Add braces around
+	inner `if' to avoid (visual) ambiguity w.r.t. a dangling `else'.
+	* mln/morpho/contrast.hh: Wrap long lines.
+	* mln/morpho/opening.hh, tests/morpho/contrast.cc:
+	Add FIXMEs.
+
+2008-08-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix many tests.
 
 	* mln/core/decorated_image.hh
