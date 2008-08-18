@@ -31,7 +31,7 @@ int main()
   
   std::cout << "X created -> thinning" << std::endl;
   
-  X = thinning(X,c4(),X_complement,2000,true);
+  X = thinning(X,c8(),X_complement,2000,true);
   
   std::cout << "thinning done -> save image" << std::endl;
   typedef mln::image2d<bool> I;

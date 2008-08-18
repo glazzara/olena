@@ -1,3 +1,17 @@
+2008-08-18  aroumougame aroune  <aroune.aroumougame@gmail.com>
+
+	skeleton of 2d images.
+	* aroumougame/skeleton/io.hh: New.
+	* aroumougame/skeleton/mesh-skel.cc: process skeleton of 3D objects
+	* aroumougame/skeleton/mesh-skel_region.cc: process skeleton of 3D
+	* objects by local neighborhood
+	* aroumougame/skeleton/miscellenous.hh: New.
+	* aroumougame/skeleton/sedt.hh: process the squared euclidean
+	* distance transform
+	* aroumougame/skeleton/test.cc: .
+	* aroumougame/skeleton/test_image2d.cc: .
+	* aroumougame/skeleton/thinning.hh: add the filtered skeleton routine
+
 2008-07-02  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix a first bug in the watershed.
