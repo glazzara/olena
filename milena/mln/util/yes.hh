@@ -58,6 +58,12 @@ namespace mln
     {
       typedef util::yes ret;
     };
+
+    template <template<class, class> class Op>
+    struct set_precise_binary_< Op, util::yes, util::yes >
+    {
+      typedef util::yes ret;
+    };
     
   } // end of namespace mln::trait
 
@@ -83,9 +89,11 @@ namespace mln
 
   // Equal.
   util::yes operator == (const util::yes&, bool);
+  util::yes operator == (const util::yes&, const util::yes&);
 
   // Not equal.
   util::yes operator != (const util::yes&, bool);
+  util::yes operator != (const util::yes&, const util::yes&);
 
   // And.
   util::yes operator && (const util::yes&, bool);
@@ -136,7 +144,19 @@ namespace mln
   }
 
   inline
+  util::yes operator == (const util::yes&, const util::yes&)
+  {
+    return util::yes(true);
+  }
+
+  inline
   util::yes operator != (const util::yes&, bool)
+  {
+    return util::yes(true);
+  }
+
+  inline
+  util::yes operator != (const util::yes&, const util::yes&)
   {
     return util::yes(true);
   }

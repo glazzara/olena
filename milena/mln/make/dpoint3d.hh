@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,13 +50,13 @@ namespace mln
      *
      * \return A 3D dpoint.
      */
-    mln::dpoint3d dpoint3d(int sli, int row, int col);
+    mln::dpoint3d dpoint3d(def::coord sli, def::coord row, def::coord col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    mln::dpoint3d dpoint3d(int sli, int row, int col)
+    mln::dpoint3d dpoint3d(def::coord sli, def::coord row, def::coord col)
     {
       mln::dpoint3d tmp;
       tmp[0] = sli;

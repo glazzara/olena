@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -57,7 +57,7 @@ namespace mln
     template <typename C, typename E>
     struct coord_impl_<1, C, E>
     {
-      C ind() const;
+      const C& ind() const;
     private:
       typedef coord_impl_<1, C, E> self_;
 
@@ -67,17 +67,17 @@ namespace mln
     template <typename C, typename E>
     struct coord_impl_<2, C, E>
     {
-      C row() const;
-      C col() const;
+      const C&row() const;
+      const C&col() const;
     };
 
     /// \internal
     template <typename C, typename E>
     struct coord_impl_<3, C, E>
     {
-      C sli() const;
-      C row() const;
-      C col() const;
+      const C&sli() const;
+      const C&row() const;
+      const C&col() const;
     };
 
 
@@ -91,7 +91,7 @@ namespace mln
     template <typename C, typename E>
     struct mutable_coord_impl_<1, C, E>
     {
-      C  ind() const;
+      const C& ind() const;
       C& ind();
     };
 
@@ -99,9 +99,9 @@ namespace mln
     template <typename C, typename E>
     struct mutable_coord_impl_<2, C, E>
     {
-      C  row() const;
+      const C& row() const;
       C& row();
-      C  col() const;
+      const C& col() const;
       C& col();
     };
 
@@ -109,11 +109,11 @@ namespace mln
     template <typename C, typename E>
     struct mutable_coord_impl_<3, C, E>
     {
-      C  sli() const;
+      const C& sli() const;
       C& sli();
-      C  row() const;
+      const C& row() const;
       C& row();
-      C  col() const;
+      const C& col() const;
       C& col();
     };
 
@@ -126,7 +126,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C coord_impl_<1, C, E>::ind() const
+    const C& coord_impl_<1, C, E>::ind() const
     {
       return internal::force_exact<E>(*this)[0];
     }
@@ -135,14 +135,14 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C coord_impl_<2, C, E>::row() const
+    const C& coord_impl_<2, C, E>::row() const
     {
       return internal::force_exact<E>(*this)[0];
     }
 
     template <typename C, typename E>
     inline
-    C coord_impl_<2, C, E>::col() const
+    const C& coord_impl_<2, C, E>::col() const
     {
       return internal::force_exact<E>(*this)[1];
     }
@@ -151,21 +151,21 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C coord_impl_<3, C, E>::sli() const
+    const C& coord_impl_<3, C, E>::sli() const
     {
       return internal::force_exact<E>(*this)[0];
     }
 
     template <typename C, typename E>
     inline
-    C coord_impl_<3, C, E>::row() const
+    const C& coord_impl_<3, C, E>::row() const
     {
       return internal::force_exact<E>(*this)[1];
     }
 
     template <typename C, typename E>
     inline
-    C coord_impl_<3, C, E>::col() const
+    const C& coord_impl_<3, C, E>::col() const
     {
       return internal::force_exact<E>(*this)[2];
     }
@@ -177,7 +177,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<1, C, E>::ind() const
+    const C& mutable_coord_impl_<1, C, E>::ind() const
     {
       return internal::force_exact<E>(*this)[0];
     }
@@ -193,7 +193,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<2, C, E>::row() const
+    const C& mutable_coord_impl_<2, C, E>::row() const
     {
       return internal::force_exact<E>(*this)[0];
     }
@@ -207,7 +207,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<2, C, E>::col() const
+    const C& mutable_coord_impl_<2, C, E>::col() const
     {
       return internal::force_exact<E>(*this)[1];
     }
@@ -223,7 +223,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<3, C, E>::sli() const
+    const C& mutable_coord_impl_<3, C, E>::sli() const
     {
       return internal::force_exact<E>(*this)[0];
     }
@@ -237,7 +237,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<3, C, E>::row() const
+    const C& mutable_coord_impl_<3, C, E>::row() const
     {
       return internal::force_exact<E>(*this)[1];
     }
@@ -251,7 +251,7 @@ namespace mln
 
     template <typename C, typename E>
     inline
-    C  mutable_coord_impl_<3, C, E>::col() const
+    const C& mutable_coord_impl_<3, C, E>::col() const
     {
       return internal::force_exact<E>(*this)[2];
     }

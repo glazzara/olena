@@ -85,7 +85,7 @@ namespace mln
     {
       // misc
       typedef trait::image::category::primary category;
-      typedef trait::image::speed::fastest    speed;
+      typedef trait::image::speed::fast       speed;
       typedef trait::image::size::regular     size;
 
       // value

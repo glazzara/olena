@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,42 +70,6 @@ namespace mln
 
     /// Flag type for a trait that is multiply undefined.
     struct multiply_defined {};
-
-
-
-    // Utility meta-function: from a category (meta) and a type, get the super category.
-
-    namespace internal
-    {
-
-      template < template <class> class Category, typename T,
-		 typename Super_Category >
-      struct helper_super_category_;
-
-      template < template <class> class Category, typename T,
-		 template <class> class Super_Category >
-      struct helper_super_category_< Category, T,
-				     Super_Category<void> >
-      {
-	typedef Super_Category<void> ret; // One super category: keep it.
-      };
-
-      template < template <class> class Category, typename T >
-      struct helper_super_category_< Category, T,
-				     void* > // Meaning: several super categories exist, depending on T.
-      {
-	typedef typename mln::category< T >::super ret; // Specific call depending on T.
-      };
-
-
-      template < template <class> class Category, typename T >
-      struct super_category_ // Entry.
-      {
-	typedef typename helper_super_category_< Category, T,
-						 typename Category<void>::super >::ret ret;
-      };
-
-    } // end of namespace mln::trait::internal
 
 
 

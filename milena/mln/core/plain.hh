@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,11 +35,8 @@
  */
 
 # include <cmath>
-
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/clone.hh>
-
-# include <mln/algebra/vec.hh>
 
 
 namespace mln

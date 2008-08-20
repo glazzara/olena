@@ -33,6 +33,8 @@
  *
  * \brief Suppress possible 'const' and/or '&' (reference) from a
  * qualified type.
+ *
+ * \todo Handle (or not) 'T*'.
  */
 
 # include <mln/metal/unconst.hh>

@@ -1,27 +1,71 @@
-KO  bgraph_image
-KO  cast_image
-KO  decorated_image
-KO  fi_adaptor
-KO  graph_image
-KO  hexa
+	-*- outline -*-
+
+* to be removed
+
+mln/core/internal/run_image.hh
+
+
+* internal
+
+... image_identity  (see todo)
+
+
+* primary
+
+** basic
+
+ok  image2d
+ok  pw::image
+
 KO  image1d
- ok image2d
 KO  image3d
- ok image_if
- rm image_if_interval
- rm image_if_value
-KO  interpolated
-KO  line_graph_image
+
+** run-based
+
 KO  mono_obased_rle_image
 KO  mono_rle_image
 KO  obased_rle_image
-KO  plain
- ok pw::image
 KO  rle_image
-KO  safe
 KO  sparse_image
- ok sub_image
+
+** graph-based
+
+KO  bgraph_image
+KO  graph_image
+KO  line_graph_image
+
+
+* morpher
+
+** value morpher
+
+KO  cast_image
+
+** domain morpher
+
+ok  image_if
+... sub_image  =  1st attempt to use the 'instant' mechanism...
+
+rm  image_if_interval
+rm  image_if_value
+
 KO  t_image
 KO  tr_image
 KO  translate_image
+
+** identity morpher
+
+new instant
+
+KO  decorated_image
+KO  interpolated
+KO  plain
+KO  safe
+
+
+
+* unknown!!!
+
+KO  fi_adaptor
+KO  hexa
 KO  value_enc_image

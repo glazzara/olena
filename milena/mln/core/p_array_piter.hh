@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -56,6 +57,10 @@ namespace mln
     /// Constructor.
     p_array_fwd_piter_(const p_array<P>& arr);
 
+    /// Constructor.
+    template <typename S>
+    p_array_fwd_piter_(const Site_Set<S>& arr);
+
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -100,6 +105,10 @@ namespace mln
     /// Constructor.
     p_array_bkd_piter_(const p_array<P>& arr);
 
+    /// Constructor.
+    template <typename S>
+    p_array_bkd_piter_(const Site_Set<S>& arr);
+
     /// Test if the iterator is valid.
     bool is_valid_() const;
 
@@ -142,6 +151,14 @@ namespace mln
   p_array_fwd_piter_<P>::p_array_fwd_piter_(const p_array<P>& arr)
   {
     this->change_target(arr);
+  }
+
+  template <typename P>
+  template <typename S>
+  inline
+  p_array_fwd_piter_<P>::p_array_fwd_piter_(const Site_Set<S>& arr)
+  {
+    this->change_target(exact(arr).array_hook());
   }
 
   template <typename P>
@@ -204,6 +221,14 @@ namespace mln
   }
 
   template <typename P>
+  template <typename S>
+  inline
+  p_array_bkd_piter_<P>::p_array_bkd_piter_(const Site_Set<S>& arr)
+  {
+    this->change_target(exact(arr).array_hook());
+  }
+
+  template <typename P>
   inline
   bool
   p_array_bkd_piter_<P>::is_valid_() const
@@ -251,14 +276,14 @@ namespace mln
   int
   index_of_in(const p_array_fwd_piter_<P>& p, const A& arr)
   {
-    return index_of_in(p.unproxy(), arr);
+    return index_of_in(p.unproxy_(), arr);
   }
 
   template <typename P, typename A>
   int
   index_of_in(const p_array_bkd_piter_<P>& p, const A& arr)
   {
-    return index_of_in(p.unproxy(), arr);
+    return index_of_in(p.unproxy_(), arr);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

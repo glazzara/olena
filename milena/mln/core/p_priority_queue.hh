@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,321 +25,398 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_PRIORITY_QUEUE_HH
-# define MLN_CORE_P_PRIORITY_QUEUE_HH
+#ifndef MLN_CORE_P_PRIORITY_HH
+# define MLN_CORE_P_PRIORITY_HH
 
-/*! \file mln/core/p_priority_queue.hh
+/*! \file mln/core/p_priority.hh
  *
- * \brief Definition of a point set class based on p_queue with
- * priority features.
+ * \brief Definition of a priority queue of sites.
+ *
+ * \todo Rename file as p_priority.hh
  */
 
-# include <vector>
-# include <deque>
 # include <map>
-# include <algorithm>
-# include <iterator>
-
+# include <mln/core/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/core/p_array_piter.hh>
-# include <mln/accu/bbox.hh>
-# include <mln/core/p_queue.hh>
+# include <mln/util/set.hh>
+
 
 namespace mln
 {
 
-  // Fwd decls.
-  template <typename P> struct p_array_fwd_piter_;
-  template <typename P> struct p_array_bkd_piter_;
+  // Forward declaration.
+  template <typename P, typename Q> class p_priority;
 
 
-  /*! \brief Point priority queue class (based on p_queue and std::map).
-   *
-   * This is a mathematical set of points (unique insertion).
-   *
-   * \todo Make it work with P being a Point_Site.
-   *
-   * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
-   */
-  template <typename P, typename T>
-  class p_priority_queue : public internal::site_set_base_< P, p_priority_queue<P, T> >
+
+  namespace trait
   {
+
+    template <typename P, typename Q>
+    struct site_set_< p_priority<P,Q> >
+    {
+      typedef trait::site_set::nsites::known     nsites;
+      typedef trait::site_set::bbox::unknown     bbox;
+      typedef trait::site_set::contents::growing contents;
+      typedef trait::site_set::arity::multiple   arity;
+    };
+
+  } // end of namespace trait
+
+
+
+
+  /*! \brief Priority queue class.
+   *
+   * FIXME
+   */
+  template <typename P, typename Q>
+  class p_priority : public internal::site_set_base_< mln_site(Q),
+						      p_priority<P,Q> >
+  {
+    typedef p_priority<P,Q> self_;
+    typedef util::set<P> set_;
   public:
 
+    /// Element associated type.
+    typedef mln_element(Q) element;
+
+
+    /// Psite associated type.
+    typedef p_double_psite<self_, Q> psite;
+
     /// Forward Site_Iterator associated type.
-    typedef p_array_fwd_piter_<P> fwd_piter;
+    typedef p_double_piter<self_, typename set_::bkd_iter, mln_fwd_piter(Q)> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_array_bkd_piter_<P> bkd_piter;
+    typedef p_double_piter<self_, typename set_::fwd_iter, mln_bkd_piter(Q)> bkd_piter;
+
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+
 
     /// Constructor.
-    p_priority_queue();
+    p_priority();
 
-    /// Test is \p p belongs to this point set.
-    bool has(const P& p) const;
+    /// Test is the psite \p p belongs to this site set.
+    bool has(const psite&) const;
 
-    /// Test if queue is empty or not.
-    bool is_empty() const;
+    /// Test this set validity so returns always true.
+    bool is_valid() const;
 
-    /// Give the number of points.
-    size_t npoints() const;
+    /// Give the number of sites.
+    unsigned nsites() const;
 
-    /// Give the exact bounding box.
-    const box_<P>& bbox() const;
 
-    /// Push force a point \p p in the queue.
-    p_priority_queue<P, T>& push_force(const P& p, T prio = 0);
+    /// Push in the queue with \p priority the element \p e.
+    void push(const P& priority, const element& e);
 
-    /// Push a point \p p in the queue.
-    p_priority_queue<P, T>& push(const P& p, T prio = 0);
+    /// Insertion element associated type. 
+    typedef std::pair<P, element> i_element;
 
-    /// Pop (remove) the front point \p p from the queue; \p p is the
-    /// least recently inserted point.
+    /// Insert a pair \p p_e (priority p, element e).
+    void insert(const i_element& p_e);
+
+
+    /// Pop (remove) from the queue an element with highest priority.
+    /// If several elements have this priority, the least recently
+    /// inserted is chosen.  \pre ! is_empty()
     void pop();
 
-    /// Give the front point \p p of the queue; \p p is the least
-    /// recently inserted point.
-    const P& front() const;
+    /// Give an element with highest priority.  If several elements
+    /// have this priority, the least recently inserted is chosen.
+    /// \pre ! is_empty()
+    const mln_element(Q)& front() const;
 
-    /// Pop (remove) the front point \p p from the queue; \p p is the
-    /// least recently inserted point and give the front point \p p of
-    /// the queue; \p p is the least recently inserted point.
-    const P& pop_front();
+    /// Return an element with highest priority and remove it from the
+    /// set.  If several elements have this priority, the least
+    /// recently inserted is chosen.  \pre ! is_empty()
+    mln_element(Q) pop_front();
+
 
     /// Clear the queue.
     void clear();
 
-    /// Return the corresponding std::vector of points.
-    const std::vector<P>& vect() const;
 
-    /// Return the \p i-th point.
-    const P& operator[](unsigned i) const;
+    /// Give the queue with the priority \p priority.  This method
+    /// always works: if the priority is not in this set, an empty
+    /// queue is returned.
+    const Q& operator()(const P& priority) const;
+
+    /// Give the set of priorities.
+    const util::set<P>& priorities() const;
+
+    /// Test if the \p priority exists.
+    bool exists_priority(const P& priority) const;
+
+    /// Give the highest priority.
+    /// \pre ! is_empty()
+    const P highest_priority() const;
+
+    /// Give the lowest priority.
+    /// \pre ! is_empty()
+    const P lowest_priority() const;
+
+
+    // Required by p_double-related classes.
+    const util::set<P>& set_1_() const;
+    const Q& set_2_(const P& priority) const;
+
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
 
   protected:
 
-    std::map<const T, p_queue<P> > q_;
+    util::set<P>  p_;
+    std::map<P,Q> q_;
+    unsigned      n_;
 
-    mutable std::vector<P> vect_;
-    mutable bool vect_needs_update_;
-    void vect_update_() const;
-
-    mutable accu::bbox<P> bb_;
-    mutable bool bb_needs_update_;
-    void bb_update_() const;
-
+    // Run invariance tests and return the result.
+    bool run_() const;
   };
+
+
+
+  template <typename P, typename Q>
+  std::ostream& operator<<(std::ostream& ostr, const p_priority<P,Q>& pq);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
-  p_priority_queue<P, T>::p_priority_queue()
+  p_priority<P,Q>::p_priority()
   {
-    vect_needs_update_ = false;
-    bb_needs_update_ = false;
+    n_ = 0;
+    mln_invariant(run_());
   }
 
-  template <typename P, typename T>
-  inline
-  void
-  p_priority_queue<P, T>::vect_update_() const
-  {
-    vect_.clear();
-    vect_.reserve(npoints());
-
-    typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      std::copy((*it).second.vect().begin(), (*it).second.vect().end(),
-		std::back_inserter(vect_));
-    vect_needs_update_ = false;
-  }
-
-  template <typename P, typename T>
-  inline
-  void
-  p_priority_queue<P, T>::bb_update_() const
-  {
-    bb_.init();
-
-    typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      for (unsigned i = 0; i < (*it).second.npoints (); ++i)
-	bb_.take((*it).second[i]);
-    bb_needs_update_ = false;
-  }
-
-
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
   bool
-  p_priority_queue<P, T>::has(const P& p) const
+  p_priority<P,Q>::has(const psite&) const
   {
-    typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      if ((*it).second.has (p))
-	return true;
-    return false;
-  }
-
-  template <typename P, typename T>
-  inline
-  bool
-  p_priority_queue<P, T>::is_empty() const
-  {
-    typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      if (!(*it).second.is_empty ())
-	return false;
+    mln_invariant(run_());
+    // FIXME
     return true;
   }
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
-  size_t
-  p_priority_queue<P, T>::npoints() const
+  bool
+  p_priority<P,Q>::is_valid() const
   {
-    unsigned res = 0;
-
-    typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      if (!(*it).second.is_empty ())
- 	res += (*it).second.npoints();
-    return res;
+    mln_invariant(run_());
+    return true;
+  }
+  
+  template <typename P, typename Q>
+  inline
+  unsigned
+  p_priority<P,Q>::nsites() const
+  {
+    mln_invariant(run_());
+    return n_;
   }
 
-  template <typename P, typename T>
-  inline
-  const box_<P>&
-  p_priority_queue<P, T>::bbox() const
-  {
-    mln_precondition(npoints() != 0);
-    if (bb_needs_update_)
-      bb_update_();
-    return bb_.to_result();
-  }
-
-  template <typename P, typename T>
-  inline
-  p_priority_queue<P, T>&
-  p_priority_queue<P, T>::push_force(const P& p, T prio)
-  {
-    q_[prio].push_force (p);
-    if (! vect_needs_update_)
-      {
-	vect_needs_update_ = true;
-	bb_needs_update_ = true;
-      }
-    return *this;
-  }
-
-  template <typename P, typename T>
-  inline
-  p_priority_queue<P, T>&
-  p_priority_queue<P, T>::push(const P& p, T prio)
-  {
-    if (! has(p))
-      return this->push_force(p, prio);
-    else
-      return *this;
-  }
-
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
   void
-  p_priority_queue<P, T>::pop()
+  p_priority<P,Q>::push(const P& priority, const element& e)
   {
-    typename std::map<T, p_queue<P> >::reverse_iterator it = q_.rbegin ();
+    mln_invariant(run_());
+    p_.insert(priority); // No-op if this priority already exists.
+    q_[priority].push(e);
+    ++n_;
+    mln_invariant(run_());
+  }
 
-    for (; it != q_.rend (); ++it)
-      if (!(*it).second.is_empty ())
- 	return (*it).second.pop ();
+  template <typename P, typename Q>
+  inline
+  void
+  p_priority<P,Q>::insert(const i_element& p_e)
+  {
+    this->push(p_e.first, p_e.second); // Also test invariants.
+  }
 
-    if (! vect_needs_update_)
+  template <typename P, typename Q>
+  inline
+  void
+  p_priority<P,Q>::pop()
+  {
+    mln_precondition(! this->is_empty()); // Also test invariants.
+    P prior = highest_priority();
+    q_[prior].pop();
+    if (q_[prior].is_empty())
       {
-	vect_needs_update_ = true;
-	bb_needs_update_ = true;
+	q_.erase(prior);
+	p_.remove(prior);
       }
+    --n_;
+    mln_invariant(run_());
   }
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
-  const P&
-  p_priority_queue<P, T>::front() const
+  const mln_element(Q)&
+  p_priority<P,Q>::front() const
   {
-    mln_precondition(! q_.empty());
-
-    typename std::map<T, p_queue<P> >::const_reverse_iterator it = q_.rbegin ();
-
-    for (; it != q_.rend (); ++it)
-      if (!(*it).second.is_empty ())
-	break;
-    return (*it).second.front ();
+    mln_precondition(! this->is_empty()); // Also test invariants.
+    return q_[highest_priority()].front();
   }
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
-  const P&
-  p_priority_queue<P, T>::pop_front()
+  mln_element(Q)
+  p_priority<P,Q>::pop_front()
   {
-    const P& res = this->front();
-
+    mln_precondition(! this->is_empty()); // Also test invariants.
+    // FIXME: can be speeded up, return const& when possible...
+    mln_element(Q) e = this->front();
     this->pop();
-    return res;
+    return e;
   }
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
   void
-  p_priority_queue<P, T>::clear()
+  p_priority<P,Q>::clear()
   {
-    typename std::map<T, p_queue<P> >::iterator it = q_.begin ();
-
-    for (; it != q_.end (); ++it)
-      (*it).second.clear ();
+    mln_invariant(run_());
+    p_.clear();
     q_.clear();
-    vect_needs_update_ = false;
-    bb_needs_update_ = false;
+    n_ = 0;
+    mln_invariant(run_());
   }
 
-  template <typename P, typename T>
+  template <typename P, typename Q>
   inline
-  const std::vector<P>&
-  p_priority_queue<P, T>::vect() const
+  std::size_t
+  p_priority<P,Q>::memory_size() const
   {
-    if (vect_needs_update_)
-      vect_update_();
-    return vect_;
+    mln_invariant(run_());
+    std::size_t mem_q = 0;
+    typename std::map<P, Q>::const_iterator i;
+    for (i = q_.begin(); i != q_.end(); ++i)
+      mem_q += i->second.memory_size();
+    return p_.memory_size() + sizeof(q_) + sizeof(n_);
   }
-
-  template <typename P, typename T>
+  
+  template <typename P, typename Q>
   inline
-  const P&
-  p_priority_queue<P, T>::operator[](unsigned i) const
+  const Q&
+  p_priority<P,Q>::operator()(const P& priority) const
   {
-    mln_precondition(i < npoints());
-
-    typename std::map<T, p_queue<P> >::const_reverse_iterator it = q_.rbegin ();
-    unsigned cpt = 0;
-
-    for (; it != q_.rend (); ++it)
+    static const Q nil_ = Q();
+    if (exists_priority(priority)) // Also test invariants.
       {
-	if (!(*it).second.is_empty ())
-	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
-	    {
-	      if (i == 0)
-		return (*it).second[cpt];
-	      --i;
-	    }
+	std::map<P,Q>& mq = const_cast<std::map<P,Q>&>(q_);
+	mln_assertion(mq[priority].nsites() > 0);
+	return mq[priority];
       }
-    return (*it).second[cpt];
+    else
+      return nil_;
+  }
+
+  template <typename P, typename Q>
+  inline
+  const util::set<P>&
+  p_priority<P,Q>::priorities() const
+  {
+    mln_invariant(run_());
+    return p_;
+  }
+
+  template <typename P, typename Q>
+  inline
+  bool
+  p_priority<P,Q>::exists_priority(const P& priority) const
+  {
+    mln_invariant(run_());
+    return p_.has(priority);
+  }
+
+  template <typename P, typename Q>
+  inline
+  const P
+  p_priority<P,Q>::highest_priority() const
+  {
+    mln_precondition(! this->is_empty()); // Also test invariants.
+    return p_.last_element();
+  }
+
+  template <typename P, typename Q>
+  inline
+  const P
+  p_priority<P,Q>::lowest_priority() const
+  {
+    mln_precondition(! this->is_empty()); // Also test invariants.
+    return p_.first_element();
+  }
+  
+  template <typename P, typename Q>
+  inline
+  const util::set<P>&
+  p_priority<P,Q>::set_1_() const
+  {
+    return p_;
+  }
+
+  template <typename P, typename Q>
+  inline
+  const Q&
+  p_priority<P,Q>::set_2_(const P& priority) const
+  {
+    mln_precondition(p_.has(priority));
+    std::map<P,Q>& mq = const_cast<std::map<P,Q>&>(q_);
+    mln_precondition(mq[priority].nsites() > 0);
+    return mq[priority];
+  }
+
+  template <typename P, typename Q>
+  inline
+  bool
+  p_priority<P,Q>::run_() const
+  {
+    if (! implies(n_ == 0, p_.is_empty()))
+      return false;
+
+    if (! (p_.nelements() == q_.size()))
+      // Containers p_ and q_ are not consistent in size!
+      return false;
+
+    typename util::set<P>::iter p(p_);
+    for_all(p)
+      if (q_.find(p) == q_.end())
+	// We have an empty queue (with priority p)!
+	return false;
+
+    typename std::map<P,Q>::const_iterator i;
+    for (i = q_.begin(); i != q_.end(); ++i)
+      if (! p_.has(i->first))
+	// A priority is unknown (for a known queue)! 
+	return false;
+
+    return true;
+  }
+
+
+  // Operator<<.
+
+  template <typename P, typename Q>
+  std::ostream& operator<<(std::ostream& ostr, const p_priority<P,Q>& pq)
+  {
+    ostr << '{';
+    typename util::set<P>::bkd_iter p(pq.priorities());
+    for_all(p)
+      {
+	ostr << ' ' << p << ':';
+	ostr << pq.set_2_(p);
+      }
+    ostr << '}';
+    return ostr;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -347,4 +424,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_PRIORITY_QUEUE_HH
+#endif // ! MLN_CORE_P_PRIORITY_HH

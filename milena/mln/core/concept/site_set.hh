@@ -33,8 +33,6 @@
  * \brief Definition of the concept of mln::Site_Set.
  *
  * \todo Rewrite and move out the ops.
- *
- * \todo Check optional methods s.a. nsites and bbox.
  */
 
 # include <mln/core/concept/site_iterator.hh>
@@ -78,14 +76,18 @@ namespace mln
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-     */
+      bool is_valid() const;
 
-    template <typename S>
-    E& insert_all(const Site_Set<S>& other);
+      std::size_t memory_size() const;
+     */
 
   protected:
     Site_Set();
   };
+
+
+  template <typename Sl, typename Sr>
+  Sl& operator+=(Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
   /*! \brief Equality test between site sets \p lhs and \p rhs.
@@ -142,6 +144,88 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // nsites: known or unknown.
+
+    template <typename trait_nsites, typename E>
+    struct site_set_nsites_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct site_set_nsites_check< mln::trait::site_set::nsites::known, E >
+    {
+      static void run()
+      {
+	unsigned (E::*m)() const = & E::nsites;
+	m = 0;
+      }
+    };
+
+    // bbox: unknown, lazy, or straight.
+
+    template <typename trait_bbox, typename E>
+    struct site_set_bbox_check
+    {
+      static void run()
+      {
+	typedef typename E::q_box q_box;
+	q_box (E::*m)() const = & E::bbox;
+	m = 0;
+      }
+    };
+
+    template <typename E>
+    struct site_set_bbox_check< mln::trait::site_set::bbox::unknown, E >
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    // contents: fixed, growing, or free.
+
+    template <typename trait_contents, typename E>
+    struct site_set_contents_check;
+
+    template <typename E>
+    struct site_set_contents_check< mln::trait::site_set::contents::fixed, E >
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct site_set_contents_check< mln::trait::site_set::contents::growing, E >
+    {
+      static void run()
+      {
+	typedef typename E::i_element i_element;
+	mlc_equal(mlc_unqualif(i_element), i_element)::check();
+	void (E::*m)(const i_element&) = & E::insert;
+	m = 0;
+      }
+    };
+
+    template <typename E>
+    struct site_set_contents_check< mln::trait::site_set::contents::free, E >
+    {
+      static void run()
+      {
+	typedef typename E::i_element i_element;
+	mlc_equal(mlc_unqualif(i_element), i_element)::check();
+	void (E::*m1)(const i_element&) = & E::insert;
+	m1 = 0;
+	typedef typename E::r_element r_element;
+	mlc_equal(mlc_unqualif(r_element), r_element)::check();
+	void (E::*m2)(const r_element&) = & E::remove;
+	m2 = 0;
+      }
+    };
+
+  } // end of namespace mln::internal
+
+
   // fwd decl
   template <typename P> struct box_;
 
@@ -160,28 +244,42 @@ namespace mln
     // Check associated types.
     typedef mln_site(E)  site;
     typedef mln_psite(E) psite;
+    typedef mln_piter(E) piter;
     typedef mln_fwd_piter(E) fwd_piter;
     typedef mln_bkd_piter(E) bkd_piter;
 
     // Check methods.
-    bool (E::*m)(const psite& p) const = & E::has;
-    m = 0;
+    bool (E::*m1)(const psite& p) const = & E::has;
+    m1 = 0;
+    bool (E::*m2)() const = & E::is_valid;
+    m2 = 0;
+    std::size_t (E::*m3)() const = & E::memory_size;
+    m3 = 0;
+
+    // Check methods depending upon properties.
+    internal::site_set_nsites_check  < mln_trait_site_set_nsites(E),   E >::run();
+    internal::site_set_bbox_check    < mln_trait_site_set_bbox(E),     E >::run();
+    internal::site_set_contents_check< mln_trait_site_set_contents(E), E >::run();
   }
 
 
-  template <typename E>
-  template <typename S>
+
+  // Operators.
+
+
+  template <typename Sl, typename Sr>
   inline
-  E& Site_Set<E>::insert_all(const Site_Set<S>& other)
+  Sl& operator+=(Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs)
   {
-    E& self = exact(*this);
-    mln_fwd_piter(S) p(exact(other));
+    mlc_is( mln_trait_site_set_contents(Sl),
+	    mln::trait::site_set::contents::dynamic )::check();
+    mlc_equal(mln_site(Sr), typename Sl::i_element)::check();
+    Sl& lhs = exact(lhs_);
+    mln_fwd_piter(Sr) p(exact(rhs));
     for_all(p)
-      self.insert(p);
-    return self;
+      lhs.insert(p);
+    return lhs;
   }
-
-  // operators
 
 
   template <typename Sl, typename Sr>

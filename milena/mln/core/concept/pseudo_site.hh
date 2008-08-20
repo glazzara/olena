@@ -64,11 +64,12 @@ namespace mln
   {
     typedef Pseudo_Site<void> category;
 
-    // When a pseudo site features this associated type...
-    // typedef target_t;
+    // typedef target;
 
-    // ...then it also features the method:
-    // const target_t* target();
+    // void change_target(const target& new_target);
+    // const target* target_() const; // Hook to the target.
+
+    bool has_target() const;
 
   protected:
     Pseudo_Site();
@@ -91,10 +92,26 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
+  inline
   Pseudo_Site<E>::Pseudo_Site()
   {
-    // FIXME
+    typedef mln_target(E) target;
+
+    void (E::*m1)(const target&) = & E::change_target;
+    m1 = 0;
+    const target* (E::*m2)() const = & E::target_;
+    m2 = 0;
   }
+
+  template <typename E>
+  inline
+  bool
+  Pseudo_Site<E>::has_target() const
+  {
+    return exact(this)->target_() != 0;
+  }
+
+
 
   namespace if_possible
   {
@@ -109,9 +126,9 @@ namespace mln
       {
 
 	template <typename P>
-	void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target) const
+	void change_target(Pseudo_Site<P>& p, const mln_target(P)& new_target) const
 	{
-	  exact(p).target() = & new_target;
+	  exact(p).change_target(new_target);
 	}
 
 	template <typename O, typename D>
@@ -135,33 +152,11 @@ namespace mln
     } // namespace mln::if_possible::internal
 
 
-
-    // FIXME: Was:
-
-//     template <typename P>
-//     void change_target(Pseudo_Site<P>& p, const typename P::target_t& new_target)
-//     {
-//       exact(p).target() = & new_target;
-//     }
-
-//     template <typename O, typename D>
-//     void change_target(Object<O>&, const D&)
-//     {
-//       // No-op.
-//     }
-
-//     template <typename P>
-//     void change_target(P& p, const typename P::target_t& new_target)
-//     {
-//       exact(p).target() = & new_target;
-//     }
-
-
     template <typename O, typename D>
     void change_target(O& o, const D& d)
     {
       enum { is_object = mlc_is_a(O, Object)::value };
-      mln::if_possible::internal::helper< is_object >().change_target(o, d);
+      mln::if_possible::internal::helper< is_object >().change_target(exact(o), d);
     }
 
   } // end of namespace mln::if_possible

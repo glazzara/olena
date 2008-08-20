@@ -66,8 +66,8 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// The set site targeted by pi_.
-    const S& pi_set_from_(const pset_if<S,F>& s) const;
+    /// Change the set site targeted by pi_.
+    void pi_change_target_(const pset_if<S,F>& s);
 
   private:
     typedef pset_if_piter_<Pi,S,F> self_;
@@ -117,10 +117,10 @@ namespace mln
   
   template <typename Pi, typename S, typename F>
   inline
-  const S&
-  pset_if_piter_<Pi,S,F>::pi_set_from_(const pset_if<S,F>& s) const
+  void
+  pset_if_piter_<Pi,S,F>::pi_change_target_(const pset_if<S,F>& s) const
   {
-    return s.overset();
+    pi_.change_target(s.overset());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

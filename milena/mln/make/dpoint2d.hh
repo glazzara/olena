@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,13 +49,13 @@ namespace mln
      *
      * \return A 2D dpoint.
      */
-    mln::dpoint2d dpoint2d(int row, int col);
+    mln::dpoint2d dpoint2d(def::coord row, def::coord col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    mln::dpoint2d dpoint2d(int row, int col)
+    mln::dpoint2d dpoint2d(def::coord row, def::coord col)
     {
       mln::dpoint2d tmp;
       tmp[0] = row;

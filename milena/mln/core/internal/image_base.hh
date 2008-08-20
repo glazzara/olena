@@ -30,7 +30,7 @@
 
 /*! \file mln/core/internal/image_base.hh
  *
- * \brief Definition of a base class for some images.
+ * \brief Definition of the common base class for all images.
  */
 
 # include <mln/core/concept/image.hh>
@@ -38,6 +38,7 @@
 # include <mln/core/trait/qlf_value.hh>
 # include <mln/core/internal/check/image_all.hh>
 # include <mln/core/internal/data.hh>
+# include <mln/core/internal/morpher_lvalue.hh>
 # include <mln/util/tracked_ptr.hh>
 
 
@@ -60,23 +61,6 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal Return the lvalue type when an image with type \c I is
-     *  morphed.
-     *
-     */
-    template <typename I>
-    struct morpher_lvalue_
-    {
-      typedef mln_lvalue(I) ret;
-    };
-
-    template <typename I>
-    struct morpher_lvalue_< const I >
-    {
-      typedef mln_rvalue(I) ret;
-    };
-
-
 
     template <typename E>
     struct image_checked_
@@ -88,10 +72,8 @@ namespace mln
 
 
 
-    /*! \internal A base class for images.
-     *  Parameter \p S is a point set type.
-     *
-     */
+    /// \internal A base class for images.  Parameter \p S is the
+    /// image site set type.
     template <typename S, typename E>
     struct image_base
       :

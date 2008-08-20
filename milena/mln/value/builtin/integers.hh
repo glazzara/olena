@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,14 +47,14 @@
 namespace mln
 {
 
-  template <> struct category< unsigned char  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed char  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned short > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed short > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned int   > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed int   > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category< unsigned long  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
-  template <> struct category<   signed long  > { typedef value::Built_In<void> ret; typedef value::Integer<void> super; };
+  template <> struct category< unsigned char  > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category<   signed char  > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category< unsigned short > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category<   signed short > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category< unsigned int   > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category<   signed int   > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category< unsigned long  > { typedef value::Built_In< value::Integer<void> > ret; };
+  template <> struct category<   signed long  > { typedef value::Built_In< value::Integer<void> > ret; };
 
 
   namespace trait

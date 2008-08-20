@@ -255,7 +255,7 @@ namespace mln
   const std::vector<D>&
   window<D>::std_vector() const
   {
-    return dps_.vect();
+    return dps_.std_vector();
   }
 
   template <typename D>

@@ -38,6 +38,8 @@
 # include <mln/accu/min_max.hh>
 # include <mln/level/fill.hh>
 
+# include <mln/morpho/internal/elementary.hh>
+
 
 namespace mln
 {
@@ -67,6 +69,14 @@ namespace mln
       namespace generic
       {
 
+	struct f_grad {
+	  template <typename A, typename V>
+	  V operator()(const A& a, const V&) const
+	  {
+	    return a.second() - a.first();
+	  }
+	};
+
 	template <typename I, typename N>
 	mln_concrete(I)
 	gradient_elementary_on_function(const I& input, const N& nbh)
@@ -74,18 +84,7 @@ namespace mln
 	  trace::entering("morpho::impl::generic::gradient_elementary_on_function");
 
 	  mln_concrete(I) output;
-	  initialize(output, input);
-
-	  accu::min_max_<mln_value(I)> m;
-	  mln_piter(I) p(input.domain());
-	  mln_niter(N) n(nbh, p);
-	  for_all(p)
-	    {
-	      m.take_as_init(input(p));
-	      for_all(n) if (input.has(n))
-		m.take(input(n));
-	      output(p) = m.second() - m.first();
-	    }
+	  output = internal::elementary< accu::min_max >(input, nbh, f_grad());
 
 	  trace::exiting("morpho::impl::generic::gradient_elementary_on_function");
 	  return output;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,14 +30,12 @@
 
 /*! \file mln/core/internal/site_set_base.hh
  *
- * \brief Definition of a base class for site set classes.
+ * \brief Definition of the common base class for all site set
+ * classes.
  */
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/site_proxy.hh>
-# include <mln/core/grids.hh>
-# include <mln/metal/is_a.hh>
-# include <mln/metal/if.hh>
 
 
 namespace mln
@@ -53,12 +51,22 @@ namespace mln
     template <typename P, typename E>
     struct site_set_base_ : public Site_Set<E>
     {
-
       /// Site associated type.
-      typedef typename internal::site_from<P>::ret site;
+      typedef typename subject<P>::ret site;
+
+      /// Test if the site set is empty.  This final method dispatches
+      /// to is_empty_ whose default implementation relies on the
+      /// 'nsites' method.
+      bool is_empty() const;
 
     protected:
       site_set_base_();
+
+    private:
+      // Default impl based on the number of sites.  It can be
+      // overridden in subclasses that do not feature the 'nsites'
+      // method.
+      bool is_empty_() const;
     };
 
 
@@ -68,6 +76,22 @@ namespace mln
     inline
     site_set_base_<S,E>::site_set_base_()
     {
+    }
+
+    template <typename S, typename E>
+    inline
+    bool
+    site_set_base_<S,E>::is_empty() const
+    {
+      return exact(this)->is_empty_();
+    }
+
+    template <typename S, typename E>
+    inline
+    bool
+    site_set_base_<S,E>::is_empty_() const
+    {
+      return exact(this)->nsites() == 0;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

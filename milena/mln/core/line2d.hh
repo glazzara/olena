@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE2D_HH
-# define MLN_CORE_LINE2D_HH
+#ifndef MLN_CORE_P_LINE2D_HH
+# define MLN_CORE_P_LINE2D_HH
 
-/*! \file mln/core/line2d.hh
+/*! \file mln/core/p_line2d.hh
  *
- * \brief Definition of a point set class based on std::vector.
+ * \brief Definition of a 2D discrete line of points (based on
+ * p_array).
  */
 
-# include <vector>
-
-# include <mln/core/internal/site_set_base.hh>
-# include <mln/core/p_array_piter.hh>
+# include <mln/core/p_array.hh>
 # include <mln/core/box2d.hh>
 # include <mln/math/all.hh>
 
@@ -44,46 +42,101 @@
 namespace mln
 {
 
+  // Forward declaration.
+  class p_line2d;
+
+
+
+  namespace trait
+  {
+
+    template <>
+    struct site_set_< p_line2d >
+    {
+      typedef trait::site_set::nsites::known   nsites;
+      typedef trait::site_set::bbox::straight  bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef trait::site_set::arity::unique   arity;
+    };
+
+  } // end of namespace trait
+
+
 
   /*! \brief 2D line point set class.
    */
-  class line2d : public internal::site_set_base_< point2d, line2d >
+  class p_line2d : public internal::site_set_base_< point2d, p_line2d >
   {
+    typedef p_line2d self_;
   public:
 
+    /// Element associated type.
+    typedef point2d element;
+
+    /// Psite associated type.
+    typedef p_indexed_psite<self_> psite;
+
+    /// Site_Iterator associated type.
+    typedef p_indexed_fwd_piter<self_> piter;
+
     /// Forward Site_Iterator associated type.
-    typedef p_array_fwd_piter_<point2d> fwd_piter;
+    typedef p_indexed_fwd_piter<self_> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_array_bkd_piter_<point2d> bkd_piter;
+    typedef p_indexed_bkd_piter<self_> bkd_piter;
 
+
+    /// Constructor without argument.
+    p_line2d();
 
     /// Constructor from point \p beg to point \p end.
-    line2d(const point2d& beg, const point2d& end);
+    p_line2d(const point2d& beg, const point2d& end,
+	     bool is_end_excluded = false);
 
 
-    /// Test is \p p belongs to this point set.
-    bool has(const point2d& p) const;
+    /// Test if \p p belongs to this point set.
+    bool has(const psite& p) const;
+
+    /// Test if index \p i belongs to this point set.
+    bool has(const util::index& i) const;
+
+    /// Test if this line is valid, i.e., initialized.
+    bool is_valid() const;
+
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    unsigned nsites() const;
 
-    /// Give the exact bounding box.
-    const box_<point2d>& bbox() const;
+    /// Give the point that begins the line.
+    const point2d& begin() const;
 
-    /// Return the corresponding std::vector of points.
-    const std::vector<point2d>& vect() const;
+    /// Give the point that ends the line.
+    const point2d& end() const;
 
-    /// Return the \p i-th point.
+    /// Return the \p i-th point of the line.
     const point2d& operator[](unsigned i) const;
 
+
+    /// Box (qualified) associated type.
+    typedef const box2d& q_box;
+
+    /// Give the exact bounding box.
+    const box2d& bbox() const;
+
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
+
+    /// Return the corresponding std::vector of points.
+    const std::vector<point2d>& std_vector() const;
+    
   protected:
 
-    point2d beg_, end_;
-    std::vector<point2d> vect_;
+    p_array<point2d> arr_;
     box2d bb_;
 
-    void compute_();
+    void compute_(const point2d& beg, const point2d& end,
+		  bool is_end_excluded);
   };
 
 
@@ -91,30 +144,42 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   inline
-  line2d::line2d(const point2d& beg, const point2d& end)
-    : beg_(beg),
-      end_(end)
+  p_line2d::p_line2d()
   {
-    compute_();
+    mln_postcondition(! is_valid());
+  }
+
+  inline
+  p_line2d::p_line2d(const point2d& beg, const point2d& end,
+		 bool is_end_excluded)
+  {
+    if (is_end_excluded)
+      mln_precondition(end != beg);
+    compute_(beg, end, is_end_excluded);
+    mln_postcondition(is_valid());
   }
 
   inline
   void
-  line2d::compute_()
+  p_line2d::compute_(const point2d& beg, const point2d& end,
+		   bool is_end_excluded)
   {
-    // vect_
-    dpoint2d dp = end_ - beg_;
+    if (is_end_excluded)
+      mln_precondition(end != beg);
+
+    // Compute arr_.
+    dpoint2d dp = end - beg;
     int
       srow = math::sign(dp.row()), drow = math::abs(dp.row()), ddrow = 2 * drow,
       scol = math::sign(dp.col()), dcol = math::abs(dp.col()), ddcol = 2 * dcol,
-      row = beg_.row(),
-      col = beg_.col();
+      row = beg.row(),
+      col = beg.col();
     if ( dcol > drow )
       {
 	int e = ddrow - dcol;
 	for (int i = 0; i < dcol; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    arr_.append(make::point2d(row, col));
 	    while (e >= 0)
 	      {
 		row += srow;
@@ -129,7 +194,7 @@ namespace mln
 	int e = ddcol - drow;
 	for (int i = 0; i < drow; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    arr_.append(make::point2d(row, col));
 	    while (e >= 0)
 	      {
 		col += scol;
@@ -139,54 +204,97 @@ namespace mln
 	    e += ddcol;
 	  }
       }
-    vect_.push_back(make::point2d(row, col));
-    // bb_
-    bb_.pmin() = make::point2d(math::min(beg_.row(), end_.row()),
-			       math::min(beg_.col(), end_.col()));
-    bb_.pmax() = make::point2d(math::max(beg_.row(), end_.row()),
-			       math::max(beg_.col(), end_.col()));
+    if (! is_end_excluded)
+      arr_.append(make::point2d(row, col));
+
+    // Compute bb_.
+    point2d end_ = arr_[arr_.nsites() - 1];
+    bb_.pmin() = make::point2d(math::min(beg.row(), end_.row()),
+			       math::min(beg.col(), end_.col()));
+    bb_.pmax() = make::point2d(math::max(beg.row(), end_.row()),
+			       math::max(beg.col(), end_.col()));
+
+    mln_postcondition(this->begin() == beg);
+    mln_postcondition(is_end_excluded == (this->end() != end));
   }
 
   inline
   bool
-  line2d::has(const point2d& p) const
+  p_line2d::has(const psite& p) const
   {
-    if (! bb_.has(p))
+    mln_precondition(p.target_() == this); // FIXME: Refine.
+    if (! has(p.index()))
       return false;
-    // FIXME: Optimize!
-    for (unsigned i = 0; i < vect_.size(); ++i)
-      if (vect_[i] == p)
-	return true;
-    return false;
+    mln_invariant(p.to_site() == (*this)[p.index()]);
+    return true;
   }
 
   inline
-  std::size_t
-  line2d::npoints() const
+  bool
+  p_line2d::has(const util::index& i) const
   {
-    return vect_.size();
+    return i >= 0 && unsigned(i) < nsites();
+  }
+
+  inline
+  bool
+  p_line2d::is_valid() const
+  {
+    mln_invariant(implies(bb_.is_valid(), ! arr_.is_empty()));
+    return bb_.is_valid();
+  }
+
+  inline
+  unsigned
+  p_line2d::nsites() const
+  {
+    return arr_.nsites();
   }
 
   inline
   const box2d&
-  line2d::bbox() const
+  p_line2d::bbox() const
   {
+    mln_precondition(is_valid());
     return bb_;
   }
 
   inline
   const std::vector<point2d>&
-  line2d::vect() const
+  p_line2d::std_vector() const
   {
-    return vect_;
+    return arr_.std_vector();
   }
 
   inline
   const point2d&
-  line2d::operator[](unsigned i) const
+  p_line2d::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
-    return vect_[i];
+    mln_precondition(i < nsites());
+    return arr_[i];
+  }
+
+  inline
+  const point2d&
+  p_line2d::begin() const
+  {
+    mln_precondition(is_valid());
+    return arr_[0];
+  }
+
+  inline
+  const point2d&
+  p_line2d::end() const
+  {
+    mln_precondition(is_valid());
+    return arr_[nsites() - 1];
+  }
+
+  inline
+  std::size_t
+  p_line2d::memory_size() const
+  {
+    return arr_.memory_size() + sizeof(box2d);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -194,4 +302,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_LINE2D_HH
+#endif // ! MLN_CORE_P_LINE2D_HH

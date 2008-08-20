@@ -61,7 +61,7 @@ int main()
   {
     typedef p_array<point2d> A;
     A arr;
-    arr.insert_all(ima.domain());
+    arr += ima.domain();
     mln_fwd_piter_(A) p(arr);
     for_all(p)
       picture(ima, win, p);

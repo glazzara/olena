@@ -31,6 +31,9 @@
 /*! \file mln/trait/site_set/props.hh
  *
  * \brief Properties of site set classes.
+ *
+ * \todo Precise the differences (?) between dynamic, growing, and
+ * free...
  */
 
 # include <string>
@@ -138,10 +141,10 @@ namespace mln
       {
 	/// Base class for the site set 'contents' property.
 	struct any { protected: any() {} };
-	struct fixed   : any { std::string name() const { return "contents::fixed"; } };
+	struct fixed   : any     { std::string name() const { return "contents::fixed"; } };
 	struct dynamic : any { protected: dynamic() {} };
 	struct growing : dynamic { std::string name() const { return "contents::growing"; } };
-	struct free    : dynamic { std::string name() const { return "contents::dynamic"; } };
+	struct free    : dynamic { std::string name() const { return "contents::free"; } };
       };
 
       /// Site set property about the unicity or multiplicity of its

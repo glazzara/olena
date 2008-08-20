@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,13 +31,15 @@
 /*! \file mln/core/sparse_image.hh
  *
  * \brief Definition of an image with sparse encoding.
+ *
+ * \todo Update p_run_set<P> to p_set_of< p_run<P> >.
  */
 
-# include <mln/core/internal/run_image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
-# include <mln/value/set.hh>
 # include <vector>
+# include <mln/core/internal/image_primary.hh>
+# include <mln/core/p_runs.hh>
+# include <mln/value/set.hh>
+
 
 namespace mln
 {
@@ -51,21 +53,15 @@ namespace mln
 
     /// \internal Data structure for \c mln::sparse_image<P,T>.
     template <typename P, typename T>
-    struct data_< sparse_image<P,T> >
+    struct data< sparse_image<P,T> >
     {
-      data_();
+      data();
 
-      /// Image values.
+      /// Domain.
+      p_run_set<P> domain_;
+
+      /// Image.
       std::vector< std::vector<T> > values_;
-
-      /// domain of the image
-      p_runs_<P> domain_;
-
-      /// Return the size of the data in memory.
-      unsigned size_mem() const;
-
-      /// Finalize the domain (internal use).
-      void finalize();
     };
 
   } // end of namespace mln::internal
@@ -77,21 +73,29 @@ namespace mln
     template <typename P, typename T>
     struct image_< sparse_image<P,T> > : default_image_< T, sparse_image<P,T> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fast       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::access::browsing   access;
-      // FIXME: Put the right dimension.
-      typedef trait::image::space::two_d     space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
+      // value
+      typedef trait::image::value_access::direct       value_access;
+      typedef trait::image::value_storage::piecewise   value_storage;
+      typedef trait::image::value_browsing::value_wise value_browsing;
+      typedef trait::image::value_io::read_write       value_io;
 
-      typedef trait::image::border::none     border;
-      typedef trait::image::data::linear     data;
-      typedef trait::image::io::read_only    io;
-      typedef trait::image::speed::slow      speed;
+      // site / domain
+      typedef trait::image::localization::basic_grid localization;
+      typedef trait::image::dimension::two_d         dimension; // FIXME
+
+      // extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
+
 
 
   /*! \brief RLE image with different value in runs.
@@ -102,42 +106,63 @@ namespace mln
    * This image is not point wise accessible.
    */
   template <typename P, typename T>
-  class sparse_image : public internal::run_image_< T, P, sparse_image<P, T> >
+  class sparse_image
+    : public internal::image_primary< p_run_set<P>,
+				      sparse_image<P,T> >
   {
+    typedef sparse_image<P,T> self_;
+    typedef internal::image_primary<p_run_set<P>, self_> super_;
   public:
-    typedef T value;
-    typedef T& lvalue;
-    typedef const T rvalue;
-    typedef runs_psite<P> psite;
+
+    /// Value associated type.
+    typedef T         value;
+
+    /// Return type of read-only access.
+    typedef const T& rvalue;
+
+    /// Return type of read-write access.
+    typedef T&       lvalue;
+
+
+    /// Value_Set associated type.
     typedef mln::value::set<T> vset;
-    typedef p_runs_<P> pset;
 
 
     /// Skeleton.
     typedef sparse_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
 
+    /// Constructor without argument.
     sparse_image();
 
+    /// Constructor from a set of runs.
+    sparse_image(const p_run_set<P>& s);
+
+
     /// Add a new range to the image.
-    void insert(const p_run<P>& pr, const std::vector<T>& value);
+    void insert(const p_run<P>& r, const std::vector<T>& vals);
+
+
+    typedef typename super_::psite psite;
+
+    /// Test if \p p is valid.
+    bool has(const psite& p) const;
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const runs_psite<P>& site) const;
+    rvalue operator()(const psite& p) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const runs_psite<P>& site);
+    lvalue operator()(const psite& p);
 
-    /// Test if this image has been initialized.
-    bool has_data() const;
 
     /// Give the set of values of the image.
     const vset& values() const;
 
-    /// Give the definition domain.
-    const pset& domain() const;
 
+    /// Give the definition domain.
+    const p_run_set<P>& domain() const;
   };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -145,51 +170,39 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< sparse_image<I,S> >
+    // internal::data< sparse_image<I,S> >
 
     template <typename P, typename T>
     inline
-    data_< sparse_image<P,T> >::data_()
+    data< sparse_image<P,T> >::data()
     {
-    }
-
-    template <typename P, typename T>
-    inline
-    unsigned
-    data_< sparse_image<P,T> >::size_mem() const
-    {
-      return sizeof(T) * domain_.npoints() + domain_.size_mem();
-    }
-
-    template <typename P, typename T>
-    inline
-    void
-    data_< sparse_image<P,T> >::finalize()
-    {
-      domain_.finalize();
     }
 
   } // end of namespace mln::internal
 
+
   template <typename P, typename T>
   inline
-  sparse_image<P, T>::sparse_image()
+  sparse_image<P,T>::sparse_image()
   {
-    this->data_ = new internal::data_< sparse_image<P,T> >();
   }
 
   template <typename P, typename T>
   inline
-  bool
-  sparse_image<P, T>::has_data() const
+  sparse_image<P,T>::sparse_image(const p_run_set<P>& s)
   {
-    return this->data_->values_.size() != 0;
+    this->data_ = new internal::data< sparse_image<P,T> >();
+    this->data_->domain_ = s;
+    const unsigned nr = s.nruns();
+    this->data_->values_.resize(nr);
+    for (unsigned r = 0; r < nr; ++r)
+      this->data_->values_[r].resize(s.run(r).nsites());
   }
 
   template <typename P, typename T>
   inline
-  const typename sparse_image<P, T>::vset&
-  sparse_image<P, T>::values() const
+  const typename sparse_image<P,T>::vset&
+  sparse_image<P,T>::values() const
   {
     return vset::the();
   }
@@ -197,40 +210,48 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  sparse_image<P, T>::insert(const p_run<P>& pr, const std::vector<T>& value)
+  sparse_image<P,T>::insert(const p_run<P>& r, const std::vector<T>& vals)
   {
-    if (!this->has_data())
-      this->data_ = new internal::data_< sparse_image<P,T> >();
-    mln_assertion(this->data_->values_.size() == 0 ||
-		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
-    this->data_->domain_.insert(pr);
-    this->data_->values_.push_back(value);
+    mln_precondition(r.nsites() == vals.size());
+    if (! this->has_data())
+      this->data_ = new internal::data< sparse_image<P,T> >();
+    this->data_->domain_.insert(r);
+    this->data_->values_.push_back(vals);
   }
 
   template <typename P, typename T>
   inline
-  typename sparse_image<P, T>::rvalue
-  sparse_image<P, T>::operator() (const runs_psite<P>& site)
-    const
+  bool
+  sparse_image<P,T>::has(const psite& p) const
   {
-    mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()][site.p_in_run()];
+    mln_precondition(this->has_data());
+    return this->data_->domain_.has(p);
   }
 
   template <typename P, typename T>
   inline
-  typename sparse_image<P, T>::lvalue
-  sparse_image<P, T>::operator() (const runs_psite<P>& site)
+  const T&
+  sparse_image<P,T>::operator()(const psite& p) const
   {
-    mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()][site.p_in_run()];
+    mln_precondition(this->has(p));
+    return this->data_->values_[p.index()][p.p().index()];
   }
 
   template <typename P, typename T>
   inline
-  const typename sparse_image<P, T>::pset&
-  sparse_image<P, T>::domain() const
+  T&
+  sparse_image<P,T>::operator()(const psite& p)
   {
+    mln_precondition(this->has(p));
+    return this->data_->values_[p.index()][p.p().index()];
+  }
+
+  template <typename P, typename T>
+  inline
+  const p_run_set<P>&
+  sparse_image<P,T>::domain() const
+  {
+    mln_precondition(this->has_data());
     return this->data_->domain_;
   }
 

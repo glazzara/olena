@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,8 +48,24 @@
 /// Postcondition.
 # define mln_postcondition(expr) assert(expr)
 
-/// Implication.
-# define mln_implies(lexpr, repxr) assert(! (rexpr) || (lexpr))
+
+namespace mln
+{
+
+  /// Implication.
+  bool implies(bool lexpr, bool rexpr);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  bool implies(bool lexpr, bool rexpr)
+  {
+    return ! (rexpr) || (lexpr);
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
 
 
 #endif // ! MLN_CORE_CONTRACT_HH

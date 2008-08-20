@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -60,10 +61,10 @@ namespace mln
      * A fast queue is used so that the algorithm is not recursive and
      * can handle large binary objects (blobs).
      */
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
     blobs(const Image<I>& input, const Neighborhood<N>& nbh,
-	  unsigned& nlabels);
+	  L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -74,9 +75,9 @@ namespace mln
       namespace generic
       {
 	
-	template <typename I, typename N>
-	mln_ch_value(I, unsigned)
-	  blobs_(const I& input, const N& nbh, unsigned& nlabels)
+	template <typename I, typename N, typename L>
+	mln_ch_value(I, L)
+	  blobs_(const I& input, const N& nbh, L& nlabels)
 	{
 	  typedef mln_psite(I) P;
 
@@ -86,7 +87,7 @@ namespace mln
 
 	  // Initialization.
 	  nlabels = 0;
-	  mln_ch_value(I, unsigned) output;
+	  mln_ch_value(I, L) output;
 	  initialize(output, input);
 	  level::fill(output, 0);
 
@@ -107,7 +108,7 @@ namespace mln
 		    for_all(n) if (input.has(n))
 		      if (input(n) && ! output(n))
 			{
-			  mln_invariant(! qu.has(n));
+			  mln_invariant(! qu.compute_has(n));
 			  qu.push(n);
 			  output(n) = nlabels;
 			}
@@ -121,9 +122,9 @@ namespace mln
       } // end of namespace mln::labeling::impl::generic
 
 
-      template <typename I, typename N>
-      mln_ch_value(I, unsigned)
-	blobs_(const I& input, const N& nbh, unsigned& nlabels)
+      template <typename I, typename N, typename L>
+      mln_ch_value(I, L)
+	blobs_(const I& input, const N& nbh, L& nlabels)
       {
 	// The only implementation is the generic one.
 	return generic::blobs_(input, nbh, nlabels);
@@ -134,11 +135,11 @@ namespace mln
 
     // Facade.
 
-    template <typename I, typename N>
+    template <typename I, typename N, typename L>
     inline
-    mln_ch_value(I, unsigned)
+    mln_ch_value(I, L)
     blobs(const Image<I>& input_, const Neighborhood<N>& nbh_,
-	  unsigned& nlabels)
+	  L& nlabels)
     {
       trace::entering("labeling::blobs");
       mlc_equal(mln_trait_image_kind(I),
@@ -147,7 +148,7 @@ namespace mln
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
-      mln_ch_value(I, unsigned) output = impl::blobs_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::blobs_(input, nbh, nlabels);
 
       trace::exiting("labeling::blobs");
       return output;

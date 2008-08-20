@@ -31,6 +31,8 @@
 /*! \file mln/core/concept/delta_point_site.hh
  *
  * \brief Definition of the concept of mln::Gdpoint.
+ *
+ * \todo Add support for (s * dp)...
  */
 
 # include <mln/core/concept/object.hh>

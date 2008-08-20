@@ -49,6 +49,12 @@
 
 // b
 
+/// Shortcuts to access the bkd_iter type associated to T.
+/// \{
+# define mln_bkd_iter(T)   typename T::bkd_iter
+# define mln_bkd_iter_(T)           T::bkd_iter
+/// \}
+
 /// Shortcuts to access the bkd_niter type associated to T.
 /// \{
 # define mln_bkd_niter(T)  typename T::bkd_niter
@@ -112,6 +118,12 @@
 
 // e
 
+/// Shortcuts to access the element type associated to T.
+/// \{
+# define mln_element(T)        typename T::element
+# define mln_element_(T)                T::element
+/// \}
+
 /// Shortcuts to access the encoding type associated to T.
 /// \{
 # define mln_enc(T)        typename T::enc
@@ -126,6 +138,12 @@
 
 
 // f
+
+/// Shortcuts to access the fwd_iter type associated to T.
+/// \{
+# define mln_fwd_iter(T)   typename T::fwd_iter
+# define mln_fwd_iter_(T)           T::fwd_iter
+/// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.
 /// \{
@@ -173,6 +191,12 @@
 /// \{
 # define mln_invert(T)	   typename T::invert
 # define mln_invert_(T)             T::invert
+/// \}
+
+/// Shortcuts to access the iterator type associated to T.
+/// \{
+# define mln_iter(T)      typename T::iter
+# define mln_iter_(T)              T::iter
 /// \}
 
 
@@ -243,6 +267,12 @@
 # define mln_qiter_(T)              T::fwd_qiter
 /// \}
 
+/// Shortcuts to access the qualified-subject type associated to T.
+/// \{
+# define mln_q_subject(T)      typename T::q_subject
+# define mln_q_subject_(T)              T::q_subject
+/// \}
+
 
 // n
 
@@ -276,11 +306,21 @@
 # define mln_site_(T)              T::site
 /// \}
 
-/// Shortcuts to access the subject type associated to T.
+// /// Shortcuts to access the subject type associated to T.
+// /// \{
+// # define mln_subject(T)      typename T::subject
+// # define mln_subject_(T)              T::subject
+// /// \}
+
+
+// t
+
+/// Shortcuts to access the target type associated to T.
 /// \{
-# define mln_subject(T)      typename T::subject
-# define mln_subject_(T)              T::subject
+# define mln_target(T)      typename T::target
+# define mln_target_(T)              T::target
 /// \}
+
 
 
 // v

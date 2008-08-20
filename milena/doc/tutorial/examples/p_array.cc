@@ -25,19 +25,20 @@ void picture(const A& arr)
 int main()
 {
   using namespace mln;
-
+  
   typedef p_array<point2d> Arr1;
   typedef p_array<mln_psite_(Arr1)> Arr2;
+
   
   {
-    mln_assertion(mln_psite_(Arr1)::proxy_level == 1);
-    mln_assertion(mln_piter_(Arr1)::proxy_level == 2);
-    mln_assertion(mln_psite_(Arr2)::proxy_level == 2);
-    mln_assertion(mln_piter_(Arr2)::proxy_level == 3);
+    mlc_bool(mln_psite_(Arr1)::proxy_level == 1)::check();
+    mlc_bool(mln_piter_(Arr1)::proxy_level == 2)::check();
+    mlc_bool(mln_psite_(Arr2)::proxy_level == 2)::check();
+    mlc_bool(mln_piter_(Arr2)::proxy_level == 3)::check();
   }
 
   Arr1 arr1;
-  
+
   {
     point2d p(1,1);
     arr1.append(p);

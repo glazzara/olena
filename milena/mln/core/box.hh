@@ -31,6 +31,8 @@
 /*! \file mln/core/box.hh
  *
  * \brief This file defines a generic box class.
+ *
+ * \todo Test if the safety code in box::box() is not too slow.
  */
 
 # include <mln/core/concept/box.hh>
@@ -71,7 +73,7 @@ namespace mln
    */
   template <typename P>
   struct box : public Box< box<P> >,
-		public internal::box_impl_< P::dim, mln_coord(P), box<P> >
+	       public internal::box_impl_< P::dim, mln_coord(P), box<P> >
   {
     /// Dimension.
     enum { dim = P::dim };
@@ -128,9 +130,12 @@ namespace mln
     /// Give a larger box.
     box<P> to_larger(unsigned b) const;
 
-    /// Test that the box owns valid data, i.e., pmin is 'less-than'
-    /// pmax.
+    /// Test that the box owns valid data, i.e., is initialized and
+    /// with pmin being 'less-than' pmax.
     bool is_valid() const;
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
 
   protected:
 
@@ -158,9 +163,9 @@ namespace mln
   bool
   box<P>::is_valid() const
   {
-    typedef util::less<P> less_t;
-    static const less_t op = less_t();
-    return op(pmin_, pmax_);
+    // Validity is: for all i, pmin_[i] <= pmax_[i].
+    // Nota bene: a one-point box is valid.
+    return util::op_less_or_equal(pmin_, pmax_);
   }
 
   template <typename P>
@@ -200,7 +205,10 @@ namespace mln
   template <typename P>
   inline
   box<P>::box()
+    : pmin_(P::plus_infty()),
+      pmax_(P::minus_infty())
   {
+    // FIXME: The code above can be slow; think about removing it...
   }
 
   template <typename P>
@@ -283,6 +291,14 @@ namespace mln
     }
     mln_postcondition(tmp.is_valid());
     return tmp;
+  }
+
+  template <typename P>
+  inline
+  std::size_t
+  box<P>::memory_size() const
+  {
+    return sizeof(*this);
   }
 
   template <typename P>

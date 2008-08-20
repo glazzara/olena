@@ -29,13 +29,17 @@
 # define MLN_CORE_SUB_IMAGE_HH
 
 /*!
- * \file   sub_image.hh
+ * \file mln/core/sub_image.hh
  *
  * \brief Definition of morpher that makes an image become restricted
  * given by a point set.
+ *
+ * \todo Add a special case for "ima | box"; think about some other
+ * special cases...
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
+# include <mln/core/image/instant.hh>
 
 
 namespace mln
@@ -94,8 +98,8 @@ namespace mln
 
   template <typename I, typename S>
   struct sub_image : public internal::image_domain_morpher< I,
-							     S,
-							     sub_image<I,S> >
+							    S,
+							    sub_image<I,S> >
   {
     /// Skeleton.
     typedef sub_image< tag::image_<I>, tag::pset_<S> > skeleton;
@@ -119,14 +123,32 @@ namespace mln
 
 
 
+
   template <typename I, typename S>
   sub_image<const I, S>
   operator|(const Image<I>& ima, const Site_Set<S>& pset);
 
+
+//   template <typename I, typename S>
+//   sub_image<I, S>
+//   operator|(Image<I>& ima, const Site_Set<S>& pset);
+
+
+// REPLACEMENT:
+
   template <typename I, typename S>
-  sub_image<I, S>
+  instant_< sub_image<I, S> >
   operator|(Image<I>& ima, const Site_Set<S>& pset);
 
+
+// NEW:
+
+  template <typename I, typename S>
+  sub_image<I, S>
+  operator|(instant_<I> ima, const Site_Set<S>& pset)
+  {
+    return ima.un_instant() | pset;
+  }
 
 
   template <typename I, typename S, typename J>
@@ -219,9 +241,18 @@ namespace mln
     return tmp;
   }
 
+//   template <typename I, typename S>
+//   inline
+//   sub_image<I, S>
+//   operator|(Image<I>& ima, const Site_Set<S>& pset)
+//   {
+//     sub_image<I, S> tmp(exact(ima), exact(pset));
+//     return tmp;
+//   }
+
   template <typename I, typename S>
   inline
-  sub_image<I, S>
+  instant_< sub_image<I, S> >
   operator|(Image<I>& ima, const Site_Set<S>& pset)
   {
     sub_image<I, S> tmp(exact(ima), exact(pset));

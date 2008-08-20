@@ -43,10 +43,13 @@
 // # include <mln/core/line_piter.hh> // FIXME
 
 
+
 // FIXME:
 
 // # include <mln/core/pixter2d.hh>
 // # include <mln/core/dpoints_pixter.hh>
+
+
 
 
 namespace mln
@@ -180,6 +183,25 @@ namespace mln
 
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point2d& p);
+
+
+    template <typename P>
+    T& alt(const P& p)
+    {
+      mln_precondition(this->has(p));
+
+//       std::cout << (int*)(&p.p_hook_()) << ' '
+// 		<< &(p.row()) << ' '
+// 		<< &(p.get_subject()) << ' '
+// 		<< &(p.to_site()) << std::endl;
+
+      // return this->data_->array_[p.to_site().row()][p.to_site().col()];
+      // return this->data_->array_[p.row()][p.col()];
+      // return this->data_->array_[p.get_subject().row()][p.get_subject().col()];
+      // return this->data_->array_ [*(int*)(&p.get_subject())] [*((int*)(&p.get_subject()) + 1)];
+      return this->data_->array_ [*(int*)(&p.p_hook_())] [*((int*)(&p.p_hook_()) + 1)];
+      // return this->data_->array_[0][0];;
+    }
 
 
     // Specific methods:

@@ -51,6 +51,7 @@ namespace mln
   };
 
 
+
   /*! \brief Base class for implementation of accumulators.
    *
    * The parameter \a E is the exact type.

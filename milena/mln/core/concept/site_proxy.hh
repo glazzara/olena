@@ -46,98 +46,6 @@ namespace mln
   template <typename E> struct Site_Proxy;
 
 
-
-  namespace internal
-  {
-
-    // Every "Site_Proxy" class should derive from site_impl.  The
-    // couple of classes below are provided to be specialized so that
-    // an effective implementation (with the interface of the
-    // targetted site) can equip site proxy classes.
-
-    template <typename Site, typename E>
-    struct site_const_impl
-    {
-      // Default is none.
-    };
-
-    template <typename Site, typename E>
-    struct site_mutable_impl
-    {
-      // Default is none.
-    };
-
-    template <bool is_mutable, typename Site, typename E>
-    struct site_impl; // Is a selector w.r.t. to mutability.
-
-    template <typename Site, typename E>
-    struct site_impl</* is_mutable = */ true, Site, E> : site_mutable_impl<Site, E>
-    {
-    };
-
-    template <typename Site, typename E>
-    struct site_impl</* is_mutable = */ false, Site, E> : site_const_impl<Site, E>
-    {
-    };
-
-
-
-    // Fwd decl.
-    template <typename P> struct site_from;
-
-    namespace deep
-    {
-
-      template <typename P, bool is_site_proxy = true>
-      struct helper_site_from
-      {
-	typedef typename P::subject S;
-	// Recursion.
-	typedef typename mln::internal::site_from<S>::ret ret;
-	// Routine.
-	static const ret& on(const P& p)
-	{
-	  return p.to_site();
-	}
-      };
-
-      template <typename O>
-      struct helper_site_from<O, /* is_site_proxy = */ false>
-      {
-	// Stop Recursion.
-	typedef O ret;
-	// Routine.
-	static const ret& on(const O& obj)
-	{
-	  return obj;
-	}
-      };
-
-    } // end of namespace internal::deep
-
-
-    /// Meta-routine to get the site type from a type \p P that can be
-    /// either a site proxy or a site.
-    template <typename P>
-    struct site_from
-    {
-      typedef mln_exact(P) E;
-      enum { is_site_proxy = mlc_is_a(E, Site_Proxy)::value };
-      typedef typename deep::helper_site_from< E, is_site_proxy >::ret ret;
-    };
-
-
-    /// Access to site reference.
-    template <typename O>
-    const typename site_from<O>::ret&
-    to_site(const O& obj);
-
-
-  } // end of namespace internal
-
-
-
-
   /// Site_Proxy category flag type.
   template <>
   struct Site_Proxy<void>
@@ -161,9 +69,6 @@ namespace mln
 
       const site& to_site() const;
       operator site() const;
-
-      FIXME: Add if possible a mutable version of to_site().
-      FIXME: Or (?) just remove this method (!)
     */
 
   protected:
@@ -184,22 +89,6 @@ namespace mln
     site (E::*m2)() const = & E::operator site;
     m2 = 0;
   }
-
-  namespace internal
-  {
-
-    // Access to site reference.
-
-    template <typename O>
-    const typename site_from<O>::ret&
-    to_site(const O& obj)
-    {
-      typedef mln_exact(O) E;
-      enum { is_site_proxy = mlc_is_a(E, Site_Proxy)::value };
-      return deep::helper_site_from<E, is_site_proxy>::on(exact(obj));
-    }
-
-  } // end of namespace mln::internal
 
 # endif // ! MLN_INCLUDE_ONLY
 

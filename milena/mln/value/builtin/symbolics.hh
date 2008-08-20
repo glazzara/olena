@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,8 +45,7 @@ namespace mln
   template <>
   struct category< bool >
   {
-    typedef value::Built_In<void*> ret;
-    typedef value::Symbolic<void> super;
+    typedef value::Built_In< value::Symbolic<void> > ret;
   };
 
 

@@ -63,6 +63,9 @@ namespace mln
      */
     unsigned len(unsigned i) const;
 
+    // Box associated type.
+    typedef const E& q_box;
+
     /*! \brief Give the bounding box of this site set.
      *
      * Return the bounding box of this site set, so that is itself.
@@ -79,7 +82,7 @@ namespace mln
      *
      * \warning This method is final for all box classes.
      */
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
   protected:
     Box();
@@ -154,18 +157,20 @@ namespace mln
 
   template <typename E>
   inline
-  std::size_t
+  unsigned
   Box<E>::nsites() const
   {
-    std::size_t count = 1;
-    typedef mln_site(E) P; // helps g++-3.3.5
+    if (! exact(this)->is_valid())
+      return 0;
+    unsigned count = 1;
+    typedef mln_site(E) P; // Helps g++-3.3.5.
     for (unsigned i = 0; i < P::dim; ++i)
       count *= exact(this)->len(i);
     return count;
   }
 
 
-  // operators
+  // Operators.
 
   template <typename Bl, typename Br>
   inline

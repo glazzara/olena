@@ -34,12 +34,14 @@
  *
  * \todo preinc and predec are not tested; post-like ops are not handled.
  *
- * \todo add op=(Literal) when possible, so add a constness property.
+ * \todo add "op=(T)" when possible, so add a constness property.
+ * \todo add "opT()const" when possible.
  */
 
 # include <mln/core/concept/object.hh>
-# include <mln/core/internal/force_exact.hh>
 # include <mln/value/ops.hh> // So that we can handle builtins, scalars, and objects.
+
+# include <mln/core/concept/proxy.hxx>
 
 
 
@@ -59,7 +61,7 @@
   mln_trait_op_##Name(P)			\
   operator Symb (const mln::Proxy<P>& rhs)	\
   {						\
-    return Symb exact(rhs).unproxy();		\
+    return Symb exact(rhs).unproxy_();		\
   }						\
 						\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
@@ -93,9 +95,9 @@
   mln_trait_op_##Name(L, R)							\
   operator Symb (const mln::Proxy<L>& lhs, const mln::Proxy<R>& rhs)		\
   {										\
-    typedef typename internal::unproxy_couple<L, R>::L_helper L_unproxy;	\
-    typedef typename internal::unproxy_couple<L, R>::R_helper R_unproxy;	\
-    return L_unproxy::on(lhs) Symb R_unproxy::on(rhs);				\
+    typedef typename internal::helper_unprox_binop<L, R>::L_helper L_helper;	\
+    typedef typename internal::helper_unprox_binop<L, R>::R_helper R_helper;	\
+    return L_helper::on(lhs) Symb R_helper::on(rhs);				\
   }										\
 										\
   template <typename P, typename O>						\
@@ -103,7 +105,7 @@
   mln_trait_op_##Name(P, O)							\
   operator Symb (const Proxy<P>& p, const Object<O>& o)				\
   {										\
-    return exact(p).unproxy() Symb exact(o);					\
+    return exact(p).unproxy_() Symb exact(o);					\
   }										\
   										\
   template <typename O, typename P>						\
@@ -111,7 +113,7 @@
   mln_trait_op_##Name(O, P)							\
   operator Symb (const Object<O>& o, const Proxy<P>& p)				\
   {										\
-    return exact(o) Symb exact(p).unproxy();					\
+    return exact(o) Symb exact(p).unproxy_();					\
   }										\
 										\
   struct e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
@@ -122,42 +124,8 @@
 namespace mln
 {
 
-  // Fwd decls.
+  // Fwd decl.
   template <typename E> struct Proxy;
-
-
-  namespace internal
-  {
-
-    template <bool b, typename P> struct unproxy_if;
-
-    template <typename P>
-    struct unproxy_if< true, P >
-    {
-      typedef mln_subject(P) ret;
-      static typename P::q_subject on(const Proxy<P>& p) { return exact(p).unproxy(); }
-    };
-
-    template <typename P>
-    struct unproxy_if< false, P >
-    {
-      typedef P ret;
-      static const P& on(const Proxy<P>& p) { return exact(p); }
-    };
-
-    template <typename L, typename R>
-    struct unproxy_couple
-    {
-      enum { L_level = L::proxy_level,
-	     R_level = R::proxy_level }; // To prevent a weird g++ warning.
-      typedef internal::unproxy_if<(L_level >= R_level), L> L_helper;
-      typedef internal::unproxy_if<(R_level >= L_level), R> R_helper;
-      typedef typename L_helper::ret L_ret;
-      typedef typename R_helper::ret R_ret;
-    };
-
-  } // end of namespace mln::internal
-
 
 
   namespace trait
@@ -168,7 +136,8 @@ namespace mln
     template < template <class> class Op, typename P >
     struct set_unary_< Op, mln::Proxy, P >
     {
-      typedef mln_trait_unary(Op, mln_subject(P)) ret;
+      typedef mlc_unqualif(mln_q_subject(P)) S;
+      typedef mln_trait_unary(Op, S) ret;
     };
 
     // Binary ops.
@@ -177,7 +146,7 @@ namespace mln
 	       typename L, typename R >
     struct set_binary_< Op, mln::Proxy, L, mln::Proxy, R >
     {
-      typedef mln::internal::unproxy_couple<L, R> helper;
+      typedef mln::internal::helper_unprox_binop<L, R> helper;
       typedef mln_trait_binary(Op,
 			       typename helper::L_ret,
 			       typename helper::R_ret) ret;
@@ -187,14 +156,16 @@ namespace mln
 	       typename P, typename O >
     struct set_binary_< Op, mln::Proxy, P, mln::Object, O >
     {
-      typedef mln_trait_binary(Op, mln_subject(P), O) ret;
+      typedef mlc_unqualif(mln_q_subject(P)) S;
+      typedef mln_trait_binary(Op, S, O) ret;
     };
 
     template < template <class, class> class Op,
 	       typename O, typename P >
     struct set_binary_< Op, mln::Object, O, mln::Proxy, P  >
     {
-      typedef mln_trait_binary(Op, O, mln_subject(P)) ret;
+      typedef mlc_unqualif(mln_q_subject(P)) S;
+      typedef mln_trait_binary(Op, O, S) ret;
     };
 
   } // end of namespace mln::trait
@@ -214,30 +185,49 @@ namespace mln
    *  "proxy".
    */
   template <typename E>
-  struct Proxy : public Object<E>
+  struct Proxy : Object<E>
   {
     typedef Proxy<void> category;
 
     /*
       enum { proxy_level };
-      typedef subject;
       typedef q_subject;
-      q_subject unproxy() const;
-
-      // FIXME:
-      // return "const subject&"?
-      // overload with not-const method?
-      // add op subject() const?
+      q_subject subj_();
     */
+    
   protected:
     Proxy();
   };
 
 
+  // subject
+
+  template <typename T>
+  struct subject
+  {
+    typedef typename mln::internal::unproxy_rec_<T>::ret q_ret;
+    typedef mlc_unqualif(q_ret) ret;
+  };
+
+
+  // unproxy_rec
+
+  template <typename T>
+  typename mln::internal::unproxy_rec_<T>::ret
+  unproxy_rec(T& t);
+
+  template <typename T>
+  typename mln::internal::unproxy_rec_<const T>::ret
+  unproxy_rec(const T& t);
+ 
+
+  // operator <<
 
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const Proxy<P>& p);
 
+
+  // operators
 
   mln_decl_unop_proxy(uplus,  + );
   mln_decl_unop_proxy(uminus, - );
@@ -265,109 +255,10 @@ namespace mln
 
 
 
-  namespace internal
-  {
-
-    // External way of getting an address of an object from/through a
-    // proxy.  This is a recursive implementation since we can have a
-    // proxy of proxy, etc.
-
-    // Case 1: Not found so unproxy.
-
-    template <typename T, typename P>
-    void get_adr(const T *& ptr, const Proxy<P>& obj)
-    {
-      get_adr(ptr, exact(obj).unproxy());
-    }
-
-    template <typename T, typename P>
-    void get_adr(      T *& ptr,       Proxy<P>& obj)
-    {
-      get_adr(ptr, exact(obj).unproxy());
-    }
-
-    // Case 2: Found.  (Note that T can also be a Proxy.)
-
-    template <typename T>
-    void get_adr(const T *& ptr, const Object<T>& obj)
-    {
-      ptr = & exact(obj);
-    }
-
-    template <typename T>
-    void get_adr(      T *& ptr,       Object<T>& obj)
-    {
-      ptr = & exact(obj);
-    }
-
-    template <typename T>
-    void get_adr(      T *& ptr,       T& obj)
-    {
-      ptr = & obj;
-    }
-
-    // Case 3: Fail to found!
-
-    template <typename T, typename O>
-    void get_adr(const T *& ptr, const Object<O>& obj)
-    {
-      ptr = 0;
-    }
-
-    template <typename T, typename O>
-    void get_adr(      T *& ptr,       Object<O>& obj)
-    {
-      ptr = 0;
-    }
-
-
-    // A proxy should convert towards its subject.  And, if we have a
-    // proxy of proxy, it should also convert towards its subject of
-    // subject, and so on.  It leads to a recursive implementation
-    // where conversions are automatically obtained through
-    // inheritance.
-    //
-    // E is a Proxy type; Subject is its subject type.
-
-    template <typename Subject, typename E> struct proxy_impl;
-
-    template <typename Subject, typename E, bool rec = true>
-    struct helper_proxy_impl : proxy_impl< mln_subject(Subject), E > // Rec.
-    {
-      enum { proxy_level = Subject::proxy_level + 1};
-    };
-
-    template <typename Subject, typename E>
-    struct helper_proxy_impl< Subject, E, false > // Stop rec.
-    {
-      enum { proxy_level = 1 };
-    };
-
-    template <typename Subject, typename E>
-    struct proxy_impl : helper_proxy_impl< Subject, E,
-					   mlc_is_a(Subject, Proxy)::value >
-    {
-      operator Subject() const
-      {
- 	return mln::internal::force_exact<const E>(*this).unproxy();
-
-	// Technical note:
-	//
-	// The code above seems more effective than the one below:
-	// 	const Subject* adr;
-	// 	get_adr(adr, mln::internal::force_exact<const E>(*this));
-	// 	mln_postcondition(adr != 0);
-	// 	return *adr;
-      }
-    };
-
-
-  } // end of namespace mln::internal
-
-
-
-
 # ifndef MLN_INCLUDE_ONLY
+
+
+  // Proxy
 
   template <typename E>
   inline
@@ -375,17 +266,39 @@ namespace mln
   {
     enum { proxy_level = E::proxy_level }; // FIXME: Check that it is >= 0...
 
-    typedef mln_subject(E) subject;
     typedef typename E::q_subject q_subject;
 
-    q_subject (E::*m)() const = & E::unproxy;
-    m = 0;
+    q_subject (E::*m_)() = & E::subj_;
+    m_ = 0;
   }
 
+
+  // unproxy_rec
+
+  template <typename T>
+  inline
+  typename mln::internal::unproxy_rec_<T>::ret
+  unproxy_rec(T& t)
+  {
+    return mln::internal::unproxy_rec_<T>::on(t);
+  }
+
+  template <typename T>
+  inline
+  typename mln::internal::unproxy_rec_<const T>::ret
+  unproxy_rec(const T& t)
+  {
+    return mln::internal::unproxy_rec_<const T>::on(t);
+  }
+
+
+  // operator <<
+
   template <typename P>
+  inline
   std::ostream& operator<<(std::ostream& ostr, const Proxy<P>& p)
   {
-    return ostr << exact(p).unproxy();
+    return ostr << unproxy_rec(p);
   }
 
 

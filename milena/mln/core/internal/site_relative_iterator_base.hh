@@ -81,7 +81,7 @@ namespace mln
       /// sub-classes provide an update() method for the client to say
       /// that she really want to read the iterator just after the
       /// center has changed.
-      const mln_psite(S)& unproxy() const;
+      const mln_psite(S)& subj_();
 
       /// Hook to the current location.
       const mln_psite(S)& p_hook_() const;
@@ -167,7 +167,7 @@ namespace mln
     template <typename S, typename E>
     inline
     const mln_psite(S)&
-    site_relative_iterator_base<S,E>::unproxy() const
+    site_relative_iterator_base<S,E>::subj_()
     {
       mln_psite(S) p_now = exact(this)->compute_p_();
       mln_assertion(p_now == p_);

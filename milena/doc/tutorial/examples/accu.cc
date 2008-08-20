@@ -1,7 +1,6 @@
 # include <mln/accu/mean.hh>
 
 
-
 int main()
 {
   using namespace mln;

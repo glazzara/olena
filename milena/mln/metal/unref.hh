@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,7 @@
  */
 
 # define mlc_unref(T) typename mln::metal::unref< T >::ret
+# define mlc_unref_(T)         mln::metal::unref< T >::ret
 
 
 namespace mln
@@ -53,6 +54,12 @@ namespace mln
     struct unref< T& >
     {
       typedef T ret;
+    };
+
+    template <typename T>
+    struct unref< const T& >
+    {
+      typedef const T ret;
     };
 
   } // end of namespace mln::metal

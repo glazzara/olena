@@ -46,24 +46,20 @@ namespace mln
      *
      * Parameter \c P is FIXME: a point site type.
      */
-    template <bool is_mutable, typename P, typename E>
+    template <typename P, typename E>
     struct pseudo_site_base_ : Pseudo_Site<E>,
-
-                               proxy_impl<P, E>,
-
-                               site_impl< is_mutable,
-					  typename site_from<P>::ret,
-					  E >
+                               proxy_impl<P, E>
     {
+    private:
+      typedef typename proxy_impl<P, E>::HOT_actual_subject q_site_;
+
+    public:
 
       // The associated site type.
-      typedef typename internal::site_from<P>::ret site;
+      typedef mlc_unqualif(q_site_) site;
 
-      // The associated subject type (as a Proxy).
-      typedef P subject;
-
-      // The associated q_subject type (as a Proxy).
-      typedef const P& q_subject;
+      // Direct access to the site.
+      const site& to_site() const;
 
     protected:
       pseudo_site_base_();
@@ -72,10 +68,18 @@ namespace mln
 
 #ifndef MLN_INCLUDE_ONLY
 
-    template <bool is_mutable, typename P, typename E>
+    template <typename P, typename E>
     inline
-    pseudo_site_base_<is_mutable, P, E>::pseudo_site_base_()
+    pseudo_site_base_<P, E>::pseudo_site_base_()
     {
+    }
+
+    template <typename P, typename E>
+    inline
+    const typename pseudo_site_base_<P, E>::site&
+    pseudo_site_base_<P, E>::to_site() const
+    {
+      return this->get_subject();
     }
 
 #endif // ! MLN_INCLUDE_ONLY

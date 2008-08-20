@@ -31,6 +31,8 @@
 /*! \file mln/core/internal/data.hh
  *
  * \brief Declaration of the type of image data.
+ *
+ * \todo Rename as image_data (more explicit!)
  */
 
 

@@ -33,6 +33,8 @@
  * \brief Definition of mln::util::set.
  * 
  * \todo Clean code and test!
+ *
+ * \todo Zed: Group methods into 2 categories: when frozen, when not.
  */
 
 # include <vector>
@@ -41,7 +43,7 @@
 # include <algorithm>
 # include <iostream>
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/proxy.hh>
 # include <mln/util/less.hh>
 
 
@@ -50,6 +52,11 @@ namespace mln
 
   namespace util
   {
+
+    // Forward declarations.
+    template <typename T> class set_fwd_iter;
+    template <typename T> class set_bkd_iter;
+
 
     /*! \brief An "efficient" mathematical set class.
      *
@@ -70,8 +77,6 @@ namespace mln
      * The unicity of set elements is handled by the mln::util::less
      * function-object.
      *
-     * \todo Add a remove method.
-     *
      * \see mln::util::less
      */
     template <typename T>
@@ -79,15 +84,23 @@ namespace mln
     {
     public:
 
-      /// Type of elements.
+      /// Element associated type.
       typedef T element;
+
+
+      /// Forward iterator associated type.
+      typedef set_fwd_iter<T> fwd_iter;
+
+      /// Backward iterator associated type.
+      typedef set_bkd_iter<T> bkd_iter;
+
+      /// Iterator associated type.
+      typedef fwd_iter iter;
 
 
       /*! \brief Insert an element \p elt into the set.
        *
        * \param[in] elt The element to be inserted.
-       *
-       * \pre The set is not frozen.
        *
        * If \p elt is already in the set, this method is a no-op.
        *
@@ -96,11 +109,19 @@ namespace mln
       set<T>& insert(const T& elt);
 
 
+      /*! \brief Insert the elements of \p other into the set.
+       *
+       * \param[in] other The set containing the elements to be inserted.
+       *
+       * \return The set itself after insertion.
+       */
+      template <typename U>
+      set<T>& insert(const set<U>& other);
+
+
       /*! \brief Remove an element \p elt into the set.
        *
        * \param[in] elt The element to be inserted.
-       *
-       * \pre The set is not frozen.
        *
        * If \p elt is already in the set, this method is a no-op.
        *
@@ -113,8 +134,6 @@ namespace mln
        *
        * All elements contained in the set are destroyed so the set is
        * emptied.
-       *
-       * \pre The set is not frozen.
        *
        * \post is_empty() == true
        */
@@ -142,6 +161,14 @@ namespace mln
        */
       const T& operator[](unsigned i) const;
 
+      /// Return the first element of the set.
+      /// \pre not is_empty()
+      const T first_element() const;
+
+      /// Return the last element of the set.
+      /// \pre not is_empty()
+      const T last_element() const;
+
 
       /*! \brief Test if the object \p elt belongs to the set.
        *
@@ -160,12 +187,18 @@ namespace mln
        *
        * \return An array (std::vector) of elements.
        */
-      const std::vector<T>& vect() const;
+      const std::vector<T>& std_vector() const;
 
 
       /// Constructor without arguments.
       set();
 
+
+      /// Return the size of this set in memory.
+      std::size_t memory_size() const;
+
+      /// Test if the set is frozen.
+      bool is_frozen_() const;
 
     private:
 
@@ -194,6 +227,11 @@ namespace mln
 
       /// Tell if the set is frozen.
       mutable bool frozen_;
+
+
+      // Used in method has(elt) when v_ holds data.
+      bool v_has_(const T& elt) const;
+      unsigned dicho_(const T& elt, unsigned beg, unsigned end) const;
     };
 
 
@@ -210,7 +248,102 @@ namespace mln
 
 
 
+    // set_fwd_iter<T>
+
+    template <typename T>
+    class set_fwd_iter : public Proxy< set_fwd_iter<T> >,
+			 public mln::internal::proxy_impl< const T&, set_fwd_iter<T> >
+    {
+    public:
+
+      /// Constructor without argument.
+      set_fwd_iter();
+
+      /// Constructor from a set \p s.
+      set_fwd_iter(const set<T>& s);
+
+      /// Change the set it iterates on to \p s.
+      void change_target(const set<T>& s);
+
+      /// Start an iteration.
+      void start();
+
+      /// Go to the next element.
+      void next();
+
+      /// Returns true if the iterator is valid.
+      bool is_valid() const;
+
+      /// Invalidate the iterator.
+      void invalidate();
+
+      /// Give the element the iterator designates.
+      const T& element() const;
+
+      // As a Proxy.
+      const T& subj_();
+
+      /// Give the current index.
+      unsigned index_() const;
+
+    protected:
+      unsigned i_;
+      const set<T>* s_;
+    };
+
+
+
+
+    // set_bkd_iter<T>
+
+    template <typename T>
+    class set_bkd_iter : public Proxy< set_bkd_iter<T> >,
+			 public mln::internal::proxy_impl< const T&, set_bkd_iter<T> >
+    {
+    public:
+
+      /// Constructor without argument.
+      set_bkd_iter();
+
+      /// Constructor from a set \p s.
+      set_bkd_iter(const set<T>& s);
+
+      /// Change the set it iterates on to \p s.
+      void change_target(const set<T>& s);
+
+      /// Start an iteration.
+      void start();
+
+      /// Go to the next element.
+      void next();
+
+      /// Returns true if the iterator is valid.
+      bool is_valid() const;
+
+      /// Invalidate the iterator.
+      void invalidate();
+
+      /// Give the element the iterator designates.
+      const T& element() const;
+
+      // As a Proxy.
+      const T& subj_();
+
+      /// Give the current index.
+      unsigned index_() const;
+
+    protected:
+      unsigned i_;
+      const set<T>* s_;
+    };
+
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+    // util::set<T>
+
 
     template <typename T>
     inline
@@ -226,6 +359,20 @@ namespace mln
     {
       if (frozen_) unfreeze_();
       s_.insert(elt);
+      return *this;
+    }
+
+    template <typename T>
+    template <typename U>
+    inline
+    set<T>&
+    set<T>::insert(const set<U>& other)
+    {
+      if (other.is_empty())
+	// No-op.
+	return *this;
+      if (frozen_) unfreeze_();
+      s_.insert(other.std_vector().begin(), other.std_vector().end());
       return *this;
     }
 
@@ -278,12 +425,28 @@ namespace mln
 
     template <typename T>
     inline
+    const T
+    set<T>::first_element() const
+    {
+      mln_precondition(! is_empty());
+      return frozen_ ? *v_.begin() : *s_.begin();
+    }
+
+    template <typename T>
+    inline
+    const T
+    set<T>::last_element() const
+    {
+      mln_precondition(! is_empty());
+      return frozen_ ? *v_.rbegin() : *s_.rbegin();
+    }
+
+    template <typename T>
+    inline
     bool
     set<T>::has(const T& elt) const
     {
-      return frozen_
-	? std::find(v_.begin(), v_.end(), elt) != v_.end()
-	: s_.find(elt) != s_.end();
+      return frozen_ ? v_has_(elt) : s_.find(elt) != s_.end();
     }
 
     template <typename T>
@@ -297,7 +460,7 @@ namespace mln
     template <typename T>
     inline
     const std::vector<T>&
-    set<T>::vect() const
+    set<T>::std_vector() const
     {
       if (! frozen_) freeze_();
       return v_;
@@ -328,14 +491,246 @@ namespace mln
     }
 
     template <typename T>
+    inline
+    std::size_t
+    set<T>::memory_size() const
+    {
+      return nelements() * sizeof(T);
+    }
+
+    template <typename T>
+    inline
+    bool
+    set<T>::is_frozen_() const
+    {
+      return frozen_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    set<T>::v_has_(const T& elt) const
+    {
+      mln_precondition(frozen_);
+      if (is_empty() || op_less(elt, v_[0]) || op_less(v_[nelements() - 1], elt))
+	return false;
+      return v_[dicho_(elt, 0, nelements())] == elt;
+    }
+
+    template <typename T>
+    inline
+    unsigned
+    set<T>::dicho_(const T& elt, unsigned beg, unsigned end) const
+    {
+      mln_precondition(frozen_);
+      mln_precondition(beg <= end);
+      if (end - beg <= 1)
+	return beg;
+      unsigned med = (beg + end) / 2;
+      return op_less(elt, v_[med]) ? dicho_(elt, beg, med) : dicho_(elt, med, end);
+    }
+
+
+
+    // util::set_fwd_iter<T>
+
+
+    template <typename T>
+    inline
+    set_fwd_iter<T>::set_fwd_iter()
+    {
+      s_ = 0;
+    }
+
+    template <typename T>
+    inline
+    set_fwd_iter<T>::set_fwd_iter(const set<T>& s)
+    {
+      change_target(s);
+    }
+
+    template <typename T>
+    inline
+    void
+    set_fwd_iter<T>::change_target(const set<T>& s)
+    {
+      s_ = &s;
+      invalidate();
+    }
+
+    template <typename T>
+    inline
+    void
+    set_fwd_iter<T>::start()
+    {
+      mln_precondition(s_ != 0);
+      i_ = 0;
+    }
+
+    template <typename T>
+    inline
+    void
+    set_fwd_iter<T>::next()
+    {
+      mln_precondition(is_valid());
+      ++i_;
+    }
+      
+    template <typename T>
+    inline
+    bool
+    set_fwd_iter<T>::is_valid() const
+    {
+      return s_ != 0 && i_ != s_->nelements();
+    }
+
+    template <typename T>
+    inline
+    void
+    set_fwd_iter<T>::invalidate()
+    {
+      if (s_ != 0)
+	i_ = s_->nelements();
+      mln_postcondition(! is_valid());
+    }
+
+    template <typename T>
+    inline
+    const T&
+    set_fwd_iter<T>::element() const
+    {
+      mln_precondition(is_valid());
+      return s_->operator[](i_);
+    }
+
+    template <typename T>
+    inline
+    const T&
+    set_fwd_iter<T>::subj_()
+    {
+      mln_precondition(is_valid());
+      return s_->operator[](i_);
+    }
+
+    template <typename T>
+    inline
+    unsigned
+    set_fwd_iter<T>::index_() const
+    {
+      return i_;
+    }
+
+
+
+    // util::set_bkd_iter<T>
+
+
+    template <typename T>
+    inline
+    set_bkd_iter<T>::set_bkd_iter()
+    {
+      s_ = 0;
+    }
+
+    template <typename T>
+    inline
+    set_bkd_iter<T>::set_bkd_iter(const set<T>& s)
+    {
+      change_target(s);
+    }
+
+    template <typename T>
+    inline
+    void
+    set_bkd_iter<T>::change_target(const set<T>& s)
+    {
+      s_ = &s;
+      invalidate();
+    }
+
+    template <typename T>
+    inline
+    void
+    set_bkd_iter<T>::start()
+    {
+      mln_precondition(s_ != 0);
+      if (! s_->is_empty())
+	i_ = s_->nelements() - 1;
+    }
+
+    template <typename T>
+    inline
+    void
+    set_bkd_iter<T>::next()
+    {
+      mln_precondition(is_valid());
+      if (i_ == 0)
+	invalidate();
+      else
+	--i_;
+    }
+      
+    template <typename T>
+    inline
+    bool
+    set_bkd_iter<T>::is_valid() const
+    {
+      return s_ != 0 && i_ != s_->nelements();
+    }
+
+    template <typename T>
+    inline
+    void
+    set_bkd_iter<T>::invalidate()
+    {
+      if (s_ != 0)
+	i_ = s_->nelements();
+      mln_postcondition(! is_valid());
+    }
+
+    template <typename T>
+    inline
+    const T&
+    set_bkd_iter<T>::element() const
+    {
+      mln_precondition(is_valid());
+      return s_->operator[](i_);
+    }
+
+    template <typename T>
+    inline
+    const T&
+    set_bkd_iter<T>::subj_()
+    {
+      mln_precondition(is_valid());
+      return s_->operator[](i_);
+    }
+
+    template <typename T>
+    inline
+    unsigned
+    set_bkd_iter<T>::index_() const
+    {
+      return i_;
+    }
+
+
+
+    // Operators.
+
+    template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
     			     const mln::util::set<T>& s)
     {
-      ostr << '[';
+      ostr << '{';
       const unsigned n = s.nelements();
       for (unsigned i = 0; i < n; ++i)
-    	ostr << s[i]
-    	     << (i == n - 1 ? ']' : ',');
+	{
+	  ostr << s[i];
+	  if (i != n - 1)
+	    ostr << ", ";
+	}
+      ostr << '}';
       return ostr;
     }
 

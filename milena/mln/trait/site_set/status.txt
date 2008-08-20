@@ -1,17 +1,49 @@
-ok  box_
-KO  line2d
+	-*- outline -*-
+
+* primary
+
+ok  box
 ok  p_array
-KO  p_array_bb
+ok  p_run
+ok  p_set
+
+KO  p_image2d
+
+* utility
+
+ok  p_double
+
+* derived
+
+ok  p_runs  ->  rename as p_run_set
+            =>  better factored as p_set_of<S>
+
+new p_set_of
+new p_mutable_array_of
+todo  p_array_of
+
+* queue-based
+
+ok  p_queue_fast
+ok  p_priority_queue  ->  rename as p_priority
+
+rm  p_priority_queue_fast
+rm  p_priority_queue_fast_with_array
+
+KO  p_queue
+
+* graph-based
+
 KO  p_bgraph
 KO  p_graph
-KO  p_image2d
 KO  p_line_graph
-KO  p_priority_queue
-KO  p_priority_queue_fast
-KO  p_priority_queue_fast_with_array
-KO  p_queue
-KO  p_queue_fast
-KO  p_run
-KO  p_runs
-KO  p_set
-KO  pset_if
+
+* adapters
+
+ok  p_vaccess
+ok  line2d
+
+??  pset_if
+
+KO  p_array_bb
+KO  pset_array.hh

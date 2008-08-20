@@ -33,7 +33,8 @@
  * \brief Definition of an "index" type.
  *
  * \todo Remove coord and dim, then make window<dindex> work.
-
+ *
+ * \todo Add inheritance to Object so add operators and traits. 
  */
 
 # include <mln/core/concept/object.hh>
@@ -64,6 +65,32 @@ namespace mln
 
       index_() {}
       index_(int i) : i_(i) {}
+
+      index_<Tag>& operator++()
+      {
+	++i_; // Pre-inc.
+	return *this;
+      }
+
+      index_<Tag> operator++(int)
+      {
+	index_<Tag> cpy(i_ + 1);
+	++i_; // Post-inc.
+	return cpy;
+      }
+
+      index_<Tag>& operator--()
+      {
+	--i_; // Pre-dec.
+	return *this;
+      }
+
+      index_<Tag> operator--(int)
+      {
+	index_<Tag> cpy(i_ + 1);
+	--i_; // Post-dec.
+	return cpy;
+      }
 
       operator int() const { return i_; }
     };

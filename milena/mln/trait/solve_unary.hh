@@ -59,119 +59,102 @@ namespace mln
     namespace internal
     {
 
+
+      template < template <class> class Name,
+		 typename Category,
+		 typename T >
+      struct trait_set_unary_;
+
+      template < template <class> class Name,
+		 template <class> class Category, typename _,
+		 typename T >
+      struct trait_set_unary_< Name, Category<_>, T >
+      {
+	typedef typename mln::trait::set_unary_<Name, Category, T>::ret ret;
+      };
+
+
       // Fwd decls.
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct get_unary_;
 
 
       template < typename user_ret, /* != not_found and != undefined */
 		 template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct helper_get_unary_
       {
-	typedef user_ret ret; // The user has defined 'ret' so we return it.
+	typedef user_ret ret;  // The user has defined 'ret' so we return it.
       };
 
 
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct helper_get_unary_< /* user_ret == */ not_found,
-				Name, Category_T, T >
+				Name, Category, T >
       {
-	typedef not_found ret; // End of search due to a blocker; 'ret' is not found. 
+	typedef not_found ret;  // End of search due to a blocker; 'ret' is not found. 
       };
 
-
-      template < template <class> class Name, typename Super_Category, typename T >
-      struct helper_get_unary_rec_;
-
-      template < template <class> class Name, template <class> class Super_Category_T, typename T >
-      struct helper_get_unary_rec_< Name, Super_Category_T<void>, T > {
-	typedef typename get_unary_<Name, Super_Category_T,       T>::ret ret;
-      };
 
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct helper_get_unary_< /* user_ret == */ undefined,
-				Name, Category_T, T >
+				Name, Category, T >
       {
-	typedef typename internal::super_category_< Category_T, T >::ret super;
-	typedef typename helper_get_unary_rec_<Name, super, T>::ret ret; // No user ret definition => Recursion.
+	typedef typename mln::internal::super_category_< Category, T >::ret Super_Category;
+	typedef typename get_unary_<Name, Super_Category, T>::ret ret;   // No user ret definition => Recursion.
       };
 
 
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct get_unary_
       {
-	typedef typename mln::trait::set_unary_<Name, Category_T, T>::ret user_ret; // First get 'user_ret'
-	typedef helper_get_unary_<user_ret, Name, Category_T, T> helper;            // Set the helper to make a decision.
-	typedef mlc_ret(helper) ret;                                                // Return.
+	typedef typename trait_set_unary_<Name, Category, T>::ret user_ret;  // First get 'user_ret'
+	typedef helper_get_unary_<user_ret, Name, Category, T> helper;       // Set the helper to make a decision.
+	typedef mlc_ret(helper) ret;                                         // Return.
       };
     
 
       template < typename precise_ret,
 		 template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct helper_choose_unary_wrt_ /* precise_ret != undefined */
       {
-	typedef precise_ret ret;                                   // -> A precise ret has been defined so it is it.
+	typedef precise_ret ret;                                 // -> A precise ret has been defined so it is it.
       };
 
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
+		 typename Category, typename T >
       struct helper_choose_unary_wrt_< /* precise_ret == */ undefined,
-				       Name, Category_T, T >
+				       Name, Category, T >
       {
-	typedef typename get_unary_<Name, Category_T, T>::ret ret; // -> Go up into the category inheritance
-	                                                           //    to fetch a ret from 'set_unary_'s.
+	typedef typename get_unary_<Name, Category, T>::ret ret; // -> Go up into the category inheritance
+	                                                         //    to fetch a ret from 'set_unary_'s.
       };
 
       template < template <class> class Name,
-		 template <class> class Category_T, typename T >
-      struct helper_choose_unary_
+		 typename Category, typename T >
+      struct helper_solve_unary_
       {
 	typedef typename set_precise_unary_<Name, T>::ret precise_ret;
 	typedef helper_choose_unary_wrt_< precise_ret, /* undefined or not (?) */
-					  Name, Category_T, T> helper;
+					  Name, Category, T> helper;
 	typedef mlc_ret(helper) ret;
       };
-
-
-      template < template <class> class Name,
-		 typename Category_T_void, typename T >
-      struct helper_solve_unary_; // This helper changes the category plain type into the category meta type.
-
-      template < template <class> class Name,
-		 template <class> class Category_T, typename void_T, typename T >
-      struct helper_solve_unary_< Name, Category_T<void_T>, T >
-	:
-	helper_choose_unary_< Name, Category_T, T > // FIXME: typedef!
-      {
-	// FIXME: Check that void_T is 'void' or 'void*'. 
-      };
-
-      // FIXME: Remove below.
-
-//       template < template <class> class Name,
-// 		 template <class> class Category_T, typename T >
-//       struct helper_solve_unary_< Name, Category_T<void*>, T >
-// 	:
-// 	helper_choose_unary_< Name, Category_T, T > // FIXME: typedef!
-//       {};
 
     } // end of namespace mln::trait::internal
 
 
-    // FIXME: Postfix solve_unary with a '-'(?)
     template < template <class> class Name,
-	       typename T >
+	       typename T_ >
     struct solve_unary
     {
-      typedef mln_exact(T) E;
-      typedef typename mln::category<E>::ret Cat;
-      typedef internal::helper_solve_unary_< Name, Cat, E > meta_code;
+      typedef mln_exact(T_) T;
+      typedef typename mln::category<T>::ret Category;
+      typedef internal::helper_solve_unary_< Name, Category, T > meta_code;
       typedef typename meta_code::ret ret;
     };
 

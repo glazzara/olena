@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,6 +70,10 @@ namespace mln
 			sizeof(internal::yes_) )>
     {
     };
+
+    template <typename T, typename U>
+    struct is< const T, const U > : is<T, U>::eval
+    {};
     
     template <typename T, typename U>
     struct is< T*, U* > : is<T, U>::eval

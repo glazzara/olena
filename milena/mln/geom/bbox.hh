@@ -59,7 +59,7 @@ namespace mln
     {
 
       template <typename S>
-      box<mln_site(S)> bbox_(trait::site_set::bbox::known,
+      box<mln_site(S)> bbox_(const trait::site_set::bbox::known&,
 			     const S& pset)
       {
 	return pset.bbox();

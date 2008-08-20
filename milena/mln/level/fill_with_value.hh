@@ -42,6 +42,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/inplace.hh>
+# include <mln/core/image/instant.hh>
 
 
 namespace mln
@@ -61,6 +62,11 @@ namespace mln
      */
     template <typename I, typename V>
     void fill_with_value(Image<I>& ima, const V& val);
+
+
+    // Case of instant images.
+    template <typename I, typename V>
+    void fill_with_value(const Image< instant_<I> >& ima, const V& val);
 
 
 
@@ -199,6 +205,14 @@ namespace mln
       trace::exiting("level::fill");
     }
 
+
+    // Un-instant.
+
+    template <typename I, typename V>
+    void fill_with_value(const Image< instant_<I> >& ima, const V& val)
+    {
+      fill_with_value(exact(ima).un_instant_(), val);
+    }
 
 
 # endif // ! MLN_INCLUDE_ONLY

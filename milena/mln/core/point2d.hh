@@ -45,7 +45,7 @@ namespace mln
   /*! \brief Type alias for a point defined on the 2D square grid with
    * integer coordinates.
    */
-  typedef point<grid::square, int> point2d;
+  typedef point<grid::square, def::coord> point2d;
 
 
   namespace internal
@@ -54,11 +54,19 @@ namespace mln
     // Specialization.
 
     template <typename C, typename E>
-    struct site_const_impl< point<grid::square, C>, E >
+    struct subject_impl< const point<grid::square, C>, E >
     {
-      C row() const;
-      C col() const;
-      C operator[](unsigned i) const;
+      typedef C coord;
+      enum { dim = 2 };
+
+      typedef const C& row_t;
+      const C& row() const;
+
+      typedef const C& col_t;
+      const C& col() const;
+
+      const C& operator[](unsigned i) const;
+      const C& last_coord() const;
     private:
       const E& exact_() const;
     };
@@ -67,83 +75,99 @@ namespace mln
     // Specialization for point<M,C>.
 
     template <typename C, typename E>
-    struct site_mutable_impl< point<grid::square, C>, E > :
-           site_const_impl  < point<grid::square, C>, E >
+    struct subject_impl<       point<grid::square, C>, E > :
+           subject_impl< const point<grid::square, C>, E >
     {
-      C& row();
-      C& col();
-      C& operator[](unsigned i);
     private:
-      typedef site_const_impl< point<grid::square, C>, E > super;
+      typedef subject_impl< const point<grid::square, C>, E > super_;
       E& exact_();
+    public:
+      using super_::row;
+      C& row();
+      using super_::col;
+      C& col();
+      using super_::operator[];
+      C& operator[](unsigned i);
     };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // Either unproxy() or to_site() can be used below.  In the
-    // former case, the unproxied features ind() because it is a
-    // point_ or another proxy to a point_.
-
-    // site_const_impl
+    // subject_impl
 
     template <typename C, typename E>
-    C
-    site_const_impl< point<grid::square, C>, E >::row() const
+    inline
+    const C&
+    subject_impl< const point<grid::square, C>, E >::row() const
     {
-      return exact_().to_site().row();
+      return exact_().get_subject().row();
     }
 
     template <typename C, typename E>
-    C
-    site_const_impl< point<grid::square, C>, E >::col() const
+    inline
+    const C&
+    subject_impl< const point<grid::square, C>, E >::col() const
     {
-      return exact_().to_site().col();
+      return exact_().get_subject().col();
     }
 
     template <typename C, typename E>
-    C
-    site_const_impl< point<grid::square, C>, E >::operator[](unsigned i) const
+    inline
+    const C&
+    subject_impl< const point<grid::square, C>, E >::operator[](unsigned i) const
     {
       mln_precondition(i < 2);
-      return exact_().to_site()[i];
+      return exact_().get_subject()[i];
     }
 
     template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::square, C>, E >::last_coord() const
+    {
+      return this->col();
+    }
+
+    template <typename C, typename E>
+    inline
     const E&
-    site_const_impl< point<grid::square, C>, E >::exact_() const
+    subject_impl< const point<grid::square, C>, E >::exact_() const
     {
       return internal::force_exact<const E>(*this);
     }
 
-    // site_mutable_impl
+    // subject_impl
 
     template <typename C, typename E>
+    inline
     C&
-    site_mutable_impl< point<grid::square, C>, E >::row()
+    subject_impl< point<grid::square, C>, E >::row()
     {
-      return exact_().to_site().row();
+      return exact_().get_subject().row();
     }
 
     template <typename C, typename E>
+    inline
     C&
-    site_mutable_impl< point<grid::square, C>, E >::col()
+    subject_impl< point<grid::square, C>, E >::col()
     {
-      return exact_().to_site().col();
+      return exact_().get_subject().col();
     }
 
     template <typename C, typename E>
+    inline
     C&
-    site_mutable_impl< point<grid::square, C>, E >::operator[](unsigned i)
+    subject_impl< point<grid::square, C>, E >::operator[](unsigned i)
     {
       mln_precondition(i < 2);
-      return exact_().to_site()[i];
+      return exact_().get_subject()[i];
     }
     
     template <typename C, typename E>
+    inline
     E&
-    site_mutable_impl< point<grid::square, C>, E >::exact_()
+    subject_impl< point<grid::square, C>, E >::exact_()
     {
       return internal::force_exact<E>(*this);
     }

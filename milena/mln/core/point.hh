@@ -35,6 +35,7 @@
  * \todo Try to generalize less_than with Gl and Gr.
  */
 
+# include <mln/core/def/coord.hh>
 # include <mln/core/concept/gpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all_to.hh>
@@ -43,6 +44,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/core/h_vec.hh>
+# include <mln/util/yes.hh>
 
 
 namespace mln
@@ -82,7 +84,7 @@ namespace mln
    */
   template <typename G, typename C>
   struct point : public Gpoint< point<G,C> >,
-		  public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
+		 public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
   {
     /*! \var dim
      * \brief Dimension of the space.
@@ -109,13 +111,21 @@ namespace mln
      * \param[in] i The coordinate index.
      * \pre \p i < \c dim
      */
-    C  operator[](unsigned i) const;
+    const C& operator[](unsigned i) const;
 
     /*! \brief Read-write access to the \p i-th coordinate value.
      * \param[in] i The coordinate index.
      * \pre \p i < \c dim
      */
     C& operator[](unsigned i);
+
+
+    /// Read-only access to the last coordinate.
+    const C& last_coord() const;
+
+    /// Read-write access to the last coordinate.
+    C& last_coord();
+
 
     /// Constructor without argument.
     point();
@@ -167,9 +177,24 @@ namespace mln
     /// Transform to point in homogene coordinate system.
     h_vec<G::dim, C> to_h_vec() const;
 
+    /// Point with all coordinates set to the maximum value.
+    static const point<G,C>& plus_infty();
+
+    /// Point with all coordinates set to the mininum value.
+    static const point<G,C>& minus_infty();
+
   protected:
     algebra::vec<G::dim, C> coord_;
   };
+
+
+
+  /// FIXME...
+  template <typename G, typename C>
+  const algebra::vec<G::dim - 1, C>& cut_(const point<G,C>& p);
+
+  template <typename C>
+  const util::yes& cut_(const point<grid::tick,C>& p);
 
 
   namespace util
@@ -208,7 +233,7 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  C point<G,C>::operator[](unsigned i) const
+  const C& point<G,C>::operator[](unsigned i) const
   {
     assert(i < dim);
     return this->coord_[i];
@@ -221,6 +246,23 @@ namespace mln
     assert(i < dim);
     return this->coord_[i];
   }
+
+  template <typename G, typename C>
+  inline
+  const C&
+  point<G,C>::last_coord() const
+  {
+    return this->coord_[dim - 1];
+  }
+
+  template <typename G, typename C>
+  inline
+  C&
+  point<G,C>::last_coord()
+  {
+    return this->coord_[dim - 1];
+  }
+
 
   // Constructors.
 
@@ -392,6 +434,43 @@ namespace mln
       tmp[i] = coord_[i];
     tmp[G::dim] = 1;
     return tmp;
+  }
+
+
+  template <typename G, typename C>
+  inline
+  const point<G,C>&
+  point<G,C>::plus_infty()
+  {
+    static const point<G,C> the_(all_to(mln_max(C)));
+    return the_;
+  }
+
+  template <typename G, typename C>
+  inline
+  const point<G,C>&
+  point<G,C>::minus_infty()
+  {
+    static const point<G,C> the_(all_to(mln_min(C)));
+    return the_;
+  }
+
+
+  template <typename G, typename C>
+  inline
+  const algebra::vec<G::dim - 1, C>&
+  cut_(const point<G,C>& p)
+  {
+    return *(const algebra::vec<G::dim - 1, C>*)(& p.to_vec());
+  }
+
+  template <typename C>
+  inline
+  const util::yes&
+  cut_(const point<grid::tick,C>& p)
+  {
+    util::yes* the_;
+    return *the_;
   }
 
 

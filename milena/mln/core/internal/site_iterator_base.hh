@@ -61,12 +61,7 @@ namespace mln
      */
     template <typename S, typename E>
     struct site_iterator_base : Site_Iterator<E>,
-
-                                proxy_impl< mln_psite(S), E>,
-
-                                site_impl< false, // Constant access to site / subject.
-					   mln_site(S),
-					   E >
+                                proxy_impl< const mln_psite(S)&, E>
     {
       /// The associated site type (as a Site_Proxy).
       typedef mln_site(S) site;
@@ -83,14 +78,8 @@ namespace mln
        */ 
       operator mln_site(S)() const;
 
-      /// The associated subject type (as a Proxy).
-      typedef mln_psite(S) subject;
-
-      /// The associated q_subject type (as a Proxy).
-      typedef const mln_psite(S)& q_subject;
-
       /// Give the subject (required by the Proxy interface).
-      const mln_psite(S)& unproxy() const;
+      const mln_psite(S)& subj_();
 
       /// Give the target address.  It might be 0.
       const S*& target_();
@@ -101,6 +90,10 @@ namespace mln
 
       /// The target.
       const S* s_;
+
+    private:
+
+      typedef proxy_impl< const mln_psite(S)&, E> super_;
     };
 
 
@@ -117,9 +110,7 @@ namespace mln
     inline
     site_iterator_base<S, E>::operator mln_site(S)() const
     {
-      typedef proxy_impl<mln_psite(S), E> super;
-      mln_precondition(exact(this)->is_valid());
-      return this->super::operator site(); // Featured by internal::proxy_impl<*>.
+      return this->to_site();
     }
 
     template <typename S, typename E>
@@ -127,14 +118,14 @@ namespace mln
     const mln_site(S)&
     site_iterator_base<S, E>::to_site() const
     {
-      mln_precondition(exact(*this).is_valid()); // FIXME: OK?
-      return internal::to_site( exact(this)->p_hook_() );
+      mln_precondition(exact(*this).is_valid());
+      return this->get_subject();
     }
 
     template <typename S, typename E>
     inline
     const mln_psite(S)&
-    site_iterator_base<S, E>::unproxy() const
+    site_iterator_base<S, E>::subj_()
     {
       return exact(this)->p_hook_();
     }

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -66,6 +66,12 @@ namespace mln
 	static T* ptr();
       };
 
+      template <typename T>
+      struct make_< T& >
+      {
+	static T* ptr();
+      };
+
       template <typename T, template <class> class U>
       struct helper_is_a_
       {
@@ -91,6 +97,14 @@ namespace mln
     
     template <typename T, template <class> class U>
     struct is_a< const T, U > : is_a< T, U >::eval
+    {};
+    
+    template <typename T, template <class> class U>
+    struct is_a< T&, U > : is_a< T, U >::eval
+    {};
+    
+    template <typename T, template <class> class U>
+    struct is_a< const T&, U > : is_a< T, U >::eval
     {};
     
 

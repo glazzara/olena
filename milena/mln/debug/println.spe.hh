@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,15 +31,21 @@
 /*! \file mln/debug/println.spe.hh
  *
  * \brief  Specializations for mln::debug::println.
+ *
+ * \todo Clean-up code.
  */
 
 # ifndef MLN_DEBUG_PRINTLN_HH
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_DEBUG_PRINTLN_HH
 
+# include <sstream>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
+# include <mln/debug/put_word.hh>
+# include <mln/level/fill.hh>
+# include <mln/accu/max.hh>
 
 
 namespace mln
@@ -55,26 +61,52 @@ namespace mln
 
 # ifdef MLN_CORE_BOX2D_HH
 
-      // 2D version.
+      // 2D versions.
+
+      inline
+      void
+      println(const box2d& b, const image2d<char>& input)
+      {
+	for (int row = b.min_row(); row <= b.max_row(); ++row)
+	{
+	  for (int col = b.min_col(); col <= b.max_col(); ++col)
+	    std::cout << input.at(row, col) << ' ';
+	  std::cout << std::endl;
+	}
+	std::cout << std::endl;
+      }
+
+
       template <typename I>
       inline
       void
       println(const box2d& b, const I& input)
       {
-	point2d p;
-	int& row = p.row();
-	int& col = p.col();
-	const int
-	  max_row = b.max_row(),
-	  max_col = b.max_col();
+	accu::max_<unsigned> len_;
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  {
+	    std::ostringstream o;
+	    o << format(input(p));
+	    len_.take(o.str().length());
+	  }
+	unsigned len = len_ + 1;
 
-	for (row = b.min_row(); row <= max_row; ++row)
+	image2d<char> output(b.nrows(), b.ncols() * len, 0);
+	level::fill(output, ' ');
+	for_all(p)
+	  {
+	    std::ostringstream oss;
+	    oss << format(input(p));
+	    point2d w( p.row() - b.min_row(),
+		      (p.col() - b.min_col()) * len);
+	    put_word(output, w, oss.str());
+	  }
+
+	for (unsigned row = 0; row < b.nrows(); ++row)
 	{
-	  for (col = b.min_col(); col <= max_col; ++col)
-	    if (input.has(p))
-	      std::cout << format(input(p)) << ' ';
-	    else
-	      std::cout << "  ";
+	  for (unsigned col = 0; col < b.ncols() * len; ++col)
+	    std::cout << output.at(row, col);
 	  std::cout << std::endl;
 	}
 	std::cout << std::endl;

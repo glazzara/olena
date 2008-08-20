@@ -118,6 +118,9 @@ namespace mln
 	unsigned (E::*m8)() const = & E::nelements;
 	m8 = 0;
 
+	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
+	m9 = 0;
+
 	// FIXME: how to check that qixter are defined when W is unknown!
       }
 

@@ -32,15 +32,9 @@
  *
  * \brief Define a base class for implementation of accumulator
  * classes.
- *
- * \todo Cf. mln/core/pseudo_site_base.hh we get some impl from
- * site_impl; we want here the same effect except that the subject is
- * not always a site.  Maybe we actually need a more generic mechanism
- * s.a. subject_impl...
  */
 
 # include <mln/core/concept/accumulator.hh>
-# include <mln/metal/unqualif.hh>
 
 
 namespace mln
@@ -57,16 +51,12 @@ namespace mln
        */
       template <typename R, typename E>
       class base_ : public Accumulator<E>,
-		    public mln::internal::proxy_impl< mlc_unqualif(R), E >
+		    public mln::internal::proxy_impl< R, E >
       {
-	typedef mlc_unconst(R)  tmp_;
-	typedef mlc_unref(tmp_) result_;
       public:
 
 	// As a proxy:
-	typedef R               q_subject;
-	typedef mlc_unqualif(R)   subject;
-	R unproxy() const;
+	R subj_();
 
 	// As an accumulator:
 	typedef R result;
@@ -87,7 +77,7 @@ namespace mln
       template <typename R, typename E>
       inline
       R
-      base_<R,E>::unproxy() const
+      base_<R,E>::subj_()
       {
 	return exact(this)->to_result();
       }

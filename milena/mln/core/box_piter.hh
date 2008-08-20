@@ -181,15 +181,30 @@ namespace mln
   box_fwd_piter_<P>::next_()
   {
     for (int i = dim - 1; i >= 0; --i)
-      if (p_[i] == s_->pmax()[i])
-	p_[i] = s_->pmin()[i];
-      else
+      if (p_[i] != s_->pmax()[i])
 	{
 	  ++p_[i];
 	  break;
 	}
-    if (p_ == s_->pmin())
-      invalidate_();
+      else
+	{
+	  p_[i] = s_->pmin()[i];
+	  if (i == 0)
+	    invalidate_();
+	}
+
+    // memo
+
+//     for (int i = dim - 1; i >= 0; --i)
+//       if (p_[i] != s_->pmax()[i])
+// 	{
+// 	  ++p_[i];
+// 	  break;
+// 	}
+//       else
+// 	p_[i] = s_->pmin()[i];
+//     if (p_ == s_->pmin())
+//       invalidate_();
   }
 
 

@@ -39,6 +39,8 @@
 # include <mln/trait/undef.hh>
 # include <mln/trait/value/kind.hh>
 
+# include <mln/core/def/coord.hh> // Move along with space_from_point...
+
 
 
 //  Properties of images.
@@ -559,10 +561,10 @@ namespace mln
   }
 
   template <typename M, typename C> struct point;
-  typedef point<grid::tick, int> point1d;
-  typedef point<grid::square, int> point2d;
-  typedef point<grid::hexa, int> point2d_h;
-  typedef point<grid::cube, int> point3d;
+  typedef point<grid::tick,   def::coord> point1d;
+  typedef point<grid::square, def::coord> point2d;
+  typedef point<grid::hexa,   def::coord> point2d_h;
+  typedef point<grid::cube,   def::coord> point3d;
 
   namespace trait
   {

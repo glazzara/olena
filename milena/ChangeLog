@@ -1,3 +1,598 @@
+2008-08-20  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Huge summer cleanup.
+
+
+
+	Part 0:  New metal stuff for use in proxy-related meta-programs.
+	----------------------------------------------------------------
+
+
+
+	* mln/metal/unqualif.hh (todo): New.
+	* mln/metal/const.hh (const_): New overloads for pointers.
+	* mln/metal/is_a.hh (is_a): New overload to handle & and const&.
+	(make_): Likewise.
+	* mln/metal/is.hh (is): New overload to handle constness.
+	* mln/metal/unref.hh (unref): New overload to handle const&.
+	* mln/metal/is_not_ref.hh: New.
+	* mln/metal/is_ref.hh: New.
+	* mln/metal/ref.hh: New.
+
+
+
+	Part I:  Cleanup traits.
+	------------------------
+
+
+
+	Reduce dependencies between trait structures and the solving
+	meta-programs.  Forward declarations of the latter are included
+	before the definition of trait structures and meta-programs are
+	eventually included at EOF.
+
+
+	* mln/trait/op/decl.hh: New.  Forward declare the couple of
+	solving meta-programs.
+
+	* mln/trait/op/leq.hh,
+	* mln/trait/op/times.hh,
+	* mln/trait/op/div.hh,
+	* mln/trait/op/plus.hh,
+	* mln/trait/op/neq.hh,
+	* mln/trait/op/greater.hh,
+	* mln/trait/op/minus.hh,
+	* mln/trait/op/not.hh,
+	* mln/trait/op/postdec.hh,
+	* mln/trait/op/predec.hh,
+	* mln/trait/op/and.hh,
+	* mln/trait/op/eq.hh,
+	* mln/trait/op/less.hh,
+	* mln/trait/op/xor.hh,
+	* mln/trait/op/uplus.hh,
+	* mln/trait/op/geq.hh,
+	* mln/trait/op/mod.hh,
+	* mln/trait/op/postinc.hh,
+	* mln/trait/op/preinc.hh,
+	* mln/trait/op/uminus.hh,
+	* mln/trait/op/or.hh: Update.
+
+	Group category materials in the same file.
+
+	* mln/trait/solve.hh (super_category_): Move...
+	* mln/category.hh: ...here.
+	Consequently mln::trait::internal::super_category_ is now
+	mln::internal::super_category_.
+
+	Allow the category associated type to hold extra information.  In
+	particular we need for proxy to carry the super category
+	information.  For that, in meta-programs, it is now used as a
+	'regular' type (no more as a meta-type), e.g., we propagate
+	'Image<void>' as a parameter in meta-programs instead of 'Image'.
+	In the case of multiple possible super categories, for instance
+	for builtin types, we have 'Category<Super_Category>'.
+
+	* mln/trait/solve_unary.hh (trait_set_unary_): New.  This
+	structure removes the parameter of the category to access the
+	definition of trait::set_unary_.
+	(Category_T): Replace in meta-code this meta-class parameter by...
+	(Category): ...this class parameter.
+	* mln/trait/solve_binary.hh: Likewise.
+
+	* tests/trait/super.cc,
+	* mln/value/builtin/symbolics.hh,
+	* mln/value/builtin/floatings.hh,
+	* mln/value/builtin/integers.hh: Update.
+
+
+
+	PART II.  Make the default coordinate type easily changeable.
+	-------------------------------------------------------------
+
+
+
+	Introduce a one-place definition of the default coordinate used in
+	point2d and related classes.  This definition is changed from
+	"int" to "short int" to save memory when containers of coordinates
+	are involved.
+
+	* mln/core/def: New directory for definitions.
+	* mln/core/def/coord.hh: New.
+	* mln/core/dpoint.hh,
+	* mln/core/point.hh: Include this new file.
+
+	* mln/core/dpoint2d.hh,
+	* mln/core/point1d.hh,
+	* mln/core/point2d.hh,
+	* mln/core/point3d.hh,
+	* mln/make/box3d.hh,
+	* mln/make/dpoint1d.hh,
+	* mln/make/dpoint2d.hh,
+	* mln/make/dpoint3d.hh,
+	* mln/make/box1d.hh,
+	* mln/make/box2d.hh,
+	* mln/make/box3d.hh,
+	* mln/make/point1d.hh,
+	* mln/make/point2d.hh,
+	* mln/make/point3d.hh,
+	* mln/trait/image/props.hh (int): Replace by...
+	(def::coord): ...this.
+
+
+
+	PART III.  Make the proxy mechanism more powerful.
+	--------------------------------------------------
+
+
+
+	The proxy mechanism can now handle the several cases in the nature
+	of the subject:
+	- with type "T", the subject is a temporary object or an object
+	  copy;
+	- with type "T&", the subject is modifiable through a non-const
+	  proxy;
+	- with type "const T&", the subject is handle by reference (not
+	  copied) yet it is never modifiable.
+
+
+	The "unproxy()" method is split into:
+	- unproxy_() [const]
+	  These methods are automatically inherited thru internal::proxy_impl.
+	  The '_' suffix emphasizes their technical-detail (non-user) nature.
+	- subj_()
+	  This method has to be defined in proxy concrete classes.  It
+	  shall return the immediate subject of the proxy.  This not-const
+	  method is unique.  A proper "unproxy_() const" method is defined
+	  from it.
+
+	The "subject" typedef is replaced by "q_subject" which is
+	qualified (so that the proxy mechanism can handle different cases
+	described above).  This typedef is no more defined explicitly by
+	the client, it is automatically set thanks to inheritance with the
+	first parameter of the internal::proxy_impl class.
+
+	* mln/core/concept/proxy.hh (unproxy): Replace this const method
+	by...
+	(subj_): ...this mutable one.
+	(subject): Remove this typedef.
+	(FIXME): Fix'n remove.
+	(subject, unproxy_rec): New external material to access the actual
+	subject type and object.  If we have a proxy to a proxy, that is, a
+	recursive construction, the subject at end is returned.
+	* mln/core/macros.hh (mln_q_subject): New.
+	(mln_subject): Deactivate for safety purpose.  The user should not
+	have to access the actual subject type. 
+
+	Recap:
+
+	- P::q_subject is the qualified immediate subject
+	  (that may be itself a proxy type)
+	v.
+	- subject<P> is the subject type at end 
+	  (it cannot be a proxy type)
+
+	- p.subject_() gives the immediate subject object
+	  (which may be a proxy object)
+	v.
+	- unproxy_rec(p) gives the subject object at end
+	  (it cannot be a proxy object).
+
+	* mln/core/concept/proxy.hh
+	(Proxy): Update ctor to perform the proper checks.
+	(unproxy_couple): Rename as...
+	(helper_unproxy_binop): ...this.
+	(mln_def_binop_proxy, operator, set_unary_, set_binary_): Update.
+	(internal): Move material into...
+	* mln/core/concept/proxy.hxx: ...this new file.
+	(helper_subject_of, helper_unproxy_rec, helper_get_proxy_impl):
+	New helpers to handle the different cases.
+
+	Proxies are automatically equipped with some new material:
+
+	* mln/core/concept/proxy.hxx:
+	(q_subject, unproxy_): New in proxy_impl.
+	(HOT_actual_subject, get_subject): New in helper_get_proxy_impl
+	when recursion ends, that is, when the subject is no more a proxy.
+	(subject_impl): New structure to be specialized (see below).
+
+	IMPORTANT:
+
+	For a proxy to look like an actual subject, it shall have the
+	interface of the later.  For that, the "subject_impl"
+	parameterized structure has to be specialized.  See
+	mln/core/point2d.hh for an example.
+
+	Consequently to the modifications of the proxy mechanism, some
+	pieces of code are now obsolete:
+
+	* mln/accu/internal/base.hh (q_subject, subject, unproxy): Remove.
+	(subj_): New.
+	(base_): Pass the qualified R type as parameter to proxy_impl.
+	* mln/core/concept/site_proxy.hh (internal): Remove.  We can now
+	use the default material for all proxies.
+	* mln/core/internal/pseudo_site_base.hh (is_mutable): Remove this
+	parameter.  It is now obsolete since the immediate subject type is
+	qualified, namely the parameter P.
+	(subject, q_subject): Remove.
+	(site): Update.  It now relies on proxy material.
+	(to_site): New method.  It is now final thanks to get_subject().
+	* mln/core/internal/site_relative_iterator_base.hh
+	(unproxy): Replace by...
+	(subj_): ...this.
+	* mln/core/internal/site_iterator_base.hh: Likewise.
+	(site_impl): Remove this obsolete inheritance.  Now the
+	implementation is offered by the proxy mechanism.
+	(operator site, to_site): Update; use get_subject.
+	* mln/core/point2d.hh (site_const_impl, site_impl): Replace by...
+	(subject_impl): ...these.
+
+	Last.
+
+	* doc/tutorial/examples/proxy.cc: New.
+
+
+
+	PART IV.  Add some utility code.
+	--------------------------------
+
+
+
+	The main idea is to provide iterators for util::set and
+	util::array so that such structures can be involved in some site
+	set types with a common interface.  In particular, they can be
+	used by the new material of mln/core/p_double.hh
+
+
+	Finalize the util::set class.  It is now fully functional.  A
+	major improvement is that the method ".has()" does no more require
+	that the data are unfrozen.
+
+	* mln/util/set.hh (set_fwd_iter, set_bkd_iter): New classes.
+	(fwd_iter, bkd_iter, iter): New typedefs.
+	(first_element, last_element, memory_size): New.
+	(is_frozen_): New.  Hum... we should think of adding a public
+	freeze method.
+	(has): Now work when the set is frozen thanks to...
+	(v_has_, dicho_): ...these new private methods.
+	(insert): New overload with a set as argument.
+	(remove): New method.
+	(todo): Remove; done.
+	(todo): New.
+	(documentation): Layout.
+	(vect): Rename this method as...
+	(std_vector): ...this more explicit name.
+	(operator<<): Change the output.
+
+	A new class, util::array, is introduce.  It is nearly a regular
+	dynamic array expect that it will provide a remove-element method
+	with O(1) complexity.  This feature is not yet implemented (see
+	the todo).
+
+	* mln/util/array.hh: New.
+
+	Misc.
+
+	* mln/core/contract.hh (mln_implies): Replace this macro by...
+	(implies): ...this routine.  Nota: the macro did not work!
+	* mln/core/macros.hh
+	(mln_bkd_iter, mln_fwd_iter, mln_iter): New.
+	(mln_element): New.
+	* mln/fun/v2v/inc.hh: New.
+	* mln/fun/v2v/dec.hh: New.
+	* mln/util/index.hh (operator++, operator--): New.
+	(todo): New.
+	* mln/util/timer.hh: New.
+	* mln/util/yes.hh (operator==, operator!=): New overloads.
+	* mln/util/less.hh (op_less, op_less_or_equal): New.
+	* mln/value/viter.hh (change_target, index_): New.
+	(fwd_viter_, bkd_viter_): New overload ctor without argument.
+
+
+
+	PART V.  Cleanup site set definitions.
+	--------------------------------------
+
+
+
+	A lot of work here has been done to FACTOR (!) code and make it
+	safer.
+
+
+	First add a re-target feature to pseudo sites.
+
+	* mln/core/concept/pseudo_site.hh (target_t): Rename this typedef
+	as...
+	(target): ...this.
+	(target_, change_target): New methods expected in concrete
+	classes.
+	(has_target): New final method.
+	(if_possible::change_target): Update.
+	* mln/core/macros.hh (mln_target_): New.
+
+	Add some methods in the site set interface.
+
+	* mln/core/concept/site_set.hh (is_valid): New method.  Some site
+	set types are always valid, some others can sometimes be
+	invalid (think of an initialized box!)
+	(memory_size): New.
+	(i_element, insert): New methods expected by site sets with
+	"dynamic contents".
+	(r_element, remove): New methods expected by site sets with "free
+	contents".  Nota bene: having a "growing contents" means that no
+	removal is possible.
+	(q_box): New typedef expected by site sets knowing their bounding
+	box.
+	(bbox): Turn this method into optional.
+	(internal): New material to check the presence of methods that
+	some site sets feature.
+	(Site_Set): Use this material to check the presence of the nsites,
+	bbox, insert, and remove methods.
+	(todo): Remove; done.
+	* mln/accu/bbox.hh (box_): Update to...
+	(box): ...the new class name.
+	(take): Rely on is_valid instead of nsites.
+	* mln/core/box.hh,
+	* mln/core/p_queue_fast.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_set.hh,
+	* mln/core/line2d.hh,
+	* mln/core/p_run.hh,
+	* mln/core/p_run_piter.hh,
+	* mln/core/p_array.hh,
+	* mln/core/p_runs.hh: Update.
+	* mln/core/concept/box.hh (q_box): New typedef.
+	(nsites): Handle the case of a non-initialized box.
+	* doc/tutorial/examples/cpp_issue.cc: New.  It illustrates the
+	impossibility of having a "typedef box" (and thus a method having
+	for signature "box bbox() const") due to the type "box<P>".
+
+	Some site set types are indexed (featuring an operator[]).  The
+	triplet of psite, fwd_piter, and bkd_piter is factored for such
+	types.  It is the case for:
+	- p_array<P>
+	- p_set<P>
+	- line2d.
+
+	* mln/core/p_array.hh (p_array_psite): Rename as...
+	(p_indexed_psite): ...this and update.
+	(p_indexed_fwd_piter, p_indexed_bkd_piter): New iterators.
+	(psite, fwd_piter, bkd_piter): Update.
+	(trait): Update.
+	(element, piter, i_element): New typedefs.
+	(has_index): Remove; replace by...
+	(has): ...this overload with util::index.
+	(operator[]): New overload with util::index.
+	(vect): Rename as...
+	(std_vector): ...this.
+	(memory_size, hook_std_vector_): New.
+	* mln/core/p_set.hh: Likewise.
+	(p_set): Change inheritance (remove dependency on set_of_) into
+	delegation with...
+	(s_): ...this new attribute whose type is util::set.
+	(remove): Re-activate and make it work.
+	(bb_, bbox): Remove because it is too costly to maintain.
+	* mln/core/p_array_piter.hh: Obsolete changes.
+	* mln/core/line2d.hh
+	(vect_): Change this attribute to...
+	(arr_): ...this new one with type being a p_array.
+	(beg_, end_): Remove those useless attributes.
+	(begin, end, bbox): New methods.
+	(line2d): Update like previous site set types.
+	* doc/tutorial/examples/line2d.cc: New.
+
+	Re-vamp the p_queue_fast so that it completely relies on p_array.
+
+	* mln/core/p_queue_fast.hh (include): Remove about all
+	includes (useless!).  Add p_array.hh.
+	(trait): Update.
+	(element, psite, piter): New typedefs.
+	(fwd_piter, bkd_piter): Now use the indexed iterators.
+	(has): Replace by...
+	(compute_has): ...this re-written method.
+	(has): Now take a psite (!)
+	(npoints, vect): Rename as...
+	(nsites, std_vector): ...these.
+	(bbox, push_force, is_empty): Remove.
+	(i_element, insert, purge, memory_size): New.
+	(bb_, vect_needs_update_): Remove.  They are useless since:
+	(q_): Change type from std::vector to p_array.
+	(begin_, end_): Change type from std::size_t to unsigned.
+	(operator[]): New.
+	(p_queue_fast, reserve, clear, pop, push): Re-write.
+	(pop_front): Fix missing precondition.
+
+	Completely re-write the priority queue class so that this class is
+	unique.  Put differently we had three classes:
+	- p_priority_queue
+	- p_priority_queue_fast
+	- p_priority_queue_fast_with_array
+	and now we have one factored class:
+	- p_priority!
+	Yet this class does not handle a bounding box (to be implemented).
+
+	* mln/core/p_priority_queue.hh (p_priority_queue): Rename as...
+	(p_priority): ...this.
+	Re-write completely and update; noticeable changes are:
+	(T): Replace this element-type parameter by...
+	(Q): ...this new parameter; it is the queue-type.
+	(bbox, operator[], push_force): Remove these methods.
+	(insert): New method.
+	(exists_priority, operator()): New methods.
+	(lowest_priority, highest_priority): New methods.
+
+	* doc/tutorial/examples/p_queue.cc: New.  Illustrate what can be
+	done with both p_queue_fast and p_priority_queue.
+
+	About site sets based on runs, cleanup and speedup code.
+	A couple of important remarks:
+	- p_run<P> does not rely on p_indexed stuff because the dedicated
+	  code is more efficient; just think of calling .next() and
+	  computing the i-th point (slow) instead of just
+	  inc/dec-rementing the last coordinate (fast).
+	- p_runs<P> is a transition class between has-been code and
+	  will-be code; it will be automatically replaced by composite
+	  site set types s.a. p_array_of< p_run<P> >.
+
+	* mln/core/p_run.hh: Update like previous site set types.
+	(set_run): Rename this method as...
+	(init): ...this.  It is now consistent with other lib types.
+	(p_): Rename this attribute as...
+	(start_): ...this more explicit name.
+	(first): Rename this method as...
+	(start): ...this.
+	(end): New method.
+	(bb_): Remove this attribute since it is easily and efficiently
+	computable.
+	(is_valid_): Likewise.
+	(bbox): Update; now return by copy.
+	(std::size_t): Change this type of length into...
+	(unsigned short): ...this sufficient type.
+	(util::less): New specialization.
+	(psite, piter): New typedefs.
+	(p_run_psite): New.  There was no psite for p_run!  Instead a type
+	of point was used so there was no very efficient ".has(p)"
+	method...
+	(has): Overload for psite.  It is quick :-)
+	* mln/core/p_run_piter.hh: Update.
+	(assign_run, to_point, operator[], ind, operator P): Remove; now
+	obsolete because factored in super classes.
+	(i_, p_, run_, is_valid_): Likewise for these attributes.
+	* mln/core/p_runs.hh (p_runs): Rename as...
+	(p_run_set): ...this.
+	(fwd_piter, bkd_piter): Use p_double stuff; see below.
+	Update the full class file.  Nota bene: this class will be soon
+	obsolete!  Yet to bench the difference after changes we keep track
+	of an up-to-date version:
+	* sandbox/geraud/p_runs__with_dedicated_piter.hh: Copy of previous
+	code to bench purpose.
+	* doc/benchmark/p_runs.cc: New.
+	* doc/tutorial/examples/p_run_set.cc: New.
+	* mln/convert/to_p_run_set.hh: New.
+
+	Add composite site set types, meaning types for "composites of
+	site sets".  For instance, a dynamic array of site sets or a
+	mathematical set of site sets.
+
+	* mln/core/p_double.hh: New.
+	* mln/core/p_mutable_array_of.hh: New.
+	* mln/core/p_set_of.hh: New.
+	* doc/tutorial/examples/p_mutable_array_of.cc: New.
+
+	New site set types that are value-oriented.
+
+	* mln/core/p_vaccess.hh: New.
+	* mln/core/obsolete_p_vaccess.hh: New.
+	* mln/core/p_key.hh: New.
+	* doc/tutorial/examples/p_vaccess.cc: New.
+	* doc/tutorial/examples/p_key.cc: New.
+	* doc/tutorial/examples/p_key.2.cc: New.
+
+	Misc.
+
+	* mln/core/p_queue.hh (npoints): Rename as...
+	(nsites): ...this.
+	(is_empty): Remove; obsolete.
+	* mln/core/internal/site_set_base.hh
+	(is_empty): New method; it dispatches to is_empty_.
+	(is_empty_): New default implementation based on the nsites
+	method.  This method has to be overridden by sub-classes that can
+	test their emptiness though they do not feature the nsites method.
+	* mln/core/concept/site_set.hh (insert_all): Replace this method by...
+	(operator+=): ...this external operator and add static checks.
+	* doc/tutorial/examples/image2d.cc,
+	* doc/tutorial/examples/window.cc: Update.
+	* mln/trait/site_set/props.hh (todo): New.
+	(contents::free): Fix typo in return of the name() method.
+
+	Last.
+
+	* mln/trait/site_set/status.txt: Layout and update.  That is THE
+	reference file to know the work done v. remaining to be done on
+	site sets.
+
+
+
+	PART VI.  Some work on image types.
+	-----------------------------------
+
+
+	Cleanup the internal classes.
+
+	* mln/core/internal/data.hh (todo): New.
+	* mln/core/internal/image_base.hh (morpher_lvalue_): Move into...
+	* mln/core/internal/morpher_lvalue.hh: ...this new file.
+	* mln/core/internal/check/image_all.hh: Typo.
+	* mln/core/internal/check/image_fastest.hh (ctor): Fix a missing
+	static check.
+	* mln/core/internal/image_identity.hh
+	(image_identity_impl__fastest, image_identity_impl): New.
+	Actually this new code should be located elsewhere.
+
+	Bench image2d and compare iterations with different
+	implementations.
+
+	* mln/core/point.hh (operator[]): Change return from "C" to "const
+	C&".
+	(last_coord): New.
+	(plus_infty, minus_infty): New.
+	(cut_): New.
+	* mln/core/internal/coord_impl.hh
+	(ind, row, col, sli): Change return from "C" to "const C&".
+	* mln/core/window.hh: Update.
+	* mln/core/box_piter.hh (next_): Speedup a bit.
+	* mln/core/image2d.hh (alt): New temporary method to bench purpose.
+	* doc/benchmark/image2d.cc: New.
+
+	First attempt to deal with temporary mutable morphers.
+
+	* mln/core/image: New directory.
+	* mln/core/image/all.hh,
+	* mln/core/image/instant.hh: New files.
+	* mln/core/sub_image.hh (operator|): New overload for instant
+	images.
+	* mln/level/fill_with_value.hh (fill_with_value): Likewsie. 
+	* doc/tutorial/examples/sub_image.cc: Use fill_with_value to show
+	that instant morphers can be mutable.
+
+	Start to update p_run-based image types.
+
+	* mln/core/sparse_image.hh: Update using p_run_set<P>.
+
+	Misc.
+
+	* mln/core/plain.hh (include): Remove useless dependence on
+	algebra::vec.
+	* mln/pw/image.hh (speed): Fix wrong property.
+
+
+
+	PART VII.  What is not in previous parts.
+	-----------------------------------------
+
+
+
+	* doc/tutorial/examples/p_array.cc: Replace some dynamic
+	assertions by static checks.
+	* mln/core/concept/gdpoint.hh (todo): New.
+	* mln/core/internal/piter_adaptor.hh
+	(pi_change_target_): New default implementation.
+	(pi_set_from_): Remove this method expected in subclasses.
+	(change_target): Call pi_change_target_.
+	* mln/core/pset_if_piter.hh: Update.
+	* mln/debug/put_word.hh: New.
+	* mln/debug/println.hh (todo): New.
+	* mln/debug/println.spe.hh (todo): New.
+	(println): Revamp 2D version so it can work on a wider set of
+	images.  It no longer relies on the "at(row,col)" method.
+	(println): Overload for image2d<char>.
+	* mln/geom/bbox.hh (bbox_): Fix signature.
+	* mln/labeling/blobs.hh (unsigned): Replace its use by...
+	(L): ...this parameter.  That is a feature bug fix!
+	* mln/morpho/internal: New.
+	* mln/morpho/internal/elementary.hh: New.
+	* mln/morpho/gradient_elementary.hh: Use new stuff.
+	* mln/morpho/dilation_elementary.hh: Add temporary code.
+
 2008-06-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start cleaning up level::fill.

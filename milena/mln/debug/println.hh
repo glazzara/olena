@@ -31,6 +31,8 @@
 /*! \file mln/debug/println.hh
  *
  * \brief Print an image on the standard output.
+ *
+ * \todo Revamp.
  */
 
 # include <mln/core/concept/image.hh>

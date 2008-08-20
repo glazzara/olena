@@ -25,15 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_DILATION_ELEMENTARY_HH
-# define MLN_MORPHO_DILATION_ELEMENTARY_HH
+#ifndef MLN_MORPHO_GRADIENT_ELEMENTARY_HH
+# define MLN_MORPHO_GRADIENT_ELEMENTARY_HH
 
-/// \file mln/morpho/dilation_elementary.hh
-/// \brief Morphological elementary dilation.
+/// \file mln/morpho/gradient_elementary.hh
+/// \brief Morphological elementary gradient.
 ///
-/// \todo Write specific code.
+/// \todo Handle border + add fastest versions.
 
-# include <mln/morpho/dilation.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/accu/min_max.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
@@ -42,7 +45,7 @@ namespace mln
   namespace morpho
   {
 
-    /// Morphological elementary dilation.
+    /// Morphological elementary gradient.
     ///
     /// \param[in] input The image to be dilated.
     /// \param[in] nbh The neighborhood to consider.
@@ -52,23 +55,123 @@ namespace mln
     /// \{
     template <typename I, typename N>
     mln_concrete(I)
-    dilation_elementary(const Image<I>& input, const Neighborhood<N>& nbh);
+    gradient_elementary(const Image<I>& input, const Neighborhood<N>& nbh);
     /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      namespace generic
+      {
+
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_elementary_on_function(const I& input, const N& nbh)
+	{
+	  trace::entering("morpho::impl::generic::gradient_elementary_on_function");
+
+	  mln_concrete(I) output;
+	  initialize(output, input);
+
+	  accu::min_max_<mln_value(I)> m;
+	  mln_piter(I) p(input.domain());
+	  mln_niter(N) n(nbh, p);
+	  for_all(p)
+	    {
+	      m.take_as_init(input(p));
+	      for_all(n) if (input.has(n))
+		m.take(input(n));
+	      output(p) = m.second() - m.first();
+	    }
+
+	  trace::exiting("morpho::impl::generic::gradient_elementary_on_function");
+	  return output;
+	}
+
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_elementary_on_set(const I& input, const N& nbh)
+	{
+	  trace::entering("morpho::impl::generic::gradient_elementary_on_set");
+
+	  mln_concrete(I) output;
+	  initialize(output, input);
+	  level::fill(output, false);
+
+	  mln_piter(I) p(input.domain());
+	  mln_niter(N) n(nbh, p);
+	  for_all(p)
+	    {
+	      bool b = input(p);
+	      for_all(n) if (input.has(n))
+		if (input(n) != b)
+		  {
+		    output(p) = true;
+		    break;
+		  }
+	    }
+
+	  trace::exiting("morpho::impl::generic::gradient_elementary_on_set");
+	  return output;
+	}
+
+      } // end of namespace mln::impl::generic
+
+
+      // Different cases.
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const mln::trait::image::kind::any&,
+			     const mln::trait::image::speed::any&,
+			     const I& input, const N& nbh)
+      {
+	return generic::gradient_elementary_on_function(input, nbh);
+      }
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const mln::trait::image::kind::logic&,
+			     const mln::trait::image::speed::any&,
+			     const I& input, const N& nbh)
+      {
+	return generic::gradient_elementary_on_set(input, nbh);
+      }
+
+
+      // Selector.
+
+      template <typename I, typename N>
+      mln_concrete(I)
+	gradient_elementary_(const I& input, const N& nbh)
+      {
+	return gradient_elementary_(mln_trait_image_kind(I)(),
+				    mln_trait_image_speed(I)(),
+				    input, nbh);
+      }
+
+    } // end of namespace mln::impl
+
+
+    // Facade.
+
     template <typename I, typename N>
     mln_concrete(I)
-    dilation_elementary(const Image<I>& input, const Neighborhood<N>& nbh)
+    gradient_elementary(const Image<I>& input_, const Neighborhood<N>& nbh_)
     {
-      trace::entering("morpho::dilation_elementary");
-      mln_precondition(exact(input).has_data());
-      // FIXME: mln_precondition(! exact(nbh).is_empty());
+      const I& input = exact(input_);
+      const N& nbh   = exact(nbh_);
 
-      mln_concrete(I) output = dilation(input, nbh.to_window());
+      trace::entering("morpho::gradient_elementary");
+      mln_precondition(input.has_data());
+      // FIXME: mln_precondition(! nbh.is_empty());
 
-      trace::exiting("morpho::dilation_elementary");
+      mln_concrete(I) output = impl::gradient_elementary_(input, nbh);
+
+      trace::exiting("morpho::gradient_elementary");
       return output;
     }
 
@@ -79,4 +182,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_DILATION_ELEMENTARY_HH
+#endif // ! MLN_MORPHO_GRADIENT_ELEMENTARY_HH

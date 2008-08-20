@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,10 +49,10 @@ namespace mln
      * The parameter \c P is the type of points.
      */
     template <typename P>
-    struct bbox : public mln::accu::internal::base_< const box_<P>& , bbox<P> >
+    struct bbox : public mln::accu::internal::base_< const box<P>& , bbox<P> >
     {
       typedef P argument;
-      typedef const box_<P>& result;
+      typedef const box<P>& result;
 
       bbox();
 
@@ -60,16 +60,16 @@ namespace mln
       void take_as_init(const P& p);
       void take(const P& p);
       void take(const bbox<P>& other);
-      void take(const box_<P>& other);
+      void take(const box<P>& b);
 
-      const box_<P>& to_result() const;
+      const box<P>& to_result() const;
 
       bool is_valid() const;
 
     protected:
 
       bool is_valid_;
-      box_<P> b_;
+      box<P> b_;
     };
 
 
@@ -138,7 +138,7 @@ namespace mln
 	  return;
 	}
       // both are valids so:
-      const box_<P>& o_b = other.b_;
+      const box<P>& o_b = other.b_;
       for (unsigned i = 0; i < P::dim; ++i)
 	{
 	  if (o_b.pmin()[i] < b_.pmin()[i])
@@ -151,32 +151,32 @@ namespace mln
     template <typename P>
     inline
     void
-    bbox<P>::take(const box_<P>& other)
+    bbox<P>::take(const box<P>& b)
     {
-      if (other.npoints() == 0)
+      if (! b.is_valid())
 	{
 	  // no-op
 	  return;
 	}
       if (! this->is_valid_)
 	{
-	  b_ = other;
+	  b_ = b;
 	  is_valid_ = true;
 	  return;
 	}
       // both are valids so:
       for (unsigned i = 0; i < P::dim; ++i)
 	{
-	  if (other.pmin()[i] < b_.pmin()[i])
-	    b_.pmin()[i] = other.pmin()[i];
-	  if (other.pmax()[i] > b_.pmax()[i])
-	    b_.pmax()[i] = other.pmax()[i];
+	  if (b.pmin()[i] < b_.pmin()[i])
+	    b_.pmin()[i] = b.pmin()[i];
+	  if (b.pmax()[i] > b_.pmax()[i])
+	    b_.pmax()[i] = b.pmax()[i];
 	}
     }
 
     template <typename P>
     inline
-    const box_<P>&
+    const box<P>&
     bbox<P>::to_result() const
     {
       mln_precondition(is_valid_);

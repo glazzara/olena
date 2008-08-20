@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -60,7 +60,7 @@ namespace mln
    * (i.e., no-op if multiple or allow multiple insertions).
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P>
   class p_queue : public internal::site_set_base_< P, p_queue<P> >
@@ -79,11 +79,8 @@ namespace mln
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
 
-    /// Test if queue is empty or not.
-    bool is_empty() const;
-
     /// Give the number of points.
-    std::size_t npoints() const;
+    unsigned nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -178,16 +175,8 @@ namespace mln
 
   template <typename P>
   inline
-  bool
-  p_queue<P>::is_empty() const
-  {
-    return (q_.empty());
-  }
-
-  template <typename P>
-  inline
-  std::size_t
-  p_queue<P>::npoints() const
+  unsigned
+  p_queue<P>::nsites() const
   {
     return q_.size();
   }
@@ -197,7 +186,7 @@ namespace mln
   const box_<P>&
   p_queue<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -286,7 +275,7 @@ namespace mln
   const P&
   p_queue<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return q_[i];
   }
 

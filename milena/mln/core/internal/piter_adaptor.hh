@@ -81,6 +81,10 @@ namespace mln
       /// Change the site set targeted by this iterator. 
       void change_target(const S& s);
 
+      /// Change the site set targeted by pi_.  This default impl is a
+      /// no-op.  This method might be overridden.
+      void pi_change_target_(const S& s);
+
     protected:
 
       /// The adaptee site iterator.
@@ -152,9 +156,16 @@ namespace mln
       this->s_ = & s;
       // p might be also updated since it can hold a pointer towards
       // the set it designates, so:
-      pi_.change_target( exact(this)->pi_set_from_(s) );
+      exact(this)->pi_change_target_(s);
       // Last:
       this->invalidate();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    void
+    piter_adaptor_<Pi,S,E>::pi_change_target_(const S& s)
+    {
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -31,6 +31,9 @@
 /*! \file mln/core/internal/image_identity.hh
  *
  * \brief Definition of a base class for image morphers w.r.t. identity.
+ *
+ * \todo Move "fastest impl" elsewhere; it can be used by some other
+ * classes.
  */
 
 # include <mln/core/internal/image_morpher.hh>
@@ -43,12 +46,90 @@ namespace mln
   {
 
 
+    // Fastest.
+
+    template <typename trait_speed, typename I, typename E>
+    struct image_identity_impl__fastest
+    {
+      // Nothing.
+    };
+
+    template <typename I, typename E>
+    struct image_identity_impl__fastest< mln::trait::image::speed::fastest, I, E >
+    {
+    private:
+
+      mlc_const(I)& del_() const
+      {
+	return * internal::force_exact<const E>(*this).delegatee_();
+      }
+
+      I& del_()
+      {
+	return * internal::force_exact<E>(*this).delegatee_();
+      }
+
+    public:
+
+      int delta_index(const mln_deduce(I, psite, delta)& dp) const
+      {
+	return del_().delta_index(dp);
+      }
+
+      mln_site(I) point_at_index(unsigned i) const
+      {
+	return del_().point_at_index(i);
+      }
+      
+      unsigned border() const
+      {
+	return del_().border();
+      }
+      
+      mln_qlf_value(I)* buffer()
+      {
+	return del_().buffer();
+      }
+      
+      const mln_value(I)* buffer() const
+      {
+	return del_().buffer();
+      }
+      
+      mln_rvalue(I) element(unsigned i) const
+      {
+	return del_().element(i);
+      }
+      
+      mln_lvalue(I) element(unsigned i)
+      {
+	return del_().element(i);
+      }
+
+      unsigned nelements() const
+      {
+	return del_().nelements();
+      }
+    };
+
+    // Facade.
+
+    template <typename I, typename E>
+    struct image_identity_impl
+      : image_identity_impl__fastest< mln_trait_image_speed(E), I, E >
+    {
+    };
+
+
+
     /*! \internal A base class for image morphers w.r.t. identity.
      * Parameter \p S is a point set type.
      *
      */
     template <typename I, typename S, typename E>
-    class image_identity : public image_morpher<I, S, E>
+    class image_identity
+      : public image_identity_impl<I, E>,
+	public image_morpher<I, S, E>
     {
     public:
 
@@ -83,6 +164,7 @@ namespace mln
       /// Constructor.
       image_identity();
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY

@@ -32,7 +32,11 @@
  *
  * \brief Definition of a "less" function-object with one type (T).
  *
- * \todo Use mln_trait_op_less as return type (?)
+ * \todo Zed: Revamp:
+ * \todo - Rename as something like ordering;
+ * \todo - Use the trait mechanism;
+ * \todo - Allow more general definitions based upon a category;
+ * \todo - Add deduced operators.
  */
 
 # include <mln/util/less_than.hh>
@@ -59,6 +63,22 @@ namespace mln
     };
 
 
+    // FIXME!!!
+
+    bool op_less(unsigned lhs, unsigned rhs)
+    {
+      return lhs < rhs;
+    }
+
+
+    template <typename T>
+    bool op_less(const Object<T>& lhs, const Object<T>& rhs);
+
+    template <typename T>
+    bool op_less_or_equal(const Object<T>& lhs, const Object<T>& rhs);
+
+    
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
@@ -68,6 +88,21 @@ namespace mln
     {
       static const less_than<T,T> lt_ = less_than<T,T>();
       return lt_(lhs, rhs);
+    }
+
+    template <typename T>
+    inline
+    bool op_less(const Object<T>& lhs, const Object<T>& rhs)
+    {
+      static const less<T> the_ = less<T>();
+      return the_(exact(lhs), exact(rhs));
+    }
+
+    template <typename T>
+    inline
+    bool op_less_or_equal(const Object<T>& lhs, const Object<T>& rhs)
+    {
+      return op_less(lhs, rhs) || exact(lhs) == exact(rhs);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

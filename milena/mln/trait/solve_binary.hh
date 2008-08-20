@@ -59,6 +59,25 @@ namespace mln
     namespace internal
     {
 
+
+      template < template <class, class> class Name,
+		 typename Category_L, typename L,
+		 typename Category_R, typename R >
+      struct trait_set_binary_;
+
+      template < template <class, class> class Name,
+		 template <class> class Category_L, typename _l, typename L,
+		 template <class> class Category_R, typename _r, typename R >
+      struct trait_set_binary_< Name,
+			       Category_L<_l>, L,
+			       Category_R<_r>, R >
+      {
+	typedef typename mln::trait::set_binary_<Name,
+						 Category_L, L,
+						 Category_R, R>::ret ret;
+      };
+
+
       // triplet_ret_
 
       template < unsigned i_L_, unsigned i_R_, typename ret_ >
@@ -159,23 +178,23 @@ namespace mln
 
       // Fwd decl.
       template < template <class, class> class Name,
-		 unsigned i_L, template <class> class Category_L, typename L,
-		 unsigned i_R, template <class> class Category_R, typename R >
+		 unsigned i_L, typename Category_L, typename L,
+		 unsigned i_R, typename Category_R, typename R >
       struct get_binary_;
 
 
       template < typename user_ret, /* != not_found and != undefined */
 		 template <class, class> class Name,
-		 unsigned i_L, template <class> class Category_L, typename L,
-		 unsigned i_R, template <class> class Category_R, typename R >
+		 unsigned i_L, typename Category_L, typename L,
+		 unsigned i_R, typename Category_R, typename R >
       struct helper_get_binary_
       {
 	typedef triplet_< i_L, i_R, user_ret > ret; // The user has defined 'ret' so we return it.
       };
 
       template < template <class, class> class Name,
-		 unsigned i_L, template <class> class Category_L, typename L,
-		 unsigned i_R, template <class> class Category_R, typename R >
+		 unsigned i_L, typename Category_L, typename L,
+		 unsigned i_R, typename Category_R, typename R >
       struct helper_get_binary_< /* user_ret == */ not_found,
 				 Name,  i_L, Category_L, L,  i_R, Category_R, R >
       {
@@ -183,23 +202,9 @@ namespace mln
       };
 
 
-      template < template <class, class> class Name,  // Nota bene: Seq means "super or equal".
-		 unsigned i_L, typename Seq_Category_L, typename L,
-		 unsigned i_R, typename Seq_Category_R, typename R >
-      struct helper_get_binary_rec_;
-
       template < template <class, class> class Name,
-		 unsigned i_L, template <class> class Seq_Category_L, typename L,
-		 unsigned i_R, template <class> class Seq_Category_R, typename R >
-      struct helper_get_binary_rec_< Name, i_L, Seq_Category_L<void>, L,  i_R, Seq_Category_R<void>, R >
-      {
-	typedef typename get_binary_<Name, i_L, Seq_Category_L, L,  i_R, Seq_Category_R, R>::ret ret;
-      };
-
-
-      template < template <class, class> class Name,
-		 unsigned i_L, template <class> class Category_L, typename L,
-		 unsigned i_R, template <class> class Category_R, typename R >
+		 unsigned i_L, typename Category_L, typename L,
+		 unsigned i_R, typename Category_R, typename R >
       struct helper_get_binary_< /* user_ret == */ undefined,
 				 Name, i_L,Category_L, L, i_R,Category_R, R >
       {
@@ -208,17 +213,17 @@ namespace mln
 	// FIXME: We *do* need to handle this search with a priority!
 	// FIXME: for a result can be found in both branches... 
 
-	typedef typename super_category_< Category_L, L >::ret Super_Category_L;
-	typedef typename super_category_< Category_R, R >::ret Super_Category_R;
+	typedef typename mln::internal::super_category_< Category_L, L >::ret Super_Category_L;
+	typedef typename mln::internal::super_category_< Category_R, R >::ret Super_Category_R;
 
-	typedef helper_get_binary_rec_< Name,
-					i_L + 1, Super_Category_L, L,
-					i_R,     Category_R<void>, R > L_branch;
+	typedef get_binary_< Name,
+			     i_L + 1, Super_Category_L, L,
+			     i_R,     Category_R,       R > L_branch;
 	typedef mlc_ret(L_branch) L_trp;
 
-	typedef helper_get_binary_rec_< Name,
-					i_L,     Category_L<void>, L,
-					i_R + 1, Super_Category_R, R > R_branch;
+	typedef get_binary_< Name,
+			     i_L,     Category_L,       L,
+			     i_R + 1, Super_Category_R, R > R_branch;
 	typedef mlc_ret(R_branch) R_trp;
 	
 	typedef typename merge_triplets_< L_trp, R_trp >::ret ret;
@@ -226,12 +231,12 @@ namespace mln
 
 
       template < template <class, class> class Name,
-		 unsigned i_L, template <class> class Category_L, typename L,
-		 unsigned i_R, template <class> class Category_R, typename R >
+		 unsigned i_L, typename Category_L, typename L,
+		 unsigned i_R, typename Category_R, typename R >
       struct get_binary_
       {
-	typedef typename mln::trait::set_binary_<Name, Category_L,L,
-						       Category_R,R>::ret user_ret; // First get 'user_ret'
+	typedef typename trait_set_binary_<Name, Category_L,L,
+					   Category_R,R>::ret user_ret;  // First get 'user_ret'
 	typedef helper_get_binary_<user_ret, Name, i_L,Category_L,L,
 				                   i_R,Category_R,R> helper;        // Set the helper to make a decision.
 	typedef mlc_ret(helper) ret;                                                // Return a triplet.
@@ -240,16 +245,16 @@ namespace mln
 
       template < typename precise_ret,
 		 template <class, class> class Name,
-		 template <class> class Category_L, typename L,
-		 template <class> class Category_R, typename R >
+		 typename Category_L, typename L,
+		 typename Category_R, typename R >
       struct helper_choose_binary_wrt_ /* precise_ret != undefined */
       {
 	typedef precise_ret ret;                                                 // -> A precise ret has been defined so it is it.
       };
 
       template < template <class, class> class Name,
-		 template <class> class Category_L, typename L,
-		 template <class> class Category_R, typename R >
+		 typename Category_L, typename L,
+		 typename Category_R, typename R >
       struct helper_choose_binary_wrt_< /* precise_ret == */ undefined,
 					Name, Category_L, L, Category_R, R >
       {
@@ -261,31 +266,13 @@ namespace mln
 
 
       template < template <class, class> class Name,
-		 template <class> class Category_L, typename L,
-		 template <class> class Category_R, typename R >
-      struct helper_choose_binary_
+		 typename Category_L, typename L,
+		 typename Category_R, typename R >
+      struct helper_solve_binary_
       {
 	typedef typename set_precise_binary_<Name, L, R>::ret precise_ret; /* undefined or not (?) */
 	typedef helper_choose_binary_wrt_<precise_ret, Name, Category_L,L, Category_R,R> helper;
 	typedef mlc_ret(helper) ret;
-      };
-
-
-      template < template <class, class> class Name,
-		 typename Category_L_void, typename L,
-		 typename Category_R_void, typename R >
-      struct helper_solve_binary_;
-
-      template < template <class, class> class Name,
-		 template <class> class Category_L, typename void_L, typename L,
-		 template <class> class Category_R, typename void_R, typename R >
-      struct helper_solve_binary_< Name,
-				   Category_L<void_L>, L,
-				   Category_R<void_R>, R > : helper_choose_binary_< Name,
-										  Category_L, L,
-										  Category_R, R >
-      {
-	// FIXME: Check that void_L and void_R are 'void' or 'void*'.
       };
 
     } // end of namespace mln::trait::internal
@@ -293,15 +280,15 @@ namespace mln
 
     // FIXME: Postfix solve_binary with a '-'(?)
     template < template <class, class> class Name,
-	       typename L,
-	       typename R >
+	       typename L_,
+	       typename R_ >
     struct solve_binary
     {
-      typedef mln_exact(L) L_;
-      typedef mln_exact(R) R_;
-      typedef typename mln::category<L_>::ret CatL;
-      typedef typename mln::category<R_>::ret CatR;
-      typedef internal::helper_solve_binary_< Name, CatL, L, CatR, R > meta_code;
+      typedef mln_exact(L_) L;
+      typedef mln_exact(R_) R;
+      typedef typename mln::category<L>::ret Category_L;
+      typedef typename mln::category<R>::ret Category_R;
+      typedef internal::helper_solve_binary_< Name, Category_L, L, Category_R, R > meta_code;
       typedef typename meta_code::ret ret;
     };
 

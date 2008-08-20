@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/p_run.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 
 
 namespace mln
@@ -43,53 +44,36 @@ namespace mln
    *
    */
   template <typename P>
-  struct p_run_fwd_piter_ : public internal::site_iterator_base_< P, p_run_fwd_piter_<P> >
+  class p_run_fwd_piter_
+    :
+    public internal::site_set_iterator_base< p_run<P>,
+					     p_run_fwd_piter_<P> >
   {
     typedef p_run_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_set_iterator_base< p_run<P>, self_ > super_;
   public:
-    
-    // Make definitions from super class available.
-    enum { dim = super_::dim };
 
     /// Constructor without arguments.
     p_run_fwd_piter_();
 
     /// Coordinate associated type.
-    p_run_fwd_piter_(const p_run<P>& pr);
-
-    /// Assign a new run to iterate.
-    void assign_run(const p_run<P>& pr);
-
-    /// Reference of the corresponding point.
-    const P& to_point() const;
-
-    /// Read-only access to the \p i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
+    p_run_fwd_piter_(const p_run<P>& r);
 
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
-    /// Get the index of the point in the run.
-    unsigned ind() const;
-
-    /// Convert the iterator into a point.
-    operator P() const;
-
   protected:
-    const p_run<P>* run_;
-    bool is_valid_;
-    unsigned i_;
-    P p_;
+    using super_::p_;
+    using super_::s_;
   };
 
 
@@ -98,53 +82,36 @@ namespace mln
    *
    */
   template <typename P>
-  struct p_run_bkd_piter_ : public internal::site_iterator_base_< P, p_run_bkd_piter_<P> >
+  class p_run_bkd_piter_
+    :
+    public internal::site_set_iterator_base< p_run<P>,
+					     p_run_bkd_piter_<P> >
   {
     typedef p_run_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_set_iterator_base< p_run<P>, self_ > super_;
   public:
-    
-    // Make definitions from super class available.
-    enum { dim = super_::dim };
 
     /// Constructor without arguments.
     p_run_bkd_piter_();
 
     /// Coordinate associated type.
-    p_run_bkd_piter_(const p_run<P>& pr);
-
-    /// Assign a new run to iterate.
-    void assign_run(const p_run<P>& pr);
-
-    /// Reference of the corresponding point.
-    const P& to_point() const;
-
-    /// Read-only access to the \p i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
+    p_run_bkd_piter_(const p_run<P>& r);
 
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
-    /// Get the index of the point in the run.
-    unsigned ind() const;
-
-    /// Convert the iterator into a point.
-    operator P() const;
-
   protected:
-    const p_run<P>* run_;
-    bool is_valid_;
-    unsigned i_;
-    P p_;
+    using super_::p_;
+    using super_::s_;
   };
 
 
@@ -156,73 +123,39 @@ namespace mln
   template <typename P>
   inline
   p_run_fwd_piter_<P>::p_run_fwd_piter_()
-    : run_ (0),
-      is_valid_(false)
   {
   }
 
   template <typename P>
   inline
-  p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& pr)
-    : run_(&pr),
-      is_valid_(false)
+  p_run_fwd_piter_<P>::p_run_fwd_piter_(const p_run<P>& r)
   {
-  }
-
-  template <typename P>
-  inline
-  void
-  p_run_fwd_piter_<P>::assign_run(const p_run<P>& pr)
-  {
-    run_ = &pr;
-    is_valid_ = false;
-  }
-
-  template <typename P>
-  inline
-  const P&
-  p_run_fwd_piter_<P>::to_point() const
-  {
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  p_run_fwd_piter_<P>::operator[](unsigned i) const
-  {
-    mln_precondition(i < dim);
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_[i];
+    this->change_target(r);
   }
 
   template <typename P>
   inline
   bool
-  p_run_fwd_piter_<P>::is_valid() const
+  p_run_fwd_piter_<P>::is_valid_() const
   {
-    return is_valid_;
+    mln_invariant(p_.index() >= 0);
+    return p_.index() < int(s_->length());
   }
 
   template <typename P>
   inline
   void
-  p_run_fwd_piter_<P>::invalidate()
+  p_run_fwd_piter_<P>::invalidate_()
   {
-    is_valid_ = false;
+    p_.change_index(s_->length());
   }
 
   template <typename P>
   inline
   void
-  p_run_fwd_piter_<P>::start()
+  p_run_fwd_piter_<P>::start_()
   {
-    p_ = run_->first();
-    i_ = 0;
-    is_valid_ = true;
+    p_.change_index(0);
   }
 
   template <typename P>
@@ -230,28 +163,7 @@ namespace mln
   void
   p_run_fwd_piter_<P>::next_()
   {
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    p_[dim - 1]++;
-    ++i_;
-    is_valid_ = p_[dim - 1] - run_->first()[dim - 1] < (signed)run_->length();
-  }
-
-  template <typename P>
-  inline
-  unsigned
-  p_run_fwd_piter_<P>::ind() const
-  {
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return i_;
-  }
-
-  template <typename P>
-  inline
-  p_run_fwd_piter_<P>::operator P() const
-  {
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_;
+    p_.inc_index();
   }
 
 
@@ -260,102 +172,49 @@ namespace mln
   template <typename P>
   inline
   p_run_bkd_piter_<P>::p_run_bkd_piter_()
-    : run_ (0)
   {
   }
 
   template <typename P>
   inline
-  p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& pr)
-    : run_(&pr),
-      is_valid_(false)
+  p_run_bkd_piter_<P>::p_run_bkd_piter_(const p_run<P>& r)
   {
-  }
-
-  template <typename P>
-  inline
-  void
-  p_run_bkd_piter_<P>::assign_run(const p_run<P>& pr)
-  {
-    run_ = &pr;
-    is_valid_ = false;
-  }
-
-  template <typename P>
-  inline
-  const P&
-  p_run_bkd_piter_<P>::to_point() const
-  {
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  p_run_bkd_piter_<P>::operator[](unsigned i) const
-  {
-    mln_precondition(i < dim);
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_[i];
+    this->change_target(r);
   }
 
   template <typename P>
   inline
   bool
-  p_run_bkd_piter_<P>::is_valid() const
+  p_run_bkd_piter_<P>::is_valid_() const
   {
-    return is_valid_;
+    mln_invariant(p_.index() < int(s_->length()));
+    return p_.index() >= 0;
   }
 
   template <typename P>
   inline
   void
-  p_run_bkd_piter_<P>::invalidate()
+  p_run_bkd_piter_<P>::invalidate_()
   {
-    is_valid_ = false;
+    p_.change_index(-1);
   }
 
   template <typename P>
   inline
   void
-  p_run_bkd_piter_<P>::start()
+  p_run_bkd_piter_<P>::start_()
   {
-    p_ = (*run_)[run_->length() - 1];
-    i_ = run_->length() - 1;
-    is_valid_ = true;
-}
+    p_.change_index(s_->length() - 1);
+  }
 
   template <typename P>
   inline
   void
   p_run_bkd_piter_<P>::next_()
   {
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    p_[dim - 1]--;
-    --i_;
-    is_valid_ = p_[dim - 1] - run_->first()[dim - 1] >= 0;
+    p_.dec_index();
   }
 
-  template <typename P>
-  inline
-  unsigned
-  p_run_bkd_piter_<P>::ind() const
-  {
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return i_;
-  }
-
-  template <typename P>
-  inline
-  p_run_bkd_piter_<P>::operator P() const
-  {
-    mln_precondition(is_valid());
-    mln_assertion(p_[P::dim - 1] - run_->first()[P::dim - 1] == signed(i_));
-    return p_;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

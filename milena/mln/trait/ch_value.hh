@@ -61,8 +61,14 @@ namespace mln
     namespace impl
     {
 
-      // Decl.
+      // Declaration.
       template <typename I, typename V> struct ch_value_;
+
+      template <typename I, typename V>
+      struct ch_value_< tag::image_<I>,  V  >
+      {
+	typedef mln_ch_value(I, V) ret;
+      };
 
       template < template <class> class M, typename T,
 		 typename V >

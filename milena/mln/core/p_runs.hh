@@ -25,553 +25,390 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_RUNS_HH
-# define MLN_CORE_P_RUNS_HH
+#ifndef MLN_CORE_P_RUN_SET_HH
+# define MLN_CORE_P_RUN_SET_HH
 
-/*! \file mln/core/p_runs.hh
+/*! \file mln/core/p_run_set.hh
  *
- * \brief Definition of mln::internal::p_runs_ class and its iterators
- * (for internal use only).
+ * \brief Definition of a set of runs.
+ *
+ * \todo Zed: Test for unicity (see FIXMEs).
+ *
+ * \todo Write a p_set_of<S> class with inheritance features (for
+ * nsites and bbox).
  */
 
-# include <mln/core/internal/site_set_base.hh>
-# include <mln/core/internal/site_iterator_base.hh>
-# include <mln/core/runs_psite.hh>
-# include <mln/core/p_run.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/util/lazy_set.hh>
-
-# include <utility>
+# include <mln/core/p_run.hh>
+# include <mln/core/p_double.hh>
+# include <mln/core/internal/piter_adaptor.hh>
+# include <mln/util/set.hh>
 
 
 
 namespace mln
 {
 
-  // Forward declaration
-  template <typename P> struct p_runs_fwd_piter_;
-  template <typename P> struct p_runs_bkd_piter_;
+  // Forward declaration.
+  template <typename P> class p_run_set;
 
-  /*! \brief p_runs_ class represent a point set used in run_image_ class.
+
+  namespace trait
+  {
+
+    template <typename P>
+    struct site_set_< p_run_set<P> >
+    {
+      typedef trait::site_set::nsites::known     nsites;
+      typedef trait::site_set::bbox::straight    bbox;
+      typedef trait::site_set::contents::growing contents;
+      typedef trait::site_set::arity::unique     arity;
+    };
+
+  } // end of namespace trait
+
+
+
+  /*! \brief p_run_set is a mathematical set of runs.
    *
    * Parameter \c P is the type of the image point.
    */
   template <typename P>
-  class p_runs_ : public internal::site_set_base_< runs_psite<P>, p_runs_<P> >
+  class p_run_set : public internal::site_set_base_< P, p_run_set<P> >
   {
+    typedef p_run_set<P> self_;
+    typedef util::set< p_run<P> > set_;
   public:
 
-//     typedef util::lazy_set_<p_run<P> > container;
-    typedef p_runs_fwd_piter_<P> fwd_piter;
-    typedef p_runs_bkd_piter_<P> bkd_piter;
+    /// Element associated type.
+    typedef p_run<P> element;
+
+
+    /// Psite associated type.
+    typedef p_double_psite<self_, element> psite;
+
+    /// Forward Site_Iterator associated type.
+    typedef p_double_piter<self_,
+			   mln_fwd_iter(set_),
+			   mln_fwd_piter(p_run<P>)> fwd_piter;
+
+    /// Backward Site_Iterator associated type.
+    typedef p_double_piter<self_,
+			   mln_bkd_iter(set_),
+			   mln_bkd_piter(p_run<P>)> bkd_piter;
+
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+
 
     /// Constructor without arguments.
-    p_runs_();
+    p_run_set();
 
-    /// Test is \p p belongs to this point set.
-    bool has(const runs_psite<P>& ps) const;
+
+    /// Test if \p p belongs to this point set.
+    bool has(const psite& p) const;
+
+    /// Test if this set of runs is valid.
+    bool is_valid() const;
+
+
+    /// Box associated type.
+    typedef const mln::box<P>& q_box;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box<P>& bbox() const;
+
 
     /// Give the number of points.
-    typename std::size_t npoints() const;
+    unsigned nsites() const;
 
-    /// Insert a range, start at point \p p wit len \p len.
-    void insert(const p_run<P>& pr);
-
-    /// Return the number of runs.
+    /// Give the number of runs.
     unsigned nruns() const;
 
-    /// Return the len of the range starting at point \p p.
-    unsigned range_len_(const P& p) const;
+    /// Give the compression ratio: FIXME: explain...
+    float zratio() const;
 
-    /// Return the i-th run of the list of runs
-    const p_run<P>& operator[](unsigned i) const;
 
-    /// Return the size of the data in memory.
-    unsigned size_mem() const;
+    /// Insertion element associated type.
+    typedef p_run<P> i_element;
 
-    /// Finalize the lazy_set (internal use)
-    void finalize();
+    /// Insert a run \p r.
+    void insert(const p_run<P>& r);
 
-//     /// Return the container of the pset (internal use only).
-//     const container& con() const;
+    /// Insert a run from \p start to \p end.
+    void insert(const P& start, const P& end);
+
+    /// Insert a run defined by \p start with length \p len.
+    void insert(const P& start, unsigned short len);
+
+    /// Insert another set of runs.
+    void insert(const p_run_set<P>& other);
+
+
+    /// Return the i-th run.
+    const p_run<P>& run(unsigned i) const;
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
+
+    /// Hook to the set of runs.
+    const util::set< p_run<P> >& hook_() const;
+
+
+    // Required by p_double-related classes.
+    const util::set< p_run<P> >& set_1_() const;
+    template <typename I>
+    const p_run<P>& set_2_(const I& it) const;
+
 
   protected:
 
     /// Number of points.
-    typename std::size_t npoints_;
+    unsigned nsites_;
 
-    /// Points container
-    util::lazy_set_<p_run<P> > con_;
+    /// Bounding box accumulator.
+    accu::bbox<P> b_;
 
-    /// Exact bounding box.
-    accu::bbox<P> fb_;
+    /// Set of runs.
+    util::set< p_run<P> > run_;
   };
+
+
+
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const p_run_set<P>& r);
+
+
+  namespace util
+  {
+
+    template <typename P>
+    struct less< p_run_set<P> >
+    {
+      bool operator()(const p_run_set<P>& lhs,
+		      const p_run_set<P>& rhs) const;
+    };
+
+  } // end of namespace mln::util
+
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
   inline
-  p_runs_<P>::p_runs_() :
-    npoints_(0)
+  p_run_set<P>::p_run_set()
+    :
+    nsites_(0)
   {
   }
 
   template <typename P>
   inline
   bool
-  p_runs_<P>::has(const runs_psite<P>& ps) const
+  p_run_set<P>::has(const psite&) const
   {
-    if (ps.p_of_run() < nruns()
-	&& ps.p_in_run() < con_[ps.p_of_run()].length())
-      return (ps == con_[ps.p_of_run()][ps.p_in_run()]);
-    else
-      return false;
+    // FIXME
+    return true;
   }
 
   template <typename P>
   inline
-  const box_<P>&
-  p_runs_<P>::bbox() const
+  bool
+  p_run_set<P>::is_valid() const
   {
-    return fb_.to_result();
+    // FIXME: A run of this set can be invalid...
+    return true;
   }
 
   template <typename P>
   inline
-  typename std::size_t
-  p_runs_<P>::npoints() const
+  const box<P>&
+  p_run_set<P>::bbox() const
   {
-    return npoints_;
+    return b_.to_result();
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  p_run_set<P>::nsites() const
+  {
+    return nsites_;
   }
 
   template <typename P>
   inline
   void
-  p_runs_<P>::insert(const p_run<P>& pr)
+  p_run_set<P>::insert(const p_run_set<P>& other)
   {
-    typename std::vector<p_run<P> >::const_iterator iter = con_.vect().begin();
-    while (iter != con_.vect().end() && iter->first() < pr.first())
-      ++iter;
+    if (other.nsites() == 0)
+      // No-op.
+      return;
+    nsites_ += other.nsites();
+    b_.take(other.bbox());
+    run_.insert(other.run_);
+  }
 
-    if (iter != con_.vect().begin())
-    {
-      typename std::vector<p_run<P> >::const_iterator prec = iter;
-      --prec;
-      bool equal = true;
-      for (int i = P::dim - 2; i >= 0; --i)
-	if (!(equal = equal && (prec->first()[i] == pr.first()[i])))
-	  break;
-      if (equal)
-	mln_assertion(prec->first()[P::dim - 1] + (signed)prec->length()
-		      <= pr.first()[P::dim - 1]);
-    }
+  template <typename P>
+  inline
+  void
+  p_run_set<P>::insert(const p_run<P>& r)
+  {
+    nsites_ += r.nsites();
+    b_.take(r.bbox());
+    run_.insert(r);
+  }
 
-    if (iter != con_.vect().end())
-    {
-      bool equal = true;
-      for (int i = P::dim - 2; i >= 0; --i)
-	if (!(equal = equal && ((*iter).first()[i] == pr.first()[i])))
-	  break;
-      if (equal)
-	mln_assertion(pr.first()[P::dim - 1] + (signed)pr.length()
-		      <= iter->first()[P::dim - 1]);
-    }
-    con_.insert(pr);
 
-    // update box
-    fb_.take(pr.bbox().pmin());
-    fb_.take(pr.bbox().pmax());
-    // update size
-    npoints_ += pr.npoints();
+// Previous code of 'insert' was: 
+//
+// {
+//     typename std::vector<p_run<P> >::const_iterator iter = con_.vect().begin();
+//     while (iter != con_.vect().end() && iter->first() < pr.first())
+//       ++iter;
+
+//     if (iter != con_.vect().begin())
+//     {
+//       typename std::vector<p_run<P> >::const_iterator prec = iter;
+//       --prec;
+//       bool equal = true;
+//       for (int i = P::dim - 2; i >= 0; --i)
+// 	if (!(equal = equal && (prec->first()[i] == pr.first()[i])))
+// 	  break;
+//       if (equal)
+// 	mln_assertion(prec->first()[P::dim - 1] + (signed)prec->length()
+// 		      <= pr.first()[P::dim - 1]);
+//     }
+
+//     if (iter != con_.vect().end())
+//     {
+//       bool equal = true;
+//       for (int i = P::dim - 2; i >= 0; --i)
+// 	if (!(equal = equal && ((*iter).first()[i] == pr.first()[i])))
+// 	  break;
+//       if (equal)
+// 	mln_assertion(pr.first()[P::dim - 1] + (signed)pr.length()
+// 		      <= iter->first()[P::dim - 1]);
+//     }
+//     con_.insert(pr);
+
+//     // update box
+//     fb_.take(pr.bbox().pmin());
+//     fb_.take(pr.bbox().pmax());
+//     // update size
+//     npoints_ += pr.npoints();
+// }
+
+
+  template <typename P>
+  inline
+  void
+  p_run_set<P>::insert(const P& start, const P& end)
+  {
+    mln_precondition(cut_(end) == cut_(start));
+    mln_precondition(end.last_coord() >= start.last_coord());
+    p_run<P> r(start, end);
+    this->insert(r);
+  }
+
+  template <typename P>
+  inline
+  void
+  p_run_set<P>::insert(const P& start, unsigned short len)
+  {
+    mln_precondition(len != 0);
+    p_run<P> r(start, len);
+    this->insert(r);
   }
 
   template <typename P>
   inline
   unsigned
-  p_runs_<P>::nruns() const
+  p_run_set<P>::nruns() const
   {
-    return con_.nelements();
-  }
-
-  template <typename P>
-  inline
-  unsigned
-  p_runs_<P>::range_len_(const P& p) const
-  {
-    unsigned i;
-    for (i = 0; i < con_.size(); ++i)
-    {
-      if (con_[i].first == p)
-	return con_[i].second;
-    }
-    mln_assertion(i < con_.size());
-
-    //Hack
-    return (con_[i].second);
+    return run_.nelements();
   }
 
   template <typename P>
   inline
   const p_run<P>&
-  p_runs_<P>::operator[](unsigned i) const
+  p_run_set<P>::run(unsigned i) const
   {
-    return con_[i];
+    mln_precondition(i < nruns());
+    return run_[i];
   }
 
   template <typename P>
   inline
-  unsigned
-  p_runs_<P>::size_mem() const
+  std::size_t
+  p_run_set<P>::memory_size() const
   {
-    if (con_.get_mode())
-      return nruns() * (sizeof(P) + sizeof(unsigned));
-    else
-      return 2 * nruns() * (sizeof(P) + sizeof(unsigned));
+    return run_.memory_size() + sizeof(nsites_) + sizeof(b_);
   }
 
   template <typename P>
   inline
-  void
-  p_runs_<P>::finalize()
+  float
+  p_run_set<P>::zratio() const
   {
-    con_.set_const_mode(true);
-  }
-
-
-//   template <typename P>
-//   const typename p_runs_<P>::container&
-//   p_runs_<P>::con() const
-//   {
-//     return con_;
-//   }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  /*! \brief Factorization class for p_runs_iterator_.
-   *
-   * Parameter \c P is the type of the point used in the point set.
-   * Parameter \c E is the exact type of the iterator
-   */
-  template <typename P, typename E>
-  class p_runs_piter_ : public internal::site_iterator_base_< runs_psite<P>, E >
-  {
-  public:
-
-    /// Conversion into a point.
-    operator P () const;
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
-
-    /// Access to the current point coordinates.
-    mln_coord(P) operator[](unsigned i) const;
-
-    /// Assign a new pset to the iterator
-    void assign(const p_runs_<P>& pset);
-
-  protected:
-
-    /// Current point.
-    P p_;
-
-    /// Point set container.
-    const p_runs_<P>* con_;
-
-    p_runs_piter_(const p_runs_<P>& pset);
-    p_runs_piter_();
-  };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename P, typename E>
-  inline
-  p_runs_piter_<P, E>::p_runs_piter_(const p_runs_<P>& pset) :
-    con_(&pset)
-  {
-  }
-
-  template <typename P, typename E>
-  inline
-  p_runs_piter_<P, E>::p_runs_piter_() :
-    con_(0)
-  {
-  }
-
-  template <typename P, typename E>
-  inline
-  p_runs_piter_<P, E>::operator P () const
-  {
-    return this->to_point();
-  }
-
-  template <typename P, typename E>
-  inline
-  const P&
-  p_runs_piter_<P, E>::to_point() const
-  {
-    mln_precondition(exact(this)->is_valid());
-    return p_;
-  }
-
-  template <typename P, typename E>
-  inline
-  mln_coord(P)
-  p_runs_piter_<P, E>::operator[] (unsigned i) const
-  {
-    mln_precondition(exact(this)->is_valid());
-    return p_[i];
-  }
-
-  template <typename P, typename E>
-  inline
-  void
-  p_runs_piter_<P, E>::assign(const p_runs_<P>& pset)
-  {
-    con_ = &pset;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-
-  /*! \brief Forward iterator on p_runs_ point set.
-   *
-   * Parameter \c P is the type of the point used in the point set.
-   */
-  template <typename P>
-  class p_runs_fwd_piter_ : public p_runs_piter_<P, p_runs_fwd_piter_<P> >
-  {
-    typedef p_runs_piter_<P, p_runs_fwd_piter_<P> > super;
-  public:
-
-    p_runs_fwd_piter_();
-    p_runs_fwd_piter_(const p_runs_<P>& pset);
-
-    /// Test the iterator validity.
-    bool is_valid() const;
-
-    /// Invalidate the iterator.
-    void invalidate();
-
-    /// Start an iteration.
-    void start();
-
-    /// Go to the next point.
-    void next_();
-
-    /// Conversion into a point-site.
-    operator runs_psite<P> () const;
-
-  protected:
-
-    unsigned i_;
-
-    p_run_fwd_piter_<P> it_;
-  };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename P>
-  inline
-  p_runs_fwd_piter_<P>::p_runs_fwd_piter_()
-  {
+    return
+      float(memory_size()) /
+      float(b_.to_result().nsites() * sizeof(P));
   }
 
   template <typename P>
   inline
-  p_runs_fwd_piter_<P>::p_runs_fwd_piter_(const p_runs_<P>& pset) :
-    super(pset)
+  const util::set< p_run<P> >&
+  p_run_set<P>::hook_() const
   {
-    invalidate();
+    return run_;
   }
 
   template <typename P>
   inline
-  bool
-  p_runs_fwd_piter_<P>::is_valid() const
+  const util::set< p_run<P> >&
+  p_run_set<P>::set_1_() const
   {
-    return this->con_ != 0 && i_ < this->con_->nruns();
+    return run_;
   }
 
   template <typename P>
+  template <typename I>
   inline
-  void
-  p_runs_fwd_piter_<P>::invalidate()
+  const p_run<P>&
+  p_run_set<P>::set_2_(const I& it) const
   {
-    mln_precondition(this->con_ != 0);
-
-    i_ = this->con_->nruns();
+    return it.element();
   }
 
-  template <typename P>
-  inline
-  void
-  p_runs_fwd_piter_<P>::start()
-  {
-    mln_precondition(this->con_ != 0);
 
-    i_ = 0;
-    it_.assign_run((*this->con_)[i_]);
-    it_.start();
-    this->p_ = it_;
+  template <typename P>
+  std::ostream& operator<<(std::ostream& ostr, const p_run_set<P>& r)
+  {
+    return ostr << r.hook_();
   }
 
-  template <typename P>
-  inline
-  void
-  p_runs_fwd_piter_<P>::next_()
-  {
-    mln_precondition(this->is_valid());
-    mln_precondition(this->con_ != 0);
 
-    it_.next();
-    if (!it_.is_valid())
+  namespace util
+  {
+
+    template <typename P>
+    inline
+    bool
+    less< p_run_set<P> >::operator()(const p_run_set<P>& lhs,
+				     const p_run_set<P>& rhs) const
     {
-      ++i_;
-      if (is_valid())
-      {
-	it_.assign_run( (*this->con_)[i_]);
-	it_.start();
-      }
-      else
-	return;
+      return op_less(lhs.run(0), rhs.run(0));
     }
-    this->p_ = it_;
-  }
 
-  template <typename P>
-  p_runs_fwd_piter_<P>::operator runs_psite<P> () const
-  {
-    mln_precondition(this->con_ != 0);
+  } // end of namespace mln::util
 
-    return runs_psite<P>(*this->con_, it_.ind(), i_);
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-
-  /*! \brief Backward iterator on p_runs_ point set.
-   *
-   * Parameter \c P is the type of the point used in the point set.
-   */
-  template <typename P>
-  class p_runs_bkd_piter_ : public p_runs_piter_<P, p_runs_bkd_piter_<P> >
-  {
-    typedef p_runs_piter_<P, p_runs_bkd_piter_<P> > super;
-  public:
-
-    p_runs_bkd_piter_();
-    p_runs_bkd_piter_(const p_runs_<P>& pset);
-
-    /// Test the iterator validity.
-    bool is_valid() const;
-
-    /// Invalidate the iterator.
-    void invalidate();
-
-    /// Start an iteration.
-    void start();
-
-    /// Go to the next point.
-    void next_();
-
-    /// Conversion into a point-site.
-    operator runs_psite<P> () const;
-
-  protected:
-
-    unsigned i_;
-
-    p_run_bkd_piter_<P> it_;
-};
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-
-  template <typename P>
-  inline
-  p_runs_bkd_piter_<P>::p_runs_bkd_piter_()
-  {
-  }
-
-  template <typename P>
-  inline
-  p_runs_bkd_piter_<P>::p_runs_bkd_piter_(const p_runs_<P>& pset) :
-    super(pset)
-  {
-    invalidate();
-  }
-
-  template <typename P>
-  inline
-  bool
-  p_runs_bkd_piter_<P>::is_valid() const
-  {
-    return this->con_ != 0 &&i_ < this->con_->nruns();
-  }
-
-  template <typename P>
-  inline
-  void
-  p_runs_bkd_piter_<P>::invalidate()
-  {
-    mln_precondition(this->con_ != 0);
-
-    i_ = this->con_->nruns();
-  }
-
-  template <typename P>
-  inline
-  void
-  p_runs_bkd_piter_<P>::start()
-  {
-    mln_precondition(this->con_ != 0);
-
-    i_ = this->con_->nruns() - 1;
-    it_.assign_run((*this->con_)[i_]);
-    it_.start();
-    this->p_ = it_;
-  }
-
-  template <typename P>
-  inline
-  void
-  p_runs_bkd_piter_<P>::next_()
-  {
-    mln_precondition(this->is_valid());
-    mln_precondition(this->con_ != 0);
-
-    it_.next();
-    if (!it_.is_valid())
-    {
-      --i_;
-      if (is_valid())
-      {
-	it_.assign_run((*this->con_)[i_]);
-	it_.start();
-      }
-      else
-	return;
-    }
-    this->p_ = it_;
-  }
-
-  template <typename P>
-  p_runs_bkd_piter_<P>::operator runs_psite<P> () const
-  {
-    mln_precondition(this->con_ != 0);
-    return runs_psite<P>((*this->con_), it_.ind(), i_);
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_RUNS_HH
+#endif // ! MLN_CORE_P_RUN_SET_HH
