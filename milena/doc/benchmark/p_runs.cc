@@ -1,7 +1,12 @@
 # include <mln/io/pbm/load.hh>
 # include <mln/core/image2d.hh>
-# include <mln/convert/to_p_runs.hh>
+# include <mln/core/alias/p_run2d.hh>
+# include <mln/core/p_set_of.hh>
+# include <mln/convert/from_to.hh>
 # include <mln/util/timer.hh>
+
+# include <sandbox/geraud/p_runs__with_dedicated_piter.hh>
+
 
 const unsigned n_times = 32;
 
@@ -44,11 +49,39 @@ int main()
   image2d<bool> ima;
   io::pbm::load(ima, "../../img/lena.pbm");
 
-  p_runs<point2d> rs = convert::to_p_runs(ima);
-  mln_assertion(rs.zratio() < 1);
+  unsigned c;
+  std::cout << "ref: " << browse_ima(ima, c) << std::endl;
 
-  unsigned c1, c2;
-  std::cout << browse_ima(ima, c1) << std::endl;
-  std::cout << browse_runs(rs, c2) << std::endl;
-  mln_assertion(c2 == c1);
+  {
+    util::timer t;
+    t.start();
+
+    // Conversion.
+    p_set_of<p_run2d> rs;
+    convert::from_to(ima, rs);
+    std::cout << "enc: " << t.read() << std::endl;
+    // FIXME: mln_assertion(rs.zratio() < 1);
+
+    // Browsing.
+    unsigned cr;
+    std::cout << "brs: " << browse_runs(rs, cr) << std::endl;
+    mln_assertion(cr == c);
+  }
+
+  {
+    util::timer t;
+    t.start();
+
+    // Conversion.
+    p_runs<point2d> rs;
+    convert::from_to(ima, rs);
+    std::cout << "enc: " << t.read() << std::endl;
+    // FIXME: mln_assertion(rs.zratio() < 1);
+
+    // Browsing.
+    unsigned cr;
+    std::cout << "brs: " << browse_runs(rs, cr) << std::endl;
+    mln_assertion(cr == c);
+  }
+
 }

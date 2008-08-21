@@ -1,3 +1,102 @@
+2008-08-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Playing with runs, several update, and some bug fixes.
+
+
+	Prefer a value type as parameter over a value set type.
+
+	* mln/core/p_vaccess.hh (todo): Remove; done:
+	(internal): Move material in...
+	* mln/core/internal/site_set_impl.hh: ...this new file.
+	(p_vaccess_impl__nsites, p_vaccess_impl__bbox),
+	(p_vaccess_impl): Rename as...
+	(site_set_impl__nsites, site_set_impl__bbox),
+	(site_set_impl): ...these.
+	* mln/core/p_vaccess.hh (clear): New method.
+	(Sp): Rename as...
+	(S): ...this.
+	(Sv): Change this parameter into...
+	(V): ...this one and update.
+
+	The semantics of this parameter is now a value type (no more a
+	value set type).  That is an idea to generalize.  To every value
+	type V is associated the value set type mln::value::set<V>.  That
+	will simplify a lot of code in different parts of the library.
+
+	Propagate.
+
+	* mln/core/p_set_of.hh (nelements, clear): New methods.
+	(todo): Remove; done:
+	(site_set_impl): New inheritance.
+	(nsites, bbox): Update properties.
+	(insert): Update code.
+	* mln/core/concept/site_set.hh (clear): New expected method when
+	the contents property is 'dynamic'.
+	(element): Add static check.
+	* mln/core/box.hh (P): Add static check.
+	(element): New typedef.
+	* mln/core/p_mutable_array_of.hh (nelements); New method.
+	(clear): Fix missing method.
+	(is_empty_): Add this overriding so that 'is_empty' works.
+	* mln/core/p_array.hh (clear): Fix missing postcondition.
+	* mln/core/sparse_image.hh (todo): Remove; done:
+	(p_run_set): Replace by...
+	(p_set_of<p_run<P>>): ...this type.
+
+	Add aliases.
+
+	* mln/core/alias: New directory.
+	* mln/core/alias/p_run2d.hh: New.
+	* mln/core/alias/p_runs2d.hh: New.
+
+	Introduce a general converter.
+
+	* mln/convert/to_p_run_set.hh: Remove; obsolete because replace by
+	a more generic new mechanism:
+	* mln/convert/impl: New directory.
+	* mln/convert/impl/from_image_to_site_set.hh: New.
+	* mln/convert/impl/all.hh: New.
+	* mln/convert/from_to.hh: New.
+	* mln/convert/all.hh: Update.
+
+	Update tutorial examples.
+
+	* doc/tutorial/examples/p_run_set.cc: Rename as...
+	* doc/tutorial/examples/p_run.cc: ...this.
+	Update.
+	* doc/tutorial/examples/p_vaccess.cc,
+	* doc/tutorial/examples/p_mutable_array_of.cc: Update.
+
+	Now bench.  The result is twofold:
+	- p_set_of<p_run<P>> is as fast as the deprecated p_run_set<P>;
+	- the dedicated iterators (in my sandbox) are twice as fast as the
+	  general ones (the p_double_* stuff); yet such a difference is not
+	  so significant!
+
+	* mln/core/p_runs.hh (clear): New method; just to be able to
+	bench!
+	* sandbox/geraud/p_runs__with_dedicated_piter.hh
+	(clear): New method.
+	* doc/benchmark/p_runs.cc: Update.
+
+	Misc.
+
+	* doc/tutorial/examples/proxy.cc: Update/fix.
+	* mln/core/image2d.hh (alt): Fix missing update.
+	* doc/benchmark/image2d.cc: Likewise.
+	* mln/core/internal/site_set_base.hh (S): Fix typo; rename as...
+	(P): ...this.
+	* mln/core/macros.hh
+	(mln_i_element, mln_i_element_),
+	(mln_r_element, mln_r_element_): New macros.
+	* mln/core/pset_if.hh
+	(is_valid, memory_size): Fix missing methods.
+	* mln/core/pset_if_piter.hh (pi_change_target_): Fix sig.
+	* mln/labeling/blobs.hh (todo): New.
+	(blobs): Add a test on label overflow.
+	* mln/trait/image/status.txt: Fix missing image type.
+
+
 2008-08-20  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
 
 	Huge summer cleanup.

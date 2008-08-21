@@ -31,13 +31,12 @@
 /*! \file mln/core/sparse_image.hh
  *
  * \brief Definition of an image with sparse encoding.
- *
- * \todo Update p_run_set<P> to p_set_of< p_run<P> >.
  */
 
 # include <vector>
 # include <mln/core/internal/image_primary.hh>
-# include <mln/core/p_runs.hh>
+# include <mln/core/p_set_of.hh>
+# include <mln/core/p_run.hh>
 # include <mln/value/set.hh>
 
 
@@ -58,7 +57,7 @@ namespace mln
       data();
 
       /// Domain.
-      p_run_set<P> domain_;
+      p_set_of< p_run<P> > domain_;
 
       /// Image.
       std::vector< std::vector<T> > values_;
@@ -107,11 +106,11 @@ namespace mln
    */
   template <typename P, typename T>
   class sparse_image
-    : public internal::image_primary< p_run_set<P>,
+    : public internal::image_primary< p_set_of< p_run<P> >,
 				      sparse_image<P,T> >
   {
     typedef sparse_image<P,T> self_;
-    typedef internal::image_primary<p_run_set<P>, self_> super_;
+    typedef internal::image_primary<p_set_of< p_run<P> >, self_> super_;
   public:
 
     /// Value associated type.
@@ -136,7 +135,7 @@ namespace mln
     sparse_image();
 
     /// Constructor from a set of runs.
-    sparse_image(const p_run_set<P>& s);
+    sparse_image(const p_set_of< p_run<P> >& s);
 
 
     /// Add a new range to the image.
@@ -160,7 +159,7 @@ namespace mln
 
 
     /// Give the definition domain.
-    const p_run_set<P>& domain() const;
+    const p_set_of< p_run<P> >& domain() const;
   };
 
 
@@ -189,7 +188,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  sparse_image<P,T>::sparse_image(const p_run_set<P>& s)
+  sparse_image<P,T>::sparse_image(const p_set_of< p_run<P> >& s)
   {
     this->data_ = new internal::data< sparse_image<P,T> >();
     this->data_->domain_ = s;
@@ -248,7 +247,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  const p_run_set<P>&
+  const p_set_of< p_run<P> >&
   sparse_image<P,T>::domain() const
   {
     mln_precondition(this->has_data());

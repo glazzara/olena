@@ -422,6 +422,7 @@ namespace mln
   p_array<P>::clear()
   {
     vect_.clear();
+    mln_postcondition(this->is_empty());
   }
 
   template <typename P>

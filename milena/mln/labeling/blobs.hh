@@ -33,6 +33,8 @@
  *
  * \brief Connected component labeling of the binary objects of a binary
  *  image using a queue-based algorithm.
+ *
+ * \todo Handle abort in a nice way...
  */
 
 # include <mln/core/concept/image.hh>
@@ -97,6 +99,11 @@ namespace mln
 	    if (input(p) && ! output(p)) // Object point, not labeled yet.
 	      {
 		// Label this point component.
+		if (nlabels == mln_max(L))
+		  {
+		    std::cerr << "FIXME: labeling aborted!" << std::endl;
+		    return output;
+		  }
 		++nlabels;
 		mln_invariant(qu.is_empty());
 		qu.push(p);

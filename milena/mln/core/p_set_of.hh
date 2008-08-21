@@ -31,12 +31,11 @@
 /*! \file mln/core/p_set_of.hh
  *
  * \brief Definition of a set of site sets.
- *
- * \todo Zed: Add nsites and bbox when possible (see p_vaccess).
  */
 
 # include <mln/core/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
+# include <mln/core/internal/site_set_impl.hh>
 # include <mln/util/set.hh>
 
 
@@ -54,8 +53,8 @@ namespace mln
     template <typename S>
     struct site_set_< p_set_of<S> >
     {
-      typedef trait::site_set::nsites::unknown   nsites;
-      typedef trait::site_set::bbox::unknown     bbox;
+      typedef mln_trait_site_set_nsites(S)       nsites;
+      typedef mln_trait_site_set_bbox(S)         bbox;
       typedef trait::site_set::contents::growing contents;
       typedef trait::site_set::arity::multiple   arity;
     };
@@ -70,8 +69,9 @@ namespace mln
    */
   template <typename S>
   class p_set_of : public internal::site_set_base_< mln_element(S),
-						      p_set_of<S> >,
-		     private mlc_is_a(S, Site_Set)::check_t
+						    p_set_of<S> >,
+		   public internal::site_set_impl<S>,
+		   private mlc_is_a(S, Site_Set)::check_t
   {
     typedef p_set_of<S>  self_;
     typedef util::set<S> set_;
@@ -118,6 +118,13 @@ namespace mln
 
     /// Return the \p i-th site set.
     const S& operator[](unsigned i) const;
+
+    /// Give the number of elements (site sets) of this composite.
+    unsigned nelements() const;
+
+
+    /// Clear this set.
+    void clear();
 
 
     /// Return the size of this site set in memory.
@@ -176,7 +183,9 @@ namespace mln
   void
   p_set_of<S>::insert(const S& s)
   {
-    s_.append(s);
+    s_.insert(s);
+    this->update_nsites_(s);
+    this->update_bbox_(s);
   }
 
   template <typename S>
@@ -188,6 +197,22 @@ namespace mln
     return s_[i];
   }
 
+  template <typename S>
+  inline
+  unsigned
+  p_set_of<S>::nelements() const
+  {
+    return s_.nelements();
+  }
+
+  template <typename S>
+  inline
+  void
+  p_set_of<S>::clear()
+  {
+    s_.clear();
+    mln_postcondition(this->is_empty());
+  }
 
   template <typename S>
   inline

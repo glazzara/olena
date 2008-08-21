@@ -73,12 +73,16 @@ namespace mln
    */
   template <typename P>
   struct box : public Box< box<P> >,
-	       public internal::box_impl_< P::dim, mln_coord(P), box<P> >
+	       public internal::box_impl_< P::dim, mln_coord(P), box<P> >,
+               private mlc_is_unqualif(P)::check_t
   {
     /// Dimension.
     enum { dim = P::dim };
 
-    /// PSite associated type.
+    /// Element associated type.
+    typedef P element;
+
+    /// Psite associated type.
     typedef P psite;
 
     /// Site associated type.

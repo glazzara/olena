@@ -125,6 +125,16 @@ namespace mln
     /// Return the \p i-th site set (mutable version).
     S& operator[](unsigned i);
 
+    /// Give the number of elements (site sets) of this composite.
+    unsigned nelements() const;
+
+
+    /// Clear this set.
+    void clear();
+
+    /// Test if the site set is empty.
+    bool is_empty_() const; // Override the default impl since we have not .nsites().
+
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
@@ -201,6 +211,31 @@ namespace mln
   {
     mln_precondition(i < arr_.nelements());
     return arr_[i];
+  }
+
+  template <typename S>
+  inline
+  unsigned
+  p_mutable_array_of<S>::nelements() const
+  {
+    return arr_.nelements();
+  }
+
+  template <typename S>
+  inline
+  void
+  p_mutable_array_of<S>::clear()
+  {
+    arr_.clear();
+    mln_postcondition(this->is_empty());
+  }
+
+  template <typename S>
+  inline
+  bool
+  p_mutable_array_of<S>::is_empty_() const
+  {
+    return arr_.is_empty();
   }
 
   template <typename S>

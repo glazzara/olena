@@ -181,6 +181,12 @@
 
 // i
 
+/// Shortcuts to access the insertion-element type associated to T.
+/// \{
+# define mln_i_element(T)  typename T::i_element
+# define mln_i_element_(T)          T::i_element
+/// \}
+
 /// Shortcuts to access the image type associated to T.
 /// \{
 # define mln_image(T)      typename T::image
@@ -284,6 +290,12 @@
 
 
 // r
+
+/// Shortcuts to access the removal-element type associated to T.
+/// \{
+# define mln_r_element(T)  typename T::r_element
+# define mln_r_element_(T)          T::r_element
+/// \}
 
 /// Shortcuts to access the result type associated to T.
 /// \{

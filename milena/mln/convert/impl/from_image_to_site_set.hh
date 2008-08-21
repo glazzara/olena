@@ -25,19 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_P_RUN_SET_HH
-# define MLN_CONVERT_TO_P_RUN_SET_HH
+#ifndef MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
+# define MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
 
-/*! \file mln/convert/to_p_run_set.hh
+/*! \file mln/convert/from_to.hh
  *
- * \brief Conversions to mln::p_run_set<P>.
+ * \brief General conversion procedure from an image to a site_set.
  *
- * \todo Revamp!
+ * \todo Augment code + add checks.
+ *
+ * \todo Add (?) the case p_run-based -> site set.
  */
 
+# include <utility>
 # include <mln/core/concept/image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/literal/zero.hh>
+# include <mln/core/concept/site_set.hh>
+# include <mln/core/p_run.hh>
+# include <mln/metal/converts_to.hh>
 
 
 
@@ -47,23 +51,27 @@ namespace mln
   namespace convert
   {
 
+    namespace impl
+    {
 
-    /// Convert a binary image \p input into a set of runs.
-    template <typename I>
-    p_run_set<mln_site(I)> to_p_run_set(const Image<I>& input);
+      /// Convertion of an image \p from towards a site set \p to.
+      template <typename I, typename S>
+      void
+      from_image_to_site_set(const Image<I>& from, Site_Set<S>& to);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
 
-      template <typename I>
-      p_run_set<mln_site(I)> to_p_run_set_(const I& input)
+      // Case: binary image -> set of point runs.
+
+      template <typename I, typename P, typename S>
+      void
+      from_image_to_site_set_(const I& input, const Gpoint<P>&,
+			      S& s,           const mln::p_run<P>&)
       {
-	typedef mln_site(I) P;
-	p_run_set<P> runs;
+	s.clear();
 	mln_fwd_piter(I) p(input.domain());
 	p.start();
 	for (;;)
@@ -81,28 +89,27 @@ namespace mln
 		q = p;
 		p.next();
 	      }
-	    while (p.is_valid() && input(p) == true && p == q + right);
-	    runs.insert(start, q);
+	    while (p.is_valid() && input(p) == true &&
+		   // p follows q in a run, i.e., "p == q + right":
+ 		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
+	    s.insert(p_run<P>(start, q));
 	  }
-	return runs;
       }
 
 
-      template <typename S, typename I>
-      void fill_p_run_set_(S& s, const I& input)
+      template <typename I, typename P, typename S>
+      void
+      from_image_to_site_set_(const I& input, const Gpoint<P>&,
+			      S& s,           const std::pair< mln_value(I), p_run<P> >&)
       {
+	s.clear();
 	mln_value(I) O = literal::zero;
-	typedef mln_site(I) P;
 	mln_fwd_piter(I) p(input.domain());
 	p.start();
 	for (;;)
 	  {
-	    // Skip background.
-	    while (p.is_valid() && input(p) == O)
-	      p.next();
 	    if (! p.is_valid()) // The end.
 	      break;
-	    mln_invariant(input(p) != O);
 	    mln_value(I) v = input(p);
 	    P start = p, q;
 	    // Go to run end.
@@ -111,28 +118,31 @@ namespace mln
 		q = p;
 		p.next();
 	      }
-	    while (p.is_valid() && input(p) == v && p == q + right);
+	    while (p.is_valid() && input(p) == v &&
+ 		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(v, p_run<P>(start, q));
 	  }
       }
 
-    } // end of namespace mln::convert::impl
 
+      // Facade.
 
-    template <typename I>
-    p_run_set<mln_site(I)> to_p_run_set(const Image<I>& input_)
-    {
-      const I& input = exact(input_);
-      mln_precondition(input.has_data());
-      return impl::to_p_run_set_(input);
-    }
-
+      template <typename I, typename S>
+      inline
+      void
+      from_image_to_site_set(const Image<I>& from, Site_Set<S>& to)
+      {
+	from_image_to_site_set_(exact(from), mln_deduce(I, pset, element)(),
+				exact(to),   mln_i_element(S)());
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::convert::impl
 
   } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CONVERT_TO_P_RUN_SET_HH
+#endif // ! MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH

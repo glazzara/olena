@@ -72,25 +72,27 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename P, typename E>
     inline
-    site_set_base_<S,E>::site_set_base_()
+    site_set_base_<P,E>::site_set_base_()
     {
     }
 
-    template <typename S, typename E>
+    template <typename P, typename E>
     inline
     bool
-    site_set_base_<S,E>::is_empty() const
+    site_set_base_<P,E>::is_empty() const
     {
       return exact(this)->is_empty_();
     }
 
-    template <typename S, typename E>
+    template <typename P, typename E>
     inline
     bool
-    site_set_base_<S,E>::is_empty_() const
+    site_set_base_<P,E>::is_empty_() const
     {
+      mlc_is(mln_trait_site_set_nsites(E),
+	     trait::site_set::nsites::known)::check();
       return exact(this)->nsites() == 0;
     }
 

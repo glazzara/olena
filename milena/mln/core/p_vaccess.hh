@@ -30,10 +30,6 @@
 
 /*! \file mln/core/p_vaccess.hh
  *
- * \todo Factor the implementation classes for site set based on a
- * couple of structures.  Such piece of code shall be used in p_set_of
- * and p_array_of.
- *
  * \todo Fix the FIXMEs.
  */
 
@@ -41,7 +37,8 @@
 # include <mln/core/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/core/internal/site_set_impl.hh>
+# include <mln/value/set.hh>
 
 
 
@@ -49,18 +46,18 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename Sv, typename Sp> class p_vaccess;
+  template <typename V, typename S> class p_vaccess;
 
 
 
   namespace trait
   {
 
-    template <typename Sv, typename Sp>
-    struct site_set_< p_vaccess<Sv,Sp> >
+    template <typename V, typename S>
+    struct site_set_< p_vaccess<V,S> >
     {
-      typedef mln_trait_site_set_nsites(Sp)      nsites;
-      typedef mln_trait_site_set_bbox(Sp)        bbox;
+      typedef mln_trait_site_set_nsites(S)      nsites;
+      typedef mln_trait_site_set_bbox(S)        bbox;
       typedef trait::site_set::contents::growing contents;
       typedef trait::site_set::arity::multiple   arity;
     };
@@ -69,90 +66,31 @@ namespace mln
 
 
 
-  namespace internal
-  {
-
-    // For .nsites()
-
-    template <typename trait_nsites, typename Sp>
-    struct p_vaccess_impl__nsites
-    {
-    protected:
-      template <typename T>
-      void update_nsites_(const T&); // No-op.
-    };
-
-    template <typename Sp>
-    struct p_vaccess_impl__nsites< trait::site_set::nsites::known, Sp>
-    {
-      p_vaccess_impl__nsites();
-      unsigned nsites() const;
-    protected:
-      void update_nsites_(const mln_site(Sp)& p);
-      template <typename S>
-      void update_nsites_(const Site_Set<S>& s);
-      unsigned nsites_;
-    };
-
-    // For .bbox()
-
-    template <typename trait_bbox, typename Sp>
-    struct p_vaccess_impl__bbox
-    {
-      typedef const mln::box<mln_site(Sp)>& q_box;
-      q_box bbox() const;
-
-    protected:
-      void update_bbox_(const mln_site(Sp)& p);
-      template <typename S>
-      void update_bbox_(const Site_Set<S>& s);
-
-      accu::bbox<mln_site(Sp)> bb_;
-    };
-
-    template <typename Sp>
-    struct p_vaccess_impl__bbox< trait::site_set::nsites::unknown, Sp >
-    {
-    protected:
-      template <typename T>
-      void update_bbox_(const T&); // No-op.
-    };
-
-    // Facade.
-
-    template <typename Sp>
-    struct p_vaccess_impl
-      : p_vaccess_impl__nsites< mln_trait_site_set_nsites(Sp), Sp>,
-	p_vaccess_impl__bbox  < mln_trait_site_set_bbox(Sp),   Sp>
-    {
-    };
-
-  } // end of namespace mln::internal
-
-
-
   /*! \brief FIXME
    */
-  template <typename Sv, typename Sp>
-  class p_vaccess : public internal::site_set_base_< mln_site(Sp),
-						     p_vaccess<Sv,Sp> >,
-		    public internal::p_vaccess_impl< Sp >
+  template <typename V, typename S>
+  class p_vaccess : public internal::site_set_base_< mln_site(S),
+						     p_vaccess<V,S> >,
+		    public internal::site_set_impl< S >
   {
-    typedef p_vaccess<Sv,Sp> self_;
+    typedef p_vaccess<V,S> self_;
   public:
 
     /// Value associated type.
-    typedef mln_value(Sv) value;
+    typedef V value;
+
+    /// Value_Set associated type.
+    typedef mln::value::set<V> vset;
 
 
     /// Psite associated type.
-    typedef p_double_psite<self_, Sp> psite;
+    typedef p_double_psite<self_, S> psite;
 
     /// Forward Site_Iterator associated type.
-    typedef p_double_piter<self_, mln_fwd_viter(Sv), mln_fwd_piter(Sp)> fwd_piter;
+    typedef p_double_piter<self_, mln_fwd_viter(vset), mln_fwd_piter(S)> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_double_piter<self_, mln_bkd_viter(Sv), mln_bkd_piter(Sp)> bkd_piter;
+    typedef p_double_piter<self_, mln_bkd_viter(vset), mln_bkd_piter(S)> bkd_piter;
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
@@ -160,7 +98,7 @@ namespace mln
 
     /// Constructor.
     p_vaccess();
-    p_vaccess(const Sv& vset);
+    p_vaccess(const V& vset);
 
 
     /// Test if \p p belongs to this site set.
@@ -168,43 +106,47 @@ namespace mln
 
     /// Test if the couple (value \p v, psite \p p) belongs to this
     /// site set.
-    bool has(const value& v, const mln_psite(Sp)& p) const;
+    bool has(const V& v, const mln_psite(S)& p) const;
 
     /// Test if this site set is valid. 
     bool is_valid() const;
 
 
     /// Element associated type.
-    typedef mln_element(Sp) element;
+    typedef mln_element(S) element;
 
     /// Insertion element associated type. 
-    typedef std::pair<value, element> i_element;
+    typedef std::pair<V, element> i_element;
 
     /// Insert a pair \p v_e (value v, element e).
     void insert(const i_element& v_e);
 
     /// Insert \p e at value \p v.
-    void insert(const value& v, const element& e);
+    void insert(const V& v, const element& e);
 
+
+    // Clear this set.
+    void clear();
+
+
+    /// Give the set of values.
+    const mln::value::set<V>& values() const;
 
     /// Return the site set at value \p v.
-    const Sp& operator()(const value& v) const;
+    const S& operator()(const V& v) const;
+
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
-
-    /// Give the set of values.
-    const Sv& values() const;
-
     // Required by p_double-related classes.
-    const Sv& set_1_() const;
-    const Sp& set_2_(const value& v) const;
+    const V& set_1_() const;
+    const S& set_2_(const V& v) const;
     
   protected:
 
-    Sv vs_;
-    std::vector<Sp> ps_;
+    mln::value::set<V> vs_;
+    std::vector<S> ps_;
   };
 
 
@@ -213,196 +155,121 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // p_vaccess<Sv,Sp>
+  // p_vaccess<V,S>
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  p_vaccess<Sv,Sp>::p_vaccess()
+  p_vaccess<V,S>::p_vaccess()
     : vs_(),
       ps_(vs_.nvalues())
   {
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  p_vaccess<Sv,Sp>::p_vaccess(const Sv& vset)
+  p_vaccess<V,S>::p_vaccess(const V& vset)
     : vs_(vset),
       ps_(vs_.nvalues())
   {
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   bool
-  p_vaccess<Sv,Sp>::has(const psite&) const
+  p_vaccess<V,S>::has(const psite&) const
   {
     // FIXME
     return true;
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   bool
-  p_vaccess<Sv,Sp>::has(const value& v, const mln_psite(Sp)& p) const
+  p_vaccess<V,S>::has(const V& v, const mln_psite(S)& p) const
   {
     return ps_[vs_.index_of(v)].has(p);
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   bool
-  p_vaccess<Sv,Sp>::is_valid() const
+  p_vaccess<V,S>::is_valid() const
   {
     // FIXME
     return true;
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   void
-  p_vaccess<Sv,Sp>::insert(const value& v, const element& e)
+  p_vaccess<V,S>::insert(const V& v, const element& e)
   {
     ps_[vs_.index_of(v)].insert(e);
     this->update_nsites_(e);
     this->update_bbox_(e);
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   void
-  p_vaccess<Sv,Sp>::insert(const i_element& v_e)
+  p_vaccess<V,S>::insert(const i_element& v_e)
   {
     insert(v_e.first, v_e.second);
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  const Sp&
-  p_vaccess<Sv,Sp>::operator()(const value& v) const
+  void
+  p_vaccess<V,S>::clear()
+  {
+    const unsigned n = ps_.size();
+    for (unsigned i = 0; i < n; ++i)
+      ps_[i].clear();
+  }
+
+  template <typename V, typename S>
+  inline
+  const S&
+  p_vaccess<V,S>::operator()(const V& v) const
   {
     return ps_[vs_.index_of(v)];
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
   std::size_t
-  p_vaccess<Sv,Sp>::memory_size() const
+  p_vaccess<V,S>::memory_size() const
   {
     std::size_t mem = 0;
-    for (unsigned i = 0; i < ps_.size(); ++i)
+    const unsigned n = ps_.size();
+    for (unsigned i = 0; i < n; ++i)
       mem += ps_[i].memory_size();
     return sizeof(*this) + mem;
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  const Sv&
-  p_vaccess<Sv,Sp>::values() const
+  const mln::value::set<V>&
+  p_vaccess<V,S>::values() const
   {
     return vs_;
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  const Sv&
-  p_vaccess<Sv,Sp>::set_1_() const
+  const V&
+  p_vaccess<V,S>::set_1_() const
   {
     return vs_;
   }
 
-  template <typename Sv, typename Sp>
+  template <typename V, typename S>
   inline
-  const Sp&
-  p_vaccess<Sv,Sp>::set_2_(const value& v) const
+  const S&
+  p_vaccess<V,S>::set_2_(const V& v) const
   {
     return ps_[vs_.index_of(v)];
   }
-
-  
-  namespace internal
-  {
-
-    // p_vaccess_impl__nsites
-
-    template <typename trait_nsites, typename Sp>
-    template <typename T>
-    inline
-    void
-    p_vaccess_impl__nsites<trait_nsites, Sp>::update_nsites_(const T&)
-    {
-      // No-op.
-    }
-
-    template <typename Sp>
-    inline
-    p_vaccess_impl__nsites<trait::site_set::nsites::known, Sp>::p_vaccess_impl__nsites()
-      : nsites_(0)
-    {
-    }
-
-    template <typename Sp>
-    inline
-    unsigned
-    p_vaccess_impl__nsites<trait::site_set::nsites::known, Sp>::nsites() const
-    {
-      return nsites_;
-    }
-
-    template <typename Sp>
-    inline
-    void
-    p_vaccess_impl__nsites<trait::site_set::nsites::known, Sp>::update_nsites_(const mln_site(Sp)&)
-    {
-      ++nsites_;
-    }
-
-    template <typename Sp>
-    template <typename S>
-    inline
-    void
-    p_vaccess_impl__nsites<trait::site_set::nsites::known, Sp>::update_nsites_(const Site_Set<S>& s)
-    {
-      nsites_ += exact(s).nsites();
-    }
-
-    // p_vaccess_impl__bbox
-
-    template <typename trait_bbox, typename Sp>
-    inline
-    typename p_vaccess_impl__bbox<trait_bbox, Sp>::q_box
-    p_vaccess_impl__bbox<trait_bbox, Sp>::bbox() const
-    {
-      return bb_.to_result();
-    }
-
-    template <typename trait_bbox, typename Sp>
-    inline
-    void
-    p_vaccess_impl__bbox<trait_bbox, Sp>::update_bbox_(const mln_site(Sp)& p)
-    {
-      bb_.take(p);
-    }
-
-    template <typename trait_bbox, typename Sp>
-    template <typename S>
-    inline
-    void
-    p_vaccess_impl__bbox<trait_bbox, Sp>::update_bbox_(const Site_Set<S>& s)
-    {
-      bb_.take(exact(s).bbox());
-    }
-
-    template <typename Sp>
-    template <typename T>
-    inline
-    void
-    p_vaccess_impl__bbox< trait::site_set::nsites::unknown, Sp >::update_bbox_(const T&)
-    {
-      // No-op.
-    }
-
-  } // end of namespace mln::internal
-  
 
 # endif // ! MLN_INCLUDE_ONLY
 

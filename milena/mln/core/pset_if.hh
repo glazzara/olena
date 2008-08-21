@@ -31,6 +31,8 @@
 /*! \file mln/core/pset_if.hh
  *
  * \brief Definition of the restriction of a point set w.r.t. a predicate.
+ *
+ * \todo Change pset_ attribute type to S*.  
  */
 
 # include <mln/core/internal/site_set_base.hh>
@@ -84,17 +86,21 @@ namespace mln
     typedef internal::site_set_base_<mln_psite(S), self_> super_;
   public:
 
-    typedef mln_psite(S) psite;
+    /// Element associated type.
+    typedef mln_element(S) element;
 
+
+    /// Psite associated type.
+    typedef mln_psite(S) psite;
 
     /// Forward Site_Iterator associated type.
     typedef pset_if_piter_<mln_fwd_piter(S), S, F> fwd_piter;
 
-    /// Site_Iterator associated type.
-    typedef fwd_piter piter;
-
     /// Backward Site_Iterator associated type.
     typedef pset_if_piter_<mln_bkd_piter(S), S, F> bkd_piter;
+
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
 
 
     /// Constructor with a point set \p pset and a predicate \p f.
@@ -102,6 +108,10 @@ namespace mln
 
     /// Constructor without argument.
     pset_if();
+
+
+    /// Test if this site set is valid.
+    bool is_valid() const;
 
 
     /// Test if \p p belongs to the subset. 
@@ -115,6 +125,10 @@ namespace mln
 
     /// Give the predicate function.
     const F& predicate() const;
+
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
 
   protected:
 
@@ -145,6 +159,14 @@ namespace mln
   pset_if<S,F>::has(const psite& p) const
   {
     return pset_.has(p) && f_(p);
+  }
+
+  template <typename S, typename F>
+  inline
+  bool
+  pset_if<S,F>::is_valid() const
+  {
+    return pset_.is_valid();
   }
 
   template <typename S, typename F>
@@ -183,6 +205,14 @@ namespace mln
   pset_if<S,F>::predicate() const
   {
     return f_;
+  }
+
+  template <typename S, typename F>
+  inline
+  std::size_t
+  pset_if<S,F>::memory_size() const
+  {
+    return pset_.memory_size() + sizeof(f_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -118,7 +118,7 @@ namespace mln
   template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_piter_<Pi,S,F>::pi_change_target_(const pset_if<S,F>& s) const
+  pset_if_piter_<Pi,S,F>::pi_change_target_(const pset_if<S,F>& s)
   {
     pi_.change_target(s.overset());
   }

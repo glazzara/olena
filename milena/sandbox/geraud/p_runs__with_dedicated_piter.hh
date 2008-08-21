@@ -50,7 +50,7 @@ namespace mln
 
   // Forward declarations.
   template <typename P> class p_runs;
-  template <typename P> class p_runs_piste;
+  template <typename P> class p_runs_psite;
   template <typename P> class p_runs_fwd_piter_;
   template <typename P> class p_runs_bkd_piter_;
 
@@ -140,6 +140,10 @@ namespace mln
 
     /// Insert another set of runs.
     void insert(const p_runs<P>& other);
+
+
+    /// Clear this set.
+    void clear();
 
 
     /// Return the i-th run.
@@ -441,6 +445,16 @@ namespace mln
     mln_precondition(len != 0);
     p_run<P> r(start, len);
     this->insert(r);
+  }
+
+  template <typename P>
+  inline
+  void
+  p_runs<P>::clear()
+  {
+    nsites_ = 0;
+    b_.init();
+    run_.clear();
   }
 
   template <typename P>

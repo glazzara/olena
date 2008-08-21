@@ -145,6 +145,10 @@ namespace mln
     void insert(const p_run_set<P>& other);
 
 
+    /// Clear this set.
+    void clear();
+
+
     /// Return the i-th run.
     const p_run<P>& run(unsigned i) const;
 
@@ -321,6 +325,16 @@ namespace mln
     mln_precondition(len != 0);
     p_run<P> r(start, len);
     this->insert(r);
+  }
+
+  template <typename P>
+  inline
+  void
+  p_run_set<P>::clear()
+  {
+    nsites_ = 0;
+    b_.init();
+    run_.clear();
   }
 
   template <typename P>

@@ -60,7 +60,7 @@ float loops_ref()
 
   int** array = data.array_;
   mln::point2d p;
-  int & row = p.row(), & col = p.col();
+  mln::def::coord & row = p.row(), & col = p.col();
   for (row = 0; row < size; ++row)
     for (col = 0; col < size; ++col)
       array[row][col] = 0;
@@ -77,7 +77,7 @@ float hybrid_1()
   mln::util::timer t;
   t.start();
   mln::point2d p;
-  int & row = p.row(), & col = p.col();
+  mln::def::coord & row = p.row(), & col = p.col();
   for (row = 0; row < size; ++row)
     for (col = 0; col < size; ++col)
       ima.at(row, col) = 0;

@@ -32,6 +32,8 @@
  *
  * \brief Definition of the concept of mln::Site_Set.
  *
+ * \todo Add a "composite" property.
+ *
  * \todo Rewrite and move out the ops.
  */
 
@@ -39,6 +41,7 @@
 # include <mln/trait/site_sets.hh>
 # include <mln/metal/not_equal.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/metal/is_unqualif.hh>
 
 # include <mln/util/yes.hh> // Temporary include.
 
@@ -69,6 +72,8 @@ namespace mln
     typedef Site_Set<void> category;
 
     /*
+      typedef element;
+
       typedef site;
       typedef psite;
 
@@ -202,8 +207,10 @@ namespace mln
       {
 	typedef typename E::i_element i_element;
 	mlc_equal(mlc_unqualif(i_element), i_element)::check();
-	void (E::*m)(const i_element&) = & E::insert;
-	m = 0;
+	void (E::*m1)(const i_element&) = & E::insert;
+	m1 = 0;
+	void (E::*m2)() = & E::clear;
+	m2 = 0;
       }
     };
 
@@ -220,6 +227,8 @@ namespace mln
 	mlc_equal(mlc_unqualif(r_element), r_element)::check();
 	void (E::*m2)(const r_element&) = & E::remove;
 	m2 = 0;
+	void (E::*m3)() = & E::clear;
+	m3 = 0;
       }
     };
 
@@ -242,6 +251,8 @@ namespace mln
     //        mlc_is_a( mln_trait_site_set_nsites(E),   mln::trait::site_set::nsites::any   )::check();
 
     // Check associated types.
+    typedef mln_element(E) element;
+    mlc_is_unqualif(element)::check();
     typedef mln_site(E)  site;
     typedef mln_psite(E) psite;
     typedef mln_piter(E) piter;

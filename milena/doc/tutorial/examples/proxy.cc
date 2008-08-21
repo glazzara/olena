@@ -38,10 +38,8 @@ int main()
   {
     mln_psite_(Arr1) p(arr1, 0);
     std::cout << p << ' ' << arr1[0] << std::endl;
-    point2d& v = unproxy_rec(p);
+
     std::cout << &(arr1[0]) << ' ' << &(unproxy_rec(p)) << std::endl;
-    unproxy_rec(p).row() = 12;
-    mln_assertion(arr1[0].row() != 12); // FIXME: that's normal!
 
     std::cout << p.get_subject() << std::endl;
     std::cout << p.to_site() << std::endl;
