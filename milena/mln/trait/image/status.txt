@@ -57,11 +57,11 @@ KO  translate_image
 ** identity morpher
 
 new instant
+ok  plain
+ok  safe
 
 KO  decorated_image
 KO  interpolated
-KO  plain
-KO  safe
 
 
 

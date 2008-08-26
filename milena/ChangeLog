@@ -1,5 +1,21 @@
 2008-08-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make the 'plain' and 'safe' morphers work.
+
+	* doc/tutorial/examples/image_plain.cc: New.
+	* doc/tutorial/examples/image_safe.cc: New.
+	* mln/trait/image/status.txt: Update.
+	* mln/core/safe.hh (data_): Update, i.e., rename as...
+	(data): ...this.
+	(trait::image_): New.
+	* mln/core/plain.hh: Likewise.
+	(operator=): New overload for 'plain' arg.
+	(plain): New ctor overload for 'plain' arg.
+	* mln/core/concept/site_set.hh
+	(operator==, operator<=): Fix warning.
+
+2008-08-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Revamp the default ordering mechanism.
 
 	Revamp the default ordering mechanism (was util::less).  It now

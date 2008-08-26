@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,13 @@
 # define MLN_CORE_SAFE_HH
 
 /*!
- * \file   safe.hh
+ * \file mln/core/safe.hh
  *
  * \brief Definition of a morpher that makes image become accessible
  * at undefined location.
  *
+ * \todo Use 'instant' as the routine safe returns.
  */
-
 
 # include <mln/core/internal/image_identity.hh>
 
@@ -44,23 +44,38 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename I> struct safe_image;
+
 
   namespace internal
   {
 
     /// \internal Data structure for \c mln::safe_image<I>.
     template <typename I>
-    struct data_< safe_image<I> >
+    struct data< safe_image<I> >
     {
-      data_(I& ima, const mln_value(I)& default_value);
+      data(I& ima, const mln_value(I)& default_value);
 
       I ima_;
       mln_value(I) default_value_;
     };
 
   } // end of namespace mln::internal
+
+
+  namespace trait
+  {
+
+    template <typename I>
+    struct image_< safe_image<I> > : image_< I > // Same as I except...
+    {
+      // ...this change.
+      typedef trait::image::category::identity_morpher category;
+    };
+
+  } // end of namespace mln::trait
+
 
 
   // FIXME: Doc!
@@ -74,8 +89,9 @@ namespace mln
     /// Skeleton.
     typedef safe_image< tag::image_<I> > skeleton;
 
-    safe_image(I& ima, const mln_value(I)& default_value);
     safe_image();
+    safe_image(I& ima);
+    safe_image(I& ima, const mln_value(I)& default_value);
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
@@ -100,14 +116,14 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // internal::data< safe_image<I,S> >
+
   namespace internal
   {
 
-    // internal::data_< safe_image<I,S> >
-
     template <typename I>
     inline
-    data_< safe_image<I> >::data_(I& ima, const mln_value(I)& default_value)
+    data< safe_image<I> >::data(I& ima, const mln_value(I)& default_value)
       : ima_(ima),
 	default_value_(default_value)
     {
@@ -119,15 +135,22 @@ namespace mln
 
   template <typename I>
   inline
-  safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
+  safe_image<I>::safe_image()
   {
-    this->data_ = new internal::data_< safe_image<I> >(ima, default_value);
   }
 
   template <typename I>
   inline
-  safe_image<I>::safe_image()
+  safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
   {
+    this->data_ = new internal::data< safe_image<I> >(ima, default_value);
+  }
+
+  template <typename I>
+  inline
+  safe_image<I>::safe_image(I& ima)
+  {
+    this->data_ = new internal::data< safe_image<I> >(ima, mln_value(I)());
   }
 
   template <typename I>
@@ -135,6 +158,7 @@ namespace mln
   mln_rvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
+    mln_precondition(this->has_data());
     if (! this->has(p))
       return this->data_->default_value_;
     return this->data_->ima_(p);
@@ -145,11 +169,13 @@ namespace mln
   typename safe_image<I>::lvalue
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
+    mln_precondition(this->has_data());
     static mln_value(I) forget_it_;
-    if (! this->has(p))
-      // so data_->default_value_ is returned but cannot be modified
+    if (this->has(p))
+      return this->data_->ima_(p);
+    else
+      // A copy of data_->default_value_ is returned.
       return forget_it_ = this->data_->default_value_;
-    return this->data_->ima_(p);
   }
 
   template <typename I>

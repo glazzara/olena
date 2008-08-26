@@ -316,7 +316,7 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  util::yes operator==(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
+  util::yes operator==(const Site_Set<Sl>&, const Site_Set<Sr>&)
   {
 //     // FIXME: Same grid!
 //     const Sl& lhs = exact(lhs_);
@@ -340,7 +340,7 @@ namespace mln
 
   template <typename Sl, typename Sr>
   inline
-  util::yes operator<=(const Site_Set<Sl>& lhs_, const Site_Set<Sr>& rhs_)
+  util::yes operator<=(const Site_Set<Sl>&, const Site_Set<Sr>&)
   {
 //     // FIXME: Same grid!
 //     const Sl& lhs = exact(lhs_);

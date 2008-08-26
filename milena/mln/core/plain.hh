@@ -30,73 +30,86 @@
 
 /*! \file mln/core/plain.hh
  *
- * \brief Definition of a morpher that prevent an image from sharing
+ * \brief Definition of a morpher that prevents an image from sharing
  * his data.
  */
 
-# include <cmath>
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/clone.hh>
+# include <mln/metal/is_not_const.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename I> struct plain;
+
 
   namespace internal
   {
 
     /// \internal Data structure for \c mln::plain<I>.
     template <typename I>
-    struct data_< plain<I> >
+    struct data< plain<I> >
     {
-      data_(const I& ima);
-
+      data(const I& ima);
       I ima_;
     };
 
   } // end of namespace mln::internal
 
+
+  namespace trait
+  {
+
+    template <typename I>
+    struct image_< plain<I> > : image_< I > // Same as I except...
+    {
+      // ...this change.
+      typedef trait::image::category::identity_morpher category;
+    };
+
+  } // end of namespace mln::trait
+
+
+
   /*! \brief FIXME
    *
    */
   template <typename I>
-  struct plain : public mln::internal::image_identity< I, mln_pset(I), plain<I> >
+  class plain
+
+    : public mln::internal::image_identity< I, mln_pset(I), plain<I> >,
+      private mlc_is_not_const(I)::check_t
   {
+    typedef plain<I> self_;
+    typedef mln::internal::image_identity<I, mln_pset(I), self_> super_;
 
-    typedef mln::internal::image_identity< I, mln_pset(I), plain<I> > super_;
-
-    /// Point_Site associated type.
-    typedef mln_psite(I) psite;
-
-    /// Value associated type.
-    typedef mln_value(I) value;
-
-    /// Return type of read-write access.
-    typedef mln_lvalue(I) lvalue; // FIXME: Depends on lvalue presence in I.
-
-    /// Return type of read-only access.
-    typedef mln_rvalue(I) rvalue;
+  public:
 
     /// Skeleton.
     typedef plain< tag::image_<I> > skeleton;
 
-
-    /// Constructors.
-    plain(const I& ima);
+    /// Constructor without argument.
     plain();
 
-    /// Read-only access of pixel value at point site \p p.
-    /// Mutable access is only OK for reading (not writing).
-    //using super_::operator();
+    /// Copy constructor.
+    plain(const plain<I>& rhs);
+
+    /// Copy constructor from an image \p ima.
+    plain(const I& ima);
 
     /// Assignment operator.
-    plain& operator=(const I& rhs);
+    plain<I>& operator=(const plain<I>& rhs);
 
+    /// Assignment operator from an image \p ima.
+    plain<I>& operator=(const I& ima);
 
-    /// Conversion into an I image
+    /// Initialization routine.
+    void init(const I& ima);
+
+    /// Conversion into an image with type \c I.
     operator I () const;
   };
 
@@ -104,28 +117,23 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  // internal::data< plain<I> >
+
   namespace internal
   {
 
-    // internal::data_< plain<I> >
-
     template <typename I>
     inline
-    data_< plain<I> >::data_(const I& ima)
+    data< plain<I> >::data(const I& ima)
       : ima_(clone(ima))
     {
     }
 
   } // end of namespace mln::internal
 
-  template <typename I>
-  inline
-  plain<I>::plain(const I& ima)
-  {
-    mln_precondition(ima.has_data());
-    this->data_ = new internal::data_< plain<I> >(ima);
-  }
 
+  // plain<I>
 
   template <typename I>
   inline
@@ -135,12 +143,51 @@ namespace mln
 
   template <typename I>
   inline
-  plain<I>&
-  plain<I>::operator=(const I& rhs)
+  plain<I>::plain(const plain<I>& rhs)
+    : super_()
   {
     mln_precondition(rhs.has_data());
+    init(rhs.data_->ima_);
+  }
+
+  template <typename I>
+  inline
+  plain<I>::plain(const I& ima)
+  {
+    mln_precondition(ima.has_data());
+    init(ima);
+  }
+
+  template <typename I>
+  inline
+  void
+  plain<I>::init(const I& ima)
+  {
+    mln_precondition(ima.has_data());
+    this->data_ = new internal::data< plain<I> >(ima);
+  }
+
+  template <typename I>
+  inline
+  plain<I>&
+  plain<I>::operator=(const plain<I>& rhs)
+  {
+    mln_precondition(rhs.has_data());
+    if (&rhs == this)
+      return *this;
     this->destroy();
-    this->data_ = new internal::data_< plain<I> >(rhs);
+    init(rhs.data_->ima_);
+    return *this;
+  }
+
+  template <typename I>
+  inline
+  plain<I>&
+  plain<I>::operator=(const I& ima)
+  {
+    mln_precondition(ima.has_data());
+    this->destroy();
+    init(ima);
     return *this;
   }
 
@@ -148,6 +195,7 @@ namespace mln
   inline
   plain<I>::operator I () const
   {
+    mln_precondition(this->has_data());
     return clone(this->data_->ima_);
   }
 
