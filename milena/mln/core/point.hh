@@ -31,8 +31,6 @@
 /*! \file mln/core/point.hh
  *
  * \brief Definition of the generic point class mln::point_.
- *
- * \todo Try to generalize less_than with Gl and Gr.
  */
 
 # include <mln/core/def/coord.hh>
@@ -195,38 +193,6 @@ namespace mln
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
-
-
-  namespace util
-  {
-
-    /*! \brief Ordering "less than" comparison between a couple of
-     *  points.
-     *
-     * The ordering is based on a lexicographical ordering over
-     * coordinates.
-     *
-     * Both points have to be defined on the same topology.
-     *
-     * \warning In the general case this ordering relationship is \em
-     * not bound to the way of browsing a domain with a forward point
-     * iterator.
-     */
-    template <typename G, typename Cl, typename Cr>
-    struct less_than< point<G,Cl>,
-		      point<G,Cr> > 
-    {
-      /*! \brief Comparison between a couple of points \a lhs and \a
-       *  rhs.
-       *
-       * \return True if \p lhs is before \p rhs in the sense of the
-       * coordinates lexicographic comparison, otherwise false.
-       */
-      bool operator()(const point<G,Cl>& lhs,
-		      const point<G,Cr>& rhs) const;
-    };
-
-  } // end of namespace mln::util
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -472,24 +438,6 @@ namespace mln
     util::yes* the_;
     return *the_;
   }
-
-
-  namespace util
-  {
-
-    template <typename G, typename Cl, typename Cr>
-    bool
-    less_than< point<G,Cl>,
-	       point<G,Cr> >::operator()(const point<G,Cl>& lhs,
-					 const point<G,Cr>& rhs) const
-    {
-      enum { n = G::dim };
-      typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
-      static const less_t op = less_t();
-      return op(lhs.to_vec(), rhs.to_vec());
-    }
-
-  } // end of namespace mln::util
 
 # endif // ! MLN_INCLUDE_ONLY
   

@@ -1,3 +1,54 @@
+2008-08-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp the default ordering mechanism.
+
+	Revamp the default ordering mechanism (was util::less).  It now
+	relies on the trait solving material so we can now factor
+	definitions.
+
+	* mln/trait/op/ord.hh: New.
+	* mln/trait/op/all.hh: Update.
+	* mln/util/ord.hh: New.
+	* mln/util/set.hh,
+	* mln/core/p_key.hh (util::less): Replace by...
+	(util::ord): ...this.
+	* mln/core/point.hh, 
+	* mln/core/dpoint.hh (less_than): Remove.
+	* mln/algebra/vec.hh,
+	* mln/core/box.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/line2d.hh,
+	* mln/core/p_run.hh,
+	* mln/core/p_runs.hh,
+	(set_precise_unary_): New specializations.
+	(util::less): Remove.
+	* mln/core/concept/site_set.hh
+	(set_precise_unary_): New specialization without
+	implementation.
+	* mln/util/less.hh: Remove.
+	* mln/util/less_than.hh: Remove.
+
+	Disambiguate between aliases (such as point2d) and taking a
+	variable (with the now obsolete mln_alias macro).
+
+	* mln/core/alias.hh: Rename as...
+	* mln/core/var.hh: ...this.
+	(mln_alias): Rename as...
+	(mln_VAR): ...this.
+	* sandbox/geraud/cs2d/kruskal.cc: Update.
+	* sandbox/geraud/cs2d/tuto_bis.cc: Update.
+
+	Misc.
+
+	* doc/tutorial/examples/line2d.cc: Rename as...
+	* doc/tutorial/examples/p_line2d.cc: ...this.
+	* mln/trait/all.hh: Fix (c).
+	* mln/util/index.hh (dindex_): Move to...
+	* mln/util/dindex.hh: ...this new file.
+	* mln/util/index.hh,
+	* mln/util/dindex.hh (operator<): New.
+
 2008-08-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Playing with runs, several update, and some bug fixes.

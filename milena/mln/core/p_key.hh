@@ -40,7 +40,7 @@
 # include <mln/core/p_set.hh>
 # include <mln/core/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/util/less.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -184,11 +184,11 @@ namespace mln
     util::set<K> b_;
 
     // Function: key k  -> set of sites {p}.
-    typedef std::map<K, p_set<P>, util::less<K> > s_t;
+    typedef std::map<K, p_set<P>, util::ord<K> > s_t;
     s_t s_;
 
     // Function: site p -> key k.
-    typedef std::map<P, K, util::less<P> > k_t;
+    typedef std::map<P, K, util::ord<P> > k_t;
     k_t k_;
 
     // Number of sites.

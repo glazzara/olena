@@ -4,7 +4,6 @@
 # include <mln/core/line2d.hh>
 # include <mln/core/p_set.hh>
 
-# include <mln/core/alias.hh>
 # include <mln/core/sub_image.hh>
 # include <mln/level/fill.hh>
 # include <mln/debug/println.hh>

@@ -65,6 +65,16 @@ namespace mln
       typedef trait::site_set::arity::unique     arity;
     };
 
+    template <typename P>
+    struct set_precise_unary_< op::ord, p_run_set<P> >
+    {
+      typedef set_precise_unary_< op::ord, p_run_set<P> > ret; // Itself.
+      bool strict(const p_run_set<P>& lhs, const p_run_set<P>& rhs) const
+      {
+	return util::ord_strict(lhs.run(0), rhs.run(0));
+      }
+    };
+
   } // end of namespace trait
 
 
@@ -181,20 +191,6 @@ namespace mln
 
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const p_run_set<P>& r);
-
-
-  namespace util
-  {
-
-    template <typename P>
-    struct less< p_run_set<P> >
-    {
-      bool operator()(const p_run_set<P>& lhs,
-		      const p_run_set<P>& rhs) const;
-    };
-
-  } // end of namespace mln::util
-
 
 
 
@@ -403,22 +399,6 @@ namespace mln
   {
     return ostr << r.hook_();
   }
-
-
-  namespace util
-  {
-
-    template <typename P>
-    inline
-    bool
-    less< p_run_set<P> >::operator()(const p_run_set<P>& lhs,
-				     const p_run_set<P>& rhs) const
-    {
-      return op_less(lhs.run(0), rhs.run(0));
-    }
-
-  } // end of namespace mln::util
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

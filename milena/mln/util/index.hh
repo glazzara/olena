@@ -46,7 +46,7 @@ namespace mln
   namespace util
   {
 
-    // Fwd decl.
+    // Forward declaration.
     template <typename Tag> struct dindex_;
 
 
@@ -56,6 +56,8 @@ namespace mln
     template <typename Tag = void>
     struct index_ // : public Object< index_<Tag> >
     {
+      typedef Object<void> category;
+
       typedef dindex_<Tag> dpsite;
 
       typedef int coord;
@@ -92,30 +94,20 @@ namespace mln
 	return cpy;
       }
 
+      bool operator<(const index_& rhs) const
+      {
+	return i_ < rhs.i_;
+      }
+
+      bool operator<(int i) const
+      {
+	return i_ < i;
+      }
+
       operator int() const { return i_; }
     };
 
     typedef index_<void> index;
-
-
-    template <typename Tag = void>
-    struct dindex_ // : public Object< dindex_<Tag> >
-    {
-      typedef index_<Tag> psite;
-      typedef index_<Tag> site;
-
-      typedef int coord;
-      enum { dim = 1 };
-
-      int i_;
-
-      dindex_() {}
-      dindex_(int i) : i_(i) {}
-
-      operator int() const { return i_; }
-    };
-
-    typedef dindex_<void> dindex;
 
 
 
@@ -128,6 +120,9 @@ namespace mln
   } // end of namespace mln::util
 
 } // end of namespace mln
+
+
+# include <mln/util/dindex.hh>
 
 
 #endif // ! MLN_UTIL_INDEX_HH

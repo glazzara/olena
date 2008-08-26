@@ -25,21 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_LESS_HH
-# define MLN_UTIL_LESS_HH
+#ifndef MLN_UTIL_ORD_HH
+# define MLN_UTIL_ORD_HH
 
-/*! \file mln/util/less.hh
+/*! \file mln/util/ord.hh
  *
- * \brief Definition of a "less" function-object with one type (T).
- *
- * \todo Zed: Revamp:
- * \todo - Rename as something like ordering;
- * \todo - Use the trait mechanism;
- * \todo - Allow more general definitions based upon a category;
- * \todo - Add deduced operators.
+ * \brief Definition of an ordering type and routine.
  */
 
-# include <mln/util/less_than.hh>
+# include <mln/core/concept/object.hh>
+# include <mln/trait/op/ord.hh>
+
 
 
 namespace mln
@@ -48,61 +44,77 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Function-object to define a less-than comparison
-     *  between a couple of objects with the same type \p T.
-     *
-     * This implementation relies on mln::util::less_than so prefer to
-     * overload mln::util::less_than (because it is more general).
-     *
-     * \see mln::util::less_than
-     */
+    /// Function-object that defines an ordering between objects with
+    /// type \p T.
     template <typename T>
-    struct less
+    struct ord
     {
       bool operator()(const T& lhs, const T& rhs) const;
     };
 
 
-    // FIXME!!!
-
-    bool op_less(unsigned lhs, unsigned rhs)
-    {
-      return lhs < rhs;
-    }
-
 
     template <typename T>
-    bool op_less(const Object<T>& lhs, const Object<T>& rhs);
+    bool ord_strict(const T& lhs, const T& rhs);
 
     template <typename T>
-    bool op_less_or_equal(const Object<T>& lhs, const Object<T>& rhs);
+    bool ord_weak(const T& lhs, const T& rhs);
 
-    
+
+    template <typename T1, typename T2>
+    bool ord_lexi_strict(const T1& lhs_1, const T2& lhs_2,
+			 const T1& rhs_1, const T2& rhs_2);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+    // ord<T>
 
     template <typename T>
     inline
     bool
-    less<T>::operator()(const T& lhs, const T& rhs) const
+    ord<T>::operator()(const T& lhs, const T& rhs) const
     {
-      static const less_than<T,T> lt_ = less_than<T,T>();
-      return lt_(lhs, rhs);
+      typedef typename mln::trait::op::ord<T>::ret F;
+      static const F f_ord = F();
+      return f_ord.strict(lhs, rhs);
     }
+
+    // ord_strict
 
     template <typename T>
     inline
-    bool op_less(const Object<T>& lhs, const Object<T>& rhs)
+    bool
+    ord_strict(const T& lhs, const T& rhs)
     {
-      static const less<T> the_ = less<T>();
-      return the_(exact(lhs), exact(rhs));
+      typedef typename mln::trait::op::ord<T>::ret F;
+      static const F f_ord = F();
+      return f_ord.strict(lhs, rhs);
     }
+
+    // ord_weak
 
     template <typename T>
     inline
-    bool op_less_or_equal(const Object<T>& lhs, const Object<T>& rhs)
+    bool ord_weak(const T& lhs, const T& rhs)
     {
-      return op_less(lhs, rhs) || exact(lhs) == exact(rhs);
+      typedef typename mln::trait::op::ord<T>::ret F;
+      static const F f_ord = F();
+      return f_ord.weak(lhs, rhs);
+    }
+
+    // ord_lex_strict
+
+    template <typename T1, typename T2>
+    inline
+    bool
+    ord_lexi_strict(const T1& lhs_1, const T2& lhs_2,
+		    const T1& rhs_1, const T2& rhs_2)
+    {
+      return
+	util::ord_strict(lhs_1, rhs_1) ||
+	(lhs_1 == rhs_1 && util::ord_strict(lhs_2, rhs_2));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -112,4 +124,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_UTIL_LESS_HH
+#endif // ! MLN_UTIL_ORD_HH

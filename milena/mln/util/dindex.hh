@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_HH
-# define MLN_CORE_ALIAS_HH
+#ifndef MLN_UTIL_DINDEX_HH
+# define MLN_UTIL_DINDEX_HH
 
-/*! \file mln/core/alias.hh
+/*! \file mln/util/dindex.hh
  *
- * \brief Definition of FIXME
+ * \brief Definition of a "delta-index" type.
+ *
+ * \todo Remove coord and dim, then make window<dindex> work.
+ *
+ * \todo Add inheritance to Object so add operators and traits. 
  */
 
-
-#define mln_alias(Var, Expr)			\
-						\
-  typeof(Expr) Var = Expr;			\
-  typedef typeof(Expr) Var##_t
+# include <mln/util/index.hh>
 
 
-#endif // ! MLN_CORE_ALIAS_HH
+namespace mln
+{
+
+  namespace util
+  {
+
+    // Fwd decl.
+    template <typename Tag> struct dindex_;
+
+
+    /*! \brief Delta-index structure.
+     *
+     */
+    template <typename Tag = void>
+    struct dindex_ // : public Object< dindex_<Tag> >
+    {
+      typedef Object<void> category;
+
+      typedef index_<Tag> psite;
+      typedef index_<Tag> site;
+
+      typedef int coord;
+      enum { dim = 1 };
+
+      int i_;
+
+      dindex_() {}
+      dindex_(int i) : i_(i) {}
+
+      bool operator<(const dindex_& rhs) const
+      {
+	return i_ < rhs.i_;
+      }
+
+      operator int() const { return i_; }
+    };
+
+    typedef dindex_<void> dindex;
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    // FIXME
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::util
+
+} // end of namespace mln
+
+
+#endif // ! MLN_UTIL_DINDEX_HH

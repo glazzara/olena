@@ -59,6 +59,13 @@ namespace mln
       typedef trait::site_set::arity::unique   arity;
     };
 
+    template <>
+    struct set_precise_unary_< op::ord, p_line2d >
+    {
+      typedef set_precise_unary_< op::ord, p_line2d > ret; // Itself.
+      bool strict(const p_line2d& lhs, const p_line2d& rhs) const;
+    };
+
   } // end of namespace trait
 
 
@@ -296,6 +303,21 @@ namespace mln
   {
     return arr_.memory_size() + sizeof(box2d);
   }
+
+
+  namespace trait
+  {
+
+    inline
+    bool
+    set_precise_unary_< op::ord, p_line2d >::strict(const p_line2d& lhs,
+						    const p_line2d& rhs) const
+    {
+      return util::ord_lexi_strict(lhs.begin(), lhs.end(),
+				   rhs.begin(), rhs.end());
+    }
+
+  } // end of namespace mln::trait
 
 # endif // ! MLN_INCLUDE_ONLY
 

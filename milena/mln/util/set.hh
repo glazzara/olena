@@ -44,7 +44,7 @@
 # include <iostream>
 
 # include <mln/core/concept/proxy.hh>
-# include <mln/util/less.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -74,10 +74,10 @@ namespace mln
      * The parameter \c T is the element type, which shall not be
      * const-qualified.
      *
-     * The unicity of set elements is handled by the mln::util::less
-     * function-object.
+     * The unicity of set elements is handled by the mln::util::ord
+     * mechanism.
      *
-     * \see mln::util::less
+     * \see mln::util::ord
      */
     template <typename T>
     class set : public Object< mln::util::set<T> >
@@ -213,7 +213,7 @@ namespace mln
        *
        * This structure is always up-to-date w.r.t. the set contents.
        */
-      mutable std::set< T, mln::util::less<T> > s_;
+      mutable std::set< T, util::ord<T> > s_;
 
 
       /*! \brief Freeze the contents of the set (update \a v_ from \a
@@ -512,7 +512,9 @@ namespace mln
     set<T>::v_has_(const T& elt) const
     {
       mln_precondition(frozen_);
-      if (is_empty() || op_less(elt, v_[0]) || op_less(v_[nelements() - 1], elt))
+      if (is_empty() ||
+	  util::ord_strict(elt, v_[0]) ||
+	  util::ord_strict(v_[nelements() - 1], elt))
 	return false;
       return v_[dicho_(elt, 0, nelements())] == elt;
     }
@@ -527,7 +529,9 @@ namespace mln
       if (end - beg <= 1)
 	return beg;
       unsigned med = (beg + end) / 2;
-      return op_less(elt, v_[med]) ? dicho_(elt, beg, med) : dicho_(elt, med, end);
+      return util::ord_strict(elt, v_[med])
+	? dicho_(elt, beg, med)
+	: dicho_(elt, med, end);
     }
 
 

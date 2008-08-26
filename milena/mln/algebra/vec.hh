@@ -42,7 +42,6 @@
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
-# include <mln/util/less_than.hh>
 # include <mln/debug/format.hh>
 
 # include <mln/value/ops.hh>
@@ -64,19 +63,6 @@ namespace mln
   template <unsigned d, typename C> struct h_vec;
 
 
-  namespace util
-  {
-
-    template <unsigned n, typename Tl, typename Tr>
-    struct less_than< algebra::vec<n,Tl>,
-		      algebra::vec<n,Tr> > 
-    {
-      bool operator()(const algebra::vec<n,Tl>& lhs,
-		      const algebra::vec<n,Tr>& rhs) const;
-    };
-
-  } // end of namespace mln::util
-
 
   namespace trait
   {
@@ -94,6 +80,12 @@ namespace mln
       typedef mln_value_quant_from_(card)     quant;
 
       typedef algebra::vec<n, mln_sum(T)> sum;
+    };
+
+    template <unsigned n, typename T>
+    struct set_precise_unary_< op::ord, mln::algebra::vec<n,T> >
+    {
+      typedef mln::internal::ord_vec< mln::algebra::vec<n,T> > ret;
     };
 
   } // end of namespace mln::trait
@@ -584,27 +576,6 @@ namespace mln
 
 
   } // end of namespace mln::algebra
-
-
-  namespace util
-  {
-
-    template <unsigned n, typename Tl, typename Tr>
-    bool
-    less_than< algebra::vec<n,Tl>,
-	       algebra::vec<n,Tr> >::operator()(const algebra::vec<n,Tl>& lhs,
-						const algebra::vec<n,Tr>& rhs) const
-    {
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  if (lhs[i] == rhs[i])
-	    continue;
-	  return lhs[i] < rhs[i];
-	}
-      return false;
-    }
-
-  } // end of namespace mln::util
 
     
 # endif // MLN_INCLUDE_ONLY

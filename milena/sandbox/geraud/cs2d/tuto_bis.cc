@@ -128,7 +128,7 @@ namespace mln
 
 
 
-#define mln_alias(Var, Expr) \
+#define mln_VAR(Var, Expr) \
 typeof(Expr) Var = Expr;
 
 
@@ -177,14 +177,14 @@ int main()
 
   image2d<int> ima(3, 5);
 
-  mln_alias(cell, ima | is_cell);
+  mln_VAR(cell, ima | is_cell);
   level::fill(cell, fun::p2v::iota);
   debug::println(cell);
   // 1   2   3 
   //      
   // 4   5   6 
 
-  mln_alias(edge, ima | is_edge);
+  mln_VAR(edge, ima | is_edge);
   level::paste(morpho::gradient(edge, nbh_e2c), edge);
   //                                  ^^^^^^^
   //                         edge -> neighbooring cells
@@ -194,7 +194,7 @@ int main()
   //   1   1
 
   unsigned nbasins;
-  mln_alias(wst, morpho::meyer_wst(edge, nbh_e2e, nbasins));
+  mln_VAR(wst, morpho::meyer_wst(edge, nbh_e2e, nbasins));
   //                                     ^^^^^^^
   //                         edge -> neighbooring edges
   debug::println(wst);
@@ -231,7 +231,7 @@ int main()
   // YET THOSE VALUES ARE ON EDGES, NOT ON CELLS...
 
 
-  mln_alias(label, wst.full());
+  mln_VAR(label, wst.full());
   debug::println(label);
   // 0 2 0 2 0 
   // 0 0 0 0 0 

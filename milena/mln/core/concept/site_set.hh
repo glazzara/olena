@@ -42,8 +42,10 @@
 # include <mln/metal/not_equal.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/is_unqualif.hh>
+# include <mln/util/ord.hh>
 
 # include <mln/util/yes.hh> // Temporary include.
+
 
 
 namespace mln
@@ -144,6 +146,25 @@ namespace mln
    */
   template <typename S>
   std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& set);
+
+
+
+  namespace trait
+  {
+
+    template <typename S>
+    struct set_unary_< op::ord, Site_Set, S >
+    {
+      // No definition here.
+
+      // That prevents from calling the inclusion operator ("op<")
+      // which is clearly not the expected ordering...
+
+      // Consequently site sets have to define the way they are
+      // ordered.
+    };
+
+  } // end of namespace mln::trait
 
 
 

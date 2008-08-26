@@ -32,15 +32,12 @@
  *
  * \brief Definition of a run of points.
  *
- * \todo Get rid of the index attribute in psite.
- *
  * \todo Use a lazy approach (in subj) like in p_array psite.
  */
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/util/index.hh>
-# include <mln/util/less.hh>
 
 
 namespace mln
@@ -65,6 +62,13 @@ namespace mln
       typedef trait::site_set::bbox::straight  bbox;
       typedef trait::site_set::contents::fixed contents;
       typedef trait::site_set::arity::unique   arity;
+    };
+
+    template <typename P>
+    struct set_precise_unary_< op::ord, p_run<P> >
+    {
+      typedef set_precise_unary_< op::ord, p_run<P> > ret; // Itself.
+      bool strict(const p_run<P>& lhs, const p_run<P>& rhs) const;
     };
 
   } // end of namespace trait
@@ -163,19 +167,6 @@ namespace mln
 
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const p_run<P>& r);
-
-
-  namespace util
-  {
-
-    template <typename P>
-    struct less< p_run<P> >
-    {
-      bool operator()(const p_run<P>& lhs,
-		      const p_run<P>& rhs) const;
-    };
-
-  } // end of namespace mln::util
 
 
 
@@ -378,24 +369,6 @@ namespace mln
 
 
 
-  // Ordering.
-
-  namespace util
-  {
-
-    template <typename P>
-    inline
-    bool
-    less< p_run<P> >::operator()(const p_run<P>& lhs,
-				 const p_run<P>& rhs) const
-    {
-      return op_less(lhs.start(), rhs.start());
-    }
-
-  } // end of namespace mln::util
-
-
-
   // p_run_psite<P>
 
   template <typename P>
@@ -500,6 +473,19 @@ namespace mln
     mln_precondition(run_ != 0);
     return *run_;
   }
+
+  namespace trait
+  {
+
+    template <typename P>
+    inline
+    bool
+    set_precise_unary_< op::ord, p_run<P> >::strict(const p_run<P>& lhs, const p_run<P>& rhs) const
+    {
+      return util::ord_strict(lhs.start(), rhs.start());
+    }
+
+  } // end of namespace trait
 
 # endif // ! MLN_INCLUDE_ONLY
 

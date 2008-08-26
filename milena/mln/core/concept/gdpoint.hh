@@ -65,6 +65,12 @@ namespace mln
       typedef L ret;
     };
 
+    template <typename D>
+    struct set_unary_< op::ord, mln::Gdpoint, D >
+    {
+      typedef mln::internal::ord_vec< D > ret;
+    };
+
   } // end of namespace mln::trait
 
 

@@ -174,7 +174,7 @@ namespace mln
 } // mln
 
 
-#define mln_alias(Var, Expr)  typeof(Expr) Var = Expr;
+#define mln_VAR(Var, Expr)  typeof(Expr) Var = Expr;
 
 
 template <typename DS_t, typename U>
@@ -259,7 +259,7 @@ int main()
   image2d<int_u8> ima(input.nrows() * 2 - 1,
 		      input.ncols() * 2 - 1, 0);
 
-  mln_alias(cell, ima | is_cell);
+  mln_VAR(cell, ima | is_cell);
   typedef typeof(cell) cell_t;
   debug::println(cell);
 
@@ -270,7 +270,7 @@ int main()
       cell(pc) = input(pi);
   }
 
-  mln_alias(edge, ima | is_edge);
+  mln_VAR(edge, ima | is_edge);
   level::paste(morpho::gradient(edge, nbh_e2c), edge);
   //                                  ^^^^^^^
   //                         edge -> neighboring cells
@@ -317,9 +317,9 @@ int main()
 
   debug::println(T);
 
-  mln_alias(is_T, pw::value(T) == pw::cst(true));
+  mln_VAR(is_T, pw::value(T) == pw::cst(true));
 
-  mln_alias(dom, (T | is_T).domain());
+  mln_VAR(dom, (T | is_T).domain());
   typedef typeof(dom) dom_t;
 
   io::ppm::save(show_edge(T, input.nrows(), input.ncols(), 7),
@@ -332,7 +332,7 @@ int main()
   // [*] See EOF.
 
   unsigned nbasins;
-  mln_alias(wst, morpho::meyer_wst(ima | is_tree, nbh_e2e, nbasins) );
+  mln_VAR(wst, morpho::meyer_wst(ima | is_tree, nbh_e2e, nbasins) );
   std::cout << "nbasins : " << nbasins << std::endl;
 
   {
@@ -352,6 +352,6 @@ int main()
 // have ctor without arg so the init cannot be delayed).  As a
 // consequence, we cannot have the following code:
 //
-//   mln_alias(tree, edge | is_T);
+//   mln_VAR(tree, edge | is_T);
 //   typedef typeof(tree) tree_t;
 //   morpho::meyer_wst(tree, nbh_e2e, nbasins);

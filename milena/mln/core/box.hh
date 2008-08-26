@@ -39,7 +39,6 @@
 # include <mln/core/internal/box_impl.hh>
 # include <mln/core/point.hh>
 # include <mln/literal/origin.hh>
-# include <mln/util/less.hh>
 
 
 namespace mln
@@ -63,7 +62,14 @@ namespace mln
       typedef trait::site_set::arity::unique   arity;
     };
 
-  } // end of namespace trait
+    template <typename P>
+    struct set_precise_unary_< op::ord, box<P> >
+    {
+      typedef set_precise_unary_< op::ord, box<P> > ret; // Itself.
+      bool strict(const box<P>& lhs, const box<P>& rhs) const;
+    };
+
+  } // end of namespace mln::trait
 
 
   /*! \brief Generic box class: site set containing points of a
@@ -169,7 +175,7 @@ namespace mln
   {
     // Validity is: for all i, pmin_[i] <= pmax_[i].
     // Nota bene: a one-point box is valid.
-    return util::op_less_or_equal(pmin_, pmax_);
+    return util::ord_weak(pmin_, pmax_);
   }
 
   template <typename P>
@@ -312,6 +318,21 @@ namespace mln
     mln_precondition(b.is_valid());
     return ostr << "[" << b.pmin() << ".." << b.pmax() << ']';
   }
+
+  namespace trait
+  {
+
+    template <typename P>
+    inline
+    bool
+    set_precise_unary_< op::ord, box<P> >::strict(const box<P>& lhs, const box<P>& rhs) const
+    {
+      // Lexicographical over "pmin then pmax".
+      return util::ord_lexi_strict(lhs.pmin(), lhs.pmax(),
+				   rhs.pmin(), rhs.pmax());
+    }
+
+  } // end of namespace mln::trait
 
 # endif // ! MLN_INCLUDE_ONLY
 

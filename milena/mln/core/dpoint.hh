@@ -135,34 +135,6 @@ namespace mln
   };
 
 
-  namespace util
-  {
-
-    /*! \brief Ordering "less than" comparison between a couple of
-     *  delta-points.
-     *
-     * The ordering is based on a lexicographical ordering over
-     * coordinates.
-     *
-     * Both delta-points have to be defined on the same topology.
-     */
-    template <typename G, typename Cl, typename Cr>
-    struct less_than< dpoint<G,Cl>,
-		      dpoint<G,Cr> > 
-    {
-      /*! \brief Comparison between a couple of delta-points \a lhs
-       *  and \a rhs.
-       *
-       * \return True if \p lhs is before \p rhs in the sense of the
-       * coordinates lexicographic comparison, otherwise false.
-       */
-      bool operator()(const dpoint<G,Cl>& lhs,
-		      const dpoint<G,Cr>& rhs) const;
-    };
-
-  } // end of namespace mln::util
-
-
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename G, typename C>
@@ -290,23 +262,6 @@ namespace mln
   {
     return coord_;
   }
-
-  namespace util
-  {
-
-    template <typename G, typename Cl, typename Cr>
-    bool
-    less_than< dpoint<G,Cl>,
-	       dpoint<G,Cr> >::operator()(const dpoint<G,Cl>& lhs,
-					  const dpoint<G,Cr>& rhs) const
-    {
-      enum { n = G::dim };
-      typedef less_than< algebra::vec<n,Cl>, algebra::vec<n,Cr> > less_t;
-      static const less_t op = less_t();
-      return op(lhs.to_vec(), rhs.to_vec());
-    }
-
-  } // end of namespace mln::util
 
 # endif // ! MLN_INCLUDE_ONLY
 

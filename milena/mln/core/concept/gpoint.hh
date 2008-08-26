@@ -36,6 +36,7 @@
 # include <mln/core/concept/site.hh>
 # include <mln/core/concept/gdpoint.hh>
 # include <mln/value/concept/scalar.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -68,6 +69,13 @@ namespace mln
 			mln::Gpoint, L, mln::Gpoint, R >
     {
       typedef mln_delta(L) ret;
+    };
+
+
+    template <typename P>
+    struct set_unary_< op::ord, mln::Gpoint, P >
+    {
+      typedef mln::internal::ord_vec< P > ret;
     };
 
   } // end of namespace mln::trait
