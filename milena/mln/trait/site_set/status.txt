@@ -43,7 +43,8 @@ KO  p_line_graph
 ok  p_vaccess
 ok  line2d
 
+rm  pset_array.hh
+
 ??  pset_if
 
 KO  p_array_bb
-KO  pset_array.hh

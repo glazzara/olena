@@ -140,7 +140,7 @@ namespace mln
     std::size_t memory_size() const;
 
     // Required by p_double-related classes.
-    const V& set_1_() const;
+    const mln::value::set<V>& set_1_() const;
     const S& set_2_(const V& v) const;
     
   protected:
@@ -257,7 +257,7 @@ namespace mln
 
   template <typename V, typename S>
   inline
-  const V&
+  const mln::value::set<V>&
   p_vaccess<V,S>::set_1_() const
   {
     return vs_;

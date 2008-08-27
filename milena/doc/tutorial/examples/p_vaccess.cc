@@ -3,6 +3,7 @@
 # include <mln/value/int_u8.hh>
 
 # include <mln/level/fill.hh>
+# include <mln/level/paste.hh>
 # include <mln/debug/println.hh>
 # include <mln/util/timer.hh>
 # include <mln/labeling/blobs.hh>
@@ -12,6 +13,8 @@
 # include <mln/core/image_if.hh>
 # include <mln/pw/all.hh>
 # include <mln/convert/from_to.hh>
+
+# include <mln/core/var.hh>
 
 
 
@@ -64,9 +67,49 @@ int main()
     mlc_equal(Arr::element, p_run2d)::check();
     Arr arr;
 
-    convert::from_to(lab | (pw::value(lab) != pw::cst(0u)), arr);
+    mln_VAR(sub, lab | (pw::value(lab) != pw::cst(0u)));
+    debug::println(sub);
+
+    convert::from_to(sub, arr);
     mln_assertion(arr.nsites() == n);
 
+    {
+      std::cout << "arr = ";
+      mln_piter_(Arr) p(arr);
+      for_all(p)
+	std::cout << p << ' ';
+      std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    {
+      for (unsigned l = 0; l <= nlabels; ++l)
+	{
+	  std::cout << "arr(" << l << ") = ";
+	  mln_piter_(p_runs2d) p(arr(l));
+	  for_all(p)
+	    std::cout << p << ' ';
+	  std::cout << std::endl;
+	}
+    }
+
+    std::cout << std::endl;
+
+    {
+      for (unsigned l = 0; l <= nlabels; ++l)
+	{
+	  std::cout << "arr(" << l << ") = ";
+	  mln_iter_(util::set<p_run2d>) r(arr(l).set_hook_());
+	  for_all(r)
+	    std::cout << r << ' ';
+	  std::cout << std::endl;
+	}
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "arr in " << arr.bbox() << std::endl;
     for (unsigned l = 0; l <= nlabels; ++l)
       {
 	std::cout << l << ": #" << arr(l).nsites();
@@ -75,22 +118,40 @@ int main()
 	std::cout << std::endl;
       }
     std::cout << std::endl;
+
+    {
+      image2d<int> ima_(arr.bbox());
+      level::fill(ima_, 0);
+      for (unsigned l = 1; l <= nlabels; ++l)
+	for (unsigned r = 0; r < arr(l).nelements(); ++r)
+	  level::paste(pw::cst(10 * l + r) | arr(l)[r], ima_);
+      debug::println(ima_);
+    }
+
+    {
+      image2d<int> ima_(arr.bbox());
+      level::fill(ima_, 0);
+      for (unsigned l = 1; l <= nlabels; ++l)
+	if (arr(l).nsites() > 1)
+	  level::paste(pw::cst(l) | arr(l), ima_);
+      debug::println(ima_);
+    }
   }
 
-  {
-    p_runs2d rs;
-    convert::from_to(ima, rs);
-    mln_assertion(rs.bbox() == ima.bbox());
+//   {
+//     p_runs2d rs;
+//     convert::from_to(ima, rs);
+//     mln_assertion(rs.bbox() == ima.bbox());
 
-    image2d<int_u8> ima_(ima.domain());
-    level::fill(ima_, 0);
-    for (unsigned r = 0; r < rs.nelements(); ++r)
-      {
-	mln_piter_(p_run2d) p(rs[r]);
-	for_all(p)
-	  ima_(p) = r + 1;
-      }
-    debug::println(ima_);
-  }
+//     image2d<int_u8> ima_(ima.domain());
+//     level::fill(ima_, 0);
+//     for (unsigned r = 0; r < rs.nelements(); ++r)
+//       {
+// 	mln_piter_(p_run2d) p(rs[r]);
+// 	for_all(p)
+// 	  ima_(p) = r + 1;
+//       }
+//     debug::println(ima_);
+//   }
 
 }

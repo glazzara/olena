@@ -75,6 +75,7 @@ int main()
 		    << index_of_in(p, arr2) << " in arr2, #"
 		    << index_of_in(p, arr1)  << " in arr1" << std::endl;
 	}
+      std::cout << std::endl;
     }
 
     mln_invariant(arr2 < arr1);
@@ -87,6 +88,14 @@ int main()
  	  mln_assertion(p2 == p1); // same as: p2.to_site() == p1.to_site()
 	  p1.next(); // p1 goes twice fast as p2.
 	}
+    }
+
+    {
+      // Fun stuff:
+
+      arr1[0] = point2d(0,0);
+      picture(arr1);
+      picture(arr2);
     }
 
   }

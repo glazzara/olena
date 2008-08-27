@@ -81,4 +81,13 @@ int main()
 
   // FIXME: j does NOT convert to int because index is NOT a proxy
   // NOTA: make index be a proxy, so equip it with every op it needs.
+
+  for (i = 0; i < n; i = i + 1)
+    {
+      std::cout << "i=" << i << ": ";
+      for_all(j)
+	std::cout << arr[(int(j.to_site()) + n) % n] << ' ';
+      std::cout << std::endl;
+    }
+
 }

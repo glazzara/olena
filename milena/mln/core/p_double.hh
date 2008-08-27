@@ -94,7 +94,7 @@ namespace mln
 					     p_double_piter<S,I1,I2> >
   {
     typedef p_double_piter<S,I1,I2> self_;
-    typedef internal::site_set_iterator_base<S,self_> super;
+    typedef internal::site_set_iterator_base<S,self_> super_;
   public:
 
     /// Constructor with no argument.
@@ -102,6 +102,9 @@ namespace mln
 
     /// Constructor.
     p_double_piter(const S& s);
+
+    /// Change the site set targeted by this iterator. 
+    void change_target(const S& newtarget);
 
     /// Test if the iterator is valid.
     bool is_valid_() const;
@@ -116,8 +119,8 @@ namespace mln
     void next_();
 
   protected:
-    using super::p_;
-    using super::s_;
+    using super_::p_;
+    using super_::s_;
 
   private:
     I1 i1_;
@@ -219,7 +222,15 @@ namespace mln
   p_double_piter<S,I1,I2>::p_double_piter(const S& s)
   {
     this->change_target(s);
-    i1_.change_target(s.set_1_());
+  }
+
+  template <typename S, typename I1, typename I2>
+  inline
+  void
+  p_double_piter<S,I1,I2>::change_target(const S& newtarget)
+  {
+    this->super_::change_target(newtarget);
+    i1_.change_target(newtarget.set_1_());
     invalidate_();
   }
 

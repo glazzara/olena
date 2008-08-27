@@ -1,3 +1,20 @@
+2008-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix a couple of bugs and augment tutorial examples.
+
+	* doc/tutorial/examples/p_array.cc: Augment with a test on p_array
+	update.
+	* doc/tutorial/examples/p_array.2.cc: Augment with index
+	manipulation.
+	* doc/tutorial/examples/p_vaccess.cc: Augment with extra output.
+	* mln/trait/site_set/status.txt (pset_array): Fix status.
+	* mln/core/p_vaccess.hh (set_1_): Fix return type.
+	* mln/core/p_double.hh (super): Rename that private typedef as...
+	(super_): ...this.
+	(change_target): New overriding in p_double_piter.  That fixes a
+	bug since such iterators have to perform some extra
+	code (w.r.t. the inherited method) when setting the site set.
+
 2008-08-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the 'plain' and 'safe' morphers work.
