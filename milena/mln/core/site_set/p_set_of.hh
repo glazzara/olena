@@ -25,22 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_MUTABLE_ARRAY_OF_HH
-# define MLN_CORE_P_MUTABLE_ARRAY_OF_HH
+#ifndef MLN_CORE_SITE_SET_P_SET_OF_HH
+# define MLN_CORE_SITE_SET_P_SET_OF_HH
 
-/*! \file mln/core/p_mutable_array_of.hh
+/*! \file mln/core/site_set/p_set_of.hh
  *
- * \brief Definition of a mutable array of site sets.
+ * \brief Definition of a set of site sets.
  *
- * \todo Zed: Add another version (p_array_of) of this class that can
- * inherit, when possible, nsites and bbox (just like in p_vaccess).
- * It is a different class since such a feature is incompatible with
- * the "op[] mutable".
+ * \todo Zed: Add element browsing.
  */
 
-# include <mln/core/p_double.hh>
+# include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/util/array.hh>
+# include <mln/core/internal/site_set_impl.hh>
+# include <mln/util/set.hh>
 
 
 
@@ -48,17 +46,17 @@ namespace mln
 {
 
   // Forward declaration.
-  template <typename S> class  p_mutable_array_of;
+  template <typename S> class  p_set_of;
 
 
   namespace trait
   {
 
     template <typename S>
-    struct site_set_< p_mutable_array_of<S> >
+    struct site_set_< p_set_of<S> >
     {
-      typedef trait::site_set::nsites::unknown   nsites;
-      typedef trait::site_set::bbox::unknown     bbox;
+      typedef mln_trait_site_set_nsites(S)       nsites;
+      typedef mln_trait_site_set_bbox(S)         bbox;
       typedef trait::site_set::contents::growing contents;
       typedef trait::site_set::arity::multiple   arity;
     };
@@ -67,17 +65,18 @@ namespace mln
 
 
 
-  /*! \brief p_mutable_array_of is a mutable array of site sets.
+  /*! \brief p_set_of is a set of site sets.
    *
    * Parameter \c S is the type of the contained site sets.
    */
   template <typename S>
-  class p_mutable_array_of : public internal::site_set_base_< mln_element(S),
-						      p_mutable_array_of<S> >,
-		     private mlc_is_a(S, Site_Set)::check_t
+  class p_set_of : public internal::site_set_base_< mln_site(S),
+						    p_set_of<S> >,
+		   public internal::site_set_impl<S>,
+		   private mlc_is_a(S, Site_Set)::check_t
   {
-    typedef p_mutable_array_of<S>  self_;
-    typedef util::array<S> array_;
+    typedef p_set_of<S>  self_;
+    typedef util::set<S> set_;
   public:
 
     /// Element associated type.
@@ -89,12 +88,12 @@ namespace mln
 
     /// Forward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_fwd_iter(array_),
+			   mln_fwd_iter(set_),
 			   mln_fwd_piter(S)> fwd_piter;
 
     /// Backward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_bkd_iter(array_),
+			   mln_bkd_iter(set_),
 			   mln_bkd_piter(S)> bkd_piter;
 
     /// Site_Iterator associated type.
@@ -102,11 +101,11 @@ namespace mln
 
 
     /// Constructor without arguments.
-    p_mutable_array_of();
+    p_set_of();
 
 
     /// Test if \p p belongs to this point set.
-    bool has(const psite&) const;
+    bool has(const psite& p) const;
 
     /// Test if this set of runs is valid.
     bool is_valid() const;
@@ -119,11 +118,8 @@ namespace mln
     void insert(const S& s);
 
 
-    /// Return the \p i-th site set (const version).
+    /// Return the \p i-th site set.
     const S& operator[](unsigned i) const;
-
-    /// Return the \p i-th site set (mutable version).
-    S& operator[](unsigned i);
 
     /// Give the number of elements (site sets) of this composite.
     unsigned nelements() const;
@@ -132,32 +128,29 @@ namespace mln
     /// Clear this set.
     void clear();
 
-    /// Test if the site set is empty.
-    bool is_empty_() const; // Override the default impl since we have not .nsites().
-
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
     /// Hook to the set of runs.
-    const util::array<S>& array_hook_() const;
+    const util::set<S>& set_hook_() const;
 
 
     // Required by p_double-related classes.
-    const util::array<S>& set_1_() const;
+    const util::set<S>& set_1_() const;
     template <typename I>
     const S& set_2_(const I& it) const;
 
   protected:
 
-    /// Array of site sets.
-    util::array<S> arr_;
+    /// Set of site sets.
+    util::set<S> s_;
   };
 
 
 
   template <typename S>
-  std::ostream& operator<<(std::ostream& ostr, const p_mutable_array_of<S>& r);
+  std::ostream& operator<<(std::ostream& ostr, const p_set_of<S>& s);
 
 
 
@@ -166,23 +159,22 @@ namespace mln
 
   template <typename S>
   inline
-  p_mutable_array_of<S>::p_mutable_array_of()
+  p_set_of<S>::p_set_of()
   {
   }
 
   template <typename S>
   inline
   bool
-  p_mutable_array_of<S>::has(const psite&) const
+  p_set_of<S>::has(const psite& p) const
   {
-    // FIXME
-    return true;
+    return p.index() < s_.nelements() && s_[p.index()].has(p.p());
   }
 
   template <typename S>
   inline
   bool
-  p_mutable_array_of<S>::is_valid() const
+  p_set_of<S>::is_valid() const
   {
     return true;
   }
@@ -190,92 +182,78 @@ namespace mln
   template <typename S>
   inline
   void
-  p_mutable_array_of<S>::insert(const S& s)
+  p_set_of<S>::insert(const S& s)
   {
-    arr_.append(s);
+    mln_precondition(s.is_valid());
+    s_.insert(s);
+    this->update_nsites_(s);
+    this->update_bbox_(s);
   }
 
   template <typename S>
   inline
   const S&
-  p_mutable_array_of<S>::operator[](unsigned i) const
+  p_set_of<S>::operator[](unsigned i) const
   {
-    mln_precondition(i < arr_.nelements());
-    return arr_[i];
-  }
-
-  template <typename S>
-  inline
-  S&
-  p_mutable_array_of<S>::operator[](unsigned i)
-  {
-    mln_precondition(i < arr_.nelements());
-    return arr_[i];
+    mln_precondition(i < s_.nelements());
+    return s_[i];
   }
 
   template <typename S>
   inline
   unsigned
-  p_mutable_array_of<S>::nelements() const
+  p_set_of<S>::nelements() const
   {
-    return arr_.nelements();
+    return s_.nelements();
   }
 
   template <typename S>
   inline
   void
-  p_mutable_array_of<S>::clear()
+  p_set_of<S>::clear()
   {
-    arr_.clear();
+    s_.clear();
     mln_postcondition(this->is_empty());
   }
 
   template <typename S>
   inline
-  bool
-  p_mutable_array_of<S>::is_empty_() const
-  {
-    return arr_.is_empty();
-  }
-
-  template <typename S>
-  inline
   std::size_t
-  p_mutable_array_of<S>::memory_size() const
+  p_set_of<S>::memory_size() const
   {
-    return arr_.memory_size();
+    return s_.memory_size();
   }
 
   template <typename S>
   inline
-  const util::array<S>&
-  p_mutable_array_of<S>::array_hook_() const
+  const util::set<S>&
+  p_set_of<S>::set_hook_() const
   {
-    return arr_;
+    return s_;
   }
 
   template <typename S>
   inline
-  const util::array<S>&
-  p_mutable_array_of<S>::set_1_() const
+  const util::set<S>&
+  p_set_of<S>::set_1_() const
   {
-    return arr_;
+    return s_;
   }
 
   template <typename S>
   template <typename I>
   inline
   const S&
-  p_mutable_array_of<S>::set_2_(const I& it) const
+  p_set_of<S>::set_2_(const I& it) const
   {
     return it.element();
   }
 
 
   template <typename S>
-  std::ostream& operator<<(std::ostream& ostr, const p_mutable_array_of<S>& a)
+  std::ostream& operator<<(std::ostream& ostr, const p_set_of<S>& s)
   {
-    return ostr << a.array_hook_();
+    return ostr << s.set_hook_();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -283,4 +261,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_MUTABLE_ARRAY_OF_HH
+#endif // ! MLN_CORE_SITE_SET_P_SET_OF_HH

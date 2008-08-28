@@ -25,19 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_DOUBLE_HH
-# define MLN_CORE_P_DOUBLE_HH
+#ifndef MLN_CORE_SITE_SET_P_DOUBLE_HH
+# define MLN_CORE_SITE_SET_P_DOUBLE_HH
 
-/*! \file mln/core/p_double.hh
+/*! \file mln/core/site_set/p_double.hh
  *
  * FIXME
  *
  * \todo Document!
  *
- * \todo Zed: IMPORTANT FIXME: a psite shall know about both iterators
- * to be fully located.  Think about an image based on
- * p_array_of<p_run<P>>: its psite has to know the first index to
- * access the associated value set.
+ * \todo Add tests about validity of compounded site sets (?)
  */
 
 # include <mln/core/internal/pseudo_site_base.hh>
@@ -317,4 +314,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_DOUBLE_HH
+#endif // ! MLN_CORE_SITE_SET_P_DOUBLE_HH

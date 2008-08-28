@@ -1,6 +1,6 @@
 # include <mln/core/image2d.hh>
 # include <mln/core/alias/p_run2d.hh>
-# include <mln/core/p_set_of.hh>
+# include <mln/core/site_set/p_set_of.hh>
 
 # include <mln/convert/from_to.hh>
 # include <mln/debug/println.hh>

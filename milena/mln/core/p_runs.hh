@@ -40,7 +40,7 @@
 
 # include <mln/accu/bbox.hh>
 # include <mln/core/p_run.hh>
-# include <mln/core/p_double.hh>
+# include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/piter_adaptor.hh>
 # include <mln/util/set.hh>
 

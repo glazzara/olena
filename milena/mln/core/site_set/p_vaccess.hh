@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_VACCESS_HH
-# define MLN_CORE_P_VACCESS_HH
+#ifndef MLN_CORE_SITE_SET_P_VACCESS_HH
+# define MLN_CORE_SITE_SET_P_VACCESS_HH
 
-/*! \file mln/core/p_vaccess.hh
+/*! \file mln/core/site_set/p_vaccess.hh
  *
  * \todo Fix the FIXMEs.
  */
 
 # include <utility>
-# include <mln/core/p_double.hh>
+# include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/core/internal/site_set_impl.hh>
@@ -276,4 +276,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_VACCESS_HH
+#endif // ! MLN_CORE_SITE_SET_P_VACCESS_HH

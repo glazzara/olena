@@ -1,5 +1,5 @@
 # include <mln/core/image2d.hh>
-# include <mln/core/p_key.hh>
+# include <mln/core/site_set/p_key.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>

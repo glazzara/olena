@@ -63,7 +63,11 @@ namespace mln
 
 
 
-  /*! \brief Point queue class (based on p_array<P>).
+  /*! \brief Queue of sites class (based on p_array<P>).
+   *
+   * This container is efficient; FIXME: explain...
+   *
+   * The parameter \c P shall be a site or pseudo-site type.
    */
   template <typename P>
   class p_queue_fast : public internal::site_set_base_< P, p_queue_fast<P> >
@@ -87,49 +91,49 @@ namespace mln
     typedef fwd_piter piter;
 
 
-    /// Constructor.
+    /// Constructor without argument.
     p_queue_fast();
 
     /// Reserve \p n cells.
     void reserve(std::size_t n);
 
-    /// Test if \p p belongs to this point set.
+    /// Test if \p p belongs to this site set.
     bool has(const psite& p) const;
 
-    /// Test if index \p i belongs to this point set.
+    /// Test if index \p i belongs to this site set.
     bool has(const util::index& i) const;
 
     /// This set is always valid so it returns true.
     bool is_valid() const;
 
-    /// Test if \p p belongs to this point set.
+    /// Test if \p p belongs to this site set.
     bool compute_has(const P& p) const;
 
-    /// Give the number of points.
+    /// Give the number of sites.
     unsigned nsites() const;
 
 
-    /// Push a point \p p in the queue.
+    /// Push a site \p p in the queue.
     void push(const P& p);
 
     /// Insertion element associated type. 
     typedef P i_element;
 
-    /// Insert a point \p p (equivalent as 'push').
+    /// Insert a site \p p (equivalent as 'push').
     void insert(const P& p);
 
 
-    /// Pop (remove) the front point \p p from the queue; \p p is the
-    /// least recently inserted point.
+    /// Pop (remove) the front site \p p from the queue; \p p is the
+    /// least recently inserted site.
     void pop();
 
-    /// Give the front point \p p of the queue; \p p is the least
-    /// recently inserted point.
+    /// Give the front site \p p of the queue; \p p is the least
+    /// recently inserted site.
     const P& front() const;
 
-    /// Pop (remove) the front point \p p from the queue; \p p is the
-    /// least recently inserted point and give the front point \p p of
-    /// the queue; \p p is the least recently inserted point.
+    /// Pop (remove) the front site \p p from the queue; \p p is the
+    /// least recently inserted site and give the front site \p p of
+    /// the queue; \p p is the least recently inserted site.
     const P& pop_front();
 
 
@@ -140,10 +144,10 @@ namespace mln
     void clear();
 
 
-    /// Return the \p i-th point.
+    /// Return the \p i-th site.
     const P& operator[](unsigned i) const;
 
-    /// Return the corresponding std::vector of points.
+    /// Return the corresponding std::vector of sites.
     const std::vector<P>& std_vector() const;
 
     /// Return the size of this site set in memory.

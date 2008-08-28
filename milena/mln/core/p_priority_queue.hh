@@ -36,7 +36,7 @@
  */
 
 # include <map>
-# include <mln/core/p_double.hh>
+# include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/util/set.hh>
 

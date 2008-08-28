@@ -1,6 +1,5 @@
 # include <mln/core/image2d.hh>
 # include <mln/core/image_if.hh>
-# include <mln/core/alias.hh>
 
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>

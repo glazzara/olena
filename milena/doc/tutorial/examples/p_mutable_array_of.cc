@@ -1,5 +1,5 @@
 # include <mln/core/image2d.hh>
-# include <mln/core/p_mutable_array_of.hh>
+# include <mln/core/site_set/p_mutable_array_of.hh>
 # include <mln/core/p_run.hh>
 # include <mln/convert/from_to.hh>
 
@@ -46,4 +46,15 @@ int main()
   display(rs);
 
   // FIXME: Use the "mutable" feature of rs...
+
+
+  {
+    typedef p_mutable_array_of<Runs> Arr; // Array of arrays of runs.
+    Arr arr;
+    arr.insert(rs);
+    arr.insert(rs);
+    std::cout << arr << std::endl;
+    display(arr);
+  }
+
 }

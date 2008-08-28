@@ -25,26 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_P_RUNS2D_HH
-# define MLN_CORE_ALIAS_P_RUNS2D_HH
+#ifndef MLN_CORE_SITE_SET_ALL_HH
+# define MLN_CORE_SITE_SET_ALL_HH
 
-/*! \file mln/core/alias/p_runs2d.hh
+/*! \file mln/core/site_set/all.hh
  *
- * \brief Definition of the mln::p_runs2d alias.
+ * \brief File that includes all site_set types.
+ *
+ * \todo Make it effective after having moved image-defining files.
  */
 
-# include <mln/core/alias/p_run2d.hh>
+
+// # include <mln/core/site_set/p_array_of.hh> // FIXME: Uncomment.
+# include <mln/core/site_set/p_image.hh>
+# include <mln/core/site_set/p_key.hh>
+# include <mln/core/site_set/p_mutable_array_of.hh>
 # include <mln/core/site_set/p_set_of.hh>
+# include <mln/core/site_set/p_vaccess.hh>
+// FIXME: Complete...
 
 
-namespace mln
-{
-
-  /// Type alias for a set of runs of 2d points.
-  typedef p_set_of<p_run2d> p_runs2d;
-
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_ALIAS_P_RUNS2D_HH
+#endif // ! MLN_CORE_SITE_SET_ALL_HH

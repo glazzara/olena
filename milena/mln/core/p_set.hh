@@ -63,8 +63,9 @@ namespace mln
 
   /*! \brief Point set class based on util::set.
    *
-   * This is a mathematical set of points (not a multi-set).  The
-   * parameter \p P shall be a Point type.
+   * This is a mathematical set of sites (not a multi-set).
+   *
+   * The parameter \c P shall be a site or pseudo-site type.
    */
   template <typename P>
   class p_set : public internal::site_set_base_< P, p_set<P> >

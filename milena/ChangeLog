@@ -1,3 +1,75 @@
+2008-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move new site sets in proper place, cleanup, and bug fix.
+
+	Move site set files that only belong to that branch
+	to a dedicated new directory.
+
+	* mln/core/site_set: New directory.
+
+	* mln/core/p_double.hh,
+	* mln/core/p_key.hh,
+	* mln/core/p_mutable_array_of.hh,
+	* mln/core/p_set_of.hh,
+	* mln/core/p_vaccess.hh: Move to...
+	* mln/core/site_set/p_double.hh,
+	* mln/core/site_set/p_key.hh,
+	* mln/core/site_set/p_mutable_array_of.hh,
+	* mln/core/site_set/p_set_of.hh,
+	* mln/core/site_set/p_vaccess.hh: ...here.
+	(file, guards): Update.
+
+	* mln/core/p_queue_fast.hh,
+	* mln/core/alias/p_runs2d.hh,
+	* mln/core/p_queue.hh,
+	* mln/core/p_priority_queue.hh,
+	* mln/core/p_set.hh,
+	* mln/core/safe.hh,
+	* mln/core/p_runs.hh: Update.
+
+	* doc/tutorial/examples/image_if.cc,
+	* doc/tutorial/examples/p_queue.cc,
+	* doc/tutorial/examples/p_vaccess.cc,
+	* doc/tutorial/examples/p_key.cc,
+	* doc/tutorial/examples/p_key.2.cc,
+	* doc/tutorial/examples/p_run.cc,
+	* doc/tutorial/examples/p_mutable_array_of.cc:
+	Update and augment.
+
+	* mln/core/site_set/all.hh: New.
+	* mln/trait/site_set/status.txt: Move to...
+	* mln/core/site_set/status.txt: ...here and update.
+
+	Bug fix.
+
+	* mln/core/p_queue_fast.hh: Fix doc.
+	* mln/core/site_set/p_double.hh (todo): Remove; obsolete.
+	(todo): New.
+	* mln/core/site_set/p_mutable_array_of.hh,
+	* mln/core/site_set/p_set_of.hh (site_set_base_):
+	Fix the 1st param.  This base class expects a type to deduce the
+	site type and, in compound site sets, such type cannot be an
+	element (a compound).
+	(doc): Fix.
+	(has): Implement so remove FIXME.
+	(insert): Add missing precondition.
+	* mln/core/site_set/p_mutable_array_of.hh (reserve): New.
+	* mln/core/safe.hh (speed): Fix.
+
+	A couple of site set cleanup.
+
+	* mln/core/p_queue.hh: Revamp.
+	(todo): New.
+	* mln/core/p_image2d.hh: Copy to...
+	* mln/core/site_set/p_image.hh: ...this new file.
+	Revamp to make it generic.
+	* doc/tutorial/examples/p_image.cc: New.
+
+	Also move the image status file.
+
+	* mln/trait/image/status.txt: Move to...
+	* mln/core/image/status.txt: ...here.
+
 2008-08-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix a couple of bugs and augment tutorial examples.

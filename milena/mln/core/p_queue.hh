@@ -30,101 +30,128 @@
 
 /*! \file mln/core/p_queue.hh
  *
- * \brief Definition of a point set class based on std::deque.
+ * \brief Definition of a site set based on std::deque.
+ *
+ * \todo Rename 'front' because it is ambiguous for C++ users; we
+ * have:
+ * - 'p_queue::pop' means 'deque::pop_front'
+ * - 'p_queue::pop_front' means 'return deque::front and run
+ *   deque::pop_front'
  */
 
-# include <vector>
 # include <deque>
-# include <algorithm>
-# include <iterator>
-
-# include <mln/core/internal/site_set_base.hh>
-# include <mln/core/p_array_piter.hh>
-# include <mln/accu/bbox.hh>
+# include <mln/core/p_array.hh>
 
 
 namespace mln
 {
 
-  // Fwd decls.
-  template <typename P> struct p_array_fwd_piter_;
-  template <typename P> struct p_array_bkd_piter_;
+  // Forward declaration.
+  template <typename P> class p_queue;
 
 
-  /*! \brief Point queue class (based on std::deque).
+  namespace trait
+  {
+
+    template <typename P>
+    struct site_set_< p_queue<P> >
+    {
+      typedef trait::site_set::nsites::known     nsites;
+      typedef trait::site_set::bbox::unknown     bbox;
+      typedef trait::site_set::contents::growing contents;
+      typedef trait::site_set::arity::multiple   arity;
+    };
+
+  } // end of namespace trait
+
+
+
+  /*! \brief Queue of sites (based on std::deque).
    *
-   * This is a mathematical set of points (unique insertion).
-   *
-   * \todo Make it work with P being a Point_Site.
-   * \todo Add a parameter flag to choose another policy for "push"
-   * (i.e., no-op if multiple or allow multiple insertions).
-   *
-   * \warning We have some troubles with point set comparison based on
-   * a call to nsites() when this container is multiple.
+   * The parameter \c P shall be a site or pseudo-site type.
    */
   template <typename P>
   class p_queue : public internal::site_set_base_< P, p_queue<P> >
   {
+    typedef p_queue<P> self_;
   public:
 
+    /// Element associated type.
+    typedef P element;
+
+
+    /// Psite associated type.
+    typedef p_indexed_psite<self_> psite;
+
     /// Forward Site_Iterator associated type.
-    typedef p_array_fwd_piter_<P> fwd_piter;
+    typedef p_indexed_fwd_piter<self_> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_array_bkd_piter_<P> bkd_piter;
+    typedef p_indexed_bkd_piter<self_> bkd_piter;
 
-    /// Constructor.
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+
+
+    /// Constructor without argument.
     p_queue();
 
-    /// Test is \p p belongs to this point set.
-    bool has(const P& p) const;
 
-    /// Give the number of points.
+    /// Test if \p p belongs to this site set.
+    bool has(const psite& p) const;
+
+    /// Test if index \p i belongs to this site set.
+    bool has(const util::index& i) const;
+
+    /// This set is always valid so it returns true.
+    bool is_valid() const;
+
+
+    /// Give the number of sites.
     unsigned nsites() const;
 
-    /// Give the exact bounding box.
-    const box_<P>& bbox() const;
 
-    /// Push force a point \p p in the queue.
-    p_queue<P>& push_force(const P& p);
+    /// Push a site \p p in the queue.
+    void push(const P& p);
 
-    /// Push a point \p p in the queue.
-    p_queue<P>& push(const P& p);
+    /// Insertion element associated type. 
+    typedef P i_element;
 
-    /// Pop (remove) the front point \p p from the queue; \p p is the
-    /// least recently inserted point.
+    /// Insert a site \p p (equivalent as 'push').
+    void insert(const P& p);
+
+
+    /// Pop (remove) the front site \p p from the queue; \p p is the
+    /// least recently inserted site.
     void pop();
 
-    /// Give the front point \p p of the queue; \p p is the least
-    /// recently inserted point.
+    /// Give the front site \p p of the queue; \p p is the least
+    /// recently inserted site.
     const P& front() const;
 
-    /// Give the front point \p p of the queue; \p p is the least
-    /// recently inserted point and pop (remove) the front point \p p
-    /// from the queue; \p p is the least recently inserted point.
-    const P& pop_front();
+    /// Pop (remove) the front site \p p from the queue; \p p is the
+    /// least recently inserted site and give the front site \p p of
+    /// the queue; \p p is the least recently inserted site.
+    P pop_front();
+
 
     /// Clear the queue.
     void clear();
 
-    /// Return the corresponding std::vector of points.
-    const std::vector<P>& vect() const;
 
-    /// Return the \p i-th point.
+    /// Return the \p i-th site.
     const P& operator[](unsigned i) const;
+
+    /// Return the corresponding std::deque of sites.
+    const std::deque<P>& std_deque() const;
+
+    /// Return the size of this site set in memory.
+    std::size_t memory_size() const;
+
 
   protected:
 
     std::deque<P> q_;
-
-    mutable std::vector<P> vect_;
-    mutable bool vect_needs_update_;
-    void vect_update_() const;
-
-    mutable accu::bbox<P> bb_;
-    mutable bool bb_needs_update_;
-    void bb_update_() const;
-
   };
 
 
@@ -135,42 +162,35 @@ namespace mln
   inline
   p_queue<P>::p_queue()
   {
-    vect_needs_update_ = false;
-    bb_needs_update_ = false;
-  }
-
-  template <typename P>
-  inline
-  void
-  p_queue<P>::vect_update_() const
-  {
-    vect_.clear();
-    vect_.reserve(q_.size());
-    std::copy(q_.begin(), q_.end(),
-	      std::back_inserter(vect_));
-    vect_needs_update_ = false;
-  }
-
-  template <typename P>
-  inline
-  void
-  p_queue<P>::bb_update_() const
-  {
-    bb_.init();
-    for (unsigned i = 0; i < q_.size(); ++i)
-      bb_.take(q_[i]);
-    bb_needs_update_ = false;
   }
 
   template <typename P>
   inline
   bool
-  p_queue<P>::has(const P& p) const
+  p_queue<P>::has(const psite& p) const
   {
-    for (unsigned i = 0; i < q_.size(); ++i)
-      if (q_[i] == p)
-	return true;
-    return false;
+    mln_precondition(p.target_() == this); // FIXME: Refine.
+    if (p.index() < 0 || unsigned(p.index()) >= nsites())
+      return false;
+    // The type of rhs below is mln_site(p_array<P>).
+    mln_invariant(p.to_site() == (*this)[p.index()]);
+    return true;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_queue<P>::has(const util::index& i) const
+  {
+    return i >= 0 && unsigned(i) < nsites();
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_queue<P>::is_valid() const
+  {
+    return true;
   }
 
   template <typename P>
@@ -183,37 +203,10 @@ namespace mln
 
   template <typename P>
   inline
-  const box_<P>&
-  p_queue<P>::bbox() const
-  {
-    mln_precondition(nsites() != 0);
-    if (bb_needs_update_)
-      bb_update_();
-    return bb_.to_result();
-  }
-
-  template <typename P>
-  inline
-  p_queue<P>&
-  p_queue<P>::push_force(const P& p)
-  {
-    q_.push_back(p);
-    if (! vect_needs_update_)
-      {
-	vect_needs_update_ = true;
-	bb_needs_update_ = true;
-      }
-    return *this;
-  }
-
-  template <typename P>
-  inline
-  p_queue<P>&
+  void
   p_queue<P>::push(const P& p)
   {
-    mln_precondition(! has(p));
-    // FIXME: Our choice is "error if multiple insertions"
-    return this->push_force(p);
+    q_.push_back(p);
   }
 
   template <typename P>
@@ -221,12 +214,8 @@ namespace mln
   void
   p_queue<P>::pop()
   {
+    mln_precondition(! this->is_empty());
     q_.pop_front();
-    if (! vect_needs_update_)
-      {
-	vect_needs_update_ = true;
-	bb_needs_update_ = true;
-      }
   }
 
   template <typename P>
@@ -234,17 +223,17 @@ namespace mln
   const P&
   p_queue<P>::front() const
   {
-    mln_precondition(! q_.empty());
+    mln_precondition(! this->is_empty());
     return q_.front();
   }
 
   template <typename P>
   inline
-  const P&
+  P
   p_queue<P>::pop_front()
   {
-    const P& res = this->front();
-
+    mln_precondition(! this->is_empty());
+    P res = this->front();
     this->pop();
     return res;
   }
@@ -255,19 +244,6 @@ namespace mln
   p_queue<P>::clear()
   {
     q_.clear();
-    vect_.clear();
-    vect_needs_update_ = false;
-    bb_needs_update_ = false;
-  }
-
-  template <typename P>
-  inline
-  const std::vector<P>&
-  p_queue<P>::vect() const
-  {
-    if (vect_needs_update_)
-      vect_update_();
-    return vect_;
   }
 
   template <typename P>
@@ -277,6 +253,30 @@ namespace mln
   {
     mln_precondition(i < nsites());
     return q_[i];
+  }
+
+  template <typename P>
+  inline
+  void
+  p_queue<P>::insert(const P& p)
+  {
+    this->push(p);
+  }
+
+  template <typename P>
+  inline
+  const std::deque<P>&
+  p_queue<P>::std_deque() const
+  {
+    return q_;
+  }
+
+  template <typename P>
+  inline
+  std::size_t
+  p_queue<P>::memory_size() const
+  {
+    return sizeof(q_) + nsites() * sizeof(P);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

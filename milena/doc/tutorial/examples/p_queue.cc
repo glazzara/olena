@@ -1,4 +1,5 @@
 # include <mln/core/image2d.hh>
+# include <mln/core/p_queue.hh>
 # include <mln/core/p_queue_fast.hh>
 # include <mln/debug/println.hh>
 # include <mln/level/fill.hh>
@@ -25,11 +26,26 @@ void picture(const S& s)
 
 
 
-int main()
+template <typename P>
+void try_purge(mln::p_queue<P>&)
+{
+  // No-op.
+}
+
+template <typename P>
+void try_purge(mln::p_queue_fast<P>& q)
+{
+  std::cout << "purge!" << std::endl;
+  q.purge();
+  picture(q);
+}
+
+
+template <typename Q>
+void run()
 {
   using namespace mln;
-  
-  typedef p_queue_fast<point2d> Q;
+
   Q q;
 
   {
@@ -45,7 +61,7 @@ int main()
   picture(q);
 
   {
-    Q::psite p(q, 0);
+    mln_psite(Q) p(q, 0);
     mln_assertion(q.has(p));
     p.change_index(6);
     mln_assertion(q.has(p));
@@ -54,17 +70,24 @@ int main()
     mln_assertion(! q.has(p));
   }
 
-  std::cout << "purge!" << std::endl;
-  q.purge();
-  picture(q);
+  try_purge(q);
 
   {
     typedef p_priority<unsigned, Q> PQ;
     PQ pq;
-    Q::piter p(q);
+    mln_piter(Q) p(q);
     for_all(p)
       pq.push(p.row() + p.col(), p);
     std::cout << pq << std::endl;
   }
 
+}
+
+
+int main()
+{
+  using namespace mln;
+  // typedef p_queue<point2d> Q;
+  typedef p_queue_fast<point2d> Q;
+  run<Q>();
 }

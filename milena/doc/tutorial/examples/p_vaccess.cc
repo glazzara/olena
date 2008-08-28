@@ -9,7 +9,7 @@
 # include <mln/labeling/blobs.hh>
 
 # include <mln/core/alias/p_runs2d.hh>
-# include <mln/core/p_vaccess.hh>
+# include <mln/core/site_set/p_vaccess.hh>
 # include <mln/core/image_if.hh>
 # include <mln/pw/all.hh>
 # include <mln/convert/from_to.hh>

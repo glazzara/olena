@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_KEY_HH
-# define MLN_CORE_P_KEY_HH
+#ifndef MLN_CORE_SITE_SET_P_KEY_HH
+# define MLN_CORE_SITE_SET_P_KEY_HH
 
-/*! \file mln/core/p_key.hh
+/*! \file mln/core/site_set/p_key.hh
  *
  * \brief Definition of a FIXME
  *
@@ -38,7 +38,7 @@
 # include <map>
 # include <mln/core/concept/function.hh>
 # include <mln/core/p_set.hh>
-# include <mln/core/p_double.hh>
+# include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/util/ord.hh>
 
@@ -649,4 +649,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_KEY_HH
+#endif // ! MLN_CORE_SITE_SET_P_KEY_HH
