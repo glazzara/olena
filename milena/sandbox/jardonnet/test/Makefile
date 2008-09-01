@@ -16,17 +16,14 @@ gau:
 icpD: icp.cc +depend
 	g++ icp.cc -I../../.. -g -o 'icpD'
 
-icp: icp.o +depend
-	g++ icp.o -I../../.. -O3 -DNDEBUG -o 'icp'
+icp: +depend
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -o 'icp'
 
 icp_refD: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ -Wall -W icp_ref.cc -I../../.. -g -o 'icp_refD'
 
 icp_ref: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ icp_ref.cc -I../../.. -O3 -DNDEBUG -o 'icp_ref'
-
-icp.o:
-	g++ -c icp.cc -I../../.. -O3 -DNDEBUG 
 
 bench:
 	ruby bench.rb

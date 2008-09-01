@@ -182,7 +182,8 @@ namespace mln
 
 
 #ifndef NDEBUG       // FIXME: theo
-      image2d<value::rgb8> tmp(500,500); // FIXME :
+      const box_<P> working_box = enlarge(bigger(cloud.bbox(),x.bbox()),5);
+      image2d<value::rgb8> tmp(convert::to_box2d(working_box), 1);
       level::fill(tmp, literal::black);
       //write X
       mln_piter(p_array<P>) p(x);
@@ -203,6 +204,7 @@ namespace mln
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, 1e-3);
 
+          /*
           //remove points
           p_array<P> tmp;
           tmp.reserve(cloud.npoints());
@@ -216,7 +218,7 @@ namespace mln
             if (norm::l2(qci - xi) < 2 * stddev)
               cloud.hook_()[i] = cloud[(i+1) % cloud.npoints()];
           }
-
+          */
 #ifndef NDEBUG
           {
             value::rgb8 c;

@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
   level::fill(output, literal::white);
 
+/* FIXME: remove or plot mu_Ck and mu_Xk
   //plot mu_Ck
   point3df mu_Ck = registration::center(c, c.npoints());
   draw::plot(output, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
@@ -84,7 +85,8 @@ int main(int argc, char* argv[])
   //plot mu_X
   point3df mu_X = registration::center(x, x.npoints());
   draw::plot(output, point2d(mu_X[0], mu_X[1]), literal::black);
-
+*/
+  
   //to 2d : projection (FIXME:if 3d)
   for (unsigned i = 0; i < c.npoints(); i++)
     {

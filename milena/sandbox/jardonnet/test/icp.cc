@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 
   
   // final transform
-  quat7<3> fqk = registration::final_qk(c, map, 2*stddev);
+  quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
   fqk.apply_on(c, c, c.npoints());
 
 
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
       //Xk points
       point2d px(x[i][0], x[i][1]);
       if (output.has(px))
-        output(px) = literal::green;
+        output(px) = literal::black;
     }
   
   
@@ -105,13 +105,13 @@ int main(int argc, char* argv[])
         {
 	  algebra::vec<3,float> xki = map(c[i]);
 	  algebra::vec<3,float> ci = c[i];
-	  
+	  /*
 	  if (length[i] > 2 * stddev)
             output(p) = literal::red;
           else if (length[i] > stddev)
             output(p) = value::rgb8(255,200,0);
-          else
-          output(p) = literal::black;
+          else*/
+          output(p) = literal::green;
         }
     }
 
