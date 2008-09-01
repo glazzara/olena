@@ -28,16 +28,47 @@
 #ifndef MLN_METAL_ARRAY1D_HH
 # define MLN_METAL_ARRAY1D_HH
 
+# include <mln/core/concept/object.hh>
+
 # include <mln/trait/all.hh>
+# include <mln/trait/value_.hh>
+
+# include <mln/value/ops.hh>
 
 namespace mln
 {
 
+  // Fwd decls.
+  namespace metal  {
+    template <typename T, unsigned Size> struct array1d;
+  }
+  
+  namespace trait
+  {
+    
+    template <typename T, unsigned Size>
+    struct value_< mln::metal::array1d<T,Size> >
+    {
+      typedef trait::value::nature::vectorial nature;
+      typedef trait::value::kind::data        kind;
+      
+      enum {
+        nbits = Size * mln_nbits(T),
+        card  = Size * mln_card(T)
+      };
+      typedef mln_value_quant_from_(card)     quant;
+
+      typedef metal::array1d<mln_sum(T),Size> sum;
+    };
+    
+  } // end of namespace mln::trait
+
+  
   namespace metal
   {
-
+    
     template <typename T, unsigned Size>
-    struct array1d
+    struct array1d : public Object< array1d<T,Size> >
     {
 
       //
@@ -72,10 +103,98 @@ namespace mln
       array1d<T, Size>&
       operator-=(const array1d<T, Size>& rhs);
 
+      
+      // dynamic accessors:
+
+      T operator[](unsigned i) const
+      {
+        mln_precondition(i < Size);
+        return buffer_[i];
+      }
+      T& operator[](unsigned i)
+      {
+        mln_precondition(i < Size);
+        return buffer_[i];
+      }
+
+      // static accessor
+
+      template<unsigned i>
+      T get() const {
+        return *(buffer_ + i);
+      }
+      template<unsigned i>
+      T& get() {
+        return *(buffer_ + i);
+      }
+
+      enum { length = Size };
     protected:
 
       T buffer_[Size];
     };
+
+  }
+
+  namespace trait
+  {
+
+    // For unary traits.
+
+    template < template <class> class Name,
+	       unsigned n, typename T >
+    struct set_precise_unary_< Name, metal::array1d<T, n> >
+    {
+      typedef mln_trait_unary(Name, T) V;
+      typedef metal::array1d<V, n> ret;
+    };
+
+    // For binary traits.
+
+    template < template <class, class> class Name,
+	       unsigned n, typename T,
+	       typename U >
+    struct set_precise_binary_< Name,
+				metal::array1d<T, n>, metal::array1d<U, n> >
+    {
+      typedef mln_trait_binary(Name, T, U) V;
+      typedef metal::array1d<V, n> ret;
+    };
+
+    template < unsigned n, typename T,
+	       typename U >
+    struct set_precise_binary_< op::times,
+				metal::array1d<T, n>, metal::array1d<U, n> >
+    {
+      typedef mln_sum_x(T,U) ret;
+    };
+
+    template < template <class, class> class Name,
+	       unsigned n, typename T,
+	       typename S >
+    struct set_precise_binary_< Name,
+				metal::array1d<T, n>, mln::value::scalar_<S> >
+    {
+      typedef mln_trait_binary(Name, T, S) V;
+      typedef metal::array1d<V, n> ret;
+    };
+
+    template < template<class, class> class Name,
+	       unsigned n, typename T,
+	       typename S >
+    struct set_binary_< Name,
+			mln::Object, metal::array1d<T, n>,
+			mln::value::Scalar, S >
+    {
+      typedef mln_trait_binary(Name, T, S) V;
+      typedef metal::array1d<T, n> ret;
+    };
+
+  } // end of namespace mln::trait
+
+
+  namespace metal
+  {
 
     //
     // Constructors

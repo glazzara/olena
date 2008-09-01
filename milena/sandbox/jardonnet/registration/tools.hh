@@ -118,7 +118,7 @@ namespace mln
 #endif 
   };
   
-  
+
   // FIXME: Should be a morpher ?
   // we could acces domain of a lazy map, iterator etc...
   template < typename F>
@@ -140,7 +140,7 @@ namespace mln
     operator () (const typename F::input& p_) const
     {
       point3d p = algebra::to_point<point3d>(p_);
-      
+
       mln_precondition(fun.domain().has(p));
       //FIXME: What about domain?
       if (is_known(p))
@@ -193,23 +193,23 @@ namespace mln
   namespace convert
   {
 
-    // to_p_array
-    template <typename I>
-    inline
-    p_array<mln_point(I)>
-    to_p_array(const Image<I>& img_)
-    {
-      const I& img = exact(img_);
+//     // to_p_array
+//     template <typename I>
+//     inline
+//     p_array<mln_point(I)>
+//     to_p_array(const Image<I>& img_)
+//     {
+//       const I& img = exact(img_);
       
-      p_array<mln_point(I)> a;
+//       p_array<mln_point(I)> a;
         
-      mln_piter(I) p(img.domain());
-      for_all(p)
-        if (img(p))
-          a.append(p);
+//       mln_piter(I) p(img.domain());
+//       for_all(p)
+//         if (img(p))
+//           a.append(p);
 
-      return a;
-    }
+//       return a;
+//     }
 
 
     template < typename P >
@@ -316,32 +316,6 @@ namespace mln
     
   } // end of namespace convert  
   
-  namespace algebra
-  {
-    
-    // transpose
-    template<unsigned n, unsigned m, typename T>
-    mat<m,n,T>
-    trans(const mat<n,m,T>& matrice)
-    {
-      mat<m,n,T> tmp;
-      for (unsigned i = 0; i < n; ++i)
-        for (unsigned j = 0; j < m; ++j)
-          tmp(j,i) = matrice(i,j);
-      return tmp;
-    }
-    
-    // trace
-    template<unsigned n, typename T> inline
-    float tr(const mat<n,n,T>& m)
-    {
-      float f = 0.f;
-      for (unsigned i = 0; i < n; ++i)
-        f += m(i,i);
-      return f;
-    }
-      
-  } // end of namespace algebra
 
 } // end of namespace mln
 
