@@ -1,3 +1,47 @@
+2008-09-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add image domain extension morphers plus the flat image.
+
+	Add image domain extension morphers.
+
+	* mln/core/image/extension_ima.hh: New.
+	* mln/trait/ch_value.hh (ch_value_): New overload to deal with
+	extension_ima.
+	* mln/core/image/extension_fun.hh: New.
+	* mln/core/image/extension_val.hh: New.
+	* mln/core/routine: New directory.
+	* mln/core/routine/all.hh: New.
+	* mln/core/routine/extend.hh: New.
+	* doc/tutorial/examples/image_if.cc: Augment to test extensions.
+
+	Add the flat image type.
+
+	* mln/core/image/flat_image.hh: New.
+	* doc/tutorial/examples/image_flat.cc: New.
+	* mln/core/image/status.txt: Update.
+
+	Enforce consistency for iterator naming.
+
+	* mln/core/macros.hh
+	(mln_iter, mln_fwd_iter, mln_bkd_iter): Rename as...
+	(mln_eiter, mln_fwd_eiter, mln_bkd_eiter): ...these.
+	* mln/core/site_set/p_key.hh,
+	* mln/core/site_set/p_mutable_array_of.hh,
+	* mln/core/site_set/p_set_of.hh,
+	* mln/core/p_runs.hh,
+	* mln/util/set.hh,
+	* mln/util/array.hh: Update.
+
+	Misc.
+
+	* mln/core/image/instant.hh (file): Fix.
+	* sandbox/geraud/p_runs__with_dedicated_piter.hh (todo): Remove;
+	obsolete.
+	* mln/core/internal/morpher_lvalue.hh
+	(mln_morpher_lvalue): New macro.
+	* mln/core/internal/image_identity.hh: Use the new macro.
+	* mln/core/safe.hh: Likewise.
+
 2008-08-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Move new site sets in proper place, cleanup, and bug fix.

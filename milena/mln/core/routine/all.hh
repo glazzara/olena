@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,44 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_MORPHER_LVALUE_HH
-# define MLN_CORE_INTERNAL_MORPHER_LVALUE_HH
+#ifndef MLN_CORE_ROUTINE_ALL_HH
+# define MLN_CORE_ROUTINE_ALL_HH
 
-/*! \file mln/core/internal/morpher_lvalue.hh
+/*! \file mln/core/routine/all.hh
  *
- * \brief Definition of a base class for some images.
+ * \brief File that includes all core routines.
+ *
+ * \todo Move files, update, and activate.
  */
 
-# include <mln/core/macros.hh>
+
+// # include <mln/core/routine/clone.hh>
+// # include <mln/core/routine/exact.hh>
+# include <mln/core/routine/extend.hh>
+// # include <mln/core/routine/initialize.hh>
 
 
-# define mln_morpher_lvalue(I) typename internal::morpher_lvalue_<I>::ret
-
-
-
-namespace mln
-{
-
-  namespace internal
-  {
-
-    /// \internal Return the lvalue type when an image with type \c I
-    /// is morphed.
-    template <typename I>
-    struct morpher_lvalue_
-    {
-      typedef mln_lvalue(I) ret;
-    };
-
-    template <typename I>
-    struct morpher_lvalue_< const I >
-    {
-      typedef mln_rvalue(I) ret;
-    };
-
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_INTERNAL_MORPHER_LVALUE_HH
+#endif // ! MLN_CORE_ROUTINE_ALL_HH

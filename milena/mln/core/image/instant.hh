@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_INSTANT_HH
 # define MLN_CORE_IMAGE_INSTANT_HH
 
-/*! \file mln/core/instant.hh
+/*! \file mln/core/image/instant.hh
  *
  * \brief Definition of a morpher that prevent an image from sharing
  * his data.

@@ -84,7 +84,6 @@ namespace mln
   template <typename I>
   class safe_image : public internal::image_identity< I, mln_pset(I), safe_image<I> >
   {
-    typedef internal::image_identity< I, mln_pset(I), safe_image<I> > super_;
   public:
 
     /// Skeleton.
@@ -96,8 +95,7 @@ namespace mln
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
-    typedef typename super_::lvalue lvalue;
-    lvalue operator()(const mln_psite(I)& p);
+    mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
 
     /// Const promotion via conversion.
     operator safe_image<const I>() const;

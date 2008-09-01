@@ -49,10 +49,11 @@
 
 // b
 
-/// Shortcuts to access the bkd_iter type associated to T.
+/// Shortcuts to access the element-backward-iterator type associated
+/// to T.
 /// \{
-# define mln_bkd_iter(T)   typename T::bkd_iter
-# define mln_bkd_iter_(T)           T::bkd_iter
+# define mln_bkd_eiter(T)   typename T::bkd_eiter
+# define mln_bkd_eiter_(T)           T::bkd_eiter
 /// \}
 
 /// Shortcuts to access the bkd_niter type associated to T.
@@ -118,6 +119,12 @@
 
 // e
 
+/// Shortcuts to access the element-iterator type associated to T.
+/// \{
+# define mln_eiter(T)      typename T::eiter
+# define mln_eiter_(T)              T::eiter
+/// \}
+
 /// Shortcuts to access the element type associated to T.
 /// \{
 # define mln_element(T)        typename T::element
@@ -139,10 +146,11 @@
 
 // f
 
-/// Shortcuts to access the fwd_iter type associated to T.
+/// Shortcuts to access the element-forward-iterator type associated
+/// to T.
 /// \{
-# define mln_fwd_iter(T)   typename T::fwd_iter
-# define mln_fwd_iter_(T)           T::fwd_iter
+# define mln_fwd_eiter(T)   typename T::fwd_eiter
+# define mln_fwd_eiter_(T)           T::fwd_eiter
 /// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.
@@ -197,12 +205,6 @@
 /// \{
 # define mln_invert(T)	   typename T::invert
 # define mln_invert_(T)             T::invert
-/// \}
-
-/// Shortcuts to access the iterator type associated to T.
-/// \{
-# define mln_iter(T)      typename T::iter
-# define mln_iter_(T)              T::iter
 /// \}
 
 

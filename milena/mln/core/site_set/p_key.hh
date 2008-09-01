@@ -88,12 +88,12 @@ namespace mln
 
     /// Forward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_fwd_iter(util::set<K>),
+			   mln_fwd_eiter(util::set<K>),
 			   mln_fwd_piter(p_set<P>)> fwd_piter;
 
     /// Backward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_bkd_iter(util::set<K>),
+			   mln_bkd_eiter(util::set<K>),
 			   mln_bkd_piter(p_set<P>)> bkd_piter;
 
     /// Site_Iterator associated type.
@@ -439,7 +439,7 @@ namespace mln
     // Update b_.
     {
       util::set<K> new_b;
-      mln_iter(util::set<K>) k(b_);
+      mln_eiter(util::set<K>) k(b_);
       for_all(k)
 	new_b.insert(lut[k] = f(k));
       b_ = new_b;
@@ -570,7 +570,7 @@ namespace mln
       }
 
     unsigned n = 0;
-    mln_iter(util::set<K>) key(b_);
+    mln_eiter(util::set<K>) key(b_);
     for_all(key)
       {
 	typename s_t::const_iterator k_s = s_.find(key);

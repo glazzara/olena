@@ -98,6 +98,13 @@ namespace mln
 	typedef M< P, V > ret;
       };
 
+      template < template <class, class> class M, typename I1, typename I2,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I1>, tag::image_<I2> >,  V  >
+      {
+	typedef M< mln_ch_value(I1, V), mln_ch_value(I2, V) > ret;
+      };
+
       // For mln::value::stack_image<n,I>.
       template < template <unsigned, class> class M, unsigned n, typename I,
 		 typename V >

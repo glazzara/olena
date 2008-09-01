@@ -31,10 +31,6 @@
 /*! \file mln/core/p_runs.hh
  *
  * \brief Definition of a set of point runs.
- *
- * \todo Zed: Use p_double* stuff.
- *
- * \todo Zed: Test for unicity (see FIXMEs).
  */
 
 # include <mln/accu/bbox.hh>

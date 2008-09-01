@@ -143,7 +143,7 @@ namespace mln
       typedef mln_rvalue(I) rvalue;
 
       /// Return type of read-write access.
-      typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+      typedef mln_morpher_lvalue(I) lvalue;
 
 
       /// Give the set of values.

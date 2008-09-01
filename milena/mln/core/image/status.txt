@@ -57,6 +57,10 @@ KO  translate_image
 ** identity morpher
 
 new instant
+new extension_ima
+new extension_fun
+new extension_val
+
 ok  plain
 ok  safe
 

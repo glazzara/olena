@@ -89,13 +89,13 @@ namespace mln
 
 
       /// Forward iterator associated type.
-      typedef set_fwd_iter<T> fwd_iter;
+      typedef set_fwd_iter<T> fwd_eiter;
 
       /// Backward iterator associated type.
-      typedef set_bkd_iter<T> bkd_iter;
+      typedef set_bkd_iter<T> bkd_eiter;
 
       /// Iterator associated type.
-      typedef fwd_iter iter;
+      typedef fwd_eiter eiter;
 
 
       /*! \brief Insert an element \p elt into the set.

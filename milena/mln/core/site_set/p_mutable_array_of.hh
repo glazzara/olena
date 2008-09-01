@@ -91,12 +91,12 @@ namespace mln
 
     /// Forward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_fwd_iter(array_),
+			   mln_fwd_eiter(array_),
 			   mln_fwd_piter(S)> fwd_piter;
 
     /// Backward Site_Iterator associated type.
     typedef p_double_piter<self_,
-			   mln_bkd_iter(array_),
+			   mln_bkd_eiter(array_),
 			   mln_bkd_piter(S)> bkd_piter;
 
     /// Site_Iterator associated type.
