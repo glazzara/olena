@@ -124,9 +124,9 @@ namespace mln
    * thickness around data.
    */
   template <typename T>
-  class image2d : public internal::image_primary< box2d, image2d<T> >
+  class image2d : public internal::image_primary< mln::box2d, image2d<T> >
   {
-    typedef internal::image_primary< box2d, image2d<T> > super_;
+    typedef internal::image_primary< mln::box2d, image2d<T> > super_;
   public:
 
     /// Coordinate associated type.

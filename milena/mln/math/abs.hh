@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
  */
 
 # include <cmath>
+# include <cstdlib>
 
 # include <mln/value/all.hh>
 
@@ -44,8 +45,29 @@ namespace mln
   namespace math
   {
 
+    /// Generic version.
     template <typename T>
     T abs(const T& v);
+
+    /// Specializations for existing overloads of std::abs.
+    /// 
+    /// Reference:
+    ///   ISO/IEC 14882:2003 C++ standard, section 26.5
+    ///   (C Library, [lib.c.math]).
+    ///
+    /// \{
+    int         abs(int v);
+    long        abs(long v);
+
+    float       abs(float v);
+    double      abs(double v);
+    long double abs(long double v);
+    /// \}
+
+    /// Specialization for mln::value::int_u.
+    template <unsigned n>
+    value::int_u<n> abs(const value::int_u<n>& v);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -54,8 +76,15 @@ namespace mln
     inline
     T abs(const T& v)
     {
-      return std::abs(v);
+      return v >= 0 ? v : -v;
     }
+
+    inline int         abs(int v)         { return std::abs(v); }
+    inline long        abs(long v)        { return std::abs(v); }
+
+    inline float       abs(float v)       { return std::abs(v); }
+    inline double      abs(double v)      { return std::abs(v); }
+    inline long double abs(long double v) { return std::abs(v); }
 
     template <unsigned n>
     inline

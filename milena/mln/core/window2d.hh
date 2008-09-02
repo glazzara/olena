@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,9 @@
 #ifndef MLN_CORE_WINDOW2D_HH
 # define MLN_CORE_WINDOW2D_HH
 
-/*! \file mln/core/window2d.hh
- *
- * \brief Definition of the mln::window2d alias and of a construction
- * routine.
- */
+/// \file mln/core/window2d.hh
+/// \brief Definition of the mln::window2d alias and of a construction
+/// routine.
 
 # include <mln/core/window.hh>
 # include <mln/core/dpoint2d.hh>
@@ -41,11 +39,42 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 2D square grid with integer coordinates.
-   */
-  typedef window<dpoint2d> window2d;
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 2D square grid with integer coordinates.
+  typedef window<mln::dpoint2d> window2d;
 
+  /// \brief 4-connectivity window on the 2D grid, including the
+  /// center.
+  ///
+  ///  - o -
+  ///  o x o
+  ///  - o -
+  ///
+  /// \return A window2d.
+  const window2d& win_c4p();
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  inline const window2d&
+  win_c4p()
+  {
+    static bool initialized_p = false;
+    static window2d it;
+    if (!initialized_p)
+      {
+	it.insert(make::dpoint2d( 0, -1));
+	it.insert(make::dpoint2d(-1,  0));
+	it.insert(make::dpoint2d( 0,  0));
+	it.insert(make::dpoint2d(+1,  0));
+	it.insert(make::dpoint2d( 0, +1));
+	initialized_p = true;
+      }
+    return it;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

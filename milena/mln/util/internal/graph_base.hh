@@ -40,41 +40,90 @@
 # include <ostream>
 
 # include <mln/core/concept/object.hh>
-# include <mln/util/ordpair.hh>
 
-// FIXME: Rename node(s) as vertex (vertices).
+# include <mln/util/ordpair.hh>
+# include <mln/value/builtin/integers.hh>
 
 namespace mln
 {
 
   namespace util
   {
-    /* FIXME: We should create actual types for node_id and edge_id,
-       (not just typedefs), at least to prevent the user from using a
-       node_id where an edge_id is expected (and vice versa).
-       Conversion to and from unsigned would still be useful, but it
-       might be safer to turn them into explicit ones.  */
+    /*--------------.
+    | Identifiers.  |
+    `--------------*/
 
-    /// \brief The type used to identify nodes.
+    /// \brief Generic identifier/handler.
     ///
-    /// Used internally as a key to manipulate nodes.
-    typedef unsigned node_id;
+    /// Inspired by Vaucansons's handlers for automata.
+    ///
+    /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hh
+    /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hxx
+    //
+    // \todo We /might/ want to integrate this into Milena's value system.
+
+    template <typename Tag, typename Equiv>
+    class gen_id
+    {
+      typedef gen_id<Tag, Equiv> self_t;
+
+    public:
+      typedef Equiv equiv;
+
+      gen_id();
+      gen_id(const Equiv& e);
+      self_t& operator=(const Equiv& e);
+
+      const equiv& to_equiv() const;
+      equiv& to_equiv();
+      operator const equiv() const;
+      operator equiv();
+
+    private:
+      equiv e_;
+    };
+    
+    /// Compare two identifiers.
+    /// \{
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j);
+
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const Equiv& i, const gen_id<Tag, Equiv>& j);
+
+    template <typename Tag, typename Equiv>
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const Equiv j);
+    /// \}
+
+    /// Tags.
+    /// \{
+    struct vertex_tag;
+    struct edge_tag;
+    /// \}
+
+    /// \brief The type used to identify vertices.
+    ///
+    /// Used internally as a key to manipulate vertices.
+    typedef gen_id<vertex_tag, unsigned> vertex_id;
 
     /// \brief The type used to identify edges.
     ///
     /// Used internally as a key to manipulate edges.
-    typedef unsigned edge_id;
+    typedef gen_id<edge_tag, unsigned> edge_id;
 
 
-    /*-------.
-    | Node.  |
-    `-------*/
+    /*---------.
+    | Vertex.  |
+    `---------*/
 
-    /// \brief Node of a graph, holding a value of type \p T.
+    /// \brief Vertex of a graph, holding a value of type \p T.
     template<typename T>
-    struct node
+    struct vertex
     {
-      node(T data)
+      vertex(T data)
 	: data(data)
       {}
 
@@ -82,10 +131,10 @@ namespace mln
       std::vector<edge_id> edges;
     };
 
-    /// \brief Specialization of mln::util::node for nodes with no
+    /// \brief Specialization of mln::util::vertex for vertices with no
     /// associated value.
     template <>
-    struct node<void>
+    struct vertex<void>
     {
       std::vector<edge_id> edges;
     };
@@ -99,38 +148,38 @@ namespace mln
     template<typename T>
     struct edge
     {
-      edge(node_id n1, node_id n2)
-	: pair_node_(n1, n2)
+      edge(vertex_id v1, vertex_id v2)
+	: pair_vertex_(v1, v2)
       {}
 
-      /// Return the lowest node id adjacent to this edge.
-      node_id n1() const { return pair_node_.first; }
-      /// Return the highest node id adjacent to this edge.
-      node_id n2() const { return pair_node_.second; }
+      /// Return the lowest vertex id adjacent to this edge.
+      vertex_id v1() const { return pair_vertex_.first; }
+      /// Return the highest vertex id adjacent to this edge.
+      vertex_id v2() const { return pair_vertex_.second; }
 
       T	data;
-      ordpair_<node_id> pair_node_;
+      ordpair_<vertex_id> pair_vertex_;
     };
 
-    /// \brief Specialization of mln::util::node for edges with no
+    /// \brief Specialization of mln::util::vertex for edges with no
     /// associated value.
     template <>
     struct edge<void>
     {
-      edge(node_id n1, node_id n2)
-	: pair_node_(n1, n2)
+      edge(vertex_id v1, vertex_id v2)
+	: pair_vertex_(v1, v2)
       {}
 
-      /// Return the lowest node id adjacent to this edge.
-      node_id n1() const { return pair_node_.first; }
-      /// Return the highest node id adjacent to this edge.
-      node_id n2() const { return pair_node_.second; }
+      /// Return the lowest vertex id adjacent to this edge.
+      vertex_id v1() const { return pair_vertex_.first; }
+      /// Return the highest vertex id adjacent to this edge.
+      vertex_id v2() const { return pair_vertex_.second; }
 
-      ordpair_<node_id> pair_node_;
+      ordpair_<vertex_id> pair_vertex_;
     };
 
     // FIXME: Document this.  In particular, we should state that edges are
-    // only compared w.r.t. their adjacent nodes, not the data they
+    // only compared w.r.t. their adjacent vertices, not the data they
     // possibly hold!
     template <typename E>
     bool
@@ -141,28 +190,44 @@ namespace mln
     operator< (const edge<E>& lhs, const edge<E>& rhs);
 
 
-    /*--------.
-    | Graph.  |
-    `--------*/
+    /*-------------.
+    | Graph base.  |
+    `-------------*/
 
     namespace internal
     {
+      // FIXME: This should be no longer useful once vertices and edges
+      // are handled without pointers and dynamic allocation.
+      template <typename T>
+      struct less_ptr
+      {
+	bool
+	operator()(const T& a, const T& b)
+	{
+	  mln_assertion(a);
+	  mln_assertion(b);
+	  return (*a < *b);
+	}
+      };
+
+
       /// \brief Base class for undirected graphs.
-      template<typename N, typename E>
+      template<typename V, typename E>
       class graph_base
       {
-	typedef graph_base<N, E> self_t;
+	typedef graph_base<V, E> self_t;
 
       public:
-	/* FIXME: Do we really want handle nodes and edges through
+	/* FIXME: Do we really want handle vertices and edges through
 	   pointers?  In my (Roland) opinion, this is just a drawback,
 	   here.  */
-	/// The type of the set of nodes.
-	typedef std::vector< util::node<N>* > nodes_t;
+	/// The type of the set of vertices.
+	typedef std::vector< util::vertex<V>* > vertices_t;
 	/// The type of the set of edges.
 	typedef std::vector< util::edge<E>* > edges_t;
 	/// A set to test the presence of a given edge.
-	typedef std::set< util::edge<E>* > edges_set_t;
+	typedef std::set< util::edge<E>*,
+			  less_ptr< util::edge<E>* > > edges_set_t;
 
 	/// Construction, assignments and destruction.
 	/// \{
@@ -172,10 +237,10 @@ namespace mln
 	~graph_base();
 	/// \}
 
-	/// Return the node whose id is \a n.
+	/// Return the vertex whose id is \a v.
 	/// \{
-	util::node<N>& node(node_id n);
-	const util::node<N>& node(edge_id n) const;
+	util::vertex<V>& vertex(vertex_id v);
+	const util::vertex<V>& vertex(vertex_id v) const;
 	/// \}
 
 	/// Return the edge whose id is \a e.
@@ -184,10 +249,10 @@ namespace mln
 	const util::edge<E>& edge(edge_id e) const;
 	/// \}
 
-	/// Return the whole nodes of the graph.
+	/// Return the whole vertices of the graph.
 	/// \{
-	nodes_t& nodes();
-	const nodes_t& nodes() const;
+	vertices_t& vertices();
+	const vertices_t& vertices() const;
 	/// \}
 
 	/// Return the whole edges of the graph.
@@ -196,8 +261,8 @@ namespace mln
 	const edges_t& edges() const;
 	/// \}
 
-	/// \brief Return the number of nodes in the graph.
-	size_t nnodes() const;
+	/// \brief Return the number of vertices in the graph.
+	size_t nvertices() const;
 	/// \brief Return the number of edges in the graph.
 	size_t nedges() const;
 
@@ -209,15 +274,22 @@ namespace mln
 	void print_debug(std::ostream& ostr) const;
 
       protected:
-	/// Shortcuts factoring the insertion of nodes and edges.
+	/// Shortcuts factoring the insertion of vertices and edges.
 	/// \{
-	void add_node_(util::node<N>* node);
-	void add_edge_(util::edge<E>* edge);
+	/// \brief Add a vertex.
+	///
+	/// \return The id of the new vertex.
+	vertex_id add_vertex_(util::vertex<V>* vertex);
+	/// \brief Add an edge.
+	///
+	/// \return The id of the new edge if it does not exist yet;
+	/// otherwise, return <tt>mln_max(edge_id)</tt>.
+	edge_id add_edge_(util::edge<E>* edge);
 	/// \}
 
       protected:
-	/// The nodes.
-	nodes_t nodes_;
+	/// The vertices.
+	vertices_t vertices_;
 	/// The edges.
 	edges_t edges_;
 	/// An index of the set of edges, for fast-access purpose.
@@ -230,18 +302,105 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /*--------------.
+    | Identifiers.  |
+    `--------------*/
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::gen_id()
+    {
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::gen_id(const Equiv& e)
+      : e_ (e)
+    {
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>&
+    gen_id<Tag, Equiv>::operator=(const Equiv& e)
+    {
+      e_ = e;
+      return *this;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    const Equiv&
+    gen_id<Tag, Equiv>::to_equiv() const
+    {
+      return e_;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    Equiv& 
+    gen_id<Tag, Equiv>::to_equiv()
+    {
+      return e_;
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::operator const Equiv() const
+    {
+      return to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    gen_id<Tag, Equiv>::operator Equiv()
+    {
+      return to_equiv();
+    }
+
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i.to_equiv() == j.to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const Equiv& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i == j.to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    operator==(const gen_id<Tag, Equiv>& i, const Equiv j)
+    {
+      return i.to_equiv() == j;
+    }
+
+    /*---------------------.
+    | Operators on edges.  |
+    `---------------------*/
+
     template <typename E>
+    inline
     bool
     operator==(const edge<E>& lhs, const edge<E>& rhs)
     {
-      return lhs.pair_node_ == rhs.pair_node_;
+      return lhs.pair_vertex_ == rhs.pair_vertex_;
     }
 
     template <typename E>
+    inline
     bool
     operator< (const edge<E>& lhs, const edge<E>& rhs)
     {
-      return lhs.pair_node_ < rhs.pair_node_;
+      return lhs.pair_vertex_ < rhs.pair_vertex_;
     }
 
     namespace internal
@@ -251,23 +410,23 @@ namespace mln
       | Construction, assignments and destruction.  |
       `--------------------------------------------*/
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      graph_base<N, E>::graph_base()
-	: nodes_(), edges_(), edges_set_()
+      graph_base<V, E>::graph_base()
+	: vertices_(), edges_(), edges_set_()
       {
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      graph_base<N, E>::graph_base(const graph_base<N, E>& rhs)
-	: nodes_(), edges_(), edges_set_()
+      graph_base<V, E>::graph_base(const graph_base<V, E>& rhs)
+	: vertices_(), edges_(), edges_set_()
       {
-	nodes_.reserve(rhs.nodes_.size());
+	vertices_.reserve(rhs.vertices_.size());
 	edges_.reserve(rhs.edges_.size());
-	for (typename nodes_t::const_iterator n = rhs.nodes_.begin();
-	     n != rhs.nodes_.end(); ++n)
-	  nodes_.push_back(new util::node<N>(**n));
+	for (typename vertices_t::const_iterator v = rhs.vertices_.begin();
+	     v != rhs.vertices_.end(); ++v)
+	  vertices_.push_back(new util::vertex<V>(**v));
 	for (typename edges_t::const_iterator e = rhs.edges_.begin();
 	     e != rhs.edges_.end(); ++e)
 	  edges_.push_back(new util::edge<E>(**e));
@@ -276,27 +435,27 @@ namespace mln
 						    edges_set_.begin()));
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      graph_base<N, E>&
-      graph_base<N, E>::operator=(const graph_base<N, E>& rhs)
+      graph_base<V, E>&
+      graph_base<V, E>::operator=(const graph_base<V, E>& rhs)
       {
 	if (this != &rhs)
 	  {
-	    /// Free previous nodes and edges.
-	    for (typename nodes_t::iterator n = nodes_.begin();
-		 n != nodes_.end(); ++n)
-	      delete *n;
+	    /// Free previous vertices and edges.
+	    for (typename vertices_t::iterator v = vertices_.begin();
+		 v != vertices_.end(); ++v)
+	      delete *v;
 	    for (typename edges_t::iterator e = edges_.begin(); 
 		 e != edges_.end(); ++e)
 	      delete *e;
 	    edges_set_.clear();
 	    /// Assign values from RHS.
-	    nodes_.reserve(rhs.nodes_.size());
+	    vertices_.reserve(rhs.vertices_.size());
 	    edges_.reserve(rhs.edges_.size());
-	    for (typename nodes_t::const_iterator n = rhs.nodes_.begin();
-		 n != rhs.nodes_.end(); ++n)
-	      nodes_.push_back(new util::node<N>(**n));
+	    for (typename vertices_t::const_iterator v = rhs.vertices_.begin();
+		 v != rhs.vertices_.end(); ++v)
+	      vertices_.push_back(new util::vertex<V>(**v));
 	    for (typename edges_t::const_iterator e = rhs.edges_.begin();
 		 e != rhs.edges_.end(); ++e)
 	      edges_.push_back(new util::edge<E>(**e));
@@ -307,13 +466,13 @@ namespace mln
 	return *this;
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      graph_base<N, E>::~graph_base()
+      graph_base<V, E>::~graph_base()
       {
-	for (typename nodes_t::iterator n = nodes_.begin(); n != nodes_.end();
-	     ++n)
-	  delete *n;
+	for (typename vertices_t::iterator v = vertices_.begin();
+	     v != vertices_.end(); ++v)
+	  delete *v;
 	for (typename edges_t::iterator e = edges_.begin(); e != edges_.end();
 	     ++e)
 	  delete *e;
@@ -324,86 +483,86 @@ namespace mln
       | Accessors.  |
       `------------*/
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      util::node<N>&
-      graph_base<N, E>::node(node_id n)
+      util::vertex<V>&
+      graph_base<V, E>::vertex(vertex_id v)
       {
-	mln_assertion(n < this->nnodes());
-	return *nodes_[n];
+	mln_assertion(v < this->nvertices());
+	return *vertices_[v];
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      const util::node<N>&
-      graph_base<N, E>::node(node_id n) const
+      const util::vertex<V>&
+      graph_base<V, E>::vertex(vertex_id v) const
       {
-	mln_assertion(n < this->nnodes());
-	return *nodes_[n];
+	mln_assertion(v < this->nvertices());
+	return *vertices_[v];
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
       util::edge<E>&
-      graph_base<N, E>::edge(edge_id e)
+      graph_base<V, E>::edge(edge_id e)
       {
 	mln_assertion(e < this->nedges());
 	return *edges_[e];
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
       const util::edge<E>&
-      graph_base<N, E>::edge(edge_id e) const
+      graph_base<V, E>::edge(edge_id e) const
       {
 	mln_assertion(e < this->nedges());
 	return *edges_[e];
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      typename graph_base<N, E>::nodes_t&
-      graph_base<N, E>::nodes()
+      typename graph_base<V, E>::vertices_t&
+      graph_base<V, E>::vertices()
       {
-	return nodes_;
+	return vertices_;
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      const typename graph_base<N, E>::nodes_t&
-      graph_base<N, E>::nodes() const
+      const typename graph_base<V, E>::vertices_t&
+      graph_base<V, E>::vertices() const
       {
-	return nodes_;
+	return vertices_;
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      typename graph_base<N, E>::edges_t&
-      graph_base<N, E>::edges()
-      {
-	return edges_;
-      }
-
-      template<typename N, typename E>
-      inline
-      const typename graph_base<N, E>::edges_t&
-      graph_base<N, E>::edges() const
+      typename graph_base<V, E>::edges_t&
+      graph_base<V, E>::edges()
       {
 	return edges_;
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      size_t
-      graph_base<N, E>::nnodes() const
+      const typename graph_base<V, E>::edges_t&
+      graph_base<V, E>::edges() const
       {
-	return nodes_.size();
+	return edges_;
       }
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
       size_t
-      graph_base<N, E>::nedges() const
+      graph_base<V, E>::nvertices() const
+      {
+	return vertices_.size();
+      }
+
+      template<typename V, typename E>
+      inline
+      size_t
+      graph_base<V, E>::nedges() const
       {
 	return edges_.size();
       }
@@ -412,19 +571,21 @@ namespace mln
       | Manipulators.  |
       `---------------*/
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      void
-      graph_base<N, E>::add_node_(util::node<N>* node)
+      vertex_id
+      graph_base<V, E>::add_vertex_(util::vertex<V>* vertex)
       {
-	nodes_.push_back (node);
+	/* FIXME: This is not thread-proof (these two lines should
+	   form an atomic section).  */
+	vertices_.push_back (vertex);
+	return vertices_.size() - 1;
       }
 
-      // FIXME: Return the (new) edge id.
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
-      void
-      graph_base<N, E>::add_edge_(util::edge<E>* edge)
+      edge_id
+      graph_base<V, E>::add_edge_(util::edge<E>* edge)
       {
 	// Does this edge already exist in the graph?
 	if (edges_set_.find(edge) != edges_set_.end ())
@@ -432,15 +593,26 @@ namespace mln
 	    // Remove the previously allocated data for EDGE.
 	    delete edge;
 	    edge = 0;
+	    // Return the erroneous value.
+	    /* FIXME: We have to explicitly extract the numerical
+	       equivalent type here, because mln::util::gen_id<T, E>
+	       is not compatible with Milena's value system (yet).  */
+	    return mln_max(edge_id::equiv);
 	  }
 	else
 	  {
 	    // Otherwise insert it into the graph.
+	    /* FIXME: This is not thread-proof (these two lines should
+	       form an atomic section).  */
 	    edges_.push_back(edge);
 	    edge_id id = edges_.size() - 1;
+
+	    // Update the set of edges.
 	    edges_set_.insert(edge);
-	    nodes_[edge->n1()]->edges.push_back(id);
-	    nodes_[edge->n2()]->edges.push_back(id);
+	    vertices_[edge->v1()]->edges.push_back(id);
+	    vertices_[edge->v2()]->edges.push_back(id);
+
+	    return id;
 	  }
       }
 
@@ -448,23 +620,24 @@ namespace mln
       | Debug.  |
       `--------*/
 
-      template<typename N, typename E>
+      template<typename V, typename E>
       inline
       void
-      graph_base<N, E>::print_debug (std::ostream& ostr) const
+      graph_base<V, E>::print_debug (std::ostream& ostr) const
       {
 	ostr << "graph: "	<< std::endl;
-	int i = 0;
-	for (typename nodes_t::const_iterator n = nodes_.begin ();
-	     n != nodes_.end (); ++n, ++i)
+	for (unsigned v = 0; v < vertices_.size(); ++v)
 	  {
-	    ostr << "node: " << i << std::endl << " -- adjacent nodes: ";
+	    ostr << "vertex: " << v << std::endl << " -- adjacent vertices: ";
 	    /* FIXME: We shouldn't manipulate std::vector<edge_id>
 	       directly, but use a typedef instead.  */
 	    for (typename std::vector<util::edge_id>::const_iterator e =
-		   (*n)->edges.begin();
-		 e != (*n)->edges.end(); ++e)
-	      ostr << *e << " ";
+		   vertices_[v]->edges.begin(); e != vertices_[v]->edges.end();
+		 ++e)
+	      if (v == edges_[*e]->v1())
+		ostr << edges_[*e]->v2() << " ";
+	      else
+		ostr << edges_[*e]->v1() << " ";
 	    ostr << std::endl;
 	  }
 	ostr << std::endl;

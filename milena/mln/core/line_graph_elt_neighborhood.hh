@@ -116,20 +116,20 @@ namespace mln
     /* FIXME: Move this computation out of the neighborhood. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
-    // Ajacent edges connected through node 1.
-    util::node_id id1 = piter.p_ref().first_id();
-    const util::node<P>& node1 = piter.plg().gr_->node(id1);
+    // Ajacent edges connected through vertex 1.
+    util::vertex_id id1 = piter.p_ref().first_id();
+    const util::vertex<P>& vertex1 = piter.plg().gr_->vertex(id1);
     for (std::vector<util::edge_id>::const_iterator e =
-	   node1.edges.begin(); e != node1.edges.end(); ++e)
+	   vertex1.edges.begin(); e != vertex1.edges.end(); ++e)
       // We explicitly enforce that the reference piter edge id is
       // *not* inserted into SITES.
       if (*e != ref_edge_id)
 	sites.insert(*e);
-    // Ajacent edges connected through node 2.
-    util::node_id id2 = piter.p_ref().second_id();
-    const util::node<P>& node2 = piter.plg().gr_->node(id2);
+    // Ajacent edges connected through vertex 2.
+    util::vertex_id id2 = piter.p_ref().second_id();
+    const util::vertex<P>& vertex2 = piter.plg().gr_->vertex(id2);
     for (std::vector<util::edge_id>::const_iterator e =
-	   node2.edges.begin(); e != node2.edges.end(); ++e)
+	   vertex2.edges.begin(); e != vertex2.edges.end(); ++e)
       // Same remark as above.
       if (*e != ref_edge_id)
 	sites.insert(*e);

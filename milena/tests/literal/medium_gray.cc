@@ -32,6 +32,8 @@
 
 #include <mln/literal/grays.hh>
 #include <mln/value/graylevel.hh>
+#include <mln/value/gl8.hh>
+#include <mln/value/gl16.hh>
 
 
 int main()

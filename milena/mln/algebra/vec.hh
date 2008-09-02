@@ -562,7 +562,7 @@ namespace mln
       return tmp;
     }
 
-    
+
     template <typename P>
     inline
     P

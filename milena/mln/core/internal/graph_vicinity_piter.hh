@@ -78,7 +78,7 @@ namespace mln
       typedef void mesh;
 
       // The type of the set of vicinity sites (adjacent vertex ids).
-      typedef std::set<util::node_id> sites_t;
+      typedef std::set<util::vertex_id> sites_t;
 
     public:
       /// Conversion and accessors.
@@ -111,8 +111,8 @@ namespace mln
       /// Internals, used by the vicinity.
       /// \{
     public:
-      /// An internal iterator on the set of nodes of the underlying graph.
-      util::node_id id_;
+      /// An internal iterator on the set of vertices of the underlying graph.
+      util::vertex_id id_;
       /// \}
 
     protected:
@@ -198,7 +198,7 @@ namespace mln
 
     template <typename P, typename E>
     inline
-    std::set<util::node_id>&
+    std::set<util::vertex_id>&
     graph_vicinity_piter_<P, E>::sites()
     {
       return sites_;

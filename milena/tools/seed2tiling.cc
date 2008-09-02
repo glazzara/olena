@@ -42,7 +42,6 @@
 # include <mln/io/pgm/save.hh>
 # include <mln/labeling/foreground.hh>
 # include <mln/debug/println.hh>
-# include <mln/draw/mesh.hh>
 # include <mln/geom/seeds2tiling.hh>
 # include <mln/geom/seeds2tiling_roundness.hh>
 # include <mln/make/voronoi.hh>

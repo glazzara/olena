@@ -1,0 +1,9 @@
+#! /bin/sh
+
+set -ex
+
+mesh_dir=@top_srcdir@/milena/mesh
+
+time ./mesh-segm $mesh_dir/socket.off 25 socket-segm.off
+time ./mesh-segm $mesh_dir/teapot.off 50 teapot-segm.off
+time ./mesh-segm $mesh_dir/bunny-holefilled.off 500 bunny-holefilled-segm.off

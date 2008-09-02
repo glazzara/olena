@@ -7,6 +7,7 @@
 #include <mln/math/sqr.hh>
 
 #include <queue>
+#include <vector>
 #include <set>
 
 namespace mln
@@ -112,14 +113,14 @@ namespace mln
     // Priority function for the second wateshed
 
     template <typename I>
-    class lesser_psite
+    class lower_psite
     {
     public:
       typedef mln_psite(I) psite;
 
-      lesser_psite(const Image<I>& ima);
+      lower_psite(const Image<I>& ima);
 
-      /// Is \a x lesser than \a y?
+      /// Is \a x lower than \a y?
       bool operator()(const psite& x, const psite& y);
 
     private:
@@ -127,76 +128,80 @@ namespace mln
     };
 
     template <typename I>
-    lesser_psite<I>
-    make_lesser_psite(const Image<I>& ima);
+    lower_psite<I>
+    make_lower_psite(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    lesser_psite<I>::lesser_psite(const Image<I>& ima)
+    lower_psite<I>::lower_psite(const Image<I>& ima)
       : ima_ (exact(ima))
     {
     }
 
     template <typename I>
     bool
-    lesser_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    lower_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
     {
       return ima_(x) < ima_(y);
     }
 
 
     template <typename I>
-    lesser_psite<I>
-    make_lesser_psite(const Image<I>& ima)
+    lower_psite<I>
+    make_lower_psite(const Image<I>& ima)
     {
-      return lesser_psite<I>(ima);
+      return lower_psite<I>(ima);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 
 
-    template <typename I, typename N>
-    class my_lesser_psite
+    template <typename I, typename N, typename B>
+    class my_lower_psite
     {
     public:
       typedef mln_psite(I) psite;
 
-      my_lesser_psite(const Image<I>& ima,
-		      const Neighborhood<N>& nbh);
+      my_lower_psite(const Image<I>& ima,
+		      const Neighborhood<N>& nbh,
+		      const Image<B>& enqueued);
 
-      /// Is \a x lesser than \a y?
+      /// Is \a x lower than \a y?
       bool operator()(const psite& x, const psite& y);
 
     private:
       const I& ima_;
       const N& nbh_;
+      const B& enqueued_;
     };
 
 
-    template <typename I, typename N>
-    my_lesser_psite<I, N>
-    make_my_lesser_psite(const Image<I>& ima,
-			 const Neighborhood<N>& nbh);
+    template <typename I, typename N, typename B>
+    my_lower_psite<I, N, B>
+    make_my_lower_psite(const Image<I>& ima,
+			 const Neighborhood<N>& nbh,
+			 const Image<B>& enqueued);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
-    my_lesser_psite<I, N>::my_lesser_psite(const Image<I>& ima,
-					   const Neighborhood<N>& nbh)
-      : ima_ (exact(ima)), nbh_(exact(nbh))
+    template <typename I, typename N, typename B>
+    my_lower_psite<I, N, B>::my_lower_psite(const Image<I>& ima,
+					      const Neighborhood<N>& nbh,
+					      const Image<B>& enqueued)
+      : ima_ (exact(ima)), nbh_(exact(nbh)), enqueued_(exact(enqueued))
     {
     }
 
-    template <typename I, typename N>
+    template <typename I, typename N, typename B>
     bool
-    my_lesser_psite<I, N>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    my_lower_psite<I, N, B>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
     {
 
-#ifdef V1
+#if 0
 
       if (ima_(x) == ima_(y))
 	{
@@ -212,27 +217,47 @@ namespace mln
 	    if (ima_.has(b) and ima_(b) > ima_(y))
 	      ++my;
 
-	  return mx > my;
+	  return mx < my;
 	}
 
-#else
+#endif
 
 
+#if 0
       if (ima_(x) == ima_(y))
 	{
 	  mln_value(I) mx = ima_(x), my = ima_(y);
 
 	  mln_niter(N) a(nbh_, x);
 	  for_all(a)
-	    if (ima_.has(a) and ima_(a) > ima_(mx))
-	      mx = a;
+	    if (ima_.has(a) and ima_(a) > mx)
+	      mx = ima_(a);
 
 	  mln_niter(N) b(nbh_, y);
 	  for_all(b)
-	    if (ima_.has(b) and ima_(b) > ima_(my))
-	      my = b;
+	    if (ima_.has(b) and ima_(b) > my)
+	      my = ima_(b);
 
-	  return ima_(x) < ima(y);
+	  return mx < my;
+	}
+#endif
+
+#if 1
+      if (ima_(x) == ima_(y))
+	{
+	  int mx = 0, my = 0;
+
+	  mln_niter(N) a(nbh_, x);
+	  for_all(a)
+	    if (ima_.has(a) and enqueued_(a))
+	      ++mx;
+
+	  mln_niter(N) b(nbh_, y);
+	  for_all(b)
+	    if (ima_.has(b) and enqueued_(b))
+	      ++my;
+
+	  return mx > my;
 	}
 
 
@@ -243,15 +268,153 @@ namespace mln
     }
 
 
-    template <typename I, typename N>
-    my_lesser_psite<I, N>
-    make_my_lesser_psite(const Image<I>& ima,
-			 const Neighborhood<N>& nbh)
+    template <typename I, typename N, typename B>
+    my_lower_psite<I, N, B>
+    make_my_lower_psite(const Image<I>& ima,
+			 const Neighborhood<N>& nbh,
+			 const Image<B>& enqueued)
     {
-      return my_lesser_psite<I, N>(ima);
+      return my_lower_psite<I, N, B>(ima, nbh, enqueued);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+
+
+
+
+
+
+    // We need a custom queue in fact...
+
+    // #define NPRIO 65536
+
+    template <typename P, typename V>
+    class fah_queue {
+
+    public :
+
+      // Push
+      void push(P point,
+		V level)
+      {
+	if (!util_ || (level < level_))
+	  level_ = level;
+
+	++util_;
+	if (util_ > max_util_)
+	  max_util_ = util_;
+
+	if (is_empty(level))
+	  queues[level] = new pqueue();
+
+	queues[level]->push(point);
+
+      } // void push(P point, V level)
+
+
+      // Top
+      P top ()
+      {
+	if (!util_) {
+	  std::cerr << "Fah vide!" << std::endl;
+	  exit (1); // FIXME!
+	}
+	return top(level_);
+      } // P top ()
+
+
+      // Pop
+      void pop ()
+      {
+	if (!util_) {
+	  std::cerr << "Fah vide!" << std::endl;
+	  return;
+	}
+	pop(level_);
+      } // void pop ()
+
+
+      // Is Empty
+      bool is_empty () {
+	return !util_;
+      } // bool is_empty ()
+
+
+      // Ctor
+      fah_queue() :
+	level_(0),
+	util_(0),
+	max_util_(0)
+      { } // fah_queue()
+
+
+      // Dtor
+      ~fah_queue()
+      {
+	typename qmap::iterator i;
+
+	for (i = queues.begin(); i != queues.end(); ++i)
+	  delete (i->second);
+      }
+
+
+      // Print
+
+
+      // Flush
+
+
+    private :
+
+      V level_;               /* niveau a partir duquel des listes existent */
+      int util_;              /* nombre de points courant dans la fah */
+      int max_util_;          /* nombre de points utilises max (au cours du temps) */
+
+      typedef std::queue <P> pqueue;
+      typedef std::map <V, pqueue *> qmap;
+      qmap queues;
+
+
+      // Is Empty
+      bool is_empty (V level) {
+	return ((queues.find(level) == queues.end()) || queues[level]->empty());
+      } // bool is_empty (V level)
+
+
+      // Top
+      P top (V level)
+      {
+	if (is_empty(level))
+	  {
+	    std::cerr << "erreur Fah vide au niveau " << level << std::endl;
+	    exit (1); // FIXME!
+	  }
+	return queues[level]->front();
+      }
+
+
+      // Pop
+      void pop (V level)
+      {
+	if (is_empty(level))
+	  {
+	    std::cerr << "erreur Fah vide au niveau " << level << std::endl;
+	    return;
+	  }
+
+	util_--;
+	queues[level]->pop();
+
+	typename qmap::iterator i = queues.find(level);
+	for (; i != queues.end() && i->second->empty(); ++i)
+	  ;
+
+	level_ = i->first;
+      }
+
+    }; // class fah_queue
+
 
   } // end of namespace mln::util
 
@@ -413,14 +576,16 @@ namespace mln
 		  psite adjCanonicalElt = Find_tree(q);
 		  psite adjNode = Find_node(subtreeRoot(adjCanonicalElt));
 		  if (curNode != adjNode)
-		    if (nodes(curNode).level == nodes(adjNode).level)
-		      curNode = MergeNode(adjNode, curNode);
-		    else
-		      {
-			nodes(curNode).addChild(adjNode);
-			nodes(curNode).area += nodes(adjNode).area;
-			nodes(curNode).highest += nodes(adjNode).highest;
-		      }
+		    {
+		      if (nodes(curNode).level == nodes(adjNode).level)
+			curNode = MergeNode(adjNode, curNode);
+		      else
+			{
+			  nodes(curNode).addChild(adjNode);
+			  nodes(curNode).area += nodes(adjNode).area;
+			  nodes(curNode).highest += nodes(adjNode).highest;
+			}
+		    }
 
 		  curCanonicalElt = Link_tree(adjCanonicalElt, curCanonicalElt);
 		  subtreeRoot(curCanonicalElt) = curNode;
@@ -713,7 +878,50 @@ namespace mln
 	mln_niter(N) q(nbh, p);
 	p_set<psite> v;
 
-	psite pmax = p;
+	for_all(q)
+	  if (pima.has(q) && pima(q) > pima(p))
+	    v.insert(Par_node(q));
+
+	if (v.npoints() == 0)
+	  return psite(-1, -1);
+
+	if (v.npoints() == 1)
+	  {
+	    if (nodes(v[0]).children.npoints() == 1)
+	      std::cout << "SINGL QUI MERDE" << std::endl;
+	    return v[0];
+	  }
+
+	psite
+	  c = max(v),
+	  cmax = c;
+
+	typename p_set<psite>::fwd_piter it(v);
+	for_all(it)
+	{
+	  // Can't remove the point from the set
+	  if (it.to_point() == cmax)
+	    continue;
+
+	  psite c1 = lca_opt(c, it.to_point());
+	  if (c1 != it.to_point())
+	    c = c1;
+	}
+
+	if (nodes(c).level <= pima(p))
+	  return psite(-1, -1);
+
+	if (nodes(c).children.npoints() == 1)
+	  std::cout << "LCA QUI MERDE" << std::endl;
+
+	return c;
+      }
+
+
+      psite w_constructible_slow(psite p)
+      {
+	mln_niter(N) q(nbh, p);
+	p_set<psite> v;
 
 	for_all(q)
 	  if (pima.has(q) && pima(q) > pima(p))
@@ -726,13 +934,14 @@ namespace mln
 	  return v[0];
 
 	psite
-	  c = max(v);
+	  c = max(v),
+	  cmax = c;
 
 	typename p_set<psite>::fwd_piter it(v);
 	for_all(it)
 	{
 	  // Can't remove the point from the set
-	  if (it.to_point() == c)
+	  if (it.to_point() == cmax)
 	    continue;
 
 	  psite c1 = lca(c, it.to_point());
@@ -919,7 +1128,9 @@ namespace mln
       {
 	init();
 
+	std::cout << "Build component tree..." << std::endl;
 	BuildComponentTree();
+	std::cout << "                       done" << std::endl;
 
 	mln_piter(I) p (pima.domain());
 	for_all(p)
@@ -927,7 +1138,17 @@ namespace mln
 
 	revert_tree(Root);
 
+	std::cout << "Build euler tour..." << std::endl;;
+	build_euler_tour();
+	std::cout << "                       done" << std::endl;
+
+	std::cout << "Build minim table..." << std::endl;;
+	build_minim();
+	std::cout << "                       done" << std::endl;
+
+	std::cout << "Watersheding..." << std::endl;;
 	topo_watershed();
+	std::cout << "                       done" << std::endl;
 
 	for_all(p)
 	  pima(p) = 255 - pima(p);
@@ -945,15 +1166,8 @@ namespace mln
 	// Not used
 	// level::fill(isproc, false);
 
-
-	typedef
-	  std::priority_queue< psite, std::vector<psite>, util::lesser_psite<I> >
-	  ordered_queue_type;
-
-	ordered_queue_type l(util::make_lesser_psite(pima));
-
-
-
+	util::fah_queue < psite, mln_value(I) > l;
+	mln_value(I) max = mln_max(mln_value(I));
 
 	// Flag C-maxima
 	level::fill(cmax, false);
@@ -961,16 +1175,6 @@ namespace mln
 	for_all(it)
 	  if (nodes(Par_node(it.to_point())).children.npoints() == 0)
 	    cmax(it.to_point()) = true;
-
-#ifdef SLOW
-
-	// Enqueue all
-	for_all(it)
-	{
-	  enqueued(it.to_point()) = true;
-	  l.push(it.to_point());
-	}
-#else // !SLOW
 
 	// Optimisation : enqueue minima's neighbours
 	level::fill(enqueued, false);
@@ -981,28 +1185,27 @@ namespace mln
 	    if (cmax.has(q) && cmax(q))
 	      {
 		enqueued(it.to_point()) = true;
-		l.push(it.to_point());
+
+		l.push(it.to_point(), max - pima(it.to_point()));
+
 		break;
 	      }
 	}
 
-#endif // SLOW
-
 
 	// Main loop
-	while(!l.empty())
+	while(!l.is_empty())
 	  {
 	    psite x = l.top();
 	    l.pop();
 	    enqueued(x) = false;
 
 	    psite c = w_constructible(x);
+	    //	    psite d = w_constructible_slow(x);
 
-	    if (x == psite(3, 3))
-	      {
-		std::cout << "w-c : " << c << std::endl;
-		io::pgm::save(pima, "int.pgm");
-	      }
+	    //if (c != d)
+	    // std::cerr << "COUILLE AVEC LE LCA : " << x << " donne " << c << " au lieu de " << d << std::endl;
+
 
 	    if (c != psite(-1, -1))
 	      {
@@ -1017,14 +1220,18 @@ namespace mln
 		    {
 		    }
 		  else
-		    std::cerr << "ERREUR COMPOSANTE BRANCHE" << std::endl;
+		    {
+		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.npoints() << std::endl;
+		    }
+
 
 		mln_niter(N) q(nbh, x);
 		for_all(q)
 		  if (pima.has(q) && !cmax(q) && !enqueued(q))
 		    {
 		      enqueued(q) = true;
-		      l.push(q);
+
+		      l.push(q, max - pima(q));
 		    }
 	      } // if (c != psite(-1, -1))
 	  } // while(!l.empty())
@@ -1032,6 +1239,134 @@ namespace mln
 	for_all(it)
 	  pima(it.to_point()) = nodes(Par_node(it.to_point())).level;
       }
+
+
+      // Optimized LCA Algorithm
+
+      int *euler;
+      int *depth;
+      int ctree_size;
+      std::map<psite, int> pos;
+      psite *repr;
+
+      int *minim;
+      int **Minim;
+
+      void compute_ctree_size (psite p)
+      {
+	ctree_size += 1;
+	node& n = nodes(p);
+
+	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
+	for_all(it)
+	  compute_ctree_size(it.to_point());
+      }
+
+      void build_euler_tour_rec(psite p, int &position, int d)
+      {
+	if (pos.find(p) == pos.end())
+	  pos[p] = position;
+
+	repr[position] = p;
+	depth[position] = d;
+	euler[position] = pos[p];
+	++position;
+	node& n = nodes(p);
+
+	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
+	for_all(it)
+	{
+	  build_euler_tour_rec(it.to_point(), position, d+1);
+	  depth[position] = d; // Not optimized
+	  euler[position] = pos[p];
+	  repr[position] = p; // Pas necessaire?
+	  ++position;
+	}
+
+      }
+
+      void build_euler_tour ()
+      {
+	ctree_size = 0;
+	compute_ctree_size(Root);
+
+	int size = 2 * ctree_size - 1;
+
+	// FIXME : free this
+	euler = new int[size];
+	depth = new int[size];
+	repr = new psite[size];
+
+	int position = 0;
+	build_euler_tour_rec(Root, position, 0);
+      }
+
+      void build_minim ()
+      {
+	// compute_tree_size(); // Already done in build_euler_tour
+	int size = 2 * ctree_size - 1;
+	int logn = (int)(ceil(log((double)(size))/log(2.0)));
+	// minim.reserve(size);
+	minim = new int [logn * size]; // FIXME : Think about freeing this
+	Minim = new int* [logn];
+
+	Minim[0] = minim;
+
+	// Init
+	for (int i = 0; i < size - 1; ++i)
+	  if (depth[euler[i]] < depth[euler[i+1]]) {
+	    Minim[0][i] = i;
+	  } else {
+	    Minim[0][i] = i+1;
+	  }
+
+	//	Minim[0][size - 1] = size - 1;
+
+	int k;
+	for (int j = 1; j < logn; j++) {
+	  k = 1 << (j - 1);
+	  Minim[j] = &minim[j * size];
+	  for (int i = 0; i < size; i++) {
+	    if ((i + (k << 1)) >= size) {
+	      //Minim[j][i] = size - 1;
+	    }
+	    else {
+	      if (depth[euler[Minim[j - 1][i]]] <= depth[euler[Minim[j - 1][i + k]]])
+		Minim[j][i] = Minim[j - 1][i];
+	      else
+		Minim[j][i] = Minim[j - 1][i + k];
+	    }
+	  }
+	}
+
+      } // void build_minim ()
+
+      psite lca_opt (psite a, psite b)
+      {
+	int
+	  m = pos[a],
+	  n = pos[b],
+	  k;
+
+	if (m == n)
+	  return repr[m];
+
+	if (m > n)
+	  {
+	    k = n;
+	    n = m;
+	    m = k;
+	  }
+
+	k = (int)(log((double)(n - m))/log(2.));
+
+	if (depth[euler[Minim[k][m]]] < depth[euler[Minim[k][n - (1 << k)]]]) {
+	  return repr[euler[Minim[k][m]]];
+	} else {
+	  return repr[euler[Minim[k][n - (1 << k)]]];
+	}
+      }
+
     }; // struct basic_najman
 
   }; // namespace morpho

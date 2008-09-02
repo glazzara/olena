@@ -28,10 +28,8 @@
 #ifndef MLN_MORPHO_OPENING_ATTRIBUTE_HH
 # define MLN_MORPHO_OPENING_ATTRIBUTE_HH
 
-/*! \file mln/morpho/opening_attribute.hh
- *
- * \brief Morphological attribute opening.
- */
+/// \file mln/morpho/opening_attribute.hh
+/// \brief Morphological attribute opening.
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>

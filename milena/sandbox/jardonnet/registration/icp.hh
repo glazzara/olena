@@ -85,9 +85,9 @@ namespace mln
 
       template <typename P, typename M>
       inline
-      p_array<P>
+      void
       icp_(const p_array<P>& C,
-           M& map,
+           const M& map,
            quat7<P::dim>& qk,
            const size_t c_length,
            const float  epsilon = 1e-3)
@@ -100,78 +100,60 @@ namespace mln
                   << c_length << " points" << std::endl;
         std::cout << "k\t\te_k >=\td_k\tdqk" << std::endl;
 #endif
-        
-        quat7<P::dim> buf_qk[4];
-        float         buf_dk[3];
-        
-        float         err = 100;
-        //float       err_bis;
+
+        buffer<4,quat7<P::dim> > buf_qk;
+        buffer<3,float>          buf_dk;
+
+        float         d_k = 10000;
         p_array<P>    Ck(C);
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
-        buf_qk[0] = qk;
-        
+        buf_qk.store(qk);
+
         qk.apply_on(C, Ck, c_length);
+
+        //buf_dk[0] = rms(C, map, c_length, buf_qk[1], qk);
 
         unsigned int k = 0;
 
         do {
-          //update buff dk //FIXME: rewrite it
-          buf_dk[2] = buf_dk[1];
-          buf_dk[1] = buf_dk[0];
-          buf_dk[0] = err;
+          buf_dk.store(d_k);
 
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
 
-          //update buff qk //FIXME: rewrite it
-          buf_qk[3] = buf_qk[2];
-          buf_qk[2] = buf_qk[1];
-          buf_qk[1] = buf_qk[0];
-          buf_qk[0] = qk;
+          buf_qk.store(qk);
 
-          
           //update qk
-          /*
-          if (k > 3)
-            qk = update_qk(buf_qk, buf_dk);
+          if (k > 2)
+            qk = update_qk(buf_qk.get_array(), buf_dk.get_array());
           qk._qR.set_unit();
           buf_qk[0] = qk;
-          */
           
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
 
-          // e_k = d(Yk, Pk)
-          //     = d(closest(Pk), Pk)
-          //     = d(closest(qk-1(P)), qk-1(P))
-          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-          
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
-          float d_k = rms(C, map, c_length, buf_qk[1], qk);
+          d_k = rms(C, map, c_length, buf_qk[1], qk);
 
-          
-          //err = d(Ck+1,Xk) = d_k
-          err = rms(C, qk, map, c_length);
+#ifndef NDEBUG         
+          // e_k = d(closest(qk-1(P)), qk-1(P))
+          float e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
 
-          //err = d(Ck,Xk) = e_k
-          float err_bis = rms(C, buf_qk[1], map, c_length);
-
-#ifndef NDEBUG              
           //plot file
-          std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
+          std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-')
+                    << '\t' << e_k << '\t' << d_k << '\t'
                     << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
                     << std::endl;
           //count the number of points processed
           pts += c_length;
 #endif
           k++;
-        } while (/*k < 3 ||*/ (qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
 
         trace::exiting("registration::impl::icp_");
-        return Ck;
       }
 
     } // end of namespace mln::registration::impl
@@ -181,8 +163,8 @@ namespace mln
     template <typename P, typename M>
     inline
     quat7<P::dim>
-    icp(p_array<P> cloud,
-        M& map,
+    icp(p_array<P> cloud, // More efficient without reference
+        const M& map,
         const float q,
         const unsigned nb_it,
         const p_array<P>& x)
@@ -193,22 +175,15 @@ namespace mln
       mln_precondition(cloud.npoints() != 0);
 
       // Shuffle cloud
-      for (size_t i = 0; i < cloud.npoints(); i++)
-        {
-          size_t r = rand() % cloud.npoints();
-          P tmp;
-          tmp = cloud[i];
-          cloud.hook_()[i] = cloud[r];
-          cloud.hook_()[r] = tmp;
-        }
-      
+      shuffle(cloud);
+            
       //init rigid transform qk
       quat7<P::dim> qk;
 
 
-
 #ifndef NDEBUG       // FIXME: theo
-      image2d<value::rgb8> tmp(500,800);
+      const box_<P> working_box = enlarge(bigger(cloud.bbox(),x.bbox()),5);
+      image2d<value::rgb8> tmp(convert::to_box2d(working_box), 1);
       level::fill(tmp, literal::black);
       //write X
       mln_piter(p_array<P>) p(x);
@@ -216,7 +191,7 @@ namespace mln
       {
         point2d qp = make::point2d(p[0], p[1]);
         if (tmp.has(qp))
-          tmp(qp) = literal::white;
+          tmp(qp) = literal::green;
       }
 #endif
 
@@ -229,11 +204,26 @@ namespace mln
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, 1e-3);
 
+          /*
+          //remove points
+          p_array<P> tmp;
+          tmp.reserve(cloud.npoints());
+          qk.apply_on(cloud,tmp, cloud.npoints());
+          float stddev, mean;
+          mean_stddev(tmp, map, mean, stddev);
+          for (unsigned i = 0; i < cloud.npoints(); i++)
+          {
+            algebra::vec<3,float> qci = tmp[i];
+            algebra::vec<3,float> xi  = x[i];
+            if (norm::l2(qci - xi) < 2 * stddev)
+              cloud.hook_()[i] = cloud[(i+1) % cloud.npoints()];
+          }
+          */
 #ifndef NDEBUG
           {
             value::rgb8 c;
             switch (e) {
-            case 2: c = literal::green; break;
+            case 2: c = literal::white; break;
             case 1: c = literal::blue; break;
             case 0: c = literal::red; break;
             }
@@ -245,8 +235,7 @@ namespace mln
               if (tmp.has(qp))
                 tmp(qp) = c;
             }
-            if (e == 0)
-              io::ppm::save(tmp, "tmp.ppm");
+            io::ppm::save(tmp, "tmp.ppm");
           }
 #endif 
         }

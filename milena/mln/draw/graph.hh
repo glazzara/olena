@@ -48,38 +48,38 @@ namespace mln
        (e.g., in debug::).  */
 
     /*! \brief Draw an image \p ima from a mln::p_graph \p pg, with
-     *  value \p node_v for nodes, value \p link_v for links and 0 for
+     *  value \p vertex_v for vertices, value \p edge_v for edges and 0 for
      *  the background.
      *
      * \param[in,out] ima      The image to be drawn.
-     * \param[in]     pg       The p_graph which contains nodes and links
+     * \param[in]     pg       The p_graph which contains vertices and edges
      *                         positions.
-     * \param[in]     node_v   The value to assign to pixels which contains
-     *                         nodes.
-     * \param[in]     link_v   The value to assign to pixels which contains
-     *                         links.
+     * \param[in]     vertex_v   The value to assign to pixels which contains
+     *                         vertices.
+     * \param[in]     edge_v   The value to assign to pixels which contains
+     *                         edges.
      */
     template <typename I, typename P>
     void
     graph(Image<I>& ima, const p_graph<P>& pg,
-	  mln_value(I) node_v, mln_value(I) link_v);
+	  mln_value(I) vertex_v, mln_value(I) edge_v);
 
     /*! \brief Draw an image \p ima from a mln::graph_image \p gi.
      *
      * The background is filled with value 0.
      *
      * \param[in,out] ima     The image to be drawn.
-     * \param[in]     gi      The graph_image which contains the nodes, links
-     *                        positions and the values of it.
-     * \param[in]     link_v  The value to assign to pixels which contains
-     *                        links, defaulting to 1.
+     * \param[in]     gi      The graph_image which contains the vertices,
+     *                        edges positions and the values of it.
+     * \param[in]     edge_v  The value to assign to pixels which contains
+     *                        edges, defaulting to 1.
      */
     // FIXME: The type of the last argument cannot always been
     // constructed from `int'!  We should remove this last argument.
     template <typename I,  typename P, typename V>
     void
     graph(Image<I>& ima, const graph_image<P, V>& gi,
-	 mln_value(I) link_v = 1);
+	 mln_value(I) edge_v = 1);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -90,37 +90,37 @@ namespace mln
     inline
     void
     graph(Image<I>& ima, const p_graph<P>& pg,
-	  mln_value(I) node_v, mln_value(I) link_v)
+	  mln_value(I) vertex_v, mln_value(I) edge_v)
     {
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
-      for (size_t l = 0; l < pg.nlines(); ++l)
+      for (size_t l = 0; l < pg.nedges(); ++l)
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
 	      // in mln/core/graph_image.hh
-	      pg.gr_.node_data(pg.gr_.edge(l).n1()),
-	      pg.gr_.node_data(pg.gr_.edge(l).n2()),
-	      link_v);
-      // Draw the points (nodes).
+	      pg.gr_->vertex_data(pg.gr_->edge(l).v1()),
+	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
+	      edge_v);
+      // Draw the points (vertices).
       for (size_t p = 0; p < pg.npoints(); ++p)
- 	exact(ima)(pg.gr_.node_data(p)) = node_v;
+ 	exact(ima)(pg.gr_->vertex_data(p)) = vertex_v;
     }
 
     template <typename I,  typename P, typename V>
     inline
     void
     graph(Image<I>& ima, const graph_image<P, V>& gi,
-	  mln_value(I) link_v)
+	  mln_value(I) edge_v)
     {
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
       for (size_t l = 0; l < gi.domain().nedges(); ++l)
-	line (exact(ima), gi.node1(l), gi.node2(l), link_v);
-      // Draw the points (nodes).
-      for (size_t p = 0; p < gi.domain().nnodes(); ++p)
- 	exact(ima)(gi.domain().point_from_id(p)) = gi.node_values()[p];
+	line (exact(ima), gi.vertex1(l), gi.vertex2(l), edge_v);
+      // Draw the points (vertices).
+      for (size_t p = 0; p < gi.domain().nvertices(); ++p)
+ 	exact(ima)(gi.domain().point_from_id(p)) = gi.vertex_values()[p];
     }
 
 # endif // ! MLN_INCLUDE_ONLY

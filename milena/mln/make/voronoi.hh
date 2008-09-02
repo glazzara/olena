@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,14 +30,14 @@
 
 /*! \file mln/make/voronoi.hh
  *
- * \brief Routine to construct a voronoi mln::mesh_p.
+ * \brief Routine to construct a Voronoi mln::p_graph.
  */
 
 # include <vector>
 # include <map>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/mesh_p.hh>
+# include <mln/core/p_graph.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 
@@ -58,7 +58,7 @@ namespace mln
      * \return The computed graph.
      */
     template <typename I, typename N>
-    mesh_p<mln_psite(I)>
+    p_graph<mln_psite(I)>
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh);
@@ -67,7 +67,7 @@ namespace mln
 
     template <typename I, typename N>
     inline
-    mesh_p<mln_psite(I)>
+    p_graph<mln_psite(I)>
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh)
@@ -116,7 +116,7 @@ namespace mln
       /// Compute the center of label.
       for (unsigned i = 0; i < nb; ++i)
 	{
-	  gr.add_node ();
+	  gr.add_vertex();
 
 	  /// FIXME
  	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
@@ -127,7 +127,7 @@ namespace mln
       for (; it != m.end (); ++it)
 	gr.add_edge((*it).first.first, (*it).first.second);
 
-      mesh_p<P> res(gr, v);
+      p_graph<P> res(gr, v);
       return res;
     }
 

@@ -23,7 +23,6 @@ check_PROGRAMS =				\
   int_u8					\
   interop					\
   label						\
-  macros					\
   quat						\
   rgb8						\
   scalar					\
@@ -48,7 +47,6 @@ int_s_SOURCES = int_s.cc
 int_s16_SOURCES = int_s16.cc
 int_u8_SOURCES = int_u8.cc
 label_SOURCES = label.cc
-macros_SOURCES = macros.cc
 quat_SOURCES = quat.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
@@ -63,3 +61,6 @@ stack_SOURCES = stack.cc
 TESTS = $(check_PROGRAMS)
 # FIXME: Enable when make check_full works.
 # TESTS_FULL = $(check_full_PROGRAMS)
+
+# FIXME: What's the purpose of this file?
+EXTRA_DIST = macros.hh

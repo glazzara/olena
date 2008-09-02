@@ -35,6 +35,7 @@
  * \todo Overload with images and points; Cf. memset_.
  */
 
+# include <cstring>
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 # include <mln/metal/is_not_const.hh>

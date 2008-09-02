@@ -49,7 +49,7 @@ namespace mln
     namespace math
     {
 
-      // sqrt_int<x, n>
+      // sqrt_int<x>
 
       namespace impl
       {

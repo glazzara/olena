@@ -50,7 +50,14 @@ int main()
   mln_assertion(ps.npoints() == 3);
 
   std::cout << ps.bbox() << std::endl;
+  std::copy(ps.vect().begin(), ps.vect().end(),
+	    std::ostream_iterator<point2d>(std::cout, " "));
+  std::cout << std::endl;
 
+  ps.remove(make::point2d(4, 2));
+  mln_assertion(ps.npoints() == 2);
+
+  std::cout << ps.bbox() << std::endl;
   std::copy(ps.vect().begin(), ps.vect().end(),
 	    std::ostream_iterator<point2d>(std::cout, " "));
   std::cout << std::endl;

@@ -12,6 +12,8 @@ check_PROGRAMS =				\
   clock_neighb2d				\
   clock_test					\
   clone						\
+  complex					\
+  complex_image					\
 						\
   decorated_image				\
   dpoint1d					\
@@ -41,7 +43,6 @@ check_PROGRAMS =				\
   line_graph_elt_neighborhood			\
   line_graph_elt_window				\
   line_graph_image				\
-  line_graph_image_wst				\
   line_piter					\
 						\
   mono_obased_rle_image				\
@@ -99,6 +100,8 @@ category_SOURCES = category.cc
 clock_neighb2d_SOURCES = clock_neighb2d.cc
 clock_test_SOURCES = clock_test.cc
 clone_SOURCES = clone.cc
+complex_SOURCES = complex.cc
+complex_image_SOURCES = complex_image.cc
 
 decorated_image_SOURCES = decorated_image.cc
 dpoint1d_SOURCES = dpoint1d.cc
@@ -128,7 +131,6 @@ graph_image_SOURCES = graph_image.cc
 line_graph_elt_neighborhood_SOURCES = line_graph_elt_neighborhood.cc
 line_graph_elt_window_SOURCES = line_graph_elt_window.cc
 line_graph_image_SOURCES = line_graph_image.cc
-line_graph_image_wst_SOURCES = line_graph_image_wst.cc
 line_piter_SOURCES = line_piter.cc
 
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc

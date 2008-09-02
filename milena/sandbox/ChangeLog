@@ -1,8 +1,748 @@
-2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+2008-09-01  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
-	Add kruskal algorithm in a sample morphological chain.
+	Sandbox: Start working on metal::array.
 
-	* geraud/cs2d/kruskal.cc: New.
+	metal::array:
+
+	* jardonnet/array: New.
+	* jardonnet/array/array.cc: Test.
+	* jardonnet/array/array.hh: metal::array base.
+	* jardonnet/array/old,
+	* jardonnet/array/old/nd.hh,
+	* jardonnet/array/old/1d.hh,
+	* jardonnet/array/old/2d.hh,
+	* jardonnet/array/old/3d.hh,
+	* jardonnet/array/old/all.hh,
+	* jardonnet/array/old/1d.hxx,
+	* jardonnet/array/old/objs.hh,
+	* jardonnet/array/old/2d.hxx,
+	* jardonnet/array/old/3d.hxx: Olena 0.11 array type.
+
+	Minor ICP updates (old):
+
+	* jardonnet/test/icp_ref.cc,
+	* jardonnet/test/icp.cc,
+	* jardonnet/registration/icp.hh: Fix plotting.
+	* jardonnet/test/img/c55.pbm: New test img.
+	* jardonnet/test/Makefile: Clean up.
+
+2008-08-18  aroumougame aroune  <aroune.aroumougame@gmail.com>
+
+	skeleton of 2d images.
+	* aroumougame/skeleton/io.hh: New.
+	* aroumougame/skeleton/mesh-skel.cc: process skeleton of 3D objects
+	* aroumougame/skeleton/mesh-skel_region.cc: process skeleton of 3D
+	* objects by local neighborhood
+	* aroumougame/skeleton/miscellenous.hh: New.
+	* aroumougame/skeleton/sedt.hh: process the squared euclidean
+	* distance transform
+	* aroumougame/skeleton/test.cc: .
+	* aroumougame/skeleton/test_image2d.cc: .
+	* aroumougame/skeleton/thinning.hh: add the filtered skeleton routine
+
+2008-07-02  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix a first bug in the watershed.
+
+	* abraham/tests/morpho/test_watershed.cc: .
+	* abraham/tests/morpho/Makefile: remove Werror.
+	* abraham/mln/morpho/basic_najman.hh: fix bug.
+
+2008-06-25  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have beguin/irm compile again.
+
+	* beguin/irm.cc: Catch up with the interface of
+	mln::util::vertex_id.
+	(my_mln::merge_fg): Remove a useless `typename'.
+
+2008-06-25 aroune aroumougame  <aroune.aroumougame@gmail.com>
+
+	problems with types selection.
+	* aroumougame/skeleton/test.cc: compilation error.
+
+2008-06-24  aroune aroumougame  <aroune.aroumougame@gmail.com>
+
+	dd graph thinning test file.
+	* aroumougame/skeleton/test.cc: New.
+
+2008-06-24  aroune aroumougame <aroune.aroumougame@gmail.com>
+
+	thinning test files.
+	* aroumougame/skeleton/neighborhood1.hh: functions to get the
+	* complementary of neighborhoods (draft version)
+	* aroumougame/skeleton/test.pbm: Remove.
+	* aroumougame/skeleton/test.pgm: Remove.
+	* aroumougame/skeleton/test1.pbm: Remove.
+	* aroumougame/skeleton/test1.pgm: Remove.
+	* aroumougame/skeleton/test_image2d.cc: New.
+	* aroumougame/skeleton/test_image3d.cc: New.
+	* aroumougame/skeleton/thinning.hh: New.
+
+2008-06-20  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: clean-up before milena update.
+
+	Prepare patch for math and geom modules.
+	* jardonnet/registration/power_it.hh: Add comment .
+	* jardonnet/registration/cov.hh: New: clean math::covariance.
+	* jardonnet/registration/variance.hh: New: clean math::variance.
+	* jardonnet/registration/exp_val.hh: New: clean math::expected value.
+	* jardonnet/registration/cross_cov.hh: Update: clean cross covariance.
+	* jardonnet/registration/center.hh: New: clean geom::center.
+
+	Update rendering for seminar.
+	* jardonnet/registration/save.hh: Update rendering.
+	* jardonnet/test/img/c5.pbm,
+	* jardonnet/test/img/x5.pbm: Update images .
+
+2008-06-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Update step by step rendering.
+
+	Update example:
+	* jardonnet/test/img/c5.pbm,
+	* jardonnet/test/img/x5.pbm: Update .
+
+	* jardonnet/test/Makefile: Add few warnings.
+
+	* jardonnet/registration/jacobi.hh: Update: thresold e-6->e-12.
+	* jardonnet/registration/power_it.hh: Fix.
+	* jardonnet/registration/save.hh: Save Xk.
+	* jardonnet/registration/tools.hh: Fix: signed -> unsigned.
+	* jardonnet/registration/quat7.hh: Fix: signed -> unsigned.
+	* jardonnet/registration/icp_ref.hh: Add saving before start.
+
+2008-06-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+
+	Add a working FLLT and tests of some connecter filters. Put together
+	in a directory the files related to the FLLT.
+
+	* geraud/fllt.svg.7.hh: New. A working version of the milena's FLLT.
+
+	* geraud/fllt/compute_fllt.cc: New.
+	* geraud/fllt.cc: .
+	* geraud/fllt.svg.1.cc: Rename as...
+	* geraud/fllt/fllt.svg.1.cc: ... this.
+	* geraud/fllt.svg.2.cc: Rename as...
+	* geraud/fllt/fllt.svg.2.cc: ... this.
+	* geraud/fllt.svg.3.cc: Rename as...
+	* geraud/fllt/fllt.svg.3.cc: ... this.
+	* geraud/fllt.svg.4.cc: Rename as...
+	* geraud/fllt/fllt.svg.4.cc: ... this.
+	* geraud/fllt.svg.5.cc: Rename as...
+	* geraud/fllt/fllt.svg.5.cc: ... this.
+	* geraud/fllt.svg.6.cc: New.
+	* geraud/fllt/fllt.svg.6.cc: New.
+	* geraud/fllt/fllt.hh: New.
+	* geraud/fllt/fllt.svg.7.hh: New.
+	* geraud/fllt/fllt_test.hh: New.
+	* geraud/fllt/fllt_tree_to_image.hh: New.
+	* geraud/fllt/simple_tests.cc: New.
+	* geraud/fllt: New.
+	* max_tree_nnodes.cc: .
+
+	Try some connected filters on the tree given by the fllt.
+
+	* geraud/fllt/connected_filters/area_filter.cc: New.
+	* geraud/fllt/connected_filters/area_filter.hh: New.
+	* geraud/fllt/connected_filters/canonize_tree.hh: New.
+	* geraud/fllt/connected_filters/pseudo_flat_zones.cc: New.
+	* geraud/fllt/connected_filters: New.
+
+2008-06-18  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Add material for slides illustration.
+
+	* jardonnet/test/icp_ref.cc: Update. Mark centers of mass.
+	* jardonnet/registration/save.hh: Update. Mark center of mass and
+	orientation.
+	* jardonnet/registration/power_it.hh: Update. Now works in n-D.
+	* jardonnet/registration/quat7.hh: Update. Cosmetic change.
+
+	* jardonnet/TODO: Update.
+	* jardonnet/test/Makefile: Fix clean rule.
+
+2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Sample code for Roland.
+
+	* geraud/dmap.cc: New.
+
+2008-06-16  Roland Levillain  <roland@lrde.epita.fr>
+
+	Start to clean up levillain/statues/.
+
+	* levillain/statues/mesh-segm.cc (main): Process command line
+	arguments.
+	Typos and aesthetic changes.
+	(color2uchar, write_verts_asc, write_faces_asc_colored)
+	(write_off_colored): Move these I/O
+	routines...
+	* levillain/statues/io.hh: ...here.
+	* levillain/statues/test: New test.
+	* levillain/statues/Makefile (mesh-segm.o): Depend on io.hh
+	(check): Depend on test.
+	Run `test' instead of `mesh-segm'.
+
+2008-06-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a test on curvature-based, 3-D mesh segmentation.
+
+	* levillain/statues/: New directory.
+	* levillain/statues/mesh-segm.cc: New.
+	* levillain/statues/Makefile: New.
+	* levillain/statues/bunny-holefilled.off: New (imported) 3-d
+	model.
+
+2008-06-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandox: ICP: Make it save images of every step of the registration.
+
+	* jardonnet/test/icp_ref.cc,
+	* jardonnet/test/icp.cc: Cleanup output image.
+	* jardonnet/test/Makefile: Remove gprof option.
+	* jardonnet/registration/save.hh: Add proper saving.
+	* jardonnet/registration/icp_ref.hh: Add step loggin.
+
+	Add images for test and slides.
+	* jardonnet/test/img/x10.pbm,
+	* jardonnet/test/img/x11.pbm,
+	* jardonnet/test/img/c10.pbm,
+	* jardonnet/test/img/c11.pbm: New test images.
+
+2008-06-09 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
+	Thinning test files.
+	* skeleton/test.cc: New.
+	* skeleton/test.pbm: New.
+	* skeleton/test.pgm: New.
+	* skeleton/test1.pbm: New.
+	* skeleton/test1.pgm: New.
+	* skeleton: New.
+
+2008-06-08  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Points escaping during multi-scale registration.
+
+	* jardonnet/test/test.rb: Fix: Change parameters e and q.
+	* jardonnet/test/icp.cc: Fix: Make use of update_qk[1].
+	* jardonnet/registration/icp_ref.hh: Fix: Remove useless Xk array.
+	* jardonnet/registration/icp.hh: Update: Escape points during
+	registration steps.
+
+2008-06-07  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Make icp stop if e_k < d_k (errors).
+
+	* jardonnet/test/icp_ref.cc: Fix p_array initialisation.
+	* jardonnet/registration/icp_ref.hh (impl::icp) : Update :
+	Stop if e_k < d_k.
+
+2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
+
+	Finish the computation of the fusion graph test.
+
+	* beguin/irm.cc: s/node/vertex/.
+	(my_mln::mk2_graph): Disable.
+	(my_mln::region_data, my_mln::abs_diff_threshold): New structs.
+	(my_mln::make_fg, my_mln::merge_fg): New routines.
+	(my_mln::main): Adjust.
+	Compute the fusion graphs and output a result.
+	* beguin/+irm6.pgm: Rename image as...
+	* beguin/irm6.pgm: ...this.
+
+2008-06-04  Géraud Béguin  <geraud.beguin@lrde.epita.fr>
+
+	Continue the work on fusion graphs..
+
+	* beguin/fusion_graph.hh, beguin/irm.cc: Do it.
+
+2008-05-30 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
+	Test files.
+	* makefile1: Remove. old file
+	* makefile: . up to date
+	* mmake.sh: .
+	* sources/test_graph.cpp: .
+	* test.ply: Remove. output file
+
+2008-05-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add some morphological routines to Roland's sandbox.
+
+	* levillain/morpho/: New directory.
+	* levillain/morpho/lower_completion.hh,
+	* levillain/morpho/shortest_path_watershed.hh:
+	New (imported from Olena proto-1.0).
+
+2008-05-29  Thierry Géraud  <thierry.geraud@lrde.epita.fr>
+
+	Test (sorry).
+
+	* geraud/toto: New.
+
+2008-05-28  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: Materials for report.
+
+	Add/Update scripts:
+
+	* jardonnet/test/bench.rb: Minor fix.
+	* jardonnet/test/test.rb: New: Bench times.
+	* jardonnet/test/plotscript: Auto Update.
+	* jardonnet/test/script_latex.plot: Latex output.
+	* jardonnet/test/Makefile: Add test rule.
+
+
+	Add few images to the test set:
+
+	* jardonnet/test/img/c4.pbm,
+	* jardonnet/test/img/c6.pbm,
+	* jardonnet/test/img/c7.pbm,
+	* jardonnet/test/img/c8.pbm,
+	* jardonnet/test/img/c9.pbm,
+	* jardonnet/test/img/x3.pbm,
+	* jardonnet/test/img/x6.pbm,
+	* jardonnet/test/img/x7.pbm,
+	* jardonnet/test/img/x8.pbm,
+	* jardonnet/test/img/x9.pbm: New.
+
+
+	Update test set:
+
+	* jardonnet/test/img/01.pbm: Rename as ...
+	* jardonnet/test/img/c0.pbm ... this.
+	* jardonnet/test/img/02.pbm: Rename as ...
+	* jardonnet/test/img/x0.pbm: ... this.
+
+	Update code so as to produce report's results.
+
+	* jardonnet/test/icp_ref.cc: Modify output image.
+	* jardonnet/test/icp.cc: Modify output image.
+	* jardonnet/registration/final_qk.hh: Cleanup.
+	* jardonnet/registration/interpolation.hh: Update (const).
+	* jardonnet/registration/tools.hh: Fix buffer.
+	* jardonnet/registration/cloud.hh: Cleanup.
+	* jardonnet/registration/icp_ref.hh: Fix.
+	* jardonnet/registration/icp.hh: Minor Fix, Make use of buffer.
+	* jardonnet/registration/update_qk.hh: Cleanup code.
+
+	* jardonnet/registration/icp_map.hh: Remove.
+
+2008-05-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add 3-D models.
+
+	* aroumougame/test/m0.wrl,
+	* aroumougame/test/m05.wrl,
+	* aroumougame/test/m9l0.wrl,
+	* aroumougame/test/ml0.wrl,
+	* aroumougame/test/ml09.wrl,
+	* aroumougame/test/test.off,
+	* aroumougame/test/test.ply:
+	New.
+
+2008-05-27  Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
+	Remove output file from Aroune's sandbox.
+
+	* aroumougame/test/out.txt: Remove.
+
+2008-05-27  Aroune Aroumougame  <aroune.aroumougame@gmail.com>
+
+	Add Aroune's work on statues.
+
+	* aroumougame/retin/headers/Trimesh/Color.h,
+	* aroumougame/retin/headers/Trimesh/KDtree.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_algo.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_bounding.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_connectivity.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_curvature.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_io.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_normals.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_pointareas.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_stats.h,
+	* aroumougame/retin/headers/Trimesh/TriMesh_tstrips.h,
+	* aroumougame/retin/headers/Trimesh/Vec.h,
+	* aroumougame/retin/headers/Trimesh/XForm.h,
+	* aroumougame/retin/headers/Trimesh/bsphere.h,
+	* aroumougame/retin/headers/Trimesh/diffuse.h,
+	* aroumougame/retin/headers/Trimesh/lineqn.h,
+	* aroumougame/retin/headers/Trimesh/lmsmooth.h,
+	* aroumougame/retin/headers/Trimesh/mempool.h,
+	* aroumougame/retin/headers/Trimesh/mesh_filter.h,
+	* aroumougame/retin/headers/Trimesh/mesh_shade.h,
+	* aroumougame/retin/headers/Trimesh/remove.h,
+	* aroumougame/retin/headers/Trimesh/reorder_verts.h,
+	* aroumougame/retin/headers/Trimesh/timestamp.h,
+	* aroumougame/retin/headers/Trimesh,
+	* aroumougame/retin/headers/WRL/Coin.h,
+	* aroumougame/retin/headers/WRL/MaillageTriangulaire.h,
+	* aroumougame/retin/headers/WRL/MailleTriangulaire.h,
+	* aroumougame/retin/headers/WRL/OFF.h,
+	* aroumougame/retin/headers/WRL/Objet3D.h,
+	* aroumougame/retin/headers/WRL/OutilsListePoints.h,
+	* aroumougame/retin/headers/WRL/OutilsPoint3D.h,
+	* aroumougame/retin/headers/WRL/PreTraitement.h,
+	* aroumougame/retin/headers/WRL/WRL.h,
+	* aroumougame/retin/headers/WRL/calcul.h,
+	* aroumougame/retin/headers/WRL,
+	* aroumougame/retin/headers/binvox/file/Buffer.h,
+	* aroumougame/retin/headers/binvox/file/Datafile.h,
+	* aroumougame/retin/headers/binvox/file/Tokenfile.h,
+	* aroumougame/retin/headers/binvox/file,
+	* aroumougame/retin/headers/binvox/geom/Face.h,
+	* aroumougame/retin/headers/binvox/geom/Globals.h,
+	* aroumougame/retin/headers/binvox/geom/Mesh.h,
+	* aroumougame/retin/headers/binvox/geom/MeshFile.h,
+	* aroumougame/retin/headers/binvox/geom/MeshFileIdentifier.h,
+	* aroumougame/retin/headers/binvox/geom/MeshRef.h,
+	* aroumougame/retin/headers/binvox/geom/MeshView.h,
+	* aroumougame/retin/headers/binvox/geom/ObjMeshFile.h,
+	* aroumougame/retin/headers/binvox/geom/OffMeshFile.h,
+	* aroumougame/retin/headers/binvox/geom/PlyMeshFile.h,
+	* aroumougame/retin/headers/binvox/geom/Vertex.h,
+	* aroumougame/retin/headers/binvox/geom/WrlMeshFile.h,
+	* aroumougame/retin/headers/binvox/geom/geom_defs.h,
+	* aroumougame/retin/headers/binvox/geom,
+	* aroumougame/retin/headers/binvox/libvox.h,
+	* aroumougame/retin/headers/binvox/math/Matrix.h,
+	* aroumougame/retin/headers/binvox/math/MyRandom.h,
+	* aroumougame/retin/headers/binvox/math/Vector.h,
+	* aroumougame/retin/headers/binvox/math/common.h,
+	* aroumougame/retin/headers/binvox/math,
+	* aroumougame/retin/headers/binvox/ply/ply_gatech.h,
+	* aroumougame/retin/headers/binvox/ply,
+	* aroumougame/retin/headers/binvox/time/WallTimer.h,
+	* aroumougame/retin/headers/binvox/time,
+	* aroumougame/retin/headers/binvox/ui/Camera.h,
+	* aroumougame/retin/headers/binvox/ui/CameraList.h,
+	* aroumougame/retin/headers/binvox/ui/GLwindow.h,
+	* aroumougame/retin/headers/binvox/ui/View.h,
+	* aroumougame/retin/headers/binvox/ui/opengl.h,
+	* aroumougame/retin/headers/binvox/ui,
+	* aroumougame/retin/headers/binvox/voxel/PalagyiFilter.h,
+	* aroumougame/retin/headers/binvox/voxel/Template.h,
+	* aroumougame/retin/headers/binvox/voxel/Templates.h,
+	* aroumougame/retin/headers/binvox/voxel/VoxelFile.h,
+	* aroumougame/retin/headers/binvox/voxel/VoxelFilter.h,
+	* aroumougame/retin/headers/binvox/voxel/VoxelRef.h,
+	* aroumougame/retin/headers/binvox/voxel/Voxelizer.h,
+	* aroumougame/retin/headers/binvox/voxel/Voxels.h,
+	* aroumougame/retin/headers/binvox/voxel/typedefs.h,
+	* aroumougame/retin/headers/binvox/voxel,
+	* aroumougame/retin/headers/binvox,
+	* aroumougame/retin/headers/cb3dr.h,
+	* aroumougame/retin/headers/histogramme/hist.h,
+	* aroumougame/retin/headers/histogramme/listeHisto.h,
+	* aroumougame/retin/headers/histogramme,
+	* aroumougame/retin/headers/matrice/MatriceF.h,
+	* aroumougame/retin/headers/matrice/valeursVecteursPropres.h,
+	* aroumougame/retin/headers/matrice,
+	* aroumougame/retin/headers,
+	* aroumougame/retin/sources/Trimesh/KDtree.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_bounding.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_connectivity.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_curvature.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_io.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_normals.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_pointareas.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_stats.cpp,
+	* aroumougame/retin/sources/Trimesh/TriMesh_tstrips.cpp,
+	* aroumougame/retin/sources/Trimesh/diffuse.cpp,
+	* aroumougame/retin/sources/Trimesh/lmsmooth.cpp,
+	* aroumougame/retin/sources/Trimesh/mesh_filter.cpp,
+	* aroumougame/retin/sources/Trimesh/mesh_shade.cpp,
+	* aroumougame/retin/sources/Trimesh/remove.cpp,
+	* aroumougame/retin/sources/Trimesh/reorder_verts.cpp,
+	* aroumougame/retin/sources/Trimesh,
+	* aroumougame/retin/sources/WRL/MaillageTriangulaire.cpp,
+	* aroumougame/retin/sources/WRL/MailleTriangulaire.cpp,
+	* aroumougame/retin/sources/WRL/OFF.cpp,
+	* aroumougame/retin/sources/WRL/Objet3D.cpp,
+	* aroumougame/retin/sources/WRL/OutilsListePoints.cpp,
+	* aroumougame/retin/sources/WRL/OutilsPoint3D.cpp,
+	* aroumougame/retin/sources/WRL/PreTraitement.cpp,
+	* aroumougame/retin/sources/WRL/WRL.cpp,
+	* aroumougame/retin/sources/WRL/calcul.cpp,
+	* aroumougame/retin/sources/WRL,
+	* aroumougame/retin/sources/binvox/file/Buffer.cpp,
+	* aroumougame/retin/sources/binvox/file/Datafile.cpp,
+	* aroumougame/retin/sources/binvox/file/Tokenfile.cpp,
+	* aroumougame/retin/sources/binvox/file,
+	* aroumougame/retin/sources/binvox/geom/Face.cpp,
+	* aroumougame/retin/sources/binvox/geom/Mesh.cpp,
+	* aroumougame/retin/sources/binvox/geom/MeshFile.cpp,
+	* aroumougame/retin/sources/binvox/geom/MeshFileIdentifier.cpp,
+	* aroumougame/retin/sources/binvox/geom/MeshRef.cpp,
+	* aroumougame/retin/sources/binvox/geom/MeshView.cpp,
+	* aroumougame/retin/sources/binvox/geom/ObjMeshFile.cpp,
+	* aroumougame/retin/sources/binvox/geom/OffMeshFile.cpp,
+	* aroumougame/retin/sources/binvox/geom/PlyMeshFile.cpp,
+	* aroumougame/retin/sources/binvox/geom/Vertex.cpp,
+	* aroumougame/retin/sources/binvox/geom/WrlMeshFile.cpp,
+	* aroumougame/retin/sources/binvox/geom,
+	* aroumougame/retin/sources/binvox/libvox.cpp,
+	* aroumougame/retin/sources/binvox/math/Matrix.cpp,
+	* aroumougame/retin/sources/binvox/math/MyRandom.cpp,
+	* aroumougame/retin/sources/binvox/math/Vector.cpp,
+	* aroumougame/retin/sources/binvox/math/common.cpp,
+	* aroumougame/retin/sources/binvox/math,
+	* aroumougame/retin/sources/binvox/ply/ply_gatech.c,
+	* aroumougame/retin/sources/binvox/ply,
+	* aroumougame/retin/sources/binvox/time/WallTimer.cpp,
+	* aroumougame/retin/sources/binvox/time,
+	* aroumougame/retin/sources/binvox/ui/Camera.cpp,
+	* aroumougame/retin/sources/binvox/ui/CameraList.cpp,
+	* aroumougame/retin/sources/binvox/ui/GLwindow.cpp,
+	* aroumougame/retin/sources/binvox/ui/View.cpp,
+	* aroumougame/retin/sources/binvox/ui/opengl.cpp,
+	* aroumougame/retin/sources/binvox/ui,
+	* aroumougame/retin/sources/binvox/voxel/PalagyiFilter.cpp,
+	* aroumougame/retin/sources/binvox/voxel/Template.cpp,
+	* aroumougame/retin/sources/binvox/voxel/Templates.cpp,
+	* aroumougame/retin/sources/binvox/voxel/VoxelFile.cpp,
+	* aroumougame/retin/sources/binvox/voxel/VoxelFilter.cpp,
+	* aroumougame/retin/sources/binvox/voxel/VoxelRef.cpp,
+	* aroumougame/retin/sources/binvox/voxel/Voxelizer.cpp,
+	* aroumougame/retin/sources/binvox/voxel/Voxels.cpp,
+	* aroumougame/retin/sources/binvox/voxel,
+	* aroumougame/retin/sources/binvox,
+	* aroumougame/retin/sources/cb3dr.cpp,
+	* aroumougame/retin/sources/histogramme/hist.cpp,
+	* aroumougame/retin/sources/histogramme/listeHisto.cpp,
+	* aroumougame/retin/sources/histogramme,
+	* aroumougame/retin/sources/matrice/MatriceF.cpp,
+	* aroumougame/retin/sources/matrice/valeursVecteursPropres.cpp,
+	* aroumougame/retin/sources/matrice,
+	* aroumougame/retin/sources,
+	* aroumougame/retin,
+	* aroumougame/test/makefile1,
+	* aroumougame/test/makefile,
+	* aroumougame/test/mmake.sh,
+	* aroumougame/test/out.txt,
+	* aroumougame/test/sources/test_graph.cpp,
+	* aroumougame/test/sources,
+	* aroumougame/test/test_graph.cpp,
+	* aroumougame/test/test_graph_off.cpp,
+	* aroumougame/test/test_graph_wrl.cpp,
+	* aroumougame/test:
+	New.
+
+2008-05-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a sandbox directory for Aroune Aroumougame.
+
+	* aroumougame/: New directory.
+
+2008-05-20  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add a new Watershed algorithm.
+
+	* abraham/tests/morpho/test_component_tree.cc: New.
+	* abraham/tests/morpho/images: New (test images).
+	* abraham/tests/morpho/images/+test_watershed.pgm: New.
+	* abraham/tests/morpho/images/result_m_watershed.pgm: New.
+	* abraham/tests/morpho/images/test_component_tree.pgm: New.
+	* abraham/tests/morpho/images/test_2.pgm: New.
+	* abraham/tests/morpho/images/test_3.pgm: New.
+	* abraham/tests/morpho/images/test_4.pgm: New.
+	* abraham/tests/morpho/images/result_topo_watershed.pgm: New.
+	* abraham/tests/morpho/images/test_watershed.pgm: New.
+	* abraham/tests/morpho/images/+irm6.pgm: New.
+	* abraham/tests/morpho/images/test_component_mapping.pgm: New.
+	* abraham/tests/morpho/test_watershed.cc: New.
+	* abraham/tests/morpho/test_watershed_topo.cc: New.
+	* abraham/tests/morpho/ref/src/lib/lwshedtopo.c:
+	uncomment specific pieces of code to show debug.
+	* abraham/tests/morpho/Makefile: Fix.
+	* abraham/tests/io/tikz/Makefile: Fix.
+	* abraham/mln/morpho/basic_najman.hh:
+	Add the new watershed from Pink library.
+	* abraham/mln/morpho/test_component_tree.cc: Remove.
+	* abraham/mln/morpho/test_watershed.cc: Remove.
+	* abraham/mln/morpho/test_watershed_topo.cc: Remove.
+	* abraham/mln/morpho/Makefile: Remove.
+	* abraham/mln/io/tikz/save.hh:
+	Add the ability to tag values on images.
+	* abraham/img/dots.pgm: New.
+
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Update final_qk.
+
+	Final_qk didn't use correct points.
+
+	* jardonnet/test/icp.cc: .
+	* jardonnet/registration/final_qk.hh: .
+	* jardonnet/registration/icp.hh: .
+
+	* jardonnet/test/no_final.ppm: New.
+
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Up and add test files.
+
+	Add test 5
+	* jardonnet/test/img/c5.pbm: New.
+	* jardonnet/test/img/x5.pbm: New.
+
+	Update images. Mainly corrects orientation.
+
+	* jardonnet/test/img/c2.pbm: Update.
+	* jardonnet/test/img/x1.pbm: Update.
+	* jardonnet/test/img/x3.pbm: Update.
+
+2008-05-17  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add results about final_qk.
+
+	fun_k_cn_xn.ppm
+	fun : final_qk v1 or v2
+	k : nstddev == k * stdddev
+	cn,xn : images from img/
+
+	* jardonnet/test/final/final_qk_1.ppm: .
+	* jardonnet/test/final/final_qk_3.ppm: New.
+	* jardonnet/test/final/final_qk_1_c1_x1.ppm: New.
+	* jardonnet/test/final/final_qk_2_c1_x1.ppm: New.
+	* jardonnet/test/final/no_final_1_c1_x1.ppm: New.
+
+2008-05-16  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: FLLT : Finalize merge.
+
+2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Maze test.
+	* folio/dt/canvas_dt.hh: Debug.
+	* folio/dt/dmap.hh: Debug.
+	* folio/dt/iz.hh: Remove.
+	* folio/dt/path.hh: New (rename).
+	* folio/dt/raw_dmap_fast.hh: Debug.
+	* folio/dt/raw_iz_fast.hh: Remove.
+	* folio/dt/raw_iz_slow.hh: Remove.
+	* folio/dt/raw_path_fast.hh: New (rename).
+	* folio/dt/raw_path_slow.hh: New (rename).
+	* folio/img/monkeys_april.ppm: Test image.
+	* folio/test/dt.cc: Tests.
+	* folio/test/dt_maze.cc: Tests.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add few results about final_qk.
+
+	bunch of results : _1 and _2 means using stddev 1 or 2 times.
+
+	* jardonnet/test/final: New.
+	* jardonnet/test/final/final_qk_1.ppm: New.
+	* jardonnet/test/final/no_final.ppm: New.
+	* jardonnet/test/final/final_qk_2.ppm: New.
+	* jardonnet/test/final/final_qk2_1.ppm: New.
+	* jardonnet/test/final/final_qk2_2.ppm: New.
+
+	* jardonnet/registration/final_qk.hh: Update, inverse translation.
+	* jardonnet/registration/icp.hh: Update, cleanup.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add functions on box : enlarge and bigger.
+
+	* jardonnet/registration/tools.hh (enlarge,bigger): Add.
+	* jardonnet/test/icp.cc: Update: use enlarge and bigger.
+
+2008-05-16  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add a bunch of files for testes.
+
+	Home-made:
+
+	* jardonnet/test/img: New.
+	* jardonnet/test/img/c1.pbm: New.
+	* jardonnet/test/img/c2.pbm: New.
+	* jardonnet/test/img/c3.pbm: New.
+	* jardonnet/test/img/c4.pbm: New.
+	* jardonnet/test/img/x1.pbm: New.
+	* jardonnet/test/img/x2.pbm: New.
+	* jardonnet/test/img/x3.pbm: New.
+	* jardonnet/test/img/x4.pbm: New.
+	* jardonnet/test/img/01.pbm: New.
+	* jardonnet/test/img/02.pbm: New.
+
+2008-05-16  Etienne FOLIO  <folio@lrde.epita.fr>
+
+	Slow, fast and canvatized cp, dmap and iz algorithms. Cleaning.
+	* folio/dt/canvas_dt.hh: New canvas for DT. Not	compiling yet.
+	* folio/dt/chamfer.hh: Old chamfer algorithm. Last version.
+	* folio/dt/cp.hh: Cp algorithm using canvas.
+	* folio/dt/dmap.hh: Dmap algorithm using canvas.
+	* folio/dt/iz.hh: Iz algorithm using canvas.
+	* folio/dt/raw_cp_fast.hh: Cp algorithm, last version.
+	* folio/dt/raw_cp_slow.hh: Cp algorithm, old version.
+	* folio/dt/raw_dmap_fast.hh: Dmap algorithm, last version.
+	* folio/dt/raw_dmap_slow.hh: Dmap algorithm, old version.
+	* folio/dt/raw_iz_fast.hh: Iz algorithm, last version.
+	* folio/dt/raw_iz_slow.hh: Iz algorithm, old version.
+	* folio/dt: Folder containing DT algorithms.
+	* folio/img: Folder containing test images (content not versionned).
+	* folio/papers/dt_resume.txt: Resume for seminar.
+	* folio/papers/examples.txt: Examples of resumes for seminar.
+	* folio/papers: Folder for papers.
+	* folio/test/canvas/dt.hh: Old test for canvas.
+	* folio/test/canvas/dt.spe.hh: Old test for canvas spe.
+	* folio/test/canvas: Old test for canvas.
+	* folio/test/chamfer.cc: Test file for chamfer.
+	* folio/test/dt.cc: Test file for DT algorithms.
+	* folio/test/dt_bench.cc: Test file for benching DT algorithms.
+	* folio/test/naive.cc: Naive testing DT version.
+	* folio/test/psn.cc: First DT algorithm using PSN.
+	* folio/test/psn_log.cc: PSN algorithm with debug structures.
+	* folio/test: Folder for test files.
+
+2008-05-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: Merge upper and lower level set in fllt.
+
+2008-05-14  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: icp_ref + cleanup.
+
+	icp_ref uses no rounding.
+
+	* jardonnet/test/icp_ref.cc: New.
+	* jardonnet/registration/icp_ref.hh: New.
+
+	* jardonnet/test/icp.cc: clean up.
+	* jardonnet/test/Makefile: Update.
+	* jardonnet/registration/final_qk.hh: Put final_qk functions in a
+	  dedicated file.
+	* jardonnet/registration/tools.hh: Add buffer and shuffle.
+	* jardonnet/registration/icp.hh: Minor fix.
+
+2008-05-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt.cc: make the two level set trees and
+	start to merge it.
+
+2008-05-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add and optimize blob labeling to FLLT.
+
+	* geraud/fllt.cc: Fllt with blob labeling.
+	* geraud/fllt.svg.5.cc: New, version before adding blob labeling.
+
+2008-05-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Sandbox: ICP: final_qk.
+
+	final_qk build a final quat7 qk considering the stddev
+
+	* jardonnet/test/icp.cc: Refactoring.
+	* jardonnet/test/plotscript: Auto update.
+	* jardonnet/registration/tools.hh: Add final_qk 1 and 2.
 
 2008-05-07  Alexandre Abraham  <abraham@lrde.epita.fr>
 
@@ -104,7 +844,7 @@
 	New red getter.
 	* conv/getred.hh: New red getter for all color spaces.
 	* conv/tored.hh: New function that takes a color as argument
-	  		 and return red part in rgb.
+			 and return red part in rgb.
 
 2008-05-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 

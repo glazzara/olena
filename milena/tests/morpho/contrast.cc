@@ -54,14 +54,19 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+  /* FIXME: Have dilation take the border into account (as erosion
+     does), and fill it with min_value(V), sot that the post-condition
+     in opening works.  */
   image2d<int_u8> out = morpho::contrast(lena, rect);
   io::pgm::save(out, "out.pgm");
 
   {
-    // self-duality test: 
-    image2d<int_u8> out_ = morpho::complementation( morpho::contrast( morpho::complementation(lena),
-								      rect )
-						    );
+    // Self-duality test.
+    // FIXME: Likewise.
+    image2d<int_u8> out_ =
+      morpho::complementation( morpho::contrast( morpho::complementation(lena),
+						 rect )
+			       );
     mln_assertion(out_ == out);
   }
 

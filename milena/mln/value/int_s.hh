@@ -75,7 +75,7 @@ namespace mln
       typedef mln::value::int_s<n> self_;
     public:
 
-      enum {
+      enum constants_ {
 	nbits = n,
 	card  = mln_value_card_from_(n) - 1
       };
@@ -122,10 +122,10 @@ namespace mln
       int_s(int i);
 
       /// \{ Constructors/assignments with literals.
-      int_s(const literal::zero_t&);
-      int_s& operator=(const literal::zero_t&);
-      int_s(const literal::one_t&);
-      int_s& operator=(const literal::one_t&);
+      int_s(const mln::literal::zero_t&);
+      int_s& operator=(const mln::literal::zero_t&);
+      int_s(const mln::literal::one_t&);
+      int_s& operator=(const mln::literal::one_t&);
       /// \}
 
       /// Conversion to an integer.
@@ -202,7 +202,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    int_s<n>::int_s(const literal::zero_t&)
+    int_s<n>::int_s(const mln::literal::zero_t&)
     {
       this->v_ = 0;
     }
@@ -210,7 +210,7 @@ namespace mln
     template <unsigned n>
     inline
     int_s<n>&
-    int_s<n>::operator=(const literal::zero_t&)
+    int_s<n>::operator=(const mln::literal::zero_t&)
     {
       this->v_ = 0;
       return *this;
@@ -218,7 +218,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    int_s<n>::int_s(const literal::one_t&)
+    int_s<n>::int_s(const mln::literal::one_t&)
     {
       this->v_ = 1;
     }
@@ -226,7 +226,7 @@ namespace mln
     template <unsigned n>
     inline
     int_s<n>&
-    int_s<n>::operator=(const literal::one_t&)
+    int_s<n>::operator=(const mln::literal::one_t&)
     {
       this->v_ = 1;
       return *this;

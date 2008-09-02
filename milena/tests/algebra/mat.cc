@@ -43,7 +43,7 @@ int main()
   using namespace mln;
 
   algebra::mat<1,3,float> m1(all_to(4.));
-  algebra::mat<2,2,float> m2 = metal::mat<2,2,float>::Id;
+  algebra::mat<2,2,float> m2 = algebra::mat<2,2,float>::Id;
 
   h_mat<1,float> hm1(m2);
   h_mat<2,float> hm2;

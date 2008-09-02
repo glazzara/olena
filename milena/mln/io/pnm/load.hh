@@ -58,12 +58,13 @@ namespace mln
     namespace pnm
     {
 
+
 # ifndef MLN_INCLUDE_ONLY
-      //read a rgb value (sizeof(int_u8) != 1)
+
+      // Read a Milena rgb value (sizeof(int_u8) != 1).
       template <unsigned int n>
       inline
-      void read_value(std::ifstream& file,
-		      value::rgb<n>& v)
+      void read_value(std::ifstream& file, value::rgb<n>& v)
       {
 	typedef typename value::int_u<n>::enc E;
 
@@ -76,25 +77,32 @@ namespace mln
 	v.blue() = c;
       }
 
-      
-      //read a scalar value (sizeof(int_u8) != 1)
+      // Read a Milena scalar value (sizeof(int_u8) != 1).
       template <class V>
       inline
-      void read_value(std::ifstream& file,
-		      V& v)
+      void read_value(std::ifstream& file, value::Scalar<V>& v)
       {
-	typedef typename V::enc E; // FIXME : if V = int
+	typedef typename V::enc E;
 
 	E c;
 	file.read((char*)(&c), sizeof(E));
+	exact(v) = c;
+      }
+
+      // Read a builtin scalar value.
+      template <typename V>
+      inline
+      void read_value(std::ifstream& file, V& v)
+      {
+	V c;
+	file.read((char*)(&c), sizeof(V));
 	v = c;
       }
 
       // used when (sizeof(int_u8) != 1)
       template <typename V>
       inline
-      void load_raw_2d_uncontiguous(std::ifstream& file,
-				    image2d<V>& ima)
+      void load_raw_2d_uncontiguous(std::ifstream& file, image2d<V>& ima)
       {
 	const int
 	  min_row = geom::min_row(ima),

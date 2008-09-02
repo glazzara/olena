@@ -42,9 +42,10 @@
 # include <mln/trait/value_.hh>
 
 # include <mln/algebra/vec.hh>
+# include <mln/math/abs.hh>
 # include <mln/norm/l2.hh>
 
-//FIXME: pow, exp etc... are def here and in value::...
+// FIXME: pow, exp etc... are def here and in value::...
 
 namespace mln
 {
@@ -186,7 +187,7 @@ namespace mln
       quat conj() const;
 
       /// Give the invert.
-      quat inv() const; //FIXME: rename invert.
+      quat inv() const; // FIXME: rename invert.
 
       /// Transform into unit quaternion.
       quat& set_unit();
@@ -409,7 +410,12 @@ namespace mln
     inline
     quat& quat::set_unit()
     {
+      if (about_equal(norm::l2(this->to_vec()), 0.f))
+        return *this;
+      
       v_.normalize();
+      mln_postcondition(this->is_unit());
+      
       return *this;
     }
 
@@ -554,10 +560,7 @@ namespace mln
     inline
     bool about_equal(const T& f, const T& q)
     {
-      // FIXME: Use abs!
-      if (f > q)
-	return (f - q ) < mln_epsilon(T);
-      return (q - f) < mln_epsilon(T);
+      return math::abs(q - f) <= mln_epsilon(T);
     }
 
     inline

@@ -78,7 +78,7 @@ namespace mln
       inline
       void save(const Image<I>& ima, const std::string& filename)
       {
-	// FIXME : this is to restrictive. Check if I is compatible with PGM.
+	// FIXME : this is too restrictive.  Check if I is compatible with PGM.
 	// 	mln::metal::or_<
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u >,
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u_sat >

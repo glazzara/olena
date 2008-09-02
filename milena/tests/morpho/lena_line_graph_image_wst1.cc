@@ -38,7 +38,7 @@
     \li compute a morphological gradient of this image;
     \li simplify the image to reduce the number of local minima;
     \li convert this 2-D image into a line graph-based one, where values
-        on edges are computed as the maxmimum of the values on the nodes
+        on edges are computed as the maxmimum of the values on the vertices
 	adjacent to the edge;
     \li perform a WST on the line graph image;
     \li create an 2-D, color output image with height and width double
@@ -110,23 +110,23 @@ int main()
   // Points.
   /* FIXME: The need for such a structure during the conversion
      exhibits the lack of a service from util::graph (or a another,
-     missing tool) regarding the retrieval of node ids from
+     missing tool) regarding the retrieval of vertex ids from
      points.  */
-  std::map<point2d, util::node_id> points;
-  util::node_id id = 0;
+  std::map<point2d, util::vertex_id> points;
+  util::vertex_id id = 0;
 
-  // Nodes.
-  std::vector<int> node_values;
+  // Vertices.
+  std::vector<int> vertex_values;
   mln_fwd_piter_(image2d<input_val_t>) p(work.domain());
   for_all (p)
   {
-    g.add_node (p);
-    node_values.push_back (work(p));
+    g.add_vertex (p);
+    vertex_values.push_back (work(p));
     /* FIXME: ``Guessing'' the id of the point just being inserted
-       is bad.  util:graph<N,E>::add_node should return this
+       is bad.  util:graph<N,E>::add_vertex should return this
        id.  */
     points[p] = id;
-    ++id;
+    ++id.to_equiv();
   }
 
   // Edges.
@@ -149,7 +149,7 @@ int main()
   /* FIXME: Shouldn't we use `input_val_t' instead of plain `int' as value
      type here?  */
   typedef line_graph_image<point2d, int> ima_t;
-  ima_t lg_ima(plg, node_values, edge_values);
+  ima_t lg_ima(plg, vertex_values, edge_values);
 
   /*------.
   | WST.  |
@@ -234,7 +234,7 @@ int main()
      We should probably solve this when we ``paint'' the watershed
      over the ``doubled'' image.
 
-     A better approach is probably to iterate over the set of nodes,
+     A better approach is probably to iterate over the set of vertices,
      and ``connect'' edges according to patterns (vertically or
      horizontally connected egdes member of the watershed, etc.).  */
   // Reuse the piter on OUTPUT.

@@ -41,11 +41,11 @@ namespace mln
 {
 
   // Fwd decl.
-  template<typename P> class p_line_graph;
+  template <typename P> class p_line_graph;
 
 
   /// \brief Point site associated to a mln::graph_image.
-  template<typename P>
+  template <typename P>
   class line_graph_psite : public Point_Site< line_graph_psite<P> >
   {
     typedef line_graph_psite<P> self_;
@@ -61,7 +61,7 @@ namespace mln
     /// Construction and assignment.
     /// \{
     line_graph_psite();
-    line_graph_psite(const p_line_graph<P>& plg, unsigned id);
+    line_graph_psite(const p_line_graph<P>& plg, util::edge_id id);
     line_graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
@@ -86,9 +86,9 @@ namespace mln
     P second() const;
 
     /// Return the id of the first associated vertex.
-    util::node_id first_id() const;
+    util::vertex_id first_id() const;
     /// Return the id of the second associated vertex.
-    util::node_id second_id() const;
+    util::vertex_id second_id() const;
 
     /// Is this psite valid?
     bool is_valid() const;
@@ -103,7 +103,7 @@ namespace mln
         Contrary to mln::graph_psite, this information is actually
         stored in the mln::line_graph_psite.  In mln::graph_psite, the
         point is retrieved from the data associated with the
-        corresponding node in the graph.  We cannot do this here,
+        corresponding vertex in the graph.  We cannot do this here,
         since points associated to edges are computed on the fly
         (storing them in the graph could be possible, but too costly
         in space).  */
@@ -111,12 +111,31 @@ namespace mln
     point p_;
   };
 
-  /// Compare two mln::line_graph_psite<P> instances.
-  /* FIXME: Shouldn't this comparison be part of a much general
+
+  /// Comparison of two mln::line_graph_psite<P> instances.
+  /// \{
+  /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
+
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_line_graph.
   template <typename P>
   bool
   operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs);
+
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting psites.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_line_graph.
+  template <typename P>
+  bool
+  operator< (const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs);
+  /// \}
+
 
   /* FIXME: This hand-made delegation is painful.  We should rely on
      the general mechanism provided by Point_Site.  But then again, we
@@ -135,7 +154,7 @@ namespace mln
      bounds).  Actually, p_line_graph_piters *do* create ill-formed
      psites at their initialization.  */
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite()
     // Dummy initializations.
@@ -146,7 +165,7 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& plg,
 					util::edge_id id)
@@ -157,17 +176,17 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const line_graph_psite<P>& rhs)
-    : super_(),
+    : super_(rhs),
       plg_(rhs.plg_),
       id_(rhs.id_),
       p_()
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   line_graph_psite<P>&
   line_graph_psite<P>::operator=(const line_graph_psite<P>& rhs)
@@ -179,7 +198,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   line_graph_psite<P>::is_valid() const
@@ -187,7 +206,7 @@ namespace mln
     return plg_ && id_ < plg_->gr_->nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const line_graph_psite<P>&
   line_graph_psite<P>::to_psite() const
@@ -195,7 +214,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   line_graph_psite<P>::to_point() const
@@ -204,7 +223,7 @@ namespace mln
     return p_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   line_graph_psite<P>::operator[](unsigned i) const
@@ -213,7 +232,7 @@ namespace mln
     return to_point()[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const p_line_graph<P>&
   line_graph_psite<P>::plg() const
@@ -222,59 +241,76 @@ namespace mln
     return *plg_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
-  util::node_id
+  util::edge_id
   line_graph_psite<P>::id() const
   {
     return id_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   P
   line_graph_psite<P>::first() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->node_data(first_id());
+    return plg().gr_->vertex_data(first_id());
   }
 
-  template<typename P>
+  template <typename P>
   inline
   P
   line_graph_psite<P>::second() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->node_data(second_id());
+    return plg().gr_->vertex_data(second_id());
   }
 
 
-  template<typename P>
+  template <typename P>
   inline
-  util::node_id
+  util::vertex_id
   line_graph_psite<P>::first_id() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->edge(id_).n1();
+    return plg().gr_->edge(id_).v1();
   }
 
-  template<typename P>
+  template <typename P>
   inline
-  util::node_id
+  util::vertex_id
   line_graph_psite<P>::second_id() const
   {
     mln_assertion(is_valid());
-    return plg().gr_->edge(id_).n2();
+    return plg().gr_->edge(id_).v2();
   }
 
+
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
 
   template <typename P>
   bool
   operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
   {
-    return &lhs.plg() == &rhs.plg() && lhs.id() == rhs.id();
+    mln_assertion(&lhs.plg() == &rhs.plg());
+    return lhs.id() == rhs.id();
   }
 
+  template <typename P>
+  bool
+  operator< (const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
+  {
+    mln_assertion(&lhs.plg() == &rhs.plg());
+    return lhs.id() < rhs.id();
+  }
+
+
+  /*------------------.
+  | Pretty-printing.  |
+  `------------------*/
 
   template <typename P>
   inline

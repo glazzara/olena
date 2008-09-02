@@ -1,3 +1,224 @@
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	* build-aux/with-swilena.m4: Require SWIG 1.3.31.
+
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make Swilena actually optional.
+
+	* Makefile.am: Compile Swilena only when asked for.
+
+2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	Handle Darwin, in order to use trimesh's gluit.mk.
+
+	* configure.ac: Add a new conditional for Darwin-based hosts.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Configure the Swilena Python Shell (sps).
+
+	* configure.ac: Configure swilena/python/sps and
+	swilena/python/sps-local.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive Swilena.
+
+	* build-aux/pypath.m4, build-aux/swig.m4: New, imported.
+	* build-aux/with-swilena.m4: New, imported from TC and adjusted.
+	* configure.ac: Add support for Libtool, SWIG and Swilena.
+	* Makefile.am (SUBDIRS): Append swilena.
+	* swilena/: New directory.
+
+2008-06-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update external/README.
+
+	* external/README: Complete the list of files removed from the
+	initial Trimesh distribution.
+
+2008-06-20  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure files in milena/apps/.
+
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Autoconfiscate trimesh2.
+
+	* configure.ac: Require Autoconf 2.61 and Automake 1.10.
+	Configure external/Makefile.
+	Configure subdirectory external/trimesh/.
+	Fix the definition of TESTS_CXXFLAGS_DEBUG.
+	* Makefile.am (SUBDIR): Add external.
+	* external/Makefile.am: New.
+	* external/README: Update.
+	* external/trimesh/ChangeLog: New.
+
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the trimesh2 library (version 2.8) as an external dependency.
+
+	* external/: New directory.
+	* external/README: New.
+
+	* external/trimesh/,
+	* external/trimesh/COPYING,
+	* external/trimesh/Makedefs.Darwin,
+	* external/trimesh/Makedefs.Linux,
+	* external/trimesh/Makedefs.Linux64,
+	* external/trimesh/Makedefs.SunOS,
+	* external/trimesh/Makedefs.Win32,
+	* external/trimesh/Makefile,
+	* external/trimesh/Makerules,
+	* external/trimesh/README,
+	* external/trimesh/gluit/,
+	* external/trimesh/gluit/COPYING.freeglut,
+	* external/trimesh/gluit/COPYING.glui,
+	* external/trimesh/gluit/Makefile,
+	* external/trimesh/gluit/freeglut_callbacks.c,
+	* external/trimesh/gluit/freeglut_cursor.c,
+	* external/trimesh/gluit/freeglut_display.c,
+	* external/trimesh/gluit/freeglut_ext.c,
+	* external/trimesh/gluit/freeglut_font.c,
+	* external/trimesh/gluit/freeglut_font_data.c,
+	* external/trimesh/gluit/freeglut_gamemode.c,
+	* external/trimesh/gluit/freeglut_geometry.c,
+	* external/trimesh/gluit/freeglut_glutfont_definitions.c,
+	* external/trimesh/gluit/freeglut_init.c,
+	* external/trimesh/gluit/freeglut_internal.h,
+	* external/trimesh/gluit/freeglut_joystick.c,
+	* external/trimesh/gluit/freeglut_main.c,
+	* external/trimesh/gluit/freeglut_menu.c,
+	* external/trimesh/gluit/freeglut_misc.c,
+	* external/trimesh/gluit/freeglut_overlay.c,
+	* external/trimesh/gluit/freeglut_state.c,
+	* external/trimesh/gluit/freeglut_stroke_mono_roman.c,
+	* external/trimesh/gluit/freeglut_stroke_roman.c,
+	* external/trimesh/gluit/freeglut_structure.c,
+	* external/trimesh/gluit/freeglut_teapot.c,
+	* external/trimesh/gluit/freeglut_teapot_data.h,
+	* external/trimesh/gluit/freeglut_videoresize.c,
+	* external/trimesh/gluit/freeglut_window.c,
+	* external/trimesh/gluit/glui.cc,
+	* external/trimesh/gluit/glui_add_controls.cc,
+	* external/trimesh/gluit/glui_algebra3.cc,
+	* external/trimesh/gluit/glui_algebra3.h,
+	* external/trimesh/gluit/glui_arcball.cc,
+	* external/trimesh/gluit/glui_arcball.h,
+	* external/trimesh/gluit/glui_bitmap_img_data.cc,
+	* external/trimesh/gluit/glui_bitmaps.cc,
+	* external/trimesh/gluit/glui_button.cc,
+	* external/trimesh/gluit/glui_checkbox.cc,
+	* external/trimesh/gluit/glui_column.cc,
+	* external/trimesh/gluit/glui_control.cc,
+	* external/trimesh/gluit/glui_edittext.cc,
+	* external/trimesh/gluit/glui_img_checkbox_0.c,
+	* external/trimesh/gluit/glui_img_checkbox_0_dis.c,
+	* external/trimesh/gluit/glui_img_checkbox_1.c,
+	* external/trimesh/gluit/glui_img_checkbox_1_dis.c,
+	* external/trimesh/gluit/glui_img_downarrow.c,
+	* external/trimesh/gluit/glui_img_leftarrow.c,
+	* external/trimesh/gluit/glui_img_listbox_down.c,
+	* external/trimesh/gluit/glui_img_listbox_up.c,
+	* external/trimesh/gluit/glui_img_listbox_up_dis.c,
+	* external/trimesh/gluit/glui_img_radiobutton_0.c,
+	* external/trimesh/gluit/glui_img_radiobutton_0_dis.c,
+	* external/trimesh/gluit/glui_img_radiobutton_1.c,
+	* external/trimesh/gluit/glui_img_radiobutton_1_dis.c,
+	* external/trimesh/gluit/glui_img_rightarrow.c,
+	* external/trimesh/gluit/glui_img_spindown_0.c,
+	* external/trimesh/gluit/glui_img_spindown_1.c,
+	* external/trimesh/gluit/glui_img_spindown_dis.c,
+	* external/trimesh/gluit/glui_img_spinup_0.c,
+	* external/trimesh/gluit/glui_img_spinup_1.c,
+	* external/trimesh/gluit/glui_img_spinup_dis.c,
+	* external/trimesh/gluit/glui_img_uparrow.c,
+	* external/trimesh/gluit/glui_listbox.cc,
+	* external/trimesh/gluit/glui_mouse_iaction.cc,
+	* external/trimesh/gluit/glui_node.cc,
+	* external/trimesh/gluit/glui_panel.cc,
+	* external/trimesh/gluit/glui_quaternion.cc,
+	* external/trimesh/gluit/glui_quaternion.h,
+	* external/trimesh/gluit/glui_radio.cc,
+	* external/trimesh/gluit/glui_rollout.cc,
+	* external/trimesh/gluit/glui_rotation.cc,
+	* external/trimesh/gluit/glui_separator.cc,
+	* external/trimesh/gluit/glui_slider.cc,
+	* external/trimesh/gluit/glui_spinner.cc,
+	* external/trimesh/gluit/glui_statictext.cc,
+	* external/trimesh/gluit/glui_stdinc.h,
+	* external/trimesh/gluit/glui_translation.cc,
+	* external/trimesh/include/,
+	* external/trimesh/include/Color.h,
+	* external/trimesh/include/GL/,
+	* external/trimesh/include/GL/freeglut.h,
+	* external/trimesh/include/GL/freeglut_ext.h,
+	* external/trimesh/include/GL/freeglut_std.h,
+	* external/trimesh/include/GL/glui.h,
+	* external/trimesh/include/GL/glut.h,
+	* external/trimesh/include/GLCamera.h,
+	* external/trimesh/include/ICP.h,
+	* external/trimesh/include/KDtree.h,
+	* external/trimesh/include/TriMesh.h,
+	* external/trimesh/include/TriMesh_algo.h,
+	* external/trimesh/include/Vec.h,
+	* external/trimesh/include/XForm.h,
+	* external/trimesh/include/bsphere.h,
+	* external/trimesh/include/lineqn.h,
+	* external/trimesh/include/mempool.h,
+	* external/trimesh/include/noise3d.h,
+	* external/trimesh/include/timestamp.h,
+	* external/trimesh/libsrc/,
+	* external/trimesh/libsrc/GLCamera.cc,
+	* external/trimesh/libsrc/ICP.cc,
+	* external/trimesh/libsrc/KDtree.cc,
+	* external/trimesh/libsrc/Makefile,
+	* external/trimesh/libsrc/TriMesh_bounding.cc,
+	* external/trimesh/libsrc/TriMesh_connectivity.cc,
+	* external/trimesh/libsrc/TriMesh_curvature.cc,
+	* external/trimesh/libsrc/TriMesh_grid.cc,
+	* external/trimesh/libsrc/TriMesh_io.cc,
+	* external/trimesh/libsrc/TriMesh_normals.cc,
+	* external/trimesh/libsrc/TriMesh_pointareas.cc,
+	* external/trimesh/libsrc/TriMesh_stats.cc,
+	* external/trimesh/libsrc/TriMesh_tstrips.cc,
+	* external/trimesh/libsrc/diffuse.cc,
+	* external/trimesh/libsrc/edgeflip.cc,
+	* external/trimesh/libsrc/faceflip.cc,
+	* external/trimesh/libsrc/filter.cc,
+	* external/trimesh/libsrc/lmsmooth.cc,
+	* external/trimesh/libsrc/mesh_align.cc,
+	* external/trimesh/libsrc/mesh_view.cc,
+	* external/trimesh/libsrc/remove.cc,
+	* external/trimesh/libsrc/reorder_verts.cc,
+	* external/trimesh/libsrc/subdiv.cc,
+	* external/trimesh/utilsrc/,
+	* external/trimesh/utilsrc/Makefile,
+	* external/trimesh/utilsrc/mesh_align.cc,
+	* external/trimesh/utilsrc/mesh_cat.cc,
+	* external/trimesh/utilsrc/mesh_cc.cc,
+	* external/trimesh/utilsrc/mesh_filter.cc,
+	* external/trimesh/utilsrc/mesh_make.cc,
+	* external/trimesh/utilsrc/mesh_shade.cc,
+	* external/trimesh/utilsrc/mesh_view.cc:
+	New.  Imported from
+	http://www.cs.princeton.edu/gfx/proj/trimesh2/src/trimesh2-2.8.tar.gz.
+
+2008-06-19  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a variable for C++ compiler flags with full debugging features.
+
+	* configure.ac (TESTS_CXXFLAGS_DEBUG): New configure variable.
+
+2008-05-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Pass option nostdinc to Automake.
+
+	* configure.ac: Do it, to avoid inclusion problems in test
+	directories hosting binaries with standard header names (e.g.,
+	``set'' or ``list'').
+
 2008-05-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update the list of Makefiles to be configured.

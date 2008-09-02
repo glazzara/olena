@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/concept/neighborhood.hh>
+
+# include <mln/literal/zero.hh>
 
 # include <mln/convert/to_window.hh>
 # include <mln/geom/bbox.hh>
@@ -175,6 +177,10 @@ namespace mln
       typedef mln_point(W) P;
       box_<P> b = geom::bbox(w_win);
       mln_image_from(W, mln_weight(W)) ima(b);
+      // Fill the image with zeros, as (weighted) windows are not
+      // necessarily box-shaped (there might be holes corresponding to
+      // null weights).
+      level::fill(ima, literal::zero);
       mln_qiter(W) q(w_win, P::origin);
       for_all(q)
 	ima(q) = q.w();

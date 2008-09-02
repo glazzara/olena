@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,8 @@
  * FreeImagePlus's ones.
  *
  * For compatibility reasons, images from FreeImage library which
- * doesn't take more than 7bits per pixel are converted to fill 8 bits per pixel.
+ * doesn't take more than 7bits per pixel are converted to fill 8 bits
+ * per pixel.
  *
  *
  * COMPILATION:
@@ -47,12 +48,12 @@
  */
 
 
+# include <FreeImagePlus.h>
+
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/box2d.hh>
 # include <mln/core/line_piter.hh>
 # include <mln/value/set.hh>
-
-# include <FreeImagePlus.h>
 
 namespace mln
 {
@@ -101,7 +102,8 @@ namespace mln
   {
 
     template <typename I>
-    struct image_< fi_adaptor<I> > : default_image_< mln_value(I), fi_adaptor<I> >
+    struct image_< fi_adaptor<I> >
+      : default_image_< mln_value(I), fi_adaptor<I> >
     {
       typedef trait::image::category::primary category;
 
@@ -244,7 +246,9 @@ namespace mln
     data_< fi_adaptor<I> >::sync_with_adaptee_()
     {
       mln_precondition(fi_ima_.isValid());
-      //FIXME: doesnt work for rgb: mln_precondition(fi_ima_.getBitsPerPixel() == 8 * sizeof(mln_value(I)));
+      // FIXME: doesnt work for rgb:
+      // mln_precondition(fi_ima_.getBitsPerPixel() ==
+      //   8 * sizeof(mln_value(I)));
 
       deallocate_();
       b_ = make::box2d(fi_ima_.getHeight(),
@@ -437,6 +441,7 @@ namespace mln
   {
     init_();
     BOOL r = this->data_->fi_ima_.load(lpszPathName, flag);
+    mln_assertion(this->data_->fi_ima_.isValid());
     if (this->data_->fi_ima_.getBitsPerPixel() < 8)
       this->data_->fi_ima_.convertTo8Bits();
     this->data_->sync_with_adaptee_();

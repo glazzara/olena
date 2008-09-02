@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/fi_adaptor.cc
- *
- * \brief Test on mln::fi_adaptor.
- */
+/// \file tests/core/fi_adaptor.cc
+/// \brief Test on mln::fi_adaptor.
 
 #include <mln/core/fi_adaptor.hh>
 #include <mln/core/image2d.hh>
@@ -43,7 +41,7 @@
 #include <mln/display/show.hh>
 #include <mln/display/save.hh>
 
-#include <FreeImagePlus.h>
+#include "tests/data.hh"
 
 
 using namespace mln;
@@ -62,15 +60,16 @@ int main()
        FreeImage_DeInitialise at the end of this main function (this
        is not needed when using FreeImage as a shared library
        (*.so)).  */
-    //FreeImage_Initialise();
+//     FreeImage_Initialise();
 
-    win::rectangle2d rect(51, 51);
+    win::rectangle2d rect(3, 3);
 
     fi_adaptor< image2d< int_u<8> > > adaptor;
 
-    adaptor.load("../img/lena.pgm");
+    adaptor.load(MLN_IMG_DIR "/lena.pgm");
     display::save (adaptor);
-    display::show (adaptor, "xv");
+    // FIXME: Don't use display::show in batch tests.
+//     display::show (adaptor, "xv");
 
     image2d<int_u8> ima(adaptor.domain());
 
@@ -79,16 +78,12 @@ int main()
     level::paste(ima, adaptor);
 
     display::save (adaptor);
-    display::show (adaptor, "xv");
+    // FIXME: Don't use display::show in batch tests.
+//     display::show (adaptor, "xv");
 
     // FIXME: Likewise.
     /* Check if this statement holds in our case.  Maybe we need to
        involve Libtool in to handle FreeImagePlus properly.  */
-    //FreeImage_DeInitialise();
+//     FreeImage_DeInitialise();
   }
-
-  {
-
-  }
-
 }

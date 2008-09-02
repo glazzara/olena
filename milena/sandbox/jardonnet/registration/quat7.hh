@@ -79,7 +79,7 @@ namespace mln
       return os;
     }
 
-    float operator[](int i)
+    float operator[](unsigned i)
     {
       if (i < n)
         return _qT[i];
@@ -126,27 +126,27 @@ namespace mln
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
                       const p_array<P>& Ck,
-                      M& map,
+                      const M& map,
                       size_t c_length)
   {
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);
-    for (size_t i = 0; i < c_length; ++i)
+    for (unsigned i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> xki = map(Ck[i]);
         mu_Xk += xki;
       }
     mu_Xk /= c_length;
-
    
     // qR
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-    for (size_t i = 0; i < c_length; ++i)
+    for (unsigned i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
            
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
+        // or Mk += make::mat(Ci) * trans(make::mat(Xki)) - make::mat(mu_C) * trans(make::mat(mu_Xk))
       }
     Mk /= c_length;
 
@@ -185,7 +185,7 @@ namespace mln
     
     // qT
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
-    
+  
     return quat7<P::dim>(qR, qT);
   }
   

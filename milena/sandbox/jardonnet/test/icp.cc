@@ -7,6 +7,7 @@
 
 #include <sandbox/jardonnet/registration/icp.hh>
 #include <sandbox/jardonnet/registration/tools.hh>
+#include <sandbox/jardonnet/registration/final_qk.hh>
 
 void usage(char *argv[])
 {
@@ -44,10 +45,13 @@ int main(int argc, char* argv[])
   
   //build p_arrays.
   p_array<mln_point_(I3d)> c = convert::to_p_array(cloud);
-  p_array<mln_point_(I3d)> x = convert::to_p_array(surface);
+  p_array<mln_point_(I3d)> x = convert::to_p_array(surface); 
 
+  //working box
+  const box_<mln_point_(I3d)> working_box = enlarge(bigger(c.bbox(),x.bbox()),100);
+  
   //Make a lazy_image map via function closest_point
-  closest_point<mln_point_(I3d)> fun(x, box_<point3d>(1000,1000,1));
+  closest_point<mln_point_(I3d)> fun(x, working_box);
   lazy_image< closest_point<mln_point_(I3d)> > map(fun);
 
   quat7<3> qk = registration::icp(c, map, q, e, x);
@@ -56,73 +60,41 @@ int main(int argc, char* argv[])
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
   std::cout << "Pts processed        = " << registration::pts << std::endl;
 #endif
-
-  //FIXME: register img1
-  
-  //init output image
-  //FIXME: Should be
-  //mln_concrete(I) output(res.bbox()) = convert::to_image<I>(res) ?
   
   qk.apply_on(c, c, c.npoints());
-              
-  const box_<point2d> box2d(400,700);
-  image2d<value::rgb8> output(box2d, 1);
-
-  std::vector<float> length(c.npoints());
-  //mean + length
-  float mean = 0;
-  for (size_t i = 0; i < c.npoints(); i++)
-    {
-      float f = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));;
-      length[i] = f;
-      mean += f;
-    }
-  mean /= c.npoints();
+  
+  float stddev, mean;
+  registration::mean_stddev(c, map, mean, stddev);
+  
 #ifndef NDEBUG
   std::cout << "mean : " << mean << std::endl;
+  std::cout << "stddev : " << stddev << std::endl;
 #endif
 
-  
-  //standar variation
-  float stdev = 0;
+  std::vector<float> length(c.npoints());
   for (size_t i = 0; i < c.npoints(); i++)
-    stdev += (length[i] - mean) * (length[i] - mean);
-  stdev /= c.npoints();
-  stdev = math::sqrt(stdev);
-#ifndef NDEBUG
-  std::cout << "stddev : " << stdev << std::endl;
-#endif
+    length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
 
-  //final translate translate using point only separated less than 2*stdev
-  //mu_Xk = center map(Ck)
-  algebra::vec<3,float> mu_Xk(literal::zero);
-  algebra::vec<3,float> mu_C(literal::zero);
-  float nb_point = 0;
-  for (size_t i = 0; i < c.npoints(); ++i)
-    {       
-      if (length[i] > 2 * stdev)
-      {
-        algebra::vec<3,float> xki = map(c[i]);
-        algebra::vec<3,float> ci = c[i];
-        mu_C += ci;
-        
-        mu_Xk += xki;
-        nb_point++;
-      }
-    }
-  mu_C  /= nb_point;
-  mu_Xk /= nb_point;
   
-  // qT
-  const algebra::vec<3,float> qT = mu_Xk - mu_C;
+  // final transform
+  quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
+  fqk.apply_on(c, c, c.npoints());
 
-  //translate
-  for (size_t i = 0; i < c.npoints(); ++i)
+
+  //init output image
+  image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
+  level::fill(output, literal::white);
+ 
+  
+  //print x
+  for (size_t i = 0; i < x.npoints(); i++)
     {
-      algebra::vec<3,float> ci = c[i];
-      ci  -= qT;
-      c.hook_()[i] = algebra::to_point<point3d>(ci);
+      //Xk points
+      point2d px(x[i][0], x[i][1]);
+      if (output.has(px))
+        output(px) = literal::black;
     }
+  
   
   //to 2d : projection (FIXME:if 3d)
   for (size_t i = 0; i < c.npoints(); i++)
@@ -131,19 +103,18 @@ int main(int argc, char* argv[])
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
         {
-          if (length[i] > 2 * stdev)
-            output(p) = value::rgb8(255,0,0);
-          else if (length[i] > stdev)
+	  algebra::vec<3,float> xki = map(c[i]);
+	  algebra::vec<3,float> ci = c[i];
+	  /*
+	  if (length[i] > 2 * stddev)
+            output(p) = literal::red;
+          else if (length[i] > stddev)
             output(p) = value::rgb8(255,200,0);
-          else
-            output(p) = value::rgb8(255,255,255);
+          else*/
+          output(p) = literal::green;
         }
-      //Xk points
-      point2d x(map(c[i])[0], map(c[i])[1]);
-      if (output.has(x))
-        output(x) = value::rgb8(0,255,0);
     }
-  
+
   io::ppm::save(output, "registred.ppm");
   
 }

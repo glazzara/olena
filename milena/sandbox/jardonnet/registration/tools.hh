@@ -6,15 +6,71 @@
 # include <mln/algebra/mat.hh>
 # include <mln/core/p_array.hh>
 
+# include "quat7.hh"
+
 
 namespace mln
 {
 
+  namespace registration
+  {
+    
+
+    
+  }
+  
+  
+  template <typename P>
+  void shuffle(p_array<P>& a)
+  {
+    for (unsigned int i = 0; i < a.npoints(); i++)
+      {
+        unsigned int r = rand() % a.npoints();
+        P tmp;
+        tmp = a[i];
+        a.hook_()[i] = a[r];
+        a.hook_()[r] = tmp;
+      }
+  }
+  
+  template <unsigned int n, typename T>
+  struct buffer
+  {
+    buffer()
+      : setted(0)
+    {
+    }
+    
+    void store(T e)
+    {
+      for (unsigned i = 0; i < n-1; i++)
+        buf[i+1] = buf[i];
+      buf[0] = e;
+
+      setted++;
+    }
+    
+    T& operator[](unsigned int i)
+    {
+      assert(i < n && i < setted);
+      return buf[i];
+    }
+
+    const T * get_array()
+    {
+      return buf;
+    }
+
+  private:
+    T buf[n];
+    unsigned int setted;
+  };
+  
   //FIXME: groe length
   template <typename P>
   struct closest_point
   {
-    typedef P input;
+    typedef algebra::vec<P::dim, float> input;
     typedef P result;
     
     closest_point(const p_array<P>& X, const box_<P>& box)
@@ -26,9 +82,9 @@ namespace mln
     
     result
     //inline
-    operator () (const P& Ck) const
+    operator () (const input& Ck) const
     {
-      
+
 #ifndef NDEBUG
       ++i;
 #endif
@@ -62,28 +118,29 @@ namespace mln
 #endif 
   };
   
-
+  
   // FIXME: Should be a morpher ?
   // we could acces domain of a lazy map, iterator etc...
   template < typename F>
   struct lazy_image
   { 
     // Fun is potentially an image.
-    lazy_image(F& fun)
+    lazy_image(const F& fun)
       : value(fun.domain()), is_known(fun.domain()), fun(fun)
     {
     }
 
     // FIXME: hack, remove this constructor
-    lazy_image(F& fun, int nrows, int ncols, int nslis)
+    lazy_image(const F& fun, int nrows, int ncols, int nslis)
       : value(nrows, ncols,1), is_known(nrows,ncols,1), fun(fun)
     { }
 
-    // FIXME: gore length
     const mln_result(F)
     //inline
-    operator () (const typename F::input& p) const
+    operator () (const typename F::input& p_) const
     {
+      point3d p = algebra::to_point<point3d>(p_);
+      
       mln_precondition(fun.domain().has(p));
       //FIXME: What about domain?
       if (is_known(p))
@@ -92,11 +149,11 @@ namespace mln
       is_known(p) = true;
       return value(p);
     }
-
+    
     //FIXME: 3d -> //mln_dim(ml_input(input))
     mutable image3d<mln_result(F)> value;
     mutable image3d<bool>          is_known;
-    F&                             fun;
+    const F&                       fun;
   };
 
   
@@ -104,25 +161,30 @@ namespace mln
 
   template <typename P>
   inline
-  const box_<P>&            //dif
+  box_<P>            //dif
   enlarge(const box_<P>& box, unsigned b)
   {
+    box_<P> nbox(box);
+
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      box.pmin()[i] -= b;
-      box.pmax()[i] += b;
+      nbox.pmin()[i] -= b;
+      nbox.pmax()[i] += b;
     }
-    return box;
+    return nbox;
   }
   
   template <typename P>
   box_<P> bigger(box_<P> a, box_<P> b)
   {
     P pmin,pmax;
-    
-    pmin = min(a.pmin(), b.pmin());
-    pmax = max(a.pmax(), b.pmax());
-    
+
+    for (unsigned i = 0; i < P::dim; i++)
+      {
+        pmin[i] = (a.pmin()[i] < b.pmin()[i]) ? a.pmin()[i] : b.pmin()[i];
+        pmax[i] = (a.pmax()[i] > b.pmax()[i]) ? a.pmax()[i] : b.pmax()[i];
+      }  
+
     return box_<P>(pmin, pmax);
   }
 
@@ -145,8 +207,10 @@ namespace mln
       for_all(p)
         if (img(p))
           a.append(p);
+
       return a;
     }
+
 
     template < typename P >
     inline
@@ -178,7 +242,7 @@ namespace mln
 
     // to_pointNd
 
-    //FIXME: Should we really provide this
+    //FIXME: Should be call projection
     //point3d -> point2d
     template <typename T>
     inline
@@ -187,6 +251,7 @@ namespace mln
     {
       return point_<grid::square, T>(p[0], p[1]);
     }
+    
     //point2d -> point2d
     template <typename T>
     inline
@@ -244,19 +309,17 @@ namespace mln
         
       mln_piter(image3d<T>) p(img3d.domain());
       for_all(p)
-      {
-        if (p[2] == 0)
-          img3d(p) = exact(img)(point2d(p[0],p[1]));
-      }
+        img3d(p) = exact(img)(point2d(p[0],p[1]));
+
       return img3d;
     }
     
-  } // end of namespace convert
-
+  } // end of namespace convert  
   
   namespace algebra
   {
-      
+    
+    // transpose
     template<unsigned n, unsigned m, typename T>
     mat<m,n,T>
     trans(const mat<n,m,T>& matrice)
@@ -269,7 +332,6 @@ namespace mln
     }
     
     // trace
-    
     template<unsigned n, typename T> inline
     float tr(const mat<n,n,T>& m)
     {
@@ -280,7 +342,7 @@ namespace mln
     }
       
   } // end of namespace algebra
-    
+
 } // end of namespace mln
 
 #endif // REGISTRATION_TOOLS_HH

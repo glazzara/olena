@@ -1,0 +1,268 @@
+2008-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the use of int_u8 in image2d_int_u8.i.
+
+	* image2d_int_u8.i: Inject #include "mln/value/int_u8.hh" into the
+	header of the generated wrapper.
+
+2008-08-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a C++ image type extensible in Python.
+
+	* dynamic_image2d.i: New.
+	* Makefile.am: Add dynamic_image2d.i.
+	* point2d.i: Add row() and col() accessors.
+	* box2d.i: Add nrows() and ncols() accessors.
+	* python/dynamic-image2d-misc.py: New test.
+	* python/Makefile.am (AM_SWIGFLAGS): Add `-Wall'
+	Handle module dynamic_image2d.
+	(TESTS): Add dynamic-image2d-misc.py.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap more morphological filters.
+
+	* morpho.ixx: Wrap mln::morpho::closing, mln::morpho::opening
+	mln::morpho::gradient_internal, mln::morpho::gradient_external,
+	mln::morpho::opening_area.
+	(instantiate_closing, instantiate_opening)
+	(instantiate_gradient_internal, instantiate_gradient_external)
+	(instantiate_opening_area):
+	New macros.
+	Use them...
+	(instantiate_morpho): ...here.
+	Deduce the previous `L' parameter from `mln_value(I)', and remove
+	it from the list of parameters of the macro.
+	* image2d_int_u8.i: Adjust.
+	* image2d_int.i: Use macros instantiate_erosion and
+	instantiate_dilation.
+
+	* python/data.py: New.
+	* python/test.py: Rename as...
+	* python/image2d-misc.py: ...this.
+	* python/lena.py: Rename as...
+	* python/morpho-fun.py: ...this.
+	Exercise more morphological filters.
+	Move WST-based segmentation tests...
+	* python/morpho-segm.py: ...here (new test).
+	* python/swilena.py: Add documentation header.
+	* python/Makefile.am (python_PYTHON): Add data.py.
+	(TESTS): Add morpho-segm.py.
+	s/test.py/image2d-misc.py/
+	s/lena.py/morpho-fun.py/
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide instantiation macros for module `morpho'.
+
+	* morpho.ixx (instantiate_dilation, instantiate_erosion)
+	(instantiate_gradient, instantiate_closing_area)
+	(instantiate_meyer_wst):
+	New SWIG macros.
+	(instantiate_morpho): Likewise.
+	Use it...
+	* image2d_int_u8.i: ...here, to simplify the wrapping of morpho
+	routines.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap morphological gradient and area closing.
+
+	* morpho.ixx: Wrap mln::morpho::gradient and
+	mln::morpho::closing_area.
+	* image2d_int_u8.i (meyer_wst): Rename as...
+	(meyer_wst32): ...this.
+	(gradient, closing_area, meyer_wst): New wrappings.
+	* python/lena.py: Exercise gradient and area closing (along with
+	Meyer's watershed transform).
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify the wrappings of mln::neighb2d and mln::window2d.
+
+	* neighb2d.i, window2d.i: Wrap the classes directly, instead of
+	using simplified, inlined declarations.
+	* box2d.i: Aesthetic changes.
+
+2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Clean up Swilena a bit.
+
+	* box2d.i, dpoint2d.i: Remove dead code.
+	* image2d.ixx: Likewise.
+	(instantiate_image2d): Indent.
+	* intp.ixx: Add missing `module' statement.
+	* fill.ixx: Use macro mln_value() in fill()'s signature, as in the
+	original one.
+	* ch_value.ixx
+	(ch_value< image2d< int_u<8> >, int_u<32> >): Turn into...
+	(ch_value< image2d< int_u<8> >, V >): ...this.
+	Adjust documentation.
+	* image2d_int.i: Add a FIXME.
+	* point2d.i: Aesthetic change.
+
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Simplify the wrapping of mln::image2d and make it (more) generic.
+
+	* box2d.i: New.
+	* image2d.ixx: Import dpoint2d.i and box2d.i.
+	Wrap mln::image2d directly, instead of using a simplified,
+	inlined declaration.
+	(instantiate_image2d): New macro.
+	Use it...
+	* image2d_int.i, image2d_int_u8.i: ...here.
+	* Makefile.am (wrappers): Add box2d.i.
+	* python/swilena.py: Import box2d.
+	* python/Makefile.am: Build module box2d.
+
+2008-08-09  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add support for mln_concrete in Swilena.
+
+	* concrete.ixx: New.
+	Use it...
+	* morpho.ixx: ...here.
+	Wrap mln::morpho::dilation.hh and mln::morpho::erosion directly,
+	instead of using a simplified declaration (previously used to
+	circumvent the lack of support of mln_concrete).
+	Fix documentation.
+	* image2d_int.i, image2d_int_u8.i: Instantiate
+	mln::trait::concrete to have swig understand the return types of
+	mln::morpho::dilation.hh and mln::morpho::erosion.
+	* ch_value.ixx: Adjust documentation.
+	* Makefile.am (meta_wrappers, wrappers): New variables.
+	Use them...
+	(EXTRA_DIST): ...here.
+	(meta_wrappers): Add concrete.ixx.
+
+2008-08-08  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap meyer_wst for image2d<int_u8>.
+
+	* int_u.ixx: New.
+	Use it...
+	* int_u8.i: ...here.
+	Actually instantiate and wrap int_u8.
+	* int_u32.i: New.
+	* ch_value.ixx: New.
+	Use it...
+	* morpho.ixx: ...here.
+	Wrap meyer_wst for image2d<int_u8>.
+	* neighb2d.i: New.
+	* image2d_int_u8.i: Add support for meyer_wst.
+	* window2d.i: Aesthetic changes.
+	* Makefile.am (EXTRA_DIST): Add ch_value.ixx, int_u.ixx, int_u32.i
+	and neighb2d.i.
+	* python/lena.py: Exercise meyer_wst.
+	* python/Makefile.am: Handle modules int_u32 and neighb2d.
+	* python/swilena.py: Import neighb2d, int_u8 and int_u32.
+
+2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Speed up Swilena.
+
+	* python/Makefile.am (TOOLS_CXXFLAGS, AM_CXXFLAGS): New.
+	Use flags for tools, that use optimization options.
+
+2008-07-28  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap mln::morpho::dilation.
+
+	* morpho.ixx: Wrap mln::morpho::dilation.
+	* image2d_int.i, image2d_int_u8.i: Instantiate it.
+	* python/lena.py: Exercise it.
+
+2008-07-27  Roland Levillain  <roland@lrde.epita.fr>
+
+	Wrap mln::image2d<int_u8> as well as I/O routines.
+
+	* pgm.ixx, int_u8.i, image2d_int_u8.i: New.
+	* Makefile.am (EXTRA_DIST): Add pgm.ixx, image2d_int_u8.i and
+	int_u8.i.
+	* fill.ixx, println.ixx: Fix doxygen headers.
+	* image2d_int.i: Typo.
+	* python/lena.py: New test.
+	* python/Makefile.am: Handle modules int_u8 and image2d_int_u8.
+	(top_srcdir): Add top_srcdir and top_builddir into the
+	environment.
+	(TESTS): Add lena.py.
+	* python/swilena.py: Import image2d_int_u8.
+
+2008-07-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add preliminary support for windows and morpho in Swilena.
+
+	* dpoint2d.i, window2d.i, morpho.ixx: New wrappers.
+	* image2d.ixx, point2d.i, fill.ixx: Aesthetic changes.
+	* image2d_int.i: Likewise.
+	Use window2d and morpho::erosion.
+	* python/swilena.py: Inject the contents of modules dpoint2d and
+	window2d.
+	* python/test.py: Exercise window2d and morpho::erosion.
+	* python/Makefile.am: Handle modules dpoint2d and window2d.
+	* Makefile.am (EXTRA_DIST): Remove image2d.i
+	Add fill.ixx, image2d.ixx, intp.ixx, morpho.ixx, println.ixx,
+	dpoint2d.i, image2d_int.i, point2d.i and window2d.i.
+
+2008-07-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Break Swilena's image2d into modules.
+
+	* image2d.i: Rename as...
+	* image2d.ixx: ...this.
+	Move parts not directly related to mln::image2d<T>...
+	* intpx.ixx, point2d.ixx, fill.ixx, println.ixx, image2d_int.i:
+	...here (new files).
+	* python/swilena.py: Adjust.
+	Inject the contents of module point2d.
+	* python/sps.py, python/test.py: Adjust.
+	* python/Makefile.am: Handle module point2d.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Improve sps.
+
+	* python/sps-common.in: Move the lines printing information at
+	the startup of the shell...
+	* python/sps.py: ...here (new file).
+	Use this script instead of swilena.py for sps...
+	* python/sps.in, python/sps-local.in: ...here.
+	* python/Makefile.am (python_PYTHON): Add sps.py.
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add the Swilena Python Shell (sps).
+
+	* python/sps-common.in, python/sps.in, python/sps-local.in: New.
+	* python/swilena.py: New.
+	Use it...
+	* python/test.py: ...here, to factor imports.
+	* python/Makefile.am (python_PYTHON): Add swilena.py.
+	(bin_SCRIPTS): New.  Add sps
+	(noinst_SCRIPTS): New.  Add sps-local.
+	(CLEANFILES): Add $(bin_SCRIPTS) and $(noinst_SCRIPTS).
+
+2008-07-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revive Swilena.
+
+	* swilena/image2d.i: New SWIG wrapper.
+	* swilena/run.in: New helper, imported from TC.
+	* swilena/Makefile.am: New.
+	* swilena/run.mk: New, imported from TC and adjusted.
+
+	* swilena/python/: New directory.
+	* swilena/python/ltihooks.py: New, imported.
+	* swilena/python/test.py: New test.
+	* swilena/python/Makefile.am: New.
+
+
+$Rev$
+$Id$
+$Date$
+
+Local Variables:
+ispell-local-dictionary: "american"
+coding: iso-latin-1
+End:

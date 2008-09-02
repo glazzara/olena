@@ -117,8 +117,8 @@ namespace mln
     const P& operator[](unsigned i) const;
 
   protected:
-
-    std::map<const T, p_queue_fast<P> > q_;
+    typedef typename std::map<T, p_queue_fast<P> > queue_map_t;
+    queue_map_t q_;
 
     mutable std::vector<P> vect_;
     mutable bool vect_needs_update_;
@@ -150,7 +150,7 @@ namespace mln
     vect_.clear();
     vect_.reserve(npoints());
 
-    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
+    typename queue_map_t::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       std::copy((*it).second.vect().begin(), (*it).second.vect().end(),
@@ -165,7 +165,7 @@ namespace mln
   {
     bb_.init();
 
-    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
+   typename queue_map_t::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       for (unsigned i = 0; i < (*it).second.npoints (); ++i)
@@ -179,7 +179,7 @@ namespace mln
   bool
   p_priority_queue_fast<P, T>::has(const P& p) const
   {
-    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
+   typename queue_map_t::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if ((*it).second.has (p))
@@ -192,7 +192,7 @@ namespace mln
   bool
   p_priority_queue_fast<P, T>::is_empty() const
   {
-    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
+   typename queue_map_t::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.is_empty ())
@@ -207,7 +207,7 @@ namespace mln
   {
     unsigned res = 0;
 
-    typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
+   typename queue_map_t::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.is_empty ())
@@ -256,7 +256,7 @@ namespace mln
   void
   p_priority_queue_fast<P, T>::pop()
   {
-    typename std::map<T, p_queue_fast<P> >::reverse_iterator it = q_.rbegin ();
+   typename queue_map_t::reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
       if (!(*it).second.is_empty ())
@@ -276,7 +276,7 @@ namespace mln
   {
     mln_precondition(! q_.empty());
 
-    typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
+   typename queue_map_t::const_reverse_iterator it = q_.rbegin ();
 
     for (; it != q_.rend (); ++it)
       if (!(*it).second.is_empty ())
@@ -300,7 +300,7 @@ namespace mln
   void
   p_priority_queue_fast<P, T>::clear()
   {
-    typename std::map<T, p_queue_fast<P> >::iterator it = q_.begin ();
+   typename queue_map_t::iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
       (*it).second.clear ();
@@ -326,7 +326,7 @@ namespace mln
   {
     mln_precondition(i < npoints());
 
-    typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
+   typename queue_map_t::const_reverse_iterator it = q_.rbegin ();
     unsigned cpt = 0;
 
     for (; it != q_.rend (); ++it)

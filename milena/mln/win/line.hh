@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,6 +62,9 @@ namespace mln
     {
       /// Point associated type.
       typedef point_<M, int> point;
+
+      /// Psite associated type.
+      typedef point psite;
 
       /// Dpoint associated type.
       typedef dpoint_<M, int> dpoint;
@@ -135,7 +138,7 @@ namespace mln
     line<M,i,C>::line(unsigned length)
       : length_(length)
     {
-      mln_precondition(i < M::dim);
+      metal::bool_< i < M::dim >::check();
       mln_precondition(length % 2 == 1);
       const int dc = length / 2;
       for (int c = - dc; c <= dc; ++c)

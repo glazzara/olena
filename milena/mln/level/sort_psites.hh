@@ -28,16 +28,10 @@
 #ifndef MLN_LEVEL_SORT_PSITES_HH
 # define MLN_LEVEL_SORT_PSITES_HH
 
-/*! \file mln/level/sort_psites.hh
- *
- * \brief Sort_Psites the contents of an image into another one.
- *
- * \todo Factor code + optimize.
- */
-
-/* FIXME: Factor with mln/level/sort_points.hh, if needed (maybe wait
-   for the upcoming big changes regarding types associated to images
-   (point -> site, etc.).  */
+/// \file mln/level/sort_psites.hh
+/// \brief Sort_Psites the contents of an image into another one.
+///
+/// \todo Factor code + optimize.
 
 # include <algorithm>
 

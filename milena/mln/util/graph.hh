@@ -33,8 +33,6 @@
 
 # include <mln/util/internal/graph_base.hh>
 
-// FIXME: Rename node(s) as vertex (vertices).
-
 namespace mln
 {
 
@@ -45,14 +43,14 @@ namespace mln
     `-----------*/
 
     /// \brief Undirected graph.
-    template<typename N = void, typename E = void>
+    template<typename V = void, typename E = void>
     class graph;
 
     /*--------------------.
     | graph<void, void>.  |
     `--------------------*/
 
-    /// Specialization for undirected graphs with no data on nodes nor
+    /// Specialization for undirected graphs with no data on vertices nor
     /// on edges.
     template <>
     class graph<void, void> : public internal::graph_base<void, void>
@@ -61,64 +59,73 @@ namespace mln
       /// The super class.
       typedef internal::graph_base<void, void> super;
 
-      // FIXME: We should return the id of the newly created node.
-      /// \brief Add a node.
-      void add_node();
-      // FIXME: We should return the id of the newly created edge.
-      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      void add_edge(node_id n1, node_id n2);
+      /// \brief Add a vertex.
+      ///
+      /// \return The id of the new vertex.
+      vertex_id add_vertex();
+      /// \brief Add an edge between vertices with ids \p v1 and \p v2.
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(vertex_id v1, vertex_id v2);
     };
 
     /*-----------------.
-    | graph<N, void>.  |
+    | graph<V, void>.  |
     `-----------------*/
 
-    /// Specialization for undirected graphs with data on nodes.
-    template <typename N>
-    class graph<N, void> : public internal::graph_base<N, void>
+    /// Specialization for undirected graphs with data on vertices.
+    template <typename V>
+    class graph<V, void> : public internal::graph_base<V, void>
     {
     public:
       /// The super class.
-      typedef internal::graph_base<N, void> super;
+      typedef internal::graph_base<V, void> super;
 
-      // FIXME: We should return the id of the newly created node.
-      /// \brief Add a node.
-      void add_node(const N& data);
-      // FIXME: We should return the id of the newly created edge.
-      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      void add_edge(node_id n1, node_id n2);
+      /// \brief Add a vertex.
+      ///
+      /// \return The id of the new vertex.
+      vertex_id add_vertex(const V& data);
+      /// \brief Add an edge between vertices with ids \p v1 and \p v2.
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(vertex_id v1, vertex_id v2);
 
-      /// Return the data associated to node with id \a n.
+      /// Return the data associated to vertex with id \a v.
       /// \{
-      N& node_data(node_id n);
-      const N& node_data(node_id n) const;
+      V& vertex_data(vertex_id v);
+      const V& vertex_data(vertex_id v) const;
       /// \}
     };
 
     /*--------------.
-    | graph<N, E>.  |
+    | graph<V, E>.  |
     `--------------*/
 
-    /// Specialization for undirected graphs with data on nodes and
+    /// Specialization for undirected graphs with data on vertices and
     /// edges.
-    template <typename N, typename E>
-    class graph : public internal::graph_base<N, E>
+    template <typename V, typename E>
+    class graph : public internal::graph_base<V, E>
     {
     public:
       /// The super class.
-      typedef internal::graph_base<N, E> super;
+      typedef internal::graph_base<V, E> super;
 
-      // FIXME: We should return the id of the newly created node.
-      /// \brief Add a node.
-      void add_node(const N& data);
-      /// \brief Add an edge between nodes with ids \p n1 and \p n2.
-      // FIXME: We should return the id of the newly created edge.
-      void add_edge(node_id n1, node_id n2, const E& data);
+      /// \brief Add a vertex.
+      ///
+      /// \return The id of the new vertex.
+      vertex_id add_vertex(const V& data);
+      /// \brief Add an edge between vertices with ids \p v1 and \p v2.
+      ///
+      /// \return The id of the new edge if it does not exist yet;
+      /// otherwise, return <tt>mln_max(edge_id)</tt>.
+      edge_id add_edge(vertex_id v1, vertex_id v2, const E& data);
 
-      /// Return the data associated to node with id \a n.
+      /// Return the data associated to vertex with id \a v.
       /// \{
-      N& node_data(node_id n);
-      const N& node_data(node_id n) const;
+      V& vertex_data(vertex_id v);
+      const V& vertex_data(vertex_id v) const;
       /// \}
 
       /// Return the data associated to the edge with id \a e.
@@ -127,11 +134,11 @@ namespace mln
       const E& edge_data(edge_id e) const;
       /// \}
 
-      /// Return the data associated to the edge between nodes with
-      /// ids \a n1 and \a n2.
+      /// Return the data associated to the edge between vertices with
+      /// ids \a v1 and \a v2.
       /// \{
-      E& edge_data(node_id n1, node_id n2);
-      const E& edge_data(node_id n1, node_id n2) const;
+      E& edge_data(vertex_id v1, vertex_id v2);
+      const E& edge_data(vertex_id v1, vertex_id v2) const;
       /// \}
     };
 
@@ -143,156 +150,156 @@ namespace mln
     | graph<void, void>.  |
     `--------------------*/
 
-    /* Note that ddefinition of members from fully specialized
+    /* Note that definition of members from fully specialized
        template classes are not preceded by `template<>'.  */
     inline
-    void
-    graph<void, void>::add_node()
+    vertex_id
+    graph<void, void>::add_vertex()
     {
-      super::add_node_(new util::node<void>);
+      return super::add_vertex_(new util::vertex<void>);
     }
 
     /* Note that ddefinition of members from fully specialized
        template classes are not preceded by `template<>'.  */
     inline
-    void
-    graph<void, void>::add_edge(node_id n1, node_id n2)
+    edge_id
+    graph<void, void>::add_edge(vertex_id v1, vertex_id v2)
     {
-      mln_assertion(n1 < this->nnodes());
-      mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<void>(n1, n2));
+      mln_assertion(v1 < this->nvertices());
+      mln_assertion(v2 < this->nvertices());
+      return super::add_edge_(new util::edge<void>(v1, v2));
     }
 
     /*-----------------.
-    | graph<N, void>.  |
+    | graph<V, void>.  |
     `-----------------*/
 
-    template<typename N>
+    template<typename V>
     inline
-    void
-    graph<N, void>::add_node(const N& data)
+    vertex_id
+    graph<V, void>::add_vertex(const V& data)
     {
-      super::add_node_(new util::node<N>(data));
+      return super::add_vertex_(new util::vertex<V>(data));
     }
 
-    template<typename N>
+    template<typename V>
     inline
-    void
-    graph<N, void>::add_edge(node_id n1, node_id n2)
+    edge_id
+    graph<V, void>::add_edge(vertex_id v1, vertex_id v2)
     {
-      mln_assertion(n1 < this->nnodes());
-      mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<void>(n1, n2));
+      mln_assertion(v1 < this->nvertices());
+      mln_assertion(v2 < this->nvertices());
+      return super::add_edge_(new util::edge<void>(v1, v2));
     }
 
-    template <class N>
+    template <class V>
     inline
-    N&
-    graph<N, void>::node_data(node_id n)
+    V&
+    graph<V, void>::vertex_data(vertex_id v)
     {
-      mln_assertion(n < this->nnodes());
-      return this->nodes_[n]->data;
+      mln_assertion(v < this->nvertices());
+      return this->vertices_[v]->data;
     }
 
-    template<typename N>
+    template<typename V>
     inline
-    const N&
-    graph<N, void>::node_data(node_id n) const
+    const V&
+    graph<V, void>::vertex_data(vertex_id v) const
     {
-      mln_assertion(n < this->nnodes());
-      return this->nodes_[n]->data;
+      mln_assertion(v < this->nvertices());
+      return this->vertices_[v]->data;
     }
 
 
     /*--------------.
-    | graph<N, E>.  |
+    | graph<V, E>.  |
     `--------------*/
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
-    void
-    graph<N, E>::add_node(const N& data)
+    vertex_id
+    graph<V, E>::add_vertex(const V& data)
     {
-      super::add_node_(new util::node<N>(data));
+      return super::add_vertex_(new util::vertex<V>(data));
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
-    void
-    graph<N, E>::add_edge(node_id n1, node_id n2, const E& data)
+    edge_id
+    graph<V, E>::add_edge(vertex_id v1, vertex_id v2, const E& data)
     {
-      mln_assertion(n1 < this->nnodes());
-      mln_assertion(n2 < this->nnodes());
-      super::add_edge_(new util::edge<E>(n1, n2, data));
+      mln_assertion(v1 < this->nvertices());
+      mln_assertion(v2 < this->nvertices());
+      return super::add_edge_(new util::edge<E>(v1, v2, data));
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
-    N&
-    graph<N, E>::node_data(node_id n)
+    V&
+    graph<V, E>::vertex_data(vertex_id v)
     {
-      mln_assertion(n < this->nnodes());
-      return this->nodes_[n]->data;
+      mln_assertion(v < this->nvertices());
+      return this->vertices_[v]->data;
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
-    const N&
-    graph<N, E>::node_data(node_id n) const
+    const V&
+    graph<V, E>::vertex_data(vertex_id v) const
     {
-      mln_assertion(n < this->nnodes());
-      return this->nodes_[n]->data;
+      mln_assertion(v < this->nvertices());
+      return this->vertices_[v]->data;
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
     E&
-    graph<N, E>::edge_data(edge_id e)
+    graph<V, E>::edge_data(edge_id e)
     {
       mln_assertion(e < this->nedges());
       return this->edges_[e]->data;
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
     const E&
-    graph<N, E>::edge_data(edge_id e) const
+    graph<V, E>::edge_data(edge_id e) const
     {
       mln_assertion(e < this->nedges());
       return this->edges_[e]->data;
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
     E&
-    graph<N, E>::edge_data(node_id n1, node_id n2)
+    graph<V, E>::edge_data(vertex_id v1, vertex_id v2)
     {
-      mln_assertion(n1 < this->nnodes());
-      mln_assertion(n2 < this->nnodes());
-      ordpair_<node_id> node_pair (n1, n2);
-      std::vector<edge_id>& edges_ids = this->nodes_[n1]->edges;
+      mln_assertion(v1 < this->nvertices());
+      mln_assertion(v2 < this->nvertices());
+      ordpair_<vertex_id> vertex_pair (v1, v2);
+      std::vector<edge_id>& edges_ids = this->vertices_[v1]->edges;
       for (std::vector<edge_id>::iterator e = edges_ids.begin();
 	   e != edges_ids.end(); ++e)
-	  if (this->edges_[*e] == node_pair)
+	  if (this->edges_[*e] == vertex_pair)
 	    return this->edges_[*e]->data;
-      // If no edge between N1 and N2 was found, abort.
+      // If no edge between V1 and V2 was found, abort.
       abort();
     }
 
-    template<typename N, typename E>
+    template<typename V, typename E>
     inline
     const E&
-    graph<N, E>::edge_data(node_id n1, node_id n2) const
+    graph<V, E>::edge_data(vertex_id v1, vertex_id v2) const
     {
-      mln_assertion(n1 < this->nnodes());
-      mln_assertion(n2 < this->nnodes());
-      ordpair_<node_id> node_pair (n1, n2);
-      const std::vector<edge_id>& edges_ids = this->nodes_[n1]->edges;
+      mln_assertion(v1 < this->nvertices());
+      mln_assertion(v2 < this->nvertices());
+      ordpair_<vertex_id> vertex_pair (v1, v2);
+      const std::vector<edge_id>& edges_ids = this->vertices_[v1]->edges;
       for (std::vector<edge_id>::const_iterator e = edges_ids.begin();
 	   e != edges_ids.end(); ++e)
-	  if (this->edges_[*e] == node_pair)
+	  if (this->edges_[*e] == vertex_pair)
 	    return this->edges_[*e]->data;
-      // If no edge between N1 and N2 was found, abort.
+      // If no edge between V1 and V2 was found, abort.
       abort();
     }
 

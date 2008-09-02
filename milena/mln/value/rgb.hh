@@ -194,12 +194,12 @@ namespace mln
       operator algebra::vec<3, float>() const { return this->v_; }
 
       /// \{ Constructors with literals.
-      rgb<n>(const literal::white_t&);
-      rgb<n>(const literal::black_t&);
+      rgb<n>(const mln::literal::white_t&);
+      rgb<n>(const mln::literal::black_t&);
 
-      rgb<n>(const literal::blue_t&);
-      rgb<n>(const literal::red_t&);
-      rgb<n>(const literal::green_t&);
+      rgb<n>(const mln::literal::blue_t&);
+      rgb<n>(const mln::literal::red_t&);
+      rgb<n>(const mln::literal::green_t&);
       /// \}
 
       /// Assignment.
@@ -333,7 +333,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const literal::white_t&)
+    rgb<n>::rgb(const mln::literal::white_t&)
     {
       this->v_[0] = mln_max(int_u<n>);
       this->v_[1] = mln_max(int_u<n>);
@@ -342,7 +342,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const literal::black_t&)
+    rgb<n>::rgb(const mln::literal::black_t&)
     {
       this->v_[0] = 0;
       this->v_[1] = 0;
@@ -351,7 +351,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const literal::red_t&)
+    rgb<n>::rgb(const mln::literal::red_t&)
     {
       this->v_[0] = mln_max(int_u<n>);
       this->v_[1] = 0;
@@ -360,7 +360,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const literal::green_t&)
+    rgb<n>::rgb(const mln::literal::green_t&)
     {
       this->v_[0] = 0;
       this->v_[1] = mln_max(int_u<n>);
@@ -369,7 +369,7 @@ namespace mln
 
     template <unsigned n>
     inline
-    rgb<n>::rgb(const literal::blue_t&)
+    rgb<n>::rgb(const mln::literal::blue_t&)
     {
       this->v_[0] = 0;
       this->v_[1] = 0;

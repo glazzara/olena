@@ -34,6 +34,8 @@
 # include <map>
 # include <vector>
 
+# include <mln/math/abs.hh>
+
 # include <mln/core/image2d.hh>
 # include <mln/core/window2d.hh>
 # include <mln/core/line_graph_image.hh>
@@ -70,23 +72,18 @@ namespace mln
       // Points.
       /* FIXME: The need for such a structure during the conversion
 	 exhibits the lack of a service from util::graph (or a another,
-	 missing tool) regarding the retrieval of nodes' ids from
+	 missing tool) regarding the retrieval of vertices' ids from
 	 points.  */
-      std::map<mln::point2d, util::node_id> points;
-      util::node_id id = 0;
+      std::map<mln::point2d, util::vertex_id> points;
 
-      // Nodes.
-      std::vector<value_t> node_values;
+      // Vertices.
+      std::vector<value_t> vertex_values;
       mln_fwd_piter(image2d<value_t>) p(ima.domain());
       for_all (p)
       {
-	g.add_node (p);
-	node_values.push_back (ima(p));
-	/* FIXME: ``Guessing'' the id of the point just being inserted
-	   is bad.  util:graph<N,E>::add_node should return this
-	   id.  */
+	util::vertex_id id = g.add_vertex (p);
+	vertex_values.push_back (ima(p));
 	points[p] = id;
-	++id;
       }
 
       // Edges.
@@ -99,9 +96,16 @@ namespace mln
 	for_all (q)
 	if (ima.has(q))
 	  {
+	    // Avoid a warning about an undefined variable when the
+	    // NDEBUG is not defined.
+#ifdef NDEBUG
 	    g.add_edge(points[p], points[q]);
+#else // !NDEBUG
+	    util::edge_id id = g.add_edge(points[p], points[q]);
+#endif //!NDEBUG
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
+	    mln_assertion(id != mln_max(util::edge_id));
 	  }
 
       // Line graph point set.
@@ -109,7 +113,7 @@ namespace mln
 
       // Line graph image.
       typedef line_graph_image<mln::point2d, value_t> ima_t;
-      ima_t lg_ima(plg, node_values, edge_values);
+      ima_t lg_ima(plg, vertex_values, edge_values);
       return lg_ima;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -107,9 +108,9 @@ namespace mln
       typedef trait::value::kind::gray      kind;
       typedef trait::value::quant::high     quant;
 
-      static const self_ min();
-      static const self_ max();
-      static const self_ epsilon();
+      static self_ min();
+      static self_ max();
+      static self_ epsilon();
 
       typedef self_ sum; // FIXME: OK?.
     };
@@ -688,7 +689,7 @@ namespace trait
 
   template <unsigned n>
   inline
-  const mln::value::internal::gray_<n>
+  mln::value::internal::gray_<n>
   value_< mln::value::internal::gray_<n> >::min()
   {
     return mln::value::internal::gray_<n>(1, 0);
@@ -696,7 +697,7 @@ namespace trait
 
   template <unsigned n>
   inline
-  const mln::value::internal::gray_<n>
+  mln::value::internal::gray_<n>
   value_< mln::value::internal::gray_<n> >::max()
   {
     return mln::value::internal::gray_<n>(1, 1);
@@ -704,7 +705,7 @@ namespace trait
 
   template <unsigned n>
   inline
-  const mln::value::internal::gray_<n>
+  mln::value::internal::gray_<n>
   value_< mln::value::internal::gray_<n> >::epsilon()
   {
     return mln::value::internal::gray_<n>(1, 0); // Means '0'.

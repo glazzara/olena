@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,7 @@ namespace mln
   /*! \brief Type alias for a point defined on the 1D square grid with
    * integer coordinates.
    */
-  typedef point<grid::tick, def::coord> point1d;
+  typedef point<mln::grid::tick, def::coord> point1d;
 
 
 } // end of namespace mln

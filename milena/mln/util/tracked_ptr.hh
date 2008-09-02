@@ -67,13 +67,13 @@ namespace mln
       **
       ** \invariant Pointer proxy exists.
       */
-      const T*const operator->() const;
+      const T* operator->() const;
 
       /*! \brief Mimics the behavior of op-> for a pointer in the mutable case.
       **
       ** \invariant Pointer proxy exists.
       */
-      T*const operator->();
+      T* operator->();
 
       /// Ctor.
       tracked_ptr();
@@ -127,7 +127,7 @@ namespace mln
     ** \invariant Pointer proxy exists.
     */
     inline
-    const T*const tracked_ptr<T>::operator->() const
+    const T* tracked_ptr<T>::operator->() const
     {
       mln_invariant(run_());
       mln_precondition(ptr_ != 0);
@@ -140,7 +140,7 @@ namespace mln
     ** \invariant Pointer proxy exists.
     */
     inline
-    T*const tracked_ptr<T>::operator->()
+    T* tracked_ptr<T>::operator->()
     {
       mln_invariant(run_());
       mln_precondition(ptr_ != 0);

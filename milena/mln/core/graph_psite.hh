@@ -31,18 +31,20 @@
 /// \file mln/core/graph_psite.hh
 /// \brief Definition of a graph-based point site.
 
+# include <mln/core/concept/point_site.hh>
+
 # include <mln/core/p_graph.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template<typename P> class p_graph;
+  // Forward declaration.
+  template <typename P> class p_graph;
 
 
   /// \brief Point site associated to a mln::graph_image.
-  template<typename P>
+  template <typename P>
   class graph_psite : public Point_Site< graph_psite<P> >
   {
     typedef graph_psite<P> self_;
@@ -58,7 +60,7 @@ namespace mln
     /// Construction and assignment.
     /// \{
     graph_psite();
-    graph_psite(const p_graph<P>& pg_, unsigned id);
+    graph_psite(const p_graph<P>& pg_, util::vertex_id id);
     graph_psite(const self_& rhs);
     self_& operator= (const self_& rhs);
     /// \}
@@ -74,8 +76,8 @@ namespace mln
 
     /// Return the p_graph this point site belongs to.
     const p_graph<P>& pg() const;
-    /// Return the node id of this point site.
-    util::node_id id() const;
+    /// Return the vertex id of this point site.
+    util::vertex_id id() const;
 
     /// Is this psite valid?
     bool is_valid() const;
@@ -83,21 +85,40 @@ namespace mln
   private:
     /// The p_graph this point site belongs to.
    const p_graph<P>* pg_;
-    /// The id of the node this psite is pointing towards.
-    util::node_id id_;
+    /// The id of the vertex this psite is pointing towards.
+    util::vertex_id id_;
   };
 
-  /// Compare two mln::graph_psite<P> instances.
-  /* FIXME: Shouldn't this comparison be part of a much general
+
+  /// Comparison of two mln::graph_psite<P> instances.
+  /// \{
+  /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
+
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_graph.
   template <typename P>
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs);
 
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting psites.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_graph.
+  template <typename P>
+  bool
+  operator< (const graph_psite<P>& lhs, const graph_psite<P>& rhs);
+  /// \}
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>::graph_psite()
     // Dummy initializations.
@@ -107,25 +128,25 @@ namespace mln
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
-  graph_psite<P>::graph_psite(const p_graph<P>& g, util::node_id id)
+  graph_psite<P>::graph_psite(const p_graph<P>& g, util::vertex_id id)
     : super_(),
       pg_(&g),
       id_(id)
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
-    : super_(),
+    : super_(rhs),
       pg_(rhs.pg_),
       id_(rhs.id_)
   {
   }
 
-  template<typename P>
+  template <typename P>
   inline
   graph_psite<P>&
   graph_psite<P>::operator= (const graph_psite<P>& rhs)
@@ -137,15 +158,15 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   graph_psite<P>::is_valid() const
   {
-    return pg_ && id_ < pg_->gr_->nnodes();
+    return pg_ && id_ < pg_->gr_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const graph_psite<P>&
   graph_psite<P>::to_psite() const
@@ -153,7 +174,7 @@ namespace mln
     return *this;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const P&
   graph_psite<P>::to_point() const
@@ -161,7 +182,7 @@ namespace mln
     return pg().point_from_id(id_);
   }
 
-  template<typename P>
+  template <typename P>
   inline
   mln_coord(P)
   graph_psite<P>::operator[](unsigned i) const
@@ -170,7 +191,7 @@ namespace mln
     return to_point()[i];
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const p_graph<P>&
   graph_psite<P>::pg() const
@@ -179,19 +200,33 @@ namespace mln
     return *pg_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
-  util::node_id
+  util::vertex_id
   graph_psite<P>::id() const
   {
     return id_;
   }
 
+
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
+
   template <typename P>
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs)
   {
-    return &lhs.pg() == &rhs.pg() && lhs.id() == rhs.id();
+    mln_assertion(&lhs.pg() == &rhs.pg());
+    return lhs.id() == rhs.id();
+  }
+
+  template <typename P>
+  bool
+  operator< (const graph_psite<P>& lhs, const graph_psite<P>& rhs)
+  {
+    mln_assertion(&lhs.pg() == &rhs.pg());
+    return lhs.id() < rhs.id();
   }
 
 

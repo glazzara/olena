@@ -69,9 +69,9 @@ namespace mln
     typedef P point;
     /// The type of psite corresponding to the window.
     typedef graph_psite<P> psite;
-    // The type of the set of window sites (node ids adjacent to the
+    // The type of the set of window sites (vertex ids adjacent to the
     // reference psite).
-    typedef std::set<util::node_id> sites_t;
+    typedef std::set<util::vertex_id> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpoint;
@@ -109,7 +109,7 @@ namespace mln
     /* FIXME: This method returns a dummy value (0), since the delta
        of a window on a graph
 
-       1. is not constant (graph nodes are not necessarily aligned on
+       1. is not constant (graph vertices are not necessarily aligned on
           a regular grid);
 
        2. depends on the underlying graph, too.
@@ -132,25 +132,27 @@ namespace mln
   graph_elt_window<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::node_id ref_node_id = piter.p_ref().id();
-    const util::node<P>& ref_node = piter.pg().gr_->node(ref_node_id);
+    util::vertex_id ref_vertex_id = piter.p_ref().id();
+    const util::vertex<P>& ref_vertex = piter.pg().gr_->vertex(ref_vertex_id);
     sites_t& sites = piter.sites();
     sites.clear();
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
-    // Adjacent vertices.
-    /* We don't need to explicitely insert the reference piter (node
-       id) itself into SITES, since it is part of the set of nodes
-       adjacent to NODE1 and NODE2, and will therefore be
+    /* Adjacent vertices.
+
+       We don't need to explicitely insert the reference piter (vertex
+       id) itself into SITES, since it is part of the set of vertices
+       adjacent to V1 and V2, and will therefore be
        automatically added.  */
-    for (std::vector<util::edge_id>::const_iterator e = ref_node.edges.begin();
-	 e != ref_node.edges.end(); ++e)
+    for (std::vector<util::edge_id>::const_iterator e =
+	   ref_vertex.edges.begin();
+	 e != ref_vertex.edges.end(); ++e)
       {
-	util::node_id n1 = piter.pg().gr_->edges()[*e]->n1();
-	sites.insert(n1);
-	util::node_id n2 = piter.pg().gr_->edges()[*e]->n2();
-	sites.insert(n2);
+	util::vertex_id v1 = piter.pg().gr_->edges()[*e]->v1();
+	sites.insert(v1);
+	util::vertex_id v2 = piter.pg().gr_->edges()[*e]->v2();
+	sites.insert(v2);
       }
   }
 

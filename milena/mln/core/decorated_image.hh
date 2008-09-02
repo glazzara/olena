@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,6 +52,7 @@ namespace mln
     struct decorated_image_impl_
     {
       typedef mln::value::proxy<E> lvalue;
+      /// Actual write routine.
       void write_(const mln_psite(I)& p, const mln_value(I)& v);
     };
 
@@ -89,8 +90,13 @@ namespace mln
     typedef decorated_image<I, D> self_;
     typedef internal::decorated_image_impl_< I, self_ > impl_;
 
+    /// Type of the psite.
+    typedef mln_psite(I) psite;
+
+    /// Return type of read-only access.
+    typedef mln_rvalue(I) rvalue;
     /// Return type of read-write access.
-    typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+    typedef typename impl_::lvalue lvalue;
 
     /// Ctors
     decorated_image();
@@ -105,7 +111,14 @@ namespace mln
     /// Skeleton.
     typedef decorated_image< tag::image_<I>, tag::data_<D> > skeleton;
 
-    mln_value(I) read_(const mln_psite(I)& p) const;
+    /// Read-only access of pixel value at point site \p p.
+    rvalue operator()(const psite& p) const;
+
+    /// Read-write access of pixel value at point site \p p.
+    lvalue operator()(const psite& p);
+
+    /// Actual read routine.
+    rvalue read_(const mln_psite(I)& p) const;
 
     /// Const promotion via conversion.
     operator decorated_image<const I, D>() const;
@@ -115,7 +128,6 @@ namespace mln
 
     /// Give the decoration.
     D& decoration();
-
   };
 
 
@@ -168,33 +180,53 @@ namespace mln
     void (D::*mr)(const I&, const mln_psite(I)&) const = & D::reading;
     mr = 0;
     typedef mlc_unconst(I) I_;
-    void (D::*mw)(I_&, const mln_psite(I_)&, const mln_value(I_)&) = & D::writing;
+    void (D::*mw)(I_&, const mln_psite(I_)&, const mln_value(I_)&) =
+      & D::writing;
     mw = 0;
   }
 
-  namespace internal
+  template <typename I, typename D>
+  inline
+  typename decorated_image<I,D>::rvalue
+  decorated_image<I,D>::operator()(const mln_psite(I)& p) const
   {
-    /// \internal
-    template <typename I, typename E>
-    inline
-    void
-    decorated_image_impl_<I,E>::write_(const mln_psite(I)& p, const mln_value(I)& v)
-    {
-      E& ima = internal::force_exact<E>(*this);
-      ima.decoration().writing(ima.data_->ima_, p, v);
-      ima.data_->ima_(p) = v;
-    }
-
-  } // end of namespace mln::internal
+    mln_precondition(this->delegatee_() != 0);
+    return read_(p);
+  }
 
   template <typename I, typename D>
   inline
-  mln_value(I)
-    decorated_image<I,D>::read_(const mln_psite(I)& p) const
+  typename decorated_image<I,D>::lvalue
+  decorated_image<I,D>::operator()(const mln_psite(I)& p)
+  {
+    mln_precondition(this->delegatee_() != 0);
+    // Return a proxy.
+    return lvalue(*this, p);
+  }
+
+  template <typename I, typename D>
+  inline
+  mln_rvalue(I)
+  decorated_image<I,D>::read_(const mln_psite(I)& p) const
   {
     this->data_->deco_.reading(this->data_->ima_, p);
     return this->data_->ima_(p);
   }
+
+  namespace internal
+  {
+    template <typename I, typename E>
+    inline
+    void
+    decorated_image_impl_<I,E>::write_(const mln_psite(I)& p,
+				       const mln_value(I)& v)
+    {
+      E& ima = internal::force_exact<E>(*this);
+      ima.decoration().writing(*ima.delegatee_(), p, v);
+      (*ima.delegatee_())(p) = v;
+    }
+
+  } // end of namespace mln::internal
 
   template <typename I, typename D>
   inline

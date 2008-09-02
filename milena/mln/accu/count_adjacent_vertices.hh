@@ -82,7 +82,7 @@ namespace mln
       /// The value of the counter.
       std::size_t count__;
       /// The set of adjacent vertices.
-      std::set<util::node_id> vertices_;
+      std::set<util::vertex_id> vertices_;
     };
 
 
@@ -149,6 +149,8 @@ namespace mln
     count_adjacent_vertices_<P, V>::set_value(std::size_t c)
     {
       count__ = c;
+      /// Reset the other member.
+      vertices_.clear();
     }
 
     template <typename P, typename V>

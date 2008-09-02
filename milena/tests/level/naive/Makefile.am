@@ -15,6 +15,6 @@ median_SOURCES = median.cc
 # For the moment, we just have the second test.  We run it during
 # target `check', but we shall move it to target `check-full' as soon
 # as a smaller and faster test is written.
-median_CXXFLAGS = $(LONG_TESTS_CXXFLAGS)
+median_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 TESTS = $(check_PROGRAMS)

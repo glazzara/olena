@@ -62,9 +62,10 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = arith::plus( input,
-					    top_hat_white(input, win) - top_hat_black(input, win),
-					    fun::v2v::saturate<mln_value(I)>() );
+      mln_concrete(I) output =
+	arith::plus( input,
+		     top_hat_white(input, win) - top_hat_black(input, win),
+		     fun::v2v::saturate<mln_value(I)>() );
 
       trace::exiting("morpho::contrast");
       return output;

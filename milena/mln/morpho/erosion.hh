@@ -76,7 +76,7 @@ namespace mln
 	  for_all(p)
 	    {
 	      min.init();
-	      for_all(q) if (input.has(q))
+	      for_all(q) if (input.owns_(q))
 		min.take(input(q));
 	      output(p) = min;
 	    }
@@ -103,7 +103,7 @@ namespace mln
 	      output = clone(input);
 	      for_all(p)
 		if (input(p))
-		  for_all(q) if (input.has(q))
+		  for_all(q) if (input.owns_(q))
 		    if (! input(q))
 		      {
 			output(p) = false;
@@ -115,7 +115,7 @@ namespace mln
 	      initialize(output, input);
 	      for_all(p)
 		{
-		  for_all(q) if (input.has(q))
+		  for_all(q) if (input.owns_(q))
 		    if (! input(q))
 		      break;
 		  // If there was no break (so q is not valid) then

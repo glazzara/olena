@@ -16,24 +16,33 @@ gau:
 icpD: icp.cc +depend
 	g++ icp.cc -I../../.. -g -o 'icpD'
 
-icp: icp.cc +depend icp.o
-	g++ icp.o -I../../.. -O3 -DNDEBUG -o 'icp'
+icp: +depend
+	g++ icp.cc -I../../.. -O3 -DNDEBUG -o 'icp'
 
-icp.o:
-	g++ -c icp.cc -I../../.. -O3 -DNDEBUG 
+icp_refD: icp_ref.cc ../registration/icp_ref.hh +depend
+	g++ -Wall -W icp_ref.cc -I../../.. -g -o 'icp_refD'
+
+icp_ref: icp_ref.cc ../registration/icp_ref.hh +depend
+	g++ icp_ref.cc -I../../.. -O3 -DNDEBUG -o 'icp_ref'
 
 bench:
 	ruby bench.rb
 
+test: icp icp_ref
+	ruby test.rb
+
 clean:
 	rm -f -- ./bin/*
-	rm -f sub gsub gau icpD icp
+	rm -f sub gsub gau icpD icp icp_refD icp_ref *.o
 	rm -f log.dat registred.pbm
 	rm -f i_*
+	rm -f tmp.ppm registred.ppm semantic.cache
+	rm +depend
+	rm -f step_*
 
-.PHONY: check bench icpD
+.PHONY: check bench test icpD icp_refD icp icp_ref
 
 +depend:
-	g++ -M icp.cc $(FLAG) > +depend
+	g++ -MM icp.cc $(FLAG) > +depend
 
 include +depend

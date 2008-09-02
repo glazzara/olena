@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,9 @@
 #ifndef MLN_CORE_WINDOW1D_HH
 # define MLN_CORE_WINDOW1D_HH
 
-/*! \file mln/core/window1d.hh
- *
- * \brief Definition of the mln::window1d alias and of a construction
- * routine.
- */
+/// \file mln/core/window1d.hh
+/// \brief Definition of the mln::window1d alias and of a construction
+/// routine.
 
 # include <mln/core/window.hh>
 # include <mln/core/dpoint1d.hh>
@@ -41,10 +39,9 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a window with arbitrary shape, defined on
-   * the 1D square grid with integer coordinates.
-   */
-  typedef window<dpoint1d> window1d;
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 1D square grid with integer coordinates.
+  typedef window<mln::dpoint1d> window1d;
 
 
 } // end of namespace mln

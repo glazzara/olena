@@ -39,6 +39,7 @@
 # include <mln/fun/i2v/all_to.hh>
 
 # include <mln/metal/bool.hh>
+# include <mln/metal/is_not.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 # include <mln/core/h_vec.hh>
@@ -370,7 +371,7 @@ namespace mln
   inline
   point<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
   {
-    return coord_; // FIXGE: Is-it OK?
+    return coord_; // FIXME: Is-it OK?
   }
   
   template <typename G, typename C>
@@ -378,7 +379,7 @@ namespace mln
   point<G,C>::operator algebra::vec<G::dim, float> () const
   {
     algebra::vec<dim, float> tmp;
-    for (unsigned i = 0; i < dim; ++i)
+    for (unsigned int i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
     return tmp;
   }

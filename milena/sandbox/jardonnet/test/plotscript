@@ -1,11 +1,9 @@
-set title "Bench : q, e" 
-
 set xlabel "q"
 set ylabel "e"
 set zlabel "time"
-
 splot "log.dat"
-
-save "plot.gp"
-
-#pause(-1)
+set terminal png nocrop enhanced size 800,600
+set output "bench_qe.png"
+replot
+set output
+set terminal x11

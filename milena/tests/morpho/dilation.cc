@@ -78,9 +78,9 @@ int main()
   }
 
   {
-    image2d<bool> bin(lena.domain()), out(lena.domain());
+    image2d<bool> bin(lena.domain());
     level::fill(bin, pw::value(lena) > pw::cst(127u));
-    morpho::dilation(bin, rec, out);
+    image2d<bool> out = morpho::dilation(bin, rec);
 
     image2d<int_u8> test(lena.domain());
     image2d<int_u8>::fwd_piter p(lena.domain());

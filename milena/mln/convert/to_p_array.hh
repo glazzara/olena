@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_CONVERT_TO_P_ARRAY_HH
 # define MLN_CONVERT_TO_P_ARRAY_HH
 
-/*! \file mln/convert/to_p_array.hh
- *
- * \brief Conversions to mln::p_array.
- */
+/// \file mln/convert/to_p_array.hh
+/// \brief Conversions to mln::p_array.
 
 # include <mln/core/p_array.hh>
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 
 
@@ -54,6 +53,11 @@ namespace mln
     p_array<mln_psite(W)> to_p_array(const Window<W>& win,
 				     const mln_psite(W)& p);
 
+    /// Convert an image \p img into a p_array.
+    template <typename I>
+    p_array<mln_point(I)>
+    to_p_array(const Image<I>& img);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -65,6 +69,7 @@ namespace mln
       const S& pset = exact(pset_);
       p_array<mln_psite(S)> v;
       v.reserve(pset.npoints());
+      // FIXME: Why mln_fwd_piter and not mln_piter?
       mln_fwd_piter(S) p(pset);
       for_all(p)
 	v.append(p);
@@ -82,6 +87,23 @@ namespace mln
       for_all(q)
 	v.append(q);
       return v;
+    }
+
+    template <typename I>
+    inline
+    p_array<mln_point(I)>
+    to_p_array(const Image<I>& img_)
+    {
+      const I& img = exact(img_);
+
+      p_array<mln_point(I)> a;
+
+      mln_piter(I) p(img.domain());
+      for_all(p)
+        if (img(p))
+          a.append(p);
+
+      return a;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

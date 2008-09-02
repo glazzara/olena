@@ -64,10 +64,10 @@ test (points_type& points, const edges_type& edges,
   util::graph<mln::point2d> g;
   // Populate the graph with nodes.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_node (points[i]);
+    g.add_vertex(points[i]);
   // Populate the graph with edges.
   for (edges_type::const_iterator i = edges.begin(); i != edges.end(); ++i)
-    g.add_edge (i->first, i->second);
+    g.add_edge(i->first, i->second);
 
   mln::p_graph<point2d> pg(g);
 

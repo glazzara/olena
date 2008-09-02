@@ -60,6 +60,10 @@
       {										\
       }										\
 										\
+      Name##_##Out##_expr_()							\
+      {										\
+      }										\
+										\
       template <typename P>							\
       result operator()(const P& p) const					\
       {										\
@@ -113,6 +117,10 @@
 										\
       Name##_##Out##_expr_(const F& f)						\
 	: f_(f)									\
+      {										\
+      }										\
+										\
+      Name##_##Out##_expr_()							\
       {										\
       }										\
 										\

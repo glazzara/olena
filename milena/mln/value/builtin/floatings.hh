@@ -72,17 +72,17 @@ namespace mln
       typedef value::kind::data       kind;
       typedef value::quant::high      quant;
 
-      static const float min()
+      static float min()
       {
 	static const float min_ = std::numeric_limits<float>::min();
 	return min_;
       }
-      static const float max()
+      static float max()
       {
 	static const float max_ = std::numeric_limits<float>::max();
 	return max_;
       }
-      static const float epsilon()
+      static float epsilon()
       {
 	static const float epsilon_ = std::numeric_limits<float>::epsilon();
 	return epsilon_;
@@ -103,17 +103,17 @@ namespace mln
       typedef value::kind::data       kind;
       typedef value::quant::high      quant;
 
-      static const double min()
+      static double min()
       {
 	static const double min_ = std::numeric_limits<double>::min();
 	return min_;
       }
-      static const double max()
+      static double max()
       {
 	static const double max_ = std::numeric_limits<double>::max();
 	return max_;
       }
-      static const double epsilon()
+      static double epsilon()
       {
 	static const double epsilon_ = std::numeric_limits<double>::epsilon();
 	return epsilon_;

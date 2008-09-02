@@ -68,6 +68,7 @@ namespace mln
       namespace impl
       {
 
+	// FIXME: Argument FILENAME is not used; remove?
 	template <typename I>
 	inline
 	void save_header_(const I& ima, const std::string& filename,

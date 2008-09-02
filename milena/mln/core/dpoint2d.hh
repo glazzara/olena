@@ -1,4 +1,8 @@
+<<<<<<< HEAD:milena/mln/core/dpoint2d.hh
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+=======
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+>>>>>>> remotes/trunk:milena/mln/core/dpoint2d.hh
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +48,7 @@ namespace mln
   /*! \brief Type alias for a delta-point defined on the 2D square
    * grid with integer coordinates.
    */
-  typedef dpoint<grid::square, def::coord> dpoint2d;
+  typedef dpoint<mln::grid::square, def::coord> dpoint2d;
 
 
 } // end of namespace mln

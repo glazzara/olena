@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,6 +32,8 @@
  *
  * \brief Same as std::memset but for fastest images.
  */
+
+# include <cstring>
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>

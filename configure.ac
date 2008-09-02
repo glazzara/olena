@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.59])
+AC_PREREQ([2.61])
 
 
 ## ---------------- ##
@@ -15,8 +15,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
-# 1.9.4 because of changelog vs. ChangeLog on Darwin.
-AM_INIT_AUTOMAKE([1.9.4 foreign check-news dist-bzip2 -Wall])
+AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 nostdinc -Wall])
 
 
 ## --------------------- ##
@@ -38,15 +37,21 @@ if test "$GXX" = yes; then
   CXXFLAGS="$CXXFLAGS -pipe"
 fi
 
-# C++ compiler flags for tests.
+# ------------------------------ #
+# C++ compiler flags for tests.  #
+# ------------------------------ #
+
+# FIXME: We might want to write an Autoconf macro to factor this.
+
+# Standard flas for tests.
 AC_ARG_VAR([TESTS_CXXFLAGS])
 # We want no optimization for the tests (it slows down compiling
-# times), and a lot of debugging.
+# times), and debugging information.
 if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS"; then
   TESTS_CXXFLAGS="-O0 -ggdb -Wall -W"
 fi
 
-# C++ compiler flags for complex tests.
+# Flags for complex tests.
 AC_ARG_VAR([TESTS_CXXFLAGS_SPEED])
 # We want optimization for complex tests, and keep debugging flags
 # (still useful).
@@ -54,17 +59,43 @@ if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_SPEED"; then
   TESTS_CXXFLAGS_SPEED="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
 
-# C++ compiler flags for tools.
+# Flags for tests with with all debugging features turned on.
+AC_ARG_VAR([TESTS_CXXFLAGS_DEBUG])
+# We want no optimization for the tests (it slows down compiling
+# times), and a lot of debugging features.
+# * GNU C++ Library Debug Mode:
+#   http://gcc.gnu.org/onlinedocs/libstdc++/manual/debug_mode.html
+# * GNU C++ Library Compile Time Checks (a.k.a. concept checking):
+#   http://gcc.gnu.org/onlinedocs/libstdc++/manual/bk01pt12ch29.html
+if test "$GXX" = yes && test -z "$TESTS_CXXFLAGS_DEBUG"; then
+  TESTS_CXXFLAGS_DEBUG="-O0 -ggdb -Wall -W -D_GLIBCXX_DEBUG -D_GLIBCXX_CONCEPT_CHECKS"
+fi
+
+# ----------------- #
+# Flags for tools.  #
+# ----------------- #
+
 AC_ARG_VAR([TOOLS_CXXFLAGS])
-# On the contrary, we want fast binaries for tools.
+# We want fast binaries for tools.
 if test "$GXX" = yes && test -z "$TOOLS_CXXFLAGS"; then
   TOOLS_CXXFLAGS="-O3 -DNDEBUG -ggdb -Wall -W"
 fi
 
 
-## -------------- ##
-## Dependencies.  ##
-## -------------- ##
+## ------------------ ##
+## Libraries set up.  ##
+## ------------------ ##
+
+# Use Libtool.
+AC_PROG_LIBTOOL
+
+# Check for Darwin.
+AC_CANONICAL_HOST
+AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
+
+
+# (Bundled) trimesh2 library.
+AC_CONFIG_SUBDIRS([external/trimesh])
 
 # FreeImage library.
 OLN_WITH_FREEIMAGEPLUS
@@ -73,6 +104,31 @@ AM_CONDITIONAL([FREEIMAGEPLUS], [test x$oln_have_freeimageplus = xyes])
 # Cfitsio library.
 OLN_WITH_CFITSIO
 AM_CONDITIONAL([CFITSIO], [test x$oln_have_cfitsio = xyes])
+
+
+## --------- ##
+## Swilena.  ##
+## --------- ##
+
+OLN_WITH_SWILENA([with_swilena=yes], [with_swilena=no])
+AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
+
+# FIXME: Should we still configure these files if ENABLE_SWILENA is
+# false?
+AC_CONFIG_FILES([swilena/Makefile
+                 swilena/python/Makefile])
+
+AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
+
+AC_CONFIG_FILES(m4_do([swilena/python/sps],
+	              [:swilena/python/sps-common.in],
+                      [:swilena/python/sps.in]),
+                [chmod +x swilena/python/sps])
+AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
+                      [:swilena/python/sps-common.in],
+                      [:swilena/python/sps-local.in]),
+                [chmod +x swilena/python/sps-local])
+
 
 
 ## --------------- ##
@@ -85,6 +141,7 @@ AM_CONFIG_HEADER([config.h])
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
   Makefile
+    external/Makefile
     milena/Makefile
       milena/doc/Makefile
       milena/tools/Makefile
@@ -164,5 +221,22 @@ AC_CONFIG_FILES([
       milena/tests/value/concept/Makefile
     milena/tests/win/Makefile
 ])
+
+
+## -------------- ##
+## Applications.  ##
+## -------------- ##
+
+# Ask for the creation of applications' Makefiles.
+# FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
+AC_CONFIG_FILES([
+  milena/apps/Makefile
+    milena/apps/statues/Makefile
+])
+
+# Configure tests.
+AC_CONFIG_FILES([milena/apps/statues/test],
+		[chmod +x milena/apps/statues/test])
+
 
 AC_OUTPUT

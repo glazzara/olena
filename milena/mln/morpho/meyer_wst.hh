@@ -46,8 +46,8 @@
 // FIXME: See below.
 # include <mln/util/greater_psite.hh>
 # include <mln/morpho/includes.hh>
+# include <mln/literal/zero.hh>
 # include <mln/labeling/regional_minima.hh>
-
 
 
 namespace mln
@@ -110,10 +110,10 @@ namespace mln
       /* FIXME: Ensure the input image has scalar values.  */
 
       typedef L marker;
-      const marker unmarked = mln_min(marker);
+      const marker unmarked = literal::zero;
 
       // Initialize the output with the markers (minima components).
-      mln_ch_value(I, marker) markers =
+      mln_ch_value(I, marker) output =
 	labeling::regional_minima (input, nbh, nbasins);
 
       typedef mln_psite(I) psite;
@@ -130,12 +130,12 @@ namespace mln
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
       // the grey level input(P).
-      mln_piter(I) p(markers.domain());
+      mln_piter(I) p(output.domain());
       mln_niter(N) n(nbh, p);
       for_all (p)
-	if (markers(p) == unmarked)
+	if (output(p) == unmarked)
 	  for_all(n)
-	    if (markers.has(n) && markers(n) != unmarked)
+	    if (output.has(n) && output(n) != unmarked)
 	      {
 		queue.push(p);
 		break;
@@ -154,31 +154,33 @@ namespace mln
 	  bool single_adjacent_marker_p = true;
 	  mln_niter(N) n(nbh, p);
 	  for_all(n)
-	    if (markers.has(n) && markers(n) != unmarked)
-	      if (adjacent_marker == unmarked)
-		{
-		  adjacent_marker = markers(n);
-		  single_adjacent_marker_p = true;
-		}
-	      else
-		if (adjacent_marker != markers(n))
+	    if (output.has(n) && output(n) != unmarked)
+	      {
+		if (adjacent_marker == unmarked)
 		  {
-		    single_adjacent_marker_p = false;
-		    break;
+		    adjacent_marker = output(n);
+		    single_adjacent_marker_p = true;
 		  }
+		else
+		  if (adjacent_marker != output(n))
+		    {
+		      single_adjacent_marker_p = false;
+		      break;
+		    }
+	      }
 	  /* If the neighborhood of P contains only psites with the
 	     same label, then P is marked with this label, and its
 	     neighbors that are not yet marked are put into the
 	     hierarchical queue.  */
 	  if (single_adjacent_marker_p)
 	    {
-	      markers(p) = adjacent_marker;
+	      output(p) = adjacent_marker;
 	      for_all(n)
-		if (markers.has(n) && markers(n) == unmarked)
+		if (output.has(n) && output(n) == unmarked)
 		  queue.push(n);
 	    }
 	}
-      return markers;
+      return output;
     }
 
     template <typename L, typename I, typename N>

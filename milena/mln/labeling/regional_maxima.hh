@@ -28,11 +28,9 @@
 #ifndef MLN_LABELING_REGIONAL_MAXIMA_HH
 # define MLN_LABELING_REGIONAL_MAXIMA_HH
 
-/*! \file mln/labeling/regional_maxima.hh
- *
- * \brief Connected component labeling of the regional maxima of an
- * image.
- */
+/// \file mln/labeling/regional_maxima.hh
+/// \brief Connected component labeling of the regional maxima of an
+/// image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -105,9 +103,9 @@ namespace mln
 	regional_maxima_functor(const I_& input, const N_& nbh)
 	  : input(input),
 	    nbh(nbh),
-	    s(level::sort_psites_decreasing(input)),
-	    attr(input.domain())
+	    s(level::sort_psites_decreasing(input))
 	{
+	  initialize(attr, input);
 	}
       };
 
@@ -123,6 +121,9 @@ namespace mln
 			 L& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::regional_maxima_");
+
+	  // FIXME: abort if L is not wide enough to encode the set of
+	  // maxima.
 
 	  typedef impl::regional_maxima_functor<I,N,L> F;
 	  F f(input, nbh);

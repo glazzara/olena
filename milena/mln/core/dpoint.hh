@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -125,13 +125,13 @@ namespace mln
 
     /// Conversion towards a algebra::vec.
     template <typename Q>
-    operator algebra::vec<G::dim, Q>() const;
+    operator mln::algebra::vec<G::dim, Q>() const;
 
     /// Explicit conversion.
-    const algebra::vec<G::dim, C>& to_vec() const;
+    const mln::algebra::vec<G::dim, C>& to_vec() const;
 
   protected:
-    algebra::vec<G::dim, C> coord_;
+    mln::algebra::vec<G::dim, C> coord_;
   };
 
 
@@ -250,14 +250,14 @@ namespace mln
   template <typename G, typename C>
   template <typename Q>
   inline
-  dpoint<G,C>::operator algebra::vec<G::dim, Q> () const
+  dpoint<G,C>::operator mln::algebra::vec<G::dim, Q> () const
   {
     return coord_;
   }
 
   template <typename G, typename C>
   inline
-  const algebra::vec<G::dim, C>&
+  const mln::algebra::vec<G::dim, C>&
   dpoint<G,C>::to_vec() const
   {
     return coord_;

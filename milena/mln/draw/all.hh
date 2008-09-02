@@ -46,5 +46,6 @@ namespace mln
 # include <mln/draw/graph.hh>
 # include <mln/draw/label.hh>
 # include <mln/draw/line.hh>
+# include <mln/draw/plot.hh>
 
 #endif // ! MLN_DRAW_ALL_HH

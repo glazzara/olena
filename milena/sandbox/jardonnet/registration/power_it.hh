@@ -12,29 +12,27 @@
 namespace mln
 {
 
-  algebra::quat power_it(algebra::mat<4,4,float> A)
+  /**
+   * Return the biggest eigen vector.
+   */
+  template <uint n>
+  algebra::vec<n,float> power_it(algebra::mat<n,n,float>& A)
   {
-    float    normex = 1.;
+    algebra::vec<n,float> b0(literal::zero);
+    algebra::vec<n,float> bk(literal::zero);
+    for (unsigned i = 0; i < n; i++)
+      bk[i] = 0.1;
+    bk[0] = 1;
+    bk[1] = 1;
 
-    algebra::vec<4,float> x0(literal::zero);
-    algebra::vec<4,float> b(literal::zero);
-
-    algebra::vec<4,float> x(literal::zero);
-    for (int i = 0; i < 4; i++)
-      x[i] = 1.;
-
-    while (fabs(norm::l2(x) - norm::l2(x0)) > 1e-6)
+    //FIXME: infinit loop
+    while (!about_equal(norm::l2(bk),norm::l2(b0)))
       {
-        x0 = x;
-        normex = norm::l2(x);
-        b = x / normex;
-        x = A * b;
+        b0 = bk;
+        bk = A * bk;
+        bk.normalize();
       }
-    normex = norm::l2(x);
-    
-    algebra::quat q(x / normex);
-    q.set_unit();
-    return q;
+    return bk.normalize();;
   }
 }
 

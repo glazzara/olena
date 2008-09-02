@@ -5,7 +5,7 @@
 namespace mln
 {
   
-  void polcoe(float x[], float y[], int n,
+  void polcoe(const float x[], const float y[], int n,
               float cof[])
   {
     int k,j,i;

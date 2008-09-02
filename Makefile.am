@@ -2,4 +2,8 @@
 
 ACLOCAL_AMFLAGS = -I build-aux
 
-SUBDIRS = build-aux milena
+SUBDIRS = build-aux external milena
+
+if ENABLE_SWILENA
+  SUBDIRS += swilena
+endif ENABLE_SWILENA

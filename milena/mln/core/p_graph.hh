@@ -33,11 +33,10 @@
 # include <mln/accu/bbox.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/graph.hh>
+
 # include <mln/core/graph_psite.hh>
 # include <mln/core/p_graph_piter.hh>
 
-/// \file mln/core/p_graph.hh
-/// \brief Definition of a point set based on graph.
 
 namespace mln
 {
@@ -45,7 +44,7 @@ namespace mln
      is expected to be a point, not a psite!!  We should have a
      uniform scheme for point site sets.  */
 
-  template<typename P>
+  template <typename P>
   struct p_graph
     : public internal::site_set_base_< graph_psite<P>, p_graph<P> >
   {
@@ -68,12 +67,14 @@ namespace mln
     /// Backward Site_Iterator associated type.
     typedef p_graph_bkd_piter_<P> bkd_piter;
 
-    /// Return The number of points (sites) of the set, i.e., the
-    /// number of \em vertices.
+    /// \brief Return The number of points (sites) of the set, i.e.,
+    /// the number of \em vertices.
+    ///
+    /// Required by the mln::Point_Set concept.
     std::size_t npoints() const;
 
-    /// Return The number of nodes (vertices) in the graph.
-    std::size_t nnodes() const;
+    /// Return The number of vertices in the graph.
+    std::size_t nvertices() const;
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
 
@@ -83,34 +84,35 @@ namespace mln
     bool has(const psite& p) const;
 
     /// Return the graph point (FIXME site?) from an index
-    const P& point_from_id(const util::node_id& id) const;
-    P& point_from_id(const util::node_id& id);
+    const P& point_from_id(const util::vertex_id& id) const;
+    P& point_from_id(const util::vertex_id& id);
 
 
-    /// Return the point contained in the first node adjacent
+    /// Return the point contained in the first vertex adjacent
     // to the edge id \a e.
-    const P& node1(const util::edge_id& e) const;
-    /// Return the point contained in the second node adjacent
+    const P& vertex1(const util::edge_id& e) const;
+    /// Return the point contained in the second vertex adjacent
     /// to the edge  id \a e.
-    const P& node2(const util::edge_id& e) const;
+    const P& vertex2(const util::edge_id& e) const;
 
     /// Adjacency tests.
     /// \{
     /// Return true if the psites \a lhs and \a rhs are adjacent.
     /// (If \a lhs and \a rhs are equal, return false).
     bool adjacent(const psite& lhs, const psite& rhs) const;
-    /// Return true if the nodes \a lhs and \a rhs are adjacent.
+    /// Return true if the vertices \a lhs and \a rhs are adjacent.
     /// (If \a lhs and \a rhs are equal, return false).
-    bool adjacent(const util::node_id& lhs, const util::node_id& rhs) const;
+    bool adjacent(const util::vertex_id& lhs, const util::vertex_id& rhs) const;
 
     /// Return true if the psites \a lhs and \a rhs are adjacent, or equal.
     bool adjacent_or_equal(const psite& lhs, const psite& rhs) const;
-    /// Return true if the nodes \a lhs and \a rhs are adjacent, or equal
-    bool adjacent_or_equal(const util::node_id& lhs,
-			   const util::node_id& rhs) const;
+    /// Return true if the vertices \a lhs and \a rhs are adjacent, or equal
+    bool adjacent_or_equal(const util::vertex_id& lhs,
+			   const util::vertex_id& rhs) const;
     /// \}
 
-    /// Return the graph associated to the p_graph domain:
+    /// Return the graph associated to the p_graph domain.
+    // FIXME: Rename as something else (graph() ?).
     const graph& to_graph() const;
     graph& to_graph();
 
@@ -138,7 +140,7 @@ namespace mln
   /// \brief Inclusion of a mln::p_graph in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
-  /// infrastrure for graphs i simple: a mln::p_graph is included
+  /// infrastrure for graphs is simple: a mln::p_graph is included
   /// in another one if their are equal.
   ///
   /// \todo Refine this later, when we are able to express subgraph
@@ -148,9 +150,10 @@ namespace mln
   operator<=(const p_graph<P>& lhs, const p_graph<P>& rhs);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-  template<typename P>
+  template <typename P>
   inline
   p_graph<P>::p_graph(const util::graph<P>& gr)
     // Create a deep, managed copy of GR.
@@ -158,27 +161,27 @@ namespace mln
   {
     accu::bbox<P> a;
     for (unsigned i = 0; i < npoints(); ++i)
-      a.take(gr_->node_data(i));
+      a.take(gr_->vertex_data(i));
     bb_ = a.to_result();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_graph<P>::npoints() const
   {
-    return nnodes();
+    return nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
-  p_graph<P>::nnodes() const
+  p_graph<P>::nvertices() const
   {
-    return this->gr_->nnodes();
+    return this->gr_->nvertices();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   std::size_t
   p_graph<P>::nedges() const
@@ -186,7 +189,7 @@ namespace mln
     return this->gr_->nedges();
   }
 
-  template<typename P>
+  template <typename P>
   inline
   const box_<P>&
   p_graph<P>::bbox() const
@@ -194,7 +197,7 @@ namespace mln
     return bb_;
   }
 
-  template<typename P>
+  template <typename P>
   inline
   bool
   p_graph<P>::has(const psite& p) const
@@ -202,38 +205,38 @@ namespace mln
     return
       // Check whether P is compatible with this psite set.
       (&p.pg() == this) &&
-      // Check that the node id of P belongs to the range of valid node ids.
-      (p.id() < gr_->nnodes());
+      // Check that the vertex id of P belongs to the range of valid vertex ids.
+      (p.id() < gr_->nvertices());
   }
 
   template <typename P>
   const P&
-  p_graph<P>::point_from_id(const util::node_id& id) const
+  p_graph<P>::point_from_id(const util::vertex_id& id) const
   {
-    return this->gr_->node_data(id);
+    return this->gr_->vertex_data(id);
   }
 
   template <typename P>
   P&
-  p_graph<P>::point_from_id(const util::node_id& id)
+  p_graph<P>::point_from_id(const util::vertex_id& id)
   {
-    return this->gr_->node_data(id);
+    return this->gr_->vertex_data(id);
   }
 
   template <typename P>
   const P&
-  p_graph<P>::node1(const util::edge_id& e) const
+  p_graph<P>::vertex1(const util::edge_id& e) const
   {
-    util::node_id n1 = this->gr_->edge(e).n1();
-    return this->point_from_id(n1);
+    util::vertex_id v1 = this->gr_->edge(e).v1();
+    return this->point_from_id(v1);
   }
 
   template <typename P>
   const P&
-  p_graph<P>::node2(const util::edge_id& e) const
+  p_graph<P>::vertex2(const util::edge_id& e) const
   {
-    util::node_id n2 = this->gr_->edge(e).n2();
-    return this->point_from_id(n2);
+    util::vertex_id v2 = this->gr_->edge(e).v2();
+    return this->point_from_id(v2);
   }
 
   template <typename P>
@@ -250,8 +253,8 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_graph<P>::adjacent(const util::node_id& lhs,
-		       const util::node_id& rhs) const
+  p_graph<P>::adjacent(const util::vertex_id& lhs,
+		       const util::vertex_id& rhs) const
   {
     mln_assertion(lhs < this->npoints());
     mln_assertion(rhs < this->npoints());
@@ -263,11 +266,11 @@ namespace mln
     // Check whether LHS and RHS are adjacent (i.e., whether RHS is
     // among the neighbors of LHS).
     typedef std::vector<util::edge_id> edges_t;
-    const edges_t& lhs_neighbs = gr_->nodes()[lhs]->edges;
+    const edges_t& lhs_neighbs = gr_->vertices()[lhs]->edges;
     for (edges_t::const_iterator e = lhs_neighbs.begin();
 	 e != lhs_neighbs.end(); ++e)
-      if (gr_->edges()[*e]->n1() == rhs ||
-	  gr_->edges()[*e]->n2() == rhs)
+      if (gr_->edges()[*e]->v1() == rhs ||
+	  gr_->edges()[*e]->v2() == rhs)
 	return true;
 
     return false;
@@ -285,8 +288,8 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_graph<P>::adjacent_or_equal(const util::node_id& lhs,
-				const util::node_id& rhs) const
+  p_graph<P>::adjacent_or_equal(const util::vertex_id& lhs,
+				const util::vertex_id& rhs) const
   {
     mln_assertion(lhs < this->npoints());
     mln_assertion(rhs < this->npoints());

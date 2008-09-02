@@ -120,6 +120,28 @@ namespace mln
 	void make_set(const psite& p)
 	{
 	  parent(p) = p;
+	  /* FIXME: What if the value_type of DATA (i.e., A) were not
+	     based on a accu::count_<mln::pix>?  Currently, nothing
+	     enforces this, but the code below expects this line to be
+	     valid:
+
+               data(p).take_as_init(make::pix(f.input, p))
+
+	     which probably restricts the kind of input images.
+
+	     If we want to be more generic, the initialization should
+	     read something like:
+
+               init_data(p);
+
+	     i.e., the functor for the initialization of data should
+	     be passed as an argument to the canvas' ctor.
+
+	     Of course, we might want to restrict attributes to the
+	     accumulator accu::count_<mln::pix> (which is perfectly
+	     acceptable), but then this class should statically check
+	     the conformance of the template parameter A to this
+	     constraint.  */
 	  data(p).take_as_init(make::pix(f.input, p)); // FIXME: algebraic so p!
 	}
 
@@ -149,6 +171,18 @@ namespace mln
 	    {
 	      if (equiv(r, p))
 		{
+		  /* FIXME: Same remark as above concerning the
+		     initialization of data(p); instead of
+
+		       data(p).take(data(r));
+		     
+		     we should (or could) have
+
+		       unite_data(p, r);
+
+		     so as to keep the generic aspect of this canvas
+		     (as long as the set of acceptable types for the
+		     template parameter A is not bound).  */
 		  data(p).take(data(r));
 		  parent(r) = p;
 		}

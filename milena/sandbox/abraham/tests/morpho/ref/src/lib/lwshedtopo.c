@@ -1,13 +1,13 @@
 /* $Id: lwshedtopo.c,v 1.14 2006/02/28 07:49:16 michel Exp $ */
-/* 
+/*
   Ligne de partage des eaux topologique (nouvelle version)
 
   Ref: CBN04
 
   Michel Couprie - septembre 2003
   Laurent Najman - mai 2005
-  
-Updates: 
+
+Updates:
   MC - cor. bug mem. alloc. - 12 juillet 2005
 */
 
@@ -27,7 +27,7 @@ Updates:
 static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N);
 static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8_t *G);
 
-#define EN_FAH     0 
+#define EN_FAH     0
 #define WATERSHED  1
 #define MASSIF     2
 #define MODIFIE    4
@@ -37,10 +37,10 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
 //#define _DEBUG_
 //#define PARANO
 
-// If you want the first version (slower), 
+// If you want the first version (slower),
 // uncomment the following line
 //#define OLDVERSION
-// If you want the first version of lwshedtopobin (slower, BUT WHICH WORKS), 
+// If you want the first version of lwshedtopobin (slower, BUT WHICH WORKS),
 // uncomment the following line
 //#define OLDVERSIONBIN
 
@@ -48,10 +48,10 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
 //#define LCASLOW
 
 /* ==================================== */
-static int32_t TrouveComposantes(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t connex, 
+static int32_t TrouveComposantes(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t connex,
                              int32_t *CM, int32_t *tabcomp)
 /* ==================================== */
-// variante sans simplification 
+// variante sans simplification
 // place la plus haute composante (ou l'une des plus hautes) en premier
 {
   int32_t k, y, n = 1, maxval = F[x], first = 1;
@@ -126,7 +126,7 @@ static int32_t TrouveComposantes(int32_t x, u_int8_t *F, int32_t rs, int32_t ps,
     } break;
   } // switch (connex)
   return n;
-} // TrouveComposantes() 
+} // TrouveComposantes()
 
 
 /* ==================================== */
@@ -135,7 +135,7 @@ static int32_t LowComAncSlow(
   int32_t c1,
   int32_t c2)
 /* Retourne le plus proche commun ancetre des cellules c1,c2
-   Utilise le champ "flags". 
+   Utilise le champ "flags".
 */
 /* ==================================== */
 #undef F_NAME
@@ -148,7 +148,7 @@ static int32_t LowComAncSlow(
     CT->flags[x] |= LCA1;     /* marque LCA1 tous les ancetres de x */
     x = CT->tabnodes[x].father;
   } while (x != -1);
-  
+
   x = c2; do
   {                           /* remonte les ancetres de x */
     if (CT->flags[x] & LCA1) { lca = x; break; }
@@ -172,8 +172,8 @@ static int32_t LowComAncSlow(
 
 /////////////////////////////////////////
 // lca : Nearest (Lowest) Common Ancestor
-// 
-// From: The LCA Problem Revisited 
+//
+// From: The LCA Problem Revisited
 // M.A. Bender - M. Farach-Colton
 //
 
@@ -266,13 +266,13 @@ int32_t ** LCApreprocess(ctree *CT,   int32_t *Euler, int32_t *Depth, int32_t *R
       }
     }
   }
-#ifdef _DEBUG_
+  //#ifdef _DEBUG_
   for (i=0; i<logn; i++) {
     for (j=0; j<nbRepresent; j++)
       printf("M[%d][%d] = %d - ", i, j, Minim[i][j]);
     printf("\n");
   }
-#endif
+  //#endif
   return Minim;
 }
 
@@ -303,14 +303,14 @@ int32_t LowComAncFast(int32_t n1, int32_t n2, int32_t *Euler, int32_t *Number, i
 }
 
 /* ==================================== */
-static int32_t W_Constructible(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t connex, 
+static int32_t W_Constructible(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, int32_t N, int32_t connex,
                            ctree *CT, int32_t *CM, int32_t *tabcomp,
 			   int32_t *c, int32_t *lcalevel
 #ifndef LCASLOW
 			   , int32_t *Euler, int32_t *Represent, int32_t *Depth, int32_t *Number, int32_t **Minim
 #endif
 			   )
-    
+
 /* ==================================== */
 // Si x est W-construcible, le couple [c, lcalevel] représente la composante (avec son niveau)
 // à laquelle x peut être ajouté.
@@ -321,7 +321,7 @@ static int32_t W_Constructible(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, i
     if (ncomp > 0)
     {
       if (ncomp == 1) *c = tabcomp[0];
-      else 
+      else
       {
         *c = tabcomp[0];
         for (k = 1; k < ncomp; k++)
@@ -344,7 +344,7 @@ static int32_t W_Constructible(int32_t x, u_int8_t *F, int32_t rs, int32_t ps, i
 static void Watershed(struct xvimage *image, int32_t connex,
 	      Fah * FAH, int32_t *CM, ctree * CT)
 /* ==================================== */
-// 
+//
 // inondation a partir des voisins des maxima, suivant les ndg decroissants
 // nouvelle (08/03) caracterisation des points destructibles
 // nouvelle (09/03) construction de l'arbre des composantes
@@ -362,7 +362,7 @@ static void Watershed(struct xvimage *image, int32_t connex,
   int32_t ncomp;                    /* nombre de composantes dans tabcomp */
   int32_t nbelev;                   /* nombre d'elevations effectuees */
   int32_t lcalevel;                 /* niveau du lca */
-  int32_t incr_vois; 
+  int32_t incr_vois;
 #ifndef LCASLOW
   int32_t logn, nbRepresent;
   int32_t *Euler, *Depth, *Represent, *Number, **Minim;
@@ -375,12 +375,12 @@ static void Watershed(struct xvimage *image, int32_t connex,
   Represent = (int32_t *)calloc(CT->nbnodes, sizeof(int32_t));
   Depth = (int32_t *)calloc(CT->nbnodes, sizeof(int32_t));
   Number = (int32_t *)calloc(CT->nbnodes, sizeof(int32_t));
-  if ((Euler == NULL) || (Represent == NULL) 
+  if ((Euler == NULL) || (Represent == NULL)
       || (Depth == NULL) || (Number == NULL)) {
     fprintf(stderr, "%s : malloc failed\n", F_NAME);
     return;
   }
-  
+
   Minim = LCApreprocess(CT, Euler, Depth, Represent, Number, &nbRepresent, &logn);
 #ifdef _DEBUG_
   printf("Comparison Slow/Fast lca\n");
@@ -423,44 +423,44 @@ static void Watershed(struct xvimage *image, int32_t connex,
   // empile les points
   for (i = 0; i < N; i++)
   {
-#ifdef OLDVERSION   
+#ifdef OLDVERSION
     // empile tous les points
     Set(i,EN_FAH);
     FahPush(FAH, i, NDG_MAX - F[i]);
-#else 
+#else
     // empile les points voisins d'un minima
     char flag=0;
     switch (connex)
       {
-      case 4: 
+      case 4:
       case 8:
 	for (k = 0; (k < 8) && (flag == 0); k += incr_vois)
           { y = voisin(i, k, rs, N);
 	  if ((y != -1) && (IsSet(y,MASSIF)))
-            { flag = 1; } 
+            { flag = 1; }
 	  }
-	  break; 
-	case 6: 
+	  break;
+	case 6:
 	  for (k = 0; k <= 10; k += 2)
           { y = voisin6(x, k, rs, ps, N);
 	  if ((y != -1) && (IsSet(y,MASSIF)))
-            { flag = 1; } 
+            { flag = 1; }
 	  } break;
-	case 18: 
+	case 18:
 	  for (k = 0; k < 18; k += 1)
           { y = voisin18(x, k, rs, ps, N);
 	  if ((y != -1) && (IsSet(y,MASSIF)))
-            { flag = 1; } 
+            { flag = 1; }
 	  } break;
-	case 26: 
+	case 26:
 	  for (k = 0; k < 26; k += 1)
           { y = voisin26(x, k, rs, ps, N);
 	  if ((y != -1) && (IsSet(y,MASSIF)))
-            { flag = 1; } 
+            { flag = 1; }
 	  } break;
 	} /* switch (connex) */
-    if (flag) { 
-      Set(i,EN_FAH); FahPush(FAH, i, NDG_MAX - F[i]); 
+    if (flag) {
+      Set(i,EN_FAH); FahPush(FAH, i, NDG_MAX - F[i]);
     }
 #endif
   } // for (i = 0; i < N; i++)
@@ -481,7 +481,7 @@ static void Watershed(struct xvimage *image, int32_t connex,
     {
         nbelev++;
         F[x] = lcalevel;      // eleve le niveau du point x
-        CM[x] = c;            // maj pointeur image -> composantes 
+        CM[x] = c;            // maj pointeur image -> composantes
         Set(x,MODIFIE);
         if (CT->tabnodes[c].nbsons == 0) // feuille
         {
@@ -491,33 +491,33 @@ static void Watershed(struct xvimage *image, int32_t connex,
         if (CT->tabnodes[c].nbsons > 1) // noeud
         {
         }
-#ifdef PARANO
+	//#ifdef PARANO
         else
           printf("%s : ERREUR COMPOSANTE BRANCHE!!!\n", F_NAME);
-#endif
+	//#endif
         // empile les c-voisins de x non marques MASSIF ni EN_FAH
 	switch (connex)
 	{
-	case 4: 
+	case 4:
 	case 8:
 	  for (k = 0; k < 8; k += incr_vois)
           { y = voisin(x, k, rs, N);
 	    if ((y != -1) && (!IsSet(y,MASSIF)) && (!IsSet(y,EN_FAH)))
             { Set(y,EN_FAH); FahPush(FAH, y, NDG_MAX - F[y]); }
-	  } break; 
-	case 6: 
+	  } break;
+	case 6:
 	  for (k = 0; k <= 10; k += 2)
           { y = voisin6(x, k, rs, ps, N);
 	    if ((y != -1) && (!IsSet(y,MASSIF)) && (!IsSet(y,EN_FAH)))
             { Set(y,EN_FAH); FahPush(FAH, y, NDG_MAX - F[y]); }
 	  } break;
-	case 18: 
+	case 18:
 	  for (k = 0; k < 18; k += 1)
           { y = voisin18(x, k, rs, ps, N);
 	    if ((y != -1) && (!IsSet(y,MASSIF)) && (!IsSet(y,EN_FAH)))
             { Set(y,EN_FAH); FahPush(FAH, y, NDG_MAX - F[y]); }
 	  } break;
-	case 26: 
+	case 26:
 	  for (k = 0; k < 26; k += 1)
           { y = voisin26(x, k, rs, ps, N);
 	    if ((y != -1) && (!IsSet(y,MASSIF)) && (!IsSet(y,EN_FAH)))
@@ -545,7 +545,7 @@ int32_t lwshedtopo(struct xvimage *image, int32_t connex)
 /* ==================================== */
 /*! \fn int32_t lwshedtopo(struct xvimage *image, int32_t connex)
     \param image (entrée/sortie) : une image 2D ndg
-    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D) 
+    \param connex (entrée) : 4 ou 8 (2D), 6, 18 ou 26 (3D)
     \return code erreur : 0 si échec, 1 sinon
     \brief ligne de partage des eaux "topologique" (algo MC, GB, LN)
 */
@@ -600,7 +600,7 @@ int32_t lwshedtopo(struct xvimage *image, int32_t connex)
   IndicsInit(N);
   Watershed(image, connex, FAH, CM, CT);
   for (i=0; i<N; i++)
-    F[i] = CT->tabnodes[CM[i]].data; 
+    F[i] = CT->tabnodes[CM[i]].data;
 
   /* ================================================ */
   /* UN PEU DE MENAGE                                 */
@@ -630,15 +630,15 @@ static void Reconstruction(struct xvimage *g, struct xvimage *f, int32_t *CM, ct
 
   for (i = 0; i < N; i++) if (G[i] >= F[i]) CT->flags[CM[i]] = 1; // marque les feuilles
 
-  for (d = 0; d < CT->nbnodes; d++) 
+  for (d = 0; d < CT->nbnodes; d++)
     if (CT->flags[d] == 1)
-    {                                               // pour toutes les feuilles marquees 
+    {                                               // pour toutes les feuilles marquees
       c = CT->tabnodes[d].father;
       while ((c != -1) && (CT->flags[c] == 0))
       {
 	CT->flags[c] = 1;                               // marque tous les ancetres de c
 	c = CT->tabnodes[c].father;
-      } 
+      }
     }
 
   for (i = 0; i < N; i++) // AMELIORATION POSSIBLE !!!
@@ -649,7 +649,7 @@ static void Reconstruction(struct xvimage *g, struct xvimage *f, int32_t *CM, ct
       c = CT->tabnodes[c].father;
     }
     G[i] = CT->tabnodes[c].data;
-  }  
+  }
 
 } // Reconstruction()
 
@@ -657,7 +657,7 @@ static void Reconstruction(struct xvimage *g, struct xvimage *f, int32_t *CM, ct
 int32_t lreconsdilat(
         struct xvimage *g,
         struct xvimage *f,
-        int32_t connex) 
+        int32_t connex)
 /* reconstruction de g sous f */
 /* g : image marqueur */
 /* f : image masque */
@@ -693,7 +693,7 @@ int32_t lreconsdilat(
 int32_t lreconseros(
         struct xvimage *g,
         struct xvimage *f,
-        int32_t connex) 
+        int32_t connex)
 /* reconstruction de g sur f */
 /* g : image marqueur */
 /* f : image masque */
@@ -735,15 +735,15 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
   for (d = 0; d < CT->nbnodes; d++) CT->flags[d] == 0; // utile ???
   for (i = 0; i < N; i++) if (G[i]) CT->flags[CM[i]] = 1; // marque les feuilles
 
-  for (d = 0; d < CT->nbnodes; d++) 
+  for (d = 0; d < CT->nbnodes; d++)
     if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 1))
-    {                                               // pour toutes les feuilles marquees 
+    {                                               // pour toutes les feuilles marquees
       c = CT->tabnodes[d].father;
       while ((c != -1) && (CT->flags[c] == 0))
       {
 	CT->flags[c] = 1;                               // marque tous les ancetres de c
 	c = CT->tabnodes[c].father;
-      } 
+      }
     }
 
 #ifdef _DEBUG_
@@ -752,7 +752,7 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
   // elimine les feuilles non marquees
   for (d = 0; d < CT->nbnodes; d++) {
     if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 0)) {
-      // pour toutes les feuilles non marquees 
+      // pour toutes les feuilles non marquees
       c = CT->tabnodes[d].father;                   // récupère le père marqué
       while (CT->flags[c] == 0)
       {
@@ -783,10 +783,10 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
 	// Save the number of the node to which e has been moved
 	newCM[e] = c;
 	CT->tabnodes[e].nbsons = -2;
-	e = CT->tabnodes[e].father; 
+	e = CT->tabnodes[e].father;
       }
-    } // if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 0)) 
-  } //  for (d = 0; d < CT->nbnodes; d++) 
+    } // if ((CT->tabnodes[d].nbsons == 0) && (CT->flags[d] == 0))
+  } //  for (d = 0; d < CT->nbnodes; d++)
 
   // change the component mapping BUT NOT THE GRAY VALUE of the original image
   // That allows to place the watershed line on the original contour
@@ -797,16 +797,16 @@ static void reconsTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N, u_int8
   // It is done that later in the main procedure
   // I do not fully understand why it is the case
 
-  for (i=0; i<N; i++) { 
+  for (i=0; i<N; i++) {
     if (CT->tabnodes[CM[i]].nbsons == -2) {
       CM[i] = newCM[CM[i]];
       // However, we can build the reconstructed image.
-      G[i] = CT->tabnodes[CM[i]].data; 
-    } 
+      G[i] = CT->tabnodes[CM[i]].data;
+    }
   }
 }
 
-static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N) 
+static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N)
 {
   // Compress the component tree
   // suppress all nodes that have only one son
@@ -823,9 +823,9 @@ static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N)
 	  soncell *sc = NULL;
 	  f = CT->tabnodes[c].father;
 	  e = CT->tabnodes[c].sonlist->son;
-	  for (sc = CT->tabnodes[f].sonlist; sc != NULL; sc = sc->next)    
+	  for (sc = CT->tabnodes[f].sonlist; sc != NULL; sc = sc->next)
 	  {
-    	    if (sc->son == c) 
+    	    if (sc->son == c)
 	    {
 	      sc->son = e;
 	      break;
@@ -850,10 +850,10 @@ static void compressTree(ctree *CT, int32_t *CM, int32_t *newCM, int32_t N)
   // Change the component mapping BUT NOT THE GRAY VALUE
   // That allows to place the watershed line on the original contour
   // while having done the reconstruction on the component tree only.
-  for (i=0; i<N; i++) { 
+  for (i=0; i<N; i++) {
     if (CT->tabnodes[CM[i]].nbsons == -3) {
       CM[i] = newCM[CM[i]];
-    } 
+    }
   }
 }
 
@@ -899,7 +899,7 @@ int32_t lwshedtopobin(struct xvimage *image, struct xvimage *marqueur, int32_t c
 
   IndicsInit(N);
   // imposition des maxima
-  for (i = 0; i < N; i++) if (G[i]) F[i] = G[i] = NDG_MAX; 
+  for (i = 0; i < N; i++) if (G[i]) F[i] = G[i] = NDG_MAX;
 
 #ifdef _DEBUG_
   printf("Component tree\n");
@@ -968,7 +968,7 @@ int32_t lwshedtopobin(struct xvimage *image, struct xvimage *marqueur, int32_t c
 
   // Reconstruction de l'image
   for (x=0; x<N; x++) {
-      F[x] = CT->tabnodes[CM[x]].data;    
+      F[x] = CT->tabnodes[CM[x]].data;
   }
   //writeimage(image, "test");
 
@@ -986,11 +986,11 @@ int32_t lwshedtopobin(struct xvimage *image, struct xvimage *marqueur, int32_t c
 #ifdef _DEBUG_
   printf("Watershed\n");
 #endif
- 
+
 #ifdef _DEBUG_
   printf("Binarisation\n");
 #endif
-  for (i = 0; i < N; i++) 
+  for (i = 0; i < N; i++)
     if (CT->tabnodes[CM[i]].nbsons == 0) // maximum
       F[i] = NDG_MAX;
     else
