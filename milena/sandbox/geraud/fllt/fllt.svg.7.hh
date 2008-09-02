@@ -331,9 +331,6 @@ namespace mln
 
     ++label;
 
-    //       if (holes.size() == 2)
-    // 	std::cout << holes[0] << holes[1] << std::endl;
-    //       std::cout << " <<<<<<<exiting blob." << std::endl;
   }
 
   template <typename P, typename V>
@@ -393,7 +390,8 @@ namespace mln
     }
   }
 
-  //   LOWER LEVEL SET : region = c4, border = c8
+  // LOWER LEVEL SET information to compute the max tree.
+  // -> region = c4, border = c8
   template <typename V>
   struct lower
   {
@@ -421,7 +419,8 @@ namespace mln
   };
 
 
-  //   UPPER LEVEL SET : region = c8, border = c4
+  // UPPER LEVEL SET information to compute the max tree.
+  // -> region = c8, border = c4
   template <typename V>
   struct upper
   {
@@ -445,6 +444,14 @@ namespace mln
     static const neighb2d& reg_nbh() { return c8(); }
   };
 
+  /*! Fast computation of a min/max tree.
+   *
+   * \param[in]  input_           An input image.
+   * \param[out] smallest_shapes  We stock in this image, for each point, a pointer
+   *                              to the smallest shape containing it.
+   * \return                      The min/max tree built.
+   *
+   */
   template <typename I, typename Set>
   fllt_tree(mln_point(I), mln_value(I))&
     level_set(const Image<I>& input_,
@@ -560,7 +567,7 @@ namespace mln
 	  deja_vu(x) = in_N;
 	}
       }
-      // gN = min u(x) for all x in N
+      // gN <- min u(x) for all x in N
       update_gN(N, gN, Set());
 
       // FIXME: update the number of CC of the border of R
@@ -609,7 +616,6 @@ namespace mln
       // c)
       else
       {
-	// FIXME: IDEA: this change might be performed while R is constructed(?)
 	n_step_4c++;
 	mln_piter(I) r(N_box);
 	for_all(r)
@@ -627,6 +633,15 @@ namespace mln
     return *new tree_type(current_cc);
   }
 
+  /*! Get the hole of a shape which contains a given point.
+   *
+   * \param[in]  node         a shape.
+   * \param[in]  p            a point.
+   * \param[in]  other_reg    The map which associate a point with its smallest shape
+   *                          of the oposite tree.
+   * \return          true if A is included in B.
+   *
+   */
   // F is the set in which we get the node.
   template <typename P, typename V, typename F>
   fllt_node(P, V)*
@@ -636,6 +651,7 @@ namespace mln
   {
     fllt_node(P, V)* s = other_reg(p);
     mln_assertion(s);
+    // Go up the tree.
     while (s->parent() && F::compare(s->parent()->elt().value, node.elt().value))
     {
       mln_assertion(s);
@@ -649,6 +665,14 @@ namespace mln
     return s;
   }
 
+  /*! Test the inclusion of two shapes of the same tree
+   *
+   * \param[in]  A            a shape.
+   * \param[in]  B            a shape.
+   * \return                  true if A is included in B.
+   *
+   * \pre The shapes have to come from the same tree.
+   */
   template <typename P, typename V>
   bool shape_is_included(fllt_node(P, V)* A,
 			 fllt_node(P, V)* B)
@@ -656,6 +680,17 @@ namespace mln
     return A->parent() == B || A == B;
   }
 
+  /*! Associated the points of the holes of the min/max tree's shapes.
+   *
+   * \param[in]  lower_tree    The min tree.
+   * \param[in]  upper_tree    The max tree.
+   * \param[in]  low_reg       The map which associate a point with its smallest shape
+   *                           of the min tree.
+   * \param[in]  upp_reg       The map which associate a point with its smallest shape
+   *                           of the max tree.
+   * \return                   The merged tree.
+   *
+   */
   template <typename P, typename V>
   void find_all_holes(fllt_tree(P, V)& lower_tree,
 		      fllt_tree(P, V)& upper_tree,
@@ -665,6 +700,7 @@ namespace mln
     typedef p_array<P> arr_t;
     typedef fllt_node(P, V) node_type;
 
+    // Get the holes of the min tree
     {
       fllt_branch_iter_ind(P, V) node_(lower_tree.main_branch());
       for_all(node_)
@@ -676,6 +712,7 @@ namespace mln
       }
     }
 
+    // Get the holes of the max tree
     {
       fllt_branch_iter_ind(P, V) node_(upper_tree.main_branch());
       for_all(node_)
@@ -688,6 +725,17 @@ namespace mln
     }
   }
 
+  /*! Merge the Min and the max tree.
+   *
+   * \param[in]  lower_tree    The min tree.
+   * \param[in]  upper_tree    The max tree.
+   * \param[in]  low_reg       The map which associate a point with its smallest shape
+   *                           of the min tree.
+   * \param[in]  upp_reg       The map which associate a point with its smallest shape
+   *                           of the max tree.
+   * \return                   The merged tree.
+   *
+   */
   template <typename I>
   fllt_tree(mln_point(I), mln_value(I))
     merge_trees(fllt_tree(mln_point(I), mln_value(I))& lower_tree,
@@ -706,17 +754,24 @@ namespace mln
     typedef p_array<P> arr_t;
 
 
+    // Here, a hole of a shape of the max or min tree is represented
+    // by a point belonging to this hole. We need to associate each of
+    // these points with its shape in the oposite tree.
     find_all_holes(lower_tree, upper_tree, low_reg, upp_reg);
     std::vector<node_type*> to_fill;
 
     fllt_branch_iter_ind(P, V) node_(lower_tree.main_branch());
+    // Browse the shapes of the min_tree, in order to put as child of
+    // min tree's shapes the shapes of the max tree corresponding to
+    // their holes.
     for_all(node_)
     {
       node_type& node = *node_;
+      // If the node was not in the min tree at the begining, we ignore it.
       if (node.elt().set_id != lower<V>::id)
 	continue;
 
-      // 	std::cout << "Fill " << &node << std::endl;
+      // Browse the holes of the shape.
       typename std::vector<fllt_node(P, V)*>::iterator hole_;
       for (hole_ = node.elt().hole_shapes.begin();
 	   hole_ != node.elt().hole_shapes.end();
@@ -724,6 +779,7 @@ namespace mln
       {
 	fllt_node(P, V)* hole = *hole_;
 
+	// Check if hole_ is contained by a hole of the children of node.
 	bool child_has_bigger_hole = false;
 	typename fllt_node(P, V)::children_t::iterator it;
 	for (it = node.children().begin(); it != node.children().end() && !child_has_bigger_hole; it++)
@@ -735,8 +791,6 @@ namespace mln
 	       child_hole_++)
 	  {
 	    fllt_node(P, V)* child_hole = *child_hole_;
-	    // 	      std::cout << "hole : " << hole << " " << hole->elt().points << " " << std::endl;
-	    // 	      std::cout << "child hole : " << child_hole << " " << child_hole->elt().points << std::endl;
 	    if (shape_is_included(hole, child_hole))
 	    {
 	      child_has_bigger_hole = true;
@@ -744,6 +798,9 @@ namespace mln
 	    }
 	  } // end of browsing child's holes.
 	} // end of browsing childs.
+
+	// If no, move the shape of the max tree previously associated to this hole.
+	// as child of node.
 	if (!child_has_bigger_hole)
 	{
 	  // // 	    std::cout << "move " << hole << " as child of " << &node << std::endl;
@@ -754,6 +811,12 @@ namespace mln
       node.elt().holes.clear();
     } // end of browsing lower_tree.
 
+    // At this step, we have filled all the holes of the min
+    // tree. But, by filling these holes, we introduced somes holes of
+    // the max tree in the result tree. We need to fill them.
+
+    // Thus, we browse the shapes of the max tree previously merged in
+    // the min tree, in order to check their holes.
     for(typename std::vector<node_type*>::iterator node_ = to_fill.begin();
 	node_ != to_fill.end();
 	node_++)
@@ -767,6 +830,7 @@ namespace mln
 	if (node.elt().set_id != upper<V>::id)
 	  continue;
 
+	// Check if hole_ is contained by a hole of the children of node.
 	typename std::vector<fllt_node(P, V)*>::iterator hole_;
 	for (hole_ = node.elt().hole_shapes.begin();
 	     hole_ != node.elt().hole_shapes.end();
@@ -785,7 +849,6 @@ namespace mln
 		 child_hole_++)
 	    {
 	      fllt_node(P, V)* child_hole = *child_hole_;
-	      //if (hole->elt().points <= child_hole->elt().points)
 	      if (shape_is_included(hole, child_hole))
 	      {
 		child_has_bigger_hole = true;
@@ -794,6 +857,8 @@ namespace mln
 	    } // end of browsing child's holes.
 	  } // end of browsing childs.
 
+	  // If no, move the shape of the max tree previously associated to this hole.
+	  // as child of node.
 	  if (!child_has_bigger_hole)
 	    node.add_child(hole);
 
@@ -806,6 +871,12 @@ namespace mln
     return lower_tree;
   }
 
+  /*! This function compute the fllt tree of an image.
+   *
+   * \param[in] input_ An input image.
+   * \return           The computed tree.
+   *
+   */
   template <typename I>
   fllt_tree(mln_point(I), mln_value(I))
     fllt(const Image<I>& input_)
@@ -820,12 +891,15 @@ namespace mln
     image2d<fllt_node(P, V)*> low_reg(input.domain());
     image2d<fllt_node(P, V)*> upp_reg(input.domain());
 
+    // Compute the Min tree.
     std::cout << "1/ Compute the lower level set.----------------------------------------" << std::endl;
     lower_tree = level_set<I, lower<V> >(input, low_reg);
 
+    // Compute the Max tree.
     std::cout << "2/ Compute the upper level set.----------------------------------------" << std::endl;
     upper_tree = level_set<I, upper<V> >(input, upp_reg);
 
+    // Merge the two trees.
     std::cout << "3/ Merge.---------------------------------------------------------------" << std::endl;
     fllt_tree(P, V) result_tree = merge_trees(lower_tree, upper_tree, low_reg, upp_reg, input);
 
