@@ -79,6 +79,11 @@ namespace mln
 
 # include <mln/metal/math/all.hh>
 
+# include <mln/metal/array.hh>
+# include <mln/metal/array1d.hh>
+# include <mln/metal/array2d.hh>
+# include <mln/metal/array3d.hh>
+
 // FIXME: Remove the following includes below!
 # include <mln/metal/same_coord.hh>
 # include <mln/metal/same_point.hh>
