@@ -1,5 +1,11 @@
 2008-09-03  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Fix a compilation bug.
+
+	* mln/core/dpoint2d.hh: remove lines created by a svn conflict.
+
+2008-09-03  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Add documentation about the image values.
 
 	* doc/tutorial/image_values.txt: New, doc file.
