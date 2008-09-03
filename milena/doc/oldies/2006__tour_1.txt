@@ -1,0 +1,671 @@
+    -*- outline -*-
+
+
+* primary image types
+
+
+** image2d<T>
+
+*** definition
+
+rectangular 2D image with a virtual border
+
+*** parameter
+
+T: value type
+
+*** related types
+
+image1d<T> and image3d<T> are similarly constructed
+
+*** sample code
+
+**** step 1
+
+char[] values = { 'a', 'b', 'c',
+                  'd', 'e', 'f' };
+image2d<char> ima(2, 3);
+level::fill(ima, values);
+debug::print(ima.bbox());
+
+// [(0, 0)..(1, 2)]
+
+debug::print(ima);
+
+//    0 1 2
+//    - - -
+// 0| a b c
+// 1| d e f
+
+ima.set_name("ima");
+point2d p(0, 1);
+
+std::cout << ima(p) << std::endl;
+// b
+
+debug::print(ima, p);
+// ima.at(0, 1) == b
+
+ima.at(0, 1) = 'B';
+debug::print(ima, p);
+// ima.at(0, 1) == B
+
+
+bbox2d bb = set(from(1,5), to(2,7));
+image2d<char> ima2(bb);
+ima2.set_name("ima2");
+level::fill(ima2, values);
+debug::print(ima2);
+
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+**** step 2
+
+ima2.set_border_thickness(1);
+border::fill(ima2, '.');
+
+debug::print(ima2.bbox());
+// [(1, 5)..(2, 7)]
+
+debug::print(ima2);
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+debug::print(ima2.large_bbox());
+// [(0, 4)..(3, 8)]
+
+debug::print_large(ima2);
+//    4 5 6 7 8
+//    - - - - -
+// 0| . . . . .
+// 1| . a b c .
+// 2| . d e f .
+// 3| . . . . .
+
+ima2.at( 0, 6) = 'x'; // OK
+ima2.at(-1, 6) = '?'; // error: out of bounds
+
+debug::print_large(ima2);
+//    4 5 6 7 8
+//    - - - - -
+// 0| . . x . .
+// 1| . a b c .
+// 2| . d e f .
+// 3| . . . . .
+
+debug::print(ima2);
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+std::cout << ima2.npoints() << std::endl;
+// 6
+
+std::cout << ima2.bbox().npoints() << std::endl;
+// 6
+
+std::cout << ima2.large_bbox().npoints() << std::endl;
+// 20
+
+std::cout << ima2.n_value_cells() << std::endl;
+// 20
+
+**** step 3
+
+a virtual border (at the outer boundary of the domain) is provided so
+that there is no need for special code to handle pixels at the limit
+of the domain.
+
+int[] values = { 0, 1, 1, 1, 0,
+                 0, 1, 1, 1, 0,
+                 0, 1, 1, 1, 0,
+                 0, 0, 0, 0, 0 };
+image2d<bool> ima(from(1,1), to(4,4));
+level::fill(ima, values);
+debug::print(ima);
+//    1 2 3 4 5
+//    - - - - -
+// 1| 0 1 1 1 0
+// 2| 0 1 1 1 0
+// 3| 0 1 1 1 0
+// 4| 0 0 0 0 0
+
+image2d<bool> ima2 = morpho::e_erosion(ima + c4);
+debug::print(ima2);
+//    1 2 3 4 5
+//    - - - - -
+// 1| 0 0 1 0 0
+// 2| 0 0 1 0 0
+// 3| 0 0 0 0 0
+// 4| 0 0 0 0 0
+
+actually, after level::fill we have:
+
+//    0 1 2 3 4 5 6
+//    - - - - - - -
+// 0| ? ? ? ? ? ? ?
+// 1| ? 0 1 1 1 0 ?
+// 2| ? 0 1 1 1 0 ?
+// 3| ? 0 1 1 1 0 ?
+// 4| ? 0 0 0 0 0 ?
+// 5| ? ? ? ? ? ? ?
+
+in morpho::e_erosion, the border is initialized:
+//    0 1 2 3 4 5 6
+//    - - - - - - -
+// 0| 1 1 1 1 1 1 1
+// 1| 1 0 1 1 1 0 1
+// 2| 1 0 1 1 1 0 1
+// 3| 1 0 1 1 1 0 1
+// 4| 1 0 0 0 0 0 1
+// 5| 1 1 1 1 1 1 1
+
+so we get the proper result:
+//    0 1 2 3 4 5 6
+//    - - - - - - -
+// 0| 1 1 1 1 1 1 1
+// 1| 1 0 0 1 0 0 1
+// 2| 1 0 0 1 0 0 1
+// 3| 1 0 0 0 0 0 1
+// 4| 1 0 0 0 0 0 1
+// 5| 1 1 1 1 1 1 1
+
+
+
+
+** image_2dhex<T>
+
+*** definition
+
+image defined on a 2D triangular grid (hexagonal pixels)
+it is equipped with a virtual border
+
+*** parameter
+
+T: value type
+
+*** sample code
+
+FIXME
+
+
+
+** igraph<T>
+
+FIXME: ...
+
+
+
+** image2d_without_border<T>
+
+*** definition
+
+same type as image2d<T> but without border
+
+*** parameter
+
+T: value type
+
+*** sample code
+
+**** step 1
+
+image2d<char> ima = set(from(0,0), to(0,0));
+ima.at( 0, 0) = 'a'; // OK
+ima.at(-1, 0) = 'a': // error
+
+std::cout << ima.npoints() << std::endl;
+// 1
+std::cout << ima.n_value_cells() << std::endl;
+// 1
+
+**** step 2
+
+int[] values = { 0, 1, 1, 1, 0,
+                 0, 1, 1, 1, 0,
+                 0, 1, 1, 1, 0,
+                 0, 0, 0, 0, 0 };
+image2d_without_border<bool> ima(from(1,1), to(4,4));
+level::fill(ima, values);
+debug::print(ima);
+//    1 2 3 4 5
+//    - - - - -
+// 1| 0 1 1 1 0
+// 2| 0 1 1 1 0
+// 3| 0 1 1 1 0
+// 4| 0 0 0 0 0
+
+image2d<bool> ima2 = morpho::e_erosion(ima + c4);
+debug::print(ima2);
+//    1 2 3 4 5
+//    - - - - -
+// 1| 0 0 0 0 0
+// 2| 0 0 1 0 0
+// 3| 0 0 0 0 0
+// 4| 0 0 0 0 0
+
+
+
+** one_value_image<S, T>
+
+*** definition
+
+image defined by a point-set and a (single) value
+this image has the same value for all pixels
+
+*** parameters
+
+S: point set type
+T: value type
+
+*** sample code
+
+bbox2d bb = set(from(1,4), to(2,6));
+one_value_image<bbox2d, char> ima(bb, 'a');
+debug::print(ima);
+
+//    4 5 6
+//    - - -
+// 1| a a a
+// 2| a a a
+
+ima.value() = 'b';
+debug::print(ima);
+
+//    4 5 6
+//    - - -
+// 1| b b b
+// 2| b b b
+
+std::cout << ima.npoints() << std::endl;
+// 6
+
+std::cout << ima.nvalues() << std::endl;
+// 1
+
+std::cout << ima.n_value_cells() << std::endl;
+// 1
+
+ima.change_value('b', 'c');
+//    4 5 6
+//    - - -
+// 1| c c c
+// 2| c c c
+
+std::cout << ima.at(1, 5) << std::endl;
+// c
+
+ima.at(1, 5) = 'd'; // error
+
+ima.change_value('C', ' '); // error at run-time
+                            // 'C' is not a value for this image
+
+
+
+** image_p2v<S, F>
+
+*** definition
+
+image defined by a point set and a function "point -> value"
+
+*** parameters
+
+S: point set type
+F: function type
+
+*** sample code
+
+**** step 1
+
+bool chess(point2d p)
+{
+  return (p.row() + p.col()) % 2;
+}
+
+bbox2d bb(from(0,0), to(3,3));
+image2d<bool> ima = image(bb, chess);
+debug::print(ima);
+//    0 1 2 3
+//    - - - -
+// 0| 0 1 0 1
+// 1| 1 0 1 0
+// 2| 0 1 0 1
+// 3| 1 0 1 0
+
+or:
+
+image_p2v<bbox2d, bool(*)(point2d)> ima(bb, chess);
+
+std::cout << ima.at(2, 3) << std::endl; // OK: image readable
+// 1
+
+bool val;
+ima.at(2, 3) = val; // error: image not writable
+
+**** step 2
+
+Likewise but with a function-object:
+
+struct chess_t
+{
+  bool operator()(point2d p) const
+  {
+    return (p.row() + p.col()) % 2;
+  }
+};
+
+bbox2d bb(from(0,0), to(3,3));
+image_p2v<bbox2d, chess_t> ima(bb);
+debug::print(ima);
+//    0 1 2 3
+//    - - - -
+// 0| 0 1 0 1
+// 1| 1 0 1 0
+// 2| 0 1 0 1
+// 3| 1 0 1 0
+
+**** step 3
+
+struct chess_t : oln::abstract::function_p2v<chess_t>
+{
+  bool value(point2d p) const
+  {
+    return (p.row() + p.col()) % 2;
+  }
+};
+static chess_t chess;
+
+// ...
+
+debug::options opt;
+opt.true_symbol('*').false_symbol(' ');
+debug::print( chess(from(0,0), to(3,3)), opt );
+//    0 1 2 3
+//    - - - -
+// 0|   *   *
+// 1| *   *  
+// 2|   *   *
+// 3| *   *  
+
+
+
+** rle_image<P, T>
+
+*** definition
+
+image with run-length encoding
+
+*** parameters
+
+P: point type
+T: value type
+
+*** sample code
+
+**** step 1
+
+rle_image<point2d, int> ima;
+ima.
+  set_name("ima").
+  insert(from(2,1), len(3), val(6)).
+  insert(from(1,2), len(2), val(8));
+
+debug::print(ima);
+// { ([(1, 2)..(1, 3)], 8), ([(2, 1)..(2, 3)], 6) }
+
+std::cout << ima.n_value_cells() << std::endl;
+// 2
+
+debug::options opt;
+opt.no_symbol('x');
+debug::print( imagine(ima), opt );
+//    1 2 3
+//    - - -
+// 1| x 8 8
+// 2| 6 6 6
+
+std::cout << ima.npoints() << std::endl;
+// 5
+
+image2d<int> ima2(from(1,1), to(2,3), val(4));
+debug::print(ima2);
+//    1 2 3
+//    - - -
+// 1| 4 4 4
+// 2| 4 4 4
+
+level::assign(ima2, ima);
+debug::print(ima2);
+//    1 2 3
+//    - - -
+// 1| 4 8 8
+// 2| 6 6 6
+
+**** step 2
+
+std::cout << ima.nrls() << std::endl;
+// 2
+
+debug::print(ima.rl(0));
+// ([(1, 2)..(1, 3)], 8)
+
+debug::print(ima.rl(1));
+// ([(2, 1)..(2, 3)], 6)
+
+std::cout << ima.rl(1).first_p() << std::endl;
+// (2, 1)
+
+std::cout << ima.rl(1).last_p() << std::endl;
+// (2, 3)
+
+std::cout << ima.rl(1).value() << std::endl;
+// 6
+
+std::cout << ima.rl(1).npoints() << std::endl;
+// 3
+
+FIXME:
+std::cout << ima.rl(1).point(0) << ' '
+	  << ima.rl(1).point(1) << ' '
+	  << ima.rl_point(1, 2) << std::endl;
+// (2, 1) (2, 2) (2, 3)
+
+**** step 3
+
+// remember that for ima, in the rl #1, the point #1 is (2, 2)
+
+point2d p(2, 2);
+std::cout << ima(p) << std::endl; // KO: does not compile
+
+std::cout << ima.rl_point(1, 1) << std::endl;
+// (2, 2)
+
+rle_psite<point2d> p_(1, 1);
+std::cout << ima(p_) << std::endl; // OK
+// 6
+
+debug::print(ima2);
+//    1 2 3
+//    - - -
+// 1| 4 8 8
+// 2| 6 6 6
+rle_image<point2d, int> ima3 = rlencode(ima2);
+debug::print(ima3);
+// { ([(1, 1)..(1, 1)], 4), ([(1, 2)..(1, 3)], 8), ([(2, 1)..(2, 3)], 6) }
+level::in_place::inc(ima3);
+
+
+debug::print(ima3);
+// { ([(1, 1)..(1, 1)], 5), ([(1, 2)..(1, 3)], 9), ([(2, 1)..(2, 3)], 7) }
+
+debug::print( imagine(ima3) );
+//    1 2 3
+//    - - -
+// 1| 5 9 9
+// 2| 7 7 7
+
+
+debug::print(ima);
+// { ([(1, 2)..(1, 3)], 8), ([(2, 1)..(2, 3)], 6) }
+
+debug::print( imagine(ima), opt );
+//    1 2 3
+//    - - -
+// 1| x 8 8
+// 2| 6 6 6
+
+std::cout << ima.rl_point(1, 1) << std::endl;
+// (2, 2)
+
+
+rl_psite<point2d> p3(ima3, 1, 1); // p3 is not bound to ima3 but to its topology
+
+std::cout << ima3.rl_point(1, 1) << std::endl;
+// (1, 3)
+
+std::cout << ima3(p3) << std::endl; // OK
+// 9
+
+std::cout << ima(p3) << std::endl; // error at run-time
+
+// explanation:
+// 1) p3, when created, clearly designates the 2D point (1, 3) through
+//    the couple (rl #1, pt #1)
+// 2) when writing "ima(p3)" we want to access the value of "ima" at point (1, 3)
+// 3) "ima" knows that the couple (rl #1, pt #1) does not designate the point (1, 3)
+//    but (2, 2) instead
+// 4) this error is then identified at run-time
+
+
+ima3.remove_rl(0);
+
+debug::print(ima3);
+// { ([(1, 2)..(1, 3)], 9), ([(2, 1)..(2, 3)], 7) }
+
+debug::print( imagine(ima3), opt );
+//    1 2 3
+//    - - -
+// 1| x 9 9
+// 2| 7 7 7
+
+rl_psite<point2d> p3_(ima3, 1, 1);
+std::cout << ima3.rl_point(1, 1) << std::endl; // now same as ima.rl_point(1, 1)
+// (2, 2)
+
+std::cout << ima(p3_) << std::endl; // now OK
+// 7
+
+
+
+
+** sparse_image<P, T>
+
+*** definition
+
+FIXME: HERE
+
+
+*** parameter
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector of couples (p_start, std::vector<T>)
+
+
+** image_vec<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector< std::pair<P, T> >
+
+
+** image_map<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+using std::map<P, T>
+
+*** related type
+
+slow::image_map<P, T>
+
+
+** slow::image_bbmap<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+point-wise accessible and mutable
+not value-wise accessible
+bounding-boxed
+
+*** data storage
+
+some values are set in a std::map<P, T>
+when not set, a default value is provided by an attribute
+
+*** related type
+
+image_map<P, T>
+
+
+
+** Morpher types
+
+** FIXME
+
+do (really!) nothing when writing at p when outside the image domain
+error when reading at p when outside the image domain
+
+** FIXME
+
+add a default value when p is outside the image domain
+
+** sequence<I>
+
+FIXME: ...
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:

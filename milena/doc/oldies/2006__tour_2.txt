@@ -1,0 +1,404 @@
+    -*- outline -*-
+
+* primary image types
+
+** image2d<T>
+
+*** parameter
+
+T: value type
+
+*** main features
+
+- debase type for a rectangular 2D image
+
+- a virtual border (at the outer boundary of the domain) is provided
+ so that there is no need for special code to handle pixels at the
+ limit of the domain.
+
+*** sample code
+
+int[] values = { 'a', 'b', 'c',
+                 'd', 'e', 'f' };
+image2d<char> ima(2, 3);
+level::fill(ima, values);
+debug::print(ima.bbox());
+
+// [(0, 0)..(1, 2)]
+
+debug::print(ima);
+
+//    0 1 2
+//    - - -
+// 0| a b c
+// 1| d e f
+
+ima.set_name("ima");
+point2d p(0, 1);
+
+std::cout << ima(p) << std::endl;
+// b
+
+debug::print(ima, p);
+// ima.at(0, 1) == b
+
+ima.at(0, 1) = 'B';
+debug::print(ima, p);
+// ima.at(0, 1) == B
+
+
+
+bbox2d bb = set(from(1,5), to(2,7));
+image2d<char> ima2(bb);
+ima2.set_name("ima2");
+level::fill(ima2, values);
+debug::print(ima2);
+
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+
+ima2.border() = 1;
+border::fill(ima2, '.');
+
+debug::print(ima2.bbox());
+// [(1, 5)..(2, 7)]
+
+debug::print(ima2);
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+debug::print(ima2.large_bbox());
+// [(0, 4)..(3, 8)]
+
+debug::print_large(ima2);
+//    4 5 6 7 8
+//    - - - - -
+// 0| . . . . .
+// 1| . a b c .
+// 2| . d e f .
+// 3| . . . . .
+
+ima2.at( 0, 6) = 'x'; // OK
+ima2.at(-1, 6) = '?'; // error: out of bounds
+
+debug::print_large(ima2);
+//    4 5 6 7 8
+//    - - - - -
+// 0| . . x . .
+// 1| . a b c .
+// 2| . d e f .
+// 3| . . . . .
+
+debug::print(ima2);
+//    5 6 7
+//    - - -
+// 1| a b c
+// 2| d e f
+
+std::cout << ima2.npoints() << std::endl;
+// 6
+
+std::cout << ima2.bbox().npoints() << std::endl;
+// 6
+
+std::cout << ima2.large_bbox().npoints() << std::endl;
+// 20
+
+std::cout << ima2.n_memory_cells() << std::endl;
+// 20
+
+
+FIXME: play with point2d and dpoint2d...
+
+
+*** related types
+
+image1d<T> and image3d<T> are similarly constructed
+
+
+*** level 2
+
+*** main features
+
+has a virtual border (same thickness for every axis)
+point-wise accessible and mutable
+not value-wise accessible
+
+*** data storage
+
+relies on array2d<T>
+
+*** to-do
+
+should rely on array2d< T::storage >
+add unambiguous ctors
+
+*** ideas
+
+point2d p(0, 1);
+point2d p = set(row(0), col(1));
+
+bbox2d bb = set(from(1,5), to(2,7));
+bbox2d bb = set(minrow(1), maxrow(2), mincol(5), maxcol(7));
+bbox2d bb = set(minrow(1), mincol(5), nrows(2), ncols(3));
+bbox2d bb = set(pmin(1,5), nrows(2), ncols(3));
+bbox2d bb = set(pmin(1,5), size(2,3));
+
+
+*** image_2dhex<T>
+
+on a 2D triangular grid (hexagonal pixels)
+FIXME: ...
+
+
+*** igraph<T>
+
+FIXME: ...
+
+
+** image2d_without_border<T>
+
+*** level 1
+
+*** main features
+
+same type as image2d<T> but without border
+
+*** sample code
+
+image2d<char> ima = set(from(0,0), to(0,0));
+ima.at( 0, 0) = 'a'; // OK
+ima.at(-1, 0) = 'a': // error
+
+std::cout << ima.npoints() << std::endl;
+// 1
+std::cout << ima.n_memory_cells() << std::endl;
+// 1
+
+** level 2
+
+*** status
+
+to-do
+
+*** main features
+
+same as image2d<T> but without virtual border
+
+*** data storage
+
+relies on array2d<T>
+
+
+
+** one_value_image<S, T>
+
+*** level 1
+
+*** main features
+
+image defined by a point-set and a (single) value
+this image has the same value for all pixels
+
+*** sample code
+
+bbox2d bb = set(from(1,4), to(2,6));
+one_value_image<bbox2d, char> ima(bb, 'a');
+debug::print(ima);
+
+//    4 5 6
+//    - - -
+// 1| a a a
+// 2| a a a
+
+ima.value() = 'b';
+debug::print(ima);
+
+//    4 5 6
+//    - - -
+// 1| b b b
+// 2| b b b
+
+std::cout << ima.npoints() << std::endl;
+// 6
+
+std::cout << ima.n_memory_cells() << std::endl;
+// 1
+
+ima.change_value('b', 'c');
+//    4 5 6
+//    - - -
+// 1| c c c
+// 2| c c c
+
+std::cout << ima.at(1, 5) << std::endl;
+// c
+
+ima.at(1, 5) = 'd'; // error
+
+
+*** level 2
+
+*** parameters
+
+S: point set type
+T: type of the value
+
+*** main features
+
+point-wise accessible but not mutable
+value-wise accessible and mutable
+
+*** data storage
+
+a single attribute: the unique value
+
+
+** image_p2v<S, F>
+
+*** parameters
+
+S: point set type
+F: function point-site -> value
+
+*** main features
+
+point-wise accessible but not mutable
+not value-wise accessible
+
+*** data storage
+
+combines the point set and the function to produce values
+on the fly
+
+
+** rle_image<P, T>
+
+*** parameter
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector of triplets (p_start, length, value)
+
+*** related type
+
+sparse_image<T>
+
+
+** sparse_image<P, T>
+
+*** parameter
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector of couples (p_start, std::vector<T>)
+
+*** related type
+
+rle_image<P, T>
+
+
+** image_vec<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+std::vector< std::pair<P, T> >
+
+
+** image_map<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+not point-wise accessible
+not value-wise accessible
+
+*** data storage
+
+using std::map<P, T>
+
+*** related type
+
+slow::image_map<P, T>
+
+
+** slow::image_bbmap<P, T>
+
+*** parameters
+
+P: point type
+T: value type
+
+*** main features
+
+point-wise accessible and mutable
+not value-wise accessible
+bounding-boxed
+
+*** data storage
+
+some values are set in a std::map<P, T>
+when not set, a default value is provided by an attribute
+
+*** related type
+
+image_map<P, T>
+
+
+
+** Morpher types
+
+** FIXME
+
+do (really!) nothing when writing at p when outside the image domain
+error when reading at p when outside the image domain
+
+** FIXME
+
+add a default value when p is outside the image domain
+
+** sequence<I>
+
+FIXME: ...
+
+
+
+Local Variables:
+mode: outline
+ispell-local-dictionary: "american"
+End:
