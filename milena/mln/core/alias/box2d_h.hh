@@ -25,32 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_W_WINDOW2D_INT_HH
-# define MLN_CORE_W_WINDOW2D_INT_HH
+#ifndef MLN_CORE_SITE_SET_BOX2D_H_HH
+# define MLN_CORE_SITE_SET_BOX2D_H_HH
 
-/*! \file mln/core/w_window2d_int.hh
+/*! \file mln/core/alias/box2d_h.hh
  *
- * \brief Definition of the mln::w_window2d_int alias.
+ * \brief Definition of the mln::box2d alias and of construction
+ * routines.
  */
 
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/site_set/box.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/alias/point2d_h.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a w_window with arbitrary shape, defined
-   * on the 2D square grid (with integer coordinates) and whose
-   * weights are integers.
+  /*! \brief FIXME
+   *
    */
-  typedef w_window<dpoint2d, int> w_window2d_int;
 
+   typedef box_<point2d_h> box2d_h;
 
 } // end of namespace mln
 
 
-# include <mln/make/w_window2d.hh>
+# include <mln/make/box2d_h.hh>
 
 
-#endif // ! MLN_CORE_W_WINDOW2D_INT_HH
+#endif // ! MLN_CORE_SITE_SET_BOX2D_HH

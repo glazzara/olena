@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/level/paste.hh>
 # include <mln/draw/line.hh>
 # include <mln/pw/image.hh>

@@ -40,7 +40,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/labeling/blobs.hh>
 #include <mln/display/save_and_show.hh>
 

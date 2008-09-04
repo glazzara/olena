@@ -32,7 +32,7 @@
 /// \brief Pixel iterators on a 2-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/geom/size2d.hh>
 
 namespace mln

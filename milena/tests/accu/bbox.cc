@@ -31,8 +31,8 @@
  */
 
 
-#include <mln/core/point2d.hh>
-#include <mln/core/box2d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
 
 #include <mln/accu/bbox.hh>
 

@@ -33,7 +33,7 @@
 
 # include <mln/core/internal/image_primary.hh>
 
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/value/set.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/core/line_piter.hh>

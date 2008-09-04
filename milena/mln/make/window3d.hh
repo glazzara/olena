@@ -34,7 +34,7 @@
  */
 
 # include <cmath>
-# include <mln/core/window3d.hh>
+# include <mln/core/alias/window3d.hh>
 # include <mln/make/dpoint3d.hh>
 
 

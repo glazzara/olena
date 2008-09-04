@@ -30,7 +30,7 @@
  * \brief Tests on mln::p_queue.
  */
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_queue.hh>
 
 

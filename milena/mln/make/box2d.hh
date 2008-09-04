@@ -33,7 +33,7 @@
  * \brief Routines to construct an mln::box2d.
  */
 
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/make/point2d.hh>
 
 

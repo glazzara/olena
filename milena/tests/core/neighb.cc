@@ -28,9 +28,9 @@
 /// \file tests/core/neighb.cc
 /// \brief Tests on mln::neighb<D> specializations.
 
-#include <mln/core/neighb1d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/neighb3d.hh>
+#include <mln/core/alias/neighb1d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/neighb3d.hh>
 
 using namespace mln;
 

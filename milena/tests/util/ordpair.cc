@@ -30,7 +30,7 @@
  * \brief Tests on mln::util::ordpair.
  */
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/util/ordpair.hh>
 
 

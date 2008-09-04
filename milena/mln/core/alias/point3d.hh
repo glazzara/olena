@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT3D_HH
-# define MLN_CORE_POINT3D_HH
+#ifndef MLN_CORE_ALIAS_POINT3D_HH
+# define MLN_CORE_ALIAS_POINT3D_HH
 
-/*! \file mln/core/point3d.hh
+/*! \file mln/core/alias/point3d.hh
  *
  * \brief Definition of the mln::point3d alias and of its construction
  * routine.
@@ -50,7 +50,7 @@ namespace mln
 
 
 # include <mln/make/point3d.hh>
-# include <mln/core/dpoint3d.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
-#endif // ! MLN_CORE_POINT3D_HH
+#endif // ! MLN_CORE_ALIAS_POINT3D_HH

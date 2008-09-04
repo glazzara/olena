@@ -37,7 +37,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
 # include <mln/geom/shift.hh>
 # include <mln/set/diff.hh>
 

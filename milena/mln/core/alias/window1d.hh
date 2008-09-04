@@ -25,45 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_DPOINT2D_H_HH
-# define MLN_CORE_DPOINT2D_H_HH
+#ifndef MLN_CORE_ALIAS_WINDOW1D_HH
+# define MLN_CORE_ALIAS_WINDOW1D_HH
 
-/*! \file mln/core/dpoint2d_h.hh
- *
- * \brief Definition of the mln::dpoint2d_h alias and of its
- * construction routine.
- */
+/// \file mln/core/alias/window1d.hh
+/// \brief Definition of the mln::window1d alias and of a construction
+/// routine.
 
-# include <mln/core/dpoint.hh>
-# include <mln/core/grids.hh>
+# include <mln/core/window.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 2D square
-   * grid with integer coordinates.
-   */
-  typedef dpoint_<mln::grid::hexa, int> dpoint2d_h;
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 1D square grid with integer coordinates.
+  typedef window<mln::dpoint1d> window1d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/dpoint2d_h.hh>
-# include <mln/core/point2d_h.hh>
+# include <mln/make/window1d.hh>
 
 
-namespace mln
-{
-
-  // FIXME: Doc!
-  const dpoint2d_h up_h    = make::dpoint2d_h( -1,  0 );
-  const dpoint2d_h down_h  = make::dpoint2d_h( +1,  0 );
-  const dpoint2d_h left_h  = make::dpoint2d_h(  0, -1 );
-  const dpoint2d_h right_h = make::dpoint2d_h(  0, +1 );
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_DPOINT2D_H_HH
+#endif // ! MLN_CORE_ALIAS_WINDOW1D_HH

@@ -29,7 +29,7 @@
 /// \brief Tests on mln::p_bgraph (the psite based on boost-graph).
 
 #include "../core/site_set/p_bgraph.hh"
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/util/internal/boost_graph.hh>
 #include <boost/typeof/std/utility.hpp>
 

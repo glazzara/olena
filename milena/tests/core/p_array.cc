@@ -30,7 +30,7 @@
  * \brief Tests on mln::p_array.
  */
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_array.hh>
 
 

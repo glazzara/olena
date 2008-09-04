@@ -37,8 +37,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 
-# include <mln/core/box2d.hh>
-# include <mln/core/box3d.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/alias/box3d.hh>
 
 // Specializations are in:
 # include <mln/debug/println_with_border.spe.hh>

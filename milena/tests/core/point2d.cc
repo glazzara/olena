@@ -31,7 +31,7 @@
  */
 
 #include <iostream>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/literal/all.hh>
 
 

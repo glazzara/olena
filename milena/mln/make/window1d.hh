@@ -34,7 +34,7 @@
  */
 
 # include <cmath>
-# include <mln/core/window1d.hh>
+# include <mln/core/alias/window1d.hh>
 # include <mln/make/dpoint1d.hh>
 
 

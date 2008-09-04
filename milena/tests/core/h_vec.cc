@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/h_vec.hh>
-#include <mln/core/point3d.hh>
+#include <mln/core/alias/point3d.hh>
 
 using namespace mln;
 

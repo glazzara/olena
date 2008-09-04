@@ -25,32 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT1D_HH
-# define MLN_CORE_POINT1D_HH
+#ifndef MLN_CORE_ALIAS_WINDOW2D_HH
+# define MLN_CORE_ALIAS_WINDOW2D_HH
 
-/*! \file mln/core/point1d.hh
- *
- * \brief Definition of the mln::point1d alias and of its construction
- * routine.
- */
+/// \file mln/core/alias/window2d.hh
+/// \brief Definition of the mln::window2d alias and of a construction
+/// routine.
 
-# include <mln/core/point.hh>
+# include <mln/core/window.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 1D square grid with
-   * integer coordinates.
-   */
-  typedef point<mln::grid::tick, def::coord> point1d;
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 2D square grid with integer coordinates.
+  typedef window<mln::dpoint2d> window2d;
 
+  /// \brief 4-connectivity window on the 2D grid, including the
+  /// center.
+  ///
+  ///  - o -
+  ///  o x o
+  ///  - o -
+  ///
+  /// \return A window2d.
+  const window2d& win_c4p();
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  inline const window2d&
+  win_c4p()
+  {
+    static bool initialized_p = false;
+    static window2d it;
+    if (!initialized_p)
+      {
+	it.insert(make::dpoint2d( 0, -1));
+	it.insert(make::dpoint2d(-1,  0));
+	it.insert(make::dpoint2d( 0,  0));
+	it.insert(make::dpoint2d(+1,  0));
+	it.insert(make::dpoint2d( 0, +1));
+	initialized_p = true;
+      }
+    return it;
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-# include <mln/make/point1d.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/make/window2d.hh>
 
 
-#endif // ! MLN_CORE_POINT1D_HH
+#endif // ! MLN_CORE_ALIAS_WINDOW2D_HH

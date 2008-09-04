@@ -31,7 +31,7 @@
 #include <iostream>
 
 #include <mln/value/int_u8.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 #include <mln/core/p_faces.hh>
 #include <mln/core/complex_image.hh>

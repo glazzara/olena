@@ -52,7 +52,7 @@
 #include <mln/value/int_u16.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/core/image/line_graph_image.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>

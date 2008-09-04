@@ -1,6 +1,6 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/compare.hh>

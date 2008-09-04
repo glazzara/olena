@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/site_set/p_array.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/math/all.hh>
 
 

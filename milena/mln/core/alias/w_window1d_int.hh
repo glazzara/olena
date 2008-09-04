@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_BOX2D_HH
-# define MLN_CORE_SITE_SET_BOX2D_HH
+#ifndef MLN_CORE_ALIAS_W_WINDOW1D_INT_HH
+# define MLN_CORE_ALIAS_W_WINDOW1D_INT_HH
 
-/*! \file mln/core/box2d.hh
+/*! \file mln/core/alias/w_window1d_int.hh
  *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
+ * \brief Definition of the mln::w_window1d_int alias.
  */
 
-# include <mln/core/site_set/box.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/w_window.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 2D square grid with
-   * integer coordinates.
-   *
-   * \see mln::win::rectangle2d.
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 1D grid (with integer coordinates) and whose
+   * weights are integers.
    */
-  typedef box<mln::point2d> box2d;
+  typedef w_window<dpoint1d, int> w_window1d_int;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d.hh>
+# include <mln/make/w_window1d.hh>
 
 
-#endif // ! MLN_CORE_SITE_SET_BOX2D_HH
+#endif // ! MLN_CORE_ALIAS_W_WINDOW1D_INT_HH

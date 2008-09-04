@@ -26,7 +26,7 @@
 // Public License.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/clone.hh>
 #include <mln/core/image_if_value.hh>

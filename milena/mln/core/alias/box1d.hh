@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT2D_H_HH
-# define MLN_CORE_POINT2D_H_HH
+#ifndef MLN_CORE_SITE_SET_BOX1D_HH
+# define MLN_CORE_SITE_SET_BOX1D_HH
 
-/// \file mln/core/point2d_h.hh
-/// \brief Definition of the mln::point2d_h alias and of its construction
-/// routine.
+/*! \file mln/core/alias/box1d.hh
+ *
+ * \brief Definition of the mln::box1d alias and of construction
+ * routines.
+ */
 
-
-# include <mln/core/point.hh>
-# include <mln/core/grids.hh>
+# include <mln/core/site_set/box.hh>
+# include <mln/core/alias/point1d.hh>
 
 
 namespace mln
 {
 
-  /// \brief Type alias for a point defined on the 2D hexagonal grid
-  /// with integer coordinates.
-  typedef point_<grid::hexa, int> point2d_h;
+  /*! \brief Type alias for a box defined on the 1D square grid with
+   * integer coordinates.
+   *
+   * \see mln::win::rectangle1d.
+   */
+  typedef box_<point1d> box1d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/point2d_h.hh>
-# include <mln/core/dpoint2d_h.hh>
+# include <mln/make/box1d.hh>
 
 
-#endif // ! MLN_CORE_POINT2D_H_HH
+#endif // ! MLN_CORE_SITE_SET_BOX1D_HH

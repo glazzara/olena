@@ -33,7 +33,7 @@
  * \brief Routine to construct an mln::dpoint1d.
  */
 
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln

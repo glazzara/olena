@@ -51,7 +51,7 @@
 # include <FreeImagePlus.h>
 
 # include <mln/core/internal/image_primary.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/core/line_piter.hh>
 # include <mln/value/set.hh>
 

@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/w_window.hh>
-# include <mln/core/dpoint3d.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 #include <iostream>
 

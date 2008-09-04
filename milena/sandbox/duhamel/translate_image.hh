@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 
 
 namespace mln

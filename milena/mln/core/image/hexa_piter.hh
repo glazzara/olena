@@ -35,8 +35,8 @@
 
 # include <mln/core/internal/piter_adaptor.hh>
 
-# include <mln/core/box2d.hh>
-# include <mln/core/box2d_h.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/alias/box2d_h.hh>
 # include <mln/core/image/inplace.hh>
 
 namespace mln

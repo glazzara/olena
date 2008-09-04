@@ -6,7 +6,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/image/sub_image.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/debug/println.hh>

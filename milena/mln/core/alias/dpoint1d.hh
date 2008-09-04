@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_DPOINT3D_HH
-# define MLN_CORE_DPOINT3D_HH
+#ifndef MLN_CORE_ALIAS_DPOINT1D_HH
+# define MLN_CORE_ALIAS_DPOINT1D_HH
 
-/*! \file mln/core/dpoint3d.hh
+/*! \file mln/core/alias/dpoint1d.hh
  *
- * \brief Definition of the mln::dpoint3d alias and of its
+ * \brief Definition of the mln::dpoint1d alias and of its
  * construction routine.
  */
 
@@ -41,38 +41,37 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 3D square
+  /*! \brief Type alias for a delta-point defined on the 1D square
    * grid with integer coordinates.
    */
-  typedef dpoint_<mln::grid::cube, int> dpoint3d;
+  typedef dpoint_<mln::grid::tick, int> dpoint1d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/dpoint3d.hh>
-# include <mln/core/point3d.hh>
+# include <mln/make/dpoint1d.hh>
+# include <mln/core/alias/point1d.hh>
 
 
 namespace mln
 {
 
   /*!
-   * \brief Definition of a shortcut for delta point in 3d.
+   * \brief Definition of a shortcut for delta point in 1d.
    * \{
    */
-  const dpoint3d sagittal_dec = make::dpoint3d( 0,  0, -1);
-  const dpoint3d sagittal_inc = make::dpoint3d( 0,  0, +1);
-  const dpoint3d axial_dec    = make::dpoint3d( 0, -1,  0);
-  const dpoint3d axial_inc    = make::dpoint3d( 0, +1,  0);
-  const dpoint3d coronal_dec  = make::dpoint3d(-1,  0,  0);
-  const dpoint3d coronal_inc  = make::dpoint3d(+1,  0,  0);
 
-  /*!
-   * \}
+  const dpoint1d before = make::dpoint1d( -1 );
+  const dpoint1d after  = make::dpoint1d( +1 );
+
+  const dpoint1d ind_dec = before;
+  const dpoint1d ind_inc = after;
+
+  /*! \}
    */
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_DPOINT3D_HH
+#endif // ! MLN_CORE_ALIAS_DPOINT1D_HH

@@ -32,7 +32,7 @@
 
 #include <mln/set/is_subset_of.hh>
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 int main()
 {

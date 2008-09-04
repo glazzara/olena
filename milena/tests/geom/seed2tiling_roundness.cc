@@ -31,8 +31,8 @@
  */
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/neighb2d.hh>
-# include <mln/core/w_window2d_int.hh>
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/core/alias/w_window2d_int.hh>
 # include <mln/make/win_chamfer.hh>
 # include <mln/geom/seeds2tiling_roundness.hh>
 # include <mln/level/compare.hh>

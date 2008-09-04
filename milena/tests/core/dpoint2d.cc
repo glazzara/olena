@@ -30,7 +30,7 @@
  * \brief Tests on mln::dpoint2d.
  */
 
-#include <mln/core/dpoint2d.hh>
+#include <mln/core/alias/dpoint2d.hh>
 
 
 

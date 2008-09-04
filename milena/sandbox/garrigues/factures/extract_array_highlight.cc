@@ -45,7 +45,7 @@
 #include <mln/labeling/level.hh>
 #include <mln/literal/all.hh>
 
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/accu/all.hh>
 

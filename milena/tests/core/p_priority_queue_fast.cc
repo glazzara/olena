@@ -30,7 +30,7 @@
  * \brief Tests on mln::p_priority_queue_fast.
  */
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/p_priority_queue_fast.hh>
 
 int main ()

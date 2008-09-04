@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_W_WINDOW3D_FLOAT_HH
-# define MLN_CORE_W_WINDOW3D_FLOAT_HH
+#ifndef MLN_CORE_ALIAS_DPOINT2D_H_HH
+# define MLN_CORE_ALIAS_DPOINT2D_H_HH
 
-/*! \file mln/core/w_window3d_float.hh
+/*! \file mln/core/alias/dpoint2d_h.hh
  *
- * \brief Definition of the mln::w_window3d_float alias.
+ * \brief Definition of the mln::dpoint2d_h alias and of its
+ * construction routine.
  */
 
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint3d.hh>
+# include <mln/core/dpoint.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a w_window with arbitrary shape, defined
-   * on the 3D grid (with integer coordinates) and whose
-   * weights are floating values.
+  /*! \brief Type alias for a delta-point defined on the 2D square
+   * grid with integer coordinates.
    */
-  typedef w_window<dpoint3d, float> w_window3d_float;
+  typedef dpoint_<mln::grid::hexa, int> dpoint2d_h;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/w_window3d.hh>
+# include <mln/make/dpoint2d_h.hh>
+# include <mln/core/alias/point2d_h.hh>
 
 
-#endif // ! MLN_CORE_W_WINDOW3D_FLOAT_HH
+namespace mln
+{
+
+  // FIXME: Doc!
+  const dpoint2d_h up_h    = make::dpoint2d_h( -1,  0 );
+  const dpoint2d_h down_h  = make::dpoint2d_h( +1,  0 );
+  const dpoint2d_h left_h  = make::dpoint2d_h(  0, -1 );
+  const dpoint2d_h right_h = make::dpoint2d_h(  0, +1 );
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_ALIAS_DPOINT2D_H_HH

@@ -1,5 +1,5 @@
-#include <mln/core/point3d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point3d.hh>
+#include <mln/core/alias/point2d.hh>
 #include "thinning.hh"
 #include <mln/level/paste.hh>
 #include <mln/level/fill.hh>

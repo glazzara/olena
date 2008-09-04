@@ -8,7 +8,7 @@
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>

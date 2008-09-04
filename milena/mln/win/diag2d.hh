@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
 # include <mln/core/dpoints_piter.hh>
 
 

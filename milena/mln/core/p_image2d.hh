@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/sub_image.hh>
 

@@ -2,7 +2,7 @@
 
 #include <mln/value/rgb8.hh>
 
-#include <mln/core/point3d.hh>
+#include <mln/core/alias/point3d.hh>
 #include <mln/make/point3d.hh>
 
 #include <mln/util/graph.hh>

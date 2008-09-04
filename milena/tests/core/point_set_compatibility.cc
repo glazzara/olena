@@ -29,7 +29,7 @@
 /// \brief Tests on the compatibility of some point sites with some
 /// point sets (and their iterators).
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/site_set/p_set.hh>

@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/geom/size2d.hh>
 
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/vline2d.hh>
 # include <mln/core/image/t_image.hh>

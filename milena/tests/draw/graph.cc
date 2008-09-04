@@ -37,7 +37,7 @@
 #include <utility>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/site_set/p_graph.hh>

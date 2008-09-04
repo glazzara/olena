@@ -30,8 +30,8 @@
  * \brief Tests on mln::convert::to_p_array.
  */
 
-#include <mln/core/point1d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point1d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_array.hh>
 
 #include <mln/win/segment1d.hh>

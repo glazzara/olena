@@ -1,5 +1,5 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/mesh_p.hh>

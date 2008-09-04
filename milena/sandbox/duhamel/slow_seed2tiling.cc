@@ -33,7 +33,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/neighb2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/stretch.hh>
@@ -52,7 +52,7 @@
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image/inplace.hh>
 
-#include <mln/core/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/make/win_chamfer.hh>
 
 

@@ -29,7 +29,7 @@
 /// \brief Tests on all_accus files in mln/accu.
 
 #include <mln/accu/all.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/value/set.hh>
 
 

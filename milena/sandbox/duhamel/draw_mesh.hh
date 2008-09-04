@@ -3,7 +3,7 @@
 
 # include <mln/pw/image.hh>
 # include <mln/core/image2d_b.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/level/fill.hh>
 # include <mln/draw/line.hh>
 # include <mln/core/mesh_p.hh>

@@ -38,7 +38,7 @@
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image/inplace.hh>
-#include <mln/core/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/display/show.hh>
 #include <mln/display/save.hh>
 #include <mln/display/remove.hh>

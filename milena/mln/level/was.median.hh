@@ -34,7 +34,7 @@
  */
 
 # include <mln/geom/shift.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/geom/min_col.hh>
 # include <mln/geom/max_col.hh>
 # include <mln/geom/max_row.hh>

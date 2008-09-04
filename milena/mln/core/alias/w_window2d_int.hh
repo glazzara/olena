@@ -25,56 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_NEIGHB1D_HH
-# define MLN_CORE_NEIGHB1D_HH
+#ifndef MLN_CORE_ALIAS_W_WINDOW2D_INT_HH
+# define MLN_CORE_ALIAS_W_WINDOW2D_INT_HH
 
-/*! \file mln/core/neighb1d.hh
+/*! \file mln/core/alias/w_window2d_int.hh
  *
- * \brief Definition of the mln::neighb1d alias and of some classical
- * 1D neighborhoods.
+ * \brief Definition of the mln::w_window2d_int alias.
  */
 
-# include <cmath>
-# include <mln/core/neighb.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/w_window.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a neighborhood defined on the 1D square
-   * grid with integer coordinates.
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 2D square grid (with integer coordinates) and whose
+   * weights are integers.
    */
-  typedef neighb_<dpoint1d> neighb1d;
+  typedef w_window<dpoint2d, int> w_window2d_int;
 
-
-  /*! \brief 2-connectivity neighborhood on the 1D grid.
-   *
-   *  o x o
-   *
-   * \return A neighb1d.
-   */
-  const neighb1d& c2();
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  inline
-  const neighb1d& c2()
-  {
-    static bool flower = true;
-    static neighb1d it;
-    if (flower)
-      {
-	it.insert(make::dpoint1d(+1));
-	flower = false;
-      }
-    return it;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_NEIGHB1D_HH
+# include <mln/make/w_window2d.hh>
+
+
+#endif // ! MLN_CORE_ALIAS_W_WINDOW2D_INT_HH

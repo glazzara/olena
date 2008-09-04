@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 
 
 namespace mln

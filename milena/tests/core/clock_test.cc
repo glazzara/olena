@@ -30,7 +30,7 @@
 #include <mln/debug/println.hh>
 #include <mln/level/fill.hh>
 #include <mln/labeling/level.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 namespace mln
 {

@@ -30,7 +30,7 @@
 
 #include <vector>
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/image/line_graph_elt_neighborhood.hh>
 
 #include <mln/debug/iota.hh>

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_W_WINDOW1D_INT_HH
-# define MLN_CORE_W_WINDOW1D_INT_HH
+#ifndef MLN_CORE_ALIAS_DPOINT3D_HH
+# define MLN_CORE_ALIAS_DPOINT3D_HH
 
-/*! \file mln/core/w_window1d_int.hh
+/*! \file mln/core/alias/dpoint3d.hh
  *
- * \brief Definition of the mln::w_window1d_int alias.
+ * \brief Definition of the mln::dpoint3d alias and of its
+ * construction routine.
  */
 
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/dpoint.hh>
+# include <mln/core/grids.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a w_window with arbitrary shape, defined
-   * on the 1D grid (with integer coordinates) and whose
-   * weights are integers.
+  /*! \brief Type alias for a delta-point defined on the 3D square
+   * grid with integer coordinates.
    */
-  typedef w_window<dpoint1d, int> w_window1d_int;
+  typedef dpoint_<mln::grid::cube, int> dpoint3d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/w_window1d.hh>
+# include <mln/make/dpoint3d.hh>
+# include <mln/core/alias/point3d.hh>
 
 
-#endif // ! MLN_CORE_W_WINDOW1D_INT_HH
+namespace mln
+{
+
+  /*!
+   * \brief Definition of a shortcut for delta point in 3d.
+   * \{
+   */
+  const dpoint3d sagittal_dec = make::dpoint3d( 0,  0, -1);
+  const dpoint3d sagittal_inc = make::dpoint3d( 0,  0, +1);
+  const dpoint3d axial_dec    = make::dpoint3d( 0, -1,  0);
+  const dpoint3d axial_inc    = make::dpoint3d( 0, +1,  0);
+  const dpoint3d coronal_dec  = make::dpoint3d(-1,  0,  0);
+  const dpoint3d coronal_inc  = make::dpoint3d(+1,  0,  0);
+
+  /*!
+   * \}
+   */
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_ALIAS_DPOINT3D_HH

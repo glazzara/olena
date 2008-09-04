@@ -30,7 +30,7 @@
  * \brief Tests on mln::box1d.
  */
 
-#include <mln/core/box1d.hh>
+#include <mln/core/alias/box1d.hh>
 
 
 

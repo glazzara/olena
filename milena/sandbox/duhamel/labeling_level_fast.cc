@@ -32,7 +32,7 @@
 
 #include <mln/core/image2d_b.hh>
 #include <mln/core/image1d_b.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/pw/all.hh>
 

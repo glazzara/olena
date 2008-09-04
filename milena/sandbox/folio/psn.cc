@@ -154,7 +154,7 @@ namespace mln
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>

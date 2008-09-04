@@ -28,7 +28,7 @@
 /// \file tests/core/w_window1d_int.cc
 /// \brief Tests on mln::w_window1d_int.
 
-#include <mln/core/w_window1d_int.hh>
+#include <mln/core/alias/w_window1d_int.hh>
 #include <mln/win/segment1d.hh>
 
 #include <mln/convert/to_image.hh>

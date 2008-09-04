@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,29 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_WINDOW1D_HH
-# define MLN_CORE_WINDOW1D_HH
+#ifndef MLN_CORE_ALIAS_W_WINDOW1D_FLOAT_HH
+# define MLN_CORE_ALIAS_W_WINDOW1D_FLOAT_HH
 
-/// \file mln/core/window1d.hh
-/// \brief Definition of the mln::window1d alias and of a construction
-/// routine.
+/*! \file mln/core/alias/w_window1d_float.hh
+ *
+ * \brief Definition of the mln::w_window1d_float alias.
+ */
 
-# include <mln/core/window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/w_window.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln
 {
 
-  /// \brief Type alias for a window with arbitrary shape, defined on
-  /// the 1D square grid with integer coordinates.
-  typedef window<mln::dpoint1d> window1d;
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 1D grid (with integer coordinates) and whose
+   * weights are floating values.
+   */
+  typedef w_window<dpoint1d, float> w_window1d_float;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/window1d.hh>
+# include <mln/make/w_window1d.hh>
 
 
-#endif // ! MLN_CORE_WINDOW1D_HH
+#endif // ! MLN_CORE_ALIAS_W_WINDOW1D_FLOAT_HH

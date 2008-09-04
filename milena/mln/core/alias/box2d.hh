@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,53 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_DPOINT1D_HH
-# define MLN_CORE_DPOINT1D_HH
+#ifndef MLN_CORE_SITE_SET_BOX2D_HH
+# define MLN_CORE_SITE_SET_BOX2D_HH
 
-/*! \file mln/core/dpoint1d.hh
+/*! \file mln/core/alias/box2d.hh
  *
- * \brief Definition of the mln::dpoint1d alias and of its
- * construction routine.
+ * \brief Definition of the mln::box2d alias and of construction
+ * routines.
  */
 
-# include <mln/core/dpoint.hh>
-# include <mln/core/grids.hh>
+# include <mln/core/site_set/box.hh>
+# include <mln/core/alias/point2d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 1D square
-   * grid with integer coordinates.
+  /*! \brief Type alias for a box defined on the 2D square grid with
+   * integer coordinates.
+   *
+   * \see mln::win::rectangle2d.
    */
-  typedef dpoint_<mln::grid::tick, int> dpoint1d;
+  typedef box<mln::point2d> box2d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/dpoint1d.hh>
-# include <mln/core/point1d.hh>
+# include <mln/make/box2d.hh>
 
 
-namespace mln
-{
-
-  /*!
-   * \brief Definition of a shortcut for delta point in 1d.
-   * \{
-   */
-
-  const dpoint1d before = make::dpoint1d( -1 );
-  const dpoint1d after  = make::dpoint1d( +1 );
-
-  const dpoint1d ind_dec = before;
-  const dpoint1d ind_inc = after;
-
-  /*! \}
-   */
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_DPOINT1D_HH
+#endif // ! MLN_CORE_SITE_SET_BOX2D_HH

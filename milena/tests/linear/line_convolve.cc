@@ -38,7 +38,7 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/core/w_window2d_float.hh>
+#include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
 #include <mln/linear/line_convolve.hh>
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::w_window3d_int.
  */
 
-#include <mln/core/w_window3d_int.hh>
+#include <mln/core/alias/w_window3d_int.hh>
 #include <mln/win/cube3d.hh>
 
 #include <mln/convert/to_image.hh>

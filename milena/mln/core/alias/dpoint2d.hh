@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,34 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_BOX3D_HH
-# define MLN_CORE_SITE_SET_BOX3D_HH
+#ifndef MLN_CORE_ALIAS_DPOINT2D_HH
+# define MLN_CORE_ALIAS_DPOINT2D_HH
 
-/*! \file mln/core/box3d.hh
+/*! \file mln/core/alias/dpoint2d.hh
  *
- * \brief Definition of the mln::box3d alias and of construction
- * routines.
+ * \brief Definition of the mln::dpoint2d alias and of its
+ * construction routine.
  */
 
-# include <mln/core/site_set/box.hh>
-# include <mln/core/point3d.hh>
+# include <mln/core/dpoint.hh>
+# include <mln/core/def/coord.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a box defined on the 3D square grid with
-   * integer coordinates.
-   *
-   * \see mln::win::rectangle3d.
+  /*! \brief Type alias for a delta-point defined on the 2D square
+   * grid with integer coordinates.
    */
-  typedef box_<point3d> box3d;
+  typedef dpoint<mln::grid::square, def::coord> dpoint2d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/box3d.hh>
+# include <mln/make/dpoint2d.hh>
+# include <mln/core/alias/point2d.hh>
 
 
-#endif // ! MLN_CORE_SITE_SET_BOX3D_HH
+namespace mln
+{
+
+  /*!
+   * \brief Definition of a shortcut for delta point in 2d.
+   * \{
+   */
+  const dpoint2d up    = make::dpoint2d( -1,  0 );
+  const dpoint2d down  = make::dpoint2d( +1,  0 );
+  const dpoint2d left  = make::dpoint2d(  0, -1 );
+  const dpoint2d right = make::dpoint2d(  0, +1 );
+
+  /*!
+   * \}
+   */
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_ALIAS_DPOINT2D_HH

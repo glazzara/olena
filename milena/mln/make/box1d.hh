@@ -33,7 +33,7 @@
  * \brief Routines to construct an mln::box1d.
  */
 
-# include <mln/core/box1d.hh>
+# include <mln/core/alias/box1d.hh>
 # include <mln/make/point1d.hh>
 
 

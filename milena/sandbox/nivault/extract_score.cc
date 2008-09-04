@@ -49,7 +49,7 @@
 # include <mln/win/disk2d.hh>
 # include <mln/level/fill.hh>
 # include <mln/labeling/blobs.hh>
-# include <mln/core/neighb2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 
 # include <mln/accu/mean.hh>
 # include <mln/accu/bbox.hh>

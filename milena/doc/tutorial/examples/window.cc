@@ -1,11 +1,11 @@
 # include <mln/core/image/image2d.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/core/site_set/p_array.hh>
 
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 
-# include <mln/core/neighb2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 
 
 template <typename I, typename W, typename P>

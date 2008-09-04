@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,52 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_DPOINT2D_HH
-# define MLN_CORE_DPOINT2D_HH
+#ifndef MLN_CORE_ALIAS_W_WINDOW3D_FLOAT_HH
+# define MLN_CORE_ALIAS_W_WINDOW3D_FLOAT_HH
 
-/*! \file mln/core/dpoint2d.hh
+/*! \file mln/core/alias/w_window3d_float.hh
  *
- * \brief Definition of the mln::dpoint2d alias and of its
- * construction routine.
+ * \brief Definition of the mln::w_window3d_float alias.
  */
 
-# include <mln/core/dpoint.hh>
-# include <mln/core/def/coord.hh>
+# include <mln/core/w_window.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 2D square
-   * grid with integer coordinates.
+  /*! \brief Type alias for a w_window with arbitrary shape, defined
+   * on the 3D grid (with integer coordinates) and whose
+   * weights are floating values.
    */
-  typedef dpoint<mln::grid::square, def::coord> dpoint2d;
+  typedef w_window<dpoint3d, float> w_window3d_float;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/dpoint2d.hh>
-# include <mln/core/point2d.hh>
+# include <mln/make/w_window3d.hh>
 
 
-namespace mln
-{
-
-  /*!
-   * \brief Definition of a shortcut for delta point in 2d.
-   * \{
-   */
-  const dpoint2d up    = make::dpoint2d( -1,  0 );
-  const dpoint2d down  = make::dpoint2d( +1,  0 );
-  const dpoint2d left  = make::dpoint2d(  0, -1 );
-  const dpoint2d right = make::dpoint2d(  0, +1 );
-
-  /*!
-   * \}
-   */
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_DPOINT2D_HH
+#endif // ! MLN_CORE_ALIAS_W_WINDOW3D_FLOAT_HH

@@ -37,8 +37,8 @@
  */
 
 
-# include <mln/core/w_window2d_int.hh>
-# include <mln/core/w_window2d_float.hh>
+# include <mln/core/alias/w_window2d_int.hh>
+# include <mln/core/alias/w_window2d_float.hh>
 # include <math.h>
 
 namespace mln

@@ -40,7 +40,7 @@
 # include <iostream>
 # include <fstream>
 
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/bexpr.hh>

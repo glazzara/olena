@@ -35,7 +35,7 @@
 #include <mln/win/octagon2d.hh>
 #include <mln/win/diag2d.hh>
 #include <mln/win/backdiag2d.hh>
-#include <mln/core/window2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

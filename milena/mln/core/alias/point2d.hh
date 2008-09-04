@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_POINT2D_HH
-# define MLN_CORE_POINT2D_HH
+#ifndef MLN_CORE_ALIAS_POINT2D_HH
+# define MLN_CORE_ALIAS_POINT2D_HH
 
-/*! \file mln/core/point2d.hh
+/*! \file mln/core/alias/point2d.hh
  *
  * \brief Definition of the mln::point2d alias and of its construction
  * routine.
@@ -181,7 +181,7 @@ namespace mln
 
 
 # include <mln/make/point2d.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
-#endif // ! MLN_CORE_POINT2D_HH
+#endif // ! MLN_CORE_ALIAS_POINT2D_HH

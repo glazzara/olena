@@ -33,7 +33,7 @@
  * \brief Routine to create a mln::w_window1d_int.
  */
 
-# include <mln/core/w_window1d_int.hh>
+# include <mln/core/alias/w_window1d_int.hh>
 # include <mln/make/w_window1d.hh>
 
 

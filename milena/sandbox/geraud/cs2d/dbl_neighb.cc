@@ -4,8 +4,8 @@
 # include <mln/value/rgb8.hh>
 
 # include <mln/core/image/image2d.hh>
-# include <mln/core/neighb2d.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/core/alias/window2d.hh>
 
 # include <mln/convert/to_p_set.hh>
 # include <mln/convert/to_image.hh>

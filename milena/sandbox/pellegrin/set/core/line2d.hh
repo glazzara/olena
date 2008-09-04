@@ -37,7 +37,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/math/all.hh>
 # include <trait/point_set.hh>
 

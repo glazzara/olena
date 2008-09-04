@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/window2d.hh>
-#include <mln/core/dpoint2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/dpoint2d.hh>
 
 #include <mln/geom/shift.hh>
 

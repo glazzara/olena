@@ -1,8 +1,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image_if.hh>
 
-# include <mln/core/neighb2d.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/convert/to_window.hh>
 
 # include <mln/debug/println.hh>

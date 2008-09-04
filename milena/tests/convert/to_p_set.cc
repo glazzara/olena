@@ -30,12 +30,12 @@
  * \brief Tests on mln::convert::to_p_set.
  */
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/box2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/inplace.hh>
 
 #include <mln/level/fill.hh>

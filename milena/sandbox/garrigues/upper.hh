@@ -35,7 +35,7 @@
  *
  */
 
-# include <mln/core/neighb2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 
 # include <mln/accu/max.hh>
 # include <mln/labeling/regional_maxima.hh>

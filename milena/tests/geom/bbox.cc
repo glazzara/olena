@@ -26,8 +26,8 @@
 // Public License.
 
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/point2d.hh>
-#include <mln/core/box2d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
 
 #include <mln/geom/bbox.hh>
 

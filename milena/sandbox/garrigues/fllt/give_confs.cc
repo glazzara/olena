@@ -1,8 +1,8 @@
 #include <mln/core/image/image2d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/core/clock_neighb2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/level.hh>
 #include <mln/level/fill.hh>

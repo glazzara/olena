@@ -40,7 +40,7 @@
 # include "mesh_p.hh"
 # include "mesh_psite.hh"
 # include <vector>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 
 namespace mln
 {

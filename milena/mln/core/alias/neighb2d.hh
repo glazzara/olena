@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_NEIGHB2D_HH
-# define MLN_CORE_NEIGHB2D_HH
+#ifndef MLN_CORE_ALIAS_NEIGHB2D_HH
+# define MLN_CORE_ALIAS_NEIGHB2D_HH
 
-/*! \file mln/core/neighb2d.hh
+/*! \file mln/core/alias/neighb2d.hh
  *
  * \brief Definition of the mln::neighb2d alias and of some classical
  * 2D neighborhoods.
@@ -36,7 +36,7 @@
 
 # include <cmath>
 # include <mln/core/neighborhood.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
@@ -167,4 +167,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_NEIGHB2D_HH
+#endif // ! MLN_CORE_ALIAS_NEIGHB2D_HH

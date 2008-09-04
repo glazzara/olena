@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/core/pixel.hh>
 

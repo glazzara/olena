@@ -32,7 +32,7 @@
 /// \brief Pixel iterators on a 3-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
-# include <mln/core/point3d.hh>
+# include <mln/core/alias/point3d.hh>
 # include <mln/geom/size3d.hh>
 
 namespace mln

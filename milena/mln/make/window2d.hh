@@ -33,7 +33,7 @@
  * \brief Routine to create an mln::window2d.
  */
 
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/metal/math/sqrt.hh>
 
 

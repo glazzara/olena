@@ -30,7 +30,7 @@
 
 #include <vector>
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/core/image/graph_image.hh>
 #include <mln/core/image/graph_elt_window.hh>
 #include <mln/core/image/graph_window_piter.hh>

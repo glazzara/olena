@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln

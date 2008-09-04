@@ -1,5 +1,5 @@
 # include <mln/core/image/image2d.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/win/rectangle2d.hh>
 # include <mln/win/fun.hh>
 

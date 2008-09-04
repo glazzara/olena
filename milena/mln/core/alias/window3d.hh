@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,33 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_BOX2D_H_HH
-# define MLN_CORE_SITE_SET_BOX2D_H_HH
+#ifndef MLN_CORE_ALIAS_WINDOW3D_HH
+# define MLN_CORE_ALIAS_WINDOW3D_HH
 
-/*! \file mln/core/box2d_h.hh
- *
- * \brief Definition of the mln::box2d alias and of construction
- * routines.
- */
+/// \file mln/core/alias/window3d.hh
+/// \brief Definition of the mln::window3d alias and of a construction
+/// routine.
 
-# include <mln/core/site_set/box.hh>
-# include <mln/core/box2d.hh>
-# include <mln/core/point2d_h.hh>
+# include <mln/core/window.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief FIXME
-   *
-   */
+  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// the 3D square grid with integer coordinates.
+  typedef window<mln::dpoint3d> window3d;
 
-   typedef box_<point2d_h> box2d_h;
 
 } // end of namespace mln
 
 
-# include <mln/make/box2d_h.hh>
+# include <mln/make/window3d.hh>
 
 
-#endif // ! MLN_CORE_SITE_SET_BOX2D_HH
+#endif // ! MLN_CORE_ALIAS_WINDOW3D_HH

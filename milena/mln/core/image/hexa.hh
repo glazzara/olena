@@ -37,8 +37,8 @@
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/point2d_h.hh>
-# include <mln/core/box2d_h.hh>
+# include <mln/core/alias/point2d_h.hh>
+# include <mln/core/alias/box2d_h.hh>
 # include <mln/core/image/hexa_piter.hh>
 
 

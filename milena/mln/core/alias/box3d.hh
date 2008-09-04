@@ -25,32 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_W_WINDOW2D_FLOAT_HH
-# define MLN_CORE_W_WINDOW2D_FLOAT_HH
+#ifndef MLN_CORE_SITE_SET_BOX3D_HH
+# define MLN_CORE_SITE_SET_BOX3D_HH
 
-/*! \file mln/core/w_window2d_float.hh
+/*! \file mln/core/alias/box3d.hh
  *
- * \brief Definition of the mln::w_window2d_float alias.
+ * \brief Definition of the mln::box3d alias and of construction
+ * routines.
  */
 
-# include <mln/core/w_window.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/site_set/box.hh>
+# include <mln/core/alias/point3d.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Type alias for a w_window with arbitrary shape, defined
-   * on the 2D square grid (with integer coordinates) and whose
-   * weights are floating values.
+  /*! \brief Type alias for a box defined on the 3D square grid with
+   * integer coordinates.
+   *
+   * \see mln::win::rectangle3d.
    */
-  typedef w_window<dpoint2d, float> w_window2d_float;
+  typedef box_<point3d> box3d;
 
 
 } // end of namespace mln
 
 
-# include <mln/make/w_window2d.hh>
+# include <mln/make/box3d.hh>
 
 
-#endif // ! MLN_CORE_W_WINDOW2D_FLOAT_HH
+#endif // ! MLN_CORE_SITE_SET_BOX3D_HH

@@ -1,7 +1,7 @@
 #include <vector>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/debug/println.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/stretch.hh>

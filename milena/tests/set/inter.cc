@@ -31,7 +31,7 @@
  */
 
 #include <mln/set/inter.hh>
-#include <mln/core/dpoint2d.hh>
+#include <mln/core/alias/dpoint2d.hh>
 
 
 int main()
