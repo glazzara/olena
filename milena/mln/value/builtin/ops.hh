@@ -121,7 +121,7 @@
   operator Symb (const Object<O>& lhs, const Builtin & rhs);	\
 								\
   template <typename O>						\
-  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
   operator Symb (const Builtin & lhs, const Object<O>& rhs);	\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n
@@ -136,10 +136,10 @@
   }								\
 								\
   template <typename O>						\
-  mln_trait_op_##Name (value::scalar_< Builtin >, O)		\
+  mln_trait_op_##Name (O, value::scalar_< Builtin >)		\
   operator Symb (const Builtin & lhs, const Object<O>& rhs)	\
   {								\
-    return value::scalar(lhs) Symb exact(rhs);			\
+    return exact(rhs) Symb value::scalar(lhs);			\
   }								\
 								\
   struct m_a_c_r_o__e_n_d__w_i_t_h__s_e_m_i_c_o_l_u_m_n

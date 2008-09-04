@@ -25,15 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_ALL_HH
-# define MLN_TRAIT_OP_ALL_HH
+#ifndef MLN_TRAIT_OP_LOR_HH
+# define MLN_TRAIT_OP_LOR_HH
 
-/*!
- * \file   mln/trait/op/all.hh
+/*! \file mln/trait/op/lor.hh
  *
- * \brief  FIXME
+ * \brief Declaration of the "binary logical or" operator trait.
  *
+ * \todo Add land (for logical and).
  */
+
+# include <mln/trait/op/decl.hh>
+
+
+# define mln_trait_op_lor(L, R)  typename mln::trait::op::lor< L , R >::ret
+# define mln_trait_op_lor_(L, R)          mln::trait::op::lor< L , R >::ret
+
 
 
 namespace mln
@@ -41,45 +48,23 @@ namespace mln
 
   namespace trait
   {
-    /// Namespace of traits related to operators.
-    namespace op {}
-  }
+
+    namespace op
+    {
+
+      template <typename L, typename R>
+      struct lor : public solve_binary<lor, L, R>
+      {
+      };
+
+    } // end of namespace mln::trait::op
+
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-# include <mln/trait/op/plus.hh>
-# include <mln/trait/op/minus.hh>
-# include <mln/trait/op/times.hh>
-# include <mln/trait/op/div.hh>
-# include <mln/trait/op/mod.hh>
-
-# include <mln/trait/op/uplus.hh>
-# include <mln/trait/op/uminus.hh>
-
-# include <mln/trait/op/preinc.hh>
-# include <mln/trait/op/postinc.hh>
-# include <mln/trait/op/predec.hh>
-# include <mln/trait/op/postdec.hh>
-
-# include <mln/trait/op/eq.hh>
-# include <mln/trait/op/neq.hh>
-
-# include <mln/trait/op/less.hh>
-# include <mln/trait/op/leq.hh>
-# include <mln/trait/op/geq.hh>
-# include <mln/trait/op/greater.hh>
-
-# include <mln/trait/op/and.hh>
-# include <mln/trait/op/or.hh>
-# include <mln/trait/op/xor.hh>
-
-# include <mln/trait/op/lor.hh>
-
-# include <mln/trait/op/not.hh>
-
-// Ordering.
-# include <mln/trait/op/ord.hh>
+# include <mln/trait/solve.hh>
 
 
-#endif // ! MLN_TRAIT_OP_ALL_HH
+#endif // ! MLN_TRAIT_OP_LOR_HH

@@ -1,5 +1,18 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a tutorial example for Z.
+
+	* doc/tutorial/examples/for_Z.cc: New.
+	* mln/trait/op/lor.hh: New.
+	* mln/trait/op/all.hh: Update.
+	* mln/value/ops.hh: Add some doc.
+
+	* mln/value/builtin/ops.hh: Make op== and op!= commute when a
+	builtin is involved:  "bi == obj" is rewritten into
+	"obj == scalar(bi)".
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix merging errors.
 
 	* mln/core/site_set/p_array.hh (bb_needs_update_): Remove.
