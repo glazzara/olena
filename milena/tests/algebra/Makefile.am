@@ -3,11 +3,13 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  h_vec						\
   mat						\
   mat2						\
   vec						\
   vec2
 
+h_vec_SOURCES = h_vec.cc
 mat_SOURCES = mat.cc
 mat2_SOURCES = mat2.cc
 vec_SOURCES = vec.cc
