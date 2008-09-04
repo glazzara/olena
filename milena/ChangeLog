@@ -1,5 +1,54 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Remove some obsolete files in mln/core/.
+
+
+	p_image2d is replaced by p_image.
+
+	* mln/core/p_image2d_pixter.hh: Remove.
+	* mln/core/p_image2d.hh: Remove.
+	* mln/core/p_image2d_piter.hh: Remove.
+	* mln/core/runs_psite.hh: Remove.
+
+	pset_array is replaced by p_array_of<S>.
+
+	* mln/core/pset_array.hh: Remove.
+	* mln/core/pset_array_psite.hh: Remove.
+
+	Priority queues are factored by p_priority<Q>.
+
+	* mln/core/p_priority_queue_fast.hh: Remove.
+	* mln/core/p_priority_queue_fast_with_array.hh: Remove.
+
+	image_if is general.
+
+	* mln/core/image_if_value.hh: Remove.
+	* mln/core/image_if_interval.hh: Remove.
+
+	p_indexed stuff is general.
+
+	* mln/core/p_array_piter.hh: Remove.
+
+	p_runs is replaced by p_set_of< p_run<P> >.
+
+	* mln/core/p_runs.hh: Remove.
+
+	Misc.
+
+	* mln/core/p_array_bb.hh: Remove.  We do not want such a slow
+	class.
+	* mln/core/obsolete_p_vaccess.hh: Remove cause p_vaccess is ok.
+
+	Fix missing move.
+
+	* mln/core/p_run_piter.hh: Rename as ...
+	* mln/core/site_set/p_run_piter.hh: ...this.
+	Update guards.
+	* mln/core/site_set/p_run.hh,
+	* sandbox/pellegrin/set/core/p_run.hh (include): Update.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move routine files from mln/core/ to mln/core/routine/.
 
 	* mln/core/initialize.hh,

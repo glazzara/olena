@@ -492,7 +492,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/p_run_piter.hh>
+# include <mln/core/site_set/p_run_piter.hh>
 
 
 #endif // ! MLN_CORE_SITE_SET_P_RUN_HH
