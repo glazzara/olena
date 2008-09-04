@@ -1,6 +1,6 @@
 # include <mln/core/queue_p.hh>
 # include "queue_p_fast.hh"
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/debug/println.hh>
 
 

@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/p_priority_queue_fast.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>

@@ -33,7 +33,7 @@
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/routine/clone.hh>
 
 #include <mln/value/int_u8.hh>
 

@@ -37,7 +37,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/border/get.hh>
 // # include <mln/level/fill.hh>
 // # include <mln/level/paste.hh>

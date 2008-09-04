@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/object.hh>
-# include <mln/core/ops.hh>
+# include <mln/core/routine/ops.hh>
 
 
 namespace mln

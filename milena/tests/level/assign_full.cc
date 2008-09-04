@@ -47,7 +47,7 @@
 #include <mln/fun/p2b/chess.hh>
 
 
-#include <mln/core/clone.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/level/assign.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/iota.hh>

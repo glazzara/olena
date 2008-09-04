@@ -33,7 +33,7 @@
  * \brief Draw a random color image from a label image.
  */
 
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>

@@ -1,6 +1,6 @@
 #include <string>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/math/max.hh>
 #include <mln/math/min.hh>
 #include <mln/math/sqr.hh>

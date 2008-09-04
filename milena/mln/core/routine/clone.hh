@@ -25,62 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_EXACT_HH
-# define MLN_CORE_EXACT_HH
+#ifndef MLN_CORE_ROUTINE_CLONE_HH
+# define MLN_CORE_ROUTINE_CLONE_HH
 
-/*! \file mln/core/exact.hh
- * \brief Definition of the mln::exact downcast routines.
+/*! \file mln/core/routine/clone.hh
+ *
+ * \brief Clone an image, that is, get an effective copy.
  */
 
-#include <mln/core/internal/exact.hh>
-
-
-/// FIXME: Doc!
-#define mln_exact(T) typename mln::internal::exact_<T>::ret
-
+# include <mln/core/concept/image.hh>
+# include <mln/core/routine/init.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
 {
 
-  /*! \brief Exact cast routine for mln objects.
+  /*! \brief Clone the image \p ima with the values of the image \p
+   *  data.
    *
-   * This set of routines can be used to downcast an object towards
-   * its exact type.  The only argument, respectively \p ptr or \p
-   * ref, should be an mln::Object.
+   * \param[in] ima The image to be cloneed.
+   * \result The clone.
    *
-   * \c The parameter E is the exact type of the object.
-   *
-   * \return The return follows the nature of the argument (either a
-   * pointer or a reference, const or not).
+   * \pre ima.has_data
    */
-  /// \{
-
-  template <typename T>
-  mln_exact(T)* exact(T* ptr);
-
-  template <typename T>
-  mln_exact(T)& exact(T& ref);
-
-  /// \}
+  template <typename I>
+  mln_concrete(I) clone(const Image<I>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  // exact
-
-  template <typename T>
+  template <typename I>
   inline
-  mln_exact(T)* exact(T* ptr)
+  mln_concrete(I) clone(const Image<I>& model)
   {
-    return internal::exact_<T>::run(ptr);
-  }
+    // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
+    trace::entering("core::clone");
 
-  template <typename T>
-  inline
-  mln_exact(T)& exact(T& ref)
-  {
-    return *exact(&ref);
+    mln_concrete(I) tmp;
+    initialize(tmp, model);
+    level::fill(tmp, model);
+
+    trace::exiting("core::clone");
+    return tmp;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -88,4 +75,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_EXACT_HH
+#endif // ! MLN_CORE_ROUTINE_CLONE_HH

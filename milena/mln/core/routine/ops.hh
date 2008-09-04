@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_OPS_HH
-# define MLN_CORE_OPS_HH
+#ifndef MLN_CORE_ROUTINE_OPS_HH
+# define MLN_CORE_ROUTINE_OPS_HH
 
-/*! \file mln/core/ops.hh
+/*! \file mln/core/routine/ops.hh
  *
  * \brief Definitions of some default implementations for operators.
  *
@@ -554,4 +554,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_OPS_HH
+#endif // ! MLN_CORE_ROUTINE_OPS_HH

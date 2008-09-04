@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/metal/is_not_const.hh>
 
 

@@ -31,7 +31,7 @@
  */
 
 #include <typeinfo>
-#include <mln/core/exact.hh>
+#include <mln/core/routine/exact.hh>
 
 
 struct test : mln::Object< test >

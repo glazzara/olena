@@ -57,7 +57,7 @@
 
 
 # include <mln/core/queue_p.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>

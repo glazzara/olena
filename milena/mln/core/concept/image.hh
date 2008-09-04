@@ -159,6 +159,6 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/initialize.hh>
+# include <mln/core/routine/initialize.hh>
 
 #endif // ! MLN_CORE_CONCEPT_IMAGE_HH

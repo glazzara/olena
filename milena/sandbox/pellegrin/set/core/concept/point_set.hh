@@ -241,6 +241,6 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/ops.hh>
+# include <mln/core/routine/ops.hh>
 
 #endif // ! MLN_CORE_CONCEPT_POINT_SET_HH

@@ -35,7 +35,7 @@
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/alias/box2d.hh>
-# include <mln/core/init.hh>
+# include <mln/core/routine/init.hh>
 
 # include <mln/border/thickness.hh>
 # include <mln/value/set.hh>

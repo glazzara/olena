@@ -37,7 +37,7 @@
  */
 
 # include <mln/core/category.hh>
-# include <mln/core/exact.hh>
+# include <mln/core/routine/exact.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/ret.hh>

@@ -34,7 +34,7 @@
  * mutable.
  */
 
-# include <mln/core/exact.hh>
+# include <mln/core/routine/exact.hh>
 
 
 namespace mln

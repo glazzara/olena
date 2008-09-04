@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INIT_HH
-# define MLN_CORE_INIT_HH
+#ifndef MLN_CORE_ROUTINE_INIT_HH
+# define MLN_CORE_ROUTINE_INIT_HH
 
-/*! \file mln/core/init.hh
+/*! \file mln/core/routine/init.hh
  *
  * \brief Definition of function that initialize an image from another
  * one.
@@ -104,4 +104,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INIT_HH
+#endif // ! MLN_CORE_ROUTINE_INIT_HH

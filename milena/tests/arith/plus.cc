@@ -62,7 +62,7 @@ int main()
 
 
 // #include <mln/core/image/image2d.hh>
-// #include <mln/core/clone.hh>
+// #include <mln/core/routine/clone.hh>
 // #include <mln/value/int_u8.hh>
 
 // #include <mln/arith/plus.hh>

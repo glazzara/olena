@@ -37,7 +37,7 @@
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/image/inplace.hh>
-# include <mln/core/init.hh>
+# include <mln/core/routine/init.hh>
 # include <mln/core/line_piter.hh>
 
 # include <mln/geom/size2d.hh>

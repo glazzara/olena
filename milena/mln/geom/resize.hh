@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/make/w_window1d.hh>
 # include <mln/accu/mean.hh>
 # include <mln/border/resize.hh>

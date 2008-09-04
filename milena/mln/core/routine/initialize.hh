@@ -25,54 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CLONE_HH
-# define MLN_CORE_CLONE_HH
+#ifndef MLN_CORE_ROUTINE_INITIALIZE_HH
+# define MLN_CORE_ROUTINE_INITIALIZE_HH
 
-/*! \file mln/core/clone.hh
+/*! \file mln/core/routine/initialize.hh
  *
- * \brief Clone an image, that is, get an effective copy.
+ * \brief Definition of function that initialize an image from another
+ * one.
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/init.hh>
-# include <mln/level/fill.hh>
-
 
 namespace mln
 {
 
-  /*! \brief Clone the image \p ima with the values of the image \p
-   *  data.
+  /*! Initialize the image \p target with data extracted from image \p model.
    *
-   * \param[in] ima The image to be cloneed.
-   * \result The clone.
+   * \param[in, out] target The image to be initialized.
+   * \param[in] model The image to provide data for the initialization.
    *
-   * \pre ima.has_data
+   * \pre (not target.has_data) and model.has_data
    */
-  template <typename I>
-  mln_concrete(I) clone(const Image<I>& model);
+  template <typename I, typename J>
+  void initialize(Image<I>& target, const Image<J>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename I>
+
+  template <typename I, typename J>
   inline
-  mln_concrete(I) clone(const Image<I>& model)
+  void initialize(Image<I>& target, const Image<J>& model)
   {
-    // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
-    trace::entering("core::clone");
+    trace::entering("core::initialize");
+    mln_precondition(! exact(target).has_data());
+    mln_precondition(exact(model).has_data());
 
-    mln_concrete(I) tmp;
-    initialize(tmp, model);
-    level::fill(tmp, model);
+    init_(tag::image, exact(target), exact(model));
 
-    trace::exiting("core::clone");
-    return tmp;
+    mln_postcondition(exact(target).has_data());
+    trace::exiting("core::initialize");
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
-
-#endif // ! MLN_CORE_CLONE_HH
+#endif // ! MLN_CORE_ROUTINE_INITIALIZE_HH

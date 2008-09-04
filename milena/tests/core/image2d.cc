@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/geom/size2d.hh>
 
-#include <mln/core/init.hh>
+#include <mln/core/routine/init.hh>
 #include <mln/border/resize.hh>
 
 

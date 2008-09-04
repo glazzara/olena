@@ -25,50 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INITIALIZE_HH
-# define MLN_CORE_INITIALIZE_HH
+#ifndef MLN_CORE_ROUTINE_EXACT_HH
+# define MLN_CORE_ROUTINE_EXACT_HH
 
-/*! \file mln/core/initialize.hh
- *
- * \brief Definition of function that initialize an image from another
- * one.
+/*! \file mln/core/routine/exact.hh
+ * \brief Definition of the mln::exact downcast routines.
  */
 
-# include <mln/core/concept/image.hh>
+#include <mln/core/internal/exact.hh>
+
+
+/// FIXME: Doc!
+#define mln_exact(T) typename mln::internal::exact_<T>::ret
+
+
 
 namespace mln
 {
 
-  /*! Initialize the image \p target with data extracted from image \p model.
+  /*! \brief Exact cast routine for mln objects.
    *
-   * \param[in, out] target The image to be initialized.
-   * \param[in] model The image to provide data for the initialization.
+   * This set of routines can be used to downcast an object towards
+   * its exact type.  The only argument, respectively \p ptr or \p
+   * ref, should be an mln::Object.
    *
-   * \pre (not target.has_data) and model.has_data
+   * \c The parameter E is the exact type of the object.
+   *
+   * \return The return follows the nature of the argument (either a
+   * pointer or a reference, const or not).
    */
-  template <typename I, typename J>
-  void initialize(Image<I>& target, const Image<J>& model);
+  /// \{
+
+  template <typename T>
+  mln_exact(T)* exact(T* ptr);
+
+  template <typename T>
+  mln_exact(T)& exact(T& ref);
+
+  /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  // exact
 
-  template <typename I, typename J>
+  template <typename T>
   inline
-  void initialize(Image<I>& target, const Image<J>& model)
+  mln_exact(T)* exact(T* ptr)
   {
-    trace::entering("core::initialize");
-    mln_precondition(! exact(target).has_data());
-    mln_precondition(exact(model).has_data());
+    return internal::exact_<T>::run(ptr);
+  }
 
-    init_(tag::image, exact(target), exact(model));
-
-    mln_postcondition(exact(target).has_data());
-    trace::exiting("core::initialize");
+  template <typename T>
+  inline
+  mln_exact(T)& exact(T& ref)
+  {
+    return *exact(&ref);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_INITIALIZE_HH
+
+#endif // ! MLN_CORE_ROUTINE_EXACT_HH
