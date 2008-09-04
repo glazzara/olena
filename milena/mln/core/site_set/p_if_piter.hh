@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_PSET_IF_PITER_HH
-# define MLN_CORE_SITE_SET_PSET_IF_PITER_HH
+#ifndef MLN_CORE_SITE_SET_P_IF_PITER_HH
+# define MLN_CORE_SITE_SET_P_IF_PITER_HH
 
-/*! \file mln/core/pset_if_piter.hh
+/*! \file mln/core/p_if_piter.hh
  *
- * \brief Definition of iterators on pset_if<S,F>.
+ * \brief Definition of iterators on p_if<S,F>.
  */
 
 # include <mln/core/internal/piter_adaptor.hh>
-# include <mln/core/site_set/pset_if.hh>
+# include <mln/core/site_set/p_if.hh>
 
 
 namespace mln
@@ -46,19 +46,19 @@ namespace mln
    * Parameter \c S is a site set type; parameter F is a function
    * from point to Boolean.
    *
-   * \see mln::pset_if
+   * \see mln::p_if
    */
   template <typename Pi, typename S, typename F>
-  struct pset_if_piter_
+  struct p_if_piter_
     : public internal::piter_adaptor_< Pi,                       // Adaptee.
-				       pset_if<S,F>,             // Site_Set.
-				       pset_if_piter_<Pi,S,F> >  // Exact.
+				       p_if<S,F>,             // Site_Set.
+				       p_if_piter_<Pi,S,F> >  // Exact.
   {
     /// Constructor without argument.
-    pset_if_piter_();
+    p_if_piter_();
 
     /// Constructor from a site set.
-    pset_if_piter_(const pset_if<S,F>& s);
+    p_if_piter_(const p_if<S,F>& s);
 
     /// Start an iteration.
     void start_();
@@ -67,11 +67,11 @@ namespace mln
     void next_();
 
     /// Change the set site targeted by pi_.
-    void pi_change_target_(const pset_if<S,F>& s);
+    void pi_change_target_(const p_if<S,F>& s);
 
   private:
-    typedef pset_if_piter_<Pi,S,F> self_;
-    typedef internal::piter_adaptor_<Pi, pset_if<S,F>, self_> super_;
+    typedef p_if_piter_<Pi,S,F> self_;
+    typedef internal::piter_adaptor_<Pi, p_if<S,F>, self_> super_;
 
   protected:
     using super_::s_;
@@ -84,13 +84,13 @@ namespace mln
 
   template <typename Pi, typename S, typename F>
   inline
-  pset_if_piter_<Pi,S,F>::pset_if_piter_()
+  p_if_piter_<Pi,S,F>::p_if_piter_()
   {
   }
 
   template <typename Pi, typename S, typename F>
   inline
-  pset_if_piter_<Pi,S,F>::pset_if_piter_(const pset_if<S,F>& s)
+  p_if_piter_<Pi,S,F>::p_if_piter_(const p_if<S,F>& s)
   {
     this->change_target(s);
   }
@@ -98,7 +98,7 @@ namespace mln
   template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_piter_<Pi,S,F>::start_()
+  p_if_piter_<Pi,S,F>::start_()
   {
     pi_.start();
     while (pi_.is_valid() && ! s_->pred(pi_))
@@ -108,7 +108,7 @@ namespace mln
   template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_piter_<Pi,S,F>::next_()
+  p_if_piter_<Pi,S,F>::next_()
   {
     do
       pi_.next();
@@ -118,7 +118,7 @@ namespace mln
   template <typename Pi, typename S, typename F>
   inline
   void
-  pset_if_piter_<Pi,S,F>::pi_change_target_(const pset_if<S,F>& s)
+  p_if_piter_<Pi,S,F>::pi_change_target_(const p_if<S,F>& s)
   {
     pi_.change_target(s.overset());
   }
@@ -128,4 +128,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_SITE_SET_PSET_IF_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_P_IF_PITER_HH

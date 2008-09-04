@@ -120,7 +120,7 @@ namespace mln
 
       // Ordered queue.
       /* FIXME: Milena probably already provides an ordered queue
-	 facility via the mln::p_priority_queue class.  Try to use it
+	 facility via the mln::p_priority class.  Try to use it
 	 instead, and get rid of mln/util/greater_psite.hh.  */
       typedef
 	std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >

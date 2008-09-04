@@ -37,7 +37,7 @@
  * \todo Add an init method (deferred initialization).
  */
 
-# include <mln/core/site_set/pset_if.hh>
+# include <mln/core/site_set/p_if.hh>
 # include <mln/fun/ops.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
@@ -76,7 +76,7 @@ namespace mln
   public:
 
     /// Equivalent site_set type.
-    typedef pset_if<S_, F_> S;
+    typedef p_if<S_, F_> S;
 
     /// Conversion towards the equivalent site set.
     operator S() const;

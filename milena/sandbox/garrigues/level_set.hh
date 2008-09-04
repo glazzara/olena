@@ -46,8 +46,8 @@
 # include <mln/core/image/inplace.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/clock_neighb2d.hh>
-# include <mln/core/pset_if_piter.hh>
-# include <mln/core/site_set/pset_if.hh>
+# include <mln/core/p_if_piter.hh>
+# include <mln/core/site_set/p_if.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image/image_if.hh>
 # include <mln/core/routine/clone.hh>

@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/site_set/pset_if.hh>
+# include <mln/core/site_set/p_if.hh>
 # include <mln/pw/all.hh>
 # include <mln/value/interval.hh>
 
@@ -57,7 +57,7 @@ namespace mln
       data_(I& ima, const F& f);
 
       I ima_;
-      pset_if<mln_pset(I), F> pset_;
+      p_if<mln_pset(I), F> pset_;
     };
 
   } // end of namespace mln::internal
@@ -99,11 +99,11 @@ namespace mln
      *
      */
     template <typename I, typename F, typename E>
-    struct image_if_base_ : public internal::image_domain_morpher< I, pset_if<mln_pset(I),F>, E >
+    struct image_if_base_ : public internal::image_domain_morpher< I, p_if<mln_pset(I),F>, E >
     {
 
       /// Give the definition domain.
-      const pset_if<mln_pset(I), F>& domain() const;
+      const p_if<mln_pset(I), F>& domain() const;
 
       void init_(I& ima, const F& f);
 
@@ -186,7 +186,7 @@ namespace mln
 
     template <typename I, typename F, typename E>
     inline
-    const pset_if<mln_pset(I), F>&
+    const p_if<mln_pset(I), F>&
     image_if_base_<I,F,E>::domain() const
     {
       return this->data_->pset_;

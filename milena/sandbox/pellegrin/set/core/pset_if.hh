@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_SITE_SET_PSET_IF_HH
-# define MLN_CORE_SITE_SET_PSET_IF_HH
+#ifndef MLN_CORE_SITE_SET_P_IF_HH
+# define MLN_CORE_SITE_SET_P_IF_HH
 
-/*! \file mln/core/site_set/pset_if.hh
+/*! \file mln/core/site_set/p_if.hh
  *
  * \brief Definition of the restriction of a point set w.r.t. a predicate.
  */
@@ -42,15 +42,15 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename S, typename F> struct pset_if;
-  template <typename S, typename F> struct pset_if_fwd_piter_;
-  template <typename S, typename F> struct pset_if_bkd_piter_;
+  template <typename S, typename F> struct p_if;
+  template <typename S, typename F> struct p_if_fwd_piter_;
+  template <typename S, typename F> struct p_if_bkd_piter_;
 
   namespace trait
   {
 
     template <typename S, typename F>
-    struct point_set_< pset_if<S, F> > : public default_point_set_< pset_if<S, F> >
+    struct point_set_< p_if<S, F> > : public default_point_set_< p_if<S, F> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::slow has_speed;
@@ -65,7 +65,7 @@ namespace mln
    * \return A subset of points.
    */
   template <typename S, typename F>
-  pset_if<S, F>
+  p_if<S, F>
   operator | (const Point_Set<S>& pset, const Function_p2b<F>& f);
 
 
@@ -76,26 +76,26 @@ namespace mln
    * from point to Boolean.
    */
   template <typename S, typename F>
-  class pset_if : public internal::point_set_base_< mln_psite(S), pset_if<S,F> >
+  class p_if : public internal::point_set_base_< mln_psite(S), p_if<S,F> >
   {
-    typedef pset_if<S,F> self_;
+    typedef p_if<S,F> self_;
     typedef internal::point_set_base_<mln_psite(S), self_> super_;
   public:
 
     typedef mln_psite(super_) psite;
 
     /// Forward Site_Iterator associated type.
-    typedef pset_if_fwd_piter_<S,F> fwd_piter;
+    typedef p_if_fwd_piter_<S,F> fwd_piter;
 
     /// Backward Site_Iterator associated type.
     typedef mln::internal::fixme bkd_piter;
 
 
     /// Constructor with a point set \p pset and a predicate \p f.
-    pset_if(const S& pset, const F& f);
+    p_if(const S& pset, const F& f);
 
     /// Constructor without argument.
-    pset_if();
+    p_if();
 
 
     /// Test if \p p belongs to the subset. 
@@ -129,20 +129,20 @@ namespace mln
 
   template <typename S, typename F>
   inline
-  pset_if<S, F>
+  p_if<S, F>
   operator | (const Point_Set<S>& pset, const Function_p2b<F>& f)
   {
-    pset_if<S, F> tmp(exact(pset), exact(f));
+    p_if<S, F> tmp(exact(pset), exact(f));
     return tmp;
   }
 
 
-  // pset_if<S,F>
+  // p_if<S,F>
 
   template <typename S, typename F>
   inline
   bool
-  pset_if<S,F>::has(const psite& p) const
+  p_if<S,F>::has(const psite& p) const
   {
     return pset_.has(p) && f_(p);
   }
@@ -150,7 +150,7 @@ namespace mln
   template <typename S, typename F>
   inline
   const box_<mln_point(S)>&
-  pset_if<S,F>::bbox() const
+  p_if<S,F>::bbox() const
   {
     return pset_.bbox();
   }
@@ -158,7 +158,7 @@ namespace mln
   template <typename S, typename F>
   inline
   const S&
-  pset_if<S,F>::overset() const
+  p_if<S,F>::overset() const
   {
     return pset_;
   }
@@ -166,14 +166,14 @@ namespace mln
   template <typename S, typename F>
   inline
   bool
-  pset_if<S,F>::pred(const psite& p) const
+  p_if<S,F>::pred(const psite& p) const
   {
     return f_(p);
   }
   
   template <typename S, typename F>
   inline
-  pset_if<S,F>::pset_if(const S& pset, const F& f)
+  p_if<S,F>::p_if(const S& pset, const F& f)
     : pset_(pset),
       f_(f)
   {
@@ -181,14 +181,14 @@ namespace mln
 
   template <typename S, typename F>
   inline
-  pset_if<S,F>::pset_if()
+  p_if<S,F>::p_if()
   {
   }
 
   template <typename S, typename F>
   inline
   const F&
-  pset_if<S,F>::predicate() const
+  p_if<S,F>::predicate() const
   {
     return f_;
   }
@@ -199,7 +199,7 @@ namespace mln
 
 
 
-# include <mln/core/pset_if_piter.hh>
+# include <mln/core/p_if_piter.hh>
 
 
 
@@ -210,7 +210,7 @@ namespace mln
 
   template <typename S, typename F>
   std::size_t
-  pset_if<S,F>::npoints() const
+  p_if<S,F>::npoints() const
   {
     std::size_t n = 0;
     fwd_piter p(*this);
@@ -224,4 +224,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_SITE_SET_PSET_IF_HH
+#endif // ! MLN_CORE_SITE_SET_P_IF_HH

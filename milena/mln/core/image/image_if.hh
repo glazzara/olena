@@ -37,7 +37,7 @@
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/site_set/pset_if.hh>
+# include <mln/core/site_set/p_if.hh>
 # include <mln/pw/all.hh>
 
 
@@ -58,7 +58,7 @@ namespace mln
       data(I& ima, const F& f);
 
       I ima_;
-      pset_if<mln_pset(I), F> pset_;
+      p_if<mln_pset(I), F> pset_;
     };
 
   } // end of namespace mln::internal
@@ -90,7 +90,7 @@ namespace mln
    */
   template <typename I, typename F>
   struct image_if : public internal::image_domain_morpher< I,
-							    pset_if<mln_pset(I), F>,
+							    p_if<mln_pset(I), F>,
 							    image_if<I, F> >
   {
     /// Skeleton.
@@ -105,7 +105,7 @@ namespace mln
     void init_(I& ima, const F& f);
 
     /// Give the definition domain.
-    const pset_if<mln_pset(I), F>& domain() const;
+    const p_if<mln_pset(I), F>& domain() const;
 
     /// Const promotion via conversion.
     operator image_if<const I, F>() const;
@@ -193,7 +193,7 @@ namespace mln
 
   template <typename I, typename F>
   inline
-  const pset_if<mln_pset(I), F>&
+  const p_if<mln_pset(I), F>&
   image_if<I,F>::domain() const
   {
     mln_precondition(this->has_data());

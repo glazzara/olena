@@ -33,7 +33,7 @@
  * \brief Definition of the concept of mln::Point_Set.
  *
  * \todo Think about adding an 'insert' method (not so easy because of
- * pset_if...)
+ * p_if...)
  */
 
 # include <mln/core/concept/point_site.hh>

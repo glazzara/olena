@@ -77,7 +77,7 @@ namespace mln
     {
       typedef mln_value(I) V;
       typedef mln_ch_value(I, value::rgb8) O;
-      typedef const mln::pset_if<mln_pset(I), mln::fun::eq_p2b_expr_<mln::pw::value_<I>, mln::pw::cst_<V> > > F;
+      typedef const mln::p_if<mln_pset(I), mln::fun::eq_p2b_expr_<mln::pw::value_<I>, mln::pw::cst_<V> > > F;
 
       I in = exact(input);
       mln_precondition(in.has_data());

@@ -71,7 +71,7 @@ int main()
   trait::image::print(ima_);
   std::cout << std::endl;
 
-  typedef pset_if<box2d, fun::p2b::chess_t> S;
+  typedef p_if<box2d, fun::p2b::chess_t> S;
   ch_target(mln_fwd_piter_(S)(), ima_.domain());
 
   // mln_VAR(ima_e, extend(ima_, pw::value(ima)));

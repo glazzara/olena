@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/pset_if.cc
+/*! \file tests/core/p_if.cc
  *
- * \brief Tests on mln::pset_if.
+ * \brief Tests on mln::p_if.
  */
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/site_set/pset_if.hh>
+#include <mln/core/site_set/p_if.hh>
 #include <mln/fun/p2b/chess.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_p_set.hh>

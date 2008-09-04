@@ -25,19 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/p_priority_queue.cc
+/*! \file tests/core/p_priority.cc
  *
- * \brief Tests on mln::p_priority_queue.
+ * \brief Tests on mln::p_priority.
  */
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/site_set/p_priority_queue.hh>
+#include <mln/core/site_set/p_priority.hh>
 
 int main ()
 {
   using namespace mln;
 
-  p_priority_queue<point2d, unsigned> q;
+  p_priority<point2d, unsigned> q;
   point2d p1 (6, 9);
   point2d p2 (5, 1);
   point2d p3 (4, 2);

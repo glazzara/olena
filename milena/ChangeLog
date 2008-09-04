@@ -1,5 +1,41 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename pset_if as p_if and remove Q at end of priority_Q.
+	* mln/core/site_set/pset_if.hh,
+	* mln/core/pset_if_piter.hh: Rename as...
+	* mln/core/site_set/p_if.hh,
+	* mln/core/site_set/p_if_piter.hh: ...these.
+	* mln/core/site_set/p_priority_queue.hh: Rename as...
+	* mln/core/site_set/p_priority.hh: ...this.
+
+	* tests/core/p_priority_queue.cc,
+	* tests/core/p_priority_queue_fast_with_array.cc,
+	* tests/core/pset_if.cc,
+	* tests/core/p_priority_queue_fast.cc,
+	* tests/convert/to_image.cc,
+	* doc/tutorial/examples/image_if.cc,
+	* doc/tutorial/examples/p_queue.cc,
+	* mln/core/site_set/p_image.hh,
+	* mln/core/image/image_if.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/draw/label.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/morpho/meyer_wst.hh,
+	* sandbox/pellegrin/set/test/p_priority_queue_fast.cc,
+	* sandbox/pellegrin/set/test/p_priority_queue.cc,
+	* sandbox/pellegrin/set/test/pset_if.cc,
+	* sandbox/pellegrin/set/test/p_priority_queue_fast_with_array.cc,
+	* sandbox/pellegrin/set/trait/point_set.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast.hh,
+	* sandbox/pellegrin/set/core/pset_if.hh,
+	* sandbox/pellegrin/set/core/concept/point_set.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue.hh,
+	* sandbox/pellegrin/set/core/p_priority_queue_fast_with_array.hh,
+	* sandbox/garrigues/level_set.hh,
+	* sandbox/garrigues/fllt/fllt.hh: Update.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Remove some obsolete files in mln/core/.
 
 
