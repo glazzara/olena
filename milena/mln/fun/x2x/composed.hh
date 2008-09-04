@@ -38,7 +38,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/bexpr.hh>
-# include <mln/core/h_mat.hh>
+# include <mln/algebra/h_mat.hh>
 
 
 namespace mln

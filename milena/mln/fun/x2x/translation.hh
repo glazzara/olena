@@ -36,7 +36,7 @@
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
-# include <mln/core/h_mat.hh>
+# include <mln/algebra/h_mat.hh>
 # include <mln/fun/i2v/all.hh>
 
 namespace mln
@@ -97,7 +97,7 @@ namespace mln
       translation<n,C>::translation(const algebra::vec<n,C>& t)
 	:t_(t)
       {
-	this->m_ = h_mat<n,C>::Id;
+	this->m_ = algebra::h_mat<n,C>::Id;
 	this->update();
       }
 

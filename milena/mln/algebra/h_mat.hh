@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_H_MAT_HH
-# define MLN_CORE_H_MAT_HH
+#ifndef MLN_ALGEBRA_H_MAT_HH
+# define MLN_ALGEBRA_H_MAT_HH
 
-/*! \file mln/core/h_mat.hh
+/*! \file mln/algebra/h_mat.hh
  *
  * \brief Definition of a matrix with homogeneous coordinates.
+ *
+ * \todo Add traits.
  */
 
 # include <mln/algebra/mat.hh>
@@ -39,44 +41,49 @@
 namespace mln
 {
 
-  /*! \brief N-Dimensional matrix with homogeneous coordinates.
-   *
-   */
-  template <unsigned d, typename T>
-  struct h_mat : public algebra::mat<d+1, d+1, T>
+  namespace algebra
   {
-    /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1)
-    enum { N = d,
-	   M = d,
-	   dim = d * d };
 
-    /// Constructor without argument.
-    h_mat();
-    /// Constructor with the underlying matrix.
-    h_mat(const algebra::mat<d+1, d+1, T>& x);
-  };
+    /*! \brief N-Dimensional matrix with homogeneous coordinates.
+     *
+     */
+    template <unsigned d, typename T>
+    struct h_mat : public mat<d+1, d+1, T>
+    {
+      /// Dimension is the 'natural' one (3 for 3D), not the one of the vector (dim + 1)
+      enum { N = d,
+	     M = d,
+	     dim = d * d };
+
+      /// Constructor without argument.
+      h_mat();
+      /// Constructor with the underlying matrix.
+      h_mat(const mat<d+1, d+1, T>& x);
+    };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned d, typename T>
-  inline
-  h_mat<d,T>::h_mat()
-    : algebra::mat<d+1, d+1, T>(algebra::mat<d+1, d+1, T>::Id)
-  {
-  }
+    template <unsigned d, typename T>
+    inline
+    h_mat<d,T>::h_mat()
+      : mat<d+1, d+1, T>(mat<d+1, d+1, T>::Id)
+    {
+    }
 
-  template <unsigned d, typename T>
-  inline
-  h_mat<d,T>::h_mat(const algebra::mat<d+1, d+1, T>& x)
-    : algebra::mat<d+1, d+1, T>(x)
-  {
-  }
+    template <unsigned d, typename T>
+    inline
+    h_mat<d,T>::h_mat(const mat<d+1, d+1, T>& x)
+      : mat<d+1, d+1, T>(x)
+    {
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::algebra
 
 } // end of namespace mln
 
 
 
-#endif // ! MLN_CORE_H_MAT_HH
+#endif // ! MLN_ALGEBRA_H_MAT_HH

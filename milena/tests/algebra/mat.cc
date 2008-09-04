@@ -34,7 +34,7 @@
 #include <iostream>
 #include <mln/fun/i2v/all_to.hh>
 #include <mln/algebra/mat.hh>
-#include <mln/core/h_mat.hh>
+#include <mln/algebra/h_mat.hh>
 
 
 
@@ -45,9 +45,9 @@ int main()
   algebra::mat<1,3,float> m1(all_to(4.));
   algebra::mat<2,2,float> m2 = algebra::mat<2,2,float>::Id;
 
-  h_mat<1,float> hm1(m2);
-  h_mat<2,float> hm2;
-  h_mat<3,float> hm3(all_to(1.5));
+  algebra::h_mat<1,float> hm1(m2);
+  algebra::h_mat<2,float> hm2;
+  algebra::h_mat<3,float> hm3(all_to(1.5));
 
   algebra::mat<4,4,float> m4 = hm3;
 
@@ -59,7 +59,7 @@ int main()
   std::cout << "hm3 = " << hm3 << ";" << std::endl;
 
   {
-    h_mat<2,float> m, m2;
+    algebra::h_mat<2,float> m, m2;
     m = m2;
     // FIXME: Test *many* => runs ok...
   }

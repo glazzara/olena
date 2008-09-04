@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/core/h_mat.hh>
-# include <mln/core/h_vec.hh>
+# include <mln/algebra/h_mat.hh>
+# include <mln/algebra/h_vec.hh>
 
 namespace mln
 {
@@ -54,11 +54,11 @@ namespace mln
 	typedef V argument;
 	typedef V result;
 	typedef typename V::coord coord;
-	typedef h_mat<dim, coord> matrix;
+	typedef algebra::h_mat<dim, coord> matrix;
 
 	V operator()(const V& x) const
 	{
-	  h_vec<dim, coord> tmp = m_ * x.to_h_vec();
+	  algebra::h_vec<dim, coord> tmp = m_ * x.to_h_vec();
 	  return tmp.to_vec();
 	}
 

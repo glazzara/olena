@@ -34,7 +34,7 @@
 #include <iostream>
 #include <mln/fun/i2v/all_to.hh>
 #include <mln/algebra/vec.hh>
-#include <mln/core/h_vec.hh>
+#include <mln/algebra/h_vec.hh>
 
 
 
@@ -45,10 +45,10 @@ int main()
   algebra::vec<1,float> v1(all_to(4.));
   algebra::vec<2,float> v2 = make::vec(6., 2.8);
 
-  h_vec<1,float> hv1;
-  h_vec<2,float> hv2 = v2.to_h_vec(); // Immersion into homogeneous.
+  algebra::h_vec<1,float> hv1;
+  algebra::h_vec<2,float> hv2 = v2.to_h_vec(); // Immersion into homogeneous.
 
-  h_vec<3,float> hv3(all_to(1.5));
+  algebra::h_vec<3,float> hv3(all_to(1.5));
 
   hv3 += make::vec(0., 0., 0., 0.5);
 

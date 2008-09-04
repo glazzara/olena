@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,10 +27,10 @@
 
 /*! \file tests/h_vec.cc
  *
- * \brief Tests on mln::h_vec.
+ * \brief Tests on mln::algebra::h_vec.
  */
 
-#include <mln/core/h_vec.hh>
+#include <mln/algebra/h_vec.hh>
 #include <mln/core/alias/point3d.hh>
 
 using namespace mln;
@@ -40,12 +40,12 @@ void run_in_3d(const algebra::vec<3, int>&)
 {
 }
 
-void run_in_3d_h(const h_vec<3, int>&)
+void run_in_3d_h(const algebra::h_vec<3, int>&)
 {
 }
 
 
-void foo(const mln::h_vec<3,float>&)
+void foo(const mln::algebra::h_vec<3,float>&)
 {
 }
 
@@ -54,9 +54,9 @@ int main()
 {
 
   algebra::vec<3, int> x;
-  h_vec<3, int> w = x.to_h_vec();
+  algebra::h_vec<3, int> w = x.to_h_vec();
 
-  typedef h_vec<3, int> p3d;
+  typedef algebra::h_vec<3, int> p3d;
   p3d p;
   run_in_3d(p.to_vec());
 
@@ -66,7 +66,7 @@ int main()
 
   {
     algebra::vec<3,float> v;
-    h_vec<3,float> w(v.to_h_vec());
+    algebra::h_vec<3,float> w(v.to_h_vec());
     w = v.to_h_vec();
     foo(v.to_h_vec());
   }

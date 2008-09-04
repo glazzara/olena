@@ -1,5 +1,26 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Move h_vec and h_mat in mln/ from core/ to algebra/.
+
+	* mln/core/h_vec.hh,
+	* mln/core/h_mat.hh: Rename as...
+	* mln/algebra/h_vec.hh,
+	* mln/algebra/h_mat.hh: ...these.
+	Update.
+
+	* tests/core/h_vec.cc,
+	* tests/algebra/vec2.cc,
+	* tests/algebra/mat.cc,
+	* mln/core/point.hh,
+	* mln/metal/vec.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh,
+	* mln/fun/internal/x2x_linear_impl.hh,
+	* mln/algebra/vec.hh: Update.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move some remaining core types in appropriate directories.
 
 	* mln/core/complex_image.hh,

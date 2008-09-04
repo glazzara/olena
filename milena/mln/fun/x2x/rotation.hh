@@ -100,7 +100,7 @@ namespace mln
 	 dir_(dir)
       {
 	mln_precondition(dir == 2 || n == 3);
-	this->m_ = h_mat<n,C>::Id;
+	this->m_ = algebra::h_mat<n,C>::Id;
 	update();
       }
 

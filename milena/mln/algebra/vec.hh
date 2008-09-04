@@ -197,7 +197,7 @@ namespace mln
 
 
       // Immersion of the vector into its homogeneous space.
-      h_vec<n, T> to_h_vec() const;
+      algebra::h_vec<n, T> to_h_vec() const;
 
 
       const T& operator[](unsigned i) const;

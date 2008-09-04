@@ -42,7 +42,7 @@
 # include <mln/metal/is_not.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
-# include <mln/core/h_vec.hh>
+# include <mln/algebra/h_vec.hh>
 # include <mln/util/yes.hh>
 
 
@@ -69,7 +69,7 @@ namespace mln
     struct point_to_
     {
       typedef algebra::vec<G::dim, C> metal_vec;
-      typedef mln::h_vec<G::dim, C> h_vec;
+      typedef mln::algebra::h_vec<G::dim, C> h_vec;
     };
 
   } // end of namespace mln::internal
@@ -174,7 +174,7 @@ namespace mln
     const algebra::vec<G::dim, C>& to_vec() const;
 
     /// Transform to point in homogene coordinate system.
-    h_vec<G::dim, C> to_h_vec() const;
+    algebra::h_vec<G::dim, C> to_h_vec() const;
 
     /// Point with all coordinates set to the maximum value.
     static const point<G,C>& plus_infty();
@@ -394,9 +394,9 @@ namespace mln
   
   template <typename G, typename C>
   inline
-  h_vec<G::dim, C> point<G,C>::to_h_vec() const
+  algebra::h_vec<G::dim, C> point<G,C>::to_h_vec() const
   {
-    h_vec<G::dim, C> tmp;
+    algebra::h_vec<G::dim, C> tmp;
     for (unsigned i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
     tmp[G::dim] = 1;
