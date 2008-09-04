@@ -33,7 +33,7 @@
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
-# include <mln/core/line_graph_psite.hh>
+# include <mln/core/image/line_graph_psite.hh>
 # include <mln/core/site_set/p_line_graph_piter.hh>
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as

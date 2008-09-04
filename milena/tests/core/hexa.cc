@@ -30,8 +30,8 @@
  * \brief Tests on mln::hexa
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/hexa.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/hexa.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/trait/image/print.hh>

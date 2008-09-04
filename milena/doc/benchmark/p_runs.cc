@@ -1,5 +1,5 @@
 # include <mln/io/pbm/load.hh>
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/alias/p_run2d.hh>
 # include <mln/core/p_set_of.hh>
 # include <mln/convert/from_to.hh>

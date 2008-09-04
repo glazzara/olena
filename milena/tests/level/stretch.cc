@@ -31,7 +31,7 @@
  */
 
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/stretch.hh>
 #include <mln/debug/iota.hh>
 #include <mln/value/int_u8.hh>

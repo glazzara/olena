@@ -1,6 +1,6 @@
 #include <mln/level/sort_psites.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/util/greater_psite.hh>
 #include <mln/estim/min_max.hh>

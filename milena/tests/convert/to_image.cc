@@ -30,7 +30,7 @@
  * \brief Tests on mln::convert::to_image.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/window2d.hh>
 #include <mln/core/site_set/pset_if.hh>
 #include <mln/fun/p2b/chess.hh>

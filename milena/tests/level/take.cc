@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::take.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/take.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/iota.hh>

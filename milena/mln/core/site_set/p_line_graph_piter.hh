@@ -30,7 +30,7 @@
 
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_line_graph.hh>
-# include <mln/core/line_graph_psite.hh>
+# include <mln/core/image/line_graph_psite.hh>
 
 /// \file mln/core/site_set/p_line_graph_piter.hh
 /// \brief Definition of point iterator on line graph-based point set.

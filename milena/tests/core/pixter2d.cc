@@ -28,7 +28,7 @@
 /// \file tests/core/pixter2d.cc
 /// \brief Tests on 2-D image pixters.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/debug/iota.hh>
 

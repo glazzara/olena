@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/window1d.hh>
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image1d.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
 

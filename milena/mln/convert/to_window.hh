@@ -42,8 +42,8 @@
 # include <mln/pw/cst.hh>
 # include <mln/metal/is_a.hh>
 
-# include <mln/core/line_graph_elt_neighborhood.hh>
-# include <mln/core/line_graph_elt_window.hh>
+# include <mln/core/image/line_graph_elt_neighborhood.hh>
+# include <mln/core/image/line_graph_elt_window.hh>
 
 
 namespace mln

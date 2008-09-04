@@ -30,7 +30,7 @@
  * \brief Tests on mln::test::positive.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/test/positive.hh>
 

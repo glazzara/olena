@@ -29,8 +29,8 @@
 #include <iostream>
 #include <sstream>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/clone.hh>
@@ -51,7 +51,7 @@
 #include <mln/util/tree_to_image.hh>
 #include <mln/util/branch_iter_ind.hh>
 
-#include <mln/core/cast_image.hh>
+#include <mln/core/image/cast_image.hh>
 #include <mln/core/site_set/p_queue_fast.hh>
 
 namespace mln

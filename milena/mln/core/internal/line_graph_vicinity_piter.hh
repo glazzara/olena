@@ -41,7 +41,7 @@
 
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/site_set/p_line_graph.hh>
-# include <mln/core/line_graph_psite.hh>
+# include <mln/core/image/line_graph_psite.hh>
 
 namespace mln
 {

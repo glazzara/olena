@@ -30,8 +30,8 @@
  * \brief Test on mln::plain.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/plain.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/plain.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/level/compare.hh>

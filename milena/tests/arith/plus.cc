@@ -30,7 +30,7 @@
  * \brief Tests on mln::arith::plus.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/plus.hh>
 #include <mln/level/compare.hh>
@@ -61,7 +61,7 @@ int main()
 
 
 
-// #include <mln/core/image2d.hh>
+// #include <mln/core/image/image2d.hh>
 // #include <mln/core/clone.hh>
 // #include <mln/value/int_u8.hh>
 

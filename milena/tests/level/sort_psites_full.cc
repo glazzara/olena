@@ -30,12 +30,12 @@
  * \brief Tests on mln::level::sort_points.
  */
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/sub_image.hh>
 
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/literal/origin.hh>

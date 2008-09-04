@@ -37,7 +37,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/core/image2d_b.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/interpolated.hh>
 
 
 int main()

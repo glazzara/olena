@@ -33,7 +33,7 @@
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/graph_psite.hh>
+#include <mln/core/image/graph_psite.hh>
 #include <mln/core/site_set/p_graph_piter.hh>
 
 

@@ -30,8 +30,8 @@
  * \brief Test on mln::core::value_enc_image.hh.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/value_enc_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/value_enc_image.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
@@ -46,7 +46,7 @@
 
 #include "tests/data.hh"
 
-#include <mln/core/value_encode.hh>
+#include <mln/core/image/value_encode.hh>
 
 struct fold_t : public mln::Function_v2v< fold_t >
 {

@@ -28,7 +28,7 @@
 /// \file tests/morpho/closing_volume.cc
 /// \brief Test on mln::morpho::closing_volume.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/core/neighb2d.hh>
 

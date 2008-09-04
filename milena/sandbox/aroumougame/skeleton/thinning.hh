@@ -1,7 +1,7 @@
 #include "neighborhood1.hh"
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/graph_image.hh>
-#include <mln/core/graph_elt_neighborhood.hh>
+#include <mln/core/image/graph_image.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/math/min.hh>
 #include <mln/math/sqrt.hh>
 #include <mln/make/dpoint2d.hh>

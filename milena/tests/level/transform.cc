@@ -32,7 +32,7 @@
 
 #include <cmath>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/transform.hh>
 #include <mln/debug/iota.hh>
 

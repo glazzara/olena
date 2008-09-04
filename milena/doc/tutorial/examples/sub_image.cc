@@ -1,6 +1,6 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/neighb2d.hh>
-# include <mln/core/sub_image.hh>
+# include <mln/core/image/sub_image.hh>
 
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>

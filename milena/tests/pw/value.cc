@@ -30,7 +30,7 @@
  * \brief Test on mln::pw::value_.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/pw/all.hh>
 

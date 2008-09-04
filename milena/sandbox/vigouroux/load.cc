@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include "color/my_hsi.hh"
 #include "color/rgb_to_hsi.hh"
@@ -18,7 +18,7 @@
 # include <mln/display/save.hh>
 # include <mln/display/show.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/make/pixel.hh>
 

@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/inplace.hh>
 
 
 namespace mln

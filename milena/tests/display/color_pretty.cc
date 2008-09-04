@@ -30,12 +30,12 @@
  * \brief Tests on mln::display::color::pretty.
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/inplace.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/level/compare.hh>

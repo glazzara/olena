@@ -28,8 +28,8 @@
 /// \file tests/core/fi_adaptor.cc
 /// \brief Test on mln::fi_adaptor.
 
-#include <mln/core/fi_adaptor.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/fi_adaptor.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/value/int_u8.hh>

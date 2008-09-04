@@ -30,7 +30,7 @@
  * \brief Tests on mln::logical::or.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/logical/or.hh>
 #include <mln/level/compare.hh>
 

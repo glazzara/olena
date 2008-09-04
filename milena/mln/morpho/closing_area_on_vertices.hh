@@ -33,7 +33,7 @@
 /// \brief Morphological area closing on a line graph image computing
 /// the area in terms of adjacent vertices.
 
-# include <mln/core/line_graph_image.hh>
+# include <mln/core/image/line_graph_image.hh>
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/count_adjacent_vertices.hh>
 

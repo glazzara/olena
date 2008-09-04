@@ -30,7 +30,7 @@
  * \brief Tests on mln::pset_if.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/core/site_set/pset_if.hh>
 #include <mln/fun/p2b/chess.hh>

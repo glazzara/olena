@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/geom/max_sli.hh>
 

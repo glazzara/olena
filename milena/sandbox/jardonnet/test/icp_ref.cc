@@ -1,4 +1,4 @@
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>

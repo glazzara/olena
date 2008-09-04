@@ -38,7 +38,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/trait/value_.hh>
 # include <mln/util/pix.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/inplace.hh>
 
 namespace mln
 {

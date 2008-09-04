@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::replace.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/replace.hh>
 #include <mln/level/compare.hh>
 

@@ -36,7 +36,7 @@
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/box2d.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/inplace.hh>
 # include <mln/core/init.hh>
 # include <mln/core/line_piter.hh>
 

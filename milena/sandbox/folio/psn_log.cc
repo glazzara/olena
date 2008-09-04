@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/literal/zero.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 # include <mln/debug/println.hh>
 
 namespace mln
@@ -248,8 +248,8 @@ namespace mln
 #include <mln/level/stretch.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/pw/value.hh>
 
 int main()

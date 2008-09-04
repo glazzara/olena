@@ -36,9 +36,9 @@
 
 # include <mln/math/abs.hh>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/window2d.hh>
-# include <mln/core/line_graph_image.hh>
+# include <mln/core/image/line_graph_image.hh>
 
 // FIXME: Generalize to other (input) images as well (image1d,
 // image3d, etc.).

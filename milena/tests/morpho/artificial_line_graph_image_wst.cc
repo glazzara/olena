@@ -49,14 +49,14 @@
 
 #include <vector>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/point2d.hh>
 #include <mln/core/window2d.hh>
 #include <mln/core/neighb2d.hh>
 
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/line_graph_elt_neighborhood.hh>
-#include <mln/core/line_graph_neighborhood_piter.hh>
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>

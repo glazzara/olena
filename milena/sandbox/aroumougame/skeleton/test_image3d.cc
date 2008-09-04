@@ -6,9 +6,9 @@
 #include <mln/make/point3d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/graph_image.hh>
-#include <mln/core/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/graph_image.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
 
 
 int main()

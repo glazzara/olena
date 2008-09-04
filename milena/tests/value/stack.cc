@@ -30,7 +30,7 @@
  * \brief Tests on mln::value::stack.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/stack.hh>
 
 

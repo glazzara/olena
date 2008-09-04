@@ -2,7 +2,7 @@
 # define OLENA_CONVERT_NRGBHSL_HH
 
 # include <mln/core/image_if_value.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/inplace.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/display/show.hh>
 # include <mln/io/ppm/save.hh>

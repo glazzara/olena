@@ -32,7 +32,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
-# include <mln/core/graph_psite.hh>
+# include <mln/core/image/graph_psite.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 # include <trait/point_set.hh>
 

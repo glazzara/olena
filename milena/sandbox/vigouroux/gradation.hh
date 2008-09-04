@@ -1,7 +1,7 @@
 #ifndef GRADATION_HH
 # define GRADATION_HH
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/debug/println.hh>
 

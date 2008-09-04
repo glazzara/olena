@@ -1,5 +1,5 @@
-# include <mln/core/image2d.hh>
-# include <mln/core/plain.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/plain.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/iota.hh>
 # include <mln/level/fill_with_value.hh>

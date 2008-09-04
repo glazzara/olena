@@ -30,7 +30,7 @@
  * \brief Tests on mln::pixel.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/pixel.hh>
 #include <mln/metal/equal.hh>
 

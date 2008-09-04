@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRANSLATE_IMAGE_HH
-# define MLN_CORE_TRANSLATE_IMAGE_HH
+#ifndef MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
+# define MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
 
-/*! \file mln/core/translate_image.hh
+/*! \file mln/core/image/translate_image.hh
  *
  * \brief Definition of an image class FIXME
  */
@@ -193,4 +193,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_TRANSLATE_IMAGE_HH
+#endif // ! MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH

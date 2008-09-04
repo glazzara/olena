@@ -34,7 +34,7 @@
 
 #include <mln/util/tree.hh>
 #include <mln/core/contract.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>

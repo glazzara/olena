@@ -1,10 +1,10 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/alias/p_run2d.hh>
 # include <mln/core/site_set/p_set_of.hh>
 
 # include <mln/convert/from_to.hh>
 # include <mln/debug/println.hh>
-// # include <mln/core/sparse_image.hh>
+// # include <mln/core/image/sparse_image.hh>
 
 
 template <typename I>

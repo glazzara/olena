@@ -30,7 +30,7 @@
  * \brief Tests on mln::logical::and_not.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/logical/and_not.hh>
 #include <mln/level/compare.hh>
 

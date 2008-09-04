@@ -32,11 +32,11 @@
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/interpolated.hh>
 #include <mln/make/vec.hh>
 
 #include "tests/data.hh"

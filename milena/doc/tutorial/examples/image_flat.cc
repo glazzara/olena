@@ -1,4 +1,4 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/image/flat_image.hh>
 # include <mln/debug/println.hh>
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::sort_psites.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/level/sort_psites.hh>
 #include <mln/core/site_set/p_array.hh>

@@ -33,9 +33,9 @@
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/core/tr_image.hh>
+#include <mln/core/image/tr_image.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 

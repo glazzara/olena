@@ -39,7 +39,7 @@
 
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/site_set/p_graph.hh>
-# include <mln/core/graph_psite.hh>
+# include <mln/core/image/graph_psite.hh>
 
 /* FIXME: Due to the poor interface of mln::p_graph and
    mln::util::graph, we show to much implementation details here.

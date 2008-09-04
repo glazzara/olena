@@ -32,8 +32,8 @@
  * \todo Make this test not dummy!
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/inplace.hh>
 #include <mln/debug/iota.hh>
 #include <mln/level/memcpy_.hh>
 

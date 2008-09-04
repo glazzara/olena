@@ -6,7 +6,7 @@
 #include <mln/core/mesh_psite.hh>
 #include <mln/draw/mesh.hh>
 #include <mln/core/mesh_image.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/interpolated.hh>
 
 using namespace mln;
 

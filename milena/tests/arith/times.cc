@@ -30,7 +30,7 @@
  * \brief Tests on mln::arith::times.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/times.hh>
 #include <mln/level/compare.hh>

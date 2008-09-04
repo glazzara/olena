@@ -27,7 +27,7 @@
 
 # include <vector>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/io/ppm/save.hh>
@@ -64,7 +64,7 @@
 # include <mln/level/stretch.hh>
 
 # include <mln/core/image_if_value.hh>
-# include <mln/core/sub_image.hh>
+# include <mln/core/image/sub_image.hh>
 # include <mln/level/paste.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>

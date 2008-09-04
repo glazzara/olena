@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::dilatation_fast.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/core/window2d.hh>
 

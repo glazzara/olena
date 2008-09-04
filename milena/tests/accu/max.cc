@@ -30,7 +30,7 @@
  * \brief Tests on mln::accu::max.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>

@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/image_if.hh>
+# include <mln/core/image/image_if.hh>
 
 # include <mln/level/fill.hh>
 # include <mln/pw/value.hh>

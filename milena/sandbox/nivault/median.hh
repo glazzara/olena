@@ -39,7 +39,7 @@
 # include <mln/core/window2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/vline2d.hh>
-# include <mln/core/t_image.hh>
+# include <mln/core/image/t_image.hh>
 # include <mln/core/dpoint.hh>
 
 # include <mln/accu/median.hh>

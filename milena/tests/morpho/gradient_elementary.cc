@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::gradient_elementary.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>

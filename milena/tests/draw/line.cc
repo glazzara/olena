@@ -32,9 +32,9 @@
 
 #include <iterator>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/inplace.hh>
 
 #include <mln/level/fill.hh>
 #include <mln/level/compare.hh>

@@ -30,7 +30,7 @@
  * \brief Tests on mln::convert::to_tiles.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
 #include <mln/level/fill.hh>
@@ -38,7 +38,7 @@
 #include <mln/border/fill.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/debug/println.hh>
-#include <mln/core/translate_image.hh>
+#include <mln/core/image/translate_image.hh>
 #include <mln/convert/to_tiles.hh>
 
 int main ()

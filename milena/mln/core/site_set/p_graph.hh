@@ -34,7 +34,7 @@
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/graph.hh>
 
-# include <mln/core/graph_psite.hh>
+# include <mln/core/image/graph_psite.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 
 

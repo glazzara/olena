@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>

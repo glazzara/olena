@@ -114,7 +114,7 @@ namespace mln
 
 # endif // MLN_CORE_SITE_SET_BOX2D_HH
 
-# ifdef MLN_CORE_IMAGE2D_H_HH
+# ifdef MLN_CORE_IMAGE_IMAGE2D_H_HH
 
       // Hexa version.
       template <typename I>
@@ -147,7 +147,7 @@ namespace mln
 	std::cout << std::endl;
       }
 
-# endif // MLN_CORE_IMAGE2D_H_HH
+# endif // MLN_CORE_IMAGE_IMAGE2D_H_HH
 
 
 # ifdef MLN_CORE_SITE_SET_BOX3D_HH

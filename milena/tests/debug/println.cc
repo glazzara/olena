@@ -30,7 +30,7 @@
  * \brief Test on mln::debug::println.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 

@@ -31,9 +31,9 @@
 #include <vector>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/line_graph_elt_window.hh>
-#include <mln/core/line_graph_window_piter.hh>
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/image/line_graph_window_piter.hh>
 
 #include <mln/morpho/dilation.hh>
 

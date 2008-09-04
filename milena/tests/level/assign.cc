@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::assign.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/assign.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/iota.hh>

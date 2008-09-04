@@ -32,7 +32,7 @@
 
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_bgraph.hh>
-# include <mln/core/bgraph_psite.hh>
+# include <mln/core/image/bgraph_psite.hh>
 
 /*! \file mln/core/site_set/p_bgraph_piter.hh
  *

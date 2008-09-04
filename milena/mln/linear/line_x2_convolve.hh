@@ -34,7 +34,7 @@
  */
 
 # include <mln/linear/line_convolve.hh>
-# include <mln/core/t_image.hh>
+# include <mln/core/image/t_image.hh>
 
 
 

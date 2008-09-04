@@ -32,9 +32,9 @@
 
 #include <mln/border/fill.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 #include <mln/value/int_s8.hh>

@@ -28,8 +28,8 @@
 /// \file tests/core/decorated_image.cc
 /// \brief Tests on mln::decorated_image.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/decorated_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/decorated_image.hh>
 
 
 unsigned count_read = 0, count_write = 0;

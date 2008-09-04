@@ -1,10 +1,10 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/pw/all.hh>
 
 # include <mln/core/site_set/line2d.hh>
 # include <mln/core/site_set/p_set.hh>
 
-# include <mln/core/sub_image.hh>
+# include <mln/core/image/sub_image.hh>
 # include <mln/level/fill.hh>
 # include <mln/debug/println.hh>
 

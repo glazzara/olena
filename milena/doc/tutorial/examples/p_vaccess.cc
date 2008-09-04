@@ -1,4 +1,4 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 
@@ -10,7 +10,7 @@
 
 # include <mln/core/alias/p_runs2d.hh>
 # include <mln/core/site_set/p_vaccess.hh>
-# include <mln/core/image_if.hh>
+# include <mln/core/image/image_if.hh>
 # include <mln/pw/all.hh>
 # include <mln/convert/from_to.hh>
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::image2d.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/geom/size2d.hh>
 
 #include <mln/core/init.hh>

@@ -28,7 +28,7 @@
 /// \file tests/core/pixter1d.cc
 /// \brief Tests on 1-D image pixters.
 
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image1d.hh>
 
 #include <mln/debug/iota.hh>
 

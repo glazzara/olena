@@ -32,8 +32,8 @@
 
 #include <iterator>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image1d.hh>
 
 #include <mln/value/int_u8.hh>
 

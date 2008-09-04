@@ -30,7 +30,7 @@
  * \brief Tests on mln::fwd_pixter3d.
  */
 
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 
 const unsigned size = 5;

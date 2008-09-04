@@ -34,9 +34,9 @@
  * mirroring effect.
  */
 
-# include <mln/core/image1d.hh>
-# include <mln/core/image2d.hh>
-# include <mln/core/image3d.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/fixme.hh>

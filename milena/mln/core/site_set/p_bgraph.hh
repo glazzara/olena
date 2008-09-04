@@ -34,7 +34,7 @@
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
-# include <mln/core/bgraph_psite.hh>
+# include <mln/core/image/bgraph_psite.hh>
 # include <mln/core/site_set/p_bgraph_piter.hh>
 
 

@@ -32,8 +32,8 @@
 
 
 #include <iostream>
-#include <mln/core/image2d.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/interpolated.hh>
 
 #include <mln/algebra/vec.hh>
 

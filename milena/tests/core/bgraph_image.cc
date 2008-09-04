@@ -31,8 +31,8 @@
 #include <vector>
 
 #include <mln/value/int_u8.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/bgraph_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/bgraph_image.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/paste.hh>
 #include <mln/debug/println.hh>

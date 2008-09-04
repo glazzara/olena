@@ -1,7 +1,7 @@
 #include <mln/value/hsi.hh>
 #include <mln/fun/v2v/rgb_to_hsi.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/rgb8.hh>
 
 #include <iostream>

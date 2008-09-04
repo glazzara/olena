@@ -30,7 +30,7 @@
  * \brief My first test.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 
 int main ()

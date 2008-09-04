@@ -114,7 +114,7 @@ namespace mln
 
 #include <iostream>
 #include <mln/debug/println.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/fun/v2v/norm.hh>
 

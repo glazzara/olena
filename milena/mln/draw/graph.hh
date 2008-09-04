@@ -35,7 +35,7 @@
 # include <mln/level/fill.hh>
 # include <mln/draw/line.hh>
 # include <mln/core/site_set/p_graph.hh>
-# include <mln/core/graph_image.hh>
+# include <mln/core/image/graph_image.hh>
 
 namespace mln
 {
@@ -98,7 +98,7 @@ namespace mln
       for (size_t l = 0; l < pg.nedges(); ++l)
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
-	      // in mln/core/graph_image.hh
+	      // in mln/core/image/graph_image.hh
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v1()),
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
 	      edge_v);

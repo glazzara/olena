@@ -28,7 +28,7 @@
 /// \file tests/core/pixter3d.cc
 /// \brief Tests on 3-D image pixters.
 
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/debug/iota.hh>
 

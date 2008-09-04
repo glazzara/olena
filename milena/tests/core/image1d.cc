@@ -30,7 +30,7 @@
  * \brief Tests on mln::image1d.
  */
 
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image1d.hh>
 #include <mln/geom/size1d.hh>
 
 

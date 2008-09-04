@@ -30,7 +30,7 @@
  * \brief Test on mln::labeling::level.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
@@ -40,7 +40,7 @@
 #include <mln/labeling/level.hh>
 #include <mln/level/paste.hh>
 #include <mln/pw/all.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 
 #include <mln/debug/println.hh>
 

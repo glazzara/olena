@@ -30,7 +30,7 @@
  * \brief Tests on mln::linear::line_convolve.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>

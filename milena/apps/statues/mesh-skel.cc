@@ -45,8 +45,8 @@
 #include <mln/make/point3d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/core/graph_image.hh>
-#include <mln/core/graph_elt_neighborhood.hh>
+#include <mln/core/image/graph_image.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/morpho/closing_area.hh>
 #include <mln/labeling/regional_minima.hh>

@@ -42,7 +42,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/image/inplace.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY

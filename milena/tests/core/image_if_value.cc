@@ -30,7 +30,7 @@
  * \brief Tests on mln::image_if_value.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>

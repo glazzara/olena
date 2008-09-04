@@ -30,7 +30,7 @@
  * \brief Test on mln::p_runs_ and related tools.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/p_runs.hh>
 
 

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/clone.hh>

@@ -28,7 +28,7 @@
 /// \file tests/binarization/thresholding.cc
 /// \brief Test on mln::binarization::threshold.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/binarization/threshold.hh>
 #include <mln/level/all.hh>
 

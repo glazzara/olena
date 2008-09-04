@@ -30,8 +30,8 @@
  * \brief Tests on mln::safe_image.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/safe.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/safe.hh>
 
 
 int main()

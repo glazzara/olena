@@ -31,7 +31,7 @@
  */
 
 #include <mln/border/fill.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/println_with_border.hh>
 

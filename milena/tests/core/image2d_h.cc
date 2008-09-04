@@ -30,7 +30,7 @@
  * \brief Tests on mln::image2d_h
  */
 
-#include <mln/core/image2d_h.hh>
+#include <mln/core/image/image2d_h.hh>
 
 #include <mln/value/int_u16.hh>
 #include <mln/trait/image/print.hh>

@@ -36,14 +36,14 @@
 #include <vector>
 #include <utility>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/site_set/p_graph.hh>
-#include <mln/core/graph_psite.hh>
+#include <mln/core/image/graph_psite.hh>
 #include <mln/draw/graph.hh>
-#include <mln/core/graph_image.hh>
+#include <mln/core/image/graph_image.hh>
 #include <mln/level/compare.hh>
 
 

@@ -1,4 +1,4 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/site_set/p_mutable_array_of.hh>
 # include <mln/core/site_set/p_run.hh>
 # include <mln/convert/from_to.hh>
@@ -6,7 +6,7 @@
 // Used by display.
 # include <mln/geom/bbox.hh>
 # include <mln/debug/println.hh>
-# include <mln/core/sub_image.hh>
+# include <mln/core/image/sub_image.hh>
 
 
 template <typename S>

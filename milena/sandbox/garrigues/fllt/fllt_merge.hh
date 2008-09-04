@@ -35,7 +35,7 @@
  *
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/set/is_subset_of.hh>
 

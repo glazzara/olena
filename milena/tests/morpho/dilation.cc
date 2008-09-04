@@ -30,7 +30,7 @@
  * \brief Test on mln::morpho::dilation.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/win/octagon2d.hh>
 #include <mln/win/diag2d.hh>

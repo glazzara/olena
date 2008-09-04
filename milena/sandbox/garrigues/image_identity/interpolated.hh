@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERPOLATED_HH
-# define MLN_CORE_INTERPOLATED_HH
+#ifndef MLN_CORE_IMAGE_INTERPOLATED_HH
+# define MLN_CORE_IMAGE_INTERPOLATED_HH
 
-/*! \file mln/core/interpolated.hh
+/*! \file mln/core/image/interpolated.hh
  *
  * \brief Definition of an image class FIXME
  */
@@ -182,4 +182,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERPOLATED_HH
+#endif // ! MLN_CORE_IMAGE_INTERPOLATED_HH

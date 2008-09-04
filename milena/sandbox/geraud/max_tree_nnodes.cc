@@ -6,7 +6,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/level/sort_psites.hh>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pgm/load.hh>

@@ -33,7 +33,7 @@
  * \brief Conversion of a vector of image2d into a tiled image with ratio.
  */
 
-# include <mln/core/translate_image.hh>
+# include <mln/core/image/translate_image.hh>
 # include <mln/level/paste.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>

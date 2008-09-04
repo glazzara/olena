@@ -30,7 +30,7 @@
  * \brief Test on mln::mono_obased_rle_image.hh.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/pw/all.hh>
@@ -42,7 +42,7 @@
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/core/mono_obased_rle_encode.hh>
+#include <mln/core/image/mono_obased_rle_encode.hh>
 
 #include "tests/data.hh"
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::canvas::browsing::fwd.hh
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/fwd.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>

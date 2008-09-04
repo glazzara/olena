@@ -33,9 +33,9 @@
  * \brief Conversions to mln::Image.
  */
 
-# include <mln/core/image1d.hh>
-# include <mln/core/image2d.hh>
-# include <mln/core/image3d.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/window.hh>

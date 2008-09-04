@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::compute.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/compute.hh>
 #include <mln/debug/iota.hh>
 #include <mln/accu/min.hh>

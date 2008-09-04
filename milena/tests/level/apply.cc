@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::apply.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/apply.hh>
 #include <mln/debug/iota.hh>
 #include <mln/fun/v2v/saturate.hh>

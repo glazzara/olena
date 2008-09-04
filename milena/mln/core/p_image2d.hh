@@ -36,8 +36,8 @@
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/box2d.hh>
-# include <mln/core/image2d.hh>
-# include <mln/core/sub_image.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/sub_image.hh>
 
 # include <mln/accu/bbox.hh>
 # include <mln/geom/ncols.hh>

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/all.hh>
 #include <mln/io/pbm/all.hh>
 #include <mln/geom/resize.hh>
@@ -37,7 +37,7 @@
 #include <mln/win/disk2d.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/inplace.hh>
 #include <mln/level/stretch.hh>
 #include <mln/level/median.hh>
 #include <mln/morpho/gradient.hh>

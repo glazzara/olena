@@ -30,7 +30,7 @@
  * \brief Tests on mln::geom::seed2tiling_roundness.
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/core/neighb2d.hh>
 # include <mln/core/w_window2d_int.hh>
 # include <mln/make/win_chamfer.hh>

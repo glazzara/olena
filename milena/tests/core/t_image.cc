@@ -30,8 +30,8 @@
  *  \brief Tests on mln::t_image.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/t_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/t_image.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>

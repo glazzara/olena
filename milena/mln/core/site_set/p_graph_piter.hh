@@ -30,7 +30,7 @@
 
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_graph.hh>
-# include <mln/core/graph_psite.hh>
+# include <mln/core/image/graph_psite.hh>
 
 /// \file mln/core/site_set/p_graph_piter.hh
 /// \brief Definition of point iterator on graph-based point set.

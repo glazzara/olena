@@ -34,7 +34,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/line_graph_image.hh>
+# include <mln/core/image/line_graph_image.hh>
 # include <mln/util/pix.hh>
 
 namespace mln

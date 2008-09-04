@@ -34,7 +34,7 @@
 # include <src/gimp-image.hh>
 # include <mln/core/point2d.hh>
 # include <mln/level/fill.hh>
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/all.hh>
 # include <mln/core/concept/function.hh>

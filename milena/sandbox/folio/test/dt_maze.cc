@@ -4,7 +4,7 @@
  */
 
 #include <iostream>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
 #include <mln/level/fill.hh>
@@ -18,8 +18,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/pw/all.hh>
 
 #include "../dt/path.hh"

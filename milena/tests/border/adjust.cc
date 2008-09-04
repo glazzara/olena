@@ -30,7 +30,7 @@
  * \brief Tests on mln::border::adjust.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/border/get.hh>
 #include <mln/border/adjust.hh>
 

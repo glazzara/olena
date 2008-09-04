@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/window2d.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/debug/println.hh>
 #include <mln/logical/not.hh>

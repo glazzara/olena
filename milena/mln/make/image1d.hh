@@ -33,7 +33,7 @@
  * \brief Routine to create an mln::image1d.
  */
 
-# include <mln/core/image1d.hh>
+# include <mln/core/image/image1d.hh>
 
 
 namespace mln

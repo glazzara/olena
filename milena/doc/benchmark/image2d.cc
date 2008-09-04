@@ -1,4 +1,4 @@
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/util/timer.hh>
 
 # include <mln/core/pixter2d.hh>

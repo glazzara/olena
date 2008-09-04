@@ -31,7 +31,7 @@
 #include <vector>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/line_graph_elt_window.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>

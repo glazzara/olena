@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::fill
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 
 int main()

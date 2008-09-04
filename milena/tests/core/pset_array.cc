@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/pset_array.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/p_runs.hh>
 
 #include <iostream>

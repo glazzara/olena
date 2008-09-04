@@ -28,9 +28,9 @@
 /// \file tests/dpoints_pixter.cc
 /// \brief Test on mln::dpoints_fwd_pixter and mln::dpoints_bkd_pixter.
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/win/segment1d.hh>
 #include <mln/win/rectangle2d.hh>

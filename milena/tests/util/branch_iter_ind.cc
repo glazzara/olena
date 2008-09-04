@@ -32,7 +32,7 @@
  *
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/util/tree.hh>
 #include <mln/util/branch_iter_ind.hh>
 
