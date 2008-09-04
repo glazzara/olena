@@ -100,7 +100,7 @@ int main()
       for (unsigned l = 0; l <= nlabels; ++l)
 	{
 	  std::cout << "arr(" << l << ") = ";
-	  mln_iter_(util::set<p_run2d>) r(arr(l).set_hook_());
+	  util::set<p_run2d>::eiter r(arr(l).set_hook_());
 	  for_all(r)
 	    std::cout << r << ' ';
 	  std::cout << std::endl;

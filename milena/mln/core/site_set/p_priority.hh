@@ -75,7 +75,6 @@ namespace mln
 						      p_priority<P,Q> >
   {
     typedef p_priority<P,Q> self_;
-    typedef util::set<P> set_;
   public:
 
     /// Element associated type.
@@ -86,10 +85,14 @@ namespace mln
     typedef p_double_psite<self_, Q> psite;
 
     /// Forward Site_Iterator associated type.
-    typedef p_double_piter<self_, typename set_::bkd_iter, mln_fwd_piter(Q)> fwd_piter;
+    typedef p_double_piter< self_,
+			    mln_bkd_eiter(util::set<P>),
+			    mln_fwd_piter(Q) > fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_double_piter<self_, typename set_::fwd_iter, mln_bkd_piter(Q)> bkd_piter;
+    typedef p_double_piter< self_,
+			    mln_fwd_eiter(util::set<P>),
+			    mln_bkd_piter(Q) > bkd_piter;
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
@@ -387,7 +390,7 @@ namespace mln
       // Containers p_ and q_ are not consistent in size!
       return false;
 
-    typename util::set<P>::iter p(p_);
+    mln_eiter(util::set<P>) p(p_);
     for_all(p)
       if (q_.find(p) == q_.end())
 	// We have an empty queue (with priority p)!
@@ -409,7 +412,7 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const p_priority<P,Q>& pq)
   {
     ostr << '{';
-    typename util::set<P>::bkd_iter p(pq.priorities());
+    mln_bkd_eiter(util::set<P>) p(pq.priorities());
     for_all(p)
       {
 	ostr << ' ' << p << ':';

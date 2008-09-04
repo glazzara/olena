@@ -233,7 +233,7 @@ namespace mln
   template <typename T, typename S>
   inline
   const T&
-  flat_image<T,S>::operator()(const mln_psite(S)& p) const
+  flat_image<T,S>::operator()(const mln_psite(S)&) const
   {
     mln_precondition(this->has_data());
     return this->data_->val_;
@@ -242,7 +242,7 @@ namespace mln
   template <typename T, typename S>
   inline
   const T&
-  flat_image<T,S>::operator()(const mln_psite(S)& p)
+  flat_image<T,S>::operator()(const mln_psite(S)&)
   {
     mln_precondition(this->has_data());
     return this->data_->val_;

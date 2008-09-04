@@ -324,15 +324,13 @@ namespace mln
   template <typename P>
   inline
   p_array<P>::p_array()
-    : bb_needs_update_(false)
   {
   }
 
   template <typename P>
   inline
   p_array<P>::p_array(const std::vector<P>& vect)
-    : vect_(vect),
-      bb_needs_update_(true)
+    : vect_(vect)
   {
   }
 

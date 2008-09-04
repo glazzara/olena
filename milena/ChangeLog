@@ -1,5 +1,23 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix merging errors.
+
+	* mln/core/site_set/p_array.hh (bb_needs_update_): Remove.
+	* mln/core/site_set/p_if.hh (include): Fix missing dir.
+	* mln/core/image/safe.hh (operator()): Fix warning.
+	* mln/core/image/flat_image.hh (p): Fix warning.
+	* mln/fun/ops.hh: Fix double ctors.
+	* mln/algebra/h_vec.hh (namespace): Fix self incl.
+	* mln/algebra/vec.hh (namespace): Fix fwd decl.
+
+	Misc.
+
+	* doc/tutorial/examples/p_vaccess.cc,
+	* mln/core/site_set/p_priority.hh,
+	* mln/core/site_set/p_key.hh (eiter): Prefer using a macro.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move test files from core/ to sub-directories.
 
 	* tests/core/alias,

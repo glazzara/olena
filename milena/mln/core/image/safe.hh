@@ -165,7 +165,7 @@ namespace mln
 
   template <typename I>
   inline
-  typename safe_image<I>::lvalue
+  mln_morpher_lvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
     mln_precondition(this->has_data());

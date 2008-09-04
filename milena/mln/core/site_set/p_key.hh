@@ -634,7 +634,7 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const p_key<K,P>& pk)
   {
     ostr << '{';
-    typename util::set<K>::fwd_iter k(pk.keys());
+    mln_fwd_eiter(util::set<K>) k(pk.keys());
     for_all(k)
       {
 	ostr << ' ' << k << ':';

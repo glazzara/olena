@@ -141,24 +141,6 @@ namespace mln
       return *this;
     }
 
-    namespace algebra
-    {
-
-      // Immersion of a vector in its homogeneous space.
-      template <unsigned n, typename T>
-      inline
-      h_vec<n, T> vec<n,T>::to_h_vec() const
-      {
-	h_vec<n, T> tmp;
-	for (unsigned i = 0; i < n; ++i)
-	  tmp[i] = this->data_[i];
-	tmp[n] = literal::one;
-	return tmp;
-      }
-
-    } // end of namespace mln::algebra
-
-
     template <unsigned d, typename C>
     inline
     vec<d,C> h_vec<d,C>::to_vec() const
@@ -169,6 +151,20 @@ namespace mln
       vec<d,C> tmp;
       for (unsigned i = 0; i < d; ++i)
 	tmp[i] = this->data_[i] / w;
+      return tmp;
+    }
+
+    // Immersion of a vector in its homogeneous space.
+
+    template <unsigned n, typename T>
+    inline
+    h_vec<n, T>
+    vec<n,T>::to_h_vec() const
+    {
+      h_vec<n, T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+	tmp[i] = this->data_[i];
+      tmp[n] = literal::one;
       return tmp;
     }
 

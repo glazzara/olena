@@ -53,14 +53,14 @@
 namespace mln
 {
 
-  // Fwd decls.
+  // Forward declarations.
   namespace algebra {
     template <unsigned n, typename T> class vec;
+    template <unsigned d, typename C> struct h_vec;
   }
   namespace literal {
     struct zero_t;
   }
-  template <unsigned d, typename C> struct h_vec;
 
 
 
