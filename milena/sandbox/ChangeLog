@@ -1,3 +1,13 @@
+2008-09-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Start working on image virtual transformation.
+
+	* jardonnet/virtual: New.
+	* jardonnet/virtual/access.hh (access): Virtual access to image.
+	It also contains image interpolation routines.
+	* jardonnet/virtual/access.cc: Test file.
+	* jardonnet/virtual/Makefile: New.
+
 2008-09-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* geraud/fllt/fllt.svg.7.hh: Add comments to the working version of
