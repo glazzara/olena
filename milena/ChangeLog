@@ -1,5 +1,17 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Remove two useless files from mln/core/.
+
+	* mln/core/dp_array.hh: Remove.
+	* sandbox/garrigues/fllt/fllt_simple.cc
+	(dp_array): Replace by util::array.
+
+	* mln/core/point_pair.hh: Remove.  This class is only used by
+	a single file (sandbox/pellegrin/set/core/p_line_graph.hh).
+	The latter file is a sandbox try and is now obsolete.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move h_vec and h_mat in mln/ from core/ to algebra/.
 
 	* mln/core/h_vec.hh,

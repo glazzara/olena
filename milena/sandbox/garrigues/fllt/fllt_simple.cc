@@ -38,7 +38,7 @@
 #include <mln/core/image/cast_image.hh>
 #include <mln/core/site_set/p_queue_fast.hh>
 
-#include <mln/core/dp_array.hh>
+#include <mln/util/array.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -149,9 +149,9 @@ namespace mln
     {
       // C6 neigboohood.
       //static std::vector<dpoint2d> nbhs[2];
-      static dp_array<dpoint2d> nbhs[2];
+      static util::array<dpoint2d> nbhs[2];
 
-      static inline const dp_array<dpoint2d>& get(point2d p)
+      static inline const util::array<dpoint2d>& get(point2d p)
       {
 	static bool toto = false;
 
@@ -176,7 +176,7 @@ namespace mln
 	return nbhs[abs(p[1] % 2)];
       }
     };
-    dp_array<dpoint2d> c6_neighb::nbhs[2];
+    util::array<dpoint2d> c6_neighb::nbhs[2];
 
 
     struct c6_interpixel
