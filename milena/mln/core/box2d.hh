@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX2D_HH
-# define MLN_CORE_BOX2D_HH
+#ifndef MLN_CORE_SITE_SET_BOX2D_HH
+# define MLN_CORE_SITE_SET_BOX2D_HH
 
 /*! \file mln/core/box2d.hh
  *
@@ -34,7 +34,7 @@
  * routines.
  */
 
-# include <mln/core/box.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/core/point2d.hh>
 
 
@@ -55,4 +55,4 @@ namespace mln
 # include <mln/make/box2d.hh>
 
 
-#endif // ! MLN_CORE_BOX2D_HH
+#endif // ! MLN_CORE_SITE_SET_BOX2D_HH

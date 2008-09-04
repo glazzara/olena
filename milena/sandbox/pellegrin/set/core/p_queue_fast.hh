@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_QUEUE_FAST_HH
-# define MLN_CORE_P_QUEUE_FAST_HH
+#ifndef MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
+# define MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 
-/*! \file mln/core/p_queue_fast.hh
+/*! \file mln/core/site_set/p_queue_fast.hh
  *
  * \brief Definition of a point set class faster but needs more memory
  * space.
@@ -315,4 +315,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_QUEUE_FAST_HH
+#endif // ! MLN_CORE_SITE_SET_P_QUEUE_FAST_HH

@@ -27,7 +27,7 @@
 
 #include <mln/core/image2d.hh>
 #include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/core/clone.hh>
 #include <mln/core/image_if_value.hh>
 

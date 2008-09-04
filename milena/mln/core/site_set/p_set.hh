@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_SET_HH
-# define MLN_CORE_P_SET_HH
+#ifndef MLN_CORE_SITE_SET_P_SET_HH
+# define MLN_CORE_SITE_SET_P_SET_HH
 
-/*! \file mln/core/p_set.hh
+/*! \file mln/core/site_set/p_set.hh
  *
  * \brief Definition of a mathematical set of sites (based on
  * util::set).
  */
 
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/util/set.hh>
 
 
@@ -260,4 +260,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_SET_HH
+#endif // ! MLN_CORE_SITE_SET_P_SET_HH

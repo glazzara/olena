@@ -31,7 +31,7 @@
 /// \file mln/core/bgraph_psite.hh
 /// \brief Definition of a boost-graph-based point site.
 
-# include <mln/core/p_graph.hh>
+# include <mln/core/site_set/p_graph.hh>
 
 
 namespace mln

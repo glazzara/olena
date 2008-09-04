@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/point2d.hh>
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 
 
 int main()

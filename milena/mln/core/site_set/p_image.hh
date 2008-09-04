@@ -37,7 +37,7 @@
  * \todo Add an init method (deferred initialization).
  */
 
-# include <mln/core/pset_if.hh>
+# include <mln/core/site_set/pset_if.hh>
 # include <mln/fun/ops.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>

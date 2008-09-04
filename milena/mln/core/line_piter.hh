@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/internal/site_iterator_base.hh>
-# include <mln/core/box.hh>
+# include <mln/core/site_set/box.hh>
 
 namespace mln
 {

@@ -34,7 +34,7 @@
  */
 
 # include <mln/accu/internal/base.hh>
-# include <mln/core/box.hh>
+# include <mln/core/site_set/box.hh>
 
 
 namespace mln

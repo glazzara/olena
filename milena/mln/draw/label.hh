@@ -43,7 +43,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/metal/is_not.hh>
 # include <mln/core/image_if_value.hh>
 # include <mln/debug/println.hh>

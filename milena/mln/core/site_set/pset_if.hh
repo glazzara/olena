@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PSET_IF_HH
-# define MLN_CORE_PSET_IF_HH
+#ifndef MLN_CORE_SITE_SET_PSET_IF_HH
+# define MLN_CORE_SITE_SET_PSET_IF_HH
 
-/*! \file mln/core/pset_if.hh
+/*! \file mln/core/site_set/pset_if.hh
  *
  * \brief Definition of the restriction of a point set w.r.t. a predicate.
  *
@@ -225,4 +225,4 @@ namespace mln
 
 
 
-#endif // ! MLN_CORE_PSET_IF_HH
+#endif // ! MLN_CORE_SITE_SET_PSET_IF_HH

@@ -31,7 +31,7 @@
 /// \file mln/core/line_graph_psite.hh
 /// \brief Definition of a line graph-based point site.
 
-# include <mln/core/p_line_graph.hh>
+# include <mln/core/site_set/p_line_graph.hh>
 
 /* FIXME: This class shares a lot with graph_psite.  Factor as much as
    possible.  */

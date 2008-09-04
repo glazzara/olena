@@ -35,11 +35,11 @@
 # include <mln/accu/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/bgraph_psite.hh>
-# include <mln/core/p_bgraph_piter.hh>
+# include <mln/core/site_set/p_bgraph_piter.hh>
 
 
 
-/// \file mln/core/p_bgraph.hh
+/// \file mln/core/site_set/p_bgraph.hh
 /// \brief Definition of a point set based on a boost graph.
 
 namespace mln

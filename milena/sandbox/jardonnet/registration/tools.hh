@@ -4,7 +4,7 @@
 // temporary
 
 # include <mln/algebra/mat.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 
 # include "quat7.hh"
 

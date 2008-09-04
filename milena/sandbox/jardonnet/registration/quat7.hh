@@ -6,7 +6,7 @@
 # include <algorithm>
 
 # include <mln/algebra/mat.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 
 # include "rotation.hh"
 # include "jacobi.hh"

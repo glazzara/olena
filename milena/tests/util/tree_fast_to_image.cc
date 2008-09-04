@@ -35,7 +35,7 @@
 #include <mln/util/tree_fast.hh>
 #include <mln/core/contract.hh>
 #include <mln/core/image2d.hh>
-#include <mln/core/p_set.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
 #include <mln/level/fill.hh>

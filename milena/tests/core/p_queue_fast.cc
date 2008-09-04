@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/point2d.hh>
-#include <mln/core/p_queue_fast.hh>
+#include <mln/core/site_set/p_queue_fast.hh>
 
 
 

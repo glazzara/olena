@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_GRAPH_HH
-# define MLN_CORE_P_GRAPH_HH
+#ifndef MLN_CORE_SITE_SET_P_GRAPH_HH
+# define MLN_CORE_SITE_SET_P_GRAPH_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/site_set_base.hh>
@@ -35,7 +35,7 @@
 # include <mln/util/graph.hh>
 
 # include <mln/core/graph_psite.hh>
-# include <mln/core/p_graph_piter.hh>
+# include <mln/core/site_set/p_graph_piter.hh>
 
 
 namespace mln
@@ -335,4 +335,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_GRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_GRAPH_HH

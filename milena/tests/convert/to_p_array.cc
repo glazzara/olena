@@ -32,7 +32,7 @@
 
 #include <mln/core/point1d.hh>
 #include <mln/core/point2d.hh>
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 
 #include <mln/win/segment1d.hh>
 #include <mln/win/rectangle2d.hh>

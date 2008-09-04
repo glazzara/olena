@@ -34,7 +34,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 
 
 namespace mln

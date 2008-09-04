@@ -34,7 +34,7 @@
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/core/line_graph_psite.hh>
-# include <mln/core/p_line_graph_piter.hh>
+# include <mln/core/site_set/p_line_graph_piter.hh>
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
@@ -42,7 +42,7 @@
 // FIXME: We should move the `adjacent_or_equal method' from
 // iterators into this class.
 
-/// \file mln/core/p_line_graph.hh
+/// \file mln/core/site_set/p_line_graph.hh
 /// \brief Definition of a point set based on line graph.
 
 namespace mln
@@ -278,4 +278,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_GRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_GRAPH_HH

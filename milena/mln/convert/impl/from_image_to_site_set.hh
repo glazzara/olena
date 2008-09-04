@@ -40,7 +40,7 @@
 # include <utility>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/site_set.hh>
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/metal/converts_to.hh>
 
 

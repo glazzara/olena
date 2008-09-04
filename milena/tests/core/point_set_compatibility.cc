@@ -31,10 +31,10 @@
 
 #include <mln/core/point2d.hh>
 
-#include <mln/core/p_array.hh>
-#include <mln/core/p_set.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/core/graph_psite.hh>
-#include <mln/core/p_graph_piter.hh>
+#include <mln/core/site_set/p_graph_piter.hh>
 
 
 int main()

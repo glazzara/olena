@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/tree.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/level/fill.hh>
 
 namespace mln

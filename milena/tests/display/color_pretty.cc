@@ -33,7 +33,7 @@
 # include <mln/core/image2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/core/sub_image.hh>
 # include <mln/core/inplace.hh>
 # include <mln/value/rgb8.hh>

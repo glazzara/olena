@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_RUNS_HH
-# define MLN_CORE_P_RUNS_HH
+#ifndef MLN_CORE_SITE_SET_P_RUNS_HH
+# define MLN_CORE_SITE_SET_P_RUNS_HH
 
 /*! \file mln/core/p_runs.hh
  *
@@ -39,7 +39,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/runs_psite.hh>
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/lazy_set.hh>
 # include <trait/point_set.hh>
@@ -538,4 +538,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_RUNS_HH
+#endif // ! MLN_CORE_SITE_SET_P_RUNS_HH

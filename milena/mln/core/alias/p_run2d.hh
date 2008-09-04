@@ -33,7 +33,7 @@
  * \brief Definition of the mln::p_run2d alias.
  */
 
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/core/point2d.hh>
 
 

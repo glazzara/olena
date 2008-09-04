@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_PSET_IF_PITER_HH
-# define MLN_CORE_PSET_IF_PITER_HH
+#ifndef MLN_CORE_SITE_SET_PSET_IF_PITER_HH
+# define MLN_CORE_SITE_SET_PSET_IF_PITER_HH
 
 /*! \file mln/core/pset_if_piter.hh
  *
@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/piter_adaptor.hh>
-# include <mln/core/pset_if.hh>
+# include <mln/core/site_set/pset_if.hh>
 
 
 namespace mln
@@ -128,4 +128,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_PSET_IF_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_PSET_IF_PITER_HH

@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/image_morpher.hh>
-# include <mln/core/box.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/value/set.hh>
 
 namespace mln

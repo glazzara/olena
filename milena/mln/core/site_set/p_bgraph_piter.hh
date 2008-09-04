@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_BGRAPH_PITER_HH
-# define MLN_CORE_P_BGRAPH_PITER_HH
+#ifndef MLN_CORE_SITE_SET_P_BGRAPH_PITER_HH
+# define MLN_CORE_SITE_SET_P_BGRAPH_PITER_HH
 
 # include <utility>
 
 # include <mln/core/internal/site_iterator_base.hh>
-# include <mln/core/p_bgraph.hh>
+# include <mln/core/site_set/p_bgraph.hh>
 # include <mln/core/bgraph_psite.hh>
 
-/*! \file mln/core/p_bgraph_piter.hh
+/*! \file mln/core/site_set/p_bgraph_piter.hh
  *
  * \brief Definition of point iterator on boost-graph-based point set.
  */

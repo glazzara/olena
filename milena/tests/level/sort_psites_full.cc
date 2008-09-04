@@ -46,7 +46,7 @@
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/level/saturate.hh>

@@ -2,7 +2,7 @@
 # include <mln/accu/min_max.hh>
 # include <mln/labeling/regional_minima.hh>
 
-# include <mln/core/p_queue_fast.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 
 
 namespace mln

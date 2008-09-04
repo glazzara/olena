@@ -1,5 +1,5 @@
 # include <mln/core/image2d.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/core/window.hh>
 
 # include <mln/debug/println.hh>

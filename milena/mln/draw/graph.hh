@@ -34,7 +34,7 @@
 # include <mln/pw/image.hh>
 # include <mln/level/fill.hh>
 # include <mln/draw/line.hh>
-# include <mln/core/p_graph.hh>
+# include <mln/core/site_set/p_graph.hh>
 # include <mln/core/graph_image.hh>
 
 namespace mln

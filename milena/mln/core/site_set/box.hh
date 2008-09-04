@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX_HH
-# define MLN_CORE_BOX_HH
+#ifndef MLN_CORE_SITE_SET_BOX_HH
+# define MLN_CORE_SITE_SET_BOX_HH
 
-/*! \file mln/core/box.hh
+/*! \file mln/core/site_set/box.hh
  *
  * \brief This file defines a generic box class.
  *
@@ -339,7 +339,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/box_piter.hh>
+# include <mln/core/site_set/box_piter.hh>
 
 
-#endif // ! MLN_CORE_BOX_HH
+#endif // ! MLN_CORE_SITE_SET_BOX_HH

@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_LINE_GRAPH_HH
-# define MLN_CORE_P_LINE_GRAPH_HH
+#ifndef MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
+# define MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/core/line_graph_psite.hh>
-# include <mln/core/p_line_graph_piter.hh>
+# include <mln/core/site_set/p_line_graph_piter.hh>
 # include <mln/core/point_pair.hh>
 # include <trait/point_set.hh>
 
@@ -41,7 +41,7 @@
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
 
-/// \file mln/core/p_line_graph.hh
+/// \file mln/core/site_set/p_line_graph.hh
 /// \brief Definition of a point set based on line graph.
 
 namespace mln
@@ -174,4 +174,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_P_LINE_GRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_LINE_GRAPH_HH

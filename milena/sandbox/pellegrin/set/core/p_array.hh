@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_ARRAY_HH
-# define MLN_CORE_P_ARRAY_HH
+#ifndef MLN_CORE_SITE_SET_P_ARRAY_HH
+# define MLN_CORE_SITE_SET_P_ARRAY_HH
 
-/*! \file mln/core/p_array.hh
+/*! \file mln/core/site_set/p_array.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -244,4 +244,4 @@ namespace mln
 # include <mln/core/p_array_piter.hh>
 
 
-#endif // ! MLN_CORE_P_ARRAY_HH
+#endif // ! MLN_CORE_SITE_SET_P_ARRAY_HH

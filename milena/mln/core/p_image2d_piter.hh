@@ -32,7 +32,7 @@
 /// \brief Definition of point iterators on mln::p_image2d.
 
 # include <mln/core/p_image2d.hh>
-# include <mln/core/box_piter.hh>
+# include <mln/core/site_set/box_piter.hh>
 
 
 namespace mln

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_SET_HH
-# define MLN_CORE_P_SET_HH
+#ifndef MLN_CORE_SITE_SET_P_SET_HH
+# define MLN_CORE_SITE_SET_P_SET_HH
 
-/*! \file mln/core/p_set.hh
+/*! \file mln/core/site_set/p_set.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -36,7 +36,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <trait/point_set.hh>
 
 
@@ -192,4 +192,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_SET_HH
+#endif // ! MLN_CORE_SITE_SET_P_SET_HH

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_BGRAPH_HH
-# define MLN_CORE_P_BGRAPH_HH
+#ifndef MLN_CORE_SITE_SET_P_BGRAPH_HH
+# define MLN_CORE_SITE_SET_P_BGRAPH_HH
 
-/// \file mln/core/p_bgraph.hh
+/// \file mln/core/site_set/p_bgraph.hh
 /// \brief Definition of a point set based on a boost graph.
 
 # include <utility>
@@ -38,7 +38,7 @@
 # include <mln/accu/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
 # include <mln/core/bgraph_psite.hh>
-# include <mln/core/p_bgraph_piter.hh>
+# include <mln/core/site_set/p_bgraph_piter.hh>
 # include <trait/point_set.hh>
 
 
@@ -231,4 +231,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_BGRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_BGRAPH_HH

@@ -52,7 +52,7 @@ namespace mln
     namespace impl
     {
 
-# ifdef MLN_CORE_BOX2D_HH
+# ifdef MLN_CORE_SITE_SET_BOX2D_HH
 
       // 2D version.
       template <typename I>
@@ -69,10 +69,10 @@ namespace mln
 	}
 	std::cout << std::endl;
       }
-# endif // MLN_CORE_BOX2D_HH
+# endif // MLN_CORE_SITE_SET_BOX2D_HH
 
 
-# ifdef MLN_CORE_BOX3D_HH
+# ifdef MLN_CORE_SITE_SET_BOX3D_HH
 
       // 3D version.
       template <typename I>
@@ -104,7 +104,7 @@ namespace mln
 	std::cout << std::endl;
       }
 
-# endif // MLN_CORE_BOX3D_HH
+# endif // MLN_CORE_SITE_SET_BOX3D_HH
 
     } // end of namespace mln::debug::impl
 

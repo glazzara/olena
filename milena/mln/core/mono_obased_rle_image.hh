@@ -36,7 +36,7 @@
 # include <mln/core/internal/run_image.hh>
 # include <mln/core/p_runs.hh>
 # include <mln/core/runs_psite.hh>
-# include <mln/core/box.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/value/set.hh>
 # include <mln/core/mono_rle_image.hh>
 # include <vector>

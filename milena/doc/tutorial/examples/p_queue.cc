@@ -1,10 +1,10 @@
 # include <mln/core/image2d.hh>
-# include <mln/core/p_queue.hh>
-# include <mln/core/p_queue_fast.hh>
+# include <mln/core/site_set/p_queue.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/debug/println.hh>
 # include <mln/level/fill.hh>
 
-# include <mln/core/p_priority_queue.hh>
+# include <mln/core/site_set/p_priority_queue.hh>
 
 
 

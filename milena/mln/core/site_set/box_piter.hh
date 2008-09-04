@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_BOX_PITER_HH
-# define MLN_CORE_BOX_PITER_HH
+#ifndef MLN_CORE_SITE_SET_BOX_PITER_HH
+# define MLN_CORE_SITE_SET_BOX_PITER_HH
 
-/*! \file mln/core/box_piter.hh
+/*! \file mln/core/site_set/box_piter.hh
  *
  * \brief Definition of iterators on points of boxes.
  */
@@ -269,4 +269,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_BOX_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_BOX_PITER_HH

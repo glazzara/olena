@@ -37,7 +37,7 @@
 # include <map>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/p_graph.hh>
+# include <mln/core/site_set/p_graph.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 

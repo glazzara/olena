@@ -25,36 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_QUEUE_HH
-# define MLN_CORE_P_QUEUE_HH
+#ifndef MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
+# define MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 
-/*! \file mln/core/p_queue.hh
+/*! \file mln/core/site_set/p_queue_fast.hh
  *
- * \brief Definition of a site set based on std::deque.
+ * \brief Definition of a queue of sites that is fast but uses extra
+ * memory w.r.t. a simple queue.
  *
- * \todo Rename 'front' because it is ambiguous for C++ users; we
- * have:
- * - 'p_queue::pop' means 'deque::pop_front'
- * - 'p_queue::pop_front' means 'return deque::front and run
- *   deque::pop_front'
+ * \todo Add insert.
  */
 
-# include <deque>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 
 
 namespace mln
 {
 
   // Forward declaration.
-  template <typename P> class p_queue;
+  template <typename P> class p_queue_fast;
+
 
 
   namespace trait
   {
 
     template <typename P>
-    struct site_set_< p_queue<P> >
+    struct site_set_< p_queue_fast<P> >
     {
       typedef trait::site_set::nsites::known     nsites;
       typedef trait::site_set::bbox::unknown     bbox;
@@ -66,19 +63,20 @@ namespace mln
 
 
 
-  /*! \brief Queue of sites (based on std::deque).
+  /*! \brief Queue of sites class (based on p_array<P>).
+   *
+   * This container is efficient; FIXME: explain...
    *
    * The parameter \c P shall be a site or pseudo-site type.
    */
   template <typename P>
-  class p_queue : public internal::site_set_base_< P, p_queue<P> >
+  class p_queue_fast : public internal::site_set_base_< P, p_queue_fast<P> >
   {
-    typedef p_queue<P> self_;
+    typedef p_queue_fast<P> self_;
   public:
 
     /// Element associated type.
     typedef P element;
-
 
     /// Psite associated type.
     typedef p_indexed_psite<self_> psite;
@@ -94,8 +92,10 @@ namespace mln
 
 
     /// Constructor without argument.
-    p_queue();
+    p_queue_fast();
 
+    /// Reserve \p n cells.
+    void reserve(std::size_t n);
 
     /// Test if \p p belongs to this site set.
     bool has(const psite& p) const;
@@ -106,6 +106,8 @@ namespace mln
     /// This set is always valid so it returns true.
     bool is_valid() const;
 
+    /// Test if \p p belongs to this site set.
+    bool compute_has(const P& p) const;
 
     /// Give the number of sites.
     unsigned nsites() const;
@@ -132,8 +134,11 @@ namespace mln
     /// Pop (remove) the front site \p p from the queue; \p p is the
     /// least recently inserted site and give the front site \p p of
     /// the queue; \p p is the least recently inserted site.
-    P pop_front();
+    const P& pop_front();
 
+
+    /// Purge the queue to save (free) some memory.
+    void purge();
 
     /// Clear the queue.
     void clear();
@@ -142,16 +147,17 @@ namespace mln
     /// Return the \p i-th site.
     const P& operator[](unsigned i) const;
 
-    /// Return the corresponding std::deque of sites.
-    const std::deque<P>& std_deque() const;
+    /// Return the corresponding std::vector of sites.
+    const std::vector<P>& std_vector() const;
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
 
-
   protected:
 
-    std::deque<P> q_;
+    p_array<P> q_;
+    unsigned begin_;
+    unsigned end_;
   };
 
 
@@ -160,14 +166,38 @@ namespace mln
 
   template <typename P>
   inline
-  p_queue<P>::p_queue()
+  p_queue_fast<P>::p_queue_fast()
   {
+    begin_ = 0;
+    end_ = 0;
+  }
+
+  template <typename P>
+  inline
+  void
+  p_queue_fast<P>::reserve(std::size_t n)
+  {
+    q_.reserve();
+  }
+
+  template <typename P>
+  inline
+  void
+  p_queue_fast<P>::purge()
+  {
+    std::vector<P>& v = q_.hook_std_vector_();
+    std::copy(v.begin() + begin_,
+              v.begin() + end_,
+              v.begin());
+    v.resize(end_ - begin_);
+    end_ -= begin_;
+    begin_ = 0;
   }
 
   template <typename P>
   inline
   bool
-  p_queue<P>::has(const psite& p) const
+  p_queue_fast<P>::has(const psite& p) const
   {
     mln_precondition(p.target_() == this); // FIXME: Refine.
     if (p.index() < 0 || unsigned(p.index()) >= nsites())
@@ -180,7 +210,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_queue<P>::has(const util::index& i) const
+  p_queue_fast<P>::has(const util::index& i) const
   {
     return i >= 0 && unsigned(i) < nsites();
   }
@@ -188,7 +218,18 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_queue<P>::is_valid() const
+  p_queue_fast<P>::compute_has(const P& p) const
+  {
+    for (unsigned i = begin_; i < end_; ++i)
+      if (q_[i] == p)
+	return true;
+    return false;
+  }
+
+  template <typename P>
+  inline
+  bool
+  p_queue_fast<P>::is_valid() const
   {
     return true;
   }
@@ -196,44 +237,46 @@ namespace mln
   template <typename P>
   inline
   unsigned
-  p_queue<P>::nsites() const
+  p_queue_fast<P>::nsites() const
   {
-    return q_.size();
+    mln_invariant(end_ >= begin_);
+    return end_ - begin_;
   }
 
   template <typename P>
   inline
   void
-  p_queue<P>::push(const P& p)
+  p_queue_fast<P>::push(const P& p)
   {
-    q_.push_back(p);
+    q_.append(p);
+    ++end_;
   }
 
   template <typename P>
   inline
   void
-  p_queue<P>::pop()
+  p_queue_fast<P>::pop()
   {
     mln_precondition(! this->is_empty());
-    q_.pop_front();
+    ++begin_;
   }
 
   template <typename P>
   inline
   const P&
-  p_queue<P>::front() const
+  p_queue_fast<P>::front() const
   {
     mln_precondition(! this->is_empty());
-    return q_.front();
+    return q_[begin_];
   }
 
   template <typename P>
   inline
-  P
-  p_queue<P>::pop_front()
+  const P&
+  p_queue_fast<P>::pop_front()
   {
     mln_precondition(! this->is_empty());
-    P res = this->front();
+    const P& res = this->front();
     this->pop();
     return res;
   }
@@ -241,42 +284,42 @@ namespace mln
   template <typename P>
   inline
   void
-  p_queue<P>::clear()
+  p_queue_fast<P>::clear()
   {
-    q_.clear();
+    end_ = begin_;
   }
 
   template <typename P>
   inline
   const P&
-  p_queue<P>::operator[](unsigned i) const
+  p_queue_fast<P>::operator[](unsigned i) const
   {
     mln_precondition(i < nsites());
-    return q_[i];
+    return q_[begin_ + i];
   }
 
   template <typename P>
   inline
   void
-  p_queue<P>::insert(const P& p)
+  p_queue_fast<P>::insert(const P& p)
   {
     this->push(p);
   }
 
   template <typename P>
   inline
-  const std::deque<P>&
-  p_queue<P>::std_deque() const
+  const std::vector<P>&
+  p_queue_fast<P>::std_vector() const
   {
-    return q_;
+    return q_.std_vector();
   }
 
   template <typename P>
   inline
   std::size_t
-  p_queue<P>::memory_size() const
+  p_queue_fast<P>::memory_size() const
   {
-    return sizeof(q_) + nsites() * sizeof(P);
+    return q_.memory_size() + 2 * sizeof(unsigned);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -284,4 +327,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_QUEUE_HH
+#endif // ! MLN_CORE_SITE_SET_P_QUEUE_FAST_HH

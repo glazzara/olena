@@ -35,7 +35,7 @@
  *
  */
 
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/util/tree.hh>
 # include <mln/util/branch_iter_ind.hh>
 

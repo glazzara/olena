@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE2D_HH
-# define MLN_CORE_LINE2D_HH
+#ifndef MLN_CORE_SITE_SET_LINE2D_HH
+# define MLN_CORE_SITE_SET_LINE2D_HH
 
-/*! \file mln/core/line2d.hh
+/*! \file mln/core/site_set/line2d.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -209,4 +209,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_LINE2D_HH
+#endif // ! MLN_CORE_SITE_SET_LINE2D_HH

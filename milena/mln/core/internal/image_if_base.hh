@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/pset_if.hh>
+# include <mln/core/site_set/pset_if.hh>
 # include <mln/pw/all.hh>
 # include <mln/value/interval.hh>
 

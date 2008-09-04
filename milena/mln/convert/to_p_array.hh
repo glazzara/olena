@@ -31,7 +31,7 @@
 /// \file mln/convert/to_p_array.hh
 /// \brief Conversions to mln::p_array.
 
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 

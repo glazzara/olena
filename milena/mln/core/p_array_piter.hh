@@ -26,13 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_ARRAY_PITER_HH
-# define MLN_CORE_P_ARRAY_PITER_HH
+#ifndef MLN_CORE_SITE_SET_P_ARRAY_PITER_HH
+# define MLN_CORE_SITE_SET_P_ARRAY_PITER_HH
 
 /// \file mln/core/p_array_piter.hh
 /// \brief Definition of point iterators on mln::p_array.
 
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/site_set_iterator_base.hh>
 
 
@@ -291,4 +291,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_ARRAY_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_P_ARRAY_PITER_HH

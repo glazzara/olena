@@ -1,5 +1,5 @@
 #include "neighborhood1.hh"
-#include <mln/core/p_set.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/core/graph_image.hh>
 #include <mln/core/graph_elt_neighborhood.hh>
 #include <mln/math/min.hh>

@@ -40,7 +40,7 @@
 #include <mln/core/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
-#include <mln/core/p_graph.hh>
+#include <mln/core/site_set/p_graph.hh>
 #include <mln/core/graph_psite.hh>
 #include <mln/draw/graph.hh>
 #include <mln/core/graph_image.hh>

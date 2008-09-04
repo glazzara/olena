@@ -1,6 +1,6 @@
 # include <mln/core/image2d.hh>
 # include <mln/core/site_set/p_mutable_array_of.hh>
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/convert/from_to.hh>
 
 // Used by display.

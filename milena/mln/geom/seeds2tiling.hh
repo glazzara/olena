@@ -36,7 +36,7 @@
 # include <map>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/p_queue.hh>
+# include <mln/core/site_set/p_queue.hh>
 # include <mln/core/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>

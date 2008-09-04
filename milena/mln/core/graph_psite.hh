@@ -33,7 +33,7 @@
 
 # include <mln/core/concept/point_site.hh>
 
-# include <mln/core/p_graph.hh>
+# include <mln/core/site_set/p_graph.hh>
 
 
 namespace mln

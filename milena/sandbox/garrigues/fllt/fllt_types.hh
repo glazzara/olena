@@ -36,7 +36,7 @@
  */
 
 # include <mln/util/tree.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 
 # define fllt_tree(P, V)  util::tree< mln::fllt::fllt_node_elt<P, V> >
 # define fllt_node(P, V)  util::node< mln::fllt::fllt_node_elt<P, V> >

@@ -36,7 +36,7 @@
 # include <vector>
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/p_set_of.hh>
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/value/set.hh>
 
 

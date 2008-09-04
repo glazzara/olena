@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_PRIORITY_QUEUE_HH
-# define MLN_CORE_P_PRIORITY_QUEUE_HH
+#ifndef MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH
+# define MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH
 
-/*! \file mln/core/p_priority_queue.hh
+/*! \file mln/core/site_set/p_priority_queue.hh
  *
  * \brief Definition of a point set class based on p_queue with
  * priority features.
@@ -43,7 +43,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_queue.hh>
+# include <mln/core/site_set/p_queue.hh>
 # include <trait/point_set.hh>
 
 
@@ -362,4 +362,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_PRIORITY_QUEUE_HH
+#endif // ! MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH

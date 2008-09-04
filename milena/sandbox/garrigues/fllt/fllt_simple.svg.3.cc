@@ -32,7 +32,7 @@
 #include <mln/core/image2d.hh>
 #include <mln/core/sub_image.hh>
 #include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/core/clone.hh>
 
 #include <mln/value/int_u8.hh>
@@ -52,7 +52,7 @@
 #include <mln/util/branch_iter_ind.hh>
 
 #include <mln/core/cast_image.hh>
-#include <mln/core/p_queue_fast.hh>
+#include <mln/core/site_set/p_queue_fast.hh>
 
 namespace mln
 {

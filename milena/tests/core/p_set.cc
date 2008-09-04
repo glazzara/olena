@@ -33,7 +33,7 @@
 #include <iterator>
 
 #include <mln/core/point2d.hh>
-#include <mln/core/p_set.hh>
+#include <mln/core/site_set/p_set.hh>
 
 
 

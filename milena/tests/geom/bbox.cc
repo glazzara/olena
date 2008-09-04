@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/p_set.hh>
+#include <mln/core/site_set/p_set.hh>
 #include <mln/core/point2d.hh>
 #include <mln/core/box2d.hh>
 

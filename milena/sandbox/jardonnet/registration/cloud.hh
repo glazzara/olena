@@ -8,7 +8,7 @@
 # include <sstream>
 
 # include <mln/algebra/vec.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/norm/l2.hh>
 
 #include "quat7.hh"
