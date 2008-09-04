@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_FACES_HH
-# define MLN_CORE_P_FACES_HH
+#ifndef MLN_CORE_SITE_SET_P_FACES_HH
+# define MLN_CORE_SITE_SET_P_FACES_HH
 
-/// \file mln/core/p_faces.hh
+/// \file mln/core/site_set/p_faces.hh
 /// \brief Definition of a point set based on the set of n-faces of a
 /// complex.
 
@@ -206,4 +206,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_FACES_HH
+#endif // MLN_CORE_SITE_SET_P_FACES_HH

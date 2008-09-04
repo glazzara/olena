@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_COMPLEX_PITER_HH
-# define MLN_CORE_P_COMPLEX_PITER_HH
+#ifndef MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
+# define MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
 
 # include <limits>
 
 # include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/p_complex.hh>
+# include <mln/core/site_set/p_complex.hh>
 # include <mln/core/complex_psite.hh>
 
-/// \file mln/core/p_complex_piter.hh
+/// \file mln/core/site_set/p_complex_piter.hh
 /// \brief Definition of point iterator on complex-based pset.
 
 // Factor p_complex_fwd_piter_<D, P> and p_complex_bkd_piter_<D, P>
@@ -607,4 +607,4 @@ namespace mln
 } // end of mln
 
 
-#endif // ! MLN_CORE_P_COMPLEX_PITER_HH
+#endif // ! MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH

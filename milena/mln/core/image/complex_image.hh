@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_COMPLEX_IMAGE_HH
-# define MLN_CORE_COMPLEX_IMAGE_HH
+#ifndef MLN_CORE_IMAGE_COMPLEX_IMAGE_HH
+# define MLN_CORE_IMAGE_COMPLEX_IMAGE_HH
 
-/// \file mln/core/complex_image.hh
+/// \file mln/core/image/complex_image.hh
 /// \brief Definition of a line complex-based image.
 
 # include <vector>
@@ -37,7 +37,7 @@
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/metal/vec.hh>
-# include <mln/core/p_complex.hh>
+# include <mln/core/site_set/p_complex.hh>
 # include <mln/core/complex_psite.hh>
 # include <mln/value/set.hh>
 
@@ -298,4 +298,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_COMPLEX_IMAGE_HH
+#endif // ! MLN_CORE_IMAGE_COMPLEX_IMAGE_HH

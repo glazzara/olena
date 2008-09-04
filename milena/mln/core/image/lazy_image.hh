@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LAZY_IMAGE_HH
-# define MLN_CORE_LAZY_IMAGE_HH
+#ifndef MLN_CORE_IMAGE_LAZY_IMAGE_HH
+# define MLN_CORE_IMAGE_LAZY_IMAGE_HH
 
-/*! \file mln/core/lazy_image.hh
+/*! \file mln/core/image/lazy_image.hh
  *
  * \brief Definition of a lazy image. Values are computed on the fly
  */
@@ -206,4 +206,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_LAZY_IMAGE_HH
+#endif // ! MLN_CORE_IMAGE_LAZY_IMAGE_HH

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_COMPLEX_HH
-# define MLN_CORE_P_COMPLEX_HH
+#ifndef MLN_CORE_SITE_SET_P_COMPLEX_HH
+# define MLN_CORE_SITE_SET_P_COMPLEX_HH
 
-/// \file mln/core/p_complex.hh
+/// \file mln/core/site_set/p_complex.hh
 /// \brief Definition of a point set based on a complex.
 
 # include <mln/core/internal/point_set_base.hh>
@@ -38,7 +38,7 @@
 # include <mln/core/complex.hh>
 
 # include <mln/core/complex_psite.hh>
-# include <mln/core/p_complex_piter.hh>
+# include <mln/core/site_set/p_complex_piter.hh>
 
 
 namespace mln
@@ -239,4 +239,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_COMPLEX_HH
+#endif // MLN_CORE_SITE_SET_P_COMPLEX_HH

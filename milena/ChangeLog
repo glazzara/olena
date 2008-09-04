@@ -1,5 +1,23 @@
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Move some remaining core types in appropriate directories.
+
+	* mln/core/complex_image.hh,
+	* mln/core/lazy_image.hh: Rename as...
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/lazy_image.hh: ...these.
+
+	* mln/core/p_complex.hh,
+	* mln/core/p_complex_piter.hh,
+	* mln/core/p_faces.hh: Rename as...
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_faces.hh: ...these.
+
+	* tests/core/complex_image.cc: Update.
+
+2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rename pset_if as p_if and remove Q at end of priority_Q.
 	* mln/core/site_set/pset_if.hh,
 	* mln/core/pset_if_piter.hh: Rename as...

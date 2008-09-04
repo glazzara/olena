@@ -33,8 +33,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/core/alias/point2d.hh>
 
-#include <mln/core/p_faces.hh>
-#include <mln/core/complex_image.hh>
+#include <mln/core/site_set/p_faces.hh>
+#include <mln/core/image/complex_image.hh>
 
 
 int main()
@@ -127,12 +127,12 @@ int main()
      At least, we could have better error messages, i.e., something
      like
 
-       mln/core/complex_image.hh 267:
+       mln/core/image/complex_image.hh 267:
        mln::complex_image<D, P, V>::operator(): Uncompatible p_complex.
 
      instead of
 
-       mln/core/complex_image.hh:267:
+       mln/core/image/complex_image.hh:267:
        typename mln::complex_image<D, P, V>::lvalue
        mln::complex_image<D, P, V>::operator()(const mln::complex_psite<D, P>&)
          [with unsigned int D = 2u,
