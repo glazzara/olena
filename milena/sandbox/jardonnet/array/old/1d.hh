@@ -236,9 +236,7 @@ namespace mlc
 
     template<int i>
     T get_() const {
-      lesseq<-Info_::center, i>::ensure();
-      lesseq<i, Info_::card - Info_::center - 1>::ensure();
-      return *(buffer_ + Info_::center + i);
+      return *(buffer_ + i);
     }
 
   protected:

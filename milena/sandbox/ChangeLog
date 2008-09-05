@@ -1,3 +1,44 @@
+2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: virtual transform, Add concept check.
+
+	* jardonnet/virtual/access.hh: Add concept check.
+	* jardonnet/virtual/access.cc: Update in consequence.
+
+2008-09-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fixes to install the gimp plugin.
+	* nivault/plugin-gimp/autogen.sh: s/main.c/main.cc
+	* nivault/plugin-gimp/configure.ac: move install dir to home to
+	install it without administrator rights (dirty)
+	* nivault/plugin-gimp/src/main.cc: Change place in the gimp menu.
+
+2008-09-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Start working on image virtual transformation.
+
+	* jardonnet/virtual: New.
+	* jardonnet/virtual/access.hh (access): Virtual access to image.
+	It also contains image interpolation routines.
+	* jardonnet/virtual/access.cc: Test file.
+	* jardonnet/virtual/Makefile: New.
+
+2008-09-02  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* geraud/fllt/fllt.svg.7.hh: Add comments to the working version of
+	FLLT.
+
+2008-09-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Update metal::array.
+
+	* jardonnet/array/array.cc: Update Test.
+	* jardonnet/array/array.hh: Add stc/dyn getters.
+	* jardonnet/array/Makefile: New.
+
+	* jardonnet/test/icp.cc: .
+	* jardonnet/registration/tools.hh: .
+
 2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add kruskal algorithm in a sample morphological chain.

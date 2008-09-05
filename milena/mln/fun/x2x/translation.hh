@@ -53,10 +53,8 @@ namespace mln
        */
       template <unsigned n, typename C>
       struct translation
-
-	: internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >
-	,
-	  public Bijection_x2x< translation<n,C> >
+	: fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> >
+	, public Bijection_x2x< translation<n,C> >
       {
 	typedef fun::internal::x2x_linear_impl_< algebra::vec<n,C>, translation<n,C> > super_;
 

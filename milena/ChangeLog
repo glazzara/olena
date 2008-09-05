@@ -1,3 +1,21 @@
+2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Minor fix : Translation Rotation.
+
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh: Fix wrong namespaces.
+	* sandbox/jardonnet/virtual/access.hh: Fix concept check.
+
+2008-09-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add metal::array (1d,2d,3d).
+
+	* mln/metal/all.hh: Update.
+	* mln/metal/array.hh: Generic.
+	* mln/metal/array1d.hh: Container 1d.
+	* mln/metal/array2d.hh: Container 2d.
+	* mln/metal/array3d.hh: Container 3d.
+
 2008-09-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a tutorial example for Z.

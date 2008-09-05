@@ -66,7 +66,7 @@ namespace mln
   
   namespace metal
   {
-    
+
     template <typename T, unsigned Size>
     struct array1d : public Object< array1d<T,Size> >
     {
@@ -106,13 +106,11 @@ namespace mln
       
       // dynamic accessors:
 
-      T operator[](unsigned i) const
-      {
+      T operator[](unsigned i) const {
         mln_precondition(i < Size);
         return buffer_[i];
       }
-      T& operator[](unsigned i)
-      {
+      T& operator[](unsigned i) {
         mln_precondition(i < Size);
         return buffer_[i];
       }
@@ -121,11 +119,11 @@ namespace mln
 
       template<unsigned i>
       T get() const {
-        return *(buffer_ + i);
+        return buffer_[i];
       }
       template<unsigned i>
       T& get() {
-        return *(buffer_ + i);
+        return buffer_[i];
       }
 
       enum { length = Size };

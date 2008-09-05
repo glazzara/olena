@@ -3,6 +3,7 @@
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/convert/to_p_array.hh>
 #include <mln/norm/l2.hh>
 
 #include <sandbox/jardonnet/registration/icp.hh>
