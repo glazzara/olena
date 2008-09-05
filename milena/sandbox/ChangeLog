@@ -1,3 +1,11 @@
+2008-09-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fixes to install the gimp plugin.
+	* nivault/plugin-gimp/autogen.sh: s/main.c/main.cc
+	* nivault/plugin-gimp/configure.ac: move install dir to home to
+	install it without administrator rights (dirty)
+	* nivault/plugin-gimp/src/main.cc: Change place in the gimp menu.
+
 2008-09-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Start working on image virtual transformation.

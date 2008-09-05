@@ -10,7 +10,7 @@
 
 PROJECT="GIMP Plug-In Template"
 TEST_TYPE=-f
-FILE=src/main.c
+FILE=src/main.cc
 
 AUTOCONF_REQUIRED_VERSION=2.54
 AUTOMAKE_REQUIRED_VERSION=1.6
@@ -33,7 +33,7 @@ check_version ()
 }
 
 echo
-echo "I am testing that you have the required versions of autoconf," 
+echo "I am testing that you have the required versions of autoconf,"
 echo "automake, glib-gettextize and intltoolize..."
 echo
 
@@ -108,7 +108,7 @@ fi
 if test "$DIE" -eq 1; then
     echo
     echo "Please install/upgrade the missing tools and call me again."
-    echo	
+    echo
     exit 1
 fi
 
