@@ -1,3 +1,9 @@
+2008-09-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update configure.ac.
+
+	* configure.ac: add the new Makefiles present in tests/core/....
+
 2008-09-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Merge last changes from trunk to cleanup.
