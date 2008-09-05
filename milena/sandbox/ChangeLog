@@ -1,3 +1,10 @@
+2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: virtual transform, Add concept check.
+
+	* jardonnet/virtual/access.hh: Add concept check.
+	* jardonnet/virtual/access.cc: Update in consequence.
+
 2008-09-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fixes to install the gimp plugin.

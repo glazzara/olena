@@ -13,7 +13,7 @@ int main()
   point2d p(5,5);
   algebra::vec<2,float> v = make::vec(3,4);
   fun::x2x::translation<2,float> t(v);
-  interpolation::nearest_neighbor nn;
+  interpolation::nearest_neighbor< image2d<int> > nn;
 
   debug::iota(img);
 
@@ -30,7 +30,7 @@ int main()
     {
       for (int j = 4; j < 54; j++)
         std::cout <<
-          access::access(img, point2d(i,j), t, nn);
+          mln::access::access(img, point2d(i,j), t, nn);
       std::cout << std::endl;
     }
 }

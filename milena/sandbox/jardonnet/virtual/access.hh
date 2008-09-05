@@ -3,7 +3,8 @@
 
 # include <mln/core/image1d.hh>
 # include <mln/core/image2d.hh>
-# include <mln/math/round.hh>
+# include <mln/metal/is.hh>
+# include <mln/core/concept/function.hh>
 
 namespace mln
 {
@@ -11,10 +12,13 @@ namespace mln
   namespace interpolation
   {
 
+    template < typename I >
     struct nearest_neighbor
+      : public Function_x2x< nearest_neighbor<I> >
     {
-    
-      template <typename I, typename V>
+      typedef mln_value(I) result;
+      
+      template < typename V >
       mln_value(I)
       operator()(const I& img, const V& v) const
       {
@@ -23,10 +27,14 @@ namespace mln
       }
 
     };
-
+    
+    template < typename I >
     struct linear
-    {     
-      template <typename I, typename C>
+      : public Function_x2x< linear<I> >
+    {
+      typedef mln_value(I) result;
+      
+      template <typename C>
       mln_value(I)
       operator()(const I& img,
                  const algebra::vec<1,C>& v) const
@@ -43,7 +51,7 @@ namespace mln
           return img(xa);
 
         // p2
-        double xb = mln_point(I)::coord(v[0] + 0.49999);
+        double xb = mln_point(I)::coord(v[0] + 1);
         double yb = img(point1d(xb));
 
         // Taylor-young
@@ -51,10 +59,13 @@ namespace mln
       }
     };
 
-    
+    template < typename I >
     struct bilinear
-    {     
-      template <typename I, typename V>
+      : public Function_x2x< bilinear<I> >
+    {
+      typedef mln_value(I) result;
+      
+      template <typename V>
       mln_value(I)
       operator()(const I& img, const V& v) const
       {
@@ -69,9 +80,9 @@ namespace mln
         double y = v[1];
         
         double x1 = mln_point(I)::coord(v[0]);
-        double x2 = mln_point(I)::coord(v[0]+ 4.9999);
+        double x2 = mln_point(I)::coord(v[0]+ 1);
         double y1 = mln_point(I)::coord(v[1]);
-        double y2 = mln_point(I)::coord(v[1]+ 4.9999);
+        double y2 = mln_point(I)::coord(v[1]+ 1);
 
         point2d q11 = point2d(x1, y1);
         point2d q12 = point2d(x1, y2);
@@ -101,6 +112,9 @@ namespace mln
     access(const I& img, const mln_point(I)& p,
            const T& trans, const F& interp)
     {
+      mlc_is(T, Bijection_x2x<T>)::check();
+      mlc_is(F, Function_x2x<F>)::check();
+
       return interp(img, (trans.inv())(p));
     }
 
