@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_GLF_HH
-# define MLN_VALUE_GLF_HH
+#ifndef MLN_CONVERT_TO_HH
+# define MLN_CONVERT_TO_HH
 
-/*! \file mln/value/glf.hh
+/*! \file mln/convert/to.hh
  *
- * \brief Define the alias value::glf.
+ * \brief General conversion procedure given the destination type.
+ *
+ * \todo Prefer a static check that fails in the "unknown" case.
  */
 
-# include <mln/value/graylevel_f.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
 {
 
-  namespace value
+  namespace convert
   {
 
 
-    /// Alias for graylevels encoded by float.
-    typedef graylevel_f glf;
+    /// Conversion of the object \p from towards an object with type \c T.
+    template <typename T, typename O>
+    inline
+    T
+    to(const O& from);
+
+    // This is no "Object" here to remain as general as possible.  For
+    // instance, the conversion "float -> glf" should occur.
 
 
-  } // end of namespace mln::value
+# ifndef MLN_INCLUDE_ONLY
+
+
+    template <typename T, typename O>
+    inline
+    T
+    to(const O& from)
+    {
+      mlc_equal(T, mln_exact(T))::check();
+      trace::entering("convert::to");
+
+      T tmp;
+      impl::from_to_(exact(from), tmp);
+
+      trace::exiting("convert::to");
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::convert
 
 } // end of namespace mln
 
 
-#endif // ! MLN_VALUE_GLF_HH
+#endif // ! MLN_CONVERT_TO_HH

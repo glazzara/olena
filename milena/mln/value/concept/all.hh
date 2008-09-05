@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,12 +33,14 @@
  * \brief File that includes every sub-concept of the Value concept.
  */
 
-# include <mln/value/concept/integer.hh>
+# include <mln/value/concept/built_in.hh>
+# include <mln/value/concept/data.hh>
 # include <mln/value/concept/floating.hh>
-# include <mln/value/concept/vectorial.hh>
+# include <mln/value/concept/integer.hh>
+# include <mln/value/concept/scalar.hh>
 # include <mln/value/concept/structured.hh>
 # include <mln/value/concept/symbolic.hh>
-# include <mln/value/concept/data.hh>
+# include <mln/value/concept/vectorial.hh>
 
 
 #endif // ! MLN_VALUE_CONCEPT_ALL_HH

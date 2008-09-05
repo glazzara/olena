@@ -1,3 +1,19 @@
+2008-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add convert::to and conversion from v2v; fix misc stuff.
+
+	* doc/tutorial/examples/vec.cc: New.
+	* doc/tutorial/examples/box.cc: Augment.
+	* mln/core/site_set/p_run.hh: Fix missing include.
+	* mln/value/glf.hh: Fix doc.
+	* mln/value/concept/all.hh: Fix missing files.
+	* mln/convert/to.hh: New.
+	* mln/convert/impl/from_image_to_site_set.hh: Fix typo.
+	* mln/convert/impl/all.hh: Update.
+	* mln/convert/impl/from_value_to_value.hh: New.
+	* mln/convert/from_to.hh (from_to): New overload for
+	'from' being 'float' and 'int'.
+
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Minor fix : Translation Rotation.

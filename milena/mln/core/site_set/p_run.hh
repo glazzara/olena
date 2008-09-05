@@ -36,6 +36,7 @@
  */
 
 # include <mln/core/internal/site_set_base.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/util/index.hh>
 

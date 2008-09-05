@@ -33,11 +33,19 @@
  * \brief General conversion procedure between two objects.
  *
  * \todo Prefer a static check that fails in the "unknown" case.
+ *
+ * \todo Use 'round' instead of static_cast in vec->Gpoint.
  */
 
 # include <mln/core/concept/object.hh>
+# include <mln/core/concept/gpoint.hh>
+# include <mln/value/concept/all.hh>
+
 # include <mln/convert/impl/all.hh>
+
+# include <mln/algebra/vec.hh>
 # include <mln/metal/is.hh>
+
 
 
 namespace mln
@@ -47,12 +55,24 @@ namespace mln
   {
 
 
-    /// Convertion of an object \p from towards an object \p to.
+    /// Conversion of an object \p from towards an object \p to.
+
     template <typename F, typename T>
     inline
     void
     from_to(const Object<F>& from, Object<T>& to);
 
+
+    template <typename T>
+    inline
+    void
+    from_to(const float& from, Object<T>& to);
+
+
+    template <typename T>
+    inline
+    void
+    from_to(const int& from, Object<T>& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -78,8 +98,32 @@ namespace mln
 	mln::convert::impl::from_image_to_site_set(from, to);
       }
 
+      // algebra::vec -> Gpoint.
+      template <unsigned n, typename T, typename P>
+      inline
+      void
+      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to_)
+      {
+	mlc_bool(P::dim == n)::check();
+	P& to = exact(to_);
+	for (unsigned i = 0; i < n; ++i)
+	  to[i] = static_cast< typename P::coord >(from[i]);
+      }
+
+
+      template <typename F, typename T>
+      inline
+      void
+      from_to_(const Value<F>& from, Value<T>& to)
+      {
+	mln::convert::impl::from_value_to_value(from, to);
+      }
 
     } // end of namespace mln::convert::impl
+
+
+
+    // Facades.
 
 
     template <typename F, typename T>
@@ -91,6 +135,27 @@ namespace mln
       impl::from_to_(exact(from), exact(to));
       trace::exiting("convert::from_to");
     }
+
+
+    template <typename T>
+    inline
+    void
+    from_to(const float& from, Object<T>& to)
+    {
+      mlc_is_a(T, mln::value::Floating)::check();
+      exact(to) = from;
+    }
+
+
+    template <typename T>
+    inline
+    void
+    from_to(const int& from, Object<T>& to)
+    {
+      mlc_is_a(T, mln::value::Integer)::check();
+      exact(to) = from;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

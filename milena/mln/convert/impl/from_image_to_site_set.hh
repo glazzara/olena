@@ -54,7 +54,7 @@ namespace mln
     namespace impl
     {
 
-      /// Convertion of an image \p from towards a site set \p to.
+      /// Conversion of an image \p from towards a site set \p to.
       template <typename I, typename S>
       void
       from_image_to_site_set(const Image<I>& from, Site_Set<S>& to);

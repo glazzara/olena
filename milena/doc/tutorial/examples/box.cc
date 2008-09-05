@@ -25,6 +25,12 @@ int main()
 {
   using namespace mln;
 
-  box2d b = make::box2d(1,1, 3,2);
-  picture(b);
+  {
+    box2d b = make::box2d(2, 3);
+    picture(b);
+  }
+  {
+    box2d b = make::box2d(1,1, 3,2);
+    picture(b);
+  }
 }

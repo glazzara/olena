@@ -35,6 +35,7 @@
 
 
 # include <mln/convert/impl/from_image_to_site_set.hh>
+# include <mln/convert/impl/from_value_to_value.hh>
 
 
 #endif // ! MLN_CONVERT_IMPL_ALL_HH
