@@ -13,7 +13,7 @@ int main()
   point2d p(5,5);
   algebra::vec<2,float> v = make::vec(3,4);
   fun::x2x::translation<2,float> t(v);
-  interpolation::nearest_neighbor< image2d<int> > nn;
+  interpolation::nearest_neighbor< image2d<int> > nn(img);
 
   debug::iota(img);
 

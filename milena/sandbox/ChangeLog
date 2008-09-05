@@ -1,5 +1,14 @@
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Sandbox: Update access.hh.
+
+	After Theo:        
+
+	* jardonnet/virtual/access.hh: Concept check, Type sum ...
+	* jardonnet/virtual/access.cc: Update testes.
+
+2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Sandbox: virtual transform, Add concept check.
 
 	* jardonnet/virtual/access.hh: Add concept check.
