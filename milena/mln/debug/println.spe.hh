@@ -129,7 +129,7 @@ namespace mln
 
 	for_all(p)
 	  {
-	    if (input.has(p))
+	    if (input.domain().has(p))
 	      std::cout << format(input(p)) << "     ";
 	    else
 	      std::cout << "      ";
@@ -173,7 +173,7 @@ namespace mln
 	    for (int i = max_row; i >= row; --i)
 	      std::cout << ' ';
 	    for (col = b.min_col(); col <= max_col; ++col)
-	      if (input.has(p))
+	      if (input.domain().has(p))
 		std::cout << format(input(p)) << ' ';
 	      else
 		std::cout << "  ";

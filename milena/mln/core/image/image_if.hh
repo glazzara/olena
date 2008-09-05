@@ -33,7 +33,7 @@
  * \brief Definition of a image which domain is restricted by a
  * function.
  *
- * \todo Relax Function_p2v into Function_v2v.
+ * \todo Relax Function_p2b into Function_v2b.
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>

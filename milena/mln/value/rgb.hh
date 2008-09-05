@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -479,10 +479,10 @@ namespace mln
     inline
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& v)
     {
-      return ostr << "(" << debug::format(v.red())
-		  << ", " << debug::format(v.green())
-		  << ", " << debug::format(v.blue())
-		  << ")";
+      return ostr << '(' << debug::format(v.red())
+		  << ',' << debug::format(v.green())
+		  << ',' << debug::format(v.blue())
+		  << ')';
     }
 
     template <unsigned n>

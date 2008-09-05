@@ -30,9 +30,9 @@
 
 /*! \file mln/core/site_set/p_if.hh
  *
- * \brief Definition of the restriction of a point set w.r.t. a predicate.
+ * \brief Definition of the restriction of a site set w.r.t. a predicate.
  *
- * \todo Change pset_ attribute type to S*.  
+ * \todo Change s_ attribute type to S*.  
  */
 
 # include <mln/core/internal/site_set_base.hh>
@@ -62,21 +62,21 @@ namespace mln
   } // end of namespace trait
 
 
-  /*! \brief Restrict a point set \p pset to points that verify \p f.
+  /*! \brief Restrict a site set \p s to points that verify \p f.
    *
-   * \param[in] pset A point set.
+   * \param[in] s A site set.
    * \param[in] f A function from point to Boolean.
    * \return A subset of points.
    */
   template <typename S, typename F>
   p_if<S, F>
-  operator | (const Site_Set<S>& pset, const Function_p2b<F>& f);
+  operator | (const Site_Set<S>& s, const Function_p2b<F>& f);
 
 
 
   /*! \brief Generic subset class.
    *
-   * Parameter \c S is a point set type; parameter F is a function
+   * Parameter \c S is a site set type; parameter F is a function
    * from point to Boolean.
    */
   template <typename S, typename F>
@@ -103,8 +103,8 @@ namespace mln
     typedef fwd_piter piter;
 
 
-    /// Constructor with a point set \p pset and a predicate \p f.
-    p_if(const S& pset, const F& f);
+    /// Constructor with a site set \p s and a predicate \p f.
+    p_if(const S& s, const F& f);
 
     /// Constructor without argument.
     p_if();
@@ -132,7 +132,7 @@ namespace mln
 
   protected:
 
-    S pset_;
+    S s_;
     F f_;
   };
 
@@ -144,9 +144,9 @@ namespace mln
   template <typename S, typename F>
   inline
   p_if<S, F>
-  operator | (const Site_Set<S>& pset, const Function_p2b<F>& f)
+  operator | (const Site_Set<S>& s, const Function_p2b<F>& f)
   {
-    p_if<S, F> tmp(exact(pset), exact(f));
+    p_if<S, F> tmp(exact(s), exact(f));
     return tmp;
   }
 
@@ -158,7 +158,7 @@ namespace mln
   bool
   p_if<S,F>::has(const psite& p) const
   {
-    return pset_.has(p) && f_(p);
+    return s_.has(p) && f_(p) == true;
   }
 
   template <typename S, typename F>
@@ -166,7 +166,7 @@ namespace mln
   bool
   p_if<S,F>::is_valid() const
   {
-    return pset_.is_valid();
+    return s_.is_valid();
   }
 
   template <typename S, typename F>
@@ -174,7 +174,7 @@ namespace mln
   const S&
   p_if<S,F>::overset() const
   {
-    return pset_;
+    return s_;
   }
 
   template <typename S, typename F>
@@ -187,8 +187,8 @@ namespace mln
   
   template <typename S, typename F>
   inline
-  p_if<S,F>::p_if(const S& pset, const F& f)
-    : pset_(pset),
+  p_if<S,F>::p_if(const S& s, const F& f)
+    : s_(s),
       f_(f)
   {
   }
@@ -212,7 +212,7 @@ namespace mln
   std::size_t
   p_if<S,F>::memory_size() const
   {
-    return pset_.memory_size() + sizeof(f_);
+    return s_.memory_size() + sizeof(f_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

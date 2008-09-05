@@ -1,3 +1,18 @@
+2008-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment tutorial example for Z.
+
+	* milena/doc/tutorial/examples/for_Z.cc: Augment.
+	* milena/mln/debug/println.spe.hh (has): Replace ima.has by
+	ima.domain.has so that we do not print the domain extension.
+	* milena/mln/core/site_set/p_if.hh (pset, pset_): Rename as...
+	(s, s_): ...these; more consistent with the other code.
+	* milena/mln/core/image/image_if.hh (todo): Fix typo.
+	* milena/mln/core/internal/image_domain_morpher.hh
+	(operator()): Fix missing preconditions.
+	* milena/mln/value/rgb.hh (operator<<): Remove spaces.
+	* milena/mln/geom/bbox.hh (bbox): Add overload for images.
+
 2008-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update ChangeLog.

@@ -53,6 +53,11 @@ namespace mln
     box<mln_site(S)> bbox(const Site_Set<S>& pset);
 
 
+    /// Compute the precise bounding box of a point set \p pset.
+    template <typename I>
+    box<mln_site(I)> bbox(const Image<I>& ima);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -108,6 +113,14 @@ namespace mln
 
       trace::exiting("geom::bbox");
       return b;
+    }
+
+    template <typename I>
+    box<mln_site(I)> bbox(const Image<I>& ima_)
+    {
+      const I& ima = exact(ima_);
+      mln_precondition(ima.has_data());
+      return geom::bbox(ima.domain());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

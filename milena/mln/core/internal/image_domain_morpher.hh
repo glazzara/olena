@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -102,6 +102,8 @@ namespace mln
     image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
+      mln_precondition(exact(this)->has(p));
+      mln_precondition(this->delegatee_()->has(p));
       return this->delegatee_()->operator()(p);
     }
 
@@ -111,6 +113,8 @@ namespace mln
     image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
+      mln_precondition(exact(this)->has(p));
+      mln_precondition(this->delegatee_()->has(p));
       return this->delegatee_()->operator()(p);
     }
 
