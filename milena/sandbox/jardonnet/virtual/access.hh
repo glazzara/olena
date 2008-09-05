@@ -112,7 +112,7 @@ namespace mln
     access(const I& img, const mln_point(I)& p,
            const T& trans, const F& interp)
     {
-      mlc_is(T, Bijection_x2x<T>)::check();
+      mlc_is(typename T::invert, Bijection_x2x<typename T::invert>)::check();
       mlc_is(F, Function_x2x<F>)::check();
 
       return interp(img, (trans.inv())(p));

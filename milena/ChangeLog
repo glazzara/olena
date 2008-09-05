@@ -1,3 +1,11 @@
+2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Minor fix : Translation Rotation.
+
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh: Fix wrong namespaces.
+	* sandbox/jardonnet/virtual/access.hh: Fix concept check.
+
 2008-09-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add metal::array (1d,2d,3d).
