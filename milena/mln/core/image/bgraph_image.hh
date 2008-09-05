@@ -97,7 +97,7 @@ namespace mln
     public internal::image_primary< p_bgraph<P>, bgraph_image<P, V> >
   {
 
-    typedef mln::internal::image_base< p_bgraph<P>, bgraph_image<P, V> >
+    typedef mln::internal::image_base< V, p_bgraph<P>, bgraph_image<P, V> >
     super_;
 
     /// Value associated type.

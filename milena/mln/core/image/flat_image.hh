@@ -37,6 +37,7 @@
  */
 
 # include <mln/core/internal/image_primary.hh>
+# include <mln/value/set.hh>
 
 
 namespace mln
@@ -78,7 +79,7 @@ namespace mln
       // value
       typedef trait::image::value_access::direct           value_access;
       typedef trait::image::value_storage::one_block       value_storage;
-      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef mln::trait::image::value_browsing::value_wise value_browsing;
       typedef trait::image::value_io::read_only            value_io;
 
       // site / domain
@@ -98,7 +99,7 @@ namespace mln
   // FIXME: Doc!
 
   template <typename T, typename S>
-  struct flat_image : public internal::image_primary< S, flat_image<T,S> >
+  struct flat_image : public internal::image_primary< T, S, flat_image<T,S> >
   {
     /// Skeleton.
     typedef flat_image< tag::value_<T>, tag::pset_<S> > skeleton;
@@ -149,7 +150,7 @@ namespace mln
 
 
     /// Change the image value.
-    void change_value(const T& val);
+    void change_value(const T& old_val, const T& new_val);
   };
 
 
@@ -259,10 +260,11 @@ namespace mln
   template <typename T, typename S>
   inline
   void
-  flat_image<T,S>::change_value(const T& val)
+  flat_image<T,S>::change_value(const T& old_val, const T& new_val)
   {
     mln_precondition(this->has_data());
-    this->data_->val_ = val;
+    mln_precondition(old_val == this->data_->val_);
+    this->data_->val_ = new_val;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -46,8 +46,8 @@ namespace mln
     /*! \internal A base class for primary images.
      *
      */
-    template <typename S, typename E>
-    struct image_primary : public image_base<S, E>
+    template <typename T, typename S, typename E>
+    struct image_primary : public image_base<T, S, E>
     {
     protected:
       image_primary();
@@ -56,9 +56,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_primary<S,E>::image_primary()
+    image_primary<T, S, E>::image_primary()
     {
     }
 

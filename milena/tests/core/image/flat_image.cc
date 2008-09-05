@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/image_if.cc
+/*! \file tests/core/flat_image.cc
  *
- * \brief Tests on mln::image_if.
+ * \brief Tests on mln::flat_image.
  */
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/image/image_if.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/image/flat_image.hh>
+#include <mln/core/alias/box2d.hh>
 
 
 int main()
 {
-  using namespace mln;
-
-  typedef image2d<int> I;
-  I ima(8, 8);
-  // debug::println(ima | fun::p2b::chess);
-  // FIXME: is this line corret?
-  ///mln_assertion((ima | fun::p2b::chess).npoints() == 32);
-
   {
-    typedef image_if<I, fun::p2b::chess_t> II;
-    II ima_ref = ima | fun::p2b::chess;
-    debug::println(ima_ref);
-    {
-      II ima_ref_;
-      ima_ref_ = ima_ref;
-      debug::println(ima_ref_);
-    }
-    {
-      II ima_;
-      initialize(ima_, ima_ref);
-      debug::println(ima_);
-    }
+    using namespace mln;
+
+    flat_image<short, box2d> test;
+
+    std::cout << test.values_eligible() << std::endl;
+    //    flat_image<short, box2d>::t_eligible_value_set::fwd_viter viter(test.values_eligible());
+
   }
 }

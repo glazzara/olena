@@ -244,8 +244,10 @@ namespace mln
   box<P>::box(mln_coord(P) nrows, mln_coord(P) ncols)
   {
     metal::bool_<(dim == 2)>::check();
+    mln_precondition(nrows != 0 && ncols != 0);
+
     pmin_ = literal::origin;
-    pmax_ = P(nrows - 1, ncols - 1);
+    pmax_ = P(--nrows, --ncols);
     mln_postcondition(is_valid());
   }
 

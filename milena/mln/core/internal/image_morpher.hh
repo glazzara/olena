@@ -48,8 +48,8 @@ namespace mln
      * \c I is the underlying-morphed image type.
      *
      */
-    template <typename I, typename S, typename E>
-    class image_morpher : public image_base<S, E>
+    template <typename I, typename T, typename S, typename E>
+    class image_morpher : public image_base<T, S, E>
     {
     public:
 
@@ -106,40 +106,40 @@ namespace mln
   namespace internal
   {
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
-    image_morpher<I,S,E>::image_morpher()
+    image_morpher<I, T, S, E>::image_morpher()
     {
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     mlc_const(I)*
-    image_morpher<I,S,E>::delegatee_() const
+    image_morpher<I, T, S, E>::delegatee_() const
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     I*
-    image_morpher<I,S,E>::delegatee_()
+    image_morpher<I, T, S, E>::delegatee_()
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
-    image_morpher<I,S,E>::operator I() const
+    image_morpher<I, T, S, E>::operator I() const
     {
       mln_precondition(exact(this)->has_data());
       return * this->delegatee_();
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     bool
-    image_morpher<I,S,E>::has_data() const
+    image_morpher<I, T, S, E>::has_data() const
     {
       return
 	this->data_ != 0 &&

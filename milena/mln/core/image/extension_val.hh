@@ -87,14 +87,15 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I>
-  class extension_val : public internal::image_identity< I, mln_pset(I), extension_val<I> >
+  class extension_val :
+    public internal::image_identity< I, mln_pset(I), extension_val<I> >
   {
   public:
 
     /// Skeleton.
     typedef extension_val< tag::image_<I> > skeleton;
     // FIXME: OK when ch_value?
-    
+
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;

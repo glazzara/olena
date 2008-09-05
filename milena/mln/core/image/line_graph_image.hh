@@ -108,11 +108,11 @@ namespace mln
   /// Values are stored on the edges of the graph.
   template <typename P, typename V>
   struct line_graph_image :
-    public internal::image_primary< p_line_graph<P>, line_graph_image<P, V> >
+    public internal::image_primary<V, p_line_graph<P>, line_graph_image<P, V> >
   {
     /// Super type.
-    typedef mln::internal::image_base< p_line_graph<P>,
-					line_graph_image<P, V> > super_;
+    typedef mln::internal::image_base< V, p_line_graph<P>,
+				       line_graph_image<P, V> > super_;
 
     /// Value associated type.
     typedef V value;

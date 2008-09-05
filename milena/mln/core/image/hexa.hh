@@ -116,7 +116,8 @@ namespace mln
    *
    */
   template <typename I>
-  struct hexa : public internal::image_domain_morpher< I, box2d_h, hexa<I> >
+  struct hexa :
+    public internal::image_domain_morpher< I, box2d_h, hexa<I> >
   {
     /// Skeleton.
     typedef hexa< tag::image_<I> > skeleton;

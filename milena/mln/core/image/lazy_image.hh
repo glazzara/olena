@@ -96,19 +96,22 @@ namespace mln
    *
    * This image class tage a functor \p fun and a box \p box.
    * Access to ima(p) where \p p include \p box return fun(b) lazily.
-   * 
+   *
    */
   template <typename I, typename F, typename B>
-  struct lazy_image : public mln::internal::image_identity_< mln_ch_value(I, mln_result(F)),
-                                                             mln_pset(I), lazy_image<I, F,B> >
+  struct lazy_image :
+    public mln::internal::image_identity_< mln_ch_value(I, mln_result(F)),
+					   mln_pset(I), lazy_image<I, F,B> >
   {
-    typedef mln::internal::image_morpher_< mln_ch_value(I, mln_result(F)),
-                                           mln_pset(I), lazy_image<I,F,B> > super_;
+    typedef mln::internal::image_identity_< mln_ch_value(I, mln_result(F)),
+					    mln_pset(I),
+					    lazy_image<I, F,B> > super_;
+
     typedef line_piter_<mln_psite(I)> line_piter;
 
     /// Return type of read access.
     typedef mln_result(F) rvalue;
-    
+
     /// Return type of read-write access.
     typedef mln_result(F)& lvalue;
 

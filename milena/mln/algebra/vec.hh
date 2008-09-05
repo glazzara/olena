@@ -47,6 +47,7 @@
 # include <mln/value/ops.hh>
 
 
+
 // FIXME: Document.
 
 
@@ -56,11 +57,13 @@ namespace mln
   // Forward declarations.
   namespace algebra {
     template <unsigned n, typename T> class vec;
-    template <unsigned d, typename C> struct h_vec;
+    template <unsigned d, typename C> class h_vec;
   }
+
   namespace literal {
     struct zero_t;
   }
+
 
 
 
@@ -209,7 +212,7 @@ namespace mln
       unsigned size() const;
 
       const vec<n, T>& normalize();
-   
+
       /// Constructor; coordinates are set by function \p f.
       template <typename F>
       vec(const Function_i2v<F>& f);
@@ -572,12 +575,12 @@ namespace mln
       for (unsigned i = 0; i < P::dim; ++i)
         tmp[i] = round(v[i]);
       return tmp;
-    }  
+    }
 
 
   } // end of namespace mln::algebra
 
-    
+
 # endif // MLN_INCLUDE_ONLY
 
 } // end of namespace mln

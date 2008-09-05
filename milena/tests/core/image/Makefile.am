@@ -7,6 +7,7 @@ check_PROGRAMS =				\
   cast_image					\
   complex_image					\
   decorated_image				\
+  flat_image					\
   graph_image					\
   graph_image_wst				\
   hexa						\
@@ -38,6 +39,7 @@ complex_image_SOURCES = complex_image.cc
 decorated_image_SOURCES = decorated_image.cc
 graph_image_SOURCES = graph_image.cc
 graph_image_wst_SOURCES = graph_image_wst.cc
+flat_image_SOURCES = flat_image.cc
 hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc

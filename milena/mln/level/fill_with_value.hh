@@ -40,6 +40,8 @@
  * \toto Activate fill_with_value_cell_wise.
  */
 
+# include <cstdlib>
+
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/inplace.hh>
 # include <mln/core/image/instant.hh>
@@ -80,11 +82,11 @@ namespace mln
       void fill_with_value_site_wise_any(I& ima, const mln_value(I)& val)
       {
 	trace::entering("level::impl::fill_with_value_site_wise_any");
-	
+
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	  ima(p) = val;
-	
+
 	trace::exiting("level::impl::fill_with_value_site_wise_any");
       }
 
@@ -112,10 +114,11 @@ namespace mln
 	trace::entering("level::impl::fill_with_value_cell_wise");
 
 	abort();
-// 	mln_viter(I) v(ima.values());
-// 	for_all(v)
-// 	  v.change_to(val);
-	
+
+	// 	mln_viter(I) v(ima.values());
+	// 	for_all(v)
+	// 	  v.change_to(val);
+
 	trace::exiting("level::impl::fill_with_value_cell_wise");
       }
 

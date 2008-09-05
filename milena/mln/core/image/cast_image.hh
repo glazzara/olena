@@ -80,7 +80,8 @@ namespace mln
    *
    */
   template <typename T, typename I>
-  struct cast_image_ : public internal::image_value_morpher< I, cast_image_<T,I> >
+  struct cast_image_ :
+    public internal::image_value_morpher< I, T, cast_image_<T,I> >
   {
     /// Value associated type.
     typedef T value;

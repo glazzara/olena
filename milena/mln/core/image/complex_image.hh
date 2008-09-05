@@ -100,7 +100,7 @@ namespace mln
   /// Values are stored on the vertices of the graph.
   template <unsigned D, typename P, typename V>
   struct complex_image :
-    public internal::image_primary_< p_complex<D, P>, complex_image<D, P, V> >
+    public internal::image_primary_< V, p_complex<D, P>, complex_image<D,P,V> >
   {
     /// Super type.
     typedef mln::internal::image_base_< p_complex<D, P>,

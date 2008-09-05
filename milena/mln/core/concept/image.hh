@@ -111,6 +111,29 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  namespace internal
+  {
+    template <typename values_browsing_trait, typename E>
+    struct image_values_interface_check
+    {
+      static void run() { /* No Requirement */}
+    };
+
+    template <typename E>
+    struct image_values_interface_check<
+      mln::trait::image::value_browsing::value_wise,
+      E>
+    {
+      static void run()
+      {
+	void (E::*m)(const typename E::value& old_val,
+		     const typename E::value& new_val) = & E::change_value;
+	m = 0;
+      }
+    };
+  }
+
   template <typename E>
   inline
   Image<E>::Image()
@@ -139,6 +162,7 @@ namespace mln
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
+    typedef typename E::t_eligible_value_set t_eligible_value_set;
 
     typedef mln_vset(E) vset;
     const vset& (E::*m5)() const = & E::values;
@@ -152,7 +176,14 @@ namespace mln
     const pset& (E::*m8)() const = & E::domain;
     m8 = 0;
 
+    const t_eligible_value_set& (E::*m9)() const = & E::values_eligible;
+    m9 = 0;
+
     typedef typename E::skeleton skeleton;
+
+    /// Optional interface:
+    internal::image_values_interface_check<mln_trait_image_value_browsing(E),
+      E>::run();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

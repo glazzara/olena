@@ -48,7 +48,7 @@ namespace mln
      *
      */
     template <typename I, typename S, typename E>
-    class image_domain_morpher : public image_morpher<I, S, E>
+    class image_domain_morpher : public image_morpher<I, mln_value(I), S, E>
     {
     public:
 

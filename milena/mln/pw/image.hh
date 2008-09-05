@@ -114,7 +114,8 @@ namespace mln
      *
      */
     template <typename F, typename S>
-    struct image : public internal::image_primary< S, image<F,S> >
+    struct image :
+      public internal::image_primary<mln_result(F), S, image<F,S> >
     {
       /// Skeleton.
       typedef image< tag::function_<F>, tag::pset_<S> > skeleton;

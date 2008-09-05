@@ -80,27 +80,27 @@ namespace mln
       {
 	return del_().point_at_index(i);
       }
-      
+
       unsigned border() const
       {
 	return del_().border();
       }
-      
+
       mln_qlf_value(I)* buffer()
       {
 	return del_().buffer();
       }
-      
+
       const mln_value(I)* buffer() const
       {
 	return del_().buffer();
       }
-      
+
       mln_rvalue(I) element(unsigned i) const
       {
 	return del_().element(i);
       }
-      
+
       mln_lvalue(I) element(unsigned i)
       {
 	return del_().element(i);
@@ -129,7 +129,7 @@ namespace mln
     template <typename I, typename S, typename E>
     class image_identity
       : public image_identity_impl<I, E>,
-	public image_morpher<I, S, E>
+	public image_morpher<I, mln_value(I), S, E>
     {
     public:
 
@@ -171,14 +171,14 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    image_identity<I,S,E>::image_identity()
+    image_identity<I, S, E>::image_identity()
     {
     }
 
     template <typename I, typename S, typename E>
     inline
     const mln_vset(I)&
-    image_identity<I,S,E>::values() const
+    image_identity<I, S, E>::values() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->values();
@@ -187,7 +187,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     mln_rvalue(I)
-    image_identity<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_identity<I, S, E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -195,8 +195,8 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    typename image_identity<I,S,E>::lvalue
-    image_identity<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_identity<I, S, E>::lvalue
+    image_identity<I, S, E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -205,7 +205,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     const mln_pset(I)&
-    image_identity<I,S,E>::domain() const
+    image_identity<I, S, E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
@@ -214,7 +214,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     bool
-    image_identity<I,S,E>::has(const mln_psite(I)& p) const
+    image_identity<I, S, E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->has(p);

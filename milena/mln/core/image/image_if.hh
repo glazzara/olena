@@ -90,8 +90,8 @@ namespace mln
    */
   template <typename I, typename F>
   struct image_if : public internal::image_domain_morpher< I,
-							    p_if<mln_pset(I), F>,
-							    image_if<I, F> >
+							   p_if<mln_pset(I), F>,
+							   image_if<I, F> >
   {
     /// Skeleton.
     typedef image_if< tag::image_<I>, tag::function_<F> > skeleton;

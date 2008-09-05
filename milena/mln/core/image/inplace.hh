@@ -41,9 +41,9 @@ namespace mln
 {
 
   /*! \brief Routine to make temporary objects become mutable.
-   * 
+   *
    * \warning This routine is not safe!  FIXME: Explain.
-   */ 
+   */
   template <typename E>
   E& inplace(const Object<E>& temp);
 

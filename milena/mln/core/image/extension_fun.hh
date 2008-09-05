@@ -88,9 +88,8 @@ namespace mln
   // FIXME: Doc!
 
   template <typename I, typename F>
-  class extension_fun
-
-    : public internal::image_identity< I, mln_pset(I), extension_fun<I, F> >,
+  class extension_fun :
+    public internal::image_identity< I, mln_pset(I), extension_fun<I, F> >,
       private mlc_converts_to(mln_result(F), mln_value(I))::check_t
   {
   public:
@@ -102,7 +101,7 @@ namespace mln
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;
-    
+
 
     /// Constructor without argument.
     extension_fun();

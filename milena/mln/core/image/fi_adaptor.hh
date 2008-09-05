@@ -129,7 +129,8 @@ namespace mln
    */
 
   template <typename I>
-  struct fi_adaptor : public internal::image_primary< box2d, fi_adaptor<I> >
+  struct fi_adaptor : public internal::image_primary< mln_value(I), box2d,
+						      fi_adaptor<I> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;

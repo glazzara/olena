@@ -164,7 +164,7 @@ namespace mln
   void
   box_fwd_piter_<P>::invalidate_()
   {
-    p_[0] = s_->pmax()[0] + 1;
+    p_[0] = (s_->pmax()[0] + 1);
   }
 
   template <typename P>
@@ -236,7 +236,7 @@ namespace mln
   void
   box_bkd_piter_<P>::invalidate_()
   {
-    p_[0] = s_->pmin()[0] - 1;
+    p_[0] = mln_coord(P)(s_->pmin()[0] - 1);
   }
 
   template <typename P>

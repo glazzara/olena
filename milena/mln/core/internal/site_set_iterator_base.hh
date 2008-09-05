@@ -58,11 +58,11 @@ namespace mln
       /// Hook to the current location.
       const mln_psite(S)& p_hook_() const;
 
-      /// Change the site set targeted by this iterator. 
+      /// Change the site set targeted by this iterator.
       void change_target(const S& s);
 
     protected:
-      
+
       /// The psite designated by this iterator.
       mln_psite(S) p_;
 

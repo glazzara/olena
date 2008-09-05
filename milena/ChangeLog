@@ -1,3 +1,45 @@
+2008-09-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add the image value type in the class image_base_.
+
+	* mln/core/internal/image_base.hh: .
+	* mln/core/internal/image_morpher.hh: .
+	* mln/core/internal/site_set_iterator_base.hh: .
+	* mln/core/internal/image_primary.hh: .
+	* mln/core/internal/image_identity.hh: .
+	* mln/core/internal/image_domain_morpher.hh: .
+	* mln/core/internal/image_value_morpher.hh: .
+	* mln/core/site_set/box.hh: fix compile warning.
+	* mln/core/site_set/box_piter.hh: .
+	* mln/core/image/lazy_image.hh: .
+	* mln/core/image/extension_fun.hh: .
+	* mln/core/image/cast_image.hh: .
+	* mln/core/image/image_if.hh: .
+	* mln/core/image/graph_image.hh: .
+	* mln/core/image/line_graph_image.hh: .
+	* mln/core/image/hexa.hh: .
+	* mln/core/image/flat_image.hh: .
+	* mln/core/image/interpolated.hh: .
+	* mln/core/image/extension_ima.hh: .
+	* mln/core/image/bgraph_image.hh: .
+	* mln/core/image/t_image.hh: .
+	* mln/core/image/image1d.hh: .
+	* mln/core/image/image2d.hh: .
+	* mln/core/image/fi_adaptor.hh: .
+	* mln/core/image/image3d.hh: .
+	* mln/core/image/complex_image.hh: .
+	* mln/core/image/inplace.hh: .
+	* mln/pw/image.hh: .
+	* mln/core/image/extension_val.hh: .
+	* mln/core/concept/image.hh: .
+	* mln/level/fill_with_value.hh: .
+	* mln/make/box2d.hh: .
+	* mln/border/find.hh: .
+	* mln/algebra/vec.hh: fix compile mistakes.
+	* tests/core/image/image_if.cc: Update the test.
+	* tests/core/image/Makefile.am: Update.
+	* tests/core/image/flat_image.cc: New Test.
+
 2008-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add convert::to and conversion from v2v; fix misc stuff.

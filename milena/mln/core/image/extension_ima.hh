@@ -102,7 +102,7 @@ namespace mln
 
     /// Return type of read-only access.
     typedef mln_value(I) rvalue;
-    
+
 
     /// Constructor without argument.
     extension_ima();

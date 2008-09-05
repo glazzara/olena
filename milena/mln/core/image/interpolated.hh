@@ -64,10 +64,12 @@ namespace mln
    *
    */
   template <typename I>
-  struct interpolated : public mln::internal::image_identity< I, mln_pset(I), interpolated<I> >
+  struct interpolated :
+    public mln::internal::image_identity< I, mln_pset(I), interpolated<I> >
   {
 
-    typedef mln::internal::image_identity< I, mln_pset(I), interpolated<I> > super_;
+    typedef mln::internal::image_identity< I, mln_pset(I),
+					   interpolated<I> > super_;
 
     /// Point_Site associated type.
     typedef mln_psite(I) psite;

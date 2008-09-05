@@ -40,7 +40,7 @@
 # include <mln/core/internal/data.hh>
 # include <mln/core/internal/morpher_lvalue.hh>
 # include <mln/util/tracked_ptr.hh>
-
+# include <mln/value/set.hh>
 
 //              image_base
 //                   ^
@@ -72,9 +72,10 @@ namespace mln
 
 
 
-    /// \internal A base class for images.  Parameter \p S is the
-    /// image site set type.
-    template <typename S, typename E>
+    /// \internal A base class for images.
+    /// Parameter \p S is the image site set type.
+    /// Parameter \p V is the image value type.
+    template <typename T, typename S, typename E>
     struct image_base
       :
       public image_checked_<E>
@@ -101,6 +102,9 @@ namespace mln
       /// fwd_piter.
       typedef fwd_piter        piter;
 
+      ///  associated type.
+      typedef mln::value::set<T> t_eligible_value_set;
+
 
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;
@@ -113,6 +117,8 @@ namespace mln
 
       // FIXME: Add void init_data(..);
 
+      // Return the set of the image eligigle values
+      const t_eligible_value_set& values_eligible() const;
 
       /// Assignment operator.
       image_base& operator=(const image_base& rhs);
@@ -138,25 +144,25 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base<S,E>::image_base()
+    image_base<T, S, E>::image_base()
     {
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base<S,E>::image_base(const image_base& rhs)
+    image_base<T, S, E>::image_base(const image_base& rhs)
       : image_checked_<E>()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base<S,E>&
-    image_base<S,E>::operator=(const image_base<S,E>& rhs)
+    image_base<T, S, E>&
+    image_base<T, S, E>::operator=(const image_base<T, S, E>& rhs)
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       if (& rhs == this) // || ! exact(rhs).has_data())
@@ -165,27 +171,27 @@ namespace mln
       return *this;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
     bool
-    image_base<S,E>::has_data() const
+    image_base<T, S, E>::has_data() const
     {
       return data_ != 0;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
     bool
-    image_base<S,E>::has(const psite& p) const
+    image_base<T, S, E>::has(const psite& p) const
     {
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().has(p);
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
     std::size_t
-    image_base<S,E>::nsites() const
+    image_base<T, S, E>::nsites() const
     {
       mlc_equal(mln_trait_site_set_nsites(S),
 		mln::trait::site_set::nsites::known)::check();
@@ -193,10 +199,18 @@ namespace mln
       return exact(this)->domain().nsites();
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
+    inline
+    const typename image_base<T, S, E>::t_eligible_value_set&
+    image_base<T, S, E>::values_eligible() const
+    {
+      return t_eligible_value_set::the();
+    }
+
+    template <typename T, typename S, typename E>
     inline
     void
-    image_base<S,E>::destroy()
+    image_base<T, S, E>::destroy()
     {
       data_.clean_();
     }
