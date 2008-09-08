@@ -109,7 +109,6 @@ namespace mln
     typedef T& lvalue;
     typedef const T rvalue;
     typedef runs_psite<P> psite;
-    typedef mln::value::set<T> vset;
     typedef p_runs_<P> pset;
 
 
@@ -130,9 +129,6 @@ namespace mln
 
     /// Test if this image has been initialized.
     bool has_data() const;
-
-    /// Give the set of values of the image.
-    const vset& values() const;
 
     /// Give the definition domain.
     const pset& domain() const;
@@ -184,14 +180,6 @@ namespace mln
   rle_image<P, T>::has_data() const
   {
     return this->data_->values_.size() != 0;
-  }
-
-  template <typename P, typename T>
-  inline
-  const typename rle_image<P, T>::vset&
-  rle_image<P, T>::values() const
-  {
-    return vset::the();
   }
 
   template <typename P, typename T>

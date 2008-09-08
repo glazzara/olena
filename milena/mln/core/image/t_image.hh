@@ -100,10 +100,6 @@ namespace mln
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<value> vset;
-
-
     /// Skeleton.
     typedef t_image< tag::image_<I> > skeleton;
 
@@ -138,8 +134,6 @@ namespace mln
     /// Read-write access of pixel value at point site \p p.
     mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
 
-    /// Give the set of values of the image.
-    const vset& values() const;
 
   protected:
     /// Exchange components \a dim1_ and \a dim2_ of point \a p.
@@ -263,16 +257,6 @@ namespace mln
     mln_precondition(this->has(p));
     return (*this->delegatee_())(transpose_(p));
   }
-
-  template <typename I>
-  inline
-  const typename t_image<I>::vset&
-  t_image<I>::values() const
-  {
-    mln_precondition(this->delegatee_() != 0);
-    return this->delegatee_()->values();
-  }
-
 
   template <typename I>
   inline

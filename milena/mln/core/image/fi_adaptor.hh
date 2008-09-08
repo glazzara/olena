@@ -157,10 +157,6 @@ namespace mln
     /// Skeleton.
     typedef fi_adaptor< tag::value_<T> > skeleton;
 
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-
     /// Constructor without argument.
     fi_adaptor();
 
@@ -169,9 +165,6 @@ namespace mln
 
     /// Initialize an empty image.
     void init_();
-
-    /// Give the set of values of the image.
-    const vset& values() const;
 
     /// Give the definition domain.
     const box2d& domain() const;
@@ -302,13 +295,6 @@ namespace mln
   fi_adaptor<I>::init_()
   {
     this->data_ = new internal::data_< fi_adaptor<I> >();
-  }
-
-  template <typename I>
-  const typename fi_adaptor<I>::vset&
-  fi_adaptor<I>::values() const
-  {
-    return vset::the();
   }
 
   template <typename I>

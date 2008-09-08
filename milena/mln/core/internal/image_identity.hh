@@ -133,9 +133,6 @@ namespace mln
     {
     public:
 
-      /// Value_Set associated type.
-      typedef mln_vset(I) vset;
-
       /// Value associated type.
       typedef mln_value(I) value;
 
@@ -144,10 +141,6 @@ namespace mln
 
       /// Return type of read-write access.
       typedef mln_morpher_lvalue(I) lvalue;
-
-
-      /// Give the set of values.
-      const vset& values() const;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const mln_psite(S)& p) const;
@@ -173,15 +166,6 @@ namespace mln
     inline
     image_identity<I, S, E>::image_identity()
     {
-    }
-
-    template <typename I, typename S, typename E>
-    inline
-    const mln_vset(I)&
-    image_identity<I, S, E>::values() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->values();
     }
 
     template <typename I, typename S, typename E>

@@ -111,9 +111,6 @@ namespace mln
     /// Return type of read-only access.
     typedef typename std::vector<V>::const_reference rvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<value> vset;
-
     /// Skeleton.
     typedef graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
@@ -137,8 +134,6 @@ namespace mln
     /// \{
     /// Return the domain of psites od the image.
     const p_graph<P>& domain() const;
-    /// Return the domain of values of the image.
-    const vset& values() const;
 
     /// Return the array of values associated to the vertices.
     const std::vector<V>& vertex_values() const;
@@ -250,14 +245,6 @@ namespace mln
     mln_precondition(p.pg() == this->data_->pg_);
     mln_precondition(p.id() < this->data_->val_.size());
     return this->data_->val_[p.id()];
-  }
-
-  template <typename P, typename V>
-  inline
-  const mln::value::set<V> &
-  graph_image<P, V>::values() const
-  {
-    return vset::the();
   }
 
   template <typename P, typename V>

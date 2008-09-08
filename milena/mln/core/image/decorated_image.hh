@@ -104,10 +104,6 @@ namespace mln
     /// Dtor
     ~decorated_image();
 
-
-    /// Value_Set associated type.
-    typedef mln_vset(I) vset;
-
     /// Skeleton.
     typedef decorated_image< tag::image_<I>, tag::data_<D> > skeleton;
 

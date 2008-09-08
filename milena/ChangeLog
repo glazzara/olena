@@ -1,3 +1,36 @@
+2008-09-08  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add the values_space method to image base.
+
+	* tests/core/image/flat_image.cc: update test
+	* mln/core/image/cast_image.hh,
+	* mln/core/image/decorated_image.hh,
+	* mln/core/image/obased_rle_image.hh,
+	* mln/core/image/value_enc_image.hh,
+	* mln/core/image/graph_image.hh,
+	* mln/core/image/line_graph_image.hh,
+	* mln/core/image/rle_image.hh,
+	* mln/core/image/tr_image.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/mono_obased_rle_image.hh,
+	* mln/core/image/interpolated.hh,
+	* mln/core/image/sparse_image.hh,
+	* mln/core/image/bgraph_image.hh,
+	* mln/core/image/t_image.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/fi_adaptor.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/mono_rle_image.hh: delete the values method.
+	* mln/core/macros.hh: update (mln_vset returns now t_eligible_values).
+	* mln/core/internal/image_base.hh: add the values_space method.
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_domain_morpher.hh: update.
+	* mln/core/internal/image_value_morpher.hh: fix compile bug.
+	* mln/core/concept/image.hh: add interface check.
+	* mln/value/super_value.hh: New trait that return the super value type.
+
 2008-09-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add the sub_image_if image type.

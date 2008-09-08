@@ -55,16 +55,6 @@ namespace mln
     {
     public:
 
-      /// Value_Set associated type.
-      typedef mln_vset(I) vset;
-
-      /// Give the set of values.
-      const vset& values() const;
-
-
-      /// Value associated type.
-      typedef mln_value(I) value;
-
       /// Return type of read-only access.
       typedef mln_rvalue(I) rvalue;
 
@@ -91,15 +81,6 @@ namespace mln
     inline
     image_domain_morpher<I,S,E>::image_domain_morpher()
     {
-    }
-
-    template <typename I, typename S, typename E>
-    inline
-    const mln_vset(I)&
-    image_domain_morpher<I,S,E>::values() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->values();
     }
 
     template <typename I, typename S, typename E>

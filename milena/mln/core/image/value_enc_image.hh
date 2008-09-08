@@ -108,7 +108,6 @@ namespace mln
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef typename std::vector<T> vset;
 
     /// Domain related typedefs
     typedef pset_array_psite< runs_psite<P> > psite;
@@ -136,9 +135,6 @@ namespace mln
 
     /// Test if this image has been initialized.
     bool has_data() const;
-
-    /// Give the set of values of the image.
-    const vset& values() const;
 
     /// Give the definition domain.
     const pset& domain() const;
@@ -174,14 +170,6 @@ namespace mln
   value_enc_image<P, T>::has_data() const
   {
     return this->data_->values_.size() != 0;
-  }
-
-  template <typename P, typename T>
-  inline
-  const typename value_enc_image<P, T>::vset&
-  value_enc_image<P, T>::values() const
-  {
-    return this->data_->values_;
   }
 
   template <typename P, typename T>

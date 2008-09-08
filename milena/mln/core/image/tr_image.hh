@@ -88,10 +88,6 @@ namespace mln
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<value> vset;
-
-
     /// Skeleton.
     typedef tr_image< T, tag::image_<I> > skeleton;
 

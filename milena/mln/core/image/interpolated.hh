@@ -83,10 +83,6 @@ namespace mln
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<value> vset;
-
-
     /// Skeleton.
     typedef interpolated< tag::image_<I> > skeleton;
 
@@ -112,8 +108,6 @@ namespace mln
     mln_value(I) operator()(const mln::algebra::vec<I::point::dim, float>& v) const;
 
 
-    /// Give the set of values of the image.
-    const vset& values() const;
   };
 
 
@@ -176,16 +170,6 @@ namespace mln
       p[i] = static_cast<int>(round(v[i]));
     mln_assertion(this->data_->ima_.has(p));
     return this->data_->ima_(p);
-  }
-
-  // FIXME : Should we remove this method? (and inherit it from
-  // identity morpher)
-  template <typename I>
-  inline
-  const mln::value::set<mln_value(I) >&
-  interpolated<I>::values() const
-  {
-    return vset::the();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

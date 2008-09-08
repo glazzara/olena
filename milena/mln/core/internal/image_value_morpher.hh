@@ -65,25 +65,25 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
-    image_value_morpher<I,E>::image_value_morpher()
+    image_value_morpher<I,T,E>::image_value_morpher()
     {
     }
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
     const mln_pset(I)&
-    image_value_morpher<I,E>::domain() const
+    image_value_morpher<I,T,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
     }
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
     bool
-    image_value_morpher<I,E>::has(const mln_psite(I)& p) const
+    image_value_morpher<I,T,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->has(p);

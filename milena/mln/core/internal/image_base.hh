@@ -41,6 +41,7 @@
 # include <mln/core/internal/morpher_lvalue.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/value/set.hh>
+# include <mln/value/super_value.hh>
 
 //              image_base
 //                   ^
@@ -85,10 +86,17 @@ namespace mln
       typedef T value;
 
       /// Eligible-value-set associated type.
-      typedef mln::value::set<T> t_eligible_value_set;
+      typedef mln::value::set<T> t_eligible_values_set;
 
       // Return the set of the image eligigle values
-      const t_eligible_value_set& values_eligible() const;
+      const t_eligible_values_set& values_eligible() const;
+
+      /// Value space associated type.
+      typedef mln::value::set<
+	typename mln::value::super_value<T>::ret > t_values_space;
+
+      /// Return the value space of the image.
+      const t_values_space& values_space() const;
 
 
       /// Site_Set associated type.
@@ -222,10 +230,18 @@ namespace mln
 
     template <typename T, typename S, typename E>
     inline
-    const typename image_base<T, S, E>::t_eligible_value_set&
+    const typename image_base<T, S, E>::t_eligible_values_set&
     image_base<T, S, E>::values_eligible() const
     {
-      return t_eligible_value_set::the();
+      return t_eligible_values_set::the();
+    }
+
+    template <typename T, typename S, typename E>
+    inline
+    const typename image_base<T, S, E>::t_values_space&
+    image_base<T, S, E>::values_space() const
+    {
+      return t_values_space::the();
     }
 
     template <typename T, typename S, typename E>

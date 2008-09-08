@@ -162,11 +162,14 @@ namespace mln
     typedef mln_value(E)  value;
     typedef mln_rvalue(E) rvalue;
     typedef mln_lvalue(E) lvalue;
-    typedef typename E::t_eligible_value_set t_eligible_value_set;
+    typedef typename E::t_eligible_values_set t_eligible_values_set;
+    typedef typename E::t_values_space t_values_space;
 
-    typedef mln_vset(E) vset;
-    const vset& (E::*m5)() const = & E::values;
-    m5 = 0;
+
+    // FIXME Doc
+    //typedef mln_vset(E) vset;
+    //const vset& (E::*m5)() const = & E::values;
+    //m5 = 0;
 
     rvalue (E::*m6)(const psite& p) const = & E::operator();
     m6 = 0;
@@ -176,8 +179,11 @@ namespace mln
     const pset& (E::*m8)() const = & E::domain;
     m8 = 0;
 
-    const t_eligible_value_set& (E::*m9)() const = & E::values_eligible;
+    const t_eligible_values_set& (E::*m9)() const = & E::values_eligible;
     m9 = 0;
+
+    const t_values_space& (E::*m10)() const = & E::values_space;
+    m10 = 0;
 
     typedef typename E::skeleton skeleton;
 

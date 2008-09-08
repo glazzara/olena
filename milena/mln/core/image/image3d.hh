@@ -142,11 +142,6 @@ namespace mln
     /// Skeleton.
     typedef image3d< tag::value_<T> > skeleton;
 
-
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-
     /// Constructor without argument.
     image3d();
 
@@ -165,9 +160,6 @@ namespace mln
 
     /// Test if \p p is valid.
     bool has(const point3d& p) const;
-
-    /// Give the set of values of the image.
-    const vset& values() const;
 
     /// Give the definition domain.
     const box3d& domain() const;
@@ -387,14 +379,6 @@ namespace mln
   {
     mln_precondition(! this->has_data());
     this->data_ = new internal::data_< image3d<T> >(b, bdr);
-  }
-
-  template <typename T>
-  inline
-  const typename image3d<T>::vset&
-  image3d<T>::values() const
-  {
-    return vset::the();
   }
 
   template <typename T>

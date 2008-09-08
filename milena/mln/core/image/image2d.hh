@@ -146,10 +146,6 @@ namespace mln
     typedef image2d< tag::value_<T> > skeleton;
 
 
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-
     /// Constructor without argument.
     image2d();
 
@@ -168,9 +164,6 @@ namespace mln
 
     /// Test if \p p is valid.
     bool has(const point2d& p) const;
-
-    /// Give the set of values of the image.
-    const vset& values() const;
 
     /// Give the definition domain.
     const box2d& domain() const;
@@ -414,14 +407,6 @@ namespace mln
   {
     mln_precondition(! this->has_data());
     this->data_ = new internal::data< image2d<T> >(b, bdr);
-  }
-
-  template <typename T>
-  inline
-  const typename image2d<T>::vset&
-  image2d<T>::values() const
-  {
-    return vset::the();
   }
 
   template <typename T>

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/flat_image.cc
+#ifndef MLN_VALUE_SUPER_VALUE_HH
+# define MLN_VALUE_SUPER_VALUE_HH
+
+/*! \file mln/value/super_value.hh
  *
- * \brief Tests on mln::flat_image.
+ * \brief Definition of the mln::super_value trait.
  */
 
-#include <mln/core/image/flat_image.hh>
-#include <mln/core/alias/box2d.hh>
-
-
-int main()
+namespace mln
 {
+
+  namespace value
   {
-    using namespace mln;
 
-    flat_image<short, box2d> test;
+    /*
+     * \brief Return the super value type associated to the parameter \p T
+     * By default, the super value type of the parameter \p T, is T itself.
+     */
+    template <typename T>
+    struct super_value
+    {
+      typedef T ret;
+    };
 
-    std::cout << test.values_eligible() << std::endl;
-    std::cout << test.values_space() << std::endl;
-    //    flat_image<short, box2d>::t_eligible_value_set::fwd_viter viter(test.values_eligible());
+    /// Specialization
+    ///
 
   }
+
 }
+
+#endif // !MLN_VALUE_SUPER_VALUE_HH

@@ -138,17 +138,6 @@ namespace mln
     const T& operator()(const mln_psite(S)& p);
 
 
-    // FIXME: Weird...
-
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-    /// Give the set of values of the image.
-    const mln::value::set<T>& values() const;
-
-    // end of FIXME
-
-
     /// Change the image value.
     void change_value(const T& old_val, const T& new_val);
   };
@@ -247,14 +236,6 @@ namespace mln
   {
     mln_precondition(this->has_data());
     return this->data_->val_;
-  }
-
-  template <typename T, typename S>
-  inline
-  const mln::value::set<T>&
-  flat_image<T,S>::values() const
-  {
-    return vset::the();
   }
 
   template <typename T, typename S>

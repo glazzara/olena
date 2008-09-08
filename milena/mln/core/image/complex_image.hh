@@ -120,9 +120,6 @@ namespace mln
     /// Return type of read-only access.
     typedef typename std::vector<V>::const_reference rvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<value> vset;
-
     /// Skeleton.
     typedef complex_image< D, tag::psite_<P>, tag::value_<V> > skeleton;
 
@@ -148,8 +145,6 @@ namespace mln
     /// \{
     /// Return the domain of psites od the image.
     const p_complex<D, P>& domain() const;
-    /// Return the domain of values of the image.
-    const vset& values() const;
 
     /// Return the array of values associated to the faces.
     const metal::vec<D + 1, std::vector<V> >& face_values() const;
@@ -266,14 +261,6 @@ namespace mln
   {
     mln_precondition(this->data_->pc_.has(p));
     return this->data_->values_[p.n()][p.face_id()];
-  }
-
-  template <unsigned D, typename P, typename V>
-  inline
-  const mln::value::set<V> &
-  complex_image<D, P, V>::values() const
-  {
-    return vset::the();
   }
 
   template <unsigned D, typename P, typename V>

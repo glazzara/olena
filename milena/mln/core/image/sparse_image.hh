@@ -122,11 +122,6 @@ namespace mln
     /// Return type of read-write access.
     typedef T&       lvalue;
 
-
-    /// Value_Set associated type.
-    typedef mln::value::set<T> vset;
-
-
     /// Skeleton.
     typedef sparse_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
@@ -152,11 +147,6 @@ namespace mln
 
     /// Read-write access to the image value located at point \p p.
     lvalue operator()(const psite& p);
-
-
-    /// Give the set of values of the image.
-    const vset& values() const;
-
 
     /// Give the definition domain.
     const p_set_of< p_run<P> >& domain() const;
@@ -196,14 +186,6 @@ namespace mln
     this->data_->values_.resize(nr);
     for (unsigned r = 0; r < nr; ++r)
       this->data_->values_[r].resize(s.run(r).nsites());
-  }
-
-  template <typename P, typename T>
-  inline
-  const typename sparse_image<P,T>::vset&
-  sparse_image<P,T>::values() const
-  {
-    return vset::the();
   }
 
   template <typename P, typename T>

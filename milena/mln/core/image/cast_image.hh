@@ -92,10 +92,6 @@ namespace mln
     /// Return type of read-write access.
     typedef T lvalue;
 
-    /// Value set associated type.
-    typedef mln::value::set<T> vset;
-
-
     /// Skeleton.
     typedef cast_image_< tag::value_<T>, tag::image_<I> > skeleton;
 
@@ -109,9 +105,6 @@ namespace mln
 
     /// Mutable access is only OK for reading (not writing).
     T operator()(const mln_psite(I)& p);
-
-    /// Give the set of values of the image.
-    const vset& values() const;
   };
 
 
@@ -170,14 +163,6 @@ namespace mln
   cast_image_<T,I>::operator()(const mln_psite(I)& p)
   {
     return mln::value::cast<T>( this->data_->ima_(p) );
-  }
-
-  template <typename T, typename I>
-  inline
-  const mln::value::set<T>&
-  cast_image_<T,I>::values() const
-  {
-    return vset::the();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
