@@ -1,3 +1,34 @@
+2008-09-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add initialization for extension morphers.
+
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh,
+	(init): Rename this method as...
+	(init_): ...this.
+	(init_): New procedure overloads.
+	* doc/tutorial/examples/image_if.cc: Augment.
+	* mln/trait/ch_value.hh: New overload.
+	* mln/core/image/extension_fun.hh (FIXME): Fix.
+	Augment doc.
+	(extension): New method.
+	* mln/core/image/extension_ima.hh (skeleton): Fix.
+	Now the extension is a particular tag so we cannot mix up
+	image and extension.
+	* mln/core/image/extension_val.hh: .
+	(extension_value, change_extension_value): Rename as...
+	(extension, change_extension): ...these.
+	* mln/core/internal/image_morpher.hh (FIXME): Fix.
+	Add static check.
+	* mln/core/concept/image.hh: Layout.
+	(check_init): New material.
+	(Image): Check the presence of the init_ method.
+	* mln/tag/init.hh: Layout.
+	(extension_t, extension): New tag type and object.
+	* mln/tag/skeleton.hh (ext_): New tag.
+	* mln/fun/p2b/has.hh: New check.
+
 2008-09-08  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add the values_space method to image base.

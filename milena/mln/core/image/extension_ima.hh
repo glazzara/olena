@@ -96,8 +96,7 @@ namespace mln
   public:
 
     /// Skeleton.
-    typedef extension_ima< tag::image_<I>, tag::image_<J> > skeleton;
-    // FIXME: OK when ch_value?
+    typedef extension_ima< tag::image_<I>, tag::ext_<J> > skeleton;
 
 
     /// Return type of read-only access.
@@ -112,7 +111,7 @@ namespace mln
 
     /// Deferred initialization from an image \p ima and a function \p
     /// ext.
-    void init(I& ima, J& ext);
+    void init_(I& ima, J& ext);
 
 
     /// Test if \p p is valid.
@@ -135,6 +134,18 @@ namespace mln
     /// can be modified if J a read-write image type.
     J& extension();
   };
+
+
+  // init_
+
+  template <typename I, typename J, typename M>
+  void init_(tag::image_t, extension_ima<I,J>& target, const M& model);
+
+  template <typename J, typename I>
+  void init_(tag::extension_t, J& target, const extension_ima<I,J>& model);
+
+  template <typename J, typename I>
+  void init_(tag::extension_t, J& target, const extension_ima<I,const J>& model);
 
 
 
@@ -168,13 +179,13 @@ namespace mln
   inline
   extension_ima<I, J>::extension_ima(I& ima, J& ext)
   {
-    init(ima, ext);
+    init_(ima, ext);
   }
 
   template <typename I, typename J>
   inline
   void
-  extension_ima<I, J>::init(I& ima, J& ext)
+  extension_ima<I, J>::init_(I& ima, J& ext)
   {
     this->data_ = new internal::data< extension_ima<I, J> >(ima, ext);
   }
@@ -244,6 +255,31 @@ namespace mln
   {
     mln_precondition(this->has_data());
     return this->data_->ext_;
+  }
+
+
+  // init_
+
+  template <typename I, typename J, typename M>
+  void init_(tag::image_t, extension_ima<I,J>& target, const M& model)
+  {
+    I ima;
+    init_(tag::image, ima, model);
+    J ext;
+    init_(tag::extension, ext, model);
+    target.init_(ima, ext);
+  }
+
+  template <typename J, typename I>
+  void init_(tag::extension_t, J& target, const extension_ima<I,J>& model)
+  {
+    target = model.extension();
+  }
+
+  template <typename J, typename I>
+  void init_(tag::extension_t, J& target, const extension_ima<I,const J>& model)
+  {
+    target = model.extension();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

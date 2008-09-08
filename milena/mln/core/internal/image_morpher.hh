@@ -167,8 +167,8 @@ namespace mln
     inline
     void init_(Subject s, T& target, const Image<J>& model_)
     {
-      // FIXME: Precondition.
-      // FIXME: Properly check that J is an internal::image_morpher.
+      mlc_is(mln_trait_image_category(J),
+	     trait::image::category::morpher)::check();
       const J& model = exact(model_);
       init_(s, target, * model.delegatee_());
     }

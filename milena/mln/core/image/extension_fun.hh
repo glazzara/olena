@@ -89,14 +89,14 @@ namespace mln
 
   template <typename I, typename F>
   class extension_fun :
+    
     public internal::image_identity< I, mln_pset(I), extension_fun<I, F> >,
-      private mlc_converts_to(mln_result(F), mln_value(I))::check_t
+    private mlc_converts_to(mln_result(F), mln_value(I))::check_t
   {
   public:
 
     /// Skeleton.
     typedef extension_fun< tag::image_<I>, tag::function_<F> > skeleton;
-    // FIXME: OK when ch_value?
 
 
     /// Return type of read-only access.
@@ -111,10 +111,11 @@ namespace mln
 
     /// Deferred initialization from an image \p ima and a function \p
     /// fun.
-    void init(I& ima, const F& fun);
+    void init_(I& ima, const F& fun);
 
 
-    /// Test if \p p is valid.  It returns always true.
+    /// Test if \p p is valid.  It returns always true, assuming that
+    /// the function is valid for any \p p.
     // Tech note: the 'template' allows for multiple input.
     template <typename P>
     bool has(const P& p) const;
@@ -125,7 +126,20 @@ namespace mln
 
     /// Read-write access to the image value located at site \p p.
     mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
+
+
+    /// Give the extension function.
+    const F& extension() const;
   };
+
+
+  // init_
+
+  template <typename I, typename F, typename J>
+  void init_(tag::image_t, extension_fun<I,F>& target, const J& model);
+
+  template <typename F, typename I>
+  void init_(tag::extension_t, F& target, const extension_fun<I,F>& model);
 
 
 
@@ -147,6 +161,7 @@ namespace mln
 
   } // end of namespace mln::internal
 
+
   // extension_fun<I, F>
 
   template <typename I, typename F>
@@ -159,13 +174,13 @@ namespace mln
   inline
   extension_fun<I, F>::extension_fun(I& ima, const F& fun)
   {
-    init(ima, fun);
+    init_(ima, fun);
   }
 
   template <typename I, typename F>
   inline
   void
-  extension_fun<I, F>::init(I& ima, const F& fun)
+  extension_fun<I, F>::init_(I& ima, const F& fun)
   {
     this->data_ = new internal::data< extension_fun<I, F> >(ima, fun);
   }
@@ -211,6 +226,34 @@ namespace mln
 	cpy = this->data_->fun_(p);
 	return cpy;
       }
+  }
+
+  template <typename I, typename F>
+  inline
+  const F&
+  extension_fun<I, F>::extension() const
+  {
+    mln_precondition(this->has_data());
+    return this->data_->fun_;
+  }
+
+
+  // init_
+
+  template <typename I, typename F, typename J>
+  void init_(tag::image_t, extension_fun<I,F>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, model);
+    F fun;
+    init_(tag::extension, fun, model);
+    target.init_(ima, fun);
+  }
+
+  template <typename F, typename I>
+  void init_(tag::extension_t, F& target, const extension_fun<I,F>& model)
+  {
+    target = model.extension();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

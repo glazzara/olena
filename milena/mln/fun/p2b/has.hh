@@ -50,7 +50,10 @@ namespace mln
       // FIXME: Doc!
 
       template <typename I>
-      struct has : public Function_p2b< has<I> >
+      struct has
+
+	: public Function_p2b< has<I> >,
+	  private mlc_is_a(I, Image)::check_t
       {
 	/// Result associated type.
 	typedef bool result;

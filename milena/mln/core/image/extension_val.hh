@@ -94,7 +94,6 @@ namespace mln
 
     /// Skeleton.
     typedef extension_val< tag::image_<I> > skeleton;
-    // FIXME: OK when ch_value?
 
 
     /// Return type of read-only access.
@@ -109,7 +108,7 @@ namespace mln
 
     /// Deferred initialization from an image \p ima and a value \p
     /// val.
-    void init(I& ima, const mln_value(I)& val);
+    void init_(I& ima, const mln_value(I)& val);
 
 
     /// Test if \p p is valid.  It returns always true.
@@ -126,12 +125,20 @@ namespace mln
 
 
     /// Read-only access to the value of the extension domain.
-    const mln_value(I)& extension_value() const;
+    const mln_value(I)& extension() const;
 
     /// Change the value of the extension domain.
-    void change_extension_value(const mln_value(I)& val);
+    void change_extension(const mln_value(I)& val);
   };
 
+
+  // init_
+
+  template <typename I, typename J>
+  void init_(tag::image_t, extension_val<I>& target, const J& model);
+
+  template <typename V, typename I>
+  void init_(tag::extension_t, V& target, const extension_val<I>& model);
 
 
 
@@ -164,13 +171,13 @@ namespace mln
   inline
   extension_val<I>::extension_val(I& ima, const mln_value(I)& val)
   {
-    init(ima, val);
+    init_(ima, val);
   }
 
   template <typename I>
   inline
   void
-  extension_val<I>::init(I& ima, const mln_value(I)& val)
+  extension_val<I>::init_(I& ima, const mln_value(I)& val)
   {
     this->data_ = new internal::data< extension_val<I> >(ima, val);
   }
@@ -218,7 +225,7 @@ namespace mln
   template <typename I>
   inline
   const mln_value(I)&
-  extension_val<I>::extension_value() const
+  extension_val<I>::extension() const
   {
     mln_precondition(this->has_data());
     return this->data_->val_;
@@ -227,10 +234,30 @@ namespace mln
   template <typename I>
   inline
   void
-  extension_val<I>::change_extension_value(const mln_value(I)& val)
+  extension_val<I>::change_extension(const mln_value(I)& val)
   {
     mln_precondition(this->has_data());
     this->data_->val_ = val;
+  }
+
+
+  // init_
+
+  template <typename I, typename J>
+  void init_(tag::image_t, extension_val<I>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, model);
+    mln_value(I) val;
+    init_(tag::extension, val, model);
+    target.init_(ima, val);
+  }
+
+  template <typename V, typename I>
+  void init_(tag::extension_t, V& target, const extension_val<I>& model)
+  {
+    mlc_converts_to(mln_value(I), V)::check();
+    target = model.extension();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -114,6 +114,7 @@ namespace mln
 
   namespace internal
   {
+
     template <typename values_browsing_trait, typename E>
     struct image_values_interface_check
     {
@@ -132,7 +133,34 @@ namespace mln
 	m = 0;
       }
     };
-  }
+
+
+    // check_init
+
+    template < typename E,
+	       typename A >
+    int check_init(void (E::*)(A))
+    {
+      return 0;
+    }
+
+    template < typename E,
+	       typename A1, typename A2 >
+    int check_init(void (E::*)(A1, A2))
+    {
+      return 0;
+    }
+
+    template < typename E,
+	       typename A1, typename A2, typename A3 >
+    int check_init(void (E::*)(A1, A2, A3))
+    {
+      return 0;
+    }
+
+  } // end of namespace mln::internal
+
+
 
   template <typename E>
   inline
@@ -186,6 +214,10 @@ namespace mln
     m10 = 0;
 
     typedef typename E::skeleton skeleton;
+
+    // Check E::init_ presence.  Since its signature varies from an
+    // image type to another, that is the only thing we can ensure.
+    internal::check_init(& E::init_);
 
     /// Optional interface:
     internal::image_values_interface_check<mln_trait_image_value_browsing(E),

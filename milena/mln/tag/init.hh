@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,18 +40,20 @@ namespace mln
   namespace tag
   {
 
-    struct image_t  {};
-    struct domain_t {};
-    struct bbox_t   {};
-    struct border_t {};
-    struct function_t {};
+    struct image_t     {};
+    struct domain_t    {};
+    struct bbox_t      {};
+    struct border_t    {};
+    struct extension_t {};
+    struct function_t  {};
 
     // FIXME: Make these proper globals (issue #43).
-    static const image_t    image = image_t();
-    static const domain_t   domain = domain_t();
-    static const bbox_t     bbox = bbox_t();
-    static const border_t   border = border_t();
-    static const function_t function = function_t();
+    static const image_t     image     = image_t();
+    static const domain_t    domain    = domain_t();
+    static const bbox_t      bbox      = bbox_t();
+    static const border_t    border    = border_t();
+    static const extension_t extension = extension_t();
+    static const function_t  function  = function_t();
 
   } // end of namespace mln::tag
 

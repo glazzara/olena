@@ -51,12 +51,21 @@ void browse_domain(const I& ima, const N& nbh)
   }
 }
 
+template <typename I>
+void algo(const I& input)
+{
+  using namespace mln;
+  mln_ch_value(I, float) output;
+  initialize(output, input);
+}
 
 
 
 int main()
 {
   using namespace mln;
+
+  trace::quiet = false;
 
   typedef image2d<unsigned> I;
   I ima(3, 3, 1);
@@ -75,8 +84,10 @@ int main()
   ch_target(mln_fwd_piter_(S)(), ima_.domain());
 
   // mln_VAR(ima_e, extend(ima_, pw::value(ima)));
-  // mln_VAR(ima_e, extend(ima_, 0));
+  // mln_VAR(ima_e, extend(ima_, 8));
   mln_VAR(ima_e, extend(ima_, ima));
   debug::println(ima_e);
   browse(ima_e, c4());
+
+  algo(ima_e);
 }
