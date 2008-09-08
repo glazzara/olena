@@ -37,12 +37,17 @@
 
 # define mlc_const(T) typename mln::metal::const_< T >::ret
 
+# define mlc_const_return(T) typename mln::metal::const_return_< T >::ret
+
+
 
 namespace mln
 {
 
   namespace metal
   {
+
+    // const_
 
     template <typename T> struct const_/*      T       */ { typedef const T ret; };
     template <typename T> struct const_< const T        > { typedef const T ret; };
@@ -54,6 +59,20 @@ namespace mln
     template <typename T> struct const_< const T*       > { typedef const T* const ret; };
     template <typename T> struct const_<       T* const > { typedef const T* const ret; };
     template <typename T> struct const_< const T* const > { typedef const T* const ret; };
+
+
+    // const_return_
+
+    template <typename T> struct const_return_/*      T       */ { typedef       T ret; };
+    template <typename T> struct const_return_< const T        > { typedef       T ret; };
+
+    template <typename T> struct const_return_<       T&       > { typedef const T& ret; };
+    template <typename T> struct const_return_< const T&       > { typedef const T& ret; };
+
+    template <typename T> struct const_return_<       T*       > { typedef const T* ret; };
+    template <typename T> struct const_return_< const T*       > { typedef const T* ret; };
+    template <typename T> struct const_return_<       T* const > { typedef const T* ret; };
+    template <typename T> struct const_return_< const T* const > { typedef const T* ret; };
 
   } // end of namespace mln::metal
 

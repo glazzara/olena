@@ -58,7 +58,7 @@ namespace mln
     struct helper_unprox_if< true, P >
     {
       typedef mlc_unqualif(mln_q_subject(P)) ret;
-      static mlc_const(mln_q_subject(P)) on(const Proxy<P>& p);
+      static mlc_const_return(mln_q_subject(P)) on(const Proxy<P>& p);
     };
 
     template <typename P>
@@ -258,7 +258,7 @@ namespace mln
       typedef Subject HOT_actual_subject;
 
       HOT_actual_subject            get_subject();
-      mlc_const(HOT_actual_subject) get_subject() const;
+      mlc_const_return(HOT_actual_subject) get_subject() const;
     };
 
     template <typename Subject, typename E>
@@ -278,7 +278,7 @@ namespace mln
       {
 	return mln::internal::force_exact<E>(*this).subj_();
       }
-      mlc_const(q_subject) unproxy_() const
+      mlc_const_return(q_subject) unproxy_() const
       {
 	E& self_ = mln::internal::force_exact<E>(*this);
 	return self_.subj_();
@@ -295,7 +295,7 @@ namespace mln
 
     template <typename P>
     inline
-    mlc_const(mln_q_subject(P))
+    mlc_const_return(mln_q_subject(P))
     helper_unprox_if< true, P >::on(const Proxy<P>& p)
     {
       return exact(p).unproxy_();
@@ -367,7 +367,7 @@ namespace mln
 
     template <typename Subject, typename E>
     inline
-    typename mln::metal::const_< typename helper_get_proxy_impl< Subject, E, false >::HOT_actual_subject >::ret
+    typename mln::metal::const_return_< typename helper_get_proxy_impl< Subject, E, false >::HOT_actual_subject >::ret
     helper_get_proxy_impl< Subject, E, false >::get_subject() const
     {
       return unproxy_rec(mln::internal::force_exact<const E>(*this));

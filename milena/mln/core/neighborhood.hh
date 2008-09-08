@@ -117,7 +117,7 @@ namespace mln
 
 
 
-    typedef window<D> window;
+    typedef mln::window<D> window;
 
     mln::window<D> to_window() const
     {
