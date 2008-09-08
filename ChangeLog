@@ -4,32 +4,6 @@
 
 	* configure.ac: add the new Makefiles present in tests/core/....
 
-2008-09-05  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Merge last changes from trunk to cleanup.
-	* milena/ChangeLog: .
-	* milena/mln/fun/x2x/rotation.hh: .
-	* milena/mln/fun/x2x/translation.hh: .
-	* milena/mln/metal/all.hh: .
-	* milena/mln/metal/array.hh: New.
-	* milena/mln/metal/array1d.hh: New.
-	* milena/mln/metal/array2d.hh: New.
-	* milena/mln/metal/array3d.hh: New.
-	* milena/sandbox/ChangeLog: .
-	* milena/sandbox/geraud/fllt/fllt.svg.7.hh: .
-	* milena/sandbox/jardonnet/array/Makefile: New.
-	* milena/sandbox/jardonnet/array/array.cc: .
-	* milena/sandbox/jardonnet/array/array.hh: .
-	* milena/sandbox/jardonnet/array/old/1d.hh: .
-	* milena/sandbox/jardonnet/registration/tools.hh: .
-	* milena/sandbox/jardonnet/test/icp.cc: .
-	* milena/sandbox/jardonnet/virtual/Makefile: New.
-	* milena/sandbox/jardonnet/virtual/access.cc: New.
-	* milena/sandbox/jardonnet/virtual/access.hh: New.
-	* milena/sandbox/nivault/plugin-gimp/autogen.sh: .
-	* milena/sandbox/nivault/plugin-gimp/configure.ac: .
-	* milena/sandbox/nivault/plugin-gimp/src/main.cc: .
-
 2008-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment tutorial example for Z.
@@ -44,12 +18,6 @@
 	(operator()): Fix missing preconditions.
 	* milena/mln/value/rgb.hh (operator<<): Remove spaces.
 	* milena/mln/geom/bbox.hh (bbox): Add overload for images.
-
-2008-09-02  Guillaume Lazzara  <z@lrde.epita.fr>
-
-	Update ChangeLog.
-	* ChangeLog,
-	* milena/sandbox/ChangeLog: Add missing entries.
 
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
