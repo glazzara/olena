@@ -1895,7 +1895,7 @@
 	* mln/util/set.hh,
 	* mln/core/p_key.hh (util::less): Replace by...
 	(util::ord): ...this.
-	* mln/core/point.hh, 
+	* mln/core/point.hh,
 	* mln/core/dpoint.hh (less_than): Remove.
 	* mln/algebra/vec.hh,
 	* mln/core/box.hh,
@@ -2194,14 +2194,14 @@
 	recursive construction, the subject at end is returned.
 	* mln/core/macros.hh (mln_q_subject): New.
 	(mln_subject): Deactivate for safety purpose.  The user should not
-	have to access the actual subject type. 
+	have to access the actual subject type.
 
 	Recap:
 
 	- P::q_subject is the qualified immediate subject
 	  (that may be itself a proxy type)
 	v.
-	- subject<P> is the subject type at end 
+	- subject<P> is the subject type at end
 	  (it cannot be a proxy type)
 
 	- p.subject_() gives the immediate subject object
@@ -2583,7 +2583,7 @@
 	* mln/core/image/instant.hh: New files.
 	* mln/core/sub_image.hh (operator|): New overload for instant
 	images.
-	* mln/level/fill_with_value.hh (fill_with_value): Likewsie. 
+	* mln/level/fill_with_value.hh (fill_with_value): Likewsie.
 	* doc/tutorial/examples/sub_image.cc: Use fill_with_value to show
 	that instant morphers can be mutable.
 
@@ -3195,7 +3195,7 @@
 	* mln/core/exact.hh (mln_exact): Disambiguate.
 	(exact): Use macro as return.
 	* mln/core/concept/site_proxy.hh: Remove redundant code,
-	use exact and cleanup. 
+	use exact and cleanup.
 
 2008-06-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -3502,7 +3502,7 @@
 	(operator P, to_point, operator[]): Remove; obsolete.
 	(is_valid, invalidate, start): Rename as...
 	(is_valid_, invalidate_, start_): ...these and update.
-	(p_): Change from attribute to 'using' (thru inheritance). 
+	(p_): Change from attribute to 'using' (thru inheritance).
 	(b_): Turn into a pointer.
 	(nop_): Remove; it was overkill.
 	(target_): New.
@@ -3511,7 +3511,7 @@
 	* mln/core/p_array_piter.hh
 	(is_valid, invalidate, start): Rename as...
 	(is_valid_, invalidate_, start_): ...these and update.
-	(p_): Change from attribute to 'using' (thru inheritance). 
+	(p_): Change from attribute to 'using' (thru inheritance).
 	(unproxy, site, to_site): Remove; now inherited.
 	(index_of_in): New overload for bkd piter.
 	(p_array_bkd_piter_): Uncomment and update likewise.
@@ -3748,7 +3748,7 @@
 	Wrap long lines.
 	(mln::fun::v2v::f_rgb_to_hsi_<T_hsi>): Remove useless variable.
 	* mln/geom/seeds2tiling.hh (mln::geom::impl::seeds2tiling): Add
-	braces around inner `if' to avoid (visual) ambiguity w.r.t. a 
+	braces around inner `if' to avoid (visual) ambiguity w.r.t. a
 	dangling `else'.
 	* mln/core/fi_adaptor.hh (mln::fi_adaptor<I>::load): Ensure the
 	image is correctly loaded.
