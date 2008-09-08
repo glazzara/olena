@@ -1,0 +1,27 @@
+# Global.
+*~
+.deps
+Makefile.in
+Makefile
+
+# Local.
+/*-stamp
+/*.patch
+/*.pyc
+/*.stamp
+/*TAGS
+/*aclocal.m4
+/*stamp-*
+/_build*
+/autom4te.cache*
+/autoscan.log
+/config
+/config.cache*
+/config.h
+/config.h?in*
+/config.log*
+/config.status*
+/configure
+/configure.scan
+/diffs.patch
+/stamp-h1
