@@ -53,9 +53,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::mono_obased_rle_image<P,T>.
     template <typename P, typename T>
-    struct data_< mono_obased_rle_image<P,T> >
+    struct data< mono_obased_rle_image<P,T> >
     {
-      data_(const std::set<T>& values);
+      data(const std::set<T>& values);
 
       /// Objects.
       std::vector< mono_rle_image<P, T> > ima_;
@@ -149,11 +149,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< mono_obased_rle_image<P,T> >
+    // internal::data< mono_obased_rle_image<P,T> >
 
     template <typename P, typename T>
     inline
-    data_< mono_obased_rle_image<P,T> >::data_(const std::set<T>& values)
+    data< mono_obased_rle_image<P,T> >::data(const std::set<T>& values)
       : ima_(values.begin(), values.end())
     {
     }
@@ -161,7 +161,7 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data_< mono_obased_rle_image<P,T> >::size_mem() const
+    data< mono_obased_rle_image<P,T> >::size_mem() const
     {
       return domain_.size_mem() * 2 + sizeof(T) * (values_.size() + ima_.size());
     }
@@ -169,7 +169,7 @@ namespace mln
     template <typename P, typename T>
     inline
     void
-    data_< mono_obased_rle_image<P,T> >::finalize()
+    data< mono_obased_rle_image<P,T> >::finalize()
     {
       domain_.finalize();
       for (typename std::vector< mono_rle_image<P, T> >::iterator it = ima_.begin();
@@ -183,7 +183,7 @@ namespace mln
   inline
   mono_obased_rle_image<P, T>::mono_obased_rle_image(const std::set<T>& values)
   {
-    this->data_ = new internal::data_< mono_obased_rle_image<P,T> >(values);
+    this->data_ = new internal::data< mono_obased_rle_image<P,T> >(values);
   }
 
   template <typename P, typename T>

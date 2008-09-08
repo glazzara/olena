@@ -48,7 +48,7 @@ namespace mln
 
     /// \internal Data structure for \c mln::t_image<I>.
     template <typename I>
-    struct data_< t_image<I> >
+    struct data< t_image<I> >
     {
       /// \brief Build the data object held by a t_image.
       ///
@@ -56,7 +56,7 @@ namespace mln
       /// \param dim1 The first dimension to be swapped.
       /// \param dim2 The second dimension to be swapped.
       /// \param box  The bounding box (domain) of the morphed image.
-      data_(I& ima, unsigned dim1, unsigned dim2,
+      data(I& ima, unsigned dim1, unsigned dim2,
 	    mln::box_<mln_psite(I)>& box);
 
       /// Underlying image.
@@ -162,11 +162,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< t_image<I,S> >
+    // internal::data< t_image<I,S> >
 
     template <typename I>
     inline
-    data_< t_image<I> >::data_(I& ima,
+    data< t_image<I> >::data(I& ima,
 			       unsigned dim1, unsigned dim2,
 			       mln::box_<mln_psite(I)>& box)
       : ima_(ima),
@@ -190,7 +190,7 @@ namespace mln
     // yet at this point.
     box_<mln_psite(I)> box(exchange_coords_(ima.bbox().pmin(), dim1, dim2),
 			   exchange_coords_(ima.bbox().pmax(), dim1, dim2));
-    this->data_ = new internal::data_< t_image<I> >(ima, dim1, dim2, box);
+    this->data_ = new internal::data< t_image<I> >(ima, dim1, dim2, box);
   }
 
   template <typename I>

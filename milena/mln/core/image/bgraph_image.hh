@@ -51,12 +51,12 @@ namespace mln
 
     /// \internal Data structure for \c mln::bgraph_image<P,V>.
     template <typename P, typename V>
-    struct data_< bgraph_image<P, V> >
+    struct data< bgraph_image<P, V> >
     {
       /// Data stores a **copy** of the pset g.
       /// But, the pset g and the data_ copy will shared the same
       /// underlaying graph.
-      data_(const p_bgraph<P>& g, const std::vector<V>& val);
+      data(const p_bgraph<P>& g, const std::vector<V>& val);
 
 
       p_bgraph<P> pg_;
@@ -179,7 +179,7 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< bgraph_image<P, V> >::data_(const p_bgraph<P>& g,
+    data< bgraph_image<P, V> >::data(const p_bgraph<P>& g,
 				       const std::vector<V>& val)
       : pg_ (g),
 	val_ (val)
@@ -218,7 +218,7 @@ namespace mln
   void
   bgraph_image<P, V>::init_(const p_bgraph<P>& g, const std::vector<V>& val)
   {
-    this->data_ = new internal::data_< bgraph_image<P, V> > (g, val);
+    this->data_ = new internal::data< bgraph_image<P, V> > (g, val);
   }
 
   /*---------------.

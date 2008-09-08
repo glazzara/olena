@@ -54,10 +54,10 @@ namespace mln
      *
      */
     template <unsigned n, typename I>
-    struct data_< value::stack_image<n, I> >
+    struct data< value::stack_image<n, I> >
     {
     public:
-      data_(const algebra::vec<n,I>& imas);
+      data(const algebra::vec<n,I>& imas);
       algebra::vec<n,I> imas_;
       I& ima_;
     };
@@ -214,11 +214,11 @@ namespace mln
 
   namespace internal
   {
-    // internal::data_< cast_image_<T,I> >
+    // internal::data< cast_image_<T,I> >
 
     template <unsigned n, typename I>
     inline
-    data_< value::stack_image<n,I> >::data_(const algebra::vec<n,I>& imas)
+    data< value::stack_image<n,I> >::data(const algebra::vec<n,I>& imas)
       : imas_(imas),
 	ima_(imas_[0])
     {
@@ -241,7 +241,7 @@ namespace mln
     inline
     stack_image<n,I>::stack_image(const algebra::vec<n,I>& imas)
     {
-      this->data_ = new mln::internal::data_< stack_image<n, I> >(imas);
+      this->data_ = new mln::internal::data< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
       {
 	mln_precondition(imas[i].has_data());

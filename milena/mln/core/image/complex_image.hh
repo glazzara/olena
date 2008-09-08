@@ -58,9 +58,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::complex_image<P,V>.
     template <unsigned D, typename P, typename V>
-    struct data_< complex_image<D, P, V> >
+    struct data< complex_image<D, P, V> >
     {
-      data_(const p_complex<D, P>& pc,
+      data(const p_complex<D, P>& pc,
 	    const metal::vec< D + 1, std::vector<V> >& values);
 
       metal::vec< D + 1, std::vector<V> > values_;
@@ -184,7 +184,7 @@ namespace mln
   {
     template <unsigned D, typename P, typename V>
     inline
-    data_< complex_image<D, P, V> >::data_(const p_complex<D, P>& pc,
+    data< complex_image<D, P, V> >::data(const p_complex<D, P>& pc,
 					   const metal::vec< D + 1,
 					                     std::vector<V> >& values)
       : values_(values),
@@ -238,7 +238,7 @@ namespace mln
   {
     mln_precondition(! this->has_data());
     this->data_ =
-      new internal::data_< complex_image<D, P, V> >(pc, values);
+      new internal::data< complex_image<D, P, V> >(pc, values);
   }
 
   /*---------------.

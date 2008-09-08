@@ -1,3 +1,30 @@
+2008-09-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Rename data_ as data.
+
+	* mln/core/image/bgraph_image.hh: .
+	* mln/core/image/cast_image.hh: .
+	* mln/core/image/complex_image.hh: .
+	* mln/core/image/decorated_image.hh: .
+	* mln/core/image/fi_adaptor.hh: .
+	* mln/core/image/graph_image.hh: .
+	* mln/core/image/hexa.hh: .
+	* mln/core/image/image1d.hh: .
+	* mln/core/image/image3d.hh: .
+	* mln/core/image/interpolated.hh: .
+	* mln/core/image/lazy_image.hh: .
+	* mln/core/image/line_graph_image.hh: .
+	* mln/core/image/mono_obased_rle_image.hh: .
+	* mln/core/image/mono_rle_image.hh: .
+	* mln/core/image/rle_image.hh: .
+	* mln/core/image/t_image.hh: .
+	* mln/core/image/tr_image.hh: .
+	* mln/core/image/translate_image.hh: .
+	* mln/core/image/value_enc_image.hh: .
+	* mln/core/internal/image_if_base.hh: .
+	* mln/neighb/image.hh: .
+	* mln/value/stack.hh: .
+
 2008-09-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add initialization for extension morphers.

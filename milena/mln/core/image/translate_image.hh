@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::translate_image<I>.
     template <typename I>
-    struct data_< translate_image<I> >
+    struct data< translate_image<I> >
     {
-      data_(I& ima, const mln_dpsite(I) dp);
+      data(I& ima, const mln_dpsite(I) dp);
 
       I			    ima_;
 
@@ -95,7 +95,7 @@ namespace mln
    *
    * The parameter \c I is the type of image.  This image class
    * makes a translation of a delta point.
-   * 
+   *
    */
   template <typename I>
   struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
@@ -137,11 +137,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< translate_image<I,S> >
+    // internal::data< translate_image<I,S> >
 
     template <typename I>
     inline
-    data_< translate_image<I> >::data_(I& ima, const mln_dpsite(I) dp)
+    data< translate_image<I> >::data(I& ima, const mln_dpsite(I) dp)
       : ima_ (ima),
 	dp_ (dp)
     {
@@ -162,7 +162,7 @@ namespace mln
   translate_image<I>::translate_image(I& ima, const mln_dpsite(I) dp)
   {
     mln_precondition(ima.has_data());
-    this->data_ = new internal::data_< translate_image<I> >(ima, dp);
+    this->data_ = new internal::data< translate_image<I> >(ima, dp);
   }
 
   template <typename I>

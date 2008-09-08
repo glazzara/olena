@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::interpolated<I>.
     template <typename I>
-    struct data_< interpolated<I> >
+    struct data< interpolated<I> >
     {
-      data_(I& ima);
+      data(I& ima);
 
       I ima_;
     };
@@ -117,11 +117,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< interpolated<I,S> >
+    // internal::data< interpolated<I,S> >
 
     template <typename I>
     inline
-    data_< interpolated<I> >::data_(I& ima)
+    data< interpolated<I> >::data(I& ima)
       : ima_(ima)
     {
     }
@@ -133,7 +133,7 @@ namespace mln
   interpolated<I>::interpolated(I& ima)
   {
     mln_precondition(ima.has_data());
-    this->data_ = new internal::data_< interpolated<I> >(ima);
+    this->data_ = new internal::data< interpolated<I> >(ima);
   }
 
   template <typename I>

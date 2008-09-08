@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::lazy_image<I>.
     template <typename I, typename F, typename B>
-    struct data_< lazy_image<I,F,B> >
+    struct data< lazy_image<I,F,B> >
     {
-      data_(const F& fun_, const B& box);
+      data(const F& fun_, const B& box);
 
       mutable mln_ch_value(I,mln_result(F)) ima_;
       mutable mln_ch_value(I,bool)          is_known;
@@ -144,11 +144,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< lazy_image<I,S> >
+    // internal::data< lazy_image<I,S> >
 
     template <typename I, typename F, typename B>
     inline
-    data_< lazy_image<I,F,B> >::data_(const F& fun, const B& box)
+    data< lazy_image<I,F,B> >::data(const F& fun, const B& box)
       : ima_(box), is_known(box), fun(fun), bb_(box)
     {
     }
@@ -159,7 +159,7 @@ namespace mln
   inline
   lazy_image<I,F,B>::lazy_image(const F& fun, const B& box)
   {
-    this->data_ = new internal::data_< lazy_image<I,F,B> >(fun, box);
+    this->data_ = new internal::data< lazy_image<I,F,B> >(fun, box);
   }
 
   template <typename I, typename F, typename B>

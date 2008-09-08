@@ -65,9 +65,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::decorated_image<I,D>.
     template <typename I, typename D>
-    struct data_< decorated_image<I,D> >
+    struct data< decorated_image<I,D> >
     {
-      data_(I& ima, const D& deco);
+      data(I& ima, const D& deco);
 
       I ima_;
       D deco_;
@@ -143,10 +143,10 @@ namespace mln
   namespace internal
   {
 
-    /// \internal internal::data_< decorated_image<I,S> >
+    /// \internal internal::data< decorated_image<I,S> >
     template <typename I, typename D>
     inline
-    data_< decorated_image<I,D> >::data_(I& ima, const D& deco)
+    data< decorated_image<I,D> >::data(I& ima, const D& deco)
       : ima_(ima),
 	deco_(deco)
     {
@@ -166,7 +166,7 @@ namespace mln
   inline
   decorated_image<I,D>::decorated_image(I& ima, const D& deco)
   {
-    this->data_ = new internal::data_< decorated_image<I,D> >(ima, deco);
+    this->data_ = new internal::data< decorated_image<I,D> >(ima, deco);
   }
 
   template <typename I, typename D>

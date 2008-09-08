@@ -52,9 +52,9 @@ namespace mln
   {
     /// \internal Data structure for \c mln::hexa<I>.
     template <typename I>
-    struct data_< hexa<I> >
+    struct data< hexa<I> >
     {
-      data_(I& ima, box2d_h b);
+      data(I& ima, box2d_h b);
 
       I ima_;
       mln::box2d_h b_;
@@ -185,14 +185,14 @@ namespace mln
 
 
 
-  // internal::data_< hexa<I> >
+  // internal::data< hexa<I> >
 
   namespace internal
   {
 
     template <typename I>
     inline
-    data_< hexa<I> >::data_(I& ima, box2d_h b)
+    data< hexa<I> >::data(I& ima, box2d_h b)
       : ima_(ima),
 	b_(b)
     {
@@ -210,7 +210,7 @@ namespace mln
     box2d b_in = ima.bbox();
     box2d_h b = make::box2d_h(b_in.pmin()[0] * 2, b_in.pmin()[1],
 			      b_in.pmax()[0] * 2, (b_in.pmax()[1] + 1) * 2 - 1);
-    this->data_ = new internal::data_< hexa<I> >(ima, b);
+    this->data_ = new internal::data< hexa<I> >(ima, b);
   }
 
 

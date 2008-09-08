@@ -64,13 +64,13 @@ namespace mln
   {
     /// \internal Data structure for \c mln::fi_adaptor<I>.
     template <typename I>
-    struct data_< fi_adaptor<I> >
+    struct data< fi_adaptor<I> >
     {
       /// Constructor.
-      data_();
+      data();
 
       /// Destructor.
-      ~data_();
+      ~data();
 
       /// Adaptee image
       fipImage fi_ima_;
@@ -91,7 +91,7 @@ namespace mln
       void deallocate_();
 
       /// Swap data between images.
-      void swap_(data_< fi_adaptor<I> >& other_);
+      void swap_(data< fi_adaptor<I> >& other_);
     };
 
   } // end of namespace mln::internal
@@ -220,24 +220,24 @@ namespace mln
   };
 
 
-  // internal::data_< fi_adaptor<I> >
+  // internal::data< fi_adaptor<I> >
 
   namespace internal
   {
     template <typename I>
-    data_< fi_adaptor<I> >::data_()
+    data< fi_adaptor<I> >::data()
     {
     }
 
     template <typename I>
-    data_< fi_adaptor<I> >::~data_()
+    data< fi_adaptor<I> >::~data()
     {
       deallocate_();
     }
 
     template <typename I>
     void
-    data_< fi_adaptor<I> >::sync_with_adaptee_()
+    data< fi_adaptor<I> >::sync_with_adaptee_()
     {
       mln_precondition(fi_ima_.isValid());
       // FIXME: doesnt work for rgb:
@@ -262,7 +262,7 @@ namespace mln
 
     template <typename I>
     void
-    data_< fi_adaptor<I> >::deallocate_()
+    data< fi_adaptor<I> >::deallocate_()
     {
       if (array_)
       {
@@ -273,9 +273,9 @@ namespace mln
 
     template <typename I>
     void
-    data_< fi_adaptor<I> >::swap_(data_< fi_adaptor<I> >& other_)
+    data< fi_adaptor<I> >::swap_(data< fi_adaptor<I> >& other_)
     {
-      data_< fi_adaptor<I> > self_ = *this;
+      data< fi_adaptor<I> > self_ = *this;
       *this = other_;
       other_ = self_;
     }
@@ -294,7 +294,7 @@ namespace mln
   void
   fi_adaptor<I>::init_()
   {
-    this->data_ = new internal::data_< fi_adaptor<I> >();
+    this->data_ = new internal::data< fi_adaptor<I> >();
   }
 
   template <typename I>

@@ -52,9 +52,9 @@ namespace mln
   {
     /// \internal Data structure for \c mln::cast_image_<T,I>.
     template <typename T, typename I>
-    struct data_< cast_image_<T,I> >
+    struct data< cast_image_<T,I> >
     {
-      data_(const I& ima);
+      data(const I& ima);
       const I& ima_;
     };
 
@@ -68,7 +68,7 @@ namespace mln
     template <typename T, typename I>
     struct image_< cast_image_<T,I> > : default_image_morpher< I, T, cast_image_<T,I> >
     {
-      typedef trait::image::io::read_only io;
+      typedef trait::image::value_io::read_only value_io;
     };
 
   } // end of namespace mln::trait
@@ -123,14 +123,14 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // internal::data_< cast_image_<T,I> >
+  // internal::data< cast_image_<T,I> >
 
   namespace internal
   {
 
     template <typename T, typename I>
     inline
-    data_< cast_image_<T,I> >::data_(const I& ima)
+    data< cast_image_<T,I> >::data(const I& ima)
       : ima_(ima)
     {
     }
@@ -145,7 +145,7 @@ namespace mln
   cast_image_<T,I>::cast_image_(const Image<I>& ima)
   {
     mln_precondition(exact(ima).has_data());
-    this->data_ = new internal::data_< cast_image_<T,I> >(exact(ima));
+    this->data_ = new internal::data< cast_image_<T,I> >(exact(ima));
   }
 
   template <typename T, typename I>

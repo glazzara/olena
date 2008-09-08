@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::graph_image<P,V>.
     template <typename P, typename V>
-    struct data_< graph_image<P, V> >
+    struct data< graph_image<P, V> >
     {
-      data_(const p_graph<P>& pg, const std::vector<V>& val);
+      data(const p_graph<P>& pg, const std::vector<V>& val);
 
       std::vector<V> val_;
       const p_graph<P> pg_;
@@ -179,7 +179,7 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< graph_image<P, V> >::data_(const p_graph<P>& pg,
+    data< graph_image<P, V> >::data(const p_graph<P>& pg,
 				      const std::vector<V>& val)
       : val_ (val),
 	pg_ (pg)
@@ -220,7 +220,7 @@ namespace mln
   graph_image<P, V>::init_(const p_graph<P>& pg, const std::vector<V>& val)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< graph_image<P, V> > (pg, val);
+    this->data_ = new internal::data< graph_image<P, V> > (pg, val);
   }
 
   /*---------------.

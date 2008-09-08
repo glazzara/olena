@@ -59,10 +59,10 @@ namespace mln
 
     /// \internal Data structure for \c mln::image1d<T>.
     template <typename T>
-    struct data_< image1d<T> >
+    struct data< image1d<T> >
     {
-      data_(const box1d& b, unsigned bdr);
-      ~data_();
+      data(const box1d& b, unsigned bdr);
+      ~data();
 
       T*  buffer_;
       T* array_;
@@ -74,7 +74,7 @@ namespace mln
       void update_vb_();
       void allocate_();
       void deallocate_();
-      void swap_ (data_< image1d<T> >& other_);
+      void swap_ (data< image1d<T> >& other_);
       void reallocate_(unsigned new_border);
     };
 
@@ -231,14 +231,14 @@ namespace mln
     target.init_(b, bdr);
   }
 
-  // \internal internal::data_< image1d<T> >
+  // \internal internal::data< image1d<T> >
 
   namespace internal
   {
 
     template <typename T>
     inline
-    data_< image1d<T> >::data_(const box1d& b, unsigned bdr)
+    data< image1d<T> >::data(const box1d& b, unsigned bdr)
       : buffer_(0),
 	array_ (0),
 	b_     (b),
@@ -249,7 +249,7 @@ namespace mln
 
     template <typename T>
     inline
-    data_< image1d<T> >::~data_()
+    data< image1d<T> >::~data()
     {
       deallocate_();
     }
@@ -257,7 +257,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image1d<T> >::update_vb_()
+    data< image1d<T> >::update_vb_()
     {
       vb_.pmin() = b_.pmin() - dpoint1d(all_to(bdr_));
       vb_.pmax() = b_.pmax() + dpoint1d(all_to(bdr_));
@@ -266,7 +266,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image1d<T> >::allocate_()
+    data< image1d<T> >::allocate_()
     {
       update_vb_();
       unsigned
@@ -279,7 +279,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image1d<T> >::deallocate_()
+    data< image1d<T> >::deallocate_()
     {
       if (buffer_)
       {
@@ -292,10 +292,10 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image1d<T> >::swap_(data_< image1d<T> >& other_)
+    data< image1d<T> >::swap_(data< image1d<T> >& other_)
     {
 
-      data_< image1d<T> > self_ = *this;
+      data< image1d<T> > self_ = *this;
       *this = other_;
       other_ = self_;
 
@@ -304,9 +304,9 @@ namespace mln
     template <typename T>
     inline
     void
-    data_< image1d<T> >::reallocate_(unsigned new_border)
+    data< image1d<T> >::reallocate_(unsigned new_border)
     {
-      data_< image1d<T> >& tmp = *(new data_< image1d<T> >(this->b_, new_border));
+      data< image1d<T> >& tmp = *(new data< image1d<T> >(this->b_, new_border));
       this->swap_(tmp);
     }
 
@@ -342,7 +342,7 @@ namespace mln
   image1d<T>::init_(const box1d& b, unsigned bdr)
   {
     mln_precondition(! this->has_data());
-    this->data_ = new internal::data_< image1d<T> >(b, bdr);
+    this->data_ = new internal::data< image1d<T> >(b, bdr);
   }
 
   template <typename T>

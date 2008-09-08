@@ -54,9 +54,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::value_enc_image<P,T>.
     template <typename P, typename T>
-    struct data_< value_enc_image<P, T> >
+    struct data< value_enc_image<P, T> >
     {
-      data_();
+      data();
 
       /// Image values.
       std::vector<T> values_;
@@ -146,11 +146,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< value_enc_image<P, T> >
+    // internal::data< value_enc_image<P, T> >
 
     template <typename P, typename T>
     inline
-    data_< value_enc_image<P,T> >::data_()
+    data< value_enc_image<P,T> >::data()
     {
     }
 
@@ -161,7 +161,7 @@ namespace mln
   inline
   value_enc_image<P, T>::value_enc_image()
   {
-    this->data_ = new internal::data_< value_enc_image<P,T> >();
+    this->data_ = new internal::data< value_enc_image<P,T> >();
   }
 
   template <typename P, typename T>
@@ -178,7 +178,7 @@ namespace mln
   value_enc_image<P, T>::insert(const p_runs_<P>& ps, T value)
   {
     if (!this->has_data())
-      this->data_ = new internal::data_< value_enc_image<P,T> >();
+      this->data_ = new internal::data< value_enc_image<P,T> >();
 
     this->data_->domain_.insert(ps);
     this->data_->values_.push_back(value);

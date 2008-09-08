@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::rle_image<P,T>.
     template <typename P, typename T>
-    struct data_< rle_image<P,T> >
+    struct data< rle_image<P,T> >
     {
-      data_();
+      data();
 
       /// Image values.
       std::vector<T> values_;
@@ -141,18 +141,18 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< rle_image<I,S> >
+    // internal::data< rle_image<I,S> >
 
     template <typename P, typename T>
     inline
-    data_< rle_image<P,T> >::data_()
+    data< rle_image<P,T> >::data()
     {
     }
 
     template <typename P, typename T>
     inline
     unsigned
-    data_< rle_image<P,T> >::size_mem() const
+    data< rle_image<P,T> >::size_mem() const
     {
       return sizeof(T) * values_.size() + domain_.size_mem();
     }
@@ -160,7 +160,7 @@ namespace mln
     template <typename P, typename T>
     inline
     void
-    data_< rle_image<P,T> >::finalize()
+    data< rle_image<P,T> >::finalize()
     {
       domain_.finalize();
     }
@@ -171,7 +171,7 @@ namespace mln
   inline
   rle_image<P, T>::rle_image()
   {
-    this->data_ = new internal::data_< rle_image<P,T> >();
+    this->data_ = new internal::data< rle_image<P,T> >();
   }
 
   template <typename P, typename T>
@@ -188,7 +188,7 @@ namespace mln
   rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
     if (!this->has_data())
-      this->data_ = new internal::data_< rle_image<P,T> >();
+      this->data_ = new internal::data< rle_image<P,T> >();
     mln_assertion(this->data_->values_.size() == 0 ||
 		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
     this->data_->domain_.insert(pr);

@@ -54,9 +54,9 @@ namespace mln
 
     /// \internal Data structure for mln::neighb::image
     template <typename I, typename N>
-    struct data_< mln::neighb::image<I, N> >
+    struct data< mln::neighb::image<I, N> >
     {
-      data_(I& ima, const N& nbh);
+      data(I& ima, const N& nbh);
 
       I ima_;
       N nbh_;
@@ -72,7 +72,7 @@ namespace mln
     template <typename I, typename N>
     struct image_< neighb::image<I, N> >
       : public default_image_morpher< I, mln_value(I), neighb::image<I, N> >
-      
+
     {
       typedef trait::image::category::morpher category;
 
@@ -86,7 +86,7 @@ namespace mln
   {
     /// \brief A class that embodies an image with an attached
     /// neighborhood.
-    /// 
+    ///
     /// Parameter \c I is the actual type of the image, and \c N is
     /// the one of the neighborhood.
     ///
@@ -129,7 +129,7 @@ namespace mln
 
       /// Initialize an empty image.
       void init_(Image<I>& ima, const Neighborhood<N>& nbh);
-    }; 
+    };
 
   } // end of namespace mln::neighb
 
@@ -169,14 +169,14 @@ namespace mln
   }
 
   /*-----------------------------------------.
-  | internal::data_< neighb::image_<T,I> >.  |
+  | internal::data< neighb::image_<T,I> >.  |
   `-----------------------------------------*/
 
   namespace internal
   {
     template <typename I, typename N>
     inline
-    data_< neighb::image<I, N> >::data_(I& ima, const N& nbh)
+    data< neighb::image<I, N> >::data(I& ima, const N& nbh)
       : ima_(ima),
 	nbh_(nbh)
     {
@@ -210,7 +210,7 @@ namespace mln
     {
       mln_precondition(! this->has_data());
       this->data_ =
-	new mln::internal::data_< mln::neighb::image<I, N> >(exact(ima),
+	new mln::internal::data< mln::neighb::image<I, N> >(exact(ima),
 							     exact(nbh));
     }
 

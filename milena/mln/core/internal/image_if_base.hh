@@ -52,9 +52,9 @@ namespace mln
     // \internal data_.
 
     template <typename I, typename F, typename E>
-    struct data_< image_if_base_<I,F,E> >
+    struct data< image_if_base_<I,F,E> >
     {
-      data_(I& ima, const F& f);
+      data(I& ima, const F& f);
 
       I ima_;
       p_if<mln_pset(I), F> pset_;
@@ -141,11 +141,11 @@ namespace mln
 //       target.init_(ima, f);
 //     }
 
-    // \internal internal::data_< image_if_base_<I,S> >
+    // \internal internal::data< image_if_base_<I,S> >
 
     template <typename I, typename F, typename E>
     inline
-    data_< image_if_base_<I,F,E> >::data_(I& ima, const F& f)
+    data< image_if_base_<I,F,E> >::data(I& ima, const F& f)
       : ima_(ima),
 	pset_(ima.domain() | f)
     {
@@ -181,7 +181,7 @@ namespace mln
     image_if_base_<I,F,E>::init_(I& ima, const F& f)
     {
       mln_precondition(! this->has_data());
-      this->data_ = new internal::data_<E>(ima, f);
+      this->data_ = new internal::data<E>(ima, f);
     }
 
     template <typename I, typename F, typename E>

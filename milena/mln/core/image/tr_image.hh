@@ -53,9 +53,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::tr_image<T,I>.
     template <typename T, typename I>
-    struct data_< tr_image<T,I> >
+    struct data< tr_image<T,I> >
     {
-      data_(I& ima, T& tr);
+      data(I& ima, T& tr);
 
       I ima_;
       T tr_;
@@ -133,11 +133,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< tr_image<I,S> >
+    // internal::data< tr_image<I,S> >
 
     template <typename T, typename I>
     inline
-    data_< tr_image<T,I> >::data_(I& ima, T& tr)
+    data< tr_image<T,I> >::data(I& ima, T& tr)
       : ima_(ima),
 	tr_(tr)
     {
@@ -150,7 +150,7 @@ namespace mln
   tr_image<T,I>::tr_image(I& ima, T& tr)
   {
     mln_precondition(ima.has_data());
-    this->data_ = new internal::data_< tr_image<T,I> >(ima, tr);
+    this->data_ = new internal::data< tr_image<T,I> >(ima, tr);
   }
 
   template <typename T, typename I>

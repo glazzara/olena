@@ -65,9 +65,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::line_graph_image<P,V>.
     template <typename P, typename V>
-    struct data_< line_graph_image<P, V> >
+    struct data< line_graph_image<P, V> >
     {
-      data_(const p_line_graph<P>& plg,
+      data(const p_line_graph<P>& plg,
 	    const std::vector<V>& vertex_val, const std::vector<V>& edge_val);
 
       std::vector<V> vertex_val_;
@@ -205,7 +205,7 @@ namespace mln
   {
     template <typename P, typename V>
     inline
-    data_< line_graph_image<P, V> >::data_(const p_line_graph<P>& plg,
+    data< line_graph_image<P, V> >::data(const p_line_graph<P>& plg,
 					   const std::vector<V>& vertex_val,
 					   const std::vector<V>& edge_val)
       : vertex_val_(vertex_val),
@@ -239,7 +239,7 @@ namespace mln
   inline
   line_graph_image<P, V>::line_graph_image(const p_line_graph<P>& plg,
 					   const std::vector<V>& vertex_val,
-					   const std::vector<V>& edge_val) 
+					   const std::vector<V>& edge_val)
   {
     init_(plg, vertex_val, edge_val);
   }
@@ -253,7 +253,7 @@ namespace mln
   {
     mln_precondition(! this->has_data());
     this->data_ =
-      new internal::data_< line_graph_image<P, V> >(plg, vertex_val, edge_val);
+      new internal::data< line_graph_image<P, V> >(plg, vertex_val, edge_val);
   }
 
   /*---------------.

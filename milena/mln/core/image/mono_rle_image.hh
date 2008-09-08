@@ -51,9 +51,9 @@ namespace mln
 
     /// \internal Data structure for \c mln::mono_rle_image<P,T>.
     template <typename P, typename T>
-    struct data_< mono_rle_image<P,T> >
+    struct data< mono_rle_image<P,T> >
     {
-      data_(const T& val);
+      data(const T& val);
 
       /// Image value.
       T value_;
@@ -145,11 +145,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< mono_rle_image<I,S> >
+    // internal::data< mono_rle_image<I,S> >
 
     template <typename P, typename T>
     inline
-    data_< mono_rle_image<P,T> >::data_(const T& val)
+    data< mono_rle_image<P,T> >::data(const T& val)
       : value_(val)
     {
     }
@@ -157,7 +157,7 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data_< mono_rle_image<P,T> >::size_mem() const
+    data< mono_rle_image<P,T> >::size_mem() const
     {
       return sizeof(T) + domain_.size_mem();
     }
@@ -165,7 +165,7 @@ namespace mln
     template <typename P, typename T>
     inline
     void
-    data_< mono_rle_image<P,T> >::finalize()
+    data< mono_rle_image<P,T> >::finalize()
     {
       domain_.finalize();
     }
@@ -176,7 +176,7 @@ namespace mln
   inline
   mono_rle_image<P, T>::mono_rle_image(const T& val)
   {
-    this->data_ = new internal::data_< mono_rle_image<P,T> >(val);
+    this->data_ = new internal::data< mono_rle_image<P,T> >(val);
   }
 
   template <typename P, typename T>
