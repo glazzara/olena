@@ -44,7 +44,10 @@ namespace mln
 
 
     /*! \internal A base class for image morphers w.r.t. domain.
-     * Parameter \p S is a point set type.
+     *
+     * Parameter \p I is the morphed image type.
+     * Parameter \p S is the morpher site set type.
+     * Parameter \p E is the exact (morpher image) type.
      *
      */
     template <typename I, typename S, typename E>
@@ -55,6 +58,10 @@ namespace mln
       /// Value_Set associated type.
       typedef mln_vset(I) vset;
 
+      /// Give the set of values.
+      const vset& values() const;
+
+
       /// Value associated type.
       typedef mln_value(I) value;
 
@@ -62,11 +69,8 @@ namespace mln
       typedef mln_rvalue(I) rvalue;
 
       /// Return type of read-write access.
-      typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+      typedef mln_morpher_lvalue(I) lvalue;
 
-
-      /// Give the set of values.
-      const vset& values() const;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const mln_psite(S)& p) const;
@@ -75,6 +79,8 @@ namespace mln
       lvalue operator()(const mln_psite(S)& p);
 
     protected:
+
+      /// Constructor (protected) without argument.
       image_domain_morpher();
     };
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -105,7 +105,7 @@ namespace mln
     typedef line_piter_<mln_psite(I)> line_piter;
 
     /// Return type of read-write access.
-    typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+    typedef mln_morpher_lvalue(I) lvalue;
 
     /// Skeleton.
     typedef translate_image< tag::image_<I> > skeleton;
@@ -127,7 +127,7 @@ namespace mln
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
     /// Read and "write if possible" access of pixel value at point site \p p.
-    lvalue operator()(const mln_psite(I)& p);
+    mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
   };
 
 
@@ -192,7 +192,7 @@ namespace mln
 
   template <typename I>
   inline
-  typename translate_image<I>::lvalue
+  mln_morpher_lvalue(I)
   translate_image<I>::operator()(const mln_psite(I)& p)
   {
     mln_assertion(this->has(p));

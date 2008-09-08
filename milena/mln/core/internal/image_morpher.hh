@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,13 +46,13 @@ namespace mln
 
     /*! \internal A base class for images that are morphers. Parameter
      * \c I is the underlying-morphed image type.
-     *
      */
     template <typename I, typename T, typename S, typename E>
     class image_morpher : public image_base<T, S, E>
     {
     public:
 
+      /// Delegatee associated type.
       typedef I delegatee;
 
       /// Return the delegatee_ pointer; default code.
@@ -64,7 +64,8 @@ namespace mln
       /* \brief Test if this image has been initialized; default impl.
        *
        * This default impl is stronger than the one inherited from
-       * image_base.
+       * image_base because it also tests that the morphed image is
+       * also initialized.
        */
       bool has_data() const;
 

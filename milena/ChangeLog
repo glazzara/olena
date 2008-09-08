@@ -1,5 +1,27 @@
 2008-09-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add the sub_image_if image type.
+
+	* doc/tutorial/examples/sub_image_if.cc: New.
+	* mln/core/image/sub_image_if.hh: New.
+	* mln/fun/p2b/has.hh: New.
+
+	Misc.
+
+	* mln/core/image/translate_image.hh
+	(lvalue): Use the recent macro.
+	(operator()): Likewise.
+	* mln/core/image/t_image.hh: Likewise.
+	* mln/core/internal/image_base.hh: Fix doc.
+	Layout; group value-related material.
+	(hook_data_, id_): Move impl into guards.
+	* mln/core/internal/image_morpher.hh: Add some doc.
+	* mln/core/internal/image_domain_morpher.hh: Fix doc.
+	(lvalue): Use the recent macro.
+	(values): Layout; group value-related material.
+
+2008-09-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix some warnings with g++-4.3.
 
 	* mln/core/neighborhood.hh (window): Fix missing namespace.

@@ -73,14 +73,24 @@ namespace mln
 
 
     /// \internal A base class for images.
+    /// Parameter \p T is the image value type.
     /// Parameter \p S is the image site set type.
-    /// Parameter \p V is the image value type.
     template <typename T, typename S, typename E>
     struct image_base
       :
       public image_checked_<E>
 
     {
+      /// Value associated type.
+      typedef T value;
+
+      /// Eligible-value-set associated type.
+      typedef mln::value::set<T> t_eligible_value_set;
+
+      // Return the set of the image eligigle values
+      const t_eligible_value_set& values_eligible() const;
+
+
       /// Site_Set associated type.
       typedef S pset;
 
@@ -102,8 +112,6 @@ namespace mln
       /// fwd_piter.
       typedef fwd_piter        piter;
 
-      ///  associated type.
-      typedef mln::value::set<T> t_eligible_value_set;
 
 
       /// Test if \p p belongs to the image domain.
@@ -117,23 +125,28 @@ namespace mln
 
       // FIXME: Add void init_data(..);
 
-      // Return the set of the image eligigle values
-      const t_eligible_value_set& values_eligible() const;
 
-      /// Assignment operator.
+      /// Assignment operator (performs a shallow assignment).
       image_base& operator=(const image_base& rhs);
 
-      /// Copy constructor.
+      /// Copy constructor (performs a shallow copy).
       image_base(const image_base& rhs);
+
+      /// Give an identifier of this image.  When several image
+      /// variables designate the same image, they share the same
+      /// identifier.
+      const void* id_() const;
+
 
       /// Detach data from an image (free it if nobody else hold it).
       void destroy();
 
-      const util::tracked_ptr< internal::data<E> >& hook_data_() const { return data_; }
-
-      const void* id_() const { return data_.ptr_; }
+      /// Hook to the image data.
+      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
     protected:
+
+      /// Constructor without argument.
       image_base();
 
       // Internal data, sharable by several images.
@@ -169,6 +182,14 @@ namespace mln
 	return *this;
       this->data_ = rhs.data_;
       return *this;
+    }
+
+    template <typename T, typename S, typename E>
+    inline
+    const void*
+    image_base<T, S, E>::id_() const
+    {
+      return data_.ptr_;
     }
 
     template <typename T, typename S, typename E>
@@ -213,6 +234,14 @@ namespace mln
     image_base<T, S, E>::destroy()
     {
       data_.clean_();
+    }
+
+    template <typename T, typename S, typename E>
+    inline
+    const util::tracked_ptr< internal::data<E> >&
+    image_base<T, S, E>::hook_data_() const
+    {
+      return data_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -95,7 +95,7 @@ namespace mln
     typedef mln_value(I) value;
 
     /// Type returned by the read-write pixel value operator.
-    typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+    typedef mln_morpher_lvalue(I) lvalue;
 
     /// Return type of read-only access.
     typedef mln_rvalue(I) rvalue;
@@ -136,7 +136,7 @@ namespace mln
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
     /// Read-write access of pixel value at point site \p p.
-    lvalue operator()(const mln_psite(I)& p);
+    mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -257,7 +257,7 @@ namespace mln
 
   template <typename I>
   inline
-  typename internal::morpher_lvalue_<I>::ret
+  mln_morpher_lvalue(I)
   t_image<I>::operator()(const mln_psite(I)& p)
   {
     mln_precondition(this->has(p));
