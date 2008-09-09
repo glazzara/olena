@@ -33,6 +33,8 @@
  * \brief Definition of the mln::super_value trait.
  */
 
+# include <mln/value/sign.hh>
+
 namespace mln
 {
 
@@ -49,11 +51,17 @@ namespace mln
       typedef T ret;
     };
 
-    /// Specialization
-    ///
+    /// Specializations:
 
-  }
+    /// Sign type is a subset of the short value type.
+    template <>
+    struct super_value<sign>
+    {
+      typedef int ret;
+    };
 
-}
+  } // end of namespace value
+
+} // end of namespace mln
 
 #endif // !MLN_VALUE_SUPER_VALUE_HH

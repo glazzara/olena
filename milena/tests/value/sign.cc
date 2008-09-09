@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,28 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/flat_image.cc
+/*! \file tests/value/sign.cc
  *
- * \brief Tests on mln::flat_image.
+ * \brief Tests on mln::value::sign.
  */
 
-#include <mln/core/image/flat_image.hh>
-#include <mln/core/alias/box2d.hh>
+#include <cassert>
 #include <mln/value/sign.hh>
 
 
 int main()
 {
-    using namespace mln;
+  using namespace mln;
+  using value::sign;
 
-    {
-      flat_image<short, box2d> test;
-      std::cout << test.values_eligible() << std::endl;
-      std::cout << test.values_space() << std::endl;
-    }
-
-    {
-      flat_image<value::sign, box2d> test;
-      std::cout << test.values_eligible() << std::endl;
-    }
+   {
+     sign s;
+     s = -1;
+     s = 0;
+     s = 1;
+     assert(sign::zero == 0);
+     assert(sign::one == 1);
+     assert(s != 3);
+   }
 }

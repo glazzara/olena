@@ -27,6 +27,7 @@ check_PROGRAMS =				\
   rgb8						\
   scalar					\
   set						\
+  sign						\
   stack
 
 # FIXME: Enable when make check_full works.
@@ -51,6 +52,7 @@ quat_SOURCES = quat.cc
 rgb8_SOURCES = rgb8.cc
 scalar_SOURCES = scalar.cc
 set_SOURCES = set.cc
+sign_SOURCES = sign.cc
 stack_SOURCES = stack.cc
 
 # FIXME: Enable when make check_full works.

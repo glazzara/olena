@@ -79,8 +79,8 @@ namespace mln
     {
       mln_precondition(nrows != 0 && ncols != 0);
       mln::box2d tmp(make::point2d(0, 0),
-		     make::point2d(nrows - 1,
-				   ncols - 1));
+		     make::point2d(def::coord (nrows - 1),
+				   def::coord (ncols - 1)));
       return tmp;
     }
 
