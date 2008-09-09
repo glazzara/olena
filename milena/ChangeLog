@@ -1,3 +1,10 @@
+2008-09-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove useless '_' in class names.
+	* mln/core/alias/box3d.hh: remove underscore to box_.
+	* mln/core/alias/dpoint3d.hh: remove underscore to dpoint_.
+	* mln/core/alias/point3d.hh: remove underscore to point_.
+
 2008-09-09  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add the sign value type (subset of the int value type).

@@ -43,7 +43,7 @@ namespace mln
   /*! \brief Type alias for a point defined on the 3D square grid with
    * integer coordinates.
    */
-  typedef point_<grid::cube, def::coord> point3d;
+  typedef point<grid::cube, def::coord> point3d;
 
 
 } // end of namespace mln
