@@ -1,0 +1,683 @@
+\documentclass{report}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{color}
+
+\newcommand{\img}[4]{
+\begin{figure}[ht!]
+	\begin{center}
+      \includegraphics[width=#2]{figures/#1}
+     \caption{#4\label{fig:#1}}
+   \end{center}
+ \end{figure}
+}
+
+\title{Olena - Tutorial
+}
+\author{LRDE}
+\date{}
+
+%%%LISTINGS SETTINGS
+\lstset{frameround=fttt}
+\lstloadlanguages{C++}
+\lstset{language=C++}
+\lstset{backgroundcolor=\color{black},
+basicstyle=\bfseries\color{white},
+identifierstyle=\color{green},
+stringstyle=\color{yellow},
+commentstyle=\color{red},
+showstringspaces=false,linewidth=14cm}
+
+
+\begin{document}
+
+\tableofcontents
+
+ajouter dans => milena/doc/tutorial  |
+-------------------------------------------------
+
+\chapter{Foreword}
+
+The following tutorial talks about 2D images. We chose that kind of images
+because it is easier to understand and this is the
+most used. \\
+
+FIXME
+[dessin de grille 2d, colonnes/lignes numerotees + repere x/y]
+Intersection <=> point 2d <=> milieu d'un pixel \\
+
+Since examples are based on 2D images pixels are actually "points" however we
+will call them "sites" which is the most generic name.\\
+
+Here is also a list of common variable name conventions:
+\begin{figure}[ht!]
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Object} & \textbf{Variable name} \\ \hline
+  Site & p                            \\ \hline
+  Value & v                           \\ \hline
+  Neighboor & n                       \\ \hline
+  A site close to another site p & q  \\ \hline
+  \end{tabular}
+\end{figure}
+
+Methods provided by the objects in the library are in constant time. If you need
+a specific method but you cannot find it, you may find an algorithm which can
+compute the information you need.
+
+Olena is organized in a namespace hierarchy.  Everything is declared by Olena
+within the 'oln::' namespace, and possibly a sub-namespace such as
+'oln::arith::' (arithmetic operations on images), 'oln::morpho::' (morphological
+operations), etc.  For the sake of simplicity, we will neglect the 'oln::'
+prefix in all the code examples.
+
+
+\chapter{Concepts}
+//FIXME lister \underline{TOUS} les concepts (core/concepts)
+
+\section{Site set}
+
+Site sets are used:
+\begin{enumerate}
+  \item To define an image definition domain.
+  \item As Site container.
+\end{enumerate}
+
+Here is a list of all the site set concepts which can be found in
+core/site\_set:
+
+\begin{tabular}{|l|p{8cm}|}
+\hline
+Site set & Description \\ \hline
+
+p\_key & \\ \hline
+p\_priority & \\ \hline
+p\_box & \\ \hline
+p\_bgraph & \\ \hline
+p\_double & \\ \hline
+p\_if & \\ \hline
+p\_line\_graph & \\ \hline
+p\_queue\_fast & \\ \hline
+p\_set & \\ \hline
+p\_faces & \\ \hline
+p\_queue & \\ \hline
+p\_set\_of & \\ \hline
+line2d & \\ \hline
+p\_complex & \\ \hline
+p\_graph & \\ \hline
+p\_image & \\ \hline
+p\_mutable\_array\_of & \\ \hline
+p\_run & \\ \hline
+p\_vaccess & \\ \hline
+\end{tabular}
+
+\subsection{Basic interface}
+Common basic interface:\\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Commor type automatically from the
+given container type
+passed as parameter. These macros can be used with any container like images or
+site sets.ents \\ \hline
+
+bool & is\_valid & - & X & Returns true if it has been initialized. The
+default constructor does not do it. \\ \hline
+
+bool & has & const P\& p & X &  \\ \hline
+\end{tabular} \\
+
+
+\subsection{Optional interface}
+Site sets may have other methods depending on their type: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+size\_t & nsites & - & - & \\ \hline
+const Box\& & bbox & - & X &  Bounding box. Available only on grid site sets.
+\\ \hline
+\end{tabular} \\
+
+The previous methods are available depending on the site set. A box
+will have the bbox() method since it can be retrived in constant time: a box
+is it's own bounding box (see \ref{fig:box_bbox}). A p\_array does not have this
+method since sites do not have to be adjacent. Maintaining such information, in
+order to keep getting the bbox in constant time, would be time and memory
+consuming. Instead of providing a method directly in p\_array, an algorithm is
+available if this information needed (see \ref{fig:parray_bbox}).
+P\_array and box both have a nsites method since the internal structure allow a
+constant time retrieval.
+
+\subsubsection*{Sample code}
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+  p_array<point2d> arr;
+
+  // The bbox is computed thanks to bbox() algorithm.
+  box2d box = geom::bbox(arr);
+  std::cout << box << std::endl;
+
+  // p_array provides nsites(),
+  // it can be retrieved in constant time.
+  std::cout << "nsites = " << arr.nsites() << std::endl;
+  \end{lstlisting}
+  \caption{How to retrieve information from a p\_array.\label{fig:parray_bbox}}
+\end{figure}
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+  box2d b(2,3);
+
+  // The bbox can be retrived in constant time.
+  std::cout << b.bbox() << std::endl;
+
+  // nsites can be retrieved in constant time.
+  std::cout << "nsites = " << b.nsites() << std::endl;
+  \end{lstlisting}
+  \caption{How to retrieve information from a box.\label{fig:box_bbox}}
+\end{figure}
+
+\clearpage
+\newpage
+\section{Image}
+
+An image is composed both of:
+\begin{itemize}
+\item A function $$
+f : \left\{
+  \begin{array}{lll}
+    Site &\rightarrow & Value \\
+    p & \mapsto & v
+  \end{array}
+\right.
+$$
+\item A site set, also called the "domain".
+\end{itemize}
+
+Every image type is defined on a specific site type. An image2d will always
+have a domain defined by a box2d.
+The Value set, which includes all the possible values a site can have, is also
+called "destination" set.
+
+An image has a virtual border which is defined thanks to its domain. The
+ border is virtual since the image can have an extended domain as well.
+That one is optional, it defines sites outside the virtual border which is
+useful in algorithms when working with sites being part of the domain but close
+to the borders. The virtual border can be defined thanks to a function, an
+image or a site set.
+
+//FIXME: remove this line
+ici, site <=> Point2d
+
+
+[sample code]
+
+In order to create a 2D image, you have two possibilites:
+\begin{lstlisting}[frame=single]
+  // which builds an empty image;
+  image2d<int> img1a;
+  // which builds an image with 6 sites
+  image2d<int> img1b(box2d(2, 3));
+\end{lstlisting}
+
+The empty image has no data and its definition domain is still unset.  We do
+not know yet the number of sites it contains. However, it is really useful to
+have such an "empty image" because it is a placeholder for the result of some
+processing, or another image.
+
+Trying to access the site value from an empty image leads to an error at
+run-time.
+
+
+\begin{lstlisting}[frame=single]
+  box2d b(2,3);
+  image2d<int> ima(b); // Define the domain of the image.
+
+  cout << b << std::endl; // Display b
+
+  cout << ima.domain() << std::endl; // Display b too
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single]
+  box2d b(2,3);
+  image2d<int> ima(b);
+  point2d p(1, 2);
+
+  ima.at(1,2) = 9; // The value is returned by reference
+                   // and can be changed.
+  cout << ima(p) << std::endl; // prints 9
+
+  ima(p) = 2; // The value is returned by reference
+              // and can be changed.
+  cout << ima(p) << std::endl; // prints 2
+\end{lstlisting}
+
+
+To know if a point belongs to an image domain or not, we can run this short
+test:
+\begin{lstlisting}[frame=single]
+point2d p(9, 9);
+
+// which gives 'true'.
+std::cout << (imga.has(p) ? "true" : "false") << std::endl;
+\end{lstlisting}
+
+Since the notion of point is independent from the image it applies on, we can
+form expressions where p is used on several images:
+\begin{lstlisting}[frame=single]
+// At index (9, 9), both values change.
+imga(p) = 'M', imgb(p) = 'W';
+
+debug::println(imga);
+debug::println(imgb);
+\end{lstlisting}
+
+
+Images do not actually store the data in the class. This is a pointer
+to an allocated space which can be shared with other objects. Once an image is
+assigned to another one, the two images share the same data so they have the
+same ID and point to the same memory space.
+Therefore, assigning an image to another one is NOT a costly operation. The new
+variable behaves like some mathematical variable.  Put differently it is just a
+name to designate an image:
+\begin{lstlisting}[frame=single]
+  image2d<int> ima1(box2d(2, 3));
+  image2d<int> ima2;
+  point2d p(1,2);
+
+  ima2 = ima1; // ima1.id() == ima2.id()
+               // and both point to the same memory area.
+
+  ima2(p) = 2; // ima1 is modified as well.
+
+  // prints "2 - 2"
+  std::cout << ima2(p) << " - " << ima1(p) << std::endl;
+  // prints "true"
+  std::cout << (ima2.id() == ima1.id()) << std::endl;
+\end{lstlisting}
+
+If a deep copy of the image is needed, a method clone() is available:
+\begin{lstlisting}[frame=single]
+  image2d<int> ima3 = ima1.clone(); // Makes a deep copy.
+
+  ima3(p) = 3;
+
+  // prints "3 - 2"
+  std::cout << ima3(p) << " - " << ima1(p) << std::endl;
+  // prints "false"
+  std::cout << (ima3.id() == ima1.id()) << std::endl;
+\end{lstlisting}
+
+[Illustration : grille + intersection + pmin() + pmax() + distance entre 2
+points en x et en y = 1]\\
+
+In the Olena library, all image types behave like image2d:
+\begin{itemize}
+\item An "empty" image actually is a mathematical variable.
+
+      $\rightarrow$ just think in a mathemetical way when dealing with images;
+
+\item No dynamic memory allocation/deallocation is required.
+    the user never has to use "new / delete" (the C++ equivalent for the C
+    "malloc / free") so she does not have to manipulate pointers or to directly
+    access memory.
+    
+    $\rightarrow$ Olena prevents the user from making mistakes;
+
+\item Image data/values can be shared between several variables and the memory
+    used for image data is handled by the library.
+    
+    $\rightarrow$ Memory management is automatic.
+\end{itemize}
+
+
+\subsection{Interface}
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+site\_set & domain & - & X - &  \\ \hline
+const Value\& & operator() & const point\& p & X & Used for reading. \\ \hline
+Value\& & operator() & const point\& p & - & Used for writing. \\ \hline
+const P\& & at & unsigned x,
+         unsigned y & X & Used for reading. \\ \hline
+P\& & at & unsigned x,
+         unsigned y & - & Used for writing. \\ \hline
+bool & has & const Point\& p & X & \\ \hline
+bool & has\_data & - & X & Returns true if the domain is defined. \\ \hline
+site\_id & id & - & X & Return the Id of the underlying shared data. \\ \hline
+FIXME & destination & - & X & Value set of all the possible site values in this
+Image. \\ \hline
+site\_set & bbox & - & - & Returns the bounding box of the domain. \\ \hline
+site\_set & bbox\_large & - & - & Returns the bouding box of the domain and the
+extended domain. \\ \hline
+
+\end{tabular}
+
+
+\newpage
+\section{Neighborhood}
+
+
+
+\newpage
+\section{Window}
+
+
+
+\chapter{Iterators}
+
+Every objects 
+Each container object in Olena like site sets or images have iterators.
+There are usually three kinds:
+\begin{itemize}
+\item \textbf{fwd\_iter}, depends on the container,
+\item \textbf{bkd\_iter}, iterates like forward but to the opposite way,
+\item \textbf{iter}, usually the same as fwd\_iter. It is guaranteed to
+iterate all over the elements.
+\end{itemize}
+
+The iterator type name depends on the data pointed by it: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Data type & Iterator Names \\ \hline
+Site & fwd\_piter, bkd\_piter, piter \\ \hline
+Value & fwd\_viter, bkd\_viter, viter \\ \hline
+\end{tabular} \\
+
+As you may have noticed, according to the data type, the word "iter" is prefixed
+by the usual name variable used for that data type. Sites variables are usually
+called 'p' so the proper iterator is "piter".\\
+
+
+An iterator has the following interface: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+void & start & - & - & \\ \hline
+void & next & - & - & \\ \hline
+bool & is\_valid & - & - & Return false if created with the default
+constructor and not associated to a proper container.\\ \hline
+\end{tabular} \\
+
+
+Example of different forward iterations:
+\begin{itemize}
+  \item box2d: from top to bottom then from left to right.
+  \item p\_array<point2d>: from left to right.
+\end{itemize}
+
+A for\_all() macro is available to iterate over all the sites
+(Fig. \ref{fig:for_all}). \\
+
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+  box2d b(3, 2);
+  mln_piter(box2d) p(b);
+
+  for_all(p)
+    std::cout << p; //prints every site coordinates.
+  \end{lstlisting}
+  \caption{Use of the for\_all() macro.\label{fig:for_all}}
+\end{figure}
+
+Note that when you declare an iterator, prefer using the "mln\_*iter" macros.
+They resolve the iterator type automatically from the given container type
+passed as parameter. These macros can be used with any container like images or
+site sets.
+(\ref{fig:iter_allcontainers}).
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+  image2d<int> ima(box2d(2, 3));
+
+  mln_piter(box2d) p(ima.domain());
+  for_all(p)
+    std::cout << p << std::endl;
+
+  mln_viter(image2d<int>) v(ima.destination());
+  for_all(v)
+    std::cout << v << std::endl;
+  \end{lstlisting}
+  \caption{mln\_*iter macros can be used with any
+containers.\label{fig:iter_allcontainers}}
+\end{figure} 
+
+
+\chapter{Basic operations}
+//FIXME : illustrer
+\begin{itemize}
+  \item level::clone(), creates a deep copy of an object. Any shared data is
+duplicated.
+  \item level::fill(), fill an object with a value (fig. \ref{fig:fill_impl}).
+  \item level::paste(), paste object data to another object (fig.
+\ref{fig:paste_impl})
+
+  \item labeling::blobs(), find and label the different components of an image.
+\end{itemize}
+
+First, create an image:
+\begin{lstlisting}[frame=single]
+  image2d<char> imga(0, 0, 20, 20);
+\end{lstlisting}
+
+Memory has been allocated so data can be stored but site values
+have not been initialized yet.  So we fill img with the value 'a':
+\begin{lstlisting}[frame=single]
+  level::fill(inplace(imga), 'a');
+\end{lstlisting}
+
+The "fill" algorithm is located in the sub-namespace "level" since this
+algorithm deals with the "level" of site values.
+
+Note that the term "level" refers to the fact that an image can be considered as
+a landscape where the elevation at a particular location/site is given by
+the corresponding site value.
+
+The full name of this routine is "oln::level::fill".  To access to a particular
+algorithm, the proper file shall be included. The file names of algorithms
+strictly map their C++ name; so oln::level::fill is defined in the file
+"oln/level/fill.hh".
+
+Most algorithms in Olena are constructed following the classical scheme: "output
+algo(input)", where the input image is only read. However some few algorithms
+take an input image in order to modify it.  To enforce this particular feature,
+the user shall explicitly state that the image is provided so that its data is
+modified "inplace". The algorithm call shall be "level::fill(inplace(ima),
+val)". When forgetting the "inplace(..)" statement it does not compile.
+
+We then define below a second image to play with.  As you can see this image has
+data for the sites (5, 5) to (14, 14) (so it has 100 sites).  The definition
+domain of a 2D image can start from any sites, even a negative one.
+
+\begin{lstlisting}[frame=single]
+  image1d<char> imgb(5, 5, 14, 14);
+
+  // We initialize the image values.
+  level::fill(inplace(imgb), 'b');
+
+  // Last we now paste the contents of img3b in img3a...
+  level::paste(imgb, inplace(imga));
+
+  // ...and print the result.
+  debug::println(imga);
+\end{lstlisting}
+
+Before pasting, the couple of images looked like:
+
+//FIXME : ajouter des zolies zimages.
+
+so after pasting we get:
+
+//FIXME : ajouter des zolies zimages again.
+
+With this simple example we can see that images defined on different domains (or
+set of sites) can interoperate.  The set of sites of an image is defined and
+can be accessed and printed. The following code:
+
+\begin{lstlisting}[frame=single]
+  std::cout << "imga.domain() = " << imga.domain()
+            << std::endl;
+  std::cout << "imgb.domain() = " << imgb.domain()
+            << std::endl;
+\end{lstlisting}
+
+Gives:
+\begin{lstlisting}[frame=single]
+  imga.domain() = { (0,0) .. (19,19) }
+  imgb.domain() = { (5,5) .. (14,14) }
+\end{lstlisting}
+
+The notion of site sets plays an important role in Olena. Many tests are
+performed at run-time to ensure that the program is correct.
+
+For instance, the algorithm level::paste tests that the set of sites of imgb
+(whose values are to be pasted) is a subset of the destination image.
+
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+template <typename I>
+void fill(I& ima, mln_value(I) v)
+{
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+    ima(p) = v;
+}
+  \end{lstlisting}
+  \caption{Implementation of the fill routine.\label{fig:fill_impl}}
+\end{figure} 
+
+
+\begin{figure}[ht!]
+  \begin{lstlisting}[frame=single]
+template <typename I, typename J>
+void paste(const I& data, J& dest)
+{
+  mln_piter(I) p(data.domain());
+  for_all(p)
+    dest(p) = data(p);
+}
+  \end{lstlisting}
+  \caption{Implementation of the paste routine.\label{fig:paste_impl}}
+\end{figure}
+
+
+\section{Working with parts of an image}
+
+Sometime it may be interesting to work only on some part of the image or to
+extract only a sub set of that image. Olena enables that thoughout out the
+operator '$|$'.
+
+Three kinds of that operator exist:\\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Prototype & Comments \\ \hline
+
+Image $|$ Sub Domain & Create a new image.\\ \hline
+Image $|$ Function\_p2b & Do not create a new image but create a morpher.\\
+\hline
+Function\_p2v $|$ Sub Domain & Do not create a new image but create a morpher.\\
+\hline
+\end{tabular} \\
+
+A Sub Domain can be a site set, an image or any value returned by this
+operator.
+For a given site, Function\_p2v returns a Value and Function\_p2b returns a
+boolean. These functions. are actually a sort of predicate. You can easily get
+of function of function\_p2v kind thanks to pw::value(Image). It returns the
+point to value function used in the given image. C functions can also be used as
+predicate by passing the function pointer.
+
+You can easily get a function\_p2b by comparing the value returned 
+by a function\_p2v to another Value.
+The following sample code illustrates this feature.
+
+In this section, all along the examples, the image "ima" will refer to the
+following declaration:
+\begin{lstlisting}[frame=single]
+  bool vals[6][5] = {
+    {0, 1, 1, 0, 0},
+    {0, 1, 1, 0, 0},
+    {0, 0, 0, 0, 0},
+    {1, 1, 0, 1, 0},
+    {1, 0, 1, 1, 1},
+    {1, 0, 0, 0, 0}
+  };
+  image2d<bool> ima = make::image2d(vals);
+\end{lstlisting}
+
+A simple example is to fill only a part of an image with a specific value:
+\begin{lstlisting}[frame=single]
+p_array2d<bool> arr;
+
+// We add two points in the array.
+arr.append(point2d(0, 1));
+arr.append(point2d(4, 0));
+
+// We restrict the image to the sites
+// contained in arr and fill these ones
+// with 0.
+// We must call "inplace" here.
+fill(inplace(ima | arr), 0);
+
+
+mln_VAR(ima2, ima | arr);
+// We do not need to call "inplace" here.
+fill(ima2, 0);
+\end{lstlisting}
+
+The two next examples extract a specific component from an image and fill a new
+image with red only in the extracted component's domain.
+\begin{lstlisting}[frame=single]
+  using namespace mln;
+  using value::int_u8;
+  using value::rgb8;
+
+  // Find and label the different components.
+  int_u8 nlabels;
+  image2d<int_u8> lab = labeling::blobs(ima, c4(), nlabels);
+
+  // Store a boolean image. True if the site is part of
+  // component 2, false otherwise.
+  mln_VAR(lab_2b, lab | (pw::value(lab) == 2));
+
+  // Get the sub site set containing only the sites
+  // part of component 2.
+  mln_VAR(lab_2, lab_2b.domain(1));
+
+  // Fill the sites of component 2 with red.
+  fill(lab_2, color::red);
+\end{lstlisting}
+
+The previous example can be written more quickly:
+\begin{lstlisting}[frame=single]
+  using namespace mln;
+  using value::int_u8;
+  using value::rgb8;
+
+  // Find and label the different components.
+  int_u8 nlabels;
+  image2d<int_u8> lab = labeling::blobs(ima, c4(), nlabels);
+
+  // Fill the sites of component 2 with red.
+  fill(inplace(lab.domain(2)), color::red);
+\end{lstlisting}
+
+
+\chapter{Graphes and images}
+
+
+
+\end{document}
