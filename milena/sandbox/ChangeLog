@@ -1,3 +1,10 @@
+2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Sync access.hh/.cc with trunk.
+
+	* jardonnet/virtual/access.hh: Sync with trunk.
+	* jardonnet/virtual/access.cc: Sync with trunk.
+
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: virtual transform, Add concept check.
