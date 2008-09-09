@@ -37,7 +37,7 @@
 
 # include <mln/core/window.hh>
 # include <mln/core/concept/weighted_window.hh>
-
+# include <mln/core/dpoints_piter.hh>
 
 namespace mln
 {

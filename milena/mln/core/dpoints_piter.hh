@@ -48,7 +48,7 @@ namespace mln
    * The parameter \c D is the type of delta-points.
    */
   template <typename D>
-  class dpoints_fwd_piter : public internal::site_iterator_base_< mln_point(D), dpoints_fwd_piter<D> >
+  class dpoints_fwd_piter : public internal::site_iterator_base< mln_point(D), dpoints_fwd_piter<D> >
   {
   public:
 
@@ -106,7 +106,7 @@ namespace mln
    * The parameter \c D is the type of delta-points.
    */
   template <typename D>
-  class dpoints_bkd_piter : public internal::site_iterator_base_< mln_point(D), dpoints_bkd_piter<D> >
+  class dpoints_bkd_piter : public internal::site_iterator_base< mln_point(D), dpoints_bkd_piter<D> >
   {
   public:
 

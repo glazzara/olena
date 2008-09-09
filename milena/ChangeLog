@@ -1,3 +1,16 @@
+2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Upgrade image1d + minor fixes ( _ removing ).
+
+	* mln/core/dpoints_piter.hh: Remove underscore to site_iterator_base_.
+	* mln/core/image/image1d.hh: Upgrade following image2d.
+	* mln/core/macros.hh: Temporarily uncomment mln_(d)point.
+	* mln/core/w_window.hh: Include dpoints_piter.hh.
+	* mln/core/line_piter.hh: Remove underscore to site_iterator_base_.
+	* mln/core/alias/dpoint1d.hh: Remove underscore to dpoint_.
+	* mln/core/alias/box1d.hh: Remove underscore to box_.
+	* mln/core/alias/point1d.hh: Cosmetic change.
+
 2008-09-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Rename data_ as data.

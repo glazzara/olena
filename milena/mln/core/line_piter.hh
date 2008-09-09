@@ -47,10 +47,10 @@ namespace mln
    */
   template <typename P>
   class line_piter_ :
-    public internal::site_iterator_base_< P, line_piter_<P> >
+    public internal::site_iterator_base< P, line_piter_<P> >
   {
     typedef line_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
   public:
 
     // Make definitions from super class available.

@@ -88,17 +88,25 @@ namespace mln
     template <typename T>
     struct image_< image1d<T> > : default_image_< T, image1d<T> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fastest    speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::access::random   access;
-      typedef trait::image::space::one_d     space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
+      // value
+      typedef trait::image::value_access::direct           value_access;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
 
-      typedef trait::image::border::stored   border;
-      typedef trait::image::data::raw        data;
-      typedef trait::image::io::read_write   io;
-      typedef trait::image::speed::fastest   speed;
+      // site / domain
+      typedef trait::image::localization::basic_grid localization;
+      typedef trait::image::dimension::one_d         dimension;
+
+      // extended domain
+      typedef trait::image::ext_domain::extendable ext_domain;
+      typedef trait::image::ext_value::multiple    ext_value;
+      typedef trait::image::ext_io::read_write     ext_io;
     };
 
   } // end of namespace mln::trait
@@ -115,17 +123,11 @@ namespace mln
   struct image1d :
     public internal::image_primary< T, box1d, image1d<T> >
   {
-    // Warning: just to make effective types appear in Doxygen:
-    typedef box1d   pset;
-    typedef point1d psite;
-    typedef point1d point;
-    typedef dpoint1d dpoint;
-    typedef mln_fwd_piter(box1d) fwd_piter;
-    typedef mln_bkd_piter(box1d) bkd_piter;
-    typedef line_piter_<point> line_piter;
-    // End of warning.
-
-
+    typedef internal::image_primary< T, mln::box1d, image1d<T> > super_;
+    
+    /// Coordinate associated type.
+    typedef int coord;
+    
     /// Value associated type.
     typedef T         value;
 
@@ -161,6 +163,9 @@ namespace mln
     /// Give the definition domain.
     const box1d& domain() const;
 
+    /// Give the bounding box domain.
+    const box1d& bbox() const;
+
     /// Give the border thickness.
     unsigned border() const;
 
@@ -188,6 +193,9 @@ namespace mln
 
     /// Fast Image method
 
+    // Give the index of a point.
+    using super_::index_of_point;
+
     /// Give the offset corresponding to the delta-point \p dp.
     int offset(const dpoint1d& dp) const;
 
@@ -199,7 +207,6 @@ namespace mln
 
     /// Give a hook to the value buffer.
     T* buffer();
-
 
 
     /// Resize image border with new_border.
@@ -351,7 +358,16 @@ namespace mln
   image1d<T>::domain() const
   {
     mln_precondition(this->has_data());
-    return this->data_->b_;
+    return this->data->b_;
+  }
+
+  template <typename T>
+  inline
+  const box1d&
+  image1d<T>::bbox() const
+  {
+    mln_precondition(this->has_data());
+    return this->data->b_;
   }
 
   template <typename T>
@@ -360,7 +376,7 @@ namespace mln
   image1d<T>::border() const
   {
     mln_precondition(this->has_data());
-    return this->data_->bdr_;
+    return this->data->bdr_;
   }
 
   template <typename T>
@@ -369,7 +385,7 @@ namespace mln
   image1d<T>::ncells() const
   {
     mln_precondition(this->has_data());
-    return this->data_->vb_.npoints();
+    return this->data->vb_.npoints();
   }
 
   template <typename T>
@@ -378,7 +394,7 @@ namespace mln
   image1d<T>::has(const point1d& p) const
   {
     mln_precondition(this->has_data());
-    return this->data_->vb_.has(p);
+    return this->data->vb_.has(p);
   }
 
   template <typename T>
@@ -387,7 +403,7 @@ namespace mln
   image1d<T>::operator()(const point1d& p) const
   {
     mln_precondition(this->has(p));
-    return this->data_->array_[p.ind()];
+    return this->data->array_[p.ind()];
   }
 
   template <typename T>
@@ -396,7 +412,7 @@ namespace mln
   image1d<T>::operator()(const point1d& p)
   {
     mln_precondition(this->has(p));
-    return this->data_->array_[p.ind()];
+    return this->data->array_[p.ind()];
   }
 
   template <typename T>
@@ -405,7 +421,7 @@ namespace mln
   image1d<T>::operator[](unsigned o) const
   {
     mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
+    return *(this->data->buffer_ + o);
   }
 
   template <typename T>
@@ -414,7 +430,7 @@ namespace mln
   image1d<T>::operator[](unsigned o)
   {
     mln_precondition(o < ncells());
-    return *(this->data_->buffer_ + o);
+    return *(this->data->buffer_ + o);
   }
 
   template <typename T>
@@ -423,7 +439,7 @@ namespace mln
   image1d<T>::at(int ind) const
   {
     mln_precondition(this->has(make::point1d(ind)));
-    return this->data_->array_[ind];
+    return this->data->array_[ind];
   }
 
   template <typename T>
@@ -432,7 +448,7 @@ namespace mln
   image1d<T>::at(int ind)
   {
     mln_precondition(this->has(make::point1d(ind)));
-    return this->data_->array_[ind];
+    return this->data->array_[ind];
   }
 
   template <typename T>
@@ -441,7 +457,7 @@ namespace mln
   image1d<T>::buffer() const
   {
     mln_precondition(this->has_data());
-    return this->data_->buffer_;
+    return this->data->buffer_;
   }
 
   template <typename T>
@@ -450,7 +466,7 @@ namespace mln
   image1d<T>::buffer()
   {
     mln_precondition(this->has_data());
-    return this->data_->buffer_;
+    return this->data->buffer_;
   }
 
   template <typename T>
@@ -469,8 +485,8 @@ namespace mln
   image1d<T>::point_at_offset(unsigned o) const
   {
     mln_precondition(o < ncells());
-    point1d p = make::point1d(o + this->data_->vb_.min_ind());
-    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
+    point1d p = make::point1d(o + this->data->vb_.min_ind());
+    mln_postcondition(& this->operator()(p) == this->data->buffer_ + o);
     return p;
   }
 
@@ -479,7 +495,7 @@ namespace mln
   void
   image1d<T>::resize_(unsigned new_border)
   {
-    this->data_->reallocate_(new_border);
+    this->data->reallocate_(new_border);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
