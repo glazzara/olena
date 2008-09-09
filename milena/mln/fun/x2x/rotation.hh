@@ -66,7 +66,7 @@ namespace mln
 	/// Constructor without argument.
         rotation();
 	/// Constructor with grade alpha and a facultative direction (rotation axis).
-        rotation(float alpha, unsigned dir = 2);
+        rotation(float alpha, algebra::vec<n,float>& axis);
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
@@ -81,7 +81,7 @@ namespace mln
         void update();
 
         float alpha_;
-        unsigned dir_;
+        algebra::vec <n,float> axis_;
       };
 
 
@@ -95,9 +95,9 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      rotation<n,C>::rotation(float alpha, unsigned dir)
+      rotation<n,C>::rotation(float alpha, algebra::vec<n,float>& axis)
 	:alpha_(alpha),
-	 dir_(dir)
+	 axis_(axis)
       {
 	mln_precondition(dir == 2 || n == 3);
 	this->m_ = algebra::h_mat<n,C>::Id;
@@ -128,7 +128,7 @@ namespace mln
       rotation<n,C>
       rotation<n,C>::inv() const
       {
-	typename rotation::invert res(-alpha_, dir_);
+	typename rotation::invert res(-alpha_, axis_);
 	return res;
       }
 
@@ -151,24 +151,44 @@ namespace mln
 	update();
       }
 
+      // Homogenous matrix for a rotation of a point (x,y,z)
+      // about the vector (u,v,w) by the angle alpha
       template <unsigned n, typename C>
       inline
       void
       rotation<n,C>::update()
       {
-	const float cos_a = cos(alpha_);
-	const float sin_a = sin(alpha_);
-	const algebra::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
-
-	unsigned k = 0;
-	for (unsigned i = 0; i < n; ++i)
-	  for (unsigned j = 0; j < n; ++j)
-	  {
-	    if (j != this->dir_ && i != this->dir_)
-	      this->m_(i, j) = vec[k++];
-	    else
-	      this->m_(i, j) = (i == j);
-	  }
+        assert(n == 3); // debug
+        const float cos_a = cos(alpha_);
+        const float sin_a = sin(alpha_);
+        const float u = axis_[0];
+        const float v = axis_[1];
+        const float w = axis_[2];
+        const float u2 = u * u;
+        const float v2 = v * v;
+        const float w2 = w * w;
+        const float uvw2 = u2 + v2 + w2;
+            
+        this->m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
+        this->m_(0,1) = (u*v * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(0,2) = (u*w * (1 - cos_a) + v * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(0,3) = 0;
+        
+        this->m_(1,0) = (u*v * (1 - cos_a) + w * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
+        this->m_(1,2) = (v*w * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(1,3) = 0;
+            
+        this->m_(2,0) = (u*w * (1 - cos_a) - v * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(2,1) = (v*w * (1 - cos_a) + u * math::sqrt(uvw2) * sin_a) / uvw2;
+        this->m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
+        this->m_(2,3) = 0;
+            
+        this->m_(2,0) = 0;
+        this->m_(2,1) = 0;
+        this->m_(2,1) = 0;
+        this->m_(2,3) = 1;        
+        
       }
 
 # endif // ! MLN_INCLUDE_ONLY

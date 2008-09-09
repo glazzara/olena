@@ -1,5 +1,11 @@
 2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Update fun::rotation.
+
+	* mln/fun/x2x/rotation.hh: Code 3d rotation about a vector x.
+
+2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Upgrade image1d + minor fixes ( _ removing ).
 
 	* mln/core/dpoints_piter.hh: Remove underscore to site_iterator_base_.
