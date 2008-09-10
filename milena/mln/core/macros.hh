@@ -45,6 +45,12 @@
 
 // b
 
+/// Shortcuts to access the bkd_citer type associated to T.
+/// \{
+# define mln_bkd_citer(T)  typename T::bkd_citer
+# define mln_bkd_citer_(T)          T::bkd_citer
+/// \}
+
 /// Shortcuts to access the bkd_niter type associated to T.
 /// \{
 # define mln_bkd_niter(T)  typename T::bkd_niter
@@ -78,6 +84,12 @@
 
 // c
 
+/// Shortcuts to access the citer type associated to T.
+/// \{
+# define mln_citer(T)      typename T::fwd_citer
+# define mln_citer_(T)              T::fwd_citer
+/// \}
+
 /// Shortcuts to access the coord type associated to T.
 /// \{
 # define mln_coord(T)      typename T::coord
@@ -110,6 +122,12 @@
 
 
 // f
+
+/// Shortcuts to access the fwd_citer type associated to T.
+/// \{
+# define mln_fwd_citer(T)  typename T::fwd_citer
+# define mln_fwd_citer_(T)          T::fwd_citer
+/// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.
 /// \{
