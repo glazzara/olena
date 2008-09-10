@@ -232,11 +232,11 @@ int main()
        where M is in [0, N-1].
 
        In that definition, P is said adjacent to an M-face Q if
-       if there is a sequence (M1, M2, ..., Mn) of faces so that
-       - M1 is an (M+1)-face adjacent to M ;
-       - M2 is an (M+2)-face adjacent to M1 ;
+       there is a sequence (M1, M2, ..., Mk) of faces so that
+       - M1 is an (N-1)-face adjacent to P ;
+       - M2 is an (N-2)-face adjacent to M1 ;
        - and so on;
-       - Mn is an (N-1)-face adjacent to N.
+       - Mk is an (M+1)-face adjacent to Q.
 
      - what else?
 
