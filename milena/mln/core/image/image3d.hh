@@ -89,17 +89,25 @@ namespace mln
     template <typename T>
     struct image_< image3d<T> > : default_image_< T, image3d<T> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fastest    speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::access::random   access;
-      typedef trait::image::space::three_d   space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
+      // value
+      typedef trait::image::value_access::direct           value_access;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
 
-      typedef trait::image::border::stored   border;
-      typedef trait::image::data::raw        data;
-      typedef trait::image::io::read_write   io;
-      typedef trait::image::speed::fastest   speed;
+      // site / domain
+      typedef trait::image::localization::basic_grid localization;
+      typedef trait::image::dimension::three_d         dimension;
+
+      // extended domain
+      typedef trait::image::ext_domain::extendable ext_domain;
+      typedef trait::image::ext_value::multiple    ext_value;
+      typedef trait::image::ext_io::read_write     ext_io;
     };
 
   } // end of namespace mln::trait
@@ -127,7 +135,7 @@ namespace mln
 
 
     /// Super type
-    typedef internal::image_primary< box3d, image3d<T> > super_;
+    typedef internal::image_primary< T, box3d, image3d<T> > super_;
 
     /// Value associated type.
     typedef T         value;

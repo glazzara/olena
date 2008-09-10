@@ -36,7 +36,7 @@
 
 # include <mln/core/dpoint.hh>
 # include <mln/core/grids.hh>
-
+# include <mln/core/def/coord.hh>
 
 namespace mln
 {
@@ -44,7 +44,7 @@ namespace mln
   /*! \brief Type alias for a delta-point defined on the 3D square
    * grid with integer coordinates.
    */
-  typedef dpoint<mln::grid::cube, int> dpoint3d;
+  typedef dpoint<mln::grid::cube, def::coord> dpoint3d;
 
 
 } // end of namespace mln

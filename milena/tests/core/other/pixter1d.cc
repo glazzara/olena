@@ -64,7 +64,7 @@ int main()
 	  p.next();
 	  ++i;
 	}
-      mln_assertion(i == b.npoints());
+      mln_assertion(i == b.nsites());
     }
 
     {
@@ -80,7 +80,7 @@ int main()
 	  p.next();
 	  ++i;
 	}
-      mln_assertion(i == b.npoints());
+      mln_assertion(i == b.nsites());
     }
   }
 }

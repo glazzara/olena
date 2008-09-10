@@ -1,3 +1,28 @@
+2008-09-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Parametrize histo::data by value types, Repair image1d.
+
+	* tests/core/other/pixter1d.cc,
+	* tests/core/image/image1d.cc: Replace npoints method by nsites.
+	* mln/histo/compute.spe.hh,
+	* mln/histo/compute.hh,
+	* tests/histo/compute.cc,
+	* tests/histo/to_image1d.cc: Change the histo::data parameter
+	* mln/histo/data.hh: Update data parameter.
+	* mln/core/site_set/p_line_graph_piter.hh: Fix compile errors.
+	* mln/core/image/image1d.hh: Repair image1d.
+	* mln/core/image/image3d.hh: Fix compile errors.
+	* mln/core/internal/check/image_fastest.hh: .
+	* mln/core/alias/dpoint1d.hh,
+	* mln/core/alias/dpoint3d.hh: Fix the dpoints coordinates type.
+	* mln/core/alias/point1d.hh,
+	* mln/core/alias/point3d.hh: Add specialization for subject_impl.
+	* mln/core/alias/point2d.hh: delete trailing whitespaces.
+	* mln/pw/image.hh,
+	* mln/value/stack.hh: Remove the values method.
+	* mln/convert/to_image.hh,
+	* mln/morpho/erosion.hh: Adapt to the histo::data changes.
+
 2008-09-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update rotation.

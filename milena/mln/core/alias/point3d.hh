@@ -35,7 +35,9 @@
  */
 
 # include <mln/core/point.hh>
-
+// For site_const_impl and site_mutable_impl:
+# include <mln/core/concept/site_proxy.hh>
+# include <mln/core/internal/force_exact.hh>
 
 namespace mln
 {
@@ -44,6 +46,159 @@ namespace mln
    * integer coordinates.
    */
   typedef point<grid::cube, def::coord> point3d;
+
+  namespace internal
+  {
+
+    // Specialization.
+
+    template <typename C, typename E>
+    struct subject_impl< const point<grid::cube, C>, E >
+    {
+      typedef C coord;
+      enum { dim = 3 };
+
+      typedef const C& row_t;
+      const C& row() const;
+
+      typedef const C& col_t;
+      const C& col() const;
+
+      typedef const C& sli_t;
+      const C& sli() const;
+
+      const C& operator[](unsigned i) const;
+      const C& last_coord() const;
+    private:
+      const E& exact_() const;
+    };
+
+
+    // Specialization for point<M,C>.
+
+    template <typename C, typename E>
+    struct subject_impl<       point<grid::cube, C>, E > :
+           subject_impl< const point<grid::cube, C>, E >
+    {
+    private:
+      typedef subject_impl< const point<grid::cube, C>, E > super_;
+      E& exact_();
+    public:
+
+      using super_::row;
+      C& row();
+
+      using super_::col;
+      C& col();
+
+      using super_::sli;
+      C& sli();
+
+      using super_::operator[];
+      C& operator[](unsigned i);
+    };
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    // subject_impl
+
+    template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::cube, C>, E >::row() const
+    {
+      return exact_().get_subject().row();
+    }
+
+    template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::cube, C>, E >::col() const
+    {
+      return exact_().get_subject().col();
+    }
+
+    template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::cube, C>, E >::sli() const
+    {
+      return exact_().get_subject().sli();
+    }
+
+    template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::cube, C>, E >::operator[](unsigned i) const
+    {
+      mln_precondition(i < 3);
+      return exact_().get_subject()[i];
+    }
+
+    template <typename C, typename E>
+    inline
+    const C&
+    subject_impl< const point<grid::cube, C>, E >::last_coord() const
+    {
+      return this->col();
+    }
+
+    template <typename C, typename E>
+    inline
+    const E&
+    subject_impl< const point<grid::cube, C>, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    // subject_impl
+
+    template <typename C, typename E>
+    inline
+    C&
+    subject_impl< point<grid::cube, C>, E >::row()
+    {
+      return exact_().get_subject().row();
+    }
+
+    template <typename C, typename E>
+    inline
+    C&
+    subject_impl< point<grid::cube, C>, E >::col()
+    {
+      return exact_().get_subject().col();
+    }
+
+    template <typename C, typename E>
+    inline
+    C&
+    subject_impl< point<grid::cube, C>, E >::sli()
+    {
+      return exact_().get_subject().sli();
+    }
+
+    template <typename C, typename E>
+    inline
+    C&
+    subject_impl< point<grid::cube, C>, E >::operator[](unsigned i)
+    {
+      mln_precondition(i < 3);
+      return exact_().get_subject()[i];
+    }
+
+    template <typename C, typename E>
+    inline
+    E&
+    subject_impl< point<grid::cube, C>, E >::exact_()
+    {
+      return internal::force_exact<E>(*this);
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::internal
 
 
 } // end of namespace mln

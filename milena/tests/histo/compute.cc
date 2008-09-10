@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,13 +51,13 @@ int main()
   // Test on 'bool'.
   {
     accu::histo< value::set<bool> > h;
-    
+
     for (unsigned i = 0; i < 5; ++i)
       h.take(false);
     for (unsigned i = 0; i < 2; ++i)
       h.take(true);
     h.untake(true);
-    
+
     mln_assertion(h[0] * 10 + h[1] == 51);
     mln_assertion(h(false) * 10 + h(true) == 51);
   }
@@ -68,9 +68,9 @@ int main()
     debug::iota(ima);
     ima.at(0,0) = 2;
 
-    histo::data< value::set<int_u8> > h = histo::compute(ima);
+    histo::data<int_u8> h = histo::compute(ima);
     std::ostringstream oss;
-    oss << h; 
+    oss << h;
     mln_assertion(oss.str() == "2:2 3:1 4:1 5:1 6:1 7:1 8:1 9:1 ");
 
     int_u8 i = 2;
@@ -84,7 +84,7 @@ int main()
     image2d<int_s5> ima(3, 3);
     debug::iota(ima);
 
-    histo::data< value::set<int_s5> > h = histo::compute(ima);
+    histo::data<int_s5> h = histo::compute(ima);
     mln_assertion(h.vset().nvalues() == 31);
 
     for (unsigned i = 0; i <= 15; ++i)  // values from -15 to  0

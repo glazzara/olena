@@ -74,12 +74,12 @@ namespace mln
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
-	    {
-	      min.init();
-	      for_all(q) if (input.owns_(q))
-		min.take(input(q));
-	      output(p) = min;
-	    }
+	  {
+	    min.init();
+	    for_all(q) if (input.owns_(q))
+	      min.take(input(q));
+	    output(p) = min;
+	  }
 
 	  trace::exiting("morpho::impl::generic::erosion_on_function_");
 	  return output;

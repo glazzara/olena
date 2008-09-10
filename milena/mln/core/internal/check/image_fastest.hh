@@ -38,7 +38,6 @@
 
 # include <mln/core/internal/force_exact.hh>
 
-
 namespace mln
 {
 
@@ -90,6 +89,7 @@ namespace mln
  	typedef mln_psite(E)      psite;
  	typedef mln_delta(psite) dpsite;
 
+
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
@@ -133,7 +133,7 @@ namespace mln
 	const E* this_ = & internal::force_exact<E>(*this);
 	mln_precondition(this_->has_data());
 	mln_precondition(this_->has(p));
-	
+
 	unsigned i = & this_->operator()(p) - this_->buffer();
 	mln_postcondition(p == this_->point_at_index(i));
 	return i;

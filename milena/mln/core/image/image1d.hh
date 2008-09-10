@@ -124,10 +124,10 @@ namespace mln
     public internal::image_primary< T, box1d, image1d<T> >
   {
     typedef internal::image_primary< T, mln::box1d, image1d<T> > super_;
-    
+
     /// Coordinate associated type.
     typedef int coord;
-    
+
     /// Value associated type.
     typedef T         value;
 
@@ -169,9 +169,6 @@ namespace mln
     /// Give the border thickness.
     unsigned border() const;
 
-    /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
-
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point1d& p) const;
 
@@ -179,16 +176,10 @@ namespace mln
     T& operator()(const point1d& p);
 
     /// Read-only access to the image value located at offset \p o.
-    const T& operator[](unsigned o) const;
+    const T& operator[](unsigned i) const;
 
     /// Read-write access to the image value located at offset \p o.
-    T& operator[](unsigned o);
-
-    /// Read-only access to the image value located at (\p ind).
-    const T& at(int ind) const;
-
-    /// Read-write access to the image value located at (\p ind).
-    T& at(int ind);
+    T& operator[](unsigned i);
 
 
     /// Fast Image method
@@ -197,16 +188,26 @@ namespace mln
     using super_::index_of_point;
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint1d& dp) const;
+    int delta_index(const dpoint1d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point1d point_at_offset(unsigned o) const;
+    point1d point_at_index(unsigned i) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
 
     /// Give a hook to the value buffer.
     T* buffer();
+
+    /// Read-only access to the image value located at (\p ind).
+    const T& element(unsigned ind) const;
+
+    /// Read-write access to the image value located at (\p ind).
+    T& element(unsigned ind);
+
+    /// Give the number of cells (points including border ones).
+    std::size_t nelements() const;
+
 
 
     /// Resize image border with new_border.
@@ -358,7 +359,7 @@ namespace mln
   image1d<T>::domain() const
   {
     mln_precondition(this->has_data());
-    return this->data->b_;
+    return this->data_->b_;
   }
 
   template <typename T>
@@ -367,7 +368,7 @@ namespace mln
   image1d<T>::bbox() const
   {
     mln_precondition(this->has_data());
-    return this->data->b_;
+    return this->data_->b_;
   }
 
   template <typename T>
@@ -376,16 +377,16 @@ namespace mln
   image1d<T>::border() const
   {
     mln_precondition(this->has_data());
-    return this->data->bdr_;
+    return this->data_->bdr_;
   }
 
   template <typename T>
   inline
   std::size_t
-  image1d<T>::ncells() const
+  image1d<T>::nelements() const
   {
     mln_precondition(this->has_data());
-    return this->data->vb_.npoints();
+    return this->data_->vb_.nsites();
   }
 
   template <typename T>
@@ -394,7 +395,7 @@ namespace mln
   image1d<T>::has(const point1d& p) const
   {
     mln_precondition(this->has_data());
-    return this->data->vb_.has(p);
+    return this->data_->vb_.has(p);
   }
 
   template <typename T>
@@ -403,7 +404,7 @@ namespace mln
   image1d<T>::operator()(const point1d& p) const
   {
     mln_precondition(this->has(p));
-    return this->data->array_[p.ind()];
+    return this->data_->array_[p.ind()];
   }
 
   template <typename T>
@@ -412,7 +413,7 @@ namespace mln
   image1d<T>::operator()(const point1d& p)
   {
     mln_precondition(this->has(p));
-    return this->data->array_[p.ind()];
+    return this->data_->array_[p.ind()];
   }
 
   template <typename T>
@@ -420,8 +421,8 @@ namespace mln
   const T&
   image1d<T>::operator[](unsigned o) const
   {
-    mln_precondition(o < ncells());
-    return *(this->data->buffer_ + o);
+    mln_precondition(o < nelements());
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
@@ -429,26 +430,26 @@ namespace mln
   T&
   image1d<T>::operator[](unsigned o)
   {
-    mln_precondition(o < ncells());
-    return *(this->data->buffer_ + o);
+    mln_precondition(o < nelements());
+    return *(this->data_->buffer_ + o);
   }
 
   template <typename T>
   inline
   const T&
-  image1d<T>::at(int ind) const
+  image1d<T>::element(unsigned ind) const
   {
     mln_precondition(this->has(make::point1d(ind)));
-    return this->data->array_[ind];
+    return this->data_->array_[ind];
   }
 
   template <typename T>
   inline
   T&
-  image1d<T>::at(int ind)
+  image1d<T>::element(unsigned ind)
   {
     mln_precondition(this->has(make::point1d(ind)));
-    return this->data->array_[ind];
+    return this->data_->array_[ind];
   }
 
   template <typename T>
@@ -457,7 +458,7 @@ namespace mln
   image1d<T>::buffer() const
   {
     mln_precondition(this->has_data());
-    return this->data->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
@@ -466,13 +467,13 @@ namespace mln
   image1d<T>::buffer()
   {
     mln_precondition(this->has_data());
-    return this->data->buffer_;
+    return this->data_->buffer_;
   }
 
   template <typename T>
   inline
   int
-  image1d<T>::offset(const dpoint1d& dp) const
+  image1d<T>::delta_index(const dpoint1d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0];
@@ -482,11 +483,11 @@ namespace mln
   template <typename T>
   inline
   point1d
-  image1d<T>::point_at_offset(unsigned o) const
+  image1d<T>::point_at_index(unsigned i) const
   {
-    mln_precondition(o < ncells());
-    point1d p = make::point1d(o + this->data->vb_.min_ind());
-    mln_postcondition(& this->operator()(p) == this->data->buffer_ + o);
+    mln_precondition(i < nelements());
+    point1d p = make::point1d(i + this->data_->vb_.min_ind());
+    mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }
 
@@ -495,7 +496,7 @@ namespace mln
   void
   image1d<T>::resize_(unsigned new_border)
   {
-    this->data->reallocate_(new_border);
+    this->data_->reallocate_(new_border);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

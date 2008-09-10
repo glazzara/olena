@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,6 +43,6 @@ int main()
 
   image1d<int> f(ninds, border);
 
-  mln_assertion(f.npoints() == ninds);
-  mln_assertion(f.ncells()  == (ninds + 2 * border));
+  mln_assertion(f.nsites() == ninds);
+  mln_assertion(f.nelements()  == (ninds + 2 * border));
 }

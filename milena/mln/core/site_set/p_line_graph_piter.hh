@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -49,12 +49,12 @@ namespace mln
   /// \brief Forward iterator on point sites of a mln::p_line_graph<P>.
   template <typename P>
   class p_line_graph_fwd_piter_
-    : public internal::site_iterator_base_< P, p_line_graph_fwd_piter_<P> >
+    : public internal::site_iterator_base< P, p_line_graph_fwd_piter_<P> >
   {
     typedef p_line_graph_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
-  public:    
+  public:
     // Make definitions from super class available.
     enum { dim = super_::dim };
 
@@ -129,12 +129,12 @@ namespace mln
   /// \brief Backward iterator on point sites of a mln::p_line_graph<P>.
   template <typename P>
   class p_line_graph_bkd_piter_
-    : public internal::site_iterator_base_< P, p_line_graph_bkd_piter_<P> >
+    : public internal::site_iterator_base< P, p_line_graph_bkd_piter_<P> >
   {
     typedef p_line_graph_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
-  public:    
+  public:
     // Make definitions from super class available.
     enum { dim = super_::dim };
 
@@ -268,7 +268,7 @@ namespace mln
 
   template <typename P>
   inline
-  void 
+  void
   p_line_graph_fwd_piter_<P>::start()
   {
     id_ = 0;
@@ -278,7 +278,7 @@ namespace mln
 
   template <typename P>
   inline
-  void 
+  void
   p_line_graph_fwd_piter_<P>::next_()
   {
     ++id_.to_equiv();
@@ -409,7 +409,7 @@ namespace mln
 
   template <typename P>
   inline
-  void 
+  void
   p_line_graph_bkd_piter_<P>::start()
   {
     id_ = plg_->nedges() - 1;
@@ -419,7 +419,7 @@ namespace mln
 
   template <typename P>
   inline
-  void 
+  void
   p_line_graph_bkd_piter_<P>::next_()
   {
     --id_.to_equiv();

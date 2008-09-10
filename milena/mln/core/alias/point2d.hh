@@ -163,7 +163,7 @@ namespace mln
       mln_precondition(i < 2);
       return exact_().get_subject()[i];
     }
-    
+
     template <typename C, typename E>
     inline
     E&
@@ -175,7 +175,7 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::internal
-  
+
 
 } // end of namespace mln
 

@@ -166,9 +166,6 @@ namespace mln
       /// Return type of read-write access.
       typedef typename internal::helper_stack_image_lvalue_<n,I>::ret lvalue;
 
-      /// Value set associated type.
-      typedef mln::value::set<value> vset;
-
 
       /// Skeleton.
       typedef stack_image< n, tag::image_<I> > skeleton;
@@ -191,9 +188,6 @@ namespace mln
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const psite&);
       void write_(const psite& p, const value& v);
-
-      /// Give the set of values of the image.
-      const vset& values() const;
     };
 
 
@@ -294,14 +288,6 @@ namespace mln
     stack_image<n,I>::operator()(const psite& p)
     {
       return internal::helper_stack_image_lvalue_<n,I>::make(*this, p);
-    }
-
-    template <unsigned n, typename I>
-    inline
-    const mln::value::set< algebra::vec<n, mln_value(I)> >&
-    stack_image<n,I>::values() const
-    {
-      return vset::the();
     }
 
     // stack(..)

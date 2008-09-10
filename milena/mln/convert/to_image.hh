@@ -187,11 +187,11 @@ namespace mln
       return ima;
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    image1d<std::size_t> to_image(const histo::data<S>& h)
+    image1d<std::size_t> to_image(const histo::data<T>& h)
     {
-      mln_value(S)
+      mln_value(histo::data<T>)
 	v_min = h.vset()[0],
 	v_max = h.vset()[h.vset().nvalues() - 1];
       image1d<std::size_t> ima(make::box1d(v_min, v_max));

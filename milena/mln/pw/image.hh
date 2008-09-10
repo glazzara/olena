@@ -130,10 +130,6 @@ namespace mln
       /// Return type of read-write access.
       typedef void lvalue; // FIXME
 
-      /// Value set associated type.
-      typedef mln::value::set<mln_result(F)> vset;
-
-
       /// Constructor without argument.
       image();
 
@@ -150,9 +146,6 @@ namespace mln
 
       /// Read-write access is present but disabled.
       void operator()(const mln_psite(S)&);
-
-      /// Give the set of values of the image.
-      const vset& values() const;
     };
 
   } // end of namespace mln::pw
@@ -228,14 +221,6 @@ namespace mln
     image<F,S>::operator()(const mln_psite(S)&)
     {
       mln_invariant(0); // FIXME: Turn into a compile-time error...
-    }
-
-    template <typename F, typename S>
-    inline
-    const mln::value::set<mln_result(F)>&
-    image<F,S>::values() const
-    {
-      return vset::the();
     }
 
   } // end of namespace mln::pw

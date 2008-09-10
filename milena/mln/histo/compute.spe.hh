@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,12 +52,12 @@ namespace mln
       namespace generic
       {
 	template <typename I>
-	data<mln_vset(I)> compute_(const I& input);
+	data<mln_value(I)> compute_(const I& input);
       }
 
       template <typename I>
       inline
-      data<mln_vset(I)>
+      data<mln_value(I)>
       compute_(trait::image::speed::any, const I& input)
       {
 	return generic::compute_(input);
@@ -65,10 +65,10 @@ namespace mln
 
       template <typename I>
       inline
-      data<mln_vset(I)>
+      data<mln_value(I)>
       compute_(trait::image::speed::fastest, const I& input)
       {
-	data<mln_vset(I)> h(input.values());
+	data<mln_value(I)> h;
 	mln_pixter(const I) p(input);
 	for_all(p)
 	  ++h(p.val());
