@@ -1,5 +1,9 @@
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/complex_psite.hh (operator<<): Fix indentation.
+
+2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/p_complex.hh: Add forward declarations for
 	p_complex_fwd_piter_ and p_complex_bkd_piter_.
 
