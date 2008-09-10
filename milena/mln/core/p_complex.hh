@@ -44,7 +44,12 @@
 namespace mln
 {
 
-  // FIXME: Rename as p_faces.
+  // Forward declarations.
+  template <unsigned D, typename P> class p_complex_fwd_piter_;
+  template <unsigned D, typename P> class p_complex_bkd_piter_;
+
+
+  // FIXME: Rename as p_faces?
 
   /* FIXME: For compatibility reasons with mln::Point_Set, a point
      type \P is attached to this complex-based pset (but it is not
