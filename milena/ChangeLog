@@ -1,3 +1,9 @@
+2008-09-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update rotation.
+
+	* mln/fun/x2x/rotation.hh (give_h_mat): Add function.
+
 2008-09-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove useless '_' in class names.

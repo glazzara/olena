@@ -48,6 +48,76 @@ namespace mln
     namespace x2x
     {
 
+      namespace internal
+      {
+        template < unsigned n, typename C >
+        algebra::h_mat<n+1, C>
+        get_h_mat(const float alpha_, const algebra::vec<3,C>& axis_
+        {
+          assert(!"get_h_mat : n not implemented");
+        }
+
+        template <typename C >
+        algebra::h_mat<4, C>
+        get_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        {
+          algebra::h_mat<4, C> m_;
+
+          const float cos_a = cos(alpha_);
+          const float sin_a = sin(alpha_);
+          const float u = axis_[0];
+          const float v = axis_[1];
+          const float w = axis_[2];
+          const float u2 = u * u;
+          const float v2 = v * v;
+          const float w2 = w * w;
+          const float uvw2 = u2 + v2 + w2;
+
+          m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
+          m_(0,1) = (u*v * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,2) = (u*w * (1 - cos_a) + v * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,3) = 0;
+
+          m_(1,0) = (u*v * (1 - cos_a) + w * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
+          m_(1,2) = (v*w * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,3) = 0;
+
+          m_(2,0) = (u*w * (1 - cos_a) - v * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,1) = (v*w * (1 - cos_a) + u * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
+          m_(2,3) = 0;
+
+          m_(2,0) = 0;
+          m_(2,1) = 0;
+          m_(2,1) = 0;
+          m_(2,3) = 1;
+
+          return m_;
+        }
+
+        template <typename C >
+        algebra::h_mat<3, C>
+        get_h_mat(const float alpha_, const algebra::vec<2,C>& axis_
+        {
+          algebra::h_mat<3, C> m_;
+          const float cos_a = cos(alpha_);
+          const float sin_a = sin(alpha_);
+          const algebra::vec<4,float> vec
+            = make::vec(cos_a, -sin_a, sin_a, cos_a);
+          unsigned k = 0;
+          for (unsigned i = 0; i < 3; ++i)
+            for (unsigned j = 0; j < 3; ++j)
+              {
+                if (j != this->dir_ && i != this->dir_)
+                  this->m_(i, j) = vec[k++];
+                else
+                  this->m_(i, j) = (i == j);
+              }
+        }
+      }
+
+
       /*! \brief Represent a rotation function.
        *
        */
@@ -159,36 +229,7 @@ namespace mln
       rotation<n,C>::update()
       {
         assert(n == 3); // debug
-        const float cos_a = cos(alpha_);
-        const float sin_a = sin(alpha_);
-        const float u = axis_[0];
-        const float v = axis_[1];
-        const float w = axis_[2];
-        const float u2 = u * u;
-        const float v2 = v * v;
-        const float w2 = w * w;
-        const float uvw2 = u2 + v2 + w2;
-            
-        this->m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
-        this->m_(0,1) = (u*v * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(0,2) = (u*w * (1 - cos_a) + v * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(0,3) = 0;
-        
-        this->m_(1,0) = (u*v * (1 - cos_a) + w * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
-        this->m_(1,2) = (v*w * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(1,3) = 0;
-            
-        this->m_(2,0) = (u*w * (1 - cos_a) - v * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(2,1) = (v*w * (1 - cos_a) + u * math::sqrt(uvw2) * sin_a) / uvw2;
-        this->m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
-        this->m_(2,3) = 0;
-            
-        this->m_(2,0) = 0;
-        this->m_(2,1) = 0;
-        this->m_(2,1) = 0;
-        this->m_(2,3) = 1;        
-        
+
       }
 
 # endif // ! MLN_INCLUDE_ONLY
