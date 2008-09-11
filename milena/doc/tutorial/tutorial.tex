@@ -144,18 +144,27 @@ const Box\& & bbox & - & X &  Bounding box. Available only on grid site sets.
 
 The previous methods are available depending on the site set. A box
 will have the bbox() method since it can be retrived in constant time: a box
-is it's own bounding box (see \ref{fig:box_bbox}). A p\_array does not have this
+is it's own bounding box (see \ref{fig:box_bbox}).
+
+\begin{lstlisting}[frame=single]
+  box2d b(2,3);
+
+  // The bbox can be retrived in constant time.
+  std::cout << b.bbox() << std::endl;
+
+  // nsites can be retrieved in constant time.
+  std::cout << "nsites = " << b.nsites() << std::endl;
+\end{lstlisting}
+
+A p\_array does not have this
 method since sites do not have to be adjacent. Maintaining such information, in
 order to keep getting the bbox in constant time, would be time and memory
 consuming. Instead of providing a method directly in p\_array, an algorithm is
-available if this information needed (see \ref{fig:parray_bbox}).
+available if this information is needed.
 P\_array and box both have a nsites method since the internal structure allow a
 constant time retrieval.
 
-\subsubsection*{Sample code}
-
-\begin{figure}[ht!]
-  \begin{lstlisting}[frame=single]
+\begin{lstlisting}[frame=single]
   p_array<point2d> arr;
 
   // The bbox is computed thanks to bbox() algorithm.
@@ -165,22 +174,10 @@ constant time retrieval.
   // p_array provides nsites(),
   // it can be retrieved in constant time.
   std::cout << "nsites = " << arr.nsites() << std::endl;
-  \end{lstlisting}
-  \caption{How to retrieve information from a p\_array.\label{fig:parray_bbox}}
-\end{figure}
+\end{lstlisting}
 
-\begin{figure}[ht!]
-  \begin{lstlisting}[frame=single]
-  box2d b(2,3);
 
-  // The bbox can be retrived in constant time.
-  std::cout << b.bbox() << std::endl;
 
-  // nsites can be retrieved in constant time.
-  std::cout << "nsites = " << b.nsites() << std::endl;
-  \end{lstlisting}
-  \caption{How to retrieve information from a box.\label{fig:box_bbox}}
-\end{figure}
 
 \clearpage
 \newpage
@@ -199,8 +196,8 @@ $$
 \item A site set, also called the "domain".
 \end{itemize}
 
-Every image type is defined on a specific site type. An image2d will always
-have a domain defined by a box2d.
+An image2d will always have its bouding box defined by a box2d whatever the
+site set used to define its domain.
 The Value set, which includes all the possible values a site can have, is also
 called "destination" set.
 
@@ -208,7 +205,7 @@ An image has a virtual border which is defined thanks to its domain. The
  border is virtual since the image can have an extended domain as well.
 That one is optional, it defines sites outside the virtual border which is
 useful in algorithms when working with sites being part of the domain but close
-to the borders. The virtual border can be defined thanks to a function, an
+to the borders. The extended domain can be defined thanks to a function, an
 image or a site set.
 
 //FIXME: remove this line
@@ -373,7 +370,6 @@ extended domain. \\ \hline
 
 \chapter{Iterators}
 
-Every objects 
 Each container object in Olena like site sets or images have iterators.
 There are usually three kinds:
 \begin{itemize}
@@ -413,32 +409,25 @@ constructor and not associated to a proper container.\\ \hline
 Example of different forward iterations:
 \begin{itemize}
   \item box2d: from top to bottom then from left to right.
-  \item p\_array<point2d>: from left to right.
+  \item p\_array$<$point2d$>$: from left to right.
 \end{itemize}
 
-A for\_all() macro is available to iterate over all the sites
-(Fig. \ref{fig:for_all}). \\
+A for\_all() macro is available to iterate over all the sites: \\
 
-
-\begin{figure}[ht!]
-  \begin{lstlisting}[frame=single]
+\begin{lstlisting}[frame=single]
   box2d b(3, 2);
   mln_piter(box2d) p(b);
 
   for_all(p)
     std::cout << p; //prints every site coordinates.
-  \end{lstlisting}
-  \caption{Use of the for\_all() macro.\label{fig:for_all}}
-\end{figure}
+\end{lstlisting}
 
 Note that when you declare an iterator, prefer using the "mln\_*iter" macros.
 They resolve the iterator type automatically from the given container type
 passed as parameter. These macros can be used with any container like images or
 site sets.
-(\ref{fig:iter_allcontainers}).
 
-\begin{figure}[ht!]
-  \begin{lstlisting}[frame=single]
+\begin{lstlisting}[frame=single]
   image2d<int> ima(box2d(2, 3));
 
   mln_piter(box2d) p(ima.domain());
@@ -448,24 +437,29 @@ site sets.
   mln_viter(image2d<int>) v(ima.destination());
   for_all(v)
     std::cout << v << std::endl;
-  \end{lstlisting}
-  \caption{mln\_*iter macros can be used with any
-containers.\label{fig:iter_allcontainers}}
-\end{figure} 
+\end{lstlisting}
 
 
 \chapter{Basic operations}
 //FIXME : illustrer
-\begin{itemize}
-  \item level::clone(), creates a deep copy of an object. Any shared data is
-duplicated.
-  \item level::fill(), fill an object with a value (fig. \ref{fig:fill_impl}).
-  \item level::paste(), paste object data to another object (fig.
-\ref{fig:paste_impl})
 
-  \item labeling::blobs(), find and label the different components of an image.
-\end{itemize}
+\section{Basic routines}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+Routine name & Description \\ \hline
+level::clone() & creates a deep copy of an object. Any shared data is
+duplicated. \\ \hline
 
+level::fill() & fill an object with a value. \\ \hline
+
+level::paste() & paste object data to another object. \\ \hline
+
+labeling::blobs() & find and label the different components of an image. \\
+\hline
+\end{tabular} \\
+
+
+\section{Examples}
 First, create an image:
 \begin{lstlisting}[frame=single]
   image2d<char> imga(0, 0, 20, 20);
@@ -572,7 +566,7 @@ void paste(const I& data, J& dest)
   \caption{Implementation of the paste routine.\label{fig:paste_impl}}
 \end{figure}
 
-
+\newpage
 \section{Working with parts of an image}
 
 Sometime it may be interesting to work only on some part of the image or to
@@ -603,6 +597,21 @@ predicate by passing the function pointer.
 You can easily get a function\_p2b by comparing the value returned 
 by a function\_p2v to another Value.
 The following sample code illustrates this feature.
+
+In order to use C functions as predicate, they must have one of the following
+prototype if you work on 2D images:
+\begin{lstlisting}[frame=single]
+//function_p2b
+bool my_function_p2b(mln::point2d p);
+
+//function_p2v
+//V is the value type used in the image.
+V my_function_p2v(mln::point2d p);
+\end{lstlisting}
+Of course, you just need to change the point type if you use another image
+type. For instance, you would use point3d with 3D images.
+The returned value type V for function\_p2v depends on the image value type.
+With image2d<int>, V would be int.
 
 In this section, all along the examples, the image "ima" will refer to the
 following declaration:
@@ -675,9 +684,197 @@ The previous example can be written more quickly:
   fill(inplace(lab.domain(2)), color::red);
 \end{lstlisting}
 
+Here is an example using a C function:
+\begin{lstlisting}[frame=single]
+bool row_oddity(mln::point2d p)
+{
+  return p.row() % 2;
+}
+
+void my_function()
+{
+  ...
+  //Prints only sites which are on odd lines.
+  debug::println(ima | row_oddity};
+  ...
+}
+\end{lstlisting}
 
 \chapter{Graphes and images}
+\section{Description}
+Olena enables the possibility of using graphes with images.
+Graphes can help you to handle directly parts of an image and represent their
+relationship.
+Specific data can be associated to each vertex and/or edges.
 
+//FIXME: Add more explanations?
 
+\section{Example}
+
+First, create a graph which looks like the following:
+
+\begin{lstlisting}[frame=single]
+      0 1 2 3 4
+   .-----------
+ 0 |  0       2
+ 1 |    \   / |
+ 2 |      1   |
+ 3 |       \  |
+ 4 |        3-4
+\end{lstlisting}
+
+To do so, we need to create a site set containing the sites we are going to use
+as vertices:
+
+\begin{lstlisting}
+std::vector<point2d> sites;
+
+// Site associated to...
+sites.push_back(point2d(0,0)); // ... vertex 0.
+sites.push_back(point2d(2,2)); // ... vertex 1.
+sites.push_back(point2d(0,4)); // ... vertex 2.
+sites.push_back(point2d(4,3)); // ... vertex 3.
+sites.push_back(point2d(4,4)); // ... vertex 4.
+\end{lstlisting}
+
+Then populate the graph with vertices:
+\begin{lstlisting}
+util::graph<point2d> g;
+
+for (unsigned i = 0; i < points.size(); ++i)
+  g.add_vertex (points[i]);
+\end{lstlisting}
+
+Finally, populate the graph with edges:
+\begin{lstlisting}
+g.add_edge(0, 1); // Associated to edge 0.
+g.add_edge(1, 2); // Associated to edge 1.
+g.add_edge(1, 3); // Associated to edge 2.
+g.add_edge(3, 4); // Associated to edge 3.
+g.add_edge(4, 2); // Associated to edge 4.
+\end{lstlisting}
+
+Now, a graph structure is created but contains only site relationship
+information. We may like to map data to it. Vertices and edges are mapped to
+indexes. Indexes start from 0 and respect the insertion order.
+Therefore, the idea is to provide a function which returns the associated data
+according to the index given as parameter. Combining this function and the
+graph, which is actually a sort of site set, we get an image. Since this is an
+image, you can use it with algorithms and for\_all loops.
+
+\begin{lstlisting}[frame=single]
+
+Value my_data_fun(vertex_index_t index)
+{
+  if (index == 0)
+    return value1;
+  else if (index > 1 && < 4)
+    return value2;
+  return value3;
+}
+
+Value my_data_fun(edge_index_t index)
+{
+  if (index == 0)
+    return value1;
+  else if (index > 1 && < 4)
+    return value2;
+  return value3;
+}
+
+void my_fun()
+{
+  ...
+  // Constructs an image which associates
+  // data and edges. A site is actually an edge.
+  mln_VAR(graph_edge_ima, my_data_fun | g.edges());
+
+  //Prints each edge.
+  mln_piter p(graph_edge_ima);
+  for_all(p)
+    std::cout << p << std::endl;
+
+  // Constructs an image which associates
+  // data and vertices. A site is actually a vertex.
+  mln_VAR(graph_vertices_ima, my_data_fun2 | g.vertices());
+
+  //Prints each vertex
+  mln_piter p(graph_vertices_ima);
+  for_all(p)
+    std::Cout << p << std::endl;
+  ...
+}
+\end{lstlisting}
+
+Note that like any image in Olena, graph images share their data. Therefore,
+while constructing a graph image from a graph and a function, the graph is not
+copied and this is NOT a costly operation.
+
+Like other images, graph images also have an overloaded operator() to access the
+data associated to a vertex or an edge.
+\begin{lstlisting}
+  //Prints each edge's associated value.
+  mln_piter p(graph_edge_ima);
+  for_all(p)
+    std::cout << graph_edge_ima(p) << std::endl;
+
+  //Prints each vertex's associated value.
+  mln_piter p(graph_vertex_ima);
+  for_all(p)
+    std::cout << graph_vertex_ima(p) << std::endl;
+\end{lstlisting}
+
+Of course, creating a graph image is not necessary and you can work directly
+with the graph and container/function mapping indexes and data.
+
+\begin{lstlisting}
+// Iterator on vertices.
+mln_Viter V(g);
+
+// Prints each vertex and its associated value.
+for_all(V)
+{
+  std::cout << V << " : " << my_data_fun(V) << std::endl;
+}
+\end{lstlisting}
+
+Graphes have iterators like any other site sets and also provide
+specific iterators in order to iterate over graphes in a more intuitive way.
+
+\begin{lstlisting}
+// Iterator on vertices.
+mln_Viter V(g);
+
+// Iterator on V's edges.
+mln_Eiter n(g, V);
+
+// Prints the graph
+// List all edges for each vertex.
+for_all(V)
+{
+  std::cout << V << " : ";
+  for_all(n)
+    std::cout << n << " ";
+  std::cout << std::endl;
+}
+
+// Iterator on edges.
+mln_Eiter E(g);
+
+// Iterator on vertices adjacent to E.
+mln_Viter n(g, E);
+
+// Prints the graph
+// List all adjacent vertices for each edge.
+for_all(E)
+{
+  std::cout << E << " : ";
+  for_all(n)
+    std::cout << n << " ";
+  std::cout << std::endl;
+}
+\end{lstlisting}
+
+//FIXME talk about p_vertices and p_edges.
 
 \end{document}
