@@ -1,5 +1,32 @@
 2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor iterators on p_complexes with iterator on complexes.
+
+	* mln/core/p_complex_piter.hh
+	(mln::p_complex_fwd_piter_<D, P>::iter)
+	(mln::p_complex_bkd_piter_<D, P>::iter):
+	New typedef.
+	(mln::p_complex_fwd_piter_<D, P>::face_)
+	(mln::p_complex_bkd_piter_<D, P>::face_):
+	Remove member.
+	(mln::p_complex_fwd_piter_<D, P>::iter_)
+	(mln::p_complex_bkd_piter_<D, P>::iter_):
+	New member.
+	(mln::p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_)
+	(mln::p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_):
+	Adjust ctors.
+	(mln::p_complex_fwd_piter_<D, P>::is_valid)
+	(mln::p_complex_fwd_piter_<D, P>::invalidate)
+	(mln::p_complex_fwd_piter_<D, P>::start)
+	(mln::p_complex_fwd_piter_<D, P>::next)
+	(mln::p_complex_fwd_piter_<D, P>::update):
+	Adjust.
+	(mln::p_complex_fwd_piter_<D, P>::invalid_unsigned_)
+	(mln::p_complex_bkd_piter_<D, P>::invalid_unsigned_):
+	Remove, useless.
+
+2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add default constructors to complexes on iterators.
 	
 	* mln/core/complex_iter.hh
