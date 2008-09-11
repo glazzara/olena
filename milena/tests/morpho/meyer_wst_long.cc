@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/extrema_components.cc
+/// \file tests/morpho/meyer_wst_long.cc
 // /\brief Test on mln::morpho::extrema_components
 
 #include <iostream>

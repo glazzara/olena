@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file mln/core/pset_array.hh
+/*! \file tests/core/site_set/pset_array.cc
  *
  * \brief Tests for the pset array.
  */

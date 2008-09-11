@@ -1,5 +1,38 @@
 2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix most of Doxygen's warnings.
+	* milena/mln/core/image/flat_image.hh,
+	* milena/mln/core/internal/site_relative_iterator_base.hh,
+	* milena/mln/core/site_set/line2d.hh,
+	* milena/mln/core/site_set/p_if_piter.hh,
+	* milena/mln/core/site_set/p_priority.hh,
+	* milena/mln/trait/image/props.hh,
+	* milena/mln/util/internal/boost_graph_structure.hh,
+	* milena/mln/util/internal/graph_base.hh,
+	* milena/tests/algebra/h_vec.cc,
+	* milena/tests/binarization/threshold.cc,
+	* milena/tests/core/image/flat_image.cc,
+	* milena/tests/core/image/tr_image.cc,
+	* milena/tests/core/other/dpoints_pixter.cc,
+	* milena/tests/core/site_set/p_priority_queue.cc,
+	* milena/tests/core/site_set/p_priority_queue_fast.cc,
+	* milena/tests/core/site_set/p_priority_queue_fast_with_array.cc,
+	* milena/tests/core/site_set/pset_array.cc,
+	* milena/tests/core/site_set/pset_if.cc,
+	* milena/tests/level/sort_psites_full.cc,
+	* milena/tests/morpho/line_graph_image_wst.cc,
+	* milena/tests/morpho/meyer_wst.cc,
+	* milena/tests/morpho/meyer_wst_long.cc,
+	* milena/tests/test/positive.cc,
+	* milena/tests/value/builtin/builtin.cc:
+	  Fix \file tag with the proper file name.
+
+	* milena/doc/Doxyfile.in: Add new macro expansions.
+	* milena/doc/Makefile.am: set EXCLUDE_SYMBOLS properly when
+	  making the user doc.
+
+2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing init_() to pw::image.
 	* milena/mln/pw/image.hh: Add missing init_().
 

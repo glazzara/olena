@@ -104,6 +104,8 @@
 //                              \    |
 //                                -- + -- cell_and_value_wise
 
+// * domain values
+
 // value_io:     /any/
 //                 |
 //                 + -- read_only
@@ -151,6 +153,8 @@
 //                        |     + -- infinite
 //                        |
 //                        + -- extendable
+
+// * extension values
 
 // ext_value:    /any/
 //                 |

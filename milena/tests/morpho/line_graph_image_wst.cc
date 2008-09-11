@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/line_graph_image.cc
+/// \file tests/morpho/line_graph_image_wst.cc
 /// \brief Tests on the Watershed Transform on a mln::line_graph_image.
 
 #include <vector>

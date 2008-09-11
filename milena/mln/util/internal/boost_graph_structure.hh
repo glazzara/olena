@@ -26,7 +26,7 @@
 // Public License.
 
 
-/// \file mln/util/internal/boost_graph_struture.hh
+/// \file mln/util/internal/boost_graph_structure.hh
 /// \brief Operations that interract with the boost_graph structure.
 
 #ifndef MLN_UTIL_INTERNAL_BOOST_GRAPH_STRUCTURE_HH_

@@ -40,7 +40,10 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./internal/,OUTPUT_DIRECTORY     
 		-e 's,HIDE_IN_BODY_DOCS      = NO,HIDE_IN_BODY_DOCS      = YES,g'			\
 		-e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'			\
 		-e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'			\
-		-e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER         = \"User documentation ,g'
+		-e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER         = \"User documentation ,g'	\
+		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	       = mln::internal::*,g'
+
+
 
 EXTRA_DIST = Doxyfile.in
 

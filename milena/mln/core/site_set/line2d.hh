@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_P_LINE2D_HH
 # define MLN_CORE_P_LINE2D_HH
 
-/*! \file mln/core/p_line2d.hh
+/*! \file mln/core/site_set/line2d.hh
  *
  * \brief Definition of a 2D discrete line of points (based on
  * p_array).

@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_BASE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_BASE_HH
 
-/// \file mln/util/internal/graph.hh
+/// \file mln/util/internal/graph_base.hh
 /// \brief Factored implementation of undirected graphs.
 
 # include <cstddef>

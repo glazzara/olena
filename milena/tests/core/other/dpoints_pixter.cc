@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/dpoints_pixter.cc
+/// \file tests/core/other/dpoints_pixter.cc
 /// \brief Test on mln::dpoints_fwd_pixter and mln::dpoints_bkd_pixter.
 
 #include <mln/core/image/image1d.hh>

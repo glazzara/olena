@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_priority_fast_with_array.cc
+/*! \file tests/core/site_set/p_priority_queue_fast_with_array.cc
  *
  * \brief Tests on mln::p_priority_fast_with_array.
  */
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/p_priority_fast_with_array.hh>
+#include <mln/core/p_priority_queue_fast_with_array.hh>
 
 int main ()
 {

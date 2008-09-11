@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_priority.cc
+/*! \file tests/core/site_set/p_priority_queue.cc
  *
  * \brief Tests on mln::p_priority.
  */
