@@ -1,5 +1,14 @@
 2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use set_cplx() in ctors of complexes on iterators.
+
+	* mln/core/complex_iter.hh (mln): 
+	(mln::complex_fwd_iter_<D>::complex_fwd_iter_(complex<D>))
+	(mln::complex_bkd_iter_<D>::complex_bkd_iter_(complex<D>)):
+	Do it.
+
+2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Allow iterators on complexes to change their target.
 
 	* mln/core/complex_iter.hh
