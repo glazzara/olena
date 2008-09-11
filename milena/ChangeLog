@@ -1,3 +1,8 @@
+2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing init_() to pw::image.
+	* milena/mln/pw/image.hh: Add missing init_().
+
 2008-09-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Clean morpho::erosion.

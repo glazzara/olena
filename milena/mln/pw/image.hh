@@ -136,10 +136,14 @@ namespace mln
       /// Constructor.
       image(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
-      // No init_ method here since this image type is not "concrete".
+      /// Initialize an empty image.
+      void init_(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
       /// Give the definition domain.
       const S& domain() const;
+
+      /// Returns the function which compute a site value.
+      F function() const;
 
       /// Read-only access of pixel value at point site \p p.
       mln_result(F) operator()(const mln_psite(S)& p) const;
@@ -150,9 +154,34 @@ namespace mln
 
   } // end of namespace mln::pw
 
+  template <typename F, typename S>
+  void init_(tag::function_t, Function_p2v<F>& target,
+	      const mln::pw::image<F,S>& model);
+
+  template <typename F, typename S, typename J>
+  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // init_
+
+  template <typename F, typename S>
+  void init_(tag::function_t, Function_p2v<F>& target,
+	      const mln::pw::image<F,S>& model)
+  {
+    target = model.function();
+  }
+
+  template <typename F, typename S, typename J>
+  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model)
+  {
+    F f;
+    init_(tag::function, f, model);
+    S s;
+    init_(tag::domain, s, model);
+    target.init_(f, s);
+  }
 
   // Operator.
 
@@ -200,11 +229,28 @@ namespace mln
 
     template <typename F, typename S>
     inline
+    void
+    image<F,S>::init_(const Function_p2v<F>& f, const Site_Set<S>& ps)
+    {
+      this->data_ = new internal::data< image<F,S> >(exact(f), exact(ps));
+    }
+
+    template <typename F, typename S>
+    inline
     const S&
     image<F,S>::domain() const
     {
       return this->data_->pset_;
     }
+
+    template <typename F, typename S>
+    inline
+    F
+    image<F,S>:: function() const
+    {
+      return this->data_->f_;
+    }
+
 
     template <typename F, typename S>
     inline
