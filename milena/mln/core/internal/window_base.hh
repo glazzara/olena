@@ -60,6 +60,10 @@ namespace mln
       /// Site associated type.
       typedef mln_site(D) site;
 
+      /// Test if this window can be a neighborhood.
+      // This method is used in the neighborhood window-adapter.
+      bool is_neighbable_() const;
+
     protected:
       window_base();
     };
@@ -71,6 +75,14 @@ namespace mln
     inline
     window_base<D,E>::window_base()
     {
+    }
+
+    template <typename D, typename E>
+    inline
+    bool
+    window_base<D,E>::is_neighbable_() const
+    {
+      return exact(this)->is_symmetric() && ! exact(this)->is_centered();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

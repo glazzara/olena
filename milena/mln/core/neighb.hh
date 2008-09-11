@@ -30,75 +30,107 @@
 
 /*! \file mln/core/neighb.hh
  *
- * \brief Definition of the generic neighborhood class mln::neighb.
+ * \brief Definition of a window-to-neighborhood adapter.
  */
 
 # include <mln/core/internal/neighborhood_base.hh>
-# include <mln/core/internal/basic_window_impl.hh>
-# include <mln/core/internal/neighborhood_impl_mixin.hh>
 
-# include <mln/core/window.hh>
-# include <mln/literal/zero.hh>
 
 
 namespace mln
 {
  
 
-  /*! \brief Generic neighborhood class.
-   *
-   * This neighborhood of window is just like a set of delta-points.
-   * The parameter is \c D, type of delta-point.
+  /*! \brief Adapter class from window to neighborhood.
    */
-  template <typename D>
-  struct neighb : internal::neighborhood_base< D, neighb<D> >,
-		  internal::neighborhood_impl_mixin< internal::basic_window_impl< D, neighb<D> >,
-						     neighb<D> >
+  template <typename W>
+  class neighb : public internal::neighborhood_base< mln_dpsite(W), neighb<D> >,
+		 private mlc_is_a(W, Window)::check_t
   {
-    /*! \brief Constructor without argument.
-     *
-     * The constructed neighborhood is empty. You have to use insert()
-     * to proceed to the neighborhood definition.
-     */
+  public:
+
+    /// Forward site iterator associated type.
+    typedef mln_fwd_qiter(W) fwd_niter;
+
+    /// Backward site iterator associated type.
+    typedef mln_bkd_qiter(W) bkd_niter;
+
+    /// Site iterator associated type.
+    typedef mln_qiter(W) niter;
+
+
+    /// Constructor without argument.
     neighb();
 
-    // Overridden from internal::basic_window_impl so that it also
-    // inserts \a -dp.
-    neighb<D>& insert_(const D& dp);
+    /// Constructor from a window \p win.
+    neighb(const W& win);
 
-    typedef mln::window<D> window;
+    /// Get the corresponding window.
+    const W& win() const;
 
-    window to_window() const
-    {
-      window tmp(this->dps_);
-      D zero = literal::zero;
-      tmp.insert(zero);
-      return tmp;
-    }
+  private:
+    W win_;
   };
+
+
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <typename W>
+      void
+      from_to_(const mln::neighb<W>& from, W& to);
+
+    } // end of namespace convert::impl
+
+  } // end of namespace convert
+
  
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb<D>::neighb()
+  neighb<W>::neighb()
   {
   }
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb<D>&
-  neighb<D>::insert_(const D& dp)
+  neighb<W>::neighb(const W& win)
   {
-    typedef neighb<D> self;
-    typedef internal::basic_window_impl< D, neighb<D> > win_impl;
-    typedef internal::neighborhood_impl_mixin< win_impl, neighb<D> > super_;
-    this->super_::insert_( dp);
-    this->super_::insert_(-dp);
-    return *this;
+    mln_precondition(win.is_neighbable_());
+    win_ = win;
   }
 
+  template <typename W>
+  inline
+  const W&
+  neighb<W>::win() const
+  {
+    return win_;
+  }
+
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <typename W>
+      void
+      from_to_(const mln::neighb<W>& from, W& to)
+      {
+	to = from.win();
+      }
+
+    } // end of namespace convert::impl
+
+  } // end of namespace convert
+
+ 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
