@@ -63,9 +63,12 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-        erosion_on_function_(const I& input, const W& win)
+	erosion_on_function(const Image<I>& input_, const Window<W>& win_);
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_function_");
+	  trace::entering("morpho::impl::generic::erosion_on_function");
+
+	  const I& input = exact(input_);
+	  const W& win = exact(win_);
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -76,12 +79,12 @@ namespace mln
 	  for_all(p)
 	  {
 	    min.init();
-	    for_all(q) if (input.owns_(q))
+	    for_all(q) if (input.has(q))
 	      min.take(input(q));
 	    output(p) = min;
 	  }
 
-	  trace::exiting("morpho::impl::generic::erosion_on_function_");
+	  trace::exiting("morpho::impl::generic::erosion_on_function");
 	  return output;
 	}
 
@@ -90,41 +93,25 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-	erosion_on_set_(const I& input, const W& win)
+	erosion_on_set(const Image<I>& input_, const Window<W>& win_);
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_set_");
+	  trace::entering("morpho::impl::generic::erosion_on_set");
+
+	  const I& input = exact(input_);
+	  const W& win = exact(win_);
 
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  mln_concrete(I) output;
+	  for_all(p)
+	  {
+	    for_all(q) if (input.has(q))
+	      if (input(q) == false)
+		break;
+	    output(p) = ! q.is_valid();
+	  }
 
-	  if (win.is_centered())
-	    {
-	      output = clone(input);
-	      for_all(p)
-		if (input(p))
-		  for_all(q) if (input.owns_(q))
-		    if (! input(q))
-		      {
-			output(p) = false;
-			break;
-		      }
-	    }
-	  else
-	    {
-	      initialize(output, input);
-	      for_all(p)
-		{
-		  for_all(q) if (input.owns_(q))
-		    if (! input(q))
-		      break;
-		  // If there was no break (so q is not valid) then
-		  // output(p) <- true; otherwise, output(p) <- false.
-		  output(p) = ! q.is_valid();
-		}
-	    }
-
-	  trace::exiting("morpho::impl::generic::erosion_on_set_");
+	  trace::exiting("morpho::impl::generic::erosion_on_set");
 	  return output;
 	}
 
@@ -145,7 +132,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = impl::erosion_(exact(input), exact(win));
+      mln_concrete(I) output = internal::erosion_dispatch(input, win);
 
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);

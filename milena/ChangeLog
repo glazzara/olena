@@ -1,3 +1,14 @@
+2008-09-11  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Clean morpho::erosion.
+
+	* mln/morpho/erosion.hh,
+	* mln/morpho/erosion.spe.hh: Clean the specialized versions
+	of erosion. The new versions have the same signature than the
+	facade. Add a new dispatch.
+
+	* mln/win/rectangle2d.hh: Update an old include
+
 2008-09-10  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Parametrize histo::data by value types, Repair image1d.

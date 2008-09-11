@@ -35,7 +35,7 @@
  * \todo Reactivate includes at EOF.
  */
 
-# include <mln/core/window.hh>
+# include <mln/core/alias/window2d.hh>
 
 
 namespace mln
@@ -43,7 +43,7 @@ namespace mln
 
   namespace win
   {
- 
+
     /*! \brief Rectangular window defined on the 2D square grid.
      *
      * A rectangle2d is a 2D window with rectangular shape.  It is
@@ -69,7 +69,7 @@ namespace mln
       typedef dpsites_fwd_piter<rectangle2d> bkd_qiter;
 
       typedef fwd_qiter qiter;
-      
+
 
       /*! \brief Constructor.
        *
@@ -133,7 +133,7 @@ namespace mln
      */
     std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
 
- 
+
 
 # ifndef MLN_INCLUDE_ONLY
 
