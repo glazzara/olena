@@ -1,5 +1,14 @@
 2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add default constructors to complexes on iterators.
+	
+	* mln/core/complex_iter.hh
+	(mln::complex_fwd_iter_<D>::complex_fwd_iter_)
+	(mln::complex_bkd_iter_<D>::complex_bkd_iter_):
+	New ctors.
+
+2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use set_cplx() in ctors of complexes on iterators.
 
 	* mln/core/complex_iter.hh
