@@ -6,6 +6,7 @@
 # include <mln/debug/println.hh>
 
 # include <mln/core/alias/neighb2d.hh>
+# include <mln/estim/nsites.hh>
 
 
 template <typename I, typename W, typename P>
@@ -34,16 +35,17 @@ void fill_null(I& ima, const W& win)
 }
 
 
-
 int main()
 {
   using namespace mln;
 
   typedef image2d<unsigned> I;
   I ima(2, 3, 0); // no border
+
   debug::iota(ima);
   debug::println(ima);
-  mln_invariant(ima.nsites() == 6);
+  mln_assertion(ima.nsites() == 6);
+  mln_assertion(estim::nsites(ima) == ima.nsites());
 
   window2d win;
   win

@@ -1,5 +1,12 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add an 'estim nsites' routine for Z.
+
+	* doc/tutorial/examples/image2d.cc: Augment.
+	* mln/estim/nsites.hh: New.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Get rid of dpoints_piter.
 
 	* mln/core/dpoints_piter.hh: Remove; obsolete thanks to
