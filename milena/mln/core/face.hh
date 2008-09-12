@@ -143,6 +143,9 @@ namespace mln
   template <unsigned N, unsigned D>
   struct face_handle
   {
+    // The type of the complex this handle points to.
+    typedef complex<D> complex_type;
+
     /// Build a non-initialized face handle.
     face_handle();
     /// Build a face handle from \a complex and \a face_id.
@@ -156,6 +159,8 @@ namespace mln
 
     /// Is this handle valid?
     bool is_valid() const;
+    /// Invalidate this handle.
+    void invalidate();
 
     /// Accessors.
     /// \{
@@ -167,6 +172,9 @@ namespace mln
 
     /// Set the complex the face belongs to.
     void set_cplx(complex<D>& cplx);
+    /// Return the dimension of the face.
+    // FIXME: Rename as `dim'?
+    unsigned n() const;
     /// Set the id of the face.
     void set_face_id(unsigned face_id);
 
@@ -259,6 +267,9 @@ namespace mln
   template <unsigned D>
   struct any_face_handle
   {
+    // The type of the complex this handle points to.
+    typedef complex<D> complex_type;
+
     /// Build a non-initialized face handle.
     any_face_handle();
     /// Build a face handle from \a complex and \a face_id.
@@ -276,6 +287,8 @@ namespace mln
 
     /// Is this handle valid?
     bool is_valid() const;
+    /// Invalidate this handle.
+    void invalidate();
 
     /// Accessors.
     /// \{
@@ -411,11 +424,25 @@ namespace mln
   }
 
   template <unsigned N, unsigned D>
+  void
+  face_handle<N, D>::invalidate()
+  {
+    set_face_id(std::numeric_limits<unsigned>::max());
+  }
+
+  template <unsigned N, unsigned D>
   complex<D>&
   face_handle<N, D>::cplx() const
   {
     mln_precondition(cplx_);
     return *cplx_;
+  }
+
+  template <unsigned N, unsigned D>
+  unsigned
+  face_handle<N, D>::n() const
+  {
+    return N;
   }
 
   template <unsigned N, unsigned D>
@@ -571,6 +598,14 @@ namespace mln
   any_face_handle<D>::is_valid() const
   {
     return cplx_ != 0 && n_ <= D && face_id_ < cplx_->nfaces(n_);
+  }
+
+  template <unsigned D>
+  void
+  any_face_handle<D>::invalidate()
+  {
+    set_n(std::numeric_limits<unsigned>::max());
+    set_face_id(std::numeric_limits<unsigned>::max());
   }
 
   template <unsigned D>

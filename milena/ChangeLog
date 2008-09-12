@@ -1,5 +1,30 @@
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor (more) iterators on complexes and faces.
+
+	* mln/core/internal/complex_iter_base.hh: New.
+	* mln/core/complex_iter.hh (mln::internal::complex_iter_<D, E>):
+	Remove.
+	(mln::internal::complex_fwd_iter_<D>)
+	(mln::internal::complex_bkd_iter_<D>):
+	Inherit from mln::internal::complex_iter_base_.
+	Adjust.
+	* mln/core/faces_iter.hh (mln::internal::faces_iter_<N, D, E>):
+	Remove.
+	(mln::internal::faces_fwd_iter_<N, D>)
+	(mln::internal::faces_bkd_iter_<N, D>):
+	Inherit from mln::internal::complex_iter_base_.
+	Adjust.
+	* mln/core/face.hh (mln::face_handle<N, D>::n): New accessor.
+	(mln::face_handle<N, D>::complex_type)
+	(mln::any_face_handle<D>::complex_type):
+	New typedefs.
+	(mln::face_handle<N, D>::invalidate)
+	(mln::any_face_handle<D>::invalidate):
+	New methods.
+
+2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add iterators on the n-faces of a complex.
 
 	* mln/core/faces_iter.hh: New.
