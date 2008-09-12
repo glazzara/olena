@@ -1,11 +1,35 @@
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix Changelog and comments.
+	* ChangeLog: Add missing entries.
+	* milena/tests/core/site_set/p_image.cc: Fix comments.
+
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated tests.
 	* milena/tests/core/site_set/p_priority_queue_fast.cc,
 	* milena/tests/core/site_set/p_priority_queue_fast_with_array.cc,
 	* milena/tests/core/site_set/p_runs.cc,
 	* milena/tests/core/site_set/pset_array.cc:
 	  Remove these tests according to core/site_set/status.txt.
+
+	* milena/mln/level/fill_with_value.hh: fix a compilation warning
+	  (unused variable).
+
+	* milena/mln/set/get.hh: new algorithm to get the ith element in a
+	site set.
+
+	* milena/tests/core/image/Makefile.am,
+	* milena/tests/core/site_set/Makefile.am: disable few tests.
+
+	* milena/tests/core/site_set/p_image2d.cc: rename as...
+	* milena/tests/core/site_set/p_image.cc: ...this file.
+
+	* milena/tests/core/site_set/p_priority_queue.cc,
+	* milena/tests/core/site_set/p_set.cc,
+	* milena/tests/core/site_set/pset_if.cc:
+	  update assertions and make the test compile.
+
 
 2008-09-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -18,7 +42,8 @@
 2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a section about graph images in tutorial.
-	* milena/doc/tutorial/tutorial.tex: Add a section about graph images and fix few mistakes all along the tutorial.
+	* milena/doc/tutorial/tutorial.tex: Add a section about graph images and fix
+	  few mistakes all along the tutorial.
 
 2008-09-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
