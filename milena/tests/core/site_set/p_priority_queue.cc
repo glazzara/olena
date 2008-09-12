@@ -36,6 +36,7 @@
 #include <mln/geom/bbox.hh>
 #include <mln/make/box2d.hh>
 #include <mln/set/has.hh>
+#include <mln/set/get.hh>
 
 
 int main()
@@ -95,9 +96,9 @@ int main()
   q.push(5, p2);
   q.push(3, p1);
 
-//   mln_assertion(q[2] == p3);
-//   mln_assertion(q[1] == p1);
-//   mln_assertion(q[0] == p2);
+  mln_assertion(set::get(q, 2) == p3);
+  mln_assertion(set::get(q, 0) == p2);
+  mln_assertion(set::get(q, 1) == p1);
   q.clear();
   mln_assertion(q.is_empty());
 }

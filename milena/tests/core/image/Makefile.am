@@ -3,23 +3,25 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  bgraph_image					\
+##  bgraph_image					\
   cast_image					\
-  complex_image					\
+##  complex_image					\
   decorated_image				\
   flat_image					\
-  graph_image					\
-  graph_image_wst				\
-  hexa						\
+##  hexa						\
+##  graph_image					\
+##  graph_image_wst				\
   image1d					\
   image2d					\
-  image2d_h					\
+##  image2d_h					\
   image3d					\
   image_if					\
+
   image_if_interval				\
   image_if_value				\
-  interpolated					\
-  line_graph_image				\
+
+##  interpolated					\
+##  line_graph_image				\
   mono_obased_rle_image				\
   mono_rle_image				\
   obased_rle_image				\
@@ -33,14 +35,14 @@ check_PROGRAMS =				\
   translate_image				\
   value_enc_image
 
-bgraph_image_SOURCES = bgraph_image.cc
+##bgraph_image_SOURCES = bgraph_image.cc
 cast_image_SOURCES = cast_image.cc
-complex_image_SOURCES = complex_image.cc
+##complex_image_SOURCES = complex_image.cc
 decorated_image_SOURCES = decorated_image.cc
-graph_image_SOURCES = graph_image.cc
-graph_image_wst_SOURCES = graph_image_wst.cc
+##graph_image_SOURCES = graph_image.cc
+##graph_image_wst_SOURCES = graph_image_wst.cc
 flat_image_SOURCES = flat_image.cc
-hexa_SOURCES = hexa.cc
+##hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
 image2d_h_SOURCES = image2d_h.cc

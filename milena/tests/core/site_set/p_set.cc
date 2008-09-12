@@ -34,6 +34,8 @@
 
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_set.hh>
+#include <mln/make/box2d.hh>
+#include <mln/geom/bbox.hh>
 
 
 
@@ -42,23 +44,15 @@ int main()
   using namespace mln;
 
   p_set<point2d> ps;
-  ps
-    .insert(make::point2d(6, 9))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(5, 1));
+  ps.insert(point2d(6, 9));
+  ps.insert(point2d(4, 2));
+  ps.insert(point2d(5, 1));
   mln_assertion(ps.nsites() == 3);
 
-  std::cout << ps.bbox() << std::endl;
-  std::copy(ps.vect().begin(), ps.vect().end(),
-	    std::ostream_iterator<point2d>(std::cout, " "));
-  std::cout << std::endl;
+  mln_assertion(geom::bbox(ps) == make::box2d(4,1, 6, 9));
 
   ps.remove(make::point2d(4, 2));
   mln_assertion(ps.nsites() == 2);
 
-  std::cout << ps.bbox() << std::endl;
-  std::copy(ps.vect().begin(), ps.vect().end(),
-	    std::ostream_iterator<point2d>(std::cout, " "));
-  std::cout << std::endl;
+  mln_assertion(geom::bbox(ps) == make::box2d(5,1, 6, 9));
 }

@@ -81,7 +81,7 @@ namespace mln
 
       template <typename I, typename V>
       inline
-      void fill_with_value_tests(Image<I>& ima, const V& val)
+      void fill_with_value_tests(Image<I>& ima, const V&)
       {
 	mlc_is(mln_trait_image_value_io(I),
 	       mln::trait::image::value_io::read_write)::check();

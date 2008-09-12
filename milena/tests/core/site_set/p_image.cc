@@ -25,69 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/pset_array.cc
+/*! \file tests/core/site_set/p_image2d.cc
  *
- * \brief Tests for the pset array.
+ * \brief Tests on mln::p_image2d.
  */
 
-#include <mln/core/pset_array.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/p_runs.hh>
-
-#include <iostream>
+#include <mln/core/site_set/p_image.hh>
 
 int main()
 {
   using namespace mln;
 
-  typedef p_runs_<point2d> runs;
+  image2d<bool> ima(box2d(20,20));
+  p_image<image2d<bool> > ps(ima);
+  ps.insert(make::point2d(6, 9));
+  ps.insert(make::point2d(4, 2));
+  ps.insert(make::point2d(4, 2));
+  ps.insert(make::point2d(5, 1));
+  mln_assertion(ps.nsites() == 3);
 
-  p_runs_<point2d> pruns0;
-  p_runs_<point2d> pruns1;
-  p_runs_<point2d> pruns2;
+  ps.remove(make::point2d(5, 1));
+  ps.remove(make::point2d(5, 1));
 
-  pruns0.insert(p_run<point2d>(make::point2d(0, 0), 2));
+  ps.remove(make::point2d(6, 9));
+  ps.remove(make::point2d(4, 2));
 
-  pruns2.insert(p_run<point2d>(make::point2d(10,10), 5));
+  mln_assertion(ps.nsites() == 0);
+  mln_assertion(ps.is_empty());
 
-  pruns1.insert(p_run<point2d>(make::point2d(2, 4), 7));
-  pruns1.insert(p_run<point2d>(make::point2d(18, 42), 5));
-  pruns1.insert(p_run<point2d>(make::point2d(50, 76), 2));
-  pruns1.insert(p_run<point2d>(make::point2d(17,40), 6));
-
-
-
-  /// Declare the pset_array
-  pset_array<runs> array;
-
-  /// Add elements in the array
-  assert(array.npsets() == 0);
-  array.insert(pruns0);
-  assert(array.npsets() == 1);
-  assert(array.nsites() == 2);
-
-  array.insert(pruns2);
-  assert(array.npsets() == 2);
-  assert(array.nsites() == 7);
-
-  array.insert(pruns1);
-
-  /// Psite tests
-  typedef pset_array<runs>::psite psite;
-  runs_psite<point2d> run_psite1(pruns0, 1, 0);
-  runs_psite<point2d> run_psite2(pruns1, 5, 1);
-
-  psite ps(run_psite1, 0);
-  assert(array.has(ps));
-
-  psite ps2(run_psite2, 2);
-  assert(array.has(ps2));
-
-  // Iterator test:
-  pset_array<runs>::fwd_piter piter(array);
-
-  for (piter.start(); piter.is_valid(); piter.next())
+  mln_fwd_piter_(box2d) p(inplace(make::box2d(13,13,19,15)));
+  for_all(p)
   {
-    std::cout << piter << std::endl;
+    ps.insert(p);
   }
+  ps.clear();
+  for_all(p)
+  {
+    mln_assertion(!ps.has(p));
+  }
+
 }

@@ -36,6 +36,7 @@
 #include <mln/fun/p2b/chess.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_p_set.hh>
+#include <mln/estim/nsites.hh>
 
 
 int main()
@@ -43,11 +44,10 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion((box_8x8 | fun::p2b::chess).nsites() == 32);
+  mln_assertion(estim::nsites((box_8x8 | fun::p2b::chess)) == 32);
 
   {
     p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess);
-    std::cout << (box_8x8 | fun::p2b::chess) << std::endl;
-    std::cout << s << std::endl;
+    mln_precondition(s == (box_8x8 | fun::p2b::chess));
   }
 }

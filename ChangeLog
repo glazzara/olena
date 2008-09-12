@@ -1,3 +1,12 @@
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated tests.
+	* milena/tests/core/site_set/p_priority_queue_fast.cc,
+	* milena/tests/core/site_set/p_priority_queue_fast_with_array.cc,
+	* milena/tests/core/site_set/p_runs.cc,
+	* milena/tests/core/site_set/pset_array.cc:
+	  Remove these tests according to core/site_set/status.txt.
+
 2008-09-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a window-to-neighborhood adapter.

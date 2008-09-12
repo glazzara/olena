@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,47 +25,60 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_image2d.cc
+#ifndef MLN_SET_GET_HH
+# define MLN_SET_GET_HH
+
+/*! \file mln/set/has.hh
  *
- * \brief Tests on mln::p_image2d.
+ * \brief Algorithm that returns the i th element in a site set.
+ *
+ * \todo Layout and specialize.
  */
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/site_set/p_image.hh>
+# include <mln/core/concept/site_set.hh>
 
-int main()
+
+
+namespace mln
 {
-  using namespace mln;
 
-  trace::quiet = false;
-  image2d<bool> ima(box2d(20,20));
-  p_image<image2d<bool> > ps(ima);
-  ps.insert(make::point2d(6, 9));
-  ps.insert(make::point2d(4, 2));
-  ps.insert(make::point2d(4, 2));
-  ps.insert(make::point2d(5, 1));
-  mln_assertion(ps.nsites() == 3);
-
-  ps.remove(make::point2d(5, 1));
-  ps.remove(make::point2d(5, 1));
-
-  ps.remove(make::point2d(6, 9));
-  ps.remove(make::point2d(4, 2));
-
-  mln_assertion(ps.nsites() == 0);
-  mln_assertion(ps.is_empty());
-
-  std::cout << ps << std::endl;
-
-  mln_fwd_piter_(box2d) p(inplace(make::box2d(13,13,19,15)));
-  for_all(p)
+  namespace set
   {
-    ps.insert(p);
-  }
-  ps.clear();
-  for_all(p)
-  {
-    mln_assertion(!ps.has(p));
-  }
 
-}
+    /// FIXME
+    template <typename S>
+    mln_site(S)
+    get(const Site_Set<S>& s, size_t index);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename S>
+    mln_site(S)
+    get(const Site_Set<S>& s_, size_t index)
+    {
+      trace::entering("set::get");
+      const S& s = exact(s_);
+
+      mln_precondition(s.is_valid());
+      mln_precondition(s.nsites() > index);
+
+      mln_piter(S) p(s);
+      for_all(p)
+	if (index == 0)
+	  break;
+	else
+	  --index;
+
+      trace::exiting("set::get");
+      return p;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::set
+
+} // end of namespace mln
+
+
+#endif // ! MLN_SET_GET_HH
