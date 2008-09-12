@@ -30,19 +30,20 @@
  * \brief Tests on mln::p_image2d.
  */
 
-#include <mln/core/p_image2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/site_set/p_image.hh>
 
 int main()
 {
   using namespace mln;
 
   trace::quiet = false;
-  p_image2d<point2d> ps(20,20);
-  ps
-    .insert(make::point2d(6, 9))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(5, 1));
+  image2d<bool> ima(box2d(20,20));
+  p_image<image2d<bool> > ps(ima);
+  ps.insert(make::point2d(6, 9));
+  ps.insert(make::point2d(4, 2));
+  ps.insert(make::point2d(4, 2));
+  ps.insert(make::point2d(5, 1));
   mln_assertion(ps.nsites() == 3);
 
   ps.remove(make::point2d(5, 1));

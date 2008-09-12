@@ -44,7 +44,7 @@ template <typename I_, typename F>
 struct assign_browsing_functor
 {
   typedef I_ I;
-  enum { dim = I::point::dim };
+  enum { dim = I::site::dim };
 
 
   I input;

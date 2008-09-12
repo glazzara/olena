@@ -36,11 +36,11 @@
 using namespace mln;
 
 
-void run_in_3d(const algebra::vec<3, int>&)
+void run_in_3d(const algebra::vec<3, def::coord>&)
 {
 }
 
-void run_in_3d_h(const algebra::h_vec<3, int>&)
+void run_in_3d_h(const algebra::h_vec<3, def::coord>&)
 {
 }
 
@@ -53,10 +53,10 @@ void foo(const mln::algebra::h_vec<3,float>&)
 int main()
 {
 
-  algebra::vec<3, int> x;
-  algebra::h_vec<3, int> w = x.to_h_vec();
+  algebra::vec<3, def::coord> x;
+  algebra::h_vec<3, def::coord> w = x.to_h_vec();
 
-  typedef algebra::h_vec<3, int> p3d;
+  typedef algebra::h_vec<3, def::coord> p3d;
   p3d p;
   run_in_3d(p.to_vec());
 

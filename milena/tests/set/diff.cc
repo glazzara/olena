@@ -39,20 +39,20 @@ int main()
   
   {
     window<dpoint2d> win1;
-    win1
-      .insert( 2, 7)
-      .insert( 2, 1)
-      .insert(-4, 0)
-      .insert( 0, 0)
-      .insert( 1, 1)
-      .insert( 6, 5);
+    win1.insert( 2, 7);
+    win1.insert( 2, 1);
+    win1.insert(-4, 0);
+    win1.insert( 0, 0);
+    win1.insert( 1, 1);
+    win1.insert( 6, 5);
+
     window<dpoint2d> win2;
-    win2
-      .insert( 2, 7)
-      .insert(-2, 1)
-      .insert(-4, 0)
-      .insert( 1,-1)
-      .insert( 6, 5);
+    win2.insert( 2, 7);
+    win2.insert(-2, 1);
+    win2.insert(-4, 0);
+    win2.insert( 1,-1);
+    win2.insert( 6, 5);
+
     window<dpoint2d> win3 = set::diff(win1, win2);
     mln_assertion(win3.has(dpoint2d( 2, 1)));
     mln_assertion(win3.has(dpoint2d( 0, 0)));
@@ -66,20 +66,20 @@ int main()
 
   {
     p_set<point2d> pst1;
-    pst1
-      .insert(point2d( 2, 7))
-      .insert(point2d( 2, 1))
-      .insert(point2d(-4, 0))
-      .insert(point2d( 0, 0))
-      .insert(point2d( 1, 1))
-      .insert(point2d( 6, 5));
+    pst1.insert(point2d( 2, 7));
+    pst1.insert(point2d( 2, 1));
+    pst1.insert(point2d(-4, 0));
+    pst1.insert(point2d( 0, 0));
+    pst1.insert(point2d( 1, 1));
+    pst1.insert(point2d( 6, 5));
+
     p_set<point2d> pst2;
-    pst2
-      .insert(point2d( 2, 7))
-      .insert(point2d(-2, 1))
-      .insert(point2d(-4, 0))
-      .insert(point2d( 1,-1))
-      .insert(point2d( 6, 5));
+    pst2.insert(point2d( 2, 7));
+    pst2.insert(point2d(-2, 1));
+    pst2.insert(point2d(-4, 0));
+    pst2.insert(point2d( 1,-1));
+    pst2.insert(point2d( 6, 5));
+
     p_set<point2d> pst3 = set::diff(pst1, pst2);
     mln_assertion(pst3.has(point2d( 2, 1)));
     mln_assertion(pst3.has(point2d( 0, 0)));

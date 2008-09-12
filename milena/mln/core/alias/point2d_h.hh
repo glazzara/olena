@@ -42,7 +42,7 @@ namespace mln
 
   /// \brief Type alias for a point defined on the 2D hexagonal grid
   /// with integer coordinates.
-  typedef point_<grid::hexa, int> point2d_h;
+  typedef point<grid::hexa, def::coord> point2d_h;
 
 
 } // end of namespace mln

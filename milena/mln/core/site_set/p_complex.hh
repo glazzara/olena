@@ -31,7 +31,7 @@
 /// \file mln/core/site_set/p_complex.hh
 /// \brief Definition of a point set based on a complex.
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 
 # include <mln/accu/bbox.hh>
 # include <mln/util/tracked_ptr.hh>
@@ -59,7 +59,7 @@ namespace mln
   /// dimension \p D (a \p D-complex).
   template <unsigned D, typename P>
   struct p_complex
-    : public internal::point_set_base_< complex_psite<D, P>,
+    : public internal::site_set_base_< complex_psite<D, P>,
 					p_complex<D, P> >
   {
     /// \brief Construct a complex psite set from a complex.

@@ -1,3 +1,27 @@
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix few tests.
+
+	* milena/mln/core/site_set/p_complex.hh,
+	* milena/mln/core/site_set/p_complex_piter.hh,
+	* milena/mln/core/site_set/p_faces.hh,
+	* milena/mln/core/site_set/p_bgraph_piter.hh,
+	* milena/mln/core/site_set/p_graph_piter.hh:
+	  remove useless '_' in class names.
+
+	* milena/tests/canvas/browsing/directional.cc,
+	* milena/tests/canvas/browsing/fwd.cc,
+	* milena/tests/canvas/browsing/snake_fwd.cc: rename point to site.
+
+	* milena/mln/core/alias/dpoint2d_h.hh,
+	* milena/mln/core/alias/point2d_h.hh,
+	* milena/tests/algebra/h_vec.cc,
+	* milena/tests/core/alias/point2d.cc,
+ 	* milena/tests/core/alias/point1d.cc: Use def::coord instead of int.
+
+	* milena/tests/set/diff.cc,
+	* milena/tests/core/site_set/p_image2d.cc: Update.
+
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make tests on some queue types pass.

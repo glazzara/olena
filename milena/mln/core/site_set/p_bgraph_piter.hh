@@ -49,10 +49,10 @@ namespace mln
   // FIXME: check the constraint due to the boost iterators
   template<typename P>
   class p_bgraph_piter_
-    : public internal::site_iterator_base_< P, p_bgraph_piter_<P> >
+    : public internal::site_iterator_base< P, p_bgraph_piter_<P> >
   {
     typedef p_bgraph_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
     typedef std::pair<typename p_bgraph<P>::node_iterator,
 		      typename p_bgraph<P>::node_iterator> iterators_type_;
 

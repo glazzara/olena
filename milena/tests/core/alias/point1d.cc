@@ -43,7 +43,7 @@ int main()
   // assignment
 
   p[0] = 4;
-  algebra::vec<1,int> v = p;
+  algebra::vec<1,def::coord> v = p;
   std::cout << v << std::endl;
 
   p.ind() += 1;

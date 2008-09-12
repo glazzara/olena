@@ -41,7 +41,6 @@ namespace mln
   template <typename P> class p_graph;
   template <typename P> class graph_psite;
 
-
   /*------------------------.
   | p_graph_fwd_piter_<P>.  |
   `------------------------*/
@@ -49,10 +48,10 @@ namespace mln
   /// \brief Forward iterator on point sites of a mln::p_graph<P>.
   template <typename P>
   class p_graph_fwd_piter_
-    : public internal::site_iterator_base_< P, p_graph_fwd_piter_<P> >
+    : public internal::site_iterator_base< P, p_graph_fwd_piter_<P> >
   {
     typedef p_graph_fwd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
   public:
     // Make definitions from super class available.
@@ -125,10 +124,10 @@ namespace mln
   /// \brief Backward iterator on point sites of a mln::p_graph<P>.
   template <typename P>
   class p_graph_bkd_piter_
-    : public internal::site_iterator_base_< P, p_graph_bkd_piter_<P> >
+    : public internal::site_iterator_base< P, p_graph_bkd_piter_<P> >
   {
     typedef p_graph_bkd_piter_<P> self_;
-    typedef internal::site_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
   public:
     // Make definitions from super class available.

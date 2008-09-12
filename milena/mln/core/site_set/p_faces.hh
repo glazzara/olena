@@ -32,7 +32,7 @@
 /// \brief Definition of a point set based on the set of n-faces of a
 /// complex.
 
-# include <mln/core/internal/point_set_base.hh>
+# include <mln/core/internal/site_set_base.hh>
 
 # include <mln/accu/bbox.hh>
 # include <mln/util/tracked_ptr.hh>
@@ -57,7 +57,7 @@ namespace mln
   /// dimension \p D (a \p D-complex).
   template <unsigned N, unsigned D, typename P>
   struct p_faces
-    : public internal::point_set_base_< faces_psite<N, D, P>,
+    : public internal::site_set_base_< faces_psite<N, D, P>,
 					p_faces<N, D, P> >
   {
     /// \brief Construct a complex psite set from a complex.

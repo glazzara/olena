@@ -30,7 +30,7 @@
 
 # include <limits>
 
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_complex.hh>
 # include <mln/core/complex_psite.hh>
 
@@ -55,10 +55,10 @@ namespace mln
   /// \brief Forward iterator on point sites of a mln::p_complex<D, P>.
   template <unsigned D, typename P>
   class p_complex_fwd_piter_
-    : public internal::point_iterator_base_< P, p_complex_fwd_piter_<D, P> >
+    : public internal::site_iterator_base< P, p_complex_fwd_piter_<D, P> >
   {
     typedef p_complex_fwd_piter_<D, P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
   public:
     // Make definitions from super class available.
@@ -148,10 +148,10 @@ namespace mln
   /// \brief Backward iterator on point sites of a mln::p_complex<D, P>.
   template <unsigned D, typename P>
   class p_complex_bkd_piter_
-    : public internal::point_iterator_base_< P, p_complex_bkd_piter_<D, P> >
+    : public internal::site_iterator_base< P, p_complex_bkd_piter_<D, P> >
   {
     typedef p_complex_bkd_piter_<D, P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base< P, self_ > super_;
 
   public:
     // Make definitions from super class available.
