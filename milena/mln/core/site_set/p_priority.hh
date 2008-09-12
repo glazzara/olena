@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -68,11 +68,16 @@ namespace mln
 
   /*! \brief Priority queue class.
    *
-   * FIXME
+   * The parameter \p P is the type of the priorities (for instance
+   * unsigned).
+   *
+   * The parameter \p Q is a type of queue (for instance
+   * p_queue<point2d>).
    */
   template <typename P, typename Q>
   class p_priority : public internal::site_set_base_< mln_site(Q),
-						      p_priority<P,Q> >
+						      p_priority<P,Q> >,
+ 	             private mlc_is_a(Q, Site_Set)::check_t
   {
     typedef p_priority<P,Q> self_;
   public:
@@ -267,7 +272,8 @@ namespace mln
   p_priority<P,Q>::front() const
   {
     mln_precondition(! this->is_empty()); // Also test invariants.
-    return q_[highest_priority()].front();
+    std::map<P,Q>& q__ = const_cast< std::map<P,Q>& >(q_);
+    return q__[highest_priority()].front();
   }
 
   template <typename P, typename Q>

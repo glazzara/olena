@@ -1,5 +1,20 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make tests on some queue types pass.
+
+	* tests/core/site_set/p_queue_fast.cc: Update.
+	* tests/core/site_set/p_queue.cc: Likewise.
+	* tests/core/site_set/p_priority_queue.cc
+	(operator[]): De-activate since priority queues do not (cannot)
+	have such a method.
+	(has): Likewise; replace the calls to this method by calling...
+	* mln/set/has.hh: ...this new procedure.
+	It is useful when a site set is not "point-wise" random
+	accessible.
+	* mln/core/site_set/p_priority.hh (Q): New static check.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update fill_with_image and fill_with_value.
 
 	* mln/level/fill_with_image.hh

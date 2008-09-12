@@ -32,67 +32,72 @@
 
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_priority.hh>
+#include <mln/core/site_set/p_queue.hh>
+#include <mln/geom/bbox.hh>
+#include <mln/make/box2d.hh>
+#include <mln/set/has.hh>
 
-int main ()
+
+int main()
 {
   using namespace mln;
 
-  p_priority<point2d, unsigned> q;
-  point2d p1 (6, 9);
-  point2d p2 (5, 1);
-  point2d p3 (4, 2);
+  typedef p_queue<point2d> Q;
+  p_priority<unsigned, Q> q;
+  point2d p1(6, 9);
+  point2d p2(5, 1);
+  point2d p3(4, 2);
 
-  mln_assertion (q.is_empty ());
+  mln_assertion(q.is_empty());
 
-  mln_assertion (q.nsites() == 0);
+  mln_assertion(q.nsites() == 0);
 
-  q.push_force (p3);
-  q.push_force (p1, 3);
-  q.push_force (p2, 5);
+  q.push(0, p3);
+  q.push(3, p1);
+  q.push(5, p2);
 
-  std::cout << q.bbox () << std::endl;
-  std::cout << q << std::endl;
+  mln_assertion(geom::bbox(q) == make::box2d(4,1, 6,9));
 
-  mln_assertion (!q.is_empty ());
+  mln_assertion(! q.is_empty());
 
-  mln_assertion (q.has (p1));
-  mln_assertion (q.has (p2));
-  mln_assertion (q.has (p3));
+  mln_assertion(set::has(q, p1));
+  mln_assertion(set::has(q, p2));
+  mln_assertion(set::has(q, p3));
 
-  mln_assertion (q.nsites() == 3);
-  mln_assertion (q.front () == p2);
-  q.pop ();
+  mln_assertion(q.nsites() == 3);
+  mln_assertion(q.front() == p2);
+  q.pop();
 
-  mln_assertion (q.has (p1));
-  mln_assertion (!q.has (p2));
-  mln_assertion (q.has (p3));
+  mln_assertion(set::has(q, p1));
+  mln_assertion(! set::has(q, p2));
+  mln_assertion(set::has(q, p3));
 
-  mln_assertion (q.nsites() == 2);
-  mln_assertion (q.front () == p1);
-  q.pop ();
+  mln_assertion(q.nsites() == 2);
+  mln_assertion(q.front() == p1);
+  q.pop();
 
-  mln_assertion (!q.has (p1));
-  mln_assertion (!q.has (p2));
-  mln_assertion (q.has (p3));
+  mln_assertion(! set::has(q, p1));
+  mln_assertion(! set::has(q, p2));
+  mln_assertion(set::has(q, p3));
 
-  mln_assertion (q.nsites() == 1);
-  mln_assertion (q.front () == p3);
-  q.pop ();
+  mln_assertion(q.nsites() == 1);
+  mln_assertion(q.front() == p3);
+  q.pop();
 
-  mln_assertion (!q.has (p1));
-  mln_assertion (!q.has (p2));
-  mln_assertion (!q.has (p3));
-  mln_assertion (q.nsites() == 0);
+  mln_assertion(! set::has(q, p1));
+  mln_assertion(! set::has(q, p2));
+  mln_assertion(! set::has(q, p3));
+  mln_assertion(q.nsites() == 0);
 
-  mln_assertion (q.is_empty ());
+  mln_assertion(q.is_empty());
 
-  q.push_force (p3);
-  q.push_force (p2, 5);
-  q.push_force (p1, 3);
+  q.push(0, p3);
+  q.push(5, p2);
+  q.push(3, p1);
 
-  mln_assertion (q[2] == p3);
-  mln_assertion (q[1] == p1);
-  mln_assertion (q[0] == p2);
-  q.clear ();
-  mln_assertion (q.is_empty ());
+//   mln_assertion(q[2] == p3);
+//   mln_assertion(q[1] == p1);
+//   mln_assertion(q[0] == p2);
+  q.clear();
+  mln_assertion(q.is_empty());
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,33 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_queue_fast.cc
+#ifndef MLN_SET_HAS_HH
+# define MLN_SET_HAS_HH
+
+/*! \file mln/set/has.hh
  *
- * \brief Tests on mln::p_queue_fast.
+ * \brief Algorithm that tests if a site set has a given site.
+ *
+ * \todo Layout and specialize.
  */
 
-#include <mln/core/alias/point2d.hh>
-#include <mln/core/site_set/p_queue_fast.hh>
-#include <mln/geom/bbox.hh>
-#include <mln/make/box2d.hh>
+# include <mln/core/concept/site_set.hh>
 
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  p_queue_fast<point2d> q;
-  q.push(point2d(6, 9));
-  q.push(point2d(5, 1));
-  q.push(point2d(4, 2));
-  mln_assertion(q.nsites() == 3);
+  namespace set
+  {
 
-  mln_assertion(geom::bbox(q) == make::box2d(4,1, 6,9));
+    /// FIXME
+    template <typename S>
+    bool
+    has(const Site_Set<S>& s, const mln_site(S)& e);
 
-  q.pop();
-  mln_assertion(q.nsites() == 2);
-  point2d p = q.front();
-  mln_assertion(q.nsites() == 2);
-  mln_assertion(p == point2d(5, 1));
-}
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename S>
+    bool
+    has(const Site_Set<S>& s_, const mln_site(S)& e)
+    {
+      trace::entering("set::has");
+      const S& s = exact(s_);
+
+      mln_precondition(s.is_valid());
+      bool found = false;
+
+      mln_piter(S) p(s);
+      for_all(p)
+	if (p == e)
+	  {
+	    found = true;
+	    break;
+	  }
+      
+      trace::exiting("set::has");
+      return found;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::set
+
+} // end of namespace mln
+
+
+#endif // ! MLN_SET_HAS_HH
