@@ -88,26 +88,27 @@ namespace mln
       // dispatch_overload
 
       template <typename I>
-      void fill_dispatch_overload(Image<I>& ima, const mln_value(I)& v)
+      void fill_dispatch_overload(I& ima, const mln_value(I)& v)
       {
 	mln::level::fill_with_value(ima, v);
       }
 
       template <typename I, typename J>
-      void fill_dispatch_overload(Image<I>& ima, const Image<J>& data)
+      void fill_dispatch_overload(I& ima, const Image<J>& data)
       {
 	mln::level::fill_with_image(ima, data);
       }
 
       template <typename I, typename F>
-      void fill_dispatch_overload(Image<I>& ima, const Function<F>& f)
+      void fill_dispatch_overload(I& ima, const Function<F>& f)
       {
 	mlc_converts_to(mln_result(F), mln_value(I))::check();
-	mln::level::fill_with_image(ima, f | ima.domain());
+	mln::level::fill_with_image(ima,
+				    exact(f) | ima.domain());
       }
 
       template <typename I, typename R, typename A>
-      void fill_dispatch_overload(Image<I>& ima, R (*f)(A))
+      void fill_dispatch_overload(I& ima, R (*f)(A))
       {
 	mlc_converts_to(R, mln_value(I))::check();
 	mln::level::fill_with_image(ima,
@@ -115,10 +116,9 @@ namespace mln
       }
 
       template <typename I, typename V, unsigned N>
-      void fill_dispatch_overload(Image<I>& ima_, V (&arr)[N])
+      void fill_dispatch_overload(I& ima, V (&arr)[N])
       {
 	mlc_converts_to(V, mln_value(I))::check();
-	I& ima = exact(ima_);
 	mln_precondition(N == ima.nsites());
 	mln_fwd_piter(I) p(ima.domain());
 	unsigned i = 0;

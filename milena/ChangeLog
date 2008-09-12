@@ -1,5 +1,11 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix update in level fill.
+
+	* mln/level/fill.hh: Fix update.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Get rid of the deprecated 'npoints' name.
 
 	* tools/area_flooding.cc,
