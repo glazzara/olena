@@ -42,8 +42,8 @@ namespace mln
 {
 
   // fwd decls
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
+  template <typename D> class dpsites_fwd_piter;
+  template <typename D> class dpsites_bkd_piter;
 
 
   /*! \brief Generic neighborhood class.
@@ -63,14 +63,14 @@ namespace mln
     /*! \brief Site_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the ordering of delta-points.
      */
-    typedef dpoints_fwd_piter<D> fwd_niter;
+    typedef dpsites_fwd_piter<D> fwd_niter;
 
     /*! \brief Site_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the reverse ordering of delta-points.
      *
      * !!! Be careful the start delta point become the last now.
      */
-    typedef dpoints_bkd_piter<D> bkd_niter;
+    typedef dpsites_bkd_piter<D> bkd_niter;
 
     /*! \brief Same as fwd_niter.
      */
@@ -126,7 +126,7 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/dpsites_piter.hh>
 
 
 #endif // ! MLN_CORE_CLOCK_NEIGHB_HH

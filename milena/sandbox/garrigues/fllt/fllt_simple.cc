@@ -276,9 +276,9 @@ namespace mln
       const c6_interpixel& ip_ref_;
     };
 
-    struct c6_niter : public dpoints_fwd_piter<dpoint2d>
+    struct c6_niter : public dpsites_fwd_piter<dpoint2d>
     {
-      typedef dpoints_fwd_piter<dpoint2d> super;
+      typedef dpsites_fwd_piter<dpoint2d> super;
 
       c6_niter(const point2d& p)
 	: super(c6_neighb::get(p), p)

@@ -36,7 +36,7 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/dpsites_piter.hh>
 
 
 namespace mln
@@ -56,10 +56,10 @@ namespace mln
       typedef dpoint_<M, int> dpoint;
 
       /// Site_Iterator type to browse a dyn_line forward
-      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
+      typedef dpsites_fwd_piter<dpoint> fwd_qiter;
 
       /// Site_Iterator type to browse a dyn_line backward
-      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
+      typedef dpsites_bkd_piter<dpoint> bkd_qiter;
 
       /// Same as fwd_qiter
       typedef fwd_qiter qiter;

@@ -37,7 +37,7 @@
 
 # include <mln/core/window.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/dpsites_piter.hh>
 
 namespace mln
 {
@@ -70,10 +70,10 @@ namespace mln
 
 
     /// Site_Iterator type to browse (forward) the points of a generic w_window.
-    typedef with_w_< dpoints_fwd_piter<D>, W > fwd_qiter;
+    typedef with_w_< dpsites_fwd_piter<D>, W > fwd_qiter;
 
     /// Site_Iterator type to browse (backward) the points of a generic w_window.
-    typedef with_w_< dpoints_bkd_piter<D>, W > bkd_qiter;
+    typedef with_w_< dpsites_bkd_piter<D>, W > bkd_qiter;
 
 
     /// Constructor without argument.

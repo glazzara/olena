@@ -1,5 +1,16 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Get rid of dpoints_piter.
+
+	* mln/core/dpoints_piter.hh: Remove; obsolete thanks to
+	the more general file dpsites_piter.hh.
+	* mln/core/w_window.hh,
+	* mln/core/clock_neighb.hh,
+	* sandbox/nivault/dyn_line.hh,
+	* sandbox/garrigues/fllt/fllt_simple.cc: Update.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Minor cleanup in set diff and geom shift.
 
 	* mln/core/dpoints_pixter.hh: Remove dead code.
