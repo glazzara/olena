@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,24 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_FILL_SPE_HH
-# define MLN_LEVEL_FILL_SPE_HH
+#ifndef MLN_LEVEL_FILL_WITH_IMAGE_SPE_HH
+# define MLN_LEVEL_FILL_WITH_IMAGE_SPE_HH
 
-/*! \file mln/level/fill.spe.hh
+/*! \file mln/level/fill_with_image.spe.hh
  *
- * \brief Specializations for mln::level::fill.
+ * \brief Specializations for mln::level::fill_with_image.
  *
+ * \todo Add specializations then rewrite the dispatch.
  */
 
-# ifndef MLN_LEVEL_FILL_HH
+# ifndef MLN_LEVEL_FILL_WITH_IMAGE_HH
 #  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_FILL_HH
+# endif // ! MLN_LEVEL_FILL_WITH_IMAGE_HH
 
-# include <cstring>
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/function.hh>
-# include <mln/core/image/inplace.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -56,8 +52,27 @@ namespace mln
     namespace impl
     {
 
+      namespace generic
+      {
+	template <typename I, typename J>
+	void fill_with_image(const Image<I>& data, Image<J>& destination);
+      }
+
+      // FIXME: Add specializations here...
 
     } // end of namespace mln::level::impl
+
+    namespace internal
+    {
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_dispatch(Image<I>& ima, const Image<J>& data)
+      {
+	impl::generic::fill_with_image(ima, data);
+      }      
+
+    } // end of namespace mln::level::internal
 
   } // end of namespace mln::level
 
@@ -65,4 +80,5 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LEVEL_FILL_SPE_HH
+
+#endif // ! MLN_LEVEL_FILL_WITH_IMAGE_HH

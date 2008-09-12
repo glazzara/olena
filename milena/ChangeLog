@@ -1,5 +1,19 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update fill_with_image and fill_with_value.
+
+	* mln/level/fill_with_image.hh
+	(fill_with_image_tests): New.
+	(generic): Strengthen signature and use tests.
+	(impl): Move specialized impl into...
+	* mln/level/fill_with_image.spe.hh: ...this new file.
+	Update.
+	* mln/level/fill_with_value.hh,
+	* mln/level/fill_with_value.spe.hh: Likewise.
+	* mln/level/fill.spe.hh: Remove; dead empty file.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix level fill.
 
 	* mln/level/fill.hh: Fix missing exact.

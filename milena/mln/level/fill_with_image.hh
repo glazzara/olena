@@ -38,6 +38,9 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/inplace.hh>
 
+// Specializations are in:
+# include <mln/level/fill_with_image.spe.hh>
+
 
 namespace mln
 {
@@ -62,6 +65,24 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_tests(Image<I>& ima, const Image<J>& data)
+      {
+	mlc_is(mln_trait_image_value_io(I),
+	       mln::trait::image::value_io::read_write)::check();
+	mlc_converts_to(mln_value(J), mln_value(I))::check();
+	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(data).has_data());
+	mln_precondition(exact(ima).domain() <= exact(data).domain());
+      }
+
+    } // end of namespace mln::level::internal
+
+
     namespace impl
     {
 
@@ -70,9 +91,10 @@ namespace mln
 
 	template <typename I, typename J>
 	inline
-	void fill_with_image(I& ima, const J& data)
+	void fill_with_image(Image<I>& ima, const Image<J>& data)
 	{
 	  trace::entering("level::impl::generic::fill_with_image");
+	  internal::fill_with_image_tests(ima, data);
 
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
@@ -83,37 +105,19 @@ namespace mln
 
       } // end if namespace mln::level::impl::generic
 
-
-      // Selector.
-
-      template <typename I, typename J>
-      inline
-      void fill_with_image_(I& ima, const J& data)
-      {
-	generic::fill_with_image(ima, data);
-      }
-
     } // end of namespace mln::level::impl
-
 
 
     /// Facade.
 
     template <typename I, typename J>
     inline
-    void fill_with_image(Image<I>& ima_, const Image<J>& data_)
+    void fill_with_image(Image<I>& ima, const Image<J>& data)
     {
       trace::entering("level::fill_with_image");
 
-      mlc_is(mln_trait_image_value_io(I),
-	     mln::trait::image::value_io::read_write)::check();
-      mlc_converts_to(mln_value(J), mln_value(I))::check();
-
-      I&        ima = exact(ima_);
-      const J& data = exact(data_);
-      mln_precondition(ima.domain() <= data.domain());
-
-      impl::fill_with_image_(ima, data);
+      internal::fill_with_image_tests(ima, data);
+      internal::fill_with_image_dispatch(ima, data);
 
       trace::exiting("level::fill_with_image");
     }
