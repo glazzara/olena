@@ -1,3 +1,16 @@
+2008-09-12  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix Bugs In Watershed.
+
+	* abraham/tests/morpho/test_component_tree.cc: Update some printing
+	  functions.
+	* abraham/tests/morpho/test_watershed.cc: Idem.
+	* abraham/tests/morpho/test_watershed_topo.cc: Make it clean.
+	* abraham/tests/morpho/ref/src/lib/lwshedtopo.c: Remove debug printing.
+	* abraham/mln/morpho/basic_najman.hh: Fix bugs
+	  basic_najman::compressTree: New
+	  basic_najman::removeOneSonNodes(): New.
+
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: Update access.hh.

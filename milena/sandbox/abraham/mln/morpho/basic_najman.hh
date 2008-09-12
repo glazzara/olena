@@ -21,16 +21,16 @@ namespace mln
     class najman_distance
     {
     public:
-      typedef mln_psite(I) psite;
+      typedef mln_point(I) point;
 
       najman_distance(const Image<I>& ima);
 
       /// Is \a x greater than \a y?
-      bool operator()(const psite& x, const psite& y);
+      bool operator()(const point& x, const point& y);
 
       // mln_value(I)
       int
-      D(const mln_psite(I)& x);
+      D(const mln_point(I)& x);
 
     private:
       const I& ima_;
@@ -52,14 +52,14 @@ namespace mln
     template <typename I>
     // mln_value(I)
     int
-    najman_distance<I>::D(const mln_psite(I)& x)
+    najman_distance<I>::D(const mln_point(I)& x)
     {
       const I& ima = exact(ima_);
 
       mln_piter(I) it(ima.domain());
 
       it.start();
-      mln_psite(I) min = it.to_point();
+      mln_point(I) min = it.to_point();
 
       for_all(it)
       {
@@ -82,7 +82,7 @@ namespace mln
 
     template <typename I>
     bool
-    najman_distance<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    najman_distance<I>::operator()(const mln_point(I)& x, const mln_point(I)& y)
     {
       if (ima_(x) < ima_(y))
 	return false;
@@ -437,43 +437,49 @@ namespace mln
     struct basic_najman
     {
 
-      typedef mln_psite(I) psite;
+      typedef mln_point(I) point;
 
       struct node {
 	mln_value(I) level;
 	int area;
 	int highest;
-	p_array<mln_psite(I)> children;
+	typedef mln_point(I) point;
+	// Can't modify the points in a p_array
+	// p_array<mln_point(I)> children;
+	std::vector<point> children;
 
 	void addChildren(const node& n)
 	{
-	  typename p_array<mln_psite(I)>::fwd_piter it(n.children);
-	  for (it.start();
-	       it.is_valid();
-	       it.next())
-	    children.append(it.to_psite());
+	  // typename p_array<mln_point(I)>::fwd_piter it(n.children);
+	  // for (it.start();
+	  //      it.is_valid();
+	  //      it.next())
+	  //  children.append(it.to_point());
+	  for (unsigned i=0; i < n.children.size(); ++i)
+	    children.push_back(n.children[i]);
 	}
 
-	void addChild(const psite n)
+	void addChild(const point p)
 	{
-	  children.append(n);
+	  // children.append(n);
+	  children.push_back(p);
 	}
       }; // struct node
 
       I pima;
       const Neighborhood<N>& nbh;
-      mln_ch_value(I, psite) Par_node;
-      mln_ch_value(I, psite) Par_tree;
+      mln_ch_value(I, point) Par_node;
+      mln_ch_value(I, point) Par_tree;
 
       mln_ch_value(I, int) Rnk_tree;
       mln_ch_value(I, int) Rnk_node;
-      mln_ch_value(I, psite) subtreeRoot;
+      mln_ch_value(I, point) subtreeRoot;
       mln_ch_value(I, node) nodes;
       mln_ch_value(I, bool) isproc;
 
-      psite Root;
-      p_array<mln_psite(I)> S;
-      // std::map<psite,psite> M; // to keep the root of any point.
+      point Root;
+      p_array<mln_point(I)> S;
+      // std::map<point,point> M; // to keep the root of any point.
 
       // Ctor
       basic_najman(const Image<I>& i,
@@ -490,33 +496,33 @@ namespace mln
       {
       }
 
-      void MakeSet_tree(psite x)
+      void MakeSet_tree(point x)
       {
 	Par_tree(x) = x;
 	Rnk_tree(x) = 0;
       }
 
-      void MakeSet_node(psite x)
+      void MakeSet_node(point x)
       {
 	Par_node(x) = x;
 	Rnk_node(x) = 0;
       }
 
-      psite Find_tree(psite x)
+      point Find_tree(point x)
       {
 	if (Par_tree(x) != x)
 	  Par_tree(x) = Find_tree(Par_tree(x));
 	return Par_tree(x);
       }
 
-      void swap(psite& x, psite& y)
+      void swap(point& x, point& y)
       {
-	psite memo = x;
+	point memo = x;
 	x = y;
 	y = memo;
       }
 
-      psite Find_node(psite x)
+      point Find_node(point x)
       {
 	if (Par_node(x) != x)
 	  Par_node(x) = Find_node(Par_node(x));
@@ -548,7 +554,7 @@ namespace mln
 	level::fill(isproc, false);
 	for (int ip = 0; ip < int(S.npoints()); ++ip)
 	  {
-	    psite p = S[ip];
+	    point p = S[ip];
 	    MakeSet_node(p);
 	    MakeSet_tree(p);
 	    // 	      if (subtreeRoot.hold(p))
@@ -561,20 +567,20 @@ namespace mln
 
       void BuildComponentTree()
       {
-	typename p_array<mln_psite(I)>::fwd_piter ip(S);
+	typename p_array<mln_point(I)>::fwd_piter ip(S);
 	for_all(ip)
 	  {
-	    psite p = ip.to_point();
+	    point p = ip.to_point();
 
-	    psite curCanonicalElt = Find_tree(p);
-	    psite curNode = Find_node(subtreeRoot(curCanonicalElt));
+	    point curCanonicalElt = Find_tree(p);
+	    point curNode = Find_node(subtreeRoot(curCanonicalElt));
 
 	    mln_niter(N) q(nbh, p);
 	    for_all(q)
 	      if (pima.has(q) and isproc(q) and pima(q) <= pima(p))
 		{
-		  psite adjCanonicalElt = Find_tree(q);
-		  psite adjNode = Find_node(subtreeRoot(adjCanonicalElt));
+		  point adjCanonicalElt = Find_tree(q);
+		  point adjNode = Find_node(subtreeRoot(adjCanonicalElt));
 		  if (curNode != adjNode)
 		    {
 		      if (nodes(curNode).level == nodes(adjNode).level)
@@ -595,7 +601,7 @@ namespace mln
 	// Pour garder une map de correspondance point <-> local_root
 	//            for (int ip = 0; ip < int(S.size()); ++ip)
 	//              {
-	//                psite p = S[ip];
+	//                point p = S[ip];
 	// 	       M(p) = Find_node(p);
 	// 	     }
 
@@ -603,14 +609,14 @@ namespace mln
 	for_all(r)
 	  Par_node(r) = Find_node(r);
 
-	Root = subtreeRoot(Find_tree(Find_node(psite(0, 0))));
+	Root = subtreeRoot(Find_tree(Find_node(point(0, 0))));
       }
 
 
-      psite MergeNode(psite& node1, psite& node2)
+      point MergeNode(point& node1, point& node2)
       {
-	psite tmpNode = Link_node(node1, node2);
-	psite tmpNode2;
+	point tmpNode = Link_node(node1, node2);
+	point tmpNode2;
 	if (tmpNode == node2)
 	  {
 	    nodes(node2).addChildren(nodes(node1));
@@ -626,7 +632,7 @@ namespace mln
 	return tmpNode;
       }
 
-      psite Link_tree(psite x, psite y)
+      point Link_tree(point x, point y)
       {
 	if (Rnk_tree(x) > Rnk_tree(y))
 	  swap(x, y);
@@ -637,7 +643,7 @@ namespace mln
 	return y;
       }
 
-      psite Link_node(psite x, psite y)
+      point Link_node(point x, point y)
       {
 	if (Rnk_node(x) > Rnk_node(y))
 	  swap(x, y);
@@ -664,7 +670,7 @@ namespace mln
 	  {
 	    for(unsigned int j = 0; j < img.domain().len(1); ++j)
 	      {
-		C l = (img(psite(i, j)));//.row() * img.domain().len(1) + (img(psite(i, j))).col();
+		C l = (img(point(i, j)));//.row() * img.domain().len(1) + (img(point(i, j))).col();
 		std::cout << " " << l << " ";
 	      }
 	    std::cout << std::endl;
@@ -673,40 +679,41 @@ namespace mln
 
 
 
-      void print_tree(psite p)
+      void print_tree(point p)
       {
 	node& n = nodes(p);
-	std::cout << "psite " << p << "(" << n.level << ")=" << (p.row() * exact(subtreeRoot).domain().len(1) + p.col()) << " : ";
+	std::cout << "point " << p << "(" << n.level << ")=" << (p.row() * exact(subtreeRoot).domain().len(1) + p.col()) << " : ";
 
-	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
+	typename p_array<mln_point(I)>::fwd_piter it(n.children);
 	for_all(it)
 	  {
-	    psite q = it.to_psite();
+	    point q = it.to_point();
 	    std::cout << q << "=" << (q.row() * subtreeRoot.domain().len(1) + q.col()) << " ";
 	  }
 	std::cout << std::endl;
 
 	for_all(it)
 	  {
-	    print_tree(it.to_psite());
+	    print_tree(it.to_point());
 	  }
       }
 
-      psite lca (psite a, psite b)
+      point lca (point a, point b)
       {
-	psite r = lca_rec(Root, Par_node(a), Par_node(b));
+	//	point r = lca_rec(Root, Par_node(a), Par_node(b));
+	point r = lca_rec(Root, a, b);
 
 	// These two conditions make the lca become a plca
 	// if (r == Par_node(a))
-	//   return psite(-1, -1);
+	//   return point(-1, -1);
 
 	// if (r == Par_node(b))
-	//   return psite(-1, -1);
+	//   return point(-1, -1);
 
 	return r;
       }
 
-      psite lca_rec (psite cur, psite a, psite b)
+      point lca_rec (point cur, point a, point b)
       {
 	// FIXME : naive implementation, make something better
 
@@ -721,16 +728,19 @@ namespace mln
 
 	// We're on a leaf, the point has not been found
 
-	if (nodes(cur).children.npoints() == 0)
-	  return psite (-1, -1);
+	// if (nodes(cur).children.npoints() == 0)
+	if (nodes(cur).children.size() == 0)
+	  return point (-1, -1);
 
-	psite tmp, acc = psite(-1, -1);
+	point tmp, acc = point(-1, -1);
 	int n = 0;
-	typename p_array<mln_psite(I)>::fwd_piter it(nodes(cur).children);
-	for_all(it)
+	// typename p_array<mln_point(I)>::fwd_piter it(nodes(cur).children);
+	// for_all(it)
+	for (unsigned i=0; i < nodes(cur).children.size(); ++i)
 	{
-	  tmp = lca_rec(it.to_psite(), a, b);
-	  if (tmp != psite(-1, -1))
+	  // tmp = lca_rec(it.to_point(), a, b);
+	  tmp = lca_rec(nodes(cur).children[i], a, b);
+	  if (tmp != point(-1, -1))
 	    {
 
 	      // On of the point has been encountered in a child branch
@@ -760,13 +770,13 @@ namespace mln
 	return acc;
       }
 
-      psite min (p_set<psite>& components)
+      point min (p_set<point>& components)
       {
 	if (components.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
-	typename p_set<psite>::fwd_piter it(components);
-	psite min = components[0];
+	typename p_set<point>::fwd_piter it(components);
+	point min = components[0];
 
 	for_all(it)
 	  if (pima(it.to_point()) < pima(min))
@@ -775,13 +785,13 @@ namespace mln
 	return min;
       }
 
-      psite max (p_set<psite>& components)
+      point max (p_set<point>& components)
       {
 	if (components.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
-	typename p_set<psite>::fwd_piter it(components);
-	psite max = components[0];
+	typename p_set<point>::fwd_piter it(components);
+	point max = components[0];
 
 	for_all(it)
 	  if (pima(it.to_point()) > pima(max))
@@ -791,166 +801,165 @@ namespace mln
       }
 
 
-      psite highest_fork (p_set<psite>& components)
+      point highest_fork (p_set<point>& components)
       {
 	if (components.npoints() == 0)
 	  {
 	    std::cerr << "highest fork : empty set" << std::endl;
-	    return psite(-1, -1);
+	    return point(-1, -1);
 	  }
 
 	// if (components.npoints() == 1)
 	//  return components[0];
 
-	psite
+	point
 	  m = min(components),
 	  hfork = m;
 
-	typename p_set<psite>::fwd_piter it(components);
+	typename p_set<point>::fwd_piter it(components);
 	for_all(it)
 	{
 	  // Can't remove the point from the set
 	  if (it.to_point() == m)
 	    continue;
 
-	  psite c = lca(hfork, it.to_point());
+	  point c = lca(hfork, it.to_point());
 	  if (c != it.to_point())
 	  // hfork = it.to_point();
 	     hfork = c;
 	}
 
 	if (nodes(m).level == nodes(hfork).level)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
 	return hfork;
       }
 
-      psite w_destructible(psite p)
+      point w_destructible(point p)
       {
 	mln_niter(N) q(nbh, p);
-	p_set<psite> v;
+	p_set<point> v;
 
 	for_all(q)
 	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
-	psite hf = highest_fork(v);
+	point hf = highest_fork(v);
 
-	if (hf == psite(-1, -1))
+	if (hf == point(-1, -1))
 	  return min(v);
 
 	if (nodes(hf).level <= pima(p))
 	  return hf;
 
-	return psite(-1, -1);
+	return point(-1, -1);
       }
 
-      psite m_destructible(psite p)
+      point m_destructible(point p)
       {
 	mln_niter(N) q(nbh, p);
-	p_set<psite> v = p_set<psite>();
+	p_set<point> v = p_set<point>();
 
 	for_all(q)
 	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
-	if (nodes(min(v)).children.npoints() != 0)
-	  return (psite(-1, -1));
+	// if (nodes(min(v)).children.npoints() != 0)
+	if (nodes(min(v)).children.size() != 0)
+	  return (point(-1, -1));
 
 	//std::cout << "hf of " << p << ":" << v;
-	psite hf = highest_fork(v);
+	point hf = highest_fork(v);
 	//std::cout << " is " << hf << std::endl;
 
-	if (hf == psite(-1, -1))
+	if (hf == point(-1, -1))
 	  return min(v);
 
-	return psite(-1, -1);
+	return point(-1, -1);
       }
 
-      psite w_constructible(psite p)
+      point w_constructible(point p)
       {
 	mln_niter(N) q(nbh, p);
-	p_set<psite> v;
+	p_set<point> v;
 
 	for_all(q)
 	  if (pima.has(q) && pima(q) > pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
 	if (v.npoints() == 1)
-	  {
-	    if (nodes(v[0]).children.npoints() == 1)
-	      std::cout << "SINGL QUI MERDE" << std::endl;
-	    return v[0];
-	  }
+	  return v[0];
 
-	psite
+	point
 	  c = max(v),
 	  cmax = c;
 
-	typename p_set<psite>::fwd_piter it(v);
+	typename p_set<point>::fwd_piter it(v);
 	for_all(it)
 	{
 	  // Can't remove the point from the set
 	  if (it.to_point() == cmax)
 	    continue;
 
-	  psite c1 = lca_opt(c, it.to_point());
+	  point c1 = lca_opt(c, it.to_point());
+	  // point c2 = lca(c, it.to_point());
+
+	  // if (c1 != c2)
+	  //  std::cout << "DIFF LCA! points : " << c << " and " << it.to_point() << " opt : " << c1 << " classic : " << c2 << std::endl;
+
 	  if (c1 != it.to_point())
 	    c = c1;
 	}
 
 	if (nodes(c).level <= pima(p))
-	  return psite(-1, -1);
-
-	if (nodes(c).children.npoints() == 1)
-	  std::cout << "LCA QUI MERDE" << std::endl;
+	  return point(-1, -1);
 
 	return c;
       }
 
 
-      psite w_constructible_slow(psite p)
+      point w_constructible_slow(point p)
       {
 	mln_niter(N) q(nbh, p);
-	p_set<psite> v;
+	p_set<point> v;
 
 	for_all(q)
 	  if (pima.has(q) && pima(q) > pima(p))
 	    v.insert(Par_node(q));
 
 	if (v.npoints() == 0)
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
 	if (v.npoints() == 1)
 	  return v[0];
 
-	psite
+	point
 	  c = max(v),
 	  cmax = c;
 
-	typename p_set<psite>::fwd_piter it(v);
+	typename p_set<point>::fwd_piter it(v);
 	for_all(it)
 	{
 	  // Can't remove the point from the set
 	  if (it.to_point() == cmax)
 	    continue;
 
-	  psite c1 = lca(c, it.to_point());
+	  point c1 = lca(c, it.to_point());
 	  if (c1 != it.to_point())
 	    c = c1;
 	}
 
 	if (nodes(c).level <= pima(p))
-	  return psite(-1, -1);
+	  return point(-1, -1);
 
 	return c;
       }
@@ -961,8 +970,8 @@ namespace mln
 
 	// FIXME : make a better priority function
 	typedef
-	  std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >
-	  //	  std::priority_queue< psite, std::vector<psite>, util::najman_distance<I> >
+	  std::priority_queue< point, std::vector<point>, util::greater_psite<I> >
+	  //	  std::priority_queue< point, std::vector<point>, util::najman_distance<I> >
 	  ordered_queue_type;
 
 
@@ -974,14 +983,14 @@ namespace mln
 	mln_piter(I) it(pima.domain());
 
 	for_all(it)
-	  if (m_destructible(it.to_point()) != psite(-1, -1))
+	  if (m_destructible(it.to_point()) != point(-1, -1))
 	    {
 	      //std::cout << "init: push " << it.to_point() << std::endl;
 	      l.push(it.to_point());
 	      isproc(it.to_point()) = true;
 	    }
 
-	psite p, i;
+	point p, i;
 	while (!l.empty())
 	  {
 	    // Extract priority queue
@@ -994,7 +1003,7 @@ namespace mln
 	    i = m_destructible(p);
 	    //std::cout << "point " << p << "is m-destructible " << i << std::endl;
 
-	    if (i != psite(-1, -1))
+	    if (i != point(-1, -1))
 	      {
 		pima(p) = nodes(i).level - 1 ;
 		Par_node(p) = i;
@@ -1002,10 +1011,10 @@ namespace mln
 		mln_niter(N) q(nbh, p);
 		for_all(q)
 		  if (pima.has(q) && !isproc(q))
-		    if (m_destructible(q) != psite(-1, -1))
+		    if (m_destructible(q) != point(-1, -1))
 		      {
-			//			if (q == psite(1, 1))
-			// std::cout << "psite(1, 1) ajoute dans la boucle" << std::endl;
+			//			if (q == point(1, 1))
+			// std::cout << "point(1, 1) ajoute dans la boucle" << std::endl;
 
 			// Add priority queue
 			l.push(q);
@@ -1019,7 +1028,7 @@ namespace mln
 
       void w_watershed()
       {
-	std::map< mln_value(I), std::set<psite> > L;
+	std::map< mln_value(I), std::set<point> > L;
 
 	// Setting the min and the max of the image
 	mln_value(I) k, kmin, kmax;
@@ -1027,24 +1036,24 @@ namespace mln
 
 	// For k From kmin to kmax - 1 Do Lk <- <empty set>
 	for (k = kmin; k < kmax; k++)
-	  L[k] = std::set<psite>();
+	  L[k] = std::set<point>();
 
 	// I K(pima.domain(), pima.border());
 	mln_ch_value(I, int) K(pima.domain(), pima.border());
 	level::fill(K, 73320);
-	mln_ch_value(I, psite) H(pima.domain(), pima.border());
+	mln_ch_value(I, point) H(pima.domain(), pima.border());
 
 	// For All p of E do
 	mln_piter(I) it(pima.domain());
 	for_all(it)
 	{
-	  psite p = it.to_point();
+	  point p = it.to_point();
 
 	  // i <- W-Destructible(p)
-	  psite i = w_destructible(p);
+	  point i = w_destructible(p);
 
 	  // If i != infinity then
-	  if (i != psite(-1, -1))
+	  if (i != point(-1, -1))
 	    {
 	      L[nodes(i).level - 1].insert(p);
 	      K(p) = nodes(i).level - 1;
@@ -1054,11 +1063,11 @@ namespace mln
 
 	for (k = kmin; k < kmax; k++)
 	  {
-	    std::set<psite>& Lk = L[k];
+	    std::set<point>& Lk = L[k];
 
 	    while (!Lk.empty())
 	      {
-		psite p = *(Lk.begin());
+		point p = *(Lk.begin());
 		Lk.erase(p);
 
 		if (K(p) == 73320)
@@ -1073,8 +1082,8 @@ namespace mln
 		    for_all(q)
 		      if (pima.has(q) && k < pima(q))
 			{
-			  psite i = w_destructible(q);
-			  if (i == psite(-1, -1))
+			  point i = w_destructible(q);
+			  if (i == point(-1, -1))
 			    K(q) = 10000;
 			  else
 			    if (K(q) != nodes(i).level - 1)
@@ -1092,8 +1101,8 @@ namespace mln
 
 			  std::cout << "cas improbable" << std::endl;
 
-			  psite i = w_destructible(p);
-			  if (i == psite(-1, -1))
+			  point i = w_destructible(p);
+			  if (i == point(-1, -1))
 			    K(p) = 10000;
 			  else
 			    if (K(p) != nodes(i).level - 1)
@@ -1112,16 +1121,17 @@ namespace mln
       }
 
 
-      void revert_tree (psite p)
+      void revert_tree (point p)
       {
 	node& n = nodes(p);
 
 	n.level = 255 - n.level;
 
-	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
-
-	for_all(it)
-	  revert_tree(it.to_psite());
+	// typename p_array<mln_point(I)>::fwd_piter it(n.children);
+	// for_all(it)
+	//   revert_tree(it.to_point());
+	for (unsigned i=0; i < n.children.size(); ++i)
+	  revert_tree(n.children[i]);
       }
 
       void gotopo()
@@ -1130,6 +1140,10 @@ namespace mln
 
 	std::cout << "Build component tree..." << std::endl;
 	BuildComponentTree();
+	std::cout << "                       done" << std::endl;
+
+	std::cout << "Compressing tree..." << std::endl;
+	compressTree();
 	std::cout << "                       done" << std::endl;
 
 	mln_piter(I) p (pima.domain());
@@ -1166,14 +1180,15 @@ namespace mln
 	// Not used
 	// level::fill(isproc, false);
 
-	util::fah_queue < psite, mln_value(I) > l;
+	util::fah_queue < point, mln_value(I) > l;
 	mln_value(I) max = mln_max(mln_value(I));
 
 	// Flag C-maxima
 	level::fill(cmax, false);
 	mln_piter(I) it(Par_node.domain());
 	for_all(it)
-	  if (nodes(Par_node(it.to_point())).children.npoints() == 0)
+	  // if (nodes(Par_node(it.to_point())).children.npoints() == 0)
+	  if (nodes(Par_node(it.to_point())).children.size() == 0)
 	    cmax(it.to_point()) = true;
 
 	// Optimisation : enqueue minima's neighbours
@@ -1196,32 +1211,34 @@ namespace mln
 	// Main loop
 	while(!l.is_empty())
 	  {
-	    psite x = l.top();
+	    point x = l.top();
 	    l.pop();
 	    enqueued(x) = false;
 
-	    psite c = w_constructible(x);
-	    //	    psite d = w_constructible_slow(x);
+	    point c = w_constructible(x);
+	    //	    point d = w_constructible_slow(x);
 
 	    //if (c != d)
 	    // std::cerr << "COUILLE AVEC LE LCA : " << x << " donne " << c << " au lieu de " << d << std::endl;
 
 
-	    if (c != psite(-1, -1))
+	    if (c != point(-1, -1))
 	      {
 		pima(x) = nodes(c).level;
 		Par_node(x) = c;
 		// isproc(x) = true;
 
-		if (nodes(c).children.npoints() == 0)
+		// if (nodes(c).children.npoints() == 0)
+		if (nodes(c).children.size() == 0)
 		  cmax(x) = true;
 		else
-		  if (nodes(c).children.npoints() > 1)
+		  // if (nodes(c).children.npoints() > 1)
+		  if (nodes(c).children.size() > 1)
 		    {
 		    }
 		  else
 		    {
-		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.npoints() << std::endl;
+		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.size() << std::endl;
 		    }
 
 
@@ -1233,7 +1250,7 @@ namespace mln
 
 		      l.push(q, max - pima(q));
 		    }
-	      } // if (c != psite(-1, -1))
+	      } // if (c != point(-1, -1))
 	  } // while(!l.empty())
 
 	for_all(it)
@@ -1246,23 +1263,26 @@ namespace mln
       int *euler;
       int *depth;
       int ctree_size;
-      std::map<psite, int> pos;
-      psite *repr;
+      std::map<point, int> pos;
+      point *repr;
 
       int *minim;
       int **Minim;
 
-      void compute_ctree_size (psite p)
+      void compute_ctree_size (point p)
       {
 	ctree_size += 1;
 	node& n = nodes(p);
 
-	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
-	for_all(it)
-	  compute_ctree_size(it.to_point());
+	// typename p_array<mln_point(I)>::fwd_piter it(n.children);
+	// for_all(it)
+	//   compute_ctree_size(it.to_point());
+
+	for (unsigned i=0; i < n.children.size(); ++i)
+	  compute_ctree_size(n.children[i]);
       }
 
-      void build_euler_tour_rec(psite p, int &position, int d)
+      void build_euler_tour_rec(point p, int &position, int d)
       {
 	if (pos.find(p) == pos.end())
 	  pos[p] = position;
@@ -1273,16 +1293,24 @@ namespace mln
 	++position;
 	node& n = nodes(p);
 
-	typename p_array<mln_psite(I)>::fwd_piter it(n.children);
-	for_all(it)
-	{
-	  build_euler_tour_rec(it.to_point(), position, d+1);
-	  depth[position] = d; // Not optimized
-	  euler[position] = pos[p];
-	  repr[position] = p; // Pas necessaire?
-	  ++position;
-	}
+	// typename p_array<mln_point(I)>::fwd_piter it(n.children);
+	// for_all(it)
+	// {
+	//   build_euler_tour_rec(it.to_point(), position, d+1);
+	//   depth[position] = d; // Not optimized
+	//   euler[position] = pos[p];
+	//   repr[position] = p; // Pas necessaire?
+	//   ++position;
+	// }
 
+	for(unsigned i=0; i < n.children.size(); ++i)
+	  {
+	    build_euler_tour_rec(n.children[i], position, d+1);
+	    depth[position] = d; // Not optimized
+	    euler[position] = pos[p];
+	    repr[position] = p; // Pas necessaire?
+	    ++position;
+	  }
       }
 
       void build_euler_tour ()
@@ -1295,7 +1323,7 @@ namespace mln
 	// FIXME : free this
 	euler = new int[size];
 	depth = new int[size];
-	repr = new psite[size];
+	repr = new point[size];
 
 	int position = 0;
 	build_euler_tour_rec(Root, position, 0);
@@ -1341,7 +1369,7 @@ namespace mln
 
       } // void build_minim ()
 
-      psite lca_opt (psite a, psite b)
+      point lca_opt (point a, point b)
       {
 	int
 	  m = pos[a],
@@ -1365,6 +1393,40 @@ namespace mln
 	} else {
 	  return repr[euler[Minim[k][n - (1 << k)]]];
 	}
+      }
+
+
+      void removeOneSonNodes(point *p, mln_ch_value(I, point) &newPar_node)
+      {
+	node &n = nodes(*p);
+
+	if (n.children.size() == 1) // this node has 1 son, delete it
+	  {
+	    n.area = -1;
+	    newPar_node(*p) = n.children[0];
+	    *p = n.children[0];
+	    removeOneSonNodes(p, newPar_node);
+	  }
+	else // there is more than one son, recursive call
+	  {
+	    for (unsigned i = 0; i < n.children.size(); ++i)
+	      removeOneSonNodes(&(n.children[i]), newPar_node);
+	  }
+      }
+
+
+      void compressTree()
+      {
+	mln_ch_value(I, point) newPar_node(Par_node.domain(), Par_node.border());
+
+	// Remove the nodes with one son
+	removeOneSonNodes(&Root, newPar_node);
+
+	// Update the references on deleted nodes
+	mln_piter(I) p(Par_node.domain());
+	for_all(p)
+	  while (nodes(Par_node(p)).area == -1)
+	    Par_node(p) = newPar_node(Par_node(p));
       }
 
     }; // struct basic_najman

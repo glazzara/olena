@@ -107,9 +107,11 @@ test_tree<image2d<int_u8>::psite>* test_convert (morpho::basic_najman<image2d<in
 
   test_tree<image2d<int_u8>::psite> *res = new test_tree<image2d<int_u8>::psite>(ima.Par_node(root));
 
-  p_array<image2d<int_u8>::psite>::fwd_piter it (n.children);
-  for_all(it)
-    res->insert_child(test_convert(ima, it.to_psite()));
+  // p_array<image2d<int_u8>::psite>::fwd_piter it (n.children);
+  // for_all(it)
+  //   res->insert_child(test_convert(ima, it.to_psite()));
+  for (unsigned i=0; i < n.children.size(); ++i)
+    res->insert_child(test_convert(ima, n.children[i]));
 
   return res;
 }
