@@ -64,11 +64,11 @@ int main()
   assert(array.npsets() == 0);
   array.insert(pruns0);
   assert(array.npsets() == 1);
-  assert(array.npoints() == 2);
+  assert(array.nsites() == 2);
 
   array.insert(pruns2);
   assert(array.npsets() == 2);
-  assert(array.npoints() == 7);
+  assert(array.nsites() == 7);
 
   array.insert(pruns1);
 

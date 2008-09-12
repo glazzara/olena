@@ -1,3 +1,41 @@
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Propagate a few renamings to some test code.
+
+	* tests/core/site_set/p_queue_fast.cc,
+	* tests/core/site_set/p_priority_queue_fast.cc,
+	* tests/core/site_set/p_queue.cc,
+	* tests/core/site_set/p_priority_queue.cc,
+	* tests/core/site_set/p_runs.cc,
+	* tests/core/site_set/p_image2d.cc,
+	* tests/core/site_set/pset_array.cc,
+	* tests/core/site_set/pset_if.cc,
+	* tests/core/site_set/p_priority_queue_fast_with_array.cc,
+	* tests/core/site_set/p_set.cc,
+	* tests/core/other/neighb.cc,
+	* tests/core/other/pixter2d.cc,
+	* tests/core/other/pixter3d.cc,
+	* tests/core/image/complex_image.cc,
+	* tests/core/image/image3d.cc,
+	* tests/core/image/image_if.cc,
+	* tests/draw/line.cc,
+	* tests/level/median_fast.cc,
+	* tests/border/mirror_full.cc,
+	* tests/border/duplicate_full.cc,
+	* tests/border/fill_full.cc,
+	* tests/border/mirror.cc,
+	* tests/border/duplicate.cc,
+	* tests/border/fill.cc,
+	* tests/convert/to_p_set.cc,
+	* tests/convert/to_p_array.cc,
+	* tests/util/lemmings.cc,
+	* tests/labeling/level.cc (npoints): Update to...
+	(nsites): ...this.
+	(image::operator[]): Update to...
+	(image::element): ...this.
+	(mln_point): Update to...
+	(mln_site): ...this.
+
 2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix most of Doxygen's warnings.

@@ -35,7 +35,7 @@
 using namespace mln;
 
 template <typename N>
-void test(const Neighborhood<N>& nbh, const mln_point(N)& p_ref,
+void test(const Neighborhood<N>& nbh, const mln_site(N)& p_ref,
 	  unsigned size)
 {
   mln_niter(N) n(nbh, p_ref);

@@ -136,7 +136,7 @@ int main()
        typename mln::complex_image<D, P, V>::lvalue
        mln::complex_image<D, P, V>::operator()(const mln::complex_psite<D, P>&)
          [with unsigned int D = 2u,
-                            P = mln::point_<mln::grid::square, int>,
+                            P = mln::point<mln::grid::square, int>,
                             V = mln::value::int_u<8u>]:
        Assertion `this->data_->pc_.has(p)' failed.
 

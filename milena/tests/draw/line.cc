@@ -48,7 +48,7 @@ int main()
 
   point2d b = make::point2d(0,0), e = make::point2d(6,9);
   line2d l(b, e);
-  mln_assertion(l.npoints() == 10);
+  mln_assertion(l.nsites() == 10);
 
   image2d<bool> ima(10,10);
   level::fill(ima, false);

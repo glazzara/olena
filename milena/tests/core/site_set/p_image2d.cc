@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,7 @@ int main()
     .insert(make::point2d(4, 2))
     .insert(make::point2d(4, 2))
     .insert(make::point2d(5, 1));
-  mln_assertion(ps.npoints() == 3);
+  mln_assertion(ps.nsites() == 3);
 
   ps.remove(make::point2d(5, 1));
   ps.remove(make::point2d(5, 1));
@@ -51,7 +51,7 @@ int main()
   ps.remove(make::point2d(6, 9));
   ps.remove(make::point2d(4, 2));
 
-  mln_assertion(ps.npoints() == 0);
+  mln_assertion(ps.nsites() == 0);
   mln_assertion(ps.is_empty());
 
   std::cout << ps << std::endl;

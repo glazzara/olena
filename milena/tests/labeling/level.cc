@@ -63,5 +63,5 @@ int main()
 	accu::compute<accu::count>(labels | (pw::value(labels) != pw::cst(0u)));
       npixels += npix;
     }
-  mln_assertion(npixels == lena.npoints());
+  mln_assertion(npixels == lena.nsites());
 }

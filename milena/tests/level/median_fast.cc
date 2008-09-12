@@ -53,7 +53,7 @@ namespace mln
   template <typename I, typename W>
   void test(I& input, const W& win)
   {
-    mln_point(I) p;
+    mln_site(I) p;
     p.row() = p.col() = 1;
 
     {

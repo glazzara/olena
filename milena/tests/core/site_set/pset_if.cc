@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,7 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
+  mln_assertion((box_8x8 | fun::p2b::chess).nsites() == 32);
 
   {
     p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess);

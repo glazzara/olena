@@ -44,7 +44,7 @@ int main()
   I ima(8, 8);
   // debug::println(ima | fun::p2b::chess);
   // FIXME: is this line corret?
-  ///mln_assertion((ima | fun::p2b::chess).npoints() == 32);
+  ///mln_assertion((ima | fun::p2b::chess).nsites() == 32);
 
   {
     typedef image_if<I, fun::p2b::chess_t> II;

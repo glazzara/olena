@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,10 +61,10 @@ int main()
   p_runs_<point2d> ps2;
 
   ps.insert(p_run<point2d>(p, 7));
-  mln_assertion(ps.npoints() == 7);
+  mln_assertion(ps.nsites() == 7);
 
   ps.insert(p_run<point2d>(q, 5));
-  mln_assertion(ps.npoints() == 12);
+  mln_assertion(ps.nsites() == 12);
 
   ps.insert(p_run<point2d>(r, 2));
 

@@ -48,7 +48,7 @@ int main()
   win::segment1d win1d(5);
   vec1d v1(convert::to_p_array(win1d, p1));
 
-  for (size_t i=0; i < v1.npoints(); i++)
+  for (size_t i=0; i < v1.nsites(); i++)
     std::cout << (v1[i]);
 
   std::cout << "\n";
@@ -58,7 +58,7 @@ int main()
   win::rectangle2d win2d(3, 3);
   vec2d v2(convert::to_p_array(win2d, p2));
 
-  for (size_t i=0; i < v2.npoints(); i++)
+  for (size_t i=0; i < v2.nsites(); i++)
     std::cout << (v2[i]);
 
 }

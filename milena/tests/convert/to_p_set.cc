@@ -46,8 +46,8 @@ using namespace mln;
 
   void test(p_set<point2d> ref, p_set<point2d> cmp)
   {
-    mln_assertion(ref.npoints() == cmp.npoints());
-    for (unsigned i = 0; i < ref.npoints(); ++i)
+    mln_assertion(ref.nsites() == cmp.nsites());
+    for (unsigned i = 0; i < ref.nsites(); ++i)
       mln_assertion(ref[i] == cmp[i]);
   }
 

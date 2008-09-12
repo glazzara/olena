@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,7 +51,7 @@ namespace mln
     border::mirror(ima);
 
     for (int i = 0; i < c; ++i)
-      mln_assertion(ima[i] == ref[i]);
+      mln_assertion(ima.element(i) == ref[i]);
   }
 
   template <typename T>
@@ -65,7 +65,7 @@ namespace mln
     border::mirror(ima);
 
     for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == ref[i]);
+      mln_assertion(ima.element(i) == ref[i]);
   }
 
 }

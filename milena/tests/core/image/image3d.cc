@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,8 +45,8 @@ int main()
 
   image3d<int> f(nslis, nrows, ncols, border);
 
-  mln_assertion(f.npoints() == geom::nslis(f) * geom::nrows(f) * geom::ncols(f));
-  mln_assertion(f.ncells()  == ((nrows + 2 * border)
+  mln_assertion(f.nsites() == geom::nslis(f) * geom::nrows(f) * geom::ncols(f));
+  mln_assertion(f.nelements()  == ((nrows + 2 * border)
 				* (ncols + 2 * border)
 				* (nslis + 2 * border)));
 }
