@@ -53,13 +53,12 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base_< T, rank_<T> >
+    struct rank_ : public mln::accu::internal::base< T, rank_<T> >
     {
       typedef T argument;
       typedef T result;
       typedef mln::value::set<T> S;
 
-      rank_(unsigned k, unsigned n, const Value_Set<S>& s);
       rank_(unsigned k, unsigned n);
 
       void   init();
@@ -76,7 +75,7 @@ namespace mln
       unsigned k_; // 0 <= k_ < n
       unsigned n_;
 
-      mutable accu::histo<S> h_;
+      mutable accu::histo<T> h_;
       const S& s_; // derived from h_
 
       mutable std::size_t sum_minus_, sum_plus_;
@@ -127,17 +126,6 @@ namespace mln
     }
 
 
-    template <typename T>
-    inline
-    rank_<T>::rank_(unsigned k, unsigned n, const Value_Set<mln::value::set<T> >& s)
-      : k_(k),
-	n_(n),
-	h_(s),
-	s_(h_.vset())
-    {
-      mln_assertion(k_ < n_);
-      init();
-    }
 
     template <typename T>
     inline

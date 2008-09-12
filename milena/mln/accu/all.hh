@@ -58,7 +58,7 @@ namespace mln
 # include <mln/accu/histo.hh>
 # include <mln/accu/max.hh>
 # include <mln/accu/mean.hh>
-# include <mln/accu/median.hh>
+# include <mln/accu/median_h.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/min_h.hh>
 # include <mln/accu/min_max.hh>

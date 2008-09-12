@@ -25,22 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/median.cc
+/*! \file tests/accu/median_h.cc
  *
- * \brief Tests on mln::accu::median.
+ * \brief Tests on mln::accu::median_h.
  */
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/accu/median.hh>
+#include <mln/accu/median_h.hh>
 
 int main()
 {
   using namespace mln;
 
   {
-    accu::median< value::set<value::int_u8> > med;
+    accu::median_h<value::int_u8> med;
 
     med.take(10);
     med.take(9);
@@ -58,7 +58,7 @@ int main()
   }
 
   {
-    accu::median< value::set<value::int_u8> > med;
+    accu::median_h<value::int_u8> med;
 
     med.take(10);
     med.take(7);

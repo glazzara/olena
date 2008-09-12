@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,16 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MEDIAN_HH
-# define MLN_ACCU_MEDIAN_HH
+#ifndef MLN_ACCU_MEDIAN_H_HH
+# define MLN_ACCU_MEDIAN_H_HH
 
-/*! \file mln/accu/median.hh
+/*! \file mln/accu/median_h.hh
  *
  * \brief Define a generic median accumulator class.
  */
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
+# include <mln/value/set.hh>
 
 
 namespace mln
@@ -45,38 +46,37 @@ namespace mln
 
 
     /*! \brief Generic median function based on histogram over a value
-     * set with type \c S.
+     * set with type \c V.
      */
-    template <typename S>
-    struct median : public mln::accu::internal::base< mln_value(S), median<S> >
-    { // FIXME: Should median be named 'median_' like other accumulators ?
-      typedef mln_value(S) argument;
+    template <typename V>
+    struct median_h : public mln::accu::internal::base< V, median_h<V> >
+    {
+      typedef V argument;
       typedef argument result;
 
-      median(const Value_Set<S>& s);
-      median();
+      median_h();
 
       void init();
       void   take(const argument& t);
-      void   take(const median<S>& other);
+      void   take(const median_h<V>& other);
       void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
       argument to_result() const;
 
-      const accu::histo<S>& histo() const;
+      const accu::histo<V>& histo() const;
 
     protected:
 
-      mutable accu::histo<S> h_;
-      const S& s_; // derived from h_
+      mutable accu::histo<V> h_;
+      const value::set<V>& s_; // derived from h_
 
       mutable std::size_t sum_minus_, sum_plus_;
 
       mutable bool valid_;
-      mutable std::size_t i_; // the median index
-      mutable argument t_;       // the median value
+      mutable std::size_t i_; // the median_h index
+      mutable argument t_;       // the median_h value
 
       // Auxiliary methods
       void update_() const;
@@ -87,28 +87,19 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename V>
     inline
-    median<S>::median(const Value_Set<S>& s)
-      : h_(s),
-	s_(h_.vset())
-    {
-      init();
-    }
-
-    template <typename S>
-    inline
-    median<S>::median()
+    median_h<V>::median_h()
       : h_(),
 	s_(h_.vset())
     {
       init();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::take(const argument& t)
+    median_h<V>::take(const argument& t)
     {
       h_.take(t);
 
@@ -121,10 +112,10 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::take(const median<S>& other)
+    median_h<V>::take(const median_h<V>& other)
     {
       // h_
       h_.take(other.h_);
@@ -141,10 +132,10 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::untake(const argument& t)
+    median_h<V>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -158,10 +149,10 @@ namespace mln
 	valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::update_() const
+    median_h<V>::update_() const
     {
       valid_ = true;
 
@@ -184,10 +175,10 @@ namespace mln
 	  }
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::go_minus_() const
+    median_h<V>::go_minus_() const
     {
       do
 	{
@@ -201,10 +192,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::go_plus_() const
+    median_h<V>::go_plus_() const
     {
       do
 	{
@@ -218,10 +209,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    median<S>::init()
+    median_h<V>::init()
     {
       h_.init();
       sum_minus_ = 0;
@@ -232,20 +223,20 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    typename median<S>::argument
-    median<S>::to_result() const
+    typename median_h<V>::argument
+    median_h<V>::to_result() const
     {
       if (! valid_)
 	update_();
       return t_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    const accu::histo<S>&
-    median<S>::histo() const
+    const accu::histo<V>&
+    median_h<V>::histo() const
     {
       return h_;
     }
@@ -257,4 +248,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_MEDIAN_HH
+#endif // ! MLN_ACCU_MEDIAN_H_HH

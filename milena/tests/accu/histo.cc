@@ -40,7 +40,7 @@ int main()
   using namespace mln;
   using namespace mln::value;
 
-  accu::histo< set<int_u8> > a;
+  accu::histo<int_u8> a;
 
   a.take(1);
   a.take(1);

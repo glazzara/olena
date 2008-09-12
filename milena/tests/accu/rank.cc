@@ -54,42 +54,42 @@ int main()
   {
     accu::rank_<value::int_u8> accu(0, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 1);
+    mln_assertion(accu.to_result() == 1u);
   }
   {
     accu::rank_<value::int_u8> accu(1, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 2);
+    mln_assertion(accu.to_result() == 2u);
   }
   {
     accu::rank_<value::int_u8> accu(2, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 2);
+    mln_assertion(accu.to_result() == 2u);
   }
   {
     accu::rank_<value::int_u8> accu(3, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 3);
+    mln_assertion(accu.to_result() == 3u);
   }
   {
     accu::rank_<value::int_u8> accu(4, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 4);
+    mln_assertion(accu.to_result() == 4u);
   }
   {
     accu::rank_<value::int_u8> accu(5, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
     accu::rank_<value::int_u8> accu(6, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
     accu::rank_<value::int_u8> accu(7, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
     accu::rank_<bool> accu_bool(1, 5);

@@ -40,7 +40,7 @@ int main()
 
   bbox<point2d> b;
   count_<int> c;
-  histo< value::set<bool> > h;
+  mln::accu::histo<bool> h;
   max_<int> ma;
   mean_<int> me;
   // median< value::set<bool> > med; // FIXME: bool has no min so workaround!

@@ -1,3 +1,20 @@
+2008-09-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Make the tests in tests/accu work.
+
+	* tests/accu/Makefile.am,
+	* tests/accu/all_accus.cc,
+	* tests/accu/histo.cc,
+	* tests/accu/rank.cc: Update.
+	* tests/accu/median.cc,
+	* tests/accu/median_h.cc: Move, rename median to median_h and update.
+	* mln/accu/min_h.hh,
+	* mln/accu/max_h.hh: Update licenses.
+	* mln/accu/rank.hh: Update.
+	* mln/accu/median.hh,
+	* mln/accu/median_h.hh: Move, rename to median_h and update.
+	* mln/accu/all.hh: Rename median to median_h.
+
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update the design of windows.
