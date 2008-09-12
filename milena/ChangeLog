@@ -1,3 +1,8 @@
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add at() and remove operator[] from image1d.
+	* milena/mln/core/image/image1d.hh: add at() and remove operator[].
+
 2008-09-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Adapt the accumulators histo, min_h, max_h to histo/data.

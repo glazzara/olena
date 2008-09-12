@@ -175,11 +175,15 @@ namespace mln
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point1d& p);
 
-    /// Read-only access to the image value located at offset \p o.
-    const T& operator[](unsigned i) const;
 
-    /// Read-write access to the image value located at offset \p o.
-    T& operator[](unsigned i);
+    // Specific methods:
+    // -----------------
+
+    /// Read-only access to the image value located at (\p index).
+    const T& at(int index) const;
+
+    /// Read-write access to the image value located at (\p index).
+    T& at(int index);
 
 
     /// Fast Image method
@@ -419,20 +423,21 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image1d<T>::operator[](unsigned o) const
+  image1d<T>::at(int index) const
   {
-    mln_precondition(o < nelements());
-    return *(this->data_->buffer_ + o);
+    mln_precondition(this->has(make::point1d(index)));
+    return this->data_->array_[index];
   }
 
   template <typename T>
   inline
   T&
-  image1d<T>::operator[](unsigned o)
+  image1d<T>::at(int index)
   {
-    mln_precondition(o < nelements());
-    return *(this->data_->buffer_ + o);
+    mln_precondition(this->has(make::point1d(index)));
+    return this->data_->array_[index];
   }
+
 
   template <typename T>
   inline
