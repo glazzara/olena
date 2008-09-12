@@ -1,5 +1,9 @@
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/concept/iterator.hh (for_all_2): Wrap a long line.
+
+2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/face.hh: Add missing `inline' keywords.
 
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
