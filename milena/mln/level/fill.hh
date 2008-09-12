@@ -32,16 +32,15 @@
  *
  * \brief Fill an image, that is, set pixel values.
  *
- * \todo Re-organize this file contents + Overload for fastest images.
+ * \todo Add a conversion "arr->fun" then get rid of the C array overload.
  */
 
 # include <mln/core/concept/function.hh>
+# include <mln/pw/image.hh>
+# include <mln/convert/to_fun.hh>
 
-# include <mln/level/fill_with_value.hh>
 # include <mln/level/fill_with_image.hh>
-
-// Specializations are in:
-// # include <mln/level/fill.spe.hh>
+# include <mln/level/fill_with_value.hh>
 
 
 namespace mln
@@ -50,165 +49,96 @@ namespace mln
   namespace level
   {
 
-    /*! Fill the whole image \p ima with the single value \p v.
+    /*! Fill the whole image \p ima with the data provided by \p aux.
      *
      * \param[in,out] ima The image to be filled.
-     * \param[in] v The value to assign to all sites.
+     * \param[in] data The auxiliary data to fill the image \p ima.
      *
      * \pre \p ima has to be initialized.
-     *
-     * \todo Optimize when \p ima is large and sizeof(mln_value(I)) > 1.
      */
-    template <typename I>
-    void fill(Image<I>& ima, const mln_value(I)& v);
-
-
-    /*! Fill the whole image \p ima with the function \p f.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] f The function.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Take benefit from quantization when possible.
-     */
-    template <typename I, typename F>
-    void fill(Image<I>& ima, const Function_p2v<F>& f);
-
-
-    /*! Fill the image \p ima by applying the function \p f.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] f The function that defines the value of every pixel.
-     *
-     * The signature of \p f has to be:
-     * " value f(const point& p) "
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Take benefit from quantization when possible.
-     */
-    template <typename I>
-    void fill(Image<I>& ima,  mln_value(I) (*(&f))(const mln_psite(I)& p));
-
-    template <typename I>
-    void fill_f(Image<I>& ima,  mln_value(I) (*f)(const mln_psite(I)& p));
-
-
-    /*! Fill the image \p ima with the values given by the array \p arr.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] arr The array of values.
-     *
-     * \warning The size of the array has to be larger than the number
-     * of image points, otherwise the program crashes.
-     *
-     * \pre \p ima has to be initialized.
-     * \pre N == \p ima.npoints
-     */
-    template <typename I, unsigned N>
-    void fill(Image<I>& ima, mln_value(I) (&arr)[N]);
-
-
-    /*! Fill the image \p ima with the values of the image \p data.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] data The image.
-     *
-     * \warning The definition domain of \p ima has to be included in
-     * the one of \p data.
-     *
-     * \pre \p ima.domain <= \p data.domain.
-     *
-     * \todo Use memcpy when possible.
-     */
-    template <typename I, typename J>
-    void fill(Image<I>& ima, const Image<J>& data);
-
+    template <typename I, typename D>
+    void fill(Image<I>& ima, const D& data);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
 
-    // With: value
+      // tests
 
-    template <typename I>
+      template <typename I, typename D>
+      inline
+      void fill_tests(Image<I>& ima, const D&)
+      {
+	mlc_is(mln_trait_image_value_io(I), trait::image::value_io::read_write)::check();
+	mln_precondition(exact(ima).has_data());
+	// FIXME: check for ambiguities...
+      }
+
+      // dispatch
+
+      template <typename I, typename D>
+      void fill_dispatch(Image<I>& ima, const D& data)
+      {
+	fill_dispatch_overload(ima, exact(data));
+      }
+
+      // dispatch_overload
+
+      template <typename I>
+      void fill_dispatch_overload(Image<I>& ima, const mln_value(I)& v)
+      {
+	mln::level::fill_with_value(ima, v);
+      }
+
+      template <typename I, typename J>
+      void fill_dispatch_overload(Image<I>& ima, const Image<J>& data)
+      {
+	mln::level::fill_with_image(ima, data);
+      }
+
+      template <typename I, typename F>
+      void fill_dispatch_overload(Image<I>& ima, const Function<F>& f)
+      {
+	mlc_converts_to(mln_result(F), mln_value(I))::check();
+	mln::level::fill_with_image(ima, f | ima.domain());
+      }
+
+      template <typename I, typename R, typename A>
+      void fill_dispatch_overload(Image<I>& ima, R (*f)(A))
+      {
+	mlc_converts_to(R, mln_value(I))::check();
+	mln::level::fill_with_image(ima,
+				    convert::to_fun(f) | ima.domain());
+      }
+
+      template <typename I, typename V, unsigned N>
+      void fill_dispatch_overload(Image<I>& ima_, V (&arr)[N])
+      {
+	mlc_converts_to(V, mln_value(I))::check();
+	I& ima = exact(ima_);
+	mln_precondition(N == ima.nsites());
+	mln_fwd_piter(I) p(ima.domain());
+	unsigned i = 0;
+	for_all(p)
+	  ima(p) = arr[i++];
+      }
+
+    } // end of namespace mln::level::internal
+
+
+    // Facade.
+
+    template <typename I, typename D>
     inline
-    void fill(Image<I>& ima, const mln_value(I)& value)
+    void fill(Image<I>& ima, const D& data)
     {
       trace::entering("level::fill");
-      fill_with_value(ima, value);
-      trace::exiting("level::fill");
-    }
 
-
-    // with: Image<J>
-
-    template <typename I, typename J>
-    inline
-    void fill(Image<I>& ima, const Image<J>& data)
-    {
-      trace::entering("level::fill");
-      fill_with_image(ima, data);
-      trace::exiting("level::fill");
-    }
-
-
-    // with: Function_p2v<F>
-
-    template <typename I, typename F>
-    inline
-    void fill(Image<I>& ima_, const Function_p2v<F>& f_)
-    {
-      trace::entering("level::fill");
-
-      I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-      const F& f = exact(f_);
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	ima(p) = f(p);
-
-      trace::exiting("level::fill");
-    }
-
-
-    // with: value f(const point&)
-
-    template <typename I>
-    inline
-    void fill_f(Image<I>& ima_,
-		mln_value(I) (*f)(const mln_psite(I)& p))
-    {
-      trace::entering("level::fill_f");
-
-      mln_precondition(f != 0);
-      I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	ima(p) = f(p);
-
-      trace::exiting("level::fill_f");
-    }
-
-
-    // with: value arr[N]
-
-    template <typename I, unsigned N>
-    inline
-    void fill(Image<I>& ima_, mln_value(I) (&arr)[N])
-    {
-      trace::entering("level::fill");
-
-      I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-      mln_precondition(N == ima.npoints());
-      mln_piter(I) p(ima.domain());
-      unsigned i = 0;
-      for_all(p)
-	ima(p) = arr[i++];
+      internal::fill_tests(ima, data);
+      internal::fill_dispatch(ima, data);
 
       trace::exiting("level::fill");
     }

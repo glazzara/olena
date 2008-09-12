@@ -1,5 +1,11 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup level fill.
+
+	* mln/level/fill.hh: Dispatch to explicit routines.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Propagate the update of fastest image interface namings.
 
 	* tests/level/paste.cc: Re-activate 3D tests.
