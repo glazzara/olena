@@ -142,7 +142,7 @@ namespace mln
       /// Give the definition domain.
       const S& domain() const;
 
-      /// Returns the function which compute a site value.
+      /// Return the function which computes a site value.
       F function() const;
 
       /// Read-only access of pixel value at point site \p p.

@@ -58,16 +58,16 @@ namespace mln
      */
     template <typename M, unsigned i, typename C>
     struct line : public Window< line<M,i,C> >,
-		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+		  public internal::dpoints_base_<dpoint<M, C>, point<M, C> >
     {
       /// Point associated type.
-      typedef point_<M, int> point;
+      typedef point<M, int> point;
 
       /// Psite associated type.
       typedef point psite;
 
       /// Dpoint associated type.
-      typedef dpoint_<M, int> dpoint;
+      typedef dpoint<M, int> dpoint;
 
       /// Site_Iterator type to browse a line forward
       typedef dpoints_fwd_piter<dpoint> fwd_qiter;

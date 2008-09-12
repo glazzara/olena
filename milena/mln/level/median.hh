@@ -303,7 +303,7 @@ namespace mln
     {
       trace::entering("level::median_dir");
 
-      mlc_is(mln_trait_image_io(O), trait::image::io::write)::check();
+      mlc_is(mln_trait_image_value_io(O), trait::image::value_io::read_write)::check();
       mlc_is(mln_trait_image_support(I), trait::image::support::aligned)::check();
       mlc_converts_to(mln_value(I), mln_value(O))::check();
 

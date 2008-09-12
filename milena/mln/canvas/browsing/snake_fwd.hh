@@ -110,8 +110,8 @@ namespace mln
 
 	// p
 	f.p = f.input.bbox().pmin();
-	int& row = f.p.row();
-	int& col = f.p.col();
+	def::coord& row = f.p.row();
+	def::coord& col = f.p.col();
 
 	// initialization
 	trace::entering("canvas::browsing::snake_fwd::init");

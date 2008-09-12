@@ -64,7 +64,7 @@ namespace mln
     template <typename T>
     struct helper_dim_
     {
-      typedef mln_point(T) P;
+      typedef mln_site(T) P;
       enum { value = P::dim };
     };
 

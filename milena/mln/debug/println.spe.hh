@@ -158,9 +158,9 @@ namespace mln
       println(const box3d& b, const I& input)
       {
 	point3d p;
-	int& sli = p.sli();
-	int& row = p.row();
-	int& col = p.col();
+	def::coord& sli = p.sli();
+	def::coord& row = p.row();
+	def::coord& col = p.col();
 	const int
 	  max_row = b.max_row(),
 	  max_sli = b.max_sli(),

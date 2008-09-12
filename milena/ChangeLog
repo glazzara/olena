@@ -1,3 +1,20 @@
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Propagate few renamings.
+	* milena/mln/canvas/browsing/snake_fwd.hh,
+	* milena/mln/debug/println.spe.hh: Use def::coord instead of int.
+
+	* milena/mln/convert/to_image.hh: Rename mln_point to mln_site.
+
+	* milena/mln/geom/shift.hh:
+	  Use convert::to instead of convert::to_dpoint().
+
+	* milena/mln/level/median.hh: Update the use of io property.
+
+	* milena/mln/pw/image.hh: Fix typo.
+
+	* milena/mln/win/line.hh: remove useless '_' in type name.
+
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Propagate a few renamings to some test code.
