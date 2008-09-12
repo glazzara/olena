@@ -170,7 +170,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Give the number of cells.
-    std::size_t ncells() const;
+    std::size_t nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
@@ -194,10 +194,10 @@ namespace mln
     /// Fast Image method
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint2d& dp) const;
+    int delta_index(const dpoint2d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point2d point_at_offset(unsigned o) const;
+    point2d point_at_index(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -307,7 +307,7 @@ namespace mln
 
   template <typename I>
   std::size_t
-  fi_adaptor<I>::ncells() const
+  fi_adaptor<I>::nelements() const
   {
     mln_precondition(this->has_data());
     return this->data_->b_.npoints();
@@ -337,7 +337,7 @@ namespace mln
   const mln_value(I)&
   fi_adaptor<I>::operator[](unsigned o) const
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     return *(this->data_->buffer_ + o);
   }
 
@@ -345,7 +345,7 @@ namespace mln
   mln_value(I)&
   fi_adaptor<I>::operator[](unsigned o)
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     return *(this->data_->buffer_ + o);
   }
 
@@ -387,7 +387,7 @@ namespace mln
 
   template <typename I>
   int
-  fi_adaptor<I>::offset(const dpoint2d& dp) const
+  fi_adaptor<I>::delta_index(const dpoint2d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0] * this->data_->b_.len(1) + dp[1];
@@ -396,9 +396,9 @@ namespace mln
 
   template <typename I>
   point2d
-  fi_adaptor<I>::point_at_offset(unsigned o) const
+  fi_adaptor<I>::point_at_index(unsigned o) const
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     point2d p = make::point2d(this->data_->b_.max_row() - o / this->data_->b_.len(1) - this->data_->b_.min_row(),
 			      o % this->data_->b_.len(1) + this->data_->b_.min_col());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);

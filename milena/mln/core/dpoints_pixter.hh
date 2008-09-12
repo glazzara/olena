@@ -264,7 +264,7 @@ namespace mln
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.ndpoints(); ++i)
-      offset_.push_back(this->image_.offset(dps.dp(i)));
+      offset_.push_back(this->image_.delta_index(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative:
     if (dps.ndpoints() > 1)
@@ -375,7 +375,7 @@ namespace mln
   dpoints_bkd_pixter<I>::init_(const Dps& dps)
   {
     for (unsigned i = 0; i < dps.ndpoints(); ++i)
-      offset_.push_back(this->image_.offset(dps.dp(i)));
+      offset_.push_back(this->image_.delta_index(dps.dp(i)));
     // offset_[ndpoints() - 1] is absolute
     // other offsets are relative:
     if (dps.ndpoints() > 1)

@@ -187,7 +187,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
+    std::size_t nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
@@ -320,7 +320,7 @@ namespace mln
   template <typename T>
   inline
   std::size_t
-  tiled_image2d<T>::ncells() const
+  tiled_image2d<T>::nelements() const
   {
     mln_precondition(this->has_data());
     return this->data_->b_.npoints();

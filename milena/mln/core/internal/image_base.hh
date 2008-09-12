@@ -31,6 +31,8 @@
 /*! \file mln/core/internal/image_base.hh
  *
  * \brief Definition of the common base class for all images.
+ *
+ * \todo Provide coord iff the site is a grid point.
  */
 
 # include <mln/core/concept/image.hh>
@@ -82,6 +84,9 @@ namespace mln
       public image_checked_<E>
 
     {
+      /// Coordinate associated type.
+      typedef mln_deduce(S, site, coord) coord;
+
       /// Value associated type.
       typedef T value;
 

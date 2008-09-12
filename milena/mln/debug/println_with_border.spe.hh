@@ -61,7 +61,7 @@ namespace mln
       println_with_border(const box2d& b, const I& input)
       {
 	const std::size_t ncols = b.ncols() + 2 * input.border();
- 	for (size_t i = 0; i < input.ncells(); i++)
+ 	for (size_t i = 0; i < input.nelements(); i++)
 	{
 	  std::cout << format(input.buffer()[i]) << ' ';
 	  if (((i + 1) % ncols) == 0)

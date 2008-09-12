@@ -231,7 +231,7 @@ namespace mln
 
 	for_all (pl)
 	  {
-	    std::size_t end = ima.offset_at (pl);
+	    std::size_t end = ima.index_of_point (pl);
 	    std::memset((void*)&ima[st],
 			*(const int*)(&v),
 			end - st);
@@ -239,7 +239,7 @@ namespace mln
 	  }
 	std::memset((void*)&ima[st],
 		    *(const int*)(&v),
-		    ima.ncells () - st);
+		    ima.nelements () - st);
       }
 
       template <typename I>
@@ -254,12 +254,12 @@ namespace mln
 
 	for_all (pl)
 	  {
-	    std::size_t end = ima.offset_at (pl);
+	    std::size_t end = ima.index_of_point (pl);
 	    for (std::size_t i = st; i < end; ++i)
 	      const_cast<I&>(ima)[i] = v;
 	    st = end + len_r;
 	  }
-	for (std::size_t i = st; i < ima.ncells (); ++i)
+	for (std::size_t i = st; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima)[i] = v;
       }
     } // end of namespace mln::border::impl

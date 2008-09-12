@@ -15,7 +15,7 @@ namespace mln
     template <typename I>
     void paste(const I& data_, I& destination_)
     {
-      imacpy_ (destination_, data_, destination_.ncells());
+      imacpy_ (destination_, data_, destination_.nelements());
     }
 
     template <typename I, typename J>

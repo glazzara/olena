@@ -33,7 +33,7 @@
  * \brief Class that statically checks the interface of fastest
  * images.
  *
- * \todo Check and convert p in offset_at towards E::psite.
+ * \todo Check and convert p in index_of_point towards E::psite.
  */
 
 # include <mln/core/internal/force_exact.hh>
@@ -60,7 +60,7 @@ namespace mln
 	 * \warning This method is final.
 	 *
 	 * \pre The image has to be initialized and to own the point \p p.
-	 * \post p == point_at_offset(result)
+	 * \post p == point_at_index(result)
 	 */
 	template <typename P>
 	unsigned

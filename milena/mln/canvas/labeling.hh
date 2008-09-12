@@ -270,7 +270,7 @@ namespace mln
     labeling_fastest<F>::init()
     {
       initialize(parent, f.input);
-      for (unsigned p = 0; p < parent.ncells(); ++p)
+      for (unsigned p = 0; p < parent.nelements(); ++p)
 	parent[p] = p; // make_set
       initialize(output, f.input);
       mln::level::fill(output, 0); // FIXME: Use literal::zero.

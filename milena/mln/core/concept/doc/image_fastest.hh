@@ -58,7 +58,7 @@ namespace mln
        *
        * \pre The image has to be initialized.
        */
-      int offset(const dpoint& dp);
+      int delta_index(const dpoint& dp);
 
 
       /*! \brief Give the point at offset \p o.
@@ -66,9 +66,9 @@ namespace mln
        * \param[in] o An offset.
        *
        * \pre The image has to be initialized.
-       * \pre o < ncells()
+       * \pre o < nelements()
        */
-      point point_at_offset(unsigned o) const;
+      point point_at_index(unsigned o) const;
 
 
       /*! \brief Give a hook to the value buffer.
@@ -83,7 +83,7 @@ namespace mln
        *
        * \param[in] o An offset.
        *
-       * \pre o < ncells()
+       * \pre o < nelements()
        *
        * \return The value at \p o (not assignable).
        */
@@ -94,7 +94,7 @@ namespace mln
        *
        * \param[in] o An offset.
        *
-       * \pre o < ncells()
+       * \pre o < nelements()
        *
        * \return The value at \p o (assignable).
        */
@@ -106,7 +106,7 @@ namespace mln
        *
        * \pre The image has to be initialized.
        */
-      std::size_t ncells() const;
+      std::size_t nelements() const;
     };
 
   } // end of namespace mln::doc

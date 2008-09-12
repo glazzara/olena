@@ -82,7 +82,7 @@ namespace mln
 	  const_cast<I&>(ima)[i] = ima[border];
 
 	std::size_t st = border + len_c - 1;
-	for (std::size_t i = st + 1; i < ima.ncells (); ++i)
+	for (std::size_t i = st + 1; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima)[i] = ima[st];
       }
 
@@ -104,7 +104,7 @@ namespace mln
 	// Duplicate
 	for_all (pl)
 	  {
- 	    st = ima.offset_at (pl);
+ 	    st = ima.index_of_point (pl);
 	    for (std::size_t i = 1; i <= border; ++i)
 	      const_cast<I&>(ima)[st - i] = ima[st];
 	    st = st + len_c - 1;
@@ -151,7 +151,7 @@ namespace mln
  	    // Duplicate
 	    for (std::size_t j = 0; j < len_r; ++j)
 	      {
-		st = ima.offset_at (pl);
+		st = ima.index_of_point (pl);
 		for (std::size_t i = 1; i <= border; ++i)
 		  const_cast<I&>(ima)[st - i] = ima[st];
 		st = st + len_c - 1;

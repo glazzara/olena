@@ -102,7 +102,7 @@ namespace mln
     if (this->value_ptr_ == 0 || ! this->image_.has_data())
       return false;
     int o = this->value_ptr_ - this->image_.buffer();
-    mln_psite(I) p = this->image_.point_at_offset(o);
+    mln_psite(I) p = this->image_.point_at_index(o);
     return this->image_.has(p);
   }
 

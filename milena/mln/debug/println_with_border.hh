@@ -65,7 +65,7 @@ namespace mln
       void
       println_with_border(const S&, const I& input)
       {
- 	for (size_t i = 0; i < input.ncells(); i++)
+ 	for (size_t i = 0; i < input.nelements(); i++)
 	  std::cout << format(input.buffer()[i]) << ' ';
 	std::cout << std::endl;
       }

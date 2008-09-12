@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -172,11 +173,14 @@ namespace mln
     /// Give the definition domain.
     const box3d& domain() const;
 
+    /// Give the bounding box domain.
+    const box3d& bbox() const;
+
     /// Give the border thickness.
     unsigned border() const;
 
     /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
+    std::size_t nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point3d& p) const;
@@ -185,10 +189,10 @@ namespace mln
     T& operator()(const point3d& p);
 
     /// Read-only access to the image value located at offset \p o.
-    const T& operator[](unsigned o) const;
+    const T& element(unsigned o) const;
 
     /// Read-write access to the image value located at offset \p o.
-    T& operator[](unsigned o);
+    T& element(unsigned o);
 
     /// Read-only access to the image value located at (\p ind).
     const T& at(int sli, int row, int col) const;
@@ -200,10 +204,10 @@ namespace mln
     /// Fast Image method
 
     /// Give the offset corresponding to the delta-point \p dp.
-    int offset(const dpoint3d& dp) const;
+    int delta_index(const dpoint3d& dp) const;
 
     /// Give the point corresponding to the offset \p o.
-    point3d point_at_offset(unsigned o) const;
+    point3d point_at_index(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -400,6 +404,15 @@ namespace mln
 
   template <typename T>
   inline
+  const box3d&
+  image3d<T>::bbox() const
+  {
+    mln_precondition(this->has_data());
+    return data_->b_;
+  }
+
+  template <typename T>
+  inline
   unsigned
   image3d<T>::border() const
   {
@@ -410,10 +423,10 @@ namespace mln
   template <typename T>
   inline
   std::size_t
-  image3d<T>::ncells() const
+  image3d<T>::nelements() const
   {
     mln_precondition(this->has_data());
-    return data_->vb_.npoints();
+    return data_->vb_.nsites();
   }
 
   template <typename T>
@@ -446,18 +459,18 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image3d<T>::operator[](unsigned o) const
+  image3d<T>::element(unsigned o) const
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     return *(data_->buffer_ + o);
   }
 
   template <typename T>
   inline
   T&
-  image3d<T>::operator[](unsigned o)
+  image3d<T>::element(unsigned o)
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     return *(data_->buffer_ + o);
   }
 
@@ -500,7 +513,7 @@ namespace mln
   template <typename T>
   inline
   int
-  image3d<T>::offset(const dpoint3d& dp) const
+  image3d<T>::delta_index(const dpoint3d& dp) const
   {
     mln_precondition(this->has_data());
     int o = dp[0];
@@ -510,9 +523,9 @@ namespace mln
   template <typename T>
   inline
   point3d
-  image3d<T>::point_at_offset(unsigned o) const
+  image3d<T>::point_at_index(unsigned o) const
   {
-    mln_precondition(o < ncells());
+    mln_precondition(o < nelements());
     point3d p = make::point3d(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli(),
 			      (o % (data_->vb_.len(1) * data_->vb_.len(2))) / data_->vb_.len(2) + data_->vb_.min_row(),
 			      o % data_->vb_.len(2) + data_->vb_.min_col());

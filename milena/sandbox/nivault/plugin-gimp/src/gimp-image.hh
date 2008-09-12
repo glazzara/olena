@@ -194,7 +194,7 @@ namespace mln
     unsigned border() const;
 
     /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
+    std::size_t nelements() const;
 
     /// const-only access to the image value located at point \p p.
     const T& operator()(const point& p) const;
@@ -218,10 +218,10 @@ namespace mln
     /// Fast Image method
 
 //     /// Give the offset corresponding to the delta-point \p dp.
-//     int offset(const dpoint2d& dp) const;
+//     int delta_index(const dpoint2d& dp) const;
 
 //     /// Give the point corresponding to the offset \p o.
-//     point2d point_at_offset(unsigned o) const;
+//     point2d point_at_index(unsigned o) const;
 
     /// Give a hook to the value buffer.
     const T* buffer() const;
@@ -390,7 +390,7 @@ namespace mln
   
   template <GimpImageType t>
   std::size_t
-  gimp_image<t>::ncells() const
+  gimp_image<t>::nelements() const
   {
      mln_precondition(this->has_data());
      return this->data_->b_.npoints();
@@ -438,7 +438,7 @@ namespace mln
 //   const mln_value(gimp_image<t>)&
 //   gimp_image<t>::operator[](unsigned o) const
 //   {
-//     mln_precondition(o < ncells());
+//     mln_precondition(o < nelements());
 //     return *(this->data_->buffer_ + o);
 //   }
 
@@ -447,7 +447,7 @@ namespace mln
 //   mln_value(gimp_image<t>)&
 //   gimp_image<t>::operator[](unsigned o)
 //   {
-//     mln_precondition(o < ncells());
+//     mln_precondition(o < nelements());
 //     return *(this->data_->buffer_ + o);
 //   }
 
@@ -490,7 +490,7 @@ namespace mln
   
 //   template <GimpImageType t>
 //   int
-//   gimp_image<t>::offset(const dpoint2d& dp) const
+//   gimp_image<t>::delta_index(const dpoint2d& dp) const
 //   {
 //     mln_precondition(this->has_data());
 //     int o = dp[0] * this->data_->b_.len(1) + dp[1];
@@ -500,9 +500,9 @@ namespace mln
   
 //   template <GimpImageType t>
 //   point2d
-//   gimp_image<t>::point_at_offset(unsigned o) const
+//   gimp_image<t>::point_at_index(unsigned o) const
 //   {
-//     mln_precondition(o < ncells());
+//     mln_precondition(o < nelements());
 //     point2d p = make::point2d(o / this->data_->b_.len(1) + this->data_->b_.min_row(),
 // 			      o % this->data_->b_.len(1) + this->data_->b_.min_col());
 //     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);

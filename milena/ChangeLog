@@ -1,5 +1,32 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Propagate the update of fastest image interface namings.
+
+	* tests/level/paste.cc: Re-activate 3D tests.
+	* mln/debug/println_with_border.spe.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/core/image/fi_adaptor.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/pixel.hh,
+	* mln/core/concept/doc/image_fastest.hh,
+	* mln/level/memset_.hh,
+	* mln/level/memcpy_.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/canvas/labeling.hh,
+	* sandbox/duhamel/paste.hh,
+	* sandbox/duhamel/fill.hh,
+	* sandbox/duhamel/border_duplicate.hh,
+	* sandbox/duhamel/border_fill.hh,
+	* sandbox/nivault/plugin-gimp/src/gimp-image.hh,
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh:
+	Update fastest interface naming.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Clean level::paste; yet de-activate specializations.
 
 	* tests/level/paste.cc: Deactivate 3D tests.
