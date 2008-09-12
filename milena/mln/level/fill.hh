@@ -82,7 +82,7 @@ namespace mln
       template <typename I, typename D>
       void fill_dispatch(Image<I>& ima, const D& data)
       {
-	fill_dispatch_overload(ima, exact(data));
+	fill_dispatch_overload(exact(ima), exact(data));
       }
 
       // dispatch_overload
