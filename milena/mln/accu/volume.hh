@@ -58,7 +58,7 @@ namespace mln
     /// of pixels is built.
     template <typename I>
     struct volume_
-      : public mln::accu::internal::base_< std::size_t , volume_<I> >
+      : public mln::accu::internal::base< std::size_t , volume_<I> >
     {
       /// \brief The accumulated data type.
       ///

@@ -1,3 +1,35 @@
+2008-09-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Adapt the accumulators histo, min_h, max_h to histo/data.
+
+	* tests/accu/max_h.cc,
+	* tests/accu/min_h.cc: Update.
+	* mln/histo/data.hh: Add a new method nvalues.
+	* mln/core/routine/ops.hh: delete trailing whitespace.
+	* mln/accu/nil.hh,
+	* mln/accu/min.hh,
+	* mln/accu/count_adjacent_vertices.hh,
+	* mln/accu/max.hh,
+	* mln/accu/count.hh,
+	* mln/accu/tuple.hh,
+	* mln/accu/bbox.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/median.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/p.hh,
+	* mln/accu/rank_high_quant.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/v.hh,
+	* mln/accu/rank_bool.hh,
+	* mln/accu/volume.hh,
+	* mln/accu/height.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/internal/base.hh: Rename base_ to base.
+	* mln/accu/max_h.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/histo.hh: Adapt to histo/data.
+	* mln/value/int_u.hh: Update.
+
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Propagate few renamings.

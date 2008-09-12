@@ -53,9 +53,9 @@ namespace mln
     /// This accumulator is used by mln::closing_area_on_vertices and
     /// mln::opening_area_on_vertices.
     template <typename P, typename V>
-    struct count_adjacent_vertices_ 
-      : public mln::accu::internal::base_< std::size_t,
-					   count_adjacent_vertices_<P, V> >
+    struct count_adjacent_vertices_
+      : public mln::accu::internal::base< std::size_t,
+					  count_adjacent_vertices_<P, V> >
     {
       typedef mln::util::pix< mln::line_graph_image<P, V> > argument;
 

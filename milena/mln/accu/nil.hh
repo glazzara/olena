@@ -51,7 +51,7 @@ namespace mln
      * \brief Define an accumulator that does nothing.
      */
     template <typename T>
-    struct nil_ : public mln::accu::internal::base_< util::ignore , nil_<T> >
+    struct nil_ : public mln::accu::internal::base< util::ignore , nil_<T> >
     {
       typedef util::eat    argument;
       typedef util::ignore result;

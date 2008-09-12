@@ -57,7 +57,7 @@ namespace mln
      * \c S is the summation type (property) of \c T.
      */
     template <typename T, typename S = mln_sum(T)>
-    struct sum_ : public mln::accu::internal::base_< S, sum_<T,S> >
+    struct sum_ : public mln::accu::internal::base< S, sum_<T,S> >
     {
       typedef T argument;
       typedef S result;

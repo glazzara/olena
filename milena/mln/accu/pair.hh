@@ -56,7 +56,7 @@ namespace mln
      * \todo Check that, when T is not provided, A1 and A2 have the same value.
      */
     template <typename A1, typename A2, typename T = mln_argument(A1)>
-    struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,T> >
+    struct pair_ : public mln::accu::internal::base< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,T> >
     {
       typedef T argument;
 

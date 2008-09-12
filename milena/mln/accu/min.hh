@@ -51,7 +51,7 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct min_ : public mln::accu::internal::base_< T, min_<T> >
+    struct min_ : public mln::accu::internal::base< T, min_<T> >
     {
       typedef T argument;
       typedef T result;

@@ -72,7 +72,7 @@ namespace mln
      */
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
     struct tuple_
-      : public mln::accu::internal::base_< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) > , tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
+      : public mln::accu::internal::base< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) > , tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
     {
       typedef A argument;
 

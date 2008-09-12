@@ -48,7 +48,7 @@ namespace mln
      * value set with type \c S.
      */
     template <typename S>
-    struct median_alt : public mln::accu::internal::base_< mln_value(S), median_alt<S> >
+    struct median_alt : public mln::accu::internal::base< mln_value(S), median_alt<S> >
     {
       typedef mln_value(S) argument;
 

@@ -50,7 +50,7 @@ namespace mln
      * \brief Generic val of accumulators.
      */
     template <typename A>
-    struct val_ : public mln::accu::internal::base_< mln_result(A) , val_<A> >
+    struct val_ : public mln::accu::internal::base< mln_result(A) , val_<A> >
     {
       typedef mln_argument(A)  argument;
       typedef mln_result(A) result;

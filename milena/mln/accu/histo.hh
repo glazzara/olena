@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,7 +41,7 @@
 # include <mln/core/concept/value_set.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/value/set.hh>
-
+# include <mln/histo/data.hh>
 
 namespace mln
 {
@@ -51,19 +51,20 @@ namespace mln
 
 
     /*!
-     * \brief Generic histogram class over a value set with type \c S.
+     * \brief Generic histogram class over a value set with type \c V.
      */
-    template <typename S>
-    struct histo : public mln::accu::internal::base_< const std::vector<std::size_t>& , histo<S> >
+    template <typename V>
+    struct histo :
+      public mln::accu::internal::base<const std::vector<std::size_t>& ,
+				       histo<V> >
     {
-      histo(const Value_Set<S>& s);
       histo();
 
-      typedef mln_value(S) argument;
+      typedef V argument;
       typedef const std::vector<std::size_t>& result;
 
       void   take(const argument& t);
-      void   take(const histo<S>& other);
+      void   take(const histo<V>& other);
       void untake(const argument& t);
       void init();
 
@@ -75,142 +76,130 @@ namespace mln
       const std::vector<std::size_t>& vect() const;
       const std::vector<std::size_t>& to_result() const;
 
-      const S& vset() const;
+      const value::set<V>& vset() const;
 
     protected:
 
-      const S& s_;
-      std::vector<std::size_t> h_;
+      mln::histo::data<V> h_;
       std::size_t sum_;
     };
 
-    template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h);
+    template <typename V>
+    std::ostream& operator<<(std::ostream& ostr, const histo<V>& h);
 
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename V>
     inline
-    histo<S>::histo(const Value_Set<S>& s)
-      : s_(exact(s)),
-	h_(s_.nvalues(), 0),
+    histo<V>::histo()
+      : h_(),
 	sum_(0)
     {
     }
 
-    template <typename S>
-    inline
-    histo<S>::histo()
-      : s_(S::the()),
-	h_(s_.nvalues(), 0),
-	sum_(0)
-    {
-    }
-
-    template <typename S>
+    template <typename V>
     inline
     void
-    histo<S>::take(const argument& t)
+    histo<V>::take(const argument& t)
     {
-      ++h_[s_.index_of(t)];
+      ++h_[h_.vset().index_of(t)];
       ++sum_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    histo<S>::take(const histo<S>& other)
+    histo<V>::take(const histo<V>& other)
     {
-      for (unsigned i = 0; i < h_.size(); ++i)
+      for (unsigned i = 0; i < h_.nvalues(); ++i)
 	h_[i] += other.h_[i];
       sum_ += other.sum_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    histo<S>::untake(const argument& t)
+    histo<V>::untake(const argument& t)
     {
-      mln_precondition(h_[s_.index_of(t)] > 0);
+      mln_precondition(h_[h_.vset().index_of(t)] > 0);
       mln_precondition(sum_ > 0);
-      --h_[s_.index_of(t)];
+      --h_[h_.vset().index_of(t)];
       --sum_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    histo<S>::init()
+    histo<V>::init()
     {
-      std::fill(h_.begin(), h_.end(), 0);
-      sum_ = 0;
+      h_.clear();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     std::size_t
-    histo<S>::operator()(const argument& t) const
+    histo<V>::operator()(const argument& t) const
     {
-      return h_[s_.index_of(t)];
+      return h_[h_.vset().index_of(t)];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     std::size_t
-    histo<S>::operator[](unsigned i) const
+    histo<V>::operator[](unsigned i) const
     {
-      mln_precondition(i < s_.nvalues());
+      mln_precondition(i < h_.vset().nvalues());
       return h_[i];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     unsigned
-    histo<S>::nvalues() const
+    histo<V>::nvalues() const
     {
-      return s_.nvalues();
+      return h_.vset().nvalues();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     std::size_t
-    histo<S>::sum() const
+    histo<V>::sum() const
     {
       return sum_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     const std::vector<std::size_t>&
-    histo<S>::vect() const
+    histo<V>::vect() const
     {
-      return h_;
+      return h_.vect();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     const std::vector<std::size_t>&
-    histo<S>::to_result() const
+    histo<V>::to_result() const
     {
-      return h_;
+      return this->vect();
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    const S&
-    histo<S>::vset() const
+    const value::set<V>&
+    histo<V>::vset() const
     {
-      return s_;
+      return h_.vset();
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const histo<S>& h)
+    std::ostream& operator<<(std::ostream& ostr, const histo<V>& h)
     {
-      mln_viter(S) v(h.vset());
+      mln_viter(V) v(h.vset());
       for_all(v)
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';

@@ -34,12 +34,14 @@
 #include <mln/accu/min_h.hh>
 
 
+
+
 int main()
 {
   using namespace mln;
   using namespace mln::value;
 
-  accu::min_h< set<int_u8> > a;
+  accu::min_h<int_u8> a;
 
   a.take(42);
   a.take(42);

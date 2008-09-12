@@ -48,7 +48,7 @@ namespace mln
      * set with type \c S.
      */
     template <typename S>
-    struct median : public mln::accu::internal::base_< mln_value(S), median<S> >
+    struct median : public mln::accu::internal::base< mln_value(S), median<S> >
     { // FIXME: Should median be named 'median_' like other accumulators ?
       typedef mln_value(S) argument;
       typedef argument result;

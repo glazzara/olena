@@ -35,6 +35,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
+# include <mln/value/set.hh>
 
 
 namespace mln
@@ -45,38 +46,37 @@ namespace mln
 
 
     /*! \brief Generic min function based on histogram over a value
-     * set with type \c S.
+     * set with type \c V.
      */
-    template <typename S>
-    struct min_h : public mln::accu::internal::base_< mln_value(S) , min_h<S> >
+    template <typename V>
+    struct min_h : public mln::accu::internal::base< V , min_h<V> >
     {
-      typedef mln_value(S) argument;
+      typedef V argument;
       typedef argument result;
 
-      min_h(const Value_Set<S>& s);
       min_h();
 
       void init();
       void   take(const argument& t);
       void   take_as_init(const argument& t);
-      void   take(const min_h<S>& other);
+      void   take(const min_h<V>& other);
       void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
       result to_result() const;
 
-      const accu::histo<S>& histo() const;
+      const accu::histo<V>& histo() const;
 
     protected:
 
-      mutable accu::histo<S> h_;
-      const S& s_; // derived from h_
+      mutable accu::histo<V> h_;
+      const value::set<V>& s_; // derived from h_
 
       mutable std::size_t sum_;
       mutable bool valid_;
       mutable std::size_t i_; // the min index
-      mutable argument t_;       // the min value
+      mutable argument t_;    // the min value
 
       // Auxiliary methods
       void update_() const;
@@ -87,28 +87,19 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename V>
     inline
-    min_h<S>::min_h(const Value_Set<S>& s)
-      : h_(s),
-	s_(h_.vset())
-    {
-      init();
-    }
-
-    template <typename S>
-    inline
-    min_h<S>::min_h()
+    min_h<V>::min_h()
       : h_(),
 	s_(h_.vset())
     {
       init();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::take(const argument& t)
+    min_h<V>::take(const argument& t)
     {
       h_.take(t);
       if (h_.sum() == 1)
@@ -123,10 +114,10 @@ namespace mln
 	}
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::take(const min_h<S>& other)
+    min_h<V>::take(const min_h<V>& other)
     {
       // h_
       h_.take(other.h_);
@@ -136,10 +127,10 @@ namespace mln
       // FIXME: Optimize.
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::untake(const argument& t)
+    min_h<V>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -159,10 +150,10 @@ namespace mln
 	  valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::update_() const
+    min_h<V>::update_() const
     {
       if (sum_ != 0)
 	go_minus_();
@@ -172,10 +163,10 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::go_minus_() const
+    min_h<V>::go_minus_() const
     {
       do
 	{
@@ -187,10 +178,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::go_plus_() const
+    min_h<V>::go_plus_() const
     {
       do
 	++i_;
@@ -198,10 +189,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::init()
+    min_h<V>::init()
     {
       h_.init();
       sum_ = 0;
@@ -210,10 +201,10 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    min_h<S>::take_as_init(const argument& t)
+    min_h<V>::take_as_init(const argument& t)
     {
       h_.take(t);
       sum_ = 0;
@@ -222,27 +213,27 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    typename min_h<S>::argument
-    min_h<S>::to_result() const
+    typename min_h<V>::argument
+    min_h<V>::to_result() const
     {
       if (! valid_)
 	update_();
       return t_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    const accu::histo<S>&
-    min_h<S>::histo() const
+    const accu::histo<V>&
+    min_h<V>::histo() const
     {
       return h_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const min_h<S>& m)
+    std::ostream& operator<<(std::ostream& ostr, const min_h<V>& m)
     {
       return ostr << m.to_result();
     }

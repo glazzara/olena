@@ -43,7 +43,7 @@ namespace mln
     /// \brief Generic counter accumulator class.
     /// The parameter \a T is the type to be count.
     template <typename T>
-    struct count_ : public mln::accu::internal::base_< std::size_t , count_<T> >
+    struct count_ : public mln::accu::internal::base< std::size_t , count_<T> >
     {
       typedef T argument;
 

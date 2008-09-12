@@ -58,7 +58,7 @@ namespace mln
     template <typename T,
 	      typename S = mln_sum(T),
 	      typename M = S>
-    struct mean_ : public mln::accu::internal::base_< M , mean_<T,S,M> >
+    struct mean_ : public mln::accu::internal::base< M , mean_<T,S,M> >
     {
       typedef T argument;
       typedef M result;

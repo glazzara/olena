@@ -50,8 +50,8 @@ namespace mln
        * Base class for implementation of accumulator classes.
        */
       template <typename R, typename E>
-      class base_ : public Accumulator<E>,
-		    public mln::internal::proxy_impl< R, E >
+      class base : public Accumulator<E>,
+		   public mln::internal::proxy_impl< R, E >
       {
       public:
 
@@ -62,7 +62,7 @@ namespace mln
 	typedef R result;
 
       protected:
-	base_();
+	base();
       };
 
 
@@ -70,14 +70,14 @@ namespace mln
 
       template <typename R, typename E>
       inline
-      base_<R,E>::base_()
+      base<R,E>::base()
       {
       }
 
       template <typename R, typename E>
       inline
       R
-      base_<R,E>::subj_()
+      base<R,E>::subj_()
       {
 	return exact(this)->to_result();
       }

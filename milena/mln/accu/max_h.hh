@@ -45,33 +45,32 @@ namespace mln
 
 
     /*! \brief Generic max function based on histogram over a value set with
-     * type \c S.
+     * type \c V.
      */
-    template <typename S>
-    struct max_h : public mln::accu::internal::base_< mln_value(S) , max_h<S> >
+    template <typename V>
+    struct max_h : public mln::accu::internal::base< V, max_h<V> >
     {
-      typedef mln_value(S) argument;
+      typedef V argument;
       typedef argument result;
 
-      max_h(const Value_Set<S>& s);
       max_h();
 
       void init();
       void   take(const argument& t);
       void   take_as_init(const argument& t);
-      void   take(const max_h<S>& other);
+      void   take(const max_h<V>& other);
       void untake(const argument& t);
 
       unsigned card() const { return h_.sum(); }
 
       argument to_result() const;
 
-      const accu::histo<S>& histo() const;
+      const accu::histo<V>& histo() const;
 
     protected:
 
-      mutable accu::histo<S> h_;
-      const S& s_; // derived from h_
+      mutable accu::histo<V> h_;
+      const value::set<V>& s_; // derived from h_
 
       mutable std::size_t sum_;
       mutable bool valid_;
@@ -87,28 +86,19 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename V>
     inline
-    max_h<S>::max_h(const Value_Set<S>& s)
-      : h_(s),
-	s_(h_.vset())
-    {
-      init();
-    }
-
-    template <typename S>
-    inline
-    max_h<S>::max_h()
+    max_h<V>::max_h()
       : h_(),
 	s_(h_.vset())
     {
       init();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take(const argument& t)
+    max_h<V>::take(const argument& t)
     {
       h_.take(t);
       if (h_.sum() == 1)
@@ -123,10 +113,10 @@ namespace mln
 	}
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take(const max_h<S>& other)
+    max_h<V>::take(const max_h<V>& other)
     {
       // h_
       h_.take(other.h_);
@@ -136,10 +126,10 @@ namespace mln
       // FIXME: Optimize.
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::untake(const argument& t)
+    max_h<V>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -159,10 +149,10 @@ namespace mln
 	  valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::update_() const
+    max_h<V>::update_() const
     {
       if (sum_ != 0)
 	go_plus_();
@@ -172,10 +162,10 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::go_minus_() const
+    max_h<V>::go_minus_() const
     {
       do
 	--i_;
@@ -183,10 +173,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::go_plus_() const
+    max_h<V>::go_plus_() const
     {
       do
       {
@@ -197,10 +187,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::init()
+    max_h<V>::init()
     {
       h_.init();
       sum_ = 0;
@@ -209,10 +199,10 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take_as_init(const argument& t)
+    max_h<V>::take_as_init(const argument& t)
     {
       h_.take(t);
       sum_ = 0;
@@ -221,27 +211,27 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    typename max_h<S>::argument
-    max_h<S>::to_result() const
+    typename max_h<V>::argument
+    max_h<V>::to_result() const
     {
       if (! valid_)
 	update_();
       return t_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    const accu::histo<S>&
-    max_h<S>::histo() const
+    const accu::histo<V>&
+    max_h<V>::histo() const
     {
       return h_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const max_h<S>& m)
+    std::ostream& operator<<(std::ostream& ostr, const max_h<V>& m)
     {
       return ostr << m.to_result();
     }

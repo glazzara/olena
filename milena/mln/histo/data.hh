@@ -63,6 +63,9 @@ namespace mln
       const std::vector<std::size_t>& vect() const;
       const mln::value::set<T>& vset() const;
       std::size_t operator[](unsigned i) const;
+      std::size_t& operator[](unsigned i);
+
+      std::size_t nvalues() const;
 
     protected:
 
@@ -130,10 +133,26 @@ namespace mln
 
     template <typename T>
     inline
+    std::size_t&
+    data<T>::operator[](unsigned i)
+    {
+      mln_precondition(i < s_.nvalues());
+      return h_[i];
+    }
+
+    template <typename T>
+    inline
     const std::vector<std::size_t>&
     data<T>::vect() const
     {
       return h_;
+    }
+
+    template <typename T>
+    inline
+    std::size_t data<T>::nvalues() const
+    {
+      return h_.size();
     }
 
     template <typename T>

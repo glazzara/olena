@@ -49,7 +49,7 @@ namespace mln
      * The parameter \c P is the type of points.
      */
     template <typename P>
-    struct bbox : public mln::accu::internal::base_< const box<P>& , bbox<P> >
+    struct bbox : public mln::accu::internal::base< const box<P>& , bbox<P> >
     {
       typedef P argument;
       typedef const box<P>& result;

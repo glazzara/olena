@@ -37,22 +37,22 @@
  * \code
 
    l += r  :  l = l + r, -> l&
-   l -= r  :  l = l - r, -> l&  
-   l *= r  :  l = l * r, -> l& 
-   l /= r  :  l = l / r, -> l&  
-   l %= r  :  l = l % r, -> l&  
-   
+   l -= r  :  l = l - r, -> l&
+   l *= r  :  l = l * r, -> l&
+   l /= r  :  l = l / r, -> l&
+   l %= r  :  l = l % r, -> l&
+
    + r     :  -> r
    - r     :  -> (0 - r)
-   
+
    l ++    :  t = l, ++l, -> t
    l --    :  t = l, --l, -> t
-   
+
    ++ r    :  r += 1, -> r&
    -- r    :  r -= 1, -> r&
-   
+
    l != r  :  -> ! (l == r)
-   
+
    l >  r  :  -> (r < l)
    l >= r  :  -> (r <= l)
    l <= r  :  -> ! (r < l)   warning: re-define when partial ordering
@@ -80,11 +80,9 @@
  * \todo Complete those definitions (...) + Overload for const (?)
  */
 
+# include <mln/trait/op/all.hh>
 # include <mln/core/concept/object.hh>
 # include <mln/metal/converts_to.hh>
-# include <mln/trait/op/all.hh>
-
-
 
 namespace mln
 {
@@ -266,7 +264,7 @@ namespace mln
    */
   template <typename O>
   O operator++(Object<O>& lhs, int);
-  
+
 
   /* \brief Default definition of the post-decrementation operator.
    *
@@ -290,7 +288,7 @@ namespace mln
    */
   template <typename O>
   O& operator--(Object<O>& rhs);
-  
+
 
   /* \brief Default definitions of the "unary plus" operator.
    *
@@ -299,7 +297,7 @@ namespace mln
    */
   template <typename O>
   O operator+(const Object<O>& rhs);
-    
+
 
   /* \brief Default definition of the "unary minus" operator.
    *
@@ -478,7 +476,7 @@ namespace mln
   }
 
   // Post-decrementation.
-  
+
   template <typename O>
   inline
   O
@@ -547,7 +545,7 @@ namespace mln
   {
     // if partial ordering, this operator should be re-defined!
     return ! (exact(rhs) < exact(lhs));
-  }  
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

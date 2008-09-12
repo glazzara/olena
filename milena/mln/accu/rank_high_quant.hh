@@ -52,7 +52,7 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base_< T, rank_<T> >
+    struct rank_ : public mln::accu::internal::base< T, rank_<T> >
     {
       typedef T argument;
       typedef T result;
