@@ -47,8 +47,8 @@ using namespace mln;
 
   void test(window2d ref, window2d cmp)
   {
-    mln_assertion(ref.ndpoints() == cmp.ndpoints());
-    for (unsigned i = 0; i < ref.ndpoints(); ++i)
+    mln_assertion(ref.size() == cmp.size());
+    for (unsigned i = 0; i < ref.size(); ++i)
       mln_assertion(ref.dp(i) == cmp.dp(i));
   }
 

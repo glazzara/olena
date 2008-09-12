@@ -190,7 +190,7 @@ namespace mln
   private:
     /// \brief Offset of each delta-point.
     ///
-    /// offset_[dps.ndpoints() - 1] is absolute, while other offsets
+    /// offset_[dps.size() - 1] is absolute, while other offsets
     /// are relative (i.e., offset_[i] is the memory difference to go
     /// from pixel i+1 to pixel i.
     std::vector<int> offset_;
@@ -225,7 +225,8 @@ namespace mln
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_site();
+    internal::get_adr(p_ref_, p_ref);
+//     p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }
@@ -263,12 +264,12 @@ namespace mln
   void
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
-    for (unsigned i = 0; i < dps.ndpoints(); ++i)
+    for (unsigned i = 0; i < dps.size(); ++i)
       offset_.push_back(this->image_.delta_index(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative:
-    if (dps.ndpoints() > 1)
-      for (unsigned i = dps.ndpoints() - 1; i > 0; --i)
+    if (dps.size() > 1)
+      for (unsigned i = dps.size() - 1; i > 0; --i)
 	offset_[i] -= offset_[i - 1];
     invalidate();
   }
@@ -336,7 +337,8 @@ namespace mln
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_site();
+    internal::get_adr(p_ref_, p_ref);
+//     p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }
@@ -374,12 +376,12 @@ namespace mln
   void
   dpoints_bkd_pixter<I>::init_(const Dps& dps)
   {
-    for (unsigned i = 0; i < dps.ndpoints(); ++i)
+    for (unsigned i = 0; i < dps.size(); ++i)
       offset_.push_back(this->image_.delta_index(dps.dp(i)));
-    // offset_[ndpoints() - 1] is absolute
+    // offset_[size() - 1] is absolute
     // other offsets are relative:
-    if (dps.ndpoints() > 1)
-      for (unsigned i = 0; i < dps.ndpoints() - 1; ++i)
+    if (dps.size() > 1)
+      for (unsigned i = 0; i < dps.size() - 1; ++i)
 	offset_[i] -= offset_[i + 1];
     invalidate();
   }

@@ -1,3 +1,27 @@
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make the median_fast test pass.
+
+	* tests/convert/to_window.cc,
+	* tests/win/cuboid3d.cc,
+	* tests/win/rectangle2d.cc,
+	* mln/core/w_window.hh,
+	* mln/core/window.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/internal/dpoints_base.hh,
+	* mln/convert/to_p_array.hh,
+	* sandbox/geraud/dmap.cc,
+	* sandbox/geraud/cs2d/dbl_neighb.hh (ndpoints): Update to...
+	(size): ...its new name.
+	* mln/core/window.hh (has): New method.
+	* mln/core/dpoints_pixter.hh (p_ref): Use get_adr.
+	* mln/level/fast_median.hh (int, median): Replace by...
+	(def::coord, median_h): ...this.
+	Update.
+	* mln/geom/shift.hh: Rewrite.
+	* mln/set/diff.hh: Rewrite without std::set.
+	* mln/win/rectangle2d.hh (typedef): Import super ones.
+
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing init_().

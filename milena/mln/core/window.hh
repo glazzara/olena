@@ -119,10 +119,11 @@ namespace mln
     */
     unsigned delta() const;
 
-    // Give the \p i-th delta-point.
+    /// Give the \p i-th delta-point.
     const D& dp(unsigned i) const;
 
-
+    /// Test if \p dp is in this window definition.
+    bool has(const D& dp) const;
 
     /// Insert a delta-point \p dp.
     window<D>& insert(const D& dp);
@@ -250,6 +251,14 @@ namespace mln
   {
     mln_precondition(i < size());
     return dps_[i];
+  }
+
+  template <typename D>
+  inline
+  bool
+  window<D>::has(const D& dp) const
+  {
+    return dps_.has(dp);
   }
 
   template <typename D>

@@ -92,7 +92,7 @@ namespace mln
       unsigned delta() const;
 
       /// Give the number of delta-points.
-      unsigned ndpoints() const;
+      unsigned size() const;
 
       /// Test if the delta-point \p dp belongs to the window.
       bool has(const D& dp) const;
@@ -149,7 +149,7 @@ namespace mln
     template <typename D, typename E>
     inline
     unsigned
-    dpoints_base_<D,E>::ndpoints() const
+    dpoints_base_<D,E>::size() const
     {
       return win_.size();
     }
@@ -159,7 +159,7 @@ namespace mln
     const D&
     dpoints_base_<D,E>::dp(unsigned i) const
     {
-      mln_precondition(i < ndpoints());
+      mln_precondition(i < size());
       return win_.dp(i);
     }
 
@@ -184,7 +184,7 @@ namespace mln
     bool
     dpoints_base_<D,E>::has(const D& dp) const
     {
-      return win_.dps_hook_().has(dp);
+      return win_.has(dp);
     }
 
     template <typename D, typename E>

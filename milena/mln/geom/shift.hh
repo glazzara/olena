@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/window.hh>
-# include <mln/convert/to.hh>
 
 
 
@@ -55,13 +54,14 @@ namespace mln
     template <typename W>
     inline
     window<mln_dpsite(W)>
-    shift(const Window<W>& win, const mln_dpsite(W)& dp)
+    shift(const Window<W>& win_, const mln_dpsite(W)& dp)
     {
-      typedef mln_site(W) P;
+      const W& win = exact(win_);
+
       window<mln_dpsite(W)> tmp;
-      mln_qiter(W) q(win, P::origin);
-      for_all(q)
-	tmp.insert(convert::to(q) + dp);
+      unsigned n = win.size();
+      for (unsigned i = 0; i < n; ++i)
+	tmp.insert(win.dp(i) + dp);
       return tmp;
     }
 

@@ -48,7 +48,7 @@ int main()
   mln_assertion(rec.is_centered());
   mln_assertion(rec.is_symmetric());
   mln_assertion(rec == geom::sym(rec));
-  mln_assertion(rec.ndpoints() == h * w);
+  mln_assertion(rec.size() == h * w);
 
   mln_assertion(rec.delta() == 2);
 

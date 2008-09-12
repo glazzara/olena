@@ -95,7 +95,7 @@ namespace mln
     const D& dp(unsigned i) const;
 
     /// Give the number of delta-points.
-    unsigned ndpoints() const;
+    unsigned size() const;
 
     /// Give access to the vector of delta-points.
     const std::vector<D>& vect() const;
@@ -191,18 +191,18 @@ namespace mln
   const D&
   w_window<D,W>::dp(unsigned i) const
   {
-    mln_precondition(i < win_.ndpoints());
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_precondition(i < win_.size());
+    mln_invariant(wei_.size() == win_.size());
     return win_.dp(i);
   }
 
   template <typename D, typename W>
   inline
   unsigned
-  w_window<D,W>::ndpoints() const
+  w_window<D,W>::size() const
   {
-    mln_invariant(wei_.size() == win_.ndpoints());
-    return win_.ndpoints();
+    mln_invariant(wei_.size() == win_.size());
+    return win_.size();
   }
 
   template <typename D, typename W>
@@ -227,7 +227,7 @@ namespace mln
   w_window<D,W>::w(unsigned i) const
   {
     mln_precondition(i < wei_.size());
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     return wei_[i];
   }
 
@@ -236,7 +236,7 @@ namespace mln
   w_window<D,W>&
   w_window<D,W>::insert(const W& w, const D& d)
   {
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     mln_precondition(! win_.has(d));
 
     if (w == W(0)) // FIXME: Implicit restriction "W scalar"...
@@ -245,7 +245,7 @@ namespace mln
 
     // memorization: d_i -> w_i
     std::map<D, W> memo_wei_;
-    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+    for (unsigned i = 0; i < win_.size(); ++i)
       memo_wei_[win_.dp(i)] = wei_[i];
 
     // insertion of d and w:
@@ -253,11 +253,11 @@ namespace mln
     memo_wei_[d] = w;
 
     // re-mapping: w_i <- d_i
-    wei_.resize(win_.ndpoints());
-    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+    wei_.resize(win_.size());
+    for (unsigned i = 0; i < win_.size(); ++i)
       wei_[i] = memo_wei_[win_.dp(i)];
 
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     return *this;
   }
 
@@ -267,7 +267,7 @@ namespace mln
   w_window<D,W>::sym()
   {
     w_window<D,W> tmp;
-    for (unsigned i = 0; i < this->ndpoints(); ++i)
+    for (unsigned i = 0; i < this->size(); ++i)
       tmp.insert(this->w(i), - this->dp(i));
     *this = tmp;
     return *this;
@@ -280,7 +280,7 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win)
   {
     ostr << '[';
-    for (unsigned i = 0; i < w_win.win().ndpoints(); ++i)
+    for (unsigned i = 0; i < w_win.win().size(); ++i)
       ostr << w_win.vect()[i] << ':' << w_win.w(i) << ' ';
     return ostr << ']';
   }
@@ -289,7 +289,7 @@ namespace mln
   inline
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs)
   {
-    if (lhs.ndpoints() != rhs.ndpoints())
+    if (lhs.size() != rhs.size())
       return false;
     if (lhs.win() != rhs.win())
       return false;

@@ -82,7 +82,7 @@ namespace mln
 				     const mln_psite(W)& p)
     {
       p_array<mln_psite(W)> v;
-      v.reserve(exact(win).ndpoints());
+      v.reserve(exact(win).size());
       mln_qiter(W) q(win, p);
       for_all(q)
 	v.append(q);

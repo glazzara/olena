@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,13 @@
 /*! \file mln/level/fast_median.hh
  *
  * \brief Fast Median filtering of an image.
+ *
+ * \todo There are implicit assumptions about input being 2D!!!
  */
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>
-# include <mln/accu/median.hh>
+# include <mln/accu/median_h.hh>
 # include <mln/geom/shift.hh>
 # include <mln/geom/min_col.hh>
 # include <mln/geom/min_row.hh>
@@ -79,7 +81,7 @@ namespace mln
 	mln_precondition(input.has_data());
 	mln_precondition(output.has_data());
 
-	int
+	def::coord
 	  min_row = geom::min_row(input), max_row = geom::max_row(input),
 	  min_col = geom::min_col(input), max_col = geom::max_col(input);
 
@@ -91,7 +93,7 @@ namespace mln
 	  win_bot  = set::diff(win, geom::shift(win, up)),
 	  win_top = set::diff(geom::shift(win, up), win);
 
-	accu::median<mln_vset(I)> med(input.values());
+	accu::median_h<mln_value(I)> med;
 
 	// initialization
 
@@ -109,8 +111,8 @@ namespace mln
 	    med.take(q.val());
 	}
 
-	int& row = p.row();
-	int& col = p.col();
+	def::coord& row = p.row();
+	def::coord& col = p.col();
 	bool fwd = true;
 
 	mln_assertion(p.col() == min_col);

@@ -54,7 +54,7 @@ namespace mln
      * \relates mln::Window
      */
     template <typename Wl, typename Wr>
-    window<mln_dpoint(Wl)>
+    window<mln_dpsite(Wl)>
     diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
     /*! \brief Set theoretic difference of \p lhs and \p rhs.
@@ -70,21 +70,26 @@ namespace mln
 
     template <typename Wl, typename Wr>
     inline
-    window<mln_dpoint(Wl)>
-    diff(const Window<Wl>& lhs, const Window<Wr>& rhs)
+    window<mln_dpsite(Wl)>
+    diff(const Window<Wl>& lhs_, const Window<Wr>& rhs_)
     {
       trace::entering("set::diff");
-      mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
-      typedef mln_dpoint(Wl) D;
-      std::set<D>
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_difference(sl.begin(), sl.end(),
-			  sr.begin(), sr.end(),
-			  std::inserter(s, s.begin()));
+      mlc_equal(mln_dpsite(Wl), mln_dpsite(Wr))::check();
+
+      const Wl& lhs = exact(lhs_);
+      const Wr& rhs = exact(rhs_);
+      window<mln_dpsite(Wl)> tmp;
+
+      const unsigned n = lhs.size();
+      for (unsigned i = 0; i < n; ++i)
+	{
+	  if (rhs.has(lhs.dp(i)))
+	    continue;
+	  tmp.insert(lhs.dp(i));
+	}
+      
       trace::exiting("set::diff");
-      return convert::to_window(s);
+      return tmp;
     }
 
     template <typename Wl, typename Wr>

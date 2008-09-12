@@ -29,7 +29,7 @@ namespace mln
 
     // Mod determination.
     mln_accu_with_(accu::max, unsigned) max;
-    for (unsigned i = 0; i < win.ndpoints(); ++i)
+    for (unsigned i = 0; i < win.size(); ++i)
       max.take(win.w(i));
     unsigned mod = unsigned(max) + 1;
 

@@ -52,7 +52,7 @@ namespace mln
     dbl_neighb_& when_true(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
-      for (unsigned i = 0; i < nbh.ndpoints(); ++i)
+      for (unsigned i = 0; i < nbh.size(); ++i)
 	trues.push_back(nbh.dp(i));
       return *this;
     }
@@ -61,7 +61,7 @@ namespace mln
     dbl_neighb_& when_false(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
-      for (unsigned i = 0; i < nbh.ndpoints(); ++i)
+      for (unsigned i = 0; i < nbh.size(); ++i)
 	falses.push_back(nbh.dp(i));
       return *this;
     }

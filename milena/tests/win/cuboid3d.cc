@@ -48,7 +48,7 @@ int main()
   mln_assertion(cuboid.is_centered());
   mln_assertion(cuboid.is_symmetric());
   mln_assertion(cuboid == geom::sym(cuboid));
-  mln_assertion(cuboid.ndpoints() == d * h * w);
+  mln_assertion(cuboid.size() == d * h * w);
 
   mln_assertion(cuboid.delta() == 3);
 
