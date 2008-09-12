@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,7 +74,9 @@ namespace mln
     diff(const Window<Wl>& lhs_, const Window<Wr>& rhs_)
     {
       trace::entering("set::diff");
-      mlc_equal(mln_dpsite(Wl), mln_dpsite(Wr))::check();
+      mlc_is_a(mln_site(Wl), Gpoint)::check();
+      mlc_is_a(mln_site(Wr), Gpoint)::check();
+      mlc_converts_to(mln_dpsite(Wl), mln_dpsite(Wr))::check();
 
       const Wl& lhs = exact(lhs_);
       const Wr& rhs = exact(rhs_);
@@ -94,21 +96,23 @@ namespace mln
 
     template <typename Wl, typename Wr>
     inline
-    p_set<mln_point(Wl)>
+    p_set<mln_site(Wl)>
     diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
       trace::entering("set::diff");
-      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
-      typedef mln_point(Wl) P;
-      std::set<P>
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_difference(sl.begin(), sl.end(),
-			  sr.begin(), sr.end(),
-			  std::inserter(s, s.begin()));
+      p_set<mln_site(Wl)> s;
+      abort();
+//       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+//       typedef mln_point(Wl) P;
+//       std::set<P>
+// 	sl = convert::to_std_set(lhs),
+// 	sr = convert::to_std_set(rhs),
+// 	s;
+//       std::set_difference(sl.begin(), sl.end(),
+// 			  sr.begin(), sr.end(),
+// 			  std::inserter(s, s.begin()));
       trace::exiting("set::diff");
-      return convert::to_p_set(s);
+      return s;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

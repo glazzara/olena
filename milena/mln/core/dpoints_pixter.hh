@@ -226,7 +226,6 @@ namespace mln
   {
     mln_precondition(image.has_data());
     internal::get_adr(p_ref_, p_ref);
-//     p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }
@@ -338,7 +337,6 @@ namespace mln
   {
     mln_precondition(image.has_data());
     internal::get_adr(p_ref_, p_ref);
-//     p_ref_ = & exact(p_ref).to_site();
     value_ref_ = 0;
     init_(dps);
   }

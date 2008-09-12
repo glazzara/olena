@@ -56,6 +56,7 @@ namespace mln
     window<mln_dpsite(W)>
     shift(const Window<W>& win_, const mln_dpsite(W)& dp)
     {
+      mlc_is_a(mln_site(W), Gpoint)::check();
       const W& win = exact(win_);
 
       window<mln_dpsite(W)> tmp;

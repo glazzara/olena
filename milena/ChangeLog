@@ -1,5 +1,14 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Minor cleanup in set diff and geom shift.
+
+	* mln/core/dpoints_pixter.hh: Remove dead code.
+	* mln/geom/shift.hh: New static check.
+	* mln/set/diff.hh: New static checks.
+	(diff): De-activate the erroneous version with Site_Set.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make the median_fast test pass.
 
 	* tests/convert/to_window.cc,
