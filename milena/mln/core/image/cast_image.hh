@@ -95,10 +95,11 @@ namespace mln
     /// Skeleton.
     typedef cast_image_< tag::value_<T>, tag::image_<I> > skeleton;
 
-
     /// Constructor.
     cast_image_(const Image<I>& ima);
 
+    /// Initialize an empty image.
+    void init_(const Image<I>& ima);
 
     /// Read-only access of pixel value at point site \p p.
     T operator()(const mln_psite(I)& p) const;
@@ -106,7 +107,6 @@ namespace mln
     /// Mutable access is only OK for reading (not writing).
     T operator()(const mln_psite(I)& p);
   };
-
 
 
   template <typename T, typename I>
@@ -117,7 +117,6 @@ namespace mln
     cast_image_<T,I> tmp(ima);
     return tmp;
   }
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -137,7 +136,6 @@ namespace mln
 
   } // end of namespace mln::internal
 
-
   // cast_image_<T,I>
 
   template <typename T, typename I>
@@ -146,6 +144,15 @@ namespace mln
   {
     mln_precondition(exact(ima).has_data());
     this->data_ = new internal::data< cast_image_<T,I> >(exact(ima));
+  }
+
+  template <typename T, typename I>
+  inline
+  void
+  cast_image_<T,I>::init_(const Image<I>& ima)
+  {
+    mln_precondition(exact(ima).has_data());
+    this->data_ = new internal::data<cast_image_<T,I> >(exact(ima));
   }
 
   template <typename T, typename I>

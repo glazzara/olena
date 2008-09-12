@@ -101,6 +101,10 @@ namespace mln
     /// Ctors
     decorated_image();
     decorated_image(I& ima, const D& deco);
+
+    /// Initialize an empty image.
+    void init_(I& ima, const D& deco);
+
     /// Dtor
     ~decorated_image();
 
@@ -166,7 +170,17 @@ namespace mln
   inline
   decorated_image<I,D>::decorated_image(I& ima, const D& deco)
   {
+    mln_precondition(exact(ima).has_data());
     this->data_ = new internal::data< decorated_image<I,D> >(ima, deco);
+  }
+
+  template <typename I, typename D>
+  inline
+  void
+  decorated_image<I,D>::init_(I& ima, const D& deco)
+  {
+    mln_precondition(exact(ima).has_data());
+    this->data_ = new internal::data<decorated_image<I,D> >(ima, deco);
   }
 
   template <typename I, typename D>

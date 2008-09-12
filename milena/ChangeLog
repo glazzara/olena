@@ -1,5 +1,11 @@
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing init_().
+	* milena/mln/core/image/cast_image.hh,
+	* milena/mln/core/image/decorated_image.hh: add missing init_().
+
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix few tests.
 
 	* milena/mln/core/site_set/p_complex.hh,
