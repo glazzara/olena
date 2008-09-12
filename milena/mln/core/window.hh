@@ -38,6 +38,8 @@
  * \todo Code other comparisons (< and <=).
  *
  * \todo Add static checks in insert methods.
+ *
+ * \todo Rename dps_hook_ as util_set_.
  */
 
 # include <mln/core/internal/window_base.hh>

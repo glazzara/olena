@@ -1,3 +1,67 @@
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update the design of windows.
+
+
+	Propagate box renaming.
+
+	* mln/core/site_set/p_bgraph.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_line_graph.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_graph.hh,
+	* mln/core/image/obased_rle_image.hh,
+	* mln/core/image/t_image.hh,
+	* mln/core/concept/doc/image.hh, 
+	* mln/core/line_piter.hh,
+	* mln/core/alias/box2d_h.hh
+	(box_): Update to...
+	(box): ...its new name.
+
+	Use site-related names instead of point-related names.
+
+	* mln/core/w_window.hh,
+	* mln/core/clock_neighb.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/concept/doc/weighted_window.hh,
+	* mln/core/concept/doc/dpoint.hh,
+	* mln/core/concept/doc/neighborhood.hh,
+	* mln/core/concept/doc/point_site.hh: Fix doc.
+	* mln/make/w_window.hh,
+	* mln/convert/to_upper_window.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_std_set.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/geom/shift.hh: Fix code.
+
+	Update the design of windows.
+
+	* mln/core/point.hh (site, psite): New; this is a temp hack.
+	* mln/core/internal/dpoints_base.hh: Revamp.
+	(set_of): Remove; use instead...
+	(util::set): ...this and prefer delegation to...
+	(win_): ...this new attribute.
+	(insert): New protected method; no more inherited.
+	* mln/win/vline2d.hh,
+	* mln/win/hline2d.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/segment1d.hh,
+	* mln/win/line.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/cuboid3d.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/disk2d.hh: Update.
+
+	Misc.
+
+	* mln/core/site_set/p_array.hh: Fix missing include.
+	* mln/core/concept/window.hh (operator==): New.
+	* mln/core/grids.hh (coord): New include.
+	* mln/geom/bbox.hh: New overload for windows.
+	* mln/geom/sym.hh: Fix; the 'sym' method returns void.
+
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add at() and remove operator[] from image1d.

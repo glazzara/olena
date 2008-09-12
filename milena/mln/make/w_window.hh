@@ -53,7 +53,7 @@ namespace mln
      * \return A  weighted window.
      */
     template <typename W, typename F>
-    mln::w_window<mln_dpoint(W), mln_result(F)>
+    mln::w_window<mln_dpsite(W), mln_result(F)>
     w_window(const Window<W>& win, const Function_p2v<F>& wei);
 
 
@@ -61,13 +61,13 @@ namespace mln
 
     template <typename W, typename F>
     inline
-    mln::w_window<mln_dpoint(W), mln_result(F)>
+    mln::w_window<mln_dpsite(W), mln_result(F)>
     w_window(const Window<W>& win_, const Function_p2v<F>& wei_)
     {
       const W& win = exact(win_);
       const F& wei = exact(wei_);
       mln_precondition(! win.is_empty());
-      typedef mln_dpoint(W) D;
+      typedef mln_dpsite(W) D;
       typedef mln_point(D)  P;
       mln::w_window<D, mln_result(F)> w_win;
       mln_qiter(W) q(win, P::origin);

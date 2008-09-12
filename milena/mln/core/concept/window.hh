@@ -30,6 +30,8 @@
 
 /*! \file mln/core/concept/window.hh
  * \brief Definition of the concept of mln::Window.
+ *
+ * \todo Operator== should test if the cmp is possible.
  */
 
 # include <mln/core/concept/object.hh>
@@ -75,6 +77,12 @@ namespace mln
     Window();
   };
 
+
+  template <typename Wl, typename Wr>
+  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
+  {
+    return exact(lhs).std_vector() == exact(rhs).std_vector();
+  }
 
 
 # ifndef MLN_INCLUDE_ONLY

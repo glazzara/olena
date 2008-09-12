@@ -84,7 +84,7 @@ namespace mln
     std::size_t nlines() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box<P>& bbox() const;
 
     bool has(const psite& p) const;
 
@@ -106,7 +106,7 @@ namespace mln
 
   private:
     graph* gr_;
-    box_<P> bb_;
+    box<P> bb_;
   };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -146,7 +146,7 @@ namespace mln
 
   template<typename P>
   inline
-  const box_<P>&
+  const box<P>&
   p_bgraph<P>::bbox() const
   {
     return bb_;

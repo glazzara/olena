@@ -121,7 +121,7 @@ namespace mln
        */
       typedef void pset;
 
-      /*! \brief Point associated type.
+      /*! \brief Site associated type.
        * \invariant This type has to derive from mln::Point.
        */
       typedef void point;
@@ -136,7 +136,7 @@ namespace mln
        */
       typedef void coord;
 
-      /*! \brief Dpoint associated type.
+      /*! \brief Dpsite associated type.
        * \invariant This type has to derive from mln::Dpoint.
        */
       typedef void dpoint;
@@ -172,7 +172,7 @@ namespace mln
        *
        * \return A bounding box of the image domain.
        */
-      const box_<point>& bbox() const;
+      const box<point>& bbox() const;
 
       /*! \brief Give the number of points of the image domain. 
        */

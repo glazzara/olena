@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,10 +33,9 @@
  * \brief Definition of the mln::win::disk2d window.
  */
 
-# include <mln/core/concept/window.hh>
+# include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
 
 
 namespace mln
@@ -50,29 +49,9 @@ namespace mln
      * An disk2d is centered and symmetric.
      *
      */
-    struct disk2d : public Window< disk2d >,
+    struct disk2d : public internal::window_base< dpoint2d, disk2d >,
 		    public internal::dpoints_base_< dpoint2d, disk2d >
     {
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
-
-      /*! \brief Site_Iterator type to browse a hline such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
-
-      /*! \brief Site_Iterator type to browse a hline such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
       /*! \brief Constructor.
        *
        * \param[in] length Length, thus diameter.

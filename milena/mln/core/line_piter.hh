@@ -60,7 +60,7 @@ namespace mln
      *
      * \param[in] b A box.
      */
-    line_piter_(const box_<P>& b);
+    line_piter_(const box<P>& b);
 
     /// Conversion to point.
     operator P() const;
@@ -84,7 +84,7 @@ namespace mln
     void next_();
 
   private:
-    const box_<P>& b_;
+    const box<P>& b_;
     P p_;
     bool is_valid_;
   };
@@ -97,7 +97,7 @@ namespace mln
 
   template <typename P>
   inline
-  line_piter_<P>::line_piter_(const box_<P>& b)
+  line_piter_<P>::line_piter_(const box<P>& b)
     : b_(b)
   {
     invalidate();

@@ -85,6 +85,11 @@ namespace mln
   struct point : public Gpoint< point<G,C> >,
 		 public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
   {
+    // FIXME: Temporary hack.
+    typedef point site;
+    typedef point psite;
+
+
     /*! \var dim
      * \brief Dimension of the space.
      * \invariant dim > 0 

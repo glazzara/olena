@@ -37,9 +37,15 @@
  * "set::nsites(Site_Set)"...
  *
  * \todo Add a static check "domain is ok for bbox (like grid)". 
+ *
+ * \todo Add the weighted_window case.
  */
 
 # include <mln/core/concept/box.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/window.hh>
+# include <mln/literal/zero.hh>
+# include <mln/accu/bbox.hh>
 
 
 namespace mln
@@ -56,6 +62,12 @@ namespace mln
     /// Compute the precise bounding box of a point set \p pset.
     template <typename I>
     box<mln_site(I)> bbox(const Image<I>& ima);
+
+
+    /// Compute the precise bounding box of a window \p win.
+    template <typename W>
+    box<mln_site(W)> bbox(const Window<W>& win);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -121,6 +133,17 @@ namespace mln
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       return geom::bbox(ima.domain());
+    }
+
+    template <typename W>
+    box<mln_site(W)> bbox(const Window<W>& win)
+    {
+      typedef mln_site(W) P;
+      accu::bbox<P> b;
+      mln_qiter(W) q(exact(win), literal::origin);
+      for_all(q)
+	b.take(q);
+      return b;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

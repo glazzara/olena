@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,7 +52,7 @@ namespace mln
      *  o o x o o \n
      * is defined with length = 5.
      */
-    typedef line<grid::square, 1, int> hline2d;
+    typedef line<grid::square, 1, def::coord> hline2d;
 
   } // end of namespace mln::win
 

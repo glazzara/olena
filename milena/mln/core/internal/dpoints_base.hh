@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,15 @@
 /*! \file mln/core/internal/dpoints_base.hh
  *
  * \brief Definition of a base class for classes based on a set of dpoints.
+ *
+ * \todo Rename as dpsites_impl.
+ *
+ * \todo Remove the .vect() method.
  */
 
-# include <mln/core/internal/set_of.hh>
-# include <mln/fun/i2v/all_to.hh>
-# include <mln/norm/linfty.hh>
+# include <mln/core/window.hh>
+# include <mln/core/dpsites_piter.hh>
+
 
 
 namespace mln
@@ -48,16 +52,28 @@ namespace mln
      *
      */
     template <typename D, typename E>
-    class dpoints_base_ : protected internal::set_of_<D>
+    class dpoints_base_
     {
-      typedef internal::set_of_<D> super_;
     public:
 
-      /// Point associated type.
-      typedef mln_point(D) point;
+      /// Dpsite associated type.
+      typedef D dpsite;
 
-      /// Dpoint associated type.
-      typedef D dpoint;
+      /// Psite associated type.
+      typedef mln_psite(D) psite;
+
+      /// Site associated type.
+      typedef mln_site(D) site;
+
+
+      /// Forward site iterator associated type.
+      typedef dpsites_fwd_piter<E> fwd_qiter;
+
+      /// Backward site iterator associated type.
+      typedef dpsites_fwd_piter<E> bkd_qiter;
+
+      /// Site iterator associated type.
+      typedef fwd_qiter qiter;
 
 
       /*! \brief Test if the window is centered.
@@ -87,8 +103,16 @@ namespace mln
       // Give the vector of delta-points.
       const std::vector<D>& vect() const;
 
+      // Give the vector of delta-points.
+      const std::vector<D>& std_vector() const;
+
     protected:
+
       dpoints_base_();
+
+      void insert(const D& d);
+
+      mln::window<D> win_;
     };
 
 
@@ -105,30 +129,21 @@ namespace mln
     inline
     bool dpoints_base_<D,E>::is_centered() const
     {
-      static const D origin = all_to(0);
-      return this->super_::has(origin);
+      return win_.is_centered();
     }
 
     template <typename D, typename E>
     inline
     bool dpoints_base_<D,E>::is_empty() const
     {
-      return this->super_::is_empty();
+      return win_.is_empty();
     }
 
     template <typename D, typename E>
     inline
     unsigned dpoints_base_<D,E>::delta() const
     {
-      unsigned d = 0;
-      const unsigned n = ndpoints();
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  unsigned dd = norm::linfty(dp(i).to_vec());
-	  if (dd > d)
-	    d = dd;
-	}
-      return d;
+      return win_.delta();
     }
 
     template <typename D, typename E>
@@ -136,7 +151,7 @@ namespace mln
     unsigned
     dpoints_base_<D,E>::ndpoints() const
     {
-      return this->super_::nelements();
+      return win_.size();
     }
 
     template <typename D, typename E>
@@ -145,7 +160,15 @@ namespace mln
     dpoints_base_<D,E>::dp(unsigned i) const
     {
       mln_precondition(i < ndpoints());
-      return this->element(i);
+      return win_.dp(i);
+    }
+
+    template <typename D, typename E>
+    inline
+    const std::vector<D>&
+    dpoints_base_<D,E>::std_vector() const
+    {
+      return win_.std_vector();
     }
 
     template <typename D, typename E>
@@ -153,7 +176,7 @@ namespace mln
     const std::vector<D>&
     dpoints_base_<D,E>::vect() const
     {
-      return this->super_::vect();
+      return std_vector();
     }
 
     template <typename D, typename E>
@@ -161,7 +184,15 @@ namespace mln
     bool
     dpoints_base_<D,E>::has(const D& dp) const
     {
-      return this->super_::has(dp);
+      return win_.dps_hook_().has(dp);
+    }
+
+    template <typename D, typename E>
+    inline
+    void
+    dpoints_base_<D,E>::insert(const D& d)
+    {
+      win_.insert(d);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

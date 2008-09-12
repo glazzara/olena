@@ -57,10 +57,10 @@ namespace mln
        */
       typedef void bkd_niter;
 
-      /// Dpoint associated type.
+      /// Dpsite associated type.
       typedef void dpoint;
 
-      /// Point associated type.
+      /// Site associated type.
       typedef void  point;
     };
 

@@ -41,6 +41,7 @@
 # include <vector>
 
 # include <mln/core/internal/site_set_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/util/index.hh>
 

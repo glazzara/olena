@@ -46,7 +46,7 @@ namespace mln
    *
    */
 
-   typedef box_<point2d_h> box2d_h;
+   typedef box<point2d_h> box2d_h;
 
 } // end of namespace mln
 

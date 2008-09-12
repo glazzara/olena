@@ -33,10 +33,9 @@
  * \brief Definition of the mln::win::line window.
  */
 
-# include <mln/core/concept/window.hh>
+# include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/dpoint.hh>
-# include <mln/core/dpoints_piter.hh>
 
 
 namespace mln
@@ -57,27 +56,9 @@ namespace mln
      * \see mln::win::hline2d for an exemple of his use.
      */
     template <typename M, unsigned i, typename C>
-    struct line : public Window< line<M,i,C> >,
-		  public internal::dpoints_base_<dpoint<M, C>, point<M, C> >
+    struct line : public internal::window_base< dpoint<M, C>, line<M,i,C> >,
+		  public internal::dpoints_base_< dpoint<M, C>, line<M,i,C> >
     {
-      /// Point associated type.
-      typedef point<M, int> point;
-
-      /// Psite associated type.
-      typedef point psite;
-
-      /// Dpoint associated type.
-      typedef dpoint<M, int> dpoint;
-
-      /// Site_Iterator type to browse a line forward
-      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
-
-      /// Site_Iterator type to browse a line backward
-      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
-
-      /// Same as fwd_qiter
-      typedef fwd_qiter qiter;
-
       /*! \brief Constructor.
        *
        * \param[in] length Length of the line.
@@ -140,11 +121,11 @@ namespace mln
     {
       metal::bool_< i < M::dim >::check();
       mln_precondition(length % 2 == 1);
+      dpoint<M,C> n;
+      n.set_all(0);
       const int dc = length / 2;
       for (int c = - dc; c <= dc; ++c)
       {
-	dpoint n;
-	n.set_all(0);
 	n[i] = c;
 	this->insert(n);
       }

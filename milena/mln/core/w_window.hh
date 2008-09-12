@@ -56,10 +56,10 @@ namespace mln
   template <typename D, typename W>
   struct w_window : public Weighted_Window< w_window<D,W> >
   {
-    /// Point associated type.
+    /// Site associated type.
     typedef mln_point(D) point;
 
-    /// Dpoint associated type.
+    /// Dpsite associated type.
     typedef D dpoint;
 
     /// Weight associated type.

@@ -31,10 +31,9 @@
 /// \file mln/win/cuboid3d.hh
 /// \brief Definition of the mln::win::cuboid3d window.
 
-# include <mln/core/concept/window.hh>
+# include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/alias/dpoint3d.hh>
-# include <mln/core/dpoints_piter.hh>
 
 
 namespace mln
@@ -74,29 +73,9 @@ namespace mln
         Reference:
           http://en.wikipedia.org/wiki/Cuboid
     */
-    struct cuboid3d : public Window< cuboid3d >,
+    struct cuboid3d : public internal::window_base< dpoint3d, cuboid3d >,
 		      public internal::dpoints_base_< dpoint3d, cuboid3d >
     {
-      /// Point Site associated type.
-      typedef point3d psite;
-
-      /// Point associated type.
-      typedef point3d point;
-
-      /// Dpoint associated type.
-      typedef dpoint3d dpoint;
-
-      /// \brief Site_Iterator type to browse a cuboid such as: "for
-      /// each slice (increasing), for each row (increasing), for each
-      /// column (increasing)."
-      typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
-
-      /// \brief Site_Iterator type to browse a cuboid such as: "for
-      /// each slice (decreasing), for each row (decreasing), for each
-      /// column (decreasing)."
-      typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;
-
-
       /// \brief Constructor.
       ///
       /// \param[in] depth  The depth of the cuboid3d.

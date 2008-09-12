@@ -35,7 +35,9 @@
  * \todo Reactivate includes at EOF.
  */
 
-# include <mln/core/alias/window2d.hh>
+# include <mln/core/internal/window_base.hh>
+# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
@@ -55,22 +57,9 @@ namespace mln
      *  o o o o o \n
      * is defined with height = 3 and width = 5.
      */
-    struct rectangle2d : public internal::window_base< dpoint2d, rectangle2d >
+    struct rectangle2d : public internal::window_base< dpoint2d, rectangle2d >,
+			 public internal::dpoints_base_< dpoint2d, rectangle2d >
     {
-
-      /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpsites_fwd_piter<rectangle2d> fwd_qiter;
-
-      /*! \brief Site_Iterator type to browse a rectangle such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpsites_fwd_piter<rectangle2d> bkd_qiter;
-
-      typedef fwd_qiter qiter;
-
-
       /*! \brief Constructor.
        *
        * \param[in] height Height of the rectangle2d.
@@ -117,7 +106,6 @@ namespace mln
     protected:
 
       unsigned height_, width_;
-      window2d win_;
     };
 
 
@@ -146,7 +134,7 @@ namespace mln
       const int drow = height / 2, dcol = width / 2;
       for (int row = - drow; row <= drow; ++row)
 	for (int col = - dcol; col <= dcol; ++col)
-	  win_.insert(row, col);
+	  this->insert(dpoint2d(row, col));
     }
 
     inline
@@ -215,8 +203,8 @@ namespace mln
 
 
 // When rectangle2d is involved, one surely also wants:
-// # include <mln/win/hline2d.hh>
-// # include <mln/win/vline2d.hh>
+# include <mln/win/hline2d.hh>
+# include <mln/win/vline2d.hh>
 
 
 #endif // ! MLN_WIN_RECTANGLE2D_HH

@@ -79,7 +79,7 @@ namespace mln
     std::size_t nedges() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box<P>& bbox() const;
 
     bool has(const psite& p) const;
 
@@ -125,7 +125,7 @@ namespace mln
        named bbox().  Now the question is: should each image type have a
        bounding box?  */
   private:
-    box_<P> bb_;
+    box<P> bb_;
   };
 
 
@@ -191,7 +191,7 @@ namespace mln
 
   template <typename P>
   inline
-  const box_<P>&
+  const box<P>&
   p_graph<P>::bbox() const
   {
     return bb_;

@@ -57,7 +57,7 @@ namespace mln
       /// \param dim2 The second dimension to be swapped.
       /// \param box  The bounding box (domain) of the morphed image.
       data(I& ima, unsigned dim1, unsigned dim2,
-	    mln::box_<mln_psite(I)>& box);
+	    mln::box<mln_psite(I)>& box);
 
       /// Underlying image.
       I ima_;
@@ -67,7 +67,7 @@ namespace mln
       unsigned dim2_;
       /// \}
       /// The bounding box of the morphed image.
-      mln::box_<mln_psite(I)> box_;
+      mln::box<mln_psite(I)> box_;
     };
 
   } // end of namespace mln::internal
@@ -126,7 +126,7 @@ namespace mln
     bool has(const mln_psite(I)& p) const;
 
     /// Give the definition domain.
-    const box_<mln_psite(I)>& domain() const;
+    const box<mln_psite(I)>& domain() const;
 
     /// Read-only access of pixel value at point site \p p.
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
@@ -168,7 +168,7 @@ namespace mln
     inline
     data< t_image<I> >::data(I& ima,
 			       unsigned dim1, unsigned dim2,
-			       mln::box_<mln_psite(I)>& box)
+			       mln::box<mln_psite(I)>& box)
       : ima_(ima),
 	dim1_(dim1), dim2_(dim2),
 	box_(box)
@@ -188,7 +188,7 @@ namespace mln
     // We don't use mln::t_image::transpose here, since one its
     // prerequisite is that data_ is initialized, which is not done
     // yet at this point.
-    box_<mln_psite(I)> box(exchange_coords_(ima.bbox().pmin(), dim1, dim2),
+    box<mln_psite(I)> box(exchange_coords_(ima.bbox().pmin(), dim1, dim2),
 			   exchange_coords_(ima.bbox().pmax(), dim1, dim2));
     this->data_ = new internal::data< t_image<I> >(ima, dim1, dim2, box);
   }
@@ -233,7 +233,7 @@ namespace mln
 
   template <typename I>
   inline
-  const box_<mln_psite(I)>&
+  const box<mln_psite(I)>&
   t_image<I>::domain() const
   {
     mln_precondition(this->has_data());

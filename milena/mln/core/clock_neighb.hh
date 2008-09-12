@@ -54,10 +54,10 @@ namespace mln
   template <typename D>
   struct clock_neighb_ : public Neighborhood< clock_neighb_ <D> >
   {
-    /// Dpoint associated type.
+    /// Dpsite associated type.
     typedef D dpoint;
 
-    /// Point associated type.
+    /// Site associated type.
     typedef mln_point(D) point;
 
     /*! \brief Site_Iterator type to browse the points of a generic

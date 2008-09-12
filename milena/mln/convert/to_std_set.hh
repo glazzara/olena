@@ -48,19 +48,19 @@ namespace mln
 
     /// Convert a window \p win into a std::set of delta-points.
     template <typename W>
-    std::set<mln_dpoint(W)> to_std_set(const Window<W>& win);
+    std::set<mln_dpsite(W)> to_std_set(const Window<W>& win);
 
     /// Convert a point set \p pset into a std::set of points.
     template <typename W>
-    std::set<mln_point(W)> to_std_set(const Site_Set<W>& setp);
+    std::set<mln_site(W)> to_std_set(const Site_Set<W>& setp);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
     inline
-    std::set<mln_dpoint(W)> to_std_set(const Window<W>& win)
+    std::set<mln_dpsite(W)> to_std_set(const Window<W>& win)
     {
-      typedef mln_dpoint(W) D;
+      typedef mln_dpsite(W) D;
       typedef mln_point(D)  P;
       std::set<D> s;
       mln_qiter(W) q(exact(win), P::origin);
@@ -71,9 +71,9 @@ namespace mln
 
     template <typename W>
     inline
-    std::set<mln_point(W)> to_std_set(const Site_Set<W>& setp)
+    std::set<mln_site(W)> to_std_set(const Site_Set<W>& setp)
     {
-      typedef mln_point(W) P;
+      typedef mln_site(W) P;
       std::set<P> s;
       mln_piter(W) p(exact(setp));
       for_all(p)

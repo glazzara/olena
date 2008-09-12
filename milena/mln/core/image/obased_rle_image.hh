@@ -147,7 +147,7 @@ namespace mln
     const std::vector<unsigned>& object(unsigned i) const;
 
     /// Give the bounding box of the i-th object.
-    const box_<P>& bbox_of_run(unsigned i) const;
+    const box<P>& bbox_of_run(unsigned i) const;
 
   };
 
@@ -175,7 +175,7 @@ namespace mln
     data_< obased_rle_image<P,T> >::size_mem() const
     {
       return domain_.size_mem()	+ bbox_.size()
-	* (sizeof(T) + sizeof(box_<P>) + sizeof(std::vector<unsigned>))
+	* (sizeof(T) + sizeof(box<P>) + sizeof(std::vector<unsigned>))
 	+ (sizeof(unsigned) + sizeof(T)) * domain_.nruns();
     }
 
@@ -261,7 +261,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  const box_<P>& 
+  const box<P>& 
   obased_rle_image<P, T>::bbox_of_run(unsigned i) const
   {
     mln_assertion(i < this->data_->bbox_.size());

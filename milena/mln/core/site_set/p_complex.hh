@@ -103,7 +103,7 @@ namespace mln
     complex<D>& cplx();
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box<P>& bbox() const;
     /// \}
 
   private:
@@ -125,7 +125,7 @@ namespace mln
          are not tied to a specific graph.  */
     mutable util::tracked_ptr< complex<D> > cplx_;
     // FIXME: Remove as soon as bbox become optional.
-    box_<P> bb_;
+    box<P> bb_;
   };
 
 
@@ -212,7 +212,7 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  const box_<P>&
+  const box<P>&
   p_complex<D, P>::bbox() const
   {
     // FIXME: Dummy value.

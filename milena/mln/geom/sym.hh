@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,7 +62,8 @@ namespace mln
     W sym(const Window<W>& win)
     {
       W tmp = exact(win);
-      return tmp.sym();
+      tmp.sym();
+      return tmp;
     }
 
     template <typename W>
@@ -70,7 +71,8 @@ namespace mln
     W sym(const Weighted_Window<W>& w_win)
     {
       W tmp = exact(w_win);
-      return tmp.sym();
+      tmp.sym();
+      return tmp;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

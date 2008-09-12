@@ -31,6 +31,8 @@
 /*! \file mln/convert/to_image.hh
  *
  * \brief Conversions to mln::Image.
+ *
+ * \todo Remove. Use from_to instead...
  */
 
 # include <mln/core/image/image1d.hh>
@@ -150,8 +152,8 @@ namespace mln
       const W& win = exact(win_);
       mln_precondition(! win.is_empty());
 
-      typedef mln_point(W) P;
-      box_<P> b = geom::bbox(win);
+      typedef mln_site(W) P;
+      box<P> b = geom::bbox(win);
       mln_image_from(W, bool) ima(b);
       level::fill(ima, false);
       mln_qiter(W) q(win, P::origin);
@@ -174,8 +176,8 @@ namespace mln
       const W& w_win = exact(w_win_);
       mln_precondition(! w_win.is_empty());
 
-      typedef mln_point(W) P;
-      box_<P> b = geom::bbox(w_win);
+      typedef mln_site(W) P;
+      box<P> b = geom::bbox(w_win);
       mln_image_from(W, mln_weight(W)) ima(b);
       // Fill the image with zeros, as (weighted) windows are not
       // necessarily box-shaped (there might be holes corresponding to

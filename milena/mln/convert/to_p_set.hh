@@ -61,7 +61,7 @@ namespace mln
 
     /// Convert a Window \p win into a point set.
     template <typename W>
-    p_set<mln_point(W)> to_p_set(const Window<W>& win);
+    p_set<mln_site(W)> to_p_set(const Window<W>& win);
 
     /// Convert an std::set \p s of points into a point set.
     template <typename P>
@@ -110,10 +110,10 @@ namespace mln
 
     template <typename W>
     inline
-    p_set<mln_point(W)> to_p_set(const Window<W>& win)
+    p_set<mln_site(W)> to_p_set(const Window<W>& win)
     {
-      typedef mln_dpoint(W) D;
-      typedef mln_point(W) P;
+      typedef mln_dpsite(W) D;
+      typedef mln_site(W) P;
       p_set<P> pset;
       mln_qiter(W) q(exact(win), P::origin);
       for_all(q)

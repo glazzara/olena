@@ -46,19 +46,19 @@ namespace mln
 
     /// Shift a window \p win with a delta-point \p dp.
     template <typename W>
-    window<mln_dpoint(W)>
-    shift(const Window<W>& win, const mln_dpoint(W)& dp);
+    window<mln_dpsite(W)>
+    shift(const Window<W>& win, const mln_dpsite(W)& dp);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename W>
     inline
-    window<mln_dpoint(W)>
-    shift(const Window<W>& win, const mln_dpoint(W)& dp)
+    window<mln_dpsite(W)>
+    shift(const Window<W>& win, const mln_dpsite(W)& dp)
     {
-      typedef mln_point(W) P;
-      window<mln_dpoint(W)> tmp;
+      typedef mln_site(W) P;
+      window<mln_dpsite(W)> tmp;
       mln_qiter(W) q(win, P::origin);
       for_all(q)
 	tmp.insert(convert::to(q) + dp);

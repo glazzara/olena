@@ -85,7 +85,7 @@ namespace mln
     std::size_t nfaces() const;
 
     /// Give the exact bounding box.
-    const box_<P>& bbox() const;
+    const box<P>& bbox() const;
 
     bool has(const psite& p) const;
 
@@ -96,7 +96,7 @@ namespace mln
     /// The complex on which this pset is built.
     util::tracked_ptr< complex<D> > cplx_;
     // FIXME: Remove as soon as bbox become optional.
-    box_<P> bb_;
+    box<P> bb_;
   };
 
 
@@ -158,7 +158,7 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  const box_<P>&
+  const box<P>&
   p_faces<N, D, P>::bbox() const
   {
     // FIXME: Dummy value.

@@ -105,7 +105,7 @@ namespace mln
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
-      /// Point associated type.
+      /// Site associated type.
       typedef mln_site(S) site;
 
 

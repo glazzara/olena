@@ -56,10 +56,10 @@ namespace mln
        */
       typedef void bkd_qiter;
 
-      /// Point associated type.
+      /// Site associated type.
       typedef void point;
 
-      /// Dpoint associated type.
+      /// Dpsite associated type.
       typedef void dpoint;
 
       /// Weight associated type.
