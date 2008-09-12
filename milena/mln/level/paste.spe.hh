@@ -57,54 +57,68 @@ namespace mln
       namespace generic
       {
 	template <typename I, typename J>
-	void paste_(const I& data, J& destination);
+	void paste(const Image<I>& data, Image<J>& destination);
       }
 
-      template <typename I, typename J>
-      inline
-      void paste_lines_(const I& data, J& destination)
-      {
-	trace::entering("level::impl::paste_lines_");
-	typedef mln_psite(I) P;
-	std::size_t n = data.bbox().len(P::dim - 1);
-	// FIXME: Works only for raw data images
-	// FIXME: For linear data images, we should get the len for each line...
+//       template <typename I, typename J>
+//       inline
+//       void paste_lines_(const I& data, J& destination)
+//       {
+// 	trace::entering("level::impl::paste_lines_");
+// 	typedef mln_psite(I) P;
+// 	std::size_t n = data.bbox().len(P::dim - 1);
+// 	// FIXME: Works only for raw data images
+// 	// FIXME: For linear data images, we should get the len for each line...
 
-	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
-	//	mln_line_piter(I) p(data.domain());
-	for_all(p)
-	  memcpy_(inplace(make::pixel(destination, p)),
-		  make::pixel(data, p),
-		  n);
-	trace::exiting("level::impl::paste_lines_");
-      }
+// 	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
+// 	//	mln_line_piter(I) p(data.domain());
+// 	for_all(p)
+// 	  memcpy_(inplace(make::pixel(destination, p)),
+// 		  make::pixel(data, p),
+// 		  n);
+// 	trace::exiting("level::impl::paste_lines_");
+//       }
 
 
-      // Disjunction.
+//       // Disjunction.
 
-      // Remember: raw < linear < stored, computed.
+//       // Remember: raw < linear < stored, computed.
 
-      template <typename I, typename J>
-      inline
-      void paste_(trait::image::value_storage::any, const I& data,
-		  trait::image::value_storage::any, J& destination)
-      {
-	generic::paste_(data, destination);
-      }
+//       template <typename I, typename J>
+//       inline
+//       void paste_(trait::image::value_storage::any, const I& data,
+// 		  trait::image::value_storage::any, J& destination)
+//       {
+// 	generic::paste_(data, destination);
+//       }
 
-      template <typename I, typename J>
-      inline
-      void paste_(trait::image::value_storage::one_block, const I& data,
-		  trait::image::value_storage::one_block, J& destination)
-      {
-	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-	  paste_lines_(data, destination);
-	else
-	  generic::paste_(data, destination);
-      }
+//       template <typename I, typename J>
+//       inline
+//       void paste_(trait::image::value_storage::one_block, const I& data,
+// 		  trait::image::value_storage::one_block, J& destination)
+//       {
+// 	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+// 	  paste_lines_(data, destination);
+// 	else
+// 	  generic::paste_(data, destination);
+//       }
 
 
     } // end of namespace mln::level::impl
+
+    namespace internal
+    {
+
+      template <typename I, typename J>
+      inline
+      void paste_dispatch(const Image<I>& data, Image<J>& destination)
+      {
+	impl::generic::paste(data, destination);
+//       impl::paste_(mln_trait_image_value_storage(I)(), data,
+// 		   mln_trait_image_value_storage(J)(), destination);
+      }      
+
+    } // end of namespace mln::level::internal
 
   } // end of namespace mln::level
 

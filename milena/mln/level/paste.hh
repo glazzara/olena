@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -73,6 +73,21 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
+
+      template <typename I, typename J>
+      inline
+      void paste_tests(const Image<I>& data, Image<J>& destination)
+      {
+	mlc_is(mln_trait_image_value_io(J), trait::image::value_io::read_write)::check();
+	mlc_converts_to(mln_value(I), mln_value(J))::check();
+	mln_precondition(exact(data).has_data());
+	mln_precondition(exact(data).domain() <= exact(destination).domain());
+      }
+
+    } // end of namespace mln::level::internal
+
     namespace impl
     {
 
@@ -81,15 +96,19 @@ namespace mln
 
 	template <typename I, typename J>
 	inline
-	void paste_(const I& data, J& destination)
+	void paste(const Image<I>& data_, Image<J>& destination_)
 	{
-	  trace::entering("level::impl::generic::paste_");
+	  trace::entering("level::impl::generic::paste");
+
+	  internal::paste_tests(data_, destination_);
+	  const I& data  = exact(data_);
+	  J& destination = exact(destination_);
 
 	  mln_piter(I) p(data.domain());
 	  for_all(p)
 	    destination(p) = data(p);
 
-	  trace::exiting("level::impl::generic::paste_");
+	  trace::exiting("level::impl::generic::paste");
 	}
 
       } // end of namespace mln::level::impl::generic
@@ -101,19 +120,12 @@ namespace mln
 
     template <typename I, typename J>
     inline
-    void paste(const Image<I>& data_, Image<J>& destination_)
+    void paste(const Image<I>& data, Image<J>& destination)
     {
       trace::entering("level::paste");
 
-      const I& data  = exact(data_);
-      J& destination = exact(destination_);
-
-      mlc_is(mln_trait_image_value_io(J), trait::image::value_io::read_write)::check();
-      mlc_converts_to(mln_value(I), mln_value(J))::check();
-      mln_precondition(data.domain() <= destination.domain());
-
-      impl::paste_(mln_trait_image_value_storage(I)(), data,
-		   mln_trait_image_value_storage(J)(), destination);
+      internal::paste_tests(data, destination);
+      internal::paste_dispatch(data, destination);
 
       trace::exiting("level::paste");
     }

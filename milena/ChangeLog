@@ -1,3 +1,14 @@
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean level::paste; yet de-activate specializations.
+
+	* tests/level/paste.cc: Deactivate 3D tests.
+	* mln/core/image/instant.hh (init_): New method; fix missing.
+	* mln/level/paste.spe.hh (paste_dispatch): New.
+	De-activate specializations; it calls the generic version.
+	* mln/level/paste.hh (paste_tests): New in internal.
+	(paste): Call tests then dispatch.
+
 2008-09-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Make the tests in tests/accu work.

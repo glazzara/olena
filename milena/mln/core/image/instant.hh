@@ -95,6 +95,9 @@ namespace mln
     /// Constructor.
     instant_(I& ima);
 
+    /// Deferred initialization.
+    void init_(I& ima);
+
     /// Remove the "instant" envelope.
     I& un_instant_();
     I& un_instant_() const;
@@ -124,6 +127,16 @@ namespace mln
   template <typename I>
   inline
   instant_<I>::instant_(I& ima)
+  {
+    mln_precondition(ima.has_data());
+    this->init_(ima);
+    this->data_ = new internal::data< instant_<I> >(ima);
+  }
+
+  template <typename I>
+  inline
+  void
+  instant_<I>::init_(I& ima)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data< instant_<I> >(ima);

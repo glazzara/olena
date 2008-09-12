@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/image3d.hh>
+// #include <mln/core/image/image3d.hh>
 #include <mln/core/image/sub_image.hh>
 
 #include <mln/level/fill.hh>
@@ -59,24 +59,24 @@ int main()
     level::paste(ima, ima2); // Fast version.
     assert(ima == (ima2 | b));
 
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
+    level::impl::generic::paste(ima, ima2); // Not so fast version...
     assert(ima == (ima2 | b));
   }
 
-  // tests in three dimension
-  {
-    box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
-    image3d<int> ima(b, 2);
-    debug::iota(ima);
+//   // tests in three dimension
+//   {
+//     box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
+//     image3d<int> ima(b, 2);
+//     debug::iota(ima);
 
-    box3d b2(make::point3d(-1,-2, -1), make::point3d(3,6, 3));
-    image3d<int> ima2(b2, 2);
-    debug::iota(ima2);
+//     box3d b2(make::point3d(-1,-2, -1), make::point3d(3,6, 3));
+//     image3d<int> ima2(b2, 2);
+//     debug::iota(ima2);
 
-    level::paste(ima, ima2); // Fast version.
-    assert(ima == (ima2 | b));
+//     level::paste(ima, ima2); // Fast version.
+//     assert(ima == (ima2 | b));
 
-    level::impl::generic::paste_(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
-  }
+//     level::impl::generic::paste(ima, ima2); // Not so fast version...
+//     assert(ima == (ima2 | b));
+//   }
 }
