@@ -32,11 +32,15 @@
 
 #include <mln/core/complex.hh>
 
+using namespace mln;
+
+
+// Forward declaration.
+template <unsigned N, unsigned D> void test_faces_iter(complex<D>& c);
+
 
 int main()
 {
-  using namespace mln;
-
   /* A 2-d (simplicial) complex and its adjacency graph.
 
               v0      e3     v3
@@ -94,7 +98,8 @@ int main()
     << "Using ``dynamic'' manipulators." << std::endl
     << "  number of 0-faces: c.nfaces(0) = " << c.nfaces(0) << std::endl
     << "  number of 1-faces: c.nfaces(1) = " << c.nfaces(1) << std::endl
-    << "  number of 2-faces: c.nfaces(2) = " << c.nfaces(2) << std::endl;
+    << "  number of 2-faces: c.nfaces(2) = " << c.nfaces(2) << std::endl
+    << std::endl;
 
   /*-------------------.
   | Handles and data.  |
@@ -110,28 +115,46 @@ int main()
 
   mln_assertion(&face1 == &face2);
 
-  
   /*------------.
   | Iteration.  |
   `------------*/
 
   // FIXME: Possibly split this test (create a test for iterators).
 
+  // --------------- //
+  // Iterator on C.  //
+  // --------------- //
+
   // Iterators on a complex (not complex_image), or more precisely on
   // (all) the faces of complex C.
   mln_fwd_citer_(complex<D>) fwd_f(c);
-  for_all(fwd_f)
-    std::cout << fwd_f << std::endl;
-
+  mln_bkd_citer_(complex<D>) bkd_f(c);
+  for_all_2(fwd_f, bkd_f)
+    std::cout << fwd_f << ' ' << bkd_f << std::endl;
   std::cout << std::endl;
 
-  mln_bkd_citer_(complex<D>) bkd_f(c);
-  for_all(bkd_f)
-    std::cout << bkd_f << std::endl;
+  // -------------------------- //
+  // Iterator on n-faces of C.  //
+  // -------------------------- //
+
+  test_faces_iter<0>(c);
+  test_faces_iter<1>(c);
+  test_faces_iter<2>(c);
 
   /* FIXME: Exercice more iterators (see
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
   // ...
 
+}
+
+template <unsigned N, unsigned D>
+void
+test_faces_iter(complex<D>& c)
+{
+  mln_fwd_fiter(N, complex<D>) fwd_nf(c);
+  mln_bkd_fiter(N, complex<D>) bkd_nf(c);
+  for_all_2(fwd_nf, bkd_nf)
+    std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
+  std::cout << std::endl;
 }

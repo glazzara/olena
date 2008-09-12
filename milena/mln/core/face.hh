@@ -165,6 +165,11 @@ namespace mln
     // FIXME: Rename as `id'?
     unsigned face_id() const;
 
+    /// Set the complex the face belongs to.
+    void set_cplx(complex<D>& cplx);
+    /// Set the id of the face.
+    void set_face_id(unsigned face_id);
+
     /// Return the mln::face pointed by this handle.
     face<N, D>& to_face() const;
     /// \}
@@ -418,6 +423,20 @@ namespace mln
   face_handle<N, D>::face_id() const
   {
     return face_id_;
+  }
+
+  template <unsigned N, unsigned D>
+  void
+  face_handle<N, D>::set_cplx(complex<D>& cplx)
+  {
+    cplx_ = &cplx;
+  }
+
+  template <unsigned N, unsigned D>
+  void
+  face_handle<N, D>::set_face_id(unsigned face_id)
+  {
+    face_id_ = face_id;
   }
 
   template <unsigned N, unsigned D>

@@ -51,6 +51,12 @@
 # define mln_bkd_citer_(T)          T::bkd_citer
 /// \}
 
+/// Shortcuts to access the (N-faces) bkd_fiter type associated to T.
+/// \{
+# define mln_bkd_fiter(N, T)  typename T::template bkd_fiter< N >::ret
+# define mln_bkd_fiter_(N, T)          T::         bkd_fiter< N >::ret
+/// \}
+
 /// Shortcuts to access the bkd_niter type associated to T.
 /// \{
 # define mln_bkd_niter(T)  typename T::bkd_niter
@@ -123,10 +129,22 @@
 
 // f
 
+/// Shortcuts to access the (N-faces) fiter type associated to T.
+/// \{
+# define mln_fiter(N, T)   typename T::template fwd_fiter< N >::ret
+# define mln_fiter_(N, T)           T::         fwd_fiter< N >::ret
+/// \}
+
 /// Shortcuts to access the fwd_citer type associated to T.
 /// \{
 # define mln_fwd_citer(T)  typename T::fwd_citer
 # define mln_fwd_citer_(T)          T::fwd_citer
+/// \}
+
+/// Shortcuts to access the (N-faces) fwd_fiter type associated to T.
+/// \{
+# define mln_fwd_fiter(N, T)  typename T::template fwd_fiter< N >::ret
+# define mln_fwd_fiter_(N, T)          T::         fwd_fiter< N >::ret
 /// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.

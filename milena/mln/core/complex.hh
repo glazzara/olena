@@ -31,10 +31,8 @@
 /// \file mln/core/complex.hh
 /// \brief Structures for general complexes.
 ///
-/// A complexes defines a topological space which can be used as a
+/// A complex defines a topological space which can be used as a
 /// support for an image (i.e., as site sets).
-///
-/// FIXME: More.
 
 # include <cstddef>
 
@@ -44,8 +42,8 @@
 # include <mln/metal/bool.hh>
 
 # include <mln/core/face.hh>
-
 # include <mln/core/complex_iter.hh>
+# include <mln/core/faces_iter.hh>
 
 
 namespace mln
@@ -59,6 +57,8 @@ namespace mln
   }
   template <unsigned D> class complex_fwd_iter_;
   template <unsigned D> class complex_bkd_iter_;
+  template <unsigned N, unsigned D> class faces_fwd_iter_;
+  template <unsigned N, unsigned D> class faces_bkd_iter_;
 
 
   /*----------.
@@ -70,10 +70,17 @@ namespace mln
   class complex : private internal::faces_set_mixin<D, D>
   {
   public:
-    /// Forward mln::Iterator associated type.
+    /// Forward mln::Iterator type iterating on all faces.
     typedef complex_fwd_iter_<D> fwd_citer;
-    /// Backward mln::Iterator associated type.
+    /// Backward mln::Iterator type iterating on all faces.
     typedef complex_bkd_iter_<D> bkd_citer;
+
+    /// Forward mln::Iterator type iterating on \p N-faces.
+    template <unsigned N>
+    struct fwd_fiter { typedef faces_fwd_iter_<N, D> ret; };
+    /// Backward mln::Iterator type iterating on \p N-faces.
+    template <unsigned N>
+    struct bkd_fiter { typedef faces_bkd_iter_<N, D> ret; };
 
     /// Complex construction.
     /// \{
