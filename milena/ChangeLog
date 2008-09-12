@@ -1,5 +1,13 @@
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Start a multiple window class.
+
+	* doc/tutorial/examples/win_multiple.cc: New.
+	* mln/core/internal/site_relative_iterator_base.hh: .
+	* mln/win/multiple.hh: New.
+
+2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add an 'estim nsites' routine for Z.
 
 	* doc/tutorial/examples/image2d.cc: Augment.
