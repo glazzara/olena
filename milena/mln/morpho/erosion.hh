@@ -63,7 +63,7 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-	erosion_on_function(const Image<I>& input_, const Window<W>& win_);
+	erosion_on_function(const Image<I>& input_, const Window<W>& win_)
 	{
 	  trace::entering("morpho::impl::generic::erosion_on_function");
 
@@ -93,7 +93,7 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-	erosion_on_set(const Image<I>& input_, const Window<W>& win_);
+	erosion_on_set(const Image<I>& input_, const Window<W>& win_)
 	{
 	  trace::entering("morpho::impl::generic::erosion_on_set");
 

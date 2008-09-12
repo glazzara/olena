@@ -34,6 +34,10 @@
 
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
+# include <mln/geom/shift.hh>
+# include <mln/accu/min_h.hh>
+# include <mln/set/diff.hh>
+# include <mln/canvas/browsing/snake_fwd.hh>
 
 
 /*! \file mln/morpho/erosion.spe.hh
@@ -57,29 +61,9 @@ namespace mln
     erosion(const Image<I>& input, const Window<W>& win);
 
 
-    namespace internal
-    {
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch(const Image<I>& input, const Window<W>& win)
-      {
-	if (mlc_equal(mln_trait_image_kind(I)(),
-		      trait::image::kind::logic)::value == true)
-	  if (mlc_equal(mln_trait_image_speed(I)(),
-			trait::image::speed::fastest)::value == true)
-	    impl::erosion_on_set_fastest(input, win);
-	  else
-	    impl::generic::erosion_on_set(input, win);
-	else
-	  if (mlc_equal(mln_trait_image_speed(I)(),
-			trait::image::speed::fastest)::value == true)
-	    impl::erosion_on_function_fastest(input, win);
-	  else
-	    impl::generic::erosion_on_function(input, win);
-      }
-
     namespace impl
     {
+
 
       namespace generic
       {
@@ -143,6 +127,7 @@ namespace mln
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) p_out(output);
+	mln_qixter(const I, W) q(p, win);
 	for_all_2(p, p_out)
 	{
 	  for_all(q)
@@ -176,11 +161,11 @@ namespace mln
 	for_all(p)
 	  if (input(p) == true)
 	    for_all(q) if (input.has(q))
-               if (input(q) == false)
-               {
-                 output(p) = false;
-                 break;
-               }
+	      if (input(q) == false)
+	      {
+		output(p) = false;
+		break;
+	      }
 	trace::exiting("morpho::impl::erosion_on_set_centered");
 
 	return output;
@@ -220,14 +205,11 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-      erosion_rectangle2d(const Image<I>& input_, const Window<W>& win_)
+      erosion_rectangle2d(const Image<I>& input_, const win::rectangle2d& win)
       {
-	mlc_equal(W, win::rectangle2d)::check();
-
 	trace::entering("morpho::impl::erosion_rectangle2d");
 
 	const I& input = exact(input_);
-	const W& win = exact(win_);
 
 	mln_concrete(I) temp, output;
 	temp   = morpho::erosion(input, win::hline2d(win.width()));
@@ -241,11 +223,12 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-      erosion_octagon2d(const I& input, const win::octagon2d& win)
+      erosion_octagon2d(const Image<I>& input_, const win::octagon2d& win)
       {
-	mlc_equal(W, win::octagon2d)::check();
-
 	trace::entering("morpho::impl::erosion_octagon2d");
+
+	const I& input = exact(input_);
+
 	const unsigned len = win.length() / 3 + 1;
 
 	mln_concrete(I) temp_1, temp_2, output;
@@ -258,7 +241,222 @@ namespace mln
 	return output;
       }
 
+      template <typename I, typename W>
+      struct erosion_arbitrary_2d_fastest_functor
+      {
+	const I& input;
+	const W& win;
+	mln_concrete(I) output;
+	accu::min_h<mln_value(I)> min;
+
+	mln_psite(I) p;
+
+	window2d
+	win_left,
+	  win_right,
+	  win_bot,
+	  win_top;
+
+	mln_qixter(const I, window2d)
+	q_l,
+	  q_r,
+	  q_top,
+	  q_bot;
+
+	erosion_arbitrary_2d_fastest_functor(const I& input, const W& win)
+	  : input(input),
+	    win(win),
+	    min(input.values()),
+	    win_left(set::diff(geom::shift(win, left), win)),
+	    win_right(set::diff(win, geom::shift(win, left))),
+	    win_bot(set::diff(win, geom::shift(win, up))),
+	    win_top(set::diff(geom::shift(win, up), win)),
+	    q_l(input, win_left, p),
+	    q_r(input, win_right, p),
+	    q_top(input, win_top, p),
+	    q_bot(input, win_bot, p)
+	{ }
+
+	void init()
+	{
+	  initialize(output, input);
+	  min.init();
+	  p = input.domain().pmin() + up;
+	  mln_qixter(const I, W) q(input, win, p);
+	  for_all(q)
+	    min.take(q.val());
+	}
+
+	void fwd()
+	{
+	  ++p.col();
+	  for_all(q_l)
+	    min.untake(q_l.val());
+	  for_all(q_r)
+	    min.take(q_r.val());
+	  output(p) = min;
+	}
+
+	void bkd()
+	{
+	  --p.col();
+	  for_all(q_r)
+	    min.untake(q_r.val());
+	  for_all(q_l)
+	    min.take(q_l.val());
+	  output(p) = min;
+	}
+
+	void down()
+	{
+	  ++p.row();
+	  for_all(q_top)
+	    min.untake(q_top.val());
+	  for_all(q_bot)
+	    min.take(q_bot.val());
+	  output(p) = min;
+	}
+
+      };
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      erosion_arbitrary_2d_fastest(const Image<I>& input, const Window<W>& win)
+      {
+	trace::entering("morpho::impl:erosion_arbitrary_2d_fastest");
+
+	typedef erosion_arbitrary_2d_fastest_functor<I, W> F;
+	mlc_equal(W, win::octagon2d)::check();
+	F f(input, win);
+	canvas::browsing::snake_fwd(f);
+
+	trace::exiting("morpho::impl:erosion_arbitrary_2d_fastest");
+
+	return f.output;
+      }
+
+
+      template <typename I, typename W>
+      struct erosion_arbitrary_2d_functor
+      {
+	const I& input;
+	const W& win;
+	mln_concrete(I) output;
+	accu::min_h<mln_value(I)> min;
+
+	mln_psite(I) p;
+
+	window2d
+	win_left,
+	  win_right,
+	  win_bot,
+	  win_top;
+
+	mln_qiter(window2d)
+	q_l,
+	  q_r,
+	  q_top,
+	  q_bot;
+
+	erosion_arbitrary_2d_functor(const I& input, const W& win)
+	  : input(input),
+	    win(win),
+	    min(input.values()),
+	    win_left(set::diff(geom::shift(win, left), win)),
+	    win_right(set::diff(win, geom::shift(win, left))),
+	    win_bot(set::diff(win, geom::shift(win, up))),
+	    win_top(set::diff(geom::shift(win, up), win)),
+	    q_l(win_left, p),
+	    q_r(win_right, p),
+	    q_top(win_top, p),
+	    q_bot(win_bot, p)
+	{ }
+
+	void init()
+	{
+	  initialize(output, input);
+	  min.init();
+	  p = input.domain().pmin() + up;
+	  mln_qiter(W) q(win, p);
+	  for_all(q)
+	    min.take(input(q));
+	}
+
+	void fwd()
+	{
+	  ++p.col();
+	  for_all(q_l)
+	    min.untake(input(q_l));
+	  for_all(q_r)
+	    min.take(input(q_r));
+	  output(p) = min;
+	}
+
+	void bkd()
+	{
+	  --p.col();
+	  for_all(q_r)
+	    min.untake(input(q_r));
+	  for_all(q_l)
+	    min.take(input(q_l));
+	  output(p) = min;
+	}
+
+	void down()
+	{
+	  ++p.row();
+	  for_all(q_top)
+	    min.untake(input(q_top));
+	  for_all(q_bot)
+	    min.take(input(q_bot));
+	  output(p) = min;
+	}
+
+      };
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      erosion_arbitrary_2d(const Image<I>& input, const Window<W>& win)
+      {
+	trace::entering("morpho::impl:erosion_arbitrary_2d");
+
+	typedef erosion_arbitrary_2d_functor<I, W> F;
+	mlc_equal(W, win::octagon2d)::check();
+	F f(input, win);
+	canvas::browsing::snake_fwd(f);
+
+	trace::exiting("morpho::impl:erosion_arbitrary_2d");
+
+	return f.output;
+      }
+
     } // end of namespace mln::morpho::impl
+
+
+    namespace internal
+    {
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch(const Image<I>& input, const Window<W>& win)
+      {
+	if (mlc_equal(mln_trait_image_kind(I)(),
+		      trait::image::kind::logic)::value == true)
+	  if (mlc_equal(mln_trait_image_speed(I)(),
+			trait::image::speed::fastest)::value == true)
+	    impl::erosion_on_set_fastest(input, win);
+	  else
+	    impl::generic::erosion_on_set(input, win);
+	else
+	  if (mlc_equal(mln_trait_image_speed(I)(),
+			trait::image::speed::fastest)::value == true)
+	    impl::erosion_on_function_fastest(input, win);
+	  else
+	    impl::generic::erosion_on_function(input, win);
+      }
+
+    } // end of namespace mln::morpho::internal
 
   } // end of namespace mln::morpho
 

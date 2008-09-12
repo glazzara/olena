@@ -1,3 +1,14 @@
+2008-09-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add fast arbitrary erosion.
+
+	* mln/morpho/erosion.hh: (erosion_arbitrary_2d_fastest) New, erosion
+	on fast images with an arbitrary window using min_h and the snake
+	browsing.
+	(erosion_arbitrary_2d_fastest) New, erosion on non-fast images with an
+	arbitrary window using min_h and the snake browsing.
+	* mln/morpho/erosion.spe.hh: Dummy fix.
+
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start a multiple window class.
