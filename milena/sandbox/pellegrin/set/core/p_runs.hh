@@ -88,7 +88,7 @@ namespace mln
     const box_<P>& bbox() const;
 
     /// Give the number of points.
-    typename std::size_t npoints() const;
+    typename std::size_t nsites() const;
 
     /// Insert a range, start at point \p p wit len \p len.
     void insert(const p_run<P>& pr);
@@ -114,7 +114,7 @@ namespace mln
   protected:
 
     /// Number of points.
-    typename std::size_t npoints_;
+    typename std::size_t nsites_;
 
     /// Points container
     util::lazy_set_<p_run<P> > con_;
@@ -128,7 +128,7 @@ namespace mln
   template <typename P>
   inline
   p_runs_<P>::p_runs_() :
-    npoints_(0)
+    nsites_(0)
   {
   }
 
@@ -155,9 +155,9 @@ namespace mln
   template <typename P>
   inline
   typename std::size_t
-  p_runs_<P>::npoints() const
+  p_runs_<P>::nsites() const
   {
-    return npoints_;
+    return nsites_;
   }
 
   template <typename P>
@@ -198,7 +198,7 @@ namespace mln
     fb_.take(pr.bbox().pmin());
     fb_.take(pr.bbox().pmax());
     // update size
-    npoints_ += pr.npoints();
+    nsites_ += pr.nsites();
   }
 
   template <typename P>

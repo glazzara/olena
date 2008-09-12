@@ -23,9 +23,9 @@ namespace mln
   template <typename P>
   void shuffle(p_array<P>& a)
   {
-    for (unsigned int i = 0; i < a.npoints(); i++)
+    for (unsigned int i = 0; i < a.nsites(); i++)
       {
-        unsigned int r = rand() % a.npoints();
+        unsigned int r = rand() % a.nsites();
         P tmp;
         tmp = a[i];
         a.hook_()[i] = a[r];
@@ -92,7 +92,7 @@ namespace mln
       algebra::vec<P::dim,float> Cki = Ck;
       algebra::vec<P::dim,float> best_x = X[0];
       float best_d = norm::l2(Cki - best_x);
-      for (size_t j = 1; j < X.npoints(); ++j)
+      for (size_t j = 1; j < X.nsites(); ++j)
         {
           algebra::vec<P::dim,float> Xj = X[j];
           float d = norm::l2(Cki - Xj);
@@ -231,7 +231,7 @@ namespace mln
     to_image2d(const p_array<P>& a)
     {
       image2d<bool> output (to_box2d(a.bbox()), 0);
-      for (size_t i = 0; i < a.npoints(); i++)
+      for (size_t i = 0; i < a.nsites(); i++)
         {
           point2d p(a[i][0], a[i][1]);
           if (output.has(p))

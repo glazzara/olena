@@ -79,7 +79,7 @@ namespace mln
     /// line graph.
     ///
     /// Required by the mln::Point_Set concept.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
@@ -155,7 +155,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_line_graph<P>::npoints() const
+  p_line_graph<P>::nsites() const
   {
     return nedges();
   }
@@ -213,8 +213,8 @@ namespace mln
   p_line_graph<P>::adjacent(const util::edge_id& lhs,
 			    const util::edge_id& rhs) const
   {
-    mln_assertion(lhs < this->npoints());
-    mln_assertion(rhs < this->npoints());
+    mln_assertion(lhs < this->nsites());
+    mln_assertion(rhs < this->nsites());
 
     // Ensure LHS and RHS are *not* equal.
     if (lhs == rhs)
@@ -248,8 +248,8 @@ namespace mln
   p_line_graph<P>::adjacent_or_equal(const util::edge_id& lhs,
 				     const util::edge_id& rhs) const
   {
-    mln_assertion(lhs < this->npoints());
-    mln_assertion(rhs < this->npoints());
+    mln_assertion(lhs < this->nsites());
+    mln_assertion(rhs < this->nsites());
 
     // Check whether LHS and RHS are equal.
     if (lhs == rhs)

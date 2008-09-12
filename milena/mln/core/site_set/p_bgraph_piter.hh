@@ -118,7 +118,7 @@ namespace mln
   p_bgraph_piter_<P>::p_bgraph_piter_(const p_bgraph<P>& pg)
     : pg_(pg),
       // Initialize psite_ to a dummy value.
-      psite_(pg, pg_.npoints()),
+      psite_(pg, pg_.nsites()),
       p_()
   {
     iterators_ = boost::vertices(pg_.to_graph());

@@ -53,18 +53,18 @@ namespace mln
     algebra::vec<P::dim,float>
     exp_value(const p_array<P>& a)
     {
-      if (a.npoints() == 0)
+      if (a.nsites() == 0)
         return P();
       
       algebra::vec<P::dim,float> c(literal::zero);
-      for (unsigned i = 0; i < a.npoints(); ++i)
+      for (unsigned i = 0; i < a.nsites(); ++i)
         {
           // FIXME : Ugly.
           algebra::vec<P::dim,float> ai = a[i];
           c += ai;
         }
       
-      return c / a.npoints();
+      return c / a.nsites();
     }
     
 # endif // ! MLN_INCLUDE_ONLY

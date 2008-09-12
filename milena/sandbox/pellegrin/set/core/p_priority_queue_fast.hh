@@ -75,7 +75,7 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P, typename T>
   class p_priority_fast : public internal::point_set_base_< P, p_priority_fast<P, T> >
@@ -98,7 +98,7 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    size_t npoints() const;
+    size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -163,7 +163,7 @@ namespace mln
   p_priority_fast<P, T>::vect_update_() const
   {
     vect_.clear();
-    vect_.reserve(npoints());
+    vect_.reserve(nsites());
 
     typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
@@ -183,7 +183,7 @@ namespace mln
     typename std::map<T, p_queue_fast<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      for (unsigned i = 0; i < (*it).second.npoints (); ++i)
+      for (unsigned i = 0; i < (*it).second.nsites (); ++i)
 	bb_.take((*it).second[i]);
     bb_needs_update_ = false;
   }
@@ -218,7 +218,7 @@ namespace mln
   template <typename P, typename T>
   inline
   size_t
-  p_priority_fast<P, T>::npoints() const
+  p_priority_fast<P, T>::nsites() const
   {
     unsigned res = 0;
 
@@ -226,7 +226,7 @@ namespace mln
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.is_empty ())
- 	res += (*it).second.npoints();
+ 	res += (*it).second.nsites();
     return res;
   }
 
@@ -235,7 +235,7 @@ namespace mln
   const box_<P>&
   p_priority_fast<P, T>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -339,7 +339,7 @@ namespace mln
   const P&
   p_priority_fast<P, T>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
 
     typename std::map<T, p_queue_fast<P> >::const_reverse_iterator it = q_.rbegin ();
     unsigned cpt = 0;
@@ -347,7 +347,7 @@ namespace mln
     for (; it != q_.rend (); ++it)
       {
 	if (!(*it).second.is_empty ())
-	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
+	  for (cpt = 0; cpt < (*it).second.nsites (); ++cpt)
 	    {
 	      if (i == 0)
 		return (*it).second[cpt];

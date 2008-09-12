@@ -64,7 +64,7 @@ namespace mln
     void update_gN(const N_t& N, G& gN)
     {
       for (unsigned g = 0; g < 256; ++g)
-	if (N[g].npoints() != 0)
+	if (N[g].nsites() != 0)
 	  {
 	    gN = g;
 	    return;
@@ -79,7 +79,7 @@ namespace mln
     {
       for (unsigned i = 0; i < 256; ++i)
 	{
-	  if (N[i].npoints() == 0)
+	  if (N[i].nsites() == 0)
 	    continue;
 	  std::cout << i << ": " << N[i] << std::endl;
 	}
@@ -221,7 +221,7 @@ namespace mln
 
 
 	// R <- R U A
-	if (A.npoints() == 0)
+	if (A.nsites() == 0)
 	  goto the_end;
 
 // 	for_all(a)
@@ -292,10 +292,10 @@ namespace mln
 	    // we only want R
 
 	    // yet A is empty (cause included in R)
-	    //   so this test is ok: mln_invariant((is | in_A).npoints() == 0);
+	    //   so this test is ok: mln_invariant((is | in_A).nsites() == 0);
 
 	    for (unsigned i = 0; i < 256; ++i)
-	      if (N[i].npoints())
+	      if (N[i].nsites())
 		level::fill(inplace(deja_vu | N[i]), false);
 // 		{
 // 		  mln_piter(arr_t) p(N[i]);

@@ -27,7 +27,7 @@ namespace mln
 	ima(p) = true;
       }
 
-    node->elt().npoints = area;
+    node->elt().nsites = area;
     return area;
   }
 
@@ -46,7 +46,7 @@ namespace mln
 			unsigned min_area,
 			value::int_u8 g)
   {
-    unsigned area = (*node).elt().npoints;
+    unsigned area = (*node).elt().nsites;
     if (area > min_area)
       g = (*node).elt().value;
 

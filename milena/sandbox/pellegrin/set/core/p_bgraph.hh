@@ -92,7 +92,7 @@ namespace mln
     p_bgraph (graph* gr);
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
     std::size_t nlines() const;
@@ -145,7 +145,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_bgraph<P>::npoints() const
+  p_bgraph<P>::nsites() const
   {
     return boost::num_vertices(*gr_);
   }
@@ -175,7 +175,7 @@ namespace mln
       // Check whether P is compatible with this psite set.
       (&p.pg() == this) &&
       // Check that the node id of P belongs to the range of valid node ids.
-      (p.id() < this->npoints());
+      (p.id() < this->nsites());
   }
 
 

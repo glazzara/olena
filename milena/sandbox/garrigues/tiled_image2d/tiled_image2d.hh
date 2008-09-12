@@ -323,7 +323,7 @@ namespace mln
   tiled_image2d<T>::nelements() const
   {
     mln_precondition(this->has_data());
-    return this->data_->b_.npoints();
+    return this->data_->b_.nsites();
   }
 
   template <typename T>

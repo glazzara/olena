@@ -89,7 +89,7 @@ namespace mln
     using super_::vect;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Insert a point \p p.
     p_set<P>& insert(const P& p);
@@ -110,7 +110,7 @@ namespace mln
   protected:
 
     accu::bbox<P> bb_;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
   };
 
 
@@ -133,7 +133,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_set<P>::npoints() const
+  p_set<P>::nsites() const
   {
     return this->super_::nelements();
   }
@@ -165,7 +165,7 @@ namespace mln
   const P&
   p_set<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return this->super_::element(i);
   }
 
@@ -183,7 +183,7 @@ namespace mln
   const box_<mln_point(P)>&
   p_set<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     return bb_.to_result();
   }
 

@@ -79,7 +79,7 @@ namespace mln
       level::fill(output, 255);
       for_all(p)
 	{
-	  if ((*p).elt().points.npoints() > limit)
+	  if ((*p).elt().points.nsites() > limit)
 	  {
 	    mln_piter(p_set<point2d>) q((*p).elt().points);
 	    for_all(q)
@@ -110,7 +110,7 @@ namespace mln
       	  std::cout << "region : " << &*p
 		    << " value = " << (*p).elt().value << std::endl
 		    << " holes : "
-		    << (*p).elt().holes.npoints()
+		    << (*p).elt().holes.nsites()
 		    << (*p).elt().holes
 		    << std::endl;
 
@@ -186,11 +186,11 @@ namespace mln
 
       level::fill(out, literal::white);
 
-      if (R.npoints() != 0)
+      if (R.nsites() != 0)
 	level::fill(inplace(out | R), literal::green);
-      if (A.npoints() != 0)
+      if (A.nsites() != 0)
 	level::fill(inplace(out | A), literal::blue);
-      if (N.npoints() != 0)
+      if (N.nsites() != 0)
 	level::fill(inplace(out | N), literal::red);
 
       io::ppm::save(out, filename.str());

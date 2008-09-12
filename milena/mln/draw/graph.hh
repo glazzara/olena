@@ -103,7 +103,7 @@ namespace mln
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
 	      edge_v);
       // Draw the points (vertices).
-      for (size_t p = 0; p < pg.npoints(); ++p)
+      for (size_t p = 0; p < pg.nsites(); ++p)
  	exact(ima)(pg.gr_->vertex_data(p)) = vertex_v;
     }
 

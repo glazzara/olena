@@ -149,7 +149,7 @@ namespace mln
 	  loc[i] = loc[i-1] + h[i-1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(input.nsites());
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
@@ -193,7 +193,7 @@ namespace mln
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(input.nsites());
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;

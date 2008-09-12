@@ -202,7 +202,7 @@ namespace mln
   inline
   bgraph_image<P, V>::bgraph_image(const p_bgraph<P>& g)
   {
-    init_(g, std::vector<V>(g.npoints()));
+    init_(g, std::vector<V>(g.nsites()));
   }
 
   template <typename P, typename V>

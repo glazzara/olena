@@ -393,7 +393,7 @@ namespace mln
   gimp_image<t>::nelements() const
   {
      mln_precondition(this->has_data());
-     return this->data_->b_.npoints();
+     return this->data_->b_.nsites();
   }
 
   

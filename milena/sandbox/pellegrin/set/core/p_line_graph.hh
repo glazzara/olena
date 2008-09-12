@@ -93,7 +93,7 @@ namespace mln
     typedef p_line_graph_piter_<P> bkd_piter;
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
     std::size_t nlines() const;
@@ -137,7 +137,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_line_graph<P>::npoints() const
+  p_line_graph<P>::nsites() const
   {
     return this->gr_.nnodes();
   }

@@ -61,10 +61,10 @@ int main()
   p_runs_<point2d> ps2;
 
   ps.insert(p_run<point2d>(p, 7));
-  mln_assertion(ps.npoints() == 7);
+  mln_assertion(ps.nsites() == 7);
 
   ps.insert(p_run<point2d>(q, 5));
-  mln_assertion(ps.npoints() == 12);
+  mln_assertion(ps.nsites() == 12);
 
   ps.insert(p_run<point2d>(r, 2));
 

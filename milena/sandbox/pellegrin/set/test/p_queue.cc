@@ -44,14 +44,14 @@ int main()
     .push(make::point2d(6, 9))
     .push(make::point2d(5, 1))
     .push(make::point2d(4, 2));
-  mln_assertion(q.npoints() == 3);
+  mln_assertion(q.nsites() == 3);
 
   std::cout << q.bbox() << std::endl;
   std::cout << q << std::endl;
 
   q.pop();
-  mln_assertion(q.npoints() == 2);
+  mln_assertion(q.nsites() == 2);
   point2d p = q.front();
-  mln_assertion(q.npoints() == 2);
+  mln_assertion(q.nsites() == 2);
   mln_assertion(p == make::point2d(5, 1));
 }

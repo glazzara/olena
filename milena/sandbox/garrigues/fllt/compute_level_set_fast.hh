@@ -120,7 +120,7 @@ namespace mln
 
       // gn <- min u(x) x belongs to N.
 
-      finished = N.npoints() == 0;
+      finished = N.nsites() == 0;
 
       if (!finished)
  	gn = level::compute< typename F::accu_for_gn >(u | N);
@@ -166,7 +166,7 @@ namespace mln
 
       // This is faster.
 
-//       if (N.npoints() >= 0)
+//       if (N.nsites() >= 0)
 //       {
 	p_image2d_fwd_pixter<point2d> pxl(N);
 	for_all(pxl)
@@ -210,7 +210,7 @@ namespace mln
       // Create a new conected component.
       // FIXME : we can make it faster.
 
-      if ((R.bbox() < u.domain()) || (R.npoints() == u.domain().npoints()))
+      if ((R.bbox() < u.domain()) || (R.nsites() == u.domain().nsites()))
       {
 	mln_piter(p_image2d<P>) p(R);
 	current_region = new fllt_node(P, V)();
@@ -277,10 +277,10 @@ namespace mln
       update_set(u,A,N,g);
 
       //       std::cout << "A :" << std::endl;
-      //       if (A.npoints())
+      //       if (A.nsites())
       // 	debug::println(u | A);
       //       std::cout << "N :" << std::endl;
-      //       if (N.npoints())
+      //       if (N.nsites())
       // 	debug::println(u | N);
 
 //       std::cout << "exiting step_fast 4_1" << std::endl;
@@ -316,10 +316,10 @@ namespace mln
       update_set(u,A,N,g);
 
       //       std::cout << "A :" << std::endl;
-      //       if (A.npoints())
+      //       if (A.nsites())
       // 	debug::println(u | A);
       //       std::cout << "N :" << std::endl;
-      //       if (N.npoints())
+      //       if (N.nsites())
       // 	debug::println(u | N);
 
 //       std::cout << "exiting step_fast 4_2" << std::endl;

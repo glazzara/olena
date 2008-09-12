@@ -68,7 +68,7 @@ namespace mln
     {
       const S& pset = exact(pset_);
       p_array<mln_psite(S)> v;
-      v.reserve(pset.npoints());
+      v.reserve(pset.nsites());
       // FIXME: Why mln_fwd_piter and not mln_piter?
       mln_fwd_piter(S) p(pset);
       for_all(p)

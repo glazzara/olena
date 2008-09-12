@@ -58,7 +58,7 @@ namespace mln
       Pl lhs = exact(lhs_);
       Pr rhs = exact(rhs_);
 
-      if (lhs.npoints() > rhs.npoints())
+      if (lhs.nsites() > rhs.nsites())
       {
 	trace::exiting("set::is_subset_of");
 	return false;

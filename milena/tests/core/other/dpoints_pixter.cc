@@ -40,7 +40,7 @@
 
 
 template <typename I, typename W>
-void test_fill(I& ima, const W& win, unsigned npoints)
+void test_fill(I& ima, const W& win, unsigned nsites)
 {
   mln_piter(I) p(ima.domain());
   mln_fwd_qixter(I, W) fq(ima, win, p);
@@ -49,7 +49,7 @@ void test_fill(I& ima, const W& win, unsigned npoints)
     unsigned i = 0;
     for_all(fq)
       ++i, fq.val() = 51;
-    mln_assertion(i == npoints);
+    mln_assertion(i == nsites);
   }
   mln_bkd_qixter(I, W) bq(ima, win, p);
   for_all(p)
@@ -57,7 +57,7 @@ void test_fill(I& ima, const W& win, unsigned npoints)
     unsigned i = 0;
     for_all(bq)
       ++i, bq.val() = 42;
-    mln_assertion(i == npoints);
+    mln_assertion(i == nsites);
   }
 }
 

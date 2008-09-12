@@ -250,7 +250,7 @@ namespace mln
 	    q.push(p);
 	    break;
 	  }
-      std::cout << "init => q has " << q.npoints() << " points"
+      std::cout << "init => q has " << q.nsites() << " points"
 		<< std::endl;
     }
 

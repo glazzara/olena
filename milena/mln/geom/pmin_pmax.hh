@@ -150,7 +150,7 @@ namespace mln
     void
     pmin_pmax(const Site_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
     {
-      mln_precondition(exact(s).npoints() != 0);
+      mln_precondition(exact(s).nsites() != 0);
       impl::pmin_pmax_(exact(s), pmin, pmax);
     }
 
@@ -159,7 +159,7 @@ namespace mln
     std::pair<mln_point(S), mln_point(S)>
     pmin_pmax(const Site_Set<S>& s)
     {
-      mln_precondition(exact(s).npoints() != 0);
+      mln_precondition(exact(s).nsites() != 0);
       typedef mln_point(S) P;
       std::pair<P, P> tmp;
       pmin_pmax(s, tmp.first, tmp.second); // Calls the previous version.

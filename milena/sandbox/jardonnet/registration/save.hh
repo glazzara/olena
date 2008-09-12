@@ -53,7 +53,7 @@ namespace mln
 
       //build ck: apply transform
       p_array<P> ck(c);
-      qk.apply_on(c, ck, c.npoints());
+      qk.apply_on(c, ck, c.nsites());
 
       const box_<P> working_box = enlarge(bigger(ck.bbox(),x.bbox()),5);
       image2d<value::rgb8> out(convert::to_box2d(working_box), 1);
@@ -72,7 +72,7 @@ namespace mln
 
       //build xk : project ck
       p_array<P> xk;
-      for (unsigned i = 0; i < ck.npoints(); ++i)
+      for (unsigned i = 0; i < ck.nsites(); ++i)
         xk.append(map(ck[i]));
       
       //plot mu_Xk
@@ -87,7 +87,7 @@ namespace mln
                  literal::red);
           
       //x in black
-      for (unsigned i = 0; i < x.npoints(); i++)
+      for (unsigned i = 0; i < x.nsites(); i++)
         {
           point2d p(x[i][0], x[i][1]);
           if (out.has(p))
@@ -95,7 +95,7 @@ namespace mln
         }
       
       //xk in red
-      for (unsigned i = 0; i < xk.npoints(); i++)
+      for (unsigned i = 0; i < xk.nsites(); i++)
         {
           point2d p(xk[i][0], xk[i][1]);
           if (out.has(p))
@@ -103,7 +103,7 @@ namespace mln
         }
       
       //ck in green
-      for (unsigned i = 0; i < ck.npoints(); i++)
+      for (unsigned i = 0; i < ck.nsites(); i++)
         {
           point2d p(ck[i][0], ck[i][1]);
           if (out.has(p))

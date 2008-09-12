@@ -28,7 +28,7 @@ namespace mln
     /// Backward Site_Iterator associated type.
     typedef mesh_p_piter_<P> bkd_piter;
 
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -128,7 +128,7 @@ namespace mln
 
   template<typename P>
   std::size_t
-  mesh_p<P>::npoints() const
+  mesh_p<P>::nsites() const
   {
     return this->gr_.nb_node_;
   }

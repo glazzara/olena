@@ -71,7 +71,7 @@ namespace mln
     /// the number of \em vertices.
     ///
     /// Required by the mln::Point_Set concept.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
@@ -160,7 +160,7 @@ namespace mln
     : gr_ (new util::graph<P>(gr))
   {
     accu::bbox<P> a;
-    for (unsigned i = 0; i < npoints(); ++i)
+    for (unsigned i = 0; i < nsites(); ++i)
       a.take(gr_->vertex_data(i));
     bb_ = a.to_result();
   }
@@ -168,7 +168,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_graph<P>::npoints() const
+  p_graph<P>::nsites() const
   {
     return nvertices();
   }
@@ -256,8 +256,8 @@ namespace mln
   p_graph<P>::adjacent(const util::vertex_id& lhs,
 		       const util::vertex_id& rhs) const
   {
-    mln_assertion(lhs < this->npoints());
-    mln_assertion(rhs < this->npoints());
+    mln_assertion(lhs < this->nsites());
+    mln_assertion(rhs < this->nsites());
 
     // Ensure LHS and RHS are *not* equal.
     if (rhs == lhs)
@@ -291,8 +291,8 @@ namespace mln
   p_graph<P>::adjacent_or_equal(const util::vertex_id& lhs,
 				const util::vertex_id& rhs) const
   {
-    mln_assertion(lhs < this->npoints());
-    mln_assertion(rhs < this->npoints());
+    mln_assertion(lhs < this->nsites());
+    mln_assertion(rhs < this->nsites());
 
     // Check whether LHS and RHS are equal.
     if (lhs == rhs)

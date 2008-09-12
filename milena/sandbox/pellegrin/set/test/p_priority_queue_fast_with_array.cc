@@ -43,19 +43,19 @@ int main ()
   point2d p3 (4, 2);
 
   mln_assertion (q.is_empty ());
-  mln_assertion (q.npoints () == 0);
+  mln_assertion (q.nsites () == 0);
 
   q.push_force (p3);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 1);
+  mln_assertion (q.nsites () == 1);
 
   q.push_force (p1, 3);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 2);
+  mln_assertion (q.nsites () == 2);
 
   q.push_force (p2, 5);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 3);
+  mln_assertion (q.nsites () == 3);
 
   std::cout << q.bbox () << std::endl;
   std::cout << q << std::endl;
@@ -66,7 +66,7 @@ int main ()
   mln_assertion (q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 3);
+  mln_assertion (q.nsites () == 3);
   mln_assertion (q.front () == p2);
   q.pop ();
 
@@ -74,7 +74,7 @@ int main ()
   mln_assertion (!q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 2);
+  mln_assertion (q.nsites () == 2);
   mln_assertion (q.front () == p1);
   q.pop ();
 
@@ -82,14 +82,14 @@ int main ()
   mln_assertion (!q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 1);
+  mln_assertion (q.nsites () == 1);
   mln_assertion (q.front () == p3);
   q.pop ();
 
   mln_assertion (!q.has (p1));
   mln_assertion (!q.has (p2));
   mln_assertion (!q.has (p3));
-  mln_assertion (q.npoints () == 0);
+  mln_assertion (q.nsites () == 0);
 
   mln_assertion (q.is_empty ());
 

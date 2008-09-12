@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
   nbh_t nbh;
 
   unsigned area = 0;
-  unsigned max_area = input.npoints();
+  unsigned max_area = input.nsites();
   unsigned nregions = mln_max(unsigned);
   unsigned max_nregions = atoi(argv[1]);
 

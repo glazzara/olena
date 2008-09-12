@@ -310,7 +310,7 @@ namespace mln
   fi_adaptor<I>::nelements() const
   {
     mln_precondition(this->has_data());
-    return this->data_->b_.npoints();
+    return this->data_->b_.nsites();
   }
 
   template <typename I>

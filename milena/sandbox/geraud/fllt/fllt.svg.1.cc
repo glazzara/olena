@@ -59,7 +59,7 @@ namespace mln
     unsigned compute_gN(const N_t& N)
     {
       for (unsigned i = 0; i < 256; ++i)
-	if (N[i].npoints() != 0)
+	if (N[i].nsites() != 0)
 	  return i;
       mln_invariant(0);
       return 0;

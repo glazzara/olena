@@ -61,7 +61,7 @@ namespace mln
    * (i.e., no-op if multiple or allow multiple insertions).
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P, typename T>
   class queue_p_priority : public internal::point_set_base_< P, queue_p_priority<P, T> >
@@ -84,7 +84,7 @@ namespace mln
     bool empty() const;
 
     /// Give the number of points.
-    unsigned npoints() const;
+    unsigned nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -142,7 +142,7 @@ namespace mln
   queue_p_priority<P, T>::vect_update_() const
   {
     vect_.clear();
-    vect_.reserve(npoints());
+    vect_.reserve(nsites());
 
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
 
@@ -161,7 +161,7 @@ namespace mln
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
     
     for (; it != q_.end (); ++it)
-      for (unsigned i = 0; i < (*it).second.npoints (); ++i)
+      for (unsigned i = 0; i < (*it).second.nsites (); ++i)
 	bb_.take((*it).second[i]);
   }
 
@@ -192,7 +192,7 @@ namespace mln
 
   template <typename P, typename T>
   unsigned
-  queue_p_priority<P, T>::npoints() const
+  queue_p_priority<P, T>::nsites() const
   {
     unsigned res = 0;
 
@@ -200,7 +200,7 @@ namespace mln
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.empty ())
- 	res += (*it).second.npoints();
+ 	res += (*it).second.nsites();
     return res;
   }
 
@@ -208,7 +208,7 @@ namespace mln
   const box_<P>&
   queue_p_priority<P, T>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -290,7 +290,7 @@ namespace mln
   const P&
   queue_p_priority<P, T>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
 
     typename std::map<T, queue_p<P> >::const_iterator it = q_.begin ();
     unsigned cpt = 0;
@@ -298,7 +298,7 @@ namespace mln
     for (; it != q_.end (); ++it)
       {
 	if (!(*it).second.empty ())
-	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
+	  for (cpt = 0; cpt < (*it).second.nsites (); ++cpt)
 	    {
 	      if (i == 0)
 		return (*it).second[cpt];

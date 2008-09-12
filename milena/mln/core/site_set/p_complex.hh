@@ -82,7 +82,7 @@ namespace mln
     /// number of \em faces.
     ///
     /// Required by the mln::Point_Set concept.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of faces in the complex.
     std::size_t nfaces() const;
@@ -161,7 +161,7 @@ namespace mln
   {
     // FIXME: Dummy initialization.
     accu::bbox<P> a;
-    for (unsigned i = 0; i < npoints(); ++i)
+    for (unsigned i = 0; i < nsites(); ++i)
       a.take(P());
     bb_ = a.to_result();
   }
@@ -169,7 +169,7 @@ namespace mln
   template <unsigned D, typename P>
   inline
   std::size_t
-  p_complex<D, P>::npoints() const
+  p_complex<D, P>::nsites() const
   {
     return nfaces();
   }

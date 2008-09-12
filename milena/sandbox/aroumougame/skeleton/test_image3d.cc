@@ -71,12 +71,12 @@ int main()
   X_complement.insert(mln::make::point3d(centre, centre, centre));
   X_complement.insert(mln::make::point3d(centre+5, centre, centre));
   
-  std::cout << "X "<< X.npoints() << std::endl;
-  std::cout << "X_complement "<< X_complement.npoints() << std::endl;
+  std::cout << "X "<< X.nsites() << std::endl;
+  std::cout << "X_complement "<< X_complement.nsites() << std::endl;
   
   X = thinning(X,c6(),X_complement,2000,false);
   
-  for(uint i=0; i<X.npoints(); i++)
+  for(uint i=0; i<X.nsites(); i++)
   {
     std::cout << X[i] << std::endl;
   }

@@ -78,7 +78,7 @@ namespace mln
     typedef p_graph_piter_<P> bkd_piter;
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
     std::size_t nlines() const;
@@ -131,7 +131,7 @@ namespace mln
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_graph!
     accu::bbox<P> a;
-    for (unsigned i = 0; i < npoints(); ++i)
+    for (unsigned i = 0; i < nsites(); ++i)
       a.take(gr_.node_data(i));
     bb_ = a.to_result();
   }
@@ -141,7 +141,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_graph<P>::npoints() const
+  p_graph<P>::nsites() const
   {
     return this->gr_.nnodes();
   }
@@ -221,8 +221,8 @@ namespace mln
   {
     // FIXME: Likewise, this is inefficient.
 
-    assert (lhs < this->npoints());
-    assert (rhs < this->npoints());
+    assert (lhs < this->nsites());
+    assert (rhs < this->nsites());
 
     if (rhs == lhs)
       return true;

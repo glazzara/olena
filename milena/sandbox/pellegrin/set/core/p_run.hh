@@ -90,7 +90,7 @@ namespace mln
     bool has(const P& p) const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the length of the run.
     std::size_t length() const;
@@ -110,7 +110,7 @@ namespace mln
   protected:
 
     accu::bbox<P> bb_;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
 
     /// The first point of the run.
     P p_;
@@ -186,7 +186,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_run<P>::npoints() const
+  p_run<P>::nsites() const
   {
     mln_precondition(is_valid_);
     return len_;
@@ -207,7 +207,7 @@ namespace mln
   p_run<P>::operator[](unsigned i) const
   {
     mln_precondition(is_valid_);
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     P p = p_;
     p[P::dim - 1] += i;
     return p;
@@ -227,7 +227,7 @@ namespace mln
   p_run<P>::bbox() const
   {
     mln_precondition(is_valid_);
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     return bb_.to_result();
   }
 

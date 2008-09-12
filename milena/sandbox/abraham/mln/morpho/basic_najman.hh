@@ -546,7 +546,7 @@ namespace mln
 
 	// Clear the marker map
 	level::fill(isproc, false);
-	for (int ip = 0; ip < int(S.npoints()); ++ip)
+	for (int ip = 0; ip < int(S.nsites()); ++ip)
 	  {
 	    psite p = S[ip];
 	    MakeSet_node(p);
@@ -721,7 +721,7 @@ namespace mln
 
 	// We're on a leaf, the point has not been found
 
-	if (nodes(cur).children.npoints() == 0)
+	if (nodes(cur).children.nsites() == 0)
 	  return psite (-1, -1);
 
 	psite tmp, acc = psite(-1, -1);
@@ -762,7 +762,7 @@ namespace mln
 
       psite min (p_set<psite>& components)
       {
-	if (components.npoints() == 0)
+	if (components.nsites() == 0)
 	  return psite(-1, -1);
 
 	typename p_set<psite>::fwd_piter it(components);
@@ -777,7 +777,7 @@ namespace mln
 
       psite max (p_set<psite>& components)
       {
-	if (components.npoints() == 0)
+	if (components.nsites() == 0)
 	  return psite(-1, -1);
 
 	typename p_set<psite>::fwd_piter it(components);
@@ -793,13 +793,13 @@ namespace mln
 
       psite highest_fork (p_set<psite>& components)
       {
-	if (components.npoints() == 0)
+	if (components.nsites() == 0)
 	  {
 	    std::cerr << "highest fork : empty set" << std::endl;
 	    return psite(-1, -1);
 	  }
 
-	// if (components.npoints() == 1)
+	// if (components.nsites() == 1)
 	//  return components[0];
 
 	psite
@@ -834,7 +834,7 @@ namespace mln
 	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
-	if (v.npoints() == 0)
+	if (v.nsites() == 0)
 	  return psite(-1, -1);
 
 	psite hf = highest_fork(v);
@@ -857,10 +857,10 @@ namespace mln
 	  if (pima.has(q) && pima(q) < pima(p))
 	    v.insert(Par_node(q));
 
-	if (v.npoints() == 0)
+	if (v.nsites() == 0)
 	  return psite(-1, -1);
 
-	if (nodes(min(v)).children.npoints() != 0)
+	if (nodes(min(v)).children.nsites() != 0)
 	  return (psite(-1, -1));
 
 	//std::cout << "hf of " << p << ":" << v;
@@ -882,12 +882,12 @@ namespace mln
 	  if (pima.has(q) && pima(q) > pima(p))
 	    v.insert(Par_node(q));
 
-	if (v.npoints() == 0)
+	if (v.nsites() == 0)
 	  return psite(-1, -1);
 
-	if (v.npoints() == 1)
+	if (v.nsites() == 1)
 	  {
-	    if (nodes(v[0]).children.npoints() == 1)
+	    if (nodes(v[0]).children.nsites() == 1)
 	      std::cout << "SINGL QUI MERDE" << std::endl;
 	    return v[0];
 	  }
@@ -911,7 +911,7 @@ namespace mln
 	if (nodes(c).level <= pima(p))
 	  return psite(-1, -1);
 
-	if (nodes(c).children.npoints() == 1)
+	if (nodes(c).children.nsites() == 1)
 	  std::cout << "LCA QUI MERDE" << std::endl;
 
 	return c;
@@ -927,10 +927,10 @@ namespace mln
 	  if (pima.has(q) && pima(q) > pima(p))
 	    v.insert(Par_node(q));
 
-	if (v.npoints() == 0)
+	if (v.nsites() == 0)
 	  return psite(-1, -1);
 
-	if (v.npoints() == 1)
+	if (v.nsites() == 1)
 	  return v[0];
 
 	psite
@@ -1173,7 +1173,7 @@ namespace mln
 	level::fill(cmax, false);
 	mln_piter(I) it(Par_node.domain());
 	for_all(it)
-	  if (nodes(Par_node(it.to_point())).children.npoints() == 0)
+	  if (nodes(Par_node(it.to_point())).children.nsites() == 0)
 	    cmax(it.to_point()) = true;
 
 	// Optimisation : enqueue minima's neighbours
@@ -1213,15 +1213,15 @@ namespace mln
 		Par_node(x) = c;
 		// isproc(x) = true;
 
-		if (nodes(c).children.npoints() == 0)
+		if (nodes(c).children.nsites() == 0)
 		  cmax(x) = true;
 		else
-		  if (nodes(c).children.npoints() > 1)
+		  if (nodes(c).children.nsites() > 1)
 		    {
 		    }
 		  else
 		    {
-		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.npoints() << std::endl;
+		      std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.nsites() << std::endl;
 		    }
 
 

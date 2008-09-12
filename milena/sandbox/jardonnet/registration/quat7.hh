@@ -64,8 +64,8 @@ namespace mln
                   p_array<P>& output,
                   const size_t c_length) const
     {
-      assert(c_length <= input.npoints());
-      assert(c_length <= output.npoints());
+      assert(c_length <= input.nsites());
+      assert(c_length <= output.nsites());
       assert(_qR.is_unit());
 
       for (size_t i = 0; i < c_length; i++)

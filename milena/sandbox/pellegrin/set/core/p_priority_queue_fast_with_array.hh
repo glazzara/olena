@@ -75,7 +75,7 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P, typename T, unsigned S>
   class p_priority_fast_with_array : public internal::point_set_base_< P, p_priority_fast_with_array<P, T, S> >
@@ -98,7 +98,7 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    unsigned npoints() const;
+    unsigned nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -168,7 +168,7 @@ namespace mln
   p_priority_fast_with_array<P, T, S>::vect_update_() const
   {
     vect_.clear();
-    vect_.reserve(npoints());
+    vect_.reserve(nsites());
 
     for (unsigned i = 0; i < S; ++i)
       std::copy(q_[i].vect().begin(), q_[i].vect().end(),
@@ -184,7 +184,7 @@ namespace mln
     bb_.init();
 
     for (unsigned i = 0; i < S; ++i)
-      for (unsigned j = 0; j < q_[i].npoints (); ++j)
+      for (unsigned j = 0; j < q_[i].nsites (); ++j)
 	bb_.take(q_[i][j]);
     bb_needs_update_ = false;
   }
@@ -215,13 +215,13 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   unsigned
-  p_priority_fast_with_array<P, T, S>::npoints() const
+  p_priority_fast_with_array<P, T, S>::nsites() const
   {
     unsigned res = 0;
 
     for (unsigned i = 0; i < S; ++i)
       if (!q_[i].is_empty ())
-	res += q_[i].npoints();
+	res += q_[i].nsites();
 
     return res;
   }
@@ -231,7 +231,7 @@ namespace mln
   const box_<P>&
   p_priority_fast_with_array<P, T, S>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -330,13 +330,13 @@ namespace mln
   const P&
   p_priority_fast_with_array<P, T, S>::operator[](unsigned n) const
   {
-    mln_precondition(n < npoints());
+    mln_precondition(n < nsites());
     unsigned i = S - 1;
     unsigned cpt = 0;
 
     for (; i != UINT_MAX; --i)
       if (!q_[i].is_empty ())
-	for (cpt = 0; cpt < q_[i].npoints (); ++cpt, --n)
+	for (cpt = 0; cpt < q_[i].nsites (); ++cpt, --n)
 	  if (n == 0)
 	    return q_[i][cpt];
     mln_assertion (false);

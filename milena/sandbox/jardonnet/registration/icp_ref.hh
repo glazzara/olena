@@ -169,7 +169,7 @@ namespace mln
       trace::entering("registration::icp");
       
       mln_precondition(P::dim == 3);
-      mln_precondition(cloud.npoints() != 0);
+      mln_precondition(cloud.nsites() != 0);
 
       shuffle(cloud);
 
@@ -193,7 +193,7 @@ namespace mln
       for (int e = nb_it-1; e >= 0; e--)
         {
           
-          size_t l = cloud.npoints() / std::pow(q, e);
+          size_t l = cloud.nsites() / std::pow(q, e);
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, x, 1e-3);
 

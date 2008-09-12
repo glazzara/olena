@@ -81,7 +81,7 @@ namespace mln
     bool has(const point2d& p) const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<point2d>& bbox() const;
@@ -177,7 +177,7 @@ namespace mln
 
   inline
   std::size_t
-  line2d::npoints() const
+  line2d::nsites() const
   {
     return vect_.size();
   }
@@ -200,7 +200,7 @@ namespace mln
   const point2d&
   line2d::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return vect_[i];
   }
 

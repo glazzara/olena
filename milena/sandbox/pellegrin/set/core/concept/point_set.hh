@@ -77,7 +77,7 @@ namespace mln
 
       bool has(const psite& p) const;
       const box_<point>& bbox() const;
-      std::size_t npoints() const;
+      std::size_t nsites() const;
      */
 
   protected:
@@ -157,7 +157,7 @@ namespace mln
     m1 = 0;
     const box_<point>& (E::*m2)() const = & E::bbox;
     m2 = 0;
-    std::size_t (E::*m3)() const = & E::npoints;
+    std::size_t (E::*m3)() const = & E::nsites;
     m3 = 0;
   }
 
@@ -174,7 +174,7 @@ namespace mln
     const Sr& rhs = exact(rhs_);
 
     // easy test:
-    if (lhs.npoints() != rhs.npoints())
+    if (lhs.nsites() != rhs.nsites())
       return false;
 
     // exhaustive test:
@@ -201,7 +201,7 @@ namespace mln
     const Sr& rhs = exact(rhs_);
 
     // easy test:
-    if (lhs.npoints() > rhs.npoints())
+    if (lhs.nsites() > rhs.nsites())
       return false;
 
     // exhaustive test:
@@ -221,7 +221,7 @@ namespace mln
     // FIXME: Same grid!
     const Sl& lhs = exact(lhs_);
     const Sr& rhs = exact(rhs_);
-    return lhs <= rhs && lhs.npoints() != rhs.npoints();
+    return lhs <= rhs && lhs.nsites() != rhs.nsites();
   }
 
 

@@ -172,7 +172,7 @@ namespace mln
       trace::entering("registration::icp");
       
       mln_precondition(P::dim == 3);
-      mln_precondition(cloud.npoints() != 0);
+      mln_precondition(cloud.nsites() != 0);
 
       // Shuffle cloud
       shuffle(cloud);
@@ -200,23 +200,23 @@ namespace mln
       for (int e = nb_it-1; e >= 0; e--)
         {
           
-          size_t l = cloud.npoints() / std::pow(q, e);
+          size_t l = cloud.nsites() / std::pow(q, e);
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, 1e-3);
 
           /*
           //remove points
           p_array<P> tmp;
-          tmp.reserve(cloud.npoints());
-          qk.apply_on(cloud,tmp, cloud.npoints());
+          tmp.reserve(cloud.nsites());
+          qk.apply_on(cloud,tmp, cloud.nsites());
           float stddev, mean;
           mean_stddev(tmp, map, mean, stddev);
-          for (unsigned i = 0; i < cloud.npoints(); i++)
+          for (unsigned i = 0; i < cloud.nsites(); i++)
           {
             algebra::vec<3,float> qci = tmp[i];
             algebra::vec<3,float> xi  = x[i];
             if (norm::l2(qci - xi) < 2 * stddev)
-              cloud.hook_()[i] = cloud[(i+1) % cloud.npoints()];
+              cloud.hook_()[i] = cloud[(i+1) % cloud.nsites()];
           }
           */
 #ifndef NDEBUG

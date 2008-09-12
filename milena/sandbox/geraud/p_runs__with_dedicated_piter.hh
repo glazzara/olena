@@ -418,7 +418,7 @@ namespace mln
 //     fb_.take(pr.bbox().pmin());
 //     fb_.take(pr.bbox().pmax());
 //     // update size
-//     npoints_ += pr.npoints();
+//     nsites_ += pr.nsites();
 // }
 
 

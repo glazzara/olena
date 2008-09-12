@@ -85,7 +85,7 @@ namespace mln
 	loc[255] = 0;
 	for (int l = 254; l >= 0; --l)
 	  loc[l] = loc[l+1] + h[l+1];
-	std::vector<mln_psite(I)> vec(ima.domain().npoints());
+	std::vector<mln_psite(I)> vec(ima.domain().nsites());
 	// storing output data
 	mln_piter(I) p(ima.domain());
 	for_all(p)

@@ -212,7 +212,7 @@ namespace mln
 	mln_niter(Nbh) x(nbh, a);
 
 	// Stop.
-	if (A->npoints() == 0)
+	if (A->nsites() == 0)
 	  goto end;
 
 	// R <- R U A
@@ -233,9 +233,9 @@ namespace mln
 
 
 #ifdef FLLTDEBUG
-	std::cout << "points of A : " << A->npoints() << std::endl;
+	std::cout << "points of A : " << A->nsites() << std::endl;
 #endif
-	mln_assertion(A->npoints() > 0);
+	mln_assertion(A->nsites() > 0);
 	R_box.take(A->bbox());
 	mln_assertion(R_box.is_valid());
 
@@ -267,7 +267,7 @@ namespace mln
 #endif
 
 	// Stop if N is empty.
-	if (N->npoints() == 0)
+	if (N->nsites() == 0)
 	  goto step_1;
 	else
 	{

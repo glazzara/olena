@@ -105,7 +105,7 @@ namespace mln
     const box_<mln_point(S)>& bbox() const;
 
     /// Give the number of points of the subset.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the primary overset.
     const S& overset() const;
@@ -210,7 +210,7 @@ namespace mln
 
   template <typename S, typename F>
   std::size_t
-  p_if<S,F>::npoints() const
+  p_if<S,F>::nsites() const
   {
     std::size_t n = 0;
     fwd_piter p(*this);

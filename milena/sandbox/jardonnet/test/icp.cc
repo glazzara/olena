@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   std::cout << "Pts processed        = " << registration::pts << std::endl;
 #endif
   
-  qk.apply_on(c, c, c.npoints());
+  qk.apply_on(c, c, c.nsites());
   
   float stddev, mean;
   registration::mean_stddev(c, map, mean, stddev);
@@ -72,14 +72,14 @@ int main(int argc, char* argv[])
   std::cout << "stddev : " << stddev << std::endl;
 #endif
 
-  std::vector<float> length(c.npoints());
-  for (size_t i = 0; i < c.npoints(); i++)
+  std::vector<float> length(c.nsites());
+  for (size_t i = 0; i < c.nsites(); i++)
     length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
 
   
   // final transform
   quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
-  fqk.apply_on(c, c, c.npoints());
+  fqk.apply_on(c, c, c.nsites());
 
 
   //init output image
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
  
   
   //print x
-  for (size_t i = 0; i < x.npoints(); i++)
+  for (size_t i = 0; i < x.nsites(); i++)
     {
       //Xk points
       point2d px(x[i][0], x[i][1]);
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
   
   
   //to 2d : projection (FIXME:if 3d)
-  for (size_t i = 0; i < c.npoints(); i++)
+  for (size_t i = 0; i < c.nsites(); i++)
     {
       //Ck points
       point2d p(c[i][0], c[i][1]);

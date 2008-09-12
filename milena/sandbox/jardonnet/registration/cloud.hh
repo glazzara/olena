@@ -21,18 +21,18 @@ namespace mln
     template <typename P>
     P center(const p_array<P>& a)
     {
-      if (a.npoints() == 0)
+      if (a.nsites() == 0)
         return P();
       
       algebra::vec<P::dim,float> c(literal::zero);
-      for (unsigned i = 0; i < a.npoints(); ++i)
+      for (unsigned i = 0; i < a.nsites(); ++i)
         {
           // FIXME : Ugly.
           algebra::vec<P::dim,float> ai = a[i];
           c += ai;
         }
       
-      return algebra::to_point<P>(c / a.npoints());
+      return algebra::to_point<P>(c / a.nsites());
     }
   }
   
@@ -70,7 +70,7 @@ namespace mln
               const M& map,
               const size_t length)
     {
-      assert(length <= a1.npoints());
+      assert(length <= a1.nsites());
      
       float f = 0.f;
       for (size_t i = 0; i < length; ++i)
@@ -89,7 +89,7 @@ namespace mln
               quat7<P::dim>& q1,
               quat7<P::dim>& q2)
     {
-      assert(length <= a1.npoints());
+      assert(length <= a1.nsites());
      
       float f = 0.f;
       for (size_t i = 0; i < length; ++i)

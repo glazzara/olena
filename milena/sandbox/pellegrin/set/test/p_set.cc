@@ -47,7 +47,7 @@ int main()
     .insert(make::point2d(4, 2))
     .insert(make::point2d(4, 2))
     .insert(make::point2d(5, 1));
-  mln_assertion(ps.npoints() == 3);
+  mln_assertion(ps.nsites() == 3);
 
   std::cout << ps.bbox() << std::endl;
 

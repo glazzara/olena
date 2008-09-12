@@ -45,15 +45,15 @@ template <typename N>
       neighbors.insert(q);
     }
   }
-//   std::cout << "nb_composant_connexe: neighbors " << neighbors.npoints() <<std::endl; 
-  if(neighbors.npoints()<=1)
+//   std::cout << "nb_composant_connexe: neighbors " << neighbors.nsites() <<std::endl; 
+  if(neighbors.nsites()<=1)
   {
-    return neighbors.npoints();
+    return neighbors.nsites();
   }
   else
     T=0;
     
-  while(neighbors.npoints()!=0)
+  while(neighbors.nsites()!=0)
   {
     T++;
     done.insert(neighbors[0]);
@@ -67,13 +67,13 @@ template <typename N>
       }
     }
      
-    while(composant.npoints()!=0)
+    while(composant.nsites()!=0)
     {
       done.insert(composant[0]);
       if(neighbors.has(composant[0]))
       {
         neighbors.remove(composant[0]);
-        if(neighbors.npoints()==0)
+        if(neighbors.nsites()==0)
           return T;
       }
       
@@ -110,14 +110,14 @@ template <typename P>
     }
   }
 
-  if(neighbors.npoints()<=1)
+  if(neighbors.nsites()<=1)
   {
-    return neighbors.npoints();
+    return neighbors.nsites();
   }
   else
     T=0;
     
-  while(neighbors.npoints()!=0)
+  while(neighbors.nsites()!=0)
   {
     T++;
     done.insert(neighbors[0]);
@@ -131,13 +131,13 @@ template <typename P>
       }
     }
      
-    while(composant.npoints()!=0)
+    while(composant.nsites()!=0)
     {
       done.insert(composant[0]);
       if(neighbors.has(composant[0]))
       {
         neighbors.remove(composant[0]);
-        if(neighbors.npoints()==0)
+        if(neighbors.nsites()==0)
           return T;
       }
       
@@ -262,19 +262,19 @@ template <typename N>
   p_set<mln_point(N)> Q;
   p_set<mln_point(N)> K;
 
-  for(uint i=0; i<X.npoints(); i++)
+  for(uint i=0; i<X.nsites(); i++)
   {
     if(simple_point(X,nbh,X_complement,X[i],local))
       P.insert(X[i]);
   }
 
-  while(P.npoints()!=0 && L>0)
+  while(P.nsites()!=0 && L>0)
   {
     Q.clear();
     // FIXME need a method to get the number of neighbor from the neighborhood instead of the 6
     for(int t=0; t<6; t++)
     {
-      for(uint i=0; i <P.npoints(); i++)
+      for(uint i=0; i <P.nsites(); i++)
       {
         // isthmus1d => X and isthmus2d => X_complement
         if(extremity(X,nbh,P[i]))
@@ -301,7 +301,7 @@ template <typename N>
     P.clear();
     L--;
     
-    for(uint i=0; i<Q.npoints(); i++)
+    for(uint i=0; i<Q.nsites(); i++)
     {
       if(simple_point(X,nbh,X_complement,Q[i],local))
       {
@@ -329,11 +329,11 @@ template <typename P>
       N.insert(p_ref);
   }
 
-  while(N.npoints()!=0 && L>0)
+  while(N.nsites()!=0 && L>0)
   {
     Q.clear();
     
-    for(uint i=0; i <N.npoints(); i++)
+    for(uint i=0; i <N.nsites(); i++)
     {
         // isthmus1d => type_isthmus = true and isthmus2d => type_isthmus = false
       if(extremity(gi,N[i]))
@@ -360,7 +360,7 @@ template <typename P>
     N.clear();
     L--;
     
-    for(uint i=0; i<Q.npoints(); i++)
+    for(uint i=0; i<Q.nsites(); i++)
     {
       if(simple_point(gi,Q[i],false))
       {
@@ -394,7 +394,7 @@ template <typename P>
       }
     }
     
-    for(int i=0; i < neighbors.npoints(); i++)
+    for(int i=0; i < neighbors.nsites(); i++)
     {
       mln_niter(graph_elt_neighborhood< P >) n(nbh, neighbors[i]);
     
@@ -408,7 +408,7 @@ template <typename P>
       }
     }
     
-    for(int i=0; i < composant.npoints(); i++)
+    for(int i=0; i < composant.nsites(); i++)
     {
       mln_niter(graph_elt_neighborhood< P >) n(nbh, composant[i]);
     
@@ -442,14 +442,14 @@ template <typename P>
     }
   }
 
-  if(neighbors.npoints()<=1)
+  if(neighbors.nsites()<=1)
   {
-    return neighbors.npoints();
+    return neighbors.nsites();
   }
   else
     T=0;
     
-  while(neighbors.npoints()!=0)
+  while(neighbors.nsites()!=0)
   {
     T++;
     done.insert(neighbors[0]);
@@ -463,13 +463,13 @@ template <typename P>
       }
     }
      
-    while(composant.npoints()!=0)
+    while(composant.nsites()!=0)
     {
       done.insert(composant[0]);
       if(neighbors.has(composant[0]))
       {
         neighbors.remove(composant[0]);
-        if(neighbors.npoints()==0)
+        if(neighbors.nsites()==0)
           return T;
       }
       
@@ -518,17 +518,17 @@ template <typename N>
   p_set< graph_psite<N> > Q;
   p_set< graph_psite<N> > K;
 
-  for(uint i=0; i<X.npoints(); i++)
+  for(uint i=0; i<X.nsites(); i++)
   {
     if(simple_point(X,X_complement,X[i],local))
       P.insert(X[i]);
   }
 
-  while(P.npoints()!=0 && L>0)
+  while(P.nsites()!=0 && L>0)
   {
     Q.clear();
     
-    for(uint i=0; i <P.npoints(); i++)
+    for(uint i=0; i <P.nsites(); i++)
     {
         // isthmus1d => X and isthmus2d => X_complement
 //       if(isthmus(X,P[i],local))
@@ -556,7 +556,7 @@ template <typename N>
     P.clear();
     L--;
     
-    for(uint i=0; i<Q.npoints(); i++)
+    for(uint i=0; i<Q.nsites(); i++)
     {
       if(simple_point(X,X_complement,Q[i],local))
       {
@@ -576,7 +576,7 @@ template <typename N>
   std::vector< std::pair< double, mln::point2d> > R;
   
   // fill Q
-  for(uint i = 0; i < X.npoints(); i++)
+  for(uint i = 0; i < X.nsites(); i++)
   {
     if (!Y.has(X[i]))
     {
@@ -586,7 +586,7 @@ template <typename N>
   }
   
   // fill R
-  for(uint i = 0; i < X.npoints(); i++)
+  for(uint i = 0; i < X.nsites(); i++)
   {
     if (!Y.has(X[i]))
     {
@@ -732,11 +732,11 @@ image2d<value::int_u8> DiscreteBisector(image2d<value::int_u8> dt, p_set<point2d
   image2d<value::int_u8> bisector(h, w);
   level::fill(bisector, 0);
   
-  for(uint i=0; i<Y.npoints(); i++)
+  for(uint i=0; i<Y.nsites(); i++)
   {
     proj = EP(dt, Y[i], lut, nbh);
     
-    int n=proj.npoints();
+    int n=proj.nsites();
 
     if(n>1)
     {
@@ -776,7 +776,7 @@ template <typename N>
 {
   std::vector< std::pair< double, mln::point2d> > Q;
   // fill Q
-  for(uint i = 0; i < X.npoints(); i++)
+  for(uint i = 0; i < X.nsites(); i++)
   {
     if (!Y.has(X[i]))
     {
@@ -891,7 +891,7 @@ image2d<bool> filteredSkeleton(image2d<bool> pic, const Neighborhood<neighb2d>& 
   mln::io::pgm::save(pic1, "bisector.pgm");
   
   uint cpt=0;
-  while(cpt!=Y.npoints())
+  while(cpt!=Y.nsites())
   {
     if(dt(Y[cpt])>=r && pic1(Y[cpt])>=alpha)
     {
@@ -934,7 +934,7 @@ template <typename P>
   std::vector< std::pair< double, pt_t > > Q;
   graph_elt_neighborhood<P> nbh;
   // fill Q
-  for(uint i = 0; i < X.npoints(); i++)
+  for(uint i = 0; i < X.nsites(); i++)
   {
     if (!Y.has(X[i]))
     {
@@ -954,7 +954,7 @@ template <typename P>
     {
       X.remove(tmp);
       X_complement.insert(tmp);
-//       std::cout <<  Y.npoints() << std::endl;
+//       std::cout <<  Y.nsites() << std::endl;
       mln_niter(graph_elt_neighborhood< P >) r(nbh, tmp);
       for_all(r)
       {
