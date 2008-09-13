@@ -1,3 +1,7 @@
+2008-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/io/pnm/load.hh: Fix dates in copyright header.
+
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/core/concept/iterator.hh (for_all_2): Wrap a long line.
