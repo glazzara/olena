@@ -28,9 +28,9 @@
 #ifndef MLN_CORE_INTERNAL_COMPLEX_ITER_BASE_HH
 # define MLN_CORE_INTERNAL_COMPLEX_ITER_BASE_HH
 
-/// \file mln/core/complex_iter_base.hh
+/// \file mln/core/internal/complex_iter_base.hh
 /// \brief Definition of an implementation (factoring) class for
-/// iterators on complexes.
+/// iterators on mln::complex.
 
 # include <limits>
 
@@ -42,12 +42,9 @@
 namespace mln
 {
 
-  // Forward declaration.
-  template <unsigned D> class complex;
-
   namespace internal
   {
-    /// \brief Factoring classe for iterators on complexes.
+    /// \brief Factoring class for iterators on mln::complex.
     ///
     /// \arg \p F The type of the face handle.
     /// \arg \p E The type exact type of the iterator.
@@ -58,6 +55,8 @@ namespace mln
 
     public:
       typedef F face;
+      // FIXME: Maybe we could just get the dimension D of the face's
+      // complex, an define complex_type as mln::complex<D>?
       typedef typename F::complex_type complex_type;
 
       /// Construction and assignment.
@@ -102,6 +101,8 @@ namespace mln
     operator<<(std::ostream& ostr, const complex_iter_base_<F, E>& p);
 
   } // end of mln::internal
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 

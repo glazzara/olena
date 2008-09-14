@@ -1,5 +1,14 @@
 2008-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc. fixes on complex-related iterators.
+
+	* mln/core/internal/complex_iter_base.hh: Fix the Doxygen
+	documentation.
+	More forward declaration of mln::complex<D>...
+	* mln/core/complex_iter.hh: ...here.
+
+2008-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor iterators on mln::p_complex.
 
 	* mln/core/internal/p_complex_piter_base.hh: New.

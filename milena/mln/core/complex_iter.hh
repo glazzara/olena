@@ -36,6 +36,9 @@
 namespace mln
 {
 
+  // Forward declaration.
+  template <unsigned D> class complex;
+
   /*-----------------------.
   | complex_fwd_iter_<D>.  |
   `-----------------------*/
