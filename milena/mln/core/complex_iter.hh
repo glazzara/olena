@@ -50,6 +50,7 @@ namespace mln
   {
   public:
     typedef any_face_handle<D> face;
+    static const unsigned complex_dim = D;
 
   private:
     typedef complex_fwd_iter_<D> self_;
@@ -100,6 +101,7 @@ namespace mln
   {
   public:
     typedef any_face_handle<D> face;
+    static const unsigned complex_dim = D;
 
   private:
     typedef complex_bkd_iter_<D> self_;
