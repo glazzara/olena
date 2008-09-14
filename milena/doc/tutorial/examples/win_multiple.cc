@@ -2,6 +2,7 @@
 # include <mln/core/alias/window2d.hh>
 # include <mln/win/multiple.hh>
 
+// # include <mln/border/fill.hh>
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 
@@ -39,11 +40,12 @@ int main()
   using namespace mln;
 
   typedef image2d<unsigned> I;
-  I ima(3, 3, 0); // no border
+  I ima(3, 3, 0); // 1);
+  // border::fill(ima, 0);
   debug::iota(ima);
   debug::println(ima);
 
-  win::multiple<2, window2d, row_oddity> w;
+  win::multiple<window2d, row_oddity> w;
 
   bool vert[] = { 0, 1, 0,
 		  0, 0, 0,
@@ -53,7 +55,7 @@ int main()
 		   1, 0, 1,
 		   0, 0, 0 };
   w.set_window(1, make::window2d(horiz));
+  mln_assertion(w.size() == 2);
 
   browse(ima, w);
-
 }

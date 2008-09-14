@@ -1,3 +1,11 @@
+2008-09-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix multiple-windows.
+
+	* mln/win/multiple.hh (n): Turn this parameter into dynamic.
+	Fix.
+	* doc/tutorial/examples/win_multiple.cc: Update.
+
 2008-09-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add fast arbitrary erosion.
