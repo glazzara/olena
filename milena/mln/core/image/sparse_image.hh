@@ -35,7 +35,7 @@
 
 # include <vector>
 # include <mln/core/internal/image_primary.hh>
-# include <mln/core/p_set_of.hh>
+# include <mln/core/site_set/p_set_of.hh>
 # include <mln/core/site_set/p_run.hh>
 # include <mln/value/set.hh>
 
@@ -55,6 +55,7 @@ namespace mln
     struct data< sparse_image<P,T> >
     {
       data();
+      data(const p_set_of< p_run<P> >& s);
 
       /// Domain.
       p_set_of< p_run<P> > domain_;
@@ -106,11 +107,11 @@ namespace mln
    */
   template <typename P, typename T>
   class sparse_image
-    : public internal::image_primary< p_set_of< p_run<P> >,
+    : public internal::image_primary< P, p_set_of< p_run<P> >,
 				      sparse_image<P,T> >
   {
     typedef sparse_image<P,T> self_;
-    typedef internal::image_primary<p_set_of< p_run<P> >, self_> super_;
+    typedef internal::image_primary<P, p_set_of< p_run<P> >, self_> super_;
   public:
 
     /// Value associated type.
@@ -132,6 +133,8 @@ namespace mln
     /// Constructor from a set of runs.
     sparse_image(const p_set_of< p_run<P> >& s);
 
+    /// Initialize an empty image.
+    void init_(const p_set_of< p_run<P> >& s);
 
     /// Add a new range to the image.
     void insert(const p_run<P>& r, const std::vector<T>& vals);
@@ -160,11 +163,22 @@ namespace mln
   {
 
     // internal::data< sparse_image<I,S> >
-
     template <typename P, typename T>
     inline
     data< sparse_image<P,T> >::data()
     {
+    }
+
+    template <typename P, typename T>
+    inline
+    data< sparse_image<P,T> >::data(const p_set_of< p_run<P> >& s)
+    {
+      mln_precondition(s.is_valid());
+      this->domain_ = s;
+      const unsigned nr = s.nelements();
+      this->values_.resize(nr);
+      for (unsigned r = 0; r < nr; ++r)
+	this->values_[r].resize(s[r].nsites());
     }
 
   } // end of namespace mln::internal
@@ -180,13 +194,17 @@ namespace mln
   inline
   sparse_image<P,T>::sparse_image(const p_set_of< p_run<P> >& s)
   {
-    this->data_ = new internal::data< sparse_image<P,T> >();
-    this->data_->domain_ = s;
-    const unsigned nr = s.nruns();
-    this->data_->values_.resize(nr);
-    for (unsigned r = 0; r < nr; ++r)
-      this->data_->values_[r].resize(s.run(r).nsites());
+    this->data_ = new internal::data< sparse_image<P,T> >(s);
   }
+
+  template <typename P, typename T>
+  inline
+  void
+  sparse_image<P,T>::init_(const p_set_of< p_run<P> >& s)
+  {
+    this->data_ = new internal::data< sparse_image<P,T> >(s);
+  }
+
 
   template <typename P, typename T>
   inline

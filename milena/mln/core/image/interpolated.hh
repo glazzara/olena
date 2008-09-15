@@ -91,6 +91,9 @@ namespace mln
     interpolated(I& ima);
     interpolated();
 
+    /// Initialize an empty image.
+    void init_(I& ima);
+
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -133,13 +136,22 @@ namespace mln
   interpolated<I>::interpolated(I& ima)
   {
     mln_precondition(ima.has_data());
-    this->data_ = new internal::data< interpolated<I> >(ima);
+    init_(ima);
   }
 
   template <typename I>
   inline
   interpolated<I>::interpolated()
   {
+  }
+
+  template <typename I>
+  inline
+  void
+  interpolated<I>::init_(I& ima)
+  {
+    mln_precondition(ima.has_data());
+    this->data_ = new internal::data< interpolated<I> >(ima);
   }
 
   template <typename I>

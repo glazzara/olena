@@ -1,3 +1,14 @@
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing init_().
+	* milena/mln/core/image/interpolated.hh,
+	* milena/mln/core/image/plain.hh,
+	* milena/mln/core/image/safe.hh,
+	* milena/mln/core/image/sparse_image.hh:
+	  Add missing init_() here .
+
+	* milena/mln/core/image/status.txt: Update cast_image status.
+
 2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Remove useless make::[d]point?d and make::window?d.

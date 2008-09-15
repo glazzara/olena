@@ -100,14 +100,14 @@ namespace mln
     /// Copy constructor from an image \p ima.
     plain(const I& ima);
 
+    /// Initialize an empty image.
+    void init_(const I& ima);
+
     /// Assignment operator.
     plain<I>& operator=(const plain<I>& rhs);
 
     /// Assignment operator from an image \p ima.
     plain<I>& operator=(const I& ima);
-
-    /// Initialization routine.
-    void init(const I& ima);
 
     /// Conversion into an image with type \c I.
     operator I () const;
@@ -161,7 +161,7 @@ namespace mln
   template <typename I>
   inline
   void
-  plain<I>::init(const I& ima)
+  plain<I>::init_(const I& ima)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data< plain<I> >(ima);

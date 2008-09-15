@@ -39,7 +39,7 @@ KO  line_graph_image
 
 ** value morpher
 
-KO  cast_image
+OK  cast_image
 KO  value::stack_image
 
 ** domain morpher
