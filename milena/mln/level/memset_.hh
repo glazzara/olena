@@ -128,7 +128,7 @@ namespace mln
       typedef mln_image(P) I;
       metal::is_not_const<I>::check();
 
-      P& pix = internal::force_exact<P>(pix_);
+      P& pix = mln::internal::force_exact<P>(pix_);
       mln_precondition(pix.ima().has_data());
       mln_precondition(& pix.val() >= & pix.ima()[0]);
       mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().nelements());

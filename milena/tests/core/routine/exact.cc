@@ -44,11 +44,6 @@ int main()
   using namespace mln;
 
   test t;
-  std::cout << typeid(exact(t)).name() << std::endl;;
-
   Object<test>& t_ = t;
-  std::cout << typeid(exact(t_)).name() << std::endl;;
-
-  int i;
-  std::cout << typeid(exact(i)).name() << std::endl;;
+  mln_assertion(typeid(exact(t_)).name() == typeid(exact(t)).name());
 }

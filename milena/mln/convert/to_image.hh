@@ -137,7 +137,7 @@ namespace mln
     mln_image_from(S, bool) to_image(const Site_Set<S>& pset_, unsigned border)
     {
       const S& pset = exact(pset_);
-      mln_image_from(S, bool) ima(pset.bbox().to_larger(border));
+      mln_image_from(S, bool) ima(geom::bbox(pset).to_larger(border));
       level::fill(ima, false);
       mln_piter(S) p(pset);
       for_all(p)

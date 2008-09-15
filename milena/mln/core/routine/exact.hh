@@ -32,14 +32,11 @@
  * \brief Definition of the mln::exact downcast routines.
  */
 
-#include <mln/core/internal/exact.hh>
-
-
 /// FIXME: Doc!
 #define mln_exact(T)  typename mln::internal::exact_<T>::ret
 #define mln_exact_(T)          mln::internal::exact_<T>::ret
 
-
+#include <mln/core/internal/exact.hh>
 
 namespace mln
 {
@@ -87,6 +84,5 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
 
 #endif // ! MLN_CORE_ROUTINE_EXACT_HH

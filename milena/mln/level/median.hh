@@ -43,7 +43,7 @@
 
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
-# include <mln/accu/median.hh>
+# include <mln/accu/median_h.hh>
 
 
 namespace mln
@@ -108,7 +108,7 @@ namespace mln
 
 	// aux data
 
-	accu::median<mln_vset(I)> med;
+	accu::median_h<mln_vset(I)> med;
 	P p;
 	window<D>    win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
 	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
@@ -196,7 +196,7 @@ namespace mln
 
 	// aux data
 	mln_psite(I) p;
-	accu::median<mln_vset(I)> med;
+	accu::median_h<mln_vset(I)> med;
 
 	// ctor
 	inline

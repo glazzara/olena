@@ -69,12 +69,13 @@ namespace mln
       inline
       I
       seeds2tiling (Image<I>& ima_,
-		    const Neighborhood<N>& nbh)
+		    const Neighborhood<N>& nbh_)
       {
 	trace::entering("geom::impl::seed2tiling");
 
 	I& ima = exact(ima_);
 	I out = clone(ima_);
+	const N& nbh = exact(nbh_);
 	p_queue<mln_psite(I)> q;
 
 	// Init.
@@ -105,8 +106,8 @@ namespace mln
 		  if (out(n) != 0)
 		    out(p) = out(n);
 		  else
-		    q.push_force(n); // n may already be in the queue,
-				     // yet we then queue again this psite
+		    q.push(n); // n may already be in the queue,
+			       // yet we then queue again this psite
 		}
 	    }
 	}

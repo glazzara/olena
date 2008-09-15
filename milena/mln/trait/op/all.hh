@@ -25,8 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_ALL_HH
-# define MLN_TRAIT_OP_ALL_HH
+// GUARD NOT REQUIRED: all included files already have guards.
 
 /*!
  * \file   mln/trait/op/all.hh
@@ -81,5 +80,3 @@ namespace mln
 // Ordering.
 # include <mln/trait/op/ord.hh>
 
-
-#endif // ! MLN_TRAIT_OP_ALL_HH

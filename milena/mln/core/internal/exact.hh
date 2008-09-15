@@ -32,7 +32,15 @@
  * \brief Meta-code for the mln::exact downcast routines.
  */
 
-# include <mln/core/concept/object.hh>
+
+/// Forward declaration.
+namespace mln
+{
+
+  template <typename T>
+  struct Object;
+
+} // End of namespace mln
 
 
 namespace mln
@@ -121,5 +129,6 @@ namespace mln
 
 } // end of namespace mln
 
+# include <mln/core/concept/object.hh>
 
 #endif // ! MLN_CORE_INTERNAL_EXACT_HH

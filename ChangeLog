@@ -1,3 +1,37 @@
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various test related files.
+	* milena/tests/core/routine/exact.cc: Write test.
+
+	* milena/tests/canvas/chamfer.cc: Fix includes.
+
+	* milena/tests/convert/to_p_set.cc: Fix a method call.
+
+	* milena/mln/trait/op/all.hh: remove guards.
+
+	* milena/mln/core/internal/exact.hh: Add a forward declaration.
+
+	* milena/mln/core/routine/exact.hh: Move an include.
+
+	* milena/mln/level/median.hh,
+	* milena/mln/level/naive/median.hh,
+	* milena/mln/level/was.median.hh: Use median_h.
+
+	* milena/mln/level/memset_.hh: Use full namespace name to call
+	  force_exact (g++ does not look at the right namespace if the full name
+	  is not given).
+
+	* milena/mln/convert/to_image.hh: use geom::bbox().
+
+	* milena/mln/geom/chamfer.hh,
+	* milena/mln/geom/pmin_pmax.hh: Rename mln_point to mln_site.
+
+
+	* milena/mln/geom/seeds2tiling.hh,
+	* milena/mln/geom/seeds2tiling_roundness.hh: Use exact().
+
+	* milena/mln/value/hsi.hh: Add missing copyright header.
+
 2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix Changelog and comments.

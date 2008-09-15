@@ -50,7 +50,7 @@ namespace mln
 
     /// Compute the minimum and maximum points of point set \p s.
     template <typename S>
-    std::pair<mln_point(S), mln_point(S)>
+    std::pair<mln_site(S), mln_site(S)>
     pmin_pmax(const Site_Set<S>& s);
 
 
@@ -58,13 +58,13 @@ namespace mln
     /// of point set \p s.
     template <typename S>
     void
-    pmin_pmax(const Site_Set<S>& s,  mln_point(S)& pmin, mln_point(S)& pmax);
+    pmin_pmax(const Site_Set<S>& s,  mln_site(S)& pmin, mln_site(S)& pmax);
 
 
     /// Compute the minimum and maximum points when browsing with
     /// iterator \p p.
     template <typename I>
-    std::pair<mln_psite(I), mln_psite(I)>
+    std::pair<mln_site(I), mln_site(I)>
     pmin_pmax(const Site_Iterator<I>& p);
 
 
@@ -72,7 +72,7 @@ namespace mln
     /// when browsing with iterator \p p.
     template <typename I>
     void
-    pmin_pmax(const Site_Iterator<I>& p,  mln_psite(I)& pmin, mln_psite(I)& pmax);
+    pmin_pmax(const Site_Iterator<I>& p,  mln_site(I)& pmin, mln_site(I)& pmax);
 
 
 
@@ -84,7 +84,7 @@ namespace mln
     template <typename I>
     inline
     void
-    pmin_pmax(const Site_Iterator<I>& p_, mln_psite(I)& pmin, mln_psite(I)& pmax)
+    pmin_pmax(const Site_Iterator<I>& p_, mln_site(I)& pmin, mln_site(I)& pmax)
     {
       I p = exact(p_); // a copy of p_
 
@@ -94,7 +94,7 @@ namespace mln
       pmin = pmax = p;
 
       // update with remaining points
-      typedef mln_psite(I) P;
+      typedef mln_site(I) P;
       for_all_remaining(p)
 	for (unsigned i = 0; i < P::dim; ++i)
 	  if (p[i] < pmin[i])
@@ -105,10 +105,10 @@ namespace mln
 
     template <typename I>
     inline
-    std::pair<mln_psite(I), mln_psite(I)>
+    std::pair<mln_site(I), mln_site(I)>
     pmin_pmax(const Site_Iterator<I>& p)
     {
-      typedef mln_psite(I) P;
+      typedef mln_site(I) P;
       std::pair<P, P> tmp;
       pmin_pmax(p, tmp.first, tmp.second); // Calls the previous version.
       return tmp;
@@ -125,7 +125,7 @@ namespace mln
       template <typename S>
       inline
       void
-      pmin_pmax_(const Site_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+      pmin_pmax_(const Site_Set<S>& s, mln_site(S)& pmin, mln_site(S)& pmax)
       {
 	mln_piter(S) it(exact(s));
 	pmin_pmax(it, pmin, pmax);
@@ -136,7 +136,7 @@ namespace mln
       template <typename B>
       inline
       void
-      pmin_pmax_(const Box<B>& b, mln_point(B)& pmin, mln_point(B)& pmax)
+      pmin_pmax_(const Box<B>& b, mln_site(B)& pmin, mln_site(B)& pmax)
       {
 	pmin = exact(b).pmin();
 	pmax = exact(b).pmax();
@@ -148,7 +148,7 @@ namespace mln
     template <typename S>
     inline
     void
-    pmin_pmax(const Site_Set<S>& s, mln_point(S)& pmin, mln_point(S)& pmax)
+    pmin_pmax(const Site_Set<S>& s, mln_site(S)& pmin, mln_site(S)& pmax)
     {
       mln_precondition(exact(s).nsites() != 0);
       impl::pmin_pmax_(exact(s), pmin, pmax);
@@ -156,11 +156,11 @@ namespace mln
 
     template <typename S>
     inline
-    std::pair<mln_point(S), mln_point(S)>
+    std::pair<mln_site(S), mln_site(S)>
     pmin_pmax(const Site_Set<S>& s)
     {
       mln_precondition(exact(s).nsites() != 0);
-      typedef mln_point(S) P;
+      typedef mln_site(S) P;
       std::pair<P, P> tmp;
       pmin_pmax(s, tmp.first, tmp.second); // Calls the previous version.
       return tmp;

@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/window2d.hh>
-# include <mln/accu/median.hh>
+# include <mln/level/median.hh>
 
 
 namespace mln
@@ -79,7 +79,7 @@ namespace mln
 	{
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
-	  accu::median<mln_vset(I)> med(input.values());
+	  accu::median_h<mln_vset(I)> med(input.values());
 
 	  for_all(p)
 	    {

@@ -37,7 +37,6 @@
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/alias/w_window2d_float.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image_if_value.hh>
 # include <mln/core/image/inplace.hh>
 # include <mln/canvas/chamfer.hh>
 
@@ -66,7 +65,7 @@ namespace mln
       {
 	typedef I_ I;
 	typedef W_ W;
-	typedef mln_point(I_) P;
+	typedef mln_site(I_) P;
 
 	// requirements from mln::canvas::chamfer:
 

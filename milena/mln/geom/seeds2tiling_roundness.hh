@@ -37,7 +37,8 @@
 
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/p_priority_fast.hh>
+# include <mln/core/site_set/p_priority.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/routine/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
@@ -79,21 +80,22 @@ namespace mln
       inline
       I
       seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
-			     unsigned max, const Neighborhood<N>& nbh)
+			     unsigned max, const Neighborhood<N>& nbh_)
       {
 	trace::entering("geom::impl::seed2tiling_roundness");
 
 	I& ima = exact(ima_);
+	const N& nbh = exact(nbh_);
 	image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
 	I out = clone(ima_);
-	p_priority_fast<mln_psite(I), unsigned> q;
+	p_priority<mln_psite(I), p_queue_fast<unsigned> > q;
 
 	// Init.
 	{
 	  mln_piter(I) p(ima.domain());
 
 	  for_all(p)
-	    q.push_force(p, max - dist(p));
+	    q.push(p, max - dist(p));
 	}
 
 
@@ -145,4 +147,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
+#endif // ! MLN_GEOM_SEEDS3TILING_ROUNDNESS_HH

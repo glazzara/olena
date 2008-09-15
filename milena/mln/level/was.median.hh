@@ -40,7 +40,7 @@
 # include <mln/geom/max_row.hh>
 # include <mln/geom/min_row.hh>
 # include <mln/set/diff.hh>
-# include <mln/accu/median.hh>
+# include <mln/level/median.hh>
 # include <mln/win/hline2d.hh>
 
 namespace mln
@@ -81,7 +81,7 @@ namespace mln
 	  q_bp(win_bkd_plus, p), q_bm(win_bkd_minus, p),
 	  q_top(win_top, p), q_bot(win_bot, p);
 
-	accu::median<mln_vset(I)> med(input.values());
+	accu::median_h<mln_vset(I)> med(input.values());
 
 	// initialization
 
@@ -154,7 +154,7 @@ namespace mln
 	int& row = p.row();
 	int& col = p.col();
 
-	accu::median<mln_vset(I)> med(input.values());
+	accu::median_h<mln_vset(I)> med(input.values());
 
 	for (row = min_row; row <= max_row; ++row)
 	  {

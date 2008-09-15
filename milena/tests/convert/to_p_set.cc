@@ -60,7 +60,10 @@ int main()
     d(0,-1);
 
   p_set<point2d> ref;
-  ref.insert(a).insert(b).insert(c).insert(d);
+  ref.insert(a);
+  ref.insert(b);
+  ref.insert(c);
+  ref.insert(d);
   // Reference constructed.
 
   // Nbh :
