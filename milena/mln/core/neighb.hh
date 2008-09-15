@@ -39,24 +39,30 @@
 
 namespace mln
 {
- 
+  // Forward declaration.
+  template <typename W> class neighb_fwd_niter;
+  template <typename W> class neighb_bkd_niter;
+
 
   /*! \brief Adapter class from window to neighborhood.
    */
   template <typename W>
-  class neighb : public internal::neighborhood_base< mln_dpsite(W), neighb<D> >,
+  class neighb : public internal::neighborhood_base< mln_dpsite(W), neighb<W> >,
 		 private mlc_is_a(W, Window)::check_t
   {
   public:
 
+    typedef W window;
+    const W& to_window() const { return win_; }
+
     /// Forward site iterator associated type.
-    typedef mln_fwd_qiter(W) fwd_niter;
+    typedef neighb_fwd_niter<W> fwd_niter;
 
     /// Backward site iterator associated type.
-    typedef mln_bkd_qiter(W) bkd_niter;
+    typedef neighb_bkd_niter<W> bkd_niter;
 
     /// Site iterator associated type.
-    typedef mln_qiter(W) niter;
+    typedef fwd_niter niter;
 
 
     /// Constructor without argument.
@@ -67,6 +73,9 @@ namespace mln
 
     /// Get the corresponding window.
     const W& win() const;
+
+    /// Change the corresponding window.
+    void change_window(const W& new_win);
 
   private:
     W win_;
@@ -83,13 +92,93 @@ namespace mln
       void
       from_to_(const mln::neighb<W>& from, W& to);
 
+      template <typename W>
+      void
+      from_to_(const W& from, mln::neighb<W>& to);
+
     } // end of namespace convert::impl
 
   } // end of namespace convert
 
+
+
+  // neighb_fwd_niter<W>
+
+  template <typename W>
+  class neighb_fwd_niter
+    : public internal::site_relative_iterator_base< neighb<W>,
+						    neighb_fwd_niter<W> >
+  {
+  public:
+
+    /// Constructor without argument.
+    neighb_fwd_niter();
+
+    template <typename P>
+    neighb_fwd_niter(const neighb<W>& nbh, const P& c);
+
+    /// Test the iterator validity.
+    bool is_valid_() const;
+
+    /// Invalidate the iterator.
+    void invalidate_();
+
+    /// Start an iteration.
+    void do_start_();
+
+    /// Go to the next point.
+    void do_next_();
+
+    /// Compute the current psite.
+    mln_psite(W) compute_p_() const;
+
+  protected:
+
+    mln_fwd_qiter(W) i_;
+  };
+
+
+
+  // neighb_bkd_niter<W>
+
+  template <typename W>
+  class neighb_bkd_niter
+    : public internal::site_relative_iterator_base< neighb<W>,
+						    neighb_bkd_niter<W> >
+  {
+  public:
+
+    /// Constructor without argument.
+    neighb_bkd_niter();
+
+    template <typename P>
+    neighb_bkd_niter(const neighb<W>& nbh, const P& c);
+
+    /// Test the iterator validity.
+    bool is_valid_() const;
+
+    /// Invalidate the iterator.
+    void invalidate_();
+
+    /// Start an iteration.
+    void do_start_();
+
+    /// Go to the next point.
+    void do_next_();
+
+    /// Compute the current psite.
+    mln_psite(W) compute_p_() const;
+
+  protected:
+
+    mln_bkd_qiter(W) i_;
+  };
+
  
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // neighb<W>
 
   template <typename W>
   inline
@@ -101,8 +190,7 @@ namespace mln
   inline
   neighb<W>::neighb(const W& win)
   {
-    mln_precondition(win.is_neighbable_());
-    win_ = win;
+    change_window(win);
   }
 
   template <typename W>
@@ -113,6 +201,17 @@ namespace mln
     return win_;
   }
 
+  template <typename W>
+  inline
+  void
+  neighb<W>::change_window(const W& new_win)
+  {
+    mln_precondition(new_win.is_neighbable_());
+    win_ = new_win;
+  }
+
+
+  // convert::impl::from_to_
 
   namespace convert
   {
@@ -126,10 +225,136 @@ namespace mln
 	to = from.win();
       }
 
+      template <typename W>
+      void
+      from_to_(const W& from, mln::neighb<W>& to)
+      {
+	to.change_window(from);
+      }
+
     } // end of namespace convert::impl
 
   } // end of namespace convert
 
+
+  // neighb_fwd_niter<W>
+
+  template <typename W>
+  inline
+  neighb_fwd_niter<W>::neighb_fwd_niter()
+  {
+  }
+
+  template <typename W>
+  template <typename P>
+  inline
+  neighb_fwd_niter<W>::neighb_fwd_niter(const neighb<W>& nbh, const P& c)
+  {
+    this->change_target(nbh);
+    this->center_at(c);
+    i_.center_at(c); // Always before change_target for this kind of iter.
+    i_.change_target(nbh.to_window());
+  }
+
+  template <typename W>
+  inline
+  bool
+  neighb_fwd_niter<W>::is_valid_() const
+  {
+    return i_.is_valid();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::invalidate_()
+  {
+    i_.invalidate();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::do_start_()
+  {
+    i_.start();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::do_next_()
+  {
+    i_.next();
+  }
+
+  template <typename W>
+  inline
+  mln_psite(W)
+  neighb_fwd_niter<W>::compute_p_() const
+  {
+    return i_.compute_p_();
+  }
+
+
+  // neighb_bkd_niter<W>
+
+  template <typename W>
+  inline
+  neighb_bkd_niter<W>::neighb_bkd_niter()
+  {
+  }
+
+  template <typename W>
+  template <typename P>
+  inline
+  neighb_bkd_niter<W>::neighb_bkd_niter(const neighb<W>& nbh, const P& c)
+  {
+    this->change_target(nbh);
+    this->center_at(c);
+    i_.center_at(c); // Always before change_target for this kind of iter.
+    i_.change_target(nbh.to_window());
+  }
+
+  template <typename W>
+  inline
+  bool
+  neighb_bkd_niter<W>::is_valid_() const
+  {
+    return i_.is_valid();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::invalidate_()
+  {
+    i_.invalidate();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::do_start_()
+  {
+    i_.start();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::do_next_()
+  {
+    i_.next();
+  }
+
+  template <typename W>
+  inline
+  mln_psite(W)
+  neighb_bkd_niter<W>::compute_p_() const
+  {
+    return i_.compute_p_();
+  }
  
 # endif // ! MLN_INCLUDE_ONLY
 

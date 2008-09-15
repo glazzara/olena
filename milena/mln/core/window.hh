@@ -186,7 +186,8 @@ namespace mln
   window<D>::is_symmetric() const
   {
     window<D> cpy = *this;
-    return cpy.sym() == *this;
+    cpy.sym();
+    return cpy == *this;
   }
 
   template <typename D>

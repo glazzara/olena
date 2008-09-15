@@ -79,10 +79,8 @@ namespace mln
 
 
   template <typename Wl, typename Wr>
-  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
-  {
-    return exact(lhs).std_vector() == exact(rhs).std_vector();
-  }
+  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -98,6 +96,13 @@ namespace mln
     typedef     mln_qiter(E)     qiter;
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
+  }
+
+  template <typename Wl, typename Wr>
+  inline
+  bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
+  {
+    return exact(lhs).std_vector() == exact(rhs).std_vector();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

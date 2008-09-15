@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -112,7 +112,6 @@ namespace mln
     inline
     p_set<mln_site(W)> to_p_set(const Window<W>& win)
     {
-      typedef mln_dpsite(W) D;
       typedef mln_site(W) P;
       p_set<P> pset;
       mln_qiter(W) q(exact(win), P::origin);

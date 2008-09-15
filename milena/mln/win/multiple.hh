@@ -78,6 +78,10 @@ namespace mln
 
       const mln_dpsite(W)& ith_dp_around(unsigned i, const mln_psite(W)& p) const;
 
+      bool is_centered() const;
+
+      bool is_symmetric() const;
+
     private:
 
       util::array<W> win_;
@@ -175,6 +179,30 @@ namespace mln
       for (unsigned i = 1; i < win_.nelements(); ++i)
 	mln_precondition(win_[i].size() == s);
       return s;
+    }
+
+    template <typename W, typename F>
+    inline
+    bool
+    multiple<W,F>::is_centered() const
+    {
+      mln_precondition(win_.nelements() >= 1);
+      for (unsigned i = 0; i < win_.nelements(); ++i)
+	if (! win_[i].is_centered())
+	  return false;
+      return true;
+    }
+
+    template <typename W, typename F>
+    inline
+    bool
+    multiple<W,F>::is_symmetric() const
+    {
+      mln_precondition(win_.nelements() >= 1);
+      for (unsigned i = 0; i < win_.nelements(); ++i)
+	if (! win_[i].is_symmetric())
+	  return false;
+      return true;
     }
 
     template <typename W, typename F>

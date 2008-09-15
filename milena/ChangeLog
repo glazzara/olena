@@ -1,3 +1,22 @@
+2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make neighborhoods based on windows work.
+
+	* sandbox/geraud/cs2d/tuto_bis.cc: Rename as...
+	* doc/examples/tuto_bis.cc: ...this.
+	De-activate code.
+	Start with new material.
+	* mln/core/window.hh (is_symmetric): Fix the use of sym.
+	* mln/core/neighb.hh (neighb_fwd_niter, neighb_bkd_niter): New.
+	(fwd_niter, bkd_niter, niter): Update.
+	(change_window): New.
+	(from_to_): New overload.
+	* mln/core/concept/window.hh (operator==): Split decl and def.
+	* mln/core/concept/neighborhood.hh (to_window): Relax sig.
+	* mln/make/dual_neighb2d.hh: New.
+	* mln/convert/to_p_set.hh (D): Remove useless typedef.
+	* mln/win/multiple.hh (is_centered, is_symmetrical): New.
+
 2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	Have tools/area_flooding compile again (cont.).

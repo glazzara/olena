@@ -1,9 +1,20 @@
 # include <vector>
 
+# include <mln/core/var.hh>
+
+# include <mln/core/alias/point2d.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/make/win_multiple.hh>
+# include <mln/convert/to.hh>
+# include <mln/make/dual_neighb2d.hh>
+# include <mln/literal/origin.hh>
+# include <mln/core/site_set/p_set.hh>
+
+
+/*
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image/image_if.hh>
-# include <mln/core/image_if_value.hh>
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/alias/window2d.hh>
@@ -21,12 +32,13 @@
 # include <mln/level/transform.hh>
 # include <mln/accu/mean.hh>
 
-# include "dbl_neighb.hh"
+*/
 
+
+/*
 
 namespace mln
 {
-
 
   namespace level
   {
@@ -87,55 +99,119 @@ namespace mln
 } // mln
 
 
-  struct is_cell_t :  mln::Function_p2b<is_cell_t>
+struct is_cell_t :  mln::Function_p2b<is_cell_t>
+{
+  typedef bool result;
+  bool operator()(const mln::point2d& p) const
   {
-    typedef bool result;
-    bool operator()(const mln::point2d& p) const
-    {
-      return p.row() % 2 == 0 && p.col() % 2 == 0;
-    }
+    return p.row() % 2 == 0 && p.col() % 2 == 0;
   }
+}
   is_cell;
 
-  struct is_edge_t :  mln::Function_p2b<is_edge_t>
+struct is_edge_t :  mln::Function_p2b<is_edge_t>
+{
+  typedef bool result;
+  bool operator()(const mln::point2d& p) const
   {
-    typedef bool result;
-    bool operator()(const mln::point2d& p) const
-    {
-      return p.row() % 2 + p.col() % 2 == 1;
-    }
+    return p.row() % 2 + p.col() % 2 == 1;
   }
+}
   is_edge;
 
-  struct is_point_t :  mln::Function_p2b<is_point_t>
+struct is_point_t :  mln::Function_p2b<is_point_t>
+{
+  typedef bool result;
+  bool operator()(const mln::point2d& p) const
   {
-    typedef bool result;
-    bool operator()(const mln::point2d& p) const
-    {
-      return p.row() % 2 && p.col() % 2;
-    }
+    return p.row() % 2 && p.col() % 2;
   }
+}
   is_point;
 
+*/
 
-  struct is_row_odd_t
+
+namespace mln
+{
+
+  template <typename W, typename S>
+  void convert_to_site_set(const Window<W>& win,
+			   const mln_psite(W)& p,
+			   Site_Set<S>& s_)
   {
-    bool operator()(const mln::point2d& p) const
-    {
-      return p.row() % 2;
-    }
-  } is_row_odd;
+    std::cout << "win -> pset" << std::endl;
+
+    S& s = exact(s_);
+    s.clear();
+
+    mln_qiter(W) q(exact(win), p);
+    for_all(q)
+      exact(s).insert(q);
+  }
 
 
 
-#define mln_VAR(Var, Expr) \
-typeof(Expr) Var = Expr;
+  template <typename N, typename S>
+  void convert_to_site_set(const Neighborhood<N>& nbh,
+			   const mln_psite(N)& p,
+			   Site_Set<S>& s_)
+  {
+    S& s = exact(s_);
+    s.clear();
+
+    mln_niter(N) n(exact(nbh), p);
+    for_all(n)
+      exact(s).insert(n);
+  }
+
+}
+
+
+
+  bool is_row_odd(const mln::point2d& p)
+  {
+    return p.row() % 2;
+  }
 
 
 
 int main()
 {
   using namespace mln;
+
+  // e2c
+
+  bool e2c_h[] = { 0, 1, 0,
+		   0, 0, 0,
+		   0, 1, 0 };
+
+  bool e2c_v[] = { 0, 0, 0,
+		   1, 0, 1,
+		   0, 0, 0 };
+
+  mln_VAR( e2c, make::dual_neighb2d(is_row_odd, e2c_h, e2c_v) );
+
+//   p_set<point2d> s;
+//   convert_to_site_set(e2c, literal::origin, s); 
+//   std::cout << s << std::endl;
+
+  bool e2e_h[] = { 0, 0, 1, 0, 0,
+		   0, 1, 0, 1, 0,
+		   0, 0, 0, 0, 0,
+		   0, 1, 0, 1, 0,
+		   0, 0, 1, 0, 0 };
+
+  bool e2e_v[] = { 0, 0, 0, 0, 0,
+		   0, 1, 0, 1, 0,
+		   1, 0, 0, 0, 1,
+		   0, 1, 0, 1, 0,
+		   0, 0, 0, 0, 0 };
+
+  mln_VAR( e2e, make::dual_neighb2d(is_row_odd, e2e_h, e2e_v) );
+
+
+  /*
 
   window2d c4 = convert::to_window(mln::c4());
 
@@ -274,4 +350,6 @@ int main()
   // 5   5   5 
 
   // DONE!
+
+  */
 }
