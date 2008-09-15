@@ -78,8 +78,8 @@ namespace mln
     mln::box2d_h box2d_h(unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0);
-      mln::box2d_h tmp(make::point2d_h(0, 0),
-		       make::point2d_h(nrows - 1, ncols - 1));
+      mln::box2d_h tmp(point2d_h(0, 0),
+		       point2d_h(nrows - 1, ncols - 1));
       return tmp;
     }
 
@@ -88,8 +88,8 @@ namespace mln
 			 int max_row, int max_col)
     {
       mln_precondition(max_row >= min_row && max_col >= min_col);
-      mln::box2d_h tmp(make::point2d_h(min_row, min_col),
-		       make::point2d_h(max_row, max_col));
+      mln::box2d_h tmp(point2d_h(min_row, min_col),
+		       point2d_h(max_row, max_col));
       return tmp;
     }
 

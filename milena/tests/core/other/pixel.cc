@@ -45,13 +45,13 @@ int main()
   I ima(3, 3);
 
   {
-    pixel<I> pxl(ima, make::point2d(1, 1));
+    pixel<I> pxl(ima, point2d(1, 1));
     pxl.val() = 51;
     mln_assertion(ima.at(1, 1) == 51);
   }
 
   {
-    pixel<const I> pxl(ima, make::point2d(1, 1));
+    pixel<const I> pxl(ima, point2d(1, 1));
     ima.at(1, 1) = 51;
     mln_assertion(unsigned(pxl) == 4);
     mln_assertion(pxl.val() == 51);

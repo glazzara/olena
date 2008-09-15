@@ -114,7 +114,7 @@ namespace mln
       for (int a = -r; a <= r; ++a)
 	for (int b = -r; b <= r; ++b)
 	  if (a * a + b * b <= r2)
-	    insert(make::dpoint2d(a, b));
+	    insert(dpoint2d(a, b));
     }
 
     inline

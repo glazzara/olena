@@ -72,14 +72,14 @@ int main()
     p_runs_<point2d> pruns1;
     p_runs_<point2d> pruns2;
 
-    pruns0.insert(p_run<point2d>(make::point2d(0, 0), 2));
+    pruns0.insert(p_run<point2d>(point2d(0, 0), 2));
 
-    pruns1.insert(p_run<point2d>(make::point2d(2, 4), 7));
-    pruns1.insert(p_run<point2d>(make::point2d(18, 42), 5));
-    pruns1.insert(p_run<point2d>(make::point2d(50, 76), 2));
-    pruns1.insert(p_run<point2d>(make::point2d(17,40), 6));
+    pruns1.insert(p_run<point2d>(point2d(2, 4), 7));
+    pruns1.insert(p_run<point2d>(point2d(18, 42), 5));
+    pruns1.insert(p_run<point2d>(point2d(50, 76), 2));
+    pruns1.insert(p_run<point2d>(point2d(17,40), 6));
 
-    pruns2.insert(p_run<point2d>(make::point2d(10,10), 5));
+    pruns2.insert(p_run<point2d>(point2d(10,10), 5));
 
     ima_type ima;
     ima.insert(pruns0, 0);
@@ -106,13 +106,13 @@ int main()
     typedef value_enc_image<point2d, int> ima_type;
     ima_type ima;
 
-     ima.insert(p_run<point2d>(make::point2d(0, 0), 2), 0);
-     ima.insert(p_run<point2d>(make::point2d(10,10), 5), 2);
+     ima.insert(p_run<point2d>(point2d(0, 0), 2), 0);
+     ima.insert(p_run<point2d>(point2d(10,10), 5), 2);
 
-    ima.insert(p_run<point2d>(make::point2d(2, 4), 7), 1);
-    ima.insert(p_run<point2d>(make::point2d(18, 42), 5), 1);
-    ima.insert(p_run<point2d>(make::point2d(50, 76), 2), 1);
-    ima.insert(p_run<point2d>(make::point2d(17,40), 6), 1);
+    ima.insert(p_run<point2d>(point2d(2, 4), 7), 1);
+    ima.insert(p_run<point2d>(point2d(18, 42), 5), 1);
+    ima.insert(p_run<point2d>(point2d(50, 76), 2), 1);
+    ima.insert(p_run<point2d>(point2d(17,40), 6), 1);
 
 
        mln_piter_(ima_type) piter (ima.domain());

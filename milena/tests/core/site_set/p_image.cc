@@ -39,17 +39,17 @@ int main()
 
   image2d<bool> ima(box2d(20,20));
   p_image<image2d<bool> > ps(ima);
-  ps.insert(make::point2d(6, 9));
-  ps.insert(make::point2d(4, 2));
-  ps.insert(make::point2d(4, 2));
-  ps.insert(make::point2d(5, 1));
+  ps.insert(point2d(6, 9));
+  ps.insert(point2d(4, 2));
+  ps.insert(point2d(4, 2));
+  ps.insert(point2d(5, 1));
   mln_assertion(ps.nsites() == 3);
 
-  ps.remove(make::point2d(5, 1));
-  ps.remove(make::point2d(5, 1));
+  ps.remove(point2d(5, 1));
+  ps.remove(point2d(5, 1));
 
-  ps.remove(make::point2d(6, 9));
-  ps.remove(make::point2d(4, 2));
+  ps.remove(point2d(6, 9));
+  ps.remove(point2d(4, 2));
 
   mln_assertion(ps.nsites() == 0);
   mln_assertion(ps.is_empty());

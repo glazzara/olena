@@ -41,9 +41,9 @@ int main()
   point2d p, q;
   dpoint2d dp;
 
-   p =  make::point2d(1, 2);
-   q =  make::point2d(4, 7);
-  dp = make::dpoint2d(3, 5);
+   p =  point2d(1, 2);
+   q =  point2d(4, 7);
+  dp = dpoint2d(3, 5);
 
   mln_assertion(dp == q - p);
   mln_assertion(q == p + dp);

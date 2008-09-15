@@ -44,7 +44,7 @@ int main()
   using namespace mln;
 
   typedef p_array<point1d> vec1d;
-  point1d p1 = make::point1d(6);
+  point1d p1 = point1d(6);
   win::segment1d win1d(5);
   vec1d v1(convert::to_p_array(win1d, p1));
 
@@ -54,7 +54,7 @@ int main()
   std::cout << "\n";
 
   typedef p_array<point2d> vec2d;
-  point2d p2 = make::point2d(10,10);
+  point2d p2 = point2d(10,10);
   win::rectangle2d win2d(3, 3);
   vec2d v2(convert::to_p_array(win2d, p2));
 

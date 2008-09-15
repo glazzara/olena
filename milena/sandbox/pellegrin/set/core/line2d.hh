@@ -129,7 +129,7 @@ namespace mln
 	int e = ddrow - dcol;
 	for (int i = 0; i < dcol; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    vect_.push_back(point2d(row, col));
 	    while (e >= 0)
 	      {
 		row += srow;
@@ -144,7 +144,7 @@ namespace mln
 	int e = ddcol - drow;
 	for (int i = 0; i < drow; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    vect_.push_back(point2d(row, col));
 	    while (e >= 0)
 	      {
 		col += scol;
@@ -154,11 +154,11 @@ namespace mln
 	    e += ddcol;
 	  }
       }
-    vect_.push_back(make::point2d(row, col));
+    vect_.push_back(point2d(row, col));
     // bb_
-    bb_.pmin() = make::point2d(math::min(beg_.row(), end_.row()),
+    bb_.pmin() = point2d(math::min(beg_.row(), end_.row()),
 			       math::min(beg_.col(), end_.col()));
-    bb_.pmax() = make::point2d(math::max(beg_.row(), end_.row()),
+    bb_.pmax() = point2d(math::max(beg_.row(), end_.row()),
 			       math::max(beg_.col(), end_.col()));
   }
 

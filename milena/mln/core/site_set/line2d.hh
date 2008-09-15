@@ -186,7 +186,7 @@ namespace mln
 	int e = ddrow - dcol;
 	for (int i = 0; i < dcol; ++i)
 	  {
-	    arr_.append(make::point2d(row, col));
+	    arr_.append(point2d(row, col));
 	    while (e >= 0)
 	      {
 		row += srow;
@@ -201,7 +201,7 @@ namespace mln
 	int e = ddcol - drow;
 	for (int i = 0; i < drow; ++i)
 	  {
-	    arr_.append(make::point2d(row, col));
+	    arr_.append(point2d(row, col));
 	    while (e >= 0)
 	      {
 		col += scol;
@@ -212,13 +212,13 @@ namespace mln
 	  }
       }
     if (! is_end_excluded)
-      arr_.append(make::point2d(row, col));
+      arr_.append(point2d(row, col));
 
     // Compute bb_.
     point2d end_ = arr_[arr_.nsites() - 1];
-    bb_.pmin() = make::point2d(math::min(beg.row(), end_.row()),
+    bb_.pmin() = point2d(math::min(beg.row(), end_.row()),
 			       math::min(beg.col(), end_.col()));
-    bb_.pmax() = make::point2d(math::max(beg.row(), end_.row()),
+    bb_.pmax() = point2d(math::max(beg.row(), end_.row()),
 			       math::max(beg.col(), end_.col()));
 
     mln_postcondition(this->begin() == beg);

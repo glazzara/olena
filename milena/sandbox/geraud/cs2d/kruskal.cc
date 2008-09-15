@@ -232,8 +232,8 @@ int main()
 
     win_p_e2c = nbh_e2c;
     win_p_e2c
-      .insert_true(make::dpoint2d(0,0))
-      .insert_false(make::dpoint2d(0,0));
+      .insert_true(dpoint2d(0,0))
+      .insert_false(dpoint2d(0,0));
 
     bool e2e_h[] = { 0, 0, 1, 0, 0,
 		     0, 1, 0, 1, 0,

@@ -7,6 +7,7 @@
 # include <mln/debug/println.hh>
 
 # include <mln/core/alias/neighb2d.hh>
+# include <mln/convert/to.hh>
 
 
 
@@ -50,12 +51,15 @@ int main()
   bool vert[] = { 0, 1, 0,
 		  0, 0, 0,
 		  0, 1, 0 };
-  w.set_window(0, make::window2d(vert));
-  bool horiz[] = { 0, 0, 0,
-		   1, 0, 1,
-		   0, 0, 0 };
-  w.set_window(1, make::window2d(horiz));
-  mln_assertion(w.size() == 2);
 
-  browse(ima, w);
+  convert::to<window2d>(vert);
+
+//   w.set_window(0, convert::to<window2d>(vert));
+//   bool horiz[] = { 0, 0, 0,
+// 		   1, 0, 1,
+// 		   0, 0, 0 };
+//   w.set_window(1, convert::to<window2d>(horiz));
+//   mln_assertion(w.size() == 2);
+
+//   browse(ima, w);
 }

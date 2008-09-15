@@ -462,7 +462,7 @@ namespace mln
   const T&
   image2d<T>::at(int row, int col) const
   {
-    mln_precondition(this->has(make::point2d(row, col)));
+    mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
@@ -471,7 +471,7 @@ namespace mln
   T&
   image2d<T>::at(int row, int col)
   {
-    mln_precondition(this->has(make::point2d(row, col)));
+    mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
   }
 
@@ -566,7 +566,7 @@ namespace mln
   image2d<T>::point_at_index(unsigned i) const
   {
     mln_precondition(i < nelements());
-    point2d p = make::point2d(i / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
+    point2d p = point2d(i / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
 			      i % this->data_->vb_.len(1) + this->data_->vb_.min_col());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;

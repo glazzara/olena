@@ -66,7 +66,7 @@ int main()
   {
     image2d<int_u8> ima(3, 3);
     debug::iota(ima);
-    ima(make::point2d(0,1)) = 255;
+    ima(point2d(0,1)) = 255;
     debug::println(ima);
     histo::data<int_u8> h = histo::compute(ima);
     std::cout << h << std::endl;

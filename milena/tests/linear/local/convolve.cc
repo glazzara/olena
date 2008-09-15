@@ -54,7 +54,7 @@ int main()
   image2d<int_u8> ima(size, size);
   debug::iota(ima);
 
-  point2d p = make::point2d(1,1);
+  point2d p = point2d(1,1);
   w_window2d_int w_win = make::w_window(win::rectangle2d(size, size),
 					pw::cst(1));
 

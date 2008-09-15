@@ -76,7 +76,7 @@ namespace mln
 	    const W& cur = weights[i];
 
 	    if (cur != 0)
-	      tmp.insert(cur, make::dpoint3d(sli, row, col));
+	      tmp.insert(cur, dpoint3d(sli, row, col));
 	    i++;
 	  }
       return tmp;

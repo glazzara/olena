@@ -38,17 +38,17 @@ int main()
 
   window2d win, win2;
 
-  win.insert(make::dpoint2d(0,0));
-  win.insert(make::dpoint2d(1,2));
-  win.insert(make::dpoint2d(3,4));
-  win.insert(make::dpoint2d(5,6));
-  win.insert(make::dpoint2d(7,8));
+  win.insert(dpoint2d(0,0));
+  win.insert(dpoint2d(1,2));
+  win.insert(dpoint2d(3,4));
+  win.insert(dpoint2d(5,6));
+  win.insert(dpoint2d(7,8));
 
-  win2.insert(make::dpoint2d(0,0));
-  win2.insert(make::dpoint2d(-1,-2));
-  win2.insert(make::dpoint2d(-3,-4));
-  win2.insert(make::dpoint2d(-5,-6));
-  win2.insert(make::dpoint2d(-7,-8));
+  win2.insert(dpoint2d(0,0));
+  win2.insert(dpoint2d(-1,-2));
+  win2.insert(dpoint2d(-3,-4));
+  win2.insert(dpoint2d(-5,-6));
+  win2.insert(dpoint2d(-7,-8));
 
   mln_assertion(geom::sym(win) == win2);
 }

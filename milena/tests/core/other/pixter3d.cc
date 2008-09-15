@@ -37,7 +37,7 @@ int main()
   using namespace mln;
 
   {
-    box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
+    box3d b(point3d(1,2, 1), point3d(2,4, 3));
     image3d<int> ima(b, 2);
 
     mln_pixter_(image3d<int>) p(ima);
@@ -46,7 +46,7 @@ int main()
   }
 
   {
-    box3d b(make::point3d(1,2, 1), make::point3d(3,6, 3));
+    box3d b(point3d(1,2, 1), point3d(3,6, 3));
     image3d<int> ima(b, 1);
 
     debug::iota(ima);

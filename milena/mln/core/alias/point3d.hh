@@ -204,7 +204,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/make/point3d.hh>
 # include <mln/core/alias/dpoint3d.hh>
 
 

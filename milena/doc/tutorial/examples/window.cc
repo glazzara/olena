@@ -59,8 +59,8 @@ int main()
     bool b2[3][3] = { { 1, 1, 0 },
 		      { 1, 0, 0 },
 		      { 0, 0, 0 } };
-    mln_assertion(make::window2d(b) == make::window2d(b2));
-    mln_assertion(make::window2d(b) == win);
+    mln_assertion(convert::to<window2d>(b) == convert::to<window2d>(b2));
+    mln_assertion(convert::to<window2d>(b) == win);
   }
 
   {

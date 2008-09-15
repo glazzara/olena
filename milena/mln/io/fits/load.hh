@@ -106,7 +106,7 @@ namespace mln
 
 	nullval  = 0; // don't check null values
 
-	point2d p(make::point2d(0, 0));
+	point2d p(point2d(0, 0));
 
 	for (p.row() = 0; p.row() < nrows; ++p.row())
 	{

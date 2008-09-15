@@ -61,7 +61,7 @@ namespace mln
     {
       mln::image1d<V> tmp(L);
       for (unsigned ind = 0; ind < L; ++ind)
-	tmp(make::point1d(ind)) = values[ind];
+	tmp(point1d(ind)) = values[ind];
       return tmp;
     }
 

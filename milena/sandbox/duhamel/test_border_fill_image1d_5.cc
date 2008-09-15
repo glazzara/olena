@@ -44,7 +44,7 @@ main (void)
   std::cout << "Test 1d size= box [2 .. 4]  with border=0 in int"
 	    << std::endl;
 
-  box1d b(make::point1d(2), make::point1d(4));
+  box1d b(point1d(2), point1d(4));
   image1d_b<int> ima(b, 0);
 
   border::fill (ima, 9);

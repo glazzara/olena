@@ -33,7 +33,7 @@
  * \brief Routine to create an mln::neighb2d.
  */
 
-# include <mln/make/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 
 
 namespace mln
@@ -75,7 +75,7 @@ namespace mln
     {
       enum { h = mlc_sqrt_int(S) / 2 };
       mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
-      mln::window2d win = make::window2d(values);
+      mln::window2d win = convert::to<window2d>(values);
       mln::neighb2d tmp(win);
       return tmp;
     }
@@ -87,7 +87,7 @@ namespace mln
     {
       mlc_bool(R % 2 == 1)::check();
       mlc_bool(C % 2 == 1)::check();
-      mln::window2d win = make::window2d(values);
+      mln::window2d win = convert::to<window2d>(values);
       mln::neighb2d tmp(win);
       return tmp;
     }

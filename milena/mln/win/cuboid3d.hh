@@ -153,7 +153,7 @@ namespace mln
       for (int sli = -dsli; sli <= dsli; ++sli)
 	for (int row = -drow; row <= drow; ++row)
 	  for (int col = -dcol; col <= dcol; ++col)
-	    insert(make::dpoint3d(sli, row, col));
+	    insert(dpoint3d(sli, row, col));
     }
 
     inline

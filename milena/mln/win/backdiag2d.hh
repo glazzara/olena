@@ -120,7 +120,7 @@ namespace mln
       mln_precondition(length % 2 == 1);
       const int dcol = length / 2;
       for (int col = - dcol; col <= dcol; ++col)
-	insert(make::dpoint2d(col, col));
+	insert(dpoint2d(col, col));
     }
 
     inline

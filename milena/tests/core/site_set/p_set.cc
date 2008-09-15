@@ -51,7 +51,7 @@ int main()
 
   mln_assertion(geom::bbox(ps) == make::box2d(4,1, 6, 9));
 
-  ps.remove(make::point2d(4, 2));
+  ps.remove(point2d(4, 2));
   mln_assertion(ps.nsites() == 2);
 
   mln_assertion(geom::bbox(ps) == make::box2d(5,1, 6, 9));

@@ -51,7 +51,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/make/dpoint1d.hh>
 # include <mln/core/alias/point1d.hh>
 
 
@@ -63,8 +62,8 @@ namespace mln
    * \{
    */
 
-  const dpoint1d before = make::dpoint1d( -1 );
-  const dpoint1d after  = make::dpoint1d( +1 );
+  const dpoint1d before = dpoint1d( -1 );
+  const dpoint1d after  = dpoint1d( +1 );
 
   const dpoint1d ind_dec = before;
   const dpoint1d ind_inc = after;

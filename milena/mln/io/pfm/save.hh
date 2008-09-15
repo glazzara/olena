@@ -94,7 +94,7 @@ namespace mln
 	    max_row = geom::max_row(ima);
 
 	  //image2d<float>& ima_ = const_cast< image2d<float>& >(ima);
-	  point2d p(make::point2d(0, 0));
+	  point2d p(point2d(0, 0));
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    file.write((const char*)(&(ima(p))),
 		       sizeof(float) * ncols);

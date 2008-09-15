@@ -22,8 +22,8 @@ using value::int_u8;
 //   {
 //     bb_.init();
 //     level::fill(ima_, false);
-//     bb_.take(make::point2d(2,2));
-//     bb_.take(make::point2d(2,3));
+//     bb_.take(point2d(2,2));
+//     bb_.take(point2d(2,3));
 //   }
 
 //   sub_image<image2d<value::int_u8>, box2d> image()

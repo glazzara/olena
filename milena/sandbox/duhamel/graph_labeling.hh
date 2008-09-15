@@ -68,7 +68,7 @@ namespace mln
 	gr.add_node ();
 	int tmp_x = y[(*ite).first] / c[(*ite).first];
 	int tmp_y = x[(*ite).first] / c[(*ite).first];
-	v[m[(*ite).first]] = (make::point2d(tmp_x, tmp_y));
+	v[m[(*ite).first]] = (point2d(tmp_x, tmp_y));
       }
     typename std::vector< std::vector<value::int_u8> >::iterator it = vec.begin ();
     for (; it != vec.end (); ++it)

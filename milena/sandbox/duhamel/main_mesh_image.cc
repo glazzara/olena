@@ -33,12 +33,12 @@ main (void)
  // g.print_debug ();
 
  std::vector<point2d> v;
- v.push_back (make::point2d (1,1));
- v.push_back (make::point2d (10,1));
- v.push_back (make::point2d (19,2));
- v.push_back (make::point2d (19,19));
- v.push_back (make::point2d (10,10));
- v.push_back (make::point2d (1,19));
+ v.push_back (point2d (1,1));
+ v.push_back (point2d (10,1));
+ v.push_back (point2d (19,2));
+ v.push_back (point2d (19,19));
+ v.push_back (point2d (10,10));
+ v.push_back (point2d (1,19));
 
 
  image2d_b<int> ima (20, 20, 1);

@@ -111,9 +111,9 @@ namespace mln
     static neighb3d it;
     if (flower)
       {
-	it.insert(make::dpoint3d(+1, 0, 0));
-	it.insert(make::dpoint3d(0, +1, 0));
-	it.insert(make::dpoint3d(0, 0, +1));
+	it.insert(dpoint3d(+1, 0, 0));
+	it.insert(dpoint3d(0, +1, 0));
+	it.insert(dpoint3d(0, 0, +1));
 	flower = false;
       }
     return it;
@@ -126,16 +126,16 @@ namespace mln
     static neighb3d it;
     if (flower)
       {
-	it.insert(make::dpoint3d(+1, 0, 0));
-	it.insert(make::dpoint3d(0, +1, 0));
-	it.insert(make::dpoint3d(0, 0, +1));
+	it.insert(dpoint3d(+1, 0, 0));
+	it.insert(dpoint3d(0, +1, 0));
+	it.insert(dpoint3d(0, 0, +1));
 
-	it.insert(make::dpoint3d(+1, 0, +1));
-	it.insert(make::dpoint3d(+1, 0, -1));
-	it.insert(make::dpoint3d(0, +1, +1));
-	it.insert(make::dpoint3d(0, +1, -1));
-	it.insert(make::dpoint3d(+1, +1, 0));
-	it.insert(make::dpoint3d(+1, -1, 0));
+	it.insert(dpoint3d(+1, 0, +1));
+	it.insert(dpoint3d(+1, 0, -1));
+	it.insert(dpoint3d(0, +1, +1));
+	it.insert(dpoint3d(0, +1, -1));
+	it.insert(dpoint3d(+1, +1, 0));
+	it.insert(dpoint3d(+1, -1, 0));
 
 	flower = false;
       }
@@ -149,21 +149,21 @@ namespace mln
     static neighb3d it;
     if (flower)
       {
-	it.insert(make::dpoint3d(+1, 0, 0));
-	it.insert(make::dpoint3d(0, +1, 0));
-	it.insert(make::dpoint3d(0, 0, +1));
+	it.insert(dpoint3d(+1, 0, 0));
+	it.insert(dpoint3d(0, +1, 0));
+	it.insert(dpoint3d(0, 0, +1));
 
-	it.insert(make::dpoint3d(+1, 0, +1));
-	it.insert(make::dpoint3d(+1, 0, -1));
-	it.insert(make::dpoint3d(0, +1, +1));
-	it.insert(make::dpoint3d(0, +1, -1));
-	it.insert(make::dpoint3d(+1, +1, 0));
-	it.insert(make::dpoint3d(+1, -1, 0));
+	it.insert(dpoint3d(+1, 0, +1));
+	it.insert(dpoint3d(+1, 0, -1));
+	it.insert(dpoint3d(0, +1, +1));
+	it.insert(dpoint3d(0, +1, -1));
+	it.insert(dpoint3d(+1, +1, 0));
+	it.insert(dpoint3d(+1, -1, 0));
 
-	it.insert(make::dpoint3d(+1, +1, +1));
-	it.insert(make::dpoint3d(+1, +1, -1));
-	it.insert(make::dpoint3d(+1, -1, +1));
-	it.insert(make::dpoint3d(+1, -1, -1));
+	it.insert(dpoint3d(+1, +1, +1));
+	it.insert(dpoint3d(+1, +1, -1));
+	it.insert(dpoint3d(+1, -1, +1));
+	it.insert(dpoint3d(+1, -1, -1));
 	flower = false;
       }
     return it;

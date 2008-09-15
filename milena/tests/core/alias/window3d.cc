@@ -46,9 +46,9 @@ int main()
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
 
-  w.insert(make::dpoint3d(-1, -1, -1));
-  w.insert(make::dpoint3d( 1,  1,  1));
-  w.insert(make::dpoint3d( 0,  0,  2));
+  w.insert(dpoint3d(-1, -1, -1));
+  w.insert(dpoint3d( 1,  1,  1));
+  w.insert(dpoint3d( 0,  0,  2));
 
   image3d<bool> ima = convert::to_image(w);
   debug::println(ima);

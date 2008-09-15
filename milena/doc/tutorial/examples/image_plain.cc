@@ -17,7 +17,7 @@ void picture(const I& ima)
       {
 	for (unsigned col = 0; col < ima.ncols(); ++col)
 	  for (unsigned c = 0; c < nc; ++c)
-	    std::cout << ima.at(row, col)(make::point2d(r,c)) << ' ';
+	    std::cout << ima.at(row, col)(point2d(r,c)) << ' ';
 	std::cout << std::endl;
       }
 }

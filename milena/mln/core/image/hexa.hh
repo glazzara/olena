@@ -235,7 +235,7 @@ namespace mln
   {
     mln_precondition(this->has_data());
     mln_precondition(this->has(p));
-    return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
+    return this->data_->ima_(point2d(p[0] / 2, p[1] / 2));
   }
 
   template <typename I>
@@ -245,7 +245,7 @@ namespace mln
   {
     mln_precondition(this->has_data());
     mln_precondition(this->has(p));
-    return this->data_->ima_(make::point2d(p[0] / 2, p[1] / 2));
+    return this->data_->ima_(point2d(p[0] / 2, p[1] / 2));
   }
 
   template <typename I>
@@ -263,7 +263,7 @@ namespace mln
   hexa<I>::has(const psite& p) const
   {
     mln_precondition(this->has_data());
-    return this->data_->ima_.has(make::point2d(p[0] / 2, p[1] / 2));
+    return this->data_->ima_.has(point2d(p[0] / 2, p[1] / 2));
   }
 
 

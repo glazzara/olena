@@ -46,7 +46,7 @@ main (void)
 	    << std::endl
 	    << std::endl;
 
-  box1d b(make::point1d(2), make::point1d(4));
+  box1d b(point1d(2), point1d(4));
   image1d_b<int> ima(b, 0);
   debug::iota (ima);
   border::duplicate (ima);

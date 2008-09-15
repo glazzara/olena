@@ -152,7 +152,7 @@ namespace mln
 // 	image2d<bool> d(make::box2d(-1, -1, 1, 1));
 // 	level::fill(d, 0);
 // 	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
-// 	mln_fwd_niter(clock_neighb2d)   dn(nbh , make::point2d(0, 0));
+// 	mln_fwd_niter(clock_neighb2d)   dn(nbh , point2d(0, 0));
 // 	for_all_2(n, dn)
 // 	  {
 // 	    d(dn) =

@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/alias/box1d.hh>
-# include <mln/make/point1d.hh>
 
 
 namespace mln
@@ -74,8 +73,8 @@ namespace mln
     mln::box1d box1d(unsigned ninds)
     {
       mln_precondition(ninds != 0);
-      mln::box1d tmp(make::point1d(0),
-		     make::point1d(ninds - 1));
+      mln::box1d tmp(point1d(0),
+		     point1d(ninds - 1));
       return tmp;
     }
 
@@ -83,8 +82,8 @@ namespace mln
     mln::box1d box1d(def::coord min_ind, def::coord max_ind)
     {
       mln_precondition(max_ind >= min_ind);
-      mln::box1d tmp(make::point1d(min_ind),
-		     make::point1d(max_ind));
+      mln::box1d tmp(point1d(min_ind),
+		     point1d(max_ind));
       return tmp;
     }
 

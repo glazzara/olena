@@ -47,8 +47,8 @@ int main()
   debug::iota(ima);
 
   point2d
-    src  = make::point2d(0, 2),
-    dest = make::point2d(1, 2);
+    src  = point2d(0, 2),
+    dest = point2d(1, 2);
 
   level::memcpy_(inplace(make::pixel(ima, dest)),
 		 make::pixel(ima, src),

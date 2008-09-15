@@ -128,7 +128,7 @@ namespace mln
       for (int sli = - dind; sli <= dind; ++sli)
 	for (int row = - dind; row <= dind; ++row)
 	  for (int col = - dind; col <= dind; ++col)
-	    insert(make::dpoint3d(sli, row, col));
+	    insert(dpoint3d(sli, row, col));
     }
 
     inline

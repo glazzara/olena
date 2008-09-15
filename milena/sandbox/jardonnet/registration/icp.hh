@@ -189,7 +189,7 @@ namespace mln
       mln_piter(p_array<P>) p(x);
       for_all(p)
       {
-        point2d qp = make::point2d(p[0], p[1]);
+        point2d qp = point2d(p[0], p[1]);
         if (tmp.has(qp))
           tmp(qp) = literal::green;
       }
@@ -231,7 +231,7 @@ namespace mln
             for_all(p)
             {
               algebra::vec<3,float> p_ = point3d(p), qp_ = qk(p_);
-              point2d qp = make::point2d(int(qp_[0]), int(qp_[1]));
+              point2d qp = point2d(int(qp_[0]), int(qp_[1]));
               if (tmp.has(qp))
                 tmp(qp) = c;
             }

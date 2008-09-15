@@ -72,7 +72,7 @@ namespace mln
 	for (int col = - h; col <= h; ++col)
 	  {
 	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint2d(row, col));
+	      tmp.insert(weights[i], dpoint2d(row, col));
 	    i++;
 	  }
       return tmp;

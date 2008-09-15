@@ -262,18 +262,18 @@ namespace mln
 	// Apply on rows.
 	for (unsigned j = 0; j < geom::ncols(img); ++j)
 	  recursivefilter_< mln_value(I) >(img, coef,
-				  make::point2d(-img.border(), j),
-				  make::point2d(geom::nrows(img) - 1 + img.border(), j),
+				  point2d(-img.border(), j),
+				  point2d(geom::nrows(img) - 1 + img.border(), j),
 				  geom::nrows(img) + 2 * img.border(),
-				  make::dpoint2d(1, 0));
+				  dpoint2d(1, 0));
 
 	// Apply on columns.
 	for (unsigned i = 0; i < geom::nrows(img); ++i)
 	  recursivefilter_< mln_value(I) >(img, coef,
-				  make::point2d(i, -img.border()),
-				  make::point2d(i, geom::ncols(img) - 1 + img.border()),
+				  point2d(i, -img.border()),
+				  point2d(i, geom::ncols(img) - 1 + img.border()),
 				  geom::ncols(img) + 2 * img.border(),
-				  make::dpoint2d(0, 1));
+				  dpoint2d(0, 1));
 
       }
 

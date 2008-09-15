@@ -142,7 +142,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/make/point1d.hh>
 # include <mln/core/alias/dpoint1d.hh>
 
 

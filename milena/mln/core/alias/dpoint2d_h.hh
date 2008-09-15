@@ -58,10 +58,10 @@ namespace mln
 {
 
   // FIXME: Doc!
-  const dpoint2d_h up_h    = make::dpoint2d_h( -1,  0 );
-  const dpoint2d_h down_h  = make::dpoint2d_h( +1,  0 );
-  const dpoint2d_h left_h  = make::dpoint2d_h(  0, -1 );
-  const dpoint2d_h right_h = make::dpoint2d_h(  0, +1 );
+  const dpoint2d_h up_h    = dpoint2d_h( -1,  0 );
+  const dpoint2d_h down_h  = dpoint2d_h( +1,  0 );
+  const dpoint2d_h left_h  = dpoint2d_h(  0, -1 );
+  const dpoint2d_h right_h = dpoint2d_h(  0, +1 );
 
 } // end of namespace mln
 

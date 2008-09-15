@@ -44,10 +44,48 @@ namespace mln
   typedef window<mln::dpoint1d> window1d;
 
 
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned M>
+      void from_to_(bool const (&values)[M], window1d& win);
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned M>
+      void
+      from_to_(bool const (&values)[M], window1d& win)
+      {
+	mlc_bool(M % 2 == 1)::check();
+	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
+
+	const int h = int(M) / 2;
+	unsigned i = 0;
+	for (int ind = - h; ind <= h; ++ind)
+	  if (values[i++])
+	    win.insert(dpoint1d(ind));
+      }
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
+
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace mln
-
-
-# include <mln/make/window1d.hh>
 
 
 #endif // ! MLN_CORE_ALIAS_WINDOW1D_HH

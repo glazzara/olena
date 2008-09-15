@@ -44,7 +44,7 @@ int main()
 
   /// Test with image 1d
   {
-    box1d b1(make::point1d(5), make::point1d(42));
+    box1d b1(point1d(5), point1d(42));
     image1d<int> f1(b1, border);
     image1d<int>::line_piter p1(f1.domain());
     for_all(p1)
@@ -57,7 +57,7 @@ int main()
 
   /// Test with image 2d
   {
-    box2d b2(make::point2d(1,2), make::point2d(5,8));
+    box2d b2(point2d(1,2), point2d(5,8));
     image2d<int> f2(b2, border);
 
     image2d<int>::line_piter p2(f2.domain());
@@ -71,7 +71,7 @@ int main()
 
   /// Test with image 3d
   {
-    box3d b3(make::point3d(1,2,3), make::point3d(5,8,7));
+    box3d b3(point3d(1,2,3), point3d(5,8,7));
     image3d<int> f3(b3, border);
 
     image3d<int>::line_piter p3(f3.domain());

@@ -21,8 +21,8 @@ int main()
   image2d<char> ima(6, 11);
   level::fill(ima, '.');
 
-  p_line2d line(make::point2d(4,10),
-		make::point2d(1,1));
+  p_line2d line(point2d(4,10),
+		point2d(1,1));
   std::cout << line << std::endl;
 
   level::fill(inplace(ima | line), 'x');

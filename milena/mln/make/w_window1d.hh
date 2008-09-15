@@ -71,7 +71,7 @@ namespace mln
       for (int ind = - h; ind <= h; ++ind)
 	  {
 	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
+	      tmp.insert(weights[i], dpoint1d(ind));
 	    i++;
 	  }
       return tmp;

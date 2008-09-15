@@ -6,7 +6,7 @@
 # include <mln/io/pbm/save.hh>
 # include <mln/draw/all.hh>
 # include <mln/morpho/erosion.hh>
-# include <mln/make/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <string>
 
 # include "quat7.hh"
@@ -115,7 +115,7 @@ namespace mln
       bool vals[] = {1, 1, 1,
                      1, 1, 1,
                      1, 1, 1};
-      morpho::erosion(out, make::window2d(vals));
+      morpho::erosion(out, convert::to<window2d>(vals));
       */
       
       //save

@@ -92,7 +92,7 @@ namespace mln
       for (unsigned i = 0; i < nb; ++i)
 	{
 	  gr.add_node ();
- 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+ 	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
 				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 
@@ -153,7 +153,7 @@ namespace mln
       for (unsigned i = 0; i < nb; ++i)
 	{
 	  gr.add_node ();
- 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+ 	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
 				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 

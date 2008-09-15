@@ -64,11 +64,11 @@ int main()
 
   // Points associated to vertices.
   std::vector<p_t> points;
-  points.push_back(make::point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(make::point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(make::point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(make::point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(make::point2d(4,4)); // Point associated to vertex 4.
+  points.push_back(point2d(0,0)); // Point associated to vertex 0.
+  points.push_back(point2d(2,2)); // Point associated to vertex 1.
+  points.push_back(point2d(0,4)); // Point associated to vertex 2.
+  points.push_back(point2d(4,3)); // Point associated to vertex 3.
+  points.push_back(point2d(4,4)); // Point associated to vertex 4.
 
   // Edges.
   mln::util::graph<p_t> g;

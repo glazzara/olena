@@ -164,10 +164,10 @@ int main()
     // Process points on odd rows and odd columns
     if (p_out[0] % 2 == 1 && p_out[1] % 2 == 1)
       output(p_out) =
-	(output(p_out + make::dpoint2d(-1, -1)) +
-	 output(p_out + make::dpoint2d(-1, +1)) +
-	 output(p_out + make::dpoint2d(+1, -1)) +
-	 output(p_out + make::dpoint2d(+1, +1))) / 4;
+	(output(p_out + dpoint2d(-1, -1)) +
+	 output(p_out + dpoint2d(-1, +1)) +
+	 output(p_out + dpoint2d(+1, -1)) +
+	 output(p_out + dpoint2d(+1, +1))) / 4;
   }
   // Draw the watershed.
   /* FIXME: We should draw the watershed on another image and

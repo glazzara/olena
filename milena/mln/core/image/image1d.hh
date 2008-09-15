@@ -425,7 +425,7 @@ namespace mln
   const T&
   image1d<T>::at(int index) const
   {
-    mln_precondition(this->has(make::point1d(index)));
+    mln_precondition(this->has(point1d(index)));
     return this->data_->array_[index];
   }
 
@@ -434,7 +434,7 @@ namespace mln
   T&
   image1d<T>::at(int index)
   {
-    mln_precondition(this->has(make::point1d(index)));
+    mln_precondition(this->has(point1d(index)));
     return this->data_->array_[index];
   }
 
@@ -444,7 +444,7 @@ namespace mln
   const T&
   image1d<T>::element(unsigned ind) const
   {
-    mln_precondition(this->has(make::point1d(ind)));
+    mln_precondition(this->has(point1d(ind)));
     return this->data_->array_[ind];
   }
 
@@ -453,7 +453,7 @@ namespace mln
   T&
   image1d<T>::element(unsigned ind)
   {
-    mln_precondition(this->has(make::point1d(ind)));
+    mln_precondition(this->has(point1d(ind)));
     return this->data_->array_[ind];
   }
 
@@ -491,7 +491,7 @@ namespace mln
   image1d<T>::point_at_index(unsigned i) const
   {
     mln_precondition(i < nelements());
-    point1d p = make::point1d(i + this->data_->vb_.min_ind());
+    point1d p = point1d(i + this->data_->vb_.min_ind());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }

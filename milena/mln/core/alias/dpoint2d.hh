@@ -50,7 +50,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/make/dpoint2d.hh>
 # include <mln/core/alias/point2d.hh>
 
 
@@ -61,10 +60,10 @@ namespace mln
    * \brief Definition of a shortcut for delta point in 2d.
    * \{
    */
-  const dpoint2d up    = make::dpoint2d( -1,  0 );
-  const dpoint2d down  = make::dpoint2d( +1,  0 );
-  const dpoint2d left  = make::dpoint2d(  0, -1 );
-  const dpoint2d right = make::dpoint2d(  0, +1 );
+  const dpoint2d up    = dpoint2d( -1,  0 );
+  const dpoint2d down  = dpoint2d( +1,  0 );
+  const dpoint2d left  = dpoint2d(  0, -1 );
+  const dpoint2d right = dpoint2d(  0, +1 );
 
   /*!
    * \}

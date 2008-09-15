@@ -43,7 +43,7 @@ int main()
   image2d<int> ima(3, 3);
   level::fill(ima, 0);
   int X = 9;
-  level::memset_(ima, make::point2d(0,0),
+  level::memset_(ima, point2d(0,0),
 		 X,
 		 geom::ncols(ima) + 2 * ima.border() + 1);
   //                                                   ^

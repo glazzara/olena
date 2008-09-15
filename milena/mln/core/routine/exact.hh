@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,8 @@
 
 
 /// FIXME: Doc!
-#define mln_exact(T) typename mln::internal::exact_<T>::ret
+#define mln_exact(T)  typename mln::internal::exact_<T>::ret
+#define mln_exact_(T)          mln::internal::exact_<T>::ret
 
 
 

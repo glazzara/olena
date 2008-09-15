@@ -47,7 +47,7 @@ main (void)
 	    << std::endl
 	    << std::endl;
 
-  box3d b(make::point3d(2, 6, 1), make::point3d(3, 8, 3));
+  box3d b(point3d(2, 6, 1), point3d(3, 8, 3));
   image3d_b<value::int_u8> ima(b, 1);
   debug::iota (ima);
   border::duplicate (ima);

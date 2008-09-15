@@ -46,7 +46,7 @@ int main()
 {
   using namespace mln;
 
-  point2d b = make::point2d(0,0), e = make::point2d(6,9);
+  point2d b = point2d(0,0), e = point2d(6,9);
   line2d l(b, e);
   mln_assertion(l.nsites() == 10);
 

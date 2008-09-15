@@ -66,7 +66,7 @@ namespace mln
     static neighb1d it;
     if (flower)
       {
-	it.insert(make::dpoint1d(+1));
+	it.insert(dpoint1d(+1));
 	flower = false;
       }
     return it;

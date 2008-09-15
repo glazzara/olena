@@ -42,7 +42,7 @@
 #include <mln/value/rgb8.hh>
 
 #include <mln/core/alias/point3d.hh>
-#include <mln/make/point3d.hh>
+#include <mln/core/alias/point3d.hh>
 
 #include <mln/util/graph.hh>
 #include <mln/core/image/graph_image.hh>
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
   // Populate the graph with vertices.
   for (unsigned i = 0; i < mesh.faces.size(); ++i)
   {
-    g.add_vertex (mln::make::point3d(i, i, i));
+    g.add_vertex (mln::point3d(i, i, i));
   }
   //fill the constraint 
   for (unsigned i = 0; i < curvMax.size(); ++i)

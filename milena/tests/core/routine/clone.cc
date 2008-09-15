@@ -57,13 +57,13 @@ int main()
   {
     image2d<int> ima_ = clone(ima);
     std::cout << ima_.border() << std::endl;
-    ima_(make::point2d(1,1)) = 51;
+    ima_(point2d(1,1)) = 51;
     debug::println(ima);
   }
   
   {
     image2d<int> ima_( ima );
-    ima_(make::point2d(1,1)) = 51;
+    ima_(point2d(1,1)) = 51;
     debug::println(ima);
   }
 

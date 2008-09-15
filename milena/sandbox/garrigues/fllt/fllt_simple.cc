@@ -158,19 +158,19 @@ namespace mln
 	if (!toto)
 	{
 	  toto = true;
-	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,-1));
-	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,0));
-	  c6_neighb::nbhs[0].append(make::dpoint2d(-1,1));
-	  c6_neighb::nbhs[0].append(make::dpoint2d(0,1));
-	  c6_neighb::nbhs[0].append(make::dpoint2d(1,0));
-	  c6_neighb::nbhs[0].append(make::dpoint2d(0,-1));
+	  c6_neighb::nbhs[0].append(dpoint2d(-1,-1));
+	  c6_neighb::nbhs[0].append(dpoint2d(-1,0));
+	  c6_neighb::nbhs[0].append(dpoint2d(-1,1));
+	  c6_neighb::nbhs[0].append(dpoint2d(0,1));
+	  c6_neighb::nbhs[0].append(dpoint2d(1,0));
+	  c6_neighb::nbhs[0].append(dpoint2d(0,-1));
 
-	  c6_neighb::nbhs[1].append(make::dpoint2d(-1,0));
-	  c6_neighb::nbhs[1].append(make::dpoint2d(0,1));
-	  c6_neighb::nbhs[1].append(make::dpoint2d(1,1));
-	  c6_neighb::nbhs[1].append(make::dpoint2d(1,0));
-	  c6_neighb::nbhs[1].append(make::dpoint2d(1,-1));
-	  c6_neighb::nbhs[1].append(make::dpoint2d(0,-1));
+	  c6_neighb::nbhs[1].append(dpoint2d(-1,0));
+	  c6_neighb::nbhs[1].append(dpoint2d(0,1));
+	  c6_neighb::nbhs[1].append(dpoint2d(1,1));
+	  c6_neighb::nbhs[1].append(dpoint2d(1,0));
+	  c6_neighb::nbhs[1].append(dpoint2d(1,-1));
+	  c6_neighb::nbhs[1].append(dpoint2d(0,-1));
 	}
 
 	return nbhs[abs(p[1] % 2)];

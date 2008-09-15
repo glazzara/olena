@@ -48,11 +48,11 @@ int main()
 
   // tests in two dimension
   {
-    box2d b(make::point2d(1,2), make::point2d(2,4));
+    box2d b(point2d(1,2), point2d(2,4));
     image2d<int> ima(b, 2);
     debug::iota(ima);
 
-    box2d b2(make::point2d(-1,-2), make::point2d(3,6));
+    box2d b2(point2d(-1,-2), point2d(3,6));
     image2d<int> ima2(b2, 0);
     debug::iota(ima2);
 
@@ -65,11 +65,11 @@ int main()
 
   // tests in three dimension
   {
-    box3d b(make::point3d(1,2, 1), make::point3d(2,4, 3));
+    box3d b(point3d(1,2, 1), point3d(2,4, 3));
     image3d<int> ima(b, 2);
     debug::iota(ima);
 
-    box3d b2(make::point3d(-1,-2, -1), make::point3d(3,6, 3));
+    box3d b2(point3d(-1,-2, -1), point3d(3,6, 3));
     image3d<int> ima2(b2, 2);
     debug::iota(ima2);
 

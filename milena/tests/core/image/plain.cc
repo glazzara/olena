@@ -60,7 +60,7 @@ int main()
 
     ima = lena;
 
-    ima(make::point2d(0,0)) = 124;
+    ima(point2d(0,0)) = 124;
 
     mln_assertion(ima != lena);
 
@@ -69,12 +69,12 @@ int main()
 
     mln_assertion(ima == ima2);
 
-    ima(make::point2d(0,0)) = 124;
+    ima(point2d(0,0)) = 124;
     mln_assertion(ima != ima2);
 
     ima = ima2;
 
-    ima(make::point2d(0,0)) = 124;
+    ima(point2d(0,0)) = 124;
     mln_assertion(ima == ima2);
 
   }

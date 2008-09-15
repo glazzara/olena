@@ -122,7 +122,7 @@ namespace mln
 	inline
 	void load_raw_2d(std::ifstream& file, I& ima)
 	{
-	  point2d p = make::point2d(0, 0);
+	  point2d p = point2d(0, 0);
 
 	  const mln_coord(I)
 	    min_row = geom::min_row(ima),

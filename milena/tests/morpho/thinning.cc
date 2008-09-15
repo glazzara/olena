@@ -54,12 +54,12 @@ int main()
   bool fg[] = { 0, 0, 0,
 		0, 1, 0,
 		0, 0, 0 };
-  window2d win_fg = make::window2d(fg);
+  window2d win_fg = convert::to<window2d>(fg);
 
   bool bg[] = { 0, 0, 0,
 		1, 0, 1,
 		0, 0, 0 };
-  window2d win_bg = make::window2d(bg);
+  window2d win_bg = convert::to<window2d>(bg);
 
   border::thickness = 2;
 

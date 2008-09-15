@@ -53,7 +53,7 @@ int main()
   using value::int_u8;
 
   window2d win_hit = geom::shift(win::rectangle2d(3, 3),
-				 make::dpoint2d(+1, +1));
+				 dpoint2d(+1, +1));
   window2d win_miss = mln::set::diff(win::rectangle2d(5, 5), win_hit);
 
   {
@@ -62,7 +62,7 @@ int main()
 		   0, 0, 1, 1, 1,
 		   0, 0, 1, 1, 1,
 		   0, 0, 1, 1, 1 };
-    window2d win_hit_ = make::window2d(hit);
+    window2d win_hit_ = convert::to<window2d>(hit);
     mln_precondition(win_hit_ == win_hit);
 
     bool miss[] = { 1, 1, 1, 1, 1,
@@ -70,7 +70,7 @@ int main()
 		    1, 1, 0, 0, 0,
 		    1, 1, 0, 0, 0,
 		    1, 1, 0, 0, 0 };
-    window2d win_miss_ = make::window2d(miss);
+    window2d win_miss_ = convert::to<window2d>(miss);
     mln_precondition(win_miss_ == win_miss);
   }
 

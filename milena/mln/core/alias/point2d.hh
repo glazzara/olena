@@ -180,7 +180,6 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/make/point2d.hh>
 # include <mln/core/alias/dpoint2d.hh>
 
 

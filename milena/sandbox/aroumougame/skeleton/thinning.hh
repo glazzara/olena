@@ -4,7 +4,7 @@
 #include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/math/min.hh>
 #include <mln/math/sqrt.hh>
-#include <mln/make/dpoint2d.hh>
+#include <mln/core/alias/dpoint2d.hh>
 #include "miscellenous.hh"
 #include "sedt.hh"
 

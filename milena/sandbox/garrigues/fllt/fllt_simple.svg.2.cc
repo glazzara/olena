@@ -151,19 +151,19 @@ namespace mln
 
       // C6 neigboohood.
       arr_dp_t neighb_c6[2];
-      neighb_c6[0].push_back(make::dpoint2d(-1,-1));
-      neighb_c6[0].push_back(make::dpoint2d(-1,0));
-      neighb_c6[0].push_back(make::dpoint2d(-1,1));
-      neighb_c6[0].push_back(make::dpoint2d(0,-1));
-      neighb_c6[0].push_back(make::dpoint2d(0,1));
-      neighb_c6[0].push_back(make::dpoint2d(1,0));
+      neighb_c6[0].push_back(dpoint2d(-1,-1));
+      neighb_c6[0].push_back(dpoint2d(-1,0));
+      neighb_c6[0].push_back(dpoint2d(-1,1));
+      neighb_c6[0].push_back(dpoint2d(0,-1));
+      neighb_c6[0].push_back(dpoint2d(0,1));
+      neighb_c6[0].push_back(dpoint2d(1,0));
 
-      neighb_c6[1].push_back(make::dpoint2d(1,-1));
-      neighb_c6[1].push_back(make::dpoint2d(1,0));
-      neighb_c6[1].push_back(make::dpoint2d(1,1));
-      neighb_c6[1].push_back(make::dpoint2d(0,-1));
-      neighb_c6[1].push_back(make::dpoint2d(0,1));
-      neighb_c6[1].push_back(make::dpoint2d(-1,0));
+      neighb_c6[1].push_back(dpoint2d(1,-1));
+      neighb_c6[1].push_back(dpoint2d(1,0));
+      neighb_c6[1].push_back(dpoint2d(1,1));
+      neighb_c6[1].push_back(dpoint2d(0,-1));
+      neighb_c6[1].push_back(dpoint2d(0,1));
+      neighb_c6[1].push_back(dpoint2d(-1,0));
 
       // Variables.
       I u = mln::clone(input);

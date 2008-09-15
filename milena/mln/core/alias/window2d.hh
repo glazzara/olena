@@ -61,10 +61,10 @@ namespace mln
     {
 
       template <unsigned S>
-      void from_to_(bool (&values)[S], window2d& win);
+      void from_to_(bool const (&values)[S], window2d& win);
 
       template <unsigned R, unsigned C>
-      void from_to_(bool (&values)[R][C], window2d& win);
+      void from_to_(bool const (&values)[R][C], window2d& win);
       
     } // end of namespace mln::convert::impl
 
@@ -81,11 +81,11 @@ namespace mln
     static window2d it;
     if (!initialized_p)
       {
-	it.insert(make::dpoint2d( 0, -1));
-	it.insert(make::dpoint2d(-1,  0));
-	it.insert(make::dpoint2d( 0,  0));
-	it.insert(make::dpoint2d(+1,  0));
-	it.insert(make::dpoint2d( 0, +1));
+	it.insert(dpoint2d( 0, -1));
+	it.insert(dpoint2d(-1,  0));
+	it.insert(dpoint2d( 0,  0));
+	it.insert(dpoint2d(+1,  0));
+	it.insert(dpoint2d( 0, +1));
 	initialized_p = true;
       }
     return it;
@@ -99,7 +99,7 @@ namespace mln
 
       template <unsigned S>
       void
-      from_to_(bool (&values)[S], window2d& win)
+      from_to_(bool const (&values)[S], window2d& win)
       {
 	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
 	enum { h = mlc_sqrt_int(S) / 2 };
@@ -113,11 +113,12 @@ namespace mln
 
       template <unsigned R, unsigned C>
       void
-      from_to_(bool (&values)[R][C], window2d& win)
+      from_to_(bool const (&values)[R][C], window2d& win)
       {
-	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
 	mlc_bool(R % 2 == 1)::check();
 	mlc_bool(C % 2 == 1)::check();
+	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
+
 	const int drow = int(R) / 2, dcol = int(C) / 2;
 	for (int row = - drow; row <= drow; ++row)
 	  for (int col = - dcol; col <= dcol; ++col)
@@ -132,9 +133,6 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
-
-# include <mln/make/window2d.hh>
 
 
 #endif // ! MLN_CORE_ALIAS_WINDOW2D_HH

@@ -43,7 +43,7 @@ int main()
   box2d b = make::box2d(2, 2);
   image2d<int> ima5(b), ima1(b);
 
-  point2d p = make::point2d(0, 0);
+  point2d p = point2d(0, 0);
   algebra::vec<2, int> v = make::vec(5, 1);
 
   value::stack(ima5, ima1)(p) = v;
@@ -54,7 +54,7 @@ int main()
 
   value::stack_image<2, image2d<int> > s2;
 
-  p = make::point2d(1, 1);
+  p = point2d(1, 1);
   s2 = s1;
   s2(p) = v;
   mln_assertion(s1(p) == v);

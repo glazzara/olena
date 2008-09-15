@@ -17,8 +17,8 @@ int main()
   level::fill(ima, 0);
   
   safe_image<I> ima_(ima);
-  level::paste(pw::cst(8) | p_line2d(make::point2d(-1,-1),
-				     make::point2d( 3, 3)),
+  level::paste(pw::cst(8) | p_line2d(point2d(-1,-1),
+				     point2d( 3, 3)),
 	       ima_);
   debug::println(ima);
 }

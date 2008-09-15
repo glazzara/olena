@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/alias/box2d.hh>
-# include <mln/make/point2d.hh>
 
 
 namespace mln
@@ -78,9 +77,9 @@ namespace mln
     mln::box2d box2d(unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0);
-      mln::box2d tmp(make::point2d(0, 0),
-		     make::point2d(def::coord (nrows - 1),
-				   def::coord (ncols - 1)));
+      mln::box2d tmp(point2d(0, 0),
+		     point2d(def::coord(nrows - 1),
+			     def::coord(ncols - 1)));
       return tmp;
     }
 
@@ -89,8 +88,8 @@ namespace mln
 		     def::coord max_row, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_col >= min_col);
-      mln::box2d tmp(make::point2d(min_row, min_col),
-		     make::point2d(max_row, max_col));
+      mln::box2d tmp(point2d(min_row, min_col),
+		     point2d(max_row, max_col));
       return tmp;
     }
 

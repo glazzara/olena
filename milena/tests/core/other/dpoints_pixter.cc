@@ -86,7 +86,7 @@ int main()
     I ima(6);
 
     win::segment1d seg(3);
-    point1d p = make::point1d(3);
+    point1d p = point1d(3);
 
     test_fill(ima, seg, 3);
     test_pixel(make::pixel(ima, p), seg);
@@ -98,7 +98,7 @@ int main()
     I ima(5, 5);
 
     win::rectangle2d rect(3, 3);
-    point2d p = make::point2d(1, 1);
+    point2d p = point2d(1, 1);
 
     test_fill(ima, rect, 3 * 3);
     test_pixel(make::pixel(ima, p), rect);
@@ -110,7 +110,7 @@ int main()
     I ima(3, 4, 5);
 
     win::cuboid3d cuboid(3, 3, 3);
-    point3d p = make::point3d(2, 1, 3);
+    point3d p = point3d(2, 1, 3);
 
     test_fill(ima, cuboid, 3 * 3 * 3);
     test_pixel(make::pixel(ima, p), cuboid);

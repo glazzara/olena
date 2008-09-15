@@ -70,7 +70,7 @@ int main()
 //     { 0, 1, 0,
 //       0, 1, 0,
 //       1, 0, 0 };
-//   window2d win = make::window2d(w);
+//   window2d win = convert::to<window2d>(w);
 //   std::cout << win << std::endl;
 //   std::cout << c8() << std::endl;
 

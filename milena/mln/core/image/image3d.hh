@@ -479,7 +479,7 @@ namespace mln
   const T&
   image3d<T>::at(int sli, int row, int col) const
   {
-    mln_precondition(this->has(make::point3d(sli, row, col)));
+    mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
   }
 
@@ -488,7 +488,7 @@ namespace mln
   T&
   image3d<T>::at(int sli, int row, int col)
   {
-    mln_precondition(this->has(make::point3d(sli, row, col)));
+    mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
   }
 
@@ -526,7 +526,7 @@ namespace mln
   image3d<T>::point_at_index(unsigned o) const
   {
     mln_precondition(o < nelements());
-    point3d p = make::point3d(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli(),
+    point3d p = point3d(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli(),
 			      (o % (data_->vb_.len(1) * data_->vb_.len(2))) / data_->vb_.len(2) + data_->vb_.min_row(),
 			      o % data_->vb_.len(2) + data_->vb_.min_col());
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);

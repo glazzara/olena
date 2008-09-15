@@ -456,7 +456,7 @@ namespace mln
 //   const mln_value(gimp_image<t>)&
 //   gimp_image<t>::at(int row, int col) const
 //   {
-//     mln_precondition(this->has(make::point2d(row, col)));
+//     mln_precondition(this->has(point2d(row, col)));
 //     return this->data_->array_[row][col];
 //   }
 
@@ -465,7 +465,7 @@ namespace mln
 //   mln_value(gimp_image<t>)&
 //   gimp_image<t>::at(int row, int col)
 //   {
-//     mln_precondition(this->has(make::point2d(row, col)));
+//     mln_precondition(this->has(point2d(row, col)));
 //     return this->data_->array_[row][col];
 //   }
 
@@ -503,7 +503,7 @@ namespace mln
 //   gimp_image<t>::point_at_index(unsigned o) const
 //   {
 //     mln_precondition(o < nelements());
-//     point2d p = make::point2d(o / this->data_->b_.len(1) + this->data_->b_.min_row(),
+//     point2d p = point2d(o / this->data_->b_.len(1) + this->data_->b_.min_row(),
 // 			      o % this->data_->b_.len(1) + this->data_->b_.min_col());
 //     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
 //     return p;

@@ -41,8 +41,8 @@ int main()
   typedef image2d<int> I;
   I ima(1, 1);
   point2d
-    in = make::point2d(0, 0),
-    out = make::point2d(-999, -999);
+    in = point2d(0, 0),
+    out = point2d(-999, -999);
 
   {
     safe_image<I> ima_ = safe(ima, 7);

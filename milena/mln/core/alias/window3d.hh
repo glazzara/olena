@@ -32,6 +32,7 @@
 /// \brief Definition of the mln::window3d alias and of a construction
 /// routine.
 
+# include <cmath>
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint3d.hh>
 
@@ -44,10 +45,51 @@ namespace mln
   typedef window<mln::dpoint3d> window3d;
 
 
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned M>
+      void from_to_(bool const (&values)[M], window3d& win);
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned M>
+      void
+      from_to_(bool const (&values)[M], window3d& win)
+      {
+	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
+	const int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
+	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
+
+	unsigned i = 0;
+	for (int sli = - h; sli <= h; ++sli)
+	  for (int row = - h; row <= h; ++row)
+	    for (int col = - h; col <= h; ++col)
+	      if (values[i++])
+		win.insert(dpoint3d(sli, row, col));
+      }
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
 } // end of namespace mln
-
-
-# include <mln/make/window3d.hh>
 
 
 #endif // ! MLN_CORE_ALIAS_WINDOW3D_HH

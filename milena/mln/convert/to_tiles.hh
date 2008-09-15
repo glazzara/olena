@@ -78,7 +78,7 @@ namespace mln
 	  mln_precondition(geom::ncols(v_ima[i]) == ncols);
 
 	  /// Compute the delta point of translation.
-	  dpoint2d dp = make::dpoint2d(i / size_c * nrows, i % size_c * ncols);
+	  dpoint2d dp = dpoint2d(i / size_c * nrows, i % size_c * ncols);
 
 	  /// Convert current image in translate image with its delta point.
 	  translate_image<I> tr_ima(v_ima[i], dp);

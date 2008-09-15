@@ -47,12 +47,12 @@ void test(const Neighborhood<N>& nbh, const mln_site(N)& p_ref,
 
 int main()
 {
-  test(c2(), make::point1d(0), 2);
+  test(c2(), point1d(0), 2);
 
-  test(c4(), make::point2d(0, 0), 4);
-  test(c8(), make::point2d(0, 0), 8);
+  test(c4(), point2d(0, 0), 4);
+  test(c8(), point2d(0, 0), 8);
 
-  test( c6(), make::point3d(0, 0, 0), 6);
-  test(c18(), make::point3d(0, 0, 0), 18);
-  test(c26(), make::point3d(0, 0, 0), 26);
+  test( c6(), point3d(0, 0, 0), 6);
+  test(c18(), point3d(0, 0, 0), 18);
+  test(c26(), point3d(0, 0, 0), 26);
 }

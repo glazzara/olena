@@ -54,7 +54,7 @@ int main()
 
   typedef image2d<int> I;
   I ima(1, 1);
-  point2d p = make::point2d(0, 0);
+  point2d p = point2d(0, 0);
 
   decorated_image< I, counter<I> > ima_ = decorate(ima, counter<I>());
   ima_(p) = ima_(p) = 51;

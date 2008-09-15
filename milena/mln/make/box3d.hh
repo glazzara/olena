@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/alias/box3d.hh>
-# include <mln/make/point3d.hh>
 
 
 namespace mln
@@ -84,8 +83,8 @@ namespace mln
     mln::box3d box3d(unsigned nslis, unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0 && nslis != 0);
-      mln::box3d tmp(make::point3d(0, 0, 0),
-		     make::point3d(nslis - 1, nrows - 1, ncols - 1));
+      mln::box3d tmp(point3d(0, 0, 0),
+		     point3d(nslis - 1, nrows - 1, ncols - 1));
       return tmp;
     }
 
@@ -95,8 +94,8 @@ namespace mln
 		     def::coord min_col, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_sli >= min_sli && max_col >= min_col);
-      mln::box3d tmp(make::point3d(min_sli, min_row, min_col),
-		     make::point3d(max_sli, max_row, max_col));
+      mln::box3d tmp(point3d(min_sli, min_row, min_col),
+		     point3d(max_sli, max_row, max_col));
       return tmp;
     }
 

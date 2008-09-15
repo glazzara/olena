@@ -121,7 +121,7 @@ namespace mln
       inline
       void load_raw_2d_contiguous(std::ifstream& file, I& ima)
       {
-	point2d p = make::point2d(0, ima.domain().pmin().col());
+	point2d p = point2d(0, ima.domain().pmin().col());
 	typedef mln_value(I) V;
 	const mln_coord(I)
 	  min_row = geom::min_row(ima),
