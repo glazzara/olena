@@ -1,3 +1,12 @@
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix fill_with_image.
+	* milena/mln/level/fill_with_image.hh: Use exact().
+	* milena/mln/level/fill_with_image.spe.hh:
+	  Fix fill_with_image prototype.
+
+	* milena/mln/level/memcpy_.hh: Use full namespace name.
+
 2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the from_to conversion mechanism more general.

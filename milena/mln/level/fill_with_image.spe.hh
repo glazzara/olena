@@ -55,7 +55,7 @@ namespace mln
       namespace generic
       {
 	template <typename I, typename J>
-	void fill_with_image(const Image<I>& data, Image<J>& destination);
+	void fill_with_image(Image<I>& ima, const Image<J>& data);
       }
 
       // FIXME: Add specializations here...

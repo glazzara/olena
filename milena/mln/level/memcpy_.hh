@@ -118,8 +118,8 @@ namespace mln
       typedef mln_image(Pd) Id;
       metal::is_not_const<Id>::check();
       typedef mln_image(Ps) Is;
-      Pd& dest = internal::force_exact<Pd>(dest_);
-      Ps& src  = internal::force_exact<Ps>(src_);
+      Pd& dest = mln::internal::force_exact<Pd>(dest_);
+      Ps& src  = mln::internal::force_exact<Ps>(src_);
 
       mln_precondition(sizeof(mln_value(Id)) == sizeof(mln_value(Is)));
       mln_precondition(dest.ima().has_data());

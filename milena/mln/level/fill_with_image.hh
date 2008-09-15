@@ -90,10 +90,12 @@ namespace mln
       {
 
 	template <typename I, typename J>
-	inline
-	void fill_with_image(Image<I>& ima, const Image<J>& data)
+	void fill_with_image(Image<I>& ima_, const Image<J>& data_)
 	{
 	  trace::entering("level::impl::generic::fill_with_image");
+	  I& ima = exact(ima_);
+	  const J& data = exact(data_);
+
 	  internal::fill_with_image_tests(ima, data);
 
 	  mln_piter(I) p(ima.domain());
