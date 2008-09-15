@@ -53,9 +53,11 @@ namespace mln
 
   public:
     typedef P point;
-    typedef mln_mesh(point) mesh;
+    // FIXME: Dummy.
+    typedef void mesh;
     enum { dim = point::dim };
-    typedef mln_dpoint(point) dpoint;
+    // FIXME: Dummy.
+    typedef void dpoint;
     typedef mln_coord(point) coord;
 
     /// Construction and assignment.
@@ -72,6 +74,7 @@ namespace mln
     /// Access to point.
     /// \{
     const point& to_point() const;
+    operator point() const;
     coord operator[](unsigned id) const;
     /// \}
 
@@ -220,6 +223,16 @@ namespace mln
   line_graph_psite<P>::to_point() const
   {
     // Dummy value.
+    abort();
+    return p_;
+  }
+
+  template <typename P>
+  inline
+  line_graph_psite<P>::operator P() const
+  {
+    // Dummy value.
+    abort();
     return p_;
   }
 

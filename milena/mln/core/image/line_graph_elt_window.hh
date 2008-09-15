@@ -65,8 +65,8 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-   /// The type of point corresponding to the window.
-    typedef P point;
+    /// The type of site corresponding to the window.
+    typedef P site;
     /// The type of psite corresponding to the window.
     typedef line_graph_psite<P> psite;
     // The type of the set of window sites (edge ids adjacent to the
@@ -74,7 +74,7 @@ namespace mln
     typedef std::set<util::edge_id> sites_t;
 
     // FIXME: This is a dummy value.
-    typedef void dpoint;
+    typedef void dpsite;
 
     /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of edges.

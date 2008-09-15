@@ -136,11 +136,11 @@ namespace mln
 			      const I& input)
       {
 	typedef mln_vset(I) S;
-	const S& vset = input.values();
+	const S& vset = input.values_eligible();
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<S> h = histo::compute(input);
+	histo::data<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
@@ -180,11 +180,11 @@ namespace mln
 			      const I& input)
       {
 	typedef mln_vset(I) S;
-	const S& vset = input.values();
+	const S& vset = input.values_eligible();
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<S> h = histo::compute(input);
+	histo::data<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());

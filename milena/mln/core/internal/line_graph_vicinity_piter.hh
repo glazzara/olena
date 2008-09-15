@@ -49,19 +49,17 @@ namespace mln
   template <typename P> class p_line_graph;
   template <typename P> class line_graph_psite;
 
-
-  /*---------------------------------------------.
-  | internal::line_graph_vicinity_piter_<P, E>.  |
-  `---------------------------------------------*/
-
   namespace internal
   {
 
     /// \brief Base for iterator on a line graph vicinity.
-    template <typename P, typename E>
-    class line_graph_vicinity_piter_ : public Site_Iterator< E >
+    template <typename P, typename S, typename E>
+    class line_graph_vicinity_piter_
+    /* FIXME: We should update the interface of this class and inherit
+       from internal::site_relative_iterator_base< S, E > instead.  */
+      : public internal::site_iterator_base< S, E >
     {
-      typedef line_graph_vicinity_piter_<P, E> self_;
+      typedef line_graph_vicinity_piter_<P, S, E> self_;
       typedef Site_Iterator< self_ > super_;
 
     public:
@@ -95,6 +93,10 @@ namespace mln
       /// Return the set of sites (adjacent edge ids).
       sites_t& sites();
 
+      /* FIXME: Get rid of this as soon as this class inherits from
+	 internal::site_relative_iterator_base< S, E >.  */
+      const psite& p_hook_() const;
+
       /// Read-only access to the \a i-th coordinate.
       coord operator[](unsigned i) const;
       /// \}
@@ -103,7 +105,7 @@ namespace mln
       /// Construction.
       /// \{
       template <typename Pref>
-      line_graph_vicinity_piter_(const Point_Site<Pref>& p_ref);
+      line_graph_vicinity_piter_(const Pref& p_ref);
       /// \}
 
     protected:
@@ -127,87 +129,95 @@ namespace mln
        the general mechanism provided by Point_Site.  But then again, we
        need to refine/adjust the interface of Point_Site w.r.t. the
        mandatory conversions to points.  */
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const line_graph_vicinity_piter_<P, E>& p);
+    operator<<(std::ostream& ostr, const line_graph_vicinity_piter_<P, S, E>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     template <typename Pref>
     inline
-    line_graph_vicinity_piter_<P, E>::line_graph_vicinity_piter_(const Point_Site<Pref>& p_ref)
-      : p_ref_(exact(p_ref).to_psite()),
+    line_graph_vicinity_piter_<P, S, E>::line_graph_vicinity_piter_(const Pref& p_ref)
+      : p_ref_(exact(p_ref)),
 	// Initialize psite_ to a dummy value.
 	psite_()
     {
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     const P&
-    line_graph_vicinity_piter_<P, E>::to_point() const
+    line_graph_vicinity_piter_<P, S, E>::to_point() const
     {
       return p_;
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     const line_graph_psite<P>&
-    line_graph_vicinity_piter_<P, E>::to_psite() const
+    line_graph_vicinity_piter_<P, S, E>::to_psite() const
     {
       return psite_;
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
-    line_graph_vicinity_piter_<P, E>::operator line_graph_psite<P> () const
+    line_graph_vicinity_piter_<P, S, E>::operator line_graph_psite<P> () const
     {
       mln_precondition(exact(*this).is_valid());
       return psite_;
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     const line_graph_psite<P>&
-    line_graph_vicinity_piter_<P, E>::p_ref() const
+    line_graph_vicinity_piter_<P, S, E>::p_ref() const
     {
       return p_ref_;
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     const p_line_graph<P>&
-    line_graph_vicinity_piter_<P, E>::plg() const
+    line_graph_vicinity_piter_<P, S, E>::plg() const
     {
       return p_ref_.plg();
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     std::set<util::edge_id>&
-    line_graph_vicinity_piter_<P, E>::sites()
+    line_graph_vicinity_piter_<P, S, E>::sites()
     {
       return sites_;
     }
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
+    inline
+    const line_graph_psite<P>&
+    line_graph_vicinity_piter_<P, S, E>::p_hook_() const
+    {
+      return psite_;
+    }
+
+    template <typename P, typename S, typename E>
     inline
     mln_coord(P)
-    line_graph_vicinity_piter_<P, E>::operator[](unsigned i) const
+    line_graph_vicinity_piter_<P, S, E>::operator[](unsigned i) const
     {
       assert(i < dim);
       return p_[i];
     }
 
 
-    template <typename P, typename E>
+    template <typename P, typename S, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const line_graph_vicinity_piter_<P, E>& p)
+    operator<<(std::ostream& ostr, const line_graph_vicinity_piter_<P, S, E>& p)
     {
       return ostr << p.to_psite();
     }

@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE_GRAPH_P_HH
-# define MLN_CORE_LINE_GRAPH_P_HH
+#ifndef MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
+# define MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/site_set_base.hh>
@@ -47,6 +47,22 @@
 
 namespace mln
 {
+  // Forward declaration.
+  template<typename P> struct p_line_graph;
+
+  namespace trait
+  {
+    template <typename P>
+    struct site_set_< p_line_graph<P> >
+    {
+      typedef trait::site_set::nsites::known   nsites;
+      // FIXME: Depends on P!
+      typedef trait::site_set::bbox::unknown   bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef trait::site_set::arity::unique   arity;
+    };
+  } // end of namespace mln::trait
+
   /* FIXME: Contray to, e.g., p_array, the sole parameter P of
      p_line_graph is expected to be a point, not a psite!!  We should
      have a uniform scheme for point site sets.  */
@@ -65,6 +81,14 @@ namespace mln
     /// set is still valid after the initial graph has been removed.
     p_line_graph (const graph& gr);
 
+    /// Associated types.
+    /// \{
+    /// Element associated type.
+    typedef P element;
+
+    /// Site associated type.
+    typedef P site;
+
     /// Point_Site associated type.
     typedef line_graph_psite<P> psite;
 
@@ -73,6 +97,10 @@ namespace mln
 
     /// Backward Site_Iterator associated type.
     typedef p_line_graph_bkd_piter_<P> bkd_piter;
+
+    /// Forward Site_Iterator associated type.
+    typedef fwd_piter piter;
+    /// \}
 
     /// \brief Return The number of points (sites) of the set, i.e.,
     /// the number of \em edges, since this is a point set based on a
@@ -89,7 +117,14 @@ namespace mln
     /// Give the exact bounding box.
     const box<P>& bbox() const;
 
+    /// Is this site set valid?
+    bool is_valid() const;
+
+    /// Does this site set has \a p?
     bool has(const psite& p) const;
+
+    // FIXME: Dummy.
+    std::size_t memory_size() const;
 
     /// Adjacency tests.
     /// \{
@@ -187,6 +222,15 @@ namespace mln
   template <typename P>
   inline
   bool
+  p_line_graph<P>::is_valid() const
+  {
+    // FIXME: Might be too low-level, again.
+    return (gr_.ptr_);
+  }
+
+  template <typename P>
+  inline
+  bool
   p_line_graph<P>::has(const psite& p) const
   {
     return
@@ -195,6 +239,16 @@ namespace mln
       // Check that the edge id of P belongs to the range of valid edge ids.
       (p.id() < gr_->nedges());
   }
+
+  template <typename P>
+  inline
+  std::size_t
+  p_line_graph<P>::memory_size() const
+  {
+    // FIXME: Dummy
+    return 0;
+  }
+
 
   template <typename P>
   inline
@@ -278,4 +332,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_SITE_SET_P_GRAPH_HH
+#endif // ! MLN_CORE_SITE_SET_P_LINE_GRAPH_HH

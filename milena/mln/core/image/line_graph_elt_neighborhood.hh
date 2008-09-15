@@ -50,6 +50,8 @@
 # include <mln/core/image/line_graph_psite.hh>
 # include <mln/core/image/line_graph_neighborhood_piter.hh>
 
+# include <mln/core/image/line_graph_elt_window.hh>
+
 
 namespace mln
 {
@@ -68,16 +70,13 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point corresponding to the neighborhood.
-    typedef P point;
+    /// The type of site corresponding to the neighborhood.
+    typedef P site;
     /// The type of psite corresponding to the neighborhood.
     typedef line_graph_psite<P> psite;
     // The type of the set of neighbors (edge ids adjacent to the
     // reference psite).
     typedef std::set<util::edge_id> sites_t;
-
-    // FIXME: This is a dummy value.
-    typedef void dpoint;
 
     /// \brief Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of edges.
@@ -91,6 +90,15 @@ namespace mln
     typedef fwd_niter niter;
     /// \}
 
+    /// Conversions.
+    /// \{
+    /// The window type corresponding to this neighborhood.
+    typedef line_graph_elt_window<P> window;
+    /// Create a window corresponding to this neighborhood.
+    window to_window() const;
+    /// \}
+
+
     /// Services for iterators.
     /// \{
     /// Compute the set of sites for this neighborhood around \a piter.
@@ -102,6 +110,14 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename P>
+  inline
+  line_graph_elt_window<P>
+  line_graph_elt_neighborhood<P>::to_window() const
+  {
+    return line_graph_elt_window<P>();
+  }
 
   template <typename P>
   template <typename Piter>

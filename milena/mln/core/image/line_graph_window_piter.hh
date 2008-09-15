@@ -47,10 +47,11 @@ namespace mln
   /// \brief Forward iterator on line graph window.
   template <typename P, typename W>
   class line_graph_window_fwd_piter
-    : public internal::line_graph_vicinity_piter_<P, line_graph_window_fwd_piter<P, W> >
+    : public internal::line_graph_vicinity_piter_<P, W,
+						  line_graph_window_fwd_piter<P, W> >
   {
     typedef line_graph_window_fwd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, self_> super_;
+    typedef internal::line_graph_vicinity_piter_<P, W, self_> super_;
 
   public:
     /// Construction.
@@ -63,11 +64,11 @@ namespace mln
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
@@ -91,10 +92,10 @@ namespace mln
   /// \brief Backward iterator on line graph window.
   template <typename P, typename W>
   class line_graph_window_bkd_piter
-    : public internal::line_graph_vicinity_piter_<P, line_graph_window_bkd_piter<P, W> >
+    : public internal::line_graph_vicinity_piter_<P, W, line_graph_window_bkd_piter<P, W> >
   {
     typedef line_graph_window_bkd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, self_> super_;
+    typedef internal::line_graph_vicinity_piter_<P, W, self_> super_;
 
   public:
     /// Construction.
@@ -107,11 +108,11 @@ namespace mln
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
@@ -144,13 +145,13 @@ namespace mln
       win_(exact(win))
   {
     // Invalidate i_.
-    invalidate();
+    this->invalidate();
   }
 
   template <typename P, typename W>
   inline
   bool
-  line_graph_window_fwd_piter<P, W>::is_valid() const
+  line_graph_window_fwd_piter<P, W>::is_valid_() const
   {
     return
       // The reference point must be valid...
@@ -164,7 +165,7 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  line_graph_window_fwd_piter<P, W>::invalidate()
+  line_graph_window_fwd_piter<P, W>::invalidate_()
   {
     i_ = this->sites_.end();
   }
@@ -172,7 +173,7 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  line_graph_window_fwd_piter<P, W>::start()
+  line_graph_window_fwd_piter<P, W>::start_()
   {
     mln_precondition(this->p_ref_.is_valid());
     // Update the sites, if needed.
@@ -183,7 +184,7 @@ namespace mln
       }
     i_ = this->sites_.begin();
     // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -196,7 +197,7 @@ namespace mln
     mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
     // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -223,13 +224,13 @@ namespace mln
       win_(exact(win))
   {
     // Invalidate i_.
-    invalidate();
+    this->invalidate();
   }
 
   template <typename P, typename W>
   inline
   bool
-  line_graph_window_bkd_piter<P, W>::is_valid() const
+  line_graph_window_bkd_piter<P, W>::is_valid_() const
   {
     return
       // The reference point must be valid...
@@ -243,7 +244,7 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  line_graph_window_bkd_piter<P, W>::invalidate()
+  line_graph_window_bkd_piter<P, W>::invalidate_()
   {
     i_ = this->sites_.rend();
   }
@@ -251,7 +252,7 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  line_graph_window_bkd_piter<P, W>::start()
+  line_graph_window_bkd_piter<P, W>::start_()
   {
     mln_precondition(this->p_ref_.is_valid());
     // Update the sites, if needed.
@@ -262,7 +263,7 @@ namespace mln
       }
     i_ = this->sites_.rbegin();
     // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -275,7 +276,7 @@ namespace mln
     mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
     // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 

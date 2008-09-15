@@ -31,6 +31,8 @@
 /// \file mln/morpho/line_gradient.hh
 /// \brief Conversions to mln::line_graph_image.
 
+# include <functional>
+
 # include <map>
 # include <vector>
 
@@ -60,6 +62,22 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    // FIXME: We should have mixins to add such a comparison operator.
+    namespace internal
+    {
+      struct point2d_lexicographical_less
+	: std::binary_function<const point2d&, const point2d&, bool>
+      {
+	bool operator()(const point2d& lhs, const point2d& rhs)
+	{
+	  return
+	    lhs.row() < rhs.row() ||
+	    (lhs.row() == rhs.row() && lhs.col() < rhs.col());
+	}
+      };
+    } // end of namespace mln::morpho::internal
+
+
     template <typename T>
     mln::line_graph_image<mln::point2d, T>
     line_gradient(const mln::image2d<T>& ima)
@@ -74,7 +92,8 @@ namespace mln
 	 exhibits the lack of a service from util::graph (or a another,
 	 missing tool) regarding the retrieval of vertices' ids from
 	 points.  */
-      std::map<mln::point2d, util::vertex_id> points;
+      std::map< mln::point2d, util::vertex_id,
+                morpho::internal::point2d_lexicographical_less > points;
 
       // Vertices.
       std::vector<value_t> vertex_values;

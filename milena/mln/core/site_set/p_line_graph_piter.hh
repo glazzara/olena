@@ -49,7 +49,8 @@ namespace mln
   /// \brief Forward iterator on point sites of a mln::p_line_graph<P>.
   template <typename P>
   class p_line_graph_fwd_piter_
-    : public internal::site_iterator_base< P, p_line_graph_fwd_piter_<P> >
+    : public internal::site_set_iterator_base< p_line_graph<P>,
+					       p_line_graph_fwd_piter_<P> >
   {
     typedef p_line_graph_fwd_piter_<P> self_;
     typedef internal::site_iterator_base< P, self_ > super_;
@@ -72,11 +73,11 @@ namespace mln
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
@@ -129,7 +130,8 @@ namespace mln
   /// \brief Backward iterator on point sites of a mln::p_line_graph<P>.
   template <typename P>
   class p_line_graph_bkd_piter_
-    : public internal::site_iterator_base< P, p_line_graph_bkd_piter_<P> >
+    : public internal::site_set_iterator_base< p_line_graph<P>,
+					       p_line_graph_bkd_piter_<P> >
   {
     typedef p_line_graph_bkd_piter_<P> self_;
     typedef internal::site_iterator_base< P, self_ > super_;
@@ -152,11 +154,11 @@ namespace mln
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
@@ -216,7 +218,7 @@ namespace mln
       psite_(plg, -1)
   {
     // Invalidate id_.
-    invalidate();
+    this->invalidate();
   }
 
   template <typename P>
@@ -253,7 +255,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_line_graph_fwd_piter_<P>::is_valid() const
+  p_line_graph_fwd_piter_<P>::is_valid_() const
   {
     return plg_ && id_ < plg_->nedges();
   }
@@ -261,7 +263,7 @@ namespace mln
   template <typename P>
   inline
   void
-  p_line_graph_fwd_piter_<P>::invalidate()
+  p_line_graph_fwd_piter_<P>::invalidate_()
   {
     id_ = -1;
   }
@@ -269,10 +271,10 @@ namespace mln
   template <typename P>
   inline
   void
-  p_line_graph_fwd_piter_<P>::start()
+  p_line_graph_fwd_piter_<P>::start_()
   {
     id_ = 0;
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -282,7 +284,7 @@ namespace mln
   p_line_graph_fwd_piter_<P>::next_()
   {
     ++id_.to_equiv();
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -312,7 +314,7 @@ namespace mln
     /* We don't check whether the iterator is valid before returning
        the value using
 
-         mln_precondition(is_valid());
+         mln_precondition(this->is_valid());
 
        since this method may be called *before* the iterator is
        actually initialized.  This is the case for instance when this
@@ -327,7 +329,7 @@ namespace mln
   inline
   p_line_graph_fwd_piter_<P>::operator line_graph_psite<P>() const
   {
-    mln_precondition(is_valid());
+    mln_precondition(this->is_valid());
     return psite_;
   }
 
@@ -355,7 +357,7 @@ namespace mln
       psite_(plg, -1)
   {
     // Invalidate id_.
-    invalidate();
+    this->invalidate();
   }
 
   template <typename P>
@@ -394,7 +396,7 @@ namespace mln
   template <typename P>
   inline
   bool
-  p_line_graph_bkd_piter_<P>::is_valid() const
+  p_line_graph_bkd_piter_<P>::is_valid_() const
   {
     return plg_ && id_ < plg_->nedges();
   }
@@ -402,7 +404,7 @@ namespace mln
   template <typename P>
   inline
   void
-  p_line_graph_bkd_piter_<P>::invalidate()
+  p_line_graph_bkd_piter_<P>::invalidate_()
   {
     id_ = -1;
   }
@@ -410,10 +412,10 @@ namespace mln
   template <typename P>
   inline
   void
-  p_line_graph_bkd_piter_<P>::start()
+  p_line_graph_bkd_piter_<P>::start_()
   {
     id_ = plg_->nedges() - 1;
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -423,7 +425,7 @@ namespace mln
   p_line_graph_bkd_piter_<P>::next_()
   {
     --id_.to_equiv();
-    if (is_valid())
+    if (this->is_valid())
       update_();
   }
 
@@ -453,7 +455,7 @@ namespace mln
     /* We don't check whether the iterator is valid before returning
        the value using
 
-         mln_precondition(is_valid());
+         mln_precondition(this->is_valid());
 
        since this method may be called *before* the iterator is
        actually initialized.  This is the case for instance when this
@@ -468,7 +470,7 @@ namespace mln
   inline
   p_line_graph_bkd_piter_<P>::operator line_graph_psite<P>() const
   {
-    mln_precondition(is_valid());
+    mln_precondition(this->is_valid());
     return psite_;
   }
 

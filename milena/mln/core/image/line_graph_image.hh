@@ -85,19 +85,31 @@ namespace mln
     struct image_< line_graph_image<P, V> >
       : default_image_< V, line_graph_image<P, V> >
     {
+      // Misc.
       typedef trait::image::category::primary category;
-
       // FIXME: Is that right?
-      typedef trait::image::access::random                    access;
-      typedef typename trait::image::space_from_point<P>::ret space;
-      typedef trait::image::size::regular                     size;
-      typedef trait::image::support::irregular                support;
+      typedef trait::image::speed::fast       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::border::none                      border;
-      typedef trait::image::data::stored                      data;
-      typedef trait::image::io::read_write                    io;
+      // Value.
+      typedef trait::image::value_access::direct           value_access;
       // FIXME: Is that right?
-      typedef trait::image::speed::fast                       speed;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
+
+      // Site / domain.
+      // FIXME: Depends on P.
+      typedef trait::image::localization::basic_grid          localization;
+      // FIXME: Likewise.
+      typedef typename trait::image::space_from_point<P>::ret dimension;
+
+      // extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      // FIXME: Is that right?
+      typedef trait::image::ext_value::irrelevant ext_value;
+      // FIXME: Is that right?
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait

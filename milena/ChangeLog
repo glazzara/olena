@@ -1,5 +1,122 @@
 2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have tools/area_flooding compile again.
+
+	* mln/core/image/line_graph_image.hh
+	(mln::trait::image_< line_graph_image<P, V> >): Update properties.
+	* mln/core/image/line_graph_psite.hh
+	(mln::line_graph_psite<P>::mesh)
+	(mln::line_graph_psite<P>::dpoint): Set to void.
+	(mln::line_graph_psite<P>::operator point): New.
+
+	* mln/core/site_set/p_line_graph.hh: Fix header guards.
+	(mln::trait::site_set_< p_line_graph<P> >): New specialization.
+	(mln::p_line_graph<P>::element)
+	(mln::p_line_graph<P>::site):
+	(mln::p_line_graph<P>::piter):
+	New typedefs.
+	(mln::p_line_graph<P>::is_valid)
+	(mln::p_line_graph<P>::memory_size):
+	New methods.
+	* mln/core/site_set/p_line_graph_piter.hh
+	(mln::p_line_graph_fwd_piter_): Inherit from
+	internal::site_set_iterator_base.
+	(mln::p_line_graph_fwd_piter_<P>::is_valid)
+	(mln::p_line_graph_fwd_piter_<P>::invalidate)
+	(mln::p_line_graph_fwd_piter_<P>::start)
+	(mln::p_line_graph_bkd_piter_<P>::is_valid)
+	(mln::p_line_graph_bkd_piter_<P>::invalidate)
+	(mln::p_line_graph_bkd_piter_<P>::start):
+	Rename as...
+	(mln::p_line_graph_fwd_piter_<P>::is_valid_)
+	(mln::p_line_graph_fwd_piter_<P>::invalidate_)
+	(mln::p_line_graph_fwd_piter_<P>::start_)
+	(mln::p_line_graph_bkd_piter_<P>::is_valid_)
+	(mln::p_line_graph_bkd_piter_<P>::invalidate_)
+	(mln::p_line_graph_bkd_piter_<P>::start_):
+	...these.
+
+	* mln/core/internal/line_graph_vicinity_piter.hh
+	(mln::line_graph_vicinity_piter_<P, S, E>): Take and additional
+	parameter S.
+	Inherit from internal::site_iterator_base< S, E >.
+	Adjust.
+	(mln::line_graph_vicinity_piter_<P, S, E>::p_hook_): New method.
+	
+	* mln/core/image/line_graph_elt_neighborhood.hh
+	(mln::line_graph_elt_neighborhood<P>::point): Rename typedef as...
+	(mln::line_graph_elt_neighborhood<P>::site): ...this.
+	(mln::line_graph_elt_neighborhood<P>::dpoint): Remove typedef.
+	(mln::line_graph_elt_neighborhood<P>::window): New typedef
+	(mln::line_graph_elt_neighborhood<P>::to_window): New method.
+	* mln/core/image/line_graph_neighborhood_piter.hh: Adjust.
+	(mln::line_graph_neighborhood_fwd_piter<P>::is_valid)
+	(mln::line_graph_neighborhood_fwd_piter<P>::invalidate)
+	(mln::line_graph_neighborhood_fwd_piter<P>::start):
+	(mln::line_graph_neighborhood_bkd_piter<P>::is_valid)
+	(mln::line_graph_neighborhood_bkd_piter<P>::invalidate)
+	(mln::line_graph_neighborhood_bkd_piter<P>::start):
+	Rename as...
+	(mln::line_graph_neighborhood_fwd_piter<P>::is_valid_)
+	(mln::line_graph_neighborhood_fwd_piter<P>::invalidate_)
+	(mln::line_graph_neighborhood_fwd_piter<P>::start_):
+	(mln::line_graph_neighborhood_bkd_piter<P>::is_valid_)
+	(mln::line_graph_neighborhood_bkd_piter<P>::invalidate_)
+	(mln::line_graph_neighborhood_bkd_piter<P>::start_):
+	...this.
+	(mln::line_graph_neighborhood_fwd_piter<P>::site)
+	(mln::line_graph_neighborhood_bkd_piter<P>::site):
+	New typedefs.
+	(mln::line_graph_neighborhood_fwd_piter<P>::site_)
+	(mln::line_graph_neighborhood_fwd_piter<P>::to_site)
+	(mln::line_graph_neighborhood_fwd_piter<P>::operator site)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::target_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::change_target)
+	(mln::line_graph_neighborhood_bkd_piter<P>::site_)
+	(mln::line_graph_neighborhood_bkd_piter<P>::to_site)
+	(mln::line_graph_neighborhood_bkd_piter<P>::operator site)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::target_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::change_target):
+	New members.
+	(mln::line_graph_neighborhood_fwd_piter<P>::nbh)
+	(mln::line_graph_neighborhood_bkd_piter<P>::nbh):
+	Turn members into a pointers.
+
+	* mln/core/image/line_graph_elt_window.hh
+	(mln::line_graph_elt_window<P>::point)
+	(mln::line_graph_elt_window<P>::dpoint): Rename typedefs as...
+	(mln::line_graph_elt_window<P>::site)
+	(mln::line_graph_elt_window<P>::dpsite): ...these.
+	* mln/core/image/line_graph_window_piter.hh: Adjust.
+	(mln::line_graph_window_fwd_piter<P>::is_valid)
+	(mln::line_graph_window_fwd_piter<P>::invalidate)
+	(mln::line_graph_window_fwd_piter<P>::start):
+	(mln::line_graph_window_bkd_piter<P>::is_valid)
+	(mln::line_graph_window_bkd_piter<P>::invalidate)
+	(mln::line_graph_window_bkd_piter<P>::start):
+	Rename as...
+	(mln::line_graph_window_fwd_piter<P>::is_valid_)
+	(mln::line_graph_window_fwd_piter<P>::invalidate_)
+	(mln::line_graph_window_fwd_piter<P>::start_):
+	(mln::line_graph_window_bkd_piter<P>::is_valid_)
+	(mln::line_graph_window_bkd_piter<P>::invalidate_)
+	(mln::line_graph_window_bkd_piter<P>::start_):
+	...this.
+
+	* mln/level/sort_psites.hh
+	(impl::sort_psites_increasing_(trait::image::quant::low, const I&)):
+	(impl::sort_psites_decreasing_(trait::image::quant::low, const I&)):
+	Catch up with the new interfaces of internal::image_base and
+	histo::data.
+	* mln/morpho/line_gradient.hh
+	(mln::morpho::internal::point2d_lexicographical_less): New class.
+	Use it...
+	(mln::morpho::line_gradient): ...here.
+
+	* tools/area_flooding.cc: Include mln/core/routine/clone.hh.
+
+2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix macros mln_vset and mln_vset_.
 
 	* mln/core/macros.hh (mln_vset, mln_vset_):
