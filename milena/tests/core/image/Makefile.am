@@ -16,10 +16,6 @@ check_PROGRAMS =				\
 ##  image2d_h					\
   image3d					\
   image_if					\
-
-  image_if_interval				\
-  image_if_value				\
-
 ##  interpolated					\
 ##  line_graph_image				\
   mono_obased_rle_image				\
@@ -45,13 +41,11 @@ flat_image_SOURCES = flat_image.cc
 ##hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
-image2d_h_SOURCES = image2d_h.cc
+##image2d_h_SOURCES = image2d_h.cc
 image3d_SOURCES = image3d.cc
 image_if_SOURCES = image_if.cc
-image_if_interval_SOURCES = image_if_interval.cc
-image_if_value_SOURCES = image_if_value.cc
-interpolated_SOURCES = interpolated.cc
-line_graph_image_SOURCES = line_graph_image.cc
+##interpolated_SOURCES = interpolated.cc
+##line_graph_image_SOURCES = line_graph_image.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc
