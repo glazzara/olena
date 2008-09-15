@@ -1,3 +1,10 @@
+2008-09-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Updtae fun::x2x::rotation.
+
+	* mln/fun/x2x/rotation.hh: Fix h_mat construction.
+	* sandbox/jardonnet/virtual/access.cc: Update in consequencce.
+
 2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make morpho erosion test compile.

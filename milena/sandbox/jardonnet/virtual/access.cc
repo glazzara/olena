@@ -1,5 +1,5 @@
-
 #include <iostream>
+
 #include "access.hh"
 #include <mln/core/image/image2d.hh>
 #include <mln/fun/x2x/all.hh>
@@ -11,8 +11,12 @@ int main()
   using namespace mln;
   image2d<int> img(50,50);
   point2d p(5,5);
-  algebra::vec<2,float> v = make::vec(3,4);
-  fun::x2x::translation<2,float> t(v);
+
+
+  //transformation
+  fun::x2x::translation<2,float> t(make::vec(3,4));
+  fun::x2x::rotation<2,float> r(90., make::vec(0,1));
+  
   interpolation::nearest_neighbor< image2d<int> > nn(img);
 
   debug::iota(img);

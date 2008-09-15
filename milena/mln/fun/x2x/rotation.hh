@@ -51,17 +51,17 @@ namespace mln
       namespace internal
       {
         template < unsigned n, typename C >
-        algebra::h_mat<n+1, C>
-        get_h_mat(const float alpha_, const algebra::vec<3,C>& axis_
+        algebra::h_mat<n, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
         {
           assert(!"get_h_mat : n not implemented");
         }
 
         template <typename C >
-        algebra::h_mat<4, C>
-        get_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        algebra::h_mat<3, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
         {
-          algebra::h_mat<4, C> m_;
+          algebra::h_mat<3, C> m_;
 
           const float cos_a = cos(alpha_);
           const float sin_a = sin(alpha_);
@@ -74,17 +74,17 @@ namespace mln
           const float uvw2 = u2 + v2 + w2;
 
           m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
-          m_(0,1) = (u*v * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
-          m_(0,2) = (u*w * (1 - cos_a) + v * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,1) = (u*v * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,2) = (u*w * (1 - cos_a) + v * std::sqrt(uvw2) * sin_a) / uvw2;
           m_(0,3) = 0;
 
-          m_(1,0) = (u*v * (1 - cos_a) + w * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,0) = (u*v * (1 - cos_a) + w * std::sqrt(uvw2) * sin_a) / uvw2;
           m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
-          m_(1,2) = (v*w * (1 - cos_a) - u * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,2) = (v*w * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
           m_(1,3) = 0;
 
-          m_(2,0) = (u*w * (1 - cos_a) - v * math::sqrt(uvw2) * sin_a) / uvw2;
-          m_(2,1) = (v*w * (1 - cos_a) + u * math::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,0) = (u*w * (1 - cos_a) - v * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,1) = (v*w * (1 - cos_a) + u * std::sqrt(uvw2) * sin_a) / uvw2;
           m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
           m_(2,3) = 0;
 
@@ -97,23 +97,10 @@ namespace mln
         }
 
         template <typename C >
-        algebra::h_mat<3, C>
-        get_h_mat(const float alpha_, const algebra::vec<2,C>& axis_
+        algebra::h_mat<2, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<2,C>& axis_)
         {
-          algebra::h_mat<3, C> m_;
-          const float cos_a = cos(alpha_);
-          const float sin_a = sin(alpha_);
-          const algebra::vec<4,float> vec
-            = make::vec(cos_a, -sin_a, sin_a, cos_a);
-          unsigned k = 0;
-          for (unsigned i = 0; i < 3; ++i)
-            for (unsigned j = 0; j < 3; ++j)
-              {
-                if (j != this->dir_ && i != this->dir_)
-                  this->m_(i, j) = vec[k++];
-                else
-                  this->m_(i, j) = (i == j);
-              }
+          assert(!"not implemented yet");
         }
       }
 
@@ -136,7 +123,7 @@ namespace mln
 	/// Constructor without argument.
         rotation();
 	/// Constructor with grade alpha and a facultative direction (rotation axis).
-        rotation(float alpha, algebra::vec<n,float>& axis);
+        rotation(float alpha, const algebra::vec<n,float>& axis);
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
@@ -165,11 +152,10 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      rotation<n,C>::rotation(float alpha, algebra::vec<n,float>& axis)
+      rotation<n,C>::rotation(float alpha, const algebra::vec<n,float>& axis)
 	:alpha_(alpha),
 	 axis_(axis)
       {
-	mln_precondition(dir == 2 || n == 3);
 	this->m_ = algebra::h_mat<n,C>::Id;
 	update();
       }
@@ -216,8 +202,6 @@ namespace mln
       void
       rotation<n,C>::set_dir(unsigned dir)
       {
-	mln_precondition(dir == 2 || n == 3);
-	dir_ = dir;
 	update();
       }
 
@@ -228,8 +212,7 @@ namespace mln
       void
       rotation<n,C>::update()
       {
-        assert(n == 3); // debug
-
+        this->m_ = internal::get_rot_h_mat(alpha_, axis_);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
