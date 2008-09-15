@@ -1,3 +1,12 @@
+2008-09-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Move and update line_piter as box_runstart_piter.
+
+	* mln/core/line_piter.hh: Rename as...
+	* mln/core/box_runstart_piter.hh: ...this.
+	* tests/core/other/line_piter.cc: Rename as...
+	* tests/core/other/box_runstart_piter.cc: ...this.
+
 2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing init_().

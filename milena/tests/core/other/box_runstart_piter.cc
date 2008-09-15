@@ -25,16 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/other/line_piter.cc
+/*! \file tests/core/other/box_runstart_piter.cc
  *
- * \brief Tests on mln::line_piter.
+ * \brief Tests on mln::box_runstart_piter.
  */
-
-//FIXME: replace by the necessary include
-#include <mln/core/image/image1d.hh>
-#include <mln/core/image/image2d.hh>
-#include <mln/core/image/image3d.hh>
-#include <mln/core/line_piter.hh>
+#include <mln/core/alias/box1d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/box3d.hh>
+#include <mln/core/box_runstart_piter.hh>
 
 int main()
 {
@@ -42,50 +40,50 @@ int main()
 
   const unsigned border = 2;
 
-  /// Test with image 1d
+  /// Test with box1d
   {
-    box1d b1(point1d(5), point1d(42));
-    image1d<int> f1(b1, border);
-    image1d<int>::line_piter p1(f1.domain());
+    box1d b1(make::point1d(40), make::point1d(42));
+    box_runstart_piter<point1d> p1(b1);
     for_all(p1)
     {
-      mln_assertion(p1[0] == 5);
+      mln_assertion(p1[0] == 40);
       std::cout << p1 <<std::endl;
     }
+    std::cout << "run_len : " << p1.run_length()<<std::endl;
+    mln_assertion(p1.run_length() == 3);
   }
 
 
-  /// Test with image 2d
+  /// Test with box2d
   {
-    box2d b2(point2d(1,2), point2d(5,8));
-    image2d<int> f2(b2, border);
-
-    image2d<int>::line_piter p2(f2.domain());
+    box2d b2(make::point2d(1,2), make::point2d(5,8));
+    box_runstart_piter<point2d> p2(b2);
     int i = 1;
     for_all(p2)
     {
       mln_assertion(p2[1] == 2 && p2[0] == i++);
       std::cout << p2 <<std::endl;
     }
+    std::cout << "run_len : " << p2.run_length()<<std::endl;
+    mln_assertion(p2.run_length() == 7);
   }
 
-  /// Test with image 3d
+//   Test with image 3d
   {
-    box3d b3(point3d(1,2,3), point3d(5,8,7));
-    image3d<int> f3(b3, border);
-
-    image3d<int>::line_piter p3(f3.domain());
+    box3d b3(make::point3d(1,2,3), make::point3d(5,8,7));
+    box_runstart_piter<point3d> p3(b3);
     int i = 1;
     int j = 2;
     for_all(p3)
     {
-      mln_assertion( p3[0] == i && p3[1] == j && p3[2] == 3);
       std::cout << p3 << std::endl;
-      if (i++ == 5)
-	i = 1;
-      if (j++ == 8)
-	j = 2;
+       if (i++ == 5)
+ 	i = 1;
+       if (j++ == 8)
+ 	j = 2;
     }
+    std::cout << "run_len : " << p3.run_length() << std::endl;
+    mln_assertion(p3.run_length() == 5);
   }
 
 }

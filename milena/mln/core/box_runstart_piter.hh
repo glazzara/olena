@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE_PITER_HH
-# define MLN_CORE_LINE_PITER_HH
+#ifndef MLN_CORE_BOX_RUNSTART_PITER_HH
+# define MLN_CORE_BOX_RUNSTART_PITER_HH
 
-/*! \file mln/core/line_piter.hh
+/*! \file mln/core/box_runstart_piter.hh
  *
  * \brief Definition of iterators on points by lines.
  *
- * \todo Rename as box_line_piter.
  */
 
 # include <mln/core/internal/site_iterator_base.hh>
@@ -46,11 +45,12 @@ namespace mln
    * The parameter \c P is the type of points.
    */
   template <typename P>
-  class line_piter_ :
-    public internal::site_iterator_base< P, line_piter_<P> >
+  class box_runstart_piter :
+    public internal::site_set_iterator_base< box<P>,
+					     box_runstart_piter<P> >
   {
-    typedef line_piter_<P> self_;
-    typedef internal::site_iterator_base< P, self_ > super_;
+    typedef box_runstart_piter<P> self_;
+    typedef internal::site_set_iterator_base< box<P>, self_ > super_;
   public:
 
     // Make definitions from super class available.
@@ -60,119 +60,100 @@ namespace mln
      *
      * \param[in] b A box.
      */
-    line_piter_(const box<P>& b);
+    box_runstart_piter(const box<P>& b);
 
-    /// Conversion to point.
-    operator P() const;
-
-    /// Reference to the corresponding point.
-    const P& to_point() const;
-
-    /// Give the i-th coordinate.
-    mln_coord(P) operator[](unsigned i) const;
+    box_runstart_piter();
 
     /// Test the iterator validity.
-    bool is_valid() const;
+    bool is_valid_() const;
 
     /// Invalidate the iterator.
-    void invalidate();
+    void invalidate_();
 
     /// Start an iteration.
-    void start();
+    void start_();
 
     /// Go to the next point.
     void next_();
 
+    /// Give the lenght of the run
+    unsigned run_length() const;
+
   private:
-    const box<P>& b_;
-    P p_;
-    bool is_valid_;
+    using super_::p_;
+    using super_::s_;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // line_piter_<P>
+  // box_runstart_piter<P>
 
   template <typename P>
   inline
-  line_piter_<P>::line_piter_(const box<P>& b)
-    : b_(b)
+  box_runstart_piter<P>::box_runstart_piter()
   {
-    invalidate();
   }
 
   template <typename P>
   inline
-  line_piter_<P>::operator P() const
+  box_runstart_piter<P>::box_runstart_piter(const box<P>& b)
   {
-    return to_point();
-  }
-
-  template <typename P>
-  inline
-  const P&
-  line_piter_<P>::to_point() const
-  {
-    mln_precondition(is_valid());
-    return p_;
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  line_piter_<P>::operator[](unsigned i) const
-  {
-    mln_precondition(is_valid());
-    mln_precondition(i < dim);
-
-    mln_invariant(p_[dim - 1] == b_.pmin()[dim - 1]);
-    return p_[i];
+    this->change_target(b);
   }
 
   template <typename P>
   inline
   bool
-  line_piter_<P>::is_valid() const
+  box_runstart_piter<P>::is_valid_() const
   {
-    return is_valid_;
+    return p_[0] != s_->pmax()[0] + 1;
   }
 
   template <typename P>
   inline
   void
-  line_piter_<P>::invalidate()
+  box_runstart_piter<P>::invalidate_()
   {
-    is_valid_= false;
+    p_[0] = s_->pmax()[0] + 1;
   }
 
   template <typename P>
   inline
   void
-  line_piter_<P>::start()
+  box_runstart_piter<P>::start_()
   {
-    p_ = b_.pmin();
-    is_valid_ = true;
+    p_ = s_->pmin();
   }
 
   template <typename P>
   inline
   void
-  line_piter_<P>::next_()
+  box_runstart_piter<P>::next_()
   {
-    mln_precondition(is_valid());
-
     // Do we want this run for image in 3d?
     for (int c = dim - 2; c >= 0; --c)
     {
-      if (p_[c] != b_.pmax()[c])
+      if (p_[c] != s_->pmax()[c])
+      {
 	++p_[c];
+	break;
+      }
       else
-	p_[c] = b_.pmin()[c];
+	p_[c] = s_->pmin()[c];
     }
-    if (p_ == b_.pmin())
-      invalidate();
+
+    if (p_ == s_->pmin())
+      invalidate_();
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  box_runstart_piter<P>::run_length() const
+  {
+    return s_->len(dim - 1);
   }
 
 
@@ -181,4 +162,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_LINE_PITER_HH
+#endif // ! MLN_CORE_BOX_RUNSTART_PITER_HH
