@@ -1,5 +1,11 @@
 2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have tools/area_flooding compile again (cont.).
+
+	* mln/make/neighb2d.hh: Include mln/convert/to.hh.
+
+2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have tools/area_flooding compile again.
 
 	* mln/core/image/line_graph_image.hh

@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/alias/window2d.hh>
+# include <mln/convert/to.hh>
 
 
 namespace mln
