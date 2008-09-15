@@ -1,5 +1,13 @@
 2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Temporary fix doc compilation.
+	* milena/doc/Doxyfile.in:
+	  Temporary excludes core/concept from the doc generation.
+	  The doc can now be generated.
+	  Due to core/concept the doc generation never ended.
+
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated tests.
 	* milena/tests/core/image/Makefile.am:
 	  Remove deprecated tests and comments few others.
