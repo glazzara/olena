@@ -1,3 +1,11 @@
+2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix the compilation of tools in Trimesh.
+
+	* utilsrc/Makefile.am (AM_LDFLAGS): New.
+	(LDADD): Add $(GLLIBS).
+	(mesh_view_LDFLAGS, mesh_view_LDADD): Remove.
+
 2008-07-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix a compilation bug on GNU/Linux.
