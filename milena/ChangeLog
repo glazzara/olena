@@ -1,3 +1,13 @@
+2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make the from_to conversion mechanism more general.
+
+	* mln/core/alias/window2d.hh (from_to_): New overload.
+	The code comes from make/window2d.hh
+	* mln/convert/to.hh (to): New static check on O.
+	* mln/convert/from_to.hh: Relax signature.
+	Add tech note.
+
 2008-09-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix multiple-windows.

@@ -64,6 +64,7 @@ namespace mln
     to(const O& from)
     {
       mlc_equal(T, mln_exact(T))::check();
+      mlc_equal(O, mln_exact(O))::check();
       trace::entering("convert::to");
 
       T tmp;

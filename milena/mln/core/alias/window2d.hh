@@ -34,6 +34,7 @@
 
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
+# include <mln/metal/math/sqrt.hh>
 
 
 namespace mln
@@ -52,6 +53,22 @@ namespace mln
   ///
   /// \return A window2d.
   const window2d& win_c4p();
+
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned S>
+      void from_to_(bool (&values)[S], window2d& win);
+
+      template <unsigned R, unsigned C>
+      void from_to_(bool (&values)[R][C], window2d& win);
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
 
 
 
@@ -73,6 +90,44 @@ namespace mln
       }
     return it;
   }
+
+
+  namespace convert
+  {
+    namespace impl
+    {
+
+      template <unsigned S>
+      void
+      from_to_(bool (&values)[S], window2d& win)
+      {
+	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
+	enum { h = mlc_sqrt_int(S) / 2 };
+	mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
+	unsigned i = 0;
+	for (int row = - h; row <= h; ++row)
+	  for (int col = - h; col <= h; ++col)
+	    if (values[i++])
+	      win.insert(row, col);
+      }
+
+      template <unsigned R, unsigned C>
+      void
+      from_to_(bool (&values)[R][C], window2d& win)
+      {
+	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
+	mlc_bool(R % 2 == 1)::check();
+	mlc_bool(C % 2 == 1)::check();
+	const int drow = int(R) / 2, dcol = int(C) / 2;
+	for (int row = - drow; row <= drow; ++row)
+	  for (int col = - dcol; col <= dcol; ++col)
+	    if (values[row + drow][col + dcol])
+	      win.insert(row, col);
+      }
+      
+    } // end of namespace mln::convert::impl
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -56,11 +56,10 @@ namespace mln
 
 
     /// Conversion of an object \p from towards an object \p to.
-
     template <typename F, typename T>
     inline
     void
-    from_to(const Object<F>& from, Object<T>& to);
+    from_to(F& from, Object<T>& to); // See below an explanation of this signature.
 
 
     template <typename T>
@@ -75,15 +74,23 @@ namespace mln
     from_to(const int& from, Object<T>& to);
 
 
+    // Technical note: 
+
+    // In order to remain as general as possible (for instance to be
+    // able to pass a C array to 'from'), the signature cannot be
+    // "const F& from."  It cannot embed the strong typing "Object<*>"
+    // neither.
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
 
-      // Default (Object -> Object) means "unknown conversion".
+      // Default (F -> Object) means "unknown conversion".
       template <typename F, typename T>
       void
-      from_to_(const Object<F>& from, Object<T>& to);
+      from_to_(const F& from, Object<T>& to);
 
 
       // Image -> Site_Set.
@@ -129,10 +136,11 @@ namespace mln
     template <typename F, typename T>
     inline
     void
-    from_to(const Object<F>& from, Object<T>& to)
+    from_to(F& from, Object<T>& to)
     {
       trace::entering("convert::from_to");
-      impl::from_to_(exact(from), exact(to));
+      mlc_equal(F, mln_exact(F))::check();
+      impl::from_to_(from, exact(to));
       trace::exiting("convert::from_to");
     }
 
