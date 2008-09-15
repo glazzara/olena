@@ -353,8 +353,8 @@
 
 /// Shortcuts to access the type of value set (vset) associated to T.
 /// \{
-# define mln_vset(T)       typename T::t_eligible_value_set
-# define mln_vset_(T)               T::t_eligible_value_set
+# define mln_vset(T)       typename T::t_eligible_values_set
+# define mln_vset_(T)               T::t_eligible_values_set
 /// \}
 
 /// Shortcuts to access the viter type associated to T.

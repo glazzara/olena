@@ -1,3 +1,10 @@
+2008-09-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix macros mln_vset and mln_vset_.
+
+	* mln/core/macros.hh (mln_vset, mln_vset_):
+	s/t_eligible_value_set/t_eligible_values_set/
+
 2008-09-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Move and update line_piter as box_runstart_piter.
