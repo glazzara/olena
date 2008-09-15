@@ -41,7 +41,7 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./internal/,OUTPUT_DIRECTORY     
 		-e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'			\
 		-e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'			\
 		-e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER         = \"User documentation ,g'	\
-		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	       = mln::internal::*,g'
+		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	       = *::internal*,g'
 
 
 
