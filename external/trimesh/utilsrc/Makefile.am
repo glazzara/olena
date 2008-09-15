@@ -6,7 +6,8 @@ include $(top_srcdir)/gluit/gluit.mk
 
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
-LDADD = -L$(top_builddir)/libsrc -ltrimesh -lm
+AM_LDFLAGS = $(GLFLAGS)
+LDADD = -L$(top_builddir)/libsrc -ltrimesh -lm $(GLLIBS)
 
 
 bin_PROGRAMS =					\
@@ -24,7 +25,4 @@ mesh_cc_SOURCES = mesh_cc.cc
 mesh_filter_SOURCES = mesh_filter.cc
 mesh_make_SOURCES = mesh_make.cc
 mesh_shade_SOURCES = mesh_shade.cc
-
 mesh_view_SOURCES = mesh_view.cc
-mesh_view_LDFLAGS = $(AM_LDFLAGS) $(GLFLAGS)
-mesh_view_LDADD = $(LDADD) $(GLLIBS)
