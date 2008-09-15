@@ -100,9 +100,11 @@ namespace mln
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
 
+	  mln_concrete(I) output;
+	  initialize(output, input);
+
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
-	  mln_concrete(I) output;
 	  for_all(p)
 	  {
 	    for_all(q) if (input.has(q))

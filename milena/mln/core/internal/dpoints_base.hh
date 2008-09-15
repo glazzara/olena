@@ -56,16 +56,6 @@ namespace mln
     {
     public:
 
-      /// Dpsite associated type.
-      typedef D dpsite;
-
-      /// Psite associated type.
-      typedef mln_psite(D) psite;
-
-      /// Site associated type.
-      typedef mln_site(D) site;
-
-
       /// Forward site iterator associated type.
       typedef dpsites_fwd_piter<E> fwd_qiter;
 

@@ -60,12 +60,6 @@ namespace mln
     struct rectangle2d : public internal::window_base< dpoint2d, rectangle2d >,
 			 public internal::dpoints_base_< dpoint2d, rectangle2d >
     {
-      typedef internal::dpoints_base_< dpoint2d, rectangle2d > super_;
-
-      typedef super_::site site;
-      typedef super_::psite psite;
-      typedef super_::dpsite dpsite;
-
       /*! \brief Constructor.
        *
        * \param[in] height Height of the rectangle2d.

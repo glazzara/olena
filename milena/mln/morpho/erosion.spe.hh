@@ -89,10 +89,10 @@ namespace mln
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
 	const W& win = exact(win_);
-	O output;
 
+	O output;
 	initialize(output, input);
-	border::fill(input, mln_max(mln_value(I)));
+// 	border::fill(input, mln_max(mln_value(I)));
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) o(output);
@@ -120,10 +120,10 @@ namespace mln
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
 	const W& win = exact(win_);
-	O output;
 
+	O output;
 	initialize(output, input);
-	border::fill(input, true);
+// 	border::fill(input, true);
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) p_out(output);
@@ -153,7 +153,7 @@ namespace mln
 	const W& win = exact(win_);
 	O output;
 
-	border::fill(input, true);
+// 	border::fill(input, true);
 
 	output = clone(input);
 	mln_piter(I) p(input.domain());
@@ -182,7 +182,7 @@ namespace mln
 	const W& win = exact(win_);
 	O output;
 
-	border::fill(input, true);
+// 	border::fill(input, true);
 
 	output = clone(input);
 	mln_pixter(const I) p(input);
@@ -445,15 +445,15 @@ namespace mln
 		      trait::image::kind::logic)::value == true)
 	  if (mlc_equal(mln_trait_image_speed(I)(),
 			trait::image::speed::fastest)::value == true)
-	    impl::erosion_on_set_fastest(input, win);
+	    return impl::erosion_on_set_fastest(input, win);
 	  else
-	    impl::generic::erosion_on_set(input, win);
+	    return impl::generic::erosion_on_set(input, win);
 	else
 	  if (mlc_equal(mln_trait_image_speed(I)(),
 			trait::image::speed::fastest)::value == true)
-	    impl::erosion_on_function_fastest(input, win);
+	    return impl::erosion_on_function_fastest(input, win);
 	  else
-	    impl::generic::erosion_on_function(input, win);
+	    return impl::generic::erosion_on_function(input, win);
       }
 
     } // end of namespace mln::morpho::internal

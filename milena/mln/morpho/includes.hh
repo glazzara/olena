@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,14 +31,14 @@
 /*! \file mln/morpho/includes.hh
  *
  * \brief Basic list of includes for all files in mln/morpho/.
+ *
+ * \todo Re-activate the border/all include when ready.
  */
 
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
-
-# include <mln/metal/has_neighborhood.hh>
 
 # include <mln/value/ops.hh>
 
@@ -54,7 +54,7 @@
 # include <mln/level/fill.hh>
 
 # include <mln/test/positive.hh>
-# include <mln/border/all.hh>
+// # include <mln/border/all.hh>
 
 # include <mln/geom/sym.hh>
 # include <mln/set/inter.hh>

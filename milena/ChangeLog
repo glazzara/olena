@@ -1,3 +1,17 @@
+2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make morpho erosion test compile.
+
+	* mln/core/internal/dpoints_base.hh
+	(site, psite, dpsite): Remove these typedefs; they were inherited
+	twice in window concrete classes, causing ambiguities.
+	* mln/win/rectangle2d.hh: Likewise; useless.
+	* mln/morpho/erosion.spe.hh (border): De-activate calls.
+	* mln/morpho/erosion.hh: Fix missing initialize.
+	* mln/morpho/includes.hh (border): De-activate include.
+	(has_neighborhood): De-activate include; this part of code is soon
+	obsolete.
+
 2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Temporary fix doc compilation.
