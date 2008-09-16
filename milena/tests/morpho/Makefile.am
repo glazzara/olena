@@ -17,9 +17,9 @@ check_PROGRAMS =				\
   gradient_elementary				\
   hit_or_miss					\
   laplacian					\
-  lena_line_graph_image_wst1			\
+##  lena_line_graph_image_wst1			\
   lena_line_graph_image_wst2			\
-  line_graph_image_wst				\
+##  line_graph_image_wst				\
   meyer_wst					\
   meyer_wst_long				\
   opening_area					\

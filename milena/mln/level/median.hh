@@ -123,7 +123,7 @@ namespace mln
 	  win(exact(win_)),
 	  output(exact(output_)),
 	  // aux data
-	  med(input.values()),
+	  med(input.values_eligible()),
 	  p(),
 	  win_fp(set::diff(win, geom::shift(win, left))),
 	  win_fm(set::diff(geom::shift(win, left),  win)),
@@ -208,7 +208,7 @@ namespace mln
 	    output(exact(output)),
 	    // aux data
 	    p(),
-	    med(input.values())
+	    med(input.values_eligible())
 	{
 	}
 

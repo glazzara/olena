@@ -44,6 +44,8 @@
 
 #include <mln/morpho/hit_or_miss.hh>
 
+# include <mln/convert/to.hh>
+
 #include "tests/data.hh"
 
 

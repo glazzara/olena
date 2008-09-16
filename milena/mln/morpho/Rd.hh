@@ -47,7 +47,7 @@
 # include <mln/level/fill.hh>
 # include <mln/level/compare.hh>
 
-
+# include <mln/util/greater_point.hh>
 
 namespace mln
 {
@@ -161,7 +161,8 @@ namespace mln
 	inline
 	bool is_proc__(const point& n, const point& p) const
 	{
-	  return g(n) > g(p) || (g(n) == g(p) && n < p);
+	  util::greater_point<I> greater_than(g);
+	  return g(n) > g(p) || (g(n) == g(p) && greater_than(p,n));
 	}
 
 	inline

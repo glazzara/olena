@@ -100,6 +100,11 @@ namespace mln
         algebra::h_mat<2, C>
         get_rot_h_mat(const float alpha_, const algebra::vec<2,C>& axis_)
         {
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void) alpha_;
+	  (void) axis_;
+
           assert(!"not implemented yet");
         }
       }

@@ -72,6 +72,11 @@ namespace mln
       inline
       void fill_with_image_tests(Image<I>& ima, const Image<J>& data)
       {
+	// Avoid a warning about an undefined variable when NDEBUG
+	// is not defined.
+	(void)ima;
+	(void)data;
+
 	mlc_is(mln_trait_image_value_io(I),
 	       mln::trait::image::value_io::read_write)::check();
 	mlc_converts_to(mln_value(J), mln_value(I))::check();

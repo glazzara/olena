@@ -61,7 +61,7 @@ namespace mln
     std::set<mln_dpsite(W)> to_std_set(const Window<W>& win)
     {
       typedef mln_dpsite(W) D;
-      typedef mln_point(D)  P;
+      typedef mln_psite(D)  P;
       std::set<D> s;
       mln_qiter(W) q(exact(win), P::origin);
       for_all(q)

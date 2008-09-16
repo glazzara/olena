@@ -88,9 +88,16 @@ namespace mln
 	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) ==
                                                           input(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) <
-								 input(p));
-	                                           attr(p) = false; }
+	void do_no_union(const P& n, const P& p)
+	{
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void)n;
+
+	  mln_invariant(input(n) < input(p));
+	  attr(p) = false;
+	}
+
 	void init_attr(const P&)                 {}
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
                                                    attr(r); }

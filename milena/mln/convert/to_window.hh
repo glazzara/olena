@@ -59,7 +59,7 @@ namespace mln
     // Default case.
     template <typename N>
     struct nbh_to_win_trait
-    { typedef window<mln_dpoint(N)> ret; };
+    { typedef window<mln_dpsite(N)> ret; };
 
     // Case of line_graph_elt_neighborhood<P>.
     template <typename P>
@@ -75,11 +75,11 @@ namespace mln
     template <typename I>
     window<mln_dpsite(I)> to_window(const Image<I>& ima);
 
-    /// Convert a point set \p pset into a window.
+    /// Convert a site set \p pset into a window.
     template <typename S>
-    window<mln_dpoint(S)> to_window(const Site_Set<S>& pset);
+    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset);
 
-    /// Convert an std::set \p s of delta-points into a window.
+    /// Convert an std::set \p s of delta-sites into a window.
     template <typename D>
     window<D> to_window(const std::set<D>& s);
 
@@ -95,11 +95,11 @@ namespace mln
 
       template <typename N>
       inline
-      window<mln_dpoint(N)> to_window(const N& nbh_)
+      window<mln_dpsite(N)> to_window(const N& nbh_)
       {
 	const N& nbh = exact(nbh_);
-	typedef mln_dpoint(N) D;
-	typedef mln_point(D) P;
+	typedef mln_dpsite(N) D;
+	typedef mln_psite(D) P;
 	window<D> win;
 	mln_niter(N) n(nbh, P::origin);
 	for_all(n)
@@ -114,7 +114,7 @@ namespace mln
       {
 	return line_graph_elt_window<P>();
       }
-      
+
     } // end of namepace mln::convert::impl
 
 
@@ -131,9 +131,9 @@ namespace mln
     `------------------------------*/
 
     /* FIXME: According to milena/core/concepts/README, windows are
-       not necessarily based on a set of dpoints.  So the current
-       algorithm won't work on non dpoint-set-based windows.  In the
-       general case (of windows not being a set of dpoints), the
+       not necessarily based on a set of dpsites.  So the current
+       algorithm won't work on non dpsite-set-based windows.  In the
+       general case (of windows not being a set of dpsites), the
        window resulting from this conversion (as well as the iterators
        based on such windows!) should depend on the initial
        neighborhood (i.e., delegate the actual iteration to the
@@ -147,7 +147,7 @@ namespace mln
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
       typedef mln_dpsite(I) D;
-      typedef mln_point(D) P;
+      typedef mln_psite(D) P;
       window<D> win;
       mln_piter(I) p(ima.domain());
       for_all(p)
@@ -162,7 +162,7 @@ namespace mln
 
     template <typename S>
     inline
-    window<mln_dpoint(S)> to_window(const Site_Set<S>& pset)
+    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
     }

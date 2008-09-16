@@ -32,6 +32,7 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_MORPHO_EROSION_HH
 
+# include <mln/core/alias/window2d.hh>
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 # include <mln/geom/shift.hh>

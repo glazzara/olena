@@ -66,7 +66,7 @@ namespace mln
     template <typename T>
     struct helper_dim_
     {
-      typedef mln_site(T) P;
+      typedef mln_psite(T) P;
       enum { value = P::dim };
     };
 
@@ -152,7 +152,7 @@ namespace mln
       const W& win = exact(win_);
       mln_precondition(! win.is_empty());
 
-      typedef mln_site(W) P;
+      typedef mln_psite(W) P;
       box<P> b = geom::bbox(win);
       mln_image_from(W, bool) ima(b);
       level::fill(ima, false);
@@ -176,7 +176,7 @@ namespace mln
       const W& w_win = exact(w_win_);
       mln_precondition(! w_win.is_empty());
 
-      typedef mln_site(W) P;
+      typedef mln_psite(W) P;
       box<P> b = geom::bbox(w_win);
       mln_image_from(W, mln_weight(W)) ima(b);
       // Fill the image with zeros, as (weighted) windows are not

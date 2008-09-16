@@ -1,3 +1,47 @@
+2008-09-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various test related files (again).
+	* milena/tests/convert/to_image.cc,
+	* milena/tests/convert/to_window.cc,
+	* milena/tests/histo/compute.cc,
+	* milena/tests/histo/to_image1d.cc,
+	* milena/tests/morpho/hit_or_miss.cc,
+	* milena/tests/morpho/thinning.cc,
+	* milena/tests/set/inter.cc,
+	* milena/tests/set/is_subset_of.cc,
+	* milena/tests/set/sym_diff.cc,
+	* milena/tests/set/uni.cc: Make the test compile.
+
+	* milena/mln/fun/x2x/rotation.hh,
+	* milena/mln/set/diff.hh,
+	* milena/mln/labeling/regional_minima.hh,
+	* milena/mln/border/resize.hh,
+	* milena/mln/level/fill.hh,
+	* milena/mln/level/fill_with_image.hh,
+	* milena/mln/level/fill_with_value.hh:
+	  Avoid compilation warning when compiled with -DNDEBUG.
+
+	* milena/mln/convert/to_p_array.hh: Add a missing exact().
+
+	* milena/mln/set/inter.hh,
+	* milena/mln/convert/to_image.hh,
+	* milena/mln/convert/to_p_set.hh,
+	* milena/mln/convert/to_std_set.hh,
+	* milena/mln/convert/to_window.hh: Rename mln_point.
+
+	* milena/mln/core/alias/box1d.hh: Add full namespace name.
+
+	* milena/mln/draw/label.hh: Use sub_image instead of image_if_value.
+
+	* milena/mln/level/transform.spe.hh,
+	* milena/mln/level/median.hh: use values_eligible() instead of values().
+
+	* milena/mln/morpho/Rd.hh: Use greater_point instead of operator<.
+
+	* milena/mln/morpho/erosion.spe.hh: Add a missing include.
+
+	* milena/tests/morpho/Makefile.am: Disable graph related tests.
+
 2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve user doc generation.

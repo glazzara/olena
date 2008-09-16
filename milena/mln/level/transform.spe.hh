@@ -85,7 +85,7 @@ namespace mln
 	const F& f      = exact(f_);
 	      O& output = exact(output_);
 
-	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values(), f);
+	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values_eligible(), f);
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  output(p) = lut(input(p));

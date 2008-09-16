@@ -52,7 +52,7 @@ namespace mln
      * \relates mln::Window
      */
     template <typename Wl, typename Wr>
-    window<mln_dpoint(Wl)>
+    window<mln_dpsite(Wl)>
     inter(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
     /*! \brief Intersection between a couple of point sets.
@@ -60,19 +60,19 @@ namespace mln
      * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
-    p_set<mln_point(Wl)>
+    p_set<mln_psite(Wl)>
     inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Wl, typename Wr>
     inline
-    window<mln_dpoint(Wl)>
+    window<mln_dpsite(Wl)>
     inter(const Window<Wl>& lhs, const Window<Wr>& rhs)
     {
       trace::entering("set::inter");
-      mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
-      typedef mln_dpoint(Wl) D;
+      mln::metal::equal<mln_dpsite(Wl), mln_dpsite(Wr)>::check();
+      typedef mln_dpsite(Wl) D;
       std::set<D>
 	sl = convert::to_std_set(lhs),
 	sr = convert::to_std_set(rhs),
@@ -86,12 +86,12 @@ namespace mln
 
     template <typename Wl, typename Wr>
     inline
-    p_set<mln_point(Wl)>
+    p_set<mln_psite(Wl)>
     inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
       trace::entering("set::inter");
-      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
-      typedef mln_point(Wl) P;
+      mln::metal::equal<mln_psite(Wl), mln_psite(Wr)>::check();
+      typedef mln_psite(Wl) P;
       std::set<P>
 	sl = convert::to_std_set(lhs),
 	sr = convert::to_std_set(rhs),

@@ -53,30 +53,36 @@ namespace mln
 
     /// Convert a neighborhood \p nbh into a point set.
     template <typename N>
-    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh);
+    p_set<mln_psite(N)>
+    to_p_set(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a point set.
     template <typename I>
-    p_set<mln_psite(I)> to_p_set(const Image<I>& ima);
+    p_set<mln_psite(I)>
+    to_p_set(const Image<I>& ima);
 
     /// Convert a Window \p win into a point set.
     template <typename W>
-    p_set<mln_site(W)> to_p_set(const Window<W>& win);
+    p_set<mln_psite(W)>
+    to_p_set(const Window<W>& win);
 
     /// Convert an std::set \p s of points into a point set.
     template <typename P>
-    p_set<P> to_p_set(const std::set<P>& s);
+    p_set<P>
+    to_p_set(const std::set<P>& s);
 
     /// Convert any point set \p ps into a 'mln::p_set' point set.
     template <typename S>
-    p_set<mln_psite(S)> to_p_set(const Site_Set<S>& ps);
+    p_set<mln_psite(S)>
+    to_p_set(const Site_Set<S>& ps);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
     inline
-    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh_)
+    p_set<mln_point(N)>
+    to_p_set(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
       typedef mln_dpoint(N) D;
@@ -90,7 +96,8 @@ namespace mln
 
     template <typename I>
     inline
-    p_set<mln_psite(I)> to_p_set(const Image<I>& ima_)
+    p_set<mln_psite(I)>
+    to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -110,7 +117,8 @@ namespace mln
 
     template <typename W>
     inline
-    p_set<mln_site(W)> to_p_set(const Window<W>& win)
+    p_set<mln_site(W)>
+    to_p_set(const Window<W>& win)
     {
       typedef mln_site(W) P;
       p_set<P> pset;
@@ -122,7 +130,8 @@ namespace mln
 
     template <typename P>
     inline
-    p_set<P> to_p_set(const std::set<P>& s)
+    p_set<P>
+    to_p_set(const std::set<P>& s)
     {
       mln::metal::is_a<P, Point_Site>::check();
       p_set<P> pset;
@@ -134,7 +143,8 @@ namespace mln
 
     template <typename S>
     inline
-    p_set<mln_psite(S)> to_p_set(const Site_Set<S>& ps_)
+    p_set<mln_psite(S)>
+    to_p_set(const Site_Set<S>& ps_)
     {
       const S& ps = exact(ps_);
       p_set<mln_psite(S)> tmp;

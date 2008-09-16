@@ -62,7 +62,7 @@ namespace mln
      * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
-    p_set<mln_point(Wl)>
+    p_set<mln_psite(Wl)>
     diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 
@@ -89,18 +89,23 @@ namespace mln
 	    continue;
 	  tmp.insert(lhs.dp(i));
 	}
-      
+
       trace::exiting("set::diff");
       return tmp;
     }
 
     template <typename Wl, typename Wr>
     inline
-    p_set<mln_site(Wl)>
+    p_set<mln_psite(Wl)>
     diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
+      // Avoid a warning about an undefined variable when NDEBUG
+      // is not defined.
+      (void) lhs;
+      (void) rhs;
+
       trace::entering("set::diff");
-      p_set<mln_site(Wl)> s;
+      p_set<mln_psite(Wl)> s;
       abort();
 //       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
 //       typedef mln_point(Wl) P;

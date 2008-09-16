@@ -51,7 +51,7 @@ int main()
   using value::int_u8;
 
   {
-    accu::histo< value::set<bool> > h;
+    accu::histo<bool> h;
 
     for (unsigned i = 0; i < 5; ++i)
       h.take(false);

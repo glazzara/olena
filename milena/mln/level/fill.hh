@@ -72,6 +72,10 @@ namespace mln
       inline
       void fill_tests(Image<I>& ima, const D&)
       {
+        // Avoid a warning about an undefined variable when NDEBUG
+        // is not defined.
+	(void) ima;
+
 	mlc_is(mln_trait_image_value_io(I), trait::image::value_io::read_write)::check();
 	mln_precondition(exact(ima).has_data());
 	// FIXME: check for ambiguities...

@@ -43,6 +43,8 @@
 
 #include <mln/morpho/thinning.hh>
 
+#include<mln/convert/to.hh>
+
 #include "tests/data.hh"
 
 

@@ -46,7 +46,7 @@ namespace mln
    *
    * \see mln::win::rectangle1d.
    */
-  typedef box<point1d> box1d;
+  typedef box<mln::point1d> box1d;
 
 
 } // end of namespace mln

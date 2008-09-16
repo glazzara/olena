@@ -61,7 +61,10 @@ int main()
     d(0,-1);
 
   window2d ref;
-  ref.insert(a).insert(b).insert(c).insert(d);
+  ref.insert(a);
+  ref.insert(b);
+  ref.insert(c);
+  ref.insert(d);
   // Reference constructed.
 
   // Nbh :
@@ -78,11 +81,10 @@ int main()
 
   // Window :
   p_set<point2d> setp;
-  setp
-    .insert(point2d::origin + a)
-    .insert(point2d::origin + b)
-    .insert(point2d::origin + c)
-    .insert(point2d::origin + d);
+  setp.insert(point2d::origin + a);
+  setp.insert(point2d::origin + b);
+  setp.insert(point2d::origin + c);
+  setp.insert(point2d::origin + d);
   window2d test_setp = convert::to_window(setp);
   test(ref, test_setp);
 

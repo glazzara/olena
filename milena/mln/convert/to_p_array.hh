@@ -78,11 +78,12 @@ namespace mln
 
     template <typename W>
     inline
-    p_array<mln_psite(W)> to_p_array(const Window<W>& win,
+    p_array<mln_psite(W)> to_p_array(const Window<W>& win_,
 				     const mln_psite(W)& p)
     {
+      const W& win = exact(win_);
       p_array<mln_psite(W)> v;
-      v.reserve(exact(win).size());
+      v.reserve(win.size());
       mln_qiter(W) q(win, p);
       for_all(q)
 	v.append(q);

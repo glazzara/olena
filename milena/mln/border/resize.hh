@@ -113,6 +113,11 @@ namespace mln
       void resize_(trait::image::ext_domain::none,
 		   const I& ima, unsigned thickness)
       {
+	// Avoid a warning about an undefined variable when NDEBUG
+	// is not defined.
+	(void) ima;
+	(void) thickness;
+
 	// No-op.
       }
 
@@ -121,6 +126,11 @@ namespace mln
       void resize_(trait::image::ext_domain::fixed,
 		   const I& ima, unsigned thickness)
       {
+	// Avoid a warning about an undefined variable when NDEBUG
+	// is not defined.
+	(void) ima;
+	(void) thickness;
+
 	// No-op.
       }
 
