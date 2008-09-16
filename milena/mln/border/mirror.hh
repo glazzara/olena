@@ -73,9 +73,10 @@ namespace mln
 
       template <typename I>
       inline
-      void mirror_(const box1d&, const I& ima)
+      void mirror_(const box1d&, const I& ima_)
       {
 	trace::entering("border::impl::mirror_");
+	I& ima = const_cast<I&>(ima_);
 
  	std::size_t border = ima.border ();
  	std::size_t nbinds = geom::ninds(ima);
@@ -90,10 +91,10 @@ namespace mln
 	{
 	  std::size_t i = 0;
 	  for (; i < min; ++i)
-	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(i));
+	    ima.element(border - 1 - i) = ima(point1d(i));
 
 	  for (; i < border; ++i)
-	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(min - 1));
+	    ima.element(border - 1 - i) = ima(point1d(min - 1));
 	}
 
 	/// right border
@@ -103,21 +104,22 @@ namespace mln
 	  for (;
 	       i < min;
 	       ++i, --j)
-	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	    ima.element(border + nbinds + i) = ima(point1d(j));
 	  ++j;
 	  for (;
 	       i < border;
 	       ++i)
-	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	    ima.element(border + nbinds + i) = ima(point1d(j));
 	}
 	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
-      void mirror_(const box2d&, const I& ima)
+      void mirror_(const box2d&, const I& ima_)
       {
 	trace::entering("border::impl::mirror_");
+	I& ima = const_cast<I&>(ima_);
 
 	std::size_t border = ima.border ();
 	std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
@@ -129,49 +131,49 @@ namespace mln
 	// mirror top left corner
 	for (std::size_t i = 0; i < border; ++i)
 	  for (std::size_t j = 0; j < border; ++j)
-	  const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + j] = ima[s];
+	  ima.element(i * ((nbcols + 1) + 2 * border) + j) = ima.element(s);
 
 	// mirror top left corner
 	s = start + nbcols;
 	for (std::size_t i = 0; i < border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)] = ima[s];
+	    ima.element(i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)) = ima.element(s);
 
 	// mirror bottom left corner
 	s = start + (nbrows * real_nbcols);
 	for (std::size_t i = 1; i <= border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s - i + (j * (real_nbcols))] = ima[s];
+	    ima.element(s - i + (j * (real_nbcols))) = ima.element(s);
 
 	// mirror bottom right corner
 	s = start + (nbrows * real_nbcols) + nbcols;
 	for (std::size_t i = 1; i <= border; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s];
+	    ima.element(s + i + (j * real_nbcols)) = ima.element(s);
 
 	// mirror top border
 	s = start;
 	for (std::size_t i = 0; i <= nbcols; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i - (j * real_nbcols)] = ima[s + i + ((j - 1)* real_nbcols)];
+	    ima.element(s + i - (j * real_nbcols)) = ima.element(s + i + ((j - 1)* real_nbcols));
 
 	// mirror left border
 	s = start;
 	for (std::size_t i = 0; i <= nbrows; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
- 	  const_cast<I&>(ima)[s + (i * real_nbcols) - j] = ima[s + (i * real_nbcols) + (j - 1)];
+ 	  ima.element(s + (i * real_nbcols) - j) = ima.element(s + (i * real_nbcols) + (j - 1));
 
 	// mirror right border
 	s = start;
 	for (std::size_t i = 0; i <= nbrows; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + (i * real_nbcols + nbcols) + j] = ima[s + (i * real_nbcols + nbcols) - (j - 1)];
+	    ima.element(s + (i * real_nbcols + nbcols) + j) = ima.element(s + (i * real_nbcols + nbcols) - (j - 1));
 
 	// mirror bottom border
 	s = start + (nbrows * real_nbcols);
 	for (std::size_t i = 0; i <= nbcols; ++i)
 	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s + i - ((j - 1)* real_nbcols)];
+	    ima.element(s + i + (j * real_nbcols)) = ima.element(s + i - ((j - 1)* real_nbcols));
 
 	trace::exiting("border::impl::mirror_");
       }

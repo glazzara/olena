@@ -35,10 +35,10 @@
  * with a function.
  *
  * \todo Deal with two-ways functions...
+ * \todo Use an envelop as lvalue to test extension writing.
  */
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/metal/converts_to.hh>
 
 
 
@@ -79,6 +79,15 @@ namespace mln
       typedef trait::image::ext_domain::infinite ext_domain;
       typedef trait::image::ext_value::multiple  ext_value;
       typedef trait::image::ext_io::read_only    ext_io;
+    };
+
+    template <typename I, typename F, typename V>
+    struct ch_value< extension_fun<I, F>, V >
+    {
+      typedef mlc_converts_to(mln_result(F), V) keep_ext;
+      typedef mln_ch_value(I, V)   Iv;
+      typedef extension_fun<Iv, F> Iv_ext;
+      typedef mlc_if(keep_ext, Iv_ext, Iv) ret;
     };
 
   } // end of namespace mln::trait

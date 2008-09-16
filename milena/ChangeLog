@@ -1,5 +1,30 @@
 2008-09-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make the tricky morpho example fully work.
+
+	* mln/core/site_set/p_centered.hh: New.
+	* mln/core/site_set/all.hh: Update.
+	* mln/core/image/extended.hh: New.
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh (ch_value): New.
+	The extension is propagated to a concrete type iff it can
+	work.
+	(todo): New.
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image3d.hh (line_piter): De-activate cause it
+	does not work yet.
+	* mln/core/point.hh (point): Add explicit to the 1D ctor.
+	* mln/level/sort_psites.hh: Update.
+	* mln/border/fill.hh,
+	* mln/border/mirror.hh: Update.
+	* mln/fun/i2v/array.hh: New.
+	* mln/win/all.hh: Update.
+	* mln/win/multiple.hh (i_): Fix warning.
+	* doc/examples/tuto_bis.cc: Update.
+
+2008-09-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment the documentation example on a 2D complex.
 
 	* doc/examples/tuto_bis.cc: Re-activate the first two steps.

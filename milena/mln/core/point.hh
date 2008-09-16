@@ -140,7 +140,7 @@ namespace mln
 
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
-    point(C ind);
+    explicit point(C ind);
     point(C row, C col);
     point(C sli, C row, C col);
     /// \}

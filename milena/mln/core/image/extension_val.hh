@@ -34,10 +34,10 @@
  * \brief Definition of a morpher that extends the domain of an image.
  *
  * \todo Use the 'instant' mechanism.
+ * \todo Use an envelop as lvalue to test extension writing.
  */
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/metal/converts_to.hh>
 
 
 
@@ -78,6 +78,15 @@ namespace mln
       typedef trait::image::ext_domain::infinite ext_domain;
       typedef trait::image::ext_value::single    ext_value;
       typedef trait::image::ext_io::read_write   ext_io;
+    };
+
+    template <typename I, typename V>
+    struct ch_value< extension_val<I>, V >
+    {
+      typedef mlc_converts_to(mln_value(I), V) keep_ext;
+      typedef mln_ch_value(I, V) Iv;
+      typedef extension_val<Iv>  Iv_ext;
+      typedef mlc_if(keep_ext, Iv_ext, Iv) ret;
     };
 
   } // end of namespace mln::trait

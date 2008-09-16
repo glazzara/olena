@@ -77,12 +77,12 @@ namespace mln
 	for_all (pl)
 	  {
 	    std::size_t end = ima.index_of_point (pl);
-	    std::memset((void*)&ima[st],
+	    std::memset((void*)&ima.element(st),
 			*(const int*)(&v),
 			end - st);
 	    st = end + len_r;
 	  }
-	std::memset((void*)&ima[st],
+	std::memset((void*)&ima.element(st),
 		    *(const int*)(&v),
 		    ima.nelements () - st);
 

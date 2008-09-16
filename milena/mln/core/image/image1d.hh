@@ -39,7 +39,6 @@
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all_to.hh>
 
-# include <mln/core/line_piter.hh>
 
 // FIXME:
 

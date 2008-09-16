@@ -38,6 +38,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/histo/compute.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -89,8 +90,10 @@ namespace mln
 	bool operator()(const mln_psite(I)& lhs,
 			const mln_psite(I)& rhs) const
 	{
-	  return ima_(lhs) < ima_(rhs) || (ima_(lhs) == ima_(rhs)
-					   && lhs < rhs);
+	  return util::ord_strict(ima_(lhs), ima_(rhs))
+	    || (ima_(lhs) == ima_(rhs)
+		&&
+		util::ord_strict(lhs, rhs));
 	}
       };
 
@@ -109,8 +112,10 @@ namespace mln
 	bool operator()(const mln_psite(I)& lhs,
 			const mln_psite(I)& rhs) const
 	{
-	  return ima_(lhs) > ima_(rhs) || (ima_(lhs) == ima_(rhs)
-					   && lhs > rhs);
+	  return util::ord_strict(ima_(rhs), ima_(lhs))
+	    || (ima_(lhs) == ima_(rhs)
+		&&
+		util::ord_strict(rhs, lhs));
 	}
       };
 

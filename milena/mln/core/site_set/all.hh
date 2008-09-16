@@ -31,18 +31,24 @@
 /*! \file mln/core/site_set/all.hh
  *
  * \brief File that includes all site_set types.
- *
- * \todo Make it effective after having moved image-defining files.
  */
 
 
-// # include <mln/core/site_set/p_array_of.hh> // FIXME: Uncomment.
+# include <mln/core/site_set/box.hh>
+# include <mln/core/site_set/line2d.hh>
+# include <mln/core/site_set/p_array.hh>
+# include <mln/core/site_set/p_centered.hh>
+# include <mln/core/site_set/p_if.hh>
 # include <mln/core/site_set/p_image.hh>
 # include <mln/core/site_set/p_key.hh>
 # include <mln/core/site_set/p_mutable_array_of.hh>
+# include <mln/core/site_set/p_priority.hh>
+# include <mln/core/site_set/p_queue.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/core/site_set/p_set_of.hh>
 # include <mln/core/site_set/p_vaccess.hh>
-// FIXME: Complete...
 
 
 #endif // ! MLN_CORE_SITE_SET_ALL_HH

@@ -40,7 +40,7 @@
 # include <mln/value/set.hh>
 # include <mln/fun/i2v/all_to.hh>
 
-# include <mln/core/line_piter.hh>
+// # include <mln/core/line_piter.hh>
 
 // FIXME:
 
@@ -131,7 +131,7 @@ namespace mln
     typedef dpoint3d dpoint;
     typedef mln_fwd_piter(box3d) fwd_piter;
     typedef mln_bkd_piter(box3d) bkd_piter;
-    typedef line_piter_<point> line_piter;
+//     typedef line_piter_<point> line_piter;
     // End of warning.
 
 

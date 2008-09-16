@@ -119,7 +119,7 @@ namespace mln
       mln_psite(W) compute_p_() const;
 
     private:
-      int i_;
+      unsigned i_;
       unsigned n_() const;
     };
 
