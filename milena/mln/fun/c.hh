@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,51 @@
 namespace mln
 {
 
+  /// Concept-like.
+  template <typename E>
+  struct C_Function;
+
+
+  /// Category declaration for a unary C function.
+  template <typename R, typename A>
+  struct category< R (*)(A) >
+  {
+    typedef C_Function<void> ret;
+  };
+
+
+
+  // Forward declaration.
+  namespace fun { template <typename F> struct C; }
+
+
+
+  namespace trait
+  {
+
+    template <template <class> class Op,
+	      typename R, typename A>
+    struct set_unary_< Op, C_Function, R (*)(A) >
+    {
+      typedef Op< fun::C<R (*)(A)> > Op_;
+      typedef typename Op_::ret ret;
+    };
+
+    template <template <class, class> class Op,
+	      typename O,
+	      typename R, typename A>
+    struct set_binary_< Op,
+			Object,      O,
+			C_Function,  R (*)(A) >
+    {
+      typedef Op< O, fun::C<R (*)(A)> > Op_;
+      typedef typename Op_::ret ret;
+    };
+
+  } // end of namespace trait
+
+
+
   namespace fun
   {
     
@@ -53,6 +98,7 @@ namespace mln
       :
       fun::internal::selector_< R, A, C<R(*)(A)> >::ret
     {
+      C();
       C(R (*f)(A));
       typedef R result;
       R operator()(const mlc_unqualif(A)& a) const;
@@ -62,6 +108,12 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename R, typename A>
+    inline
+    C<R(*)(A)>::C()
+    {
+    }
 
     template <typename R, typename A>
     inline

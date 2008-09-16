@@ -34,6 +34,7 @@
 
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint1d.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln

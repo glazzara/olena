@@ -35,6 +35,7 @@
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/metal/math/sqrt.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln

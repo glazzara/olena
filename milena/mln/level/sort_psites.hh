@@ -124,7 +124,7 @@ namespace mln
 			      const I& input)
       {
 	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
-	std::sort(v.hook_().begin(), v.hook_().end(),
+	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_less_<I>(input));
 	return v;
       }
@@ -168,7 +168,7 @@ namespace mln
 			      const I& input)
       {
 	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
-	std::sort(v.hook_().begin(), v.hook_().end(),
+	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_greater_<I>(input));
 	return v;
       }

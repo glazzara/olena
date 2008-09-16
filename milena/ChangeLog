@@ -1,3 +1,26 @@
+2008-09-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment the documentation example on a 2D complex.
+
+	* doc/examples/tuto_bis.cc: Re-activate the first two steps.
+	* mln/core/image/image_if.hh (operator|): New overloads.
+	It now works with C functions.
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/neighb.hh,
+	* mln/make/dual_neighb2d.hh: Fix missing include.
+	We shall always first include from_to.hh in files that provide
+	some overloading of from_to_.
+	* mln/level/sort_psites.hh: Fix.
+	* mln/convert/to_p_array.hh (reserve): Deactivate cause nsites
+	is an optional method.
+	* mln/fun/c.hh (C_Function): New concept declaration.
+	(category): New specialization for C functions.
+	(set_unary_, set_binary_): New specializations for C functions.
+	(C): Fix missing default ctor.
+	* mln/morpho/meyer_wst.hh (nbh): Fix missing exact.
+
 2008-09-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make neighborhoods based on windows work.

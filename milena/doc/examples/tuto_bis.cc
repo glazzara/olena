@@ -1,32 +1,32 @@
-# include <vector>
-
 # include <mln/core/var.hh>
 
-# include <mln/core/alias/point2d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/routine/extend.hh>
+
 # include <mln/core/alias/window2d.hh>
-# include <mln/make/win_multiple.hh>
-# include <mln/convert/to.hh>
 # include <mln/make/dual_neighb2d.hh>
-# include <mln/literal/origin.hh>
-# include <mln/core/site_set/p_set.hh>
+
+# include <mln/debug/println.hh>
+# include <mln/fun/p2v/iota.hh>
+
+# include <mln/level/paste.hh>
+# include <mln/level/fill.hh>
+
+# include <mln/accu/min_max.hh>
+# include <mln/morpho/meyer_wst.hh>
 
 
 /*
-# include <mln/core/image/image2d.hh>
+# include <vector>
+
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image/image_if.hh>
 
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/alias/window2d.hh>
 # include <mln/convert/to_window.hh>
 
-# include <mln/debug/println.hh>
-# include <mln/fun/p2v/iota.hh>
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
-
 # include <mln/morpho/dilation.hh>
-# include <mln/morpho/gradient.hh>
 # include <mln/morpho/meyer_wst.hh>
 
 # include <mln/level/transform.hh>
@@ -99,36 +99,6 @@ namespace mln
 } // mln
 
 
-struct is_cell_t :  mln::Function_p2b<is_cell_t>
-{
-  typedef bool result;
-  bool operator()(const mln::point2d& p) const
-  {
-    return p.row() % 2 == 0 && p.col() % 2 == 0;
-  }
-}
-  is_cell;
-
-struct is_edge_t :  mln::Function_p2b<is_edge_t>
-{
-  typedef bool result;
-  bool operator()(const mln::point2d& p) const
-  {
-    return p.row() % 2 + p.col() % 2 == 1;
-  }
-}
-  is_edge;
-
-struct is_point_t :  mln::Function_p2b<is_point_t>
-{
-  typedef bool result;
-  bool operator()(const mln::point2d& p) const
-  {
-    return p.row() % 2 && p.col() % 2;
-  }
-}
-  is_point;
-
 */
 
 
@@ -150,8 +120,6 @@ namespace mln
       exact(s).insert(q);
   }
 
-
-
   template <typename N, typename S>
   void convert_to_site_set(const Neighborhood<N>& nbh,
 			   const mln_psite(N)& p,
@@ -165,14 +133,59 @@ namespace mln
       exact(s).insert(n);
   }
 
+
+  namespace morpho
+  {
+
+    template <typename I, typename N>
+    mln_concrete(I)
+    gradient(const I& input, const N& nbh)
+    {
+      mln_concrete(I) output;
+      initialize(output, input);
+      accu::min_max_<mln_value(I)> mm;
+
+      mln_piter(I) p(input.domain());
+      mln_niter(N) n(nbh, p);
+      for_all(p)
+      {
+	mm.init();
+	for_all(n) if (input.has(n))
+	  mm.take(input(n));
+	output(p) = mm.second() - mm.first();
+      }
+      return output;
+    }
+    
+
+  } // mln::morpho
+
+
+} // mln
+
+
+// Functions
+
+bool is_row_odd(const mln::point2d& p)
+{
+  return p.row() % 2;
 }
 
+bool is_cell(const mln::point2d& p)
+{
+  return p.row() % 2 == 0 && p.col() % 2 == 0;
+}
 
+bool is_edge(const mln::point2d& p)
+{
+  return p.row() % 2 + p.col() % 2 == 1;
+}
 
-  bool is_row_odd(const mln::point2d& p)
-  {
-    return p.row() % 2;
-  }
+bool is_point(const mln::point2d& p)
+{
+  return p.row() % 2 && p.col() % 2;
+}
+
 
 
 
@@ -192,10 +205,6 @@ int main()
 
   mln_VAR( e2c, make::dual_neighb2d(is_row_odd, e2c_h, e2c_v) );
 
-//   p_set<point2d> s;
-//   convert_to_site_set(e2c, literal::origin, s); 
-//   std::cout << s << std::endl;
-
   bool e2e_h[] = { 0, 0, 1, 0, 0,
 		   0, 1, 0, 1, 0,
 		   0, 0, 0, 0, 0,
@@ -211,44 +220,6 @@ int main()
   mln_VAR( e2e, make::dual_neighb2d(is_row_odd, e2e_h, e2e_v) );
 
 
-  /*
-
-  window2d c4 = convert::to_window(mln::c4());
-
-
-  dbl_neighb_<dpoint2d, is_row_odd_t> nbh_e2c, win_p_e2c, nbh_e2e;
-  {
-    bool e2c_h[] = { 0, 1, 0,
-		     0, 0, 0,
-		     0, 1, 0 };
-
-    bool e2c_v[] = { 0, 0, 0,
-		     1, 0, 1,
-		     0, 0, 0 };
-    nbh_e2c
-      .when_true (make::neighb2d(e2c_h))
-      .when_false(make::neighb2d(e2c_v));
-
-    win_p_e2c = nbh_e2c;
-    win_p_e2c
-      .insert_true(dpoint2d(0,0))
-      .insert_false(dpoint2d(0,0));
-
-    bool e2e_h[] = { 0, 0, 1, 0, 0,
-		     0, 1, 0, 1, 0,
-		     0, 0, 0, 0, 0,
-		     0, 1, 0, 1, 0,
-		     0, 0, 1, 0, 0 };
-
-    bool e2e_v[] = { 0, 0, 0, 0, 0,
-		     0, 1, 0, 1, 0,
-		     1, 0, 0, 0, 1,
-		     0, 1, 0, 1, 0,
-		     0, 0, 0, 0, 0 };
-    nbh_e2e
-      .when_true (make::neighb2d(e2e_h))
-      .when_false(make::neighb2d(e2e_v));
-  }
 
 
   image2d<int> ima(3, 5);
@@ -260,14 +231,37 @@ int main()
   //      
   // 4   5   6 
 
-  mln_VAR(edge, ima | is_edge);
-  level::paste(morpho::gradient(edge, nbh_e2c), edge);
-  //                                  ^^^^^^^
-  //                         edge -> neighbooring cells
+
+
+  mln_VAR(edge, extend(inplace(ima | is_edge),
+		       pw::value(ima)));
+  level::paste(morpho::gradient(edge, e2c), edge);
+  //                                  ^^^
+  //                         edge -> neighboring cells
   debug::println(edge);
   //   1   1   
   // 3   3   3 
   //   1   1
+
+
+  unsigned nbasins;
+  mln_VAR(wst, morpho::meyer_wst(edge, e2e, nbasins));
+  //                                   ^^^
+  //                         edge -> neighboring edges
+  debug::println(wst);
+  //   2   2   
+  // 0   0   0 
+  //   1   1   
+
+  std::cout << nbasins << " bassins" << std::endl;
+  // 2 bassins
+
+
+
+  /*
+
+  window2d c4 = convert::to_window(mln::c4());
+
 
   unsigned nbasins;
   mln_VAR(wst, morpho::meyer_wst(edge, nbh_e2e, nbasins));

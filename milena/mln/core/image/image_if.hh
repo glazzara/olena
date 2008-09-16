@@ -39,6 +39,7 @@
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/site_set/p_if.hh>
 # include <mln/pw/all.hh>
+# include <mln/convert/to_fun.hh>
 
 
 namespace mln
@@ -149,6 +150,16 @@ namespace mln
 
 
 
+  template <typename I, typename A>
+  image_if< const I, fun::C<bool(*)(A)> >
+  operator | (const Image<I>& ima, bool (*f)(A) );
+
+  template <typename I, typename A>
+  image_if< I, fun::C<bool(*)(A)> >
+  operator | (Image<I>& ima, bool (*f)(A) );
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   // internal::data< image_if<I,F> >
@@ -230,6 +241,22 @@ namespace mln
     image_if<const I, F> tmp(exact(ima), exact(f));
     return tmp;
   }
+
+
+  template <typename I, typename A>
+  image_if< const I, fun::C<bool(*)(A)> >
+  operator | (const Image<I>& ima, bool (*f)(A) )
+  {
+    return exact(ima) | convert::to_fun(f);
+  }
+
+  template <typename I, typename A>
+  image_if< I, fun::C<bool(*)(A)> >
+  operator | (Image<I>& ima, bool (*f)(A) )
+  {
+    return exact(ima) | convert::to_fun(f);
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

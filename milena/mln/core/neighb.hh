@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/internal/neighborhood_base.hh>
+# include <mln/convert/from_to.hh>
 
 
 

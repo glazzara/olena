@@ -33,6 +33,7 @@
  * \brief Routine to create a dual neighborhood.
  */
 
+# include <mln/convert/to.hh>
 # include <mln/core/alias/window2d.hh>
 # include <mln/win/multiple.hh>
 # include <mln/core/neighb.hh>

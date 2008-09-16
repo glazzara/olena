@@ -35,6 +35,7 @@
 # include <cmath>
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint3d.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
