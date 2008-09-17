@@ -45,16 +45,20 @@
 
 # include <mln/core/face.hh>
 
+# include <mln/core/complex_iter.hh>
+
 
 namespace mln
 {
 
-  // Forward declaration.
+  // Forward declarations.
   namespace internal
   {
     template <unsigned N, unsigned D>
     struct faces_set_mixin;
   }
+  template <unsigned D> class complex_fwd_iter_;
+  template <unsigned D> class complex_bkd_iter_;
 
 
   /*----------.
@@ -66,6 +70,11 @@ namespace mln
   class complex : private internal::faces_set_mixin<D, D>
   {
   public:
+    /// Forward mln::Iterator associated type.
+    typedef complex_fwd_iter_<D> fwd_citer;
+    /// Backward mln::Iterator associated type.
+    typedef complex_bkd_iter_<D> bkd_citer;
+
     /// Complex construction.
     /// \{
     /// \brief Add a 0-face to the complex.

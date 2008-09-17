@@ -1415,6 +1415,20 @@
 
 	* mln/win/rectangle2d.hh: Update an old include
 
+2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add forward and backward iterators on complexes.
+
+	* mln/core/complex_iter.hh: New
+	* mln/core/complex.hh: Add forward declarations for class
+	complex_fwd_iter_ and class complex_bkd_iter_.
+	(mln::complex<D>::fwd_citer, mln::complex<D>::bkd_citer):
+	New typedefs.
+	* mln/core/macros.hh (mln_citer, mln_citer_)
+	(mln_bkd_citer, mln_bkd_citer_, mln_fwd_citer, mln_fwd_citer_):
+	New shortcut macros.
+	* tests/core/complex.cc: Exercise iterators on complexes.
+
 2008-09-10  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Parametrize histo::data by value types, Repair image1d.

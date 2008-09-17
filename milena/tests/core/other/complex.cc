@@ -109,4 +109,28 @@ int main()
   const face<1, D>& face2 = af.to_face<1>();
 
   mln_assertion(&face1 == &face2);
+
+  
+  /*------------.
+  | Iteration.  |
+  `------------*/
+
+  // Iterators on a complex (not complex_image), or more precisely on
+  // the faces of a complex.
+
+  mln_fwd_citer_(complex<D>) ff(c);
+  for_all(ff)
+    std::cout << ff << std::endl;
+
+  std::cout << std::endl;
+
+  mln_bkd_citer_(complex<D>) bf(c);
+  for_all(bf)
+    std::cout << bf << std::endl;
+
+  /* FIXME: Exercice more iterators (see
+     milena/tests/core/complex_image.cc) and ticket #162
+     (https://trac.lrde.org/olena/ticket/162) */
+  // ...
+
 }
