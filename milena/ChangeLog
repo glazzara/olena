@@ -1,3 +1,9 @@
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/core/contract.hh (HAS_NDEBUG): New preprocessor constant.
+	[NDEBUG]: Expand as 1.
+	[!NDEBUG]: Expand as 0.
+
 2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add extension::fill routine and test.

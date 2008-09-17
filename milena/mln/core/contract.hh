@@ -35,6 +35,15 @@
 
 # include <cassert>
 
+// Define a preprocessor constant HAS_NDEBUG reflecting the existence
+// of NDEBUG, as avised by the section Conditional Compilation of the
+// GNU Coding Standards
+// (http://www.gnu.org/prep/standards/html_node/Conditional-Compilation.html).
+#ifdef NDEBUG
+#define HAS_NDEBUG 1
+#else
+#define HAS_NDEBUG 0
+#endif
 
 /// Assertion.
 # define mln_assertion(expr)     assert(expr)
