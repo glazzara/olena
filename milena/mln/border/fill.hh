@@ -36,6 +36,7 @@
 # include <cstring>
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/box_runstart_piter.hh>
 
 
 namespace mln
@@ -70,8 +71,9 @@ namespace mln
 
 	typedef mln_psite(I) P;
 	typedef mln_psite(I) P;
-	typename I::line_piter pl(ima.domain());
-	std::size_t len_r = ima.bbox().len(P::dim - 1);
+	mln_box_runstart_piter(I) pl(ima.domain());
+
+	std::size_t len_r = pl.run_length();
 	std::size_t st = 0;
 
 	for_all (pl)
@@ -96,19 +98,19 @@ namespace mln
 	trace::entering("border::impl::fill_size_n_");
 
 	typedef mln_psite(I) P;
-	typename I::line_piter pl(ima.domain());
-	std::size_t len_r = ima.bbox().len(P::dim - 1);
+	mln_box_runstart_piter(I) pl(ima.domain());
+	std::size_t len_r = pl.run_length();
 	std::size_t st = 0;
 
 	for_all (pl)
 	  {
 	    std::size_t end = ima.index_of_point (pl);
 	    for (std::size_t i = st; i < end; ++i)
-	      const_cast<I&>(ima)[i] = v;
+	      (const_cast<I&>(ima)).element(i) = v;
 	    st = end + len_r;
 	  }
 	for (std::size_t i = st; i < ima.nelements (); ++i)
-	  const_cast<I&>(ima)[i] = v;
+	  const_cast<I&>(ima).element(i) = v;
 
 	trace::exiting("border::impl::fill_size_n_");
       }

@@ -37,6 +37,9 @@
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/box.hh>
 
+#define mln_box_runstart_piter(I) typename mln::box_runstart_piter< mln_psite(I) >
+#define mln_box_runstart_piter_(I) mln::box_runstart_piter<mln_psite(I)>
+
 namespace mln
 {
 

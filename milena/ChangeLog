@@ -1,3 +1,11 @@
+2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Restore border::fill.
+
+	* mln/border/fill.hh: Updates dues to the renaming of line_piter to
+	box_runstart_piter.
+	* mln/core/box_runstart_piter.hh(mln_box_runstart_piter): New.
+
 2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some morphological reconstruction algorithms in sandbox.
