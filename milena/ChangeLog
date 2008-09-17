@@ -1,3 +1,8 @@
+2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Do not exclude the concept directory from doc generation.
+	* milena/doc/Doxyfile.in: do it.
+
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix handling of arguments in mln::morpho::meyer_wst.
