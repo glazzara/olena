@@ -1,5 +1,12 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update morpho::meyer_wst.
+
+	* mln/morpho/meyer_wst.hh (mln::morpho::meyer_wst): Work with the
+	exact types of the arguments.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the handling of a possibly unused variable in line_gradient.
 
 	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient): Here.

@@ -104,9 +104,12 @@ namespace mln
 
     template <typename L, typename I, typename N>
     mln_ch_value(I, L)
-    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh_,
+    meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)
     {
+      I input = exact(input_);
+      N nbh = exact(nbh_);
+
       /* FIXME: Ensure the input image has scalar values.  */
       const N& nbh = exact(nbh_);
 
