@@ -1,5 +1,11 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update tools/area_flooding.
+
+	* tools/area_flooding.cc (main): s/p.to_psite()/p.unproxy_()/.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Re-enable some tests on line graph entities.
 
 	* tests/core/image/line_graph_image.cc: Remove useless #include's.

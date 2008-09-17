@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
   `-----------*/
 
   /* FIXME: I'm not sure this is the way it should be done.  Anyway,
-     we should implemented this as a canvas.  */
+     we should implement this as a canvas.  */
 
   typedef line_graph_elt_neighborhood<point2d> nbh_t;
   nbh_t nbh;
@@ -163,8 +163,10 @@ int main(int argc, char* argv[])
   for_all(p)
     if (wshed(p) != wshed_label)
       {
-	wshed2d(p.to_psite().first()) = wshed(p);
-	wshed2d(p.to_psite().second()) = wshed(p);
+	// FIXME: Equip the iterator with first() and second()
+	// accessors?
+	wshed2d(p.unproxy_().first()) = wshed(p);
+	wshed2d(p.unproxy_().second()) = wshed(p);
       }
 
   // For each basin, compute the average gray level.
