@@ -1,5 +1,20 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph elementary neighborhood and window.
+
+	* mln/core/image/line_graph_elt_neighborhood.hh,
+	* mln/core/image/line_graph_elt_window.hh
+	(mln::line_graph_elt_neighborhood<P>::site)
+	(mln::line_graph_elt_window<P>::site):
+	Deduce these typedefs from their respective psites.
+	(mln::line_graph_elt_neighborhood<P>::compute_sites_)
+	(mln::line_graph_elt_window<P>::compute_sites_):
+	Adjust to the new psite interface.
+	s/pref()/center()/.
+	s/plg()/center().site_set()/.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a site_set accessor on site_relative_iterator_base.
 
 	* mln/core/internal/site_relative_iterator_base.hh

@@ -38,7 +38,9 @@
    - mln::graph_elt_window
    - mln::graph_elt_neighborhood
    - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.  */
+   - mln::line_graph_elt_neighborhood.
+
+   See https://trac.lrde.org/olena/ticket/139.  */
 
 /* FIXME: Due to the poor interface of mln::p_line_graph and
    mln::util::graph, we show to much implementation details here.
@@ -70,10 +72,10 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of site corresponding to the neighborhood.
-    typedef P site;
     /// The type of psite corresponding to the neighborhood.
     typedef line_graph_psite<P> psite;
+    /// The type of site corresponding to the neighborhood.
+    typedef mln_site(psite) site;
     // The type of the set of neighbors (edge ids adjacent to the
     // reference psite).
     typedef std::set<util::edge_id> sites_t;
@@ -97,7 +99,6 @@ namespace mln
     /// Create a window corresponding to this neighborhood.
     window to_window() const;
     /// \}
-
 
     /// Services for iterators.
     /// \{
@@ -126,15 +127,15 @@ namespace mln
   line_graph_elt_neighborhood<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::edge_id ref_edge_id = piter.p_ref().id();
+    util::edge_id ref_edge_id = piter.center().edge_id();
     sites_t& sites = piter.sites();
     sites.clear();
     /* FIXME: Move this computation out of the neighborhood. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
     // Ajacent edges connected through vertex 1.
-    util::vertex_id id1 = piter.p_ref().first_id();
-    const util::vertex<P>& vertex1 = piter.plg().gr_->vertex(id1);
+    util::vertex_id id1 = piter.center().first_id();
+    const util::vertex<P>& vertex1 = piter.center().site_set().gr_->vertex(id1);
     for (std::vector<util::edge_id>::const_iterator e =
 	   vertex1.edges.begin(); e != vertex1.edges.end(); ++e)
       // We explicitly enforce that the reference piter edge id is
@@ -142,8 +143,8 @@ namespace mln
       if (*e != ref_edge_id)
 	sites.insert(*e);
     // Ajacent edges connected through vertex 2.
-    util::vertex_id id2 = piter.p_ref().second_id();
-    const util::vertex<P>& vertex2 = piter.plg().gr_->vertex(id2);
+    util::vertex_id id2 = piter.center().second_id();
+    const util::vertex<P>& vertex2 = piter.center().site_set().gr_->vertex(id2);
     for (std::vector<util::edge_id>::const_iterator e =
 	   vertex2.edges.begin(); e != vertex2.edges.end(); ++e)
       // Same remark as above.
