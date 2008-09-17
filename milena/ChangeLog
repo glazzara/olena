@@ -908,6 +908,24 @@
 
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add iterators on the n-faces of a complex.
+
+	* mln/core/faces_iter.hh: New.
+	* mln/core/complex.hh: Add forward declarations for
+	faces_fwd_iter_ and faces_bkd_iter_.
+	(mln::complex<D>::fwd_fiter<N>, mln::complex<D>::bkd_fiter<N>):
+	New inner classes.
+	* mln/core/face.hh
+	(mln::face_handle<N, D>::set_cplx)
+	(mln::face_handle<N, D>::set_face_id):
+	New mutators.
+	* mln/core/macros.hh (mln_fiter, mln_fiter_)
+	(mln_fwd_fiter, mln_fwd_fiter_, mln_bkd_fiter, mln_bkd_fiter_):
+	New macros.
+	* tests/core/complex.cc (main): Exercise iterators on n-faces.
+
+2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor iterators on complexes.
 
 	* mln/core/complex_iter.hh (mln::internal::complex_iter_<D, E>):
