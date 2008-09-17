@@ -264,13 +264,16 @@ namespace mln
     return lhs.face() < rhs.face();
   }
 
+  /*------------------.
+  | Pretty-printing.  |
+  `------------------*/
 
   template <unsigned D, typename P>
   inline
   std::ostream&
   operator<<(std::ostream& ostr, const complex_psite<D, P>& p)
   {
-        return ostr << "(dim = " << p.n() << ", id = " << p.face_id() << ')';
+    return ostr << "(dim = " << p.n() << ", id = " << p.face_id() << ')';
   }
 
 # endif // ! MLN_INCLUDE_ONLY
