@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,6 +74,10 @@ namespace mln
 
       /// Go to the next point.
       void next_();
+
+      /// Give the site set (neighborhood or window) that this
+      /// iterator browses.
+      const S& site_set() const;
 
       /// The psite around which this iterator moves.
       const mln_psite(S)& center() const;
@@ -168,6 +172,15 @@ namespace mln
     {
       mln_precondition(c_ != 0);
       return *c_;
+    }
+
+    template <typename S, typename E>
+    inline
+    const S&
+    site_relative_iterator_base<S, E>::site_set() const
+    {
+      mln_precondition(this->s_ != 0);
+      return *this->s_;
     }
 
     template <typename S, typename E>

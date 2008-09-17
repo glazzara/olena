@@ -1,5 +1,13 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a site_set accessor on site_relative_iterator_base.
+
+	* mln/core/internal/site_relative_iterator_base.hh
+	(mln::internal::site_relative_iterator_base<S, E>::site_set):
+	New method.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph psite set iterators.
 
 	* mln/core/site_set/p_line_graph_piter.hh
