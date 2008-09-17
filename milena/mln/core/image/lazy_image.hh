@@ -49,7 +49,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::lazy_image<I>.
+    /// Data structure for \c mln::lazy_image<I>.
     template <typename I, typename F, typename B>
     struct data< lazy_image<I,F,B> >
     {
@@ -128,7 +128,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_psite(I)&) const;
+    bool has(const mln_psite(I)&) const;
 
     /// Read-only access of pixel value at point site \p p.
     mln_result(F) operator()(const mln_psite(I)& p) const;
@@ -164,9 +164,9 @@ namespace mln
 
   template <typename I, typename F, typename B>
   inline
-  bool lazy_image<I,F,B>::owns_(const mln_psite(I)& p) const
+  bool lazy_image<I,F,B>::has(const mln_psite(I)& p) const
   {
-    return this->data_->ima_.owns_(p);
+    return this->data_->ima_.has(p);
   }
 
   template <typename I, typename F, typename B>
@@ -174,7 +174,7 @@ namespace mln
   mln_result(F)
   lazy_image<I,F,B>::operator()(const mln_psite(I)& p) const
   {
-    mln_assertion(this->owns_(p));
+    mln_assertion(this->has(p));
     if (this->data_->is_known(p))
       return this->data_->ima_(p);
     this->data_->ima_(p) = this->data_->fun(p);
@@ -188,7 +188,7 @@ namespace mln
   typename lazy_image<I,F,B>::lvalue
   lazy_image<I,F,B>::operator()(const mln_psite(I)& p)
   {
-    mln_assertion(this->owns_(p));
+    mln_assertion(this->has(p));
     if (this->data_->is_known(p))
       return this->data_->ima_(p);
     this->data_->ima_(p) = this->data_->fun(p);

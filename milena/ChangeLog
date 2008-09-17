@@ -1,5 +1,11 @@
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename owns_() to has().
+	* milena/mln/core/image/lazy_image.hh,
+	* milena/mln/morpho/dilation.hh: here.
+
+2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Do not exclude the concept directory from doc generation.
 	* milena/doc/Doxyfile.in: do it.
 
