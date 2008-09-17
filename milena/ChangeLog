@@ -1,5 +1,14 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use util::ord in morpho::line_gradient instead of ad hoc code.
+
+	* mln/morpho/line_gradient.hh
+	(mln::morpho::internal::point2_lexicographical_less): Remove.
+	(mln::morpho::line_gradient()::points): Use util::ord<point2d>
+	instead of morpho::internal::point2d_lexicographical_less.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have morpho::line_gradient compile again
 
 	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient):
