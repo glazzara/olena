@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_DUAL_NEIGHB2D_HH
-# define MLN_MAKE_DUAL_NEIGHB2D_HH
+#ifndef MLN_MAKE_DOUBLE_NEIGHB2D_HH
+# define MLN_MAKE_DOUBLE_NEIGHB2D_HH
 
-/*! \file mln/make/dual_neighb2d.hh
+/*! \file mln/make/double_neighb2d.hh
  *
  * \brief Routine to create a dual neighborhood.
  */
@@ -47,21 +47,20 @@ namespace mln
 
     template <typename A, unsigned St, unsigned Sf>
     neighb< win::multiple<window2d, bool(*)(A)> >
-    dual_neighb2d(bool (*test)(A),
-		  bool const (&when_true) [St],
-		  bool const (&when_false)[Sf]);
+    double_neighb2d(bool (*test)(A),
+		    bool const (&when_true) [St],
+		    bool const (&when_false)[Sf]);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-
     template <typename A, unsigned St, unsigned Sf>
     inline
     neighb< win::multiple<window2d, bool(*)(A)> >
-    dual_neighb2d(bool (*test)(A),
-		  bool const (&when_true) [St],
-		  bool const (&when_false)[Sf])
+    double_neighb2d(bool (*test)(A),
+		    bool const (&when_true) [St],
+		    bool const (&when_false)[Sf])
     {
       typedef win::multiple<window2d, bool(*)(A)> W;
       W wm(test);
@@ -78,4 +77,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_DUAL_NEIGHB2D_HH
+#endif // ! MLN_MAKE_DOUBLE_NEIGHB2D_HH

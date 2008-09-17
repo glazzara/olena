@@ -7,7 +7,7 @@
 
 # include <mln/core/alias/window2d.hh>
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/make/dual_neighb2d.hh>
+# include <mln/make/double_neighb2d.hh>
 # include <mln/core/site_set/p_centered.hh>
 # include <mln/literal/origin.hh>
 
@@ -25,39 +25,6 @@
 
 # include <mln/debug/println.hh>
 
-
-/*
-
-namespace mln
-{
-
-  namespace level
-  {
-
-    template<typename I, typename R>
-    mln_ch_value(I, R)
-      transform(const Image<I>& input_, const std::vector<R>& v)
-    {
-      trace::entering("level::transform");
-      const I& input = exact(input_);
-
-      mln_ch_value(I, R) output;
-      initialize(output, input);
-
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	output(p) = v[input(p)];
-
-      trace::exiting("level::transform");
-      return output;
-    }
-
-  } // mln::level
-
-
-} // mln
-
-*/
 
 
 namespace mln
@@ -220,7 +187,7 @@ int main()
 		   1, 0, 1,
 		   0, 0, 0 };
 
-  mln_VAR( e2c, make::dual_neighb2d(is_row_odd, e2c_h, e2c_v) );
+  mln_VAR( e2c, make::double_neighb2d(is_row_odd, e2c_h, e2c_v) );
 
   bool e2e_h[] = { 0, 0, 1, 0, 0,
 		   0, 1, 0, 1, 0,
@@ -234,7 +201,7 @@ int main()
 		   0, 1, 0, 1, 0,
 		   0, 0, 0, 0, 0 };
 
-  mln_VAR( e2e, make::dual_neighb2d(is_row_odd, e2e_h, e2e_v) );
+  mln_VAR( e2e, make::double_neighb2d(is_row_odd, e2e_h, e2e_v) );
 
 
 

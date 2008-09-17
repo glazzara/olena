@@ -1,3 +1,12 @@
+2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix double_neighb2d name.
+
+	* mln/core/image/ch_piter.hh: New.
+	* mln/make/dual_neighb2d.hh: Rename as...
+	* mln/make/double_neighb2d.hh: ...this.
+	* doc/examples/tuto_bis.cc: Update.
+
 2008-09-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the tricky morpho example fully work.
