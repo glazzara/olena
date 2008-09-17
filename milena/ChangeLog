@@ -1,5 +1,21 @@
 2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add extension::fill routine and test.
+
+	* mln/extension/fill.hh: New, implementation of extension::fill.
+
+	* tests/Makefile.am: Add extension test directory.
+
+	* tests/core/other/Makefile.am(line_piter): Rename as...
+	* tests/core/other/Makefile.am(box_runstart_piter): ...this
+
+	* tests/extension/Makefile.am: New. To test extension namespace
+
+	* tests/extension/fill.cc: New, extension::fill basic test.
+	* tests/extension: New, extension test directory
+
+2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add mln/extension directory.
 
 	* mln/extension: New. Concerns all stuff related to the domain

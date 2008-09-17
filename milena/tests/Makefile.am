@@ -15,6 +15,7 @@ SUBDIRS =					\
   display					\
   draw						\
   estim						\
+  extension					\
   fun						\
   geom						\
   histo						\

@@ -3,6 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  box_runstart_piter				\
   category					\
   clock_neighb2d				\
   clock_test					\
@@ -12,7 +13,6 @@ check_PROGRAMS =				\
   graph_elt_window				\
   line_graph_elt_neighborhood			\
   line_graph_elt_window				\
-  line_piter					\
   neighb					\
   pixel						\
   pixter1d					\
@@ -23,6 +23,7 @@ check_PROGRAMS =				\
   pixter3d_more					\
   point_set_compatibility
 
+box_runstart_piter_SOURCES = box_runstart_piter.cc
 category_SOURCES = category.cc
 clock_neighb2d_SOURCES = clock_neighb2d.cc
 clock_test_SOURCES = clock_test.cc
@@ -32,7 +33,6 @@ graph_elt_neighborhood_SOURCES = graph_elt_neighborhood.cc
 graph_elt_window_SOURCES = graph_elt_window.cc
 line_graph_elt_neighborhood_SOURCES = line_graph_elt_neighborhood.cc
 line_graph_elt_window_SOURCES = line_graph_elt_window.cc
-line_piter_SOURCES = line_piter.cc
 neighb_SOURCES = neighb.cc
 pixel_SOURCES = pixel.cc
 pixter1d_SOURCES = pixter1d.cc
