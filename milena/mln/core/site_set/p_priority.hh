@@ -39,6 +39,7 @@
 # include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/util/set.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -177,7 +178,7 @@ namespace mln
   protected:
 
     util::set<P>  p_;
-    std::map<P,Q> q_;
+    std::map<P, Q, util::ord<P> > q_;
     unsigned      n_;
 
     // Run invariance tests and return the result.

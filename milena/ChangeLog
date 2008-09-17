@@ -1,5 +1,15 @@
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make w_window compile.
+	* milena/mln/core/site_set/p_priority.hh:
+	  Add missing comparison operator.
+
+	* milena/mln/core/w_window.hh,
+	* milena/mln/core/concept/weighted_window.hh:
+	  Update typedefs.
+
+2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename owns_() to has().
 	* milena/mln/core/image/lazy_image.hh,
 	* milena/mln/morpho/dilation.hh: here.

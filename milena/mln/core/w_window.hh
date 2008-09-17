@@ -38,6 +38,8 @@
 # include <mln/core/window.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/dpsites_piter.hh>
+# include <mln/value/ops.hh>
+# include <mln/util/ord.hh>
 
 namespace mln
 {
@@ -56,11 +58,14 @@ namespace mln
   template <typename D, typename W>
   struct w_window : public Weighted_Window< w_window<D,W> >
   {
-    /// Site associated type.
-    typedef mln_point(D) point;
+    /// DPsite associated type.
+    typedef D dpsite;
 
-    /// Dpsite associated type.
-    typedef D dpoint;
+    /// Psite associated type.
+    typedef mln_psite(D) psite;
+
+    /// Site associated type.
+    typedef mln_site(D) site;
 
     /// Weight associated type.
     typedef W weight;
@@ -70,10 +75,10 @@ namespace mln
 
 
     /// Site_Iterator type to browse (forward) the points of a generic w_window.
-    typedef with_w_< dpsites_fwd_piter<D>, W > fwd_qiter;
+    typedef with_w_< dpsites_fwd_piter< w_window<D, W> >, W > fwd_qiter;
 
     /// Site_Iterator type to browse (backward) the points of a generic w_window.
-    typedef with_w_< dpsites_bkd_piter<D>, W > bkd_qiter;
+    typedef with_w_< dpsites_bkd_piter< w_window<D, W> >, W > bkd_qiter;
 
 
     /// Constructor without argument.
@@ -98,7 +103,7 @@ namespace mln
     unsigned size() const;
 
     /// Give access to the vector of delta-points.
-    const std::vector<D>& vect() const;
+    const std::vector<D>& std_vector() const;
 
     /// Give the corresponding window.
     const mln::window<D>& win() const;
@@ -108,7 +113,7 @@ namespace mln
     w_window<D,W>& sym();
 
   protected:
-    
+
     mln::window<D> win_;
     std::vector<W> wei_;
   };
@@ -208,9 +213,9 @@ namespace mln
   template <typename D, typename W>
   inline
   const std::vector<D>&
-  w_window<D,W>::vect() const
+  w_window<D,W>::std_vector() const
   {
-    return win_.vect();
+    return win_.std_vector();
   }
 
   template <typename D, typename W>
@@ -244,7 +249,7 @@ namespace mln
       return *this;
 
     // memorization: d_i -> w_i
-    std::map<D, W> memo_wei_;
+    std::map<D, W, util::ord<D> > memo_wei_;
     for (unsigned i = 0; i < win_.size(); ++i)
       memo_wei_[win_.dp(i)] = wei_[i];
 

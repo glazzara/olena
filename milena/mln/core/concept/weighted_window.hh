@@ -41,7 +41,7 @@ namespace mln
 {
 
   // Fwd decl.
-  template <typename E> struct Weighted_Window;
+  template <typename W> struct Weighted_Window;
 
   // Weighted_Window category flag type.
   template <>
@@ -57,8 +57,8 @@ namespace mln
    * \see mln::doc::Weighted_Window for a complete documentation of
    * this class contents.
    */
-  template <typename E>
-  struct Weighted_Window : public Object<E>
+  template <typename W>
+  struct Weighted_Window : public Object<W>
   {
     typedef Weighted_Window<void> category;
 
@@ -66,8 +66,9 @@ namespace mln
       typedef fwd_qiter;
       typedef bkd_piter;
 
-      typedef point;
-      typedef dpoint;
+      typedef dpsite;
+      typedef psite;
+      typedef site;
       typedef weight;
       typedef window;
 
@@ -109,22 +110,22 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename E>
+  template <typename W>
   inline
-  Weighted_Window<E>::Weighted_Window()
+  Weighted_Window<W>::Weighted_Window()
   {
-    typedef  mln_point(E)  point;
-    typedef mln_dpoint(E) dpoint;
-    typedef mln_weight(E) weight;
-    typedef mln_window(E) window;
+    //typedef  mln_psite(E)  point;
+    //typedef mln_dpsite(E) dpoint;
+    typedef mln_weight(W) weight;
+    typedef mln_window(W) window;
 
-    typedef mln_fwd_qiter(E) fwd_qiter;
-    typedef mln_bkd_qiter(E) bkd_qiter;
+    typedef mln_fwd_qiter(W) fwd_qiter;
+    typedef mln_bkd_qiter(W) bkd_qiter;
 
-    E& (E::*m1)() = & E::sym;
+    W& (W::*m1)() = & W::sym;
     m1 = 0;
 
-    const window& (E::*m2)() const = & E::win;
+    const window& (W::*m2)() const = & W::win;
     m2 = 0;
   }
 
