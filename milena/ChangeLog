@@ -1,3 +1,10 @@
+2008-09-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update matrix rotation + FIx make::box1d.
+
+	* mln/make/box1d.hh: Remove ambiguity.
+	* mln/fun/x2x/rotation.hh: Add 2d case.
+
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	make seed2tiling_roundness test compile.

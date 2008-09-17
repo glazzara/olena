@@ -82,9 +82,8 @@ namespace mln
     mln::box1d box1d(def::coord min_ind, def::coord max_ind)
     {
       mln_precondition(max_ind >= min_ind);
-      mln::box1d tmp(point1d(min_ind),
-		     point1d(max_ind));
-      return tmp;
+      return mln::box1d(point1d(min_ind),
+                        point1d(max_ind));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

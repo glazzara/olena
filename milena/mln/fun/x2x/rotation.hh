@@ -98,14 +98,20 @@ namespace mln
 
         template <typename C >
         algebra::h_mat<2, C>
-        get_rot_h_mat(const float alpha_, const algebra::vec<2,C>& axis_)
+        get_rot_h_mat(const float alpha_, const algebra::vec<2,C>&)
         {
-	  // Avoid a warning about an undefined variable when NDEBUG
-	  // is not defined.
-	  (void) alpha_;
-	  (void) axis_;
+          algebra::h_mat<2, C> m_;
 
-          assert(!"not implemented yet");
+          const float cos_a = cos(alpha_);
+          const float sin_a = sin(alpha_);
+          
+          m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
+
+          m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;
+          
+          m_(2,0) = 0;     m_(2,1) = 0;      m_(2,2) = 1;
+
+          return m_;
         }
       }
 
