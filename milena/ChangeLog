@@ -1,5 +1,12 @@
 2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add mln/extension directory.
+
+	* mln/extension: New. Concerns all stuff related to the domain
+	extension.
+
+2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Restore border::fill.
 
 	* mln/border/fill.hh: Updates dues to the renaming of line_piter to
