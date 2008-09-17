@@ -1,5 +1,15 @@
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	make seed2tiling_roundness test compile.
+	* milena/mln/convert/to_image.hh:
+	  use operator(point1d p) instead of operator(int index).
+
+	* milena/mln/display/color_pretty.hh: add missing header.
+
+	* milena/mln/geom/chamfer.hh: Use pw::cst(bool) with operator |.
+
+2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make w_window compile.
 	* milena/mln/core/site_set/p_priority.hh:
 	  Add missing comparison operator.

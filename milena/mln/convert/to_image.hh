@@ -197,8 +197,8 @@ namespace mln
 	v_min = h.vset()[0],
 	v_max = h.vset()[h.vset().nvalues() - 1];
       image1d<std::size_t> ima(make::box1d(v_min, v_max));
-      for(unsigned i = 0; i < h.vset().nvalues(); ++i)
-	ima(i) = h[i];
+      for (unsigned i = 0; i < h.vset().nvalues(); ++i)
+	ima(point1d(i)) = h[i];
       return ima;
     }
 

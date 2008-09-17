@@ -38,7 +38,12 @@
 # include <mln/core/alias/w_window2d_float.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image/inplace.hh>
+# include <mln/core/image/image_if.hh>
 # include <mln/canvas/chamfer.hh>
+
+//FIXME: to be removed when ima | bool will be supported.
+// See init().
+# include <mln/pw/all.hh>
 
 namespace mln
 {
@@ -58,7 +63,7 @@ namespace mln
     namespace impl
     {
 
-      // \internal Functors.
+      // Functors.
 
       template <typename I_, typename W_>
       struct chamfer_t
@@ -76,10 +81,10 @@ namespace mln
 	bool status;
 	unsigned max;
 
- 	inline
- 	void init()                            { initialize(output, exact(input));
-						 level::fill(inplace(output | (input | true).domain()),  0);
-						 level::fill(inplace(output | (input | false).domain()), max); }
+	inline
+	void init()                            { initialize(output, exact(input));
+						 level::fill(inplace(output | (input | pw::cst(true)).domain()),  0);
+						 level::fill(inplace(output | (input | pw::cst(false)).domain()), max); }
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }
 
@@ -93,7 +98,7 @@ namespace mln
 	{}
       };
 
-      /// \internal Routines.
+      /// Routines.
 
       template <typename I, typename W>
       inline
