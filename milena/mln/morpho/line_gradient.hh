@@ -98,7 +98,7 @@ namespace mln
       mln_fwd_qiter_(window2d) q(next_c4_win, p); 
       for_all (p)
 	for_all (q)
-	if (ima.has(q))
+	if (ima.domain().has(q))
 	  {
 	    // Avoid a warning about an undefined variable when the
 	    // NDEBUG is not defined.
