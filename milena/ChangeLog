@@ -1,5 +1,55 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph psite.
+
+	* mln/core/image/line_graph_psite.hh
+	(mln::line_graph_psite<P>): Inherit from
+	mln::internal::pseudo_site_base_.
+	(mln::line_graph_psite<P>::line_graph_psite):
+	Adjust ctors.
+	(mln::line_graph_psite<P>::first)
+	(mln::line_graph_psite<P>::second)
+	(mln::line_graph_psite<P>::first_id)
+	(mln::line_graph_psite<P>::second_id):
+	Adjust methods.
+	(operator==(const line_graph_psite<P>&, const line_graph_psite<P>&))
+	(operator< (const line_graph_psite<P>&, const line_graph_psite<P>&)):
+	Adjust operators.
+	(mln::line_graph_psite<P>::super_): Adjust.
+	(mln::line_graph_psite<P>::target): New typedef.
+	(mln::line_graph_psite<P>::dim)
+	(mln::line_graph_psite<P>::coord)
+	(mln::line_graph_psite<P>::point)
+	(mln::line_graph_psite<P>::dpoint)
+	(mln::line_graph_psite<P>::mesh):
+	Remove typedefs.
+	(mln::line_graph_psite<P>::line_graph_psite(const self_&))
+	(mln::line_graph_psite<P>::self_& operator=)
+	(mln::line_graph_psite<P>::to_psite)
+	(mln::line_graph_psite<P>::to_point)
+	(mln::line_graph_psite<P>::operator point)
+	(mln::line_graph_psite<P>::operator[])
+	(mln::line_graph_psite<P>::plg):
+	Remove methods.
+	(mln::line_graph_psite<P>::invalidate)
+	(mln::line_graph_psite<P>::site_set)
+	(mln::line_graph_psite<P>::target_)
+	(mln::line_graph_psite<P>::change_target)
+	(mln::line_graph_psite<P>::subj_)
+	(mln::line_graph_psite<P>::update_)
+	(mln::line_graph_psite<P>::change_edge_id)
+	(mln::line_graph_psite<P>::inc_edge_id)
+	(mln::line_graph_psite<P>::dec_edge_id):
+	New methods.
+	(mln::line_graph_psite<P>::id): Rename as...
+	(mln::line_graph_psite<P>::edge_id): ...this.
+	(mln::line_graph_psite<P>::plg_): Change type to `const target*'.
+	(mln::line_graph_psite<P>::p_): Change type to site_pair<P>.
+	(operator!=(const line_graph_psite<P>&, const line_graph_psite<P>&)):
+	New operator.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Create an util::ordpair_-based container usable as a site.
 
 	* mln/util/site_pair.hh: New.
