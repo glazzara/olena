@@ -212,9 +212,8 @@ namespace mln
   inline
   complex_fwd_iter_<D>::complex_fwd_iter_(complex<D>& c)
   {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
+    set_cplx(c);
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned D>
@@ -345,9 +344,8 @@ namespace mln
   inline
   complex_bkd_iter_<D>::complex_bkd_iter_(complex<D>& c)
   {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
+    set_cplx(c);
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned D>
