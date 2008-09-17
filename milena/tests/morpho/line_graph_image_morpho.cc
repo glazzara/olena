@@ -35,6 +35,7 @@
 #include <mln/core/image/line_graph_elt_window.hh>
 #include <mln/core/image/line_graph_window_piter.hh>
 
+#include <mln/morpho/erosion.hh>
 #include <mln/morpho/dilation.hh>
 
 
@@ -85,13 +86,6 @@ int main()
 
   p_line_graph<point2d> plg(g);
 
-  // Check adjacencies of edge 1.
-  mln_assertion( plg.adjacent(1, 0));
-  mln_assertion(!plg.adjacent(1, 1));
-  mln_assertion( plg.adjacent(1, 2));
-  mln_assertion(!plg.adjacent(1, 3));
-  mln_assertion( plg.adjacent(1, 4));
-
   /*-------------------.
   | Line graph image.  |
   `-------------------*/
@@ -111,26 +105,20 @@ int main()
   typedef line_graph_image<point2d, int> ima_t;
   ima_t ima(plg, vertex_values, edge_values);
 
-  /*------------.
-  | Iterators.  |
-  `------------*/
+  /*--------------------------.
+  | Processing graph images.  |
+  `--------------------------*/
 
-  // Manual iteration over the domain of IMA.
-  mln_piter_(ima_t) p(ima.domain());
-  for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
-
-  // Manual iterations over the neighborhoods of each point site of IMA.
-  typedef line_graph_elt_window<point2d> win_t;
-  win_t win;
-  mln_qiter_(win_t) q(win, p);
-  for_all (p)
-  {
-    std::cout << "sites adjacent to " << p << " (" << ima(p) << "), "
-	      << "including the site itself:" << std::endl;
-    for_all (q)
-      std::cout << "  " << q << " (level = " << ima(q) << ")"
-		<< std::endl;
-  }
+  line_graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  // Manual iteration over the domain of IMA_DIL.
+  mln_piter_(ima_t) p_dil(ima_dil.domain());
+  for_all (p_dil)
+    std::cout << "ima_dil (" << p_dil << ") = " << ima_dil(p_dil) << std::endl;
   std::cout << std::endl;
+
+  line_graph_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  // Manual iteration over the domain of IMA_ERO.
+  mln_piter_(ima_t) p_ero(ima_ero.domain());
+  for_all (p_ero)
+    std::cout << "ima_ero (" << p_ero << ") = " << ima_ero(p_ero) << std::endl;
 }

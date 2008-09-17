@@ -1,5 +1,19 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Re-enable some tests on line graph entities.
+
+	* tests/core/image/line_graph_image.cc: Remove useless #include's.
+	Move morpho-related tests...
+	* tests/morpho/line_graph_image_morpho.cc: ...here.
+	* tests/core/image/Makefile.am (check_PROGRAMS): Re-enable
+	line_graph_image.
+	(line_graph_image_SOURCES): Re-enable.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add
+	line_graph_image_morpho.
+	(line_graph_image_morpho_SOURCES): New.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update morpho::meyer_wst.
 
 	* mln/morpho/meyer_wst.hh (mln::morpho::meyer_wst): Work with the

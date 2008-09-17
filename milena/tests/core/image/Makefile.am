@@ -17,7 +17,7 @@ check_PROGRAMS =				\
   image3d					\
   image_if					\
 ##  interpolated					\
-##  line_graph_image				\
+  line_graph_image				\
   mono_obased_rle_image				\
   mono_rle_image				\
   obased_rle_image				\
@@ -45,7 +45,7 @@ image2d_SOURCES = image2d.cc
 image3d_SOURCES = image3d.cc
 image_if_SOURCES = image_if.cc
 ##interpolated_SOURCES = interpolated.cc
-##line_graph_image_SOURCES = line_graph_image.cc
+line_graph_image_SOURCES = line_graph_image.cc
 mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
 mono_rle_image_SOURCES = mono_rle_image.cc
 obased_rle_image_SOURCES = obased_rle_image.cc
