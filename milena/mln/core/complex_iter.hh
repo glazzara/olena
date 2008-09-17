@@ -71,6 +71,10 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Change the target complex.
+    // FIXME: Same comment as the ctor above.
+    void set_cplx(complex<D>& c);
+
     /// Test if the iterator is valid.
     bool is_valid() const;
     /// Invalidate the iterator.
@@ -144,6 +148,10 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Change the target complex.
+    // FIXME: Same comment as the ctor above.
+    void set_cplx(complex<D>& c);
+
     /// Test if the iterator is valid.
     bool is_valid() const;
     /// Invalidate the iterator.
@@ -225,6 +233,16 @@ namespace mln
       return *this;
     face_ = rhs.face_;
     return *this;
+  }
+
+  template <unsigned D>
+  inline
+  void
+  complex_fwd_iter_<D>::set_cplx(complex<D>& c)
+  {
+    face_.set_cplx(c);
+    // Invalidate face_.
+    invalidate();
   }
 
   template <unsigned D>
@@ -348,6 +366,16 @@ namespace mln
       return *this;
     face_ = rhs.face_;
     return *this;
+  }
+
+  template <unsigned D>
+  inline
+  void
+  complex_bkd_iter_<D>::set_cplx(complex<D>& c)
+  {
+    face_.set_cplx(c);
+    // Invalidate face_.
+    invalidate();
   }
 
   template <unsigned D>

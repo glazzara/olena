@@ -1415,6 +1415,15 @@
 
 	* mln/win/rectangle2d.hh: Update an old include
 
+2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
+
+	Allow iterators on complexes to change their target.
+
+	* mln/core/complex_iter.hh
+	(mln::complex_fwd_iter_<D>::set_cplx)
+	(mln::complex_bkd_iter_<D>::set_cplx):
+	New.
+
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/core/complex_image.cc: Fix comment about complex windows.
