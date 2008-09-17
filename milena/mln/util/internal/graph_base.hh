@@ -59,11 +59,13 @@ namespace mln
     ///
     /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hh
     /// https://svn.lrde.epita.fr/svn/vaucanson/trunk/include/vaucanson/automata/concept/handlers.hxx
-    //
-    // \todo We /might/ want to integrate this into Milena's value system.
+    ///
+    /// \todo We /might/ want to integrate this into Milena's value system.
+    ///
+    /// \todo Move this class elsewhere?
 
     template <typename Tag, typename Equiv>
-    class gen_id
+    class gen_id : public Object< gen_id < Tag, Equiv > >
     {
       typedef gen_id<Tag, Equiv> self_t;
 

@@ -1,5 +1,12 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update util::gen_id.
+
+	* mln/util/internal/graph_base.hh (mln::util::gen_id<Tag, Equiv>):
+	Inherit from Object< gen_id < Tag, Equiv > >.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/contract.hh (HAS_NDEBUG): New preprocessor constant.
 	[NDEBUG]: Expand as 1.
 	[!NDEBUG]: Expand as 0.
