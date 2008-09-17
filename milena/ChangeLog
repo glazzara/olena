@@ -1417,6 +1417,10 @@
 
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/core/complex_image.cc: Fix comment about complex windows.
+
+2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/complex_psite.hh (operator<<): Fix indentation.
 
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
