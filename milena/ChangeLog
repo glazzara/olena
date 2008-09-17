@@ -908,6 +908,15 @@
 
 2008-09-13  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add default ctors for iterators on faces.
+
+	* mln/core/faces_iter.hh
+	(mln::faces_fwd_iter_<N, D>::faces_fwd_iter_)
+	(mln::faces_bkd_iter_<N, D>::faces_bkd_iter_):
+	New default ctor.
+
+2008-09-13  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/pnm/load.hh: Fix dates in copyright header.
 
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>

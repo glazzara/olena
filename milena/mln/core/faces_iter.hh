@@ -64,6 +64,7 @@ namespace mln
   public:
     /// Construction and assignment.
     /// \{
+    faces_fwd_iter_();
     // FIXME: See above (internal::complex_iter_base_'s default ctor).
     faces_fwd_iter_(complex<D>& c);
     faces_fwd_iter_(const self_& rhs);
@@ -110,6 +111,7 @@ namespace mln
   public:
     /// Construction and assignment.
     /// \{
+    faces_bkd_iter_();
     // FIXME: See above (internal::complex_iter_base_'s default ctor).
     faces_bkd_iter_(complex<D>& c);
     faces_bkd_iter_(const self_& rhs);
@@ -135,6 +137,15 @@ namespace mln
   /*------------------------.
   | faces_fwd_iter_<N, D>.  |
   `------------------------*/
+
+  template <unsigned N, unsigned D>
+  inline
+  faces_fwd_iter_<N, D>::faces_fwd_iter_()
+    : super_()
+  {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
+  }
 
   template <unsigned N, unsigned D>
   inline
@@ -199,7 +210,14 @@ namespace mln
   | faces_bkd_iter_<N, D>.  |
   `------------------------*/
 
-  // FIXME: Resume here.
+  template <unsigned N, unsigned D>
+  inline
+  faces_bkd_iter_<N, D>::faces_bkd_iter_()
+    : super_()
+  {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
+  }
 
   template <unsigned N, unsigned D>
   inline
