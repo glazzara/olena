@@ -1,5 +1,11 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update the Doxygen documentation of site set internal classes.
+
+	* mln/core/internal/site_set_base.hh: Do it.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph image.
 
 	* mln/core/image/line_graph_image.hh

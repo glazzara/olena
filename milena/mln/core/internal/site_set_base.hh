@@ -46,7 +46,11 @@ namespace mln
 
 
     /*! \internal A base class for site set classes.
-     * \p P is a psite type.
+     *
+     * \arg \p P The psite type of what is ``contained'' in the site
+     *           set, not the psite of the site set (which is
+     *           different, and defined by the site set itself).
+     * \arg \p E The exact type of the site set.
      */
     template <typename P, typename E>
     struct site_set_base_ : public Site_Set<E>
