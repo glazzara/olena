@@ -75,7 +75,7 @@ namespace mln
 
 
 
-    /// \internal A base class for images.
+    /// A base class for images.
     /// Parameter \p T is the image value type.
     /// Parameter \p S is the image site set type.
     template <typename T, typename S, typename E>

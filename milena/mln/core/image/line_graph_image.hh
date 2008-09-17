@@ -63,7 +63,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::line_graph_image<P,V>.
+    /// Data structure for \c mln::line_graph_image<P,V>.
     template <typename P, typename V>
     struct data< line_graph_image<P, V> >
     {

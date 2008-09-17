@@ -59,7 +59,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::image3d<T>.
+    /// Data structure for \c mln::image3d<T>.
     template <typename T>
     struct data< image3d<T> >
     {

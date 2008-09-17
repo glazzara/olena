@@ -44,7 +44,7 @@ namespace mln
 
     namespace internal
     {
-      /// \internal
+      /// 
       template <typename T>
       struct convert_
       {
@@ -54,7 +54,7 @@ namespace mln
 	static unsigned index_of_value(const T& v);
       };
 
-      /// \internal
+      /// 
       template <>
       struct convert_<bool>
       {

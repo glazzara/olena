@@ -46,7 +46,7 @@ namespace mln
     namespace internal
     {
 
-      /*! \internal Generic min accumulator class.
+      /*! Generic min accumulator class.
        * Base class for implementation of accumulator classes.
        */
       template <typename R, typename E>

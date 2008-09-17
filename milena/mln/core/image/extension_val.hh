@@ -51,7 +51,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::extension_val<I>.
+    /// Data structure for \c mln::extension_val<I>.
     template <typename I>
     struct data< extension_val<I> >
     {

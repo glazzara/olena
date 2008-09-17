@@ -57,7 +57,7 @@ namespace mln
 
     /*! \brief A dynamic array class.
      *
-     * \internal
+     * 
      *
      * Elements are stored by copy.  Implementation is lazy.
      *

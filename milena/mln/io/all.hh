@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of input/output handling.
   namespace io
   {
-    /// \internal Internal namespace of io namespace.
+    /// Internal namespace of io namespace.
     namespace internal {}
   }
 

@@ -39,10 +39,10 @@ namespace mln
   /// Namespace of meta-programming tools.
   namespace metal
   {
-    /// \internal Implementation namespace of metal namespace.
+    /// Implementation namespace of metal namespace.
     namespace impl {}
 
-    /// \internal Internal namespace of metal namespace.
+    /// Internal namespace of metal namespace.
     namespace internal {}
 
   }

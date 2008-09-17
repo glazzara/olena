@@ -40,7 +40,6 @@ namespace mln
   namespace value
   {
 
-    /// \internal
     namespace internal
     {
 

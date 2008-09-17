@@ -46,7 +46,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::t_image<I>.
+    /// Data structure for \c mln::t_image<I>.
     template <typename I>
     struct data< t_image<I> >
     {

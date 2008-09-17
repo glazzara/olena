@@ -139,13 +139,13 @@
  */
 namespace mln
 {
-  /// \internal Implementation namespace of mln namespace.
+  /// Implementation namespace of mln namespace.
   namespace impl {}
 
-  /// \internal Internal namespace of mln namespace.
+  /// Internal namespace of mln namespace.
   namespace internal
   {
-    /// \internal FIXME : doc
+    /// FIXME : doc
     namespace check {}
   }
 

@@ -42,10 +42,10 @@ namespace mln
   namespace level
   {
 
-    /// \internal Implementation namespace of level namespace.
+    /// Implementation namespace of level namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of level namespace.
+      /// Generic implementation namespace of level namespace.
       namespace generic {}
 
     }

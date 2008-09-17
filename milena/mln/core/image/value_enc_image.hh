@@ -52,7 +52,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::value_enc_image<P,T>.
+    /// Data structure for \c mln::value_enc_image<P,T>.
     template <typename P, typename T>
     struct data< value_enc_image<P, T> >
     {

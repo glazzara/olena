@@ -52,7 +52,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::image_if<I,F>.
+    /// Data structure for \c mln::image_if<I,F>.
     template <typename I, typename F>
     struct data< image_if<I,F> >
     {

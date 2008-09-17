@@ -52,7 +52,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for mln::neighb::image
+    /// Data structure for mln::neighb::image
     template <typename I, typename N>
     struct data< mln::neighb::image<I, N> >
     {

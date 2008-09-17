@@ -44,11 +44,10 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Namespace of all image-related internal checks.
+    /// Namespace of all image-related internal checks.
     namespace check
     {
 
-      /// \internal
       template <typename E>
       struct image_all_
 	:

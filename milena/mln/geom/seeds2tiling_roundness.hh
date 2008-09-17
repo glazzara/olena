@@ -103,7 +103,7 @@ namespace mln
 	{
 	  while (! q.is_empty())
 	    {
-	      mln_psite(I) p = q.front();
+	      mln_psite(I) p = q.highest_priority();
 	      q.pop();
 	      if (out(p) != 0) // p has already been processed so ignore
 		continue;

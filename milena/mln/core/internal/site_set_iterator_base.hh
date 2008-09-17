@@ -43,7 +43,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for site iterators.
+    /*! A base class for site iterators.
      *
      * Parameter \c S is the targeted site set type.
      *

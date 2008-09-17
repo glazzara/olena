@@ -73,7 +73,7 @@ namespace mln
 
       /*! \brief Give a hook to the value buffer.
        *
-       * \internal
+       * 
        *
        * \pre The image has to be initialized.
        */

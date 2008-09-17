@@ -43,17 +43,16 @@ namespace mln
   {
 
 
-    /// \internal coord_impl
+    /// coord_impl
 
 
-    /* \internal Implementation class to equip generalized points with
+    /* Implementation class to equip generalized points with
      * explicit access to their coordinates.
      *
      */
     template <unsigned n, typename C, typename E>
     struct coord_impl_;
 
-    /// \internal
     template <typename C, typename E>
     struct coord_impl_<1, C, E>
     {
@@ -63,7 +62,6 @@ namespace mln
 
     };
 
-    /// \internal
     template <typename C, typename E>
     struct coord_impl_<2, C, E>
     {
@@ -71,7 +69,6 @@ namespace mln
       const C&col() const;
     };
 
-    /// \internal
     template <typename C, typename E>
     struct coord_impl_<3, C, E>
     {
@@ -81,13 +78,11 @@ namespace mln
     };
 
 
-    // \internal mutable_coord_impl
+    // mutable_coord_impl
 
-    /// \internal
     template <unsigned n, typename C, typename E>
     struct mutable_coord_impl_;
 
-    /// \internal
     template <typename C, typename E>
     struct mutable_coord_impl_<1, C, E>
     {
@@ -95,7 +90,6 @@ namespace mln
       C& ind();
     };
 
-    /// \internal
     template <typename C, typename E>
     struct mutable_coord_impl_<2, C, E>
     {
@@ -105,7 +99,6 @@ namespace mln
       C& col();
     };
 
-    /// \internal
     template <typename C, typename E>
     struct mutable_coord_impl_<3, C, E>
     {
@@ -120,9 +113,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // \internal coord_impl
+    // coord_impl
 
-    // \internal 1
+    // 1
 
     template <typename C, typename E>
     inline
@@ -131,7 +124,7 @@ namespace mln
       return internal::force_exact<E>(*this)[0];
     }
 
-    // \internal 2
+    // 2
 
     template <typename C, typename E>
     inline
@@ -147,7 +140,7 @@ namespace mln
       return internal::force_exact<E>(*this)[1];
     }
 
-    // \internal 3
+    // 3
 
     template <typename C, typename E>
     inline
@@ -171,9 +164,9 @@ namespace mln
     }
 
 
-    // \internal mutable_coord_impl
+    // mutable_coord_impl
 
-    // \internal 1
+    // 1
 
     template <typename C, typename E>
     inline
@@ -189,7 +182,7 @@ namespace mln
       return internal::force_exact<E>(*this)[0];
     }
 
-    // \internal 2
+    // 2
 
     template <typename C, typename E>
     inline
@@ -219,7 +212,7 @@ namespace mln
       return internal::force_exact<E>(*this)[1];
     }
 
-    // \internal 3
+    // 3
 
     template <typename C, typename E>
     inline

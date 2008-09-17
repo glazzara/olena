@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for neighborhood classes.
+    /*! A base class for neighborhood classes.
      *
      * \p D is a dpsite type.
      */

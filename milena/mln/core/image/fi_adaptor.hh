@@ -62,7 +62,7 @@ namespace mln
 
   namespace internal
   {
-    /// \internal Data structure for \c mln::fi_adaptor<I>.
+    /// Data structure for \c mln::fi_adaptor<I>.
     template <typename I>
     struct data< fi_adaptor<I> >
     {

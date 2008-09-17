@@ -49,7 +49,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::interpolated<I>.
+    /// Data structure for \c mln::interpolated<I>.
     template <typename I>
     struct data< interpolated<I> >
     {

@@ -42,7 +42,7 @@ namespace mln
   {
 
     /*!
-     * \internal Namespace of morphological image processing routines
+     * Namespace of morphological image processing routines
      * implementation details.
      *
      */
@@ -50,7 +50,7 @@ namespace mln
     {
 
       /*!
-       * \internal Namespace of morphological image processing routines
+       * Namespace of morphological image processing routines
        * implementation generic implementations.
        *
        */

@@ -47,7 +47,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for point iterator adaptors.
+    /*! A base class for point iterator adaptors.
      *
      * Parameter \c Pi is the type of the point iterator adaptee;
      * parameter E is the exact type.

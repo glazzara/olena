@@ -45,7 +45,7 @@ namespace mln
     | internal::pixel_iterator_base_<I, E>.  |
     `---------------------------------------*/
 
-    /// \internal A base class for pixel iterators.
+    /// A base class for pixel iterators.
     template <typename I, typename E>
     class pixel_iterator_base_ : public Pixel_Iterator<E>,
 				 public internal::pixel_impl_<I, E>
@@ -68,7 +68,7 @@ namespace mln
     | internal::forward_pixel_iterator_base_<I, E>.  |
     `-----------------------------------------------*/
 
-    /// \internal A base class for forward pixel iterators.
+    /// A base class for forward pixel iterators.
     template <typename I, typename E>
     class forward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
     {
@@ -95,7 +95,7 @@ namespace mln
     | internal::backward_pixel_iterator_base_<I, E>.  |
     `------------------------------------------------*/
 
-    /// \internal A base class for backward pixel iterators.
+    /// A base class for backward pixel iterators.
     template <typename I, typename E>
     class backward_pixel_iterator_base_ : public pixel_iterator_base_<I, E>
     {

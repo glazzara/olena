@@ -52,7 +52,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::extension_fun<I, F>.
+    /// Data structure for \c mln::extension_fun<I, F>.
     template <typename I, typename F>
     struct data< extension_fun<I, F> >
     {

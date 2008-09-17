@@ -45,7 +45,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for site set classes.
+    /*! A base class for site set classes.
      *
      * \arg \p P The psite type of what is ``contained'' in the site
      *           set, not the psite of the site set (which is

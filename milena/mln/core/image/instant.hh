@@ -65,7 +65,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::instant_<I>.
+    /// Data structure for \c mln::instant_<I>.
     template <typename I>
     struct data< instant_<I> >
     {

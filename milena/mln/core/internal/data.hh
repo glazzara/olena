@@ -42,7 +42,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Class of image internal data.
+    /// Class of image internal data.
     /// It has to be specialized for every image type.
 
     template <typename I>

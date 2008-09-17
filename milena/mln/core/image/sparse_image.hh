@@ -50,7 +50,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::sparse_image<P,T>.
+    /// Data structure for \c mln::sparse_image<P,T>.
     template <typename P, typename T>
     struct data< sparse_image<P,T> >
     {

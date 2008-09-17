@@ -43,7 +43,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal Factorization class for run_image.
+    /*! Factorization class for run_image.
      * Parameter \c T is the type of the image value.
      * Parameter \c P is the type of the image point.
      * Parameter \c E is the Exact type of the image.

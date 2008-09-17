@@ -49,7 +49,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for site iterators.
+    /*! A base class for site iterators.
      *
      * NEVER DIRECTLY DERIVE FROM THIS CLASS.
      *

@@ -56,7 +56,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::image1d<T>.
+    /// Data structure for \c mln::image1d<T>.
     template <typename T>
     struct data< image1d<T> >
     {
@@ -242,7 +242,7 @@ namespace mln
     target.init_(b, bdr);
   }
 
-  // \internal internal::data< image1d<T> >
+  // internal::data< image1d<T> >
 
   namespace internal
   {

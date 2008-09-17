@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for image morphers w.r.t. domain.
+    /*! A base class for image morphers w.r.t. domain.
      *
      * Parameter \p I is the morphed image type.
      * Parameter \p S is the morpher site set type.

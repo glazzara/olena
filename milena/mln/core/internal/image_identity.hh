@@ -122,7 +122,7 @@ namespace mln
 
 
 
-    /*! \internal A base class for image morphers w.r.t. identity.
+    /*! A base class for image morphers w.r.t. identity.
      * Parameter \p S is a point set type.
      *
      */

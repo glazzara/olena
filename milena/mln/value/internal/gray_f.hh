@@ -143,7 +143,7 @@ namespace mln
     namespace internal
     {
 
-      /// \internal General gray-level class on n bits.
+      /// General gray-level class on n bits.
       struct gray_f
 	:
 	public Floating< gray_f >,
@@ -195,7 +195,7 @@ namespace mln
 
       // Operators.
 
-      /// \internal Op<<.
+      /// Op<<.
       std::ostream& operator<<(std::ostream& ostr, const gray_f& g);
 
 

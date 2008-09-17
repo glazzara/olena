@@ -46,10 +46,10 @@ namespace mln
   namespace internal
   {
 
-    // \internal Fwd decl.
+    // Fwd decl.
     template <typename I, typename F, typename E> struct image_if_base_;
 
-    // \internal data_.
+    // data_.
 
     template <typename I, typename F, typename E>
     struct data< image_if_base_<I,F,E> >
@@ -95,7 +95,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal An base image class for image_if_'something.
+    /*! An base image class for image_if_'something.
      *
      */
     template <typename I, typename F, typename E>
@@ -123,7 +123,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-//     // \internal init_
+//     // init_
 
 //     template <typename I, typename F, typename E>
 //     void init_(tag::function_t, F& f, const image_if_base_<I,F,E>& model)
@@ -141,7 +141,7 @@ namespace mln
 //       target.init_(ima, f);
 //     }
 
-    // \internal internal::data< image_if_base_<I,S> >
+    // internal::data< image_if_base_<I,S> >
 
     template <typename I, typename F, typename E>
     inline
@@ -151,7 +151,7 @@ namespace mln
     {
     }
 
-    // \internal image_if_base_<I,F,E>
+    // image_if_base_<I,F,E>
 
     template <typename I, typename F, typename E>
     inline

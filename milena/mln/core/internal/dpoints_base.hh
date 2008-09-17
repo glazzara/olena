@@ -48,7 +48,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal FIXME.
+    /*! FIXME.
      *
      */
     template <typename D, typename E>

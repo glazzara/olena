@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for primary images.
+    /*! A base class for primary images.
      *
      */
     template <typename T, typename S, typename E>

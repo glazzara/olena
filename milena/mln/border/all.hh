@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of routines related to image virtual (outer) border.
   namespace border
   {
-    /// \internal Implementation namespace of border namespace.
+    /// Implementation namespace of border namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of border namespace.
+      /// Generic implementation namespace of border namespace.
       namespace generic {}
 
     }

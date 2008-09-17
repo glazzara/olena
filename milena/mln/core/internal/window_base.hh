@@ -43,7 +43,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for window classes.
+    /*! A base class for window classes.
      *
      * \p D is a dpsite type.
      */

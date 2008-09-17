@@ -56,7 +56,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::complex_image<P,V>.
+    /// Data structure for \c mln::complex_image<P,V>.
     template <unsigned D, typename P, typename V>
     struct data< complex_image<D, P, V> >
     {

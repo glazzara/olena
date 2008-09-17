@@ -47,7 +47,7 @@ namespace mln
     namespace check
     {
 
-      /*! \internal FIXME
+      /*! FIXME
        */
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
@@ -71,7 +71,7 @@ namespace mln
       };
 
 
-      /// \internal
+      /// 
       template <typename E>
       struct image_fastest_< E, metal::false_ >
       {

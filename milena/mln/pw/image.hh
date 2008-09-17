@@ -61,7 +61,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for mln::pw::image
+    /// Data structure for mln::pw::image
     template <typename F, typename S>
     struct data< mln::pw::image<F,S> >
     {
@@ -198,7 +198,7 @@ namespace mln
 
   namespace internal
   {
-    /// \internal
+
     template <typename F, typename S>
     inline
     data< pw::image<F,S> >::data(const F& f, const S& ps)

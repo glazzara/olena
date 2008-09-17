@@ -41,7 +41,7 @@ namespace mln
   namespace linear
   {
 
-    /// \internal Namespace of linear image processing routines implementation details.
+    /// Namespace of linear image processing routines implementation details.
     namespace impl
     {
     }
@@ -50,7 +50,7 @@ namespace mln
     namespace local
     {
 
-      /// \internal Namespace of local linear routines implementation details.
+      /// Namespace of local linear routines implementation details.
       namespace impl
       {
       }

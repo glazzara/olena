@@ -50,7 +50,7 @@ namespace mln
 
     /*! \brief An "efficient" mathematical set class.
      *
-     * \internal
+     * 
      *
      * This set class is designed to store a mathematical set and to
      * present it to the user as a linear array (std::vector).

@@ -42,7 +42,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for pseudo sites.
+    /*! A base class for pseudo sites.
      *
      * Parameter \c P is FIXME: a point site type.
      */

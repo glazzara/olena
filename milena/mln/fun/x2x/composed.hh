@@ -56,12 +56,11 @@ namespace mln
 
       namespace internal
       {
-	/// \internal
 	template <typename F, typename G, typename E, bool is_bij>
 	struct helper_composed_;
 
 
-	/// \internal Helper for describing a bijective composition.
+	/// Helper for describing a bijective composition.
 	template <typename F, typename G, typename E>
 	struct helper_composed_< F, G, E, true>
 	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
@@ -94,7 +93,7 @@ namespace mln
 	  G g_;
 	};
 
-	/// \internal Helper for describing a non bijective composition.
+	/// Helper for describing a non bijective composition.
 	template <typename F, typename G, typename E>
 	struct helper_composed_< F, G, E, false>
 	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
@@ -175,7 +174,7 @@ namespace mln
       namespace internal
       {
 
-	// \internal Implementation of the bijective version.
+	// Implementation of the bijective version.
 
 	template <typename F, typename G, typename E>
 	inline
@@ -192,7 +191,6 @@ namespace mln
 	  this->m_ = f_.mat() * g_.mat();
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	typename helper_composed_<F,G,E,true>::invert
@@ -201,7 +199,6 @@ namespace mln
 	  return compose(g_.inv(), f_.inv());
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	void
@@ -211,7 +208,6 @@ namespace mln
 	  this->m_ = this->f_.mat() * this->g_.mat();
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	void
@@ -221,14 +217,13 @@ namespace mln
 	  this->m_ = this->f_.mat() * this->g_.mat();
 	}
 
-	// \internal Implementation of the non bijective version.
+	// Implementation of the non bijective version.
 	template <typename F, typename G, typename E>
 	inline
 	helper_composed_<F,G,E,false>::helper_composed_()
 	{
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	helper_composed_<F,G,E,false>::helper_composed_(const F& f, const G& g)
@@ -238,7 +233,6 @@ namespace mln
 	  this->m_ = f_.mat() * g_.mat();
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	void
@@ -248,7 +242,6 @@ namespace mln
 	  this->m_ = this->f_.mat() * this->g_.mat();
 	}
 
-	/// \internal
 	template <typename F, typename G, typename E>
 	inline
 	void

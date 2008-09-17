@@ -43,16 +43,15 @@ namespace mln
   namespace internal
   {
 
-    // \internal box_impl
+    // box_impl
 
-    /*! \internal Implementation class to equip objects having a bounding
+    /*! Implementation class to equip objects having a bounding
      * box.
      *
      */
     template <unsigned n, typename C, typename E>
     struct box_impl_;
 
-    /// \internal
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
     struct box_impl_<3, C, E>
     {
@@ -84,7 +83,6 @@ namespace mln
       C max_col() const;
     };
 
-    /// \internal
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
     struct box_impl_<2, C, E>
     {
@@ -107,7 +105,6 @@ namespace mln
       C max_col() const;
     };
 
-    /// \internal
     template <typename C, typename E> // FIXME: Add an extra param to replace 'unsigned'.
     struct box_impl_<1, C, E>
     {
@@ -124,9 +121,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // \internal box_impl
+    // box_impl
 
-    // \internal 3
+    // 3
 
     template <typename C, typename E>
     inline
@@ -192,7 +189,7 @@ namespace mln
     }
 
 
-    // \internal 2
+    // 2
 
     template <typename C, typename E>
     inline
@@ -236,7 +233,7 @@ namespace mln
       return internal::force_exact<E>(*this).bbox().pmax()[1];
     }
 
-    // \internal 1
+    // 1
 
     template <typename C, typename E>
     inline

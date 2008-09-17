@@ -37,7 +37,7 @@ namespace mln {
 
     /** \brief A ``greater than'' functor comparing psites w.r.t. the
         values they refer to in an image.
-       
+
         This functor used in useful to implement ordered queues of
         psites.  */
     template <typename I>

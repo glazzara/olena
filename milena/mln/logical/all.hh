@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of logic.
   namespace logical
   {
-    /// \internal Implementation namespace of logical namespace.
+    /// Implementation namespace of logical namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of logical namespace.
+      /// Generic implementation namespace of logical namespace.
       namespace generic {}
 
     }

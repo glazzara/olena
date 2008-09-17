@@ -44,7 +44,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for images that are morphers. Parameter
+    /*! A base class for images that are morphers. Parameter
      * \c I is the underlying-morphed image type.
      */
     template <typename I, typename T, typename S, typename E>
@@ -93,7 +93,6 @@ namespace mln
 // FIXME: Lines above have been inactivated because they are either
 // prioritary or ambiguous.
 
-    /// \internal
     template <typename Subject, typename T,
 	      typename J>
     void init_(Subject s, T& target, const Image<J>& model);

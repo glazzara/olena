@@ -46,7 +46,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Return the lvalue type when an image with type \c I
+    /// Return the lvalue type when an image with type \c I
     /// is morphed.
     template <typename I>
     struct morpher_lvalue_

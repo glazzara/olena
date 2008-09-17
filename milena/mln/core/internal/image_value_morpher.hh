@@ -46,7 +46,7 @@ namespace mln
   {
 
 
-    /*! \internal A base class for image morphers w.r.t. value.
+    /*! A base class for image morphers w.r.t. value.
      * Parameter \p S is a point set type.
      * Parameter \p P is a value type.
      */

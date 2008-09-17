@@ -49,7 +49,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::rle_image<P,T>.
+    /// Data structure for \c mln::rle_image<P,T>.
     template <typename P, typename T>
     struct data< rle_image<P,T> >
     {

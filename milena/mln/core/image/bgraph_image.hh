@@ -49,7 +49,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::bgraph_image<P,V>.
+    /// Data structure for \c mln::bgraph_image<P,V>.
     template <typename P, typename V>
     struct data< bgraph_image<P, V> >
     {

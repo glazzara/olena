@@ -43,13 +43,13 @@ namespace mln
   namespace trait
   {
 
-    /// \internal Image namespace of trait namespace.
+    /// Image namespace of trait namespace.
     namespace image {}
 
-    /// \internal Implementation namespace of trait namespace.
+    /// Implementation namespace of trait namespace.
     namespace impl {}
 
-    /// \internal Internal namespace of trait namespace.
+    /// Internal namespace of trait namespace.
     namespace internal {}
 
   }

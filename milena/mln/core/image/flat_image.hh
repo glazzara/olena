@@ -51,7 +51,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal Data structure for \c mln::flat_image<T,S>.
+    /// Data structure for \c mln::flat_image<T,S>.
     template <typename T, typename S>
     struct data< flat_image<T,S> >
     {

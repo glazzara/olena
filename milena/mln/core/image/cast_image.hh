@@ -50,7 +50,7 @@ namespace mln
 
   namespace internal
   {
-    /// \internal Data structure for \c mln::cast_image_<T,I>.
+    /// Data structure for \c mln::cast_image_<T,I>.
     template <typename T, typename I>
     struct data< cast_image_<T,I> >
     {

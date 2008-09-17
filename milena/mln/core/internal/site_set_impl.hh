@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_INTERNAL_SITE_SET_IMPL_HH
 # define MLN_CORE_INTERNAL_SITE_SET_IMPL_HH
 
-/// \internal \file mln/core/internal/site_set_impl.hh
+/// \file mln/core/internal/site_set_impl.hh
 /// Provide implementation for optional site set methods.
 
 # include <mln/core/concept/site_set.hh>
@@ -42,7 +42,7 @@ namespace mln
   namespace internal
   {
 
-    /// \internal The facade.
+    /// The facade.
     /// Parameter \c Sc is the site set component.
     template <typename Sc>
     struct site_set_impl;

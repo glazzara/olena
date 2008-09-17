@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of labeling routines.
   namespace labeling
   {
-    /// \internal Implementation namespace of labeling namespace.
+    /// Implementation namespace of labeling namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of labeling namespace.
+      /// Generic implementation namespace of labeling namespace.
       namespace generic {}
 
     }

@@ -125,7 +125,7 @@ namespace mln
     namespace internal
     {
 
-      /// \internal General gray-level class where n bits is not know at compile-time.
+      /// General gray-level class where n bits is not know at compile-time.
       /// This class is used for exchange between gray-level types purpose.
       template <unsigned n>
       class gray_

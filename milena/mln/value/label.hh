@@ -127,7 +127,6 @@ namespace mln
     namespace internal
     {
 
-      /// \internal
       template <unsigned n>
       struct convert_< label<n> >
       {

@@ -47,7 +47,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal An "efficient" mathematical set class.
+    /*! An "efficient" mathematical set class.
      * This set class is designed to store a mathematical set and to
      * present it to the user as a linear array (std::vector).
      * Elements are stored by copy.  Implementation is lazy.
@@ -166,7 +166,7 @@ namespace mln
     };
 
 
-    /*! \internal Print a set \p s into the output stream \p
+    /*! Print a set \p s into the output stream \p
      *  ostr.
      *
      * \param[in,out] ostr An output stream.
