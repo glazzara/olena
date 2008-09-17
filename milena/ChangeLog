@@ -1,5 +1,12 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have morpho::line_gradient compile again
+
+	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient):
+	s/mln_max(util::edge_id))/mln_max(util::edge_id::equiv))/
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update the Doxygen documentation of iterator internal classes.
 
 	* mln/core/internal/site_set_iterator_base.hh

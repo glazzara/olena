@@ -124,7 +124,7 @@ namespace mln
 #endif //!NDEBUG
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
-	    mln_assertion(id != mln_max(util::edge_id));
+	    mln_assertion(id != mln_max(util::edge_id::equiv));
 	  }
 
       // Line graph point set.
