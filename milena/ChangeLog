@@ -1,5 +1,24 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph psite set.
+
+	* mln/core/site_set/p_line_graph.hh (mln::p_line_graph<P>):
+	Inherit from
+	internal::site_set_base_< site_pair<P>, p_line_graph<P> >.
+	(mln::p_line_graph<P>::self_)
+	(mln::p_line_graph<P>::super_):
+	New typedefs.
+	(mln::p_line_graph<P>::site): Remove typedef.
+	(mln::p_line_graph<P>::element): Define as mln_site(super_).
+	(mln::p_line_graph<P>::nsites): Set return type to unsigned.
+	(mln::p_line_graph<P>::has): Update w.r.t. the new interface of
+	mln::line_graph_psite.
+	* mln/core/concept/site_set.hh
+	(site_set_nsites_check<mln::trait::site_set::nsites::known, E>::run):
+	Add a FIXME.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph psite.
 
 	* mln/core/image/line_graph_psite.hh

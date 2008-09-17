@@ -186,6 +186,7 @@ namespace mln
     {
       static void run()
       {
+	// FIXME: Return type should be std::size_t.
 	unsigned (E::*m)() const = & E::nsites;
 	m = 0;
       }

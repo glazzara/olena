@@ -28,6 +28,8 @@
 #ifndef MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 # define MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 
+# include <mln/util/site_pair.hh>
+
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/accu/bbox.hh>
@@ -47,6 +49,7 @@
 
 namespace mln
 {
+
   // Forward declaration.
   template<typename P> struct p_line_graph;
 
@@ -69,8 +72,11 @@ namespace mln
 
   template<typename P>
   struct p_line_graph
-    : public internal::site_set_base_< line_graph_psite<P>, p_line_graph<P> >
+    : public internal::site_set_base_< site_pair<P>, p_line_graph<P> >
   {
+    typedef p_line_graph<P> self_;
+    typedef internal::site_set_base_< site_pair<P>, self_ > super_;
+
     typedef util::graph<P> graph;
 
     /// \brief Construct a line graph psite set from a graph of points.
@@ -84,10 +90,7 @@ namespace mln
     /// Associated types.
     /// \{
     /// Element associated type.
-    typedef P element;
-
-    /// Site associated type.
-    typedef P site;
+    typedef mln_site(super_) element;
 
     /// Point_Site associated type.
     typedef line_graph_psite<P> psite;
@@ -107,7 +110,9 @@ namespace mln
     /// line graph.
     ///
     /// Required by the mln::Point_Set concept.
-    std::size_t nsites() const;
+    /* FIXME: Return type should be std::size_t (see
+       mln/core/concept/site_set.hh). */
+    unsigned nsites() const;
 
     /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
@@ -160,6 +165,10 @@ namespace mln
   bool
   operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs);
 
+
+  /* FIXME: Extend the `ord' mechanism instead of this ill-defined
+     pseudo-order. */
+
   /// \brief Inclusion of a mln::p_line_graph in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
@@ -189,7 +198,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_line_graph<P>::nsites() const
   {
     return nedges();
@@ -235,9 +244,9 @@ namespace mln
   {
     return
       // Check whether P is compatible with this psite set.
-      (&p.plg() == this) &&
+      (p.target_() == this) &&
       // Check that the edge id of P belongs to the range of valid edge ids.
-      (p.id() < gr_->nedges());
+      (p.is_valid());
   }
 
   template <typename P>
@@ -317,6 +326,10 @@ namespace mln
   bool
   operator==(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs)
   {
+    /* FIXME: We should not rely on pointer equality here, as graph
+       will soon become shells using (shared) tracked pointers to
+       actual data.  So, delegate the equality test to the graphs
+       themselves.  */
     return lhs.gr_.ptr_ == rhs.gr_.ptr_;
   }
 
