@@ -1,2 +1,2 @@
 all:
-	g++ access.cc -I../../..
+	g++ -Wall -W access.cc -I../../..

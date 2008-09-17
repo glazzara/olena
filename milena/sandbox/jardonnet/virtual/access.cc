@@ -1,40 +1,45 @@
 #include <iostream>
 
 #include "access.hh"
+#include <mln/value/all.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/fun/x2x/all.hh>
 #include <mln/debug/iota.hh>
 #include <mln/algebra/vec.hh>
+#include <mln/io/pgm/all.hh>
+
+template < template <class> class N,
+           typename I, typename T>
+void
+test1(const I& input, I& output,
+      const mln::Function_x2x<T>& t_)
+{
+  N<I> interp(input);
+  T t = exact(t_);
+  
+  mln_piter(I) p(output.domain());
+  for_all(p)
+  {
+    mln::algebra::vec<2,float> v = mln::point2d(p);
+    output(p) = interp(t.inv()(v));
+  }
+}
+
 
 int main()
 {
   using namespace mln;
-  image2d<int> img(50,50);
-  point2d p(5,5);
 
-
+  //initialization
+  image2d< value::rgb<8> > input(512,512,100);
+  mln::io::pgm::load(input, "./lena.pgm");
+  image2d< value::rgb<8> > output(512,512);
+  
   //transformation
   fun::x2x::translation<2,float> t(make::vec(3,4));
-  fun::x2x::rotation<2,float> r(90., make::vec(0,1));
-  
-  interpolation::nearest_neighbor< image2d<int> > nn(img);
+  fun::x2x::rotation<2,float> r(1.57, make::vec(0,1));
 
-  debug::iota(img);
-
-  for (int i = 0; i < 50; i++)
-    {
-      for (int j = 0; j < 50; j++)
-        std::cout << img(point2d(i,j));
-      std::cout << std::endl;
-    }
-  
-  std::cout << std::endl;
-  
-  for (int i = 3; i < 53; i++)
-    {
-      for (int j = 4; j < 54; j++)
-        std::cout <<
-          mln::access::access(img, point2d(i,j), t, nn);
-      std::cout << std::endl;
-    }
+  test1<interpolation::nearest_neighbor>(input, output, t);
+  mln::io::pgm::save(output,"./out.pgm");
 }
+  
