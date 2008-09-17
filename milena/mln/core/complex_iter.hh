@@ -62,6 +62,7 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
+    complex_fwd_iter_();
     /* FIXME: Keep this non-const?  See a (big) comment about this in
        milena/tests/complex_image.cc.   */
     complex_fwd_iter_(complex<D>& c);
@@ -139,6 +140,7 @@ namespace mln
 
     /// Construction and assignment.
     /// \{
+    complex_bkd_iter_();
     /* FIXME: Keep this non-const?  See a (big) comment about this in
        milena/tests/complex_image.cc.   */
     complex_bkd_iter_(complex<D>& c);
@@ -207,6 +209,13 @@ namespace mln
   /*-----------------------.
   | complex_fwd_iter_<D>.  |
   `-----------------------*/
+
+  template <unsigned D>
+  inline
+  complex_fwd_iter_<D>::complex_fwd_iter_()
+  {
+    invalidate();
+  }
 
   template <unsigned D>
   inline
@@ -339,6 +348,13 @@ namespace mln
   /*-----------------------.
   | complex_bkd_iter_<D>.  |
   `-----------------------*/
+
+  template <unsigned D>
+  inline
+  complex_bkd_iter_<D>::complex_bkd_iter_()
+  {
+    invalidate();
+  }
 
   template <unsigned D>
   inline
