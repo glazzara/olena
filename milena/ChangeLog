@@ -1,5 +1,16 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph image.
+
+	* mln/core/image/line_graph_image.hh
+	(mln::line_graph_image<P, V>::operator() const)
+	(mln::line_graph_image<P, V>::operator()):
+	Adjust to the new psite interface.
+	s/id()/edge_id()/.
+	Adjust preconditions.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph neighborhood & window piters.
 
 	* mln/core/internal/line_graph_vicinity_piter.hh

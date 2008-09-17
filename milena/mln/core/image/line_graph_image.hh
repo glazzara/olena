@@ -277,9 +277,9 @@ namespace mln
   typename line_graph_image<P, V>::rvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p) const
   {
-    mln_precondition(p.plg() == this->data_->plg_);
-    mln_precondition(p.id() < this->data_->edge_val_.size());
-    return this->data_->edge_val_[p.id()];
+    mln_precondition(p.is_valid());
+    mln_precondition(p.site_set() == this->data_->plg_);
+    return this->data_->edge_val_[p.edge_id()];
   }
 
   template <typename P, typename V>
@@ -287,9 +287,9 @@ namespace mln
   typename line_graph_image<P, V>::lvalue
   line_graph_image<P, V>::operator()(const line_graph_psite<P>& p)
   {
-    mln_precondition(p.plg() == this->data_->plg_);
-    mln_precondition(p.id() < this->data_->edge_val_.size());
-    return this->data_->edge_val_[p.id()];
+    mln_precondition(p.is_valid());
+    mln_precondition(p.site_set() == this->data_->plg_);
+    return this->data_->edge_val_[p.edge_id()];
   }
 
   template <typename P, typename V>
