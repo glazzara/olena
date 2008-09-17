@@ -28,6 +28,9 @@
 #ifndef MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
 # define MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH
 
+/// \file mln/core/p_complex_piter.hh
+/// \brief Definition of point iterator on complex-based pset.
+
 # include <limits>
 
 # include <mln/core/internal/site_iterator_base.hh>
@@ -37,7 +40,7 @@
 /// \file mln/core/site_set/p_complex_piter.hh
 /// \brief Definition of point iterator on complex-based pset.
 
-// Factor p_complex_fwd_piter_<D, P> and p_complex_bkd_piter_<D, P>
+// Factor p_complex_fwd_piter_<D, P> and p_complex_bkd_piter_<D, P>.
 
 namespace mln
 {

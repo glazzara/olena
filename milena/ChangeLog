@@ -1417,6 +1417,10 @@
 
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/p_complex_piter.hh: Fix Doxygen header.
+
+2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add forward and backward iterators on complexes.
 
 	* mln/core/complex_iter.hh: New
