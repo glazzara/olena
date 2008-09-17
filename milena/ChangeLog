@@ -1,5 +1,99 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph neighborhood & window piters.
+
+	* mln/core/internal/line_graph_vicinity_piter.hh
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>):
+	Inherit from internal::site_relative_iterator_base.
+	(line_graph_vicinity_piter_<P, S, E>::line_graph_vicinity_piter_):
+	New default ctor.
+	Adjust other ctors.
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::super_)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::psite)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::point)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::coord):
+	Remove typedefs.
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::to_point)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::to_psite)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::operator psite)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::p_ref)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::plg)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::p_hook_)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::operator[]):
+	Remove methods.
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::p_ref_)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::saved_p_ref_)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::psite_)
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::p_):
+	Remove attributes.
+
+	* mln/core/image/line_graph_neighborhood_piter.hh
+	* mln/core/image/line_graph_window_piter.hh
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::psite)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::psite)
+	(mln::line_graph_window_fwd_piter<P, W>::psite)
+	(mln::line_graph_window_bkd_piter<P, W>::psite):
+	New typdefs.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>)
+	(mln::line_graph_window_fwd_piter<P, W>)
+	(mln::line_graph_window_bkd_piter<P, W>):
+	New default ctors.
+	Adjust other ctors to the new interface of
+	mln::line_graph_vicinity_piter_.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::is_valid_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::is_valid_)
+	(mln::line_graph_window_fwd_piter<P, W>::is_valid_)
+	(mln::line_graph_window_bkd_piter<P, W>::is_valid_):
+	Adjust to the new interface of mln::line_graph_vicinity_piter_.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::start)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::start)
+	(mln::line_graph_window_fwd_piter<P, W>::start)
+	(mln::line_graph_window_bkd_piter<P, W>::start)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::next)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::next)
+	(mln::line_graph_window_fwd_piter<P, W>::next)
+	(mln::line_graph_window_bkd_piter<P, W>::next):
+	Likewise.
+	Rename as...
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::do_start_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::do_start_)
+	(mln::line_graph_window_fwd_piter<P, W>::do_start_)
+	(mln::line_graph_window_bkd_piter<P, W>::do_start_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::do_next_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::do_next_)
+	(mln::line_graph_window_fwd_piter<P, W>::do_next_)
+	(mln::line_graph_window_bkd_piter<P, W>::do_next_):
+	...these.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::compute_p_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::compute_p_)
+	(mln::line_graph_window_fwd_piter<P, W>::compute_p_)
+	(mln::line_graph_window_bkd_piter<P, W>::compute_p_):
+	New methods.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::site)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::site):
+	Remove typedefs.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::update_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::update_)
+	(mln::line_graph_window_fwd_piter<P, W>::update_)
+	(mln::line_graph_window_bkd_piter<P, W>::update_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::to_site)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::to_site)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::operator site)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::operator site)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::target_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::target_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::change_target)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::change_target):
+	Remove methods.
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::nbh_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::nbh_)
+	(mln::line_graph_neighborhood_fwd_piter<P, N>::site_)
+	(mln::line_graph_neighborhood_bkd_piter<P, N>::site_):
+	Remove attributes.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph elementary neighborhood and window.
 
 	* mln/core/image/line_graph_elt_neighborhood.hh,
