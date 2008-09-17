@@ -1,5 +1,63 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update line graph psite set iterators.
+
+	* mln/core/site_set/p_line_graph_piter.hh
+	(mln::p_line_graph_fwd_piter_<P>::super)
+	(mln::p_line_graph_bkd_piter_<P>::super):
+	Adjust.
+	(mln::p_line_graph_fwd_piter_<P>::dim)
+	(mln::p_line_graph_bkd_piter_<P>::dim)
+	(mln::p_line_graph_fwd_piter_<P>::point)
+	(mln::p_line_graph_bkd_piter_<P>::point)
+	(mln::p_line_graph_fwd_piter_<P>::site)
+	(mln::p_line_graph_bkd_piter_<P>::psite)
+	(mln::p_line_graph_fwd_piter_<P>::psite)
+	(mln::p_line_graph_bkd_piter_<P>::coord)
+	(mln::p_line_graph_fwd_piter_<P>::coord):
+	Remove typedefs.
+	(mln::p_line_graph_fwd_piter<P>::p_line_graph_fwd_piter)
+	(mln::p_line_graph_bkd_piter<P>::p_line_graph_bkd_piter):
+	New default ctors.
+	Remove copy ctors.
+	(mln::p_line_graph_fwd_piter<P>::is_valid_)
+	(mln::p_line_graph_bkd_piter<P>::is_valid_)
+	(mln::p_line_graph_fwd_piter<P>::invalidate_)
+	(mln::p_line_graph_bkd_piter<P>::invalidate_)
+	(mln::p_line_graph_fwd_piter<P>::start_)
+	(mln::p_line_graph_bkd_piter<P>::start_)
+	(mln::p_line_graph_fwd_piter<P>::next_)
+	(mln::p_line_graph_bkd_piter<P>::next_):
+	Adjust w.r.t. the new interface of line_graph_psite.
+	(operator<<(std::ostream&, const p_line_graph_fwd_piter_<P>&))
+	(operator<<(std::ostream&, const p_line_graph_bkd_piter_<P>&)):
+	Likewise.
+	(mln::p_line_graph_fwd_piter<P>::operator=)
+	(mln::p_line_graph_bkd_piter<P>::operator=)
+	(mln::p_line_graph_fwd_piter<P>::update)
+	(mln::p_line_graph_bkd_piter<P>::update_)
+	(mln::p_line_graph_fwd_piter<P>::to_point)
+	(mln::p_line_graph_bkd_piter<P>::to_point)
+	(mln::p_line_graph_fwd_piter<P>::to_psite)
+	(mln::p_line_graph_bkd_piter<P>::to_psite)
+	(mln::p_line_graph_fwd_piter<P>::operator psite)
+	(mln::p_line_graph_bkd_piter<P>::operator psite)
+	(mln::p_line_graph_fwd_piter<P>::operator[]):
+	(mln::p_line_graph_bkd_piter<P>::operator[]):
+	Remove methods.
+	(mln::p_line_graph_fwd_piter<P>::plg_)
+	(mln::p_line_graph_bkd_piter<P>::plg_)
+	(mln::p_line_graph_fwd_piter<P>::id_)
+	(mln::p_line_graph_bkd_piter<P>::id_)
+	(mln::p_line_graph_fwd_piter<P>::psite_):
+	(mln::p_line_graph_bkd_piter<P>::psite_):
+	Remove attributes.
+	(mln::p_line_graph_fwd_piter<P>::p_)
+	(mln::p_line_graph_bkd_piter<P>::p_):
+	Get it from super_.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update line graph psite set.
 
 	* mln/core/site_set/p_line_graph.hh (mln::p_line_graph<P>):
