@@ -1,5 +1,16 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update util::ordpair_.
+
+	* mln/util/ordpair.hh
+	(mln::util::ordpair_<T>::ordpair_)
+	(operator< (const ordpair_<T>&, const ordpair_<T>&))
+	(operator<=(const ordpair_<T>&, const ordpair_<T>&)):
+	Replace the use of operator < (resp. operator <=) by
+	util::ord_strict (reps. util::ord_weak).
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update util::gen_id.
 
 	* mln/util/internal/graph_base.hh (mln::util::gen_id<Tag, Equiv>):

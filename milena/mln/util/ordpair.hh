@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/object.hh>
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -48,6 +49,7 @@ namespace mln
      * ordering.
      *
      */
+    // FIXME: Rename as ordpair.
     template <typename T>
     struct ordpair_ : public mln::Object< ordpair_<T> >
     {
@@ -71,6 +73,7 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const ordpair_<T>& op);
 
 
+    // FIXME: Rename as make::ordpair.
     /// Routine to construct a ordpair on the fly.
     template <typename T>
     ordpair_<T> ordpair(const T& t1, const T& t2);
@@ -82,17 +85,17 @@ namespace mln
     inline
     ordpair_<T>::ordpair_(const T& t1, const T& t2)
     {
-      if (t1 > t2)
-	{
-	  first  = t2;
-	  second = t1;
-	}
-      else
+      if (util::ord_strict(t1, t2))
 	{
 	  first  = t1;
 	  second = t2;
 	}
-      mln_postcondition(first <= second);
+      else
+	{
+	  first  = t2;
+	  second = t1;
+	}
+      mln_postcondition(util::ord_weak(first, second));
     }
 
     template <typename T>
@@ -107,8 +110,8 @@ namespace mln
     bool operator< (const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
-	lhs.first < rhs.first ||
-	(lhs.first == rhs.first && lhs.second < rhs.second);
+	util::ord_strict(lhs.first, rhs.first) ||
+	(lhs.first == rhs.first && util::ord_strict(lhs.second, rhs.second));
     }
 
     template <typename T>
@@ -116,8 +119,8 @@ namespace mln
     bool operator<=(const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
-	lhs.first < rhs.first ||
-	(lhs.first == rhs.first && lhs.second <= rhs.second);
+	util::ord_strict(lhs.first, rhs.first) ||
+	(lhs.first == rhs.first && util::ord_weak(lhs.second, rhs.second));
     }
 
 
