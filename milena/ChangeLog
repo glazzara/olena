@@ -906,6 +906,22 @@
 	Fix.
 	* doc/tutorial/examples/win_multiple.cc: Update.
 
+2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Factor iterators on complexes.
+
+	* mln/core/complex_iter.hh (mln::internal::complex_iter_<D, E>):
+	New class.
+	Use it to factor...
+	(mln::complex_fwd_iter_<D>, mln::complex_bkd_iter_<D>):
+	...these.
+	(operator<<(std::ostream&, const complex_iter_<D, E>&)):
+	New.
+	(operator<<(std::ostream&, const complex_fwd_iter_<D>&))
+	(operator<<(std::ostream&, const complex_bkd_iter_<D>&)):
+	Remove.
+	* tests/core/complex.cc: Use clearer names for iterators.
+
 2008-09-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add fast arbitrary erosion.

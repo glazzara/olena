@@ -31,14 +31,10 @@
 /// \file mln/core/complex_iter.hh
 /// \brief Definition of forward and backward iterators on complexes.
 
-
 # include <limits>
 
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/complex.hh>
-
-
-// Factor complex_fwd_iter_<D> and complex_bkd_iter_<D>?
 
 namespace mln
 {
@@ -46,25 +42,107 @@ namespace mln
   // Fwd decls.
   template <unsigned D> class complex;
 
+  /*--------------------------------.
+  | internal::complex_iter_<D, E>.  |
+  `--------------------------------*/
+
+  namespace internal
+  {
+    /// \brief Factoring classe for iterators on all the faces of
+    /// a mln::complex<D>.
+    ///
+    /// \arg \p D The dimension of the complex this iterator belongs to.
+    /// \arg \p E The type exact type of the iterator.
+    template <unsigned D, typename E>
+    class complex_iter_ : public Iterator<E>
+    {
+      typedef complex_iter_<D, E> self_;
+
+    public:
+      typedef any_face_handle<D> face;
+
+      /// Construction and assignment.
+      /// \{
+      complex_iter_();
+      /* FIXME: Keep this non-const?  See a (big) comment about this in
+	 milena/tests/complex_image.cc.   */
+      complex_iter_(complex<D>& c);
+      complex_iter_(const self_& rhs);
+      self_& operator= (const self_& rhs);
+      /// \}
+
+      /// Manipulation.
+      /// \{
+      /// Test if the iterator is valid.
+      bool is_valid() const;
+      /// Invalidate the iterator.
+      void invalidate();
+      /// \}
+
+      /// Conversion and accessors.
+      /// \{
+      /// Reference to the corresponding any-face handle.
+      const face& to_face () const;
+      /// Convert the iterator into an any-face handle.
+      operator face() const;
+      /// \}
+
+    protected:
+      /// The face handle this iterator is pointing to.
+      face face_;
+
+    private:
+      /// \brief An invalid value for both the dimension and the id of
+      /// the face.
+      ///
+      /// Use a function instead of a static constant, since `static'
+      /// variables needs to be compiled once, which requires a compiled
+      /// library to avoid duplicate symbols, which is something that
+      /// was not really planned in Milena.  A function tagged `inlined'
+      /// can appear multiple times in a program, and solves this
+      /// problem.  We rely on the compiler to inline this call.
+      ///
+      /// Of course, we could have used UINT_MAX, but it is not very
+      /// C++.
+      unsigned invalid_unsigned_() const;
+    };
+
+
+    /* FIXME: This hand-made delegation is painful.  We should rely on
+       the general mechanism provided by Point_Site.  But then again, we
+       need to refine/adjust the interface of Point_Site w.r.t. the
+       mandatory conversions to points.  */
+    template <unsigned D, typename E>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const complex_iter_<D, E>& p);
+
+  } // end of mln::internal
+
 
   /*-----------------------.
   | complex_fwd_iter_<D>.  |
   `-----------------------*/
 
-  /// \brief Forward iterator on all the faces of mln::complex<D>.
+  /// \brief Forward iterator on all the faces of a mln::complex<D>.
+  ///
+  /// \arg \p D The dimension of the complex this iterator belongs to.
   template <unsigned D>
-  class complex_fwd_iter_ : public Iterator< complex_fwd_iter_<D> >
+  class complex_fwd_iter_
+    : public internal::complex_iter_< D, complex_fwd_iter_<D> >
   {
     typedef complex_fwd_iter_<D> self_;
+    typedef internal::complex_iter_< D, self_ > super_;
 
   public:
-    typedef any_face_handle<D> face;
+    using super_::is_valid;
+    using super_::invalidate;
 
+  public:
     /// Construction and assignment.
     /// \{
     complex_fwd_iter_();
-    /* FIXME: Keep this non-const?  See a (big) comment about this in
-       milena/tests/complex_image.cc.   */
+    // FIXME: See above (internal::complex_iter_'s default ctor).
     complex_fwd_iter_(complex<D>& c);
     complex_fwd_iter_(const self_& rhs);
     self_& operator= (const self_& rhs);
@@ -77,72 +155,39 @@ namespace mln
     void set_cplx(complex<D>& c);
 
     /// Test if the iterator is valid.
-    bool is_valid() const;
-    /// Invalidate the iterator.
-    void invalidate();
-    /// Start an iteration.
     void start();
-
     /// Go to the next point.
     void next_();
     /// \}
 
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding any-face handle.
-    const face& to_face () const;
-    /// Convert the iterator into an any-face handle.
-    operator face() const;
-    /// \}
-
   private:
-    /// The face handle this iterator is pointing to.
-    face face_;
-
-    /// \brief An invalid value for both the dimension and the id of
-    /// the face.
-    ///
-    /// Use a function instead of a static constant, since `static'
-    /// variables needs to be compiled once, which requires a compiled
-    /// library to avoid duplicate symbols, which is something that
-    /// was not really planned in Milena.  A function tagged `inlined'
-    /// can appear multiple times in a program, and solves this
-    /// problem.  We rely on the compiler to inline this call.
-    ///
-    /// Of course, we could have used UINT_MAX, but it is not very
-    /// C++.
-    unsigned invalid_unsigned_() const;
+    using super_::face_;
   };
-
-
-  /* FIXME: This hand-made delegation is painful.  We should rely on
-     the general mechanism provided by Point_Site.  But then again, we
-     need to refine/adjust the interface of Point_Site w.r.t. the
-     mandatory conversions to points.  */
-  template <unsigned D>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const complex_fwd_iter_<D>& p);
 
 
   /*-----------------------.
   | complex_bkd_iter_<D>.  |
   `-----------------------*/
 
-  /// \brief Backward iterator on all the faces of mln::complex<D>.
+  /// \brief Backward iterator on all the faces of a mln::complex<D>.
+  ///
+  /// \arg \p D The dimension of the complex this iterator belongs to.
   template <unsigned D>
-  class complex_bkd_iter_ : public Iterator< complex_bkd_iter_<D> >
+  class complex_bkd_iter_
+    : public internal::complex_iter_< D, complex_bkd_iter_<D> >
   {
     typedef complex_bkd_iter_<D> self_;
+    typedef internal::complex_iter_< D, self_ > super_;
 
   public:
-    typedef any_face_handle<D> face;
+    using super_::is_valid;
+    using super_::invalidate;
 
+  public:
     /// Construction and assignment.
     /// \{
     complex_bkd_iter_();
-    /* FIXME: Keep this non-const?  See a (big) comment about this in
-       milena/tests/complex_image.cc.   */
+    // FIXME: See above (internal::complex_iter_'s default ctor).
     complex_bkd_iter_(complex<D>& c);
     complex_bkd_iter_(const self_& rhs);
     self_& operator= (const self_& rhs);
@@ -154,57 +199,126 @@ namespace mln
     // FIXME: Same comment as the ctor above.
     void set_cplx(complex<D>& c);
 
-    /// Test if the iterator is valid.
-    bool is_valid() const;
-    /// Invalidate the iterator.
-    void invalidate();
     /// Start an iteration.
     void start();
-
     /// Go to the next point.
     void next_();
     /// \}
 
-    /// Conversion and accessors.
-    /// \{
-    /// Reference to the corresponding any-face handle.
-    const face& to_face () const;
-    /// Convert the iterator into an any-face handle.
-    operator face() const;
-    /// \}
-
   private:
-    /// The face handle this iterator is pointing to.
-    face face_;
-
-    /// \brief An invalid value for both the dimension and the id of
-    /// the face.
-    ///
-    /// Use a function instead of a static constant, since `static'
-    /// variables needs to be compiled once, which requires a compiled
-    /// library to avoid duplicate symbols, which is something that
-    /// was not really planned in Milena.  A function tagged `inlined'
-    /// can appear multiple times in a program, and solves this
-    /// problem.  We rely on the compiler to inline this call.
-    ///
-    /// Of course, we could have used UINT_MAX, but it is not very
-    /// C++.
-    unsigned invalid_unsigned_() const;
+    using super_::face_;
   };
-
-
-  /* FIXME: This hand-made delegation is painful.  We should rely on
-     the general mechanism provided by Point_Site.  But then again, we
-     need to refine/adjust the interface of Point_Site w.r.t. the
-     mandatory conversions to points.  */
-  template <unsigned D>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const complex_bkd_iter_<D>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  /*--------------------------------.
+  | internal::complex_iter_<D, E>.  |
+  `--------------------------------*/
+
+  namespace internal
+  {
+
+    template <unsigned D, typename E>
+    inline
+    complex_iter_<D, E>::complex_iter_()
+    {
+      // Invalidate face_.
+      invalidate();
+    }
+
+    template <unsigned D, typename E>
+    inline
+    complex_iter_<D, E>::complex_iter_(complex<D>& c)
+    {
+      face_.set_cplx(c);
+      // Invalidate face_.
+      invalidate();
+    }
+
+    template <unsigned D, typename E>
+    inline
+    complex_iter_<D, E>::complex_iter_(const complex_iter_<D, E>& rhs)
+      : face_(rhs.face_)
+    {
+    }
+
+    template <unsigned D, typename E>
+    inline
+    complex_iter_<D, E>&
+    complex_iter_<D, E>::operator=(const complex_iter_<D, E>& rhs)
+    {
+      if (&rhs == this)
+	return *this;
+      face_ = rhs.face_;
+      return *this;
+    }
+
+    template <unsigned D, typename E>
+    inline
+    bool
+    complex_iter_<D, E>::is_valid() const
+    {
+      return face_.is_valid();
+    }
+
+    template <unsigned D, typename E>
+    inline
+    void
+    complex_iter_<D, E>::invalidate()
+    {
+      face_.set_n(invalid_unsigned_());
+      face_.set_face_id(invalid_unsigned_());
+    }
+
+    template <unsigned D, typename E>
+    inline
+    const any_face_handle<D>&
+    complex_iter_<D, E>::to_face() const
+    {
+      return face_;
+    }
+
+    template <unsigned D, typename E>
+    inline
+    complex_iter_<D, E>::operator any_face_handle<D>() const
+    {
+      mln_precondition(is_valid());
+      return face_;
+    }
+
+    template <unsigned D, typename E>
+    unsigned
+    complex_iter_<D, E>::invalid_unsigned_() const
+    {
+      return std::numeric_limits<unsigned>::max();
+    }
+
+    template <unsigned D, typename E>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const complex_iter_<D, E>& p)
+    {
+    /* FIXME: We should use p.to_face() here, but as it lacks the
+       precondition the conversion operator has, so we use the latter.
+
+       We should
+       - rename `to_face' as `to_face_';
+       - write a new `to_face' routine checking the validity of the
+         iterator;
+       - have the conversion operator to face use this new `to_face'
+         routine;
+       - adjust former clients of `to_face'
+
+       This is a general remark that applies to all iterators of
+       Milena.  */
+      any_face_handle<D> f = p;
+      return ostr << "(dim = " << f.n() << ", id = " << f.face_id() << ')';
+    }
+
+  } // end of mln::internal
+
 
   /*-----------------------.
   | complex_fwd_iter_<D>.  |
@@ -213,8 +327,8 @@ namespace mln
   template <unsigned D>
   inline
   complex_fwd_iter_<D>::complex_fwd_iter_()
+    : super_()
   {
-    invalidate();
   }
 
   template <unsigned D>
@@ -228,7 +342,7 @@ namespace mln
   template <unsigned D>
   inline
   complex_fwd_iter_<D>::complex_fwd_iter_(const complex_fwd_iter_<D>& rhs)
-    : face_(rhs.face_)
+    : super_(rhs)
   {
   }
 
@@ -239,7 +353,7 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    face_ = rhs.face_;
+    super_::operator=(rhs);
     return *this;
   }
 
@@ -251,23 +365,6 @@ namespace mln
     face_.set_cplx(c);
     // Invalidate face_.
     invalidate();
-  }
-
-  template <unsigned D>
-  inline
-  bool
-  complex_fwd_iter_<D>::is_valid() const
-  {
-    return face_.is_valid();
-  }
-
-  template <unsigned D>
-  inline
-  void
-  complex_fwd_iter_<D>::invalidate()
-  {
-    face_.set_n(invalid_unsigned_());
-    face_.set_face_id(invalid_unsigned_());
   }
 
   template <unsigned D>
@@ -311,49 +408,18 @@ namespace mln
       }
   }
 
-  template <unsigned D>
-  inline
-  const any_face_handle<D>&
-  complex_fwd_iter_<D>::to_face() const
-  {
-    return face_;
-  }
-
-  template <unsigned D>
-  inline
-  complex_fwd_iter_<D>::operator any_face_handle<D>() const
-  {
-    mln_precondition(is_valid());
-    return face_;
-  }
-
-  template <unsigned D>
-  unsigned
-  complex_fwd_iter_<D>::invalid_unsigned_() const
-  {
-    return std::numeric_limits<unsigned>::max();
-  }
-
-
-  template <unsigned D>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const complex_fwd_iter_<D>& p)
-  {
-    return ostr << "(dim = " << p.to_face().n()
-		<< ", id = " << p.to_face().face_id() << ')';
-  }
-
 
   /*-----------------------.
   | complex_bkd_iter_<D>.  |
   `-----------------------*/
 
+  // FIXME: Resume here.
+
   template <unsigned D>
   inline
   complex_bkd_iter_<D>::complex_bkd_iter_()
+    : super_()
   {
-    invalidate();
   }
 
   template <unsigned D>
@@ -367,7 +433,7 @@ namespace mln
   template <unsigned D>
   inline
   complex_bkd_iter_<D>::complex_bkd_iter_(const complex_bkd_iter_<D>& rhs)
-    : face_(rhs.face_)
+    : super_(rhs)
   {
   }
 
@@ -378,7 +444,7 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    face_ = rhs.face_;
+    super_::operator=(rhs);
     return *this;
   }
 
@@ -390,23 +456,6 @@ namespace mln
     face_.set_cplx(c);
     // Invalidate face_.
     invalidate();
-  }
-
-  template <unsigned D>
-  inline
-  bool
-  complex_bkd_iter_<D>::is_valid() const
-  {
-    return face_.is_valid();
-  }
-
-  template <unsigned D>
-  inline
-  void
-  complex_bkd_iter_<D>::invalidate()
-  {
-    face_.set_n(invalid_unsigned_());
-    face_.set_face_id(invalid_unsigned_());
   }
 
   template <unsigned D>
@@ -448,39 +497,6 @@ namespace mln
 	  else
 	    invalidate();
       }
-  }
-
-  template <unsigned D>
-  inline
-  const any_face_handle<D>&
-  complex_bkd_iter_<D>::to_face() const
-  {
-    return face_;
-  }
-
-  template <unsigned D>
-  inline
-  complex_bkd_iter_<D>::operator any_face_handle<D>() const
-  {
-    mln_precondition(is_valid());
-    return face_;
-  }
-
-  template <unsigned D>
-  unsigned
-  complex_bkd_iter_<D>::invalid_unsigned_() const
-  {
-    return std::numeric_limits<unsigned>::max();
-  }
-
-
-  template <unsigned D>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const complex_bkd_iter_<D>& p)
-  {
-    return ostr << "(dim = " << p.to_face().n()
-		<< ", id = " << p.to_face().face_id() << ')';
   }
 
 # endif // ! MLN_INCLUDE_ONLY

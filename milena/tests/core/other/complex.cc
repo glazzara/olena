@@ -115,18 +115,19 @@ int main()
   | Iteration.  |
   `------------*/
 
-  // Iterators on a complex (not complex_image), or more precisely on
-  // the faces of a complex.
+  // FIXME: Possibly split this test (create a test for iterators).
 
-  mln_fwd_citer_(complex<D>) ff(c);
-  for_all(ff)
-    std::cout << ff << std::endl;
+  // Iterators on a complex (not complex_image), or more precisely on
+  // (all) the faces of complex C.
+  mln_fwd_citer_(complex<D>) fwd_f(c);
+  for_all(fwd_f)
+    std::cout << fwd_f << std::endl;
 
   std::cout << std::endl;
 
-  mln_bkd_citer_(complex<D>) bf(c);
-  for_all(bf)
-    std::cout << bf << std::endl;
+  mln_bkd_citer_(complex<D>) bkd_f(c);
+  for_all(bkd_f)
+    std::cout << bkd_f << std::endl;
 
   /* FIXME: Exercice more iterators (see
      milena/tests/core/complex_image.cc) and ticket #162
