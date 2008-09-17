@@ -1,5 +1,11 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the handling of a possibly unused variable in line_gradient.
+
+	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient): Here.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a bug in morpho::line_gradient.
 
 	* mln/morpho/line_gradient.hh (mln::morpho::line_gradient):

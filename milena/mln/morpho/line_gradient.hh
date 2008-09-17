@@ -100,13 +100,10 @@ namespace mln
 	for_all (q)
 	if (ima.domain().has(q))
 	  {
-	    // Avoid a warning about an undefined variable when the
-	    // NDEBUG is not defined.
-#ifdef NDEBUG
-	    g.add_edge(points[p], points[q]);
-#else // !NDEBUG
 	    util::edge_id id = g.add_edge(points[p], points[q]);
-#endif //!NDEBUG
+	    // Avoid a warning about an undefined variable when NDEBUG
+	    // is not defined.
+	    (void) id;
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
 	    mln_assertion(id != mln_max(util::edge_id::equiv));
