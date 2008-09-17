@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -36,6 +36,7 @@
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_complex.hh>
 # include <mln/core/complex_psite.hh>
+# include <mln/core/complex_iter.hh>
 
 /// \file mln/core/site_set/p_complex_piter.hh
 /// \brief Definition of point iterator on complex-based pset.
@@ -62,6 +63,9 @@ namespace mln
   {
     typedef p_complex_fwd_piter_<D, P> self_;
     typedef internal::site_iterator_base< P, self_ > super_;
+
+    /// The type of the underlying complex iterator.
+    typedef complex_fwd_iter_<D> iter;
 
   public:
     // Make definitions from super class available.
@@ -110,27 +114,13 @@ namespace mln
     /// \}
 
   private:
-    /// The face handle this iterator is pointing to.
-    any_face_handle<D> face_;
+    /// The underlying complex iterator.
+    iter iter_;
     /// The psite corresponding to this iterator.
     psite psite_;
     /// \brief The point associated to this psite.
     // FIXME: Actually, this is a dummy value!
     point p_;
-
-    /// \brief An invalid value for both the dimension and the id of
-    /// the face.
-    ///
-    /// Use a function instead of a static constant, since `static'
-    /// variables needs to be compiled once, which requires a compiled
-    /// library to avoid duplicate symbols, which is something that
-    /// was not really planned in Milena.  A function tagged `inlined'
-    /// can appear multiple times in a program, and solves this
-    /// problem.  We rely on the compiler to inline this call.
-    ///
-    /// Of course, we could have used UINT_MAX, but it is not very
-    /// C++.
-    unsigned invalid_unsigned_() const;
   };
 
 
@@ -155,6 +145,9 @@ namespace mln
   {
     typedef p_complex_bkd_piter_<D, P> self_;
     typedef internal::site_iterator_base< P, self_ > super_;
+
+    /// The type of the underlying complex iterator.
+    typedef complex_bkd_iter_<D> iter;
 
   public:
     // Make definitions from super class available.
@@ -203,27 +196,13 @@ namespace mln
     /// \}
 
   private:
-    /// The face handle this iterator is pointing to.
-    any_face_handle<D> face_;
+    /// The underlying complex iterator.
+    iter iter_;
     /// The psite corresponding to this iterator.
     psite psite_;
     /// \brief The point associated to this psite.
     // FIXME: Actually, this is a dummy value!
     point p_;
-
-    /// \brief An invalid value for both the dimension and the id of
-    /// the face.
-    ///
-    /// Use a function instead of a static constant, since `static'
-    /// variables needs to be compiled once, which requires a compiled
-    /// library to avoid duplicate symbols, which is something that
-    /// was not really planned in Milena.  A function tagged `inlined'
-    /// can appear multiple times in a program, and solves this
-    /// problem.  We rely on the compiler to inline this call.
-    ///
-    /// Of course, we could have used UINT_MAX, but it is not very
-    /// C++.
-    unsigned invalid_unsigned_() const;
   };
 
 
@@ -251,15 +230,14 @@ namespace mln
     : psite_(),
       p_()
   {
-    face_.set_cplx(pc.cplx());
-    // Invalidate face_.
-    invalidate();
+    iter_.set_cplx(pc.cplx());
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned D, typename P>
   inline
   p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_(const p_complex_fwd_piter_<D, P>& rhs)
-    : face_(rhs.face_),
+    : iter_(rhs.iter_),
       psite_(rhs.psite_),
       // Dummy value.
       p_()
@@ -273,7 +251,7 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    face_ = rhs.face_;
+    iter_ = rhs.iter_;
     psite_ = rhs.psite_;
     return *this;
   }
@@ -292,7 +270,7 @@ namespace mln
   bool
   p_complex_fwd_piter_<D, P>::is_valid() const
   {
-    return face_.is_valid();
+    return iter_.is_valid();
   }
 
   template <unsigned D, typename P>
@@ -300,50 +278,24 @@ namespace mln
   void
   p_complex_fwd_piter_<D, P>::invalidate()
   {
-    face_.set_n(invalid_unsigned_());
-    face_.set_face_id(invalid_unsigned_());
+    iter_.invalidate();
   }
 
   template <unsigned D, typename P>
   inline
-  void 
+  void
   p_complex_fwd_piter_<D, P>::start()
   {
-    face_.set_n(0u);
-    face_.set_face_id(0u);
+    iter_.start();
     update_();
   }
 
   template <unsigned D, typename P>
   inline
-  void 
+  void
   p_complex_fwd_piter_<D, P>::next_()
   {
-    if (is_valid())
-      {
-	unsigned n = face_.n();
-	unsigned face_id = face_.face_id();
-
-	if (face_id + 1 < face_.cplx().nfaces(n))
-	  /* FIXME: Provide accessor any_face_handle::n() returning
-	     a mutable reference?  This way, we could just write
-	 
-	       ++face_.face_id();
-	     
-	     instead of the following.  */
-	  face_.set_face_id(face_id + 1);
-	else
-	  // Start to iterate on the faces of the next dimension if
-	  // possible.
-	  if (n <= D)
-	    {
-	      // FIXME: Same remark as above.
-	      face_.set_n(n + 1);
-	      face_.set_face_id(0u);
-	    }
-	  else
-	    invalidate();
-      }
+    iter_.next_();
     if (is_valid())
       update_();
   }
@@ -354,7 +306,7 @@ namespace mln
   p_complex_fwd_piter_<D, P>::update_()
   {
     // Update psite_.
-    psite_ = complex_psite<D, P>(face_);
+    psite_ = complex_psite<D, P>(iter_);
   }
 
   template <unsigned D, typename P>
@@ -393,13 +345,6 @@ namespace mln
     return psite_;
   }
 
-  template <unsigned D, typename P>
-  unsigned
-  p_complex_fwd_piter_<D, P>::invalid_unsigned_() const
-  {
-    return std::numeric_limits<unsigned>::max();
-  }
-
 
   template <unsigned D, typename P>
   inline
@@ -434,15 +379,14 @@ namespace mln
     : psite_(),
       p_()
   {
-    face_.set_cplx(pc.cplx());
-    // Invalidate face_.
-    invalidate();
+    iter_.set_cplx(pc.cplx());
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned D, typename P>
   inline
   p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_(const p_complex_bkd_piter_<D, P>& rhs)
-    : face_(rhs.face_),
+    : iter_(rhs.iter_),
       psite_(rhs.psite_),
       // Dummy value.
       p_()
@@ -456,7 +400,7 @@ namespace mln
   {
     if (&rhs == this)
       return *this;
-    face_ = rhs.face_;
+    iter_ = rhs.iter_;
     psite_ = rhs.psite_;
     return *this;
   }
@@ -475,7 +419,7 @@ namespace mln
   bool
   p_complex_bkd_piter_<D, P>::is_valid() const
   {
-    return face_.is_valid();
+    return iter_.is_valid();
   }
 
   template <unsigned D, typename P>
@@ -483,50 +427,24 @@ namespace mln
   void
   p_complex_bkd_piter_<D, P>::invalidate()
   {
-    face_.set_n(invalid_unsigned_());
-    face_.set_face_id(invalid_unsigned_());
+    iter_.invalidate();
   }
 
   template <unsigned D, typename P>
   inline
-  void 
+  void
   p_complex_bkd_piter_<D, P>::start()
   {
-    face_.set_n(D);
-    face_.set_face_id(face_.cplx().template nfaces<D>() - 1);
+    iter_.start();
     update_();
   }
 
   template <unsigned D, typename P>
   inline
-  void 
+  void
   p_complex_bkd_piter_<D, P>::next_()
   {
-    if (is_valid())
-      {
-	unsigned n = face_.n();
-	unsigned face_id = face_.face_id();
-
-	if (face_id > 0)
-	  /* FIXME: Provide accessor any_face_handle::n() returning
-	     a mutable reference?  This way, we could just write
-	 
-	       ++face_.face_id();
-	     
-	     instead of the following.  */
-	  face_.set_face_id(face_id - 1);
-	else
-	  // Start to iterate on the faces of the previous dimension
-	  // if it exists.
-	  if (n > 0)
-	    {
-	      // FIXME: Same remark as above.
-	      face_.set_n(n - 1);
-	      face_.set_face_id(face_.cplx().nfaces(n - 1) - 1);
-	    }
-	  else
-	    invalidate();
-      }
+    iter_.next_();
     if (is_valid())
       update_();
   }
@@ -537,7 +455,7 @@ namespace mln
   p_complex_bkd_piter_<D, P>::update_()
   {
     // Update psite_.
-    psite_ = complex_psite<D, P>(face_);
+    psite_ = complex_psite<D, P>(iter_);
   }
 
   template <unsigned D, typename P>
@@ -574,13 +492,6 @@ namespace mln
   {
     mln_precondition(is_valid());
     return psite_;
-  }
-
-  template <unsigned D, typename P>
-  unsigned
-  p_complex_bkd_piter_<D, P>::invalid_unsigned_() const
-  {
-    return std::numeric_limits<unsigned>::max();
   }
 
 
