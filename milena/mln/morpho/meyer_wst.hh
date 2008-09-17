@@ -107,11 +107,10 @@ namespace mln
     meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)
     {
-      I input = exact(input_);
-      N nbh = exact(nbh_);
-
       /* FIXME: Ensure the input image has scalar values.  */
-      const N& nbh = exact(nbh_);
+
+      const I input = exact(input_);
+      const N nbh = exact(nbh_);
 
       typedef L marker;
       const marker unmarked = literal::zero;
