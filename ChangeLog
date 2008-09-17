@@ -1,3 +1,7 @@
+2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* configure.ac: Add tests/extension to configure.ac.
+
 2008-09-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix various test related files (again).
