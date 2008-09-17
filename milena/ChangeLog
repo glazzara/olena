@@ -908,6 +908,10 @@
 
 2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/face.hh: Add missing `inline' keywords.
+
+2008-09-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor (more) iterators on complexes and faces.
 
 	* mln/core/internal/complex_iter_base.hh: New.
