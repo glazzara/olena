@@ -49,14 +49,15 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief A generic forward iterator on points of windows and of
+    /*! \brief A generic iterator on points of windows and of
      *  neighborhoods.
      *
      * Parameter \c S is the targeted "site set definition" type.  It
      * can be either a Window, or a Neighborhood.
      *
-     * IMPORTANT: Sub-classes have to define do_start_, do_next_, and
-     * compute_p_.  They shall define NEITHER start_ NOR next_.
+     * IMPORTANT: Sub-classes have to define do_start_, do_next_,
+     * is_valid_, invalidate_ and compute_p_.  They shall define
+     * NEITHER start_ NOR next_.
      */
     template <typename S, typename E>
     class site_relative_iterator_base : public site_iterator_base< S, E >

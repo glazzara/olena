@@ -46,6 +46,9 @@ namespace mln
     /*! \internal A base class for site iterators.
      *
      * Parameter \c S is the targeted site set type.
+     *
+     * IMPORTANT: Sub-classes have to define start_, next_,
+     * is_valid_ and invalidate_.
      */
     template <typename S, typename E>
     class site_set_iterator_base : public site_iterator_base<S, E>
