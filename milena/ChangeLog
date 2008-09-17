@@ -900,6 +900,17 @@
 
 2008-09-14  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor iterators on mln::p_complex.
+
+	* mln/core/internal/p_complex_piter_base.hh: New.
+	Use it to factor...
+	* mln/core/p_complex_piter.hh
+	(mln::p_complex_fwd_piter_<D, P>)
+	(mln::p_complex_bkd_piter_<D, P>):
+	...these.
+
+2008-09-14  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have iterators on mln::complex export their dimension.
 
 	* mln/core/complex_iter.hh
