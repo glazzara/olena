@@ -1,5 +1,11 @@
 2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Create an util::ordpair_-based container usable as a site.
+
+	* mln/util/site_pair.hh: New.
+
+2008-09-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update util::ordpair_.
 
 	* mln/util/ordpair.hh
