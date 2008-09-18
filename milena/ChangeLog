@@ -1,5 +1,16 @@
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update util::site_pair.
+
+	* mln/util/site_pair
+	(operator==(const site_pair<P>&, const site_pair<P>&))
+	(operator< (const site_pair<P>&, const site_pair<P>&)):
+	Remove abort() statements.
+	(operator<= (const site_pair<P>&, const site_pair<P>&)):
+	New operator.
+
+2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix inequality comparison on util::gen_id.
 
 	* mln/util/internal/graph_base.hh: Include

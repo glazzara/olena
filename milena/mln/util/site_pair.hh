@@ -37,8 +37,8 @@ namespace mln
 {
   /* FIXME: The class mln::internal::image_base requires its site
      types to have a `coord' typedef, but util::ordpair_ has none.
-     Hence this small workaround.  Remove as soon as image_base is
-     refurbished.  */
+     Hence this small workaround.  Use ord_pair directly as soon as
+     image_base is refurbished.  */
   template <typename P>
   struct site_pair : public mln::Object< site_pair<P> >
   {
@@ -48,12 +48,16 @@ namespace mln
     util::ordpair_<P> pair_;
   };
 
-  /* FIXME: The proxy mechanism requires these operators; why?  It
-     seems its static assertions do not check the right guy.  IMHO
-     (Roland's), it should look for line_graph_psite's operators,
-     not site_pair's.  */
+  /* FIXME: The proxy mechanism requires operator== and operator<= for
+     line_graph_psite to compile (line_graph_psite aggregates a
+     site_pair); why?  It seems its static assertions do not check the
+     right guy(s).  IMHO (Roland's), it should look for
+     line_graph_psite's operators, not site_pair's.  */
   template <typename P>
   bool operator==(const site_pair<P>& lhs, const site_pair<P>& rhs);
+
+  template <typename P>
+  bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
 
   template <typename P>
   bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
@@ -61,6 +65,10 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  /*---------------.
+  | Construction.  |
+  `---------------*/
 
   template <typename P>
   site_pair<P>::site_pair()
@@ -74,12 +82,15 @@ namespace mln
   {
   }
 
+  /*-------------.
+  | Comparison.  |
+  `-------------*/
+
   template <typename P>
   inline
   bool
   operator==(const site_pair<P>& lhs, const site_pair<P>& rhs)
   {
-    abort();
     return lhs.pair_ == rhs.pair_;
   }
 
@@ -88,8 +99,15 @@ namespace mln
   bool
   operator< (const site_pair<P>& lhs, const site_pair<P>& rhs)
   {
-    abort();
     return lhs.pair_ < rhs.pair_;
+  }
+
+  template <typename P>
+  inline
+  bool
+  operator<=(const site_pair<P>& lhs, const site_pair<P>& rhs)
+  {
+    return lhs.pair_ <= rhs.pair_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
