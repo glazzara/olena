@@ -39,16 +39,21 @@
 # include <set>
 # include <ostream>
 
+// For gen_id.
+# include <mln/value/builtin/all.hh>
+
 # include <mln/core/concept/object.hh>
 
 # include <mln/util/ordpair.hh>
 # include <mln/value/builtin/integers.hh>
+
 
 namespace mln
 {
 
   namespace util
   {
+
     /*--------------.
     | Identifiers.  |
     `--------------*/
@@ -84,7 +89,8 @@ namespace mln
     private:
       equiv e_;
     };
-    
+
+
     /// Compare two identifiers.
     /// \{
     template <typename Tag, typename Equiv>
@@ -98,13 +104,24 @@ namespace mln
     template <typename Tag, typename Equiv>
     bool
     operator==(const gen_id<Tag, Equiv>& i, const Equiv j);
+
+
+    template <typename Tag, typename Equiv>
+    bool
+    ord_strict(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j);
+
+    template <typename Tag, typename Equiv>
+    bool
+    ord_weak(const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j);
     /// \}
+
 
     /// Tags.
     /// \{
     struct vertex_tag;
     struct edge_tag;
     /// \}
+
 
     /// \brief The type used to identify vertices.
     ///
@@ -384,6 +401,24 @@ namespace mln
     {
       return i.to_equiv() == j;
     }
+
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    ord_strict (const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i.to_equiv() < j.to_equiv();
+    }
+
+    template <typename Tag, typename Equiv>
+    inline
+    bool
+    ord_weak (const gen_id<Tag, Equiv>& i, const gen_id<Tag, Equiv>& j)
+    {
+      return i.to_equiv() <= j.to_equiv();
+    }
+
 
     /*---------------------.
     | Operators on edges.  |

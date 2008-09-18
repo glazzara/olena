@@ -1,5 +1,15 @@
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix inequality comparison on util::gen_id.
+
+	* mln/util/internal/graph_base.hh: Include
+	mln/value/builtin/all.hh to have traits resolution work.
+	(ord_strict(const gen_id<Tag, Equiv>&, const gen_id<Tag, Equiv>&))
+	(ord_weak(const gen_id<Tag, Equiv>&, const gen_id<Tag, Equiv>&)):
+	New.
+
+2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust clients to the new interface of util::ordpair_.
 
 	* mln/util/internal/graph_base.hh
