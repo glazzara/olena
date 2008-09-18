@@ -28,10 +28,8 @@
 #ifndef MLN_UTIL_ORDPAIR_HH
 # define MLN_UTIL_ORDPAIR_HH
 
-/*! \file mln/util/ordpair.hh
- *
- * \brief Definition of an ordered pair.
- */
+/// \file mln/util/ordpair.hh
+/// \brief Definition of an ordered pair.
 
 # include <mln/core/concept/object.hh>
 # include <mln/util/ord.hh>
@@ -43,19 +41,54 @@ namespace mln
   namespace util
   {
 
-    /*!
-     * \brief  Ordered pair structure s.a. this->first <= this->second;
-     * ordered pairs are partially ordered using lexicographical
-     * ordering.
-     *
-     */
-    // FIXME: Rename as ordpair.
+    // FIXME: Rename as ord_pair.
+
+    /// \brief  Ordered pair structure s.a. this->first <= this->second;
+    /// ordered pairs are partially ordered using lexicographical
+    /// ordering.
     template <typename T>
     struct ordpair_ : public mln::Object< ordpair_<T> >
     {
-      ordpair_(const T& t1, const T& t2);
-      T first;
-      T second;
+    public:
+      ordpair_(const T& val1, const T& val2);
+      
+    public:
+      /// Get the first (lowest) member of the pair.
+      /// \{
+      const T& first() const;
+      T& first();
+      /// \}
+
+      /// Get the second (highest) member of the pair.
+      /// \{
+      const T& second() const;
+      T& second();
+      /// \}
+
+      /// \brief Replace the first member of the pair by \a val, while
+      /// keeping the relative order.
+      ///
+      /// \post \a first_ <= \a second_ (with <= being the
+      /// mln::util::ord_weak relationship).
+      void change_first(const T& val);
+
+      /// \brief Replace the second member of the pair by \a val,
+      /// while keeping the relative order.
+      ///
+      /// \post \a first_ <= \a second_ (with <= being the
+      /// mln::util::ord_weak relationship).
+      void change_second(const T& val);
+
+      /// \brief Replace both members of the pair by \a val, while
+      /// keeping the relative order.
+      ///
+      /// \post \a first_ <= \a second_ (with <= being the
+      /// mln::util::ord_weak relationship).
+      void change_both(const T& first, const T& second);
+
+    private:
+      T first_;
+      T second_;
     };
 
 
@@ -73,36 +106,128 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const ordpair_<T>& op);
 
 
-    // FIXME: Rename as make::ordpair.
+    // FIXME: Rename as make::ord_pair.
     /// Routine to construct a ordpair on the fly.
     template <typename T>
-    ordpair_<T> ordpair(const T& t1, const T& t2);
+    ordpair_<T> ordpair(const T& val1, const T& val2);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /*---------------.
+    | Construction.  |
+    `---------------*/
+
     template <typename T>
     inline
-    ordpair_<T>::ordpair_(const T& t1, const T& t2)
+    ordpair_<T>::ordpair_(const T& val1, const T& val2)
     {
-      if (util::ord_strict(t1, t2))
+      change_both(val1, val2);
+    }
+
+    template <typename T>
+    inline
+    ordpair_<T>
+    ordpair(const T& val1, const T& val2)
+    {
+      ordpair_<T> tmp(val1, val2);
+      return tmp;
+    }
+
+    /*---------.
+    | Access.  |
+    `---------*/
+
+    template <typename T>
+    inline
+    const T&
+    ordpair_<T>::first() const
+    {
+      return first_;
+    }
+
+    template <typename T>
+    inline
+    T&
+    ordpair_<T>::first()
+    {
+      return first_;
+    }
+
+    template <typename T>
+    inline
+    const T&
+    ordpair_<T>::second() const
+    {
+      return second_;
+    }
+
+    template <typename T>
+    inline
+    T&
+    ordpair_<T>::second()
+    {
+      return second_;
+    }
+
+    template <typename T>
+    inline
+    void
+    ordpair_<T>::change_first(const T& val)
+    {
+      mln_precondition(util::ord_weak(first_, second_));
+
+      if (util::ord_strict(val, second_))
+	first_ = val;
+      else
+	second_ = val;
+
+      mln_postcondition(util::ord_weak(first_, second_));
+    }
+
+    template <typename T>
+    inline
+    void
+    ordpair_<T>::change_second(const T& val)
+    {
+      mln_precondition(util::ord_weak(first_, second_));
+
+      if (util::ord_strict(first_, val))
+	second_ = val;
+      else
+	first_ = val;
+
+      mln_postcondition(util::ord_weak(first_, second_));
+    }
+
+    template <typename T>
+    inline
+    void
+    ordpair_<T>::change_both(const T& val1, const T& val2)
+    {
+      if (util::ord_strict(val1, val2))
 	{
-	  first  = t1;
-	  second = t2;
+	  first_  = val1;
+	  second_ = val2;
 	}
       else
 	{
-	  first  = t2;
-	  second = t1;
+	  first_  = val2;
+	  second_ = val1;
 	}
-      mln_postcondition(util::ord_weak(first, second));
+      mln_postcondition(util::ord_weak(first_, second_));
     }
+
+    /*-------------.
+    | Comparison.  |
+    `-------------*/
 
     template <typename T>
     inline
     bool operator==(const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
-      return lhs.first == rhs.first && lhs.second == rhs.second;
+      return lhs.first() == rhs.first() && lhs.second() == rhs.second();
     }
 
     template <typename T>
@@ -110,8 +235,9 @@ namespace mln
     bool operator< (const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
-	util::ord_strict(lhs.first, rhs.first) ||
-	(lhs.first == rhs.first && util::ord_strict(lhs.second, rhs.second));
+	util::ord_strict(lhs.first(), rhs.first()) ||
+	(lhs.first() == rhs.first() &&
+	 util::ord_strict(lhs.second(), rhs.second()));
     }
 
     template <typename T>
@@ -119,27 +245,22 @@ namespace mln
     bool operator<=(const ordpair_<T>& lhs, const ordpair_<T>& rhs)
     {
       return
-	util::ord_strict(lhs.first, rhs.first) ||
-	(lhs.first == rhs.first && util::ord_weak(lhs.second, rhs.second));
+	util::ord_strict(lhs.first(), rhs.first()) ||
+	(lhs.first() == rhs.first() &&
+	 util::ord_weak(lhs.second(), rhs.second()));
     }
 
+    /*-------------------.
+    | Pretty-printing..  |
+    `-------------------*/
 
     template <typename T>
     inline
     std::ostream& operator<<(std::ostream& ostr, const ordpair_<T>& op)
     {
-      return ostr << '(' << op.first << ',' << op.second << ')';
+      return ostr << '(' << op.first() << ',' << op.second() << ')';
     }
 
-
-    template <typename T>
-    inline
-    ordpair_<T>
-    ordpair(const T& t1, const T& t2)
-    {
-      ordpair_<T> tmp(t1, t2);
-      return tmp;
-    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

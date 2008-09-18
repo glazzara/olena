@@ -1,3 +1,20 @@
+2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp util::ordpair_.
+
+	* mln/util/ordpair.hh
+	(mln::ordpair_<T>::first, mln::ordpair_<T>::second):
+	Make these attributes private and rename them as...
+	(mln::ordpair_<T>::first_, mln::ordpair_<T>::second_):
+	...these.
+	(mln::ordpair_<T>::first, mln::ordpair_<T>::second)
+	(mln::ordpair_<T>::change_first, mln::ordpair_<T>::change_second):
+	New accessors.
+	(mln::ordpair_<T>::change_both):
+	Likewise.
+	Use it to factor...
+	(mln::ordpair_<T>::ordpair_): ...this ctor.
+
 2008-09-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix some tests.
