@@ -349,8 +349,7 @@ namespace mln
   line_graph_psite<P>::update_()
   {
     mln_assertion(is_valid());
-    p_.pair_.first = first();
-    p_.pair_.second = second();
+    p_.pair_.change_both(first(), second());
   }
 
 

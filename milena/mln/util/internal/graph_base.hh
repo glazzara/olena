@@ -155,9 +155,9 @@ namespace mln
       {}
 
       /// Return the lowest vertex id adjacent to this edge.
-      vertex_id v1() const { return pair_vertex_.first; }
+      vertex_id v1() const { return pair_vertex_.first(); }
       /// Return the highest vertex id adjacent to this edge.
-      vertex_id v2() const { return pair_vertex_.second; }
+      vertex_id v2() const { return pair_vertex_.second(); }
 
       T	data;
       ordpair_<vertex_id> pair_vertex_;
@@ -173,9 +173,9 @@ namespace mln
       {}
 
       /// Return the lowest vertex id adjacent to this edge.
-      vertex_id v1() const { return pair_vertex_.first; }
+      vertex_id v1() const { return pair_vertex_.first(); }
       /// Return the highest vertex id adjacent to this edge.
-      vertex_id v2() const { return pair_vertex_.second; }
+      vertex_id v2() const { return pair_vertex_.second(); }
 
       ordpair_<vertex_id> pair_vertex_;
     };

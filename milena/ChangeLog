@@ -1,5 +1,19 @@
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust clients to the new interface of util::ordpair_.
+
+	* mln/util/internal/graph_base.hh
+	(mln::util::edge<T>::v1, mln::util::edge<void>::v1):
+	s/first/first()/.
+	(mln::util::edge<T>::v2, mln::util::edge<void>::v2):
+	s/second/second()/.
+
+	* mln/core/image/line_graph_psite.hh
+	(mln::line_graph_psite<P>::update_): Use
+	util::ordpair_::change_both.
+
+2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp util::ordpair_.
 
 	* mln/util/ordpair.hh
