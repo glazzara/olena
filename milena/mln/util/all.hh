@@ -53,7 +53,7 @@ namespace mln
 # include <mln/util/graph.hh>
 # include <mln/util/ignore.hh>
 # include <mln/util/nil.hh>
-# include <mln/util/ordpair.hh>
+# include <mln/util/ord_pair.hh>
 # include <mln/util/pix.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/tree_fast.hh>

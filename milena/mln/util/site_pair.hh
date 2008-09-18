@@ -28,7 +28,7 @@
 #ifndef MLN_UTIL_SITE_PAIR_HH
 # define MLN_UTIL_SITE_PAIR_HH
 
-# include <mln/util/ordpair.hh>
+# include <mln/util/ord_pair.hh>
 
 /// \file mln/util/site_pair.hh
 /// \brief Definition of a site pair type.
@@ -36,7 +36,7 @@
 namespace mln
 {
   /* FIXME: The class mln::internal::image_base requires its site
-     types to have a `coord' typedef, but util::ordpair_ has none.
+     types to have a `coord' typedef, but util::ord_pair has none.
      Hence this small workaround.  Use ord_pair directly as soon as
      image_base is refurbished.  */
   template <typename P>
@@ -45,7 +45,7 @@ namespace mln
     site_pair();
     site_pair(const P& first, const P& second);
     typedef mln_coord(P) coord;
-    util::ordpair_<P> pair_;
+    util::ord_pair<P> pair_;
   };
 
   /* FIXME: The proxy mechanism requires operator== and operator<= for

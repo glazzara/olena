@@ -44,7 +44,7 @@
 
 # include <mln/core/concept/object.hh>
 
-# include <mln/util/ordpair.hh>
+# include <mln/util/ord_pair.hh>
 # include <mln/value/builtin/integers.hh>
 
 
@@ -177,7 +177,7 @@ namespace mln
       vertex_id v2() const { return pair_vertex_.second(); }
 
       T	data;
-      ordpair_<vertex_id> pair_vertex_;
+      ord_pair<vertex_id> pair_vertex_;
     };
 
     /// \brief Specialization of mln::util::vertex for edges with no
@@ -194,7 +194,7 @@ namespace mln
       /// Return the highest vertex id adjacent to this edge.
       vertex_id v2() const { return pair_vertex_.second(); }
 
-      ordpair_<vertex_id> pair_vertex_;
+      ord_pair<vertex_id> pair_vertex_;
     };
 
     // FIXME: Document this.  In particular, we should state that edges are

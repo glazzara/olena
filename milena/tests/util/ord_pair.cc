@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file util/ordpair.cc
- *
- * \brief Tests on mln::util::ordpair.
- */
+/// \file util/ord_pair.cc
+/// \brief Tests on mln::util::ord_pair.
 
 #include <mln/core/alias/point2d.hh>
 #include <mln/util/ordpair.hh>
-
 
 
 int main()
@@ -41,8 +38,8 @@ int main()
 
   point2d p1(5,6), p2(5,7), p3(4,2);
 
-  mln_assertion(util::ordpair (p2, p1) == util::ordpair (p1, p2));
-  mln_assertion(util::ordpair (p1, p3) <  util::ordpair (p1, p2));
-  mln_assertion(util::ordpair (p1, p2) <= util::ordpair (p1, p2));
-  mln_assertion(util::ordpair (p1, p3) <= util::ordpair (p1, p2));
+  mln_assertion(make::ordpair (p2, p1) == make::ordpair (p1, p2));
+  mln_assertion(make::ordpair (p1, p3) <  make::ordpair (p1, p2));
+  mln_assertion(make::ordpair (p1, p2) <= make::ordpair (p1, p2));
+  mln_assertion(make::ordpair (p1, p3) <= make::ordpair (p1, p2));
 }

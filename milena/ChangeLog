@@ -1,5 +1,24 @@
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename util::ordpair_<T> as util::ord_pair<T>.
+
+	* mln/util/ordpair.hh: Rename as...
+	* mln/util/ord_pair.hh: ...this.
+	(mln::util::ordpair_<T>): Rename class as...
+	(mln::util::ord_pair<T>): ...this.
+	(mln::util::ordpair<T>): Rename helper as...
+	(mln::make::ord_pair<T>): ...this.
+	* mln/util/all.hh,
+	* mln/util/graph.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/util/site_pair.hh:
+	Adjust clients.
+	* tests/util/ordpair.cc: Likewise.
+	Rename as...
+	* tests/util/ord_pair.cc: ...this.
+
+2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update util::site_pair.
 
 	* mln/util/site_pair

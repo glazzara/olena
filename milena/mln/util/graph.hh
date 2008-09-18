@@ -276,7 +276,7 @@ namespace mln
     {
       mln_assertion(v1 < this->nvertices());
       mln_assertion(v2 < this->nvertices());
-      ordpair_<vertex_id> vertex_pair (v1, v2);
+      ord_pair<vertex_id> vertex_pair (v1, v2);
       std::vector<edge_id>& edges_ids = this->vertices_[v1]->edges;
       for (std::vector<edge_id>::iterator e = edges_ids.begin();
 	   e != edges_ids.end(); ++e)
@@ -293,7 +293,7 @@ namespace mln
     {
       mln_assertion(v1 < this->nvertices());
       mln_assertion(v2 < this->nvertices());
-      ordpair_<vertex_id> vertex_pair (v1, v2);
+      ord_pair<vertex_id> vertex_pair (v1, v2);
       const std::vector<edge_id>& edges_ids = this->vertices_[v1]->edges;
       for (std::vector<edge_id>::const_iterator e = edges_ids.begin();
 	   e != edges_ids.end(); ++e)
