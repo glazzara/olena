@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,7 +50,7 @@ int main()
   mln_assertion(p.ind() == 5 && p[0] == 5);
 
   // construction
-  q = 5;
+  q.ind() = 5;
   mln_assertion(p == q);
 
   q.set_all(0);

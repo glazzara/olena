@@ -43,6 +43,7 @@
 #include <mln/level/paste.hh>
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/core/alias/p_runs2d.hh>
 
 #include "tests/data.hh"
 
@@ -66,11 +67,10 @@ int main()
   /// Basic test
   {
     typedef value_enc_image<point2d, int> ima_type;
-    typedef p_runs_<point2d> runs;
 
-    p_runs_<point2d> pruns0;
-    p_runs_<point2d> pruns1;
-    p_runs_<point2d> pruns2;
+    p_runs2d pruns0;
+    p_runs2d pruns1;
+    p_runs2d pruns2;
 
     pruns0.insert(p_run<point2d>(point2d(0, 0), 2));
 

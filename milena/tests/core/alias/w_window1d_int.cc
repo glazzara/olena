@@ -43,7 +43,7 @@ int f(mln::point1d p)
   return p.ind ();
 }
 
-
+#include <mln/convert/to.hh>
 int main()
 {
   using namespace mln;
@@ -53,7 +53,7 @@ int main()
     w_window1d_int w_win = make::w_window1d(ws);
 
     image1d<int> ima = convert::to_image(w_win);
-    w_window1d_int w_win_2 = convert::to_w_window(ima);
+    w_window1d_int w_win_2 = mln::convert::to<w_window1d_int>(ima);
     mln_assertion(w_win_2 == w_win);
   }
 

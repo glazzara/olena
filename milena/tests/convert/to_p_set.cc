@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007. 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,6 +41,7 @@
 #include <mln/level/fill.hh>
 
 #include <mln/convert/to_p_set.hh>
+#include <mln/util/ord.hh>
 
 using namespace mln;
 
@@ -89,11 +90,13 @@ int main()
   test(ref, test_win);
 
   // std::set :
-  std::set<point2d> set;
+  std::set<point2d, util::ord<point2d> > set;
+
   set.insert(a);
   set.insert(b);
   set.insert(c);
   set.insert(d);
+
   p_set<point2d> test_set = convert::to_p_set(set);
   test(ref, test_set);
 }
