@@ -1,3 +1,36 @@
+2008-09-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix many errors in core/image tests.
+	* milena/mln/convert/to_p_set.hh: Update doc.
+
+	* milena/mln/make/w_window.hh,
+	* milena/mln/convert/to_p_set.hh,
+	* milena/mln/convert/to_w_window.hh,
+	* milena/mln/convert/to_window.hh: rename mln_dpoint to mln_dpsite.
+
+	* milena/mln/core/internal/run_image.hh,
+	* milena/mln/core/image/mono_rle_image.hh,
+	* milena/mln/core/image/mono_obased_rle_image.hh,
+	* milena/mln/core/image/rle_image.hh,
+	* milena/mln/core/image/obased_rle_image.hh:
+	  Rename size_mem() to memory_size().
+	  Rename p_of_run() to index().
+
+	* milena/mln/core/image/plain.hh: add missing init_().
+
+	* milena/mln/core/internal/run_image.hh,
+	* milena/mln/core/image/mono_rle_image.hh,
+	* milena/mln/core/image/mono_obased_rle_image.hh,
+	* milena/mln/core/image/rle_image.hh,
+	* milena/mln/core/image/value_enc_image.hh:
+	  Use p_set_of and p_run instead of p_runs_.
+
+
+	* milena/mln/estim/sum.hh:
+	  Fully specify the types in template parameters.
+
+	* milena/mln/geom/bbox.hh: Add support for weighted_windows.
+
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove \internal tag.

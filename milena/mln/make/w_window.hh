@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -68,7 +68,7 @@ namespace mln
       const F& wei = exact(wei_);
       mln_precondition(! win.is_empty());
       typedef mln_dpsite(W) D;
-      typedef mln_point(D)  P;
+      typedef mln_psite(D)  P;
       mln::w_window<D, mln_result(F)> w_win;
       mln_qiter(W) q(win, P::origin);
       for_all(q)

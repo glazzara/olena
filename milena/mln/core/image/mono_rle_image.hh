@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007,2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/run_image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set_of.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
@@ -59,13 +59,14 @@ namespace mln
       T value_;
 
       /// domain of the image
-      p_runs_<P> domain_;
+      p_set_of< p_run<P> > domain_;
 
       /// Return the size of the data in memory.
-      unsigned size_mem() const;
+      unsigned memory_size() const;
 
       /// Finalize the domain (internal use).
       void finalize();
+
     };
 
   } // end of namespace mln::internal
@@ -109,24 +110,28 @@ namespace mln
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef runs_psite<P> psite;
-    typedef p_runs_<P> pset;
+    typedef p_set_of< p_run<P> > pset;
+    typedef mln_psite(pset) psite;
 
 
     /// Skeleton.
     typedef mono_rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
 
+    /// Constructor
     mono_rle_image(const T& val);
+
+    /// Initialize an empty image.
+    void init_(const T& val);
 
     /// Add a new range to the image.
     void insert(const p_run<P>& pr);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const runs_psite<P>& site) const;
+    rvalue operator() (const mln_psite(pset)& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const runs_psite<P>& site);
+    lvalue operator() (const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -157,9 +162,9 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data< mono_rle_image<P,T> >::size_mem() const
+    data< mono_rle_image<P,T> >::memory_size() const
     {
-      return sizeof(T) + domain_.size_mem();
+      return sizeof(T) + domain_.memory_size();
     }
 
     template <typename P, typename T>
@@ -175,6 +180,14 @@ namespace mln
   template <typename P, typename T>
   inline
   mono_rle_image<P, T>::mono_rle_image(const T& val)
+  {
+    init_(val);
+  }
+
+  template <typename P, typename T>
+  inline
+  void
+  mono_rle_image<P, T>::init_(const T& val)
   {
     this->data_ = new internal::data< mono_rle_image<P,T> >(val);
   }
@@ -192,15 +205,15 @@ namespace mln
   void
   mono_rle_image<P, T>::insert(const p_run<P>& pr)
   {
-    if (this->data_->domain_.nruns() != 0)
-      mln_assertion(pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+    if (this->data_->domain_.nsites() != 0)
+      mln_assertion(pr[0] > this->data_->domain_[this->data_->domain_.nsites() - 1].start());
     this->data_->domain_.insert(pr);
   }
 
   template <typename P, typename T>
   inline
   typename mono_rle_image<P, T>::rvalue
-  mono_rle_image<P, T>::operator() (const runs_psite<P>& site) const
+  mono_rle_image<P, T>::operator() (const mln_psite(pset)& site) const
   {
     mln_precondition(this->has(site));
     return this->data_->value_;
@@ -209,7 +222,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename mono_rle_image<P, T>::lvalue
-  mono_rle_image<P, T>::operator() (const runs_psite<P>& site)
+  mono_rle_image<P, T>::operator() (const mln_psite(pset)& site)
   {
     mln_precondition(this->has(site));
     return this->data_->value_;

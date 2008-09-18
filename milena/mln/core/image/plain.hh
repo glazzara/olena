@@ -147,7 +147,7 @@ namespace mln
     : super_()
   {
     mln_precondition(rhs.has_data());
-    init(rhs.data_->ima_);
+    init_(rhs.data_->ima_);
   }
 
   template <typename I>
@@ -155,7 +155,7 @@ namespace mln
   plain<I>::plain(const I& ima)
   {
     mln_precondition(ima.has_data());
-    init(ima);
+    init_(ima);
   }
 
   template <typename I>
@@ -176,7 +176,7 @@ namespace mln
     if (&rhs == this)
       return *this;
     this->destroy();
-    init(rhs.data_->ima_);
+    init_(rhs.data_->ima_);
     return *this;
   }
 
@@ -187,7 +187,7 @@ namespace mln
   {
     mln_precondition(ima.has_data());
     this->destroy();
-    init(ima);
+    init_(ima);
     return *this;
   }
 

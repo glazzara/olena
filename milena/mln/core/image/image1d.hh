@@ -136,7 +136,6 @@ namespace mln
     /// Return type of read-write access.
     typedef T&       lvalue;
 
-
     /// Skeleton.
     typedef image1d< tag::value_<T> > skeleton;
 

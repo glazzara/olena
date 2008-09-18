@@ -41,9 +41,10 @@
  * \todo Add the weighted_window case.
  */
 
-# include <mln/core/concept/box.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
+# include <mln/core/concept/weighted_window.hh>
 # include <mln/literal/zero.hh>
 # include <mln/accu/bbox.hh>
 
@@ -66,7 +67,11 @@ namespace mln
 
     /// Compute the precise bounding box of a window \p win.
     template <typename W>
-    box<mln_site(W)> bbox(const Window<W>& win);
+    box<mln_psite(W)> bbox(const Window<W>& win);
+
+    /// Compute the precise bounding box of a weighted window \p win.
+    template <typename W>
+    box<mln_psite(W)> bbox(const Weighted_Window<W>& win);
 
 
 
@@ -136,15 +141,22 @@ namespace mln
     }
 
     template <typename W>
-    box<mln_site(W)> bbox(const Window<W>& win)
+    box<mln_psite(W)> bbox(const Window<W>& win)
     {
-      typedef mln_site(W) P;
+      typedef mln_psite(W) P;
       accu::bbox<P> b;
       mln_qiter(W) q(exact(win), literal::origin);
       for_all(q)
 	b.take(q);
       return b;
     }
+
+    template <typename W>
+    box<mln_psite(W)> bbox(const Weighted_Window<W>& win)
+    {
+      return bbox(exact(win).win());
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

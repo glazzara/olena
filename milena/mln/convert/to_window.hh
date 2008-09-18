@@ -80,8 +80,8 @@ namespace mln
     window<mln_dpsite(S)> to_window(const Site_Set<S>& pset);
 
     /// Convert an std::set \p s of delta-sites into a window.
-    template <typename D>
-    window<D> to_window(const std::set<D>& s);
+    template <typename D, typename C>
+    window<D> to_window(const std::set<D, C>& s);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -147,7 +147,8 @@ namespace mln
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
       typedef mln_dpsite(I) D;
-      typedef mln_psite(D) P;
+      typedef mln_site(D) P;
+
       window<D> win;
       mln_piter(I) p(ima.domain());
       for_all(p)
@@ -171,14 +172,14 @@ namespace mln
     | std::set-to-window conversions.  |
     `---------------------------------*/
 
-    template <typename D>
+    template <typename D, typename C>
     inline
-    window<D> to_window(const std::set<D>& s)
+    window<D> to_window(const std::set<D, C>& s)
     {
       // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();
       mln::metal::is_a<D, Delta_Point_Site>::check();
       window<D> win;
-      for (typename std::set<D>::const_iterator i = s.begin();
+      for (typename std::set<D, C>::const_iterator i = s.begin();
 	   i != s.end(); ++i)
 	win.insert(*i);
       return win;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007.2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/run_image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set_of.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/value/set.hh>
 # include <mln/core/image/mono_rle_image.hh>
@@ -64,13 +64,14 @@ namespace mln
       std::vector<T> values_;
 
       /// domain of the image
-      p_runs_<P> domain_;
+      p_set_of< p_run<P> > domain_;
 
       /// Return the size of the data in memory.
-      unsigned size_mem() const;
+      unsigned memory_size() const;
 
       /// Finalize the domain (internal use).
       void finalize();
+
     };
 
   } // end of namespace mln::internal
@@ -113,24 +114,27 @@ namespace mln
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef runs_psite<P> psite;
-    typedef p_runs_<P> pset;
+    typedef p_set_of< p_run<P> > pset;
+    typedef mln_psite(pset) psite;
 
 
     /// Skeleton.
     typedef mono_obased_rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
-
+    /// Constructor.
     mono_obased_rle_image(const std::set<T>& values);
+
+    /// Initialize an empty image.
+    void init_(const std::set<T>& values);
 
     /// Add a new range to the image.
     void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
-    const T operator()(const runs_psite<P>& site) const;
+    const T operator()(const mln_psite(pset)& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    T& operator()(const runs_psite<P>& site);
+    T& operator()(const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -161,9 +165,9 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data< mono_obased_rle_image<P,T> >::size_mem() const
+    data< mono_obased_rle_image<P,T> >::memory_size() const
     {
-      return domain_.size_mem() * 2 + sizeof(T) * (values_.size() + ima_.size());
+      return domain_.memory_size() * 2 + sizeof(T) * (values_.size() + ima_.size());
     }
 
     template <typename P, typename T>
@@ -183,6 +187,14 @@ namespace mln
   inline
   mono_obased_rle_image<P, T>::mono_obased_rle_image(const std::set<T>& values)
   {
+    init_(values);
+  }
+
+  template <typename P, typename T>
+  inline
+  void
+  mono_obased_rle_image<P, T>::init_(const std::set<T>& values)
+  {
     this->data_ = new internal::data< mono_obased_rle_image<P,T> >(values);
   }
 
@@ -199,8 +211,8 @@ namespace mln
   void
   mono_obased_rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
-    mln_assertion(this->data_->values_.size() == 0 || this->data_->domain_.nruns() == 0 ||
-		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+    mln_assertion(this->data_->values_.size() == 0 || this->data_->domain_.nsites() == 0 ||
+		  pr[0] > this->data_->domain_[this->data_->domain_.nsites() - 1].start());
     this->data_->domain_.insert(pr);
     this->data_->values_.push_back(value);
     unsigned i;
@@ -214,19 +226,19 @@ namespace mln
   template <typename P, typename T>
   inline
   const T
-  mono_obased_rle_image<P, T>::operator() (const runs_psite<P>& site) const
+  mono_obased_rle_image<P, T>::operator() (const mln_psite(pset)& site) const
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>
   inline
   T&
-  mono_obased_rle_image<P, T>::operator() (const runs_psite<P>& site)
+  mono_obased_rle_image<P, T>::operator() (const mln_psite(pset)& site)
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>

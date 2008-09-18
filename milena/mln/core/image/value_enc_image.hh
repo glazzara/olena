@@ -35,9 +35,9 @@
 
 # include <mln/core/internal/image_primary.hh>
 
-# include <mln/core/pset_array.hh>
-# include <mln/core/pset_array_psite.hh>
-# include <mln/core/p_runs.hh>
+# include <mln/core/site_set/p_array.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set_of.hh>
 
 # include <vector>
 # include <mln/util/tracked_ptr.hh>
@@ -62,7 +62,7 @@ namespace mln
       std::vector<T> values_;
 
       /// domain of the image
-      pset_array< p_runs_<P> > domain_;
+      p_array< p_set_of< p_run<P> > > domain_;
     };
 
   } // end of namespace mln::internal
@@ -99,7 +99,7 @@ namespace mln
    */
   template <typename P, typename T>
   class value_enc_image :
-    public internal::image_primary< pset_array< p_runs_<P> >,
+    public internal::image_primary< P, p_array< p_set_of< p_run<P> > >,
 				     value_enc_image<P, T> >
   {
   public:
@@ -110,8 +110,8 @@ namespace mln
     typedef const T rvalue;
 
     /// Domain related typedefs
-    typedef pset_array_psite< runs_psite<P> > psite;
-    typedef pset_array< p_runs_<P> > pset;
+    typedef p_array< p_set_of< p_run<P> > > pset;
+    typedef mln_psite(pset) psite;
 
     /// Skeleton.
     typedef value_enc_image< tag::psite_<P>, tag::value_<T> > skeleton;
@@ -119,7 +119,7 @@ namespace mln
     value_enc_image();
 
     /// Add a new set of ranges  to the image.
-    void insert(const p_runs_<P>& ps, T value);
+    void insert(const p_set_of< p_run<P> >& ps, T value);
 
     /// Add a new range to the image
     void insert(const p_run<P>& pr, T value);
@@ -175,7 +175,7 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  value_enc_image<P, T>::insert(const p_runs_<P>& ps, T value)
+  value_enc_image<P, T>::insert(const p_set_of<p_run<P> >& ps, T value)
   {
     if (!this->has_data())
       this->data_ = new internal::data< value_enc_image<P,T> >();
@@ -201,7 +201,7 @@ namespace mln
       this->data_->domain_[i].insert(pr);
     else
     {
-      p_runs_<P> ps = p_runs_<P> ();
+      p_set_of< p_run<P> > ps = p_set_of< p_run<P> >();
       ps.insert(pr);
       this->data_->domain_.insert(ps);
       this->data_->values_.push_back(value);
@@ -226,7 +226,7 @@ namespace mln
   {
     mln_precondition(this->has(site));
 
-    return this->data_->values_[site.to_index()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>

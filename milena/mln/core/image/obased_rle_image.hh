@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,7 +72,7 @@ namespace mln
       p_runs_<P> domain_;
 
       /// Return the size of the data in memory.
-      unsigned size_mem() const;
+      unsigned memory_size() const;
 
       /// Finalize the domain (internal use).
       void finalize();
@@ -172,9 +172,9 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data_< obased_rle_image<P,T> >::size_mem() const
+    data_< obased_rle_image<P,T> >::memory_size() const
     {
-      return domain_.size_mem()	+ bbox_.size()
+      return domain_.memory_size() + bbox_.size()
 	* (sizeof(T) + sizeof(box<P>) + sizeof(std::vector<unsigned>))
 	+ (sizeof(unsigned) + sizeof(T)) * domain_.nruns();
     }
@@ -230,7 +230,7 @@ namespace mln
     const
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>
@@ -239,7 +239,7 @@ namespace mln
   obased_rle_image<P, T>::operator() (const runs_psite<P>& site)
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>

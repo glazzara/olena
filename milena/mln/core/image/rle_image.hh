@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/run_image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+# include <mln/core/site_set/p_set_of.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/value/set.hh>
 # include <vector>
 
@@ -59,10 +59,10 @@ namespace mln
       std::vector<T> values_;
 
       /// domain of the image
-      p_runs_<P> domain_;
+      p_set_of< p_run<P> > domain_;
 
       /// Return the size of the data in memory.
-      unsigned size_mem() const;
+      unsigned memory_size() const;
 
       /// Finalize the domain (internal use).
       void finalize();
@@ -108,8 +108,8 @@ namespace mln
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef runs_psite<P> psite;
-    typedef p_runs_<P> pset;
+    typedef p_set_of< p_run<P> > pset;
+    typedef mln_psite(pset) psite;
 
 
     /// Skeleton.
@@ -152,9 +152,9 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data< rle_image<P,T> >::size_mem() const
+    data< rle_image<P,T> >::memory_size() const
     {
-      return sizeof(T) * values_.size() + domain_.size_mem();
+      return sizeof(T) * values_.size() + domain_.memory_size();
     }
 
     template <typename P, typename T>
@@ -202,7 +202,7 @@ namespace mln
     const
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>
@@ -211,7 +211,7 @@ namespace mln
   rle_image<P, T>::operator() (const runs_psite<P>& site)
   {
     mln_precondition(this->has(site));
-    return this->data_->values_[site.p_of_run()];
+    return this->data_->values_[site.index()];
   }
 
   template <typename P, typename T>

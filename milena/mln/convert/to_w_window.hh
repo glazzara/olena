@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,6 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/w_window.hh>
 
-
 namespace mln
 {
 
@@ -45,20 +44,22 @@ namespace mln
 
     /// Convert an image \p input into a weighted window.
     template <typename I>
-    w_window<mln_dpsite(I), mln_value(I)> to_w_window(const Image<I>& input);
+    w_window<mln_dpsite(I), mln_value(I)>
+    to_w_window(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    w_window<mln_dpsite(I), mln_value(I)> to_w_window(const Image<I>& input_)
+    w_window<mln_dpsite(I), mln_value(I)>
+    to_w_window(const Image<I>& input_)
     {
       const I& input = exact(input_);
       mln_precondition(input.has_data());
       // FIXME: Check that input is scalar?
       typedef mln_dpsite(I) D;
-      typedef mln_point(D) P;
+      typedef mln_psite(D) P;
       w_window<D, mln_value(I)> w_win;
       mln_piter(I) p(input.domain());
       for_all(p)
