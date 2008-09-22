@@ -1,5 +1,15 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update graph image.
+
+	* mln/core/image/graph_image.hh
+	(mln::trait::image_< graph_image<P, V> >): Update properties.
+	(mln::graph_image<P, V>): Fix access to members.
+	(mln::graph_image<P, V>::operator()(const graph_psite<P>&)):
+	Catch up with the new interface of mln::graph_psite.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update elementary neighborhood on graph image.
 
 	* mln/core/image/graph_elt_neighborhood.hh

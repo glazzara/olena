@@ -31,6 +31,8 @@
 /// \file mln/core/image/graph_image.hh
 /// \brief Definition of a graph-based image.
 
+# include <vector>
+
 # include <mln/trait/images.hh>
 
 # include <mln/core/internal/image_primary.hh>
@@ -38,7 +40,10 @@
 # include <mln/core/site_set/p_graph.hh>
 # include <mln/core/image/graph_psite.hh>
 # include <mln/value/set.hh>
-# include <vector>
+
+/* FIXME: This class shares a lot with line_graph_image.  Factor as
+   much as possible.  */
+
 
 namespace mln
 {
@@ -68,35 +73,42 @@ namespace mln
     template <typename P, typename V>
     struct image_< graph_image<P, V> > : default_image_< V, graph_image<P, V> >
     {
+      // Misc.
       typedef trait::image::category::primary category;
-
       // FIXME: Is that right?
-      typedef trait::image::access::random                    access;
-      typedef typename trait::image::space_from_point<P>::ret space;
-      typedef trait::image::size::regular                     size;
-      typedef trait::image::support::irregular                support;
+      typedef trait::image::speed::fast       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::border::none                      border;
-      typedef trait::image::data::stored                      data;
-      typedef trait::image::io::read_write                    io;
+      // Value.
+      typedef trait::image::value_access::direct           value_access;
       // FIXME: Is that right?
-      typedef trait::image::speed::fast                       speed;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
+
+      // Site / domain.
+      // FIXME: Depends on P.
+      typedef trait::image::localization::basic_grid          localization;
+      // FIXME: Likewise.
+      typedef typename trait::image::space_from_point<P>::ret dimension;
+
+      // Extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
 
 
-  /// \brief Image based on a line graph.
+  /// \brief Image based on a graph.
   ///
   /// Values are stored on the edges of the graph, not on its vertices.
   template <typename P, typename V>
-  struct graph_image :
+  class graph_image :
     public internal::image_primary< V, p_graph<P>, graph_image<P, V> >
   {
-    /// Super type.
-    typedef mln::internal::image_base<V, p_graph<P>,
-				      graph_image<P, V> > super_;
-
+  public:
     /// Value associated type.
     typedef V value;
 
@@ -114,6 +126,7 @@ namespace mln
     /// Skeleton.
     typedef graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
+  public:
     /// Constructors.
     /// \{
     graph_image();
@@ -148,7 +161,7 @@ namespace mln
     /// Return the point of the second vertex adjacent to the edge with
     /// id \a e.
     const P& vertex2(const util::edge_id& e) const;
-};
+  };
 
   // Fwd decl.
   template <typename P, typename V, typename W>
@@ -232,9 +245,9 @@ namespace mln
   typename graph_image<P, V>::rvalue
   graph_image<P, V>::operator()(const graph_psite<P>& p) const
   {
-    mln_precondition(p.pg() == this->data_->pg_);
-    mln_precondition(p.id() < this->data_->val_.size());
-    return this->data_->val_[p.id()];
+    mln_precondition(p.is_valid());
+    mln_precondition(p.site_set() == this->data_->pg_);
+    return this->data_->val_[p.vertex_id()];
   }
 
   template <typename P, typename V>
@@ -242,9 +255,9 @@ namespace mln
   typename graph_image<P, V>::lvalue
   graph_image<P, V>::operator()(const graph_psite<P>& p)
   {
-    mln_precondition(p.pg() == this->data_->pg_);
-    mln_precondition(p.id() < this->data_->val_.size());
-    return this->data_->val_[p.id()];
+    mln_precondition(p.is_valid());
+    mln_precondition(p.site_set() == this->data_->pg_);
+    return this->data_->val_[p.vertex_id()];
   }
 
   template <typename P, typename V>
