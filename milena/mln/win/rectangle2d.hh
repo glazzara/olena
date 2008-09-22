@@ -38,6 +38,7 @@
 # include <mln/core/internal/window_base.hh>
 # include <mln/core/internal/dpoints_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
+# include <mln/core/def/coord.hh>
 
 
 namespace mln
@@ -131,9 +132,11 @@ namespace mln
 	width_(width)
     {
       mln_precondition(height % 2 == 1 && width % 2 == 1);
-      const int drow = height / 2, dcol = width / 2;
-      for (int row = - drow; row <= drow; ++row)
-	for (int col = - dcol; col <= dcol; ++col)
+      const def::coord  drow = (def::coord) (height / 2);
+      const def::coord dcol = (def::coord) (width / 2);
+
+      for (def::coord row = (def::coord) -drow; row <= drow; ++row)
+	for (def::coord col = (def::coord) -dcol; col <= dcol; ++col)
 	  this->insert(dpoint2d(row, col));
     }
 

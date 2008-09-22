@@ -1,3 +1,11 @@
+2008-09-22  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update median"".
+
+	* tests/level/median_.cc: New.
+	* mln/level/median.hh: .
+	* mln/win/rectangle2d.hh: .
+
 2008-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial.

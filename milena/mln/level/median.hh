@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -96,9 +96,9 @@ namespace mln
 
       template <typename I, typename W, typename O>
       struct median_t
-      { 
+      {
 	typedef mln_psite(I)  P;
-	typedef mln_dpsite(I) D;
+	typedef mln_dpsite(P) D;
 
 	// i/o
 
@@ -108,10 +108,10 @@ namespace mln
 
 	// aux data
 
-	accu::median_h<mln_vset(I)> med;
+	accu::median_h<mln_value(I)> med;
 	P p;
 	window<D>    win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
-	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
+	mln_qiter(window<D>)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
 
 	// ctor
 
@@ -123,7 +123,7 @@ namespace mln
 	  win(exact(win_)),
 	  output(exact(output_)),
 	  // aux data
-	  med(input.values_eligible()),
+	  med(),
 	  p(),
 	  win_fp(set::diff(win, geom::shift(win, left))),
 	  win_fm(set::diff(geom::shift(win, left),  win)),
@@ -196,7 +196,7 @@ namespace mln
 
 	// aux data
 	mln_psite(I) p;
-	accu::median_h<mln_vset(I)> med;
+	accu::median_h<mln_value(I)> med;
 
 	// ctor
 	inline
@@ -304,7 +304,8 @@ namespace mln
       trace::entering("level::median_dir");
 
       mlc_is(mln_trait_image_value_io(O), trait::image::value_io::read_write)::check();
-      mlc_is(mln_trait_image_support(I), trait::image::support::aligned)::check();
+      mlc_is(mln_trait_image_localization(I),
+	     trait::image::localization::basic_grid)::check();
       mlc_converts_to(mln_value(I), mln_value(O))::check();
 
       mln_precondition(exact(output).domain() == exact(input).domain());
@@ -312,7 +313,7 @@ namespace mln
       mln_precondition(dir < P::dim);
       mln_precondition(length % 2 == 1);
 
-      impl::median_dir_(exact(input), dir, length, exact(output)); 
+      impl::median_dir_(exact(input), dir, length, exact(output));
 
       trace::exiting("level::median_dir");
     }
