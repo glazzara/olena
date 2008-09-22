@@ -47,37 +47,40 @@ namespace mln
   /// \brief Forward iterator on graph window.
   template <typename P, typename W>
   class graph_window_fwd_piter :
-    public internal::graph_vicinity_piter_< P, graph_window_fwd_piter<P, W> >
+    public internal::graph_vicinity_piter_< P, W, graph_window_fwd_piter<P, W> >
   {
     typedef graph_window_fwd_piter<P, W> self_;
-    typedef internal::graph_vicinity_piter_<P, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, W, self_> super_;
+
+  public:
+    /// The Point_Site type.
+    typedef mln_psite(W) psite;
 
   public:
     /// Construction.
     /// \{
+    graph_window_fwd_piter();
     template <typename Pref>
-    graph_window_fwd_piter(const Window<W>& win, const Point_Site<Pref>& p_ref);
+    graph_window_fwd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
-    /// Start an iteration.
-    void start();
+    void invalidate_();
 
+    /// Start an iteration.
+    void do_start_();
     /// Go to the next point.
-    void next_();
-    /// Update the internal data of the iterator.
-    void update_();
+    void do_next_();
+
+    /// Compute the current psite.
+    psite compute_p_() const;
     /// \}
 
   private:
-    /// The window.
-    const W& win_;
-
     /// An iterator on the set of adjacent vertices.
     typename super_::sites_t::const_iterator i_; 
   };
@@ -90,37 +93,40 @@ namespace mln
   /// \brief Backward iterator on graph window.
   template <typename P, typename W>
   class graph_window_bkd_piter :
-    public internal::graph_vicinity_piter_< P, graph_window_bkd_piter<P, W> >
+    public internal::graph_vicinity_piter_< P, W, graph_window_bkd_piter<P, W> >
   {
     typedef graph_window_bkd_piter<P, W> self_;
-    typedef internal::graph_vicinity_piter_<P, self_> super_;
+    typedef internal::graph_vicinity_piter_<P, W, self_> super_;
+
+  public:
+    /// The Point_Site type.
+    typedef mln_psite(W) psite;
 
   public:
     /// Construction.
     /// \{
+    graph_window_bkd_piter();
     template <typename Pref>
-    graph_window_bkd_piter(const Window<W>& win, const Point_Site<Pref>& p_ref);
+    graph_window_bkd_piter(const Window<W>& win, const Pref& p_ref);
     /// \}
 
     /// Manipulation.
     /// \{
     /// Test if the iterator is valid.
-    bool is_valid() const;
+    bool is_valid_() const;
     /// Invalidate the iterator.
-    void invalidate();
-    /// Start an iteration.
-    void start();
+    void invalidate_();
 
+    /// Start an iteration.
+    void do_start_();
     /// Go to the next point.
-    void next_();
-    /// Update the internal data of the iterator.
-    void update_();
+    void do_next_();
+
+    /// Compute the current psite.
+    psite compute_p_() const;
     /// \}
 
   private:
-    /// The window.
-    const W& win_;
-
     /// An iterator on the set of adjacent vertices.
     typename super_::sites_t::const_reverse_iterator i_; 
   };
@@ -134,35 +140,33 @@ namespace mln
   `-------------------------------*/
 
   template <typename P, typename W>
+  inline
+  graph_window_fwd_piter<P, W>::graph_window_fwd_piter()
+  {
+  }
+
+  template <typename P, typename W>
   template <typename Pref>
   inline
   graph_window_fwd_piter<P, W>::graph_window_fwd_piter(const Window<W>& win,
-						       const Point_Site<Pref>& p_ref)
-    : super_(p_ref),
-      win_(exact(win))
+						       const Pref& p_ref)
+    : super_(p_ref)
   {
-    // Invalidate i_.
-    invalidate();
+    this->change_target(exact(win));
   }
 
   template <typename P, typename W>
   inline
   bool
-  graph_window_fwd_piter<P, W>::is_valid() const
+  graph_window_fwd_piter<P, W>::is_valid_() const
   {
-    return
-      // The reference point must be valid...
-      this->p_ref_.is_valid()
-      // ...and must not have changed since the window has been computed...
-      && this->p_ref_ == this->saved_p_ref_
-      // ...and the iterator i_ must point a valid value.
-      && i_ != this->sites_.end();
+    return i_ != this->sites_.end();
   }
 
   template <typename P, typename W>
   inline
   void
-  graph_window_fwd_piter<P, W>::invalidate()
+  graph_window_fwd_piter<P, W>::invalidate_()
   {
     i_ = this->sites_.end();
   }
@@ -170,41 +174,26 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  graph_window_fwd_piter<P, W>::start()
+  graph_window_fwd_piter<P, W>::do_start_()
   {
-    mln_precondition(this->p_ref_.is_valid());
-    // Update the sites, if needed.
-    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
-      {
-	this->saved_p_ref_ = this->p_ref_;
-	win_.compute_sites_(*this);
-      }
+    this->site_set().compute_sites_(*this);
     i_ = this->sites_.begin();
-    // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
-      update_();
   }
 
   template <typename P, typename W>
   inline
   void
-  graph_window_fwd_piter<P, W>::next_()
+  graph_window_fwd_piter<P, W>::do_next_()
   {
-    // Ensure the p_ref_ has not changed.
-    mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
-    // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
-      update_();
   }
 
   template <typename P, typename W>
   inline
-  void
-  graph_window_fwd_piter<P, W>::update_()
+  mln_psite(W)
+  graph_window_fwd_piter<P, W>::compute_p_() const
   {
-    // Update psite_.
-    this->psite_ = graph_psite<P>(this->pg(), *i_);
+    return graph_psite<P>(this->center().site_set(), *i_);
   }
 
 
@@ -213,35 +202,33 @@ namespace mln
   `-------------------------------*/
 
   template <typename P, typename W>
+  inline
+  graph_window_bkd_piter<P, W>::graph_window_bkd_piter()
+  {
+  }
+
+  template <typename P, typename W>
   template <typename Pref>
   inline
   graph_window_bkd_piter<P, W>::graph_window_bkd_piter(const Window<W>& win,
-						       const Point_Site<Pref>& p_ref)
-    : super_(p_ref),
-      win_(exact(win))
+						       const Pref& p_ref)
+    : super_(p_ref)
   {
-    // Invalidate i_.
-    invalidate();
+    this->change_target(exact(win));
   }
 
   template <typename P, typename W>
   inline
   bool
-  graph_window_bkd_piter<P, W>::is_valid() const
+  graph_window_bkd_piter<P, W>::is_valid_() const
   {
-    return
-      // The reference point must be valid...
-      this->p_ref_.is_valid()
-      // ...and must not have changed since the window has been computed...
-      && this->p_ref_ == this->saved_p_ref_
-      // ...and the iterator i_ must point a valid value.
-      && i_ != this->sites_.rend();
+    return i_ != this->sites_.rend();
   }
 
   template <typename P, typename W>
   inline
   void
-  graph_window_bkd_piter<P, W>::invalidate()
+  graph_window_bkd_piter<P, W>::invalidate_()
   {
     i_ = this->sites_.rend();
   }
@@ -249,41 +236,26 @@ namespace mln
   template <typename P, typename W>
   inline
   void
-  graph_window_bkd_piter<P, W>::start()
+  graph_window_bkd_piter<P, W>::do_start_()
   {
-    mln_precondition(this->p_ref_.is_valid());
-    // Update the sites, if needed.
-    if (!this->saved_p_ref_.is_valid() || this->p_ref_ != this->saved_p_ref_)
-      {
-	this->saved_p_ref_ = this->p_ref_;
-	win_.compute_sites_(*this);
-      }
+    this->site_set().compute_sites_(*this);
     i_ = this->sites_.rbegin();
-    // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
-      update_();
   }
 
   template <typename P, typename W>
   inline
   void
-  graph_window_bkd_piter<P, W>::next_()
+  graph_window_bkd_piter<P, W>::do_next_()
   {
-    // Ensure the p_ref_ has not changed.
-    mln_precondition(this->p_ref_ == this->saved_p_ref_);
     ++i_;
-    // FIXME: We might move the is_valid condition within update_.
-    if (is_valid())
-      update_();
   }
 
   template <typename P, typename W>
   inline
-  void
-  graph_window_bkd_piter<P, W>::update_()
+  mln_psite(W)
+  graph_window_bkd_piter<P, W>::compute_p_() const
   {
-    // Update psite_.
-    this->psite_ = graph_psite<P>(this->pg(), *i_);
+    return graph_psite<P>(this->center().site_set(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

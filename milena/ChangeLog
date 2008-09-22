@@ -1,5 +1,56 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update graph window piters.
+
+	* mln/core/image/graph_window_piter.hh
+	(mln::graph_window_fwd_piter<P, W>)
+	(mln::graph_window_bkd_piter<P, W>):
+	Adjust to the new interface of internal::graph_vicinity_piter_.
+	(mln::graph_window_fwd_piter<P, W>::super_)
+	(mln::graph_window_bkd_piter<P, W>::super_):
+	Adjust.
+	(mln::graph_window_fwd_piter<P, W>::psite)
+	(mln::graph_window_bkd_piter<P, W>::psite):
+	New typedefs.
+	(mln::graph_window_fwd_piter<P, W>::graph_window_fwd_piter)
+	(mln::graph_window_bkd_piter<P, W>::graph_window_bkd_piter):
+	New default ctors.
+	(graph_window_fwd_piter(const Window<W>&, const Point_Site<Pref>&))
+	(graph_window_bkd_piter(const Window<W>&, const Point_Site<Pref>&)):
+	Turn ctors into...
+	(graph_window_fwd_piter(const Window<W>&, const Pref&))
+	(graph_window_bkd_piter(const Window<W>&, const Pref&)):
+	...these.
+	Adjust.
+	(mln::graph_window_fwd_piter<P, W>::is_valid)
+	(mln::graph_window_fwd_piter<P, W>::invalidate)
+	(mln::graph_window_fwd_piter<P, W>::start)
+	(mln::graph_window_fwd_piter<P, W>::next_)
+	(mln::graph_window_bkd_piter<P, W>::is_valid)
+	(mln::graph_window_bkd_piter<P, W>::invalidate)
+	(mln::graph_window_bkd_piter<P, W>::start)
+	(mln::graph_window_bkd_piter<P, W>::next_):
+	Catch up with the new interface of
+	internal::graph_vicinity_piter_.
+	Rename as...
+	(mln::graph_window_fwd_piter<P, W>::is_valid_)
+	(mln::graph_window_fwd_piter<P, W>::invalidate_)
+	(mln::graph_window_fwd_piter<P, W>::do_start_)
+	(mln::graph_window_fwd_piter<P, W>::do_next_)
+	(mln::graph_window_bkd_piter<P, W>::is_valid_)
+	(mln::graph_window_bkd_piter<P, W>::invalidate_)
+	(mln::graph_window_bkd_piter<P, W>::do_start_)
+	(mln::graph_window_bkd_piter<P, W>::do_next_):
+	...these.
+	(mln::graph_window_fwd_piter<P, W>::compute_sites_)
+	(mln::graph_window_bkd_piter<P, W>::compute_sites_):
+	New methods.
+	(mln::graph_window_fwd_piter<P, W>::win_)
+	(mln::graph_window_bkd_piter<P, W>::win_):
+	Remove attributes.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update relative iterators on graph image vicinity.
 
 	* mln/core/internal/graph_vicinity_piter.hh
