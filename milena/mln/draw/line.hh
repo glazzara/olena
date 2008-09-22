@@ -75,7 +75,7 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       mln_precondition(exact(ima).has(beg) && exact(ima).has(end));
-      level::paste(pw::cst(v) | line2d(beg, end),
+      level::paste(pw::cst(v) | p_line2d(beg, end),
 		   ima);
     }
 

@@ -1,5 +1,11 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update mln::draw::line w.r.t to mln::p_line2d.
+
+	* mln/draw/line.hh (mln::draw::line): s/line2d/p_line2d/.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Misc. fixes on line graph images.
 
 	* mln/core/image/line_graph_image.hh: Fix identation.
