@@ -95,7 +95,6 @@ namespace mln
       translation<n,C>::translation(const algebra::vec<n,C>& t)
 	:t_(t)
       {
-	this->m_ = algebra::h_mat<n,C>::Id;
 	this->update();
       }
 
@@ -131,6 +130,7 @@ namespace mln
       void
       translation<n,C>::update()
       {
+        this->m_ = algebra::h_mat<n,C>::Id;
 	for (unsigned i = 0; i < n; ++i)
 	  this->m_(i,n) = this->t_[i];
       }
