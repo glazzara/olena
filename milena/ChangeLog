@@ -1,5 +1,32 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site set mln::p_faces
+
+	* mln/core/site_set/p_faces.hh
+	(mln::internal::site_set_< p_faces<N, D, P> >): New properties.
+	(mln::internal::site_set_< p_faces<N, D, P> >::self_)
+	(mln::internal::site_set_< p_faces<N, D, P> >::super_)
+	(mln::internal::site_set_< p_faces<N, D, P> >::element_)
+	(mln::internal::site_set_< p_faces<N, D, P> >::piter):
+	New typedefs.
+	(mln::p_faces<N, D, P>::nsites): Change the return type of this
+	method to unsigned.
+	(mln::p_faces<N, D, P>::is_valid)
+	(mln::p_faces<N, D, P>::memory_size):
+	New methods.
+	(mln::p_faces<N, D, P>::bbox): Remove method.
+	(mln::p_faces<N, D, P>::bb_): Remove attribute.
+	(mln::p_faces<N, D, P>::p_faces)
+	(mln::p_faces<N, D, P>::has)
+	(mln::p_faces<N, D, P>::cplx() const):
+	Update methods.
+	(mln::p_faces<N, D, P>::cplx()):
+	New (mutable) accessor.
+	(operator==(const mln::p_faces<N,D,P>&, const mln::p_faces<N,D,P>&)):
+	New operator.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site set mln::p_complex.
 
 	* mln/core/site_set/p_complex.hh (mln::p_complex<D, P>): Inherit

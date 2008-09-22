@@ -44,14 +44,28 @@
 namespace mln
 {
 
-  /* FIXME: For compatibility reasons with mln::Point_Set, a point
-     type \P is attached to this complex-based pset (but it is not
-     used actually).  We should either:
+  // Forward declarations.
+  template <unsigned N, unsigned D, typename P> class p_faces;
+  // FIXME: Enable when available.
+#if 0
+  template <unsigned N, unsigned D, typename P> class p_faces_fwd_piter_;
+  template <unsigned N, unsigned D, typename P> class p_faces_bkd_piter_;
+#endif
 
-     - use it, and make it mandatory (good solution for the moment);
-     - use it, and make it optional (better solution, but implies
-       changes in mln::Point_Set;
-     - remove it (easy and bad solution).  */
+
+  namespace trait
+  {
+    template <unsigned N, unsigned D, typename P>
+    struct site_set_< p_faces<N, D, P> >
+    {
+      typedef trait::site_set::nsites::known   nsites;
+      // FIXME: Depends on P!
+      typedef trait::site_set::bbox::unknown   bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef trait::site_set::arity::unique   arity;
+    };
+  } // end of namespace mln::trait
+
 
   /// A complex psite set based on a the \N-faces of a complex of
   /// dimension \p D (a \p D-complex).
@@ -60,6 +74,9 @@ namespace mln
     : public internal::site_set_base_< faces_psite<N, D, P>,
 					p_faces<N, D, P> >
   {
+    typedef p_faces<N, D, P> self_;
+    typedef internal::site_set_base_< faces_psite<N, D, P>, self_ > super_;
+
     /// \brief Construct a complex psite set from a complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
@@ -68,35 +85,71 @@ namespace mln
     /// still valid after the initial complex has been removed.
     p_faces (const complex<D>& cplx);
 
+    /// Associated types.
+    /// \{
+    /// Element associated type.
+    typedef mln_site(super_) element;
+
     /// Point_Site associated type.
     typedef faces_psite<N, D, P> psite;
 
     // FIXME: Fake.
+    /// Forward Site_Iterator associated type.
     typedef void fwd_piter;
+
+    // FIXME: Fake.
+    /// Backward Site_Iterator associated type.
     typedef void bkd_piter;
 
-    /// \brief Return The number of points (sites) of the set, i.e., the
-    /// number of \em faces.
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+    /// \}
+
+    /// \brief Return The number of sites of the set, i.e., the number
+    /// of \em faces.
     ///
-    /// Required by the mln::Point_Set concept.
-    std::size_t nsites() const;
+    /// (Required by the mln::Site_Set concept, since the property
+    /// trait::site_set::nsites::known of this site set is set to
+    /// `known'.)
+    /* FIXME: Return type should be std::size_t (see
+       mln/core/concept/site_set.hh). */
+    unsigned nsites() const;
 
     /// Return The number of faces in the complex.
     std::size_t nfaces() const;
 
-    /// Give the exact bounding box.
-    const box<P>& bbox() const;
+    // FIXME: Add nfaces(unsigned) routines?  Yes, if this can
+    // simplify (and lighten) the implementation of piters, psites,
+    // etc.
+
+    /// Is this site set valid?
+    bool is_valid() const;
 
     bool has(const psite& p) const;
 
-    /// Return the complex associated to the p_faces domain.
-    const complex<D>& cplx() const;
+    // FIXME: Dummy.
+    std::size_t memory_size() const;
+
+    /// Accessors.
+    /// \{
+    /// Return the complex associated to the p_faces domain (const
+    /// version).
+    /* FIXME: Move back the const qualifier on this return type (see
+       comment below on cplx_). */
+    complex<D>& cplx() const;
+    /// Return the complex associated to the p_faces domain (mutable
+    /// version).
+    complex<D>& cplx();
+    /// \}
 
   private:
     /// The complex on which this pset is built.
     util::tracked_ptr< complex<D> > cplx_;
-    // FIXME: Remove as soon as bbox become optional.
-    box<P> bb_;
+
+    template <unsigned D_, unsigned N_, typename P_>
+    friend
+    bool operator==(const p_faces<D_, N_, P_>& lhs,
+		    const p_faces<D_, N_, P_>& rhs);
   };
 
 
@@ -132,17 +185,11 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
-
-    // FIXME: Dummy initialization.
-    accu::bbox<P> a;
-    for (unsigned i = 0; i < nsites(); ++i)
-      a.take(P());
-    bb_ = a.to_result();
   }
 
   template <unsigned N, unsigned D, typename P>
   inline
-  std::size_t
+  unsigned
   p_faces<N, D, P>::nsites() const
   {
     return nfaces();
@@ -158,11 +205,11 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  const box<P>&
-  p_faces<N, D, P>::bbox() const
+  bool
+  p_faces<N, D, P>::is_valid() const
   {
-    // FIXME: Dummy value.
-    return bb_;
+    // FIXME: Might be too low-level, again.
+    return (cplx_.ptr_);
   }
 
   template <unsigned N, unsigned D, typename P>
@@ -170,22 +217,44 @@ namespace mln
   bool
   p_faces<N, D, P>::has(const psite& p) const
   {
+    mln_precondition(is_valid());
     return
       // Check whether P's complex is compatible with this pset's complex.
-      &p.cplx() == &cplx() &&
+      (p.site_set() == *this) &&
       // Check whether the complex has the face associated to P.
-      p.face().is_valid();
+      (p.is_valid());
   }
 
+  template <unsigned N, unsigned D, typename P>
+  inline
+  std::size_t
+  p_faces<N, D, P>::memory_size() const
+  {
+    // FIXME: Dummy; implement (see other site sets).
+    abort();
+    return 0;
+  }
 
   template <unsigned N, unsigned D, typename P>
-  const complex<D>&
+  complex<D>&
   p_faces<N, D, P>::cplx() const
   {
     mln_precondition(cplx_);
     return *cplx_.ptr_;
   }
 
+  template <unsigned N, unsigned D, typename P>
+  complex<D>&
+  p_faces<N, D, P>::cplx()
+  {
+    mln_precondition(cplx_);
+    return *cplx_.ptr_;
+  }
+
+
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
 
   template <unsigned N, unsigned D, typename P>
   bool
