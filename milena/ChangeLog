@@ -1,5 +1,76 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update iterators on mln::p_graph.
+
+	* mln/core/site_set/p_graph_piter.hh
+	(mln::p_graph_fwd_piter<P>)
+	(mln::p_graph_bkd_piter<P>):
+	Inherit from internal::site_set_iterator_base.
+	(mln::p_graph_fwd_piter<P>::super_)
+	(mln::p_graph_bkd_piter<P>::super_):
+	Adjust.
+	(mln::p_graph_fwd_piter<P>::dim)
+	(mln::p_graph_bkd_piter<P>::dim):
+	Remove enums.
+	(mln::p_graph_fwd_piter<P>::psite)
+	(mln::p_graph_fwd_piter<P>::point)
+	(mln::p_graph_fwd_piter<P>::coord)
+	(mln::p_graph_bkd_piter<P>::psite)
+	(mln::p_graph_bkd_piter<P>::point)
+	(mln::p_graph_bkd_piter<P>::coord):
+	Remove typedefs.
+	(mln::p_graph_fwd_piter<P>::p_graph_fwd_piter)
+	(mln::p_graph_bkd_piter<P>::p_graph_bkd_piter):
+	New default ctors.
+	(mln::p_graph_fwd_piter<P>::p_graph_fwd_piter(const p_graph<P>& pg))
+	(mln::p_graph_bkd_piter<P>::p_graph_bkd_piter(const p_graph<P>& pg)):
+	Ajust ctors.
+	(mln::p_graph_fwd_piter<P>::p_graph_fwd_piter(const self_&))
+	(mln::p_graph_bkd_piter<P>::p_graph_bkd_piter(const self_&))
+	(mln::p_graph_fwd_piter<P>::operator=(const self_&))
+	(mln::p_graph_bkd_piter<P>::operator=(const self_&)):
+	Remove.
+	(mln::p_graph_fwd_piter<P>::next_)
+	(mln::p_graph_bkd_piter<P>::next_):
+	Catch up with the new interface of graph_psite.
+	(mln::p_graph_fwd_piter<P>::is_valid)
+	(mln::p_graph_fwd_piter<P>::invalidate)
+	(mln::p_graph_fwd_piter<P>::start)
+	(mln::p_graph_bkd_piter<P>::is_valid)
+	(mln::p_graph_bkd_piter<P>::invalidate)
+	(mln::p_graph_bkd_piter<P>::start):
+	Likewise.
+	Rename as...
+	(mln::p_graph_fwd_piter<P>::is_valid_)
+	(mln::p_graph_fwd_piter<P>::invalidate_)
+	(mln::p_graph_fwd_piter<P>::start_):
+	(mln::p_graph_bkd_piter<P>::is_valid_)
+	(mln::p_graph_bkd_piter<P>::invalidate_)
+	(mln::p_graph_bkd_piter<P>::start_):
+	...these.
+	(mln::p_graph_fwd_piter<P>::to_point)
+	(mln::p_graph_fwd_piter<P>::to_psite)
+	(mln::p_graph_fwd_piter<P>::operator psite)
+	(mln::p_graph_fwd_piter<P>::operator[])
+	(mln::p_graph_bkd_piter<P>::to_point)
+	(mln::p_graph_bkd_piter<P>::to_psite)
+	(mln::p_graph_bkd_piter<P>::operator psite)
+	(mln::p_graph_bkd_piter<P>::operator[]):
+	Remove.
+	(mln::p_graph_fwd_piter<P>::pg_)
+	(mln::p_graph_fwd_piter<P>::id_)
+	(mln::p_graph_fwd_piter<P>::psite_)
+	(mln::p_graph_bkd_piter<P>::pg_)
+	(mln::p_graph_bkd_piter<P>::id_)
+	(mln::p_graph_bkd_piter<P>::psite_):
+	Remove attributes
+	(mln::p_graph_fwd_piter<P>::p_)
+	(mln::p_graph_bkd_piter<P>::p_):
+	Remove.
+	Use the one from the super class.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site of mln::p_graph.
 
 	* mln/core/image/graph_psite.hh (mln::graph_psite<P>): Inherit
