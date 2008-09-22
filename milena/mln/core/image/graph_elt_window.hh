@@ -38,7 +38,9 @@
    - mln::graph_elt_window
    - mln::graph_elt_neighborhood
    - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.  */
+   - mln::line_graph_elt_neighborhood.
+
+   See https://trac.lrde.org/olena/ticket/139.  */
 
 /* FIXME: Due to the poor interface of mln::p_line_graph and
    mln::util::graph, we show to much implementation details here.
@@ -65,16 +67,16 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point corresponding to the window.
-    typedef P point;
     /// The type of psite corresponding to the window.
     typedef graph_psite<P> psite;
+    /// The type of site corresponding to the window.
+    typedef mln_site(psite) site;
     // The type of the set of window sites (vertex ids adjacent to the
     // reference psite).
     typedef std::set<util::vertex_id> sites_t;
 
     // FIXME: This is a dummy value.
-    typedef void dpoint;
+    typedef void dpsite;
 
     /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.
@@ -132,10 +134,11 @@ namespace mln
   graph_elt_window<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::vertex_id ref_vertex_id = piter.p_ref().id();
-    const util::vertex<P>& ref_vertex = piter.pg().gr_->vertex(ref_vertex_id);
+    util::vertex_id ref_vertex_id = piter.center().vertex_id();
     sites_t& sites = piter.sites();
     sites.clear();
+    const util::vertex<P>& ref_vertex =
+      piter.center().site_set().gr_->vertex(ref_vertex_id);
     /* FIXME: Move this computation out of the window. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
@@ -149,9 +152,9 @@ namespace mln
 	   ref_vertex.edges.begin();
 	 e != ref_vertex.edges.end(); ++e)
       {
-	util::vertex_id v1 = piter.pg().gr_->edges()[*e]->v1();
+	util::vertex_id v1 = piter.center().site_set().gr_->edges()[*e]->v1();
 	sites.insert(v1);
-	util::vertex_id v2 = piter.pg().gr_->edges()[*e]->v2();
+	util::vertex_id v2 = piter.center().site_set().gr_->edges()[*e]->v2();
 	sites.insert(v2);
       }
   }
