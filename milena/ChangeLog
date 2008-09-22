@@ -1,5 +1,35 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc. fixes on line graph images.
+
+	* mln/core/image/line_graph_image.hh: Fix identation.
+	* mln/core/site_set/p_line_graph.hh: Fix documentation and
+	indentation.
+	(mln::::p_line_graph<P>::gr): Fix implementations.
+	* mln/core/image/line_graph_psite.hh: Fix documentation.
+	(mln::line_graph_psite<P>::line_graph_psite): Don't invalidate the
+	iterator as the site set is not defined, and invalidation would
+	trigger an error.
+	* mln/core/site_set/p_line_graph_piter.hh: Fix documentation.
+	(mln::p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_)
+	(mln::p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_):
+	Fix postconditions
+	(mln::p_line_graph_bkd_piter_<P>::invalidate_)
+	(mln::p_line_graph_bkd_piter_<P>::start_):
+	Catch up with the current interface of mln::line_graph_psite.
+	* mln/core/image/line_graph_elt_neighborhood.hh
+	(mln::line_graph_elt_neighborhood<P>::niter): Fix documentation.
+	* mln/core/internal/line_graph_vicinity_piter.hh: Typo in comment.
+	(mln::internal::line_graph_vicinity_piter_<P, S, E>::self_):
+	Remove typedef.
+	* tests/core/image/line_graph_image.cc: Remove superfluous
+	inclusion of mln/morpho/dilation.hh.
+	* tests/morpho/line_graph_image_morpho.cc: Fix Doxygen header.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Disable
+	line_graph_image_morpho.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update tests exercising graph image.
 	
 	* tests/core/image/graph_image.cc: Update.

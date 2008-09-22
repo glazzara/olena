@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/graph_image.cc
-/// \brief Tests on mln::graph_image.
+/// \file tests/morpho/line_graph_image_morpho.cc
+/// \brief Tests on mln::line_graph_image with morphological filters.
 
 #include <vector>
 

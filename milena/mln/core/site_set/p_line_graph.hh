@@ -29,22 +29,21 @@
 # define MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 
 /// \file mln/core/site_set/p_line_graph.hh
-/// \brief Definition of a point set based on line graph.
+/// \brief Definition of a point set based on a line graph.
 
-# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
 # include <mln/util/site_pair.hh>
+
 # include <mln/core/image/line_graph_psite.hh>
 # include <mln/core/site_set/p_line_graph_piter.hh>
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
 
-/* FIXME: We should move the `adjacent_or_equal method' from iterators
- into this class.  */
-
+/* FIXME: We should move the `adjacent'/`adjacent_or_equal' methods
+   out of this class (into iterators on *graph*).  */
 
 namespace mln
 {
@@ -82,7 +81,7 @@ namespace mln
     ///
     /// \a gr is \em copied internally, so that the line graph psite
     /// set is still valid after the initial graph has been removed.
-    p_line_graph (const graph& gr);
+    p_line_graph(const graph& gr);
 
     /// Associated types.
     /// \{
@@ -128,11 +127,9 @@ namespace mln
 
     /// Accessors.
     /// \{
-    /// Return the graph associated to the p_graph domain (const
-    /// version)
+    /// Return the graph associated to this site set (const version)
     const graph& gr() const;
-    /// Return the graph associated to the p_graph domain (mutable
-    /// version).
+    /// Return the graph associated to this site set (mutable version).
     graph& gr();
     /// \}
 
@@ -176,8 +173,8 @@ namespace mln
   /// \brief Inclusion of a mln::p_line_graph in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
-  /// infrastrure for graphs i simple: a mln::p_line_graph is included
-  /// in another one if their are equal.
+  /// infrastructure for graphs is simple: a mln::p_line_graph is
+  /// included in another one if their are equal.
   ///
   /// \todo Refine this later, when we are able to express subgraph
   /// relations.
@@ -193,7 +190,7 @@ namespace mln
   inline
   p_line_graph<P>::p_line_graph(const util::graph<P>& gr)
     // Create a deep, managed copy of GR.
-    : gr_ (new util::graph<P>(gr))
+    : gr_(new util::graph<P>(gr))
   {
   }
 
@@ -227,7 +224,7 @@ namespace mln
   p_line_graph<P>::is_valid() const
   {
     // FIXME: Might be too low-level, again.
-    return (gr_.ptr_);
+    return gr_.ptr_;
   }
 
   template <typename P>
@@ -255,7 +252,7 @@ namespace mln
 
   template <typename P>
   const util::graph<P>&
-  p_graph<P>::gr() const
+  p_line_graph<P>::gr() const
   {
     mln_precondition(is_valid());
     return *gr_.ptr_;
@@ -263,7 +260,7 @@ namespace mln
 
   template <typename P>
   util::graph<P>&
-  p_graph<P>::gr()
+  p_line_graph<P>::gr()
   {
     mln_precondition(is_valid());
     return *gr_.ptr_;

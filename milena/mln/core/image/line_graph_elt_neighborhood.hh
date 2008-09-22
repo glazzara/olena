@@ -88,7 +88,7 @@ namespace mln
     /// neighborhood w.r.t. the reverse ordering of edges.
     typedef line_graph_neighborhood_bkd_piter<P, self_> bkd_niter;
 
-    /// The default qiter type.
+    /// The default niter type.
     typedef fwd_niter niter;
     /// \}
 

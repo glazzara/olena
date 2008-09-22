@@ -31,9 +31,12 @@
 /// \file mln/core/site_set/p_line_graph_piter.hh
 /// \brief Definition of point iterators on line graph-based site set.
 
-# include <mln/core/internal/site_iterator_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/site_set/p_line_graph.hh>
 # include <mln/core/image/line_graph_psite.hh>
+
+/* FIXME: Iterators on p_graph and p_line_graph share common code.
+   Factor as much as possible.  */
 
 
 namespace mln
@@ -78,11 +81,12 @@ namespace mln
     /// \}
 
   protected:
+    /// The psite corresponding to this iterator.
     using super_::p_;
   };
 
 
-  /// Print a mln::p_line_graph_fwd_piter_<P>.
+  /// Print an mln::p_line_graph_fwd_piter_<P>.
   template <typename P>
   inline
   std::ostream&
@@ -135,6 +139,7 @@ namespace mln
   operator<<(std::ostream& ostr, const p_line_graph_bkd_piter_<P>& p);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
   /*-----------------------------.
@@ -145,7 +150,7 @@ namespace mln
   inline
   p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_()
   {
-    mln_postcondition(!is_valid());
+    mln_postcondition(!this->is_valid());
   }
 
   template <typename P>
@@ -153,7 +158,7 @@ namespace mln
   p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_(const p_line_graph<P>& plg)
   {
     this->change_target(plg);
-    mln_postcondition(!is_valid());
+    mln_postcondition(!this->is_valid());
   }
 
   template <typename P>
@@ -206,7 +211,7 @@ namespace mln
   inline
   p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_()
   {
-    mln_postcondition(!is_valid());
+    mln_postcondition(!this->is_valid());
   }
 
   template <typename P>
@@ -214,7 +219,7 @@ namespace mln
   p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_(const p_line_graph<P>& plg)
   {
     this->change_target(plg);
-    mln_postcondition(!is_valid());
+    mln_postcondition(!this->is_valid());
   }
 
   template <typename P>
@@ -230,7 +235,7 @@ namespace mln
   void
   p_line_graph_bkd_piter_<P>::invalidate_()
   {
-    p_.set_id(this->site_set().nedges());
+    p_.change_edge_id(this->site_set().nedges());
   }
 
   template <typename P>
@@ -238,7 +243,7 @@ namespace mln
   void
   p_line_graph_bkd_piter_<P>::start_()
   {
-    p_.set_id(this->site_set().nedges() - 1);
+    p_.change_edge_id(this->site_set().nedges() - 1);
   }
 
   template <typename P>

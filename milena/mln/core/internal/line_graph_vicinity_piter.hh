@@ -32,16 +32,17 @@
 /// \brief  Factored implementation for point iterators on a line graph windows
 /// and line graph neighborhoods, called "vicinities".
 
-/* FIXME: Factor those classes:
-
-   - mln::internal::graph_vicinity_piter.hh
-   - mln::internal::line_graph_vicinity_piter.hh  */
-
 # include <set>
 
 # include <mln/core/internal/site_relative_iterator_base.hh>
 # include <mln/core/site_set/p_line_graph.hh>
 # include <mln/core/image/line_graph_psite.hh>
+
+/* FIXME: Factor those classes:
+
+   - mln::internal::graph_vicinity_piter.hh
+   - mln::internal::line_graph_vicinity_piter.hh  */
+
 
 namespace mln
 {
@@ -52,6 +53,7 @@ namespace mln
   // FIXME: Consider renaming line_graph_vicinity_piter_ as
   // line_graph_relative_piter_.
 
+
   namespace internal
   {
 
@@ -60,8 +62,6 @@ namespace mln
     class line_graph_vicinity_piter_
       : public internal::site_relative_iterator_base< S, E >
     {
-      typedef line_graph_vicinity_piter_<P, S, E> self_;
-
     public:
       enum { dim = P::dim };
 
@@ -91,7 +91,7 @@ namespace mln
     };
 
 
-    /// Print a mln::line_graph_vicinity_piter_<P, S, E>.
+    /// Print an mln::line_graph_vicinity_piter_<P, S, E>.
     template <typename P, typename S, typename E>
     inline
     std::ostream&

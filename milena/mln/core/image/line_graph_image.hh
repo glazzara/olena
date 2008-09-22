@@ -181,7 +181,7 @@ namespace mln
     /// Return the point of the second vertex adjacent to the edge with
     /// id \a e.
     const P& vertex2(const util::edge_id& e) const;
-};
+  };
 
   // Fwd decl.
   template <typename P, typename V, typename W>

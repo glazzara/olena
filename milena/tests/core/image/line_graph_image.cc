@@ -35,8 +35,6 @@
 #include <mln/core/image/line_graph_elt_window.hh>
 #include <mln/core/image/line_graph_window_piter.hh>
 
-#include <mln/morpho/dilation.hh>
-
 
 int main()
 {

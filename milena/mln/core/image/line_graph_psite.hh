@@ -29,7 +29,7 @@
 # define MLN_CORE_IMAGE_LINE_GRAPH_PSITE_HH
 
 /// \file mln/core/image/line_graph_psite.hh
-/// \brief Definition of a line graph-based point site.
+/// \brief Definition of a line graph-based psite.
 
 # include <mln/core/internal/pseudo_site_base.hh>
 
@@ -46,9 +46,10 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename P> class p_line_graph;
   template <typename P> class line_graph_psite;
+
 
   /// \brief Point site associated to a mln::line_graph_image.
   ///
@@ -191,7 +192,6 @@ namespace mln
   line_graph_psite<P>::line_graph_psite()
     : plg_(0)
   {
-    invalidate();
   }
 
   template <typename P>
@@ -339,7 +339,6 @@ namespace mln
     // FIXME: Too low-level.
     return plg_->gr_->edge(id_).v2();
   }
-
 
   template <typename P>
   inline
