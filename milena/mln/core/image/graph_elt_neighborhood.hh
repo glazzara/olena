@@ -38,15 +38,21 @@
    - mln::graph_elt_window
    - mln::graph_elt_neighborhood
    - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.  */
+   - mln::line_graph_elt_neighborhood.
+
+   See https://trac.lrde.org/olena/ticket/139.  */
 
 /* FIXME: Due to the poor interface of mln::p_line_graph and
    mln::util::graph, we show to much implementation details here.
    Enrich their interfaces to avoid that.  */
 
+# include <set>
+
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/image/graph_psite.hh>
 # include <mln/core/image/graph_neighborhood_piter.hh>
+
+# include <mln/core/image/graph_elt_window.hh>
 
 
 namespace mln
@@ -56,7 +62,7 @@ namespace mln
   template <typename P, typename N> class graph_neighborhood_bkd_piter;
 
 
-  /// Elementary neighborhood on graph class.
+  /// \brief Elementary neighborhood on graph class.
   template <typename P>
   class graph_elt_neighborhood
     : public Neighborhood< graph_elt_neighborhood<P> >
@@ -66,16 +72,13 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    /// The type of point corresponding to the neighborhood.
-    typedef P point;
     /// The type of psite corresponding to the neighborhood.
     typedef graph_psite<P> psite;
+    /// The type of site corresponding to the neighborhood.
+    typedef mln_site(psite) site;
     // The type of the set of neighbors (vertex ids adjacent to the
     // reference psite).
     typedef std::set<util::vertex_id> sites_t;
-
-    // FIXME: This is a dummy value.
-    typedef void dpoint;
 
     /// \brief Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of vertices.
@@ -87,6 +90,14 @@ namespace mln
 
     /// The default niter type.
     typedef fwd_niter niter;
+    /// \}
+
+    /// Conversions.
+    /// \{
+    /// The window type corresponding to this neighborhood.
+    typedef graph_elt_window<P> window;
+    /// Create a window corresponding to this neighborhood.
+    window to_window() const;
     /// \}
 
     /// Services for iterators.
@@ -101,16 +112,25 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
+  inline
+  graph_elt_window<P>
+  graph_elt_neighborhood<P>::to_window() const
+  {
+    return graph_elt_window<P>();
+  }
+
+  template <typename P>
   template <typename Piter>
   inline
   void
   graph_elt_neighborhood<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::vertex_id ref_vertex_id = piter.p_ref().id();
-    const util::vertex<P>& ref_vertex = piter.pg().gr_->vertex(ref_vertex_id);
+    util::vertex_id ref_vertex_id = piter.center().vertex_id();
     sites_t& sites = piter.sites();
     sites.clear();
+    const util::vertex<P>& ref_vertex =
+      piter.center().site_set().gr_->vertex(ref_vertex_id);
     /* FIXME: Move this computation out of the neighborhood. In fact,
        this should be a service of the graph, also proposed by the
        p_line_graph.  */
@@ -119,12 +139,12 @@ namespace mln
 	   ref_vertex.edges.begin();
 	 e != ref_vertex.edges.end(); ++e)
       {
-	util::vertex_id v1 = piter.pg().gr_->edges()[*e]->v1();
+	util::vertex_id v1 = piter.center().site_set().gr_->edges()[*e]->v1();
 	// We explicitly enforce that the reference piter vertex id is
 	// *not* inserted into SITES.
 	if (v1 != ref_vertex_id)
 	  sites.insert(v1);
-	util::vertex_id v2 = piter.pg().gr_->edges()[*e]->v2();
+	util::vertex_id v2 = piter.center().site_set().gr_->edges()[*e]->v2();
 	// Likewise.
 	if (v2 != ref_vertex_id)
 	  sites.insert(v2);

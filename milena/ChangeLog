@@ -1,5 +1,22 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update elementary neighborhood on graph image.
+
+	* mln/core/image/graph_elt_neighborhood.hh
+	(mln::graph_elt_neighborhood<P>::point)
+	(mln::graph_elt_neighborhood<P>::dpoint):
+	Remove typedefs.
+	(mln::graph_elt_neighborhood<P>::psite)
+	(mln::graph_elt_neighborhood<P>::window):
+	New typedefs.
+	(mln::graph_elt_neighborhood<P>::to_window):
+	New method.
+	(mln::graph_elt_neighborhood<P>::compute_sites_):
+	Catch up with the new interface of iterators on graph
+	neighborhood.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update elementary window on graph image.
 
 	* mln/core/image/graph_elt_window.hh
