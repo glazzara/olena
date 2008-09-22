@@ -1,5 +1,30 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site set mln::p_complex.
+
+	* mln/core/site_set/p_complex.hh (mln::p_complex<D, P>): Inherit
+	from internal::site_set_base_.
+	(mln::p_complex<D, P>::self_)
+	(mln::p_complex<D, P>::super_)
+	(mln::p_complex<D, P>::element_)
+	(mln::p_complex<D, P>::piter):
+	New typedefs.
+	(mln::p_complex<D, P>::nsites): Change the return type of this
+	method to unsigned.
+	(mln::p_complex<D, P>::is_valid)
+	(mln::p_complex<D, P>::memory_size):
+	New methods.
+	(mln::p_complex<D, P>::bbox): Remove method.
+	(mln::p_complex<D, P>::bb_): Remove attribute.
+	(mln::p_complex<D, P>::p_complex)
+	(mln::p_complex<D, P>::has)
+	(mln::p_complex<D, P>::cplx):
+	Update methods.
+	(operator==(const mln::p_complex<D, P>&, const mln::p_complex<D, P>&)):
+	New operator.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete the overhaul of line graph images.
 
 	* mln/core/image/line_graph_image.hh: 
