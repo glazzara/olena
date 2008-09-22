@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_BROWSING_SNAKE_FWD_HH
-# define MLN_CANVAS_BROWSING_SNAKE_FWD_HH
+#ifndef MLN_CANVAS_BROWSING_SNAKE_VERT_HH
+# define MLN_CANVAS_BROWSING_SNAKE_VERT_HH
 
-/*! \file mln/canvas/browsing/snake_fwd.hh
+/*! \file mln/canvas/browsing/snake_vert.hh
  *
  * \brief Browsing in a snake-way, forward.
  */
@@ -52,18 +52,18 @@ namespace mln
        * This canvas browse all the point of an image 'input' like
        * this :
        *
-       *     ------->
-       *     <------'
-       *     '------>
+       *     |  /\ |
+       *     |  |  |
+       *     \/ |  \/
        *
        * The fonctor should provide (In addition to 'input') four
        * methods :
        *
        *   - init() : Will be called at the beginning.
-       *   - down() : Will be called after each moving down. (will
+       *   - down() : Will be called after each moving down.
+       *   - up()  : Will ba called after each moving up.
+       *   - fwd()  : Will be called after each moving right. (will
        *   also be called once at the first point).
-       *   - fwd()  : Will be called after each moving right.
-       *   - bwd()  : Will ba called after each moving left.
        *
        * This methods should acces to the current working point 'p'
        * also provided by the functor.
@@ -78,19 +78,19 @@ namespace mln
        *   --- as methods: \n
        *   void init(); \n
        *   void down(); \n
+       *   void up(); \n
        *   void fwd(); \n
-       *   void bkd(); \n
        * } \n
        *
        */
 
-      struct snake_fwd_t : public Browsing< snake_fwd_t >
+      struct snake_vert_t : public Browsing< snake_vert_t >
       {
 	template <typename F>
 	void operator()(F& f) const;
       }
 
-      snake_fwd;
+      snake_vert;
 
 
 
@@ -99,12 +99,12 @@ namespace mln
       template <typename F>
       inline
       void
-      snake_fwd_t::operator()(F& f) const
+      snake_vert_t::operator()(F& f) const
       {
 	// Fixme: check the dimension of the input
 // 	mlc_equal(mln_trait_image_dimension(I)(),
 // 		  trait::image::dimension::two_d)::check();
-	trace::entering("canvas::browsing::snake_fwd");
+	trace::entering("canvas::browsing::snake_vert");
 	mln_precondition(f.input.has_data());
 	int
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
@@ -116,42 +116,42 @@ namespace mln
 	def::coord& col = f.p.col();
 
 	// initialization
-	trace::entering("canvas::browsing::snake_fwd::init");
+	trace::entering("canvas::browsing::snake_vert::init");
 	f.init();
-	trace::exiting("canvas::browsing::snake_fwd::init");
+	trace::exiting("canvas::browsing::snake_vert::init");
 
-	bool fwd = true;
-	for (row = min_row; row <= max_row; ++row)
+	bool down = true;
+	for (col = min_col; col <= max_col; ++col)
 	  // FIXME: Add "if (f.input.has(p))"?
 	  {
-	    // go down
-	    trace::entering("canvas::browsing::snake_fwd::init");
-	    f.down();
-	    trace::exiting("canvas::browsing::snake_fwd::init");
+	    // go fwd
+	    trace::entering("canvas::browsing::snake_vert::init");
+	    f.fwd();
+	    trace::exiting("canvas::browsing::snake_vert::init");
 
-	    if (fwd)
-	      // browse line fwd
-	      while (col < max_col)
+	    if (down)
+	      // browse col down.
+	      while (row < max_row)
 		{
-		  ++col;
-		  trace::entering("canvas::browsing::snake_fwd::fwd");
-		  f.fwd();
-		  trace::exiting("canvas::browsing::snake_fwd::fwd");
+		  ++row;
+		  trace::entering("canvas::browsing::snake_vert::down");
+		  f.down();
+		  trace::exiting("canvas::browsing::snake_vert::down");
 		}
 	    else
-	      // browse line bkd
-	      while (col > min_col)
+	      // browse col up.
+	      while (row > min_row)
 		{
-		  --col;
-		  trace::entering("canvas::browsing::snake_fwd::bkd");
-		  f.bkd();
-		  trace::exiting("canvas::browsing::snake_fwd::bkd");
+		  --row;
+		  trace::entering("canvas::browsing::snake_vert::up");
+		  f.up();
+		  trace::exiting("canvas::browsing::snake_vert::up");
 		}
 
 	    // change browsing
-	    fwd = ! fwd;
+	    down = ! down;
 	  }
-	trace::exiting("canvas::browsing::snake_fwd");
+	trace::exiting("canvas::browsing::snake_vert");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -163,4 +163,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CANVAS_BROWSING_SNAKE_FWD_HH
+#endif // ! MLN_CANVAS_BROWSING_SNAKE_VERT_HH

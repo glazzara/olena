@@ -1,3 +1,21 @@
+2008-09-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add snake_vert browsing canvas.
+
+	* mln/canvas/browsing/snake_vert.hh: New, snake vert browsing
+	 canvas. This canvas browse all the point of an image 'input' like
+	 this :
+                      1  4  5
+                      || /\ ||
+                      || || ||
+                      \/ || \/
+                      2  3  6
+
+	* tests/canvas/browsing/Makefile.am: Add snake_vert test.
+	* tests/canvas/browsing/snake_vert.cc: New. The test.
+	* mln/canvas/browsing/snake_fwd.hh: Desactivate check
+	of dimension.
+
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename util::ordpair_<T> as util::ord_pair<T>.
