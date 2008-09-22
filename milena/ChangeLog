@@ -1,5 +1,9 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/site_set/p_graph.hh (operator<=): Typo in comment.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update mln::draw::line w.r.t to mln::p_line2d.
 
 	* mln/draw/line.hh (mln::draw::line): s/line2d/p_line2d/.

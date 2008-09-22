@@ -185,7 +185,7 @@ namespace mln
   /// \brief Inclusion of a mln::p_graph in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
-  /// infrastrure for graphs is simple: a mln::p_graph is included
+  /// infrastructure for graphs is simple: a mln::p_graph is included
   /// in another one if their are equal.
   ///
   /// \todo Refine this later, when we are able to express subgraph
