@@ -35,8 +35,6 @@
 
 namespace mln
 {
-  /* FIXME: Get rid of P?  */
-
 
   /*-----------------------------.
   | p_complex_fwd_piter_<D, P>.  |
@@ -56,9 +54,8 @@ namespace mln
   public:
     /// Construction and assignment.
     /// \{
+    p_complex_fwd_piter_();
     p_complex_fwd_piter_(const p_complex<D, P>& pc);
-    p_complex_fwd_piter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
   };
 
@@ -81,9 +78,8 @@ namespace mln
   public:
     /// Construction and assignment.
     /// \{
+    p_complex_bkd_piter_();
     p_complex_bkd_piter_(const p_complex<D, P>& pc);
-    p_complex_bkd_piter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
   };
 
@@ -97,27 +93,15 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
+  p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_()
+  {
+  }
+
+  template <unsigned D, typename P>
+  inline
   p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_(const p_complex<D, P>& pc)
     : super_(pc)
   {
-  }
-
-  template <unsigned D, typename P>
-  inline
-  p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_(const p_complex_fwd_piter_<D, P>& rhs)
-    : super_(rhs)
-  {
-  }
-
-  template <unsigned D, typename P>
-  inline
-  p_complex_fwd_piter_<D, P>&
-  p_complex_fwd_piter_<D, P>::operator=(const p_complex_fwd_piter_<D, P>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
   }
 
 
@@ -127,27 +111,15 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
+  p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_()
+  {
+  }
+
+  template <unsigned D, typename P>
+  inline
   p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_(const p_complex<D, P>& pc)
     : super_(pc)
   {
-  }
-
-  template <unsigned D, typename P>
-  inline
-  p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_(const p_complex_bkd_piter_<D, P>& rhs)
-    : super_(rhs)
-  {
-  }
-
-  template <unsigned D, typename P>
-  inline
-  p_complex_bkd_piter_<D, P>&
-  p_complex_bkd_piter_<D, P>::operator=(const p_complex_bkd_piter_<D, P>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

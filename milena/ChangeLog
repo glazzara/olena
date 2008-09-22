@@ -1,5 +1,60 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update iterators on p_complex.
+
+	* mln/core/internal/p_complex_piter_base.hh
+	(mln::p_complex_piter_base_<D, P>): Inherit
+	from internal::site_set_iterator_base.
+	(mln::p_complex_piter_base_<D, P>::super_): Update typedef.
+	(mln::p_complex_piter_base_<D, P>::complex_dim): New constant.
+	(mln::p_complex_piter_base_<D, P>::pset)
+	(mln::p_complex_piter_base_<D, P>::psite):
+	Remove typedefs.
+	(mln::p_complex_piter_base_<D, P>::p_complex_piter_base_):
+	New default ctor.
+	(mln::p_complex_piter_base_<D, P>::p_complex_piter_base_(const self&)):
+	Remove copy ctor.
+	(mln::p_complex_piter_base_<D, P>::p_complex_piter_base_):
+	Update other ctor.
+	(mln::p_complex_piter_base_<D, P>::operator=(const self&)):
+	Remove operator.
+	(mln::p_complex_piter_base_<D, P>::next_)
+	(mln::p_complex_piter_base_<D, P>::update_):
+	Update methods.
+	(mln::p_complex_piter_base_<D, P>::is_valid)
+	(mln::p_complex_piter_base_<D, P>::invalidate)
+	(mln::p_complex_piter_base_<D, P>::start):
+	Likewise.
+	Rename as...
+	(mln::p_complex_piter_base_<D, P>::is_valid_)
+	(mln::p_complex_piter_base_<D, P>::invalidate_)
+	(mln::p_complex_piter_base_<D, P>::start_):
+	...these.
+	(mln::p_complex_piter_base_<D, P>::to_point)
+	(mln::p_complex_piter_base_<D, P>::to_psite)
+	(mln::p_complex_piter_base_<D, P>::operator psite)
+	(mln::p_complex_piter_base_<D, P>::operator[]):
+	Remove methods.
+	(operator<<(std::ostream&, const p_complex_piter_base_<I, P, E>&)):
+	Update.
+	(mln::p_complex_piter_base_<D, P>::p_): Get it from the super
+	class.
+	(mln::p_complex_piter_base_<D, P>::psite): Remove attribute.
+	* mln/core/site_set/p_complex_piter.hh: 
+	(mln::p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_)
+	(mln::p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_):
+	New default ctors.
+	(mln::p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_)
+	(mln::p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_):
+	Adjust other ctor.
+	(mln::p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_(const self_&))
+	(mln::p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_(const self_&))
+	(mln::p_complex_fwd_piter_<D, P>::operator=(const self_&))
+	(mln::p_complex_bkd_piter_<D, P>::operator=(const self_&)):
+	Remove.
+	
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site on mln::p_faces.
 
 	* mln/core/faces_psite.hh (mln::faces_psite<N, D, P>): Inherit
