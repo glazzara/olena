@@ -104,7 +104,7 @@ namespace mln
     extended();
 
     /// Constructor.
-    extended(I& ima, const box<mln_site(I)>& );
+    extended(I& ima, const box<mln_site(I)>& b);
 
     /// Initialization.
     void init_(I& ima, const box<mln_site(I)>& b);

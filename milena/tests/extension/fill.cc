@@ -31,9 +31,12 @@
  */
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/extended.hh>
 #include <mln/extension/fill.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/debug/println_with_border.hh>
+
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -41,8 +44,12 @@ int main()
 
   const unsigned border = 2;
 
-  image2d<value::int_u8> ima(3, 3, border);
-  extension::fill(ima, 42);
+  image2d<unsigned> ima(3, 3, border);
 
-  debug::println_with_border(ima);
+  level::fill(ima, 0);
+  extension::fill(ima, 9);
+
+  box2d b = ima.bbox();
+  b.enlarge(border);
+  debug::println(extended_to(ima, b));
 }
