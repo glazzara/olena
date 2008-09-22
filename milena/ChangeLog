@@ -1,5 +1,56 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update graph neighborhood piters.
+
+	* mln/core/image/graph_neighborhood_piter.hh
+	(mln::graph_neighborhood_fwd_piter<P, N>)
+	(mln::graph_neighborhood_bkd_piter<P, N>):
+	Adjust to the new interface of internal::graph_vicinity_piter_.
+	(mln::graph_neighborhood_fwd_piter<P, N>::super_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::super_):
+	Adjust.
+	(mln::graph_neighborhood_fwd_piter<P, N>::psite)
+	(mln::graph_neighborhood_bkd_piter<P, N>::psite):
+	New typedefs.
+	(mln::graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter)
+	(mln::graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter):
+	New default ctors.
+	(graph_neighborhood_fwd_piter(const Neighborhood<N>&, const Point_Site<Pref>&))
+	(graph_neighborhood_bkd_piter(const Neighborhood<N>&, const Point_Site<Pref>&)):
+	Turn ctors into...
+	(graph_neighborhood_fwd_piter(const Neighborhood<N>&, const Pref&))
+	(graph_neighborhood_bkd_piter(const Neighborhood<N>&, const Pref&)):
+	...these.
+	Adjust.
+	(mln::graph_neighborhood_fwd_piter<P, N>::is_valid)
+	(mln::graph_neighborhood_fwd_piter<P, N>::invalidate)
+	(mln::graph_neighborhood_fwd_piter<P, N>::start)
+	(mln::graph_neighborhood_fwd_piter<P, N>::next_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::is_valid)
+	(mln::graph_neighborhood_bkd_piter<P, N>::invalidate)
+	(mln::graph_neighborhood_bkd_piter<P, N>::start)
+	(mln::graph_neighborhood_bkd_piter<P, N>::next_):
+	Catch up with the new interface of
+	internal::graph_vicinity_piter_.
+	Rename as...
+	(mln::graph_neighborhood_fwd_piter<P, N>::is_valid_)
+	(mln::graph_neighborhood_fwd_piter<P, N>::invalidate_)
+	(mln::graph_neighborhood_fwd_piter<P, N>::do_start_)
+	(mln::graph_neighborhood_fwd_piter<P, N>::do_next_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::is_valid_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::invalidate_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::do_start_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::do_next_):
+	...these.
+	(mln::graph_neighborhood_fwd_piter<P, N>::compute_sites_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::compute_sites_):
+	New methods.
+	(mln::graph_neighborhood_fwd_piter<P, N>::nbh_)
+	(mln::graph_neighborhood_bkd_piter<P, N>::nbh_):
+	Remove attributes.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update graph window piters.
 
 	* mln/core/image/graph_window_piter.hh
