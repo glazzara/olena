@@ -39,6 +39,9 @@
 /* FIXME: This class shares a lot with graph_psite.  Factor as much as
    possible.  */
 
+// FIXME: Rename line_graph_psite as p_line_graph_psite, and move this
+// to core/site_set.
+
 
 namespace mln
 {
@@ -46,8 +49,6 @@ namespace mln
   // Fwd decl.
   template <typename P> class p_line_graph;
   template <typename P> class line_graph_psite;
-
-  // FIXME: Rename as line_graph_psite as p_line_graph_psite.
 
   /// \brief Point site associated to a mln::line_graph_image.
   ///
@@ -58,7 +59,6 @@ namespace mln
 					  line_graph_psite<P> >
   {
     typedef line_graph_psite<P> self_;
-    typedef internal::pseudo_site_base_< P, self_ > super_;
 
   public:
     // This associated type is important to know that this particular
@@ -191,55 +191,19 @@ namespace mln
   line_graph_psite<P>::line_graph_psite()
     : plg_(0)
   {
+    invalidate();
   }
 
   template <typename P>
   inline
   line_graph_psite<P>::line_graph_psite(const p_line_graph<P>& plg,
 					util::edge_id id)
+    // FIXME: Use change_target instead.
     : plg_(&plg),
       id_(id)
   {
     update_();
   }
-
-  template <typename P>
-  inline
-  const p_line_graph<P>&
-  line_graph_psite<P>::site_set() const
-  {
-    mln_precondition(plg_);
-    return *plg_;
-  }
-
-  template <typename P>
-  inline
-  const p_line_graph<P>*
-  line_graph_psite<P>::target_() const
-  {
-    return plg_;
-  }
-
-  template <typename P>
-  inline
-  void
-  line_graph_psite<P>::change_target(const p_line_graph<P>& new_target)
-  {
-    plg_ = & new_target;
-    invalidate();
-  }
-
-  template <typename P>
-  inline
-  const site_pair<P>&
-  line_graph_psite<P>::subj_()
-  {
-    // FIXME: p_ is not properly updated yet; we shouldn't call this
-    // method yet.
-    abort();
-    return p_;
-  }
-
 
   template <typename P>
   inline
@@ -263,6 +227,40 @@ namespace mln
     id_ = plg_->gr_->nedges();
   }
 
+  template <typename P>
+  inline
+  const p_line_graph<P>&
+  line_graph_psite<P>::site_set() const
+  {
+    mln_precondition(target_());
+    return *target_();
+  }
+
+  template <typename P>
+  inline
+  const p_line_graph<P>*
+  line_graph_psite<P>::target_() const
+  {
+    return plg_;
+  }
+
+  template <typename P>
+  inline
+  void
+  line_graph_psite<P>::change_target(const p_line_graph<P>& new_target)
+  {
+    plg_ = &new_target;
+    invalidate();
+  }
+
+  // FIXME: Write or extend a test to exercise this method.
+  template <typename P>
+  inline
+  const site_pair<P>&
+  line_graph_psite<P>::subj_()
+  {
+    return p_;
+  }
 
   template <typename P>
   inline
@@ -307,7 +305,7 @@ namespace mln
   P
   line_graph_psite<P>::first() const
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     // FIXME: Too low-level.
     return plg_->gr_->vertex_data(first_id());
   }
@@ -317,7 +315,7 @@ namespace mln
   P
   line_graph_psite<P>::second() const
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     // FIXME: Too low-level.
     return plg_->gr_->vertex_data(second_id());
   }
@@ -327,7 +325,7 @@ namespace mln
   util::vertex_id
   line_graph_psite<P>::first_id() const
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     // FIXME: Too low-level.
     return plg_->gr_->edge(id_).v1();
   }
@@ -337,7 +335,7 @@ namespace mln
   util::vertex_id
   line_graph_psite<P>::second_id() const
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     // FIXME: Too low-level.
     return plg_->gr_->edge(id_).v2();
   }
@@ -348,7 +346,7 @@ namespace mln
   void
   line_graph_psite<P>::update_()
   {
-    mln_assertion(is_valid());
+    mln_precondition(is_valid());
     p_.pair_.change_both(first(), second());
   }
 
@@ -361,7 +359,7 @@ namespace mln
   bool
   operator==(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
   {
-    mln_assertion(lhs.target_() == rhs.target_());
+    mln_precondition(lhs.target_() == rhs.target_());
     return lhs.edge_id() == rhs.edge_id();
   }
 
@@ -369,7 +367,7 @@ namespace mln
   bool
   operator!=(const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
   {
-    mln_assertion(lhs.target_() == rhs.target_());
+    mln_precondition(lhs.target_() == rhs.target_());
     return lhs.edge_id() != rhs.edge_id();
   }
 
@@ -377,7 +375,7 @@ namespace mln
   bool
   operator< (const line_graph_psite<P>& lhs, const line_graph_psite<P>& rhs)
   {
-    mln_assertion(lhs.target_() == rhs.target_());
+    mln_precondition(lhs.target_() == rhs.target_());
     return lhs.edge_id() < rhs.edge_id();
   }
 

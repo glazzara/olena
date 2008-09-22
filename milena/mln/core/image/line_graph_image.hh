@@ -31,6 +31,8 @@
 /// \file mln/core/image/line_graph_image.hh
 /// \brief Definition of a line graph-based image.
 
+# include <vector>
+
 # include <mln/trait/images.hh>
 
 # include <mln/core/internal/image_primary.hh>
@@ -38,7 +40,6 @@
 # include <mln/core/site_set/p_line_graph.hh>
 # include <mln/core/image/line_graph_psite.hh>
 # include <mln/value/set.hh>
-# include <vector>
 
 /* FIXME: This class shares a lot with graph_image.  Factor as much as
    possible.  */
@@ -57,7 +58,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename P, typename V> struct line_graph_image;
 
   namespace internal
@@ -104,11 +105,9 @@ namespace mln
       // FIXME: Likewise.
       typedef typename trait::image::space_from_point<P>::ret dimension;
 
-      // extended domain
+      // Extended domain
       typedef trait::image::ext_domain::none      ext_domain;
-      // FIXME: Is that right?
       typedef trait::image::ext_value::irrelevant ext_value;
-      // FIXME: Is that right?
       typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
@@ -119,13 +118,11 @@ namespace mln
   ///
   /// Values are stored on the edges of the graph.
   template <typename P, typename V>
-  struct line_graph_image :
-    public internal::image_primary<V, p_line_graph<P>, line_graph_image<P, V> >
+  class line_graph_image
+    : public internal::image_primary< V, p_line_graph<P>,
+				      line_graph_image<P, V> >
   {
-    /// Super type.
-    typedef mln::internal::image_base< V, p_line_graph<P>,
-				       line_graph_image<P, V> > super_;
-
+  public:
     /// Value associated type.
     typedef V value;
 
@@ -143,6 +140,7 @@ namespace mln
     /// Skeleton.
     typedef line_graph_image< tag::psite_<P>, tag::value_<V> > skeleton;
 
+  public:
     /// Constructors.
     /// \{
     line_graph_image();

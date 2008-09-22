@@ -28,16 +28,18 @@
 #ifndef MLN_CORE_SITE_SET_P_LINE_GRAPH_PITER_HH
 # define MLN_CORE_SITE_SET_P_LINE_GRAPH_PITER_HH
 
+/// \file mln/core/site_set/p_line_graph_piter.hh
+/// \brief Definition of point iterators on line graph-based site set.
+
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/p_line_graph.hh>
 # include <mln/core/image/line_graph_psite.hh>
 
-/// \file mln/core/site_set/p_line_graph_piter.hh
-/// \brief Definition of point iterator on line graph-based point set.
 
 namespace mln
 {
-  // Fwd decls.
+
+  // Forward declarations.
   template <typename P> class p_line_graph;
   template <typename P> class line_graph_psite;
 
@@ -121,11 +123,12 @@ namespace mln
     /// \}
 
   protected:
+    /// The psite corresponding to this iterator.
     using super_::p_;
   };
 
 
-  /// Print a mln::p_line_graph_bkd_piter_<P>.
+  /// Print an mln::p_line_graph_bkd_piter_<P>.
   template <typename P>
   inline
   std::ostream&
@@ -142,6 +145,7 @@ namespace mln
   inline
   p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_()
   {
+    mln_postcondition(!is_valid());
   }
 
   template <typename P>
@@ -149,6 +153,7 @@ namespace mln
   p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_(const p_line_graph<P>& plg)
   {
     this->change_target(plg);
+    mln_postcondition(!is_valid());
   }
 
   template <typename P>
@@ -201,6 +206,7 @@ namespace mln
   inline
   p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_()
   {
+    mln_postcondition(!is_valid());
   }
 
   template <typename P>
@@ -208,6 +214,7 @@ namespace mln
   p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_(const p_line_graph<P>& plg)
   {
     this->change_target(plg);
+    mln_postcondition(!is_valid());
   }
 
   template <typename P>

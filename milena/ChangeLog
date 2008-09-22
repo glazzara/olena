@@ -1,3 +1,31 @@
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Complete the overhaul of line graph images.
+
+	* mln/core/image/line_graph_image.hh: 
+	(mln::line_graph_image<P, V>): Fix access to members.
+	(mln::line_graph_image<P, V>::super_): Remove typedef.
+	* mln/core/site_set/p_line_graph.hh: Update documentation.
+	(mln::p_line_graph<P>::gr() const)
+	(mln::p_line_graph<P>::gr()):
+	New accessors.
+	(mln::p_line_graph<P>::bbox): Remove method.
+	(mln::p_line_graph<P>::bb_): Remove attributes.
+	(mln::p_line_graph<P>::p_line_graph<P>): Ajust ctor.
+	(mln::p_line_graph<P>::has): Ensure the site set is valid.
+	(mln::p_line_graph<P>::memory_size): Temporarily prevent the
+	method from being executed.
+	* mln/core/image/line_graph_psite.hh: Aesthetic changes.
+	(mln::line_graph_psite<P>::super_): Remove typedef.
+	(mln::line_graph_psite<P>::line_graph_psite): Invalidate the psite
+	in the default ctor.
+	(mln::line_graph_psite<P>::site_set): Use target_() instead of
+	manipulating plg_ directly.
+	* mln/core/site_set/p_line_graph_piter.hh: Update documentation.
+	(p_line_graph_fwd_piter_<P>::p_line_graph_fwd_piter_)
+	(p_line_graph_bkd_piter_<P>::p_line_graph_bkd_piter_):
+	Add postconditions.
+
 2008-09-22  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update median"".

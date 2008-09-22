@@ -28,30 +28,30 @@
 #ifndef MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 # define MLN_CORE_SITE_SET_P_LINE_GRAPH_HH
 
-# include <mln/util/site_pair.hh>
+/// \file mln/core/site_set/p_line_graph.hh
+/// \brief Definition of a point set based on line graph.
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
+# include <mln/util/site_pair.hh>
 # include <mln/core/image/line_graph_psite.hh>
 # include <mln/core/site_set/p_line_graph_piter.hh>
 
 /* FIXME: This class shares a lot with p_graph.  Factor as much as
    possible.  */
 
-// FIXME: We should move the `adjacent_or_equal method' from
-// iterators into this class.
+/* FIXME: We should move the `adjacent_or_equal method' from iterators
+ into this class.  */
 
-/// \file mln/core/site_set/p_line_graph.hh
-/// \brief Definition of a point set based on line graph.
 
 namespace mln
 {
 
   // Forward declaration.
   template<typename P> struct p_line_graph;
+
 
   namespace trait
   {
@@ -66,9 +66,6 @@ namespace mln
     };
   } // end of namespace mln::trait
 
-  /* FIXME: Contray to, e.g., p_array, the sole parameter P of
-     p_line_graph is expected to be a point, not a psite!!  We should
-     have a uniform scheme for point site sets.  */
 
   template<typename P>
   struct p_line_graph
@@ -101,15 +98,16 @@ namespace mln
     /// Backward Site_Iterator associated type.
     typedef p_line_graph_bkd_piter_<P> bkd_piter;
 
-    /// Forward Site_Iterator associated type.
+    /// Site_Iterator associated type.
     typedef fwd_piter piter;
     /// \}
 
-    /// \brief Return The number of points (sites) of the set, i.e.,
-    /// the number of \em edges, since this is a point set based on a
-    /// line graph.
+    /// \brief Return The number of sites of the set, i.e., the number
+    /// of \em edges.
     ///
-    /// Required by the mln::Point_Set concept.
+    /// (Required by the mln::Site_Set concept, since the property
+    /// trait::site_set::nsites::known of this site set is set to
+    /// `known'.)
     /* FIXME: Return type should be std::size_t (see
        mln/core/concept/site_set.hh). */
     unsigned nsites() const;
@@ -119,9 +117,6 @@ namespace mln
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
 
-    /// Give the exact bounding box.
-    const box<P>& bbox() const;
-
     /// Is this site set valid?
     bool is_valid() const;
 
@@ -130,6 +125,19 @@ namespace mln
 
     // FIXME: Dummy.
     std::size_t memory_size() const;
+
+    /// Accessors.
+    /// \{
+    /// Return the graph associated to the p_graph domain (const
+    /// version)
+    const graph& gr() const;
+    /// Return the graph associated to the p_graph domain (mutable
+    /// version).
+    graph& gr();
+    /// \}
+
+    // FIXME: These would probably be no longer needed as soon as
+    // iterators on graphs are available.
 
     /// Adjacency tests.
     /// \{
@@ -148,12 +156,8 @@ namespace mln
     /// \}
 
     // FIXME: Should be private.
+    /// The graph on which the pset is built.
     util::tracked_ptr<graph> gr_;
-    // FIXME: (Roland) Is it really useful/needed?
-    /* 2007-12-19: It seems so, since graph_image must implement a
-       method named bbox().  Now the question is: should each image
-       type have a bounding box?  */
-    box<P> bb_;
   };
 
 
@@ -182,6 +186,7 @@ namespace mln
   operator<=(const p_line_graph<P>& lhs, const p_line_graph<P>& rhs);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
@@ -190,10 +195,6 @@ namespace mln
     // Create a deep, managed copy of GR.
     : gr_ (new util::graph<P>(gr))
   {
-    accu::bbox<P> a;
-    for (unsigned i = 0; i < nvertices(); ++i)
-      a.take(gr_->vertex_data(i));
-    bb_ = a.to_result();
   }
 
   template <typename P>
@@ -222,14 +223,6 @@ namespace mln
 
   template <typename P>
   inline
-  const box<P>&
-  p_line_graph<P>::bbox() const
-  {
-    return bb_;
-  }
-
-  template <typename P>
-  inline
   bool
   p_line_graph<P>::is_valid() const
   {
@@ -242,6 +235,7 @@ namespace mln
   bool
   p_line_graph<P>::has(const psite& p) const
   {
+    mln_precondition(is_valid());
     return
       // Check whether P is compatible with this psite set.
       (p.target_() == this) &&
@@ -254,10 +248,26 @@ namespace mln
   std::size_t
   p_line_graph<P>::memory_size() const
   {
-    // FIXME: Dummy
+    // FIXME: Dummy; implement (see other site sets).
+    abort();
     return 0;
   }
 
+  template <typename P>
+  const util::graph<P>&
+  p_graph<P>::gr() const
+  {
+    mln_precondition(is_valid());
+    return *gr_.ptr_;
+  }
+
+  template <typename P>
+  util::graph<P>&
+  p_graph<P>::gr()
+  {
+    mln_precondition(is_valid());
+    return *gr_.ptr_;
+  }
 
   template <typename P>
   inline
@@ -321,6 +331,10 @@ namespace mln
     return adjacent(lhs, rhs);
   }
 
+
+  /*--------------.
+  | Comparisons.  |
+  `--------------*/
 
   template <typename P>
   bool
