@@ -1,5 +1,51 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site on mln::p_complex.
+
+	* mln/core/complex_psite.hh (mln::complex_psite<D, P>): Inherit
+	from internal::pseudo_site_base_.
+	(mln::complex_psite<D, P>::self_)
+	(mln::complex_psite<D, P>::super_):
+	(mln::complex_psite<D, P>::mesh):
+	(mln::complex_psite<D, P>::point):
+	(mln::complex_psite<D, P>::dpoint):
+	(mln::complex_psite<D, P>::coord):
+	Remove typdefs.
+	(mln::complex_psite<D, P>::dim):
+	Remove enum.
+	(mln::complex_psite<D, P>::target): New typedef.
+	(mln::complex_psite<D, P>::complex_psite(const self_&)):
+	Remove ctor.
+	(mln::complex_psite<D, P>::operator=(const self_&))
+	(mln::complex_psite<D, P>::to_site)
+	(mln::complex_psite<D, P>::to_point)
+	(mln::complex_psite<D, P>::operator[]):
+	Remove methods.
+	(mln::complex_psite<D, P>::complex_psite(const any_face_handle<D>&)):
+	Add an extra argument pc to pass the target mln::p_complex.
+	(complex_psite(const p_complex<D, P>, unsigned, unsigned)):
+	New ctor.
+	(mln::complex_psite<D, P>::invalidate)
+	(mln::complex_psite<D, P>::target_)
+	(mln::complex_psite<D, P>::change_target)
+	(mln::complex_psite<D, P>::subj_)
+	(mln::complex_psite<D, P>::update_):
+	New method.
+	(mln::complex_psite<D, P>::cplx): Rename as...
+	(mln::complex_psite<D, P>::site_set): ...this.
+	Adjust clients.
+	(mln::complex_psite<D, P>::p_): Change type of attribute to P.
+	(mln::complex_psite<D, P>::pc_): New attribute.
+	(operator!=(const complex_psite<D, P>&, const complex_psite<D, P>&)):
+	New operator.
+	(mln::complex_psite<D, P>::complex_psite):
+	Adjust all ctors.
+	(mln::complex_psite<D, P>::is_valid)
+	(mln::complex_psite<D, P>::site_set):
+	Adjust methods.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site set mln::p_faces
 
 	* mln/core/site_set/p_faces.hh

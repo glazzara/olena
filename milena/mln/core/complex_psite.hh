@@ -31,57 +31,82 @@
 /// \file mln/core/complex_psite.hh
 /// \brief Definition of a complex-based point site.
 
-# include <mln/core/concept/point_site.hh>
+# include <mln/core/internal/pseudo_site_base.hh>
 
 # include <mln/core/complex.hh>
+
+// FIXME: There's a circular dependency issue between complex_psite
+// and p_complex (likewise for faces_psite and p_faces): they have to
+// know their interfaces one another.  I have disabled some
+// preconditions and invariants to have the code compile, but we must
+// find a real solution.
+
+// FIXME: Factor complex_psite and faces_psite?
+
+// FIXME: Rename complex_psite as p_complex_psite, and move this file to
+// core/site_set.
 
 
 namespace mln
 {
-  /* FIXME: Get rid of P?  */
+  // Forward declaration.
+  template <unsigned D, typename P> class p_complex;
+
 
   /// \brief Point site associated to a mln::p_complex.
   ///
   /// \arg \p D The dimension of the complex this psite belongs to.
   /// \arg \p P The type of point associated to this psite.
   template <unsigned D, typename P>
-  class complex_psite : public Point_Site< complex_psite<D, P> >
+  class complex_psite
+    : public internal::pseudo_site_base_< const P&,
+					  complex_psite<D, P> >
   {
-    typedef complex_psite<D, P> self_;
-    typedef Point_Site<self_> super_;
-
   public:
-    typedef mln_mesh(P) mesh;
-    enum { dim = P::dim };
-    typedef P point;
-    typedef mln_dpoint(P) dpoint;
-    typedef mln_coord(P) coord;
+    // This associated type is important to know that this particular
+    // pseudo site knows the site set it refers to.
+    typedef p_complex<D, P> target;
 
+    // FIXME: Document.
     /// Construction and assignment.
     /// \{
     complex_psite();
-    complex_psite(const any_face_handle<D>& face);
-    complex_psite(const self_& rhs);
-    self_& operator= (const self_& rhs);
+    /// \pre pc.cplx() == face.cplx().
+    complex_psite(const p_complex<D, P>& pc, const any_face_handle<D>& face);
+    complex_psite(const p_complex<D, P>& pc, unsigned n, unsigned face_id);
     /// \}
 
-    /// Access to psite.
-    const self_& to_psite() const;
-
-    /* FIXME: Should be removed as soon as ``point sets'' become
-       ``site sets''.  */
-    /// Access to point.
+    /// Psite manipulators.
     /// \{
-    const point& to_point() const;
-    coord operator[](unsigned face) const;
+    /// Is this psite valid?
+    bool is_valid() const;
+    /// Invalidate this psite.
+    void invalidate();
     /// \}
 
-    /// Accessors
+    /// Site set manipulators.
+    /// \{
+    /// \brief Return the mln::p_complex this site is built on.
+    /// (shortcut for *target()).
+    /// \pre Member face_ is valid.
+    const target& site_set() const;
+
+    /// Get a pointer to the target site_set.
+    const target* target_() const;
+    /// Set the target site_set.
+    void change_target(const target& new_target);
+    /// \}
+
+    /// Proxy manipulators.
+    /// \{
+    /// Return the site corresponding to this psite.
+    const P& subj_();
+    /// \}
+
+    /// Face handle manipulators.
     /// \{
     /// Return the face handle of this point site.
     any_face_handle<D> face() const;
-    /// Return the complex on which this site is built.
-    const complex<D>& cplx() const;
 
     /// Return the dimension of the face of this psite.
     unsigned n() const;
@@ -89,14 +114,35 @@ namespace mln
     unsigned face_id() const;
     /// \}
 
-    /// Is this psite valid?
-    bool is_valid() const;
-
   private:
+    /// Site-related members.
+    /// \{
+    /// Update the site corresponding to this psite.
+    void update_();
+    // The site corresponding to this psite.
+    P p_;
+    /// \}
+
+    /* FIXME: Attributes pc_ and face_ share a common information: the
+       address of their complex.
+
+       This is both a loss of space and time (we must ensure
+       synchronization), but this design issue is not trivial: we
+       actually introduced (any-)face handles to pack together the
+       location information (n, face_id) with the support (the
+       complex), to avoid what we did with graphs --- where location
+       (edge id or vertex id) is separated from the support (the
+       graph).
+
+       Think about it, and adjust faces_psite as well.  */
+  private:
+    /// Complex-related members.
+    /// \{
+    /// The mln::p_faces this point site belongs to.
+    const target* pc_;
     /// The handle of the face this psite is pointing towards.
     any_face_handle<D> face_;
-    // FIXME: Actually, this is a dummy value!
-    point p_;
+    /// \}
   };
 
 
@@ -108,10 +154,23 @@ namespace mln
   /// \brief Is \a lhs equal to \a rhs?
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
-  /// mln::complex.
+  /// mln::p_complex.
+  /* FIXME: We probably want to relax this precondition: p_complex
+     equality is too strong; prefer complex equality.  */
   template <unsigned D, typename P>
   bool
   operator==(const complex_psite<D, P>& lhs,
+	     const complex_psite<D, P>& rhs);
+
+  /// \brief Is \a lhs not equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_complex.
+  /* FIXME: We probably want to relax this precondition: p_complex
+     equality is too strong; prefer complex equality.  */
+  template <unsigned D, typename P>
+  bool
+  operator!=(const complex_psite<D, P>& lhs,
 	     const complex_psite<D, P>& rhs);
 
   /// \brief Is \a lhs ``less'' than \a rhs?
@@ -119,7 +178,9 @@ namespace mln
   /// This comparison is required by algorithms sorting psites.
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
-  /// mln::complex.
+  /// mln::p_complex.
+  /* FIXME: We probably want to relax this precondition: p_complex
+     equality is too strong; prefer complex equality.  */
   template <unsigned D, typename P>
   bool
   operator< (const complex_psite<D, P>& lhs,
@@ -127,10 +188,6 @@ namespace mln
   /// \}
 
 
-  /* FIXME: This hand-made delegation is painful.  We should rely on
-     the general mechanism provided by Point_Site.  But then again, we
-     need to refine/adjust the interface of Point_Site w.r.t. the
-     mandatory conversions to points.  */
   template <unsigned D, typename P>
   inline
   std::ostream&
@@ -143,37 +200,31 @@ namespace mln
   template <unsigned D, typename P>
   inline
   complex_psite<D, P>::complex_psite()
-    : super_(),
-      // Dummy initializations.
-      face_(), p_()
+    : pc_(0)
   {
+    invalidate();
   }
 
   template <unsigned D, typename P>
   inline
-  complex_psite<D, P>::complex_psite(const any_face_handle<D>& face)
-    : super_(),
-      face_(face), p_()
+  complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
+				     const any_face_handle<D>& face)
+    : pc_(&pc),
+      face_(face)
   {
+    // Check arguments consistency.
+//     mln_precondition(pc.cplx() == face.cplx());
+    update_();
   }
 
   template <unsigned D, typename P>
   inline
-  complex_psite<D, P>::complex_psite(const complex_psite<D, P>& rhs)
-    : super_(rhs),
-      face_(rhs.face_), p_()
+  complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
+				     unsigned n, unsigned face_id)
+    : pc_(&pc),
+      face_(pc.cplx(), n, face_id)  
   {
-  }
-
-  template <unsigned D, typename P>
-  inline
-  complex_psite<D, P>&
-  complex_psite<D, P>::operator= (const complex_psite<D, P>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    face_ = rhs.face_;
-    return *this;
+    update_();
   }
 
   template <unsigned D, typename P>
@@ -181,33 +232,58 @@ namespace mln
   bool
   complex_psite<D, P>::is_valid() const
   {
+//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
     return face_.is_valid();
   }
 
   template <unsigned D, typename P>
   inline
-  const complex_psite<D, P>&
-  complex_psite<D, P>::to_psite() const
+  void
+  complex_psite<D, P>::invalidate()
   {
-    return *this;
+    return face_.invalidate();
   }
 
+  template <unsigned D, typename P>
+  inline
+  const p_complex<D, P>&
+  complex_psite<D, P>::site_set() const
+  {
+    mln_precondition(target_());
+    return *target_();
+  }
+
+  template <unsigned D, typename P>
+  inline
+  const p_complex<D, P>*
+  complex_psite<D, P>::target_() const
+  {
+//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+    return pc_;
+  }
+
+  template <unsigned D, typename P>
+  inline
+  void
+  complex_psite<D, P>::change_target(const p_complex<D, P>& new_target)
+  {
+    // Update both pc_ and face_.
+    pc_ = &new_target;
+    face_.set_cplx(new_target.cplx());
+    invalidate();
+  }
+
+  // FIXME: Write or extend a test to exercise this method (when the
+  // handling of P is done, i.e., when update_ is complete).
   template <unsigned D, typename P>
   inline
   const P&
-  complex_psite<D, P>::to_point() const
+  complex_psite<D, P>::subj_()
   {
-    // FIXME: Dummy value.
+    // FIXME: Member p_ is not updated correctly yet; do not use this
+    // method for now.
+    abort();
     return p_;
-  }
-
-  template <unsigned D, typename P>
-  inline
-  mln_coord(P)
-  complex_psite<D, P>::operator[](unsigned i) const
-  {
-    mln_precondition(is_valid());
-    return to_point()[i];
   }
 
   template <unsigned D, typename P>
@@ -216,14 +292,6 @@ namespace mln
   complex_psite<D, P>::face() const
   {
     return face_;
-  }
-
-  template <unsigned D, typename P>
-  inline
-  const complex<D>&
-  complex_psite<D, P>::cplx() const
-  {
-    return face_.cplx();
   }
 
   template <unsigned D, typename P>
@@ -242,6 +310,17 @@ namespace mln
     return face_.face_id();
   }
 
+  template <unsigned D, typename P>
+  inline
+  void
+  complex_psite<D, P>::update_()
+  {
+    mln_precondition(is_valid());
+//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+    // FIXME: Implement (update p_).
+  }
+
+
   /*--------------.
   | Comparisons.  |
   `--------------*/
@@ -251,8 +330,17 @@ namespace mln
   operator==(const complex_psite<D, P>& lhs,
 	     const complex_psite<D, P>& rhs)
   {
-    mln_precondition(&lhs.cplx() == &rhs.cplx());
+    mln_precondition(&lhs.site_set() == &rhs.site_set());
     return lhs.face() == rhs.face();
+  }
+
+  template <unsigned D, typename P>
+  bool
+  operator!=(const complex_psite<D, P>& lhs,
+	     const complex_psite<D, P>& rhs)
+  {
+    mln_precondition(&lhs.site_set() == &rhs.site_set());
+    return lhs.face() != rhs.face();
   }
 
   template <unsigned D, typename P>
@@ -260,9 +348,10 @@ namespace mln
   operator< (const complex_psite<D, P>& lhs,
 	     const complex_psite<D, P>& rhs)
   {
-    mln_precondition(&lhs.cplx() == &rhs.cplx());
+    mln_precondition(&lhs.site_set() == &rhs.site_set());
     return lhs.face() < rhs.face();
   }
+
 
   /*------------------.
   | Pretty-printing.  |
@@ -277,7 +366,6 @@ namespace mln
   }
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
 } // end of mln
 
