@@ -1,5 +1,41 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update relative iterators on graph image vicinity.
+
+	* mln/core/internal/graph_vicinity_piter.hh
+	(mln::internal::graph_vicinity_piter_<P, S, E>): Take and
+	additional parameter S.
+	Inherit from internal::site_relative_iterator_base.
+	Adjust.
+	(graph_vicinity_piter_<P, S, E>::graph_vicinity_piter_):
+	New default ctor.
+	Adjust other ctor.
+	(mln::internal::graph_vicinity_piter_<P, S, E>::self_)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::super_)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::psite)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::point)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::coord):
+	Remove typedefs.
+	(mln::internal::graph_vicinity_piter_<P, S, E>::to_point)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::to_psite)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::operator psite)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::p_ref)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::pg)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::operator[]):
+	Remove methods.
+	(mln::internal::graph_vicinity_piter_<P, S, E>::p_ref_)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::saved_p_ref_)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::psite_)
+	(mln::internal::graph_vicinity_piter_<P, S, E>::p_):
+	Remove attributes.
+	(operator<<(std::ostream&, const graph_vicinity_piter_<P, E>&_)):
+	Adjust, turn into...
+	(operator<<(std::ostream&, const graph_vicinity_piter_<P, S, E>&_)):
+	...this.
+	Adjust.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update iterators on mln::p_graph.
 
 	* mln/core/site_set/p_graph_piter.hh
