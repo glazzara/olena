@@ -1,5 +1,19 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update tests exercising graph image.
+	
+	* tests/core/image/graph_image.cc: Update.
+	Move the morpho-related part...
+	* tests/morpho/graph_image_morpho.cc: ...here (new test).
+	* tests/core/image/Makefile.am (check_PROGRAMS): Re-enable
+	graph_image.
+	(graph_image_SOURCES): Re-enable.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add
+	graph_image_morpho (as a disabled test).
+	(graph_image_morpho_SOURCES): New.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update graph image.
 
 	* mln/core/image/graph_image.hh

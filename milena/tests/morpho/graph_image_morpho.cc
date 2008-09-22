@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/graph_image.cc
-/// \brief Tests on mln::graph_image.
+/// \file tests/morpho/graph_image_morpho.cc
+/// \brief Tests on mln::graph_image with morphological filters.
 
 #include <vector>
 
@@ -36,6 +36,8 @@
 #include <mln/core/image/graph_image.hh>
 #include <mln/core/image/graph_elt_window.hh>
 #include <mln/core/image/graph_window_piter.hh>
+
+#include <mln/morpho/dilation.hh>
 
 #include <mln/draw/graph.hh>
 #include <mln/debug/iota.hh>
@@ -91,16 +93,9 @@ int main()
 
   p_graph<point2d> pg(g);
 
-  // Check adjacencies of vertex 1.
-  mln_assertion( pg.adjacent(1, 0));
-  mln_assertion(!pg.adjacent(1, 1));
-  mln_assertion( pg.adjacent(1, 2));
-  mln_assertion( pg.adjacent(1, 3));
-  mln_assertion(!pg.adjacent(1, 4));
-
-  /*-------------.
+  /*--------------.
   | Graph image.  |
-  `-------------*/
+  `--------------*/
 
   // Values ("empty" vector).
   std::vector<int> values(5);
@@ -109,59 +104,16 @@ int main()
   ima_t ima(pg, values);
   // Initialize values.
   debug::iota(ima);
-  // Compute the bounding box of IMA.
-  /* FIXME: mln::graph_image should automatically feature a bbox when
-     its parameter P is akin to a point.  */
-  accu::bbox<point2d> a;
-  for (std::vector<point2d>::const_iterator i = points.begin();
-       i != points.end(); ++i)
-      a.take(*i);
-  box2d bbox = a.to_result();
-  // Print the image.
-  /* FIXME: Unfortunately, displaying graph images is not easy right
-     now (2008-02-05).  We could use 
 
-       debug::println(ima);
+  /*--------------------------.
+  | Processing graph images.  |
+  `--------------------------*/
 
-     but there's not specialization working for graph_image; the one
-     selected by the compiler is based on a 2-D bbox, and expects the
-     interface of graph_image to work with points (not psites).
-     Moreover, this implementation only shows *values*, not the graph
-     itslef.
- 
-     An alternative is to use draw::graph (which, again, is misnamed),
-     but it doesn't show the values, only the vertices and edges of the
-     graph.
+  graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  draw::graph(ima_rep, ima_dil, 9);
+  debug::println(ima_rep);
 
-     The current solution is a mix between draw::graph and hand-made
-     iterations.  */
-  image2d<int> ima_rep(bbox);
-  // We use the value 9 in draw::graph instead of the default (which is
-  // 1) to represent edges to distinguish it from vertices holding a
-  // value of 1.
-  draw::graph (ima_rep, ima, 9);
-  debug::println (ima_rep);
-
-
-  /*------------.
-  | Iterators.  |
-  `------------*/
-
-  // Manual iteration over the domain of IMA.
-  mln_piter_(ima_t) p(ima.domain());
-  for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
-
-  // Manual iterations over the neighborhoods of each point site of IMA.
-  typedef graph_elt_window<point2d> win_t;
-  win_t win;
-  mln_qiter_(win_t) q(win, p);
-  for_all (p)
-  {
-    std::cout << "neighbors of " << p << " (" << ima(p) << "), "
-	      << "including the site itself:" << std::endl;
-    for_all (q)
-      std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
-  }
-  std::cout << std::endl;
+  graph_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  draw::graph(ima_rep, ima_ero, 9);
+  debug::println(ima_rep);
 }
