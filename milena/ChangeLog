@@ -1,5 +1,30 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site set mln::p_graph.
+
+	* mln/core/site_set/p_graph.hh
+	(mln::trait::site_set_< p_graph<P> >): New properties.
+	(mln::p_graph<P>): Inherit from internal::site_set_base_.
+	(mln::p_graph<P>::self_
+	(mln::p_graph<P>::super_)
+	(mln::p_graph<P>::element)
+	(mln::p_graph<P>::piter):
+	New typedefs.
+	(mln::p_graph<P>::bbox): Remove method.
+	(mln::p_graph<P>::bb_): Remove attribute. 
+	(mln::p_graph<P>::p_graph): Adjust ctor.
+	(mln::p_graph<P>::has): Update.
+	(mln::p_graph<P>::to_graph): Update accessors.
+	Rename them as...
+	(mln::p_graph<P>::gr): ...these.
+	(mln::p_graph<P>::nsites): Change return type of this method to
+	unsigned.
+	(mln::p_graph<P>::is_valid)
+	(mln::p_graph<P>::memory_size):
+	New methods.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update complex-based image.
 
 	* mln/core/complex_iter.hh: More documentation.

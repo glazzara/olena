@@ -28,26 +28,49 @@
 #ifndef MLN_CORE_SITE_SET_P_GRAPH_HH
 # define MLN_CORE_SITE_SET_P_GRAPH_HH
 
-# include <mln/core/concept/point_site.hh>
+/// \file mln/core/site_set/p_graph.hh
+/// \brief Definition of a point set based on a graph.
+
 # include <mln/core/internal/site_set_base.hh>
-# include <mln/accu/bbox.hh>
-# include <mln/util/tracked_ptr.hh>
 # include <mln/util/graph.hh>
+# include <mln/util/tracked_ptr.hh>
 
 # include <mln/core/image/graph_psite.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 
+/* FIXME: This class shares a lot with p_line_graph.  Factor as much
+   as possible.  */
+
+/* FIXME: We should move the `adjacent'/`adjacent_or_equal' methods
+   out of this class (into iterators on *graph*).  */
+
 
 namespace mln
 {
-  /* FIXME: Contray to, e.g., p_array, the sole parameter P of p_graph
-     is expected to be a point, not a psite!!  We should have a
-     uniform scheme for point site sets.  */
+  // Forward declaration.
+  template <typename P> struct p_graph;
+
+  namespace trait
+  {
+    template <typename P>
+    struct site_set_< p_graph<P> >
+    {
+      typedef trait::site_set::nsites::known   nsites;
+      // FIXME: Depends on P!
+      typedef trait::site_set::bbox::unknown   bbox;
+      typedef trait::site_set::contents::fixed contents;
+      typedef trait::site_set::arity::unique   arity;
+    };
+  } // end of namespace mln::trait
+
 
   template <typename P>
   struct p_graph
-    : public internal::site_set_base_< graph_psite<P>, p_graph<P> >
+    : public internal::site_set_base_< P, p_graph<P> >
   {
+    typedef p_graph<P> self_;
+    typedef internal::site_set_base_< P, self_ > super_;
+
     typedef util::graph<P> graph;
 
     /// \brief Construct a graph psite set from a graph of points.
@@ -56,8 +79,12 @@ namespace mln
     ///
     /// \a gr is \em copied internally, so that the graph psite set is
     /// still valid after the initial graph has been removed.
-    p_graph (const graph& gr);
+    p_graph(const graph& gr);
 
+    /// Associated types.
+    /// \{
+    /// Element associated type.
+    typedef mln_site(super_) element;
     /// Point_Site associated type.
     typedef graph_psite<P> psite;
 
@@ -67,26 +94,47 @@ namespace mln
     /// Backward Site_Iterator associated type.
     typedef p_graph_bkd_piter_<P> bkd_piter;
 
+    /// Site_Iterator associated type.
+    typedef fwd_piter piter;
+    /// \}
+
     /// \brief Return The number of points (sites) of the set, i.e.,
     /// the number of \em vertices.
     ///
     /// Required by the mln::Point_Set concept.
-    std::size_t nsites() const;
+    /* FIXME: Return type should be std::size_t (see
+       mln/core/concept/site_set.hh). */
+    unsigned nsites() const;
 
     /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
     /// Return The number of edges in the graph.
     std::size_t nedges() const;
 
-    /// Give the exact bounding box.
-    const box<P>& bbox() const;
+    /// Is this site set valid?
+    bool is_valid() const;
 
+    /// Does this site set has \a p?
     bool has(const psite& p) const;
 
+    // FIXME: Dummy.
+    std::size_t memory_size() const;
+
+    /// Accessors.
+    /// \{
+    /// Return the graph associated to this site set (const version)
+    const graph& gr() const;
+    /// Return the graph associated to this site set (mutable version).
+    graph& gr();
+    /// \}
+
+    /// \brief Graph-related services
+    ///
+    /// \todo Move them into iterators on graphs.
+    /// \{
     /// Return the graph point (FIXME site?) from an index
     const P& point_from_id(const util::vertex_id& id) const;
     P& point_from_id(const util::vertex_id& id);
-
 
     /// Return the point contained in the first vertex adjacent
     // to the edge id \a e.
@@ -94,6 +142,9 @@ namespace mln
     /// Return the point contained in the second vertex adjacent
     /// to the edge  id \a e.
     const P& vertex2(const util::edge_id& e) const;
+
+    // FIXME: These would probably be no longer needed as soon as
+    // iterators on graphs are available.
 
     /// Adjacency tests.
     /// \{
@@ -111,21 +162,11 @@ namespace mln
 			   const util::vertex_id& rhs) const;
     /// \}
 
-    /// Return the graph associated to the p_graph domain.
-    // FIXME: Rename as something else (graph() ?).
-    const graph& to_graph() const;
-    graph& to_graph();
+    /// \}
 
-
-    // FIXME: Should be private.
   public:
+    // FIXME: Should be private.
     util::tracked_ptr<graph> gr_;
-    // FIXME: (Roland) Is it really useful/needed?
-    /* 2007-12-19: It seems so, since graph_image must implement a method
-       named bbox().  Now the question is: should each image type have a
-       bounding box?  */
-  private:
-    box<P> bb_;
   };
 
 
@@ -136,6 +177,10 @@ namespace mln
   template <typename P>
   bool
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs);
+
+
+  /* FIXME: Extend the `ord' mechanism instead of this ill-defined
+     pseudo-order. */
 
   /// \brief Inclusion of a mln::p_graph in another one.
   ///
@@ -159,15 +204,11 @@ namespace mln
     // Create a deep, managed copy of GR.
     : gr_ (new util::graph<P>(gr))
   {
-    accu::bbox<P> a;
-    for (unsigned i = 0; i < nsites(); ++i)
-      a.take(gr_->vertex_data(i));
-    bb_ = a.to_result();
   }
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_graph<P>::nsites() const
   {
     return nvertices();
@@ -191,10 +232,11 @@ namespace mln
 
   template <typename P>
   inline
-  const box<P>&
-  p_graph<P>::bbox() const
+  bool
+  p_graph<P>::is_valid() const
   {
-    return bb_;
+    // FIXME: Might be too low-level, again.
+    return gr_.ptr_;
   }
 
   template <typename P>
@@ -202,11 +244,39 @@ namespace mln
   bool
   p_graph<P>::has(const psite& p) const
   {
+    mln_precondition(is_valid());
     return
       // Check whether P is compatible with this psite set.
-      (&p.pg() == this) &&
-      // Check that the vertex id of P belongs to the range of valid vertex ids.
-      (p.id() < gr_->nvertices());
+      (p.target_() == this) &&
+      // Check that the vertex id of P belongs to the range of valid
+      // vertex ids.
+      (p.is_valid());
+  }
+
+  template <typename P>
+  inline
+  std::size_t
+  p_graph<P>::memory_size() const
+  {
+    // FIXME: Dummy; implement (see other site sets).
+    abort();
+    return 0;
+  }
+
+  template <typename P>
+  const typename p_graph<P>::graph&
+  p_graph<P>::gr() const
+  {
+    mln_precondition(is_valid());
+    return *gr_.ptr;
+  }
+
+  template <typename P>
+  typename p_graph<P>::graph&
+  p_graph<P>::gr()
+  {
+    mln_precondition(is_valid());
+    return *gr_.ptr;
   }
 
   template <typename P>
@@ -301,25 +371,15 @@ namespace mln
     return adjacent(lhs, rhs);
   }
 
-  template <typename P>
-  const typename p_graph<P>::graph&
-  p_graph<P>::to_graph() const
-  {
-    return this->gr_;
-  }
-
-  template <typename P>
-  typename p_graph<P>::graph&
-  p_graph<P>::to_graph()
-  {
-    return this->gr_;
-  }
-
 
   template <typename P>
   bool
   operator==(const p_graph<P>& lhs, const p_graph<P>& rhs)
   {
+    /* FIXME: We should not rely on pointer equality here, as graph
+       will soon become shells using (shared) tracked pointers to
+       actual data.  So, delegate the equality test to the graphs
+       themselves.  */
     return lhs.gr_.ptr_ == rhs.gr_.ptr_;
   }
 
