@@ -186,10 +186,10 @@ constant time retrieval.
 An image is composed both of:
 \begin{itemize}
 \item A function $$
-f : \left\{
+ima : \left\{
   \begin{array}{lll}
     Site &\rightarrow & Value \\
-    p & \mapsto & v
+    p & \mapsto & ima(p)
   \end{array}
 \right.
 $$
@@ -212,8 +212,31 @@ image or a site set.
 ici, site <=> Point2d
 
 
-[sample code]
+\section{About value, rvalue and lvalue}
 
+Image types provide a method to access values, namely "operator() const".
+Yet, its signature is NOT "value operator()(const site\& p) const"
+but "rvalue operator()(const psite\& p) const"
+
+For instance, with I being image2d$<$int\_u8$>$, we have :
+
+    I::value == int\_u8  but  I::rvalue == const int\_u8\&
+
+so copying the value when the call "f(p)" returns is avoided.
+In that case, it is a low-level implementation issue that makes rvalue
+be different from value.  In some other cases, the difference can be
+more fundamental.  For instance, a proxy is returned so that some extra
+code is performed if this value is eventually read.
+
+Likewise, lvalue is also used as return type for methods such as "operator()".
+The difference is that lvalue allows the data to be modified.
+
+With I being image2d$<$int\_u8$>$, we have :
+
+    I::value == int\_u8  but  I::lvalue == int\_u8\&
+
+
+\section{Sample code}
 In order to create a 2D image, you have two possibilites:
 \begin{lstlisting}[frame=single]
   // which builds an empty image;
@@ -333,13 +356,14 @@ In the Olena library, all image types behave like image2d:
 \end{itemize}
 
 
+
 \subsection{Interface}
 
 \begin{tabular}{|l|l|l|l|p{4cm}|}
 \hline
 Return Type & Name & Arguments & Const & Comments \\ \hline
 
-site\_set & domain & - & X - &  \\ \hline
+I::pvset & domain & - & X - &  \\ \hline
 const Value\& & operator() & const point\& p & X & Used for reading. \\ \hline
 Value\& & operator() & const point\& p & - & Used for writing. \\ \hline
 const P\& & at & unsigned x,
@@ -349,7 +373,7 @@ P\& & at & unsigned x,
 bool & has & const Point\& p & X & \\ \hline
 bool & has\_data & - & X & Returns true if the domain is defined. \\ \hline
 site\_id & id & - & X & Return the Id of the underlying shared data. \\ \hline
-FIXME & destination & - & X & Value set of all the possible site values in this
+I::vset & destination & - & X & Value set of all the possible site values in this
 Image. \\ \hline
 site\_set & bbox & - & - & Returns the bounding box of the domain. \\ \hline
 site\_set & bbox\_large & - & - & Returns the bouding box of the domain and the
@@ -368,9 +392,143 @@ extended domain. \\ \hline
 
 
 
+
+\chapter{Sites and psites}
+
+\section{Need for site}
+
+As we have seen before, an image is defined on a grid. It has associated
+data and a site set which defines the domain of the image on that grid.
+Usually, we need to access a value by its coordinates. With default images it
+can be done easily, at no cost.
+
+Example with an image2d:
+
+\begin{lstlisting}[frame=single]
+    c  0 1 2 3
+   r
+      +-+-+-+-+
+   0  | |x| | |
+      +-+-+-+-+
+   1  | | | | |
+      +-+-+-+-+
+\end{lstlisting}
+
+The site x is the point (0, 1).  The image values are stored in a
+multi-dimensional array. The point coordinates can be used directly. The site
+(0, 1) \textbf{is} the point (0, 1) and the data is stored at row 0 and column
+1.
+
+Here we have:
+
+  I::site == I::psite == point2d
+
+where, roughly, point2d = \{ row, column \}.
+
+\section{Need for psite}
+
+Sometimes, accessing a value in constant-time complexity, O(1), is not
+possible with a site object.
+
+Let's have a small example. Define a function returning a value for a given
+point:
+
+\begin{lstlisting}[frame=single]
+  unsigned my_values(const point2d& p)
+  {
+    if (p.row() == 0)
+      return 8;
+    return 9;
+  }
+\end{lstlisting}
+So, for each point having (0, x) as coordinate, this function will return 8,
+otherwise it will be 9.
+
+Then, define a p\_array with few point2d:
+
+\begin{lstlisting}[frame=single]
+  p_array<point2d> arr;
+  arr.append(point2d(3, 6));
+  arr.append(point2d(3, 7));
+  arr.append(point2d(3, 8));
+  arr.append(point2d(4, 8));
+  arr.append(point2d(4, 9));
+\end{lstlisting}
+
+Now, create a point-wise image from this function and this p\_array:
+\begin{lstlisting}[frame=single]
+  mln_VAR(ima, my_values | arr);
+\end{lstlisting}
+
+Ima is actually that image:
+\begin{lstlisting}[frame=single]
+    c  6 7 8 9
+   r
+      +-+-+-+
+   3  | |x| |
+      +-+-+-+-+
+   4      | | |
+          +-+-+
+\end{lstlisting}
+
+However, in memory, since it is based on a p\_array, values are stored in a
+vector.
+
+The site x is the point (3, 7).  The image values are stored in a
+vector where the index is the offset of the cell from the beginning of the
+vector. The site x thus corresponds to the cell 1.
+
+
+\begin{lstlisting}[frame=single]
+arr[] = 0 1 2 3 4
+       +-+-+-+-+-+
+       | |x| | | |
+       +-+-+-+-+-+
+\end{lstlisting}
+
+Obviously, from the site coordinates, we cannot access the associated data in
+constant-time. That's why we need a different mechanism in order to access
+this data: the psites.
+
+Here we have:
+
+  I::site == point2d  but  I::psite == pseudo\_site$<$point2d$>$
+
+where, roughly, pseudo\_site$<$point2d$>$ = \{ i\_in\_p\_array, p\_array\_ptr
+\}.
+
+Psites contains all the needed information to access the values in
+constant-time.
+
+\section{From psite to site}
+
+In the last example there was an image of type I such as I::site != I::psite. 
+In that case, an object of type I::psite is actually convertible towards an
+object of type I::site.  Furthermore, a psite shall behave as if it was a
+site.
+
+Design note: it seems impossible to offer through the interface of
+some psite what is expected from its corresponding site.  For instance, when a
+site has a given feature, say a method "m", then this
+method has to appear in the psite interface. However, thanks to
+inheritance, we fetch an interface and an implementation that delegates
+to the site.
+
+For instance, in the last example, I::psite has a method ::row() because
+I::site, point2d, provides such a method.
+
+How it works: a psite inherits from internal::site\_impl$<$site$>$ which is
+specialized for every site type; for instance, internal::site\_impl$<$point2d$>$
+owns the method "coord row() const" which is defined as
+"return exact(this)->to\_site().row()"
+
+
 \chapter{Iterators}
 
 Each container object in Olena like site sets or images have iterators.
+The iteration mechanism for images is directly derived from the mechanism
+for site set.
+
 There are usually three kinds:
 \begin{itemize}
 \item \textbf{fwd\_iter}, depends on the container,
@@ -378,6 +536,10 @@ There are usually three kinds:
 \item \textbf{iter}, usually the same as fwd\_iter. It is guaranteed to
 iterate all over the elements.
 \end{itemize}
+Every iterable object have these three kinds of iterator. There are all
+bidirectional containers.
+Whatever the iterator used, the basic iterator has the only property of
+browsing every site once.
 
 The iterator type name depends on the data pointed by it: \\
 
@@ -700,6 +862,7 @@ void my_function()
 }
 \end{lstlisting}
 
+
 \chapter{Graphes and images}
 \section{Description}
 Olena enables the possibility of using graphes with images.
@@ -875,6 +1038,6 @@ for_all(E)
 }
 \end{lstlisting}
 
-//FIXME talk about p_vertices and p_edges.
+//FIXME talk about p\_vertices and p\_edges.
 
 \end{document}

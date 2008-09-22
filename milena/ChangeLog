@@ -1,3 +1,9 @@
+2008-09-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+	* tutorial.tex: Add sections about values and differences between
+	  sites and psites.
+
 2008-09-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add snake_vert browsing canvas.
