@@ -1,3 +1,13 @@
+2008-09-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox fix and check rgb bilinear interpolation.
+
+	* jardonnet/virtual/access.hh: Fix wrong type.
+	* jardonnet/virtual/bilinear.ppm: bilinear result.
+	* jardonnet/virtual/access.cc: Handle border.
+	* jardonnet/virtual/nn.ppm: NNeighbor result.
+	* jardonnet/virtual/lena.ppm: Add test image.
+
 2008-09-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox : Update test on virtually transformed image.
