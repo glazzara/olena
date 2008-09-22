@@ -29,11 +29,17 @@
 # define MLN_CORE_IMAGE_GRAPH_PSITE_HH
 
 /// \file mln/core/image/graph_psite.hh
-/// \brief Definition of a graph-based point site.
+/// \brief Definition of a graph-based psite.
 
-# include <mln/core/concept/point_site.hh>
+# include <mln/core/internal/pseudo_site_base.hh>
 
 # include <mln/core/site_set/p_graph.hh>
+
+/* FIXME: This class shares a lot with line_graph_psite.  Factor as
+   much as possible.  */
+
+// FIXME: Rename graph_psite as p_graph_psite, and move this
+// to core/site_set.
 
 
 namespace mln
@@ -41,52 +47,84 @@ namespace mln
 
   // Forward declaration.
   template <typename P> class p_graph;
+  template <typename P> class graph_psite;
 
 
   /// \brief Point site associated to a mln::graph_image.
+  ///
+  /// \arg \p P The type of the site.
   template <typename P>
-  class graph_psite : public Point_Site< graph_psite<P> >
+  class graph_psite
+    : public internal::pseudo_site_base_< const P&, graph_psite<P> >
   {
     typedef graph_psite<P> self_;
-    typedef Point_Site<self_> super_;
 
   public:
-    typedef mln_mesh(P) mesh;
-    enum { dim = P::dim };
-    typedef P point;
-    typedef mln_dpoint(P) dpoint;
-    typedef mln_coord(P) coord;
+    // This associated type is important to know that this particular
+    // pseudo site knows the site set it refers to.
+    typedef p_graph<P> target;
 
     /// Construction and assignment.
     /// \{
     graph_psite();
     graph_psite(const p_graph<P>& pg_, util::vertex_id id);
-    graph_psite(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
 
-    /// Access to psite.
-    const self_& to_psite() const;
-
-    /// Access to point.
+    /// Psite manipulators.
     /// \{
-    const point& to_point() const;
-    coord operator[](unsigned id) const;
-    /// \}
-
-    /// Return the p_graph this point site belongs to.
-    const p_graph<P>& pg() const;
-    /// Return the vertex id of this point site.
-    util::vertex_id id() const;
-
     /// Is this psite valid?
     bool is_valid() const;
+    /// Invalidate this psite.
+    void invalidate();
+    /// \}
+
+    /// Site set manipulators.
+    /// \{
+    /// \brief Get the site set (shortcut for *target()).
+    /// \pre Member plg_ is non null.
+    const target& site_set() const;
+
+    /// Get a pointer to the target site_set.
+    const target* target_() const;
+    /// Set the target site_set.
+    void change_target(const target& new_target);
+    /// \}
+
+    /// Proxy manipulators.
+    /// \{
+    /// Return the site corresponding to this psite.
+    const P& subj_();
+    /// \}
+
+    /// Vertex id manipulators.
+    //// \{
+    /// Return the vertex id of this point site.
+    util::vertex_id vertex_id() const;
+    /// Set the vertex id of this point site.
+    void change_vertex_id(const util::vertex_id& id);
+    /// Increment the vertex id of this point site.
+    void inc_vertex_id();
+    /// Increment the vertex id of this point site.
+    void dec_vertex_id();
+    /// \}
 
   private:
+    /// Site-related members.
+    /// \{
+    /// Update the site corresponding to this psite.
+    void update_();
+    // The site corresponding to this psite.
+    P p_;
+    /// \}
+
+  private:
+    /// Graph-related members.
+    /// \{
     /// The p_graph this point site belongs to.
-   const p_graph<P>* pg_;
+   const target* pg_;
     /// The id of the vertex this psite is pointing towards.
     util::vertex_id id_;
+    /// \}
   };
 
 
@@ -103,6 +141,14 @@ namespace mln
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs);
 
+  /// \brief Is \a lhs not equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_graph.
+  template <typename P>
+  bool
+  operator!=(const graph_psite<P>& lhs, const graph_psite<P>& rhs);
+
   /// \brief Is \a lhs ``less'' than \a rhs?
   ///
   /// This comparison is required by algorithms sorting psites.
@@ -115,47 +161,30 @@ namespace mln
   /// \}
 
 
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const graph_psite<P>& p);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename P>
   inline
   graph_psite<P>::graph_psite()
-    // Dummy initializations.
-    : super_(),
-      pg_(0),
-      id_(-1)
+    : pg_(0)
   {
   }
 
   template <typename P>
   inline
   graph_psite<P>::graph_psite(const p_graph<P>& g, util::vertex_id id)
-    : super_(),
-      pg_(&g),
+    // FIXME: Use change_target instead.
+    : pg_(&g),
       id_(id)
   {
-  }
-
-  template <typename P>
-  inline
-  graph_psite<P>::graph_psite(const graph_psite<P>& rhs)
-    : super_(rhs),
-      pg_(rhs.pg_),
-      id_(rhs.id_)
-  {
-  }
-
-  template <typename P>
-  inline
-  graph_psite<P>&
-  graph_psite<P>::operator= (const graph_psite<P>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    pg_ = rhs.pg_;
-    id_ = rhs.id_;
-    return *this;
+    update_();
   }
 
   template <typename P>
@@ -163,49 +192,103 @@ namespace mln
   bool
   graph_psite<P>::is_valid() const
   {
+    /* FIXME: Instead of `plg_->gr_->nvertices()', we should have
+       something like `run_->has_edge_id(id_)' (see the implementation of
+       p_run_psite.  */
     return pg_ && id_ < pg_->gr_->nvertices();
   }
 
   template <typename P>
   inline
-  const graph_psite<P>&
-  graph_psite<P>::to_psite() const
+  void
+  graph_psite<P>::invalidate()
   {
-    return *this;
-  }
-
-  template <typename P>
-  inline
-  const P&
-  graph_psite<P>::to_point() const
-  {
-    return pg().point_from_id(id_);
-  }
-
-  template <typename P>
-  inline
-  mln_coord(P)
-  graph_psite<P>::operator[](unsigned i) const
-  {
-    mln_assertion(is_valid());
-    return to_point()[i];
+    /* FIXME: Instead of `plg_->gr_->nvertices()', we should have
+       something like `run_->has_edge_id(id_)' (see the implementation of
+       p_run_psite.  */
+    id_ = pg_->gr_->nvertices();
   }
 
   template <typename P>
   inline
   const p_graph<P>&
-  graph_psite<P>::pg() const
+  graph_psite<P>::site_set() const
   {
-    mln_assertion(pg_);
-    return *pg_;
+    mln_precondition(target_());
+    return *target_();
+  }
+
+  template <typename P>
+  inline
+  const p_graph<P>*
+  graph_psite<P>::target_() const
+  {
+    return pg_;
+  }
+
+  template <typename P>
+  inline
+  void
+  graph_psite<P>::change_target(const p_graph<P>& new_target)
+  {
+    pg_ = &new_target;
+    invalidate();
+  }
+
+  // FIXME: Write or extend a test to exercise this method.
+  template <typename P>
+  inline
+  const P&
+  graph_psite<P>::subj_()
+  {
+    return p_;
   }
 
   template <typename P>
   inline
   util::vertex_id
-  graph_psite<P>::id() const
+  graph_psite<P>::vertex_id() const
   {
     return id_;
+  }
+
+  template <typename P>
+  inline
+  void
+  graph_psite<P>::change_vertex_id(const util::vertex_id& id)
+  {
+    id_ = id;
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P>
+  inline
+  void
+  graph_psite<P>::inc_vertex_id()
+  {
+    ++id_.to_equiv();
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P>
+  inline
+  void
+  graph_psite<P>::dec_vertex_id()
+  {
+    --id_.to_equiv();
+    if (is_valid())
+      update_();
+  }
+
+  template <typename P>
+  inline
+  void
+  graph_psite<P>::update_()
+  {
+    mln_precondition(is_valid());
+    p_ = site_set().point_from_id(id_);
   }
 
 
@@ -217,18 +300,38 @@ namespace mln
   bool
   operator==(const graph_psite<P>& lhs, const graph_psite<P>& rhs)
   {
-    mln_assertion(&lhs.pg() == &rhs.pg());
-    return lhs.id() == rhs.id();
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.vertex_id() == rhs.vertex_id();
+  }
+
+  template <typename P>
+  bool
+  operator!=(const graph_psite<P>& lhs, const graph_psite<P>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.vertex_id() != rhs.vertex_id();
   }
 
   template <typename P>
   bool
   operator< (const graph_psite<P>& lhs, const graph_psite<P>& rhs)
   {
-    mln_assertion(&lhs.pg() == &rhs.pg());
-    return lhs.id() < rhs.id();
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.vertex_id() < rhs.vertex_id();
   }
 
+
+  /*------------------.
+  | Pretty-printing.  |
+  `------------------*/
+
+  template <typename P>
+  inline
+  std::ostream&
+  operator<<(std::ostream& ostr, const graph_psite<P>& p)
+  {
+    return ostr << p.unproxy_();
+  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

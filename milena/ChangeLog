@@ -1,5 +1,52 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site of mln::p_graph.
+
+	* mln/core/image/graph_psite.hh (mln::graph_psite<P>): Inherit
+	from internal::pseudo_site_base_.
+	(mln::graph_psite<P>::super_)
+	(mln::graph_psite<P>::mesh)
+	(mln::graph_psite<P>::point)
+	(mln::graph_psite<P>::dpoint)
+	(mln::graph_psite<P>::coord):
+	Remove typedefs.
+	(mln::graph_psite<P>::dim): Remove enum.
+	(mln::graph_psite<P>::target): New typedef.
+	(mln::graph_psite<P>::graph_psite(const self_&))
+	(mln::graph_psite<P>::operator=(const self_&)):
+	Remove.
+	(mln::graph_psite<P>::to_psite)
+	(mln::graph_psite<P>::to_point)
+	(mln::graph_psite<P>::operator[]):
+	Remove methods.
+	(mln::graph_psite<P>::graph_psite)
+	(mln::graph_psite<P>::graph_psite(const p_graph<P>&, util::vertex_id)):
+	Update ctors.
+	(mln::graph_psite<P>::is_valid):
+	Update.
+	(mln::graph_psite<P>::invalidate)
+	(mln::graph_psite<P>::update_)
+	(mln::graph_psite<P>::site_set)
+	(mln::graph_psite<P>::target_)
+	(mln::graph_psite<P>::change_target)
+	(mln::graph_psite<P>::subj_):
+	New methods.
+	(mln::graph_psite<P>::id): Rename accessor as...
+	(mln::graph_psite<P>::vertex_id): ...this.
+	(mln::graph_psite<P>::change_vertex_id)
+	(mln::graph_psite<P>::inc_vertex_id)
+	(mln::graph_psite<P>::dec_vertex_id):
+	New methods.
+	(mln::graph_psite<P>::p_): New attribute.
+	(operator!=(const graph_psite<P>&, const graph_psite<P>&))
+	(operator<<(std::ostream&, const graph_psite<P>&)):
+	New operators.
+	(operator==(const graph_psite<P>&, const graph_psite<P>&))
+	(operator< (const graph_psite<P>&, const graph_psite<P>&)):
+	Update operators.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site set mln::p_graph.
 
 	* mln/core/site_set/p_graph.hh
