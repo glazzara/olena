@@ -1,5 +1,21 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update complex-based image.
+
+	* mln/core/complex_iter.hh: More documentation.
+	* mln/core/image/complex_image.hh
+	(mln::internal::data< complex_image<D, P, V> >):
+	Update properties.
+	(mln::complex_image<D, P, V>): Fix access to members.
+	(mln::complex_image<D, P, V>::super_): Remove typedef.
+	* tests/core/image/complex_image.: Catch up with the current
+	interfaces of mln::complex_psite and mln::faces_psite.
+	* tests/core/image/Makefile.am (check_PROGRAMS): Re-enable
+	complex_image.
+	(complex_image_SOURCES): Re-enable.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update iterators on p_complex.
 
 	* mln/core/internal/p_complex_piter_base.hh

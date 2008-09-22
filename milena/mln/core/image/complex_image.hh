@@ -50,8 +50,8 @@
 namespace mln
 {
 
-  // Fwd decl.
-  template <unsigned D, typename P, typename V> struct complex_image;
+  // Forward declaration.
+  template <unsigned D, typename P, typename V> class complex_image;
 
   namespace internal
   {
@@ -80,16 +80,25 @@ namespace mln
       typedef trait::image::category::primary category;
 
       // FIXME: Is that right?
-      typedef trait::image::access::random                    access;
-      typedef typename trait::image::space_from_point<P>::ret space;
-      typedef trait::image::size::regular                     size;
-      typedef trait::image::support::irregular                support;
+      typedef trait::image::speed::fast       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::border::none                      border;
-      typedef trait::image::data::stored                      data;
-      typedef trait::image::io::read_write                    io;
+      // Value.
+      typedef trait::image::value_access::direct           value_access;
       // FIXME: Is that right?
-      typedef trait::image::speed::fast                       speed;
+      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_io::read_write           value_io;
+
+      // Site / domain.
+      typedef trait::image::localization::space         localization;
+      // FIXME: Likewise.
+      typedef typename trait::image::space_from_point<P>::ret dimension;
+
+      // Extended domain.
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
@@ -99,13 +108,11 @@ namespace mln
   ///
   /// Values are stored on the vertices of the graph.
   template <unsigned D, typename P, typename V>
-  struct complex_image :
-    public internal::image_primary_< V, p_complex<D, P>, complex_image<D,P,V> >
+  class complex_image
+    : public internal::image_primary< V, p_complex<D, P>,
+				      complex_image<D, P, V> >
   {
-    /// Super type.
-    typedef mln::internal::image_base_< p_complex<D, P>,
-					complex_image<D, P, V> > super_;
-
+  public:
     /// Value associated type.
     typedef V value;
 
@@ -123,6 +130,7 @@ namespace mln
     /// Skeleton.
     typedef complex_image< D, tag::psite_<P>, tag::value_<V> > skeleton;
 
+  public:
     /// Constructors.
     /// \{
     complex_image();

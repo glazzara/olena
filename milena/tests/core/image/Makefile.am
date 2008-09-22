@@ -5,7 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
 ##  bgraph_image					\
   cast_image					\
-##  complex_image					\
+  complex_image					\
   decorated_image				\
   flat_image					\
 ##  hexa						\
@@ -33,7 +33,7 @@ check_PROGRAMS =				\
 
 ##bgraph_image_SOURCES = bgraph_image.cc
 cast_image_SOURCES = cast_image.cc
-##complex_image_SOURCES = complex_image.cc
+complex_image_SOURCES = complex_image.cc
 decorated_image_SOURCES = decorated_image.cc
 ##graph_image_SOURCES = graph_image.cc
 ##graph_image_wst_SOURCES = graph_image_wst.cc

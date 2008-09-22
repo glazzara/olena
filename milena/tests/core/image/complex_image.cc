@@ -146,7 +146,7 @@ int main()
   face_handle<1, D> e0_(pc.cplx(), 0);
   any_face_handle<D> af(e0_);
   // An associated psite.
-  complex_psite<D, point2d> cs(af);
+  complex_psite<D, point2d> cs(pc, af);
 
 
   /*--------------------.
@@ -161,9 +161,9 @@ int main()
   p_faces<2, D, point2d> pf2(c);
 
   // Some psites on faces.
-  faces_psite<0, D, point2d> fs0(v0);
-  faces_psite<1, D, point2d> fs1(e0);
-  faces_psite<2, D, point2d> fs2(t0);
+  faces_psite<0, D, point2d> fs0(pf0, v0);
+  faces_psite<1, D, point2d> fs1(pf1, e0);
+  faces_psite<2, D, point2d> fs2(pf2, t0);
 
 
   /*----------------------.

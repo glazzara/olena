@@ -33,6 +33,9 @@
 
 # include <mln/core/internal/complex_iter_base.hh>
 
+// FIXME: Factor a bit more? (Using complex_iter_base_.)
+
+
 namespace mln
 {
 
@@ -52,7 +55,10 @@ namespace mln
 					   complex_fwd_iter_<D> >
   {
   public:
+    /// Type of associated face.
     typedef any_face_handle<D> face;
+    // FIXME: Rename as dim?
+    /// Dimension of the complex.
     static const unsigned complex_dim = D;
 
   private:
@@ -103,7 +109,10 @@ namespace mln
 					   complex_bkd_iter_<D> >
   {
   public:
+    /// Type of associated face.
     typedef any_face_handle<D> face;
+    // FIXME: Rename as dim?
+    /// Dimension of the complex.
     static const unsigned complex_dim = D;
 
   private:
