@@ -1,5 +1,55 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update site on mln::p_faces.
+
+	* mln/core/faces_psite.hh (mln::faces_psite<N, D, P>): Inherit
+	from internal::pseudo_site_base_.
+	(mln::faces_psite<N, D, P>::self_)
+	(mln::faces_psite<N, D, P>::super_):
+	(mln::faces_psite<N, D, P>::mesh):
+	(mln::faces_psite<N, D, P>::point):
+	(mln::faces_psite<N, D, P>::dpoint):
+	(mln::faces_psite<N, D, P>::coord):
+	Remove typdefs.
+	(mln::faces_psite<N, D, P>::dim):
+	Remove enum.
+	(mln::faces_psite<N, D, P>::target): New typedef.
+	(mln::faces_psite<N, D, P>::faces_psite(const self_&)):
+	Remove ctor.
+	(mln::faces_psite<N, D, P>::operator=(const self_&))
+	(mln::faces_psite<N, D, P>::to_site)
+	(mln::faces_psite<N, D, P>::to_point)
+	(mln::faces_psite<N, D, P>::operator[]):
+	Remove methods.
+	(mln::faces_psite<N, D, P>::faces_psite(const any_face_handle<D>&)):
+	Add an extra argument pc to pass the target mln::p_complex.
+	(faces_psite(const p_complex<N, D, P>, unsigned, unsigned)):
+	New ctor.
+	(mln::faces_psite<N, D, P>::invalidate)
+	(mln::faces_psite<N, D, P>::target_)
+	(mln::faces_psite<N, D, P>::change_target)
+	(mln::faces_psite<N, D, P>::subj_)
+	(mln::faces_psite<N, D, P>::update_):
+	New method.
+	(mln::faces_psite<N, D, P>::cplx): Rename as...
+	(mln::faces_psite<N, D, P>::site_set): ...this.
+	Adjust clients.
+	(mln::faces_psite<N, D, P>::p_): Change type of attribute to P.
+	(mln::faces_psite<N, D, P>::pc_): New attribute.
+	(operator!=(const faces_psite<N, D, P>&, const faces_psite<N, D, P>&)):
+	New operator.
+	(operator<<(std::ostream& ostr, const faces_psite<N, D, P>& p))
+	(mln::faces_psite<N, D, P>::faces_psite):
+	Adjust all ctors.
+	(mln::faces_psite<N, D, P>::is_valid)
+	(mln::faces_psite<N, D, P>::site_set):
+	Adjust methods.
+	(mln::faces_psite<N, D, P>::n)
+	(mln::faces_psite<N, D, P>::face_id):
+	New accessors.
+
+2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update site on mln::p_complex.
 
 	* mln/core/complex_psite.hh (mln::complex_psite<D, P>): Inherit
