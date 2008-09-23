@@ -46,7 +46,10 @@
 	in it, interpolating inter-pixel points;
     \li print the watershed on lines into that same image, and save it.  */
 
+#include <map>
 #include <vector>
+
+#include <mln/util/ord.hh>
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>
@@ -112,7 +115,7 @@ int main()
      exhibits the lack of a service from util::graph (or a another,
      missing tool) regarding the retrieval of vertex ids from
      points.  */
-  std::map<point2d, util::vertex_id> points;
+  std::map<point2d, util::vertex_id, util::ord<point2d> > points;
   util::vertex_id id = 0;
 
   // Vertices.
@@ -136,7 +139,7 @@ int main()
   mln_fwd_qiter_(window2d) q(next_c4_win, p); 
   for_all (p)
     for_all (q)
-    if (work.has(q))
+    if (work.domain().has(q))
       {
 	g.add_edge(points[p], points[q]);
 	edge_values.push_back(math::max(work(p), work(q)));

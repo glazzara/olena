@@ -38,6 +38,7 @@
 #include <mln/core/image/graph_window_piter.hh>
 
 #include <mln/morpho/dilation.hh>
+#include <mln/morpho/erosion.hh>
 
 #include <mln/draw/graph.hh>
 #include <mln/debug/iota.hh>
@@ -105,9 +106,44 @@ int main()
   // Initialize values.
   debug::iota(ima);
 
+  /*-------------------------------------.
+  | Image representation/visualization.  |
+  `-------------------------------------*/
+
+  // Compute the bounding box of IMA.
+  /* FIXME: mln::graph_image should automatically feature a bbox when
+     its parameter P is akin to a point.  */
+  accu::bbox<point2d> a;
+  for (std::vector<point2d>::const_iterator i = points.begin();
+       i != points.end(); ++i)
+      a.take(*i);
+  box2d bbox = a.to_result();
+  // Print the image.
+  /* FIXME: Unfortunately, displaying graph images is not easy right
+     now (2008-02-05).  We could use 
+
+       debug::println(ima);
+
+     but there's not specialization working for graph_image; the one
+     selected by the compiler is based on a 2-D bbox, and expects the
+     interface of graph_image to work with points (not psites).
+     Moreover, this implementation only shows *values*, not the graph
+     itslef.
+ 
+     An alternative is to use draw::graph (which, again, is misnamed),
+     but it doesn't show the values, only the vertices and edges of the
+     graph.
+
+     The current solution is a mix between draw::graph and hand-made
+     iterations.  */
+  image2d<int> ima_rep(bbox);
+
   /*--------------------------.
   | Processing graph images.  |
   `--------------------------*/
+
+  typedef graph_elt_window<point2d> win_t;
+  win_t win;
 
   graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
   draw::graph(ima_rep, ima_dil, 9);

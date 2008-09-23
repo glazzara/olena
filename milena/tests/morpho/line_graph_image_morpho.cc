@@ -109,6 +109,9 @@ int main()
   | Processing graph images.  |
   `--------------------------*/
 
+  typedef line_graph_elt_window<point2d> win_t;
+  win_t win;
+
   line_graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.
   mln_piter_(ima_t) p_dil(ima_dil.domain());

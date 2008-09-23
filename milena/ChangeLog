@@ -1,5 +1,19 @@
 2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix more morphological tests on graph-based images.
+
+	* tests/morpho/Makefile.am (check_PROGRAMS): Re-enable
+	graph_image_morpho, lena_line_graph_image_wst1,
+	line_graph_image_wst and line_graph_image_morpho.
+	* tests/morpho/graph_image_morpho.cc
+	* tests/morpho/line_graph_image_morpho.cc:
+	Add missing code from tests/core/image/graph_image.cc and
+	tests/core/image/line_graph_image.cc to have this test pass again.
+	* tests/morpho/lena_line_graph_image_wst1.cc: Catch up with
+	util::ord usage and domain's has() semantics.
+
+2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have morphological erosion work on non-classical image types.
 
 	* mln/morpho/erosion.spe.hh
