@@ -1,0 +1,168 @@
+-*- outline -*-
+
+                    Values related properties
+
+
+* TODO
+ -> Are the properties related to the values sufficiant?
+ -> What are the interface related to each value property?
+ -> How these values properties affect the fill/paste/transform process?
+
+* Values properties list:
+
+** value_access: /any/
+                  |
+                  + -- direct
+                  |
+                  + -- computed
+
+
+** value_storage:/any/
+                  |
+                  + -- /organized/
+                  |      |
+                  |      + -- singleton
+                  |      |
+                  |      + -- one_block
+                  |      |
+                  |      + -- piecewise
+                  |
+                  + -- disrupted
+
+=>  Methods related:
+ value_storage == singleton
+   => ima.value()        -> return the image value
+
+ value_storage == one_block
+   => image.nelements()  -> return the number of elements in memory
+   => image.buffer()     -> return the start adress of the ima buffer
+
+ value_storage == piece_wise
+   //FIXME
+
+** value_browsing:/any/
+                    |
+                    + -- site_wise_only
+                    |
+                    + -------- cell_wise
+                    |                 |
+                    + -- value_wise   |
+                                 \    |
+                                   -- + -- cell_and_value_wise
+
+=> Methods related:
+ value_browsing == value_wise
+   => ima.values_taken()               -> return the current values taken by
+                                          ima
+   => ima.change_value(oldVal, newVal) -> change the value oldVal to newVal
+   => ima.change_values(f)             -> apply f (a function v2v) to all the
+                                          values
+   => ima.sites(v)                     -> return the sites associated to the
+                                          value v
+
+ value_browsing == cell_wise
+   => ima.values_cell()                -> return the cells composing the image
+
+ value_browsing == cell_and_value_wise
+  method of value_wise property value + cell_wise property value
+
+
+
+
+
+* fill (depends on the value_storage property)
+
+*** values_storage == oneblock
+// Replace by Memcopy?
+const unsigned n = ima.nelements();
+mln_value(I)* ptr = ima.buffer();
+for (unsigned i = 0; i < n; ++i)
+  *ptr++ = val;
+
+**** Method related
+-> nelements
+-> buffer
+
+
+*** value_storage == piece_wise
+// MemCopy on the runs?
+for (ungsigned i = 0; i < ima.nruns(); ++i)
+    //FIXME
+**** Method related:
+  nruns ???
+
+
+*** value_storage == any && value_browsing == value_wise
+
+// direct access to the value
+mln_viter(mln_taken_values(I)) viter(I.taken_values();
+for_all(viter);
+  ima.changes_values(viter, v);
+
+**** Method related:
+ -> iterator on value taken
+ -> change_values
+
+*** Generic case: all the other case
+mln_piter(I) p(ima.domain());
+for_all(p)
+  ima(p) = v;
+
+
+* To keep in Mind
+
+-image storage in memory
+
+=> Computed
+  [...]
+
+=> All is store
+
+    0 1 2 3 4
+   ----------
+0 |eeeeeeeeee|
+1 |errrbbbgge|
+2 |ebbbggrrre|
+3 |errbbbrrbe| // e is the extended border
+4 |eeeeeeeeee|
+   ----------
+
+
+=> Run
+
+    0 1 2 3 4
+   ----------
+0 |          |
+1 |   rbrrb  |
+2 |          |
+3 |     bbbbb|
+4 |grgbb     |
+   ----------
+
+=> Values oriented
+
+r : (5,2), (4, 2), (6, 2)
+g : (5,4), (4, 4), (6, 3)
+b : (2,2), (1, 2), (3, 2)
+
+-differentiate the localization of an image and its storage method.
+
+* Image related with 'special' values access
+
+** Run Images (sparce, value_encoded)
+
+=> fill: *cpt++ = v sur chaque run
+|
++-> related to memory storage
+
+** Pkey Images
+
+=> change_value
+
+
+
+* Note
+
+- Cell access and Value access wise property depends on the image
+ --> property related:
+    cell-wise and value wise
