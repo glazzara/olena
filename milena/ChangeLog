@@ -1,5 +1,19 @@
 2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix test graph_image_wst.
+
+	* tests/core/image/graph_image_wst.cc: Move test...
+	* tests/morpho/graph_image_wst.cc: ...here.
+	Catch up with interfaces of cleanup-2008.
+	Turn this test into an actual WST segmentation of a graph image.
+	* tests/core/image/Makefile.am (check_PROGRAM): Remove
+	graph_image_wst.
+	(graph_image_wst_SOURCES): Move...
+	* tests/morpho/Makefile.am: ...here.
+	(check_PROGRAM): Add graph_image_wst.
+
+2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix more morphological tests on graph-based images.
 
 	* tests/morpho/Makefile.am (check_PROGRAMS): Re-enable

@@ -10,7 +10,6 @@ check_PROGRAMS =				\
   flat_image					\
 ##  hexa						\
   graph_image					\
-##  graph_image_wst				\
   image1d					\
   image2d					\
 ##  image2d_h					\
@@ -36,10 +35,6 @@ cast_image_SOURCES = cast_image.cc
 complex_image_SOURCES = complex_image.cc
 decorated_image_SOURCES = decorated_image.cc
 graph_image_SOURCES = graph_image.cc
-### FIXME: graph_image_wst is almost a clone of graph_image: move it
-### into tests/morpho and turn it into a real test on the WST (see
-### line_graph_image_wst).
-##graph_image_wst_SOURCES = graph_image_wst.cc
 flat_image_SOURCES = flat_image.cc
 ##hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc

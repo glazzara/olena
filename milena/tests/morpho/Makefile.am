@@ -16,6 +16,7 @@ check_PROGRAMS =				\
   gradient					\
   gradient_elementary				\
   graph_image_morpho				\
+  graph_image_wst				\
   hit_or_miss					\
   laplacian					\
   lena_line_graph_image_wst1			\
@@ -54,9 +55,11 @@ laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc
 
 graph_image_morpho_SOURCES = graph_image_morpho.cc
+graph_image_wst_SOURCES = graph_image_wst.cc
 
 line_graph_image_morpho_SOURCES = line_graph_image_morpho.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
+
 meyer_wst_SOURCES = meyer_wst.cc
 
 combined_SOURCES = combined.cc
