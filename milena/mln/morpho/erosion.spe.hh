@@ -444,16 +444,23 @@ namespace mln
       {
 	if (mlc_equal(mln_trait_image_kind(I)(),
 		      trait::image::kind::logic)::value == true)
+/* FIXME: Temporarily disabled, since this dynamic dispatch triggers
+   errors when class I has no pixter associated type(s).  */
+#if 0
 	  if (mlc_equal(mln_trait_image_speed(I)(),
 			trait::image::speed::fastest)::value == true)
 	    return impl::erosion_on_set_fastest(input, win);
 	  else
+#endif
 	    return impl::generic::erosion_on_set(input, win);
 	else
+// FIXME: Likewise.
+#if 0
 	  if (mlc_equal(mln_trait_image_speed(I)(),
 			trait::image::speed::fastest)::value == true)
 	    return impl::erosion_on_function_fastest(input, win);
 	  else
+#endif
 	    return impl::generic::erosion_on_function(input, win);
       }
 

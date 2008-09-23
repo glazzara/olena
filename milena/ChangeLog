@@ -1,3 +1,11 @@
+2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
+	Have morphological erosion work on non-classical image types.
+
+	* mln/morpho/erosion.spe.hh
+	(mln::morpho::internal::erosion_dispatch): (Temporarily) disable
+	delegation to fastest routines.
+
 2008-09-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add basic conversion + minor fixes.
