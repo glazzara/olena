@@ -114,6 +114,9 @@ namespace mln
      */
     bool is_empty() const;
 
+    /// Clear the window.
+    void clear();
+
     /*! \brief Give the maximum coordinate gap between the window
       center and a window point.
     */
@@ -127,6 +130,10 @@ namespace mln
 
     /// Insert a delta-point \p dp.
     window<D>& insert(const D& dp);
+
+    /// Insert another window \p win.
+    template <typename W>
+    window<D>& insert(const Window<W>& win);
 
     /// \{ Insertion of a delta-point with different numbers of
     /// arguments (coordinates) w.r.t. the dimension.
@@ -211,13 +218,20 @@ namespace mln
     *this = tmp;
   }
 
-
   template <typename D>
   inline
   bool
   window<D>::is_empty() const
   {
     return dps_.is_empty();
+  }
+
+  template <typename D>
+  inline
+  void
+  window<D>::clear()
+  {
+    dps_.clear();
   }
 
   template <typename D>
@@ -276,6 +290,19 @@ namespace mln
   window<D>::insert(const D& dp)
   {
     dps_.insert(dp);
+    return *this;
+  }
+
+  template <typename D>
+  template <typename W>
+  inline
+  window<D>&
+  window<D>::insert(const Window<W>& win_)
+  {
+    const W& win = exact(win_);
+    const unsigned n = win.size();
+    for (unsigned i = 0; i < n; ++i)
+      dps_.insert(win.dp(i));
     return *this;
   }
 

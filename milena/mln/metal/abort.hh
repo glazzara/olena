@@ -35,6 +35,8 @@
 
 # include <mln/metal/bool.hh>
 
+# define mlc_abort(A_TYPE) mln::metal::abort_< A_TYPE >
+
 
 namespace mln
 {

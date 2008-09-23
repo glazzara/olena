@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,8 @@
 
 # include <cmath>
 # include <mln/core/neighb.hh>
-# include <mln/core/alias/dpoint3d.hh>
+# include <mln/core/alias/window3d.hh>
+# include <mln/geom/sym.hh>
 
 
 namespace mln
@@ -45,7 +46,7 @@ namespace mln
   /*! \brief Type alias for a neighborhood defined on the 3D square
    * grid with integer coordinates.
    */
-  typedef neighb_<dpoint3d> neighb3d;
+  typedef neighb<window3d> neighb3d;
 
 
   /*! \brief 6-connectivity neighborhood on the 3D grid.
@@ -102,19 +103,23 @@ namespace mln
    */
   const neighb3d& c26();
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   inline
   const neighb3d& c6()
   {
-    static bool flower = true;
     static neighb3d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(dpoint3d(+1, 0, 0));
-	it.insert(dpoint3d(0, +1, 0));
-	it.insert(dpoint3d(0, 0, +1));
-	flower = false;
+	window3d& win = it.hook_win_();
+	win
+	  .insert(1, 0, 0)
+	  .insert(0, 1, 0)
+	  .insert(0, 0, 1);
+	win
+	  .insert(geom::sym(win));
       }
     return it;
   }
@@ -122,22 +127,20 @@ namespace mln
   inline
   const neighb3d& c18()
   {
-    static bool flower = true;
     static neighb3d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(dpoint3d(+1, 0, 0));
-	it.insert(dpoint3d(0, +1, 0));
-	it.insert(dpoint3d(0, 0, +1));
-
-	it.insert(dpoint3d(+1, 0, +1));
-	it.insert(dpoint3d(+1, 0, -1));
-	it.insert(dpoint3d(0, +1, +1));
-	it.insert(dpoint3d(0, +1, -1));
-	it.insert(dpoint3d(+1, +1, 0));
-	it.insert(dpoint3d(+1, -1, 0));
-
-	flower = false;
+	window3d& win = it.hook_win_();
+	win
+	  .insert(1,  0,  1)
+	  .insert(1,  0, -1)
+	  .insert(0,  1,  1)
+	  .insert(0,  1, -1)
+	  .insert(1,  1,  0)
+	  .insert(1, -1,  0);
+	win
+	  .insert(geom::sym(win))
+	  .insert(c6().win());
       }
     return it;
   }
@@ -145,26 +148,18 @@ namespace mln
   inline
   const neighb3d& c26()
   {
-    static bool flower = true;
     static neighb3d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(dpoint3d(+1, 0, 0));
-	it.insert(dpoint3d(0, +1, 0));
-	it.insert(dpoint3d(0, 0, +1));
-
-	it.insert(dpoint3d(+1, 0, +1));
-	it.insert(dpoint3d(+1, 0, -1));
-	it.insert(dpoint3d(0, +1, +1));
-	it.insert(dpoint3d(0, +1, -1));
-	it.insert(dpoint3d(+1, +1, 0));
-	it.insert(dpoint3d(+1, -1, 0));
-
-	it.insert(dpoint3d(+1, +1, +1));
-	it.insert(dpoint3d(+1, +1, -1));
-	it.insert(dpoint3d(+1, -1, +1));
-	it.insert(dpoint3d(+1, -1, -1));
-	flower = false;
+	window3d& win = it.hook_win_();
+	win
+	  .insert(1,  1,  1)
+	  .insert(1,  1, -1)
+	  .insert(1, -1,  1)
+	  .insert(1, -1, -1);
+	win
+	  .insert(geom::sym(win))
+	  .insert(c18().win());
       }
     return it;
   }

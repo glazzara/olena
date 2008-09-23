@@ -26,33 +26,37 @@
 // Public License.
 
 /// \file tests/core/other/neighb.cc
-/// \brief Tests on mln::neighb<D> specializations.
+/// \brief Tests on regular neighborhoods.
 
 #include <mln/core/alias/neighb1d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/alias/neighb3d.hh>
+#include <mln/literal/origin.hh>
 
 using namespace mln;
 
+
 template <typename N>
-void test(const Neighborhood<N>& nbh, const mln_site(N)& p_ref,
-	  unsigned size)
+unsigned
+size(const N& nbh)
 {
-  mln_niter(N) n(nbh, p_ref);
-  unsigned i = 0;
+  mln_site(N) O = literal::origin;
+  mln_niter(N) n(nbh, O);
+  unsigned s = 0;
   for_all(n)
-    ++i;
-  mln_assertion(i == size);
+    ++s;
+  return s;
 }
+
 
 int main()
 {
-  test(c2(), point1d(0), 2);
+  mln_assertion(size(c2()) == 2);
 
-  test(c4(), point2d(0, 0), 4);
-  test(c8(), point2d(0, 0), 8);
+  mln_assertion(size(c4()) == 4);
+  mln_assertion(size(c8()) == 8);
 
-  test( c6(), point3d(0, 0, 0), 6);
-  test(c18(), point3d(0, 0, 0), 18);
-  test(c26(), point3d(0, 0, 0), 26);
+  mln_assertion(size( c6()) == 6);
+  mln_assertion(size(c18()) == 18);
+  mln_assertion(size(c26()) == 26);
 }

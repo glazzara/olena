@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,8 @@
 
 # include <cmath>
 # include <mln/core/neighb.hh>
-# include <mln/core/alias/dpoint1d.hh>
+# include <mln/core/alias/window1d.hh>
+# include <mln/geom/sym.hh>
 
 
 namespace mln
@@ -45,7 +46,7 @@ namespace mln
   /*! \brief Type alias for a neighborhood defined on the 1D square
    * grid with integer coordinates.
    */
-  typedef neighb_<dpoint1d> neighb1d;
+  typedef neighb<window1d> neighb1d;
 
 
   /*! \brief 2-connectivity neighborhood on the 1D grid.
@@ -62,12 +63,12 @@ namespace mln
   inline
   const neighb1d& c2()
   {
-    static bool flower = true;
     static neighb1d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(dpoint1d(+1));
-	flower = false;
+	it.hook_win_()
+	  .insert(dpoint1d(-1))
+	  .insert(dpoint1d(+1));
       }
     return it;
   }

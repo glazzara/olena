@@ -65,7 +65,10 @@ namespace mln
       typedef bkd_niter;
 
       typedef window;
-      window to_window() const;
+      either
+        const window& win() const;
+      or
+        window win() const;
     */
 
   protected:
@@ -85,7 +88,7 @@ namespace mln
     typedef mln_bkd_niter(E) bkd_niter;
 
     typedef mln_window(E) window;
-    bool m = (& E::to_window) == (& E::to_window);
+    bool m = (& E::win) == (& E::win);
     m = 0;
 //     const window& (E::*m)() const = & E::to_window;
 //     m = 0;

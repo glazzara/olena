@@ -68,7 +68,7 @@ namespace mln
       trace::entering("convert::to");
 
       T tmp;
-      impl::from_to_(from, tmp);
+      from_to(from, tmp);
 
       trace::exiting("convert::to");
       return tmp;

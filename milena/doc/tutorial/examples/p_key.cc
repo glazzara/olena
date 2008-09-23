@@ -41,6 +41,8 @@ int main()
     for (unsigned i = 0; i < 7;  ++i)
       p += dp[i], s.insert(p.row(), p);
 
+    picture(s);
+
     std::cout << s.keys() << std::endl;
     std::cout << s << std::endl;
   }
@@ -78,8 +80,8 @@ int main()
   s.remove_key(0);
   std::cout << s << std::endl;
 
-  std::cout << "change key 2 -> 4" << std::endl;
-  s.change_key(2, 4);
+  std::cout << "change key 2 -> 5" << std::endl;
+  s.change_key(2, 5);
   std::cout << s << std::endl;
 
   std::cout << "remove key 3" << std::endl;

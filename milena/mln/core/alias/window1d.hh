@@ -47,13 +47,9 @@ namespace mln
 
   namespace convert
   {
-    namespace impl
-    {
 
-      template <unsigned M>
-      void from_to_(bool const (&values)[M], window1d& win);
-      
-    } // end of namespace mln::convert::impl
+    template <unsigned M>
+    void from_to(const bool (&values)[M], window1d& win);
 
   } // end of namespace mln::convert
 
@@ -63,24 +59,19 @@ namespace mln
 
   namespace convert
   {
-    namespace impl
+
+    template <unsigned M>
+    void
+    from_to(bool const (&values)[M], window1d& win)
     {
-
-      template <unsigned M>
-      void
-      from_to_(bool const (&values)[M], window1d& win)
-      {
-	mlc_bool(M % 2 == 1)::check();
-	mln_precondition(win.is_empty()); // FIXME: or just .clear() it?
-
-	const int h = int(M) / 2;
-	unsigned i = 0;
-	for (int ind = - h; ind <= h; ++ind)
-	  if (values[i++])
-	    win.insert(dpoint1d(ind));
-      }
-      
-    } // end of namespace mln::convert::impl
+      mlc_bool(M % 2 == 1)::check();
+      win.clear();
+      const int h = int(M) / 2;
+      unsigned i = 0;
+      for (int ind = - h; ind <= h; ++ind)
+	if (values[i++])
+	  win.insert(ind);
+    }
 
   } // end of namespace mln::convert
 

@@ -31,9 +31,17 @@
 /*! \file mln/core/neighb.hh
  *
  * \brief Definition of a window-to-neighborhood adapter.
+ *
+ * \todo Introduce properties so that we can deal properly with
+ * optional methods.
+ *
+ * \todo See if the impl of from_to is fine.  What about removing the
+ * origin?  etc.
  */
 
+# include <mln/core/concept/window.hh>
 # include <mln/core/internal/neighborhood_base.hh>
+# include <mln/core/internal/site_relative_iterator_base.hh>
 # include <mln/convert/from_to.hh>
 
 
@@ -53,8 +61,8 @@ namespace mln
   {
   public:
 
+    /// Window associated type.
     typedef W window;
-    const W& to_window() const { return win_; }
 
     /// Forward site iterator associated type.
     typedef neighb_fwd_niter<W> fwd_niter;
@@ -78,6 +86,21 @@ namespace mln
     /// Change the corresponding window.
     void change_window(const W& new_win);
 
+
+    // Optional methods...
+
+    /// Give the neighborhood size, i.e., the number of elements it
+    /// contains.
+    unsigned size() const;
+
+    /// Give the maximum coordinate gap between the neighborhood
+    /// center and a neighboring point.
+    unsigned delta() const;
+
+
+    /// \internal Hook to the window.
+    W& hook_win_();
+
   private:
     W win_;
   };
@@ -86,18 +109,14 @@ namespace mln
 
   namespace convert
   {
-    namespace impl
-    {
 
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to);
+    template <typename W>
+    void
+    from_to(const mln::neighb<W>& from, W& to);
 
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to);
-
-    } // end of namespace convert::impl
+    template <typename W>
+    void
+    from_to(const W& from, mln::neighb<W>& to);
 
   } // end of namespace convert
 
@@ -140,40 +159,40 @@ namespace mln
 
 
 
-  // neighb_bkd_niter<W>
+// neighb_bkd_niter<W>
 
-  template <typename W>
-  class neighb_bkd_niter
-    : public internal::site_relative_iterator_base< neighb<W>,
-						    neighb_bkd_niter<W> >
-  {
-  public:
+template <typename W>
+class neighb_bkd_niter
+  : public internal::site_relative_iterator_base< neighb<W>,
+						  neighb_bkd_niter<W> >
+{
+public:
 
-    /// Constructor without argument.
-    neighb_bkd_niter();
+  /// Constructor without argument.
+  neighb_bkd_niter();
 
-    template <typename P>
-    neighb_bkd_niter(const neighb<W>& nbh, const P& c);
+  template <typename P>
+  neighb_bkd_niter(const neighb<W>& nbh, const P& c);
 
-    /// Test the iterator validity.
-    bool is_valid_() const;
+  /// Test the iterator validity.
+  bool is_valid_() const;
 
-    /// Invalidate the iterator.
-    void invalidate_();
+  /// Invalidate the iterator.
+  void invalidate_();
 
-    /// Start an iteration.
-    void do_start_();
+  /// Start an iteration.
+  void do_start_();
 
-    /// Go to the next point.
-    void do_next_();
+  /// Go to the next point.
+  void do_next_();
 
-    /// Compute the current psite.
-    mln_psite(W) compute_p_() const;
+  /// Compute the current psite.
+  mln_psite(W) compute_p_() const;
 
-  protected:
+protected:
 
-    mln_bkd_qiter(W) i_;
-  };
+  mln_bkd_qiter(W) i_;
+};
 
  
 
@@ -211,29 +230,49 @@ namespace mln
     win_ = new_win;
   }
 
+  template <typename W>
+  inline
+  unsigned
+  neighb<W>::size() const
+  {
+    return win_.size();
+  }
 
-  // convert::impl::from_to_
+  template <typename W>
+  inline
+  unsigned
+  neighb<W>::delta() const
+  {
+    return win_.delta();
+  }
+
+  template <typename W>
+  inline
+  W&
+  neighb<W>::hook_win_()
+  {
+    return win_;
+  }
+
+
+  // convert::from_to
 
   namespace convert
   {
-    namespace impl
+
+    template <typename W>
+    void
+    from_to(const mln::neighb<W>& from, W& to)
     {
+      to = from.win();
+    }
 
-      template <typename W>
-      void
-      from_to_(const mln::neighb<W>& from, W& to)
-      {
-	to = from.win();
-      }
-
-      template <typename W>
-      void
-      from_to_(const W& from, mln::neighb<W>& to)
-      {
-	to.change_window(from);
-      }
-
-    } // end of namespace convert::impl
+    template <typename W>
+    void
+    from_to(const W& from, mln::neighb<W>& to)
+    {
+      to.change_window(from);
+    }
 
   } // end of namespace convert
 
@@ -254,7 +293,7 @@ namespace mln
     this->change_target(nbh);
     this->center_at(c);
     i_.center_at(c); // Always before change_target for this kind of iter.
-    i_.change_target(nbh.to_window());
+    i_.change_target(nbh.win());
   }
 
   template <typename W>
@@ -314,7 +353,7 @@ namespace mln
     this->change_target(nbh);
     this->center_at(c);
     i_.center_at(c); // Always before change_target for this kind of iter.
-    i_.change_target(nbh.to_window());
+    i_.change_target(nbh.win());
   }
 
   template <typename W>

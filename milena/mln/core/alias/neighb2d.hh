@@ -32,11 +32,14 @@
  *
  * \brief Definition of the mln::neighb2d alias and of some classical
  * 2D neighborhoods.
+ *
+ * \todo Add symmetry and non-centering tests in conversion.
  */
 
 # include <cmath>
-# include <mln/core/neighborhood.hh>
-# include <mln/core/alias/dpoint2d.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/core/neighb.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
@@ -45,12 +48,9 @@ namespace mln
   /*! \brief Type alias for a neighborhood defined on the 2D square
    * grid with integer coordinates.
    */
-  typedef neighborhood<dpoint2d> neighb2d;
+  typedef neighb<window2d> neighb2d;
 
 }
-
-
-# include <mln/make/neighb2d.hh>
 
 
 namespace mln
@@ -101,20 +101,31 @@ namespace mln
 
 
 
+  namespace convert
+  {
+
+    template <unsigned S>
+    void from_to(const bool (&values)[S], neighb2d& nbh);
+
+    template <unsigned R, unsigned C>
+    void from_to(bool const (&values)[R][C], neighb2d& nbh);
+
+  } // end of namespace mln::convert
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   inline
   const neighb2d& c4()
   {
-    // FIXME: `flower' is probably not a canonical name to state
-    // whether the neighborhood is initialized or not. :)
-    static bool flower = true;
     static neighb2d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(0, 1)
-	  .insert(1, 0);
-	flower = false;
+	static const bool vals[] = { 0, 1, 0,
+				     1, 0, 1,
+				     0, 1, 0 };
+	convert::from_to(vals, it);
       }
     return it;
   }
@@ -122,15 +133,13 @@ namespace mln
   inline
   const neighb2d& c8()
   {
-    static bool flower = true;
     static neighb2d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(0, 1)
-	  .insert(1,-1)
-	  .insert(1, 0)
-	  .insert(1, 1);
-	flower = false;
+	static const bool vals[] = { 1, 1, 1,
+				     1, 0, 1,
+				     1, 1, 1 };
+	convert::from_to(vals, it);
       }
     return it;
   }
@@ -138,12 +147,13 @@ namespace mln
   inline
   const neighb2d& c2_row()
   {
-    static bool flower = true;
     static neighb2d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(0, 1);
-	flower = false;
+	static const bool vals[] = { 0, 0, 0,
+				     1, 0, 1,
+				     0, 0, 0 };
+	convert::from_to(vals, it);
       }
     return it;
   }
@@ -151,15 +161,44 @@ namespace mln
   inline
   const neighb2d& c2_col()
   {
-    static bool flower = true;
     static neighb2d it;
-    if (flower)
+    if (it.size() == 0)
       {
-	it.insert(1, 0);
-	flower = false;
+	static const bool vals[] = { 0, 1, 0,
+				     0, 0, 0,
+				     0, 1, 0 };
+	convert::from_to(vals, it);
       }
     return it;
   }
+
+
+  namespace convert
+  {
+
+    template <unsigned S>
+    void
+    from_to(const bool (&values)[S], neighb2d& nbh)
+    {
+      enum { h = mlc_sqrt_int(S) / 2 };
+      mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
+      window2d& win = nbh.hook_win_();
+      convert::from_to(values, win);
+      mln_postcondition(win.is_neighbable_());
+    }
+
+    template <unsigned R, unsigned C>
+    void
+    from_to(bool const (&values)[R][C], neighb2d& nbh)
+    {
+      mlc_bool(R % 2 == 1)::check();
+      mlc_bool(C % 2 == 1)::check();
+      window2d& win = nbh.hook_win_();
+      convert::from_to(values, win);
+      mln_postcondition(win.is_neighbable_());
+    }
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

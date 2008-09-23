@@ -1,3 +1,37 @@
+2008-09-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make basic neighborhoods rely on neighb<W> and fix from_to.
+
+	* tests/core/other/neighb.cc: Revamp.
+	* doc/tutorial/examples/p_key.cc: Augment.
+	* mln/core/window.hh (clear): New.
+	(insert): New overload.
+	* mln/core/alias/neighb1d.hh,
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/neighb3d.hh: Update.
+	They now rely on neighb<W>.
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh: Update.
+	(impl::from_to_): Replace by...
+	(from_to): ...these new overloads.
+	* mln/core/neighb.hh (todo): New.
+	(include): Fix missings.
+	(to_window): Rename as...
+	(win): ...this.
+	(size, delta, hook_win_): New.
+	(impl::from_to_): Replace by...
+	(from_to): ...this and update.
+	* mln/core/concept/neighborhood.hh: Update.
+	* mln/metal/abort.hh (mlc_abort): New.
+	* mln/make/neighb2d.hh: Remove.
+	* mln/convert/to.hh (impl::from_to_): Update call to...
+	(from_to): ...this.
+	* mln/convert/from_to.hh (impl::from_to_): Rename as...
+	(from_to): ...this.
+	Now convert::from_to is a set of overloaded routines; that makes
+	much easier the definitions of new versions.
+
 2008-09-23  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Start a new documentation file about the value properties.
