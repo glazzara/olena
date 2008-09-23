@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_LINE2D_HH
 # define MLN_CORE_SITE_SET_LINE2D_HH
 
-/*! \file mln/core/site_set/line2d.hh
+/*! \file mln/core/site_set/p_line2d.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */

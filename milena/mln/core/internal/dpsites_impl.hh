@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_DPOINTS_BASE_HH
-# define MLN_CORE_INTERNAL_DPOINTS_BASE_HH
+#ifndef MLN_CORE_INTERNAL_DPSITES_IMPL_HH
+# define MLN_CORE_INTERNAL_DPSITES_IMPL_HH
 
-/*! \file mln/core/internal/dpoints_base.hh
+/*! \file mln/core/internal/dpsites_impl.hh
  *
  * \brief Definition of a base class for classes based on a set of dpoints.
  *
@@ -52,7 +52,7 @@ namespace mln
      *
      */
     template <typename D, typename E>
-    class dpoints_base_
+    class dpsites_impl
     {
     public:
 
@@ -98,7 +98,7 @@ namespace mln
 
     protected:
 
-      dpoints_base_();
+      dpsites_impl();
 
       void insert(const D& d);
 
@@ -111,27 +111,27 @@ namespace mln
 
     template <typename D, typename E>
     inline
-    dpoints_base_<D,E>::dpoints_base_()
+    dpsites_impl<D,E>::dpsites_impl()
     {
     }
 
     template <typename D, typename E>
     inline
-    bool dpoints_base_<D,E>::is_centered() const
+    bool dpsites_impl<D,E>::is_centered() const
     {
       return win_.is_centered();
     }
 
     template <typename D, typename E>
     inline
-    bool dpoints_base_<D,E>::is_empty() const
+    bool dpsites_impl<D,E>::is_empty() const
     {
       return win_.is_empty();
     }
 
     template <typename D, typename E>
     inline
-    unsigned dpoints_base_<D,E>::delta() const
+    unsigned dpsites_impl<D,E>::delta() const
     {
       return win_.delta();
     }
@@ -139,7 +139,7 @@ namespace mln
     template <typename D, typename E>
     inline
     unsigned
-    dpoints_base_<D,E>::size() const
+    dpsites_impl<D,E>::size() const
     {
       return win_.size();
     }
@@ -147,7 +147,7 @@ namespace mln
     template <typename D, typename E>
     inline
     const D&
-    dpoints_base_<D,E>::dp(unsigned i) const
+    dpsites_impl<D,E>::dp(unsigned i) const
     {
       mln_precondition(i < size());
       return win_.dp(i);
@@ -156,7 +156,7 @@ namespace mln
     template <typename D, typename E>
     inline
     const std::vector<D>&
-    dpoints_base_<D,E>::std_vector() const
+    dpsites_impl<D,E>::std_vector() const
     {
       return win_.std_vector();
     }
@@ -164,7 +164,7 @@ namespace mln
     template <typename D, typename E>
     inline
     const std::vector<D>&
-    dpoints_base_<D,E>::vect() const
+    dpsites_impl<D,E>::vect() const
     {
       return std_vector();
     }
@@ -172,7 +172,7 @@ namespace mln
     template <typename D, typename E>
     inline
     bool
-    dpoints_base_<D,E>::has(const D& dp) const
+    dpsites_impl<D,E>::has(const D& dp) const
     {
       return win_.has(dp);
     }
@@ -180,7 +180,7 @@ namespace mln
     template <typename D, typename E>
     inline
     void
-    dpoints_base_<D,E>::insert(const D& d)
+    dpsites_impl<D,E>::insert(const D& d)
     {
       win_.insert(d);
     }
@@ -192,4 +192,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_INTERNAL_DPOINTS_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_DPSITES_IMPL_HH

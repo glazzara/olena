@@ -1,7 +1,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/pw/all.hh>
 
-# include <mln/core/site_set/line2d.hh>
+# include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/site_set/p_set.hh>
 
 # include <mln/core/image/sub_image.hh>

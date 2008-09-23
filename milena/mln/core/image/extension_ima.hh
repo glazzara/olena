@@ -84,7 +84,7 @@ namespace mln
     template <typename I, typename J, typename V>
     struct ch_value< extension_ima<I, J>, V >
     {
-      typedef mlc_converts_to(mln_result(J), V) keep_ext;
+      typedef mlc_converts_to(mln_value(J), V) keep_ext;
       typedef mln_ch_value(I, V)   Iv;
       typedef extension_ima<Iv, J> Iv_ext;
       typedef mlc_if(keep_ext, Iv_ext, Iv) ret;

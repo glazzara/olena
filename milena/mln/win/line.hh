@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/dpoint.hh>
 
 
@@ -57,7 +57,7 @@ namespace mln
      */
     template <typename M, unsigned i, typename C>
     struct line : public internal::window_base< dpoint<M, C>, line<M,i,C> >,
-		  public internal::dpoints_base_< dpoint<M, C>, line<M,i,C> >
+		  public internal::dpsites_impl< dpoint<M, C>, line<M,i,C> >
     {
       /*! \brief Constructor.
        *

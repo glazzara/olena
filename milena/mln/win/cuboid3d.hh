@@ -32,7 +32,7 @@
 /// \brief Definition of the mln::win::cuboid3d window.
 
 # include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/alias/dpoint3d.hh>
 
 
@@ -74,7 +74,7 @@ namespace mln
           http://en.wikipedia.org/wiki/Cuboid
     */
     struct cuboid3d : public internal::window_base< dpoint3d, cuboid3d >,
-		      public internal::dpoints_base_< dpoint3d, cuboid3d >
+		      public internal::dpsites_impl< dpoint3d, cuboid3d >
     {
       /// \brief Constructor.
       ///

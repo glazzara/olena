@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/site_set/p_array.hh>
 

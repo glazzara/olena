@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/alias/dpoint2d.hh>
 
 
@@ -50,7 +50,7 @@ namespace mln
      *
      */
     struct disk2d : public internal::window_base< dpoint2d, disk2d >,
-		    public internal::dpoints_base_< dpoint2d, disk2d >
+		    public internal::dpsites_impl< dpoint2d, disk2d >
     {
       /*! \brief Constructor.
        *

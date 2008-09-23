@@ -35,7 +35,7 @@
 
 
 # include <mln/core/site_set/box.hh>
-# include <mln/core/site_set/line2d.hh>
+# include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/site_set/p_centered.hh>
 # include <mln/core/site_set/p_if.hh>

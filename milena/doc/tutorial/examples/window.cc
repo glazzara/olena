@@ -6,6 +6,7 @@
 # include <mln/debug/println.hh>
 
 # include <mln/core/alias/neighb2d.hh>
+# include <mln/convert/to.hh>
 
 
 template <typename I, typename W, typename P>

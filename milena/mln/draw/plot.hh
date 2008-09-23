@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/site_set/line2d.hh>
+# include <mln/core/site_set/p_line2d.hh>
 # include <mln/level/paste.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>

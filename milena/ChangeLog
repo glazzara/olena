@@ -1,5 +1,38 @@
 2008-09-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Get consistent naming for p_line2d and dpsites_impl.
+
+	Ensure consistent naming.
+	* mln/core/site_set/line2d.hh: Rename as...
+	* mln/core/site_set/p_line2d.hh: ...this.
+	* mln/core/internal/dpoints_base.hh: Rename as...
+	* mln/core/internal/dpsites_impl.hh: ...this.
+	(dpoints_base_): Rename as...
+	(dpsites_impl): ...this.
+	* doc/tutorial/examples/p_line2d.cc,
+	* mln/core/site_set/all.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/clock_neighb.hh,
+	* mln/draw/line.hh,
+	* mln/draw/plot.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/line.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/cuboid3d.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/disk2d.hh,
+	* sandbox/pellegrin/set/core/line2d.hh,
+	* sandbox/nivault/dyn_line.hh: Update.
+
+	Misc.
+	* mln/core/neighborhood.hh: Remove; obsolete because we now fully
+	rely on neighb<W>.
+	* doc/tutorial/examples/window.cc (include): Fix missing.
+
+2008-09-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Make basic neighborhoods rely on neighb<W> and fix from_to.
 
 	* tests/core/other/neighb.cc: Revamp.

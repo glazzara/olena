@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/dpsites_piter.hh>
 
@@ -47,7 +47,7 @@ namespace mln
  
     template <typename M, typename C>
     struct dyn_line : public Window< dyn_line<M,C> >,
-		      public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+		      public internal::dpsites_impl<dpoint_<M, C>, point_<M, C> >
     {
       /// Point associated type.
       typedef point_<M, int> point;
