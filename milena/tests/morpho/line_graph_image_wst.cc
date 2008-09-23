@@ -37,10 +37,6 @@
 
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/draw/graph.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-
 
 int main()
 {
