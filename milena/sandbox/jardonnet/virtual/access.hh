@@ -74,11 +74,12 @@ namespace mln
       const I& ima;
     };
 
+
     template < typename I >
     struct bilinear
       : public fun::internal::selector_<const algebra::vec<3,float>,
                                         // 3,float is a dummy parameter (real is n,T)
-                                        mln_value(I), linear<I> >::ret
+                                        mln_value(I), bilinear<I> >::ret
     {
       typedef mln_value(I) result;
 
@@ -100,40 +101,55 @@ namespace mln
         double x = v[0];
         double y = v[1];
 
-        double x1 = mln_psite(I)::coord(v[0]);
-        double x2 = mln_psite(I)::coord(v[0]+ 1);
-        double y1 = mln_psite(I)::coord(v[1]);
-        double y2 = mln_psite(I)::coord(v[1]+ 1);
+        double x1 = std::floor(v[0]);
+        double x2 = std::floor(v[0]) + 1;
+        double y1 = std::floor(v[1]);
+        double y2 = std::floor(v[1]) + 1;
 
+        //if (not ima.has(point2d(x1, y1))) return mln_value(I)();
         vsum q11 = ima(point2d(x1, y1));
         vsum q12 = ima(point2d(x1, y2));
         vsum q21 = ima(point2d(x2, y1));
         vsum q22 = ima(point2d(x2, y2));
 
-        //if (x2 - x1 == 0)
-        //std::cout << x2 <<" - " << x1 << std::endl;
-        double x2_x1 = (x2 - x1) ? x2 - x1 : 0.000001;
-        double y2_y1 = (y2 - y1) ? y2 - y1 : 0.000001;
+        double x2_x1 = x2 - x1;
+        double y2_y1 = y2 - y1;
 
         // linear interpolation #1
         vsum img_r1 = q11 * (x2 - x) / (x2_x1) +
           q21 * (x - x1) / (x2_x1);
-        //std::cout << "l1 :  "<< img_r1 << std::endl;
 
         // linear interpolation #2
-        vsum img_r2 =  q12 * (x2 - x) / (x2_x1) +
-          q22 * (x - x1) / (x2_x1);
-        //std::cout << "l2 :  "<< img_r2 << std::endl;
+        vsum img_r2 =  q12 * (x2 - x) / (x2_x1) + q22 * (x - x1) / (x2_x1);
 
         // interpolating in y direction
-        // FIXME : Sometime try to cast neg value to rgb component
         vsum res = (img_r1 * (y2 - y) / (y2_y1)
-                    + img_r2 * (y - y1) /(y2_y1));
-        res[0] = (res[0] < 0) ? 0 : res[0];
-        res[1] = (res[1] < 0) ? 0 : res[1];
-        res[2] = (res[2] < 0) ? 0 : res[2];
+                    + img_r2 * (y - y1) / (y2_y1));
 
         return convert::to<mln_value(I)>(res);
+      }
+
+      const I& ima;
+    };
+
+        template < typename I >
+    struct bicubic
+      : public fun::internal::selector_<const algebra::vec<3,float>,
+                                        // 3,float is a dummy parameter (real is n,T)
+                                        mln_value(I), bicubic<I> >::ret
+    {
+      typedef mln_value(I) result;
+
+      bicubic(const I& ima) : ima(ima) {}
+
+      template <unsigned n, typename T>
+      mln_value(I)
+      operator()(const algebra::vec<n,T>& v) const
+      {
+        typedef mln_sum(mln_value(I)) vsum;
+
+
+        //return convert::to<mln_value(I)>(res);
       }
 
       const I& ima;
