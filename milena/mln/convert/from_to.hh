@@ -59,19 +59,10 @@ namespace mln
   {
 
 
-    /// Guards.
-    template <typename F, typename T>
-    void
-    from_to(const F& from, Object<T>& to);
-
+    /// Guard.
     template <typename F, typename T>
     void
     from_to(const Object<F>& from, Object<T>& to);
-
-    template <typename F, typename T>
-    void
-    from_to(const Object<F>& from, T& to);
-    /// end of Guards.
 
 
     template <typename T>
@@ -87,28 +78,17 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    /// Guards.
-    template <typename F, typename T>
-    void
-    from_to(const F&, Object<T>&)
-    {
-      mlc_abort(F)::check();
-    }
-
+    // Guard.
     template <typename F, typename T>
     void
     from_to(const Object<F>&, Object<T>&)
     {
+      // This particular from-to is not defined!
+      //
+      // Either this conversion is meaningless or an overload is
+      // missing.
       mlc_abort(F)::check();
     }
-
-    template <typename F, typename T>
-    void
-    from_to(const Object<F>&, T&)
-    {
-      mlc_abort(F)::check();
-    }
-    /// end of Guards.
 
 
     // Image -> Site_Set.

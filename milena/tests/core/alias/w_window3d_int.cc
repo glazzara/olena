@@ -33,9 +33,8 @@
 #include <mln/core/alias/w_window3d_int.hh>
 #include <mln/win/cube3d.hh>
 
+#include <mln/convert/to.hh>
 #include <mln/convert/to_image.hh>
-#include <mln/convert/to_w_window.hh>
-
 #include <mln/convert/to_fun.hh>
 #include <mln/estim/sum.hh>
 
@@ -67,7 +66,7 @@ int main()
     image3d<int> ima = convert::to_image(w_win);
     debug::println(ima);
     std::cout << std::endl;
-    w_window3d_int w_win_2 = convert::to_w_window(ima);
+    w_window3d_int w_win_2 = convert::to<w_window3d_int>(ima);
     mln_assertion(w_win_2 == w_win);
   }
 

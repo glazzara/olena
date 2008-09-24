@@ -50,6 +50,5 @@ namespace mln
 # include <mln/convert/to_tiles.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/convert/to_window.hh>
-# include <mln/convert/to_w_window.hh>
 
 #endif // ! MLN_CONVERT_ALL_HH

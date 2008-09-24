@@ -156,7 +156,8 @@ namespace mln
       box<P> b = geom::bbox(win);
       mln_image_from(W, bool) ima(b);
       level::fill(ima, false);
-      mln_qiter(W) q(win, P::origin);
+      P O = P::origin;
+      mln_qiter(W) q(win, O);
       for_all(q)
 	ima(q) = true;
       return ima;

@@ -30,11 +30,12 @@
 
 #include <mln/core/alias/w_window1d_int.hh>
 #include <mln/win/segment1d.hh>
+#include <mln/convert/to.hh>
 
-#include <mln/convert/to_image.hh>
-#include <mln/convert/to_w_window.hh>
-
+#include <mln/convert/to.hh>
 #include <mln/convert/to_fun.hh>
+#include <mln/convert/to_image.hh>
+
 #include <mln/estim/sum.hh>
 
 
@@ -53,7 +54,8 @@ int main()
     w_window1d_int w_win = make::w_window1d(ws);
 
     image1d<int> ima = convert::to_image(w_win);
-    w_window1d_int w_win_2 = mln::convert::to<w_window1d_int>(ima);
+
+    w_window1d_int w_win_2 = convert::to<w_window1d_int>(ima);
     mln_assertion(w_win_2 == w_win);
   }
 

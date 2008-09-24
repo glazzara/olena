@@ -113,6 +113,16 @@ namespace mln
   };
 
 
+  namespace convert
+  {
+
+    template <typename P>
+    void
+    from_to(const Gpoint<P>& from, mln_delta(P)& to);
+
+  } // end of namespace::convert
+
+
 
   /*! \brief Equality comparison between a couple of grid point \p lhs
    *  and \p rhs.
@@ -252,6 +262,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
   // Gpoint
 
   template <typename E>
@@ -264,6 +275,29 @@ namespace mln
     const vec& (E::*m)() const = & E::to_vec;
     m = 0;
   }
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename P>
+    inline
+    void
+    from_to(const Gpoint<P>& p_, mln_delta(P)& dp)
+    {
+      // Instead of "dp.to_vec() = exact(p).to_vec();" that
+      // does not compile (cause to_vec returns const), we
+      // have:
+      enum { n = P::dim };
+      const P& p = exact(p_);
+      for (unsigned i = 0; i < n; ++i)
+	dp[i] = p[i];
+    }
+
+  } // end of namespace::convert
+
 
   // Operators.
 

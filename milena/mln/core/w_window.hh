@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,11 +35,17 @@
 
 # include <map>
 
-# include <mln/core/window.hh>
 # include <mln/core/concept/weighted_window.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/window.hh>
 # include <mln/core/dpsites_piter.hh>
+
 # include <mln/value/ops.hh>
 # include <mln/util/ord.hh>
+# include <mln/metal/converts_to.hh>
+# include <mln/literal/zero.hh>
+# include <mln/convert/to.hh>
+
 
 namespace mln
 {
@@ -109,14 +115,28 @@ namespace mln
     const mln::window<D>& win() const;
 
 
-    /// Apply a central symmetry to the target window.
-    w_window<D,W>& sym();
+    /// Apply a central symmetry to the window.
+    void sym();
+
+    /// Clear this window.
+    void clear();
 
   protected:
 
     mln::window<D> win_;
     std::vector<W> wei_;
   };
+
+
+  namespace convert
+  {
+
+    template <typename I, typename D, typename W>
+    inline
+    void
+    from_to(const Image<I>& from, w_window<D,W>& to);
+
+  } // end of namespace mln::convert
 
 
   /* \brief Print a weighted window \p w_win into an output stream \p ostr.
@@ -268,15 +288,47 @@ namespace mln
 
   template <typename D, typename W>
   inline
-  w_window<D,W>&
+  void
   w_window<D,W>::sym()
   {
     w_window<D,W> tmp;
     for (unsigned i = 0; i < this->size(); ++i)
       tmp.insert(this->w(i), - this->dp(i));
     *this = tmp;
-    return *this;
   }
+
+  template <typename D, typename W>
+  inline
+  void
+  w_window<D,W>::clear()
+  {
+    win_.clear();
+    wei_.clear();
+  }
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename I, typename D, typename W>
+    inline
+    void
+    from_to(const Image<I>& from_, w_window<D,W>& to)
+    {
+      mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
+      mlc_converts_to(mln_value(I),  W)::check();
+      const I& ima = exact(from_);
+      to.clear();
+      mln_piter(I) p(ima.domain());
+      for_all(p)
+	if (ima(p) != literal::zero)
+	  to.insert(ima(p), convert::to<D>(p));
+    }
+
+  } // end of namespace mln::convert
+
 
   // operators
 

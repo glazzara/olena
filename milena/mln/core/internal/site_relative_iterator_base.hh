@@ -139,6 +139,8 @@ namespace mln
     site_relative_iterator_base<S,E>::center_at(const P& c)
     {
       internal::get_adr(c_, c);
+      mln_precondition(c_ != 0);
+      // c_ == 0 means that the center c does not have the expected type.
       this->invalidate();
     }
 

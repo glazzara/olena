@@ -41,6 +41,7 @@
 # include <mln/core/concept/object.hh>
 # include <mln/value/ops.hh> // So that we can handle builtins, scalars, and objects.
 
+# include <mln/convert/from_to.hxx>
 # include <mln/core/concept/proxy.hxx>
 
 
@@ -200,6 +201,19 @@ namespace mln
   };
 
 
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename P, typename T>
+    void
+    from_to(const Proxy<P>& from, T& to);
+
+  } // end of namespace mln::convert
+
+
+
   // subject
 
   template <typename T>
@@ -271,6 +285,22 @@ namespace mln
     q_subject (E::*m_)() = & E::subj_;
     m_ = 0;
   }
+
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename P, typename T>
+    void
+    from_to(const Proxy<P>& from, T& to)
+    {
+      from_to(exact(from).unproxy_(), to);
+    }
+
+  } // end of namespace mln::convert
 
 
   // unproxy_rec

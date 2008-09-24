@@ -42,7 +42,6 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
-# include <mln/convert/from_to.hh>
 
 
 

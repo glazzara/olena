@@ -1,5 +1,33 @@
 2008-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make w_window tests pass with from_to instead of to_w_window.
+
+	* mln/core/w_window.hh (win): Update sig.
+	(clear): New.
+	(from_to): New overload.
+	* mln/core/internal/site_relative_iterator_base.hh: Update.
+	* mln/core/neighb.hh: Update.
+	* mln/core/concept/proxy.hh (from_to): New overload.
+	* mln/core/concept/weighted_window.hh (sym): Update.
+	* mln/core/concept/gpoint.hh (from_to): New overload.
+	* mln/convert/to.hh: Decouple from convert::from_to so...
+	(include from_to.hh): Replace by...
+	(include from_to.hxx): ...this.
+	Update includes.
+	* mln/convert/to_image.hh: Fix temporary; O can be *-able.
+	* mln/geom/bbox.hh: Likewise.
+	* mln/convert/to_w_window.hh: Remove; obsolete because replaced by
+	from_to.
+	* mln/convert/from_to.hh: Fix ambiguities in multiple guards; keep
+	only one.
+	* mln/convert/all.hh,
+	* tests/core/alias/w_window1d_int.cc,
+	* tests/core/alias/w_window2d_int.cc,
+	* tests/core/alias/w_window3d_int.cc: Update.
+	* mln/convert/from_to.hxx: New.
+
+2008-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add dispatch for morpho erosion.
 
 	* tests/morpho/temp.erosion.cc: New.

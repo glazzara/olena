@@ -35,7 +35,10 @@
  * \todo Prefer a static check that fails in the "unknown" case.
  */
 
-# include <mln/convert/from_to.hh>
+# include <mln/core/routine/exact.hh>
+# include <mln/metal/equal.hh>
+# include <mln/trace/all.hh>
+# include <mln/convert/from_to.hxx>
 
 
 namespace mln
@@ -47,7 +50,6 @@ namespace mln
 
     /// Conversion of the object \p from towards an object with type \c T.
     template <typename T, typename O>
-    inline
     T
     to(const O& from);
 
@@ -56,7 +58,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
 
     template <typename T, typename O>
     inline

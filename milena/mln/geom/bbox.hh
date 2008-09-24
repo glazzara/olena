@@ -145,7 +145,8 @@ namespace mln
     {
       typedef mln_psite(W) P;
       accu::bbox<P> b;
-      mln_qiter(W) q(exact(win), literal::origin);
+      P O = literal::origin;
+      mln_qiter(W) q(exact(win), O);
       for_all(q)
 	b.take(q);
       return b;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,10 +33,10 @@
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/win/rectangle2d.hh>
 
+#include <mln/convert/to.hh>
 #include <mln/convert/to_image.hh>
-#include <mln/convert/to_w_window.hh>
-
 #include <mln/convert/to_fun.hh>
+
 #include <mln/estim/sum.hh>
 
 
@@ -57,7 +57,7 @@ int main()
     w_window2d_int w_win = make::w_window2d(ws);
 
     image2d<int> ima = convert::to_image(w_win);
-    w_window2d_int w_win_2 = convert::to_w_window(ima);
+    w_window2d_int w_win_2 = convert::to<w_window2d_int>(ima);
     mln_assertion(w_win_2 == w_win);
   }
 
