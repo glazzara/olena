@@ -41,6 +41,12 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add piters on n-faces able to convert to mln::complex_psite.
+
+	* mln/core/site_set/p_complex_faces_piter.hh: New.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise complex_faces_iter's.
 
 	* tests/core/other/complex.cc (test_complex_faces_iter):
