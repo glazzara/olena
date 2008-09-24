@@ -32,6 +32,8 @@
  *
  * \brief Definition of a morpher that makes an image become readable
  * with floating coordinates.
+ *
+ * \todo think having has(algebra::vec v) as a method
  */
 
 # include <cmath>
@@ -44,32 +46,47 @@ namespace mln
 {
 
   // Fwd decl.
-  template <typename I> struct interpolated;
+  template <typename I, template <class> class F> struct interpolated;
 
   namespace internal
   {
 
     /// Data structure for \c mln::interpolated<I>.
-    template <typename I>
-    struct data< interpolated<I> >
+    template <typename I, template <class> class F>
+    struct data< interpolated<I,F> >
     {
       data(I& ima);
 
-      I ima_;
+      I& ima_;
     };
 
   } // end of namespace mln::internal
 
+
+  namespace trait
+  {
+
+    template <typename I, template <class> class F>
+    struct image_< interpolated<I,F> >
+      : public image_<I> // Same as I except...
+    {
+      // ...these changes.
+      typedef trait::image::value_io::read_only value_io;
+    };
+
+  } // end of namespace mln::trait
+
+
   /*! \brief Morpher that makes underlaying image being accessed with floating coordinate.
    *
    */
-  template <typename I>
+  template <typename I, template <class> class F>
   struct interpolated :
-    public mln::internal::image_identity< I, mln_pset(I), interpolated<I> >
+    public mln::internal::image_identity< I, mln_pset(I), interpolated<I,F> >
   {
 
     typedef mln::internal::image_identity< I, mln_pset(I),
-					   interpolated<I> > super_;
+					   interpolated<I,F> > super_;
 
     /// Point_Site associated type.
     typedef mln_psite(I) psite;
@@ -84,7 +101,7 @@ namespace mln
     typedef mln_rvalue(I) rvalue;
 
     /// Skeleton.
-    typedef interpolated< tag::image_<I> > skeleton;
+    typedef interpolated< tag::image_<I>, F > skeleton;
 
 
     /// Constructors.
@@ -102,15 +119,15 @@ namespace mln
     using super_::has;
 
     /// Test if a pixel value is accessible at \p v.
-    bool has(const mln::algebra::vec<I::point::dim, float>& v) const;
+    bool has(const mln::algebra::vec<I::psite::dim, float>& v) const;
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
     using super_::operator();
 
-    mln_value(I) operator()(const mln::algebra::vec<I::point::dim, float>& v) const;
+    mln_value(I) operator()(const mln::algebra::vec<I::psite::dim, float>& v) const;
 
-
+    const F<I> fun_;
   };
 
 
@@ -122,66 +139,68 @@ namespace mln
 
     // internal::data< interpolated<I,S> >
 
-    template <typename I>
+    template <typename I, template <class> class F>
     inline
-    data< interpolated<I> >::data(I& ima)
+    data< interpolated<I,F> >::data(I& ima)
       : ima_(ima)
     {
     }
 
   } // end of namespace mln::internal
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
-  interpolated<I>::interpolated(I& ima)
+  interpolated<I,F>::interpolated(I& ima)
+    : fun_(ima)
   {
     mln_precondition(ima.has_data());
     init_(ima);
   }
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
-  interpolated<I>::interpolated()
+  interpolated<I,F>::interpolated()
   {
   }
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
   void
-  interpolated<I>::init_(I& ima)
+  interpolated<I, F >::init_(I& ima)
   {
     mln_precondition(ima.has_data());
-    this->data_ = new internal::data< interpolated<I> >(ima);
+    this->data_ = new internal::data< interpolated<I,F> >(ima);
   }
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
-  bool interpolated<I>::has_data() const
+  bool interpolated<I,F>::has_data() const
   {
     mln_invariant(this->data_->ima_.has_data());
     return true;
   }
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
-  bool interpolated<I>::has(const mln::algebra::vec<I::point::dim, float>& v) const
+  bool interpolated<I,F>::has(const mln::algebra::vec<I::psite::dim, float>& v) const
   {
     mln_psite(I) p;
-    for (unsigned i = 0; i < I::point::dim; ++i)
+    for (unsigned i = 0; i < I::psite::dim; ++i)
       p[i] = static_cast<int>(round(v[i]));
     return this->data_->ima_.has(p);
   }
 
-  template <typename I>
+  template <typename I, template <class> class F>
   inline
   mln_value(I)
-  interpolated<I>::operator()(const mln::algebra::vec<I::point::dim, float>& v) const
+  interpolated<I,F>::operator()(const mln::algebra::vec<I::psite::dim, float>& v) const
   {
-    mln_psite(I) p;
-    for (unsigned i = 0; i < I::point::dim; ++i)
-      p[i] = static_cast<int>(round(v[i]));
-    mln_assertion(this->data_->ima_.has(p));
-    return this->data_->ima_(p);
+    // mln_psite(I) p;
+    //     for (unsigned i = 0; i < I::point::dim; ++i)
+    //       p[i] = static_cast<int>(round(v[i]));
+    //     mln_assertion(this->data_->ima_.has(p));
+    //     return this->data_->ima_(p);
+    return fun_(v);
   }
 
 # endif // ! MLN_INCLUDE_ONLY
