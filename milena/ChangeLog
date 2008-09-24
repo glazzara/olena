@@ -41,6 +41,15 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise complex_faces_iter's.
+
+	* tests/core/other/complex.cc (test_complex_faces_iter):
+	New function.
+	Use it...
+	(main): ...here.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::complex known complex_faces_iter's.
 
 	* mln/core/complex.hh: Include mln/core/complex_faces_iter.hh.

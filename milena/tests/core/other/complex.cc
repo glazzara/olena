@@ -37,6 +37,7 @@ using namespace mln;
 
 // Forward declaration.
 template <unsigned N, unsigned D> void test_faces_iter(complex<D>& c);
+template <unsigned N, unsigned D> void test_complex_faces_iter(complex<D>& c);
 
 
 int main()
@@ -137,24 +138,56 @@ int main()
   // Iterator on n-faces of C.  //
   // -------------------------- //
 
+  /* FIXME: There's probably useless code here; I (Roland) think that
+     faces_{fwd,bkd}_iter<N, D> won't be really useful to work with
+     actual complex processing since they are not really flexible ---
+     but I'm not sure.  */
+
+  /* Using faces_{fwd,bkd}_iter_<N, D>, which are proxies to
+     face_handles<N, D>.  */
   test_faces_iter<0>(c);
   test_faces_iter<1>(c);
   test_faces_iter<2>(c);
+
+  /* Using complex_faces_{fwd,bkd}_iter_<N, D>, which are proxies to
+     any_face_handles<N>.  */
+  test_complex_faces_iter<0>(c);
+  test_complex_faces_iter<1>(c);
+  test_complex_faces_iter<2>(c);
+
 
   /* FIXME: Exercice more iterators (see
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
   // ...
-
 }
+
 
 template <unsigned N, unsigned D>
 void
 test_faces_iter(complex<D>& c)
 {
+  std::cout << "test_faces_iter<" << N << ", " << D << ">:"
+	    << std::endl;
   mln_fwd_fiter(N, complex<D>) fwd_nf(c);
   mln_bkd_fiter(N, complex<D>) bkd_nf(c);
   for_all_2(fwd_nf, bkd_nf)
     std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
+  std::cout << std::endl;
+}
+
+template <unsigned N, unsigned D>
+void
+test_complex_faces_iter(complex<D>& c)
+{
+  std::cout << "test_complex_faces_iter<" << N << ", " << D << ">:"
+	    << std::endl;
+  /* FIXME: Provide sugar.  Maybe redefined mln_fwd_fiter and
+     mln_bkd_fiter so that they expand as complex_faces_iters (instead
+     of faces_iters).  */
+  complex_faces_fwd_iter_<N, D> fwd_ncf(c);
+  complex_faces_bkd_iter_<N, D> bkd_ncf(c);
+  for_all_2(fwd_ncf, bkd_ncf)
+    std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
   std::cout << std::endl;
 }
