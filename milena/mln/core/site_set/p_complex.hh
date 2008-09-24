@@ -33,7 +33,6 @@
 
 # include <mln/core/internal/site_set_base.hh>
 
-# include <mln/util/tracked_ptr.hh>
 # include <mln/core/complex.hh>
 
 # include <mln/core/complex_psite.hh>
@@ -44,6 +43,8 @@ namespace mln
 {
 
   // Forward declarations.
+  template <unsigned D, typename P> class p_complex;
+
   template <unsigned D, typename P> class p_complex_fwd_piter_;
   template <unsigned D, typename P> class p_complex_bkd_piter_;
 
@@ -98,9 +99,6 @@ namespace mln
     /// \brief Construct a complex psite set from a complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
-    ///
-    /// \a gr is \em copied internally, so that the complex psite set is
-    /// still valid after the initial complex has been removed.
     p_complex (const complex<D>& cplx);
 
     /// Associated types.
@@ -161,29 +159,20 @@ namespace mln
 
   private:
     /// The complex on which this pset is built.
-    /* FIXME:Get rid of this `mutable' qualifier.  This is needed for
-       compatiblity reasons with any_face_handle (see p_complex_piter)
+    /* FIXME: Get rid of this `mutable' qualifier.  This is needed for
+       compatiblity reasons with any_face_handle (see
+       p_complex_piter).
 
        We should either
 
-       - do not use any_face_handle in the implementation of
-         p_complex_piter;
-
-       - have an additional version of any_face_handles holding a
+       - have an additional version of any_face_handle holding a
          const (not mutable) complex;
 
-       - or even have face_handle and any_face_handle do not hold a
-         reference on a complex, leading to a design of complexes
-         similar to graphs, where vertex and edge handles (named `id's)
-         are not tied to a specific graph.  */
-    mutable util::tracked_ptr< complex<D> > cplx_;
-
-    // FIXME: Remove as soon as the tracked_ptr is move into the
-    // complex itself.
-    template <unsigned D_, typename P_>
-    friend
-    bool operator==(const p_complex<D_, P_>& lhs,
-		    const p_complex<D_, P_>& rhs);
+       - have face_handle and any_face_handle do not hold a reference
+         on a complex, leading to a design of complexes similar to
+         graphs, where vertex and edge handles (named `id's) are not
+         tied to a specific graph.  */
+    mutable complex<D> cplx_;
   };
 
 
@@ -214,8 +203,7 @@ namespace mln
   template <unsigned D, typename P>
   inline
   p_complex<D, P>::p_complex(const complex<D>& cplx)
-    // Create a deep, managed copy of CPLX.
-    : cplx_(new complex<D>(cplx))
+    : cplx_(cplx)
   {
   }
 
@@ -232,7 +220,7 @@ namespace mln
   std::size_t
   p_complex<D, P>::nfaces() const
   {
-    return cplx_->nfaces();
+    return cplx_.nfaces();
   }
 
   template <unsigned D, typename P>
@@ -240,8 +228,7 @@ namespace mln
   bool
   p_complex<D, P>::is_valid() const
   {
-    // FIXME: Might be too low-level, again.
-    return (cplx_.ptr_);
+    return true;
   }
 
   template <unsigned D, typename P>
@@ -272,7 +259,7 @@ namespace mln
   p_complex<D, P>::cplx() const
   {
     mln_precondition(is_valid());
-    return *cplx_.ptr_;
+    return cplx_;
   }
 
   template <unsigned D, typename P>
@@ -280,7 +267,7 @@ namespace mln
   p_complex<D, P>::cplx()
   {
     mln_precondition(is_valid());
-    return *cplx_.ptr_;
+    return cplx_;
   }
 
 
@@ -292,17 +279,17 @@ namespace mln
   bool
   operator==(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
   {
-    /* FIXME: We should not rely on pointer equality here, as graph
-       will soon become shells using (shared) tracked pointers to
-       actual data.  So, delegate the equality test to the graphs
-       themselves.  */
-    return lhs.cplx_.ptr_ == rhs.cplx_.ptr_;
+    /* FIXME: When actual location data is attached to a p_complex,
+       check also the equlity w.r.t. to these data.  */
+    return lhs.cplx() == rhs.cplx();
   }
 
   template <unsigned D, typename P>
   bool
   operator<=(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
   {
+    /* FIXME: When actual location data is attached to a p_complex,
+       check also the equality w.r.t. to these data.  */
     return lhs == rhs;
   }
 

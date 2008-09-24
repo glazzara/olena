@@ -35,7 +35,6 @@
 # include <mln/core/internal/site_set_base.hh>
 
 # include <mln/accu/bbox.hh>
-# include <mln/util/tracked_ptr.hh>
 # include <mln/core/complex.hh>
 
 # include <mln/core/faces_psite.hh>
@@ -77,12 +76,10 @@ namespace mln
     typedef p_faces<N, D, P> self_;
     typedef internal::site_set_base_< faces_psite<N, D, P>, self_ > super_;
 
-    /// \brief Construct a complex psite set from a complex.
+    /// \brief Construct a faces psite set from an mln::complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
     ///
-    /// \a gr is \em copied internally, so that the complex psite set is
-    /// still valid after the initial complex has been removed.
     p_faces (const complex<D>& cplx);
 
     /// Associated types.
@@ -144,12 +141,19 @@ namespace mln
 
   private:
     /// The complex on which this pset is built.
-    util::tracked_ptr< complex<D> > cplx_;
+    /* FIXME: Get rid of this `mutable' qualifier.  This is needed for
+       compatiblity reasons with face_handle (see p_faces_piter).
 
-    template <unsigned D_, unsigned N_, typename P_>
-    friend
-    bool operator==(const p_faces<D_, N_, P_>& lhs,
-		    const p_faces<D_, N_, P_>& rhs);
+       We should either
+
+       - have an additional version of face_handle holding a const
+         (not mutable) complex;
+
+       - have face_handle and any_face_handle do not hold a reference
+         on a complex, leading to a design of complexes similar to
+         graphs, where vertex and edge handles (named `id's) are not
+         tied to a specific graph.  */
+    mutable complex<D> cplx_;
   };
 
 
@@ -180,8 +184,7 @@ namespace mln
   template <unsigned N, unsigned D, typename P>
   inline
   p_faces<N, D, P>::p_faces(const complex<D>& cplx)
-    // Create a deep, managed copy of CPLX.
-    : cplx_(new complex<D>(cplx))
+    : cplx_(cplx)
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
@@ -200,7 +203,7 @@ namespace mln
   std::size_t
   p_faces<N, D, P>::nfaces() const
   {
-    return cplx_->template nfaces<N>();
+    return cplx_.template nfaces<N>();
   }
 
   template <unsigned N, unsigned D, typename P>
@@ -208,8 +211,7 @@ namespace mln
   bool
   p_faces<N, D, P>::is_valid() const
   {
-    // FIXME: Might be too low-level, again.
-    return (cplx_.ptr_);
+    return true;
   }
 
   template <unsigned N, unsigned D, typename P>
@@ -239,16 +241,16 @@ namespace mln
   complex<D>&
   p_faces<N, D, P>::cplx() const
   {
-    mln_precondition(cplx_);
-    return *cplx_.ptr_;
+    mln_precondition(is_valid());
+    return cplx_;
   }
 
   template <unsigned N, unsigned D, typename P>
   complex<D>&
   p_faces<N, D, P>::cplx()
   {
-    mln_precondition(cplx_);
-    return *cplx_.ptr_;
+    mln_precondition(is_valid());
+    return cplx_;
   }
 
 
@@ -260,13 +262,17 @@ namespace mln
   bool
   operator==(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs)
   {
-    return lhs.cplx_.ptr_ == rhs.cplx_.ptr_;
+    /* FIXME: When actual location data is attached to a p_faces,
+       check also the equality w.r.t. to these data.  */
+    return lhs.cplx() == rhs.cplx();
   }
 
   template <unsigned N, unsigned D, typename P>
   bool
   operator<=(const p_faces<N, D, P>& lhs, const p_faces<N, D, P>& rhs)
   {
+    /* FIXME: When actual location data is attached to a p_faces,
+       check also the equality w.r.t. to these data.  */
     return lhs == rhs;
   }
 
