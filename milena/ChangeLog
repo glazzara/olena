@@ -1,3 +1,32 @@
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Move complex-related entities to mln/topo/.
+
+	* mln/topo/: New directory.
+	* tests/topo/: New directory.
+	* mln/core/complex.hh,
+	* mln/core/complex_faces_iter.hh,
+	* mln/core/face.hh,
+	* mln/core/faces_iter.hh,
+	* mln/core/internal/complex_iter_base.hh,
+	* tests/core/other/complex.cc:
+	Move...
+	* mln/topo/complex.hh,
+	* mln/topo/complex_faces_iter.hh,
+	* mln/topo/face.hh,
+	* mln/topo/faces_iter.hh,
+	* mln/topo/internal/complex_iter_base.hh,
+	* tests/topo/complex.cc:
+	...here.
+	Adjust.
+	* tests/core/other/Makefile.am
+	(check_PROGRAM): Remove complex.
+	(complex_SOURCES): Remove.
+	* tests/topo/Makefile.am: New.
+	(check_PROGRAM): Add complex.
+	(complex_SOURCES, TESTS): New.
+	* tests/Makefile.am (SUBDIRS): Add topo.
+
 2008-09-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make w_window tests pass with from_to instead of to_w_window.

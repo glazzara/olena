@@ -25,19 +25,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/other/complex.cc
+/// \file tests/topo/complex.cc
 /// \brief Test of mln::complex.
 
 #include <iostream>
 
-#include <mln/core/complex.hh>
+#include <mln/topo/complex.hh>
 
 using namespace mln;
 
 
 // Forward declaration.
-template <unsigned N, unsigned D> void test_faces_iter(complex<D>& c);
-template <unsigned N, unsigned D> void test_complex_faces_iter(complex<D>& c);
+template <unsigned N, unsigned D> void test_faces_iter(topo::complex<D>& c);
+template <unsigned N, unsigned D> void test_complex_faces_iter(topo::complex<D>& c);
 
 
 int main()
@@ -66,24 +66,24 @@ int main()
   | Complex construction.  |
   `-----------------------*/
 
-  complex<D> c;
+  topo::complex<D> c;
 
   // 0-faces (points).
-  face_handle<0, D> v0 = c.add_face();
-  face_handle<0, D> v1 = c.add_face();
-  face_handle<0, D> v2 = c.add_face();
-  face_handle<0, D> v3 = c.add_face();
+  topo::face_handle<0, D> v0 = c.add_face();
+  topo::face_handle<0, D> v1 = c.add_face();
+  topo::face_handle<0, D> v2 = c.add_face();
+  topo::face_handle<0, D> v3 = c.add_face();
  
   // 1-faces (segments).
-  face_handle<1, D> e0 = c.add_face(v0 + v1);
-  face_handle<1, D> e1 = c.add_face(v0 + v2);
-  face_handle<1, D> e2 = c.add_face(v1 + v2);
-  face_handle<1, D> e3 = c.add_face(v0 + v3);
-  face_handle<1, D> e4 = c.add_face(v2 + v3);
+  topo::face_handle<1, D> e0 = c.add_face(v0 + v1);
+  topo::face_handle<1, D> e1 = c.add_face(v0 + v2);
+  topo::face_handle<1, D> e2 = c.add_face(v1 + v2);
+  topo::face_handle<1, D> e3 = c.add_face(v0 + v3);
+  topo::face_handle<1, D> e4 = c.add_face(v2 + v3);
 
   // 2-faces (triangles).
-  face_handle<2, D> t0 = c.add_face(e0 + e1 + e2);
-  face_handle<2, D> t1 = c.add_face(e1 + e3 + e4);
+  topo::face_handle<2, D> t0 = c.add_face(e0 + e1 + e2);
+  topo::face_handle<2, D> t1 = c.add_face(e1 + e3 + e4);
 
   std::cout << c << std::endl;
 
@@ -107,12 +107,12 @@ int main()
   `-------------------*/
 
   // Get the face data from (``static'') face handle E0.
-  const face<1, D>& face1 = e0.to_face();
+  const topo::face<1, D>& face1 = e0.to_face();
 
   // Any-face handle.
-  any_face_handle<D> af(e0);
+  topo::any_face_handle<D> af(e0);
   // Get the face data from (``dynamic'') face handle AF.
-  const face<1, D>& face2 = af.to_face<1>();
+  const topo::face<1, D>& face2 = af.to_face<1>();
 
   mln_assertion(&face1 == &face2);
 
@@ -128,8 +128,8 @@ int main()
 
   // Iterators on a complex (not complex_image), or more precisely on
   // (all) the faces of complex C.
-  mln_fwd_citer_(complex<D>) fwd_f(c);
-  mln_bkd_citer_(complex<D>) bkd_f(c);
+  mln_fwd_citer_(topo::complex<D>) fwd_f(c);
+  mln_bkd_citer_(topo::complex<D>) bkd_f(c);
   for_all_2(fwd_f, bkd_f)
     std::cout << fwd_f << ' ' << bkd_f << std::endl;
   std::cout << std::endl;
@@ -165,12 +165,12 @@ int main()
 
 template <unsigned N, unsigned D>
 void
-test_faces_iter(complex<D>& c)
+test_faces_iter(topo::complex<D>& c)
 {
   std::cout << "test_faces_iter<" << N << ", " << D << ">:"
 	    << std::endl;
-  mln_fwd_fiter(N, complex<D>) fwd_nf(c);
-  mln_bkd_fiter(N, complex<D>) bkd_nf(c);
+  mln_fwd_fiter(N, topo::complex<D>) fwd_nf(c);
+  mln_bkd_fiter(N, topo::complex<D>) bkd_nf(c);
   for_all_2(fwd_nf, bkd_nf)
     std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
   std::cout << std::endl;
@@ -178,15 +178,15 @@ test_faces_iter(complex<D>& c)
 
 template <unsigned N, unsigned D>
 void
-test_complex_faces_iter(complex<D>& c)
+test_complex_faces_iter(topo::complex<D>& c)
 {
   std::cout << "test_complex_faces_iter<" << N << ", " << D << ">:"
 	    << std::endl;
   /* FIXME: Provide sugar.  Maybe redefined mln_fwd_fiter and
      mln_bkd_fiter so that they expand as complex_faces_iters (instead
      of faces_iters).  */
-  complex_faces_fwd_iter_<N, D> fwd_ncf(c);
-  complex_faces_bkd_iter_<N, D> bkd_ncf(c);
+  topo::complex_faces_fwd_iter_<N, D> fwd_ncf(c);
+  topo::complex_faces_bkd_iter_<N, D> bkd_ncf(c);
   for_all_2(fwd_ncf, bkd_ncf)
     std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
   std::cout << std::endl;

@@ -35,6 +35,7 @@ SUBDIRS =					\
   subsampling					\
   tag						\
   test						\
+  topo						\
   trace						\
   trait						\
   util						\
