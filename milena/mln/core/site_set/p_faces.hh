@@ -34,10 +34,12 @@
 
 # include <mln/core/internal/site_set_base.hh>
 
-# include <mln/accu/bbox.hh>
 # include <mln/core/complex.hh>
 
 # include <mln/core/faces_psite.hh>
+# include <mln/core/site_set/p_faces_piter.hh>
+
+# include <mln/core/site_set/p_complex.hh>
 
 
 namespace mln
@@ -45,11 +47,9 @@ namespace mln
 
   // Forward declarations.
   template <unsigned N, unsigned D, typename P> class p_faces;
-  // FIXME: Enable when available.
-#if 0
+
   template <unsigned N, unsigned D, typename P> class p_faces_fwd_piter_;
   template <unsigned N, unsigned D, typename P> class p_faces_bkd_piter_;
-#endif
 
 
   namespace trait
@@ -79,8 +79,14 @@ namespace mln
     /// \brief Construct a faces psite set from an mln::complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
+    p_faces(const complex<D>& cplx);
+
+    /// \brief Construct a faces psite set from an mln::p_complex.
     ///
-    p_faces (const complex<D>& cplx);
+    /// \param gr The complex upon which the complex psite set is built.
+    ///
+    /// \todo When available, get location information from \a pc.
+    p_faces(const p_complex<D, P>& pc);
 
     /// Associated types.
     /// \{
@@ -92,11 +98,11 @@ namespace mln
 
     // FIXME: Fake.
     /// Forward Site_Iterator associated type.
-    typedef void fwd_piter;
+    typedef p_faces_fwd_piter_<N, D, P> fwd_piter;
 
     // FIXME: Fake.
     /// Backward Site_Iterator associated type.
-    typedef void bkd_piter;
+    typedef p_faces_bkd_piter_<N, D, P> bkd_piter;
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
@@ -119,6 +125,7 @@ namespace mln
     // simplify (and lighten) the implementation of piters, psites,
     // etc.
 
+    // FIXME: This method is probably useless now.
     /// Is this site set valid?
     bool is_valid() const;
 
@@ -192,6 +199,15 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
+  p_faces<N, D, P>::p_faces(const p_complex<D, P>& pc)
+    : cplx_(pc.cplx())
+  {
+    // Ensure N is compatible with D.
+    metal::bool_< N <= D >::check();
+  }
+
+  template <unsigned N, unsigned D, typename P>
+  inline
   unsigned
   p_faces<N, D, P>::nsites() const
   {
@@ -223,7 +239,7 @@ namespace mln
     return
       // Check whether P's complex is compatible with this pset's complex.
       (p.site_set() == *this) &&
-      // Check whether the complex has the face associated to P.
+      // Check whether P is valid.
       (p.is_valid());
   }
 

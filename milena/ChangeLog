@@ -1,5 +1,17 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add iterators on p_faces.
+
+	* mln/core/site_set/p_faces_piter.hh: New.
+	Add forward declarations for these iterators...
+	* mln/core/site_set/p_faces.hh: ...here.
+	(mln::p_faces<N,D,P>::fwd_piter): Set to p_faces_fwd_piter_<N,D,P>.
+	(mln::p_faces<N,D,P>::bkd_piter): Set to p_faces_bkd_piter_<N,D,P>.
+	(mln::p_faces<N, D, P>::p_faces(const p_complex<D, P>&)):
+	New ctor.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make internal::p_complex_piter_base generic w.r.t. the site set.
 
 	* mln/core/internal/p_complex_piter_base.hh
