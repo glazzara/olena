@@ -1,5 +1,19 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Make internal::p_complex_piter_base generic w.r.t. the site set.
+
+	* mln/core/internal/p_complex_piter_base.hh
+	(mln::internal::p_complex_piter_base<I, P, E>): Take an additional
+	parameter and turn this class into...
+	(mln::internal::p_complex_piter_base<I, S, P, E>): ...this.
+	Adjust inheritance and member definitions.
+	(mln::internal::p_complex_piter_base<I, S, P, E>::complex_dim):
+	Remove constant.
+	* mln/core/site_set/p_complex_piter.hh: Catch up with the changes
+	in mln::internal::p_complex_piter_base.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::complex_image be accessible via faces_psites.
 
 	* mln/core/image/complex_image.hh

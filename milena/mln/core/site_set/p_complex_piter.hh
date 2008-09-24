@@ -31,10 +31,19 @@
 /// \file mln/core/site_set/p_complex_piter.hh
 /// \brief Definition of point iterator on complex-based pset.
 
+# include <mln/core/site_set/p_complex.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
+# include <mln/core/complex_iter.hh>
 
 namespace mln
 {
+
+  // Forward declarations.
+  template <unsigned D, typename P> class p_complex;
+
+  template <unsigned D> class complex_fwd_iter_;
+  template <unsigned D> class complex_bkd_iter_;
+
 
   /*-----------------------------.
   | p_complex_fwd_piter_<D, P>.  |
@@ -44,12 +53,15 @@ namespace mln
   template <unsigned D, typename P>
   class p_complex_fwd_piter_
     : public internal::p_complex_piter_base_< complex_fwd_iter_<D>,
+					      p_complex<D, P>,
 					      P,
 					      p_complex_fwd_piter_<D, P> >
   {
     typedef p_complex_fwd_piter_<D, P> self_;
-    typedef
-    internal::p_complex_piter_base_< complex_fwd_iter_<D>, P, self_ > super_;
+    typedef internal::p_complex_piter_base_< complex_fwd_iter_<D>,
+					     p_complex<D, P>,
+					     P,
+					     self_ > super_;
 
   public:
     /// Construction and assignment.
@@ -68,12 +80,15 @@ namespace mln
   template <unsigned D, typename P>
   class p_complex_bkd_piter_
     : public internal::p_complex_piter_base_< complex_bkd_iter_<D>,
+					      p_complex<D, P>,
 					      P,
 					      p_complex_bkd_piter_<D, P> >
   {
     typedef p_complex_bkd_piter_<D, P> self_;
-    typedef
-    internal::p_complex_piter_base_< complex_bkd_iter_<D>, P, self_ > super_;
+    typedef internal::p_complex_piter_base_< complex_bkd_iter_<D>,
+					     p_complex<D, P>,
+					     P,
+					     self_ > super_;
 
   public:
     /// Construction and assignment.

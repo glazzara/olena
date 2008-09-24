@@ -33,40 +33,37 @@
 /// iterators on mln::p_complex.
 
 # include <mln/core/internal/site_set_iterator_base.hh>
-# include <mln/core/site_set/p_complex.hh>
-# include <mln/core/complex_psite.hh>
-# include <mln/core/complex_iter.hh>
 
+/* FIXME: Rename internal::p_complex_piter_base_ to something else, as
+   it is also used for p_faces piters.  Maybe
+   internal::complex_piter_base_, but it is really close to
+   internal::complex_iter_base_... */
 
 namespace mln
 {
 
-  // Forward declarations.
-  template <unsigned D, typename P> class p_complex;
-  template <unsigned D, typename P> class complex_psite;
-
   namespace internal
   {
 
-    /*---------------------------------.
-    | p_complex_piter_base_<I, P, E>.  |
-    `---------------------------------*/
+    /*------------------------------------.
+    | p_complex_piter_base_<I, S, P, E>.  |
+    `------------------------------------*/
+
+    // FIXME: P could probably be deduced from S.
 
     /// \brief Factoring class for iterators on mln::p_complex.
     ///
     /// \arg \p I The type of the underlying complex iterator.
+    /// \arg \p S The associated site set type.
     /// \arg \p P The associated site type.
     /// \arg \p E The type exact type of the iterator.
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     class p_complex_piter_base_
-      : public internal::site_set_iterator_base< p_complex<I::complex_dim, P>,
-						 p_complex_piter_base_<I, P, E> >
+      : public internal::site_set_iterator_base< S,
+						 p_complex_piter_base_<I, S, P, E> >
     {
-      static const unsigned D = I::complex_dim;
-
-      typedef p_complex_piter_base_<I, P, E> self_;
-      typedef internal::site_set_iterator_base< p_complex<D, P>,
-						self_ > super_;
+      typedef p_complex_piter_base_<I, S, P, E> self_;
+      typedef internal::site_set_iterator_base< S, self_ > super_;
 
       /// The type of the underlying complex iterator.
       typedef I iter;
@@ -75,7 +72,7 @@ namespace mln
       /// Construction and assignment.
       /// \{
       p_complex_piter_base_();
-      p_complex_piter_base_(const p_complex<D, P>& pc);
+      p_complex_piter_base_(const S& pc);
       /// \}
 
       /// Manipulation.
@@ -106,87 +103,88 @@ namespace mln
     };
 
 
-    /// Print an mln::p_complex_piter_base_<I, P, E>.
-    template <typename I, typename P, typename E>
+    /// Print an mln::p_complex_piter_base_<I, S, P, E>.
+    template <typename I, typename S, typename P, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, P, E>& p);
+    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, S, P, E>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*---------------------------------.
-    | p_complex_piter_base_<I, P, E>.  |
-    `---------------------------------*/
+    /*------------------------------------.
+    | p_complex_piter_base_<I, S, P, E>.  |
+    `------------------------------------*/
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
-    p_complex_piter_base_<I, P, E>::p_complex_piter_base_()
+    p_complex_piter_base_<I, S, P, E>::p_complex_piter_base_()
     {
       mln_postcondition(!this->is_valid());
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
-    p_complex_piter_base_<I, P, E>::p_complex_piter_base_(const p_complex<D, P>& pc)
+    p_complex_piter_base_<I, S, P, E>::p_complex_piter_base_(const S& pc)
     {
       this->change_target(pc);
       iter_.set_cplx(pc.cplx());
       mln_postcondition(!this->is_valid());
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     bool
-    p_complex_piter_base_<I, P, E>::is_valid_() const
+    p_complex_piter_base_<I, S, P, E>::is_valid_() const
     {
       return iter_.is_valid();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::invalidate_()
+    p_complex_piter_base_<I, S, P, E>::invalidate_()
     {
       iter_.invalidate();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::start_()
+    p_complex_piter_base_<I, S, P, E>::start_()
     {
       iter_.start();
       if (this->is_valid())
 	update_();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::next_()
+    p_complex_piter_base_<I, S, P, E>::next_()
     {
       iter_.next_();
       if (this->is_valid())
 	update_();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::update_()
+    p_complex_piter_base_<I, S, P, E>::update_()
     {
       mln_precondition(this->is_valid());
       // Update psite_.
-      p_ = complex_psite<D, P>(exact(this)->site_set(), iter_);
+      typedef mln_psite(S) psite;
+      p_ = psite(exact(this)->site_set(), iter_);
     }
 
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, P, E>& p)
+    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, S, P, E>& p)
     {
       return ostr << p.unproxy_();
     }
