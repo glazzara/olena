@@ -141,23 +141,47 @@ int main()
   | Complex-based image iterators.  |
   `--------------------------------*/
 
+  // ---------------------------- //
+  // Iterators on all the faces.  //
+  // ---------------------------- //
+
   mln_fwd_piter_(ima_t) fp(ima.domain());
   for_all(fp)
     std::cout << "ima(" << fp << ") = " << ima(fp) << std::endl;
-
   std::cout << std::endl;
 
   mln_bkd_piter_(ima_t) bp(ima.domain());
   for_all(bp)
     std::cout << "ima(" << bp << ") = " << ima(bp) << std::endl;
+  std::cout << std::endl;
+
+
+  // ----------------------------------------------- //
+  // Iterators on n-faces (with n fixed in [0, D]).  //
+  // ----------------------------------------------- //
+
+  // We need to instantiate a (non temporary) object on the stack, so
+  // that it can be referenced later by face_psites held by iterators
+  // (as for windows and neighborhoods).
+
+  typedef p_faces<0, D, point2d> p0f_t;
+  p0f_t pf(ima.domain());
+  mln_piter_(p0f_t) f0p(pf);
+  for_all(f0p)
+    /* FIXME: This explicit call to unproxy_() is not elegant... But
+       is required for ima() to work, since the target operator() is
+       templated.  */
+    std::cout << "ima(" << f0p << ") = " << ima(f0p.unproxy_()) << std::endl;
 
 
   /* FIXME: Implement other psite iterators, for instance:
 
-     - iterators on N-faces with N fixed in [0, D] (using p_faces
-       and faces_psite?)
      - iterators on N-faces with N in a subset of [0, D];
      - etc.  */
+
+  // ---------------------------------------- //
+  // Iterators on windows and neighborhoods.  //
+  // ---------------------------------------- //
 
   /* FIXME: Implement windows (and neighborhoods) and corresponding
      iterators for complex-based images.
@@ -188,5 +212,7 @@ int main()
      - what else?
 
      We might want to look at operators on (simplicial?) complexes
-     like star, link, etc. and possibly implement them.  */
+     like star, link, etc. and possibly implement them.
+
+     See also https://trac.lrde.org/olena/ticket/162.  */
 }

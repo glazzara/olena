@@ -1,5 +1,9 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/core/image/complex_image.cc: Exercise iterators on p_faces.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add iterators on p_faces.
 
 	* mln/core/site_set/p_faces_piter.hh: New.
