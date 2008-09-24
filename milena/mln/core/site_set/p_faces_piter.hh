@@ -30,6 +30,9 @@
 
 /// \file mln/core/site_set/p_faces_piter.hh
 /// \brief Definition of point iterator on complex-based pset.
+///
+/// Types defined here are akin to parametrized typedefs: the code is
+/// factored in mln::internal::p_complex_piter_base_.
 
 # include <mln/core/site_set/p_faces.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
@@ -50,7 +53,8 @@ namespace mln
   | p_faces_fwd_piter_<N, D, P>.  |
   `------------------------------*/
 
-  /// \brief Forward iterator on point sites of a mln::p_faces<N, D, P>.
+  /// \brief Forward iterator on the \p N-faces sites of an
+  /// mln::p_faces<N, D, P>.
   template <unsigned N, unsigned D, typename P>
   class p_faces_fwd_piter_
     : public internal::p_complex_piter_base_< faces_fwd_iter_<N, D>,
@@ -77,7 +81,8 @@ namespace mln
   | p_faces_bkd_piter_<N, D, P>.  |
   `------------------------------*/
 
-  /// \brief Backward iterator on point sites of a mln::p_faces<N, D, P>.
+  /// \brief Backward iterator on the \p N-faces sites of an
+  /// mln::p_faces<N, D, P>.
   template <unsigned N, unsigned D, typename P>
   class p_faces_bkd_piter_
   /* FIXME: Rename internal::p_complex_piter_base_ to something else,

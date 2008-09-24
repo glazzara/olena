@@ -41,6 +41,14 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Misc. documentation fixes in complex-related entities.
+
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_faces_piter.hh:
+	Here.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Get back to the previous, simpler interface of mln::complex_image.
 
 	* mln/core/image/complex_image.hh
