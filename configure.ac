@@ -216,6 +216,7 @@ AC_CONFIG_FILES([
     milena/tests/subsampling/Makefile
     milena/tests/tag/Makefile
     milena/tests/test/Makefile
+    milena/tests/topo/Makefile
     milena/tests/trace/Makefile
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
