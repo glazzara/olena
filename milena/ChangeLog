@@ -1,5 +1,19 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Update complex-based images w.r.t. the creation of mln/topo/.
+
+	* mln/core/faces_psite.hh,
+	* mln/core/complex_psite.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_complex_faces_piter.hh,
+	* mln/core/site_set/p_complex_piter.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_faces_piter.hh,
+	* tests/core/image/complex_image.cc:
+	Adjust names.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Move complex-related entities to mln/topo/.
 
 	* mln/topo/: New directory.

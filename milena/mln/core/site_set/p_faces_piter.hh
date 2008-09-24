@@ -36,7 +36,7 @@
 
 # include <mln/core/site_set/p_faces.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
-# include <mln/core/faces_iter.hh>
+# include <mln/topo/faces_iter.hh>
 
 
 namespace mln
@@ -57,13 +57,13 @@ namespace mln
   /// mln::p_faces<N, D, P>.
   template <unsigned N, unsigned D, typename P>
   class p_faces_fwd_piter_
-    : public internal::p_complex_piter_base_< faces_fwd_iter_<N, D>,
+    : public internal::p_complex_piter_base_< topo::faces_fwd_iter_<N, D>,
 					      p_faces<N, D, P>,
 					      P,
 					      p_faces_fwd_piter_<N, D, P> >
   {
     typedef p_faces_fwd_piter_<N, D, P> self_;
-    typedef internal::p_complex_piter_base_< faces_fwd_iter_<N, D>,
+    typedef internal::p_complex_piter_base_< topo::faces_fwd_iter_<N, D>,
 					     p_faces<N, D, P>,
 					     P,
 					     self_ > super_;
@@ -87,13 +87,13 @@ namespace mln
   class p_faces_bkd_piter_
   /* FIXME: Rename internal::p_complex_piter_base_ to something else,
      as it is also used for p_faces piters! */
-    : public internal::p_complex_piter_base_< faces_bkd_iter_<N, D>,
+    : public internal::p_complex_piter_base_< topo::faces_bkd_iter_<N, D>,
 					      p_faces<N, D, P>,
 					      P,
 					      p_faces_bkd_piter_<N, D, P> >
   {
     typedef p_faces_bkd_piter_<N, D, P> self_;
-    typedef internal::p_complex_piter_base_< faces_bkd_iter_<N, D>,
+    typedef internal::p_complex_piter_base_< topo::faces_bkd_iter_<N, D>,
 					     p_faces<N, D, P>,
 					     P,
 					     self_ > super_;
@@ -148,6 +148,5 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln
-
 
 #endif // ! MLN_CORE_SITE_SET_P_FACES_PITER_HH

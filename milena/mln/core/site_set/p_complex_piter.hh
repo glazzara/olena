@@ -36,7 +36,7 @@
 
 # include <mln/core/site_set/p_complex.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
-# include <mln/core/complex_iter.hh>
+# include <mln/topo/complex_iter.hh>
 
 namespace mln
 {
@@ -55,13 +55,13 @@ namespace mln
   /// \brief Forward iterator on (all) the faces of an mln::p_complex<D, P>.
   template <unsigned D, typename P>
   class p_complex_fwd_piter_
-    : public internal::p_complex_piter_base_< complex_fwd_iter_<D>,
+    : public internal::p_complex_piter_base_< topo::complex_fwd_iter_<D>,
 					      p_complex<D, P>,
 					      P,
 					      p_complex_fwd_piter_<D, P> >
   {
     typedef p_complex_fwd_piter_<D, P> self_;
-    typedef internal::p_complex_piter_base_< complex_fwd_iter_<D>,
+    typedef internal::p_complex_piter_base_< topo::complex_fwd_iter_<D>,
 					     p_complex<D, P>,
 					     P,
 					     self_ > super_;
@@ -82,13 +82,13 @@ namespace mln
   /// \brief Backward iterator on (all) the faces of an mln::p_complex<D, P>.
   template <unsigned D, typename P>
   class p_complex_bkd_piter_
-    : public internal::p_complex_piter_base_< complex_bkd_iter_<D>,
+    : public internal::p_complex_piter_base_< topo::complex_bkd_iter_<D>,
 					      p_complex<D, P>,
 					      P,
 					      p_complex_bkd_piter_<D, P> >
   {
     typedef p_complex_bkd_piter_<D, P> self_;
-    typedef internal::p_complex_piter_base_< complex_bkd_iter_<D>,
+    typedef internal::p_complex_piter_base_< topo::complex_bkd_iter_<D>,
 					     p_complex<D, P>,
 					     P,
 					     self_ > super_;
@@ -143,6 +143,5 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln
-
 
 #endif // ! MLN_CORE_SITE_SET_P_COMPLEX_PITER_HH

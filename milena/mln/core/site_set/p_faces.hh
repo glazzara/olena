@@ -34,7 +34,7 @@
 
 # include <mln/core/internal/site_set_base.hh>
 
-# include <mln/core/complex.hh>
+# include <mln/topo/complex.hh>
 
 # include <mln/core/faces_psite.hh>
 # include <mln/core/site_set/p_faces_piter.hh>
@@ -71,7 +71,7 @@ namespace mln
   template <unsigned N, unsigned D, typename P>
   struct p_faces
     : public internal::site_set_base_< faces_psite<N, D, P>,
-					p_faces<N, D, P> >
+				       p_faces<N, D, P> >
   {
     typedef p_faces<N, D, P> self_;
     typedef internal::site_set_base_< faces_psite<N, D, P>, self_ > super_;
@@ -79,7 +79,7 @@ namespace mln
     /// \brief Construct a faces psite set from an mln::complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
-    p_faces(const complex<D>& cplx);
+    p_faces(const topo::complex<D>& cplx);
 
     /// \brief Construct a faces psite set from an mln::p_complex.
     ///
@@ -140,10 +140,10 @@ namespace mln
     /// version).
     /* FIXME: Move back the const qualifier on this return type (see
        comment below on cplx_). */
-    complex<D>& cplx() const;
+    topo::complex<D>& cplx() const;
     /// Return the complex associated to the p_faces domain (mutable
     /// version).
-    complex<D>& cplx();
+    topo::complex<D>& cplx();
     /// \}
 
   private:
@@ -160,7 +160,7 @@ namespace mln
          on a complex, leading to a design of complexes similar to
          graphs, where vertex and edge handles (named `id's) are not
          tied to a specific graph.  */
-    mutable complex<D> cplx_;
+    mutable topo::complex<D> cplx_;
   };
 
 
@@ -190,7 +190,7 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  p_faces<N, D, P>::p_faces(const complex<D>& cplx)
+  p_faces<N, D, P>::p_faces(const topo::complex<D>& cplx)
     : cplx_(cplx)
   {
     // Ensure N is compatible with D.
@@ -254,7 +254,7 @@ namespace mln
   }
 
   template <unsigned N, unsigned D, typename P>
-  complex<D>&
+  topo::complex<D>&
   p_faces<N, D, P>::cplx() const
   {
     mln_precondition(is_valid());
@@ -262,7 +262,7 @@ namespace mln
   }
 
   template <unsigned N, unsigned D, typename P>
-  complex<D>&
+  topo::complex<D>&
   p_faces<N, D, P>::cplx()
   {
     mln_precondition(is_valid());
@@ -295,6 +295,5 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln
-
 
 #endif // MLN_CORE_SITE_SET_P_FACES_HH

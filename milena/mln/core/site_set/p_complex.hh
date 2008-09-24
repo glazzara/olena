@@ -33,7 +33,7 @@
 
 # include <mln/core/internal/site_set_base.hh>
 
-# include <mln/core/complex.hh>
+# include <mln/topo/complex.hh>
 
 # include <mln/core/complex_psite.hh>
 # include <mln/core/site_set/p_complex_piter.hh>
@@ -105,7 +105,7 @@ namespace mln
     /// \brief Construct a complex psite set from a complex.
     ///
     /// \param gr The complex upon which the complex psite set is built.
-    p_complex (const complex<D>& cplx);
+    p_complex (const topo::complex<D>& cplx);
 
     /// Associated types.
     /// \{
@@ -158,10 +158,10 @@ namespace mln
     /// version)
     /* FIXME: Move back the const qualifier on this return type (see
        comment below on cplx_). */
-    complex<D>& cplx() const;
+    topo::complex<D>& cplx() const;
     /// Return the complex associated to the p_complex domain (mutable
     /// version).
-    complex<D>& cplx();
+    topo::complex<D>& cplx();
     /// \}
 
   private:
@@ -179,7 +179,7 @@ namespace mln
          on a complex, leading to a design of complexes similar to
          graphs, where vertex and edge handles (named `id's) are not
          tied to a specific graph.  */
-    mutable complex<D> cplx_;
+    mutable topo::complex<D> cplx_;
   };
 
 
@@ -209,7 +209,7 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  p_complex<D, P>::p_complex(const complex<D>& cplx)
+  p_complex<D, P>::p_complex(const topo::complex<D>& cplx)
     : cplx_(cplx)
   {
   }
@@ -262,7 +262,7 @@ namespace mln
   }
 
   template <unsigned D, typename P>
-  complex<D>&
+  topo::complex<D>&
   p_complex<D, P>::cplx() const
   {
     mln_precondition(is_valid());
@@ -270,7 +270,7 @@ namespace mln
   }
 
   template <unsigned D, typename P>
-  complex<D>&
+  topo::complex<D>&
   p_complex<D, P>::cplx()
   {
     mln_precondition(is_valid());
@@ -303,6 +303,5 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln
-
 
 #endif // MLN_CORE_SITE_SET_P_COMPLEX_HH

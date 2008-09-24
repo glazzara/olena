@@ -33,7 +33,7 @@
 
 # include <mln/core/internal/pseudo_site_base.hh>
 
-# include <mln/core/complex.hh>
+# include <mln/topo/complex.hh>
 
 // FIXME: There's a circular dependency issue between complex_psite
 // and p_complex (likewise for faces_psite and p_faces): they have to
@@ -72,7 +72,8 @@ namespace mln
     /// \{
     complex_psite();
     /// \pre pc.cplx() == face.cplx().
-    complex_psite(const p_complex<D, P>& pc, const any_face_handle<D>& face);
+    complex_psite(const p_complex<D, P>& pc,
+		  const topo::any_face_handle<D>& face);
     complex_psite(const p_complex<D, P>& pc, unsigned n, unsigned face_id);
     /// \}
 
@@ -106,7 +107,7 @@ namespace mln
     /// Face handle manipulators.
     /// \{
     /// Return the face handle of this point site.
-    any_face_handle<D> face() const;
+    topo::any_face_handle<D> face() const;
 
     /// Return the dimension of the face of this psite.
     unsigned n() const;
@@ -141,7 +142,7 @@ namespace mln
     /// The mln::p_faces this point site belongs to.
     const target* pc_;
     /// The handle of the face this psite is pointing towards.
-    any_face_handle<D> face_;
+    topo::any_face_handle<D> face_;
     /// \}
   };
 
@@ -208,7 +209,7 @@ namespace mln
   template <unsigned D, typename P>
   inline
   complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
-				     const any_face_handle<D>& face)
+				     const topo::any_face_handle<D>& face)
     : pc_(&pc),
       face_(face)
   {
@@ -288,7 +289,7 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  any_face_handle<D>
+  topo::any_face_handle<D>
   complex_psite<D, P>::face() const
   {
     return face_;
