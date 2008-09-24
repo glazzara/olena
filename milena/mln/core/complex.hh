@@ -44,8 +44,10 @@
 # include <mln/util/tracked_ptr.hh>
 
 # include <mln/core/face.hh>
+
 # include <mln/core/complex_iter.hh>
 # include <mln/core/faces_iter.hh>
+# include <mln/core/complex_faces_iter.hh>
 
 
 namespace mln

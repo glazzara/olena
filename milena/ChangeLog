@@ -41,6 +41,12 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have mln::complex known complex_faces_iter's.
+
+	* mln/core/complex.hh: Include mln/core/complex_faces_iter.hh.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add iterators on n-faces able to convert to mln::any_face_handle's.
 
 	* mln/core/complex_faces_iter.hh: New.
