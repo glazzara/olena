@@ -73,6 +73,10 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Change the target complex.
+    // FIXME: Same comment as the ctor above.
+    void set_cplx(complex<D>& c);
+
     /// Test if the iterator is valid.
     void start();
     /// Go to the next point.
@@ -120,6 +124,10 @@ namespace mln
 
     /// Manipulation.
     /// \{
+    /// Change the target complex.
+    // FIXME: Same comment as the ctor above.
+    void set_cplx(complex<D>& c);
+
     /// Start an iteration.
     void start();
     /// Go to the next point.
@@ -163,6 +171,16 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
+  }
+
+  template <unsigned N, unsigned D>
+  inline
+  void
+  faces_fwd_iter_<N, D>::set_cplx(complex<D>& c)
+  {
+    face_.set_cplx(c);
+    // Invalidate face_.
+    invalidate();
   }
 
   template <unsigned N, unsigned D>
@@ -235,6 +253,16 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
+  }
+
+  template <unsigned N, unsigned D>
+  inline
+  void
+  faces_bkd_iter_<N, D>::set_cplx(complex<D>& c)
+  {
+    face_.set_cplx(c);
+    // Invalidate face_.
+    invalidate();
   }
 
   template <unsigned N, unsigned D>
