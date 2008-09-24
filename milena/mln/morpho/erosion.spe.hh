@@ -267,7 +267,7 @@ namespace mln
 	erosion_arbitrary_2d_fastest_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(input.values()),
+	    min(),
 	    win_left(set::diff(geom::shift(win, left), win)),
 	    win_right(set::diff(win, geom::shift(win, left))),
 	    win_bot(set::diff(win, geom::shift(win, up))),
@@ -328,8 +328,7 @@ namespace mln
 	trace::entering("morpho::impl:erosion_arbitrary_2d_fastest");
 
 	typedef erosion_arbitrary_2d_fastest_functor<I, W> F;
-	mlc_equal(W, win::octagon2d)::check();
-	F f(input, win);
+	F f(exact(input), exact(win));
 	canvas::browsing::snake_fwd(f);
 
 	trace::exiting("morpho::impl:erosion_arbitrary_2d_fastest");
@@ -363,7 +362,7 @@ namespace mln
 	erosion_arbitrary_2d_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(input.values()),
+	    min(),
 	    win_left(set::diff(geom::shift(win, left), win)),
 	    win_right(set::diff(win, geom::shift(win, left))),
 	    win_bot(set::diff(win, geom::shift(win, up))),
@@ -424,8 +423,7 @@ namespace mln
 	trace::entering("morpho::impl:erosion_arbitrary_2d");
 
 	typedef erosion_arbitrary_2d_functor<I, W> F;
-	mlc_equal(W, win::octagon2d)::check();
-	F f(input, win);
+	F f(exact(input), exact(win));
 	canvas::browsing::snake_fwd(f);
 
 	trace::exiting("morpho::impl:erosion_arbitrary_2d");
@@ -438,30 +436,147 @@ namespace mln
 
     namespace internal
     {
+
+      // dispatch for the generic version
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
+				   trait::image::speed::fastest,
+				   const I& input, const W& win)
+      {
+	if (win.is_centered())
+	  return impl::erosion_on_set_centered_fastest(input, win);
+	else
+	  return impl::erosion_on_set_fastest(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
+				   trait::image::speed::fastest,
+				   const I& input, const W& win)
+      {
+	return impl::erosion_on_function_fastest(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
+				   trait::image::speed::any,
+				   const I& input, const W& win)
+      {
+	if (win.is_centered())
+	  return erosion_on_set_centered(input, win);
+	else
+	  return impl::generic::erosion_on_set(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
+				   trait::image::speed::any,
+				   const I& input, const W& win)
+      {
+	return impl::generic::erosion_on_function(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(const I& input, const W& win) // Entry point.
+      {
+	return erosion_dispatch_for_generic(mln_trait_image_kind(I)(),
+					    mln_trait_image_speed(I)(),
+					    input, win);
+      }
+
+
+      // dispatch for arbitrary elements
+
+      template <typename I, typename W>
+      bool
+      erosion_chooses_arbitrary(const I& input, const W& win)
+      {
+	return
+	  win.size() >= 25 // size is not too small
+	  &&
+	  // 2d case only
+	  mlc_equal(mln_trait_image_dimension(I),
+		    trait::image::dimension::two_d)::value
+	  &&
+	  // on a grid
+	  mlc_is_a(mln_site(I),
+		   Gpoint)::value
+	  &&
+	  // continuous data
+	  mlc_not_equal(mln_trait_image_value_storage(I),
+			trait::image::value_storage::disrupted)::value;
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_arbitrary(trait::image::speed::fastest,
+				     const I& input, const W& win)
+      {
+	return impl::erosion_arbitrary_2d_fastest(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_arbitrary(trait::image::speed::any,
+				     const I& input, const W& win)
+      {
+	return impl::erosion_arbitrary_2d(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_arbitrary(const I& input, const W& win)
+      {
+	return erosion_dispatch_for_arbitrary(mln_trait_image_speed(I)(),
+					      input, win);
+      }
+
+      // dispatch w.r.t. win
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const W& win)
+      {
+	if (erosion_chooses_arbitrary(input, win))
+	  return erosion_dispatch_for_arbitrary(input, win);
+	else
+	  return erosion_dispatch_for_generic(input, win);
+      }
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::rectangle2d& win)
+      {
+	if (win.size() <= 9) // FIXME: Hard-coded!
+	  return erosion_dispatch_for_generic(input, win);
+	else
+	  return impl::erosion_rectangle2d(input, win);
+      }
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::octagon2d& win)
+      {
+	if (win.size() <= 9) // FIXME: Hard-coded!
+	  return erosion_dispatch_for_generic(input, win);
+	else
+	  return impl::erosion_octagon2d(input, win);
+      }
+
+
+      // The dispatch entry point.
+
       template <typename I, typename W>
       mln_concrete(I)
       erosion_dispatch(const Image<I>& input, const Window<W>& win)
       {
-	if (mlc_equal(mln_trait_image_kind(I)(),
-		      trait::image::kind::logic)::value == true)
-/* FIXME: Temporarily disabled, since this dynamic dispatch triggers
-   errors when class I has no pixter associated type(s).  */
-#if 0
-	  if (mlc_equal(mln_trait_image_speed(I)(),
-			trait::image::speed::fastest)::value == true)
-	    return impl::erosion_on_set_fastest(input, win);
-	  else
-#endif
-	    return impl::generic::erosion_on_set(input, win);
-	else
-// FIXME: Likewise.
-#if 0
-	  if (mlc_equal(mln_trait_image_speed(I)(),
-			trait::image::speed::fastest)::value == true)
-	    return impl::erosion_on_function_fastest(input, win);
-	  else
-#endif
-	    return impl::generic::erosion_on_function(input, win);
+	return erosion_dispatch_wrt_win(exact(input), exact(win));
       }
 
     } // end of namespace mln::morpho::internal
