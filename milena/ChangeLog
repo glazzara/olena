@@ -1,5 +1,9 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/core/site_set/Makefile.am (p_bgraph_SOURCES): Disable.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update complex-based images w.r.t. the creation of mln/topo/.
 
 	* mln/core/faces_psite.hh,

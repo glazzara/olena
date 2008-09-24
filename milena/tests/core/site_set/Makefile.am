@@ -13,7 +13,7 @@ check_PROGRAMS =				\
   pset_if
 
 p_array_SOURCES = p_array.cc
-p_bgraph_SOURCES = p_bgraph.cc
+##p_bgraph_SOURCES = p_bgraph.cc
 p_image_SOURCES = p_image.cc
 p_priority_queue_SOURCES = p_priority_queue.cc
 p_queue_SOURCES = p_queue.cc
