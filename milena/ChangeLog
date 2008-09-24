@@ -1,5 +1,16 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move mln/core/complex_psite.hh to mln/core/site_set/.
+
+	* mln/core/complex_psite.hh: Move...
+	* mln/core/site_set/complex_psite.hh: ...here.
+	Adjust headers guard and documentation.
+	* mln/core/image/complex_image.hh,
+	* mln/core/site_set/p_complex.hh:
+	Adjust paths.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/core/site_set/Makefile.am (p_bgraph_SOURCES): Disable.
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>

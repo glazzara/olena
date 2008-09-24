@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_COMPLEX_PSITE_HH
-# define MLN_CORE_COMPLEX_PSITE_HH
+#ifndef MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
+# define MLN_CORE_SITE_SET_COMPLEX_PSITE_HH
 
-/// \file mln/core/complex_psite.hh
+/// \file mln/core/site_set/complex_psite.hh
 /// \brief Definition of a complex-based point site.
 
 # include <mln/core/internal/pseudo_site_base.hh>
@@ -370,4 +370,4 @@ namespace mln
 
 } // end of mln
 
-#endif // MLN_CORE_COMPLEX_PSITE_HH
+#endif // MLN_CORE_SITE_SET_COMPLEX_PSITE_HH

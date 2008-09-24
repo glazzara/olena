@@ -38,7 +38,7 @@
 # include <mln/core/internal/image_primary.hh>
 # include <mln/metal/vec.hh>
 # include <mln/core/site_set/p_complex.hh>
-# include <mln/core/complex_psite.hh>
+# include <mln/core/site_set/complex_psite.hh>
 # include <mln/value/set.hh>
 
 

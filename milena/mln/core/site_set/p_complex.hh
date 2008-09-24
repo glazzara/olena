@@ -35,7 +35,7 @@
 
 # include <mln/topo/complex.hh>
 
-# include <mln/core/complex_psite.hh>
+# include <mln/core/site_set/complex_psite.hh>
 # include <mln/core/site_set/p_complex_piter.hh>
 # include <mln/core/site_set/p_complex_faces_piter.hh>
 
