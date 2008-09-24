@@ -74,6 +74,19 @@
 
 2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have complexes share common data and behave as pointers.
+
+	* mln/core/complex.hh (mln::internal::complex_data<D>): New class.
+	(mln::complex<D>): No longer inherit from
+	mln::internal::faces_set_mixin<D, D>.
+	(mln::complex<D>::data_): New attribute, holding data previously
+	stored in mln::complex<D>.
+	(mln::complex<D>): Adjust accesses to data.
+	(mln::complex<D>::complex): New default ctor.
+	(operator==(const complex<D>&, const complex<D>&)): New.
+
+2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/morpho/line_graph_image_wst.cc: Remove useless #include's.
 
 2008-09-23  Roland Levillain  <roland@lrde.epita.fr>

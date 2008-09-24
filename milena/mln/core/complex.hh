@@ -41,6 +41,8 @@
 
 # include <mln/metal/bool.hh>
 
+# include <mln/util/tracked_ptr.hh>
+
 # include <mln/core/face.hh>
 # include <mln/core/complex_iter.hh>
 # include <mln/core/faces_iter.hh>
@@ -52,6 +54,9 @@ namespace mln
   // Forward declarations.
   namespace internal
   {
+    template <unsigned D>
+    struct complex_data;
+
     template <unsigned N, unsigned D>
     struct faces_set_mixin;
   }
@@ -67,7 +72,7 @@ namespace mln
 
   /// \brief General complex of dimension \p D.
   template <unsigned D>
-  class complex : private internal::faces_set_mixin<D, D>
+  class complex
   {
   public:
     /// Forward mln::Iterator type iterating on all faces.
@@ -84,6 +89,9 @@ namespace mln
 
     /// Complex construction.
     /// \{
+    /// Create a new \p D-complex.
+    complex();
+
     /// \brief Add a 0-face to the complex.
     face_handle<0u, D> add_face();
 
@@ -131,6 +139,12 @@ namespace mln
     /// \}
 
   private:
+    /// The actual data of the complex.
+    util::tracked_ptr< internal::complex_data<D> > data_;
+
+    template <unsigned D_>
+    friend bool operator==(const complex<D_>& lhs, const complex<D_>& rhs);
+
     /// Accessors.
     /// \{
     template <unsigned N, unsigned D_> friend class face_handle;
@@ -181,10 +195,36 @@ namespace mln
   };
 
 
+  /// Compare two complexes for equality.
+  template <unsigned D>
+  bool
+  operator==(const complex<D>& lhs, const complex<D>& rhs);
+
+
   /// Pretty print a complex.
   template <unsigned D>
   std::ostream&
   operator<<(std::ostream& ostr, const complex<D>& c);
+
+
+  /*---------------.
+  | Complex data.  |
+  `---------------*/
+
+  namespace internal
+  {
+    // Forward declarations.
+    template <unsigned N, unsigned D>
+    struct faces_set_mixin;
+    
+    /// \brief Complex data.
+    template <unsigned D>
+    struct complex_data : faces_set_mixin<D, D>
+    {
+      // Data is contained in super classes.
+    };
+    
+  } // end of namespace mln::internal::complex
 
 
   /*---------------------.
@@ -200,10 +240,9 @@ namespace mln
     template <unsigned N, unsigned D> struct lower_dim_faces_set_mixin;
     template <unsigned N, unsigned D> struct higher_dim_faces_set_mixin;
 
-
-    /*---------------------------------.
-    | mln::internal::faces_set_mixin.  |
-    `---------------------------------*/
+    // -------------------------------- //
+    // mln::internal::faces_set_mixin.  //
+    // -------------------------------- //
 
     /// \brief Recursive mixins of set of faces.
     /// \{
@@ -324,10 +363,10 @@ namespace mln
     /// \}
 
 
-    /*--------------------------------------------.
-    | mln::internal::lower_dim_faces_set_mixin.   |
-    | mln::internal::higher_dim_faces_set_mixin.  |
-    `--------------------------------------------*/
+    // ------------------------------------------- //
+    // mln::internal::lower_dim_faces_set_mixin.   //
+    // mln::internal::higher_dim_faces_set_mixin.  //
+    // ------------------------------------------- //
 
     /// Mixins of mixin mln::faces_set_mixin.
     /// \{
@@ -355,12 +394,19 @@ namespace mln
   `-----------------------*/
 
   template <unsigned D>
+  complex<D>::complex()
+    // Allocate data for this complex.
+    : data_(new internal::complex_data<D>())
+  {
+  }
+
+  template <unsigned D>
   face_handle<0u, D>
   complex<D>::add_face()
   {
     /* FIXME: This is not thread-proof (these two lines should
        form an atomic section).  */
-    internal::faces_set_mixin<0u, D>::faces_.push_back(face<0u, D>());
+    data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face<0u, D>());
     unsigned id = nfaces<0u>() - 1;
 
     return face_handle<0u, D>(*this, id);
@@ -388,7 +434,7 @@ namespace mln
     face<N + 1, D> f;
     /* FIXME: This is not thread-proof (these two lines should
        form an atomic section).  */
-    internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
+    data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
     unsigned id = nfaces<N + 1>() - 1;
 
     face_handle<N + 1, D> fh(*this, id);
@@ -462,7 +508,7 @@ namespace mln
   std::size_t
   complex<D>::nfaces() const
   {
-    return internal::faces_set_mixin<N, D>::faces_.size();
+    return data_->internal::faces_set_mixin<N, D>::faces_.size();
   }
 
 
@@ -489,7 +535,7 @@ namespace mln
   face<N, D>&
   complex<D>::face_(unsigned face_id)
   {
-    return internal::faces_set_mixin<N, D>::faces_[face_id];
+    return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
   }
 
   template <unsigned D>
@@ -497,7 +543,7 @@ namespace mln
   const face<N, D>&
   complex<D>::face_(unsigned face_id) const
   {
-    return internal::faces_set_mixin<N, D>::faces_[face_id];
+    return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
   }
 
   template <unsigned D>
@@ -511,6 +557,18 @@ namespace mln
 
     f1.to_face().connect_higher_dim_face(f2);
     f2.to_face().connect_lower_dim_face(f1);
+  }
+
+
+  /*-------------.
+  | Comparison.  |
+  `-------------*/
+
+  template <unsigned D>
+  bool
+  operator==(const complex<D>& lhs, const complex<D>& rhs)
+  {
+    return lhs.data_.ptr_ == rhs.data_.ptr_;
   }
 
 
@@ -530,7 +588,7 @@ namespace mln
   void
   complex<D>::print(std::ostream& ostr) const
   {
-    internal::faces_set_mixin<D, D>::print_rec_asc(ostr);
+    data_->internal::faces_set_mixin<D, D>::print_rec_asc(ostr);
   }
 
   template <unsigned D>
@@ -541,7 +599,7 @@ namespace mln
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
 
-    internal::faces_set_mixin<N, D>::print(ostr);
+    data_->internal::faces_set_mixin<N, D>::print(ostr);
   }
 
 
@@ -674,7 +732,7 @@ namespace mln
   T
   complex<D>::fold_left_(const BinaryFunction& f, const T& accu) const
   {
-    return internal::faces_set_mixin<D, D>::fold_left_(f, accu);
+    return data_->internal::faces_set_mixin<D, D>::fold_left_(f, accu);
   }
 
   namespace internal
@@ -731,7 +789,7 @@ namespace mln
   {
     // Ensure N is compatible with D.
     mln_precondition(n <= D);
-    return internal::faces_set_mixin<D, D>::apply_if_dim_matches_(n, f);
+    return data_->internal::faces_set_mixin<D, D>::apply_if_dim_matches_(n, f);
   }
 
   namespace internal
