@@ -37,6 +37,7 @@
 
 # include <mln/core/complex_psite.hh>
 # include <mln/core/site_set/p_complex_piter.hh>
+# include <mln/core/site_set/p_complex_faces_piter.hh>
 
 
 namespace mln
@@ -47,6 +48,11 @@ namespace mln
 
   template <unsigned D, typename P> class p_complex_fwd_piter_;
   template <unsigned D, typename P> class p_complex_bkd_piter_;
+
+  template <unsigned N, unsigned D, typename P>
+  class p_complex_faces_fwd_piter_;
+  template <unsigned N, unsigned D, typename P>
+  class p_complex_faces_bkd_piter_;
 
 
   namespace trait
@@ -136,6 +142,7 @@ namespace mln
     // simplify (and lighten) the implementation of piters, psites,
     // etc.
 
+    // FIXME: This method is probably useless now.
     /// Is this site set valid?
     bool is_valid() const;
 
@@ -240,7 +247,7 @@ namespace mln
     return
       // Check whether P's complex is compatible with this pset's complex.
       (p.site_set() == *this) &&
-      // Check whether the complex has the face associated to P.
+      // Check whether P is valid.
       (p.is_valid());
   }
 

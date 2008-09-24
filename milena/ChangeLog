@@ -41,6 +41,14 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have mln::p_complex known p_complex_faces_iter's.
+
+	* mln/core/site_set/p_complex.hh: Add forward declarations for
+	mln::p_complex_faces_fwd_piter_ and
+	mln::p_complex_faces_bkd_piter_
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add piters on n-faces able to convert to mln::complex_psite.
 
 	* mln/core/site_set/p_complex_faces_piter.hh: New.
