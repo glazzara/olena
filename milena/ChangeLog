@@ -41,6 +41,32 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify iterators on complexes.
+
+	* mln/core/complex_iter.hh, mln/core/faces_iter.hh:
+	Fix and supplement documentation.
+	Add missing postconditions.
+	(mln::complex_fwd_iter_<D>::complex_dim)
+	(mln::complex_bkd_iter_<D>::complex_dim):
+	Remove constants.
+	(mln::complex_fwd_iter_<D>::complex_fwd_iter_(const self_&))
+	(mln::complex_bkd_iter_<D>::complex_bkd_iter_(const self_&))
+	(mln::faces_fwd_iter_<N, D>::faces_fwd_iter_(const self_&))
+	(mln::faces_bkd_iter_<N, D>::faces_bkd_iter_(const self_&)):
+	Remove copy ctors.
+	(mln::complex_fwd_iter_<D>::operator=(const self_&))
+	(mln::complex_bkd_iter_<D>::operator=(const self_&))
+	(mln::faces_fwd_iter_<N, D>::operator=(const self_&))
+	(mln::faces_bkd_iter_<N, D>::operator=(const self_&)):
+	Remove assignment operators.
+	(mln::complex_fwd_iter_<D>::set_cplx)
+	(mln::complex_bkd_iter_<D>::set_cplx)
+	(mln::faces_fwd_iter_<N, D>::set_cplx)
+	(mln::faces_bkd_iter_<N, D>::set_cplx):
+	Remove accessors.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify mln::internal::complex_iter_base_.
 
 	* mln/core/internal/complex_iter_base.hh: 

@@ -57,9 +57,6 @@ namespace mln
   public:
     /// Type of associated face.
     typedef any_face_handle<D> face;
-    // FIXME: Rename as dim?
-    /// Dimension of the complex.
-    static const unsigned complex_dim = D;
 
   private:
     typedef complex_fwd_iter_<D> self_;
@@ -73,18 +70,12 @@ namespace mln
     /// Construction and assignment.
     /// \{
     complex_fwd_iter_();
-    // FIXME: See above (internal::complex_iter_base_'s default ctor).
+    // FIXME: See comment in internal::complex_iter_base_'s default ctor
     complex_fwd_iter_(complex<D>& c);
-    complex_fwd_iter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
 
     /// Manipulation.
     /// \{
-    /// Change the target complex.
-    // FIXME: Same comment as the ctor above.
-    void set_cplx(complex<D>& c);
-
     /// Test if the iterator is valid.
     void start();
     /// Go to the next point.
@@ -111,9 +102,6 @@ namespace mln
   public:
     /// Type of associated face.
     typedef any_face_handle<D> face;
-    // FIXME: Rename as dim?
-    /// Dimension of the complex.
-    static const unsigned complex_dim = D;
 
   private:
     typedef complex_bkd_iter_<D> self_;
@@ -127,18 +115,12 @@ namespace mln
     /// Construction and assignment.
     /// \{
     complex_bkd_iter_();
-    // FIXME: See above (internal::complex_iter_base_'s default ctor).
+    // FIXME: See comment in internal::complex_iter_base_'s default ctor
     complex_bkd_iter_(complex<D>& c);
-    complex_bkd_iter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
 
     /// Manipulation.
     /// \{
-    /// Change the target complex.
-    // FIXME: Same comment as the ctor above.
-    void set_cplx(complex<D>& c);
-
     /// Start an iteration.
     void start();
     /// Go to the next point.
@@ -175,34 +157,6 @@ namespace mln
 
   template <unsigned D>
   inline
-  complex_fwd_iter_<D>::complex_fwd_iter_(const complex_fwd_iter_<D>& rhs)
-    : super_(rhs)
-  {
-  }
-
-  template <unsigned D>
-  inline
-  complex_fwd_iter_<D>&
-  complex_fwd_iter_<D>::operator=(const complex_fwd_iter_<D>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
-  }
-
-  template <unsigned D>
-  inline
-  void
-  complex_fwd_iter_<D>::set_cplx(complex<D>& c)
-  {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
-  }
-
-  template <unsigned D>
-  inline
   void 
   complex_fwd_iter_<D>::start()
   {
@@ -221,12 +175,14 @@ namespace mln
 	unsigned face_id = face_.face_id();
 
 	if (face_id + 1 < face_.cplx().nfaces(n))
-	  /* FIXME: Provide accessor any_face_handle::n() returning
+	  /* FIXME: Provide accessor any_face_handle::face_id() returning
 	     a mutable reference?  This way, we could just write
 	 
 	       ++face_.face_id();
 	     
-	     instead of the following.  */
+	     instead of the following.
+
+	     Or add {inc,add}_face_id() services.  */
 	  face_.set_face_id(face_id + 1);
 	else
 	  // Start to iterate on the faces of the next dimension if
@@ -265,34 +221,6 @@ namespace mln
 
   template <unsigned D>
   inline
-  complex_bkd_iter_<D>::complex_bkd_iter_(const complex_bkd_iter_<D>& rhs)
-    : super_(rhs)
-  {
-  }
-
-  template <unsigned D>
-  inline
-  complex_bkd_iter_<D>&
-  complex_bkd_iter_<D>::operator=(const complex_bkd_iter_<D>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
-  }
-
-  template <unsigned D>
-  inline
-  void
-  complex_bkd_iter_<D>::set_cplx(complex<D>& c)
-  {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
-  }
-
-  template <unsigned D>
-  inline
   void 
   complex_bkd_iter_<D>::start()
   {
@@ -311,12 +239,14 @@ namespace mln
 	unsigned face_id = face_.face_id();
 
 	if (face_id > 0)
-	  /* FIXME: Provide accessor any_face_handle::n() returning
+	  /* FIXME: Provide accessor any_face_handle::face_id() returning
 	     a mutable reference?  This way, we could just write
 	 
 	       ++face_.face_id();
 	     
-	     instead of the following.  */
+	     instead of the following.
+
+	     Or add {inc,add}_face_id() services.  */
 	  face_.set_face_id(face_id - 1);
 	else
 	  // Start to iterate on the faces of the previous dimension

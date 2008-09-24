@@ -51,6 +51,7 @@ namespace mln
 					   faces_fwd_iter_<N, D> >
   {
   public:
+    /// Type of associated face.
     typedef face_handle<N, D> face;
 
   private:
@@ -65,18 +66,12 @@ namespace mln
     /// Construction and assignment.
     /// \{
     faces_fwd_iter_();
-    // FIXME: See above (internal::complex_iter_base_'s default ctor).
+    // FIXME: See comment in internal::complex_iter_base_'s default ctor
     faces_fwd_iter_(complex<D>& c);
-    faces_fwd_iter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
 
     /// Manipulation.
     /// \{
-    /// Change the target complex.
-    // FIXME: Same comment as the ctor above.
-    void set_cplx(complex<D>& c);
-
     /// Test if the iterator is valid.
     void start();
     /// Go to the next point.
@@ -102,6 +97,7 @@ namespace mln
 					   faces_bkd_iter_<N, D> >
   {
   public:
+    /// Type of associated face.
     typedef face_handle<N, D> face;
 
   private:
@@ -116,18 +112,12 @@ namespace mln
     /// Construction and assignment.
     /// \{
     faces_bkd_iter_();
-    // FIXME: See above (internal::complex_iter_base_'s default ctor).
+    // FIXME: See comment in internal::complex_iter_base_'s default ctor
     faces_bkd_iter_(complex<D>& c);
-    faces_bkd_iter_(const self_& rhs);
-    self_& operator= (const self_& rhs);
     /// \}
 
     /// Manipulation.
     /// \{
-    /// Change the target complex.
-    // FIXME: Same comment as the ctor above.
-    void set_cplx(complex<D>& c);
-
     /// Start an iteration.
     void start();
     /// Go to the next point.
@@ -153,6 +143,7 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned N, unsigned D>
@@ -162,36 +153,7 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  faces_fwd_iter_<N, D>::faces_fwd_iter_(const faces_fwd_iter_<N, D>& rhs)
-    : super_(rhs)
-  {
-    // Ensure N is compatible with D.
-    metal::bool_< N <= D >::check();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  void
-  faces_fwd_iter_<N, D>::set_cplx(complex<D>& c)
-  {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  faces_fwd_iter_<N, D>&
-  faces_fwd_iter_<N, D>::operator=(const faces_fwd_iter_<N, D>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned N, unsigned D>
@@ -235,6 +197,7 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned N, unsigned D>
@@ -244,36 +207,7 @@ namespace mln
   {
     // Ensure N is compatible with D.
     metal::bool_< N <= D >::check();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  faces_bkd_iter_<N, D>::faces_bkd_iter_(const faces_bkd_iter_<N, D>& rhs)
-    : super_(rhs)
-  {
-    // Ensure N is compatible with D.
-    metal::bool_< N <= D >::check();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  void
-  faces_bkd_iter_<N, D>::set_cplx(complex<D>& c)
-  {
-    face_.set_cplx(c);
-    // Invalidate face_.
-    invalidate();
-  }
-
-  template <unsigned N, unsigned D>
-  inline
-  faces_bkd_iter_<N, D>&
-  faces_bkd_iter_<N, D>::operator=(const faces_bkd_iter_<N, D>& rhs)
-  {
-    if (&rhs == this)
-      return *this;
-    super_::operator=(rhs);
-    return *this;
+    mln_postcondition(!is_valid());
   }
 
   template <unsigned N, unsigned D>
