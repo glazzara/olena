@@ -91,60 +91,7 @@ int main()
 
   // A pset.
   p_complex<D, point2d> pc(c);
-  /* An any-face handle (on E0).
-
-     Note that AF is built on `e0_', not `e0' (e0_ is built on
-     `pc.cplx()', not `c'), since the p_complex `pc' makes a copy of
-     the complex `c', and crossed-ownership tests doesn't work.  I.e.,
-
-       pc.has(e0);
-
-     is false.
-
-
-     FIXME: This might be a problem, since `pc.cplx()' and `c'
-     represent the same complex, in two different memory location (but
-     the former is controlled by PC, while the latter can be modified,
-     or even destroyed).  This is a common problem for ``big'' values
-     that we don't want to manipulate by value (copy), or when we
-     don't want to use expensive, deep comparisons of pset to ensure
-     consistency.  Here (and in graph-based images), we choose to
-     create a copy of the pset once, and manipulate it with a
-     tracked_ptr, to ensure both
-
-     1. perfect control of the lifetime of the pset (here, you can
-        delete `c', and `pc' will still be valid);
-
-     2. no pset duplication when creating new images based on it.
-
-
-     I (Roland) don't see elegant solutions here.  A possiblity would
-     be to disconnect a face_handle from its complex (currently, a
-     face_handle is a bit like a Trivial Iterator from the C++
-     Standard Library), but this means relaxed dynamic checks, and
-     more obscure errors.
-
-     At least, we could have better error messages, i.e., something
-     like
-
-       mln/core/image/complex_image.hh 267:
-       mln::complex_image<D, P, V>::operator(): Uncompatible p_complex.
-
-     instead of
-
-       mln/core/image/complex_image.hh:267:
-       typename mln::complex_image<D, P, V>::lvalue
-       mln::complex_image<D, P, V>::operator()(const mln::complex_psite<D, P>&)
-         [with unsigned int D = 2u,
-                            P = mln::point<mln::grid::square, int>,
-                            V = mln::value::int_u<8u>]:
-       Assertion `this->data_->pc_.has(p)' failed.
-
-     (which looks even uglier in the original, non-indented version).
-
-     Ask Akim for his improved versions of abort() and assert().  */
-  face_handle<1, D> e0_(pc.cplx(), 0);
-  any_face_handle<D> af(e0_);
+  any_face_handle<D> af(e0);
   // An associated psite.
   complex_psite<D, point2d> cs(pc, af);
 
@@ -186,7 +133,7 @@ int main()
   // Create and init an image based on PC.
   ima_t ima(pc, values);
 
-  // Check the value associated to edge E0_ (through complex psite CS).
+  // Check the value associated to edge E0 (through complex psite CS).
   mln_assertion(ima(cs) == 1u);
 
 
