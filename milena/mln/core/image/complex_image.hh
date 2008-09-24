@@ -143,11 +143,17 @@ namespace mln
     void init_(const p_complex<D, P>& pc,
 	       const metal::vec< D + 1, std::vector<V> >& values);
 
-    /// Read-only access of pixel value at point site \p p.
+    /// Read-only access of face value at point site \p p.
     rvalue operator()(const complex_psite<D, P>& p) const;
-
-    /// Read-write access of pixel value at point site \p p.
+    /// Read-write access of face value at point site \p p.
     lvalue operator()(const complex_psite<D, P>& p);
+
+    /// Read-only access of face value at point site \p p.
+    template <unsigned N>
+    rvalue operator()(const faces_psite<N, D, P>& p) const;
+    /// Read-write access of face value at point site \p p.
+    template <unsigned N>
+    lvalue operator()(const faces_psite<N, D, P>& p);
 
     /// Accessors.
     /// \{
@@ -193,8 +199,7 @@ namespace mln
     template <unsigned D, typename P, typename V>
     inline
     data< complex_image<D, P, V> >::data(const p_complex<D, P>& pc,
-					   const metal::vec< D + 1,
-					                     std::vector<V> >& values)
+					 const metal::vec< D + 1, std::vector<V> >& values)
       : values_(values),
 	pc_(pc)
     {
@@ -268,6 +273,28 @@ namespace mln
   complex_image<D, P, V>::operator()(const complex_psite<D, P>& p)
   {
     mln_precondition(this->data_->pc_.has(p));
+    return this->data_->values_[p.n()][p.face_id()];
+  }
+
+  template <unsigned D, typename P, typename V>
+  template <unsigned N>
+  inline
+  typename complex_image<D, P, V>::rvalue
+  complex_image<D, P, V>::operator()(const faces_psite<N, D, P>& p) const
+  {
+    /* FIXME: We should ensure data_->pc_ has P, but it is not
+       trivial: a daces_psite has no idea what a p_complex is.  */
+    return this->data_->values_[p.n()][p.face_id()];
+  }
+
+  template <unsigned D, typename P, typename V>
+  template <unsigned N>
+  inline
+  typename complex_image<D, P, V>::lvalue
+  complex_image<D, P, V>::operator()(const faces_psite<N, D, P>& p)
+  {
+    /* FIXME: We should ensure data_->pc_ has P, but it is not
+       trivial: a daces_psite has no idea what a p_complex is.  */
     return this->data_->values_[p.n()][p.face_id()];
   }
 

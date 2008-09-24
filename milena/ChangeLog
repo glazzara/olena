@@ -1,5 +1,14 @@
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have mln::complex_image be accessible via faces_psites.
+
+	* mln/core/image/complex_image.hh
+	(complex_image<D, P, V>::operator()(const faces_psite<N, D, P>) const)
+	(complex_image<D, P, V>::operator()(const faces_psite<N, D, P>)):
+	New operators.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete iterators on faces.
 
 	* mln/core/faces_iter.hh
