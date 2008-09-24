@@ -65,12 +65,14 @@ namespace mln
 	 milena/tests/complex_image.cc.   */
       complex_iter_base_();
       complex_iter_base_(complex_type& c);
-      complex_iter_base_(const self_& rhs);
-      self_& operator= (const self_& rhs);
       /// \}
 
       /// Manipulation.
       /// \{
+      /// Change the target complex.
+      // FIXME: Same comment as the ctor above.
+      void set_cplx(complex_type& c);
+
       /// Test if the iterator is valid.
       bool is_valid() const;
       /// Invalidate the iterator.
@@ -100,14 +102,9 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const complex_iter_base_<F, E>& p);
 
-  } // end of mln::internal
-
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-  namespace internal
-  {
 
     template <typename F, typename E>
     inline
@@ -133,22 +130,12 @@ namespace mln
 
     template <typename F, typename E>
     inline
-    complex_iter_base_<F, E>::complex_iter_base_(const complex_iter_base_<F, E>& rhs)
-      : face_(rhs.face_)
+    void
+    complex_iter_base_<F, E>::set_cplx(complex_type& c)
     {
-      // Ensure F and E are compatible.
-      mlc_equal(F, typename E::face)::check();
-    }
-
-    template <typename F, typename E>
-    inline
-    complex_iter_base_<F, E>&
-    complex_iter_base_<F, E>::operator=(const complex_iter_base_<F, E>& rhs)
-    {
-      if (&rhs == this)
-	return *this;
-      face_ = rhs.face_;
-      return *this;
+      face_.set_cplx(c);
+      // Invalidate face_.
+      invalidate();
     }
 
     template <typename F, typename E>

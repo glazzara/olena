@@ -41,6 +41,18 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify mln::internal::complex_iter_base_.
+
+	* mln/core/internal/complex_iter_base.hh: 
+	(mln::internal::complex_iter_base_<F, E>::complex_iter_base_):
+	Remove copy ctor.
+	(mln::internal::complex_iter_base_<F, E>::operator=):
+	Remove assignment operator.
+	(mln::internal::complex_iter_base_<F, E>::set_cplx):
+	New accessor.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/core/image/complex_image.cc: Exercise iterators on p_faces.
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
