@@ -41,6 +41,17 @@
 
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Get back to the previous, simpler interface of mln::complex_image.
+
+	* mln/core/image/complex_image.hh
+	(complex_image<D, P, V>::operator()(const faces_psite<N, D, P>) const)
+	(complex_image<D, P, V>::operator()(const faces_psite<N, D, P>)):
+	Remove operators.
+	* tests/core/image/complex_image.cc: Update, and make use of
+	p_complex_faces_iter's.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::p_complex known p_complex_faces_iter's.
 
 	* mln/core/site_set/p_complex.hh: Add forward declarations for

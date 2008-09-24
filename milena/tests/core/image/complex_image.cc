@@ -100,6 +100,10 @@ int main()
   | Faces-based psets.  |
   `--------------------*/
 
+  /* FIXME: Not that p_faces have become less interesting since the
+     introduction of p_complex_faces_{fwd,bkd}_piter_.  Keep this part
+     of the test?  */
+
   // Pset of 0-faces.
   p_faces<0, D, point2d> pf0(c);
   // Pset of 1-faces.
@@ -164,14 +168,10 @@ int main()
   // that it can be referenced later by face_psites held by iterators
   // (as for windows and neighborhoods).
 
-  typedef p_faces<0, D, point2d> p0f_t;
-  p0f_t pf(ima.domain());
-  mln_piter_(p0f_t) f0p(pf);
+  // FIXME: Sugar the name of the iterator.
+  p_complex_faces_fwd_piter_<0, D, point2d> f0p(ima.domain());
   for_all(f0p)
-    /* FIXME: This explicit call to unproxy_() is not elegant... But
-       is required for ima() to work, since the target operator() is
-       templated.  */
-    std::cout << "ima(" << f0p << ") = " << ima(f0p.unproxy_()) << std::endl;
+    std::cout << "ima(" << f0p << ") = " << ima(f0p) << std::endl;
 
 
   /* FIXME: Implement other psite iterators, for instance:
