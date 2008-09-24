@@ -74,6 +74,13 @@
 
 2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have the compiler check more code, even in NDEBUG mode.
+
+	* mln/core/complex.hh (mln::complex<D>::add_face): Use
+	`if (!HAS_NDEBUG)' instead of `#ifndef NDEBUG'.
+
+2008-09-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make use of the new semantics of complexes in tests.
 
 	* tests/core/image/complex_image.cc: Update.

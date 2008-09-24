@@ -420,16 +420,13 @@ namespace mln
     typedef typename std::vector< face_handle<N, D> >::const_iterator iter_t;
 
     // Ensure ADJACENT_FACES are already part of the complex.
-    /* FIXME: We need additional macros in mln/core/contract.hh for
-       big blocks of preconditions like this one.  */
-# ifndef NDEBUG
-    for (iter_t a = adjacent_faces.faces().begin();
-	 a != adjacent_faces.faces().end(); ++a)
-      {
-	mln_precondition(&a->cplx() == this);
-	mln_precondition(a->is_valid());
-      }
-# endif // !NDEBUG
+    if (!HAS_NDEBUG)
+      for (iter_t a = adjacent_faces.faces().begin();
+	   a != adjacent_faces.faces().end(); ++a)
+	{
+	  mln_precondition(&a->cplx() == this);
+	  mln_precondition(a->is_valid());
+	}
 
     face<N + 1, D> f;
     /* FIXME: This is not thread-proof (these two lines should
