@@ -1,3 +1,29 @@
+2008-09-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp extension fill and fix dependant morpho operators.
+
+	* tests/core/routine/extend.cc: New.
+	* tests/core/routine/Makefile.am: Update.
+	* sandbox/geraud/cs2d/dbl_neighb.cc: Rename as...
+	* doc/examples/tuto_one.cc: ...this.
+	Update.
+	* mln/core/image/extension_ima.hh (change_extension): New.
+	* mln/core/routine/extend.hh (todo): New.
+	* mln/core/internal/image_morpher.hh (unmorph_): New.
+	* mln/border/fill.hh: Revamp.
+	* mln/morpho/closing_area.hh (closing_area): New up-to-date sig.
+	* mln/morpho/erosion.spe.hh: Update.
+	De-activate some parts because of multiple windows.
+	(FIXME): New couple.
+	* mln/morpho/erosion.hh (has): Replace by...
+	(domain.has): ...this.
+	* mln/morpho/dilation.hh: Likewise.
+	* mln/morpho/meyer_wst.hh: Likewise.
+	* mln/canvas/morpho/algebraic_union_find.hh: Likewise.
+	* mln/canvas/labeling.hh: Likewise.
+	* mln/morpho/includes.hh: New include.
+	* mln/extension/fill.hh: Revamp.
+
 2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix interpolated and tr_image.

@@ -3,6 +3,7 @@
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 
+# include <mln/core/var.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/alias/window2d.hh>
@@ -11,7 +12,7 @@
 # include <mln/convert/to_image.hh>
 # include <mln/debug/println.hh>
 
-# include "dbl_neighb.hh"
+# include <mln/make/double_neighb2d.hh>
 
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>
@@ -28,14 +29,6 @@
 
 
 
-
-struct is_chess_t
-{ 
-  bool operator()(const mln::point2d& p) const
-  {
-    return p.col() % 2 == p.row() % 2;
-  }
-};
 
 
 struct colorize : mln::Function_v2v< colorize >
@@ -58,6 +51,12 @@ struct colorize : mln::Function_v2v< colorize >
 };
 
 
+  bool is_chess(const mln::point2d& p)
+  {
+    return p.col() % 2 == p.row() % 2;
+  }
+
+
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0] << " input.pgm lambda output.ppm" << std::endl;
@@ -69,6 +68,7 @@ int main(int argc, char* argv[])
 {
   using namespace mln;
   using value::int_u8;
+
 
   if (argc != 4)
     usage(argv);
@@ -84,26 +84,27 @@ int main(int argc, char* argv[])
 		  1, 0, 1,
 		  1, 1, 0 };
 
-  dbl_neighb_<dpoint2d, is_chess_t> nbh;
-  nbh
-    .when_true (make::neighb2d(vert))
-    .when_false(make::neighb2d(hori));
+   mln_VAR( nbh, make::double_neighb2d(is_chess, vert, hori) );
+//   mln_VAR(nbh, c4());
+//    mln_VAR(nbh, c8());
 
-  image2d<int_u8> clo, grad = morpho::gradient(lena, nbh);
-  // io::pgm::save(grad, "grad.pgm");
+  image2d<int_u8> clo, grad = morpho::gradient(lena, nbh.win());
+  // io::pgm::save(grad, "tmp_grad.pgm");
 
   int lambda = atoi(argv[2]);
   if (lambda > 1)
     {
       clo = morpho::closing_area(grad, nbh, lambda);
-      // io::pgm::save(clo, "clo.pgm");
+      io::pgm::save(clo, "tmp_clo.pgm");
     }
   else
     clo = grad;
 
   unsigned l;
   image2d<unsigned> wst = morpho::meyer_wst(clo, nbh, l);
+
   std::cout << "l = " << l << std::endl;
+  debug::println(wst);
 
   io::ppm::save(level::transform(wst, colorize(l)), argv[3]);
 

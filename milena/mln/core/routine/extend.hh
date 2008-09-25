@@ -35,6 +35,7 @@
  *
  * \todo Use the 'instant' mechanism.
  * \todo Deal with ambiguities.
+ * \todo Check that there is no extension yet (except "extendable").
  */
 
 # include <mln/core/image/extension_ima.hh>

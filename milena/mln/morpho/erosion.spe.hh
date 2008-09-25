@@ -93,7 +93,7 @@ namespace mln
 
 	O output;
 	initialize(output, input);
-// 	border::fill(input, mln_max(mln_value(I)));
+ 	extension::fill(input, mln_max(mln_value(I)));
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) o(output);
@@ -124,7 +124,7 @@ namespace mln
 
 	O output;
 	initialize(output, input);
-// 	border::fill(input, true);
+ 	extension::fill(input, true);
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) p_out(output);
@@ -154,7 +154,7 @@ namespace mln
 	const W& win = exact(win_);
 	O output;
 
-// 	border::fill(input, true);
+ 	extension::fill(input, true);
 
 	output = clone(input);
 	mln_piter(I) p(input.domain());
@@ -183,7 +183,7 @@ namespace mln
 	const W& win = exact(win_);
 	O output;
 
-// 	border::fill(input, true);
+ 	extension::fill(input, true);
 
 	output = clone(input);
 	mln_pixter(const I) p(input);
@@ -439,26 +439,29 @@ namespace mln
 
       // dispatch for the generic version
 
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
-				   trait::image::speed::fastest,
-				   const I& input, const W& win)
-      {
-	if (win.is_centered())
-	  return impl::erosion_on_set_centered_fastest(input, win);
-	else
-	  return impl::erosion_on_set_fastest(input, win);
-      }
+      // FIXME: De-activate because when the window is multiple, the access
+      // win.dp(i), used in dpoints_pixter, is impossible.
 
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
-				   trait::image::speed::fastest,
-				   const I& input, const W& win)
-      {
-	return impl::erosion_on_function_fastest(input, win);
-      }
+//       template <typename I, typename W>
+//       mln_concrete(I)
+//       erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
+// 				   trait::image::speed::fastest,
+// 				   const I& input, const W& win)
+//       {
+// 	if (win.is_centered())
+// 	  return impl::erosion_on_set_centered_fastest(input, win);
+// 	else
+// 	  return impl::erosion_on_set_fastest(input, win);
+//       }
+
+//       template <typename I, typename W>
+//       mln_concrete(I)
+//       erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
+// 				   trait::image::speed::fastest,
+// 				   const I& input, const W& win)
+//       {
+// 	return impl::erosion_on_function_fastest(input, win);
+//       }
 
       template <typename I, typename W>
       mln_concrete(I)
@@ -543,9 +546,13 @@ namespace mln
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const W& win)
       {
-	if (erosion_chooses_arbitrary(input, win))
-	  return erosion_dispatch_for_arbitrary(input, win);
-	else
+	// FIXME: De-activate because, when win is multiple,
+	// geom::shift does not work.  We have to introduce
+	// props from windows, then re-write geom::shift.
+
+// 	if (erosion_chooses_arbitrary(input, win))
+// 	  return erosion_dispatch_for_arbitrary(input, win);
+// 	else
 	  return erosion_dispatch_for_generic(input, win);
       }
 

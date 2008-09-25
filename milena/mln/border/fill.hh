@@ -58,16 +58,34 @@ namespace mln
     template <typename I>
     void fill(const Image<I>& ima, const mln_value(I)& v);
 
+
 # ifndef MLN_INCLUDE_ONLY
+
+
+    namespace internal
+    {
+
+      template <typename I>
+      inline
+      void fill_tests(const Image<I>& ima, const mln_value(I)& v)
+      {
+	mln_precondition(exact(ima).has_data());
+      }
+
+    } // end of namespace mln::border::internal
+
 
     namespace impl
     {
 
       template <typename I>
       inline
-      void fill_size_1_(const I& ima, const mln_value(I)& v)
+      void fill_size_1(const Image<I>& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_1_");
+	trace::entering("border::impl::fill_size_1");
+	
+	const I& ima = exact(ima_);
+	internal::fill_tests(ima, v);
 
 	typedef mln_psite(I) P;
 	typedef mln_psite(I) P;
@@ -88,14 +106,18 @@ namespace mln
 		    *(const int*)(&v),
 		    ima.nelements () - st);
 
-	trace::exiting("border::impl::fill_size_1_");
+	trace::exiting("border::impl::fill_size_1");
       }
+
 
       template <typename I>
       inline
-      void fill_size_n_(const I& ima, const mln_value(I)& v)
+      void fill_size_n(const I& ima_, const mln_value(I)& v)
       {
-	trace::entering("border::impl::fill_size_n_");
+	trace::entering("border::impl::fill_size_n");
+
+	const I& ima = exact(ima_);
+	internal::fill_tests(ima, v);
 
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
@@ -112,33 +134,80 @@ namespace mln
 	for (std::size_t i = st; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima).element(i) = v;
 
-	trace::exiting("border::impl::fill_size_n_");
+	trace::exiting("border::impl::fill_size_n");
       }
 
-    }
+
+    } // end of namespace mln::border::impl
+
+
+    namespace internal
+    {
+    
+      // Dispatch.
+
+      template <typename I>
+      inline
+      void fill_dispatch(const Image<I>& ima, const mln_value(I)& v);
+
+      template <typename I>
+      inline
+      void fill_dispatch(mln::trait::image::category::primary,
+			 mln::trait::image::speed::fastest,
+			 I& ima, const mln_value(I)& v)
+      {
+	if (sizeof(mln_value(I)) == 1)
+	  impl::fill_size_1(ima, v);
+	else
+	  impl::fill_size_n(ima, v);
+      }
+
+      template <typename I>
+      inline
+      void fill_dispatch(mln::trait::image::category::primary,
+			 mln::trait::image::speed::any,
+			 I& ima, const mln_value(I)& v)
+      {
+	// No border so no-op.
+      }
+
+      template <typename I>
+      inline
+      void fill_dispatch(mln::trait::image::category::morpher,
+			 mln::trait::image::speed::any,
+			 I& ima, const mln_value(I)& v)
+      {
+	fill_dispatch(ima.unmorph_(), v);
+      }
+
+      template <typename I>
+      inline
+      void fill_dispatch(const Image<I>& ima_, const mln_value(I)& v)
+      {
+	I& ima = const_cast<I&>(exact(ima_));
+	fill_dispatch(mln_trait_image_category(I)(),
+		      mln_trait_image_speed(I)(),
+		      ima, v);
+      }
+
+    } // end of namespace mln::border::internal
+
+
 
     // Facade.
 
     template <typename I>
     inline
-    void fill(const Image<I>& ima_, const mln_value(I)& v)
+    void fill(const Image<I>& ima, const mln_value(I)& v)
     {
       trace::entering("border::fill");
 
-      typedef mln_psite(I) P;
-      const I& ima = exact(ima_);
-
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-      mln_precondition(ima.has_data());
-      if (!ima.border ())
-	return;
-      if (sizeof(mln_value(I)) == 1)
-	impl::fill_size_1_(ima, v);
-      else
-	impl::fill_size_n_(ima, v);
+      internal::fill_tests(ima, v);
+      internal::fill_dispatch(ima, v);
 
       trace::exiting("border::fill");
     }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

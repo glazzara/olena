@@ -25,7 +25,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 #ifndef MLN_CORE_EXTENSION_FILL_HH
 # define MLN_CORE_EXTENSION_FILL_HH
 
@@ -33,12 +32,16 @@
  *
  * \brief Define function that fills domain extension.
  *
+ *
+ * \todo Test the compatibility between val and mln_value(I) because,
+ * while unmorphing, this type can change...
  */
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/image/props.hh>
 # include <mln/border/fill.hh>
 # include <mln/level/fill_with_value.hh>
+
 
 namespace mln
 {
@@ -50,63 +53,136 @@ namespace mln
      *  single value \p v.
      *
      * \param[in,out] ima The image whose domain extension is to be filled.
-     * \param[in] v The value to assign.
+     * \param[in] val The value to assign.
      *
      * \pre \p ima has to be initialized.
      *
      * \todo Optimize with memset if possible.
      */
     template <typename I>
-    void fill(const Image<I>& ima, const mln_value(I)& v);
+    void fill(const Image<I>& ima, const mln_value(I)& val);
 
-    namespace impl
-    {
-      template <typename I>
-      void fill_fixed_extension(const Image<I>& ima, const mln_value(I)& v);
-    }
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
-    void fill(const Image<I>& ima, const mln_value(I)& v)
+
+    namespace internal
     {
-      // Case of ext_io::read_only.
-      if (mlc_equal(mln_trait_image_ext_io(I),
-		    mln::trait::image::ext_io::read_only)::value == true)
-	return; // No-op.
 
-      // Case of ext_domain::none.
-      if (mlc_equal(mln_trait_image_ext_domain(I),
-		    mln::trait::image::ext_domain::none)::value == true)
-	return; // No-op.
+      // Do it.
 
-      // Case of ext_domain::extendable.
-      if (mlc_equal(mln_trait_image_ext_domain(I),
-		    mln::trait::image::ext_domain::extendable)::value == true)
-	return mln::border::fill(ima, v);
-
-
-      // Case of ext_domain::fixed.
-      if (mlc_equal(mln_trait_image_ext_domain(I),
-		    mln::trait::image::ext_domain::fixed)::value == true)
-
-	// Case of ext_value::single.
-	if (mlc_equal(mln_trait_image_ext_value(I),
-		      mln::trait::image::ext_value::single)::value == true)
-	  return impl::fill_fixed_extension(const_cast<I&>(exact(ima)), v);
-	else
-	  return mln::level::fill_with_value(const_cast<I&>(exact(ima)), v);
-
-    }
-
-    namespace impl
-    {
       template <typename I>
-      void fill_fixed_extension(Image<I>& ima_, const mln_value(I)& v)
+      void do_fill(I& ima, const mln_value(I)& val); // Entry point.
+
+      template <typename I>
+      void do_fill(mln::trait::image::ext_domain::some,
+		   mln::trait::image::ext_value::single,
+		   mln::trait::image::ext_domain::none,
+		   I& ima, const mln_value(I)& val)
       {
-	I& ima = exact(ima_);
-	ima.extension() = v;
+	ima.change_extension(val);
       }
+
+      template <typename I>
+      void do_fill(mln::trait::image::ext_domain::some,
+		   mln::trait::image::ext_value::multiple,
+		   mln::trait::image::ext_domain::none,
+		   I& ima, const mln_value(I)& val)
+      {
+	border::fill(ima, val);
+	ima.change_extension(val);
+      }
+
+      template <typename I>
+      void do_fill(mln::trait::image::ext_domain::some,
+		   mln::trait::image::ext_value::any,
+		   mln::trait::image::ext_domain::some,
+		   I& ima, const mln_value(I)& val)
+      {
+	mln::extension::fill(ima.unmorph_(), val);
+      }
+
+      template <typename I>
+      void do_fill(mln::trait::image::ext_domain::none,
+		   mln::trait::image::ext_value::any,
+		   mln::trait::image::ext_domain::any,
+		   I& ima, const mln_value(I)& val)
+      {
+	// Oops...
+      }
+
+      template <typename I>
+      void do_fill(I& ima, const mln_value(I)& val)
+      {
+	typedef typename I::delegatee D;
+	do_fill(mln_trait_image_ext_domain(I)(),
+		mln_trait_image_ext_value(I)(),
+		mln_trait_image_ext_domain(D)(),
+		ima, val);
+      }
+
+
+
+      // Dispatch.
+
+      template <typename I>
+      void fill_dispatch(mln::trait::image::ext_domain::none,
+			 mln::trait::image::ext_io::any,
+			 I& ima, const mln_value(I)& val)
+      {
+	// No-op cause no extension domain, no border.
+      }
+
+      template <typename I>
+      void fill_dispatch(mln::trait::image::ext_domain::some,
+			 mln::trait::image::ext_io::read_only,
+			 I& ima, const mln_value(I)& val)
+      {
+	// No-op for the extension domain, yet:
+	border::fill(ima, val);
+      }
+
+      template <typename I>
+      void fill_dispatch(mln::trait::image::ext_domain::extendable,
+			 mln::trait::image::ext_io::read_write,
+			 I& ima, const mln_value(I)& val)
+      {
+	// Just fill the border.
+	border::fill(ima, val);
+      }
+
+      template <typename I>
+      void fill_dispatch(mln::trait::image::ext_domain::some,
+			 mln::trait::image::ext_io::read_write,
+			 I& ima, const mln_value(I)& val)
+      {
+	do_fill(ima, val);
+      }
+
+      template <typename I>
+      void fill_dispatch(const Image<I>& ima_, const mln_value(I)& val)
+      {
+	I& ima = const_cast<I&>(exact(ima_));
+	fill_dispatch(mln_trait_image_ext_domain(I)(),
+		      mln_trait_image_ext_io(I)(),
+		      ima, val);
+      }
+
+    } // end of namespace mln::extension::internal
+
+
+    // Facade.
+
+    template <typename I>
+    void fill(const Image<I>& ima, const mln_value(I)& val)
+    {
+      trace::entering("extension::fill");
+
+      mln_precondition(exact(ima).has_data());
+      internal::fill_dispatch(ima, val);
+
+      trace::exiting("extension::fill");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

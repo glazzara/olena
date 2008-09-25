@@ -61,6 +61,11 @@ namespace mln
       /// Return the delegatee_ pointer (non-const version); default code.
       I* delegatee_();
 
+
+      /// Give the morphed image.
+      I& unmorph_();
+
+
       /* \brief Test if this image has been initialized; default impl.
        *
        * This default impl is stronger than the one inherited from
@@ -126,6 +131,16 @@ namespace mln
     image_morpher<I, T, S, E>::delegatee_()
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
+    }
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    I&
+    image_morpher<I, T, S, E>::unmorph_()
+    {
+      I* ptr = delegatee_();
+      mln_assertion(ptr != 0);
+      return *ptr;
     }
 
     template <typename I, typename T, typename S, typename E>

@@ -48,6 +48,10 @@ namespace mln
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
 		      std::size_t lambda, Image<O>& output);
 
+    template <typename I, typename N>
+    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+				 std::size_t lambda);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -60,6 +64,16 @@ namespace mln
       typedef util::pix<I> pix_t;
       // FIXME: Change sig of closing_attribute!
       closing_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+    }
+
+    template <typename I, typename N>
+    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+				 std::size_t lambda)
+    {
+      mln_concrete(I) output;
+      initialize(output, input);
+      closing_area(input, nbh, lambda, output);
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

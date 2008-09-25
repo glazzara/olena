@@ -138,7 +138,7 @@ namespace mln
       for_all (p)
 	if (output(p) == unmarked)
 	  for_all(n)
-	    if (output.has(n) && output(n) != unmarked)
+	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
 		queue.push(p);
 		break;
@@ -157,7 +157,7 @@ namespace mln
 	  bool single_adjacent_marker_p = true;
 	  mln_niter(N) n(nbh, p);
 	  for_all(n)
-	    if (output.has(n) && output(n) != unmarked)
+	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
 		if (adjacent_marker == unmarked)
 		  {
@@ -179,7 +179,7 @@ namespace mln
 	    {
 	      output(p) = adjacent_marker;
 	      for_all(n)
-		if (output.has(n) && output(n) == unmarked)
+		if (output.domain().has(n) && output(n) == unmarked)
 		  queue.push(n);
 	    }
 	}

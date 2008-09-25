@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -173,7 +173,7 @@ namespace mln
 	{
 	  make_set(p);
 	  for_all(n)
-	    if (f.input.has(n) && deja_vu(n))
+	    if (f.input.domain().has(n) && deja_vu(n))
 	      {
 		if (f.equiv(n, p))
 		  do_union(n, p);

@@ -79,7 +79,7 @@ namespace mln
 	  for_all(p)
 	  {
 	    min.init();
-	    for_all(q) if (input.has(q))
+	    for_all(q) if (input.domain().has(q))
 	      min.take(input(q));
 	    output(p) = min;
 	  }
@@ -107,7 +107,7 @@ namespace mln
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
 	  {
-	    for_all(q) if (input.has(q))
+	    for_all(q) if (input.domain().has(q))
 	      if (input(q) == false)
 		break;
 	    output(p) = ! q.is_valid();

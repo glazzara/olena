@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,50 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
-
-/*! \file mln/morpho/includes.hh
+/*! \file tests/core/routine/extend.cc
  *
- * \brief Basic list of includes for all files in mln/morpho/.
- *
- * \todo Re-activate the border/all include when ready.
+ *  \brief Tests on mln::extend.
  */
 
+#include <mln/core/var.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/neighborhood.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
 
-# include <mln/value/ops.hh>
+#include <mln/core/image/extended.hh>
+#include <mln/core/routine/extend.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
-# include <mln/accu/rank.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
 
-# include <mln/fun/v2v/saturate.hh>
+#include <mln/extension/fill.hh>
 
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
 
-# include <mln/test/positive.hh>
 
-// # include <mln/border/all.hh>
-# include <mln/extension/fill.hh>
+int main()
+{
+  using namespace mln;
 
-# include <mln/geom/sym.hh>
-# include <mln/set/inter.hh>
+  image2d<int> ima(3, 3, 1);
+  debug::iota(ima);
 
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
+  box2d bb = ima.domain().to_larger(1);
+  box2d BB = ima.domain().to_larger(2);
 
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
+  debug::println(ima);
+  debug::println(extended_to(ima, bb));
 
-# include <mln/convert/to_window.hh>
+  mln_VAR(ima_, extend(ima | make::box2d(2,2), 7));
+  debug::println(ima_);
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+  debug::println(extended_to(ima_, BB));
+
+  extension::fill(ima_, 8);
+
+  debug::println(ima_);
+  debug::println(extended_to(ima_, BB));
+
+  debug::println(ima_);
+}

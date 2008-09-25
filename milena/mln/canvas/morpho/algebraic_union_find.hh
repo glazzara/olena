@@ -92,7 +92,7 @@ namespace mln
 	      {
 		make_set(p);
 		for_all(n)
-		  if (f.input.has(n) && deja_vu(n))
+		  if (f.input.domain().has(n) && deja_vu(n))
 		    do_union(n, p);
 		deja_vu(p) = true;
 	      }

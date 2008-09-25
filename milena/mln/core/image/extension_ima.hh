@@ -39,6 +39,7 @@
  */
 
 # include <mln/core/internal/image_identity.hh>
+# include <mln/level/fill_with_value.hh>
 
 
 
@@ -142,6 +143,9 @@ namespace mln
     /// Mutable access to the extension domain (image).  This domain
     /// can be modified if J a read-write image type.
     J& extension();
+
+    /// Change the value in the extension domain (image).
+    void change_extension(const mln_value(I)& v);
   };
 
 
@@ -266,6 +270,15 @@ namespace mln
     return this->data_->ext_;
   }
 
+  template <typename I, typename J>
+  inline
+  void
+  extension_ima<I, J>::change_extension(const mln_value(I)& v)
+  {
+    mlc_equal(mln_trait_image_value_io(J),
+	      trait::image::value_io::read_write)::check();
+    level::fill_with_value(v);
+  }
 
   // init_
 
