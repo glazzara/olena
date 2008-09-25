@@ -11,6 +11,9 @@
 #include <mln/border/fill.hh>
 #include <mln/literal/all.hh>
 #include <mln/core/image/interpolated.hh>
+#include <mln/core/image/tr_image.hh>
+#include <mln/core/var.hh>
+#include <mln/level/fill.hh>
 
 template < template <class> class N,
            typename I, typename T>
@@ -42,8 +45,18 @@ test2(const I& interp, O& output,
   for_all(p)
   {
     mln::algebra::vec<2,float> v = mln::point2d(p);
-    mln::algebra::vec<2,float> tip = t.inv()(v);
-    output(p) = interp(tip);
+    output(p) = interp(t.inv()(v));
+  }
+}
+
+template <typename I, typename O>
+void
+test3(const I& tr_ima, O& output)
+{
+  mln_piter(I) p(output.domain());
+  for_all(p)
+  {
+    output(p) = tr_ima(p);
   }
 }
 
@@ -64,13 +77,19 @@ int main()
   interpolated< image2d< value::rgb<8> >, interpolation::bilinear>
     interp(input);
 
-  //border::adjust(interp, 20);
-
   //transformation
   fun::x2x::translation<2,float> t(make::vec(20,20));
   fun::x2x::rotation<2,float> r(0.12, make::vec(0,1));
+  mln_VAR(rt,  compose(r,t));
+  mln_VAR(tr_ima, transposed_image(interp.domain(), interp, rt));
 
-  test1<interpolation::bilinear>(input, output, compose(r,t));
+  //  level::fill(output, tr_ima);
+
+
+  //border::adjust(interp, 20);
+
+  //test1<interpolation::bilinear>(input, output, compose(r,t));
   //test2(interp, output, compose(r,t));
+  test3(tr_ima, output);
   mln::io::ppm::save(output,"./out.ppm");
 }

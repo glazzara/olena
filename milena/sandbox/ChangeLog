@@ -1,3 +1,9 @@
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Add basic test for tr_image over interpolated.
+
+	* jardonnet/virtual/access.cc: Instanciate and use updated morphers.
+
 2008-09-24  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: Make use of interpolated image.
