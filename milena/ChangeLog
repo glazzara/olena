@@ -1,3 +1,10 @@
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update interpolated and tr_image morphers.
+
+	* mln/core/image/tr_image.hh: Update (traits ...) .
+	* mln/core/image/interpolated.hh (operator()): Add non const version.
+
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move mln/core/complex_psite.hh to mln/core/site_set/.

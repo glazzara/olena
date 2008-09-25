@@ -126,6 +126,7 @@ namespace mln
     using super_::operator();
 
     mln_value(I) operator()(const mln::algebra::vec<I::psite::dim, float>& v) const;
+    mln_value(I) operator()(const mln::algebra::vec<I::psite::dim, float>& v);
 
     const F<I> fun_;
   };
@@ -195,11 +196,14 @@ namespace mln
   mln_value(I)
   interpolated<I,F>::operator()(const mln::algebra::vec<I::psite::dim, float>& v) const
   {
-    // mln_psite(I) p;
-    //     for (unsigned i = 0; i < I::point::dim; ++i)
-    //       p[i] = static_cast<int>(round(v[i]));
-    //     mln_assertion(this->data_->ima_.has(p));
-    //     return this->data_->ima_(p);
+    return fun_(v);
+  }
+
+  template <typename I, template <class> class F>
+  inline
+  mln_value(I)
+  interpolated<I,F>::operator()(const mln::algebra::vec<I::psite::dim, float>& v)
+  {
     return fun_(v);
   }
 
