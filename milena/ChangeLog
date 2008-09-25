@@ -1,3 +1,11 @@
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix interpolated and tr_image.
+
+	* mln/core/image/tr_image.hh (operator()): Fix. Fix trait.
+	* mln/convert/from_to.hh (from_to): Move (vec -> rgb)...
+	* mln/value/rgb.hh: ...here.
+
 2008-09-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Conversions from proxies keep the possible reference.

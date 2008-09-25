@@ -73,6 +73,7 @@ namespace mln
     {
       // ...these changes.
       typedef trait::image::value_io::read_only value_io;
+      typedef mln_internal_trait_image_speed_from(I) speed; // Un-fastest.
     };
 
   } // end of namespace mln::trait
@@ -97,10 +98,10 @@ namespace mln
     typedef mln_value(I) value;
 
     /// Return type of read-write access.
-    typedef mln_lvalue(I) lvalue; // FIXME: Depends on lvalue presence in I.
+    typedef mln_value(I) lvalue; // FIXME: Depends on lvalue presence in I.
 
     /// Return type of read-only access.
-    typedef mln_rvalue(I) rvalue;
+    typedef mln_value(I) rvalue;
 
     /// Skeleton.
     typedef tr_image< S, tag::image_<I>, T> skeleton;
@@ -130,10 +131,10 @@ namespace mln
 
     /// Read-only access of pixel value at point site \p p.
     /// Mutable access is only OK for reading (not writing).
-    using super_::operator();
+    //using super_::operator();
 
-    mln_value(I) operator()(const psite& p);
     mln_value(I) operator()(const psite& p) const;
+    mln_value(I) operator()(const psite& p);
 
     void set_tr(T& tr);
   };
@@ -205,7 +206,6 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p) const
   {
-    std::cout << "yay" << std::endl;
     algebra::vec<I::psite::dim, float> v = p;
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }

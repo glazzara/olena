@@ -283,6 +283,7 @@ namespace mln
     operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
     /// \}
 
+    
 # ifndef MLN_INCLUDE_ONLY
 
     /*---------------.
@@ -496,6 +497,26 @@ namespace mln
 
   } // end of namespace mln::value
 
+
+  namespace convert
+  {
+    
+    // algebra::vec -> rgb.
+    template <typename T, unsigned m>
+    inline
+    void
+    from_to(const algebra::vec<3,T>& from, value::rgb<m>& to_)
+    {
+      value::rgb<m>& to = exact(to_);
+      algebra::vec<3, unsigned> tmp;
+      for (unsigned i = 0; i < 3; ++i)
+	tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to instead of cast.
+
+      to = value::rgb<m>(tmp);
+    }
+  
+  } // end of namespace mln::convert
+  
 } // end of namespace mln
 
 
