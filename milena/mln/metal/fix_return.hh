@@ -25,75 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_CONCEPT_SITE_PROXY_HH
-# define MLN_CORE_CONCEPT_SITE_PROXY_HH
+#ifndef MLN_METAL_FIX_RETURN_HH
+# define MLN_METAL_FIX_RETURN_HH
 
-/*! \file mln/core/concept/site_proxy.hh
+/*!
+ * \file  mln/metal/fix_return.hh
  *
- * \brief Definition of the concept of mln::Site_Proxy.
+ * \brief FIXME.
  */
 
-# include <mln/core/concept/proxy.hh>
-# include <mln/metal/is_a.hh>
 
+# define mlc_fix_return(T) typename mln::metal::fix_return< T >::ret
 
 
 namespace mln
 {
 
-
-  // Fwd decl.
-  template <typename E> struct Site_Proxy;
-
-
-  /// Site_Proxy category flag type.
-  template <>
-  struct Site_Proxy<void>
+  namespace metal
   {
-    typedef Proxy<void> super;
-  };
 
+    // No-op.
+    template <typename T> struct fix_return             { typedef       T  ret; };
+    template <typename T> struct fix_return<       T& > { typedef       T& ret; };
+    template <typename T> struct fix_return< const T& > { typedef const T& ret; };
+    template <typename T> struct fix_return<       T* > { typedef       T* ret; };
+    template <typename T> struct fix_return< const T* > { typedef const T* ret; };
 
-  /*! \brief Base class for implementation classes of the notion of
-   *  "site proxy".
-   *
-   * FIXME: Explain...
-   */
-  template <typename E>
-  struct Site_Proxy : public Proxy<E>
-  {
-    typedef Site_Proxy<void> category;
+    // Remove const.
+    template <typename T> struct fix_return< const T >        { typedef       T  ret; };
+    template <typename T> struct fix_return<       T* const > { typedef       T* ret; };
+    template <typename T> struct fix_return< const T* const > { typedef const T* ret; };
 
-    /*
-      typedef site;
-
-      const site& to_site() const;
-      operator site() const;
-    */
-
-  protected:
-    Site_Proxy();
-  };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename E>
-  Site_Proxy<E>::Site_Proxy()
-  {
-    typedef mln_site(E) site;
-
-    const site& (E::*m1)() const = & E::to_site;
-    m1 = 0;
-
-    // De-activate because sometimes it returns a "const site&"...
-//     site (E::*m2)() const = & E::operator site;
-//     m2 = 0;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
+  } // end of namespace mln::metal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_CONCEPT_SITE_PROXY_HH
+#endif // ! MLN_METAL_FIX_RETURN_HH

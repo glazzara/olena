@@ -41,6 +41,7 @@
 
 # include <vector>
 # include <mln/core/internal/site_iterator_base.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
@@ -138,9 +139,8 @@ namespace mln
     void
     site_relative_iterator_base<S,E>::center_at(const P& c)
     {
-      internal::get_adr(c_, c);
-      mln_precondition(c_ != 0);
-      // c_ == 0 means that the center c does not have the expected type.
+      mlc_converts_to(P, const mln_psite(S)&)::check();
+      c_ = & static_cast< const mln_psite(S)& >(c);
       this->invalidate();
     }
 

@@ -37,6 +37,7 @@
 # include <mln/metal/unconst.hh>
 # include <mln/metal/is_not_ref.hh>
 # include <mln/metal/ref.hh>
+# include <mln/metal/fix_return.hh>
 
 
 namespace mln
@@ -265,7 +266,9 @@ namespace mln
     struct get_proxy_impl : helper_get_proxy_impl< Subject, E,
 						   mlc_is_a(Subject, Proxy)::value >
     {
-      operator mlc_unqualif(Subject) () const;
+    public:
+      operator mlc_fix_return(Subject) ();
+      operator mlc_fix_return(mlc_const_return(Subject)) () const;
     };
 
     template <typename Subject, typename E>
@@ -378,7 +381,7 @@ namespace mln
 
     template <typename Subject, typename E>
     inline
-    get_proxy_impl<Subject, E>::operator mlc_unqualif(Subject) () const
+    get_proxy_impl<Subject, E>::operator mlc_fix_return(mlc_const_return(Subject)) () const
     {
       return mln::internal::force_exact<const E>(*this).unproxy_();
       
@@ -389,6 +392,13 @@ namespace mln
       // 	get_adr(adr, mln::internal::force_exact<const E>(*this));
       // 	mln_postcondition(adr != 0);
       // 	return *adr;
+    }
+
+    template <typename Subject, typename E>
+    inline
+    get_proxy_impl<Subject, E>::operator mlc_fix_return(Subject) ()
+    {
+      return mln::internal::force_exact<E>(*this).unproxy_();
     }
 
 

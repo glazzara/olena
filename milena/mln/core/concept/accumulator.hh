@@ -34,7 +34,8 @@
  */
 
 # include <mln/core/concept/proxy.hh>
-# include <mln/metal/unqualif.hh>
+# include <mln/metal/fix_return.hh>
+# include <mln/metal/const.hh>
 
 
 namespace mln
@@ -104,7 +105,7 @@ namespace mln
     result (E::*m4)() const = & E::to_result;
     m4 = 0;
 
-    typedef mlc_unqualif(result) result_;
+    typedef mlc_fix_return(mlc_const_return(result)) result_;
     result_ (E::*m5)() const = & E::operator result_;
     m5 = 0;
   }

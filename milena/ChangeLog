@@ -1,3 +1,20 @@
+2008-09-25  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Conversions from proxies keep the possible reference.
+
+	* mln/core/concept/proxy.hxx
+	(get_proxy_impl::operator): New overload (mutable) conversion
+	towards the immediate subject.
+	Keep ref or ptr in conversion return type.
+	* mln/core/concept/site_proxy.hh (operator site): De-activate
+	the static check of its presence since "site" can be either a
+	ref, a const ref, or a plain type.
+	* mln/core/concept/accumulator.hh (result_): Update.
+	* mln/core/dpoints_pixter.hh (get_adr): Replace by conversion.
+	Add a static check about the p_ref argument type.
+	* mln/core/internal/site_relative_iterator_base.hh: Likewise.
+	* mln/metal/fix_return.hh: New.
+
 2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update interpolated and tr_image morphers.

@@ -38,6 +38,7 @@
 
 # include <mln/core/concept/pixel_iterator.hh>
 # include <mln/core/internal/pixel_impl.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
@@ -225,7 +226,10 @@ namespace mln
     : super_(image)
   {
     mln_precondition(image.has_data());
-    internal::get_adr(p_ref_, p_ref);
+
+    mlc_converts_to(Pref, const mln_psite(I)&)::check();
+    p_ref_ = & static_cast< const mln_psite(I)& >(p_ref);
+
     value_ref_ = 0;
     init_(dps);
   }
