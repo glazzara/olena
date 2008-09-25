@@ -72,7 +72,8 @@ int main()
 
   // adjust border
   border::adjust(input, 100);
-  //border::fill(input, literal::black);
+  border::fill(input, literal::red);
+  // See extension_fill
 
   interpolated< image2d< value::rgb<8> >, interpolation::bilinear>
     interp(input);
@@ -89,7 +90,7 @@ int main()
   //border::adjust(interp, 20);
 
   //test1<interpolation::bilinear>(input, output, compose(r,t));
-  //test2(interp, output, compose(r,t));
-  test3(tr_ima, output);
+  test2(interp, output, compose(r,t));
+  //test3(tr_ima, output);
   mln::io::ppm::save(output,"./out.ppm");
 }

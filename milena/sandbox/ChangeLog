@@ -1,5 +1,11 @@
 2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Sandbox: Update test.
+
+	* jardonnet/virtual/access.cc: Update test.
+
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Sandbox: Add basic test for tr_image over interpolated.
 
 	* jardonnet/virtual/access.cc: Instanciate and use updated morphers.
