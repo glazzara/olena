@@ -110,7 +110,7 @@ int main()
   const topo::face_data<1, D>& face1 = e0.face_data();
 
   // Any-face handle.
-  topo::any_face_handle<D> af(e0);
+  topo::face<D> af(e0);
   // Get the face data from (``dynamic'') face handle AF.
   const topo::face_data<1, D>& face2 = af.face_data<1>();
 
@@ -150,7 +150,7 @@ int main()
   test_faces_iter<2>(c);
 
   /* Using complex_faces_{fwd,bkd}_iter_<N, D>, which are proxies to
-     any_face_handles<N>.  */
+     faces<N>.  */
   test_complex_faces_iter<0>(c);
   test_complex_faces_iter<1>(c);
   test_complex_faces_iter<2>(c);
@@ -278,7 +278,7 @@ int main()
 
      faces_fwd_iter_<N, D>              Iterators on N-faces, N being
      faces_fwd_iter_<N, D>	        static, acting as proxies of
-                                        any_face_handle<N, D>'s. 
+                                        face<D>'s. 
      -----------------------------------------------------------------
   */
 }

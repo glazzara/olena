@@ -167,18 +167,17 @@ namespace mln
   private:
     /// The complex on which this pset is built.
     /* FIXME: Get rid of this `mutable' qualifier.  This is needed for
-       compatiblity reasons with any_face_handle (see
-       p_complex_piter).
+       compatiblity reasons with topo::face (see p_complex_piter).
 
        We should either
 
-       - have an additional version of any_face_handle holding a
-         const (not mutable) complex;
+       - have an additional version of topo::face holding a const (not
+         mutable) complex;
 
-       - have face_handle and any_face_handle do not hold a reference
-         on a complex, leading to a design of complexes similar to
-         graphs, where vertex and edge handles (named `id's) are not
-         tied to a specific graph.  */
+       - have face_handle and topo::face do not hold a reference on a
+         complex, leading to a design of complexes similar to graphs,
+         where vertex and edge handles (named `id's) are not tied to a
+         specific graph.  */
     mutable topo::complex<D> cplx_;
   };
 

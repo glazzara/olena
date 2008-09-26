@@ -73,7 +73,7 @@ namespace mln
     complex_psite();
     /// \pre pc.cplx() == face.cplx().
     complex_psite(const p_complex<D, P>& pc,
-		  const topo::any_face_handle<D>& face);
+		  const topo::face<D>& face);
     complex_psite(const p_complex<D, P>& pc, unsigned n, unsigned face_id);
     /// \}
 
@@ -107,7 +107,7 @@ namespace mln
     /// Face handle manipulators.
     /// \{
     /// Return the face handle of this point site.
-    topo::any_face_handle<D> face() const;
+    topo::face<D> face() const;
 
     /// Return the dimension of the face of this psite.
     unsigned n() const;
@@ -142,7 +142,7 @@ namespace mln
     /// The mln::p_faces this point site belongs to.
     const target* pc_;
     /// The handle of the face this psite is pointing towards.
-    topo::any_face_handle<D> face_;
+    topo::face<D> face_;
     /// \}
   };
 
@@ -209,7 +209,7 @@ namespace mln
   template <unsigned D, typename P>
   inline
   complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
-				     const topo::any_face_handle<D>& face)
+				     const topo::face<D>& face)
     : pc_(&pc),
       face_(face)
   {
@@ -289,7 +289,7 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  topo::any_face_handle<D>
+  topo::face<D>
   complex_psite<D, P>::face() const
   {
     return face_;

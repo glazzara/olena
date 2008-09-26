@@ -91,7 +91,7 @@ int main()
 
   // A pset.
   p_complex<D, point2d> pc(c);
-  topo::any_face_handle<D> af(e0);
+  topo::face<D> af(e0);
   // An associated psite.
   complex_psite<D, point2d> cs(pc, af);
 
