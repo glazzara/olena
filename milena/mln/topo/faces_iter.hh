@@ -50,12 +50,12 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
     class faces_fwd_iter_
-      : public internal::complex_iter_base_< face_handle<N, D>,
+      : public internal::complex_iter_base_< n_face<N, D>,
 					     faces_fwd_iter_<N, D> >
     {
     public:
       /// Type of associated face.
-      typedef face_handle<N, D> face;
+      typedef n_face<N, D> face;
 
     private:
       typedef faces_fwd_iter_<N, D> self_;
@@ -96,12 +96,12 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
     class faces_bkd_iter_
-      : public internal::complex_iter_base_< face_handle<N, D>,
+      : public internal::complex_iter_base_< n_face<N, D>,
 					     faces_bkd_iter_<N, D> >
     {
     public:
       /// Type of associated face.
-      typedef face_handle<N, D> face;
+      typedef n_face<N, D> face;
 
     private:
       typedef faces_bkd_iter_<N, D> self_;
@@ -176,7 +176,7 @@ namespace mln
 	{
 	  unsigned face_id = face_.face_id();
 	  if (face_id + 1 < face_.cplx().template nfaces<N>())
-	    /* FIXME: Provide accessor face_handle::n() returning
+	    /* FIXME: Provide accessor n_face::n() returning
 	       a mutable reference?  This way, we could just write
 
 	       ++face_.face_id();
@@ -230,7 +230,7 @@ namespace mln
 	{
 	  unsigned face_id = face_.face_id();
 	  if (face_id > 0)
-	    /* FIXME: Provide accessor face_handle::n() returning
+	    /* FIXME: Provide accessor n_face::n() returning
 	       a mutable reference?  This way, we could just write
 
 	       ++face_.face_id();

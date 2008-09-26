@@ -66,7 +66,7 @@ namespace mln
     /// \{
     faces_psite();
     /// \pre pf.cplx() == face.cplx().
-    faces_psite(const p_faces<N, D, P>& pf, const topo::face_handle<N, D>& face);
+    faces_psite(const p_faces<N, D, P>& pf, const topo::n_face<N, D>& face);
     faces_psite(const p_faces<N, D, P>& pf, unsigned face_id);
     /// \}
 
@@ -100,7 +100,7 @@ namespace mln
     /// Face handle manipulators.
     /// \{
     /// Return the face handle of this point site.
-    topo::face_handle<N, D> face() const;
+    topo::n_face<N, D> face() const;
 
     /// Return the dimension of the face of this psite.
     unsigned n() const;
@@ -134,7 +134,7 @@ namespace mln
     /// The mln::p_faces this point site belongs to.
     const target* pf_;
     /// The handle of the face this psite is pointing towards.
-    topo::face_handle<N, D> face_;
+    topo::n_face<N, D> face_;
     /// \}
   };
 
@@ -199,7 +199,7 @@ namespace mln
   template <unsigned N, unsigned D, typename P>
   inline
   faces_psite<N, D, P>::faces_psite(const p_faces<N, D, P>& pf,
-				    const topo::face_handle<N, D>& face)
+				    const topo::n_face<N, D>& face)
     : pf_(&pf),
       face_(face)
   {
@@ -285,7 +285,7 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  topo::face_handle<N, D>
+  topo::n_face<N, D>
   faces_psite<N, D, P>::face() const
   {
     return face_;

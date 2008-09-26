@@ -98,14 +98,14 @@ namespace mln
       complex();
 
       /// \brief Add a 0-face to the complex.
-      face_handle<0u, D> add_face();
+      n_face<0u, D> add_face();
 
       /// \brief Add a \p (N+1)-face to the complex (with \p N >= 0).
       ///
       /// \param adjacent_faces The (\p N-1)-faces adjacent to the new
       /// \p N-face.
       template <unsigned N>
-      face_handle<N + 1, D> add_face(const faces_set<N, D>& adjacent_faces);
+      n_face<N + 1, D> add_face(const faces_set<N, D>& adjacent_faces);
       /// \}
 
       /// \brief Static manipulators.
@@ -152,7 +152,7 @@ namespace mln
 
       /// Accessors.
       /// \{
-      template <unsigned N, unsigned D_> friend class face_handle;
+      template <unsigned N, unsigned D_> friend class n_face;
       template <unsigned D_> friend class any_face_handle;
 
       template <unsigned N>
@@ -195,8 +195,8 @@ namespace mln
       ///
       /// \pre \p N must be lower or equal to \p D.
       template <unsigned N>
-      void connect_(const face_handle<N, D>& f1,
-		    const face_handle<N + 1, D>& f2);
+      void connect_(const n_face<N, D>& f1,
+		    const n_face<N + 1, D>& f2);
     };
 
 
@@ -406,7 +406,7 @@ namespace mln
     }
 
     template <unsigned D>
-    face_handle<0u, D>
+    n_face<0u, D>
     complex<D>::add_face()
     {
       /* FIXME: This is not thread-proof (these two lines should
@@ -414,15 +414,15 @@ namespace mln
       data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face_data<0u, D>());
       unsigned id = nfaces<0u>() - 1;
 
-      return face_handle<0u, D>(*this, id);
+      return n_face<0u, D>(*this, id);
     }
 
     template <unsigned D>
     template <unsigned N>
-    face_handle<N + 1, D>
+    n_face<N + 1, D>
     complex<D>::add_face(const faces_set<N, D>& adjacent_faces)
     {
-      typedef typename std::vector< face_handle<N, D> >::const_iterator iter_t;
+      typedef typename std::vector< n_face<N, D> >::const_iterator iter_t;
 
       // Ensure ADJACENT_FACES are already part of the complex.
       if (!HAS_NDEBUG)
@@ -439,7 +439,7 @@ namespace mln
       data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
       unsigned id = nfaces<N + 1>() - 1;
 
-      face_handle<N + 1, D> fh(*this, id);
+      n_face<N + 1, D> fh(*this, id);
       // Connect F and its ADJACENT_FACES.
       for (iter_t a = adjacent_faces.faces().begin();
 	   a != adjacent_faces.faces().end(); ++a)
@@ -551,8 +551,8 @@ namespace mln
     template <unsigned D>
     template <unsigned N>
     void
-    complex<D>::connect_(const face_handle<N, D>& f1,
-			 const face_handle<N + 1, D>& f2)
+    complex<D>::connect_(const n_face<N, D>& f1,
+			 const n_face<N + 1, D>& f2)
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
@@ -703,7 +703,7 @@ namespace mln
       lower_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					     const face_data<N, D>& f) const
       {
-	for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
+	for (typename std::vector< n_face<N - 1, D> >::const_iterator l =
 	       f.lower_dim_faces_.begin(); l != f.lower_dim_faces_.end(); ++l)
 	  ostr << l->face_id() << " ";
       }
@@ -713,7 +713,7 @@ namespace mln
       higher_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					      const face_data<N, D>& f) const
       {
-	for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
+	for (typename std::vector< n_face<N + 1, D> >::const_iterator h =
 	       f.higher_dim_faces_.begin(); h != f.higher_dim_faces_.end(); ++h)
 	  ostr << h->face_id() << " ";
       }

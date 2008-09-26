@@ -68,21 +68,21 @@ int main()
   topo::complex<D> c;
 
   // 0-faces (points).
-  topo::face_handle<0, D> v0 = c.add_face();
-  topo::face_handle<0, D> v1 = c.add_face();
-  topo::face_handle<0, D> v2 = c.add_face();
-  topo::face_handle<0, D> v3 = c.add_face();
+  topo::n_face<0, D> v0 = c.add_face();
+  topo::n_face<0, D> v1 = c.add_face();
+  topo::n_face<0, D> v2 = c.add_face();
+  topo::n_face<0, D> v3 = c.add_face();
  
   // 1-faces (segments).
-  topo::face_handle<1, D> e0 = c.add_face(v0 + v1);
-  topo::face_handle<1, D> e1 = c.add_face(v0 + v2);
-  topo::face_handle<1, D> e2 = c.add_face(v1 + v2);
-  topo::face_handle<1, D> e3 = c.add_face(v0 + v3);
-  topo::face_handle<1, D> e4 = c.add_face(v2 + v3);
+  topo::n_face<1, D> e0 = c.add_face(v0 + v1);
+  topo::n_face<1, D> e1 = c.add_face(v0 + v2);
+  topo::n_face<1, D> e2 = c.add_face(v1 + v2);
+  topo::n_face<1, D> e3 = c.add_face(v0 + v3);
+  topo::n_face<1, D> e4 = c.add_face(v2 + v3);
 
   // 2-faces (triangles).
-  topo::face_handle<2, D> t0 = c.add_face(e0 + e1 + e2);
-  topo::face_handle<2, D> t1 = c.add_face(e1 + e3 + e4);
+  topo::n_face<2, D> t0 = c.add_face(e0 + e1 + e2);
+  topo::n_face<2, D> t1 = c.add_face(e1 + e3 + e4);
 
   
   /*---------------------.

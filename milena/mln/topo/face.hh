@@ -69,7 +69,7 @@ namespace mln
     }
 
     // Forward declarations (internal).
-    template <unsigned N, unsigned D> class face_handle;
+    template <unsigned N, unsigned D> class n_face;
     namespace internal
     {
       template <unsigned N, unsigned D> class lower_dim_faces_data_mixin;
@@ -121,20 +121,20 @@ namespace mln
       class lower_dim_faces_data_mixin
       {
       public:
-	void connect_lower_dim_face (const face_handle<N - 1, D>& f);
+	void connect_lower_dim_face (const n_face<N - 1, D>& f);
       private:
 	friend class mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
-	std::vector< face_handle<N - 1, D> > lower_dim_faces_;
+	std::vector< n_face<N - 1, D> > lower_dim_faces_;
       };
 
       template <unsigned N, unsigned D>
       class higher_dim_faces_data_mixin
       {
       public:
-	void connect_higher_dim_face(const face_handle<N + 1, D>& f);
+	void connect_higher_dim_face(const n_face<N + 1, D>& f);
       private:
 	friend class mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
-	std::vector< face_handle<N + 1, D> > higher_dim_faces_;
+	std::vector< n_face<N + 1, D> > higher_dim_faces_;
       };
       /// \}
 
@@ -142,26 +142,26 @@ namespace mln
 
 
 
-    /*--------------.
-    | Face handle.  |
-    `--------------*/
+    /*---------.
+    | n-Face.  |
+    `---------*/
 
-    // Face handle in a complex.
+    // \p N-face handle in a complex.
     template <unsigned N, unsigned D>
-    struct face_handle
+    struct n_face
     {
       // The type of the complex this handle points to.
       typedef complex<D> complex_type;
 
       /// Build a non-initialized face handle.
-      face_handle();
+      n_face();
       /// Build a face handle from \a complex and \a face_id.
-      face_handle(complex<D>& complex, unsigned face_id);
+      n_face(complex<D>& complex, unsigned face_id);
 
       /// Copy and assignment.
       /// \{
-      face_handle(const face_handle<N, D>& rhs);
-      face_handle<N, D>& operator=(const face_handle<N, D>& rhs);
+      n_face(const n_face<N, D>& rhs);
+      n_face<N, D>& operator=(const n_face<N, D>& rhs);
       /// \}
 
       /// Is this handle valid?
@@ -192,7 +192,7 @@ namespace mln
     private:
       /// \brief The complex the face belongs to.
       ///
-      /// A const face_handle can be used to modify a complex.
+      /// A const mln::topo::n_face can be used to modify a complex.
       mutable complex<D>* cplx_;
       /// \brief The id of the face.
       // FIXME: Rename as `id_'?
@@ -202,11 +202,11 @@ namespace mln
 
     /// Create a handle for \p N-face of a \p D-complex.
     template <unsigned N, unsigned D>
-    face_handle<N, D>
-    make_face_handle(const complex<D>& c, unsigned face_id);
+    n_face<N, D>
+    make_n_face(const complex<D>& c, unsigned face_id);
 
 
-    /// Comparison of two instances of mln::topo::face_handle.
+    /// Comparison of two instances of mln::topo::n_face.
     /// \{
     /// \brief Is \a lhs equal to \a rhs?
     ///
@@ -214,7 +214,7 @@ namespace mln
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool
-    operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
+    operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
 
     /// \brief Is \a lhs ``less'' than \a rhs?
     ///
@@ -224,7 +224,7 @@ namespace mln
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool
-    operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
+    operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs);
     /// \}
 
 
@@ -237,20 +237,20 @@ namespace mln
     class faces_set
     {
     public:
-      void add(const face_handle<N, D>& f);
+      void add(const n_face<N, D>& f);
 
       /// \brief Accessors.
       ///
       /// Return the set of handles.
       /// \{
-      const std::vector< face_handle<N, D> >& faces() const;
+      const std::vector< n_face<N, D> >& faces() const;
       /// \}
 
     private:
       friend class complex<D>;
 
       // FIXME: Rename this as `handles_'?
-      std::vector< face_handle<N, D> > faces_;
+      std::vector< n_face<N, D> > faces_;
     };
 
 
@@ -258,11 +258,11 @@ namespace mln
     /// \{
     template <unsigned N, unsigned D>
     faces_set<N, D>
-    operator+(const face_handle<N, D>& f1, const face_handle<N, D>& f2);
+    operator+(const n_face<N, D>& f1, const n_face<N, D>& f2);
 
     template <unsigned N, unsigned D>
     faces_set<N, D>
-    operator+(const faces_set<N, D>& fs, const face_handle<N, D>& f);
+    operator+(const faces_set<N, D>& fs, const n_face<N, D>& f);
     /// \}
 
 
@@ -284,7 +284,7 @@ namespace mln
 
       /// Build a face handle from a face_handle.
       template <unsigned N>
-      any_face_handle(const face_handle<N, D>& f);
+      any_face_handle(const n_face<N, D>& f);
 
       /// Copy and assignment.
       /// \{
@@ -369,7 +369,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face(const face_handle<N - 1, D>& f)
+      lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face(const n_face<N - 1, D>& f)
       {
 	lower_dim_faces_.push_back(f);
       }
@@ -377,7 +377,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face(const face_handle<N + 1, D>& f)
+      higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face(const n_face<N + 1, D>& f)
       {
 	higher_dim_faces_.push_back(f);
       }
@@ -391,7 +391,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face_handle<N, D>::face_handle()
+    n_face<N, D>::n_face()
       : cplx_(0), face_id_(std::numeric_limits<unsigned>::max())
     {
       // Ensure N is compatible with D.
@@ -400,7 +400,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face_handle<N, D>::face_handle(complex<D>& c, unsigned face_id)
+    n_face<N, D>::n_face(complex<D>& c, unsigned face_id)
       : cplx_(&c), face_id_(face_id)
     {
       // Ensure N is compatible with D.
@@ -409,7 +409,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face_handle<N, D>::face_handle(const face_handle<N, D>& rhs)
+    n_face<N, D>::n_face(const n_face<N, D>& rhs)
       : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
     {
       // Ensure N is compatible with D.
@@ -418,8 +418,8 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face_handle<N, D>&
-    face_handle<N, D>::operator=(const face_handle<N, D>& rhs)
+    n_face<N, D>&
+    n_face<N, D>::operator=(const n_face<N, D>& rhs)
     {
       if (&rhs != this)
 	{
@@ -432,7 +432,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     bool
-    face_handle<N, D>::is_valid() const
+    n_face<N, D>::is_valid() const
     {
       return cplx_ != 0 && face_id_ < cplx_->template nfaces<N>();
     }
@@ -440,7 +440,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    face_handle<N, D>::invalidate()
+    n_face<N, D>::invalidate()
     {
       set_face_id(std::numeric_limits<unsigned>::max());
     }
@@ -448,7 +448,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     complex<D>&
-    face_handle<N, D>::cplx() const
+    n_face<N, D>::cplx() const
     {
       mln_precondition(cplx_);
       return *cplx_;
@@ -457,7 +457,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     unsigned
-    face_handle<N, D>::n() const
+    n_face<N, D>::n() const
     {
       return N;
     }
@@ -465,7 +465,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     unsigned
-    face_handle<N, D>::face_id() const
+    n_face<N, D>::face_id() const
     {
       return face_id_;
     }
@@ -473,7 +473,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    face_handle<N, D>::set_cplx(complex<D>& cplx)
+    n_face<N, D>::set_cplx(complex<D>& cplx)
     {
       cplx_ = &cplx;
     }
@@ -481,7 +481,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    face_handle<N, D>::set_face_id(unsigned face_id)
+    n_face<N, D>::set_face_id(unsigned face_id)
     {
       face_id_ = face_id;
     }
@@ -489,7 +489,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     face_data<N, D>&
-    face_handle<N, D>::face_data() const
+    n_face<N, D>::face_data() const
     {
       mln_precondition(is_valid());
       return cplx_->template face_data_<N>(face_id_);
@@ -498,17 +498,17 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face_handle<N, D>
-    make_face_handle(const complex<D>& c, unsigned face_id)
+    n_face<N, D>
+    make_n_face(const complex<D>& c, unsigned face_id)
     {
-      return face_handle<N, D>(&c, face_id);
+      return n_face<N, D>(&c, face_id);
     }
 
 
     template <unsigned N, unsigned D>
     inline
     bool
-    operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
+    operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs)
     {
       // Ensure LHS and RHS belong to the same complex.
       mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
@@ -518,7 +518,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     bool
-    operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs)
+    operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs)
     {
       // Ensure LHS and RHS belong to the same complex.
       mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
@@ -533,7 +533,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    faces_set<N, D>::add(const face_handle<N, D>& f)
+    faces_set<N, D>::add(const n_face<N, D>& f)
     {
       // Check consistency.
       if (!faces_.empty())
@@ -543,7 +543,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    const std::vector< face_handle<N, D> >&
+    const std::vector< n_face<N, D> >&
     faces_set<N, D>::faces() const
     {
       return faces_;
@@ -553,7 +553,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     faces_set<N, D>
-    operator+(const face_handle<N, D>& f1, const face_handle<N, D>& f2)
+    operator+(const n_face<N, D>& f1, const n_face<N, D>& f2)
     {
       faces_set<N, D> fs;
       fs.add(f1);
@@ -564,7 +564,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     faces_set<N, D>
-    operator+(const faces_set<N, D>& fs, const face_handle<N, D>& f)
+    operator+(const faces_set<N, D>& fs, const n_face<N, D>& f)
     {
       faces_set<N, D> fs2(fs);
       fs2.add(f);
@@ -598,7 +598,7 @@ namespace mln
     template <unsigned D>
     template <unsigned N>
     inline
-    any_face_handle<D>::any_face_handle(const face_handle<N, D>& f)
+    any_face_handle<D>::any_face_handle(const n_face<N, D>& f)
       : cplx_(&f.cplx()), n_(N), face_id_(f.face_id())
     {
       // Ensure N is compatible with D.

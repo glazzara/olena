@@ -1,5 +1,21 @@
 2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename mln::topo::face_handle as mln::topo::n_face.
+
+	* mln/topo/face.hh (mln::topo::face_handle<N, D>): Rename as...
+	(mln::topo::n_face<N, D>): ...this.
+	Adjust.
+	* mln/topo/complex.hh,
+	* mln/topo/faces_iter.hh,
+	* tests/topo/complex.cc:
+	Adjust.
+
+	* mln/core/faces_psite.hh,
+	* tests/core/image/complex_image.cc:
+	Likewise.
+
+2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename mln::topo::face as mln::topo::face_data.
 
 	* mln/topo/face.hh (mln::topo::face<N, D>): Rename as...
