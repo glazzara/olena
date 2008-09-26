@@ -36,7 +36,7 @@
 
 # include <mln/core/site_set/p_faces.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
-# include <mln/topo/faces_iter.hh>
+# include <mln/topo/attic/faces_iter.hh>
 
 
 namespace mln

@@ -37,7 +37,7 @@
 
 # include <mln/core/site_set/p_complex.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
-# include <mln/topo/complex_faces_iter.hh>
+# include <mln/topo/attic/complex_faces_iter.hh>
 
 /* FIXME: p_complex_faces_fwd_piter_ and p_complex_faces_bkd_piter_
    are really long names: find something shorter.  */
