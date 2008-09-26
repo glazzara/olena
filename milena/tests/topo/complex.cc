@@ -143,6 +143,8 @@ int main()
      actual complex processing since they are not really flexible ---
      but I'm not sure.  */
 
+// FIXME: Disabled (moved to the attic).
+# if 0
   /* Using faces_{fwd,bkd}_iter_<N, D>, which are proxies to
      n_faces<N, D>.  */
   test_faces_iter<0>(c);
@@ -154,6 +156,7 @@ int main()
   test_complex_faces_iter<0>(c);
   test_complex_faces_iter<1>(c);
   test_complex_faces_iter<2>(c);
+#endif
 
   /*------------------------------.
   | Iterators on adjacent faces.  |
@@ -269,8 +272,11 @@ int main()
                                         | define the iterated subset.
      -----------------------------------------------------------------
 
-     I'm unsure about the following existing iterators; should we keep
-     them?  What are they good for, except testing our code?
+
+     I'm unsure about the old iterators on n-faces (with a static n)
+     moved to the attic; should we keep them?  What are they good for,
+     except testing our code?  At least, we should find better names
+     for them, as we might confuse them with new iterators.
 
      -----------------------------------------------------------------
      Current name                       Definition
@@ -287,6 +293,8 @@ int main()
 }
 
 
+// FIXME: Disabled (moved to the attic).
+# if 0
 template <unsigned N, unsigned D>
 void
 test_faces_iter(topo::complex<D>& c)
@@ -315,3 +323,4 @@ test_complex_faces_iter(topo::complex<D>& c)
     std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
   std::cout << std::endl;
 }
+#endif

@@ -164,15 +164,13 @@ int main()
   // Iterators on n-faces (with n fixed in [0, D]).  //
   // ----------------------------------------------- //
 
-  // We need to instantiate a (non temporary) object on the stack, so
-  // that it can be referenced later by face_psites held by iterators
-  // (as for windows and neighborhoods).
-
+// FIXME: Disabled (moved to the attic).
+# if 0
   // FIXME: Sugar the name of the iterator.
   p_complex_faces_fwd_piter_<0, D, point2d> f0p(ima.domain());
   for_all(f0p)
     std::cout << "ima(" << f0p << ") = " << ima(f0p) << std::endl;
-
+#endif
 
   /* FIXME: Implement other psite iterators, for instance:
 

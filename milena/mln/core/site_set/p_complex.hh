@@ -37,7 +37,10 @@
 
 # include <mln/core/site_set/complex_psite.hh>
 # include <mln/core/site_set/p_complex_piter.hh>
-# include <mln/core/site_set/p_complex_faces_piter.hh>
+// FIXME: Disabled (moved to the attic).
+# if 0
+#  include <mln/core/site_set/p_complex_faces_piter.hh>
+# endif
 
 
 namespace mln
@@ -49,11 +52,13 @@ namespace mln
   template <unsigned D, typename P> class p_complex_fwd_piter_;
   template <unsigned D, typename P> class p_complex_bkd_piter_;
 
+// FIXME: Disabled (moved to the attic).
+# if 0
   template <unsigned N, unsigned D, typename P>
   class p_complex_faces_fwd_piter_;
   template <unsigned N, unsigned D, typename P>
   class p_complex_faces_bkd_piter_;
-
+# endif
 
   namespace trait
   {

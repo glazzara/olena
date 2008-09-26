@@ -49,9 +49,11 @@
 # include <mln/topo/n_faces_set.hh>
 
 # include <mln/topo/complex_iter.hh>
-# include <mln/topo/faces_iter.hh>
-# include <mln/topo/complex_faces_iter.hh>
-
+// FIXME: Disabled (moved to the attic).
+# if 0
+#  include <mln/topo/faces_iter.hh>
+#  include <mln/topo/complex_faces_iter.hh>
+# endif
 
 namespace mln
 {
@@ -63,8 +65,11 @@ namespace mln
     template <unsigned N, unsigned D> class n_faces_set;
     template <unsigned D> class complex_fwd_iter_;
     template <unsigned D> class complex_bkd_iter_;
+// FIXME: Disabled (moved to the attic).
+# if 0
     template <unsigned N, unsigned D> class faces_fwd_iter_;
     template <unsigned N, unsigned D> class faces_bkd_iter_;
+#endif
 
     // Forward declarations (internal).
     namespace internal
@@ -91,12 +96,15 @@ namespace mln
       /// Backward mln::Iterator type iterating on all faces.
       typedef complex_bkd_iter_<D> bkd_citer;
 
+// FIXME: Disabled (moved to the attic).
+# if 0
       /// Forward mln::Iterator type iterating on \p N-faces.
       template <unsigned N>
       struct fwd_fiter { typedef faces_fwd_iter_<N, D> ret; };
       /// Backward mln::Iterator type iterating on \p N-faces.
       template <unsigned N>
       struct bkd_fiter { typedef faces_bkd_iter_<N, D> ret; };
+#endif
 
       /// Complex construction.
       /// \{
