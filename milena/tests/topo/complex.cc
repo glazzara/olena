@@ -189,24 +189,24 @@ int main()
      complex_faces_piter) use a static `n'.  We should also have
      n-faces iterators where n could be dynamic.
 
-     But first, we need to clarify (existing) names.
+
+     But first, we need to clarify (existing) names.  These ones are
+     OK:
 
      -----------------------------------------------------------------
-     Current name             New name	           Definition                
+     Name                               Definition                
      -----------------------------------------------------------------
-     complex<D>               (n/a)                General complex
+     complex<D>                         General complex
 
-     face_data<N, D>          (n/a)                Face data                 
-     n_face<N, D>             (n/a)                (Static) n-face handle    
-     n_faces_set<N, D>        (n/a)                Set of face handles       
-     face<D>	              (n/a)                Dynamic face handle       
+     face_data<N, D>                    Face data                 
+     n_face<N, D>                       (Static) n-face handle    
+     n_faces_set<N, D>                  Set of face handles       
+     face<D>                            Dynamic face handle       
 
-     complex_fwd_iter_<D>(c)  face_fwd_iter<D>(c)  | Iterators on all
-     complex_bkd_iter_<D>(c)  face_bkd_iter<D>(c)  | faces of c
+     face_fwd_iter<D>(c)                | Iterators on all the faces
+     face_bkd_iter<D>(c)                | of c
 
-     complex_iter_base_<F, E> complex_iter_base<F, E>
-                                                   | Factoring base
-                                                   | class.
+     internal::complex_iter_base<F, E>  Factoring base class.
      -----------------------------------------------------------------
 
      (Note: get rid of trailing underscores, even for entities in
@@ -286,7 +286,7 @@ int main()
                                         n_face<N, D>'s.
 
      faces_fwd_iter_<N, D>              Iterators on N-faces, N being
-     faces_fwd_iter_<N, D>	        static, acting as proxies of
+     faces_fwd_iter_<N, D>              static, acting as proxies of
                                         face<D>'s. 
      -----------------------------------------------------------------
   */

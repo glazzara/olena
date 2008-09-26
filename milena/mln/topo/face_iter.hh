@@ -25,11 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TOPO_COMPLEX_ITER_HH
-# define MLN_TOPO_COMPLEX_ITER_HH
+#ifndef MLN_TOPO_FACE_ITER_HH
+# define MLN_TOPO_FACE_ITER_HH
 
-/// \file mln/topo/complex_iter.hh
-/// \brief Definition of forward and backward iterators on complexes.
+/// \file mln/topo/face_iter.hh
+/// \brief Definition of forward and backward iterators on all the
+/// faces of a complex.
 
 # include <mln/topo/internal/complex_iter_base.hh>
 # include <mln/topo/face.hh>
@@ -47,23 +48,23 @@ namespace mln
     template <unsigned D> class complex;
 
 
-    /*-----------------------------.
-    | topo::complex_fwd_iter_<D>.  |
-    `-----------------------------*/
+    /*-------------------------.
+    | topo::face_fwd_iter<D>.  |
+    `-------------------------*/
 
-    /// \brief Forward iterator on all the faces of a mln::complex<D>.
+    /// \brief Forward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
-    class complex_fwd_iter_
-      : public internal::complex_iter_base< face<D>, complex_fwd_iter_<D> >
+    class face_fwd_iter
+      : public internal::complex_iter_base< face<D>, face_fwd_iter<D> >
     {
     public:
       /// Type of associated face.
       typedef face<D> face;
 
     private:
-      typedef complex_fwd_iter_<D> self_;
+      typedef face_fwd_iter<D> self_;
       typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
@@ -73,9 +74,9 @@ namespace mln
     public:
       /// Construction and assignment.
       /// \{
-      complex_fwd_iter_();
+      face_fwd_iter();
       // FIXME: See comment in internal::complex_iter_base's default ctor
-      complex_fwd_iter_(complex<D>& c);
+      face_fwd_iter(complex<D>& c);
       /// \}
 
       /// Manipulation.
@@ -91,23 +92,23 @@ namespace mln
     };
 
 
-    /*-----------------------------.
-    | topo::complex_bkd_iter_<D>.  |
-    `-----------------------------*/
+    /*-------------------------.
+    | topo::face_bkd_iter<D>.  |
+    `-------------------------*/
 
-    /// \brief Backward iterator on all the faces of a mln::complex<D>.
+    /// \brief Backward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
-    class complex_bkd_iter_
-    : public internal::complex_iter_base< face<D>, complex_bkd_iter_<D> >
+    class face_bkd_iter
+    : public internal::complex_iter_base< face<D>, face_bkd_iter<D> >
     {
     public:
       /// Type of associated face.
       typedef face<D> face;
 
     private:
-      typedef complex_bkd_iter_<D> self_;
+      typedef face_bkd_iter<D> self_;
       typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
@@ -117,9 +118,9 @@ namespace mln
     public:
       /// Construction and assignment.
       /// \{
-      complex_bkd_iter_();
+      face_bkd_iter();
       // FIXME: See comment in internal::complex_iter_base's default ctor
-      complex_bkd_iter_(complex<D>& c);
+      face_bkd_iter(complex<D>& c);
       /// \}
 
       /// Manipulation.
@@ -138,20 +139,20 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*-----------------------------.
-    | topo::complex_fwd_iter_<D>.  |
-    `-----------------------------*/
+    /*-------------------------.
+    | topo::face_fwd_iter<D>.  |
+    `-------------------------*/
 
     template <unsigned D>
     inline
-    complex_fwd_iter_<D>::complex_fwd_iter_()
+    face_fwd_iter<D>::face_fwd_iter()
       : super_()
     {
     }
 
     template <unsigned D>
     inline
-    complex_fwd_iter_<D>::complex_fwd_iter_(complex<D>& c)
+    face_fwd_iter<D>::face_fwd_iter(complex<D>& c)
       : super_(c)
     {
       set_cplx(c);
@@ -161,7 +162,7 @@ namespace mln
     template <unsigned D>
     inline
     void
-    complex_fwd_iter_<D>::start()
+    face_fwd_iter<D>::start()
     {
       face_.set_n(0u);
       face_.set_face_id(0u);
@@ -170,7 +171,7 @@ namespace mln
     template <unsigned D>
     inline
     void
-    complex_fwd_iter_<D>::next_()
+    face_fwd_iter<D>::next_()
     {
       if (is_valid())
 	{
@@ -202,20 +203,20 @@ namespace mln
     }
 
 
-    /*-----------------------------.
-    | topo::complex_bkd_iter_<D>.  |
-    `-----------------------------*/
+    /*-------------------------.
+    | topo::face_bkd_iter<D>.  |
+    `-------------------------*/
 
     template <unsigned D>
     inline
-    complex_bkd_iter_<D>::complex_bkd_iter_()
+    face_bkd_iter<D>::face_bkd_iter()
       : super_()
     {
     }
 
     template <unsigned D>
     inline
-    complex_bkd_iter_<D>::complex_bkd_iter_(complex<D>& c)
+    face_bkd_iter<D>::face_bkd_iter(complex<D>& c)
       : super_(c)
     {
       set_cplx(c);
@@ -225,7 +226,7 @@ namespace mln
     template <unsigned D>
     inline
     void
-    complex_bkd_iter_<D>::start()
+    face_bkd_iter<D>::start()
     {
       face_.set_n(D);
       face_.set_face_id(face_.cplx().template nfaces<D>() - 1);
@@ -234,7 +235,7 @@ namespace mln
     template <unsigned D>
     inline
     void
-    complex_bkd_iter_<D>::next_()
+    face_bkd_iter<D>::next_()
     {
       if (is_valid())
 	{
@@ -271,4 +272,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_COMPLEX_ITER_HH
+#endif // ! MLN_TOPO_FACE_ITER_HH

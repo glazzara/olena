@@ -48,7 +48,7 @@
 # include <mln/topo/n_face.hh>
 # include <mln/topo/n_faces_set.hh>
 
-# include <mln/topo/complex_iter.hh>
+# include <mln/topo/face_iter.hh>
 // FIXME: Disabled (moved to the attic).
 # if 0
 #  include <mln/topo/faces_iter.hh>
@@ -63,8 +63,8 @@ namespace mln
 
     // Forward declarations (external).
     template <unsigned N, unsigned D> class n_faces_set;
-    template <unsigned D> class complex_fwd_iter_;
-    template <unsigned D> class complex_bkd_iter_;
+    template <unsigned D> class face_fwd_iter;
+    template <unsigned D> class face_bkd_iter;
 // FIXME: Disabled (moved to the attic).
 # if 0
     template <unsigned N, unsigned D> class faces_fwd_iter_;
@@ -92,9 +92,9 @@ namespace mln
     {
     public:
       /// Forward mln::Iterator type iterating on all faces.
-      typedef complex_fwd_iter_<D> fwd_citer;
+      typedef face_fwd_iter<D> fwd_citer;
       /// Backward mln::Iterator type iterating on all faces.
-      typedef complex_bkd_iter_<D> bkd_citer;
+      typedef face_bkd_iter<D> bkd_citer;
 
 // FIXME: Disabled (moved to the attic).
 # if 0
