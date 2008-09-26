@@ -156,10 +156,10 @@ namespace mln
       template <unsigned D_> friend class any_face_handle;
 
       template <unsigned N>
-      face<N, D>& face_(unsigned face_id);
+      face_data<N, D>& face_data_(unsigned face_id);
 
       template <unsigned N>
-      const face<N, D>& face_(unsigned face_id) const;
+      const face_data<N, D>& face_data_(unsigned face_id) const;
       /// \}
 
       /// Functional meta-manipulators.
@@ -258,7 +258,7 @@ namespace mln
       struct faces_set_mixin<D, D> : public faces_set_mixin<D - 1, D>,
 				     public lower_dim_faces_set_mixin<D, D>
       {
-	std::vector< face<D, D> > faces_;
+	std::vector< face_data<D, D> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -287,7 +287,7 @@ namespace mln
 			       public lower_dim_faces_set_mixin<N, D>,
 			       public higher_dim_faces_set_mixin<N, D>
       {
-	std::vector< face<N, D> > faces_;
+	std::vector< face_data<N, D> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -316,7 +316,7 @@ namespace mln
       template <unsigned D>
       struct faces_set_mixin<0u, D> : public higher_dim_faces_set_mixin<0u, D>
       {
-	std::vector< face<0u, D> > faces_;
+	std::vector< face_data<0u, D> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -343,7 +343,7 @@ namespace mln
       template <>
       struct faces_set_mixin<0u, 0u>
       {
-	std::vector< face<0u, 0u> > faces_;
+	std::vector< face_data<0u, 0u> > faces_;
 
 	/// Pretty-printing.
 	/// \{
@@ -378,13 +378,13 @@ namespace mln
       template <unsigned N, unsigned D>
       struct lower_dim_faces_set_mixin
       {
-	void print(std::ostream& ostr, const face<N, D>& f) const;
+	void print(std::ostream& ostr, const face_data<N, D>& f) const;
       };
 
       template <unsigned N, unsigned D>
       struct higher_dim_faces_set_mixin
       {
-	void print(std::ostream& ostr, const face<N, D>& f) const;
+	void print(std::ostream& ostr, const face_data<N, D>& f) const;
       };
       /// \}
 
@@ -411,7 +411,7 @@ namespace mln
     {
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
-      data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face<0u, D>());
+      data_->internal::faces_set_mixin<0u, D>::faces_.push_back(face_data<0u, D>());
       unsigned id = nfaces<0u>() - 1;
 
       return face_handle<0u, D>(*this, id);
@@ -433,7 +433,7 @@ namespace mln
 	    mln_precondition(a->is_valid());
 	  }
 
-      face<N + 1, D> f;
+      face_data<N + 1, D> f;
       /* FIXME: This is not thread-proof (these two lines should
 	 form an atomic section).  */
       data_->internal::faces_set_mixin<N + 1, D>::faces_.push_back(f);
@@ -534,16 +534,16 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
-    face<N, D>&
-    complex<D>::face_(unsigned face_id)
+    face_data<N, D>&
+    complex<D>::face_data_(unsigned face_id)
     {
       return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
     }
 
     template <unsigned D>
     template <unsigned N>
-    const face<N, D>&
-    complex<D>::face_(unsigned face_id) const
+    const face_data<N, D>&
+    complex<D>::face_data_(unsigned face_id) const
     {
       return data_->internal::faces_set_mixin<N, D>::faces_[face_id];
     }
@@ -557,8 +557,8 @@ namespace mln
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
 
-      f1.to_face().connect_higher_dim_face(f2);
-      f2.to_face().connect_lower_dim_face(f1);
+      f1.face_data().connect_higher_dim_face(f2);
+      f2.face_data().connect_lower_dim_face(f1);
     }
 
 
@@ -701,7 +701,7 @@ namespace mln
       template <unsigned N, unsigned D>
       void
       lower_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
-					     const face<N, D>& f) const
+					     const face_data<N, D>& f) const
       {
 	for (typename std::vector< face_handle<N - 1, D> >::const_iterator l =
 	       f.lower_dim_faces_.begin(); l != f.lower_dim_faces_.end(); ++l)
@@ -711,7 +711,7 @@ namespace mln
       template <unsigned N, unsigned D>
       void
       higher_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
-					      const face<N, D>& f) const
+					      const face_data<N, D>& f) const
       {
 	for (typename std::vector< face_handle<N + 1, D> >::const_iterator h =
 	       f.higher_dim_faces_.begin(); h != f.higher_dim_faces_.end(); ++h)

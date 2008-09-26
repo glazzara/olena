@@ -107,12 +107,12 @@ int main()
   `-------------------*/
 
   // Get the face data from (``static'') face handle E0.
-  const topo::face<1, D>& face1 = e0.to_face();
+  const topo::face_data<1, D>& face1 = e0.face_data();
 
   // Any-face handle.
   topo::any_face_handle<D> af(e0);
   // Get the face data from (``dynamic'') face handle AF.
-  const topo::face<1, D>& face2 = af.to_face<1>();
+  const topo::face_data<1, D>& face2 = af.face_data<1>();
 
   mln_assertion(&face1 == &face2);
 

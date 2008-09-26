@@ -47,6 +47,10 @@
    Anyway, whatever the decision, splitting `face', `face_handle' and
    `any_face_handle' seems to be sound.
 
+   `face_data' is somehow an implementation detail: it should be
+   hidden, either by moving it to mln/topo/complex.cc or into its own
+   file in mln/topo/internal.
+
    (And what about `faces_set'? Should we move it to its own file as
    well?)  */
 
@@ -68,42 +72,42 @@ namespace mln
     template <unsigned N, unsigned D> class face_handle;
     namespace internal
     {
-      template <unsigned N, unsigned D> class lower_dim_faces_mixin;
-      template <unsigned N, unsigned D> class higher_dim_faces_mixin;
+      template <unsigned N, unsigned D> class lower_dim_faces_data_mixin;
+      template <unsigned N, unsigned D> class higher_dim_faces_data_mixin;
     }
 
 
-    /*-------.
-    | Face.  |
-    `-------*/
+    /*------------.
+    | Face data.  |
+    `------------*/
 
-    /// \p N-face of a \p D-complex.
-    template <unsigned N, unsigned D> class face;
+    /// Data (adjacent faces) associated to a \p N-face of a \p D-complex.
+    template <unsigned N, unsigned D> class face_data;
 
 
     // Specialization for the faces of highest dimension (\p D).
     template <unsigned D>
-    class face<D, D> : public internal::lower_dim_faces_mixin<D, D>
+    class face_data<D, D> : public internal::lower_dim_faces_data_mixin<D, D>
     {
     };
 
     // Specialization for the faces of intermediate dimension (greater
     // than 0, lower than \p D).
     template <unsigned N, unsigned D>
-    class face : public internal::lower_dim_faces_mixin<N, D>,
-		 public internal::higher_dim_faces_mixin<N, D>
+    class face_data : public internal::lower_dim_faces_data_mixin<N, D>,
+		      public internal::higher_dim_faces_data_mixin<N, D>
     {
     };
 
     // Specialization for the faces of lowest dimension (0).
     template <unsigned D>
-    class face<0u, D> : public internal::higher_dim_faces_mixin<0u, D>
+    class face_data<0u, D> : public internal::higher_dim_faces_data_mixin<0u, D>
     {
     };
 
     // Specialization for the case of a 0-complex.
     template <>
-    class face<0u, 0u>
+    class face_data<0u, 0u>
     {
     };
 
@@ -114,7 +118,7 @@ namespace mln
       /// Factored implementation of faces.
       /// \{
       template <unsigned N, unsigned D>
-      class lower_dim_faces_mixin
+      class lower_dim_faces_data_mixin
       {
       public:
 	void connect_lower_dim_face (const face_handle<N - 1, D>& f);
@@ -124,7 +128,7 @@ namespace mln
       };
 
       template <unsigned N, unsigned D>
-      class higher_dim_faces_mixin
+      class higher_dim_faces_data_mixin
       {
       public:
 	void connect_higher_dim_face(const face_handle<N + 1, D>& f);
@@ -181,8 +185,8 @@ namespace mln
       /// Set the id of the face.
       void set_face_id(unsigned face_id);
 
-      /// Return the mln::face pointed by this handle.
-      face<N, D>& to_face() const;
+      /// Return the mln::topo::face_data pointed by this handle.
+      face_data<N, D>& face_data() const;
       /// \}
 
     private:
@@ -202,12 +206,12 @@ namespace mln
     make_face_handle(const complex<D>& c, unsigned face_id);
 
 
-    /// Comparison of two instances of mln::face_handle.
+    /// Comparison of two instances of mln::topo::face_handle.
     /// \{
     /// \brief Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::complex.
+    /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool
     operator==(const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
@@ -217,7 +221,7 @@ namespace mln
     /// This comparison is required by algorithms sorting face handles.
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::complex.
+    /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool
     operator< (const face_handle<N, D>& lhs, const face_handle<N, D>& rhs);
@@ -250,7 +254,7 @@ namespace mln
     };
 
 
-    /// Construction helpers for mln::faces_set.
+    /// Construction helpers for mln::topo::faces_set.
     /// \{
     template <unsigned N, unsigned D>
     faces_set<N, D>
@@ -311,9 +315,9 @@ namespace mln
       /// Set the id of the face.
       void set_face_id(unsigned face_id);
 
-      /// Return the mln::face pointed by this handle.
+      /// Return the mln::topo::face_data pointed by this handle.
       template <unsigned N>
-      face<N, D>& to_face() const;
+      face_data<N, D>& face_data() const;
       /// \}
 
     private:
@@ -330,12 +334,12 @@ namespace mln
     };
 
 
-    /// Comparison of two instances of mln::any_face_handle.
+    /// Comparison of two instances of mln::topo::any_face_handle.
     /// \{
     /// \brief Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::complex.
+    /// mln::topo::complex.
     template <unsigned D>
     bool
     operator==(const any_face_handle<D>& lhs, const any_face_handle<D>& rhs);
@@ -345,7 +349,7 @@ namespace mln
     /// This comparison is required by algorithms sorting face handles.
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::complex.
+    /// mln::topo::complex.
     /// \pre Arguments \a lhs and \a rhs must have the same dimension.
     template <unsigned D>
     bool
@@ -365,7 +369,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      lower_dim_faces_mixin<N, D>::connect_lower_dim_face(const face_handle<N - 1, D>& f)
+      lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face(const face_handle<N - 1, D>& f)
       {
 	lower_dim_faces_.push_back(f);
       }
@@ -373,7 +377,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      higher_dim_faces_mixin<N, D>::connect_higher_dim_face(const face_handle<N + 1, D>& f)
+      higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face(const face_handle<N + 1, D>& f)
       {
 	higher_dim_faces_.push_back(f);
       }
@@ -484,11 +488,11 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    face<N, D>&
-    face_handle<N, D>::to_face() const
+    face_data<N, D>&
+    face_handle<N, D>::face_data() const
     {
       mln_precondition(is_valid());
-      return cplx_->template face_<N>(face_id_);
+      return cplx_->template face_data_<N>(face_id_);
     }
 
 
@@ -499,6 +503,7 @@ namespace mln
     {
       return face_handle<N, D>(&c, face_id);
     }
+
 
     template <unsigned N, unsigned D>
     inline
@@ -691,12 +696,12 @@ namespace mln
     template <unsigned D>
     template <unsigned N>
     inline
-    face<N, D>&
-    any_face_handle<D>::to_face() const
+    face_data<N, D>&
+    any_face_handle<D>::face_data() const
     {
       mln_precondition(n_ == N);
       mln_precondition(is_valid());
-      return cplx_->template face_<N>(face_id_);
+      return cplx_->template face_data_<N>(face_id_);
     }
 
 
@@ -711,6 +716,7 @@ namespace mln
 	lhs.face().n() == rhs.face().n() &&
 	lhs.face().id() == rhs.face().id();
     }
+
 
     template <unsigned D>
     inline
