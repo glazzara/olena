@@ -1,5 +1,17 @@
 2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename internal::complex_iter_base_ as internal::complex_iter_base.
+
+	* mln/topo/internal/complex_iter_base.hh
+	(mln::topo::internal::complex_iter_base_<F, E>): Rename as...
+	(mln::topo::internal::complex_iter_base<F, E>): ...this.
+	* milena/mln/topo/attic/complex_faces_iter.hh,
+	* milena/mln/topo/attic/faces_iter.hh,
+	* milena/mln/topo/complex_iter.hh:
+	Adjust clients.
+
+2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable old iterators on n-faces (with n statically known).
 
 	* milena/mln/core/site_set/p_complex_faces_piter.hh,

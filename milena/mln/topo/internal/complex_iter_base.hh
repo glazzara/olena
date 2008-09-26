@@ -53,9 +53,9 @@ namespace mln
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
       template <typename F, typename E>
-      class complex_iter_base_ : public Iterator<E>
+      class complex_iter_base : public Iterator<E>
       {
-	typedef complex_iter_base_<F, E> self_;
+	typedef complex_iter_base<F, E> self_;
 
       public:
 	typedef F face;
@@ -67,8 +67,8 @@ namespace mln
 	/// \{
 	/* FIXME: Keep this non-const?  See a (big) comment about this in
 	   milena/tests/complex_image.cc.   */
-	complex_iter_base_();
-	complex_iter_base_(complex_type& c);
+	complex_iter_base();
+	complex_iter_base(complex_type& c);
 	/// \}
 
 	/// Manipulation.
@@ -104,7 +104,7 @@ namespace mln
       template <typename F, typename E>
       inline
       std::ostream&
-      operator<<(std::ostream& ostr, const complex_iter_base_<F, E>& p);
+      operator<<(std::ostream& ostr, const complex_iter_base<F, E>& p);
 
 
 
@@ -112,7 +112,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_iter_base_<F, E>::complex_iter_base_()
+      complex_iter_base<F, E>::complex_iter_base()
       {
 	// Ensure F and E are compatible.
 	mlc_equal(F, typename E::face)::check();
@@ -122,7 +122,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_iter_base_<F, E>::complex_iter_base_(complex_type& c)
+      complex_iter_base<F, E>::complex_iter_base(complex_type& c)
       {
 	// Ensure F and E are compatible.
 	mlc_equal(F, typename E::face)::check();
@@ -135,7 +135,7 @@ namespace mln
       template <typename F, typename E>
       inline
       void
-      complex_iter_base_<F, E>::set_cplx(complex_type& c)
+      complex_iter_base<F, E>::set_cplx(complex_type& c)
       {
 	face_.set_cplx(c);
 	// Invalidate face_.
@@ -145,7 +145,7 @@ namespace mln
       template <typename F, typename E>
       inline
       bool
-      complex_iter_base_<F, E>::is_valid() const
+      complex_iter_base<F, E>::is_valid() const
       {
 	return face_.is_valid();
       }
@@ -153,7 +153,7 @@ namespace mln
       template <typename F, typename E>
       inline
       void
-      complex_iter_base_<F, E>::invalidate()
+      complex_iter_base<F, E>::invalidate()
       {
 	face_.invalidate();
       }
@@ -161,14 +161,14 @@ namespace mln
       template <typename F, typename E>
       inline
       const F&
-      complex_iter_base_<F, E>::to_face() const
+      complex_iter_base<F, E>::to_face() const
       {
 	return face_;
       }
 
       template <typename F, typename E>
       inline
-      complex_iter_base_<F, E>::operator F() const
+      complex_iter_base<F, E>::operator F() const
       {
 	mln_precondition(is_valid());
 	return face_;
@@ -178,7 +178,7 @@ namespace mln
       template <typename F, typename E>
       inline
       std::ostream&
-      operator<<(std::ostream& ostr, const complex_iter_base_<F, E>& p)
+      operator<<(std::ostream& ostr, const complex_iter_base<F, E>& p)
       {
 	/* FIXME: We should use p.to_face() here, but as it lacks the
 	   precondition the conversion operator has, so we use the latter.

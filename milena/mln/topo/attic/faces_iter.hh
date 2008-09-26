@@ -51,8 +51,8 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
     class faces_fwd_iter_
-      : public internal::complex_iter_base_< n_face<N, D>,
-					     faces_fwd_iter_<N, D> >
+      : public internal::complex_iter_base< n_face<N, D>,
+					    faces_fwd_iter_<N, D> >
     {
     public:
       /// Type of associated face.
@@ -60,7 +60,7 @@ namespace mln
 
     private:
       typedef faces_fwd_iter_<N, D> self_;
-      typedef internal::complex_iter_base_< face, self_ > super_;
+      typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -70,7 +70,7 @@ namespace mln
       /// Construction and assignment.
       /// \{
       faces_fwd_iter_();
-      // FIXME: See comment in internal::complex_iter_base_'s default ctor
+      // FIXME: See comment in internal::complex_iter_base's default ctor
       faces_fwd_iter_(complex<D>& c);
       /// \}
 
@@ -97,8 +97,8 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
     class faces_bkd_iter_
-      : public internal::complex_iter_base_< n_face<N, D>,
-					     faces_bkd_iter_<N, D> >
+      : public internal::complex_iter_base< n_face<N, D>,
+					    faces_bkd_iter_<N, D> >
     {
     public:
       /// Type of associated face.
@@ -106,7 +106,7 @@ namespace mln
 
     private:
       typedef faces_bkd_iter_<N, D> self_;
-      typedef internal::complex_iter_base_< face, self_ > super_;
+      typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -116,7 +116,7 @@ namespace mln
       /// Construction and assignment.
       /// \{
       faces_bkd_iter_();
-      // FIXME: See comment in internal::complex_iter_base_'s default ctor
+      // FIXME: See comment in internal::complex_iter_base's default ctor
       faces_bkd_iter_(complex<D>& c);
       /// \}
 

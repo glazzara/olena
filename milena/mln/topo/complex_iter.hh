@@ -34,7 +34,7 @@
 # include <mln/topo/internal/complex_iter_base.hh>
 # include <mln/topo/face.hh>
 
-// FIXME: Factor a bit more? (Using complex_iter_base_.)
+// FIXME: Factor a bit more? (Using complex_iter_base.)
 
 
 namespace mln
@@ -56,8 +56,7 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class complex_fwd_iter_
-      : public internal::complex_iter_base_< face<D>,
-					     complex_fwd_iter_<D> >
+      : public internal::complex_iter_base< face<D>, complex_fwd_iter_<D> >
     {
     public:
       /// Type of associated face.
@@ -65,7 +64,7 @@ namespace mln
 
     private:
       typedef complex_fwd_iter_<D> self_;
-      typedef internal::complex_iter_base_< face, self_ > super_;
+      typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -75,7 +74,7 @@ namespace mln
       /// Construction and assignment.
       /// \{
       complex_fwd_iter_();
-      // FIXME: See comment in internal::complex_iter_base_'s default ctor
+      // FIXME: See comment in internal::complex_iter_base's default ctor
       complex_fwd_iter_(complex<D>& c);
       /// \}
 
@@ -101,8 +100,7 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class complex_bkd_iter_
-    : public internal::complex_iter_base_< face<D>,
-					   complex_bkd_iter_<D> >
+    : public internal::complex_iter_base< face<D>, complex_bkd_iter_<D> >
     {
     public:
       /// Type of associated face.
@@ -110,7 +108,7 @@ namespace mln
 
     private:
       typedef complex_bkd_iter_<D> self_;
-      typedef internal::complex_iter_base_< face, self_ > super_;
+      typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -120,7 +118,7 @@ namespace mln
       /// Construction and assignment.
       /// \{
       complex_bkd_iter_();
-      // FIXME: See comment in internal::complex_iter_base_'s default ctor
+      // FIXME: See comment in internal::complex_iter_base's default ctor
       complex_bkd_iter_(complex<D>& c);
       /// \}
 
