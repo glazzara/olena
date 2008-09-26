@@ -155,11 +155,132 @@ int main()
   test_complex_faces_iter<1>(c);
   test_complex_faces_iter<2>(c);
 
+  /*------------------------------.
+  | Iterators on adjacent faces.  |
+  `------------------------------*/
 
-  /* FIXME: Exercice more iterators (see
+  /* FIXME: Write and exercise more iterators (see
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
-  // ...
+
+  /* Iterate on the the set of (n-1)-faces adjacent to AF.
+
+     Note: this can be solved with iterators where the dimension can
+     be either static or dynamic.
+
+     Let's start with a dynamic one, as it would allow us to
+     write something like this:
+
+       mln_fwd_citer_(topo::complex<D>) f(c);
+       mln_fwd_lower_nciter(topo::complex<D>) n(c);
+       for_all(c)
+         for_all(n)
+           // ...
+
+     (Note: we might want to get rid of the name `citer', and use
+     `fiter' everywhere.).
+
+     A static version might be useful (and more efficient) too.
+
+     Likewise, our iterators on n-faces (both faces_piter and
+     complex_faces_piter) use a static `n'.  We should also have
+     n-faces iterators where n could be dynamic.
+
+     But first, we need to clarify (existing) names.
+
+     -----------------------------------------------------------------
+     Current name             New name	           Definition                
+     -----------------------------------------------------------------
+     complex<D>               (n/a)                General complex
+			                     
+     face<N, D>               face_data<N, D>      Face data                 
+     face_handle<N, D>        n_face<N, D>         (Static) n-face handle    
+     faces_set<N, D>          n_faces_set<N, D>    Set of face handles       
+     any_face_handle<D>       face<D>	           Dynamic face handle       
+			                     
+     complex_fwd_iter_<D>(c)  face_fwd_iter<D>(c)  | Iterators on all
+     complex_bkd_iter_<D>(c)  face_bkd_iter<D>(c)  | faces of c
+
+     complex_iter_base_<F, E> complex_iter_base<F, E>
+                                                   | Factoring base
+                                                   | class.
+     -----------------------------------------------------------------
+
+     (Note: get rid of trailing underscores, even for entities in
+     mln::internal::.)
+
+     Next, write these:
+
+     -----------------------------------------------------------------
+     Name                               Definition
+     -----------------------------------------------------------------
+     n_faces_fwd_iter<D>(c)             | Iterators on n-faces,
+     n_faces_bkd_iter<D>(c)             | n being dynamic
+
+     adj_lower_faces_fwd_iter<D>(c, f)  | Iterators on the adjacent
+     adj_lower_faces_bkd_iter<D>(c, f)  | (lower) (n-1)-faces of the
+                                        | n-face f of the complex c,
+                                        | n being dynamic
+
+     adj_higher_faces_fwd_iter<D>(c, f) | Iterators on the adjacent
+     adj_higher_faces_bkd_iter<D>(c, f) | (higher) (n+1)-faces of the
+                                        | n-face f of the complex c,
+                                        | n being dynamic
+
+     adj_lower_dim_connected_n_faces_fwd_iter<D>(c, f)
+     adj_lower_dim_connected_n_faces_bkd_iter<D>(c, f)
+     (FIXME: These names are admittedly too long.)
+                                        | Iterators on the the set of
+                                        | n-faces sharing an adjacent
+                                        | (n-1)-face with f, n being
+                                        | dynamic
+
+     adj_higher_dim_connected_n_faces_fwd_iter<D>(c, f)
+     adj_higher_dim_connected_n_faces_bkd_iter<D>(c, f)
+     (FIXME: These names are admittedly too long.)
+                                        | Iterators on the the set of
+                                        | n-faces sharing an adjacent
+                                        | (n+1)-face with f, n being
+                                        | dynamic
+
+     cell_fwd_iter<D>(c, f)             | Iterators on the set of the
+     cell_bkd_iter<D>(c, f)             | faces in the « cell »
+                                        | including p, i.e. the set of
+                                        | all m-faces adjacent to p,
+                                        | where m is in [0, n-1];
+                                        | this set is name « f-hat »
+
+     cell_boundary_fwd_iter<D>(c, f)    | Likewise, but excluding p;
+     cell_boundary_bkd_iter<D>(c, f)    | this set is named « p-hat* »
+     -----------------------------------------------------------------
+
+     We could also have generic iterators based on predicated, and
+     even use them to provide first (non efficient) implementations of
+     the iterators from the previous list.
+
+     -----------------------------------------------------------------
+     Name                               Definition
+     -----------------------------------------------------------------
+     generic_face_fwd_iter<D>(c, pred)  | Generic face iterators on c
+     generic_face_bkd_iter<D>(c, pred)  | using predicate pred to
+                                        | define the iterated subset.
+     -----------------------------------------------------------------
+
+     I'm unsure about the following existing iterators; should we keep
+     them?  What are they good for, except testing our code?
+
+     -----------------------------------------------------------------
+     Current name                       Definition
+     -----------------------------------------------------------------
+     complex_faces_fwd_iter_<N, D>      Iterators on N-faces, N being
+     complex_faces_fwd_iter_<N, D>      static, acting as proxies of
+                                        face_handle<N, D>'s.
+
+     faces_fwd_iter_<N, D>              Iterators on N-faces, N being
+     faces_fwd_iter_<N, D>	        static, acting as proxies of
+                                        any_face_handle<N, D>'s. 
+     -----------------------------------------------------------------
+  */
 }
 
 
