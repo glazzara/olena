@@ -35,9 +35,14 @@
 using namespace mln;
 
 
-// Forward declaration.
-template <unsigned N, unsigned D> void test_faces_iter(topo::complex<D>& c);
-template <unsigned N, unsigned D> void test_complex_faces_iter(topo::complex<D>& c);
+// Forward declarations.
+template <unsigned N, unsigned D>
+void test_static_n_face_iter(topo::complex<D>& c);
+// FIXME: Disabled (moved to the attic).
+#if 0
+template <unsigned N, unsigned D>
+void test_faces_iter(topo::complex<D>& c);
+#endif
 
 
 int main()
@@ -143,6 +148,11 @@ int main()
      actual complex processing since they are not really flexible ---
      but I'm not sure.  */
 
+  // Static version.
+  test_static_n_face_iter<0>(c);
+  test_static_n_face_iter<1>(c);
+  test_static_n_face_iter<2>(c);
+
 // FIXME: Disabled (moved to the attic).
 # if 0
   /* Using faces_{fwd,bkd}_iter_<N, D>, which are proxies to
@@ -150,12 +160,6 @@ int main()
   test_faces_iter<0>(c);
   test_faces_iter<1>(c);
   test_faces_iter<2>(c);
-
-  /* Using complex_faces_{fwd,bkd}_iter_<N, D>, which are proxies to
-     faces<N>.  */
-  test_complex_faces_iter<0>(c);
-  test_complex_faces_iter<1>(c);
-  test_complex_faces_iter<2>(c);
 #endif
 
   /*------------------------------.
@@ -293,6 +297,22 @@ int main()
 }
 
 
+template <unsigned N, unsigned D>
+void
+test_static_n_face_iter(topo::complex<D>& c)
+{
+  std::cout << "test_static_n_face_iter<" << N << ", " << D << ">:"
+	    << std::endl;
+  /* FIXME: Provide sugar.  Maybe redefined mln_fwd_fiter and
+     mln_bkd_fiter so that they expand as complex_faces_iters (instead
+     of faces_iters).  */
+  topo::static_n_face_fwd_iter<N, D> fwd_ncf(c);
+  topo::static_n_face_bkd_iter<N, D> bkd_ncf(c);
+  for_all_2(fwd_ncf, bkd_ncf)
+    std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
+  std::cout << std::endl;
+}
+
 // FIXME: Disabled (moved to the attic).
 # if 0
 template <unsigned N, unsigned D>
@@ -305,22 +325,6 @@ test_faces_iter(topo::complex<D>& c)
   mln_bkd_fiter(N, topo::complex<D>) bkd_nf(c);
   for_all_2(fwd_nf, bkd_nf)
     std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
-  std::cout << std::endl;
-}
-
-template <unsigned N, unsigned D>
-void
-test_complex_faces_iter(topo::complex<D>& c)
-{
-  std::cout << "test_complex_faces_iter<" << N << ", " << D << ">:"
-	    << std::endl;
-  /* FIXME: Provide sugar.  Maybe redefined mln_fwd_fiter and
-     mln_bkd_fiter so that they expand as complex_faces_iters (instead
-     of faces_iters).  */
-  topo::complex_faces_fwd_iter_<N, D> fwd_ncf(c);
-  topo::complex_faces_bkd_iter_<N, D> bkd_ncf(c);
-  for_all_2(fwd_ncf, bkd_ncf)
-    std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
   std::cout << std::endl;
 }
 #endif

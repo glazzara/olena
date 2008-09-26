@@ -25,19 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TOPO_COMPLEX_FACES_ITER_HH
-# define MLN_TOPO_COMPLEX_FACES_ITER_HH
+#ifndef MLN_TOPO_STATIC_N_FACE_ITER_HH
+# define MLN_TOPO_STATIC_N_FACE_ITER_HH
 
-/// \file mln/topo/complex_faces_iter.hh
-/// \brief Definition of forward and backward iterators on the n-faces
-/// of a complex.
+/// \file mln/topo/static_n_face_iter.hh
+/// \brief Definition of forward and backward iterators on all the
+/// \p N-faces of a complex, \p N being a static value.
 
 # include <mln/topo/internal/complex_iter_base.hh>
 # include <mln/topo/face.hh>
-
-/* FIXME: Should we drop N from the signature of these iterators?
-   I.e., have N be dynamic?  Or better: provide other iterators where
-   N is dynamic?  */
 
 
 namespace mln
@@ -46,25 +42,26 @@ namespace mln
   namespace topo
   {
 
-    /*--------------------------------------.
-    | topo::complex_faces_fwd_iter_<N, D>.  |
-    `--------------------------------------*/
+    /*-------------------------------------.
+    | topo::static_n_face_fwd_iter<N, D>.  |
+    `-------------------------------------*/
 
-    /// \brief Forward iterator on all the faces of a mln::complex<D>.
+    /// \brief Forward iterator on all the \p N-faces of a
+    /// mln::complex<D>.
     ///
     /// \arg \p N The dimension of the face associated to this iterator.
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
-    class complex_faces_fwd_iter_
+    class static_n_face_fwd_iter
       : public internal::complex_iter_base< face<D>,
-					    complex_faces_fwd_iter_<N, D> >
+					    static_n_face_fwd_iter<N, D> >
     {
     public:
       /// Type of associated face.
       typedef face<D> face;
 
     private:
-      typedef complex_faces_fwd_iter_<N, D> self_;
+      typedef static_n_face_fwd_iter<N, D> self_;
       typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
@@ -74,9 +71,9 @@ namespace mln
     public:
       /// Construction and assignment.
       /// \{
-      complex_faces_fwd_iter_();
+      static_n_face_fwd_iter();
       // FIXME: See comment in internal::complex_iter_base's default ctor
-      complex_faces_fwd_iter_(complex<D>& c);
+      static_n_face_fwd_iter(complex<D>& c);
       /// \}
 
       /// Manipulation.
@@ -92,25 +89,26 @@ namespace mln
     };
 
 
-    /*--------------------------------------.
-    | topo::complex_faces_bkd_iter_<N, D>.  |
-    `--------------------------------------*/
+    /*-------------------------------------.
+    | topo::static_n_face_bkd_iter<N, D>.  |
+    `-------------------------------------*/
 
-    /// \brief Backward iterator on all the faces of a mln::complex<D>.
+    /// \brief Backward iterator on all the \p N-faces of a
+    /// mln::complex<D>.
     ///
     /// \arg \p N The dimension of the face associated to this iterator.
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned N, unsigned D>
-    class complex_faces_bkd_iter_
+    class static_n_face_bkd_iter
       : public internal::complex_iter_base< face<D>,
-					    complex_faces_bkd_iter_<N, D> >
+					    static_n_face_bkd_iter<N, D> >
     {
     public:
       /// Type of associated face.
       typedef face<D> face;
 
     private:
-      typedef complex_faces_bkd_iter_<N, D> self_;
+      typedef static_n_face_bkd_iter<N, D> self_;
       typedef internal::complex_iter_base< face, self_ > super_;
 
     public:
@@ -120,9 +118,9 @@ namespace mln
     public:
       /// Construction and assignment.
       /// \{
-      complex_faces_bkd_iter_();
+      static_n_face_bkd_iter();
       // FIXME: See comment in internal::complex_iter_base's default ctor
-      complex_faces_bkd_iter_(complex<D>& c);
+      static_n_face_bkd_iter(complex<D>& c);
       /// \}
 
       /// Manipulation.
@@ -141,13 +139,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*--------------------------------------.
-    | topo::complex_faces_fwd_iter_<N, D>.  |
-    `--------------------------------------*/
+    /*-------------------------------------.
+    | topo::static_n_face_fwd_iter<N, D>.  |
+    `-------------------------------------*/
 
     template <unsigned N, unsigned D>
     inline
-    complex_faces_fwd_iter_<N, D>::complex_faces_fwd_iter_()
+    static_n_face_fwd_iter<N, D>::static_n_face_fwd_iter()
       : super_()
     {
       // Ensure N is compatible with D.
@@ -158,7 +156,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    complex_faces_fwd_iter_<N, D>::complex_faces_fwd_iter_(complex<D>& c)
+    static_n_face_fwd_iter<N, D>::static_n_face_fwd_iter(complex<D>& c)
       : super_(c)
     {
       // Ensure N is compatible with D.
@@ -170,7 +168,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    complex_faces_fwd_iter_<N, D>::start()
+    static_n_face_fwd_iter<N, D>::start()
     {
       face_.set_face_id(0u);
     }
@@ -178,12 +176,14 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    complex_faces_fwd_iter_<N, D>::next_()
+    static_n_face_fwd_iter<N, D>::next_()
     {
       if (is_valid())
 	{
 	  unsigned face_id = face_.face_id();
-	  if (face_id + 1 < face_.cplx().template nfaces<N>())
+	  // The number of faces of dimension N in cplx_.
+	  unsigned nn_faces = face_.cplx().template nfaces<N>();
+	  if (face_id + 1 < nn_faces)
 	    /* FIXME: Provide accessor face::face_id()
 	       returning a mutable reference?  This way, we could just
 	       write
@@ -200,13 +200,13 @@ namespace mln
     }
 
 
-    /*--------------------------------------.
-    | topo::complex_faces_bkd_iter_<N, D>.  |
-    `--------------------------------------*/
+    /*-------------------------------------.
+    | topo::static_n_face_bkd_iter<N, D>.  |
+    `-------------------------------------*/
 
     template <unsigned N, unsigned D>
     inline
-    complex_faces_bkd_iter_<N, D>::complex_faces_bkd_iter_()
+    static_n_face_bkd_iter<N, D>::static_n_face_bkd_iter()
       : super_()
     {
       // Ensure N is compatible with D.
@@ -217,7 +217,7 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    complex_faces_bkd_iter_<N, D>::complex_faces_bkd_iter_(complex<D>& c)
+    static_n_face_bkd_iter<N, D>::static_n_face_bkd_iter(complex<D>& c)
       : super_(c)
     {
       // Ensure N is compatible with D.
@@ -229,7 +229,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    complex_faces_bkd_iter_<N, D>::start()
+    static_n_face_bkd_iter<N, D>::start()
     {
       face_.set_face_id(face_.cplx().template nfaces<N>() - 1);
     }
@@ -237,7 +237,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    complex_faces_bkd_iter_<N, D>::next_()
+    static_n_face_bkd_iter<N, D>::next_()
     {
       if (is_valid())
 	{
@@ -264,4 +264,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_COMPLEX_FACES_ITER_HH
+#endif // ! MLN_TOPO_STATIC_N_FACE_ITER_HH
