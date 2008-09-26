@@ -49,6 +49,7 @@
 # include <mln/topo/n_faces_set.hh>
 
 # include <mln/topo/face_iter.hh>
+# include <mln/topo/n_face_iter.hh>
 # include <mln/topo/static_n_face_iter.hh>
 // FIXME: Disabled (moved to the attic).
 # if 0

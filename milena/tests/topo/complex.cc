@@ -148,6 +148,18 @@ int main()
      actual complex processing since they are not really flexible ---
      but I'm not sure.  */
 
+  // Dynamic version.
+  for (unsigned n = 0; n <= D; ++n)
+    {
+      topo::n_face_fwd_iter<D> fwd_nf(c, n);
+      topo::n_face_fwd_iter<D> bkd_nf(c, n);
+      std::cout << "test (dynamic) n_face_iters (n = " << n << "):"
+		<< std::endl;
+      for_all_2(fwd_nf, bkd_nf)
+	std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
+      std::cout << std::endl;
+    }
+
   // Static version.
   test_static_n_face_iter<0>(c);
   test_static_n_face_iter<1>(c);
@@ -200,15 +212,21 @@ int main()
      -----------------------------------------------------------------
      Name                               Definition                
      -----------------------------------------------------------------
-     complex<D>                         General complex
+     complex<D>                         General complex.
 
-     face_data<N, D>                    Face data                 
-     n_face<N, D>                       (Static) n-face handle    
-     n_faces_set<N, D>                  Set of face handles       
-     face<D>                            Dynamic face handle       
+     face_data<N, D>                    Face data.          
+     n_face<N, D>                       (Static) n-face handle.
+     n_faces_set<N, D>                  Set of face handles.   
+     face<D>                            Dynamic face handle.
 
      face_fwd_iter<D>(c)                | Iterators on all the faces
-     face_bkd_iter<D>(c)                | of c
+     face_bkd_iter<D>(c)                | of c.
+
+     n_face_fwd_iter<D>(c)              | Iterators on n-faces,
+     n_face_bkd_iter<D>(c)              | n being dynamic.
+
+     static_n_face_fwd_iter<D>(c)       | Iterators on n-faces,
+     static_n_face_bkd_iter<D>(c)       | n being static.
 
      internal::complex_iter_base<F, E>  Factoring base class.
      -----------------------------------------------------------------
@@ -224,9 +242,6 @@ int main()
      -----------------------------------------------------------------
      Name                               Definition
      -----------------------------------------------------------------
-     n_faces_fwd_iter<D>(c)             | Iterators on n-faces,
-     n_faces_bkd_iter<D>(c)             | n being dynamic
-
      adj_lower_faces_fwd_iter<D>(c, f)  | Iterators on the adjacent
      adj_lower_faces_bkd_iter<D>(c, f)  | (lower) (n-1)-faces of the
                                         | n-face f of the complex c,
