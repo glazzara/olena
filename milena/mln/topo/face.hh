@@ -39,8 +39,6 @@
 
 /* FIXME: Suggestions:
 
-   Rename faces_set as n_faces_set.
-
    Split `face', `face_handle' and `any_face_handle' code into several
    files.
 
@@ -48,8 +46,8 @@
    hidden, either by moving it to mln/topo/complex.cc or into its own
    file in mln/topo/internal.
 
-   (And what about `faces_set'? Should we move it to its own file as
-   well?)  */
+   And what about `n_faces_set'? Should we move it to its own file as
+   well?  */
 
 namespace mln
 {
@@ -234,7 +232,7 @@ namespace mln
 
     /// \brief Set of face handles of dimension \p N.
     template <unsigned N, unsigned D>
-    class faces_set
+    class n_faces_set
     {
     public:
       void add(const n_face<N, D>& f);
@@ -254,15 +252,15 @@ namespace mln
     };
 
 
-    /// Construction helpers for mln::topo::faces_set.
+    /// Construction helpers for mln::topo::n_faces_set.
     /// \{
     template <unsigned N, unsigned D>
-    faces_set<N, D>
+    n_faces_set<N, D>
     operator+(const n_face<N, D>& f1, const n_face<N, D>& f2);
 
     template <unsigned N, unsigned D>
-    faces_set<N, D>
-    operator+(const faces_set<N, D>& fs, const n_face<N, D>& f);
+    n_faces_set<N, D>
+    operator+(const n_faces_set<N, D>& fs, const n_face<N, D>& f);
     /// \}
 
 
@@ -536,7 +534,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     void
-    faces_set<N, D>::add(const n_face<N, D>& f)
+    n_faces_set<N, D>::add(const n_face<N, D>& f)
     {
       // Check consistency.
       if (!faces_.empty())
@@ -547,7 +545,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     const std::vector< n_face<N, D> >&
-    faces_set<N, D>::faces() const
+    n_faces_set<N, D>::faces() const
     {
       return faces_;
     }
@@ -555,10 +553,10 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    faces_set<N, D>
+    n_faces_set<N, D>
     operator+(const n_face<N, D>& f1, const n_face<N, D>& f2)
     {
-      faces_set<N, D> fs;
+      n_faces_set<N, D> fs;
       fs.add(f1);
       fs.add(f2);
       return fs;
@@ -566,10 +564,10 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    faces_set<N, D>
-    operator+(const faces_set<N, D>& fs, const n_face<N, D>& f)
+    n_faces_set<N, D>
+    operator+(const n_faces_set<N, D>& fs, const n_face<N, D>& f)
     {
-      faces_set<N, D> fs2(fs);
+      n_faces_set<N, D> fs2(fs);
       fs2.add(f);
       return fs2;
     }

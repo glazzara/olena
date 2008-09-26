@@ -105,7 +105,7 @@ namespace mln
       /// \param adjacent_faces The (\p N-1)-faces adjacent to the new
       /// \p N-face.
       template <unsigned N>
-      n_face<N + 1, D> add_face(const faces_set<N, D>& adjacent_faces);
+      n_face<N + 1, D> add_face(const n_faces_set<N, D>& adjacent_faces);
       /// \}
 
       /// \brief Static manipulators.
@@ -128,8 +128,8 @@ namespace mln
       /// \brief Return the number of \a n-faces.
       ///
       /// Warning, this function has a complexity linear in term of N,
-      /// since each faces_set is checked (the present implementation
-      /// does not provide a direct access to faces_set through a
+      /// since each n_faces_set is checked (the present implementation
+      /// does not provide a direct access to n_faces_set through a
       /// dynamic value of the dimension).
       std::size_t nfaces(unsigned n) const;
       /// \}
@@ -171,7 +171,7 @@ namespace mln
       /* FIXME: Replace F and ACCU by a Milena accumulator?  */
 
       /** \brief Apply a kind of static fold left operator to the
-	  implicit list of faces_set using a functor \a f and a value \a
+	  implicit list of n_faces_set using a functor \a f and a value \a
 	  accu.
 
 	  Argument \a is called an "accumulator", but with a slightly
@@ -420,7 +420,7 @@ namespace mln
     template <unsigned D>
     template <unsigned N>
     n_face<N + 1, D>
-    complex<D>::add_face(const faces_set<N, D>& adjacent_faces)
+    complex<D>::add_face(const n_faces_set<N, D>& adjacent_faces)
     {
       typedef typename std::vector< n_face<N, D> >::const_iterator iter_t;
 
