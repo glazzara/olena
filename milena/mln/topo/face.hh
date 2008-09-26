@@ -70,13 +70,6 @@ namespace mln
       template <unsigned N>
       face(const n_face<N, D>& f);
 
-      // FIXME: Probably useless.
-      /// Copy and assignment.
-      /// \{
-      face(const face<D>& rhs);
-      face<D>& operator=(const face<D>& rhs);
-      /// \}
-
       /// Is this handle valid?
       bool is_valid() const;
       /// Invalidate this handle.
@@ -172,27 +165,6 @@ namespace mln
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
 
-    }
-
-    template <unsigned D>
-    inline
-    face<D>::face(const face<D>& rhs)
-      : cplx_(rhs.cplx_), n_(rhs.n_), face_id_(rhs.face_id_)
-    {
-    }
-
-    template <unsigned D>
-    inline
-    face<D>&
-    face<D>::operator=(const face<D>& rhs)
-    {
-      if (&rhs != this)
-	{
-	  cplx_ = rhs.cplx_;
-	  n_ = rhs.n_;
-	  face_id_ = rhs.face_id_;
-	}
-      return *this;
     }
 
     template <unsigned D>

@@ -66,13 +66,6 @@ namespace mln
       /// Build a face handle from \a complex and \a face_id.
       n_face(complex<D>& complex, unsigned face_id);
 
-      // FIXME: Probably useless.
-      /// Copy and assignment.
-      /// \{
-      n_face(const n_face<N, D>& rhs);
-      n_face<N, D>& operator=(const n_face<N, D>& rhs);
-      /// \}
-
       /// Is this handle valid?
       bool is_valid() const;
       /// Invalidate this handle.
@@ -156,28 +149,6 @@ namespace mln
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
-    }
-
-    template <unsigned N, unsigned D>
-    inline
-    n_face<N, D>::n_face(const n_face<N, D>& rhs)
-      : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
-    {
-      // Ensure N is compatible with D.
-      metal::bool_< N <= D >::check();
-    }
-
-    template <unsigned N, unsigned D>
-    inline
-    n_face<N, D>&
-    n_face<N, D>::operator=(const n_face<N, D>& rhs)
-    {
-      if (&rhs != this)
-	{
-	  cplx_ = rhs.cplx_;
-	  face_id_ = rhs.face_id_;
-	}
-      return *this;
     }
 
     template <unsigned N, unsigned D>
