@@ -321,10 +321,10 @@ test_static_n_face_iter(topo::complex<D>& c)
   /* FIXME: Provide sugar.  Maybe redefined mln_fwd_fiter and
      mln_bkd_fiter so that they expand as complex_faces_iters (instead
      of faces_iters).  */
-  topo::static_n_face_fwd_iter<N, D> fwd_ncf(c);
-  topo::static_n_face_bkd_iter<N, D> bkd_ncf(c);
-  for_all_2(fwd_ncf, bkd_ncf)
-    std::cout << fwd_ncf << ' ' << bkd_ncf << std::endl;
+  topo::static_n_face_fwd_iter<N, D> fwd_nf(c);
+  topo::static_n_face_bkd_iter<N, D> bkd_nf(c);
+  for_all_2(fwd_nf, bkd_nf)
+    std::cout << fwd_nf << ' ' << bkd_nf << std::endl;
   std::cout << std::endl;
 }
 
