@@ -33,6 +33,7 @@
 /// of a complex.
 
 # include <mln/topo/internal/complex_iter_base.hh>
+# include <mln/topo/face.hh>
 
 /* FIXME: Should we drop N from the signature of these iterators?
    I.e., have N be dynamic?  Or better: provide other iterators where

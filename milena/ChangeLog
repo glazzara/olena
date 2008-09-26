@@ -1,5 +1,25 @@
 2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
 
+	Split mln/topo/face.hh.
+
+	* milena/mln/topo/face.hh
+	(mln::topo::face_data<N, D>)
+	(mln::topo::n_face<N, D>)
+	(mln::topo::n_faces_set<N, D>):
+	Move...
+	* milena/mln/topo/face_data.hh,
+	* milena/mln/topo/n_face.hh,
+	* milena/mln/topo/n_faces_set.hh:
+	...here (new files).
+	* milena/mln/topo/complex.hh,
+	* milena/mln/topo/complex_faces_iter.hh,
+	* milena/mln/topo/complex_iter.hh,
+	* milena/mln/topo/faces_iter.hh:
+	Adjust.
+	* milena/tests/topo/complex.cc: Update documentation.
+
+2008-09-26  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename mln::topo::faces_set as mln::topo::n_faces_set.
 
 	* mln/topo/face.hh (mln::topo::faces_set<N, D>): Rename as...

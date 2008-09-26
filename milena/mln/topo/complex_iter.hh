@@ -32,6 +32,7 @@
 /// \brief Definition of forward and backward iterators on complexes.
 
 # include <mln/topo/internal/complex_iter_base.hh>
+# include <mln/topo/face.hh>
 
 // FIXME: Factor a bit more? (Using complex_iter_base_.)
 

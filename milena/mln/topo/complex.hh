@@ -43,7 +43,10 @@
 
 # include <mln/util/tracked_ptr.hh>
 
+# include <mln/topo/face_data.hh>
 # include <mln/topo/face.hh>
+# include <mln/topo/n_face.hh>
+# include <mln/topo/n_faces_set.hh>
 
 # include <mln/topo/complex_iter.hh>
 # include <mln/topo/faces_iter.hh>
@@ -56,7 +59,14 @@ namespace mln
   namespace topo
   {
 
-    // Forward declarations.
+    // Forward declarations (external).
+    template <unsigned N, unsigned D> class n_faces_set;
+    template <unsigned D> class complex_fwd_iter_;
+    template <unsigned D> class complex_bkd_iter_;
+    template <unsigned N, unsigned D> class faces_fwd_iter_;
+    template <unsigned N, unsigned D> class faces_bkd_iter_;
+
+    // Forward declarations (internal).
     namespace internal
     {
       template <unsigned D>
@@ -65,10 +75,6 @@ namespace mln
       template <unsigned N, unsigned D>
       struct faces_set_mixin;
     }
-    template <unsigned D> class complex_fwd_iter_;
-    template <unsigned D> class complex_bkd_iter_;
-    template <unsigned N, unsigned D> class faces_fwd_iter_;
-    template <unsigned N, unsigned D> class faces_bkd_iter_;
 
 
     /*----------.

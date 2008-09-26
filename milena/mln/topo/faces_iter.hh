@@ -33,6 +33,7 @@
 /// of a complex.
 
 # include <mln/topo/internal/complex_iter_base.hh>
+# include <mln/topo/n_face.hh>
 
 namespace mln
 {

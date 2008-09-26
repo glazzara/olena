@@ -189,15 +189,15 @@ int main()
      But first, we need to clarify (existing) names.
 
      -----------------------------------------------------------------
-     Current/old name         New name	           Definition                
+     Current name             New name	           Definition                
      -----------------------------------------------------------------
      complex<D>               (n/a)                General complex
-			                     
-     face<N, D>               face_data<N, D>      Face data                 
-     face_handle<N, D>        n_face<N, D>         (Static) n-face handle    
-     faces_set<N, D>          n_faces_set<N, D>    Set of face handles       
-     any_face_handle<D>       face<D>	           Dynamic face handle       
-			                     
+
+     face_data<N, D>          (n/a)                Face data                 
+     n_face<N, D>             (n/a)                (Static) n-face handle    
+     n_faces_set<N, D>        (n/a)                Set of face handles       
+     face<D>	              (n/a)                Dynamic face handle       
+
      complex_fwd_iter_<D>(c)  face_fwd_iter<D>(c)  | Iterators on all
      complex_bkd_iter_<D>(c)  face_bkd_iter<D>(c)  | faces of c
 
@@ -208,6 +208,9 @@ int main()
 
      (Note: get rid of trailing underscores, even for entities in
      mln::internal::.)
+
+     And likewise for image-related entities!
+
 
      Next, write these:
 

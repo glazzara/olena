@@ -25,15 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TOPO_FACE_HH
-# define MLN_TOPO_FACE_HH
+#ifndef MLN_TOPO_N_FACE_HH
+# define MLN_TOPO_N_FACE_HH
 
-/// \file mln/topo/face.hh
-/// \brief Face of a complex.
+/// \file mln/topo/n_face.hh
+/// \brief n-face of a complex.
 
 #include <limits>
 
 #include <mln/core/contract.hh>
+
 
 namespace mln
 {
@@ -41,40 +42,35 @@ namespace mln
   namespace topo
   {
 
-    // Forward declarations.
+    // Forward declaration.
     template <unsigned D> class complex;
-    template <unsigned N, unsigned D> class n_face;
     template <unsigned N, unsigned D> class face_data;
-    
 
-    /*-------.
-    | Face.  |
-    `-------*/
 
-    /// \brief Face handle in a complex; the face dimension is dynamic.
+    /*---------.
+    | n-Face.  |
+    `---------*/
+
+    /// \brief \p N-face handle in a complex.
     ///
-    /// Contrary to an mln::topo::n_face, the dimension of an
-    /// mln::topo::face is not fixed.
-    template <unsigned D>
-    struct face
+    /// Contrary to an mln::topo::face, the dimension of an
+    /// mln::topo::n_face is fixed.
+    template <unsigned N, unsigned D>
+    struct n_face
     {
       // The type of the complex this handle points to.
       typedef complex<D> complex_type;
 
       /// Build a non-initialized face handle.
-      face();
+      n_face();
       /// Build a face handle from \a complex and \a face_id.
-      face(complex<D>& complex, unsigned n, unsigned face_id);
-
-      /// Build a face handle from an mln::topo::n_face.
-      template <unsigned N>
-      face(const n_face<N, D>& f);
+      n_face(complex<D>& complex, unsigned face_id);
 
       // FIXME: Probably useless.
       /// Copy and assignment.
       /// \{
-      face(const face<D>& rhs);
-      face<D>& operator=(const face<D>& rhs);
+      n_face(const n_face<N, D>& rhs);
+      n_face<N, D>& operator=(const n_face<N, D>& rhs);
       /// \}
 
       /// Is this handle valid?
@@ -86,48 +82,48 @@ namespace mln
       /// \{
       /// Return the complex the face belongs to.
       complex<D>& cplx() const;
-      /// Return the dimension of the face.
-      // FIXME: Rename as `dim'?
-      unsigned n() const;
       /// Return the id of the face.
       // FIXME: Rename as `id'?
       unsigned face_id() const;
 
       /// Set the complex the face belongs to.
       void set_cplx(complex<D>& cplx);
-      /// Set the dimension of the face.
-      void set_n(unsigned n);
+      /// Return the dimension of the face.
+      // FIXME: Rename as `dim'?
+      unsigned n() const;
       /// Set the id of the face.
       void set_face_id(unsigned face_id);
 
       /// Return the mln::topo::face_data pointed by this handle.
-      template <unsigned N>
       face_data<N, D>& face_data() const;
       /// \}
 
     private:
       /// \brief The complex the face belongs to.
       ///
-      /// A const face can be used to modify a complex.
+      /// A const mln::topo::n_face can be used to modify a complex.
       mutable complex<D>* cplx_;
-      /// The dimension of the face.
-      // FIXME: Rename as `dim_'?
-      unsigned n_;
       /// \brief The id of the face.
       // FIXME: Rename as `id_'?
       unsigned face_id_;
     };
 
 
-    /// Comparison of two instances of mln::topo::face.
+    /// Create a handle for \p N-face of a \p D-complex.
+    template <unsigned N, unsigned D>
+    n_face<N, D>
+    make_n_face(const complex<D>& c, unsigned face_id);
+
+
+    /// Comparison of two instances of mln::topo::n_face.
     /// \{
     /// \brief Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     bool
-    operator==(const face<D>& lhs, const face<D>& rhs);
+    operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
 
     /// \brief Is \a lhs ``less'' than \a rhs?
     ///
@@ -135,165 +131,148 @@ namespace mln
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
-    /// \pre Arguments \a lhs and \a rhs must have the same dimension.
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     bool
-    operator< (const face<D>& lhs, const face<D>& rhs);
+    operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs);
     /// \}
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
-    face<D>::face()
-      : cplx_(0),
-	n_(std::numeric_limits<unsigned>::max()),
-	face_id_(std::numeric_limits<unsigned>::max())
-    {
-    }
-
-    template <unsigned D>
-    inline
-    face<D>::face(complex<D>& c, unsigned n, unsigned face_id)
-      : cplx_(&c), n_(n), face_id_(face_id)
-    {
-      // Ensure N is compatible with D.
-      mln_precondition(n <= D);
-    }
-
-    template <unsigned D>
-    template <unsigned N>
-    inline
-    face<D>::face(const n_face<N, D>& f)
-      : cplx_(&f.cplx()), n_(N), face_id_(f.face_id())
+    n_face<N, D>::n_face()
+      : cplx_(0), face_id_(std::numeric_limits<unsigned>::max())
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
-
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
-    face<D>::face(const face<D>& rhs)
-      : cplx_(rhs.cplx_), n_(rhs.n_), face_id_(rhs.face_id_)
+    n_face<N, D>::n_face(complex<D>& c, unsigned face_id)
+      : cplx_(&c), face_id_(face_id)
     {
+      // Ensure N is compatible with D.
+      metal::bool_< N <= D >::check();
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
-    face<D>&
-    face<D>::operator=(const face<D>& rhs)
+    n_face<N, D>::n_face(const n_face<N, D>& rhs)
+      : cplx_(rhs.cplx_), face_id_(rhs.face_id_)
+    {
+      // Ensure N is compatible with D.
+      metal::bool_< N <= D >::check();
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_face<N, D>&
+    n_face<N, D>::operator=(const n_face<N, D>& rhs)
     {
       if (&rhs != this)
 	{
 	  cplx_ = rhs.cplx_;
-	  n_ = rhs.n_;
 	  face_id_ = rhs.face_id_;
 	}
       return *this;
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     bool
-    face<D>::is_valid() const
+    n_face<N, D>::is_valid() const
     {
-      return cplx_ != 0 && n_ <= D && face_id_ < cplx_->nfaces(n_);
+      return cplx_ != 0 && face_id_ < cplx_->template nfaces<N>();
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     void
-    face<D>::invalidate()
+    n_face<N, D>::invalidate()
     {
-      set_n(std::numeric_limits<unsigned>::max());
       set_face_id(std::numeric_limits<unsigned>::max());
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     complex<D>&
-    face<D>::cplx() const
+    n_face<N, D>::cplx() const
     {
       mln_precondition(cplx_);
       return *cplx_;
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     unsigned
-    face<D>::n() const
+    n_face<N, D>::n() const
     {
-      return n_;
+      return N;
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     unsigned
-    face<D>::face_id() const
+    n_face<N, D>::face_id() const
     {
       return face_id_;
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     void
-    face<D>::set_cplx(complex<D>& cplx)
+    n_face<N, D>::set_cplx(complex<D>& cplx)
     {
       cplx_ = &cplx;
     }
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
     void
-    face<D>::set_n(unsigned n)
-    {
-      n_ = n;
-    }
-
-    template <unsigned D>
-    inline
-    void
-    face<D>::set_face_id(unsigned face_id)
+    n_face<N, D>::set_face_id(unsigned face_id)
     {
       face_id_ = face_id;
     }
 
-    template <unsigned D>
-    template <unsigned N>
+    template <unsigned N, unsigned D>
     inline
     face_data<N, D>&
-    face<D>::face_data() const
+    n_face<N, D>::face_data() const
     {
-      mln_precondition(n_ == N);
       mln_precondition(is_valid());
       return cplx_->template face_data_<N>(face_id_);
     }
 
 
-    template <unsigned D>
+    template <unsigned N, unsigned D>
     inline
-    bool
-    operator==(const face<D>& lhs, const face<D>& rhs)
+    n_face<N, D>
+    make_n_face(const complex<D>& c, unsigned face_id)
     {
-      // Ensure LHS and RHS belong to the same complex.
-      mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
-      return
-	lhs.face().n() == rhs.face().n() &&
-	lhs.face().id() == rhs.face().id();
+      return n_face<N, D>(&c, face_id);
     }
 
-    template <unsigned D>
+
+    template <unsigned N, unsigned D>
     inline
     bool
-    operator< (const face<D>& lhs, const face<D>& rhs)
+    operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs)
     {
       // Ensure LHS and RHS belong to the same complex.
       mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
-      // Ensure LHS and RHS have the same dimension.
-      mln_precondition(lhs.face().n() == rhs.face().n());
+      return lhs.face().id() == rhs.face().id();
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    bool
+    operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs)
+    {
+      // Ensure LHS and RHS belong to the same complex.
+      mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
       return lhs.face().id() < rhs.face().id();
     }
 
@@ -303,4 +282,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_FACE_HH
+#endif // ! MLN_TOPO_N_FACE_HH
