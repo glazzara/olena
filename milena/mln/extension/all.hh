@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,49 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_EXTENSION_ALL_HH
+# define MLN_EXTENSION_ALL_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/pw/all.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
+ * \brief File that includes all extension materials.
  *
- * \todo Re-activate the border/all include when ready.
+ * \todo Also include "extension images" + "extended"?
  */
 
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/neighborhood.hh>
+namespace mln
+{
 
-# include <mln/value/ops.hh>
+  /// Namespace of extension tools.
+  namespace extension {}
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
-# include <mln/accu/rank.hh>
+} // end of namespace mln
 
-# include <mln/fun/v2v/saturate.hh>
 
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
+# include <mln/extension/fill.hh>
 
-# include <mln/test/positive.hh>
 
-# include <mln/extension/all.hh>
-
-# include <mln/geom/sym.hh>
-# include <mln/set/inter.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-
-# include <mln/convert/to_window.hh>
-
-#endif // ! MLN_MORPHO_INCLUDES_HH
+#endif // ! MLN_EXTENSION_ALL_HH

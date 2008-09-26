@@ -34,6 +34,9 @@
  * image.
  *
  * \todo Use level::fill!!!
+ *
+ * \todo Test with a primary image with no notion of border; I guess
+ * it does not work.
  */
 
 # include <mln/core/concept/image.hh>

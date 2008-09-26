@@ -30,6 +30,8 @@
 
 /// \file mln/morpho/erosion.hh
 /// \brief Morphological erosion.
+///
+/// \todo Activate the FIXMEs (border::adjust).
 
 # include <mln/morpho/includes.hh>
 
@@ -70,16 +72,20 @@ namespace mln
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
 
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, mln_max(mln_value(I)));
+
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
 	  accu::min_<mln_value(I)> min;
+
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
 	  {
 	    min.init();
-	    for_all(q) if (input.domain().has(q))
+	    for_all(q) if (input.has(q))
 	      min.take(input(q));
 	    output(p) = min;
 	  }
@@ -100,6 +106,9 @@ namespace mln
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
 
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, true);
+
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
@@ -107,7 +116,7 @@ namespace mln
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
 	  {
-	    for_all(q) if (input.domain().has(q))
+	    for_all(q) if (input.has(q))
 	      if (input(q) == false)
 		break;
 	    output(p) = ! q.is_valid();

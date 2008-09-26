@@ -30,6 +30,8 @@
 
 /// \file mln/morpho/dilation.hh
 /// \brief Morphological dilation.
+///
+/// \todo Activate the FIXMEs (border::adjust).
 
 # include <mln/morpho/includes.hh>
 
@@ -92,6 +94,9 @@ namespace mln
 	const W& win   = exact(win_);
 	O& output      = exact(output_);
 
+	// FIXME: border::adjust(input, win.delta());
+	extension::fill(input, mln_min(mln_value(I)));
+
 	accu::max_<mln_value(I)> max;
 
 	mln_piter(I) p(input.domain());
@@ -99,7 +104,7 @@ namespace mln
 	for_all(p)
 	  {
 	    max.init();
-	    for_all(q) if (input.domain().has(q))
+	    for_all(q) if (input.has(q))
 	      max.take(input(q));
 	    output(p) = max.to_result();
 	  }
@@ -116,13 +121,16 @@ namespace mln
 	const W& win   = exact(win_);
 	O& output      = exact(output_);
 
+	// FIXME: border::adjust(input, win.delta());
+	extension::fill(input, false);
+
 	level::fill(output, input);
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
 	for_all(p)
 	  if (!input(p))
-	    for_all(q) if (input.domain().has(q))
+	    for_all(q) if (input.has(q))
 	      if (input(q))
 		{
 		  output(p) = true;

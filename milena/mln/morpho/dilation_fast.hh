@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
 
 /*! \file mln/morpho/dilation_fast.hh
  *
- * \brief Ero filtering of an image.
+ * \brief Dilation filtering of an image with arbitrary s.e.
  *
  * \todo Add fastest versions.
  */
@@ -62,7 +62,7 @@ namespace mln
      */
     template <typename I, typename W, typename O>
     void dilation_fast(const Image<I>& input, const Window<W>& win,
-		      Image<O>& output);
+		       Image<O>& output);
 
 
 
@@ -124,6 +124,8 @@ namespace mln
 	inline
 	void init()
 	{
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, mln_min(mln_value(I)));
 	  max.init();
 	  mln_qiter(W) q(win, p);
 	  for_all(q) if (input.has(q))

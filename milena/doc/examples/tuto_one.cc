@@ -3,41 +3,35 @@
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 
+# include <mln/io/pgm/load.hh>
+# include <mln/io/ppm/save.hh>
+
 # include <mln/core/var.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/core/alias/window2d.hh>
-
-# include <mln/convert/to_p_set.hh>
-# include <mln/convert/to_image.hh>
-# include <mln/debug/println.hh>
-
 # include <mln/make/double_neighb2d.hh>
-
-# include <mln/io/pgm/load.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/io/pbm/save.hh>
-# include <mln/io/ppm/save.hh>
 
 # include <mln/level/transform.hh>
 # include <mln/literal/black.hh>
-# include <mln/pw/all.hh>
+# include <mln/debug/println.hh>
 
 # include <mln/morpho/closing_area.hh>
 # include <mln/morpho/gradient.hh>
 # include <mln/morpho/meyer_wst.hh>
 
 
+using namespace mln;
+using value::int_u8;
 
 
 
-struct colorize : mln::Function_v2v< colorize >
+struct colorize : Function_v2v< colorize >
 {
-  typedef mln::value::rgb8 result;
+  typedef value::rgb8 result;
   colorize(unsigned max)
     : lut(max + 1)
   {
-    lut[0] = mln::literal::black;
+    lut[0] = literal::black;
     for (unsigned i = 1; i <= max; ++i)
       lut[i] = result(100 + std::rand() % 150,
 		      100 + std::rand() % 150,
@@ -51,63 +45,84 @@ struct colorize : mln::Function_v2v< colorize >
 };
 
 
-  bool is_chess(const mln::point2d& p)
-  {
-    return p.col() % 2 == p.row() % 2;
-  }
+bool is_chess(const point2d& p)
+{
+  return p.col() % 2 == p.row() % 2;
+}
 
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.pgm lambda output.ppm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.pgm nbh lambda output.ppm" << std::endl;
+  std::cerr << "  nbh in {4, 6, 8}; lambda >= 0" << std::endl;
   abort();
+}
+
+
+template <typename I, typename N>
+void do_it(const I& ima,
+	   const N& nbh,
+	   int lambda,
+	   const std::string& filename)
+{
+  I grad = morpho::gradient(ima, nbh.win());
+
+  I clo;
+  if (lambda > 1)
+    clo = morpho::closing_area(grad, nbh, lambda);
+  else
+    clo = grad;
+
+  unsigned l;
+  mln_ch_value(I, unsigned) wst = morpho::meyer_wst(clo, nbh, l);
+
+  debug::println(labeling::regional_minima(clo, nbh, l));
+  debug::println(wst);
+
+  io::ppm::save(level::transform(wst, colorize(l)), filename);
 }
 
 
 int main(int argc, char* argv[])
 {
-  using namespace mln;
-  using value::int_u8;
-
-
-  if (argc != 4)
+  if (argc != 5)
     usage(argv);
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, argv[1]);
-  
-  bool vert[] = { 1, 1, 0,
-		  1, 0, 1,
-		  0, 1, 1 };
-    
-  bool hori[] = { 0, 1, 1,
-		  1, 0, 1,
-		  1, 1, 0 };
+  image2d<int_u8> ima;
 
-   mln_VAR( nbh, make::double_neighb2d(is_chess, vert, hori) );
-//   mln_VAR(nbh, c4());
-//    mln_VAR(nbh, c8());
+  io::pgm::load(ima, argv[1]);
 
-  image2d<int_u8> clo, grad = morpho::gradient(lena, nbh.win());
-  // io::pgm::save(grad, "tmp_grad.pgm");
+  int nbh_ = atoi(argv[2]);
+  if (! (nbh_ == 4 || nbh_ == 6 || nbh_ == 8))
+    usage(argv);
 
-  int lambda = atoi(argv[2]);
-  if (lambda > 1)
+  int lambda = atoi(argv[3]);
+  if (lambda < 0)
+    usage(argv);
+
+  std::string filename(argv[4]);
+
+  if (nbh_ == 4)
     {
-      clo = morpho::closing_area(grad, nbh, lambda);
-      io::pgm::save(clo, "tmp_clo.pgm");
+      mln_VAR(nbh, c4());
+      do_it(ima, nbh, lambda, filename);
     }
-  else
-    clo = grad;
+  else if (nbh_ == 8)
+    {
+      mln_VAR(nbh, c8());
+      do_it(ima, nbh, lambda, filename);
+    }
+  else if (nbh_ == 6)
+    {
+      bool vert[] = { 1, 1, 0,
+		      1, 0, 1,
+		      0, 1, 1 };
 
-  unsigned l;
-  image2d<unsigned> wst = morpho::meyer_wst(clo, nbh, l);
-
-  std::cout << "l = " << l << std::endl;
-  debug::println(wst);
-
-  io::ppm::save(level::transform(wst, colorize(l)), argv[3]);
-
-//   io::pbm::save((pw::value(wst) == pw::cst(0)) | lena.domain(),
-// 		argv[3]);
+      bool hori[] = { 0, 1, 1,
+		      1, 0, 1,
+		      1, 1, 0 };
+  
+      mln_VAR(nbh, make::double_neighb2d(is_chess, vert, hori));
+      do_it(ima, nbh, lambda, filename);
+    }
 }

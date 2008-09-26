@@ -45,7 +45,10 @@
  *
  * \brief Specialization for mln::morpho::erosion.
  *
+ * \todo Warning: we should also have the "arbitrary" versions working
+ * on sets (not only on functions!)
  *
+ * \todo Activate the FIXMEs (border::adjust).
  */
 
 # ifndef MLN_INCLUDE_ONLY
@@ -91,9 +94,11 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
+	// FIXME: border::adjust(input, win.delta());
+ 	extension::fill(input, mln_max(mln_value(I)));
+
 	O output;
 	initialize(output, input);
- 	extension::fill(input, mln_max(mln_value(I)));
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) o(output);
@@ -122,9 +127,11 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
+	// FIXME: border::adjust(input, win.delta());
+ 	extension::fill(input, true);
+
 	O output;
 	initialize(output, input);
- 	extension::fill(input, true);
 
 	mln_pixter(const I) p(input);
 	mln_pixter(O) p_out(output);
@@ -152,11 +159,13 @@ namespace mln
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
 	const W& win = exact(win_);
-	O output;
 
+	// FIXME: border::adjust(input, win.delta());
  	extension::fill(input, true);
 
+	O output;
 	output = clone(input);
+
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
 	for_all(p)
@@ -181,11 +190,13 @@ namespace mln
 	typedef mln_concrete(I) O;
 	const I& input = exact(input_);
 	const W& win = exact(win_);
-	O output;
 
+	// FIXME: border::adjust(input, win.delta());
  	extension::fill(input, true);
 
+	O output;
 	output = clone(input);
+
 	mln_pixter(const I) p(input);
 	mln_qixter(const I, W) q(p, win);
 	mln_pixter(O) p_out(output);
@@ -280,6 +291,8 @@ namespace mln
 
 	void init()
 	{
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
 	  p = input.domain().pmin() + up;
@@ -375,6 +388,8 @@ namespace mln
 
 	void init()
 	{
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
 	  p = input.domain().pmin() + up;
