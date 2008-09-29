@@ -95,7 +95,7 @@ namespace mln
 
       /// Return the mln::topo::face_data pointed by this handle.
       template <unsigned N>
-      face_data<N, D>& face_data() const;
+      face_data<N, D>& data() const;
       /// \}
 
     private:
@@ -237,7 +237,7 @@ namespace mln
     template <unsigned N>
     inline
     face_data<N, D>&
-    face<D>::face_data() const
+    face<D>::data() const
     {
       mln_precondition(n_ == N);
       mln_precondition(is_valid());

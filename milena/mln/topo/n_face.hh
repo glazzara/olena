@@ -88,7 +88,7 @@ namespace mln
       void set_face_id(unsigned face_id);
 
       /// Return the mln::topo::face_data pointed by this handle.
-      face_data<N, D>& face_data() const;
+      face_data<N, D>& data() const;
       /// \}
 
     private:
@@ -211,7 +211,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     face_data<N, D>&
-    n_face<N, D>::face_data() const
+    n_face<N, D>::data() const
     {
       mln_precondition(is_valid());
       return cplx_->template face_data_<N>(face_id_);

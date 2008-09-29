@@ -572,8 +572,8 @@ namespace mln
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
 
-      f1.face_data().connect_higher_dim_face(f2);
-      f2.face_data().connect_lower_dim_face(f1);
+      f1.data().connect_higher_dim_face(f2);
+      f2.data().connect_lower_dim_face(f1);
     }
 
 

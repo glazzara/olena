@@ -1,5 +1,18 @@
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Help the compiler not to mix up classes and methods.
+
+	* mln/topo/face.hh (mln::topo::face<D>::face_data):
+	Rename method as...
+	(mln::topo::face<D>::data): ...this.
+	* mln/topo/n_face.hh (mln::topo::n_face<N, D>::face_data):
+	Rename method as...
+	(mln::topo::n_face<N, D>::data): ...this.
+	* mln/topo/complex.hh (mln::topo::complex<D>::connect_): Adjust.
+	* tests/topo/complex.cc: Adjust.
+
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help the compiler not to mix up typedefs and methods.
 
 	* mln/topo/face_iter.hh,
