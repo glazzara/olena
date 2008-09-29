@@ -32,6 +32,8 @@
 /// \brief Definition of a point site based on the n-faces of a
 /// complex.
 
+# include <cstdlib>
+
 # include <mln/core/internal/pseudo_site_base.hh>
 
 # include <mln/topo/complex.hh>

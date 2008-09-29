@@ -1,3 +1,7 @@
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/core/faces_psite.hh: Include csdtlib for abort().
+
 2008-09-29  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update documentation about the image value properties.
