@@ -133,8 +133,8 @@ int main()
 
   // Iterators on a complex (not complex_image), or more precisely on
   // (all) the faces of complex C.
-  mln_fwd_citer_(topo::complex<D>) fwd_f(c);
-  mln_bkd_citer_(topo::complex<D>) bkd_f(c);
+  topo::face_fwd_iter<D> fwd_f(c);
+  topo::face_bkd_iter<D> bkd_f(c);
   for_all_2(fwd_f, bkd_f)
     std::cout << fwd_f << ' ' << bkd_f << std::endl;
   std::cout << std::endl;

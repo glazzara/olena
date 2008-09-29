@@ -1,5 +1,17 @@
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove macros mln_*[cf]iter.
+
+	* mln/core/macros.hh
+	(mln_citer, mln_citer_)
+	(mln_fwd_citer, mln_fwd_citer_, mln_bkd_citer, mln_bkd_citer_)
+	(mln_fiter, mln_fiter_)
+	(mln_fwd_fiter, mln_fwd_fiter_, mln_bkd_fiter, mln_bkd_fiter_):
+	Remove macros.
+	* tests/topo/complex.cc: Adjust.
+
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add (dynamic) iterators on n-faces.
 
 	* mln/core/internal/p_complex_piter_base.hh

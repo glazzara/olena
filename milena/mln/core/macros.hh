@@ -49,23 +49,11 @@
 
 // b
 
-/// Shortcuts to access the bkd_citer type associated to T.
-/// \{
-# define mln_bkd_citer(T)  typename T::bkd_citer
-# define mln_bkd_citer_(T)          T::bkd_citer
-/// \}
-
 /// Shortcuts to access the element-backward-iterator type associated
 /// to T.
 /// \{
 # define mln_bkd_eiter(T)   typename T::bkd_eiter
 # define mln_bkd_eiter_(T)           T::bkd_eiter
-/// \}
-
-/// Shortcuts to access the (N-faces) bkd_fiter type associated to T.
-/// \{
-# define mln_bkd_fiter(N, T)  typename T::template bkd_fiter< N >::ret
-# define mln_bkd_fiter_(N, T)          T::         bkd_fiter< N >::ret
 /// \}
 
 /// Shortcuts to access the bkd_niter type associated to T.
@@ -100,12 +88,6 @@
 
 
 // c
-
-/// Shortcuts to access the citer type associated to T.
-/// \{
-# define mln_citer(T)      typename T::fwd_citer
-# define mln_citer_(T)              T::fwd_citer
-/// \}
 
 /// Shortcuts to access the coord type associated to T.
 /// \{
@@ -164,29 +146,11 @@
 
 // f
 
-/// Shortcuts to access the (N-faces) fiter type associated to T.
-/// \{
-# define mln_fiter(N, T)   typename T::template fwd_fiter< N >::ret
-# define mln_fiter_(N, T)           T::         fwd_fiter< N >::ret
-/// \}
-
-/// Shortcuts to access the fwd_citer type associated to T.
-/// \{
-# define mln_fwd_citer(T)  typename T::fwd_citer
-# define mln_fwd_citer_(T)          T::fwd_citer
-/// \}
-
 /// Shortcuts to access the element-forward-iterator type associated
 /// to T.
 /// \{
 # define mln_fwd_eiter(T)   typename T::fwd_eiter
 # define mln_fwd_eiter_(T)           T::fwd_eiter
-/// \}
-
-/// Shortcuts to access the (N-faces) fwd_fiter type associated to T.
-/// \{
-# define mln_fwd_fiter(N, T)  typename T::template fwd_fiter< N >::ret
-# define mln_fwd_fiter_(N, T)          T::         fwd_fiter< N >::ret
 /// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.
