@@ -3,12 +3,12 @@
                     Values related properties
 
 
-* TODO
- -> Are the properties related to the values sufficiant?
- -> What are the interface related to each value property?
+* What is this file about
+ -> Are the image properties about the values sufficient/correct?
+ -> What are the piece of interface related to each property?
  -> How these values properties affect the fill/paste/transform process?
 
-* Values properties list:
+* Image values properties:
 
 ** value_access: /any/
                   |
@@ -33,16 +33,16 @@
  value_storage == singleton
    => ima.value()        -> return the image value
 
- value_storage == one_block
+ value_storage == one_block (what about the fastest image?)
    => image.nelements()  -> return the number of elements in memory
    => image.buffer()     -> return the start adress of the ima buffer
 
  value_storage == piece_wise
-   //FIXME
+   // runs iterator?
 
 ** value_browsing:/any/
                     |
-                    + -- site_wise_only
+                     + -- site_wise_only
                     |
                     + -------- cell_wise
                     |                 |
@@ -55,7 +55,7 @@
    => ima.values_taken()               -> return the current values taken by
                                           ima
    => ima.change_value(oldVal, newVal) -> change the value oldVal to newVal
-   => ima.change_values(f)             -> apply f (a function v2v) to all the
+   => ima.apply(f)                     -> apply f (a function v2v) to all the
                                           values
    => ima.sites(v)                     -> return the sites associated to the
                                           value v
@@ -68,9 +68,11 @@
 
 
 
+* Impact on the fill and paste algorithms
 
+** fill
 
-* fill (depends on the value_storage property)
+Fill an image ima with a value v.
 
 *** values_storage == oneblock
 // Replace by Memcopy?
@@ -78,11 +80,9 @@ const unsigned n = ima.nelements();
 mln_value(I)* ptr = ima.buffer();
 for (unsigned i = 0; i < n; ++i)
   *ptr++ = val;
-
 **** Method related
 -> nelements
 -> buffer
-
 
 *** value_storage == piece_wise
 // MemCopy on the runs?
@@ -91,23 +91,37 @@ for (ungsigned i = 0; i < ima.nruns(); ++i)
 **** Method related:
   nruns ???
 
-
-*** value_storage == any && value_browsing == value_wise
-
+*** value_browsing == value_wise
 // direct access to the value
 mln_viter(mln_taken_values(I)) viter(I.taken_values();
 for_all(viter);
   ima.changes_values(viter, v);
-
 **** Method related:
  -> iterator on value taken
  -> change_values
 
-*** Generic case: all the other case
+*** generic case
 mln_piter(I) p(ima.domain());
 for_all(p)
   ima(p) = v;
 
+** Paste
+
+Paste value data from an image source to destination.
+
+*** values_storage == oneblock (for source an destination)
+// Replace by Memcopy?
+const unsigned n = ima.nelements();
+mln_value(I)* ptr_src = source.buffer();
+mln_value(I)* ptr_dest = destination.buffer();
+for (unsigned i = 0; i < n; ++i)
+  *ptr_src++ = *ptr_dest++;
+
+
+*** generic case
+mln_piter(I) p(source.domain());
+for_all(p)
+  destination(p) = source(p);
 
 * To keep in Mind
 
@@ -147,22 +161,7 @@ b : (2,2), (1, 2), (3, 2)
 
 -differentiate the localization of an image and its storage method.
 
-* Image related with 'special' values access
+** Image related with 'special' values access
 
-** Run Images (sparce, value_encoded)
-
-=> fill: *cpt++ = v sur chaque run
-|
-+-> related to memory storage
-
-** Pkey Images
-
-=> change_value
-
-
-
-* Note
-
-- Cell access and Value access wise property depends on the image
- --> property related:
-    cell-wise and value wise
+*** Run Images (sparse, value_encoded)
+*** Pkey Images
