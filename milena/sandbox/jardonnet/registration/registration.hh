@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_REGISTRATION_ICP_HH
-# define MLN_REGISTRATION_ICP_HH
+#ifndef MLN_REGISTRATION_REGISTRATION_HH
+# define MLN_REGISTRATION_REGISTRATION_HH
 
-/*! \file mln/registration/icp.hh
+/*! \file mln/registration/registration.hh
  *
  * \brief image registration
  */
@@ -43,9 +43,11 @@
 # include <mln/make/w_window3d.hh>
 
 # include <mln/value/rgb8.hh>
-# include <mln/literal/all.hh>
+# include <mln/literal/colors.hh>
+# include <mln/literal/black.hh>
 # include <mln/level/fill.hh>
 # include <mln/io/ppm/save.hh>
+
 
 # include "tools.hh"
 
@@ -55,8 +57,6 @@
 # include "chamfer.hh"
 
 # include "save.hh"
-
-
 
 namespace mln
 {
@@ -75,7 +75,7 @@ namespace mln
     template <typename I, typename J>
     inline
     mln_concrete(I)
-    icp(const Image<I>& cloud,
+    registration(const Image<I>& cloud,
         const Image<J>& surface);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -86,140 +86,77 @@ namespace mln
       template <typename P, typename M>
       inline
       void
-      icp_(const p_array<P>& C,
+      registration_(const p_array<P>& C,
            const M& map,
            quat7<P::dim>& qk,
-           const size_t c_length,
-           const p_array<P>& X,
+           const unsigned c_length,
            const float  epsilon = 1e-3)
       {
-	trace::entering("registration::impl::icp_");
-
-#ifndef NDEBUG
-        //display registred points
-        std::cout << "Register "
-                  << c_length << " points" << std::endl;
-        std::cout << "k\t\te_k >=\td_k\tdqk" << std::endl;
-#endif
+	trace::entering("registration::impl::registration_");
 
         buffer<4,quat7<P::dim> > buf_qk;
+        buffer<3,float>          buf_dk;
 
+        float         d_k = 10000;
         p_array<P>    Ck(C);
-        float d_k = 1000, d_k_1 = 1000, e_k = 1000;
 
         algebra::vec<P::dim,float> mu_C = center(C, c_length), mu_Xk;
 
         buf_qk.store(qk);
 
-        save_(qk,C,X,map,2);
-
         qk.apply_on(C, Ck, c_length);
 
-        save_(qk,C,X,map,2);
-
         unsigned int k = 0;
-
         do {
+          buf_dk.store(d_k);
+
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
-
           buf_qk.store(qk);
+
+          //update qk
+          if (k > 2)
+            qk = update_qk(buf_qk.get_array(), buf_dk.get_array());
+          qk._qR.set_unit();
+          buf_qk[0] = qk;
 
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
-
-          d_k_1 = d_k;
 
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
           d_k = rms(C, map, c_length, buf_qk[1], qk);
 
-          // e_k = d(closest(qk-1(P)), qk-1(P))
-          e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-
-#ifndef NDEBUG
-          save_(qk,C,X,map,2);
-          //print info
-          std::cout << k << '\t' << (e_k >= d_k ? ' ' : '-') << '\t' << e_k << '\t' << d_k << '\t'
-                    << ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm()) << '\t'
-                    << std::endl;
-          //count the number of points processed
-          pts += c_length;
-#endif
           k++;
-        } while (d_k_1 - d_k > epsilon);
-        // FIXME : test (e_k >= d_k) but seems to be a bad idea.
+        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
 
-        trace::exiting("registration::impl::icp_");
+        trace::exiting("registration::impl::registration_");
       }
 
     } // end of namespace mln::registration::impl
 
 
-    // Only for 3d images
+    // FIXME: Separate icp.hh registration.hh multiscale_registration.hh
+    // FIXME: Make it works in 3d *AND* 2d
     template <typename P, typename M>
     inline
     quat7<P::dim>
-    icp(p_array<P> cloud, // FIXME : is almost const (shuffled)
-        const M& map,
-        const float q,
-        const unsigned nb_it,
-        const p_array<P>& x)
+    registration(p_array<P>& cloud,
+                 const M& map,
+                 const p_array<P>& x)
     {
-      trace::entering("registration::icp");
+      trace::entering("registration::registration");
 
-      mln_precondition(P::dim == 3);
+      mln_precondition(P::dim == 3 || P::dim == 2);
       mln_precondition(cloud.nsites() != 0);
-
-      shuffle(cloud);
 
       //init rigid transform qk
       quat7<P::dim> qk;
 
-#ifndef NDEBUG       // FIXME: theo
-      image2d<value::rgb8> tmp(500,800);
-      level::fill(tmp, literal::black);
-      //write X
-      mln_piter(p_array<P>) p(x);
-      for_all(p)
-      {
-        point2d qp = point2d(p[0], p[1]);
-        if (tmp.has(qp))
-          tmp(qp) = literal::white;
-      }
-#endif
+      //run registration
+      impl::registration_(cloud, map, qk, l, 1e-3);
 
-      //run icp
-      for (int e = nb_it-1; e >= 0; e--)
-        {
-
-          size_t l = cloud.nsites() / std::pow(q, e);
-          l = (l<1) ? 1 : l;
-          impl::icp_(cloud, map, qk, l, x, 1e-3);
-
-#ifndef NDEBUG
-          {
-            value::rgb8 c;
-            switch (e) {
-            case 2: c = literal::green; break;
-            case 1: c = literal::blue; break;
-            case 0: c = literal::red; break;
-            }
-            mln_piter(p_array<P>) p(cloud);
-            for_all(p)
-            {
-              algebra::vec<3,float> p_ = P(p), qp_ = qk(p_);
-              point2d qp = point2d(int(qp_[0]), int(qp_[1]));
-              if (tmp.has(qp))
-                tmp(qp) = c;
-            }
-            if (e == 0)
-              io::ppm::save(tmp, "tmp.ppm");
-          }
-#endif
-        }
-
-      trace::exiting("registration::icp");
+      trace::exiting("registration::registration");
 
       return qk;
     }
@@ -231,4 +168,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_REGISTRATION_ICP_HH
+#endif // ! MLN_REGISTRATION_REGISTRATION_HH

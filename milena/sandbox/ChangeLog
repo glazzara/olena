@@ -1,3 +1,22 @@
+2008-09-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Start revamp registration.
+
+	* jardonnet/test/registration.cc: Simple registration test.
+	* jardonnet/registration/registration.hh: Simple registration.
+	* jardonnet/registration/multiscale.hh: Multiscale registration.
+
+
+	* jardonnet/test/icp.cc,
+	* jardonnet/registration/icp.hh,
+	* jardonnet/registration/final_qk.hh,
+	* jardonnet/registration/save.hh,
+	* jardonnet/registration/tools.hh,
+	* jardonnet/registration/icp_ref.hh,
+	* jardonnet/registration/quat7.hh: Upgrade to 'clean-up'.
+
+	* jardonnet/test/Makefile: Add rules.
+
 2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: Update test.

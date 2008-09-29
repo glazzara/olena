@@ -27,14 +27,14 @@ namespace mln
       void save(const p_array<P>& a, const std::string& filename)
       {
         mln_precondition(P::dim == 2);
-        
+
         image2d<bool> out = convert::to_image(a);
         save(out, filename);
       }
     }
   }
-  
-  
+
+
   namespace registration
   {
 
@@ -62,7 +62,7 @@ namespace mln
       //plot mu_Ck
       algebra::vec<P::dim,float> mu_Ck = geom::center(ck);
       draw::plot(out, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
-      
+
       //Ck orientation
       algebra::mat<P::dim,P::dim,float> Mk = math::cov(ck,ck);
       algebra::vec<3,float> vck = power_it(Mk);
@@ -74,7 +74,7 @@ namespace mln
       p_array<P> xk;
       for (unsigned i = 0; i < ck.nsites(); ++i)
         xk.append(map(ck[i]));
-      
+
       //plot mu_Xk
       algebra::vec<P::dim,float> mu_Xk = geom::center(xk);
       draw::plot(out, point2d(mu_Xk[0], mu_Xk[1]), literal::blue);
@@ -85,7 +85,7 @@ namespace mln
       draw::line(out, point2d(mu_Xk[0], mu_Xk[1]),
                  point2d(mu_Xk[0]+vxk[0]*10, mu_Xk[1]+vxk[1]*10),
                  literal::red);
-          
+
       //x in black
       for (unsigned i = 0; i < x.nsites(); i++)
         {
@@ -93,7 +93,7 @@ namespace mln
           if (out.has(p))
             out(p) = literal::black;
         }
-      
+
       //xk in red
       for (unsigned i = 0; i < xk.nsites(); i++)
         {
@@ -101,7 +101,7 @@ namespace mln
           if (out.has(p))
             out(p) = literal::red;
         }
-      
+
       //ck in green
       for (unsigned i = 0; i < ck.nsites(); i++)
         {
@@ -117,15 +117,15 @@ namespace mln
                      1, 1, 1};
       morpho::erosion(out, convert::to<window2d>(vals));
       */
-      
+
       //save
       std::stringstream oss;
       oss << "step_" << id++ << ".ppm";
       io::ppm::save(out, oss.str());
     }
-    
+
   }
-  
+
 }
 
 #endif

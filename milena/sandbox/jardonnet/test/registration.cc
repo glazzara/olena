@@ -9,6 +9,7 @@
 #include <sandbox/jardonnet/registration/icp.hh>
 #include <sandbox/jardonnet/registration/tools.hh>
 #include <sandbox/jardonnet/registration/final_qk.hh>
+#include <mln/geom/bbox.hh>
 
 void usage(char *argv[])
 {
@@ -30,32 +31,30 @@ int main(int argc, char* argv[])
     usage(argv);
 
   using namespace mln;
-  typedef image3d< bool > I3d;
+  typedef image2d< bool > image2db;
 
-  image2d< bool > img1;
-  image2d< bool > img2;
+  image2db img1;
+  image2db img2;
 
   //load images
   io::pbm::load(img1, argv[1]);
   io::pbm::load(img2, argv[2]);
 
-  //convert to image3d
-  I3d cloud   = convert::to_image3d(img1);
-  I3d surface = convert::to_image3d(img2);
-
   //build p_arrays.
-  p_array<mln_psite_(I3d)> c = convert::to_p_array(cloud);
-  p_array<mln_psite_(I3d)> x = convert::to_p_array(surface);
+  p_array<mln_psite_(image2db)> c = convert::to< p_array<point2d> >(img1);
+  p_array<mln_psite_(image2db)> x = convert::to< p_array<point2d> >(img2);
 
   //working box
-  const box<mln_psite_(I3d)> working_box =
-    enlarge(bigger(c.bbox(),x.domain()),100);
+  const box<point2d> working_box =
+    enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
 
   //Make a lazy_image map via function closest_point
-  closest_point<mln_psite_(I3d)> fun(x, working_box);
-  lazy_image< closest_point<mln_psite_(I3d)> > map(fun);
+  closest_point<mln_psite_(image2db)> fun(x, working_box);
 
-  quat7<3> qk = registration::icp(c, map, q, e, x);
+  // * Use real lazy image
+  //lazy_image< closest_point<mln_psite_(image2db)> > map(fun);
+  p_array<point2d> map;
+  quat7<2> qk ;//= registration::icp(c, map, q, e, x);
 
 #ifndef NDEBUG
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
@@ -74,11 +73,11 @@ int main(int argc, char* argv[])
 
   std::vector<float> length(c.nsites());
   for (size_t i = 0; i < c.nsites(); i++)
-    length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
+    length[i] = norm::l2( convert::to< algebra::vec<2,float> >( c[i] - map(c[i]) ) );
 
 
   // final transform
-  quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
+  quat7<2> fqk = registration::final_qk2(c, map, 2*stddev);
   fqk.apply_on(c, c, c.nsites());
 
 
@@ -88,7 +87,7 @@ int main(int argc, char* argv[])
 
 
   //print x
-  for (size_t i = 0; i < x.nsites(); i++)
+  for (unsigned i = 0; i < x.nsites(); i++)
     {
       //Xk points
       point2d px(x[i][0], x[i][1]);
@@ -97,23 +96,12 @@ int main(int argc, char* argv[])
     }
 
 
-  //to 2d : projection (FIXME:if 3d)
-  for (size_t i = 0; i < c.nsites(); i++)
+  for (unsigned i = 0; i < c.nsites(); i++)
     {
       //Ck points
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
-        {
-	  algebra::vec<3,float> xki = map(c[i]);
-	  algebra::vec<3,float> ci = c[i];
-	  /*
-	  if (length[i] > 2 * stddev)
-            output(p) = literal::red;
-          else if (length[i] > stddev)
-            output(p) = value::rgb8(255,200,0);
-          else*/
-          output(p) = literal::green;
-        }
+        output(p) = literal::green;
     }
 
   io::ppm::save(output, "registred.ppm");

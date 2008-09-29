@@ -1,7 +1,7 @@
 SOURCE=test.cc subsampling.cc
 FLAG=-Wall -W -pedantic -I../../.. -g
 
-all: 
+all:
 	echo "sub gsub gau icpD icp check bench"
 
 sub:
@@ -13,17 +13,26 @@ gsub:
 gau:
 	g++ gaussian.cc $(FLAG) -o 'gau'
 
+
+#  # icp
 icpD: icp.cc +depend
 	g++ icp.cc -I../../.. -g -o 'icpD'
-
 icp: +depend
 	g++ icp.cc -I../../.. -O3 -DNDEBUG -o 'icp'
 
+
+# # icp-ref
 icp_refD: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ -Wall -W icp_ref.cc -I../../.. -g -o 'icp_refD'
-
 icp_ref: icp_ref.cc ../registration/icp_ref.hh +depend
 	g++ icp_ref.cc -I../../.. -O3 -DNDEBUG -o 'icp_ref'
+
+
+# # reg
+regD: registration.cc +depend
+	g++ registration.cc -I../../.. -g -o 'reg'
+reg: registration.cc +depend
+	g++ registration.cc -I../../.. -g -o 'reg'
 
 bench:
 	ruby bench.rb

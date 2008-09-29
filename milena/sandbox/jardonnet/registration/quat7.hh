@@ -29,18 +29,18 @@ namespace mln
   {
     algebra::quat _qR;
     algebra::vec<n,float> _qT;
-    
+
     quat7()
       : _qR(1,0,0,0), _qT(literal::zero)
     {
     }
-    
+
     quat7(const algebra::quat& qR, const algebra::vec<n,float>& qT) :
       _qR(qR),
       _qT(qT)
     {
     }
-    
+
     float sqr_norm() const
     {
       return norm::l2(_qR.to_vec()) + norm::l2(_qT);
@@ -50,10 +50,10 @@ namespace mln
     {
       return norm::l1(_qR.to_vec()) + norm::l1(_qT);
     }
-    
-    
+
+
     // quat7 is an object-function
-    
+
     algebra::vec<n,float> operator()(const algebra::vec<n,float>& v) const
     {
       return rotate(_qR, v) + _qT;
@@ -69,9 +69,9 @@ namespace mln
       assert(_qR.is_unit());
 
       for (size_t i = 0; i < c_length; i++)
-        output.hook_()[i] = algebra::to_point<P>((*this)(input[i]));
+        output[i] = algebra::to_point<P>((*this)(input[i]));
     }
-    
+
     friend std::ostream& operator << (std::ostream& os, quat7& q)
     {
       std::cout << q._qR << std::endl;
@@ -100,12 +100,12 @@ namespace mln
         }
       return v;
     }
-    
+
     quat7 operator*(float f)
     {
       return quat7(_qR * f, _qT * f);
     }
-    
+
     quat7 operator/(float f)
     {
       return quat7(_qR / f, _qT / f);
@@ -121,7 +121,7 @@ namespace mln
       return quat7(_qR + rhs._qR, _qT + rhs._qT);
     }
   };
-  
+
   template <typename P, typename M>
   quat7<P::dim> match(const p_array<P>& C,
                       const algebra::vec<P::dim,float>& mu_C,
@@ -137,14 +137,14 @@ namespace mln
         mu_Xk += xki;
       }
     mu_Xk /= c_length;
-   
+
     // qR
     algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
     for (unsigned i = 0; i < c_length; ++i)
       {
         algebra::vec<P::dim,float> Ci  = C[i];
         algebra::vec<P::dim,float> Xki = map(Ck[i]);
-           
+
         Mk += make::mat(Ci - mu_C) * trans(make::mat(Xki - mu_Xk));
         // or Mk += make::mat(Ci) * trans(make::mat(Xki)) - make::mat(mu_C) * trans(make::mat(mu_Xk))
       }
@@ -182,13 +182,13 @@ namespace mln
     //std::cout << qR << std::endl;
     //qR = power_it(Qk);
     //std::cout << qR << std::endl;
-    
+
     // qT
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);
-  
+
     return quat7<P::dim>(qR, qT);
   }
-  
+
 } //end of namespace mln
 
 #endif // ndef QUAT7_HH
