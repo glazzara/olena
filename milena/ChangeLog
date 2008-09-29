@@ -1,5 +1,10 @@
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/topo/complex.cc: Move some comments to the Trac Wiki.
+	See https://trac.lrde.org/olena/wiki/Olena/ComplexBasedImages.
+
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove macros mln_*[cf]iter.
 
 	* mln/core/macros.hh

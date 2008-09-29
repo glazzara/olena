@@ -205,37 +205,9 @@ int main()
      complex_faces_piter) use a static `n'.  We should also have
      n-faces iterators where n could be dynamic.
 
-
-     But first, we need to clarify (existing) names.  These ones are
-     OK:
-
-     -----------------------------------------------------------------
-     Name                               Definition                
-     -----------------------------------------------------------------
-     complex<D>                         General complex.
-
-     face_data<N, D>                    Face data.          
-     n_face<N, D>                       (Static) n-face handle.
-     n_faces_set<N, D>                  Set of face handles.   
-     face<D>                            Dynamic face handle.
-
-     face_fwd_iter<D>(c)                | Iterators on all the faces
-     face_bkd_iter<D>(c)                | of c.
-
-     n_face_fwd_iter<D>(c)              | Iterators on n-faces,
-     n_face_bkd_iter<D>(c)              | n being dynamic.
-
-     static_n_face_fwd_iter<D>(c)       | Iterators on n-faces,
-     static_n_face_bkd_iter<D>(c)       | n being static.
-
-     internal::complex_iter_base<F, E>  Factoring base class.
-     -----------------------------------------------------------------
-
-     (Note: get rid of trailing underscores, even for entities in
-     mln::internal::.)
-
-     And likewise for image-related entities!
-
+     But first, we need to clarify (existing) names.  The one listed
+     in https://trac.lrde.org/olena/wiki/Olena/ComplexBasedImages
+     are OK.
 
      Next, write these:
 
