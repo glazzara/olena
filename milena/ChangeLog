@@ -1,5 +1,18 @@
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add (dynamic) iterators on n-faces.
+
+	* mln/core/internal/p_complex_piter_base.hh
+	(mln::internal::p_complex_piter_base_<I, S, P, E>::iter_):
+	Set to protected.
+	* mln/core/site_set/p_n_faces_piter.hh): New file.
+	Include it...
+	* mln/core/site_set/p_complex.hh: ...here.
+	* tests/core/image/complex_image.cc: Exercise iterators on
+	n-faces.
+
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	Help the compiler not to mix up classes and methods.
 
 	* mln/topo/face.hh (mln::topo::face<D>::face_data):

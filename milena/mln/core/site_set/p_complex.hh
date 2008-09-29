@@ -37,6 +37,7 @@
 
 # include <mln/core/site_set/complex_psite.hh>
 # include <mln/core/site_set/p_complex_piter.hh>
+# include <mln/core/site_set/p_n_faces_piter.hh>
 // FIXME: Disabled (moved to the attic).
 # if 0
 #  include <mln/core/site_set/p_complex_faces_piter.hh>

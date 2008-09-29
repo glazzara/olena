@@ -96,8 +96,6 @@ namespace mln
     protected:
       /// The psite corresponding to this iterator.
       using super_::p_;
-
-    private:
       /// The underlying complex iterator.
       iter iter_;
     };

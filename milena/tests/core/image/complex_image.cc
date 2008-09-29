@@ -164,6 +164,19 @@ int main()
   // Iterators on n-faces (with n fixed in [0, D]).  //
   // ----------------------------------------------- //
 
+  // Dynamic version.
+  for (unsigned n = 0; n <= D; ++n)
+    {
+      p_n_faces_fwd_piter<D, point2d> fwd_np(ima.domain(), n);
+      p_n_faces_bkd_piter<D, point2d> bkd_np(ima.domain(), n);
+      for_all_2(fwd_np, bkd_np)
+	std::cout << "ima(" << fwd_np << ") = " << ima(fwd_np) << '\t'
+		  << "ima(" << bkd_np << ") = " << ima(bkd_np)
+		  << std::endl;
+      std::cout << std::endl;
+    }
+
+  // Static version.
 // FIXME: Disabled (moved to the attic).
 # if 0
   // FIXME: Sugar the name of the iterator.
