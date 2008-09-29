@@ -1,5 +1,27 @@
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
+	Help the compiler not to mix up typedefs and methods.
+
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/static_n_face_iter.hh
+	(mln::topo::face_fwd_iter<D>::face)
+	(mln::topo::face_bkd_iter<D>::face)
+	(mln::topo::n_face_fwd_iter<D>::face)
+	(mln::topo::n_face_bkd_iter<D>::face)
+	(mln::topo::static_n_face_fwd_iter<D>::face)
+	(mln::topo::static_n_face_bkd_iter<D>::face):
+	Remove typedef.
+	(mln::topo::face_fwd_iter<D>::super_)
+	(mln::topo::face_bkd_iter<D>::super_)
+	(mln::topo::n_face_fwd_iter<D>::super_)
+	(mln::topo::n_face_bkd_iter<D>::super_)
+	(mln::topo::static_n_face_fwd_iter<D>::super_)
+	(mln::topo::static_n_face_bkd_iter<D>::super_):
+	Adjust.
+
+2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/faces_psite.hh: Include csdtlib for abort().
 
 2008-09-29  Nicolas Ballas  <ballas@lrde.epita.fr>

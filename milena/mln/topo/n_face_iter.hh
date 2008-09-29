@@ -62,13 +62,9 @@ namespace mln
     class n_face_fwd_iter
       : public internal::complex_iter_base< face<D>, n_face_fwd_iter<D> >
     {
-    public:
-      /// Type of associated face.
-      typedef face<D> face;
-
     private:
       typedef n_face_fwd_iter<D> self_;
-      typedef internal::complex_iter_base< face, self_ > super_;
+      typedef internal::complex_iter_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -114,13 +110,9 @@ namespace mln
     class n_face_bkd_iter
     : public internal::complex_iter_base< face<D>, n_face_bkd_iter<D> >
     {
-    public:
-      /// Type of associated face.
-      typedef face<D> face;
-
     private:
       typedef n_face_bkd_iter<D> self_;
-      typedef internal::complex_iter_base< face, self_ > super_;
+      typedef internal::complex_iter_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
