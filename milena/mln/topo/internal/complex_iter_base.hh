@@ -97,10 +97,7 @@ namespace mln
       };
 
 
-      /* FIXME: This hand-made delegation is painful.  We should rely on
-	 the general mechanism provided by Point_Site.  But then again, we
-	 need to refine/adjust the interface of Point_Site w.r.t. the
-	 mandatory conversions to points.  */
+      /// Print an mln::topo::internal::complex_iter_base.
       template <typename F, typename E>
       inline
       std::ostream&
@@ -194,7 +191,7 @@ namespace mln
 	   This is a general remark that applies to all iterators of
 	   Milena.  */
 	F f = p;
-	return ostr << "(dim = " << f.n() << ", id = " << f.face_id() << ')';
+	return ostr << f;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

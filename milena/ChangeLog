@@ -1,5 +1,11 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Delegate pretty-printing of iterators on faces to mln::topo::face.
+
+	* mln/topo/internal/complex_iter_base.hh (operator<<): Here.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add accesses to adjacent faces to mln::topo::face<D>.
 
 	* mln/topo/face.hh
