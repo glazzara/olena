@@ -1,5 +1,13 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add pretty-printing operators for face handles.
+
+	* mln/topo/face.hh (operator<<(std::ostream&, const face<D>))
+	* mln/topo/n_face.hh (operator<<(std::ostream&, const n_face<N, D>)):
+	New operators.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/topo/complex.hh: Add some more documentation.
 
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>

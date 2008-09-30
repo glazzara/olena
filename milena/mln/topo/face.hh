@@ -135,6 +135,12 @@ namespace mln
     /// \}
 
 
+    /// Print an mln::topo::face.
+    template <unsigned D>
+    std::ostream&
+    operator<<(std::ostream& ostr, const face<D>& f);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -267,6 +273,15 @@ namespace mln
       // Ensure LHS and RHS have the same dimension.
       mln_precondition(lhs.face().n() == rhs.face().n());
       return lhs.face().id() < rhs.face().id();
+    }
+
+
+    template <unsigned D>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const face<D>& f)
+    {
+      return ostr << "(dim = " << f.n() << ", id = " << f.face_id() << ')';
     }
 
 # endif // ! MLN_INCLUDE_ONLY
