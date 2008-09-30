@@ -9,7 +9,7 @@
 # include <mln/core/alias/window2d.hh>
 # include <string>
 
-# include "quat7.hh"
+//# include "quat7.hh"
 # include "tools.hh"
 # include "power_it.hh"
 # include "center.hh"
@@ -38,8 +38,8 @@ namespace mln
   namespace registration
   {
 
-    template<typename P, typename M>
-    void save_(const quat7<3>& qk,
+    template<typename P, typename M, typename T>
+    void save_(const T& qk,
                const p_array<P>& c,
                const p_array<P>& x,
                const M& map,

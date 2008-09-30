@@ -17,7 +17,7 @@ namespace mln
       std::vector<float> length(c.nsites());
       mean = 0;
 
-      for (size_t i = 0; i < c.nsites(); i++)
+      for (unsigned i = 0; i < c.nsites(); i++)
 	{
 	  float f = norm::l2(convert::to< algebra::vec<P::dim,int> > (c[i] - map(c[i])));
 	  length[i] = f;
@@ -27,7 +27,7 @@ namespace mln
 
       //standar variation
       stddev = 0;
-      for (size_t i = 0; i < c.nsites(); i++)
+      for (unsigned i = 0; i < c.nsites(); i++)
 	stddev += (length[i] - mean) * (length[i] - mean);
       stddev /= c.nsites();
       stddev = math::sqrt(stddev);
@@ -42,12 +42,12 @@ namespace mln
 	     float       nstddev)
     {
       p_array<P> newc;
-      algebra::vec<3,float> mu_newc(literal::zero);
+      algebra::vec<P::dim,float> mu_newc(literal::zero);
 
-      for (size_t i = 0; i < c.nsites(); ++i)
+      for (unsigned i = 0; i < c.nsites(); ++i)
 	{
-          algebra::vec<3,float> ci = c[i];
-	  algebra::vec<3,float> xki = map(c[i]);
+          algebra::vec<P::dim,float> ci = c[i];
+	  algebra::vec<P::dim,float> xki = map(c[i]);
 
 	  if (norm::l2(ci - xki) < nstddev)
 	    {
@@ -74,22 +74,22 @@ namespace mln
 	      float       nstddev)
     {
       //mu_Xk = center map(Ck)
-      algebra::vec<3,float> mu_Xk(literal::zero);
-      algebra::vec<3,float> mu_C(literal::zero);
+      algebra::vec<P::dim,float> mu_Xk(literal::zero);
+      algebra::vec<P::dim,float> mu_C(literal::zero);
 
       float nb_point = 0;
-      for (size_t i = 0; i < c.nsites(); ++i)
-	{
-	  algebra::vec<P::dim,float> xki = map(c[i]);
-	  algebra::vec<P::dim,float> ci = c[i];
+      for (unsigned i = 0; i < c.nsites(); ++i)
+        {
+          algebra::vec<P::dim,float> xki = map(c[i]);
+          algebra::vec<P::dim,float> ci = c[i];
 
-	  if (norm::l2(ci - xki) > nstddev)
-	    {
-	      mu_C += ci;
-	      mu_Xk += xki;
-	      nb_point++;
-	    }
-	}
+          if (norm::l2(ci - xki) > nstddev)
+            {
+              mu_C += ci;
+              mu_Xk += xki;
+              nb_point++;
+            }
+        }
       mu_C  /= nb_point;
       mu_Xk /= nb_point;
 

@@ -26,6 +26,7 @@ namespace mln
     return (q * algebra::quat(0. ,p) * q.inv()).v();
   }
 
+
   //FIXME : check if correct with n != 3
   template <unsigned n>
   bool check_rotation(const algebra::mat<n,n,float>& mat,
@@ -41,7 +42,7 @@ namespace mln
     algebra::vec<n,float>
       p_rot_1 = rotate(q, p),
       p_rot_2 = mat * p;
-    
+
     return about_equal(norm::l2(p_rot_1 - p_rot_2), 0.f);
   }
 

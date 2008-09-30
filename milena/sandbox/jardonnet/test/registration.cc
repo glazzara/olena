@@ -5,8 +5,9 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/convert/to_p_array.hh>
 #include <mln/norm/l2.hh>
+#include <mln/core/image/lazy_image.hh>
 
-#include <sandbox/jardonnet/registration/icp.hh>
+#include <sandbox/jardonnet/registration/registration.hh>
 #include <sandbox/jardonnet/registration/tools.hh>
 #include <sandbox/jardonnet/registration/final_qk.hh>
 #include <mln/geom/bbox.hh>
@@ -52,8 +53,7 @@ int main(int argc, char* argv[])
   closest_point<mln_psite_(image2db)> fun(x, working_box);
 
   // * Use real lazy image
-  //lazy_image< closest_point<mln_psite_(image2db)> > map(fun);
-  p_array<point2d> map;
+  lazy_image<image2d<bool>, closest_point<mln_psite_(image2db)>, box2d > map(fun, fun.domain());
   quat7<2> qk ;//= registration::icp(c, map, q, e, x);
 
 #ifndef NDEBUG
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 
   std::vector<float> length(c.nsites());
   for (size_t i = 0; i < c.nsites(); i++)
-    length[i] = norm::l2( convert::to< algebra::vec<2,float> >( c[i] - map(c[i]) ) );
+    length[i] = norm::l2( convert::to< algebra::vec<2,float> >(c[i] - map(c[i])));
 
 
   // final transform

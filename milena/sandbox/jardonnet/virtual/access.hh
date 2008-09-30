@@ -132,7 +132,7 @@ namespace mln
       const I& ima;
     };
 
-        template < typename I >
+    template < typename I >
     struct bicubic
       : public fun::internal::selector_<const algebra::vec<3,float>,
                                         // 3,float is a dummy parameter (real is n,T)

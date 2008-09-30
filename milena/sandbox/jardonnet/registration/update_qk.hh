@@ -2,12 +2,14 @@
 # define MLN_UPDATE_QK_HH
 
 #include "interpolation.hh"
-#include "quat7.hh"
+//#include "quat7.hh"
 
 namespace mln
 {
 
-  float arc(quat7<3> dqk, quat7<3> dqk_1)
+  // FIXME: T different ?
+  template <typename T>
+  float arc(const T& dqk, const T& dqk_1)
   {
     float res = 0.0;
     for (int i = 0; i < 7; i++)
@@ -16,14 +18,15 @@ namespace mln
     return acos(res) * 180.0 / 3.14159265;
   }
 
-  
-  quat7<3> update_qk(const quat7<3> qk[4],
-                     const float    dk[3])
-  {   
-    quat7<3> dqk_2 = qk[2] - qk[3];
-    quat7<3> dqk_1 = qk[1] - qk[2];
-    quat7<3> dqk   = qk[0] - qk[1];
-    
+
+  template <typename T>
+  T update_qk(const T qk[4],
+              const float    dk[3])
+  {
+    T dqk_2 = qk[2] - qk[3];
+    T dqk_1 = qk[1] - qk[2];
+    T dqk   = qk[0] - qk[1];
+
     float tetak_1 = arc(dqk_1, dqk_2);
     float tetak   = arc(dqk,   dqk_1);
 
@@ -48,7 +51,7 @@ namespace mln
       float v2 = - b2 / (2. * a2);
 
       float vmax = 25 * dqk.sqr_norm();
-     
+
       if ((0 < v2 and v2 < v1 and v1 < vmax) or
           (0 < v2 and v2 < vmax and vmax < v1))
         return qk[0] + (dqk / dqk.sqr_norm()) * v2;
@@ -61,10 +64,10 @@ namespace mln
       if (v1 > vmax and v2 > vmax)
         return qk[0] + (dqk / dqk.sqr_norm()) * vmax;
     }
-    
+
     return qk[0];
   }
-    
+
 }
 
 

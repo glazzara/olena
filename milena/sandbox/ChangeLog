@@ -1,3 +1,19 @@
+2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: continue to revamp registration.
+
+	* jardonnet/test/registration.cc: Make use of lazy_image.
+	* jardonnet/registration/final_qk.hh: Remove use of size_t.
+	* jardonnet/registration/cloud.hh,
+	* jardonnet/registration/save.hh,
+	* jardonnet/registration/update_qk.hh,
+	* jardonnet/registration/registration.hh: Replace quat7 by generique T.
+	* jardonnet/registration/tools.hh,
+	* jardonnet/registration/quat7.hh,
+	* jardonnet/registration/rotation.hh: Remove Whitespace.
+
+	* jardonnet/virtual/access.hh: Minor fix.
+
 2008-09-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: Start revamp registration.

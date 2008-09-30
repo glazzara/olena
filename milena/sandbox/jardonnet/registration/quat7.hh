@@ -127,7 +127,7 @@ namespace mln
                       const algebra::vec<P::dim,float>& mu_C,
                       const p_array<P>& Ck,
                       const M& map,
-                      size_t c_length)
+                      unsigned c_length)
   {
     //mu_Xk = center map(Ck)
     algebra::vec<P::dim,float> mu_Xk(literal::zero);

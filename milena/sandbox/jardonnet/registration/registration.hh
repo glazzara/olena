@@ -37,7 +37,6 @@
 # include <string>
 # include <cmath>
 
-# include <mln/algebra/quat.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/make/w_window.hh>
 # include <mln/make/w_window3d.hh>
@@ -48,11 +47,9 @@
 # include <mln/level/fill.hh>
 # include <mln/io/ppm/save.hh>
 
-
 # include "tools.hh"
 
 # include "cloud.hh"
-# include "quat7.hh"
 # include "update_qk.hh"
 # include "chamfer.hh"
 
@@ -83,18 +80,18 @@ namespace mln
     namespace impl
     {
 
-      template <typename P, typename M>
+      template <typename P, typename M, typename T>
       inline
       void
       registration_(const p_array<P>& C,
-           const M& map,
-           quat7<P::dim>& qk,
-           const unsigned c_length,
-           const float  epsilon = 1e-3)
+                    const M& map,
+                    const T& qk,
+                    const unsigned c_length,
+                    const float  epsilon = 1e-3)
       {
 	trace::entering("registration::impl::registration_");
 
-        buffer<4,quat7<P::dim> > buf_qk;
+        buffer<4,T> buf_qk;
         buffer<3,float>          buf_dk;
 
         float         d_k = 10000;
@@ -140,7 +137,7 @@ namespace mln
     // FIXME: Make it works in 3d *AND* 2d
     template <typename P, typename M>
     inline
-    quat7<P::dim>
+    quat7<P::dim> // what is it suposed to return tr(rot()), rot(tr()) or something else ... 
     registration(p_array<P>& cloud,
                  const M& map,
                  const p_array<P>& x)

@@ -6,7 +6,7 @@
 # include <mln/algebra/mat.hh>
 # include <mln/core/site_set/p_array.hh>
 
-# include "quat7.hh"
+//# include "quat7.hh"
 
 
 namespace mln
@@ -110,7 +110,7 @@ namespace mln
 #endif
   };
 
-
+  /*
   // FIXME: Should be a morpher ?
   // we could acces domain of a lazy map, iterator etc...
   template < typename F >
@@ -147,7 +147,7 @@ namespace mln
     mutable image3d<bool>          is_known;
     const F&                       fun;
   };
-
+  */
 
   // Box
 
