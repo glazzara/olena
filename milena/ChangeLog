@@ -1,5 +1,13 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Print the address of complexes with their face handles.
+
+	* mln/topo/face.hh (operator<<(std::ostream&, const face<D>&))
+	* mln/topo/n_face.hh (operator<<(std::ostream&, const n_face<N, D>&)): 
+	Do it.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul mln::topo::internal::complex_iter_base.
 
 	* mln/topo/internal/complex_iter_base.hh

@@ -259,7 +259,8 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const n_face<N, D>& f)
     {
-      return ostr << "(dim = " << f.n() << ", id = " << f.face_id() << ')';
+      return ostr << "(cplx = " << &f.cplx() << ", dim = " << f.n()
+		  << ", id = " << f.face_id() << ')';
     }
 
 # endif // ! MLN_INCLUDE_ONLY
