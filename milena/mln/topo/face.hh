@@ -100,9 +100,9 @@ namespace mln
       // FIXME: To be overhauled.
       // FIXME: Why no `const' here?
       /// Return an array of face handles pointing to adjacent (n-1)-faces.
-      std::vector< face<D> > lower_dim_adj_faces();
+      std::vector< face<D> > lower_dim_adj_faces() const;
       /// Return an array of face handles pointing to adjacent (n+1)-faces.
-      std::vector< face<D> > higher_dim_adj_faces();
+      std::vector< face<D> > higher_dim_adj_faces() const;
       /// \}
 
     private:
@@ -264,7 +264,7 @@ namespace mln
       template <unsigned N, unsigned D>
       struct lower_dim_adj_faces_if_dim_matches_
       {
-	std::vector< face<D> > operator()(face<D>& face)
+	std::vector< face<D> > operator()(const face<D>& face)
 	{
 	  metal::bool_< (N <= D) >::check();
 	  metal::bool_< (N > 1) >::check();
@@ -288,7 +288,7 @@ namespace mln
       template <unsigned D>
       struct lower_dim_adj_faces_if_dim_matches_<1, D>
       {
-	std::vector< face<D> > operator()(face<D>& face)
+	std::vector< face<D> > operator()(const face<D>& face)
 	{
 	  /// If we reached this function, then the dimension of FACE
 	  /// has to be 1.
@@ -306,7 +306,7 @@ namespace mln
       template <unsigned N, unsigned D>
       struct higher_dim_adj_faces_if_dim_matches_
       {
-	std::vector< face<D> > operator()(face<D>& face)
+	std::vector< face<D> > operator()(const face<D>& face)
 	{
 	  metal::bool_< (N < D) >::check();
 
@@ -330,7 +330,7 @@ namespace mln
       template <unsigned D>
       struct higher_dim_adj_faces_if_dim_matches_<0, D>
       {
-	std::vector< face<D> > operator()(face<D>& face)
+	std::vector< face<D> > operator()(const face<D>& face)
 	{
 	  /// If we reached this function, then the dimension of face
 	  /// has to be D - 1.
@@ -350,25 +350,27 @@ namespace mln
     template <unsigned D>
     inline
     std::vector< face<D> >
-    face<D>::lower_dim_adj_faces()
+    face<D>::lower_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
       metal::bool_< D != 0 >::check();
 
-      mln_precondition(n_ > 0);
-      return internal::lower_dim_adj_faces_if_dim_matches_<D, D>()(*this);
+      return n_ > 0 ?
+	internal::lower_dim_adj_faces_if_dim_matches_<D, D>()(*this) :
+	std::vector< face<D> >();
     }
 
     template <unsigned D>
     inline
     std::vector< face<D> >
-    face<D>::higher_dim_adj_faces()
+    face<D>::higher_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
       metal::bool_< D != 0 >::check();
 
-      mln_precondition(n_ < D);
-      return internal::higher_dim_adj_faces_if_dim_matches_<D - 1, D>()(*this);
+      return n_ < D ?
+	internal::higher_dim_adj_faces_if_dim_matches_<D - 1, D>()(*this) :
+	std::vector< face<D> >();
     }
 
 

@@ -1,5 +1,21 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve accesses to adjacent faces to mln::topo::face<D>.
+
+	* mln/topo/face.hh
+	(mln::topo::face<D>::lower_dim_adj_faces):
+	Return an empty vector if `this' is a 0-face.
+	(mln::topo::face<D>::higher_dim_adj_faces):
+	Return an empty vector if `this' is a D-face.
+	(mln::topo::face<D>::lower_dim_adj_faces)
+	(mln::topo::face<D>::higher_dim_adj_faces):
+	Make it const.
+	(mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>)
+	(mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>):
+	Adjust.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Delegate pretty-printing of iterators on faces to mln::topo::face.
 
 	* mln/topo/internal/complex_iter_base.hh (operator<<): Here.
