@@ -32,10 +32,13 @@
  * \brief Definition of the concept of mln::Window.
  *
  * \todo Operator== should test if the cmp is possible.
+ *
+ * \todo Activate run_extra() below.
  */
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
+# include <mln/trait/windows.hh>
 # include <mln/core/site_set/p_array.hh>
 
 
@@ -82,20 +85,124 @@ namespace mln
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
 
 
+  template <typename W>
+  std::ostream& operator<<(std::ostream& ostr, const Window<W>& win);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace internal
+  {
+
+    // size: fixed or unknown.
+
+    template <typename trait_size, typename E>
+    struct window_size_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_size_check< mln::trait::window::size::fixed, E >
+    {
+      static void run()
+      {
+	unsigned (E::*m)() const = & E::size;
+	m = 0;
+      }
+    };
+
+    // support: regular or irregular.
+
+    template <typename trait_support, typename E>
+    struct window_support_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_support_check< mln::trait::window::support::regular, E >
+    {
+      static void run_extra()
+      {
+	bool (E::*m1)() const = &E::is_centered;
+	m1 = 0;
+	bool (E::*m2)() const = &E::is_symmetric;
+	m2 = 0;
+	void (E::*m3)() = &E::sym;
+	m3 = 0;
+	unsigned (E::*m4)() const = &E::delta;
+	m4 = 0;
+      }
+      static void run(mln::trait::window::definition::unique)
+      {
+	typedef mln_dpsite(E) D;
+	const D& (E::*m)(unsigned) const = &E::dp;
+	m = 0;
+	run_extra();
+      }
+      static void run(mln::trait::window::definition::n_ary)
+      {
+	// run_extra();
+      }
+      static void run(mln::trait::window::definition::varying)
+      {
+	/* No requirement. */
+      }
+      static void run()
+      {
+	run(mln_trait_window_definition(E)());
+      }
+    };
+
+    // definition: unique, n_ary, or varying.
+
+    template <typename trait_definition, typename E>
+    struct window_definition_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_definition_check< mln::trait::window::definition::multiple, E >
+    {
+      static void run()
+      {
+	typedef mln_element(E) W;
+	void (E::*m1)(unsigned, const W&) = &E::set_window;
+	m1 = 0;
+	const W& (E::*m2)(unsigned) const = &E::window;
+	m2 = 0;
+	unsigned (E::*m3)() const = &E::nwindows;
+	m3 = 0;
+      }
+    };
+
+  } // end of namespace mln::internal
+
 
   template <typename E>
   inline
   Window<E>::Window()
   {
+    // Check properties.
+    mlc_not_equal( mln_trait_window_size(E),       mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_window_support(E),    mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_window_definition(E), mln::trait::undef )::check();
+
+    // Check associated types.
     typedef   mln_site(E)   site;
     typedef  mln_psite(E)  psite;
     typedef mln_dpsite(E) dpsite;
-
     typedef     mln_qiter(E)     qiter;
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
+
+    // Check methods depending upon properties.
+    internal::window_size_check      < mln_trait_window_size(E),       E >::run();
+    internal::window_support_check   < mln_trait_window_support(E),    E >::run();
+    internal::window_definition_check< mln_trait_window_definition(E), E >::run();
   }
 
   template <typename Wl, typename Wr>
@@ -103,6 +210,51 @@ namespace mln
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
   {
     return exact(lhs).std_vector() == exact(rhs).std_vector();
+  }
+
+
+  // Operator <<.
+
+  namespace internal
+  {
+
+    template <typename W>
+    inline
+    void print(trait::window::definition::unique,
+	       std::ostream& ostr, const W& win) // FIXME: Add Window<W> to win?
+    {
+      win.print(ostr);
+    }
+
+    template <typename W>
+    inline
+    void print(trait::window::definition::multiple,
+	       std::ostream& ostr, const W& win) // FIXME: Add Window<W> to win?
+    {
+      ostr << "[";
+      const unsigned nw = win.nwindows();
+      for (unsigned w = 0; w < nw; ++w)
+	{
+	  ostr << " #" << w << ':';
+	  win.window(w).print(ostr);
+	}
+      ostr << " ]";
+    }
+    
+  } // end of namespace mln
+
+  template <typename W>
+  inline
+  std::ostream& operator<<(std::ostream& ostr, const Window<W>& win)
+  {
+    mlc_is(mln_trait_window_support(W),
+	   trait::window::support::regular)::check();
+    mlc_is_not(mln_trait_window_definition(W),
+	       trait::window::definition::varying)::check();
+    // FIXME: test on is_empty?
+    internal::print(mln_trait_window_definition(W)(),
+		    ostr, exact(win));
+    return ostr;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

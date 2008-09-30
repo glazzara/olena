@@ -105,6 +105,13 @@ namespace mln
   };
 
 
+  template <typename W>
+  inline
+  std::ostream& operator<<(std::ostream&ostr, const neighb<W>& nbh)
+  {
+    return ostr << nbh.win();
+  }
+
 
   namespace convert
   {

@@ -33,13 +33,28 @@
  * \brief Definition of the mln::win::line window.
  */
 
-# include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpsites_impl.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/dpoint.hh>
 
 
 namespace mln
 {
+
+  // Forward declaration.
+  namespace win { template <typename M, unsigned i, typename C> struct line; }
+
+
+  namespace trait
+  {
+
+    template <typename M, unsigned i, typename C>
+    struct window_< mln::win::line<M,i,C> > : classical_window_
+    {
+    };
+
+  } // end of namespace trait
+
+
 
   namespace win
   {
@@ -56,8 +71,7 @@ namespace mln
      * \see mln::win::hline2d for an exemple of his use.
      */
     template <typename M, unsigned i, typename C>
-    struct line : public internal::window_base< dpoint<M, C>, line<M,i,C> >,
-		  public internal::dpsites_impl< dpoint<M, C>, line<M,i,C> >
+    struct line : public internal::classical_window_base< dpoint<M, C>, line<M,i,C> >
     {
       /*! \brief Constructor.
        *
@@ -66,48 +80,23 @@ namespace mln
        * \pre \p length is odd.
        */
       line(unsigned length);
-
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
 	
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-	
-      /*! \brief Give the hline length, that is, its width.
-       */
+      /// Give the line length.
       unsigned length() const;
+	
+      /// Give the line size, that is, its length.
+      unsigned size() const;
 	
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      line<M,i,C>& sym();
+      void print_(std::ostream& ostr) const;
 		
       protected:
 	unsigned length_;
     };
-
-
-    /*! \brief Print an line window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win An line window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::line
-     */
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
 
  
 
@@ -133,20 +122,6 @@ namespace mln
 
     template <typename M, unsigned i, typename C>
     inline
-    bool line<M,i,C>::is_centered() const
-    {
-      return true;
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
-    bool line<M,i,C>::is_symmetric() const
-    {
-      return true;
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
     unsigned line<M,i,C>::length() const
     {
       return length_;
@@ -154,24 +129,24 @@ namespace mln
 
     template <typename M, unsigned i, typename C>
     inline
-    unsigned line<M,i,C>::delta() const
+    unsigned line<M,i,C>::size() const
+    {
+      return length_;
+    }
+
+    template <typename M, unsigned i, typename C>
+    inline
+    unsigned line<M,i,C>::delta_() const
     {
       return length_ / 2;
     }
 
     template <typename M, unsigned i, typename C>
     inline
-    line<M,i,C>& line<M,i,C>::sym()
+    void
+    line<M,i,C>::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
-    {
-      ostr << "[line: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[line: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

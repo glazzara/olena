@@ -45,24 +45,63 @@ namespace mln
 
     /// Shift a window \p win with a delta-point \p dp.
     template <typename W>
-    window<mln_dpsite(W)>
+    mln_regular(W)
     shift(const Window<W>& win, const mln_dpsite(W)& dp);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace impl
+    {
+
+      template <typename W>
+      inline
+      mln_regular(W)
+      shift_(trait::window::definition::unique,
+	     const W& win, const mln_dpsite(W)& dp)
+      {
+	mlc_is(mln_trait_window_size(W),
+	       trait::window::size::fixed)::check();
+	mln_regular(W) tmp;
+	unsigned n = win.size();
+	for (unsigned i = 0; i < n; ++i)
+	  tmp.insert(win.dp(i) + dp);
+	return tmp;
+      }
+
+      template <typename W>
+      inline
+      mln_regular(W)
+      shift_(trait::window::definition::multiple,
+	     const W& win, const mln_dpsite(W)& dp)
+      {
+	mln_regular(W) tmp(win.function());
+	const unsigned nw = win.nwindows();
+	for (unsigned w = 0; w < nw; ++w)
+	  tmp.set_window(w, geom::shift(win.window(w), dp));
+	return tmp;
+      }
+
+    } // end of namespace mln::geom::impl
+
+
+    // Facade.
     template <typename W>
     inline
-    window<mln_dpsite(W)>
-    shift(const Window<W>& win_, const mln_dpsite(W)& dp)
+    mln_regular(W)
+    shift(const Window<W>& win, const mln_dpsite(W)& dp)
     {
-      mlc_is_a(mln_site(W), Gpoint)::check();
-      const W& win = exact(win_);
+      trace::entering("geom::shift");
 
-      window<mln_dpsite(W)> tmp;
-      unsigned n = win.size();
-      for (unsigned i = 0; i < n; ++i)
-	tmp.insert(win.dp(i) + dp);
+      mlc_is(mln_trait_window_support(W),
+	     trait::window::support::regular)::check();
+      mlc_is_not(mln_trait_window_definition(W),
+		 trait::window::definition::varying)::check();
+
+      mln_regular(W) tmp = impl::shift_(mln_trait_window_definition(W)(),
+					exact(win), dp);
+
+      trace::exiting("geom::shift");
       return tmp;
     }
 

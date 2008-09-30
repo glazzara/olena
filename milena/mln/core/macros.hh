@@ -299,6 +299,12 @@
 # define mln_r_element_(T)          T::r_element
 /// \}
 
+/// Shortcuts to access the regular type associated to T.
+/// \{
+# define mln_regular(T)     typename T::regular
+# define mln_regular_(T)    T::regular
+/// \}
+
 /// Shortcuts to access the result type associated to T.
 /// \{
 # define mln_result(T)     typename T::result

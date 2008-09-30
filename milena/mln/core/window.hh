@@ -53,9 +53,26 @@
 namespace mln
 {
 
-  // Fwd decls.
+  // Forward declarations.
+  template <typename D> class window;
   template <typename V> class dpsites_fwd_piter;
   template <typename V> class dpsites_bkd_piter;
+
+
+
+  namespace trait
+  {
+
+    template <typename D>
+    struct window_< mln::window<D> >
+    {
+      typedef trait::window::size::fixed        size;
+      typedef trait::window::support::regular   support;
+      typedef trait::window::definition::unique definition;
+    };
+
+  } // end of namespace trait
+
 
 
   /*! \brief Generic window class.
@@ -67,6 +84,10 @@ namespace mln
   class window : public internal::window_base< D, window<D> >
   {
   public:
+
+    /// Regular window associated type.
+    typedef window<D> regular;
+
 
     /*! \brief Constructor without argument.
      *
@@ -154,15 +175,13 @@ namespace mln
     /// Hook to the set of D.
     const util::set<D>& dps_hook_() const;
 
+    /// Print the window definition into \p ostr.
+    void print(std::ostream& ostr) const;
+
   private:
 
     util::set<D> dps_;
   };
-
-
-  // FIXME: Doc!
-  template <typename D>
-  std::ostream& operator<<(std::ostream& ostr, const window<D>& win);
 
 
 
@@ -347,14 +366,16 @@ namespace mln
     return dps_;
   }
 
-  // Operators.
-
   template <typename D>
-  std::ostream&
-  operator<<(std::ostream& ostr, const window<D>& win)
+  inline
+  void
+  window<D>::print(std::ostream& ostr) const
   {
-    return ostr << win.dps_hook_();
+    ostr << dps_;
   }
+
+
+  // Operators.
 
   template <typename D>
   bool

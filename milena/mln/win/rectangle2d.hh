@@ -35,14 +35,16 @@
  * \todo Reactivate includes at EOF.
  */
 
-# include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpsites_impl.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/core/def/coord.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(rectangle2d);
+
 
   namespace win
   {
@@ -58,8 +60,7 @@ namespace mln
      *  o o o o o \n
      * is defined with height = 3 and width = 5.
      */
-    struct rectangle2d : public internal::window_base< dpoint2d, rectangle2d >,
-			 public internal::dpsites_impl< dpoint2d, rectangle2d >
+    struct rectangle2d : public internal::classical_window_base< dpoint2d, rectangle2d >
     {
       /*! \brief Constructor.
        *
@@ -70,18 +71,6 @@ namespace mln
        */
       rectangle2d(unsigned height, unsigned width);
 
-
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
 
       /// Give the rectangle height.
       unsigned height() const;
@@ -95,32 +84,18 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
-
-      /// Apply a central symmetry to the target window; a no-op here.
-      void sym();
+      unsigned delta_() const;
 
 
       /// Give the std vector of delta-points.
       const std::vector<dpoint2d>& std_vector() const;
 
+      void print_(std::ostream& ostr) const;
+
     protected:
 
       unsigned height_, width_;
     };
-
-
-    /*! \brief Print a rectangle window \p win into the output stream \p
-     *  ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A rectangle window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::rectangle2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
 
 
 
@@ -138,18 +113,6 @@ namespace mln
       for (def::coord row = (def::coord) -drow; row <= drow; ++row)
 	for (def::coord col = (def::coord) -dcol; col <= dcol; ++col)
 	  this->insert(dpoint2d(row, col));
-    }
-
-    inline
-    bool rectangle2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool rectangle2d::is_symmetric() const
-    {
-      return true;
     }
 
     inline
@@ -171,16 +134,9 @@ namespace mln
     }
 
     inline
-    unsigned rectangle2d::delta() const
+    unsigned rectangle2d::delta_() const
     {
       return width_ > height_ ? width_ / 2 : height_ / 2;
-    }
-
-    inline
-    void
-    rectangle2d::sym()
-    {
-      // No-op.
     }
 
     inline
@@ -191,10 +147,10 @@ namespace mln
     }
 
     inline
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win)
+    void
+    rectangle2d::print_(std::ostream& ostr) const
     {
-      ostr << "[rectangle2d: width=" << win.width() << ", height=" << win.height() << ']';
-      return ostr;
+      ostr << "[rectangle2d: width=" << width_ << ", height=" << height_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

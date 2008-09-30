@@ -1,3 +1,38 @@
+2008-09-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add traits for windows and factor code.
+
+	* mln/trait/windows.hh: New.
+	* mln/trait/window: New.
+	* mln/trait/window/props.hh: New.
+	* mln/trait/window/print.hh: New.
+	* mln/core/macros.hh (mln_regular): New.
+	* mln/core/neighb.hh (operator<<): New.
+	* mln/core/concept/weighted_window.hh (include): Update.
+	* mln/core/concept/neighborhood.hh: Likewise.
+	* mln/core/concept/window.hh: Likewise.
+	(window_size_check, window_support_check): New.
+	(window_definition_check): New.
+	(operator<<): New.
+	* mln/core/concept/object.hh: New metal include.
+	* mln/core/internal/dpsites_impl.hh: Rename as...
+	* mln/core/internal/classical_window_base.hh: ...this.
+	(is_centered, is_symmetric, sym): New.
+	(delta): Rely on...
+	(delta_): ...this new method.
+	(print, print_): New.
+	* mln/geom/shift.hh: Revamp.
+	* mln/core/window.hh,
+	* mln/win/cube3d.hh,
+	* mln/win/line.hh,
+	* mln/win/rectangle2d.hh,
+	* mln/win/diag2d.hh,
+	* mln/win/backdiag2d.hh,
+	* mln/win/multiple.hh,
+	* mln/win/cuboid3d.hh,
+	* mln/win/octagon2d.hh,
+	* mln/win/disk2d.hh: Update and factor code.
+
 2008-09-30  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update documentation about image properties.

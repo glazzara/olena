@@ -33,6 +33,7 @@
  */
 
 # include <mln/core/concept/object.hh>
+# include <mln/trait/windows.hh>
 
 
 namespace mln

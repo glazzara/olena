@@ -33,13 +33,15 @@
  * \brief Definition of the mln::win::octagon2d window.
  */
 
-# include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpsites_impl.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(octagon2d);
+
 
   namespace win
   {
@@ -61,8 +63,7 @@ namespace mln
      *     o o o \n
      * is defined with L = 7 (l = 1).
      */
-    struct octagon2d : public internal::window_base< dpoint2d, octagon2d >,
-		       public internal::dpsites_impl< dpoint2d, octagon2d >
+    struct octagon2d : public internal::classical_window_base< dpoint2d, octagon2d >
     {
       /*! \brief Constructor.
        *
@@ -72,18 +73,6 @@ namespace mln
        */
       octagon2d(unsigned length);
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
       /*! \brief Give the octagon length, that is, its width.
        */
       unsigned length() const;
@@ -91,31 +80,17 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
       /*! \brief Give the area.
        */
       unsigned area() const;
 
-      /// Apply a central symmetry to the target window.
-      octagon2d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       unsigned length_;
     };
-
-
-    /*! \brief Print an octagon window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win An octagon window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::octagon2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win);
 
 
 
@@ -153,25 +128,13 @@ namespace mln
     }
 
     inline
-    bool octagon2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool octagon2d::is_symmetric() const
-    {
-      return true;
-    }
-
-    inline
     unsigned octagon2d::length() const
     {
       return length_;
     }
 
     inline
-    unsigned octagon2d::delta() const
+    unsigned octagon2d::delta_() const
     {
       return length_ / 2;
     }
@@ -184,16 +147,9 @@ namespace mln
     }
 
     inline
-    octagon2d& octagon2d::sym()
+    void octagon2d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win)
-    {
-      ostr << "[octagon2d: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[octagon2d: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

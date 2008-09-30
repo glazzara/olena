@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
+# include <mln/trait/windows.hh>
 
 
 namespace mln

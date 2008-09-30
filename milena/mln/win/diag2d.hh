@@ -33,13 +33,15 @@
  * \brief Definition of the mln::win::diag2d window.
  */
 
-# include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpsites_impl.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(diag2d);
+
 
   namespace win
   {
@@ -57,8 +59,7 @@ namespace mln
      *  o         \n
      * is defined with length = 5.
      */
-    struct diag2d : public internal::window_base< dpoint2d, diag2d >,
-		    public internal::dpsites_impl< dpoint2d, diag2d >
+    struct diag2d : public internal::classical_window_base< dpoint2d, diag2d >
     {
       /*! \brief Constructor.
        *
@@ -68,18 +69,6 @@ namespace mln
        */
       diag2d(unsigned length);
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
       /*! \brief Give the diagonal length, that is, its width.
        */
       unsigned length() const;
@@ -87,27 +76,13 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      diag2d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       unsigned length_;
     };
-
-
-    /*! \brief Print an diagonal line window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A diagonal line window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::diag2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const diag2d& win);
 
  
 
@@ -124,40 +99,21 @@ namespace mln
     }
 
     inline
-    bool diag2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool diag2d::is_symmetric() const
-    {
-      return true;
-    }
-
-    inline
     unsigned diag2d::length() const
     {
       return length_;
     }
 
     inline
-    unsigned diag2d::delta() const
+    unsigned diag2d::delta_() const
     {
       return length_ / 2;
     }
 
     inline
-    diag2d& diag2d::sym()
+    void diag2d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const diag2d& win)
-    {
-      ostr << "[diag 2d: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[diag 2d: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -31,13 +31,15 @@
 /// \file mln/win/cuboid3d.hh
 /// \brief Definition of the mln::win::cuboid3d window.
 
-# include <mln/core/internal/window_base.hh>
-# include <mln/core/internal/dpsites_impl.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(cuboid3d);
+
 
   namespace win
   {
@@ -73,8 +75,7 @@ namespace mln
         Reference:
           http://en.wikipedia.org/wiki/Cuboid
     */
-    struct cuboid3d : public internal::window_base< dpoint3d, cuboid3d >,
-		      public internal::dpsites_impl< dpoint3d, cuboid3d >
+    struct cuboid3d : public internal::classical_window_base< dpoint3d, cuboid3d >
     {
       /// \brief Constructor.
       ///
@@ -85,16 +86,6 @@ namespace mln
       /// \pre Argument \a depth, \a height and \a width must be odd.
       cuboid3d(unsigned depth, unsigned height, unsigned width);
 
-
-      /// Properties of the window.
-      /// \{
-      /// \brief Test if the window is centered.
-      /// \return \c true (always).
-      bool is_centered() const;
-      /// \brief Test if the window is symmetric.
-      /// \return \c true (always).
-      bool is_symmetric() const;
-      /// \}
 
       /// Accessors.
       /// \{
@@ -111,10 +102,9 @@ namespace mln
 
       /// \brief Give the maximum coordinate gap between the center of
       /// the window and a point of the window.
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      cuboid3d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       /// The depth of the cuboid (expressed as a number of slices).
@@ -126,17 +116,6 @@ namespace mln
     };
 
 
-    /// \brief Print a cuboid window \a win into the output stream \a ostr.
-    ///
-    /// \param[in,out] ostr An output stream.
-    /// \param[in] win A cuboid window.
-    ///
-    /// \return The modified output stream \a ostr.
-    ///
-    /// \relates mln::win::cuboid3d
-    std::ostream& operator<<(std::ostream& ostr, const cuboid3d& win);
-
- 
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -154,20 +133,6 @@ namespace mln
 	for (int row = -drow; row <= drow; ++row)
 	  for (int col = -dcol; col <= dcol; ++col)
 	    insert(dpoint3d(sli, row, col));
-    }
-
-    inline
-    bool
-    cuboid3d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool
-    cuboid3d::is_symmetric() const
-    {
-      return true;
     }
 
     inline
@@ -200,7 +165,7 @@ namespace mln
 
     inline
     unsigned
-    cuboid3d::delta() const
+    cuboid3d::delta_() const
     {
       if (depth_ > height_)
 	if (depth_ > width_)
@@ -219,20 +184,12 @@ namespace mln
     }
 
     inline
-    cuboid3d&
-    cuboid3d::sym()
+    void
+    cuboid3d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream&
-    operator<<(std::ostream& ostr, const cuboid3d& win)
-    {
-      ostr << "[cuboid3d: width=" << win.depth()
-	   << ", depth=" << win.width()
-	   << ", height=" << win.height() << ']';
-      return ostr;
+      ostr << "[cuboid3d: width=" << depth_
+	   << ", depth=" << width_
+	   << ", height=" << height_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY
