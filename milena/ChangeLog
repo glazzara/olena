@@ -1,3 +1,11 @@
+2008-09-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fixes on median.
+
+	* mln/level/median.hh: Add initialisation of p :
+	                   p = input.domain().pmin() + up;
+	* tests/level/median_.cc: Some tests.
+
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add iterators on lower- and higher-dimension adjacent faces.

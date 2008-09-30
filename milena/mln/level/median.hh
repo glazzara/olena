@@ -143,9 +143,10 @@ namespace mln
 	void init()
 	{
 	  med.init();
+	  p = input.domain().pmin() + up;
 	  mln_qiter(W) q(win, p);
 	  for_all(q) if (input.has(q))
-	    med.take(input(q));
+            med.take(input(q));
 	}
 
 	inline
@@ -174,7 +175,7 @@ namespace mln
 	  for_all(q_bm) if (input.has(q_bm))
 	    med.untake(input(q_bm));
 	  for_all(q_bp) if (input.has(q_bp))
-	    med.take(input(q_bp));
+            med.take(input(q_bp));
 	  output(p) = med.to_result();
 	}
 
