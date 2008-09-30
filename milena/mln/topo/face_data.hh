@@ -51,6 +51,11 @@ namespace mln
     {
       template <unsigned N, unsigned D> struct lower_dim_faces_set_mixin;
       template <unsigned N, unsigned D> struct higher_dim_faces_set_mixin;
+      
+      template <unsigned N, unsigned D>
+      struct lower_dim_adj_faces_if_dim_matches_;
+      template <unsigned N, unsigned D>
+      struct higher_dim_adj_faces_if_dim_matches_;
     }
 
     // Forward declarations (internal).
@@ -109,6 +114,8 @@ namespace mln
 	void connect_lower_dim_face (const n_face<N - 1, D>& f);
       private:
 	friend class mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
+	friend class mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>;
+	// FIXME: Rename as lower_dim_adj_faces_?
 	std::vector< n_face<N - 1, D> > lower_dim_faces_;
       };
 
@@ -119,6 +126,8 @@ namespace mln
 	void connect_higher_dim_face(const n_face<N + 1, D>& f);
       private:
 	friend class mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
+	friend class mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>;
+	// FIXME: Rename as higher_dim_adj_faces_?
 	std::vector< n_face<N + 1, D> > higher_dim_faces_;
       };
       /// \}

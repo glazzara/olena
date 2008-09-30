@@ -96,6 +96,13 @@ namespace mln
       /// Return the mln::topo::face_data pointed by this handle.
       template <unsigned N>
       face_data<N, D>& data() const;
+
+      // FIXME: To be overhauled.
+      // FIXME: Why no `const' here?
+      /// Return an array of face handles pointing to adjacent (n-1)-faces.
+      std::vector< face<D> > lower_dim_adj_faces();
+      /// Return an array of face handles pointing to adjacent (n+1)-faces.
+      std::vector< face<D> > higher_dim_adj_faces();
       /// \}
 
     private:
@@ -248,6 +255,120 @@ namespace mln
       mln_precondition(n_ == N);
       mln_precondition(is_valid());
       return cplx_->template face_data_<N>(face_id_);
+    }
+
+
+    // FIXME: This is way too complicated.
+    namespace internal
+    {
+      template <unsigned N, unsigned D>
+      struct lower_dim_adj_faces_if_dim_matches_
+      {
+	std::vector< face<D> > operator()(face<D>& face)
+	{
+	  metal::bool_< (N <= D) >::check();
+	  metal::bool_< (N > 1) >::check();
+
+	  if (face.n() == N)
+	    {
+	      face_data<N, D>& data = face.template data<N>();
+	      std::vector< n_face<N - 1, D> > lower_dim_faces =
+		data.lower_dim_faces_;
+	      std::vector< topo::face<D> > result;
+	      for (typename std::vector< n_face<N - 1, D> >::const_iterator f =
+		     lower_dim_faces.begin(); f != lower_dim_faces.end(); ++f)
+		result.push_back(*f);
+	      return result;
+	    }
+	  else
+	    return internal::lower_dim_adj_faces_if_dim_matches_<N - 1, D>()(face);
+	}
+      };
+
+      template <unsigned D>
+      struct lower_dim_adj_faces_if_dim_matches_<1, D>
+      {
+	std::vector< face<D> > operator()(face<D>& face)
+	{
+	  /// If we reached this function, then the dimension of FACE
+	  /// has to be 1.
+	  mln_precondition(face.n() == 1);
+	  face_data<1, D>& data = face.template data<1>();
+	  std::vector< n_face<0, D> > lower_dim_faces = data.lower_dim_faces_;
+	  std::vector< topo::face<D> > result;
+	  for (typename std::vector< n_face<0, D> >::const_iterator f =
+		 lower_dim_faces.begin(); f != lower_dim_faces.end(); ++f)
+	    result.push_back(*f);
+	  return result;
+	}
+      };
+
+      template <unsigned N, unsigned D>
+      struct higher_dim_adj_faces_if_dim_matches_
+      {
+	std::vector< face<D> > operator()(face<D>& face)
+	{
+	  metal::bool_< (N < D) >::check();
+
+	  if (face.n() == N)
+	    {
+	      face_data<N, D>& data = face.template data<N>();
+	      std::vector< n_face<N + 1, D> > higher_dim_faces =
+		data.higher_dim_faces_;
+	      std::vector< topo::face<D> > result;
+	      for (typename std::vector< n_face<N + 1, D> >::const_iterator f =
+		     higher_dim_faces.begin(); f != higher_dim_faces.end(); ++f)
+		result.push_back(*f);
+	      return result;
+	    }
+	  else
+	    return
+	      internal::higher_dim_adj_faces_if_dim_matches_<N - 1, D>()(face);
+	}
+      };
+
+      template <unsigned D>
+      struct higher_dim_adj_faces_if_dim_matches_<0, D>
+      {
+	std::vector< face<D> > operator()(face<D>& face)
+	{
+	  /// If we reached this function, then the dimension of face
+	  /// has to be D - 1.
+	  mln_precondition(face.n() == 0);
+	  face_data<0, D>& data = face.template data<0>();
+	  std::vector< n_face<1, D> > higher_dim_faces =
+	    data.higher_dim_faces_;
+	  std::vector< topo::face<D> > result;
+	  for (typename std::vector< n_face<1, D> >::const_iterator f =
+		 higher_dim_faces.begin(); f != higher_dim_faces.end(); ++f)
+	    result.push_back(*f);
+	  return result;
+	}
+      };
+    }
+
+    template <unsigned D>
+    inline
+    std::vector< face<D> >
+    face<D>::lower_dim_adj_faces()
+    {
+      // FIXME: Warning: might prevent any attempt to build a complex<0>.
+      metal::bool_< D != 0 >::check();
+
+      mln_precondition(n_ > 0);
+      return internal::lower_dim_adj_faces_if_dim_matches_<D, D>()(*this);
+    }
+
+    template <unsigned D>
+    inline
+    std::vector< face<D> >
+    face<D>::higher_dim_adj_faces()
+    {
+      // FIXME: Warning: might prevent any attempt to build a complex<0>.
+      metal::bool_< D != 0 >::check();
+
+      mln_precondition(n_ < D);
+      return internal::higher_dim_adj_faces_if_dim_matches_<D - 1, D>()(*this);
     }
 
 

@@ -28,6 +28,8 @@
 /// \file tests/topo/complex.cc
 /// \brief Test of mln::complex.
 
+#include <algorithm>
+#include <iterator>
 #include <iostream>
 
 #include <mln/topo/complex.hh>
@@ -114,12 +116,35 @@ int main()
   // Get the face data from (``static'') face handle E0.
   const topo::face_data<1, D>& face1 = e0.data();
 
+  /* FIXME: Rename AF (everywhere) as `any-face handles' have been
+     renamed to `face'.  */
   // Any-face handle.
   topo::face<D> af(e0);
   // Get the face data from (``dynamic'') face handle AF.
   const topo::face_data<1, D>& face2 = af.data<1>();
 
   mln_assertion(&face1 == &face2);
+
+  /*-----------------.
+  | Adjacent faces.  |
+  `-----------------*/
+
+  // Adjacent lower-dimension faces of AF.
+  std::vector< topo::face<D> > af_lower_dim_adj_faces =
+    af.lower_dim_adj_faces();
+  std::cout << "lower-dimension faces adjacent to " << af << ":" << std::endl;
+  std::copy (af_lower_dim_adj_faces.begin(), af_lower_dim_adj_faces.end(),
+	     std::ostream_iterator< topo::face<D> > (std::cout, "\n"));
+  std::cout << std::endl;
+
+  // Adjacent higher-dimension faces of AF.
+  std::vector< topo::face<D> > af_higher_dim_adj_faces =
+    af.higher_dim_adj_faces();
+  std::cout << "higher-dimension faces adjacent to " << af << ":" << std::endl;
+  std::copy (af_higher_dim_adj_faces.begin(), af_higher_dim_adj_faces.end(),
+	     std::ostream_iterator< topo::face<D> > (std::cout, "\n"));
+  std::cout << std::endl;
+
 
   /*------------.
   | Iteration.  |

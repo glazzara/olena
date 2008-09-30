@@ -1,5 +1,25 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add accesses to adjacent faces to mln::topo::face<D>.
+
+	* mln/topo/face.hh
+	(mln::topo::face<D>::lower_dim_adj_faces)
+	(mln::topo::face<D>::higher_dim_adj_faces):
+	New.
+	(mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>)
+	(mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>):
+	New classes.
+	* mln/topo/face_data.hh
+	(mln::topo::internal::lower_dim_faces_data_mixin<N, D>): Allow
+	mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D> to
+	access to private data.
+	(mln::topo::internal::higher_dim_faces_data_mixin<N, D>): Allow
+	mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D> to
+	access to private data.
+	* tests/topo/complex.cc: Exercise accesses to adjacent faces.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/topo/complex.cc: Fix diagram in documentation.
 
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
