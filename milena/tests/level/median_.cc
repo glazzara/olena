@@ -33,15 +33,16 @@ int main()
   }
 
 
- {
-   win::rectangle2d rect(20, 20);
-   border::thickness = 6;
+  {
+    win::rectangle2d rect(20, 20);
+    border::thickness = 6;
 
-   image2d<int_u8> lena;
-   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-   image2d<int_u8> out(lena.domain());
+    image2d<int_u8> lena;
+    io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+    image2d<int_u8> out(lena.domain());
 
-   level::impl::median_(lena, rect, out);
-   io::pgm::save(out, "out.pgm");
- }
+    level::impl::median_(lena, rect, out);
+    io::pgm::save(out, "out.pgm");
+  }
+
 }

@@ -14,7 +14,20 @@
                   |
                   + -- direct
                   |
+                  + -- semi_direct
+                  |
                   + -- computed
+
+=> Definition: This property indicates if the image value are stored in memory.
+
+- direct: Images store all their values in memory, we can take a reference
+of the values.
+
+- semi-direct: Images store partially their value in memory, we can't take
+a reference on them. For instance, images that compute a value at the first
+access and store it in a buffer to speed up the next access, are semi-direct.
+
+- computed: All the image values are computed on the fly, at each access.
 
 
 ** value_storage:/any/
@@ -27,9 +40,54 @@
                   |      |
                   |      + -- piecewise
                   |
-                  + -- disrupted
+                  + -- none
 
-=>  Methods related:
+
+*** Definition:
+ Indicate how the value are stored in memory
+
+- singleton: The image has only one values, this values is store in memory.
+   01
+   --
+0 |ee|  values in memory
+1 |ee|     ==========>   [e]
+   --
+
+
+
+- one_block: All the image values are stored in a buffer in memory.
+
+   01
+   --
+0 |ef|  values in memory
+1 |ge|     ==========>   [e, f, g, e]
+   --
+
+- piece_wise: The values are stored in several memory locations.
+
+example 1) RLE Image
+
+   013456
+   ------
+0 |ee    |  values in memory
+1 |  fff |     ==========>   [e], [f], [g]
+3 |   ggg|
+4 |      |
+   ------
+
+example 2) Sparse Image
+
+   013456
+   ------
+0 |ef    |  values in memory
+1 | faaff|     ==========>   [e, f], [f, a, a, f, f], [l, l, o, g, g]
+3 | llogg|
+4 |      |
+   ------
+
+- none: We don't have any information about the value storage.
+
+*** Methods related:
  value_storage == singleton
    => ima.value()        -> return the image value
 
@@ -42,7 +100,7 @@
 
 ** value_browsing:/any/
                     |
-                     + -- site_wise_only
+                    + -- site_wise_only
                     |
                     + -------- cell_wise
                     |                 |
@@ -66,6 +124,23 @@
  value_browsing == cell_and_value_wise
   method of value_wise property value + cell_wise property value
 
+
+** site_wise_io:/any/
+                  |
+                  + -- read_only
+                  |
+                  + -- read_write
+
+=> Definition:
+  Indicates the io permission for the site access.
+  It replaces the property value_access.
+
+- read_only: We can only read the image values.
+- read_write: We can read and write the image values.
+
+ **Note**: RLE images are read only for the access sites.
+
+FIXME: Do we need a value_wise_io
 
 
 * Impact on the fill and paste algorithms
@@ -158,10 +233,3 @@ for_all(p)
 r : (5,2), (4, 2), (6, 2)
 g : (5,4), (4, 4), (6, 3)
 b : (2,2), (1, 2), (3, 2)
-
--differentiate the localization of an image and its storage method.
-
-** Image related with 'special' values access
-
-*** Run Images (sparse, value_encoded)
-*** Pkey Images

@@ -199,7 +199,7 @@ namespace mln
     inline
     std::ostream& operator<<(std::ostream& ostr, const histo<V>& h)
     {
-      mln_viter(V) v(h.vset());
+      mln_viter(value::set<V>) v(h.vset());
       for_all(v)
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';
