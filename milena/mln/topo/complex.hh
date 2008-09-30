@@ -231,6 +231,59 @@ namespace mln
     | Complex data.  |
     `---------------*/
 
+    /** \brief Complex data.
+
+	Data is aggregated as follows in an mln::topo::complex<D>:
+
+        \verbatim
+
+                   ,----------->  lower_dim_faces_set_mixin<D, D>
+                   |
+        faces_set_mixin<0, D> 
+                 ^
+                 |
+                 | ,-----------> higher_dim_faces_set_mixin<1, D>
+                 | | ,--------->  lower_dim_faces_set_mixin<1, D>
+                 | | |           
+        faces_set_mixin<1, D>
+                 ^
+                 |
+                 |
+
+                ...
+
+                 ^
+                 |
+                 | ,-----------> higher_dim_faces_set_mixin<D - 1, D>
+                 | | ,--------->  lower_dim_faces_set_mixin<D - 1, D>
+                 | | |           
+        faces_set_mixin<D - 1, D>
+                 ^
+                 |              
+                 |   ,--------->  lower_dim_faces_set_mixin<D, D>
+                 |   |           
+        faces_set_mixin<D, D> 
+                 ^
+                 |
+                 |
+           complex_data<D> ----.  (shared data)
+                               |
+                               |
+                ,--------------'
+                |
+                |
+                `----<> tracked_ptr< complex_data<D> > ----<> complex<D>
+
+        \endverbatim
+
+
+	An instance of mln::topo::internal::faces_set_mixin<N, D>
+	stores the \p N-faces of a \p D-complex.
+
+	Classes mln::topo::internal::lower_dim_faces_set_mixin<N, D>
+	are implementation classes factoring services related to
+	complex data.  */
+    /// \{
     namespace internal
     {
       // Forward declarations.
@@ -245,6 +298,7 @@ namespace mln
       };
 
     } // end of namespace mln::topo::internal
+    /// \}
 
 
     /*---------------------.
