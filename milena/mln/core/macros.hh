@@ -418,5 +418,58 @@
 # define mln_nixter(I, N)  mln_fwd_nixter(I, N)
 # define mln_nixter_(I, N) mln_fwd_nixter_(I, N)
 
+/// Shortcuts to access the vertex iterator type associated to a graph G.
+/// \{
+# define mln_vertex_iter(G)	    typename G::vertex_iter
+# define mln_vertex_iter_(G)		     G::vertex_iter
+# define mln_vertex_fwd_iter(G)     typename G::vertex_fwd_iter
+# define mln_vertex_fwd_iter_(G)             G::vertex_fwd_iter
+# define mln_vertex_bkd_iter(G)     typename G::vertex_bkd_iter
+# define mln_vertex_bkd_iter_(G)             G::vertex_bkd_iter
+/// \}
+
+/// Shortcuts to access the edge iterator type associated to a graph G.
+/// \{
+# define mln_edge_iter(G)	  typename G::edge_iter
+# define mln_edge_iter_(G)		   G::edge_iter
+# define mln_edge_fwd_iter(G)     typename G::edge_fwd_iter
+# define mln_edge_fwd_iter_(G)             G::edge_fwd_iter
+# define mln_edge_bkd_iter(G)     typename G::edge_bkd_iter
+# define mln_edge_bkd_iter_(G)             G::edge_bkd_iter
+/// \}
+
+/// Shortcuts to access the vertex centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_vertex_nbh_vertex_iter(G)	       typename G::vertex_nbh_vertex_iter
+# define mln_vertex_nbh_vertex_iter_(G)			G::vertex_nbh_vertex_iter
+# define mln_vertex_nbh_vertex_fwd_iter(G)     typename G::vertex_nbh_vertex_fwd_iter
+# define mln_vertex_nbh_vertex_fwd_iter_(G)             G::vertex_nbh_vertex_fwd_iter
+# define mln_vertex_nbh_vertex_bkd_iter(G)     typename G::vertex_nbh_vertex_bkd_iter
+# define mln_vertex_nbh_vertex_bkd_iter_(G)             G::vertex_nbh_vertex_bkd_iter
+/// \}
+
+/// Shortcuts to access the vertex centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_vertex_nbh_edge_iter(G)	     typename G::vertex_nbh_edge_iter
+# define mln_vertex_nbh_edge_iter_(G)	              G::vertex_nbh_edge_iter
+# define mln_vertex_nbh_edge_fwd_iter(G)     typename G::vertex_nbh_edge_fwd_iter
+# define mln_vertex_nbh_edge_fwd_iter_(G)             G::vertex_nbh_edge_fwd_iter
+# define mln_vertex_nbh_edge_bkd_iter(G)     typename G::vertex_nbh_edge_bkd_iter
+# define mln_vertex_nbh_edge_bkd_iter_(G)             G::vertex_nbh_edge_bkd_iter
+/// \}
+
+/// Shortcuts to access the edge centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_edge_nbh_edge_iter(G)	 typename G::edge_nbh_edge_iter
+# define mln_edge_nbh_edge_iter_(G)		  G::edge_nbh_edge_iter
+# define mln_edge_nbh_edge_fwd_iter(G)   typename G::edge_nbh_edge_fwd_iter
+# define mln_edge_nbh_edge_fwd_iter_(G)           G::edge_nbh_edge_fwd_iter
+# define mln_edge_nbh_edge_bkd_iter(G)   typename G::edge_nbh_edge_bkd_iter
+# define mln_edge_nbh_edge_bkd_iter_(G)           G::edge_nbh_edge_bkd_iter
+/// \}
 
 #endif // ! MLN_CORE_MACROS_HH
+
