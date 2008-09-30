@@ -1,5 +1,9 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	* tests/topo/complex.cc: Fix diagram in documentation.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add pretty-printing operators for face handles.
 
 	* mln/topo/face.hh (operator<<(std::ostream&, const face<D>))
