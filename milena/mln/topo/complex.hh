@@ -414,6 +414,7 @@ namespace mln
     `-----------------------*/
 
     template <unsigned D>
+    inline
     complex<D>::complex()
       // Allocate data for this complex.
       : data_(new internal::complex_data<D>())
@@ -421,6 +422,7 @@ namespace mln
     }
 
     template <unsigned D>
+    inline
     n_face<0u, D>
     complex<D>::add_face()
     {
@@ -434,6 +436,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     n_face<N + 1, D>
     complex<D>::add_face(const n_faces_set<N, D>& adjacent_faces)
     {
@@ -514,6 +517,7 @@ namespace mln
     `----------------------*/
 
     template <unsigned D>
+    inline
     std::size_t
     complex<D>::nfaces() const
     {
@@ -522,6 +526,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     std::size_t
     complex<D>::nfaces() const
     {
@@ -534,6 +539,7 @@ namespace mln
     `-----------------------*/
 
     template <unsigned D>
+    inline
     std::size_t
     complex<D>::nfaces(unsigned n) const
     {
@@ -549,6 +555,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     face_data<N, D>&
     complex<D>::face_data_(unsigned face_id)
     {
@@ -557,6 +564,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     const face_data<N, D>&
     complex<D>::face_data_(unsigned face_id) const
     {
@@ -565,6 +573,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     void
     complex<D>::connect_(const n_face<N, D>& f1,
 			 const n_face<N + 1, D>& f2)
@@ -582,6 +591,7 @@ namespace mln
     `-------------*/
 
     template <unsigned D>
+    inline
     bool
     operator==(const complex<D>& lhs, const complex<D>& rhs)
     {
@@ -594,6 +604,7 @@ namespace mln
     `------------------*/
 
     template <unsigned D>
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const complex<D>& c)
     {
@@ -602,6 +613,7 @@ namespace mln
     }
 
     template <unsigned D>
+    inline
     void
     complex<D>::print(std::ostream& ostr) const
     {
@@ -610,6 +622,7 @@ namespace mln
 
     template <unsigned D>
     template <unsigned N>
+    inline
     void
     complex<D>::print_faces(std::ostream& ostr) const
     {
@@ -624,6 +637,7 @@ namespace mln
     {
 
       template <unsigned N, unsigned D>
+      inline
       void
       faces_set_mixin<N, D>::print_rec_asc(std::ostream& ostr) const
       {
@@ -632,6 +646,7 @@ namespace mln
       }
 
       template <unsigned D>
+      inline
       void
       faces_set_mixin<0u, D>::print_rec_asc(std::ostream& ostr) const
       {
@@ -639,6 +654,7 @@ namespace mln
       }
 
       template <unsigned D>
+      inline
       void
       faces_set_mixin<D, D>::print_rec_asc(std::ostream& ostr) const
       {
@@ -646,6 +662,7 @@ namespace mln
 	print(ostr);
       }
 
+      inline
       void
       faces_set_mixin<0u, 0u>::print_rec_asc(std::ostream& ostr) const
       {
@@ -654,6 +671,7 @@ namespace mln
 
 
       template <unsigned N, unsigned D>
+      inline
       void
       faces_set_mixin<N, D>::print(std::ostream& ostr) const
       {
@@ -672,6 +690,7 @@ namespace mln
       }
 
       template <unsigned D>
+      inline
       void
       faces_set_mixin<0u, D>::print(std::ostream& ostr) const
       {
@@ -688,6 +707,7 @@ namespace mln
       }
 
       template <unsigned D>
+      inline
       void
       faces_set_mixin<D, D>::print(std::ostream& ostr) const
       {
@@ -703,6 +723,7 @@ namespace mln
 	  }
       }
 
+      inline
       void
       faces_set_mixin<0u, 0u>::print(std::ostream& ostr) const
       {
@@ -714,6 +735,7 @@ namespace mln
 
 
       template <unsigned N, unsigned D>
+      inline
       void
       lower_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					     const face_data<N, D>& f) const
@@ -724,6 +746,7 @@ namespace mln
       }
 
       template <unsigned N, unsigned D>
+      inline
       void
       higher_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					      const face_data<N, D>& f) const
@@ -746,6 +769,7 @@ namespace mln
 
     template <unsigned D>
     template <typename BinaryFunction, typename T>
+    inline
     T
     complex<D>::fold_left_(const BinaryFunction& f, const T& accu) const
     {
@@ -759,6 +783,7 @@ namespace mln
 
       template <unsigned D>
       template <typename BinaryFunction, typename T>
+      inline
       T
       faces_set_mixin<D, D>::fold_left_(const BinaryFunction& f,
 					const T& accu) const
@@ -768,6 +793,7 @@ namespace mln
 
       template <unsigned N, unsigned D>
       template <typename BinaryFunction, typename T>
+      inline
       T
       faces_set_mixin<N, D>::fold_left_(const BinaryFunction& f,
 					const T& accu) const
@@ -777,6 +803,7 @@ namespace mln
 
       template <unsigned D>
       template <typename BinaryFunction, typename T>
+      inline
       T
       faces_set_mixin<0u, D>::fold_left_(const BinaryFunction& f,
 					 const T& accu) const
@@ -785,6 +812,7 @@ namespace mln
       }
 
       template <typename BinaryFunction, typename T>
+      inline
       T
       faces_set_mixin<0u, 0u>::fold_left_(const BinaryFunction& f,
 					  const T& accu) const
@@ -801,6 +829,7 @@ namespace mln
 
     template <unsigned D>
     template <typename UnaryFunction>
+    inline
     typename UnaryFunction::result_type
     complex<D>::apply_if_dim_matches_(unsigned n, const UnaryFunction& f) const
     {
@@ -816,6 +845,7 @@ namespace mln
 
       template <unsigned D>
       template <typename UnaryFunction>
+      inline
       typename UnaryFunction::result_type
       faces_set_mixin<D, D>::apply_if_dim_matches_(unsigned n,
 						   const UnaryFunction& f) const
@@ -829,6 +859,7 @@ namespace mln
 
       template <unsigned N, unsigned D>
       template <typename UnaryFunction>
+      inline
       typename UnaryFunction::result_type
       faces_set_mixin<N, D>::apply_if_dim_matches_(unsigned n,
 						   const UnaryFunction& f) const
@@ -842,6 +873,7 @@ namespace mln
 
       template <unsigned D>
       template <typename UnaryFunction>
+      inline
       typename UnaryFunction::result_type
       faces_set_mixin<0u, D>::apply_if_dim_matches_(unsigned n,
 						    const UnaryFunction& f) const
@@ -852,6 +884,7 @@ namespace mln
       }
 
       template <typename UnaryFunction>
+      inline
       typename UnaryFunction::result_type
       faces_set_mixin<0u, 0u>::apply_if_dim_matches_(unsigned n,
 						     const UnaryFunction& f) const

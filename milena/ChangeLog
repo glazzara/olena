@@ -1,3 +1,7 @@
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	* mln/topo/complex.hh: Add missing `inline' keywords.
+
 2008-09-29  Roland Levillain  <roland@lrde.epita.fr>
 
 	* tests/topo/complex.cc: Move some comments to the Trac Wiki.
