@@ -28,6 +28,8 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
 
+# include <mln/util/internal/graph_edge_impl.hh>
+
 /*! \file mln/util/internal/graph_edge.hh
  * \brief Definition of a graph edge.
  */
@@ -44,7 +46,7 @@ namespace mln
 
     /// \brief Edge of a graph \p G.
     template <typename G>
-    class edge
+    class edge : public internal::edge_impl_<G>
     {
       typedef mlc_const(G) graph_t;
 

@@ -28,6 +28,8 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_VERTEX_HH
 # define MLN_UTIL_INTERNAL_GRAPH_VERTEX_HH
 
+# include <mln/util/internal/graph_vertex_impl.hh>
+
 /// \file   mln/util/internal/graph_vertex.hh
 /// \brief  Implementation of a graph vertex.
 
@@ -39,7 +41,7 @@ namespace mln
 
     /// \brief Vertex of a graph \p G.
     template<typename G>
-    class vertex
+    class vertex : public internal::vertex_impl_<G>
     {
       typedef mlc_const(G) graph_t;
 
