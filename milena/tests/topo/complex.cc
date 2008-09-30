@@ -207,7 +207,8 @@ int main()
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
 
-  /* Iterate on the the set of (n-1)-faces adjacent to AF.
+  /* Iterate on the the set of (n-1)- and (n+1)-faces adjacent to the
+     faces of C.
 
      Note: this can be solved with iterators where the dimension can
      be either static or dynamic.
@@ -224,13 +225,31 @@ int main()
      (Note: we might want to get rid of the name `citer', and use
      `fiter' everywhere.).
 
-     A static version might be useful (and more efficient) too.
+     A static version might be useful (and more efficient) too.  */
 
-     Likewise, our iterators on n-faces (both faces_piter and
-     complex_faces_piter) use a static `n'.  We should also have
-     n-faces iterators where n could be dynamic.
+  topo::adj_lower_face_fwd_iter<D> fwd_alf(fwd_f);
+  topo::adj_lower_face_bkd_iter<D> bkd_alf(fwd_f);
+  for_all(fwd_f)
+  {
+    std::cout << "Lower-dimension faces adjacent to " << fwd_f << ": "
+	      << std::endl;
+    for_all_2(fwd_alf, bkd_alf)
+      std::cout << "  " << fwd_alf << '\t' << bkd_alf << std::endl;
+  }
+  std::cout << std::endl;
 
-     But first, we need to clarify (existing) names.  The one listed
+  topo::adj_higher_face_fwd_iter<D> fwd_ahf(fwd_f);
+  topo::adj_higher_face_bkd_iter<D> bkd_ahf(fwd_f);
+  for_all(fwd_f)
+  {
+    std::cout << "Higher-dimension faces adjacent to " << fwd_f << ": "
+	      << std::endl;
+    for_all_2(fwd_ahf, bkd_ahf)
+      std::cout << "  " << fwd_ahf << '\t' << bkd_ahf << std::endl;
+  }
+  std::cout << std::endl;
+
+  /* But first, we need to clarify (existing) names.  The one listed
      in https://trac.lrde.org/olena/wiki/Olena/ComplexBasedImages
      are OK.
 
@@ -239,26 +258,16 @@ int main()
      -----------------------------------------------------------------
      Name                               Definition
      -----------------------------------------------------------------
-     adj_lower_faces_fwd_iter<D>(c, f)  | Iterators on the adjacent
-     adj_lower_faces_bkd_iter<D>(c, f)  | (lower) (n-1)-faces of the
-                                        | n-face f of the complex c,
-                                        | n being dynamic
-
-     adj_higher_faces_fwd_iter<D>(c, f) | Iterators on the adjacent
-     adj_higher_faces_bkd_iter<D>(c, f) | (higher) (n+1)-faces of the
-                                        | n-face f of the complex c,
-                                        | n being dynamic
-
-     adj_lower_dim_connected_n_faces_fwd_iter<D>(c, f)
-     adj_lower_dim_connected_n_faces_bkd_iter<D>(c, f)
+     adj_lower_dim_connected_n_face_fwd_iter<D>(c, f)
+     adj_lower_dim_connected_n_face_bkd_iter<D>(c, f)
      (FIXME: These names are admittedly too long.)
                                         | Iterators on the the set of
                                         | n-faces sharing an adjacent
                                         | (n-1)-face with f, n being
                                         | dynamic
 
-     adj_higher_dim_connected_n_faces_fwd_iter<D>(c, f)
-     adj_higher_dim_connected_n_faces_bkd_iter<D>(c, f)
+     adj_higher_dim_connected_n_face_fwd_iter<D>(c, f)
+     adj_higher_dim_connected_n_face_bkd_iter<D>(c, f)
      (FIXME: These names are admittedly too long.)
                                         | Iterators on the the set of
                                         | n-faces sharing an adjacent

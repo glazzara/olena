@@ -1,5 +1,18 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add iterators on lower- and higher-dimension adjacent faces.
+
+	* mln/topo/internal/complex_relative_iterator_base.hh:
+	New file.
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh:
+	New files.
+	Include them...
+	* mln/topo/complex.hh: ...here.
+	* tests/topo/complex.cc (main): Exercise these iterators.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Print the address of complexes with their face handles.
 
 	* mln/topo/face.hh (operator<<(std::ostream&, const face<D>&))
