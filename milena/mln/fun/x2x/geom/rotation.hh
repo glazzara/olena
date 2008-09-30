@@ -48,8 +48,11 @@ namespace mln
     namespace x2x
     {
 
-      namespace internal
+      namespace geom
       {
+
+        namespace internal
+        {
         template < unsigned n, typename C >
         algebra::h_mat<n, C>
         get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
@@ -104,11 +107,11 @@ namespace mln
 
           const float cos_a = cos(alpha_);
           const float sin_a = sin(alpha_);
-          
+
           m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
 
           m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;
-          
+
           m_(2,0) = 0;     m_(2,1) = 0;      m_(2,2) = 1;
 
           return m_;
@@ -227,6 +230,8 @@ namespace mln
       }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+      } // end of namespace mln::fun::x2x::geom
 
     } // end of namespace mln::fun::x2x
 

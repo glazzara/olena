@@ -46,8 +46,7 @@ namespace mln
   namespace draw
   {
 
-    /*! Plot a point at level \p v in image \p ima between the points
-     *  \p beg and \p end.
+    /*! Plot a point at level \p v in image \p ima
      *
      * \param[in,out] ima The image to be drawn.
      * \param[in] p The point to be plotted.
@@ -68,7 +67,7 @@ namespace mln
     template <typename I>
     inline
     void plot(Image<I>& ima,
-	      const mln_point(I)& p,
+	      const mln_psite(I)& p,
 	      const mln_value(I)& v)
     {
       mln_precondition(exact(ima).has_data());

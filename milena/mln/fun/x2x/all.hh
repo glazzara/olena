@@ -54,9 +54,12 @@ namespace mln
 }
 
 
-# include <mln/fun/x2x/composed.hh>
-# include <mln/fun/x2x/rotation.hh>
-# include <mln/fun/x2x/translation.hh>
+# include <mln/fun/x2x/geom/composed.hh>
+# include <mln/fun/x2x/geom/rotation.hh>
+# include <mln/fun/x2x/geom/translation.hh>
+
+# include <mln/fun/x2x/interpol/linear.hh>
+# include <mln/fun/x2x/interpol/bilinear.hh>
 
 
 

@@ -31,7 +31,7 @@
 /*! \file mln/util/array.hh
  *
  * \brief Definition of mln::util::array.
- * 
+ *
  * \todo Zed: Add a lazy removal method (based on an extra attribute
  * std::vector<bool> has_).  Then add a purge/compress method.
  */
@@ -57,7 +57,7 @@ namespace mln
 
     /*! \brief A dynamic array class.
      *
-     * 
+     *
      *
      * Elements are stored by copy.  Implementation is lazy.
      *
@@ -390,7 +390,7 @@ namespace mln
       mln_precondition(is_valid());
       ++i_;
     }
-      
+
     template <typename T>
     inline
     bool
@@ -484,7 +484,7 @@ namespace mln
       else
 	--i_;
     }
-      
+
     template <typename T>
     inline
     bool

@@ -37,7 +37,6 @@
 
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/alias/box2d.hh>
-# include <mln/core/line_piter.hh>
 
 
 namespace mln
@@ -69,19 +68,11 @@ namespace mln
   {
 
     template <typename I, typename F, typename B>
-    struct image_< lazy_image<I,F,B> > : default_image_morpher_< I, mln_value(I),
-                                                             lazy_image<I,F,B> >
+    struct image_< lazy_image<I,F,B> > : default_image_morpher< I, mln_value(I),
+                                                                lazy_image<I,F,B> >
     {
       typedef trait::image::category::domain_morpher category;
-
-      typedef mln_trait_image_access(I)     access;
-      typedef mln_trait_image_space(I)      space;
-      typedef mln_trait_image_size(I)       size;
-      typedef mln_trait_image_support(I)    support;
-      typedef mln_trait_image_border(I)     border;
-      typedef mln_trait_image_io_from_(I)   io;
-      typedef mln_trait_image_data_from_(I) data;
-
+      typedef trait::image::value_io::read_only value_io;
     };
 
   } // end of namespace mln::trait
@@ -100,14 +91,12 @@ namespace mln
    */
   template <typename I, typename F, typename B>
   struct lazy_image :
-    public mln::internal::image_identity_< mln_ch_value(I, mln_result(F)),
-					   mln_pset(I), lazy_image<I, F,B> >
+    public mln::internal::image_identity< mln_ch_value(I, mln_result(F)),
+                                          mln_pset(I), lazy_image<I, F,B> >
   {
-    typedef mln::internal::image_identity_< mln_ch_value(I, mln_result(F)),
-					    mln_pset(I),
-					    lazy_image<I, F,B> > super_;
-
-    typedef line_piter_<mln_psite(I)> line_piter;
+    typedef mln::internal::image_identity< mln_ch_value(I, mln_result(F)),
+                                           mln_pset(I),
+                                           lazy_image<I, F,B> > super_;
 
     /// Return type of read access.
     typedef mln_result(F) rvalue;
@@ -122,7 +111,13 @@ namespace mln
     using super_::has_data;
 
     /// Constructors.
+    lazy_image();
+
+    /// Constructors.
     lazy_image(const F& fun, const B& box);
+
+    /// Initialize an empty image.
+    void init_(const F& fun, const B& box);
 
     /// Return domain of lazyd_image.
     const box2d& domain() const;
@@ -158,6 +153,13 @@ namespace mln
   template <typename I, typename F, typename B>
   inline
   lazy_image<I,F,B>::lazy_image(const F& fun, const B& box)
+  {
+    this->data_ = new internal::data< lazy_image<I,F,B> >(fun, box);
+  }
+
+  template <typename I, typename F, typename B>
+  inline
+  void lazy_image<I,F,B>::init_(const F& fun, const B& box)
   {
     this->data_ = new internal::data< lazy_image<I,F,B> >(fun, box);
   }

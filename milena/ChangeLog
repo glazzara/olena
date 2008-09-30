@@ -1,3 +1,25 @@
+2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add interpolation function. Revamp lazy_image.
+
+	* mln/core/image/lazy_image.hh: Fix traits, Add init_.
+
+	* mln/fun/x2x/all.hh: Upgrade.
+
+	* mln/fun/x2x/geom: New.
+	* mln/fun/x2x/composed.hh: Move and update ...
+	* mln/fun/x2x/geom/composed.hh: ... here.
+	* mln/fun/x2x/translation.hh: Move and update ...
+	* mln/fun/x2x/geom/translation.hh: ... here.
+	* mln/fun/x2x/rotation.hh: Move and update ...
+	* mln/fun/x2x/geom/rotation.hh: ... here.
+
+	* mln/fun/x2x/interpol: New.
+	* mln/fun/x2x/interpol/bilinear.hh: New interpolation.
+	* mln/fun/x2x/interpol/linear.hh: New interpolation.
+
+	* mln/draw/plot.hh: Fix doxygen.
+
 2008-09-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add traits for windows and factor code.
