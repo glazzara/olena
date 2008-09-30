@@ -1,3 +1,21 @@
+2008-09-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update reconstruction algorithms in theo's sandbox.
+
+	* milena/mln/level/paste.hh: Fix warning.
+	* milena/sandbox/geraud/Rd/hybrid.hh,
+	* milena/sandbox/geraud/Rd/queue_based.hh,
+	* milena/sandbox/geraud/Rd/parallel.cc,
+	* milena/sandbox/geraud/Rd/union_find.hh,
+	* milena/sandbox/geraud/Rd/parallel.hh,
+	* milena/sandbox/geraud/Rd/sequential.cc,
+	* milena/sandbox/geraud/Rd/utils.hh,
+	* milena/sandbox/geraud/Rd/hybrid.cc,
+	* milena/sandbox/geraud/Rd/queue_based.cc,
+	* milena/sandbox/geraud/Rd/min.cc,
+	* milena/sandbox/geraud/Rd/sequential.hh,
+	* milena/sandbox/geraud/Rd/union_find.cc: Update.
+
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/topo/Makefile.

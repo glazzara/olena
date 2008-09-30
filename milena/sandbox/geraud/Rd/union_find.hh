@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +44,7 @@ namespace mln
       template <typename I, typename N>
       struct union_find_t
       {
-	typedef mln_point(I) point;
+	typedef mln_site(I)  point;
 	typedef mln_value(I) value;
 
 	// in:
@@ -56,28 +56,21 @@ namespace mln
 
 	// aux:
 	std::vector<point> S;
-	// was: I data;
-	mln_ch_value(I, bool) isproc;
+	mln_ch_value(I, bool)  deja_vu;
 	mln_ch_value(I, point) parent;
 
 	union_find_t(const I& f, const I& g, const N& nbh)
 	  : f(f), g(g), nbh(nbh)
 	{
-	  f.name_it("f");
-	  g.name_it("g");
 	  initialize(o, f);
-	  o.name_it("o");
 	  initialize(parent, f);
-	  parent.name_it("parent");
-	  initialize(isproc, f);
-	  isproc.name_it("isproc");
-	  // was: initialize(data, f);
+	  initialize(deja_vu, f);
 	
 	  // init
 
-	  level::fill(isproc, false);
+	  level::fill(deja_vu, false);
 	  S = histo_reverse_sort(g);
-	  level::paste(f, o); // new: replace make_set(p) { data(p) = f(p) }
+	  level::paste(f, o); // Replace: for all p, make_set(p) { data(p) = f(p) }
 
 	  // first pass
 
@@ -90,11 +83,11 @@ namespace mln
 	      for_all(n)
 		{
 		  if (f.has(n))
-		    mln_invariant(isproc(n) == is_proc(n, p));
-		  if (f.has(n) and isproc(n))
+		    mln_invariant(deja_vu(n) == is_proc(n, p));
+		  if (f.has(n) && deja_vu(n))
 		    do_union(n, p);
 		}
-	      isproc(p) = true;
+	      deja_vu(p) = true;
 	    }
 
 	  // second pass
@@ -109,13 +102,12 @@ namespace mln
 		o(p) = o(parent(p));
 	    }
 
-	  print_counts();
-
 	}
  
 	bool is_proc(const point& n, const point& p) const
 	{
-	  return g(n) > g(p) or (g(n) == g(p) and n < p);
+	  return g(n) > g(p) or (g(n) == g(p) &&
+				 util::ord_strict(n, p));
 	}
 
 	void make_set(const point& p)

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,9 +31,11 @@
 # include <vector>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/util/ord.hh>
+
+# include <mln/level/fill_with_value.hh>
 # include <mln/level/paste.hh>
 # include <mln/level/compare.hh>
 
@@ -59,7 +61,7 @@ namespace mln
       template <typename I>
       I minimun(const I& ima1, const I& ima2)
       {
-	mln_precondition(ima1.has_data() and ima2.has_data());
+	mln_precondition(ima1.has_data() && ima2.has_data());
 	mln_precondition(ima1.domain() == ima2.domain());
 	I out(ima1.domain());
 	mln_piter(I) p(ima1.domain());
@@ -75,7 +77,7 @@ namespace mln
 	mln_value(I) v = ima(p);
 	mln_niter(N) n(nbh, p);
 	for_all(n)
-	  if (ima.has(n) and ima(n) > v)
+	  if (ima.has(n) && ima(n) > v)
 	    v = ima(n);
 	return v;
       }
@@ -87,7 +89,9 @@ namespace mln
 	mln_value(I) v = ima(p);
 	mln_niter(N) n(nbh, p);
 	for_all(n)
-	  if (ima.has(n) and n > p and ima(n) > v)
+	  if (ima.has(n) &&
+	      util::ord_strict(p.to_site(), n.to_site()) &&
+	      ima(n) > v)
 	    v = ima(n);
 	return v;
       }
@@ -98,7 +102,9 @@ namespace mln
 	mln_value(I) v = ima(p);
 	mln_niter(N) n(nbh, p);
 	for_all(n)
-	  if (ima.has(n) and n < p and ima(n) > v)
+	  if (ima.has(n) &&
+	      util::ord_strict(n.to_site(), p.to_site()) &&
+	      ima(n) > v)
 	    v = ima(n);
 	return v;
       }
@@ -116,7 +122,7 @@ namespace mln
 
 
 //       template <typename I>
-//       std::vector<mln_point(I)> histo_sort(const I& ima)
+//       std::vector<mln_site(I)> histo_sort(const I& ima)
 //       {
 // 	std::vector<unsigned> h = compute_histo(ima);
 // 	// preparing output data
@@ -124,9 +130,9 @@ namespace mln
 // 	loc[0] = 0;
 // 	for (int l = 1; l < 256; ++l)
 // 	  loc[l] = loc[l-1] + h[l-1];
-// 	std::vector<mln_point(I)> vec(ima.points().npoints());
+// 	std::vector<mln_site(I)> vec(ima.nsites());
 // 	// storing output data
-// 	mln_piter(I) p(ima.points());
+// 	mln_piter(I) p(ima.domain());
 // 	for_all(p)
 // 	  vec[loc[ima(p)]++] = p;
 // 	return vec;
@@ -134,7 +140,7 @@ namespace mln
 
 
       template <typename I>
-      std::vector<mln_point(I)> histo_reverse_sort(const I& ima)
+      std::vector<mln_site(I)> histo_reverse_sort(const I& ima)
       {
 	std::vector<unsigned> h = compute_histo(ima);
 	// preparing output data
@@ -142,7 +148,7 @@ namespace mln
 	loc[255] = 0;
 	for (int l = 254; l >= 0; --l)
 	  loc[l] = loc[l+1] + h[l+1];
-	std::vector<mln_point(I)> vec(ima.domain().npoints());
+	std::vector<mln_site(I)> vec(ima.nsites());
 	// storing output data
 	mln_piter(I) p(ima.domain());
 	for_all(p)
@@ -155,7 +161,7 @@ namespace mln
       template <typename I, typename N>
       struct regional_maxima_t
       {
-	typedef mln_point(I) point;
+	typedef mln_site(I) point;
 	typedef mln_ch_value(I, bool)  image_bool;
 	typedef mln_ch_value(I, point) image_point;
 
@@ -168,26 +174,21 @@ namespace mln
 
 	// aux:
 	std::vector<point> S;
-	image_bool  is_proc;
+	image_bool  deja_vu;
 	image_bool  attr;
 	image_point parent;
 
 	regional_maxima_t(const I& f, const N& nbh)
 	  : f(f), nbh(nbh)
 	{
-	  f.name_it("rm.f");
 	  initialize(o, f);
-	  o.name_it("rm.o");
 	  initialize(parent, f);
-	  parent.name_it("rm.parent");
 	  initialize(attr, f);
-	  attr.name_it("rm.attr");
-	  initialize(is_proc, f);
-	  is_proc.name_it("rm.is_proc");
+	  initialize(deja_vu, f);
 	
 	  // init
 
-	  level::fill(is_proc, false);
+	  level::fill_with_value(deja_vu, false);
 	  S = histo_reverse_sort(f);
 
 	  // first pass
@@ -199,14 +200,14 @@ namespace mln
 	      make_set(p);
 	      mln_niter(N) n(nbh, p);
 	      for_all(n)
-		if (f.has(n) and is_proc(n))
+		if (f.has(n) && deja_vu(n))
 		  {
 		    if (f(n) == f(p))
 		      do_union(n, p);
 		    else // f(n) > f(p)
 		      attr(p) = false;
 		  }
-	      is_proc(p) = true;
+	      deja_vu(p) = true;
 	    }
 
 	  // second pass
@@ -242,7 +243,7 @@ namespace mln
 	  if (r != p)
 	    {
 	      parent(r) = p;
-	      attr(p) = attr(p) and attr(r);
+	      attr(p) = attr(p) && attr(r);
 	    }
 	}
      

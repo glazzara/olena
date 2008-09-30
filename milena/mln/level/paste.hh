@@ -84,6 +84,8 @@ namespace mln
 	mlc_converts_to(mln_value(I), mln_value(J))::check();
 	mln_precondition(exact(data).has_data());
 	mln_precondition(exact(data).domain() <= exact(destination).domain());
+	(void)data;
+	(void)destination;
       }
 
     } // end of namespace mln::level::internal

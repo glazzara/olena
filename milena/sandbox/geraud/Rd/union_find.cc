@@ -1,5 +1,5 @@
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/debug/println.hh>
@@ -13,7 +13,7 @@
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0] << " f.pgm g.pgm c output.pgm" << std::endl
-            << "reconstruction by dilation (union_find version; may 2007)" << std::endl
+            << "reconstruction by dilation (union_find version; sep 2008)" << std::endl
             << "f = marker (to be dilated)" << std::endl
             << "g = mask (constraint >= f)" << std::endl
             << "c: 4 or 8" << std::endl;
@@ -29,22 +29,24 @@ int main(int argc, char* argv[])
   using namespace mln;
   using value::int_u8;
 
+  border::thickness = 0; // Safety.
+
   typedef image2d<int_u8> I;
 
   int c = atoi(argv[3]);
   if (c != 4 and c != 8)
     usage(argv);
 
-  I f = io::pgm::load<int_u8>(argv[1]);
-  I g = io::pgm::load<int_u8>(argv[2]);
+  I f, g;
+  io::pgm::load(f, argv[1]);
+  io::pgm::load(g, argv[2]);
   
-  if (not (f <= g))
+  if (! (f <= g))
     {
-      std::cerr << "pb" << std::endl;
+      std::cerr << "error: the precondition 'f <= g' is not true" << std::endl;
       return 1;
     }
 
-  io::pgm::save(morpho::Rd::union_find(f, g,
-				       (c == 4 ? c4() : c8())),
-		argv[4]);
+  I o = morpho::Rd::union_find(f, g, (c == 4 ? c4() : c8()));
+  io::pgm::save(o, argv[4]);
 }

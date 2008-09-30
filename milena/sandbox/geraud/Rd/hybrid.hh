@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,17 +46,11 @@ namespace mln
       I hybrid(const I& f, const I& g, const N& nbh,
 	       bool echo = false)
       {
-	typedef mln_point(I) point;
+	typedef mln_site(I) point;
 	std::queue<point> q;
 
-	f.name_it("f");
-	g.name_it("g");
-
 	// initialisation
- 	I o(f.domain());
-	o.name_it("o");
-	level::paste(f, o);
-	// WAS: I o = clone(f);
+ 	I o = clone(f);
 
 	unsigned n_init_pushs = 0, n_body_pushs = 0, n_pops = 0;
 
@@ -72,12 +66,14 @@ namespace mln
 	  for_all(p)
 	    {
 	      o(p) = min( max_Nplus(o, p,nbh), g(p) );
-	      for_all(n) if (f.has(n) and n < p) // N+
-		if (o(n) < o(p) and o(n) < g(n))
-		  {
-		    q.push(p);
-		    ++n_init_pushs;
-		  }
+	      for_all(n)
+		if (f.has(n) &&
+		    util::ord_strict(n.to_site(), p.to_site())) // N+
+		  if (o(n) < o(p) && o(n) < g(n))
+		    {
+		      q.push(p);
+		      ++n_init_pushs;
+		    }
 	    }
 	}
 
@@ -92,7 +88,7 @@ namespace mln
 	      q.pop();
 	      ++n_pops;
 	      for_all(n) if (f.has(n))
-		if (o(n) < o(p) and o(n) != g(n))
+		if (o(n) < o(p) && o(n) != g(n))
 		  {
 		    o(n) = min(o(p), g(n));
 		    if (echo) std::cout << " push " << n;
@@ -103,12 +99,10 @@ namespace mln
 	  if (echo) std::cout << std::endl;
 	}
 
-
-	std::cout << "n_init_pushs = " << n_init_pushs << std::endl
-		  << "n_body_pushs = " << n_body_pushs << std::endl
-		  << "n_pops = " << n_pops << std::endl;
-
-	print_counts();
+	if (echo)
+	  std::cout << "n_init_pushs = " << n_init_pushs << std::endl
+		    << "n_body_pushs = " << n_body_pushs << std::endl
+		    << "n_pops = " << n_pops << std::endl;
 
 	return o;
       }

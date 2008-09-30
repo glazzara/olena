@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,17 +45,10 @@ namespace mln
       {
 	mln_precondition(f <= g);
 
-	f.name_it("f");
-	g.name_it("g");
-
 	I o_(f.domain());
-	o_.name_it("o_");
 
 	// initialisation
- 	I o(f.domain());
-	o.name_it("o");
-	level::paste(f, o);
-	// WAS: I o = clone(f);
+ 	I o = clone(f);
 
 	bool stability;
 	do
@@ -79,8 +72,6 @@ namespace mln
 	    stability = (o == o_);
 	  }
 	while (not stability);
-
-	print_counts();
 
 	mln_postcondition(o <= g);
 	return o;

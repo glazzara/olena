@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -7,7 +7,7 @@
 void usage(char* argv[])
 {
   std::cerr << "usage: " << argv[0] << " 1.pgm 2.pgm out.pgm" << std::endl
-            << "(2008 Feb)" << std::endl;
+            << "(sep 2008)" << std::endl;
   exit(1);
 }
 

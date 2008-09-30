@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research && Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -18,7 +18,7 @@
 // As a special exception, you may use this file as part of a free
 // software library without restriction.  Specifically, if other files
 // instantiate templates or use macros or inline functions from this
-// file, or you compile this file and link it with other files to
+// file, or you compile this file && link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
 // License.  This exception does not however invalidate any other
@@ -52,13 +52,9 @@ namespace mln
 	
 	if (echo) std::cout << std::endl;
 
-	f.name_it("f");
-	g.name_it("g");
-
-	typedef mln_point(I) point;
+	typedef mln_site(I) point;
 	std::queue<point> q;
 	I o;
-	o.name_it("o");
 
 	unsigned n_init_pushs = 0, n_body_pushs = 0, n_pops = 0;
 
@@ -71,8 +67,8 @@ namespace mln
 	  mln_piter(I) p(f.domain());
 	  mln_niter(N) n(nbh, p);
 
-	  for_all(p) if (o(p) != 0) // p in M
-	    for_all(n) if (f.has(n) and o(n) == 0) // n not in M
+	  for_all(p) if (o(p) != 0u) // p in M
+	    for_all(n) if (f.has(n) && o(n) == 0u) // n not in M
 	      {
 		q.push(p);
 		que(p) = true;
@@ -94,7 +90,7 @@ namespace mln
 	      ++n_pops;
 	      for_all(n) if (f.has(n))
 		{
-		  if (o(n) < o(p) and o(n) != g(n))
+		  if (o(n) < o(p) && o(n) != g(n))
 		    {
 		      o(n) = min(o(p), g(n));
 		      if (echo) std::cout << " push " << n;
@@ -110,11 +106,10 @@ namespace mln
 	  if (echo) std::cout << std::endl;
 	}
 
-	std::cout << "n_init_pushs = " << n_init_pushs << std::endl
-		  << "n_body_pushs = " << n_body_pushs << std::endl
-		  << "n_pops = " << n_pops << std::endl;
-
-	print_counts();
+	if (echo)
+	  std::cout << "n_init_pushs = " << n_init_pushs << std::endl
+		    << "n_body_pushs = " << n_body_pushs << std::endl
+		    << "n_pops = " << n_pops << std::endl;
 
 	return o;
       }
