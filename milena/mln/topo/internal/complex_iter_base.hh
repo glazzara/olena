@@ -39,6 +39,11 @@
 # include <mln/core/concept/iterator.hh>
 # include <mln/topo/complex.hh>
 
+// FIXME: Rename as something else?
+// - complex_iterator_base?
+// - complex_set_iterator_base?
+// - faces_set_iterator_base?
+
 
 namespace mln
 {
@@ -83,17 +88,15 @@ namespace mln
 	void invalidate();
 	/// \}
 
-	/// Conversion and accessors.
+	/// Conversion.
 	/// \{
-	/// Reference to the corresponding face handle.
-	const face& to_face () const;
-	/// Convert the iterator into an face handle.
-	operator face() const;
+	/// Return a reference to the corresponding face handle.
+	operator const face&() const;
 	/// \}
 
       protected:
 	/// The face handle this iterator is pointing to.
-	face face_;
+	face f_;
       };
 
 
@@ -124,8 +127,8 @@ namespace mln
 	// Ensure F and E are compatible.
 	mlc_equal(F, typename E::face)::check();
 
-	face_.set_cplx(c);
-	// Invalidate face_.
+	f_.set_cplx(c);
+	// Invalidate f_.
 	invalidate();
       }
 
@@ -134,8 +137,8 @@ namespace mln
       void
       complex_iter_base<F, E>::set_cplx(complex_type& c)
       {
-	face_.set_cplx(c);
-	// Invalidate face_.
+	f_.set_cplx(c);
+	// Invalidate f_.
 	invalidate();
       }
 
@@ -144,7 +147,7 @@ namespace mln
       bool
       complex_iter_base<F, E>::is_valid() const
       {
-	return face_.is_valid();
+	return f_.is_valid();
       }
 
       template <typename F, typename E>
@@ -152,23 +155,14 @@ namespace mln
       void
       complex_iter_base<F, E>::invalidate()
       {
-	face_.invalidate();
+	f_.invalidate();
       }
 
       template <typename F, typename E>
       inline
-      const F&
-      complex_iter_base<F, E>::to_face() const
+      complex_iter_base<F, E>::operator const F&() const
       {
-	return face_;
-      }
-
-      template <typename F, typename E>
-      inline
-      complex_iter_base<F, E>::operator F() const
-      {
-	mln_precondition(is_valid());
-	return face_;
+	return f_;
       }
 
 
@@ -177,21 +171,7 @@ namespace mln
       std::ostream&
       operator<<(std::ostream& ostr, const complex_iter_base<F, E>& p)
       {
-	/* FIXME: We should use p.to_face() here, but as it lacks the
-	   precondition the conversion operator has, so we use the latter.
-
-	   We should
-	   - rename `to_face' as `to_face_';
-	   - write a new `to_face' routine checking the validity of the
-	   iterator;
-	   - have the conversion operator to face use this new `to_face'
-	   routine;
-	   - adjust former clients of `to_face'
-
-	   This is a general remark that applies to all iterators of
-	   Milena.  */
-	F f = p;
-	return ostr << f;
+	return ostr << F(p);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

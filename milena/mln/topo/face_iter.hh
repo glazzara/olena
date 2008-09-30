@@ -84,7 +84,7 @@ namespace mln
       /// \}
 
     private:
-      using super_::face_;
+      using super_::f_;
     };
 
 
@@ -124,7 +124,7 @@ namespace mln
       /// \}
 
     private:
-      using super_::face_;
+      using super_::f_;
     };
 
 
@@ -156,8 +156,8 @@ namespace mln
     void
     face_fwd_iter<D>::start()
     {
-      face_.set_n(0u);
-      face_.set_face_id(0u);
+      f_.set_n(0u);
+      f_.set_face_id(0u);
     }
 
     template <unsigned D>
@@ -167,27 +167,27 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned n = face_.n();
-	  unsigned face_id = face_.face_id();
+	  unsigned n = f_.n();
+	  unsigned face_id = f_.face_id();
 
-	  if (face_id + 1 < face_.cplx().nfaces(n))
+	  if (face_id + 1 < f_.cplx().nfaces(n))
 	    /* FIXME: Provide accessor face::face_id() returning
 	       a mutable reference?  This way, we could just write
 
-	       ++face_.face_id();
+	       ++f_.face_id();
 
 	       instead of the following.
 
 	       Or add {inc,add}_face_id() services.  */
-	    face_.set_face_id(face_id + 1);
+	    f_.set_face_id(face_id + 1);
 	  else
 	    // Start to iterate on the faces of the next dimension if
 	    // possible.
 	    if (n <= D)
 	      {
 		// FIXME: Same remark as above.
-		face_.set_n(n + 1);
-		face_.set_face_id(0u);
+		f_.set_n(n + 1);
+		f_.set_face_id(0u);
 	      }
 	    else
 	      invalidate();
@@ -220,8 +220,8 @@ namespace mln
     void
     face_bkd_iter<D>::start()
     {
-      face_.set_n(D);
-      face_.set_face_id(face_.cplx().template nfaces<D>() - 1);
+      f_.set_n(D);
+      f_.set_face_id(f_.cplx().template nfaces<D>() - 1);
     }
 
     template <unsigned D>
@@ -231,27 +231,27 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned n = face_.n();
-	  unsigned face_id = face_.face_id();
+	  unsigned n = f_.n();
+	  unsigned face_id = f_.face_id();
 
 	  if (face_id > 0)
 	    /* FIXME: Provide accessor face::face_id() returning
 	       a mutable reference?  This way, we could just write
 
-	       ++face_.face_id();
+	       ++f_.face_id();
 
 	       instead of the following.
 
 	       Or add {inc,add}_face_id() services.  */
-	    face_.set_face_id(face_id - 1);
+	    f_.set_face_id(face_id - 1);
 	  else
 	    // Start to iterate on the faces of the previous dimension
 	    // if it exists.
 	    if (n > 0)
 	      {
 		// FIXME: Same remark as above.
-		face_.set_n(n - 1);
-		face_.set_face_id(face_.cplx().nfaces(n - 1) - 1);
+		f_.set_n(n - 1);
+		f_.set_face_id(f_.cplx().nfaces(n - 1) - 1);
 	      }
 	    else
 	      invalidate();

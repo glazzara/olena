@@ -95,7 +95,7 @@ namespace mln
       /// \}
 
     private:
-      using super_::face_;
+      using super_::f_;
     };
 
 
@@ -143,7 +143,7 @@ namespace mln
       /// \}
 
     private:
-      using super_::face_;
+      using super_::f_;
     };
 
 
@@ -177,7 +177,7 @@ namespace mln
     void
     n_face_fwd_iter<D>::start()
     {
-      face_.set_face_id(0u);
+      f_.set_face_id(0u);
     }
 
     template <unsigned D>
@@ -187,19 +187,19 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned face_id = face_.face_id();
+	  unsigned face_id = f_.face_id();
 	  // The number of faces of dimension N in cplx_.
-	  unsigned nn_faces = face_.cplx().nfaces(n());
+	  unsigned nn_faces = f_.cplx().nfaces(n());
 	  if (face_id + 1 < nn_faces)
 	    /* FIXME: Provide accessor face::face_id() returning
 	       a mutable reference?  This way, we could just write
 
-	       ++face_.face_id();
+	       ++f_.face_id();
 
 	       instead of the following.
 
 	       Or add {inc,add}_face_id() services.  */
-	    face_.set_face_id(face_id + 1);
+	    f_.set_face_id(face_id + 1);
 	  else
 	    invalidate();
 	}
@@ -210,7 +210,7 @@ namespace mln
     unsigned
     n_face_fwd_iter<D>::n() const
     {
-      return face_.n();
+      return f_.n();
     }
 
     template <unsigned D>
@@ -219,7 +219,7 @@ namespace mln
     n_face_fwd_iter<D>::set_n(unsigned n)
     {
       mln_precondition(n <= D);
-      face_.set_n(n);
+      f_.set_n(n);
     }
 
 
@@ -250,8 +250,8 @@ namespace mln
     void
     n_face_bkd_iter<D>::start()
     {
-      face_.set_n(n());
-      face_.set_face_id(face_.cplx().nfaces(n()) - 1);
+      f_.set_n(n());
+      f_.set_face_id(f_.cplx().nfaces(n()) - 1);
     }
 
     template <unsigned D>
@@ -261,17 +261,17 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned face_id = face_.face_id();
+	  unsigned face_id = f_.face_id();
 	  if (face_id > 0)
 	    /* FIXME: Provide accessor face::face_id() returning
 	       a mutable reference?  This way, we could just write
 
-	       ++face_.face_id();
+	       ++f_.face_id();
 
 	       instead of the following.
 
 	       Or add {inc,add}_face_id() services.  */
-	    face_.set_face_id(face_id - 1);
+	    f_.set_face_id(face_id - 1);
 	  else
 	    invalidate();
 	}
@@ -282,7 +282,7 @@ namespace mln
     unsigned
     n_face_bkd_iter<D>::n() const
     {
-      return face_.n();
+      return f_.n();
     }
 
     template <unsigned D>
@@ -291,7 +291,7 @@ namespace mln
     n_face_bkd_iter<D>::set_n(unsigned n)
     {
       mln_precondition(n <= D);
-      face_.set_n(n);
+      f_.set_n(n);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

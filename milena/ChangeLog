@@ -1,5 +1,21 @@
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul mln::topo::internal::complex_iter_base.
+
+	* mln/topo/internal/complex_iter_base.hh
+	(mln::topo::internal::complex_iter_base<F, E>::to_face): Remove.
+	(operator<<(std::ostream&, const complex_iter_base<F, E>&)):
+	Remove outdated FIXME.
+	(mln::topo::internal::complex_iter_base<F, E>::face_): Rename as...
+	(mln::topo::internal::complex_iter_base<F, E>::f_): ...this.
+	Adjust.
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/static_n_face_iter.hh:
+	Adjust as well.
+
+2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve accesses to adjacent faces to mln::topo::face<D>.
 
 	* mln/topo/face.hh
