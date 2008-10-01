@@ -38,8 +38,9 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
-# include <mln/geom/shift.hh>
-# include <mln/set/diff.hh>
+
+# include <mln/win/shift.hh>
+# include <mln/win/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/accu/max_h.hh>
@@ -107,12 +108,12 @@ namespace mln
 	  // aux data
 	  max(input.values()),
 	  p(),
-	  win_fp(set::diff(win, geom::shift(win, left))),
-	  win_fm(set::diff(geom::shift(win, left),  win)),
-	  win_bp(set::diff(win, geom::shift(win, right))),
-	  win_bm(set::diff(geom::shift(win, right), win)),
-	  win_dp(set::diff(win, geom::shift(win, up))),
-	  win_dm(set::diff(geom::shift(win, up),    win)),
+	  win_fp(win - win::shift(win, left)),
+	  win_fm(win::shift(win, left)  - win),
+	  win_bp(win - win::shift(win, right)),
+	  win_bm(win::shift(win, right) - win),
+	  win_dp(win - win::shift(win, up)),
+	  win_dm(win::shift(win, up)    - win),
 	  q_fp(win_fp, p),  q_fm(win_fm, p),
 	  q_bp(win_bp, p),  q_bm(win_bm, p),
 	  q_dp(win_dp, p),  q_dm(win_dm, p)

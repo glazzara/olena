@@ -45,7 +45,7 @@
 # include <mln/accu/median.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
 
-# include <mln/geom/shift.hh>
+# include <mln/win/shift.hh>
 # include <mln/set/diff.hh>
 
 # include <mln/border/resize.hh>

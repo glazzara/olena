@@ -37,7 +37,6 @@
 # include <cmath>
 # include <mln/core/neighb.hh>
 # include <mln/core/alias/window1d.hh>
-# include <mln/geom/sym.hh>
 
 
 namespace mln

@@ -35,8 +35,9 @@
 
 #include <mln/win/rectangle2d.hh>
 #include <mln/core/alias/window2d.hh>
-#include <mln/geom/shift.hh>
-#include <mln/set/diff.hh>
+
+#include <mln/win/shift.hh>
+#include <mln/win/diff.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -54,9 +55,9 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  window2d win_hit = geom::shift(win::rectangle2d(3, 3),
-				 dpoint2d(+1, +1));
-  window2d win_miss = mln::set::diff(win::rectangle2d(5, 5), win_hit);
+  window2d win_hit = win::shift(win::rectangle2d(3, 3),
+				dpoint2d(+1, +1));
+  window2d win_miss = win::rectangle2d(5, 5) - win_hit;
 
   {
     bool hit[] = { 0, 0, 0, 0, 0,

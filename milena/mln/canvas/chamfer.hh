@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/image_morpher.hh>
-# include <mln/geom/sym.hh>
+# include <mln/win/sym.hh>
 
 namespace mln
 {
@@ -94,7 +94,7 @@ namespace mln
 
       /// Bkd pass.
       {
-	W w_win_b = geom::sym(f.win);
+	W w_win_b = win::sym(f.win);
 
 	mln_bkd_piter(I) p(f.input.domain());
 	mln_qiter(W) q(w_win_b, p);

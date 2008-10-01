@@ -28,7 +28,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/dpoint2d.hh>
 
-#include <mln/geom/sym.hh>
+#include <mln/win/shift.hh>
 
 int main()
 {
@@ -44,11 +44,11 @@ int main()
   win.insert(dpoint2d(5,6));
   win.insert(dpoint2d(7,8));
 
-  win2.insert(dpoint2d(0,0));
-  win2.insert(dpoint2d(-1,-2));
-  win2.insert(dpoint2d(-3,-4));
-  win2.insert(dpoint2d(-5,-6));
-  win2.insert(dpoint2d(-7,-8));
+  win2.insert(dpoint2d(2,2));
+  win2.insert(dpoint2d(3,4));
+  win2.insert(dpoint2d(5,6));
+  win2.insert(dpoint2d(7,8));
+  win2.insert(dpoint2d(9,10));
 
-  mln_assertion(geom::sym(win) == win2);
+  mln_assertion(win::shift(win, dp) == win2);
 }

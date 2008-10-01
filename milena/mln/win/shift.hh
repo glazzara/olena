@@ -25,16 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_SYM_HH
-# define MLN_GEOM_SYM_HH
+#ifndef MLN_GEOM_SHIFT_HH
+# define MLN_GEOM_SHIFT_HH
 
-/*! \file mln/geom/sym.hh
+/*! \file mln/win/shift.hh
  *
- * \brief Give the symmetrical object.
+ * \brief Define a function which shifts a window with a delta-point.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/weighted_window.hh>
+# include <mln/core/window.hh>
 
 
 
@@ -44,34 +43,65 @@ namespace mln
   namespace geom
   {
 
-    /*! \brief Give the symmetrical window of \p win.
-     */
+    /// Shift a window \p win with a delta-point \p dp.
     template <typename W>
-    W sym(const Window<W>& win);
-
-    /*! \brief Give the symmetrical weighted window of \p w_win.
-     */
-    template <typename W>
-    W sym(const Weighted_Window<W>& w_win);
+    mln_regular(W)
+    shift(const Window<W>& win, const mln_dpsite(W)& dp);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W>
-    inline
-    W sym(const Window<W>& win)
+    namespace impl
     {
-      W tmp = exact(win);
-      tmp.sym();
-      return tmp;
-    }
 
+      template <typename W>
+      inline
+      mln_regular(W)
+      shift_(trait::window::definition::unique,
+	     const W& win, const mln_dpsite(W)& dp)
+      {
+	mlc_is(mln_trait_window_size(W),
+	       trait::window::size::fixed)::check();
+	mln_regular(W) tmp;
+	unsigned n = win.size();
+	for (unsigned i = 0; i < n; ++i)
+	  tmp.insert(win.dp(i) + dp);
+	return tmp;
+      }
+
+      template <typename W>
+      inline
+      mln_regular(W)
+      shift_(trait::window::definition::multiple,
+	     const W& win, const mln_dpsite(W)& dp)
+      {
+	mln_regular(W) tmp(win.function());
+	const unsigned nw = win.nwindows();
+	for (unsigned w = 0; w < nw; ++w)
+	  tmp.set_window(w, win::shift(win.window(w), dp));
+	return tmp;
+      }
+
+    } // end of namespace mln::geom::impl
+
+
+    // Facade.
     template <typename W>
     inline
-    W sym(const Weighted_Window<W>& w_win)
+    mln_regular(W)
+    shift(const Window<W>& win, const mln_dpsite(W)& dp)
     {
-      W tmp = exact(w_win);
-      tmp.sym();
+      trace::entering("win::shift");
+
+      mlc_is(mln_trait_window_support(W),
+	     trait::window::support::regular)::check();
+      mlc_is_not(mln_trait_window_definition(W),
+		 trait::window::definition::varying)::check();
+
+      mln_regular(W) tmp = impl::shift_(mln_trait_window_definition(W)(),
+					exact(win), dp);
+
+      trace::exiting("win::shift");
       return tmp;
     }
 
@@ -82,4 +112,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SYM_HH
+#endif // ! MLN_GEOM_SHIFT_HH

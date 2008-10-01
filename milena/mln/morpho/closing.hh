@@ -60,7 +60,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = erosion(dilation(input, win), geom::sym(win));
+      mln_concrete(I) output = erosion(dilation(input, win), win::sym(win));
 
       mln_postcondition(output >= input);
       trace::exiting("morpho::closing");

@@ -35,9 +35,11 @@
 # include <mln/core/alias/window2d.hh>
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
-# include <mln/geom/shift.hh>
+
+# include <mln/win/shift.hh>
+# include <mln/win/diff.hh>
+
 # include <mln/accu/min_h.hh>
-# include <mln/set/diff.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
 
 
@@ -279,10 +281,10 @@ namespace mln
 	  : input(input),
 	    win(win),
 	    min(),
-	    win_left(set::diff(geom::shift(win, left), win)),
-	    win_right(set::diff(win, geom::shift(win, left))),
-	    win_bot(set::diff(win, geom::shift(win, up))),
-	    win_top(set::diff(geom::shift(win, up), win)),
+	    win_left(win::shift(win, left) - win),
+	    win_right(win - win::shift(win, left)),
+	    win_bot(win - win::shift(win, up)),
+	    win_top(win::shift(win, up) - win),
 	    q_l(input, win_left, p),
 	    q_r(input, win_right, p),
 	    q_top(input, win_top, p),
@@ -376,10 +378,10 @@ namespace mln
 	  : input(input),
 	    win(win),
 	    min(),
-	    win_left(set::diff(geom::shift(win, left), win)),
-	    win_right(set::diff(win, geom::shift(win, left))),
-	    win_bot(set::diff(win, geom::shift(win, up))),
-	    win_top(set::diff(geom::shift(win, up), win)),
+	    win_left(win::shift(win, left) - win),
+	    win_right(win - win::shift(win, left)),
+	    win_bot(win - win::shift(win, up)),
+	    win_top(win::shift(win, up) - win),
 	    q_l(win_left, p),
 	    q_r(win_right, p),
 	    q_top(win_top, p),
@@ -562,8 +564,8 @@ namespace mln
       erosion_dispatch_wrt_win(const I& input, const W& win)
       {
 	// FIXME: De-activate because, when win is multiple,
-	// geom::shift does not work.  We have to introduce
-	// props from windows, then re-write geom::shift.
+	// win::shift does not work.  We have to introduce
+	// props from windows, then re-write win::shift.
 
 // 	if (erosion_chooses_arbitrary(input, win))
 // 	  return erosion_dispatch_for_arbitrary(input, win);

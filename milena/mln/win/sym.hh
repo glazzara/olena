@@ -25,51 +25,61 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
+#ifndef MLN_WIN_SYM_HH
+# define MLN_WIN_SYM_HH
 
-/*! \file mln/morpho/includes.hh
+/*! \file mln/win/sym.hh
  *
- * \brief Basic list of includes for all files in mln/morpho/.
- *
- * \todo Re-activate the border/all include when ready.
+ * \brief Give the symmetrical object.
  */
 
-
-# include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
-# include <mln/core/concept/neighborhood.hh>
+# include <mln/core/concept/weighted_window.hh>
 
-# include <mln/value/ops.hh>
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
-# include <mln/accu/rank.hh>
 
-# include <mln/fun/v2v/saturate.hh>
+namespace mln
+{
 
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
+  namespace win
+  {
 
-# include <mln/test/positive.hh>
+    /*! \brief Give the symmetrical window of \p win.
+     */
+    template <typename W>
+    W sym(const Window<W>& win);
 
-# include <mln/extension/all.hh>
+    /*! \brief Give the symmetrical weighted window of \p w_win.
+     */
+    template <typename W>
+    W sym(const Weighted_Window<W>& w_win);
 
-# include <mln/win/sym.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/diff.hh>
-# include <mln/set/inter.hh>
 
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
+# ifndef MLN_INCLUDE_ONLY
 
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
+    template <typename W>
+    inline
+    W sym(const Window<W>& win)
+    {
+      W tmp = exact(win);
+      tmp.sym();
+      return tmp;
+    }
 
-# include <mln/convert/to_window.hh>
+    template <typename W>
+    inline
+    W sym(const Weighted_Window<W>& w_win)
+    {
+      W tmp = exact(w_win);
+      tmp.sym();
+      return tmp;
+    }
 
-#endif // ! MLN_MORPHO_INCLUDES_HH
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::win
+
+} // end of namespace mln
+
+
+#endif // ! MLN_WIN_SYM_HH

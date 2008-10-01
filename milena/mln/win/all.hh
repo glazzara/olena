@@ -42,6 +42,9 @@ namespace mln
 
 }
 
+
+// Types.
+
 # include <mln/win/backdiag2d.hh>
 # include <mln/win/cube3d.hh>
 # include <mln/win/cuboid3d.hh>
@@ -54,6 +57,12 @@ namespace mln
 # include <mln/win/rectangle2d.hh>
 # include <mln/win/segment1d.hh>
 # include <mln/win/vline2d.hh>
+
+// Routines.
+
+# include <mln/win/diff.hh>
+# include <mln/win/shift.hh>
+# include <mln/win/sym.hh>
 
 
 

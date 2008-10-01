@@ -47,7 +47,8 @@
 
 namespace mln
 {
-  // Forward declaration.
+
+  // Forward declarations.
   template <typename W> class neighb_fwd_niter;
   template <typename W> class neighb_bkd_niter;
 

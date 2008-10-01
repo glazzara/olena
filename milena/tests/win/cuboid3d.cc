@@ -32,7 +32,7 @@
 
 #include <cmath>
 #include <mln/win/cuboid3d.hh>
-#include <mln/geom/sym.hh>
+#include <mln/win/sym.hh>
 
 #include <mln/convert/to_image.hh>
 
@@ -47,7 +47,7 @@ int main()
 
   mln_assertion(cuboid.is_centered());
   mln_assertion(cuboid.is_symmetric());
-  mln_assertion(cuboid == geom::sym(cuboid));
+  mln_assertion(cuboid == win::sym(cuboid));
   mln_assertion(cuboid.size() == d * h * w);
 
   mln_assertion(cuboid.delta() == 3);

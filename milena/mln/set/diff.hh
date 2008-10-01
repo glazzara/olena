@@ -37,7 +37,6 @@
  */
 
 # include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_window.hh>
 # include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
 
@@ -51,14 +50,6 @@ namespace mln
 
     /*! \brief Set theoretic difference of \p lhs and \p rhs.
      *
-     * \relates mln::Window
-     */
-    template <typename Wl, typename Wr>
-    window<mln_dpsite(Wl)>
-    diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
-
-    /*! \brief Set theoretic difference of \p lhs and \p rhs.
-     *
      * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
@@ -67,32 +58,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    template <typename Wl, typename Wr>
-    inline
-    window<mln_dpsite(Wl)>
-    diff(const Window<Wl>& lhs_, const Window<Wr>& rhs_)
-    {
-      trace::entering("set::diff");
-      mlc_is_a(mln_site(Wl), Gpoint)::check();
-      mlc_is_a(mln_site(Wr), Gpoint)::check();
-      mlc_converts_to(mln_dpsite(Wl), mln_dpsite(Wr))::check();
-
-      const Wl& lhs = exact(lhs_);
-      const Wr& rhs = exact(rhs_);
-      window<mln_dpsite(Wl)> tmp;
-
-      const unsigned n = lhs.size();
-      for (unsigned i = 0; i < n; ++i)
-	{
-	  if (rhs.has(lhs.dp(i)))
-	    continue;
-	  tmp.insert(lhs.dp(i));
-	}
-
-      trace::exiting("set::diff");
-      return tmp;
-    }
 
     template <typename Wl, typename Wr>
     inline

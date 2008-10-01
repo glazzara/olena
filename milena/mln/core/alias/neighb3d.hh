@@ -37,7 +37,7 @@
 # include <cmath>
 # include <mln/core/neighb.hh>
 # include <mln/core/alias/window3d.hh>
-# include <mln/geom/sym.hh>
+# include <mln/win/sym.hh>
 
 
 namespace mln
@@ -119,7 +119,7 @@ namespace mln
 	  .insert(0, 1, 0)
 	  .insert(0, 0, 1);
 	win
-	  .insert(geom::sym(win));
+	  .insert(win::sym(win));
       }
     return it;
   }
@@ -139,7 +139,7 @@ namespace mln
 	  .insert(1,  1,  0)
 	  .insert(1, -1,  0);
 	win
-	  .insert(geom::sym(win))
+	  .insert(win::sym(win))
 	  .insert(c6().win());
       }
     return it;
@@ -158,7 +158,7 @@ namespace mln
 	  .insert(1, -1,  1)
 	  .insert(1, -1, -1);
 	win
-	  .insert(geom::sym(win))
+	  .insert(win::sym(win))
 	  .insert(c18().win());
       }
     return it;

@@ -42,6 +42,18 @@
 # include <mln/core/site_set/p_array.hh>
 
 
+
+# define mln_is_simple_window(W)							\
+											\
+mln::metal::and_< mlc_is(mln_trait_window_size(W),					\
+			 mln::trait::window::size::fixed),				\
+		  mln::metal::and_< mlc_is(mln_trait_window_support(W),			\
+					   mln::trait::window::support::regular),	\
+				    mlc_is(mln_trait_window_definition(W),		\
+					   mln::trait::window::definition::unique) > >
+
+
+
 namespace mln
 {
 
@@ -90,7 +102,14 @@ namespace mln
 
 
 
+  template <typename W>
+  void check_simple(const Window<W>& win);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+
 
   namespace internal
   {

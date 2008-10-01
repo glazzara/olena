@@ -25,51 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_INCLUDES_HH
-# define MLN_MORPHO_INCLUDES_HH
-
-/*! \file mln/morpho/includes.hh
+/*! \file tests/win/diff.cc
  *
- * \brief Basic list of includes for all files in mln/morpho/.
- *
- * \todo Re-activate the border/all include when ready.
+ * \brief Tests on mln::win::diff.
  */
 
+#include <mln/core/alias/dpoint2d.hh>
+#include <mln/win/diff.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/neighborhood.hh>
 
-# include <mln/value/ops.hh>
+int main()
+{
+  using namespace mln;
+  
+  window<dpoint2d> win1;
+  win1
+    .insert( 2, 7)
+    .insert( 2, 1)
+    .insert(-4, 0)
+    .insert( 0, 0)
+    .insert( 1, 1)
+    .insert( 6, 5);
 
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
-# include <mln/accu/rank.hh>
+  window<dpoint2d> win2;
+  win2
+    .insert( 2, 7)
+    .insert(-2, 1)
+    .insert(-4, 0)
+    .insert( 1,-1)
+    .insert( 6, 5);
 
-# include <mln/fun/v2v/saturate.hh>
+  window<dpoint2d> win3 = win1 - win2;
 
-# include <mln/level/compare.hh>
-# include <mln/level/fill.hh>
+  mln_assertion(  win3.has(dpoint2d( 2, 1)));
+  mln_assertion(  win3.has(dpoint2d( 0, 0)));
+  mln_assertion(  win3.has(dpoint2d( 1, 1)));
 
-# include <mln/test/positive.hh>
-
-# include <mln/extension/all.hh>
-
-# include <mln/win/sym.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/diff.hh>
-# include <mln/set/inter.hh>
-
-# include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
-# include <mln/morpho/minus.hh>
-# include <mln/morpho/plus.hh>
-
-# include <mln/convert/to_window.hh>
-
-#endif // ! MLN_MORPHO_INCLUDES_HH
+  mln_assertion(! win3.has(dpoint2d( 2, 7)));
+  mln_assertion(! win3.has(dpoint2d(-2, 1)));
+  mln_assertion(! win3.has(dpoint2d(-4, 0)));
+  mln_assertion(! win3.has(dpoint2d( 1,-1)));
+  mln_assertion(! win3.has(dpoint2d( 6, 5)));
+}

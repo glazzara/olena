@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,11 +51,9 @@ namespace mln
 # include <mln/geom/pmin_pmax.hh>
 # include <mln/geom/seeds2tiling.hh>
 # include <mln/geom/seeds2tiling_roundness.hh>
-# include <mln/geom/shift.hh>
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
-# include <mln/geom/sym.hh>
 
 
 #endif // ! MLN_GEOM_ALL_HH

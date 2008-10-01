@@ -1,3 +1,54 @@
+2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make the difference between geom and win materials.
+
+	Move window-related routines from mln/geom to mln/win.
+
+	* mln/geom/sym.hh: Move to...
+	* mln/win/sym.hh: ...here.
+	* mln/geom/shift.hh: Move to...
+	* mln/win/shift.hh: ...here.
+	* tests/geom/sym.cc: Move to...
+	* tests/win/sym.cc: ...here and update.
+	* tests/geom/shift.cc: Move to...
+	* tests/win/shift.cc: ...here and update.
+	* tests/geom/Makefile.am: Update.
+	* mln/geom/all.hh: Update.
+	* mln/win/all.hh: Update.
+
+	Move window difference into mln/win.
+
+	* mln/set/diff.hh (diff): Move overload on windows into...
+	* mln/win/diff.hh: ...this new file.
+	(diff): Rename as...
+	(operator-): ...this and update.
+	* tests/win/diff.cc: New.
+	* tests/win/Makefile.am: Update.
+	* tests/set/diff.cc: Update.
+
+	Propagate those modifications.
+
+	* tests/win/cuboid3d.cc,
+	* tests/win/rectangle2d.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* mln/core/alias/neighb1d.hh,
+	* mln/core/alias/neighb3d.hh,
+	* mln/core/neighb.hh,
+	* mln/core/concept/window.hh,
+	* mln/level/was.median.hh,
+	* mln/level/median.hh,
+	* mln/level/fast_median.hh,
+	* mln/morpho/erosion_fast.hh,
+	* mln/morpho/erosion.spe.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/closing.hh,
+	* mln/morpho/opening.hh,
+	* mln/morpho/includes.hh,
+	* mln/morpho/dilation_fast.hh,
+	* mln/canvas/chamfer.hh,
+	* sandbox/duhamel/canvas_chamfer.hh,
+	* sandbox/nivault/median.hh: Update.
+
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
 	* mln/core/concept/neighborhood.hh: Add documentation on static

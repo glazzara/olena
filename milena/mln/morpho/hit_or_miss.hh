@@ -224,7 +224,7 @@ namespace mln
       impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
 
       mln_concrete(I) output = dilation( hit_or_miss(input, win_hit, win_miss),
-					 geom::sym(win_hit) );
+					 win::sym(win_hit) );
 
       trace::exiting("morpho::hit_or_miss_opening");
       return output;
@@ -243,7 +243,7 @@ namespace mln
       mln_concrete(I) output = hit_or_miss_opening(complementation(input), win_miss, win_hit);
 
       mln_postcondition( dilation( hit_or_miss(input, win_hit, win_miss),
-				   geom::sym(win_miss) ) == output);
+				   win::sym(win_miss) ) == output);
       trace::exiting("morpho::hit_or_miss_background_opening");
       return output;
     }
