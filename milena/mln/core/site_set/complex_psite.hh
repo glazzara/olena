@@ -363,7 +363,7 @@ namespace mln
   std::ostream&
   operator<<(std::ostream& ostr, const complex_psite<D, P>& p)
   {
-    return ostr << "(dim = " << p.n() << ", id = " << p.face_id() << ')';
+    return ostr << p.face();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
