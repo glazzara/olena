@@ -65,7 +65,7 @@ namespace mln
 	  initialize(o, f);
 	  initialize(parent, f);
 	  initialize(deja_vu, f);
-	
+
 	  // init
 
 	  level::fill(deja_vu, false);
@@ -77,7 +77,6 @@ namespace mln
 	  for (unsigned i = 0; i < S.size(); ++i)
 	    {
 	      point p = S[i];
-	    
 	      make_set(p);
 	      mln_niter(N) n(nbh, p);
 	      for_all(n)
@@ -89,15 +88,17 @@ namespace mln
 		}
 	      deja_vu(p) = true;
 	    }
-
+	      
 	  // second pass
 
 	  for (int i = S.size() - 1; i >= 0; --i)
 	    {
 	      point p = S[i];
 	      if (parent(p) == p)
-		if (o(p) == mln_max(value))
-		  o(p) = g(p);
+		{
+		  if (o(p) == mln_max(value))
+		    o(p) = g(p);
+		}
 	      else
 		o(p) = o(parent(p));
 	    }
