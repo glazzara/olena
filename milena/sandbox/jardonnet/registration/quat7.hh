@@ -179,9 +179,6 @@ namespace mln
 
     algebra::quat qR(literal::zero);
     qR = jacobi(Qk);
-    //std::cout << qR << std::endl;
-    //qR = power_it(Qk);
-    //std::cout << qR << std::endl;
 
     // qT
     const algebra::vec<P::dim,float> qT = mu_Xk - rotate(qR, mu_C);

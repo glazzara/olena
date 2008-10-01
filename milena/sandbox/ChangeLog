@@ -1,3 +1,63 @@
+2008-10-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Registration: Start to use milena transformations.
+
+	* jardonnet/test/registration.cc: Add use of milena trasformation.
+	* jardonnet/registration/quat7.hh: Replace quat7 by a generic T.
+	* jardonnet/registration/registration.hh: Replace quat7 by a generic T..
+
+	Start working on .hxx creation using perl:
+	* jardonnet/perl/hxx.pl: Script.
+
+	* jardonnet/perl/test,
+	* jardonnet/perl/test/ops.hh,
+	* jardonnet/perl/test/c.hh,
+	* jardonnet/perl/test/i2v,
+	* jardonnet/perl/test/i2v/all.hh,
+	* jardonnet/perl/test/i2v/all_to.hh,
+	* jardonnet/perl/test/i2v/array.hh,
+	* jardonnet/perl/test/x2x,
+	* jardonnet/perl/test/x2x/all.hh,
+	* jardonnet/perl/test/x2x/geom,
+	* jardonnet/perl/test/x2x/geom/composed.hh,
+	* jardonnet/perl/test/x2x/geom/translation.hh,
+	* jardonnet/perl/test/x2x/geom/rotation.hh,
+	* jardonnet/perl/test/x2x/interpol,
+	* jardonnet/perl/test/x2x/interpol/bilinear.hh,
+	* jardonnet/perl/test/x2x/interpol/test.cc,
+	* jardonnet/perl/test/x2x/interpol/linear.hh,
+	* jardonnet/perl/test/p2b,
+	* jardonnet/perl/test/p2b/chess.hh,
+	* jardonnet/perl/test/p2b/all.hh,
+	* jardonnet/perl/test/p2b/has.hh,
+	* jardonnet/perl/test/vv2v,
+	* jardonnet/perl/test/vv2v/min.hh,
+	* jardonnet/perl/test/vv2v/max.hh,
+	* jardonnet/perl/test/all.hh,
+	* jardonnet/perl/test/p2v,
+	* jardonnet/perl/test/p2v/elifs.hh,
+	* jardonnet/perl/test/p2v/ternary.hh,
+	* jardonnet/perl/test/p2v/all.hh,
+	* jardonnet/perl/test/p2v/iota.hh,
+	* jardonnet/perl/test/cast.hh,
+	* jardonnet/perl/test/v2b,
+	* jardonnet/perl/test/v2b/threshold.hh,
+	* jardonnet/perl/test/internal,
+	* jardonnet/perl/test/internal/x2x_linear_impl.hh,
+	* jardonnet/perl/test/internal/selector.hh,
+	* jardonnet/perl/test/v2v,
+	* jardonnet/perl/test/v2v/abs.hh,
+	* jardonnet/perl/test/v2v/enc.hh,
+	* jardonnet/perl/test/v2v/saturate.hh,
+	* jardonnet/perl/test/v2v/all.hh,
+	* jardonnet/perl/test/v2v/inc.hh,
+	* jardonnet/perl/test/v2v/linear.hh,
+	* jardonnet/perl/test/v2v/cast.hh,
+	* jardonnet/perl/test/v2v/norm.hh,
+	* jardonnet/perl/test/v2v/dec.hh,
+	* jardonnet/perl/test/v2v/id.hh,
+	* jardonnet/perl/test/v2v/rgb_to_hsi.hh: Add test files.
+
 2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: continue to revamp registration.

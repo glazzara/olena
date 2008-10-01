@@ -61,24 +61,24 @@ namespace mln
   namespace registration
   {
 
-#ifndef NDEBUG
-    static unsigned pts = 0;
-#endif
+
+    using namespace fun::x2x::geom;
 
     /*! Registration FIXME : doxy
-     *
-     *
      */
     template <typename I, typename J>
     inline
     mln_concrete(I)
     registration(const Image<I>& cloud,
-        const Image<J>& surface);
+                 const Image<J>& surface);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     namespace impl
     {
+
 
       template <typename P, typename M, typename T>
       inline
@@ -91,8 +91,8 @@ namespace mln
       {
 	trace::entering("registration::impl::registration_");
 
-        buffer<4,T> buf_qk;
-        buffer<3,float>          buf_dk;
+        buffer<4,T>     buf_qk;
+        buffer<3,float> buf_dk;
 
         float         d_k = 10000;
         p_array<P>    Ck(C);
@@ -133,11 +133,12 @@ namespace mln
     } // end of namespace mln::registration::impl
 
 
+
     // FIXME: Separate icp.hh registration.hh multiscale_registration.hh
     // FIXME: Make it works in 3d *AND* 2d
     template <typename P, typename M>
     inline
-    quat7<P::dim> // what is it suposed to return tr(rot()), rot(tr()) or something else ... 
+    composed< rotation<P::dim, float>, translation<P::dim, float> >
     registration(p_array<P>& cloud,
                  const M& map,
                  const p_array<P>& x)
@@ -158,9 +159,12 @@ namespace mln
       return qk;
     }
 
+
 # endif // ! MLN_INCLUDE_ONLY
 
+
   } // end of namespace mln::registration
+
 
 } // end of namespace mln
 
