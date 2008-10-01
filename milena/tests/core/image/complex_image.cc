@@ -89,11 +89,13 @@ int main()
   | Complex-based pset.  |
   `---------------------*/
 
+  typedef point2d P;
+
   // A pset.
-  p_complex<D, point2d> pc(c);
+  p_complex<D, P> pc(c);
   topo::face<D> af(e0);
   // An associated psite.
-  complex_psite<D, point2d> cs(pc, af);
+  complex_psite<D, P> cs(pc, af);
 
 
   /*--------------------.
@@ -105,16 +107,16 @@ int main()
      of the test?  */
 
   // Pset of 0-faces.
-  p_faces<0, D, point2d> pf0(c);
+  p_faces<0, D, P> pf0(c);
   // Pset of 1-faces.
-  p_faces<1, D, point2d> pf1(c);
+  p_faces<1, D, P> pf1(c);
   // Pset of 2-faces.
-  p_faces<2, D, point2d> pf2(c);
+  p_faces<2, D, P> pf2(c);
 
   // Some psites on faces.
-  faces_psite<0, D, point2d> fs0(pf0, v0);
-  faces_psite<1, D, point2d> fs1(pf1, e0);
-  faces_psite<2, D, point2d> fs2(pf2, t0);
+  faces_psite<0, D, P> fs0(pf0, v0);
+  faces_psite<1, D, P> fs1(pf1, e0);
+  faces_psite<2, D, P> fs2(pf2, t0);
 
 
   /*----------------------.
@@ -125,7 +127,7 @@ int main()
 
   // An image type built on a 2-complex with mln::int_u8 values on
   // each face.
-  typedef complex_image<D, point2d, int_u8> ima_t;
+  typedef complex_image<D, P, int_u8> ima_t;
 
   // Values.
   metal::vec<D + 1, std::vector< int_u8 > > values;
@@ -167,8 +169,8 @@ int main()
   // Dynamic version.
   for (unsigned n = 0; n <= D; ++n)
     {
-      p_n_faces_fwd_piter<D, point2d> fwd_np(ima.domain(), n);
-      p_n_faces_bkd_piter<D, point2d> bkd_np(ima.domain(), n);
+      p_n_faces_fwd_piter<D, P> fwd_np(ima.domain(), n);
+      p_n_faces_bkd_piter<D, P> bkd_np(ima.domain(), n);
       for_all_2(fwd_np, bkd_np)
 	std::cout << "ima(" << fwd_np << ") = " << ima(fwd_np) << '\t'
 		  << "ima(" << bkd_np << ") = " << ima(bkd_np)
@@ -180,7 +182,7 @@ int main()
 // FIXME: Disabled (moved to the attic).
 # if 0
   // FIXME: Sugar the name of the iterator.
-  p_complex_faces_fwd_piter_<0, D, point2d> f0p(ima.domain());
+  p_complex_faces_fwd_piter_<0, D, P> f0p(ima.domain());
   for_all(f0p)
     std::cout << "ima(" << f0p << ") = " << ima(f0p) << std::endl;
 #endif
