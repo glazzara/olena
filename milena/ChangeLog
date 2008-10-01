@@ -1,5 +1,18 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix comparison operators on topo::face<D> and topo::n_face<N, D>.
+
+	* mln/topo/face.hh
+	(operator==(const face<D>&, const face<D>&))
+	(operator< (const face<D>&, const face<D>&)):
+	* mln/topo/n_face.hh
+	(operator==(const n_face<N, D>&, const n_face<N, D>&))
+	(operator< (const n_face<N, D>&, const n_face<N, D>&)):
+	Fix preconditions.
+	Fix and catch up with the current interface of mln::topo::face<D>.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix exact type of mln::internal::p_complex_piter_base_
 
 	* mln/core/internal/p_complex_piter_base.hh

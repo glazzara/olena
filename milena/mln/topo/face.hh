@@ -380,10 +380,8 @@ namespace mln
     operator==(const face<D>& lhs, const face<D>& rhs)
     {
       // Ensure LHS and RHS belong to the same complex.
-      mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
-      return
-	lhs.face().n() == rhs.face().n() &&
-	lhs.face().id() == rhs.face().id();
+      mln_precondition(lhs.cplx() == rhs.cplx());
+      return lhs.n() == rhs.n() && lhs.face_id() == rhs.face_id();
     }
 
     template <unsigned D>
@@ -392,10 +390,10 @@ namespace mln
     operator< (const face<D>& lhs, const face<D>& rhs)
     {
       // Ensure LHS and RHS belong to the same complex.
-      mln_precondition(&lhs.face.cplx() == &rhs.face.cplx());
+      mln_precondition(lhs.cplx() == rhs.cplx());
       // Ensure LHS and RHS have the same dimension.
-      mln_precondition(lhs.face().n() == rhs.face().n());
-      return lhs.face().id() < rhs.face().id();
+      mln_precondition(lhs.n() == rhs.n());
+      return lhs.face_id() < rhs.face_id();
     }
 
 
