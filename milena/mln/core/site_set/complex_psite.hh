@@ -107,7 +107,7 @@ namespace mln
     /// Face handle manipulators.
     /// \{
     /// Return the face handle of this point site.
-    topo::face<D> face() const;
+    const topo::face<D>& face() const;
 
     /// Return the dimension of the face of this psite.
     unsigned n() const;
@@ -289,7 +289,7 @@ namespace mln
 
   template <unsigned D, typename P>
   inline
-  topo::face<D>
+  const topo::face<D>&
   complex_psite<D, P>::face() const
   {
     return face_;

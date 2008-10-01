@@ -1,5 +1,14 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::topo::complex_psite<D, P> conversion to topo::face<D>.
+
+	* mln/core/site_set/complex_psite.hh
+	(mln::topo::complex_psite<D, P>): Return a const reference to the
+	held face instead of a copy, so that its address can be safely
+	taken.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix comparison operators on topo::face<D> and topo::n_face<N, D>.
 
 	* mln/topo/face.hh
