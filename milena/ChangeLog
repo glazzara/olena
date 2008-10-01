@@ -1,5 +1,10 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/concept/neighborhood.hh: Add documentation on static
+	checks.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add iterators on complex neighborhood.
 
 	* mln/core/image/complex_neighborhood_piter.hh New.

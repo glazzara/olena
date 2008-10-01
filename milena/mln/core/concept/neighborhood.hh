@@ -91,8 +91,13 @@ namespace mln
     typedef mln_window(E) window;
     bool m = (& E::win) == (& E::win);
     m = 0;
-//     const window& (E::*m)() const = & E::to_window;
-//     m = 0;
+# if 0
+    /* FIXME: Disabled, as win() can either return a const reference
+       or a copy of the window (see documentation above).  Hence the
+       simpler, relaxed check above (m0).  */
+    const window& (E::*m1)() const = & E::win;
+    m = m1;
+# endif
   }
 
 # endif // ! MLN_INCLUDE_ONLY
