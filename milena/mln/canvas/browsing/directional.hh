@@ -44,7 +44,7 @@ namespace mln
 
     namespace browsing
     {
-      
+
       /*!
        * \brief Browsing in a certain direction.
        *
@@ -74,6 +74,21 @@ namespace mln
        *   void final(); \n
        * } \n
        *
+       * Example : \n
+       *
+       *   1 0 0
+       *  2 0 0
+       * 3 0 0
+       *
+       *   4 0 0
+       *  5 0 0
+       * 6 0 0
+       *
+       *   7 0 0
+       *  8 0 0
+       * 9 0 0
+       *
+       *
        */
       struct directional_t : public Browsing< directional_t >
       {
@@ -97,19 +112,19 @@ namespace mln
 	mln_psite(I)
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
-	
+
 	f.p = pmin;
-	
+
 	trace::entering("canvas::browsing::directional::init");
 	f.init();
 	trace::exiting("canvas::browsing::directional::init");
-	
+
 	do
 	{
 	  trace::entering("canvas::browsing::directional::next");
 	  f.next();
 	  trace::exiting("canvas::browsing::directional::next");
-	  
+
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
 	    if (c == int(f.dir))

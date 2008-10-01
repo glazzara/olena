@@ -1,3 +1,18 @@
+2008-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add a generic snake browsing with some examples.
+
+
+	* mln/canvas/browsing/snake_generic.hh: New, generic snake. Works on
+	any dimension and follows the dimensions in any order.
+
+	* tests/canvas/browsing/snake_generic_2d_hori.cc: New,
+	* tests/canvas/browsing/snake_generic_2d_vert.cc: New,
+	* tests/canvas/browsing/snake_generic_3d_hori.cc: New,
+	* tests/canvas/browsing/snake_generic_3d_vert.cc: New, examples
+
+	* mln/canvas/browsing/directional.hh: Documentation.
+
 2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the difference between geom and win materials.
