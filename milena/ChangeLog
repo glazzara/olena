@@ -1,5 +1,13 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add iterators on complex neighborhood.
+
+	* mln/core/image/complex_neighborhood_piter.hh New.
+	* tests/core/image/complex_image.cc: Exercise these iterators as
+	well as lower- and higher-dimension complex neighborhoods.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add neighborhoods of lower- and higher-dimension adjacent faces.
 
 	* mln/core/image/complex_lower_neighborhood.hh,

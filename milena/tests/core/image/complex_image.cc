@@ -36,6 +36,11 @@
 #include <mln/core/site_set/p_faces.hh>
 #include <mln/core/image/complex_image.hh>
 
+// FIXME: Include these elsewhere? (In complex_image.hh?)
+#include <mln/core/image/complex_lower_neighborhood.hh>
+#include <mln/core/image/complex_higher_neighborhood.hh>
+#include <mln/core/image/complex_neighborhood_piter.hh>
+
 
 int main()
 {
@@ -195,6 +200,50 @@ int main()
   // ---------------------------------------- //
   // Iterators on windows and neighborhoods.  //
   // ---------------------------------------- //
+
+  // FIXME: Factor: these two test cases only differ by their neighborhood.
+
+  // Iterate on the lower-dimension faces of each face.
+  {
+    typedef complex_lower_neighborhood<D, P> nbh_t;
+    nbh_t nbh;
+    mln_fwd_niter_(nbh_t) fn(nbh, fp);
+    mln_bkd_niter_(nbh_t) bn(nbh, fp);
+    for_all(fp)
+    {
+      std::cout << "Lower-dimension faces adjacent to " << fp << std::endl;
+      for_all_2(fn, bn)
+	{
+	  mln_assertion((fn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  mln_assertion((bn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  std::cout << "  " << fn << '\t' << bn << std::endl;
+	}
+    }
+    std::cout << std::endl;
+  }
+
+  // Iterate on the higher-dimension faces of each face.
+  {
+    typedef complex_higher_neighborhood<D, P> nbh_t;
+    nbh_t nbh;
+    mln_fwd_niter_(nbh_t) fn(nbh, fp);
+    mln_bkd_niter_(nbh_t) bn(nbh, fp);
+    for_all(fp)
+    {
+      std::cout << "Higher-dimension faces adjacent to " << fp << std::endl;
+      for_all_2(fn, bn)
+	{
+	  mln_assertion((fn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  mln_assertion((bn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  std::cout << "  " << fn << '\t' << bn << std::endl;
+	}
+    }
+    std::cout << std::endl;
+  }
 
   /* FIXME: Implement windows (and neighborhoods) and corresponding
      iterators for complex-based images.
