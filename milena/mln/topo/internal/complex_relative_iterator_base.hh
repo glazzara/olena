@@ -110,10 +110,8 @@ namespace mln
 
 	/// Conversion and accessors.
 	/// \{
-	/// Reference to the corresponding face handle.
-	const face& to_face () const;
 	/// Convert the iterator into an face handle.
-	operator face() const;
+	operator const face&() const;
 	/// \}
 
       protected:
@@ -297,17 +295,8 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      const F&
-      complex_relative_iterator_base<F, E>::to_face() const
+      complex_relative_iterator_base<F, E>::operator const F&() const
       {
-	return f_;
-      }
-
-      template <typename F, typename E>
-      inline
-      complex_relative_iterator_base<F, E>::operator F() const
-      {
-	mln_precondition(exact(this)->is_valid());
 	return f_;
       }
 

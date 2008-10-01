@@ -1,5 +1,21 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul conversions of complex_relative_iterator_base<F, E>.
+
+	* mln/topo/internal/complex_relative_iterator_base.hh
+	(complex_relative_iterator_base<F, E>::to_face):
+	Remove.
+	(complex_relative_iterator_base<F, E>::operator face):
+	Turn into...
+	(complex_relative_iterator_base<F, E>::operator const face&):
+	..this.
+	Return a const reference to the held face instead of a copy, so
+	that its address can be safely taken.
+	Remove the precondition, as invalid iterators are allowed to give
+	access to the face they hold.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	Delegate pretty-printing of complex_psite<D> to topo::face<D>.
 
 	* mln/core/site_set/complex_psite.hh
