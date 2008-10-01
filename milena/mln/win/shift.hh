@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_GEOM_SHIFT_HH
-# define MLN_GEOM_SHIFT_HH
+#ifndef MLN_WIN_SHIFT_HH
+# define MLN_WIN_SHIFT_HH
 
 /*! \file mln/win/shift.hh
  *
@@ -40,7 +40,7 @@
 namespace mln
 {
 
-  namespace geom
+  namespace win
   {
 
     /// Shift a window \p win with a delta-point \p dp.
@@ -82,7 +82,7 @@ namespace mln
 	return tmp;
       }
 
-    } // end of namespace mln::geom::impl
+    } // end of namespace mln::win::impl
 
 
     // Facade.
@@ -107,9 +107,9 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::geom
+  } // end of namespace mln::win
 
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SHIFT_HH
+#endif // ! MLN_WIN_SHIFT_HH
