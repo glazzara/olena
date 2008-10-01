@@ -1,3 +1,13 @@
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
+	Fix exact type of mln::internal::p_complex_piter_base_
+
+	* mln/core/internal/p_complex_piter_base.hh
+	(mln::internal::p_complex_piter_base_<I, S, P, E>): Fix the type
+	of the base class w.r.t. the exact type.
+	(mln::internal::p_complex_piter_base_<I, S, P, E>::super_):
+	Adjust.
+
 2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add interpolation function. Revamp lazy_image.

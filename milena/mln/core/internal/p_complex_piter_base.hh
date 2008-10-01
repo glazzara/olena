@@ -59,11 +59,10 @@ namespace mln
     /// \arg \p E The type exact type of the iterator.
     template <typename I, typename S, typename P, typename E>
     class p_complex_piter_base_
-      : public internal::site_set_iterator_base< S,
-						 p_complex_piter_base_<I, S, P, E> >
+      : public internal::site_set_iterator_base< S, E >
     {
-      typedef p_complex_piter_base_<I, S, P, E> self_;
-      typedef internal::site_set_iterator_base< S, self_ > super_;
+      typedef p_complex_piter_base_< I, S, P, E > self_;
+      typedef internal::site_set_iterator_base< S, E > super_;
 
       /// The type of the underlying complex iterator.
       typedef I iter;
