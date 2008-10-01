@@ -1,3 +1,11 @@
+2008-10-01  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update documentation, add an operator to the sign value class.
+
+	* tests/value/sign.cc: Update.
+	* doc/technical/designs/properties/values.txt: Update.
+	* mln/value/sign.hh: Add an operator.
+
 2008-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add bench for median.

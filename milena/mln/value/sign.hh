@@ -32,7 +32,6 @@
  *
  * \brief Definition of the mln::value::sign class.
  */
-
 # include <mln/value/internal/integer.hh>
 # include <mln/trait/value_.hh>
 # include <mln/literal/zero.hh>
@@ -85,7 +84,6 @@ namespace mln
       sign& operator=(int i);
 
 
-
       /// Zero value.
       static const sign zero;
 
@@ -108,7 +106,8 @@ namespace mln
     std::ostream& operator<<(std::ostream& ostr, const sign& i);
 
     /// Comparaison operator
-    bool operator==(sign lhs, sign rhs);
+    bool operator==(const sign& lhs, const sign& rhs);
+    bool operator<(const sign& lhs, const sign& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -187,7 +186,13 @@ namespace mln
     }
 
     inline
-    bool operator==(sign lhs, sign rhs)
+    bool operator==(const sign& lhs, const sign& rhs)
+    {
+      return lhs.val_() == rhs.val_();
+    }
+
+    inline
+    bool operator<(const sign& lhs, const sign& rhs)
     {
       return lhs.val_() == rhs.val_();
     }
@@ -219,6 +224,7 @@ namespace mln
 
       typedef int sum;
     };
+
 
   } // end of namespace trait
 

@@ -23,7 +23,7 @@
 - direct: Images store all their values in memory, we can take a reference
 of the values.
 
-- semi-direct: Images store partially their value in memory, we can't take
+- semi_direct: Images store partially their value in memory, we can't take
 a reference on them. For instance, images that compute a value at the first
 access and store it in a buffer to speed up the next access, are semi-direct.
 
@@ -96,7 +96,7 @@ example 2) Sparse Image
    => image.buffer()     -> return the start adress of the ima buffer
 
  value_storage == piece_wise
-   // runs iterator?
+   => image.pieces()     -> return all the pieces composing the image.
 
 ** value_browsing:/any/
                     |
@@ -112,11 +112,12 @@ example 2) Sparse Image
  value_browsing == value_wise
    => ima.values_taken()               -> return the current values taken by
                                           ima
+   => ima.sites(v)                     -> return the sites associated to the
+                                          value v
+// FIXME these method depend on value_taken more than ima
    => ima.change_value(oldVal, newVal) -> change the value oldVal to newVal
    => ima.apply(f)                     -> apply f (a function v2v) to all the
                                           values
-   => ima.sites(v)                     -> return the sites associated to the
-                                          value v
 
  value_browsing == cell_wise
    => ima.values_cell()                -> return the cells composing the image
@@ -132,7 +133,7 @@ example 2) Sparse Image
                   + -- read_write
 
 => Definition:
-  Indicates the io permission for the site access.
+  Indicates the io permissions for the site access.
   It replaces the property value_access.
 
 - read_only: We can only read the image values.
@@ -161,10 +162,13 @@ for (unsigned i = 0; i < n; ++i)
 
 *** value_storage == piece_wise
 // MemCopy on the runs?
-for (ungsigned i = 0; i < ima.nruns(); ++i)
-    //FIXME
-**** Method related:
-  nruns ???
+mln_miter(I::miter) mit(image.pieces())
+for_all(miter)
+   for (unsigned i = 0; i < miter.size(); ++i)
+    *miter.buffer[i] = v;
+**** Method/Type related
+  -> I::miter
+  -> ima.pieces
 
 *** value_browsing == value_wise
 // direct access to the value

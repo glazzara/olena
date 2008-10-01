@@ -32,6 +32,7 @@
 
 #include <cassert>
 #include <mln/value/sign.hh>
+#include <mln/value/set.hh>
 
 
 int main()
@@ -44,8 +45,15 @@ int main()
      s = -1;
      s = 0;
      s = 1;
-     assert(sign::zero == 0);
-     assert(sign::one == 1);
-     assert(s != 3);
+     assert(sign::zero == (sign) 0);
+     assert(sign::one == (sign) 1);
+     assert(s != (sign) -1);
+   }
+
+   {
+     value::set<sign> set;
+     mln_viter_(value::set<sign>) v(set);
+     for_all(v)
+       std::cout << v << std::endl;
    }
 }
