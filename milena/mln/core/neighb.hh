@@ -97,6 +97,12 @@ namespace mln
     /// center and a neighboring point.
     unsigned delta() const;
 
+    /// Give the maximum coordinate gap between the neighborhood
+    /// center and a neighboring point.
+    const mln_dpsite(W)& dp(unsigned i) const;
+
+    // end of Optional methods.
+
 
     /// \internal Hook to the window.
     W& hook_win_();
@@ -105,13 +111,6 @@ namespace mln
     W win_;
   };
 
-
-  template <typename W>
-  inline
-  std::ostream& operator<<(std::ostream&ostr, const neighb<W>& nbh)
-  {
-    return ostr << nbh.win();
-  }
 
 
   namespace convert
@@ -242,6 +241,8 @@ protected:
   unsigned
   neighb<W>::size() const
   {
+    mlc_is(mln_trait_window_size(W),
+	   trait::window::size::fixed)::check(); 
     return win_.size();
   }
 
@@ -250,7 +251,23 @@ protected:
   unsigned
   neighb<W>::delta() const
   {
+    mlc_is(mln_trait_window_support(W),
+	   trait::window::support::regular)::check();
+    mlc_is_not(mln_trait_window_definition(W),
+	       trait::window::definition::varying)::check();
     return win_.delta();
+  }
+
+  template <typename W>
+  inline
+  const mln_dpsite(W)&
+  neighb<W>::dp(unsigned i) const
+  {
+    mlc_is(mln_trait_window_support(W),
+	   trait::window::support::regular)::check();
+    mlc_is(mln_trait_window_definition(W),
+	   trait::window::definition::unique)::check();
+    return win_.dp(i);
   }
 
   template <typename W>

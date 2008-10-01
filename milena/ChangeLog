@@ -1,3 +1,14 @@
+2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some completion work on window and neighborhood.
+
+	* mln/core/neighb.hh (dp): New.
+	(operator<<): Move to...
+	* mln/core/concept/neighborhood.hh: ...here.
+	Generalize it.
+	* mln/core/concept/window.hh (todo): Done.
+	* mln/win/multiple.hh (delta, sym): New methods.
+
 2008-10-01  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add a generic snake browsing with some examples.

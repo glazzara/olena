@@ -32,8 +32,6 @@
  * \brief Definition of the concept of mln::Window.
  *
  * \todo Operator== should test if the cmp is possible.
- *
- * \todo Activate run_extra() below.
  */
 
 # include <mln/core/concept/object.hh>
@@ -163,7 +161,7 @@ namespace mln
       }
       static void run(mln::trait::window::definition::n_ary)
       {
-	// run_extra();
+	run_extra();
       }
       static void run(mln::trait::window::definition::varying)
       {

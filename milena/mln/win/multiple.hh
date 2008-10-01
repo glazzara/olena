@@ -110,6 +110,10 @@ namespace mln
 
       bool is_symmetric() const;
 
+      void sym();
+
+      unsigned delta() const;
+
     private:
 
       util::array<W> win_;
@@ -248,6 +252,33 @@ namespace mln
 	if (! win_[i].is_symmetric())
 	  return false;
       return true;
+    }
+
+
+    template <typename W, typename F>
+    inline
+    void
+    multiple<W,F>::sym()
+    {
+      mln_precondition(win_.nelements() >= 1);
+      for (unsigned i = 0; i < win_.nelements(); ++i)
+	win_[i].sym();
+    }
+
+    template <typename W, typename F>
+    inline
+    unsigned
+    multiple<W,F>::delta() const
+    {
+      mln_precondition(win_.nelements() >= 1);
+      unsigned d = win_[0].delta();
+      for (unsigned i = 1; i < win_.nelements(); ++i)
+	{
+	  unsigned d_i = win_[i].delta();
+	  if (d_i > d)
+	    d = d_i;
+	}
+      return d;
     }
 
 //     template <typename W, typename F>

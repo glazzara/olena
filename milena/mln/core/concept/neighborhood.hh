@@ -78,6 +78,13 @@ namespace mln
 
 
 
+
+  template <typename N>
+  std::ostream&
+  operator<<(std::ostream&ostr, const Neighborhood<N>& nbh);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename E>
@@ -98,6 +105,16 @@ namespace mln
     const window& (E::*m1)() const = & E::win;
     m = m1;
 # endif
+  }
+
+
+
+  template <typename N>
+  inline
+  std::ostream&
+  operator<<(std::ostream&ostr, const Neighborhood<N>& nbh)
+  {
+    return ostr << exact(nbh).win();
   }
 
 # endif // ! MLN_INCLUDE_ONLY
