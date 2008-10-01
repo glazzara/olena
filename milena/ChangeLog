@@ -1,5 +1,13 @@
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add neighborhoods of lower- and higher-dimension adjacent faces.
+
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_higher_neighborhood.hh:
+	New.
+
+2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
+
 	* tests/core/image/complex_image.cc: Alias mln::point2d to P.
 
 2008-10-01  Roland Levillain  <roland@lrde.epita.fr>
