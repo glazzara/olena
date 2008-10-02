@@ -258,7 +258,7 @@
 	Fixes on median.
 
 	* mln/level/median.hh: Add initialisation of p :
-	                   p = input.domain().pmin() + up;
+			   p = input.domain().pmin() + up;
 	* tests/level/median_.cc: Some tests.
 
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
@@ -279,7 +279,7 @@
 	Print the address of complexes with their face handles.
 
 	* mln/topo/face.hh (operator<<(std::ostream&, const face<D>&))
-	* mln/topo/n_face.hh (operator<<(std::ostream&, const n_face<N, D>&)): 
+	* mln/topo/n_face.hh (operator<<(std::ostream&, const n_face<N, D>&)):
 	Do it.
 
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
@@ -384,7 +384,7 @@
 	* mln/core/internal/p_complex_piter_base.hh
 	(mln::internal::p_complex_piter_base_<I, S, P, E>::iter_):
 	Set to protected.
-	* mln/core/site_set/p_n_faces_piter.hh): New file.
+	* mln/core/site_set/p_n_faces_piter.hh: New file.
 	Include it...
 	* mln/core/site_set/p_complex.hh: ...here.
 	* tests/core/image/complex_image.cc: Exercise iterators on
@@ -892,7 +892,7 @@
 
 	Simplify mln::internal::complex_iter_base_.
 
-	* mln/core/internal/complex_iter_base.hh: 
+	* mln/core/internal/complex_iter_base.hh:
 	(mln::internal::complex_iter_base_<F, E>::complex_iter_base_):
 	Remove copy ctor.
 	(mln::internal::complex_iter_base_<F, E>::operator=):
@@ -1162,7 +1162,7 @@
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update tests exercising graph image.
-	
+
 	* tests/core/image/graph_image.cc: Update.
 	Move the morpho-related part...
 	* tests/morpho/graph_image_morpho.cc: ...here (new test).
@@ -1481,7 +1481,7 @@
 	(mln::p_graph<P>::piter):
 	New typedefs.
 	(mln::p_graph<P>::bbox): Remove method.
-	(mln::p_graph<P>::bb_): Remove attribute. 
+	(mln::p_graph<P>::bb_): Remove attribute.
 	(mln::p_graph<P>::p_graph): Adjust ctor.
 	(mln::p_graph<P>::has): Update.
 	(mln::p_graph<P>::to_graph): Update accessors.
@@ -1551,7 +1551,7 @@
 	(mln::p_complex_piter_base_<D, P>::p_): Get it from the super
 	class.
 	(mln::p_complex_piter_base_<D, P>::psite): Remove attribute.
-	* mln/core/site_set/p_complex_piter.hh: 
+	* mln/core/site_set/p_complex_piter.hh:
 	(mln::p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_)
 	(mln::p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_):
 	New default ctors.
@@ -1563,7 +1563,7 @@
 	(mln::p_complex_fwd_piter_<D, P>::operator=(const self_&))
 	(mln::p_complex_bkd_piter_<D, P>::operator=(const self_&)):
 	Remove.
-	
+
 2008-09-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Update site on mln::p_faces.
@@ -1716,7 +1716,7 @@
 
 	Complete the overhaul of line graph images.
 
-	* mln/core/image/line_graph_image.hh: 
+	* mln/core/image/line_graph_image.hh:
 	(mln::line_graph_image<P, V>): Fix access to members.
 	(mln::line_graph_image<P, V>::super_): Remove typedef.
 	* mln/core/site_set/p_line_graph.hh: Update documentation.
@@ -1761,11 +1761,11 @@
 	* mln/canvas/browsing/snake_vert.hh: New, snake vert browsing
 	 canvas. This canvas browse all the point of an image 'input' like
 	 this :
-                      1  4  5
-                      || /\ ||
-                      || || ||
-                      \/ || \/
-                      2  3  6
+		      1  4  5
+		      || /\ ||
+		      || || ||
+		      \/ || \/
+		      2  3  6
 
 	* tests/canvas/browsing/Makefile.am: Add snake_vert test.
 	* tests/canvas/browsing/snake_vert.cc: New. The test.
@@ -2438,7 +2438,7 @@
 	Inherit from internal::site_iterator_base< S, E >.
 	Adjust.
 	(mln::line_graph_vicinity_piter_<P, S, E>::p_hook_): New method.
-	
+
 	* mln/core/image/line_graph_elt_neighborhood.hh
 	(mln::line_graph_elt_neighborhood<P>::point): Rename typedef as...
 	(mln::line_graph_elt_neighborhood<P>::site): ...this.
@@ -2781,7 +2781,7 @@
 	Have iterators on mln::complex export their dimension.
 
 	* mln/core/complex_iter.hh
-	(mln::complex_fwd_iter<D>::complex_dim): 
+	(mln::complex_fwd_iter<D>::complex_dim):
 	(mln::complex_bkd_iter<D>::complex_dim):
 	New constants.
 
@@ -2968,7 +2968,7 @@
 	* milena/mln/core/alias/point2d_h.hh,
 	* milena/tests/algebra/h_vec.cc,
 	* milena/tests/core/alias/point2d.cc,
- 	* milena/tests/core/alias/point1d.cc: Use def::coord instead of int.
+	* milena/tests/core/alias/point1d.cc: Use def::coord instead of int.
 
 	* milena/tests/set/diff.cc,
 	* milena/tests/core/site_set/p_image2d.cc: Update.
@@ -3191,7 +3191,7 @@
 	* mln/core/site_set/p_graph.hh,
 	* mln/core/image/obased_rle_image.hh,
 	* mln/core/image/t_image.hh,
-	* mln/core/concept/doc/image.hh, 
+	* mln/core/concept/doc/image.hh,
 	* mln/core/line_piter.hh,
 	* mln/core/alias/box2d_h.hh
 	(box_): Update to...
@@ -3412,7 +3412,7 @@
 2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add default constructors to complexes on iterators.
-	
+
 	* mln/core/complex_iter.hh
 	(mln::complex_fwd_iter_<D>::complex_fwd_iter_)
 	(mln::complex_bkd_iter_<D>::complex_bkd_iter_):
