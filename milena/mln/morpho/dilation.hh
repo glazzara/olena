@@ -257,7 +257,7 @@ namespace mln
 	   here.  This means the conversion should be smart enough to
 	   produce a working window, even in the case of a non
 	   dpoint-set-based neighborhood.  */
-	dilation_wrt_win(input, convert::to_window(nbh), output);
+	dilation_wrt_win(input, nbh.win(), output);
       }
 #endif
 

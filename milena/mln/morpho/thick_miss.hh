@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -64,7 +64,7 @@ namespace mln
       trace::entering("morpho::thick_miss");
       // FIXME: Fix the following line (win_miss ??)
 //       mln_precondition(exact(win_miss).is_centered());
-      mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
+      mln_precondition((exact(win_fg) && exact(win_bg)).is_empty());
 
       mln_concrete(I)
 	output = morpho::plus( input,

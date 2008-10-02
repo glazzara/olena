@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -105,6 +105,35 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace internal
+    {
+
+      template <typename I, typename Wh, typename Wm>
+      inline
+      void
+      hit_or_miss_tests(const Image<I>&   input_,
+			const Window<Wh>& win_hit_,
+			const Window<Wm>& win_miss_)
+      {
+	const I&  input    = exact(input_);
+	const Wh& win_hit  = exact(win_hit_);
+	const Wm& win_miss = exact(win_miss_);
+
+	// Tests.
+	mln_precondition(input.has_data());
+	mln_precondition(win_hit.is_centered());
+	mln_precondition((win_hit && win_miss).is_empty());
+
+	// Avoid warnings.
+	(void) input_;
+	(void) win_hit_;
+	(void) win_miss_;
+      }
+
+    } // end of namespace mln::morpho::internal
+
+
     namespace impl
     {
 
@@ -113,11 +142,15 @@ namespace mln
 
       template <typename I, typename Wh, typename Wm>
       inline
-      void hit_or_miss_preconditions_(const Image<I>& input,
-				      const Window<Wh>& win_hit, const Window<Wm>& win_miss)
+      void hit_or_miss_preconditions_(const Image<I>&   input_,
+				      const Window<Wh>& win_hit_,
+				      const Window<Wm>& win_miss_)
       {
-	mln_precondition(exact(input).has_data());
-	mln_precondition(set::inter(exact(win_hit), exact(win_miss)).is_empty());
+	const I& input     = exact(input_);
+	const Wh& win_hit  = exact(win_hit_);
+	const Wm& win_miss = exact(win_miss_);
+	mln_precondition(input.has_data());
+	mln_precondition((win_hit && win_miss).is_empty());
       }
 
 
@@ -203,7 +236,7 @@ namespace mln
 		  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
       trace::entering("morpho::hit_or_miss");
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+      internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = impl::hit_or_miss_(mln_trait_image_kind(I)(),
 						  exact(input),
@@ -221,7 +254,7 @@ namespace mln
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
       trace::entering("morpho::hit_or_miss_opening");
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+      internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = dilation( hit_or_miss(input, win_hit, win_miss),
 					 win::sym(win_hit) );
@@ -238,7 +271,7 @@ namespace mln
 				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
       trace::entering("morpho::hit_or_miss_background_opening");
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+      internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = hit_or_miss_opening(complementation(input), win_miss, win_hit);
 
@@ -256,7 +289,7 @@ namespace mln
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
       trace::entering("morpho::hit_or_miss_closing");
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+      internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = complementation( hit_or_miss_opening( complementation(input),
 								     win_hit, win_miss ) );
@@ -274,7 +307,7 @@ namespace mln
 				     const Window<Wh>& win_hit, const Window<Wm>& win_miss)
     {
       trace::entering("morpho::hit_or_miss_background_closing");
-      impl::hit_or_miss_preconditions_(input, win_hit, win_miss);
+      internal::hit_or_miss_tests(input, win_hit, win_miss);
 
       mln_concrete(I) output = hit_or_miss_closing(input, win_miss, win_hit);
 

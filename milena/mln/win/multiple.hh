@@ -126,12 +126,16 @@ namespace mln
       : public internal::site_relative_iterator_base< multiple<W,F>,
 						      multiple_qiter<W,F> >
     {
+      typedef multiple_qiter<W,F> self_;
+      typedef internal::site_relative_iterator_base< multiple<W,F>, self_ > super_;
     public:
 
       multiple_qiter();
 
       template <typename P>
       multiple_qiter(const multiple<W,F>& w, const P& c);
+
+      void change_target(const multiple<W,F>& w); // Overridden to initialize size_.
 
       /// Test the iterator validity.
       bool is_valid_() const;
@@ -317,8 +321,16 @@ namespace mln
       this->center_at(c);
       // We have to first change the center so that 'invalidate' can
       // work when changing the target.
-      this->change_target(w);
-      size_ = w.size(); // FIXME: In a local change_target!
+      change_target(w);
+    }
+
+    template <typename W, typename F>
+    inline
+    void
+    multiple_qiter<W,F>::change_target(const multiple<W,F>& w)
+    {
+      this->super_::change_target(w);
+      size_ = w.size();
     }
 
     template <typename W, typename F>

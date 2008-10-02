@@ -143,6 +143,10 @@ namespace mln
     {
       static void run_extra()
       {
+	// Associated type.
+	typedef mln_regular(E) regular;
+
+	// Methods.
 	bool (E::*m1)() const = &E::is_centered;
 	m1 = 0;
 	bool (E::*m2)() const = &E::is_symmetric;
@@ -152,21 +156,27 @@ namespace mln
 	unsigned (E::*m4)() const = &E::delta;
 	m4 = 0;
       }
+
       static void run(mln::trait::window::definition::unique)
       {
 	typedef mln_dpsite(E) D;
-	const D& (E::*m)(unsigned) const = &E::dp;
-	m = 0;
+	const D& (E::*m1)(unsigned) const = &E::dp;
+	m1 = 0;
+	bool (E::*m2)(const D&) const = &E::has;
+	m2 = 0;
 	run_extra();
       }
+
       static void run(mln::trait::window::definition::n_ary)
       {
 	run_extra();
       }
+
       static void run(mln::trait::window::definition::varying)
       {
 	/* No requirement. */
       }
+
       static void run()
       {
 	run(mln_trait_window_definition(E)());

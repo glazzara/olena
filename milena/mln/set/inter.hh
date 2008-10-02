@@ -31,11 +31,10 @@
 /*! \file mln/set/inter.hh
  *
  * \brief Several routines to compute the intersection between a
- * couple of sets.
+ * couple of site sets.
  */
 
 # include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_window.hh>
 # include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
 
@@ -47,14 +46,6 @@ namespace mln
   namespace set
   {
 
-    /*! \brief Intersection between a couple of windows.
-     *
-     * \relates mln::Window
-     */
-    template <typename Wl, typename Wr>
-    window<mln_dpsite(Wl)>
-    inter(const Window<Wl>& lhs, const Window<Wr>& rhs);
-
     /*! \brief Intersection between a couple of point sets.
      *
      * \relates mln::Site_Set
@@ -64,25 +55,6 @@ namespace mln
     inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
-
-    template <typename Wl, typename Wr>
-    inline
-    window<mln_dpsite(Wl)>
-    inter(const Window<Wl>& lhs, const Window<Wr>& rhs)
-    {
-      trace::entering("set::inter");
-      mln::metal::equal<mln_dpsite(Wl), mln_dpsite(Wr)>::check();
-      typedef mln_dpsite(Wl) D;
-      std::set<D>
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_intersection(sl.begin(), sl.end(),
-			    sr.begin(), sr.end(),
-			    std::inserter(s, s.begin()));
-      trace::exiting("set::inter");
-      return convert::to_window(s);
-    }
 
     template <typename Wl, typename Wr>
     inline

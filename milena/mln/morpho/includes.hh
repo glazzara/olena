@@ -60,7 +60,7 @@
 # include <mln/win/sym.hh>
 # include <mln/win/shift.hh>
 # include <mln/win/diff.hh>
-# include <mln/set/inter.hh>
+# include <mln/win/inter.hh>
 
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion.hh>
@@ -70,6 +70,5 @@
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/plus.hh>
 
-# include <mln/convert/to_window.hh>
 
 #endif // ! MLN_MORPHO_INCLUDES_HH

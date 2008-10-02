@@ -1,3 +1,35 @@
+2008-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Several fixes and updates on windows and morphology.
+
+	* mln/core/concept/window.hh (regular, has): New checks.
+	Layout.
+	* mln/convert/to_window.hh (to_window): Update version for
+	neighborhoods.
+	Cut useless dependencies to line_graph stuff.
+	* mln/set/inter.hh (inter): Remove window version.
+	* mln/win/shift.hh: Copy to...
+	* mln/win/inter.hh: ...this new file.
+	(shift): Model...
+	(operator&&): ...this new operator.
+	Update.
+	* mln/win/multiple.hh (FIXME): Fix.
+	(change_target): New.
+	Use it.
+	* mln/win/diff.hh (operator-): Move to mln namespace to
+	disambiguate calls.
+	(check): New checks.
+	* mln/morpho/thin_fit.hh,
+	* mln/morpho/thinning.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/thickening.hh,
+	* mln/morpho/thick_miss.hh: Factor test routines.
+	Use them.
+	(set::inter): Replace by operator && on windows.
+	* mln/morpho/dilation.hh (convert::to_window): Update to .win().
+	* mln/morpho/includes.hh (to_window): Remove include; obsolete.
+	(set/inter): Update to win/inter.
+
 2008-10-02  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename complex_iter_base as complex_set_iterator_base.

@@ -42,34 +42,16 @@
 # include <mln/pw/cst.hh>
 # include <mln/metal/is_a.hh>
 
-# include <mln/core/image/line_graph_elt_neighborhood.hh>
-# include <mln/core/image/line_graph_elt_window.hh>
-
 
 namespace mln
 {
 
   namespace convert
   {
-    // Return type trait of neighborhood-to-window conversions.
-
-    /* FIXME: This trait should probably be moved elsewhere.  And/or
-       it could encapsulate the conversion function, too. */
-
-    // Default case.
-    template <typename N>
-    struct nbh_to_win_trait
-    { typedef window<mln_dpsite(N)> ret; };
-
-    // Case of line_graph_elt_neighborhood<P>.
-    template <typename P>
-    struct nbh_to_win_trait< line_graph_elt_neighborhood<P> >
-    { typedef line_graph_elt_window<P> ret; };
-
 
     /// Convert a neighborhood \p nbh into a window.
     template <typename N>
-    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh);
+    mln_window(N) to_window(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a window.
     template <typename I>
@@ -90,40 +72,11 @@ namespace mln
     | Neighborhood-to-window conversions.  |
     `-------------------------------------*/
 
-    namespace impl
-    {
-
-      template <typename N>
-      inline
-      window<mln_dpsite(N)> to_window(const N& nbh_)
-      {
-	const N& nbh = exact(nbh_);
-	typedef mln_dpsite(N) D;
-	typedef mln_psite(D) P;
-	window<D> win;
-	mln_niter(N) n(nbh, P::origin);
-	for_all(n)
-	  win.insert(n - P::origin);
-	return win;
-      }
-
-      template <typename P>
-      inline
-      line_graph_elt_window<P>
-      to_window(const line_graph_elt_neighborhood<P>& /* nbh_ */ )
-      {
-	return line_graph_elt_window<P>();
-      }
-
-    } // end of namepace mln::convert::impl
-
-
-    // Facade.
     template <typename N>
     inline
-    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh)
+    mln_window(N) to_window(const Neighborhood<N>& nbh)
     {
-      return impl::to_window(exact(nbh));
+      return exact(nbh).win();
     }
 
     /*------------------------------.
