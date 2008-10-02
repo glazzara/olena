@@ -1,3 +1,14 @@
+2008-10-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Start to integrate registration in Milena.
+
+	* mln/binarization/binarization.hh: Remove whitesapce.
+
+	* mln/registration: New.
+	* mln/registration/multiscale.hh: Multiscale registration of tow images.
+	* mln/registration/registration.hh: Simple registration of tow images.
+	* mln/registration/icp.hh: ICP registration of two p_array.
+
 2008-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make tutorial examples compile.

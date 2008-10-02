@@ -41,7 +41,7 @@ namespace mln
 {
 
   namespace binarization
-  {    
+  {
 
     /*! Thresholds the values of \p input so that they can be stored in
      *  the \p output binary image.
@@ -89,7 +89,7 @@ namespace mln
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
 
-      mln_concrete_ch_value(I, bool) output(exact(input).domain());  
+      mln_concrete_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), fun);
 
       trace::exiting("binarization::binarization");
