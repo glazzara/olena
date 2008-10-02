@@ -1,3 +1,14 @@
+2008-10-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add nearest neighbor interpolation.
+
+	* mln/fun/x2x/interpol/nneighbor.hh: Add this interpolation.
+
+	* mln/fun/x2x/interpol/bilinear.hh: Fix include.
+	* mln/fun/x2x/interpol/linear.hh: Fix include.
+
+	* mln/fun/x2x/interpol/test.cc: Remove.
+
 2008-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Several fixes and updates on windows and morphology.

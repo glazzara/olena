@@ -31,6 +31,8 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/selector.hh>
+# include <mln/convert/to.hh>
+# include <mln/algebra/vec.hh>
 
 /*! \file mln/fun/x2x/interpol/bilinear.hh
  *

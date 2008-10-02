@@ -25,19 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_INTERPOL_LINEAR_HH
-# define MLN_FUN_X2X_INTERPOL_LINEAR_HH
+#ifndef MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
+# define MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
 
-/*! \file mln/fun/x2x/interpol/linear.hh
- *
- * \brief Define a linear interpolation of values from an underlying image
- */
-
-# include <mln/core/image/image1d.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/selector.hh>
-# include <mln/convert/to.hh>
 # include <mln/algebra/vec.hh>
+# include <mln/convert/to.hh>
+
+/*! \file mln/fun/x2x/interpol/nneighbor.hh
+ *
+ * \brief Define a nneighbor interpolation of values from an underlying image
+ */
 
 namespace mln
 {
@@ -51,66 +50,40 @@ namespace mln
       namespace interpol
       {
 
-
-        /*! \brief Represent a linear interolation of values from an underlying image
-         *
-         */
         template < typename I >
-        struct linear
-          : public fun::internal::selector_<const algebra::vec<1,float>,
-                                            // float is a dummy parameter (real is C)
-                                            mln_value(I), linear<I> >::ret
+        struct nneighbor
+          : public fun::internal::selector_<const algebra::vec<3,float>,
+                                            // 3,float is a dummy parameter (real is n,T)
+                                            mln_value(I), nneighbor<I> >::ret
         {
           typedef mln_value(I) result;
 
-          /// Constructor with the underlying image
-          linear(const I& ima);
+          nneighbor(const I& ima);
 
-          /// Return the interpolated value in the underlying image
-          /// at the given 'point' v.
-          template <typename C>
+          template < unsigned n, typename T >
           mln_value(I)
-          operator()(const algebra::vec<1,C>& v) const;
+          operator()(const algebra::vec<n,T>& x) const;
 
-          /// Underlying image
           const I& ima;
         };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-        template <typename I>
-        linear<I>::linear(const I& ima) : ima(ima)
+        template < typename I >
+        nneighbor<I>::nneighbor(const I& ima) : ima(ima)
         {
-          mlc_bool(I::psite::dim == 1)::check();
         }
 
-        template <typename I>
-        template <typename C>
+        template < typename I >
+        template < unsigned n, typename T >
         mln_value(I)
-        linear<I>::operator()(const algebra::vec<1,C>& v) const
+        nneighbor<I>::operator()(const algebra::vec<n,T>& x) const
         {
-          typedef mln_sum(mln_value(I)) vsum;
+          mln_psite(I) p =  convert::to<mln_psite(I)>(x);
+          return ima(p);
+        }
 
-          // looking for img(x);
-          double x = v[0];
-
-          // p1
-          double xa = mln_point(I)::coord(v[0]);
-          vsum ya = ima(point1d(xa));
-
-          // x makes sens in img
-          if (x == xa)
-            return ima(xa);
-
-          // p2
-          double xb = mln_point(I)::coord(v[0] + 1);
-          vsum yb = ima(point1d(xb));
-
-          // Taylor-young
-          return convert::to<mln_value(I)>
-            (ya + (x - xa) * (yb - ya) / (xb - xa));
-          }
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -123,4 +96,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_X2X_INTERPOL_HH
+#endif // ! MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
