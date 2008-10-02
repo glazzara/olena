@@ -94,7 +94,6 @@ namespace mln
     safe_image(I& ima, const mln_value(I)& default_value);
 
     // Initialize an empty image.
-    void init_(I& ima);
     void init_(I& ima, const mln_value(I)& default_value);
 
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
@@ -156,15 +155,6 @@ namespace mln
   {
     mln_precondition(ima.has_data());
     init_(ima, mln_value(I)());
-  }
-
-  template <typename I>
-  inline
-  void
-  safe_image<I>::init_(I& ima)
-  {
-    mln_precondition(ima.has_data());
-    this->data_ = new internal::data< safe_image<I> >(ima, mln_value(I)());
   }
 
   template <typename I>

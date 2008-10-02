@@ -38,6 +38,8 @@
  */
 
 # include <mln/util/index.hh>
+# include <mln/literal/zero.hh>
+# include <mln/literal/one.hh>
 
 
 namespace mln
@@ -66,15 +68,46 @@ namespace mln
 
       int i_;
 
-      dindex_() {}
-      dindex_(int i) : i_(i) {}
+      dindex_()
+      {
+      }
+
+      dindex_(int i)
+	: i_(i)
+      {
+      }
+
+      /// \{ Constructors/assignments with literals.
+      dindex_(const literal::zero_t&)
+	: i_(0)
+      {
+      }
+      dindex_<Tag>& operator=(const literal::zero_t&)
+      {
+	i_ = 0;
+	return *this;
+      }
+
+      dindex_(const literal::one_t&)
+	: i_(1)
+      {
+      }
+      dindex_<Tag>& operator=(const literal::one_t&)
+      {
+	i_ = 1;
+	return *this;
+      }
+      /// \}
 
       bool operator<(const dindex_& rhs) const
       {
 	return i_ < rhs.i_;
       }
 
-      operator int() const { return i_; }
+      operator int() const
+      {
+	return i_;
+      }
     };
 
     typedef dindex_<void> dindex;

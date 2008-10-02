@@ -43,11 +43,13 @@
  */
 
 # include <mln/core/internal/window_base.hh>
+# include <mln/core/concept/gdpoint.hh>
 
 # include <mln/metal/is_a.hh>
 # include <mln/util/set.hh>
 # include <mln/fun/i2v/all_to.hh>
 # include <mln/norm/linfty.hh>
+# include <mln/literal/zero.hh>
 
 
 namespace mln
@@ -181,6 +183,9 @@ namespace mln
   private:
 
     util::set<D> dps_;
+
+    unsigned delta_(int i) const;                // For indices.
+    unsigned delta_(const Gdpoint<D>& dp) const; // For grids delta-points.
   };
 
 
@@ -221,8 +226,7 @@ namespace mln
   bool
   window<D>::is_centered() const
   {
-    static const D origin = all_to(0);
-    return this->dps_.has(origin); // FIXME: Use literal::origin.
+    return this->dps_.has(literal::zero);
   }
 
   template <typename D>
@@ -258,16 +262,31 @@ namespace mln
   unsigned
   window<D>::delta() const
   {
-    // FIXME: Is-it correct?
     unsigned d = 0;
     const unsigned n = size();
     for (unsigned i = 0; i < n; ++i)
       {
-	unsigned dd = norm::linfty(dp(i).to_vec());
+	unsigned dd = delta_(dp(i));
 	if (dd > d)
 	  d = dd;
       }
     return d;
+  }
+
+  template <typename D>
+  inline
+  unsigned
+  window<D>::delta_(int i) const
+  {
+    return i;
+  }
+
+  template <typename D>
+  inline
+  unsigned
+  window<D>::delta_(const Gdpoint<D>& dp) const
+  {
+    return norm::linfty(exact(dp).to_vec());
   }
 
   template <typename D>

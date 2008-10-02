@@ -93,6 +93,11 @@ namespace mln
     void
     from_to(const Image<I>& from, Site_Set<S>& to);
 
+    // Gpoint -> algebra::vec.
+    template <typename P, unsigned n, typename T>
+    void
+    from_to(const Gpoint<P>& from, algebra::vec<n,T>& to);
+
     // algebra::vec -> Gpoint.
     template <unsigned n, typename T, typename P>
     void

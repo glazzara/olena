@@ -32,8 +32,6 @@
  *
  * \brief General conversion procedure between two objects.
  *
- * \todo Use 'round' instead of static_cast in vec->Gpoint.
- *
  * \todo Test the effectiveness of guards.
  * \todo Add fwd decls.
  * \todo Dispatch code in appropriate files.
@@ -74,6 +72,7 @@ namespace mln
     from_to(const int& from, Object<T>& to);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
 
@@ -102,18 +101,6 @@ namespace mln
       mln::convert::impl::from_image_to_site_set(from, to);
     }
 
-    // algebra::vec -> Gpoint.
-    template <unsigned n, typename T, typename P>
-    inline
-    void
-    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to_)
-    {
-      mlc_bool(P::dim == n)::check();
-      P& to = exact(to_);
-      for (unsigned i = 0; i < n; ++i)
-	to[i] = static_cast< typename P::coord >(from[i]);
-    }
-
     // Value -> Value
     template <typename F, typename T>
     inline
@@ -122,6 +109,7 @@ namespace mln
     {
       mln::convert::impl::from_value_to_value(from, to);
     }
+
 
     // float -> Object
     template <typename T>

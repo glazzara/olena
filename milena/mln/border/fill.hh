@@ -67,9 +67,10 @@ namespace mln
 
       template <typename I>
       inline
-      void fill_tests(const Image<I>& ima, const mln_value(I)& v)
+      void fill_tests(const Image<I>& ima, const mln_value(I)&)
       {
 	mln_precondition(exact(ima).has_data());
+	(void) ima;
       }
 
     } // end of namespace mln::border::internal

@@ -177,9 +177,11 @@ namespace mln
 
   protected:
 
-    util::set<P>  p_;
-    std::map<P, Q, util::ord<P> > q_;
-    unsigned      n_;
+    typedef std::map<P, Q, util::ord<P> > q_type_;
+
+    util::set<P> p_;
+    q_type_      q_;
+    unsigned     n_;
 
     // Run invariance tests and return the result.
     bool run_() const;
@@ -308,7 +310,7 @@ namespace mln
   {
     mln_invariant(run_());
     std::size_t mem_q = 0;
-    typename std::map<P, Q>::const_iterator i;
+    typename q_type_::const_iterator i;
     for (i = q_.begin(); i != q_.end(); ++i)
       mem_q += i->second.memory_size();
     return p_.memory_size() + sizeof(q_) + sizeof(n_);
@@ -322,7 +324,7 @@ namespace mln
     static const Q nil_ = Q();
     if (exists_priority(priority)) // Also test invariants.
       {
-	std::map<P,Q>& mq = const_cast<std::map<P,Q>&>(q_);
+	q_type_& mq = const_cast<q_type_&>(q_);
 	mln_assertion(mq[priority].nsites() > 0);
 	return mq[priority];
       }
@@ -380,7 +382,7 @@ namespace mln
   p_priority<P,Q>::set_2_(const P& priority) const
   {
     mln_precondition(p_.has(priority));
-    std::map<P,Q>& mq = const_cast<std::map<P,Q>&>(q_);
+    q_type_& mq = const_cast<q_type_&>(q_);
     mln_precondition(mq[priority].nsites() > 0);
     return mq[priority];
   }

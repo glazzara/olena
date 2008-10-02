@@ -1,3 +1,23 @@
+2008-10-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make tutorial examples compile.
+
+	* doc/tutorial/examples/image_safe.cc: Fix missing update.
+	* mln/core/site_set/p_priority.hh (q_type_): New.
+	Use it instead of explicit type name, so fix bugs.
+	* mln/core/image/safe.hh (init_): Remove extra overload,
+	so fix bug in this method presence checking.
+	* mln/convert/from_to.hh: Move overload vec->Gpoint...
+	* mln/core/concept/gpoint.hh: ...here.
+	(from_to): New overload for Gpoint->vec.
+	* mln/convert/from_to.hxx: Update.
+	* mln/core/window.hh (delta_): New.
+	(delta): Fix the case where D is a delta-index.
+	* mln/border/fill.hh: Fix warning.
+	* mln/util/dindex.hh (literal::zero): Handle constructor and
+	assignment.
+	(literal::one): Likewise.
+
 2008-10-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add nearest neighbor interpolation.

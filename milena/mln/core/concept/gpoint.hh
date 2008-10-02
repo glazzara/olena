@@ -36,6 +36,7 @@
 # include <mln/core/concept/site.hh>
 # include <mln/core/concept/gdpoint.hh>
 # include <mln/value/concept/scalar.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/util/ord.hh>
 
 
@@ -119,6 +120,14 @@ namespace mln
     template <typename P>
     void
     from_to(const Gpoint<P>& from, mln_delta(P)& to);
+
+    template <typename P, unsigned n, typename T>
+    void
+    from_to(const Gpoint<P>& from, algebra::vec<n,T>& to);
+
+    template <unsigned n, typename T, typename P>
+    void
+    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to);
 
   } // end of namespace::convert
 
@@ -282,6 +291,7 @@ namespace mln
   namespace convert
   {
 
+    // Gpoint -> delta
     template <typename P>
     inline
     void
@@ -294,6 +304,29 @@ namespace mln
       const P& p = exact(p_);
       for (unsigned i = 0; i < n; ++i)
 	dp[i] = p[i];
+    }
+
+    // Gpoint -> algebra::vec.
+    template <typename P, unsigned n, typename T>
+    void
+    from_to(const Gpoint<P>& from_, algebra::vec<n,T>& to)
+    {
+      mlc_bool(n == P::dim)::check();
+      const P& from = exact(from_);
+      for (unsigned i = 0; i < n; ++i)
+	to[i] = static_cast< T >(from[i]); // FIXME: cast -> best effort...
+    }
+
+    // algebra::vec -> Gpoint.
+    template <unsigned n, typename T, typename P>
+    inline
+    void
+    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to_)
+    {
+      mlc_bool(P::dim == n)::check();
+      P& to = exact(to_);
+      for (unsigned i = 0; i < n; ++i)
+	to[i] = static_cast< typename P::coord >(from[i]); // FIXME: cast -> best effort...
     }
 
   } // end of namespace::convert
