@@ -55,6 +55,9 @@
 # include <mln/core/concept/iterator.hh>
 # include <mln/topo/complex.hh>
 
+/* FIXME: Introduce a common factoring class for this class and for
+   complex_relative_iterator_base?  */
+
 /* FIXME: By moving iterator `i_' into
    internal::complex_relative_iterator_base, we'll be able to factor
    more methods (do_next_, update_f); this requires the type of this

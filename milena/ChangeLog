@@ -1,3 +1,17 @@
+2008-10-02  Roland Levillain  <roland@lrde.epita.fr>
+
+	Rename complex_iter_base as complex_set_iterator_base.
+
+	* mln/topo/internal/complex_iter_base.hh: Rename as...
+	* mln/topo/internal/complex_set_iterator_base.hh: ...this.
+	(mln::internal::complex_iter_base<F, E>): Rename as...
+	(mln::internal::complex_set_iternal_base<F, E>): ...this.
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face_iter.hh,
+	* mln/topo/static_n_face_iter.hh,
+	* mln/topo/attic/faces_iter.hh:
+	Adjust derived classes.
+
 2008-10-01  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update documentation, add an operator to the sign value class.

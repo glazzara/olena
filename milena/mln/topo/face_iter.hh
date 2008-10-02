@@ -32,10 +32,10 @@
 /// \brief Definition of forward and backward iterators on all the
 /// faces of a complex.
 
-# include <mln/topo/internal/complex_iter_base.hh>
+# include <mln/topo/internal/complex_set_iterator_base.hh>
 # include <mln/topo/face.hh>
 
-// FIXME: Factor a bit more? (Using complex_iter_base.)
+// FIXME: Factor a bit more? (Using complex_set_iterator_base.)
 
 
 namespace mln
@@ -57,11 +57,11 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class face_fwd_iter
-      : public internal::complex_iter_base< face<D>, face_fwd_iter<D> >
+      : public internal::complex_set_iterator_base< face<D>, face_fwd_iter<D> >
     {
     private:
       typedef face_fwd_iter<D> self_;
-      typedef internal::complex_iter_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -71,7 +71,8 @@ namespace mln
       /// Construction and assignment.
       /// \{
       face_fwd_iter();
-      // FIXME: See comment in internal::complex_iter_base's default ctor
+      // FIXME: See comment in internal::complex_set_iterator_base's
+      // default ctor.
       face_fwd_iter(complex<D>& c);
       /// \}
 
@@ -97,11 +98,11 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class face_bkd_iter
-    : public internal::complex_iter_base< face<D>, face_bkd_iter<D> >
+    : public internal::complex_set_iterator_base< face<D>, face_bkd_iter<D> >
     {
     private:
       typedef face_bkd_iter<D> self_;
-      typedef internal::complex_iter_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -111,7 +112,8 @@ namespace mln
       /// Construction and assignment.
       /// \{
       face_bkd_iter();
-      // FIXME: See comment in internal::complex_iter_base's default ctor
+      // FIXME: See comment in internal::complex_set_iterator_base's
+      // default ctor.
       face_bkd_iter(complex<D>& c);
       /// \}
 

@@ -32,10 +32,10 @@
 /// \brief Definition of forward and backward iterators on all the
 /// \a n-faces of a complex, \a n being a dynamic value.
 
-# include <mln/topo/internal/complex_iter_base.hh>
+# include <mln/topo/internal/complex_set_iterator_base.hh>
 # include <mln/topo/face.hh>
 
-// FIXME: Factor a bit more? (Using complex_iter_base.)
+// FIXME: Factor a bit more? (Using complex_set_iterator_base.)
 
 // FIXME: Rename the old commplex_faces_{fwd,bkd}_iter as
 // static_n_face_{fwd,bkd}_iter.
@@ -60,11 +60,12 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class n_face_fwd_iter
-      : public internal::complex_iter_base< face<D>, n_face_fwd_iter<D> >
+      : public internal::complex_set_iterator_base< face<D>,
+						    n_face_fwd_iter<D> >
     {
     private:
       typedef n_face_fwd_iter<D> self_;
-      typedef internal::complex_iter_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -74,7 +75,8 @@ namespace mln
       /// Construction and assignment.
       /// \{
       n_face_fwd_iter();
-      // FIXME: See comment in internal::complex_iter_base's default ctor
+      // FIXME: See comment in internal::complex_set_iterator_base's
+      // default ctor.
       n_face_fwd_iter(complex<D>& c, unsigned n);
       /// \}
 
@@ -108,11 +110,12 @@ namespace mln
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
     class n_face_bkd_iter
-    : public internal::complex_iter_base< face<D>, n_face_bkd_iter<D> >
+      : public internal::complex_set_iterator_base< face<D>,
+						    n_face_bkd_iter<D> >
     {
     private:
       typedef n_face_bkd_iter<D> self_;
-      typedef internal::complex_iter_base< face<D>, self_ > super_;
+      typedef internal::complex_set_iterator_base< face<D>, self_ > super_;
 
     public:
       using super_::is_valid;
@@ -122,7 +125,8 @@ namespace mln
       /// Construction and assignment.
       /// \{
       n_face_bkd_iter();
-      // FIXME: See comment in internal::complex_iter_base's default ctor
+      // FIXME: See comment in internal::complex_set_iterator_base's
+      // default ctor.
       n_face_bkd_iter(complex<D>& c, unsigned n);
       /// \}
 

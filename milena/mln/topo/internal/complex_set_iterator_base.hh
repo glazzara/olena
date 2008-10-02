@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TOPO_INTERNAL_COMPLEX_ITER_BASE_HH
-# define MLN_TOPO_INTERNAL_COMPLEX_ITER_BASE_HH
+#ifndef MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
+# define MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
 
-/// \file mln/topo/internal/complex_iter_base.hh
+/// \file mln/topo/internal/complex_set_iterator_base.hh
 /// \brief Definition of an implementation (factoring) class for
-/// iterators on mln::complex.
+/// iterators on faces of a complex.
 
 # include <limits>
 
@@ -39,10 +39,8 @@
 # include <mln/core/concept/iterator.hh>
 # include <mln/topo/complex.hh>
 
-// FIXME: Rename as something else?
-// - complex_iterator_base?
-// - complex_set_iterator_base?
-// - faces_set_iterator_base?
+/* FIXME: Introduce a common factoring class for this class and for
+   complex_relative_iterator_base?  */
 
 
 namespace mln
@@ -58,9 +56,9 @@ namespace mln
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
       template <typename F, typename E>
-      class complex_iter_base : public Iterator<E>
+      class complex_set_iterator_base : public Iterator<E>
       {
-	typedef complex_iter_base<F, E> self_;
+	typedef complex_set_iterator_base<F, E> self_;
 
       public:
 	typedef F face;
@@ -72,8 +70,8 @@ namespace mln
 	/// \{
 	/* FIXME: Keep this non-const?  See a (big) comment about this in
 	   milena/tests/complex_image.cc.   */
-	complex_iter_base();
-	complex_iter_base(complex_type& c);
+	complex_set_iterator_base();
+	complex_set_iterator_base(complex_type& c);
 	/// \}
 
 	/// Manipulation.
@@ -100,11 +98,11 @@ namespace mln
       };
 
 
-      /// Print an mln::topo::internal::complex_iter_base.
+      /// Print an mln::topo::internal::complex_set_iterator_base.
       template <typename F, typename E>
       inline
       std::ostream&
-      operator<<(std::ostream& ostr, const complex_iter_base<F, E>& p);
+      operator<<(std::ostream& ostr, const complex_set_iterator_base<F, E>& p);
 
 
 
@@ -112,7 +110,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_iter_base<F, E>::complex_iter_base()
+      complex_set_iterator_base<F, E>::complex_set_iterator_base()
       {
 	// Ensure F and E are compatible.
 	mlc_equal(F, typename E::face)::check();
@@ -122,7 +120,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_iter_base<F, E>::complex_iter_base(complex_type& c)
+      complex_set_iterator_base<F, E>::complex_set_iterator_base(complex_type& c)
       {
 	// Ensure F and E are compatible.
 	mlc_equal(F, typename E::face)::check();
@@ -135,7 +133,7 @@ namespace mln
       template <typename F, typename E>
       inline
       void
-      complex_iter_base<F, E>::set_cplx(complex_type& c)
+      complex_set_iterator_base<F, E>::set_cplx(complex_type& c)
       {
 	f_.set_cplx(c);
 	// Invalidate f_.
@@ -145,7 +143,7 @@ namespace mln
       template <typename F, typename E>
       inline
       bool
-      complex_iter_base<F, E>::is_valid() const
+      complex_set_iterator_base<F, E>::is_valid() const
       {
 	return f_.is_valid();
       }
@@ -153,14 +151,14 @@ namespace mln
       template <typename F, typename E>
       inline
       void
-      complex_iter_base<F, E>::invalidate()
+      complex_set_iterator_base<F, E>::invalidate()
       {
 	f_.invalidate();
       }
 
       template <typename F, typename E>
       inline
-      complex_iter_base<F, E>::operator const F&() const
+      complex_set_iterator_base<F, E>::operator const F&() const
       {
 	return f_;
       }
@@ -169,7 +167,7 @@ namespace mln
       template <typename F, typename E>
       inline
       std::ostream&
-      operator<<(std::ostream& ostr, const complex_iter_base<F, E>& p)
+      operator<<(std::ostream& ostr, const complex_set_iterator_base<F, E>& p)
       {
 	return ostr << F(p);
       }
@@ -182,4 +180,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_TOPO_INTERNAL_COMPLEX_ITER_BASE_HH
+#endif // ! MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
