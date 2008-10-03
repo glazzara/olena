@@ -1,5 +1,11 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add neighborhood of both lower- and higher-dimension adjacent faces.
+
+	* mln/core/image/complex_lower_higher_neighborhood.hh: New.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise iterators lower+higher-dimension adjacent faces.
 
 	* tests/topo/complex.cc: Here.
