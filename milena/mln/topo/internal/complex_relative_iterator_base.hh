@@ -48,7 +48,9 @@
    \endverbatim
 */
 
-# include <limits>
+# include <iosfwd>
+
+# include <vector>
 
 # include <mln/metal/equal.hh>
 
@@ -88,16 +90,14 @@ namespace mln
 	typedef complex_relative_iterator_base<F, E> self_;
 
       public:
+	/// The type of the iterated faces.
 	typedef F face;
-	// FIXME: Maybe we could just get the dimension D of the face's
-	// complex, an define complex_type as mln::complex<D>?
-	typedef typename F::complex_type complex_type;
 
-	/// Construction and assignment.
+	/// Construction.
 	/// \{
-	/* FIXME: Keep this non-const?  See a (big) comment about this in
-	   milena/tests/complex_image.cc.   */
 	complex_relative_iterator_base();
+	template <typename Fref>
+	complex_relative_iterator_base(const Fref& f_ref);
 	/// \}
 
 	/// Manipulation.
@@ -111,9 +111,9 @@ namespace mln
 	void next_();
 	/// \}
 
-	/// Conversion and accessors.
+	/// Conversion.
 	/// \{
-	/// Convert the iterator into an face handle.
+	/// Return a reference to the corresponding face handle.
 	operator const face&() const;
 	/// \}
 
@@ -139,7 +139,8 @@ namespace mln
       template <typename F, typename E>
       inline
       std::ostream&
-      operator<<(std::ostream& ostr, const complex_relative_iterator_base<F, E>& p);
+      operator<<(std::ostream& ostr,
+		 const complex_relative_iterator_base<F, E>& p);
 
 
       /*---------------------------------------------------------------.
@@ -160,16 +161,13 @@ namespace mln
 
       public:
 	typedef F face;
-	// FIXME: Maybe we could just get the dimension D of the face's
-	// complex, an define complex_type as mln::complex<D>?
-	typedef typename F::complex_type complex_type;
 
       public:
-	/// Construction and assignment.
+	/// Construction.
 	/// \{
-	/* FIXME: Keep this non-const?  See a (big) comment about this in
-	   milena/tests/complex_image.cc.   */
 	forward_complex_relative_iterator_base();
+	template <typename Fref>
+	forward_complex_relative_iterator_base(const Fref& f_ref);
 	/// \}
 
       public:
@@ -213,16 +211,13 @@ namespace mln
 
       public:
 	typedef F face;
-	// FIXME: Maybe we could just get the dimension D of the face's
-	// complex, an define complex_type as mln::complex<D>?
-	typedef typename F::complex_type complex_type;
 
       public:
-	/// Construction and assignment.
+	/// Construction.
 	/// \{
-	/* FIXME: Keep this non-const?  See a (big) comment about this in
-	   milena/tests/complex_image.cc.   */
 	backward_complex_relative_iterator_base();
+	template <typename Fref>
+	backward_complex_relative_iterator_base(const Fref& f_ref);
 	/// \}
 
       public:
@@ -265,6 +260,22 @@ namespace mln
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
 	m = 0;
+
+ 	exact(this)->invalidate();
+      }
+
+      template <typename F, typename E>
+      template <typename Fref>
+      inline
+      complex_relative_iterator_base<F, E>::complex_relative_iterator_base(const Fref& f_ref)
+      {
+	// Ensure F and E are compatible.
+	mlc_equal(F, typename E::face)::check();
+	// Check for required methods in E.
+	void (E::*m)() = & E::update_adj_faces_;
+	m = 0;
+
+	center_at(f_ref);
       }
 
       template <typename F, typename E>
@@ -325,6 +336,14 @@ namespace mln
       }
 
       template <typename F, typename E>
+      template <typename Fref>
+      inline
+      forward_complex_relative_iterator_base<F, E>::forward_complex_relative_iterator_base(const Fref& f_ref)
+	: super_(f_ref)
+      {
+      }
+
+      template <typename F, typename E>
       inline
       bool
       forward_complex_relative_iterator_base<F, E>::is_valid() const
@@ -362,6 +381,7 @@ namespace mln
       void
       forward_complex_relative_iterator_base<F, E>::update_f_()
       {
+	mln_precondition(is_valid());
 	this->f_ = *i_;
       }
 
@@ -373,6 +393,14 @@ namespace mln
       template <typename F, typename E>
       inline
       backward_complex_relative_iterator_base<F, E>::backward_complex_relative_iterator_base()
+      {
+      }
+
+      template <typename F, typename E>
+      template <typename Fref>
+      inline
+      backward_complex_relative_iterator_base<F, E>::backward_complex_relative_iterator_base(const Fref& f_ref)
+	: super_(f_ref)
       {
       }
 
@@ -414,6 +442,7 @@ namespace mln
       void
       backward_complex_relative_iterator_base<F, E>::update_f_()
       {
+	mln_precondition(is_valid());
 	this->f_ = *i_;
       }
 

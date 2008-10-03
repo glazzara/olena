@@ -1,5 +1,26 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul mln::topo::internal::complex_relative_iterator_base.
+
+	* mln/topo/internal/complex_relative_iterator_base.hh:
+	Update the documentation.
+	Wrap long lines.
+	(mln::complex_relative_iterator_base<F, E>::complex_type)
+	(mln::forward_complex_relative_iterator_base<F, E>::complex_type)
+	(mln::backward_complex_relative_iterator_base<F, E>::complex_type):
+	Remove (useless) typedefs.
+	(complex_relative_iterator_base(const Fref&))
+	(forward_complex_relative_iterator_base(const Fref&))
+	(backward_complex_relative_iterator_base(const Fref&)):
+	New ctors.
+	(complex_relative_iterator_base):
+	Explicitely invalidate the iterator in this default ctor.
+	(mln::forward_complex_relative_iterator_base<F, E>::update_f_)
+	(mln::backward_complex_relative_iterator_base<F, E>::update_f_)
+	Add more assertions.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul mln::topo::internal::complex_set_iterator_base.
 
 	* mln/topo/internal/complex_set_iterator_base.hh: Update
