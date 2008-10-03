@@ -1,5 +1,11 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise iterators lower+higher-dimension adjacent faces.
+
+	* tests/topo/complex.cc: Here.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add iterators on both lower- and higher-dimension adjacent faces.
 
 	* mln/topo/adj_lower_higher_face_iter.hh: New.

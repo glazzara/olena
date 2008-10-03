@@ -36,6 +36,9 @@
 
 using namespace mln;
 
+/* FIXME: Split this test (and maybe factor common parts, like the
+   construction of the complex), since it exercises too many features
+   in a single file.  */
 
 // Forward declarations.
 template <unsigned N, unsigned D>
@@ -207,26 +210,18 @@ int main()
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
 
-  /* Iterate on the the set of (n-1)- and (n+1)-faces adjacent to the
-     faces of C.
+  /* Iterate on the the set of (n-1)- and/or (n+1)-faces adjacent to
+     the faces of C.
 
      Note: this can be solved with iterators where the dimension can
-     be either static or dynamic.
+     be either static or dynamic.  For the moment, our iterators are
+     dynamic w.r.t. the dimensions of the faces (both the reference
+     face and the iterated ones).
 
-     Let's start with a dynamic one, as it would allow us to
-     write something like this:
+     Static versions might be useful, and more efficient too, when
+     flexibility is not needed.  */
 
-       mln_fwd_citer_(topo::complex<D>) f(c);
-       mln_fwd_lower_nciter(topo::complex<D>) n(c);
-       for_all(c)
-         for_all(n)
-           // ...
-
-     (Note: we might want to get rid of the name `citer', and use
-     `fiter' everywhere.).
-
-     A static version might be useful (and more efficient) too.  */
-
+  // Iterate on the the set of (n-1)-faces adjacent to the faces of C.
   topo::adj_lower_face_fwd_iter<D> fwd_alf(fwd_f);
   topo::adj_lower_face_bkd_iter<D> bkd_alf(fwd_f);
   for_all(fwd_f)
@@ -238,6 +233,7 @@ int main()
   }
   std::cout << std::endl;
 
+  // Iterate on the the set of (n+1)-faces adjacent to the faces of C.
   topo::adj_higher_face_fwd_iter<D> fwd_ahf(fwd_f);
   topo::adj_higher_face_bkd_iter<D> bkd_ahf(fwd_f);
   for_all(fwd_f)
@@ -246,6 +242,19 @@ int main()
 	      << std::endl;
     for_all_2(fwd_ahf, bkd_ahf)
       std::cout << "  " << fwd_ahf << '\t' << bkd_ahf << std::endl;
+  }
+  std::cout << std::endl;
+
+  // Iterate on the the set of (n+1)-faces *and* (n+1)-faces adjacent
+  // to the faces of C.
+  topo::adj_lower_higher_face_fwd_iter<D> fwd_alhf(fwd_f);
+  topo::adj_lower_higher_face_bkd_iter<D> bkd_alhf(fwd_f);
+  for_all(fwd_f)
+  {
+    std::cout << "Lower- and higher-dimension faces adjacent to " << fwd_f
+	      << ": " << std::endl;
+    for_all_2(fwd_alhf, bkd_alhf)
+      std::cout << "  " << fwd_alhf << '\t' << bkd_alhf << std::endl;
   }
   std::cout << std::endl;
 
