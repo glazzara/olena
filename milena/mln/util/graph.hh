@@ -94,7 +94,7 @@ namespace mln
       /// Return whether this graph is a subgraph
       /// Return always false here.
       template <typename G2>
-      bool is_subgraph_of(const G2& g);
+      bool is_subgraph_of(const G2& g) const;
     };
 
   } // end of namespace mln::util
@@ -113,9 +113,9 @@ namespace mln
     template <typename G2>
     inline
     bool
-    graph::is_subgraph_of(const G2& g)
+    graph::is_subgraph_of(const G2& g) const
     {
-      return false;
+      return &g == this;
     }
 
   } // end of namespace mln::util
