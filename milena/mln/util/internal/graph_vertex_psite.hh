@@ -29,6 +29,7 @@
 # define MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
 
 # include <mln/core/concept/pseudo_site.hh>
+# include <mln/util/internal/graph_psite_base.hh>
 
 namespace mln
 {
@@ -47,37 +48,26 @@ namespace mln
     {
 
       template <typename G, typename F>
-      class vertex_psite : public mln::Pseudo_Site< vertex_psite<G, F> >,
-	  public internal::proxy_impl< const typename F::result&, vertex_psite<G, F> >
+      class vertex_psite :
+	public graph_psite_base<util::vertex<G>, typename F::result,
+				p_vertices<G, F>,
+				vertex_psite<G, F> >
       {
-        typedef Pseudo_Site< vertex_psite<G, F> > super;
+	typedef vertex_psite<G, F> self_;
+	typedef p_vertices<G, F> target_t;
+        typedef graph_psite_base<util::vertex<G>, typename F::result, target_t, self_> super_;
+	typedef util::vertex<G> vertex_t;
 
-        public:
-	typedef p_vertices<G, F> site_set;
-        typedef mlc_const(site_set) target;
+      public:
         typedef typename F::result site;
 
         vertex_psite();
-        vertex_psite(const target& t);
+        vertex_psite(const target_t& t);
 
-        void change_target(const target& new_target);
-	void change_vertex_id(unsigned id_v);
-	void update_id(unsigned v_id);
-
-        const target* target_() const; // Hook to the target.
-
-	bool is_valid() const;
-	void invalidate();
-
-	typedef const site& q_subject;
-        const site& subj_();
-	const site& to_site() const;
-
-        const util::vertex<G>& v() const;
+        const vertex_t& v() const;
 
       protected:
-	target* t_;
-        util::vertex<G> v_;
+	using super_::v_;
      };
 
     } // end of namespace internal
@@ -96,86 +86,19 @@ namespace mln
       template <typename G, typename F>
       inline
       vertex_psite<G, F>::vertex_psite()
-	: t_(0)
       {
       }
 
       template <typename G, typename F>
       inline
-      vertex_psite<G, F>::vertex_psite(const target& t)
-        : t_(0)
+      vertex_psite<G, F>::vertex_psite(const target_t& t)
       {
-        change_target(t);
+        this->change_target(t);
       }
 
       template <typename G, typename F>
       inline
-      void
-      vertex_psite<G, F>::change_target(const target& new_target)
-      {
-        t_ = &new_target;
-	v_.change_graph(new_target.g());
-      }
-
-      template <typename G, typename F>
-      inline
-      void
-      vertex_psite<G, F>::change_vertex_id(unsigned id_v)
-      {
-	v_.update_id(id_v);
-      }
-
-      template <typename G, typename F>
-      inline
-      void
-      vertex_psite<G, F>::update_id(unsigned v_id)
-      {
-	v_.update_id(v_id);
-      }
-
-      template <typename G, typename F>
-      inline
-      const typename vertex_psite<G, F>::target*
-      vertex_psite<G, F>::target_() const
-      {
-        return t_;
-      }
-
-      template <typename G, typename F>
-      inline
-      bool
-      vertex_psite<G, F>::is_valid() const
-      {
-	return t_ != 0 && t_->is_valid();
-      }
-
-      template <typename G, typename F>
-      inline
-      void
-      vertex_psite<G, F>::invalidate()
-      {
-	t_ = 0;
-      }
-
-      template <typename G, typename F>
-      inline
-      const typename vertex_psite<G, F>::site&
-      vertex_psite<G, F>::subj_()
-      {
-        return to_site();
-      }
-
-      template <typename G, typename F>
-      inline
-      const typename vertex_psite<G, F>::site&
-      vertex_psite<G, F>::to_site() const
-      {
-        return t_->function()(v_);
-      }
-
-      template <typename G, typename F>
-      inline
-      const util::vertex<G>&
+      const typename vertex_psite<G, F>::vertex_t&
       vertex_psite<G, F>::v() const
       {
         return v_;
