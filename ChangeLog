@@ -1,3 +1,84 @@
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+        Add p_edges.
+  
+        * milena/mln/core/site_set/p_edges.hh:
+        The site set p_edges.
+
+        * milena/mln/util/internal/graph_edge_psite.hh:
+	The associated psite.
+
+	* milena/tests/core/site_set/Makefile.am,
+	* milena/tests/core/site_set/p_edges.cc:
+	Add a basic test.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+    
+	Refactor graph_vertex_psite.
+
+	* milena/mln/util/internal/graph_vertex_psite.hh:
+	Refactor this class...
+        * milena/mln/util/internal/graph_psite_base.hh:
+        ... here.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+        Fix util::graph<G>::is_subgraph_of().
+
+        * milena/mln/util/graph.hh: here.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing methods to vertex and edge.
+
+        * milena/mln/util/internal/graph_edge.hh:
+        Add change_graph().
+        * milena/mln/util/internal/graph_vertex.hh:
+        Add invalidate().
+
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add p_vertices.
+
+	* milena/mln/core/site_set/p_vertices.hh:
+	The site set p_vertices.
+	
+	* milena/mln/util/internal/graph_vertex_psite.hh:
+	The psite associated to p_vertices.
+	
+	* milena/tests/core/site_set/p_vertices.cc,
+	* milena/tests/core/site_set/Makefile.am:
+	Add a small test.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a missing method to graph_vertex_iter.
+
+	* milena/mln/util/internal/graph_vertex_iter.hh:
+	Add a missing update_graph() method.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid compilation of graph_vertex.
+
+	* milena/mln/util/internal/graph_vertex.hh:
+	Remove useless const and a wrong precondition.
+  
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix missing methods in graph_base.
+
+	* milena/mln/util/internal/graph_base.hh:
+	Add new has() overload for convenience.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update p_graph_piter.
+
+	* milena/mln/core/site_set/p_graph_piter.hh: 
+	update in order to make it work with the new graph structure.
+
 2008-09-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update reconstruction algorithms in theo's sandbox.

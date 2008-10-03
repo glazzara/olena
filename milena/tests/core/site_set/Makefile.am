@@ -5,6 +5,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   p_array					\
 ##  p_bgraph					\
+  p_edges 					\
   p_image					\
   p_priority_queue				\
   p_queue					\
@@ -22,5 +23,6 @@ p_queue_fast_SOURCES = p_queue_fast.cc
 p_set_SOURCES = p_set.cc
 pset_if_SOURCES = pset_if.cc
 p_vertices_SOURCES = p_vertices.cc
+p_edges_SOURCES = p_edges.cc
 
 TESTS = $(check_PROGRAMS)
