@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/run_image.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set_of.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/value/set.hh>
 # include <vector>
@@ -52,9 +52,9 @@ namespace mln
 
     /// Data structure for \c mln::obased_rle_image<P,T>.
     template <typename P, typename T>
-    struct data_< obased_rle_image<P,T> >
+    struct data< obased_rle_image<P,T> >
     {
-      data_(const std::set<T>& values);
+      data(const std::set<T>& values);
 
       /// Objects.
       std::vector< std::vector<unsigned> > obj_;
@@ -69,7 +69,7 @@ namespace mln
       std::vector<T> values_;
 
       /// domain of the image
-      p_runs_<P> domain_;
+      p_set_of< p_run<P> > domain_;
 
       /// Return the size of the data in memory.
       unsigned memory_size() const;
@@ -118,24 +118,27 @@ namespace mln
     typedef T value;
     typedef T& lvalue;
     typedef const T rvalue;
-    typedef runs_psite<P> psite;
-    typedef p_runs_<P> pset;
+    typedef p_set_of< p_run<P> > pset;
+    typedef mln_psite(pset) psite;
 
 
     /// Skeleton.
     typedef obased_rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
-
+    /// Constructor
     obased_rle_image(const std::set<T>& values);
+
+    /// Initialize an empty image
+    void init_(const std::set<T>& values);
 
     /// Add a new range to the image.
     void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const runs_psite<P>& site) const;
+    rvalue operator() (const mln_psite(pset)& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const runs_psite<P>& site);
+    lvalue operator() (const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -176,7 +179,7 @@ namespace mln
     {
       return domain_.memory_size() + bbox_.size()
 	* (sizeof(T) + sizeof(box<P>) + sizeof(std::vector<unsigned>))
-	+ (sizeof(unsigned) + sizeof(T)) * domain_.nruns();
+	+ (sizeof(unsigned) + sizeof(T)) * domain_.nsites();
     }
 
     template <typename P, typename T>
@@ -193,7 +196,15 @@ namespace mln
   inline
   obased_rle_image<P, T>::obased_rle_image(const std::set<T>& values)
   {
-    this->data_ = new internal::data_< obased_rle_image<P,T> >(values);
+    init_(values);
+  }
+
+  template <typename P, typename T>
+  inline
+  void
+  obased_rle_image<P, T>::init_(const std::set<T>& values)
+  {
+    this->data_ = new internal::data< obased_rle_image<P,T> >(values);
   }
 
   template <typename P, typename T>
@@ -209,8 +220,8 @@ namespace mln
   void
   obased_rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
-    mln_assertion(this->data_->v_obj_.size() == 0 || this->data_->domain_.nruns() == 0 ||
-		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+    mln_assertion(this->data_->v_obj_.size() == 0 || this->data_->domain_.nsites() == 0 ||
+		  pr[0] > this->data_->domain_[this->data_->domain_.nsites() - 1].start());
     this->data_->domain_.insert(pr);
     this->data_->values_.push_back(value);
     unsigned i;
@@ -218,7 +229,7 @@ namespace mln
 	   && this->data_->v_obj_[i] != value; ++i)
       ;
     mln_assertion(i != this->data_->v_obj_.size());
-    this->data_->obj_[i].push_back(this->data_->domain_.nruns() - 1);
+    this->data_->obj_[i].push_back(this->data_->domain_.nsites() - 1);
     this->data_->bbox_[i].take(pr.bbox().pmin());
     this->data_->bbox_[i].take(pr.bbox().pmax());
   }
@@ -226,7 +237,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename obased_rle_image<P, T>::rvalue
-  obased_rle_image<P, T>::operator() (const runs_psite<P>& site)
+  obased_rle_image<P, T>::operator() (const mln_psite(pset)& site)
     const
   {
     mln_precondition(this->has(site));
@@ -236,7 +247,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename obased_rle_image<P, T>::lvalue
-  obased_rle_image<P, T>::operator() (const runs_psite<P>& site)
+  obased_rle_image<P, T>::operator() (const mln_psite(pset)& site)
   {
     mln_precondition(this->has(site));
     return this->data_->values_[site.index()];

@@ -69,10 +69,8 @@ int main()
     mln_assertion(O_ == O);
     mln_assertion(O == literal::origin);
   }
-  
+
   q.set_all(0);
   for (unsigned i = 0; i < p.dim; ++i)
     mln_assertion(q[i] == 0);
-
-  std::cout << 3.4 * algebra::vec<2, def::coord>(p) << std::endl;
 }

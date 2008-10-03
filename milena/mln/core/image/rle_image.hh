@@ -115,17 +115,17 @@ namespace mln
     /// Skeleton.
     typedef rle_image< tag::psite_<P>, tag::value_<T> > skeleton;
 
-
+    /// Constructor.
     rle_image();
 
     /// Add a new range to the image.
     void insert(const p_run<P>& pr, T value);
 
     /// Read-only access to the image value located at point \p p.
-    rvalue operator() (const runs_psite<P>& site) const;
+    rvalue operator() (const mln_psite(pset)& site) const;
 
     /// Read-write access to the image value located at point \p p.
-    lvalue operator() (const runs_psite<P>& site);
+    lvalue operator() (const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
     bool has_data() const;
@@ -190,7 +190,7 @@ namespace mln
     if (!this->has_data())
       this->data_ = new internal::data< rle_image<P,T> >();
     mln_assertion(this->data_->values_.size() == 0 ||
-		  pr.first() > this->data_->domain_[this->data_->domain_.nruns() - 1].first());
+		  pr[0] > this->data_->domain_[this->data_->domain_.nsites() - 1].start());
     this->data_->domain_.insert(pr);
     this->data_->values_.push_back(value);
   }
@@ -198,7 +198,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename rle_image<P, T>::rvalue
-  rle_image<P, T>::operator() (const runs_psite<P>& site)
+  rle_image<P, T>::operator() (const mln_psite(pset)& site)
     const
   {
     mln_precondition(this->has(site));
@@ -208,7 +208,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename rle_image<P, T>::lvalue
-  rle_image<P, T>::operator() (const runs_psite<P>& site)
+  rle_image<P, T>::operator() (const mln_psite(pset)& site)
   {
     mln_precondition(this->has(site));
     return this->data_->values_[site.index()];

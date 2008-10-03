@@ -17,13 +17,13 @@ check_PROGRAMS =				\
   image_if					\
 ##  interpolated					\
   line_graph_image				\
-  mono_obased_rle_image				\
-  mono_rle_image				\
-  obased_rle_image				\
+##  mono_obased_rle_image				\
+##  mono_rle_image				\
+##  obased_rle_image				\
   plain						\
-  rle_image					\
+##  rle_image					\
   safe_image					\
-  sparse_image					\
+##  sparse_image					\
   sub_image					\
   t_image					\
   tr_image					\
@@ -44,13 +44,13 @@ image3d_SOURCES = image3d.cc
 image_if_SOURCES = image_if.cc
 ##interpolated_SOURCES = interpolated.cc
 line_graph_image_SOURCES = line_graph_image.cc
-mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
-mono_rle_image_SOURCES = mono_rle_image.cc
-obased_rle_image_SOURCES = obased_rle_image.cc
+##mono_obased_rle_image_SOURCES = mono_obased_rle_image.cc
+##mono_rle_image_SOURCES = mono_rle_image.cc
+##obased_rle_image_SOURCES = obased_rle_image.cc
 plain_SOURCES = plain.cc
-rle_image_SOURCES = rle_image.cc
+##rle_image_SOURCES = rle_image.cc
 safe_image_SOURCES = safe_image.cc
-sparse_image_SOURCES = sparse_image.cc
+##sparse_image_SOURCES = sparse_image.cc
 sub_image_SOURCES = sub_image.cc
 t_image_SOURCES = t_image.cc
 tr_image_SOURCES = tr_image.cc

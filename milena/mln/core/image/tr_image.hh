@@ -51,11 +51,11 @@ namespace mln
   namespace internal
   {
 
-    /// Data structure for \c mln::tr_image<T,I>.
+    /// Data structure for \c mln::tr_image<S,I,T>.
     template <typename S, typename I, typename T>
     struct data< tr_image<S,I,T> >
     {
-      data(const S& s,I& ima, const T& tr);
+      data(const S& s, I& ima, const T& tr);
 
       I ima_;
       T tr_;
@@ -117,7 +117,7 @@ namespace mln
        if we do not provide set_ima().  */
     tr_image();
 
-
+    /// Initialize an empty image.
     void init_(const S& s, I& ima, const T& tr);
 
     /// Test if this image has been initialized.
@@ -163,13 +163,13 @@ namespace mln
   inline
   tr_image<S,I,T>::tr_image(const S& s, I& ima, const T& tr)
   {
-    mln_precondition(ima.has_data());
-    this->data_ = new internal::data< tr_image<S,I,T> >(s, ima, tr);
+    init_(s, ima, tr);
   }
 
   template <typename S, typename I, typename T>
   inline
-  void tr_image<S,I,T>::init_(const S& s, I& ima, const T& tr)
+  void
+  tr_image<S,I,T>::init_(const S& s, I& ima, const T& tr)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data< tr_image<S,I,T> >(s, ima, tr);
@@ -177,13 +177,8 @@ namespace mln
 
   template <typename S, typename I, typename T>
   inline
-  tr_image<S,I,T>::tr_image()
-  {
-  }
-
-  template <typename S, typename I, typename T>
-  inline
-  bool tr_image<S,I,T>::has_data() const
+  bool
+  tr_image<S,I,T>::has_data() const
   {
     mln_invariant(this->delegatee_()->has_data());
     return true;
@@ -191,7 +186,8 @@ namespace mln
 
   template <typename S, typename I, typename T>
   inline
-  bool tr_image<S,I,T>::has(const algebra::vec<I::psite::dim, float>& v) const
+  bool
+  tr_image<S,I,T>::has(const algebra::vec<I::psite::dim, float>& v) const
   {
     mln_psite(I) p;
     algebra::vec<I::point::dim, float> v2 = this->data_->tr_.inv()(v);
@@ -215,7 +211,6 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p)
   {
-    std::cout << "yay" << std::endl;
     algebra::vec<I::psite::dim, float> v = p;
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }

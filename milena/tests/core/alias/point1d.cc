@@ -44,7 +44,6 @@ int main()
 
   p[0] = 4;
   algebra::vec<1,def::coord> v = p;
-  std::cout << v << std::endl;
 
   p.ind() += 1;
   mln_assertion(p.ind() == 5 && p[0] == 5);

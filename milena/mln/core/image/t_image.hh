@@ -119,6 +119,11 @@ namespace mln
     /// \param dim2 The second dimension to be swapped.
     t_image(I& ima, unsigned dim1, unsigned dim2);
 
+
+    /// Initialize an empty image.
+    void init_(I& ima, unsigned dim1, unsigned dim2);
+
+
     /// Test if this image has been initialized.
     bool has_data() const;
 
@@ -182,6 +187,14 @@ namespace mln
   inline
   t_image<I>::t_image(I& ima, unsigned dim1, unsigned dim2)
   {
+    init_(ima, dim1, dim2);
+  }
+
+  template <typename I>
+  inline
+  void
+  t_image<I>::init_(I& ima, unsigned dim1, unsigned dim2)
+  {
     mln_precondition(ima.has_data());
     /* FIXME: Add a precondition on the fact that the domain of ima is
        a box.  */
@@ -192,6 +205,7 @@ namespace mln
 			   exchange_coords_(ima.bbox().pmax(), dim1, dim2));
     this->data_ = new internal::data< t_image<I> >(ima, dim1, dim2, box);
   }
+
 
   template <typename I>
   inline

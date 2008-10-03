@@ -1,3 +1,23 @@
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+	* milena/mln/algebra/vec.hh: add missing header.
+	
+	* milena/mln/core/image/obased_rle_image.hh,
+	* milena/mln/core/image/rle_image.hh: Use pruns.
+	
+	* milena/mln/core/image/obased_rle_image.hh,
+	* milena/mln/core/image/t_image.hh: add missing init_ function.
+	
+	* milena/mln/core/image/tr_image.hh,
+	* milena/tests/core/alias/point1d.cc,
+	* milena/tests/core/alias/point2d.cc: cleanup.
+	
+	* milena/tests/core/image/Makefile.am: Disable known broken test
+	such as graph related tests.
+
+	* milena/tests/core/image/tr_image.cc: make it compile.
+
 2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/topo/Makefile.

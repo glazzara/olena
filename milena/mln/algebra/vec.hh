@@ -39,6 +39,7 @@
 
 # include <mln/core/concept/object.hh>
 
+# include <mln/literal/zero.hh>
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
