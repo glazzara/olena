@@ -113,7 +113,10 @@ namespace mln
 	/// \brief Return the number of vertices in the graph.
 	size_t v_nmax() const;
 
-	/// Check whether a vertex id \p id_v is valid in the graph.
+	/// Check whether a vertex \p v exists in the graph.
+	bool has(const util::vertex<E>& v) const;
+
+	/// Check whether a vertex id \p id_v exists in the graph.
 	bool has_v(unsigned id_v) const;
 
 	/// Return the number of adjacent edges of vertex \p id_v.
@@ -147,6 +150,9 @@ namespace mln
 
 	/// \brief Return the number of edges in the graph.
 	size_t e_nmax() const;
+
+	/// Check whether an edge \p e exists in the graph.
+	bool has(const util::edge<E>& e) const;
 
 	/// Return whether \p id_e is in the graph.
 	bool has_e(unsigned id_e) const;
@@ -284,6 +290,14 @@ namespace mln
       template<typename E>
       inline
       bool
+      graph_base<E>::has(const util::vertex<E>& v) const
+      {
+	return has_v(v.id());
+      }
+
+      template<typename E>
+      inline
+      bool
       graph_base<E>::has_v(unsigned id_v) const
       {
 	return id_v < vertices_.size();
@@ -380,6 +394,14 @@ namespace mln
       graph_base<E>::e_nmax() const
       {
 	return edges_.size();
+      }
+
+      template<typename E>
+      inline
+      bool
+      graph_base<E>::has(const util::edge<E>& e) const
+      {
+	return has_e(e.id());
       }
 
       template<typename E>
