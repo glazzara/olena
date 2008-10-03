@@ -1,5 +1,9 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/macros.hh (mln_face, mln_face_): New macros.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul neighborhoods of adjacent lower- and higher-dimension faces.
 
 	* mln/core/image/complex_lower_neighborhood.hh,
