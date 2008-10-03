@@ -1,3 +1,11 @@
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial..
+	* milena/doc/tutorial/tutorial.tex:
+	  - Add a new section about sites
+	  - Add new subsections about image domain and values.
+	  - Talk about operator '/' used to create sub images.
+
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise neighborhood and piters on lower+higher-dim. adjacent faces.
