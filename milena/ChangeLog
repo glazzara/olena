@@ -1,5 +1,17 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul piters on complex neighborhood.
+
+	* mln/core/image/complex_neighborhood_piter.hh
+	Update the documentation.
+	(mln::complex_neighborhood_fwd_piter<I, P, N>::dpoint)
+	(mln::complex_neighborhood_fwd_piter<I, P, N>::mesh)
+	(mln::complex_neighborhood_bkd_piter<I, P, N>::dpoint)
+	(mln::complex_neighborhood_bkd_piter<I, P, N>::mesh):
+	Remove (already disabled) typedefs.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix the definition of mln::complex_neighborhood_bkd_piter.
 
 	* mln/core/image/complex_neighborhood_piter.hh

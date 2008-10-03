@@ -61,13 +61,8 @@ namespace mln
     typedef internal::site_relative_iterator_base< N, self_ > super_;
 
   public:
-    /// The Point_Site type.
+    /// The Pseudo_Site type.
     typedef mln_psite(N) psite;
-
-    // FIXME: Dummy typedef.
-//     typedef void dpoint;
-    // FIXME: Dummy typedef.
-//     typedef void mesh;
 
   public:
     /// Construction.
@@ -87,7 +82,7 @@ namespace mln
 
     /// Start an iteration.
     void do_start_();
-    /// Go to the next point.
+    /// Go to the next site.
     void do_next_();
 
     /// Set the reference psite.
@@ -129,13 +124,8 @@ namespace mln
     typedef internal::site_relative_iterator_base< N, self_ > super_;
 
   public:
-    /// The Point_Site type.
+    /// The Pseudo_Site type.
     typedef mln_psite(N) psite;
-
-    // FIXME: Dummy typedef.
-//     typedef void dpoint;
-    // FIXME: Dummy typedef.
-//     typedef void mesh;
 
   public:
     /// Construction.
@@ -155,7 +145,7 @@ namespace mln
 
     /// Start an iteration.
     void do_start_();
-    /// Go to the next point.
+    /// Go to the next site.
     void do_next_();
 
     /// Set the reference psite.
