@@ -43,7 +43,7 @@
 
 namespace mln
 {
-  // Fwd decls.
+  // Forward declarations.
   template <typename I, typename P, typename N>
   class complex_neighborhood_fwd_piter;
   template <typename I, typename P, typename N>
@@ -58,10 +58,12 @@ namespace mln
   {
     typedef complex_lower_neighborhood<D, P> self_;
 
-    // FIXME: The associated complex iterators.
   public:
+    /// The associated complex iterators.
+    /// \{
     typedef topo::adj_lower_face_fwd_iter<D> complex_fwd_iter;
     typedef topo::adj_lower_face_bkd_iter<D> complex_bkd_iter;
+    /// \}
 
   public:
     /// Associated types.
@@ -71,12 +73,12 @@ namespace mln
     /// The type of site corresponding to the neighborhood.
     typedef mln_site(psite) site;
 
-    /// \brief Point_Iterator type to browse the psites of the neighborhood
+    /// \brief Site_Iterator type to browse the psites of the neighborhood
     /// w.r.t. the ordering of vertices.
     typedef
     complex_neighborhood_fwd_piter<complex_fwd_iter, P, self_> fwd_niter;
 
-    /// \brief Point_Iterator type to browse the psites of the neighborhood
+    /// \brief Site_Iterator type to browse the psites of the neighborhood
     /// w.r.t. the reverse ordering of vertices.
     typedef
     complex_neighborhood_bkd_piter<complex_bkd_iter, P, self_> bkd_niter;

@@ -1,5 +1,13 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul neighborhoods of adjacent lower- and higher-dimension faces.
+
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_higher_neighborhood.hh:
+	Update the documentation.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul piters on complex neighborhood.
 
 	* mln/core/image/complex_neighborhood_piter.hh
