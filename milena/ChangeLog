@@ -1,5 +1,13 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add iterators on both lower- and higher-dimension adjacent faces.
+
+	* mln/topo/adj_lower_higher_face_iter.hh: New.
+	Include this header...
+	* mln/topo/complex.hh: ...here.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a meta iterator sequencing two complex relative iterators.
 
 	* mln/topo/internal/complex_relative_iterator_sequence.hh: New.

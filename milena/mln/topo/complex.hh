@@ -58,6 +58,7 @@
 
 # include <mln/topo/adj_lower_face_iter.hh>
 # include <mln/topo/adj_higher_face_iter.hh>
+# include <mln/topo/adj_lower_higher_face_iter.hh>
 
 
 namespace mln
