@@ -39,7 +39,12 @@
 // FIXME: Include these elsewhere? (In complex_image.hh?)
 #include <mln/core/image/complex_lower_neighborhood.hh>
 #include <mln/core/image/complex_higher_neighborhood.hh>
+#include <mln/core/image/complex_lower_higher_neighborhood.hh>
 #include <mln/core/image/complex_neighborhood_piter.hh>
+
+/* FIXME: Split this test (and maybe factor common parts, like the
+   construction of the complex), since it exercises too many features
+   in a single file.  */
 
 
 int main()
@@ -201,7 +206,8 @@ int main()
   // Iterators on windows and neighborhoods.  //
   // ---------------------------------------- //
 
-  // FIXME: Factor: these two test cases only differ by their neighborhood.
+  // FIXME: Factor: these three test cases only differ by their
+  // neighborhoods.
 
   // Iterate on the lower-dimension faces of each face.
   {
@@ -245,16 +251,34 @@ int main()
     std::cout << std::endl;
   }
 
-  /* FIXME: Implement windows (and neighborhoods) and corresponding
-     iterators for complex-based images.
+  // Iterate on the lower- and higher-dimension faces of each face.
+  {
+    typedef complex_lower_higher_neighborhood<D, P> nbh_t;
+    nbh_t nbh;
+    mln_fwd_niter_(nbh_t) fn(nbh, fp);
+    mln_bkd_niter_(nbh_t) bn(nbh, fp);
+    for_all(fp)
+    {
+      std::cout << "Lower- and higer-dimension faces adjacent to " << fp
+		<< std::endl;
+      for_all_2(fn, bn)
+	{
+	  mln_assertion((fn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  mln_assertion((bn.center() ==
+			 static_cast<const complex_psite<D, P>&>(fp)));
+	  std::cout << "  " << fn << '\t' << bn << std::endl;
+	}
+    }
+    std::cout << std::endl;
+  }
+
+
+  /* FIXME: Implement other neighborhoods (and windows) and
+     corresponding iterators for complex-based images.
 
      For a given (fixed) dimension N and a psite P on a N-face,
      implement windows returning
-
-     - the set of (N-1)-faces adjacent to P (using p_faces and
-       faces_psite?);
-     - the set of (N+1)-faces adjacent to P (using p_faces and
-       faces_psite?);
 
      - the set of N-faces sharing a (N-1)-face with P;
      - the set of N-faces sharing a (N-1)-face or (N-2)-face (by
