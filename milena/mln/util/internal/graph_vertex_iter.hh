@@ -71,6 +71,8 @@ namespace mln
 	unsigned index() const;
 	/// \}
 
+	void update_graph(const G& g);
+
 	/// Proxy.
 	/// \{
 	/// Proxy subject
@@ -136,8 +138,8 @@ namespace mln
     template<typename G>
     inline
     vertex_fwd_iterator<G>::vertex_fwd_iterator(const G& g)
-      : v_(util::vertex<G>(&g))
     {
+      update_graph(g);
       invalidate();
     }
 
@@ -171,6 +173,14 @@ namespace mln
     vertex_fwd_iterator<G>::next()
     {
       v_.update_id(v_.id() + 1);
+    }
+
+    template<typename G>
+    inline
+    void
+    vertex_fwd_iterator<G>::update_graph(const G& g)
+    {
+      v_ = util::vertex<G>(&g);
     }
 
     template<typename G>
