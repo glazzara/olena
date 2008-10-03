@@ -58,6 +58,12 @@
 	* jardonnet/perl/test/v2v/id.hh,
 	* jardonnet/perl/test/v2v/rgb_to_hsi.hh: Add test files.
 
+2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing parentheses in sandbox Rd by union-find.
+
+	* geraud/Rd/union_find.hh: Fix.
+
 2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Sandbox: continue to revamp registration.
@@ -131,6 +137,31 @@
 	* jardonnet/virtual/lena.pgm: Add test image.
 	* jardonnet/virtual/access.cc: Update.
 	* jardonnet/virtual/Makefile: Add warning.
+
+2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some morphological reconstruction algorithms in sandbox.
+
+	* geraud/Rd: New directory.
+	* geraud/Rd/hybrid.hh,
+	* geraud/Rd/queue_based.hh,
+	* geraud/Rd/parallel.cc,
+	* geraud/Rd/parallel_wo.cc,
+	* geraud/Rd/union_find.hh,
+	* geraud/Rd/parallel.hh,
+	* geraud/Rd/diff.cc,
+	* geraud/Rd/sequential_bench.cc,
+	* geraud/Rd/sequential.cc,
+	* geraud/Rd/utils.hh,
+	* geraud/Rd/deco.cc,
+	* geraud/Rd/hybrid.cc,
+	* geraud/Rd/queue_based.cc,
+	* geraud/Rd/sequential_bench.hh,
+	* geraud/Rd/min.cc,
+	* geraud/Rd/sequential.hh,
+	* geraud/Rd/debase.union_find.hh,
+	* geraud/Rd/union_find.cc,
+	* geraud/Rd/svg.queue_based.hh: New files.
 
 2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -1048,9 +1079,9 @@
 
 	Make Tikz output able to valuate pixels.
 
-	* sandbox/abraham/io/tikz/save_header.hh: New
+	* abraham/io/tikz/save_header.hh: New
 	(mln::io::tikz::save_header) Write the header of the LaTeX file.
-	* sandbox/abraham/io/tikz/save.hh:
+	* abraham/io/tikz/save.hh:
 	(mln::io::tikz::save) Can now take another image in argument to put
 	values on pixels.
 

@@ -103,12 +103,6 @@
 
 2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
-	Fix missing parentheses in sandbox Rd by union-find.
-
-	* sandbox/geraud/Rd/union_find.hh: Fix.
-
-2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
 	Fix wrong namespace in win/shift.
 
 	* mln/win/shift.hh (geom): Change to...
@@ -2374,31 +2368,6 @@
 	* mln/border/fill.hh: Updates dues to the renaming of line_piter to
 	box_runstart_piter.
 	* mln/core/box_runstart_piter.hh(mln_box_runstart_piter): New.
-
-2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Add some morphological reconstruction algorithms in sandbox.
-
-	* sandbox/geraud/Rd: New directory.
-	* sandbox/geraud/Rd/hybrid.hh,
-	* sandbox/geraud/Rd/queue_based.hh,
-	* sandbox/geraud/Rd/parallel.cc,
-	* sandbox/geraud/Rd/parallel_wo.cc,
-	* sandbox/geraud/Rd/union_find.hh,
-	* sandbox/geraud/Rd/parallel.hh,
-	* sandbox/geraud/Rd/diff.cc,
-	* sandbox/geraud/Rd/sequential_bench.cc,
-	* sandbox/geraud/Rd/sequential.cc,
-	* sandbox/geraud/Rd/utils.hh,
-	* sandbox/geraud/Rd/deco.cc,
-	* sandbox/geraud/Rd/hybrid.cc,
-	* sandbox/geraud/Rd/queue_based.cc,
-	* sandbox/geraud/Rd/sequential_bench.hh,
-	* sandbox/geraud/Rd/min.cc,
-	* sandbox/geraud/Rd/sequential.hh,
-	* sandbox/geraud/Rd/debase.union_find.hh,
-	* sandbox/geraud/Rd/union_find.cc,
-	* sandbox/geraud/Rd/svg.queue_based.hh: New files.
 
 2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
