@@ -1,5 +1,13 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix the definition of mln::complex_neighborhood_bkd_piter.
+
+	* mln/core/image/complex_neighborhood_piter.hh
+	(mln::complex_neighborhood_bkd_piter<I, P, N>::iter): Set to
+	N::complex_bkd_iter (instead of N::complex_fwd_iter).
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul iterators on adjacent lower- and higher-dimension faces.
 
 	* mln/topo/adj_lower_face_iter.hh:

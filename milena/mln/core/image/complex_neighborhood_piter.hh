@@ -170,7 +170,7 @@ namespace mln
 
   private:
     /// The type of the underlying complex iterator.
-    typedef typename N::complex_fwd_iter iter;
+    typedef typename N::complex_bkd_iter iter;
     /// The underlying complex iterator.
     iter iter_;
   };
