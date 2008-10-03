@@ -32,7 +32,7 @@
 /// \brief Definition of an implementation (factoring) class for
 /// iterators on faces of a complex.
 
-# include <limits>
+# include <iosfwd>
 
 # include <mln/metal/equal.hh>
 
@@ -61,6 +61,7 @@ namespace mln
 	typedef complex_set_iterator_base<F, E> self_;
 
       public:
+	/// The type of the iterated faces.
 	typedef F face;
 	// FIXME: Maybe we could just get the dimension D of the face's
 	// complex, an define complex_type as mln::complex<D>?
