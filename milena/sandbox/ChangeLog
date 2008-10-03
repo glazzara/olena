@@ -470,13 +470,13 @@
 
 	Add a 2D simplicial complex (toy code) + a double-window type.
 
-	* sandbox/geraud/cs2d: New directory.
-	* sandbox/geraud/cs2d/cs2d.cc: New.
-	* sandbox/geraud/cs2d/dbl_neighb.cc: New.
-	* sandbox/geraud/cs2d/cs2d.hh: New.
-	* sandbox/geraud/cs2d/cs2d_utils.hh: New.
-	* sandbox/geraud/cs2d/dbl_neighb.hh: New.
-	* sandbox/geraud/cs2d/cs2d_morpho.hh: New.
+	* geraud/cs2d: New directory.
+	* geraud/cs2d/cs2d.cc: New.
+	* geraud/cs2d/dbl_neighb.cc: New.
+	* geraud/cs2d/cs2d.hh: New.
+	* geraud/cs2d/cs2d_utils.hh: New.
+	* geraud/cs2d/dbl_neighb.hh: New.
+	* geraud/cs2d/cs2d_morpho.hh: New.
 
 2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
 
