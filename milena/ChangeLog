@@ -114,6 +114,87 @@
 	Don't include header `limits'.
 	Include header `iosfwd'.
 
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+        Add p_edges.
+  
+        * mln/core/site_set/p_edges.hh:
+        The site set p_edges.
+
+        * mln/util/internal/graph_edge_psite.hh:
+	The associated psite.
+
+	* tests/core/site_set/Makefile.am,
+	* tests/core/site_set/p_edges.cc:
+	Add a basic test.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+    
+	Refactor graph_vertex_psite.
+
+	* mln/util/internal/graph_vertex_psite.hh:
+	Refactor this class...
+        * mln/util/internal/graph_psite_base.hh:
+        ... here.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+        Fix util::graph<G>::is_subgraph_of().
+
+        * mln/util/graph.hh: here.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing methods to vertex and edge.
+
+        * mln/util/internal/graph_edge.hh:
+        Add change_graph().
+        * mln/util/internal/graph_vertex.hh:
+        Add invalidate().
+
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add p_vertices.
+
+	* mln/core/site_set/p_vertices.hh:
+	The site set p_vertices.
+	
+	* mln/util/internal/graph_vertex_psite.hh:
+	The psite associated to p_vertices.
+	
+	* tests/core/site_set/p_vertices.cc,
+	* tests/core/site_set/Makefile.am:
+	Add a small test.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a missing method to graph_vertex_iter.
+
+	* mln/util/internal/graph_vertex_iter.hh:
+	Add a missing update_graph() method.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix invalid compilation of graph_vertex.
+
+	* mln/util/internal/graph_vertex.hh:
+	Remove useless const and a wrong precondition.
+  
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix missing methods in graph_base.
+
+	* mln/util/internal/graph_base.hh:
+	Add new has() overload for convenience.
+
+2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update p_graph_piter.
+
+	* mln/core/site_set/p_graph_piter.hh: 
+	update in order to make it work with the new graph structure.
+
 2008-10-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Start to integrate registration in Milena.
@@ -511,6 +592,24 @@
 	(mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>)
 	(mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>):
 	Adjust.
+
+2008-09-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update reconstruction algorithms in theo's sandbox.
+
+	* mln/level/paste.hh: Fix warning.
+	* sandbox/geraud/Rd/hybrid.hh,
+	* sandbox/geraud/Rd/queue_based.hh,
+	* sandbox/geraud/Rd/parallel.cc,
+	* sandbox/geraud/Rd/union_find.hh,
+	* sandbox/geraud/Rd/parallel.hh,
+	* sandbox/geraud/Rd/sequential.cc,
+	* sandbox/geraud/Rd/utils.hh,
+	* sandbox/geraud/Rd/hybrid.cc,
+	* sandbox/geraud/Rd/queue_based.cc,
+	* sandbox/geraud/Rd/min.cc,
+	* sandbox/geraud/Rd/sequential.hh,
+	* sandbox/geraud/Rd/union_find.cc: Update.
 
 2008-09-30  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -1970,6 +2069,14 @@
 	* mln/canvas/browsing/snake_fwd.hh: Desactivate check
 	of dimension.
 
+2008-09-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update test on extension fill.
+
+	* tests/extension/fill.cc (println_with_border): Remove.
+	Use 'extended' instead.
+	* mln/core/image/extended.hh: Fix missing arg name.
+
 2008-09-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Rename util::ordpair_<T> as util::ord_pair<T>.
@@ -2043,6 +2150,39 @@
 
 2008-09-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix many errors in core/image tests.
+	* mln/convert/to_p_set.hh: Update doc.
+
+	* mln/make/w_window.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_w_window.hh,
+	* mln/convert/to_window.hh: rename mln_dpoint to mln_dpsite.
+
+	* mln/core/internal/run_image.hh,
+	* mln/core/image/mono_rle_image.hh,
+	* mln/core/image/mono_obased_rle_image.hh,
+	* mln/core/image/rle_image.hh,
+	* mln/core/image/obased_rle_image.hh:
+	  Rename size_mem() to memory_size().
+	  Rename p_of_run() to index().
+
+	* mln/core/image/plain.hh: add missing init_().
+
+	* mln/core/internal/run_image.hh,
+	* mln/core/image/mono_rle_image.hh,
+	* mln/core/image/mono_obased_rle_image.hh,
+	* mln/core/image/rle_image.hh,
+	* mln/core/image/value_enc_image.hh:
+	  Use p_set_of and p_run instead of p_runs_.
+
+
+	* mln/estim/sum.hh:
+	  Fully specify the types in template parameters.
+
+	* mln/geom/bbox.hh: Add support for weighted_windows.
+
+2008-09-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix some tests.
 	* milena/tests/convert/to_p_set.cc,
 	* milena/tests/convert/to_window.cc: Use the proper comparison operator.
@@ -2060,6 +2200,120 @@
 
 	* mln/make/box1d.hh: Remove ambiguity.
 	* mln/fun/x2x/rotation.hh: Add 2d case.
+
+2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove \internal tag.
+	* mln/accu/all.hh,
+	* mln/accu/internal/base.hh,
+	* mln/arith/all.hh,
+	* mln/border/all.hh,
+	* mln/canvas/all.hh,
+	* mln/core/concept/doc/image_fastest.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/image/bgraph_image.hh,
+	* mln/core/image/cast_image.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/image/decorated_image.hh,
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh,
+	* mln/core/image/fi_adaptor.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/graph_image.hh,
+	* mln/core/image/hexa.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/core/image/image_if.hh,
+	* mln/core/image/instant.hh,
+	* mln/core/image/interpolated.hh,
+	* mln/core/image/line_graph_image.hh,
+	* mln/core/image/mono_obased_rle_image.hh,
+	* mln/core/image/mono_rle_image.hh,
+	* mln/core/image/obased_rle_image.hh,
+	* mln/core/image/plain.hh,
+	* mln/core/image/rle_image.hh,
+	* mln/core/image/safe.hh,
+	* mln/core/image/sparse_image.hh,
+	* mln/core/image/sub_image.hh,
+	* mln/core/image/sub_image_if.hh,
+	* mln/core/image/t_image.hh,
+	* mln/core/image/tr_image.hh,
+	* mln/core/image/translate_image.hh,
+	* mln/core/image/value_enc_image.hh,
+	* mln/core/internal/box_impl.hh,
+	* mln/core/internal/check/image_all.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/coord_impl.hh,
+	* mln/core/internal/data.hh,
+	* mln/core/internal/dpoints_base.hh,
+	* mln/core/internal/fixme.hh,
+	* mln/core/internal/force_exact.hh,
+	* mln/core/internal/image_base.hh,
+	* mln/core/internal/image_domain_morpher.hh,
+	* mln/core/internal/image_identity.hh,
+	* mln/core/internal/image_if_base.hh,
+	* mln/core/internal/image_morpher.hh,
+	* mln/core/internal/image_primary.hh,
+	* mln/core/internal/image_value_morpher.hh,
+	* mln/core/internal/morpher_lvalue.hh,
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/internal/piter_adaptor.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/internal/pixel_iterator_base.hh,
+	* mln/core/internal/pseudo_site_base.hh,
+	* mln/core/internal/run_image.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/internal/site_iterator_base.hh,
+	* mln/core/internal/site_set_base.hh,
+	* mln/core/internal/site_set_impl.hh,
+	* mln/core/internal/site_set_iterator_base.hh,
+	* mln/core/internal/window_base.hh,
+	* mln/debug/all.hh,
+	* mln/display/all.hh,
+	* mln/fun/all.hh,
+	* mln/fun/x2x/all.hh,
+	* mln/fun/x2x/composed.hh,
+	* mln/geom/all.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/histo/all.hh,
+	* mln/io/all.hh,
+	* mln/io/pbm/all.hh,
+	* mln/io/pfm/all.hh,
+	* mln/io/pnm/all.hh,
+	* mln/labeling/all.hh,
+	* mln/level/all.hh,
+	* mln/level/approx/all.hh,
+	* mln/level/naive/all.hh,
+	* mln/linear/all.hh,
+	* mln/logical/all.hh,
+	* mln/metal/all.hh,
+	* mln/metal/math/all.hh,
+	* mln/morpho/all.hh,
+	* mln/neighb/image.hh,
+	* mln/norm/all.hh,
+	* mln/pw/image.hh,
+	* mln/test/all.hh,
+	* mln/trait/all.hh,
+	* mln/util/all.hh,
+	* mln/util/array.hh,
+	* mln/util/greater_point.hh,
+	* mln/util/greater_psite.hh,
+	* mln/util/lazy_set.hh,
+	* mln/util/set.hh,
+	* mln/value/all.hh,
+	* mln/value/float01_.hh,
+	* mln/value/graylevel.hh,
+	* mln/value/internal/convert.hh,
+	* mln/value/internal/encoding.hh,
+	* mln/value/internal/gray_.hh,
+	* mln/value/internal/gray_f.hh,
+	* mln/value/internal/iterable_set.hh,
+	* mln/value/internal/value_like.hh,
+	* mln/value/label.hh,
+	* mln/value/set.hh,
+	* mln/value/stack.hh: here.
 
 2008-09-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -2519,6 +2773,50 @@
 	* mln/win/multiple.hh (i_): Fix warning.
 	* doc/examples/tuto_bis.cc: Update.
 
+2008-09-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various test related files (again).
+	* tests/convert/to_image.cc,
+	* tests/convert/to_window.cc,
+	* tests/histo/compute.cc,
+	* tests/histo/to_image1d.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/thinning.cc,
+	* tests/set/inter.cc,
+	* tests/set/is_subset_of.cc,
+	* tests/set/sym_diff.cc,
+	* tests/set/uni.cc: Make the test compile.
+
+	* mln/fun/x2x/rotation.hh,
+	* mln/set/diff.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/border/resize.hh,
+	* mln/level/fill.hh,
+	* mln/level/fill_with_image.hh,
+	* mln/level/fill_with_value.hh:
+	  Avoid compilation warning when compiled with -DNDEBUG.
+
+	* mln/convert/to_p_array.hh: Add a missing exact().
+
+	* mln/set/inter.hh,
+	* mln/convert/to_image.hh,
+	* mln/convert/to_p_set.hh,
+	* mln/convert/to_std_set.hh,
+	* mln/convert/to_window.hh: Rename mln_point.
+
+	* mln/core/alias/box1d.hh: Add full namespace name.
+
+	* mln/draw/label.hh: Use sub_image instead of image_if_value.
+
+	* mln/level/transform.spe.hh,
+	* mln/level/median.hh: use values_eligible() instead of values().
+
+	* mln/morpho/Rd.hh: Use greater_point instead of operator<.
+
+	* mln/morpho/erosion.spe.hh: Add a missing include.
+
+	* tests/morpho/Makefile.am: Disable graph related tests.
+
 2008-09-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment the documentation example on a 2D complex.
@@ -2691,6 +2989,12 @@
 	* mln/core/macros.hh (mln_vset, mln_vset_):
 	s/t_eligible_value_set/t_eligible_values_set/
 
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve user doc generation.
+	* doc/Doxyfile.in: Exclude the proper file.
+	* doc/Makefile.am: Exclude the proper symbols for the user doc.
+
 2008-09-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Move and update line_piter as box_runstart_piter.
@@ -2699,6 +3003,40 @@
 	* mln/core/box_runstart_piter.hh: ...this.
 	* tests/core/other/line_piter.cc: Rename as...
 	* tests/core/other/box_runstart_piter.cc: ...this.
+
+2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various test related files.
+	* tests/core/routine/exact.cc: Write test.
+
+	* tests/canvas/chamfer.cc: Fix includes.
+
+	* tests/convert/to_p_set.cc: Fix a method call.
+
+	* mln/trait/op/all.hh: remove guards.
+
+	* mln/core/internal/exact.hh: Add a forward declaration.
+
+	* mln/core/routine/exact.hh: Move an include.
+
+	* mln/level/median.hh,
+	* mln/level/naive/median.hh,
+	* mln/level/was.median.hh: Use median_h.
+
+	* mln/level/memset_.hh: Use full namespace name to call
+	  force_exact (g++ does not look at the right namespace if the full name
+	  is not given).
+
+	* mln/convert/to_image.hh: use geom::bbox().
+
+	* mln/geom/chamfer.hh,
+	* mln/geom/pmin_pmax.hh: Rename mln_point to mln_site.
+
+
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/seeds2tiling_roundness.hh: Use exact().
+
+	* mln/value/hsi.hh: Add missing copyright header.
 
 2008-09-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
@@ -3064,6 +3402,39 @@
 	* doc/tutorial/examples/win_multiple.cc: New.
 	* mln/core/internal/site_relative_iterator_base.hh: .
 	* mln/win/multiple.hh: New.
+
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix Changelog and comments.
+	* ChangeLog: Add missing entries.
+	* tests/core/site_set/p_image.cc: Fix comments.
+
+2008-09-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated tests.
+	* tests/core/site_set/p_priority_queue_fast.cc,
+	* tests/core/site_set/p_priority_queue_fast_with_array.cc,
+	* tests/core/site_set/p_runs.cc,
+	* tests/core/site_set/pset_array.cc:
+	  Remove these tests according to core/site_set/status.txt.
+
+	* mln/level/fill_with_value.hh: fix a compilation warning
+	  (unused variable).
+
+	* mln/set/get.hh: new algorithm to get the ith element in a
+	site set.
+
+	* tests/core/image/Makefile.am,
+	* tests/core/site_set/Makefile.am: disable few tests.
+
+	* tests/core/site_set/p_image2d.cc: rename as...
+	* tests/core/site_set/p_image.cc: ...this file.
+
+	* tests/core/site_set/p_priority_queue.cc,
+	* tests/core/site_set/p_set.cc,
+	* tests/core/site_set/pset_if.cc:
+	  update assertions and make the test compile.
+
 
 2008-09-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -3555,6 +3926,14 @@
 
 	* mln/win/rectangle2d.hh: Update an old include
 
+2008-09-11  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a window-to-neighborhood adapter.
+
+	* mln/core/internal/window_base.hh
+	(is_neighbable_): New.
+	* mln/core/neighb.hh: Revamp.
+
 2008-09-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor iterators on p_complexes with iterator on complexes.
@@ -3608,6 +3987,12 @@
 	(mln::complex_fwd_iter_<D>::set_cplx)
 	(mln::complex_bkd_iter_<D>::set_cplx):
 	New.
+
+2008-09-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a section about graph images in tutorial.
+	* doc/tutorial/tutorial.tex: Add a section about graph images and fix
+	  few mistakes all along the tutorial.
 
 2008-09-10  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -3677,6 +4062,11 @@
 	* mln/core/alias/box3d.hh: remove underscore to box_.
 	* mln/core/alias/dpoint3d.hh: remove underscore to dpoint_.
 	* mln/core/alias/point3d.hh: remove underscore to point_.
+
+2008-09-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve tutorial.
+	* doc/tutorial/tutorial.tex: improve explanations.
 
 2008-09-09  Nicolas Ballas  <ballas@lrde.epita.fr>
 
@@ -3895,6 +4285,21 @@
 	* mln/fun/x2x/translation.hh,
 	* mln/fun/x2x/rotation.hh: Fix wrong namespaces.
 	* sandbox/jardonnet/virtual/access.hh: Fix concept check.
+
+2008-09-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment tutorial example for Z.
+
+	* doc/tutorial/examples/for_Z.cc: Augment.
+	* mln/debug/println.spe.hh (has): Replace ima.has by
+	ima.domain.has so that we do not print the domain extension.
+	* mln/core/site_set/p_if.hh (pset, pset_): Rename as...
+	(s, s_): ...these; more consistent with the other code.
+	* mln/core/image/image_if.hh (todo): Fix typo.
+	* mln/core/internal/image_domain_morpher.hh
+	(operator()): Fix missing preconditions.
+	* mln/value/rgb.hh (operator<<): Remove spaces.
+	* mln/geom/bbox.hh (bbox): Add overload for images.
 
 2008-09-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
