@@ -1,5 +1,11 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a meta iterator sequencing two complex relative iterators.
+
+	* mln/topo/internal/complex_relative_iterator_sequence.hh: New.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/macros.hh (mln_face, mln_face_): New macros.
 
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
