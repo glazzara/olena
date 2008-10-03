@@ -211,12 +211,6 @@
 	* jardonnet/test/icp.cc: .
 	* jardonnet/registration/tools.hh: .
 
-2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
-
-	Add kruskal algorithm in a sample morphological chain.
-
-	* geraud/cs2d/kruskal.cc: New.
-
 2008-09-01  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Sandbox: Start working on metal::array.
@@ -331,6 +325,12 @@
 	* jardonnet/registration/tools.hh: Fix: signed -> unsigned.
 	* jardonnet/registration/quat7.hh: Fix: signed -> unsigned.
 	* jardonnet/registration/icp_ref.hh: Add saving before start.
+
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add kruskal algorithm in a sample morphological chain.
+
+	* geraud/cs2d/kruskal.cc: New.
 
 2008-06-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
