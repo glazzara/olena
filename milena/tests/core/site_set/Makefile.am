@@ -10,7 +10,8 @@ check_PROGRAMS =				\
   p_queue					\
   p_queue_fast					\
   p_set						\
-  pset_if
+  pset_if 					\
+  p_vertices
 
 p_array_SOURCES = p_array.cc
 ##p_bgraph_SOURCES = p_bgraph.cc
@@ -20,5 +21,6 @@ p_queue_SOURCES = p_queue.cc
 p_queue_fast_SOURCES = p_queue_fast.cc
 p_set_SOURCES = p_set.cc
 pset_if_SOURCES = pset_if.cc
+p_vertices_SOURCES = p_vertices.cc
 
 TESTS = $(check_PROGRAMS)
