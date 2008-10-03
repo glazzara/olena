@@ -431,6 +431,13 @@
 	* jardonnet/test/img/c10.pbm,
 	* jardonnet/test/img/c11.pbm: New test images.
 
+2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some tutorial-like files about cubical complex.
+
+	* geraud/cs2d/tuto.cc: New.
+	* geraud/cs2d/tuto_bis.cc: New.
+
 2008-06-09 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Thinning test files.
@@ -458,6 +465,18 @@
 	* jardonnet/test/icp_ref.cc: Fix p_array initialisation.
 	* jardonnet/registration/icp_ref.hh (impl::icp) : Update :
 	Stop if e_k < d_k.
+
+2008-06-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a 2D simplicial complex (toy code) + a double-window type.
+
+	* sandbox/geraud/cs2d: New directory.
+	* sandbox/geraud/cs2d/cs2d.cc: New.
+	* sandbox/geraud/cs2d/dbl_neighb.cc: New.
+	* sandbox/geraud/cs2d/cs2d.hh: New.
+	* sandbox/geraud/cs2d/cs2d_utils.hh: New.
+	* sandbox/geraud/cs2d/dbl_neighb.hh: New.
+	* sandbox/geraud/cs2d/cs2d_morpho.hh: New.
 
 2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
 
