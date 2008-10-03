@@ -50,7 +50,8 @@ namespace mln
     | topo::adj_lower_face_fwd_iter<D>.  |
     `-----------------------------------*/
 
-    /// \brief Forward iterator on all the faces of an mln::complex<D>.
+    /// \brief Forward iterator on all the adjacent (n-1)-faces of the
+    /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
@@ -64,11 +65,7 @@ namespace mln
 								self_ > super_;
 
     public:
-      using super_::is_valid;
-      using super_::invalidate;
-
-    public:
-      /// Construction and assignment.
+      /// Construction.
       /// \{
       adj_lower_face_fwd_iter();
       template <typename Fref>
@@ -84,7 +81,8 @@ namespace mln
     | topo::adj_lower_face_bkd_iter<D>.  |
     `-----------------------------------*/
 
-    /// \brief Backward iterator on all the faces of an mln::complex<D>.
+    /// \brief Backward iterator on all the adjacent (n-1)-faces of the
+    /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
@@ -98,11 +96,7 @@ namespace mln
 								 self_ > super_;
 
     public:
-      using super_::is_valid;
-      using super_::invalidate;
-
-    public:
-      /// Construction and assignment.
+      /// Construction.
       /// \{
       adj_lower_face_bkd_iter();
       template <typename Fref>
@@ -131,10 +125,8 @@ namespace mln
     template <typename Fref>
     inline
     adj_lower_face_fwd_iter<D>::adj_lower_face_fwd_iter(const Fref& f_ref)
+      : super_(f_ref)
     {
-      center_at(f_ref);
-      // FIXME: Move this to the super class?
-      invalidate();
     }
 
     template <unsigned D>
@@ -161,10 +153,8 @@ namespace mln
     template <typename Fref>
     inline
     adj_lower_face_bkd_iter<D>::adj_lower_face_bkd_iter(const Fref& f_ref)
+      : super_(f_ref)
     {
-      center_at(f_ref);
-      // FIXME: Move this to the super class?
-      invalidate();
     }
 
     template <unsigned D>

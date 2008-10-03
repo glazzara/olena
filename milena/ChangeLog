@@ -1,5 +1,27 @@
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Overhaul iterators on adjacent lower- and higher-dimension faces.
+
+	* mln/topo/adj_lower_face_iter.hh:
+	* mln/topo/adj_higher_face_iter.hh:
+	Update the documentation.
+	(mln::topo::adj_lower_face_fwd_iter<D>::is_valid)
+	(mln::topo::adj_lower_face_fwd_iter<D>::invalidate)
+	(mln::topo::adj_lower_face_bkd_iter<D>::is_valid)
+	(mln::topo::adj_lower_face_bkd_iter<D>::invalidate)
+	(mln::topo::adj_higher_face_fwd_iter<D>::is_valid)
+	(mln::topo::adj_higher_face_fwd_iter<D>::invalidate)
+	(mln::topo::adj_higher_face_bkd_iter<D>::is_valid)
+	(mln::topo::adj_higher_face_bkd_iter<D>::invalidate):
+	Remove useless `using' declarations.
+	(mln::topo::adj_lower_face_fwd_iter<D>::adj_lower_face_fwd_iter)
+	(mln::topo::adj_lower_face_bkd_iter<D>::adj_lower_face_bkd_iter)
+	(mln::topo::adj_higher_face_fwd_iter<D>::adj_higher_face_fwd_iter)
+	(mln::topo::adj_higher_face_bkd_iter<D>::adj_higher_face_bkd_iter):
+	Delegate the construction to the super class.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Overhaul mln::topo::internal::complex_relative_iterator_base.
 
 	* mln/topo/internal/complex_relative_iterator_base.hh:
