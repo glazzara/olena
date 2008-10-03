@@ -69,7 +69,10 @@ namespace mln
 	void update_id(unsigned id);
 
 	/// Return pointer of the graph holding this edge.
-        const graph_t * const g() const;
+        const graph_t * g() const;
+
+	/// Set \att g_ with \p g;
+	void change_graph(const graph_t& g);
 	/// \}
 
 
@@ -99,7 +102,7 @@ namespace mln
 	/// \}
 
       private:
-	graph_t * const g_;
+	graph_t * g_;
 	unsigned id_;
     };
 
@@ -123,7 +126,7 @@ namespace mln
     struct subject_impl< const util::edge<G>, E >
     {
 	unsigned id() const;
-        const mlc_const(G) * const g() const;
+        const mlc_const(G) * g() const;
         unsigned v_other(unsigned id_v)	const;
 	bool is_valid() const;
 	unsigned v1() const;
@@ -141,6 +144,7 @@ namespace mln
            subject_impl< const util::edge<G>, E >
     {
       void update_id(unsigned id);
+      void change_graph(const mlc_const(G)& g);
 
       private:
 	E& exact_();
@@ -199,10 +203,18 @@ namespace mln
 
     template <typename G>
     inline
-    const typename edge<G>::graph_t * const
+    const typename edge<G>::graph_t *
     edge<G>::g() const
     {
       return g_;
+    }
+
+    template <typename G>
+    inline
+    void
+    edge<G>::change_graph(const graph_t& g)
+    {
+      g_ = & g;
     }
 
     template <typename G>
@@ -303,7 +315,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    const mlc_const(G) * const
+    const mlc_const(G) *
     subject_impl< const util::edge<G>, E >::g() const
     {
       return exact_().get_subject().g();
@@ -368,6 +380,14 @@ namespace mln
     subject_impl<	util::edge<G>, E >::update_id(unsigned id)
     {
       return exact_().get_subject().update_id(id);
+    }
+
+    template <typename G, typename E>
+    inline
+    void
+    subject_impl<	util::edge<G>, E >::change_graph(const mlc_const(G)& g)
+    {
+      return exact_().get_subject().change_graph(&g);
     }
 
   } // End of namespace mln::internal

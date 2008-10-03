@@ -56,6 +56,8 @@ namespace mln
 
         /// Check whether the vertex is still part of the graph.
         bool is_valid() const;
+	/// Invalidate that vertex.
+	void invalidate();
 
         unsigned other(unsigned id_e) const;
 
@@ -118,6 +120,7 @@ namespace mln
     struct subject_impl<       util::vertex<G>, E > :
            subject_impl< const util::vertex<G>, E >
     {
+	void invalidate();
 	void change_graph(const G& g);
 	void update_id(unsigned id);
 
@@ -168,6 +171,15 @@ namespace mln
     {
       return g_ != 0 && g_->has_v(id_);
     }
+
+    template<typename G>
+    inline
+    void
+    vertex<G>::invalidate()
+    {
+      id_ = g_->v_nmax();
+    }
+
 
     template<typename G>
     inline
@@ -333,6 +345,14 @@ namespace mln
     subject_impl<	util::vertex<G>, E >::exact_()
     {
       return internal::force_exact<E>(*this);
+    }
+
+    template <typename G, typename E>
+    inline
+    void
+    subject_impl<	util::vertex<G>, E >::invalidate()
+    {
+      exact_().get_subject().invalidate();
     }
 
     template <typename G, typename E>
