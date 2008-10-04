@@ -48,19 +48,7 @@
 # include <mln/topo/n_face.hh>
 # include <mln/topo/n_faces_set.hh>
 
-# include <mln/topo/face_iter.hh>
-# include <mln/topo/n_face_iter.hh>
-# include <mln/topo/static_n_face_iter.hh>
-// FIXME: Disabled (moved to the attic).
-# if 0
-#  include <mln/topo/faces_iter.hh>
-# endif
-
-# include <mln/topo/adj_lower_face_iter.hh>
-# include <mln/topo/adj_higher_face_iter.hh>
-# include <mln/topo/adj_lower_higher_face_iter.hh>
-# include <mln/topo/adj_lower_dim_connected_n_face_iter.hh>
-# include <mln/topo/adj_higher_dim_connected_n_face_iter.hh>
+# include <mln/topo/complex_iterators.hh>
 
 
 namespace mln

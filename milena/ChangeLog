@@ -1,5 +1,12 @@
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a header for iterators on complexes.
+
+	* mln/topo/complex.hh: Move iterator-related header inclusions...
+	* mln/topo/complex_iterators.hh: ...here (new file).
+
+2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add relative iterators on faces sharing lower/higher-dimension faces.
 
 	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
