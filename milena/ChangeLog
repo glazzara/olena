@@ -1,5 +1,12 @@
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a centered window of higher-dimension adjacent complex faces.
+
+	* mln/core/image/complex_higher_window_p.hh: New.
+	* tests/morpho/complex_image_morpho.cc: Exercise this window.
+
+2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Revamp test complex_image_morpho.
 
 	* tests/morpho/complex_image_morpho.cc: Clean up whitespaces.
