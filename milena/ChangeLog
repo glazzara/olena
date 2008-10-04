@@ -1,5 +1,14 @@
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	First tests of morphological filters on complex-based images.
+
+	* tests/morpho/complex_image_morpho.cc: New.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add
+	complex_image_morpho.
+	(complex_image_morpho_SOURCES): New.
+
+2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a centered window of lower-dimension adjacent complex faces.
 
 	* mln/core/image/complex_lower_window_p.hh: New.

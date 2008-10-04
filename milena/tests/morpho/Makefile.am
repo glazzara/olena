@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   closing_height				\
   closing_volume				\
   combined					\
+  complex_image_morpho				\
   contrast					\
   dilation					\
   dilation_max_h				\
@@ -59,6 +60,8 @@ graph_image_wst_SOURCES = graph_image_wst.cc
 
 line_graph_image_morpho_SOURCES = line_graph_image_morpho.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
+
+complex_image_morpho_SOURCES = complex_image_morpho.cc
 
 meyer_wst_SOURCES = meyer_wst.cc
 
