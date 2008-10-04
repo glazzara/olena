@@ -1,5 +1,11 @@
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a complex relative iterator adapter adding the center/ref. face.
+
+	* mln/topo/centered_iter_adapter.hh: New.
+
+2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a complex relative iterator iterating on its center only.
 
 	* mln/topo/center_only_iter.hh: New.
