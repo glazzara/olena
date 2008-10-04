@@ -154,7 +154,7 @@ namespace mln
     const p_complex<D, P>& domain() const;
 
     /// Return the array of values associated to the faces.
-    const metal::vec<D + 1, std::vector<V> >& face_values() const;
+    const metal::vec<D + 1, std::vector<V> >& values() const;
     /// \}
   };
 
@@ -178,8 +178,8 @@ namespace mln
 	     const complex_image<D, P, W>& model)
   {
     metal::vec<D + 1, std::vector<V> > values;
-    for (unsigned i = 0; i < D; ++i)
-      values[i].resize(model.values[i].size());
+    for (unsigned i = 0; i <= D; ++i)
+      values[i].resize(model.values()[i].size());
     target.init_(model.domain(), values);
   }
 
@@ -222,7 +222,7 @@ namespace mln
   complex_image<D, P, V>::complex_image(const p_complex<D, P>& pc)
   {
     metal::vec<D + 1, std::vector<V> > values;
-    for (unsigned i = 0; i < D; ++i)
+    for (unsigned i = 0; i <= D; ++i)
       values[i].resize(pc.cplx().nfaces(i));
     init_(pc, values);
   }
@@ -272,9 +272,9 @@ namespace mln
   template <unsigned D, typename P, typename V>
   inline
   const metal::vec< D + 1, std::vector<V> >&
-  complex_image<D, P, V>::face_values() const
+  complex_image<D, P, V>::values() const
   {
-    return this->data_->val_;
+    return this->data_->values_;
   }
 
   template <unsigned D, typename P, typename V>

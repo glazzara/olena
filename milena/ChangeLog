@@ -1,5 +1,18 @@
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix initialization and access to values in mln::complex_image.
+
+	* mln/core/image/complex_image.hh
+	(mln::complex_image<D, P, V>::face_values): Rename as...
+	(mln::complex_image<D, P, V>::values): ...this.
+	Fix access to the array of values.
+	(mln::complex_image<D, P, V>::complex_image(const p_complex<D, P>&)):
+	Initialize faces of all dimensions, including D.
+	(mln::init_): Likewise.
+	Fix the use of values from model.
+
+2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove a warning about not used arguments in mln::fill_dispatch.
 
 	* mln/extension/fill.hh
