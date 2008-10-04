@@ -1,5 +1,12 @@
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a complex relative iterator iterating on its center only.
+
+	* mln/topo/center_only_iter.hh: New.
+	* tests/topo/complex.cc: Exercise this iterator.
+
+2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix initialization and access to values in mln::complex_image.
 
 	* mln/core/image/complex_image.hh

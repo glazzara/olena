@@ -33,6 +33,7 @@
 #include <iostream>
 
 #include <mln/topo/complex.hh>
+#include <mln/topo/center_only_iter.hh>
 
 using namespace mln;
 
@@ -324,6 +325,19 @@ int main()
                                         face<D>'s. 
      -----------------------------------------------------------------
   */
+
+  /*------------------.
+  | Other iterators.  |
+  `------------------*/
+
+  // For each face, iterate on itself.  (This iterator is not
+  // interesting as-is, but is useful when combined with others,
+  // e.g. in topo::centered_iter_adapter).
+  topo::center_only_iter<D> center(fwd_f);
+  for_all(fwd_f)
+    for_all(center)
+      std::cout << "  " << center << std::endl;
+  std::cout << std::endl;
 }
 
 
