@@ -48,6 +48,10 @@
 /* FIXME: Factor common parts with
    milena/tests/core/image/complex_image.cc  */
 
+// Forward declaration.
+template <typename I, typename W>
+void test_morpho(const mln::Image<I>& ima, const mln::Window<W> win);
+
 
 int main()
 {
@@ -59,14 +63,14 @@ int main()
 
   /* A 2-d (simplicial) complex and its adjacency graph.
 
-              v0      e3     v3
-                o-----------o                v0----e3----v3      
-               / \ ,-----. /                / \    |    /   
-              / . \ \ t1/ /                /   \   t1  /    
-          e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
-            / /t0 \ \ ' /                /   t0  \   /      
-           / `-----' \ /                /    |    \ /       
-          o-----------o                v1----e2----v2
+	      v0      e3     v3
+		o-----------o                v0----e3----v3
+	       / \ ,-----. /                / \    |    /
+	      / . \ \ t1/ /                /   \   t1  /
+	  e0 / / \ e1\ / / e4             e0.  ,e1´  `e4
+	    / /t0 \ \ ' /                /   t0  \   /
+	   / `-----' \ /                /    |    \ /
+	  o-----------o                v1----e2----v2
        v1      e2      v2
 
        v = vertex
@@ -84,7 +88,7 @@ int main()
   topo::n_face<0, D> v1 = c.add_face();
   topo::n_face<0, D> v2 = c.add_face();
   topo::n_face<0, D> v3 = c.add_face();
- 
+
   // 1-faces (segments).
   topo::n_face<1, D> e0 = c.add_face(v0 + v1);
   topo::n_face<1, D> e1 = c.add_face(v0 + v2);
@@ -96,7 +100,7 @@ int main()
   topo::n_face<2, D> t0 = c.add_face(e0 + e1 + e2);
   topo::n_face<2, D> t1 = c.add_face(e1 + e3 + e4);
 
-  
+
   /*-------------------------.
   | Complex-based site set.  |
   `-------------------------*/
@@ -118,30 +122,54 @@ int main()
   // Initialize values.
   debug::iota(ima);
 
+  /* Values of IMA.
+
+	      v0      e3     v3             1      8      4
+		o-----------o                o-----------o
+	       / \ ,-----. /                / \ ,-----. /
+	      / . \ \ t1/ /                / . \ \ 11/ /
+	  e0 / / \ e1\ / / e4           5 / / \ 6 \ / / 9
+	    / /t0 \ \ ' /                / /10 \ \ ' /
+	   / `-----' \ /                / `-----' \ /
+	  o-----------o                o-----------o
+       v1      e2      v2	     2      7       3
+
+  */
+
   // Manual iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   for_all (p)
     std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
-  std::cout << std::endl;
+  std::cout << std::endl << std::endl;
 
   /*---------------------------------------------------.
   | Morphological operations on complex-based images.  |
   `---------------------------------------------------*/
 
-  typedef complex_lower_window_p<D, P> win_t;
-  win_t win;
+  test_morpho(ima, complex_lower_window_p<D, P>());
 
-  ima_t ima_dil = morpho::dilation(ima, win);
+  /* FIXME: Exercise elementary erosion/dilation (with neighborhoods)
+     when available.  */
+}
+
+
+template <typename I, typename W>
+void
+test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win)
+{
+  const I& ima = exact(ima_);
+  mln_assertion(ima.has_data());
+  mln_piter(I) p(ima.domain());
+
+  mln_concrete(I) ima_dil = mln::morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.
   for_all (p)
     std::cout << "ima_dil (" << p << ") = " << ima_dil(p) << std::endl;
   std::cout << std::endl;
 
-  ima_t ima_ero = morpho::erosion(ima, win);
+  mln_concrete(I) ima_ero = mln::morpho::erosion(ima, win);
   // Manual iteration over the domain of IMA_ERO.
   for_all (p)
     std::cout << "ima_ero (" << p << ") = " << ima_ero(p) << std::endl;
-
-  /* FIXME: Exercise elementary erosion/dilation (with neighborhoods)
-     when available.  */
+  std::cout << std::endl << std::endl;
 }

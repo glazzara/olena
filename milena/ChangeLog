@@ -1,3 +1,11 @@
+2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
+	Revamp test complex_image_morpho.
+
+	* tests/morpho/complex_image_morpho.cc: Clean up whitespaces.
+	(main): Move tests on morphological filters...
+	(test_morpho): ...here (new function).
+
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
 	First tests of morphological filters on complex-based images.
