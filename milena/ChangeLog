@@ -1,5 +1,16 @@
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add relative iterators on faces sharing lower/higher-dimension faces.
+
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh:
+	New.
+	Include these headers...
+	* mln/topo/complex.hh: ...here.
+	* tests/topo/complex.cc: Exercise these iterators.
+
+2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add operator!= on face handles.
 
 	* mln/topo/face.hh

@@ -211,10 +211,12 @@ int main()
      milena/tests/core/complex_image.cc) and ticket #162
      (https://trac.lrde.org/olena/ticket/162) */
 
-  /* Iterate on the the set of (n-1)- and/or (n+1)-faces adjacent to
-     the faces of C.
+  // ------------------------------------------------------------ //
+  // Iterate on the the set of (n-1)- and/or (n+1)-faces adjacent //
+  // to the faces of C.                                           //
+  // ------------------------------------------------------------ //
 
-     Note: this can be solved with iterators where the dimension can
+  /*   Note: this can be solved with iterators where the dimension can
      be either static or dynamic.  For the moment, our iterators are
      dynamic w.r.t. the dimensions of the faces (both the reference
      face and the iterated ones).
@@ -259,31 +261,44 @@ int main()
   }
   std::cout << std::endl;
 
-  /* But first, we need to clarify (existing) names.  The one listed
-     in https://trac.lrde.org/olena/wiki/Olena/ComplexBasedImages
-     are OK.
 
-     Next, write these:
+  // ------------------------------------------------------- //
+  // Iterators on the the set of n-faces sharing an adjacent //
+  // (n-1)-face or (n+1)-face with f, n being dynamic.       //
+  // ------------------------------------------------------- //
+
+  // For each face F of C, iterate on the the set of n-faces sharing
+  // adjacent (n-1)-faces with F.
+  topo::adj_lower_dim_connected_n_face_fwd_iter<D> fwd_aldcf(fwd_f);
+  topo::adj_lower_dim_connected_n_face_bkd_iter<D> bkd_aldcf(fwd_f);
+  for_all(fwd_f)
+  {
+    std::cout << "Lower-dim-connected faces adjacent to " << fwd_f
+	      << ": " << std::endl;
+    for_all_2(fwd_aldcf, bkd_aldcf)
+      std::cout << "  " << fwd_aldcf << '\t' << bkd_aldcf << std::endl;
+  }
+  std::cout << std::endl;
+
+  // For each face F of C, iterate on the the set of n-faces sharing
+  // adjacent (n+1)-faces with F.
+  topo::adj_higher_dim_connected_n_face_fwd_iter<D> fwd_ahdcf(fwd_f);
+  topo::adj_higher_dim_connected_n_face_bkd_iter<D> bkd_ahdcf(fwd_f);
+  for_all(fwd_f)
+  {
+    std::cout << "Higher-dim-connected faces adjacent to " << fwd_f
+	      << ": " << std::endl;
+    for_all_2(fwd_ahdcf, bkd_ahdcf)
+      std::cout << "  " << fwd_ahdcf << '\t' << bkd_ahdcf << std::endl;
+  }
+  std::cout << std::endl;
+
+
+  /* Next, write these:
 
      -----------------------------------------------------------------
      Name                               Definition
      -----------------------------------------------------------------
-     adj_lower_dim_connected_n_face_fwd_iter<D>(c, f)
-     adj_lower_dim_connected_n_face_bkd_iter<D>(c, f)
-     (FIXME: These names are admittedly too long.)
-                                        | Iterators on the the set of
-                                        | n-faces sharing an adjacent
-                                        | (n-1)-face with f, n being
-                                        | dynamic
-
-     adj_higher_dim_connected_n_face_fwd_iter<D>(c, f)
-     adj_higher_dim_connected_n_face_bkd_iter<D>(c, f)
-     (FIXME: These names are admittedly too long.)
-                                        | Iterators on the the set of
-                                        | n-faces sharing an adjacent
-                                        | (n+1)-face with f, n being
-                                        | dynamic
-
      cell_fwd_iter<D>(c, f)             | Iterators on the set of the
      cell_bkd_iter<D>(c, f)             | faces in the « cell »
                                         | including p, i.e. the set of
@@ -324,7 +339,9 @@ int main()
      faces_fwd_iter_<N, D>              static, acting as proxies of
                                         face<D>'s. 
      -----------------------------------------------------------------
-  */
+
+     See also https://trac.lrde.org/olena/wiki/Olena/ComplexBasedImages  */
+
 
   /*------------------.
   | Other iterators.  |
@@ -333,6 +350,7 @@ int main()
   // For each face, iterate on itself.  (This iterator is not
   // interesting as-is, but is useful when combined with others,
   // e.g. in topo::centered_iter_adapter).
+  std::cout << "Center-only iterator:" << std::endl;
   topo::center_only_iter<D> center(fwd_f);
   for_all(fwd_f)
     for_all(center)
