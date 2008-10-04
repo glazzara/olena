@@ -144,6 +144,15 @@
 
 2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix header guards of complex neighborhoods.
+
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_higher_neighborhood.hh,
+	* mln/core/image/complex_lower_higher_neighborhood.hh:
+	Do it.
+
+2008-10-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise neighborhood and piters on lower+higher-dim. adjacent faces.
 
 	* tests/core/image/complex_image.cc: Here.

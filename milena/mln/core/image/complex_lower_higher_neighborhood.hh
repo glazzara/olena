@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
-# define MLN_CORE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
+#ifndef MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
+# define MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
 
 /// \file mln/core/complex_lower_higher_neighborhood.hh
 /// \brief A neighborhood centered on a n-face of complex returning its
@@ -118,4 +118,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
+#endif // ! MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
