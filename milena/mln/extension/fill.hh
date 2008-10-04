@@ -129,7 +129,7 @@ namespace mln
       template <typename I>
       void fill_dispatch(mln::trait::image::ext_domain::none,
 			 mln::trait::image::ext_io::any,
-			 I& ima, const mln_value(I)& val)
+			 I& /* ima */, const mln_value(I)& /* val */)
       {
 	// No-op cause no extension domain, no border.
       }

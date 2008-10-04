@@ -1,5 +1,12 @@
 2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
 
+	Remove a warning about not used arguments in mln::fill_dispatch.
+
+	* mln/extension/fill.hh
+	(mln::fill_dispatch(none, any, I&, const mln_value(I)&)): Here.
+
+2008-10-04  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/window.hh: Fix a closing-namespace comment.
 
 2008-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
