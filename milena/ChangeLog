@@ -30,7 +30,7 @@
 
 	Add a centered window of lower/higher-dim. adjacent complex faces.
 
-	* mln/core/image/complex_lower_higher_neighborhood.hh: New.
+	* mln/core/image/complex_lower_higher_window_p.hh: New.
 	* tests/morpho/complex_image_morpho.cc: Exercise this window.
 
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
