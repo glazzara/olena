@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,7 @@
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/alias/w_window2d_float.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image/inplace.hh>
+
 # include <mln/core/image/image_if.hh>
 # include <mln/canvas/chamfer.hh>
 
@@ -83,8 +83,8 @@ namespace mln
 
 	inline
 	void init()                            { initialize(output, exact(input));
-						 level::fill(inplace(output | (input | pw::cst(true)).domain()),  0);
-						 level::fill(inplace(output | (input | pw::cst(false)).domain()), max); }
+	                                         level::fill((output | (input | pw::cst(true)).domain()).rw(),  0);
+						 level::fill((output | (input | pw::cst(false)).domain()).rw(), max); }
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }
 

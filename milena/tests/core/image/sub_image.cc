@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>
-#include <mln/core/image/inplace.hh>
+
 
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
@@ -46,8 +46,8 @@ int main()
   level::fill(ima, 0);
   debug::println(ima);
 
-  level::fill(inplace(ima | make::box2d(1,1, 3,3)),  5);
-  level::fill(inplace(ima | make::box2d(4,4, 6,6)),  1);
+  level::fill((ima | make::box2d(1,1, 3,3)).rw(),  5);
+  level::fill((ima | make::box2d(4,4, 6,6)).rw(),  1);
 
   debug::println(ima);
 }

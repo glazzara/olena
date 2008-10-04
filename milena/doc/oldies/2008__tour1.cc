@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2007, 2008 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -165,7 +166,7 @@ int main()
   // Memory has been allocated so data can be stored but pixel values
   // have not been initialized yet.  So we fill img3a, that is, all
   // pixels of img3a, with the value 'a':
-  level::fill(inplace(img3a), 'a');
+  level::fill(img3a, 'a');
 
   // The "fill" algorithm is located in the sub-namespace "level"
   // since this algorithm deals with the "level" of pixel values.
@@ -183,12 +184,14 @@ int main()
   // Most algorithms in Olena are constructed following the classical
   // scheme: "output algo(input)", where the input image is only read.
   // However some few algorithms take an input image in order to
-  // modify it.  To enforce this particular feature, the user shall
-  // explicitly state that the image is provided so that its data is
-  // modified "inplace".
+  // modify it.
 
-  // The algorithm call shall be "level::fill(inplace(ima), val)".
-  // When forgetting the "inplace(..)" statement it does not compile.
+  // Obsolete:  To enforce this particular feature, the user shall
+  // Obsolete:  explicitly state that the image is provided so that its data is
+  // Obsolete:  modified "inplace".
+
+  // Obsolete:  The algorithm call shall be "level::fill(inplace(ima), val)".
+  // Obsolete:  When forgetting the "inplace(..)" statement it does not compile.
 
 
   // We then define below a second image to play with.  As you can see
@@ -198,10 +201,10 @@ int main()
   image1d<char> img3b(5, 14);
 
   // We initialize the image values.
-  level::fill(inplace(img3b), 'b');
+  level::fill(img3b, 'b');
 
   // Last we now paste the contents of img3b in img3a...
-  level::paste(img3b, inplace(img3a));
+  level::paste(img3b, img3a);
 
   // ...and print the result.
   debug::println(img3a);

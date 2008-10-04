@@ -189,7 +189,7 @@ namespace mln
       {
 	// R <- 0 and N <- 0
 	if (N_box.is_valid() != 0)
-	  level::fill(inplace(is | N_box.to_result()), in_O);
+	  level::fill((is | N_box.to_result()).rw(), in_O);
 	clear_N(N);
 	N_box.init();
 

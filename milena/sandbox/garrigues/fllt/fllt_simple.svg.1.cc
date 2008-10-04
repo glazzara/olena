@@ -192,7 +192,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	if (N_box.is_valid())
-	  level::fill(inplace(is | N_box.to_result()), in_O);
+	  level::fill((is | N_box.to_result()).rw(), in_O);
 
 	N_box.init();
 	R_box.init();

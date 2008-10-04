@@ -227,7 +227,7 @@ int main()
 
 
 
-  mln_VAR(edge, extend(inplace(ima | is_edge),
+  mln_VAR(edge, extend((ima | is_edge).rw(),
 		       pw::value(ima)));
   level::paste(morpho::gradient(edge, e2c), edge);
   //                                  ^^^

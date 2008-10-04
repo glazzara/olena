@@ -1,5 +1,114 @@
 2008-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Replace the inplace routine by the rw method.
+
+	Get rid of the old inplace/instant files.
+
+	* sandbox/geraud/dead: New directory.
+	* mln/core/image/instant.hh: Move...
+	* sandbox/geraud/dead/instant.hh: ...here.
+	* mln/core/image/inplace.hh: Move...
+	* sandbox/geraud/dead/inplace.hh: ...here.
+
+	Add the rw method to do the job.
+	* mln/core/internal/image_morpher.hh (rw): New.
+
+	Update other files.
+
+	* tools/seed2tiling.cc,
+	* tests/core/site_set/p_image.cc,
+	* tests/core/image/sub_image.cc,
+	* tests/draw/line.cc,
+	* tests/level/memcpy_.cc,
+	* tests/convert/to_p_set.cc,
+	* tests/convert/to_window.cc,
+	* tests/display/show.cc,
+	* tests/display/save_and_show.cc,
+	* tests/display/color_pretty.cc,
+	* tests/canvas/chamfer.cc,
+	* doc/oldies/2008__tour1.cc,
+	* doc/oldies/2008__tour3.cc,
+	* doc/tutorial/examples/sub_image.cc,
+	* doc/tutorial/examples/p_line2d.cc,
+	* doc/tutorial/examples/for_Z.cc,
+	* doc/examples/tuto_bis.cc,
+	* mln/core/image/status.txt,
+	* mln/core/image/all.hh,
+	* mln/core/image/hexa_piter.hh,
+	* mln/core/image/sub_image.hh,
+	* mln/level/fill_with_image.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/replace.hh,
+	* mln/level/paste.hh,
+	* mln/level/fill_with_value.hh,
+	* mln/accu/rank.hh,
+	* mln/accu/rank_high_quant.hh,
+	* mln/accu/rank_bool.hh,
+	* mln/geom/chamfer.hh,
+	* sandbox/duhamel/slow_seed2tiling.cc,
+	* sandbox/duhamel/color_sub.cc,
+	* sandbox/duhamel/chamfer.cc,
+	* sandbox/duhamel/chamfer.hh,
+	* sandbox/geraud/fllt.svg.6.cc,
+	* sandbox/geraud/cs2d/tuto.cc,
+	* sandbox/geraud/fllt/fllt_tree_to_image.hh,
+	* sandbox/geraud/fllt/fllt.svg.3.cc,
+	* sandbox/geraud/fllt/fllt.svg.4.cc,
+	* sandbox/geraud/fllt/fllt.svg.5.cc,
+	* sandbox/geraud/fllt/fllt.svg.6.cc,
+	* sandbox/geraud/fllt/fllt_test.hh,
+	* sandbox/geraud/Rd/debase.union_find.hh,
+	* sandbox/vigouroux/yuv/get_blue.hh,
+	* sandbox/vigouroux/yuv/get_red.hh,
+	* sandbox/vigouroux/yuv/rgb_to_yuv.hh,
+	* sandbox/vigouroux/yuv/get_green.hh,
+	* sandbox/vigouroux/hsi/get_blue.hh,
+	* sandbox/vigouroux/hsi/get_red.hh,
+	* sandbox/vigouroux/hsi/rgb_to_hsi.hh,
+	* sandbox/vigouroux/hsi/get_green.hh,
+	* sandbox/vigouroux/function.hh,
+	* sandbox/vigouroux/tests.cc,
+	* sandbox/vigouroux/cmy/rgb_to_cmy.hh,
+	* sandbox/vigouroux/cmy/get_blue.hh,
+	* sandbox/vigouroux/cmy/fun.hh,
+	* sandbox/vigouroux/cmy/get_green.hh,
+	* sandbox/vigouroux/xyz/rgb_to_xyz.hh,
+	* sandbox/vigouroux/xyz/get_blue.hh,
+	* sandbox/vigouroux/xyz/get_red.hh,
+	* sandbox/vigouroux/xyz/get_green.hh,
+	* sandbox/vigouroux/yiq/get_blue.hh,
+	* sandbox/vigouroux/yiq/get_red.hh,
+	* sandbox/vigouroux/yiq/rgb_to_yiq.hh,
+	* sandbox/vigouroux/yiq/get_green.hh,
+	* sandbox/vigouroux/conv/getred.hh,
+	* sandbox/vigouroux/conv/tored.hh,
+	* sandbox/vigouroux/conv/torgb.hh,
+	* sandbox/vigouroux/conv/rgbto.hh,
+	* sandbox/vigouroux/color/rgb_to_hsl.hh,
+	* sandbox/vigouroux/color/rgb_to_cmy.hh,
+	* sandbox/vigouroux/color/rgb_to_xyz.hh,
+	* sandbox/vigouroux/color/tests.cc,
+	* sandbox/vigouroux/color/rgb_to_hsv.hh,
+	* sandbox/vigouroux/color/rgb_to_yiq.hh,
+	* sandbox/vigouroux/color/rgb_to_hsi.hh,
+	* sandbox/vigouroux/color/rgb_to_yuv.hh,
+	* sandbox/garrigues/level_set.hh,
+	* sandbox/garrigues/fllt/fllt_simple.svg.1.cc,
+	* sandbox/garrigues/fllt/fllt_simple.svg.3.cc,
+	* sandbox/garrigues/fllt/fllt_simple.cc,
+	* sandbox/garrigues/fllt/compute_level_set_fast2.hh,
+	* sandbox/garrigues/fllt/debug.hh,
+	* sandbox/garrigues/fllt/compute_level_set_fast.hh,
+	* sandbox/garrigues/fllt/fllt_simple.svg.2.cc,
+	* sandbox/garrigues/fllt/fllt.hh,
+	* sandbox/garrigues/fllt/compute_level_set.hh,
+	* sandbox/garrigues/tiled_image2d/tiled_image2d.hh,
+	* sandbox/garrigues/factures/extract_array_highlight.cc,
+	* sandbox/garrigues/factures/extract_array.cc,
+	* sandbox/ballas/test.cc: Update.
+
+2008-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add multiple-size windows and dual neighborhoods.
 
 	* tests/make: New.

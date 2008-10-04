@@ -197,8 +197,8 @@ namespace mln
 	// R <- 0 and N <- 0
 	if (N_box.is_valid() != 0)
 	  {
-// 	    level::fill(inplace(is | N_box.to_result()), in_O);
-	    level::fill(inplace(deja_vu | N_box.to_result()), false);
+// 	    level::fill((is | N_box.to_result()).rw(), in_O);
+	    level::fill(deja_vu | N_box.to_result()), false);
 	  }
 	clear_N(N);
 	N_box.init();
@@ -302,7 +302,7 @@ namespace mln
 
 	    for (unsigned i = 0; i < 256; ++i)
 	      if (N[i]->nsites())
-		level::fill(inplace(deja_vu | *N[i]), false);
+		level::fill(deja_vu | *N[i]), false);
 		
 // 	    mln_invariant(deja_vu == ((pw::value(is) == pw::cst(in_R)) | input.domain()));
 

@@ -37,7 +37,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/image/inplace.hh>
+
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/p_if_piter.hh>
 # include <mln/core/site_set/p_if.hh>

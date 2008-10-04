@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
 # include <mln/level/fill.hh>
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image/inplace.hh>
+
 # include <mln/value/rgb8.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/level/compare.hh>
@@ -55,7 +55,7 @@ int main()
     s.insert(point2d(0, 0));
     s.insert(point2d(1, 1));
 
-    sub_image<image2d<int_u8>, p_set<point2d > > input = inplace(ima | s);
+    sub_image<image2d<int_u8>, p_set<point2d > > input = ima | s;
     image2d<value::rgb8> out = display::color_pretty(input);
 
     value::rgb8 vs[2][2] = {

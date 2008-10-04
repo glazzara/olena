@@ -207,7 +207,7 @@ int main()
 //   image2d<rgb8> cool(ima.domain());
 //   level::fill(cool, literal::black);
 
-//   level::fill( inplace(cool | (pw::value(lab) == 1u)),
+//   level::fill( (cool | (pw::value(lab) == 1u)).rw(),
 // 	       literal::red );
 
 //   debug::println(cool);

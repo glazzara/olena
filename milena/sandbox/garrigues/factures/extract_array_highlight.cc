@@ -37,7 +37,7 @@
 #include <mln/win/disk2d.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/image/inplace.hh>
+
 #include <mln/level/stretch.hh>
 #include <mln/level/median.hh>
 #include <mln/morpho/gradient.hh>
@@ -150,7 +150,7 @@ int main()
 
   // Binarisation.
   ima2d_bool bin(in.domain());
-  level::paste(inplace(pw::value(in) > pw::cst(50) | in.domain()), bin);
+  level::paste(pw::value(in) > pw::cst(50) | in.domain(), bin);
 
   image2d<value::rgb8> output_h = highlight_hlines(bin);
   image2d<value::rgb8> output_v = highlight_vlines(bin);

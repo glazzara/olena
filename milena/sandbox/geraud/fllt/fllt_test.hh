@@ -474,7 +474,7 @@ namespace mln
 
     fllt_branch_iter(P, V) n(*child);
     for_all(n)
-      level::fill(inplace(ima | (*n).elt().points), true);
+      level::fill((ima | (*n).elt().points).rw(), true);
 
     tmp.append((*n).elt().points);
 

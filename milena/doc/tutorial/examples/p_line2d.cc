@@ -10,10 +10,6 @@
 
 
 
-# include <mln/core/image/instant.hh>
-
-
-
 int main()
 {
   using namespace mln;
@@ -25,7 +21,7 @@ int main()
 		point2d(1,1));
   std::cout << line << std::endl;
 
-  level::fill(inplace(ima | line), 'x');
+  level::fill((ima | line).rw(), 'x');
   debug::println(ima);
 
   p_set<point2d> s;
@@ -35,11 +31,4 @@ int main()
 
   debug::println(pw::cst('o') | line);
   // ...
-
-
-  {
-    typedef image2d<char> I;
-    instant_<I> ima_(ima);
-    debug::println(ima_);
-  }
 }

@@ -45,7 +45,7 @@ KO  value::stack_image
 ** domain morpher
 
 ok  image_if
-... sub_image  =  1st attempt to use the 'instant' mechanism...
+ok  sub_image
 
 rm  image_if_interval
 rm  image_if_value
@@ -56,7 +56,6 @@ KO  translate_image
 
 ** identity morpher
 
-new instant
 new extension_ima
 new extension_fun
 new extension_val

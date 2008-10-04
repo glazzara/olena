@@ -1003,7 +1003,7 @@ namespace mln
       fllt_tree(P, V) subtree(node);
       fllt_branch_iter_ind(P, V) s(fllt_branch(P, V)(subtree, *node));
       for_all(s)
-	level::fill(inplace(output | (*s).elt().points), (*s).elt().value);
+	level::fill(output | (*s).elt().points), (*s).elt().value);
     }
 
     void area_filter(image2d<value::int_u8>& output,
@@ -1037,7 +1037,7 @@ namespace mln
       }
 
       accu += (*node).elt().nsites;
-      level::fill(inplace(output | (*node).elt().points), g);
+      level::fill(output | (*node).elt().points), g);
 
       for (int i = 0; i < node->children().size();i++)
 	area_filter_min(output, node->children()[i], min_area, g, accu);

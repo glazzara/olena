@@ -9,7 +9,7 @@ namespace mln
   void fllt_tree_to_image_(I& output,
 			   fllt_node(point2d, value::int_u8)* node)
   {
-    level::fill(inplace(output | node->elt().points), node->elt().value);
+    level::fill((output | node->elt().points).rw(), node->elt().value);
 
     for (int i = 0; i < node->children().size(); i++)
       fllt_tree_to_image_(output, node->children()[i]);

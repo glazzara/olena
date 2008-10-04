@@ -37,7 +37,7 @@
 
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/box2d_h.hh>
-# include <mln/core/image/inplace.hh>
+
 
 namespace mln
 {

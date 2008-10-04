@@ -35,7 +35,7 @@
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/image/inplace.hh>
+
 #include <mln/level/stretch.hh>
 #include <mln/labeling/level.hh>
 #include <mln/literal/all.hh>
@@ -63,7 +63,7 @@ int main()
 
   // Binarisation.
   ima2d_bool bin(small.domain());
-  level::paste(inplace(pw::value(small) > pw::cst(50) | small.domain()), bin);
+  level::paste(pw::value(small) > pw::cst(50) | small.domain(), bin);
 
   // Labeling.
   unsigned nlabels;
@@ -108,7 +108,7 @@ int main()
   // Draw the bounding boxes.
   for (int i = 0; i < nlabels; i++)
     if (is_array[i])
-      draw::box(output, inplace(caracteristics[i].to_result().first), inplace(value::rgb8(literal::green)));
+      draw::box(output, caracteristics[i].to_result().first, value::rgb8(literal::green));
 
   io::ppm::save(output, "array.ppm");
 }

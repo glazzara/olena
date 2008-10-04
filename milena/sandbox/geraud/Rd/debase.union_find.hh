@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,7 +70,7 @@ namespace oln
 	  // init
 
 	  std::cout << "0 ";
-	  level::fill(inplace(is_proc), false);
+	  level::fill(is_proc, false);
 	  S = histo_reverse_sort(g);
 
 	  // first pass
@@ -91,7 +91,7 @@ namespace oln
 	  // second pass
 
 	  std::cout << "2 ";
-	  level::fill(inplace(is_proc), false);
+	  level::fill(is_proc, false);
 	  for (int i = S.size() - 1; i >= 0; --i)
 	    {
 	      point p = S[i];

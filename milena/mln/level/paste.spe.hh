@@ -73,9 +73,12 @@ namespace mln
 // 	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
 // 	//	mln_line_piter(I) p(data.domain());
 // 	for_all(p)
-// 	  memcpy_(inplace(make::pixel(destination, p)),
+// 	{
+//           FIXME: TYPE pix = make::pixel(destination, p);
+// 	  memcpy_(pix,
 // 		  make::pixel(data, p),
 // 		  n);
+// 	  }
 // 	trace::exiting("level::impl::paste_lines_");
 //       }
 

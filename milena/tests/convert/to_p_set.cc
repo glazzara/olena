@@ -1,4 +1,4 @@
-// Copyright (C) 2007. 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/image/inplace.hh>
+
 
 #include <mln/level/fill.hh>
 
@@ -75,7 +75,7 @@ int main()
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
   level::fill(ima, false);
-  level::fill(inplace(ima | ref), true);
+  level::fill((ima | ref).rw(), true);
   p_set<point2d> test_ima = convert::to_p_set(ima);
   test(ref, test_ima);
 

@@ -187,11 +187,11 @@ namespace mln
       level::fill(out, literal::white);
 
       if (R.nsites() != 0)
-	level::fill(inplace(out | R), literal::green);
+	level::fill((out | R).rw(), literal::green);
       if (A.nsites() != 0)
-	level::fill(inplace(out | A), literal::blue);
+	level::fill((out | A).rw(), literal::blue);
       if (N.nsites() != 0)
-	level::fill(inplace(out | N), literal::red);
+	level::fill((out | N).rw(), literal::red);
 
       io::ppm::save(out, filename.str());
     }

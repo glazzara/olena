@@ -76,8 +76,8 @@ namespace mln
 	unsigned max;
 
  	void init()                            { initialize(output, exact(input));
-						 level::fill(inplace(output | (input | true).domain()),  0);
-						 level::fill(inplace(output | (input | false).domain()), max); }
+	  level::fill((output | (input | true).domain()).rw(),  0);
+	  level::fill((output | (input | false).domain()).rw(), max); }
 	bool handles(const P& p) const         { return input(p) == false; }
 
 	// end of requirements

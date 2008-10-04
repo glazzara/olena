@@ -37,7 +37,7 @@
 #include <mln/value/rgb8.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/image_if_value.hh>
-#include <mln/core/image/inplace.hh>
+
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/display/show.hh>
 #include <mln/display/save.hh>
@@ -69,7 +69,7 @@ int main()
   // Call color_pretty for sub_image.
   for (unsigned i = 2; i < 6; i += 2)
     {
-      image_if_value<image2d<unsigned> > t = inplace (tmp | i);
+      image_if_value<image2d<unsigned> > t = tmp | i;
       display::save (t);
       display::show (t, "display", 1);
     }

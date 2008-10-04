@@ -39,7 +39,7 @@
  */
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/image/instant.hh>
+
 
 
 namespace mln
@@ -129,26 +129,10 @@ namespace mln
   operator|(const Image<I>& ima, const Site_Set<S>& pset);
 
 
-//   template <typename I, typename S>
-//   sub_image<I, S>
-//   operator|(Image<I>& ima, const Site_Set<S>& pset);
-
-
-// REPLACEMENT:
-
-  template <typename I, typename S>
-  instant_< sub_image<I, S> >
-  operator|(Image<I>& ima, const Site_Set<S>& pset);
-
-
-// NEW:
-
   template <typename I, typename S>
   sub_image<I, S>
-  operator|(instant_<I> ima, const Site_Set<S>& pset)
-  {
-    return ima.un_instant() | pset;
-  }
+  operator|(Image<I>& ima, const Site_Set<S>& pset);
+
 
 
   template <typename I, typename S, typename J>
@@ -241,18 +225,9 @@ namespace mln
     return tmp;
   }
 
-//   template <typename I, typename S>
-//   inline
-//   sub_image<I, S>
-//   operator|(Image<I>& ima, const Site_Set<S>& pset)
-//   {
-//     sub_image<I, S> tmp(exact(ima), exact(pset));
-//     return tmp;
-//   }
-
   template <typename I, typename S>
   inline
-  instant_< sub_image<I, S> >
+  sub_image<I, S>
   operator|(Image<I>& ima, const Site_Set<S>& pset)
   {
     sub_image<I, S> tmp(exact(ima), exact(pset));

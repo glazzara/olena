@@ -1,4 +1,5 @@
-// Copyright (C) 2001, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2001, 2007, 2008 EPITA Research and Development
+// Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -76,7 +77,7 @@ int main()
 		  0, 1, 1 };
   // ...the debug::fill routine allows for manually initializing
   // image data:
-  debug::fill(inplace(img), vals);
+  debug::fill(img, vals);
   std::cout << "img = " << std::endl;
   debug::println(img);
   // img =
@@ -137,7 +138,7 @@ int main()
   // And now for a little test: what is the result of this code?
   {
     image2d<int> test(ima.points());
-    level::fill(inplace(test), ima);
+    level::fill(test, ima);
     (test + c4).at(1, 1) = 9;
     debug::println(test);
   }

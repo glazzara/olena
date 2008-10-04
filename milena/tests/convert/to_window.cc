@@ -36,7 +36,7 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/core/image/inplace.hh>
+
 
 #include <mln/level/fill.hh>
 
@@ -77,7 +77,7 @@ int main()
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
   level::fill(ima, false);
-  level::fill(inplace(ima | convert::to_p_set(ref)), true);
+  level::fill((ima | convert::to_p_set(ref)).rw(), true);
   window2d test_ima = convert::to_window(ima);
   test(ref, test_ima);
 

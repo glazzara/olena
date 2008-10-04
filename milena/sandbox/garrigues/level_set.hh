@@ -43,7 +43,7 @@
 # include <mln/core/alias/point2d.hh>
 
 # include <mln/core/site_set/p_set.hh>
-# include <mln/core/image/inplace.hh>
+
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/clock_neighb2d.hh>
 # include <mln/core/p_if_piter.hh>

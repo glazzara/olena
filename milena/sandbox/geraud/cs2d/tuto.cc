@@ -66,9 +66,9 @@ int main()
     //        
     // o   o   o 
   
-    level::fill(inplace(ima | is_cell),  'c');
-    level::fill(inplace(ima | is_edge),  'e');
-    level::fill(inplace(ima | is_point), 'p');
+    level::fill((ima | is_cell).rw(),  'c');
+    level::fill((ima | is_edge).rw(),  'e');
+    level::fill((ima | is_point).rw(), 'p');
 
     debug::println(ima);
     // c e c e c 
@@ -85,7 +85,7 @@ int main()
     // 0 0 0 0 0 
     // 0 0 0 0 0 
 
-    level::fill(inplace(ima | is_cell), fun::p2v::iota);
+    level::fill((ima | is_cell).rw(), fun::p2v::iota);
     debug::println(ima | is_cell);
     // 1   2   3 
     //      

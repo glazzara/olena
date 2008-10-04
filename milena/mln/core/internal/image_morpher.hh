@@ -31,11 +31,14 @@
 /*! \file mln/core/internal/image_morpher.hh
  *
  *  \brief Definition of a base class for image morphers.
+ *
+ * \todo Add the appropriate checks in .rw().
  */
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/metal/const.hh>
 # include <mln/metal/is_const.hh>
+# include <mln/metal/is_not_const.hh>
 
 
 namespace mln
@@ -76,6 +79,12 @@ namespace mln
 
       /// Conversion to the underlying (morphed) image.
       operator I() const; // FIXME: Very dangerous? Remove?
+
+
+      /// State that the morpher is writable.  This allows for C++ to
+      /// use it as a mutable object even if it is a temporary object.
+      E& rw();
+
 
     protected:
       image_morpher();
@@ -160,6 +169,18 @@ namespace mln
 	this->data_ != 0 &&
 	this->delegatee_() != 0 &&
 	this->delegatee_()->has_data();
+    }
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    E&
+    image_morpher<I, T, S, E>::rw()
+    {
+      mlc_is_not_const(I)::check();
+      mlc_equal(mln_trait_image_value_io(I),
+		mln::trait::image::value_io::read_write)::check();
+      // FIXME Nicolas: pw_io == read_write OR vw_io == read_write...
+      return exact(*this);
     }
 
   } // end of namespace mln::internal

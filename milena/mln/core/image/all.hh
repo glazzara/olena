@@ -36,7 +36,6 @@
  */
 
 
-# include <mln/core/image/instant.hh>
 // FIXME: Complete...
 
 

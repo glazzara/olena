@@ -179,7 +179,7 @@ namespace mln
 	static image2d<bool> border_ima(tmp.domain());
 	level::fill(border_ima, false);
 
-	//       level::fill(inplace(border_ima | N), true);
+	//       level::fill((border_ima | N).rw(), true);
 	//       std::cout << "tmp border = " << tmp.border () << std::endl;
 	//       std::cout << "ima border = " << border_ima.border () << std::endl;
 	mln_piter(p_set<P>) z(N);

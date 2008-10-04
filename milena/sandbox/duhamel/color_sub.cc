@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
 
 # include <mln/core/image2d_b.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image/inplace.hh>
+
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
@@ -43,7 +43,7 @@
 # include <mln/core/image_if_value.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image_if_value.hh>
-# include <mln/core/image/inplace.hh>
+
 
 # include <mln/debug/println.hh>
 # include <mln/core/alias/w_window2d_int.hh>
@@ -64,7 +64,7 @@ int main()
   image2d_b<bool> input = io::pbm::load("../../img/toto.pbm");
   const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
   image2d_b<unsigned> tmp = geom::chamfer(input, w_win, max);
-  image2d_b<value::rgb8> out = display::color_pretty(inplace (tmp | 4));
+  image2d_b<value::rgb8> out = display::color_pretty(tmp | 4);
   io::ppm::save(out, "out.ppm");
   std::cout << "out.ppm generate" << std::endl;
 }

@@ -54,7 +54,7 @@ int main()
   mln_assertion(ps.nsites() == 0);
   mln_assertion(ps.is_empty());
 
-  mln_fwd_piter_(box2d) p(inplace(make::box2d(13,13,19,15)));
+  mln_fwd_piter_(box2d) p(make::box2d(13,13,19,15));
   for_all(p)
   {
     ps.insert(p);

@@ -22,13 +22,8 @@ int main()
   debug::println(sub);
   debug::println(morpho::gradient_elementary(sub, c4()));
 
-  level::fill_with_value(ima | box2d(2,3), 0);
+  level::fill_with_value((ima | box2d(2,3)).rw(), 0);
   debug::println(ima);
 
   trait::image::print(sub);
-
-
-  {
-    instant_<I> tmp(ima);
-  }
 }

@@ -36,7 +36,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/image/inplace.hh>
+
 
 // Specializations are in:
 # include <mln/level/fill_with_image.spe.hh>

@@ -44,8 +44,8 @@
 # include <cstdlib>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/image/inplace.hh>
-# include <mln/core/image/instant.hh>
+
+
 
 // Specializations are in:
 # include <mln/level/fill_with_value.spe.hh>
@@ -66,11 +66,6 @@ namespace mln
      */
     template <typename I, typename V>
     void fill_with_value(Image<I>& ima, const V& val);
-
-
-    // Case of instant images.
-    template <typename I, typename V>
-    void fill_with_value(const Image< instant_<I> >& ima, const V& val);
 
 
 
@@ -135,15 +130,6 @@ namespace mln
       internal::fill_with_value_dispatch(ima, val);
 
       trace::exiting("level::fill_with_value");
-    }
-
-
-    // Un-instant.
-
-    template <typename I, typename V>
-    void fill_with_value(const Image< instant_<I> >& ima, const V& val)
-    {
-      fill_with_value(exact(ima).un_instant_(), val);
     }
 
 

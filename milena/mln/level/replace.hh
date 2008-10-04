@@ -72,7 +72,7 @@ namespace mln
 		      const mln_value(I)& new_value)
 	{
 	  trace::entering("level::impl::generic::replace");
-	  level::fill(inplace(exact(input_) | pw::value(input_) == pw::cst(old_value)),  new_value);
+	  level::fill((exact(input_) | pw::value(input_) == pw::cst(old_value)).rw(),  new_value);
 	  trace::exiting("level::impl::generic::replace");
 	}
 

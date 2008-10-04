@@ -38,7 +38,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/trait/value_.hh>
 # include <mln/util/pix.hh>
-# include <mln/core/image/inplace.hh>
+
 
 namespace mln
 {
@@ -149,8 +149,7 @@ namespace mln
     T
     rank_<T>::to_result() const
     {
-      // Fixme : Call to inplace to unconst (*this).
-      inplace(*this).sort();
+      const_cast<rank_<T>&>(*this).sort();
 
       if (n_ == elts_.size())
 	return elts_[k_];
@@ -164,7 +163,7 @@ namespace mln
     void
     rank_<T>::sort()
     {
-      if (!is_sorted_)
+      if (! is_sorted_)
       {
 	is_sorted_ = true;
 	std::sort(elts_.begin(), elts_.end());

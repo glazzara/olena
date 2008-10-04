@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +34,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>
-#include <mln/core/image/inplace.hh>
+
 
 #include <mln/level/fill.hh>
 #include <mln/level/compare.hh>
@@ -62,7 +62,7 @@ int main()
 
   image2d<bool> ima3(10,10);
   level::fill(ima3, false);
-  level::fill(inplace(ima3 | l), true);
+  level::fill((ima3 | l).rw(), true);
 
   mln_assertion(ima3 == ima);
 }
