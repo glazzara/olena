@@ -110,13 +110,20 @@ namespace mln
 
     /// Comparison of two instances of mln::topo::n_face.
     /// \{
+
     /// \brief Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
-    bool
-    operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
+    bool operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
+
+    /// \brief Is \a lhs different from \a rhs?
+    ///
+    /// \pre Arguments \a lhs and \a rhs must belong to the same
+    /// mln::topo::complex.
+    template <unsigned N, unsigned D>
+    bool operator!=(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
 
     /// \brief Is \a lhs ``less'' than \a rhs?
     ///
@@ -125,8 +132,8 @@ namespace mln
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
-    bool
-    operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs);
+    bool operator< (const n_face<N, D>& lhs, const n_face<N, D>& rhs);
+
     /// \}
 
 
@@ -241,6 +248,16 @@ namespace mln
       // Ensure LHS and RHS belong to the same complex.
       mln_precondition(lhs.cplx() == rhs.cplx());
       return lhs.face_id() == rhs.face_id();
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    bool
+    operator!=(const n_face<N, D>& lhs, const n_face<N, D>& rhs)
+    {
+      // Ensure LHS and RHS belong to the same complex.
+      mln_precondition(lhs.cplx() == rhs.cplx());
+      return !(lhs == rhs);
     }
 
     template <unsigned N, unsigned D>

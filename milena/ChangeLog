@@ -1,5 +1,15 @@
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add operator!= on face handles.
+
+	* mln/topo/face.hh
+	(operator!=(const face<D>&, const face<D>&))
+	* mln/topo/n_face.hh
+	(operator!=(const n_face<N, D>&, const n_face<N, D>&)):
+	New operators.
+
+2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a centered window of lower/higher-dim. adjacent complex faces.
 
 	* mln/core/image/complex_lower_higher_neighborhood.hh: New.
