@@ -73,7 +73,7 @@ namespace mln
       typedef trait::window::definition::unique definition;
     };
 
-  } // end of namespace trait
+  } // end of namespace mln::trait
 
 
 
