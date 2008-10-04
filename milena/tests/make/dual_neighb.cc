@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,46 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_ALL_HH
-# define MLN_WIN_ALL_HH
-
-/*! \file mln/win/all.hh
+/*! \file tests/make/dual_neighb.cc
  *
- * \brief File that includes all win-related routines.
+ * \brief Tests on mln::make::dual_neighb.
  */
 
+#include <mln/make/dual_neighb.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/image/image2d.hh>
 
-namespace mln
+
+
+template <typename I, typename N>
+unsigned count(const I& ima, const N& nbh)
 {
-
-  /// Namespace of image processing routines related to win.
-  namespace win {}
-
+  mln_piter(I) p(ima.domain());
+  mln_niter(N) n(nbh, p);
+  unsigned c = 0;
+  for_all(p)
+    for_all(n)
+    { std::cout << n << std::endl; ++c; }
+  return c;
 }
 
 
-// Types.
+int main()
+{
+  using namespace mln;
 
-# include <mln/win/backdiag2d.hh>
-# include <mln/win/cube3d.hh>
-# include <mln/win/cuboid3d.hh>
-# include <mln/win/diag2d.hh>
-# include <mln/win/disk2d.hh>
-# include <mln/win/hline2d.hh>
-# include <mln/win/line.hh>
-# include <mln/win/multiple.hh>
-# include <mln/win/multiple_size.hh>
-# include <mln/win/octagon2d.hh>
-# include <mln/win/rectangle2d.hh>
-# include <mln/win/segment1d.hh>
-# include <mln/win/vline2d.hh>
+  image2d<bool> ima(1, 2, 1);
+  ima.at(0, 0) = true;
+  ima.at(0, 1) = false;
 
-// Routines.
+  mln_assertion( count(ima, make::dual_neighb(ima, c4(), c8()))
+		 == c4().size() + c8().size() );
 
-# include <mln/win/diff.hh>
-# include <mln/win/shift.hh>
-# include <mln/win/sym.hh>
-
-
-
-#endif // ! MLN_WIN_ALL_HH
+  // We can observe that the neighboord is not restricted by the
+  // respective domains defined by ima(p) == false and true.
+}

@@ -25,19 +25,18 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_DOUBLE_NEIGHB2D_HH
-# define MLN_MAKE_DOUBLE_NEIGHB2D_HH
+#ifndef MLN_MAKE_DUAL_NEIGHB_HH
+# define MLN_MAKE_DUAL_NEIGHB_HH
 
-/*! \file mln/make/double_neighb2d.hh
+/*! \file mln/make/dual_neighb.hh
  *
- * \brief Routine to create a double neighborhood.
- *
- * \todo Add overload with 'when_*' being Neighborhood<N>...
+ * \brief Routine to create a dual neighborhood.
  */
 
-# include <mln/convert/to.hh>
-# include <mln/core/alias/window2d.hh>
-# include <mln/win/multiple.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/pw/value.hh>
+# include <mln/win/multiple_size.hh>
 # include <mln/core/neighb.hh>
 
 
@@ -47,29 +46,42 @@ namespace mln
   namespace make
   {
 
-    template <typename A, unsigned St, unsigned Sf>
-    neighb< win::multiple<window2d, bool(*)(A)> >
-    double_neighb2d(bool (*test)(A),
-		    bool const (&when_true) [St],
-		    bool const (&when_false)[Sf]);
+    template <typename I, typename N>
+    neighb< win::multiple_size< mln_window(N), pw::value_<I> > >
+    dual_neighb(const Image<I>& ima,
+		const Neighborhood<N>& nbh_true,
+		const Neighborhood<N>& nbh_false);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename A, unsigned St, unsigned Sf>
+
+    template <typename I, typename N>
     inline
-    neighb< win::multiple<window2d, bool(*)(A)> >
-    double_neighb2d(bool (*test)(A),
-		    bool const (&when_true) [St],
-		    bool const (&when_false)[Sf])
+    neighb< win::multiple_size< mln_window(N), pw::value_<I> > >
+    dual_neighb(const Image<I>& ima_,
+		const Neighborhood<N>& nbh_true_,
+		const Neighborhood<N>& nbh_false_)
     {
-      typedef win::multiple<window2d, bool(*)(A)> W;
-      W wm(test);
-      wm.set_window(false, convert::to<window2d>(when_false)); // 0
-      wm.set_window(true,  convert::to<window2d>(when_true) ); // 1
-      neighb<W> tmp(wm);
-      return tmp;
+      trace::entering("make::dual_neighb");
+
+      mlc_is(mln_trait_image_kind(I), trait::image::kind::logic)::check();
+
+      const I& ima = exact(ima_);
+      const N& nbh_true = exact(nbh_true_);
+      const N& nbh_false = exact(nbh_false_);
+      mln_precondition(ima.has_data());
+
+      typedef win::multiple_size< mln_window(N), pw::value_<I> > W;
+      W win(pw::value(ima));
+      win.set_window(false, nbh_false.win()); // 0
+      win.set_window(true,  nbh_true .win()); // 1
+
+      neighb<W> nbh(win);
+
+      trace::exiting("make::dual_neighb");
+      return nbh;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -79,4 +91,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_DOUBLE_NEIGHB2D_HH
+#endif // ! MLN_MAKE_DUAL_NEIGHB_HH

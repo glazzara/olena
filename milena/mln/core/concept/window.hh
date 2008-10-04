@@ -32,6 +32,8 @@
  * \brief Definition of the concept of mln::Window.
  *
  * \todo Operator== should test if the cmp is possible.
+ *
+ * \todo Add an is_valid() method.
  */
 
 # include <mln/core/concept/object.hh>

@@ -1,3 +1,30 @@
+2008-10-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add multiple-size windows and dual neighborhoods.
+
+	* tests/make: New.
+	* tests/make/dual_neighb.cc: New.
+	* tests/make/Makefile.am: New.
+	* tests/Makefile.am: Update.
+	* mln/core/concept/window.hh (todo): New.
+	* mln/make/dual_neighb.hh: New.
+	* mln/make/double_neighb2d.hh: Fix dox.
+	(todo): New.
+	* mln/README: Remove; obsolete file contents.
+	* mln/win/multiple.hh: Remove non-activate code.
+	(W): New static checks.
+	Copy to...
+	* mln/win/multiple_size.hh: ...this new file.
+	(size_around): Activate.
+	(multiple): Rename as...
+	(multiple_size): ...this new class.
+	(size_): Replace this attribute by...
+	(size_): ...this new method.
+	(change_target): Remove; useless.
+	(siae): Remove; obsolete.
+	(set_window): Remove no more valid tests.
+	* mln/win/all.hh: Update.
+
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial..

@@ -25,6 +25,7 @@ SUBDIRS =					\
   linear					\
   literal					\
   logical					\
+  make						\
   math						\
   metal						\
   morpho					\

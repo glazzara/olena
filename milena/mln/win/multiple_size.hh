@@ -25,14 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_WIN_MULTIPLE_HH
-# define MLN_WIN_MULTIPLE_HH
+#ifndef MLN_WIN_MULTIPLE_SIZE_HH
+# define MLN_WIN_MULTIPLE_SIZE_HH
 
-/*! \file mln/win/multiple.hh
+/*! \file mln/win/multiple_size.hh
  *
- * \brief Definition of a multiple window.
- *
- * \todo Implementation of the bkd_qiter (see FIXME).
+ * \brief Definition of a multiple-size window.
  */
 
 # include <mln/core/internal/window_base.hh>
@@ -47,8 +45,8 @@ namespace mln
   // Forward declarations.
   namespace win
   {
-    template <typename W, typename F> class multiple;
-    template <typename W, typename F> class multiple_qiter;
+    template <typename W, typename F> class multiple_size;
+    template <typename W, typename F> class multiple_size_qiter;
   }
 
 
@@ -57,9 +55,9 @@ namespace mln
   {
 
     template <typename W, typename F>
-    struct window_< win::multiple<W,F> >
+    struct window_< win::multiple_size<W,F> >
     {
-      typedef trait::window::size::fixed       size;
+      typedef trait::window::size::unknown     size;
       typedef trait::window::support::regular  support;
       typedef trait::window::definition::n_ary definition;
     };
@@ -72,9 +70,9 @@ namespace mln
   {
 
     template <typename W, typename F>
-    class multiple
+    class multiple_size
 
-      : public internal::window_base< mln_dpsite(W), multiple<W,F> >,
+      : public internal::window_base< mln_dpsite(W), multiple_size<W,F> >,
 
 	private metal::and_< mlc_is(mln_trait_window_size(W),
 				    trait::window::size::fixed),
@@ -87,17 +85,17 @@ namespace mln
       typedef  mln_psite(W)  psite;
       typedef   mln_site(W)   site;
 
-      typedef multiple< window<dpsite>, F > regular;
+      typedef multiple_size< window<dpsite>, F > regular;
 
-      typedef multiple_qiter<W,F> fwd_qiter;
-      typedef /* FIXME: */ multiple_qiter<W,F> bkd_qiter;
-      typedef multiple_qiter<W,F> qiter;
+      typedef multiple_size_qiter<W,F> fwd_qiter;
+      typedef multiple_size_qiter<W,F> bkd_qiter;
+      typedef multiple_size_qiter<W,F> qiter;
 
       typedef W element;
 
-      multiple();
+      multiple_size();
 
-      multiple(const F& f);
+      multiple_size(const F& f);
 
       bool is_empty() const;
 
@@ -109,7 +107,7 @@ namespace mln
 
       const F& function() const;
 
-      unsigned size() const;
+      unsigned size_around(const mln_psite(W)& p) const;
 
       const mln_dpsite(W)& ith_dp_around(unsigned i, const mln_psite(W)& p) const;
 
@@ -129,20 +127,18 @@ namespace mln
 
 
     template <typename W, typename F>
-    class multiple_qiter 
-      : public internal::site_relative_iterator_base< multiple<W,F>,
-						      multiple_qiter<W,F> >
+    class multiple_size_qiter 
+      : public internal::site_relative_iterator_base< multiple_size<W,F>,
+						      multiple_size_qiter<W,F> >
     {
-      typedef multiple_qiter<W,F> self_;
-      typedef internal::site_relative_iterator_base< multiple<W,F>, self_ > super_;
+      typedef multiple_size_qiter<W,F> self_;
+      typedef internal::site_relative_iterator_base< multiple_size<W,F>, self_ > super_;
     public:
 
-      multiple_qiter();
+      multiple_size_qiter();
 
       template <typename P>
-      multiple_qiter(const multiple<W,F>& w, const P& c);
-
-      void change_target(const multiple<W,F>& w); // Overridden to initialize size_.
+      multiple_size_qiter(const multiple_size<W,F>& w, const P& c);
 
       /// Test the iterator validity.
       bool is_valid_() const;
@@ -161,25 +157,25 @@ namespace mln
 
     private:
       unsigned i_;
-      unsigned size_;
+      unsigned size_() const;
     };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // win::multiple<W,F>
+    // win::multiple_size<W,F>
 
     template <typename W, typename F>
     inline
-    multiple<W,F>::multiple()
+    multiple_size<W,F>::multiple_size()
       : f_()
     {
     }
 
     template <typename W, typename F>
     inline
-    multiple<W,F>::multiple(const F& f)
+    multiple_size<W,F>::multiple_size(const F& f)
       : f_(f)
     {
     }
@@ -187,7 +183,7 @@ namespace mln
     template <typename W, typename F>
     inline
     bool
-    multiple<W,F>::is_empty() const
+    multiple_size<W,F>::is_empty() const
     {
       return win_.is_empty();
     }
@@ -195,18 +191,16 @@ namespace mln
     template <typename W, typename F>
     inline
     void
-    multiple<W,F>::set_window(unsigned i, const W& win)
+    multiple_size<W,F>::set_window(unsigned i, const W& win)
     {
       mln_precondition(i == win_.nelements());
-      if (i >= 1)
-	mln_precondition(win.size() == win_[0].size());
       win_.append(win);
     }
 
     template <typename W, typename F>
     inline
     const W&
-    multiple<W,F>::window(unsigned i) const
+    multiple_size<W,F>::window(unsigned i) const
     {
       mln_precondition(i < win_.nelements());
       return win_[i];
@@ -215,7 +209,7 @@ namespace mln
     template <typename W, typename F>
     inline
     unsigned
-    multiple<W,F>::nwindows() const
+    multiple_size<W,F>::nwindows() const
     {
       return win_.nelements();
     }
@@ -223,27 +217,15 @@ namespace mln
     template <typename W, typename F>
     inline
     const F&
-    multiple<W,F>::function() const
+    multiple_size<W,F>::function() const
     {
       return f_;
     }
 
     template <typename W, typename F>
     inline
-    unsigned
-    multiple<W,F>::size() const
-    {
-      mln_precondition(win_.nelements() >= 2); // Multiple cannot be just 1 element.
-      unsigned s = win_[0].size();
-      for (unsigned i = 1; i < win_.nelements(); ++i)
-	mln_precondition(win_[i].size() == s);
-      return s;
-    }
-
-    template <typename W, typename F>
-    inline
     bool
-    multiple<W,F>::is_centered() const
+    multiple_size<W,F>::is_centered() const
     {
       mln_precondition(win_.nelements() >= 1);
       for (unsigned i = 0; i < win_.nelements(); ++i)
@@ -255,7 +237,7 @@ namespace mln
     template <typename W, typename F>
     inline
     bool
-    multiple<W,F>::is_symmetric() const
+    multiple_size<W,F>::is_symmetric() const
     {
       mln_precondition(win_.nelements() >= 1);
       for (unsigned i = 0; i < win_.nelements(); ++i)
@@ -264,11 +246,10 @@ namespace mln
       return true;
     }
 
-
     template <typename W, typename F>
     inline
     void
-    multiple<W,F>::sym()
+    multiple_size<W,F>::sym()
     {
       mln_precondition(win_.nelements() >= 1);
       for (unsigned i = 0; i < win_.nelements(); ++i)
@@ -278,7 +259,7 @@ namespace mln
     template <typename W, typename F>
     inline
     unsigned
-    multiple<W,F>::delta() const
+    multiple_size<W,F>::delta() const
     {
       mln_precondition(win_.nelements() >= 1);
       unsigned d = win_[0].delta();
@@ -293,63 +274,65 @@ namespace mln
 
     template <typename W, typename F>
     inline
-    const mln_dpsite(W)&
-    multiple<W,F>::ith_dp_around(unsigned i, const mln_psite(W)& p) const
+    unsigned
+    multiple_size<W,F>::size_around(const mln_psite(W)& p) const
     {
+      mln_precondition(win_.nelements() >= 2);
+      mln_precondition(f_(p) < win_.nelements());
+      return win_[f_(p)].size();
+    }
+
+    template <typename W, typename F>
+    inline
+    const mln_dpsite(W)&
+    multiple_size<W,F>::ith_dp_around(unsigned i, const mln_psite(W)& p) const
+    {
+      mln_precondition(win_.nelements() >= 2);
       mln_precondition(f_(p) < win_.nelements());
       mln_precondition(i < win_[f_(p)].size());
       return win_[f_(p)].dp(i);
     }
 
 
-    // win::multiple_qiter<W,F>
+    // win::multiple_size_qiter<W,F>
 
     template <typename W, typename F>
     inline
-    multiple_qiter<W,F>::multiple_qiter()
+    multiple_size_qiter<W,F>::multiple_size_qiter()
     {
     }
 
     template <typename W, typename F>
     template <typename P>
     inline
-    multiple_qiter<W,F>::multiple_qiter(const multiple<W,F>& w, const P& c)
+    multiple_size_qiter<W,F>::multiple_size_qiter(const multiple_size<W,F>& w, const P& c)
     {
       this->center_at(c);
       // We have to first change the center so that 'invalidate' can
       // work when changing the target.
-      change_target(w);
-    }
-
-    template <typename W, typename F>
-    inline
-    void
-    multiple_qiter<W,F>::change_target(const multiple<W,F>& w)
-    {
-      this->super_::change_target(w);
-      size_ = w.size();
+      this->change_target(w);
     }
 
     template <typename W, typename F>
     inline
     bool
-    multiple_qiter<W,F>::is_valid_() const
+    multiple_size_qiter<W,F>::is_valid_() const
     {
-      return i_ < size_;
+      return i_ < size_();
     }
 
     template <typename W, typename F>
     inline
     void
-    multiple_qiter<W,F>::invalidate_()
+    multiple_size_qiter<W,F>::invalidate_()
     {
-      i_ = size_;
+      i_ = size_();
     }
 
     template <typename W, typename F>
     inline
     void
-    multiple_qiter<W,F>::do_start_()
+    multiple_size_qiter<W,F>::do_start_()
     {
       i_ = 0;
     }
@@ -357,7 +340,7 @@ namespace mln
     template <typename W, typename F>
     inline
     void
-    multiple_qiter<W,F>::do_next_()
+    multiple_size_qiter<W,F>::do_next_()
     {
       ++i_;
     }
@@ -365,9 +348,17 @@ namespace mln
     template <typename W, typename F>
     inline
     mln_psite(W)
-    multiple_qiter<W,F>::compute_p_() const
+    multiple_size_qiter<W,F>::compute_p_() const
     {
       return *this->c_ + this->s_->ith_dp_around(i_, *this->c_);
+    }
+
+    template <typename W, typename F>
+    inline
+    unsigned
+    multiple_size_qiter<W,F>::size_() const
+    {
+      return this->s_->size_around(*this->c_);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -378,4 +369,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_WIN_MULTIPLE_HH
+#endif // ! MLN_WIN_MULTIPLE_SIZE_HH
