@@ -93,19 +93,13 @@ namespace mln
 	mln_precondition(f.input.has_data());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
-	trace::entering("canvas::browsing::fwd::init");
 	f.init();
-	trace::exiting("canvas::browsing::fwd::init");
 	for_all(p)
 	  {
 	    f.p = p;
-	trace::entering("canvas::browsing::fwd::next");
 	    f.next();
-	trace::exiting("canvas::browsing::fwd::next");
 	  }
-	trace::entering("canvas::browsing::fwd::final");
 	f.final();
-	trace::exiting("canvas::browsing::fwd::final");
 	trace::exiting("canvas::browsing::fwd");
       }
 

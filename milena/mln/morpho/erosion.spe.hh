@@ -487,7 +487,7 @@ namespace mln
 				   const I& input, const W& win)
       {
 	if (win.is_centered())
-	  return erosion_on_set_centered(input, win);
+	  return impl::erosion_on_set_centered(input, win);
 	else
 	  return impl::generic::erosion_on_set(input, win);
       }

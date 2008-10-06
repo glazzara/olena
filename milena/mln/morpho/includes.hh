@@ -40,6 +40,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
 
+# include <mln/core/routine/clone.hh>
+
 # include <mln/value/ops.hh>
 
 # include <mln/accu/min.hh>
