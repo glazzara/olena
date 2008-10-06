@@ -174,20 +174,8 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned face_id = f_.face_id();
-	  // The number of faces of dimension N in cplx_.
-	  unsigned nn_faces = f_.cplx().template nfaces<N>();
-	  if (face_id + 1 < nn_faces)
-	    /* FIXME: Provide accessor face::face_id()
-	       returning a mutable reference?  This way, we could just
-	       write
-
-	       ++f_.face_id();
-
-	       instead of the following.
-
-	       Or add {inc,add}_face_id() services.  */
-	    f_.set_face_id(face_id + 1);
+	  if (f_.face_id() + 1 < f_.cplx().template nfaces<N>())
+	    f_.inc_face_id();
 	  else
 	    invalidate();
 	}
@@ -235,18 +223,8 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned face_id = f_.face_id();
-	  if (face_id > 0)
-	    /* FIXME: Provide accessor face::face_id()
-	       returning a mutable reference?  This way, we could just
-	       write
-
-	       ++f_.face_id();
-
-	       instead of the following.
-
-	       Or add {inc,add}_face_id() services.  */
-	    f_.set_face_id(face_id - 1);
+	  if (f_.face_id() > 0)
+	    f_.dec_face_id();
 	  else
 	    invalidate();
 	}

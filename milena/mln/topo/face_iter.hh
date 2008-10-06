@@ -169,26 +169,14 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned n = f_.n();
-	  unsigned face_id = f_.face_id();
-
-	  if (face_id + 1 < f_.cplx().nfaces(n))
-	    /* FIXME: Provide accessor face::face_id() returning
-	       a mutable reference?  This way, we could just write
-
-	       ++f_.face_id();
-
-	       instead of the following.
-
-	       Or add {inc,add}_face_id() services.  */
-	    f_.set_face_id(face_id + 1);
+	  if (f_.face_id() + 1 < f_.cplx().nfaces(f_.n()))
+	    f_.inc_face_id();
 	  else
 	    // Start to iterate on the faces of the next dimension if
 	    // possible.
-	    if (n <= D)
+	    if (f_.n() <= D)
 	      {
-		// FIXME: Same remark as above.
-		f_.set_n(n + 1);
+		f_.inc_n();
 		f_.set_face_id(0u);
 	      }
 	    else
@@ -233,27 +221,15 @@ namespace mln
     {
       if (is_valid())
 	{
-	  unsigned n = f_.n();
-	  unsigned face_id = f_.face_id();
-
-	  if (face_id > 0)
-	    /* FIXME: Provide accessor face::face_id() returning
-	       a mutable reference?  This way, we could just write
-
-	       ++f_.face_id();
-
-	       instead of the following.
-
-	       Or add {inc,add}_face_id() services.  */
-	    f_.set_face_id(face_id - 1);
+	  if (f_.face_id() > 0)
+	    f_.dec_face_id();
 	  else
 	    // Start to iterate on the faces of the previous dimension
 	    // if it exists.
-	    if (n > 0)
+	    if (f_.n() > 0)
 	      {
-		// FIXME: Same remark as above.
-		f_.set_n(n - 1);
-		f_.set_face_id(f_.cplx().nfaces(n - 1) - 1);
+		f_.dec_n();
+		f_.set_face_id(f_.cplx().nfaces(f_.n()) - 1);
 	      }
 	    else
 	      invalidate();

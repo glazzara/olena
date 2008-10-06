@@ -1,5 +1,20 @@
 2008-10-06  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify face iterators using the new accessors of face handles.
+
+	* mln/topo/face_iter.hh
+	(mln::topo::face_fwd_iter<D>::next_)
+	(mln::topo::face_bkd_iter<D>::next_)
+	* mln/topo/n_face_iter.hh
+	(mln::topo::n_face_fwd_iter<D>::next_)
+	(mln::topo::n_face_bkd_iter<D>::next_)
+	* mln/topo/static_n_face_iter.hh
+	(mln::topo::static_n_face_fwd_iter<N, D>::next_)
+	(mln::topo::static_n_face_bkd_iter<N, D>::next_):
+	Here.
+
+2008-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add extra accessors for topo::face<D> and topo::n_face<N, D>.
 
 	* mln/topo/face.hh
