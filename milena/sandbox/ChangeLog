@@ -1,3 +1,11 @@
+2008-10-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New sample code for line-based processing.
+
+	* geraud/browsing: New.
+	* geraud/browsing/fwd.cc: New.
+	* geraud/browsing/fwd.hh: New.
+
 2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Prototype for bijective and 2 ways functions.
