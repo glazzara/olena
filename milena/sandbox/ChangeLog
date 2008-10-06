@@ -1,5 +1,29 @@
 2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Prototype for bijective and 2 ways functions.
+
+	Not tested yet so it goes to sandbox
+
+	* abraham/mln/fun: New.
+	* abraham/mln/fun/v2w2v: New.
+	* abraham/mln/fun/v2w2v/cos.hh: New
+	    Example of bijective function using cosinus.
+	* abraham/mln/fun/v2w_w2v: New.
+	* abraham/mln/fun/v2w_w2v/norm.hh: New
+	    Example of 2 way function using norm.
+	* abraham/mln/core: New.
+	* abraham/mln/core/concept: New.
+	* abraham/mln/core/concept/function.hh: New
+	    Definition of bijective and 2 way function concepts
+	    (Function_v2w2v and Function_v2w_w2v).
+	* abraham/mln/math: New.
+	* abraham/mln/math/cos.hh: New
+	    templated mln::math::cos function.
+	* abraham/mln/math/acos.hh: New
+ 	    templated mln::math::acos function.
+
+2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Huge cleanup, remove useless code and improve genericity.
 
 	* abraham/mln/morpho/basic_najman.hh:
