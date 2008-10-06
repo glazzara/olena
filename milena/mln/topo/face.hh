@@ -88,10 +88,20 @@ namespace mln
 
       /// Set the complex the face belongs to.
       void set_cplx(complex<D>& cplx);
+
       /// Set the dimension of the face.
       void set_n(unsigned n);
+      /// Increment the dimension of the face.
+      void inc_n();
+      /// Decrement the dimension of the face.
+      void dec_n();
+
       /// Set the id of the face.
       void set_face_id(unsigned face_id);
+      /// Increment the id of the face.
+      void inc_face_id();
+      /// Decrement the id of the face.
+      void dec_face_id();
 
       /// Return the mln::topo::face_data pointed by this handle.
       template <unsigned N>
@@ -248,9 +258,41 @@ namespace mln
     template <unsigned D>
     inline
     void
+    face<D>::inc_n()
+    {
+      ++n_;
+    }
+
+    template <unsigned D>
+    inline
+    void
+    face<D>::dec_n()
+    {
+      --n_;
+    }
+
+    template <unsigned D>
+    inline
+    void
     face<D>::set_face_id(unsigned face_id)
     {
       face_id_ = face_id;
+    }
+
+    template <unsigned D>
+    inline
+    void
+    face<D>::inc_face_id()
+    {
+      ++face_id_;
+    }
+
+    template <unsigned D>
+    inline
+    void
+    face<D>::dec_face_id()
+    {
+      --face_id_;
     }
 
     template <unsigned D>

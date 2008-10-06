@@ -1,3 +1,17 @@
+2008-10-06  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add extra accessors for topo::face<D> and topo::n_face<N, D>.
+
+	* mln/topo/face.hh
+	(mln::topo::face<D>::inc_n)
+	(mln::topo::face<D>::dec_n)
+	(mln::topo::face<D>::inc_face_id)
+	(mln::topo::face<D>::dec_face_id)
+	* mln/topo/n_face.hh
+	(mln::topo::n_face<N, D>::inc_face_id)
+	(mln::topo::n_face<N, D>::dec_face_id):
+	New methods.
+
 2008-10-05  Roland Levillain  <roland@lrde.epita.fr>
 
 	Introduce a header for iterators on complexes.

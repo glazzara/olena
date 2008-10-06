@@ -86,6 +86,10 @@ namespace mln
       unsigned n() const;
       /// Set the id of the face.
       void set_face_id(unsigned face_id);
+      /// Increment the id of the face.
+      void inc_face_id();
+      /// Decrement the id of the face.
+      void dec_face_id();
 
       /// Return the mln::topo::face_data pointed by this handle.
       face_data<N, D>& data() const;
@@ -219,6 +223,22 @@ namespace mln
     n_face<N, D>::set_face_id(unsigned face_id)
     {
       face_id_ = face_id;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    void
+    n_face<N, D>::inc_face_id()
+    {
+      ++face_id_;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    void
+    n_face<N, D>::dec_face_id()
+    {
+      --face_id_;
     }
 
     template <unsigned N, unsigned D>
