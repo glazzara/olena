@@ -1,0 +1,402 @@
+\section{Properties}
+
+
+\subsection{Notation}
+
+A property has several values.
+Furthermore the values of a property can be seen as a hierarchy.
+Hence, we need to define a notation to represent these hierarchies.
+\begin{itemize}
+
+\item \verb+category: primary+ means that \verb+primary+ is a value of the
+property category.
+
+\item
+\begin{verbatim}
+category: any
+           |
+           +--- primary
+           |
+           +--- morpher
+\end{verbatim}
+\end{itemize} It means that \verb+primary+ and \verb+morpher+ inherit from
+\verb+any+
+
+\subsection{Properties defining the image}
+
+%%%%%%%%%%%%%%%%%%
+% Category       %
+%%%%%%%%%%%%%%%%%%
+\subsubsection{category}
+\index{Property: category}
+
+
+\begin{verbatim}
+  category: any
+             |
+             +--- primary
+             |
+             +--- morpher
+                     |
+                     +--- domain_morpher
+                     |
+                     +--- value_morpher
+                     |
+                     +--- identity_morpher
+\end{verbatim}
+
+
+This property specifies the category of an image type.
+Primary images are instantiated in the first place; they don't need any
+prior image type definition.
+Morpher images transform an image type into another one.
+Morphers are a non-intrusive way to add or modify some behaviors in an
+existing class.
+
+
+%% FIXME image morpher
+
+%%%%%%%%%%%%%%%%%%
+% Size           %
+%%%%%%%%%%%%%%%%%%
+\subsubsection{size}
+\index{Property: size}
+
+\begin{verbatim}
+  size: any
+         |
+         +--- regular
+         |
+         +--- huge
+\end{verbatim}
+
+
+The size property gives an indication about the memory needed by an image.
+A $huge$ image is an image which cannot be fully stored in the RAM.
+Accessing a $huge$ image is slower than accessing a $regular$ image.
+Indeed, to access to a $huge$ image, we first need to load in the RAM a part of
+the image from another storage device.
+
+\subsection{Properties related to the image localization}
+
+%%%%%%%%%%%%%%%%%%
+% Localization   %
+%%%%%%%%%%%%%%%%%%
+\subsubsection{localization}
+\index{Property: localization}
+
+\begin{verbatim}
+ localization: /any/
+                 |
+                 + -- none
+                 |
+                 + -- space
+                       |
+                       + -- /grid/
+                              |
+                              + -- isotropic_grid
+                              |     |
+                              |     + -- basic_grid
+                              |
+                              + -- anisotropic_grid
+
+\end{verbatim}
+
+This property defines the underlying support of the images.
+The support of an image describes the image geometry and the relationship
+between its sites.
+An image on a non-localized space has this property set to $none$.
+An image on a localized space has this property set to $space$.
+An image based on a isotropic grid has this property set to $isotropic\_gride$
+An image based on a anisotropic grid has this property set to
+$anisotropic\_gride$
+An image based on a aligned and orthogonal grid has its property set to
+$basic\_grid$
+
+%% FIXME: Is it true?
+If an image has its \verb+localization+ set to $space$, the user must define
+the neighborhood relationships between the sites.
+Otherwise, the image underlying grid defines the neighborhood relationships.
+
+
+%% FIXME Image de different type de grid
+
+%%%%%%%%%%%%%%%%%%
+% Space          %
+%%%%%%%%%%%%%%%%%%
+\subsubsection{space}
+\index{Property: space}
+
+\begin{verbatim}
+  dimension:  any
+               |
+               +--- none
+               |
+               +--- some
+                      |
+                      +--- one_d
+                      |
+                      +--- two_d
+                      |
+                      +--- three_d
+
+
+\end{verbatim}
+
+This property specifies the dimension of the image.
+An image in Milena can either be in one dimension, two dimensions or three dimensions.
+An image can also have no dimension specified.
+
+
+
+\subsection{Property related to the image values}
+
+
+%%%
+%%% Data storage
+%%%
+\subsubsection{value\_access}
+\index{Property: value\_access}
+
+\begin{verbatim}
+value\_access: any
+                |
+                +--- direct
+                |
+                +--- indirect
+                        |
+                        +--- computed
+\end{verbatim}
+
+
+Image values can either be computed on the fly by a function or stored in
+memory. If an image type has a direct acces on the values in memory, it is
+possible to take a reference of them. In this case, this property is set to
+$direct$. In the other case, this property is set $indirect$. When an image
+computes its values on the fly, this property is refined to $computed$.
+
+
+\subsubsection{vw\_storage}
+\index{Property: vw\_storage}
+
+\begin{verbatim}
+vw_storage: any
+             |
+             +--- /ram/
+             |      |
+             |      +--- singleton
+             |      |
+             |      +--- one_block
+             |      |
+             |      +--- piecewise
+             +--- irrelevant
+\end{verbatim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% access               %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{pw\_io}
+\index{Property: pw\_io}
+
+\begin{verbatim}
+
+  pw_io:  any
+          |
+          +--- read
+          |
+          +--- read_write
+\end{verbatim}
+
+
+All the image types in Milena provide an access to its values through
+\verb+ima(p)+ where \verb+ima+ is an image and \verb+p+ a site.
+
+This property describes the read/write accessibility of this access.
+If the image is read only, \verb+pw_io+ is set to $read$.
+If the image is readable and writable, \verb+pw_io+ is set to $read\_write$.\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%   Speed              %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% FIXME detais fast image..., add normal image
+\subsubsection{speed}
+\index{Property: speed}
+
+\begin{verbatim}
+
+  speed:  any
+           |
+           +--- slow
+           |
+           +--- fast
+           |
+           +--- fastest
+\end{verbatim}
+
+  This property gives some information about the time needed to access a
+value from a site through \verb+ima(p)+ where \verb+ima+ is an image and
+\verb+p+ a site.
+
+If the \verb+speed+ property is equal to $slow$, $ima(p)$ complexity is greater
+than $O(1)$.
+If this property is equal to $fast$, $ima(p)$ complexity is in
+$O(1)$
+If this property is equal to $fastest$, $ima(p)$ complexity is
+in $O(1)$. Furthermore, in this case, $ima$ has an extended domain, and $ima$
+values have a pointer semantics (it is possible to directly iterate on the
+image pixels).
+
+\subsubsection{vw\_io}
+\index{Property: vw\_io}
+
+%% FIXME functions that modify globaly all the values...
+\begin{verbatim}
+
+  vw_io:  any
+           |
+           +--- /vm_some/
+           |        |
+           |        +--- vw_read
+           |        |
+           |        +--- vw_read_write
+           +--- vw_none
+\end{verbatim}
+
+\subsubsection{vw\_set}
+\index{Property: vw\_set}
+
+\begin{verbatim}
+
+  vw_io:  any
+           |
+           +--- /some/
+           |      |
+           |      +--- uni
+           |      |
+           |      +--- multi
+           +--- none
+\end{verbatim}
+
+
+
+
+
+\subsection{Properties related to the extended domain}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%   ext_domain         %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{ext\_domain}
+\index{Property: ext\_domain}
+
+\begin{verbatim}
+  ext_domain: any
+               |
+               +--- none
+               |
+               +--- some
+                     |
+                     +--- fixed
+                     |
+                     +--- infinite
+                     |
+                     +--- extendable
+\end{verbatim}
+
+This property indicates if the image has an extended domain.
+An extended domain grows the image domain by adding dummy values
+on the image border.
+\begin{table}[!h]
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}}\\
+      \hline
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}}\\
+      \hline
+      {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{red}{12}}} &
+      {\textbf{\textcolor{red}{2}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}}\\
+      \hline
+      {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{red}{2}}} &
+      {\textbf{\textcolor{red}{15}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}}\\
+      \hline
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}}\\
+      \hline
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}} &
+      {\textbf{\textcolor{green}{1}}} & {\textbf{\textcolor{green}{1}}}\\
+    \end{tabular}
+    The values equal to  {\textbf{\textcolor{green}{1}}} represent the extended domain.
+  \end{center}
+  \label{tab:pprop01}\caption{Image with an extended domain of size 2.}
+\end{table}
+An extended domain increases the performances of the image processing
+algorithms.
+Indeed, image processing algorithms often use the neighbors of the image
+sites.
+With an extended border it isn't necessary to test if the neighbors of an image
+site are included in the image domain.
+The size of the extended domain can differ (\verb+fixed+, \verb+infinite+ or
+\verb+extendable+).
+
+
+
+%% FIXME illustration
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%   ext_value          %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{ext\_value}
+\index{Property: ext\_value}
+
+\begin{verbatim}
+  ext_value:  any
+               |
+               +--- undefined
+               |
+               +--- single
+               |
+               +--- multiple
+\end{verbatim}
+
+If all the extended domain sites share the same value (in memory), this property
+is set to ``single''.
+If each site of the image extended domain has its proper value, this property
+is set to ``multiple''.
+Otherwise, this property is set to ``undefined''.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%   ext_io             %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{ext\_io}
+\index{Property: ext\_io}
+
+\begin{verbatim}
+
+  ext_io:  any
+            |
+            +--- /some/
+            |      |
+            |      +--- read
+            |      |
+            |      +--- read_write
+            +--- none
+\end{verbatim}
+
+This property describes  the read/write accessibility of the image extended
+border values.

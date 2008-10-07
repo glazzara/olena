@@ -1,3 +1,16 @@
+2008-10-07  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add documentation about the image properties.
+
+	* doc/tutorial/design: New.
+	* doc/tutorial/design/include: New.
+	* doc/tutorial/design/include/properties.tex,
+	* doc/tutorial/design/include/imagetours.tex,
+	* doc/tutorial/design/design.tex: New documentation files.
+	* doc/tutorial/design/Makefile: New.
+	* doc/tutorial/images_tour.txt: Update.
+	* sandbox/ballas/doc/image_tours.txt: Fix typo mistakes.
+
 2008-10-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Some fixes.

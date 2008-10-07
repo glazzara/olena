@@ -1,0 +1,299 @@
+%% Outline:
+%% This file gives a quick overview of the following image types:
+
+%% image2d<T>
+%% mmap_image2d<T>
+%% file_image2d<T>
+%% tiled_image
+%% fun_image<S,F>
+%% flat_image<S,T>
+%% pkey_image<P,T>
+%% pvkeys_image<P,T>
+
+%% graph-based images...
+
+%% rle_image<P,T>
+%% sparse_image<P, T>
+%% value_enc_image<P, T>
+
+%% f_image<F,I>
+%% f_images<F,n,I>
+%% lut_image<I,T>
+
+%% sub_image
+%% image_if
+%% hexa<I>
+%% translated_image
+
+
+\section{Images tour}
+
+\subsection{Introduction}
+
+
+In the Milena library, an image can be seen as an application
+$site$ to $value$.
+A $site$ is a localized object in space.
+Points in $1D$, $2D$ or $3D$, are the sites objects commonly used in the
+library.
+However, the $site$ concept allows Milena to deal with complicated image type
+(for instance see the \verb+graph_image+ type).
+
+So, an image is composed by a set of localized objects, $sites$, that
+compose the definition domain of the image.
+A value is associated to each site of the image. This is the destination domain
+of the image.
+To access to a value of an image nammed $ima$ localized at the point p, we
+just use the mathematic notation: \verb+ima(p)+.
+
+Obviously, every image types of Milena provide an access $site$ to $value$,
+through \verb+ima(p)+. Yet, depending on the image type, the values can be
+stored in different way in memory.
+For instance, in the \verb+image2d+, all the values are stored directly in a
+memory buffer.
+On the contrary, some images compress the space taken by the destination set
+like the \verb+rle_image+.
+These images use runs.
+A run is a succession of points that share the same value. It is encoded by
+a point (the beginning of the run), and an integer (the length of the run).
+Runs allows \verb+rle_image+ to gain space in memory.\\
+
+%% Explain what is a run
+
+%% Explain the different template parameters T/S/F...
+All the image types are parametrized by different static parameters.
+In this document, we will used the following namming convention for the
+image types parameters:
+\begin{itemize}
+\item{\verb+T+:} represents an image value type.
+\item{\verb+S+:} represents a type of a $sites$ set.
+\item{\verb+F+:} is a type of a function $site$ to $value$.
+\item{\verb+P+:} represents a $site$ type.
+\item{\verb+I+:} represents an image type.
+\end{itemize}
+
+\subsection{Primary images}
+
+%% Primary image definition
+
+Primary images are a major category of Milena image type.
+Primary images are not based on another image type.
+They are sufficient to define themselves.
+Thus, a primary image types directly holds in memory its data (values).
+
+
+\begin{itemize}
+
+\item{\verb+image2d<T>+}: rectangular images based on a 2d grid with all its
+values stored in a buffer in memory. An extended domain is added to the image
+domain.
+
+Related image type: \verb+image1d<T>+, \verb+image3d<T>+.
+
+
+\item{\verb+mmap_image2d<T>+:}  this image2d-like type has its values data
+``memory mapped''.
+
+Related image types: \verb+mmap_image1d<T>+, \verb+mmap_image3d<T>+.
+
+\item{\verb+file_image2d<T>+:} this image2d-like type has its values data
+stored in a file.
+
+Related image types: \verb+file_image1d<T>+, \verb+file_image3d<T>+.
+
+\item{\verb+tiled_image<T>+:} FIXME.
+
+\item{\verb+fun_image<S, F>+:} image type defined by a domain \verb+S+ and a
+function f of type \verb+F+: $site \rightarrow value$.
+f associates some values to each site composing the image.
+
+\item{\verb+flat_image<S, T>+:} defined by a domain and a value $v$.
+All the sites composing a flat image share the same value $v$.
+
+\item{\verb+pkey_image<P, T>+:} defined by couples $(p,v)$ where the $site$ p
+is a key to retrieve the values v. A map, a sorted associative container, is
+used to store the couples $(p,v)$.
+
+\item{\verb+pvkeys_image<P, T>+:} defined by couples $(p,v)$ where  the site p is a key, and at the same time, coherently maintaining couples
+($v$, list of $p$) where the value v is the key.
+
+
+%% FIXME Graph Image
+\item{\verb+graph_image+:} FIXME
+
+%% FIXME what is a run...
+\item{\verb+rle_image<P, T>+:} defined by couples $(r, v)$, where $r$ is a run
+and $v$ a value. A value is associated to each run.
+
+\item{\verb+sparse_image<P, T>+:} defined by couples ($r$, list of $v$) where a
+run $r$ is associated to a list of values. A value is associated to each
+point composing a run.
+
+\item{\verb+value_enc_image<P, T>+:} defined by couples ($v$, list of $r$).
+A list of run is associated to every values composing the image. This is a
+value-driven image.
+
+\end{itemize}
+
+\subsection{Morphers}
+
+%% Morpher definition
+A morpher transforms a type into another one.
+It can be seen as an extension of the decorator design pattern.
+Morphers are a non-intrusive way to add or modify some behaviors in an
+existing class.
+Here, the image morphers rest upon another image (the input image(s) which
+will be transformed).
+Since, it extends an image, an image morpher is also an image type.
+
+The Milena library provide different kinds of morphers.
+Domain morphers only modify the domain (the set of points/sites composing the image) of the input image.
+Value morphers only change the input image values (cast the values into another
+type\ldots{})
+Identity morphers don't modify either the definition domain or the image
+values.
+
+
+
+\subsubsection{Domain morphers}
+
+\begin{itemize}
+
+\item{\verb+sub_image<I, S>+:} restrict an image to a given sites set.
+
+\item{\verb+image_if<I, F>+:} restrict the input image domain to all the image
+sites that satisfy a condition expressed by a function.
+
+\item{\verb+hexa<I>+:}  make a hexagonal mesh of the input image (the input
+image must be an image in two dimension).
+
+\item{\verb+translated image<I, T>+:} apply a translation of $dp$, a given
+delta-point to all the sites composing the input image.
+\end{itemize}
+
+\subsubsection{Value morphers}
+
+\begin{itemize}
+
+\item{\verb+f_image<F, I>+:} transform the image values through a "function".
+
+\item{\verb+f_images<F, n, I>+:} takes $n$ values from $n$ input images,
+and transform them through a function (that return only one value).
+
+\item{\verb+lut_image<I, T>+:} use a translation table, to do a binding between the input image values and the morpher output values.
+
+\end{itemize}
+
+
+\subsubsection{Identity morphers}
+
+\begin{itemize}
+\item FIXME...
+\end{itemize}
+
+
+\subsection{Data access:}
+
+\begin{tabular}{ccl}
+
+image type & ima(p) & Details\\
+\hline
+
+\verb+image2d<T>+ &
+\lstinline+values[p.row][p.col]+ &
+\verb+values+ is a buffer containing all the image\\
+&
+&
+values.\\
+
+\\
+
+\verb+fun_image<S, F>+ &
+\lstinline+f(p)+ &
+\verb+f+ is the function associated to the image.\\
+
+\verb+flat_image<T>+ &
+\lstinline+v+ &
+\verb+v+ is the flat value.\\
+
+\\
+
+\verb+pkey_image<P, T>+ &
+\lstinline+map[p]+ &
+\verb+map+ is a table that associates a value to\\
+&
+&
+each key \verb+p+.\\
+
+\verb+pkeys_image<P, T>+ &
+\lstinline+map[p]+ &
+same as \verb+pkey_image<P, T>+.\\
+
+\\
+
+\verb+rle_image<P, T>+ &
+\lstinline+values[r.in_index()]+ &
+\verb+values+ is an array that associates a value\\
+&
+&
+to each run.\\
+&
+&
+\verb+in_index+ returns the index of the run in\\
+&
+&
+the image.\\
+
+\verb+sparse_image<P, T>+ &
+\lstinline+values[r.in_index()][r.out_index()]+ &
+\verb+values+ is an 2D array that associates a\\
+&
+&
+value to each point in a run.\\
+&
+&
+\verb+in_index+ returns the index of the run in\\
+&
+&
+the image.\\
+&
+&
+\verb+out_index+ returns the index of the current\\
+&
+&
+point in the run.\\
+
+\verb+value_enc_image<P, T>+ &
+\lstinline+values[r.in_index()]+ &
+\verb+values+ is an array that associates a values\\
+&
+&
+to each run.\\
+
+\\
+
+\verb+f_image<F, I>+ &
+\lstinline+f(ref(p))+ &
+\verb+f+ is the function associated to the morpher.\\
+&
+&
+\verb+ref+ is the underlying image.\\
+
+\verb+f_images<F, n, I>+ &
+\lstinline+f(ref_1(p), ref_2(p), ... ref_n(p))+ &
+\verb+f+ is the function associated to the morpher.\\
+&
+&
+\verb+ref_n+ are the underlying images.\\
+
+
+\verb+lut_image<I, T>+ &
+\lstinline+lut[ref(p)]+ &
+\verb+lut+ is the morpher translation table.\\
+&
+&
+\verb+ref_n+ are the underlying images.\\
+
+\end{tabular}
+
+
