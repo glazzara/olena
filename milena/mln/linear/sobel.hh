@@ -82,45 +82,51 @@ namespace mln
 
     /// Compute the Sobel gradient of an image.
     ///
-    /// \param output A vectorial output image.
-    /// \param 
+    /// \param[in] input A vectorial output image.
+    /// \{
     template <typename I>
     mln_gradient(I) sobel(const Image<I>& input);
+    /// \}
 
     /// Compute the norm of the Sobel gradient of an image.
-    /// 
+    ///
     /// \param input  a vectorial input image
-    /// \param output the norm-image of the Sobel gradient of the input image
     /// \param norm   a norm functor (\see mln/fun/v2v/norm.hh),
     ///               defaulting to the L1-norm (mln::fun::v2v::l1_norm).
-    /* FIXME: Add constraints on N (mln::Function_v2v<N>).  */
+    /// \return the norm-image of the Sobel gradient of the input image
+    /// FIXME: Add constraints on N (mln::Function_v2v<N>).
+    /// \{
     template <typename I, typename N>
-    mln_ch_value(I, mln_result(N)) sobel_norm(const Image<I>& input, N norm); 
+    mln_ch_value(I, mln_result(N)) sobel_norm(const Image<I>& input, N norm);
+    /// \}
 
 
     /// \brief Compute the L-1 norm of the Sobel gradient of an image.
     ///
     /// This function is a shortcut for the general
     /// mln::linear::sobel_norm function.
+    /// \{
     template <typename I>
     mln_ch_value(I, mln_sum(mln_value(I))) sobel_norm(const Image<I>& input);
+    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-/// \brief Ensure type \a V is a scalar value.
+/// \brief Ensure type \p V is a scalar value.
 ///
 /// For internal use only (#undef'd before the end of this file).  (We
 /// might want to export this macro to the user interface; if so,
 /// rename it and move it elsewhere.)
 ///
-/* FIXME: At the moment (rev. 1645), we cannot use mlc_is_a to check
-   whether V derives from trait::value::nature::scalar like this
-
-     mlc_is_a(trait::value_<V>::nature, trait::value::nature::scalar)::check()
-
-   since `mlc_is_a' doesn't work on non template classes (yet).  Hence
-   the ugly workaround based on comprehensive checks.  */
+/// FIXME: At the moment (rev. 1645), we cannot use mlc_is_a to check
+/// whether V derives from trait::value::nature::scalar like this
+///
+/// mlc_is_a(trait::value_<V>::nature, trait::value::nature::scalar)::check()
+///
+/// since `mlc_is_a' doesn't work on non template classes (yet).  Hence
+/// the ugly workaround based on comprehensive checks.
+/// \{
 #  define mlc_internal_ensure_is_scalar(V)				\
     mlc_or(mlc_equal(typename mln::trait::value_<V>::nature,		\
                      mln::trait::value::nature::scalar),		\
@@ -128,6 +134,7 @@ namespace mln
 		     mln::trait::value::nature::integer),		\
 	   mlc_equal(typename mln::trait::value_<V>::nature,		\
 		     mln::trait::value::nature::floating)))::check()
+/// \}
 
     namespace impl
     {

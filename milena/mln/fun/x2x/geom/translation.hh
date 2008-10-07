@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_TRANSLATION_HH
 # define MLN_FUN_X2X_TRANSLATION_HH
 
-/*! \file mln/fun/x2x/translation.hh
+/*! \file mln/fun/x2x/geom/translation.hh
  *
  * \brief Define a translation function.
  */

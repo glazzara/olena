@@ -264,7 +264,7 @@ namespace mln
   template <unsigned N, unsigned D, typename P>
   inline
   void
-  faces_psite<N, D, P>::change_target(const p_faces<N, D, P>& new_target)
+  faces_psite<N, D, P>::change_target(const target& new_target)
   {
     // Update both pc_ and face_.
     pf_ = &new_target;

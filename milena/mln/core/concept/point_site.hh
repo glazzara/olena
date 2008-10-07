@@ -171,38 +171,42 @@ namespace mln
   operator-(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
 
 
-  /*! \brief Add a delta-point \p rhs to a point site \p lhs.
-   *
-   * \param[in] p  A point site.
-   * \param[in] dp A delta-point.
-   *
-   * The type of \p dp has to compatible with the type of \p p.
-   *
-   * \return A point (temporary object).
-   *
-   * \relates mln::Point_Site
-   * \see mln::Delta_Point_Site
-   */
+  /// \brief Add a delta-point \p rhs to a point site \p lhs.
+  ///
+  /// \param[in] p  A point site.
+  /// \param[in] dp A delta-point.
+  ///
+  /// The type of \p dp has to compatible with the type of \p p.
+  ///
+  /// \return A point (temporary object).
+  ///
+  /// \relates mln::Point_Site
+  /// \see mln::Delta_Point_Site
+  ///
+  /// \{
   template <typename P, typename D>
   mln_point(P)
   operator+(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+  /// }
 
 
-  /*! \brief Substract a delta-point \p rhs to a point site \p lhs.
-   *
-   * \param[in] p A point site.
-   * \param[in] dp A delta-point.
-   *
-   * The type of \p dp has to compatible with the type of \p p.
-   *
-   * \return A point (temporary object).
-   *
-   * \see mln::Dpoint
-   * \see mln::Delta_Point_Site
-   */
+  /// \brief Substract a delta-point \p dp to a point site \p p.
+  ///
+  /// \param[in] p A point site.
+  /// \param[in] dp A delta-point.
+  ///
+  /// The type of \p dp has to compatible with the type of \p p.
+  ///
+  /// \return A point (temporary object).
+  ///
+  /// \see mln::Dpoint
+  /// \see mln::Delta_Point_Site
+  ///
+  /// \{
   template <typename P, typename D>
   mln_point(P)
   operator-(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+  /// \}
 
 
   /*! \brief Print a point site \p p into the output stream \p ostr.

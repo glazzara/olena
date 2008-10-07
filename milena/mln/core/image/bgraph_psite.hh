@@ -100,7 +100,7 @@ namespace mln
   /// FIXME: Is it normal to have to call super_() ?
   template<typename P>
   inline
-  bgraph_psite<P>::bgraph_psite(const bgraph_psite<P>& rhs)
+  bgraph_psite<P>::bgraph_psite(const self_& rhs)
     : super_(),
       pg_(rhs.pg_),
       id_(rhs.id_)
@@ -110,7 +110,7 @@ namespace mln
   template<typename P>
   inline
   bgraph_psite<P>&
-  bgraph_psite<P>::operator= (const bgraph_psite<P>& rhs)
+  bgraph_psite<P>::operator= (const self_& rhs)
   {
     if (&rhs == this)
       return *this;

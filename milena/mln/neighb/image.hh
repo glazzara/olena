@@ -176,7 +176,7 @@ namespace mln
   {
     template <typename I, typename N>
     inline
-    data< neighb::image<I, N> >::data(I& ima, const N& nbh)
+    data< mln::neighb::image<I, N> >::data(I& ima, const N& nbh)
       : ima_(ima),
 	nbh_(nbh)
     {

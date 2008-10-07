@@ -176,7 +176,6 @@ namespace mln
      *
      * \param[in] input The image.
      * \param[in] val The value.
-     * \param[in] f   Function.
      * \result The result image.
      *
      * \pre \p input.has_data

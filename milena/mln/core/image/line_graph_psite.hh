@@ -247,7 +247,7 @@ namespace mln
   template <typename P>
   inline
   void
-  line_graph_psite<P>::change_target(const p_line_graph<P>& new_target)
+  line_graph_psite<P>::change_target(const target& new_target)
   {
     plg_ = &new_target;
     invalidate();

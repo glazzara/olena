@@ -201,7 +201,7 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    data< pw::image<F,S> >::data(const F& f, const S& ps)
+    data< mln::pw::image<F,S> >::data(const F& f, const S& ps)
       : f_(f),
 	pset_(ps)
     {

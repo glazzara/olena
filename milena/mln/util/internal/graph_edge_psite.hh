@@ -38,7 +38,7 @@ namespace mln
 
 } // end of namespace mln
 
-/// \file mln/util/internal/edge_psite.hh
+/// \file mln/util/internal/graph_edge_psite.hh
 /// \brief Implementation of p_edges psite.
 
 namespace mln

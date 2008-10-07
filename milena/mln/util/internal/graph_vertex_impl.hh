@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_VERTEX_IMPL_HH
-# define MLN_CORE_INTERNAL_VERTEX_IMPL_HH
+#ifndef MLN_CORE_INTERNAL_GRAPH_VERTEX_IMPL_HH
+# define MLN_CORE_INTERNAL_GRAPH_VERTEX_IMPL_HH
 
-/*! \file mln/core/internal/vertex_impl.hh
+/*! \file mln/util/internal/graph_vertex_impl.hh
  *
  * \brief Define a couple of implementation classes to provide methods
  * to classes of generalized vertexs.
@@ -86,4 +86,4 @@ namespace mln
 #endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_CORE_INTERNAL_VERTEX_IMPL_HH
+#endif // ! MLN_CORE_INTERNAL_GRAPH_VERTEX_IMPL_HH

@@ -223,7 +223,7 @@ namespace mln
 
   template<typename P>
   inline
-  p_bgraph_piter_<P>::operator P() const
+  p_bgraph_piter_<P>::operator point() const
   {
     mln_precondition(is_valid());
     return p_;
@@ -231,7 +231,7 @@ namespace mln
 
   template<typename P>
   inline
-  p_bgraph_piter_<P>::operator bgraph_psite<P>() const
+  p_bgraph_piter_<P>::operator psite() const
   {
     mln_precondition(is_valid());
     bgraph_psite<P> tmp(pg_, *cur_);

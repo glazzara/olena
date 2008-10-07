@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_GEOM_COMPOSED_HH
 # define MLN_FUN_X2X_GEOM_COMPOSED_HH
 
-/*! \file mln/fun/x2x/composed.hh
+/*! \file mln/fun/x2x/geom/composed.hh
  *
  * \brief Definition of a composed transformation.
  */

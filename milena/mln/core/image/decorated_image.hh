@@ -196,7 +196,7 @@ namespace mln
   template <typename I, typename D>
   inline
   typename decorated_image<I,D>::rvalue
-  decorated_image<I,D>::operator()(const mln_psite(I)& p) const
+  decorated_image<I,D>::operator()(const psite& p) const
   {
     mln_precondition(this->delegatee_() != 0);
     return read_(p);
@@ -205,7 +205,7 @@ namespace mln
   template <typename I, typename D>
   inline
   typename decorated_image<I,D>::lvalue
-  decorated_image<I,D>::operator()(const mln_psite(I)& p)
+  decorated_image<I,D>::operator()(const psite& p)
   {
     mln_precondition(this->delegatee_() != 0);
     // Return a proxy.

@@ -55,7 +55,7 @@ namespace mln
      */
     template <typename L, typename R>
     mln_concrete(L)
-      min(const Image<L>& lhs, const Image<R>& rhs);
+    min(const Image<L>& lhs, const Image<R>& rhs);
 
 
     /*! Point-wise min of image \p lhs in image \p rhs.

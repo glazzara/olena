@@ -41,13 +41,13 @@
 namespace mln
 {
 
-  /*! \brief Clone the image \p ima with the values of the image \p
+  /*! \brief Clone the image \p model with the values of the image \p
    *  data.
    *
-   * \param[in] ima The image to be cloneed.
+   * \param[in] model The image to be cloneed.
    * \result The clone.
    *
-   * \pre ima.has_data
+   * \pre model.has_data
    */
   template <typename I>
   mln_concrete(I) clone(const Image<I>& model);

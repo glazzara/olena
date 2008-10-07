@@ -73,7 +73,7 @@ namespace mln {
 
     template <typename I>
     bool
-    greater_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    greater_psite<I>::operator()(const psite& x, const psite& y)
     {
       return ima_(x) > ima_(y);
     }

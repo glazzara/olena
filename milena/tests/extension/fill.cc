@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/extension/fill.cc
+/*! \file tests/extension/fill.cc
  *
  * \brief Tests on mln::extension::fill.
  */

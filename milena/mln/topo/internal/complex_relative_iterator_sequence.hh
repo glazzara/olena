@@ -128,7 +128,7 @@ namespace mln
 	// Ensure I1 and I2 are compatible.
 	mlc_equal(mln_face(I1), mln_face(I2))::check();
 
- 	invalidate();
+	invalidate();
       }
 
       template <typename I1, typename I2, typename E>
@@ -145,11 +145,11 @@ namespace mln
       template <typename I1, typename I2, typename E>
       inline
       void
-      complex_relative_iterator_sequence<I1, I2, E>::center_at(const mln_face(I1)& c)
+      complex_relative_iterator_sequence<I1, I2, E>::center_at(const face& c)
       {
- 	iter1_.center_at(c);
- 	iter2_.center_at(c);
- 	invalidate();
+	iter1_.center_at(c);
+	iter2_.center_at(c);
+	invalidate();
       }
 
       template <typename I1, typename I2, typename E>
@@ -209,7 +209,7 @@ namespace mln
 
       template <typename I1, typename I2, typename E>
       inline
-      complex_relative_iterator_sequence<I1, I2, E>::operator const mln_face(I1)&() const
+      complex_relative_iterator_sequence<I1, I2, E>::operator const face&() const
       {
 	return f_;
       }

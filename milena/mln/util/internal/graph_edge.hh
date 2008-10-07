@@ -65,13 +65,13 @@ namespace mln
 	/// Return the edge id.
 	unsigned id() const;
 
-	/// Set \att id_ with \p id;
+	/// Set id_ with \p id;
 	void update_id(unsigned id);
 
 	/// Return pointer of the graph holding this edge.
         const graph_t * g() const;
 
-	/// Set \att g_ with \p g;
+	/// Set g_ with \p g;
 	void change_graph(const graph_t& g);
 	/// \}
 

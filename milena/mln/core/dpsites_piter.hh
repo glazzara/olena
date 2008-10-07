@@ -55,8 +55,8 @@ namespace mln
 
     /*! \brief Constructor.
      *
-     * \param[in] dps   Object that can provide an array of delta-points.
-     * \param[in] p_ref Center point to iterate around.
+     * \param[in] v   Object that can provide an array of delta-points.
+     * \param[in] c Center point to iterate around.
      */
     template <typename P>
     dpsites_fwd_piter(const V& v, const P& c);
@@ -99,8 +99,8 @@ namespace mln
 
     /*! \brief Constructor.
      *
-     * \param[in] dps   Object that can provide an array of delta-points.
-     * \param[in] p_ref Center point to iterate around.
+     * \param[in] v   Object that can provide an array of delta-points.
+     * \param[in] c   Center point to iterate around.
      */
     template <typename P>
     dpsites_bkd_piter(const V& v, const P& c);

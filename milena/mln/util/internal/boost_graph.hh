@@ -190,8 +190,7 @@ namespace mln
       template <typename V, typename E>
       inline
       typename boost_graph<V, E>::vertex_bundled&
-      boost_graph<V, E>::operator[](typename boost_graph<V, E>::
-				    vertex_descriptor v)
+      boost_graph<V, E>::operator[](vertex_descriptor v)
       {
 	return this->graph_[v];
       }
@@ -199,8 +198,7 @@ namespace mln
       template <typename V, typename E>
       inline
       const typename boost_graph<V, E>::vertex_bundled&
-      boost_graph<V, E>::operator[](typename boost_graph<V, E>::
-				    vertex_descriptor v) const
+      boost_graph<V, E>::operator[](vertex_descriptor v) const
       {
 	return this->graph_[v];
       }

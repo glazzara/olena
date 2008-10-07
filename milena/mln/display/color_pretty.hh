@@ -51,7 +51,7 @@ namespace mln
     /*! Return new image colored from an image \p input_. with the
      *  color red for the pixels not in the domain of \p input_.
      *
-     * \param[in] ima The image in gray level to color.
+     * \param[in] input_ The image in gray level to color.
      *
      * \return colored image from \p input_ in rgb8 with red for the
      * color filled when the point is in bounding box of \p input_ but
@@ -69,7 +69,7 @@ namespace mln
     /*! Return new image colored from an image \p input_. with the
      *  color red for the pixels not in the domain of \p input_.
      *
-     * \param[in] ima The image whose domain let to define the domain
+     * \param[in] input_ The image whose domain let to define the domain
      * of the returned image.
      * \param[in] s1_ The p_set where the points will be colored in red.
      * \param[in] s2_ The p_set where the points will be colored in green.

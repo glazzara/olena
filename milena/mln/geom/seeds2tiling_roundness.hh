@@ -51,24 +51,24 @@ namespace mln
   namespace geom
   {
 
-    /*! Take a labeled image \p ima_ with seeds and extend them until
-     *  creating tiles rounder than the primary version.
-     *
-     * \param[in,out] ima_   The labeled image with seed.
-     * \param[in]     win_w  The weight window using by geom::chamfer to
-     *                       compute distance.
-     * \param[in]     max    Unsigned using by geom::chamfer to compute
-     *                       the distance.
-     * \param[in]     nbh    The neighborhood to use on this algorithm.
-     *
-     * \pre \p ima_ has to be initialized.
-     *
-     */
+    /// \brief Take a labeled image \p ima_ with seeds and extend them until
+    /// creating tiles rounder than the primary version.
+    ///
+    /// \param[in,out] ima_   The labeled image with seed.
+    /// \param[in]     w_win  The weight window using by geom::chamfer to
+    ///                       compute distance.
+    /// \param[in]     max    Unsigned using by geom::chamfer to compute
+    ///                       the distance.
+    /// \param[in]     nbh_   The neighborhood to use on this algorithm.
+    ///
+    /// \pre \p ima_ has to be initialized.
+    ///
+    /// \{
     template <typename I, typename N>
     I
     seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win,
-			    unsigned max, const Neighborhood<N>& nbh);
-
+			    unsigned max, const Neighborhood<N>& nbh_);
+    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -122,7 +122,7 @@ namespace mln
     } // end of namespace mln::geom::impl
 
 
-    /// Facade
+    // Facade
     template <typename I, typename N>
     inline
     I

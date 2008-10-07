@@ -127,10 +127,10 @@ namespace mln
     /// Tell if the image has the given point site.
     bool has(const psite& ps) const;
 
-    /// Read-only access to the image value located at the site \site.
+    /// Read-only access to the image value located at the site \p site.
     rvalue operator() (const psite& site) const;
 
-    /// Read-write access to the image value located at the site \site.
+    /// Read-write access to the image value located at the site \p site.
     lvalue operator() (const psite& site);
 
     /// Test if this image has been initialized.
@@ -211,7 +211,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  value_enc_image<P, T>::has(const typename value_enc_image<P, T>::psite& site)
+  value_enc_image<P, T>::has(const psite& site)
     const
   {
     return this->data_->domain_.has(site);
@@ -220,8 +220,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename value_enc_image<P, T>::rvalue
-  value_enc_image<P, T>::operator() (const typename
-				     value_enc_image<P, T>::psite& site)
+  value_enc_image<P, T>::operator() (const psite& site)
     const
   {
     mln_precondition(this->has(site));
@@ -232,8 +231,7 @@ namespace mln
   template <typename P, typename T>
   inline
   typename value_enc_image<P, T>::lvalue
-  value_enc_image<P, T>::operator() (const typename
-				     value_enc_image<P, T>::psite& site)
+  value_enc_image<P, T>::operator() (const psite& site)
   {
     mln_precondition(this->has(site));
 

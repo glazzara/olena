@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_SITE_SET_P_COMPLEX_FACES_PITER_HH
 # define MLN_CORE_SITE_SET_P_COMPLEX_FACES_PITER_HH
 
-/// \file mln/core/site_set/p_complex_faces_piter.hh
+/// \file mln/core/site_set/attic/p_complex_faces_piter.hh
 /// \brief Definition of point iterator on the n-faces of a
 /// complex-based pset.
 ///

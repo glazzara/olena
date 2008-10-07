@@ -112,7 +112,7 @@ namespace mln
 
     template <typename T>
     inline
-    branch_iter_ind<T>::operator tree_node<T>&() const
+    branch_iter_ind<T>::operator util::tree_node<T>&() const
     {
       mln_assertion(n_);
       return *n_;

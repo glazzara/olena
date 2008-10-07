@@ -266,7 +266,7 @@ namespace mln
   template <unsigned D, typename P>
   inline
   void
-  complex_psite<D, P>::change_target(const p_complex<D, P>& new_target)
+  complex_psite<D, P>::change_target(const target& new_target)
   {
     // Update both pc_ and face_.
     pc_ = &new_target;

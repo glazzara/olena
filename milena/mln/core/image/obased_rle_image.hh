@@ -160,11 +160,11 @@ namespace mln
   namespace internal
   {
 
-    // internal::data_< obased_rle_image<P,T> >
+    // internal::data< obased_rle_image<P,T> >
 
     template <typename P, typename T>
     inline
-    data_< obased_rle_image<P,T> >::data_(const std::set<T>& values)
+    data< obased_rle_image<P,T> >::data(const std::set<T>& values)
       : obj_(values.size()),
 	bbox_(values.size())
     {
@@ -175,7 +175,7 @@ namespace mln
     template <typename P, typename T>
     inline
     unsigned
-    data_< obased_rle_image<P,T> >::memory_size() const
+    data< obased_rle_image<P,T> >::memory_size() const
     {
       return domain_.memory_size() + bbox_.size()
 	* (sizeof(T) + sizeof(box<P>) + sizeof(std::vector<unsigned>))
@@ -185,7 +185,7 @@ namespace mln
     template <typename P, typename T>
     inline
     void
-    data_< obased_rle_image<P,T> >::finalize()
+    data< obased_rle_image<P,T> >::finalize()
     {
       domain_.finalize();
     }
@@ -272,7 +272,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  const box<P>& 
+  const box<P>&
   obased_rle_image<P, T>::bbox_of_run(unsigned i) const
   {
     mln_assertion(i < this->data_->bbox_.size());

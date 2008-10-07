@@ -113,7 +113,7 @@ namespace mln
 
   template<typename P>
   inline
-  p_bgraph<P>::p_bgraph (typename p_bgraph<P>::graph* gr)
+  p_bgraph<P>::p_bgraph (graph* gr)
     : gr_ (gr)
   {
     mln_precondition(gr != 0);
@@ -167,14 +167,14 @@ namespace mln
 
   template <typename P>
   const P&
-  p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id) const
+  p_bgraph<P>::point_from_id(const node_id& id) const
   {
     return this->gr_->operator[](id);
   }
 
   template <typename P>
   P&
-  p_bgraph<P>::point_from_id(const typename p_bgraph<P>::node_id& id)
+  p_bgraph<P>::point_from_id(const node_id& id)
   {
     return this->gr_->operator[](id);
   }
@@ -184,7 +184,7 @@ namespace mln
   /// information. Is it bad??
   template <typename P>
   const P&
-  p_bgraph<P>::node1(const typename p_bgraph<P>::edge_id& e) const
+  p_bgraph<P>::node1(const edge_id& e) const
   {
     return this->point_from_id(source(e, *this->gr_));
   }
@@ -192,7 +192,7 @@ namespace mln
   /// FIXME: same as node1...
   template <typename P>
   const P&
-  p_bgraph<P>::node2(const typename p_bgraph<P>::edge_id& e) const
+  p_bgraph<P>::node2(const edge_id& e) const
   {
     return this->point_from_id(target(e, *this->gr_));
   }

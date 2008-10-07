@@ -57,15 +57,17 @@ namespace mln
   namespace level
   {
 
-    /*! Fill the whole image \p ima with the single value \p v.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] val The value to assign to all sites.
-     *
-     * \pre \p ima has to be initialized.
-     */
+    /// \brief Fill the whole image \p ima with the single value \p v.
+    ///
+    /// \param[in,out] ima The image to be filled.
+    /// \param[in] val The value to assign to all sites.
+    ///
+    /// \pre \p ima has to be initialized.
+    ///
+    /// \{
     template <typename I, typename V>
     void fill_with_value(Image<I>& ima, const V& val);
+    /// \}
 
 
 
@@ -118,7 +120,7 @@ namespace mln
     } // end of namespace mln::level::impl
 
 
-    /// Facade.
+    // Facade.
 
     template <typename I, typename V>
     inline

@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_COMPLEX_HH
 # define MLN_TOPO_COMPLEX_HH
 
-/// \file mln/core/topo/complex.hh
+/// \file mln/topo/complex.hh
 /// \brief Structures for general complexes.
 ///
 /// A complex defines a topological space which can be used as a

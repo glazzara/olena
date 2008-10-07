@@ -98,8 +98,8 @@ namespace mln
 
   /* FIXME: Aggregate site data (location).  */
 
-  /// A complex psite set based on a the \N-faces of a complex of
-  /// dimension \p D (a \p D-complex).
+  /// A complex psite set based on a the N-faces of a complex of
+  /// dimension \tparam D (a \p D-complex).
   template <unsigned D, typename P>
   class p_complex
     : public internal::site_set_base_< complex_psite<D, P>, p_complex<D, P> >
@@ -110,7 +110,7 @@ namespace mln
   public:
     /// \brief Construct a complex psite set from a complex.
     ///
-    /// \param gr The complex upon which the complex psite set is built.
+    /// \param cplx The complex upon which the complex psite set is built.
     p_complex (const topo::complex<D>& cplx);
 
     /// Associated types.

@@ -159,7 +159,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_set_iterator_base<F, E>::operator const F&() const
+      complex_set_iterator_base<F, E>::operator const face&() const
       {
 	return f_;
       }

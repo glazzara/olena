@@ -1,4 +1,4 @@
-// Copyright (C) 2005, 2008 EPITA Research and Development Laboratory (LRDE)
+:/ Copyright (C) 2005, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -73,7 +73,7 @@ namespace mln {
 
     template <typename I>
     bool
-    greater_point<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    greater_point<I>::operator()(const point& x, const point& y)
     {
       return ima_(x) > ima_(y);
     }

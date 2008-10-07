@@ -54,8 +54,8 @@ namespace mln
      * \param[in] input_ The image to resize.
      * \param[in] ratio The ratio of the resize image.
      *
-     * \precondition \p input_ has to be initialized.
-     * \precondition \p ratio <= 1.
+     * \pre \p input_ has to be initialized.
+     * \pre \p ratio <= 1.
      *
      * \return The resized image.
      */

@@ -309,7 +309,7 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_relative_iterator_base<F, E>::operator const F&() const
+      complex_relative_iterator_base<F, E>::operator const face&() const
       {
 	return f_;
       }

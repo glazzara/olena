@@ -192,7 +192,7 @@ namespace mln
 
   /*! \brief Equality comparison between windows \p lhs and \p rhs.
    *
-   * \relates mln::window<D>
+   * \relates mln::window
    */
   template <typename D>
   bool operator==(const window<D>& lhs, const window<D>& rhs);

@@ -28,7 +28,7 @@
 #ifndef MLN_TOPO_COMPLEX_ITERATORS_HH
 # define MLN_TOPO_COMPLEX_ITERATORS_HH
 
-/// \file mln/core/topo/complex_iterators.hh
+/// \file mln/topo/complex_iterators.hh
 /// \brief Iterators on complexes.
 ///
 /// This file includes all iterators on faces.

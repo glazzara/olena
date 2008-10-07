@@ -229,7 +229,7 @@ namespace mln
   template <typename P>
   inline
   void
-  graph_psite<P>::change_target(const p_graph<P>& new_target)
+  graph_psite<P>::change_target(const target& new_target)
   {
     pg_ = &new_target;
     invalidate();

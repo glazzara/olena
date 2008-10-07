@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_WINDOW_P_HH
 # define MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_WINDOW_P_HH
 
-/// \file mln/core/complex_lower_higher_window_p.hh
+/// \file mln/core/image/complex_lower_higher_window_p.hh
 /// \brief Definition of a window centered on a n-face of complex
 /// returning its adjacent (n-1)-faces and (n+1)-faces as well as the
 /// center n-face.

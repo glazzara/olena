@@ -70,8 +70,8 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// A complex psite set based on a the \N-faces of a complex of
-  /// dimension \p D (a \p D-complex).
+  /// A complex psite set based on a the \tparam N -faces of a complex of
+  /// dimension \tparam D (a \p D-complex).
   template <unsigned N, unsigned D, typename P>
   struct p_faces
     : public internal::site_set_base_< faces_psite<N, D, P>,
@@ -82,12 +82,12 @@ namespace mln
 
     /// \brief Construct a faces psite set from an mln::complex.
     ///
-    /// \param gr The complex upon which the complex psite set is built.
+    /// \param cplx The complex upon which the complex psite set is built.
     p_faces(const topo::complex<D>& cplx);
 
     /// \brief Construct a faces psite set from an mln::p_complex.
     ///
-    /// \param gr The complex upon which the complex psite set is built.
+    /// \param pc The complex upon which the complex psite set is built.
     ///
     /// \todo When available, get location information from \a pc.
     p_faces(const p_complex<D, P>& pc);

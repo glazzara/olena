@@ -48,17 +48,18 @@ namespace mln
   namespace geom
   {
 
-    /*! Take a labeled image \p ima_ with seeds and extend them
-     *  until creating tiles.
-     *
-     * \param[in,out] ima_ The labeled image with seed.
-     * \param[in] nbh The neighborhood to use on this algorithm.
-     *
-     * \pre \p ima_ has to be initialized.
-     *
-     */
+    /// \brief Take a labeled image \p ima_ with seeds and extend them
+    /// until creating tiles.
+    ///
+    /// \param[in,out] ima_ The labeled image with seed.
+    /// \param[in] nbh The neighborhood to use on this algorithm.
+    ///
+    /// \pre \p ima_ has to be initialized.
+    ///
+    /// \{
     template <typename I, typename N>
     I seeds2tiling (Image<I>& ima_, const Neighborhood<N>& nbh);
+    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -119,7 +120,7 @@ namespace mln
     } // end of namespace mln::geom::impl
 
 
-    /// Facade
+    // Facade
     template <typename I, typename N>
     inline
     I seeds2tiling(Image<I>& ima_, const Neighborhood<N>& nbh)

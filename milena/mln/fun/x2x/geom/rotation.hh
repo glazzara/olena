@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_ROTATION_HH
 # define MLN_FUN_X2X_ROTATION_HH
 
-/*! \file mln/fun/x2x/rotation.hh
+/*! \file mln/fun/x2x/geom/rotation.hh
  *
  * \brief Define a rotation function.
  */

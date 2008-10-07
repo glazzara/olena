@@ -68,7 +68,6 @@ int main()
   g.add_edge (5, 3);
   g.add_edge (2, 1);
 
-//  typedef point2d (*fun_t)(const util::vertex<util::graph>&);
   typedef p_vertices<util::graph, my_fun<util::graph> > p_vertices;
   p_vertices pv(g, my_fun<util::graph>());
 

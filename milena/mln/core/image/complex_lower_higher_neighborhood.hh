@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
 # define MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
 
-/// \file mln/core/complex_lower_higher_neighborhood.hh
+/// \file mln/core/image/complex_lower_higher_neighborhood.hh
 /// \brief A neighborhood centered on a n-face of complex returning its
 /// adjacent (n-1)-faces and (n+1)-faces.
 

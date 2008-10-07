@@ -43,7 +43,7 @@ namespace mln
 
   namespace win
   {
- 
+
     /** \brief Cuboid defined on the 3-D square grid.
 
 	A cuboid3d is a 3-D window with cuboid (also known as
@@ -56,19 +56,19 @@ namespace mln
            o o o o o o o\n
           o o o o o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
             o o o o o o o\n
            o o o o o o o\n
           o o o x o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
             o o o o o o o\n
            o o o o o o o\n
           o o o o o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
         is defined with depth = 3, height = 5 and width = 7.
 

@@ -88,7 +88,7 @@ namespace mln
 
   namespace fun
   {
-    
+
     template <typename F> struct C;
 
 

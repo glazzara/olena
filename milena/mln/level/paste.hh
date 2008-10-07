@@ -49,25 +49,26 @@ namespace mln
   namespace level
   {
 
-    /*!
-     *  \brief Paste the contents of image \p data into the image \p
-     *  destination.
-     *
-     * \param[in] data The input image providing pixels values.
-     * \param[in,out] destination The image in which values are
-     * assigned.
-     *
-     * This routine runs: \n
-     * for all p of \p data, \p destination(p) = \p data(p).
-     *
-     * \warning The definition domain of \p data has to be included in
-     * the one of \p destination; so using mln::safe_image does not
-     * make pasting outside the destination domain work.
-     *
-     * \pre \p data.domain <= \p destination.domain
-     */
+    /// \brief Paste the contents of image \p data into the image \p
+    /// destination.
+    ///
+    /// \param[in] data The input image providing pixels values.
+    /// \param[in,out] destination The image in which values are
+    /// assigned.
+    ///
+    /// This routine runs: \n
+    /// for all p of \p data, \p destination(p) = \p data(p).
+    ///
+    /// \warning The definition domain of \p data has to be included in
+    /// the one of \p destination; so using mln::safe_image does not
+    /// make pasting outside the destination domain work.
+    ///
+    /// \pre \p data.domain <= \p destination.domain
+    ///
+    /// \{
     template <typename I, typename J>
     void paste(const Image<I>& data, Image<J>& destination);
+    /// \}
 
 
 

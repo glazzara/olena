@@ -48,18 +48,20 @@ namespace mln
   namespace level
   {
 
-    /*! Fill the image \p ima with the values of the image \p data.
-     *
-     * \param[in,out] ima The image to be filled.
-     * \param[in] data The image.
-     *
-     * \warning The definition domain of \p ima has to be included in
-     * the one of \p data.
-     *
-     * \pre \p ima.domain <= \p data.domain.
-     */
+    /// Fill the image \p ima with the values of the image \p data.
+    ///
+    /// \param[in,out] ima The image to be filled.
+    /// \param[in] data The image.
+    ///
+    /// \warning The definition domain of \p ima has to be included in
+    /// the one of \p data.
+    ///
+    /// \pre \p ima.domain <= \p data.domain.
+    ///
+    /// \{
     template <typename I, typename J>
     void fill_with_image(Image<I>& ima, const Image<J>& data);
+    /// \}
 
 
 
@@ -115,7 +117,7 @@ namespace mln
     } // end of namespace mln::level::impl
 
 
-    /// Facade.
+    // Facade.
 
     template <typename I, typename J>
     inline

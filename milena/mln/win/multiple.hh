@@ -129,7 +129,7 @@ namespace mln
 
 
     template <typename W, typename F>
-    class multiple_qiter 
+    class multiple_qiter
       : public internal::site_relative_iterator_base< multiple<W,F>,
 						      multiple_qiter<W,F> >
     {
