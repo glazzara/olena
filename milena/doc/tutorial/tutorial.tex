@@ -726,7 +726,7 @@ First, create an image:
 Memory has been allocated so data can be stored but site values
 have not been initialized yet.  So we fill img with the value 'a':
 \begin{lstlisting}[frame=single]
-  level::fill(inplace(imga), 'a');
+  level::fill(imga.rw(), 'a');
 \end{lstlisting}
 
 The "fill" algorithm is located in the sub-namespace "level" since this
@@ -746,8 +746,8 @@ Most algorithms in Olena are constructed following the classical scheme: "output
 algo(input)", where the input image is only read. However some few algorithms
 take an input image in order to modify it.  To enforce this particular feature,
 the user shall explicitly state that the image is provided so that its data is
-modified "inplace". The algorithm call shall be "level::fill(inplace(ima),
-val)". When forgetting the "inplace(..)" statement it does not compile.
+modified "read/write". The algorithm call shall be "level::fill(ima.rw(),
+val)". When forgetting the "rw()" call it does not compile.
 
 
 \section{Paste}
@@ -758,10 +758,10 @@ data for the sites (5, 5) to (14, 14) (so it has 100 sites).
   image1d<char> imgb(5, 5, 14, 14);
 
   // We initialize the image values.
-  level::fill(inplace(imgb), 'b');
+  level::fill(imgb.rw(), 'b');
 
   // Last we now paste the contents of img3b in img3a...
-  level::paste(imgb, inplace(imga));
+  level::paste(imgb, imga.rw()));
 
   // ...and print the result.
   debug::println(imga);
@@ -875,12 +875,12 @@ arr.append(point2d(4, 0));
 // We restrict the image to the sites
 // contained in arr and fill these ones
 // with 0.
-// We must call "inplace" here.
-fill(inplace(ima | arr), 0);
+// We must call "rw()" here.
+fill((ima | arr).rw(), 0);
 
 
 mln_VAR(ima2, ima | arr);
-// We do not need to call "inplace" here.
+// We do not need to call "rw()" here.
 fill(ima2, 0);
 \end{lstlisting}
 
@@ -918,7 +918,7 @@ The previous example can be written more quickly:
   image2d<int_u8> lab = labeling::blobs(ima, c4(), nlabels);
 
   // Fill the sites of component 2 with red.
-  fill(inplace(lab.domain(2)), color::red);
+  fill(lab.domain(2).rw(), color::red);
 \end{lstlisting}
 
 Here is an example using a C function:
