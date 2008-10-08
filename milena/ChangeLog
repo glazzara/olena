@@ -1,3 +1,19 @@
+2008-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Work on erosion and browsing canvas.
+
+	Todo: Add a n-dimensional browsing canvas which follows diagonal
+	directions, to accelerate erosion on diagonal lines.
+
+	* mln/morpho/erosion.spe.hh:
+	* tests/morpho/erosion.cc: More tests and benches on rectangles,
+	hline2d, vline2d and octogone.
+
+	* mln/canvas/browsing/directional.hh: Improve this canvas in order to
+	use it in erosion, to improve performance on erosion with lines.
+
+	* tests/timer.hh: New. Tool to bench tests.
+
 2008-10-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add documentation about the image properties.

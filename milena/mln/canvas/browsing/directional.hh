@@ -121,10 +121,18 @@ namespace mln
 
 	do
 	{
-	  trace::entering("canvas::browsing::directional::next");
-	  f.next();
-	  trace::exiting("canvas::browsing::directional::next");
 
+	  // Browse the run
+	  f.init_run();
+	  while (f.p[f.dir] <= pmax[f.dir])
+	  {
+	    f.next();
+	    ++f.p[f.dir];
+	  }
+	  f.p[f.dir] = pmin[f.dir];
+
+
+	  // Select the next run start
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
 	    if (c == int(f.dir))
@@ -136,6 +144,7 @@ namespace mln
 	    }
 	    f.p[c] = pmin[c];
 	  }
+
 	} while (f.p != pmin);
 
 	trace::entering("canvas::browsing::directional::final");

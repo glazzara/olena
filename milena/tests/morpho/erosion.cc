@@ -33,25 +33,17 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/win/octagon2d.hh>
-#include <mln/win/diag2d.hh>
-#include <mln/win/backdiag2d.hh>
-#include <mln/core/alias/window2d.hh>
+
+#include <mln/debug/iota.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
 #include <mln/morpho/erosion.hh>
 
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
-
-#include <mln/convert/to_p_array.hh>
-#include <mln/convert/to_window.hh>
-
 #include "tests/data.hh"
+#include "tests/timer.hh"
 
 
 int main()
@@ -76,43 +68,150 @@ int main()
   // 11  29    1
   // 25  66   15
 
+  border::thickness = 20;
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  // trace::quiet = false;
+  win::rectangle2d rec(21, 21);
+  win::hline2d hline(31);
+  win::vline2d vline(31);
+  win::octagon2d oct(15);
+  image2d<int_u8> out;
+  image2d<int_u8> ref;
+//   trace::quiet = false;
+  timer t;
 
-  { 
-    win::rectangle2d rec(L_rec, L_rec);
-    io::pgm::save(morpho::erosion(lena, rec),
-		  "out1.pgm");
+
+  // Rectangle
+  std::cout << "-------------------------- Rectangle: " << std::endl;
+
+  {
+    t.start();
+    ref = morpho::impl::generic::erosion_on_function(lena, rec);
+    std::cout << "generic on rectangle2d: " << t << std::endl;
   }
 
   {
-    win::octagon2d oct(L_oct);
-    io::pgm::save(morpho::erosion(lena, oct),
- 		  "out2.pgm");
+    t.start();
+    out = morpho::erosion(lena, rec);
+    std::cout << "dispach on rectangle2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
-//   { 
-//     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);
-//     window2d win = convert::to_window(vec);
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, rec);
+    std::cout << "erosion_arbitrary_2d_fastest on rectangle2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
 
-//     image2d<int_u8> out(lena.domain());
-//     level::ero(lena, win, out);
-//     morpho::erosion(lena, win, out);
-//     io::pgm::save(out, "out.pgm");
-//   }
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d(lena, rec);
+    std::cout << "erosion_arbitrary_2d on rectangle2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
 
-//   {
-//     image2d<bool> bin(lena.domain()), out(lena.domain());
-//     level::fill(bin, pw::value(lena) > pw::cst(127));
-//     morpho::erosion(bin, rec, out);
+  //Hline
 
-//     image2d<int_u8> test(lena.domain());
-//     image2d<int_u8>::fwd_piter p(lena.domain());
-//     for_all(p)
-//       test(p) = out(p) ? 255 : 0;
-//     io::pgm::save(test, "test.pgm");
-//   }
+  std::cout << "-------------------------- Hline2d: "  << std::endl;
+
+  {
+    t.start();
+    ref = morpho::impl::generic::erosion_on_function(lena, hline);
+    std::cout << "generic on hline2d: " << t << std::endl;
+  }
+
+  {
+    t.start();
+    out = morpho::erosion(lena, hline);
+    std::cout << "dispach on hline2d : " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, hline);
+    std::cout << "erosion_arbitrary_2d_fastest on hline2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d(lena, hline);
+    std::cout << "erosion_arbitrary_2d on hline2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+  std::cout << "-------------------------- Vline2d: "<< std::endl;
+
+  //Vline
+  {
+    t.start();
+    ref = morpho::impl::generic::erosion_on_function(lena, vline);
+    std::cout << "generic on vline2d: " << t << std::endl;
+  }
+
+  {
+    t.start();
+    out = morpho::erosion(lena, vline);
+    std::cout << "dispach on vline2d : " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, vline);
+    std::cout << "erosion_arbitrary_2d_fastest on vline2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+
+  {
+    t.start();
+    out = morpho::impl::erosion_arbitrary_2d(lena, vline);
+    std::cout << "erosion_arbitrary_2d on vline2d: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+  std::cout << "-------------------------- Octogone: " << std::endl;
+
+  //Octogone
+  {
+    t.start();
+    ref = morpho::impl::generic::erosion_on_function(lena, oct);
+    std::cout << "generic on octogone: " << t << std::endl;
+    io::pgm::save(ref, "out_oct_ref.pgm");
+  }
+
+  {
+    t.start();
+    out = morpho::erosion(lena, oct);
+    std::cout << "dispach on octogone: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+    io::pgm::save(out, "out_oct.pgm");
+  }
 
 }
