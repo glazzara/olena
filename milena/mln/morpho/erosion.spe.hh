@@ -33,6 +33,8 @@
 # endif // ! MLN_MORPHO_EROSION_HH
 
 # include <mln/core/alias/window2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
+
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 
@@ -276,16 +278,21 @@ namespace mln
 	  win_right_fwd,
 	  win_left_bkd,
 	  win_right_bkd,
-	  win_bot,
-	  win_top;
+	  win_bot_up,
+	  win_top_up,
+	  win_bot_down,
+	  win_top_down;
 
 	mln_qixter(const I, window2d)
 	q_l_fwd,
 	  q_r_fwd,
 	  q_l_bkd,
 	  q_r_bkd,
-	  q_top,
-	  q_bot;
+	  q_top_up,
+	  q_bot_up,
+	  q_top_down,
+	  q_bot_down;
+
 
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
@@ -294,27 +301,53 @@ namespace mln
 	  : input(input),
 	    win(win),
 	    min(),
-	    win_left_fwd(win::shift(win, left) - win),
-	    win_right_fwd(win - win::shift(win, left)),
-	    win_left_bkd(win::shift(win_left_fwd, right)),
-	    win_right_bkd(win::shift(win_right_fwd, right)),
-	    win_bot(win - win::shift(win, up)),
-	    win_top(win::shift(win, up) - win),
+
+	    win_left_fwd(win::shift(win, mln::left) - win),
+	    win_right_fwd(win - win::shift(win, mln::left)),
+	    win_left_bkd(win::shift(win_left_fwd, mln::right)),
+	    win_right_bkd(win::shift(win_right_fwd, mln::right)),
+
+ 	    win_bot_up(win::shift(win, mln::down) - win),
+	    win_top_up(win - win::shift(win, mln::down)),
+	    win_bot_down(win::shift(win_bot_up, mln::up)),
+	    win_top_down(win::shift(win_top_up, mln::up)),
+
 	    q_l_fwd(input, win_left_fwd, p),
 	    q_r_fwd(input, win_right_fwd, p),
 	    q_l_bkd(input, win_left_bkd, p),
 	    q_r_bkd(input, win_right_bkd, p),
-	    q_top(input, win_top, p),
-	    q_bot(input, win_bot, p),
+
+	    q_top_up(input, win_top_up, p),
+	    q_bot_up(input, win_bot_up, p),
+	    q_top_down(input, win_top_down, p),
+	    q_bot_down(input, win_bot_down, p),
+
 	    moves(3),
 	    dps(3)
 	{
-	  dps[0] = dpsite(1, 0);
-	  dps[1] = dpsite(0, 1);
-	  dps[2] = dpsite(0, -1);
-	  moves[0] = &self::down;
-	  moves[1] = &self::fwd;
-	  moves[2] = &self::bkd;
+	  if (win_bot_up.size()   + win_top_up.size() +
+	      win_bot_down.size() + win_top_down.size() <
+	      win_left_fwd.size() + win_right_fwd.size() +
+	      win_left_bkd.size() + win_right_bkd.size())
+	  {
+	    // Vertical snake
+	    dps[0] = mln::right;
+	    dps[1] = mln::down;
+	    dps[2] = mln::up;
+	    moves[0] = &self::right;
+	    moves[1] = &self::down;
+	    moves[2] = &self::up;
+	  }
+	  else
+	  {
+	    // Horizontal snake
+	    dps[0] = mln::down;
+	    dps[1] = mln::right;
+	    dps[2] = mln::left;
+	    moves[0] = &self::down;
+	    moves[1] = &self::right;
+	    moves[2] = &self::left;
+	  }
 	}
 
 	void init()
@@ -323,14 +356,14 @@ namespace mln
 	  extension::fill(input, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
-	  p = input.domain().pmin() + up;
+	  p = input.domain().pmin() - dps[0];
 	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
 	    min.take(q.val());
 	  p = input.domain().pmin();
 	}
 
-	void fwd()
+	void right()
 	{
 	  for_all(q_l_fwd)
 	    min.untake(q_l_fwd.val());
@@ -339,7 +372,7 @@ namespace mln
 	  output(p) = min;
 	}
 
-	void bkd()
+	void left()
 	{
 	  for_all(q_r_bkd)
 	    min.untake(q_r_bkd.val());
@@ -350,10 +383,19 @@ namespace mln
 
 	void down()
 	{
-	  for_all(q_top)
-	    min.untake(q_top.val());
-	  for_all(q_bot)
-	    min.take(q_bot.val());
+	  for_all(q_top_down)
+	    min.untake(q_top_down.val());
+	  for_all(q_bot_down)
+	    min.take(q_bot_down.val());
+	  output(p) = min;
+	}
+
+	void up()
+	{
+	  for_all(q_bot_up)
+	    min.untake(q_bot_up.val());
+	  for_all(q_top_up)
+	    min.take(q_top_up.val());
 	  output(p) = min;
 	}
 
@@ -395,16 +437,20 @@ namespace mln
 	  win_right_fwd,
 	  win_left_bkd,
 	  win_right_bkd,
-	  win_bot,
-	  win_top;
+	  win_bot_up,
+	  win_top_up,
+	  win_bot_down,
+	  win_top_down;
 
 	mln_qiter(window2d)
 	q_l_fwd,
 	  q_r_fwd,
 	  q_l_bkd,
 	  q_r_bkd,
-	  q_top,
-	  q_bot;
+	  q_top_up,
+	  q_bot_up,
+	  q_top_down,
+	  q_bot_down;
 
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
@@ -413,27 +459,53 @@ namespace mln
 	  : input(input),
 	    win(win),
 	    min(),
-	    win_left_fwd(win::shift(win, left) - win),
-	    win_right_fwd(win - win::shift(win, left)),
-	    win_left_bkd(win::shift(win_left_fwd, right)),
-	    win_right_bkd(win::shift(win_right_fwd, right)),
-	    win_bot(win - win::shift(win, up)),
-	    win_top(win::shift(win, up) - win),
+
+	    win_left_fwd(win::shift(win, mln::left) - win),
+	    win_right_fwd(win - win::shift(win, mln::left)),
+	    win_left_bkd(win::shift(win_left_fwd, mln::right)),
+	    win_right_bkd(win::shift(win_right_fwd, mln::right)),
+
+ 	    win_bot_up(win::shift(win, mln::down) - win),
+	    win_top_up(win - win::shift(win, mln::down)),
+	    win_bot_down(win::shift(win_bot_up, mln::up)),
+	    win_top_down(win::shift(win_top_up, mln::up)),
+
 	    q_l_fwd(win_left_fwd, p),
 	    q_r_fwd(win_right_fwd, p),
 	    q_l_bkd(win_left_bkd, p),
 	    q_r_bkd(win_right_bkd, p),
-	    q_top(win_top, p),
-	    q_bot(win_bot, p),
+
+	    q_top_up(win_top_up, p),
+	    q_bot_up(win_bot_up, p),
+	    q_top_down(win_top_down, p),
+	    q_bot_down(win_bot_down, p),
+
 	    moves(3),
 	    dps(3)
 	{
-	  dps[0] = dpsite(1, 0);
-	  dps[1] = dpsite(0, 1);
-	  dps[2] = dpsite(0, -1);
-	  moves[0] = &self::down;
-	  moves[1] = &self::fwd;
-	  moves[2] = &self::bkd;
+	  if (win_bot_up.size()   + win_top_up.size() +
+	      win_bot_down.size() + win_top_down.size() <
+	      win_left_fwd.size() + win_right_fwd.size() +
+	      win_left_bkd.size() + win_right_bkd.size())
+	  {
+	    // Vertical snake
+	    dps[0] = mln::right;
+	    dps[1] = mln::down;
+	    dps[2] = mln::up;
+	    moves[0] = &self::right;
+	    moves[1] = &self::down;
+	    moves[2] = &self::up;
+	  }
+	  else
+	  {
+	    // Horizontal snake
+	    dps[0] = mln::down;
+	    dps[1] = mln::right;
+	    dps[2] = mln::left;
+	    moves[0] = &self::down;
+	    moves[1] = &self::right;
+	    moves[2] = &self::left;
+	  }
 	}
 
 	void init()
@@ -442,14 +514,14 @@ namespace mln
 	  extension::fill(input, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
-	  p = input.domain().pmin() + up;
+	  p = input.domain().pmin() - dps[0];
 	  mln_qiter(W) q(win, p);
 	  for_all(q)
 	    min.take(input(q));
 	  p = input.domain().pmin();
 	}
 
-	void fwd()
+	void right()
 	{
 	  for_all(q_l_fwd)
 	    min.untake(input(q_l_fwd));
@@ -458,7 +530,7 @@ namespace mln
 	  output(p) = min;
 	}
 
-	void bkd()
+	void left()
 	{
 	  for_all(q_r_bkd)
 	    min.untake(input(q_r_bkd));
@@ -469,10 +541,19 @@ namespace mln
 
 	void down()
 	{
-	  for_all(q_top)
-	    min.untake(input(q_top));
-	  for_all(q_bot)
-	    min.take(input(q_bot));
+	  for_all(q_top_down)
+	    min.untake(input(q_top_down));
+	  for_all(q_bot_down)
+	    min.take(input(q_bot_down));
+	  output(p) = min;
+	}
+
+	void up()
+	{
+	  for_all(q_bot_up)
+	    min.untake(input(q_bot_up));
+	  for_all(q_top_up)
+	    min.take(input(q_top_up));
 	  output(p) = min;
 	}
 

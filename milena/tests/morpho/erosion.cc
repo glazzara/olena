@@ -75,7 +75,7 @@ int main()
   win::rectangle2d rec(21, 21);
   win::hline2d hline(31);
   win::vline2d vline(31);
-  win::octagon2d oct(15);
+  win::octagon2d oct(19);
   image2d<int_u8> out;
   image2d<int_u8> ref;
 //   trace::quiet = false;
@@ -211,7 +211,6 @@ int main()
     bool test = out == ref;
     mln_assertion(test);
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
-    io::pgm::save(out, "out_oct.pgm");
   }
 
 }

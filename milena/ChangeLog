@@ -1,5 +1,15 @@
 2008-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add flexibility on arbitrary erosion 2d.
+
+	* mln/morpho/erosion.spe.hh: arbitrary erosion 2d choose between
+	vertical or horizontal snake browsing with respect to the shape of the
+	window.
+
+	* tests/morpho/erosion.cc: Fix octagone 2d size.
+
+2008-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Work on erosion and browsing canvas.
 
 	Todo: Add a n-dimensional browsing canvas which follows diagonal
