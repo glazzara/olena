@@ -33,10 +33,49 @@
  * \brief Register an image over an another using the ICP algorithm.
  */
 
-#include <mln/fun/x2x/all.hh>
+# include <mln/fun/x2x/all.hh>
 
 namespace mln
 {
+
+  namespace util
+  {
+
+    // FIXME: Remove use of this class
+    template <unsigned int n, typename T>
+    struct buffer
+    {
+      buffer()
+        : setted(0)
+      {
+      }
+
+      void store(T e)
+      {
+        for (unsigned i = 0; i < n-1; i++)
+          buf[i+1] = buf[i];
+        buf[0] = e;
+
+        setted++;
+      }
+
+      T& operator[](unsigned int i)
+      {
+        assert(i < n && i < setted);
+        return buf[i];
+      }
+
+      const T * get_array()
+      {
+        return buf;
+      }
+
+    private:
+      T buf[n];
+      unsigned int setted;
+    };
+
+  } // end of namespace mln::util
 
   namespace registration
   {
@@ -88,8 +127,8 @@ namespace mln
       {
 	trace::entering("registration::impl::icp_");
 
-        buffer<4,T>     buf_qk;
-        buffer<3,float> buf_dk;
+        util::buffer<4,T>     buf_qk;
+        util::buffer<3,float> buf_dk;
 
         float         d_k = 10000;
         p_array<P>    Ck(c);

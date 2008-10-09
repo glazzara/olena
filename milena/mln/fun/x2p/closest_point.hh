@@ -25,18 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
-# define MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
+#ifndef MLN_FUN_X2P_CLOSEST_POINT_HH
+# define MLN_FUN_X2P_CLOSEST_POINT_HH
 
-# include <mln/core/concept/function.hh>
-# include <mln/fun/internal/selector.hh>
 # include <mln/algebra/vec.hh>
-# include <mln/convert/to.hh>
-
-/*! \file mln/fun/x2x/interpol/nneighbor.hh
- *
- * \brief Define a nneighbor interpolation of values from an underlying image
- */
+# include <mln/norm/l2.hh>
 
 namespace mln
 {
@@ -44,56 +37,60 @@ namespace mln
   namespace fun
   {
 
-    namespace x2x
+    namespace x2p
     {
 
-      namespace interpol
+      ///FIXME: doxygen + concept checking
+      template <typename P>
+      struct closest_point
       {
+        typedef algebra::vec<P::dim, float> input;
+        typedef P result;
 
-        template < typename I >
-        struct nneighbor
-          : public fun::internal::selector_<const algebra::vec<3,float>,
-                                            // 3,float is a dummy parameter (real is n,T)
-                                            mln_value(I), nneighbor<I> >::ret
+        closest_point(const p_array<P>& X, const box<P>& box)
+          : X(X), box(box)
+          , log_functor_call(0)
+
+        { }
+
+        result
+        //inline
+        operator () (const input& Ck) const
         {
-          typedef mln_value(I) result;
+          ++log_functor_call;
 
-          nneighbor(const I& ima);
-
-          template < unsigned n, typename T >
-          mln_value(I)
-          operator()(const algebra::vec<n,T>& x) const;
-
-          const I& ima;
-        };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-        template < typename I >
-        nneighbor<I>::nneighbor(const I& ima) : ima(ima)
-        {
+          algebra::vec<P::dim,float> Cki = Ck;
+          algebra::vec<P::dim,float> best_x = X[0];
+          float best_d = norm::l2(Cki - best_x);
+          for (size_t j = 1; j < X.nsites(); ++j)
+            {
+              algebra::vec<P::dim,float> Xj = X[j];
+              float d = norm::l2(Cki - Xj);
+              if (d < best_d)
+                {
+                  best_d = d;
+                  best_x = Xj;
+                }
+            }
+          return convert::to<P>(best_x);
         }
 
-        template < typename I >
-        template < unsigned n, typename T >
-        mln_value(I)
-        nneighbor<I>::operator()(const algebra::vec<n,T>& x) const
+        const box<P>& domain() const
         {
-          mln_psite(I) p =  convert::to<mln_psite(I)>(x);
-          return ima(p);
+          return box;
         }
 
+        const p_array<P>& X;
+        const box<P>     box;
 
-# endif // ! MLN_INCLUDE_ONLY
+        // log call to the functor
+        mutable unsigned log_functor_call;
+      };
 
-      } // end of namespace mln::fun::x2x::interpol
-
-    } // end of namespace mln::fun::x2x
+    } // end of namespace mln::fun::x2p
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
-
-#endif // ! MLN_FUN_X2X_INTERPOL_NNEIGHBOR_HH
+#endif // ! MLN_FUN_X2P_CLOSEST_POINT_HH

@@ -29,6 +29,7 @@
 # define MLN_REGISTRATION_MULTISCALE_HH
 
 # include <mln/registration/icp.hh>
+# include <mln/fun/x2p/closest_point.hh>
 
 namespace mln
 {
@@ -52,22 +53,25 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      composed< rotation<P::dim, float>, translation<P::dim, float> >
+      composed< rotation<I::site::dim, float>, translation<I::site::dim, float> >
       multiscale_(const Image<I>& cloud,
                   const Image<J>& surface,
                   const float q,
                   const unsigned nb_it)
       {
+        p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
+        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(I)> >(surface);
+
         // Shuffle cloud
-        shuffle(cloud);
+        shuffle(c);
 
         //working box
         const box<point2d> working_box =
           enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
 
         //make a lazy_image map via function closest_point
-        closest_point<mln_psite_(image2db)> fun(x, working_box); //FIXME: to port
-        lazy_image<image2d<bool>, closest_point<mln_psite_(image2db)>, box2d >
+        fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
+        lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d >
           map(fun, fun.domain());
 
         //init rigid transform qk
@@ -87,7 +91,7 @@ namespace mln
 
     template <typename I, typename J>
     inline
-    composed< rotation<P::dim, float>, translation<P::dim, float> >
+    composed< rotation<I::site::dim, float>, translation<I::site::dim, float> >
     multiscale(const Image<I>& cloud,
                const Image<J>& surface,
                const float q,
@@ -95,9 +99,10 @@ namespace mln
     {
       trace::entering("registration::registration");
 
-      mln_precondition(P::dim == 3 || P::dim == 2);
+      mln_precondition(I::site::dim == 3 || I::site::dim == 2);
 
-      impl::multiscale_(cloud, surface, q, nb_it);
+      composed< rotation<I::site::dim, float>, translation<I::site::dim, float> >
+        qk = impl::multiscale_(cloud, surface, q, nb_it);
 
       trace::exiting("registration::registration");
 

@@ -1,3 +1,29 @@
+2008-10-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix registration. Clean up fun.
+
+	* mln/fun/x2x/interpol/bilinear.hh,
+	* mln/fun/x2x/interpol/linear.hh,
+	* mln/fun/x2x/interpol/nneighbor.hh: Move ...
+	* mln/fun/x2v/bilinear.hh,
+	* mln/fun/x2v/linear.hh,
+	* mln/fun/x2v/nneighbor.hh: ... here.
+
+	* mln/fun/x2x/geom/composed.hh,
+	* mln/fun/x2x/geom/translation.hh,
+	* mln/fun/x2x/geom/rotation.hh: Move ...
+	* mln/fun/x2x/composed.hh,
+	* mln/fun/x2x/translation.hh,
+	* mln/fun/x2x/rotation.hh: ... here.
+
+	* mln/fun/x2p: New.
+	* mln/fun/x2p/closest_point.hh: Add a functor that return the closest
+	point of a vector x in a given p_array.
+
+	* mln/registration/multiscale.hh: Fix use of p_array.
+	* mln/registration/registration.hh: Make use of fun::x2p::closest_point.
+	* mln/registration/icp.hh: Add buffers.
+
 2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix accu::min_h and max_h.

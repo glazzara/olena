@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_ROTATION_HH
 # define MLN_FUN_X2X_ROTATION_HH
 
-/*! \file mln/fun/x2x/geom/rotation.hh
+/*! \file mln/fun/x2x/rotation.hh
  *
  * \brief Define a rotation function.
  */
@@ -47,9 +47,6 @@ namespace mln
 
     namespace x2x
     {
-
-      namespace geom
-      {
 
         namespace internal
         {
@@ -231,7 +228,6 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-      } // end of namespace mln::fun::x2x::geom
 
     } // end of namespace mln::fun::x2x
 

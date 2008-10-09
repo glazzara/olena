@@ -34,6 +34,7 @@
  */
 
 # include <mln/registration/icp.hh>
+# include <mln/fun/x2p/closest_point.hh>
 # include <mln/core/image/lazy_image.hh>
 
 namespace mln
@@ -76,12 +77,13 @@ namespace mln
           enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
 
         //make a lazy_image map via function closest_point
-        closest_point<mln_psite(I)> fun(x, working_box); //FIXME: to port
-        lazy_image<mln_ch_value(I,bool), closest_point<mln_psite(I)>, box2d >
+        fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
+        lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d>
           map(fun, fun.domain());
 
+
         //run registration
-        registration::icp(c, map, qk, l, 1e-3);
+        registration::icp(c, map, qk, c.nsites(), 1e-3);
 
       }
 

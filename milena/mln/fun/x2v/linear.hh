@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_INTERPOL_LINEAR_HH
-# define MLN_FUN_X2X_INTERPOL_LINEAR_HH
+#ifndef MLN_FUN_X2X_LINEAR_HH
+# define MLN_FUN_X2X_LINEAR_HH
 
-/*! \file mln/fun/x2x/interpol/linear.hh
+/*! \file mln/fun/x2x/linear.hh
  *
  * \brief Define a linear interpolation of values from an underlying image
  */
@@ -48,73 +48,67 @@ namespace mln
     namespace x2x
     {
 
-      namespace interpol
+      /*! \brief Represent a linear interolation of values from an underlying image
+       *
+       */
+      template < typename I >
+      struct linear
+        : public fun::internal::selector_<const algebra::vec<1,float>,
+                                          // float is a dummy parameter (real is C)
+                                          mln_value(I), linear<I> >::ret
       {
+        typedef mln_value(I) result;
 
+        /// Constructor with the underlying image
+        linear(const I& ima);
 
-        /*! \brief Represent a linear interolation of values from an underlying image
-         *
-         */
-        template < typename I >
-        struct linear
-          : public fun::internal::selector_<const algebra::vec<1,float>,
-                                            // float is a dummy parameter (real is C)
-                                            mln_value(I), linear<I> >::ret
-        {
-          typedef mln_value(I) result;
+        /// Return the interpolated value in the underlying image
+        /// at the given 'point' v.
+        template <typename C>
+        mln_value(I)
+        operator()(const algebra::vec<1,C>& v) const;
 
-          /// Constructor with the underlying image
-          linear(const I& ima);
-
-          /// Return the interpolated value in the underlying image
-          /// at the given 'point' v.
-          template <typename C>
-          mln_value(I)
-          operator()(const algebra::vec<1,C>& v) const;
-
-          /// Underlying image
-          const I& ima;
-        };
+        /// Underlying image
+        const I& ima;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-        template <typename I>
-        linear<I>::linear(const I& ima) : ima(ima)
-        {
-          mlc_bool(I::psite::dim == 1)::check();
-        }
+      template <typename I>
+      linear<I>::linear(const I& ima) : ima(ima)
+      {
+        mlc_bool(I::psite::dim == 1)::check();
+      }
 
-        template <typename I>
-        template <typename C>
-        mln_value(I)
-        linear<I>::operator()(const algebra::vec<1,C>& v) const
-        {
-          typedef mln_sum(mln_value(I)) vsum;
+      template <typename I>
+      template <typename C>
+      mln_value(I)
+      linear<I>::operator()(const algebra::vec<1,C>& v) const
+      {
+        typedef mln_sum(mln_value(I)) vsum;
 
-          // looking for img(x);
-          double x = v[0];
+        // looking for img(x);
+        double x = v[0];
 
-          // p1
-          double xa = mln_point(I)::coord(v[0]);
-          vsum ya = ima(point1d(xa));
+        // p1
+        double xa = mln_point(I)::coord(v[0]);
+        vsum ya = ima(point1d(xa));
 
-          // x makes sens in img
-          if (x == xa)
-            return ima(xa);
+        // x makes sens in img
+        if (x == xa)
+          return ima(xa);
 
-          // p2
-          double xb = mln_point(I)::coord(v[0] + 1);
-          vsum yb = ima(point1d(xb));
+        // p2
+        double xb = mln_point(I)::coord(v[0] + 1);
+        vsum yb = ima(point1d(xb));
 
-          // Taylor-young
-          return convert::to<mln_value(I)>
-            (ya + (x - xa) * (yb - ya) / (xb - xa));
-          }
+        // Taylor-young
+        return convert::to<mln_value(I)>
+          (ya + (x - xa) * (yb - ya) / (xb - xa));
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
-
-      } // end of namespace mln::fun::x2x::interpol
 
     } // end of namespace mln::fun::x2x
 
