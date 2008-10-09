@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/directional.cc
+/*! \file tests/canvas/browsing/hyper_directional.cc
  *
- * \brief Tests on mln::canvas::browsing::directional.
+ * \brief Tests on mln::canvas::browsing::hyper_directional.
  */
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/canvas/browsing/directional.hh>
+#include <mln/canvas/browsing/hyper_directional.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
 #include <mln/level/fill.hh>
@@ -99,23 +99,23 @@ int main()
   image3d<unsigned> ima3(3, 3, 3);
 
   level::fill(ima2, 0);
-  my_test(ima2, fun::p2v::iota, canvas::browsing::directional, 0);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::hyper_directional, 0);
   debug::println(ima2);
 
   level::fill(ima2, 0);
-  my_test(ima2, fun::p2v::iota, canvas::browsing::directional, 1);
+  my_test(ima2, fun::p2v::iota, canvas::browsing::hyper_directional, 1);
   debug::println(ima2);
 
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 0);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 0);
   debug::println(ima3);
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 1);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 1);
   debug::println(ima3);
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::directional, 2);
+  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 2);
   debug::println(ima3);
 }

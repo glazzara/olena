@@ -1,3 +1,17 @@
+2008-10-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add hyper_directional browsing.
+
+	This is the old directional browsing. hyper_directional browse an
+	hyper plan of a n dimensional box (It browse all the dimensions except
+	the given one. The given dimension is browsed by the "next()" method
+	of the argument functor defined by the user).
+
+	* mln/canvas/browsing/hyper_directional.hh: New.
+	* tests/canvas/browsing/Makefile.am: .
+	* tests/canvas/browsing/directional.cc: Remove.
+	* tests/canvas/browsing/hyper_directional.cc: New.
+
 2008-10-08  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add flexibility on arbitrary erosion 2d.
