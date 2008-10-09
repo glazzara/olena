@@ -67,6 +67,8 @@ namespace mln
 
       const accu::histo<V>& histo() const;
 
+      void debug_print_() const;
+
     protected:
 
       mutable accu::histo<V> h_;
@@ -100,12 +102,12 @@ namespace mln
     void
     max_h<V>::take(const argument& t)
     {
-      h_.take(t);
-      if (h_.sum() == 1)
+      if (h_.sum() == 0)
 	{
 	  this->take_as_init(t);
 	  return;
 	}
+      h_.take(t);
       if (t > t_)
 	{
 	  ++sum_;
@@ -165,25 +167,26 @@ namespace mln
     template <typename V>
     inline
     void
-    max_h<V>::go_minus_() const
+    max_h<V>::go_plus_() const
     {
       do
-	--i_;
-      while (h_[i_] == 0);
+	{
+	  ++i_;
+	  if (h_[i_] != 0)
+	    sum_ -= h_[i_];
+	}
+      while (sum_ != 0);
       t_ = s_[i_];
     }
 
     template <typename V>
     inline
     void
-    max_h<V>::go_plus_() const
+    max_h<V>::go_minus_() const
     {
       do
-      {
-	++i_;
-	if (h_[i_] != 0)
-	  sum_ -= h_[i_];
-      } while (sum_ != 0);
+	--i_;
+      while (h_[i_] == 0);
       t_ = s_[i_];
     }
 
@@ -227,6 +230,18 @@ namespace mln
     max_h<V>::histo() const
     {
       return h_;
+    }
+
+    template <typename V>
+    inline
+    void
+    max_h<V>::debug_print_() const
+    {
+      std::cout << "h={" << h_ << "} ";
+      std::cout << "sum=" << sum_ << ' '
+		<< "valid=" << valid_ << ' '
+		<< "i=" << i_ << ' '
+		<< "t=" << t_ << std::endl;
     }
 
     template <typename V>
