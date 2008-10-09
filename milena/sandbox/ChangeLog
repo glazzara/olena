@@ -1,5 +1,11 @@
 2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a diff main file.
+
+	* geraud/Rd/diff_pgm.cc: New.
+
+2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment line iteration sandbox code.
 
 	* geraud/browsing/fwd.cc: Add some code closer to what we
