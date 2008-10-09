@@ -1,6 +1,7 @@
 \section{Properties}
 
 
+
 \subsection{Notation}
 
 A property has several values.
@@ -107,13 +108,12 @@ The support of an image describes the image geometry and the relationship
 between its sites.
 An image on a non-localized space has this property set to $none$.
 An image on a localized space has this property set to $space$.
-An image based on a isotropic grid has this property set to $isotropic\_gride$
+An image based on a isotropic grid has this property set to $isotropic\_grid$
 An image based on a anisotropic grid has this property set to
-$anisotropic\_gride$
+$anisotropic\_grid$
 An image based on a aligned and orthogonal grid has its property set to
 $basic\_grid$
 
-%% FIXME: Is it true?
 If an image has its \verb+localization+ set to $space$, the user must define
 the neighborhood relationships between the sites.
 Otherwise, the image underlying grid defines the neighborhood relationships.
@@ -139,8 +139,6 @@ Otherwise, the image underlying grid defines the neighborhood relationships.
                       +--- two_d
                       |
                       +--- three_d
-
-
 \end{verbatim}
 
 This property specifies the dimension of the image.
@@ -159,38 +157,69 @@ An image can also have no dimension specified.
 \index{Property: value\_access}
 
 \begin{verbatim}
-value\_access: any
-                |
-                +--- direct
-                |
-                +--- indirect
-                        |
-                        +--- computed
+value_access: any
+               |
+               +--- direct
+               |
+               +--- indirect
+                       |
+                       +--- computed
 \end{verbatim}
 
 
 Image values can either be computed on the fly by a function or stored in
-memory. If an image type has a direct acces on the values in memory, it is
+memory. If an image type has a direct access on the values in memory, it is
 possible to take a reference of them. In this case, this property is set to
 $direct$. In the other case, this property is set $indirect$. When an image
 computes its values on the fly, this property is refined to $computed$.
 
 
-\subsubsection{vw\_storage}
-\index{Property: vw\_storage}
+\subsubsection{value\_storage}
+\index{Property: value\_storage}
 
 \begin{verbatim}
-vw_storage: any
-             |
-             +--- /ram/
-             |      |
-             |      +--- singleton
-             |      |
-             |      +--- one_block
-             |      |
-             |      +--- piecewise
-             +--- irrelevant
+value_storage: any
+                |
+                +--- /memory/
+                |      |
+                |      +--- singleton
+                |      |
+                |      +--- one_block
+                |      |
+                |      +--- piecewise
+                +--- irrelevant
 \end{verbatim}
+
+This property indicates how the values are stored in memory, when it is the
+case. If the values aren't stored in the $memory$, this property is set to
+$irrelevant$. If this property is set to $singleton$, only one value is store
+in memory for the whole image (this the case of the \verb+flat_image+ type).
+If this value is set to $one\_block$, all the image values are stored in a
+linear buffer in memory. And, an image is $piecewise$, when it's value are
+stored in several buffers in memory.
+
+
+\subsubsection{value\_alignment}
+\index{Property: value\_alignment}
+
+\begin{verbatim}
+value_alignment: any
+                   |
+                   +--- with_grid
+                   |
+                   +--- not_aligned
+                   |
+                   +--- irrelevant
+\end{verbatim}
+
+This property indicates if the image values are ordered the same way in memory
+than when we run over them through a \verb+fwd_piter+.
+When this is the case, the image values are aligned with the image underlying
+grid, this property is set to $with\_grid$.
+If the values are not ordered the same way in memory than the \verb+fwd_piter+
+order, this property is set to $not\_aligned$.
+If the image values are not stored in memory, this property is set to
+$irrelevant$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -255,23 +284,38 @@ image pixels).
 
 %% FIXME functions that modify globaly all the values...
 \begin{verbatim}
-
   vw_io:  any
            |
-           +--- /vm_some/
+           +--- /some/
            |        |
            |        +--- vw_read
            |        |
            |        +--- vw_read_write
-           +--- vw_none
+           |        |
+           |        +--- vw_global_read_write
+           +--- none
 \end{verbatim}
+
+This property defines the value wise access of an image.
+If \verb+vw_io+ is set to $vw\_none$, the associated image type does not
+ provide any value wise access.
+If an image type provides a readable (or writable)
+value access, this property is set to $vw\_read$ (or $vw\_read\_write$).
+If the image provide a value wise access that allows the user to change
+globally all the image values through a function $value$ to $value$,
+this property is set to $vw\_global\_read\_write$.
+
+%% FIXME define the interface associated
+
+The method provided for this value access depend on the \verb+vm_set+ property.
+
 
 \subsubsection{vw\_set}
 \index{Property: vw\_set}
 
 \begin{verbatim}
 
-  vw_io:  any
+  vw_set:  any
            |
            +--- /some/
            |      |
@@ -282,6 +326,15 @@ image pixels).
 \end{verbatim}
 
 
+This property precises what kind of value access is provided by an image type.
+If an image type does not provide any value access (\verb+vw_io+ set to $none$)
+, \verb+vw_set+ is set to $none$.
+Otherwise, \verb+vw_set+ is set to $uni$ if the image provides an
+access to the mathematical set of values taken by the image (through the method
+\verb+value_taken+).
+If \verb+vw_set+ is set to $multi$, the image provides an access to the values
+taken in memory (cells) (through the method \verb+cells+). Note that a value
+can be present twice in the cells set.
 
 
 

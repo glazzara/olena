@@ -1,3 +1,11 @@
+2008-10-09  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Continue documentation.
+
+	* doc/tutorial/design/include/properties.tex: Add properties.
+	* doc/tutorial/design/include/imagetours.tex: Fix typos.
+	* doc/tutorial/design/design.tex: Update.
+
 2008-10-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix registration. Clean up fun.
