@@ -1,3 +1,10 @@
+2008-10-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix registration genericity.
+
+	* mln/registration/multiscale.hh: Replace point2d by I::psite.
+	* mln/registration/registration.hh: Replace point2d by I::psite.
+
 2008-10-09  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Continue documentation.

@@ -54,8 +54,8 @@ namespace mln
       template <typename I, typename J>
       inline
       composed< rotation<I::site::dim, float>, translation<I::site::dim, float> >
-      multiscale_(const Image<I>& cloud,
-                  const Image<J>& surface,
+      multiscale_(const I& cloud,
+                  const J& surface,
                   const float q,
                   const unsigned nb_it)
       {
@@ -66,7 +66,7 @@ namespace mln
         shuffle(c);
 
         //working box
-        const box<point2d> working_box =
+        const box<mln_psite(I)> working_box =
           enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
 
         //make a lazy_image map via function closest_point
@@ -102,7 +102,7 @@ namespace mln
       mln_precondition(I::site::dim == 3 || I::site::dim == 2);
 
       composed< rotation<I::site::dim, float>, translation<I::site::dim, float> >
-        qk = impl::multiscale_(cloud, surface, q, nb_it);
+        qk = impl::multiscale_(exact(cloud), exact(surface), q, nb_it);
 
       trace::exiting("registration::registration");
 

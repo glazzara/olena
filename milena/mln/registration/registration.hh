@@ -63,8 +63,8 @@ namespace mln
       template <typename I, typename J>
       inline
       composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-      registration_(const Image<I>& cloud,
-                    const Image<J>& surface)
+      registration_(const I& cloud,
+                    const J& surface)
       {
         p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
         p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(I)> >(surface);
@@ -73,7 +73,7 @@ namespace mln
         composed< rotation<I::P::dim, float>, translation<I::P::dim, float> > qk;
 
         //working box
-        const box<point2d> working_box =
+        const box<mln_psite(I)> working_box =
           enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
 
         //make a lazy_image map via function closest_point
@@ -101,7 +101,7 @@ namespace mln
       mln_precondition(I::psite::dim == 3 || J::psite::dim == 2);
 
       composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >
-        qk = impl::registration_(cloud, surface);
+        qk = impl::registration_(exact(cloud), exact(surface));
 
       trace::exiting("registration::registration");
 
