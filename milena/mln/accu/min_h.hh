@@ -36,6 +36,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
 # include <mln/value/set.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -85,6 +86,29 @@ namespace mln
       void go_minus_() const;
       void go_plus_() const;
     };
+
+
+
+    template <typename I> struct min_h< util::pix<I> >;
+
+
+    namespace meta
+    {
+
+      /*!
+       * \brief Meta accumulator for min.
+       */
+      struct min_h : public Meta_Accumulator< min_h >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef accu::min_h<T> ret;
+	};
+      };
+
+    } // end of namespace mln::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY

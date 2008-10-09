@@ -35,6 +35,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -84,6 +85,29 @@ namespace mln
       void go_minus_() const;
       void go_plus_() const;
     };
+
+
+
+    template <typename I> struct max_h< util::pix<I> >;
+
+
+    namespace meta
+    {
+
+      /*!
+       * \brief Meta accumulator for max.
+       */
+      struct max_h : public Meta_Accumulator< max_h >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef accu::max_h<T> ret;
+	};
+      };
+
+    } // end of namespace mln::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY

@@ -1,3 +1,17 @@
+2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add accu computation along lines and use it in erosion.
+
+	* mln/accu/line.hh: New.
+	* tests/accu/line.cc: New.
+	* tests/accu/Makefile.am: Update.
+	* mln/accu/min_h.hh (min_h): New meta-class.
+	* mln/accu/max_h.hh (max_h): New meta-class.
+	* mln/morpho/erosion.spe.hh
+	(erosion_line_on_function): New impl.
+	(erosion_dispatch_wrt_win): Replace calls to the directional impl
+	by the line impl for windows being lines.
+
 2008-10-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix registration genericity.

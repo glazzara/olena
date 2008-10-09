@@ -42,6 +42,8 @@
 # include <mln/win/diff.hh>
 
 # include <mln/accu/min_h.hh>
+# include <mln/accu/line.hh>
+
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/canvas/browsing/snake_generic.hh>
 # include <mln/canvas/browsing/directional.hh>
@@ -216,6 +218,55 @@ namespace mln
 	      }
 	trace::exiting("morpho::impl::erosion_on_set_centered_fastest");
 
+	return output;
+      }
+
+
+      template <typename I, typename G, unsigned Dir, typename C>
+      inline
+      mln_concrete(I)
+      erosion_line_on_function(const Image<I>& input_, const win::line<G,Dir,C>& win)
+      {
+	trace::entering("morpho::impl::erosion_line");
+
+	typedef mln_site(I) P;
+	enum { dim = P::dim };
+
+	const I& input = exact(input_);
+
+	mln_concrete(I) output;
+	initialize(output, input);
+
+	mln_psite(I)
+	  pmin = input.domain().pmin(),
+	  pmax = input.domain().pmax(),
+	  p = pmin;
+
+	const unsigned len = input.domain().len(Dir);
+	const unsigned win_half_length = win.length() / 2;
+
+	do
+	  {
+	    accu::line< accu::meta::min_h, Dir >(input,
+						 p, len,
+						 win_half_length,
+						 output);
+	    
+	    for (int c = dim - 1; c >= 0; --c)
+	      {
+		if (c == int(Dir))
+		  continue;
+		if (p[c] != pmax[c])
+		  {
+		    ++p[c];
+		    break;
+		  }
+		p[c] = pmin[c];
+	      }
+	  }
+	while (p != pmin);
+
+	trace::exiting("morpho::impl::erosion_line");
 	return output;
       }
 
@@ -627,7 +678,6 @@ namespace mln
 	  initialize(output, input);
 	}
 
-
 	void init_run()
 	{
 	  min.init();
@@ -941,7 +991,8 @@ namespace mln
 	if (win.size() <= 3)
 	  return erosion_dispatch_for_generic(input, win);
 	else
-	  return erosion_dispatch_for_directional(input, win, 1);
+	  return impl::erosion_line_on_function(input, win);
+// 	  return erosion_dispatch_for_directional(input, win, 1);
       }
 
       template <typename I>
@@ -951,7 +1002,8 @@ namespace mln
 	if (win.size() <= 3)
 	  return erosion_dispatch_for_generic(input, win);
 	else
-	  return erosion_dispatch_for_directional(input, win, 0);
+	  return impl::erosion_line_on_function(input, win);
+// 	  return erosion_dispatch_for_directional(input, win, 0);
       }
 
 

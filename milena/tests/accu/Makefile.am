@@ -8,6 +8,7 @@ check_PROGRAMS =				\
   compute					\
   count						\
   histo						\
+  line						\
   max						\
   max_h						\
   mean						\
@@ -25,6 +26,7 @@ bbox_SOURCES = bbox.cc
 compute_SOURCES = compute.cc
 count_SOURCES = count.cc
 histo_SOURCES = histo.cc
+line_SOURCES = line.cc
 max_SOURCES = max.cc
 max_h_SOURCES = max_h.cc
 mean_SOURCES = mean.cc
