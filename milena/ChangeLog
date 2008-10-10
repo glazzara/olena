@@ -1,3 +1,10 @@
+2008-10-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add new properties.
+
+	* mln/trait/image/props.hh: Add properties.
+	* mln/core/image/image2d.hh: Update image2d properties.
+
 2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add accu computation along lines and use it in erosion.

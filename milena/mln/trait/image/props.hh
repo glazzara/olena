@@ -76,11 +76,19 @@
 
 // * value
 
+// pw_io:  /any/
+//           |
+//           +-- read
+//           |
+//           +-- read_write
+
 // value_access: /any/
 //                 |
-//                 + -- direct
+//                 +-- direct
 //                 |
-//                 + -- computed
+//                 +-- indirect
+//                        |
+//                        +-- computed
 
 // value_storage:/any/
 //                 |
@@ -104,13 +112,35 @@
 //                              \    |
 //                                -- + -- cell_and_value_wise
 
-// * domain values
-
 // value_io:     /any/
 //                 |
 //                 + -- read_only
 //                 |
 //                 + -- read_write
+
+// value_alignement:/any/
+//                   |
+//                   +-- with_grid
+//                   |
+//                   +-- no_aligned
+//                   |
+//                   +-- irrelevant
+
+// vw_io:  /any/
+//           |
+//           +-- read
+//           |
+//           +-- read_write
+
+// vw_set: /any/
+//          |
+//          +-- /some/
+//          |     |
+//          |     +-- uni
+//          |     |
+//          |     +-- multi
+//          |
+//          +-- none
 
 // * site localization
 
@@ -264,7 +294,7 @@ namespace mln
       {
 	struct any { protected: any() {} };
 	struct slow : any { std::string name() const { return "speed::slow"; } };
-	struct fast : any { std::string name() const { return "speed::fast"; } };
+	struct fast : any { std::string name() const { return "speedw::fast"; } };
 	struct fastest
 	  : fast { std::string name() const { return "speed::fastest"; } };
       };
@@ -286,16 +316,21 @@ namespace mln
 
 // value_access: /any/
 //                 |
-//                 + -- direct
+//                 +-- direct
 //                 |
-//                 + -- computed
+//                 +-- indirect
+//                       |
+//                       +-- computed
 
       struct value_access
       {
 	struct any { protected: any() {} };
 	struct direct   : any  { std::string name() const { return "value_access::direct"; } };
+        struct indirect : any  { std::string name() const { return "value_access::indirect"; } };
 	struct computed : any  { std::string name() const { return "value_access::computed"; } };
       };
+
+
 
 
 // value_storage:/any/
@@ -324,7 +359,80 @@ namespace mln
 	struct disrupted : any  { std::string name() const { return "value_storage::disrupted"; } };
       };
 
+// value_alignement:/any/
+//                   |
+//                   +-- with_grid
+//                   |
+//                   +-- no_aligned
+//                   |
+//                   +-- irrelevant
+      struct value_alignement
+      {
+        struct any { protected: any() {} };
+        struct with_grid
+          : any { std::string name() const { return "value_alignement::with_grid"; } };
+        struct not_aligned
+          : any { std::string name() const { return "value_alignement::not_aligned"; } };
+        struct irrelevant
+          : any { std::string name() const { return "value_alignement::irrelevant"; } };
+      };
 
+// pw_io:  /any/
+//           |
+//           +-- read
+//           |
+//           +-- read_write
+
+      struct pw_io
+      {
+        struct any { protected: any() {} };
+        struct read
+          : any { std::string name() const { return "pw_io::read"; } };
+        struct read_write
+          : any { std::string name() const { return "pw_io::read_write"; } };
+      };
+
+// vw_io:  /any/
+//           |
+//           +-- read
+//           |
+//           +-- read_write
+
+      struct vw_io
+      {
+        struct any { protected: any() {} };
+        struct some : any { protected: some() {} };
+        struct read
+          : some { std::string name() const { return "pw_io::read"; } };
+        struct read_write
+          : some { std::string name() const { return "pw_io::read_write"; } };
+        struct none
+          : any { std::string name() const { return "pw_io::none"; } };
+      };
+
+// vw_set: /any/
+//          |
+//          +-- /some/
+//          |     |
+//          |     +-- uni
+//          |     |
+//          |     +-- multi
+//          |
+//          +-- none
+
+      struct vw_set
+      {
+        struct any { protected: any() {} };
+        struct some : any { protected: some() {} };
+        struct none : any { protected: none() {} };
+        struct uni
+          : some { std::string name() const { return "vw_set::uni";} };
+        struct multi
+          : some { std::string name() const { return "vw_set::multi";} };
+      };
+
+
+// DEPRECATED PROPERTY
 // value_browsing:/any/
 //                 |
 //                 + -- site_wise_only
@@ -351,6 +459,7 @@ namespace mln
       };
 
 
+// DEPRECATED PROPERTY
 // value_io:     /any/
 //                 |
 //                 + -- read_only
