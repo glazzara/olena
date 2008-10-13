@@ -1,3 +1,9 @@
+2008-13-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* milena/sandbox/scribo/remove_tables.cc:
+	New small example to remove table borders in a document such as a
+	bill.
+
 2008-10-07  Guillaume Lazzara  <z@lrde.epita.fr>
       
 	Fix most of the doxygen warnings.
