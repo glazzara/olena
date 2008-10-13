@@ -1,3 +1,35 @@
+2008-10-13  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add different types of function and tests.
+
+	+ abraham/tests/fun: New.
+	+ abraham/tests/fun/v2w2v: New
+	    Bijective function.
+	+ abraham/tests/fun/v2w2v/cos.cc: New
+	    Bijective functor cosinus.
+	+ abraham/tests/fun/v2w_w2v: New
+	    Two way function.
+	+ abraham/tests/fun/v2w_w2v/norm.cc: New
+	    Two way functor norm.
+	+ abraham/tests/core: New.
+	+ abraham/tests/core/image: New.
+	+ abraham/tests/core/image/violent_cast_image.cc: New
+	    Dummy test.
+	+ abraham/tests/core/image/thru.cc: New
+	    Dummy test.
+	+ abraham/mln/level: New.
+	+ abraham/mln/level/thru.hh: New.
+	+ abraham/mln/core/site_set: New.
+	+ abraham/mln/core/site_set/p_priority_queue.hh: New
+	    Useful for Watershed.
+	+ abraham/mln/core/image: New.
+	+ abraham/mln/core/image/violent_cast_image.hh: New
+	    Allow to cast an image violently.
+	* abraham/mln/core/concept/function.hh:
+	    Add bijective and two ways function concepts.
+	* abraham/mln/fun/v2w_w2v/norm.hh:
+	    Add invert functions.
+
 2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a diff main file.

@@ -41,6 +41,7 @@ namespace mln
 
   // Fwd decls.
   template <typename E> struct Function;
+  template <typename E> struct Meta_fun;
   template <typename E> struct Function_v2v;
   template <typename E> struct Function_v2w2v;
   template <typename E> struct Function_v2w_w2v;
@@ -168,7 +169,7 @@ namespace mln
 
   protected:
     Function_v2w_w2v();
-    Function_v2w_w2v(const Function_v2w2v&);
+    Function_v2w_w2v(const Function_v2w_w2v&);
   };
 
 
@@ -391,8 +392,20 @@ namespace mln
 
   template <typename E>
   inline
+  Function_v2w2v<E>::Function_v2w2v()
+  {
+  }
+
+  template <typename E>
+  inline
   Function_v2w2v<E>::Function_v2w2v(const Function_v2w2v<E>& rhs)
     : Function<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_v2w_w2v<E>::Function_v2w_w2v()
   {
   }
 

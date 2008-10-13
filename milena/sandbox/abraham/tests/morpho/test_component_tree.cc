@@ -45,8 +45,8 @@ public:
   test_tree<T>* insert_child(test_tree<T> *n)
   {
     test_tree<T> **p = &children;
-    while (*p && (**p).data < n->data)
-      p = &((**p).brother);
+    // while (*p && (**p).data < n->data)
+    //   p = &((**p).brother);
     n->brother = *p;
     *p = n;
     return n;
@@ -99,17 +99,17 @@ using namespace mln;
 using value::int_u8;
 
 
-test_tree<image2d<int_u8>::psite>* test_convert (morpho::basic_najman<image2d<int_u8>, neighb2d>& ima, image2d<int_u8>::psite root);
+test_tree<image2d<int_u8>::site>* test_convert (morpho::basic_najman<image2d<int_u8>, neighb2d>& ima, image2d<int_u8>::site root);
 
-test_tree<image2d<int_u8>::psite>* test_convert (morpho::basic_najman<image2d<int_u8>, neighb2d>& ima, image2d<int_u8>::psite root)
+test_tree<image2d<int_u8>::site>* test_convert (morpho::basic_najman<image2d<int_u8>, neighb2d>& ima, image2d<int_u8>::site root)
 {
   morpho::basic_najman<image2d<int_u8>, neighb2d>::node& n = ima.nodes(ima.Par_node(root));
 
-  test_tree<image2d<int_u8>::psite> *res = new test_tree<image2d<int_u8>::psite>(ima.Par_node(root));
+  test_tree<image2d<int_u8>::site> *res = new test_tree<image2d<int_u8>::site>(ima.Par_node(root));
 
-  p_array<image2d<int_u8>::psite>::fwd_piter it (n.children);
+  p_array<image2d<int_u8>::site>::fwd_piter it (n.children);
   for_all(it)
-    res->insert_child(test_convert(ima, it.to_psite()));
+    res->insert_child(test_convert(ima, it.to_site()));
 
   return res;
 }
@@ -153,19 +153,19 @@ int main ()
   // Component mapping test
 
   image2dint::fwd_piter it(input.domain());
-  image2dint::psite c[10];
-  c[1] = n.Par_node(image2dint::psite(1, 0));
-  c[2] = n.Par_node(image2dint::psite(0, 5));
-  c[3] = n.Par_node(image2dint::psite(0, 0));
-  c[5] = n.Par_node(image2dint::psite(3, 6));
-  c[6] = n.Par_node(image2dint::psite(3, 2));
-  c[7] = n.Par_node(image2dint::psite(1, 4));
-  c[9] = n.Par_node(image2dint::psite(0, 4));
+  image2dint::site c[10];
+  c[1] = n.Par_node(image2dint::site(1, 0));
+  c[2] = n.Par_node(image2dint::site(0, 5));
+  c[3] = n.Par_node(image2dint::site(0, 0));
+  c[5] = n.Par_node(image2dint::site(3, 6));
+  c[6] = n.Par_node(image2dint::site(3, 2));
+  c[7] = n.Par_node(image2dint::site(1, 4));
+  c[9] = n.Par_node(image2dint::site(0, 4));
 
   bool id = true;
 
   for_all(it)
-    id = (c[verif(it.to_point())] == n.Par_node(it.to_point()));
+    id = (c[verif(it.to_site())] == n.Par_node(it.to_site()));
 
   if (!id)
     {
@@ -175,7 +175,7 @@ int main ()
 
   // Component tree test
 
-  test_tree<image2dint::psite> *gen, ref(c[9]), *l1, *l2;
+  test_tree<image2dint::site> *gen, ref(c[9]), *l1, *l2;
 
   // Create the ref
   ref.insert_child(c[6]);
@@ -202,26 +202,26 @@ int main ()
     }
 
   // Test the LCA alorithm
-  image2dint::psite p(0, 0), q(0, 6), r(2, 4);
-  if (n.lca(p, q) != image2dint::psite(2,4))
+  image2dint::site p(0, 0), q(0, 6), r(2, 4);
+  if (n.lca(p, q) != image2dint::site(2,4))
     return 1;
 
-  if (n.lca(r, q) != image2dint::psite(2,4))
+  if (n.lca(r, q) != image2dint::site(2,4))
     return 1;
 
   // Test the Highest Fork
-  p_set<image2dint::psite> comp;
-  comp.insert(image2dint::psite(0,0));
-  comp.insert(image2dint::psite(2,4));
-  comp.insert(image2dint::psite(0,6));
-  comp.insert(image2dint::psite(1,0));
+  p_set<image2dint::site> comp;
+  comp.insert(image2dint::site(0,0));
+  comp.insert(image2dint::site(2,4));
+  comp.insert(image2dint::site(0,6));
+  comp.insert(image2dint::site(1,0));
 
-  if (n.highest_fork(comp) != image2dint::psite(2, 4))
+  if (n.highest_fork(comp) != image2dint::site(2, 4))
     return 1;
 
-  comp.insert(image2dint::psite(3,2));
+  comp.insert(image2dint::site(3,2));
 
-  if (n.highest_fork(comp) != image2dint::psite(1, 3))
+  if (n.highest_fork(comp) != image2dint::site(1, 3))
     return 1;
 
   std::cout << "Test is successfull" << std::endl;
