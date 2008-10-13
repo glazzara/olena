@@ -34,6 +34,7 @@
  */
 
 # include <mln/registration/icp.hh>
+# include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2p/closest_point.hh>
 # include <mln/core/image/lazy_image.hh>
 
@@ -43,8 +44,7 @@ namespace mln
   namespace registration
   {
 
-
-    using namespace fun::x2x;
+    using namespace mln::fun::x2x;
 
     /*! Register an image \p cloud over the image \p surface.
      */
@@ -74,7 +74,7 @@ namespace mln
 
         //working box
         const box<mln_psite(I)> working_box =
-          enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
+          larger_than(geom::bbox(c), geom::bbox(x)).to_larger(100);
 
         //make a lazy_image map via function closest_point
         fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
@@ -83,7 +83,7 @@ namespace mln
 
 
         //run registration
-        registration::icp(c, map, qk, c.nsites(), 1e-3);
+        return registration::icp(c, map, 1e-3);
 
       }
 

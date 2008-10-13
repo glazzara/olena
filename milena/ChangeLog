@@ -1,3 +1,13 @@
+2008-10-13  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update registration.
+
+	* mln/core/site_set/box.hh (larger_than): Add.
+	* mln/math/jacobi.hh: Add jacobi eigen vector extraction method.
+	* mln/registration/registration.hh: Minor fix.
+	* mln/registration/icp.hh: Fix.
+	* mln/registration/get_rtransf.hh: Add match function.
+
 2008-10-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Update Registration.

@@ -35,6 +35,7 @@
 
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2v/all.hh>
+# include <mln/registration/get_rtransf.hh>
 
 namespace mln
 {
@@ -95,7 +96,7 @@ namespace mln
      */
     template <typename P, typename M>
     inline
-    composed<rotation<2u, float>, translation<2u, float> >
+    composed<rotation<P::dim, float>, translation<P::dim, float> >
     icp(const p_array<P>& c, const M& map,
         const float epsilon = 1e-3);
 
@@ -117,10 +118,32 @@ namespace mln
     namespace impl
     {
 
+      // FIXME: Move elsewhere
+      template <typename P>
+      P center(const p_array<P>& a)
+      {
+        algebra::vec<P::dim,float> c(literal::zero);
+        for (unsigned i = 0; i < a.nsites(); ++i)
+          c += convert::to< algebra::vec<P::dim,float> > (a[i]);
+
+        return algebra::to_point<P>(c / a.nsites());
+      }
+
+      // FIXME: Make use of level::apply
+      template <typename P, typename F>
+      void apply(F& f,
+                 const p_array<P>& a,
+                 p_array<P>& b)
+      {
+        for (unsigned i = 0; i < a.nsites(); i++)
+          b[i] = f(a[i]);
+      }
+
+
       template <typename P, typename M, typename T>
       inline
       void
-      icp_(const p_array<P>& c,
+      icp_(const p_array<P>& c_,
            const unsigned c_length,
            const M& map,
            T& qk,
@@ -132,28 +155,32 @@ namespace mln
         util::buffer<3,float> buf_dk;
 
         float         d_k = 10000;
-        p_array<P>    Ck(c);
 
-        algebra::vec<P::dim,float> mu_C = center(c, c_length), mu_Xk;
+        //work on a reduced version of c_
+        p_array<P> c = c_;
+        c.hook_std_vector_().resize(c_length);
+
+        p_array<P>    ck(c);
+        algebra::vec<P::dim,float> mu_c = center(c);
 
         buf_qk.store(qk);
 
-        qk.apply_on(c, Ck, c_length);
+        apply(qk, c, ck);
 
         unsigned int k = 0;
         do {
           buf_dk.store(d_k);
 
           //compute qk
-          qk = match(c, mu_C, Ck, map, c_length);
+          qk = get_rtransf(c, mu_c, ck, map);
           buf_qk.store(qk);
 
           //Ck+1 = qk(c)
-          qk.apply_on(c, Ck, c_length);
+          apply(qk, c, ck);
 
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
-          d_k = rms(c, map, c_length, buf_qk[1], qk);
+          d_k = rms(c, map, buf_qk[1], qk);
 
           k++;
         } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
@@ -164,15 +191,14 @@ namespace mln
     } // end of namespace mln::registration::impl
 
 
-    template <typename P, typename M, typename T>
+    template <typename P, typename M>
     inline
-    T
-    icp(const p_array<P>& c,
-        const M& map,
+    composed<rotation<P::dim, float>, translation<P::dim, float> >
+    icp(const p_array<P>& c, const M& map,
         const float epsilon = 1e-3)
     {
-      T qk;
-      impl::icp_(c, map, qk, c.length(), epsilon);
+      composed<rotation<P::dim, float>, translation<P::dim, float> > qk;
+      impl::icp_(c, c.nsites(),map, qk, epsilon);
       return qk;
     }
 
