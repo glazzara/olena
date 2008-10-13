@@ -34,6 +34,7 @@
  */
 
 # include <mln/fun/x2x/all.hh>
+# include <mln/fun/x2v/all.hh>
 
 namespace mln
 {
@@ -80,7 +81,7 @@ namespace mln
   namespace registration
   {
 
-    using namespace fun::x2x::geom;
+    using namespace fun::x2x;
 
     /*! Register point in \p c using a map of closest points \p map
      *

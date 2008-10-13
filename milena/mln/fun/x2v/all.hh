@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_ALL_HH
-# define MLN_FUN_X2X_ALL_HH
+#ifndef MLN_FUN_X2V_ALL_HH
+# define MLN_FUN_X2V_ALL_HH
 
-/*! \file mln/fun/x2x/all.hh
+/*! \file mln/fun/x2v/all.hh
  *
- * \brief File that includes all functions from vector to vector.
+ * \brief File that includes all functions from vector to value.
  */
 
 
@@ -40,8 +40,8 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from vector to vector.
-    namespace x2x
+    /// Namespace of functions from vector to value.
+    namespace x2v
     {
 
       /// Internal namespace of functions form vector to vector.
@@ -54,9 +54,8 @@ namespace mln
 }
 
 
-# include <mln/fun/x2x/composed.hh>
-# include <mln/fun/x2x/rotation.hh>
-# include <mln/fun/x2x/translation.hh>
+# include <mln/fun/x2v/linear.hh>
+# include <mln/fun/x2v/bilinear.hh>
+# include <mln/fun/x2v/nneighbor.hh>
 
-
-#endif // ! MLN_FUN_X2X_ALL_HH
+#endif // ! MLN_FUN_X2V_ALL_HH

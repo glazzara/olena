@@ -44,7 +44,7 @@ namespace mln
   {
 
 
-    using namespace fun::x2x::geom;
+    using namespace fun::x2x;
 
     /*! Register an image \p cloud over the image \p surface.
      */
@@ -70,7 +70,7 @@ namespace mln
         p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(I)> >(surface);
 
         //init rigid transform qk
-        composed< rotation<I::P::dim, float>, translation<I::P::dim, float> > qk;
+        composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> > qk;
 
         //working box
         const box<mln_psite(I)> working_box =

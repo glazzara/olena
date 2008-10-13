@@ -31,6 +31,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/norm/l2.hh>
 
+
 namespace mln
 {
 
@@ -44,25 +45,25 @@ namespace mln
       template <typename P>
       struct closest_point
       {
-        typedef algebra::vec<P::dim, float> input;
+        typedef const algebra::vec<P::dim, float>& input;
         typedef P result;
 
         closest_point(const p_array<P>& X, const box<P>& box)
-          : X(X), box(box)
+          : X(X), box_(box)
           , log_functor_call(0)
 
         { }
 
         result
         //inline
-        operator () (const input& Ck) const
+        operator () (const algebra::vec<P::dim, float>& Ck) const
         {
           ++log_functor_call;
 
           algebra::vec<P::dim,float> Cki = Ck;
           algebra::vec<P::dim,float> best_x = X[0];
           float best_d = norm::l2(Cki - best_x);
-          for (size_t j = 1; j < X.nsites(); ++j)
+          for (unsigned j = 1; j < X.nsites(); ++j)
             {
               algebra::vec<P::dim,float> Xj = X[j];
               float d = norm::l2(Cki - Xj);
@@ -77,11 +78,11 @@ namespace mln
 
         const box<P>& domain() const
         {
-          return box;
+          return box_;
         }
 
+        const box<P> box_;
         const p_array<P>& X;
-        const box<P>     box;
 
         // log call to the functor
         mutable unsigned log_functor_call;

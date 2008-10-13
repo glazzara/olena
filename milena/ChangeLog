@@ -1,3 +1,13 @@
+2008-10-13  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Update Registration.
+
+	* mln/fun/x2v/all.hh: Add all header.
+	* mln/fun/x2x/all.hh: Fix includes.
+	* mln/fun/x2p/closest_point.hh: Fix g++4.3 error.
+	* mln/registration/registration.hh: Fix namespace use.
+	* mln/registration/icp.hh: Fix namespace use.
+
 2008-10-10  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add new properties.
