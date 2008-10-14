@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/bbox.hh>
 
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/int.hh>
@@ -61,7 +62,7 @@ namespace mln
     mln_deduce(I, site, coord) min_row(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmin().row();
+      return geom::bbox(ima).pmin().row();
     }
 
 

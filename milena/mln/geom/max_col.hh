@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/bbox.hh>
 
 
 namespace mln
@@ -57,7 +58,7 @@ namespace mln
     mln_deduce(I, site, coord) max_col(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmax().col();
+      return geom::bbox(ima).pmax().col();
     }
 
 
