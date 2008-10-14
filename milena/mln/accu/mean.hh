@@ -65,11 +65,19 @@ namespace mln
 
       mean_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take(const argument& t);
       void take(const mean_<T,S,M>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       M to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -142,6 +150,14 @@ namespace mln
     mean_<T,S,M>::to_result() const
     {
       return sum_.to_result() / count_.to_result();
+    }
+
+    template <typename T, typename S, typename M>
+    inline
+    bool
+    mean_<T,S,M>::is_valid() const
+    {
+      return count_.to_result() != 0;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

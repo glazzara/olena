@@ -55,28 +55,36 @@ namespace mln
       void take(const argument&);
       void take(const count_<T>& other);
 
-      /// Force the value of the counter to \a c. 
+      /// Force the value of the counter to \a c.
       void set_value(std::size_t c);
       /// \}
 
       /// Get the value of the accumulator.
       std::size_t to_result() const;
 
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
+
     protected:
       /// The value of the counter.
       std::size_t count__;
     };
 
-
-    /// \brief Meta accumulator for count.
-    struct count : public Meta_Accumulator< count >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// \brief Meta accumulator for count.
+      struct count : public Meta_Accumulator< count >
       {
-	typedef count_<T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef count_<T> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -126,6 +134,14 @@ namespace mln
     count_<T>::set_value(std::size_t c)
     {
       count__ = c;
+    }
+
+    template <typename T>
+    inline
+    bool
+    count_<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

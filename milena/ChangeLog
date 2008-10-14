@@ -1,5 +1,42 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add is_valid() in the accumulator concept and move meta-accumulators
+	in meta namespace.
+        * milena/mln/accu/count.hh,
+        * milena/mln/accu/height.hh,
+        * milena/mln/accu/histo.hh,
+        * milena/mln/accu/max.hh,
+        * milena/mln/accu/max_h.hh,
+        * milena/mln/accu/mean.hh,
+        * milena/mln/accu/median_alt.hh,
+        * milena/mln/accu/min.hh,
+        * milena/mln/accu/min_h.hh,
+        * milena/mln/accu/nil.hh,
+        * milena/mln/accu/p.hh,
+        * milena/mln/accu/pair.hh,
+        * milena/mln/accu/rank.hh,
+        * milena/mln/accu/rank_bool.hh,
+        * milena/mln/accu/rank_high_quant.hh,
+        * milena/mln/accu/sum.hh,
+        * milena/mln/accu/tuple.hh,
+        * milena/mln/accu/v.hh,
+        * milena/mln/accu/volume.hh:
+	Add is_valid() and move meta-accumulators in meta namespace if needed.
+
+        * milena/mln/core/concept/accumulator.hh:
+	Add is_valid() static test.
+
+	* milena/tests/accu/all_accus.cc,
+	* milena/tests/accu/max.cc,
+	* milena/tests/accu/mean.cc,
+	* milena/tests/accu/min.cc,
+	* milena/tests/accu/min_max.cc,
+	* milena/tests/accu/nil.cc:
+	Fix tests.
+
+
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add labeling::compute.
 	* milena/mln/labeling/compute.hh: do it.
 	* milena/tests/labeling/Makefile.am,

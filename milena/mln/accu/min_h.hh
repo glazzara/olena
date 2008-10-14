@@ -57,17 +57,25 @@ namespace mln
 
       min_h();
 
+      /// Manipulators.
+      /// \{
       void init();
       void   take(const argument& t);
       void   take_as_init(const argument& t);
       void   take(const min_h<V>& other);
       void untake(const argument& t);
+      /// \}
 
       unsigned card() const { return h_.sum(); }
 
+      /// Get the value of the accumulator.
       result to_result() const;
 
       const accu::histo<V>& histo() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
       void debug_print_() const;
 
@@ -256,6 +264,15 @@ namespace mln
     {
       return h_;
     }
+
+    template <typename V>
+    inline
+    bool
+    min_h<V>::is_valid() const
+    {
+      return true;
+    }
+
 
     template <typename V>
     inline

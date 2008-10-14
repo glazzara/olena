@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,12 +61,20 @@ namespace mln
       p_();
       p_(const A& a);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const p_<A>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       result to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
       A a_;
@@ -142,6 +150,14 @@ namespace mln
     p_<A>::to_result() const
     {
       return a_.to_result();
+    }
+
+    template <typename A>
+    inline
+    bool
+    p_<A>::is_valid() const
+    {
+      return a_.is_valid();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

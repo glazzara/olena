@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -58,26 +58,38 @@ namespace mln
 
       nil_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument&);
       void take(const argument&);
       void take(const nil_<T>&);
+      /// \}
 
+      /// Get the value of the accumulator.
       util::ignore to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
     };
 
 
-    /*!
-     * \brief Meta accumulator for nil.
-     */
-    struct nil : public Meta_Accumulator< nil >
+    namespace meta
     {
-      template <typename V>
-      struct with
+
+      /// Meta accumulator for nil.
+
+      struct nil : public Meta_Accumulator< nil >
       {
-	typedef nil_<V> ret;
+	template <typename V>
+	struct with
+	{
+	  typedef nil_<V> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -123,6 +135,15 @@ namespace mln
     {
       return util::ignore();
     }
+
+    template <typename T>
+    inline
+    bool
+    nil_<T>::is_valid() const
+    {
+      return true;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

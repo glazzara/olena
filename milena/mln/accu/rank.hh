@@ -61,14 +61,22 @@ namespace mln
 
       rank_(unsigned k, unsigned n);
 
+      /// Manipulators.
+      /// \{
       void   init();
       void   take(const argument& t);
       void   take(const rank_<T>& other);
       void untake(const argument& t);
+      /// \}
 
       unsigned card() const { return h_.sum(); }
 
+      /// Get the value of the accumulator.
       T to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -94,19 +102,21 @@ namespace mln
     template <typename I> struct rank_< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for rank.
-     */
-    struct rank : public Meta_Accumulator< rank >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for rank.
+
+      struct rank : public Meta_Accumulator< rank >
       {
-	typedef rank_<T> ret;
+	template <typename T>
+	  struct with
+	  {
+	    typedef rank_<T> ret;
+	  };
       };
-    };
 
-
+    } // end of namespace mln::accu::meta
 
 
 
@@ -262,6 +272,14 @@ namespace mln
       if (! valid_)
 	update_();
       return t_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    rank_<T>::is_valid() const
+    {
+      return valid_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

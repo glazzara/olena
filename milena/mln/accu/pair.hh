@@ -67,16 +67,26 @@ namespace mln
       pair_();
       pair_(const A1& a1, const A2& a2);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const pair_<A1,A2,T>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
+      /// \{
       result to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
+      /// \}
 
       mln_result(A1) first() const;
       mln_result(A2) second() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -182,6 +192,14 @@ namespace mln
     pair_<A1,A2,T>::second() const
     {
       return a2_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    bool
+    pair_<A1,A2,T>::is_valid() const
+    {
+      return a1_.is_valid() && a2_.is_valid();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

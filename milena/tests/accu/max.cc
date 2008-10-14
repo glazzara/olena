@@ -47,16 +47,7 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute< accu::max >(ima) == 9);
-  mln_assertion(level::compute< accu::max_<int> >(ima) == 9);
-
-  accu::compute< accu::nil >(ima); // No-op.
-
-  // FIXME : what's the difference between
-  //  accu::compute< accu::max >(ima);
-
-  mln_assertion( accu::compute< accu::val<accu::max> >(ima) == 9);
-
-//   std::cout << accu::compute< accu::max >(ima)
-// 	    << std::endl;
+  mln_assertion(level::compute(accu::meta::max(), ima) == 9);
+  accu::max_<int> M;
+  mln_assertion(level::compute(M, ima) == 9);
 }

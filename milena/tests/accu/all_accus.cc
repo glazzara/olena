@@ -48,7 +48,7 @@ int main()
   // min_h< value::set<bool> > mh;   // OK: do not work since bool has
                                      // no min/max :)
   min_max_<int> mm;
-  nil n;
+  nil_<int> n;
   pair_< min_<int>, max_<int> > p;
   sum_<int> s;
 }

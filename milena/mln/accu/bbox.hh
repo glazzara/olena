@@ -56,14 +56,20 @@ namespace mln
 
       bbox();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const P& p);
       void take(const P& p);
       void take(const bbox<P>& other);
       void take(const box<P>& b);
+      /// \}
 
+      /// Get the value of the accumulator.
       const box<P>& to_result() const;
 
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
       bool is_valid() const;
 
     protected:

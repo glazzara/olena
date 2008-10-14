@@ -47,15 +47,8 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute< accu::min >(ima) == 1);
-  mln_assertion(level::compute< accu::min_<int> >(ima) == 1);
+  mln_assertion(level::compute(accu::meta::min(), ima) == 1);
 
-//   accu::compute< accu::nil >(ima); // No-op.
-
-//   accu::compute< accu::min >(ima);
-
-  mln_assertion(accu::compute< accu::val<accu::min> >(ima) == 1);
-
-//   std::cout << accu::compute< accu::min >(ima)
-// 	    << std::endl;
+  accu::min_<int> m;
+  mln_assertion(level::compute(m, ima) == 1);
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -54,11 +54,19 @@ namespace mln
 
       median_alt(const Value_Set<S>& s);
 
+      /// Manipulators.
+      /// \{
       void   take(const argument& t);
       void untake(const argument& t);
       void init();
+      /// \}
 
+      /// Get the value of the accumulator.
       argument to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
       // FIXME: remove
       void debug__() const
@@ -72,12 +80,15 @@ namespace mln
     protected:
 
       histo<S> h_;
-      const S& s_; // derived from h_
+      /// derived from h_
+      const S& s_;
 
       std::size_t sum_minus_, sum_plus_;
 
-      std::size_t i_; // the median index
-      argument t_;       // the median argument
+      /// the median index
+      std::size_t i_;
+      /// the median argument
+      argument t_;
 
       // Auxiliary methods
       void go_minus_();
@@ -205,6 +216,33 @@ namespace mln
 	}
     }
 
+    template <typename S>
+    inline
+    void
+    median_alt<S>::init()
+    {
+      h_.init();
+      sum_minus_ = 0;
+      sum_plus_ = 0;
+      i_ = (mln_max(argument) - mln_min(argument)) / 2;
+      t_ = s_[i_];
+    }
+
+    template <typename S>
+    inline
+    typename median_alt<S>::argument
+    median_alt<S>::to_result() const
+    {
+      return t_;
+    }
+
+    template <typename S>
+    inline
+    bool
+    median_alt<S>::is_valid() const
+    {
+      return true;
+    }
 
     template <typename S>
     inline
@@ -239,27 +277,6 @@ namespace mln
 	}
       while (2 * sum_plus_ > h_.sum());
       t_ = s_[i_];
-    }
-
-
-    template <typename S>
-    inline
-    void
-    median_alt<S>::init()
-    {
-      h_.init();
-      sum_minus_ = 0;
-      sum_plus_ = 0;
-      i_ = (mln_max(argument) - mln_min(argument)) / 2;
-      t_ = s_[i_];
-    }
-
-    template <typename S>
-    inline
-    typename median_alt<S>::argument
-    median_alt<S>::to_result() const
-    {
-      return t_;
     }
 
     template <typename S>

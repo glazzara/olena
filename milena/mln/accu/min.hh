@@ -58,12 +58,20 @@ namespace mln
 
       min_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const min_<T>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       T to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -79,7 +87,7 @@ namespace mln
     {
 
       /// Meta accumulator for min.
-      
+
       struct min : public Meta_Accumulator< min >
       {
 	template <typename T>
@@ -140,6 +148,14 @@ namespace mln
     min_<T>::to_result() const
     {
       return t_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    min_<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -40,7 +40,7 @@ int main()
   using namespace mln;
 
   {
-    mln_accu_with_(accu::min_max, int) accu;
+    mln_accu_with_(accu::meta::min_max, int) accu;
 
     accu.take(7);
 
@@ -49,7 +49,7 @@ int main()
   }
 
   {
-    mln_accu_with_(accu::min_max, int) accu;
+    mln_accu_with_(accu::meta::min_max, int) accu;
 
     accu.take(10);
     accu.take(9);

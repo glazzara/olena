@@ -58,12 +58,20 @@ namespace mln
 
       max_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const max_<T>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       T to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -78,7 +86,7 @@ namespace mln
     {
 
       /// Meta accumulator for max.
-      
+
       struct max : public Meta_Accumulator< max >
       {
 	template <typename T>
@@ -140,6 +148,14 @@ namespace mln
     max_<T>::to_result() const
     {
       return t_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    max_<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

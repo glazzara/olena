@@ -59,13 +59,21 @@ namespace mln
 
       rank_(unsigned k, unsigned n);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const rank_<T>& other);
       void sort();
+      /// \}
 
+      /// Get the value of the accumulator.
       T to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -79,21 +87,21 @@ namespace mln
     template <typename I> struct rank_< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for rank.
-     */
-    struct rank : public Meta_Accumulator< rank >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for rank.
+
+      struct rank : public Meta_Accumulator< rank >
       {
-	typedef rank_<T> ret;
+	template <typename T>
+	  struct with
+	  {
+	    typedef rank_<T> ret;
+	  };
       };
-    };
 
-
-
-
+    }
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -156,6 +164,14 @@ namespace mln
       else
 	// FIXME : This alternative is used to handle images edges.
 	return elts_[(elts_.size() * k_) / n_];
+    }
+
+    template <typename T>
+    inline
+    bool
+    rank_<T>::is_valid() const
+    {
+      return true;
     }
 
     template <typename T>

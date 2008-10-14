@@ -39,6 +39,7 @@
 # include <algorithm>
 
 # include <mln/core/concept/value_set.hh>
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/value/set.hh>
 # include <mln/histo/data.hh>
@@ -63,6 +64,8 @@ namespace mln
       typedef V argument;
       typedef const std::vector<std::size_t>& result;
 
+      /// Manipulators.
+      /// \{
       void   take(const argument& t);
       void   take(const histo<V>& other);
       void untake(const argument& t);
@@ -72,11 +75,19 @@ namespace mln
       std::size_t operator[](unsigned i) const;
       unsigned    nvalues() const;
       std::size_t sum() const;
+      /// \}
 
+      /// Get the value of the accumulator.
+      /// \{
       const std::vector<std::size_t>& vect() const;
       const std::vector<std::size_t>& to_result() const;
+      /// \}
 
       const value::set<V>& vset() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -86,6 +97,21 @@ namespace mln
 
     template <typename V>
     std::ostream& operator<<(std::ostream& ostr, const histo<V>& h);
+
+    namespace meta
+    {
+
+      /// Meta accumulator for histo.
+      struct histo : public Meta_Accumulator< histo >
+      {
+	template <typename V>
+	struct with
+	{
+	  typedef mln::accu::histo<V> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
 
 
 
@@ -204,6 +230,14 @@ namespace mln
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';
       return ostr;
+    }
+
+    template <typename V>
+    inline
+    bool
+    histo<V>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

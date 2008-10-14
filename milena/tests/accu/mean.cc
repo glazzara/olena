@@ -40,7 +40,7 @@ int main()
   using namespace mln;
 
   {
-    mln_accu_with_(accu::mean, int) mean;
+    mln_accu_with_(accu::meta::mean, int) mean;
 
     mean.take(10);
     mean.take(9);
@@ -58,7 +58,7 @@ int main()
   }
 
   {
-    mln_accu_with_(accu::mean, int) mean;
+    mln_accu_with_(accu::meta::mean, int) mean;
 
     mean.take(10);
     mean.take(8);

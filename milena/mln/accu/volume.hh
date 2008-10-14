@@ -85,6 +85,10 @@ namespace mln
       /// Get the value of the accumulator.
       std::size_t to_result() const;
 
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
+
     protected:
       /// The reference level (the level of the component's root).
       value ref_level__;
@@ -95,15 +99,21 @@ namespace mln
     };
 
 
-    /// \brief Meta accumulator for volume.
-    struct volume : public Meta_Accumulator< volume >
+    namespace meta
     {
-      template <typename I>
-      struct with
+
+      /// Meta accumulator for volume.
+
+      struct volume : public Meta_Accumulator< volume >
       {
-	typedef volume_<I> ret;
+	template <typename I>
+	  struct with
+	  {
+	    typedef volume_<I> ret;
+	  };
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -180,6 +190,14 @@ namespace mln
       // Reset the other members.
       ref_level__ = literal::zero;
       area__ = 0;
+    }
+
+    template <typename I>
+    inline
+    bool
+    volume_<I>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

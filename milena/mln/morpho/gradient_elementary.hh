@@ -84,7 +84,7 @@ namespace mln
 	  trace::entering("morpho::impl::generic::gradient_elementary_on_function");
 
 	  mln_concrete(I) output;
-	  output = internal::elementary< accu::min_max >(input, nbh, f_grad());
+	  output = internal::elementary< accu::meta::min_max >(input, nbh, f_grad());
 
 	  trace::exiting("morpho::impl::generic::gradient_elementary_on_function");
 	  return output;

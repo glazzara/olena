@@ -64,11 +64,19 @@ namespace mln
 
       sum_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take(const argument& t);
       void take(const sum_<T,S>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       S to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -133,6 +141,14 @@ namespace mln
     sum_<T,S>::to_result() const
     {
       return s_;
+    }
+
+    template <typename T, typename S>
+    inline
+    bool
+    sum_<T,S>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

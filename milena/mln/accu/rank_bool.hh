@@ -60,18 +60,27 @@ namespace mln
 
       rank_(unsigned k, unsigned n);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const rank_<bool>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       bool to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
       unsigned nfalse_;
       unsigned k_; // 0 <= k_ < n
       unsigned n_;
     };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -122,6 +131,13 @@ namespace mln
     {
       mln_assertion(nfalse_ <= n_);
       return k_ >= nfalse_;
+    }
+
+    inline
+    bool
+    rank_<bool>::is_valid() const
+    {
+      return nfalse_ <= n_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

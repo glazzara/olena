@@ -75,6 +75,8 @@ namespace mln
 
       result to_result() const;
       operator mlc_unqualif(result) const;
+
+      bool is_valid() const;
      */
 
     // Default impl.
@@ -104,10 +106,12 @@ namespace mln
 
     result (E::*m4)() const = & E::to_result;
     m4 = 0;
-
     typedef mlc_fix_return(mlc_const_return(result)) result_;
     result_ (E::*m5)() const = & E::operator result_;
     m5 = 0;
+
+    bool (E::*m6)() const = & E::is_valid;
+    m6 = 0;
   }
 
   template <typename E>

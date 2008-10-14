@@ -86,6 +86,10 @@ namespace mln
       /// Get the value of the accumulator.
       std::size_t to_result() const;
 
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
+
     protected:
       /// The minimum level in the component.
       value min_level__;
@@ -96,16 +100,20 @@ namespace mln
     };
 
 
-    /// \brief Meta accumulator for height.
-    struct height : public Meta_Accumulator< height >
+    namespace meta
     {
-      template <typename I>
-      struct with
-      {
-	typedef height_<I> ret;
-      };
-    };
 
+      /// \brief Meta accumulator for height.
+      struct height : public Meta_Accumulator< height >
+      {
+	template <typename I>
+	  struct with
+	  {
+	    typedef height_<I> ret;
+	  };
+      };
+
+    } // end of namespace mln::accu::meta
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -163,6 +171,14 @@ namespace mln
       // Reset the other members.
       min_level__ = mln_max(value);
       max_level__ = mln_min(value);
+    }
+
+    template <typename I>
+    inline
+    bool
+    height_<I>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

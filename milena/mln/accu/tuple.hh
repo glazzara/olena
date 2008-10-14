@@ -82,32 +82,44 @@ namespace mln
 
       tuple_();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       result to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
       intern a_;
     };
 
-    /*!
-     * \brief Meta accumulator for tuple.
-     */
-    template <unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
-    struct tuple : public Meta_Accumulator< tuple<n, BOOST_PP_ENUM_PARAMS(10, T)> >
+    namespace meta
     {
-      template <typename A>
-      struct with
+
+      ///Meta accumulator for tuple.
+
+      template <unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
+      struct tuple : public Meta_Accumulator< tuple<n, BOOST_PP_ENUM_PARAMS(10, T)> >
       {
+	template <typename A>
+	struct with
+	{
 # include BOOST_PP_LOCAL_ITERATE()
 
-	typedef tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, AT)> ret;
+	  typedef tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, AT)> ret;
+	};
       };
-    };
+
+    }
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -219,6 +231,14 @@ namespace mln
       result tmp;
       internal::tuple_helper<n, self>::to_result(this->a_, tmp);
       return tmp;
+    }
+
+    template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
+    inline
+    bool
+    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
