@@ -45,7 +45,7 @@ namespace mln
     template <typename P>
     algebra::vec<P::dim,float>
     exp_value(const p_array<P>& a);
-    
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P>
@@ -55,18 +55,14 @@ namespace mln
     {
       if (a.nsites() == 0)
         return P();
-      
+
       algebra::vec<P::dim,float> c(literal::zero);
       for (unsigned i = 0; i < a.nsites(); ++i)
-        {
-          // FIXME : Ugly.
-          algebra::vec<P::dim,float> ai = a[i];
-          c += ai;
-        }
-      
+        c += convert::to< algebra::vec<P::dim,float> > (a[i]);
+
       return c / a.nsites();
     }
-    
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::math

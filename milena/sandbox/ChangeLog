@@ -1,3 +1,25 @@
+2008-10-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM Bootstrap Classification.
+
+	Bootstrap classification:
+	* classif/Makefile: New.
+	* classif/iccvg04.cc: New.
+
+	Add test image:
+	* classif/chiche.pgm: New.
+	* classif/images/caf_0009.jpg: New.
+	* classif/images/caf_0028.jpg: New.
+	* classif/images/edfverso06.JPG: New.
+	* classif/images/capture.png: New.
+	* classif/images/vpc_0001.jpg: New.
+	* classif/images/caf_0010.jpg: New.
+	* classif/images/caf_0013.jpg: New.
+	* classif/images/caf_0005.jpg: New.
+	* classif/images/caf_0034.jpg: New.
+	* classif/lena.ppm: New.
+	* classif/scoolNBR.ppm: New.
+
 2008-10-13  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add different types of function and tests.
