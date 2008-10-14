@@ -33,8 +33,9 @@
  * \brief Define an accumulator that computes a bbox.
  */
 
-# include <mln/accu/internal/base.hh>
 # include <mln/core/site_set/box.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/accu/internal/base.hh>
 
 
 namespace mln
@@ -78,6 +79,21 @@ namespace mln
       box<P> b_;
     };
 
+
+    namespace meta
+    {
+
+      /// Meta accumulator for bbox.
+      struct bbox : public Meta_Accumulator< bbox >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef mln::accu::bbox<T> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY

@@ -1,5 +1,10 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add meta-accumulator for accu::bbox.
+	* milena/mln/accu/bbox.hh: add missing meta-accumulator.
+
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add is_valid() in the accumulator concept and move meta-accumulators
 	in meta namespace.
         * milena/mln/accu/count.hh,
@@ -34,6 +39,7 @@
 	* milena/tests/accu/nil.cc:
 	Fix tests.
 
+	* milena/mln/morpho/gradient_elementary.hh: Fix compilation.
 
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
