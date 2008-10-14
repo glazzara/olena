@@ -84,8 +84,10 @@ namespace mln
 	// is not defined.
 	(void) ima;
 
-	mlc_is(mln_trait_image_value_io(I),
-	       mln::trait::image::value_io::read_write)::check();
+        // FIXME
+	//mlc_is(mln_trait_image_value_io(I),
+        //mln::trait::image::value_io::read_write)::check();
+
 	mlc_converts_to(mln_exact(V), mln_value(I))::check();
 	mln_precondition(exact(ima).has_data());
       }

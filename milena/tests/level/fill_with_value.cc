@@ -30,19 +30,49 @@
  * \brief Tests on mln::level::fill_with_value
  */
 
-#include <mln/core/image/image2d.hh>
 #include <mln/level/fill_with_value.hh>
 
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/flat_image.hh>
+#include <mln/core/image/image_if.hh>
+
+#include <mln/fun/p2b/chess.hh>
 
 int main()
 {
   using namespace mln;
-
   const unsigned size = 100;
 
-  image2d<unsigned char> ima(size, size);
-  level::fill_with_value(ima, 51);
-  box2d::piter p(ima.domain());
-  for_all(p)
-    mln_assertion(ima(p) == 51);
+  {
+    image2d<unsigned char> ima(size, size);
+    level::fill_with_value(ima, 51);
+    box2d::piter p(ima.domain());
+    for_all(p)
+      mln_assertion(ima(p) == 51);
+  }
+
+
+  {
+    flat_image<short, box2d> ima(5, make::box2d(2, 3));
+    level::fill_with_value(ima, 51);
+    box2d::piter p(ima.domain());
+    for_all(p)
+      mln_assertion(ima(p) == 51);
+  }
+
+
+  {
+    typedef image2d<unsigned char> I;
+    typedef image_if<I, fun::p2b::chess_t> II;
+
+    I ima(size, size);
+    level::fill_with_value(ima, 51);
+
+    II ima_if = ima | fun::p2b::chess;
+    level::fill_with_value(ima_if, 42);
+
+    II::piter p(ima_if.domain());
+    for_all(p)
+      mln_assertion(ima_if(p) == 42);
+  }
 }

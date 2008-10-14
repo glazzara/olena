@@ -37,6 +37,7 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LEVEL_FILL_WITH_VALUE_HH
 
+# include <mln/level/memset_.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -80,11 +81,7 @@ namespace mln
 	I& ima = exact(ima_);
 	internal::fill_with_value_tests(ima, val);
 
-	// level::memset_(ima, ima.point_at_index(0), v, ima.nelements());
-	const unsigned n = ima.nelements();
-	mln_value(I)* ptr = ima.buffer();
-	for (unsigned i = 0; i < n; ++i)
-	  *ptr++ = val;
+        level::memset_(ima, ima.point_at_index(0), val, ima.nelements());
 
 	trace::exiting("level::impl::fill_with_value_one_block");
       }
@@ -98,14 +95,29 @@ namespace mln
 	I& ima = exact(ima_);
 	internal::fill_with_value_tests(ima, val);
 
-	mln_viter(I) v(ima.values());
+	mln_viter(I) v(ima.cells());
 	for_all(v)
 	  v.change_to(val);
 
 	trace::exiting("level::impl::fill_with_value_cell_wise");
       }
 
+      template <typename I, typename V>
+      inline
+      void fill_with_value_singleton(Image<I>& ima_, const V& val)
+      {
+        trace::entering("level::impl::fill_with_value_singleton");
+
+	I& ima = exact(ima_);
+	internal::fill_with_value_tests(ima, val);
+
+	ima.val() = val;
+
+	trace::exiting("level::impl::fill_with_value_singleton");
+      }
+
     } // end of namespace mln::level::impl
+
 
 
     // Dispatch.
@@ -115,11 +127,83 @@ namespace mln
     {
 
       template <typename I, typename V>
-      inline
+      void fill_with_value_dispatch(trait::image::value_storage::one_block,
+                                    trait::image::vw_io::any,
+                                    Image<I>& ima, const V& val)
+      {
+        if ((mlc_is(mln_trait_image_pw_io(I),
+                    trait::image::pw_io::read_write)::value ||
+             mlc_is(mln_trait_image_vw_io(I),
+                    trait::image::vw_io::read_write)::value) &&
+            mlc_is(mln_trait_image_value_access(I),
+                   trait::image::value_access::direct)::value)
+          impl::fill_with_value_one_block(ima, val);
+        else
+          impl::generic::fill_with_value(ima, val);
+      }
+
+      template <typename I, typename V>
+      void fill_with_value_dispatch(trait::image::value_storage::singleton,
+                                    trait::image::vw_io::any,
+                                    Image<I>& ima, const V& val)
+      {
+        if ((mlc_is(mln_trait_image_pw_io(I),
+                    trait::image::pw_io::read_write)::value ||
+             mlc_is(mln_trait_image_vw_io(I),
+                    trait::image::vw_io::read_write)::value) &&
+            mlc_is(mln_trait_image_value_access(I),
+                   trait::image::value_access::direct)::value)
+          impl::fill_with_value_singleton(ima, val);
+      }
+
+      template <typename I, typename V>
+      void fill_with_value_dispatch(trait::image::value_storage::piecewise,
+                                    trait::image::vw_io::any,
+                                    Image<I>& ima, const V& val)
+      {
+        /// FIXME
+      }
+
+
+      template <typename I, typename V>
+      void fill_with_value_dispatch(trait::image::value_storage::disrupted,
+                                    trait::image::vw_io::read_write,
+                                    Image<I>& ima, const V& val)
+      {
+        impl::fill_with_value_cell_wise(ima, val);
+      }
+
+
+
+      template <typename I, typename V>
+      void fill_with_value_dispatch(trait::image::value_storage::disrupted,
+                                    trait::image::vw_io::read,
+                                    Image<I>& ima, const V& val)
+      {
+        impl::generic::fill_with_value(ima, val);
+      }
+
+
+      /// FIXME:
+      // This specialization is only here to deal with image which have
+      // non-updated properties (vw_io).
+      template <typename I, typename V>
+      void fill_with_value_dispatch(trait::image::value_storage::any,
+                                    trait::undef,
+                                    Image<I>& ima, const V& val)
+      {
+        impl::generic::fill_with_value(ima, val);
+      }
+
+
+
+      template <typename I,  typename V>
       void fill_with_value_dispatch(Image<I>& ima, const V& val)
       {
-	impl::generic::fill_with_value(ima, val);
-      }      
+        fill_with_value_dispatch(mln_trait_image_value_storage(I)(),
+                                 mln_trait_image_vw_io(I)(),
+                                 ima, val);
+      }
 
     } // end of namespace mln::level::internal
 

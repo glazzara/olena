@@ -1,3 +1,15 @@
+2008-10-14  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Reactivate dispatch in the fill_with_value algorithm.
+
+	* tests/level/fill_with_value.cc: Update.
+	* mln/trait/images.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image3d.hh: Update properties.
+	* mln/level/fill_with_value.spe.hh: Add dispatch.
+	* mln/level/fill_with_value.hh: Comment irrelevant tests.
+
 2008-10-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Move some meta-acc into meta:: and revamp level take'n compute.

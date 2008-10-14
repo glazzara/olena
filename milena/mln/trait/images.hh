@@ -55,10 +55,14 @@
 # define mln_trait_image_speed(I)    typename mln::trait::image_< I >::speed
 # define mln_trait_image_size(I)     typename mln::trait::image_< I >::size
 
-# define mln_trait_image_value_access(I)   typename mln::trait::image_< I >::value_access
-# define mln_trait_image_value_storage(I)  typename mln::trait::image_< I >::value_storage
-# define mln_trait_image_value_browsing(I) typename mln::trait::image_< I >::value_browsing
-# define mln_trait_image_value_io(I)       typename mln::trait::image_< I >::value_io
+# define mln_trait_image_value_access(I)     typename mln::trait::image_< I >::value_access
+# define mln_trait_image_value_storage(I)    typename mln::trait::image_< I >::value_storage
+# define mln_trait_image_value_browsing(I)   typename mln::trait::image_< I >::value_browsing
+# define mln_trait_image_value_io(I)         typename mln::trait::image_< I >::value_io
+# define mln_trait_image_pw_io(I)            typename mln::trait::image_< I >::pw_io
+# define mln_trait_image_vw_io(I)            typename mln::trait::image_< I >::vw_io
+# define mln_trait_image_vw_set(I)           typename mln::trait::image_< I >::vw_set
+# define mln_trait_image_value_alignement(I) typename mln::trait::image_< I>::value_alignement
 
 # define mln_trait_image_localization(I) typename mln::trait::image_< I >::localization
 # define mln_trait_image_dimension(I)    typename mln::trait::image_< I >::dimension
@@ -122,12 +126,16 @@ namespace mln
       typedef undef size;
 
       // value
+      typedef undef vw_io;
+      typedef undef vw_set;
+      typedef undef value_alignement;
       typedef undef value_access;
       typedef undef value_storage;
       typedef undef value_browsing;
       typedef undef value_io;
 
       // site
+      typedef undef pw_io;
       typedef undef localization;
       typedef undef dimension;
 
