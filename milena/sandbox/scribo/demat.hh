@@ -25,10 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file doc/examples/hit_or_miss.cc
- *
- * \brief Test on mln::morpho::hit_or_miss.
- */
+#ifndef DEMAT_HH_
+# define DEMAT_HH_
 
 # include <mln/core/image/image2d.hh>
 
@@ -57,55 +55,79 @@
 # include <mln/convert/to_fun.hh>
 # include <mln/geom/bbox.hh>
 
-void clean_lines(mln::image2d<bool>& in,
-		 const mln::image2d<bool>& ima,
-		 unsigned bbox_larger)
+# include <mln/labeling/compute.hh>
+# include <mln/accu/bbox.hh>
+
+namespace scribo
 {
-  using namespace mln;
-  using value::int_u8;
 
-  int_u8 nlabels;
-  image2d<int_u8> lbl = labeling::blobs(ima, c4(), nlabels);
-
-  for (unsigned i = nlabels; i > 0; --i)
+  namespace internal
   {
-    level::paste(pw::cst(false)
-		    | geom::bbox(lbl | (pw::value(lbl) == pw::cst(i))),//.to_larger(bbox_larger),
-		    in);
-  }
-}
 
-int main(int argc, char*argv[])
-{
-  using namespace mln;
-  using value::int_u8;
+    void filter_image(mln::image2d<bool>& ima,
+		      const mln::image2d<bool>& filter,
+		      unsigned bbox_larger)
+    {
+      using namespace mln;
+      using value::int_u8;
 
-  if (argc < 2)
+      typedef image2d<int_u8> I;
+      typedef mln_accu_with_(accu::meta::bbox, mln_psite_(I)) A;
+      typedef p_array<mlc_unqualif_(A::result)> boxes_t;
+
+      int_u8 nlabels;
+      I lbl = labeling::blobs(filter, c4(), nlabels);
+
+      boxes_t boxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
+      mln_piter_(boxes_t) p(boxes);
+
+      for_all(p)
+	level::paste(pw::cst(false)
+	    | p.to_site().to_larger(bbox_larger),
+	    ima);
+    }
+
+    void remove_tables(mln::image2d<bool>& in, unsigned h, unsigned w, unsigned n)
+    {
+      using namespace mln;
+
+      // Lignes verticales
+      win::rectangle2d vwin(h, w);
+      image2d<bool> vfilter = morpho::opening(in, vwin);
+      io::pbm::save(vfilter, "./table-vfilter.pbm");
+      filter_image(in, vfilter, n);
+
+      // Lignes horizontales
+      win::rectangle2d hwin(w, h);
+      image2d<bool> hfilter = morpho::opening(in, hwin);
+      io::pbm::save(hfilter, "./table-hfilter.pbm");
+      filter_image(in, hfilter, n);
+    }
+
+  } // end of namespace scribo::internal
+
+
+
+  // Facade
+  void demat(char *argv[])
   {
-    std::cout << argv[0] << " <image.pgm> <h> <w>" << std::endl;
-    return 1;
+    using namespace mln;
+    using value::int_u8;
+
+    //Useful debug variables
+    unsigned h = atoi(argv[2]);
+    unsigned w = atoi(argv[3]);
+    unsigned n = atoi(argv[4]);
+
+    //Load image
+    image2d<bool> in;
+    io::pbm::load(in, argv[1]);
+
+    internal::remove_tables(in, h, w, n);
+
+    io::pbm::save(in, "./table-filtered.pbm");
   }
 
-  image2d<bool> in;
-  io::pbm::load(in, argv[1]);
+} // end of namespace scribo
 
-  unsigned h = atoi(argv[2]);
-  unsigned w = atoi(argv[3]);
-  unsigned n = atoi(argv[4]);
-
-  // Lignes verticales
-  win::rectangle2d vwin(h, w);
-  image2d<bool> vout = morpho::opening(in, vwin);
-  io::pbm::save(vout, "./vout.pbm");
-  clean_lines(in, vout, n);
-
-  // Lignes horizontales
-  win::rectangle2d hwin(w, h);
-  image2d<bool> hout = morpho::opening(in, hwin);
-  io::pbm::save(hout, "./hout.pbm");
-  clean_lines(in, hout, n);
-
-  io::pbm::save(in, "./outt.pbm");
-
-  return 0;
-}
+# endif // ! DEMAT_HH

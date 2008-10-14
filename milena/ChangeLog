@@ -1,5 +1,13 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use labeling::compute for Scribo.
+	* milena/sandbox/scribo/remove_tables.hh: split in...
+	* milena/sandbox/scribo/demat.hh,
+	* milena/sandbox/scribo/main.cc: ...these two files.
+	Update the code in order to use labeling::compute.
+
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix labeling::compute return type.
 	* milena/mln/labeling/compute.hh: Fix many compilation errors
 	while taking directly the result type of an accumulator as a template
