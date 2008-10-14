@@ -35,7 +35,6 @@
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/meta_accumulator.hh>
 
 
 
@@ -92,6 +91,7 @@ namespace mln
       {
 
 	template <typename A, typename I>
+	inline
 	mln_result(A)
 	update(Accumulator<A>& a_, const Image<I>& input_)
 	{
@@ -113,6 +113,7 @@ namespace mln
 
 
       template <typename A, typename I>
+      inline
       mln_result(A)
       update_fastest(Accumulator<A>& a_, const Image<I>& input_)
       {
@@ -141,6 +142,7 @@ namespace mln
     {
 
       template <typename A, typename I>
+      inline
       mln_result(A)
       update_dispatch(trait::image::speed::any,
 		      Accumulator<A>& a, const Image<I>& input)
@@ -149,6 +151,7 @@ namespace mln
       }
 
       template <typename A, typename I>
+      inline
       mln_result(A)
       update_dispatch(trait::image::speed::fastest,
 		      Accumulator<A>& a, const Image<I>& input)
@@ -157,6 +160,7 @@ namespace mln
       }
 
       template <typename A, typename I>
+      inline
       mln_result(A)
       update_dispatch(Accumulator<A>& a, const Image<I>& input)
       {

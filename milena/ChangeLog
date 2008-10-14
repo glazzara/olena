@@ -1,3 +1,12 @@
+2008-10-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Some fixes on level update and compute.
+
+	* mln/level/update.hh: Fix missing 'inline'.
+	Remove useless include.
+	* mln/level/compute.hh: Rely on level::update.
+	Remove redundant code.
+
 2008-10-14  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Reactivate dispatch in the fill_with_value algorithm.

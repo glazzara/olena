@@ -33,8 +33,7 @@
  * \brief Compute an accumulator onto image pixel values.
  */
 
-# include <mln/core/concept/accumulator.hh>
-# include <mln/core/concept/image.hh>
+# include <mln/level/update.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 
 
@@ -50,6 +49,8 @@ namespace mln
      * \param[in] a An accumulator.
      * \param[in] input The input image.
      * \return The accumulator result.
+     *
+     * It fully relies on level::update.
      */
     template <typename A, typename I>
     mln_result(A)
@@ -71,133 +72,27 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    // Tests.
-
-    namespace internal
-    {
-
-      template <typename A, typename I>
-      inline
-      void
-      compute_tests(const Accumulator<A>& a_, const Image<I>& input_)
-      {
-	const A& a     = exact(a_);
-	const I& input = exact(input_);
-	mln_precondition(input.has_data());
-	// sizeof(a.take(mln_value(I)()));
-
-	(void) a;
-	(void) input;
-      }
-
-    } // end of namespace internal
-
-
-
-    // Implementations.
-
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename A, typename I>
-	mln_result(A)
-	compute(const Accumulator<A>& a_, const Image<I>& input_)
-	{
-	  trace::entering("level::impl::generic::compute");
-
-	  A a = exact(a_);
-	  const I& input = exact(input_);
-	  internal::compute_tests(a, input);
-
-	  a.init();
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    a.take(input(p));
-
-	  trace::exiting("level::impl::generic::compute");
-	  return a.to_result();
-	}
-
-      } // end of namespace mln::level::impl::generic
-
-
-      template <typename A, typename I>
-      mln_result(A)
-      compute_fastest(const Accumulator<A>& a_, const Image<I>& input_)
-      {
-	trace::entering("level::impl::compute_fastest");
-	
-	A a = exact(a_);
-	const I& input = exact(input_);
-	internal::compute_tests(a, input);
-	
-	a.init();
-	mln_pixter(const I) pxl(input);
-	for_all(pxl)
-	  a.take(pxl.val());
-	
-	trace::exiting("level::impl::compute_fastest");
-	return a.to_result();
-      }
-
-
-    } // end of namespace mln::level::impl
-
-    
-
-    // Dispatch.
-
-    namespace internal
-    {
-
-      template <typename A, typename I>
-      mln_result(A)
-      compute_dispatch(trait::image::speed::any,
-		       const Accumulator<A>& a, const Image<I>& input)
-      {
-	return impl::generic::compute(a, input);
-      }
-
-      template <typename A, typename I>
-      mln_result(A)
-      compute_dispatch(trait::image::speed::fastest,
-		       const Accumulator<A>& a, const Image<I>& input)
-      {
-	return impl::compute_fastest(a, input);
-      }
-
-      template <typename A, typename I>
-      mln_result(A)
-      compute_dispatch(const Accumulator<A>& a, const Image<I>& input)
-      {
-	return compute_dispatch(mln_trait_image_speed(I)(),
-				a, input);
-      }
-
-    } // end of namespace internal
-
-
-
     // Facades.
 
     template <typename A, typename I>
     inline
     mln_result(A)
-    compute(const Accumulator<A>& a, const Image<I>& input)
+    compute(const Accumulator<A>& a_, const Image<I>& input)
     {
       trace::entering("level::compute");
 
-      internal::compute_tests(a, input);
-      mln_result(A) r = internal::compute_dispatch(a, input);
+      A a = exact(a_);
+      level::internal::update_tests(a, input);
+
+      a.init();
+      level::internal::update_dispatch(a, input);
 
       trace::exiting("level::compute");
-      return r;
+      return a;
     }
 
     template <typename A, typename I>
+    inline
     mln_accu_with(A, mln_value(I))::result
     compute(const Meta_Accumulator<A>&, const Image<I>& input)
     {
