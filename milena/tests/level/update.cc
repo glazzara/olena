@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,64 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_TAKE_SPE_HH
-# define MLN_LEVEL_TAKE_SPE_HH
-
-/*! \file mln/level/take.spe.hh
+/*! \file tests/level/update.cc
  *
- * \brief Specializations for mln::level::take.
+ * \brief Tests on mln::level::update.
  */
 
-# ifndef MLN_LEVEL_TAKE_HH
-#  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_TAKE_HH
+#include <mln/core/image/image2d.hh>
+#include <mln/level/update.hh>
+#include <mln/level/compare.hh>
+#include <mln/debug/iota.hh>
+#include <mln/accu/min.hh>
+#include <mln/accu/max.hh>
 
-# include <mln/core/concept/accumulator.hh>
-# include <mln/core/concept/image.hh>
 
-# ifndef MLN_INCLUDE_ONLY
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace level
-  {
+  const unsigned size = 200;
+  image2d<int> ima(size, size);
+  accu::min_<int> m;
+  accu::max_<int> M;
 
-    namespace impl
-    {
+  debug::iota(ima);
+  level::update(m, ima);
+  level::update(M, ima);
 
-      namespace generic
-      {
-	template <typename A, typename I>
-	void take_(const I& input, A& a);
-      }
-
-      template <typename A, typename I>
-      inline
-      void take_(trait::image::speed::any, const I& input, A& a)
-      {
-	generic::take_(input, a);
-      }
-
-      template <typename A, typename I>
-      inline
-      void take_(trait::image::speed::fastest, const I& input, A& a)
-      {
-	trace::entering("level::impl::take");
-
-	mln_pixter(const I) pxl(input);
-	for_all(pxl)
-	  a.take(pxl.val());
-
-	trace::exiting("level::impl::take");
-      }
-
-    } // end of namespace mln::level::impl
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
-
-# endif // ! MLN_INCLUDE_ONLY
-
-#endif // ! MLN_LEVEL_TAKE_HH
+  mln_assertion(m == 1);
+  mln_assertion(M == 40000);
+}

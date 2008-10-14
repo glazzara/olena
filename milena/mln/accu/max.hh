@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,18 +74,21 @@ namespace mln
     template <typename I> struct max_< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for max.
-     */
-    struct max : public Meta_Accumulator< max >
+    namespace meta
     {
-      template <typename T>
-      struct with
-      {
-	typedef max_<T> ret;
-      };
-    };
 
+      /// Meta accumulator for max.
+      
+      struct max : public Meta_Accumulator< max >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef max_<T> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY

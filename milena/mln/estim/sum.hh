@@ -70,7 +70,7 @@ namespace mln
     mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
       mln_precondition(exact(input).has_data());
-      return level::compute<accu::sum, I>(input);
+      return level::compute(accu::meta::sum(), input);
     }
 
     template <typename I, typename S>
@@ -78,8 +78,8 @@ namespace mln
     void sum(const Image<I>& input, S& result)
     {
       mln_precondition(exact(input).has_data());
-      typedef accu::sum_<mln_value(I), S> A;
-      result = level::compute(input, A());
+      accu::sum_<mln_value(I), S> a;
+      result = level::compute(a, input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

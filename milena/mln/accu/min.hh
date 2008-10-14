@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,20 +74,22 @@ namespace mln
     template <typename I> struct min_< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for min.
-     */
-    struct min : public Meta_Accumulator< min >
+
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for min.
+      
+      struct min : public Meta_Accumulator< min >
       {
-	typedef min_<T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef min_<T> ret;
+	};
       };
-    };
 
-
-
+    } // end of namespace mln::accu::meta
 
 
 

@@ -1,3 +1,30 @@
+2008-10-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move some meta-acc into meta:: and revamp level take'n compute.
+
+	* mln/level/take.spe.hh,
+	* mln/level/take.hh: Merge both files into as...
+	* mln/level/update.hh: ...this single new one.
+	Update.
+	* tests/level/take.cc: Rename as...
+	* tests/level/update.cc: ...this.
+	* tests/level/Makefile.am: Update.
+	* mln/level/compute.hh: Change sig.
+	* mln/accu/min.hh,
+	* mln/accu/max.hh,
+	* mln/accu/min_max.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/mean.hh: Move meta-accumulator into the meta::
+	namespace.
+	* mln/estim/sum.hh,
+	* mln/estim/min_max.hh,
+	* mln/estim/mean.hh,
+	* tests/level/compute_full.cc,
+	* tests/level/compute.cc: Update.
+	* tests/estim/min_max.cc: New.
+	* tests/estim/Makefile.am: Update.
+
 2008-10-13  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update registration.

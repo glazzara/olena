@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/estim/min_max.hh
  *
  * \brief Compute the min and max pixel values of an image.
+ *
+ * \todo Overload while returning an std::pair.
  */
 
 # include <mln/accu/min_max.hh>
@@ -62,8 +64,8 @@ namespace mln
 		 mln_value(I)& min, mln_value(I)& max)
     {
       mln_precondition(exact(input).has_data());
-      typedef accu::min_max_<mln_value(I)> A;
-      mln_result(A) mm = level::compute<A>(input);
+      typedef mln_value(I) V;
+      std::pair<V, V> mm = level::compute(accu::meta::min_max(), input);
       min = mm.first;
       max = mm.second;
     }

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/take.cc
+/*! \file tests/estim/min_max.cc
  *
- * \brief Tests on mln::level::take.
+ * \brief Tests on mln::estim::min_max.
  */
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/take.hh>
-#include <mln/level/compare.hh>
+#include <mln/estim/min_max.hh>
 #include <mln/debug/iota.hh>
 #include <mln/accu/min.hh>
 #include <mln/accu/max.hh>
@@ -44,14 +43,10 @@ int main()
 
   const unsigned size = 200;
   image2d<int> ima(size, size);
-  accu::min_<int> acu_min;
-  accu::max_<int> acu_max;
-
   debug::iota(ima);
-  level::take(ima, acu_min);
-  level::take(ima, acu_max);
 
-  mln_assertion(acu_min.to_result() == 1);
-  mln_assertion(acu_max.to_result() == 40000);
-
+  int m, M;
+  estim::min_max(ima, m, M);
+  mln_assertion(m == 1);
+  mln_assertion(M == 40000);
 }

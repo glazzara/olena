@@ -84,20 +84,24 @@ namespace mln
       A2 a2_;
     };
 
-    /*!
-     * \brief Meta accumulator for pair.
-     */
-    template <typename A1, typename A2>
-    struct pair : public Meta_Accumulator< pair<A1,A2> >
+
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for pair.
+      template <typename A1, typename A2>
+      struct pair : public Meta_Accumulator< pair<A1,A2> >
       {
-	typedef mln_accu_with(A1, T) A1_T;
-	typedef mln_accu_with(A2, T) A2_T;
-	typedef pair_<A1_T, A2_T, T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef mln_accu_with(A1, T) A1_T;
+	  typedef mln_accu_with(A2, T) A2_T;
+	  typedef pair_<A1_T, A2_T, T> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY

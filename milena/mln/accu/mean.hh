@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -83,19 +83,22 @@ namespace mln
     struct mean_< util::pix<I>, S,M >;
 
 
-    /*!
-     * \brief Meta accumulator for mean.
-     */
-    struct mean : public Meta_Accumulator< mean >
+    namespace meta
     {
-      template < typename T,
-		 typename S = mln_sum(T),
-		 typename M = S >
-      struct with
+
+      /// Meta accumulator for mean.
+      struct mean : public Meta_Accumulator< mean >
       {
-	typedef mean_<T,S,M> ret;
+	template < typename T,
+		   typename S = mln_sum(T),
+		   typename M = S >
+	struct with
+	{
+	  typedef mean_<T,S,M> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY

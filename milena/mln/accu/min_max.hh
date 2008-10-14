@@ -63,8 +63,13 @@ namespace mln
     template <typename I> struct min_max_< util::pix<I> >;
 
 
-    // FIXME: Doc!
-    typedef pair<min,max> min_max;
+    namespace meta
+    {
+
+      // FIXME: Doc!
+      typedef pair<min,max> min_max;
+
+    } // end of namespace mln::accu::meta
 
 
   } // end of namespace mln::accu
