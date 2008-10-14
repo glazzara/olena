@@ -30,12 +30,12 @@
 
 /*! \file mln/labeling/compute.hh
  *
- * \brief Compute an accumulator onto image pixel values.
+ * \brief Compute accumulators onto sites/values of each labeled component
+ * of an image.
  */
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/util/array.hh>
-
 
 
 namespace mln
@@ -57,7 +57,7 @@ namespace mln
      * It fully relies on labeling::update.
      */
     template <typename A, typename I, typename J>
-    p_array<mln_result(A)>
+    p_array<mlc_unqualif(mln_result(A))>
     compute(const Accumulator<A>& a,
 	    const Image<I>& input,
 	    const Image<J>& label, mln_value(J) nlabels);
@@ -75,12 +75,12 @@ namespace mln
      * It fully relies on labeling::update.
      */
     template <typename A, typename I, typename J>
-    p_array<mln_accu_with(A, mln_value(I))::result>
+    p_array<mlc_unqualif(mln_accu_with(A, mln_value(I))::result)>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
 	    const Image<J>& label, mln_value(J) nlabels);
 
-    /*! Compute an accumulator onto the sites of each component domain of
+    /*! Compute an accumulator onto the pixel sites of each component domain of
      * \p label.
      *
      * \param[in] a An accumulator.
@@ -92,11 +92,11 @@ namespace mln
      * It fully relies on labeling::update.
      */
     template <typename A, typename J>
-    p_array<mln_result(A)>
+    p_array<mlc_unqualif(mln_result(A))>
     compute(const Accumulator<A>& a,
 	    const Image<J>& label, mln_value(J) nlabels);
 
-    /*! Compute an accumulator onto the sites of each component domain of
+    /*! Compute an accumulator onto the pixel sites of each component domain of
      * \p label.
      *
      * \param[in] a A meta-accumulator.
@@ -108,7 +108,7 @@ namespace mln
      * It fully relies on labeling::update.
      */
     template <typename A, typename J>
-    p_array<mln_accu_with(A, mln_psite(J))::result>
+    p_array<mlc_unqualif(mln_accu_with(A, mln_psite(J))::result)>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<J>& label, mln_value(J) nlabels);
 
@@ -121,7 +121,7 @@ namespace mln
 
     template <typename A, typename I, typename J>
     inline
-    p_array<mln_result(A)>
+    p_array<mlc_unqualif(mln_result(A))>
     compute(const Accumulator<A>&,
 	    const Image<I>& input_,
 	    const Image<J>& label_, mln_value(J) nlabels)
@@ -132,12 +132,17 @@ namespace mln
       const J& label = exact(label_);
 
       util::array<A> accus;
-      for (mln_value(J) i = 0; i <= nlabels; ++i)
+      for (mln_value(J) i = 0; i < nlabels; ++i)
 	accus.append(A());
 
       mln_piter(I) p(input.domain());
+      mln_value(J) l;
       for_all(p)
-	accus[label(p)].take(input(p));
+      {
+	l = label(p) - 1;
+	if (l >= 0)
+	  accus[l].take(input(p));
+      }
 
       p_array<mln_result(A)> results;
       for (unsigned i = 0; i < accus.nelements(); ++i)
@@ -149,7 +154,7 @@ namespace mln
 
     template <typename A, typename I, typename J>
     inline
-    p_array<mln_accu_with(A, mln_value(I))::result>
+    p_array<mlc_unqualif(mln_accu_with(A, mln_value(I))::result)>
     compute(const Meta_Accumulator<A>&,
 	    const Image<I>& input,
 	    const Image<J>& label, mln_value(J) nlabels)
@@ -161,7 +166,7 @@ namespace mln
 
     template <typename A, typename J>
     inline
-    p_array<mln_result(A)>
+    p_array<mlc_unqualif(mln_result(A))>
     compute(const Accumulator<A>& a,
 	    const Image<J>& label_, mln_value(J) nlabels)
     {
@@ -170,14 +175,19 @@ namespace mln
       const J& label = exact(label_);
 
       util::array<A> accus;
-      for (mln_value(J) i = 0; i <= nlabels; ++i)
+      for (mln_value(J) i = 0; i < nlabels; ++i)
 	accus.append(exact(a));
 
       mln_piter(J) p(label.domain());
+      mln_value(J) l;
       for_all(p)
-	accus[label(p)].take(p);
+      {
+	l = label(p) - 1;
+	if (l >= 0)
+	  accus[l].take(p);
+      }
 
-      p_array<mln_result(A)> results;
+      p_array<mlc_unqualif(mln_result(A))> results;
       for (unsigned i = 0; i < accus.nelements(); ++i)
 	results.append(accus[i]);
 
@@ -188,7 +198,7 @@ namespace mln
 
     template <typename A, typename J>
     inline
-    p_array<mln_accu_with(A, mln_psite(J))::result>
+    p_array<mlc_unqualif(mln_accu_with(A, mln_psite(J))::result)>
     compute(const Meta_Accumulator<A>&,
 	    const Image<J>& label, mln_value(J) nlabels)
     {

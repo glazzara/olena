@@ -1,5 +1,13 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix labeling::compute return type.
+	* milena/mln/labeling/compute.hh: Fix many compilation errors
+	while taking directly the result type of an accumulator as a template
+	parameter for p_array<>.
+	Use mlc_unqualif.
+
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add meta-accumulator for accu::bbox.
 	* milena/mln/accu/bbox.hh: add missing meta-accumulator.
 
