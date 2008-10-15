@@ -46,7 +46,7 @@ int main()
 {
   using namespace mln;
 
-  typedef accu::tuple_<int, 4, accu::count_<int>, accu::max_<int>, accu::min_<int>, accu::mean_<int> > teratuple;
+  typedef accu::tuple_<int, 4, accu::count_<int>, accu::max<int>, accu::min<int>, accu::mean_<int> > teratuple;
 
   teratuple tuple1;  
   teratuple tuple2;

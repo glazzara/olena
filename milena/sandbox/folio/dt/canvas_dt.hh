@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -97,7 +97,7 @@ namespace mln
       initialize(distance, f.input);
 
       // Mod determination.
-      mln::accu::max_<unsigned> accu;
+      mln::accu::max<unsigned> accu;
       mln_fwd_piter(I) p(f.input.domain());
       mln_qiter(N) n(f.nbh, p);
       for_all(n)

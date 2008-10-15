@@ -51,18 +51,18 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct max_ : public mln::accu::internal::base< const T& , max_<T> >
+    struct max : public mln::accu::internal::base< const T& , max<T> >
     {
       typedef T argument;
 
-      max_();
+      max();
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const max_<T>& other);
+      void take(const max<T>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -78,7 +78,7 @@ namespace mln
     };
 
 
-    template <typename I> struct max_< util::pix<I> >;
+    template <typename I> struct max< util::pix<I> >;
 
 
     namespace meta
@@ -91,18 +91,19 @@ namespace mln
 	template <typename T>
 	struct with
 	{
-	  typedef max_<T> ret;
+	  typedef accu::max<T> ret;
 	};
       };
 
     } // end of namespace mln::accu::meta
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     inline
-    max_<T>::max_()
+    max<T>::max()
     {
       init();
     }
@@ -110,7 +111,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::init()
+    max<T>::init()
     {
       t_ = mln_min(T);
     }
@@ -118,7 +119,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take_as_init(const argument& t)
+    max<T>::take_as_init(const argument& t)
     {
       t_ = t;
     }
@@ -126,7 +127,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take(const argument& t)
+    max<T>::take(const argument& t)
     {
       if (t > t_)
 	t_ = t;
@@ -135,7 +136,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take(const max_<T>& other)
+    max<T>::take(const max<T>& other)
     {
       if (other.t_ > t_)
 	t_ = other.t_;
@@ -144,7 +145,7 @@ namespace mln
     template <typename T>
     inline
     const T&
-    max_<T>::to_result() const
+    max<T>::to_result() const
     {
       return t_;
     }
@@ -152,7 +153,7 @@ namespace mln
     template <typename T>
     inline
     bool
-    max_<T>::is_valid() const
+    max<T>::is_valid() const
     {
       return true;
     }

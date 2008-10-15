@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,19 +51,21 @@ int main()
   {
     mln_accu_with_(accu::meta::min_max, int) accu;
 
-    accu.take(10);
-    accu.take(9);
-    accu.take(8);
-    accu.take(7);
-    accu.take(6);
-    accu.take(5);
-    accu.take(4);
-    accu.take(3);
     accu.take(2);
     accu.take(1);
     accu.take(0);
 
-    mln_assertion(accu.to_result().first == 0);
-    mln_assertion(accu.to_result().second == 10);
+    accu.take(6);
+    accu.take(5);
+    accu.take(4);
+    accu.take(3);
+
+    accu.take(10);
+    accu.take(9);
+    accu.take(8);
+    accu.take(7);
+
+    mln_assertion(accu.first()  ==  0);
+    mln_assertion(accu.second() == 10);
   }
 }

@@ -45,11 +45,11 @@ int main()
   image2d<int> ima(size, size);
   debug::iota(ima);
 
-  accu::min_<int> m;
+  accu::min<int> m;
   int min = level::compute(m, ima);
   mln_assertion(min == 1);
 
-  accu::max_<int> M;
+  accu::max<int> M;
   int max = level::compute(M, ima);
   mln_assertion(max == 40000);
 }

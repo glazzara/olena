@@ -56,28 +56,28 @@ namespace mln
      * \todo Check that, when T is not provided, A1 and A2 have the same value.
      */
     template <typename A1, typename A2, typename T = mln_argument(A1)>
-    struct pair_ : public mln::accu::internal::base< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,T> >
+    struct pair : public mln::accu::internal::base< std::pair<mln_result(A1), mln_result(A2)>,
+						    pair<A1,A2,T> >
     {
       typedef T argument;
 
-      typedef mlc_unqualif(mln_result(A1))  result_1;
-      typedef mlc_unqualif(mln_result(A2))  result_2;
-      typedef std::pair<result_1, result_2> result;
+      typedef mln_result(A1) result_1;
+      typedef mln_result(A2) result_2;
 
-      pair_();
-      pair_(const A1& a1, const A2& a2);
+      pair();
+      pair(const A1& a1, const A2& a2);
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const pair_<A1,A2,T>& other);
+      void take(const pair<A1,A2,T>& other);
       /// \}
 
       /// Get the value of the accumulator.
       /// \{
-      result to_result() const;
+      std::pair<mln_result(A1), mln_result(A2)> to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
       /// \}
 
@@ -107,7 +107,7 @@ namespace mln
 	{
 	  typedef mln_accu_with(A1, T) A1_T;
 	  typedef mln_accu_with(A2, T) A2_T;
-	  typedef pair_<A1_T, A2_T, T> ret;
+	  typedef accu::pair<A1_T, A2_T, T> ret;
 	};
       };
 
@@ -118,7 +118,7 @@ namespace mln
 
     template <typename A1, typename A2, typename T>
     inline
-    pair_<A1,A2,T>::pair_()
+    pair<A1,A2,T>::pair()
     {
       init();
     }
@@ -126,7 +126,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::init()
+    pair<A1,A2,T>::init()
     {
       a1_.init();
       a2_.init();
@@ -135,7 +135,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take_as_init(const argument& t)
+    pair<A1,A2,T>::take_as_init(const argument& t)
     {
       a1_.take_as_init(t);
       a2_.take_as_init(t);
@@ -144,7 +144,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take(const argument& t)
+    pair<A1,A2,T>::take(const argument& t)
     {
       a1_.take(t);
       a2_.take(t);
@@ -153,7 +153,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take(const pair_<A1,A2,T>& other)
+    pair<A1,A2,T>::take(const pair<A1,A2,T>& other)
     {
       a1_.take(other.a1_);
       a2_.take(other.a2_);
@@ -161,17 +161,17 @@ namespace mln
 
     template <typename A1, typename A2, typename T>
     inline
-    typename pair_<A1,A2,T>::result
-    pair_<A1,A2,T>::to_result() const
+    std::pair<mln_result(A1), mln_result(A2)>
+    pair<A1,A2,T>::to_result() const
     {
-      result tmp(a1_.to_result(), a2_.to_result());
+      std::pair<mln_result(A1), mln_result(A2)> tmp(a1_.to_result(), a2_.to_result());
       return tmp;
     }
 
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::get_result(result_1& r1,
+    pair<A1,A2,T>::get_result(result_1& r1,
 			       result_2& r2) const
     {
       r1 = a1_.to_result();
@@ -181,7 +181,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     mln_result(A1)
-    pair_<A1,A2,T>::first() const
+    pair<A1,A2,T>::first() const
     {
       return a1_.to_result();
     }
@@ -189,7 +189,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     mln_result(A2)
-    pair_<A1,A2,T>::second() const
+    pair<A1,A2,T>::second() const
     {
       return a2_.to_result();
     }
@@ -197,7 +197,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     bool
-    pair_<A1,A2,T>::is_valid() const
+    pair<A1,A2,T>::is_valid() const
     {
       return a1_.is_valid() && a2_.is_valid();
     }

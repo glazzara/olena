@@ -111,7 +111,7 @@ namespace mln
 	mln_pixter(const I) p(input);
 	mln_pixter(O) o(output);
 	mln_qixter(const I, W) q(p, win);
-	accu::min_<mln_value(I)> min;
+	accu::min<mln_value(I)> min;
 	for_all_2(p, o)
 	{
 	  min.init();

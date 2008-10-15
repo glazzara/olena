@@ -113,8 +113,8 @@ namespace mln
 
 
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
       I min = level::compute(acu_min, ima);
       I max = level::compute(acu_max, ima);
@@ -125,8 +125,8 @@ namespace mln
     {
       sub_image<image1d<I>, box1d> sub_ima (ima, b1);
 
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
       I min = level::compute(acu_min, sub_ima);
       I max = level::compute(acu_max, sub_ima);
@@ -138,8 +138,8 @@ namespace mln
       f_box1d_t f_b(b1);
       image_if<image1d<I>, f_box1d_t> if_ima(ima, f_b);
 
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
       I min = level::compute(acu_min, if_ima);
       I max = level::compute(acu_max, if_ima);
@@ -173,8 +173,8 @@ namespace mln
       }
 
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
       I min = level::compute(acu_min, ima);
       I max = level::compute(acu_max, ima);
@@ -204,8 +204,8 @@ namespace mln
     else
       real_max = (I)(slis * rows * cols);
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
       I min = level::compute(acu_min, ima);
       I max = level::compute(acu_max, ima);

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -55,12 +55,12 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct min_max_ : public pair_< min_<V>, max_<V> >
+    struct min_max : public pair< min<V>, max<V> >
     {
     };
 
 
-    template <typename I> struct min_max_< util::pix<I> >;
+    template <typename I> struct min_max< util::pix<I> >;
 
 
     namespace meta

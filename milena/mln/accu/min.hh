@@ -51,18 +51,18 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct min_ : public mln::accu::internal::base< const T&, min_<T> >
+    struct min : public mln::accu::internal::base< const T&, min<T> >
     {
       typedef T argument;
 
-      min_();
+      min();
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const min_<T>& other);
+      void take(const min<T>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -78,7 +78,7 @@ namespace mln
     };
 
 
-    template <typename I> struct min_< util::pix<I> >;
+    template <typename I> struct min< util::pix<I> >;
 
 
 
@@ -92,7 +92,7 @@ namespace mln
 	template <typename T>
 	struct with
 	{
-	  typedef min_<T> ret;
+	  typedef accu::min<T> ret;
 	};
       };
 
@@ -104,7 +104,7 @@ namespace mln
 
     template <typename T>
     inline
-    min_<T>::min_()
+    min<T>::min()
     {
       init();
     }
@@ -112,21 +112,21 @@ namespace mln
     template <typename T>
     inline
     void
-    min_<T>::init()
+    min<T>::init()
     {
       t_ = mln_max(T);
     }
 
     template <typename T>
     inline
-    void min_<T>::take_as_init(const argument& t)
+    void min<T>::take_as_init(const argument& t)
     {
       t_ = t;
     }
 
     template <typename T>
     inline
-    void min_<T>::take(const argument& t)
+    void min<T>::take(const argument& t)
     {
       if (t < t_)
 	t_ = t;
@@ -135,7 +135,7 @@ namespace mln
     template <typename T>
     inline
     void
-    min_<T>::take(const min_<T>& other)
+    min<T>::take(const min<T>& other)
     {
       if (other.t_ < t_)
 	t_ = other.t_;
@@ -144,7 +144,7 @@ namespace mln
     template <typename T>
     inline
     const T&
-    min_<T>::to_result() const
+    min<T>::to_result() const
     {
       return t_;
     }
@@ -152,7 +152,7 @@ namespace mln
     template <typename T>
     inline
     bool
-    min_<T>::is_valid() const
+    min<T>::is_valid() const
     {
       return true;
     }

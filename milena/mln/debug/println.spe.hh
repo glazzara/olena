@@ -82,7 +82,7 @@ namespace mln
       void
       println(const box2d& b, const I& input)
       {
-	accu::max_<unsigned> len_;
+	accu::max<unsigned> len_;
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  {

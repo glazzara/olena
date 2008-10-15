@@ -97,7 +97,7 @@ namespace mln
 	// FIXME: border::adjust(input, win.delta());
 	extension::fill(input, mln_min(mln_value(I)));
 
-	accu::max_<mln_value(I)> max;
+	accu::max<mln_value(I)> max;
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);

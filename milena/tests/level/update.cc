@@ -44,8 +44,8 @@ int main()
 
   const unsigned size = 200;
   image2d<int> ima(size, size);
-  accu::min_<int> m;
-  accu::max_<int> M;
+  accu::min<int> m;
+  accu::max<int> M;
 
   debug::iota(ima);
   level::update(m, ima);

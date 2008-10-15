@@ -78,7 +78,7 @@ namespace mln
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  accu::min_<mln_value(I)> min;
+	  accu::min<mln_value(I)> min;
 
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);

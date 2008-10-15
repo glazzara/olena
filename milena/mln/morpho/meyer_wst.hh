@@ -49,6 +49,10 @@
 # include <mln/literal/zero.hh>
 # include <mln/labeling/regional_minima.hh>
 
+# include <mln/core/site_set/p_queue_fast.hh>
+# include <mln/core/site_set/p_priority.hh>
+
+
 
 namespace mln
 {
@@ -115,6 +119,9 @@ namespace mln
       typedef L marker;
       const marker unmarked = literal::zero;
 
+      typedef mln_value(I) V;
+      const V max = mln_max(V);
+
       // Initialize the output with the markers (minima components).
       mln_ch_value(I, marker) output =
 	labeling::regional_minima (input, nbh, nbasins);
@@ -122,13 +129,8 @@ namespace mln
       typedef mln_psite(I) psite;
 
       // Ordered queue.
-      /* FIXME: Milena probably already provides an ordered queue
-	 facility via the mln::p_priority class.  Try to use it
-	 instead, and get rid of mln/util/greater_psite.hh.  */
-      typedef
-	std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >
-	ordered_queue_type;
-      ordered_queue_type queue(util::make_greater_psite(input));
+      typedef p_queue_fast<psite> Q;
+      p_priority<mln_value(I), Q> queue;
 
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
@@ -140,16 +142,16 @@ namespace mln
 	  for_all(n)
 	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
-		queue.push(p);
+		queue.push(max - input(p), p);
 		break;
 	      }
 
       /* Until the queue is empty, extract a psite P from the
          hierarchical queue, at the highest priority level, that is,
          the lowest level.  */
-      while (!queue.empty())
+      while (! queue.is_empty())
 	{
-	  psite p = queue.top();
+	  psite p = queue.front();
 	  queue.pop();
 	  // Last seen marker adjacent to P.
 	  marker adjacent_marker = unmarked;
@@ -180,7 +182,7 @@ namespace mln
 	      output(p) = adjacent_marker;
 	      for_all(n)
 		if (output.domain().has(n) && output(n) == unmarked)
-		  queue.push(n);
+		  queue.push(max - input(n), n);
 	    }
 	}
       return output;

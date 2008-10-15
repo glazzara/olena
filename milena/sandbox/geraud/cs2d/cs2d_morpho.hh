@@ -45,7 +45,7 @@ namespace mln
       mln_concrete(I) output;
       initialize(output, input);
 
-      accu::min_max_<mln_value(I)> m;
+      accu::min_max<mln_value(I)> m;
 	
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);

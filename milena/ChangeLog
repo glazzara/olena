@@ -1,3 +1,34 @@
+2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Remove the useless '_' postfix in some accumulators.
+
+	* mln/core/site_set/p_priority.hh (front): Fix.
+	* mln/accu/min.hh (min_): Rename as...
+	(min): ...this.
+	* mln/accu/max.hh (max_): Rename as...
+	(max): ...this.
+	* mln/accu/min_max.hh (min_max_): Rename as...
+	(min_max): ...this.
+	* mln/accu/pair.hh (pair_): Rename as...
+	(pair): ...this.
+	* mln/morpho/dilation_elementary.hh,
+	* mln/morpho/erosion.spe.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/meyer_wst.hh,
+	* sandbox/geraud/cs2d/cs2d_morpho.hh,
+	* sandbox/folio/dt/canvas_dt.hh,
+	* tests/level/compute_full.cc,
+	* tests/level/compute.cc,
+	* tests/level/update.cc,
+	* tests/accu/pair.cc,
+	* tests/accu/min.cc,
+	* tests/accu/max.cc,
+	* tests/accu/min_max.cc,
+	* tests/accu/tuple.cc,
+	* doc/examples/tuto_bis.cc,
+	* mln/debug/println.spe.hh: Update.
+
 2008-10-15  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix a bug in the fill_with_value dispatch.

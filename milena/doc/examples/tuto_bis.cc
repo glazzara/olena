@@ -342,11 +342,11 @@ int main()
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 
 
-  level::fill(cell, level::transform(lab, m));
-  debug::println(cell);
-  // 2   2   2 
-  //
-  // 5   5   5 
+//   level::fill(cell, level::transform(lab, m));
+//   debug::println(cell);
+//   // 2   2   2 
+//   //
+//   // 5   5   5 
 
 
   // DONE!

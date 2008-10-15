@@ -275,7 +275,7 @@ namespace mln
   p_priority<P,Q>::front() const
   {
     mln_precondition(! this->is_empty()); // Also test invariants.
-    std::map<P,Q>& q__ = const_cast< std::map<P,Q>& >(q_);
+    q_type_& q__ = const_cast< q_type_& >(q_);
     return q__[highest_priority()].front();
   }
 

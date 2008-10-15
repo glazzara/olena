@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
 
   {
-    accu::pair_<accu::mean_<int>, accu::max_<int> > mean;
+    accu::pair<accu::mean_<int>, accu::max<int> > mean;
 
     mean.take(10);
     mean.take(9);
