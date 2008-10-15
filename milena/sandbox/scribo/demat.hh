@@ -73,17 +73,16 @@ namespace scribo
 
       typedef image2d<int_u8> I;
       typedef mln_accu_with_(accu::meta::bbox, mln_psite_(I)) A;
-      typedef p_array<mlc_unqualif_(A::result)> boxes_t;
+      typedef util::array<A::result> boxes_t;
 
       int_u8 nlabels;
       I lbl = labeling::blobs(filter, c4(), nlabels);
 
       boxes_t boxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
-      mln_piter_(boxes_t) p(boxes);
 
-      for_all(p)
+      for (unsigned i = 1; i <= nlabels; ++i)
 	level::paste(pw::cst(false)
-	    | p.to_site().to_larger(bbox_larger),
+	    | boxes[i].to_larger(bbox_larger),
 	    ima);
     }
 

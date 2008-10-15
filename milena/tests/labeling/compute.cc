@@ -37,6 +37,7 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/sum.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/util/array.hh>
 
 int main()
 {
@@ -55,7 +56,7 @@ int main()
   int_u8 nlabels = 3;
 
   accu::sum<int_u8> sum;
-  p_array<float> sums = labeling::compute(sum, ima, ima, nlabels);
+  util::array<float> sums = labeling::compute(sum, ima, ima, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
   mln_assertion(sums[2] == 8);
@@ -68,7 +69,7 @@ int main()
   mln_assertion(sums[3] == 12);
 
   accu::count<mln_site_(image2d<int_u8>)> count;
-  p_array<unsigned int> counts = labeling::compute(count, ima, nlabels);
+  util::array<unsigned int> counts = labeling::compute(count, ima, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);
   mln_assertion(counts[2] == 4);

@@ -1,5 +1,15 @@
 2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update the prototype of labeling::compute().
+	* milena/mln/labeling/compute.hh: change the return type to an
+	util::array.
+
+	* milena/sandbox/scribo/demat.hh,
+	* milena/tests/labeling/compute.cc: update according the new
+	prototype.
+
+2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove the useless '_' postfix in all the accumulators.
 	* milena/doc/examples/tuto_bis.cc,
 	* milena/doc/tutorial/examples/accu.cc,
