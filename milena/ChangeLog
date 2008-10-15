@@ -1,3 +1,10 @@
+2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix convert::to_image(histo::data<T>).
+
+	* mln/convert/to_image.hh: Replace suspicous use of size_t by T.
+	Now return an image1d<T> instead of image1d<std::size_t>
+
 2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Remove the useless '_' postfix in some accumulators.
