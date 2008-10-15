@@ -1,5 +1,11 @@
 2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Fix my previous patch (convert::to_image).
+
+	* mln/convert/to_image.hh: Fix proto also.
+
+2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Fix convert::to_image(histo::data<T>).
 
 	* mln/convert/to_image.hh: Replace suspicous use of size_t by T.
