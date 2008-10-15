@@ -33,9 +33,14 @@
 #include <cmath>
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/flat_image.hh>
+#include <mln/core/image/image_if.hh>
+
 #include <mln/level/transform.hh>
 #include <mln/debug/iota.hh>
+#include <mln/core/var.hh>
 
+#include <mln/fun/p2b/chess.hh>
 
 struct mysqrt : mln::Function_v2v<mysqrt>
 {
@@ -51,24 +56,68 @@ struct mysqrt : mln::Function_v2v<mysqrt>
 int main()
 {
   using namespace mln;
-
   const unsigned size = 1000;
-  image2d<unsigned short>
-    ima(size, size);
-  image2d<unsigned short>
-    out(size, size);
 
-  (std::cout << "iota... ").flush();
-  debug::iota(ima);
-  std::cout << "done" << std::endl;
+  {
+    image2d<unsigned short> ima(size, size);
+    image2d<unsigned short> out(size, size);
 
-  (std::cout << "transform... ").flush();
-  level::transform(ima, mysqrt(), out);
-  std::cout << "done" << std::endl;
+    (std::cout << "iota... ").flush();
+    debug::iota(ima);
+    std::cout << "done" << std::endl;
 
-  (std::cout << "checking... ").flush();
-  box_fwd_piter_<point2d> p(out.domain());
-  for_all(p)
-    mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
-  std::cout << "done" << std::endl;
+    (std::cout << "transform... ").flush();
+    level::transform(ima, mysqrt(), out);
+    std::cout << "done" << std::endl;
+
+    (std::cout << "checking... ").flush();
+    box_fwd_piter_<point2d> p(out.domain());
+    for_all(p)
+        mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+    std::cout << "done" << std::endl;
+  }
+
+  {
+    flat_image<short, box2d> ima(5, make::box2d(size, size));
+    image2d<unsigned short> out(size, size);
+
+    (std::cout << "fill... ").flush();
+    level::fill_with_value(ima, 51);
+    std::cout << "done" << std::endl;
+
+    (std::cout << "transform... ").flush();
+    level::transform(ima, mysqrt(), out);
+    std::cout << "done" << std::endl;
+
+    (std::cout << "checking... ").flush();
+    box2d::piter p(out.domain());
+    for_all(p)
+      mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+    std::cout << "done" << std::endl;
+  }
+
+  {
+    typedef image2d<unsigned short> I;
+    typedef image_if<I, fun::p2b::chess_t> II;
+
+    I ima(size, size);
+    I out(size, size);
+    II ima_if = ima | fun::p2b::chess;
+
+    level::fill_with_value(ima, 0);
+    (std::cout << "iota... ").flush();
+    debug::iota(ima);
+    std::cout << "done" << std::endl;;
+
+    (std::cout << "transform... ").flush();
+    level::transform(ima_if, mysqrt(), out);
+    std::cout << "done" << std::endl;
+
+    (std::cout << "checking... ").flush();
+    II::piter p(ima_if.domain());
+    for_all(p)
+      mln_assertion((unsigned short)std::sqrt(ima_if(p)) == out(p));
+    std::cout << "done" << std::endl;
+  }
+
 }

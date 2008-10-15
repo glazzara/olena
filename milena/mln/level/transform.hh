@@ -76,22 +76,60 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
+      template <typename I, typename F, typename O>
+      inline
+      void transform_tests(const Image<I>& input,
+                           const Function_v2v<F>& f,
+                           Image<O>& output)
+      {
+	// Avoid a warning about an undefined variable when NDEBUG
+	// is not defined.
+	(void) input;
+        (void) f;
+        (void) output;
+
+        // Properties check
+        mln_precondition((mlc_is(mln_trait_image_pw_io(O),
+                            trait::image::pw_io::read_write)::value ||
+                     mlc_is(mln_trait_image_vw_io(O),
+                            trait::image::vw_io::read_write)::value));
+
+        // FIXME Convert test
+	mlc_converts_to(mln_result(F), mln_value(O))::check();
+
+
+        // Dynamic tests
+	mln_precondition(exact(input).has_data());
+        mln_precondition(exact(output).domain() >= exact(input).domain());
+      }
+    } // end of namespace mln::level::internal
+
+
     namespace impl
     {
+
 
       namespace generic
       {
 
+        // Generic implementation.
 	template <typename I, typename F, typename O>
 	inline
-	void transform_(const Image<I>& input_, const Function_v2v<F>& f_,
+	void transform(const Image<I>& input_, const Function_v2v<F>& f_,
 			Image<O>& output_)
 	{
-	  trace::entering("level::impl::generic::transform");
+          trace::entering("level::impl::generic::transform");
+
 
 	  const I& input  = exact(input_);
 	  const F& f      = exact(f_);
-		O& output = exact(output_);
+          O& output       = exact(output_);
+
+          level::internal::transform_tests(input, f, output);
+          mlc_is(mln_trait_image_pw_io(O),
+                 trait::image::pw_io::read_write)::check();
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
@@ -115,8 +153,8 @@ namespace mln
       trace::entering("level::transform");
 
       mln_precondition(exact(output).domain() >= exact(input).domain());
-      impl::transform_(mln_trait_image_quant(I)(),
-		       exact(input), exact(f), exact(output));
+      impl::internal::transform_dispatch(exact(input), exact(f),
+                                         exact(output));
 
       trace::exiting("level::transform");
     }

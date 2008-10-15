@@ -424,7 +424,8 @@ namespace mln
       {
         struct any { protected: any() {} };
         struct some : any { protected: some() {} };
-        struct none : any { protected: none() {} };
+        struct none
+          : any { std::string name() const { return "vw_set::none";} };
         struct uni
           : some { std::string name() const { return "vw_set::uni";} };
         struct multi

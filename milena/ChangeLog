@@ -1,3 +1,12 @@
+2008-10-15  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update dispatch in the transform algo according to image properties.
+
+	* tests/level/transform.cc: Add tests.
+	* mln/trait/image/props.hh: Fix a mistakes.
+	* mln/level/transform.spe.hh: Add dispatch.
+	* mln/level/transform.hh: Add transform_tests function.
+
 2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Change requirements for accumulators.
