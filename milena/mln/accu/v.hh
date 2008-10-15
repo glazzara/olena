@@ -49,10 +49,9 @@ namespace mln
 
     /// Generic val of accumulators.
     template <typename A>
-    struct val_ : public mln::accu::internal::base< mln_result(A) , val_<A> >
+    struct val_ : public mln::accu::internal::base< const mln_result(A)& , val_<A> >
     {
       typedef mln_argument(A)  argument;
-      typedef mln_result(A) result;
 
       val_();
       val_(const A& a);
@@ -63,22 +62,14 @@ namespace mln
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const val_<A>& other);
+      template <typename I>
+      void take_as_init(const util::pix<I>& pix);
+      template <typename I>
+      void take(const util::pix<I>& pix);
       /// \}
 
-      template <typename I>
-      void take_as_init(const util::pix<I>& pix)
-      {
-	a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
-      }
-
-      template <typename I>
-      void take(const util::pix<I>& pix)
-      {
-	a_.take(pix.v());
-      }
-
       /// Get the value of the accumulator.
-      result to_result() const;
+      const mln_result(A)& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -157,8 +148,26 @@ namespace mln
     }
 
     template <typename A>
+    template <typename I>
     inline
-    typename val_<A>::result
+    void
+    val_<A>::take_as_init(const util::pix<I>& pix)
+    {
+      a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
+    }
+
+    template <typename A>
+    template <typename I>
+    inline
+    void
+    val_<A>::take(const util::pix<I>& pix)
+    {
+      a_.take(pix.v());
+    }
+
+    template <typename A>
+    inline
+    const mln_result(A)&
     val_<A>::to_result() const
     {
       return a_.to_result();

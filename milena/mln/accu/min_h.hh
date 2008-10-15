@@ -50,10 +50,9 @@ namespace mln
      * set with type \c V.
      */
     template <typename V>
-    struct min_h : public mln::accu::internal::base< V , min_h<V> >
+    struct min_h : public mln::accu::internal::base< const V& , min_h<V> >
     {
       typedef V argument;
-      typedef argument result;
 
       min_h();
 
@@ -69,7 +68,7 @@ namespace mln
       unsigned card() const { return h_.sum(); }
 
       /// Get the value of the accumulator.
-      result to_result() const;
+      const argument& to_result() const;
 
       const accu::histo<V>& histo() const;
 
@@ -249,7 +248,7 @@ namespace mln
 
     template <typename V>
     inline
-    typename min_h<V>::argument
+    const typename min_h<V>::argument&
     min_h<V>::to_result() const
     {
       if (! valid_)

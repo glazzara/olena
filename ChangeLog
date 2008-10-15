@@ -1,3 +1,25 @@
+2008-14-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update accus to make them work with the new q_result typedef.
+	* milena/mln/accu/bbox.hh,
+	* milena/mln/accu/histo.hh,
+	* milena/mln/accu/max.hh,
+	* milena/mln/accu/max_h.hh,
+	* milena/mln/accu/mean.hh,
+	* milena/mln/accu/median_alt.hh,
+	* milena/mln/accu/median_h.hh,
+	* milena/mln/accu/min_h.hh,
+	* milena/mln/accu/nil.hh,
+	* milena/mln/accu/p.hh,
+	* milena/mln/accu/rank.hh,
+	* milena/mln/accu/rank_bool.hh,
+	* milena/mln/accu/rank_high_quant.hh,
+	* milena/mln/accu/sum.hh,
+	* milena/mln/accu/tuple.hh,
+	* milena/mln/accu/v.hh:
+	Remove "result" typedef.
+	Pass the qualified type as parameter to internal::base<>.
+
 2008-13-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* milena/sandbox/scribo/remove_tables.cc:

@@ -57,10 +57,9 @@ namespace mln
      * \c S is the summation type (property) of \c T.
      */
     template <typename T, typename S = mln_sum(T)>
-    struct sum_ : public mln::accu::internal::base< S, sum_<T,S> >
+    struct sum_ : public mln::accu::internal::base< const S&, sum_<T,S> >
     {
       typedef T argument;
-      typedef S result;
 
       sum_();
 
@@ -72,7 +71,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      S to_result() const;
+      const S& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -137,7 +136,7 @@ namespace mln
 
     template <typename T, typename S>
     inline
-    S
+    const S&
     sum_<T,S>::to_result() const
     {
       return s_;

@@ -56,7 +56,6 @@ namespace mln
     struct rank_<bool> : public mln::accu::internal::base< bool, rank_<bool> >
     {
       typedef bool argument;
-      typedef bool result;
 
       rank_(unsigned k, unsigned n);
 

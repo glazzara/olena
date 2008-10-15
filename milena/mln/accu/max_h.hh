@@ -49,10 +49,9 @@ namespace mln
      * type \c V.
      */
     template <typename V>
-    struct max_h : public mln::accu::internal::base< V, max_h<V> >
+    struct max_h : public mln::accu::internal::base< const V&, max_h<V> >
     {
       typedef V argument;
-      typedef argument result;
 
       max_h();
 
@@ -68,7 +67,7 @@ namespace mln
       unsigned card() const { return h_.sum(); }
 
       /// Get the value of the accumulator.
-      argument to_result() const;
+      const argument& to_result() const;
 
       const accu::histo<V>& histo() const;
 
@@ -248,7 +247,7 @@ namespace mln
 
     template <typename V>
     inline
-    typename max_h<V>::argument
+    const typename max_h<V>::argument&
     max_h<V>::to_result() const
     {
       if (! valid_)

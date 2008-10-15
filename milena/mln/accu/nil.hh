@@ -54,7 +54,6 @@ namespace mln
     struct nil_ : public mln::accu::internal::base< util::ignore , nil_<T> >
     {
       typedef util::eat    argument;
-      typedef util::ignore result;
 
       nil_();
 

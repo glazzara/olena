@@ -72,11 +72,11 @@ namespace mln
      */
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
     struct tuple_
-      : public mln::accu::internal::base< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) > , tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
+      : public mln::accu::internal::base< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) >, tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
     {
       typedef A argument;
 
-      typedef boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !)> result;
+      typedef boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !)> res;
       typedef boost::tuple< BOOST_PP_ENUM_PARAMS(10, T)> intern;
       typedef tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> self;
 
@@ -91,7 +91,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      result to_result() const;
+      res to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -225,10 +225,10 @@ namespace mln
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
-    typename tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::result
+    typename tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::res
     tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::to_result() const
     {
-      result tmp;
+      res tmp;
       internal::tuple_helper<n, self>::to_result(this->a_, tmp);
       return tmp;
     }

@@ -48,7 +48,7 @@ namespace mln
      * value set with type \c S.
      */
     template <typename S>
-    struct median_alt : public mln::accu::internal::base< mln_value(S), median_alt<S> >
+    struct median_alt : public mln::accu::internal::base< const mln_value(S)&, median_alt<S> >
     {
       typedef mln_value(S) argument;
 
@@ -62,7 +62,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      argument to_result() const;
+      const argument& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -230,7 +230,7 @@ namespace mln
 
     template <typename S>
     inline
-    typename median_alt<S>::argument
+    const typename median_alt<S>::argument&
     median_alt<S>::to_result() const
     {
       return t_;

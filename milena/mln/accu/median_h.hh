@@ -49,10 +49,9 @@ namespace mln
      * set with type \c V.
      */
     template <typename V>
-    struct median_h : public mln::accu::internal::base< V, median_h<V> >
+    struct median_h : public mln::accu::internal::base< const V&, median_h<V> >
     {
       typedef V argument;
-      typedef argument result;
 
       median_h();
 
@@ -67,7 +66,7 @@ namespace mln
       unsigned card() const { return h_.sum(); }
 
       /// Get the value of the accumulator.
-      argument to_result() const;
+      const argument& to_result() const;
 
       const accu::histo<V>& histo() const;
 
@@ -233,7 +232,7 @@ namespace mln
 
     template <typename V>
     inline
-    typename median_h<V>::argument
+    const typename median_h<V>::argument&
     median_h<V>::to_result() const
     {
       if (! valid_)

@@ -61,7 +61,6 @@ namespace mln
     struct mean_ : public mln::accu::internal::base< M , mean_<T,S,M> >
     {
       typedef T argument;
-      typedef M result;
 
       mean_();
 

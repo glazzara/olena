@@ -53,7 +53,6 @@ namespace mln
     struct bbox : public mln::accu::internal::base< const box<P>& , bbox<P> >
     {
       typedef P argument;
-      typedef const box<P>& result;
 
       bbox();
 

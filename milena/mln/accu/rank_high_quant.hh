@@ -52,10 +52,9 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base< T, rank_<T> >
+    struct rank_ : public mln::accu::internal::base< const T&, rank_<T> >
     {
       typedef T argument;
-      typedef T result;
 
       rank_(unsigned k, unsigned n);
 
@@ -69,7 +68,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      T to_result() const;
+      const T& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -154,7 +153,7 @@ namespace mln
 
     template <typename T>
     inline
-    T
+    const T&
     rank_<T>::to_result() const
     {
       const_cast<rank_<T>&>(*this).sort();

@@ -52,11 +52,9 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename A>
-    struct p_ : public mln::accu::internal::base< mln_result(A) , p_<A> >
+    struct p_ : public mln::accu::internal::base< const mln_result(A)& , p_<A> >
     {
       typedef mln_argument(A)  argument;
-      typedef mln_result(A) result;
-
 
       p_();
       p_(const A& a);
@@ -70,7 +68,7 @@ namespace mln
       /// \}
 
       /// Get the value of the accumulator.
-      result to_result() const;
+      const mln_result(A)& to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -146,7 +144,7 @@ namespace mln
 
     template <typename A>
     inline
-    typename p_<A>::result
+    const mln_result(A)&
     p_<A>::to_result() const
     {
       return a_.to_result();

@@ -62,7 +62,6 @@ namespace mln
       histo();
 
       typedef V argument;
-      typedef const std::vector<std::size_t>& result;
 
       /// Manipulators.
       /// \{
