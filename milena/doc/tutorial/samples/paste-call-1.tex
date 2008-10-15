@@ -1,0 +1,10 @@
+image1d<char> imgb(5, 5, 14, 14);
+
+// We initialize the image values.
+level::fill(imgb.rw(), 'b');
+
+// Last we now paste the contents of img3b in img3a...
+level::paste(imgb, imga.rw()));
+
+// ...and print the result.
+debug::println(imga);

@@ -5,6 +5,7 @@
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{html}
+\usepackage{tikz}
 
 \newcommand{\img}[4]{
 \begin{figure}[ht!]
@@ -26,16 +27,10 @@
 \definecolor{cbg}{rgb}{0.95,0.95,0.95}
 
 %%%LISTINGS SETTINGS
+%begin{latexonly}
 \lstset{frameround=fttt}
 \lstloadlanguages{C++}
 \lstset{language=C++}
-
-%\lstset{backgroundcolor=\color{black},
-%basicstyle=\bfseries\color{white},
-%identifierstyle=\color{green},
-%stringstyle=\color{yellow},
-%commentstyle=\color{red},
-%showstringspaces=false,linewidth=14cm}
 
 \lstset{backgroundcolor=\color{cbg},
 basicstyle=\bfseries\color{black},
@@ -43,34 +38,58 @@ identifierstyle=\color{black},
 stringstyle=\color{cstring},
 commentstyle=\color{ccomment},
 showstringspaces=false,linewidth=14cm}
+%end{latexonly}
 
-\newenvironment{doxycode}
-{% This is the begin code
-\begin{latexonly}%
-\begin{lstlisting}[frame=single]%
-\end{latexonly}%
-\begin{htmlonly}%
-\backslash code%
-\end{htmlonly}%
+% #1 : sub page name
+% #2 : sub page title
+\newcommand{\doxychapter}[2]{%
+\backslash endhtmlonly%
+\backslash page #1 #2%
+\backslash htmlonly%
 }
-{%
-\begin{htmlonly}%
-\backslash endcode%
-\end{htmlonly}%
-\begin{latexonly}%
-\end{lstlisting}%
-\end{latexonly}%
+\newcommand{\doxysection}[1]{%
+\backslash endhtmlonly%
+\backslash section Tutorial #1%
+\backslash htmlonly%
+}
+\newcommand{\doxycode}[1]{
+\backslash endhtmlonly%
+\backslash include #1.tex%
+\backslash htmlonly%
 }
 
+%\begin{latexonly}
+\renewcommand{\doxychapter}[2]{\chapter{#2}}
+\renewcommand{\doxysection}[1]{\section{#1}}
+\renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1}}
+%\end{latexonly}
 
 
 
 \begin{document}
 
+\begin{htmlonly}
+\backslash endhtmlonly
+\backslash page tutorial Tutorial
+- \backslash subpage foreword
+- \backslash subpage site
+- \backslash subpage siteset
+- \backslash subpage image
+- \backslash subpage winneigh
+- \backslash subpage sitesandco
+- \backslash subpage iterators
+- \backslash subpage basicops
+- \backslash subpage graphes
+\backslash htmlonly
+\end{htmlonly}
+
+\begin{latexonly}
 \tableofcontents
+\end{latexonly}
 
-\chapter*{Foreword}
+\doxychapter{foreword}{Foreword}
 
+\doxysection{Generality}
 The following tutorial explains the basic concepts behind Olena and how to use 
 the most common objects and routines.
 This tutorial includes many code examples and figures. In order to make this
@@ -104,19 +123,44 @@ Methods provided by objects in the library are in constant time. If you need
 a specific method but you cannot find it, you may find an algorithm which can
 compute the information you need.
 
+\doxysection{Directory hierarchy}
+Olena's tarball is structured as follow:
+
+\begin{itemize}
+  \item milena
+    \begin{itemize}
+%      \item apps :
+      \item doc
+	\begin{itemize}
+	  \item benchmark: set of benchmark.
+	  \item examples: more examples.
+	  \item oldies: partialy not updated documentation. Not recommended for new users.
+	  \item technical: technical doc.
+	  \item tutorial: code sample and tutorial.
+	\end{itemize}
+      \item img: a set of sample images. 
+      \item mesh: a full example which uses Olena.
+      \item mln: the library. Contains only headers.
+      \item tests: test suite.
+%      \item tools : 
+    \end{itemize}
+  \item swilena: Python bindings for Olena.
+\end{itemize}
+
+
 \clearpage
 \newpage
-\chapter{Site}
+\doxychapter{site}{Site}
 
 Usually, when talking about images, we think about common images composed of a
 set of pixels.
 Since Olena is generic, we want to support many kind of images, even images
-which are not composed of a set of pixels, such as images of images.
+which are not composed of a set of pixels, such as images having images as sites.
 
 In order to express this genericity, we have the ``site'' concept.
 This concept allows us to divide a pixel into two information:
 \begin{itemize}
-  \item The coordinates (the site itself).
+  \item The pixel location, e.g. its coordinates (the site itself).
   \item The value.
 \end{itemize}
 
@@ -126,7 +170,24 @@ Let's say we have 2D grid like this:
 [dessin de grille 2d, colonnes/lignes numerotees + repere x/y]
 Intersection == point 2d == milieu d'un pixel \\
 
-On a regular grid like this, in 2D, we usually use a 2D point as a site which
+%FIXME: Find a way to get that figure in HTML output.
+\begin{latexonly}
+\begin{tikzpicture}[scale=2]
+
+\draw[blue!20, thick] (-2, -2) grid [right=0.5cm,above=0.5cm,step=1cm] (3, 3);
+\draw[line width=1mm] (-1, -1) grid [step=1cm] (3, 3);
+\draw[black,line width=2mm,->] (0, -2) node {y} -- (0, 4);
+\draw[black,line width=2mm,->] (-2, 3) node {x} -- (4, 3);
+
+\foreach \x in {-0.5, 0.5, 1.5, 2.5}
+  \foreach \y in {-0.5, 0.5, 1.5, 2.5}
+    \node at (\x, \y) [fill=blue!30] {};
+
+\draw[black] (2.5, 1.5) -- (4, 2) node {Point2d(2, 2)};
+\end{tikzpicture}
+\end{latexonly}
+
+On such a regular grid, in 2D, we usually use a 2D point as a site which
 means we have the following equivalence:
 
 \begin{center}
@@ -139,7 +200,7 @@ to read its value.
 
 \clearpage
 \newpage
-\chapter{Site set}
+\doxychapter{siteset}{Site set}
 
 Site sets are used:
 \begin{enumerate}
@@ -159,7 +220,7 @@ Site set    & Description \\
 
 p\_array    & site array. \\
 \hline
-p\_box	    & compact domain definde on a regular grid (in 2D, a rectangle). \\
+p\_box	    & compact domain defined on a regular grid (in 2D, a rectangle). \\
 \hline
 p\_if	    & site set verifying a predicate. \\
 \hline
@@ -179,7 +240,9 @@ p\_vertices & set of graph vertices associated to sites.\\
 \hline
 \end{tabular}
 
-\section{Basic interface}
+All site sets are iterable. More detailed explanations are available in section \ref{iterators}.
+
+\doxysection{Basic interface}
 Common basic interface:\\
 
 \begin{tabular}{|l|l|l|l|p{4cm}|}
@@ -193,7 +256,7 @@ bool & has & const P\& p & X &  \\ \hline
 \end{tabular} \\
 
 
-\section{Optional interface}
+\doxysection{Optional interface}
 Site sets may have other methods depending on their type: \\
 
 \begin{tabular}{|l|l|l|l|p{4cm}|}
@@ -209,42 +272,21 @@ The previous methods are available depending on the site set. A box
 will have the bbox() method since it can be retrived in constant time: a box
 is it's own bounding box.
 
-\begin{lstlisting}[frame=single]
-  box2d b(2,3);
-
-  // The bbox can be retrived in constant time.
-  std::cout << b.bbox() << std::endl;
-
-  // nsites can be retrieved in constant time.
-  std::cout << "nsites = " << b.nsites() << std::endl;
-\end{lstlisting}
+\doxycode{box2d-1}
 
 A p\_array does not have this
 method since sites do not have to be adjacent. Maintaining such information, in
 order to keep getting the bbox in constant time, would be time and memory
 consuming. Instead of providing a method directly in p\_array, an algorithm is
 available if this information is needed.
-P\_array and box both have a nsites method since the internal structure allow a
+p\_array and box both have a nsites method since the internal structure allows a
 constant time retrieval.
 
-%\begin{doxycode}
-\begin{lstlisting}[frame=single]
-  p_array<point2d> arr;
-
-  // The bbox is computed thanks to bbox() algorithm.
-  box2d box = geom::bbox(arr);
-  std::cout << box << std::endl;
-
-  // p_array provides nsites(),
-  // it can be retrieved in constant time.
-  std::cout << "nsites = " << arr.nsites() << std::endl;
-\end{lstlisting}
-%\end{doxycode}
-
+\doxycode{box2d-2}
 
 \clearpage
 \newpage
-\chapter{Image}
+\doxychapter{image}{Image}
 
 An image is composed both of:
 \begin{itemize}
@@ -259,7 +301,53 @@ $$
 \item A site set, also called the "domain".
 \end{itemize}
 
-\section{About value, rvalue and lvalue}
+\doxysection{Possible value types}
+
+Every image type must take its type of value as parameter.
+The value type can be one of the builtins one:
+\begin{itemize}
+  \item bool
+  \item char
+  \item unsigned
+  \item int
+  \item short
+  \item long
+  \item float
+  \item double
+\end{itemize}
+
+Other data types are also available:
+
+\begin{tabular}{l|l}
+Value type & underlying data type \\ 
+\hline
+float01\_8 & unsigned long \\
+float01\_16 & unsigned long \\
+float01\_f & float \\
+gl8 & unsigned char \\
+gl16 & unsigned short \\
+glf & float \\
+hsi\_d & double \\
+hsi\_f & float \\
+int\_s8 & char \\
+int\_s16 & short \\
+int\_s32 & int \\
+int\_u8 & unsigned char \\
+int\_u16 & unsigned short \\
+int\_u32 & unsigned int \\
+rgb16 & mln::util::vec$<$unsigned short$>$ \\
+rgb8 & mln::util::vec$<$unsigned char$>$ \\
+\end{tabular} \\
+
+
+All these types are available in mln/value and accessible in the mln::value namespace.
+Most of the time, the name of the header which must be included to use one of these data
+types is actually ``type\_name.hh". For instance, for rgb8 the header will be
+rgb8.hh.
+
+
+
+\subsection{About value, rvalue and lvalue}
 
 Since the values are of a specific type, it exists a set of all the possible
 site values. This set is called "destination" set. It may be iterable and
@@ -290,7 +378,7 @@ With I being image2d$<$int\_u8$>$, we have :
     I::value == int\_u8  but  I::lvalue == int\_u8\&
 \end{center}
 
-\section{Domain}
+\doxysection{Domain}
 The site set contains the sites which compose the image. Sites are based on a
 grid so the image depends on that grid as well. 
 It means that an image 2D can only be defined by sites based on a 2D grid.
@@ -303,17 +391,9 @@ For instance, defining a 2D image with a box2d starting from point (-20, -20)
 The following example shows that the definition domain and the site set are
 exactly equivalent.
 
-\begin{lstlisting}[frame=single]
-  box2d b(-2,3, 3,-5); // Define a box2d from (-2,3) to (3,-5).
-  image2d<int> ima(b); // Define the domain of the image.
+\doxycode{ima2d-1}
 
-  cout << b << std::endl; // Display b
-
-  cout << ima.domain() << std::endl; // Display b too
-\end{lstlisting}
-
-
-\section{Border and extension}
+\doxysection{Border and extension}
 // FIXME: COMPLETELY WRONG!!!
 // FIXME: Tell that the user can disable the border/extension: foo(ima | ima.domain())
 An image has a virtual border which is defined thanks to its domain. The
@@ -325,18 +405,14 @@ image or a site set.
 
 //FIXME ADD FIGURE
 
-\section{Morphed images}
+\doxysection{Morphed images}
 //FIXME: Write it!
 // Pas concrete, light, how to concrete
 
-\section{Sample code}
+\doxysection{Sample code}
 In order to create a 2D image, you have two possibilites:
-\begin{lstlisting}[frame=single]
-  // which builds an empty image;
-  image2d<int> img1a;
-  // which builds an image with 6 sites
-  image2d<int> img1b(box2d(2, 3));
-\end{lstlisting}
+
+\doxycode{ima2d-2}
 
 The empty image has no data and its definition domain is still unset.  We do
 not know yet the number of sites it contains. However, it is really useful to
@@ -347,41 +423,15 @@ image leads to an error at run-time.
 The following example illustrates how to map data to a site throughout the
 image.
 
-\begin{lstlisting}[frame=single]
-  box2d b(2,3);
-  image2d<int> ima(b);
-  point2d p(1, 2);
-
-  // Associate '9' as value for the site/point2d (1,2).
-  // The value is returned by reference and can be changed.
-  ima.at(1,2) = 9;
-  cout << ima(p) << std::endl; // prints 9
-
-  ima(p) = 2; // The value is returned by reference
-              // and can be changed as well.
-  cout << ima(p) << std::endl; // prints 2
-\end{lstlisting}
-
+\doxycode{ima2d-3}
 
 To know if a point belongs to an image domain or not, we can run this short
 test:
-\begin{lstlisting}[frame=single]
-point2d p(9, 9);
-
-// which gives 'true'.
-std::cout << (imga.has(p) ? "true" : "false") << std::endl;
-\end{lstlisting}
+\doxycode{point-1}
 
 Since the notion of site is independent from the image it applies on, we can
 form expressions where p is used on several images:
-\begin{lstlisting}[frame=single]
-// At index (9, 9), both values change.
-imga(p) = 'M', imgb(p) = 'W';
-
-debug::println(imga);
-debug::println(imgb);
-\end{lstlisting}
-
+\doxycode{ima2d-4}
 
 Images do not actually store the data in the class. Images store a pointer
 to an allocated space which can be shared with other objects. Once an image is
@@ -390,33 +440,10 @@ same ID and point to the same memory space.
 Therefore, assigning an image to another one is NOT a costly operation. The new
 variable behaves like some mathematical variable.  Put differently it is just a
 name to designate an image:
-\begin{lstlisting}[frame=single]
-  image2d<int> ima1(box2d(2, 3));
-  image2d<int> ima2;
-  point2d p(1,2);
-
-  ima2 = ima1; // ima1.id() == ima2.id()
-               // and both point to the same memory area.
-
-  ima2(p) = 2; // ima1 is modified as well.
-
-  // prints "2 - 2"
-  std::cout << ima2(p) << " - " << ima1(p) << std::endl;
-  // prints "true"
-  std::cout << (ima2.id() == ima1.id()) << std::endl;
-\end{lstlisting}
+\doxycode{ima2d-5}
 
 If a deep copy of the image is needed, a method clone() is available:
-\begin{lstlisting}[frame=single]
-  image2d<int> ima3 = ima1.clone(); // Makes a deep copy.
-
-  ima3(p) = 3;
-
-  // prints "3 - 2"
-  std::cout << ima3(p) << " - " << ima1(p) << std::endl;
-  // prints "false"
-  std::cout << (ima3.id() == ima1.id()) << std::endl;
-\end{lstlisting}
+\doxycode{ima2d-6-clone}
 
 [Illustration : grille + intersection + pmin() + pmax() + distance entre 2
 points en x et en y = 1]\\
@@ -442,7 +469,7 @@ In the Olena library, all image types behave like image2d:
 
 
 
-\section{Interface}
+\doxysection{Interface}
 
 \begin{tabular}{|l|l|l|l|p{4cm}|}
 \hline
@@ -468,16 +495,17 @@ extended domain. \\ \hline
 
 \clearpage
 \newpage
-\chapter{Window and Neighborhood}
+\doxychapter{winneigh}{Window and neighborhood}
+\doxysection{FIXME}
+FIXME
 
-
-
+\doxycode{ima2d-display-1}
 
 \clearpage
 \newpage
-\chapter{Sites, psites and dpoints}
+\doxychapter{sitesandco}{Sites, psites and dpoints}
 
-\section{Need for site}
+\doxysection{Need for site}
 
 As we have seen before, an image is defined on a grid. It has associated
 data and a site set which defines the domain of the image on that grid.
@@ -485,16 +513,7 @@ Usually, we need to access a value by its coordinates. With default images it
 can be done easily, at no cost.
 
 Example with an image2d:
-
-\begin{lstlisting}[frame=single]
-    c  0 1 2 3
-   r
-      +-+-+-+-+
-   0  | |x| | |
-      +-+-+-+-+
-   1  | | | | |
-      +-+-+-+-+
-\end{lstlisting}
+\doxycode{ima2d-display-1}
 
 The site x is the point (0, 1).  The image values are stored in a
 multi-dimensional array. The point coordinates can be used directly. The site
@@ -507,7 +526,7 @@ Here we have:
 
 where, roughly, point2d = \{ row, column \}.
 
-\section{Need for psite}
+\doxysection{Need for psite}
 
 Sometimes, accessing a value in constant-time complexity, O(1), is not
 possible with a site object.
@@ -515,55 +534,25 @@ possible with a site object.
 Let's have a small example. Define a function returning a value for a given
 point:
 \clearpage
-\begin{lstlisting}[frame=single]
-  unsigned my_values(const point2d& p)
-  {
-    if (p.row() == 0)
-      return 8;
-    return 9;
-  }
-\end{lstlisting}
+\doxycode{fun-p2v-1}
+
 So, for each point having (0, x) as coordinate, this function will return 8,
 otherwise it will be 9.
 
 Then, define a p\_array with few point2d:
-
-\begin{lstlisting}[frame=single]
-  p_array<point2d> arr;
-  arr.append(point2d(3, 6));
-  arr.append(point2d(3, 7));
-  arr.append(point2d(3, 8));
-  arr.append(point2d(4, 8));
-  arr.append(point2d(4, 9));
-\end{lstlisting}
+\doxycode{parray-append}
 
 Now, create a point-wise image from this function and this p\_array:
-\begin{lstlisting}[frame=single]
-  mln_VAR(ima, my_values | arr);
-\end{lstlisting}
+\doxycode{mln_var-1}
 
 Ima is actually that image:
-\begin{lstlisting}[frame=single]
-    c  6 7 8 9
-   r
-      +-+-+-+
-   3  | |x| |
-      +-+-+-+-+
-   4      | | |
-          +-+-+
-\end{lstlisting}
+\doxycode{ima2d-display-2}
 
 However, in memory, since it is based on a p\_array, sites are stored in a
 vector.
 
 The site x is the point (3, 7) which corresponds to the cell 1 in the p\_array.
-
-\begin{lstlisting}[frame=single]
-arr[] = 0 1 2 3 4
-       +-+-+-+-+-+
-       | |x| | | |
-       +-+-+-+-+-+
-\end{lstlisting}
+\doxycode{parray-display-1}
 
 Obviously, we cannot check in constant time whether the site x, point2d here,
 is part of that image or not: knowing the point coordinates is not enough.
@@ -572,15 +561,15 @@ the psites.
 
 Here we have:
 
-  I::site == point2d  but  I::psite == pseudo\_site$<$point2d$>$
+  I::site $==$ point2d  but  I::psite $==$ pseudo\_site$<$point2d$>$
 
-where, roughly, pseudo\_site$<$point2d$>$ = \{ i\_in\_p\_array, p\_array\_ptr
+where, roughly, pseudo\_site$<$point2d$>$ $=$ \{ i\_in\_p\_array, p\_array\_ptr
 \}.
 
 Psites contains all the needed information to access the values in
 constant-time.
 
-\section{From psite to site}
+\doxysection{From psite to site}
 
 In the last example there was an image of type I such as I::site != I::psite. 
 In that case, an object of type I::psite is actually convertible towards an
@@ -602,12 +591,12 @@ specialized for every site type; for instance, internal::site\_impl$<$point2d$>$
 owns the method "coord row() const" which is defined as
 "return exact(this)-$>$to\_site().row()"
 
-\section{Need for dpoint}
+\doxysection{Need for dpoint}
 //FIXME
 
 \clearpage
 \newpage
-\chapter{Iterators}
+\doxychapter{iterators}{Iterators}
 
 Each container object in Olena like site sets or images have iterators.
 The iteration mechanism for images is directly derived from the mechanism
@@ -660,13 +649,7 @@ Example of different forward iterations:
 
 A for\_all() macro is available to iterate over all the sites: \\
 
-\begin{lstlisting}[frame=single]
-  box2d b(3, 2);
-  mln_piter(box2d) p(b);
-
-  for_all(p)
-    std::cout << p; //prints every site coordinates.
-\end{lstlisting}
+\doxycode{forall-piter-1}
 
 Note that when you declare an iterator, prefer using the "mln\_*iter" macros.
 They resolve the iterator type automatically from the given container type
@@ -676,33 +659,16 @@ site sets.
 Here follow an example with the implemantions of the most basic routines which use the for\_all
 loop: fill and paste.
 
-\begin{lstlisting}[frame=single]
-template <typename I>
-void fill(I& ima, mln_value(I) v)
-{
-  mln_piter(I) p(ima.domain());
-  for_all(p)
-    ima(p) = v;
-}
-\end{lstlisting}
+\doxycode{fill}
 
-
-\begin{lstlisting}[frame=single]
-template <typename I, typename J>
-void paste(const I& data, J& dest)
-{
-  mln_piter(I) p(data.domain());
-  for_all(p)
-    dest(p) = data(p);
-}
-\end{lstlisting}
+\doxycode{paste}
 
 \clearpage
 \newpage
-\chapter{Basic operations}
+\doxychapter{basicops}{Basic operations}
 //FIXME : illustrer
 
-\section{Basic routines}
+\doxysection{Basic routines}
 \begin{tabular}{|l|p{8cm}|}
 \hline
 Routine name & Description \\ \hline
@@ -717,17 +683,14 @@ labeling::blobs() & find and label the different components of an image. \\
 \hline
 \end{tabular} \\
 
-\section{Fill}
+\doxysection{Fill}
 First, create an image:
-\begin{lstlisting}[frame=single]
-  image2d<char> imga(0, 0, 20, 20);
-\end{lstlisting}
+\doxycode{ima2d-decl-1}
 
 Memory has been allocated so data can be stored but site values
 have not been initialized yet.  So we fill img with the value 'a':
-\begin{lstlisting}[frame=single]
-  level::fill(imga.rw(), 'a');
-\end{lstlisting}
+
+\doxycode{fill-call-1}
 
 The "fill" algorithm is located in the sub-namespace "level" since this
 algorithm deals with the "level" of site values.
@@ -750,22 +713,11 @@ modified "read/write". The algorithm call shall be "level::fill(ima.rw(),
 val)". When forgetting the "rw()" call it does not compile.
 
 
-\section{Paste}
+\doxysection{Paste}
 We then define below a second image to play with.  As you can see this image has
 data for the sites (5, 5) to (14, 14) (so it has 100 sites).  
 
-\begin{lstlisting}[frame=single]
-  image1d<char> imgb(5, 5, 14, 14);
-
-  // We initialize the image values.
-  level::fill(imgb.rw(), 'b');
-
-  // Last we now paste the contents of img3b in img3a...
-  level::paste(imgb, imga.rw()));
-
-  // ...and print the result.
-  debug::println(imga);
-\end{lstlisting}
+\doxycode{paste-call-1}
 
 Before pasting, the couple of images looked like:
 
@@ -780,18 +732,10 @@ With this simple example we can see that images defined on different domains (or
 set of sites) can interoperate.  The set of sites of an image is defined and
 can be accessed and printed. The following code:
 
-\begin{lstlisting}[frame=single]
-  std::cout << "imga.domain() = " << imga.domain()
-            << std::endl;
-  std::cout << "imgb.domain() = " << imgb.domain()
-            << std::endl;
-\end{lstlisting}
+\doxycode{domain-display-1}
 
 Gives:
-\begin{lstlisting}[frame=single]
-  imga.domain() = { (0,0) .. (19,19) }
-  imgb.domain() = { (5,5) .. (14,14) }
-\end{lstlisting}
+\doxycode{domain-display-out-1}
 
 The notion of site sets plays an important role in Olena. Many tests are
 performed at run-time to ensure that the program is correct.
@@ -800,11 +744,11 @@ For instance, the algorithm level::paste tests that the set of sites of imgb
 (whose values are to be pasted) is a subset of the destination image.
 
 
-\section{Blobs}
+\doxysection{Blobs}
 //FIXME: write it!
 
 \newpage
-\section{Working with parts of an image}
+\doxysection{Working with parts of an image}
 
 Sometime it may be interesting to work only on some parts of the image or to
 extract only a sub set of that image. Olena enables that thoughout out the
@@ -837,14 +781,7 @@ The following sample codes illustrate this feature.
 
 In order to use C functions as predicate, they must have one of the following
 prototype if you work on 2D images:
-\begin{lstlisting}[frame=single]
-//function_p2b
-bool my_function_p2b(mln::point2d p);
-
-//function_p2v
-//V is the value type used in the image.
-V my_function_p2v(mln::point2d p);
-\end{lstlisting}
+\doxycode{predicate-1}
 Of course, you just need to change the point type if you use another image
 type. For instance, you would use point3d with 3D images.
 The returned value type V for function\_p2v depends on the image value type.
@@ -852,91 +789,23 @@ With image2d$<$int$>$, V would be int.
 
 In this section, all along the examples, the image "ima" will refer to the
 following declaration:
-\begin{lstlisting}[frame=single]
-  bool vals[6][5] = {
-    {0, 1, 1, 0, 0},
-    {0, 1, 1, 0, 0},
-    {0, 0, 0, 0, 0},
-    {1, 1, 0, 1, 0},
-    {1, 0, 1, 1, 1},
-    {1, 0, 0, 0, 0}
-  };
-  image2d<bool> ima = make::image2d(vals);
-\end{lstlisting}
+\doxycode{ima2d-decl-2}
 
 A simple example is to fill only a part of an image with a specific value:
-\begin{lstlisting}[frame=single]
-p_array2d<bool> arr;
-
-// We add two points in the array.
-arr.append(point2d(0, 1));
-arr.append(point2d(4, 0));
-
-// We restrict the image to the sites
-// contained in arr and fill these ones
-// with 0.
-// We must call "rw()" here.
-fill((ima | arr).rw(), 0);
-
-
-mln_VAR(ima2, ima | arr);
-// We do not need to call "rw()" here.
-fill(ima2, 0);
-\end{lstlisting}
+\doxycode{fill-part-1}
 
 The two next examples extract a specific component from an image and fill a new
 image with red only in the extracted component's domain.
-\begin{lstlisting}[frame=single]
-  using namespace mln;
-  using value::int_u8;
-  using value::rgb8;
-
-  // Find and label the different components.
-  int_u8 nlabels;
-  image2d<int_u8> lab = labeling::blobs(ima, c4(), nlabels);
-
-  // Store a boolean image. True if the site is part of
-  // component 2, false otherwise.
-  mln_VAR(lab_2b, lab | (pw::value(lab) == 2));
-
-  // Get the sub site set containing only the sites
-  // part of component 2.
-  mln_VAR(lab_2, lab_2b.domain(true));
-
-  // Fill the sites of component 2 with red.
-  fill(lab_2, color::red);
-\end{lstlisting}
+\doxycode{fill-part-2}
 
 The previous example can be written more quickly:
-\begin{lstlisting}[frame=single]
-  using namespace mln;
-  using value::int_u8;
-  using value::rgb8;
-
-  // Find and label the different components.
-  int_u8 nlabels;
-  image2d<int_u8> lab = labeling::blobs(ima, c4(), nlabels);
-
-  // Fill the sites of component 2 with red.
-  fill(lab.domain(2).rw(), color::red);
-\end{lstlisting}
+\doxycode{fill-part-3}
 
 Here is an example using a C function:
-\begin{lstlisting}[frame=single]
-bool row_oddity(mln::point2d p)
-{
-  return p.row() % 2;
-}
+\doxycode{fun-p2b-1}
 
-void my_function()
-{
-  ...
-  //Prints only sites which are on odd lines.
-  debug::println(ima | row_oddity};
-  ...
-}
-\end{lstlisting}
-%
+\doxycode{ima2d-restricted-display-1}
+
 %
 \medskip
 %
@@ -944,75 +813,39 @@ void my_function()
 \subsection*{Important note}
 When writing:
 
-\begin{lstlisting}[frame=single]
-  ima | sub_D
-\end{lstlisting}
+\doxycode{ima2d-restricted-1}
 
 sub\_D must be included in ima.domain().
 
 Let's have an image, \textit{imab}, like this:
-\begin{lstlisting}[frame=single]
-0 1 0
-1 1 1
-\end{lstlisting}
+\doxycode{ima2d-display-output-1}
 
 Extract a sub image from \textit{imab} with sites having their value set to 1.
-\begin{lstlisting}[frame=single]
-mln_VAR(imab1, imab | (pw::value(imab) == 1u));
-\end{lstlisting}
-
+\doxycode{mln_var-2}
 Then, \textit{imab1} looks like:
-\begin{lstlisting}[frame=single]
-  1 
-1 1 1
-\end{lstlisting}
+\doxycode{ima2d-display-output-2}
 
 Now, if we want to extract a sub image it may fail, depending on the site set
 used:
-\begin{lstlisting}[frame=single]
-box2d b1(1,0, 1, 2);
-mln_VAR(imac, imab1 | b1);
-
-// Print:
-// 1 1 1
-debug::prinln(imac);
-
-box2d b2(0,0, 1, 1);
-// Will fail at runtime.
-// ima.domain().has((0,0)) is false.
-mln_VAR(imad, imab1 | b2);
-debug::prinln(imad);
-\end{lstlisting}
-
+\doxycode{ima2d-restricted-2}
 
 If you do not want this constraint, you may want to use an alternative
 operator:
-
-\begin{lstlisting}[frame=single]
-  ima / sub_D
-\end{lstlisting}
+\doxycode{ima2d-restricted-3}
 
 In that case there is no restriction on the domain at all and the following example will work.
-\begin{lstlisting}[frame=single]
-box2d b2(0,0, 1, 1);
+\doxycode{mln_var-3}
 
-mln_VAR(imad, imab1 / b2);
-
-// Print
-//   1
-// 1 1
-debug::prinln(imad);
-\end{lstlisting}
 With this operator, an intersection is applied on the image domain and the
 site set.
 
 \newpage
 \clearpage
-\chapter{Graphes and images}
+\doxychapter{graphes}{Graphes and images}
 
 //FIXME: REWRITE
 
-\section{Description}
+\doxysection{Description}
 Olena enables the possibility of using graphes with images.
 Graphes can help you to handle directly parts of an image and represent their
 relationship.
@@ -1020,40 +853,19 @@ Specific data can be associated to each vertex and/or edges.
 
 //FIXME: Add more explanations?
 
-\section{Example}
+\doxysection{Example}
 
 First, create a graph which looks like the following:
 
-\begin{lstlisting}[frame=single]
-      0 1 2 3 4
-   .-----------
- 0 |  0       2
- 1 |    \   / |
- 2 |      1   |
- 3 |       \  |
- 4 |        3-4
-\end{lstlisting}
+\doxycode{graph-output-1}
 
-To do so, we need to create a site set containing the sites we are going to use
-as vertices:
+First we need to add vertices:
 
 \begin{lstlisting}
-std::vector<point2d> sites;
+util::graph g;
 
-// Site associated to...
-sites.push_back(point2d(0,0)); // ... vertex 0.
-sites.push_back(point2d(2,2)); // ... vertex 1.
-sites.push_back(point2d(0,4)); // ... vertex 2.
-sites.push_back(point2d(4,3)); // ... vertex 3.
-sites.push_back(point2d(4,4)); // ... vertex 4.
-\end{lstlisting}
-
-Then populate the graph with vertices:
-\begin{lstlisting}
-util::graph<point2d> g;
-
-for (unsigned i = 0; i < points.size(); ++i)
-  g.add_vertex (points[i]);
+for (unsigned i = 0; i < 5; ++i)
+  g.add_vertex () // Associated to vertex 'i';
 \end{lstlisting}
 
 Finally, populate the graph with edges:
@@ -1065,49 +877,49 @@ g.add_edge(3, 4); // Associated to edge 3.
 g.add_edge(4, 2); // Associated to edge 4.
 \end{lstlisting}
 
-Now, a graph structure is created but contains only site relationship
-information. We may like to map data to it. Vertices and edges are mapped to
-indexes. Indexes start from 0 and respect the insertion order.
-Therefore, the idea is to provide a function which returns the associated data
-according to the index given as parameter. Combining this function and the
-graph, which is actually a sort of site set, we get an image. Since this is an
-image, you can use it with algorithms and for\_all loops.
+Now there is a graph topology and we want to associate elements of this graph
+to a site in the image.
+The idea is to use specific site sets such as p\_vertices and p\_edges.
+Let's associate the vertices with sites. To do so we need to create a functor
+which for a given vertex returns a site.
+
+\begin{lstlisting}[frame=single]
+struct assoc_fun : public Function_v2v< assoc_fun >
+{
+  typedef const point2d& result;
+
+  inline
+  const point2d& operator()(const vertex<graph::util>& v) const
+  {
+    ...
+  }
+
+};
+\end{lstlisting}
+
+Then declare a p\_vertices:
+\begin{lstlisting}[frame=single]
+p_vertices<util::graph, assoc_fun> pv(g, assoc_fun());
+\end{lstlisting}
+
+Thanks to the p\_vertices there is now a mapping between vertices and sites.
+We may like to map data to it. The idea is to provide a function which returns the associated data
+according to the site given as parameter. Combining this function and the
+p\_vertices, we get an image. Since this is an image, you can use it with algorithms and for\_all loops.
 
 \begin{lstlisting}[frame=single]
 
-Value my_data_fun(vertex_index_t index)
+template <typename I>
+mln_rvalue(I) my_data_fun(mln_site(I) site)
 {
-  if (index == 0)
-    return value1;
-  else if (index > 1 && < 4)
-    return value2;
-  return value3;
-}
-
-Value my_data_fun(edge_index_t index)
-{
-  if (index == 0)
-    return value1;
-  else if (index > 1 && < 4)
-    return value2;
-  return value3;
+  ...
 }
 
 void my_fun()
 {
   ...
-  // Constructs an image which associates
-  // data and edges. A site is actually an edge.
-  mln_VAR(graph_edge_ima, my_data_fun | g.edges());
-
-  //Prints each edge.
-  mln_piter p(graph_edge_ima);
-  for_all(p)
-    std::cout << p << std::endl;
-
-  // Constructs an image which associates
-  // data and vertices. A site is actually a vertex.
-  mln_VAR(graph_vertices_ima, my_data_fun2 | g.vertices());
+  // Constructs an image 
+  mln_VAR(graph_vertices_ima, my_data_fun | pv);
 
   //Prints each vertex
   mln_piter p(graph_vertices_ima);

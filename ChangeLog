@@ -1,5 +1,50 @@
 2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	* milena/mln/doc/tutorial/samples/box2d-1.tex,
+	* milena/mln/doc/tutorial/samples/box2d-2.tex,
+	* milena/mln/doc/tutorial/samples/domain-display-1.tex,
+	* milena/mln/doc/tutorial/samples/domain-display-out-1.tex,
+	* milena/mln/doc/tutorial/samples/fill-call-1.tex,
+	* milena/mln/doc/tutorial/samples/fill-part-1.tex,
+	* milena/mln/doc/tutorial/samples/fill-part-2.tex,
+	* milena/mln/doc/tutorial/samples/fill-part-3.tex,
+	* milena/mln/doc/tutorial/samples/fill.tex,
+	* milena/mln/doc/tutorial/samples/forall-piter-1.tex,
+	* milena/mln/doc/tutorial/samples/fun-p2b-1.tex,
+	* milena/mln/doc/tutorial/samples/fun-p2v-1.tex,
+	* milena/mln/doc/tutorial/samples/graph-output-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-2.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-3.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-4.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-5.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-6-clone.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-decl-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-decl-2.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-display-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-display-2.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-display-output-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-display-output-2.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-restricted-1.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-restricted-2.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-restricted-3.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-restricted-display-1.tex,
+	* milena/mln/doc/tutorial/samples/mln_var-1.tex,
+	* milena/mln/doc/tutorial/samples/mln_var-2.tex,
+	* milena/mln/doc/tutorial/samples/mln_var-3.tex,
+	* milena/mln/doc/tutorial/samples/parray-append.tex,
+	* milena/mln/doc/tutorial/samples/parray-display-1.tex,
+	* milena/mln/doc/tutorial/samples/paste-call-1.tex,
+	* milena/mln/doc/tutorial/samples/paste.tex,
+	* milena/mln/doc/tutorial/samples/point-1.tex,
+	* milena/mln/doc/tutorial/samples/predicate-1.tex:
+	Move sample code from the tutorial to these files.
+
+	* milena/mln/doc/tutorial/tutorial.tex: various update.
+
+
+2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update the prototype of labeling::compute().
 	* milena/mln/labeling/compute.hh: change the return type to an
 	util::array.

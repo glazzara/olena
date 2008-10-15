@@ -1,0 +1,12 @@
+box2d b(2,3);
+image2d<int> ima(b);
+point2d p(1, 2);
+
+// Associate '9' as value for the site/point2d (1,2).
+// The value is returned by reference and can be changed.
+ima.at(1,2) = 9;
+cout << ima(p) << std::endl; // prints 9
+
+ima(p) = 2; // The value is returned by reference
+// and can be changed as well.
+cout << ima(p) << std::endl; // prints 2
