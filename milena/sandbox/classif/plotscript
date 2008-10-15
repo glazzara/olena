@@ -1,0 +1,4 @@
+set xlabel "red"
+set ylabel "green"
+set zlabel "blue"
+splot "plot"
