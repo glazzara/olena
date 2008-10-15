@@ -68,13 +68,14 @@ namespace mln
     /*
       typedef argument;
       typedef result;
+      typedef q_result;
 
       void init();
       void take(const argument& t);
       void take(const E& other);
 
-      result to_result() const;
-      operator mlc_unqualif(result) const;
+      q_result to_result() const;
+      operator q_result const;
 
       bool is_valid() const;
      */
@@ -96,6 +97,7 @@ namespace mln
   {
     typedef mln_argument(E) argument;
     typedef mln_result(E)   result;
+    typedef mln_q_result(E) q_result;
 
     void (E::*m1)() = & E::init;
     m1 = 0;
@@ -104,10 +106,9 @@ namespace mln
     void (E::*m3)(const E&) = & E::take;
     m3 = 0;
 
-    result (E::*m4)() const = & E::to_result;
+    q_result (E::*m4)() const = & E::to_result;
     m4 = 0;
-    typedef mlc_fix_return(mlc_const_return(result)) result_;
-    result_ (E::*m5)() const = & E::operator result_;
+    q_result (E::*m5)() const = & E::operator q_result;
     m5 = 0;
 
     bool (E::*m6)() const = & E::is_valid;

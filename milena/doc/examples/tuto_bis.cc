@@ -215,6 +215,7 @@ int main()
 //   }
 
 
+  border::thickness = 0;
 
   image2d<int> ima(3, 5);
 
@@ -337,7 +338,7 @@ int main()
 
 
   fun::i2v::array<int> m(nbasins + 1);
-  accu::compute<accu::mean>(cell, label, m);
+  accu::compute<accu::meta::mean>(cell, label, m);
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 
 

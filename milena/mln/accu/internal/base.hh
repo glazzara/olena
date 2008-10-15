@@ -59,7 +59,8 @@ namespace mln
 	R subj_();
 
 	// As an accumulator:
-	typedef R result;
+	typedef R               q_result;
+	typedef mlc_unqualif(R)   result;
 
       protected:
 	base();

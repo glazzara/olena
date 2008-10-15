@@ -1,3 +1,19 @@
+2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Change requirements for accumulators.
+
+	Now an accumulator have to pass a qualified result as
+	super class parameter.  In addition no result typedef is
+	required.
+
+	* doc/examples/tuto_bis.cc: Update.
+	* mln/core/macros.hh (mln_q_result, mln_q_result_): New.
+	* mln/core/concept/object.hh (unqualif): New include.
+	* mln/core/concept/accumulator.hh (q_result): New.
+	(to_result, operator): Update return type.
+	* mln/accu/min.hh: Update.
+	* mln/accu/internal/base.hh (result, q_result): Factor.
+
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Use labeling::compute for Scribo.

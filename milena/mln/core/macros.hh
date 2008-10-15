@@ -281,6 +281,12 @@
 # define mln_qiter_(T)              T::fwd_qiter
 /// \}
 
+/// Shortcuts to access the qualified-result type associated to T.
+/// \{
+# define mln_q_result(T)     typename T::q_result
+# define mln_q_result_(T)    T::q_result
+/// \}
+
 /// Shortcuts to access the qualified-subject type associated to T.
 /// \{
 # define mln_q_subject(T)      typename T::q_subject

@@ -41,10 +41,13 @@
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/trace/all.hh>
+
+// metal
 # include <mln/metal/is_a.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/is_not.hh>
 # include <mln/metal/ret.hh>
+# include <mln/metal/unqualif.hh>
 
 
 /*! \mainpage Documentation of milena
