@@ -456,9 +456,7 @@ namespace mln
   operator-(const Object<O>& rhs)
   {
     mlc_converts_to(literal::zero_t, O)::check();
-    /* FIXME: The following statements trigger a warning:
-       ``'p_zero' is used uninitialized in this function.''  */
-    literal::zero_t* p_zero;
+    literal::zero_t* p_zero = 0;
     return O(*p_zero) - exact(rhs);
   }
 

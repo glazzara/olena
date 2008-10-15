@@ -39,8 +39,6 @@
       eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
       (1991), pages 847--859.  */
 
-# include <queue>
-
 # include <mln/trait/ch_value.hh>
 
 // FIXME: See below.
@@ -51,7 +49,6 @@
 
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
-
 
 
 namespace mln
@@ -130,7 +127,12 @@ namespace mln
 
       // Ordered queue.
       typedef p_queue_fast<psite> Q;
-      p_priority<mln_value(I), Q> queue;
+      p_priority<V, Q> queue;
+
+      // In_queue structure to avoid processing sites several times.
+      mln_ch_value(I, bool) in_queue;
+      initialize(in_queue, input);
+      level::fill(in_queue, false);
 
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
@@ -143,6 +145,7 @@ namespace mln
 	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
 		queue.push(max - input(p), p);
+		in_queue(p) = true;
 		break;
 	      }
 
@@ -181,8 +184,12 @@ namespace mln
 	    {
 	      output(p) = adjacent_marker;
 	      for_all(n)
-		if (output.domain().has(n) && output(n) == unmarked)
-		  queue.push(max - input(n), n);
+		if (output.domain().has(n) && output(n) == unmarked
+		    && ! in_queue(n))
+		  {
+		    queue.push(max - input(n), n);
+		    in_queue(n) = true;
+		  }
 	    }
 	}
       return output;

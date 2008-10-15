@@ -1,3 +1,10 @@
+2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make morpho meyer_wst practicable.
+
+	* mln/core/routine/ops.hh (FIXME): Resolve warning.
+	* mln/morpho/meyer_wst.hh (in_queue): New.
+
 2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix my previous patch (convert::to_image).
