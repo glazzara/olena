@@ -1,4 +1,51 @@
-2008-14-07  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove the useless '_' postfix in all the accumulators.
+	* milena/doc/examples/tuto_bis.cc,
+	* milena/doc/tutorial/examples/accu.cc,
+	* milena/mln/accu/bbox.hh,
+	* milena/mln/accu/count.hh,
+	* milena/mln/accu/count_adjacent_vertices.hh,
+	* milena/mln/accu/height.hh,
+	* milena/mln/accu/histo.hh,
+	* milena/mln/accu/max_h.hh,
+	* milena/mln/accu/mean.hh,
+	* milena/mln/accu/median_alt.hh,
+	* milena/mln/accu/median_h.hh,
+	* milena/mln/accu/nil.hh,
+	* milena/mln/accu/p.hh,
+	* milena/mln/accu/rank.hh,
+	* milena/mln/accu/rank_bool.hh,
+	* milena/mln/accu/rank_high_quant.hh,
+	* milena/mln/accu/sum.hh,
+	* milena/mln/accu/tuple.hh,
+	* milena/mln/accu/v.hh,
+	* milena/mln/accu/volume.hh,
+	* milena/mln/canvas/morpho/algebraic_union_find.hh,
+	* milena/mln/estim/mean.hh,
+	* milena/mln/estim/sum.hh,
+	* milena/mln/make/voronoi.hh,
+	* milena/mln/morpho/closing_area.hh,
+	* milena/mln/morpho/closing_area_on_vertices.hh,
+	* milena/mln/morpho/closing_height.hh,
+	* milena/mln/morpho/closing_volume.hh,
+	* milena/mln/morpho/erosion.spe.hh,
+	* milena/mln/morpho/opening_area.hh,
+	* milena/mln/morpho/opening_area_on_vertices.hh,
+	* milena/mln/morpho/opening_height.hh,
+	* milena/mln/morpho/opening_volume.hh,
+	* milena/mln/morpho/rank_filter.hh,
+	* milena/tests/accu/all_accus.cc,
+	* milena/tests/accu/count.cc,
+	* milena/tests/accu/nil.cc,
+	* milena/tests/accu/pair.cc,
+	* milena/tests/accu/rank.cc,
+	* milena/tests/accu/tuple.cc,
+	* milena/tests/labeling/compute.cc:
+	Update.
+
+
+2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update accus to make them work with the new q_result typedef.
 	* milena/mln/accu/bbox.hh,

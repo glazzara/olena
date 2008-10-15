@@ -35,7 +35,7 @@
     This accumulator uses an mln::util::pix (pixel) to update the
     reference level, area and volume information of the component.
 
-    The class mln/accu/volume_ is not a general-purpose accumulator;
+    The class mln/accu/volume is not a general-purpose accumulator;
     it is used to implement volume-based connected filters.
     \see mln::morpho::closing_volume
     \see mln::morpho::opening_volume  */
@@ -57,8 +57,8 @@ namespace mln
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
     template <typename I>
-    struct volume_
-      : public mln::accu::internal::base< std::size_t , volume_<I> >
+    struct volume
+      : public mln::accu::internal::base< std::size_t , volume<I> >
     {
       /// \brief The accumulated data type.
       ///
@@ -70,13 +70,13 @@ namespace mln
       /// The value type associated to the pixel type.
       typedef typename argument::value value;
 
-      volume_();
+      volume();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument& pixel);
-      void take(const volume_<I>& other);
+      void take(const volume<I>& other);
 
       /// Force the value of the counter to \a v.
       void set_value(std::size_t v);
@@ -95,7 +95,7 @@ namespace mln
       /// The area of the component.
       std::size_t area__;
       /// The volume of the component.
-      std::size_t volume__;
+      std::size_t volume_;
     };
 
 
@@ -107,10 +107,10 @@ namespace mln
       struct volume : public Meta_Accumulator< volume >
       {
 	template <typename I>
-	  struct with
-	  {
-	    typedef volume_<I> ret;
-	  };
+	struct with
+	{
+	  typedef accu::volume<I> ret;
+	};
       };
 
     } // end of namespace mln::accu::meta
@@ -120,7 +120,7 @@ namespace mln
 
     template <typename I>
     inline
-    volume_<I>::volume_()
+    volume<I>::volume()
     {
       init();
     }
@@ -128,17 +128,17 @@ namespace mln
     template <typename I>
     inline
     void
-    volume_<I>::init()
+    volume<I>::init()
     {
       ref_level__ = literal::zero;
-      volume__ = 0;
+      volume_ = 0;
       area__ = 0;
     }
 
     template <typename I>
     inline
     void
-    volume_<I>::take(const argument& pixel)
+    volume<I>::take(const argument& pixel)
     {
       /* FIXME: Growing a component using this particular `take'
          routine won't work, since the update does not take care of
@@ -148,27 +148,27 @@ namespace mln
          1. the empty accumulator case (which corresponds to the
             following code);
          2. the non-empty accumulator case (which sohuld act as in
-           `take(const volume_<I>& other)').
+           `take(const volume<I>& other)').
 
          Currently, the implementation is only valid if the
          accumulator was initialy empty before the call to
         `take(const argument&)'.  */
       ref_level__ = pixel.v();
       ++area__;
-      ++volume__;
+      ++volume_;
     }
 
     template <typename I>
     inline
     void
-    volume_<I>::take(const volume_<I>& other)
+    volume<I>::take(const volume<I>& other)
     {
       area__ += other.area__;
       /* FIXME: Is it `t.area__' or `area__' ? Théo said it was
 	 the latter, but both the ISMM 2005 paper and Olena 0.11 use
 	 the former.  */
-      volume__ +=
-	other.volume__  +
+      volume_ +=
+	other.volume_  +
 	other.area__ * math::abs(other.ref_level__ - ref_level__);
       // Member ref_level__ is not touched.
     }
@@ -176,17 +176,17 @@ namespace mln
     template <typename I>
     inline
     std::size_t
-    volume_<I>::to_result() const
+    volume<I>::to_result() const
     {
-      return volume__;
+      return volume_;
     }
 
     template <typename I>
     inline
     void
-    volume_<I>::set_value(std::size_t v)
+    volume<I>::set_value(std::size_t v)
     {
-      volume__ = v;
+      volume_ = v;
       // Reset the other members.
       ref_level__ = literal::zero;
       area__ = 0;
@@ -195,7 +195,7 @@ namespace mln
     template <typename I>
     inline
     bool
-    volume_<I>::is_valid() const
+    volume<I>::is_valid() const
     {
       return true;
     }

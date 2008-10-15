@@ -79,7 +79,7 @@ namespace mln
     void mean(const Image<I>& input, M& result)
     {
       mln_precondition(exact(input).has_data());
-      accu::mean_<mln_value(I), S, M> a;
+      accu::mean<mln_value(I), S, M> a;
       result = level::compute(a, input);
     }
 

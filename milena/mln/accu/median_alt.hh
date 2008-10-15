@@ -96,6 +96,23 @@ namespace mln
     };
 
 
+    namespace meta
+    {
+
+      /// Meta accumulator for median_alt.
+
+      struct median_alt : public Meta_Accumulator< median_alt >
+      {
+	template <typename V>
+	struct with
+	{
+	  typedef accu::median_alt<V> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
+
+
     template <typename T>
     struct median_alt_on : public median_alt< value::set<T> >
     {

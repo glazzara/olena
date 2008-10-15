@@ -53,18 +53,18 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base< const T&, rank_<T> >
+    struct rank : public mln::accu::internal::base< const T&, rank<T> >
     {
       typedef T argument;
       typedef mln::value::set<T> S;
 
-      rank_(unsigned k, unsigned n);
+      rank(unsigned k, unsigned n);
 
       /// Manipulators.
       /// \{
       void   init();
       void   take(const argument& t);
-      void   take(const rank_<T>& other);
+      void   take(const rank<T>& other);
       void untake(const argument& t);
       /// \}
 
@@ -98,7 +98,7 @@ namespace mln
     };
 
 
-    template <typename I> struct rank_< util::pix<I> >;
+    template <typename I> struct rank< util::pix<I> >;
 
 
     namespace meta
@@ -111,7 +111,7 @@ namespace mln
 	template <typename T>
 	  struct with
 	  {
-	    typedef rank_<T> ret;
+	    typedef accu::rank<T> ret;
 	  };
       };
 
@@ -124,7 +124,7 @@ namespace mln
 
     template <typename T>
     inline
-    rank_<T>::rank_(unsigned k, unsigned n)
+    rank<T>::rank(unsigned k, unsigned n)
       : k_(k),
 	n_(n),
 	h_(),
@@ -138,7 +138,7 @@ namespace mln
 
     template <typename T>
     inline
-    void rank_<T>::take(const argument& t)
+    void rank<T>::take(const argument& t)
     {
       h_.take(t);
 
@@ -154,7 +154,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::take(const rank_<T>& other)
+    rank<T>::take(const rank<T>& other)
     {
       // h_
       h_.take(other.h_);
@@ -175,7 +175,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::untake(const argument& t)
+    rank<T>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -192,7 +192,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::update_() const
+    rank<T>::update_() const
     {
       valid_ = true;
 
@@ -218,7 +218,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::go_minus_() const
+    rank<T>::go_minus_() const
     {
       do
 	{
@@ -235,7 +235,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::go_plus_() const
+    rank<T>::go_plus_() const
     {
       do
 	{
@@ -252,7 +252,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::init()
+    rank<T>::init()
     {
       h_.init();
       sum_minus_ = 0;
@@ -266,7 +266,7 @@ namespace mln
     template <typename T>
     inline
     const T&
-    rank_<T>::to_result() const
+    rank<T>::to_result() const
     {
       if (! valid_)
 	update_();
@@ -276,7 +276,7 @@ namespace mln
     template <typename T>
     inline
     bool
-    rank_<T>::is_valid() const
+    rank<T>::is_valid() const
     {
       return valid_;
     }

@@ -92,6 +92,24 @@ namespace mln
     };
 
 
+    namespace meta
+    {
+
+      /// Meta accumulator for median_h.
+
+      struct median_h : public Meta_Accumulator< median_h >
+      {
+	template <typename V>
+	struct with
+	{
+	  typedef accu::median_h<V> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V>

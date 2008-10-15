@@ -47,7 +47,7 @@
 # include "boost/preprocessor/repetition/enum_params.hpp"
 # include "boost/preprocessor/repetition/enum_params_with_a_default.hpp"
 
-# define RESULT_ACCU(z, n, data) BOOST_PP_COMMA_IF(n) typename internal::tuple_helper_<T ## n>::result
+# define RESULT_ACCU(z, n, data) BOOST_PP_COMMA_IF(n) typename internal::tuplehelper_<T ## n>::result
 # define ARG(z, n, data) BOOST_PP_COMMA_IF(n) const T ## n& p ## n = T ## n()
 # define BOOST_PP_LOCAL_MACRO(n) typedef mln_accu_with(T ## n, A) AT ## n;
 # define BOOST_PP_LOCAL_LIMITS (0, 9)
@@ -61,8 +61,8 @@ namespace mln
     namespace internal
     {
       // Fwd decl.
-      template <typename T> struct tuple_helper_;
-      template <unsigned n, typename T> struct tuple_helper;
+      template <typename T> struct tuplehelper_;
+      template <unsigned n, typename T> struct tuplehelper;
     }
 
     /*! \brief Generic tuple of accumulators.
@@ -71,23 +71,23 @@ namespace mln
      *
      */
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
-    struct tuple_
-      : public mln::accu::internal::base< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) >, tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
+    struct tuple
+      : public mln::accu::internal::base< boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !) >, tuple<A, n, BOOST_PP_ENUM_PARAMS(10, T)> >
     {
       typedef A argument;
 
       typedef boost::tuple< BOOST_PP_REPEAT(10, RESULT_ACCU, Le Ricard ya que ca de vrai !)> res;
       typedef boost::tuple< BOOST_PP_ENUM_PARAMS(10, T)> intern;
-      typedef tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)> self;
+      typedef tuple<A, n, BOOST_PP_ENUM_PARAMS(10, T)> self;
 
-      tuple_();
+      tuple();
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, T)>& other);
+      void take(const tuple<A, n, BOOST_PP_ENUM_PARAMS(10, T)>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -115,7 +115,7 @@ namespace mln
 	{
 # include BOOST_PP_LOCAL_ITERATE()
 
-	  typedef tuple_<A, n, BOOST_PP_ENUM_PARAMS(10, AT)> ret;
+	  typedef accu::tuple<A, n, BOOST_PP_ENUM_PARAMS(10, AT)> ret;
 	};
       };
 
@@ -128,53 +128,53 @@ namespace mln
     {
 
       template <typename T>
-      struct tuple_helper_
+      struct tuplehelper_
       {
 	typedef typename T::result result;
       };
 
       template <>
-      struct tuple_helper_<boost::tuples::null_type>
+      struct tuplehelper_<boost::tuples::null_type>
       {
 	typedef boost::tuples::null_type result;
       };
 
       template <unsigned n, typename T>
-      struct tuple_helper
+      struct tuplehelper
       {
 	static void init(typename T::intern& a)
 	{
 	  boost::get<n - 1>(a).init();
-	  tuple_helper<n - 1, T>::init(a);
+	  tuplehelper<n - 1, T>::init(a);
 	}
 
 	static void take_as_init(typename T::intern& a, const typename T::argument& argument)
 	{
 	  boost::get<n - 1>(a).take_as_init(argument);
-	  tuple_helper<n - 1, T>::take_as_init(a, argument);
+	  tuplehelper<n - 1, T>::take_as_init(a, argument);
 	}
 
 	static void take(typename T::intern& a, const typename T::argument& argument)
 	{
 	  boost::get<n - 1>(a).take(argument);
-	  tuple_helper<n - 1, T>::take(a, argument);
+	  tuplehelper<n - 1, T>::take(a, argument);
 	}
 
 	static void take(typename T::intern& a, const typename T::intern& other)
 	{
 	  boost::get<n - 1>(a).take(boost::get<n - 1>(other));
-	  tuple_helper<n - 1, T>::take(a, other);
+	  tuplehelper<n - 1, T>::take(a, other);
 	}
 
 	static void to_result(const typename T::intern& a, typename T::result& res)
 	{
 	  boost::get<n - 1>(res) = boost::get<n - 1>(a).to_result();
-	  tuple_helper<n - 1, T>::to_result(a, res);
+	  tuplehelper<n - 1, T>::to_result(a, res);
 	}
       };
 
       template <typename T>
-      struct tuple_helper<0, T>
+      struct tuplehelper<0, T>
       {
 	static void init(typename T::intern&) {}
 	static void take_as_init(typename T::intern&, const typename T::argument&) {}
@@ -186,7 +186,7 @@ namespace mln
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::tuple_()
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::tuple()
     {
       init();
     }
@@ -194,49 +194,49 @@ namespace mln
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     void
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::init()
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::init()
     {
-      internal::tuple_helper<n, self>::init(this->a_);
+      internal::tuplehelper<n, self>::init(this->a_);
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     void
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take_as_init(const argument& t)
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take_as_init(const argument& t)
     {
-      internal::tuple_helper<n, self>::take_as_init(this->a_, t);
+      internal::tuplehelper<n, self>::take_as_init(this->a_, t);
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     void
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take(const argument& t)
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take(const argument& t)
     {
-      internal::tuple_helper<n, self>::take(this->a_, t);
+      internal::tuplehelper<n, self>::take(this->a_, t);
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     void
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take(const tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >& other)
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::take(const tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >& other)
     {
-      internal::tuple_helper<n, self>::take(this->a_, other.a_);
+      internal::tuplehelper<n, self>::take(this->a_, other.a_);
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
-    typename tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::res
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::to_result() const
+    typename tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::res
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::to_result() const
     {
       res tmp;
-      internal::tuple_helper<n, self>::to_result(this->a_, tmp);
+      internal::tuplehelper<n, self>::to_result(this->a_, tmp);
       return tmp;
     }
 
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS(10, typename T)>
     inline
     bool
-    tuple_<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::is_valid() const
+    tuple<A,n,BOOST_PP_ENUM_PARAMS(10,T) >::is_valid() const
     {
       return true;
     }

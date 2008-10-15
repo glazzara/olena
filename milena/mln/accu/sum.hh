@@ -57,17 +57,17 @@ namespace mln
      * \c S is the summation type (property) of \c T.
      */
     template <typename T, typename S = mln_sum(T)>
-    struct sum_ : public mln::accu::internal::base< const S&, sum_<T,S> >
+    struct sum : public mln::accu::internal::base< const S&, sum<T,S> >
     {
       typedef T argument;
 
-      sum_();
+      sum();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument& t);
-      void take(const sum_<T,S>& other);
+      void take(const sum<T,S>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -84,7 +84,7 @@ namespace mln
 
 
     template <typename I, typename S>
-    struct sum_< util::pix<I>, S >;
+    struct sum< util::pix<I>, S >;
 
     namespace meta
     {
@@ -95,7 +95,7 @@ namespace mln
 	template <typename T, typename S = mln_sum(T)>
 	struct with
 	{
-	  typedef sum_<T, S> ret;
+	  typedef accu::sum<T, S> ret;
 	};
       };
 
@@ -106,7 +106,7 @@ namespace mln
 
     template <typename T, typename S>
     inline
-    sum_<T,S>::sum_()
+    sum<T,S>::sum()
     {
       init();
     }
@@ -114,14 +114,14 @@ namespace mln
     template <typename T, typename S>
     inline
     void
-    sum_<T,S>::init()
+    sum<T,S>::init()
     {
       s_ = literal::zero;
     }
 
     template <typename T, typename S>
     inline
-    void sum_<T,S>::take(const argument& t)
+    void sum<T,S>::take(const argument& t)
     {
       s_ += t;
     }
@@ -129,7 +129,7 @@ namespace mln
     template <typename T, typename S>
     inline
     void
-    sum_<T,S>::take(const sum_<T,S>& other)
+    sum<T,S>::take(const sum<T,S>& other)
     {
       s_ += other.s_;
     }
@@ -137,7 +137,7 @@ namespace mln
     template <typename T, typename S>
     inline
     const S&
-    sum_<T,S>::to_result() const
+    sum<T,S>::to_result() const
     {
       return s_;
     }
@@ -145,7 +145,7 @@ namespace mln
     template <typename T, typename S>
     inline
     bool
-    sum_<T,S>::is_valid() const
+    sum<T,S>::is_valid() const
     {
       return true;
     }

@@ -121,7 +121,7 @@ namespace mln
 	{
 	  parent(p) = p;
 	  /* FIXME: What if the value_type of DATA (i.e., A) were not
-	     based on a accu::count_<mln::pix>?  Currently, nothing
+	     based on a accu::count<mln::pix>?  Currently, nothing
 	     enforces this, but the code below expects this line to be
 	     valid:
 
@@ -138,7 +138,7 @@ namespace mln
 	     be passed as an argument to the canvas' ctor.
 
 	     Of course, we might want to restrict attributes to the
-	     accumulator accu::count_<mln::pix> (which is perfectly
+	     accumulator accu::count<mln::pix> (which is perfectly
 	     acceptable), but then this class should statically check
 	     the conformance of the template parameter A to this
 	     constraint.  */

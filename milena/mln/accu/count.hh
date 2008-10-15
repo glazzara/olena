@@ -43,17 +43,17 @@ namespace mln
     /// \brief Generic counter accumulator class.
     /// The parameter \a T is the type to be count.
     template <typename T>
-    struct count_ : public mln::accu::internal::base< std::size_t , count_<T> >
+    struct count : public mln::accu::internal::base< std::size_t , count<T> >
     {
       typedef T argument;
 
-      count_();
+      count();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument&);
-      void take(const count_<T>& other);
+      void take(const count<T>& other);
 
       /// Force the value of the counter to \a c.
       void set_value(std::size_t c);
@@ -68,7 +68,7 @@ namespace mln
 
     protected:
       /// The value of the counter.
-      std::size_t count__;
+      std::size_t count_;
     };
 
     namespace meta
@@ -80,7 +80,7 @@ namespace mln
 	template <typename T>
 	struct with
 	{
-	  typedef count_<T> ret;
+	  typedef accu::count<T> ret;
 	};
       };
 
@@ -91,7 +91,7 @@ namespace mln
 
     template <typename T>
     inline
-    count_<T>::count_()
+    count<T>::count()
     {
       init();
     }
@@ -99,47 +99,47 @@ namespace mln
     template <typename T>
     inline
     void
-    count_<T>::init()
+    count<T>::init()
     {
-      count__ = 0;
+      count_ = 0;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::take(const argument&)
+    count<T>::take(const argument&)
     {
-      ++count__;
+      ++count_;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::take(const count_<T>& other)
+    count<T>::take(const count<T>& other)
     {
-      count__ += other.count__;
+      count_ += other.count_;
     }
 
     template <typename T>
     inline
     std::size_t
-    count_<T>::to_result() const
+    count<T>::to_result() const
     {
-      return count__;
+      return count_;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::set_value(std::size_t c)
+    count<T>::set_value(std::size_t c)
     {
-      count__ = c;
+      count_ = c;
     }
 
     template <typename T>
     inline
     bool
-    count_<T>::is_valid() const
+    count<T>::is_valid() const
     {
       return true;
     }

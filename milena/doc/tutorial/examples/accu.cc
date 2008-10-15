@@ -5,9 +5,9 @@ int main()
 {
   using namespace mln;
 
-  mlc_bool(accu::mean_<int>::proxy_level == 1)::check();
+  mlc_bool(accu::mean<int>::proxy_level == 1)::check();
 
-  accu::mean_<int> m;
+  accu::mean<int> m;
   m.take(100);
   m.take(2);
   mln_assertion(m == 51);

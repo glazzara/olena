@@ -101,9 +101,7 @@ namespace mln
     namespace meta
     {
 
-      /*!
-       * \brief Meta accumulator for max.
-       */
+      /// Meta accumulator for max.
       struct max_h : public Meta_Accumulator< max_h >
       {
 	template <typename T>

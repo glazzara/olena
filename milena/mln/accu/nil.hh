@@ -51,18 +51,18 @@ namespace mln
      * \brief Define an accumulator that does nothing.
      */
     template <typename T>
-    struct nil_ : public mln::accu::internal::base< util::ignore , nil_<T> >
+    struct nil : public mln::accu::internal::base< util::ignore , nil<T> >
     {
       typedef util::eat    argument;
 
-      nil_();
+      nil();
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument&);
       void take(const argument&);
-      void take(const nil_<T>&);
+      void take(const nil<T>&);
       /// \}
 
       /// Get the value of the accumulator.
@@ -84,7 +84,7 @@ namespace mln
 	template <typename V>
 	struct with
 	{
-	  typedef nil_<V> ret;
+	  typedef accu::nil<V> ret;
 	};
       };
 
@@ -95,42 +95,42 @@ namespace mln
 
     template <typename T>
     inline
-    nil_<T>::nil_()
+    nil<T>::nil()
     {
     }
 
     template <typename T>
     inline
     void
-    nil_<T>::init()
+    nil<T>::init()
     {
     }
 
     template <typename T>
     inline
     void
-    nil_<T>::take(const argument&)
+    nil<T>::take(const argument&)
     {
     }
 
     template <typename T>
     inline
     void
-    nil_<T>::take_as_init(const argument&)
+    nil<T>::take_as_init(const argument&)
     {
     }
 
     template <typename T>
     inline
     void
-    nil_<T>::take(const nil_<T>&)
+    nil<T>::take(const nil<T>&)
     {
     }
 
     template <typename T>
     inline
     util::ignore
-    nil_<T>::to_result() const
+    nil<T>::to_result() const
     {
       return util::ignore();
     }
@@ -138,7 +138,7 @@ namespace mln
     template <typename T>
     inline
     bool
-    nil_<T>::is_valid() const
+    nil<T>::is_valid() const
     {
       return true;
     }

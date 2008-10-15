@@ -56,7 +56,7 @@ namespace mln
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::height_<I> >(input, nbh, lambda, output);
+      closing_attribute< accu::height<I> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -83,7 +83,7 @@ namespace mln
       estim::min_max (ima, min, max);
       unsigned nb = max - min + 1;
       std::vector<P> v(nb);
-      std::vector< accu::mean_< X > > tab_mean (nb);
+      std::vector< accu::mean< X > > tab_mean (nb);
       std::map<std::pair<V, V>, bool> m;
 
       /// Take original point.

@@ -54,7 +54,7 @@ int main()
   image2d<int_u8> ima = make::image2d(vals);
   int_u8 nlabels = 3;
 
-  accu::sum_<int_u8> sum;
+  accu::sum<int_u8> sum;
   p_array<float> sums = labeling::compute(sum, ima, ima, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
@@ -67,7 +67,7 @@ int main()
   mln_assertion(sums[2] == 8);
   mln_assertion(sums[3] == 12);
 
-  accu::count_<mln_site_(image2d<int_u8>)> count;
+  accu::count<mln_site_(image2d<int_u8>)> count;
   p_array<unsigned int> counts = labeling::compute(count, ima, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);

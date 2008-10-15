@@ -35,7 +35,7 @@
     This accumulator uses an mln::util::pix (pixel) to update the
     height information of the component.
 
-    The class mln/accu/height_ is not a general-purpose accumulator;
+    The class mln/accu/height is not a general-purpose accumulator;
     it is used to implement height-based connected filters.
     \see mln::morpho::closing_height
     \see mln::morpho::opening_height  */
@@ -58,8 +58,8 @@ namespace mln
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
     template <typename I>
-    struct height_
-      : public mln::accu::internal::base< std::size_t , height_<I> >
+    struct height
+      : public mln::accu::internal::base< std::size_t , height<I> >
     {
       /// \brief The accumulated data type.
       ///
@@ -71,13 +71,13 @@ namespace mln
       /// The value type associated to the pixel type.
       typedef typename argument::value value;
 
-      height_();
+      height();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument&);
-      void take(const height_<I>& other);
+      void take(const height<I>& other);
 
       /// Force the value of the counter to \a h.
       void set_value(std::size_t h);
@@ -96,7 +96,7 @@ namespace mln
       /// The maximum level in the component.
       value max_level__;
       /// The height of the component.
-      std::size_t height__;
+      std::size_t height_;
     };
 
 
@@ -107,10 +107,10 @@ namespace mln
       struct height : public Meta_Accumulator< height >
       {
 	template <typename I>
-	  struct with
-	  {
-	    typedef height_<I> ret;
-	  };
+	struct with
+	{
+	  typedef accu::height<I> ret;
+	};
       };
 
     } // end of namespace mln::accu::meta
@@ -119,7 +119,7 @@ namespace mln
 
     template <typename I>
     inline
-    height_<I>::height_()
+    height<I>::height()
     {
       init();
     }
@@ -127,47 +127,47 @@ namespace mln
     template <typename I>
     inline
     void
-    height_<I>::init()
+    height<I>::init()
     {
       min_level__ = mln_max(value);
       max_level__ = mln_min(value);
-      height__ = 0;
+      height_ = 0;
     }
 
     template <typename I>
     inline
     void
-    height_<I>::take(const argument& t)
+    height<I>::take(const argument& t)
     {
       min_level__ = math::min(min_level__, t.v());
       max_level__ = math::max(max_level__, t.v());
-      height__ = max_level__ - min_level__;
+      height_ = max_level__ - min_level__;
     }
 
     template <typename I>
     inline
     void
-    height_<I>::take(const height_<I>& other)
+    height<I>::take(const height<I>& other)
     {
       min_level__ = math::min(min_level__, other.min_level__);
       max_level__ = math::max(max_level__, other.max_level__);
-      height__ = max_level__ - min_level__;
+      height_ = max_level__ - min_level__;
     }
 
     template <typename I>
     inline
     std::size_t
-    height_<I>::to_result() const
+    height<I>::to_result() const
     {
-      return height__;
+      return height_;
     }
 
     template <typename I>
     inline
     void
-    height_<I>::set_value(std::size_t h)
+    height<I>::set_value(std::size_t h)
     {
-      height__ = h;
+      height_ = h;
       // Reset the other members.
       min_level__ = mln_max(value);
       max_level__ = mln_min(value);
@@ -176,7 +176,7 @@ namespace mln
     template <typename I>
     inline
     bool
-    height_<I>::is_valid() const
+    height<I>::is_valid() const
     {
       return true;
     }

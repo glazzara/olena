@@ -53,21 +53,21 @@ namespace mln
     /// This accumulator is used by mln::closing_area_on_vertices and
     /// mln::opening_area_on_vertices.
     template <typename P, typename V>
-    struct count_adjacent_vertices_
+    struct count_adjacent_vertices
       : public mln::accu::internal::base< std::size_t,
-					  count_adjacent_vertices_<P, V> >
+					  count_adjacent_vertices<P, V> >
     {
       typedef mln::util::pix< mln::line_graph_image<P, V> > argument;
 
-      count_adjacent_vertices_();
+      count_adjacent_vertices();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument& arg);
-      void take(const count_adjacent_vertices_<P, V>& other);
+      void take(const count_adjacent_vertices<P, V>& other);
 
-      /// Force the value of the counter to \a c. 
+      /// Force the value of the counter to \a c.
       void set_value(std::size_t c);
       /// \}
 
@@ -86,23 +86,28 @@ namespace mln
     };
 
 
-    /// \brief Meta accumulator for count_adjacent_vertices.
-    struct count_adjacent_vertices
-      : public Meta_Accumulator< count_adjacent_vertices >
+    namespace meta
     {
-      template <typename P, typename V>
-      struct with
+
+      /// \brief Meta accumulator for count_adjacent_vertices.
+      struct count_adjacent_vertices
+	: public Meta_Accumulator< count_adjacent_vertices >
       {
-	typedef count_adjacent_vertices_<P, V> ret;
+	template <typename P, typename V>
+	  struct with
+	  {
+	    typedef accu::count_adjacent_vertices<P, V> ret;
+	  };
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P, typename V>
     inline
-    count_adjacent_vertices_<P, V>::count_adjacent_vertices_()
+    count_adjacent_vertices<P, V>::count_adjacent_vertices()
     {
       init();
     }
@@ -110,7 +115,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::init()
+    count_adjacent_vertices<P, V>::init()
     {
       vertices_.clear();
       update_();
@@ -119,7 +124,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::take(const argument& arg)
+    count_adjacent_vertices<P, V>::take(const argument& arg)
     {
       vertices_.insert(arg.p().first_id());
       vertices_.insert(arg.p().second_id());
@@ -129,7 +134,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::take(const count_adjacent_vertices_<P, V>& other)
+    count_adjacent_vertices<P, V>::take(const count_adjacent_vertices<P, V>& other)
     {
       vertices_.insert (other.vertices_.begin(), other.vertices_.end());
       update_();
@@ -138,7 +143,7 @@ namespace mln
     template <typename P, typename V>
     inline
     std::size_t
-    count_adjacent_vertices_<P, V>::to_result() const
+    count_adjacent_vertices<P, V>::to_result() const
     {
       return count__;
     }
@@ -146,7 +151,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::set_value(std::size_t c)
+    count_adjacent_vertices<P, V>::set_value(std::size_t c)
     {
       count__ = c;
       /// Reset the other member.
@@ -156,7 +161,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::update_()
+    count_adjacent_vertices<P, V>::update_()
     {
       count__ = vertices_.size();
     }

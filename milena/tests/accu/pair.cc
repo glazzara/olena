@@ -42,7 +42,7 @@ int main()
   using namespace mln;
 
   {
-    accu::pair<accu::mean_<int>, accu::max<int> > mean;
+    accu::pair<accu::mean<int>, accu::max<int> > mean;
 
     mean.take(10);
     mean.take(9);

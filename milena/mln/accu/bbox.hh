@@ -88,7 +88,7 @@ namespace mln
 	template <typename T>
 	struct with
 	{
-	  typedef mln::accu::bbox<T> ret;
+	  typedef accu::bbox<T> ret;
 	};
       };
 

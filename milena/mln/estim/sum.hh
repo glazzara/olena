@@ -78,7 +78,7 @@ namespace mln
     void sum(const Image<I>& input, S& result)
     {
       mln_precondition(exact(input).has_data());
-      accu::sum_<mln_value(I), S> a;
+      accu::sum<mln_value(I), S> a;
       result = level::compute(a, input);
     }
 

@@ -103,7 +103,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	// FIXME: border::adjust(input, win.delta());
- 	extension::fill(input, mln_max(mln_value(I)));
+	extension::fill(input, mln_max(mln_value(I)));
 
 	O output;
 	initialize(output, input);
@@ -136,7 +136,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	// FIXME: border::adjust(input, win.delta());
- 	extension::fill(input, true);
+	extension::fill(input, true);
 
 	O output;
 	initialize(output, input);
@@ -169,7 +169,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	// FIXME: border::adjust(input, win.delta());
- 	extension::fill(input, true);
+	extension::fill(input, true);
 
 	O output;
 	output = clone(input);
@@ -200,7 +200,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	// FIXME: border::adjust(input, win.delta());
- 	extension::fill(input, true);
+	extension::fill(input, true);
 
 	O output;
 	output = clone(input);
@@ -251,7 +251,7 @@ namespace mln
 						 p, len,
 						 win_half_length,
 						 output);
-	    
+
 	    for (int c = dim - 1; c >= 0; --c)
 	      {
 		if (c == int(Dir))
@@ -358,7 +358,7 @@ namespace mln
 	    win_left_bkd(win::shift(win_left_fwd, mln::right)),
 	    win_right_bkd(win::shift(win_right_fwd, mln::right)),
 
- 	    win_bot_up(win::shift(win, mln::down) - win),
+	    win_bot_up(win::shift(win, mln::down) - win),
 	    win_top_up(win - win::shift(win, mln::down)),
 	    win_bot_down(win::shift(win_bot_up, mln::up)),
 	    win_top_down(win::shift(win_top_up, mln::up)),
@@ -461,7 +461,7 @@ namespace mln
 
 	typedef erosion_arbitrary_2d_fastest_functor<I, W> F;
 	F f(exact(input), exact(win));
- 	canvas::browsing::snake_generic(f);
+	canvas::browsing::snake_generic(f);
 
 	trace::exiting("morpho::impl:erosion_arbitrary_2d_fastest");
 
@@ -516,7 +516,7 @@ namespace mln
 	    win_left_bkd(win::shift(win_left_fwd, mln::right)),
 	    win_right_bkd(win::shift(win_right_fwd, mln::right)),
 
- 	    win_bot_up(win::shift(win, mln::down) - win),
+	    win_bot_up(win::shift(win, mln::down) - win),
 	    win_top_up(win - win::shift(win, mln::down)),
 	    win_bot_down(win::shift(win_bot_up, mln::up)),
 	    win_top_down(win::shift(win_top_up, mln::up)),

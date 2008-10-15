@@ -106,7 +106,7 @@ namespace mln
 	template <typename V>
 	struct with
 	{
-	  typedef mln::accu::histo<V> ret;
+	  typedef accu::histo<V> ret;
 	};
       };
 

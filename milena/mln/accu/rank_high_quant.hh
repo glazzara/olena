@@ -52,18 +52,18 @@ namespace mln
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base< const T&, rank_<T> >
+    struct rank : public mln::accu::internal::base< const T&, rank<T> >
     {
       typedef T argument;
 
-      rank_(unsigned k, unsigned n);
+      rank(unsigned k, unsigned n);
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const rank_<T>& other);
+      void take(const rank<T>& other);
       void sort();
       /// \}
 
@@ -83,7 +83,7 @@ namespace mln
     };
 
 
-    template <typename I> struct rank_< util::pix<I> >;
+    template <typename I> struct rank< util::pix<I> >;
 
 
     namespace meta
@@ -96,7 +96,7 @@ namespace mln
 	template <typename T>
 	  struct with
 	  {
-	    typedef rank_<T> ret;
+	    typedef accu::rank<T> ret;
 	  };
       };
 
@@ -107,7 +107,7 @@ namespace mln
 
     template <typename T>
     inline
-    rank_<T>::rank_(unsigned k, unsigned n)
+    rank<T>::rank(unsigned k, unsigned n)
       : k_(k),
 	n_(n),
 	is_sorted_(false)
@@ -119,14 +119,14 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::init()
+    rank<T>::init()
     {
       elts_.clear();
     }
 
     template <typename T>
     inline
-    void rank_<T>::take_as_init(const argument& t)
+    void rank<T>::take_as_init(const argument& t)
     {
       elts_.push_back(t);
       is_sorted_ = false;
@@ -134,7 +134,7 @@ namespace mln
 
     template <typename T>
     inline
-    void rank_<T>::take(const argument& t)
+    void rank<T>::take(const argument& t)
     {
       elts_.push_back(t);
       is_sorted_ = false;
@@ -143,7 +143,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::take(const rank_<T>& other)
+    rank<T>::take(const rank<T>& other)
     {
       elts_.insert(elts_.end(),
 		   other.elts_.begin(),
@@ -154,9 +154,9 @@ namespace mln
     template <typename T>
     inline
     const T&
-    rank_<T>::to_result() const
+    rank<T>::to_result() const
     {
-      const_cast<rank_<T>&>(*this).sort();
+      const_cast<rank<T>&>(*this).sort();
 
       if (n_ == elts_.size())
 	return elts_[k_];
@@ -168,7 +168,7 @@ namespace mln
     template <typename T>
     inline
     bool
-    rank_<T>::is_valid() const
+    rank<T>::is_valid() const
     {
       return true;
     }
@@ -176,7 +176,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::sort()
+    rank<T>::sort()
     {
       if (! is_sorted_)
       {
@@ -191,6 +191,6 @@ namespace mln
 
 } // end of namespace mln
 
-#include <mln/accu/rank_bool.hh>
+#include <mln/accu/rankbool.hh>
 
 #endif // ! MLN_ACCU_RANK_HH

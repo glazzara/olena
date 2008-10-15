@@ -42,7 +42,7 @@ int main()
   using namespace mln;
   image2d<value::int_u8> ima(3, 3);
 
-  accu::nil_<value::int_u8> a;
+  accu::nil<value::int_u8> a;
   level::compute(a, ima);
 
   level::compute(accu::meta::nil(), ima);

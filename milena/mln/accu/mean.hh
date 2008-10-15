@@ -58,17 +58,17 @@ namespace mln
     template <typename T,
 	      typename S = mln_sum(T),
 	      typename M = S>
-    struct mean_ : public mln::accu::internal::base< M , mean_<T,S,M> >
+    struct mean : public mln::accu::internal::base< M , mean<T,S,M> >
     {
       typedef T argument;
 
-      mean_();
+      mean();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument& t);
-      void take(const mean_<T,S,M>& other);
+      void take(const mean<T,S,M>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -80,14 +80,14 @@ namespace mln
 
     protected:
 
-      accu::count_<T> count_;
-      accu::sum_<T,S>   sum_;
+      accu::count<T> count_;
+      accu::sum<T,S>   sum_;
     };
 
 
 
     template <typename I, typename S, typename M>
-    struct mean_< util::pix<I>, S,M >;
+    struct mean< util::pix<I>, S,M >;
 
 
     namespace meta
@@ -101,7 +101,7 @@ namespace mln
 		   typename M = S >
 	struct with
 	{
-	  typedef mean_<T,S,M> ret;
+	  typedef accu::mean<T,S,M> ret;
 	};
       };
 
@@ -112,7 +112,7 @@ namespace mln
 
     template <typename T, typename S, typename M>
     inline
-    mean_<T,S,M>::mean_()
+    mean<T,S,M>::mean()
     {
       init();
     }
@@ -120,7 +120,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     void
-    mean_<T,S,M>::init()
+    mean<T,S,M>::init()
     {
       count_.init();
       sum_.init();
@@ -128,7 +128,7 @@ namespace mln
 
     template <typename T, typename S, typename M>
     inline
-    void mean_<T,S,M>::take(const argument& t)
+    void mean<T,S,M>::take(const argument& t)
     {
       count_.take(t);
       sum_.take(t);
@@ -137,7 +137,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     void
-    mean_<T,S,M>::take(const mean_<T,S,M>& other)
+    mean<T,S,M>::take(const mean<T,S,M>& other)
     {
       count_.take(other.count_);
       sum_.take(other.sum_);
@@ -146,7 +146,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     M
-    mean_<T,S,M>::to_result() const
+    mean<T,S,M>::to_result() const
     {
       return sum_.to_result() / count_.to_result();
     }
@@ -154,7 +154,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     bool
-    mean_<T,S,M>::is_valid() const
+    mean<T,S,M>::is_valid() const
     {
       return count_.to_result() != 0;
     }

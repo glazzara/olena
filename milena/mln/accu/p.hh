@@ -52,19 +52,19 @@ namespace mln
      * The parameter \c V is the type of values.
      */
     template <typename A>
-    struct p_ : public mln::accu::internal::base< const mln_result(A)& , p_<A> >
+    struct p : public mln::accu::internal::base< const mln_result(A)& , p<A> >
     {
       typedef mln_argument(A)  argument;
 
-      p_();
-      p_(const A& a);
+      p();
+      p(const A& a);
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const p_<A>& other);
+      void take(const p<A>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -79,32 +79,36 @@ namespace mln
     };
 
 
-    /*!
-     * \brief Meta accumulator for p.
-     */
-    template <typename mA>
-    struct p : public Meta_Accumulator< p<mA> >
+    namespace meta
     {
-      template <typename V>
-      struct with
+
+      /// Meta accumulator for p.
+
+      template <typename mA>
+      struct p : public Meta_Accumulator< p<mA> >
       {
-	typedef mln_accu_with(mA, mln_psite(V)) ret;
+	template <typename V>
+	struct with
+	{
+	  typedef p<V> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A>
     inline
-    p_<A>::p_()
+    p<A>::p()
     {
       init();
     }
 
     template <typename A>
     inline
-    p_<A>::p_(const A& a)
+    p<A>::p(const A& a)
       : a_(a)
     {
       init();
@@ -113,7 +117,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::init()
+    p<A>::init()
     {
       a_.init();
     }
@@ -121,7 +125,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take_as_init(const argument& t)
+    p<A>::take_as_init(const argument& t)
     {
       a_.take_as_init(t.p()); // FIXME: Generalize with "psite(t)".
     }
@@ -129,7 +133,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take(const argument& t)
+    p<A>::take(const argument& t)
     {
       a_.take(t.p());
     }
@@ -137,7 +141,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take(const p_<A>& other)
+    p<A>::take(const p<A>& other)
     {
       a_.take(other.a_);
     }
@@ -145,7 +149,7 @@ namespace mln
     template <typename A>
     inline
     const mln_result(A)&
-    p_<A>::to_result() const
+    p<A>::to_result() const
     {
       return a_.to_result();
     }
@@ -153,7 +157,7 @@ namespace mln
     template <typename A>
     inline
     bool
-    p_<A>::is_valid() const
+    p<A>::is_valid() const
     {
       return a_.is_valid();
     }

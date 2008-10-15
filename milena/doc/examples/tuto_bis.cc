@@ -50,7 +50,7 @@ namespace mln
 	  ima.at(nrows, c) = v;
 	}
     }
-    
+
   } // mln::border
 
   namespace accu
@@ -63,7 +63,7 @@ namespace mln
 	    const Image<L>& label_,
 	    V& v)
     {
-      mlc_is_a(A_, Meta_Accumulator)::check();      
+      mlc_is_a(A_, Meta_Accumulator)::check();
       trace::entering("accu::compute");
 
       const I& input = exact(input_);
@@ -94,7 +94,7 @@ namespace mln
     {
       mln_concrete(I) output;
       initialize(output, input);
-      accu::min_max_<mln_value(I)> mm;
+      accu::min_max<mln_value(I)> mm;
 
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);
@@ -117,7 +117,7 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      accu::max_<V> m;
+      accu::max<V> m;
 
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);

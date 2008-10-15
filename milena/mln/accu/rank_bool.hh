@@ -28,7 +28,7 @@
 #ifndef MLN_ACCU_RANK_BOOL_HH
 # define MLN_ACCU_RANK_BOOL_HH
 
-/*! \file mln/accu/rank_bool.hh
+/*! \file mln/accu/rankbool.hh
  *
  * \brief Define an rank accumulator.
  */
@@ -47,24 +47,24 @@ namespace mln
   {
 
     // Fwd declaration.
-    template <typename T> struct rank_;
+    template <typename T> struct rank;
 
     /*! \brief rank accumulator class for boolean.
      *
      */
     template <>
-    struct rank_<bool> : public mln::accu::internal::base< bool, rank_<bool> >
+    struct rank<bool> : public mln::accu::internal::base< bool, rank<bool> >
     {
       typedef bool argument;
 
-      rank_(unsigned k, unsigned n);
+      rank(unsigned k, unsigned n);
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const rank_<bool>& other);
+      void take(const rank<bool>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -84,7 +84,7 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    rank_<bool>::rank_(unsigned k, unsigned n)
+    rank<bool>::rank(unsigned k, unsigned n)
       : nfalse_(0),
 	k_(k),
 	n_(n)
@@ -96,21 +96,21 @@ namespace mln
 
     inline
     void
-    rank_<bool>::init()
+    rank<bool>::init()
     {
       nfalse_ = 0;
     }
 
 
     inline
-    void rank_<bool>::take_as_init(const argument& t)
+    void rank<bool>::take_as_init(const argument& t)
     {
       nfalse_ += !t;
     }
 
 
     inline
-    void rank_<bool>::take(const argument& t)
+    void rank<bool>::take(const argument& t)
     {
       nfalse_ += !t;
     }
@@ -118,7 +118,7 @@ namespace mln
 
     inline
     void
-    rank_<bool>::take(const rank_<bool>& other)
+    rank<bool>::take(const rank<bool>& other)
     {
       nfalse_ += other.nfalse_;
     }
@@ -126,7 +126,7 @@ namespace mln
 
     inline
     bool
-    rank_<bool>::to_result() const
+    rank<bool>::to_result() const
     {
       mln_assertion(nfalse_ <= n_);
       return k_ >= nfalse_;
@@ -134,7 +134,7 @@ namespace mln
 
     inline
     bool
-    rank_<bool>::is_valid() const
+    rank<bool>::is_valid() const
     {
       return nfalse_ <= n_;
     }

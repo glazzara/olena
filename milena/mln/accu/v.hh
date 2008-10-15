@@ -49,19 +49,19 @@ namespace mln
 
     /// Generic val of accumulators.
     template <typename A>
-    struct val_ : public mln::accu::internal::base< const mln_result(A)& , val_<A> >
+    struct val : public mln::accu::internal::base< const mln_result(A)& , val<A> >
     {
       typedef mln_argument(A)  argument;
 
-      val_();
-      val_(const A& a);
+      val();
+      val(const A& a);
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const val_<A>& other);
+      void take(const val<A>& other);
       template <typename I>
       void take_as_init(const util::pix<I>& pix);
       template <typename I>
@@ -92,7 +92,7 @@ namespace mln
 	  struct with
 	  {
 	    typedef mln_accu_with(mA, mln_value(V)) A;
-	    typedef val_<A> ret;
+	    typedef val<A> ret;
 	  };
       };
 
@@ -102,14 +102,14 @@ namespace mln
 
     template <typename A>
     inline
-    val_<A>::val_()
+    val<A>::val()
     {
       init();
     }
 
     template <typename A>
     inline
-    val_<A>::val_(const A& a)
+    val<A>::val(const A& a)
       : a_(a)
     {
       init();
@@ -118,7 +118,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::init()
+    val<A>::init()
     {
       a_.init();
     }
@@ -126,7 +126,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take_as_init(const argument& t)
+    val<A>::take_as_init(const argument& t)
     {
       a_.take_as_init(t);
     }
@@ -134,7 +134,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take(const argument& t)
+    val<A>::take(const argument& t)
     {
       a_.take(t);
     }
@@ -142,7 +142,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take(const val_<A>& other)
+    val<A>::take(const val<A>& other)
     {
       a_.take(other.a_);
     }
@@ -151,7 +151,7 @@ namespace mln
     template <typename I>
     inline
     void
-    val_<A>::take_as_init(const util::pix<I>& pix)
+    val<A>::take_as_init(const util::pix<I>& pix)
     {
       a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
     }
@@ -160,7 +160,7 @@ namespace mln
     template <typename I>
     inline
     void
-    val_<A>::take(const util::pix<I>& pix)
+    val<A>::take(const util::pix<I>& pix)
     {
       a_.take(pix.v());
     }
@@ -168,7 +168,7 @@ namespace mln
     template <typename A>
     inline
     const mln_result(A)&
-    val_<A>::to_result() const
+    val<A>::to_result() const
     {
       return a_.to_result();
     }
@@ -176,7 +176,7 @@ namespace mln
     template <typename A>
     inline
     bool
-    val_<A>::is_valid() const
+    val<A>::is_valid() const
     {
       return a_.is_valid();
     }

@@ -60,7 +60,7 @@ namespace mln
 				  std::size_t lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef accu::count_adjacent_vertices_<P, V> attribute_t;
+      typedef accu::count_adjacent_vertices<P, V> attribute_t;
       // FIXME: Change sig of opening_attribute!
       opening_attribute<attribute_t>(input, nbh, lambda, output);
     }

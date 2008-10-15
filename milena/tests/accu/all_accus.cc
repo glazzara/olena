@@ -39,16 +39,16 @@ int main()
   using namespace mln::accu;
 
   bbox<point2d> b;
-  count_<int> c;
+  count<int> c;
   mln::accu::histo<bool> h;
-  max_<int> ma;
-  mean_<int> me;
+  max<int> ma;
+  mean<int> me;
   // median< value::set<bool> > med; // FIXME: bool has no min so workaround!
-  min_<int> mi;
+  min<int> mi;
   // min_h< value::set<bool> > mh;   // OK: do not work since bool has
                                      // no min/max :)
-  min_max_<int> mm;
-  nil_<int> n;
-  pair_< min_<int>, max_<int> > p;
-  sum_<int> s;
+  min_max<int> mm;
+  nil<int> n;
+  pair< min<int>, max<int> > p;
+  sum<int> s;
 }

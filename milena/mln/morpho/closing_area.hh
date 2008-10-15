@@ -63,7 +63,7 @@ namespace mln
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef util::pix<I> pix_t;
       // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      closing_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
     }
 
     template <typename I, typename N>

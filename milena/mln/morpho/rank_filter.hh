@@ -69,7 +69,7 @@ namespace mln
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  accu::rank_<mln_value(I)> accu(k, convert::to_p_array(win, mln_psite(I)()).nsites());
+	  accu::rank<mln_value(I)> accu(k, convert::to_p_array(win, mln_psite(I)()).nsites());
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  for_all(p)

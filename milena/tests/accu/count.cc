@@ -40,12 +40,12 @@ int main()
   using namespace mln;
 
   {
-    accu::count_<value::int_u8> accu;
+    accu::count<value::int_u8> accu;
     mln_assertion(accu.to_result() == 0);
   }
 
   {
-    accu::count_<value::int_u8> accu;
+    accu::count<value::int_u8> accu;
     for (int i = 0; i < 200; i++)
       accu.take(i);
     mln_assertion(accu.to_result() == 200);

@@ -59,7 +59,7 @@ namespace mln
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef util::pix<I> pix_t;
       // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      opening_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
