@@ -80,6 +80,12 @@ namespace mln
 
 	I& ima = exact(ima_);
 	internal::fill_with_value_tests(ima, val);
+        mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
+                                  trait::image::pw_io::read_write)::value ||
+                           mlc_is(mln_trait_image_vw_io(I),
+                                  trait::image::vw_io::read_write)::value) &&
+                          mlc_is(mln_trait_image_value_access(I),
+                                 trait::image::value_access::direct)::value));
 
         level::memset_(ima, ima.point_at_index(0), val, ima.nelements());
 
@@ -93,6 +99,7 @@ namespace mln
 	trace::entering("level::impl::fill_with_value_cell_wise");
 
 	I& ima = exact(ima_);
+
 	internal::fill_with_value_tests(ima, val);
 
 	mln_viter(I) v(ima.cells());
@@ -109,7 +116,14 @@ namespace mln
         trace::entering("level::impl::fill_with_value_singleton");
 
 	I& ima = exact(ima_);
+
 	internal::fill_with_value_tests(ima, val);
+        mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
+                                  trait::image::pw_io::read_write)::value ||
+                           mlc_is(mln_trait_image_vw_io(I),
+                                  trait::image::vw_io::read_write)::value) &&
+                          mlc_is(mln_trait_image_value_access(I),
+                                 trait::image::value_access::direct)::value));
 
 	ima.val() = val;
 
@@ -147,12 +161,6 @@ namespace mln
                                     trait::image::vw_io::any,
                                     Image<I>& ima, const V& val)
       {
-        if ((mlc_is(mln_trait_image_pw_io(I),
-                    trait::image::pw_io::read_write)::value ||
-             mlc_is(mln_trait_image_vw_io(I),
-                    trait::image::vw_io::read_write)::value) &&
-            mlc_is(mln_trait_image_value_access(I),
-                   trait::image::value_access::direct)::value)
           impl::fill_with_value_singleton(ima, val);
       }
 
@@ -161,7 +169,7 @@ namespace mln
                                     trait::image::vw_io::any,
                                     Image<I>& ima, const V& val)
       {
-        /// FIXME
+        impl::generic::fill_with_value(ima, val);
       }
 
 

@@ -220,6 +220,7 @@ namespace mln
 
         /// Deal with image not updated
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::undef,
                                 mln::trait::image::quant::any,
                                 const Image<I>& input,
@@ -230,6 +231,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::vw_set::any,
                                 mln::trait::image::quant::any,
                                 const Image<I>& input,
@@ -240,6 +242,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::vw_set::uni,
                                 mln::trait::image::quant::any,
                                 const Image<I>& input,
@@ -251,6 +254,7 @@ namespace mln
 
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::vw_set::none,
                                 mln::trait::image::quant::low,
                                 const Image<I>& input,
@@ -261,6 +265,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch_oneblock(mln::trait::image::quant::any,
                                          const Image<I>& input,
                                          const Function_v2v<F>& f,
@@ -270,6 +275,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch_oneblock(mln::trait::image::quant::low,
                                          const Image<I>& input,
                                          const Function_v2v<F>& f,
@@ -280,6 +286,7 @@ namespace mln
 
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::value_storage::any,
                                 mln::trait::image::value_storage::any,
                                 const Image<I>& input,
@@ -292,6 +299,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::value_storage::singleton,
                                 mln::trait::image::value_storage::any,
                                 const Image<I>& input,
@@ -302,6 +310,7 @@ namespace mln
         }
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(mln::trait::image::value_storage::one_block,
                                 mln::trait::image::value_storage::one_block,
                                 const Image<I>& input_,
@@ -352,6 +361,7 @@ namespace mln
 
 
         template <typename I, typename F, typename O>
+        inline
         void transform_dispatch(const Image<I>& input,
                                 const Function_v2v<F>& f,
                                 Image<O>& output)

@@ -1,5 +1,14 @@
 2008-10-15  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Fix a bug in the fill_with_value dispatch.
+
+	* tests/level/transform.cc: Add a test.
+	* mln/level/transform.spe.hh: Inline the dispatch functions.
+	* mln/level/fill_with_value.spe.hh,
+	* mln/level/fill_with_value.hh: Fix...
+
+2008-10-15  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Update dispatch in the transform algo according to image properties.
 
 	* tests/level/transform.cc: Add tests.

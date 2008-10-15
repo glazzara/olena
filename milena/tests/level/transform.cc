@@ -73,7 +73,7 @@ int main()
     (std::cout << "checking... ").flush();
     box_fwd_piter_<point2d> p(out.domain());
     for_all(p)
-        mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+      mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
     std::cout << "done" << std::endl;
   }
 
@@ -93,6 +93,18 @@ int main()
     box2d::piter p(out.domain());
     for_all(p)
       mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
+    std::cout << "done" << std::endl;
+  }
+
+  {
+    image2d<unsigned short> ima(size, size);
+
+    (std::cout << "fill... ").flush();
+    level::fill_with_value(ima, 51);
+    std::cout << "done" << std::endl;
+
+    (std::cout << "transform... ").flush();
+    level::transform(ima, mysqrt());
     std::cout << "done" << std::endl;
   }
 
