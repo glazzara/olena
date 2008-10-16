@@ -25,9 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/complex_image_morpho.cc
-/// \brief Test of mln::complex_image with morphological filters.
+/// \file tests/core/image/p_complex.cc
+/// \brief Test of mln::p_complex and mln::geom::complex_geometry.
 
+#include <algorithm>
+#include <iterator>
 #include <iostream>
 
 #include <mln/value/int_u8.hh>
@@ -36,23 +38,9 @@
 #include <mln/core/site_set/p_faces.hh>
 #include <mln/core/image/complex_image.hh>
 
-// FIXME: Include these elsewhere? (In complex_image.hh?)
-#include <mln/core/image/complex_lower_window_p.hh>
-#include <mln/core/image/complex_higher_window_p.hh>
-#include <mln/core/image/complex_lower_higher_window_p.hh>
-#include <mln/core/image/complex_window_piter.hh>
-
-#include <mln/debug/iota.hh>
-
-#include <mln/morpho/erosion.hh>
-#include <mln/morpho/dilation.hh>
-
-/* FIXME: Factor common parts with
-   milena/tests/core/image/complex_image.cc  */
-
-// Forward declaration.
-template <typename I, typename W>
-void test_morpho(const mln::Image<I>& ima, const mln::Window<W> win);
+/* FIXME: Split this test (and maybe factor common parts, like the
+   construction of the complex), since it exercises too many features
+   in a single file.  */
 
 
 int main()
@@ -92,7 +80,7 @@ int main()
   topo::n_face<0, D> v1 = c.add_face();
   topo::n_face<0, D> v2 = c.add_face();
   topo::n_face<0, D> v3 = c.add_face();
-
+ 
   // 1-faces (segments).
   topo::n_face<1, D> e0 = c.add_face(v0 + v1);
   topo::n_face<1, D> e1 = c.add_face(v0 + v2);
@@ -105,9 +93,9 @@ int main()
   topo::n_face<2, D> t1 = c.add_face(e1 + e3 + e4);
 
 
-  /*-------------------------.
-  | Complex-based site set.  |
-  `-------------------------*/
+  /*------------------------------.
+  | Complex geometry (location).  |
+  `------------------------------*/
 
   typedef point2d P;
   typedef geom::complex_geometry<D, P> G;
@@ -116,72 +104,24 @@ int main()
   geom.add_location(point2d(2,0)); // 0-face #1.
   geom.add_location(point2d(2,2)); // 0-face #2.
   geom.add_location(point2d(0,3)); // 0-face #3. 
+
+
+  /*---------------------.
+  | Complex-based pset.  |
+  `---------------------*/
+
+  // A pset.
   p_complex<D, G> pc(c, geom);
 
-
-  /*----------------------.
-  | Complex-based image.  |
-  `----------------------*/
-
-  using mln::value::int_u8;
-
-  // An image type built on a 2-complex with mln::int_u8 values on
-  // each face.
-  typedef complex_image<D, G, int_u8> ima_t;
-  ima_t ima(pc);
-  // Initialize values.
-  debug::iota(ima);
-
-  /* Values of IMA.
-
-	      v0      e3     v3             1      8      4
-		o-----------o                o-----------o
-	       / \ ,-----. /                / \ ,-----. /
-	      / . \ \ t1/ /                / . \ \ 11/ /
-	  e0 / / \ e1\ / / e4           5 / / \ 6 \ / / 9
-	    / /t0 \ \ ' /                / /10 \ \ ' /
-	   / `-----' \ /                / `-----' \ /
-	  o-----------o                o-----------o
-       v1      e2      v2	     2      7       3
-
-  */
-
-  // Manual iteration over the domain of IMA.
-  mln_piter_(ima_t) p(ima.domain());
-  for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
-  std::cout << std::endl << std::endl;
-
-  /*---------------------------------------------------.
-  | Morphological operations on complex-based images.  |
-  `---------------------------------------------------*/
-
-  test_morpho(ima, complex_lower_window_p<D, G>());
-  test_morpho(ima, complex_higher_window_p<D, G>());
-  test_morpho(ima, complex_lower_higher_window_p<D, G>());
-
-  /* FIXME: Exercise elementary erosion/dilation (with neighborhoods)
-     when available.  */
-}
-
-
-template <typename I, typename W>
-void
-test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win)
-{
-  const I& ima = exact(ima_);
-  mln_assertion(ima.has_data());
-  mln_piter(I) p(ima.domain());
-
-  mln_concrete(I) ima_dil = mln::morpho::dilation(ima, win);
-  // Manual iteration over the domain of IMA_DIL.
-  for_all (p)
-    std::cout << "ima_dil (" << p << ") = " << ima_dil(p) << std::endl;
-  std::cout << std::endl;
-
-  mln_concrete(I) ima_ero = mln::morpho::erosion(ima, win);
-  // Manual iteration over the domain of IMA_ERO.
-  for_all (p)
-    std::cout << "ima_ero (" << p << ") = " << ima_ero(p) << std::endl;
-  std::cout << std::endl << std::endl;
+  // An iterator on this pset.
+  p_complex_fwd_piter_<D, G> p(pc);
+  for_all(p)
+  {
+    std::cout << p << ": ";
+    // Print site(s).
+    mln_site_(G) s(p);
+    std::copy (s.sites.begin(), s.sites.end(),
+	       std::ostream_iterator<P>(std::cout, " "));
+    std::cout << std::endl;
+  }
 }

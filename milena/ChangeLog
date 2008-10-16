@@ -1,5 +1,17 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::geom::complex_geometry with mln::p_complex.
+
+	* tests/core/image/complex_image.cc,
+	* tests/morpho/complex_image_morpho.cc:
+	...here.
+	Adjust: s/P/G/.
+	* tests/core/site_set/p_complex.cc: New.
+	* tests/core/site_set/Makefile.am (check_PROGRAMS): Add p_complex.
+	(p_complex_SOURCES): New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have complex-based site set use geometry functor for site location.
 
 	* mln/core/site_set/p_complex.hh

@@ -57,15 +57,17 @@ int main()
 
   /* A 2-d (simplicial) complex and its adjacency graph.
 
-              v0      e3     v3
-                o-----------o                v0----e3----v3      
-               / \ ,-----. /                / \    |    /   
-              / . \ \ t1/ /                /   \   t1  /    
-          e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
-            / /t0 \ \ ' /                /   t0  \   /      
-           / `-----' \ /                /    |    \ /       
-          o-----------o                v1----e2----v2
-       v1      e2      v2
+       c   0     1     2     3
+     r .------------------------
+       |        v0      e3     v3
+     0 |         o-----------o                v0----e3----v3      
+       |        / \ ,-----. /                / \    |    /   
+       |       / . \ \ t1/ /                /   \   t1  /    
+     1 |   e0 / / \ e1\ / / e4             e0.  ,e1´  `e4  
+       |     / /t0 \ \ ' /                /   t0  \   /      
+       |    / `-----' \ /                /    |    \ /       
+     2 |   o-----------o                v1----e2----v2
+       | v1     e2      v2
 
        v = vertex
        e = edge
@@ -94,18 +96,29 @@ int main()
   topo::n_face<2, D> t0 = c.add_face(e0 + e1 + e2);
   topo::n_face<2, D> t1 = c.add_face(e1 + e3 + e4);
 
-  
+
+  /*------------------------------.
+  | Complex geometry (location).  |
+  `------------------------------*/
+
+  typedef point2d P;
+  typedef geom::complex_geometry<D, P> G;
+  G geom;
+  geom.add_location(point2d(0,1)); // 0-face #0.
+  geom.add_location(point2d(2,0)); // 0-face #1.
+  geom.add_location(point2d(2,2)); // 0-face #2.
+  geom.add_location(point2d(0,3)); // 0-face #3. 
+
+
   /*---------------------.
   | Complex-based pset.  |
   `---------------------*/
 
-  typedef point2d P;
-
   // A pset.
-  p_complex<D, P> pc(c);
+  p_complex<D, G> pc(c, geom);
   topo::face<D> af(e0);
   // An associated psite.
-  complex_psite<D, P> cs(pc, af);
+  complex_psite<D, G> cs(pc, af);
 
 
   /*--------------------.
@@ -117,16 +130,16 @@ int main()
      of the test?  */
 
   // Pset of 0-faces.
-  p_faces<0, D, P> pf0(c);
+  p_faces<0, D, G> pf0(c);
   // Pset of 1-faces.
-  p_faces<1, D, P> pf1(c);
+  p_faces<1, D, G> pf1(c);
   // Pset of 2-faces.
-  p_faces<2, D, P> pf2(c);
+  p_faces<2, D, G> pf2(c);
 
   // Some psites on faces.
-  faces_psite<0, D, P> fs0(pf0, v0);
-  faces_psite<1, D, P> fs1(pf1, e0);
-  faces_psite<2, D, P> fs2(pf2, t0);
+  faces_psite<0, D, G> fs0(pf0, v0);
+  faces_psite<1, D, G> fs1(pf1, e0);
+  faces_psite<2, D, G> fs2(pf2, t0);
 
 
   /*----------------------.
@@ -137,7 +150,7 @@ int main()
 
   // An image type built on a 2-complex with mln::int_u8 values on
   // each face.
-  typedef complex_image<D, P, int_u8> ima_t;
+  typedef complex_image<D, G, int_u8> ima_t;
 
   // Values.
   metal::vec<D + 1, std::vector< int_u8 > > values;
@@ -179,8 +192,8 @@ int main()
   // Dynamic version.
   for (unsigned n = 0; n <= D; ++n)
     {
-      p_n_faces_fwd_piter<D, P> fwd_np(ima.domain(), n);
-      p_n_faces_bkd_piter<D, P> bkd_np(ima.domain(), n);
+      p_n_faces_fwd_piter<D, G> fwd_np(ima.domain(), n);
+      p_n_faces_bkd_piter<D, G> bkd_np(ima.domain(), n);
       for_all_2(fwd_np, bkd_np)
 	std::cout << "ima(" << fwd_np << ") = " << ima(fwd_np) << '\t'
 		  << "ima(" << bkd_np << ") = " << ima(bkd_np)
@@ -192,7 +205,7 @@ int main()
 // FIXME: Disabled (moved to the attic).
 # if 0
   // FIXME: Sugar the name of the iterator.
-  p_complex_faces_fwd_piter_<0, D, P> f0p(ima.domain());
+  p_complex_faces_fwd_piter_<0, D, G> f0p(ima.domain());
   for_all(f0p)
     std::cout << "ima(" << f0p << ") = " << ima(f0p) << std::endl;
 #endif
@@ -211,7 +224,7 @@ int main()
 
   // Iterate on the lower-dimension faces of each face.
   {
-    typedef complex_lower_neighborhood<D, P> nbh_t;
+    typedef complex_lower_neighborhood<D, G> nbh_t;
     nbh_t nbh;
     mln_fwd_niter_(nbh_t) fn(nbh, fp);
     mln_bkd_niter_(nbh_t) bn(nbh, fp);
@@ -221,9 +234,9 @@ int main()
       for_all_2(fn, bn)
 	{
 	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  std::cout << "  " << fn << '\t' << bn << std::endl;
 	}
     }
@@ -232,7 +245,7 @@ int main()
 
   // Iterate on the higher-dimension faces of each face.
   {
-    typedef complex_higher_neighborhood<D, P> nbh_t;
+    typedef complex_higher_neighborhood<D, G> nbh_t;
     nbh_t nbh;
     mln_fwd_niter_(nbh_t) fn(nbh, fp);
     mln_bkd_niter_(nbh_t) bn(nbh, fp);
@@ -242,9 +255,9 @@ int main()
       for_all_2(fn, bn)
 	{
 	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  std::cout << "  " << fn << '\t' << bn << std::endl;
 	}
     }
@@ -253,7 +266,7 @@ int main()
 
   // Iterate on the lower- and higher-dimension faces of each face.
   {
-    typedef complex_lower_higher_neighborhood<D, P> nbh_t;
+    typedef complex_lower_higher_neighborhood<D, G> nbh_t;
     nbh_t nbh;
     mln_fwd_niter_(nbh_t) fn(nbh, fp);
     mln_bkd_niter_(nbh_t) bn(nbh, fp);
@@ -264,9 +277,9 @@ int main()
       for_all_2(fn, bn)
 	{
 	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, P>&>(fp)));
+			 static_cast<const complex_psite<D, G>&>(fp)));
 	  std::cout << "  " << fn << '\t' << bn << std::endl;
 	}
     }
