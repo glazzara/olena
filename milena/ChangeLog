@@ -1,5 +1,14 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::io::load on OFF file (with no color data).
+
+	* tests/io/Makefile.am (SUBDIRS): Add io.
+	* tests/io/off/: New directory.
+	* tests/io/off/load_bin.cc: New.
+	* tests/io/off/Makefile.am: New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a routine to create a complex-based image from an OFF file.
 
 	* mln/io/off/load.hh: New.
