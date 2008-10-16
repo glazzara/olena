@@ -1,5 +1,11 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a functor encoding the geometry of a complex using its 0-faces.
+
+	* mln/geom/complex_geometry.hh: New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a multiple-site type.
 
 	* mln/util/multi_site.hh: New.
