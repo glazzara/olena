@@ -153,6 +153,12 @@ namespace mln
       void print_faces(std::ostream& ostr) const;
       /// \}
 
+      /// \brief Get the address of the data of this complex.
+      ///
+      /// This address is a concise and useful information to print
+      /// and track the actual content of this complex.
+      const void* addr() const;
+
     private:
       /// The actual data of the complex.
       util::tracked_ptr< internal::complex_data<D> > data_;
@@ -679,6 +685,14 @@ namespace mln
       metal::bool_< N <= D >::check();
 
       data_->internal::faces_set_mixin<N, D>::print(ostr);
+    }
+
+    template <unsigned D>
+    inline
+    const void* 
+    complex<D>::addr() const
+    {
+      return data_.ptr_;
     }
 
 

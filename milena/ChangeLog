@@ -1,5 +1,9 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/topo/complex.hh (mln::complex<D>::addr): New accessor.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have mln::point be more generic.
 
 	* mln/core/point.hh: Fix a name in documentation.
