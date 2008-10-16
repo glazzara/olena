@@ -211,8 +211,7 @@ namespace mln
       ///
       /// \pre \p N must be lower or equal to \p D.
       template <unsigned N>
-      void connect_(const n_face<N, D>& f1,
-		    const n_face<N + 1, D>& f2);
+      void connect_(const n_face<N, D>& f1, const n_face<N + 1, D>& f2);
     };
 
 
@@ -502,7 +501,7 @@ namespace mln
 	for (iter_t a = adjacent_faces.faces().begin();
 	     a != adjacent_faces.faces().end(); ++a)
 	  {
-	    mln_precondition(&a->cplx() == this);
+	    mln_precondition(a->cplx() == *this);
 	    mln_precondition(a->is_valid());
 	  }
 
@@ -630,8 +629,7 @@ namespace mln
     template <unsigned N>
     inline
     void
-    complex<D>::connect_(const n_face<N, D>& f1,
-			 const n_face<N + 1, D>& f2)
+    complex<D>::connect_(const n_face<N, D>& f1, const n_face<N + 1, D>& f2)
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();

@@ -1,5 +1,15 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a precondition in complex construction (add_face).
+
+	* mln/topo/complex.hh
+	(mln::complex<D>::add_face(const n_faces_set<N, D>&)):
+	Don't compare pointers-on-complex in precondition, compare the
+	complexes themselves.
+	Aesthetic changes.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/topo/complex.hh (mln::complex<D>::addr): New accessor.
 
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
