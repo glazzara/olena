@@ -56,7 +56,15 @@ namespace mln
     class n_faces_set
     {
     public:
+      /// \brief Append face \a f to the set.
       void add(const n_face<N, D>& f);
+
+      /// \brief Reserve \a n cells in the set.
+      ///
+      /// This methods does not change the content of \a faces_; it
+      /// only pre-allocate memory.  Method reserve is provided for
+      /// efficiency purpose, and its use is completely optional.
+      void reserve(size_t n);
 
       /// \brief Accessors.
       ///
@@ -82,6 +90,10 @@ namespace mln
     template <unsigned N, unsigned D>
     n_faces_set<N, D>
     operator+(const n_faces_set<N, D>& fs, const n_face<N, D>& f);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>&
+    operator+=(n_faces_set<N, D>& fs, const n_face<N, D>& f);
     /// \}
 
 
@@ -97,6 +109,14 @@ namespace mln
       if (!faces_.empty())
 	mln_precondition(faces_.front().cplx() == f.cplx());
       faces_.push_back(f);
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    void
+    n_faces_set<N, D>::reserve(size_t n)
+    {
+      faces_.reserve(n);
     }
 
     template <unsigned N, unsigned D>
@@ -127,6 +147,14 @@ namespace mln
       n_faces_set<N, D> fs2(fs);
       fs2.add(f);
       return fs2;
+    }
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>&
+    operator+=(n_faces_set<N, D>& fs, const n_face<N, D>& f)
+    {
+      fs.add(f);
+      return fs;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

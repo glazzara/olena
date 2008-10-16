@@ -1,5 +1,14 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more services to mln::topo::n_faces_set.
+
+	* mln/topo/n_faces_set.hh
+	(mln::topo::n_faces_set<N, D>::reserve)
+	(operator+=(n_faces_set<N, D>&, const n_face<N, D>&)):
+	New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add more services to mln::topo::n_face.
 
 	* mln/topo/n_face.hh
