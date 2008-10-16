@@ -30,10 +30,13 @@
 
 # include <string>
 
-/** \brief The absolute path to the img directory of Milena.
+/* Macros are evil, but they save us an extra compilation unit here
+   (as well as additional burden in Makefiles, too.).  */
 
-    Macros are evil, but they save us an extra compilation unit here
-    (as well as additional burden in Makefiles, too.).  */
+/// \brief The absolute path to the img directory of Milena.
 # define MLN_IMG_DIR "@abs_top_srcdir@/milena/img"
+
+/// \brief The absolute path to the mesh directory of Milena.
+# define MLN_MESH_DIR "@abs_top_srcdir@/milena/mesh"
 
 #endif // ! TESTS_DATA_HH
