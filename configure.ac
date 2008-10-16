@@ -191,6 +191,7 @@ AC_CONFIG_FILES([
     milena/tests/histo/Makefile
     milena/tests/io/Makefile
       milena/tests/io/fits/Makefile
+      milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
       milena/tests/io/pfm/Makefile
       milena/tests/io/pgm/Makefile

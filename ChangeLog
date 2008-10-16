@@ -1,3 +1,7 @@
+2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/io/off/Makefile.
+
 2008-16-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix ambiguous namespaces.
