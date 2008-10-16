@@ -1,13 +1,21 @@
 2008-16-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix ambiguous namespaces.
+	* milena/mln/level/fill_with_image.hh
+	* milena/mln/level/paste.hh:
+	Fix compilation error. It could not resolve the correct namespace
+	path.
+
+2008-16-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tutorial.
-	* samples/ima2d-1.tex,
-	* samples/ima2d-3.tex,
-	* samples/paste-call-1.tex,
-	* samples/point-1.tex:
+	* milena/doc/tutorial/samples/ima2d-1.tex,
+	* milena/doc/tutorial/samples/ima2d-3.tex,
+	* milena/doc/tutorial/samples/paste-call-1.tex,
+	* milena/doc/tutorial/samples/point-1.tex:
 	Add new sample code.
 
-	* tutorial.tex:
+	* milena/doc/tutorial/tutorial.tex:
 	Mainly update image chapter.
 	Cleanup source.
 

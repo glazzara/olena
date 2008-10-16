@@ -103,7 +103,7 @@ namespace mln
 	{
 	  trace::entering("level::impl::generic::paste");
 
-	  internal::paste_tests(data_, destination_);
+	  level::internal::paste_tests(data_, destination_);
 	  const I& data  = exact(data_);
 	  J& destination = exact(destination_);
 

@@ -103,7 +103,7 @@ namespace mln
 	  I& ima = exact(ima_);
 	  const J& data = exact(data_);
 
-	  internal::fill_with_image_tests(ima, data);
+	  level::internal::fill_with_image_tests(ima, data);
 
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
