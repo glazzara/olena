@@ -115,7 +115,10 @@ namespace mln
       private:
 	friend class mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
 	friend class mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>;
-	// FIXME: Rename as lower_dim_adj_faces_?
+	friend std::vector< n_face<N - 1, D> >
+	mln::topo::n_face<N, D>::lower_dim_adj_faces() const;
+
+	// FIXME: Rename as lower_dim_adj_faces_ (as well as related members).
 	std::vector< n_face<N - 1, D> > lower_dim_faces_;
       };
 
@@ -127,7 +130,10 @@ namespace mln
       private:
 	friend class mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
 	friend class mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>;
-	// FIXME: Rename as higher_dim_adj_faces_?
+	friend std::vector< n_face<N + 1, D> >
+	mln::topo::n_face<N, D>::higher_dim_adj_faces() const;
+
+	// FIXME: Rename as higher_dim_adj_faces_ (as well as related members).
 	std::vector< n_face<N + 1, D> > higher_dim_faces_;
       };
       /// \}

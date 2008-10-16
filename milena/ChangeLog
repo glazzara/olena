@@ -1,5 +1,23 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add more services to mln::topo::n_face.
+
+	* mln/topo/n_face.hh
+	(mln::topo::n_face<N, D>::lower_dim_adj_faces)
+	(mln::topo::n_face<N, D>::higher_dim_adj_faces):
+	New methods.
+	(mln::topo::edge(const n_face<0, D>&, const n_face<0, D>&)):
+	New function.
+	* mln/topo/face_data.hh
+	(mln::topo::internal::lower_dim_faces_data_mixin): Make 
+	mln::topo::n_face<N, D>::lower_dim_adj_faces a friend of this
+	class.
+	(mln::topo::internal::higher_dim_faces_data_mixin): Make 
+	mln::topo::n_face<N, D>::higher_dim_adj_faces a friend of this
+	class.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Manipulate complexes as plain objects (instead of pointers) in
 	face handles.
 

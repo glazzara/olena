@@ -32,6 +32,7 @@
 /// \brief n-face of a complex.
 
 #include <limits>
+#include <vector>
 
 #include <mln/core/contract.hh>
 
@@ -93,6 +94,13 @@ namespace mln
 
       /// Return the mln::topo::face_data pointed by this handle.
       face_data<N, D>& data() const;
+
+      /* FIXME: We should not provide lower_dim_adj_faces() when N ==
+	 0 nor higher_dim_adj_faces() when N == D.  */
+      /// \Return an array of face handles pointing to adjacent (n-1)-faces.
+      std::vector< n_face<N - 1, D> > lower_dim_adj_faces() const;
+      /// Return an array of face handles pointing to adjacent (n+1)-faces.
+      std::vector< n_face<N + 1, D> > higher_dim_adj_faces() const;
       /// \}
 
     private:
@@ -145,6 +153,31 @@ namespace mln
     template <unsigned N, unsigned D>
     std::ostream&
     operator<<(std::ostream& ostr, const n_face<N, D>& f);
+
+
+    /// \brief Helpers
+    /// \{
+
+    /** \brief Return the 1-face (edge) linking the 0-faces (vertices)
+	\a f1 and \a f2.  If there is no 1-face between \a f1 and \a
+	f2, return an invalid 1-face.
+
+	\pre \a f1 and \a f2 must belong to the same complex.
+
+	Note: this routine assumes the complex is not degenerated, i.e,
+	\li it does not check that \a f1 and \a f2 are the only
+	    0-faces adjacent to an hypothetical 1-face; it just checks
+	    that \a f1 and \a f2 <em>share</em> a common 1-face;
+
+	\li if there are several ajacent 1-faces shared by \a f1 and
+            \a f2 (if the complex is ill-formed), there is no
+            guarantee on the returned 1-face (the current
+            implementation return the first 1-face found, but client
+            code should not rely on this implementation-defined
+            behavior).  */
+    template <unsigned D>
+    n_face<1, D> edge(const n_face<0, D>& f1, const n_face<0, D>& f2);
+    /// \}
 
 
 
@@ -250,6 +283,26 @@ namespace mln
       return cplx_.template face_data_<N>(face_id_);
     }
 
+    template <unsigned N, unsigned D>
+    inline
+    std::vector< n_face<N - 1, D> >
+    n_face<N, D>::lower_dim_adj_faces() const
+    {
+      mln_precondition(N > 0);
+      mln_precondition(is_valid());
+      return cplx_.template face_data_<N>(face_id_).lower_dim_faces_;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    std::vector< n_face<N + 1, D> >
+    n_face<N, D>::higher_dim_adj_faces() const
+    {
+      mln_precondition(N <= D);
+      mln_precondition(is_valid());
+      return cplx_.template face_data_<N>(face_id_).higher_dim_faces_;
+    }
+
 
     template <unsigned N, unsigned D>
     inline
@@ -298,6 +351,32 @@ namespace mln
     {
       return ostr << "(cplx = " << f.cplx().addr() << ", dim = " << f.n()
 		  << ", id = " << f.face_id() << ')';
+    }
+
+    /*----------.
+    | Helpers.  |
+    `----------*/
+
+    template <unsigned D>
+    n_face<1, D> edge(const n_face<0, D>& f1, const n_face<0, D>& f2)
+    {
+      typedef std::vector< n_face<0, D> > n0_faces_t;
+      typedef std::vector< n_face<1, D> > n1_faces_t;
+
+      n1_faces_t f1_adj_edges = f1.higher_dim_adj_faces();
+      for (typename n1_faces_t::const_iterator e = f1_adj_edges.begin();
+	   e != f1_adj_edges.end(); ++e)
+	{
+	  n0_faces_t e_adj_vertices = e->lower_dim_adj_faces();
+	  for (typename n0_faces_t::const_iterator w = e_adj_vertices.begin();
+	       w != e_adj_vertices.end(); ++w)
+	    if (*w == f2)
+	      // E is the edge linking F1 and F2.
+	      return *e;
+	}
+
+      // If no shared edge was found, retun an empty (invalid) 1-face.
+      return n_face<1, D>();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
