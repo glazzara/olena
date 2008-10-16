@@ -1,10 +1,21 @@
-image1d<char> imgb(5, 5, 14, 14);
+#include <mln/core/image/image2d.hh>
+#include <mln/make/box2d.hh>
+#include <mln/level/fill.hh>
+#include <mln/level/paste.hh>
+#include <mln/debug/println.hh>
+int main()
+{
+  using namespace mln;
 
-// We initialize the image values.
-level::fill(imgb.rw(), 'b');
+  image2d<char> imgb(make::box2d(5,5, 7,8));
+  // Initialize imga with the same domain as imgb.
+  image2d<char> imga(imgb.domain());
 
-// Last we now paste the contents of img3b in img3a...
-level::paste(imgb, imga.rw()));
+  // Initialize the image values.
+  level::fill(imgb, 'b');
 
-// ...and print the result.
-debug::println(imga);
+  // Paste the content of imgb in imga.
+  level::paste(imgb, imga);
+
+  debug::println(imga);
+}

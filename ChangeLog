@@ -1,3 +1,16 @@
+2008-16-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+	* samples/ima2d-1.tex,
+	* samples/ima2d-3.tex,
+	* samples/paste-call-1.tex,
+	* samples/point-1.tex:
+	Add new sample code.
+
+	* tutorial.tex:
+	Mainly update image chapter.
+	Cleanup source.
+
 2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* milena/mln/doc/tutorial/samples/box2d-1.tex,

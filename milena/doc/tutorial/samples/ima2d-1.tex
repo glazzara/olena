@@ -1,6 +1,12 @@
-box2d b(-2,3, 3,-5); // Define a box2d from (-2,3) to (3,-5).
-image2d<int> ima(b); // Define the domain of the image.
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/image/image2d.hh>
+int main()
+{
+  // Define a box2d from (-2,3) to (3,-5).
+  box2d b(-2,3, 3,-5);
+  // Initialize an image with b as domain.
+  image2d<int> ima(b);
 
-cout << b << std::endl; // Display b
-
-cout << ima.domain() << std::endl; // Display b too
+  cout << "b = " << b << std::endl;
+  cout << "domain = " << ima.domain() << std::endl;
+}

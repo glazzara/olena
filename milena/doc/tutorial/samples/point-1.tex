@@ -1,4 +1,18 @@
-point2d p(9, 9);
+#include <core/image/image2d.hh>
+#include <core/alias/box2d.hh>
+int main()
+{
+  using namespace mln;
 
-// which gives 'true'.
-std::cout << (imga.has(p) ? "true" : "false") << std::endl;
+  image2d<bool> ima(box2d(0,0, 10,10));
+  mln_site(image2d<bool>) p1(9, 9);
+  mln_site(image2d<bool>) p2(10, 10);
+
+  std::cout << "has(p1)? "
+	    << (img.has(p1) ? "true" : "false")
+	    << std::endl;
+
+  std::cout << "has(p2)? "
+	    << (img.has(p2) ? "true" : "false")
+	    << std::endl;
+}
