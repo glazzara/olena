@@ -1,5 +1,11 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a floating-point 3-dimensional point type.
+
+	* mln/core/alias/point3df.hh: New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a floating-point coordinate type.
 
 	* mln/core/def/coordf.hh: New.
