@@ -1,5 +1,23 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Manipulate complexes as plain objects (instead of pointers) in
+	face handles.
+
+	* mln/topo/face.hh, mln/topo/n_face.hh
+	(mln::face<D>::cplx_, mln::n_face<N, D>::cplx_):
+	Change type from mutable complex<D>* to mutable complex<D>.
+	(mln::face<D>::face, mln::n_face<N, D>::n_face): Adjust ctors.
+	(mln::face<D>::is_valid, mln::face<D>::data)
+	(mln::n_face<N, D>::is_valid, mln::n_face<N, D>::data):
+	Adjust.
+	(mln::complex<D>::cplx, mln::complex<D>::set_cplx): Don't
+	manipulate complexes by pointers, use plain objects instead.
+	(operator<<(std::ostream&, const face<D>&)): Adjust.
+	* mln/topo/n_faces_set.hh
+	(mln::topo::n_faces_set<N, D>::add(const n_face<N, D>&)): Adjust.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a precondition in complex construction (add_face).
 
 	* mln/topo/complex.hh

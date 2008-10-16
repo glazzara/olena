@@ -32,8 +32,10 @@
 /// \brief Face of a complex.
 
 #include <limits>
+#include <vector>
 
 #include <mln/core/contract.hh>
+
 
 namespace mln
 {
@@ -78,7 +80,7 @@ namespace mln
       /// Accessors.
       /// \{
       /// Return the complex the face belongs to.
-      complex<D>& cplx() const;
+      complex<D> cplx() const;
       /// Return the dimension of the face.
       // FIXME: Rename as `dim'?
       unsigned n() const;
@@ -87,7 +89,7 @@ namespace mln
       unsigned face_id() const;
 
       /// Set the complex the face belongs to.
-      void set_cplx(complex<D>& cplx);
+      void set_cplx(const complex<D>& cplx);
 
       /// Set the dimension of the face.
       void set_n(unsigned n);
@@ -108,7 +110,6 @@ namespace mln
       face_data<N, D>& data() const;
 
       // FIXME: To be overhauled.
-      // FIXME: Why no `const' here?
       /// Return an array of face handles pointing to adjacent (n-1)-faces.
       std::vector< face<D> > lower_dim_adj_faces() const;
       /// Return an array of face handles pointing to adjacent (n+1)-faces.
@@ -119,7 +120,7 @@ namespace mln
       /// \brief The complex the face belongs to.
       ///
       /// A const face can be used to modify a complex.
-      mutable complex<D>* cplx_;
+      mutable complex<D> cplx_;
       /// The dimension of the face.
       // FIXME: Rename as `dim_'?
       unsigned n_;
@@ -171,7 +172,7 @@ namespace mln
     template <unsigned D>
     inline
     face<D>::face()
-      : cplx_(0),
+      : cplx_(),
 	n_(std::numeric_limits<unsigned>::max()),
 	face_id_(std::numeric_limits<unsigned>::max())
     {
@@ -180,7 +181,7 @@ namespace mln
     template <unsigned D>
     inline
     face<D>::face(complex<D>& c, unsigned n, unsigned face_id)
-      : cplx_(&c), n_(n), face_id_(face_id)
+      : cplx_(c), n_(n), face_id_(face_id)
     {
       // Ensure N is compatible with D.
       mln_precondition(n <= D);
@@ -190,7 +191,7 @@ namespace mln
     template <unsigned N>
     inline
     face<D>::face(const n_face<N, D>& f)
-      : cplx_(&f.cplx()), n_(N), face_id_(f.face_id())
+      : cplx_(f.cplx()), n_(N), face_id_(f.face_id())
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
@@ -202,7 +203,7 @@ namespace mln
     bool
     face<D>::is_valid() const
     {
-      return cplx_ != 0 && n_ <= D && face_id_ < cplx_->nfaces(n_);
+      return n_ <= D && face_id_ < cplx_.nfaces(n_);
     }
 
     template <unsigned D>
@@ -216,11 +217,10 @@ namespace mln
 
     template <unsigned D>
     inline
-    complex<D>&
+    complex<D>
     face<D>::cplx() const
     {
-      mln_precondition(cplx_);
-      return *cplx_;
+      return cplx_;
     }
 
     template <unsigned D>
@@ -242,9 +242,9 @@ namespace mln
     template <unsigned D>
     inline
     void
-    face<D>::set_cplx(complex<D>& cplx)
+    face<D>::set_cplx(const complex<D>& cplx)
     {
-      cplx_ = &cplx;
+      cplx_ = cplx;
     }
 
     template <unsigned D>
@@ -303,7 +303,7 @@ namespace mln
     {
       mln_precondition(n_ == N);
       mln_precondition(is_valid());
-      return cplx_->template face_data_<N>(face_id_);
+      return cplx_.template face_data_<N>(face_id_);
     }
 
 
@@ -461,7 +461,7 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const face<D>& f)
     {
-      return ostr << "(cplx = " << &f.cplx() << ", dim = " << f.n()
+      return ostr << "(cplx = " << f.cplx().addr() << ", dim = " << f.n()
 		  << ", id = " << f.face_id() << ')';
     }
 

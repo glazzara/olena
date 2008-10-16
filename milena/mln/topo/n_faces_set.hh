@@ -95,7 +95,7 @@ namespace mln
     {
       // Check consistency.
       if (!faces_.empty())
-	mln_precondition(&faces_.front().cplx() == &f.cplx());
+	mln_precondition(faces_.front().cplx() == f.cplx());
       faces_.push_back(f);
     }
 
