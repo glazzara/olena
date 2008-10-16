@@ -78,6 +78,14 @@
  * \endcode
  *
  * \todo Complete those definitions (...) + Overload for const (?)
+ *
+ * \todo Optimize deduced ops to eliminate object creation.  E.g.
+ * in the unary minus op:
+ *    literal::zero_t* p_zero = 0;
+ *    return O(*p_zero) - exact(rhs);
+ * can become:
+ *    static O zero =...
+ *    return zero - exact(rhs);
  */
 
 # include <mln/trait/op/all.hh>

@@ -302,9 +302,8 @@ namespace mln
 
 	mln_concrete(I) temp_1, temp_2, output;
 	temp_1 = morpho::erosion(input,  win::hline2d(len));
-	temp_2 = morpho::erosion(temp_1, win::vline2d(len));
-	temp_1 = morpho::erosion(temp_2, win::diag2d(len));
-	output = morpho::erosion(temp_1, win::backdiag2d(len));
+	temp_2 = morpho::erosion(temp_1, win::diag2d(len));
+	output = morpho::erosion(temp_2, win::backdiag2d(len));
 
 	trace::exiting("morpho::impl::erosion_(win::octagon2d)");
 	return output;
@@ -683,16 +682,16 @@ namespace mln
 	  min.init();
 	  p[dir]--;
 	  mln_qiter(W) q(win, p);
-	  for_all(q)
+	  for_all(q) if (input.has(q))
 	    min.take(input(q));
 	  p[dir]++;
 	}
 
 	void next()
 	{
-	  for_all(q_l)
+	  for_all(q_l) if (input.has(q_l))
 	    min.untake(input(q_l));
-	  for_all(q_r)
+	  for_all(q_r) if (input.has(q_r))
 	    min.take(input(q_r));
 	  output(p) = min;
 	}
@@ -735,13 +734,9 @@ namespace mln
 	enum { dim = I::site::dim };
 	unsigned dir;
 
-	window2d
-	win_left,
-	  win_right;
+	window2d win_left, win_right;
 
-	mln_qixter(const I, window2d)
-	q_l,
-	  q_r;
+	mln_qixter(const I, window2d) q_l, q_r;
 
 	erosion_directional_nd_fastest_functor(const I& input, const W& win, unsigned dir)
 	  : input(input),
@@ -984,27 +979,93 @@ namespace mln
       }
 
 
+      /// Handling win::hline2d.
+      /// \{
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(metal::true_,
+			       const I& input, const win::hline2d& win)
+      {
+	return erosion_dispatch_for_directional(input, win, 1);
+      }
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(metal::false_,
+			       const I& input, const win::hline2d& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
+      }
+
       template <typename I>
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const win::hline2d& win)
       {
-	if (win.size() <= 3)
+	if (win.size() == 1)
+	  return clone(input);
+	else if (win.size() == 3)
 	  return erosion_dispatch_for_generic(input, win);
 	else
-	  return impl::erosion_line_on_function(input, win);
-// 	  return erosion_dispatch_for_directional(input, win, 1);
+	  {
+	    typedef mlc_is_not(mln_trait_image_kind(I),
+			       mln::trait::image::kind::logic) test_not_logic;
+	    typedef mlc_is_a(mln_pset(I), Box) test_box;
+	    typedef mlc_equal(mln_trait_image_quant(I),
+			      mln::trait::image::quant::low) test_lowq;
+	    typedef mlc_and(test_not_logic, test_box) temp;
+	    typedef mlc_and(temp, test_lowq) tests;
+	    return erosion_dispatch_wrt_win(typename tests::eval (),
+					    input, win);
+	  }
+      }
+
+      /// \}
+
+
+
+      /// Handling win::vline2d.
+      /// \{
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(metal::true_,
+			       const I& input, const win::vline2d& win)
+      {
+	return erosion_dispatch_for_directional(input, win, 0);
+      }
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(metal::false_,
+			       const I& input, const win::vline2d& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
       }
 
       template <typename I>
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const win::vline2d& win)
       {
-	if (win.size() <= 3)
+	if (win.size() == 1)
+	  return clone(input);
+	else if (win.size() == 3)
 	  return erosion_dispatch_for_generic(input, win);
 	else
-	  return impl::erosion_line_on_function(input, win);
-// 	  return erosion_dispatch_for_directional(input, win, 0);
+	  {
+	    typedef mlc_is_not(mln_trait_image_kind(I),
+			       mln::trait::image::kind::logic) test_not_logic;
+	    typedef mlc_is_a(mln_pset(I), Box) test_box;
+	    typedef mlc_equal(mln_trait_image_quant(I),
+			      mln::trait::image::quant::low) test_lowq;
+	    typedef mlc_and(test_not_logic, test_box) temp;
+	    typedef mlc_and(temp, test_lowq) tests;
+	    return erosion_dispatch_wrt_win(typename tests::eval (),
+					    input, win);
+	  }
       }
+
+      /// \}
 
 
       // The dispatch entry point.

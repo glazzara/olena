@@ -194,20 +194,20 @@ int main()
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
-  std::cout << "-------------------------- Octogone: " << std::endl;
+  std::cout << "-------------------------- Octagon: " << std::endl;
 
-  //Octogone
+  // Octagon
   {
     t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, oct);
-    std::cout << "generic on octogone: " << t << std::endl;
+    std::cout << "generic on octagon: " << t << std::endl;
     io::pgm::save(ref, "out_oct_ref.pgm");
   }
 
   {
     t.start();
     out = morpho::erosion(lena, oct);
-    std::cout << "dispach on octogone: " << t << std::endl;
+    std::cout << "dispach on octagon: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;

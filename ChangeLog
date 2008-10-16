@@ -1,3 +1,12 @@
+2008-10-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix some morpho operators.
+
+	* milena/tests/morpho/erosion.cc: Fix typo.
+	* milena/mln/core/routine/ops.hh (todo): New.
+	* milena/mln/morpho/erosion.spe.hh (octagon2d): Fix.
+	(hline2d, vline2d): Fix dispatch.
+
 2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/io/off/Makefile.
