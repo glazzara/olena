@@ -49,16 +49,16 @@ namespace mln
 {
 
   /*------------------------------------.
-  | complex_window_fwd_piter<I, P, W>.  |
+  | complex_window_fwd_piter<I, G, W>.  |
   `------------------------------------*/
 
   /// \brief Forward iterator on complex window.
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   class complex_window_fwd_piter
     : public internal::site_relative_iterator_base< W,
-						    complex_window_fwd_piter<I, P, W> >
+						    complex_window_fwd_piter<I, G, W> >
   {
-    typedef complex_window_fwd_piter<I, P, W> self_;
+    typedef complex_window_fwd_piter<I, G, W> self_;
     typedef internal::site_relative_iterator_base< W, self_ > super_;
 
   public:
@@ -104,23 +104,23 @@ namespace mln
 
 
   /// Print an mln::complex_window_fwd_piter.
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_window_fwd_piter<I, P, W>& p);
+	     const complex_window_fwd_piter<I, G, W>& p);
 
 
   /*------------------------------------.
-  | complex_window_bkd_piter<I, P, W>.  |
+  | complex_window_bkd_piter<I, G, W>.  |
   `------------------------------------*/
 
   /// \brief Backward iterator on complex window.
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   class complex_window_bkd_piter
     : public internal::site_relative_iterator_base< W,
-						    complex_window_bkd_piter<I, P, W> >
+						    complex_window_bkd_piter<I, G, W> >
   {
-    typedef complex_window_bkd_piter<I, P, W> self_;
+    typedef complex_window_bkd_piter<I, G, W> self_;
     typedef internal::site_relative_iterator_base< W, self_ > super_;
 
   public:
@@ -166,29 +166,29 @@ namespace mln
 
 
   /// Print an mln::complex_window_bkd_piter.
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_window_bkd_piter<I, P, W>& p);
+	     const complex_window_bkd_piter<I, G, W>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   /*------------------------------------.
-  | complex_window_fwd_piter<I, P, W>.  |
+  | complex_window_fwd_piter<I, G, W>.  |
   `------------------------------------*/
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
-  complex_window_fwd_piter<I, P, W>::complex_window_fwd_piter()
+  complex_window_fwd_piter<I, G, W>::complex_window_fwd_piter()
   {
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   template <typename Pref>
   inline
-  complex_window_fwd_piter<I, P, W>::complex_window_fwd_piter(const Window<W>& win,
+  complex_window_fwd_piter<I, G, W>::complex_window_fwd_piter(const Window<W>& win,
 							      const Pref& p_ref)
   {
     this->change_target(exact(win));
@@ -196,81 +196,81 @@ namespace mln
     mln_postcondition(!this->is_valid());
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   bool
-  complex_window_fwd_piter<I, P, W>::is_valid_() const
+  complex_window_fwd_piter<I, G, W>::is_valid_() const
   {
     return iter_.is_valid();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_fwd_piter<I, P, W>::invalidate_()
+  complex_window_fwd_piter<I, G, W>::invalidate_()
   {
     iter_.invalidate();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_fwd_piter<I, P, W>::do_start_()
+  complex_window_fwd_piter<I, G, W>::do_start_()
   {
     iter_.start();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_fwd_piter<I, P, W>::do_next_()
+  complex_window_fwd_piter<I, G, W>::do_next_()
   {
     iter_.next();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   template <typename Pref>
   inline
   void
-  complex_window_fwd_piter<I, P, W>::center_at(const Pref& c)
+  complex_window_fwd_piter<I, G, W>::center_at(const Pref& c)
   {
     super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   mln_psite(W)
-  complex_window_fwd_piter<I, P, W>::compute_p_() const
+  complex_window_fwd_piter<I, G, W>::compute_p_() const
   {
     return psite(this->center().site_set(), iter_);
   }
 
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_window_fwd_piter<I, P, W>& p)
+	     const complex_window_fwd_piter<I, G, W>& p)
   {
     return ostr << p.unproxy_();
   }
 
 
   /*------------------------------------.
-  | complex_window_bkd_piter<I, P, W>.  |
+  | complex_window_bkd_piter<I, G, W>.  |
   `------------------------------------*/
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
-  complex_window_bkd_piter<I, P, W>::complex_window_bkd_piter()
+  complex_window_bkd_piter<I, G, W>::complex_window_bkd_piter()
   {
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   template <typename Pref>
   inline
-  complex_window_bkd_piter<I, P, W>::complex_window_bkd_piter(const Window<W>& win,
+  complex_window_bkd_piter<I, G, W>::complex_window_bkd_piter(const Window<W>& win,
 							      const Pref& p_ref)
   {
     this->change_target(exact(win));
@@ -278,62 +278,62 @@ namespace mln
     mln_postcondition(!this->is_valid());
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   bool
-  complex_window_bkd_piter<I, P, W>::is_valid_() const
+  complex_window_bkd_piter<I, G, W>::is_valid_() const
   {
     return iter_.is_valid();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_bkd_piter<I, P, W>::invalidate_()
+  complex_window_bkd_piter<I, G, W>::invalidate_()
   {
     iter_.invalidate();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_bkd_piter<I, P, W>::do_start_()
+  complex_window_bkd_piter<I, G, W>::do_start_()
   {
     iter_.start();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   void
-  complex_window_bkd_piter<I, P, W>::do_next_()
+  complex_window_bkd_piter<I, G, W>::do_next_()
   {
     iter_.next();
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   template <typename Pref>
   inline
   void
-  complex_window_bkd_piter<I, P, W>::center_at(const Pref& c)
+  complex_window_bkd_piter<I, G, W>::center_at(const Pref& c)
   {
     super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   mln_psite(W)
-  complex_window_bkd_piter<I, P, W>::compute_p_() const
+  complex_window_bkd_piter<I, G, W>::compute_p_() const
   {
     return psite(this->center().site_set(), iter_);
   }
 
 
-  template <typename I, typename P, typename W>
+  template <typename I, typename G, typename W>
   inline
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_window_bkd_piter<I, P, W>& p)
+	     const complex_window_bkd_piter<I, G, W>& p)
   {
     return ostr << p.unproxy_();
   }

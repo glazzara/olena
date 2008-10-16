@@ -51,20 +51,20 @@ namespace mln
 {
 
   // Forward declaration.
-  template <unsigned D, typename P, typename V> class complex_image;
+  template <unsigned D, typename G, typename V> class complex_image;
 
   namespace internal
   {
 
-    /// Data structure for \c mln::complex_image<P,V>.
-    template <unsigned D, typename P, typename V>
-    struct data< complex_image<D, P, V> >
+    /// Data structure for \c mln::complex_image.
+    template <unsigned D, typename G, typename V>
+    struct data< complex_image<D, G, V> >
     {
-      data(const p_complex<D, P>& pc,
+      data(const p_complex<D, G>& pc,
 	    const metal::vec< D + 1, std::vector<V> >& values);
 
       metal::vec< D + 1, std::vector<V> > values_;
-      const p_complex<D, P> pc_;
+      const p_complex<D, G> pc_;
     };
 
   } // end of namespace mln::internal
@@ -73,9 +73,9 @@ namespace mln
   namespace trait
   {
 
-    template <unsigned D, typename P, typename V>
-    struct image_< complex_image<D, P, V> >
-      : default_image_< V, complex_image<D, P, V> >
+    template <unsigned D, typename G, typename V>
+    struct image_< complex_image<D, G, V> >
+      : default_image_< V, complex_image<D, G, V> >
     {
       typedef trait::image::category::primary category;
 
@@ -92,8 +92,11 @@ namespace mln
 
       // Site / domain.
       typedef trait::image::localization::space         localization;
-      // FIXME: Likewise.
-      typedef typename trait::image::space_from_point<P>::ret dimension;
+      /* FIXME: Depends on G.  We could use
+	 `trait::image::space_from_point<mln_site(G)>::ret' in most
+	 cases (i.e., when G's site is a Point), but would not be
+	 generic.  */
+      typedef typename trait::image::dimension::none    dimension;
 
       // Extended domain.
       typedef trait::image::ext_domain::none      ext_domain;
@@ -106,11 +109,15 @@ namespace mln
 
   /// \brief Image based on a complex.
   ///
-  /// Values are stored on the vertices of the graph.
-  template <unsigned D, typename P, typename V>
+  /// Values attached to each face of the complex.
+  ///
+  /// \arg p D The dimension of the complex.
+  /// \arg p G The geometry of the complex.
+  /// \arg p V The value type of the image.
+  template <unsigned D, typename G, typename V>
   class complex_image
-    : public internal::image_primary< V, p_complex<D, P>,
-				      complex_image<D, P, V> >
+    : public internal::image_primary< V, p_complex<D, G>,
+				      complex_image<D, G, V> >
   {
   public:
     /// Value associated type.
@@ -128,30 +135,30 @@ namespace mln
     typedef typename std::vector<V>::const_reference rvalue;
 
     /// Skeleton.
-    typedef complex_image< D, tag::psite_<P>, tag::value_<V> > skeleton;
+    typedef complex_image< D, tag::psite_<G>, tag::value_<V> > skeleton;
 
   public:
     /// Constructors.
     /// \{
     complex_image();
-    complex_image(const p_complex<D, P>& pc);
-    complex_image(const p_complex<D, P>& pc,
+    complex_image(const p_complex<D, G>& pc);
+    complex_image(const p_complex<D, G>& pc,
 		  const metal::vec< D + 1, std::vector<V> >& values);
     /// \}
 
     /// Initialize an empty image.
-    void init_(const p_complex<D, P>& pc,
+    void init_(const p_complex<D, G>& pc,
 	       const metal::vec< D + 1, std::vector<V> >& values);
 
     /// Read-only access of face value at point site \p p.
-    rvalue operator()(const complex_psite<D, P>& p) const;
+    rvalue operator()(const complex_psite<D, G>& p) const;
     /// Read-write access of face value at point site \p p.
-    lvalue operator()(const complex_psite<D, P>& p);
+    lvalue operator()(const complex_psite<D, G>& p);
 
     /// Accessors.
     /// \{
     /// Return the domain of psites od the image.
-    const p_complex<D, P>& domain() const;
+    const p_complex<D, G>& domain() const;
 
     /// Return the array of values associated to the faces.
     const metal::vec<D + 1, std::vector<V> >& values() const;
@@ -159,10 +166,10 @@ namespace mln
   };
 
   // Fwd decl.
-  template <unsigned D, typename P, typename V, typename W>
+  template <unsigned D, typename G, typename V, typename W>
   void init_(tag::image_t,
-	     complex_image<D, P, V>& target,
-	     const complex_image<D, P, W>& model);
+	     complex_image<D, G, V>& target,
+	     const complex_image<D, G, W>& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -171,11 +178,11 @@ namespace mln
   | Initialization.  |
   `-----------------*/
 
-  template <unsigned D, typename P, typename V, typename W>
+  template <unsigned D, typename G, typename V, typename W>
   inline
   void init_(tag::image_t,
-	     complex_image<D, P, V>& target,
-	     const complex_image<D, P, W>& model)
+	     complex_image<D, G, V>& target,
+	     const complex_image<D, G, W>& model)
   {
     metal::vec<D + 1, std::vector<V> > values;
     for (unsigned i = 0; i <= D; ++i)
@@ -189,9 +196,9 @@ namespace mln
 
   namespace internal
   {
-    template <unsigned D, typename P, typename V>
+    template <unsigned D, typename G, typename V>
     inline
-    data< complex_image<D, P, V> >::data(const p_complex<D, P>& pc,
+    data< complex_image<D, G, V> >::data(const p_complex<D, G>& pc,
 					 const metal::vec< D + 1, std::vector<V> >& values)
       : values_(values),
 	pc_(pc)
@@ -211,15 +218,15 @@ namespace mln
   | Construction.  |
   `---------------*/
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  complex_image<D, P, V>::complex_image()
+  complex_image<D, G, V>::complex_image()
   {
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  complex_image<D, P, V>::complex_image(const p_complex<D, P>& pc)
+  complex_image<D, G, V>::complex_image(const p_complex<D, G>& pc)
   {
     metal::vec<D + 1, std::vector<V> > values;
     for (unsigned i = 0; i <= D; ++i)
@@ -227,60 +234,60 @@ namespace mln
     init_(pc, values);
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  complex_image<D, P, V>::complex_image(const p_complex<D, P>& pc,
+  complex_image<D, G, V>::complex_image(const p_complex<D, G>& pc,
 					const metal::vec< D + 1,
                                                           std::vector<V> >& values)
   {
     init_(pc, values);
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
   void
-  complex_image<D, P, V>::init_(const p_complex<D, P>& pc,
+  complex_image<D, G, V>::init_(const p_complex<D, G>& pc,
 				const metal::vec< D + 1, std::vector<V> >& values)
   {
     mln_precondition(! this->has_data());
     this->data_ =
-      new internal::data< complex_image<D, P, V> >(pc, values);
+      new internal::data< complex_image<D, G, V> >(pc, values);
   }
 
   /*---------------.
   | Manipulation.  |
   `---------------*/
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  typename complex_image<D, P, V>::rvalue
-  complex_image<D, P, V>::operator()(const complex_psite<D, P>& p) const
+  typename complex_image<D, G, V>::rvalue
+  complex_image<D, G, V>::operator()(const complex_psite<D, G>& p) const
   {
     mln_precondition(this->data_->pc_.has(p));
     return this->data_->values_[p.n()][p.face_id()];
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  typename complex_image<D, P, V>::lvalue
-  complex_image<D, P, V>::operator()(const complex_psite<D, P>& p)
+  typename complex_image<D, G, V>::lvalue
+  complex_image<D, G, V>::operator()(const complex_psite<D, G>& p)
   {
     mln_precondition(this->data_->pc_.has(p));
     return this->data_->values_[p.n()][p.face_id()];
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
   const metal::vec< D + 1, std::vector<V> >&
-  complex_image<D, P, V>::values() const
+  complex_image<D, G, V>::values() const
   {
     return this->data_->values_;
   }
 
-  template <unsigned D, typename P, typename V>
+  template <unsigned D, typename G, typename V>
   inline
-  const p_complex<D, P>&
-  complex_image<D, P, V>::domain() const
+  const p_complex<D, G>&
+  complex_image<D, G, V>::domain() const
   {
     mln_precondition(this->has_data());
     return this->data_->pc_;

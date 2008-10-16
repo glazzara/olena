@@ -42,62 +42,62 @@ namespace mln
 {
 
   // Forward declarations.
-  template <unsigned D, typename P> class p_complex;
+  template <unsigned D, typename G> class p_complex;
 
   template <unsigned D> class complex_fwd_iter_;
   template <unsigned D> class complex_bkd_iter_;
 
 
   /*-----------------------------.
-  | p_complex_fwd_piter_<D, P>.  |
+  | p_complex_fwd_piter_<D, G>.  |
   `-----------------------------*/
 
-  /// \brief Forward iterator on (all) the faces of an mln::p_complex<D, P>.
-  template <unsigned D, typename P>
+  /// \brief Forward iterator on (all) the faces of an mln::p_complex<D, G>.
+  template <unsigned D, typename G>
   class p_complex_fwd_piter_
     : public internal::p_complex_piter_base_< topo::face_fwd_iter<D>,
-					      p_complex<D, P>,
-					      P,
-					      p_complex_fwd_piter_<D, P> >
+					      p_complex<D, G>,
+					      mln_site(G),
+					      p_complex_fwd_piter_<D, G> >
   {
-    typedef p_complex_fwd_piter_<D, P> self_;
+    typedef p_complex_fwd_piter_<D, G> self_;
     typedef internal::p_complex_piter_base_< topo::face_fwd_iter<D>,
-					     p_complex<D, P>,
-					     P,
+					     p_complex<D, G>,
+					     mln_site(G),
 					     self_ > super_;
 
   public:
     /// Construction and assignment.
     /// \{
     p_complex_fwd_piter_();
-    p_complex_fwd_piter_(const p_complex<D, P>& pc);
+    p_complex_fwd_piter_(const p_complex<D, G>& pc);
     /// \}
   };
 
 
   /*-----------------------------.
-  | p_complex_bkd_piter_<D, P>.  |
+  | p_complex_bkd_piter_<D, G>.  |
   `-----------------------------*/
 
-  /// \brief Backward iterator on (all) the faces of an mln::p_complex<D, P>.
-  template <unsigned D, typename P>
+  /// \brief Backward iterator on (all) the faces of an mln::p_complex<D, G>.
+  template <unsigned D, typename G>
   class p_complex_bkd_piter_
     : public internal::p_complex_piter_base_< topo::face_bkd_iter<D>,
-					      p_complex<D, P>,
-					      P,
-					      p_complex_bkd_piter_<D, P> >
+					      p_complex<D, G>,
+					      mln_site(G),
+					      p_complex_bkd_piter_<D, G> >
   {
-    typedef p_complex_bkd_piter_<D, P> self_;
+    typedef p_complex_bkd_piter_<D, G> self_;
     typedef internal::p_complex_piter_base_< topo::face_bkd_iter<D>,
-					     p_complex<D, P>,
-					     P,
+					     p_complex<D, G>,
+					     mln_site(G),
 					     self_ > super_;
 
   public:
     /// Construction and assignment.
     /// \{
     p_complex_bkd_piter_();
-    p_complex_bkd_piter_(const p_complex<D, P>& pc);
+    p_complex_bkd_piter_(const p_complex<D, G>& pc);
     /// \}
   };
 
@@ -106,36 +106,36 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   /*-----------------------------.
-  | p_complex_fwd_piter_<D, P>.  |
+  | p_complex_fwd_piter_<D, G>.  |
   `-----------------------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_()
+  p_complex_fwd_piter_<D, G>::p_complex_fwd_piter_()
   {
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_complex_fwd_piter_<D, P>::p_complex_fwd_piter_(const p_complex<D, P>& pc)
+  p_complex_fwd_piter_<D, G>::p_complex_fwd_piter_(const p_complex<D, G>& pc)
     : super_(pc)
   {
   }
 
 
   /*-----------------------------.
-  | p_complex_bkd_piter_<D, P>.  |
+  | p_complex_bkd_piter_<D, G>.  |
   `-----------------------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_()
+  p_complex_bkd_piter_<D, G>::p_complex_bkd_piter_()
   {
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_complex_bkd_piter_<D, P>::p_complex_bkd_piter_(const p_complex<D, P>& pc)
+  p_complex_bkd_piter_<D, G>::p_complex_bkd_piter_(const p_complex<D, G>& pc)
     : super_(pc)
   {
   }

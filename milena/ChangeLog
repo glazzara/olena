@@ -1,5 +1,53 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have complex-based site set use geometry functor for site location.
+
+	* mln/core/site_set/p_complex.hh
+	(p_complex<D, P>): Replace parameter P, standing for a site type,
+	by...
+	(p_complex<D, G>): ...a parameter G, standing for a geometry
+	functor type.
+	Adjust.
+	Update documentation.
+	(mln::p_complex<D, G>::geom_): New attribute.
+	(mln::p_complex<D, G>::geom): New accessor.
+	(mln::p_complex::p_complex(const topo::complex<D>&)):
+	Add an extra parameter...
+	(mln::p_complex::p_complex(const topo::complex<D>&, const G&)):
+	...to initialize mln::p_complex<D, G>::geom_.
+	* mln/core/image/complex_higher_neighborhood.hh,
+	* mln/core/image/complex_higher_window_p.hh,
+	* mln/core/image/complex_lower_higher_neighborhood.hh,
+	* mln/core/image/complex_lower_higher_window_p.hh,
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_lower_window_p.hh,
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/core/image/complex_window_piter.hh,
+	* mln/core/image/complex_image.hh,
+	* mln/core/site_set/complex_psite.hh,
+	* mln/core/site_set/p_complex_piter.hh:
+	Adjust: s/P/G/.
+	* mln/core/image/complex_image.hh
+	(mln::trait::image_< complex_image<D, G, V> >::dimension): Adjust.
+	(mln::complex_image<D, G, V>): More documentation.
+	* mln/core/site_set/complex_psite.hh: Use #if 0 / #endif to
+	disable code instead of comments.
+	(mln::complex_psite<D, G>::p_): Set type to mln_site(G).
+	(mln::complex_psite::complex_psite): Don't update unconditionally,
+	ensure the iterator is valid first.
+	(mln::complex_psite::complex_psite<D, G>::subj_())
+	(mln::complex_psite::complex_psite<D, G>::update_()):
+	Provide actual implementations.
+	* mln/core/site_set/p_complex_piter.hh
+	(mln::p_complex_fwd_piter_<D, G>)
+	(mln::p_complex_bkd_piter_<D, G>):
+	Adjust site type passed as parameter as super class.
+	(mln::p_complex_fwd_piter_<D, G>::super_)
+	(mln::p_complex_bkd_piter_<D, G>::super_):
+	Likewise.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a functor encoding the geometry of a complex using its 0-faces.
 
 	* mln/geom/complex_geometry.hh: New.

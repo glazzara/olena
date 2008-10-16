@@ -48,16 +48,16 @@ namespace mln
 {
 
   /*------------------------------------------.
-  | complex_neighborhood_fwd_piter<I, P, N>.  |
+  | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
   /// \brief Forward iterator on complex neighborhood.
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   class complex_neighborhood_fwd_piter
     : public internal::site_relative_iterator_base< N,
-						    complex_neighborhood_fwd_piter<I, P, N> >
+						    complex_neighborhood_fwd_piter<I, G, N> >
   {
-    typedef complex_neighborhood_fwd_piter<I, P, N> self_;
+    typedef complex_neighborhood_fwd_piter<I, G, N> self_;
     typedef internal::site_relative_iterator_base< N, self_ > super_;
 
   public:
@@ -104,23 +104,23 @@ namespace mln
 
 
   /// Print an mln::complex_neighborhood_fwd_piter.
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_neighborhood_fwd_piter<I, P, N>& p);
+	     const complex_neighborhood_fwd_piter<I, G, N>& p);
 
 
   /*------------------------------------------.
-  | complex_neighborhood_bkd_piter<I, P, N>.  |
+  | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
   /// \brief Backward iterator on complex neighborhood.
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   class complex_neighborhood_bkd_piter
     : public internal::site_relative_iterator_base< N,
-						    complex_neighborhood_bkd_piter<I, P, N> >
+						    complex_neighborhood_bkd_piter<I, G, N> >
   {
-    typedef complex_neighborhood_bkd_piter<I, P, N> self_;
+    typedef complex_neighborhood_bkd_piter<I, G, N> self_;
     typedef internal::site_relative_iterator_base< N, self_ > super_;
 
   public:
@@ -167,29 +167,29 @@ namespace mln
 
 
   /// Print an mln::complex_neighborhood_bkd_piter.
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_neighborhood_bkd_piter<I, P, N>& p);
+	     const complex_neighborhood_bkd_piter<I, G, N>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   /*------------------------------------------.
-  | complex_neighborhood_fwd_piter<I, P, N>.  |
+  | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
-  complex_neighborhood_fwd_piter<I, P, N>::complex_neighborhood_fwd_piter()
+  complex_neighborhood_fwd_piter<I, G, N>::complex_neighborhood_fwd_piter()
   {
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   template <typename Pref>
   inline
-  complex_neighborhood_fwd_piter<I, P, N>::complex_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
+  complex_neighborhood_fwd_piter<I, G, N>::complex_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
 									  const Pref& p_ref)
   {
     this->change_target(exact(nbh));
@@ -197,81 +197,81 @@ namespace mln
     mln_postcondition(!this->is_valid());
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   bool
-  complex_neighborhood_fwd_piter<I, P, N>::is_valid_() const
+  complex_neighborhood_fwd_piter<I, G, N>::is_valid_() const
   {
     return iter_.is_valid();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_fwd_piter<I, P, N>::invalidate_()
+  complex_neighborhood_fwd_piter<I, G, N>::invalidate_()
   {
     iter_.invalidate();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_fwd_piter<I, P, N>::do_start_()
+  complex_neighborhood_fwd_piter<I, G, N>::do_start_()
   {
     iter_.start();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_fwd_piter<I, P, N>::do_next_()
+  complex_neighborhood_fwd_piter<I, G, N>::do_next_()
   {
     iter_.next();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   template <typename Pref>
   inline
   void
-  complex_neighborhood_fwd_piter<I, P, N>::center_at(const Pref& c)
+  complex_neighborhood_fwd_piter<I, G, N>::center_at(const Pref& c)
   {
     super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   mln_psite(N)
-  complex_neighborhood_fwd_piter<I, P, N>::compute_p_() const
+  complex_neighborhood_fwd_piter<I, G, N>::compute_p_() const
   {
     return psite(this->center().site_set(), iter_);
   }
 
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_neighborhood_fwd_piter<I, P, N>& p)
+	     const complex_neighborhood_fwd_piter<I, G, N>& p)
   {
     return ostr << p.unproxy_();
   }
 
 
   /*------------------------------------------.
-  | complex_neighborhood_bkd_piter<I, P, N>.  |
+  | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
-  complex_neighborhood_bkd_piter<I, P, N>::complex_neighborhood_bkd_piter()
+  complex_neighborhood_bkd_piter<I, G, N>::complex_neighborhood_bkd_piter()
   {
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   template <typename Pref>
   inline
-  complex_neighborhood_bkd_piter<I, P, N>::complex_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
+  complex_neighborhood_bkd_piter<I, G, N>::complex_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
 									  const Pref& p_ref)
   {
     this->change_target(exact(nbh));
@@ -279,62 +279,62 @@ namespace mln
     mln_postcondition(!this->is_valid());
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   bool
-  complex_neighborhood_bkd_piter<I, P, N>::is_valid_() const
+  complex_neighborhood_bkd_piter<I, G, N>::is_valid_() const
   {
     return iter_.is_valid();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_bkd_piter<I, P, N>::invalidate_()
+  complex_neighborhood_bkd_piter<I, G, N>::invalidate_()
   {
     iter_.invalidate();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_bkd_piter<I, P, N>::do_start_()
+  complex_neighborhood_bkd_piter<I, G, N>::do_start_()
   {
     iter_.start();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   void
-  complex_neighborhood_bkd_piter<I, P, N>::do_next_()
+  complex_neighborhood_bkd_piter<I, G, N>::do_next_()
   {
     iter_.next();
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   template <typename Pref>
   inline
   void
-  complex_neighborhood_bkd_piter<I, P, N>::center_at(const Pref& c)
+  complex_neighborhood_bkd_piter<I, G, N>::center_at(const Pref& c)
   {
     super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   mln_psite(N)
-  complex_neighborhood_bkd_piter<I, P, N>::compute_p_() const
+  complex_neighborhood_bkd_piter<I, G, N>::compute_p_() const
   {
     return psite(this->center().site_set(), iter_);
   }
 
 
-  template <typename I, typename P, typename N>
+  template <typename I, typename G, typename N>
   inline
   std::ostream&
   operator<<(std::ostream& ostr,
-	     const complex_neighborhood_bkd_piter<I, P, N>& p)
+	     const complex_neighborhood_bkd_piter<I, G, N>& p)
   {
     return ostr << p.unproxy_();
   }

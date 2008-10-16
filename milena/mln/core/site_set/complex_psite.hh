@@ -50,31 +50,30 @@
 namespace mln
 {
   // Forward declaration.
-  template <unsigned D, typename P> class p_complex;
+  template <unsigned D, typename G> class p_complex;
 
 
   /// \brief Point site associated to a mln::p_complex.
   ///
   /// \arg \p D The dimension of the complex this psite belongs to.
-  /// \arg \p P The type of point associated to this psite.
-  template <unsigned D, typename P>
+  /// \arg \p G The geometry of the complex.
+  template <unsigned D, typename G>
   class complex_psite
-    : public internal::pseudo_site_base_< const P&,
-					  complex_psite<D, P> >
+    : public internal::pseudo_site_base_< const mln_site(G)&, complex_psite<D, G> >
   {
   public:
     // This associated type is important to know that this particular
     // pseudo site knows the site set it refers to.
-    typedef p_complex<D, P> target;
+    typedef p_complex<D, G> target;
 
     // FIXME: Document.
     /// Construction and assignment.
     /// \{
     complex_psite();
     /// \pre pc.cplx() == face.cplx().
-    complex_psite(const p_complex<D, P>& pc,
+    complex_psite(const p_complex<D, G>& pc,
 		  const topo::face<D>& face);
-    complex_psite(const p_complex<D, P>& pc, unsigned n, unsigned face_id);
+    complex_psite(const p_complex<D, G>& pc, unsigned n, unsigned face_id);
     /// \}
 
     /// Psite manipulators.
@@ -101,7 +100,7 @@ namespace mln
     /// Proxy manipulators.
     /// \{
     /// Return the site corresponding to this psite.
-    const P& subj_();
+    const mln_site(G)& subj_();
     /// \}
 
     /// Face handle manipulators.
@@ -121,7 +120,7 @@ namespace mln
     /// Update the site corresponding to this psite.
     void update_();
     // The site corresponding to this psite.
-    P p_;
+    mln_site(G) p_;
     /// \}
 
     /* FIXME: Attributes pc_ and face_ share a common information: the
@@ -158,10 +157,10 @@ namespace mln
   /// mln::p_complex.
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator==(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs);
+  operator==(const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs);
 
   /// \brief Is \a lhs not equal to \a rhs?
   ///
@@ -169,10 +168,10 @@ namespace mln
   /// mln::p_complex.
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator!=(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs);
+  operator!=(const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs);
 
   /// \brief Is \a lhs ``less'' than \a rhs?
   ///
@@ -182,91 +181,102 @@ namespace mln
   /// mln::p_complex.
   /* FIXME: We probably want to relax this precondition: p_complex
      equality is too strong; prefer complex equality.  */
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator< (const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs);
+  operator< (const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs);
   /// \}
 
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   std::ostream&
-  operator<<(std::ostream& ostr, const complex_psite<D, P>& p);
+  operator<<(std::ostream& ostr, const complex_psite<D, G>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  complex_psite<D, P>::complex_psite()
+  complex_psite<D, G>::complex_psite()
     : pc_(0)
   {
     invalidate();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
+  complex_psite<D, G>::complex_psite(const p_complex<D, G>& pc,
 				     const topo::face<D>& face)
     : pc_(&pc),
       face_(face)
   {
     // Check arguments consistency.
-//     mln_precondition(pc.cplx() == face.cplx());
-    update_();
+    // FIXME: Re-enable when the cyclic dependencies are fixed.
+#if 0
+    mln_precondition(pc.cplx() == face.cplx());
+#endif
+    if (is_valid())
+      update_();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  complex_psite<D, P>::complex_psite(const p_complex<D, P>& pc,
+  complex_psite<D, G>::complex_psite(const p_complex<D, G>& pc,
 				     unsigned n, unsigned face_id)
     : pc_(&pc),
       face_(pc.cplx(), n, face_id)  
   {
-    update_();
+    if (is_valid())
+      update_();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   bool
-  complex_psite<D, P>::is_valid() const
+  complex_psite<D, G>::is_valid() const
   {
-//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+    // FIXME: Re-enable when the cyclic dependencies are fixed.
+#if 0
+    mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+#endif
     return face_.is_valid();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   void
-  complex_psite<D, P>::invalidate()
+  complex_psite<D, G>::invalidate()
   {
     return face_.invalidate();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  const p_complex<D, P>&
-  complex_psite<D, P>::site_set() const
+  const p_complex<D, G>&
+  complex_psite<D, G>::site_set() const
   {
     mln_precondition(target_());
     return *target_();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  const p_complex<D, P>*
-  complex_psite<D, P>::target_() const
+  const p_complex<D, G>*
+  complex_psite<D, G>::target_() const
   {
-//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+    // FIXME: Re-enable when the cyclic dependencies are fixed.
+#if 0
+    mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+#endif
     return pc_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   void
-  complex_psite<D, P>::change_target(const target& new_target)
+  complex_psite<D, G>::change_target(const target& new_target)
   {
     // Update both pc_ and face_.
     pc_ = &new_target;
@@ -275,50 +285,52 @@ namespace mln
   }
 
   // FIXME: Write or extend a test to exercise this method (when the
-  // handling of P is done, i.e., when update_ is complete).
-  template <unsigned D, typename P>
+  // handling of G is done, i.e., when update_ is complete).
+  template <unsigned D, typename G>
   inline
-  const P&
-  complex_psite<D, P>::subj_()
+  const mln_site(G)&
+  complex_psite<D, G>::subj_()
   {
-    // FIXME: Member p_ is not updated correctly yet; do not use this
-    // method for now.
-    abort();
     return p_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   const topo::face<D>&
-  complex_psite<D, P>::face() const
+  complex_psite<D, G>::face() const
   {
     return face_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   unsigned
-  complex_psite<D, P>::n() const
+  complex_psite<D, G>::n() const
   {
     return face_.n();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   unsigned
-  complex_psite<D, P>::face_id() const
+  complex_psite<D, G>::face_id() const
   {
     return face_.face_id();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   void
-  complex_psite<D, P>::update_()
+  complex_psite<D, G>::update_()
   {
     mln_precondition(is_valid());
-//     mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
-    // FIXME: Implement (update p_).
+    // FIXME: Re-enable when the cyclic dependencies are fixed.
+#if 0
+    mln_invariant(!pc_ || pc_.cplx() == face_.cplx());
+#endif
+    // FIXME: Simplify? (I.e., add accessors to shorten the following
+    // line?)
+    p_ = site_set().geom()(face_);
   }
 
 
@@ -326,28 +338,28 @@ namespace mln
   | Comparisons.  |
   `--------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator==(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs)
+  operator==(const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs)
   {
     mln_precondition(&lhs.site_set() == &rhs.site_set());
     return lhs.face() == rhs.face();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator!=(const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs)
+  operator!=(const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs)
   {
     mln_precondition(&lhs.site_set() == &rhs.site_set());
     return lhs.face() != rhs.face();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator< (const complex_psite<D, P>& lhs,
-	     const complex_psite<D, P>& rhs)
+  operator< (const complex_psite<D, G>& lhs,
+	     const complex_psite<D, G>& rhs)
   {
     mln_precondition(&lhs.site_set() == &rhs.site_set());
     return lhs.face() < rhs.face();
@@ -358,10 +370,10 @@ namespace mln
   | Pretty-printing.  |
   `------------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   std::ostream&
-  operator<<(std::ostream& ostr, const complex_psite<D, P>& p)
+  operator<<(std::ostream& ostr, const complex_psite<D, G>& p)
   {
     return ostr << p.face();
   }

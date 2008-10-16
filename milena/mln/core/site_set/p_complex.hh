@@ -43,31 +43,36 @@
 #  include <mln/core/site_set/p_complex_faces_piter.hh>
 # endif
 
+# include <mln/geom/complex_geometry.hh>
+
+// FIXME: Have G default to mln::geom::complex_geom<D, P>?  But we
+// don't know P...
+
 
 namespace mln
 {
 
   // Forward declarations.
-  template <unsigned D, typename P> class p_complex;
+  template <unsigned D, typename G> class p_complex;
 
-  template <unsigned D, typename P> class p_complex_fwd_piter_;
-  template <unsigned D, typename P> class p_complex_bkd_piter_;
+  template <unsigned D, typename G> class p_complex_fwd_piter_;
+  template <unsigned D, typename G> class p_complex_bkd_piter_;
 
 // FIXME: Disabled (moved to the attic).
 # if 0
-  template <unsigned N, unsigned D, typename P>
+  template <unsigned N, unsigned D, typename G>
   class p_complex_faces_fwd_piter_;
-  template <unsigned N, unsigned D, typename P>
+  template <unsigned N, unsigned D, typename G>
   class p_complex_faces_bkd_piter_;
 # endif
 
   namespace trait
   {
-    template <unsigned D, typename P>
-    struct site_set_< p_complex<D, P> >
+    template <unsigned D, typename G>
+    struct site_set_< p_complex<D, G> >
     {
       typedef trait::site_set::nsites::known   nsites;
-      // FIXME: Depends on P!
+      // FIXME: Depends on G!
       typedef trait::site_set::bbox::unknown   bbox;
       typedef trait::site_set::contents::fixed contents;
       typedef trait::site_set::arity::unique   arity;
@@ -75,7 +80,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /* FIXME: We should decide was P represents:
+  /* FIXME: We should decide was G represents:
 
      - a unique site type for all faces of all dimensions?
          (Acceptable for a first implementation -- the one currently
@@ -98,20 +103,25 @@ namespace mln
 
   /* FIXME: Aggregate site data (location).  */
 
-  /// A complex psite set based on a the N-faces of a complex of
-  /// dimension \tparam D (a \p D-complex).
-  template <unsigned D, typename P>
+  /** \brief A complex psite set based on a the \N-faces of a complex
+      of dimension \tparam D (a \p D-complex).
+
+      \arg \p D The dimension of the complex.
+      \arg \p G A function object type, associating localization
+                information (geometry) to each face of the complex.
+                \see mln::geom::complex_geometry.  */
+  template <unsigned D, typename G>
   class p_complex
-    : public internal::site_set_base_< complex_psite<D, P>, p_complex<D, P> >
+    : public internal::site_set_base_< complex_psite<D, G>, p_complex<D, G> >
   {
-    typedef p_complex<D, P> self_;
-    typedef internal::site_set_base_< complex_psite<D, P>, self_ > super_;
+    typedef p_complex<D, G> self_;
+    typedef internal::site_set_base_< complex_psite<D, G>, self_ > super_;
 
   public:
     /// \brief Construct a complex psite set from a complex.
     ///
     /// \param cplx The complex upon which the complex psite set is built.
-    p_complex (const topo::complex<D>& cplx);
+    p_complex(const topo::complex<D>& cplx, const G& geom);
 
     /// Associated types.
     /// \{
@@ -119,13 +129,13 @@ namespace mln
     typedef mln_site(super_) element;
 
     /// Point_Site associated type.
-    typedef complex_psite<D, P> psite;
+    typedef complex_psite<D, G> psite;
 
     /// Forward Site_Iterator associated type.
-    typedef p_complex_fwd_piter_<D, P> fwd_piter;
+    typedef p_complex_fwd_piter_<D, G> fwd_piter;
 
     /// Backward Site_Iterator associated type.
-    typedef p_complex_bkd_piter_<D, P> bkd_piter;
+    typedef p_complex_bkd_piter_<D, G> bkd_piter;
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
@@ -168,6 +178,9 @@ namespace mln
     /// Return the complex associated to the p_complex domain (mutable
     /// version).
     topo::complex<D>& cplx();
+
+    /// Return the geometry of the complex.
+    const G& geom() const;
     /// \}
 
   private:
@@ -185,6 +198,8 @@ namespace mln
          where vertex and edge handles (named `id's) are not tied to a
          specific graph.  */
     mutable topo::complex<D> cplx_;
+    /// Geometry of the complex.
+    G geom_;
   };
 
 
@@ -192,9 +207,9 @@ namespace mln
   ///
   /// Two mln::p_complex's are considered equal if they share the
   /// same complex.
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator==(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs);
+  operator==(const p_complex<D, G>& lhs, const p_complex<D, G>& rhs);
 
   /// \brief Inclusion of a mln::p_complex in another one.
   ///
@@ -204,49 +219,49 @@ namespace mln
   ///
   /// \todo Refine this later, when we are able to express subcomplex
   /// relations.
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator<=(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs);
+  operator<=(const p_complex<D, G>& lhs, const p_complex<D, G>& rhs);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
-  p_complex<D, P>::p_complex(const topo::complex<D>& cplx)
-    : cplx_(cplx)
+  p_complex<D, G>::p_complex(const topo::complex<D>& cplx, const G& geom)
+    : cplx_(cplx), geom_(geom)
   {
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   unsigned
-  p_complex<D, P>::nsites() const
+  p_complex<D, G>::nsites() const
   {
     return nfaces();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   std::size_t
-  p_complex<D, P>::nfaces() const
+  p_complex<D, G>::nfaces() const
   {
     return cplx_.nfaces();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   bool
-  p_complex<D, P>::is_valid() const
+  p_complex<D, G>::is_valid() const
   {
     return true;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   bool
-  p_complex<D, P>::has(const psite& p) const
+  p_complex<D, G>::has(const psite& p) const
   {
     mln_precondition(is_valid());
     return
@@ -256,30 +271,37 @@ namespace mln
       (p.is_valid());
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   inline
   std::size_t
-  p_complex<D, P>::memory_size() const
+  p_complex<D, G>::memory_size() const
   {
     // FIXME: Dummy; implement (see other site sets). 
     abort();
     return 0;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   topo::complex<D>&
-  p_complex<D, P>::cplx() const
+  p_complex<D, G>::cplx() const
   {
     mln_precondition(is_valid());
     return cplx_;
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   topo::complex<D>&
-  p_complex<D, P>::cplx()
+  p_complex<D, G>::cplx()
   {
     mln_precondition(is_valid());
     return cplx_;
+  }
+
+  template <unsigned D, typename G>
+  const G&
+  p_complex<D, G>::geom() const
+  {
+    return geom_;
   }
 
 
@@ -287,18 +309,18 @@ namespace mln
   | Comparisons.  |
   `--------------*/
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator==(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
+  operator==(const p_complex<D, G>& lhs, const p_complex<D, G>& rhs)
   {
     /* FIXME: When actual location data is attached to a p_complex,
        check also the equlity w.r.t. to these data.  */
     return lhs.cplx() == rhs.cplx();
   }
 
-  template <unsigned D, typename P>
+  template <unsigned D, typename G>
   bool
-  operator<=(const p_complex<D, P>& lhs, const p_complex<D, P>& rhs)
+  operator<=(const p_complex<D, G>& lhs, const p_complex<D, G>& rhs)
   {
     /* FIXME: When actual location data is attached to a p_complex,
        check also the equality w.r.t. to these data.  */
