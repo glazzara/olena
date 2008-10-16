@@ -30,7 +30,7 @@
 
 /*! \file mln/core/point.hh
  *
- * \brief Definition of the generic point class mln::point_.
+ * \brief Definition of the generic point class mln::point.
  */
 
 # include <mln/core/def/coord.hh>
@@ -173,7 +173,18 @@ namespace mln
 
     /// Hook to coordinates.
     operator typename internal::point_to_<G, C>::metal_vec () const;
+  /* FIXME: Seems highly non-generic!  Moreover, causes
+     overloading/duplicate errors with the previous operator when
+     C == float.  Disable it for the moment.
+
+     This (non documented change, even in ChangeLog) change was
+     introduce by revision 1224, see
+     https://trac.lrde.org/olena/changeset/1224#file2
+     https://www.lrde.epita.fr/pipermail/olena-patches/2007-October/001592.html
+  */
+#if 0
     operator algebra::vec<G::dim, float> () const;
+#endif
 
     /// Explicit conversion towards mln::algebra::vec.
     const algebra::vec<G::dim, C>& to_vec() const;
@@ -376,9 +387,11 @@ namespace mln
   inline
   point<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
   {
-    return coord_; // FIXME: Is-it OK?
+    return coord_; // FIXME: Is it OK?
   }
-  
+
+  // FIXME: See declaration of this member above.
+#if 0
   template <typename G, typename C>
   inline
   point<G,C>::operator algebra::vec<G::dim, float> () const
@@ -388,6 +401,7 @@ namespace mln
       tmp[i] = coord_[i];
     return tmp;
   }
+#endif
 
   template <typename G, typename C>
   inline
