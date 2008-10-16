@@ -1,5 +1,11 @@
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a routine to create a complex-based image from an OFF file.
+
+	* mln/io/off/load.hh: New.
+
+2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a macro containing the path to meshes, to be used in tests.
 
 	* tests/data.hh.in (MLN_MESH_DIR): New macro.
