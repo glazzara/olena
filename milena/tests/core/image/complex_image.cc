@@ -37,9 +37,7 @@
 #include <mln/core/image/complex_image.hh>
 
 // FIXME: Include these elsewhere? (In complex_image.hh?)
-#include <mln/core/image/complex_lower_neighborhood.hh>
-#include <mln/core/image/complex_higher_neighborhood.hh>
-#include <mln/core/image/complex_lower_higher_neighborhood.hh>
+#include <mln/core/image/complex_neighborhoods.hh>
 #include <mln/core/image/complex_neighborhood_piter.hh>
 
 /* FIXME: Split this test (and maybe factor common parts, like the
@@ -215,9 +213,9 @@ int main()
      - iterators on N-faces with N in a subset of [0, D];
      - etc.  */
 
-  // ---------------------------------------- //
-  // Iterators on windows and neighborhoods.  //
-  // ---------------------------------------- //
+  // ---------------------------- //
+  // Iterators on neighborhoods.  //
+  // ---------------------------- //
 
   // FIXME: Factor: these three test cases only differ by their
   // neighborhoods.

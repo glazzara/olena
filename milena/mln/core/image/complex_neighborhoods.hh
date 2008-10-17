@@ -25,20 +25,46 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
-# define MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
+#ifndef MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOODS_HH
+# define MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOODS_HH
 
-/// \file mln/core/image/complex_lower_higher_neighborhood.hh
-/// \brief A neighborhood centered on a n-face of complex returning its
-/// adjacent (n-1)-faces and (n+1)-faces.
+/// \file mln/core/image/complex_neighborhoods.hh
+/// \brief Definitions of some neighborhoods of complex images.
 
 # include <mln/core/internal/complex_neighborhood_base.hh>
+
+# include <mln/topo/adj_lower_face_iter.hh>
+# include <mln/topo/adj_higher_face_iter.hh>
 # include <mln/topo/adj_lower_higher_face_iter.hh>
 
 
 namespace mln
 {
 
+  /// \brief Neighborhood centered on an n-face of complex returning
+  /// its adjacent (n-1)-faces.
+  template <unsigned D, typename G>
+  struct complex_lower_neighborhood
+    : internal::complex_neighborhood_base< D, G,
+					   topo::adj_lower_face_fwd_iter<D>,
+					   topo::adj_lower_face_bkd_iter<D>,
+					   complex_lower_neighborhood<D, G> >
+  {
+  };
+
+  /// \brief Neighborhood centered on an n-face of complex returning
+  /// its adjacent (n+1)-faces.
+  template <unsigned D, typename G>
+  struct complex_higher_neighborhood
+    : internal::complex_neighborhood_base< D, G,
+					   topo::adj_higher_face_fwd_iter<D>,
+					   topo::adj_higher_face_bkd_iter<D>,
+					   complex_higher_neighborhood<D, G> >
+  {
+  };
+
+  /// \brief Neighborhood centered on an n-face of complex returning
+  /// its adjacent (n-1)-faces and (n+1)-faces.
   template <unsigned D, typename G>
   struct complex_lower_higher_neighborhood
     : internal::complex_neighborhood_base<
@@ -52,4 +78,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_IMAGE_COMPLEX_LOWER_HIGHER_NEIGHBORHOOD_HH
+#endif // ! MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOODS_HH

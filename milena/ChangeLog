@@ -1,5 +1,18 @@
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor neighborhoods of complex images.
+
+	* mln/core/image/complex_neighborhoods.hh: New.
+	Replace...
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_higher_neighborhood.hh, 
+	* mln/core/image/complex_lower_higher_neighborhood.hh:
+	...these files.
+	Remove.
+	* tests/core/image/complex_image.cc: Adjust.
+
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix and factor windows of complex images.
 
 	* mln/core/image/complex_windows.hh: New.
