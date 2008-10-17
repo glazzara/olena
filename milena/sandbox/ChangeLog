@@ -1,3 +1,17 @@
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Get and display character bboxes.
+
+	* sandbox/scribo/demat.hh: update. 
+	Does not create text bboxes yet.
+
+2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update the prototype of labeling::compute().
+
+	* sandbox/scribo/demat.hh: update according the new
+	prototype.
+
 2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM Classification++.

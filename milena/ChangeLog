@@ -1,3 +1,74 @@
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add "essential" headers.
+
+	* mln/essential/1d.hh,
+	* mln/essential/2d.hh,
+	* mln/essential/3d.hh:
+	First version of these headers. Will be automatically generated in a
+	near future.
+
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Refactor graph iterator classes.
+
+	* mln/util/internal/graph_edge.hh: add invalidate().
+
+	* mln/util/internal/graph_iter_base.hh: Base implementation for
+	a graph iterator.
+
+	* mln/util/internal/graph_vertex_iter.hh,
+	* mln/util/internal/graph_edge_iter.hh: content moved...
+	* mln/util/internal/graph_iter.hh: ...here.
+
+	* mln/util/internal/graph_nbh_iter.hh: Base implementation for
+	a graph iterator on a edge/vertex neighborhood.
+
+	* mln/util/internal/graph_edge_nbh_edge_iter.hh,
+	* mln/util/internal/graph_vertex_nbh_edge_iter.hh,
+	* mln/util/internal/graph_vertex_nbh_vertex_iter.hh: content
+	moved...
+	* mln/util/internal/graph_nbh_iter_base.hh: ...here.
+
+	* mln/util/graph.hh: update includes.
+
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use track_ptr in graph.
+
+	* mln/core/concept/graph.hh,
+	* util/graph.hh,
+	* util/internal/graph_base.hh,
+	* util/internal/graph_edge.hh,
+	* util/internal/graph_edge_iter.hh,
+	* util/internal/graph_edge_nbh_edge_iter.hh,
+	* util/internal/graph_vertex.hh,
+	* util/internal/graph_vertex_iter.hh,
+	* util/internal/graph_vertex_nbh_edge_iter.hh,
+	* util/internal/graph_vertex_nbh_vertex_iter.hh:
+	Share data between graphs.
+	Refactor some parts of the code.
+
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add sample code for the tutorial.
+
+	* mln/doc/tutorial/samples/borderthickness-output.tex,
+	* mln/doc/tutorial/samples/borderthickness.tex,
+	* mln/doc/tutorial/samples/extension-ignore.tex,
+	* mln/doc/tutorial/samples/extension-ignore2.tex,
+	* mln/doc/tutorial/samples/ima-load.tex,
+	* mln/doc/tutorial/samples/ima-save.tex,
+	* mln/doc/tutorial/samples/ima-size-output.tex,
+	* mln/doc/tutorial/samples/ima-size.tex,
+	* mln/doc/tutorial/samples/ima2d-1-output.tex,
+	* mln/doc/tutorial/samples/ima2d-3-output.tex,
+	* mln/doc/tutorial/samples/paste-call-1-output.tex,
+	* mln/doc/tutorial/samples/point-1-output.tex,
+	* mln/doc/tutorial/tutorial.tex:
+	Add these sample codes for the tutorial.
+
+
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
 	Move site_pair into namespace mln::util.
@@ -66,6 +137,15 @@
 	Add a factored implementation of neighborhood of complex image.
 
 	* mln/core/internal/complex_neighborhood_base.hh: New.
+
+2008-10-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix ambiguous namespaces.
+
+	* mln/level/fill_with_image.hh
+	* mln/level/paste.hh:
+	Fix compilation error. It could not resolve the correct namespace
+	path.
 
 2008-10-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
@@ -255,9 +335,10 @@
 
 	* mln/core/def/coordf.hh: New.
 
-2008-16-07  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-10-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial.
+
 	* doc/tutorial/samples/ima2d-1.tex,
 	* doc/tutorial/samples/ima2d-3.tex,
 	* doc/tutorial/samples/paste-call-1.tex,
@@ -268,7 +349,9 @@
 	Mainly update image chapter.
 	Cleanup source.
 
-2008-15-07  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
 
 	* mln/doc/tutorial/samples/box2d-1.tex,
 	* mln/doc/tutorial/samples/box2d-2.tex,
@@ -315,11 +398,11 @@
 2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update the prototype of labeling::compute().
+
 	* mln/labeling/compute.hh: change the return type to an
 	util::array.
 
-	* sandbox/scribo/demat.hh,
-	* tests/labeling/compute.cc: update according the new
+	* mln/tests/labeling/compute.cc: update according the new
 	prototype.
 
 2008-10-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
@@ -345,6 +428,7 @@
 2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove the useless '_' postfix in all the accumulators.
+
 	* doc/examples/tuto_bis.cc,
 	* doc/tutorial/examples/accu.cc,
 	* mln/accu/bbox.hh,
@@ -422,6 +506,7 @@
 2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update accus to make them work with the new q_result typedef.
+
 	* mln/accu/bbox.hh,
 	* mln/accu/histo.hh,
 	* mln/accu/max.hh,
@@ -478,6 +563,7 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix labeling::compute return type.
+
 	* mln/labeling/compute.hh: Fix many compilation errors
 	while taking directly the result type of an accumulator as a template
 	parameter for p_array<>.
@@ -486,12 +572,14 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add meta-accumulator for accu::bbox.
+
 	* mln/accu/bbox.hh: add missing meta-accumulator.
 
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add is_valid() in the accumulator concept and move meta-accumulators
 	in meta namespace.
+	
         * mln/accu/count.hh,
         * mln/accu/height.hh,
         * mln/accu/histo.hh,
@@ -529,6 +617,7 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add labeling::compute.
+
 	* mln/labeling/compute.hh: do it.
 	* tests/labeling/Makefile.am,
 	* tests/labeling/compute.cc: Add the proper test.
@@ -536,6 +625,7 @@
 2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Use geom::bbox instead of bbox().
+
 	* mln/geom/max_col.hh,
 	* mln/geom/max_row.hh,
 	* mln/geom/min_col.hh,
@@ -722,6 +812,7 @@
 2008-10-07  Guillaume Lazzara  <z@lrde.epita.fr>
       
 	Fix most of the doxygen warnings.
+
 	* mln/arith/min.hh,
 	* mln/arith/plus.hh,
 	* mln/core/concept/doc/point_iterator.hh,
@@ -1092,6 +1183,7 @@
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.
+
 	* mln/algebra/vec.hh: add missing header.
 	
 	* mln/core/image/obased_rle_image.hh,
@@ -1112,6 +1204,7 @@
 2008-10-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial..
+
 	* doc/tutorial/tutorial.tex:
 	  - Add a new section about sites
 	  - Add new subsections about image domain and values.
