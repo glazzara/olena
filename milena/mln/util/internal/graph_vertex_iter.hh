@@ -108,6 +108,8 @@ namespace mln
 	/// Go to the next value.
 	void next();
 
+	void update_graph(const G& g);
+
 	/// Return current index
 	unsigned index() const;
 	/// \}
@@ -156,7 +158,7 @@ namespace mln
     void
     vertex_fwd_iterator<G>::invalidate()
     {
-      v_.update_id(v_.g()->v_nmax());
+      v_.update_id(v_.g().v_nmax());
     }
 
     template<typename G>
@@ -180,7 +182,7 @@ namespace mln
     void
     vertex_fwd_iterator<G>::update_graph(const G& g)
     {
-      v_ = util::vertex<G>(&g);
+      v_ = util::vertex<G>(g);
     }
 
     template<typename G>
@@ -213,8 +215,8 @@ namespace mln
     template<typename G>
     inline
     vertex_bkd_iterator<G>::vertex_bkd_iterator(const G& g)
-      : v_(util::vertex<G>(&g))
     {
+      update_graph(g);
       invalidate();
     }
 
@@ -231,7 +233,7 @@ namespace mln
     void
     vertex_bkd_iterator<G>::invalidate()
     {
-      v_.update_id(v_.g()->v_nmax());
+      v_.update_id(v_.g().v_nmax());
     }
 
     template<typename G>
@@ -239,7 +241,7 @@ namespace mln
     void
     vertex_bkd_iterator<G>::start()
     {
-      v_.update_id(v_.g()->v_nmax() - 1);
+      v_.update_id(v_.g().v_nmax() - 1);
     }
 
     template<typename G>
@@ -248,6 +250,14 @@ namespace mln
     vertex_bkd_iterator<G>::next()
     {
       v_.update_id(v_.id() - 1);
+    }
+
+    template<typename G>
+    inline
+    void
+    vertex_bkd_iterator<G>::update_graph(const G& g)
+    {
+      v_ = util::vertex<G>(g);
     }
 
     template<typename G>

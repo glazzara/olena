@@ -158,7 +158,7 @@ namespace mln
     void
     vertex_nbh_vertex_fwd_iterator<G>::invalidate()
     {
-      i_ = v_.g()->v_nmax();
+      i_ = v_.g().v_nmax();
     }
 
     template <typename G>
@@ -248,7 +248,7 @@ namespace mln
     void
     vertex_nbh_vertex_bkd_iterator<G>::invalidate()
     {
-      v_.update_id(v_.g()->e_nmax());
+      v_.update_id(v_.g().e_nmax());
     }
 
     template <typename G>

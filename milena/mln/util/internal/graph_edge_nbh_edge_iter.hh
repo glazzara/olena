@@ -158,7 +158,7 @@ namespace mln
     void
     edge_nbh_edge_fwd_iterator<G>::invalidate()
     {
-      i_ = e_.g()->e_nmax();
+      i_ = e_.g().e_nmax();
     }
 
     template <typename G>
@@ -256,7 +256,7 @@ namespace mln
     void
     edge_nbh_edge_bkd_iterator<G>::invalidate()
     {
-      i_ = e_.g()->e_nmax();
+      i_ = e_.g().e_nmax();
     }
 
     template <typename G>

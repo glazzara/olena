@@ -48,14 +48,14 @@ namespace mln
     template <typename G>
     class edge : public internal::edge_impl_<G>
     {
-      typedef mlc_const(G) graph_t;
+      typedef mlc_unconst(G) graph_t;
 
       public:
 	/// Constructors
 	/// \{
 	edge();
-	explicit edge(graph_t *g);
-        edge(graph_t *g, unsigned id);
+	explicit edge(const graph_t& g);
+        edge(const graph_t& g, unsigned id);
 	/// \}
 
 
@@ -68,8 +68,8 @@ namespace mln
 	/// Set id_ with \p id;
 	void update_id(unsigned id);
 
-	/// Return pointer of the graph holding this edge.
-        const graph_t * g() const;
+	/// Return a reference to the graph holding this edge.
+        const graph_t& g() const;
 
 	/// Set g_ with \p g;
 	void change_graph(const graph_t& g);
@@ -102,7 +102,7 @@ namespace mln
 	/// \}
 
       private:
-	graph_t * g_;
+	graph_t g_;
 	unsigned id_;
     };
 
@@ -126,7 +126,7 @@ namespace mln
     struct subject_impl< const util::edge<G>, E >
     {
 	unsigned id() const;
-        const mlc_const(G) * g() const;
+        const mlc_const(G)& g() const;
         unsigned v_other(unsigned id_v)	const;
 	bool is_valid() const;
 	unsigned v1() const;
@@ -172,17 +172,17 @@ namespace mln
 
     template <typename G>
     inline
-    edge<G>::edge(graph_t *g)
-      : g_(g), id_(g->e_nmax())
+    edge<G>::edge(const graph_t& g)
+      : g_(g), id_(g.e_nmax())
     {
     }
 
     template <typename G>
     inline
-    edge<G>::edge(graph_t *g, unsigned id)
+    edge<G>::edge(const graph_t& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(g->has_e(id));
+      mln_precondition(g.has_e(id));
     }
 
     template <typename G>
@@ -203,7 +203,7 @@ namespace mln
 
     template <typename G>
     inline
-    const typename edge<G>::graph_t *
+    const typename edge<G>::graph_t&
     edge<G>::g() const
     {
       return g_;
@@ -214,7 +214,7 @@ namespace mln
     void
     edge<G>::change_graph(const graph_t& g)
     {
-      g_ = & g;
+      g_ = g;
     }
 
     template <typename G>
@@ -223,7 +223,7 @@ namespace mln
     edge<G>::v_other(unsigned id_v) const
     {
       mln_precondition(v1() == id_v || v2() == id_v);
-      return g_->v_other(id_, id_v);
+      return g_.v_other(id_, id_v);
     }
 
     template <typename G>
@@ -231,7 +231,7 @@ namespace mln
     bool
     edge<G>::is_valid() const
     {
-      return g_ != 0 && g_->has_e(id_);
+      return g_.has_e(id_);
     }
 
     template <typename G>
@@ -239,8 +239,8 @@ namespace mln
     unsigned
     edge<G>::v1() const
     {
-      mln_precondition(g_->has_e(id_));
-      return g_->v1(id_);
+      mln_precondition(g_.has_e(id_));
+      return g_.v1(id_);
     }
 
     template <typename G>
@@ -248,8 +248,8 @@ namespace mln
     unsigned
     edge<G>::v2() const
     {
-      mln_precondition(g_->has_e(id_));
-      return g_->v2(id_);
+      mln_precondition(g_.has_e(id_));
+      return g_.v2(id_);
     }
 
     template <typename G>
@@ -257,8 +257,8 @@ namespace mln
     size_t
     edge<G>::nmax_nbh_edges() const
     {
-      mln_precondition(g_->has_e(id_));
-      return g_->e_nmax_nbh_edges(id_);
+      mln_precondition(g_.has_e(id_));
+      return g_.e_nmax_nbh_edges(id_);
     }
 
     template <typename G>
@@ -266,8 +266,8 @@ namespace mln
     unsigned
     edge<G>::ith_nbh_edge(unsigned i) const
     {
-      mln_precondition(g_->has_e(id_));
-      return g_->e_ith_nbh_edge(id_, i);
+      mln_precondition(g_.has_e(id_));
+      return g_.e_ith_nbh_edge(id_, i);
     }
 
 
@@ -315,7 +315,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    const mlc_const(G) *
+    const mlc_const(G)&
     subject_impl< const util::edge<G>, E >::g() const
     {
       return exact_().get_subject().g();
@@ -387,7 +387,7 @@ namespace mln
     void
     subject_impl<	util::edge<G>, E >::change_graph(const mlc_const(G)& g)
     {
-      return exact_().get_subject().change_graph(&g);
+      return exact_().get_subject().change_graph(g);
     }
 
   } // End of namespace mln::internal

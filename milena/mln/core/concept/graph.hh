@@ -67,7 +67,7 @@ namespace mln
       typedef bkd_piter;
 
       // Misc.
-      void *graph_id() const;
+      const E& graph_id() const;
       template<typename G2>
       bool is_subgraph_of(const G2& gr) const;
 

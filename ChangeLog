@@ -1,5 +1,21 @@
 2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use track_ptr in graph.
+	* milena/mln/core/concept/graph.hh,
+	* milena/util/graph.hh,
+	* milena/util/internal/graph_base.hh,
+	* milena/util/internal/graph_edge.hh,
+	* milena/util/internal/graph_edge_iter.hh,
+	* milena/util/internal/graph_edge_nbh_edge_iter.hh,
+	* milena/util/internal/graph_vertex.hh,
+	* milena/util/internal/graph_vertex_iter.hh,
+	* milena/util/internal/graph_vertex_nbh_edge_iter.hh,
+	* milena/util/internal/graph_vertex_nbh_vertex_iter.hh:
+	Share data between graphs.
+	Refactor some parts of the code.
+
+2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add sample code for the tutorial.
 	* milena/mln/doc/tutorial/samples/borderthickness-output.tex,
 	* milena/mln/doc/tutorial/samples/borderthickness.tex,

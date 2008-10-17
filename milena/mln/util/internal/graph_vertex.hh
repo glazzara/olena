@@ -43,15 +43,15 @@ namespace mln
     template<typename G>
     class vertex : public internal::vertex_impl_<G>
     {
-      typedef mlc_const(G) graph_t;
+      typedef mlc_unconst(G) graph_t;
 
       public:
 
 	/// Constructors.
 	/// \{
 	vertex();
-	explicit vertex(graph_t *g);
-        vertex(graph_t *g, unsigned id);
+	explicit vertex(const graph_t& g);
+        vertex(const graph_t& g, unsigned id);
 	/// \}
 
         /// Check whether the vertex is still part of the graph.
@@ -82,15 +82,25 @@ namespace mln
 	void update_id(unsigned id);
 
 	/// Returns the graph pointer this vertex belongs to.
-	const graph_t * g() const;
+	const graph_t&  g() const;
 
 	/// Returns vertex id.
 	unsigned id() const;
 
-      private:
-        graph_t * g_;
+      protected:
+        graph_t g_;
         unsigned id_;
     };
+
+    /// Comparison operator. Test whether two vertices have the same id.
+    template<typename G>
+    bool
+    operator==(const util::vertex<G>& v1, const util::vertex<G>& v2);
+
+    /// Inferior operator. Test whether lhs.id() < rhs.id().
+    template<typename G>
+    bool
+    operator<(const util::vertex<G>& lhs, const util::vertex<G>& rhs);
 
   } // End of namespace mln::util
 
@@ -103,7 +113,7 @@ namespace mln
     struct subject_impl< const util::vertex<G>, E >
     {
 	bool is_valid() const;
-	const mlc_const(G) * g() const;
+	const mlc_const(G)& g() const;
 	unsigned id() const;
 
 	unsigned other(unsigned id_e) const;
@@ -142,26 +152,44 @@ namespace mln
   namespace util
   {
 
+    template<typename G>
+    inline
+    bool
+    operator==(const util::vertex<G>& v1, const util::vertex<G>& v2)
+    {
+      return v1.id() == v2.id();
+    }
+
+    template<typename G>
+    inline
+    bool
+    operator<(const util::vertex<G>& lhs, const util::vertex<G>& rhs)
+    {
+      return lhs.id() < rhs.id();
+    }
+
+
+
     template <typename G>
     inline
     vertex<G>::vertex()
-      : g_(0), id_(0)
+      : id_(0)
     {
     }
 
     template <typename G>
     inline
-    vertex<G>::vertex(graph_t *g)
-      : g_(g), id_(g_->v_nmax())
+    vertex<G>::vertex(const graph_t& g)
+      : g_(g), id_(g_.v_nmax())
     {
     }
 
     template<typename G>
     inline
-    vertex<G>::vertex(graph_t *g, unsigned id)
+    vertex<G>::vertex(const graph_t& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(g_->has_v(id));
+      mln_precondition(g_.has_v(id));
     }
 
     template<typename G>
@@ -169,7 +197,7 @@ namespace mln
     bool
     vertex<G>::is_valid() const
     {
-      return g_ != 0 && g_->has_v(id_);
+      return g_.has_v(id_);
     }
 
     template<typename G>
@@ -177,7 +205,7 @@ namespace mln
     void
     vertex<G>::invalidate()
     {
-      id_ = g_->v_nmax();
+      id_ = g_.v_nmax();
     }
 
 
@@ -186,10 +214,10 @@ namespace mln
     unsigned
     vertex<G>::other(unsigned id_e) const
     {
-      mln_precondition(g_->has_v(id_));
-      mln_precondition(g_->has_e(id_e));
-      mln_precondition(g_->v1(id_e) == id_ || g_->v2(id_e) == id_);
-      return g_->v_other(id_e, id_);
+      mln_precondition(g_.has_v(id_));
+      mln_precondition(g_.has_e(id_e));
+      mln_precondition(g_.v1(id_e) == id_ || g_.v2(id_e) == id_);
+      return g_.v_other(id_e, id_);
     }
 
     template<typename G>
@@ -197,8 +225,8 @@ namespace mln
     unsigned
     vertex<G>::ith_nbh_edge(unsigned i) const
     {
-      mln_precondition(g_->has_v(id_));
-      return g_->v_ith_nbh_edge(id_, i);
+      mln_precondition(g_.has_v(id_));
+      return g_.v_ith_nbh_edge(id_, i);
     }
 
     template<typename G>
@@ -206,8 +234,8 @@ namespace mln
     unsigned
     vertex<G>::nmax_nbh_edges() const
     {
-      mln_precondition(g_->has_v(id_));
-      return g_->v_nmax_nbh_edges(id_);
+      mln_precondition(g_.has_v(id_));
+      return g_.v_nmax_nbh_edges(id_);
     }
 
     template<typename G>
@@ -215,8 +243,8 @@ namespace mln
     unsigned
     vertex<G>::ith_nbh_vertex(unsigned i) const
     {
-      mln_precondition(g_->has_v(id_));
-      return g_->v_ith_nbh_vertex(id_, i);
+      mln_precondition(g_.has_v(id_));
+      return g_.v_ith_nbh_vertex(id_, i);
     }
 
     template<typename G>
@@ -224,8 +252,8 @@ namespace mln
     unsigned
     vertex<G>::nmax_nbh_vertices() const
     {
-      mln_precondition(g_->has_v(id_));
-      return g_->v_nmax_nbh_vertices(id_);
+      mln_precondition(g_.has_v(id_));
+      return g_.v_nmax_nbh_vertices(id_);
     }
 
     template<typename G>
@@ -233,7 +261,7 @@ namespace mln
     void
     vertex<G>::change_graph(const G& g)
     {
-      g_ = &g;
+      g_ = g;
     }
 
     template<typename G>
@@ -246,7 +274,7 @@ namespace mln
 
     template<typename G>
     inline
-    const typename vertex<G>::graph_t *
+    const typename vertex<G>::graph_t&
     vertex<G>::g() const
     {
       return g_;
@@ -283,7 +311,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    const mlc_const(G)*
+    const mlc_const(G)&
     subject_impl< const util::vertex<G>, E >::g() const
     {
       return exact_().get_subject().g();

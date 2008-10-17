@@ -142,7 +142,7 @@ namespace mln
     template <typename G>
     inline
     edge_fwd_iterator<G>::edge_fwd_iterator(const G& g)
-      : e_(util::edge<G>(&g))
+      : e_(util::edge<G>(g))
     {
       invalidate();
     }
@@ -160,7 +160,7 @@ namespace mln
     void
     edge_fwd_iterator<G>::invalidate()
     {
-      e_.update_id(e_.g()->e_nmax());
+      e_.update_id(e_.g().e_nmax());
     }
 
     template <typename G>
@@ -210,7 +210,7 @@ namespace mln
     template <typename G>
     inline
     edge_bkd_iterator<G>::edge_bkd_iterator(const G& g)
-      : e_(util::edge<G>(&g))
+      : e_(util::edge<G>(g))
     {
       invalidate();
     }
@@ -228,7 +228,7 @@ namespace mln
     void
     edge_bkd_iterator<G>::invalidate()
     {
-      e_.update_id(e_.g()->e_nmax());
+      e_.update_id(e_.g().e_nmax());
     }
 
     template <typename G>
@@ -236,7 +236,7 @@ namespace mln
     void
     edge_bkd_iterator<G>::start()
     {
-      e_.update_id(e_.g()->e_nmax() - 1);
+      e_.update_id(e_.g().e_nmax() - 1);
     }
 
     template <typename G>
