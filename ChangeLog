@@ -1,3 +1,22 @@
+2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add sample code for the tutorial.
+	* milena/mln/doc/tutorial/samples/borderthickness-output.tex,
+	* milena/mln/doc/tutorial/samples/borderthickness.tex,
+	* milena/mln/doc/tutorial/samples/extension-ignore.tex,
+	* milena/mln/doc/tutorial/samples/extension-ignore2.tex,
+	* milena/mln/doc/tutorial/samples/ima-load.tex,
+	* milena/mln/doc/tutorial/samples/ima-save.tex,
+	* milena/mln/doc/tutorial/samples/ima-size-output.tex,
+	* milena/mln/doc/tutorial/samples/ima-size.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-1-output.tex,
+	* milena/mln/doc/tutorial/samples/ima2d-3-output.tex,
+	* milena/mln/doc/tutorial/samples/paste-call-1-output.tex,
+	* milena/mln/doc/tutorial/samples/point-1-output.tex,
+	* milena/mln/doc/tutorial/tutorial.tex:
+	Add these sample codes for the tutorial.
+
+
 2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/io/off/Makefile.

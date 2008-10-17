@@ -1,0 +1,8 @@
+bool vals[2][2] = { {0, 1},
+		    {1, 0} };
+image2d<bool> ima_def = make::image2d(vals);
+display::format(ima_def);
+
+border::thickness = 0;
+image2d<bool> ima_bt0 = make::image2d(vals);
+display::format(ima_bt0);
