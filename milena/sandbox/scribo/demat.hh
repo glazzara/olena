@@ -32,31 +32,48 @@
 
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/sub_image.hh>
+# include <mln/core/image/cast_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/var.hh>
+# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/ops.hh>
 # include <mln/core/site_set/p_vaccess.hh>
 
+# include <mln/accu/bbox.hh>
+
 # include <mln/binarization/threshold.hh>
-# include <mln/morpho/hit_or_miss.hh>
-# include <mln/level/fill.hh>
+
 # include <mln/border/fill.hh>
+
+# include <mln/convert/to.hh>
+# include <mln/convert/to_fun.hh>
+
+# include <mln/debug/println.hh>
+
+# include <mln/draw/box.hh>
+
+# include <mln/estim/nsites.hh>
+
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pbm/save.hh>
 # include <mln/io/pgm/save.hh>
-# include <mln/debug/println.hh>
-# include <mln/morpho/opening.hh>
-# include <mln/trait/value_.hh>
-# include <mln/value/int_u8.hh>
-# include <mln/level/paste.hh>
-# include <mln/labeling/blobs.hh>
-# include <mln/level/fill.hh>
-# include <mln/pw/all.hh>
-# include <mln/convert/to_fun.hh>
-# include <mln/geom/bbox.hh>
 
+# include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
-# include <mln/accu/bbox.hh>
+
+# include <mln/level/fill.hh>
+# include <mln/level/paste.hh>
+
+# include <mln/morpho/hit_or_miss.hh>
+# include <mln/morpho/opening.hh>
+
+# include <mln/pw/all.hh>
+
+# include <mln/util/array.hh>
+
+# include <mln/value/int_u16.hh>
+# include <mln/value/rgb8.hh>
 
 namespace scribo
 {
@@ -64,43 +81,78 @@ namespace scribo
   namespace internal
   {
 
-    void filter_image(mln::image2d<bool>& ima,
-		      const mln::image2d<bool>& filter,
-		      unsigned bbox_larger)
+    using namespace mln;
+    using value::int_u16;
+
+    util::array<box2d>
+    component_boxes(const image2d<bool>& filter)
     {
-      using namespace mln;
-      using value::int_u8;
 
-      typedef image2d<int_u8> I;
-      typedef mln_accu_with_(accu::meta::bbox, mln_psite_(I)) A;
-      typedef util::array<A::result> boxes_t;
+      int_u16 nlabels;
+      image2d<int_u16> lbl = labeling::blobs(filter, c4(), nlabels);
 
-      int_u8 nlabels;
-      I lbl = labeling::blobs(filter, c4(), nlabels);
-
-      boxes_t boxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
-
-      for (unsigned i = 1; i <= nlabels; ++i)
-	level::paste(pw::cst(false)
-	    | boxes[i].to_larger(bbox_larger),
-	    ima);
+      return labeling::compute(accu::meta::bbox(), lbl, nlabels);
     }
 
-    void remove_tables(mln::image2d<bool>& in, unsigned h, unsigned w, unsigned n)
+    void erase_boxes(image2d<bool>& ima,
+		     const util::array<box2d>& boxes,
+		     unsigned bbox_larger)
     {
-      using namespace mln;
+      for (unsigned i = 1; i <= boxes.nelements(); ++i)
+	level::paste(pw::cst(false)
+		    | boxes[i].to_larger(bbox_larger),
+		    ima);
+    }
+
+
+    std::pair<util::array<box2d>,
+		    util::array<box2d> >
+    extract_tables(image2d<bool>& in, unsigned h, unsigned w, unsigned n)
+    {
+      typedef image2d<int_u16> I;
+      typedef accu::bbox<mln_psite_(I)> A;
+      typedef util::array<mln_result_(A)> boxes_t;
 
       // Lignes verticales
       win::rectangle2d vwin(h, w);
       image2d<bool> vfilter = morpho::opening(in, vwin);
       io::pbm::save(vfilter, "./table-vfilter.pbm");
-      filter_image(in, vfilter, n);
+      boxes_t vboxes = component_boxes(vfilter);
+      erase_boxes(in, vboxes, n);
 
       // Lignes horizontales
       win::rectangle2d hwin(w, h);
       image2d<bool> hfilter = morpho::opening(in, hwin);
       io::pbm::save(hfilter, "./table-hfilter.pbm");
-      filter_image(in, hfilter, n);
+      boxes_t hboxes = component_boxes(hfilter);
+      erase_boxes(in, hboxes, n);
+
+      return std::make_pair(vboxes, hboxes);
+    }
+
+    void
+    extract_text(image2d<bool>& in)
+    {
+      typedef image2d<int_u16> I;
+      typedef util::array<box2d> boxes_t;
+
+      boxes_t tboxes = component_boxes(in);
+
+      //FIXME: don't know how to clone and convert to image<int> properly
+      // \{
+      I ima(in.domain());
+      level::paste(in, ima);
+      level::paste(pw::cst(100)
+	  | (in | (pw::value(in) == pw::cst(true))).domain(), ima);
+      // \}
+
+      for (int i = 1; i < tboxes.nelements(); ++i)
+	if (estim::nsites(tboxes[i]) < 40)
+	  level::paste(pw::cst(false) | tboxes[i], ima);
+	else
+	 draw::box(ima, tboxes[i], 150u);
+
+      io::pgm::save(ima, "./text.pgm");
     }
 
   } // end of namespace scribo::internal
@@ -111,7 +163,7 @@ namespace scribo
   void demat(char *argv[])
   {
     using namespace mln;
-    using value::int_u8;
+    border::thickness = 0;
 
     //Useful debug variables
     unsigned h = atoi(argv[2]);
@@ -122,9 +174,11 @@ namespace scribo
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
 
-    internal::remove_tables(in, h, w, n);
+    internal::extract_tables(in, h, w, n);
 
     io::pbm::save(in, "./table-filtered.pbm");
+
+    internal::extract_text(in);
   }
 
 } // end of namespace scribo

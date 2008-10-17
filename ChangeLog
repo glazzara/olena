@@ -1,5 +1,11 @@
 2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Get and display character bboxes.
+	* milena/sandbox/scribo/demat.hh: update. 
+	Does not create text bboxes yet.
+
+2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add "essential" headers.
 	* milena/mln/essential/1d.hh,
 	* milena/mln/essential/2d.hh,
