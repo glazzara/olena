@@ -1,5 +1,11 @@
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a factored implementation of window of complex image.
+
+	* mln/core/internal/complex_window_p_base.hh: New.
+
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor concrete neighborhoods of complex image.
 
 	* mln/core/image/complex_lower_neighborhood.hh,
