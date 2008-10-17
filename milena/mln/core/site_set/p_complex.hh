@@ -94,7 +94,7 @@ namespace mln
        dimensions, e.g.
 
          mln_type_list(point2d,
-           mln_type_list(site_pair<point2d>,
+           mln_type_list(util::site_pair<point2d>,
              mln_type_list(site_set<point2d>,  // or site_triplet<point2d>
                mln_empty_list)))
 

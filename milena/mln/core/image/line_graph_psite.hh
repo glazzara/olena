@@ -56,7 +56,7 @@ namespace mln
   /// \arg \p P The type of the site.
   template <typename P>
   class line_graph_psite
-    : public internal::pseudo_site_base_< const site_pair<P>&,
+    : public internal::pseudo_site_base_< const util::site_pair<P>&,
 					  line_graph_psite<P> >
   {
     typedef line_graph_psite<P> self_;
@@ -95,7 +95,7 @@ namespace mln
     /// Proxy manipulators.
     /// \{
     /// Return the site corresponding to this psite.
-    const site_pair<P>& subj_();
+    const util::site_pair<P>& subj_();
     /// \}
 
     /// Edge id manipulators.
@@ -131,7 +131,7 @@ namespace mln
     /// Update the site corresponding to this psite.
     void update_();
     // The site corresponding to this psite.
-    site_pair<P> p_;
+    util::site_pair<P> p_;
     /// \}
 
   private:
@@ -256,7 +256,7 @@ namespace mln
   // FIXME: Write or extend a test to exercise this method.
   template <typename P>
   inline
-  const site_pair<P>&
+  const util::site_pair<P>&
   line_graph_psite<P>::subj_()
   {
     return p_;

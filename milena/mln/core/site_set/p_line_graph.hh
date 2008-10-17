@@ -68,10 +68,10 @@ namespace mln
 
   template<typename P>
   struct p_line_graph
-    : public internal::site_set_base_< site_pair<P>, p_line_graph<P> >
+    : public internal::site_set_base_< util::site_pair<P>, p_line_graph<P> >
   {
     typedef p_line_graph<P> self_;
-    typedef internal::site_set_base_< site_pair<P>, self_ > super_;
+    typedef internal::site_set_base_< util::site_pair<P>, self_ > super_;
 
     typedef util::graph<P> graph;
 

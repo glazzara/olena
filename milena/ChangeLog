@@ -1,5 +1,16 @@
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Move site_pair into namespace mln::util.
+
+	* mln/util/site_pair.hh (mln::site_pair): Move class...
+	(mln::util::site_pair): ...here, into namespace mln::util.
+	* mln/core/image/line_graph_psite.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_line_graph.hh:
+	Adjust.
+
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor neighborhoods of complex images.
 
 	* mln/core/image/complex_neighborhoods.hh: New.

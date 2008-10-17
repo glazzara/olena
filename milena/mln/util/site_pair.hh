@@ -35,82 +35,93 @@
 
 namespace mln
 {
-  /* FIXME: The class mln::internal::image_base requires its site
-     types to have a `coord' typedef, but util::ord_pair has none.
-     Hence this small workaround.  Use ord_pair directly as soon as
-     image_base is refurbished.  */
-  template <typename P>
-  struct site_pair : public mln::Object< site_pair<P> >
+
+  namespace util
   {
-    site_pair();
-    site_pair(const P& first, const P& second);
-    typedef mln_coord(P) coord;
-    util::ord_pair<P> pair_;
-  };
 
-  /* FIXME: The proxy mechanism requires operator== and operator<= for
-     line_graph_psite to compile (line_graph_psite aggregates a
-     site_pair); why?  It seems its static assertions do not check the
-     right guy(s).  IMHO (Roland's), it should look for
-     line_graph_psite's operators, not site_pair's.  */
-  template <typename P>
-  bool operator==(const site_pair<P>& lhs, const site_pair<P>& rhs);
+    /* FIXME: The class mln::internal::image_base requires its site
+       types to have a `coord' typedef, but util::ord_pair has none.
+       Hence this small workaround.  Use ord_pair directly as soon as
+       image_base is refurbished.  */
+    template <typename P>
+    struct site_pair : public mln::Object< site_pair<P> >
+    {
+      /* FIXME: We should not need to define this typedef
+	 (see. mln::internal::image_base's site `coord' typedef).  */
+      typedef mln_coord(P) coord;
 
-  template <typename P>
-  bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
+      site_pair();
+      site_pair(const P& first, const P& second);
 
-  template <typename P>
-  bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
+      util::ord_pair<P> pair_;
+    };
+
+
+    /* FIXME: The proxy mechanism requires operator== and operator<= for
+       line_graph_psite to compile (note: line_graph_psite aggregates a
+       site_pair); why?  It seems its static assertions do not check the
+       right guy(s).  IMHO (Roland's), it should look for
+       line_graph_psite's operators, not site_pair's.  */
+    template <typename P>
+    bool operator==(const site_pair<P>& lhs, const site_pair<P>& rhs);
+
+    template <typename P>
+    bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
+
+    template <typename P>
+    bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /*---------------.
-  | Construction.  |
-  `---------------*/
+    /*---------------.
+    | Construction.  |
+    `---------------*/
 
-  template <typename P>
-  site_pair<P>::site_pair()
-    : pair_(P(), P())
-  {
-  }
+    template <typename P>
+    site_pair<P>::site_pair()
+      : pair_(P(), P())
+    {
+    }
 
-  template <typename P>
-  site_pair<P>::site_pair(const P& first, const P& second)
-    : pair_(first, second)
-  {
-  }
+    template <typename P>
+    site_pair<P>::site_pair(const P& first, const P& second)
+      : pair_(first, second)
+    {
+    }
 
-  /*-------------.
-  | Comparison.  |
-  `-------------*/
+    /*-------------.
+    | Comparison.  |
+    `-------------*/
 
-  template <typename P>
-  inline
-  bool
-  operator==(const site_pair<P>& lhs, const site_pair<P>& rhs)
-  {
-    return lhs.pair_ == rhs.pair_;
-  }
+    template <typename P>
+    inline
+    bool
+    operator==(const site_pair<P>& lhs, const site_pair<P>& rhs)
+    {
+      return lhs.pair_ == rhs.pair_;
+    }
 
-  template <typename P>
-  inline
-  bool
-  operator< (const site_pair<P>& lhs, const site_pair<P>& rhs)
-  {
-    return lhs.pair_ < rhs.pair_;
-  }
+    template <typename P>
+    inline
+    bool
+    operator< (const site_pair<P>& lhs, const site_pair<P>& rhs)
+    {
+      return lhs.pair_ < rhs.pair_;
+    }
 
-  template <typename P>
-  inline
-  bool
-  operator<=(const site_pair<P>& lhs, const site_pair<P>& rhs)
-  {
-    return lhs.pair_ <= rhs.pair_;
-  }
+    template <typename P>
+    inline
+    bool
+    operator<=(const site_pair<P>& lhs, const site_pair<P>& rhs)
+    {
+      return lhs.pair_ <= rhs.pair_;
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of mln::util
 
 } // end of mln
 
