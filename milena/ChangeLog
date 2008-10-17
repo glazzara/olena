@@ -1,3 +1,9 @@
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a factored implementation of neighborhood of complex image.
+
+	* mln/core/internal/complex_neighborhood_base.hh: New.
+
 2008-10-16  Roland Levillain  <roland@lrde.epita.fr>
 
 	Exercise mln::io::load on OFF file (with no color data).
