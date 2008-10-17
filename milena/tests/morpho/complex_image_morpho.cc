@@ -37,9 +37,7 @@
 #include <mln/core/image/complex_image.hh>
 
 // FIXME: Include these elsewhere? (In complex_image.hh?)
-#include <mln/core/image/complex_lower_window_p.hh>
-#include <mln/core/image/complex_higher_window_p.hh>
-#include <mln/core/image/complex_lower_higher_window_p.hh>
+#include <mln/core/image/complex_windows.hh>
 #include <mln/core/image/complex_window_piter.hh>
 
 #include <mln/debug/iota.hh>

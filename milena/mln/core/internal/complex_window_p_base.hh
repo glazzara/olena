@@ -36,7 +36,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/core/site_set/complex_psite.hh>
 
-# include <mln/topo/adj_lower_face_iter.hh>
+# include <mln/topo/centered_iter_adapter.hh>
+
 
 // FIXME: Factor with mln::internal::complex_neighborhood_base.
 

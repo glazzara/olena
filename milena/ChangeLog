@@ -1,5 +1,20 @@
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix and factor windows of complex images.
+
+	* mln/core/image/complex_windows.hh: New.
+	Replace...
+	* mln/core/image/complex_lower_window_p.hh,
+	* mln/core/image/complex_higher_window_p.hh, 
+	* mln/core/image/complex_lower_higher_window_p.hh:
+	...these files.
+	Remove.
+	* mln/core/internal/complex_window_p_base.hh: Fix headers
+	inclusions.
+	* tests/morpho/complex_image_morpho.cc: Adjust.
+
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor concrete windows of complex image.
 
 	* mln/core/image/complex_lower_window_p.hh,
