@@ -1,5 +1,14 @@
 2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor concrete neighborhoods of complex image.
+
+	* mln/core/image/complex_lower_neighborhood.hh,
+	* mln/core/image/complex_higher_neighborhood.hh, 
+	* mln/core/image/complex_lower_higher_neighborhood.hh:
+	Factor using mln::internal::complex_neighborhood_base.
+
+2008-10-17  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a factored implementation of neighborhood of complex image.
 
 	* mln/core/internal/complex_neighborhood_base.hh: New.

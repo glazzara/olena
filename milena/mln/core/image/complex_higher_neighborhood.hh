@@ -32,87 +32,21 @@
 /// \brief A neighborhood centered on a n-face of complex returning its
 /// adjacent (n+1)-faces.
 
-# include <mln/core/concept/neighborhood.hh>
-
-# include <mln/core/site_set/complex_psite.hh>
-
+# include <mln/core/internal/complex_neighborhood_base.hh>
 # include <mln/topo/adj_higher_face_iter.hh>
-
-// FIXME: Factor with complex_lower_neighborhood.
 
 
 namespace mln
 {
-  // Forward declarations.
-  template <typename I, typename G, typename N>
-  class complex_neighborhood_fwd_piter;
-  template <typename I, typename G, typename N>
-  class complex_neighborhood_bkd_piter;
 
-
-  /// \brief Neighborhood centered on a n-face of complex returning its
-  /// adjacent (n-1)-faces.
   template <unsigned D, typename G>
-  class complex_higher_neighborhood
-    : public Neighborhood< complex_higher_neighborhood<D, G> >
+  struct complex_higher_neighborhood
+    : internal::complex_neighborhood_base< D, G,
+					   topo::adj_higher_face_fwd_iter<D>,
+					   topo::adj_higher_face_bkd_iter<D>,
+					   complex_higher_neighborhood<D, G> >
   {
-    typedef complex_higher_neighborhood<D, G> self_;
-
-  public:
-    /// The associated complex iterators.
-    /// \{
-    typedef topo::adj_higher_face_fwd_iter<D> complex_fwd_iter;
-    typedef topo::adj_higher_face_bkd_iter<D> complex_bkd_iter;
-    /// \}
-
-  public:
-    /// Associated types.
-    /// \{
-    /// The type of psite corresponding to the neighborhood.
-    typedef complex_psite<D, G> psite;
-    /// The type of site corresponding to the neighborhood.
-    typedef mln_site(psite) site;
-
-    /// \brief Site_Iterator type to browse the psites of the neighborhood
-    /// w.r.t. the ordering of vertices.
-    typedef
-    complex_neighborhood_fwd_piter<complex_fwd_iter, G, self_> fwd_niter;
-
-    /// \brief Site_Iterator type to browse the psites of the neighborhood
-    /// w.r.t. the reverse ordering of vertices.
-    typedef
-    complex_neighborhood_bkd_piter<complex_bkd_iter, G, self_> bkd_niter;
-
-    /// The default niter type.
-    typedef fwd_niter niter;
-    /// \}
-
-    /// Conversions.
-    /// \{
-    /// The window type corresponding to this neighborhood.
-    // FIXME: Dummy.
-    typedef self_ window;
-    /// Create a window corresponding to this neighborhood.
-    const window& win() const;
-    /// \}
   };
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  // FIXME: Dummy.
-  template <unsigned D, typename G>
-  inline
-  // FIXME: Change (dummy) type.
-  const typename complex_higher_neighborhood<D, G>::window&
-  complex_higher_neighborhood<D, G>::win() const
-  {
-    // FIXME: Dummy.
-    return *this;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
