@@ -62,6 +62,11 @@ namespace mln
 
         /// Misc.
 	/// \{
+	/// Return whether is points to a known edge.
+	bool is_valid() const;
+	/// Invalidate that vertex.
+	void invalidate();
+
 	/// Return the edge id.
 	unsigned id() const;
 
@@ -86,8 +91,6 @@ namespace mln
 
 	/// Edge oriented.
 	/// \{
-	bool is_valid() const;
-
 	/// Return the lowest vertex id adjacent to this edge.
 	unsigned v1() const;
 
@@ -145,6 +148,7 @@ namespace mln
     {
       void update_id(unsigned id);
       void change_graph(const mlc_const(G)& g);
+      void invalidate();
 
       private:
 	E& exact_();
@@ -219,19 +223,28 @@ namespace mln
 
     template <typename G>
     inline
+    bool
+    edge<G>::is_valid() const
+    {
+      return g_.has_e(id_);
+    }
+
+    template <typename G>
+    inline
+    void
+    edge<G>::invalidate()
+    {
+      id_ = g_.e_nmax();
+    }
+
+
+    template <typename G>
+    inline
     unsigned
     edge<G>::v_other(unsigned id_v) const
     {
       mln_precondition(v1() == id_v || v2() == id_v);
       return g_.v_other(id_, id_v);
-    }
-
-    template <typename G>
-    inline
-    bool
-    edge<G>::is_valid() const
-    {
-      return g_.has_e(id_);
     }
 
     template <typename G>
@@ -388,6 +401,14 @@ namespace mln
     subject_impl<	util::edge<G>, E >::change_graph(const mlc_const(G)& g)
     {
       return exact_().get_subject().change_graph(g);
+    }
+
+    template <typename G, typename E>
+    inline
+    void
+    subject_impl<	util::edge<G>, E >::invalidate()
+    {
+      return exact_().get_subject().invalidate();
     }
 
   } // End of namespace mln::internal

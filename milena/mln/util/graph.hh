@@ -32,11 +32,8 @@
 /// \brief Definitions of undirected graphs.
 
 # include <mln/util/internal/graph_base.hh>
-# include <mln/util/internal/graph_vertex_iter.hh>
-# include <mln/util/internal/graph_edge_iter.hh>
-# include <mln/util/internal/graph_vertex_nbh_vertex_iter.hh>
-# include <mln/util/internal/graph_vertex_nbh_edge_iter.hh>
-# include <mln/util/internal/graph_edge_nbh_edge_iter.hh>
+# include <mln/util/internal/graph_iter.hh>
+# include <mln/util/internal/graph_nbh_iter_base.hh>
 # include <mln/util/ord_pair.hh>
 
 namespace mln
@@ -47,6 +44,7 @@ namespace mln
     /// Fwd declaration.
     class graph;
   }
+
 
   namespace internal
   {
