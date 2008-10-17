@@ -6,6 +6,14 @@
 	* classif/plotscript: Basic plotting script.
 	* classif/chiche.pgm: Revamp chiche.
 
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use labeling::compute for Scribo.
+	* scribo/remove_tables.hh: split in...
+	* scribo/demat.hh,
+	* scribo/main.cc: ...these two files.
+	Update the code in order to use labeling::compute.
+
 2008-10-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM Bootstrap Classification.
@@ -27,6 +35,12 @@
 	* classif/images/caf_0034.jpg: New.
 	* classif/lena.ppm: New.
 	* classif/scoolNBR.ppm: New.
+
+2008-10-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/remove_tables.cc:
+	New small example to remove table borders in a document such as a
+	bill.
 
 2008-10-13  Alexandre Abraham  <abraham@lrde.epita.fr>
 
