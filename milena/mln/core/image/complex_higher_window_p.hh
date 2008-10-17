@@ -32,114 +32,21 @@
 /// \brief Definition of a window centered on a n-face of complex
 /// returning its adjacent (n+1)-faces as well as the center n-face.
 
-# include <mln/core/concept/window.hh>
-
-# include <mln/core/site_set/complex_psite.hh>
-
-# include <mln/topo/centered_iter_adapter.hh>
+# include <mln/core/internal/complex_window_p_base.hh>
 # include <mln/topo/adj_higher_face_iter.hh>
 
 
 namespace mln
 {
-  // Forward declarations.
-  template <unsigned D, typename G> class complex_higher_window_p;
-  template <typename I, typename G, typename W> class complex_window_fwd_piter;
-  template <typename I, typename G, typename W> class complex_window_bkd_piter;
 
-
-  namespace trait
-  {
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_higher_window_p<D,G> >
-    {
-      typedef trait::window::size::unknown       size;
-      typedef trait::window::support::irregular  support;
-      typedef trait::window::definition::varying definition;
-    };
-
-  } // end of namespace mln::trait
-
-
-  /// \brief Window centered on a n-face of complex returning its
-  /// adjacent (n+1)-faces as well as the center n-face.
   template <unsigned D, typename G>
-  class complex_higher_window_p
-    : public Window< complex_higher_window_p<D, G> >
+  struct complex_higher_window_p
+    : internal::complex_window_p_base< D, G,
+				       topo::adj_higher_face_fwd_iter<D>,
+				       topo::adj_higher_face_bkd_iter<D>,
+				       complex_higher_window_p<D, G> >
   {
-    typedef complex_higher_window_p<D, G> self_;
-    /// The complex iterators on the <em>adjacent</em> faces only
-    /// (without the center point).
-    /// \{
-    typedef topo::adj_higher_face_fwd_iter<D> adj_fwd_iter_;
-    typedef topo::adj_higher_face_bkd_iter<D> adj_bkd_iter_;
-    /// \}
-
-  public:
-    /// The associated complex iterators.
-    /// \{
-    typedef topo::centered_fwd_iter_adapter<D, adj_fwd_iter_> complex_fwd_iter;
-    typedef topo::centered_bkd_iter_adapter<D, adj_bkd_iter_> complex_bkd_iter;
-    /// \}
-
-  public:
-    /// Associated types.
-    /// \{
-    /// The type of psite corresponding to the window.
-    typedef complex_psite<D, G> psite;
-    /// The type of site corresponding to the window.
-    typedef mln_site(psite) site;
-
-    // FIXME: This is a dummy value.
-    typedef void dpsite;
-
-    /// \brief Site_Iterator type to browse the psites of the window
-    /// w.r.t. the ordering of vertices.
-    typedef
-    complex_window_fwd_piter<complex_fwd_iter, G, self_> fwd_qiter;
-
-    /// \brief Site_Iterator type to browse the psites of the window
-    /// w.r.t. the reverse ordering of vertices.
-    typedef
-    complex_window_bkd_piter<complex_bkd_iter, G, self_> bkd_qiter;
-
-    /// The default qiter type.
-    typedef fwd_qiter qiter;
-    /// \}
-
-  public:
-    /// Services.
-    /// \{
-    /* FIXME: mln::morpho::dilation requires these method from models
-       of concept Window, but Window does not list them in its
-       requirements.  Who's guilty: morpho::dilation or Window?  */
-    /// Is this window empty?  (Always returns \c false).
-    bool is_empty() const;
-    /// Is this window centered?  (Always returns \c true).
-    bool is_centered() const;
-    /// \}
   };
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <unsigned D, typename G>
-  bool
-  complex_higher_window_p<D, G>::is_empty() const
-  {
-    return false;
-  }
-
-  template <unsigned D, typename G>
-  bool
-  complex_higher_window_p<D, G>::is_centered() const
-  {
-    return true;
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
