@@ -1,5 +1,14 @@
 2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add "essential" headers.
+	* milena/mln/essential/1d.hh,
+	* milena/mln/essential/2d.hh,
+	* milena/mln/essential/3d.hh:
+	First version of these headers. Will be automatically generated in a
+	near future.
+
+2008-17-07  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Refactor graph iterator classes.
 	* milena/mln/util/internal/graph_edge.hh: add invalidate().
 
