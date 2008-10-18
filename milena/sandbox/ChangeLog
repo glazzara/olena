@@ -1,3 +1,9 @@
+2008-10-18  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Create a ocr directory.
+	* garrigues/ocr/ocr.cc: New.
+	* garrigues/ocr: New.
+
 2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Get and display character bboxes.
