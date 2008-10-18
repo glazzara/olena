@@ -31,29 +31,45 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
+#include <mln/core/image/cast_image.hh>
+
 #include <mln/value/int_u8.hh>
 
-#include <mln/morpho/meyer_wst.hh>
+#include "resize.hh"
+#include <mln/linear/convolve.hh>
+#include <mln/linear/gaussian.hh>
 
-#include <mln/io/pgm/load.hh>
+#include <mln/trace/all.hh>
+#include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/core/alias/w_window2d_float.hh>
 
 
 int main(int argc, char** argv)
 {
+  mln::trace::quiet = false;
+
   using namespace mln;
   using value::int_u8;
 
-  image2d<int_u8> input;
+  image2d<bool> input;
+  image2d<int_u8> output;
+  image2d<int_u8> output2;
 
   if (argc != 3)
     return 1;
 
-  io::pgm::load(input, argv[1]);
 
-  typedef int_u8 wst_val;
-  wst_val nbasins;
-  image2d<int_u8> output = morpho::meyer_wst(input, c4(), nbasins);
-  std::cout << "nbasins = " << nbasins << std::endl;
-  io::pgm::save(output, argv[2]);
+
+  io::pbm::load(input, argv[1]);
+
+
+  // Step 1: Enlarge input.
+  output = geom::resize(cast_image<int_u8>(input), 4);
+
+  // Step 2: Blur.
+  initialize(output2, output);
+  linear::gaussian(output, 15, output2);
+
+  io::pgm::save(output2, argv[2]);
 }

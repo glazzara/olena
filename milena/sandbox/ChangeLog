@@ -1,3 +1,10 @@
+2008-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve OCR preprocessing.
+
+	* garrigues/ocr/ocr.cc: Add resize + gaussian blur.
+	* garrigues/ocr/resize.hh: New. Enlarge an image.
+
 2008-10-18  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
 	Create a ocr directory.
