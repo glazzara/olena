@@ -1,5 +1,19 @@
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add windows based on lower/higher-dimension connected n-faces.
+
+	* mln/core/image/complex_windows.hh
+	(mln::complex_lower_dim_connected_n_face_window_p)
+	(mln::complex_higher_dim_connected_n_face_window_p):
+	New windows.
+	(trait::window_< complex_lower_dim_connected_n_face_window_p<D, G> >)
+	(trait::window_< complex_higher_dim_connected_n_face_window_p<D, G> >):
+	New traits.
+	Exercise these new windows...
+	* tests/morpho/complex_image_morpho.cc: ...here.
+
+2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add neighborhoods based on lower/higher-dimension connected n-faces.
 
 	* mln/core/image/complex_neighborhoods.hh

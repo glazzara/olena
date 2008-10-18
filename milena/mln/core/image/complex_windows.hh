@@ -75,6 +75,38 @@ namespace mln
   {
   };
 
+  /// \brief Window centered on an n-face of complex returning the
+  /// n-faces sharing an (n-1)-face with the center n-face, as well as
+  /// this center n-face.
+  template <unsigned D, typename G>
+  struct complex_lower_dim_connected_n_face_window_p
+    : internal::complex_window_p_base<
+        D, G,
+        topo::adj_lower_dim_connected_n_face_fwd_iter<D>,
+        topo::adj_lower_dim_connected_n_face_bkd_iter<D>,
+        complex_lower_dim_connected_n_face_window_p<D, G>
+      >
+  {
+  };
+
+  /// \brief Window centered on an n-face of complex returning the
+  /// n-faces sharing an (n+1)-face with the center n-face, as well as
+  /// this center n-face.
+  template <unsigned D, typename G>
+  struct complex_higher_dim_connected_n_face_window_p
+    : internal::complex_window_p_base<
+        D, G,
+        topo::adj_higher_dim_connected_n_face_fwd_iter<D>,
+        topo::adj_higher_dim_connected_n_face_bkd_iter<D>,
+        complex_higher_dim_connected_n_face_window_p<D, G>
+      >
+  {
+  };
+
+
+  // -------- //
+  // Traits.  //
+  // -------- //
 
   namespace trait
   {
@@ -108,6 +140,28 @@ namespace mln
 		      mln::topo::adj_lower_higher_face_fwd_iter<D>,
 		      mln::topo::adj_lower_higher_face_bkd_iter<D>,
 		      mln::complex_lower_higher_window_p<D, G> >
+		 >
+    {
+    };
+
+    template <unsigned D, typename G>
+    struct window_< mln::complex_lower_dim_connected_n_face_window_p<D, G> >
+      : window_< mln::internal::complex_window_p_base<
+		      D, G,
+		      mln::topo::adj_lower_dim_connected_n_face_fwd_iter<D>,
+		      mln::topo::adj_lower_dim_connected_n_face_bkd_iter<D>,
+		      mln::complex_lower_dim_connected_n_face_window_p<D, G> >
+		 >
+    {
+    };
+
+    template <unsigned D, typename G>
+    struct window_< mln::complex_higher_dim_connected_n_face_window_p<D, G> >
+      : window_< mln::internal::complex_window_p_base<
+		      D, G,
+		      mln::topo::adj_higher_dim_connected_n_face_fwd_iter<D>,
+		      mln::topo::adj_higher_dim_connected_n_face_bkd_iter<D>,
+		      mln::complex_higher_dim_connected_n_face_window_p<D, G> >
 		 >
     {
     };

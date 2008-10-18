@@ -162,6 +162,11 @@ int main()
   test_morpho(ima, complex_lower_higher_window_p<D, G>(),
 	      "lower- and higer-dimension faces");
 
+  test_morpho(ima, complex_lower_dim_connected_n_face_window_p<D, G>(),
+	      "lower-dimension connected n-faces");
+  test_morpho(ima, complex_higher_dim_connected_n_face_window_p<D, G>(),
+	      "higher-dimension connected n-faces");
+
   /* FIXME: Exercise elementary erosion/dilation (with neighborhoods)
      when available.  */
 }
