@@ -1,5 +1,13 @@
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have tests/morpho/complex_image_morpho.cc be more verbose/specific.
+
+	* tests/morpho/complex_image_morpho.cc (test_morpho): Take an
+	extra argument to accept a textual comment (to be displayed).
+	(main): Adjust.
+
+2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor tests/core/image/complex_image.cc.
 
 	* tests/core/image/complex_image.cc (test_neighborhood): New

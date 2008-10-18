@@ -50,7 +50,8 @@
 
 // Forward declaration.
 template <typename I, typename W>
-void test_morpho(const mln::Image<I>& ima, const mln::Window<W> win);
+void test_morpho(const mln::Image<I>& ima, const mln::Window<W> win,
+		 const std::string& comment);
 
 
 int main()
@@ -154,9 +155,12 @@ int main()
   | Morphological operations on complex-based images.  |
   `---------------------------------------------------*/
 
-  test_morpho(ima, complex_lower_window_p<D, G>());
-  test_morpho(ima, complex_higher_window_p<D, G>());
-  test_morpho(ima, complex_lower_higher_window_p<D, G>());
+  test_morpho(ima, complex_lower_window_p<D, G>(),
+	      "lower-dimension faces");
+  test_morpho(ima, complex_higher_window_p<D, G>(),
+	      "higher-dimension faces");
+  test_morpho(ima, complex_lower_higher_window_p<D, G>(),
+	      "lower- and higer-dimension faces");
 
   /* FIXME: Exercise elementary erosion/dilation (with neighborhoods)
      when available.  */
@@ -165,7 +169,8 @@ int main()
 
 template <typename I, typename W>
 void
-test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win)
+test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win,
+	    const std::string& comment)
 {
   const I& ima = exact(ima_);
   mln_assertion(ima.has_data());
@@ -173,13 +178,15 @@ test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win)
 
   mln_concrete(I) ima_dil = mln::morpho::dilation(ima, win);
   // Manual iteration over the domain of IMA_DIL.
+  std::cout << "Dilation using " << comment << ":" << std::endl;
   for_all (p)
-    std::cout << "ima_dil (" << p << ") = " << ima_dil(p) << std::endl;
+    std::cout << "  ima_dil (" << p << ") = " << ima_dil(p) << std::endl;
   std::cout << std::endl;
 
+  std::cout << "Erosion using " << comment  << ":" << std::endl;
   mln_concrete(I) ima_ero = mln::morpho::erosion(ima, win);
   // Manual iteration over the domain of IMA_ERO.
   for_all (p)
-    std::cout << "ima_ero (" << p << ") = " << ima_ero(p) << std::endl;
+    std::cout << "  ima_ero (" << p << ") = " << ima_ero(p) << std::endl;
   std::cout << std::endl << std::endl;
 }
