@@ -37,137 +37,86 @@
 # include <mln/topo/adj_higher_face_iter.hh>
 # include <mln/topo/adj_lower_higher_face_iter.hh>
 
+/** \brief Generate a complex window class, as well as its traits.
+
+    \param Win              The name of the class to generate.
+    \param Fwd_Complex_Iter The underlying forward iterator type.
+    \param Bkd_Complex_Iter The underlying backward iterator type.
+
+    The generated class inherits from
+
+      mln:: internal::complex_window_p_base< D, G,
+                                             Fwd_Complex_Iter<D>,
+                                             Bkd_Complex_Iter<D>,
+                                             Win <D, G> >
+
+    where D and G are template parameters of the generated Win class.  */
+# define mln_gen_complex_window(Win, Fwd_Complex_Iter, Bkd_Complex_Iter) \
+  /* Forward declaration.  */						\
+  template <unsigned D, typename G> struct Win;				\
+									\
+  /* Traits.  */							\
+  namespace trait							\
+  {									\
+    template <unsigned D, typename G>					\
+    struct window_< Win <D, G> >					\
+      : window_< mln::internal::complex_window_p_base< D, G,		\
+						       Fwd_Complex_Iter<D>, \
+						       Bkd_Complex_Iter <D>, \
+						       Win <D, G> > >	\
+    {									\
+    };									\
+  }									\
+									\
+  /* Definition.  */							\
+  template <unsigned D, typename G>					\
+  struct Win								\
+    : internal::complex_window_p_base< D, G,				\
+				       Fwd_Complex_Iter <D>,		\
+				       Bkd_Complex_Iter <D>,		\
+				       Win <D, G> >			\
+  {									\
+  }
+
 
 namespace mln
 {
 
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n-1)-faces as well as the center n-face.
-  template <unsigned D, typename G>
-  struct complex_lower_window_p
-    : internal::complex_window_p_base< D, G,
-				       topo::adj_lower_face_fwd_iter<D>,
-				       topo::adj_lower_face_bkd_iter<D>,
-				       complex_lower_window_p<D, G> >
-  {
-  };
+  mln_gen_complex_window(complex_lower_window_p,
+			 topo::adj_lower_face_fwd_iter,
+			 topo::adj_lower_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n+1)-faces as well as the center n-face.
-  template <unsigned D, typename G>
-  struct complex_higher_window_p
-    : internal::complex_window_p_base< D, G,
-				       topo::adj_higher_face_fwd_iter<D>,
-				       topo::adj_higher_face_bkd_iter<D>,
-				       complex_higher_window_p<D, G> >
-  {
-  };
+  mln_gen_complex_window(complex_higher_window_p,
+			 topo::adj_higher_face_fwd_iter,
+			 topo::adj_higher_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning its
   /// adjacent (n-1)-faces and (n+1)-faces as well as the center
   /// n-face.
-  template <unsigned D, typename G>
-  struct complex_lower_higher_window_p
-    : internal::complex_window_p_base< D, G,
-				       topo::adj_lower_higher_face_fwd_iter<D>,
-				       topo::adj_lower_higher_face_bkd_iter<D>,
-				       complex_lower_higher_window_p<D, G> >
-  {
-  };
+  mln_gen_complex_window(complex_lower_higher_window_p,
+			 topo::adj_lower_higher_face_fwd_iter,
+			 topo::adj_lower_higher_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning the
   /// n-faces sharing an (n-1)-face with the center n-face, as well as
   /// this center n-face.
-  template <unsigned D, typename G>
-  struct complex_lower_dim_connected_n_face_window_p
-    : internal::complex_window_p_base<
-        D, G,
-        topo::adj_lower_dim_connected_n_face_fwd_iter<D>,
-        topo::adj_lower_dim_connected_n_face_bkd_iter<D>,
-        complex_lower_dim_connected_n_face_window_p<D, G>
-      >
-  {
-  };
+  mln_gen_complex_window(complex_lower_dim_connected_n_face_window_p,
+			 topo::adj_lower_dim_connected_n_face_fwd_iter,
+			 topo::adj_lower_dim_connected_n_face_bkd_iter);
 
   /// \brief Window centered on an n-face of complex returning the
   /// n-faces sharing an (n+1)-face with the center n-face, as well as
   /// this center n-face.
-  template <unsigned D, typename G>
-  struct complex_higher_dim_connected_n_face_window_p
-    : internal::complex_window_p_base<
-        D, G,
-        topo::adj_higher_dim_connected_n_face_fwd_iter<D>,
-        topo::adj_higher_dim_connected_n_face_bkd_iter<D>,
-        complex_higher_dim_connected_n_face_window_p<D, G>
-      >
-  {
-  };
-
-
-  // -------- //
-  // Traits.  //
-  // -------- //
-
-  namespace trait
-  {
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_lower_window_p<D, G> >
-      : window_< mln::internal::complex_window_p_base<
-		      D, G,
-		      mln::topo::adj_lower_face_fwd_iter<D>,
-		      mln::topo::adj_lower_face_bkd_iter<D>,
-		      mln::complex_lower_window_p<D, G> >
-		 >
-    {
-    };
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_higher_window_p<D, G> >
-      : window_< mln::internal::complex_window_p_base<
-		      D, G,
-		      mln::topo::adj_higher_face_fwd_iter<D>,
-		      mln::topo::adj_higher_face_bkd_iter<D>,
-		      mln::complex_higher_window_p<D, G> >
-		 >
-    {
-    };
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_lower_higher_window_p<D, G> >
-      : window_< mln::internal::complex_window_p_base<
-		      D, G,
-		      mln::topo::adj_lower_higher_face_fwd_iter<D>,
-		      mln::topo::adj_lower_higher_face_bkd_iter<D>,
-		      mln::complex_lower_higher_window_p<D, G> >
-		 >
-    {
-    };
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_lower_dim_connected_n_face_window_p<D, G> >
-      : window_< mln::internal::complex_window_p_base<
-		      D, G,
-		      mln::topo::adj_lower_dim_connected_n_face_fwd_iter<D>,
-		      mln::topo::adj_lower_dim_connected_n_face_bkd_iter<D>,
-		      mln::complex_lower_dim_connected_n_face_window_p<D, G> >
-		 >
-    {
-    };
-
-    template <unsigned D, typename G>
-    struct window_< mln::complex_higher_dim_connected_n_face_window_p<D, G> >
-      : window_< mln::internal::complex_window_p_base<
-		      D, G,
-		      mln::topo::adj_higher_dim_connected_n_face_fwd_iter<D>,
-		      mln::topo::adj_higher_dim_connected_n_face_bkd_iter<D>,
-		      mln::complex_higher_dim_connected_n_face_window_p<D, G> >
-		 >
-    {
-    };
-
-  } // end of namespace mln::trait
+  mln_gen_complex_window(complex_higher_dim_connected_n_face_window_p,
+			 topo::adj_higher_dim_connected_n_face_fwd_iter,
+			 topo::adj_higher_dim_connected_n_face_bkd_iter);
 
 } // end of namespace mln
+
+# undef mln_gen_complex_window
 
 #endif // ! MLN_CORE_IMAGE_COMPLEX_WINDOWS_P_HH

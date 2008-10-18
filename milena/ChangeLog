@@ -1,5 +1,28 @@
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor mln/core/image/complex_windows.hh using the preprocessor.
+
+	* mln/core/image/complex_windows.hh
+	(mln_gen_complex_window): New (generator) macro.
+	Use it to factor...
+	(mln::complex_lower_window_p<D, G>)
+	(mln::complex_higher_window_p<D, G>)
+	(mln::complex_lower_higher_window_p<D, G>)
+	(mln::complex_lower_dim_connected_n_face_window_p<D, G>)
+	(mln::complex_higher_dim_connected_n_face_window_p<D, G>):
+	...the definitions of these classes, as well as...
+	(trait::window_< complex_lower_window_p<D, G> >)
+	(trait::window_< complex_higher_window_p<D, G> >)
+	(trait::window_< complex_lower_higher_window_p<D, G> >)
+	(trait::window_< complex_lower_dim_connected_n_face_window_p<D, G> >)
+	(trait::window_< complex_higher_dim_connected_n_face_window_p<D, G> >):
+	...their traits.
+	* mln/core/internal/complex_window_p_base.hh
+	(mln::internal::complex_window_p_base<D, G, F, B, E>):
+	Be more precise in documentation.
+
+2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Factor mln/core/image/complex_neighborhoods.hh using the preprocessor.
 
 	* mln/core/image/complex_neighborhoods.hh
