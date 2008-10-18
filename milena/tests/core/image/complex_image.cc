@@ -44,6 +44,12 @@
    construction of the complex), since it exercises too many features
    in a single file.  */
 
+// Forward declaration.
+template <typename I, typename N>
+void
+test_neighborhood(const mln::Image<I>& ima_, const mln::Neighborhood<N> nbh,
+		  const std::string& comment);
+
 
 int main()
 {
@@ -217,72 +223,13 @@ int main()
   // Iterators on neighborhoods.  //
   // ---------------------------- //
 
-  // FIXME: Factor: these three test cases only differ by their
-  // neighborhoods.
 
-  // Iterate on the lower-dimension faces of each face.
-  {
-    typedef complex_lower_neighborhood<D, G> nbh_t;
-    nbh_t nbh;
-    mln_fwd_niter_(nbh_t) fn(nbh, fp);
-    mln_bkd_niter_(nbh_t) bn(nbh, fp);
-    for_all(fp)
-    {
-      std::cout << "Lower-dimension faces adjacent to " << fp << std::endl;
-      for_all_2(fn, bn)
-	{
-	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  std::cout << "  " << fn << '\t' << bn << std::endl;
-	}
-    }
-    std::cout << std::endl;
-  }
-
-  // Iterate on the higher-dimension faces of each face.
-  {
-    typedef complex_higher_neighborhood<D, G> nbh_t;
-    nbh_t nbh;
-    mln_fwd_niter_(nbh_t) fn(nbh, fp);
-    mln_bkd_niter_(nbh_t) bn(nbh, fp);
-    for_all(fp)
-    {
-      std::cout << "Higher-dimension faces adjacent to " << fp << std::endl;
-      for_all_2(fn, bn)
-	{
-	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  std::cout << "  " << fn << '\t' << bn << std::endl;
-	}
-    }
-    std::cout << std::endl;
-  }
-
-  // Iterate on the lower- and higher-dimension faces of each face.
-  {
-    typedef complex_lower_higher_neighborhood<D, G> nbh_t;
-    nbh_t nbh;
-    mln_fwd_niter_(nbh_t) fn(nbh, fp);
-    mln_bkd_niter_(nbh_t) bn(nbh, fp);
-    for_all(fp)
-    {
-      std::cout << "Lower- and higer-dimension faces adjacent to " << fp
-		<< std::endl;
-      for_all_2(fn, bn)
-	{
-	  mln_assertion((fn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  mln_assertion((bn.center() ==
-			 static_cast<const complex_psite<D, G>&>(fp)));
-	  std::cout << "  " << fn << '\t' << bn << std::endl;
-	}
-    }
-    std::cout << std::endl;
-  }
+  test_neighborhood(ima, complex_lower_neighborhood<D, G>(),
+		    "Lower-dimension faces");
+  test_neighborhood(ima, complex_higher_neighborhood<D, G>(),
+		    "Higher-dimension faces");
+  test_neighborhood(ima, complex_lower_higher_neighborhood<D, G>(),
+		    "Lower- and higer-dimension faces");
 
 
   /* FIXME: Implement other neighborhoods (and windows) and
@@ -312,4 +259,28 @@ int main()
      like star, link, etc. and possibly implement them.
 
      See also https://trac.lrde.org/olena/ticket/162.  */
+}
+
+
+template <typename I, typename N>
+void
+test_neighborhood(const mln::Image<I>& ima_, const mln::Neighborhood<N> nbh,
+		  const std::string& comment)
+{
+  const I& ima = exact(ima_);
+  mln_fwd_piter(I) fp(ima.domain());
+
+  mln_fwd_niter(N) fn(nbh, fp);
+  mln_bkd_niter(N) bn(nbh, fp);
+  for_all(fp)
+  {
+    std::cout << comment << " adjacent to " << fp << std::endl;
+    for_all_2(fn, bn)
+      {
+	mln_assertion((fn.center() == static_cast<const mln_psite(I)&>(fp)));
+	mln_assertion((bn.center() == static_cast<const mln_psite(I)&>(fp)));
+	std::cout << "  " << fn << '\t' << bn << std::endl;
+      }
+  }
+  std::cout << std::endl;
 }
