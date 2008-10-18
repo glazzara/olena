@@ -1,5 +1,16 @@
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add neighborhoods based on lower/higher-dimension connected n-faces.
+
+	* mln/core/image/complex_neighborhoods.hh
+	(mln::complex_lower_dim_connected_n_face_neighborhood<D, G>): 
+	(mln::complex_higher_dim_connected_n_face_neighborhood<D, G>):
+	New neighborhoods.
+	Exercise them...
+	* tests/core/image/complex_image.cc: ...here.	
+
+2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have tests/morpho/complex_image_morpho.cc be more verbose/specific.
 
 	* tests/morpho/complex_image_morpho.cc (test_morpho): Take an

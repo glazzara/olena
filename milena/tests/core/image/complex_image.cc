@@ -231,6 +231,12 @@ int main()
   test_neighborhood(ima, complex_lower_higher_neighborhood<D, G>(),
 		    "Lower- and higer-dimension faces");
 
+  test_neighborhood(ima,
+		    complex_lower_dim_connected_n_face_neighborhood<D, G>(),
+		    "Lower-dimension connected n-faces");
+  test_neighborhood(ima,
+		    complex_higher_dim_connected_n_face_neighborhood<D, G>(),
+		    "Higher-dimension connected n-faces");
 
   /* FIXME: Implement other neighborhoods (and windows) and
      corresponding iterators for complex-based images.

@@ -36,6 +36,8 @@
 # include <mln/topo/adj_lower_face_iter.hh>
 # include <mln/topo/adj_higher_face_iter.hh>
 # include <mln/topo/adj_lower_higher_face_iter.hh>
+# include <mln/topo/adj_lower_dim_connected_n_face_iter.hh>
+# include <mln/topo/adj_higher_dim_connected_n_face_iter.hh>
 
 
 namespace mln
@@ -72,6 +74,32 @@ namespace mln
         topo::adj_lower_higher_face_fwd_iter<D>,
         topo::adj_lower_higher_face_bkd_iter<D>,
         complex_lower_higher_neighborhood<D, G>
+      >
+  {
+  };
+
+  /// \brief Neighborhood centered on an n-face of complex returning
+  /// the n-faces sharing an (n-1)-face with the center n-face.
+  template <unsigned D, typename G>
+  struct complex_lower_dim_connected_n_face_neighborhood
+    : internal::complex_neighborhood_base<
+        D, G,
+        topo::adj_lower_dim_connected_n_face_fwd_iter<D>,
+        topo::adj_lower_dim_connected_n_face_bkd_iter<D>,
+        complex_lower_dim_connected_n_face_neighborhood<D, G>
+      >
+  {
+  };
+
+  /// \brief Neighborhood centered on an n-face of complex returning
+  /// the n-faces sharing an (n+1)-face with the center n-face.
+  template <unsigned D, typename G>
+  struct complex_higher_dim_connected_n_face_neighborhood
+    : internal::complex_neighborhood_base<
+        D, G,
+        topo::adj_higher_dim_connected_n_face_fwd_iter<D>,
+        topo::adj_higher_dim_connected_n_face_bkd_iter<D>,
+        complex_higher_dim_connected_n_face_neighborhood<D, G>
       >
   {
   };
