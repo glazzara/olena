@@ -160,7 +160,7 @@ namespace mln
 		       const mln_psite(I)& start,
 		       const mln_psite(I)& finish,
 		       int len,
-		       const mln_dpsite(I)& d)
+		       const mln_deduce(I, psite, delta)& d)
       {
 	std::vector<WorkType>	tmp1(len);
 	std::vector<WorkType>	tmp2(len);
@@ -289,7 +289,7 @@ namespace mln
       {
       	mln_ch_value(O, float) work_img(exact(in).domain());
       	level::paste(in, work_img);
-      
+
       	// On tiny sigma, Derich algorithm doesn't work.
       	// It is the same thing that to convolve with a Dirac.
       	if (sigma > 0.006)
@@ -318,9 +318,9 @@ namespace mln
 	if (sigma > 0.006)
 	  gaussian_(out, coef);
       }
-      
+
     } // end of namespace mln::linear::impl
-    
+
     // Facade.
 
     template <class I, class O>
@@ -331,7 +331,7 @@ namespace mln
     {
       mln_precondition(exact(input).has_data());
       mln_precondition(exact(output).has_data());
-      
+
       impl::recursivefilter_coef_
 	coef(1.68f, 3.735f,
 	     1.783f, 1.723f,

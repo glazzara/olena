@@ -1,3 +1,8 @@
+2008-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* mln/linear/gaussian.hh: Fix linear::gaussian.
+	(mln_dpsite doesn't exists yet).
+
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	Factor mln/core/image/complex_windows.hh using the preprocessor.
