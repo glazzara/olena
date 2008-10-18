@@ -60,9 +60,9 @@ namespace mln
 	based on an pair of (forward and backward) complex iterators.
 	
 	\tparam D The dimension of the complex.
-	\tparam G The geometry functor of the complex.
-	\tparam F The underlying forward iterator.
-	\tparam B The underlying backward iterator.
+	\tparam G The type of the geometry functor of the complex.
+	\tparam F The underlying forward iterator type.
+	\tparam B The underlying backward iterator type.
 	\tparam E The exact type.  */
   template <unsigned D, typename G, typename F, typename B, typename E>
   class complex_neighborhood_base : public Neighborhood<E>

@@ -1,5 +1,22 @@
 2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Factor mln/core/image/complex_neighborhoods.hh using the preprocessor.
+
+	* mln/core/image/complex_neighborhoods.hh
+	(mln_gen_complex_neighborhood): New (generator) macro.
+	Use it to factor...
+	(mln::complex_lower_neighborhood<D, G>)
+	(mln::complex_higher_neighborhood<D, G>)
+	(mln::complex_lower_higher_neighborhood<D, G>)
+	(mln::complex_lower_dim_connected_n_face_neighborhood<D, G>)
+	(mln::complex_higher_dim_connected_n_face_neighborhood<D, G>):
+	...the definitions of these classes.
+	* mln/core/internal/complex_neighborhood_base.hh
+	(mln::internal::complex_neighborhood_base<D, G, F, B, E>):
+	Be more precise in documentation.
+
+2008-10-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add windows based on lower/higher-dimension connected n-faces.
 
 	* mln/core/image/complex_windows.hh
