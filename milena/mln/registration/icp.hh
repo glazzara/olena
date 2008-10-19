@@ -36,6 +36,7 @@
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2v/all.hh>
 # include <mln/registration/get_rtransf.hh>
+# include <mln/registration/internal/rms.hh>
 
 namespace mln
 {
@@ -180,10 +181,12 @@ namespace mln
 
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
-          d_k = rms(c, map, buf_qk[1], qk);
+          d_k = internal::rms(c, map, buf_qk[1], qk);
 
           k++;
-        } while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+          //FIXME: Add matrix norm
+          //} while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
+        } while (d_k > epsilon);
 
         trace::exiting("registration::impl::icp_");
       }

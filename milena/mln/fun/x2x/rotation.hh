@@ -37,6 +37,7 @@
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
+# include <mln/algebra/quat.hh>
 # include <cmath>
 
 namespace mln
@@ -48,8 +49,8 @@ namespace mln
     namespace x2x
     {
 
-        namespace internal
-        {
+      namespace internal
+      {
         template < unsigned n, typename C >
         algebra::h_mat<n, C>
         get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
@@ -106,14 +107,13 @@ namespace mln
           const float sin_a = sin(alpha_);
 
           m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
-
           m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;
-
           m_(2,0) = 0;     m_(2,1) = 0;      m_(2,2) = 1;
 
           return m_;
         }
-      }
+
+      } // end of namespace internal
 
 
       /*! \brief Represent a rotation function.
@@ -135,6 +135,8 @@ namespace mln
         rotation();
 	/// Constructor with grade alpha and a facultative direction (rotation axis).
         rotation(float alpha, const algebra::vec<n,float>& axis);
+        /// Constructor with quaternion
+        rotation(const algebra::quat& q);
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
@@ -143,7 +145,7 @@ namespace mln
 	/// Set a new grade alpha.
         void set_alpha(float alpha);
 	/// Set a new rotation axis.
-        void set_dir(unsigned dir);
+        void set_axis(const algebra::vec<n,float>& axis);
 
       protected:
         void update();
@@ -169,6 +171,25 @@ namespace mln
       {
 	this->m_ = algebra::h_mat<n,C>::Id;
 	update();
+      }
+
+      template <unsigned n, typename C>
+      inline
+      rotation<n,C>::rotation(const algebra::quat& q)
+      {
+        mln_precondition(q.is_unit());
+        // FIXME: Should also work for 2d.
+        mln_precondition(n == 3);
+        float
+          w = q.to_vec()[0],
+          x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+          y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+          z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+        float t[16] = {1.f - y2 - z2,  xy - zw,  xz + yw, 0,
+                       xy + zw,  1.f - x2 - z2,  yz - xw, 0,
+                       xz - yw,  yz + xw,  1.f - x2 - y2, 0,
+                       0,              0,              0, 1};
+        this->m_(make::mat<4,4,16,float>(t));
       }
 
       template <unsigned n, typename C>
@@ -211,8 +232,9 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      rotation<n,C>::set_dir(unsigned dir)
+      rotation<n,C>::set_axis(const algebra::vec<n,float>& axis)
       {
+        axis_ = axis;
 	update();
       }
 

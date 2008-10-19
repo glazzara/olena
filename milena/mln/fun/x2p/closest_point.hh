@@ -49,7 +49,7 @@ namespace mln
         typedef P result;
 
         closest_point(const p_array<P>& X, const box<P>& box)
-          : X(X), box_(box)
+          : box_(box), X(X)
           , log_functor_call(0)
 
         { }

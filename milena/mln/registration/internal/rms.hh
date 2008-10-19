@@ -25,37 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2V_ALL_HH
-# define MLN_FUN_X2V_ALL_HH
+#ifndef MLN_REGISTRATION_INTERNAL_RMS_HH
+# define MLN_REGISTRATION_INTERNAL_RMS_HH
 
-/*! \file mln/fun/x2v/all.hh
- *
- * \brief File that includes all functions from vector to value.
- */
-
+# include <mln/core/site_set/p_array.hh>
 
 namespace mln
 {
 
-  namespace fun
+  namespace registration
   {
 
-    /// Namespace of functions from vector to value.
-    namespace x2v
+    namespace internal
     {
 
-      /// Internal namespace of functions form vector to value.
-      namespace internal
-      {
-      }
+      template <typename P, typename M, typename T>
+      float rms(const p_array<P>& a1,
+                M& map,
+                const unsigned length,
+                const T& q1,
+                const T& q2);
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+      template <typename P, typename M, typename T>
+      float rms(const p_array<P>& a,
+                M& map,
+                const T& q1,
+                const T& q2)
+    {
+      float f = 0.f;
+      for (unsigned i = 0; i < a.nsites(); ++i)
+        {
+          algebra::vec<P::dim,float> a2f = q2(a[i]);
+          algebra::vec<P::dim,float> a1f = map(algebra::to_point<P>(q1(a[i])));
+          f += norm::l2(a1f - a2f);
+        }
+      return f / a.nsites();
     }
-  }
-
-}
 
 
-# include <mln/fun/x2v/linear.hh>
-# include <mln/fun/x2v/bilinear.hh>
-# include <mln/fun/x2v/nneighbor.hh>
+# endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_FUN_X2V_ALL_HH
+    } // end of nqmespace mln::registration::internal
+
+  } // end of namespace mln::registration
+
+} // end of namespace mln
+
+
+#endif // ! MLN_REGISTRATION_INTERNAL_RMS_HH

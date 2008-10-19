@@ -31,6 +31,7 @@
 # include <mln/fun/x2x/all.hh>
 # include <mln/algebra/quat.hh>
 # include <mln/math/jacobi.hh>
+# include <mln/registration/get_rot.hh>
 
 namespace mln
 {
@@ -50,7 +51,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
     template <typename P, typename M>
     composed<rotation<P::dim, float>, translation<P::dim, float> >
     get_rtransf(const p_array<P>& c,
@@ -64,51 +64,11 @@ namespace mln
         mu_xk += convert::to< algebra::vec<P::dim,float> >(map(ck[i]));
       mu_xk /= c.nsites();
 
-      // FIXME: Make use of a cross_covariance accu (maybe not because of map(ck[i]))
       // qR
-      algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-      for (unsigned i = 0; i < c.nsites(); ++i)
-        {
-          algebra::vec<P::dim,float> ci  = c[i];
-          algebra::vec<P::dim,float> xki = map(ck[i]);
-          Mk += make::mat(ci - mu_c) * trans(make::mat(xki - mu_xk));
-        }
-      Mk /= c.nsites();
-
-      algebra::vec<3,float> a;
-      a[0] = Mk(1,2) - Mk(2,1);
-      a[1] = Mk(2,0) - Mk(0,2);
-      a[2] = Mk(0,1) - Mk(1,0);
-
-      algebra::mat<4,4,float> Qk(literal::zero);
-      float t = tr(Mk);
-
-      Qk(0,0) = t;
-      for (int i = 1; i < 4; i++)
-        {
-          Qk(i,0) = a[i - 1];
-          Qk(0,i) = a[i - 1];
-          for (int j = 1; j < 4; j++)
-            if (i == j)
-              Qk(i,j) = 2 * Mk(i - 1,i - 1) - t;
-        }
-
-      Qk(1,2) = Mk(0,1) + Mk(1,0);
-      Qk(2,1) = Mk(0,1) + Mk(1,0);
-
-      Qk(1,3) = Mk(0,2) + Mk(2,0);
-      Qk(3,1) = Mk(0,2) + Mk(2,0);
-
-      Qk(2,3) = Mk(1,2) + Mk(2,1);
-      Qk(3,2) = Mk(1,2) + Mk(2,1);
-
-      algebra::quat qR(literal::zero);
-      qR = math::jacobi(Qk);
+      rotation<P::dim, float> tqR = get_rot(c, mu_c, ck, map, mu_xk);
 
       // qT
-      const algebra::vec<P::dim,float> qT = mu_xk - rotate(qR, mu_c);
-
-      rotation<P::dim, float>    tqR(qR);
+      const algebra::vec<P::dim,float> qT = mu_xk - tqR(mu_c);
       translation<P::dim, float> tqT(qT);
       return compose(tqR,tqT);
     }

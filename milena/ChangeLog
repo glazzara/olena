@@ -1,3 +1,19 @@
+2008-10-19  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Registration Fix.
+
+	* mln/convert/to_image.hh: Fix missing ;.
+	* mln/convert/to_p_array.hh: Fix use of mln_point.
+	* mln/fun/x2v/all.hh: Fix wrong comment.
+	* mln/fun/x2x/rotation.hh: Add constructor with quaternion.
+	* mln/fun/x2p/closest_point.hh: Fix warning.
+	* mln/algebra/quat.hh (quad::rotate): Add method.
+	* mln/registration/get_rot.hh: New. Get rotation needed btw 2 p_arrays.
+	* mln/registration/registration.hh: Add inclusion.
+	* mln/registration/icp.hh: Minor fix.
+	* mln/registration/get_rtransf.hh: Split code.
+	* mln/registration/internal/rms.hh: Add specific rms computation.
+
 2008-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/linear/gaussian.hh: Fix linear::gaussian.

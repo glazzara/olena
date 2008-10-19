@@ -124,9 +124,9 @@ namespace mln
     template <typename W>
     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win);
 
-    /// Convert an histo \p h into an image1d<std::size_t>.
+    /// Convert an histo \p h into an image1d<T>.
     template <typename T>
-    image1d<T> to_image(const histo::data<T>& h)
+    image1d<T> to_image(const histo::data<T>& h);
 
 
 

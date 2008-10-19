@@ -37,6 +37,7 @@
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2p/closest_point.hh>
 # include <mln/core/image/lazy_image.hh>
+# include <mln/convert/to_p_array.hh>
 
 namespace mln
 {
@@ -66,8 +67,9 @@ namespace mln
       registration_(const I& cloud,
                     const J& surface)
       {
-        p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
-        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(I)> >(surface);
+        //FIXME: Use convert::to< p_array<mln_psite(I)> >()
+        p_array<mln_psite(I)> c = convert::to_p_array(cloud);
+        p_array<mln_psite(J)> x = convert::to_p_array(surface);
 
         //init rigid transform qk
         composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> > qk;
