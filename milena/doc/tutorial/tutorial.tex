@@ -82,7 +82,9 @@ showstringspaces=false,linewidth=14cm}
 - \backslash subpage iterators
 - \backslash subpage imamemmgmt
 - \backslash subpage basicops
-- \backslash subpage graphes
+- \backslash subpage graphandima
+- \backslash subpage arithmops
+- \backslash subpage mathtools
 \backslash htmlonly
 \end{htmlonly}
 
@@ -976,7 +978,22 @@ For instance, the algorithm level::paste tests that the set of sites of imgb
 
 %====================================
 \doxysection{blobs}{Blobs}
-//FIXME: write it!
+
+Labeling::blobs() is used to label an image. It returns a new image with the
+component id as value for each site. The background has 0 as id therefore the
+component ids start from 1.
+
+Consider the following image:
+\doxycode{ima2d-decl-2}
+
+Then label this image thanks to labeling::blobs:
+\doxycode{ima2d-decl-2-blobs}
+Output:
+\doxycode{ima2d-decl-2-blobs-output}
+
+Note that this routine returns the number of components in its third parameter.
+This parameter \textbf{must} be of the same type as the returned image value.
+
 
 %**************************
 \doxysection{compute}{Compute}
@@ -992,55 +1009,116 @@ image. \\
 level::compute() & compute an accumulator on the values of an image.  \\
 \end{tabular}
 
+\subsection{Accumulators}
 An accumulator is a special object accumulating data while iterating all over
 the image values or sites. Hereby follows a list of accumulators available in
 Olena.
 
 %----------------
-\subsection*{Accumulators on sites}
+\subsubsection*{Accumulators on sites}
 \begin{tabular}{l|p{8cm}}
-Name | Description \\
+Name & Description \\
 \hline
-bbox & \\
-count\_adjacent\_vertices & \\
-count & \\
+bbox & Bounding boxes\\
+count\_adjacent\_vertices & Count adjacent vertices\\
+count & Count the number of sites\\
 height & \\
 volume & \\
 \end{tabular}
 
 %----------------
-\subsection*{Accumulators on values}
+\subsubsection*{Accumulators on values}
 \begin{tabular}{l|p{8cm}}
-Name | Description \\
+Name & Description \\
 \hline
-histo & \\
-max & \\
-max\_h & \\
-mean & \\
-median\_alt & \\
-median\_h & \\
-min & \\
-min\_h & \\
-min\_max & \\
+histo & Histogram \\
+max & Max value \\
+max\_h & Max value (Hexa)\\
+mean & Mean value\\
+median\_alt & Median\\
+median\_h & Median (Hexa)\\
+min & Min value\\
+min\_h & Min value (Hexa)\\
+min\_max & Min and Max value\\
 rank\_bool & \\
 rank & \\
 rank\_high\_quant & \\
-sum & \\
+sum & Sum the values\\
 \end{tabular}
 
 %----------------
-\subsection*{Accumulators on values}
+\subsubsection*{Special accumulators}
 \begin{tabular}{l|p{8cm}}
-Name | Description \\
+Name & Description \\
 \hline
-pair & \\
-p & \\
-tuple & \\
-v & \\
+pair & Pair of accumulators\\
+tuple & $n$-uplets of accumulators\\
 \end{tabular}
 
-//FIXME: write it!
+Each accumulator can be used in *::compute().
+It exists two versions of each accumulator.
+\begin{itemize}
+  \item mln::accu::*, this version require the site or value type as parameter.
+  For instance, for the bbox accumulator, the type would be
+  accu::bbox<mln\_psite(I)>, where I is the type of the image on which it will be
+  computed.
+  \item mln::accu::meta::*, this is usually the easiest version to use. The type
+  of site or value do not need to be specified and will be deduced at compile
+  time. For the bbox accumulator, the accumulator type would be
+  accu::meta::bbox.
+\end{itemize}
 
+Note that when an accumulator is passed to *::compute, it must be instanciated.
+You cannot write:
+\doxycode{accu-wrong-instanciation}
+Instead, you must write:
+\doxycode{accu-right-instanciation}
+
+\subsection{Example with labeling::compute()}
+
+In this example we will try to retrieve the bounding box of each component in an
+image.
+
+Consider the following image:
+\doxycode{ima2d-decl-2}
+
+Then label this image thanks to labeling::blobs:
+\doxycode{ima2d-decl-2-blobs}
+Output:
+\doxycode{ima2d-decl-2-blobs-output}
+
+Then, use labeling::compute() with the bbox accumulator:
+\doxycode{labeling-compute-call}
+
+Labeling::compute() hold an accumulator for each component, which means it
+returns an array of accumulator results.
+In this case, it returns an array of box2d. 
+
+\textbf{Important note:} since labeling::blobs() labels the component from 1 and
+set the background to 0, we will want to iterate from 1 to nlabels included.
+\doxycode{labeling-compute-result}
+Output:
+\doxycode{labeling-compute-result-output}
+
+\subsection{Routines based on accumulators and *::compute()}
+
+In order to make the code cleaner, small routines are available for the
+most used accumulators. 
+
+Currently there are the following routines:\\
+
+\begin{tabular}{l|p{8cm}}
+Name & Description \\
+\hline
+nsites & Return the number of sites of an image or a site set.\\
+mean & Return the mean of the values of an image.\\
+min\_max & Return the min and max values of the values of an image.\\
+sum & Return the sum of the values of an image.
+\end{tabular}
+
+These routines can be found in mln/estim.
+For example, with estim::nsites() simply write:
+\doxycode{estim-sites}
 
 %====================================
 \doxysection{partima}{Working with parts of an image}
@@ -1140,9 +1218,9 @@ site set.
 %====================================
 \newpage
 \clearpage
-\doxychapter{graphes}{Graphes and images}
+\doxychapter{graphandima}{Graphes and images}
 
-//FIXME: REWRITE
+FIXME: REWRITE
 
 %**************************
 \doxysection{graphdesc}{Description}
@@ -1300,5 +1378,19 @@ for_all(E)
 \end{lstlisting}
 
 //FIXME talk about p\_vertices and p\_edges.
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{arithmops}{Arithmetical operators}
+
+FIXME write it
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{mathtools}{Mathematical tools}
+
+FIXME write it
 
 \end{document}

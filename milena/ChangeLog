@@ -1,3 +1,23 @@
+2008-10-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+
+	* doc/samples/accu-right-instanciation.tex,
+	* doc/samples/accu-wrong-instanciation.tex,
+	* doc/samples/estim-sites.tex,
+	* doc/samples/ima2d-decl-2-blobs-output.tex,
+	* doc/samples/ima2d-decl-2-blobs.tex,
+	* doc/samples/ima2d-decl-2.tex,
+	* doc/samples/labeling-compute-call.tex,
+	* doc/samples/labeling-compute-result-output.tex,
+	* doc/samples/labeling-compute-result.tex:
+	New sample code included in the doc.
+
+	* doc/tutorial.tex:
+	Write section about:
+	  - accumulators and *::compute.
+	  - blobs
+
 2008-10-20  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update dispatch of the fill_with image and paste routines.
