@@ -33,9 +33,6 @@
  * \brief Fill an image with a value, that is, set all pixel values to
  * the given value.
  *
- * \todo Overload for fastest images.
- * \todo Handle all value_storage properties (piecewise, etc.)
- * \todo Make memset_ work and use it when appropriate.
  * \todo Move specializations in a extra file.
  * \toto Activate fill_with_value_cell_wise.
  * \todo Optimize when \p ima is large and sizeof(mln_value(I)) > 1.

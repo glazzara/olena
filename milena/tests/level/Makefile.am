@@ -13,6 +13,7 @@ check_PROGRAMS =				\
   compute					\
   fill						\
   fill_with_value				\
+  fill_with_image				\
   median					\
   median_					\
   median_dir					\
@@ -36,6 +37,7 @@ compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
 fill_SOURCES = fill.cc
 fill_with_value_SOURCES = fill_with_value.cc
+fill_with_image_SOURCES = fill_with_image.cc
 median_SOURCES = median.cc
 median__SOURCES = median_.cc
 median_dir_SOURCES = median_dir.cc

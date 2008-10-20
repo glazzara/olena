@@ -17,8 +17,8 @@ mln/core/internal/run_image.hh
 ok  image2d
 ok  pw::image
 
-KO  image1d
-KO  image3d
+ok  image1d
+ok  image3d
 
 ** run-based
 

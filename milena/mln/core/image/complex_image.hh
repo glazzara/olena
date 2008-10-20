@@ -86,12 +86,16 @@ namespace mln
       // Value.
       typedef trait::image::value_access::direct           value_access;
       // FIXME: Is that right?
-      typedef trait::image::value_storage::one_block       value_storage;
+      typedef trait::image::vw_io::read_write              vw_io;
+      typedef trait::image::vw_set::multi                  vw_set;
+      typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_alignement::irrelevant   value_alignement;
       typedef trait::image::value_io::read_write           value_io;
 
       // Site / domain.
-      typedef trait::image::localization::space         localization;
+      typedef trait::image::pw_io::read_write              pw_io;
+      typedef trait::image::localization::space            localization;
       /* FIXME: Depends on G.  We could use
 	 `trait::image::space_from_point<mln_site(G)>::ret' in most
 	 cases (i.e., when G's site is a Point), but would not be

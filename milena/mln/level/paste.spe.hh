@@ -51,14 +51,25 @@ namespace mln
   namespace level
   {
 
+    namespace internal
+    {
+
+
+      template <typename I, typename J>
+      inline
+      void paste_tests(const Image<I>& input, Image<J>& output);
+    }
+
     namespace impl
     {
 
       namespace generic
       {
 	template <typename I, typename J>
-	void paste(const Image<I>& data, Image<J>& destination);
+	void paste_(const Image<I>& input, Image<J>& output);
       }
+
+
 
 //       template <typename I, typename J>
 //       inline
@@ -83,43 +94,98 @@ namespace mln
 //       }
 
 
-//       // Disjunction.
+      template <typename I, typename J>
+      void paste_fast(const Image<I>& input_, Image<J>& output_)
+      {
+        trace::entering("level::impl::paste_fast");
 
-//       // Remember: raw < linear < stored, computed.
+        const I& input = exact(input_);
+        J& output      = exact(output_);
 
-//       template <typename I, typename J>
-//       inline
-//       void paste_(trait::image::value_storage::any, const I& data,
-// 		  trait::image::value_storage::any, J& destination)
-//       {
-// 	generic::paste_(data, destination);
-//       }
+        level::internal::paste_tests(input, output);
 
-//       template <typename I, typename J>
-//       inline
-//       void paste_(trait::image::value_storage::one_block, const I& data,
-// 		  trait::image::value_storage::one_block, J& destination)
-//       {
-// 	if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-// 	  paste_lines_(data, destination);
-// 	else
-// 	  generic::paste_(data, destination);
-//       }
+        mln_pixter(const I) pi(input);
+        mln_pixter(J) po(output);
+
+        po.start();
+        for_all(pi)
+        {
+          po.val() = pi.val();
+        }
+        trace::entering("level::impl::paste_fast");
+      }
+
+    } // end of namespace impl.
 
 
-    } // end of namespace mln::level::impl
-
+    // Dispatch.
     namespace internal
     {
 
+
       template <typename I, typename J>
       inline
-      void paste_dispatch(const Image<I>& data, Image<J>& destination)
+      void paste_(trait::image::value_storage::any,
+                  trait::image::value_storage::any,
+                  const Image<I>& input,
+                  Image<J>& output)
       {
-	impl::generic::paste(data, destination);
-//       impl::paste_(mln_trait_image_value_storage(I)(), data,
-// 		   mln_trait_image_value_storage(J)(), destination);
-      }      
+        impl::generic::paste_(input, output);
+      }
+
+      template <typename I, typename J>
+      inline
+      void paste_(trait::image::value_storage::one_block,
+                  trait::image::value_storage::one_block,
+                  const Image<I>& input_,
+                  Image<J>& output_)
+      {
+        const I& input  = exact(input_);
+        J& output       = exact(output_);
+
+        /// Check basic properties
+        if (mlc_is(mln_trait_image_value_access(J),
+                   trait::image::value_access::direct)::value &&
+            mlc_is(mln_trait_image_value_access(I),
+                   trait::image::value_access::direct)::value &&
+            mlc_is(mln_trait_image_value_alignement(I),
+                   trait::image::value_alignement::with_grid)::value &&
+            mlc_is(mln_trait_image_value_alignement(J),
+                   trait::image::value_alignement::with_grid)::value)
+          {
+            /// Check ext_domain
+            if (
+                ((mlc_is(mln_trait_image_ext_domain(I),
+                         trait::image::ext_domain::fixed)::value ||
+                  mlc_is(mln_trait_image_ext_domain(I),
+                         trait::image::ext_domain::extendable)::value) &&
+                 (mlc_is(mln_trait_image_ext_domain(J),
+                         trait::image::ext_domain::fixed)::value ||
+                  mlc_is(mln_trait_image_ext_domain(J),
+                         trait::image::ext_domain::extendable)::value) &&
+                 input.border() == output.border()) ||
+                (mlc_is(mln_trait_image_ext_domain(I),
+                        trait::image::ext_domain::none)::value &&
+                 mlc_is(mln_trait_image_ext_domain(J),
+                        trait::image::ext_domain::none)::value))
+              {
+                /// Check domain
+                if (input.domain() == output.domain())
+                  impl::paste_fast(input, output);
+              }
+          }
+        impl::generic::paste_(input, output);
+      }
+
+
+      template <typename I, typename J>
+      inline
+      void paste_(const Image<I>& input, Image<J>& output)
+      {
+        paste_(mln_trait_image_value_storage(I)(),
+               mln_trait_image_value_storage(J)(),
+               input, output);
+      }
 
     } // end of namespace mln::level::internal
 

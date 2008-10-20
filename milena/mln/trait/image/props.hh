@@ -122,7 +122,7 @@
 //                   |
 //                   +-- with_grid
 //                   |
-//                   +-- no_aligned
+//                   +-- not_aligned
 //                   |
 //                   +-- irrelevant
 
@@ -363,7 +363,7 @@ namespace mln
 //                   |
 //                   +-- with_grid
 //                   |
-//                   +-- no_aligned
+//                   +-- not_aligned
 //                   |
 //                   +-- irrelevant
       struct value_alignement

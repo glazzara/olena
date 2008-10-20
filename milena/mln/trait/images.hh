@@ -190,12 +190,16 @@ namespace mln
       typedef mln_internal_trait_image_speed_from(D) speed; // un-fastest
 
       // value => delegation
-      typedef typename image_<D>::value_access   value_access;
-      typedef typename image_<D>::value_storage  value_storage;
-      typedef typename image_<D>::value_browsing value_browsing;
+      typedef typename image_<D>::vw_io            vw_io;
+      typedef typename image_<D>::vw_set           vw_set;
+      typedef typename image_<D>::value_alignement value_alignement;
+      typedef typename image_<D>::value_access     value_access;
+      typedef typename image_<D>::value_storage    value_storage;
+      typedef typename image_<D>::value_browsing   value_browsing;
       typedef mln_internal_trait_image_value_io_from(D) value_io; // un-write when D is const
 
       // site => delegation
+      typedef typename image_<D>::pw_io        pw_io;
       typedef typename image_<D>::localization localization;
       typedef typename image_<D>::dimension    dimension;
 

@@ -72,8 +72,8 @@ namespace mln
 
     template <typename I, typename S>
     struct image_< sub_image<I,S> > : default_image_morpher< I,
-							      mln_value(I),
-							      sub_image<I,S> >
+                                                             mln_value(I),
+                                                             sub_image<I,S> >
     {
 //     private:
 //       typedef mln_trait_image_data(I) I_data_;
@@ -86,6 +86,9 @@ namespace mln
       typedef trait::image::ext_value::irrelevant ext_value;
       typedef trait::image::ext_io::irrelevant    ext_io;
 
+      typedef trait::image::vw_io::none                    vw_io;
+      typedef trait::image::vw_set::none                   vw_set;
+      typedef trait::image::value_alignement::not_aligned  value_alignement;
       typedef trait::image::value_storage::disrupted value_storage;
       // HOT FIXME: except if S is a Box
     };

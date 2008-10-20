@@ -78,6 +78,7 @@ namespace mln
       {
 	trace::entering("level::impl::fill_with_value_one_block");
 
+
 	I& ima = exact(ima_);
 	internal::fill_with_value_tests(ima, val);
         mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
@@ -178,14 +179,16 @@ namespace mln
                                     trait::image::vw_io::read_write,
                                     Image<I>& ima, const V& val)
       {
-        impl::fill_with_value_cell_wise(ima, val);
+        // FIXME
+        //impl::fill_with_value_cell_wise(ima, val);
+        impl::generic::fill_with_value(ima, val);
       }
 
 
 
       template <typename I, typename V>
       void fill_with_value_dispatch(trait::image::value_storage::disrupted,
-                                    trait::image::vw_io::read,
+                                    trait::image::vw_io::any,
                                     Image<I>& ima, const V& val)
       {
         impl::generic::fill_with_value(ima, val);

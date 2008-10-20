@@ -8,7 +8,7 @@
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Public License for more details.
+ // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this library; see the file COPYING.  If not, write to
@@ -128,6 +128,7 @@ namespace mln
           O& output       = exact(output_);
 
           level::internal::transform_tests(input, f, output);
+
           mlc_is(mln_trait_image_pw_io(O),
                  trait::image::pw_io::read_write)::check();
 

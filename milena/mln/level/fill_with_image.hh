@@ -79,8 +79,8 @@ namespace mln
 	(void)ima;
 	(void)data;
 
-	mlc_is(mln_trait_image_value_io(I),
-	       mln::trait::image::value_io::read_write)::check();
+	mlc_is(mln_trait_image_pw_io(I),
+	       mln::trait::image::pw_io::read_write)::check();
 	mlc_converts_to(mln_value(J), mln_value(I))::check();
 	mln_precondition(exact(ima).has_data());
 	mln_precondition(exact(data).has_data());
@@ -125,8 +125,7 @@ namespace mln
     {
       trace::entering("level::fill_with_image");
 
-      internal::fill_with_image_tests(ima, data);
-      internal::fill_with_image_dispatch(ima, data);
+      internal::fill_with_image_(ima, data);
 
       trace::exiting("level::fill_with_image");
     }

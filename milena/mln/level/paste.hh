@@ -49,25 +49,25 @@ namespace mln
   namespace level
   {
 
-    /// \brief Paste the contents of image \p data into the image \p
-    /// destination.
+    /// \brief Paste the contents of image \p input into the image \p
+    /// output.
     ///
-    /// \param[in] data The input image providing pixels values.
-    /// \param[in,out] destination The image in which values are
+    /// \param[in] input The input image providing pixels values.
+    /// \param[in,out] output The image in which values are
     /// assigned.
     ///
     /// This routine runs: \n
-    /// for all p of \p data, \p destination(p) = \p data(p).
+    /// for all p of \p input, \p output(p) = \p input(p).
     ///
-    /// \warning The definition domain of \p data has to be included in
-    /// the one of \p destination; so using mln::safe_image does not
-    /// make pasting outside the destination domain work.
+    /// \warning The definition domain of \p input has to be included in
+    /// the one of \p output; so using mln::safe_image does not
+    /// make pasting outside the output domain work.
     ///
-    /// \pre \p data.domain <= \p destination.domain
+    /// \pre \p input.domain <= \p output.domain
     ///
     /// \{
     template <typename I, typename J>
-    void paste(const Image<I>& data, Image<J>& destination);
+    void paste(const Image<I>& input, Image<J>& output);
     /// \}
 
 
@@ -79,14 +79,17 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      void paste_tests(const Image<I>& data, Image<J>& destination)
+      void paste_tests(const Image<I>& input, Image<J>& output)
       {
-	mlc_is(mln_trait_image_value_io(J), trait::image::value_io::read_write)::check();
+	mlc_is(mln_trait_image_pw_io(J), trait::image::pw_io::read_write)::
+          check();
 	mlc_converts_to(mln_value(I), mln_value(J))::check();
-	mln_precondition(exact(data).has_data());
-	mln_precondition(exact(data).domain() <= exact(destination).domain());
-	(void)data;
-	(void)destination;
+
+	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).domain() <= exact(output).domain());
+
+	(void)input;
+	(void)output;
       }
 
     } // end of namespace mln::level::internal
@@ -99,17 +102,19 @@ namespace mln
 
 	template <typename I, typename J>
 	inline
-	void paste(const Image<I>& data_, Image<J>& destination_)
+	void paste_(const Image<I>& input_, Image<J>& output_)
 	{
 	  trace::entering("level::impl::generic::paste");
 
-	  level::internal::paste_tests(data_, destination_);
-	  const I& data  = exact(data_);
-	  J& destination = exact(destination_);
+	  level::internal::paste_tests(input_, output_);
 
-	  mln_piter(I) p(data.domain());
+	  const I& input  = exact(input_);
+	  J& output = exact(output_);
+
+
+	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    destination(p) = data(p);
+	    output(p) = input(p);
 
 	  trace::exiting("level::impl::generic::paste");
 	}
@@ -123,12 +128,13 @@ namespace mln
 
     template <typename I, typename J>
     inline
-    void paste(const Image<I>& data, Image<J>& destination)
+    void paste(const Image<I>& input, Image<J>& output)
     {
       trace::entering("level::paste");
 
-      internal::paste_tests(data, destination);
-      internal::paste_dispatch(data, destination);
+
+      internal::paste_tests(input, output);
+      internal::paste_(input, output);
 
       trace::exiting("level::paste");
     }

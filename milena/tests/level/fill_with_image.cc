@@ -25,62 +25,67 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste.cc
+/*! \file tests/level/fill_with_value.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::level::fill_with_value
  */
 
+#include <mln/level/fill_with_value.hh>
+#include <mln/level/fill_with_image.hh>
+
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/image3d.hh>
+#include <mln/core/image/flat_image.hh>
 #include <mln/core/image/sub_image.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/level/compare.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
+#include <mln/fun/p2b/chess.hh>
 
 
 int main()
 {
   using namespace mln;
+  const unsigned size = 100;
 
-  // tests in two dimension
+  {
+    image2d<unsigned int> ima(size, size);
+    image2d<unsigned int> ima2(size, size);
+    debug::iota(ima2);
+
+    level::fill_with_image(ima, ima2);
+    mln_assertion(ima == ima2);
+  }
+
   {
     box2d b(point2d(1,2), point2d(2,4));
     image2d<int> ima(b, 2);
-    debug::iota(ima);
 
     box2d b2(point2d(-1,-2), point2d(3,6));
     image2d<int> ima2(b2, 0);
     debug::iota(ima2);
 
-    image2d<int> ima3(b, 2);
-
-    level::paste(ima, ima2); // Not so fast version...
+    level::fill_with_image(ima, ima2);
     assert(ima == (ima2 | b));
-
-    level::paste(ima, ima3); // Fast version...
-    assert(ima == ima3);
   }
 
-  // tests in three dimension
   {
-    box3d b(point3d(1,2, 1), point3d(2,4, 3));
-    image3d<int> ima(b, 2);
-    debug::iota(ima);
+    typedef image2d<unsigned char> I;
+    typedef image_if<I, fun::p2b::chess_t> II;
 
-    box3d b2(point3d(-1,-2, -1), point3d(3,6, 3));
-    image3d<int> ima2(b2, 2);
-    debug::iota(ima2);
+    I ima(size, size);
+    I ima2(size, size);
+    level::fill_with_value(ima, 51);
+    level::fill_with_value(ima2, 42);
 
-    image3d<int> ima3(b, 2);
+    II ima_if = ima | fun::p2b::chess;
+    level::fill_with_image(ima_if, ima2);
 
-    level::paste(ima, ima2); // Not so fast version...
-    assert(ima == (ima2 | b));
+    II::piter p(ima_if.domain());
+    for_all(p)
+      mln_assertion(ima_if(p) == 42);
 
-    level::paste(ima, ima3); // Fast version...
-    assert(ima == ima3);
   }
 }

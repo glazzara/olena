@@ -1,3 +1,27 @@
+2008-10-20  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update dispatch of the fill_with image and paste routines.
+
+	* tests/level/fill_with_image.cc: New test.
+	* tests/level/paste.cc: Update.
+	* tests/level/Makefile.am: Add the new test.
+	* mln/trait/image/props.hh: Fix documentation.
+	* mln/trait/images.hh: Fix properties delegation.
+	* mln/core/image/image_if.hh,
+	* mln/core/image/flat_image.hh,
+	* mln/core/image/sub_image.hh,
+	* mln/pw/image.hh,
+	* mln/core/image/complex_image.hh: Update image properties.
+	* mln/core/image/status.txt: Update.
+	* mln/level/fill_with_image.hh,
+	* mln/level/fill_with_image.spe.hh: Specialize fill_with_value routine.
+	* mln/level/fill_with_value.hh: Update documentation.
+	* mln/level/fill_with_value.spe.hh: Fix a bug in the dispatch.
+	* mln/level/transform.hh: Update.
+	* mln/level/paste.hh,
+	* mln/level/paste.spe.hh: Specialize paste routine.
+	* mln/morpho/gradient.hh: Delete trailing whitespaces.
+
 2008-10-19  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Registration Fix.

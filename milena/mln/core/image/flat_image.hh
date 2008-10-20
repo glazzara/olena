@@ -78,12 +78,12 @@ namespace mln
 
       // value
       typedef trait::image::vw_io::read_write               vw_io;
-      typedef trait::image::vw_set::none                   vw_set;
-      typedef trait::image::value_access::direct           value_access;
-      typedef trait::image::value_storage::singleton       value_storage;
+      typedef trait::image::vw_set::none                    vw_set;
+      typedef trait::image::value_access::direct            value_access;
+      typedef trait::image::value_storage::singleton        value_storage;
       typedef mln::trait::image::value_browsing::value_wise value_browsing;
-      typedef trait::image::value_alignement::with_grid    value_alignement;
-      typedef trait::image::value_io::read_only            value_io;
+      typedef trait::image::value_alignement::with_grid     value_alignement;
+      typedef trait::image::value_io::read_only             value_io;
 
       // site / domain
       typedef trait::image::pw_io::read              pw_io;

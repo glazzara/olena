@@ -89,12 +89,16 @@ namespace mln
       typedef trait::image::size::regular     size;
 
       // value
+      typedef trait::image::vw_io::none                    vw_io;
+      typedef trait::image::vw_set::none                   vw_set;
       typedef trait::image::value_access::computed         value_access;
       typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_alignement::irrelevant   value_alignement;
       typedef trait::image::value_io::read_only            value_io;
 
       // site / domain
+      typedef trait::image::pw_io::read         pw_io;
       typedef /* FIXME: depends on S */  undef  localization;
       typedef /* FIXME: depends on S */  undef  dimension;
 
