@@ -33,7 +33,7 @@
 
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
-// FIXME: These might be factor-able.
+// FIXME: These might be factor-able, both between fwd/bkd and nbh/win.
 
 /* FIXME: Do we really want to inherit from
    internal::site_relative_iterator_base?  I might duplicate things,
@@ -63,6 +63,8 @@ namespace mln
   public:
     /// The Pseudo_Site type.
     typedef mln_psite(N) psite;
+    /// The type of the underlying complex iterator.
+    typedef typename N::complex_fwd_iter iter_type;
 
   public:
     /// Construction.
@@ -95,11 +97,15 @@ namespace mln
     psite compute_p_() const;
     /// \}
 
+    /// \brief Accessors.
+    /// \{
+    const iter_type& iter() const;
+    iter_type& iter();
+    /// \}
+
   private:
-    /// The type of the underlying complex iterator.
-    typedef typename N::complex_fwd_iter iter;
     /// The underlying complex iterator.
-    iter iter_;
+    iter_type iter_;
   };
 
 
@@ -126,6 +132,8 @@ namespace mln
   public:
     /// The Pseudo_Site type.
     typedef mln_psite(N) psite;
+    /// The type of the underlying complex iterator.
+    typedef typename N::complex_bkd_iter iter_type;
 
   public:
     /// Construction.
@@ -158,11 +166,15 @@ namespace mln
     psite compute_p_() const;
     /// \}
 
+    /// \brief Accessors.
+    /// \{
+    const iter_type& iter() const;
+    iter_type& iter();
+    /// \}
+
   private:
-    /// The type of the underlying complex iterator.
-    typedef typename N::complex_bkd_iter iter;
     /// The underlying complex iterator.
-    iter iter_;
+    iter_type iter_;
   };
 
 
@@ -247,6 +259,22 @@ namespace mln
     return psite(this->center().site_set(), iter_);
   }
 
+  template <typename I, typename G, typename N>
+  inline
+  const typename N::complex_fwd_iter&
+  complex_neighborhood_fwd_piter<I, G, N>::iter() const
+  {
+    return iter_;
+  }
+
+  template <typename I, typename G, typename N>
+  inline
+  typename N::complex_fwd_iter&
+  complex_neighborhood_fwd_piter<I, G, N>::iter()
+  {
+    return iter_;
+  }
+
 
   template <typename I, typename G, typename N>
   inline
@@ -327,6 +355,22 @@ namespace mln
   complex_neighborhood_bkd_piter<I, G, N>::compute_p_() const
   {
     return psite(this->center().site_set(), iter_);
+  }
+
+  template <typename I, typename G, typename N>
+  inline
+  const typename N::complex_bkd_iter&
+  complex_neighborhood_bkd_piter<I, G, N>::iter() const
+  {
+    return iter_;
+  }
+
+  template <typename I, typename G, typename N>
+  inline
+  typename N::complex_bkd_iter&
+  complex_neighborhood_bkd_piter<I, G, N>::iter()
+  {
+    return iter_;
   }
 
 

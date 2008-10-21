@@ -24,6 +24,22 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add accessors to complex piters on neighborhoods.
+
+	* mln/core/image/complex_neighborhood_piter.hh
+	(mln::complex_neighborhood_fwd_piter<I, G, N>::iter)
+	(mln::complex_neighborhood_bkd_piter<I, G, N>::iter):
+	Rename typedefs as...
+	(mln::complex_neighborhood_fwd_piter<I, G, N>::iter_type)
+	(mln::complex_neighborhood_bkd_piter<I, G, N>::iter_type):
+	...these.
+	Adjust.
+	(mln::complex_neighborhood_fwd_piter<I, G, N>::iter)
+	(mln::complex_neighborhood_bkd_piter<I, G, N>::iter):
+	New accessors.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify mln::geom::complex_geometry.
 
 	* mln/geom/complex_geometry.hh
