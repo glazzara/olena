@@ -26,8 +26,7 @@
 // Public License.
 
 /// \file tests/io/off/load_bin.cc
-/// \brief Test mln::io::off::load with an
-/// mln::complex_image<3, geom::complex_data<3, point3df>, bool>.
+/// \brief Test mln::io::off::load with an mln::bin_2complex_image3df.
 
 #include <algorithm>
 #include <iterator>

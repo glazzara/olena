@@ -54,9 +54,9 @@ namespace mln
     }
 
 
-    /*---------------------------------------------------.
+    /*----------------------------------------------------.
     | topo::adj_higher_dim_connected_n_face_fwd_iter<D>.  |
-    `---------------------------------------------------*/
+    `----------------------------------------------------*/
 
     /// \brief Forward iterator on all the n-faces sharing an adjacent
     /// (n+1)-face with a (reference) n-face of an mln::complex<D>.
@@ -81,14 +81,17 @@ namespace mln
       adj_higher_dim_connected_n_face_fwd_iter(const Fref& f_ref);
       /// \}
 
-      /// Compute the set of faces adjacent to the reference face.
+      /// \brief Compute the set of faces adjacent to the reference face.
+      ///
+      /// The computation is delegated to
+      /// mln::topo::internal::adj_higher_dim_connected_n_face_iterator.
       void update_adj_faces_();
     };
 
 
-    /*---------------------------------------------------.
+    /*----------------------------------------------------.
     | topo::adj_higher_dim_connected_n_face_bkd_iter<D>.  |
-    `---------------------------------------------------*/
+    `----------------------------------------------------*/
 
     /// \brief Backward iterator on all the n-faces sharing an adjacent
     /// (n+1)-face with a (reference) n-face of an mln::complex<D>.
@@ -121,9 +124,9 @@ namespace mln
     };
 
 
-    /*-------------------------------------------------------------.
+    /*--------------------------------------------------------------.
     | topo::internal::adj_higher_dim_connected_n_face_iterator<D>.  |
-    `-------------------------------------------------------------*/
+    `--------------------------------------------------------------*/
 
     namespace internal
     {
@@ -144,9 +147,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*---------------------------------------------------.
+    /*----------------------------------------------------.
     | topo::adj_higher_dim_connected_n_face_fwd_iter<D>.  |
-    `---------------------------------------------------*/
+    `----------------------------------------------------*/
 
     template <unsigned D>
     inline
@@ -178,9 +181,9 @@ namespace mln
     }
 
 
-    /*---------------------------------------------------.
+    /*----------------------------------------------------.
     | topo::adj_higher_dim_connected_n_face_bkd_iter<D>.  |
-    `---------------------------------------------------*/
+    `----------------------------------------------------*/
 
     template <unsigned D>
     inline
@@ -207,9 +210,9 @@ namespace mln
     }
 
 
-    /*-------------------------------------------------------------.
+    /*--------------------------------------------------------------.
     | topo::internal::adj_higher_dim_connected_n_face_iterator<D>.  |
-    `-------------------------------------------------------------*/
+    `--------------------------------------------------------------*/
 
     namespace internal
     {

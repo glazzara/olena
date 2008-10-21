@@ -81,7 +81,10 @@ namespace mln
       adj_lower_dim_connected_n_face_fwd_iter(const Fref& f_ref);
       /// \}
 
-      /// Compute the set of faces adjacent to the reference face.
+      /// \brief Compute the set of faces adjacent to the reference face.
+      ///
+      /// The computation is delegated to
+      /// mln::topo::internal::adj_lower_dim_connected_n_face_iterator.
       void update_adj_faces_();
     };
 

@@ -24,6 +24,15 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes and documentation updates.
+
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh,
+	* tests/io/off/load_bin.cc:
+	Do it.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/io/off/load.hh: Polish this file.
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
