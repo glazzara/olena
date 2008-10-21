@@ -24,6 +24,13 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add window on transitively adjacent m-faces.
+
+	* mln/core/image/complex_windows.hh
+	(mln::complex_m_face_window): New.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add neighborhood on transitively adjacent m-faces.
 
 	* mln/core/image/complex_neighborhoods.hh

@@ -115,6 +115,12 @@ namespace mln
 			 topo::adj_higher_dim_connected_n_face_fwd_iter,
 			 topo::adj_higher_dim_connected_n_face_bkd_iter);
 
+  /// \brief Window centered on an n-face of complex returning
+  /// the m-faces transitively adjacent to this center n-face.
+  mln_gen_complex_window(complex_m_face_window,
+			 topo::adj_m_face_fwd_iter,
+			 topo::adj_m_face_bkd_iter);
+
 } // end of namespace mln
 
 # undef mln_gen_complex_window
