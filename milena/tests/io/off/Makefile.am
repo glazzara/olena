@@ -3,8 +3,10 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-   load_bin
+   load_bin					\
+   load_save_bin
 
 load_bin_SOURCES = load_bin.cc
+load_save_bin_SOURCES = load_save_bin.cc
 
 TESTS = $(check_PROGRAMS)

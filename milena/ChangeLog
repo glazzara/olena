@@ -24,6 +24,14 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::io::off:save.
+
+	* tests/io/off/load_save_bin.cc: New test.
+	* tests/io/off/Makefile.am (check_PROGRAMS): Add load_save_bin.
+	(load_save_bin_SOURCES): New.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a routine to save a complex-based image to an OFF file.
 
 	* mln/io/off/save.hh: New.
