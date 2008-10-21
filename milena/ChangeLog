@@ -24,6 +24,12 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a routine to save a complex-based image to an OFF file.
+
+	* mln/io/off/save.hh: New.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Enrich the interface of mln::util::multi_site.
 
 	* mln/util/multi_site.hh (mln::util::multi_site<P>::front):
