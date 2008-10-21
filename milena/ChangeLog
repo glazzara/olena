@@ -24,6 +24,10 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/core/macros.hh (mln_geom, mln_geom_): New macros.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add accessors to implementations class of complex iterators.
 
 	* mln/topo/internal/complex_set_iterator_base.hh

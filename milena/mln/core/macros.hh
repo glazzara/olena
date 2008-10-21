@@ -186,6 +186,12 @@
 
 // g
 
+/// Shortcuts to access the geometry type associated to T.
+/// \{
+# define mln_geom(T)      typename T::geom
+# define mln_geom_(T)              T::geom
+/// \}
+
 /// Shortcuts to access the grid type associated to T.
 /// \{
 # define mln_grid(T)      typename T::grid
