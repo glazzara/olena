@@ -1,2 +1,2 @@
 all:
-	g++ *.cc -I../../ -O3
+	g++ *.cc -I../../ -O1 -DNDEBUG

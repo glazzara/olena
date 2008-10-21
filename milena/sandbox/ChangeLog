@@ -1,3 +1,10 @@
+2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Work on INIM classification
+	* classif/Makefile: Change flags.
+	* classif/iccvg04.cc: Implement classification method of ICCVG04.
+	* classif/scoolNBR.ppm: Remove.
+
 2008-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve OCR preprocessing.
