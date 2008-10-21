@@ -24,6 +24,22 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add accessors to complex piters on windows.
+
+	* mln/core/image/complex_window_piter.hh
+	(mln::complex_window_fwd_piter<I, G, W>::iter)
+	(mln::complex_window_bkd_piter<I, G, W>::iter):
+	Rename typedefs as...
+	(mln::complex_window_fwd_piter<I, G, W>::iter_type)
+	(mln::complex_window_bkd_piter<I, G, W>::iter_type):
+	...these.
+	Adjust.
+	(mln::complex_window_fwd_piter<I, G, W>::iter)
+	(mln::complex_window_bkd_piter<I, G, W>::iter):
+	New accessors.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add accessors to complex piters on neighborhoods.
 
 	* mln/core/image/complex_neighborhood_piter.hh
