@@ -52,13 +52,13 @@ namespace mln
     namespace off
     {
 
-      /** \brief Load a (boolean) OFF image into a complex image.
+      /** \brief Load a (binary) OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
 
-	  The image is said boolean since data only represent the
-	  existence of vertices and faces.  */
+	  The image is said binary since data only represent the
+	  existence of faces.  */
       void load(bin_2complex_image3df& ima, const std::string& filename);
 
       namespace internal
@@ -73,14 +73,14 @@ namespace mln
 
       void load(bin_2complex_image3df& ima, const std::string& filename)
       {
-	const std::string me = "mln::io::load::off";
+	const std::string me = "mln::io::off::load";
 
 	std::ifstream istr(filename.c_str());
 	if (!istr)
 	{
 	  std::cerr << me << ": `" << filename << "' not found." << std::endl;
 	  /* FIXME: Too violent.  We should allow the use of
-	     exception, at least to have Milena's code behave
+	     exceptions, at least to have Milena's code behave
 	     correctly in interpreted environments (std::exit() or
 	     std::abort() causes the termination of a Python
 	     interpreter, for instance!).  */
@@ -92,9 +92,9 @@ namespace mln
 	`---------*/
 
 	/* ``The .off files in the Princeton Shape Benchmark conform
-	   to the following standard. */
+	   to the following standard''. */
 
-	/* OFF files are all ASCII files beginning with the keyword
+	/* ``OFF files are all ASCII files beginning with the keyword
 	   OFF. ''  */
 	std::string type;
 	istr >> internal::eat_comment >> type;

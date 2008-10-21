@@ -24,6 +24,10 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	* mln/io/off/load.hh: Polish this file.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise mln::io::off:save.
 
 	* tests/io/off/load_save_bin.cc: New test.
