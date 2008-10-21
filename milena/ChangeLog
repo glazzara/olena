@@ -1,3 +1,9 @@
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Provide an alias for binary 2-complex-based 3-dimensional images.
+
+	* mln/core/alias/bin_2complex_image3df.hh: New.
+
 2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Remove debug in chamfer.
