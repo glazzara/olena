@@ -24,6 +24,13 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add neighborhood on transitively adjacent m-faces.
+
+	* mln/core/image/complex_neighborhoods.hh
+	(mln::complex_m_face_neighborhood): New.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add accessors to complex piters on windows.
 
 	* mln/core/image/complex_window_piter.hh
