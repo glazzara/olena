@@ -24,6 +24,15 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a complex relative iterator on transitively adjacent m-faces.
+
+	* mln/topo/adj_m_face_iter.hh: New.
+	Include this file...
+	* mln/topo/complex_iterators.hh: ...here.
+	Include also mln/topo/center_only_iter.hh.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Supplement complex-based image.
 
 	* mln/core/image/complex_image.hh
