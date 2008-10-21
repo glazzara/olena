@@ -1,5 +1,10 @@
 2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Work on ICCVG04 classification method
+	* iccvg04.cc: Add a general display function for 3d images.
+
+2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Work on INIM classification
 	* classif/Makefile: Change flags.
 	* classif/iccvg04.cc: Implement classification method of ICCVG04.

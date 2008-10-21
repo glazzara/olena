@@ -11,6 +11,8 @@
 #include <mln/arith/revert.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/core/alias/neighb3d.hh>
+#include <mln/util/array.hh>
+#include <mln/labeling/compute.hh>
 
 // FIXME: !?
 #include <mln/geom/all.hh>
@@ -18,6 +20,10 @@
 #include <mln/io/ppm/load.hh>
 
 #include <mln/io/pgm/save.hh>
+
+#include <sys/stat.h>
+#include <sstream>
+
 
 using namespace mln;
 
@@ -49,6 +55,33 @@ void gplot(const I& ima)
     if (ima(p) != 0)
       std::cout << p[0] << ' ' << p[1] << ' ' << p[2] << std::endl;
   }
+}
+
+template <typename I>
+void display(const I& ima, const char * dir)
+{
+  mkdir(dir, 0777);
+  chdir(dir);
+
+  for (int s = 0; s < geom::nslis(ima); ++s)
+  {
+    image2d< mln_value(I) > out(geom::nrows(ima), geom::ncols(ima));
+   // image2d< value::int_u8 > out(geom::nrows(ima), geom::ncols(ima));
+    for (int r = 0; r < geom::nrows(ima); ++r)
+    {
+      for (int c = 0; c < geom::ncols(ima); ++c)
+      {
+	out(point2d(r, c)) = ima(point3d(s, r, c));
+      }
+    }
+
+    std::ostringstream is;
+    is << "out_" << s << ".ppm";
+
+    io::pgm::save(out, is.str());
+  }
+
+  chdir("..");
 }
 
 template <typename I>
@@ -133,6 +166,24 @@ mln_ch_value(I, value::int_u8) normalizeu8(const I& ima)
   return res;
 }
 
+template <typename I, typename J, typename K>
+mln_ch_value(I, value::int_u8) donne_tout(const I& ima, const J& histo, const K& ws, int nbasins)
+{
+  image2d<value::rgb8> out(ima.domain());
+
+  typedef mln::accu::mean<mln_value(J)> accu_t;
+
+  accu_t acu;
+
+  util::array<mln_result(accu_t)> tmp = labeling::compute(acu, histo, ws, nbasins);
+
+  /*mln_piter(I) p(ima.domain());
+
+  for_all(p)
+  {
+  }*/
+}
+
 int main(int argc, char **argv)
 {
   image2d<value::rgb8> ima;
@@ -140,14 +191,16 @@ int main(int argc, char **argv)
 
   //make histo
   image3d<unsigned> histo = fill_histo(ima);
-
   image3d<value::int_u8> nhisto = normalizeu8(histo);
+
+  //display(nhisto, "histo");
 
   //revert histo
   image3d<value::int_u8> rhisto = arith::revert(nhisto);
+  //display(rhisto, "rhisto");
   //compute closing_area of histo
 
-  image3d<unsigned> histo_closure(histo.domain());
+  image3d<value::int_u8> histo_closure(histo.domain());
   morpho::closing_area(rhisto, c6(), 420, histo_closure);
 
   //display_proj_revert(histo_closure, "chisto.ppm");
@@ -156,7 +209,9 @@ int main(int argc, char **argv)
   value::int_u16 nbasins;
   image3d<value::int_u16> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
 
+  display(ws, "ws");
   display_proj_revert(ws, "whisto.ppm");
   //gplot(ws);
 
+  //donne_tout(ima, histo_closure, ws, nbasins);
 }
