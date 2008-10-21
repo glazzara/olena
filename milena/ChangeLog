@@ -24,6 +24,12 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise iterators on transitively adjacent m-faces.
+
+	* tests/topo/complex.cc: Here.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a complex relative iterator on transitively adjacent m-faces.
 
 	* mln/topo/adj_m_face_iter.hh: New.

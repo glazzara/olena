@@ -33,7 +33,6 @@
 #include <iostream>
 
 #include <mln/topo/complex.hh>
-#include <mln/topo/center_only_iter.hh>
 
 using namespace mln;
 
@@ -292,6 +291,24 @@ int main()
       std::cout << "  " << fwd_ahdcf << '\t' << bkd_ahdcf << std::endl;
   }
   std::cout << std::endl;
+
+  // For each face F of C, and for M in [0, D], iterate on the the set
+  // of M-faces transitively adjacent to F.
+  topo::adj_m_face_fwd_iter<D> fwd_amf(fwd_f, 0);
+  topo::adj_m_face_bkd_iter<D> bkd_amf(fwd_f, 0);
+  for_all(fwd_f)
+  {
+    for (unsigned m = 0; m <= D; ++m)
+      {
+	fwd_amf.set_m(m);
+	bkd_amf.set_m(m);
+	std::cout << m << "-faces (transitively) adjacent to " << fwd_f
+		  << ": "  << std::endl;
+	for_all_2(fwd_amf, bkd_amf)
+	  std::cout << "  " << fwd_amf << '\t' << bkd_amf << std::endl;
+      }
+    std::cout << std::endl;
+  }
 
 
   /* Next, write these:
