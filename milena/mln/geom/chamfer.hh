@@ -100,7 +100,6 @@ namespace mln
 						 // Was :
 						 // level::fill((output | (input | pw::cst(true)).domain()).rw(), 0);
 						 // level::fill((output | (input | pw::cst(false)).domain()).rw(), max);
-						 debug::println(output);
 	}
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }

@@ -1,5 +1,11 @@
 2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Remove debug in chamfer.
+
+	* mln/geom/chamfer.hh: Remove debug. (sorry).
+
+2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Fix chamfer.
 
 	* mln/canvas/chamfer.hh: use image2d.domain.has method instead of
