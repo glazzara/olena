@@ -1,3 +1,22 @@
+2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add diagonal2d browsings.
+
+	* mln/canvas/browsing/backdiagonal2d.hh: New.
+	* mln/canvas/browsing/diagonal2d.hh: New.
+	* tests/canvas/browsing/backdiagonal2d.cc: New.
+	* tests/canvas/browsing/diagonal2d.cc: New.
+
+	Use it in erosion.
+
+	* mln/morpho/erosion.spe.hh: Add diagonal versions of erosion:
+	(erosion_diagonal) New,
+	(erosion_diagonal_fastest) New,
+	(erosion_backdiagonal) New,
+	(erosion_backdiagonal_fastest) New.
+	* tests/morpho/erosion.cc: Some tests on erosion with win::diag2d and
+	win::backdiag2d.
+
 2008-10-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial.
