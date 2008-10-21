@@ -1,5 +1,57 @@
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	s/milena/Milena/.
+
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/object.hh,
+	* mln/core/concept/point_site.hh,
+	* mln/core/image/fi_adaptor.hh,
+	* mln/core/macros.hh,
+	* mln/core/routine/ops.hh,
+	* mln/io/fits/load.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/pnm/save_header.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh,
+	* mln/make/all.hh:
+	Do it.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add accessors to implementations class of complex iterators.
+
+	* mln/topo/internal/complex_set_iterator_base.hh
+	(internal::complex_set_iterator_base<F, E>::face):
+	Rename typedef as...
+	(internal::complex_set_iterator_base<F, E>::face_type):
+	...this.
+	Adjust.
+	(internal::complex_set_iterator_base<F, E>::face): New iterator.
+	(internal::complex_set_iterator_base<F, E>): Remove irrelevant
+	static assertion.
+	* mln/topo/internal/complex_relative_iterator_base.hh
+	(internal::complex_relative_iterator_base<F, E>::face)
+	(internal::forward_complex_relative_iterator_base<F, E>::face)
+	(internal::backward_complex_relative_iterator_base<F, E>::face):
+	Rename typedefs as...
+	(internal::complex_relative_iterator_base<F, E>::face_type)
+	(internal::forward_complex_relative_iterator_base<F, E>::face_type)
+	(internal::backward_complex_relative_iterator_base<F, E>::face_type):
+	...these.
+	Adjust.
+	(internal::complex_relative_iterator_base<F, E>::face):
+	New accessor.
+	(internal::complex_relative_iterator_base<F, E>):
+	Remove irrelevant static assertion.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use alias mln::bin_2complex_image3df.
 
 	* mln/io/off/load.hh,

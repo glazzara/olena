@@ -62,7 +62,7 @@ namespace mln
 
       public:
 	/// The type of the iterated faces.
-	typedef F face;
+	typedef F face_type;
 	// FIXME: Maybe we could just get the dimension D of the face's
 	// complex, an define complex_type as mln::complex<D>?
 	typedef typename F::complex_type complex_type;
@@ -87,15 +87,19 @@ namespace mln
 	void invalidate();
 	/// \}
 
-	/// Conversion.
-	/// \{
+	/// \brief Conversion.
+	///
 	/// Return a reference to the corresponding face handle.
-	operator const face&() const;
+	/// \{
+	/// Explicit conversion (accessor).
+	const face_type& face() const;
+	/// Implicit conversion (conversion operator).
+	operator const face_type&() const;
 	/// \}
 
       protected:
 	/// The face handle this iterator is pointing to.
-	face f_;
+	face_type f_;
       };
 
 
@@ -113,9 +117,6 @@ namespace mln
       inline
       complex_set_iterator_base<F, E>::complex_set_iterator_base()
       {
-	// Ensure F and E are compatible.
-	mlc_equal(F, typename E::face)::check();
-
 	invalidate();
       }
 
@@ -123,9 +124,6 @@ namespace mln
       inline
       complex_set_iterator_base<F, E>::complex_set_iterator_base(complex_type& c)
       {
-	// Ensure F and E are compatible.
-	mlc_equal(F, typename E::face)::check();
-
 	f_.set_cplx(c);
 	// Invalidate f_.
 	invalidate();
@@ -159,7 +157,15 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_set_iterator_base<F, E>::operator const face&() const
+      const F&
+      complex_set_iterator_base<F, E>::face() const
+      {
+	return f_;
+      }
+
+      template <typename F, typename E>
+      inline
+      complex_set_iterator_base<F, E>::operator const face_type&() const
       {
 	return f_;
       }

@@ -58,7 +58,7 @@
 # include <mln/topo/complex.hh>
 
 /* FIXME: Introduce a common factoring class for this class and for
-   complex_relative_iterator_base?  */
+   complex_set_iterator_base?  */
 
 /* FIXME: By moving iterator `i_' into
    internal::complex_relative_iterator_base, we'll be able to factor
@@ -91,7 +91,7 @@ namespace mln
 
       public:
 	/// The type of the iterated faces.
-	typedef F face;
+	typedef F face_type;
 
 	/// Construction.
 	/// \{
@@ -111,24 +111,28 @@ namespace mln
 	void next_();
 	/// \}
 
-	/// Conversion.
-	/// \{
+	/// \brief Conversion.
+	///
 	/// Return a reference to the corresponding face handle.
-	operator const face&() const;
+	/// \{
+	/// Explicit conversion (accessor).
+	const face_type& face() const;
+	/// Implicit conversion (conversion operator).
+	operator const face_type&() const;
 	/// \}
 
       protected:
 	/// A pointer to the center face around which this iterator
 	/// moves.
-	const face* c_;
+	const face_type* c_;
 
 	// The type of the set of vicinity sites (adjacent face handles).
-	typedef std::vector<face> adj_faces_t;
+	typedef std::vector<face_type> adj_faces_t;
 	/// The set of faces adjacent to the reference face.
 	adj_faces_t adj_faces_;
 
 	/// The face handle this iterator is pointing to.
-	face f_;
+	face_type f_;
       };
 
 
@@ -160,7 +164,7 @@ namespace mln
 	typedef complex_relative_iterator_base<F, E> super_;
 
       public:
-	typedef F face;
+	typedef F face_type;
 
       public:
 	/// Construction.
@@ -210,7 +214,7 @@ namespace mln
 	typedef complex_relative_iterator_base<F, E> super_;
 
       public:
-	typedef F face;
+	typedef F face_type;
 
       public:
 	/// Construction.
@@ -255,8 +259,6 @@ namespace mln
       complex_relative_iterator_base<F, E>::complex_relative_iterator_base()
 	: c_(0)
       {
-	// Ensure F and E are compatible.
-	mlc_equal(F, typename E::face)::check();
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
 	m = 0;
@@ -269,8 +271,6 @@ namespace mln
       inline
       complex_relative_iterator_base<F, E>::complex_relative_iterator_base(const Fref& f_ref)
       {
-	// Ensure F and E are compatible.
-	mlc_equal(F, typename E::face)::check();
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
 	m = 0;
@@ -309,7 +309,15 @@ namespace mln
 
       template <typename F, typename E>
       inline
-      complex_relative_iterator_base<F, E>::operator const face&() const
+      const F&
+      complex_relative_iterator_base<F, E>::face() const
+      {
+	return f_;
+      }
+
+      template <typename F, typename E>
+      inline
+      complex_relative_iterator_base<F, E>::operator const face_type&() const
       {
 	return f_;
       }
