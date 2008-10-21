@@ -116,7 +116,7 @@ namespace mln
   /// Values attached to each face of the complex.
   ///
   /// \arg p D The dimension of the complex.
-  /// \arg p G The geometry of the complex.
+  /// \arg p G The geometry type of the complex.
   /// \arg p V The value type of the image.
   template <unsigned D, typename G, typename V>
   class complex_image
@@ -124,6 +124,10 @@ namespace mln
 				      complex_image<D, G, V> >
   {
   public:
+    /// The dimension of the complex.
+    static const unsigned dim = D;
+    /// The geometry type of the complex.
+    typedef G geom;
     /// Value associated type.
     typedef V value;
 

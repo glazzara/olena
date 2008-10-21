@@ -24,6 +24,14 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Supplement complex-based image.
+
+	* mln/core/image/complex_image.hh
+	(mln::complex_image<D, G, V>::dim): New constant.
+	(mln::complex_image<D, G, V>::geom): New typedef.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/macros.hh (mln_geom, mln_geom_): New macros.
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
