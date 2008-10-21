@@ -86,7 +86,7 @@ namespace mln
 	mln_qiter(W) q(f.win, p);
 
 	for_all(p) if (f.handles (p))
-	  for_all(q) if (f.input.has(q))
+	  for_all(q) if (f.input.domain().has(q))
 	    if (f.output(q) != f.max
 		&& f.output(q) + q.w() < f.output(p))
 	      f.output(p) = f.output(q) + q.w();
@@ -100,7 +100,7 @@ namespace mln
 	mln_qiter(W) q(w_win_b, p);
 
 	for_all(p) if (f.handles (p))
-	  for_all(q) if (f.input.has(q))
+	  for_all(q) if (f.input.domain().has(q))
 	    if (f.output(q) != f.max
 		&& f.output(q) + q.w() < f.output(p))
 	      f.output(p) = f.output(q) + q.w();

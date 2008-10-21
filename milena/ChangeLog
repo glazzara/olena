@@ -1,5 +1,14 @@
 2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix chamfer.
+
+	* mln/canvas/chamfer.hh: use image2d.domain.has method instead of
+	image2d.has.
+
+	* mln/geom/chamfer.hh: Fix output initialisation.
+
+2008-10-21  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add diagonal2d browsings.
 
 	* mln/canvas/browsing/backdiagonal2d.hh: New.

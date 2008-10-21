@@ -69,6 +69,7 @@ namespace mln
       struct chamfer_t
       {
 	typedef I_ I;
+	typedef mln_ch_value(I, unsigned) O;
 	typedef W_ W;
 	typedef mln_site(I_) P;
 
@@ -77,14 +78,30 @@ namespace mln
 	const I& input;
 	const W& win;
 
-	mln_ch_value(I_, unsigned) output;
+	O output;
 	bool status;
 	unsigned max;
 
+	void fill_output()
+	{
+	  mln_piter(O) p(output.domain());
+	  for_all(p)
+	  {
+	    if (input(p) == true)
+	      output(p) = 0;
+	    else
+	      output(p) = max;
+	  }
+	}
+
 	inline
 	void init()                            { initialize(output, exact(input));
-	                                         level::fill((output | (input | pw::cst(true)).domain()).rw(),  0);
-						 level::fill((output | (input | pw::cst(false)).domain()).rw(), max); }
+						 fill_output();
+						 // Was :
+						 // level::fill((output | (input | pw::cst(true)).domain()).rw(), 0);
+						 // level::fill((output | (input | pw::cst(false)).domain()).rw(), max);
+						 debug::println(output);
+	}
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }
 
