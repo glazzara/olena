@@ -38,6 +38,7 @@
 # include <set>
 
 # include <mln/topo/face.hh>
+# include <mln/topo/adj_m_face_iter.hh>
 
 # include <mln/util/multi_site.hh>
 # include <mln/util/tracked_ptr.hh>
@@ -162,56 +163,19 @@ namespace mln
 	}
       else
 	{
-	  // F is an n-face, with n > 0.
-	  typedef std::vector < topo::face<D> > faces_t;
-	  typedef std::set < topo::face<D> > faces_set_t;
-
-	  // The adjacent m-faces.
-	  faces_t m_faces = f.lower_dim_adj_faces();
-	  // The set of (m-1)-face being built.
-	  /* FIXME: This pattern is recurring in Milena---using an
-	     std::set (or any fast associative container) to improve
-	     the lookup speed of an std::vector; we should create a
-	     class for this, a bit like mln::util::set, but with a
-	     garantee on the order of insertion.  */
- 	  faces_t work_faces;
-	  faces_set_t work_faces_set;
-
-	  // Iteratively compute the set of locations.
-	  for (unsigned m = f.n() - 1; m > 0; --m)
-	    {
-	      for (typename faces_t::const_iterator g = m_faces.begin();
-		   g != m_faces.end(); ++g)
-		{
-		  faces_t m_minus_one_faces = g->lower_dim_adj_faces();
-		  // Don't insert a face twice.
-		  for (typename faces_t::const_iterator h =
-			 m_minus_one_faces.begin();
-		       h != m_minus_one_faces.end(); ++h)
-		    if (work_faces_set.find(*h) == work_faces_set.end())
-		      {
-			work_faces.push_back(*h);
-			work_faces_set.insert(*h);
-		      }
-		}
-	      work_faces.swap(m_faces);
-	      work_faces.clear();
-	      work_faces_set.clear();
-	    }
-	  for (typename faces_t::const_iterator g = m_faces.begin();
-	       g != m_faces.end(); ++g)
-	    {
-	      mln_assertion(g->face_id() < data_->zero_faces.size());
-	      s.push_back(data_->zero_faces[g->face_id()]);
-	    }
+	  /* F is an n-face, with n > 0.
+	     Compute the set of 0-faces transitively adjacent to F.  */
+	  topo::adj_m_face_fwd_iter<D> g(f, 0);
+	  for_all(g)
+	    s.push_back(data_->zero_faces[g.face().face_id()]);
 	}
       return s;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of mln::geom
+  } // end of mln::geom
 
-  } // end of mln
+} // end of mln
 
 #endif // MLN_GEOM_COMPLEX_GEOMETRY_HH

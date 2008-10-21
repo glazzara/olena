@@ -24,6 +24,15 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify mln::geom::complex_geometry.
+
+	* mln/geom/complex_geometry.hh
+	(mln::geom::complex_geometry<D, P>::operator()):
+	Use mln::topo::adj_m_face_fwd_iter to simplify the implementation
+	of this operator.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise iterators on transitively adjacent m-faces.
 
 	* tests/topo/complex.cc: Here.
