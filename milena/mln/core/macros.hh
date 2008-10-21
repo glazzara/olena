@@ -31,7 +31,7 @@
 
 /*! \file mln/core/macros.hh
  *
- * \brief Definition of the set of milena macros.
+ * \brief Definition of the set of Milena macros.
  */
 
 

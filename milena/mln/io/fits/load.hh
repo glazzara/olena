@@ -55,7 +55,7 @@ namespace mln
     namespace fits
     {
 
-      /*! Load a fits image in a milena image.
+      /*! Load a fits image in a Milena image.
        *
        * \param[out] ima A reference to the image2d<float> which will receive
        * data.

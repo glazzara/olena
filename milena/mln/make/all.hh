@@ -37,7 +37,7 @@
 namespace mln
 {
 
-  /// Namespace of routines that help to make milena's objects.
+  /// Namespace of routines that help to make Milena's objects.
   namespace make {}
 
 }

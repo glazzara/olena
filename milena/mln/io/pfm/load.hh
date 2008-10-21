@@ -53,7 +53,7 @@ namespace mln
     namespace pfm
     {
 
-      /*! Load a pfm image in a milena image.
+      /*! Load a pfm image in a Milena image.
        *
        * \param[out] ima A reference to the image2d<float> which will receive
        * data.

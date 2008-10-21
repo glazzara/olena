@@ -55,7 +55,7 @@ namespace mln
     {
 
 
-      /*! Load a pbm image in a milena image.
+      /*! Load a pbm image in a Milena image.
        *
        * \param[out] ima A reference to the image2d<bool> which will receive
        * data.

@@ -55,7 +55,7 @@ namespace mln
     namespace pfm
     {
 
-      /*! Save a milena image as a pfm image.
+      /*! Save a Milena image as a pfm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.

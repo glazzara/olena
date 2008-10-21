@@ -64,7 +64,7 @@ namespace mln
     namespace pnm
     {
 
-      /*! Save a milena image as a pnm image.
+      /*! Save a Milena image as a pnm image.
        *
        * \param[in] type The type of the image to save (can be PPM,
        * PGM, PBM).

@@ -57,7 +57,7 @@ namespace mln
     namespace pgm
     {
 
-      /*! Load a pgm image in a milena image.
+      /*! Load a pgm image in a Milena image.
        *
        * \param[out] ima A reference to the image which will receive
        * data.
@@ -68,7 +68,7 @@ namespace mln
 		const std::string& filename);
 
 
-      /*! Load a pgm image in a milena image. To use this routine, you
+      /*! Load a pgm image in a Milena image. To use this routine, you
        *  should specialize the template whith the value type of the
        *  image loaded. (ex : load<value::int_u8>("...") )
        *

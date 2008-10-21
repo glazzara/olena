@@ -52,7 +52,7 @@ namespace mln
     namespace ppm
     {
 
-      /*! Save a milena image as a ppm image.
+      /*! Save a Milena image as a ppm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.

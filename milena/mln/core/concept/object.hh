@@ -30,7 +30,7 @@
 
 /*! \file mln/core/concept/object.hh
  *
- * \brief Definition of the top milena class mln::Object.
+ * \brief Definition of the top Milena class mln::Object.
  */
 
 # include <cassert>
@@ -54,12 +54,12 @@
  *
  * \section intro_sec Introduction
  *
- * This is the documentation of milena.
+ * This is the documentation of Milena.
  *
  * \section tools_subsec Tools required.
  * FIXME.
  *
- * \section mln_sec Overview of milena.
+ * \section mln_sec Overview of Milena.
  *
  * <UL>
  * <LI> \ref mln
@@ -164,7 +164,7 @@ namespace mln
   };
 
 
-  /*! \brief Base class for almost every class defined in milena.
+  /*! \brief Base class for almost every class defined in Milena.
    *
    * The parameter \a E is the exact type.
    */

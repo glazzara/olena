@@ -215,7 +215,7 @@ namespace mln
    * It returns "not (lhs == rhs)".
    *
    * \warning There shall not be any other definition of this operator
-   * in milena when applying on a couple of mln::Object.
+   * in Milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
   mln_trait_op_neq(O1, O2)
@@ -229,7 +229,7 @@ namespace mln
    * operator.  It returns "rhs < lhs".
    *
    * \warning There shall not be any other definition of this operator
-   * in milena when applying on a couple of mln::Object.
+   * in Milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
   mln_trait_op_greater(O1, O2)
@@ -240,11 +240,11 @@ namespace mln
    *  operator.
    *
    * The "greater than or equal to" operator is here defined for
-   * every milena objects.  It relies on the definition of the "less
+   * every Milena objects.  It relies on the definition of the "less
    * than or equal to" operator.  It returns "rhs <= lhs".
    *
    * \warning There shall not be any other definition of this operator
-   * in milena when applying on a couple of mln::Object.
+   * in Milena when applying on a couple of mln::Object.
    */
   template <typename O1, typename O2>
   mln_trait_op_geq(O1, O2)
@@ -255,7 +255,7 @@ namespace mln
    *  operator.
    *
    * A default version of the "less than or equal to" operator is
-   * defined for every milena objects.  It relies on the definition of
+   * defined for every Milena objects.  It relies on the definition of
    * the "less than" operator.  It returns "not (rhs < lhs)".
    *
    * \warning In the case of partial ordering between objects, this

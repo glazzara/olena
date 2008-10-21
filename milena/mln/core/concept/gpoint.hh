@@ -157,7 +157,7 @@ namespace mln
    * \param[in] lhs A first grid point.
    * \param[in] rhs A second grid point.
    *
-   * \warning There is no type promotion in milena so the client
+   * \warning There is no type promotion in Milena so the client
    * has to make sure that both points are defined with the same
    * type of coordinates.
    *

@@ -63,7 +63,7 @@ namespace mln
     namespace pbm
     {
 
-      /*! Save a milena image as a pbm image.
+      /*! Save a Milena image as a pbm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.

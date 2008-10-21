@@ -123,7 +123,7 @@ namespace mln
 
   /*! \brief fi_adaptor class.
    *
-   * The parameter \c I is the type of image through milena will see
+   * The parameter \c I is the type of image through Milena will see
    * the Freeimage's class. This class aims to load images using
    * Freeimage library.
    */
