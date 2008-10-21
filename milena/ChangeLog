@@ -1,5 +1,13 @@
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use alias mln::bin_2complex_image3df.
+
+	* mln/io/off/load.hh,
+	* tests/io/off/load_bin.cc:
+	Here.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Provide an alias for binary 2-complex-based 3-dimensional images.
 
 	* mln/core/alias/bin_2complex_image3df.hh: New.

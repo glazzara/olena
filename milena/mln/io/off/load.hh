@@ -40,12 +40,7 @@
 
 # include <string>
 
-# include <mln/core/image/complex_image.hh>
-# include <mln/geom/complex_geometry.hh>
-# include <mln/core/alias/point3df.hh>
-
-// // FIXME: Really needed?
-// # include <mln/topo/n_faces_set.hh>
+# include <mln/core/alias/bin_2complex_image3df.hh>
 
 
 namespace mln
@@ -64,8 +59,7 @@ namespace mln
 
 	  The image is said boolean since data only represent the
 	  existence of vertices and faces.  */
-      void load(complex_image<2, geom::complex_geometry<2,point3df>, bool>& ima,
-		const std::string& filename);
+      void load(bin_2complex_image3df& ima, const std::string& filename);
 
       namespace internal
       {
@@ -77,8 +71,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      void load(complex_image<2 ,geom::complex_geometry<2,point3df>, bool>& ima,
-		const std::string& filename)
+      void load(bin_2complex_image3df& ima, const std::string& filename)
       {
 	const std::string me = "mln::io::load::off";
 

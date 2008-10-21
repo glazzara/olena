@@ -42,9 +42,7 @@ int main()
 {
   using namespace mln;
 
-  /* FIXME: Create an alias in milena/mln/core/alias/ for this
-     particular image type?  */
-  typedef mln::complex_image<2, geom::complex_geometry<2,point3df>, bool> ima_t;
+  typedef bin_2complex_image3df ima_t;
   ima_t ima;
   io::off::load(ima, MLN_MESH_DIR "/tetrahedron.off");
 
