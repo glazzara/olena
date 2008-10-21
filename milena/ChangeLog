@@ -24,6 +24,13 @@
 
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Enrich the interface of mln::util::multi_site.
+
+	* mln/util/multi_site.hh (mln::util::multi_site<P>::front):
+	New methods.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add window on transitively adjacent m-faces.
 
 	* mln/core/image/complex_windows.hh

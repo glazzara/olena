@@ -59,10 +59,16 @@ namespace mln
       /// Interface similar to std::vector.
       /// \{
       void push_back(const P& p);
+
       void reserve(size_type n);
+
       size_type size() const;
+
       reference operator[](size_type n);
       const_reference operator[](size_type n) const;
+
+      const_reference front() const;
+      reference front();
       /// \}
 
       container sites;
@@ -105,6 +111,22 @@ namespace mln
     multi_site<P>::operator[](size_type n) const
     {
       return sites[n];
+    }
+
+    template <typename P>
+    typename multi_site<P>::const_reference
+    multi_site<P>::front() const
+    {
+      mln_precondition(!sites.empty());
+      return sites[0];
+    }
+
+    template <typename P>
+    typename multi_site<P>::reference
+    multi_site<P>::front()
+    {
+      mln_precondition(!sites.empty());
+      return sites[0];
     }
 
 # endif // ! MLN_INCLUDE_ONLY
