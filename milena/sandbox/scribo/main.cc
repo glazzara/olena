@@ -35,7 +35,32 @@ int main(int argc, char*argv[])
 
   if (argc < 2)
   {
-    std::cout << argv[0] << " <image.pgm> <h> <w> <bbox_larger> <bbox_distance> <min_comp_size>" << std::endl;
+    std::cout << argv[0] << " <in.pbm> <out.pgm> <l> <bbox_larger> <bbox_distance> <min_comp_nsites>" << std::endl
+	      << std::endl << std::endl
+	      << std::endl
+	      << "=========="
+	      << std::endl << std::endl
+	      << "<in.pbm>	    B/W inverted input image."
+	      << std::endl << std::endl
+	      << "<out.pgm>	    RGB8 output image."
+	      << std::endl << std::endl
+	      << "<l>		    Line length"
+	      << std::endl << std::endl
+	      << "<bbox_larger>	    Extension size of the bounding boxes vertical/horizontal"
+	      << std::endl
+	      << "		    lines considered as table borders which will be removed"
+	      << std::endl << std::endl
+	      << "<bbox_distance>     Maximum distance between character bounding boxes. Used for bbox grouping."
+	      << std::endl << std::endl
+	      << "<min_comp_nsites>   Minimum site count of a character/text component."
+	      << std::endl
+	      << "		    If a component have a site count lesser than this value, it is erased."
+	      << std::endl << std::endl
+	      << std::endl
+	      << "=========="
+	      << std::endl << std::endl
+	      << "HINT: compile with -DNOUT to avoid debug images."
+	      << std::endl << std::endl;
     return 1;
   }
 

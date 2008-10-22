@@ -42,6 +42,7 @@
 # include <mln/core/site_set/p_set.hh>
 
 # include <mln/accu/bbox.hh>
+# include <mln/accu/count.hh>
 
 # include <mln/binarization/threshold.hh>
 
@@ -59,16 +60,19 @@
 # include <mln/fun/i2v/array.hh>
 
 # include <mln/io/pbm/load.hh>
-# include <mln/io/pgm/load.hh>
 # include <mln/io/pbm/save.hh>
+# include <mln/io/ppm/save.hh>
 # include <mln/io/pgm/save.hh>
 
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/level/compute.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
 # include <mln/level/apply.hh>
+
+# include <mln/literal/all.hh>
 
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/opening.hh>
@@ -82,6 +86,9 @@
 # include <mln/value/int_u16.hh>
 # include <mln/value/rgb8.hh>
 
+# include <mln/win/hline2d.hh>
+# include <mln/win/vline2d.hh>
+
 namespace scribo
 {
 
@@ -90,6 +97,35 @@ namespace scribo
 
     using namespace mln;
     using value::int_u16;
+    using value::rgb8;
+
+
+    template <typename V>
+    void save_lbl_image(const image2d<V>& lbl, unsigned nlabels,
+		        const char *filename)
+    {
+      image2d<rgb8> output(lbl.domain());
+
+      fun::i2v::array<rgb8> f(nlabels + 1);
+      f(0) = literal::black;
+      for (unsigned i = 1; i <= nlabels; ++i)
+	f(i) = rgb8(255 / ((i % 10) + 1), (100 + i) % 255, (255 + i)%255);
+      level::transform(lbl, f, output);
+      io::ppm::save(output, filename);
+    }
+
+    image2d<rgb8>
+    to_color(const image2d<bool>& input)
+    {
+      image2d<rgb8> output;
+
+      fun::i2v::array<rgb8> fconvert(2);
+      fconvert(0) = literal::black;
+      fconvert(1) = literal::white;
+
+      return level::transform(input, fconvert);
+    }
+
 
     /// Functions related to the table removal
     /// \{
@@ -108,14 +144,24 @@ namespace scribo
 
 
     /// Remove table bboxes from an image.
-    void erase_table_boxes(image2d<bool>& ima,
+    void erase_table_boxes(image2d<rgb8>& output,
 		     const util::array<box2d>& boxes,
 		     unsigned bbox_larger)
     {
-      std::cout << "erase table boxes " << std::endl;
+      for (unsigned i = 1; i < boxes.nelements(); ++i)
+	level::paste((pw::cst(literal::black)
+		    | (boxes[i].to_larger(bbox_larger) | (pw::value(output) != pw::cst(literal::black)))), output);
+
+    }
+
+    /// Remove table bboxes from an image.
+    void erase_table_boxes(image2d<bool>& output,
+		     const util::array<box2d>& boxes,
+		     unsigned bbox_larger)
+    {
       for (unsigned i = 1; i < boxes.nelements(); ++i)
 	level::paste((pw::cst(false)
-		    | (boxes[i].to_larger(bbox_larger) | (pw::value(ima) == pw::cst(true)))), ima);
+		    | (boxes[i].to_larger(bbox_larger) | (pw::value(output) == pw::cst(true)))), output);
 
     }
 
@@ -123,34 +169,47 @@ namespace scribo
     /// Find table bboxes and remove them from the image.
     std::pair<util::array<box2d>,
 		    util::array<box2d> >
-    extract_tables(image2d<bool>& in, unsigned h, unsigned w, unsigned n)
+    extract_tables(image2d<bool>& in,
+		   image2d<rgb8>& output,
+		   unsigned l,
+		   unsigned n)
     {
       typedef image2d<int_u16> I;
       typedef accu::bbox<mln_psite_(I)> A;
       typedef util::array<mln_result_(A)> boxes_t;
 
+
       // Lignes verticales
       std::cout << "Removing vertical lines" << std::endl;
-      win::rectangle2d vwin(h, w);
-      image2d<bool> vfilter = morpho::opening(in, vwin);
+      win::vline2d vline(l);
+      image2d<bool> vfilter = morpho::opening(in, vline);
+
 #ifndef NOUT
       io::pbm::save(vfilter, "./table-vfilter.pbm");
 #endif
+
       boxes_t vboxes = component_boxes(vfilter);
       erase_table_boxes(in, vboxes, n);
 
+
       // Lignes horizontales
       std::cout << "Removing horizontal lines" << std::endl;
-      win::rectangle2d hwin(w, h);
-      image2d<bool> hfilter = morpho::opening(in, hwin);
+      win::hline2d hline(l);
+      image2d<bool> hfilter = morpho::opening(in, hline);
+
 #ifndef NOUT
       io::pbm::save(hfilter, "./table-hfilter.pbm");
 #endif
+
       boxes_t hboxes = component_boxes(hfilter);
       erase_table_boxes(in, hboxes, n);
 
+
 #ifndef NOUT
-      io::pbm::save(in, "./table-filtered.pbm");
+      image2d<rgb8> tmp = clone(output);
+      erase_table_boxes(tmp, vboxes, n);
+      erase_table_boxes(tmp, hboxes, n);
+      io::ppm::save(tmp, "./table-filtered.ppm");
 #endif
 
       return std::make_pair(vboxes, hboxes);
@@ -171,39 +230,39 @@ namespace scribo
       return i;
     }
 
+    template <typename V>
     void
-    remove_small_comps_i2v(image2d<int_u16>& lbl,
-			   util::array<box2d>& cboxes, int_u16& ncomps,
+    remove_small_comps_i2v(image2d<V>& lbl,
+			   V& nlabels,
 			   unsigned min_comp_size)
     {
-      ncomps = cboxes.nelements() - 1;
-      unsigned current = 1;
-      fun::i2v::array<int_u16> comps;
-      comps.resize(cboxes.nelements());
-      comps(0) = 0;
+      std::cout << "Removing small components smaller than "
+		<< min_comp_size << " sites among " << nlabels
+		<< " components" << std::endl;
 
-      // Construct the transform function.
-      for (int i = 1; i <= ncomps;)
+      typedef accu::count<mln_psite(image2d<V>)> accu_count_t;
+
+      util::array<mln_result(accu_count_t)> nsitecomp
+	    = labeling::compute(accu_count_t(), lbl, nlabels);
+
+      V ncomp = 0;
+      fun::i2v::array<V> f(nsitecomp.nelements());
+      f(0) = 0;
+      for (unsigned i = 1; i <= nlabels; ++i)
       {
-	// On aimerait avoir une routine qui nous le fait toute seule et qui
-	// soit optimisee.
-	if (estim::nsites(cboxes[i]) < min_comp_size)
-	{
-	  comps(current) = 0;
-	  cboxes[i] = cboxes[ncomps];
-	  comps(ncomps) = i;
-	  current = ncomps--;
-	}
+	if (nsitecomp[i] < min_comp_size)
+	  f(i) = 0;
 	else
-	{
-	  comps(current) = i;
-	  current = ++i;
-	}
+	  f(i) = ++ncomp;
       }
 
-      //Relabel
-      level::apply(lbl, comps);
-      cboxes.resize(ncomps + 1);
+      level::apply(lbl, f);
+      nlabels = ncomp;
+
+#ifndef NOUT
+      std::cout << "nlabels = " << nlabels << std::endl;
+      save_lbl_image(lbl, nlabels, "./lbl-small-comps-removed.pgm");
+#endif
     }
 
 
@@ -222,8 +281,12 @@ namespace scribo
 	tboxes[left_link(i)].take(cboxes[i]);
       }
 
-      //Update labels - FIXME: Do we need to do that?
+      //Update labels
       level::apply(lbl, left_link);
+
+#ifndef NOUT
+      save_lbl_image(lbl, ncomp, "./lbl-grouped-boxes.pgm");
+#endif
 
       util::array<box2d> result;
       for (unsigned i = 1; i <= ncomp; ++i)
@@ -291,6 +354,7 @@ namespace scribo
 
     util::array<box2d>
     extract_text(image2d<bool>& in,
+		 image2d<rgb8>& output,
 		 unsigned bbox_distance,
 		 unsigned min_comp_size)
     {
@@ -303,37 +367,18 @@ namespace scribo
       //  Find character bboxes.
       V nlabels;
       image2d<V> lbl = labeling::blobs(in, c4(), nlabels);
-      boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
-
-# ifndef NOUT
-      std::cout << "nlabels = " << nlabels << std::endl;
-      I ima(in.domain());
-      level::paste(pw::cst(100)
-	  | (in.domain() | (pw::value(in) == pw::cst(true))), ima);
-#endif
 
       //Remove small components.
-      int_u16 ncomp;
-      remove_small_comps_i2v(lbl, cboxes, ncomp, min_comp_size);
+      remove_small_comps_i2v(lbl, nlabels, min_comp_size);
 
-#ifndef NOUT
-      io::pgm::save(ima, "./text-wo-small.pgm");
-#endif
+      boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
 
       //Link character bboxes to their left neighboor if possible.
       fun::i2v::array<int_u16> left =
-	link_character_bboxes(lbl, cboxes, ncomp, bbox_distance);
+	link_character_bboxes(lbl, cboxes, nlabels, bbox_distance);
 
       //Merge character bboxes according to their left neighbor.
-      util::array<box2d> tboxes = group_bboxes(left, lbl, cboxes, ncomp);
-
-#ifndef NOUT
-      for (unsigned i = 1; i <= ncomp; ++i)
-	if (tboxes[i].is_valid())
-	  draw::box(ima, tboxes[i], 254u);
-
-      io::pgm::save(ima, "./bbtext.pgm");
-#endif
+      util::array<box2d> tboxes = group_bboxes(left, lbl, cboxes, nlabels);
 
       return tboxes;
     }
@@ -344,17 +389,17 @@ namespace scribo
   } // end of namespace scribo::internal
 
 
-
   // Facade
   void demat(char *argv[])
   {
     using namespace mln;
+    using value::rgb8;
+
     border::thickness = 3;
     trace::quiet = true;
 
     //Useful debug variables
-    unsigned h = atoi(argv[2]);
-    unsigned w = atoi(argv[3]);
+    unsigned l = atoi(argv[3]);
     unsigned bbox_larger = atoi(argv[4]);
     unsigned bbox_distance = atoi(argv[5]);
     unsigned min_comp_size = atoi(argv[6]);
@@ -362,11 +407,17 @@ namespace scribo
     //Load image
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
+    image2d<rgb8> output = internal::to_color(in);
 
-    internal::extract_tables(in, h, w, bbox_larger);
+    internal::extract_tables(in, output, l, bbox_larger);
 
     util::array<box2d> tboxes =
-      internal::extract_text(in, bbox_distance, min_comp_size);
+      internal::extract_text(in, output, bbox_distance, min_comp_size);
+
+    for (unsigned i = 1; i < tboxes.nelements(); ++i)
+      if (tboxes[i].is_valid())
+	draw::box(output, tboxes[i], literal::red);
+    io::ppm::save(output, argv[2]);
 
     /// Use txt bboxes here with Tesseract
     /// => in | tboxes[i]
