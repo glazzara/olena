@@ -1,3 +1,19 @@
+2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix Registration. Add tests.
+
+	Add tests:
+	* tests/registration: New.
+	* tests/registration/Makefile.am: New.
+	* tests/registration/registration.cc: New.
+
+	Fix Registration:
+	* mln/core/image/lazy_image.hh: Fix lvalue.
+	* mln/fun/x2p/closest_point.hh: Fix input type.
+	* mln/registration/icp.hh: Fix center()
+	* mln/registration/get_rtransf.hh,
+	* mln/registration/internal/rms.hh: Fix point->vec convertions.
+
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	s/milena/Milena/.

@@ -69,7 +69,7 @@ namespace mln
 	typedef O_ O;
 	typedef p_array<P> S;
 	typedef util::pix<I> pix_t;
-      
+
 	const I& input;
 	const N& nbh;
 	mln_result(A) lambda;
@@ -99,9 +99,9 @@ namespace mln
 	{
 	  attr.set_value(lambda);
 	}
-      
+
 	// end of requirements
-      
+
 	inline
 	closing_attribute_t(const I_& input, const N_& nbh,
 			    mln_result(A) lambda, O_& output)

@@ -57,11 +57,14 @@ namespace mln
     {
       float f = 0.f;
       for (unsigned i = 0; i < a.nsites(); ++i)
-        {
-          algebra::vec<P::dim,float> a2f = q2(a[i]);
-          algebra::vec<P::dim,float> a1f = map(algebra::to_point<P>(q1(a[i])));
-          f += norm::l2(a1f - a2f);
-        }
+      {
+        algebra::vec<P::dim,float> a2f = convert::to< algebra::vec<P::dim,float> >(a[i]);
+        algebra::vec<P::dim,float> a1f =
+          convert::to< algebra::vec<P::dim,float> > \
+          (map(q1(convert::to< algebra::vec<P::dim,float> >(a[i]))));
+
+        f += norm::l2(a1f - q2(a2f));
+      }
       return f / a.nsites();
     }
 

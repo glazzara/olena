@@ -102,7 +102,7 @@ namespace mln
     typedef mln_result(F) rvalue;
 
     /// Return type of read-write access.
-    typedef mln_result(F)& lvalue;
+    typedef mln_result(F) lvalue;
 
     /// Skeleton.
     typedef lazy_image< tag::image_<I>, F, B > skeleton;
@@ -125,11 +125,18 @@ namespace mln
     /// Test if a pixel value is accessible at \p p.
     bool has(const mln_psite(I)&) const;
 
+    /// Read-only access of pixel value at F::input \p x.
+    mln_result(F) operator()(const typename F::input& x) const;
+
+    /// Read and "write if possible" access of pixel value at F::input \p x.
+    mln_result(F) operator()(const typename F::input& x);
+
     /// Read-only access of pixel value at point site \p p.
-    mln_result(F) operator()(const mln_psite(I)& p) const;
+    rvalue operator()(const mln_psite(I)& p) const;
 
     /// Read and "write if possible" access of pixel value at point site \p p.
     lvalue operator()(const mln_psite(I)& p);
+
   };
 
 
@@ -174,7 +181,7 @@ namespace mln
   template <typename I, typename F, typename B>
   inline
   mln_result(F)
-  lazy_image<I,F,B>::operator()(const mln_psite(I)& p) const
+  lazy_image<I,F,B>::operator()(const typename F::input& p) const
   {
     mln_assertion(this->has(p));
     if (this->data_->is_known(p))
@@ -187,8 +194,8 @@ namespace mln
 
   template <typename I, typename F, typename B>
   inline
-  typename lazy_image<I,F,B>::lvalue
-  lazy_image<I,F,B>::operator()(const mln_psite(I)& p)
+  mln_result(F)
+  lazy_image<I,F,B>::operator()(const typename F::input& p)
   {
     mln_assertion(this->has(p));
     if (this->data_->is_known(p))
@@ -196,6 +203,22 @@ namespace mln
     this->data_->ima_(p) = this->data_->fun(p);
     this->data_->is_known(p) = true;
     return this->data_->ima_(p);
+  }
+
+  template <typename I, typename F, typename B>
+  inline
+  typename lazy_image<I,F,B>::rvalue
+  lazy_image<I,F,B>::operator()(const mln_psite(I)& p) const
+  {
+    return (*this).operator()(convert::to< typename F::input >(p));
+  }
+
+  template <typename I, typename F, typename B>
+  inline
+  typename lazy_image<I,F,B>::lvalue
+  lazy_image<I,F,B>::operator()(const mln_psite(I)& p)
+  {
+    return (*this).operator()(convert::to< typename F::input >(p));
   }
 
   template <typename I, typename F, typename B>

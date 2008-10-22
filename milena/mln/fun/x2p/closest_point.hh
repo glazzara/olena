@@ -45,7 +45,7 @@ namespace mln
       template <typename P>
       struct closest_point
       {
-        typedef const algebra::vec<P::dim, float>& input;
+        typedef algebra::vec<P::dim, float> input;
         typedef P result;
 
         closest_point(const p_array<P>& X, const box<P>& box)
@@ -56,16 +56,16 @@ namespace mln
 
         result
         //inline
-        operator () (const algebra::vec<P::dim, float>& Ck) const
+        operator () (const input& Ck) const
         {
           ++log_functor_call;
 
           algebra::vec<P::dim,float> Cki = Ck;
-          algebra::vec<P::dim,float> best_x = X[0];
+          algebra::vec<P::dim,float> best_x = convert::to< algebra::vec<P::dim,float> >(X[0]);
           float best_d = norm::l2(Cki - best_x);
           for (unsigned j = 1; j < X.nsites(); ++j)
             {
-              algebra::vec<P::dim,float> Xj = X[j];
+              algebra::vec<P::dim,float> Xj = convert::to< algebra::vec<P::dim,float> >(X[j]);
               float d = norm::l2(Cki - Xj);
               if (d < best_d)
                 {

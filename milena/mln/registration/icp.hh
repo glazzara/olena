@@ -121,13 +121,14 @@ namespace mln
 
       // FIXME: Move elsewhere
       template <typename P>
-      P center(const p_array<P>& a)
+      algebra::vec<P::dim,float>
+      center(const p_array<P>& a)
       {
         algebra::vec<P::dim,float> c(literal::zero);
         for (unsigned i = 0; i < a.nsites(); ++i)
           c += convert::to< algebra::vec<P::dim,float> > (a[i]);
 
-        return algebra::to_point<P>(c / a.nsites());
+        return c / a.nsites();
       }
 
       // FIXME: Make use of level::apply
@@ -137,7 +138,7 @@ namespace mln
                  p_array<P>& b)
       {
         for (unsigned i = 0; i < a.nsites(); i++)
-          b[i] = f(a[i]);
+          b[i] = f(convert::to< algebra::vec<P::dim,float> >(a[i]));
       }
 
 

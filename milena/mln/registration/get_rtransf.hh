@@ -61,7 +61,8 @@ namespace mln
       //mu_xk = center map(Ck)
       algebra::vec<P::dim,float> mu_xk(literal::zero);
       for (unsigned i = 0; i < c.nsites(); ++i)
-        mu_xk += convert::to< algebra::vec<P::dim,float> >(map(ck[i]));
+        mu_xk += convert::to< algebra::vec<P::dim,float> >(map(
+                                                               convert::to< algebra::vec<P::dim,float> >(ck[i])));
       mu_xk /= c.nsites();
 
       // qR
