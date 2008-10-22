@@ -68,6 +68,7 @@
 
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
+# include <mln/level/apply.hh>
 
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/opening.hh>
@@ -98,6 +99,7 @@ namespace scribo
     util::array<box2d>
     component_boxes(const image2d<bool>& filter)
     {
+      std::cout << "component boxes" << std::endl;
       int_u16 nlabels;
       image2d<int_u16> lbl = labeling::blobs(filter, c4(), nlabels);
 
@@ -105,14 +107,16 @@ namespace scribo
     }
 
 
-    /// Remove bboxes from an image.
-    void erase_boxes(image2d<bool>& ima,
+    /// Remove table bboxes from an image.
+    void erase_table_boxes(image2d<bool>& ima,
 		     const util::array<box2d>& boxes,
 		     unsigned bbox_larger)
     {
-      for (unsigned i = 1; i <= boxes.nelements(); ++i)
+      std::cout << "erase table boxes " << std::endl;
+      for (unsigned i = 1; i < boxes.nelements(); ++i)
 	level::paste((pw::cst(false)
-		    | boxes[i].to_larger(bbox_larger)), ima);
+		    | (boxes[i].to_larger(bbox_larger) | (pw::value(ima) == pw::cst(true)))), ima);
+
     }
 
 
@@ -126,20 +130,28 @@ namespace scribo
       typedef util::array<mln_result_(A)> boxes_t;
 
       // Lignes verticales
+      std::cout << "Removing vertical lines" << std::endl;
       win::rectangle2d vwin(h, w);
       image2d<bool> vfilter = morpho::opening(in, vwin);
-      //io::pbm::save(vfilter, "./table-vfilter.pbm");
+#ifndef NOUT
+      io::pbm::save(vfilter, "./table-vfilter.pbm");
+#endif
       boxes_t vboxes = component_boxes(vfilter);
-      erase_boxes(in, vboxes, n);
+      erase_table_boxes(in, vboxes, n);
 
       // Lignes horizontales
+      std::cout << "Removing horizontal lines" << std::endl;
       win::rectangle2d hwin(w, h);
       image2d<bool> hfilter = morpho::opening(in, hwin);
-      //io::pbm::save(hfilter, "./table-hfilter.pbm");
+#ifndef NOUT
+      io::pbm::save(hfilter, "./table-hfilter.pbm");
+#endif
       boxes_t hboxes = component_boxes(hfilter);
-      erase_boxes(in, hboxes, n);
+      erase_table_boxes(in, hboxes, n);
 
-      //io::pbm::save(in, "./table-filtered.pbm");
+#ifndef NOUT
+      io::pbm::save(in, "./table-filtered.pbm");
+#endif
 
       return std::make_pair(vboxes, hboxes);
     }
@@ -152,22 +164,15 @@ namespace scribo
     /// \{
 
     int_u16
-    anc(const fun::i2v::array<int_u16>& f, unsigned i)
+    most_left(const fun::i2v::array<int_u16>& left_link, unsigned i)
     {
-      while (f(i) != i)
-	i = f(i);
+      while (left_link(i) != i)
+	i = left_link(i);
       return i;
     }
 
-    void do_curri(fun::i2v::array<int_u16>& f, int_u16 i)
-    {
-      if (f(i) != i)
-	f(i) = anc(f, f(i));
-    }
-
-
     void
-    remove_small_comps_i2v(image2d<int_u16>& ima, image2d<int_u16>& lbl,
+    remove_small_comps_i2v(image2d<int_u16>& lbl,
 			   util::array<box2d>& cboxes, int_u16& ncomps,
 			   unsigned min_comp_size)
     {
@@ -178,18 +183,13 @@ namespace scribo
       comps(0) = 0;
 
       // Construct the transform function.
-      for (int i = 1; i < ncomps;)
+      for (int i = 1; i <= ncomps;)
       {
 	// On aimerait avoir une routine qui nous le fait toute seule et qui
 	// soit optimisee.
 	if (estim::nsites(cboxes[i]) < min_comp_size)
 	{
 	  comps(current) = 0;
-
-	  /// DEBUG
-	  level::paste(pw::cst(false) | cboxes[i], ima);
-	  /// DEBUG
-
 	  cboxes[i] = cboxes[ncomps];
 	  comps(ncomps) = i;
 	  current = ncomps--;
@@ -198,50 +198,39 @@ namespace scribo
 	{
 	  comps(current) = i;
 	  current = ++i;
-	  //draw::box(ima, cboxes[i], 150u);
 	}
       }
 
       //Relabel
-      lbl = level::transform(lbl, comps);
+      level::apply(lbl, comps);
       cboxes.resize(ncomps + 1);
     }
 
 
     /// Merge bboxes according to their left box neighbor.
-    util::array< accu::bbox<point2d> >
-    group_bboxes(fun::i2v::array<int_u16>& left, image2d<int_u16>& lbl,
+    util::array< box2d >
+    group_bboxes(fun::i2v::array<int_u16>& left_link, image2d<int_u16>& lbl,
 		 util::array<box2d>& cboxes, unsigned ncomp)
     {
-      // Currify left lookup table and compute text area bboxes.
+      // Currify left_link lookup table and compute text area bboxes.
       util::array< accu::bbox<point2d> > tboxes;
       tboxes.resize(ncomp + 1);
       for (unsigned i = 1; i <= ncomp; ++i)
       {
-	do_curri(left, i);
-	tboxes[left(i)].take(cboxes[i]);
+	if (left_link(i) != i)
+	  left_link(i) = most_left(left_link, left_link(i));
+	tboxes[left_link(i)].take(cboxes[i]);
       }
 
-      //Update labels
-      level::transform(lbl, left);
+      //Update labels - FIXME: Do we need to do that?
+      level::apply(lbl, left_link);
 
-      return tboxes;
+      util::array<box2d> result;
+      for (unsigned i = 1; i <= ncomp; ++i)
+	result.append(tboxes[i].to_result());
+
+      return result;
     }
-
-    bool
-    has_valid_left_link(const fun::i2v::array<int_u16>& left, unsigned j)
-    {
-      return left(j) == j;
-    }
-
-
-
-    bool
-    is_valid_comp_neigh(const point2d& p, const point2d& c, unsigned dmax)
-    {
-      return (p.col() - c.col()) < dmax;
-    }
-
 
 
     /// Update the lookup table \p left if a neighbor is found on the right of
@@ -250,12 +239,14 @@ namespace scribo
 		     const point2d& p, const point2d& c,
 		     unsigned i, unsigned dmax)
     {
-	if (lbl.domain().has(p) && lbl(p) != 0
-	    && is_valid_comp_neigh(p, c, dmax)
-	    && has_valid_left_link(left_link, lbl(p)))
-	  left_link(lbl(p)) = i;
-	else if (!has_valid_left_link(left_link, lbl(p)) && lbl(p) != 0)
-	  left_link(lbl(p)) = 0;
+	if (lbl.domain().has(p) && lbl(p) != 0 && lbl(p) != i
+	    && (p.col() - c.col()) < dmax)
+	{
+	  if (left_link(lbl(p)) == lbl(p))
+	    left_link(lbl(p)) = i;
+//	  else
+//	    left_link(lbl(p)) = 0;//FIXME: should be uncommented?
+	}
     }
 
 
@@ -278,15 +269,16 @@ namespace scribo
       {
 	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
 	unsigned dmax = midcol + bbox_distance;
-	/// Box center => Routine?
-	point2d c (cboxes[i].pmin().row() + ((cboxes[i].pmax().row() - cboxes[i].pmin().row()) / 2),
+	/// FIXME: Box center => Routine?
+	point2d c (cboxes[i].pmin().row()
+		    + ((cboxes[i].pmax().row() - cboxes[i].pmin().row()) / 2),
 		   cboxes[i].pmin().col() + midcol);
-	/// First point on the right of c
+	/// First site on the right of the center site
 	point2d p(c.row(), c.col() + 1);
 
-	// Lemmings avec condition sur la distance en plus => Faire une version speciale?
+	// FIXME: Lemmings with a condition on the distance => write a special version?
 	while (lbl.domain().has(p) && (lbl(p) == 0 || lbl(p) == i)
-		&& is_valid_comp_neigh(p, c, dmax))
+		&& (p.col() - c.col()) < dmax)
 	  ++p.col();
 
 	update_link(left_link, lbl, p, c, i, dmax);
@@ -297,9 +289,13 @@ namespace scribo
 
 
 
-    void
-    extract_text(image2d<bool>& in, unsigned bbox_distance, unsigned min_comp_size)
+    util::array<box2d>
+    extract_text(image2d<bool>& in,
+		 unsigned bbox_distance,
+		 unsigned min_comp_size)
     {
+      std::cout << "extracting text..." << std::endl;
+
       typedef int_u16 V;
       typedef image2d<V> I;
       typedef util::array<box2d> boxes_t;
@@ -309,47 +305,37 @@ namespace scribo
       image2d<V> lbl = labeling::blobs(in, c4(), nlabels);
       boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
 
+# ifndef NOUT
       std::cout << "nlabels = " << nlabels << std::endl;
-
-      //DEBUG PURPOSE
-      //FIXME: don't know how to clone and convert to image<int> properly
-      // \{
       I ima(in.domain());
-      level::paste(in, ima);
       level::paste(pw::cst(100)
-	  | (in | (pw::value(in) == pw::cst(true))).domain(), ima);
-      // \}
+	  | (in.domain() | (pw::value(in) == pw::cst(true))), ima);
+#endif
 
       //Remove small components.
       int_u16 ncomp;
-      remove_small_comps_i2v(ima, lbl, cboxes, ncomp, min_comp_size);
+      remove_small_comps_i2v(lbl, cboxes, ncomp, min_comp_size);
 
-      std::cout << "ncomp = " << ncomp << std::endl;
+#ifndef NOUT
+      io::pgm::save(ima, "./text-wo-small.pgm");
+#endif
 
       //Link character bboxes to their left neighboor if possible.
       fun::i2v::array<int_u16> left =
 	link_character_bboxes(lbl, cboxes, ncomp, bbox_distance);
 
       //Merge character bboxes according to their left neighbor.
-      util::array< accu::bbox<point2d> > tboxes = group_bboxes(left, lbl, cboxes, ncomp);
+      util::array<box2d> tboxes = group_bboxes(left, lbl, cboxes, ncomp);
 
-      /// DEBUG PURPOSE
-      /// \{
-      io::pgm::save(lbl, "./textlbl.pgm");
-      io::pgm::save(ima, "./text.pgm");
-
+#ifndef NOUT
       for (unsigned i = 1; i <= ncomp; ++i)
 	if (tboxes[i].is_valid())
-	  draw::box(ima, tboxes[i].to_result(), 254u);
-
-      for (unsigned i = 1; i <= ncomp; ++i)
-	if (tboxes[i].is_valid())
-	  draw::box(in, tboxes[i].to_result(), true);
+	  draw::box(ima, tboxes[i], 254u);
 
       io::pgm::save(ima, "./bbtext.pgm");
-      io::pbm::save(in, "./intext.pgm");
-      /// \}
+#endif
 
+      return tboxes;
     }
 
     /// \}
@@ -363,7 +349,8 @@ namespace scribo
   void demat(char *argv[])
   {
     using namespace mln;
-    border::thickness = 0;
+    border::thickness = 3;
+    trace::quiet = true;
 
     //Useful debug variables
     unsigned h = atoi(argv[2]);
@@ -378,7 +365,11 @@ namespace scribo
 
     internal::extract_tables(in, h, w, bbox_larger);
 
-    internal::extract_text(in, bbox_distance, min_comp_size);
+    util::array<box2d> tboxes =
+      internal::extract_text(in, bbox_distance, min_comp_size);
+
+    /// Use txt bboxes here with Tesseract
+    /// => in | tboxes[i]
   }
 
 } // end of namespace scribo

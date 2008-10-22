@@ -1,3 +1,11 @@
+2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix bad deletion of small components.
+
+	* scribo/demat.hh:
+	  - Correctly relabel.
+	  - Correctly erase components.
+
 2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Extract text bboxes for Scribo.
