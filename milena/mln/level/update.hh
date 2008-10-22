@@ -99,7 +99,7 @@ namespace mln
 
 	  A& a = exact(a_);
 	  const I& input = exact(input_);
-	  internal::update_tests(a, input);
+	  level::internal::update_tests(a, input);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
@@ -121,7 +121,7 @@ namespace mln
 	
 	A& a = exact(a_);
 	const I& input = exact(input_);
-	internal::update_tests(a, input);
+	level::internal::update_tests(a, input);
 	
 	mln_pixter(const I) pxl(input);
 	for_all(pxl)
@@ -181,7 +181,7 @@ namespace mln
     {
       trace::entering("level::update");
 
-      internal::update_tests(a, input);
+      level::internal::update_tests(a, input);
       mln_result(A) r = internal::update_dispatch(a, input);
 
       trace::exiting("level::update");

@@ -1,3 +1,9 @@
+2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix namespace path to update_tests().
+
+	* mln/level/update.hh: specify full namespace path to update_tests().	
+
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
 	Use complex_iterator_base to factor iterators' implementations.
