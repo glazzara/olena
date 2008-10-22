@@ -1,3 +1,9 @@
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
+	Add a top-level class factoring iterators on complexes.
+
+	* mln/topo/internal/complex_iterator_base.hh: New.
+
 2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update make mat.
