@@ -1,2 +1,4 @@
+CCFLAGS=-I../.. -O1 -DNDEBUG
+
 all:
-	g++ *.cc -I../../ -O1 -DNDEBUG
+	g++ iccvg04.cc $(CCFLAGS)

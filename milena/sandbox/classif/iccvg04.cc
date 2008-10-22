@@ -32,16 +32,17 @@ unsigned max = 0;
 
 template <typename I>
 mln::image3d<unsigned>
-fill_histo(const I& ima)
+fill_histo(const I& ima, int f)
 {
-  image3d< unsigned > histo(128,128,128);
+  const mln_value(I) v = mln_max(mln_value(I)) / f;
+  image3d< unsigned > histo(v,v,v);
   level::fill(histo, 0);
   unsigned i = 0;
 
   mln_piter(I) p(ima.domain());
   for_all(p)
   {
-    point3d p3(ima(p).red()/2,ima(p).green()/2, ima(p).blue()/2);
+    point3d p3(ima(p).red()/f,ima(p).green()/f, ima(p).blue()/f);
     histo(p3)++;
   }
   return histo;
@@ -86,90 +87,10 @@ void display(const I& ima, const char * dir)
   chdir("..");
 }
 
-template <typename I>
-void display_proj_revert(const I& histo, const char * s)
-{
-  image2d< unsigned long long > proj_histo(geom::nrows(histo),geom::ncols(histo));
-  level::fill(proj_histo, 0);
-
-  mln_piter_(image2d< unsigned long long >) p(proj_histo.domain());
-  double max = 0;
-  for_all(p)
-  {
-    for (unsigned i = 0; i < geom::nslis(histo); i++)
-//      if (histo(point3d(p[0], p[1], i)) < 255)
-	proj_histo(p) += histo(point3d(p[0], p[1], i));
-
-    if (proj_histo(p) > max)
-      max = proj_histo(p);
-  }
-
-  image2d< value::int_u8 > out(proj_histo.domain());
-  for_all(p)
-  {
-    out(p) = (proj_histo(p) / max) * 255;
-
-    if (out(p) < 255)
-      out(p) -= (255 - out(p)) * 10;
-  }
-
-  io::pgm::save(out,s);
-}
-
-template <typename I>
-void display_proj_min(const I& histo, const char * s)
-{
-  image2d< unsigned long long > proj_histo(geom::nrows(histo),geom::ncols(histo));
-  level::fill(proj_histo, 0);
-
-  mln_piter_(image2d< unsigned long long >) p(proj_histo.domain());
-  double max = 0;
-  for_all(p)
-  {
-    unsigned min = 9999999;
-    for (unsigned i = 0; i < geom::nslis(histo); i++)
-      if (histo(point3d(p[0], p[1], i)) < min)
-        min = histo(point3d(p[0], p[1], i));
-    proj_histo(p) = min;
-
-    if (proj_histo(p) > max)
-      max = proj_histo(p);
-  }
-
-  image2d< value::int_u8 > out(proj_histo.domain());
-  for_all(p)
-  {
-    out(p) = (proj_histo(p) / max) * 255;
-  }
-
-  io::pgm::save(out, s);
-}
-
-
-template <typename I>
-mln_ch_value(I, value::int_u8) normalizeu8(const I& ima)
-{
-  mln_ch_value(I, value::int_u8) res(ima.domain());
-  level::fill(res, literal::zero);
-
-  mln_piter(I) p(ima.domain());
-  mln_value(I) max = 0;
-  for_all(p)
-  {
-    if (ima(p) > max)
-      max = ima(p);
-  }
-
-  for_all(p)
-  {
-    res(p) = (ima(p) / (double) max) * 255;
-  }
-
-  return res;
-}
 
 template <typename I, typename J, typename K>
-mln_ch_value(I, value::int_u8) donne_tout(const I& ima, const J& histo, const K& ws, int nbasins)
+mln_concrete(I)
+classify_image(const I& ima, const J& histo, const K& ws, int nbasins)
 {
   image2d<value::rgb8> out(ima.domain());
 
@@ -192,24 +113,24 @@ int main(int argc, char **argv)
   ima = io::ppm::load<value::rgb8>(argv[1]);
 
   //make histo
-  image3d<unsigned> histo = fill_histo(ima);
+  image3d<unsigned> histo = fill_histo(ima,4);
   {
     unsigned m, M;
     estim::min_max(histo, m, M);
     std::cout << m << ' ' << M << std::endl;
   }
 
-  image3d<value::int_u8> nhisto = normalizeu8(histo);
+  /*  image3d<value::int_u8> nhisto = normalizeu8(histo);
   {
     value::int_u8 m, M;
     estim::min_max(nhisto, m, M);
     std::cout << m << ' ' << M << std::endl;
-  }
+    }*/
 
   //display(nhisto, "histo");
 
   //revert histo
-  image3d<value::int_u8> rhisto = arith::revert(nhisto);
+  image3d<value::int_u8> rhisto = arith::revert(histo);
   {
     value::int_u8 m, M;
     estim::min_max(rhisto, m, M);

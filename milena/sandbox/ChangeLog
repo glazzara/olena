@@ -1,5 +1,12 @@
 2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	INIM: Classif++.
+
+	* classif/iccvg04.cc: iccvg04.cc.
+	* classif/Makefile: Makefile.
+
+2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	INIM: Classification: Clean up directory.
 
 	* classif/images,
