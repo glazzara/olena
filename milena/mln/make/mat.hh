@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,35 +34,83 @@
  */
 
 # include <mln/algebra/mat.hh>
+# include <mln/metal/math/sqrt.hh>
+
 
 namespace mln
 {
 
   namespace make
   {
+
     /*! \brief Create an mln::algebra::mat<n,m,T>.
      *
-     * \param[in] tab Tab of value.
+     * \param[in] tab Array of values.
      *
-     * \pre The dimension table N is such as N = n * m
-     * with n and m, the dimensions oh the matrix.
+     * \pre The array dimension has to be n * m.
      */
-    template <unsigned n, unsigned m, unsigned N, typename T>
-    algebra::mat<n,m,T> mat(const T tab[N]);
+    template <unsigned n, unsigned m, typename T>
+    algebra::mat<n,m,T> mat(const T (&tab)[n*m]);
+
+
+    /*! \brief Create an mln::algebra::mat<n,m,T>.
+     *
+     * \param[in] tab Array of values.
+     *
+     * \pre The array dimension has to be n * m.
+     */
+    template <typename T, unsigned n, unsigned m>
+    algebra::mat<n,m,T> mat(const T (&tab)[n][m]);
+
+
+    /*! \brief Create an mln::algebra::mat<n,n,T>.
+     *
+     * \param[in] tab C-array of values.
+     *
+     * \pre The array dimension N has to be square (N = n * n).
+     */
+    template <typename T, unsigned N>
+    algebra::mat<mlc_sqrt_int(N), mlc_sqrt_int(N), T>
+    mat(const T (&tab)[N]);
+
     
     template <unsigned n, unsigned m, typename T>
     algebra::mat<n,m,T> mat(algebra::vec<n,T> v);
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
-    template <unsigned n, unsigned m, unsigned N, typename T>
+    template <unsigned n, unsigned m, typename T>
     inline
-    algebra::mat<n,m,T> mat(const T tab[N])
+    algebra::mat<n,m,T> mat(const T (&tab)[n*m])
     {
-      mln_precondition(n * m == N);
       algebra::mat<n,m,T> tmp;
-      for (unsigned i = 0; i < N; ++i)
+      for (unsigned i = 0; i < n*m; ++i)
 	tmp(i / m, i % m) = tab[i];
+      return tmp;
+    }
+
+    template <typename T, unsigned n, unsigned m>
+    algebra::mat<n,m,T> mat(const T (&tab)[n][m])
+    {
+      algebra::mat<n,m,T> tmp;
+      for (unsigned i = 0; i < n; ++i)
+      for (unsigned j = 0; j < m; ++j)
+	tmp(i, j) = tab[i][j];
+      return tmp;
+    }
+
+    template <typename T, unsigned N>
+    inline
+    algebra::mat<mlc_sqrt_int(N), mlc_sqrt_int(N), T>
+    mat(const T (&tab)[N])
+    {
+      enum { n = mlc_sqrt_int(N) };
+      mlc_bool(N == n * n)::check();
+      algebra::mat<n,n,T> tmp;
+      for (unsigned i = 0; i < N; ++i)
+	tmp(i / n, i % n) = tab[i];
       return tmp;
     }
 

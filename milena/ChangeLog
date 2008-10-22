@@ -1,3 +1,11 @@
+2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update make mat.
+
+	* tests/make/mat.cc: New.
+	* tests/make/Makefile.am: Update.
+	* mln/make/mat.hh: Overload.
+
 2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Use util::ord with std::set.
