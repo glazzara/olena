@@ -121,7 +121,7 @@ namespace mln
       template <typename P>
       struct complex_geometry_data
       {
-	util::multi_site<P> zero_faces;
+	std::vector<P> zero_faces_geom;
       };
     }
 
@@ -143,8 +143,8 @@ namespace mln
     {
       mln_precondition(data_);
       // FIXME: These two lines are not thread safe.
-      data_->zero_faces.push_back(p);
-      return data_->zero_faces.size();
+      data_->zero_faces_geom.push_back(p);
+      return data_->zero_faces_geom.size();
     }
 
     template <unsigned D, typename P>
@@ -158,8 +158,8 @@ namespace mln
       if (f.n() == 0)
 	{
 	  // F is a 0-face.
-	  mln_assertion(f.face_id() < data_->zero_faces.size());
-	  s.push_back(data_->zero_faces[f.face_id()]);
+	  mln_assertion(f.face_id() < data_->zero_faces_geom.size());
+	  s.push_back(data_->zero_faces_geom[f.face_id()]);
 	}
       else
 	{
@@ -167,7 +167,7 @@ namespace mln
 	     Compute the set of 0-faces transitively adjacent to F.  */
 	  topo::adj_m_face_fwd_iter<D> g(f, 0);
 	  for_all(g)
-	    s.push_back(data_->zero_faces[g.face().face_id()]);
+	    s.push_back(data_->zero_faces_geom[g.subject().face_id()]);
 	}
       return s;
     }

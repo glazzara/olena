@@ -45,20 +45,12 @@
                                                    |
                               backward_complex_relative_iterator_base<F, E>
 
-   \endverbatim
+    \endverbatim
 */
-
-# include <iosfwd>
 
 # include <vector>
 
-# include <mln/metal/equal.hh>
-
-# include <mln/core/concept/iterator.hh>
-# include <mln/topo/complex.hh>
-
-/* FIXME: Introduce a common factoring class for this class and for
-   complex_set_iterator_base?  */
+# include <mln/topo/internal/complex_iterator_base.hh>
 
 /* FIXME: By moving iterator `i_' into
    internal::complex_relative_iterator_base, we'll be able to factor
@@ -85,7 +77,7 @@ namespace mln
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
       template <typename F, typename E>
-      class complex_relative_iterator_base : public Iterator<E>
+      class complex_relative_iterator_base : public complex_iterator_base<F, E>
       {
 	typedef complex_relative_iterator_base<F, E> self_;
 
@@ -111,16 +103,6 @@ namespace mln
 	void next_();
 	/// \}
 
-	/// \brief Conversion.
-	///
-	/// Return a reference to the corresponding face handle.
-	/// \{
-	/// Explicit conversion (accessor).
-	const face_type& face() const;
-	/// Implicit conversion (conversion operator).
-	operator const face_type&() const;
-	/// \}
-
       protected:
 	/// A pointer to the center face around which this iterator
 	/// moves.
@@ -130,21 +112,8 @@ namespace mln
 	typedef std::vector<face_type> adj_faces_t;
 	/// The set of faces adjacent to the reference face.
 	adj_faces_t adj_faces_;
-
-	/// The face handle this iterator is pointing to.
-	face_type f_;
       };
 
-
-      /* FIXME: This hand-made delegation is painful.  We should rely on
-	 the general mechanism provided by Point_Site.  But then again, we
-	 need to refine/adjust the interface of Point_Site w.r.t. the
-	 mandatory conversions to points.  */
-      template <typename F, typename E>
-      inline
-      std::ostream&
-      operator<<(std::ostream& ostr,
-		 const complex_relative_iterator_base<F, E>& p);
 
 
       /*---------------------------------------------------------------.
@@ -307,30 +276,6 @@ namespace mln
 	  exact(this)->update_f_();
       }
 
-      template <typename F, typename E>
-      inline
-      const F&
-      complex_relative_iterator_base<F, E>::face() const
-      {
-	return f_;
-      }
-
-      template <typename F, typename E>
-      inline
-      complex_relative_iterator_base<F, E>::operator const face_type&() const
-      {
-	return f_;
-      }
-
-
-      template <typename F, typename E>
-      inline
-      std::ostream&
-      operator<<(std::ostream& ostr,
-		 const complex_relative_iterator_base<F, E>& p)
-      {
-	return ostr << F(p);
-      }
 
 
       /*---------------------------------------------------------------.

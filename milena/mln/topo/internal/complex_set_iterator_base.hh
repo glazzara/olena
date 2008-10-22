@@ -30,17 +30,9 @@
 
 /// \file mln/topo/internal/complex_set_iterator_base.hh
 /// \brief Definition of an implementation (factoring) class for
-/// iterators on faces of a complex.
+/// (set) iterators on faces of a complex.
 
-# include <iosfwd>
-
-# include <mln/metal/equal.hh>
-
-# include <mln/core/concept/iterator.hh>
-# include <mln/topo/complex.hh>
-
-/* FIXME: Introduce a common factoring class for this class and for
-   complex_relative_iterator_base?  */
+# include <mln/topo/internal/complex_iterator_base.hh>
 
 
 namespace mln
@@ -51,12 +43,12 @@ namespace mln
 
     namespace internal
     {
-      /// \brief Factoring class for iterators on mln::complex.
+      /// \brief Factoring class for (set) iterators on mln::complex.
       ///
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
       template <typename F, typename E>
-      class complex_set_iterator_base : public Iterator<E>
+      class complex_set_iterator_base : public complex_iterator_base<F, E>
       {
 	typedef complex_set_iterator_base<F, E> self_;
 
@@ -86,28 +78,7 @@ namespace mln
 	/// Invalidate the iterator.
 	void invalidate();
 	/// \}
-
-	/// \brief Conversion.
-	///
-	/// Return a reference to the corresponding face handle.
-	/// \{
-	/// Explicit conversion (accessor).
-	const face_type& face() const;
-	/// Implicit conversion (conversion operator).
-	operator const face_type&() const;
-	/// \}
-
-      protected:
-	/// The face handle this iterator is pointing to.
-	face_type f_;
       };
-
-
-      /// Print an mln::topo::internal::complex_set_iterator_base.
-      template <typename F, typename E>
-      inline
-      std::ostream&
-      operator<<(std::ostream& ostr, const complex_set_iterator_base<F, E>& p);
 
 
 
@@ -124,7 +95,7 @@ namespace mln
       inline
       complex_set_iterator_base<F, E>::complex_set_iterator_base(complex_type& c)
       {
-	f_.set_cplx(c);
+	this->f_.set_cplx(c);
 	// Invalidate f_.
 	invalidate();
       }
@@ -134,7 +105,7 @@ namespace mln
       void
       complex_set_iterator_base<F, E>::set_cplx(complex_type& c)
       {
-	f_.set_cplx(c);
+	this->f_.set_cplx(c);
 	// Invalidate f_.
 	invalidate();
       }
@@ -144,7 +115,7 @@ namespace mln
       bool
       complex_set_iterator_base<F, E>::is_valid() const
       {
-	return f_.is_valid();
+	return this->f_.is_valid();
       }
 
       template <typename F, typename E>
@@ -152,31 +123,7 @@ namespace mln
       void
       complex_set_iterator_base<F, E>::invalidate()
       {
-	f_.invalidate();
-      }
-
-      template <typename F, typename E>
-      inline
-      const F&
-      complex_set_iterator_base<F, E>::face() const
-      {
-	return f_;
-      }
-
-      template <typename F, typename E>
-      inline
-      complex_set_iterator_base<F, E>::operator const face_type&() const
-      {
-	return f_;
-      }
-
-
-      template <typename F, typename E>
-      inline
-      std::ostream&
-      operator<<(std::ostream& ostr, const complex_set_iterator_base<F, E>& p)
-      {
-	return ostr << F(p);
+	this->f_.invalidate();
       }
 
 # endif // ! MLN_INCLUDE_ONLY

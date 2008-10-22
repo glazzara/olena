@@ -1,5 +1,35 @@
 2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use complex_iterator_base to factor iterators' implementations.
+
+	* mln/topo/internal/complex_set_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh
+	(complex_set_iterator_base<F, E>)
+	(complex_relative_iterator_base<F, E>):
+	Inherit from mln::topo::internal::complex_iterator_base<F, E>.
+	(complex_set_iterator_base<F, E>::face)
+	(complex_relative_iterator_base<F, E>::face)
+	(complex_set_iterator_base<F, E>::operator const face_type&)
+	(complex_relative_iterator_base<F, E>::operator const face_type&)
+	(complex_set_iterator_base<F, E>::f_)
+	(complex_relative_iterator_base<F, E>::f_)
+	(operator<<(ostream&, const complex_set_iterator_base<F,E>&))
+	(operator<<(ostream&, const complex_relative_iterator_base<F,E>&)):
+	Remove.
+	Adjust other methods.
+	* mln/geom/complex_geometry.hh
+	(mln::geom::internal::complex_geometry_data<P>::zero_faces):
+	Rename attribute as...
+	(mln::geom::internal::complex_geometry_data<P>::zero_faces_geom):
+	...this.
+	Use a more meaningful (though equivalent) type.
+	(mln::geom::complex_geometry<D, P>::add_location): Adjust.
+	(mln::geom::complex_geometry<D, P>::operator()): Likewise.
+	Catch up with mln::topo::internal::complex_iterator_base<F, E>'s
+	interface.
+
+2008-10-22  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a top-level class factoring iterators on complexes.
 
 	* mln/topo/internal/complex_iterator_base.hh: New.
