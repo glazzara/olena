@@ -124,9 +124,9 @@ namespace mln
     template <typename W>
     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win);
 
-    /// Convert an histo \p h into an image1d<T>.
+    /// Convert an histo \p h into an image1d<std::size_t>.
     template <typename T>
-    image1d<T> to_image(const histo::data<T>& h);
+    image1d<std::size_t> to_image(const histo::data<T>& h);
 
 
 
@@ -192,11 +192,11 @@ namespace mln
 
     template <typename T>
     inline
-    image1d<T> to_image(const histo::data<T>& h)
+    image1d<std::size_t> to_image(const histo::data<T>& h)
     {
       T	v_min = h.vset()[0],
 	v_max = h.vset()[h.vset().nvalues() - 1];
-      image1d<T> ima(make::box1d(v_min, v_max));
+      image1d<std::size_t> ima(make::box1d(v_min, v_max));
       for (unsigned i = 0; i < h.vset().nvalues(); ++i)
 	ima(point1d(i)) = h[i];
       return ima;
