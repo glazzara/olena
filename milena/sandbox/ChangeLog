@@ -1,3 +1,11 @@
+2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update of the ICIP'07 max-tree canonization code.
+
+	* scribo/demat.hh (trace): Set on.
+	* geraud/max_tree_nnodes.cc (neighb): Remove useless.
+	(mln_point): Update.
+
 2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve debug output.

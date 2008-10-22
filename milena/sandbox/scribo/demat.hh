@@ -396,7 +396,7 @@ namespace scribo
     using value::rgb8;
 
     border::thickness = 3;
-    trace::quiet = true;
+    trace::quiet = false;
 
     //Useful debug variables
     unsigned l = atoi(argv[3]);
