@@ -1,3 +1,18 @@
+2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classification: Clean up directory.
+
+	* classif/images,
+	* classif/images/caf_0009.jpg,
+	* classif/images/caf_0028.jpg,
+	* classif/images/edfverso06.JPG,
+	* classif/images/capture.png,
+	* classif/images/vpc_0001.jpg,
+	* classif/images/caf_0010.jpg,
+	* classif/images/caf_0013.jpg,
+	* classif/images/caf_0005.jpg,
+	* classif/images/caf_0034.jpg: Remove.
+
 2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update classif main.
