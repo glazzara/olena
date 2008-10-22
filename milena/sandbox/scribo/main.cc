@@ -35,7 +35,7 @@ int main(int argc, char*argv[])
 
   if (argc < 2)
   {
-    std::cout << argv[0] << " <image.pgm> <h> <w> <bbox_larger>" << std::endl;
+    std::cout << argv[0] << " <image.pgm> <h> <w> <bbox_larger> <bbox_distance> <min_comp_size>" << std::endl;
     return 1;
   }
 

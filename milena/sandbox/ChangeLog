@@ -1,3 +1,14 @@
+2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Extract text bboxes for Scribo.
+
+	* scribo/main.cc: Change usage message.
+	
+	* scribo/demat.hh:
+	  - Cleanup.
+	  - Remove too small components using level::transform.
+	  - Support text bboxes extraction.
+
 2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Work on ICCVG04 classification method
