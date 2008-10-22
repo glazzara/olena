@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,7 @@
 # include <mln/convert/to_window.hh>
 # include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
-
+# include <mln/util/ord.hh>
 
 
 namespace mln
@@ -73,7 +73,7 @@ namespace mln
       trace::entering("set::uni");
       mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
       typedef mln_dpoint(Wl) D;
-      std::set<D>
+      std::set<D, util::ord<D> >
 	sl = convert::to_std_set(lhs),
 	sr = convert::to_std_set(rhs),
 	s;
@@ -92,7 +92,7 @@ namespace mln
       trace::entering("set::uni");
       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
       typedef mln_point(Wl) P;
-      std::set<P>
+      std::set<P, util::ord<P> >
 	sl = convert::to_std_set(lhs),
 	sr = convert::to_std_set(rhs),
 	s;

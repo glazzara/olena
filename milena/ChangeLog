@@ -1,5 +1,15 @@
 2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use util::ord with std::set.
+
+	* mln/set/inter.hh,
+	* mln/set/sym_diff.hh,
+	* mln/set/uni.hh:
+	Use util::ord as comparison operator.
+
+
+2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add missing resize() method to util::array.
 
 	* mln/util/array.hh: add resize().

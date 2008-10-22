@@ -37,6 +37,7 @@
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
+# include <mln/util/ord.hh>
 
 
 
@@ -64,7 +65,7 @@ namespace mln
       trace::entering("set::inter");
       mln::metal::equal<mln_psite(Wl), mln_psite(Wr)>::check();
       typedef mln_psite(Wl) P;
-      std::set<P>
+      std::set<P, util::ord<P> >
 	sl = convert::to_std_set(lhs),
 	sr = convert::to_std_set(rhs),
 	s;
