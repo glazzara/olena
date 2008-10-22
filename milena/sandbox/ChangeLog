@@ -1,3 +1,9 @@
+2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update classif main.
+
+	* classif/iccvg04.cc: Update.
+
 2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix bad deletion of small components.

@@ -18,8 +18,9 @@
 #include <mln/geom/all.hh>
 
 #include <mln/io/ppm/load.hh>
-
 #include <mln/io/pgm/save.hh>
+
+#include <mln/estim/min_max.hh>
 
 #include <sys/stat.h>
 #include <sstream>
@@ -63,9 +64,10 @@ void display(const I& ima, const char * dir)
   mkdir(dir, 0777);
   chdir(dir);
 
+  image2d< mln_value(I) > out(geom::nrows(ima), geom::ncols(ima));
+
   for (int s = 0; s < geom::nslis(ima); ++s)
   {
-    image2d< mln_value(I) > out(geom::nrows(ima), geom::ncols(ima));
    // image2d< value::int_u8 > out(geom::nrows(ima), geom::ncols(ima));
     for (int r = 0; r < geom::nrows(ima); ++r)
     {
@@ -76,7 +78,7 @@ void display(const I& ima, const char * dir)
     }
 
     std::ostringstream is;
-    is << "out_" << s << ".ppm";
+    is << "out_" << s << ".pgm";
 
     io::pgm::save(out, is.str());
   }
@@ -191,23 +193,48 @@ int main(int argc, char **argv)
 
   //make histo
   image3d<unsigned> histo = fill_histo(ima);
+  {
+    unsigned m, M;
+    estim::min_max(histo, m, M);
+    std::cout << m << ' ' << M << std::endl;
+  }
+
   image3d<value::int_u8> nhisto = normalizeu8(histo);
+  {
+    value::int_u8 m, M;
+    estim::min_max(nhisto, m, M);
+    std::cout << m << ' ' << M << std::endl;
+  }
 
   //display(nhisto, "histo");
 
   //revert histo
   image3d<value::int_u8> rhisto = arith::revert(nhisto);
+  {
+    value::int_u8 m, M;
+    estim::min_max(rhisto, m, M);
+    std::cout << m << ' ' << M << std::endl;
+  }
   //display(rhisto, "rhisto");
   //compute closing_area of histo
 
   image3d<value::int_u8> histo_closure(histo.domain());
-  morpho::closing_area(rhisto, c6(), 420, histo_closure);
+  morpho::closing_area(rhisto, c6(), 20, histo_closure);
+  {
+    value::int_u8 m, M;
+    estim::min_max(histo_closure, m, M);
+    std::cout << m << ' ' << M << std::endl;
+  }
+
+
 
   //display_proj_revert(histo_closure, "chisto.ppm");
 
   //watershed over histo_closure
-  value::int_u16 nbasins;
-  image3d<value::int_u16> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
+  value::int_u8 nbasins;
+  image3d<value::int_u8> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
+
+  std::cout << nbasins << std::endl;
 
   display(ws, "ws");
   display_proj_revert(ws, "whisto.ppm");
