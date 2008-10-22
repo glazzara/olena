@@ -19,11 +19,17 @@
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <mln/estim/min_max.hh>
+#include <mln/algebra/vec.hh>
+#include <mln/algebra/vec.hh>
+
+#include <mln/level/stretch.hh>
 
 #include <sys/stat.h>
 #include <sstream>
+#include <string.h>
 
 
 using namespace mln;
@@ -34,15 +40,15 @@ template <typename I>
 mln::image3d<unsigned>
 fill_histo(const I& ima, int f)
 {
-  const mln_value(I) v = mln_max(mln_value(I)) / f;
-  image3d< unsigned > histo(v,v,v);
+  const value::int_u8 v = 255 / f; // FIXME
+  image3d<unsigned> histo(v,v,v);
   level::fill(histo, 0);
   unsigned i = 0;
 
   mln_piter(I) p(ima.domain());
   for_all(p)
   {
-    point3d p3(ima(p).red()/f,ima(p).green()/f, ima(p).blue()/f);
+    point3d p3(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
     histo(p3)++;
   }
   return histo;
@@ -89,62 +95,109 @@ void display(const I& ima, const char * dir)
 
 
 template <typename I, typename J, typename K>
-mln_concrete(I)
-classify_image(const I& ima, const J& histo, const K& ws, int nbasins)
+void
+classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 {
-  image2d<value::rgb8> out(ima.domain());
 
-  typedef mln::accu::mean<mln_value(J)> accu_t;
+  unsigned count[nbasins + 1];
+  memset(count, 0, nbasins + 1);
+  algebra::vec<3, unsigned> sum[nbasins + 1];
 
-  accu_t acu;
+  for (int i = 1; i < nbasins + 1; ++i)
+  {
+    sum[i] = literal::zero;
+  }
 
-  util::array<mln_result(accu_t)> tmp = labeling::compute(acu, histo, ws, nbasins);
-
-  /*mln_piter(I) p(ima.domain());
-
+  /*mln_piter(K) p(ws.domain());
   for_all(p)
   {
+    count[ws(p)] += histo(p);
+    sum[ws(p)] += histo(p) * convert::to<algebra::vec<3, value::int_u8> >(p) * f;
   }*/
+
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+  {
+    point3d p3(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
+
+    count[ws(p3)] += histo(p3);
+    sum[ws(p3)] += histo(p3) * convert::to<algebra::vec<3, value::int_u8> >(p3) * f;
+
+    std::cerr << "p3 : " << p3 << " == " << convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
+  }
+
+  for (int i = 1; i < nbasins + 1; ++i)
+  {
+    sum[i] /= count[i];
+    //std::cout << "count[" << i << "] = " << count[i] << std::endl;
+    std::cout << "sum[" << i << "] = " << sum[i] << std::endl;
+  }
+
+
+  mln_piter(I) pi(ima.domain());
+  I out(ima.domain());
+  for_all(pi)
+  {
+    value::rgb8 coul = ima(pi);
+
+    int w = ws(point3d(coul.red() / f, coul.green() / f, coul.blue() / f));
+
+    out(pi) = convert::to<value::rgb8>(sum[w]);
+
+    std::cerr << "(" << coul << ") -> (" << out(pi) << "); sum[" << w << "] = " << sum[w] << " -> " << convert::to<value::rgb8>(sum[w]) << std::endl;
+  }
+
+  // 1- La valeur contenue dans sum n'est pas correctement écrite dans out.ppm. À vérifier !
+  // 2- Le cast de sum[w] en rgb8 se passe très bizarrement. À vérifier !
+  // 3- Rajoute le std::cout de count change le comportement du programme. À vérifier !
+
+  io::ppm::save(out, "out.ppm");
 }
 
 int main(int argc, char **argv)
 {
+  const int div_factor = 8;
+
   image2d<value::rgb8> ima;
   ima = io::ppm::load<value::rgb8>(argv[1]);
 
   //make histo
-  image3d<unsigned> histo = fill_histo(ima,4);
+  image3d<unsigned> histo = fill_histo(ima,div_factor);
   {
     unsigned m, M;
     estim::min_max(histo, m, M);
-    std::cout << m << ' ' << M << std::endl;
+    std::cout << "histo : " << m << ' ' << M << std::endl;
   }
 
-  /*  image3d<value::int_u8> nhisto = normalizeu8(histo);
+#if 0
+  image3d<value::int_u8> nhisto(histo.domain());
+  level::stretch(histo, nhisto);
+  //image3d<value::int_u8> nhisto = normalizeu8(histo);
   {
     value::int_u8 m, M;
     estim::min_max(nhisto, m, M);
-    std::cout << m << ' ' << M << std::endl;
-    }*/
+    std::cout << "nhisto : " << m << ' ' << M << std::endl;
+   }
+#endif
 
   //display(nhisto, "histo");
 
   //revert histo
-  image3d<value::int_u8> rhisto = arith::revert(histo);
+  image3d<unsigned> rhisto = arith::revert(histo);
   {
-    value::int_u8 m, M;
+    unsigned m, M;
     estim::min_max(rhisto, m, M);
-    std::cout << m << ' ' << M << std::endl;
+    std::cout << "rhisto : " << m << ' ' << M << std::endl;
   }
   //display(rhisto, "rhisto");
   //compute closing_area of histo
 
-  image3d<value::int_u8> histo_closure(histo.domain());
+  image3d<unsigned> histo_closure(histo.domain());
   morpho::closing_area(rhisto, c6(), 20, histo_closure);
   {
-    value::int_u8 m, M;
+    unsigned m, M;
     estim::min_max(histo_closure, m, M);
-    std::cout << m << ' ' << M << std::endl;
+    std::cout << "histo_closure : " << m << ' ' << M << std::endl;
   }
 
 
@@ -152,14 +205,16 @@ int main(int argc, char **argv)
   //display_proj_revert(histo_closure, "chisto.ppm");
 
   //watershed over histo_closure
-  value::int_u8 nbasins;
-  image3d<value::int_u8> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
+  unsigned nbasins = 0;
+  image3d<unsigned> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
 
-  std::cout << nbasins << std::endl;
+  std::cout << "nbassins : " << nbasins << std::endl;
 
-  display(ws, "ws");
-  display_proj_revert(ws, "whisto.ppm");
+  //display(ws, "ws");
+  //display_proj_revert(ws, "whisto.ppm");
   //gplot(ws);
 
-  //donne_tout(ima, histo_closure, ws, nbasins);
+  // Classify image !
+  //classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
+  classify_image(ima, histo, ws, nbasins, div_factor);
 }

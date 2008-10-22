@@ -1,3 +1,9 @@
+2008-10-22  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Work on ICCVG04 for INIM.
+	* Makefile: Make a smarter Makefile.
+	* iccvg04.cc: Enhance the classification routine.
+
 2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update of the ICIP'07 max-tree canonization code.
