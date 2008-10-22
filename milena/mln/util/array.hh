@@ -90,6 +90,9 @@ namespace mln
       /// Reserve memory for \p n elements.
       void reserve(unsigned n);
 
+      /// Resize this array to \p n elements.
+      void resize(unsigned n);
+
 
       /// Add the element \p elt at the end of this array.
       array<T>& append(const T& elt);
@@ -253,6 +256,14 @@ namespace mln
     array<T>::reserve(unsigned n)
     {
       v_.reserve(n);
+    }
+
+    template <typename T>
+    inline
+    void
+    array<T>::resize(unsigned n)
+    {
+      v_.resize(n);
     }
 
     template <typename T>
