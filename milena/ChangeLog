@@ -1,5 +1,20 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust (non algebraic) faces.
+
+	* mln/topo/face.hh
+	(mln::topo::face<D>::lower_dim_adj_faces)
+	(mln::topo::face<D>::higher_dim_adj_faces):
+	Return algebraic faces.
+	(mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>)
+	(mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>):
+	Split the interface from the implementation, and move the
+	latter...
+	* mln/topo/algebraic_face.hh: ...here.
+	Update w.r.t. algebraic faces.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust (non algebraic) n-faces.
 
 	* mln/topo/n_face.hh

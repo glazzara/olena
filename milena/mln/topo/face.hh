@@ -47,7 +47,8 @@ namespace mln
     template <unsigned D> class complex;
     template <unsigned N, unsigned D> class n_face;
     template <unsigned N, unsigned D> class face_data;
-    
+    template <unsigned N> class algebraic_face;
+
 
     /*-------.
     | Face.  |
@@ -60,6 +61,7 @@ namespace mln
     template <unsigned D>
     struct face
     {
+    public:
       // The type of the complex this handle points to.
       typedef complex<D> complex_type;
 
@@ -111,9 +113,9 @@ namespace mln
 
       // FIXME: To be overhauled.
       /// Return an array of face handles pointing to adjacent (n-1)-faces.
-      std::vector< face<D> > lower_dim_adj_faces() const;
+      std::vector< algebraic_face<D> > lower_dim_adj_faces() const;
       /// Return an array of face handles pointing to adjacent (n+1)-faces.
-      std::vector< face<D> > higher_dim_adj_faces() const;
+      std::vector< algebraic_face<D> > higher_dim_adj_faces() const;
       /// \}
 
     private:
@@ -195,7 +197,6 @@ namespace mln
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
-
     }
 
     template <unsigned D>
@@ -307,98 +308,50 @@ namespace mln
     }
 
 
-    // FIXME: This is way too complicated.
+    /*-----------------------------------------------.
+    | Helpers for face<D>::lower_dim_adj_faces() and |
+    | face<D>::higher_dim_adj_faces().               |
+    `-----------------------------------------------*/
+
+    /* FIXME: This is way too complicated; should disappear when the
+       implementation of complexes is simplified (see
+       https://trac.lrde.org/olena/ticket/168).  */
+
+    // Implementation is in mln/topo/algebraic_face.hh.
+
     namespace internal
     {
+
       template <unsigned N, unsigned D>
       struct lower_dim_adj_faces_if_dim_matches_
       {
-	std::vector< face<D> > operator()(const face<D>& face)
-	{
-	  metal::bool_< (N <= D) >::check();
-	  metal::bool_< (N > 1) >::check();
-
-	  if (face.n() == N)
-	    {
-	      face_data<N, D>& data = face.template data<N>();
-	      std::vector< n_face<N - 1, D> > lower_dim_faces =
-		data.lower_dim_faces_;
-	      std::vector< topo::face<D> > result;
-	      for (typename std::vector< n_face<N - 1, D> >::const_iterator f =
-		     lower_dim_faces.begin(); f != lower_dim_faces.end(); ++f)
-		result.push_back(*f);
-	      return result;
-	    }
-	  else
-	    return internal::lower_dim_adj_faces_if_dim_matches_<N - 1, D>()(face);
-	}
+	std::vector< algebraic_face<D> > operator()(const face<D>& face);
       };
 
       template <unsigned D>
       struct lower_dim_adj_faces_if_dim_matches_<1, D>
       {
-	std::vector< face<D> > operator()(const face<D>& face)
-	{
-	  /// If we reached this function, then the dimension of FACE
-	  /// has to be 1.
-	  mln_precondition(face.n() == 1);
-	  face_data<1, D>& data = face.template data<1>();
-	  std::vector< n_face<0, D> > lower_dim_faces = data.lower_dim_faces_;
-	  std::vector< topo::face<D> > result;
-	  for (typename std::vector< n_face<0, D> >::const_iterator f =
-		 lower_dim_faces.begin(); f != lower_dim_faces.end(); ++f)
-	    result.push_back(*f);
-	  return result;
-	}
+	std::vector< algebraic_face<D> > operator()(const face<D>& face);
       };
 
       template <unsigned N, unsigned D>
       struct higher_dim_adj_faces_if_dim_matches_
       {
-	std::vector< face<D> > operator()(const face<D>& face)
-	{
-	  metal::bool_< (N < D) >::check();
-
-	  if (face.n() == N)
-	    {
-	      face_data<N, D>& data = face.template data<N>();
-	      std::vector< n_face<N + 1, D> > higher_dim_faces =
-		data.higher_dim_faces_;
-	      std::vector< topo::face<D> > result;
-	      for (typename std::vector< n_face<N + 1, D> >::const_iterator f =
-		     higher_dim_faces.begin(); f != higher_dim_faces.end(); ++f)
-		result.push_back(*f);
-	      return result;
-	    }
-	  else
-	    return
-	      internal::higher_dim_adj_faces_if_dim_matches_<N - 1, D>()(face);
-	}
+	std::vector< algebraic_face<D> > operator()(const face<D>& face);
       };
 
       template <unsigned D>
       struct higher_dim_adj_faces_if_dim_matches_<0, D>
       {
-	std::vector< face<D> > operator()(const face<D>& face)
-	{
-	  /// If we reached this function, then the dimension of face
-	  /// has to be D - 1.
-	  mln_precondition(face.n() == 0);
-	  face_data<0, D>& data = face.template data<0>();
-	  std::vector< n_face<1, D> > higher_dim_faces =
-	    data.higher_dim_faces_;
-	  std::vector< topo::face<D> > result;
-	  for (typename std::vector< n_face<1, D> >::const_iterator f =
-		 higher_dim_faces.begin(); f != higher_dim_faces.end(); ++f)
-	    result.push_back(*f);
-	  return result;
-	}
+	std::vector< algebraic_face<D> > operator()(const face<D>& face);
       };
-    }
+
+    } // end of namespace mln::topo::internal
+
 
     template <unsigned D>
     inline
-    std::vector< face<D> >
+    std::vector< algebraic_face<D> >
     face<D>::lower_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
@@ -406,12 +359,12 @@ namespace mln
 
       return n_ > 0 ?
 	internal::lower_dim_adj_faces_if_dim_matches_<D, D>()(*this) :
-	std::vector< face<D> >();
+	std::vector< algebraic_face<D> >();
     }
 
     template <unsigned D>
     inline
-    std::vector< face<D> >
+    std::vector< algebraic_face<D> >
     face<D>::higher_dim_adj_faces() const
     {
       // FIXME: Warning: might prevent any attempt to build a complex<0>.
@@ -419,7 +372,7 @@ namespace mln
 
       return n_ < D ?
 	internal::higher_dim_adj_faces_if_dim_matches_<D - 1, D>()(*this) :
-	std::vector< face<D> >();
+	std::vector< algebraic_face<D> >();
     }
 
 
