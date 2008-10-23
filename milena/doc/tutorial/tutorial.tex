@@ -48,25 +48,147 @@ showstringspaces=false,linewidth=14cm}
 \backslash page #1 #2%
 \backslash htmlonly%
 }
+
+% #1 : section name
+% #2 : section title
 \newcommand{\doxysection}[2]{%
 \label{#1}
 \backslash endhtmlonly%
 \backslash section #1 #2%
 \backslash htmlonly%
 }
+\newcommand{\doxysubsection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash subsection #1 #2%
+\backslash htmlonly%
+}
+
 \newcommand{\doxycode}[1]{
 \backslash endhtmlonly%
 \backslash include #1.tex%
 \backslash htmlonly%
 }
 
+\newenvironment{doxymath}
+{
+%\backslash endhtmlonly%
+%\backslash f\$
+%\begin{rawtext}
+$$
+}
+{
+$$
+%\end{rawtext}
+%\backslash f\$
+%\backslash htmlonly%
+}
+
 %\begin{latexonly}
 \renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
 \renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
+\renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
 \renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1}}
+\renewenvironment{doxymath}
+{
+  $$
+}
+{
+  $$
+}
+
 %\end{latexonly}
 
+\usetikzlibrary{er}
 
+\newcommand{\neighcfour}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\neighceight}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+  %Top left
+  \draw (-0.25,0.25) node[entity,draw] {};
+  %Top right
+  \draw (0.26,0.25) node[entity,draw] {};%
+  %Bottom left
+  \draw (-0.25,-0.25) node[entity,draw] {};%
+  %Bottom Right
+  \draw (0.26,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\wincfour}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[entity,draw] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\winceight}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[entity,draw] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+  %Top left
+  \draw (-0.25,0.25) node[entity,draw] {};
+  %Top right
+  \draw (0.26,0.25) node[entity,draw] {};%
+  %Bottom left
+  \draw (-0.25,-0.25) node[entity,draw] {};%
+  %Bottom Right
+  \draw (0.26,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
 
 \begin{document}
 
@@ -85,6 +207,7 @@ showstringspaces=false,linewidth=14cm}
 - \backslash subpage graphandima
 - \backslash subpage arithmops
 - \backslash subpage mathtools
+- \backslash subpage globalvars
 \backslash htmlonly
 \end{htmlonly}
 
@@ -206,6 +329,18 @@ means we have the following equivalence:
 The site does not store any value but refer to an area where we will be able
 to read its value.
 
+Sites may have a different types, depending on the image type:
+
+\begin{tabular}{l|l}
+Name & Description \\
+\hline
+point2d & 2D point on a regular grid \\
+point & Generic point ($n-D$) on a regular grid \\
+util::vec & Algebraic vector \\
+util::vertex & Graph vertex \\
+util::edge & Graph edge \\
+\end{tabular}
+
 [Illustration : grille + intersection + pmin() + pmax() + distance entre 2
 points en x et en y = 1]\\
 
@@ -311,19 +446,38 @@ constant time retrieval.
 \doxysection{definition}{Definition}
 An image is composed both of:
 \begin{itemize}
-\item A function $$
+\item A function
+\begin{doxymath}
 ima : \left\{
   \begin{array}{lll}
     Site &\rightarrow & Value \\
     p & \mapsto & ima(p)
   \end{array}
 \right.
-$$
+\end{doxymath}
 \item A site set, also called the "domain".
 \end{itemize}
 
 %**************************
-\doxysection{imavalues}{Possible value types}
+\doxysection{imatypes}{Possible image types}
+
+Here is a short list of the main/usual image types you may want to use with
+Olena: \\
+\bigskip
+
+\begin{tabular}{l|l}
+Name & Description \\
+\hline
+image1d & 1D image \\
+image2d & 2D image \\
+image3d & 3D image \\
+flat\_image & Constant value image \\
+image\_if & Image defined by a function \\
+FIXME & FIXME \\
+\end{tabular}
+
+%**************************
+\doxysection{imapossvalues}{Possible value types}
 
 Every image type must take its type of value as parameter.
 The value type can be one of the builtins one:
@@ -370,7 +524,7 @@ rgb8.hh.
 
 
 %----------------
-\subsection{About value, rvalue and lvalue}
+\doxysubsection{imavalues}{About value, rvalue and lvalue}
 
 Since the values are of a specific type, it exists a set of all the possible
 site values. This set is called "destination" set. It may be iterable and
@@ -632,7 +786,7 @@ case will be detailed further in section \ref{iterators}.
 
 
 
-%================================================
+s%================================================
 \doxysection{imasize}{Image size}
 Most typical image types owns special methods to retrieve the image size.
 
@@ -661,13 +815,128 @@ Output:
 %====================================
 \clearpage
 \newpage
-\doxychapter{winneigh}{Window and neighborhood}
+\doxychapter{winneigh}{Structural elements: Window and neighborhood}
 
-%**************************
-\doxysection{winfixme}{FIXME}
-FIXME
+In Olena, there are both the window and neighborhood concept. A window can be
+defined on any sites around a central site which may also be included.
+A neighborhood is more restrictive and must not include the central site.
+Therefore these two concepts are really similar and are detailed together in
+this section. 
 
-\doxycode{ima2d-display-1}
+By default, structural elements are centered. The central site is located at the
+origin of the grid: ``literal::origin''. With image2d, the central site is
+(0,0).
+
+
+\doxysection{sedef}{Define an element}
+
+\doxysubsection{winwin}{Window}
+
+\subsubsection*{Generic Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+win\_c4p & 4-connectivity &  \wincfour \\
+win\_c8p & 8-connectivity & \winceight \\
+\end{tabular}
+%
+\bigskip
+% 
+
+\subsubsection*{1D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+segment1d & 1D segment & - \\
+\end{tabular}
+%
+\bigskip
+%
+
+\subsubsection*{2D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+backdiag2d & Back diagonal & - \\
+diag2d & 2D diagonal & - \\
+disk2d & 2D disk & - \\
+hline2d & 2D horizontal line & - \\
+octagon2d & 2D octogon & - \\
+rectangle2d & 2D rectangle & - \\
+vline2d & 2D vertical line & - \\
+\end{tabular}
+%
+\bigskip
+%
+
+\subsubsection*{3D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+cube3d & 3D Cube & - \\
+cuboid3d & Cuboid & - \\
+\end{tabular}
+
+These predefined windows can be passed directly to a function. The headers are
+located in mln/core/alias/window*.hh.
+
+
+
+\doxysubsection{neighborhood}{Neighborhood}
+
+Predefined neighborhood:\\
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+c4 & 4-connectivity &  \neighcfour \\
+c8 & 8-connectivity & \neighceight \\
+\end{tabular}
+
+These predefined neighborhood can be passed directly to a function. The headers are
+located in mln/core/alias/neigh*.hh.
+
+Use case example:
+\doxycode{ima2d-decl-2-blobs}
+
+\doxysubsection{customse}{Custom structural elements}
+
+\subsubsection{Windows}
+
+There are several ways to define a new window.
+The first and the most common way is to declare a window variable and insert
+dpoints:
+\doxycode{win-create-1}
+This code creates the following window where ``X'' is the central point from
+which the window is computed:
+\doxycode{win-create-1-display}
+
+Another way to define the same window is to provide a bool array:
+\doxycode{win-create-2}
+
+Note that ``win'' == ``win2''.
+The boolean array must always have an odd size.
+While creating a windows thanks to a bool array/matrix, the window's center is the
+central site of the array/matrix.
+
+
+\subsubsection{Neighborhood}
+
+
+\doxysubsection{sitedepse}{Site dependent structural elements}
+
+\doxysubsection{convneighwin}{Conversion between Neighborhoods and Windows}
+
+Windows are not convertible to a Neighborhood.
+Neighborhood are convertible to a window though.
+
+A neighborhood has a method ``win()'' which returns the definition window.
+Be ware that this window is not centered, thus does not include the central
+point.
 
 
 
@@ -767,14 +1036,24 @@ owns the method "coord row() const" which is defined as
 "return exact(this)-$>$to\_site().row()"
 
 %**************************
-\doxysection{sitesdpoint}{Need for dpoint}
-//FIXME
+\doxysection{sitesdpoint}{Dpoint}
+Dpoints are relative sites. They are usually used in window and neighborhood
+definitions. Since the central site is not constant, windows and neighborhoods
+must be recomputed and dpoints help in doing that.
+
+\doxycode{dpoint-1}
+Output:
+\doxycode{dpoint-1-output}
 
 
 
 %====================================
 \clearpage
 \newpage
+%Ugly workaround to avoid missing chapter references in doxygen.
+\begin{htmlonly}
+\doxychapter{1}{}
+\end{htmlonly}
 \doxychapter{iterators}{Iterators}
 
 Each container object in Olena like site sets or images have iterators.
@@ -1009,7 +1288,7 @@ image. \\
 level::compute() & compute an accumulator on the values of an image.  \\
 \end{tabular}
 
-\subsection{Accumulators}
+\doxysubsection{accu}{Accumulators}
 An accumulator is a special object accumulating data while iterating all over
 the image values or sites. Hereby follows a list of accumulators available in
 Olena.
@@ -1074,7 +1353,7 @@ You cannot write:
 Instead, you must write:
 \doxycode{accu-right-instanciation}
 
-\subsection{Example with labeling::compute()}
+\doxysubsection{exlblcompute}{Example with labeling::compute()}
 
 In this example we will try to retrieve the bounding box of each component in an
 image.
@@ -1100,8 +1379,8 @@ set the background to 0, we will want to iterate from 1 to nlabels included.
 Output:
 \doxycode{labeling-compute-result-output}
 
-\subsection{Routines based on accumulators and *::compute()}
 
+\subsection{Routines based on accumulators and *::compute()}
 In order to make the code cleaner, small routines are available for the
 most used accumulators. 
 
@@ -1218,6 +1497,8 @@ site set.
 %====================================
 \newpage
 \clearpage
+%Ugly workaround to avoid missing chapter references in doxygen.
+\doxychapter{2}{}
 \doxychapter{graphandima}{Graphes and images}
 
 FIXME: REWRITE
@@ -1392,5 +1673,27 @@ FIXME write it
 \doxychapter{mathtools}{Mathematical tools}
 
 FIXME write it
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{globalvars}{Useful global variables}
+
+\begin{tabular}{l|p{8cm}|l}
+\hline
+Name & Description & Possible values \\
+\hline
+literal::zero & Generic zero value. Can be used with various types such as
+util::vec, dpoint\dots & n.a.\\
+& & \\
+literal::one & Generic one value. Can be used with various types such as
+util::vec, dpoint\dots & n.a.\\
+& & \\
+literal::origin & Generic value for the origin point on a grid.& n.a.\\
+& & \\
+border::thickness & Set the default border thickness of images & $[0-UINT_MAX]$\\
+& & \\
+trace::quiet & Enable trace printing & true/false \\
+\end{tabular}
 
 \end{document}

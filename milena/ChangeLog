@@ -1,3 +1,25 @@
+2008-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+
+	* doc/tutorial/samples/fun-p2b-1.tex,
+	* doc/tutorial/samples/graph-output-1.tex,
+	* doc/tutorial/samples/ima2d-display-1.tex,
+	* doc/tutorial/samples/ima2d-display-2.tex,
+	* doc/tutorial/samples/parray-display-1.tex,
+	* doc/tutorial/samples/paste.tex: Fix indentation
+
+	* doc/tutorial/samples/dpoint-1-output.tex,
+	* doc/tutorial/samples/dpoint-1.tex,
+	* doc/tutorial/samples/win-create-1-display.tex,
+	* doc/tutorial/samples/win-create-1.tex,
+	* doc/tutorial/samples/win-create-2.tex: new sample code.
+
+	* doc/tutorial/tutorial.tex: Update.
+	  - Start writing section about windows and neighborhoods.
+	  - Write section about dpoints.
+	  - Add a section about the global variables.
+
 2008-10-23  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Make extension images and cast image work with fill_with_value routine.
