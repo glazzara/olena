@@ -1,5 +1,14 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a bug in OFF file saving.
+
+	* mln/io/off/save.hh
+	(save(const bin_2complex_image3df&, const std::string&)):
+	Swap the positions of the number of edges and number of faces in
+	the written file.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Remove seldom used macros mln_face and mln_face_.
 
 	* mln/core/macros.hh (mln_face, mln_face_): Remove macros.

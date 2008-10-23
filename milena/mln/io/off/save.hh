@@ -113,8 +113,8 @@ namespace mln
 	     ima.nfaces<0>().
 	*/
 	ostr << ima.domain().cplx().nfaces<0>() << ' '
-	     << ima.domain().cplx().nfaces<1>() << ' '
-	     << ima.domain().cplx().nfaces<2>() << std::endl;
+	     << ima.domain().cplx().nfaces<2>() << ' '
+	     << ima.domain().cplx().nfaces<1>() << std::endl;
 
 	/*-------.
 	| Data.  |
