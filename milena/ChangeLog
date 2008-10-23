@@ -1,3 +1,23 @@
+2008-10-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update directional erosion so that it can now be used on sets.
+
+	* mln/accu/rank.hh (todo): New.
+	* mln/accu/rank_bool.hh (todo): New.
+	Fix doc.
+	(rank): Fix ctor.
+	(take_as_init): Fix.
+	* mln/accu/land.hh: New.
+	* mln/morpho/erosion.spe.hh
+	(erosion_directional_nd_functor),
+	(erosion_directional_nd_fastest_functor): Add accumulator type
+	as parameter and rename min as accu.
+	(erosion_directional_nd),
+	(erosion_directional_nd_fastest): Update; compute A.
+	(erosion_dispatch_wrt_win): Update overload for hline2d and
+	vline2d.
+	* mln/morpho/includes.hh: Update.
+
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
 	Improve mln::io::off:load.

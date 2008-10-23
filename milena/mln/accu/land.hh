@@ -25,17 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_RANK_BOOL_HH
-# define MLN_ACCU_RANK_BOOL_HH
+#ifndef MLN_ACCU_LAND_HH
+# define MLN_ACCU_LAND_HH
 
-/*! \file mln/accu/rank_bool.hh
+/*! \file mln/accu/land.hh
  *
- * \brief Define an rank accumulator.
- *
- * \todo There is no-arg-ctor so this accumulator does not support
- * deferred initialization!
- *
- * \todo Add untake routines...
+ * \brief Define a 'logical-and' accumulator.
  */
 
 # include <mln/accu/internal/base.hh>
@@ -47,25 +42,23 @@ namespace mln
   namespace accu
   {
 
-    // Fwd declaration.
-    template <typename T> struct rank;
-
-    /*! \brief rank accumulator class for Boolean.
-     *
-     */
-    template <>
-    struct rank<bool> : public mln::accu::internal::base< bool, rank<bool> >
+    /// "Logical-and" accumulator class.
+    struct land : public mln::accu::internal::base< bool, land >
     {
       typedef bool argument;
 
-      rank(unsigned k, unsigned n);
+      land();
 
       /// Manipulators.
       /// \{
       void init();
       void take_as_init(const argument& t);
+
       void take(const argument& t);
-      void take(const rank<bool>& other);
+      void take(const land& other);
+
+      void untake(const argument& t);
+      void untake(const land& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -77,66 +70,71 @@ namespace mln
 
     protected:
       unsigned nfalse_;
-      unsigned k_; // 0 <= k_ < n
-      unsigned n_;
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    rank<bool>::rank(unsigned k, unsigned n)
-      : k_(k),
-	n_(n)
+    land::land()
     {
-      mln_assertion(k_ < n_);
       init();
     }
 
-
     inline
     void
-    rank<bool>::init()
+    land::init()
     {
       nfalse_ = 0;
     }
 
-
     inline
-    void rank<bool>::take_as_init(const argument& t)
+    void land::take_as_init(const argument& t)
     {
       nfalse_ = t ? 0 : 1;
     }
 
-
     inline
-    void rank<bool>::take(const argument& t)
+    void land::take(const argument& t)
     {
-      nfalse_ += !t;
+      if (t == false)
+	++nfalse_;
     }
-
 
     inline
     void
-    rank<bool>::take(const rank<bool>& other)
+    land::take(const land& other)
     {
       nfalse_ += other.nfalse_;
     }
 
+    inline
+    void land::untake(const argument& t)
+    {
+      if (t == false)
+	--nfalse_;
+    }
 
     inline
-    bool
-    rank<bool>::to_result() const
+    void
+    land::untake(const land& other)
     {
-      mln_assertion(nfalse_ <= n_);
-      return k_ >= nfalse_;
+      mln_precondition(other.nfalse_ <= nfalse_);
+      nfalse_ -= other.nfalse_;
     }
 
     inline
     bool
-    rank<bool>::is_valid() const
+    land::to_result() const
     {
-      return nfalse_ <= n_;
+      return nfalse_ == 0;
+    }
+
+    inline
+    bool
+    land::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -145,5 +143,4 @@ namespace mln
 
 } // end of namespace mln
 
-
-#endif // ! MLN_ACCU_RANK_BOOL_HH
+#endif // ! MLN_ACCU_AND_HH

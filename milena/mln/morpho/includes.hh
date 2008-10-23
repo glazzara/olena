@@ -44,6 +44,8 @@
 
 # include <mln/value/ops.hh>
 
+# include <mln/accu/land.hh>
+// # include <mln/accu/lor.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 # include <mln/accu/min_h.hh>

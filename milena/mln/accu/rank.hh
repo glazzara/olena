@@ -31,6 +31,9 @@
 /*! \file mln/accu/rank.hh
  *
  * \brief Define an rank accumulator.
+ *
+ * \todo It should be renamed as rank_h since it relies on histogram
+ * (thus low quantization).
  */
 
 # include <vector>

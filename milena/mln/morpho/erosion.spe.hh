@@ -636,7 +636,7 @@ namespace mln
 	return dp;
       }
 
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_directional_nd_functor
       {
 	typedef I_ I;
@@ -645,7 +645,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 	enum { dim = I::site::dim };
 
 	mln_psite(I) p;
@@ -662,7 +662,7 @@ namespace mln
 	erosion_directional_nd_functor(const I& input, const W& win, int dir)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, -dp_directional<dpsite>(dir)) - win),
 	    win_right(win - win::shift(win, -dp_directional<dpsite>(dir))),
@@ -675,27 +675,27 @@ namespace mln
 	void init()
 	{
 	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::fill(input, accu);
 	  initialize(output, input);
 	}
 
 	void init_run()
 	{
-	  min.init();
+	  accu.init();
 	  p[dir]--;
 	  mln_qiter(W) q(win, p);
 	  for_all(q) if (input.has(q))
-	    min.take(input(q));
+	    accu.take(input(q));
 	  p[dir]++;
 	}
 
 	void next()
 	{
 	  for_all(q_l) if (input.has(q_l))
-	    min.untake(input(q_l));
+	    accu.untake(input(q_l));
 	  for_all(q_r) if (input.has(q_r))
-	    min.take(input(q_r));
-	  output(p) = min;
+	    accu.take(input(q_r));
+	  output(p) = accu;
 	}
 
 	void final()
@@ -711,7 +711,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_directional_nd");
 
-	typedef erosion_directional_nd_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_directional_nd_functor<I, W, A> F;
 	F f(exact(input), exact(win), dir);
 	canvas::browsing::directional(f);
 
@@ -721,7 +725,7 @@ namespace mln
       }
 
 
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_directional_nd_fastest_functor
       {
 	typedef I_ I;
@@ -730,7 +734,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
@@ -743,7 +747,7 @@ namespace mln
 	erosion_directional_nd_fastest_functor(const I& input, const W& win, unsigned dir)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, -dp_directional<dpsite>(dir)) - win),
 	    win_right(win - win::shift(win, -dp_directional<dpsite>(dir))),
@@ -755,27 +759,27 @@ namespace mln
 	void init()
 	{
 	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::fill(input, accu);
 	  initialize(output, input);
 	}
 
 	void next()
 	{
 	  for_all(q_l)
-	    min.untake(q_l.val());
+	    accu.untake(q_l.val());
 	  for_all(q_r)
-	    min.take(q_r.val());
-	  output(p) = min;
+	    accu.take(q_r.val());
+	  output(p) = accu;
 	}
 
 
 	void init_run()
 	{
-	  min.init();
+	  accu.init();
 	  p[dir]--;
 	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
-	    min.take(q.val());
+	    accu.take(q.val());
 	  p[dir]++;
 	}
 
@@ -793,7 +797,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_directional_nd_fastest");
 
-	typedef erosion_directional_nd_fastest_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_directional_nd_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win), dir);
 	canvas::browsing::directional(f);
 
@@ -1400,13 +1408,10 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_not(mln_trait_image_kind(I),
-			       mln::trait::image::kind::logic) test_not_logic;
 	    typedef mlc_is_a(mln_pset(I), Box) test_box;
 	    typedef mlc_equal(mln_trait_image_quant(I),
 			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_not_logic, test_box) temp;
-	    typedef mlc_and(temp, test_lowq) tests;
+	    typedef mlc_and(test_box, test_lowq) tests;
 	    return erosion_dispatch_wrt_win(typename tests::eval (),
 					    input, win);
 	  }
@@ -1445,13 +1450,10 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_not(mln_trait_image_kind(I),
-			       mln::trait::image::kind::logic) test_not_logic;
 	    typedef mlc_is_a(mln_pset(I), Box) test_box;
 	    typedef mlc_equal(mln_trait_image_quant(I),
 			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_not_logic, test_box) temp;
-	    typedef mlc_and(temp, test_lowq) tests;
+	    typedef mlc_and(test_box, test_lowq) tests;
 	    return erosion_dispatch_wrt_win(typename tests::eval (),
 					    input, win);
 	  }
