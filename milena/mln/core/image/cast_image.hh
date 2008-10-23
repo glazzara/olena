@@ -65,10 +65,34 @@ namespace mln
   namespace trait
   {
 
+    template <typename T, typename I, typename value_io>
+    struct cast_image_trait_selector :
+      default_image_morpher< I, T, cast_image_<T,I> >
+    {
+      typedef trait::image::vw_io::none vw_io;
+      typedef trait::image::vw_set::none vw_set;
+    };
+
     template <typename T, typename I>
-    struct image_< cast_image_<T,I> > : default_image_morpher< I, T, cast_image_<T,I> >
+    struct cast_image_trait_selector<T, I, trait::image::vw_io::read> :
+      default_image_morpher< I, T, cast_image_<T,I> >
+    {
+      typedef trait::image::vw_io::read vw_io;
+    };
+
+    template <typename T, typename I>
+    struct cast_image_trait_selector<T, I, trait::image::vw_io::read_write> :
+      default_image_morpher< I, T, cast_image_<T,I> >
+    {
+      typedef trait::image::vw_io::read vw_io;
+    };
+
+    template <typename T, typename I>
+    struct image_< cast_image_<T,I> > :
+      cast_image_trait_selector<T, I, mln_trait_image_vw_io(I)>
     {
       typedef trait::image::value_io::read_only value_io;
+      typedef trait::image::pw_io::read pw_io;
     };
 
   } // end of namespace mln::trait

@@ -30,25 +30,53 @@
  * \brief Tests on mln::level::fill_with_value
  */
 
+
 #include <mln/level/fill_with_value.hh>
 
+#include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/core/image/flat_image.hh>
 #include <mln/core/image/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/extension_val.hh>
 
+#include <mln/value/rgb8.hh>
 #include <mln/fun/p2b/chess.hh>
+
+#include <mln/make/box2d.hh>
 
 int main()
 {
   using namespace mln;
-  const unsigned size = 100;
+  const unsigned size = 50;
 
   {
-    image2d<unsigned char> ima(size, size);
+    typedef image1d<unsigned char> I;
+    I ima(size);
     level::fill_with_value(ima, 51);
-    box2d::piter p(ima.domain());
+    mln_piter_(I) p(ima.domain());
     for_all(p)
       mln_assertion(ima(p) == 51);
+  }
+
+
+  {
+    typedef image2d<unsigned char> I;
+    I ima(size, size);
+    level::fill_with_value(ima, 51);
+    mln_piter_(I) p(ima.domain());
+    for_all(p)
+      mln_assertion(ima(p) == 51);
+  }
+
+  {
+    typedef image3d<value::rgb8> I;
+    I ima(size, size, size);
+    level::fill_with_value(ima, value::rgb8(255, 0, 255));
+    mln_piter_(I) p(ima.domain());
+    for_all(p)
+      mln_assertion(ima(p) == value::rgb8(255, 0, 255));
   }
 
 
@@ -75,4 +103,31 @@ int main()
     for_all(p)
       mln_assertion(ima_if(p) == 42);
   }
+
+  {
+    typedef image2d<int> I;
+    typedef sub_image< image2d<int>, box2d > II;
+    I ima(size, size);
+    II sub_ima(ima, make::box2d(4,4, 10,10));
+
+    level::fill_with_value(sub_ima,  5);
+
+    II::piter p(sub_ima.domain());
+    for_all(p)
+      mln_assertion(sub_ima(p) == 5);
+  }
+
+  {
+    typedef image2d<int> I;
+    typedef extension_val< image2d<int> > II;
+    I ima(size, size);
+    II extend_ima(ima, 5);
+
+    level::fill_with_value(extend_ima,  51);
+
+    II::piter p(extend_ima.domain());
+    for_all(p)
+      mln_assertion(extend_ima(p) == 51);
+  }
+
 }

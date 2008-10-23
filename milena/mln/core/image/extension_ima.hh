@@ -75,6 +75,7 @@ namespace mln
       // ...these changes.
       typedef trait::image::category::identity_morpher category;
       typedef mln_internal_trait_image_speed_from(I) speed; // Un-fastest.
+      typedef trait::image::value_access::indirect value_access;
 
       // extended domain
       typedef trait::image::ext_domain::extendable ext_domain;

@@ -20,6 +20,8 @@ ok  pw::image
 ok  image1d
 ok  image3d
 
+ok  flat_image
+
 ** run-based
 
 KO  mono_obased_rle_image
@@ -39,7 +41,7 @@ KO  line_graph_image
 
 ** value morpher
 
-OK  cast_image
+ok  cast_image
 KO  value::stack_image
 
 ** domain morpher
@@ -62,6 +64,8 @@ new extension_val
 
 ok  plain
 ok  safe
+
+ok extended
 
 KO  decorated_image
 KO  interpolated

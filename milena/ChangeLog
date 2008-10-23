@@ -1,3 +1,16 @@
+2008-10-23  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Make extension images and cast image work with fill_with_value routine.
+
+	* tests/level/fill_with_value.cc: Add tests.
+	* mln/core/image/status.txt: Update documentation.
+	* mln/core/image/extension_fun.hh,
+	* mln/core/image/cast_image.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/image/extension_val.hh: Fix properties.
+	* mln/level/fill_with_value.spe.hh: Fix dispatch.
+	* mln/level/fill_with_value.hh: Add a static tests.
+
 2008-10-22  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* mln/convert/to_image.hh: convert a histo::data<T> in an
