@@ -1,5 +1,30 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert mln::topo::complex to algebraic faces.
+
+	* mln/topo/complex.hh
+	(connect_(const n_face<N, D>&, const n_face<N + 1, D>&)):
+	Turn method into...
+	(connect_(const algebraic_n_face<N, D>&, const n_face<N + 1, D>&)):
+	...this.
+	(complex<D>::add_face): Adjust.
+	(internal::lower_dim_faces_set_mixin<N, D>::print)
+	(higher_dim_faces_set_mixin<N, D>::print):
+	Adjust.
+	* mln/topo/face_data.hh: Adjust friends.
+	(internal::lower_dim_faces_data_mixin<N, D>::lower_dim_faces_type)
+	(internal::higher_dim_faces_data_mixin<N, D>::higher_dim_faces_type):
+	New typedefs.
+	Use them as types of...
+	(internal::lower_dim_faces_data_mixin<N, D>::lower_dim_faces_)
+	(internal::higher_dim_faces_data_mixin<N, D>::higher_dim_faces_):
+	...these members.
+	(internal::lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face)
+	(internal::higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face):
+	Convert to algebraic n-faces.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert n-faces set to algebraic faces.
 
 	* milena/mln/topo/n_faces_set.hh

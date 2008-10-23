@@ -36,7 +36,7 @@
 
 # include <vector>
 
-# include <mln/topo/n_face.hh>
+# include <mln/topo/algebraic_n_face.hh>
 
 
 namespace mln
@@ -110,31 +110,37 @@ namespace mln
       template <unsigned N, unsigned D>
       class lower_dim_faces_data_mixin
       {
+	typedef std::vector< algebraic_n_face<N - 1, D> > lower_dim_faces_type;
+
       public:
-	void connect_lower_dim_face (const n_face<N - 1, D>& f);
+	void connect_lower_dim_face(const algebraic_n_face<N - 1, D>& f);
+
       private:
 	friend class mln::topo::internal::lower_dim_faces_set_mixin<N, D>;
 	friend class mln::topo::internal::lower_dim_adj_faces_if_dim_matches_<N, D>;
-	friend std::vector< n_face<N - 1, D> >
+	friend lower_dim_faces_type
 	mln::topo::n_face<N, D>::lower_dim_adj_faces() const;
 
 	// FIXME: Rename as lower_dim_adj_faces_ (as well as related members).
-	std::vector< n_face<N - 1, D> > lower_dim_faces_;
+	lower_dim_faces_type lower_dim_faces_;
       };
 
       template <unsigned N, unsigned D>
       class higher_dim_faces_data_mixin
       {
+	typedef std::vector< algebraic_n_face<N + 1, D> > higher_dim_faces_type;
+
       public:
-	void connect_higher_dim_face(const n_face<N + 1, D>& f);
+	void connect_higher_dim_face(const algebraic_n_face<N + 1, D>& f);
+
       private:
 	friend class mln::topo::internal::higher_dim_faces_set_mixin<N, D>;
 	friend class mln::topo::internal::higher_dim_adj_faces_if_dim_matches_<N, D>;
-	friend std::vector< n_face<N + 1, D> >
+	friend higher_dim_faces_type
 	mln::topo::n_face<N, D>::higher_dim_adj_faces() const;
 
 	// FIXME: Rename as higher_dim_adj_faces_ (as well as related members).
-	std::vector< n_face<N + 1, D> > higher_dim_faces_;
+	higher_dim_faces_type higher_dim_faces_;
       };
       /// \}
 
@@ -149,7 +155,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face(const n_face<N - 1, D>& f)
+      lower_dim_faces_data_mixin<N, D>::connect_lower_dim_face(const algebraic_n_face<N - 1, D>& f)
       {
 	lower_dim_faces_.push_back(f);
       }
@@ -157,7 +163,7 @@ namespace mln
       template <unsigned N, unsigned D>
       inline
       void
-      higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face(const n_face<N + 1, D>& f)
+      higher_dim_faces_data_mixin<N, D>::connect_higher_dim_face(const algebraic_n_face<N + 1, D>& f)
       {
 	higher_dim_faces_.push_back(f);
       }

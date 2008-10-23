@@ -44,8 +44,8 @@
 # include <mln/util/tracked_ptr.hh>
 
 # include <mln/topo/face_data.hh>
-# include <mln/topo/face.hh>
-# include <mln/topo/n_face.hh>
+# include <mln/topo/algebraic_face.hh>
+# include <mln/topo/algebraic_n_face.hh>
 # include <mln/topo/n_faces_set.hh>
 
 # include <mln/topo/complex_iterators.hh>
@@ -204,14 +204,15 @@ namespace mln
       apply_if_dim_matches_(unsigned n, const UnaryFunction& f) const;
       /// \}
 
-      /// \brief connect two faces.
+      /// \brief Connect two algebraic faces.
       ///
-      /// \param f1 A face of dimension \p N
+      /// \param f1 An algebraic face of dimension \p N
       /// \param f2 A face of dimension \p N + 1
       ///
       /// \pre \p N must be lower or equal to \p D.
       template <unsigned N>
-      void connect_(const n_face<N, D>& f1, const n_face<N + 1, D>& f2);
+      void connect_(const algebraic_n_face<N, D>& f1,
+		    const n_face<N + 1, D>& f2);
     };
 
 
@@ -494,7 +495,8 @@ namespace mln
     n_face<N + 1, D>
     complex<D>::add_face(const n_faces_set<N, D>& adjacent_faces)
     {
-      typedef typename std::vector< n_face<N, D> >::const_iterator iter_t;
+      typedef typename std::vector< algebraic_n_face<N, D> >::const_iterator
+	iter_t;
 
       // Ensure ADJACENT_FACES are already part of the complex.
       if (!HAS_NDEBUG)
@@ -515,6 +517,10 @@ namespace mln
       // Connect F and its ADJACENT_FACES.
       for (iter_t a = adjacent_faces.faces().begin();
 	   a != adjacent_faces.faces().end(); ++a)
+	/* Connect
+	   - algebraic n-face *A,
+	   - and an (n+1)-algebraic face based on FH and having the
+             sign of *A.  */
 	connect_(*a, fh);
       return fh;
     }
@@ -629,12 +635,17 @@ namespace mln
     template <unsigned N>
     inline
     void
-    complex<D>::connect_(const n_face<N, D>& f1, const n_face<N + 1, D>& f2)
+    complex<D>::connect_(const algebraic_n_face<N, D>& f1,
+			 const n_face<N + 1, D>& f2)
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
 
-      f1.data().connect_higher_dim_face(f2);
+      /* Connect
+	 - F1, an algebraic n-face,
+	 - and AF2, an algebraic (n+1)-face based on F2 and having the
+	   sign of F1.  */
+      f1.data().connect_higher_dim_face(make_algebraic_n_face(f2, f1.sign()));
       f2.data().connect_lower_dim_face(f1);
     }
 
@@ -801,7 +812,7 @@ namespace mln
       lower_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					     const face_data<N, D>& f) const
       {
-	for (typename std::vector< n_face<N - 1, D> >::const_iterator l =
+	for (typename std::vector< algebraic_n_face<N - 1, D> >::const_iterator l =
 	       f.lower_dim_faces_.begin(); l != f.lower_dim_faces_.end(); ++l)
 	  ostr << l->face_id() << " ";
       }
@@ -812,7 +823,7 @@ namespace mln
       higher_dim_faces_set_mixin<N, D>::print(std::ostream& ostr,
 					      const face_data<N, D>& f) const
       {
-	for (typename std::vector< n_face<N + 1, D> >::const_iterator h =
+	for (typename std::vector< algebraic_n_face<N + 1, D> >::const_iterator h =
 	       f.higher_dim_faces_.begin(); h != f.higher_dim_faces_.end(); ++h)
 	  ostr << h->face_id() << " ";
       }
