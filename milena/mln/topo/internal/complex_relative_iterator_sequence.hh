@@ -64,7 +64,7 @@ namespace mln
 
       public:
 	/// The type of the iterated faces.
-	typedef mln_face(I1) face;
+	typedef typename I1::face_type face_type;
 
 	/// Construction and assignment.
 	/// \{
@@ -92,7 +92,7 @@ namespace mln
 	/// Conversion.
 	/// \{
 	/// Return a reference to the corresponding face handle.
-	operator const face&() const;
+	operator const face_type&() const;
 	/// \}
 
       protected:
@@ -106,7 +106,7 @@ namespace mln
 	I2 iter2_;
 
 	/// The face handle this iterator is pointing to.
-	face f_;
+	face_type f_;
       };
 
 
@@ -126,7 +126,7 @@ namespace mln
       complex_relative_iterator_sequence<I1, I2, E>::complex_relative_iterator_sequence()
       {
 	// Ensure I1 and I2 are compatible.
-	mlc_equal(mln_face(I1), mln_face(I2))::check();
+	mlc_equal(typename I1::face_type, typename I2::face_type)::check();
 
 	invalidate();
       }
@@ -137,7 +137,7 @@ namespace mln
       complex_relative_iterator_sequence<I1, I2, E>::complex_relative_iterator_sequence(const Fref& f_ref)
       {
 	// Ensure I1 and I2 are compatible.
-	mlc_equal(mln_face(I1), mln_face(I2))::check();
+	mlc_equal(typename I1::face_type, typename I2::face_type)::check();
 
 	center_at(f_ref);
       }
@@ -209,7 +209,7 @@ namespace mln
 
       template <typename I1, typename I2, typename E>
       inline
-      complex_relative_iterator_sequence<I1, I2, E>::operator const face&() const
+      complex_relative_iterator_sequence<I1, I2, E>::operator const face_type&() const
       {
 	return f_;
       }
@@ -221,7 +221,7 @@ namespace mln
       operator<<(std::ostream& ostr,
 		 const complex_relative_iterator_sequence<I1, I2, E>& p)
       {
-	return ostr << mln_face(I1)(p);
+	return ostr << typename I1::face_type(p);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

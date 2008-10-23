@@ -146,12 +146,6 @@
 
 // f
 
-/// Shortcuts to access the (complex) face type associated to T.
-/// \{
-# define mln_face(T)       typename T::face
-# define mln_face_(T)               T::face
-/// \}
-
 /// Shortcuts to access the element-forward-iterator type associated
 /// to T.
 /// \{
