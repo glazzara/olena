@@ -100,6 +100,13 @@ namespace scribo
     using value::rgb8;
 
 
+    void draw_component_boxes(image2d<rgb8>& output, const util::array<box2d>& boxes)
+    {
+      for (unsigned i = 1; i < boxes.nelements(); ++i)
+        if (boxes[i].is_valid())
+	  draw::box(output, boxes[i], literal::red);
+    }
+
     template <typename V>
     void save_lbl_image(const image2d<V>& lbl, unsigned nlabels,
 		        const char *filename)
@@ -124,6 +131,14 @@ namespace scribo
       fconvert(1) = literal::white;
 
       return level::transform(input, fconvert);
+    }
+
+    void negate(image2d<bool>& in)
+    {
+      fun::i2v::array<unsigned> negate(2);
+      negate(0) = 1;
+      negate(1) = 0;
+      level::apply(in, negate);
     }
 
 
@@ -207,8 +222,8 @@ namespace scribo
 
 #ifndef NOUT
       image2d<rgb8> tmp = clone(output);
-      erase_table_boxes(tmp, vboxes, n);
-      erase_table_boxes(tmp, hboxes, n);
+      draw_component_boxes(tmp, vboxes);
+      draw_component_boxes(tmp, hboxes);
       io::ppm::save(tmp, "./table-filtered.ppm");
 #endif
 
@@ -222,12 +237,22 @@ namespace scribo
     /// Function related to text extraction
     /// \{
 
+    inline
     int_u16
     most_left(const fun::i2v::array<int_u16>& left_link, unsigned i)
     {
       while (left_link(i) != i)
 	i = left_link(i);
       return i;
+    }
+
+    inline
+    int_u16
+    uncurri_left_link(const fun::i2v::array<int_u16>& left_link, unsigned i)
+    {
+      if (left_link(i) != i)
+	left_link(i) = most_left(left_link, left_link(i));
+      return left_link(i);
     }
 
     template <typename V>
@@ -276,12 +301,14 @@ namespace scribo
       tboxes.resize(ncomp + 1);
       for (unsigned i = 1; i <= ncomp; ++i)
       {
-	if (left_link(i) != i)
-	  left_link(i) = most_left(left_link, left_link(i));
-	tboxes[left_link(i)].take(cboxes[i]);
+	//if (left_link(i) != i)
+	//  left_link(i) = most_left(left_link, left_link(i));
+	tboxes[most_left(left_link, i)].take(cboxes[i]);
       }
 
       //Update labels
+      for (unsigned i = 1; i <= ncomp; ++i)
+	uncurri_left_link(left_link, i);
       level::apply(lbl, left_link);
 
 #ifndef NOUT
@@ -290,7 +317,8 @@ namespace scribo
 
       util::array<box2d> result;
       for (unsigned i = 1; i <= ncomp; ++i)
-	result.append(tboxes[i].to_result());
+	if (tboxes[i].is_valid())
+	  result.append(tboxes[i].to_result());
 
       return result;
     }
@@ -305,7 +333,7 @@ namespace scribo
 	if (lbl.domain().has(p) && lbl(p) != 0 && lbl(p) != i
 	    && (p.col() - c.col()) < dmax)
 	{
-	  if (left_link(lbl(p)) == lbl(p))
+	  if (left_link(lbl(p)) == lbl(p) && most_left(left_link, i) != lbl(p))
 	    left_link(lbl(p)) = i;
 //	  else
 //	    left_link(lbl(p)) = 0;//FIXME: should be uncommented?
@@ -350,7 +378,39 @@ namespace scribo
       return left_link;
     }
 
+/*
+    void merge_bboxes(util::array<box2d>& cboxes,
+		      image2d<int_u16>& lbl, unsigned &nlabels)
+    {
+      fun::i2v::array<int_u16> merge;
+      unsigned current = 1;
 
+      for (unsigned i = 1; i <= nlabels;)
+      {
+	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
+	/// FIXME: Box center => Routine?
+	point2d c (cboxes[i].pmin().row()
+		    + ((cboxes[i].pmax().row() - cboxes[i].pmin().row()) / 2),
+		   cboxes[i].pmin().col() + midcol);
+	/// First site on the right of the center site
+	point2d p(c.row(), c.col() + 1);
+
+	// FIXME: Lemmings with a condition on the distance => write a special version?
+	while (lbl.domain().has(p) && (lbl(p) == 0 || lbl(p) == i)
+		&& (p.col() - c.col()) <= midcol)
+	  ++p.col();
+
+	if (lbl.domain().has(p) && lbl(p) != 0 && lbl(p) != i
+	    && (p.col() - c.col()) <= midcol)
+	{
+	   
+	}
+      }
+
+      level::apply(lbl, merge);
+      cboxes.resize(nlabels);
+    }
+*/
 
     util::array<box2d>
     extract_text(image2d<bool>& in,
@@ -372,6 +432,14 @@ namespace scribo
       remove_small_comps_i2v(lbl, nlabels, min_comp_size);
 
       boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
+
+#ifndef NOUT
+      image2d<rgb8> tmp = clone(output);
+      draw_component_boxes(tmp, cboxes);
+      io::ppm::save(tmp, "character-bboxes.ppm");
+#endif
+
+      //merge_bboxes(cboxes, lbl, nlabels);
 
       //Link character bboxes to their left neighboor if possible.
       fun::i2v::array<int_u16> left =
@@ -407,6 +475,12 @@ namespace scribo
     //Load image
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
+    internal::negate(in);
+
+#ifndef NOUT
+    io::pbm::save(in, "in-neg.pbm");
+#endif
+
     image2d<rgb8> output = internal::to_color(in);
 
     internal::extract_tables(in, output, l, bbox_larger);
@@ -414,13 +488,12 @@ namespace scribo
     util::array<box2d> tboxes =
       internal::extract_text(in, output, bbox_distance, min_comp_size);
 
-    for (unsigned i = 1; i < tboxes.nelements(); ++i)
-      if (tboxes[i].is_valid())
-	draw::box(output, tboxes[i], literal::red);
+    internal::draw_component_boxes(output, tboxes);
     io::ppm::save(output, argv[2]);
 
     /// Use txt bboxes here with Tesseract
-    /// => in | tboxes[i]
+    /// for (i = 1; i < tboxes.nelements(); ++i)
+    ///	  tesseract(in | tboxes[i])
   }
 
 } // end of namespace scribo

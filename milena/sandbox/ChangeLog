@@ -1,3 +1,9 @@
+2008-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix an endless loop.
+
+	* scribo/demat.hh: Fix a endless loop. 
+
 2008-10-22  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Work on ICCVG04 for INIM.
