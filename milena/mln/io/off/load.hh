@@ -264,6 +264,17 @@ namespace mln
 	// Image.
 	ima.init_(pc, values);
 
+	/*--------------.
+	| End of file.  |
+	`--------------*/
+
+	istr >> internal::eat_comment;
+	if (!istr.eof())
+	  {
+	    std::cerr << me << ": `" << filename
+		      << "': end of file not reached" << std::endl;
+	    std::exit(1);
+	  }
 	istr.close();
       }
 

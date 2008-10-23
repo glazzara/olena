@@ -1,5 +1,12 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve mln::io::off:load.
+
+	* mln/io/off/load.hh (mln::io::off:load): Ensure the end of the
+	file is reached.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust I/O routines to algebraic faces.
 
 	* mln/io/off/load.hh (mln::io::off::load): Adjust.
