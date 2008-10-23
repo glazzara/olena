@@ -34,7 +34,9 @@
 #include <vector>
 
 #include <mln/core/contract.hh>
-#include <mln/topo/n_face.hh>
+#include <mln/topo/algebraic_n_face.hh>
+
+// FIXME: Rename as algebraic_n_faces_set?
 
 
 namespace mln
@@ -47,17 +49,17 @@ namespace mln
     template <unsigned D> class complex;
 
 
-    /*------------------------.
-    | Set of n-face handles.  |
-    `------------------------*/
+    /*------------------------------------.
+    | Set of (algebraic) n-face handles.  |
+    `------------------------------------*/
 
     /// \brief Set of face handles of dimension \p N.
     template <unsigned N, unsigned D>
     class n_faces_set
     {
     public:
-      /// \brief Append face \a f to the set.
-      void add(const n_face<N, D>& f);
+      /// \brief Append an algebraic face \a f to the set.
+      void add(const algebraic_n_face<N, D>& f);
 
       /// \brief Reserve \a n cells in the set.
       ///
@@ -66,26 +68,54 @@ namespace mln
       /// efficiency purpose, and its use is completely optional.
       void reserve(size_t n);
 
+      /// The type of the set of face handles.
+      typedef std::vector< algebraic_n_face<N, D> > faces_type;
+
       /// \brief Accessors.
       ///
       /// Return the set of handles.
       /// \{
-      const std::vector< n_face<N, D> >& faces() const;
+      const faces_type& faces() const;
       /// \}
 
     private:
       friend class complex<D>;
 
-      // FIXME: Rename this as `handles_'?
-      std::vector< n_face<N, D> > faces_;
+      /// The set of face handles.
+      faces_type faces_;
     };
 
 
-    /// Construction helpers for mln::topo::n_faces_set.
+    /*-----------------------.
+    | Construction helpers.  |
+    `-----------------------*/
+
+    /* FIXME: We can probably reduce the number of operators, given
+       the fact that ``a - b'' is equivalent to ``a + (-b)''.  */
+
+    /// Addition.
     /// \{
     template <unsigned N, unsigned D>
     n_faces_set<N, D>
+    operator+(const algebraic_n_face<N, D>& f1,
+	      const algebraic_n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator+(const algebraic_n_face<N, D>& f1, const n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator+(const n_face<N, D>& f1, const algebraic_n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
     operator+(const n_face<N, D>& f1, const n_face<N, D>& f2);
+
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator+(const n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f);
 
     template <unsigned N, unsigned D>
     n_faces_set<N, D>
@@ -93,17 +123,54 @@ namespace mln
 
     template <unsigned N, unsigned D>
     n_faces_set<N, D>&
-    operator+=(n_faces_set<N, D>& fs, const n_face<N, D>& f);
+    operator+=(n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f);
+    /// \}
+
+    /// Subtraction.
+    /// \{
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const algebraic_n_face<N, D>& f1,
+	      const algebraic_n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const algebraic_n_face<N, D>& f1, const n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const n_face<N, D>& f1, const algebraic_n_face<N, D>& f2);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const n_face<N, D>& f1, const n_face<N, D>& f2);
+
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>
+    operator-(const n_faces_set<N, D>& fs, const n_face<N, D>& f);
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>&
+    operator-=(n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f);
     /// \}
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    /*------------------------------------.
+    | Set of (algebraic) n-face handles.  |
+    `------------------------------------*/
+
     template <unsigned N, unsigned D>
     inline
     void
-    n_faces_set<N, D>::add(const n_face<N, D>& f)
+    n_faces_set<N, D>::add(const algebraic_n_face<N, D>& f)
     {
       // Check consistency.
       if (!faces_.empty())
@@ -121,17 +188,25 @@ namespace mln
 
     template <unsigned N, unsigned D>
     inline
-    const std::vector< n_face<N, D> >&
+    const std::vector< algebraic_n_face<N, D> >&
     n_faces_set<N, D>::faces() const
     {
       return faces_;
     }
 
+    /*-----------------------.
+    | Construction helpers.  |
+    `-----------------------*/
+
+    // ---------- //
+    // Addition.  //
+    // ---------- //
 
     template <unsigned N, unsigned D>
     inline
     n_faces_set<N, D>
-    operator+(const n_face<N, D>& f1, const n_face<N, D>& f2)
+    operator+(const algebraic_n_face<N, D>& f1,
+	      const algebraic_n_face<N, D>& f2)
     {
       n_faces_set<N, D> fs;
       fs.add(f1);
@@ -142,7 +217,41 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     n_faces_set<N, D>
-    operator+(const n_faces_set<N, D>& fs, const n_face<N, D>& f)
+    operator+(const algebraic_n_face<N, D>& f1, const n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(f1);
+      fs.add(make_algebraic_n_face(f2, true));
+      return fs;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator+(const n_face<N, D>& f1, const algebraic_n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(make_algebraic_n_face(f1, true));
+      fs.add(f2);
+      return fs;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator+(const n_face<N, D>& f1, const n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(make_algebraic_n_face(f1, true));
+      fs.add(make_algebraic_n_face(f2, true));
+      return fs;
+    }
+
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator+(const n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f)
     {
       n_faces_set<N, D> fs2(fs);
       fs2.add(f);
@@ -150,10 +259,98 @@ namespace mln
     }
 
     template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator+(const n_faces_set<N, D>& fs, const n_face<N, D>& f)
+    {
+      n_faces_set<N, D> fs2(fs);
+      fs2.add(make_algebraic_n_face(f, true));
+      return fs2;
+    }
+
+    template <unsigned N, unsigned D>
     n_faces_set<N, D>&
-    operator+=(n_faces_set<N, D>& fs, const n_face<N, D>& f)
+    operator+=(n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f)
     {
       fs.add(f);
+      return fs;
+    }
+
+    // ------------- //
+    // Subtraction.  //
+    // ------------- //
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const algebraic_n_face<N, D>& f1,
+	      const algebraic_n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(f1);
+      fs.add(-f2);
+      return fs;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const algebraic_n_face<N, D>& f1, const n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(f1);
+      fs.add(make_algebraic_n_face(f2, false));
+      return fs;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const n_face<N, D>& f1, const algebraic_n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(make_algebraic_n_face(f1, true));
+      fs.add(-f2);
+      return fs;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const n_face<N, D>& f1, const n_face<N, D>& f2)
+    {
+      n_faces_set<N, D> fs;
+      fs.add(make_algebraic_n_face(f1, true));
+      fs.add(make_algebraic_n_face(f2, false));
+      return fs;
+    }
+
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f)
+    {
+      n_faces_set<N, D> fs2(fs);
+      fs2.add(-f);
+      return fs2;
+    }
+
+    template <unsigned N, unsigned D>
+    inline
+    n_faces_set<N, D>
+    operator-(const n_faces_set<N, D>& fs, const n_face<N, D>& f)
+    {
+      n_faces_set<N, D> fs2(fs);
+      fs2.add(make_algebraic_n_face(f, false));
+      return fs2;
+    }
+
+    template <unsigned N, unsigned D>
+    n_faces_set<N, D>&
+    operator-=(n_faces_set<N, D>& fs, const algebraic_n_face<N, D>& f)
+    {
+      fs.add(-f);
       return fs;
     }
 

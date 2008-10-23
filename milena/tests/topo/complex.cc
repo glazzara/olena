@@ -85,15 +85,15 @@ int main()
   topo::n_face<0, D> v3 = c.add_face();
  
   // 1-faces (segments).
-  topo::n_face<1, D> e0 = c.add_face(v0 + v1);
-  topo::n_face<1, D> e1 = c.add_face(v0 + v2);
-  topo::n_face<1, D> e2 = c.add_face(v1 + v2);
-  topo::n_face<1, D> e3 = c.add_face(v0 + v3);
-  topo::n_face<1, D> e4 = c.add_face(v2 + v3);
+  topo::n_face<1, D> e0 = c.add_face(-v1 + v0);
+  topo::n_face<1, D> e1 = c.add_face(-v0 + v2);
+  topo::n_face<1, D> e2 = c.add_face(-v2 + v1);
+  topo::n_face<1, D> e3 = c.add_face(-v0 + v3);
+  topo::n_face<1, D> e4 = c.add_face(-v3 + v2);
 
   // 2-faces (triangles).
-  topo::n_face<2, D> t0 = c.add_face(e0 + e1 + e2);
-  topo::n_face<2, D> t1 = c.add_face(e1 + e3 + e4);
+  topo::n_face<2, D> t0 = c.add_face( e0 + e1 + e2);
+  topo::n_face<2, D> t1 = c.add_face(-e1 + e3 + e4);
 
   std::cout << c << std::endl;
 
@@ -133,7 +133,7 @@ int main()
   `-----------------*/
 
   // Adjacent lower-dimension faces of AF.
-  std::vector< topo::face<D> > af_lower_dim_adj_faces =
+  std::vector< topo::algebraic_face<D> > af_lower_dim_adj_faces =
     af.lower_dim_adj_faces();
   std::cout << "lower-dimension faces adjacent to " << af << ":" << std::endl;
   std::copy (af_lower_dim_adj_faces.begin(), af_lower_dim_adj_faces.end(),
@@ -141,7 +141,7 @@ int main()
   std::cout << std::endl;
 
   // Adjacent higher-dimension faces of AF.
-  std::vector< topo::face<D> > af_higher_dim_adj_faces =
+  std::vector< topo::algebraic_face<D> > af_higher_dim_adj_faces =
     af.higher_dim_adj_faces();
   std::cout << "higher-dimension faces adjacent to " << af << ":" << std::endl;
   std::copy (af_higher_dim_adj_faces.begin(), af_higher_dim_adj_faces.end(),

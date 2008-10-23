@@ -1,5 +1,34 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert n-faces set to algebraic faces.
+
+	* milena/mln/topo/n_faces_set.hh
+	(mln::topo::n_faces_set::faces_type): New typedef.
+	Use it as type of...
+	(mln::topo::n_faces_set::faces_): ...this member.
+	(mln::topo::n_faces_set::faces)
+	(mln::topo::n_faces_set::add):
+	Adjust methods.
+	(operator+(const algebraic_n_face<N,D>&, const algebraic_n_face<N,D>&))
+	(operator+(const n_face<N,D>&, const algebraic_n_face<N,D>&))
+	(operator+(const algebraic_n_face<N,D>&, const n_face<N,D>&))
+	(operator+(const n_faces_set<N,D>&, const algebraic_n_face<N,D>))
+	(operator-(const algebraic_n_face<N,D>&, const algebraic_n_face<N,D>&))
+	(operator-(const n_face<N,D>&, const algebraic_n_face<N,D>&))
+	(operator-(const algebraic_n_face<N,D>&, const n_face<N,D>&))
+	(operator-(const n_face<N,D>&, const n_face<N,D>&))
+	(operator-(const n_faces_set<N,D>&, const algebraic_n_face<N,D>))
+	(operator-(const n_faces_set<N,D>&, const n_face<N,D>))
+	(operator-=(n_faces_set<N,D>&, const algebraic_n_face<N, D>&))
+	New operators.
+	(operator+=(n_faces_set<N,D>&, const n_face<N, D>&)):
+	Turn into...
+	(operator+=(n_faces_set<N,D>&, const algebraic_n_face<N, D>&)):
+	...this.
+	* tests/topo/complex.cc: Adjust test.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Adjust (non algebraic) faces.
 
 	* mln/topo/face.hh
