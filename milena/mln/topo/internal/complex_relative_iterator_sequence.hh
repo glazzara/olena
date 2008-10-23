@@ -63,6 +63,8 @@ namespace mln
 	typedef complex_relative_iterator_sequence<I1, I2, E> self_;
 
       public:
+	/// The type of the center face.
+	typedef typename I1::center_type center_type;
 	/// The type of the iterated faces.
 	typedef typename I1::face_type face_type;
 
@@ -76,7 +78,7 @@ namespace mln
 	/// Manipulation.
 	/// \{
 	/// Change the center face.
-	void center_at(const face& c);
+	void center_at(const center_type& c);
 
 	/// Test if the iterator is valid.
 	bool is_valid() const;
@@ -145,7 +147,7 @@ namespace mln
       template <typename I1, typename I2, typename E>
       inline
       void
-      complex_relative_iterator_sequence<I1, I2, E>::center_at(const face& c)
+      complex_relative_iterator_sequence<I1, I2, E>::center_at(const center_type& c)
       {
 	iter1_.center_at(c);
 	iter2_.center_at(c);

@@ -37,7 +37,7 @@
 # include <set>
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
-# include <mln/topo/face.hh>
+# include <mln/topo/algebraic_face.hh>
 
 
 namespace mln
@@ -65,12 +65,14 @@ namespace mln
     template <unsigned D>
     class adj_higher_dim_connected_n_face_fwd_iter
       : public internal::forward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 adj_higher_dim_connected_n_face_fwd_iter<D> >,
-        private internal::adj_higher_dim_connected_n_face_iterator<D>
+	private internal::adj_higher_dim_connected_n_face_iterator<D>
     {
     private:
       typedef adj_higher_dim_connected_n_face_fwd_iter<D> self_;
       typedef internal::forward_complex_relative_iterator_base< face<D>,
+								algebraic_face<D>,
 								self_ > super_;
 
     public:
@@ -100,12 +102,14 @@ namespace mln
     template <unsigned D>
     class adj_higher_dim_connected_n_face_bkd_iter
       : public internal::backward_complex_relative_iterator_base< face<D>,
+								  algebraic_face<D>,
 								  adj_higher_dim_connected_n_face_bkd_iter<D> >,
-        private internal::adj_higher_dim_connected_n_face_iterator<D>
+	private internal::adj_higher_dim_connected_n_face_iterator<D>
     {
     private:
       typedef adj_higher_dim_connected_n_face_bkd_iter<D> self_;
       typedef internal::backward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 self_ > super_;
 
     public:
@@ -138,7 +142,7 @@ namespace mln
 	/// The actual implementation of the computation of the set of
 	/// faces adjacent to the reference face.
 	void update_adj_faces__(const face<D>& center,
-				std::vector< face<D> >& adj_faces);
+				std::vector< algebraic_face<D> >& adj_faces);
       };
 
     } // end of namespace mln::topo::internal
@@ -225,7 +229,7 @@ namespace mln
       inline
       void
       adj_higher_dim_connected_n_face_iterator<D>::update_adj_faces__(const face<D>& center,
-								     std::vector< face<D> >& adj_faces)
+								      std::vector< algebraic_face<D> >& adj_faces)
       {
 	// Reset the result container.
 	adj_faces.clear();
@@ -235,8 +239,8 @@ namespace mln
 	   added to the pool of adjacent faces. We use an std::set
 	   because the lookup is cheaper (O(log(n)) vs O(n) for a
 	   vector, where n is the size of the containers.  */
-	std::set< face<D> > faces_set;
-	typedef std::vector< face<D> > faces_t;
+	std::set< algebraic_face<D> > faces_set;
+	typedef std::vector< algebraic_face<D> > faces_t;
 
 	// The set of (n+1)-faces adjacent to CENTER.
 	faces_t shared_higher_faces = center.higher_dim_adj_faces();

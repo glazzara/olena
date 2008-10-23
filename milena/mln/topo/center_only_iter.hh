@@ -74,11 +74,13 @@ namespace mln
     template <unsigned D>
     class center_only_iter
       : public internal::forward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 center_only_iter<D> >
     {
     private:
       typedef center_only_iter<D> self_;
       typedef internal::forward_complex_relative_iterator_base< face<D>,
+								algebraic_face<D>,
 								self_ > super_;
 
     public:
@@ -122,7 +124,7 @@ namespace mln
     {
       mln_precondition(this->c_);
       this->adj_faces_.clear();
-      this->adj_faces_.push_back(*this->c_);
+      this->adj_faces_.push_back(make_algebraic_face(*this->c_, true));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

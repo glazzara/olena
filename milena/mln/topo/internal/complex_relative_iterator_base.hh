@@ -36,14 +36,14 @@
     
     \verbatim
 
-                    complex_relative_iterator_base<F, E>
+                    complex_relative_iterator_base<C, F, E>
                                     ^
                                     |
                      ,--------------+--------------.
                      |                             |
-   forward_complex_relative_iterator_base<F, E>    |
+ forward_complex_relative_iterator_base<C, F, E>   |
                                                    |
-                              backward_complex_relative_iterator_base<F, E>
+                            backward_complex_relative_iterator_base<C, F, E>
 
     \endverbatim
 */
@@ -68,20 +68,24 @@ namespace mln
     namespace internal
     {
 
-      /*-------------------------------------------------------.
-      | topo::internal::complex_relative_iterator_base<F, E>.  |
-      `-------------------------------------------------------*/
+      /*----------------------------------------------------------.
+      | topo::internal::complex_relative_iterator_base<C, F, E>.  |
+      `----------------------------------------------------------*/
 
       /// \brief Factoring class for relative iterators on mln::complex.
       ///
+      /// \arg \p C The type of the center face handle.
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
-      template <typename F, typename E>
-      class complex_relative_iterator_base : public complex_iterator_base<F, E>
+      template <typename C, typename F, typename E>
+      class complex_relative_iterator_base :
+	public complex_iterator_base<F, E>
       {
-	typedef complex_relative_iterator_base<F, E> self_;
+	typedef complex_relative_iterator_base<C, F, E> self_;
 
       public:
+	/// The type of the center face.
+	typedef C center_type;
 	/// The type of the iterated faces.
 	typedef F face_type;
 
@@ -95,7 +99,7 @@ namespace mln
 	/// Manipulation.
 	/// \{
 	/// Change the center face.
-	void center_at(const F& c);
+	void center_at(const center_type& c);
 
 	/// Start an iteration.
 	void start();
@@ -106,7 +110,7 @@ namespace mln
       protected:
 	/// A pointer to the center face around which this iterator
 	/// moves.
-	const face_type* c_;
+	const center_type* c_;
 
 	// The type of the set of vicinity sites (adjacent face handles).
 	typedef std::vector<face_type> adj_faces_t;
@@ -116,21 +120,22 @@ namespace mln
 
 
 
-      /*---------------------------------------------------------------.
-      | topo::internal::forward_complex_relative_iterator_base<F, E>.  |
-      `---------------------------------------------------------------*/
+      /*------------------------------------------------------------------.
+      | topo::internal::forward_complex_relative_iterator_base<C, F, E>.  |
+      `------------------------------------------------------------------*/
 
       /// \brief Factoring class for forward relative iterators on
       /// mln::complex.
       ///
+      /// \arg \p C The type of the center face handle.
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       class forward_complex_relative_iterator_base
-	: public complex_relative_iterator_base<F, E>
+	: public complex_relative_iterator_base<C, F, E>
       {
-	typedef forward_complex_relative_iterator_base<F, E> self_;
-	typedef complex_relative_iterator_base<F, E> super_;
+	typedef forward_complex_relative_iterator_base<C, F, E> self_;
+	typedef complex_relative_iterator_base<C, F, E> super_;
 
       public:
 	typedef F face_type;
@@ -166,21 +171,22 @@ namespace mln
       };
 
 
-      /*----------------------------------------------------------------.
-      | topo::internal::backward_complex_relative_iterator_base<F, E>.  |
-      `----------------------------------------------------------------*/
+      /*-------------------------------------------------------------------.
+      | topo::internal::backward_complex_relative_iterator_base<C, F, E>.  |
+      `-------------------------------------------------------------------*/
 
       /// \brief Factoring class for backward relative iterators on
       /// mln::complex.
       ///
+      /// \arg \p C The type of the center face handle.
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       class backward_complex_relative_iterator_base
-	: public complex_relative_iterator_base<F, E>
+	: public complex_relative_iterator_base<C, F, E>
       {
-	typedef backward_complex_relative_iterator_base<F, E> self_;
-	typedef complex_relative_iterator_base<F, E> super_;
+	typedef backward_complex_relative_iterator_base<C, F, E> self_;
+	typedef complex_relative_iterator_base<C, F, E> super_;
 
       public:
 	typedef F face_type;
@@ -219,13 +225,13 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-      /*-------------------------------------------------------.
-      | topo::internal::complex_relative_iterator_base<F, E>.  |
-      `-------------------------------------------------------*/
+      /*----------------------------------------------------------.
+      | topo::internal::complex_relative_iterator_base<C, F, E>.  |
+      `----------------------------------------------------------*/
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
-      complex_relative_iterator_base<F, E>::complex_relative_iterator_base()
+      complex_relative_iterator_base<C, F, E>::complex_relative_iterator_base()
 	: c_(0)
       {
 	// Check for required methods in E.
@@ -235,10 +241,10 @@ namespace mln
  	exact(this)->invalidate();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       template <typename Fref>
       inline
-      complex_relative_iterator_base<F, E>::complex_relative_iterator_base(const Fref& f_ref)
+      complex_relative_iterator_base<C, F, E>::complex_relative_iterator_base(const Fref& f_ref)
       {
 	// Check for required methods in E.
 	void (E::*m)() = & E::update_adj_faces_;
@@ -247,29 +253,29 @@ namespace mln
 	center_at(f_ref);
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      complex_relative_iterator_base<F, E>::center_at(const F& c)
+      complex_relative_iterator_base<C, F, E>::center_at(const C& c)
       {
  	c_ = &c;
  	exact(this)->invalidate();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      complex_relative_iterator_base<F, E>::start()
+      complex_relative_iterator_base<C, F, E>::start()
       {
 	exact(this)->do_start_();
 	if (exact(this)->is_valid())
 	  exact(this)->update_f_();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      complex_relative_iterator_base<F, E>::next_()
+      complex_relative_iterator_base<C, F, E>::next_()
       {
 	exact(this)->do_next_();
 	if (exact(this)->is_valid())
@@ -278,122 +284,122 @@ namespace mln
 
 
 
-      /*---------------------------------------------------------------.
-      | topo::internal::forward_complex_relative_iterator_base<F, E>.  |
-      `---------------------------------------------------------------*/
+      /*------------------------------------------------------------------.
+      | topo::internal::forward_complex_relative_iterator_base<C, F, E>.  |
+      `------------------------------------------------------------------*/
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
-      forward_complex_relative_iterator_base<F, E>::forward_complex_relative_iterator_base()
+      forward_complex_relative_iterator_base<C, F, E>::forward_complex_relative_iterator_base()
       {
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       template <typename Fref>
       inline
-      forward_complex_relative_iterator_base<F, E>::forward_complex_relative_iterator_base(const Fref& f_ref)
+      forward_complex_relative_iterator_base<C, F, E>::forward_complex_relative_iterator_base(const Fref& f_ref)
 	: super_(f_ref)
       {
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       bool
-      forward_complex_relative_iterator_base<F, E>::is_valid() const
+      forward_complex_relative_iterator_base<C, F, E>::is_valid() const
       {
 	return i_ != this->adj_faces_.end();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      forward_complex_relative_iterator_base<F, E>::invalidate()
+      forward_complex_relative_iterator_base<C, F, E>::invalidate()
       {
 	i_ = this->adj_faces_.end();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      forward_complex_relative_iterator_base<F, E>::do_start_()
+      forward_complex_relative_iterator_base<C, F, E>::do_start_()
       {
 	exact(this)->update_adj_faces_();
 	i_ = this->adj_faces_.begin();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      forward_complex_relative_iterator_base<F, E>::do_next_()
+      forward_complex_relative_iterator_base<C, F, E>::do_next_()
       {
 	++i_;
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      forward_complex_relative_iterator_base<F, E>::update_f_()
+      forward_complex_relative_iterator_base<C, F, E>::update_f_()
       {
 	mln_precondition(is_valid());
 	this->f_ = *i_;
       }
 
 
-      /*----------------------------------------------------------------.
-      | topo::internal::backward_complex_relative_iterator_base<F, E>.  |
-      `----------------------------------------------------------------*/
+      /*-------------------------------------------------------------------.
+      | topo::internal::backward_complex_relative_iterator_base<C, F, E>.  |
+      `-------------------------------------------------------------------*/
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
-      backward_complex_relative_iterator_base<F, E>::backward_complex_relative_iterator_base()
+      backward_complex_relative_iterator_base<C, F, E>::backward_complex_relative_iterator_base()
       {
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       template <typename Fref>
       inline
-      backward_complex_relative_iterator_base<F, E>::backward_complex_relative_iterator_base(const Fref& f_ref)
+      backward_complex_relative_iterator_base<C, F, E>::backward_complex_relative_iterator_base(const Fref& f_ref)
 	: super_(f_ref)
       {
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       bool
-      backward_complex_relative_iterator_base<F, E>::is_valid() const
+      backward_complex_relative_iterator_base<C, F, E>::is_valid() const
       {
 	return i_ != this->adj_faces_.rend();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      backward_complex_relative_iterator_base<F, E>::invalidate()
+      backward_complex_relative_iterator_base<C, F, E>::invalidate()
       {
 	i_ = this->adj_faces_.rend();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      backward_complex_relative_iterator_base<F, E>::do_start_()
+      backward_complex_relative_iterator_base<C, F, E>::do_start_()
       {
 	exact(this)->update_adj_faces_();
 	i_ = this->adj_faces_.rbegin();
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      backward_complex_relative_iterator_base<F, E>::do_next_()
+      backward_complex_relative_iterator_base<C, F, E>::do_next_()
       {
 	++i_;
       }
 
-      template <typename F, typename E>
+      template <typename C, typename F, typename E>
       inline
       void
-      backward_complex_relative_iterator_base<F, E>::update_f_()
+      backward_complex_relative_iterator_base<C, F, E>::update_f_()
       {
 	mln_precondition(is_valid());
 	this->f_ = *i_;

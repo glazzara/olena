@@ -1,5 +1,39 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Convert iterators on complexes to algebraic faces.
+
+	* mln/topo/internal/complex_relative_iterator_base.hh
+	(topo::internal::complex_relative_iterator_base)
+	(topo::internal::forward_complex_relative_iterator_base)
+	(topo::internal::backward_complex_relative_iterator_base):
+	Add a template parameter C, for the type of the center face, which
+	might be different from F, the type of the iterated faces.
+	(topo::internal::complex_relative_iterator_base::center_type):
+	New typedef.
+	Use it as type of...
+	(topo::internal::complex_relative_iterator_base::c_):
+	...this member.
+	(topo::internal::complex_relative_iterator_base::center_at):
+	Adjust.
+	* mln/topo/internal/complex_iterator_base.hh:
+	Adjust documentation.
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh,
+	* mln/topo/adj_lower_dim_connected_n_face_iter.hh,
+	* mln/topo/adj_higher_dim_connected_n_face_iter.hh,
+	* mln/topo/center_only_iter.hh,
+	* mln/topo/internal/complex_relative_iterator_sequence:
+	Adjust.
+	Pass algebraic_face<D> as parameter F to super class, and face<D>
+	as as parameter C.
+	* mln/topo/adj_m_face_iter.hh: Likewise.
+	(adj_m_face_iterator<D>::update_adj_faces__): Have the
+	algorithm take the sign (orientation) of the face into account.
+	* mln/topo/adj_lower_higher_face_iter.hh: Remove a useless header
+	inclusion.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert mln::topo::complex to algebraic faces.
 
 	* mln/topo/complex.hh

@@ -50,7 +50,7 @@
                                     |
                      ,--------------+--------------.
                      |                             |
-    complex_set_iterator_base<F, E>   complex_relative_iterator_base<F, E>
+    complex_set_iterator_base<F, E> complex_relative_iterator_base<C, F, E>
 
     \endverbatim
 */

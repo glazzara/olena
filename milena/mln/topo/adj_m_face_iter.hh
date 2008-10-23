@@ -70,12 +70,14 @@ namespace mln
     template <unsigned D>
     class adj_m_face_fwd_iter
       : public internal::forward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 adj_m_face_fwd_iter<D> >,
         public internal::adj_m_face_iterator<D>
     {
     private:
       typedef adj_m_face_fwd_iter<D> self_;
       typedef internal::forward_complex_relative_iterator_base< face<D>,
+								algebraic_face<D>,
 								self_ > super_;
       typedef internal::adj_m_face_iterator<D> impl_;
 
@@ -115,12 +117,14 @@ namespace mln
     template <unsigned D>
     class adj_m_face_bkd_iter
       : public internal::backward_complex_relative_iterator_base< face<D>,
+								  algebraic_face<D>,
 								  adj_m_face_bkd_iter<D> >,
         public internal::adj_m_face_iterator<D>
     {
     private:
       typedef adj_m_face_bkd_iter<D> self_;
       typedef internal::backward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 self_ > super_;
       typedef internal::adj_m_face_iterator<D> impl_;
 
@@ -168,7 +172,7 @@ namespace mln
 	/// The actual implementation of the computation of the set of
 	/// faces adjacent to the reference face.
 	void update_adj_faces__(const face<D>& center,
-				std::vector< face<D> >& adj_faces);
+				std::vector< algebraic_face<D> >& adj_faces);
 
 	/// The dimension of the iterated faces.
 	unsigned m_;
@@ -278,22 +282,23 @@ namespace mln
       inline
       void
       adj_m_face_iterator<D>::update_adj_faces__(const face<D>& center,
-						 std::vector< face<D> >& adj_faces)
+						 std::vector< algebraic_face<D> >& adj_faces)
       {
 	adj_faces.clear();
 
 	if (center.n() == m_)
 	  return;
   
-	typedef std::vector < topo::face<D> > faces_t;
-	typedef std::set < topo::face<D> > faces_set_t;
+	typedef std::vector < topo::algebraic_face<D> > faces_t;
+	typedef std::set < topo::algebraic_face<D> > faces_set_t;
 
 	/* FIXME: p_faces is redundant; we could use adj_faces
 	   directly.  */
 	/* The adjacent p-faces being built; initialized with CENTER,
 	   and filled with q-faces at each step, until q reaches
 	   m_.  */
-	faces_t p_faces(1, center);
+	faces_t p_faces(1,
+			make_algebraic_face(center, true));
 	// The set of faces being built.
 	/* FIXME: This pattern is recurring in Milena---using an
 	   std::set (or any fast associative container) to improve
@@ -314,14 +319,34 @@ namespace mln
 		faces_t q_faces = g->n() < m_ ?
 		  g->higher_dim_adj_faces() :
 		  g->lower_dim_adj_faces();
-		// Don't insert a face twice.
-		for (typename faces_t::const_iterator h = q_faces.begin();
+		/* Traverse the higher- or lower-dimension adjacent
+		   faces of G in the natural order if G's sign is
+		   positive, or in the reverse order if G's sign is
+		   negative.  */
+		/* FIXME: Factor; the code if the two branches is the
+		   same, except for the iteration order. */
+		if (g->sign())
+		  {
+		    for (typename faces_t::const_iterator h = q_faces.begin();
 		     h != q_faces.end(); ++h)
-		  if (work_faces_set.find(*h) == work_faces_set.end())
-		    {
-		      work_faces.push_back(*h);
-		      work_faces_set.insert(*h);
-		    }
+		      // Don't insert a face twice.
+		      if (work_faces_set.find(*h) == work_faces_set.end())
+			{
+			  work_faces.push_back(*h);
+			  work_faces_set.insert(*h);
+			}
+		  }
+		else
+		  {
+		    for (typename faces_t::const_reverse_iterator h =
+			   q_faces.rbegin(); h != q_faces.rend(); ++h)
+		      // Don't insert a face twice.
+		      if (work_faces_set.find(*h) == work_faces_set.end())
+			{
+			  work_faces.push_back(*h);
+			  work_faces_set.insert(*h);
+			}
+		  }
 	      }
 	    work_faces.swap(p_faces);
 	    work_faces.clear();

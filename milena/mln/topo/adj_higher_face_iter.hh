@@ -33,7 +33,7 @@
 /// adjacent (n+1)-faces of a (reference) n-face in a complex.
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
-# include <mln/topo/face.hh>
+# include <mln/topo/algebraic_face.hh>
 
 
 namespace mln
@@ -57,10 +57,12 @@ namespace mln
     template <unsigned D>
     class adj_higher_face_fwd_iter
       : public internal::forward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 adj_higher_face_fwd_iter<D> >
     {
       typedef adj_higher_face_fwd_iter<D> self_;
       typedef internal::forward_complex_relative_iterator_base< face<D>,
+								algebraic_face<D>,
 								self_ > super_;
 
     public:
@@ -87,10 +89,12 @@ namespace mln
     template <unsigned D>
     class adj_higher_face_bkd_iter
       : public internal::backward_complex_relative_iterator_base< face<D>,
+								  algebraic_face<D>,
 								  adj_higher_face_bkd_iter<D> >
     {
       typedef adj_higher_face_bkd_iter<D> self_;
       typedef internal::backward_complex_relative_iterator_base< face<D>,
+								 algebraic_face<D>,
 								 self_ > super_;
 
     public:
