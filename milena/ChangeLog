@@ -1,5 +1,11 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add an algebraic (oriented) n-face handle (descriptor).
+
+	* mln/topo/algebraic_n_face.hh: New.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a bug in OFF file saving.
 
 	* mln/io/off/save.hh
