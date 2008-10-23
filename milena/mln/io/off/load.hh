@@ -220,14 +220,16 @@ namespace mln
 		topo::n_face<0, D> vertex(c, vertex_id);
 		topo::n_face<0, D> next_vertex(c, next_vertex_id);
 		// The current edge.
-		topo::n_face<1, D> edge;
+		topo::algebraic_n_face<1, D> edge;
 		// If the edge has been constructed yet, create it;
 		// otherwise, retrieve its id from the complex.
 		if (!complex_edges[vertex_id][next_vertex_id])
 		  {
 		    complex_edges[vertex_id][next_vertex_id] = true;
 		    complex_edges[next_vertex_id][vertex_id] = true;
-		    edge = c.add_face(vertex + next_vertex);
+		    edge =
+		      make_algebraic_n_face(c.add_face(vertex - next_vertex),
+					    true);
 		  }
 		else
 		  {

@@ -1,5 +1,11 @@
 2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
 
+	Adjust I/O routines to algebraic faces.
+
+	* mln/io/off/load.hh (mln::io::off::load): Adjust.
+
+2008-10-23  Roland Levillain  <roland@lrde.epita.fr>
+
 	Convert iterators on complexes to algebraic faces.
 
 	* mln/topo/internal/complex_relative_iterator_base.hh
