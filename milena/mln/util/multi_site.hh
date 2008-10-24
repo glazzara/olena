@@ -75,6 +75,13 @@ namespace mln
     };
 
 
+    /* FIXME: Required by an assertion in mln::p_queue_fast<P>::has();
+       shouldn't there be no requirements on sites?  */
+    template <typename P>
+    bool
+    operator==(const multi_site<P>& lhs, const multi_site<P>& rhs);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -127,6 +134,14 @@ namespace mln
     {
       mln_precondition(!sites.empty());
       return sites[0];
+    }
+
+
+    template <typename P>
+    bool
+    operator==(const multi_site<P>& lhs, const multi_site<P>& rhs)
+    {
+      return lhs.sites == rhs.sites;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

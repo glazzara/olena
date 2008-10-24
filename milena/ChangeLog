@@ -1,5 +1,12 @@
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add operator== on mln::util::multi_site to please mln::p_queue_fast.
+
+	* mln/util/multi_site.hh
+	(operator==(const multi_site<P>&, const multi_site<P>&)): New.
+
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Update mln/trait/ch_value.hh w.r.t. mln::complex_image.
 
 	* mln/trait/ch_value.hh
