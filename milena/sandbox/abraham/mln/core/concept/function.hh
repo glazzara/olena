@@ -160,7 +160,7 @@ namespace mln
   template <typename E>
   struct Function_v2w_w2v : public Function<E>
   {
-    typedef Function_v2w2v<void> category;
+    typedef Function_v2w_w2v<void> category;
 
     /*
       result operator() (value);

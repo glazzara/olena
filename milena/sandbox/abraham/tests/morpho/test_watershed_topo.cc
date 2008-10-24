@@ -9,7 +9,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/morpho/basic_najman.hh>
+#include <mln/morpho/topo_wst.hh>
 #include <string>
 #include <iostream>
 
@@ -32,7 +32,7 @@ int main ()
 
   //  io::pgm::load(input, "./images/test_watershed.pgm");
   // io::pgm::load(input, "./images/little_test.pgm");
-    io::pgm::load(input, "./images/test_4.pgm");
+    io::pgm::load(input, "./images/test.pgm");
   // io::pgm::load(input, "../../img/dots.pgm");
   //io::pgm::load(input, "./images/+irm6.pgm");
 
@@ -40,7 +40,7 @@ int main ()
  // io::pgm::load(mverif, "./images/result_m_watershed.pgm");
  // io::pgm::load(wverif, "./images/result_topo_watershed.pgm");
 
-  morpho::basic_najman< image2d<int_u8>, neighb2d> n(input, c4());
+  morpho::topo_wst< image2d<int_u8>, neighb2d> n(input, c4());
 
   /*
   image2dint::fwd_piter it(input.domain());
@@ -53,7 +53,7 @@ int main ()
 
   //  io::tikz::save(input, "start.tex");
 
-  n.gotopo();
+  n.go();
 
   io::pgm::save(n.pima, "out.pgm");
 

@@ -33,8 +33,10 @@
 #include <mln/estim/min_max.hh>
 #include <mln/math/sqr.hh>
 #include <mln/util/greater_psite.hh>
+#include <mln/util/ord.hh>
 
-#include <mln/core/site_set/p_priority_queue.hh>
+#include <mln/core/site_set/p_priority.hh>
+#include <mln/core/site_set/p_queue_fast.hh>
 
 #include <queue>
 #include <vector>
@@ -78,8 +80,8 @@ namespace mln
 	}
       }; // struct node
 
-      I pima;
-      const Neighborhood<N>& nbh;
+      mln_exact(I) pima;
+      const mln_exact(N)& nbh;
       mln_ch_value(I, site) Par_node;
       mln_ch_value(I, site) Par_tree;
 
@@ -148,6 +150,8 @@ namespace mln
 	compressTree();
 	build_euler_tour();
 	build_minim();
+	m_watershed();
+	w_watershed();
       }
 
 
@@ -269,22 +273,6 @@ namespace mln
 	return n;
       }
 
-      template <typename C>
-      void image_output(image2d<C>& img)
-      {
-	for(unsigned int i = 0; i < img.domain().len(0); ++i)
-	  {
-	    for(unsigned int j = 0; j < img.domain().len(1); ++j)
-	      {
-		C l = (img(site(i, j)));//.row() * img.domain().len(1) + (img(site(i, j))).col();
-		std::cout << " " << l << " ";
-	      }
-	    std::cout << std::endl;
-	  }
-      }
-
-
-
       void print_tree(site p)
       {
 	node& n = nodes(p);
@@ -335,12 +323,12 @@ namespace mln
       }
 
 
-      site highest_fork (p_set<site>& components)
+      bool highest_fork (p_set<site>& components, site &r)
       {
 	if (components.nsites() == 0)
 	  {
 	    std::cerr << "highest fork : empty set" << std::endl;
-	    return site(-1, -1);
+	    return false;
 	  }
 
 	site
@@ -360,12 +348,13 @@ namespace mln
 	}
 
 	if (nodes(m).level == nodes(hfork).level)
-	  return site(-1, -1);
+	  return false;
 
-	return hfork;
+	r = hfork;
+	return true;
       }
 
-      site w_destructible(site p)
+      bool w_destructible(site p, site &r)
       {
 	mln_niter(N) q(nbh, p);
 	p_set<site> v;
@@ -375,20 +364,45 @@ namespace mln
 	    v.insert(Par_node(q));
 
 	if (v.nsites() == 0)
-	  return site(-1, -1);
+	  return false;
 
-	site hf = highest_fork(v);
+	site hf;
+	bool is_hf = highest_fork(v, hf);
 
-	if (hf == site(-1, -1))
-	  return min(v);
+	if (!is_hf) {
+	  r =  min(v);
+	  return true;
+	}
 
-	if (nodes(hf).level <= pima(p))
-	  return hf;
-
-	return site(-1, -1);
+	if (nodes(hf).level <= pima(p)) {
+	  r = hf;
+	  return true;
+	}
+	return false;
       }
 
-      site m_destructible(site p)
+      bool highest_fork (p_set<site>& components) {
+	site i;
+	return highest_fork(components, i);
+      }
+
+      bool m_destructible(site p) {
+	site i;
+	return m_destructible(p, i);
+      }
+
+      bool w_destructible(site p) {
+	site i;
+	return w_destructible(p, i);
+      }
+
+      bool w_constructible(site p) {
+	site i;
+	return w_constructible(p, i);
+      }
+
+
+      bool m_destructible(site p, site &r)
       {
 	mln_niter(N) q(nbh, p);
 	p_set<site> v = p_set<site>();
@@ -398,21 +412,23 @@ namespace mln
 	    v.insert(Par_node(q));
 
 	if (v.nsites() == 0)
-	  return site(-1, -1);
+	  return false;
 
 	// if (nodes(min(v)).children.nsites() != 0)
 	if (nodes(min(v)).children.size() != 0)
-	  return (site(-1, -1));
+	  return false;
 
-	site hf = highest_fork(v);
+	bool is_hf = highest_fork(v);
 
-	if (hf == site(-1, -1))
-	  return min(v);
+	if (!is_hf) {
+	  r = min(v);
+	  return true;
+	}
 
-	return site(-1, -1);
+	return false;
       }
 
-      site w_constructible(site p)
+      bool w_constructible(site p, site &r)
       {
 	mln_niter(N) q(nbh, p);
 	p_set<site> v;
@@ -422,10 +438,12 @@ namespace mln
 	    v.insert(Par_node(q));
 
 	if (v.nsites() == 0)
-	  return site(-1, -1);
+	  return false;
 
-	if (v.nsites() == 1)
-	  return v[0];
+	if (v.nsites() == 1) {
+	  r = v[0];
+	  return true;
+	}
 
 	site
 	  c = max(v),
@@ -445,9 +463,10 @@ namespace mln
 	}
 
 	if (nodes(c).level <= pima(p))
-	  return site(-1, -1);
+	  return false;
 
-	return c;
+	r = c;
+	return true;
       }
 
       void m_watershed ()
@@ -465,7 +484,7 @@ namespace mln
 	mln_piter(I) it(pima.domain());
 
 	for_all(it)
-	  if (m_destructible(it.to_site()) != site(-1, -1))
+	  if (m_destructible(it.to_site()))
 	    {
 	      l.push(it.to_site());
 	      isproc(it.to_site()) = true;
@@ -481,9 +500,9 @@ namespace mln
 	    // unmark p
 	    isproc(p) = false;
 
-	    i = m_destructible(p);
+	    bool is_m = m_destructible(p, i);
 
-	    if (i != site(-1, -1))
+	    if (is_m)
 	      {
 		pima(p) = nodes(i).level;
 		Par_node(p) = i;
@@ -491,7 +510,7 @@ namespace mln
 		mln_niter(N) q(nbh, p);
 		for_all(q)
 		  if (pima.has(q) && !isproc(q))
-		    if (m_destructible(q) != site(-1, -1))
+		    if (m_destructible(q))
 		      {
 			// Add priority queue
 			l.push(q);
@@ -505,15 +524,9 @@ namespace mln
 
       void w_watershed()
       {
-	std::map< mln_value(I), std::set<site> > L;
+	mln::p_priority< mln_value(I), p_queue_fast<site> > L;
 
-	// Setting the min and the max of the image
-	mln_value(I) k, kmin, kmax;
-	mln::estim::min_max(pima, kmin, kmax);
-
-	// For k From kmin to kmax - 1 Do Lk <- <empty set>
-	for (k = kmin; k < kmax; k++)
-	  L[k] = std::set<site>();
+	mln_value(I) max = level::compute(accu::meta::max(), pima);
 
 	// I K(pima.domain(), pima.border());
 	mln_ch_value(I, unsigned) K(pima.domain(), pima.border());
@@ -524,53 +537,51 @@ namespace mln
 	for_all(it)
 	{
 	  site p = it.to_site();
+	  site i;
 
 	  // i <- W-Destructible(p)
-	  site i = w_destructible(p);
+	  bool is_w = w_destructible(p, i);
 
 	  // If i != infinity then
-	  if (i != site(-1, -1))
+	  if (is_w)
 	    {
-	      L[nodes(i).level].insert(p);
+	      L.push(max - nodes(i).level, p);
 	      K(p) = nodes(i).level;
 	      H(p) = i;
 	    }
 	}
 
-	for (k = kmin; k < kmax; k++)
+	while (!L.is_empty())
 	  {
-	    std::set<site>& Lk = L[k];
+	    mln_value(I) k = max - L.highest_priority();
 
-	    while (!Lk.empty())
+	    site p = L.front();
+	    L.pop();
+
+	    if (K(p) == k)
 	      {
-		site p = *(Lk.begin());
-		Lk.erase(p);
+		pima(p) = k;
+		Par_node(p) = H(p);
 
-		if (K(p) == k)
-		  {
-		    pima(p) = k;
-		    Par_node(p) = H(p);
-
-		    mln_niter(N) q(nbh, p);
-		    for_all(q)
-		      if (pima.has(q) && k < pima(q))
-			{
-			  site i = w_destructible(q);
-			  if (i == site(-1, -1))
-			    K(q) = 10000; // FIXME : supposed to be infinity...
-			  else
-			    if (K(q) != nodes(i).level)
-			      {
-				L[nodes(i).level].insert(q);
-				K(q) = nodes(i).level;
-				H(q) = i;
-			      }
-			}
-		  }
+		mln_niter(N) q(nbh, p);
+		for_all(q)
+		  if (pima.has(q) && k < pima(q))
+		    {
+		      site i;
+		      bool is_w = w_destructible(q, i);
+		      if (!is_w)
+			K(q) = 10000; // FIXME : supposed to be infinity...
+		      else
+			if (K(q) != nodes(i).level)
+			  {
+			    L.push(max - nodes(i).level, q);
+			    K(q) = nodes(i).level;
+			    H(q) = i;
+			  }
+		    }
 	      }
 	  }
       }
-
 
       void revert_tree (site p)
       {
@@ -628,7 +639,7 @@ namespace mln
 	// Mark enqueued sites
 	mln_ch_value(I, bool) enqueued(pima.domain(), pima.border());
 
-	p_priority_queue < site, mln_value(I) > l;
+	p_priority< mln_value(I), p_queue_fast<site> > l;
 	// p_queue < site > m;
 	std::queue<site> m;
 	mln_value(I) max = mln_max(mln_value(I));
@@ -655,7 +666,7 @@ namespace mln
 	      if (cmax.has(q) && !cmax(q) && !enqueued(q))
 		{
 		  enqueued(q) = true;
-		  l.push(q, pima(q));
+		  l.push(pima(q), q);
 		}
 	    m.pop();
 	  }
@@ -670,9 +681,10 @@ namespace mln
 	    l.pop();
 	    enqueued(x) = false;
 
-	    site c = w_constructible(x);
+	    site c;
+	    bool is_w = w_constructible(x, c);
 
-	    if (c != site(-1, -1))
+	    if (is_w)
 	      {
 		pima(x) = nodes(c).level;
 		Par_node(x) = c;
@@ -692,7 +704,7 @@ namespace mln
 		    {
 		      enqueued(q) = true;
 
-		      l.push(q, pima(q));
+		      l.push(pima(q), q);
 		    }
 	      } // if (c != site(-1, -1))
 	  } // while(!l.empty())
@@ -707,7 +719,7 @@ namespace mln
       int *euler;
       int *depth;
       int ctree_size;
-      std::map<site, int> pos;
+      std::map<site, int, mln::util::ord<site> > pos;
       site *repr;
 
       int *minim;

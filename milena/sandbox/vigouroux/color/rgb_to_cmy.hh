@@ -1,4 +1,4 @@
-#include <mln/core/image_if_value.hh>
+#include <mln/core/image/image_if.hh>
 
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/display/show.hh>
@@ -17,7 +17,7 @@ namespace mln {
       doit(const struct value::rgb<8> rgb) const
       {
 	struct value::cmy<8> cmy;
-	
+
 	cmy.c(1 - rgb.red());
 	cmy.m(1 - rgb.green());
 	cmy.y(1 - rgb.blue());
@@ -25,7 +25,7 @@ namespace mln {
 	return (cmy);
       }
     };
-    
+
     struct f_cmy_to_rgb
     {
       struct value::rgb<8>
@@ -39,7 +39,7 @@ namespace mln {
 	green = int(1 - cmy.m());
 	blue = int(1 - cmy.y());
 	struct value::rgb<8> rgb(red, green, blue);
-	
+
 	return (rgb);
       }
     };

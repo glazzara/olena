@@ -1,3 +1,52 @@
+2008-10-24  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add bijective functors, 2-way functors and meta-fun.
+
+	* abraham/tests/morpho/test_component_tree.cc: Remove
+	    This test was outdated.
+	* abraham/tests/morpho/test_watershed.cc:
+	    Clean.
+	* abraham/tests/morpho/test_watershed_topo.cc:
+	    Clean.
+	* abraham/tests/fun/meta: New.
+	* abraham/tests/fun/meta/red.cc: New
+	    (mln::meta::red) : meta function to access red in rgb.
+	* abraham/tests/core/image/thru_norm.cc: New
+	    test for norm functor.
+	* abraham/tests/core/image/thru_v2v.cc: New
+	    test for abs functor.
+	* abraham/tests/core/image/thru.cc: Remove.
+	* abraham/tests/core/image/thru_const.cc: New
+	    test of writing in a const image.
+	* abraham/tests/core/image/thru_v2w2v.cc: New
+	    test for cosinus functor.
+	* abraham/tests/core/concept: New.
+	* abraham/tests/core/concept/test.cc: New.
+	* abraham/mln/morpho/najman_wst.hh: New
+	    M-W watershed.
+	* abraham/mln/morpho/basic_najman.hh:
+	    Obsolete, will eventually be removed.
+	* abraham/mln/morpho/topo_wst.hh: New
+	    1 pass topological watershed.
+	* abraham/mln/core/image/thru.hh:
+	    (mln::thru): see an image throught a function.
+	* abraham/mln/core/image/shell.hh: New
+	    (mln::shell): value shell.
+	* abraham/mln/core/concept/function.hh:
+	    Add bijective and 2-way function.
+	* abraham/mln/core/concept/meta_fun.hh: New
+	    Add concept for meta function.
+	* abraham/mln/fun/meta: New.
+	* abraham/mln/fun/meta/red.hh: New
+	    red fun object.
+	* abraham/mln/fun/v2w_w2v/norm.hh:
+	    2-way functor.
+	* vigouroux/tests.cc: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_cmy.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_xyz.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_hsi.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_yuv.hh: Rename image_if_value > image_if.
+
 2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a processing chain about segmentation on edges.

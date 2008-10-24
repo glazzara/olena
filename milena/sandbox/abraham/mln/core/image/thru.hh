@@ -36,7 +36,9 @@
  */
 
 # include <mln/core/internal/image_value_morpher.hh>
+# include <mln/trait/images.hh>
 # include <mln/value/set.hh>
+# include <mln/core/image/shell.hh>
 
 namespace mln
 {
@@ -50,8 +52,8 @@ namespace mln
     template <typename F, typename I>
     struct data< thru<F,I> >
     {
-      data(const I& ima);
-      const I& ima_;
+      data( I& ima);
+      I& ima_;
     };
 
   } // end of namespace mln::internal
@@ -64,7 +66,9 @@ namespace mln
     template <typename F, typename I>
     struct image_< thru<F,I> > : default_image_morpher< I, mln_result(F), thru<F,I> >
     {
-      typedef trait::image::value_io::read_only value_io;
+      typedef trait::image::value_io::read_write      value_io;
+      typedef trait::image::value_access::computed    value_access;
+      typedef trait::image::value_storage::disrupted  value_storage;
     };
 
   } // end of namespace mln::trait
@@ -85,28 +89,22 @@ namespace mln
     typedef mln_result(F) rvalue;
 
     /// Return type of read-write access.
-    typedef mln_result(F) lvalue;
+    typedef shell<F,I> lvalue;
 
     /// Skeleton.
     typedef thru< tag::value_<mln_result(F)>, tag::image_<I> > skeleton;
 
     /// Constructor.
-    thru(const Image<I>& ima);
+    thru(Image<I>& ima);
 
     /// Initialize an empty image.
-    void init_(const Image<I>& ima);
+    void init_(Image<I>& ima);
 
     /// Read-only access of pixel value at point site \p p.
     mln_result(F) operator()(const mln_psite(I)& p) const;
 
-    /// Mutable access is only OK for reading (not writing).
-    // T operator()(const mln_psite(I)& p);
-  };
-
-  template <typename F, typename I>
-  struct thru <F, const I>
-  {
-    mln_result(F) operator()(const mln_psite(I)& p);
+    /// Mutable access is for reading and writing.
+    lvalue operator()(const mln_psite(I)& p);
   };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -119,7 +117,7 @@ namespace mln
 
     template <typename F, typename I>
     inline
-    data< thru<F,I> >::data(const I& ima)
+    data< thru<F,I> >::data(I& ima)
       : ima_(ima)
     {
     }
@@ -130,22 +128,22 @@ namespace mln
 
   template <typename F, typename I>
   inline
-  thru<F,I>::thru(const Image<I>& ima)
+  thru<F,I>::thru(Image<I>& ima)
   {
     mln_precondition(exact(ima).has_data());
     this->data_ = new internal::data< thru<F,I> >(exact(ima));
   }
 
-  /*
+
   template <typename F, typename I>
   inline
   void
-  thru<F,I>::init_(const Image<I>& ima)
+  thru<F,I>::init_(Image<I>& ima)
   {
     mln_precondition(exact(ima).has_data());
     this->data_ = new internal::data<thru<F,I> >(exact(ima));
   }
-  */
+
 
   template <typename F, typename I>
   inline
@@ -158,10 +156,10 @@ namespace mln
 
   template <typename F, typename I>
   inline
-  mln_result(F)
+  shell<F, I>
   thru<F,I>::operator()(const mln_psite(I)& p)
   {
-    return *(F*)(void*)&( this->data_->ima_(p) );
+    return shell<F, I>( this->data_->ima_, p );
   }
 
 # endif // ! MLN_INCLUDE_ONLY

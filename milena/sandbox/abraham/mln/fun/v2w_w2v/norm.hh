@@ -71,7 +71,7 @@ namespace mln
        *  \see mln::norm::l2.
        */
       template <typename V, typename R>
-      struct l2_norm : public Function_v2v< l2_norm<V, R> >
+      struct l2_norm : public Function_v2w_w2v< l2_norm<V, R> >
       {
 	typedef R result;
 	R operator()(const V& v) const;
@@ -85,7 +85,7 @@ namespace mln
        *  \see mln::norm::linfty.
        */
       template <typename V, typename R>
-      struct linfty_norm : public Function_v2v< linfty_norm<V, R> >
+      struct linfty_norm : public Function_v2w_w2v< linfty_norm<V, R> >
       {
 	typedef R result;
 	R operator()(const V& v) const;
