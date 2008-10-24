@@ -157,10 +157,20 @@ namespace mln
 		 typename V >
       struct ch_value_<  M< tag::function_<F>, tag::pset_<S> >,  V  >
       {
-	typedef typename S::mesh mesh;
-	// FIXME: from_psite instead? coord=int!?
-	typedef typename image_from_mesh< mesh, V >::ret ret;
+        // FIXME: what about S::site having no grid?
+        typedef mln_deduce(S, site, grid) grid;
+        typedef typename image_from_mesh< grid, V >::ret ret;
       };
+
+      template < template <class, class> class M, typename T, typename S,
+		 typename V >
+      struct ch_value_<  M< tag::value_<T>, tag::pset_<S> >,  V  >
+      {
+        // FIXME: what about S::site having no grid?
+        typedef mln_deduce(S, site, grid) grid;
+        typedef typename image_from_mesh< grid, V >::ret ret;
+      };
+
 
       template < template <class, class> class M, typename I, typename F,
 		 typename V >

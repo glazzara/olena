@@ -132,37 +132,40 @@ namespace mln
 
           level::internal::transform_tests(input, f, output);
 
-	  // FIXME: Re-activate! 
-//           mlc_is(mln_trait_image_pw_io(O),
-//                  trait::image::pw_io::read_write)::check();
+          mlc_is(mln_trait_image_pw_io(O),
+                 trait::image::pw_io::read_write)::check();
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    output(p) = f( input(p) );
+	    output(p) = f(input(p));
+
 
 	  trace::exiting("level::impl::generic::transform");
 	}
 
       } // end of namespace mln::level::impl::generic
 
-    } // end of namespace mln::level::impl
 
 
     // Facade.
 
-    template <typename I, typename F, typename O>
-    inline
-    void transform(const Image<I>& input, const Function_v2v<F>& f,
-		   Image<O>& output)
+    namespace internal
     {
-      trace::entering("level::transform");
+      template <typename I, typename F, typename O>
+      inline
+      void transform_(const Image<I>& input, const Function_v2v<F>& f,
+                      Image<O>& output)
+      {
+        trace::entering("level::transform");
 
-      mln_precondition(exact(output).domain() >= exact(input).domain());
-      impl::internal::transform_dispatch(exact(input), exact(f),
-                                         exact(output));
+        mln_precondition(exact(output).domain() >= exact(input).domain());
+        transform_dispatch(exact(input), exact(f), exact(output));
 
-      trace::exiting("level::transform");
+        trace::exiting("level::transform");
+      }
     }
+
+    } // end of namespace mln::level::impl
 
 
     template <typename I, typename F>
@@ -175,7 +178,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_ch_value(I, mln_result(F)) output;
       initialize(output, input);
-      transform(input, f, output);
+      impl::internal::transform_(input, f, output);
 
       trace::exiting("level::transform");
       return output;

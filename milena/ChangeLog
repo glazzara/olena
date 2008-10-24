@@ -1,3 +1,11 @@
+2008-10-24  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update transform routine interface.
+
+	* tests/level/transform.cc: Update test.
+	* mln/trait/ch_value.hh: Add a specialization for flat image.
+	* mln/level/transform.hh: Update transform interface.
+
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Test Meyer's WST on complex-based images.
