@@ -1,3 +1,13 @@
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	Update mln/trait/ch_value.hh w.r.t. mln::complex_image.
+
+	* mln/trait/ch_value.hh
+	(mln::trait::impl::ch_value_<M< D,tag::psite_<P>,tag::value_<T> >, V>):
+	Catch up with current parameter names, and turn into...
+	(mln::trait::impl::ch_value_<M< D,tag::psite_<G>,tag::value_<T> >, V>):
+	...this.
+
 2008-10-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial.
