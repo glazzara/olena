@@ -70,6 +70,8 @@ namespace mln
       {
 	trace::entering("level::impl::stretch");
 
+	initialize(output, input);
+
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)

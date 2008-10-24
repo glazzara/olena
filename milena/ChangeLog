@@ -1,5 +1,13 @@
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix mln::level::stretch w.r.t. the initialization.
+
+	* mln/level/stretch.hh
+	(mln::level::impl::stretch(int_u<n>, const Image<I>&, Image<O>&)):
+	Initialize the output image from the input.
+
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	First attempt at generating a GraphViz' neato output.
 
 	* tests/morpho/complex_image_wst.cc: Generate a neato graph.
