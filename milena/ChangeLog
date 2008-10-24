@@ -1,5 +1,18 @@
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix a bug in iterators on n-faces.
+
+	* mln/topo/n_face_iter.hh
+	(mln::n_face_fwd_iter<D>::invalidate_face_id_)
+	(mln::n_face_bkd_iter<D>::invalidate_face_id_):
+	New methods.
+	(mln::n_face_fwd_iter<D>::next_)
+	(mln::n_face_bkd_iter<D>::next_):
+	Use it here, instead of invalidate().
+	(mln::n_face_fwd_iter<D>::start_): Don't set n_.
+
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add operator== on mln::util::multi_site to please mln::p_queue_fast.
 
 	* mln/util/multi_site.hh

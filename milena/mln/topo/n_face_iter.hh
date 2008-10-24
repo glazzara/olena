@@ -97,6 +97,10 @@ namespace mln
       /// \}
 
     private:
+      /// Partially invalidate the iterator (don't alter its dimension).
+      void invalidate_face_id_();
+
+    private:
       using super_::f_;
     };
 
@@ -147,6 +151,10 @@ namespace mln
       /// \}
 
     private:
+      /// Partially invalidate the iterator (don't alter its dimension).
+      void invalidate_face_id_();
+
+    private:
       using super_::f_;
     };
 
@@ -194,8 +202,19 @@ namespace mln
 	  if (f_.face_id() + 1 < f_.cplx().nfaces(n()))
 	    f_.inc_face_id();
 	  else
-	    invalidate();
+	    /* Don't invalidate the whole face if we have reached the
+	       last face of the dimension---this would lose the
+	       dimension.  Instead, invalidate the face_id only.  */
+	    invalidate_face_id_();
 	}
+    }
+
+    template <unsigned D>
+    inline
+    void
+    n_face_fwd_iter<D>::invalidate_face_id_()
+    {
+      f_.set_face_id(f_.cplx().nfaces(n()));
     }
 
     template <unsigned D>
@@ -243,7 +262,6 @@ namespace mln
     void
     n_face_bkd_iter<D>::start()
     {
-      f_.set_n(n());
       f_.set_face_id(f_.cplx().nfaces(n()) - 1);
     }
 
@@ -257,8 +275,19 @@ namespace mln
 	  if (f_.face_id() > 0)
 	    f_.dec_face_id();
 	  else
-	    invalidate();
+	    /* Don't invalidate the whole face if we have reached the
+	       last face of the dimension---this would lose the
+	       dimension.  Instead, invalidate the face_id only.  */
+	    invalidate_face_id_();
 	}
+    }
+
+    template <unsigned D>
+    inline
+    void
+    n_face_bkd_iter<D>::invalidate_face_id_()
+    {
+      f_.set_face_id(f_.cplx().nfaces(n()));
     }
 
     template <unsigned D>
