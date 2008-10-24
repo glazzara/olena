@@ -1,5 +1,13 @@
 2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
+	Fix the skeleton algorithm introduced by aroumougame.
+	* garrigues/ocr/skeleton.cc,
+	  garrigues/ocr/skeleton.hh: New.
+	  The code has been updated to work with the current version of
+	  milena. However, the code itself has to be cleaned and improved.
+
+2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
 	Update OCR using tesseract.
 	* garrigues/ocr/enlarge.hh: New.
 	  New enlargement algorithm better than the naive resize.
