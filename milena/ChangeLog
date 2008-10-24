@@ -1,5 +1,13 @@
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
+	Test Meyer's WST on complex-based images.
+
+	* tests/morpho/complex_image_wst.cc: New.
+	* tests/morpho/Makefile.am (check_PROGRAMS): Add complex_image_wst.
+	(complex_image_wst_SOURCES): New.
+
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix a bug in iterators on n-faces.
 
 	* mln/topo/n_face_iter.hh
