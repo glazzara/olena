@@ -58,6 +58,8 @@
 #include <mln/norm/l2.hh>
 
 #include <mln/morpho/closing_area.hh>
+#include <mln/morpho/closing_volume.hh>
+#include <mln/morpho/closing_height.hh>
 #include <mln/morpho/meyer_wst.hh>
 
 
@@ -116,9 +118,17 @@ namespace mln
 }
 
 
-
-int main()
+void usage(char* argv[])
 {
+  std::cerr << argv[0] << " lambda" << std::endl;
+  abort();
+}
+
+int main(int argc, char* argv[])
+{
+  if (argc != 2)
+    usage(argv);
+
   using namespace mln;
   using mln::value::int_u8;
 
@@ -156,7 +166,20 @@ int main()
 
   unsigned nlabels;
   image2d<unsigned> label = labeling::blobs(seeds, c4(), nlabels);
+
+  std::cout << "n seeds = " << nlabels << std::endl;
+  {
+    image2d<int_u8> lab(label.domain());
+    level::paste(label, lab);
+    io::pgm::save(lab, "label.pgm");
+  }
+
   image2d<unsigned> iz = influence_zones(label, c4());
+  {
+    image2d<int_u8> IZ(iz.domain());
+    level::paste(iz, IZ);
+    io::pgm::save(IZ, "iz.pgm");
+  }
 //   debug::println( (pw::value(iz) - pw::cst(1)) | iz.domain() );
 
 
@@ -217,6 +240,8 @@ int main()
 	  }
     }
 
+    std::cout << "v size = " << v.size() << std::endl;
+
     // 1-faces (edges).
     std::vector<edge> e;
     {
@@ -225,6 +250,8 @@ int main()
 	  if (adj[l][ll])
 	    e.push_back( c.add_face(-v[l-1] + v[ll-1]) );
     }
+
+    std::cout << "e size = " << e.size() << std::endl;
 
   }
 
@@ -284,7 +311,7 @@ int main()
     v.next();
     mln_invariant(!v.is_valid());
 
-    dist_ima(e) = norm::l2_distance(p1.to_vec(), p2.to_vec());
+    dist_ima(e) = norm::l2_distance(p1.to_vec(), p2.to_vec()) / 2;
     dist_max.take(dist_ima(e));
 
     draw::line(canvas, p1, p2, dist_ima(e));
@@ -332,7 +359,7 @@ int main()
 
   // Currently, does nothing (lambda = 1).
   dist_ima_t closed_dist_ima (dist_ima.domain());
-  morpho::closing_area(dist_ima, nbh, 1, closed_dist_ima);
+  morpho::closing_height(dist_ima, nbh, atoi(argv[1]), closed_dist_ima);
 
   /*------.
   | WST.  |

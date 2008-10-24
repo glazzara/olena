@@ -1,5 +1,11 @@
 2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update morpho classif for LN.
+
+	* geraud/laurent/classif.cc: Update.
+
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update morphological classification for LN.
 
 	* geraud/laurent/classif.cc: Update.
