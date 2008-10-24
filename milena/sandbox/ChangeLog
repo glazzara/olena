@@ -1,3 +1,14 @@
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add demo code for Laurent N.
+
+	* geraud/toto: Remove.
+	* geraud/laurent: New.
+	* geraud/laurent/wst2d.cc: New.
+	* geraud/laurent/wst3d.cc: New.
+	* geraud/laurent/classif.cc: New.
+	* geraud/laurent/segmentation.hh: New.
+
 2008-10-24  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Enhance the build-system.
