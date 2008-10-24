@@ -29,8 +29,15 @@
 /// \brief Testing Meyer's Watershed Transform on mln::complex_image.
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/literal/black.hh>
+#include <mln/literal/white.hh>
+
 #include <mln/core/alias/point2d.hh>
 
 #include <mln/core/site_set/p_faces.hh>
@@ -46,6 +53,29 @@
 
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
+
+#include <mln/core/concept/function.hh>
+
+// FIXME: To be put elsewhere (from milena/sandbox/geraud/wst_edge.cc).
+struct colorize : mln::Function_v2v< colorize >
+{
+  typedef mln::value::rgb8 result;
+  colorize(unsigned max)
+    : lut(max + 1)
+  {
+    lut[0] = mln::literal::black;
+    for (unsigned i = 1; i <= max; ++i)
+      lut[i] = result(100 + std::rand() % 150,
+		      100 + std::rand() % 150,
+		      100 + std::rand() % 150);
+  }
+  result operator()(unsigned i) const
+  {
+    return lut[i];
+  }
+  std::vector<result> lut;
+};
+
 
 
 int main()
@@ -203,5 +233,84 @@ int main()
 
      We definitely need a complex_image that can accept a subset of a
      complex as domain (or at least a p_face<N, D, P>.  */
-  std::cout << "nbasins = " << nbasins << std::endl;
+  wst_val_t actual_nbasins = nbasins - c.nfaces<0>();
+  std::cout << "nbasins = " << actual_nbasins << std::endl;
+
+
+  colorize color(nbasins);
+
+  std::ofstream g("wst.neato");
+  g << "graph wst"  << std::endl
+    << "{" << std::endl
+    << "  graph [bgcolor = \"#000000\"]" << std::endl
+    << "  edge [color = \"#FFFFFF\"]" << std::endl
+    << "  node [color = \"#FFFFFF\", fontcolor = \"#FFFFFF\" ]" << std::endl;
+
+  // Vertices.
+  typedef complex_higher_neighborhood<D, G> e_nbh_t;
+  e_nbh_t e_nbh;
+  mln_niter_(e_nbh_t) v_e(e_nbh, v_);   
+  for_all(v_)
+  {
+    // Find the adjacent basin (color).
+    value::rgb8 basin_color = literal::white;
+    for_all(v_e)
+      if (wshed(v_e) != 0)
+	{
+	  basin_color = color(wshed(v_e));
+	  break;
+	}
+    std::ostringstream basin_color_str;
+    basin_color_str << '#'
+		    << std::hex
+		    << std::setfill('0')
+		    << std::setw(2) << basin_color.red()
+		    << std::setw(2) << basin_color.green()
+		    << std::setw(2) << basin_color.blue()
+		    << std::dec;
+
+    g << "  v" << v_.unproxy_().face_id()
+      << " [pos = \""
+      << std::fixed << std::setprecision(1)
+      << (float)v_.to_site().front()[1] << ", "
+      << -(float)v_.to_site().front()[0]
+      << "\", color = \"" << basin_color_str.str()
+      << "\", fillcolor = \"" << basin_color_str.str()
+      << "\", pin = \"true\", style=\"filled,setlinewidth(3)\"];"
+      << std::endl;
+  }
+
+  for_all(e)
+  {
+    value::rgb8 basin_color = color(wshed(e));
+    std::ostringstream basin_color_str;
+    basin_color_str << '#'
+	      << std::hex
+	      << std::setfill('0')
+	      << std::setw(2) << basin_color.red()
+	      << std::setw(2) << basin_color.green()
+	      << std::setw(2) << basin_color.blue()
+	      << std::dec;
+
+    // Adjacent vertices.
+    v.start();
+    topo::face<1> v1 = v.unproxy_().face();
+    point2d p1 = v.to_site().front();
+    v.next();
+    topo::face<1> v2 = v.unproxy_().face();
+    point2d p2 = v.to_site().front();
+    v.next();
+    mln_invariant(!v.is_valid());
+
+    // Edges.
+    g << "  v" << v1.face_id() << " -- v" << v2.face_id() << " ";
+    if (wshed(e) == 0)
+      g << "[color = \"#FFFFFF\"];" << std::endl;
+    else
+      g << "[color = \"" << basin_color_str.str()
+	<< "\", style=\"setlinewidth(3)\"];" << std::endl;
+  }
+
+  g << "}" << std::endl;
+  g.close();
 }

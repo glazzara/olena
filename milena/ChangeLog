@@ -1,3 +1,9 @@
+2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	First attempt at generating a GraphViz' neato output.
+
+	* tests/morpho/complex_image_wst.cc: Generate a neato graph.
+
 2008-10-24  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update transform routine interface.
