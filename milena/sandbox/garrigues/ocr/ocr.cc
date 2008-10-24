@@ -36,40 +36,103 @@
 #include <mln/value/int_u8.hh>
 
 #include "resize.hh"
-#include <mln/linear/convolve.hh>
+#include "enlarge.hh"
+//#include "skeleton.hh"
 #include <mln/linear/gaussian.hh>
 
 #include <mln/trace/all.hh>
-#include <mln/io/pbm/load.hh>
+#include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/io/pbm/load.hh>
+#include <mln/io/pbm/save.hh>
 #include <mln/core/alias/w_window2d_float.hh>
 
+#include <mln/debug/println.hh>
+#include <mln/geom/chamfer.hh>
+#include <mln/make/win_chamfer.hh>
+#include <mln/labeling/regional_maxima.hh>
+#include <mln/morpho/dilation.hh>
+
+#include <tesseract/baseapi.h>
+
+// _COMPILATION_ 
+// g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
+
+
+// Call tesseract
+// lang: expected language
+template <typename T>
+char*	tesseract(const char* lang, const mln::image2d<T>& input)
+{
+  TessBaseAPI::InitWithLanguage(NULL, NULL, lang, NULL, false, 0, NULL);
+  char* s = TessBaseAPI::TesseractRect(
+			  (unsigned char*) input.buffer(),
+			  sizeof (T),
+			  input.ncols() * sizeof (T),
+			  0, 0,
+			  input.ncols(),
+			  input.nrows());
+  return s;
+}
 
 int main(int argc, char** argv)
 {
-  mln::trace::quiet = false;
-
   using namespace mln;
   using value::int_u8;
 
   image2d<bool> input;
-  image2d<int_u8> output;
-  image2d<int_u8> output2;
 
-  if (argc != 3)
+  if (argc < 2)
     return 1;
 
-
+  mln::border::thickness = 0;
 
   io::pbm::load(input, argv[1]);
 
+  std::cout << "> without any preprocessing." << std::endl;
+  char* s = tesseract("fra", input);
+  std::cout << s;
+  free(s);
 
-  // Step 1: Enlarge input.
-  output = geom::resize(cast_image<int_u8>(input), 4);
+  //
+  // PREPROCESS !!
+  //
+  // Resize
+//  output2 = geom::resize(cast_image<int_u8>(input), 3);
+  image2d<int_u8> output = enlarge(input, 1);
 
-  // Step 2: Blur.
-  initialize(output2, output);
-  linear::gaussian(output, 15, output2);
+  // TODO CLEANUP
+#if 0
+  // Blur.
+  image2d<int_u8> output;
+  initialize(output, output2);
+  linear::gaussian(output2, 1, output);
+#endif
 
-  io::pgm::save(output2, argv[2]);
+#if 0
+  // Threshold
+  mln_piter_(image2d<unsigned>) p(output.domain());
+  for_all(p)
+  {
+    output(p) = output(p) > 127 ? 1 : 0;
+  }
+#endif
+
+#if 0
+  // Compute chamfer distance map.
+  const w_window2d_int& w_win = make::mk_chamfer_3x3_int<8, 0> ();
+  image2d<unsigned> out = geom::chamfer(output, w_win, 255);
+
+  for_all(p)
+  {
+    out(p) = out(p) > 10 ? 255 : 0;
+  }
+#endif
+
+  io::pgm::save(cast_image<int_u8>(output), argv[2]);
+
+  std::cout << "> with preprocessing." << std::endl;
+  s = tesseract("fra", output);
+  std::cout << s;
+  free(s);
 }

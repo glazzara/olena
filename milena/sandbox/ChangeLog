@@ -1,3 +1,12 @@
+2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Update OCR using tesseract.
+	* garrigues/ocr/enlarge.hh: New.
+	  New enlargement algorithm better than the naive resize.
+
+	* garrigues/ocr/ocr.cc: Provide sample code to link milena against
+	  tesseract.
+
 2008-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix an endless loop.
