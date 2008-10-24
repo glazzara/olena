@@ -72,17 +72,17 @@ namespace mln
 
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
-	if (max_ == min_)
-	  return; // FIXME
-	float min = float(min_), max = float(max_);
-	const float epsilon = mln_epsilon(float);
- 	float m = 0.0f - 0.5f + epsilon;
- 	float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
-	float a = (M - m) / (max - min);
-	float b = (m * max - M * min) / (max - min);
-	fun::v2v::linear<float, float, int> f(a, b);
-	level::transform(input, f, output);
-
+	if (max_ != min_)
+	  {
+	    float min = float(min_), max = float(max_);
+	    const float epsilon = mln_epsilon(float);
+	    float m = 0.0f - 0.5f + epsilon;
+	    float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
+	    float a = (M - m) / (max - min);
+	    float b = (m * max - M * min) / (max - min);
+	    fun::v2v::linear<float, float, int> f(a, b);
+	    level::transform(input, f, output);
+	  }
 	trace::exiting("level::impl::stretch");
       }
 

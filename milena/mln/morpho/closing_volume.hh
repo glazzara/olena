@@ -54,9 +54,11 @@ namespace mln
     void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
 			std::size_t lambda, Image<O>& output)
     {
+      trace::entering("morpho::closing_volume");
       mln_precondition(exact(output).domain() == exact(input).domain());
       // FIXME: Change sig of closing_attribute!
       closing_attribute< accu::volume<I> >(input, nbh, lambda, output);
+      trace::exiting("morpho::closing_volume");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

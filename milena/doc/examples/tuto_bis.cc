@@ -20,6 +20,7 @@
 # include <mln/level/paste.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/transform.hh>
+# include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
 
@@ -90,7 +91,7 @@ namespace mln
 
     template <typename I, typename N>
     mln_concrete(I)
-    gradient(const I& input, const N& nbh)
+      gradient(const I& input, const N& nbh)
     {
       mln_concrete(I) output;
       initialize(output, input);
@@ -99,21 +100,21 @@ namespace mln
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);
       for_all(p)
-      {
-	mm.init();
-	for_all(n) if (input.has(n))
-	  mm.take(input(n));
-	output(p) = mm.second() - mm.first();
-      }
+	{
+	  mm.init();
+	  for_all(n) if (input.has(n))
+	    mm.take(input(n));
+	  output(p) = mm.second() - mm.first();
+	}
       return output;
     }
 
     template <typename I, typename N>
     mln_concrete(I)
-    dilation(const I& input, const N& nbh)
+      dilation(const I& input, const N& nbh)
     {
       typedef mln_value(I) V;
-      // extension::fill(input, mln_min(V));
+      // FIXME: extension::fill(input, mln_min(V));
 
       mln_concrete(I) output;
       initialize(output, input);
@@ -122,18 +123,20 @@ namespace mln
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);
       for_all(p)
-      {
-	m.init();
-	for_all(n) if (input.has(n))
-	  m.take(input(n));
-	output(p) = m;
-      }
+	{
+	  m.init();
+	  for_all(n) if (input.has(n))
+	    m.take(input(n));
+	  output(p) = m;
+	}
       return output;
     }
     
   } // mln::morpho
 
+
 } // mln
+
 
 
 
@@ -239,8 +242,7 @@ int main()
   //   1   1
 
 
-  image2d<unsigned> label(ima.bbox(), 1);
-  border::fill(label, 0);
+  image2d<unsigned> label(ima.bbox(), 0);
   level::fill(label, 9);
   debug::println(label);
   // 9 9 9 9 9 
@@ -309,7 +311,8 @@ int main()
   //        
   // 9   9   9 
 
-  level::paste(morpho::dilation(extend(lab, pw::value(label)),
+
+  level::paste(morpho::dilation(extend(lab, label),
 				c4()),
 	       label);
 

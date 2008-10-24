@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ESTIM_NSITES_HH
-# define MLN_ESTIM_NSITES_HH
+#ifndef MLN_GEOM_NSITES_HH
+# define MLN_GEOM_NSITES_HH
 
-/*! \file mln/estim/nsites.hh
+/*! \file mln/geom/nsites.hh
  *
  * \brief Compute the number of sites of an image or a site set.
  */
@@ -40,7 +40,7 @@
 namespace mln
 {
 
-  namespace estim
+  namespace geom
   {
 
     /// Compute the number of sites of the site set \p input.
@@ -69,7 +69,7 @@ namespace mln
 	template <typename S>
 	unsigned nsites(const Site_Set<S>& s_)
 	{
-	  trace::entering("estim::impl::generic::nsites");
+	  trace::entering("geom::impl::generic::nsites");
 	  const S& s = exact(s_);
 	  mln_precondition(s.is_valid());
 	  
@@ -78,11 +78,11 @@ namespace mln
 	  for_all(p)
 	    ++n;
 
-	  trace::exiting("estim::impl::generic::nsites");
+	  trace::exiting("geom::impl::generic::nsites");
 	  return n;
 	}      
 
-      } // end of namespace mln::estim::impl::generic
+      } // end of namespace mln::geom::impl::generic
 
 
       // A single specialization.
@@ -91,13 +91,13 @@ namespace mln
       inline
       unsigned nsites_method(const Site_Set<S>& s)
       {
-	trace::entering("estim::impl::nsites_method");
+	trace::entering("geom::impl::nsites_method");
 	unsigned n = exact(s).nsites();
-	trace::exiting("estim::impl::nsites_method");
+	trace::exiting("geom::impl::nsites_method");
 	return n;
       }
 
-    } // end of namespace mln::estim::impl
+    } // end of namespace mln::geom::impl
 
 
 
@@ -132,7 +132,7 @@ namespace mln
 			       s);
       }      
 
-    } // end of namespace mln::estim::internal
+    } // end of namespace mln::geom::internal
 
 
     
@@ -142,12 +142,12 @@ namespace mln
     inline
     unsigned nsites(const Site_Set<S>& s)
     {
-      trace::entering("estim::nsites");
+      trace::entering("geom::nsites");
       mln_precondition(exact(s).is_valid());
 
       unsigned n = internal::nsites_dispatch(s);
 
-      trace::exiting("estim::nsites");
+      trace::exiting("geom::nsites");
       return n;
     }
 
@@ -155,7 +155,7 @@ namespace mln
     inline
     unsigned nsites(const Image<I>& input_)
     {
-      trace::entering("estim::nsites");
+      trace::entering("geom::nsites");
       const I& input = exact(input_);
 
       mln_precondition(input.has_data());
@@ -164,15 +164,15 @@ namespace mln
       // Relies on the nsites routines on a site set.
       unsigned n = internal::nsites_dispatch(input.domain());
 
-      trace::exiting("estim::nsites");
+      trace::exiting("geom::nsites");
       return n;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::estim
+  } // end of namespace mln::geom
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ESTIM_NSITES_HH
+#endif // ! MLN_GEOM_NSITES_HH

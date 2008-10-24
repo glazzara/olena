@@ -1,3 +1,25 @@
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	De-activate not compiling tests in level transform.
+
+	* doc/examples/tuto_bis.cc: Layout.
+	(label): Set no border.
+	(lab): Change extension from pw fun to image.
+	That fixes some weird behavior.
+	* mln/level/transform.hh (todo): New.
+	De-activate tests since Nicolas has not fixed it yet.
+	* mln/level/stretch.hh (FIXME): Fix.
+	Avoid escaping allows for properly tracing.
+	* mln/estim/nsites.hh: Rename as...
+	* mln/geom/nsites.hh: ...this.
+	Update.
+	* mln/level/sort_psites.hh: Use geom::nsites.
+	Remember that only some images have the nsites method.
+	* mln/trace/exiting.hh: Print the scope when exiting.
+	It eases debugging (reading traces).
+	* mln/morpho/closing_volume.hh,.
+	* mln/morpho/meyer_wst.hh: Add trace equipment
+
 2008-10-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update directional erosion so that it can now be used on sets.

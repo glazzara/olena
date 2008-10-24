@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,6 +40,7 @@
 # include <mln/convert/to_p_array.hh>
 # include <mln/histo/compute.hh>
 # include <mln/util/ord.hh>
+# include <mln/geom/nsites.hh>
 
 
 namespace mln
@@ -154,7 +156,7 @@ namespace mln
 	  loc[i] = loc[i-1] + h[i-1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.nsites());
+	std::vector<mln_psite(I)> vec(geom::nsites(input));
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
@@ -198,7 +200,7 @@ namespace mln
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.nsites());
+	std::vector<mln_psite(I)> vec(geom::nsites(input));
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
