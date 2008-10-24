@@ -1,3 +1,8 @@
+2008-10-24  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Add some debug infos and an uber-simple getopt.
+	* iccvg04.cc: Here.
+
 2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add demo code for Laurent N.

@@ -30,6 +30,7 @@
 #include <sys/stat.h>
 #include <sstream>
 #include <string.h>
+#include <stdlib.h>
 
 
 using namespace mln;
@@ -119,15 +120,20 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
   for_all(p)
   {
     point3d p3(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
+    int w = ws(p3);
 
-    count[ws(p3)] += histo(p3);
-    sum[ws(p3)] += histo(p3) * convert::to<algebra::vec<3, value::int_u8> >(p3) * f;
-
+    // Check if we are not on a border of the WS
+    if (w != 0)
+    {
+      count[w] += histo(p3);
+      sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
+    }
     std::cerr << "p3 : " << p3 << " == " << convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
   }
 
   for (int i = 1; i < nbasins + 1; ++i)
   {
+    sum[i] *= f;
     sum[i] /= count[i];
     //std::cout << "count[" << i << "] = " << count[i] << std::endl;
     std::cout << "sum[" << i << "] = " << sum[i] << std::endl;
@@ -136,27 +142,50 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 
   mln_piter(I) pi(ima.domain());
   I out(ima.domain());
+  I ws_out(ima.domain());
+
   for_all(pi)
   {
     value::rgb8 coul = ima(pi);
 
     int w = ws(point3d(coul.red() / f, coul.green() / f, coul.blue() / f));
 
-    out(pi) = convert::to<value::rgb8>(sum[w]);
+    if (w != 0) // If w == 0 it means that the current point is part of a border of the watershed
+    {
+      std::cerr << "out(" << pi << ") = sum[" << w << "]; //" << sum[w] << std::endl;
+      out(pi) = convert::to<value::rgb8>(sum[w]);
+      //out(pi) = value::rgb8(sum[w][0], sum[w][1], sum[w][2]);
+      ws_out(pi) = value::rgb8(0, 0, 0);
+    }
+    else
+    {
+      std::cerr << "Border : " << pi << std::endl;
+      ws_out(pi) = value::rgb8(255, 255, 255);
 
-    std::cerr << "(" << coul << ") -> (" << out(pi) << "); sum[" << w << "] = " << sum[w] << " -> " << convert::to<value::rgb8>(sum[w]) << std::endl;
+      // FIXME
+      // ima(pi) is a border in the histogram and therefore lacks of a mean color.
+      // Choosing a good value for out(pi) is not so easy. One idea could be to randomly
+      // choose a color from one of the surrounding classes, but it's not the best idea
+      // because of large « border » zones.
+      out(pi) = value::rgb8(255, 255, 255);
+    }
+
+    //std::cerr << "(" << coul << ") -> (" << out(pi) << "); sum[" << w << "] = " << sum[w] << " -> " << convert::to<value::rgb8>(sum[w]) << std::endl;
   }
 
   // 1- La valeur contenue dans sum n'est pas correctement écrite dans out.ppm. À vérifier !
   // 2- Le cast de sum[w] en rgb8 se passe très bizarrement. À vérifier !
   // 3- Rajoute le std::cout de count change le comportement du programme. À vérifier !
+  // 4- Le WS semble faire des pâtés (beaucoup de points de classe 0)
 
   io::ppm::save(out, "out.ppm");
+  io::ppm::save(ws_out, "out-ws.ppm");
 }
 
 int main(int argc, char **argv)
 {
-  const int div_factor = 8;
+  const int div_factor = atoi(argv[2]);
+  const int lambda = atoi(argv[3]);
 
   image2d<value::rgb8> ima;
   ima = io::ppm::load<value::rgb8>(argv[1]);
@@ -169,6 +198,7 @@ int main(int argc, char **argv)
     std::cout << "histo : " << m << ' ' << M << std::endl;
   }
 
+// Normalize histogram frequences
 #if 0
   image3d<value::int_u8> nhisto(histo.domain());
   level::stretch(histo, nhisto);
@@ -190,17 +220,15 @@ int main(int argc, char **argv)
     std::cout << "rhisto : " << m << ' ' << M << std::endl;
   }
   //display(rhisto, "rhisto");
-  //compute closing_area of histo
 
+  //compute closing_area of histo
   image3d<unsigned> histo_closure(histo.domain());
-  morpho::closing_area(rhisto, c6(), 20, histo_closure);
+  morpho::closing_area(rhisto, c6(), lambda, histo_closure);
   {
     unsigned m, M;
     estim::min_max(histo_closure, m, M);
     std::cout << "histo_closure : " << m << ' ' << M << std::endl;
   }
-
-
 
   //display_proj_revert(histo_closure, "chisto.ppm");
 
