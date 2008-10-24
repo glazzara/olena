@@ -1,18 +1,21 @@
-#include <core/image/image2d.hh>
-#include <core/alias/box2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/box2d.hh>
 int main()
 {
   using namespace mln;
 
-  image2d<bool> ima(box2d(0,0, 10,10));
-  mln_site(image2d<bool>) p1(9, 9);
-  mln_site(image2d<bool>) p2(10, 10);
+  // Create an image on a 2D box 
+  // with 10 columns and 10 rows.
+  image2d<bool> ima(make::box2d(10, 10));
+
+  mln_site_(image2d<bool>) p1(20, 20);
+  mln_site_(image2d<bool>) p2(3, 3);
 
   std::cout << "has(p1)? "
-	    << (img.has(p1) ? "true" : "false")
+	    << (ima.has(p1) ? "true" : "false")
 	    << std::endl;
 
   std::cout << "has(p2)? "
-	    << (img.has(p2) ? "true" : "false")
+	    << (ima.has(p2) ? "true" : "false")
 	    << std::endl;
 }

@@ -1,3 +1,25 @@
+2008-10-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+
+	* doc/tutorial/samples/borderthickness-output.tex,
+	* doc/tutorial/samples/borderthickness.tex,
+	* doc/tutorial/samples/ima2d-4.tex,
+	* doc/tutorial/samples/point-1-output.tex,
+	* doc/tutorial/samples/point-1.tex: Fix mistakes in code sample.
+
+	* doc/tutorial/samples/ima2d-6-clone.tex: clone() is not a
+	    method. Use a routine instead.
+
+	* doc/tutorial/samples/logical-not-output.tex,
+	* doc/tutorial/samples/logical-not.tex: new sample code.
+
+	* doc/tutorial/tutorial.tex: Update tutorial.
+	  - Add a section about useful macros.
+	  - Emphazise keywords such as variable names, method names, type
+	  names,...
+	  - Add a section about logical::not() routine.
+
 2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	De-activate not compiling tests in level transform.

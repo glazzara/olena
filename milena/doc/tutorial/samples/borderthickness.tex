@@ -1,8 +1,17 @@
-bool vals[2][2] = { {0, 1},
-		    {1, 0} };
-image2d<bool> ima_def = make::image2d(vals);
-display::format(ima_def);
+#include <mln/core/image/image2d.hh>
+#include <mln/debug/println_with_border.hh>
+int main()
+{
+  using namespace mln;
 
-border::thickness = 0;
-image2d<bool> ima_bt0 = make::image2d(vals);
-display::format(ima_bt0);
+  bool vals[2][2] = { {0, 1},
+		      {1, 0} };
+  image2d<bool> ima_def = make::image2d(vals);
+  debug::println_with_border(ima_def);
+
+  std::cout << "===========" << std::endl << std::endl;
+
+  border::thickness = 0;
+  image2d<bool> ima_bt0 = make::image2d(vals);
+  debug::println_with_border(ima_bt0);
+}
