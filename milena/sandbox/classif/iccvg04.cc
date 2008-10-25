@@ -101,20 +101,11 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 {
 
   unsigned count[nbasins + 1];
-  memset(count, 0, nbasins + 1);
+  memset(count, 0, (nbasins + 1) * sizeof(unsigned));
   algebra::vec<3, unsigned> sum[nbasins + 1];
 
   for (int i = 1; i < nbasins + 1; ++i)
-  {
     sum[i] = literal::zero;
-  }
-
-  /*mln_piter(K) p(ws.domain());
-  for_all(p)
-  {
-    count[ws(p)] += histo(p);
-    sum[ws(p)] += histo(p) * convert::to<algebra::vec<3, value::int_u8> >(p) * f;
-  }*/
 
   mln_piter(I) p(ima.domain());
   for_all(p)
@@ -128,7 +119,9 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
       count[w] += histo(p3);
       sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
     }
+#if DEBUG
     std::cerr << "p3 : " << p3 << " == " << convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
+#endif // DEBUG
   }
 
   for (int i = 1; i < nbasins + 1; ++i)
@@ -136,7 +129,9 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
     sum[i] *= f;
     sum[i] /= count[i];
     //std::cout << "count[" << i << "] = " << count[i] << std::endl;
+#if DEBUG
     std::cout << "sum[" << i << "] = " << sum[i] << std::endl;
+#endif // DEBUG
   }
 
 
@@ -152,14 +147,18 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 
     if (w != 0) // If w == 0 it means that the current point is part of a border of the watershed
     {
+#if DEBUG
       std::cerr << "out(" << pi << ") = sum[" << w << "]; //" << sum[w] << std::endl;
+#endif
       out(pi) = convert::to<value::rgb8>(sum[w]);
       //out(pi) = value::rgb8(sum[w][0], sum[w][1], sum[w][2]);
       ws_out(pi) = value::rgb8(0, 0, 0);
     }
     else
     {
+#if DEBUG
       std::cerr << "Border : " << pi << std::endl;
+#endif
       ws_out(pi) = value::rgb8(255, 255, 255);
 
       // FIXME
@@ -182,8 +181,22 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
   io::ppm::save(ws_out, "out-ws.ppm");
 }
 
+bool usage(int argc, char ** argv)
+{
+  if (argc != 4)
+  {
+    std::cout << "usage: " << argv[0] << " image div_factor lambda" << std::endl;
+    return false;
+  }
+  return true;
+}
+
+
 int main(int argc, char **argv)
 {
+  if (not usage(argc, argv))
+    return 1;
+
   const int div_factor = atoi(argv[2]);
   const int lambda = atoi(argv[3]);
 
@@ -198,20 +211,6 @@ int main(int argc, char **argv)
     std::cout << "histo : " << m << ' ' << M << std::endl;
   }
 
-// Normalize histogram frequences
-#if 0
-  image3d<value::int_u8> nhisto(histo.domain());
-  level::stretch(histo, nhisto);
-  //image3d<value::int_u8> nhisto = normalizeu8(histo);
-  {
-    value::int_u8 m, M;
-    estim::min_max(nhisto, m, M);
-    std::cout << "nhisto : " << m << ' ' << M << std::endl;
-   }
-#endif
-
-  //display(nhisto, "histo");
-
   //revert histo
   image3d<unsigned> rhisto = arith::revert(histo);
   {
@@ -219,7 +218,6 @@ int main(int argc, char **argv)
     estim::min_max(rhisto, m, M);
     std::cout << "rhisto : " << m << ' ' << M << std::endl;
   }
-  //display(rhisto, "rhisto");
 
   //compute closing_area of histo
   image3d<unsigned> histo_closure(histo.domain());
@@ -230,17 +228,11 @@ int main(int argc, char **argv)
     std::cout << "histo_closure : " << m << ' ' << M << std::endl;
   }
 
-  //display_proj_revert(histo_closure, "chisto.ppm");
-
   //watershed over histo_closure
   unsigned nbasins = 0;
   image3d<unsigned> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
 
   std::cout << "nbassins : " << nbasins << std::endl;
-
-  //display(ws, "ws");
-  //display_proj_revert(ws, "whisto.ppm");
-  //gplot(ws);
 
   // Classify image !
   //classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
