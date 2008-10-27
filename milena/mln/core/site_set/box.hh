@@ -351,7 +351,7 @@ namespace mln
   box<P>::center() const
   {
     mln_precondition(is_valid());
-    point2d center;
+    P center;
     for (unsigned i = 0; i < P::dim; ++i)
       center[i] = pmin_[i] + ((pmax_[i] - pmin_[i]) / 2);
     return center;
