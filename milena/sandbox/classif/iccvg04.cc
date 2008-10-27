@@ -31,6 +31,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "proj.hh"
 
 using namespace mln;
 
@@ -102,7 +103,7 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
   memset(count, 0, (nbasins + 1) * sizeof(unsigned));
 
   algebra::vec<3, unsigned> sum[nbasins + 1];
-  for (int i = 1; i < nbasins + 1; ++i)
+  for (int i = 0; i < nbasins + 1; ++i)
     sum[i] = literal::zero;
 
   // Compute representatives of every class
@@ -127,7 +128,6 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
   I out(ima.domain());
   for_all(pi)
   {
-
     //retrieve color class
     value::rgb8 coul = ima(pi);
     int w = ws(point3d(coul.red() / f, coul.green() / f, coul.blue() / f));
@@ -177,4 +177,6 @@ int main(int argc, char **argv)
 
   //classify image
   classify_image(ima, histo, ws, nbasins, div_factor);
+
+  save_class(histo_closure, "histo.ppm");
 }

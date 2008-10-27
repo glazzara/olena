@@ -1,3 +1,10 @@
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Add projection.
+
+	* classif/iccvg04.cc: Fix wrong init.
+	* classif/proj.hh: Add generic proj.
+
 2008-10-27  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Make meta-functions work with thru morpher.
