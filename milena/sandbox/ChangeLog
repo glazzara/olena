@@ -1,5 +1,11 @@
 2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
 
+	Work on a new classification method based on max_trees.
+	* max_tree.hh: New.
+	* v2.cc: New.
+
+2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
+
 	Fix bug in the mean color computation.
 	* Makefile: Fix.
 	* iccvg04.cc: Use double values instead of unsigned.
