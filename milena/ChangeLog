@@ -1,5 +1,11 @@
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix return type of i2v::array::operator().
+
+	* mln/fun/i2v/array.hh (operator() const): Return a reference instead of a copy.	
+
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add box::center() and a new overload of box::enlarge().
 
 	* mln/core/site_set/box.hh:

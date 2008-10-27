@@ -60,7 +60,7 @@ namespace mln
 	void resize(unsigned n);
 	unsigned size() const;
 
-	T operator()(unsigned i) const;
+	const T& operator()(unsigned i) const;
 	T& operator()(unsigned i);
 
       private:
@@ -111,7 +111,7 @@ namespace mln
 
       template <typename T>
       inline
-      T
+      const T&
       array<T>::operator()(unsigned i) const
       {
 	mln_precondition(i < v_.size());
