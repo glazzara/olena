@@ -12,6 +12,12 @@
 	* mln/level/transform.hh,
 	* mln/level/paste.hh: Rename routines.
 
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix assertion failures on Mac.
+
+	* mln/core/contract.hh: Cast expression to bool.
+
 2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Use a more explicit name for the method used to retrieve the graph

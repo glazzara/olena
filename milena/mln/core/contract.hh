@@ -46,16 +46,16 @@
 #endif
 
 /// Assertion.
-# define mln_assertion(expr)     assert(expr)
+# define mln_assertion(expr)     assert((bool)(expr))
 
 /// Invariant.
-# define mln_invariant(expr)     assert(expr)
+# define mln_invariant(expr)     assert((bool)(expr))
 
 /// Precondition.
-# define mln_precondition(expr)  assert(expr)
+# define mln_precondition(expr)  assert((bool)(expr))
 
 /// Postcondition.
-# define mln_postcondition(expr) assert(expr)
+# define mln_postcondition(expr) assert((bool)(expr))
 
 
 namespace mln
