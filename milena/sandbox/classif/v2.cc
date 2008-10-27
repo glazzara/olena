@@ -38,13 +38,23 @@ fill_histo(const I& ima, int f)
   return histo;
 }
 
-template <typename I, typename N>
+template <typename I, typename J, typename N>
 unsigned
-compute_max_tree(const I& ima, const J& histo, const N& nbh)
+compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f)
 {
-  max_tree_<I,N> run(ima, nbh);
+  max_tree_<J,N> run(histo, nbh);
 
-  
+  I out(ima.domain());
+  mln_piter(I) p(ima.domain());
+  for_all(p)
+  {
+    algebra::vec<3, value::int_u8> v = make::vec(ima(p).red()   / f,
+                                                 ima(p).green() / f,
+                                                 ima(p).blue()  / f);
+    point3d pn = run.parent(v);
+    out(p) = value::rgb8(pn[0] * f, pn[1] * f, pn[2] * f);
+  }
+  io::ppm::save(out, "tmp.ppm");
 }
 
 bool usage(int argc, char ** argv)
@@ -75,5 +85,5 @@ int main(int argc, char* argv[])
   //debug::println(phisto);
 
   // Compute max_tree
-  max_tree_<I,N> run(ima, nbh);
+  compute_max_tree(ima, histo, c6(), div_factor);
 }

@@ -1,5 +1,11 @@
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	INIM: Classif: Update max tree version.
+
+	* classif/v2.cc: Update.
+
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	INIM: Classif: Start working on max_tree version.
 
 	* classif/max_tree.hh: max_tree struct.
