@@ -114,7 +114,7 @@ namespace mln
     bool is_valid() const;
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Push in the queue with \p priority the element \p e.
@@ -181,7 +181,7 @@ namespace mln
 
     util::set<P> p_;
     q_type_      q_;
-    unsigned     n_;
+    std::size_t  n_;
 
     // Run invariance tests and return the result.
     bool run_() const;
@@ -225,7 +225,7 @@ namespace mln
   
   template <typename P, typename Q>
   inline
-  unsigned
+  std::size_t
   p_priority<P,Q>::nsites() const
   {
     mln_invariant(run_());

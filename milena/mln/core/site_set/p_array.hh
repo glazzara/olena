@@ -125,7 +125,7 @@ namespace mln
     void change(const psite& p, const P& new_p);
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Append a point \p p.
@@ -383,7 +383,7 @@ namespace mln
 
   template <typename P>
   inline
-  unsigned
+  std::size_t
   p_array<P>::nsites() const
   {
     return vect_.size();

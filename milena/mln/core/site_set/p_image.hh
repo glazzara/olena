@@ -115,7 +115,7 @@ namespace mln
     bool is_valid() const;
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Insertion element associated type. 
@@ -149,7 +149,7 @@ namespace mln
   private:
 
     I ima_;
-    unsigned nsites_;
+    std::size_t nsites_;
   };
 
 
@@ -198,7 +198,7 @@ namespace mln
 
   template <typename I>
   inline
-  unsigned
+  std::size_t
   p_image<I>::nsites() const
   {
     return nsites_;

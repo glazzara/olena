@@ -82,7 +82,7 @@ namespace mln
      *
      * \warning This method is final for all box classes.
      */
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
   protected:
     Box();
@@ -157,12 +157,12 @@ namespace mln
 
   template <typename E>
   inline
-  unsigned
+  std::size_t
   Box<E>::nsites() const
   {
     if (! exact(this)->is_valid())
       return 0;
-    unsigned count = 1;
+    std::size_t count = 1;
     typedef mln_site(E) P; // Helps g++-3.3.5.
     for (unsigned i = 0; i < P::dim; ++i)
       count *= exact(this)->len(i);

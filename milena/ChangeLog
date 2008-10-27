@@ -12,6 +12,27 @@
 	* mln/level/transform.hh,
 	* mln/level/paste.hh: Rename routines.
 
+2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Change return type of Site_set::nsites() from unsigned to std:size_t.
+
+	* mln/core/concept/box.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_graph.hh,
+	* mln/core/site_set/p_image.hh,
+	* mln/core/site_set/p_key.hh,
+	* mln/core/site_set/p_line2d.hh,
+	* mln/core/site_set/p_line_graph.hh,
+	* mln/core/site_set/p_priority.hh,
+	* mln/core/site_set/p_queue.hh,
+	* mln/core/site_set/p_queue_fast.hh,
+	* mln/core/site_set/p_run.hh,
+	* mln/core/site_set/p_set.hh:
+	Update declarations.
+
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mln::level::stretch w.r.t. the initialization.

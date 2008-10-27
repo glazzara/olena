@@ -104,7 +104,7 @@ namespace mln
     /// Required by the mln::Point_Set concept.
     /* FIXME: Return type should be std::size_t (see
        mln/core/concept/site_set.hh). */
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
     /// Return The number of vertices in the graph.
     std::size_t nvertices() const;
@@ -208,7 +208,7 @@ namespace mln
 
   template <typename P>
   inline
-  unsigned
+  std::size_t
   p_graph<P>::nsites() const
   {
     return nvertices();

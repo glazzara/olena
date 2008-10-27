@@ -115,7 +115,7 @@ namespace mln
     bool is_valid() const;
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Insertion element associated type. 
@@ -192,7 +192,7 @@ namespace mln
     k_t k_;
 
     // Number of sites.
-    unsigned n_;
+    std::size_t n_;
 
     // Run invariance tests and return the result.
     bool run_() const;
@@ -245,7 +245,7 @@ namespace mln
   
   template <typename K, typename P>
   inline
-  unsigned
+  std::size_t
   p_key<K,P>::nsites() const
   {
     mln_invariant(run_());

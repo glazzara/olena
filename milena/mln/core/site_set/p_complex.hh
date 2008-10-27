@@ -149,7 +149,7 @@ namespace mln
     /// `known'.)
     /* FIXME: Return type should be std::size_t (see
        mln/core/concept/site_set.hh). */
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
     /// Return The number of faces in the complex.
     std::size_t nfaces() const;
@@ -236,7 +236,7 @@ namespace mln
 
   template <unsigned D, typename G>
   inline
-  unsigned
+  std::size_t
   p_complex<D, G>::nsites() const
   {
     return nfaces();

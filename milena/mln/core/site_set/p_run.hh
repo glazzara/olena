@@ -128,7 +128,7 @@ namespace mln
     bool has_index(unsigned short i) const;
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
     /// Give the length of the run.
     unsigned short length() const;
@@ -162,7 +162,7 @@ namespace mln
     P start_;
 
     /// The length of the run.
-    unsigned short len_;
+    std::size_t len_;
   };
 
 
@@ -307,7 +307,7 @@ namespace mln
 
   template <typename P>
   inline
-  unsigned
+  std::size_t
   p_run<P>::nsites() const
   {
     mln_precondition(is_valid());

@@ -110,7 +110,7 @@ namespace mln
     bool compute_has(const P& p) const;
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Push a site \p p in the queue.
@@ -236,7 +236,7 @@ namespace mln
 
   template <typename P>
   inline
-  unsigned
+  std::size_t
   p_queue_fast<P>::nsites() const
   {
     mln_invariant(end_ >= begin_);

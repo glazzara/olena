@@ -107,7 +107,7 @@ namespace mln
 
 
     /// Give the number of sites.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
 
     /// Insertion element associated type. 
@@ -192,7 +192,7 @@ namespace mln
 
   template <typename P>
   inline
-  unsigned
+  std::size_t
   p_set<P>::nsites() const
   {
     return s_.nelements();

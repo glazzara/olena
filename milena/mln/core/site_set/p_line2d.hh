@@ -112,7 +112,7 @@ namespace mln
 
 
     /// Give the number of points.
-    unsigned nsites() const;
+    std::size_t nsites() const;
 
     /// Give the point that begins the line.
     const point2d& begin() const;
@@ -252,7 +252,7 @@ namespace mln
   }
 
   inline
-  unsigned
+  std::size_t
   p_line2d::nsites() const
   {
     return arr_.nsites();
