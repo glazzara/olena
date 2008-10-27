@@ -1,3 +1,19 @@
+2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fun::v2v::convert and level::convert.
+
+	* milena/mln/fun/v2v/convert.hh: New.
+	* milena/mln/fun/v2v/cast.hh (todo): New.
+	* milena/mln/level/convert.hh: New.
+	* milena/tests/level/convert.cc: New.
+	* milena/tests/level/Makefile.am: Update.
+	* milena/mln/value/rgb.hh (todo): New.
+	(from_to): New overload for bool->rgbn.
+	* milena/mln/convert/from_to.hxx
+	(from_to): New decl for bool->rgbn.
+	* milena/sandbox/scribo/demat.hh
+	(include): Remove obsolete dependency.
+
 2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/io/off/Makefile.

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,60 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_CAST_HH
-# define MLN_FUN_V2V_CAST_HH
-
-/*! \file mln/fun/v2v/cast.hh
+/*! \file tests/level/convert.cc
  *
- * \brief FIXME.
- *
- * \todo The function is intrisically meta; how to handle that
- * particular case?
+ * \brief Tests on mln::level::convert
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/value/cast.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/level/convert.hh>
+
+#include <mln/value/rgb8.hh>
+#include <mln/literal/grays.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::rgb8;
 
-  namespace fun
+//   trace::quiet = false;
+
+  // bool -> rgb8
   {
-
-    namespace v2v
-    {
-
-      // FIXME: Doc!
-
-      template <typename V>
-      struct cast : public Function_v2v< cast<V> >
-      {
-	typedef V result;
-
-	template <typename W>
-	V operator()(const W& w) const;
-      };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename V>
-      template <typename W>
-      inline
-      V
-      cast<V>::operator()(const W& w) const
-      {
-	return mln::value::cast<V>(w);
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::v2v
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-
-#endif // ! MLN_FUN_V2V_CAST_HH
+    image2d<bool> ima(1, 2);
+    ima.at(0, 0) = false;
+    ima.at(0, 1) = true;
+    image2d<rgb8> out = level::convert(rgb8(), ima);
+    mln_assertion(out.at(0, 0) == literal::black);
+    mln_assertion(out.at(0, 1) == literal::white);
+  }
+}

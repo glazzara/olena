@@ -11,6 +11,7 @@ check_PROGRAMS =				\
   assign					\
   compare					\
   compute					\
+  convert					\
   fill						\
   fill_with_value				\
   fill_with_image				\
@@ -35,6 +36,7 @@ apply_SOURCES = apply.cc
 assign_SOURCES = assign.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
+convert_SOURCES = convert.cc
 fill_SOURCES = fill.cc
 fill_with_value_SOURCES = fill_with_value.cc
 fill_with_image_SOURCES = fill_with_image.cc

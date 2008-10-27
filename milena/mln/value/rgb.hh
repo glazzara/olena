@@ -32,6 +32,11 @@
  *
  * \brief Color class for red-green-blue where every component is
  * n-bit encoded.
+ *
+ * \todo Split decl and def for from_to.
+ *
+ * \todo Introduce the concept of Color, then generalize from_to to
+ * colors.
  */
 
 # include <mln/value/ops.hh>
@@ -513,6 +518,22 @@ namespace mln
 	tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to instead of cast.
 
       to = value::rgb<m>(tmp);
+    }
+
+    // bool -> rgb.
+    template <unsigned m>
+    void
+    from_to(bool from, value::rgb<m>& to)
+    {
+      static literal::white_t* white_ = 0;
+      static literal::black_t* black_ = 0;
+      // We do not use literal::white (the object) so that we
+      // do not introduce any coupling with the file where
+      // literals are defined.
+      if (from)
+	to = *white_;
+      else
+	to = *black_;
     }
   
   } // end of namespace mln::convert

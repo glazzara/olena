@@ -55,8 +55,6 @@
 
 # include <mln/draw/box.hh>
 
-# include <mln/estim/nsites.hh>
-
 # include <mln/fun/i2v/array.hh>
 
 # include <mln/io/pbm/load.hh>

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_CAST_HH
-# define MLN_FUN_V2V_CAST_HH
+#ifndef MLN_FUN_V2V_CONVERT_HH
+# define MLN_FUN_V2V_CONVERT_HH
 
-/*! \file mln/fun/v2v/cast.hh
+/*! \file mln/fun/v2v/convert.hh
  *
  * \brief FIXME.
  *
@@ -37,7 +37,8 @@
  */
 
 # include <mln/core/concept/function.hh>
-# include <mln/value/cast.hh>
+# include <mln/convert/to.hh>
+
 
 
 namespace mln
@@ -52,7 +53,7 @@ namespace mln
       // FIXME: Doc!
 
       template <typename V>
-      struct cast : public Function_v2v< cast<V> >
+      struct convert : public Function_v2v< convert<V> >
       {
 	typedef V result;
 
@@ -67,9 +68,9 @@ namespace mln
       template <typename W>
       inline
       V
-      cast<V>::operator()(const W& w) const
+      convert<V>::operator()(const W& w) const
       {
-	return mln::value::cast<V>(w);
+	return mln::convert::to<V>(w);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -81,4 +82,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_V2V_CAST_HH
+#endif // ! MLN_FUN_V2V_CONVERT_HH

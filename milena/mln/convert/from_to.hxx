@@ -108,6 +108,11 @@ namespace mln
     void
     from_to(const algebra::vec<3,T>& from, value::rgb<m>& to);
 
+    // bool -> rgb.
+    template <unsigned m>
+    void
+    from_to(bool from, value::rgb<m>& to);
+
     // Value -> Value
     template <typename F, typename T>
     void

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -8,7 +8,7 @@
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Public License for more details.
+ // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this library; see the file COPYING.  If not, write to
@@ -25,60 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2V_CAST_HH
-# define MLN_FUN_V2V_CAST_HH
+#ifndef MLN_LEVEL_CONVERT_HH
+# define MLN_LEVEL_CONVERT_HH
 
-/*! \file mln/fun/v2v/cast.hh
+/*! \file mln/level/convert.hh
  *
- * \brief FIXME.
+ * \brief Convert the contents of an image into another one.
  *
- * \todo The function is intrisically meta; how to handle that
- * particular case?
+ * \todo Re-write doc.
  */
 
-# include <mln/core/concept/function.hh>
-# include <mln/value/cast.hh>
+# include <mln/fun/v2v/convert.hh>
+# include <mln/level/transform.hh>
 
 
 namespace mln
 {
 
-  namespace fun
+  namespace level
   {
 
-    namespace v2v
-    {
+    /*! Convert the image \p input by changing the value type.
+     *
+     * \param[in] v A value of the destination type.
+     * \param[in] input The input image.
+     * \param[out] output The result image.
+     */
+    template <typename V, typename I>
+    mln_ch_value(I, V)
+    convert(const V&, const Image<I>& input);
 
-      // FIXME: Doc!
-
-      template <typename V>
-      struct cast : public Function_v2v< cast<V> >
-      {
-	typedef V result;
-
-	template <typename W>
-	V operator()(const W& w) const;
-      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
-      template <typename W>
-      inline
-      V
-      cast<V>::operator()(const W& w) const
-      {
-	return mln::value::cast<V>(w);
-      }
+    // Facade.
+
+    template <typename V, typename I>
+    inline
+    mln_ch_value(I, V)
+    convert(const V&, const Image<I>& input)
+    {
+      trace::entering("level::convert");
+
+      mln_precondition(exact(input).has_data());
+      fun::v2v::convert<V> f;
+      mln_ch_value(I, V) output = level::transform(input, f);
+
+      trace::exiting("level::convert");
+      return output;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::v2v
-
-  } // end of namespace mln::fun
+  } // end of namespace mln::level
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_V2V_CAST_HH
+#endif // ! MLN_LEVEL_CONVERT_HH
