@@ -6,8 +6,12 @@
 #include <mln/value/all.hh>
 
 #include <mln/level/fill.hh>
+
 #include <mln/morpho/closing_volume.hh>
 #include <mln/morpho/closing_area.hh>
+#include <mln/morpho/opening_volume.hh>
+#include <mln/morpho/opening_area.hh>
+
 #include <mln/arith/revert.hh>
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/core/alias/neighb3d.hh>
@@ -163,20 +167,19 @@ int main(int argc, char **argv)
   //make histo
   image3d<unsigned> histo = fill_histo(ima,div_factor);
 
-  //revert histo
-  image3d<unsigned> rhisto = arith::revert(histo);
+  //compute opening_volume of histo
+  image3d<unsigned> histo_filtered(histo.domain());
+  morpho::opening_volume(histo, c6(), lambda, histo_filtered);
 
-  //compute closing_volume of histo
-  image3d<unsigned> histo_closure(histo.domain());
-  morpho::closing_volume(rhisto, c6(), lambda, histo_closure);
 
   //watershed over histo_closure
   unsigned nbasins = 0;
-  image3d<unsigned> ws = morpho::meyer_wst(histo_closure, c6(), nbasins);
+  image3d<unsigned> ws = morpho::meyer_wst(arith::revert(histo_filtered),
+					   c6(), nbasins);
   std::cout << "nbassins : " << nbasins << std::endl;
 
   //classify image
   classify_image(ima, histo, ws, nbasins, div_factor);
 
-  save_class(histo_closure, "histo.ppm");
+  save_class(histo_filtered, "histo.ppm");
 }

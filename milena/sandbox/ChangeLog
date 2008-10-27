@@ -1,3 +1,10 @@
+2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update classification.
+
+	* classif/iccvg04.cc: Swap filtering and reverting so that
+	  lambda is more intuitive.
+
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Add projection.
