@@ -137,8 +137,15 @@ namespace mln
     /// Enlarge the box with a border \p b.
     void enlarge(unsigned b);
 
+    /// Enlarge the box with a border \p b for dimension \p dim.
+    void enlarge(unsigned dim, unsigned b);
+
     /// Give a larger box.
     box<P> to_larger(unsigned b) const;
+
+    /// Return the approximated central site of this box.
+    /// FIXME: Do we want a routine as well like geom::bbox()?
+    P center() const;
 
     /// Test that the box owns valid data, i.e., is initialized and
     /// with pmin being 'less-than' pmax.
@@ -296,6 +303,17 @@ namespace mln
 
   template <typename P>
   inline
+  void
+  box<P>::enlarge(unsigned dim, unsigned b)
+  {
+    mln_precondition(is_valid());
+    pmin_[dim] -= b;
+    pmax_[dim] += b;
+    mln_postcondition(is_valid());
+  }
+
+  template <typename P>
+  inline
   box<P>
   larger_than(const box<P> a, const box<P> b)
   {
@@ -325,6 +343,18 @@ namespace mln
     }
     mln_postcondition(tmp.is_valid());
     return tmp;
+  }
+
+  template <typename P>
+  inline
+  P
+  box<P>::center() const
+  {
+    mln_precondition(is_valid());
+    point2d center;
+    for (unsigned i = 0; i < P::dim; ++i)
+      center[i] = pmin_[i] + ((pmax_[i] - pmin_[i]) / 2);
+    return center;
   }
 
   template <typename P>
