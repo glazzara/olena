@@ -159,6 +159,8 @@ namespace mln
       inline
       image2d<V> load(char type_, const std::string& filename)
       {
+	trace::entering("mln::io::pnm::load");
+
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -191,8 +193,10 @@ namespace mln
 	else
 	  if (type == (type_ - 3))
 	    pnm::load_ascii(file, ima);
-	return ima;
 
+	trace::entering("mln::io::pnm::load");
+
+	return ima;
       }
 
       /// An other way to load pnm files :
@@ -204,6 +208,8 @@ namespace mln
 		Image<I>& ima_,
 		const std::string& filename)
       {
+	trace::entering("mln::io::pnm::load");
+
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -240,6 +246,7 @@ namespace mln
 	  if (type == (type_ - 3))
 	    pnm::load_ascii(file, ima);
 
+	trace::exiting("mln::io::pnm::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

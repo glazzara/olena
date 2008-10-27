@@ -70,6 +70,8 @@ namespace mln
 
       void save(const bin_2complex_image3df& ima, const std::string& filename)
       {
+	trace::entering("mln::io::off::save");
+
 	const std::string me = "mln::io::off::save";
 
 	std::ofstream ostr(filename.c_str());
@@ -183,6 +185,8 @@ namespace mln
 	}
 
 	ostr.close();
+
+	trace::exiting("mln::io::off::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

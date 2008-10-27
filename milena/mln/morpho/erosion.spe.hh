@@ -1199,10 +1199,12 @@ namespace mln
       erosion_dispatch_for_generic(const I& input, const W& win) // Entry point.
       {
 	trace::entering("morpho::erosion_dispatch_for_generic");
-	return erosion_dispatch_for_generic(mln_trait_image_kind(I)(),
-					    mln_trait_image_speed(I)(),
-					    input, win);
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_generic(mln_trait_image_kind(I)(),
+				       mln_trait_image_speed(I)(),
+				       input, win);
 	trace::entering("morpho::erosion_dispatch_for_generic");
+	return ima;
       }
 
 
@@ -1249,8 +1251,9 @@ namespace mln
       erosion_dispatch_for_arbitrary(const I& input, const W& win)
       {
 	trace::entering("morpho::erosion_dispatch_for_arbitrary");
-	return erosion_dispatch_for_arbitrary(mln_trait_image_speed(I)(),
-					      input, win);
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_arbitrary(mln_trait_image_speed(I)(),
+					 input, win);
 	trace::exiting("morpho::erosion_dispatch_for_arbitrary");
       }
 
@@ -1279,9 +1282,11 @@ namespace mln
       erosion_dispatch_for_directional(const I& input, const W& win, unsigned dir)
       {
 	trace::entering("morpho::erosion_dispatch_for_directional");
-	return erosion_dispatch_for_directional(mln_trait_image_speed(I)(),
-						input, win, dir);
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_directional(mln_trait_image_speed(I)(),
+					   input, win, dir);
 	trace::exiting("morpho::erosion_dispatch_for_directional");
+	return ima;
       }
 
 
@@ -1308,9 +1313,11 @@ namespace mln
       erosion_dispatch_for_diagonal2d(const I& input, const W& win)
       {
 	trace::entering("morpho::erosion_dispatch_for_diagonal2d");
-	return erosion_dispatch_for_diagonal2d(mln_trait_image_speed(I)(),
-						input, win);
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_diagonal2d(mln_trait_image_speed(I)(),
+					  input, win);
 	trace::exiting("morpho::erosion_dispatch_for_diagonal2d");
+	return ima;
       }
 
 
@@ -1337,9 +1344,11 @@ namespace mln
       erosion_dispatch_for_backdiagonal2d(const I& input, const W& win)
       {
 	trace::entering("morpho::erosion_dispatch_for_backdiagonal2d");
-	return erosion_dispatch_for_backdiagonal2d(mln_trait_image_speed(I)(),
-						input, win);
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_backdiagonal2d(mln_trait_image_speed(I)(),
+					      input, win);
 	trace::exiting("morpho::erosion_dispatch_for_backdiagonal2d");
+	return ima;
       }
 
       // dispatch w.r.t. win

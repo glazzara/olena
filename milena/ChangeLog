@@ -1,3 +1,24 @@
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix wrong or missing traces.
+	* milena/mln/level/fill_with_image.spe.hh,
+	* milena/mln/morpho/erosion.spe.hh:
+	Call trace::exiting before the return statement.
+
+	* mln/io/fits/load.hh,
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/load.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/ppm/load.hh:
+	Add missing traces.
+
 2008-10-27  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix bugs in low level routines.

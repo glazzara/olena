@@ -83,8 +83,9 @@ namespace mln
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u >,
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u_sat >
 	// 	  >::check();
-
+	trace::entering("mln::io::pgm::save");
 	io::pnm::save(PGM, exact(ima), filename);
+	trace::exiting("mln::io::pgm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

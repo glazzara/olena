@@ -73,6 +73,8 @@ namespace mln
 
       void load(bin_2complex_image3df& ima, const std::string& filename)
       {
+	trace::entering("mln::io::off::load");
+
 	const std::string me = "mln::io::off::load";
 
 	std::ifstream istr(filename.c_str());
@@ -276,6 +278,8 @@ namespace mln
 	    std::exit(1);
 	  }
 	istr.close();
+
+	trace::exiting("mln::io::off::load");
       }
 
 

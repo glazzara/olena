@@ -88,7 +88,7 @@ namespace mln
           pi.val() = d.val();
           d.next();
         }
-        trace::entering("level::impl::fill_with_image_fast");
+        trace::exiting("level::impl::fill_with_image_fast");
       }
 
 
@@ -108,7 +108,7 @@ namespace mln
         for_all(pi)
           pi.val() = data.val();
 
-        trace::entering("level::impl::fill_with_image_fast_singleton");
+        trace::exiting("level::impl::fill_with_image_fast_singleton");
       }
 
     } // end of namespace mln::level::impl
