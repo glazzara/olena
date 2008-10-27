@@ -13,6 +13,7 @@
 # include <mln/value/int_u8.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/core/site_set/p_array.hh>
+# include <mln/debug/println.hh>
 
 using namespace mln;
 
@@ -81,6 +82,20 @@ struct max_tree_
   {
     parent(p) = p;
     zpar(p) = p;
+  }
+
+  void area()
+  {
+    image2d<value::int_u16> area(f.domain());
+    level::fill(area, 1);
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (parent(p) == p)
+        continue;
+      area(parent(p)) += area(p);
+    }
+    debug::println(area);
   }
 
   bool is_root(const point& p) const

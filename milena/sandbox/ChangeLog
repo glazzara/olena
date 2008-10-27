@@ -1,3 +1,12 @@
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Start working on max_tree version.
+
+	* classif/max_tree.hh: max_tree struct.
+	* classif/iccvg04.cc: minor fix.
+	* classif/display.hh: Put display here.
+	* classif/v2.cc: STart max_tree.
+
 2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Work on a new classification method based on max_trees.

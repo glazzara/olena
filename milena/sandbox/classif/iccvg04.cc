@@ -36,6 +36,7 @@
 #include <stdlib.h>
 
 #include "proj.hh"
+#include "display.hh"
 
 using namespace mln;
 
@@ -69,35 +70,6 @@ void gplot(const I& ima)
       std::cout << p[0] << ' ' << p[1] << ' ' << p[2] << std::endl;
   }
 }
-
-template <typename I>
-void display(const I& ima, const char * dir)
-{
-  mkdir(dir, 0777);
-  chdir(dir);
-
-  image2d< mln_value(I) > out(geom::nrows(ima), geom::ncols(ima));
-
-  for (int s = 0; s < geom::nslis(ima); ++s)
-    {
-      // image2d< value::int_u8 > out(geom::nrows(ima), geom::ncols(ima));
-      for (int r = 0; r < geom::nrows(ima); ++r)
-        {
-          for (int c = 0; c < geom::ncols(ima); ++c)
-            {
-              out(point2d(r, c)) = ima(point3d(s, r, c));
-            }
-        }
-
-      std::ostringstream is;
-      is << "out_" << s << ".pgm";
-
-      io::pgm::save(out, is.str());
-    }
-
-  chdir("..");
-}
-
 
 template <typename I, typename J, typename K>
 void

@@ -14,7 +14,9 @@
 #include <mln/arith/revert.hh>
 #include <mln/core/alias/neighb3d.hh>
 
-#include "min_tree.hh"
+#include "max_tree.hh"
+#include "proj.hh"
+#include "display.hh"
 
 using namespace mln;
 
@@ -38,17 +40,11 @@ fill_histo(const I& ima, int f)
 
 template <typename I, typename N>
 unsigned
-compute_min_tree(const I& ima, const N& nbh)
+compute_max_tree(const I& ima, const J& histo, const N& nbh)
 {
-  min_tree_<I,N> run(ima, nbh);
+  max_tree_<I,N> run(ima, nbh);
 
-  mln_piter(I) p(ima.domain());
-  unsigned nnodes = 0;
-  for_all(p)
-    if (run.is_node(p))
-      ++nnodes;
-
-  return nnodes;
+  
 }
 
 bool usage(int argc, char ** argv)
@@ -72,9 +68,12 @@ int main(int argc, char* argv[])
   //make histo
   image3d<unsigned> histo = fill_histo(ima,div_factor);
 
-  //revert histo
-  image3d<unsigned> rhisto = arith::revert(histo);
+  //proj
+  accu::mean<unsigned, unsigned, unsigned> mean;
+  image2d<unsigned> phisto = proj(histo, mean);
 
-  // Compute min_tree
-  compute_min_tree(rhisto, c6());
+  //debug::println(phisto);
+
+  // Compute max_tree
+  max_tree_<I,N> run(ima, nbh);
 }
