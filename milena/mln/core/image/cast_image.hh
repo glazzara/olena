@@ -91,8 +91,20 @@ namespace mln
     struct image_< cast_image_<T,I> > :
       cast_image_trait_selector<T, I, mln_trait_image_vw_io(I)>
     {
+    private:
+      typedef mlc_equal(mln_trait_value_quant(T),
+			trait::value::quant::high) is_high_quant_;
+    public:
+      typedef mlc_if(is_high_quant_,
+		     trait::image::quant::high,
+		     trait::image::quant::low) quant;
+
       typedef trait::image::value_io::read_only value_io;
       typedef trait::image::pw_io::read pw_io;
+      typedef trait::image::value_access::indirect value_access;
+
+      /// FIXME is the following property correct?
+      typedef trait::image::ext_domain::none ext_domain;
     };
 
   } // end of namespace mln::trait

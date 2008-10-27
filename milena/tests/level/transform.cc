@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,11 @@
 #include <mln/core/image/image3d.hh>
 #include <mln/pw/image.hh>
 #include <mln/core/image/flat_image.hh>
+#include <mln/core/image/cast_image.hh>
 #include <mln/core/image/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/extension_val.hh>
+
 
 #include <mln/level/fill.hh>
 #include <mln/level/transform.hh>
@@ -140,6 +144,7 @@ int main()
       mln_assertion((unsigned short)std::sqrt(ima(p)) == out(p));
   }
 
+  // image if test
   {
     typedef image2d<unsigned short> I;
     typedef image_if<I, fun::p2b::chess_t> II;
@@ -157,4 +162,59 @@ int main()
       mln_assertion((unsigned short)std::sqrt(ima_if(p)) == out(p));
   }
 
+  // cast image test
+  {
+    typedef image2d<unsigned short> I;
+    typedef cast_image_<int, I> II;
+    typedef image2d<unsigned short> III;
+
+    I in(size, size);
+    II cast(in);
+    III out(size, size);
+
+    level::fill(in, 51);
+    level::fill(out, 42);
+
+    out = level::transform(cast, mysqrt());
+
+    II::piter p(cast.domain());
+    for_all(p)
+      mln_assertion((unsigned short)std::sqrt(cast(p)) == out(p));
+  }
+
+  // sub_image test
+  {
+    typedef image2d<int> I;
+    typedef sub_image< image2d<int>, box2d > II;
+    typedef image2d<unsigned short> III;
+
+    I ima(size, size);
+    II sub_ima(ima, make::box2d(4,4, 10,10));
+    III out(size, size);
+
+    level::fill(ima, 51);
+    out = level::transform(sub_ima, mysqrt());
+
+    II::piter p(sub_ima.domain());
+    for_all(p)
+      mln_assertion((unsigned short)std::sqrt(sub_ima(p)) == out(p));
+  }
+
+  // extended image test
+  {
+    typedef image2d<int> I;
+    typedef extension_val< image2d<int> > II;
+    typedef image2d<unsigned short> III;
+
+    I ima(size, size);
+    II extend_ima(ima, 5);
+    III out(size, size);
+
+    level::fill(ima, 51);
+    out = level::transform(extend_ima, mysqrt());
+
+    II::piter p(extend_ima.domain());
+    for_all(p)
+      mln_assertion((unsigned short)std::sqrt(extend_ima(p)) == out(p));
+  }
 }

@@ -159,7 +159,7 @@ namespace mln
         trace::entering("level::transform");
 
         mln_precondition(exact(output).domain() >= exact(input).domain());
-        transform_dispatch(exact(input), exact(f), exact(output));
+        transform_dispatch_(exact(input), exact(f), exact(output));
 
         trace::exiting("level::transform");
       }

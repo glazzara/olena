@@ -1,3 +1,17 @@
+2008-10-27  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix bugs in low level routines.
+
+	* tests/level/fill_with_image.cc,
+	* tests/level/transform.cc,
+	* tests/level/paste.cc: Add tests.
+	* mln/core/image/cast_image.hh: Update properties.
+	* mln/level/transform.spe.hh,
+	* mln/level/paste.spe.hh,
+	* mln/level/fill_with_image.spe.hh: Update dispatch, fix bugs.
+	* mln/level/transform.hh,
+	* mln/level/paste.hh: Rename routines.
+
 2008-10-24  Roland Levillain  <roland@lrde.epita.fr>
 
 	Fix mln::level::stretch w.r.t. the initialization.

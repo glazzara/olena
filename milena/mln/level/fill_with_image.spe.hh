@@ -86,9 +86,31 @@ namespace mln
         for_all(pi)
         {
           pi.val() = d.val();
+          d.next();
         }
         trace::entering("level::impl::fill_with_image_fast");
       }
+
+
+      template <typename I, typename J>
+      void fill_with_image_fast_singleton(Image<I>& ima_,
+                                          const Image<J>& data_)
+      {
+        trace::entering("level::impl::fill_with_image_fast_singleton");
+
+        I& ima               = exact(ima_);
+        const J& data        = exact(data_);
+
+        level::internal::fill_with_image_tests(ima, data);
+
+        mln_pixter(I) pi(ima);
+
+        for_all(pi)
+          pi.val() = data.val();
+
+        trace::entering("level::impl::fill_with_image_fast_singleton");
+      }
+
     } // end of namespace mln::level::impl
 
 
@@ -96,6 +118,49 @@ namespace mln
     // Namespace dispatch
     namespace internal
     {
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_(mln::trait::image::value_access::direct,
+                            mln::trait::image::value_access::direct,
+                            mln::trait::image::ext_domain::some,
+                            mln::trait::image::ext_domain::some,
+                            Image<I>& ima_,
+                            const Image<J>& data_)
+      {
+        I& ima        = exact(ima_);
+        const J& data = exact(data_);
+
+        if (ima.domain() == data.domain())
+          impl::fill_with_image_fast(ima, data);
+        else
+          impl::generic::fill_with_image(ima, data);
+      }
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_(mln::trait::image::value_access::direct,
+                            mln::trait::image::value_access::direct,
+                            mln::trait::image::ext_domain::none,
+                            mln::trait::image::ext_domain::none,
+                            Image<I>& ima,
+                            const Image<J>& data)
+      {
+        impl::fill_with_image_fast(ima, data);
+      }
+
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_(mln::trait::image::value_access::any,
+                            mln::trait::image::value_access::any,
+                            mln::trait::image::ext_domain::any,
+                            mln::trait::image::ext_domain::any,
+                            Image<I>& ima,
+                            const Image<J>& data)
+      {
+        impl::generic::fill_with_image(ima, data);
+      }
 
       template <typename I, typename J>
       inline
@@ -110,47 +175,39 @@ namespace mln
       template <typename I, typename J>
       inline
       void fill_with_image_(trait::image::value_storage::one_block,
-                            trait::image::value_storage::one_block,
+                            trait::image::value_storage::singleton,
+                            Image<I>& ima,
+                            const Image<J>& data)
+      {
+        impl::generic::fill_with_image(ima, data);
+      }
+
+      template <typename I, typename J>
+      inline
+      void fill_with_image_(mln::trait::image::value_storage::one_block,
+                            mln::trait::image::value_storage::one_block,
                             Image<I>& ima_,
                             const Image<J>& data_)
       {
         I& ima        = exact(ima_);
         const J& data = exact(data_);
 
+
         /// Check basic properties
-        if (mlc_is(mln_trait_image_value_access(J),
-                   trait::image::value_access::direct)::value &&
-            mlc_is(mln_trait_image_value_access(I),
-                   trait::image::value_access::direct)::value &&
-            mlc_is(mln_trait_image_value_alignement(I),
+        if (mlc_is(mln_trait_image_value_alignement(I),
                    trait::image::value_alignement::with_grid)::value &&
             mlc_is(mln_trait_image_value_alignement(J),
                    trait::image::value_alignement::with_grid)::value)
           {
-            /// Check ext_domain
-            if (
-                ((mlc_is(mln_trait_image_ext_domain(I),
-                         trait::image::ext_domain::fixed)::value ||
-                  mlc_is(mln_trait_image_ext_domain(I),
-                         trait::image::ext_domain::extendable)::value) &&
-                 (mlc_is(mln_trait_image_ext_domain(J),
-                         trait::image::ext_domain::fixed)::value ||
-                  mlc_is(mln_trait_image_ext_domain(J),
-                         trait::image::ext_domain::extendable)::value) &&
-                 data.border() == data.border()) ||
-                (mlc_is(mln_trait_image_ext_domain(I),
-                        trait::image::ext_domain::none)::value &&
-                 mlc_is(mln_trait_image_ext_domain(J),
-                        trait::image::ext_domain::none)::value))
-              {
-                /// Check domain
-                if (data.domain() == data.domain())
-                  impl::fill_with_image_fast(ima, data);
-              }
+            fill_with_image_(mln_trait_image_value_access(I)(),
+                             mln_trait_image_value_access(J)(),
+                             mln_trait_image_ext_domain(I)(),
+                             mln_trait_image_ext_domain(J)(),
+                             ima, data);
           }
-        impl::generic::fill_with_image(ima, data);
+        else
+          impl::generic::fill_with_image(ima, data);
       }
-
 
 
       template <typename I, typename J>

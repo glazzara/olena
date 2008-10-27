@@ -175,6 +175,7 @@ namespace mln
         for_all(pi)
         {
           po.val() = f(pi.val());
+          po.next();
         }
 
 	trace::exiting("level::impl::transform_fast");
@@ -195,8 +196,8 @@ namespace mln
 
         level::internal::transform_tests(input, f, output);
 
-         value::lut_vec<mln_vset(I), mln_result(F)>
-           lut(input.values_eligible(), f);
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.values_eligible(), f);
 
         mln_pixter(const I) pi(input);
         mln_pixter(O) po(output);
@@ -204,8 +205,8 @@ namespace mln
         po.start();
         for_all(pi)
         {
-          //po.val() = lut(pi.val);
-          po.val() = f(pi.val());
+          po.val() = lut(pi.val());
+          po.next();
         }
 
 	trace::exiting("level::impl::transform_fast_lowq");
@@ -221,33 +222,33 @@ namespace mln
         /// Deal with image not updated
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::undef,
-                                mln::trait::image::quant::any,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::undef,
+                                 mln::trait::image::quant::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           impl::generic::transform(input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::vw_set::any,
-                                mln::trait::image::quant::any,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::image::vw_set::any,
+                                 mln::trait::image::quant::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           impl::generic::transform(input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::vw_set::uni,
-                                mln::trait::image::quant::any,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::image::vw_set::uni,
+                                 mln::trait::image::quant::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           impl::transform_taken(input, f, output);
         }
@@ -255,31 +256,84 @@ namespace mln
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::vw_set::none,
-                                mln::trait::image::quant::low,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::image::vw_set::none,
+                                 mln::trait::image::quant::low,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           impl::transform_lowq(input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch_oneblock(mln::trait::image::quant::any,
-                                         const Image<I>& input,
-                                         const Function_v2v<F>& f,
-                                         Image<O>& output)
+        void transform_dispatch_(mln::trait::image::quant::any,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::ext_domain::some,
+                                 mln::trait::image::ext_domain::some,
+                                 const Image<I>& input_,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output_)
+        {
+          const I& input  = exact(input_);
+          O& output       = exact(output_);
+
+
+          if (input.domain() == output.domain())
+            transform_fast(input, f, output);
+          else
+            transform_dispatch_(mln_trait_image_vw_set(I)(),
+                                mln_trait_image_quant(I)(),
+                                input, f, output);
+        }
+
+        template <typename I, typename F, typename O>
+        inline
+        void transform_dispatch_(mln::trait::image::quant::any,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::ext_domain::none,
+                                 mln::trait::image::ext_domain::none,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           transform_fast(input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch_oneblock(mln::trait::image::quant::low,
-                                         const Image<I>& input,
-                                         const Function_v2v<F>& f,
-                                         Image<O>& output)
+        void transform_dispatch_(mln::trait::image::quant::low,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::ext_domain::some,
+                                 mln::trait::image::ext_domain::some,
+                                 const Image<I>& input_,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output_)
+        {
+          const I& input  = exact(input_);
+          O& output       = exact(output_);
+
+          if (input.domain() == output.domain())
+            transform_fast_lowq(input, f, output);
+          else
+            transform_dispatch_(mln_trait_image_vw_set(I)(),
+                                mln_trait_image_quant(I)(),
+                                input, f, output);
+        }
+
+        template <typename I, typename F, typename O>
+        inline
+        void transform_dispatch_(mln::trait::image::quant::low,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::value_access::direct,
+                                 mln::trait::image::ext_domain::none,
+                                 mln::trait::image::ext_domain::none,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           transform_fast_lowq(input, f, output);
         }
@@ -287,88 +341,87 @@ namespace mln
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::value_storage::any,
-                                mln::trait::image::value_storage::any,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::image::quant::any,
+                                 mln::trait::image::value_access::any,
+                                 mln::trait::image::value_access::any,
+                                 mln::trait::image::ext_domain::any,
+                                 mln::trait::image::ext_domain::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
-          transform_dispatch(mln_trait_image_vw_set(I)(),
-                             mln_trait_image_quant(I)(),
-                             input, f, output);
+          transform_dispatch_(mln_trait_image_vw_set(I)(),
+                              mln_trait_image_quant(I)(),
+                              input, f, output);
+        }
+
+
+        template <typename I, typename F, typename O>
+        inline
+        void transform_dispatch_(mln::trait::image::value_storage::any,
+                                 mln::trait::image::value_storage::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
+        {
+          transform_dispatch_(mln_trait_image_vw_set(I)(),
+                              mln_trait_image_quant(I)(),
+                              input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::value_storage::singleton,
-                                mln::trait::image::value_storage::any,
-                                const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(mln::trait::image::value_storage::singleton,
+                                 mln::trait::image::value_storage::any,
+                                 const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
           transform_singleton(input, f, output);
         }
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(mln::trait::image::value_storage::one_block,
-                                mln::trait::image::value_storage::one_block,
-                                const Image<I>& input_,
-                                const Function_v2v<F>& f_,
-                                Image<O>& output_)
+        void transform_dispatch_(mln::trait::image::value_storage::one_block,
+                                 mln::trait::image::value_storage::one_block,
+                                 const Image<I>& input_,
+                                 const Function_v2v<F>& f_,
+                                 Image<O>& output_)
         {
           const I& input  = exact(input_);
           O& output       = exact(output_);
 
+
           /// Check basic properties
-          if (mlc_is(mln_trait_image_value_access(O),
-                     trait::image::value_access::direct)::value &&
-              mlc_is(mln_trait_image_value_access(I),
-                     trait::image::value_access::direct)::value &&
-              mlc_is(mln_trait_image_value_alignement(I),
+          if (mlc_is(mln_trait_image_value_alignement(I),
                      trait::image::value_alignement::with_grid)::value &&
               mlc_is(mln_trait_image_value_alignement(O),
                      trait::image::value_alignement::with_grid)::value)
             {
-              /// Check ext_domain
-              if (
-                  ((mlc_is(mln_trait_image_ext_domain(I),
-                           trait::image::ext_domain::fixed)::value ||
-                    mlc_is(mln_trait_image_ext_domain(I),
-                          trait::image::ext_domain::extendable)::value) &&
-                   (mlc_is(mln_trait_image_ext_domain(O),
-                           trait::image::ext_domain::fixed)::value ||
-                    mlc_is(mln_trait_image_ext_domain(O),
-                           trait::image::ext_domain::extendable)::value) &&
-                   input.border() == output.border()) ||
-                  (mlc_is(mln_trait_image_ext_domain(I),
-                          trait::image::ext_domain::none)::value &&
-                   mlc_is(mln_trait_image_ext_domain(O),
-                          trait::image::ext_domain::none)::value))
-                {
-
-                  /// Check domain
-                  if (input.domain() == output.domain())
-                    transform_dispatch_oneblock(mln_trait_image_quant(I)(),
-                                                input, f_, output);
-                }
+              transform_dispatch_(mln_trait_image_quant(I)(),
+                                  mln_trait_image_value_access(I)(),
+                                  mln_trait_image_value_access(O)(),
+                                  mln_trait_image_ext_domain(I)(),
+                                  mln_trait_image_ext_domain(O)(),
+                                  input, f_, output);
             }
-          transform_dispatch(mln_trait_image_vw_set(I)(),
-                             mln_trait_image_quant(I)(),
-                             input, f_, output);
+          else
+            transform_dispatch_(mln_trait_image_vw_set(I)(),
+                                mln_trait_image_quant(I)(),
+                                input, f_, output);
         }
 
 
 
         template <typename I, typename F, typename O>
         inline
-        void transform_dispatch(const Image<I>& input,
-                                const Function_v2v<F>& f,
-                                Image<O>& output)
+        void transform_dispatch_(const Image<I>& input,
+                                 const Function_v2v<F>& f,
+                                 Image<O>& output)
         {
-          transform_dispatch(mln_trait_image_value_storage(I)(),
-                             mln_trait_image_value_storage(O)(),
-                             input, f, output);
+          transform_dispatch_(mln_trait_image_value_storage(I)(),
+                              mln_trait_image_value_storage(O)(),
+                              input, f, output);
         }
 
       }

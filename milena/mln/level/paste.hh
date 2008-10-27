@@ -102,7 +102,7 @@ namespace mln
 
 	template <typename I, typename J>
 	inline
-	void paste_(const Image<I>& input_, Image<J>& output_)
+	void paste(const Image<I>& input_, Image<J>& output_)
 	{
 	  trace::entering("level::impl::generic::paste");
 
