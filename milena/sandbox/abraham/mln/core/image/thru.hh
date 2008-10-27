@@ -89,7 +89,7 @@ namespace mln
     typedef mln_result(F) rvalue;
 
     /// Return type of read-write access.
-    typedef shell<F,I> lvalue;
+    typedef shell<F,I> lvalue; // FIXME : if I is const or F is Function_v2v, there is no shell
 
     /// Skeleton.
     typedef thru< tag::value_<mln_result(F)>, tag::image_<I> > skeleton;

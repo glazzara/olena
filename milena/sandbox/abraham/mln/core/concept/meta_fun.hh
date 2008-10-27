@@ -39,7 +39,7 @@
 namespace mln
 {
 
-  template <class M, class T>
+  template <class M>
   struct function;
 
   namespace meta
@@ -49,27 +49,23 @@ namespace mln
     struct impl
     {
 
-      template <class T>
-      struct info
-      {
-	typedef function<M, T> F;
-	typedef typename F::result result;
-	typedef typename F::lresult lresult;
-      };
+      typedef function<M> F;
+      typedef typename F::value value;
+      typedef typename F::result result;
+      typedef typename F::lresult lresult;
+      typedef typename F::category category;
 
-      template <class T>
-      typename info<T>::result
-      operator()(const T& t) const
+      result
+      operator()(const value& t) const
       {
-	function<M,T> f;
+	F f;
 	return f.read(t);
       }
 
-      template <class T>
-      T&
-      f_1(typename info<T>::result v, T& t)
+      value&
+      f_1(result v, value& t)
       {
-	function<M,T> f;
+	F f;
 	f.write(t) = v;
 	return t;
       }

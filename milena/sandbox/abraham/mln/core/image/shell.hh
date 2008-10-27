@@ -57,7 +57,7 @@ namespace mln
   template <typename F, typename I>
   struct shell : shell_write<F, I, typename F::category> // FIXME : inherit of value_base or sth?
   {
-    typedef mln_value(I) value;
+    typedef typename F::result value;
 
     // Ctor
     shell(Image<I> &ima, const mln_site(I) &s);
@@ -66,7 +66,14 @@ namespace mln
     operator value ();
 
     // Write
-    mln_value(I) operator= (typename F::result);
+    value operator= (value);
+
+    // <<
+    // std::ostream& operator<<(std::ostream& ostr);
+
+    // >>
+    // std::istream& operator>>(std::istream& istr);
+
 
     protected :
       I &ima;
@@ -92,9 +99,10 @@ namespace mln
 
     // Write for everyone
   template <typename F, typename I>
-  mln_value(I) shell<F, I>::operator= (typename F::result v)
+  typename F::result shell<F, I>::operator= (typename F::result v)
   {
     set_(ima, s, v);
+    return v;
   }
 
   template <typename F, typename I>
@@ -110,6 +118,36 @@ namespace mln
     ima(s) = F().f_1(ima(s), v);
     return ima(s);
   }
+
+//   template <typename F, typename I>
+//   std::ostream& shell<F, I>::operator<<(std::ostream& ostr)
+//   {
+//     ostr << ima(s);
+//     return ostr;
+//   }
+
+//   template <typename F, typename I>
+//   std::istream& shell<F, I>::operator>>(std::istream& istr)
+//   {
+//     ima(s) >> istr;
+//     return istr;
+//   }
+
+  template <typename F, typename I>
+  std::ostream& operator<<(std::ostream& ostr, shell<F, I> &s)
+  {
+    ostr << (typename shell<F, I>::value) s;
+    return ostr;
+  }
+
+  template <typename F, typename I>
+  std::istream& operator>>(std::istream& istr, shell<F, I> &s)
+  {
+    (typename shell<F, I>::value) s >> istr;
+    return istr;
+  }
+
+
 
 # endif // MLN_INCLUDE_ONLY
 

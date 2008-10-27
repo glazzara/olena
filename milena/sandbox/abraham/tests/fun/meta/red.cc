@@ -14,8 +14,10 @@ namespace mln
   };
 
   template <class T>
-  struct function< meta::red, rgb<T> > : public Function_v2w_w2v<function< meta::red, rgb<T> > >
+  struct function< meta::red< rgb<T> > > : public Function_v2w_w2v<function< meta::red < rgb<T> > > >
   {
+    typedef rgb<T> value;
+
     typedef T result;
     T read(const rgb<T>& c)
     {
@@ -50,7 +52,9 @@ int main ()
   c.r = 1;
   i(mln::point2d(2,1)) = c;
 
-  mln::thru<mln::meta::red, mln::image2d<C> > out(i);
+  mln::thru<mln::meta::red <C>, mln::image2d<C> > out(i);
+
+  mln_piter_(mln::image2d<C>) p(i.domain());
 
   for_all (p)
     std::cout << out(p) << std::endl;

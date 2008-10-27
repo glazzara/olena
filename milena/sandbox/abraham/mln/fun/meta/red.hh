@@ -34,11 +34,10 @@ namespace mln {
 
   namespace meta {
 
-    struct red : impl<red> { };
+    template <class T>
+    struct red : impl< red<T> > { typedef T value; };
 
   };
-
-  meta::red red; // fun obj
 
 };
 

@@ -1,3 +1,15 @@
+2008-10-27  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make meta-functions work with thru morpher.
+
+	* abraham/tests/fun/meta/red.cc: Update example.
+	* abraham/mln/core/image/thru.hh: .
+	* abraham/mln/core/image/shell.hh: Fix result value.
+	* abraham/mln/core/concept/meta_fun.hh:
+	    (mln::meta::impl) : now templated by return type
+	                        (necessary to typedef result).
+	* abraham/mln/fun/meta/red.hh: .
+
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Clean up classification.
