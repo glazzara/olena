@@ -69,9 +69,11 @@ namespace mln
     typedef p_vertices<G, F> self_;
     typedef internal::site_set_base_< typename F::result, self_ > super_;
 
+  public:
+
+    /// Type of the graph this site set is based on.
     typedef G graph_t;
 
-  public:
     /// \brief Construct a graph psite set from a graph of points.
     /// \{
     p_vertices();
@@ -128,6 +130,7 @@ namespace mln
     /// \{
     const mln_result(F)& operator()(const psite& p) const;
     const mln_result(F)& operator()(const util::vertex<G>& p) const;
+    const mln_result(F)& operator()(unsigned id_v) const;
     /// \}
 
     /// Accessors.
@@ -266,9 +269,17 @@ namespace mln
   const mln_result(F)&
   p_vertices<G, F>::operator()(const util::vertex<G>& v) const
   {
-    std::cout << v.id() << std::endl;
     mln_precondition(g_->has_v(v));
-    return f_(v.id());
+    return (*this)(v.id());
+  }
+
+  template <typename G, typename F>
+  inline
+  const mln_result(F)&
+  p_vertices<G, F>::operator()(unsigned id_v) const
+  {
+    mln_precondition(g_->has_v(id_v));
+    return f_(id_v);
   }
 
   template <typename G, typename F>

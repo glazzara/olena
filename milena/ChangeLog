@@ -14,6 +14,22 @@
 
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing methods in graph related classes.
+
+	* mln/core/site_set/p_vertices.hh: Add missing operator()(unsigned).
+
+	* mln/util/graph.hh: Add missing has_v(util::vertex) and
+	has_e(util::edge).
+	Fix is_subgraph_of().
+
+	* mln/util/internal/graph_vertex_psite.hh,
+	* mln/util/internal/graph_edge_psite.hh: Add a missing constructor.
+
+	* mln/util/internal/graph_psite_base.hh: Add missing graph() and
+	site_set() methods.
+
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix assertion failures on Mac.
 
 	* mln/core/contract.hh: Cast expression to bool.

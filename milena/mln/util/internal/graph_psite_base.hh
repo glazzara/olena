@@ -51,21 +51,13 @@ namespace mln
 	  public internal::proxy_impl<const P&, E>
       {
         typedef Pseudo_Site< graph_psite_base<V, P, S, E> > super;
+	typedef typename S::graph_t graph_t;
 
         public:
 	/// Associated types.
 	/// \{
         typedef P site;
 	typedef S target;
-	/// \}
-
-
-	/// Constructors.
-	/// \{
-        graph_psite_base();
-	/// \p t A site set.
-	/// \sa p_vertices, p_edges.
-        graph_psite_base(const target& t);
 	/// \}
 
 	/// Setters.
@@ -79,6 +71,12 @@ namespace mln
 
 	/// Return the target (the site set).
         const target* target_() const; // Hook to the target.
+
+	/// Return the site set (the target).
+        const target& site_set() const;
+
+	/// Return the graph associated to the target of this psite.
+	const graph_t& graph() const;
 
 	/// Check whether it is valid.
 	bool is_valid() const;
@@ -96,11 +94,27 @@ namespace mln
 	/// \}
 
       protected:
+	/// Constructors.
+	/// \{
+        graph_psite_base();
+	/// \p t A site set.
+	/// \sa p_vertices, p_edges.
+        graph_psite_base(const target& t);
+	/// \p t A site set.
+	/// \sa p_vertices, p_edges.
+	/// \p id The id of the element associated to this psite.
+        graph_psite_base(const target& t, unsigned id);
+	/// \}
+
 	mlc_const(target)* t_;
         V v_;
      };
 
     } // end of namespace internal
+
+    template <typename V, typename P, typename S, typename E>
+    std::ostream&
+    operator<<(std::ostream& ostr, internal::graph_psite_base<V, P, S, E>& p);
 
 } // end of namespace mln
 
@@ -130,6 +144,15 @@ namespace mln
 
       template <typename V, typename P, typename S, typename E>
       inline
+      graph_psite_base<V, P, S, E>::graph_psite_base(const target& t, unsigned id)
+        : t_(0)
+      {
+	change_target(t);
+	update_id(id);
+      }
+
+      template <typename V, typename P, typename S, typename E>
+      inline
       void
       graph_psite_base<V, P, S, E>::change_target(const target& new_target)
       {
@@ -145,12 +168,28 @@ namespace mln
 	v_.update_id(id);
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename v, typename p, typename s, typename e>
       inline
-      const typename graph_psite_base<V, P, S, E>::target*
-      graph_psite_base<V, P, S, E>::target_() const
+      const typename graph_psite_base<v, p, s, e>::target*
+      graph_psite_base<v, p, s, e>::target_() const
       {
         return t_;
+      }
+
+      template <typename v, typename p, typename s, typename e>
+      inline
+      const typename graph_psite_base<v, p, s, e>::target&
+      graph_psite_base<v, p, s, e>::site_set() const
+      {
+        return *t_;
+      }
+
+      template <typename v, typename p, typename s, typename e>
+      inline
+      const typename graph_psite_base<v, p, s, e>::graph_t&
+      graph_psite_base<v, p, s, e>::graph() const
+      {
+        return t_->graph();
       }
 
       template <typename V, typename P, typename S, typename E>
@@ -187,6 +226,13 @@ namespace mln
       }
 
     } // end of namespace internal
+
+    template <typename V, typename P, typename S, typename E>
+    std::ostream&
+    operator<<(std::ostream& ostr, internal::graph_psite_base<V, P, S, E>& p)
+    {
+      return ostr << p.subj_();
+    }
 
 } // end of namespace mln
 

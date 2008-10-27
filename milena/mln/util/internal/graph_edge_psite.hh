@@ -69,6 +69,7 @@ namespace mln
 	/// \{
         edge_psite();
         edge_psite(const target_t& t);
+        edge_psite(const target_t& t, unsigned);
 	/// \}
 
 	/// Accessors
@@ -104,8 +105,15 @@ namespace mln
       template <typename G, typename F>
       inline
       edge_psite<G, F>::edge_psite(const target_t& t)
+	: super_(t)
       {
-        this->change_target(t);
+      }
+
+      template <typename G, typename F>
+      inline
+      edge_psite<G, F>::edge_psite(const target_t& t, unsigned id)
+	: super_(id)
+      {
       }
 
       template <typename G, typename F>

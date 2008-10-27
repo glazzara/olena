@@ -64,6 +64,7 @@ namespace mln
 
         vertex_psite();
         vertex_psite(const target_t& t);
+        vertex_psite(const target_t& t, unsigned id);
 
         const vertex_t& v() const;
 
@@ -93,8 +94,15 @@ namespace mln
       template <typename G, typename F>
       inline
       vertex_psite<G, F>::vertex_psite(const target_t& t)
+	: super_(t)
       {
-        this->change_target(t);
+      }
+
+      template <typename G, typename F>
+      inline
+      vertex_psite<G, F>::vertex_psite(const target_t& t, unsigned i)
+	: super_(t, i)
+      {
       }
 
       template <typename G, typename F>

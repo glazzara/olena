@@ -152,6 +152,10 @@ namespace mln
 
       /// Check whether a vertex id \p id_v exists in the graph.
       bool has_v(unsigned id_v) const;
+      /// Check whether an edge \p v exists in the graph.
+      template <typename G>
+      bool has_v(const util::vertex<G>& v) const;
+
 
       /// Return the number of adjacent edges of vertex \p id_v.
       size_t v_nmax_nbh_edges(unsigned id_v) const;
@@ -185,6 +189,10 @@ namespace mln
 
       /// Return whether \p id_e is in the graph.
       bool has_e(unsigned id_e) const;
+      /// Return whether \p e is in the graph.
+      template <typename G>
+      bool has_e(const util::edge<G>& e) const;
+
 
       /// Return the first vertex associated to the edge \p id_e.
       unsigned v1(unsigned id_e) const;
@@ -199,7 +207,7 @@ namespace mln
       unsigned e_ith_nbh_edge(unsigned id_e, unsigned i) const;
 
       /// Return whether this graph is a subgraph
-      /// Return always false here.
+      /// Return true if g and *this have the same graph_id.
       template <typename G2>
       bool is_subgraph_of(const G2& g) const;
       /// \}
@@ -275,6 +283,14 @@ namespace mln
     graph::has_v(unsigned id_v) const
     {
       return id_v < data_->vertices_.size();
+    }
+
+    template <typename G>
+    inline
+    bool
+    graph::has_v(const util::vertex<G>& v) const
+    {
+      return v.graph().is_subgraph_of(*this) && has_v(v.id());
     }
 
     inline
@@ -368,6 +384,14 @@ namespace mln
       return id_e < data_->edges_.size();
     }
 
+    template <typename G>
+    inline
+    bool
+    graph::has_e(const util::edge<G>& e) const
+    {
+      return e.graph().is_subgraph_of(*this) && has_e(e.id());
+    }
+
     inline
     unsigned
     graph::v1(unsigned id_e) const
@@ -412,7 +436,7 @@ namespace mln
     bool
     graph::is_subgraph_of(const G2& g) const
     {
-      return &g == this;
+      return g.graph_id() == this->graph_id();
     }
 
   } // end of namespace mln::util
