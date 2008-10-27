@@ -134,7 +134,7 @@ namespace mln
       graph_psite_base<V, P, S, E>::change_target(const target& new_target)
       {
         t_ = &new_target;
-	v_.change_graph(new_target.g());
+	v_.change_graph(new_target.graph());
       }
 
       template <typename V, typename P, typename S, typename E>

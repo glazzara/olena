@@ -116,7 +116,7 @@ namespace mln
     /// Accessors.
     /// \{
     /// Return the graph associated to this site set
-    const graph_t& g() const;
+    const graph_t& graph() const;
     /// Return the mapping function.
     F function() const;
     /// \}
@@ -207,7 +207,7 @@ namespace mln
   p_edges<G, F>::has(const util::edge<G2>& e) const
   {
     mln_precondition(is_valid());
-    return e.g().is_subgraph_of(*g_) && g_->has(e) && e.is_valid();
+    return e.graph().is_subgraph_of(*g_) && g_->has(e) && e.is_valid();
   }
 
   template <typename G, typename F>
@@ -223,7 +223,7 @@ namespace mln
   template <typename G, typename F>
   inline
   const typename p_edges<G, F>::graph_t&
-  p_edges<G, F>::g() const
+  p_edges<G, F>::graph() const
   {
     mln_precondition(is_valid());
     return *g_;

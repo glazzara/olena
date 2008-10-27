@@ -111,7 +111,7 @@ namespace mln
   template <typename S, typename I>
   inline
   p_graph_piter<S,I>::p_graph_piter(const S& pv)
-    : iter_(pv.g())
+    : iter_(pv.graph())
   {
     this->change_target(pv);
     mln_postcondition(!this->is_valid());

@@ -314,7 +314,7 @@ namespace mln
     void
     vertex_nbh_vertex_fwd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().v_nmax();
+      this->i_ = this->p_.graph().v_nmax();
     }
 
     template <typename G>
@@ -367,7 +367,7 @@ namespace mln
     void
     vertex_nbh_vertex_bkd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().v_nmax();
+      this->i_ = this->p_.graph().v_nmax();
     }
 
     template <typename G>
@@ -420,7 +420,7 @@ namespace mln
     void
     vertex_nbh_edge_fwd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().e_nmax();
+      this->i_ = this->p_.graph().e_nmax();
     }
 
     template <typename G>
@@ -472,7 +472,7 @@ namespace mln
     void
     vertex_nbh_edge_bkd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().e_nmax();
+      this->i_ = this->p_.graph().e_nmax();
     }
 
     template <typename G>
@@ -526,7 +526,7 @@ namespace mln
     void
     edge_nbh_edge_fwd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().e_nmax();
+      this->i_ = this->p_.graph().e_nmax();
     }
 
     template <typename G>
@@ -588,7 +588,7 @@ namespace mln
     void
     edge_nbh_edge_bkd_iterator<G>::invalidate_()
     {
-      this->i_ = this->p_.g().e_nmax();
+      this->i_ = this->p_.graph().e_nmax();
     }
 
     template <typename G>

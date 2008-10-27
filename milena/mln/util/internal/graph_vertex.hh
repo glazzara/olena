@@ -82,7 +82,7 @@ namespace mln
 	void update_id(unsigned id);
 
 	/// Returns the graph pointer this vertex belongs to.
-	const graph_t&  g() const;
+	const graph_t&  graph() const;
 
 	/// Returns vertex id.
 	unsigned id() const;
@@ -113,7 +113,7 @@ namespace mln
     struct subject_impl< const util::vertex<G>, E >
     {
 	bool is_valid() const;
-	const mlc_const(G)& g() const;
+	const mlc_const(G)& graph() const;
 	unsigned id() const;
 
 	unsigned other(unsigned id_e) const;
@@ -275,7 +275,7 @@ namespace mln
     template<typename G>
     inline
     const typename vertex<G>::graph_t&
-    vertex<G>::g() const
+    vertex<G>::graph() const
     {
       return g_;
     }
@@ -312,9 +312,9 @@ namespace mln
     template <typename G, typename E>
     inline
     const mlc_const(G)&
-    subject_impl< const util::vertex<G>, E >::g() const
+    subject_impl< const util::vertex<G>, E >::graph() const
     {
-      return exact_().get_subject().g();
+      return exact_().get_subject().graph();
     }
 
     template <typename G, typename E>

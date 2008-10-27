@@ -74,7 +74,7 @@ namespace mln
 	void update_id(unsigned id);
 
 	/// Return a reference to the graph holding this edge.
-        const graph_t& g() const;
+        const graph_t& graph() const;
 
 	/// Set g_ with \p g;
 	void change_graph(const graph_t& g);
@@ -129,7 +129,7 @@ namespace mln
     struct subject_impl< const util::edge<G>, E >
     {
 	unsigned id() const;
-        const mlc_const(G)& g() const;
+        const mlc_const(G)& graph() const;
         unsigned v_other(unsigned id_v)	const;
 	bool is_valid() const;
 	unsigned v1() const;
@@ -208,7 +208,7 @@ namespace mln
     template <typename G>
     inline
     const typename edge<G>::graph_t&
-    edge<G>::g() const
+    edge<G>::graph() const
     {
       return g_;
     }
@@ -329,9 +329,9 @@ namespace mln
     template <typename G, typename E>
     inline
     const mlc_const(G)&
-    subject_impl< const util::edge<G>, E >::g() const
+    subject_impl< const util::edge<G>, E >::graph() const
     {
-      return exact_().get_subject().g();
+      return exact_().get_subject().graph();
     }
 
     template <typename G, typename E>

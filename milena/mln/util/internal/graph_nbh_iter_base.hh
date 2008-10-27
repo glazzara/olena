@@ -90,9 +90,9 @@ namespace mln
     template <typename C2>
     inline
     nbh_iterator_base<G, C, P, E>::nbh_iterator_base(const C2& c)
-      : p_(c.g()), i_(0)
+      : p_(c.graph()), i_(0)
     {
-      //FIXME: Check if typeof(e.g()) == G
+      //FIXME: Check if typeof(c.graph()) == G
       center_at(c);
     }
 

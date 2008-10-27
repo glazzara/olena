@@ -73,12 +73,13 @@ namespace mln
 
   public:
     /// \brief Construct a graph psite set from a graph of points.
-    ///
+    /// \{
+    p_vertices();
+
     /// \param gr The graph upon which the graph psite set is built.
-    ///
-    /// \a gr is \em copied internally, so that the graph psite set is
-    /// still valid after the initial graph has been removed.
+    /// \param f the function which maps a vertex to a site.
     p_vertices(const graph_t& gr, const F& f);
+    /// \}
 
     /// Associated types.
     /// \{
@@ -123,10 +124,16 @@ namespace mln
     // FIXME: Dummy.
     std::size_t memory_size() const;
 
+    /// Return the value associated to an element of this site set.
+    /// \{
+    const mln_result(F)& operator()(const psite& p) const;
+    const mln_result(F)& operator()(const util::vertex<G>& p) const;
+    /// \}
+
     /// Accessors.
     /// \{
     /// Return the graph associated to this site set (const version)
-    const graph_t& g() const;
+    const graph_t& graph() const;
     /// Return the association function.
     F function() const;
     /// \}
@@ -164,6 +171,13 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  template <typename G, typename F>
+  inline
+  p_vertices<G, F>::p_vertices()
+    : f_(0)
+  {
+  }
 
   template <typename G, typename F>
   inline
@@ -222,7 +236,7 @@ namespace mln
     mln_precondition(is_valid());
     return
       // Check whether P is compatible with this psite set.
-      (p.g() == *g_) &&
+      (p.graph() == *g_) &&
       // Check that the vertex id of P belongs to the range of valid
       // vertex ids.
       (p.is_valid());
@@ -240,8 +254,27 @@ namespace mln
 
   template <typename G, typename F>
   inline
+  const mln_result(F)&
+  p_vertices<G, F>::operator()(const psite& p) const
+  {
+    mln_precondition(g_.has(p.v()));
+    return (*this)(p.v().id());
+  }
+
+  template <typename G, typename F>
+  inline
+  const mln_result(F)&
+  p_vertices<G, F>::operator()(const util::vertex<G>& v) const
+  {
+    std::cout << v.id() << std::endl;
+    mln_precondition(g_->has_v(v));
+    return f_(v.id());
+  }
+
+  template <typename G, typename F>
+  inline
   const typename p_vertices<G, F>::graph_t&
-  p_vertices<G, F>::g() const
+  p_vertices<G, F>::graph() const
   {
     mln_precondition(is_valid());
     return *g_;

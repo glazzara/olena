@@ -14,6 +14,22 @@
 
 2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use a more explicit name for the method used to retrieve the graph
+	pointer.
+
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_graph_piter.hh,
+	* mln/core/site_set/p_vertices.hh,
+	* mln/util/internal/graph_edge.hh,
+	* mln/util/internal/graph_iter.hh,
+	* mln/util/internal/graph_nbh_iter.hh,
+	* mln/util/internal/graph_nbh_iter_base.hh,
+	* mln/util/internal/graph_psite_base.hh,
+	* mln/util/internal/graph_vertex.hh:
+	Change the method name from g() to graph() and update method calls.
+
+2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small Fixes and cleanup.
 
 	* mln/util/internal/graph_edge.hh,

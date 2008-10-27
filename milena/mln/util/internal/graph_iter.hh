@@ -207,7 +207,7 @@ namespace mln
     unsigned
     vertex_bkd_iterator<G>::start_id_() const
     {
-      return p_.g().v_nmax() - 1;
+      return p_.graph().v_nmax() - 1;
     }
 
     template <typename G>
@@ -277,7 +277,7 @@ namespace mln
     unsigned
     edge_bkd_iterator<G>::start_id_() const
     {
-      return p_.g().e_nmax() - 1;
+      return p_.graph().e_nmax() - 1;
     }
 
     template <typename G>
