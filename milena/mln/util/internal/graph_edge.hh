@@ -170,7 +170,7 @@ namespace mln
     template <typename G>
     inline
     edge<G>::edge()
-      : g_(0), id_(0)
+      : id_(0)
     {
     }
 

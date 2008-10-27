@@ -33,7 +33,7 @@
 
 # include <mln/util/internal/graph_base.hh>
 # include <mln/util/internal/graph_iter.hh>
-# include <mln/util/internal/graph_nbh_iter_base.hh>
+# include <mln/util/internal/graph_nbh_iter.hh>
 # include <mln/util/ord_pair.hh>
 
 namespace mln
@@ -209,7 +209,6 @@ namespace mln
   } // end of namespace mln::util
 
 } // end of namespace mln
-
 
 # ifndef MLN_INCLUDE_ONLY
 

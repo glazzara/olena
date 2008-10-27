@@ -207,7 +207,7 @@ namespace mln
   p_edges<G, F>::has(const util::edge<G2>& e) const
   {
     mln_precondition(is_valid());
-    return e.g()->is_subgraph_of(*g_) && g_->has(e) && e.is_valid();
+    return e.g().is_subgraph_of(*g_) && g_->has(e) && e.is_valid();
   }
 
   template <typename G, typename F>

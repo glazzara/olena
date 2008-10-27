@@ -222,7 +222,7 @@ namespace mln
     mln_precondition(is_valid());
     return
       // Check whether P is compatible with this psite set.
-      (p.g() == g_) &&
+      (p.g() == *g_) &&
       // Check that the vertex id of P belongs to the range of valid
       // vertex ids.
       (p.is_valid());
@@ -259,10 +259,6 @@ namespace mln
   bool
   operator==(const p_vertices<G, F>& lhs, const p_vertices<G, F>& rhs)
   {
-    /* FIXME: We should not rely on pointer equality here, as graph
-       will soon become shells using (shared) tracked pointers to
-       actual data.  So, delegate the equality test to the graphs
-       themselves.  */
     return (*lhs.g_) == (*rhs.g_);
   }
 

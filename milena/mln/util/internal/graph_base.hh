@@ -125,7 +125,13 @@ namespace mln
       };
 
     } // end of namespace mln::util::internal
+
   } // End of namespace mln::util
+
+  template <typename E>
+  bool
+  operator==(const util::internal::graph_base<E>& lhs,
+	     const util::internal::graph_base<E>& rhs);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -186,7 +192,7 @@ namespace mln
       bool
       graph_base<E>::has(const util::vertex<E>& v) const
       {
-	return has_v(v.id());
+	return exact(this)->has_v(v.id());
       }
 
       /*--------------.
@@ -198,7 +204,7 @@ namespace mln
       bool
       graph_base<E>::has(const util::edge<E>& e) const
       {
-	return has_e(e.id());
+	return exact(this)->has_e(e.id());
       }
 
       /*--------.
@@ -216,15 +222,14 @@ namespace mln
 	for (unsigned v = 0; v < g->v_nmax(); ++v)
 	  {
 	    ostr << "vertex: " << v << std::endl << " -- adjacent vertices: ";
-	    for (int n = 0; n < g->v_nmax_nbh_vertices(v); ++n)
+	    for (unsigned n = 0; n < g->v_nmax_nbh_vertices(v); ++n)
 	      ostr << g->v_ith_nbh_vertex(v, n) << " ";
 	    ostr << std::endl;
 	  }
 	ostr << std::endl;
 
 	ostr << "edges:" << std::endl;
-	unsigned ei = 0;
-	for (int i = 0; i < g->e_nmax(); ++i)
+	for (unsigned i = 0; i < g->e_nmax(); ++i)
 	  ostr << "edge " << i << ": ("
 	       << g->v1(i) << ", "
 	       << g->v2(i) << " )"
@@ -237,6 +242,14 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
+  template <typename E>
+  inline
+  bool
+  operator==(const util::internal::graph_base<E>& lhs,
+	     const util::internal::graph_base<E>& rhs)
+  {
+    return lhs.graph_id() == rhs.graph_id();
+  }
 
 } // end of namespace mln
 

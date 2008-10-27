@@ -62,7 +62,7 @@ namespace mln
 
 	T operator()(unsigned i) const;
 	T& operator()(unsigned i);
-	
+
       private:
 	std::vector<T> v_;
       };

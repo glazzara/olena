@@ -35,10 +35,6 @@
 //# include <mln/core/site_set/p_graph.hh>
 //# include <mln/core/image/graph_psite.hh>
 
-/* FIXME: Iterators on p_graph and p_line_graph share common code.
-   Factor as much as possible.  */
-
-
 namespace mln
 {
   // Fwd decls.
@@ -49,7 +45,7 @@ namespace mln
   | p_graph_piter<S,I>.  |
   `------------------------*/
 
-  /// \brief Forward iterator on point sites of a mln::S.
+  /// \brief Generic iterator on point sites of a mln::S.
   template <typename S, typename I>
   class p_graph_piter
     : public internal::site_set_iterator_base< S,
@@ -99,66 +95,11 @@ namespace mln
   operator<<(std::ostream& ostr, const p_graph_piter<S,I>& p);
 
 
-  /*------------------------.
-  | p_graph_bkd_piter_<S,I>.  |
-  `------------------------*/
-
-  /// \brief Backward iterator on point sites of a mln::S.
-/*  template <typename S, typename I>
-  class p_graph_bkd_piter_
-    : public internal::site_set_iterator_base< S,
-					       p_graph_bkd_piter_<S,I> >
-  {
-    typedef p_graph_bkd_piter_<S,I> self_;
-    typedef internal::site_set_iterator_base< S, self_ > super_;
-    typedef I iter;
-
-  public:
-    /// Construction and assignment.
-    /// \{
-    p_graph_bkd_piter_();
-    p_graph_bkd_piter_(const S& pv);
-    /// \}
-
-    /// Manipulation.
-    /// \{
-    /// Test if the iterator is valid.
-    bool is_valid_() const;
-    /// Invalidate the iterator.
-    void invalidate_();
-
-    /// Start an iteration.
-    void start_();
-    /// Go to the next point.
-    void next_();
-    /// \}
-
-  private:
-    /// Update the psite corresponding to this iterator.
-    void update_();
-
-  private:
-    /// The psite corresponding to this iterator.
-    using super_::p_;
-
-    /// The underlying vertex iterator.
-    iter iter_;
-  };
-
-
-  /// Print an mln::p_graph_bkd_piter_<S,I>.
-  template <typename S, typename I>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const p_graph_bkd_piter_<S,I>& p);
-*/
-
-
 # ifndef MLN_INCLUDE_ONLY
 
-  /*------------------------.
+  /*---------------------.
   | p_graph_piter<S,I>.  |
-  `------------------------*/
+  `---------------------*/
 
   template <typename S, typename I>
   inline
@@ -232,81 +173,6 @@ namespace mln
     return ostr << p.unproxy_();
   }
 
-
-  /*------------------------.
-  | p_graph_bkd_piter_<S,I>.  |
-  `------------------------*/
-
-/*  template <typename S, typename I>
-  inline
-  p_graph_bkd_piter_<S,I>::p_graph_bkd_piter_()
-  {
-    mln_postcondition(!this->is_valid());
-  }
-
-  template <typename S, typename I>
-  inline
-  p_graph_bkd_piter_<S,I>::p_graph_bkd_piter_(const S& pv)
-    : iter_(pv.g())
-  {
-    this->change_target(pv);
-    mln_postcondition(!this->is_valid());
-  }
-
-  template <typename S, typename I>
-  inline
-  bool
-  p_graph_bkd_piter_<S,I>::is_valid_() const
-  {
-    return p_.is_valid();
-  }
-
-  template <typename S, typename I>
-  inline
-  void
-  p_graph_bkd_piter_<S,I>::invalidate_()
-  {
-    p_.invalidate();
-  }
-
-  template <typename S, typename I>
-  inline
-  void
-  p_graph_bkd_piter_<S,I>::start_()
-  {
-    iter_.start();
-      if (this->is_valid())
-	update_();
-  }
-
-  template <typename S, typename I>
-  inline
-  void
-  p_graph_bkd_piter_<S,I>::next_()
-  {
-    iter_.next();
-      if (this->is_valid())
-	update_();
-  }
-
-  template <typename S, typename I>
-  inline
-  void
-  p_graph_bkd_piter_<S,I>::update_()
-  {
-    mln_precondition(this->is_valid());
-    // Update psite_.
-    p_.update_id(iter_.id());
-  }
-
-  template <typename S, typename I>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const p_graph_bkd_piter_<S,I>& p)
-  {
-    return ostr << p.unproxy_();
-  }
-*/
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln

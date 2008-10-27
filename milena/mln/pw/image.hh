@@ -259,7 +259,7 @@ namespace mln
     template <typename F, typename S>
     inline
     mln_result(F)
-      image<F,S>::operator()(const mln_psite(S)& p) const
+    image<F,S>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->data_->pset_.has(p));
       return this->data_->f_(p);

@@ -30,6 +30,7 @@
 
 # include <mln/core/concept/pseudo_site.hh>
 # include <mln/util/internal/graph_psite_base.hh>
+# include <mln/util/internal/graph_vertex.hh>
 
 namespace mln
 {

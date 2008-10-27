@@ -14,6 +14,25 @@
 
 2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small Fixes and cleanup.
+
+	* mln/util/internal/graph_edge.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_vertices.hh: fix compilation issues.
+
+	* mln/fun/i2v/array.hh,
+	* mln/pw/image.hh,
+	* mln/core/site_set/p_graph_piter.hh: cleanup.
+
+	* mln/util/internal/graph_vertex_psite.hh,
+	* mln/util/graph.hh: fix wrong include.
+
+	* tests/core/site_set/pset_if.cc: use geom::nsites() instead of
+	estim::nsites().
+
+2008-10-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Change return type of Site_set::nsites() from unsigned to std:size_t.
 
 	* mln/core/concept/box.hh,
