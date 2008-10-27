@@ -104,9 +104,9 @@ void
 classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 {
   unsigned count[nbasins + 1];
-  memset(count, 0, (nbasins + 1) * sizeof(unsigned));
+  memset(count, 0, (nbasins + 1) * sizeof (unsigned));
 
-  algebra::vec<3, unsigned> sum[nbasins + 1];
+  algebra::vec<3, double> sum[nbasins + 1];
   for (int i = 0; i < nbasins + 1; ++i)
     sum[i] = literal::zero;
 
@@ -123,9 +123,16 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
       count[w] += histo(p3);
       sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
     }
+
+    std::cerr << "p3 : " << p3 << " == " << convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
   }
+
   for (int i = 1; i < nbasins + 1; ++i)
+  {
+    std::cout << "sum[" << i << "] = " << sum[i] * f << " / " << count[i]  << " == ";
     sum[i] = (sum[i] * f) / count[i];
+    std::cout << sum[i] << std::endl;
+  }
 
   // Make an output image where colors are replaced by their representatives.
   mln_piter(I) pi(ima.domain());
@@ -138,6 +145,8 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 
     //if w == 0, out(pi) = 0 ie is part of a border of the watershed
     out(pi) = convert::to<value::rgb8>(sum[w]);
+
+    std::cerr << "out(" << pi << ") = sum[" << w << "]; //" << sum[w]  << " : rgb8(" << convert::to<value::rgb8>(sum[w]) << ")" << std::endl;
   }
 
   io::ppm::save(out, "out.ppm");

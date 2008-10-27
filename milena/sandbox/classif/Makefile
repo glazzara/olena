@@ -1,45 +1,62 @@
-INCLUDES=-I../..
+DISP=xv
 
-SRC=iccvg04.cc
-TARGET=iccvg
-
-TARGET_DBG=iccvg_dbg
+# ICCVG
+ICCVG_INCLUDES=-I../..
+ICCVG_SRC=iccvg04.cc
+ICCVG=iccvg
+ICCVG_DBG=iccvg_dbg
 
 IMG?=../../img/lena.ppm
 DIV?=8
 LAMBDA?=10
 
+
+# V2
+V2_INCLUDES=-I../.. -I../garrigues/fllt
+V2_SRC=v2.cc
+V2=v2
+V2_DBG=v2_dbg
+
+
 LOG=> stdout.log 2> stderr.log
 
-all: $(TARGET)
 
-$(TARGET): $(SRC)
-	g++ $(INCLUDES) -O1 -DNDEBUG $(SRC) -o $(TARGET)
+$(ICCVG): $(ICCVG_SRC)
+	g++ $(ICCVG_INCLUDES) -O1 -DNDEBUG $(ICCVG_SRC) -o $(ICCVG)
 
-debug: $(TARGET_DBG)
 
-iccvg_dbg: $(SRC)
-	g++ $(INCLUDES) -O0 -g3 -ggdb3 $(SRC) -o $(TARGET_DBG)
+$(ICCVG_DBG): $(ICCVG_SRC)
+	g++ $(ICCVG_INCLUDES) -O0 -g3 -ggdb3 $(ICCVG_SRC) -o $(ICCVG_DBG)
+
+$(V2): $(V2_SRC)
+	g++ $(V2_INCLUDES) -O1 -DNDEBUG $(V2_SRC) -o $(V2)
+
+
+$(V2_DBG): $(V2_SRC)
+	g++ $(V2_INCLUDES) -O0 -g3 -ggdb3 $(V2_SRC) -o $(V2_DBG)
+
 
 .PHONY:clean check check-debug valgrind
 
 clean:
-	rm -f $(TARGET)
-	rm -f $(TARGET_DBG)
+	rm -f $(ICCVG)
+	rm -f $(ICCVG_DBG)
+	rm -f $(V2)
+	rm -f $(V2_DBG)
 
-check-debug: $(TARGET_DBG)
+check-debug: $(ICCVG_DBG)
 	./iccvg_dbg $(IMG) $(DIV) $(LAMBDA) $(LOG)
 	cat stdout.log
-	display out.ppm &
+	$(DISP) out.ppm &
 
-check: $(TARGET)
+check: $(ICCVG)
 	./iccvg $(IMG) $(DIV) $(LAMBDA) $(LOG)
 	cat stdout.log
-	display out.ppm &
+	$(DISP) out.ppm &
 
-valgrind:
+valgrind: $(ICCVG_DBG)
 	valgrind --log-file=valgrind.log ./iccvg_dbg ../../img/lena.ppm $(DIV) $(LAMBDA) $(LOG)
 
-gdb: $(TARGET_DBG)
+gdb: $(ICCVG_DBG)
 	echo "run ../../img/lena.ppm $(DIV) $(LAMBDA)" > gdb.cmd
-	gdb $(TARGET_DBG) -x gdb.cmd
+	gdb $(ICCVG_DBG) -x gdb.cmd

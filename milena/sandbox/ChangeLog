@@ -1,3 +1,9 @@
+2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Fix bug in the mean color computation.
+	* Makefile: Fix.
+	* iccvg04.cc: Use double values instead of unsigned.
+
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Use more routines provided by Olena.
