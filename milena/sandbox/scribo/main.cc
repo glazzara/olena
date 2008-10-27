@@ -42,13 +42,9 @@ int main(int argc, char*argv[])
 	      << std::endl << std::endl
 	      << "<in.pbm>	    B/W inverted input image."
 	      << std::endl << std::endl
-	      << "<out.pgm>	    RGB8 output image."
+	      << "<out.ppm>	    RGB8 output image."
 	      << std::endl << std::endl
 	      << "<l>		    Line length"
-	      << std::endl << std::endl
-	      << "<bbox_larger>	    Extension size of the bounding boxes vertical/horizontal"
-	      << std::endl
-	      << "		    lines considered as table borders which will be removed"
 	      << std::endl << std::endl
 	      << "<bbox_distance>     Maximum distance between character bounding boxes. Used for bbox grouping."
 	      << std::endl << std::endl

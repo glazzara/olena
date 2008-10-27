@@ -1,3 +1,14 @@
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use more routines provided by Olena.
+
+	* scribo/demat.hh: Use more routines provided by Olena:
+	  - not_inplace
+	  - level::convert
+	  - box::center()
+
+	* scribo/main.cc: Update usage.
+
 2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update classification.

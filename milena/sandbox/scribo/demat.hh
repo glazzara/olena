@@ -44,8 +44,6 @@
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
 
-# include <mln/binarization/threshold.hh>
-
 # include <mln/border/fill.hh>
 
 # include <mln/convert/to.hh>
@@ -65,19 +63,21 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
 
+# include <mln/level/convert.hh>
 # include <mln/level/compute.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
 # include <mln/level/apply.hh>
+# include <mln/level/transform.hh>
 
 # include <mln/literal/all.hh>
 
+# include <mln/logical/not.hh>
+
 # include <mln/morpho/hit_or_miss.hh>
-# include <mln/morpho/opening.hh>
+# include <mln/morpho/erosion.hh>
 
 # include <mln/pw/all.hh>
-
-# include <mln/set/inter.hh>
 
 # include <mln/util/array.hh>
 
@@ -115,30 +115,9 @@ namespace scribo
       f(0) = literal::black;
       for (unsigned i = 1; i <= nlabels; ++i)
 	f(i) = rgb8(255 / ((i % 10) + 1), (100 + i) % 255, (255 + i)%255);
-      level::transform(lbl, f, output);
+      output = level::transform(lbl, f);
       io::ppm::save(output, filename);
     }
-
-    image2d<rgb8>
-    to_color(const image2d<bool>& input)
-    {
-      image2d<rgb8> output;
-
-      fun::i2v::array<rgb8> fconvert(2);
-      fconvert(0) = literal::black;
-      fconvert(1) = literal::white;
-
-      return level::transform(input, fconvert);
-    }
-
-    void negate(image2d<bool>& in)
-    {
-      fun::i2v::array<unsigned> negate(2);
-      negate(0) = 1;
-      negate(1) = 0;
-      level::apply(in, negate);
-    }
-
 
     /// Functions related to the table removal
     /// \{
@@ -155,27 +134,17 @@ namespace scribo
       return labeling::compute(accu::meta::bbox(), lbl, nlabels);
     }
 
-
-    /// Remove table bboxes from an image.
-    void erase_table_boxes(image2d<rgb8>& output,
-		     const util::array<box2d>& boxes,
-		     unsigned bbox_larger)
-    {
-      for (unsigned i = 1; i < boxes.nelements(); ++i)
-	level::paste((pw::cst(literal::black)
-		    | (boxes[i].to_larger(bbox_larger) | (pw::value(output) != pw::cst(literal::black)))), output);
-
-    }
-
     /// Remove table bboxes from an image.
     void erase_table_boxes(image2d<bool>& output,
-		     const util::array<box2d>& boxes,
-		     unsigned bbox_larger)
+		     util::array<box2d>& boxes,
+		     unsigned bbox_enlarge, unsigned dim)
     {
       for (unsigned i = 1; i < boxes.nelements(); ++i)
+      {
+	boxes[i].enlarge(dim, bbox_enlarge);
 	level::paste((pw::cst(false)
-		    | (boxes[i].to_larger(bbox_larger) | (pw::value(output) == pw::cst(true)))), output);
-
+		    | (boxes[i] | (pw::value(output) == pw::cst(true)))), output);
+      }
     }
 
 
@@ -184,8 +153,7 @@ namespace scribo
 		    util::array<box2d> >
     extract_tables(image2d<bool>& in,
 		   image2d<rgb8>& output,
-		   unsigned l,
-		   unsigned n)
+		   unsigned l)
     {
       typedef image2d<int_u16> I;
       typedef accu::bbox<mln_psite_(I)> A;
@@ -195,27 +163,27 @@ namespace scribo
       // Lignes verticales
       std::cout << "Removing vertical lines" << std::endl;
       win::vline2d vline(l);
-      image2d<bool> vfilter = morpho::opening(in, vline);
+      image2d<bool> vfilter = morpho::erosion(in, vline);
 
 #ifndef NOUT
       io::pbm::save(vfilter, "./table-vfilter.pbm");
 #endif
 
       boxes_t vboxes = component_boxes(vfilter);
-      erase_table_boxes(in, vboxes, n);
+      erase_table_boxes(in, vboxes, (l / 2), 0);
 
 
       // Lignes horizontales
       std::cout << "Removing horizontal lines" << std::endl;
       win::hline2d hline(l);
-      image2d<bool> hfilter = morpho::opening(in, hline);
+      image2d<bool> hfilter = morpho::erosion(in, hline);
 
 #ifndef NOUT
       io::pbm::save(hfilter, "./table-hfilter.pbm");
 #endif
 
       boxes_t hboxes = component_boxes(hfilter);
-      erase_table_boxes(in, hboxes, n);
+      erase_table_boxes(in, hboxes, (l / 2), 1);
 
 
 #ifndef NOUT
@@ -246,7 +214,7 @@ namespace scribo
 
     inline
     int_u16
-    uncurri_left_link(const fun::i2v::array<int_u16>& left_link, unsigned i)
+    uncurri_left_link(fun::i2v::array<int_u16>& left_link, unsigned i)
     {
       if (left_link(i) != i)
 	left_link(i) = most_left(left_link, left_link(i));
@@ -358,11 +326,8 @@ namespace scribo
       {
 	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
 	unsigned dmax = midcol + bbox_distance;
-	/// FIXME: Box center => Routine?
-	point2d c (cboxes[i].pmin().row()
-		    + ((cboxes[i].pmax().row() - cboxes[i].pmin().row()) / 2),
-		   cboxes[i].pmin().col() + midcol);
-	/// First site on the right of the center site
+	point2d c = cboxes[i].center();
+	/// First site on the right of the central site
 	point2d p(c.row(), c.col() + 1);
 
 	// FIXME: Lemmings with a condition on the distance => write a special version?
@@ -386,10 +351,7 @@ namespace scribo
       for (unsigned i = 1; i <= nlabels;)
       {
 	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
-	/// FIXME: Box center => Routine?
-	point2d c (cboxes[i].pmin().row()
-		    + ((cboxes[i].pmax().row() - cboxes[i].pmin().row()) / 2),
-		   cboxes[i].pmin().col() + midcol);
+	point2d c = cboxes[i].center();
 	/// First site on the right of the center site
 	point2d p(c.row(), c.col() + 1);
 
@@ -401,7 +363,7 @@ namespace scribo
 	if (lbl.domain().has(p) && lbl(p) != 0 && lbl(p) != i
 	    && (p.col() - c.col()) <= midcol)
 	{
-	   
+
 	}
       }
 
@@ -466,22 +428,21 @@ namespace scribo
 
     //Useful debug variables
     unsigned l = atoi(argv[3]);
-    unsigned bbox_larger = atoi(argv[4]);
-    unsigned bbox_distance = atoi(argv[5]);
-    unsigned min_comp_size = atoi(argv[6]);
+    unsigned bbox_distance = atoi(argv[4]);
+    unsigned min_comp_size = atoi(argv[5]);
 
     //Load image
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
-    internal::negate(in);
+    logical::not_inplace(in);
 
 #ifndef NOUT
     io::pbm::save(in, "in-neg.pbm");
 #endif
 
-    image2d<rgb8> output = internal::to_color(in);
+    image2d<rgb8> output = level::convert(rgb8(), in);
 
-    internal::extract_tables(in, output, l, bbox_larger);
+    internal::extract_tables(in, output, l);
 
     util::array<box2d> tboxes =
       internal::extract_text(in, output, bbox_distance, min_comp_size);
