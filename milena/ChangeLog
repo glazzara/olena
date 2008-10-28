@@ -1,5 +1,13 @@
 2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morphological top hats.
+
+	* tests/morpho/elementary/top_hat.cc: New.
+	* mln/morpho/elementary/top_hat.hh: New.
+	* mln/morpho/elementary/all.hh: Update.
+
+2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add the morphological elementary laplacian.
 
 	* tests/morpho/elementary/laplacian.cc: New.
