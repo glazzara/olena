@@ -1,5 +1,17 @@
 2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add some bench tests on ocr preprocessing.
+
+	* garrigues/ocr/Makefile: New, compile an ocr with preprocess
+	and an other one without.
+	* garrigues/ocr/check.sh: New, script to bench ocr preprocessing.
+	* garrigues/ocr/ocr.cc: Rename as...
+	* garrigues/ocr/ocr_with_preprocess.cc: ...this.
+	* garrigues/ocr/ocr_without_preprocess.cc: New. version without
+	preprocess.
+
+2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	* garrigues/ocr/ocr.cc: Updates dues to gaussian's facade changes.
 
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>

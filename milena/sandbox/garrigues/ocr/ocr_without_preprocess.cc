@@ -84,7 +84,7 @@ int main(int argc, char** argv)
 
   if (argc < 2)
   {
-    std::cerr << "Usage: " << argv[0] << " in.pbm out.pbm" << std::endl;
+    std::cerr << "Usage: " << argv[0] << " in.pbm" << std::endl;
     return 1;
   }
 
@@ -92,48 +92,7 @@ int main(int argc, char** argv)
 
   io::pbm::load(input, argv[1]);
 
-  std::cout << "> without any preprocessing." << std::endl;
   char* s = tesseract("fra", input);
-  std::cout << s;
-  free(s);
-
-  //
-  // PREPROCESS !!
-  //
-  // Resize
-//  output2 = geom::resize(cast_image<int_u8>(input), 3);
-  image2d<int_u8> output = enlarge(input, 1);
-
-  // TODO CLEANUP
-#if 1
-  // Blur.
-  output = linear::gaussian(output, 1);
-#endif
-
-#if 0
-  // Threshold
-  mln_piter_(image2d<unsigned>) p(output.domain());
-  for_all(p)
-  {
-    output(p) = output(p) > 127 ? 1 : 0;
-  }
-#endif
-
-#if 0
-  // Compute chamfer distance map.
-  const w_window2d_int& w_win = make::mk_chamfer_3x3_int<8, 0> ();
-  image2d<unsigned> out = geom::chamfer(output, w_win, 255);
-
-  for_all(p)
-  {
-    out(p) = out(p) > 10 ? 255 : 0;
-  }
-#endif
-
-  io::pgm::save(cast_image<int_u8>(output), argv[2]);
-
-  std::cout << "> with preprocessing." << std::endl;
-  s = tesseract("fra", output);
   std::cout << s;
   free(s);
 }
