@@ -1,3 +1,10 @@
+2008-10-28  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Compute volume of max tree nodes.
+	* Makefile: Little fix.
+	* max_tree.hh: Compute the volume.
+	* v2.cc: Call the volume routine.
+
 2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add some bench tests on ocr preprocessing.

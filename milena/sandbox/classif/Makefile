@@ -13,7 +13,7 @@ LAMBDA?=10
 
 # V2
 V2_INCLUDES=-I../.. -I../garrigues/fllt
-V2_SRC=v2.cc
+V2_SRC=v2.cc max_tree.hh
 V2=v2
 V2_DBG=v2_dbg
 
@@ -43,6 +43,7 @@ clean:
 	rm -f $(ICCVG_DBG)
 	rm -f $(V2)
 	rm -f $(V2_DBG)
+	rm -f *.log
 
 check-debug: $(ICCVG_DBG)
 	./iccvg_dbg $(IMG) $(DIV) $(LAMBDA) $(LOG)

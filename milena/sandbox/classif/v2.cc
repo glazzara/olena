@@ -55,6 +55,8 @@ compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f)
     out(p) = value::rgb8(pn[0] * f, pn[1] * f, pn[2] * f);
   }
   io::ppm::save(out, "tmp.ppm");
+
+  run.volume();
 }
 
 bool usage(int argc, char ** argv)

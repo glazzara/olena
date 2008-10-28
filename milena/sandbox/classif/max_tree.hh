@@ -9,6 +9,7 @@
 # include <mln/level/sort_psites.hh>
 
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pgm/load.hh>
@@ -33,9 +34,13 @@ struct max_tree_
   mln_ch_value(I, point) parent;
   mln_ch_value(I, point) zpar;
 
+  // image of volumes
+  image3d<unsigned> vol;
+  image3d<unsigned> nb_represent;
+  image3d<double> density;
+
   max_tree_(const I& f, const N& nbh)
-    : f(f),
-    nbh(nbh)
+    : f(f), nbh(nbh), vol(f.domain()), nb_represent(f.domain()), density(f.domain())
   {
     run();
   }
@@ -96,6 +101,42 @@ struct max_tree_
       area(parent(p)) += area(p);
     }
     debug::println(area);
+  }
+
+  void volume()
+  {
+    level::fill(vol, 0);
+    level::fill(nb_represent, 0);
+
+    {
+      mln_fwd_piter(S) p(s);
+
+      for_all(p)
+      {
+	vol(p) += 1;
+	nb_represent(p) += f(p);
+
+	if (parent(p) != p)
+	{
+	  nb_represent(parent(p)) += nb_represent(p);
+	  vol(parent(p)) += vol(p);
+	}
+
+	density(p) = nb_represent(p) / (double) vol(p);
+      }
+    }
+
+    {
+      mln_fwd_piter(S) p(s);
+      for_all(p)
+      {
+	std::cerr << " Color " << p << std::endl
+	          << "   vol          = " << vol(p) << " vertices" << std::endl
+	          << "   nb_represent = " << nb_represent(p) << std::endl
+	          << "   f            = " << f(p) << std::endl
+		  << "   density      = " << density(p) << " representant / vertices " << std::endl << std::endl;
+      }
+    }
   }
 
   bool is_root(const point& p) const
