@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,32 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ELEMENTARY_ALL_HH
-# define MLN_MORPHO_ELEMENTARY_ALL_HH
+/*! \file tests/morpho/elementary/dilation.cc
+ *
+ * \brief Test on mln::morpho::elementary::dilation.
+ */
 
-/// \file mln/morpho/elementary/all.hh
-///
-/// File that includes all elementary mathematical morphology
-/// routines.
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/morpho/elementary/dilation.hh>
 
 
-namespace mln
+int main()
 {
-  namespace morpho
+  using namespace mln;
+  using value::int_u8;
+
+//   trace::quiet = false;
+
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
   {
-
-    /// Namespace of image processing routines of elementary
-    /// mathematical morphology.
-    namespace elementary {}
-
+    image2d<int_u8> dil = morpho::elementary::dilation(ima, c4());
+    mln_assertion(dil.border() == 1);
+    debug::println(dil);
   }
+
+  image2d<bool> msk(3, 3, 0);
+  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  debug::println(msk);
+  {
+    image2d<bool> dil = morpho::elementary::dilation(msk, c4());
+    mln_assertion(dil.border() == 1);
+    debug::println(dil);
+  }
+
 }
-
-# include <mln/morpho/elementary/erosion.hh>
-# include <mln/morpho/elementary/dilation.hh>
-# include <mln/morpho/elementary/gradient_internal.hh>
-# include <mln/morpho/elementary/gradient_external.hh>
-
-
-
-#endif // ! MLN_MORPHO_ELEMENTARY_ALL_HH

@@ -29,6 +29,8 @@
 # define MLN_MORPHO_ELEMENTARY_LIKE_ERO_SET_HH
 
 /// \file mln/morpho/elementary/like_ero_set.hh
+///
+/// \todo Add a choice between adjust_fill and adjust_duplicate.
 
 # include <mln/morpho/includes.hh>
 
@@ -79,7 +81,10 @@ namespace mln
 	    if (do_clone)
 	      output = clone(input);
 	    else
+	    {
+	      initialize(output, input);
 	      level::fill(output, false);
+	    }
 
 	    mln_piter(I) p(input.domain());
 	    mln_niter(N) n(nbh, p);
@@ -119,7 +124,10 @@ namespace mln
 	  if (do_clone)
 	    output = clone(input);
 	  else
-	    level::fill(output, false);
+	    {
+	      initialize(output, input);
+	      level::fill(output, false);
+	    }
 
 	  mln_pixter(const I) p_in(input);
 	  mln_pixter(I) p_out(output);

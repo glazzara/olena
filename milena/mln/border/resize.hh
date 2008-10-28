@@ -176,8 +176,6 @@ namespace mln
 
       impl::resize_(ima, thickness);
 
-      mln_postcondition(border::get(ima) == thickness);
-
       trace::exiting("border::resize");
     }
 

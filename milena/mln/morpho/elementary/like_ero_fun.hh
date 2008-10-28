@@ -29,6 +29,9 @@
 # define MLN_MORPHO_ELEMENTARY_LIKE_ERO_FUN_HH
 
 /// \file mln/morpho/elementary/like_ero_fun.hh
+///
+/// \todo Add a choice between adjust_fill and adjust_duplicate.
+
 
 # include <mln/morpho/includes.hh>
 
@@ -49,17 +52,23 @@ namespace mln
 		   const Image<I>& input, const Neighborhood<N>& nbh);
 
 
-      struct f_accu
-      {
-	template <typename V, typename A>
-	V operator()(const V& input_p, const A& a) const
-	{
-	  return a;
-	}
-      };
-
 
 # ifndef MLN_INCLUDE_ONLY
+
+      namespace internal
+      {
+
+	struct f_accu
+	{
+	  template <typename V, typename A>
+	  V operator()(const V& input_p, const A& a) const
+	  {
+	    return a;
+	  }
+	};
+
+      } // end of namespace mln::morpho::elementary::internal
+
 
       namespace impl
       {

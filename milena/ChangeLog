@@ -1,5 +1,25 @@
 2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morpho elementary dilation and internal gradient.
+
+	* mln/border/resize.hh: Remove precondition.
+	This test cannot be verified since this operation may be
+	a no-op (for images without borders).
+	* mln/border/adjust.hh: Likewise.
+
+	* mln/morpho/elementary/like_ero_set.hh: Fix missing
+	initialization.
+	* mln/morpho/elementary/like_ero_fun.hh: Likewise.
+	(f_accu): Move into the internal namespace.
+
+	* mln/morpho/elementary/dilation.hh: New.
+	* mln/morpho/elementary/gradient_internal.hh: New.
+	* mln/morpho/elementary/all.hh: Update.
+	* tests/morpho/elementary/dilation.cc: New.
+	* tests/morpho/elementary/gradient_internal.cc: New.
+
+2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add extension::adjust_fill and elementary erosion.
 
 	* mln/debug/println.hh: Add trace.
