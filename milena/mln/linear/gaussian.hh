@@ -55,10 +55,9 @@ namespace mln
      *
      * \pre output.domain = input.domain
      */
-    template <class I, class O>
-    void
-    gaussian(const Image<I>& input, float sigma,
-	     Image<O>& output);
+    template <class I>
+    mln_concrete(I)
+    gaussian(const Image<I>& input, float sigma);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -323,14 +322,15 @@ namespace mln
 
     // Facade.
 
-    template <class I, class O>
+    template <class I>
     inline
-    void
-    gaussian(const Image<I>& input, float sigma,
-	     Image<O>& output)
+    mln_concrete(I)
+    gaussian(const Image<I>& input, float sigma)
     {
       mln_precondition(exact(input).has_data());
-      mln_precondition(exact(output).has_data());
+
+      mln_concrete(I) output;
+      initialize(output, input);
 
       impl::recursivefilter_coef_
 	coef(1.68f, 3.735f,
@@ -340,6 +340,8 @@ namespace mln
 	     sigma);
       impl::gaussian_common_(mln_trait_value_nature(mln_value(I))(),
                              input, coef, sigma, output);
+
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

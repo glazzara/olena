@@ -1,3 +1,10 @@
+2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Update gaussian facade.
+
+	* mln/linear/gaussian.hh: Return the output image.
+	* tests/linear/gaussian.cc: Update.
+
 2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix a compilation issue.

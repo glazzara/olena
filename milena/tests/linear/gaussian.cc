@@ -53,10 +53,7 @@ int main()
   image2d< value::int_u8 > lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  image2d<float> tmp(lena.domain());
-  linear::gaussian(lena, 5.1f, tmp);
+  image2d< value::int_u8 > out = linear::gaussian(lena, 5.1f);
 
-  image2d< value::int_u_sat<8> > out(lena.domain());
-  level::transform(tmp, math::round<int>(), out);
   io::pgm::save(out, "out.pgm");
  }
