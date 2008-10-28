@@ -57,8 +57,6 @@
  *
  * \todo Warning: we should also have the "arbitrary" versions working
  * on sets (not only on functions!)
- *
- * \todo Activate the FIXMEs (border::adjust).
  */
 
 # ifndef MLN_INCLUDE_ONLY
@@ -104,8 +102,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
-	// FIXME: border::adjust(input, win.delta());
-	extension::fill(input, mln_max(mln_value(I)));
+	extension::adjust_fill(input, win, mln_max(mln_value(I)));
 
 	O output;
 	initialize(output, input);
@@ -137,8 +134,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
-	// FIXME: border::adjust(input, win.delta());
-	extension::fill(input, true);
+	extension::adjust_fill(input, win, true);
 
 	O output;
 	initialize(output, input);
@@ -170,8 +166,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
-	// FIXME: border::adjust(input, win.delta());
-	extension::fill(input, true);
+	extension::adjust_fill(input, win, true);
 
 	O output;
 	output = clone(input);
@@ -201,8 +196,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
-	// FIXME: border::adjust(input, win.delta());
-	extension::fill(input, true);
+	extension::adjust_fill(input, win, true);
 
 	O output;
 	output = clone(input);
@@ -404,8 +398,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
 	  p = input.domain().pmin() - dps[0];
@@ -562,8 +555,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	  min.init();
 	  p = input.domain().pmin() - dps[0];
@@ -674,8 +666,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, accu);
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
@@ -758,8 +749,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, accu);
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
@@ -845,8 +835,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	}
 
@@ -928,8 +917,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	}
 
@@ -1011,8 +999,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	}
 
@@ -1094,8 +1081,7 @@ namespace mln
 
 	void init()
 	{
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
 	}
 

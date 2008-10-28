@@ -63,7 +63,6 @@ namespace mln
     void fill(const Image<I>& ima, const mln_value(I)& val);
 
 
-
 # ifndef MLN_INCLUDE_ONLY
 
 

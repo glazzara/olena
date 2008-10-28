@@ -81,8 +81,10 @@ namespace mln
     void
     println(const Image<I>& input)
     {
+      trace::entering("debug::println");
       impl::println(geom::bbox(exact(input).domain()),
 		    exact(input));
+      trace::exiting("debug::println");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

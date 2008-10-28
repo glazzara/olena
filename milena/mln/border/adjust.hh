@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -66,16 +66,16 @@ namespace mln
     {
       trace::entering("border::adjust");
 
-      //FIXME: fix this check
-      //mlc_is(mln_trait_image_border(I),
-      //      trait::image::border::some)::check();
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-
-      if (border::get(ima) < min_thickness)
-	border::resize(ima, min_thickness);
-
-      mln_postcondition(border::get(ima) >= min_thickness);
+      if (min_thickness != 0)
+	{
+	  const I& ima = exact(ima_);
+	  mln_precondition(ima.has_data());
+	  
+	  if (border::get(ima) < min_thickness)
+	    border::resize(ima, min_thickness);
+	  
+	  mln_postcondition(border::get(ima) >= min_thickness);
+	}
 
       trace::exiting("border::adjust");
     }

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,28 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_EXTENSION_ALL_HH
-# define MLN_EXTENSION_ALL_HH
-
-/*! \file mln/pw/all.hh
+/*! \file tests/morpho/elementary/erosion.cc
  *
- * \brief File that includes all extension materials.
- *
- * \todo Also include "extension images" + "extended"?
+ * \brief Test on mln::morpho::elementary::erosion.
  */
 
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
 
-namespace mln
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/morpho/elementary/erosion.hh>
+
+
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /// Namespace of extension tools.
-  namespace extension {}
+//   trace::quiet = false;
 
-} // end of namespace mln
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
+  {
+    image2d<int_u8> ero = morpho::elementary::erosion(ima, c4());
+    mln_assertion(ero.border() == 1);
+    debug::println(ero);
+  }
 
+  image2d<bool> msk(3, 3, 0);
+  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  debug::println(msk);
+  {
+    image2d<bool> ero = morpho::elementary::erosion(msk, c4());
+    mln_assertion(ero.border() == 1);
+    debug::println(ero);
+  }
 
-# include <mln/extension/fill.hh>
-# include <mln/extension/adjust_fill.hh>
-
-
-#endif // ! MLN_EXTENSION_ALL_HH
+}

@@ -25,28 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_EXTENSION_ALL_HH
-# define MLN_EXTENSION_ALL_HH
+#ifndef MLN_MORPHO_ELEMENTARY_ALL_HH
+# define MLN_MORPHO_ELEMENTARY_ALL_HH
 
-/*! \file mln/pw/all.hh
- *
- * \brief File that includes all extension materials.
- *
- * \todo Also include "extension images" + "extended"?
- */
+/// \file mln/morpho/elementary/all.hh
+///
+/// File that includes all elementary mathematical morphology
+/// routines.
 
 
 namespace mln
 {
+  namespace morpho
+  {
 
-  /// Namespace of extension tools.
-  namespace extension {}
+    /// Namespace of image processing routines of elementary
+    /// mathematical morphology.
+    namespace elementary {}
 
-} // end of namespace mln
+  }
+}
+
+# include <mln/morpho/elementary/erosion.hh>
 
 
-# include <mln/extension/fill.hh>
-# include <mln/extension/adjust_fill.hh>
 
-
-#endif // ! MLN_EXTENSION_ALL_HH
+#endif // ! MLN_MORPHO_ELEMENTARY_ALL_HH

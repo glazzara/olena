@@ -92,11 +92,11 @@ namespace mln
 
 	mln_concrete(I) memo = clone(ima);
 	ima.resize_(thickness);
-	// level::fill(ima, memo);
+	level::fill(ima, memo);
 	// level::paste(memo, ima);
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  ima(p) = memo(p);
+// 	mln_piter(I) p(ima.domain());
+// 	for_all(p)
+// 	  ima(p) = memo(p);
       }
 
 // ext_domain:   /any/

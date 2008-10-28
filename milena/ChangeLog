@@ -1,3 +1,25 @@
+2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add extension::adjust_fill and elementary erosion.
+
+	* mln/debug/println.hh: Add trace.
+	* mln/border/resize.hh: Re-activate fast code.
+	* mln/border/adjust.hh: Handle the 0 case.
+	* mln/geom/delta.hh: New.
+	* mln/extension/adjust_fill.hh: New.
+	* mln/extension/all.hh: Update.
+	* mln/morpho/erosion.hh (todo): Remove; see below.
+	Use adjust_fill.
+	* mln/morpho/erosion.spe.hh: Likewise.
+
+	* mln/morpho/elementary: New directory.
+	* mln/morpho/elementary/like_ero_fun.hh: New.
+	* mln/morpho/elementary/like_ero_set.hh: New.
+	* mln/morpho/elementary/all.hh: New.
+	* mln/morpho/elementary/erosion.hh: New.
+	* tests/morpho/elementary: New directory.
+	* tests/morpho/elementary/erosion.cc: New.
+
 2008-10-28  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
 	Add missing return.

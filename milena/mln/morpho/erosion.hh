@@ -30,8 +30,6 @@
 
 /// \file mln/morpho/erosion.hh
 /// \brief Morphological erosion.
-///
-/// \todo Activate the FIXMEs (border::adjust).
 
 # include <mln/morpho/includes.hh>
 
@@ -72,8 +70,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
 
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
@@ -106,8 +103,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
 
-	  // FIXME: border::adjust(input, win.delta());
-	  extension::fill(input, true);
+	  extension::adjust_fill(input, win, true);
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
