@@ -1,3 +1,7 @@
+2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* garrigues/ocr/ocr.cc: Updates dues to gaussian's facade changes.
+
 2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Update max tree version.

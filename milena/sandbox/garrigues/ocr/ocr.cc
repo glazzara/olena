@@ -55,7 +55,7 @@
 
 #include <tesseract/baseapi.h>
 
-// _COMPILATION_ 
+// _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
 
 
@@ -83,7 +83,10 @@ int main(int argc, char** argv)
   image2d<bool> input;
 
   if (argc < 2)
+  {
+    std::cerr << "Usage: " << argv[0] << " in.pbm out.pbm" << std::endl;
     return 1;
+  }
 
   mln::border::thickness = 0;
 
@@ -102,11 +105,9 @@ int main(int argc, char** argv)
   image2d<int_u8> output = enlarge(input, 1);
 
   // TODO CLEANUP
-#if 0
+#if 1
   // Blur.
-  image2d<int_u8> output;
-  initialize(output, output2);
-  linear::gaussian(output2, 1, output);
+  output = linear::gaussian(output, 1);
 #endif
 
 #if 0
