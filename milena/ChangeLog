@@ -1,3 +1,8 @@
+2008-10-28  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Add missing return.
+	* mln/morpho/erosion.spe.hh: done.
+
 2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Update gaussian facade.

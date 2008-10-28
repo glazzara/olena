@@ -1255,6 +1255,7 @@ namespace mln
 	  erosion_dispatch_for_arbitrary(mln_trait_image_speed(I)(),
 					 input, win);
 	trace::exiting("morpho::erosion_dispatch_for_arbitrary");
+	return ima;
       }
 
 
