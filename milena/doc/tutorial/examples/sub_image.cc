@@ -5,7 +5,7 @@
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 
-# include <mln/morpho/gradient_elementary.hh>
+# include <mln/morpho/elementary/gradient.hh>
 # include <mln/level/fill_with_value.hh>
 
 
@@ -20,7 +20,7 @@ int main()
 
   sub_image<I, box2d> sub = ima | box2d(2,3);
   debug::println(sub);
-  debug::println(morpho::gradient_elementary(sub, c4()));
+  debug::println(morpho::elementary::gradient(sub, c4()));
 
   level::fill_with_value((ima | box2d(2,3)).rw(), 0);
   debug::println(ima);
