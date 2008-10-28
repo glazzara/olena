@@ -63,7 +63,7 @@ namespace mln
 	  template <typename V, typename A>
 	  V operator()(const V& input_p, const A& a) const
 	  {
-	    return a;
+	    return a.to_result();
 	  }
 	};
 
@@ -180,7 +180,7 @@ namespace mln
 	  typedef mln_is_simple_window(W) N_simple;
 
 	  return like_ero_fun_dispatch(mlc_and(I_fastest, N_simple)(),
-				  a, f, input, nbh);
+				       a, f, input, nbh);
 	}
 
       } // end of namespace mln::morpho::elementary::internal

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,56 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MIN_MAX_HH
-# define MLN_ACCU_MIN_MAX_HH
-
-/*! \file mln/accu/min_max.hh
+/*! \file tests/morpho/elementary/gradient_external.cc
  *
- * \brief Define an accumulator that computes a min and a max.
- *
- * \todo A macro to create such accumulators.
+ * \brief Test on mln::morpho::elementary::gradient_external.
  */
 
-# include <utility>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/var.hh>
+#include <mln/value/int_u8.hh>
 
-# include <mln/accu/pair.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/morpho/elementary/gradient_external.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace accu
+//    trace::quiet = false;
+
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
+
+  mln_VAR(b, ima.domain());
+
   {
+    mln_VAR(gra,
+	    morpho::elementary::gradient_external(ima | b, c4()));
+    debug::println(gra);
+  }
 
-    /*! \brief Generic min and max accumulator class.
-     *
-     * The parameter \c V is the type of values.
-     */
-    template <typename V>
-    struct min_max : public pair< min<V>, max<V> >
-    {
-    };
+  image2d<bool> msk(3, 3, 0);
+  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  debug::println(msk);
+  {
+    mln_VAR(gra,
+	    morpho::elementary::gradient_external(msk | b, c4()));
+    debug::println(gra);
+  }
 
-
-    template <typename I> struct min_max< util::pix<I> >;
-
-
-    namespace meta
-    {
-
-      // FIXME: Doc!
-      typedef meta::pair<meta::min,meta::max> min_max;
-
-    } // end of namespace mln::accu::meta
-
-
-  } // end of namespace mln::accu
-
-} // end of namespace mln
-
-
-#endif // ! MLN_ACCU_MIN_MAX_HH
+}

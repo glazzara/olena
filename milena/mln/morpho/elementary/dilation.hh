@@ -104,6 +104,7 @@ namespace mln
 
 	mln_concrete(I) output = internal::dilation_dispatch(input, nbh);
 	
+	mln_postcondition(output >= input);
 	trace::exiting("morpho::elementary::dilation");
 	return output;
       }

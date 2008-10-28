@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,56 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MIN_MAX_HH
-# define MLN_ACCU_MIN_MAX_HH
-
-/*! \file mln/accu/min_max.hh
+/*! \file tests/morpho/elementary/closing.cc
  *
- * \brief Define an accumulator that computes a min and a max.
- *
- * \todo A macro to create such accumulators.
+ * \brief Test on mln::morpho::elementary::closing.
  */
 
-# include <utility>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
 
-# include <mln/accu/pair.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/morpho/elementary/closing.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace accu
+//   trace::quiet = false;
+
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
   {
+    image2d<int_u8> clo = morpho::elementary::closing(ima, c4());
+    mln_assertion(clo.border() == 1);
+    debug::println(clo);
+  }
 
-    /*! \brief Generic min and max accumulator class.
-     *
-     * The parameter \c V is the type of values.
-     */
-    template <typename V>
-    struct min_max : public pair< min<V>, max<V> >
-    {
-    };
+  image2d<bool> msk(3, 3, 0);
+  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  debug::println(msk);
+  {
+    image2d<bool> clo = morpho::elementary::closing(msk, c4());
+    mln_assertion(clo.border() == 1);
+    debug::println(clo);
+  }
 
-
-    template <typename I> struct min_max< util::pix<I> >;
-
-
-    namespace meta
-    {
-
-      // FIXME: Doc!
-      typedef meta::pair<meta::min,meta::max> min_max;
-
-    } // end of namespace mln::accu::meta
-
-
-  } // end of namespace mln::accu
-
-} // end of namespace mln
-
-
-#endif // ! MLN_ACCU_MIN_MAX_HH
+}

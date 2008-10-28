@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,23 +25,21 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/gradient_elementary.cc
+/*! \file tests/morpho/elementary/gradient.cc
  *
- * \brief Test on mln::morpho::gradient_elementary.
+ * \brief Test on mln::morpho::elementary::gradient.
  */
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
 #include <mln/core/alias/neighb2d.hh>
-
-#include <mln/io/pbm/load.hh>
-#include <mln/io/pbm/save.hh>
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
+#include <mln/core/var.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/gradient_elementary.hh>
 
-#include "tests/data.hh"
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/morpho/elementary/gradient.hh>
 
 
 int main()
@@ -49,20 +47,27 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  border::thickness = 0;
+//    trace::quiet = false;
+
+  image2d<int_u8> ima(3, 3, 0);
+  debug::iota(ima);
+  debug::println(ima);
+
+  mln_VAR(b, ima.domain());
 
   {
-    image2d<int_u8> lena;
-    io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
-    
-    io::pgm::save( morpho::gradient_elementary(lena, c4()),
-		   "out.pgm" );
+    mln_VAR(gra,
+	    morpho::elementary::gradient(ima | b, c4()));
+    debug::println(gra);
   }
+
+  image2d<bool> msk(3, 3, 0);
+  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  debug::println(msk);
   {
-    image2d<bool> pic;
-    io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
-    
-    io::pbm::save( morpho::gradient_elementary(pic, c4()),
-		   "out.pbm" );
+    mln_VAR(gra,
+	    morpho::elementary::gradient(msk | b, c4()));
+    debug::println(gra);
   }
+
 }

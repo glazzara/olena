@@ -1,5 +1,29 @@
 2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add new morphological elementary operators.
+
+	* tests/morpho/elementary/gradient.cc: New.
+	* tests/morpho/elementary/closing.cc: New.
+	* tests/morpho/elementary/gradient_external.cc: New.
+	* tests/morpho/elementary/opening.cc: New.
+	* tests/morpho/gradient_elementary.cc: Remove; obsolete.
+	* tests/morpho/Makefile.am: Update.
+	* mln/accu/min_max.hh (meta::min_max): Disambiguate.
+	* mln/morpho/elementary/like_ero_fun.hh (f_accu): Make it
+	consistent with others.
+	* mln/morpho/elementary/dilation.hh (postcondition): New.
+	* mln/morpho/dilation_elementary.hh: Remove; obsolete.
+	* mln/morpho/elementary/gradient_internal.hh (val): Fix.
+	(postcondition): New.
+	* mln/morpho/elementary/gradient.hh: New.
+	* mln/morpho/gradient_elementary.hh: Remove; obsolete.
+	* mln/morpho/elementary/erosion.hh (postcondition): New.
+	* mln/morpho/elementary/closing.hh: New.
+	* mln/morpho/elementary/gradient_external.hh: New.
+	* mln/morpho/elementary/opening.hh: New.
+
+2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add morpho elementary dilation and internal gradient.
 
 	* mln/border/resize.hh: Remove precondition.

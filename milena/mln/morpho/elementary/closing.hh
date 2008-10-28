@@ -25,56 +25,59 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_MIN_MAX_HH
-# define MLN_ACCU_MIN_MAX_HH
+#ifndef MLN_MORPHO_ELEMENTARY_CLOSING_HH
+# define MLN_MORPHO_ELEMENTARY_CLOSING_HH
 
-/*! \file mln/accu/min_max.hh
+/*! \file mln/morpho/elementary/closing.hh
  *
- * \brief Define an accumulator that computes a min and a max.
- *
- * \todo A macro to create such accumulators.
+ * \brief Morphological elementary closing.
  */
 
-# include <utility>
-
-# include <mln/accu/pair.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
+# include <mln/morpho/elementary/erosion.hh>
+# include <mln/morpho/elementary/dilation.hh>
 
 
 namespace mln
 {
 
-  namespace accu
+  namespace morpho
   {
 
-    /*! \brief Generic min and max accumulator class.
-     *
-     * The parameter \c V is the type of values.
-     */
-    template <typename V>
-    struct min_max : public pair< min<V>, max<V> >
-    {
-    };
-
-
-    template <typename I> struct min_max< util::pix<I> >;
-
-
-    namespace meta
+    namespace elementary
     {
 
-      // FIXME: Doc!
-      typedef meta::pair<meta::min,meta::max> min_max;
+      /// Morphological elementary closing.
+      ///
+      /// This operator is e o d.
+      template <typename I, typename N>
+      mln_concrete(I) closing(const Image<I>& input, const Neighborhood<N>& nbh);
 
-    } // end of namespace mln::accu::meta
 
+# ifndef MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::accu
+      template <typename I, typename N>
+      inline
+      mln_concrete(I) closing(const Image<I>& input, const Neighborhood<N>& nbh)
+      {
+	trace::entering("morpho::elementary::closing");
+
+	mln_precondition(exact(input).has_data());
+	// mln_precondition(exact(nbh).is_valid());
+
+	mln_concrete(I) output = erosion(dilation(input, nbh), nbh);
+
+	mln_postcondition(output >= input);
+	trace::exiting("morpho::elementary::closing");
+	return output;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::morpho::elementary
+
+  } // end of namespace mln::morpho
 
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_MIN_MAX_HH
+#endif // ! MLN_MORPHO_ELEMENTARY_CLOSING_HH

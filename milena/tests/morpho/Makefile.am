@@ -16,7 +16,6 @@ check_PROGRAMS =				\
   erosion					\
   erosion_min_h					\
   gradient					\
-  gradient_elementary				\
   graph_image_morpho				\
   graph_image_wst				\
   hit_or_miss					\
@@ -51,7 +50,6 @@ opening_volume_SOURCES = opening_volume.cc
 
 contrast_SOURCES = contrast.cc
 gradient_SOURCES = gradient.cc
-gradient_elementary_SOURCES = gradient_elementary.cc
 hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc

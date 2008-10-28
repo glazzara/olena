@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
-# define MLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
+#ifndef MLN_MORPHO_ELEMENTARY_GRADIENT_EXTERNAL_HH
+# define MLN_MORPHO_ELEMENTARY_GRADIENT_EXTERNAL_HH
 
-/// \file mln/morpho/elementary/gradient_internal.hh
+/// \file mln/morpho/elementary/gradient_external.hh
 ///
 /// \todo Fix the extension issue (see todo in like_ero_fun and _set).
 
@@ -48,7 +48,7 @@ namespace mln
 
       template <typename I, typename N>
       mln_concrete(I)
-      gradient_internal(const Image<I>& input, const Neighborhood<N>& nbh);
+      gradient_external(const Image<I>& input, const Neighborhood<N>& nbh);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -56,12 +56,12 @@ namespace mln
       namespace internal
       {
 
-	struct f_grad_int
+	struct f_grad_ext
 	{
 	  template <typename V, typename A>
 	  V operator()(const V& input_p, const A& a) const
 	  {
-	    return input_p - a.to_result();
+	    return a.to_result() - input_p;
 	  }
 	};
 
@@ -69,23 +69,23 @@ namespace mln
 
 	template <typename I, typename N>
 	mln_concrete(I)
-	gradient_internal_dispatch(trait::image::kind::any,
+	gradient_external_dispatch(trait::image::kind::any,
 			 const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  return like_ero_fun(accu::meta::min(), f_grad_int(), input, nbh);
+	  return like_ero_fun(accu::meta::max(), f_grad_ext(), input, nbh);
 	}
 
 	template <typename I, typename N>
 	mln_concrete(I)
-	gradient_internal_dispatch(trait::image::kind::logic,
+	gradient_external_dispatch(trait::image::kind::logic,
 				   const Image<I>& input, const Neighborhood<N>& nbh)
 	{
 	  bool val[] =
 	    {
-	      1, // ext_value
+	      0, // ext_value
 	      0, // do_clone
-	      1, // on_input_p
-	      0, // on_input_n
+	      0, // on_input_p
+	      1, // on_input_n
 	      1, // output_p
 	    };
 	  return like_ero_set(val, input, nbh);
@@ -93,9 +93,9 @@ namespace mln
 
 	template <typename I, typename N>
 	mln_concrete(I)
-	gradient_internal_dispatch(const Image<I>& input, const Neighborhood<N>& nbh)
+	gradient_external_dispatch(const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  return gradient_internal_dispatch(mln_trait_image_kind(I)(),
+	  return gradient_external_dispatch(mln_trait_image_kind(I)(),
 					    input, nbh);
 	}
 
@@ -106,17 +106,16 @@ namespace mln
 
       template <typename I, typename N>
       mln_concrete(I)
-      gradient_internal(const Image<I>& input, const Neighborhood<N>& nbh)
+      gradient_external(const Image<I>& input, const Neighborhood<N>& nbh)
       {
-	trace::entering("morpho::elementary::gradient_internal");
+	trace::entering("morpho::elementary::gradient_external");
 
 	mln_precondition(exact(input).has_data());
 	// mln_precondition(exact(nbh).is_valid());
 
-	mln_concrete(I) output = internal::gradient_internal_dispatch(input, nbh);
+	mln_concrete(I) output = internal::gradient_external_dispatch(input, nbh);
 	
-	mln_postcondition(output <= input);
-	trace::exiting("morpho::elementary::gradient_internal");
+	trace::exiting("morpho::elementary::gradient_external");
 	return output;
       }
 
@@ -129,4 +128,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_ELEMENTARY_GRADIENT_INTERNAL_HH
+#endif // ! MLN_MORPHO_ELEMENTARY_GRADIENT_EXTERNAL_HH
