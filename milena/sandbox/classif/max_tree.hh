@@ -12,9 +12,11 @@
 # include <mln/core/image/image3d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
+# include <mln/value/rgb8.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/debug/println.hh>
+# include <mln/io/ppm/save.hh>
 
 using namespace mln;
 
@@ -39,8 +41,13 @@ struct max_tree_
   image3d<unsigned> nb_represent;
   image3d<double> density;
 
+  //tags
+  image3d<bool> is_active;
+  image3d< algebra::vec<3, double> > mean_color;
+
   max_tree_(const I& f, const N& nbh)
-    : f(f), nbh(nbh), vol(f.domain()), nb_represent(f.domain()), density(f.domain())
+    : f(f), nbh(nbh), vol(f.domain()), nb_represent(f.domain()), density(f.domain()),
+      is_active(f.domain()), mean_color(f.domain())
   {
     run();
   }
@@ -137,6 +144,79 @@ struct max_tree_
 		  << "   density      = " << density(p) << " representant / vertices " << std::endl << std::endl;
       }
     }
+  }
+
+  void compute_mean_color()
+  {
+    level::fill(mean_color, make::vec(0, 0, 0));
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+      mean_color(p) = make::vec(p[0], p[1], p[2]);
+
+    for_all(p)
+      mean_color(parent(p)) = (mean_color(parent(p)) + mean_color(p)) / 2.;
+  }
+
+  void simple_filter_1(int lambda)
+  {
+    level::fill(is_active, true);
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (vol(p) < lambda)
+	is_active(p) = false;
+    }
+  }
+
+  template < typename J >
+  void to_ppm(const J& ima, const std::string& file, unsigned f)
+  {
+    J out(ima.domain());
+    level::fill(out, value::rgb8(0, 0, 0));
+
+    mln_piter(J) p(ima.domain());
+    for_all(p)
+    {
+      point3d p3 = point3d(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
+
+      point3d node = p3;
+      if (not is_node(p3))
+      {
+	if (is_active(parent(p3)))
+	  goto write;
+
+	node = parent(p3);
+      }
+
+      while (not is_active(node))
+	node = parent(node);
+
+write:
+      out(p) = value::rgb8(static_cast<unsigned char>(mean_color(node)[0] * f),
+	                   static_cast<unsigned char>(mean_color(node)[1] * f),
+			   static_cast<unsigned char>(mean_color(node)[2] * f));
+      //out(p) = value::rgb8(mean_color(node)[0] * f, mean_color(node)[1] * f, mean_color(node)[2] * f);
+    }
+
+    io::ppm::save(out, file);
+  }
+
+  unsigned number_of_nodes()
+  {
+    p_array<point> node;
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+      if (is_node(p))
+	node.insert(p);
+
+    std::cout << s.nsites() << std::endl;
+    std::cout << parent.domain().nsites() << std::endl;
+    std::cout << node.nsites() << std::endl;
+
+    return s.nsites();
   }
 
   bool is_root(const point& p) const

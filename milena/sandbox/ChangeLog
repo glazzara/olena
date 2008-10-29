@@ -1,3 +1,10 @@
+2008-10-29  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Implement a simple filter on the max_tree.
+	* Makefile: Add nice rules.
+	* max_tree.hh: Add to_ppm, compute_mean_colors and number_of_nodes.
+	* v2.cc: Fix the getopt.
+
 2008-10-29  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	INIM : nature filters and little bug fixes.

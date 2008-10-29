@@ -55,9 +55,18 @@ check: $(ICCVG)
 	cat stdout.log
 	$(DISP) out.ppm &
 
+v2-check: $(V2)
+	./v2 $(IMG) $(DIV) $(LAMBDA) $(LOG)
+	cat stdout.log
+	$(DISP) out.ppm &
+
 valgrind: $(ICCVG_DBG)
 	valgrind --log-file=valgrind.log ./iccvg_dbg ../../img/lena.ppm $(DIV) $(LAMBDA) $(LOG)
 
 gdb: $(ICCVG_DBG)
 	echo "run ../../img/lena.ppm $(DIV) $(LAMBDA)" > gdb.cmd
 	gdb $(ICCVG_DBG) -x gdb.cmd
+
+v2-gdb: $(V2_DBG)
+	echo "run ../../img/lena.ppm $(DIV) $(LAMBDA) $(LOG)" > gdb.cmd
+	gdb $(V2_DBG) -x gdb.cmd
