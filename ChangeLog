@@ -1,3 +1,16 @@
+2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Few updates.
+
+	* milena/tests/draw/line.cc: Fix missing update.
+	* milena/mln/draw/line.hh: Make it safe.
+	* milena/mln/morpho/closing_volume.hh (closing_volume): New
+	overload with output as return.
+	* milena/mln/morpho/all.hh: Better doc.
+	(include): Update.
+	* milena/sandbox/geraud/wst_edge.cc: Prefer volume closing over
+	area closing.
+
 2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add fun::v2v::convert and level::convert.

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,26 +41,18 @@ namespace mln
   namespace morpho
   {
 
-    /*!
-     * Namespace of morphological image processing routines
-     * implementation details.
-     *
-     */
+    /// Namespace of morphological image processing routines
+    /// implementations.
     namespace impl
     {
 
-      /*!
-       * Namespace of morphological image processing routines
-       * implementation generic implementations.
-       *
-       */
+      /// Namespace of morphological image processing routines
+      /// generic implementations.
       namespace generic
       {}
 
     }
-
   }
-
 }
 
 
@@ -87,6 +79,8 @@ namespace mln
 # include <mln/morpho/thin_fit.hh>
 # include <mln/morpho/thinning.hh>
 # include <mln/morpho/top_hat.hh>
+
+# include <mln/morpho/elementary/all.hh>
 
 
 

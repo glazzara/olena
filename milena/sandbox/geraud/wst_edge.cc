@@ -33,7 +33,7 @@
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
-# include <mln/morpho/closing_area.hh>
+# include <mln/morpho/closing_volume.hh>
 
 # include <mln/debug/println.hh>
 
@@ -315,7 +315,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
   }
 
 
-  level::paste( morpho::closing_area(edge, e2e, lambda), edge );
+  level::paste( morpho::closing_volume(edge, e2e, lambda), edge );
   
 
   image2d<unsigned> label(ima.bbox(), 0);

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
+# include <mln/core/image/safe.hh>
 # include <mln/level/paste.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
@@ -69,14 +70,15 @@ namespace mln
 
     template <typename I>
     inline
-    void line(Image<I>& ima,
+    void line(Image<I>& ima_,
 	      const mln_psite(I)& beg, const mln_psite(I)& end,
 	      const mln_value(I)& v)
     {
-      mln_precondition(exact(ima).has_data());
-      mln_precondition(exact(ima).has(beg) && exact(ima).has(end));
+      I& ima = exact(ima_);
+      mln_precondition(ima.has_data());
+      // if (! ima.has(beg) ||  ! ima.has(end)) trace::warning("out");
       level::paste(pw::cst(v) | p_line2d(beg, end),
-		   ima);
+		   safe(ima).rw());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

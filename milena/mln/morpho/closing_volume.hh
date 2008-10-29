@@ -30,6 +30,8 @@
 
 /// \file mln/morpho/closing_volume.hh
 /// \brief Morphological volume closing.
+///
+/// \todo Clean!
 
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/volume.hh>
@@ -45,6 +47,16 @@ namespace mln
     template <typename I, typename N, typename O>
     void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
 			std::size_t lambda, Image<O>& output);
+
+    template <typename I, typename N>
+    mln_concrete(I)
+    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda)
+    {
+      mln_concrete(I) output;
+      initialize(output, input);
+      closing_volume(input, nbh, lambda, output);
+      return output;
+    }
 
 
 # ifndef MLN_INCLUDE_ONLY
