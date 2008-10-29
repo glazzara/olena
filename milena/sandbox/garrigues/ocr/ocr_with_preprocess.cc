@@ -37,7 +37,7 @@
 
 #include "resize.hh"
 #include "enlarge.hh"
-//#include "skeleton.hh"
+#include "skeleton.hh"
 #include <mln/linear/gaussian.hh>
 
 #include <mln/trace/all.hh>
@@ -96,17 +96,17 @@ int main(int argc, char** argv)
   image2d<int_u8> output = enlarge(input, 1);
 
   // TODO CLEANUP
-#if 0
+#if 1
   // Blur.
   output = linear::gaussian(output, 1);
 #endif
 
-#if 0
+#if 1
   // Threshold
   mln_piter_(image2d<unsigned>) p(output.domain());
   for_all(p)
   {
-    output(p) = output(p) > 127 ? 1 : 0;
+    output(p) = output(p) > 150 ? 255 : 0;
   }
 #endif
 

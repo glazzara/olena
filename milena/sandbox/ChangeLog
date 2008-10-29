@@ -1,3 +1,9 @@
+2008-10-29  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Update OCR preprocessing.
+	* garrigues/ocr/ocr_with_preprocess.cc: Apply gaussian blur and
+	  naive thresholding.
+
 2008-10-28  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Compute volume of max tree nodes.
