@@ -1,5 +1,13 @@
 2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new colors.
+
+	* mln/literal/colors.hh,
+	* mln/value/rgb.hh:
+	Add literal::dark_red and literal::dark_orange.
+
+2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new methods to box.
 
 	* mln/core/site_set/box.hh: add crop_wrt(), nrows() and ncols.

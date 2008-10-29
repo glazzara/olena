@@ -51,6 +51,16 @@ namespace mln
     {
     };
 
+    /// Type of literal dark red.
+    struct dark_red_t : public Literal<dark_red_t>
+    {
+    };
+
+    /// Type of literal dark orange.
+    struct dark_orange_t : public Literal<dark_orange_t>
+    {
+    };
+
     /// Type of literal green.
     struct green_t : public Literal<green_t>
     {
@@ -60,6 +70,14 @@ namespace mln
     /// Literal red.
     // FIXME: Make this a proper global (issue #43).
     static const red_t red = red_t();
+
+    /// Literal dark red.
+    // FIXME: Make this a proper global (issue #43).
+    static const dark_red_t dark_red = dark_red_t();
+
+    /// Literal red.
+    // FIXME: Make this a proper global (issue #43).
+    static const dark_orange_t dark_orange = dark_orange_t();
 
     /// Literal green.
     // FIXME: Make this a proper global (issue #43).

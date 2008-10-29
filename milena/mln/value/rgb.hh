@@ -56,6 +56,8 @@ namespace mln
     struct white_t;
 
     struct red_t;
+    struct dark_red_t;
+    struct dark_orange_t;
     struct blue_t;
     struct green_t;
     /// \}
@@ -204,6 +206,8 @@ namespace mln
 
       rgb<n>(const mln::literal::blue_t&);
       rgb<n>(const mln::literal::red_t&);
+      rgb<n>(const mln::literal::dark_red_t&);
+      rgb<n>(const mln::literal::dark_orange_t&);
       rgb<n>(const mln::literal::green_t&);
       /// \}
 
@@ -361,6 +365,24 @@ namespace mln
     {
       this->v_[0] = mln_max(int_u<n>);
       this->v_[1] = 0;
+      this->v_[2] = 0;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::dark_red_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) / 3;
+      this->v_[1] = 0;
+      this->v_[2] = 0;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::dark_orange_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) / 3;
+      this->v_[1] = mln_max(int_u<n>) / 3;
       this->v_[2] = 0;
     }
 
