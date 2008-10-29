@@ -1,3 +1,25 @@
+2008-10-29  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add simple point computation to ocr preprocessing.
+
+	* garrigues/ocr/simple_point.hh: New ,Tell if a point is simple or
+	not. A point of an object is simple if in its c8 neiborhood, there is
+	exactly one connected component of the object, and only one connected
+	component of the background
+
+	Examples : ( | == object, - = background)
+
+         - - |
+         | P | Here P is simple in the c4 and c8 case.
+         | | |
+
+         - | -
+         | P | Here P is never simple.
+         | | |
+
+	* garrigues/ocr/simple_point.cc: New. A simple test that shows all the
+	simple points of a binary image.
+
 2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve code for Scribo.
