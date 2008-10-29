@@ -139,8 +139,8 @@ namespace mln
   p_graph_piter<S,I>::start_()
   {
     iter_.start();
-      if (this->is_valid())
-	update_();
+    if (this->is_valid())
+      update_();
   }
 
   template <typename S, typename I>

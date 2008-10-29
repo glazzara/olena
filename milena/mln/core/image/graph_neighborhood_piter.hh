@@ -31,26 +31,25 @@
 /// \file   mln/core/image/graph_neighborhood_piter.hh
 /// \brief  Definition of a point iterator on a graph neighborhood.
 
-# include <mln/core/internal/graph_vicinity_piter.hh>
-
-/* FIXME: Due to the poor interface of mln::p_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
+# include <mln/core/internal/graph_relative_piter.hh>
 
 namespace mln
 {
 
-  /*-------------------------------------.
-  | graph_neighborhood_fwd_piter<P, N>.  |
-  `-------------------------------------*/
+  /*----------------------------------------.
+  | graph_neighborhood_fwd_piter<G, F, N>.  |
+  `----------------------------------------*/
 
-  template <typename P, typename N>
+  /// \p G Graph type.
+  /// \p F function i2p used in the p_vertices<G, F>.
+  /// \p N Type of the neighborhood.
+  template <typename G, typename F, typename N>
   class graph_neighborhood_fwd_piter :
-    public internal::graph_vicinity_piter_< P, N,
-					    graph_neighborhood_fwd_piter<P, N> >
+    public internal::graph_relative_piter< mln_result(F), N,
+					    graph_neighborhood_fwd_piter<G, F, N> >
   {
-    typedef graph_neighborhood_fwd_piter<P, N> self_;
-    typedef internal::graph_vicinity_piter_<P, N, self_> super_;
+    typedef graph_neighborhood_fwd_piter<G, F, N> self_;
+    typedef internal::graph_relative_piter<mln_result(F), N, self_> super_;
 
   public:
     /// The Point_Site type.
@@ -83,21 +82,21 @@ namespace mln
 
   private:
     /// An iterator on the set of adjacent edges.
-    typename super_::sites_t::const_iterator i_; 
+    typename super_::sites_t::const_iterator i_;
   };
 
 
-  /*-------------------------------------.
-  | graph_neighborhood_bkd_piter<P, N>.  |
-  `-------------------------------------*/
+  /*----------------------------------------.
+  | graph_neighborhood_bkd_piter<G, F, N>.  |
+  `----------------------------------------*/
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   class graph_neighborhood_bkd_piter :
-    public internal::graph_vicinity_piter_< P, N,
-					    graph_neighborhood_bkd_piter<P, N> >
+    public internal::graph_relative_piter< mln_result(F), N,
+					    graph_neighborhood_bkd_piter<G, F, N> >
   {
-    typedef graph_neighborhood_bkd_piter<P, N> self_;
-    typedef internal::graph_vicinity_piter_<P, N, self_> super_;
+    typedef graph_neighborhood_bkd_piter<G, F, N> self_;
+    typedef internal::graph_relative_piter<mln_result(F), N, self_> super_;
 
     /// The Point_Site type.
     typedef mln_psite(N) psite;
@@ -129,134 +128,134 @@ namespace mln
 
   private:
     /// An iterator on the set of adjacent edges.
-    typename super_::sites_t::const_reverse_iterator i_; 
+    typename super_::sites_t::const_reverse_iterator i_;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  /*-------------------------------------.
-  | graph_neighborhood_fwd_piter<P, N>.  |
-  `-------------------------------------*/
+  /*----------------------------------------.
+  | graph_neighborhood_fwd_piter<G, F, N>.  |
+  `----------------------------------------*/
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
-  graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter()
+  graph_neighborhood_fwd_piter<G, F, N>::graph_neighborhood_fwd_piter()
   {
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   template <typename Pref>
   inline
-  graph_neighborhood_fwd_piter<P, N>::graph_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
+  graph_neighborhood_fwd_piter<G, F, N>::graph_neighborhood_fwd_piter(const Neighborhood<N>& nbh,
 								   const Pref& p_ref)
     : super_(p_ref)
   {
     this->change_target(exact(nbh));
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   bool
-  graph_neighborhood_fwd_piter<P, N>::is_valid_() const
+  graph_neighborhood_fwd_piter<G, F, N>::is_valid_() const
   {
     return i_ != this->sites_.end();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P, N>::invalidate_()
+  graph_neighborhood_fwd_piter<G, F, N>::invalidate_()
   {
     i_ = this->sites_.end();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P, N>::do_start_()
+  graph_neighborhood_fwd_piter<G, F, N>::do_start_()
   {
     this->site_set().compute_sites_(*this);
     i_ = this->sites_.begin();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_fwd_piter<P, N>::do_next_()
+  graph_neighborhood_fwd_piter<G, F, N>::do_next_()
   {
     ++i_;
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   mln_psite(N)
-  graph_neighborhood_fwd_piter<P, N>::compute_p_() const
+  graph_neighborhood_fwd_piter<G, F, N>::compute_p_() const
   {
-    return graph_psite<P>(this->center().site_set(), *i_);
+    return internal::vertex_psite<G, F>(this->center().site_set(), *i_);
   }
 
 
-  /*-------------------------------------.
-  | graph_neighborhood_bkd_piter<P, N>.  |
-  `-------------------------------------*/
+  /*----------------------------------------.
+  | graph_neighborhood_bkd_piter<G, F, N>.  |
+  `----------------------------------------*/
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
-  graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter()
+  graph_neighborhood_bkd_piter<G, F, N>::graph_neighborhood_bkd_piter()
   {
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   template <typename Pref>
   inline
-  graph_neighborhood_bkd_piter<P, N>::graph_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
+  graph_neighborhood_bkd_piter<G, F, N>::graph_neighborhood_bkd_piter(const Neighborhood<N>& nbh,
 								   const Pref& p_ref)
     : super_(p_ref)
   {
     this->change_target(exact(nbh));
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   bool
-  graph_neighborhood_bkd_piter<P, N>::is_valid_() const
+  graph_neighborhood_bkd_piter<G, F, N>::is_valid_() const
   {
     return i_ != this->sites_.rend();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P, N>::invalidate_()
+  graph_neighborhood_bkd_piter<G, F, N>::invalidate_()
   {
     i_ = this->sites_.rend();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P, N>::do_start_()
+  graph_neighborhood_bkd_piter<G, F, N>::do_start_()
   {
     this->site_set().compute_sites_(*this);
     i_ = this->sites_.rbegin();
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   void
-  graph_neighborhood_bkd_piter<P, N>::do_next_()
+  graph_neighborhood_bkd_piter<G, F, N>::do_next_()
   {
     ++i_;
   }
 
-  template <typename P, typename N>
+  template <typename G, typename F, typename N>
   inline
   mln_psite(N)
-  graph_neighborhood_bkd_piter<P, N>::compute_p_() const
+  graph_neighborhood_bkd_piter<G, F, N>::compute_p_() const
   {
-    return graph_psite<P>(this->center().site_set(), *i_);
+    return internal::vertex_psite<G, F>(this->center().site_set(), *i_);
   }
 
 

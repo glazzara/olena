@@ -1,3 +1,46 @@
+2008-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update the window and the neighborhood on graph vertices.
+
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/graph_elt_window.hh:
+	  Use the new util::graph API.
+
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/graph_neighborhood_piter.hh:
+	  Update template parameters.
+
+	* mln/core/image/graph_psite.hh:
+	  Deleted.
+	  Replaced by mln/util/internal/graph_vertex_psite.
+
+	* mln/core/image/image2d.hh: Update comments.
+
+	* mln/core/internal/graph_iter_base.hh:
+	  Deleted.
+	  Replaced by mln/util/internal/graph_iter_base.hh.
+
+	* mln/core/internal/graph_vicinity_piter.hh: Renamed as...
+	* mln/core/internal/graph_relative_piter.hh: ...this.
+
+	* mln/core/internal/site_relative_iterator_base.hh:
+	  Update an assertion.
+
+	* mln/core/site_set/p_vertices.hh,
+	* mln/core/site_set/p_edges.hh: returns the function by reference.
+
+	* mln/labeling/blobs.hh,
+	* mln/core/site_set/p_graph_piter.hh: reindent.
+
+	* mln/core/var.hh: add mln_const_VAR().
+
+	* mln/util/internal/graph_psite_base.hh:
+	  pass the vertex id to the site set's function instead of the
+	  vertex itself.
+
+	* tests/core/image/graph_image.cc: Update according the new graph
+	structure.
+
 2008-10-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add morphological top hats.

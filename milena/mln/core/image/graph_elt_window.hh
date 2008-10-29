@@ -31,9 +31,6 @@
 /// \file mln/core/image/graph_elt_window.hh
 /// \brief Definition of the elementary ``window'' on a graph.
 
-/* FIXME: Have a consistent naming: we have window (without '_') but
-   point_, neighb_, etc.  */
-
 /* FIXME: Factor those classes:
    - mln::graph_elt_window
    - mln::graph_elt_neighborhood
@@ -42,49 +39,60 @@
 
    See https://trac.lrde.org/olena/ticket/139.  */
 
-/* FIXME: Due to the poor interface of mln::p_line_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
-
 # include <mln/core/concept/window.hh>
-# include <mln/core/image/graph_psite.hh>
+# include <mln/util/internal/graph_vertex_psite.hh>
 # include <mln/core/image/graph_window_piter.hh>
 
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P, typename W> class graph_window_fwd_piter;
-  template <typename P, typename W> class graph_window_bkd_piter;
+
+  /// Forward declaration
+  template <typename G, typename F> class graph_elt_window;
+
+  namespace trait
+  {
+
+    ///FIXME: check that!
+    template <typename G, typename F>
+    struct window_< mln::graph_elt_window<G, F> >
+    {
+      typedef trait::window::size::unknown       size;
+      typedef trait::window::support::irregular  support;
+      typedef trait::window::definition::varying definition;
+    };
+
+  } // end of namespace mln::trait
 
 
   /// \brief Elementary window on graph class.
-  template <typename P>
-  class graph_elt_window : public Window< graph_elt_window<P> >
+  template <typename G, typename F>
+  class graph_elt_window : public Window< graph_elt_window<G, F> >
   {
-    typedef graph_elt_window<P> self_;
+    typedef graph_elt_window<G, F> self_;
+    typedef mln_result(F) P;
 
   public:
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the window.
-    typedef graph_psite<P> psite;
+    typedef internal::vertex_psite<G, F> psite;
     /// The type of site corresponding to the window.
     typedef mln_site(psite) site;
     // The type of the set of window sites (vertex ids adjacent to the
     // reference psite).
-    typedef std::set<util::vertex_id> sites_t;
+    typedef std::set<unsigned> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpsite;
 
     /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.
-    typedef graph_window_fwd_piter<P, self_> fwd_qiter;
+    typedef graph_window_fwd_piter<G, F, self_> fwd_qiter;
 
     /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of vertices.
-    typedef graph_window_bkd_piter<P, self_> bkd_qiter;
+    typedef graph_window_bkd_piter<G, F, self_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
@@ -127,75 +135,61 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename P>
+  template <typename G, typename F>
   template <typename Piter>
   inline
   void
-  graph_elt_window<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
+  graph_elt_window<G, F>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::vertex_id ref_vertex_id = piter.center().vertex_id();
+    const G& g = piter.center().graph();
+
+    unsigned central_vertex = piter.center().v().id();
     sites_t& sites = piter.sites();
     sites.clear();
-    const util::vertex<P>& ref_vertex =
-      piter.center().site_set().gr_->vertex(ref_vertex_id);
-    /* FIXME: Move this computation out of the window. In fact,
-       this should be a service of the graph, also proposed by the
-       p_line_graph.  */
-    /* Adjacent vertices.
 
-       We don't need to explicitely insert the reference piter (vertex
-       id) itself into SITES, since it is part of the set of vertices
-       adjacent to V1 and V2, and will therefore be
-       automatically added.  */
-    for (std::vector<util::edge_id>::const_iterator e =
-	   ref_vertex.edges.begin();
-	 e != ref_vertex.edges.end(); ++e)
-      {
-	util::vertex_id v1 = piter.center().site_set().gr_->edges()[*e]->v1();
-	sites.insert(v1);
-	util::vertex_id v2 = piter.center().site_set().gr_->edges()[*e]->v2();
-	sites.insert(v2);
-      }
+    sites.insert(central_vertex);
+    for (unsigned i = 0; i < g.v_nmax_nbh_vertices(central_vertex); ++i)
+      sites.insert(g.v_ith_nbh_vertex(central_vertex, i));
   }
 
-  template <typename P>
+  template <typename G, typename F>
   inline
   bool
-  graph_elt_window<P>::is_empty() const
+  graph_elt_window<G, F>::is_empty() const
   {
     return false;
   }
 
-  template <typename P>
+  template <typename G, typename F>
   inline
   bool
-  graph_elt_window<P>::is_centered() const
+  graph_elt_window<G, F>::is_centered() const
   {
     return false;
   }
 
-  template <typename P>
+  template <typename G, typename F>
   inline
   bool
-  graph_elt_window<P>::is_symmetric() const
+  graph_elt_window<G, F>::is_symmetric() const
   {
     return true;
   }
 
-  template <typename P>
+  template <typename G, typename F>
   inline
   unsigned
-  graph_elt_window<P>::delta() const
+  graph_elt_window<G, F>::delta() const
   {
     // Dummy value (see the interface of the method above).
     return 0;
   }
 
-  template <typename P>
+  template <typename G, typename F>
   inline
-  graph_elt_window<P>&
-  graph_elt_window<P>::sym()
+  graph_elt_window<G, F>&
+  graph_elt_window<G, F>::sym()
   {
     return *this;
   }

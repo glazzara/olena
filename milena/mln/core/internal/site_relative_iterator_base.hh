@@ -191,8 +191,7 @@ namespace mln
     const mln_psite(S)&
     site_relative_iterator_base<S,E>::subj_()
     {
-      mln_psite(S) p_now = exact(this)->compute_p_();
-      mln_assertion(p_now == p_);
+      mln_assertion(exact(this)->compute_p_() == p_);
       return p_;
     }
 

@@ -55,7 +55,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename T> struct image2d;
 
 
@@ -255,7 +255,7 @@ namespace mln
 
 
 
-  // Fwd decl.
+  // Forward declaration
 
   template <typename T>
   void init_(tag::border_t, unsigned& bdr, const image2d<T>& model);

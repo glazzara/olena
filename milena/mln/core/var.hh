@@ -40,5 +40,10 @@
   typeof(Expr) Var = Expr;			\
   typedef typeof(Expr) Var##_t
 
+#define mln_const_VAR(Var, Expr)		\
+						\
+  const typeof(Expr) Var = Expr;		\
+  typedef const typeof(Expr) Var##_t
+
 
 #endif // ! MLN_CORE_VAR_HH

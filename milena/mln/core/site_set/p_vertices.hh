@@ -138,7 +138,7 @@ namespace mln
     /// Return the graph associated to this site set (const version)
     const graph_t& graph() const;
     /// Return the association function.
-    F function() const;
+    const F& function() const;
     /// \}
 
   private:
@@ -293,7 +293,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  F
+  const F&
   p_vertices<G, F>::function() const
   {
     return f_;

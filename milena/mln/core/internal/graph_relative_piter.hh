@@ -25,45 +25,31 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_GRAPH_VICINITY_PITER_HH
-# define MLN_CORE_INTERNAL_GRAPH_VICINITY_PITER_HH
+#ifndef MLN_CORE_INTERNAL_GRAPH_RELATIVE_PITER_HH
+# define MLN_CORE_INTERNAL_GRAPH_RELATIVE_PITER_HH
 
-/// \file   mln/core/internal/graph_vicinity_piter.hh
+/// \file   mln/core/internal/graph_relative_piter.hh
 /// \brief  Factored implementation for point iterators on a graph windows
-/// and graph neighborhoods, called "vicinities".
+/// and graph neighborhoods.
 
 # include <set>
 
 # include <mln/core/internal/site_relative_iterator_base.hh>
-# include <mln/core/site_set/p_graph.hh>
-# include <mln/core/image/graph_psite.hh>
 
 /* FIXME: Factor those classes:
 
-   - mln::internal::graph_vicinity_piter.hh
-   - mln::internal::line_graph_vicinity_piter.hh  */
-
-/* FIXME: Due to the poor interface of mln::p_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
-
+   - mln::internal::graph_relative_piter.hh
+   - mln::internal::line_graph_relative_piter.hh  */
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P> class p_graph;
-  template <typename P> class graph_psite;
-
-  // FIXME: Consider renaming graph_vicinity_piter_ as
-  // graph_relative_piter_.
-
 
   namespace internal
   {
 
     /// \brief Base for iterator on a graph vicinity.
     template <typename P, typename S, typename E>
-    class graph_vicinity_piter_
+    class graph_relative_piter
       : public internal::site_relative_iterator_base< S, E >
     {
     public:
@@ -74,8 +60,8 @@ namespace mln
       // FIXME: Dummy value.
       typedef void mesh;
 
-      // The type of the set of vicinity sites (adjacent vertex ids).
-      typedef std::set<util::vertex_id> sites_t;
+      // The type of the set of sites (adjacent vertex ids).
+      typedef std::set<unsigned> sites_t;
 
     public:
       /// Return the set of sites (adjacent vertex ids).
@@ -84,9 +70,9 @@ namespace mln
     protected:
       /// Construction.
       /// \{
-      graph_vicinity_piter_();
+      graph_relative_piter();
       template <typename Pref>
-      graph_vicinity_piter_(const Pref& p_ref);
+      graph_relative_piter(const Pref& p_ref);
       /// \}
 
     protected:
@@ -94,46 +80,28 @@ namespace mln
       sites_t sites_;
     };
 
-
-    /// Print an mln::line_graph_vicinity_piter_<P, S, E>.
-    template <typename P, typename S, typename E>
-    inline
-    std::ostream&
-    operator<<(std::ostream& ostr, const graph_vicinity_piter_<P, S, E>& p);
-
-
-
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P, typename S, typename E>
     inline
-    graph_vicinity_piter_<P, S, E>::graph_vicinity_piter_()
+    graph_relative_piter<P, S, E>::graph_relative_piter()
     {
     }
 
     template <typename P, typename S, typename E>
     template <typename Pref>
     inline
-    graph_vicinity_piter_<P, S, E>::graph_vicinity_piter_(const Pref& p_ref)
+    graph_relative_piter<P, S, E>::graph_relative_piter(const Pref& p_ref)
     {
       center_at(p_ref);
     }
 
     template <typename P, typename S, typename E>
     inline
-    std::set<util::vertex_id>&
-    graph_vicinity_piter_<P, S, E>::sites()
+    std::set<unsigned>&
+    graph_relative_piter<P, S, E>::sites()
     {
       return sites_;
-    }
-
-
-    template <typename P, typename S, typename E>
-    inline
-    std::ostream&
-    operator<<(std::ostream& ostr, const graph_vicinity_piter_<P, S, E>& p)
-    {
-      return ostr << p.unproxy_();
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -142,4 +110,4 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_CORE_INTERNAL_GRAPH_VICINITY_PITER_HH
+#endif // ! MLN_CORE_INTERNAL_GRAPH_RELATIVE_PITER_HH

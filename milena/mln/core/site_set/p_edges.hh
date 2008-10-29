@@ -65,9 +65,10 @@ namespace mln
     typedef p_edges<G, F> self_;
     typedef internal::site_set_base_< typename F::result, self_ > super_;
 
+  public:
+    /// Type of the graph this site set is based on.
     typedef G graph_t;
 
-  public:
     /// \brief Construct a graph edge psite set from a graph and a function.
     ///
     /// \param gr The graph upon which the graph edge psite set is built.
@@ -118,7 +119,7 @@ namespace mln
     /// Return the graph associated to this site set
     const graph_t& graph() const;
     /// Return the mapping function.
-    F function() const;
+    const F& function() const;
     /// \}
 
   private:
@@ -231,7 +232,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  F
+  const F&
   p_edges<G, F>::function() const
   {
     return f_;
@@ -241,11 +242,7 @@ namespace mln
   bool
   operator==(const p_edges<G, F>& lhs, const p_edges<G, F>& rhs)
   {
-    /* FIXME: We should not rely on pointer equality here, as graph
-       will soon become shells using (shared) tracked pointers to
-       actual data.  So, delegate the equality test to the graphs
-       themselves.  */
-    return (*lhs.g_) == (*rhs.g_);
+    return lhs.graph() == rhs.graph();
   }
 
   template <typename G, typename F>

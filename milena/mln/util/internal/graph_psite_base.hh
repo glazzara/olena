@@ -222,7 +222,7 @@ namespace mln
       const typename graph_psite_base<V, P, S, E>::site&
       graph_psite_base<V, P, S, E>::to_site() const
       {
-        return t_->function()(v_);
+        return t_->function()(v_.id());
       }
 
     } // end of namespace internal

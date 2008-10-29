@@ -76,7 +76,7 @@ namespace mln
 
       namespace generic
       {
-	
+
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
 	  blobs_(const I& input, const N& nbh, L& nlabels)
@@ -122,10 +122,10 @@ namespace mln
 		  }
 		while (! qu.is_empty());
 	      }
-      
+
 	  return output;
 	}
-	
+
       } // end of namespace mln::labeling::impl::generic
 
 
