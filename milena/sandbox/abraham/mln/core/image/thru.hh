@@ -39,6 +39,8 @@
 # include <mln/trait/images.hh>
 # include <mln/value/set.hh>
 # include <mln/core/image/shell.hh>
+# include <mln/metal/if.hh>
+# include <mln/metal/equal.hh>
 
 namespace mln
 {
@@ -69,6 +71,18 @@ namespace mln
       typedef trait::image::value_io::read_write      value_io;
       typedef trait::image::value_access::computed    value_access;
       typedef trait::image::value_storage::disrupted  value_storage;
+      typedef
+      mlc_if(mlc_equal(typename value_<mln_result(F)>::quant, trait::value::quant::low),
+	// Then
+	trait::image::quant::low,
+	// Else
+	     mlc_if(mlc_equal(typename value_<mln_result(F)>::quant, trait::value::quant::high),
+		    // Then
+		    trait::image::quant::high,
+		    // Else
+		    undef)
+	     )
+	quant;
     };
 
   } // end of namespace mln::trait

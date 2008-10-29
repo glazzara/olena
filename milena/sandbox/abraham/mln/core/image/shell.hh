@@ -28,6 +28,7 @@
 #ifndef MLN_CORE_VALUE_SHELL_HH
 # define MLN_CORE_VALUE_SHELL_HH
 
+# include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
 
 namespace mln
