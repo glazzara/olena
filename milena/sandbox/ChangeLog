@@ -1,5 +1,10 @@
 2008-10-29  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	* garrigues/ocr/compute_local_configurations.cc: New, A program to
+	compute the number of connected component in a local configuration.
+
+2008-10-29  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add simple point computation to ocr preprocessing.
 
 	* garrigues/ocr/simple_point.hh: New ,Tell if a point is simple or
