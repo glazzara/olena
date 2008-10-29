@@ -1,3 +1,9 @@
+2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new methods to box.
+
+	* mln/core/site_set/box.hh: add crop_wrt(), nrows() and ncols.
+
 2008-10-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update the window and the neighborhood on graph vertices.

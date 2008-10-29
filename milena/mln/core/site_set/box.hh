@@ -147,9 +147,18 @@ namespace mln
     /// FIXME: Do we want a routine as well like geom::bbox()?
     P center() const;
 
+    /// Return the column count of this box.
+    unsigned ncols() const;
+
+    /// Return the row count of this box.
+    unsigned nrows() const;
+
     /// Test that the box owns valid data, i.e., is initialized and
     /// with pmin being 'less-than' pmax.
     bool is_valid() const;
+
+    /// Crop this bbox in order to fit in the reference box \p b.
+    void crop_wrt(const box<P>& b);
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
@@ -190,6 +199,22 @@ namespace mln
     // Validity is: for all i, pmin_[i] <= pmax_[i].
     // Nota bene: a one-point box is valid.
     return util::ord_weak(pmin_, pmax_);
+  }
+
+  template <typename P>
+  inline
+  void
+  box<P>::crop_wrt(const box<P>& ref)
+  {
+    if (pmin_.col() < ref.pmin().col())
+      pmin_.col() = ref.pmin().col();
+    if (pmin_.row() < ref.pmin().row())
+      pmin_.row() = ref.pmin().row();
+
+    if (pmax_.col() > ref.pmax().col())
+      pmax_.col() = ref.pmax().col();
+    if (pmax_.row() > ref.pmax().row())
+      pmax_.row() = ref.pmax().row();
   }
 
   template <typename P>
@@ -355,6 +380,24 @@ namespace mln
     for (unsigned i = 0; i < P::dim; ++i)
       center[i] = pmin_[i] + ((pmax_[i] - pmin_[i]) / 2);
     return center;
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  box<P>::ncols() const
+  {
+    mln_precondition(is_valid());
+    return pmax().col() - pmin().col();
+  }
+
+  template <typename P>
+  inline
+  unsigned
+  box<P>::nrows() const
+  {
+    mln_precondition(is_valid());
+    return pmax().row() - pmin().row();
   }
 
   template <typename P>
