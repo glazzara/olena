@@ -60,7 +60,7 @@ int main(int argc, char*argv[])
     return 1;
   }
 
-  scribo::demat(argv);
+  scribo::demat(argv, true);
 
   return 0;
 }

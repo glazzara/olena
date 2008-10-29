@@ -1,3 +1,14 @@
+2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve code for Scribo.
+
+	* scribo/demat.hh: New output showing the table matrix.
+
+	* scribo/main.cc: Move and update the code...
+
+	* scribo/photo.cc,
+	* scribo/table.cc: Here. Add New main() functions.
+
 2008-10-29  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Implement a simple filter on the max_tree.
