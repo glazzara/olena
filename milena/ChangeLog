@@ -1,3 +1,15 @@
+2008-10-30  Florian Lesaint  <florian.lesaint@lrde.epita.fr>
+
+	Add gaussian_1st_derivative and gaussian_2nd_derivative.
+	* mln/extension/adjust_fill.hh: Add a adjust_fill version which takes
+	  a delta.
+	* mln/level/stretch.hh: Fix code.
+	* mln/level/transform.hh: Revert work done by Nicolas Ballas to make
+	  gaussian work.
+	* mln/linear/gaussian.hh: Add gaussian_1st_derivative and
+	  gaussian_2nd_derivative.
+	* tests/linear/gaussian.cc: Fix test.
+
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove duplicate nrows() and ncols from mln::box.

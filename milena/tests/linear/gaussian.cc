@@ -50,10 +50,10 @@ int main()
 {
   using namespace mln;
 
-  image2d< value::int_u8 > lena;
+  image2d<value::int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  image2d< value::int_u8 > out = linear::gaussian(lena, 5.1f);
+  image2d<value::int_u8> out = linear::gaussian(lena, 5.1f);
 
   io::pgm::save(out, "out.pgm");
  }

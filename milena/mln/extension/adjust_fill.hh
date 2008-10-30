@@ -71,11 +71,27 @@ namespace mln
 		     const Neighborhood<N>& nbh,
 		     const mln_value(I)& val);
 
+    template <typename I>
+    void adjust_fill(const Image<I>& ima,
+		     unsigned delta,
+		     const mln_value(I)& val);
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
+
+      template <typename I, typename V>
+      void do_adjust_fill(const I& ima,
+			  unsigned delta,
+			  const V& val)
+      {
+	mln_precondition(exact(ima).has_data());
+	// mln_precondition(exact(win_like).is_valid());
+
+	border::adjust(ima, delta);
+	extension::fill(ima, val);
+      }
 
       template <typename I, typename W, typename V>
       void do_adjust_fill(const I& ima,
@@ -123,6 +139,17 @@ namespace mln
       impl::do_adjust_fill(ima, nbh, val);
       trace::exiting("extension::adjust_fill");
     }
+
+    template <typename I>
+    void adjust_fill(const Image<I>& ima,
+		     unsigned delta,
+		     const mln_value(I)& val)
+    {
+      trace::entering("extension::adjust_fill");
+      impl::do_adjust_fill(ima, delta, val);
+      trace::exiting("extension::adjust_fill");
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

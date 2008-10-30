@@ -70,8 +70,6 @@ namespace mln
       {
 	trace::entering("level::impl::stretch");
 
-	initialize(output, input);
-
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)
@@ -96,6 +94,8 @@ namespace mln
     void stretch(const Image<I>& input, Image<O>& output)
     {
       trace::entering("level::stretch");
+
+      initialize(output, input);
 
       mln_precondition(exact(output).domain() == exact(input).domain());
       impl::stretch(mln_value(O)(), input, output);
