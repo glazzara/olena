@@ -32,6 +32,8 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/level/paste.hh>
 #include <mln/accu/mean.hh>
+#include <mln/accu/max.hh>
+#include <mln/literal/white.hh>
 
 namespace mln
 {
@@ -50,12 +52,28 @@ namespace mln
     return output;
   }
 
-  template <typename T>
+  template <typename T, typename U, typename K>
   void
-  save_class(const image3d<T>& histo, const char * fn)
+  save_class(const image3d<T>& histo, const image3d<U>& ws,
+             K mean, const char * fn)
   {
-    accu::mean<unsigned, unsigned long, value::int_u8> mean;
-    io::pgm::save(proj(histo, mean), fn);
+
+    //accu::mean<unsigned, unsigned long, value::int_u8> mean_accu;
+    accu::max<value::int_u8> max_1;//FIXME: use majoritaire accu
+    image2d<value::int_u8> hproj = proj(histo, max_1);
+
+    accu::max<U> max_2;//FIXME: use majoritaire accu
+    image2d<U> proj_class = proj(ws, max_2);
+
+    image2d<value::rgb8> out(proj_class.domain());
+
+    level::fill(out, literal::white);
+    mln_piter(image2d<value::int_u8>) p(hproj.domain());
+    for_all(p)
+      if (hproj(p) > 0)
+        out(p) = convert::to<value::rgb8>(mean[proj_class(p)]);
+
+    io::ppm::save(out, fn);
   }
 
 } // end of namespace mln

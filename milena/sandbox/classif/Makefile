@@ -7,7 +7,7 @@ ICCVG=iccvg
 ICCVG_DBG=iccvg_dbg
 
 IMG?=../../img/lena.ppm
-DIV?=8
+DIV?=4
 LAMBDA?=10
 
 

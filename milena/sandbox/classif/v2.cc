@@ -48,10 +48,13 @@ compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f, i
   mln_piter(I) p(ima.domain());
   for_all(p)
   {
-    algebra::vec<3, value::int_u8> v = make::vec(ima(p).red()   / f,
-                                                 ima(p).green() / f,
-                                                 ima(p).blue()  / f);
+    //color at ima(p)
+    point3d v = point3d(ima(p).red()   / f,
+                        ima(p).green() / f,
+                        ima(p).blue()  / f);
+    //node the class of color with same density as v
     point3d pn = run.parent(v);
+    //out(p) = color pn
     out(p) = value::rgb8(pn[0] * f, pn[1] * f, pn[2] * f);
   }
   io::ppm::save(out, "tmp.ppm");

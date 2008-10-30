@@ -96,7 +96,8 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
       sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
     }
 
-    std::cerr << "p3 : " << p3 << " == " << convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
+    std::cerr << "p3 : " << p3 << " == " <<
+      convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
   }
 
   for (int i = 1; i < nbasins + 1; ++i)
@@ -118,10 +119,12 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
     //if w == 0, out(pi) = 0 ie is part of a border of the watershed
     out(pi) = convert::to<value::rgb8>(sum[w]);
 
-    std::cerr << "out(" << pi << ") = sum[" << w << "]; //" << sum[w]  << " : rgb8(" << convert::to<value::rgb8>(sum[w]) << ")" << std::endl;
+    std::cerr << "out(" << pi << ") = sum[" << w << "]; //"
+              << sum[w] << " : rgb8(" << sum[w] << ")" << std::endl;
   }
 
   io::ppm::save(out, "out.ppm");
+  save_class(histo, ws, sum, "palette.ppm");
 }
 
 bool usage(int argc, char ** argv)
@@ -161,6 +164,4 @@ int main(int argc, char **argv)
 
   //classify image
   classify_image(ima, histo, ws, nbasins, div_factor);
-
-  save_class(histo_filtered, "histo.ppm");
 }
