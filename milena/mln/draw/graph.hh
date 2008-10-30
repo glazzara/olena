@@ -95,7 +95,7 @@ namespace mln
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
-      for (size_t l = 0; l < pg.nedges(); ++l)
+      for (unsigned l = 0; l < pg.nedges(); ++l)
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
 	      // in mln/core/image/graph_image.hh
@@ -103,7 +103,7 @@ namespace mln
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
 	      edge_v);
       // Draw the points (vertices).
-      for (size_t p = 0; p < pg.nsites(); ++p)
+      for (unsigned p = 0; p < pg.nsites(); ++p)
  	exact(ima)(pg.gr_->vertex_data(p)) = vertex_v;
     }
 
@@ -116,10 +116,10 @@ namespace mln
       // Draw the background.
       level::fill(ima, 0);
       // Draw the lines (edges).
-      for (size_t l = 0; l < gi.domain().nedges(); ++l)
+      for (unsigned l = 0; l < gi.domain().nedges(); ++l)
 	line (exact(ima), gi.vertex1(l), gi.vertex2(l), edge_v);
       // Draw the points (vertices).
-      for (size_t p = 0; p < gi.domain().nvertices(); ++p)
+      for (unsigned p = 0; p < gi.domain().nvertices(); ++p)
  	exact(ima)(gi.domain().point_from_id(p)) = gi.vertex_values()[p];
     }
 

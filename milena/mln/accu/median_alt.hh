@@ -83,10 +83,10 @@ namespace mln
       /// derived from h_
       const S& s_;
 
-      std::size_t sum_minus_, sum_plus_;
+      unsigned sum_minus_, sum_plus_;
 
       /// the median index
-      std::size_t i_;
+      unsigned i_;
       /// the median argument
       argument t_;
 

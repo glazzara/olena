@@ -57,20 +57,20 @@ namespace mln
 
       void clear();
 
-      std::size_t operator()(const T& v) const;
-      std::size_t& operator()(const T& v);
+      unsigned operator()(const T& v) const;
+      unsigned& operator()(const T& v);
 
-      const std::vector<std::size_t>& vect() const;
+      const std::vector<unsigned>& vect() const;
       const mln::value::set<T>& vset() const;
-      std::size_t operator[](unsigned i) const;
-      std::size_t& operator[](unsigned i);
+      unsigned operator[](unsigned i) const;
+      unsigned& operator[](unsigned i);
 
-      std::size_t nvalues() const;
+      unsigned nvalues() const;
 
     protected:
 
       const mln::value::set<T>& s_;
-      std::vector<std::size_t> h_;
+      std::vector<unsigned> h_;
     };
 
 
@@ -100,7 +100,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t
+    unsigned
     data<T>::operator()(const T& v) const
     {
       return h_[s_.index_of(v)];
@@ -108,7 +108,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t&
+    unsigned&
     data<T>::operator()(const T& v)
     {
       return h_[s_.index_of(v)];
@@ -124,7 +124,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t
+    unsigned
     data<T>::operator[](unsigned i) const
     {
       mln_precondition(i < s_.nvalues());
@@ -133,7 +133,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t&
+    unsigned&
     data<T>::operator[](unsigned i)
     {
       mln_precondition(i < s_.nvalues());
@@ -142,7 +142,7 @@ namespace mln
 
     template <typename T>
     inline
-    const std::vector<std::size_t>&
+    const std::vector<unsigned>&
     data<T>::vect() const
     {
       return h_;
@@ -150,7 +150,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t data<T>::nvalues() const
+    unsigned data<T>::nvalues() const
     {
       return h_.size();
     }

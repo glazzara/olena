@@ -60,7 +60,7 @@ namespace mln
       void
       println_with_border(const box2d& b, const I& input)
       {
-	const std::size_t ncols = b.ncols() + 2 * input.border();
+	const unsigned ncols = b.ncols() + 2 * input.border();
  	for (size_t i = 0; i < input.nelements(); i++)
 	{
 	  std::cout << format(input.buffer()[i]) << ' ';
@@ -81,20 +81,20 @@ namespace mln
       {
 	typedef mln_psite(I) P;
 
-	std::size_t len_s = b.len(P::dim - 3);
-	std::size_t len_r = b.len(P::dim - 2);
-	std::size_t len_c = b.len(P::dim - 1);
+	unsigned len_s = b.len(P::dim - 3);
+	unsigned len_r = b.len(P::dim - 2);
+	unsigned len_c = b.len(P::dim - 1);
 
-	std::size_t border = input.border();
-	std::size_t real_len_s = len_s + 2 * border;
-	std::size_t real_len_c = len_c + 2 * border;
-	std::size_t real_len_r = len_r + 2 * border;
+	unsigned border = input.border();
+	unsigned real_len_s = len_s + 2 * border;
+	unsigned real_len_c = len_c + 2 * border;
+	unsigned real_len_r = len_r + 2 * border;
 
-	for (std::size_t k = 0; k < real_len_s; ++k)
+	for (unsigned k = 0; k < real_len_s; ++k)
 	  {
-	    for (std::size_t j = 0; j < real_len_r; ++j)
+	    for (unsigned j = 0; j < real_len_r; ++j)
 	      {
-		for (std::size_t i = 0; i < real_len_c; ++i)
+		for (unsigned i = 0; i < real_len_c; ++i)
 		  std::cout << format(input[k * (real_len_r * real_len_c) + j * real_len_c + i])
 			    << ' ';
 		std::cout << std::endl;

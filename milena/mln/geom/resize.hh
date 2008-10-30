@@ -77,15 +77,15 @@ namespace mln
 	trace::entering("mln::geom::impl::resize_1d_");
 	typedef mln_value(I) V;
 
-	std::size_t cols = input.bbox().len(0);
-	std::size_t new_cols = (std::size_t)(ratio * cols);
+	unsigned cols = input.bbox().len(0);
+	unsigned new_cols = (unsigned)(ratio * cols);
 
-	std::size_t n = (std::size_t)(1 / ratio);
+	unsigned n = (unsigned)(1 / ratio);
 
 	I output (new_cols);
 	level::fill(output, 0);
 
-	for (std::size_t j = 0; j < cols; ++j)
+	for (unsigned j = 0; j < cols; ++j)
 	  {
 	    output(point1d(j / n)) += input(point1d(j));
 	    if (!((j + 1) % n))
@@ -103,30 +103,30 @@ namespace mln
 	trace::entering("mln::geom::impl::resize_2d_");
 	typedef mln_sum(mln_value(I)) V;
 
-	std::size_t rows = input.bbox().len(0);
-	std::size_t cols = input.bbox().len(1);
-	std::size_t new_rows = (std::size_t)(ratio * rows);
-	std::size_t new_cols = (std::size_t)(ratio * cols);
+	unsigned rows = input.bbox().len(0);
+	unsigned cols = input.bbox().len(1);
+	unsigned new_rows = (unsigned)(ratio * rows);
+	unsigned new_cols = (unsigned)(ratio * cols);
 
-	std::size_t n = (std::size_t)(1 / ratio);
-	std::size_t nn = n * n;
+	unsigned n = (unsigned)(1 / ratio);
+	unsigned nn = n * n;
 
 	I output (new_rows, new_cols);
 	std::vector<V> v (new_cols);
 
-	for (std::size_t i = 0; i < rows; ++i)
+	for (unsigned i = 0; i < rows; ++i)
 	  {
-	    std::size_t in = i / n;
+	    unsigned in = i / n;
 
 	    if (!(i % n))
-	      for (std::size_t j = 0; j < new_cols; ++j)
+	      for (unsigned j = 0; j < new_cols; ++j)
 		v[j] = 0;
 
-	    for (std::size_t j = 0; j < cols; ++j)
+	    for (unsigned j = 0; j < cols; ++j)
 	      v[j / n] += input(point2d(i, j));
 
 	    if (!((i + 1) % n))
-	      for (std::size_t j = 0; j < cols; ++j)
+	      for (unsigned j = 0; j < cols; ++j)
 		output(point2d(in, j / n)) = v[j / n] / nn;
 	  }
 

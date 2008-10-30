@@ -44,7 +44,7 @@ namespace mln
     /// Morphological height opening.
     template <typename I, typename N, typename O>
     void opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output);
+			unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -52,7 +52,7 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output)
+			unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       // FIXME: Change sig of opening_attribute!

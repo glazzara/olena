@@ -46,11 +46,11 @@ namespace mln
     /// Morphological area closing.
     template <typename I, typename N, typename O>
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output);
+		      unsigned lambda, Image<O>& output);
 
     template <typename I, typename N>
     mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-				 std::size_t lambda);
+				 unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,7 +58,7 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output)
+		      unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef util::pix<I> pix_t;
@@ -68,7 +68,7 @@ namespace mln
 
     template <typename I, typename N>
     mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-				 std::size_t lambda)
+				 unsigned lambda)
     {
       mln_concrete(I) output;
       initialize(output, input);

@@ -79,10 +79,10 @@ namespace mln
       mutable accu::histo<V> h_;
       const value::set<V>& s_; // derived from h_
 
-      mutable std::size_t sum_minus_, sum_plus_;
+      mutable unsigned sum_minus_, sum_plus_;
 
       mutable bool valid_;
-      mutable std::size_t i_; // the median_h index
+      mutable unsigned i_; // the median_h index
       mutable argument t_;       // the median_h value
 
       // Auxiliary methods

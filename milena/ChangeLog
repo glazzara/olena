@@ -1,3 +1,36 @@
+2008-10-30  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Portability fix.
+
+	Partially fix portability problem due to wrong cast
+	of size_t to unsigned:
+	* mln/histo/data.hh,
+	* mln/debug/println_with_border.spe.hh,
+	* mln/core/image/translate_image.hh,
+	* mln/draw/graph.hh,
+	* mln/level/all.hh,
+	* mln/accu/count_adjacent_vertices.hh,
+	* mln/accu/count.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/rank.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/median_h.hh,
+	* mln/accu/volume.hh,
+	* mln/accu/height.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* mln/geom/resize.hh,
+	* mln/morpho/closing_volume.hh,
+	* mln/morpho/closing_area.hh,
+	* mln/morpho/closing_height.hh,
+	* mln/morpho/opening_area_on_vertices.hh,
+	* mln/morpho/opening_volume.hh,
+	* mln/morpho/closing_area_on_vertices.hh,
+	* mln/morpho/opening_height.hh,
+	* mln/morpho/opening_area.hh: Remove wrong use of std::size_t.
+
 2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add majority accu.

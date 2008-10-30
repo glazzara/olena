@@ -48,7 +48,7 @@ namespace mln
     template <typename P, typename V, typename N, typename O>
     void opening_area_on_vertices(const line_graph_image<P, V>& input,
 				  const Neighborhood<N>& nbh,
-				  std::size_t lambda, Image<O>& output);
+				  unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -57,7 +57,7 @@ namespace mln
     inline
     void opening_area_on_vertices(const line_graph_image<P, V>& input,
 				  const Neighborhood<N>& nbh,
-				  std::size_t lambda, Image<O>& output)
+				  unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef accu::count_adjacent_vertices<P, V> attribute_t;

@@ -59,7 +59,7 @@ namespace mln
     /// of pixels is built.
     template <typename I>
     struct height
-      : public mln::accu::internal::base< std::size_t , height<I> >
+      : public mln::accu::internal::base< unsigned , height<I> >
     {
       /// \brief The accumulated data type.
       ///
@@ -80,11 +80,11 @@ namespace mln
       void take(const height<I>& other);
 
       /// Force the value of the counter to \a h.
-      void set_value(std::size_t h);
+      void set_value(unsigned h);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -96,7 +96,7 @@ namespace mln
       /// The maximum level in the component.
       value max_level__;
       /// The height of the component.
-      std::size_t height_;
+      unsigned height_;
     };
 
 
@@ -156,7 +156,7 @@ namespace mln
 
     template <typename I>
     inline
-    std::size_t
+    unsigned
     height<I>::to_result() const
     {
       return height_;
@@ -165,7 +165,7 @@ namespace mln
     template <typename I>
     inline
     void
-    height<I>::set_value(std::size_t h)
+    height<I>::set_value(unsigned h)
     {
       height_ = h;
       // Reset the other members.

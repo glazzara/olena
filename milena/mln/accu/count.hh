@@ -43,7 +43,7 @@ namespace mln
     /// \brief Generic counter accumulator class.
     /// The parameter \a T is the type to be count.
     template <typename T>
-    struct count : public mln::accu::internal::base< std::size_t , count<T> >
+    struct count : public mln::accu::internal::base< unsigned , count<T> >
     {
       typedef T argument;
 
@@ -56,11 +56,11 @@ namespace mln
       void take(const count<T>& other);
 
       /// Force the value of the counter to \a c.
-      void set_value(std::size_t c);
+      void set_value(unsigned c);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -68,7 +68,7 @@ namespace mln
 
     protected:
       /// The value of the counter.
-      std::size_t count_;
+      unsigned count_;
     };
 
     namespace meta
@@ -122,7 +122,7 @@ namespace mln
 
     template <typename T>
     inline
-    std::size_t
+    unsigned
     count<T>::to_result() const
     {
       return count_;
@@ -131,7 +131,7 @@ namespace mln
     template <typename T>
     inline
     void
-    count<T>::set_value(std::size_t c)
+    count<T>::set_value(unsigned c)
     {
       count_ = c;
     }

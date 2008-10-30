@@ -46,11 +46,11 @@ namespace mln
     /// Morphological volume closing.
     template <typename I, typename N, typename O>
     void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output);
+			unsigned lambda, Image<O>& output);
 
     template <typename I, typename N>
     mln_concrete(I)
-    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh, std::size_t lambda)
+    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh, unsigned lambda)
     {
       mln_concrete(I) output;
       initialize(output, input);
@@ -64,7 +64,7 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output)
+			unsigned lambda, Image<O>& output)
     {
       trace::entering("morpho::closing_volume");
       mln_precondition(exact(output).domain() == exact(input).domain());

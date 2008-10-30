@@ -58,7 +58,7 @@ namespace mln
     /// of pixels is built.
     template <typename I>
     struct volume
-      : public mln::accu::internal::base< std::size_t , volume<I> >
+      : public mln::accu::internal::base< unsigned , volume<I> >
     {
       /// \brief The accumulated data type.
       ///
@@ -79,11 +79,11 @@ namespace mln
       void take(const volume<I>& other);
 
       /// Force the value of the counter to \a v.
-      void set_value(std::size_t v);
+      void set_value(unsigned v);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -93,9 +93,9 @@ namespace mln
       /// The reference level (the level of the component's root).
       value ref_level__;
       /// The area of the component.
-      std::size_t area__;
+      unsigned area__;
       /// The volume of the component.
-      std::size_t volume_;
+      unsigned volume_;
     };
 
 
@@ -175,7 +175,7 @@ namespace mln
 
     template <typename I>
     inline
-    std::size_t
+    unsigned
     volume<I>::to_result() const
     {
       return volume_;
@@ -184,7 +184,7 @@ namespace mln
     template <typename I>
     inline
     void
-    volume<I>::set_value(std::size_t v)
+    volume<I>::set_value(unsigned v)
     {
       volume_ = v;
       // Reset the other members.

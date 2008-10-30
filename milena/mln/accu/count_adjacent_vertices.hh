@@ -54,7 +54,7 @@ namespace mln
     /// mln::opening_area_on_vertices.
     template <typename P, typename V>
     struct count_adjacent_vertices
-      : public mln::accu::internal::base< std::size_t,
+      : public mln::accu::internal::base< unsigned,
 					  count_adjacent_vertices<P, V> >
     {
       typedef mln::util::pix< mln::line_graph_image<P, V> > argument;
@@ -68,11 +68,11 @@ namespace mln
       void take(const count_adjacent_vertices<P, V>& other);
 
       /// Force the value of the counter to \a c.
-      void set_value(std::size_t c);
+      void set_value(unsigned c);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
 
     protected:
       /// Update the value of the counter.
@@ -80,7 +80,7 @@ namespace mln
 
     protected:
       /// The value of the counter.
-      std::size_t count__;
+      unsigned count__;
       /// The set of adjacent vertices.
       std::set<util::vertex_id> vertices_;
     };
@@ -142,7 +142,7 @@ namespace mln
 
     template <typename P, typename V>
     inline
-    std::size_t
+    unsigned
     count_adjacent_vertices<P, V>::to_result() const
     {
       return count__;
@@ -151,7 +151,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices<P, V>::set_value(std::size_t c)
+    count_adjacent_vertices<P, V>::set_value(unsigned c)
     {
       count__ = c;
       /// Reset the other member.

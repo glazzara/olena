@@ -70,7 +70,6 @@ namespace mln
 # include <mln/level/saturate.hh>
 # include <mln/level/sort_psites.hh>
 # include <mln/level/stretch.hh>
-# include <mln/level/take.hh>
 # include <mln/level/to_enc.hh>
 # include <mln/level/transform.hh>
 # include <mln/level/was.median.hh>

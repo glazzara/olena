@@ -83,9 +83,9 @@ namespace mln
       mutable accu::histo<V> h_;
       const value::set<V>& s_; // derived from h_
 
-      mutable std::size_t sum_;
+      mutable unsigned sum_;
       mutable bool valid_;
-      mutable std::size_t i_; // the min index
+      mutable unsigned i_; // the min index
       mutable argument t_;    // the min value
 
       // Auxiliary methods

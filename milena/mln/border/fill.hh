@@ -92,12 +92,12 @@ namespace mln
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
 
-	std::size_t len_r = pl.run_length();
-	std::size_t st = 0;
+	unsigned len_r = pl.run_length();
+	unsigned st = 0;
 
 	for_all (pl)
 	  {
-	    std::size_t end = ima.index_of_point (pl);
+	    unsigned end = ima.index_of_point (pl);
 	    std::memset((void*)&ima.element(st),
 			*(const int*)(&v),
 			end - st);
@@ -122,17 +122,17 @@ namespace mln
 
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
-	std::size_t len_r = pl.run_length();
-	std::size_t st = 0;
+	unsigned len_r = pl.run_length();
+	unsigned st = 0;
 
 	for_all (pl)
 	  {
-	    std::size_t end = ima.index_of_point (pl);
-	    for (std::size_t i = st; i < end; ++i)
+	    unsigned end = ima.index_of_point (pl);
+	    for (unsigned i = st; i < end; ++i)
 	      (const_cast<I&>(ima)).element(i) = v;
 	    st = end + len_r;
 	  }
-	for (std::size_t i = st; i < ima.nelements (); ++i)
+	for (unsigned i = st; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima).element(i) = v;
 
 	trace::exiting("border::impl::fill_size_n");

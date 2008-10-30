@@ -35,7 +35,6 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/level/memset_.hh>
-# include <mln/core/line_piter.hh>
 # include <mln/core/pixel.hh>
 
 
@@ -71,14 +70,14 @@ namespace mln
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
- 	std::size_t len_c = exact(ima).bbox().len(P::dim - 1);
- 	std::size_t border = ima.border ();
+ 	unsigned len_c = exact(ima).bbox().len(P::dim - 1);
+ 	unsigned border = ima.border ();
 
-	for (std::size_t i = 0; i < border; ++i)
+	for (unsigned i = 0; i < border; ++i)
 	  const_cast<I&>(ima)[i] = ima[border];
 
-	std::size_t st = border + len_c - 1;
-	for (std::size_t i = st + 1; i < ima.nelements (); ++i)
+	unsigned st = border + len_c - 1;
+	for (unsigned i = st + 1; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima)[i] = ima[st];
 
 	trace::exiting("border::impl::duplicate_1d_");
@@ -92,34 +91,34 @@ namespace mln
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
- 	std::size_t border = ima.border ();
- 	std::size_t border_2x = 2 * ima.border ();
- 	std::size_t len_c = exact(ima).bbox().len(1);
- 	std::size_t len_r = exact(ima).bbox().len(0);
- 	std::size_t real_len_c = len_c + border_2x;
- 	std::size_t st;
+ 	unsigned border = ima.border ();
+ 	unsigned border_2x = 2 * ima.border ();
+ 	unsigned len_c = exact(ima).bbox().len(1);
+ 	unsigned len_r = exact(ima).bbox().len(0);
+ 	unsigned real_len_c = len_c + border_2x;
+ 	unsigned st;
 
 	// Duplicate
 	for_all (pl)
 	  {
  	    st = ima.index_of_point (pl);
-	    for (std::size_t i = 1; i <= border; ++i)
+	    for (unsigned i = 1; i <= border; ++i)
 	      const_cast<I&>(ima)[st - i] = ima[st];
 	    st = st + len_c - 1;
-	    for (std::size_t i = 1; i <= border; ++i)
+	    for (unsigned i = 1; i <= border; ++i)
 	      const_cast<I&>(ima)[st + i] = ima[st];
  	  }
 
 	// Duplicate n first * border line
 	st = real_len_c * border;
-	for (std::size_t k = 0; k < border; ++k)
-	  for (std::size_t i = 0; i < real_len_c; ++i)
+	for (unsigned k = 0; k < border; ++k)
+	  for (unsigned i = 0; i < real_len_c; ++i)
 	    const_cast<I&>(ima)[k * real_len_c + i] = ima[st + i];
 
 	// Duplicate n last * border line
 	st = real_len_c * (border + len_r - 1);
-	for (std::size_t k = 1; k <= border; ++k)
-	  for (std::size_t i = st; i < st + real_len_c; ++i)
+	for (unsigned k = 1; k <= border; ++k)
+	  for (unsigned i = st; i < st + real_len_c; ++i)
 	    const_cast<I&>(ima)[k * real_len_c + i] = ima[i];
 
 	trace::exiting("border::impl::duplicate_2d_");
@@ -136,56 +135,56 @@ namespace mln
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
- 	std::size_t border = ima.border ();
- 	std::size_t border_2x = 2 * ima.border ();
- 	std::size_t len_c = exact(ima).bbox().len(P::dim - 1);
- 	std::size_t len_r = exact(ima).bbox().len(1);
- 	std::size_t len_s = exact(ima).bbox().len(0);
- 	std::size_t real_len_c = len_c + border_2x;
- 	std::size_t real_len_r = len_r + border_2x;
-	std::size_t face = real_len_c * real_len_r;
-	std::size_t st;
+ 	unsigned border = ima.border ();
+ 	unsigned border_2x = 2 * ima.border ();
+ 	unsigned len_c = exact(ima).bbox().len(P::dim - 1);
+ 	unsigned len_r = exact(ima).bbox().len(1);
+ 	unsigned len_s = exact(ima).bbox().len(0);
+ 	unsigned real_len_c = len_c + border_2x;
+ 	unsigned real_len_r = len_r + border_2x;
+	unsigned face = real_len_c * real_len_r;
+	unsigned st;
 
 	pl.start ();
 
-	for (std::size_t k = 0; k < len_s; ++k)
+	for (unsigned k = 0; k < len_s; ++k)
 	  {
 
  	    // Duplicate
-	    for (std::size_t j = 0; j < len_r; ++j)
+	    for (unsigned j = 0; j < len_r; ++j)
 	      {
 		st = ima.index_of_point (pl);
-		for (std::size_t i = 1; i <= border; ++i)
+		for (unsigned i = 1; i <= border; ++i)
 		  const_cast<I&>(ima)[st - i] = ima[st];
 		st = st + len_c - 1;
-		for (std::size_t i = 1; i <= border; ++i)
+		for (unsigned i = 1; i <= border; ++i)
 		  const_cast<I&>(ima)[st + i] = ima[st];
 		pl.next ();
 	      }
 
 	    // Duplicate n last * border line
 	    st = border * face + k * face + border * real_len_c ;
-	    for (std::size_t j = 1; j <= border; ++j)
-	      for (std::size_t i = 0; i < real_len_c; ++i)
+	    for (unsigned j = 1; j <= border; ++j)
+	      for (unsigned i = 0; i < real_len_c; ++i)
 		const_cast<I&>(ima)[st - j * real_len_c + i] = ima[st + i];
 
 	    // Duplicate n last * border line
 	    st = border * face + k * face + (len_r + border - 1) * real_len_c ;
-	    for (std::size_t j = 1; j <= border; ++j)
-	      for (std::size_t i = 0; i < real_len_c; ++i)
+	    for (unsigned j = 1; j <= border; ++j)
+	      for (unsigned i = 0; i < real_len_c; ++i)
 		const_cast<I&>(ima)[st + j * real_len_c + i] = ima[st + i];
 	  }
 
 	// Duplicate n first * border face
 	st = border * face;
-	for (std::size_t k = 0; k < border; ++k)
-	  for (std::size_t i = 0; i < face; ++i)
+	for (unsigned k = 0; k < border; ++k)
+	  for (unsigned i = 0; i < face; ++i)
 	    const_cast<I&>(ima)[k * face + i] = ima[st + i];
 
 	// Duplicate n last * border face
 	st = (len_s + border - 1) * face;
-	for (std::size_t k = 1; k <= border; ++k)
-	  for (std::size_t i = 0; i < face; ++i)
+	for (unsigned k = 1; k <= border; ++k)
+	  for (unsigned i = 0; i < face; ++i)
 	    const_cast<I&>(ima)[st + k * face + i] = ima[st + i];
 
 	trace::exiting("border::impl::duplicate_3d_");
