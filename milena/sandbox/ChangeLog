@@ -1,3 +1,10 @@
+2008-10-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add is_curve_extremum to detect curve extrema.
+
+	* garrigues/ocr/simple_point.hh: (is_curve_extremum) Tell if a point
+	is a curve extremum.
+
 2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Make palette.

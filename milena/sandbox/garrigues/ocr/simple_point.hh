@@ -30,7 +30,7 @@
 
 /*! \file simple_point.hh
  *
- * \brief simple_point tell if a point is simple or not (Cf
+ * \brief is_simple_point tell if a point is simple or not (Cf
  * bertrand.07.chap).
  *
  */
@@ -57,9 +57,11 @@ namespace mln
  *
  */
 
-  bool simple_point(const image2d<bool>& ima, const neighb2d& nbh, const point2d& p);
+  bool is_simple_point(const image2d<bool>& ima, const neighb2d& nbh, const point2d& p);
 
   unsigned nb_connexity2d(const image2d<bool>& ima, const neighb2d& nbh, const point2d& p);
+
+  bool is_curve_extremum(const image2d<bool>& ima, unsigned nbh, const point2d& p);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -129,15 +131,15 @@ namespace mln
     return 0;
   }
 
-  unsigned nb_connexity2d(const image2d<bool>& ima, unsigned nbh, const point2d& p, bool complemented)
+  unsigned nb_connexity2d(const image2d<bool>& ima, unsigned nbh, const point2d& p, bool object)
   {
     unsigned res = 0;
 
-    mln_fwd_niter_(neighb2d) n(c8() , p);
+    mln_bkd_niter_(neighb2d) n(c8() , p);
     for_all(n)
     {
       res = (res << 1);
-      if (ima(n) == complemented)
+      if (ima(n) == object)
 	res = res | 1;
     }
 
@@ -150,12 +152,26 @@ namespace mln
     }
   }
 
-  bool simple_point2d(const image2d<bool>& ima, unsigned nbh, const point2d& p)
+  bool is_curve_extremum(const image2d<bool>& ima, unsigned nbh, const point2d& p)
+  {
+    unsigned cpt = 0;
+    mln_bkd_niter_(neighb2d) n(c8() , p);
+
+    for_all(n)
+    {
+      if (ima(n) == true)
+	cpt++;
+    }
+
+    return cpt == 1;
+  }
+
+  bool is_simple_point2d(const image2d<bool>& ima, unsigned nbh, const point2d& p)
   {
     mln_assertion(nbh == 4 || nbh == 8);
 
-    return nb_connexity2d(ima, nbh, p, true) == 1 &&
-      nb_connexity2d(ima, complement_neighb(nbh), p, false) == 1;
+    return (nb_connexity2d(ima, nbh, p, true) == 1) &&
+      (nb_connexity2d(ima, complement_neighb(nbh), p, false) == 1);
   }
 
 # endif // MLN_INCLUDE_ONLY
