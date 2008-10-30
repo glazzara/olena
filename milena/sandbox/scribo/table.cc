@@ -42,7 +42,7 @@ int main(int argc, char*argv[])
 	      << std::endl << std::endl
 	      << "<in.pbm>	    B/W inverted input image."
 	      << std::endl << std::endl
-	      << "<out.ppm>	    RGB8 output image."
+/*	      << "<out.ppm>	    RGB8 output image."
 	      << std::endl << std::endl
 	      << "<l>		    Line length"
 	      << std::endl << std::endl
@@ -52,7 +52,7 @@ int main(int argc, char*argv[])
 	      << std::endl
 	      << "		    If a component have a site count lesser than this value, it is erased."
 	      << std::endl << std::endl
-	      << std::endl
+	      << std::endl*/
 	      << "=========="
 	      << std::endl << std::endl
 	      << "HINT: compile with -DNOUT to avoid debug images."

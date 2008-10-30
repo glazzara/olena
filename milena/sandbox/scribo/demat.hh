@@ -28,6 +28,8 @@
 #ifndef DEMAT_HH_
 # define DEMAT_HH_
 
+# include <libgen.h>
+
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image1d.hh>
 
@@ -269,14 +271,6 @@ namespace scribo
 	level::paste((pw::cst(false) | boxes[i] |
 		(pw::value(output) == pw::cst(true))), output);
       }
-      if (dim == 0)
-      {
-        io::pbm::save(output, "plop.pbm");
-	image2d<rgb8> tmp(output.domain());
-	level::fill(tmp, literal::black);
-	draw_component_boxes(tmp, boxes);
-	io::ppm::save(tmp, output_file("plop2.ppm"));
-      }
     }
 
 
@@ -295,6 +289,8 @@ namespace scribo
       // Lignes verticales
       std::cout << "Removing vertical lines" << std::endl;
       win::vline2d vline(l);
+      io::pbm::save(in, "ero_in_before");
+      trace::quiet = false;
       image2d<bool> vfilter = morpho::erosion(in, vline);
 
 #ifndef NOUT
@@ -368,6 +364,8 @@ namespace scribo
       util::array<mln_result(accu_count_t)> nsitecomp
 	    = labeling::compute(accu_count_t(), lbl, nlabels);
 
+      std::cout << "nlabels with small comps = " << nlabels
+		<< " == " << nsitecomp.nelements() << std::endl;
       V ncomp = 0;
       fun::i2v::array<V> f(nsitecomp.nelements());
       f(0) = 0;
@@ -379,7 +377,10 @@ namespace scribo
 	  f(i) = ++ncomp;
       }
 
-      level::apply(lbl, f);
+      std::cout << "f.size() =" << f.size()
+		<< " - nsitecomp.nelements() =" << nsitecomp.nelements()
+		<< std::endl;
+      lbl = level::transform(lbl, f);
       nlabels = ncomp;
 
 #ifndef NOUT
@@ -401,7 +402,7 @@ namespace scribo
 	tboxes[uncurri_left_link(left_link, i)].take(cboxes[i]);
 
       //Update labels
-      level::apply(lbl, left_link);
+      lbl = level::transform(lbl, left_link);
 
 #ifndef NOUT
       save_lbl_image(lbl, ncomp, "lbl-grouped-boxes.pgm");
@@ -522,18 +523,15 @@ namespace scribo
     trace::quiet = true;
 
     //Useful debug variables
-    unsigned narg = 3;
-    internal::input_file = argv[2];
-    unsigned l;
-    if (treat_tables)
-      l = atoi(argv[narg++]);
-    unsigned bbox_distance = atoi(argv[narg++]);
-    unsigned min_comp_size = atoi(argv[narg++]);
+    internal::input_file = basename(argv[1]);
+    unsigned l = 101;
+    unsigned bbox_distance = 25;
+    unsigned min_comp_size = 5;
 
     //Load image
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
-    logical::not_inplace(in);
+    in = logical::not_(in);
 
     image2d<rgb8> output = level::convert(rgb8(), in);
 
@@ -549,7 +547,7 @@ namespace scribo
       internal::extract_text(in, output, bbox_distance, min_comp_size);
 
     internal::draw_component_boxes(output, tboxes);
-    io::ppm::save(output, argv[2]);
+    io::ppm::save(output, internal::output_file("out"));
 
     /// Use txt bboxes here with Tesseract
     /// for (i = 1; i < tboxes.nelements(); ++i)
