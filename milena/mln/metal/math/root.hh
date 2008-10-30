@@ -25,24 +25,73 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal/math/pow.cc
+#ifndef MLN_METAL_MATH_ROOT_HH
+# define MLN_METAL_MATH_ROOT_HH
+
+/*! \file mln/metal/math/root.hh
  *
- * \brief Test on mln::metal::math::pow.
+ * \brief Definition of the 'nth-root' static function.
+ *
+ * \todo Have consistent writing of math meta-routines.
  */
 
-#include <iostream>
-#include <mln/core/contract.hh>
-#include <mln/metal/math/pow.hh>
+# include <mln/metal/math/pow.hh>
 
 
-int main()
+# define mlc_root(N,X) mln::metal::math::root<( N ),( X )>
+
+
+namespace mln
 {
-  using namespace mln;
-  using namespace mln::metal;
 
-  int res = metal::math::pow_int<2,3>::value;
-  mln_assertion(res == 8);
+  namespace metal
+  {
 
-  std::string s = metal::math::pow< int_<2>, int_<3> >::ret().name();
-  mln_assertion(s == "metal::int_<8>");
-}
+    namespace math
+    {
+
+      namespace impl
+      {
+
+	template <unsigned n, unsigned x,
+		  unsigned lo = 1, unsigned hi = x>
+	struct root
+	{
+	  enum {
+	    mid = (lo + hi + 1) / 2,
+	    val_lo = root<n, x, lo, mid-1>::value,
+	    val_hi = root<n, x, mid, hi>::value
+	  };
+	  enum { value = x < mlc_pow_int(mid, n) ? val_lo : val_hi };
+	};
+
+	template<unsigned n, unsigned x, unsigned m>
+	struct root<n, x, m, m>
+	{
+	  enum { value = m }; // Found.
+	};
+
+      } // end of namespace mln::metal::math::impl
+
+      template <unsigned n, unsigned x>
+      struct root : bool_<(n != 0)>::check_t
+      {
+	enum { value    = impl::root<n,x>::value,
+	       reminder = x - mlc_pow_int(value, n) };
+      };
+
+      template <unsigned n>
+      struct root<n, 0> : bool_<(n != 0)>::check_t
+      {
+	enum { value = 0,
+	       reminder = 0};
+      };
+
+    } // end of namespace mln::metal::math
+
+  } // end of namespace mln::metal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_MATH_ROOT_HH

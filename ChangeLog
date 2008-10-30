@@ -1,3 +1,27 @@
+2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a generic discrete distance transform.
+
+	* milena/mln/transform: New.
+	* milena/mln/transform/distance.hh: New.
+	* milena/tests/transform: New directory.
+	* milena/tests/transform/Makefile.am: New.
+	* milena/tests/transform/distance.cc: New.
+	* milena/sandbox/geraud/skel.cc: Layout.
+	* milena/sandbox/geraud/dmap.cc: Update.
+
+	Slight change in w_window.
+
+	* milena/mln/core/w_window.hh (from_to): Prepare new overload.
+	For that, add some new meta-code:
+	* milena/mln/metal/math/root.hh: New.
+	* milena/mln/metal/math/all.hh: Update.
+	* milena/mln/metal/math/sqrt.hh (todo): New.
+	* milena/tests/metal/math/root.cc: New.
+	* milena/tests/metal/math/pow.cc: Remove echo.
+	* milena/tests/metal/math/Makefile.am: Update.
+	* milena/tests/morpho/Makefile.am (SUBDIRS): Fix missing.
+
 2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Few updates.

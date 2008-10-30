@@ -31,6 +31,8 @@
 /*! \file mln/metal/math/sqrt.hh
  *
  * \brief Definition of the 'sqrt' static function.
+ *
+ * \todo Rely on nth-root.
  */
 
 # include <mln/metal/bool.hh>

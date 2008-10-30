@@ -25,24 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/metal/math/pow.cc
+/*! \file tests/metal/math/root.cc
  *
- * \brief Test on mln::metal::math::pow.
+ * \brief Test on mln::metal::math::root.
  */
 
 #include <iostream>
 #include <mln/core/contract.hh>
-#include <mln/metal/math/pow.hh>
+#include <mln/metal/math/root.hh>
 
 
 int main()
 {
   using namespace mln;
-  using namespace mln::metal;
 
-  int res = metal::math::pow_int<2,3>::value;
-  mln_assertion(res == 8);
-
-  std::string s = metal::math::pow< int_<2>, int_<3> >::ret().name();
-  mln_assertion(s == "metal::int_<8>");
+  int res = metal::math::root<3,8>::value;
+  mln_assertion(res == 2);
 }

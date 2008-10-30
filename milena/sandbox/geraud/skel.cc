@@ -12,7 +12,6 @@
 
 # include <mln/debug/println.hh>
 
-
 namespace mln
 {
 
@@ -75,30 +74,33 @@ namespace mln
     return output;
   }
 
+*/
+
+
 
 } // mln
 
 
 
-void usage(char* argv[])
-{
-  std::cerr << "usage: " << argv[0] << " input.pbm output.pgm" << std::endl;
-  abort();
-}
+  void usage(char* argv[])
+  {
+    std::cerr << "usage: " << argv[0] << " input.pbm output.pgm" << std::endl;
+    abort();
+  }
 
 
 
-int main(int argc, char* argv[])
-{
-  using namespace mln;
-  using value::int_u8;
+  int main(int argc, char* argv[])
+  {
+    using namespace mln;
+    using value::int_u8;
 
-  if (argc != 3)
-    usage(argv);
+    if (argc != 3)
+      usage(argv);
 
-  image2d<bool> input;
-  io::pbm::load(input, argv[1]);
+    image2d<bool> input;
+    io::pbm::load(input, argv[1]);
 
-  image2d<int_u8> output = distance(int_u8(), input, c4());
-  io::pgm::save(output, argv[2]);
-}
+    image2d<int_u8> output = distance(int_u8(), input, c4());
+    io::pgm::save(output, argv[2]);
+  }

@@ -2,6 +2,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS = elementary
+
 check_PROGRAMS =				\
   artificial_line_graph_image_wst		\
   closing_area					\

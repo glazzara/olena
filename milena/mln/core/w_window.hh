@@ -148,6 +148,10 @@ namespace mln
     void
     from_to(const Image<I>& from, w_window<D,W>& to);
 
+    template <typename V, unsigned S, typename D, typename W>
+    void
+    from_to(const V (&values)[S], w_window<D,W>& to);
+
   } // end of namespace mln::convert
 
 
@@ -338,6 +342,19 @@ namespace mln
 	if (ima(p) != literal::zero)
 	  to.insert(ima(p), convert::to<D>(p));
     }
+
+//     template <typename V, unsigned S, typename D, typename W>
+//     void
+//     from_to(const V (&values)[S], w_window<D,W>& to)
+//     {
+//       enum { d = D::dim,
+// 	     s = mlc_root(d,S)::value / 2 };
+//       metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+//       to.clear();
+//       D dp;
+//       dp.set_all(-s);
+//       FIXME
+//     }
 
   } // end of namespace mln::convert
 
