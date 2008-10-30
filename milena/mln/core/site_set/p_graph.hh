@@ -35,7 +35,6 @@
 # include <mln/util/graph.hh>
 # include <mln/util/tracked_ptr.hh>
 
-# include <mln/core/image/graph_psite.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
 
 /* FIXME: This class shares a lot with p_line_graph.  Factor as much

@@ -35,7 +35,7 @@
  */
 
 # include <mln/trait/image_from_grid.hh>
-# include <mln/core/image_if_value.hh>
+# include <mln/core/image/image_if.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>

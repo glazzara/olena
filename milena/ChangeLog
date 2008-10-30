@@ -1,3 +1,15 @@
+2008-10-31  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix wrong include.
+
+	* mln/core/site_set/p_graph.hh,
+	* mln/core/image/graph_image.hh,
+	* mln/display/remove.hh,
+	* mln/display/save.hh,
+	* mln/display/show.hh,
+	* mln/util/greater_point.hh: Include image/image_if.hh instead
+	of image_if_value.hh.
+
 2008-10-30  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Portability fix.

@@ -38,7 +38,7 @@
 # include <mln/core/internal/image_primary.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/core/site_set/p_graph.hh>
-# include <mln/core/image/graph_psite.hh>
+# include <mln/core/image/bgraph_psite.hh>
 # include <mln/value/set.hh>
 
 /* FIXME: This class shares a lot with line_graph_image.  Factor as
