@@ -38,7 +38,7 @@
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/trait/images.hh>
 # include <mln/value/set.hh>
-# include <mln/core/image/shell.hh>
+# include <mln/value/shell.hh>
 # include <mln/metal/if.hh>
 # include <mln/metal/equal.hh>
 
@@ -89,8 +89,7 @@ namespace mln
 
 
 
-  /*! \brief Class of image morpher which takes an image and a functor
-   * FIXME
+  /*! \brief Class of image morpher which takes allow to view an image throught a morpher
    */
   template <typename F, typename I>
   struct thru :
@@ -103,7 +102,7 @@ namespace mln
     typedef mln_result(F) rvalue;
 
     /// Return type of read-write access.
-    typedef shell<F,I> lvalue; // FIXME : if I is const or F is Function_v2v, there is no shell
+    typedef mln::value::shell<F,I> lvalue; // FIXME : if I is const or F is Function_v2v, there is no shell
 
     /// Skeleton.
     typedef thru< tag::value_<mln_result(F)>, tag::image_<I> > skeleton;
@@ -170,11 +169,19 @@ namespace mln
 
   template <typename F, typename I>
   inline
-  shell<F, I>
+  value::shell<F, I>
   thru<F,I>::operator()(const mln_psite(I)& p)
   {
-    return shell<F, I>( this->data_->ima_, p );
+    return mln::value::shell<F, I>( this->data_->ima_, p );
   }
+
+
+  //  template <typename F, typename I>
+  //  thru<F, I> thru(Function<F> &f, Image<I> &i)
+  //  {
+  //    return thru<F, I> (f, i);
+  //  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

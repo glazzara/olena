@@ -1,3 +1,11 @@
+2008-10-30  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make shell a value.
+
+	* abraham/mln/value/shell.hh: New
+	    mln::value::shell is now a value.
+	* abraham/mln/core/image/thru.hh: change namespace of shell.
+
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update and add more debug.
