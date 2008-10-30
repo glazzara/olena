@@ -1,3 +1,8 @@
+2008-10-30  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Add skeleton algorithm.
+	* garrigues/ocr/skel.cc: New.
+
 2008-10-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add is_curve_extremum to detect curve extrema.
