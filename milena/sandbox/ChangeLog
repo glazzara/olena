@@ -1,3 +1,12 @@
+2008-10-30  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add co-occurence matrix computing.
+
+	* nature/co_occurence.hh: New
+	    (mln::co_occurence) : compute co-occurence matrix.
+	* nature/mco.cc: New
+	    Dummy test.
+
 2008-10-30  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
 	Add skeleton algorithm.
