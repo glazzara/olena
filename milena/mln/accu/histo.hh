@@ -56,7 +56,7 @@ namespace mln
      */
     template <typename V>
     struct histo :
-      public mln::accu::internal::base<const std::vector<std::size_t>& ,
+      public mln::accu::internal::base<const std::vector<unsigned>& ,
 				       histo<V> >
     {
       histo();
@@ -70,16 +70,16 @@ namespace mln
       void untake(const argument& t);
       void init();
 
-      std::size_t operator()(const argument& t) const;
-      std::size_t operator[](unsigned i) const;
+      unsigned operator()(const argument& t) const;
+      unsigned operator[](unsigned i) const;
       unsigned    nvalues() const;
-      std::size_t sum() const;
+      unsigned sum() const;
       /// \}
 
       /// Get the value of the accumulator.
       /// \{
-      const std::vector<std::size_t>& vect() const;
-      const std::vector<std::size_t>& to_result() const;
+      const std::vector<unsigned>& vect() const;
+      const std::vector<unsigned>& to_result() const;
       /// \}
 
       const value::set<V>& vset() const;
@@ -91,7 +91,7 @@ namespace mln
     protected:
 
       mln::histo::data<V> h_;
-      std::size_t sum_;
+      unsigned sum_;
     };
 
     template <typename V>
@@ -165,7 +165,7 @@ namespace mln
 
     template <typename V>
     inline
-    std::size_t
+    unsigned
     histo<V>::operator()(const argument& t) const
     {
       return h_[h_.vset().index_of(t)];
@@ -173,7 +173,7 @@ namespace mln
 
     template <typename V>
     inline
-    std::size_t
+    unsigned
     histo<V>::operator[](unsigned i) const
     {
       mln_precondition(i < h_.vset().nvalues());
@@ -190,7 +190,7 @@ namespace mln
 
     template <typename V>
     inline
-    std::size_t
+    unsigned
     histo<V>::sum() const
     {
       return sum_;
@@ -198,7 +198,7 @@ namespace mln
 
     template <typename V>
     inline
-    const std::vector<std::size_t>&
+    const std::vector<unsigned>&
     histo<V>::vect() const
     {
       return h_.vect();
@@ -206,7 +206,7 @@ namespace mln
 
     template <typename V>
     inline
-    const std::vector<std::size_t>&
+    const std::vector<unsigned>&
     histo<V>::to_result() const
     {
       return this->vect();

@@ -61,6 +61,7 @@ namespace mln
     struct mean : public mln::accu::internal::base< M , mean<T,S,M> >
     {
       typedef T argument;
+      typedef M result;
 
       mean();
 
@@ -73,6 +74,7 @@ namespace mln
 
       /// Get the value of the accumulator.
       M to_result() const;
+      operator M () const;
 
       /// Check whether this accu is able to return a result.
       /// Always true here.
@@ -149,6 +151,13 @@ namespace mln
     mean<T,S,M>::to_result() const
     {
       return sum_.to_result() / count_.to_result();
+    }
+
+    template <typename T, typename S, typename M>
+    inline
+    mean<T,S,M>::operator M() const
+    {
+      return M(sum_.to_result() / count_.to_result());
     }
 
     template <typename T, typename S, typename M>

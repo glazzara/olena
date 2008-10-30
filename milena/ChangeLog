@@ -1,3 +1,12 @@
+2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add majority accu.
+
+	* mln/accu/maj_h.hh: Add majority accumulator.
+	* mln/accu/histo.hh: Remove bad use of size_t.
+	* mln/accu/mean.hh: Temporary fix.
+	* mln/fun/x2x/rotation.hh: Fix matrix parameters.
+
 2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start cleaning weighted windows and linear operators.
