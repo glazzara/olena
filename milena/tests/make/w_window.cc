@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,63 +25,44 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
-# define MLN_TRAIT_IMAGE_FROM_MESH_HH
-
-/*! \file mln/trait/image_from_mesh.hh
+/*! \file tests/make/w_window.cc
  *
- * \brief Definition of the "image from mesh" trait.
+ * \brief Tests on mln::make::w_window.
+ *
+ * \todo Remove std::cout.
  */
 
-# include <mln/core/grids.hh>
+#include <mln/core/alias/window2d.hh>
+// #include <mln/core/w_window.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 
 
-# define mln_image_from_mesh(I, V) typename mln::trait::image_from_mesh< I, V >::ret
-
-
-
-namespace mln
+struct test : mln::Function_p2v<test>
 {
-
-
-  // Fwd decls.
-  template <typename T> struct image1d;
-  template <typename T> struct image2d;
-  template <typename T> struct image3d;
-
-
-  namespace trait
+  typedef int result;
+  int operator()(const mln::point2d& p) const
   {
-
-    template <typename M, typename V> struct image_from_mesh;
-
-    template <typename V>
-    struct image_from_mesh< grid::tick, V >
-    {
-      typedef image1d<V> ret;
-    };
-
-    template <typename V>
-    struct image_from_mesh< grid::square, V >
-    {
-      typedef image2d<V> ret;
-    };
-
-    template <typename V>
-    struct image_from_mesh< grid::cube, V >
-    {
-      typedef image3d<V> ret;
-    };
+    return p.row() + p.col();
+  }
+};
 
 
-    // FIXME: Return other image types than imagend when size trait is not regular...
+int main()
+{
+  using namespace mln;
 
-    // FIXME: Add cases when the mesh is not a grid...
+  bool vals[] = { 1, 1, 0, 0, 1,
+		  1, 1, 1, 1, 0,
+		  0, 1, 1, 1, 0,
+		  0, 1, 1, 1, 0,
+		  0, 1, 0, 0, 0 };
+  window2d win;
+  convert::from_to(vals, win);
+
+  w_window2d_int w_win = make::w_window(win, test());
+  std::cout << w_win << std::endl;
 
 
-  } // end of namespace mln::trait
-
-} // end of namespace mln
-
-
-#endif // ! MLN_TRAIT_IMAGE_FROM_MESH_HH
+//   mln_assertion( count(ima, make::w_window(ima, c4(), c8()))
+// 		 == c4().size() + c8().size() );
+}

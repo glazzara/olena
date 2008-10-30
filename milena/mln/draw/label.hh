@@ -38,7 +38,7 @@
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 
-# include <mln/trait/image_from_mesh.hh>
+# include <mln/trait/image_from_grid.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
@@ -64,14 +64,14 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     label(Image<I>& input, const value::rgb8& background);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     label(Image<I>& input, const value::rgb8& background)
     {
       typedef mln_value(I) V;

@@ -34,7 +34,7 @@
  */
 
 # include <mln/tag/skeleton.hh>
-# include <mln/trait/image_from_mesh.hh>
+# include <mln/trait/image_from_grid.hh>
 
 
 # define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
@@ -159,7 +159,7 @@ namespace mln
       {
         // FIXME: what about S::site having no grid?
         typedef mln_deduce(S, site, grid) grid;
-        typedef typename image_from_mesh< grid, V >::ret ret;
+        typedef typename image_from_grid< grid, V >::ret ret;
       };
 
       template < template <class, class> class M, typename T, typename S,
@@ -168,7 +168,7 @@ namespace mln
       {
         // FIXME: what about S::site having no grid?
         typedef mln_deduce(S, site, grid) grid;
-        typedef typename image_from_mesh< grid, V >::ret ret;
+        typedef typename image_from_grid< grid, V >::ret ret;
       };
 
 

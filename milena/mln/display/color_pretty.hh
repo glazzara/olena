@@ -34,7 +34,7 @@
  *  with red value for undefined point site.
  */
 
-# include <mln/trait/image_from_mesh.hh>
+# include <mln/trait/image_from_grid.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
@@ -62,7 +62,7 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_);
 
 
@@ -79,7 +79,7 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
 		     const p_set<mln_psite(I) >& s1_,
 		     const p_set<mln_psite(I) >& s2_,
@@ -116,7 +116,7 @@ namespace mln
 
       template <typename I>
       inline
-      typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+      typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
       color_pretty(const Image<I>& input_)
       {
 	trace::entering("display::impl::color_pretty");
@@ -139,7 +139,7 @@ namespace mln
 
       template <typename I>
       inline
-      typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+      typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
       color_pretty_rgb(const Image<I>& input_,
 		       const p_set<mln_psite(I) >& s1_,
 		       const p_set<mln_psite(I) >& s2_,
@@ -185,7 +185,7 @@ namespace mln
 
     template <typename I>
     inline
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_)
     {
       trace::entering("display::color_pretty");
@@ -204,7 +204,7 @@ namespace mln
 
     template <typename I>
     inline
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
 		     const p_set<mln_psite(I) >& s1_,
 		     const p_set<mln_psite(I) >& s2_,

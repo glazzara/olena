@@ -25,71 +25,63 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_HH
-# define MLN_MAKE_W_WINDOW_HH
+#ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
+# define MLN_TRAIT_IMAGE_FROM_MESH_HH
 
-/*! \file mln/make/w_window.hh
+/*! \file mln/trait/image_from_grid.hh
  *
- * \brief Routine to create a mln::w_window.
+ * \brief Definition of the "image from mesh" trait.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/concept/function.hh>
-# include <mln/core/w_window.hh>
+# include <mln/core/grids.hh>
+
+
+# define mln_image_from_grid(G, V) typename mln::trait::image_from_grid< G, V >::ret
+
 
 
 namespace mln
 {
 
-  namespace make
+
+  // Fwd decls.
+  template <typename T> struct image1d;
+  template <typename T> struct image2d;
+  template <typename T> struct image3d;
+
+
+  namespace trait
   {
 
-    /*! \brief Create a mln::w_window from a window and a weight
-     *  function.
-     *
-     * \param[in] win A simple window.
-     * \param[in] wei A weight function.
-     *
-     * \return A weighted window.
-     */
-    template <typename W, typename F>
-    mln::w_window<mln_dpsite(W), mln_result(F)>
-    w_window(const Window<W>& win, const Function_p2v<F>& wei);
+    template <typename M, typename V> struct image_from_grid;
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename W, typename F>
-    inline
-    mln::w_window<mln_dpsite(W), mln_result(F)>
-    w_window(const Window<W>& win_, const Function_p2v<F>& wei_)
+    template <typename V>
+    struct image_from_grid< grid::tick, V >
     {
-      trace::entering("make::w_window");
+      typedef image1d<V> ret;
+    };
 
-      mln_is_simple_window(W)::check();
+    template <typename V>
+    struct image_from_grid< grid::square, V >
+    {
+      typedef image2d<V> ret;
+    };
 
-      const W& win = exact(win_);
-      const F& wei = exact(wei_);
-      mln_precondition(! win.is_empty());
+    template <typename V>
+    struct image_from_grid< grid::cube, V >
+    {
+      typedef image3d<V> ret;
+    };
 
-      typedef mln_dpsite(W) D;
-      mln::w_window<D, mln_result(F)> w_win;
 
-      typedef mln_psite(D) P;
-      P O = literal::origin;
-      mln_qiter(W) q(win, O);
-      for_all(q)
-	w_win.insert(wei(q), q - O);
+    // FIXME: Return other image types than imagend when size trait is not regular...
 
-      trace::exiting("make::w_window");
-      return w_win;
-    }
+    // FIXME: Add cases when the mesh is not a grid...
 
-# endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+  } // end of namespace mln::trait
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW_HH
+#endif // ! MLN_TRAIT_IMAGE_FROM_MESH_HH

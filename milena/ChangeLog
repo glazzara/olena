@@ -1,3 +1,24 @@
+2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start cleaning weighted windows and linear operators.
+
+	* mln/core/w_window.hh (trait): New
+	* mln/make/w_window.hh: Fix.
+	* tests/make/w_window.cc: New.
+	* tests/make/Makefile.am: Update.
+	* mln/trait/image_from_mesh.hh: Rename as...
+	* mln/trait/image_from_grid.hh: ...this.
+	(image_from_mesh, mln_image_from_mesh): Rename as...
+	(image_from_grid, mln_image_from_grid): ...these.
+	* mln/draw/label.hh,
+	* mln/trait/ch_value.hh,
+	* mln/display/color_pretty.hh,
+	* mln/display/remove.hh,
+	* mln/display/save.hh,
+	* mln/display/show.hh: Update.
+	* mln/border/resize.hh: Remove dead code.
+	* mln/convert/from_to.hxx: Disambiguate doc.
+
 2008-10-30  Florian Lesaint  <florian.lesaint@lrde.epita.fr>
 
 	Add gaussian_1st_derivative and gaussian_2nd_derivative.

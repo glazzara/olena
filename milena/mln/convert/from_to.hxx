@@ -133,7 +133,7 @@ namespace mln
     void
     from_to(const Proxy<P>& from, T& to);
 
-    // Gpoint -> delta
+    // Gpoint -> delta-point
     template <typename P>
     void
     from_to(const Gpoint<P>& from, mln_delta(P)& to);

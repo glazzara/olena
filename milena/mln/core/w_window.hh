@@ -50,9 +50,21 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declarations.
+  template <typename D,  typename W> struct w_window;
   template <typename It, typename W> struct with_w_;
 
+
+  namespace trait
+  {
+
+    template <typename D, typename W>
+    struct window_< mln::w_window<D,W> > : window_<W>
+    {
+      // Same traits as its corresponding window.
+    };
+
+  } // end of namespace mln::trait
 
 
   /*! \brief Generic w_window class.
@@ -64,7 +76,7 @@ namespace mln
   template <typename D, typename W>
   struct w_window : public Weighted_Window< w_window<D,W> >
   {
-    /// DPsite associated type.
+    /// Dpsite associated type.
     typedef D dpsite;
 
     /// Psite associated type.
@@ -338,7 +350,7 @@ namespace mln
   {
     ostr << '[';
     for (unsigned i = 0; i < w_win.win().size(); ++i)
-      ostr << w_win.vect()[i] << ':' << w_win.w(i) << ' ';
+      ostr << w_win.dp(i) << ':' << w_win.w(i) << ' ';
     return ostr << ']';
   }
 
