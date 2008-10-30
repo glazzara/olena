@@ -147,12 +147,6 @@ namespace mln
     /// FIXME: Do we want a routine as well like geom::bbox()?
     P center() const;
 
-    /// Return the column count of this box.
-    unsigned ncols() const;
-
-    /// Return the row count of this box.
-    unsigned nrows() const;
-
     /// Test that the box owns valid data, i.e., is initialized and
     /// with pmin being 'less-than' pmax.
     bool is_valid() const;
@@ -380,24 +374,6 @@ namespace mln
     for (unsigned i = 0; i < P::dim; ++i)
       center[i] = pmin_[i] + ((pmax_[i] - pmin_[i]) / 2);
     return center;
-  }
-
-  template <typename P>
-  inline
-  unsigned
-  box<P>::ncols() const
-  {
-    mln_precondition(is_valid());
-    return pmax().col() - pmin().col();
-  }
-
-  template <typename P>
-  inline
-  unsigned
-  box<P>::nrows() const
-  {
-    mln_precondition(is_valid());
-    return pmax().row() - pmin().row();
   }
 
   template <typename P>

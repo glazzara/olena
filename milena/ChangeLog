@@ -1,3 +1,9 @@
+2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove duplicate nrows() and ncols from mln::box.
+
+	* mln/core/site_set/box.hh: here.
+
 2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new colors.
