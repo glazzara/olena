@@ -32,7 +32,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/level/paste.hh>
 #include <mln/accu/mean.hh>
-#include <mln/accu/max.hh>
+#include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
 
 namespace mln
@@ -59,11 +59,13 @@ namespace mln
   {
 
     //accu::mean<unsigned, unsigned long, value::int_u8> mean_accu;
-    accu::max<value::int_u8> max_1;//FIXME: use majoritaire accu
+    accu::maj_h<value::int_u8> max_1;
     image2d<value::int_u8> hproj = proj(histo, max_1);
 
-    accu::max<U> max_2;//FIXME: use majoritaire accu
-    image2d<U> proj_class = proj(ws, max_2);
+    accu::maj_h<value::int_u8> max_2;
+    image2d<value::int_u8> proj_class = proj(ws, max_2);
+
+    //std::cout << histo;
 
     image2d<value::rgb8> out(proj_class.domain());
 

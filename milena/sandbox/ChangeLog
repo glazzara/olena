@@ -1,3 +1,10 @@
+2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Make use of maj_h. Fix Makefile.
+
+	* classif/proj.hh: Make use of majority.
+	* classif/Makefile: Proper dependencies.
+
 2008-10-30  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add co-occurence matrix computing.

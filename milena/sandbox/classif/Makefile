@@ -12,7 +12,7 @@ LAMBDA?=10
 
 
 # V2
-V2_INCLUDES=-I../.. -I../garrigues/fllt
+V2_INCLUDES=-I../..
 V2_SRC=v2.cc max_tree.hh
 V2=v2
 V2_DBG=v2_dbg
@@ -32,11 +32,11 @@ $(V2): $(V2_SRC)
 	g++ $(V2_INCLUDES) -O1 -DNDEBUG $(V2_SRC) -o $(V2)
 
 
-$(V2_DBG): $(V2_SRC)
+$(V2_DBG): $(V2_SRC) .dep_v2
 	g++ $(V2_INCLUDES) -O0 -g3 -ggdb3 $(V2_SRC) -o $(V2_DBG)
 
 
-.PHONY:clean check check-debug valgrind
+.PHONY:clean check check-debug valgrind .dep_iccvg .dep_v2
 
 clean:
 	rm -f $(ICCVG)
@@ -44,6 +44,7 @@ clean:
 	rm -f $(V2)
 	rm -f $(V2_DBG)
 	rm -f *.log
+	rm -f .dep_iccvg .dep_v2
 
 check-debug: $(ICCVG_DBG)
 	./iccvg_dbg $(IMG) $(DIV) $(LAMBDA) $(LOG)
@@ -70,3 +71,17 @@ gdb: $(ICCVG_DBG)
 v2-gdb: $(V2_DBG)
 	echo "run ../../img/lena.ppm $(DIV) $(LAMBDA) $(LOG)" > gdb.cmd
 	gdb $(V2_DBG) -x gdb.cmd
+
+
+.dep_iccvg:
+	g++ $(ICCVG_INCLUDES) -MM iccvg04.cc > $@
+	@sed -ir s/iccvg04.cc// .dep_iccvg
+	@sed -ir s/iccvg04.o/iccvg/ .dep_iccvg
+
+.dep_v2:
+	g++ $(V2_INCLUDES) -MM v2.cc > $@
+	@sed -ir s/v2.cc// .dep_v2
+	@sed -ir s/v2.o/v2/ .dep_v2
+
+-include .dep_iccvg
+-include .dep_v2
