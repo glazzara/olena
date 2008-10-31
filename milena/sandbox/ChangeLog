@@ -1,3 +1,10 @@
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Fix snake2d and add test.
+	* inim/binarization/snake2d.cc: New.
+	* inim/binarization/snake2d.hh: New.
+	* inim/binarization/snake_2d.hh: Remove.
+
 2008-10-31  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Improve Skeleton computation.
