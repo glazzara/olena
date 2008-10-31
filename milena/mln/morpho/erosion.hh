@@ -63,7 +63,9 @@ namespace mln
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
-	
+	(void) input;
+	(void) win;
+
 	mln_precondition(exact(input).has_data());
 	mln_precondition(! exact(win).is_empty());
       }

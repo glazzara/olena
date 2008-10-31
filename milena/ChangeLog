@@ -1,5 +1,10 @@
 2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
+	Add void cast to remove unused variable warnings.
+	* mln/morpho/erosion.hh: Done.
+
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
 	Fix previous patch.
 	* mln/morpho/erosion.spe.hh: Remove concept.
 
