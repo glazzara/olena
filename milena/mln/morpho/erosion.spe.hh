@@ -463,17 +463,17 @@ namespace mln
       }
 
 
-      template <typename I, typename W>
+      template <typename I, typename W, typename A>
       struct erosion_arbitrary_2d_functor
       {
-	typedef erosion_arbitrary_2d_functor<I,W> self;
+	typedef erosion_arbitrary_2d_functor<I,W, A> self;
 	typedef void (self::*move_fun)();
 	typedef mln_deduce(I, psite, delta) dpsite;
 
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	Accumulator<A> accu;
 
 	mln_psite(I) p;
 
@@ -503,7 +503,7 @@ namespace mln
 	erosion_arbitrary_2d_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 
 	    win_left_fwd(win::shift(win, mln::left) - win),
 	    win_right_fwd(win - win::shift(win, mln::left)),
@@ -557,48 +557,48 @@ namespace mln
 	{
 	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  initialize(output, input);
-	  min.init();
+	  accu.init();
 	  p = input.domain().pmin() - dps[0];
 	  mln_qiter(W) q(win, p);
 	  for_all(q)
-	    min.take(input(q));
+	    accu.take(input(q));
 	  p = input.domain().pmin();
 	}
 
 	void right()
 	{
 	  for_all(q_l_fwd)
-	    min.untake(input(q_l_fwd));
+	    accu.untake(input(q_l_fwd));
 	  for_all(q_r_fwd)
-	    min.take(input(q_r_fwd));
-	  output(p) = min;
+	    accu.take(input(q_r_fwd));
+	  output(p) = accu;
 	}
 
 	void left()
 	{
 	  for_all(q_r_bkd)
-	    min.untake(input(q_r_bkd));
+	    accu.untake(input(q_r_bkd));
 	  for_all(q_l_bkd)
-	    min.take(input(q_l_bkd));
-	  output(p) = min;
+	    accu.take(input(q_l_bkd));
+	  output(p) = accu;
 	}
 
 	void down()
 	{
 	  for_all(q_top_down)
-	    min.untake(input(q_top_down));
+	    accu.untake(input(q_top_down));
 	  for_all(q_bot_down)
-	    min.take(input(q_bot_down));
-	  output(p) = min;
+	    accu.take(input(q_bot_down));
+	  output(p) = accu;
 	}
 
 	void up()
 	{
 	  for_all(q_bot_up)
-	    min.untake(input(q_bot_up));
+	    accu.untake(input(q_bot_up));
 	  for_all(q_top_up)
-	    min.take(input(q_top_up));
-	  output(p) = min;
+	    accu.take(input(q_top_up));
+	  output(p) = accu;
 	}
 
       };
@@ -610,7 +610,7 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_arbitrary_2d");
 
-	typedef erosion_arbitrary_2d_functor<I, W> F;
+	typedef erosion_arbitrary_2d_functor<I, W, accu::min_h<mln_value(I)> > F;
 	F f(exact(input), exact(win));
 	canvas::browsing::snake_generic(f);
 
