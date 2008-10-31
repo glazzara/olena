@@ -34,6 +34,9 @@
  * \todo Operator== should test if the cmp is possible.
  *
  * \todo Add an is_valid() method.
+ *
+ * \todo The is_centered() method could also exist when the window is
+ * not regular...
  */
 
 # include <mln/core/concept/object.hh>

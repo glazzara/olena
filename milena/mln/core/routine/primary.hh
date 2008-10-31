@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,47 +25,76 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/convolve.cc
+#ifndef MLN_CORE_ROUTINE_PRIMARY_HH
+# define MLN_CORE_ROUTINE_PRIMARY_HH
+
+/*! \file mln/core/routine/primary.hh
  *
- * \brief Tests on mln::linear::convolve.
+ * \brief FIXME
+ *
+ * \todo We also need to get the extension image to handle border
+ * routines.
  */
 
-#include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/math/round.hh>
-#include <mln/level/transform.hh>
-
-#include <mln/core/alias/w_window2d_float.hh>
-#include <mln/border/thickness.hh>
-#include <mln/linear/convolve.hh>
-
-#include "tests/data.hh"
+# include <mln/core/concept/image.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  border::thickness = 2;
+  /// FIXME: Doc!
+  template <typename I>
+  void primary(const Image<I>& ima);
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  float ws[] = { .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04 };
-  w_window2d_float w = make::w_window2d(ws);
+# ifndef MLN_INCLUDE_ONLY
 
-//   image2d<float> tmp = linear::convolve(lena, w);
-//   image2d<int_u8>  out = level::transform(tmp, math::round<int_u8>());
 
-  image2d<int_u8> out = linear::convolve(lena, w);
+  namespace internal
+  {
 
-  io::pgm::save(out, "out.pgm");
-}
+    // Primary_type.
+
+    template <typename I> struct primary_type;
+
+    template <typename I, typename C>
+    struct primary_type_helper
+    {
+      typedef typename primary_type<mln_delegatee(I)>::ret ret;
+    };
+
+    template <typename I>
+    struct primary_type_helper< I, mln::trait::image::category::primary >
+    {
+      typedef I ret;
+    };
+
+    template <typename I>
+    struct primary_type
+    {
+      typedef mln_trait_image_category(I) Cat;
+      typedef typename primary_type_helper<I, Cat>::ret ret;
+    };
+
+
+    // Routine.
+
+  } // end of namespace mln::internal
+
+
+
+    // Facade.
+
+  template <typename I>
+  inline
+  void primary(const Image<I>&)
+  {
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_ROUTINE_PRIMARY_HH

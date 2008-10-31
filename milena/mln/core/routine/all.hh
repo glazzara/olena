@@ -36,10 +36,11 @@
  */
 
 
-// # include <mln/core/routine/clone.hh>
-// # include <mln/core/routine/exact.hh>
+# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/exact.hh>
 # include <mln/core/routine/extend.hh>
-// # include <mln/core/routine/initialize.hh>
+# include <mln/core/routine/initialize.hh>
+# include <mln/core/routine/primary.hh>
 
 
 #endif // ! MLN_CORE_ROUTINE_ALL_HH

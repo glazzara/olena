@@ -52,6 +52,25 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      inline
+      void
+      erosion_tests(const Image<I>& input_, const Window<W>& win_)
+      {
+	const I& input = exact(input_);
+	const W& win   = exact(win_);
+	
+	mln_precondition(exact(input).has_data());
+	mln_precondition(! exact(win).is_empty());
+      }
+
+    } // end of mln::morpho::internal
+
+
     namespace impl
     {
 
@@ -69,6 +88,7 @@ namespace mln
 
 	  const I& input = exact(input_);
 	  const W& win = exact(win_);
+	  internal::erosion_tests(input, win);
 
 	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 
@@ -139,6 +159,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
+      internal::erosion_tests(input, win);
       mln_concrete(I) output = internal::erosion_dispatch(input, win);
 
       if (exact(win).is_centered())

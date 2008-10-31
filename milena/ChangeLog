@@ -1,3 +1,14 @@
+2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp linear convolution.
+
+	* mln/linear/convolve.hh: Re-vamp.
+	* tests/linear/convolve.cc: Update.
+	* mln/core/routine/primary.hh: New; not completed yet.
+	* mln/core/routine/all.hh: Update.
+	* mln/core/concept/window.hh (todo): New.
+	* mln/morpho/erosion.hh (tests): New.
+
 2008-10-31  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix wrong include.
