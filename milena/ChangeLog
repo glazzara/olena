@@ -1,5 +1,10 @@
 2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
+	Fix previous patch.
+	* mln/morpho/erosion.spe.hh: Remove concept.
+
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
 	Generalize erosion in 2d for any accumulator.
 	* mln/morpho/erosion.spe.hh: Add accumulator type as parameter and
 	  rename min as accu.

@@ -473,7 +473,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	Accumulator<A> accu;
+	A accu;
 
 	mln_psite(I) p;
 
