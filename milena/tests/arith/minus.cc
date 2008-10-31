@@ -51,7 +51,7 @@ int main()
       {6, 7, 8}
     };
 
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
 
     mln_assertion (ima - 1 == ref);
   }

@@ -37,12 +37,14 @@
 
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/concept/image.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/core/window.hh>
 # include <mln/core/dpsites_piter.hh>
 
 # include <mln/value/ops.hh>
 # include <mln/util/ord.hh>
 # include <mln/metal/converts_to.hh>
+# include <mln/metal/math/root.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to.hh>
 
@@ -150,7 +152,7 @@ namespace mln
 
     template <typename V, unsigned S, typename D, typename W>
     void
-    from_to(const V (&values)[S], w_window<D,W>& to);
+    from_to(const V (&weight)[S], w_window<D,W>& to);
 
   } // end of namespace mln::convert
 
@@ -343,18 +345,26 @@ namespace mln
 	  to.insert(ima(p), convert::to<D>(p));
     }
 
-//     template <typename V, unsigned S, typename D, typename W>
-//     void
-//     from_to(const V (&values)[S], w_window<D,W>& to)
-//     {
-//       enum { d = D::dim,
-// 	     s = mlc_root(d,S)::value / 2 };
-//       metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
-//       to.clear();
-//       D dp;
-//       dp.set_all(-s);
-//       FIXME
-//     }
+    template <typename V, unsigned S, typename D, typename W>
+    void
+    from_to(const V (&weight)[S], w_window<D,W>& to)
+    {
+      mlc_converts_to(V, W)::check();
+      enum { d = D::dim,
+	     s = mlc_root(d,S)::value / 2 };
+      metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+      to.clear();
+      typedef mln_site(D) P;
+      box<P> b(all_to(-s), all_to(+s));
+      mln_fwd_piter(box<P>) p(b);
+      unsigned i = 0;
+      for_all(p)
+      {
+	if (weight[i] != literal::zero)
+	  to.insert(weight[i], convert::to<D>(p));
+	++i;
+      }
+    }
 
   } // end of namespace mln::convert
 

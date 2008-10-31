@@ -57,7 +57,7 @@ int main()
 
   };
 
-  rhs = make::image2d(vs);
+  rhs = make::image(vs);
 
   mln_assertion(! (lhs == rhs));
   mln_assertion(  (lhs <= rhs));
@@ -80,7 +80,7 @@ int main()
 
   };
 
-  rhs = make::image2d(ws);
+  rhs = make::image(ws);
 
   mln_assertion(! (lhs == rhs));
   mln_assertion(  (lhs <= rhs));

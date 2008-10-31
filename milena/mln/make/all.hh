@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,6 +48,7 @@ namespace mln
 # include <mln/make/box2d_h.hh>
 # include <mln/make/box3d.hh>
 # include <mln/make/dpoint2d_h.hh>
+# include <mln/make/image.hh>
 # include <mln/make/mat.hh>
 # include <mln/make/pixel.hh>
 # include <mln/make/pix.hh>

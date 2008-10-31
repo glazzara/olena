@@ -60,7 +60,7 @@ main ()
 	{105, 107, 109, 111, 113, 115, 117, 119}
       };
 
-    image2d<int> ref(make::image2d(ws));
+    image2d<int> ref(make::image(ws));
 
     mln_assertion (out == ref);
   }

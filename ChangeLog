@@ -1,3 +1,49 @@
+2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Introduce make::image.
+
+	When there is no ambiguity, the user can call make::image.
+
+	* milena/mln/make/image2d.hh: Rename as...
+	* milena/mln/make/image.hh: ...this.
+	Import code from...
+	* milena/mln/make/image1d.hh: ...this removed file.
+	* milena/mln/make/all.hh: Update.
+	* milena/tests/debug/iota.cc,
+	* milena/tests/draw/graph.cc,
+	* milena/tests/level/abs.cc,
+	* milena/tests/level/replace.cc,
+	* milena/tests/level/stretch.cc,
+	* milena/tests/level/apply.cc,
+	* milena/tests/level/compare.cc,
+	* milena/tests/level/saturate.cc,
+	* milena/tests/arith/minus.cc,
+	* milena/tests/arith/times.cc,
+	* milena/tests/arith/plus.cc,
+	* milena/tests/arith/revert.cc,
+	* milena/tests/accu/compute.cc,
+	* milena/tests/geom/resize.cc,
+	* milena/tests/geom/seed2tiling_roundness.cc,
+	* milena/tests/geom/seed2tiling.cc,
+	* milena/tests/display/color_pretty.cc,
+	* milena/tests/logical/or.cc,
+	* milena/tests/logical/not.cc,
+	* milena/tests/logical/and_not.cc,
+	* milena/tests/logical/and.cc,
+	* milena/tests/canvas/chamfer.cc,
+	* milena/tests/util/tree_to_image.cc,
+	* milena/tests/util/lemmings.cc,
+	* milena/tests/util/tree_fast_to_image.cc,
+	* milena/tests/labeling/compute.cc,
+	* milena/mln/core/image/image1d.hh: Update.
+	* milena/mln/core/image/image2d.hh: Update.
+	(todo): New.
+	* milena/mln/core/w_window.hh (from_to): New overload.
+	* milena/mln/make/w_window2d.hh: Change tests into checks.
+	* milena/mln/convert/from_to.hxx: Update.
+	* milena/mln/canvas/browsing/directional.hh: .
+	* milena/tests/core/alias/w_window2d_int.cc: Add alt code.
+
 2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a generic discrete distance transform.

@@ -52,7 +52,7 @@ int main()
       { -8, -9, -10}
     };
 
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
     arith::revert_inplace(ima);
 
     mln_assertion (ima == ref);

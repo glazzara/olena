@@ -69,7 +69,7 @@ int main()
 	{16, 14, 12, 10,  8, 10, 12, 14, 16}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
   }
 
@@ -92,7 +92,7 @@ int main()
 	{12, 11, 10, 9, 8, 9, 10, 11, 12}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
   }
 
@@ -118,7 +118,7 @@ int main()
 	{12, 10, 9, 8, 8, 8, 9, 10, 12}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
 
   }

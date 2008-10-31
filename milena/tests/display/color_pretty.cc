@@ -63,7 +63,7 @@ int main()
       {value::rgb8(255, 0, 0), value::rgb8(51, 51, 51)}
     };
 
-    image2d<value::rgb8> ref (make::image2d(vs));
+    image2d<value::rgb8> ref (make::image(vs));
     mln_assertion (ref == out);
   }
 
@@ -87,7 +87,7 @@ int main()
       {value::rgb8(0, 0, 255), value::rgb8(0, 0, 0)}
     };
 
-    image2d<value::rgb8> ref (make::image2d(vs));
+    image2d<value::rgb8> ref (make::image(vs));
     mln_assertion (ref == out);
   }
 }

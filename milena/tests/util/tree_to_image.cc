@@ -133,6 +133,6 @@ int main (void)
 
   };
 
-  image2d<int_u8> ref (make::image2d(vs));
+  image2d<int_u8> ref (make::image(vs));
   mln_assertion(ref == output);
 }

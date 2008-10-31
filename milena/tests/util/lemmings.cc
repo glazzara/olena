@@ -46,7 +46,7 @@ int main ()
 		    {3, 3, 4, 4},
 		    {3, 3, 4, 4}};
 
-  I ima = make::image2d<int>(vals);
+  I ima = make::image<int>(vals);
   
   mln_site_(I) pt1(1, 0);
   mln_site_(I) pt2(0, 2);

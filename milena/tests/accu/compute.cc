@@ -48,7 +48,7 @@ int main()
 // 		      {6,5,4},
 // 		      {3,2,1} };
 
-//   image2d<int_u8> ima = make::image2d(vs);
+//   image2d<int_u8> ima = make::image(vs);
 //   int a = accu::compute<accu::min>(ima);
 
 //   std::cout << a << std::endl;

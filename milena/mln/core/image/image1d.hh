@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -600,6 +601,6 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/make/image1d.hh>
+# include <mln/make/image.hh>
 
 #endif // ! MLN_CORE_IMAGE_IMAGE1D_HH

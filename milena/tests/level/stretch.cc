@@ -47,7 +47,7 @@ int main()
     { 1000, 2000, 3000 },
     { 1000, 2000, 3000 }
   };
-  image2d<int> ima(make::image2d(vs));
+  image2d<int> ima(make::image(vs));
 
   image2d<int_u8> out(3, 3);
 
@@ -57,7 +57,7 @@ int main()
     { 0, 127, 255 }
   };
 
-  image2d<int_u8> ref(make::image2d(ws));
+  image2d<int_u8> ref(make::image(ws));
   level::stretch(ima, out);
   box_fwd_piter_<point2d> p(out.domain());
   for_all(p)

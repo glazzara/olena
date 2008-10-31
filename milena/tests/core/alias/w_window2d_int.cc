@@ -56,6 +56,10 @@ int main()
 		 -1, 0, 1 };
     w_window2d_int w_win = make::w_window2d(ws);
 
+//     w_window2d_int w_win;
+//     convert::from_to(ws, w_win);
+//     std::cout << w_win << std::endl;
+
     image2d<int> ima = convert::to_image(w_win);
     w_window2d_int w_win_2 = convert::to<w_window2d_int>(ima);
     mln_assertion(w_win_2 == w_win);

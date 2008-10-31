@@ -52,7 +52,7 @@ int main()
     };
 
     ima += 2;
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
 
     mln_assertion (ima + 1 == ref);
   }

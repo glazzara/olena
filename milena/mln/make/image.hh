@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_IMAGE1D_HH
-# define MLN_MAKE_IMAGE1D_HH
+#ifndef MLN_MAKE_IMAGE_HH
+# define MLN_MAKE_IMAGE_HH
 
-/*! \file mln/make/image1d.hh
+/*! \file mln/make/image.hh
  *
- * \brief Routine to create an mln::image1d.
+ * \brief Routine to create an image from various input.
  */
 
 # include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
 
 
 namespace mln
@@ -52,16 +54,37 @@ namespace mln
     mln::image1d<V> image1d(V (&values)[L]);
 
 
+    /*! \brief Create an image2d from an 2d array of values.
+     *
+     * \param[in] values 2d array.
+     *
+     * \return A 2D image.
+     */
+    template <typename V, unsigned R, unsigned C>
+    mln::image2d<V> image(V (&values)[R][C]);
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, unsigned L>
-    inline
     mln::image1d<V>
     image1d(V (&values)[L])
     {
+      mlc_bool(L != 0)::check();
       mln::image1d<V> tmp(L);
       for (unsigned ind = 0; ind < L; ++ind)
 	tmp(point1d(ind)) = values[ind];
+      return tmp;
+    }
+
+    template <typename V, unsigned R, unsigned C>
+    mln::image2d<V>
+    image(V (&values)[R][C])
+    {
+      mln::image2d<V> tmp(R, C);
+      for (unsigned row = 0; row < R; ++row)
+	for (unsigned col = 0; col < C; ++col)
+	    tmp(point2d(row, col)) = values[row][col];
       return tmp;
     }
 
@@ -72,4 +95,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_IMAGE1D_HH
+#endif // ! MLN_MAKE_IMAGE_HH

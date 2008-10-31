@@ -57,8 +57,8 @@ int main()
     {1, 0, 1}
   };
 
-  image2d<bool> ima1 (make::image2d(vs));
-  image2d<bool> ima2 (make::image2d(us));
-  image2d<bool> ref (make::image2d(ws));
+  image2d<bool> ima1 (make::image(vs));
+  image2d<bool> ima2 (make::image(us));
+  image2d<bool> ref (make::image(ws));
   mln_assertion (logical::and_not(ima1, ima2) == ref);
 }

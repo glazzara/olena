@@ -31,6 +31,8 @@
 
 /// \file mln/core/image/image2d.hh
 /// \brief Definition of the basic mln::image2d class.
+///
+/// \todo Re-activate include at EOF when make::image2d is up again.
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
@@ -687,6 +689,9 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/make/image2d.hh>
+
+# include <mln/make/image.hh>
+// # include <mln/make/image2d.hh>
+
 
 #endif // ! MLN_CORE_IMAGE_IMAGE2D_HH

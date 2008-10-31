@@ -90,7 +90,7 @@ main ()
       {0, 1, 0},
       {0, 0, 2}
     };
-    image2d<int> ref (make::image2d(vs));
+    image2d<int> ref (make::image(vs));
 
     // Points associated to nodes.
     points_type points;
@@ -117,7 +117,7 @@ main ()
       {0, 0, 0, 1, 1},
       {0, 0, 0, 2, 2},
     };
-    image2d<int> ref (make::image2d(vs));
+    image2d<int> ref (make::image(vs));
 
     // Points associated to nodes.
     points_type points;

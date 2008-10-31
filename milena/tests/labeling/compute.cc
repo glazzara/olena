@@ -52,7 +52,7 @@ int main()
     {2, 0, 3, 3, 3},
     {2, 0, 0, 0, 0}
   };
-  image2d<int_u8> ima = make::image2d(vals);
+  image2d<int_u8> ima = make::image(vals);
   int_u8 nlabels = 3;
 
   accu::sum<int_u8> sum;

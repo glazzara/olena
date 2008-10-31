@@ -82,9 +82,9 @@ int main()
     {1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
   };
 
-  image2d<unsigned> ima (make::image2d(vs));
+  image2d<unsigned> ima (make::image(vs));
   image2d<unsigned> out = geom::seeds2tiling_roundness(ima, w_win, max, c4());
-  image2d<unsigned> ref (make::image2d(ws));
+  image2d<unsigned> ref (make::image(ws));
 
   mln_assertion (ref == out);
 }

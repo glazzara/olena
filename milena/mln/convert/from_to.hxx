@@ -138,10 +138,17 @@ namespace mln
     void
     from_to(const Gpoint<P>& from, mln_delta(P)& to);
 
+
     // Image -> w_window
     template <typename I, typename D, typename W>
     void
     from_to(const Image<I>& from, w_window<D,W>& to);
+
+    // C-array -> w_window
+    template <typename V, unsigned S, typename D, typename W>
+    void
+    from_to(const V (&weight)[S], w_window<D,W>& to);
+
 
     // neighb<W> -> W
     template <typename W>
