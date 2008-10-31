@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -124,6 +125,23 @@ namespace mln
 
 
 
+  namespace convert
+  {
+
+    template <typename D>
+    void
+    from_to(const Gdpoint<D>& from, mln_site(D)& to);
+
+//     template <typename D, unsigned n, typename T>
+//     void
+//     from_to(const Gdpoint<D>& from, algebra::vec<n,T>& to);
+
+//     template <unsigned n, typename T, typename D>
+//     void
+//     from_to(const algebra::vec<n,T>& from, Gdpoint<D>& to);
+
+  } // end of namespace::convert
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -173,6 +191,23 @@ namespace mln
     L tmp = exact(lhs).to_vec() - exact(rhs).to_vec();
     return tmp;
   }
+
+
+  namespace convert
+  {
+
+    template <typename D>
+    inline
+    void
+    from_to(const Gdpoint<D>& dp_, mln_site(D)& p)
+    {
+      enum { n = D::dim };
+      const D& dp = exact(dp_);
+      for (unsigned i = 0; i < n; ++i)
+	p[i] = dp[i];
+    }
+
+  } // end of namespace::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -1,5 +1,40 @@
 2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Clean-up from_to, add some new overloads, and fix (c).
+
+	* milena/tests/core/other/w_window.cc: New.
+	* milena/tests/core/other/Makefile.am: Update.
+	* milena/tests/core/alias/window2d.cc: Remove echos.
+	* milena/mln/make/image2d.hh: New.
+	* milena/tests/make/image2d.cc: New.
+	* milena/tests/make/Makefile.am: Update.
+	* milena/tests/convert/to_image.cc: Fix copyright.
+	(include): Remove; useless.
+	* milena/mln/core/alias/window2d.hh: Fix include.
+	* milena/mln/core/w_window.hh (from_to): New overload.
+	* milena/mln/core/dpoint.hh: Fix (c).
+	* milena/mln/core/concept/weighted_window.hh: Fix (c).
+	* milena/mln/core/concept/object.hh: Include all metal math.
+	Include metal converts_to.
+	* milena/mln/core/concept/window.hh (from_to): New overload.
+	(todo): New.
+	* milena/mln/core/concept/image.hh (from_to): New overload.
+	* milena/mln/core/concept/gpoint.hh: Fix doc.
+	* milena/mln/core/concept/gdpoint.hh (from_to): New overload.
+	* milena/mln/core/def/all.hh: New.
+	* milena/mln/core/window.hh: Fix copyright.
+	* milena/mln/linear/convolve.hh: Fix warning + copyright.
+	* milena/mln/make/image.hh (image): New overload for 3D.
+	* milena/mln/make/w_window2d.hh: Fix copyright.
+	Remove useless include.
+	* milena/mln/convert/to_image.hh
+	(mln_image_from, helper_dim_, helper_image_from_): Remove.
+	Redundant with image_from_grid.
+	(to_image): Update and use convert::from_to.
+	* milena/mln/convert/from_to.hxx: Layout and update.
+
+2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Introduce make::image.
 
 	When there is no ambiguity, the user can call make::image.

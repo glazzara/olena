@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +44,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Gpoint;
 
 
@@ -308,6 +309,7 @@ namespace mln
 
     // Gpoint -> algebra::vec.
     template <typename P, unsigned n, typename T>
+    inline
     void
     from_to(const Gpoint<P>& from_, algebra::vec<n,T>& to)
     {

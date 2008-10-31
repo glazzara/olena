@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_CORE_ALIAS_WINDOW2D_HH
 
 /// \file mln/core/alias/window2d.hh
-/// \brief Definition of the mln::window2d alias and of a construction
+///
+/// Definition of the mln::window2d alias and of a construction
 /// routine.
 ///
 /// \todo c8p etc.
@@ -37,7 +39,7 @@
 # include <mln/core/window.hh>
 # include <mln/core/alias/dpoint2d.hh>
 # include <mln/metal/math/sqrt.hh>
-# include <mln/convert/from_to.hh>
+# include <mln/convert/from_to.hxx>
 
 
 namespace mln

@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/convert/to_image.cc
-/// Tests on mln::convert::to_image.
+/// \file tests/core/other/w_window.cc
+/// \brief Tests on regular weighted windows.
 
+#include <mln/core/w_window.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/core/site_set/p_if.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/level/compare.hh>
-
-#include <mln/convert/to_image.hh>
-#include <mln/convert/to.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  box2d box_3x3 = make::box2d(-1,-1, +1,+1);
-  //                          ^^^^^  ^^^^^
-  //                          from   to
+  int vals[] = { 1, 2, 3,
+		 4, 5, 6,
+		 7, 8, 9 };
+  w_window<dpoint2d,int> w_win;
+  convert::from_to(vals, w_win);
 
-  //         center point
-  //              V
-  bool X[] = { 1, 0, 1,
-	       0, 1, 0,   // < center point
-	       1, 0, 1 };
-
-  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess, 0);
-  window2d win_X = convert::to<window2d>(X);
-  mln_assertion(convert::to_image(win_X) == ima_X);
+  image2d<int> ima;
+  convert::from_to(w_win, ima);
+  mln_assertion(ima.domain() == make::box2d(-1,-1, 1,1));
 }

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,17 @@
 #ifndef MLN_CORE_CONCEPT_IMAGE_HH
 # define MLN_CORE_CONCEPT_IMAGE_HH
 
-/*! \file mln/core/concept/image.hh
- * \brief Definition of the concept of mln::Image.
- */
+/// \file mln/core/concept/image.hh
+///
+/// Definition of the concept of mln::Image.
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/mesh.hh>
 
 # include <mln/core/trait/all.hh> // FIXME: Move out of core!
 # include <mln/core/macros.hh>
+# include <mln/core/site_set/box.hh>
+
 # include <mln/trait/concrete.hh> // FIXME: Should be in all.hh!
 # include <mln/trait/images.hh>
 
@@ -107,6 +110,18 @@ namespace mln
   protected:
     Image();
   };
+
+
+
+  namespace convert
+  {
+
+    template <typename V, unsigned S, typename I>
+    void
+    from_to(const V (&values)[S], Image<I>& to);
+
+  } // end of namespace mln::convert
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -224,10 +239,40 @@ namespace mln
       E>::run();
   }
 
+
+  namespace convert
+  {
+
+    template <typename V, unsigned S, typename I>
+    void
+    from_to(const V (&values)[S], Image<I>& to_)
+    {
+      mlc_bool(S != 0)::check();
+      mlc_converts_to(V, mln_value(I))::check();
+      typedef mln_site(I) P;
+      enum { d = P::dim,
+	     s = mlc_root(d,S)::value / 2 };
+      metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+
+      I& to = exact(to_);
+      mln_precondition(! to.has_data());
+
+      box<P> b(all_to(0), all_to(2 * s));
+      to.init_(b);
+      mln_fwd_piter(box<P>) p(b);
+      unsigned i = 0;
+      for_all(p)
+	to(p) = values[i++];
+    }
+
+  } // end of namespace mln::convert
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
+
 # include <mln/core/routine/initialize.hh>
+
 
 #endif // ! MLN_CORE_CONCEPT_IMAGE_HH

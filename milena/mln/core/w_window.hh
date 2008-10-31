@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,11 @@
 #ifndef MLN_CORE_W_WINDOW_HH
 # define MLN_CORE_W_WINDOW_HH
 
-/*! \file mln/core/w_window.hh
- *
- * \brief Definition of the generic weighted window class mln::w_window.
- */
+/// \file mln/core/w_window.hh
+///
+/// Definition of the generic weighted window class mln::w_window.
+///
+/// \todo Generalize W_Window -> Image.
 
 # include <map>
 
@@ -43,8 +45,8 @@
 
 # include <mln/value/ops.hh>
 # include <mln/util/ord.hh>
-# include <mln/metal/converts_to.hh>
-# include <mln/metal/math/root.hh>
+# include <mln/level/fill.hh>
+# include <mln/geom/bbox.hh> // FIXME: We may have some dep trouble with this include.
 # include <mln/literal/zero.hh>
 # include <mln/convert/to.hh>
 
@@ -149,6 +151,10 @@ namespace mln
     inline
     void
     from_to(const Image<I>& from, w_window<D,W>& to);
+
+    template <typename D, typename W, typename I>
+    void
+    from_to(const w_window<D,W>& from, Image<I>& to);
 
     template <typename V, unsigned S, typename D, typename W>
     void
@@ -331,12 +337,11 @@ namespace mln
   {
 
     template <typename I, typename D, typename W>
-    inline
     void
     from_to(const Image<I>& from_, w_window<D,W>& to)
     {
       mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
-      mlc_converts_to(mln_value(I),  W)::check();
+      mlc_converts_to(mln_value(I), W)::check();
       const I& ima = exact(from_);
       to.clear();
       mln_piter(I) p(ima.domain());
@@ -345,10 +350,54 @@ namespace mln
 	  to.insert(ima(p), convert::to<D>(p));
     }
 
+    template <typename D, typename W, typename I>
+    void
+    from_to(const w_window<D,W>& w_win, Image<I>& ima_)
+    {
+      typedef mln_site(I) P;
+      mlc_converts_to(D, mln_delta(P))::check();
+      mlc_converts_to(W, mln_value(I))::check();
+
+      I& ima = exact(ima_);
+      mln_precondition(! ima.has_data());
+      // mln_precondition(w_win.is_valid());
+
+      ima.init_(geom::bbox(w_win));
+      level::fill(ima, literal::zero);
+ 
+      unsigned n = w_win.size();
+      for (unsigned i = 0; i < n; ++i)
+	ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
+    }
+
+    // FIXME: Sample code (below) to generalize the code above:
+
+//     template <typename W>
+//     inline
+//     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win_)
+//     {
+//       const W& w_win = exact(w_win_);
+//       mln_precondition(! w_win.is_empty());
+
+//       typedef mln_psite(W) P;
+//       box<P> b = geom::bbox(w_win);
+//       mln_image_from(W, mln_weight(W)) ima(b);
+//       // Fill the image with zeros, as (weighted) windows are not
+//       // necessarily box-shaped (there might be holes corresponding to
+//       // null weights).
+//       level::fill(ima, literal::zero);
+//       P O = P::origin;
+//       mln_qiter(W) q(w_win, O);
+//       for_all(q)
+// 	ima(q) = q.w();
+//       return ima;
+//     }
+
     template <typename V, unsigned S, typename D, typename W>
     void
     from_to(const V (&weight)[S], w_window<D,W>& to)
     {
+      mlc_bool(S != 0)::check();
       mlc_converts_to(V, W)::check();
       enum { d = D::dim,
 	     s = mlc_root(d,S)::value / 2 };

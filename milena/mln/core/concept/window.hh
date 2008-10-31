@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,12 +38,20 @@
  *
  * \todo The is_centered() method could also exist when the window is
  * not regular...
+ *
+ * \todo Remove hack.
  */
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
 # include <mln/trait/windows.hh>
+
 # include <mln/core/site_set/p_array.hh>
+
+# include <mln/accu/bbox.hh>
+# include <mln/literal/origin.hh>
+# include <mln/level/fill.hh>
+# include <mln/convert/from_to.hxx>
 
 
 
@@ -60,8 +69,9 @@ mln::metal::and_< mlc_is(mln_trait_window_size(W),					\
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Window;
+
 
   // Window category flag type.
   template <>
@@ -105,14 +115,18 @@ namespace mln
 
 
 
-  template <typename W>
-  void check_simple(const Window<W>& win);
+  namespace convert
+  {
+
+    template <typename W, typename I>
+    void
+    from_to(const Window<W>& from, Image<I>& to);
+
+  } // end of namespace mln::convert
 
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
 
   namespace internal
   {
@@ -273,7 +287,7 @@ namespace mln
       ostr << " ]";
     }
     
-  } // end of namespace mln
+  } // end of namespace mln::internal
 
   template <typename W>
   inline
@@ -288,6 +302,56 @@ namespace mln
 		    ostr, exact(win));
     return ostr;
   }
+
+
+  namespace convert
+  {
+
+    namespace internal
+    {
+
+
+      // FIXME: Hack to avoid including geom::bbox (circular
+      // dependency).
+
+      template <typename W>
+      box<mln_psite(W)> bbox_(const Window<W>& win)
+      {
+	typedef mln_psite(W) P;
+	accu::bbox<P> b;
+	P O = literal::origin;
+	mln_qiter(W) q(exact(win), O);
+	for_all(q)
+	  b.take(q);
+	return b;
+      }
+
+    }
+
+    template <typename W, typename I>
+    void
+    from_to(const Window<W>& win_, Image<I>& ima_)
+    {
+      mln_is_simple_window(W)::check();
+      typedef mln_psite(I) P;
+      mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
+      mlc_equal(mln_value(I), bool)::check();
+
+      const W& win = exact(win_);
+      I& ima = exact(ima_);
+
+      // mln_precondition(win.is_valid());
+      mln_precondition(! ima.has_data());
+
+      ima.init_(internal::bbox_(win)); // geom::bbox(win));
+      level::fill(ima, false);
+ 
+      unsigned n = win.size();
+      for (unsigned i = 0; i < n; ++i)
+	ima(convert::to<P>(win.dp(i))) = true;
+    }
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

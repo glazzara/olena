@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,34 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/convert/to_image.cc
-/// Tests on mln::convert::to_image.
+#ifndef MLN_MAKE_IMAGE2D_HH
+# define MLN_MAKE_IMAGE2D_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/core/site_set/p_if.hh>
-#include <mln/fun/p2b/chess.hh>
-#include <mln/level/compare.hh>
+/// \file mln/make/image2d.hh
+///
+/// Routine to create a 2D image from a 1D array.
 
-#include <mln/convert/to_image.hh>
-#include <mln/convert/to.hh>
+# include <mln/core/image/image2d.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  box2d box_3x3 = make::box2d(-1,-1, +1,+1);
-  //                          ^^^^^  ^^^^^
-  //                          from   to
+  namespace make
+  {
 
-  //         center point
-  //              V
-  bool X[] = { 1, 0, 1,
-	       0, 1, 0,   // < center point
-	       1, 0, 1 };
+    /*! \brief Create an image2d from an 2D array of values.
+     *
+     * \param[in] values 2D array.
+     *
+     * \return A 2D image.
+     */
+    template <typename V, unsigned S>
+    mln::image2d<V>
+    image2d(V (&values)[S]);
 
-  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess, 0);
-  window2d win_X = convert::to<window2d>(X);
-  mln_assertion(convert::to_image(win_X) == ima_X);
-}
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename V, unsigned S>
+    mln::image2d<V>
+    image2d(V (&values)[S])
+    {
+      mlc_bool(S != 0)::check();
+      enum { s = mlc_sqrt_int(S) / 2 };
+      metal::bool_<((2 * s + 1) * (2 * s + 1) == S)>::check();
+      mln::image2d<V> tmp;
+      convert::from_to(values, tmp);
+      return tmp;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::make
+
+} // end of namespace mln
+
+
+#endif // ! MLN_MAKE_IMAGE2D_HH

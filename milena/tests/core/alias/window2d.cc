@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/alias/window2d.cc
- *
- * \brief Tests on mln::window2d.
- */
+/// \file tests/core/alias/window2d.cc
+///
+/// Tests on mln::window2d.
 
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/convert/to_image.hh>
-#include <mln/debug/println.hh>
-#include <mln/logical/not.hh>
-
 
 
 int main()
@@ -50,9 +47,11 @@ int main()
   w .insert(-1,-1)
     .insert( 1, 1);
 
-  image2d<bool> ima = convert::to_image(w);
-  debug::println(ima);
-  debug::println(logical::not_(ima));
-
   mln_assertion(w.delta() == 1);
+
+  // The code below is equivalent to:
+  //   image2d<bool> ima;
+  //   convert::from_to(w, ima);
+  image2d<bool> ima = convert::to_image(w);
+  (void) ima;
 }

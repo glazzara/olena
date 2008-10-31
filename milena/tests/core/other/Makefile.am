@@ -20,7 +20,8 @@ check_PROGRAMS =				\
   pixter2d_more					\
   pixter3d					\
   pixter3d_more					\
-  point_set_compatibility
+  point_set_compatibility			\
+  w_window
 
 box_runstart_piter_SOURCES = box_runstart_piter.cc
 category_SOURCES = category.cc
@@ -40,5 +41,6 @@ pixter2d_more_SOURCES = pixter2d_more.cc
 pixter3d_SOURCES = pixter3d.cc
 pixter3d_more_SOURCES = pixter3d_more.cc
 point_set_compatibility_SOURCES = point_set_compatibility.cc
+w_window_SOURCES = w_window.cc
 
 TESTS = $(check_PROGRAMS)

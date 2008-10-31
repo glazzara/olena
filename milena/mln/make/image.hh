@@ -29,13 +29,14 @@
 #ifndef MLN_MAKE_IMAGE_HH
 # define MLN_MAKE_IMAGE_HH
 
-/*! \file mln/make/image.hh
- *
- * \brief Routine to create an image from various input.
- */
+/// \file mln/make/image.hh
+///
+/// Routine to create an image from values given as a C-array.
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
+
 
 
 namespace mln
@@ -44,19 +45,19 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an image1d from an 1d array of values.
+    /*! \brief Create an image1d from an 1D array of values.
      *
-     * \param[in] values 1d array.
+     * \param[in] values 1D array.
      *
      * \return A 1D image.
      */
     template <typename V, unsigned L>
-    mln::image1d<V> image1d(V (&values)[L]);
+    mln::image1d<V> image(V (&values)[L]);
 
 
-    /*! \brief Create an image2d from an 2d array of values.
+    /*! \brief Create an image2d from an 2D array of values.
      *
-     * \param[in] values 2d array.
+     * \param[in] values 2D array.
      *
      * \return A 2D image.
      */
@@ -64,11 +65,22 @@ namespace mln
     mln::image2d<V> image(V (&values)[R][C]);
 
 
+    /*! \brief Create an image3d from an 3D array of values.
+     *
+     * \param[in] values 3D array.
+     *
+     * \return A 3D image.
+     */
+    template <typename V, unsigned S, unsigned R, unsigned C>
+    mln::image3d<V> image(V (&values)[S][R][C]);
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename V, unsigned L>
     mln::image1d<V>
-    image1d(V (&values)[L])
+    image(V (&values)[L])
     {
       mlc_bool(L != 0)::check();
       mln::image1d<V> tmp(L);
@@ -81,10 +93,24 @@ namespace mln
     mln::image2d<V>
     image(V (&values)[R][C])
     {
+      mlc_bool(R != 0 && C != 0)::check();
       mln::image2d<V> tmp(R, C);
       for (unsigned row = 0; row < R; ++row)
 	for (unsigned col = 0; col < C; ++col)
-	    tmp(point2d(row, col)) = values[row][col];
+	    tmp.at(row, col) = values[row][col];
+      return tmp;
+    }
+
+    template <typename V, unsigned S, unsigned R, unsigned C>
+    mln::image3d<V>
+    image(V (&values)[S][R][C])
+    {
+      mlc_bool(S != 0 && R != 0 && C != 0)::check();
+      mln::image3d<V> tmp(S, R, C);
+      for (unsigned sli = 0; sli < S; ++sli)
+	for (unsigned row = 0; row < R; ++row)
+	  for (unsigned col = 0; col < C; ++col)
+	    tmp.at(sli, row, col) = values[sli][row][col];
       return tmp;
     }
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -78,6 +79,8 @@ namespace mln
       {
 	mln_precondition(exact(input).has_data());
 	// mln_precondition(exact(w_win).is_valid());
+	(void) input;
+	(void) w_win;
       }
 
     }  // end of namespace mln::linear::internal
