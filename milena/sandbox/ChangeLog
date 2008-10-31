@@ -1,3 +1,12 @@
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Add snake_2d.
+	* inim/binarization/snake_2d.hh: New, The snake_2d function takes an
+	  accumulator, an image and a window and return the ouput image of
+	  the accumulator applies on the input image.
+	* inim/binarization: New.
+	* inim: New.
+
 2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Make use of maj_h. Fix Makefile.
