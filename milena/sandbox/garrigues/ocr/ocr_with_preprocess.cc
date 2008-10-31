@@ -38,22 +38,27 @@
 #include "resize.hh"
 #include "enlarge.hh"
 #include "skeleton.hh"
+
 #include <mln/linear/gaussian.hh>
 
 #include <mln/trace/all.hh>
+
+#include <mln/fun/p2v/ternary.hh>
+#include <mln/pw/image.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/labeling/regional_maxima.hh>
+#include <mln/morpho/dilation.hh>
+#include <mln/win/octagon2d.hh>
+
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/core/alias/w_window2d_float.hh>
-
-#include <mln/debug/println.hh>
-#include <mln/geom/chamfer.hh>
-#include <mln/make/win_chamfer.hh>
-#include <mln/labeling/regional_maxima.hh>
-#include <mln/morpho/dilation.hh>
+#include <mln/logical/not.hh>
 
 #include <tesseract/baseapi.h>
+
 
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
@@ -93,38 +98,69 @@ int main(int argc, char** argv)
   io::pbm::load(input, argv[1]);
 
   // Resize
-  image2d<int_u8> output = enlarge(input, 1);
+  std::cerr << "Enlarge the image" << std::endl;
+  image2d<int_u8> enlarged = enlarge(logical::not_(input), 2);
+  //image2d<bool> enlarged = geom::resize(logical::not_(input), 4);
+  io::pgm::save(enlarged, "1_enlage.pgm");
 
-  // TODO CLEANUP
-#if 1
   // Blur.
-  output = linear::gaussian(output, 1);
-#endif
+  std::cerr << "Blur the enlarged image" << std::endl;
+//   image2d<int_u8> blur = linear::gaussian(fun::p2v::ternary(pw::value(enlarged), pw::cst(int_u8(255)), pw::cst(int_u8(0))) | enlarged.domain(),
+// 					  4);
+  image2d<int_u8> blur = linear::gaussian(enlarged, 1);
 
-#if 1
+  io::pgm::save(blur, "2_gaussian.pgm");
+
+  // Crest.
+//   image2d<bool> c = crest(enlarged, blur, c4());
+//   io::pbm::save(c, "3_crest.pbm");
+
+
+
   // Threshold
-  mln_piter_(image2d<unsigned>) p(output.domain());
-  for_all(p)
+  image2d<bool> binary;
   {
-    output(p) = output(p) > 150 ? 255 : 0;
+    std::cerr << "Threshold the blur image" << std::endl;
+
+//     // Compute the histogram.
+//     histo::data<int_u8> h = histo::compute(blur);
+//     image1d<std::size_t> h_ima = convert::to_image(h);
+
+//     // Blur the histogram.
+//     h_ima = linear::gaussian(h_ima, 4);
+
+//     // Get the maxima.
+//     unsigned n;
+//     image1d<std::size_t> maxs = regional_maxima(h_ima, c2(), n);
+//     mln_piter()
+
+
+    initialize(binary, blur);
+    mln_piter_(image2d<int_u8>) p(blur.domain());
+    for_all(p)
+      binary(p) = blur(p) > 100;
+
+    io::pbm::save(binary, "3_threshold.pbm");
   }
-#endif
 
-#if 0
-  // Compute chamfer distance map.
-  const w_window2d_int& w_win = make::mk_chamfer_3x3_int<8, 0> ();
-  image2d<unsigned> out = geom::chamfer(output, w_win, 255);
+  // Skeleton
+  std::cerr << "Compute the skeleton" << std::endl;
+  image2d<bool> skel = skeleton(binary, 4);
+  io::pbm::save(skel, "4_skeleton.pbm");
 
-  for_all(p)
-  {
-    out(p) = out(p) > 10 ? 255 : 0;
-  }
-#endif
+  // Dilation
+  std::cerr << "Dilate the skeleton" << std::endl;
+  win::octagon2d oct(7);
+  for (unsigned i = 0; i < 1; i++)
+    skel = morpho::dilation(skel, oct);
 
-  io::pgm::save(cast_image<int_u8>(output), argv[2]);
+  io::pbm::save(skel, "5_dilation.pbm");
 
-  std::cout << "> with preprocessing." << std::endl;
-  char* s = tesseract("fra", output);
+  io::pbm::save(skel, argv[2]);
+
+  std::cerr << "Text recognition" << std::endl;
+  char* s = tesseract("fra", clone(logical::not_(skel)));
+  std::cerr << "Tesseract result:"<< std::endl;
   std::cout << s;
   free(s);
 }

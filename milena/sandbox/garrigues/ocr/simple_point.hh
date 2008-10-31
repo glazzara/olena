@@ -139,7 +139,7 @@ namespace mln
     for_all(n)
     {
       res = (res << 1);
-      if (ima(n) == object)
+      if (ima.domain().has(n) && ima(n) == object)
 	res = res | 1;
     }
 
@@ -152,18 +152,43 @@ namespace mln
     }
   }
 
-  bool is_curve_extremum(const image2d<bool>& ima, unsigned nbh, const point2d& p)
+  bool is_curve_extremum(const image2d<bool>& ima, unsigned nbh_i, const point2d& p_, unsigned deep)
   {
+//     return false;
     unsigned cpt = 0;
-    mln_bkd_niter_(neighb2d) n(c8() , p);
+    mln_site_(image2d<bool>) next = p_;
+    mln_site_(image2d<bool>) p = next;
+    mln_niter_(neighb2d) n(int_to_neighb(nbh_i) , p);
 
+    p = next;
     for_all(n)
     {
-      if (ima(n) == true)
+      if (ima.domain().has(n) && ima(n) == true)
+      {
+	next = n;
 	cpt++;
+      }
+    }
+    if (cpt != 1)
+      return false;
+
+    for (unsigned i = 0; i < deep - 1; i++)
+    {
+      cpt = 0;
+      p = next;
+      for_all(n)
+      {
+	if (ima.domain().has(n) && ima(n) == true)
+	{
+	  next = n;
+	  cpt++;
+	}
+      }
+      if (cpt != 2)
+	return false;
     }
 
-    return cpt == 1;
+    return true;
   }
 
   bool is_simple_point2d(const image2d<bool>& ima, unsigned nbh, const point2d& p)

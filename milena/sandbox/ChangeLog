@@ -1,3 +1,22 @@
+2008-10-31  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve Skeleton computation.
+
+	* garrigues/ocr/check_simple_point.cc: New. check the analysis of the
+	local configuration of a pixel.
+	* garrigues/ocr/enlarge.hh: Add routine for int_u8 images.
+	* garrigues/ocr/ocr_with_preprocess.cc: Add the use of skeleton in the
+	ocr preprocessing.
+	* garrigues/ocr/simple_point.cc: .
+	* garrigues/ocr/simple_point.hh: .
+	* garrigues/ocr/skel.cc: Remove.
+	* garrigues/ocr/skeleton.cc: Remove.
+	* garrigues/ocr/skeleton.old.cc: New.
+	* garrigues/ocr/skeleton.old.hh: New.
+
+	* garrigues/ocr/Makefile: .
+	* garrigues/ocr/check.sh: .
+
 2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
 	Add snake_2d.

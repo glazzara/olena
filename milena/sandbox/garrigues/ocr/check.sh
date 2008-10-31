@@ -22,7 +22,6 @@ for i in input/*.pbm ; do
     d_without=`diff  ./tmp/without tmp/ref | diffstat | grep insert | sed -r 's/.*, ([0-9]+) insertion.*/\1/g'`
     echo "$(($d_without * 100 / $total))% missmatch without preprocessing"
 
-    ./ocr_with_preprocess $i tmp/`basename $i` | sed -e 's/\(.\)/\1\n/g' > tmp/with
     d_with=`diff  ./tmp/with tmp/ref | diffstat | grep insert | sed -r 's/.*, ([0-9]+) insertion.*/\1/g'`
     echo "$(($d_with * 100 / $total))% missmatch with preprocessing"
     echo ""

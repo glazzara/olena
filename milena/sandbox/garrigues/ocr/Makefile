@@ -19,3 +19,8 @@ tmp:
 
 check: logs tmp ocr_without_preprocess ocr_with_preprocess
 	./check.sh
+
+skeleton: skeleton.cc
+	g++ -DNDEBUG -W -Wall -Wextra ${CXXFLAGS} $< -o $@
+
+.PHONY: skeleton

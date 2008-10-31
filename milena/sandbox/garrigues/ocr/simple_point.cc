@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
   mln_piter_(I) p(input.domain());
   for_all(p)
-    if (input(p) && simple_point2d(input, 8, p))
+    if (input(p) && simple_point2d(input, 4, p))
       output(p) = true;
 
   io::pbm::save(output, argv[2]);
