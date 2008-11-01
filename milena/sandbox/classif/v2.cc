@@ -40,45 +40,30 @@ fill_histo(const I& ima, int f)
 
 template <typename I, typename J, typename N>
 unsigned
-compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f, int lambda)
+compute_max_tree(const I& ima, const J& histo, const N& nbh,
+                 const unsigned f, float lambda, float ratio)
 {
   max_tree_<J,N> run(histo, nbh);
-#if 0
-  I out(ima.domain());
-  mln_piter(I) p(ima.domain());
-  for_all(p)
-  {
-    //color at ima(p)
-    point3d v = point3d(ima(p).red()   / f,
-                        ima(p).green() / f,
-                        ima(p).blue()  / f);
-    //node the class of color with same density as v
-    point3d pn = run.parent(v);
-    //out(p) = color pn
-    out(p) = value::rgb8(pn[0] * f, pn[1] * f, pn[2] * f);
-  }
-  io::ppm::save(out, "tmp.ppm");
-#endif
 
   //run.number_of_nodes();
-  run.volume();
 
-  run.nb_represent_fusion(lambda);
+  run.volume();
   run.volume_fusion(lambda);
-  run.color_fusion(5);
+  run.density_fusion(ratio);
 
   run.compute_mean_color();
-  run.print_class_info();
   run.to_ppm(ima, "out.ppm", f);
+
+  run.print_class_info();
 
   //std::cout << " Number of nodes : " << run.number_of_nodes() << std::endl;
 }
 
 bool usage(int argc, char ** argv)
 {
-  if (argc != 4)
+  if (argc != 5)
   {
-    std::cout << "usage: " << argv[0] << " image div_factor lambda" << std::endl;
+    std::cout << "usage: " << argv[0] << " image div_factor lambda ratio" << std::endl;
     return false;
   }
   return true;
@@ -92,7 +77,8 @@ int main(int argc, char* argv[])
   image2d<value::rgb8> ima;
   ima = io::ppm::load<value::rgb8>(argv[1]);
   const int div_factor = atoi(argv[2]);
-  const int lambda = atoi(argv[3]);
+  const float lambda = atof(argv[3]);
+  const float ratio = atof(argv[4]);
 
   //make histo
   image3d<unsigned> histo = fill_histo(ima, div_factor);
@@ -104,5 +90,5 @@ int main(int argc, char* argv[])
   //debug::println(phisto);
 
   // Compute max_tree
-  compute_max_tree(ima, histo, c6(), div_factor, lambda);
+  compute_max_tree(ima, histo, c6(), div_factor, lambda, ratio);
 }

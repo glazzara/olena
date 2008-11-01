@@ -91,6 +91,16 @@ struct max_tree_
 
   } // end of run()
 
+  point active_parent(const point& p)
+  {
+    if(is_root(p))
+      return p;
+    point node = parent(p);
+    while (not is_active(node))
+      node = parent(node);
+    return node;
+  }
+
   void make_set(const point& p)
   {
     parent(p) = p;
@@ -124,13 +134,13 @@ struct max_tree_
 	vol(p) += 1;
 	nb_represent(p) += f(p);
 
-	if (parent(p) != p)
+	if (not is_root(p))
 	{
-	  nb_represent(parent(p)) += nb_represent(p);
+          nb_represent(parent(p)) += nb_represent(p);
 	  vol(parent(p)) += vol(p);
 	}
 
-	density(p) = nb_represent(p) / (double) vol(p);
+	density(parent(p)) = (nb_represent(parent(p)) - nb_represent(p)) / (double) (vol(parent(p)) - vol(p));
       }
     }
 
@@ -144,6 +154,31 @@ struct max_tree_
 	          << "   f            = " << f(p) << std::endl
 		  << "   density      = " << density(p) << " representant / vertices " << std::endl << std::endl;
       }
+    }
+  }
+
+  void density_fusion(float ratio)
+  {
+    assert(ratio < 1);
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (density(active_parent(p)) > (1 - ratio) * density(p) &&
+          density(active_parent(p)) < (1 + ratio) * density(p))
+	is_active(p) = false;
+    }
+  }
+
+  void density_closing(float lambda)
+  {
+    assert(ratio < 1);
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (density(p) < lambda)
+	is_active(p) = false;
     }
   }
 
@@ -214,7 +249,6 @@ struct max_tree_
       while (not is_active(node))
 	node = parent(node);
 
-write:
       out(p) = value::rgb8(static_cast<unsigned char>(mean_color(node)[0] * f),
 	                   static_cast<unsigned char>(mean_color(node)[1] * f),
 			   static_cast<unsigned char>(mean_color(node)[2] * f));
