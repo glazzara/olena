@@ -38,45 +38,100 @@ fill_histo(const I& ima, int f)
   return histo;
 }
 
+template <typename I>
+image3d< double >
+compute_density(const I& weight, const I& volume)
+{
+  image3d< double > density(volume.domain());
+
+  mln_piter(I) p(volume.domain());
+  for_all(p)
+    density(p) = weight(p) / volume(p);
+
+  return density;
+}
+
 template <typename I, typename J, typename N>
 unsigned
-compute_max_tree(const I& ima, const J& histo, const N& nbh,
-                 const unsigned f, float lambda, float ratio)
+process_max_tree(const I& ima, const J& histo, const N& nbh,
+                 double density_lambda, unsigned volume_lambda,
+		 unsigned nb_represent_lambda, unsigned color_lambda,
+		 unsigned div_factor)
 {
   max_tree_<J,N> run(histo, nbh);
 
 
-  run.volume();
+  // FIXME: write a compute() method with functor argument
+  image3d<unsigned> nb_represent		  = run.compute_nb_represent();
+  image3d<unsigned> volume			  = run.compute_volume();
+  image3d< algebra::vec<3, double> > mean_color	  = run.compute_mean_color();
+  image3d<double> density			  = compute_density(nb_represent, volume);
 
-  std::cout << "step 1 - nb_represent fusion" << std::endl;
-  //run.nb_represent_fusion(lambda);
-  std::cout << "step 2 - volume fusion" << std::endl;
-  //run.volume_fusion(lambda);
-  std::cout << "step 3 - color fusion" << std::endl;
-  //run.color_fusion(lambda);
-  std::cout << "step 3 - density fusion" << std::endl;
-  //run.density_fusion(ratio);
+  // Density closing
+  if (density_lambda > 0.00001)
+  {
+    std::cout << "Density cutting" << std::endl;
+    run.nuclear_fusion(density, density_lambda);
+  }
 
-  std::cout << "step Update parents" << std::endl;
-  run.update_parents();
+  // Volume cutting
+  if (volume_lambda != 0)
+  {
+    std::cout << "Volume cutting" << std::endl;
+    run.lumberjack(volume, volume_lambda);
+  }
 
-  std::cout << "step Compute mean color" << std::endl;
+  // Represent cutting
+  if (nb_represent_lambda != 0)
+  {
+    std::cout << "nb_represent cutting" << std::endl;
+    run.lumberjack(nb_represent, nb_represent_lambda);
+  }
+
+  // Color fusion
+  if (color_lambda != 0)
+  {
+    std::cout << "Color fusion" << std::endl;
+    run.color_fusion(color_lambda); // FIXME: factorize the code with a functor
+  }
+
+  // Compute mean color of active nodes
+  std::cout << "Compute mean color" << std::endl;
   run.compute_mean_color();
 
-  std::cout << "step Print class info" << std::endl;
-  run.print_class_info();
+  // Print informations on the filtered max tree
+  {
+    int nb_class = 0;
 
-  std::cout << "step Output image" << std::endl;
-  run.to_ppm(ima, "out.ppm", f);
+    mln_piter(image3d<unsigned>) p(nb_represent.domain());
+
+    std::cerr.precision(2);
+
+    std::cerr << "Color\t\tId\t\tdensity\t\tvolume\t\tnb_represent" << std::endl;
+
+    for_all(p)
+      if (run.is_active(p))
+      {
+	std::cerr << mean_color(p)  << "\t\t" << nb_class << "\t\t" << density(p) << "\t\t" << volume(p) << "\t\t" << nb_represent(p) << std::endl;
+	++nb_class;
+      }
+
+    std::cout << "Number of classes : " << nb_class << std::endl;
+  }
+
+
+  // Write the image w.r.t. the max tree
+  run.to_ppm(ima, "out.ppm", div_factor, mean_color);
 }
 
 bool usage(int argc, char ** argv)
 {
-  if (argc != 5)
+  if (argc != 7)
   {
-    std::cout << "usage: " << argv[0] << " image div_factor lambda ratio" << std::endl;
+    std::cout << "usage: " << argv[0] << " image div_factor density_lambda volume_lambda nb_represent_lambda color_lambda" << std::endl;
     return false;
   }
+
   return true;
 }
 
@@ -86,10 +141,14 @@ int main(int argc, char* argv[])
     return 1;
 
   image2d<value::rgb8> ima;
+
   ima = io::ppm::load<value::rgb8>(argv[1]);
-  const int div_factor = atoi(argv[2]);
-  const float lambda = atof(argv[3]);
-  const float ratio = atof(argv[4]);
+
+  int div_factor = atoi(argv[2]);
+  float density_lambda = atof(argv[3]);
+  unsigned volume_lambda = atoi(argv[4]);
+  unsigned nb_represent_lambda = atoi(argv[5]);
+  unsigned color_lambda = atoi(argv[6]);
 
   //make histo
   image3d<unsigned> histo = fill_histo(ima, div_factor);
@@ -98,8 +157,6 @@ int main(int argc, char* argv[])
   accu::mean<unsigned, unsigned, unsigned> mean;
   image2d<unsigned> phisto = proj(histo, mean);
 
-  //debug::println(phisto);
-
-  // Compute max_tree
-  compute_max_tree(ima, histo, c6(), div_factor, lambda, ratio);
+  // Process max_tree
+  process_max_tree(ima, histo, c6(), density_lambda, volume_lambda, nb_represent_lambda, color_lambda, div_factor);
 }

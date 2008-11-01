@@ -37,21 +37,16 @@ struct max_tree_
   mln_ch_value(I, point) new_parent;
   mln_ch_value(I, point) zpar;
 
-  // image of volumes
-  image3d<unsigned> vol;
-  image3d<unsigned> nb_represent;
-  image3d<double> density;
-
   //tags
   image3d<bool> is_active;
-  image3d< algebra::vec<3, double> > mean_color;
 
   max_tree_(const I& f, const N& nbh)
-    : f(f), nbh(nbh), vol(f.domain()), nb_represent(f.domain()), density(f.domain()),
-      is_active(f.domain()), mean_color(f.domain()), new_parent(f.domain())
+    : f(f), nbh(nbh), is_active(f.domain()), new_parent(f.domain())
   {
     run();
     level::fill(is_active, true);
+
+    new_parent = parent;
   }
 
   void run()
@@ -94,11 +89,11 @@ struct max_tree_
 
   point active_parent(const point& p)
   {
-    if(is_root(p))
-      return p;
-    point node = parent(p);
-    while (not is_active(node))
-      node = parent(node);
+    point node = new_parent(p);
+
+    while (not is_active(node) && not is_root(node))
+      node = new_parent(node);
+
     return node;
   }
 
@@ -108,163 +103,169 @@ struct max_tree_
     zpar(p) = p;
   }
 
-  void area()
+  image3d<unsigned> compute_nb_represent()
   {
-    image2d<value::int_u16> area(f.domain());
-    level::fill(area, 1);
-    mln_fwd_piter(S) p(s);
-    for_all(p)
-    {
-      if (parent(p) == p)
-        continue;
-      area(parent(p)) += area(p);
-    }
-    debug::println(area);
-  }
+    image3d<unsigned> nb_represent(f.domain());
 
-  void volume()
-  {
-    level::fill(vol, 0);
     level::fill(nb_represent, 0);
-
-    {
-      mln_fwd_piter(S) p(s);
-
-      for_all(p)
-      {
-	vol(p) += 1;
-	nb_represent(p) += f(p);
-
-	if (not is_root(p))
-	{
-          nb_represent(parent(p)) += nb_represent(p);
-	  vol(parent(p)) += vol(p);
-	}
-
-	density(parent(p)) = (nb_represent(parent(p)) - nb_represent(p)) / (double) (vol(parent(p)) - vol(p));
-      }
-    }
-
-    {
-      mln_fwd_piter(S) p(s);
-      for_all(p)
-      {
-	std::cerr << " Color " << p << std::endl
-	          << "   vol          = " << vol(p) << " vertices" << std::endl
-	          << "   nb_represent = " << nb_represent(p) << std::endl
-	          << "   f            = " << f(p) << std::endl
-		  << "   density      = " << density(p) << " representant / vertices " << std::endl << std::endl;
-      }
-    }
-  }
-
-  void density_fusion(float ratio)
-  {
-    assert(ratio < 1);
-
     mln_fwd_piter(S) p(s);
+
     for_all(p)
     {
-      if (density(active_parent(p)) > (1 - ratio) * density(p) &&
-          density(active_parent(p)) < (1 + ratio) * density(p))
-	is_active(p) = false;
+      nb_represent(p) += f(p);
+      if (not is_root(p))
+        nb_represent(parent(p)) += nb_represent(p);
     }
+
+    return nb_represent;
   }
 
-  void density_closing(float lambda)
+  image3d<unsigned> compute_volume()
   {
-    assert(ratio < 1);
+    image3d<unsigned> volume(f.domain());
 
+    level::fill(volume, 0);
     mln_fwd_piter(S) p(s);
+
     for_all(p)
     {
-      if (density(p) < lambda)
-	is_active(p) = false;
+      volume(p) += 1;
+      if (not is_root(p))
+        volume(parent(p)) += volume(p);
     }
+
+    return volume;
   }
 
-  void compute_mean_color()
+  image3d< algebra::vec<3, double> > compute_mean_color()
   {
-    level::fill(mean_color, make::vec(0, 0, 0));
+    image3d< algebra::vec<3, double> > mean_color(f.domain());
+
+    update_parents();
 
     mln_fwd_piter(S) p(s);
     for_all(p)
       mean_color(p) = make::vec(p[0], p[1], p[2]);
 
     for_all(p)
-      mean_color(parent(p)) = (mean_color(parent(p)) + mean_color(p)) / 2.;
+      mean_color(new_parent(p)) = (mean_color(new_parent(p)) + mean_color(p)) / 2.;
 
-    for_all(p)
-      if (mean_color(p)[0] < 10 && mean_color(p)[1] < 10 && mean_color(p)[2] < 10)
-	std::cerr << "Warning " << p << " == " << mean_color(p) << std::endl;
+    return mean_color;
   }
 
-  // Cut components with less represents than lambda
-  void volume_fusion(int lambda)
+  template<typename X>
+  void lumberjack(const X& ima, const mln_value(X)& lambda)
   {
+    unsigned progress = 0;
+    unsigned step = s.nsites() / 100;
+
+    mln_fwd_piter(S) p(s);
+
+    for_all(p)
+    {
+      if (ima(p) < lambda)
+	is_active(p) = false;
+
+      ++progress;
+      if (progress % step == 0)
+      {
+	std::cout << "." << std::flush;
+	progress = 0;
+      }
+    }
+
+    std::cout << std::endl;
+  }
+
+  template<typename X>
+  void nuclear_fusion(const X& ima, const mln_value(X)& lambda)
+  {
+    unsigned progress = 0;
+    unsigned step = s.nsites() / 100;
+
+    update_parents();
+
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
-      if (vol(p) < lambda)
+      if (fabs(1 - ima(new_parent(p)) / ima(p)) < lambda)
 	is_active(p) = false;
-    }
-  }
 
-  void nb_represent_fusion(int lambda)
-  {
-    mln_fwd_piter(S) p(s);
-    for_all(p)
-    {
-      if (nb_represent(p) < lambda)
-	is_active(p) = false;
+      ++progress;
+      if (progress % step == 0)
+      {
+	std::cout << "." << std::flush;
+	progress = 0;
+      }
     }
+
+    std::cout << std::endl;
   }
 
   void color_fusion(int lambda)
   {
+    unsigned progress = 0;
+    unsigned step = s.nsites() / 100;
+
+    update_parents();
+
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
-      if (parent(p)[0] - p[0] < lambda &&
-	  parent(p)[1] - p[1] < lambda &&
-	  parent(p)[2] - p[2] < lambda)
+      if (new_parent(p)[0] - p[0] < lambda &&
+	  new_parent(p)[1] - p[1] < lambda &&
+	  new_parent(p)[2] - p[2] < lambda)
 	is_active(p) = false;
+
+      ++progress;
+      if (progress % step == 0)
+      {
+	std::cout << "." << std::flush;
+	progress = 0;
+      }
     }
-  }
-
-  point active_parent(const point& p)
-  {
-    point node = parent(p);
-
-    while (not is_active(node) && not is_root(node))
-      node = parent(node);
-
-    return node;
+    std::cout << std::endl;
   }
 
   void update_parents()
   {
+    unsigned progress = 0;
+    unsigned step = s.nsites() / 100;
+
+    std::cout << "Update parents";
+
     mln_fwd_piter(S) p(s);
     for_all(p)
+    {
       new_parent(p) = active_parent(p);
+
+      ++progress;
+      if (progress % step == 0)
+      {
+	std::cout << "." << std::flush;
+	progress = 0;
+      }
+    }
+    std::cout << std::endl;
   }
 
   template < typename J >
-  void to_ppm(const J& ima, const std::string& file, unsigned f)
+  void to_ppm(const J& ima, const std::string& file, unsigned f,
+              const image3d< algebra::vec<3, double> >& mean_color)
   {
+    update_parents();
+
     J out(ima.domain());
     level::fill(out, value::rgb8(0, 0, 0));
 
     mln_piter(J) p(ima.domain());
     for_all(p)
     {
-      point3d p3 = point3d(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
-      point3d node = new_parent(p3);
+      point3d node = new_parent(point3d(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f));
 
       out(p) = value::rgb8(static_cast<unsigned char>(mean_color(node)[0] * f),
 	                   static_cast<unsigned char>(mean_color(node)[1] * f),
 			   static_cast<unsigned char>(mean_color(node)[2] * f));
-      //out(p) = value::rgb8(mean_color(node)[0] * f, mean_color(node)[1] * f, mean_color(node)[2] * f);
     }
 
     io::ppm::save(out, file);
@@ -272,39 +273,7 @@ struct max_tree_
 
   unsigned number_of_nodes()
   {
-    p_array<point> node;
-
-    mln_fwd_piter(S) p(s);
-    for_all(p)
-      if (is_node(p))
-	node.insert(p);
-
-    std::cout << s.nsites() << std::endl;
-    std::cout << parent.domain().nsites() << std::endl;
-    std::cout << node.nsites() << std::endl;
-
     return s.nsites();
-  }
-
-  void print_class_info()
-  {
-    int nb_class = 0;
-
-    mln_fwd_piter(S) p(s);
-
-    //std::cout.width(5);
-    std::cout.precision(2);
-
-    std::cout << "Color\t\tId\t\tdensity\t\tvolume\t\tnb_represent" << std::endl;
-
-    for_all(p)
-    {
-      if (is_active(p))
-      {
-	std::cout << mean_color(p)  << "\t\t" << nb_class << "\t\t" << density(p) << "\t\t" << vol(p) << "\t\t" << nb_represent(p) << std::endl;
-	++nb_class;
-      }
-    }
   }
 
   bool is_root(const point& p) const
@@ -334,7 +303,6 @@ struct max_tree_
       zpar(r) = p;
     }
   }
-
 };
 
 

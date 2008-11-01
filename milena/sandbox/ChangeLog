@@ -1,5 +1,11 @@
 2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
 
+	Big cleanup.
+	* max_tree.hh: Factorize code in generic methods.
+	* v2.cc: Comment and clean code.
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
 	Merge the filter chain.
 	* max_tree.hh: Add a new_parent image to avoid computing them all
 	* the time.
