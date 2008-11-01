@@ -45,7 +45,7 @@ int main(int argc, const char * argv[])
     return 1;
   }
 
-  for (unsigned i = 1; i < argc; ++i)
+  for (int i = 1; i < argc; ++i)
     {
       image2d<int_u8> ima;
       io::pgm::load(ima, argv[i]);

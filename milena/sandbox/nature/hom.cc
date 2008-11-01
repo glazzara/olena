@@ -35,7 +35,7 @@
 
 #include <mln/value/int_u8.hh>
 
-
+# include <mln/core/alias/window2d.hh>
 
 #include <mln/level/transform.hh>
 #include <mln/binarization/threshold.hh>
@@ -47,26 +47,48 @@
 int main(int argc, const char * argv[])
 {
   using namespace mln;
-  using value::int_u16;
+  using namespace value;
 
   if (argc < 2) {
     std::cerr << "usage: " << argv[0] << " in.pgm [other_files.pgm]" << std::endl;
     return 1;
   }
 
-  for (unsigned i = 1; i < argc; ++i)
+  for (int i = 1; i < argc; ++i)
     {
-      image2d<int_u16> ima;
+      image2d<int_u8> ima;
       io::pgm::load(ima, argv[i]);
 
       // Compute the mean
-      int_u16 mean = estim::mean(ima);
+      int_u8 mean = estim::mean(ima);
 
-      win::rectangle2d rectout(3, 3);
-      win::rectangle2d rectin(5, 5);
+      window2d winout;
+      window2d winin;
+
+      static const bool matout [] = {0, 0, 0, 0, 0, 0, 0,
+				     1, 0, 0, 0, 0, 0, 0,
+				     1, 0, 0, 0, 0, 0, 0,
+				     1, 0, 0, 0, 0, 0, 0,
+				     1, 0, 0, 0, 0, 0, 0,
+				     1, 0, 0, 0, 0, 0, 0,
+				     1, 1, 1, 1, 1, 1, 0};
+
+      convert::from_to(matout, winout);
+
+      static const bool matin [] = {0, 1, 0, 0, 0, 0, 0,
+				    0, 1, 0, 0, 0, 0, 0,
+				    0, 1, 0, 0, 0, 0, 0,
+				    0, 1, 0, 0, 0, 0, 0,
+				    0, 1, 0, 0, 0, 0, 0,
+				    0, 1, 1, 1, 1, 1, 1,
+				    0, 0, 0, 0, 0, 0, 0};
+
+      convert::from_to(matin, winin);
 
 
-      io::pbm::save( morpho::hit_or_miss(binarization::threshold(ima, mean), rectout, rectin),
-		     "out.pbm" );
+      std::string name(argv[i]);
+      name.erase(name.length() - 4);
+      io::pbm::save( morpho::hit_or_miss(binarization::threshold(ima, mean), winout, winin),
+		     name.append("_hom.pbm"));
     }
 }

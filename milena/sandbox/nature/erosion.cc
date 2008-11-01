@@ -45,7 +45,7 @@ int main(int argc, const char * argv[])
     return 1;
   }
 
-  for (unsigned i = 1; i < argc; ++i)
+  for (int i = 1; i < argc; ++i)
     {
       image2d<int_u8> ima;
       io::pgm::load(ima, argv[i]);
@@ -53,7 +53,8 @@ int main(int argc, const char * argv[])
       win::hline2d f(31);
       border::thickness = 16;
 
-      io::pgm::save( morpho::erosion(ima, f),
-		     "out.pgm" );
+      std::string name(argv[i]);
+      name.erase(name.length() - 4);
+      io::pgm::save(morpho::erosion(ima, f), name.append("_eroded.pgm"));
     }
 }

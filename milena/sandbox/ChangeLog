@@ -1,3 +1,13 @@
+2008-11-01  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Updating filters.
+
+	* nature/erosion.cc: More user friendly.
+	* nature/gradient.cc: .
+	* nature/hom.cc: Now working.
+	* nature/mco.cc: Now working on every images.
+	* nature/opening.cc: .
+
 2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Allow to chain filters.
