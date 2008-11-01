@@ -62,7 +62,7 @@ compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f, i
 
   //run.number_of_nodes();
   run.volume();
-  run.simple_filter_1(lambda);
+  run.nb_represent_fusion(lambda);
   run.compute_mean_color();
   run.to_ppm(ima, "out.ppm", f);
 

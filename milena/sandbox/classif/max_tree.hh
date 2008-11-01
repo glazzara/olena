@@ -156,9 +156,14 @@ struct max_tree_
 
     for_all(p)
       mean_color(parent(p)) = (mean_color(parent(p)) + mean_color(p)) / 2.;
+
+    for_all(p)
+      if (mean_color(p)[0] < 10 && mean_color(p)[1] < 10 && mean_color(p)[2] < 10)
+	std::cerr << "Warning " << p << " == " << mean_color(p) << std::endl;
   }
 
-  void simple_filter_1(int lambda)
+  // Cut components with less represents than lambda
+  void volume_fusion(int lambda)
   {
     level::fill(is_active, true);
 
@@ -166,6 +171,18 @@ struct max_tree_
     for_all(p)
     {
       if (vol(p) < lambda)
+	is_active(p) = false;
+    }
+  }
+
+  void nb_represent_fusion(int lambda)
+  {
+    level::fill(is_active, true);
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (nb_represent(p) < lambda)
 	is_active(p) = false;
     }
   }
@@ -183,12 +200,7 @@ struct max_tree_
 
       point3d node = p3;
       if (not is_node(p3))
-      {
-	if (is_active(parent(p3)))
-	  goto write;
-
 	node = parent(p3);
-      }
 
       while (not is_active(node))
 	node = parent(node);
@@ -217,6 +229,22 @@ write:
     std::cout << node.nsites() << std::endl;
 
     return s.nsites();
+  }
+
+  void print_class_info()
+  {
+    int nb_class = 0;
+
+    mln_fwd_piter(S) p(s);
+
+    for_all(p)
+    {
+      if (is_active(p))
+      {
+	std::cout << "Class " << nb_class << " : " << p << std::endl;
+	++nb_class;
+      }
+    }
   }
 
   bool is_root(const point& p) const

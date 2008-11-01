@@ -1,3 +1,9 @@
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Add some debug infos and some filters on max trees.
+	* max_tree.hh,
+	* v2.cc: Here.
+
 2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
 	Fix snake2d and add test.
