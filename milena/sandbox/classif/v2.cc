@@ -45,18 +45,29 @@ compute_max_tree(const I& ima, const J& histo, const N& nbh,
 {
   max_tree_<J,N> run(histo, nbh);
 
-  //run.number_of_nodes();
 
   run.volume();
-  run.volume_fusion(lambda);
-  run.density_fusion(ratio);
 
+  std::cout << "step 1 - nb_represent fusion" << std::endl;
+  //run.nb_represent_fusion(lambda);
+  std::cout << "step 2 - volume fusion" << std::endl;
+  //run.volume_fusion(lambda);
+  std::cout << "step 3 - color fusion" << std::endl;
+  //run.color_fusion(lambda);
+  std::cout << "step 3 - density fusion" << std::endl;
+  //run.density_fusion(ratio);
+
+  std::cout << "step Update parents" << std::endl;
+  run.update_parents();
+
+  std::cout << "step Compute mean color" << std::endl;
   run.compute_mean_color();
-  run.to_ppm(ima, "out.ppm", f);
 
+  std::cout << "step Print class info" << std::endl;
   run.print_class_info();
 
-  //std::cout << " Number of nodes : " << run.number_of_nodes() << std::endl;
+  std::cout << "step Output image" << std::endl;
+  run.to_ppm(ima, "out.ppm", f);
 }
 
 bool usage(int argc, char ** argv)

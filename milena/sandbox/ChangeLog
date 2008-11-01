@@ -1,3 +1,10 @@
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Merge the filter chain.
+	* max_tree.hh: Add a new_parent image to avoid computing them all
+	* the time.
+	* v2.cc: Define a filter chain order.
+
 2008-11-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Work on density.

@@ -34,6 +34,7 @@ struct max_tree_
   S s;
   mln_ch_value(I, bool)  deja_vu;
   mln_ch_value(I, point) parent;
+  mln_ch_value(I, point) new_parent;
   mln_ch_value(I, point) zpar;
 
   // image of volumes
@@ -47,7 +48,7 @@ struct max_tree_
 
   max_tree_(const I& f, const N& nbh)
     : f(f), nbh(nbh), vol(f.domain()), nb_represent(f.domain()), density(f.domain()),
-      is_active(f.domain()), mean_color(f.domain())
+      is_active(f.domain()), mean_color(f.domain()), new_parent(f.domain())
   {
     run();
     level::fill(is_active, true);
@@ -231,6 +232,23 @@ struct max_tree_
     }
   }
 
+  point active_parent(const point& p)
+  {
+    point node = parent(p);
+
+    while (not is_active(node) && not is_root(node))
+      node = parent(node);
+
+    return node;
+  }
+
+  void update_parents()
+  {
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+      new_parent(p) = active_parent(p);
+  }
+
   template < typename J >
   void to_ppm(const J& ima, const std::string& file, unsigned f)
   {
@@ -241,13 +259,7 @@ struct max_tree_
     for_all(p)
     {
       point3d p3 = point3d(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
-
-      point3d node = p3;
-      if (not is_node(p3))
-	node = parent(p3);
-
-      while (not is_active(node))
-	node = parent(node);
+      point3d node = new_parent(p3);
 
       out(p) = value::rgb8(static_cast<unsigned char>(mean_color(node)[0] * f),
 	                   static_cast<unsigned char>(mean_color(node)[1] * f),
