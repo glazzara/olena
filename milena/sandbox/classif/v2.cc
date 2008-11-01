@@ -62,8 +62,13 @@ compute_max_tree(const I& ima, const J& histo, const N& nbh, const unsigned f, i
 
   //run.number_of_nodes();
   run.volume();
+
   run.nb_represent_fusion(lambda);
+  run.volume_fusion(lambda);
+  run.color_fusion(5);
+
   run.compute_mean_color();
+  run.print_class_info();
   run.to_ppm(ima, "out.ppm", f);
 
   //std::cout << " Number of nodes : " << run.number_of_nodes() << std::endl;

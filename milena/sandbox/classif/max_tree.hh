@@ -50,6 +50,7 @@ struct max_tree_
       is_active(f.domain()), mean_color(f.domain())
   {
     run();
+    level::fill(is_active, true);
   }
 
   void run()
@@ -165,8 +166,6 @@ struct max_tree_
   // Cut components with less represents than lambda
   void volume_fusion(int lambda)
   {
-    level::fill(is_active, true);
-
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
@@ -177,12 +176,22 @@ struct max_tree_
 
   void nb_represent_fusion(int lambda)
   {
-    level::fill(is_active, true);
-
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
       if (nb_represent(p) < lambda)
+	is_active(p) = false;
+    }
+  }
+
+  void color_fusion(int lambda)
+  {
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+    {
+      if (parent(p)[0] - p[0] < lambda &&
+	  parent(p)[1] - p[1] < lambda &&
+	  parent(p)[2] - p[2] < lambda)
 	is_active(p) = false;
     }
   }
@@ -237,11 +246,16 @@ write:
 
     mln_fwd_piter(S) p(s);
 
+    //std::cout.width(5);
+    std::cout.precision(2);
+
+    std::cout << "Color\t\tId\t\tdensity\t\tvolume\t\tnb_represent" << std::endl;
+
     for_all(p)
     {
       if (is_active(p))
       {
-	std::cout << "Class " << nb_class << " : " << p << std::endl;
+	std::cout << mean_color(p)  << "\t\t" << nb_class << "\t\t" << density(p) << "\t\t" << vol(p) << "\t\t" << nb_represent(p) << std::endl;
 	++nb_class;
       }
     }

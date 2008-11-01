@@ -1,5 +1,11 @@
 2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
 
+	Allow to chain filters.
+	* max_tree.hh: Here.
+	* v2.cc: Chain filters.
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
 	Add some debug infos and some filters on max trees.
 	* max_tree.hh,
 	* v2.cc: Here.
