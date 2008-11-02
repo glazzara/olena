@@ -1,3 +1,9 @@
+2008-11-02  Florian Lesaint  <florian.lesaint@lrde.epita.fr>
+
+	Fix the gaussian_2nd_derivative coef normalisation.
+	and remove stretch since it can be a problem with float images.
+	* linear/gaussian.hh: Here.
+
 2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
 	Add void cast to remove unused variable warnings.

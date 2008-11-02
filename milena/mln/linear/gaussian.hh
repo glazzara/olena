@@ -329,6 +329,7 @@ namespace mln
 	float exp2b0 = exp(2.0 * b0);
 
 	float scale0 = 1 + exp2b0 - 2 * cos0 * expb0;
+	scale0 *= scale0 * scale0;
 
 	float scaleA = a1 * sin0 * expb0 * (1 + expb0 * (2 * cos0 * (1 + exp2b0) + exp2b0 - 6)) +
 		       a0 * expb0 * (2 * expb0 * (2 - cos0 * cos0) * (1 - exp2b0) - cos0 * (1 - exp2b0 * exp2b0));
@@ -337,6 +338,7 @@ namespace mln
 	float exp2b1 = exp(2.0 * b1);
 
 	float scale1 = 1 + exp2b1 - 2 * cos1 * expb1;
+	scale1 *= scale1 * scale1;
 
 	float scaleC = c1 * sin1 * expb1 * (1 + expb1 * (2 * cos1 * (1 + exp2b1) + exp2b1 - 6)) +
 		       c0 * expb1 * (2 * expb1 * (2 - cos1 * cos1) * (1 - exp2b1) - cos1 * (1 - exp2b1 * exp2b1));
@@ -393,8 +395,8 @@ namespace mln
 	/* Convert the result image to the user-requested datatype.
 	   FIXME: We are making an unnecessary copy in case the
 	   user expects a ntg::float_s image.  */
-	level::stretch(work_img, out);
-	//level::paste(work_img, out);
+	//level::stretch(work_img, out);
+	level::paste(work_img, out);
       }
 
 
