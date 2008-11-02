@@ -28,12 +28,14 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image1d.hh>
 #include <mln/win/rectangle2d.hh>
+#include <mln/core/image/cast_image.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/opening.hh>
+
 #include "proj.hh"
 
 int main(int argc, const char * argv[])
@@ -54,7 +56,10 @@ int main(int argc, const char * argv[])
       std::string name(argv[i]);
       name.erase(name.length() - 4);
       image1d<float> toto = proj_nat(ima);
-      //      io::pgm::save(toto, name.append("_proj.pgm"));
-
+      image2d<float> tata (toto.nelements(), 1);
+      mln_piter_(image1d<float>) p(toto.domain());
+      for_all(p)
+	tata(point2d((p.row(), 1))) = toto(p);
+      io::pgm::save(cast_image <int>(tata), name.append("_proj.pgm"));
     }
 }
