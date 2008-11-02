@@ -56,10 +56,11 @@ int main(int argc, const char * argv[])
       std::string name(argv[i]);
       name.erase(name.length() - 4);
       image1d<float> toto = proj_nat(ima);
-      image2d<float> tata (toto.nelements(), 1);
+      image2d<int_u8> tata (toto.nelements(), 1);
       mln_piter_(image1d<float>) p(toto.domain());
       for (unsigned u = 0; u < toto.nelements(); ++u)
-	tata(point2d(u, 1)) = toto(point1d(u));
+	if (toto.domain().has(point1d(u)))
+	  tata(point2d(u, 1)) = (int_u8) ceil(toto(point1d(u)));
       io::pgm::save(cast_image <int_u8>(tata), name.append("_proj.pgm"));
     }
 }
