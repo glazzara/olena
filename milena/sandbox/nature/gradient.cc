@@ -53,7 +53,8 @@ int main(int argc, const char * argv[])
       win::rectangle2d rect(5, 5);
       border::thickness = 5;
 
-      io::pgm::save( morpho::gradient(ima, rect),
-		     "out.pgm" );
+      std::string name(argv[i]);
+      name.erase(name.length() - 4);
+      io::pgm::save(morpho::gradient(ima, rect), name.append("_grad.pgm"));
     }
 }

@@ -61,25 +61,29 @@ typedef int_u16 u_t;
 
 
 template <typename I>
-void save_histo(Image<I> &i, std::string &name, unsigned width, unsigned height, unsigned npoints)
+void save_histo(Image<I> &i, std::string &name)
 {
   I& ima = exact(i);
 
-  histo::data<u_t> h = histo::compute(ima);
+  histo::data<float01_8> h = histo::compute(ima);
 
-  double norm = (double) npoints / (double) height;
+  // Compute histo max
+  size_t max = 0;
+  mln_viter(mln::value::set<float01_8>) v(h.vset());
 
-  image2d<bool> output(height + 1, width + 1, 0);
+  for_all(v)
+    if (h(v) > max)
+      max = h(v);
+
+  image2d<bool> output(max, mln_card(float01_8), 0);
   level::fill(output, true);
 
-  mln_viter(mln::value::set<u_t>) v(h.vset());
   for_all(v)
-    if (h(v) > 0)
-      for (u_t i = 0; i < h(v)/norm; ++i)
-	{
-	  // std::cout << height - i << ", " << (u_t)v << std::endl;
-	  output(point2d(height - i, (u_t)v)) = false;
-	}
+    for (size_t i = 0; i < h(v); ++i)
+      {
+	// std::cout << height - i << ", " << (u_t)v << std::endl;
+	output(point2d(max - i - 1, (float01_8)v)) = false;
+      }
 
   io::pbm::save(output, name);
 }
@@ -91,21 +95,19 @@ int main (int argc, const char* argv [])
     return 1;
   }
 
-  for (unsigned i = 1; i < argc; ++i)
+  for (int i = 1; i < argc; ++i)
     {
 
       image2d<rgb8> input;
       io::ppm::load(input, argv[i]);
 
-      unsigned npoints = input.ncols() * input.nrows();
-
       image2d<hsi_f> hsi = level::transform(input, fun::v2v::f_rgb_to_hsi_f);
       thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > h(hsi);
-      cast_image_<u_t, thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > > hue(h);
+      cast_image_<float01_8, thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > > hue(h);
 
       std::string n(argv[i]);
       n.erase(n.length() - 4);
-      io::pgm::save(hue, n.append("_hue.pgm"));
+      // io::pgm::save(hue, n.append("_hue.pgm"));
 
       image2d<hsi_f>::piter p(hsi.domain());
       float m = 0;
@@ -120,8 +122,10 @@ int main (int argc, const char* argv [])
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      save_histo(hue, name.append("_hue.pbm"), 256, 360, npoints);
+      save_histo(hue, name.append("_hue.pbm"));
 
+
+      /*
       thru<mln::meta::sat<hsi_f>, image2d<hsi_f> > s(hsi);
       cast_image_<u_t, thru<mln::meta::sat<hsi_f>, image2d<hsi_f> > > sat(s);
 
@@ -162,5 +166,6 @@ int main (int argc, const char* argv [])
       name = argv[i];
       name.erase(name.length() - 4);
       save_histo(inty, name.append("_inty.pbm"), 256, 256, npoints);
+      */
     }
 }

@@ -1,3 +1,13 @@
+2008-11-02  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add closing, udate filter parameters.
+
+	* nature/closing.cc: New.
+	* nature/gradient.cc: .
+	* nature/histo_hsi.cc: .
+	* nature/hom.cc: .
+	* nature/opening.cc: .
+
 2008-11-02  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
 
 	Cleanup OCR preprocessing.

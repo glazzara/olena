@@ -32,7 +32,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/morpho/opening.hh>
+#include <mln/morpho/closing.hh>
 
 int main(int argc, const char * argv[])
 {
@@ -54,6 +54,6 @@ int main(int argc, const char * argv[])
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      io::pgm::save(morpho::opening(ima, rect), name.append("_opened.pgm"));
+      io::pgm::save(morpho::closing(ima, rect), name.append("_opened.pgm"));
     }
 }

@@ -34,6 +34,7 @@
 #include <mln/io/pbm/save.hh>
 
 #include <mln/value/int_u8.hh>
+#include <mln/value/int_u16.hh>
 
 # include <mln/core/alias/window2d.hh>
 
@@ -56,39 +57,110 @@ int main(int argc, const char * argv[])
 
   for (int i = 1; i < argc; ++i)
     {
-      image2d<int_u8> ima;
+      typedef int_u8 int_t;
+
+      image2d<int_t> ima;
       io::pgm::load(ima, argv[i]);
 
       // Compute the mean
-      int_u8 mean = estim::mean(ima);
+      int_t mean = estim::mean(ima);
+
+      image2d<bool> imab = binarization::threshold(ima, mean);
+
+      border::thickness = 10;
 
       window2d winout;
       window2d winin;
 
-      static const bool matout [] = {0, 0, 0, 0, 0, 0, 0,
-				     1, 0, 0, 0, 0, 0, 0,
-				     1, 0, 0, 0, 0, 0, 0,
-				     1, 0, 0, 0, 0, 0, 0,
-				     1, 0, 0, 0, 0, 0, 0,
-				     1, 0, 0, 0, 0, 0, 0,
-				     1, 1, 1, 1, 1, 1, 0};
+//       static const bool matout [] = {0, 0, 0, 0, 0, 0, 0,
+// 				     0, 0, 1, 0, 0, 0, 0,
+// 				     0, 0, 1, 0, 0, 0, 0,
+// 				     0, 0, 1, 0, 0, 0, 0,
+// 				     0, 0, 1, 1, 1, 1, 0,
+// 				     0, 0, 0, 0, 0, 0, 0,
+// 				     0, 0, 0, 0, 0, 0, 0};
 
-      convert::from_to(matout, winout);
+//       static const bool matout [] = {0, 0, 0, 0, 0,
+// 				     0, 1, 0, 0, 0,
+// 				     0, 1, 0, 0, 0,
+// 				     0, 1, 1, 1, 0,
+// 				     0, 0, 0, 0, 0};
 
-      static const bool matin [] = {0, 1, 0, 0, 0, 0, 0,
-				    0, 1, 0, 0, 0, 0, 0,
-				    0, 1, 0, 0, 0, 0, 0,
-				    0, 1, 0, 0, 0, 0, 0,
-				    0, 1, 0, 0, 0, 0, 0,
-				    0, 1, 1, 1, 1, 1, 1,
-				    0, 0, 0, 0, 0, 0, 0};
+      static const bool blmatout [] = {0, 0, 0,
+				       1, 0, 0,
+				       1, 1, 0};
 
-      convert::from_to(matin, winin);
+
+      convert::from_to(blmatout, winout);
+
+//       static const bool matin [] = {0, 0, 0, 1, 0, 0, 0,
+// 				    0, 0, 0, 1, 0, 0, 0,
+// 				    0, 0, 0, 1, 0, 0, 0,
+// 				    0, 0, 0, 1, 1, 1, 1,
+// 				    0, 0, 0, 0, 0, 0, 0,
+// 				    0, 0, 0, 0, 0, 0, 0,
+// 				    0, 0, 0, 0, 0, 0, 0};
+
+//       static const bool matin [] = {0, 0, 1, 0, 0,
+// 				    0, 0, 1, 0, 0,
+// 				    0, 0, 1, 1, 1,
+// 				    0, 0, 0, 0, 0,
+// 				    0, 0, 0, 0, 0};
+
+      static const bool blmatin [] = {0, 1, 0,
+				      0, 1, 1,
+				      0, 0, 0};
+
+      convert::from_to(blmatin, winin);
+      image2d<bool> bottom_left = morpho::hit_or_miss(imab, winout, winin);
+
+
+      static const bool brmatout [] = {0, 0, 0,
+				       0, 0, 1,
+				       0, 1, 1};
+
+      static const bool brmatin [] = {0, 1, 0,
+				      1, 1, 0,
+				      0, 0, 0};
+
+      convert::from_to(brmatout, winout);
+      convert::from_to(brmatin, winin);
+      image2d<bool> bottom_right = morpho::hit_or_miss(imab, winout, winin);
+
+      static const bool urmatout [] = {0, 1, 1,
+				       0, 0, 1,
+				       0, 0, 0};
+
+      static const bool urmatin [] = {0, 0, 0,
+				      1, 1, 0,
+				      0, 1, 0};
+
+      convert::from_to(urmatout, winout);
+      convert::from_to(urmatin, winin);
+      image2d<bool> up_right = morpho::hit_or_miss(imab, winout, winin);
+
+
+      static const bool ulmatout [] = {1, 1, 0,
+				       1, 0, 0,
+				       0, 0, 0};
+
+      static const bool ulmatin [] = {0, 0, 0,
+				      0, 1, 1,
+				      0, 1, 0};
+
+      convert::from_to(ulmatout, winout);
+      convert::from_to(ulmatin, winin);
+      image2d<bool> up_left = morpho::hit_or_miss(imab, winout, winin);
+
 
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      io::pbm::save( morpho::hit_or_miss(binarization::threshold(ima, mean), winout, winin),
+      io::pbm::save( imab, name.append("_bin.pbm"));
+
+      name = argv[i];
+      name.erase(name.length() - 4);
+      io::pbm::save( up_left + up_right + bottom_right + bottom_left,
 		     name.append("_hom.pbm"));
     }
 }
