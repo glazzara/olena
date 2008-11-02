@@ -53,7 +53,7 @@
 #include <mln/labeling/regional_maxima.hh>
 #include <mln/morpho/dilation.hh>
 
-#include <tesseract/baseapi.h>
+#include "tesseract_wrap.hh"
 
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
@@ -61,19 +61,6 @@
 
 // Call tesseract
 // lang: expected language
-template <typename T>
-char*	tesseract(const char* lang, const mln::image2d<T>& input)
-{
-  TessBaseAPI::InitWithLanguage(NULL, NULL, lang, NULL, false, 0, NULL);
-  char* s = TessBaseAPI::TesseractRect(
-			  (unsigned char*) input.buffer(),
-			  sizeof (T),
-			  input.ncols() * sizeof (T),
-			  0, 0,
-			  input.ncols(),
-			  input.nrows());
-  return s;
-}
 
 int main(int argc, char** argv)
 {
@@ -92,7 +79,12 @@ int main(int argc, char** argv)
 
   io::pbm::load(input, argv[1]);
 
-  char* s = tesseract("fra", input);
-  std::cout << s;
-  free(s);
+  {
+    image2d<int_u8> tmp = clone(cast_image<int_u8>(input));
+    float score = 0;
+    char* s = tesseract("fra", tmp, &score);
+    std::cerr << "Tesseract result: (score " << score << ")" << std::endl;
+    std::cout << s;
+    delete[] s;
+  }
 }

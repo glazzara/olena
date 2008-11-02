@@ -57,28 +57,24 @@
 #include <mln/io/pbm/save.hh>
 #include <mln/logical/not.hh>
 
-#include <tesseract/baseapi.h>
-
+#include "tesseract_wrap.hh"
 
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
 
+#if 0
+# define TEST(Var)						\
+  {								\
+    image2d<int_u8> tmp = clone(cast_image<int_u8>(Var));	\
+    float score = 0.f;						\
+    char* s = tesseract("fra", tmp, &score);			\
+    std::cerr << #Var << ": " << score << std::endl << s;	\
+    delete[] s;							\
+  }
+#else
+# define TEST(Var)
+#endif
 
-// Call tesseract
-// lang: expected language
-template <typename T>
-char*	tesseract(const char* lang, const mln::image2d<T>& input)
-{
-  TessBaseAPI::InitWithLanguage(NULL, NULL, lang, NULL, false, 0, NULL);
-  char* s = TessBaseAPI::TesseractRect(
-			  (unsigned char*) input.buffer(),
-			  sizeof (T),
-			  input.ncols() * sizeof (T),
-			  0, 0,
-			  input.ncols(),
-			  input.nrows());
-  return s;
-}
 
 int main(int argc, char** argv)
 {
@@ -96,20 +92,23 @@ int main(int argc, char** argv)
   mln::border::thickness = 0;
 
   io::pbm::load(input, argv[1]);
+  TEST(input);
 
   // Resize
-  std::cerr << "Enlarge the image" << std::endl;
+  //std::cerr << "Enlarge the image" << std::endl;
   image2d<int_u8> enlarged = enlarge(logical::not_(input), 2);
   //image2d<bool> enlarged = geom::resize(logical::not_(input), 4);
-  io::pgm::save(enlarged, "1_enlage.pgm");
+  io::pgm::save(enlarged, "1_enlarge.pgm");
+  TEST(enlarged);
 
   // Blur.
-  std::cerr << "Blur the enlarged image" << std::endl;
+  //std::cerr << "Blur the enlarged image" << std::endl;
 //   image2d<int_u8> blur = linear::gaussian(fun::p2v::ternary(pw::value(enlarged), pw::cst(int_u8(255)), pw::cst(int_u8(0))) | enlarged.domain(),
-// 					  4);
-  image2d<int_u8> blur = linear::gaussian(enlarged, 1);
+//					  4);
+  image2d<int_u8> blur = linear::gaussian(clone(enlarged), 1);
 
   io::pgm::save(blur, "2_gaussian.pgm");
+  TEST(blur);
 
   // Crest.
 //   image2d<bool> c = crest(enlarged, blur, c4());
@@ -120,7 +119,7 @@ int main(int argc, char** argv)
   // Threshold
   image2d<bool> binary;
   {
-    std::cerr << "Threshold the blur image" << std::endl;
+    //std::cerr << "Threshold the blur image" << std::endl;
 
 //     // Compute the histogram.
 //     histo::data<int_u8> h = histo::compute(blur);
@@ -141,26 +140,35 @@ int main(int argc, char** argv)
       binary(p) = blur(p) > 100;
 
     io::pbm::save(binary, "3_threshold.pbm");
+    TEST(binary);
   }
 
   // Skeleton
-  std::cerr << "Compute the skeleton" << std::endl;
+  //std::cerr << "Compute the skeleton" << std::endl;
   image2d<bool> skel = skeleton(binary, 4);
   io::pbm::save(skel, "4_skeleton.pbm");
+  TEST(skel);
 
   // Dilation
-  std::cerr << "Dilate the skeleton" << std::endl;
+  //std::cerr << "Dilate the skeleton" << std::endl;
   win::octagon2d oct(7);
   for (unsigned i = 0; i < 1; i++)
     skel = morpho::dilation(skel, oct);
 
   io::pbm::save(skel, "5_dilation.pbm");
+  TEST(skel);
 
   io::pbm::save(skel, argv[2]);
 
-  std::cerr << "Text recognition" << std::endl;
-  char* s = tesseract("fra", clone(logical::not_(skel)));
-  std::cerr << "Tesseract result:"<< std::endl;
-  std::cout << s;
-  free(s);
+  //std::cerr << "Text recognition" << std::endl;
+  //char* s = tesseract("fra", clone(logical::not_(skel)));
+  {
+    image2d<int_u8> tmp = clone(cast_image<int_u8>(skel));
+    float score = 0;
+    char* s = tesseract("fra", tmp, &score);
+    std::cerr << "Tesseract result: (score " << score << ")" << std::endl;
+    std::cout << s;
+    delete[] s;
+  }
+
 }

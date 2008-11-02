@@ -1,3 +1,15 @@
+2008-11-02  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Cleanup OCR preprocessing.
+	* garrigues/ocr/ocr_with_preprocess.cc,
+	  garrigues/ocr/ocr_without_preprocess.cc: Cleanup the call to
+	  tesseract.
+
+	* garrigues/ocr/tesseract_wrap.hh: New.
+	  Provide a Tesseract wrapper which is also able to compute an
+	  approximate confidence value of the recognition based on tesseract
+	  internal data.
+
 2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Big cleanup.
