@@ -58,8 +58,8 @@ int main(int argc, const char * argv[])
       image1d<float> toto = proj_nat(ima);
       image2d<float> tata (toto.nelements(), 1);
       mln_piter_(image1d<float>) p(toto.domain());
-      for_all(p)
-	tata(point2d((p.row(), 1))) = toto(p);
-      io::pgm::save(cast_image <int>(tata), name.append("_proj.pgm"));
+      for (unsigned u = 0; u < toto.nelements(); ++u)
+	tata(point2d(u, 1)) = toto(point1d(u));
+      io::pgm::save(cast_image <int_u8>(tata), name.append("_proj.pgm"));
     }
 }

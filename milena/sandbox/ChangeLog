@@ -1,3 +1,9 @@
+2008-11-03  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix 1d to 2d problem.
+
+	* nature/proj.cc: use an unsigned to iterate over the image.
+
 2008-11-02  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add closing, udate filter parameters.
