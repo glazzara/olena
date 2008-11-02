@@ -54,6 +54,6 @@ int main(int argc, const char * argv[])
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      io::pgm::save(morpho::closing(ima, rect), name.append("_opened.pgm"));
+      io::pgm::save(morpho::closing(ima, rect), name.append("_closed.pgm"));
     }
 }
