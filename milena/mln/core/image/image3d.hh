@@ -184,7 +184,7 @@ namespace mln
     unsigned border() const;
 
     /// Give the number of cells (points including border ones).
-    std::size_t nelements() const;
+    unsigned nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point3d& p) const;
@@ -426,7 +426,7 @@ namespace mln
 
   template <typename T>
   inline
-  std::size_t
+  unsigned
   image3d<T>::nelements() const
   {
     mln_precondition(this->has_data());

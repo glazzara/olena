@@ -1,3 +1,11 @@
+2008-11-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Remove a std::size_t.
+
+	In my opinion nelements must not return size_t.
+	* milena/mln/core/site_set/p_image.hh,
+	* milena/mln/core/image/image3d.hh: Here.
+
 2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Clean-up from_to, add some new overloads, and fix (c).
