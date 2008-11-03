@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -49,7 +50,13 @@
 #include <mln/fun/ops.hh>
 
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/neighb/image.hh>
+
+  /* FIXME: Re-enable these tests for Olena 1.1, when associated
+     neighborhoods (i.e., the neighb::image morpher) are supported and
+     shipped.  */
+#if 0
+#  include <mln/neighb/image.hh>
+#endif
 
 #include "tests/data.hh"
 

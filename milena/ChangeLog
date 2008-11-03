@@ -1,5 +1,17 @@
 2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Hack morphological dilation so it is practicable.
+
+	* tests/morpho/dilation.cc: Fix copyright.
+	(neighb/image.hh): Fix missing guards for this include.
+	* mln/morpho/dilation.hh (todo): New.
+	Fix copyright.
+	(impl): Remove all implementations; they were obsolete.
+	(dilation_as_erosion_dual): New implementation.
+	(dilation_tests, dilation_dispatch): New.
+
+2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix many little things in weighted window related stuff.
 
 	* tests/core/alias/w_window1d_int.cc: Fix doc.
