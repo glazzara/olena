@@ -90,7 +90,7 @@ binarization(mln::image2d<mln::value::int_u8>& input, int size)
   mln::image2d<mln::value::int_u8> maj = snake2d(mln::accu::maj_h<mln::value::int_u8>(), input, mln::win::rectangle2d(size,size));
   mln::image2d<mln::value::int_u8>::fwd_piter p (input.domain());
   for_all (p)
-    output(p) = (input(p) == maj(p)) * 255;
+    output(p) = (input(p) != maj(p)) * 255;
   return output;
 }
 

@@ -9,9 +9,9 @@ profile: release
 
 ## Defaults
 CC	 = g++
-CFLAGS	 = -W -Wall -Werror -ansi -I ../milena
+CFLAGS	 = -W -Wall -Werror -ansi -I ../../../../..
 LDFLAGS  =
-DEPFLAGS = -I ../milena -MM
+DEPFLAGS = -I ../../../../.. -MM
 
 #Darwin@LDFLAGS :=
 

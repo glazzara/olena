@@ -95,12 +95,14 @@ main (int argc, char** argv)
   image1d<size_t> wst = morpho::meyer_wst<size_t, image1d<unsigned long>, neighb1d> (hist_close, c2());
   std::vector<value::int_u8> colors = colors_init (wst);
 
-  image2d<value::int_u8> out;
-  initialize(out, in);
+  image2d<value::int_u8> cla;
+  initialize(cla, in);
 
   image2d<value::int_u8>::fwd_piter q (in.domain ());
   for_all (q)
-    out (q) = colors_match (colors, in (q));
+    cla (q) = colors_match (colors, in (q));
+
+  image2d<value::int_u8> out = binarization(cla, 20);
 
   mln::io::pgm::save (out, file_out);
 }
