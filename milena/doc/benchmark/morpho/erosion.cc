@@ -42,11 +42,30 @@
 #include <mln/morpho/erosion.hh>
 
 #include "tests/data.hh"
+#include "tests/timer.hh"
+
 
 int main()
 {
   using namespace mln;
   using value::int_u8;
+
+//   unsigned
+//     l_oct = 11,  L_oct = 6 * l_oct + 1,
+//     l_rec = 29,  L_rec = 2 * l_rec + 1;
+
+  //    l_
+  // oct rec  err
+  //  0   0    3
+  //  0   1    5
+  //  1   2   15
+  //  1   3    9
+  //  2   5   11
+  //  3   8    9
+  //  5  13   15
+  //  8  21   11
+  // 11  29    1
+  // 25  66   15
 
   border::thickness = 20;
   image2d<int_u8> lena;
@@ -60,145 +79,214 @@ int main()
   win::octagon2d oct(6 * 3 + 1);
   image2d<int_u8> out;
   image2d<int_u8> ref;
+//   trace::quiet = false;
+  timer t;
 
 
   // Rectangle
+  std::cout << "-------------------------- Rectangle: " << std::endl;
+
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, rec);
+    std::cout << "generic on rectangle2d: " << t << std::endl;
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, rec);
+    std::cout << "dispach on rectangle2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d_fastest(lena, rec);
+    std::cout << "erosion_arbitrary_2d_fastest on rectangle2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d(lena, rec);
+    std::cout << "erosion_arbitrary_2d on rectangle2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
   //Hline
+
+  std::cout << "-------------------------- Hline2d: "  << std::endl;
+
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, hline);
+    std::cout << "generic on hline2d: " << t << std::endl;
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, hline);
+    std::cout << "dispach on hline2d : " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d_fastest(lena, hline);
+    std::cout << "erosion_arbitrary_2d_fastest on hline2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d(lena, hline);
+    std::cout << "erosion_arbitrary_2d on hline2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
+
+  std::cout << "-------------------------- Vline2d: "<< std::endl;
 
   //Vline
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, vline);
+    std::cout << "generic on vline2d: " << t << std::endl;
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, vline);
+    std::cout << "dispach on vline2d : " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d_fastest(lena, vline);
+    std::cout << "erosion_arbitrary_2d_fastest on vline2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d(lena, vline);
+    std::cout << "erosion_arbitrary_2d on vline2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   //Diag2d
-
+  std::cout << "-------------------------- Diag2d: "<< std::endl;
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, diag2d);
+    std::cout << "generic on diag2d: " << t << std::endl;
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, diag2d);
+    std::cout << "dispach on diag2d : " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d_fastest(lena, diag2d);
+    std::cout << "erosion_arbitrary_2d_fastest on diag2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d(lena, diag2d);
+    std::cout << "erosion_arbitrary_2d on diag2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
   //Backdiag2d
-
+  std::cout << "-------------------------- Backdiag2d: "<< std::endl;
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, backdiag2d);
+    std::cout << "generic on backdiag2d: " << t << std::endl;
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, backdiag2d);
+    std::cout << "dispach on backdiag2d : " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d_fastest(lena, backdiag2d);
+    std::cout << "erosion_arbitrary_2d_fastest on backdiag2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 
   {
+    t.start();
     out = morpho::impl::erosion_arbitrary_2d(lena, backdiag2d);
+    std::cout << "erosion_arbitrary_2d on backdiag2d: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
-
+  std::cout << "-------------------------- Octagon: " << std::endl;
 
   // Octagon
   {
+    t.start();
     ref = morpho::impl::generic::erosion_on_function(lena, oct);
+    std::cout << "generic on octagon: " << t << std::endl;
     io::pgm::save(ref, "out_oct_ref.pgm");
   }
 
   {
+    t.start();
     out = morpho::erosion(lena, oct);
+    std::cout << "dispach on octagon: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
 
 }

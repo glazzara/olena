@@ -1,3 +1,13 @@
+2008-11-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Create doc/benchmark/morpho, add bench for erosion.
+
+	* doc/benchmark/morpho/erosion.cc: New, bench several specialization
+	of erosion.
+	* doc/benchmark/morpho: New.
+	* tests/morpho/erosion.cc: Make it a real test, not a
+	benchmark. Remove output and timer.
+
 2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make linear::convolve work properly with heterogenous types.
