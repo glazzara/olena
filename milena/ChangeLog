@@ -1,3 +1,9 @@
+2008-11-03  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Fix an include problem in mln/morpho.
+	* includes.hh: As erosion is used in dilation it must be included
+	* before. Same for complementation.
+
 2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Hack morphological dilation so it is practicable.

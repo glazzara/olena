@@ -66,11 +66,11 @@
 # include <mln/win/diff.hh>
 # include <mln/win/inter.hh>
 
-# include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion.hh>
+# include <mln/morpho/complementation.hh>
+# include <mln/morpho/dilation.hh>
 
 # include <mln/morpho/min.hh>
-# include <mln/morpho/complementation.hh>
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/plus.hh>
 
