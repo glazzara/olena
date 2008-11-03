@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,9 +32,7 @@
  */
 
 #include <mln/core/alias/window1d.hh>
-#include <mln/core/image/image1d.hh>
 #include <mln/convert/to_image.hh>
-#include <mln/debug/println.hh>
 
 
 
@@ -46,14 +45,12 @@ int main()
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
 
-  // FIXME: Does not compile as expected.
-  // w.insert(-1,0);
+  // As expected, the code below does not compile:
+  //   w.insert(-1,0);
 
   w.insert(-1);
   w.insert( 1);
 
   image1d<bool> ima = convert::to_image(w);
-  debug::println(ima);
-
   mln_assertion(w.delta() == 1);
 }

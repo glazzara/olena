@@ -38,8 +38,6 @@
  *
  * \todo The is_centered() method could also exist when the window is
  * not regular...
- *
- * \todo Remove hack.
  */
 
 # include <mln/core/concept/object.hh>
@@ -47,10 +45,7 @@
 # include <mln/trait/windows.hh>
 
 # include <mln/core/site_set/p_array.hh>
-
-# include <mln/accu/bbox.hh>
-# include <mln/literal/origin.hh>
-# include <mln/level/fill.hh>
+# include <mln/core/internal/geom_bbox.hh> // For use in convert::from_to.
 # include <mln/convert/from_to.hxx>
 
 
@@ -307,27 +302,6 @@ namespace mln
   namespace convert
   {
 
-    namespace internal
-    {
-
-
-      // FIXME: Hack to avoid including geom::bbox (circular
-      // dependency).
-
-      template <typename W>
-      box<mln_psite(W)> bbox_(const Window<W>& win)
-      {
-	typedef mln_psite(W) P;
-	accu::bbox<P> b;
-	P O = literal::origin;
-	mln_qiter(W) q(exact(win), O);
-	for_all(q)
-	  b.take(q);
-	return b;
-      }
-
-    }
-
     template <typename W, typename I>
     void
     from_to(const Window<W>& win_, Image<I>& ima_)
@@ -343,9 +317,14 @@ namespace mln
       // mln_precondition(win.is_valid());
       mln_precondition(! ima.has_data());
 
-      ima.init_(internal::bbox_(win)); // geom::bbox(win));
-      level::fill(ima, false);
- 
+      // Hack (below) to avoid circular dependency.
+      ima.init_(mln::internal::geom_bbox(win));
+      {
+	// level::fill(ima, false) is:
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  ima(p) = false;
+      }
       unsigned n = win.size();
       for (unsigned i = 0; i < n; ++i)
 	ima(convert::to<P>(win.dp(i))) = true;

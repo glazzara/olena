@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/alias/w_window3d_int.cc
- *
- * \brief Tests on mln::w_window3d_int.
- */
+/// tests/core/alias/w_window3d_int.cc
+///
+/// Tests on mln::w_window3d_int.
 
 #include <mln/core/alias/w_window3d_int.hh>
 #include <mln/win/cube3d.hh>
@@ -37,8 +37,6 @@
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_fun.hh>
 #include <mln/estim/sum.hh>
-
-#include <mln/debug/println.hh>
 
 
 int f(mln::point3d p)
@@ -64,8 +62,6 @@ int main()
     w_window3d_int w_win = make::w_window3d(ws);
 
     image3d<int> ima = convert::to_image(w_win);
-    debug::println(ima);
-    std::cout << std::endl;
     w_window3d_int w_win_2 = convert::to<w_window3d_int>(ima);
     mln_assertion(w_win_2 == w_win);
   }
@@ -77,7 +73,6 @@ int main()
     //  -2 -1  0 +1 +2
     //  -1  0 +1 +2 +3
     image3d<int> ima = convert::to_image(w_win);
-    debug::println(ima);
     mln_assertion(estim::sum(ima) == 0);
   }
 

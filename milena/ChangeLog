@@ -1,3 +1,33 @@
+2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix many little things in weighted window related stuff.
+
+	* tests/core/alias/w_window1d_int.cc: Fix doc.
+	* tests/core/alias/window1d.cc: Likewise.
+	Remove echo on std::cout.
+	* tests/core/alias/w_window3d_int.cc: Likewise.
+	* tests/core/alias/window3d.cc: Likewise.
+	* tests/core/alias/w_window2d_int.cc: Fix doc.
+	* tests/core/alias/window2d.cc: Remove useless include.
+	* mln/trait/image_from_grid.hh: Update doc style.
+	* mln/core/concept/weighted_window.hh: Likewise.
+	(sym): Fix sig in doc.
+	(W): Rename this parameter as...
+	(E): ...this to remain consistent with othe concept files.
+	(is_empty, is_centered, delta): Move to...
+	* mln/core/internal/weighted_window_base.hh: ...this new file.
+	* mln/core/concept/object.hh: Include some more metal stuff.
+	* mln/core/concept/window.hh
+	(level::fill): Replace by plain code to supress dep.
+	(internal::bbox_): Move this hack into...
+	* mln/core/internal/geom_bbox.hh: ...this new file.
+	Update include.
+	* mln/core/w_window.hh (w_window): Update inheritance.
+	* mln/core/internal/window_base.hh: Fix copyright.
+	* mln/make/w_window2d.hh: Fix missing include.
+	* mln/convert/to_image.hh: Likewise.
+	(to_image): Fix sig in the Weighted_Window overload.
+
 2008-11-02  Florian Lesaint  <florian.lesaint@lrde.epita.fr>
 
 	Fix the gaussian_2nd_derivative coef normalisation.

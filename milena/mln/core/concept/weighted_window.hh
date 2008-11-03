@@ -29,10 +29,11 @@
 #ifndef MLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
 # define MLN_CORE_CONCEPT_WEIGHTED_WINDOW_HH
 
-/*! \file mln/core/concept/weighted_window.hh
- *
- * \brief Definition of the concept of mln::Weighted_Window.
- */
+/// \file mln/core/concept/weighted_window.hh
+///
+/// Definition of the concept of mln::Weighted_Window.
+///
+/// \todo Make ::sym() be optional.
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
@@ -42,8 +43,9 @@
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename W> struct Weighted_Window;
+  // Forward declaration.
+  template <typename E> struct Weighted_Window;
+
 
   // Weighted_Window category flag type.
   template <>
@@ -59,8 +61,8 @@ namespace mln
    * \see mln::doc::Weighted_Window for a complete documentation of
    * this class contents.
    */
-  template <typename W>
-  struct Weighted_Window : public Object<W>
+  template <typename E>
+  struct Weighted_Window : public Object<E>
   {
     typedef Weighted_Window<void> category;
 
@@ -74,28 +76,8 @@ namespace mln
       typedef weight;
       typedef window;
 
-      E& sym();
+      void sym();
     */
-
-    /// Test if the weighted window is empty; final method.
-    bool is_empty() const
-    {
-      return exact(this)->win().is_empty();
-    }
-
-    /// Test if the weighted window is centered; final method.
-    bool is_centered() const
-    {
-      return exact(this)->win().is_centered();
-    }
-
-    // FIXME: Remove because too ambiguous: bool is_symmetric() const
-    
-    /// Give the maximum coordinate gap.
-    unsigned delta() const
-    {
-      return exact(this)->win().delta();
-    }
     
   protected:
     Weighted_Window();
@@ -110,24 +92,27 @@ namespace mln
   W operator-(const Weighted_Window<W>& rhs);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename W>
+  template <typename E>
   inline
-  Weighted_Window<W>::Weighted_Window()
+  Weighted_Window<E>::Weighted_Window()
   {
-    //typedef  mln_psite(E)  point;
-    //typedef mln_dpsite(E) dpoint;
-    typedef mln_weight(W) weight;
-    typedef mln_window(W) window;
+    typedef   mln_site(E)   site;
+    typedef  mln_psite(E)  psite;
+    typedef mln_dpsite(E) dpsite;
 
-    typedef mln_fwd_qiter(W) fwd_qiter;
-    typedef mln_bkd_qiter(W) bkd_qiter;
+    typedef mln_weight(E) weight;
+    typedef mln_window(E) window;
 
-    void (W::*m1)() = & W::sym;
+    typedef mln_fwd_qiter(E) fwd_qiter;
+    typedef mln_bkd_qiter(E) bkd_qiter;
+
+    void (E::*m1)() = & E::sym;
     m1 = 0;
 
-    const window& (W::*m2)() const = & W::win;
+    const window& (E::*m2)() const = & E::win;
     m2 = 0;
   }
 

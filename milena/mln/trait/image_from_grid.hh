@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,13 @@
 #ifndef MLN_TRAIT_IMAGE_FROM_MESH_HH
 # define MLN_TRAIT_IMAGE_FROM_MESH_HH
 
-/*! \file mln/trait/image_from_grid.hh
- *
- * \brief Definition of the "image from mesh" trait.
- */
+/// \file mln/trait/image_from_grid.hh
+///
+/// Definition of the "image from mesh" trait.
+///
+/// This file shall not include the concrete image types it returns;
+/// otherwise we get circular dependencies.  As a consequence the user
+/// shall include the appropriate image type she deals with.
 
 # include <mln/core/grids.hh>
 

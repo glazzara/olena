@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,56 +25,51 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW2D_HH
-# define MLN_MAKE_W_WINDOW2D_HH
+#ifndef MLN_CORE_INTERNAL_GEOM_BBOX_HH
+# define MLN_CORE_INTERNAL_GEOM_BBOX_HH
 
-/*! \file mln/make/w_window2d.hh
- *
- * \brief Routine to create an mln::w_window in the 2D case.
- */
+/// \file mln/core/internal/geom_bbox.hh
+///
+/// \internal Routine that computes a bounding box from a window.
+/// This file is included in mln/core/concept/window.hh and avoid
+/// circular dependency since mln/geom/bbox.hh cannot be included in
+/// concept files.
 
-# include <mln/core/w_window.hh>
-# include <mln/core/alias/dpoint2d.hh>
-# include <mln/convert/from_to.hxx>
+# include <mln/accu/bbox.hh>
+# include <mln/literal/origin.hh>
 
 
 namespace mln
 {
 
-  namespace make
+  namespace internal
   {
 
-    /*! \brief Create a 2D mln::w_window from an array of weights.
-     *
-     * \param[in] weights Array.
-     *
-     * \pre The array size, \c S, has to be a square of an odd integer.
-     *
-     * \return A 2D weighted window.
-     */
-    template <typename W, unsigned S>
-    mln::w_window<mln::dpoint2d, W> w_window2d(W (&weights)[S]);
+    template <typename W>
+    box<mln_psite(W)>
+    geom_bbox(const W& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned S>
-    inline
-    mln::w_window<mln::dpoint2d, W>
-    w_window2d(W (&weights)[S])
+    template <typename W>
+    box<mln_psite(W)>
+    geom_bbox(const W& win)
     {
-      enum { s = mlc_sqrt_int(S) / 2 };
-      metal::bool_<(((2 * s + 1) * (2 * s + 1)) == S)>::check();
-      mln::w_window<mln::dpoint2d, W> tmp;
-      convert::from_to(weights, tmp);
-      return tmp;
+      typedef mln_psite(W) P;
+      accu::bbox<P> b;
+      P O = literal::origin;
+      mln_qiter(W) q(exact(win), O);
+      for_all(q)
+	b.take(q);
+      return b;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+  } // end of namespace mln::internal
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_W_WINDOW2D_HH
+#endif // ! MLN_CORE_INTERNAL_GEOM_BBOX_HH

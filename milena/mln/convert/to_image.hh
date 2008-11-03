@@ -40,12 +40,13 @@
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/core/concept/neighborhood.hh>
 
-# include <mln/literal/zero.hh>
 # include <mln/geom/bbox.hh>
 # include <mln/level/fill.hh>
 # include <mln/histo/data.hh>
 
-
+# include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
 
 namespace mln
@@ -68,7 +69,7 @@ namespace mln
 
     /// Convert a weighted window \p w_win into an image.
     template <typename W>
-    mln_image_from_grid(mln_site(W)::grid, bool)
+    mln_image_from_grid(mln_site(W)::grid, mln_weight(W))
     to_image(const Weighted_Window<W>& w_win);
 
     /// Convert a neighborhood \p nbh into a binary image.
@@ -114,12 +115,12 @@ namespace mln
 
     template <typename W>
     inline
-    mln_image_from_grid(mln_site(W)::grid, bool)
+    mln_image_from_grid(mln_site(W)::grid, mln_weight(W))
     to_image(const Weighted_Window<W>& w_win)
     {
       mln_is_simple_window(W)::check();
       // mln_precondition(exact(w_win).is_valid());
-      mln_image_from_grid(mln_site(W)::grid, bool) tmp;
+      mln_image_from_grid(mln_site(W)::grid, mln_weight(W)) tmp;
       convert::from_to(exact(w_win), tmp);
       return tmp;
     }

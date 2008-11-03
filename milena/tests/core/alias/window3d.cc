@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +32,7 @@
  */
 
 #include <mln/core/alias/window3d.hh>
-#include <mln/core/image/image3d.hh>
 #include <mln/convert/to_image.hh>
-#include <mln/debug/println.hh>
-
 
 
 int main()
@@ -46,12 +44,10 @@ int main()
   mln_assertion(w.is_centered() == false);
   mln_assertion(w.is_symmetric() == true);
 
-  w.insert(dpoint3d(-1, -1, -1));
-  w.insert(dpoint3d( 1,  1,  1));
-  w.insert(dpoint3d( 0,  0,  2));
+  w.insert(-1, -1, -1);
+  w.insert( 1,  1,  1);
+  w.insert( 0,  0,  2);
 
   image3d<bool> ima = convert::to_image(w);
-  debug::println(ima);
-
   mln_assertion(w.delta() == 2);
 }

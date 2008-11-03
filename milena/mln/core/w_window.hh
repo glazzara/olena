@@ -37,7 +37,7 @@
 
 # include <map>
 
-# include <mln/core/concept/weighted_window.hh>
+# include <mln/core/internal/weighted_window_base.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/box.hh>
 # include <mln/core/window.hh>
@@ -45,7 +45,6 @@
 
 # include <mln/value/ops.hh>
 # include <mln/util/ord.hh>
-# include <mln/level/fill.hh>
 # include <mln/geom/bbox.hh> // FIXME: We may have some dep trouble with this include.
 # include <mln/literal/zero.hh>
 # include <mln/convert/to.hh>
@@ -63,7 +62,7 @@ namespace mln
   {
 
     template <typename D, typename W>
-    struct window_< mln::w_window<D,W> > : window_<W>
+    struct window_< mln::w_window<D,W> > : window_< mln::window<D> >
     {
       // Same traits as its corresponding window.
     };
@@ -78,22 +77,14 @@ namespace mln
    * the type of weights.
    */
   template <typename D, typename W>
-  struct w_window : public Weighted_Window< w_window<D,W> >
+  struct w_window : public internal::weighted_window_base< mln::window<D>,
+							   w_window<D,W> >
   {
     /// Dpsite associated type.
     typedef D dpsite;
 
-    /// Psite associated type.
-    typedef mln_psite(D) psite;
-
-    /// Site associated type.
-    typedef mln_site(D) site;
-
     /// Weight associated type.
     typedef W weight;
-
-    /// Window associated type.
-    typedef mln::window<D> window;
 
 
     /// Site_Iterator type to browse (forward) the points of a generic w_window.
@@ -117,12 +108,6 @@ namespace mln
     /// Give access to the vector of weights.
     const std::vector<W>& weights() const;
 
-
-    // Give the \p i-th delta-point.
-    const D& dp(unsigned i) const;
-
-    /// Give the number of delta-points.
-    unsigned size() const;
 
     /// Give access to the vector of delta-points.
     const std::vector<D>& std_vector() const;
@@ -237,25 +222,6 @@ namespace mln
 
   template <typename D, typename W>
   inline
-  const D&
-  w_window<D,W>::dp(unsigned i) const
-  {
-    mln_precondition(i < win_.size());
-    mln_invariant(wei_.size() == win_.size());
-    return win_.dp(i);
-  }
-
-  template <typename D, typename W>
-  inline
-  unsigned
-  w_window<D,W>::size() const
-  {
-    mln_invariant(wei_.size() == win_.size());
-    return win_.size();
-  }
-
-  template <typename D, typename W>
-  inline
   const std::vector<D>&
   w_window<D,W>::std_vector() const
   {
@@ -344,9 +310,10 @@ namespace mln
       mlc_converts_to(mln_value(I), W)::check();
       const I& ima = exact(from_);
       to.clear();
+      mln_value(I) zero = literal::zero;
       mln_piter(I) p(ima.domain());
       for_all(p)
-	if (ima(p) != literal::zero)
+	if (ima(p) != zero)
 	  to.insert(ima(p), convert::to<D>(p));
     }
 
@@ -363,8 +330,13 @@ namespace mln
       // mln_precondition(w_win.is_valid());
 
       ima.init_(geom::bbox(w_win));
-      level::fill(ima, literal::zero);
- 
+      {
+	// level::fill(ima, literal::zero) is:
+	mln_value(I) zero = literal::zero;
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  ima(p) = zero;
+      }
       unsigned n = w_win.size();
       for (unsigned i = 0; i < n; ++i)
 	ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
@@ -407,9 +379,10 @@ namespace mln
       box<P> b(all_to(-s), all_to(+s));
       mln_fwd_piter(box<P>) p(b);
       unsigned i = 0;
+      V zero = literal::zero;
       for_all(p)
       {
-	if (weight[i] != literal::zero)
+	if (weight[i] != zero)
 	  to.insert(weight[i], convert::to<D>(p));
 	++i;
       }
