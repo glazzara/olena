@@ -58,11 +58,10 @@ namespace mln
              K mean, const char * fn)
   {
 
-    //accu::mean<unsigned, unsigned long, value::int_u8> mean_accu;
-    accu::maj_h<value::int_u8> max_1;
+    accu::max<value::int_u8> max_1;
     image2d<value::int_u8> hproj = proj(histo, max_1);
 
-    accu::maj_h<value::int_u8> max_2;
+    accu::max<value::int_u8> max_2;
     image2d<value::int_u8> proj_class = proj(ws, max_2);
 
     //std::cout << histo;

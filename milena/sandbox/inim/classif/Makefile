@@ -1,18 +1,18 @@
 DISP=xv
 
 # ICCVG
-ICCVG_INCLUDES=-I../..
+ICCVG_INCLUDES=-I../../..
 ICCVG_SRC=iccvg04.cc
 ICCVG=iccvg
 ICCVG_DBG=iccvg_dbg
 
-IMG?=../../img/lena.ppm
+IMG?=..//../img/lena.ppm
 DIV?=4
 LAMBDA?=10
 
 
 # V2
-V2_INCLUDES=-I../..
+V2_INCLUDES=-I../../..
 V2_SRC=v2.cc max_tree.hh
 V2=v2
 V2_DBG=v2_dbg
