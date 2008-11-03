@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,8 +43,8 @@ main (void)
 {
   image2d<int> ima(3, 3, 1);
 
-  debug::iota (ima);
-  border::duplicate (ima);
+  debug::iota(ima);
+  border::duplicate(ima);
 
   mln_assertion(ima.element( 0) == 1);
   mln_assertion(ima.element( 1) == 1);
@@ -70,6 +71,5 @@ main (void)
   mln_assertion(ima.element(22) == 8);
   mln_assertion(ima.element(23) == 9);
   mln_assertion(ima.element(24) == 9);
-
 }
 

@@ -1,3 +1,20 @@
+2008-11-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make linear::convolve work properly with heterogenous types.
+
+	* tests/core/routine/primary.cc: New.
+	* tests/core/routine/Makefile.am: Update.
+	* tests/border/duplicate.cc: Layout.
+	* mln/core/routine/primary.hh: Complete.
+	* mln/core/internal/image_morpher.hh
+	(unmorph_): New overload from const target.
+	* mln/accu/convolve.hh: New.
+	* mln/accu/all.hh: Update.
+	(todo): New.
+	* mln/border/duplicate.hh: Fix.
+	* mln/extension/adjust_duplicate.hh: New.
+	* mln/linear/convolve.hh: Update.
+
 2008-11-03  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Fix an include problem in mln/morpho.

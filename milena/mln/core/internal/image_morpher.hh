@@ -65,8 +65,11 @@ namespace mln
       I* delegatee_();
 
 
-      /// Give the morphed image.
+      /// Give the morphed image (mutable version).
       I& unmorph_();
+
+      /// Give the morphed image (const version).
+      mlc_const(I)& unmorph_() const;
 
 
       /* \brief Test if this image has been initialized; default impl.
@@ -151,6 +154,17 @@ namespace mln
       mln_assertion(ptr != 0);
       return *ptr;
     }
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    mlc_const(I)&
+    image_morpher<I, T, S, E>::unmorph_() const
+    {
+      mlc_const(I)* ptr = delegatee_();
+      mln_assertion(ptr != 0);
+      return *ptr;
+    }
+
 
     template <typename I, typename T, typename S, typename E>
     inline

@@ -6,11 +6,13 @@ check_PROGRAMS =				\
   clone						\
   exact						\
   extend					\
-  initialize
+  initialize					\
+  primary
 
 clone_SOURCES = clone.cc
 exact_SOURCES = exact.cc
 extend_SOURCES = extend.cc
 initialize_SOURCES = initialize.cc
+primary_SOURCES = primary.cc
 
 TESTS = $(check_PROGRAMS)

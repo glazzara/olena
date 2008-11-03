@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,50 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_ALL_HH
-# define MLN_ACCU_ALL_HH
+/// \file tests/core/routine/primary.cc
+///
+/// Tests on mln::primary.
 
-/*! \file mln/accu/all.hh
- *
- * \brief File that includes all accumulator types.
- *
- * \todo Update accumulators s.a. count so that they are like min_/min.
- *
- * \todo Propagate those updates to mln/estim/.
- *
- * \todo Update the include list...
- */
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/routine/primary.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of accumulators.
-  namespace accu
-  {
-    /// Implementation namespace of accumulator namespace.
-    namespace impl {}
+  image2d<int> ima(1, 1);
+  box2d b = ima.domain();
 
-    /// Internal namespace of accumulators.
-    namespace internal {}
-  }
-
+  mln_assertion(primary((ima | b) | b).id_() == ima.id_());
 }
-
-
-# include <mln/accu/bbox.hh>
-# include <mln/accu/count.hh>
-# include <mln/accu/convolve.hh>
-# include <mln/accu/histo.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/mean.hh>
-# include <mln/accu/median_h.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/min_max.hh>
-# include <mln/accu/nil.hh>
-# include <mln/accu/pair.hh>
-# include <mln/accu/sum.hh>
-
-
-#endif // ! MLN_ACCU_ALL_HH

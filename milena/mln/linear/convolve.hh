@@ -38,8 +38,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/duplicate.hh>
+# include <mln/extension/adjust_duplicate.hh>
+# include <mln/accu/convolve.hh>
 
 
 
@@ -105,21 +105,23 @@ namespace mln
 	  const W& w_win = exact(w_win_);
 	  internal::convolve_tests(input, w_win);
 
-	  // extension::adjust_duplicate(input, w_win);
+	  extension::adjust_duplicate(input, w_win);
 	  
 	  typedef mln_concrete(I) O;
 	  O output;
 	  initialize(output, input);
+
+	  accu::convolve<mln_value(I), mln_weight(W)> a;
 
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(w_win, p);
 
 	  for_all(p)
 	  {
-	    mln_value(O) v = literal::zero;
+	    a.init();
 	    for_all(q) if (input.has(q))
-	      v += input(q) * q.w();
-	    output(p) = v;
+	      a.take(input(q), q.w());
+	    output(p) = a.to_result();
 	  }
 	  
 	  trace::exiting("linear::impl::generic::convolve");
@@ -140,23 +142,25 @@ namespace mln
 	const W& w_win = exact(w_win_);
 	internal::convolve_tests(input, w_win);
 
-	// extension::adjust_duplicate(input, w_win);
+	extension::adjust_duplicate(input, w_win);
 
 	typedef mln_concrete(I) O;
 	O output;
 	initialize(output, input);
  	mln_pixter(O) p_out(output);
 
+	accu::convolve<mln_value(I), mln_weight(W)> a;
+
 	mln_pixter(const I)    p(input);
 	mln_qixter(const I, W) q(p, w_win);
 
  	for_all_2(p, p_out)
 	  {
-	    mln_value(O) v = literal::zero;
+	    a.init();
 	    unsigned i = 0;
 	    for_all(q)
-	      v += w_win.w(i++) * q.val();
- 	    p_out.val() = v;
+	      a.take(q.val(), w_win.w(i++));
+ 	    p_out.val() = a.to_result();
 	  }
 
 	trace::exiting("linear::impl::convolve_fastest");

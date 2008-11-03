@@ -42,9 +42,17 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace internal
+  {
+    template <typename I> struct primary_type;
+  }
+
+
   /// FIXME: Doc!
   template <typename I>
-  void primary(const Image<I>& ima);
+  const typename internal::primary_type<I>::ret&
+  primary(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -60,7 +68,8 @@ namespace mln
     template <typename I, typename C>
     struct primary_type_helper
     {
-      typedef typename primary_type<mln_delegatee(I)>::ret ret;
+      typedef typename I::delegatee D;
+      typedef typename primary_type<D>::ret ret;
     };
 
     template <typename I>
@@ -79,6 +88,37 @@ namespace mln
 
     // Routine.
 
+    template <typename I>
+    const typename internal::primary_type<I>::ret&
+    primary_(const Image<I>& input); // Forward declaration.
+
+    template <typename I>
+    inline
+    const typename internal::primary_type<I>::ret&
+    primary_(trait::image::category::primary,
+	     const Image<I>& input)
+    {
+      return exact(input);
+    }
+
+    template <typename I>
+    inline
+    const typename internal::primary_type<I>::ret&
+    primary_(trait::image::category::morpher,
+	     const Image<I>& input)
+    {
+      return primary_(exact(input).unmorph_());
+    }
+
+    template <typename I>
+    inline
+    const typename internal::primary_type<I>::ret&
+    primary_(const Image<I>& input)
+    {
+      return primary_(mln_trait_image_category(I)(),
+		      input);
+    }
+
   } // end of namespace mln::internal
 
 
@@ -87,8 +127,11 @@ namespace mln
 
   template <typename I>
   inline
-  void primary(const Image<I>&)
+  const typename internal::primary_type<I>::ret&
+  primary(const Image<I>& input)
   {
+    mln_precondition(exact(input).has_data());
+    return internal::primary_(input);
   }
 
 
