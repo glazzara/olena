@@ -1,0 +1,26 @@
+## configure.in
+## Made by nicuveo for inim
+
+
+
+## Configuration
+profile: release
+
+
+## Defaults
+CC	 = g++
+CFLAGS	 = -W -Wall -Werror -ansi -I ../milena
+LDFLAGS  =
+DEPFLAGS = -I ../milena -MM
+
+#Darwin@LDFLAGS :=
+
+
+## Debug
+[debug]
+	CFLAGS  += -Wextra -g -pg
+	LDFLAGS += -pg
+
+## Release
+[release]
+	CFLAGS += -DNDEBUG -O1

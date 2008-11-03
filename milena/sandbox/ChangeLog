@@ -1,3 +1,29 @@
+2008-11-03  Antoine Leblanc  <leblanc@lrde.epita.fr>
+
+	INIM binarization proof of concept
+	* inim/binarization/proof-of-concept/ChangeLog: New.
+	* inim/binarization/proof-of-concept/Makefile: New.
+	* inim/binarization/proof-of-concept/bin: New.
+	* inim/binarization/proof-of-concept/build/Makefile: New.
+	* inim/binarization/proof-of-concept/build/configure.in: New.
+	* inim/binarization/proof-of-concept/build: New.
+	* inim/binarization/proof-of-concept/check/Makefile: New.
+	* inim/binarization/proof-of-concept/check/graph.sh: New.
+	* inim/binarization/proof-of-concept/check/histo.gp: New.
+	* inim/binarization/proof-of-concept/check: New.
+	* inim/binarization/proof-of-concept/configure.in: New.
+	* inim/binarization/proof-of-concept/configure: New.
+	* inim/binarization/proof-of-concept/scripts/flower: New.
+	* inim/binarization/proof-of-concept/scripts/init_tar.sh: New.
+	* inim/binarization/proof-of-concept/scripts/todo.sh: New.
+	* inim/binarization/proof-of-concept/scripts: New.
+	* inim/binarization/proof-of-concept/src/basic.cc: New.
+	* inim/binarization/proof-of-concept/src/gradient.cc: New.
+	* inim/binarization/proof-of-concept/src/snake2d.hh: New.
+	* inim/binarization/proof-of-concept/src/util.hxx: New.
+	* inim/binarization/proof-of-concept/src: New.
+	* inim/binarization/proof-of-concept: New.
+
 2008-11-03  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix projection.
