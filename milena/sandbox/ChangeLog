@@ -1,3 +1,20 @@
+2008-11-03  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Inim: Add the code related to edge detection in the sandbox.
+
+	* ballas/color: New.
+	* ballas/color/min_tree_volume_filter.cc: Min tree using volume filter.
+	* ballas/color/reference.cc: Method using a gradient.
+	* ballas/color/min_tree_area_filter.cc: Min tree using area filter.
+	* ballas/color/min_tree_color.cc: Min tree using filter based on color.
+	* ballas/color/reference2.cc: Method using the laplacien.
+	* ballas/color/src: New.
+	* ballas/color/src/graph.hh,
+	* ballas/color/src/io.hh,
+	* ballas/color/src/distance.hh,
+	* ballas/color/src/convert.hh: New, factorize some code.
+	* ballas/color/laplacien.cc: Laplacien tests.
+
 2008-11-03  Antoine Leblanc  <leblanc@lrde.epita.fr>
 
 	INIM binarization proof of concept
