@@ -32,36 +32,29 @@
 #include <mln/level/paste.hh>
 #include <mln/accu/mean.hh>
 #include <mln/literal/white.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/level/fill.hh>
 
 namespace mln
 {
-
-  template <typename T, typename A>
-  image1d<mln_result(A)>
-  proj(const image2d<T>& input, A a)
-  {
-    (void)a;
-
-    image1d<A> acc(geom::ncols(input));
-    mln_piter(image2d<T>) p(input.domain());
-    for_all(p) // 2d
-      acc.at(p.col()).take(input(p));
-
-    image1d<mln_result(A)> output(acc.domain());
-    level::paste(acc, output);
-    return output;
-  }
-
   template <typename T>
   image1d<float>
-  proj_nat(const image2d<T>& histo)
+  proj_nat(const image2d<T>& input)
   {
-    //    accu::mean<T> mean;
-    mln_accu_with(accu::meta::mean, T) mean;
-    image1d<float> out = proj(histo, mean);
+    image1d<float> out(geom::nrows(input));
+    level::fill(out, 0);
 
+    mln_piter(image2d<T>) p(input.domain());
+    for_all(p) // 2d
+      out.at(p.row()) += input(p);
+
+    mln_piter(image1d<T>) p2(out.domain());
+    unsigned count = geom::ncols(input);
+    for_all(p2) {
+      out(p2) /= count;
+    }
     return out;
-    //    io::pgm::save(out, fn);
   }
 
 } // end of namespace mln

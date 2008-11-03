@@ -13,4 +13,6 @@ clean:
 distclean: clean
 	rm -rf $(EXEC)
 
+proj: proj.cc proj.hh
+
 .PHONY: clean distclean
