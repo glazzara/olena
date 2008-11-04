@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004 EPITA Research and Development
+// Copyright (C) 2001, 2002, 2003, 2004, 2008 EPITA Research and Development
 // Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -432,6 +432,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output;
+      initialize(output, input);
 
       impl::recursivefilter_coef_
 	coef(1.68f, 3.735f,
@@ -453,6 +454,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output;
+      initialize(output, input);
 
       impl::recursivefilter_coef_
         coef(-0.6472f, -4.531f,
@@ -473,6 +475,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output;
+      initialize(output, input);
 
       impl::recursivefilter_coef_
         coef(-1.331f, 3.661f,
