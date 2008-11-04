@@ -305,17 +305,17 @@ namespace mln
 	return output;
       }
 
-      template <typename I, typename W>
+      template <typename I, typename W, typename A>
       struct erosion_arbitrary_2d_fastest_functor
       {
-	typedef erosion_arbitrary_2d_fastest_functor<I,W> self;
+	typedef erosion_arbitrary_2d_fastest_functor<I,W,A> self;
 	typedef void (self::*move_fun)();
 	typedef mln_deduce(I, psite, delta) dpsite;
 
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 
@@ -346,7 +346,7 @@ namespace mln
 	erosion_arbitrary_2d_fastest_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 
 	    win_left_fwd(win::shift(win, mln::left) - win),
 	    win_right_fwd(win - win::shift(win, mln::left)),
@@ -398,50 +398,50 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
-	  min.init();
+	  accu.init();
 	  p = input.domain().pmin() - dps[0];
 	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
-	    min.take(q.val());
+	    accu.take(q.val());
 	  p = input.domain().pmin();
 	}
 
 	void right()
 	{
 	  for_all(q_l_fwd)
-	    min.untake(q_l_fwd.val());
+	    accu.untake(q_l_fwd.val());
 	  for_all(q_r_fwd)
-	    min.take(q_r_fwd.val());
-	  output(p) = min;
+	    accu.take(q_r_fwd.val());
+	  output(p) = accu;
 	}
 
 	void left()
 	{
 	  for_all(q_r_bkd)
-	    min.untake(q_r_bkd.val());
+	    accu.untake(q_r_bkd.val());
 	  for_all(q_l_bkd)
-	    min.take(q_l_bkd.val());
-	  output(p) = min;
+	    accu.take(q_l_bkd.val());
+	  output(p) = accu;
 	}
 
 	void down()
 	{
 	  for_all(q_top_down)
-	    min.untake(q_top_down.val());
+	    accu.untake(q_top_down.val());
 	  for_all(q_bot_down)
-	    min.take(q_bot_down.val());
-	  output(p) = min;
+	    accu.take(q_bot_down.val());
+	  output(p) = accu;
 	}
 
 	void up()
 	{
 	  for_all(q_bot_up)
-	    min.untake(q_bot_up.val());
+	    accu.untake(q_bot_up.val());
 	  for_all(q_top_up)
-	    min.take(q_top_up.val());
-	  output(p) = min;
+	    accu.take(q_top_up.val());
+	  output(p) = accu;
 	}
 
       };
@@ -453,7 +453,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_arbitrary_2d_fastest");
 
-	typedef erosion_arbitrary_2d_fastest_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_arbitrary_2d_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win));
 	canvas::browsing::snake_generic(f);
 
@@ -555,7 +559,7 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	  accu.init();
 	  p = input.domain().pmin() - dps[0];
@@ -802,7 +806,7 @@ namespace mln
 
 
       // Diagonal2d non fastest.
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_diagonal2d_functor
       {
 	typedef I_ I;
@@ -811,7 +815,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
@@ -824,7 +828,7 @@ namespace mln
 	erosion_diagonal2d_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, dpsite(1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(1, -1))),
@@ -835,27 +839,27 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
 	void next()
 	{
 	  for_all(q_l)
-	    min.untake(input(q_l));
+	    accu.untake(input(q_l));
 	  for_all(q_r)
-	    min.take(input(q_r));
-	  output(p) = min;
+	    accu.take(input(q_r));
+	  output(p) = accu;
 	}
 
 
 	void init_diag()
 	{
-	  min.init();
+	  accu.init();
 	  p = p - dpsite(-1, 1);
 	  mln_qiter(W) q(win, p);
 	  for_all(q)
-	    min.take(input(q));
+	    accu.take(input(q));
 	  p = p + dpsite(-1, 1);
 	}
 
@@ -873,7 +877,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_diagonal2d");
 
-	typedef erosion_diagonal2d_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_diagonal2d_functor<I, W, A> F;
 	F f(exact(input), exact(win));
 	canvas::browsing::diagonal2d(f);
 
@@ -884,7 +892,7 @@ namespace mln
 
 
 
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_backdiagonal2d_functor
       {
 	typedef I_ I;
@@ -893,7 +901,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
@@ -906,7 +914,7 @@ namespace mln
 	erosion_backdiagonal2d_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, dpsite(-1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(-1, -1))),
@@ -917,27 +925,27 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
 	void next()
 	{
 	  for_all(q_l)
-	    min.untake(input(q_l));
+	    accu.untake(input(q_l));
 	  for_all(q_r)
-	    min.take(input(q_r));
-	  output(p) = min;
+	    accu.take(input(q_r));
+	  output(p) = accu;
 	}
 
 
 	void init_diag()
 	{
-	  min.init();
+	  accu.init();
 	  p = p - dpsite(1, 1);
 	  mln_qiter(W) q(win, p);
 	  for_all(q)
-	    min.take(input(q));
+	    accu.take(input(q));
 	  p = p + dpsite(1, 1);
 	}
 
@@ -954,7 +962,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_backdiagonal2d");
 
-	typedef erosion_backdiagonal2d_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_backdiagonal2d_functor<I, W, A> F;
 	F f(exact(input), exact(win));
 	canvas::browsing::backdiagonal2d(f);
 
@@ -966,7 +978,7 @@ namespace mln
 
 
       // Diagonal2d fastest.
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_diagonal2d_fastest_functor
       {
 	typedef I_ I;
@@ -975,7 +987,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
@@ -988,7 +1000,7 @@ namespace mln
 	erosion_diagonal2d_fastest_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, dpsite(1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(1, -1))),
@@ -999,27 +1011,27 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
 	void next()
 	{
 	  for_all(q_l)
-	    min.untake(q_l.val());
+	    accu.untake(q_l.val());
 	  for_all(q_r)
-	    min.take(q_r.val());
-	  output(p) = min;
+	    accu.take(q_r.val());
+	  output(p) = accu;
 	}
 
 
 	void init_diag()
 	{
-	  min.init();
+	  accu.init();
 	  p = p - dpsite(-1, 1);
 	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
-	    min.take(q.val());
+	    accu.take(q.val());
 	  p = p + dpsite(-1, 1);
 	}
 
@@ -1036,7 +1048,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_diagonal2d_fastest");
 
-	typedef erosion_diagonal2d_fastest_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_diagonal2d_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win));
 	canvas::browsing::diagonal2d(f);
 
@@ -1048,7 +1064,7 @@ namespace mln
 
 
       // Backdiagonal2d fastest.
-      template <typename I_, typename W>
+      template <typename I_, typename W, typename A>
       struct erosion_backdiagonal2d_fastest_functor
       {
 	typedef I_ I;
@@ -1057,7 +1073,7 @@ namespace mln
 	const I& input;
 	const W& win;
 	mln_concrete(I) output;
-	accu::min_h<mln_value(I)> min;
+	A accu;
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
@@ -1070,7 +1086,7 @@ namespace mln
 	erosion_backdiagonal2d_fastest_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
-	    min(),
+	    accu(),
 	    dir(dir),
 	    win_left(win::shift(win, dpsite(-1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(-1, -1))),
@@ -1079,29 +1095,33 @@ namespace mln
 	{
 	}
 
+	template <typename V>
+	void neutral(const V&) { return mln_max(V); }
+	void neutral(const bool&) { return true; }
+
 	void init()
 	{
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
+	  extension::adjust_fill(input, win, neutral(mln_value(I)()));
 	  initialize(output, input);
 	}
 
 	void next()
 	{
 	  for_all(q_l)
-	    min.untake(q_l.val());
+	    accu.untake(q_l.val());
 	  for_all(q_r)
-	    min.take(q_r.val());
-	  output(p) = min;
+	    accu.take(q_r.val());
+	  output(p) = accu;
 	}
 
 
 	void init_diag()
 	{
-	  min.init();
+	  accu.init();
 	  p = p - dpsite(1, 1);
 	  mln_qixter(const I, W) q(input, win, p);
 	  for_all(q)
-	    min.take(q.val());
+	    accu.take(q.val());
 	  p = p + dpsite(1, 1);
 	}
 
@@ -1118,7 +1138,11 @@ namespace mln
       {
 	trace::entering("morpho::impl:erosion_backdiagonal2d_fastest");
 
-	typedef erosion_backdiagonal2d_fastest_functor<I, W> F;
+	typedef mlc_is(mln_trait_image_kind(I),
+		       trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	typedef erosion_backdiagonal2d_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win));
 	canvas::browsing::backdiagonal2d(f);
 

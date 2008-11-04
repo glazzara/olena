@@ -1,3 +1,8 @@
+2008-11-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* mln/morpho/erosion.spe.hh: Add accumulator template parameter to all
+	versions of erosion.
+
 2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix sanity check.
