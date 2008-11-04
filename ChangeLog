@@ -1,3 +1,9 @@
+2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Update configure.ac for unit_test.
+
+	* configure.ac: Add unit_test Makefile.
+
 2008-11-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Remove a std::size_t.

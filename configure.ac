@@ -224,6 +224,7 @@ AC_CONFIG_FILES([
       milena/tests/trait/op/Makefile
       milena/tests/trait/value/Makefile
     milena/tests/util/Makefile
+    milena/tests/unit_test/Makefile
     milena/tests/value/Makefile
       milena/tests/value/builtin/Makefile
       milena/tests/value/concept/Makefile
