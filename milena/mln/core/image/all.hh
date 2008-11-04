@@ -32,12 +32,11 @@
  *
  * \brief File that includes all image types.
  *
- * \todo Make it effective after having moved image-defining files.
  */
 
 
-# include <mln/core/image/bgraph_image.hh>
-# include <mln/core/image/bgraph_psite.hh>
+//# include <mln/core/image/bgraph_image.hh>
+//# include <mln/core/image/bgraph_psite.hh>
 # include <mln/core/image/cast_image.hh>
 # include <mln/core/image/ch_piter.hh>
 # include <mln/core/image/complex_image.hh>
@@ -45,6 +44,12 @@
 # include <mln/core/image/complex_neighborhoods.hh>
 # include <mln/core/image/complex_window_piter.hh>
 # include <mln/core/image/complex_windows.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/flat_image.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/fi_adaptor.hh>
+# include <mln/core/image/image1d.hh>
 # include <mln/core/image/decorated_image.hh>
 # include <mln/core/image/extended.hh>
 # include <mln/core/image/extension_fun.hh>
@@ -53,7 +58,7 @@
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/graph_elt_neighborhood.hh>
 # include <mln/core/image/graph_elt_window.hh>
-# include <mln/core/image/graph_image.hh>
+//# include <mln/core/image/graph_image.hh>
 # include <mln/core/image/graph_neighborhood_piter.hh>
 # include <mln/core/image/graph_window_piter.hh>
 # include <mln/core/image/hexa.hh>
@@ -65,12 +70,12 @@
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/interpolated.hh>
 # include <mln/core/image/lazy_image.hh>
-# include <mln/core/image/line_graph_elt_neighborhood.hh>
-# include <mln/core/image/line_graph_elt_window.hh>
-# include <mln/core/image/line_graph_image.hh>
-# include <mln/core/image/line_graph_neighborhood_piter.hh>
-# include <mln/core/image/line_graph_psite.hh>
-# include <mln/core/image/line_graph_window_piter.hh>
+//# include <mln/core/image/line_graph_elt_neighborhood.hh>
+//# include <mln/core/image/line_graph_elt_window.hh>
+//# include <mln/core/image/line_graph_image.hh>
+//# include <mln/core/image/line_graph_neighborhood_piter.hh>
+//# include <mln/core/image/line_graph_psite.hh>
+//# include <mln/core/image/line_graph_window_piter.hh>
 # include <mln/core/image/mono_obased_rle_encode.hh>
 # include <mln/core/image/mono_obased_rle_image.hh>
 # include <mln/core/image/mono_rle_encode.hh>
@@ -92,6 +97,5 @@
 # include <mln/core/image/value_enc_image.hh>
 # include <mln/core/image/value_encode.hh>
 
-//# include <mln/core/image/fi_adaptor.hh>
 
 #endif // ! MLN_CORE_IMAGE_ALL_HH

@@ -31,67 +31,8 @@
 # include <libgen.h>
 # include <sstream>
 
-# include <mln/core/image/image2d.hh>
 # include <mln/core/image/image1d.hh>
-
-# include <mln/core/concept/function.hh>
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/sub_image.hh>
-# include <mln/core/image/cast_image.hh>
-# include <mln/core/alias/neighb2d.hh>
-# include <mln/core/var.hh>
-# include <mln/core/routine/clone.hh>
-# include <mln/core/routine/ops.hh>
-# include <mln/core/site_set/p_vaccess.hh>
-# include <mln/core/site_set/p_set.hh>
-
-# include <mln/accu/bbox.hh>
-# include <mln/accu/count.hh>
-
-# include <mln/border/fill.hh>
-
-# include <mln/convert/to.hh>
-# include <mln/convert/to_fun.hh>
-
-# include <mln/debug/println.hh>
-# include <mln/debug/colorize.hh>
-
-# include <mln/draw/box.hh>
-
-# include <mln/fun/i2v/array.hh>
-
-# include <mln/io/pbm/load.hh>
-# include <mln/io/pbm/save.hh>
-# include <mln/io/ppm/save.hh>
-# include <mln/io/pgm/save.hh>
-# include <mln/io/txt/save.hh>
-
-# include <mln/labeling/blobs.hh>
-# include <mln/labeling/compute.hh>
-
-# include <mln/level/convert.hh>
-# include <mln/level/compute.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
-# include <mln/level/apply.hh>
-# include <mln/level/transform.hh>
-
-# include <mln/literal/all.hh>
-
-# include <mln/logical/not.hh>
-
-# include <mln/morpho/hit_or_miss.hh>
-# include <mln/morpho/erosion.hh>
-
-# include <mln/pw/all.hh>
-
-# include <mln/util/array.hh>
-
-# include <mln/value/int_u16.hh>
-# include <mln/value/rgb8.hh>
-
-# include <mln/win/hline2d.hh>
-# include <mln/win/vline2d.hh>
+# include <mln/essential/2d.hh>
 
 #include <tesseract/baseapi.h>
 
@@ -264,17 +205,17 @@ namespace scribo
       for (unsigned i = 1; i < in.ncols(); ++i)
       {
 	if (hend.at(i) > 0)
-	  draw_col(tmp, i, literal::dark_orange);
+	  draw_col(tmp, i, literal::orange);
 	if (vcol.at(i) > 0)
-	  draw_col(tmp, i, literal::dark_orange);
+	  draw_col(tmp, i, literal::orange);
       }
 
       for (unsigned i = 1; i < in.nrows(); ++i)
       {
 	if (hrow.at(i) > 0)
-	  draw_row(tmp, i, literal::dark_red);
+	  draw_row(tmp, i, literal::magenta);
 	if (vend.at(i) > 0)
-	  draw_row(tmp, i, literal::dark_red);
+	  draw_row(tmp, i, literal::magenta);
       }
 
       for (unsigned i = 1; i < tboxes.first.nelements(); ++i)

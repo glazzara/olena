@@ -41,6 +41,7 @@ namespace mln
 }
 
 # include <mln/convert/from_to.hh>
+# include <mln/convert/to.hh>
 
 # include <mln/convert/to_dpoint.hh>
 # include <mln/convert/to_fun.hh>

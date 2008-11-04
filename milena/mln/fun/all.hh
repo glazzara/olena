@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -55,7 +55,11 @@ namespace mln
 # include <mln/fun/i2v/all.hh>
 # include <mln/fun/p2b/all.hh>
 # include <mln/fun/p2v/all.hh>
+# include <mln/fun/v2b/all.hh>
 # include <mln/fun/v2v/all.hh>
+# include <mln/fun/vv2v/all.hh>
+# include <mln/fun/x2p/all.hh>
+# include <mln/fun/x2v/all.hh>
 # include <mln/fun/x2x/all.hh>
 
 

@@ -35,12 +35,15 @@
 
 
 # include <mln/core/site_set/box.hh>
-# include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/site_set/p_centered.hh>
+# include <mln/core/site_set/p_complex.hh>
+# include <mln/core/site_set/p_edges.hh>
+# include <mln/core/site_set/p_faces.hh>
 # include <mln/core/site_set/p_if.hh>
 # include <mln/core/site_set/p_image.hh>
 # include <mln/core/site_set/p_key.hh>
+# include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/site_set/p_mutable_array_of.hh>
 # include <mln/core/site_set/p_priority.hh>
 # include <mln/core/site_set/p_queue.hh>
@@ -49,6 +52,7 @@
 # include <mln/core/site_set/p_set.hh>
 # include <mln/core/site_set/p_set_of.hh>
 # include <mln/core/site_set/p_vaccess.hh>
+# include <mln/core/site_set/p_vertices.hh>
 
 
 #endif // ! MLN_CORE_SITE_SET_ALL_HH

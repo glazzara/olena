@@ -41,7 +41,6 @@
 # include <mln/core/concept/function.hh>
 
 # include <mln/value/set.hh>
-# include <mln/value/lut_vec.hh>
 
 
 // Specializations are in:

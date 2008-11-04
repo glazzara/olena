@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -51,9 +51,13 @@ namespace mln
 
 # include <mln/fun/v2v/abs.hh>
 # include <mln/fun/v2v/cast.hh>
+# include <mln/fun/v2v/convert.hh>
+# include <mln/fun/v2v/dec.hh>
 # include <mln/fun/v2v/enc.hh>
 # include <mln/fun/v2v/id.hh>
 # include <mln/fun/v2v/linear.hh>
+# include <mln/fun/v2v/norm.hh>
+# include <mln/fun/v2v/rgb_to_hsi.hh>
 # include <mln/fun/v2v/saturate.hh>
 
 

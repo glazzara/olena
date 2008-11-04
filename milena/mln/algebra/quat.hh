@@ -432,6 +432,7 @@ namespace mln
       mln_precondition(theta > - pi - mln_epsilon(float)
 		       && theta < pi + mln_epsilon(float));
       mln_precondition(about_equal(norm::l2(uv), 1.f));
+      (void) pi;
 
       this->v_[0] = cos(theta);
       float sint = sin(theta);

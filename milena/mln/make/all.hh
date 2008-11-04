@@ -48,21 +48,23 @@ namespace mln
 # include <mln/make/box2d_h.hh>
 # include <mln/make/box3d.hh>
 # include <mln/make/dpoint2d_h.hh>
+# include <mln/make/dual_neighb.hh>
 # include <mln/make/image.hh>
+# include <mln/make/image2d.hh>
 # include <mln/make/mat.hh>
-# include <mln/make/pixel.hh>
 # include <mln/make/pix.hh>
+# include <mln/make/pixel.hh>
 # include <mln/make/point2d_h.hh>
 # include <mln/make/vec.hh>
 # include <mln/make/voronoi.hh>
-# include <mln/make/win_chamfer.hh>
+# include <mln/make/w_window.hh>
 # include <mln/make/w_window1d.hh>
 # include <mln/make/w_window1d_int.hh>
 # include <mln/make/w_window2d.hh>
 # include <mln/make/w_window2d_int.hh>
 # include <mln/make/w_window3d.hh>
 # include <mln/make/w_window3d_int.hh>
-# include <mln/make/w_window.hh>
 # include <mln/make/w_window_line.hh>
+# include <mln/make/win_chamfer.hh>
 
 #endif // ! MLN_MAKE_ALL_HH

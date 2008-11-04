@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,10 +43,14 @@ namespace mln
 }
 
 
-# include <mln/math/sign.hh>
 # include <mln/math/abs.hh>
-# include <mln/math/min.hh>
+# include <mln/math/jacobi.hh>
 # include <mln/math/max.hh>
+# include <mln/math/min.hh>
+# include <mln/math/round.hh>
+# include <mln/math/sign.hh>
+# include <mln/math/sqr.hh>
+# include <mln/math/sqrt.hh>
 
 
 

@@ -1,5 +1,128 @@
 2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve 1D, 2D and 3D essential headers.
+
+	* mln/util/all.hh,
+	* mln/trait/op/all.hh,
+	* mln/set/all.hh,
+	* mln/morpho/all.hh,
+	* mln/math/all.hh,
+	* mln/make/all.hh,
+	* mln/linear/all.hh,
+	* mln/level/all.hh,
+	* mln/labeling/all.hh,
+	* mln/geom/all.hh,
+	* mln/fun/v2v/all.hh,
+	* mln/fun/p2b/all.hh,
+	* mln/fun/i2v/all.hh,
+	* mln/fun/all.hh,
+	* mln/essential/1d.hh,
+	* mln/essential/2d.hh,
+	* mln/essential/3d.hh,
+	* mln/debug/all.hh,
+	* mln/core/trait/all.hh,
+	* mln/core/site_set/all.hh,
+	* mln/core/image/all.hh,
+	* mln/convert/all.hh,
+	* mln/canvas/browsing/all.hh,
+	* mln/accu/all.hh: update includes.
+
+	* mln/algebra/quat.hh: avoid a warning.
+
+	* mln/accu/essential.hh,
+	* mln/algebra/all.hh,
+	* mln/algebra/essential.hh,
+	* mln/arith/essential.hh,
+	* mln/binarization/all.hh,
+	* mln/binarization/essential.hh,
+	* mln/border/essential.hh,
+	* mln/canvas/browsing/essential.hh,
+	* mln/canvas/essential.hh,
+	* mln/canvas/morpho/essential.hh,
+	* mln/convert/essential.hh,
+	* mln/core/all.hh,
+	* mln/core/def/essential.hh,
+	* mln/core/essential.hh,
+	* mln/core/image/essential.hh,
+	* mln/core/routine/essential.hh,
+	* mln/core/site_set/essential.hh,
+	* mln/core/trait/essential.hh,
+	* mln/debug/essential.hh,
+	* mln/display/essential.hh,
+	* mln/draw/essential.hh,
+	* mln/essential/routine.hh,
+	* mln/estim/essential.hh,
+	* mln/extension/essential.hh,
+	* mln/fun/essential.hh,
+	* mln/fun/i2v/essential.hh,
+	* mln/fun/p2b/essential.hh,
+	* mln/fun/p2v/essential.hh,
+	* mln/fun/v2b/all.hh,
+	* mln/fun/v2b/essential.hh,
+	* mln/fun/v2v/essential.hh,
+	* mln/fun/vv2v/all.hh,
+	* mln/fun/vv2v/essential.hh,
+	* mln/fun/x2p/all.hh,
+	* mln/fun/x2p/essential.hh,
+	* mln/fun/x2v/essential.hh,
+	* mln/fun/x2x/essential.hh,
+	* mln/geom/essential.hh,
+	* mln/histo/essential.hh,
+	* mln/io/essential.hh,
+	* mln/labeling/essential.hh,
+	* mln/level/approx/essential.hh,
+	* mln/level/essential.hh,
+	* mln/level/naive/essential.hh,
+	* mln/linear/essential.hh,
+	* mln/literal/essential.hh,
+	* mln/logical/essential.hh,
+	* mln/make/essential.hh,
+	* mln/math/essential.hh,
+	* mln/metal/essential.hh,
+	* mln/morpho/elementary/essential.hh,
+	* mln/morpho/essential.hh,
+	* mln/neighb/all.hh,
+	* mln/neighb/essential.hh,
+	* mln/norm/essential.hh,
+	* mln/pw/essential.hh,
+	* mln/registration/all.hh,
+	* mln/registration/essential.hh,
+	* mln/set/essential.hh,
+	* mln/subsampling/all.hh,
+	* mln/subsampling/essential.hh,
+	* mln/tag/essential.hh,
+	* mln/test/essential.hh,
+	* mln/topo/all.hh,
+	* mln/topo/essential.hh,
+	* mln/trace/essential.hh,
+	* mln/trait/essential.hh,
+	* mln/trait/op/essential.hh,
+	* mln/trait/value/essential.hh,
+	* mln/transform/all.hh,
+	* mln/transform/essential.hh,
+	* mln/util/essential.hh,
+	* mln/value/builtin/essential.hh,
+	* mln/value/concept/essential.hh,
+	* mln/value/essential.hh,
+	* mln/value/internal/essential.hh,
+	* mln/win/essential.hh: new headers.
+
+	* mln/extension/all.hh: update comments.
+
+	* mln/core/image/hexa_piter.hh: fix wrong template argument number.
+
+	* mln/core/site_set/box.hh: fix comment.
+
+	* mln/core/trait/op_mult.hh: fix a wrong namespace.
+
+	* mln/core/clock_neighb.hh: fix wrong include.
+
+	* mln/level/transform.hh: remove useless include.
+
+	* sandbox/scribo/demat.hh: use new essential headers.
+
+2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add io::txt::save.
 
 	* mln/io/all.hh: update.
@@ -33,7 +156,6 @@
 
 	* mln/logical/not.hh,
 	* mln/logical/not.spe.hh: Write a dedicated version of not_inplace.
-
 
 2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 	
@@ -70,7 +192,6 @@
 	* mln/trace/stop.hh: new routines.
 
 	* mln/core/routine/initialize.hh: Use trace::stop and trace::resume.
-
 
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 

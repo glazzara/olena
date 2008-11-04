@@ -48,12 +48,27 @@ namespace mln
 
 # include <mln/geom/bbox.hh>
 # include <mln/geom/chamfer.hh>
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_ind.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/max_sli.hh>
+# include <mln/geom/min_col.hh>
+# include <mln/geom/min_ind.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/min_sli.hh>
+# include <mln/geom/ncols.hh>
+# include <mln/geom/ninds.hh>
+# include <mln/geom/nrows.hh>
+# include <mln/geom/nslis.hh>
 # include <mln/geom/pmin_pmax.hh>
+# include <mln/geom/resize.hh>
 # include <mln/geom/seeds2tiling.hh>
 # include <mln/geom/seeds2tiling_roundness.hh>
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
-
+# include <mln/geom/complex_geometry.hh>
+# include <mln/geom/nsites.hh>
+# include <mln/geom/delta.hh>
 
 #endif // ! MLN_GEOM_ALL_HH

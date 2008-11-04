@@ -52,11 +52,12 @@ namespace mln
   template <typename S>
   class hexa_fwd_piter_
     : public internal::piter_adaptor_< mln_fwd_piter(S),
+				       S,
 				       hexa_fwd_piter_<S> >
   {
     typedef mln_fwd_piter(S) adaptee_;
     typedef hexa_fwd_piter_<S> self_;
-    typedef internal::piter_adaptor_<adaptee_, self_> super_;
+    typedef internal::piter_adaptor_<adaptee_, S, self_> super_;
 
   public:
 

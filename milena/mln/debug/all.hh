@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,11 +46,13 @@ namespace mln
 
 }
 
+# include <mln/debug/colorize.hh>
 # include <mln/debug/format.hh>
+# include <mln/debug/graph.hh>
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
-# include <mln/debug/graph.hh>
+# include <mln/debug/put_word.hh>
 
 
 #endif // ! MLN_DEBUG_ALL_HH

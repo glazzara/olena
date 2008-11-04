@@ -67,6 +67,7 @@ namespace mln
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/laplacian.hh>
+# include <mln/morpho/meyer_wst.hh>
 # include <mln/morpho/min.hh>
 # include <mln/morpho/minus.hh>
 # include <mln/morpho/opening_area.hh>
@@ -74,6 +75,7 @@ namespace mln
 # include <mln/morpho/opening.hh>
 # include <mln/morpho/plus.hh>
 # include <mln/morpho/Rd.hh>
+# include <mln/morpho/rank_filter.hh>
 # include <mln/morpho/thickening.hh>
 # include <mln/morpho/thick_miss.hh>
 # include <mln/morpho/thin_fit.hh>

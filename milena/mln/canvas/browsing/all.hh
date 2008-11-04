@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,9 +45,14 @@ namespace mln
 
 }
 
-# include <mln/canvas/browsing/directional.hh>
+# include <mln/canvas/browsing/backdiagonal2d.hh>
+# include <mln/canvas/browsing/diagonal2d.hh>
 # include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
+# include <mln/canvas/browsing/directional.hh>
+# include <mln/canvas/browsing/hyper_directional.hh>
 # include <mln/canvas/browsing/fwd.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
+# include <mln/canvas/browsing/snake_generic.hh>
+# include <mln/canvas/browsing/snake_vert.hh>
 
 #endif // ! MLN_CANVAS_BROWSING_ALL_HH

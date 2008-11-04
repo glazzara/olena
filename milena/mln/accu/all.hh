@@ -60,8 +60,13 @@ namespace mln
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/convolve.hh>
+//# include <mln/accu/count_adjacent_vertices.hh>
+# include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
+# include <mln/accu/land.hh>
+# include <mln/accu/line.hh>
 # include <mln/accu/max.hh>
+# include <mln/accu/max_h.hh>
 # include <mln/accu/mean.hh>
 # include <mln/accu/median_h.hh>
 # include <mln/accu/min.hh>
@@ -69,7 +74,10 @@ namespace mln
 # include <mln/accu/min_max.hh>
 # include <mln/accu/nil.hh>
 # include <mln/accu/pair.hh>
+# include <mln/accu/rank.hh>
 # include <mln/accu/sum.hh>
+# include <mln/accu/tuple.hh>
+# include <mln/accu/volume.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

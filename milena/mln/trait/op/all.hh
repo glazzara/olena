@@ -66,6 +66,7 @@ namespace mln
 
 # include <mln/trait/op/less.hh>
 # include <mln/trait/op/leq.hh>
+# include <mln/trait/op/lor.hh>
 # include <mln/trait/op/geq.hh>
 # include <mln/trait/op/greater.hh>
 

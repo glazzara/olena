@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,6 +44,8 @@ namespace mln
 
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
+# include <mln/set/get.hh>
+# include <mln/set/has.hh>
 # include <mln/set/is_subset_of.hh>
 # include <mln/set/sym_diff.hh>
 # include <mln/set/uni.hh>

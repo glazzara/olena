@@ -34,7 +34,6 @@
  */
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/site_set/p_array.hh>
 
@@ -58,7 +57,7 @@ namespace mln
     typedef D dpoint;
 
     /// Site associated type.
-    typedef mln_point(D) point;
+    typedef mln_psite(D) point;
 
     /*! \brief Site_Iterator type to browse the points of a generic
      * neighborhood w.r.t. the ordering of delta-points.

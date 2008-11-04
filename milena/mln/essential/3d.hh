@@ -28,22 +28,24 @@
 #ifndef MLN_ESSENTIAL_3D_HH_
 # define MLN_ESSENTIAL_3D_HH_
 
-# include <core/image/image3d.hh>
-# include <core/pixter3d.hh>
-# include <core/alias/box3d.hh>
-# include <core/alias/dpoint3d.hh>
-# include <core/alias/neighb3d.hh>
-# include <core/alias/point3d.hh>
-# include <core/alias/w_window3d_float.hh>
-# include <core/alias/w_window3d_int.hh>
-# include <core/alias/window3d.hh>
-# include <geom/size3d.hh>
-# include <make/box3d.hh>
-# include <make/w_window3d.hh>
-# include <make/w_window3d_int.hh>
-# include <metal/array3d.hh>
-# include <win/cube3d.hh>
-# include <win/cuboid3d.hh>
+# include <mln/core/image/image3d.hh>
+# include <mln/core/pixter3d.hh>
+# include <mln/core/alias/box3d.hh>
+# include <mln/core/alias/dpoint3d.hh>
+# include <mln/core/alias/neighb3d.hh>
+# include <mln/core/alias/point3d.hh>
+# include <mln/core/alias/w_window3d_float.hh>
+# include <mln/core/alias/w_window3d_int.hh>
+# include <mln/core/alias/window3d.hh>
+# include <mln/geom/size3d.hh>
+# include <mln/make/box3d.hh>
+# include <mln/make/w_window3d.hh>
+# include <mln/make/w_window3d_int.hh>
+# include <mln/metal/array3d.hh>
+# include <mln/win/cube3d.hh>
+# include <mln/win/cuboid3d.hh>
+
+# include <mln/essential/routine.hh>
 
 #endif // ! MLN_ESSENTIAL_3D_HH_
 

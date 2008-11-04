@@ -28,22 +28,23 @@
 #ifndef MLN_ESSENTIAL_1D_HH_
 # define MLN_ESSENTIAL_1D_HH_
 
-# include <core/image/image1d.hh>
-# include <core/pixter1d.hh>
-# include <core/alias/box1d.hh>
-# include <core/alias/dpoint1d.hh>
-# include <core/alias/neighb1d.hh>
-# include <core/alias/point1d.hh>
-# include <core/alias/w_window1d_float.hh>
-# include <core/alias/w_window1d_int.hh>
-# include <core/alias/window1d.hh>
-# include <geom/size1d.hh>
-# include <make/box1d.hh>
-# include <make/image1d.hh>
-# include <make/w_window1d.hh>
-# include <make/w_window1d_int.hh>
-# include <metal/array1d.hh>
-# include <win/segment1d.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/pixter1d.hh>
+# include <mln/core/alias/box1d.hh>
+# include <mln/core/alias/dpoint1d.hh>
+# include <mln/core/alias/neighb1d.hh>
+# include <mln/core/alias/point1d.hh>
+# include <mln/core/alias/w_window1d_float.hh>
+# include <mln/core/alias/w_window1d_int.hh>
+# include <mln/core/alias/window1d.hh>
+# include <mln/geom/size1d.hh>
+# include <mln/make/box1d.hh>
+# include <mln/make/w_window1d.hh>
+# include <mln/make/w_window1d_int.hh>
+# include <mln/metal/array1d.hh>
+# include <mln/win/segment1d.hh>
+
+# include <mln/essential/routine.hh>
 
 #endif // ! MLN_ESSENTIAL_1D_HH_
 

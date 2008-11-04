@@ -144,7 +144,6 @@ namespace mln
     box<P> to_larger(unsigned b) const;
 
     /// Return the approximated central site of this box.
-    /// FIXME: Do we want a routine as well like geom::bbox()?
     P center() const;
 
     /// Test that the box owns valid data, i.e., is initialized and
