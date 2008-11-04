@@ -29,6 +29,7 @@
 # define DEMAT_HH_
 
 # include <libgen.h>
+# include <sstream>
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image1d.hh>
@@ -53,6 +54,7 @@
 # include <mln/convert/to_fun.hh>
 
 # include <mln/debug/println.hh>
+# include <mln/debug/colorize.hh>
 
 # include <mln/draw/box.hh>
 
@@ -62,6 +64,7 @@
 # include <mln/io/pbm/save.hh>
 # include <mln/io/ppm/save.hh>
 # include <mln/io/pgm/save.hh>
+# include <mln/io/txt/save.hh>
 
 # include <mln/labeling/blobs.hh>
 # include <mln/labeling/compute.hh>
@@ -90,6 +93,8 @@
 # include <mln/win/hline2d.hh>
 # include <mln/win/vline2d.hh>
 
+#include <tesseract/baseapi.h>
+
 namespace scribo
 {
 
@@ -103,38 +108,81 @@ namespace scribo
     char *input_file = 0;
     int dbg_file_id = 0;
 
-    std::string output_file(const char *name)
+    std::string output_file(const char *name, unsigned file_id)
     {
-      std::string str = "";
-//      str += dbg_file_id;
-//      str += "-";
-//      str += input_file;
-//      str += "-";
-      str += name;
-      return str;
+      std::ostringstream os;
+      os << "./"
+	 << file_id
+	 << "_"
+	 << input_file
+	 << "_"
+	 << name;
+      return os.str();
     }
 
     void draw_component_boxes(image2d<rgb8>& output, const util::array<box2d>& boxes)
     {
       for (unsigned i = 1; i < boxes.nelements(); ++i)
         if (boxes[i].is_valid())
+	{
+	  output(boxes[i].center()) = literal::red;
 	  draw::box(output, boxes[i], literal::red);
+	}
     }
 
     template <typename V>
     void save_lbl_image(const image2d<V>& lbl, unsigned nlabels,
-		        const char *filename)
+		        const char *filename, unsigned file_id)
     {
-      image2d<rgb8> output(lbl.domain());
-
-      fun::i2v::array<rgb8> f(nlabels + 1);
-      f(0) = literal::black;
-      for (unsigned i = 1; i <= nlabels; ++i)
-	f(i) = rgb8(255 / ((i % 10) + 1), (100 + i) % 255, (255 + i)%255);
-      output = level::transform(lbl, f);
-      io::ppm::save(output, output_file(filename));
+      image2d<rgb8> output = debug::colorize<image2d<rgb8>, image2d<V> >(lbl, nlabels);
+      io::ppm::save(output, output_file(filename, file_id));
     }
 
+
+    /// Functions related to Text Recognition.
+    /// \{
+
+    void
+    text_recognition(const image2d<bool>& in, const image2d<int_u16>& lbl,
+		     const util::array<box2d>& tboxes)
+    {
+      /// Use txt bboxes here with Tesseract
+      std::cout << "Text recognition..." << std::endl;
+
+      TessBaseAPI::InitWithLanguage(NULL, NULL, "fra", NULL, false, 0, NULL);
+      image2d<char> txt(in.domain());
+      level::fill(txt, ' ');
+
+      for (unsigned i = 1; i < tboxes.nelements(); ++i)
+      {
+	if (tboxes[i].is_valid())
+	{
+	  // FIXME: do not create a new image.
+	  image2d<bool> b(tboxes[i], 0);
+	  level::fill(b, false);
+	  level::fill(b, in | (tboxes[i] | (pw::value(lbl) == pw::cst(i))));
+
+	  char* s = TessBaseAPI::TesseractRect(
+	      (unsigned char*) b.buffer(),
+	      sizeof (bool),		  // Pixel size.
+	      b.ncols() * sizeof (bool),  // Row_offset
+	      0,			  // Left
+	      0,			  // Top
+	      b.ncols(),		  // n cols
+	      b.nrows());		  // n rows
+
+	  point2d p = tboxes[i].center();
+	  p.col() -= (tboxes[i].pmax().col() - tboxes[i].pmin().col()) / 2;
+	  if (s != 0)
+	    debug::put_word(txt, p, s);
+	  free(s);
+	}
+      }
+      io::txt::save(txt, "out.txt");
+    }
+
+
+    /// \}
 
     /// Functions related to the matrix extraction
     /// \{
@@ -216,17 +264,17 @@ namespace scribo
       for (unsigned i = 1; i < in.ncols(); ++i)
       {
 	if (hend.at(i) > 0)
-	  draw_row(tmp, i, literal::dark_orange);
+	  draw_col(tmp, i, literal::dark_orange);
 	if (vcol.at(i) > 0)
-	  draw_row(tmp, i, literal::dark_orange);
+	  draw_col(tmp, i, literal::dark_orange);
       }
 
       for (unsigned i = 1; i < in.nrows(); ++i)
       {
 	if (hrow.at(i) > 0)
-	  draw_col(tmp, i, literal::dark_red);
+	  draw_row(tmp, i, literal::dark_red);
 	if (vend.at(i) > 0)
-	  draw_col(tmp, i, literal::dark_red);
+	  draw_row(tmp, i, literal::dark_red);
       }
 
       for (unsigned i = 1; i < tboxes.first.nelements(); ++i)
@@ -235,7 +283,7 @@ namespace scribo
       for (unsigned i = 1; i < tboxes.second.nelements(); ++i)
 	draw_hline(tmp, tboxes.second[i], literal::red);
 
-      io::ppm::save(tmp, output_file("matrix.ppm"));
+      io::ppm::save(tmp, output_file("matrix.ppm", 4));
 #endif
 
     }
@@ -254,7 +302,7 @@ namespace scribo
     {
       std::cout << "component boxes" << std::endl;
       int_u16 nlabels = 0;
-      image2d<int_u16> lbl = labeling::blobs(filter, c4(), nlabels);
+      image2d<int_u16> lbl = labeling::blobs(filter, c8(), nlabels);
 
       return labeling::compute(accu::meta::bbox(), lbl, nlabels);
     }
@@ -289,12 +337,10 @@ namespace scribo
       // Lignes verticales
       std::cout << "Removing vertical lines" << std::endl;
       win::vline2d vline(l);
-      io::pbm::save(in, "ero_in_before");
-      trace::quiet = false;
       image2d<bool> vfilter = morpho::erosion(in, vline);
 
 #ifndef NOUT
-      io::pbm::save(vfilter, output_file("table-vfilter.pbm"));
+      io::pbm::save(vfilter, output_file("table-vfilter.pbm", 1));
 #endif
 
       boxes_t vboxes = component_boxes(vfilter);
@@ -307,7 +353,7 @@ namespace scribo
       image2d<bool> hfilter = morpho::erosion(in, hline);
 
 #ifndef NOUT
-      io::pbm::save(hfilter, output_file("table-hfilter.pbm"));
+      io::pbm::save(hfilter, output_file("table-hfilter.pbm", 2));
 #endif
 
       boxes_t hboxes = component_boxes(hfilter);
@@ -318,7 +364,7 @@ namespace scribo
       image2d<rgb8> tmp = clone(output);
       draw_component_boxes(tmp, vboxes);
       draw_component_boxes(tmp, hboxes);
-      io::ppm::save(tmp, output_file("table-filtered.ppm"));
+      io::ppm::save(tmp, output_file("table-filtered.ppm", 3));
 #endif
 
       return std::make_pair(vboxes, hboxes);
@@ -364,11 +410,11 @@ namespace scribo
       util::array<mln_result(accu_count_t)> nsitecomp
 	    = labeling::compute(accu_count_t(), lbl, nlabels);
 
-      std::cout << "nlabels with small comps = " << nlabels
-		<< " == " << nsitecomp.nelements() << std::endl;
       V ncomp = 0;
+
       fun::i2v::array<V> f(nsitecomp.nelements());
       f(0) = 0;
+
       for (unsigned i = 1; i <= nlabels; ++i)
       {
 	if (nsitecomp[i] < min_comp_size)
@@ -377,15 +423,11 @@ namespace scribo
 	  f(i) = ++ncomp;
       }
 
-      std::cout << "f.size() =" << f.size()
-		<< " - nsitecomp.nelements() =" << nsitecomp.nelements()
-		<< std::endl;
       lbl = level::transform(lbl, f);
       nlabels = ncomp;
 
 #ifndef NOUT
-      std::cout << "nlabels = " << nlabels << std::endl;
-      save_lbl_image(lbl, nlabels, "lbl-small-comps-removed.pgm");
+      save_lbl_image(lbl, nlabels, "lbl-small-comps-removed.pgm", 6);
 #endif
     }
 
@@ -405,7 +447,7 @@ namespace scribo
       lbl = level::transform(lbl, left_link);
 
 #ifndef NOUT
-      save_lbl_image(lbl, ncomp, "lbl-grouped-boxes.pgm");
+      save_lbl_image(lbl, ncomp, "lbl-grouped-boxes.pgm", 7);
 #endif
 
       util::array<box2d> result;
@@ -421,10 +463,10 @@ namespace scribo
     /// the current bbox.
     void update_link(fun::i2v::array<int_u16>& left_link, image2d<int_u16>& lbl,
 		     const point2d& p, const point2d& c,
-		     unsigned i, unsigned dmax)
+		     unsigned i, int dmax)
     {
-	if (lbl.domain().has(p) && lbl(p) != 0 && lbl(p) != i
-	    && (p.col() - c.col()) < dmax)
+	if (lbl.domain().has(p) && lbl(p) != 0u && lbl(p) != i
+	    && (math::abs(p.col() - c.col())) < dmax)
 	{
 	  if (left_link(lbl(p)) == lbl(p) && most_left(left_link, i) != lbl(p))
 	    left_link(lbl(p)) = i;
@@ -452,14 +494,14 @@ namespace scribo
       for (unsigned i = 1; i <= ncomp; ++i)
       {
 	unsigned midcol = (cboxes[i].pmax().col() - cboxes[i].pmin().col()) / 2;
-	unsigned dmax = midcol + bbox_distance;
+	int dmax = midcol + bbox_distance;
 	point2d c = cboxes[i].center();
 	/// First site on the right of the central site
 	point2d p(c.row(), c.col() + 1);
 
 	// FIXME: Lemmings with a condition on the distance => write a special version?
-	while (lbl.domain().has(p) && (lbl(p) == 0 || lbl(p) == i)
-		&& (p.col() - c.col()) < dmax)
+	while (lbl.domain().has(p) && (lbl(p) == 0u || lbl(p) == i)
+		&& math::abs(p.col() - c.col()) < dmax)
 	  ++p.col();
 
 	update_link(left_link, lbl, p, c, i, dmax);
@@ -470,6 +512,7 @@ namespace scribo
 
     util::array<box2d>
     extract_text(image2d<bool>& in,
+		 image2d<int_u16>& lbl,
 		 image2d<rgb8>& output,
 		 unsigned bbox_distance,
 		 unsigned min_comp_size)
@@ -482,7 +525,7 @@ namespace scribo
 
       //  Find character bboxes.
       V nlabels;
-      image2d<V> lbl = labeling::blobs(in, c4(), nlabels);
+      lbl = labeling::blobs(in, c8(), nlabels);
 
       //Remove small components.
       remove_small_comps_i2v(lbl, nlabels, min_comp_size);
@@ -492,7 +535,7 @@ namespace scribo
 #ifndef NOUT
       image2d<rgb8> tmp = clone(output);
       draw_component_boxes(tmp, cboxes);
-      io::ppm::save(tmp, output_file("character-bboxes.ppm"));
+      io::ppm::save(tmp, output_file("character-bboxes.ppm", 5));
 #endif
 
       //merge_bboxes(cboxes, lbl, nlabels);
@@ -531,7 +574,7 @@ namespace scribo
     //Load image
     image2d<bool> in;
     io::pbm::load(in, argv[1]);
-    in = logical::not_(in);
+    logical::not_inplace(in);
 
     image2d<rgb8> output = level::convert(rgb8(), in);
 
@@ -543,15 +586,14 @@ namespace scribo
       internal::extract_matrix(in, tblboxes);
     }
 
+    image2d<value::int_u16> lbl;
     util::array<box2d> tboxes =
-      internal::extract_text(in, output, bbox_distance, min_comp_size);
+      internal::extract_text(in, lbl, output, bbox_distance, min_comp_size);
 
     internal::draw_component_boxes(output, tboxes);
-    io::ppm::save(output, internal::output_file("out"));
+    io::ppm::save(output, internal::output_file("out.ppm", 8));
 
-    /// Use txt bboxes here with Tesseract
-    /// for (i = 1; i < tboxes.nelements(); ++i)
-    ///	  tesseract(in | tboxes[i])
+    internal::text_recognition(in, lbl, tboxes);
   }
 
 } // end of namespace scribo

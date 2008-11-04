@@ -1,3 +1,11 @@
+2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add tesseract support for Scribo.
+
+	* scribo/demat.hh: Use tesseract and store the result in an image of
+	char.
+
+
 2008-11-03  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	INIM: Move classif work in the inim directory.
