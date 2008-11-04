@@ -1,5 +1,15 @@
 2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix graph related files.
+
+	* mln/debug/graph.hh: update in order to support p_vertices.
+
+	* tests/core/image/graph_image.cc: Add assertions.
+	
+	* tests/core/site_set/p_vertices.cc: use fun::i2v::array.
+
+2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make all_headers and essential_headers compile.
 
 	* mln/core/image/all.hh,

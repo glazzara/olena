@@ -34,8 +34,7 @@
 # include <mln/pw/image.hh>
 # include <mln/level/fill.hh>
 # include <mln/draw/line.hh>
-# include <mln/core/site_set/p_graph.hh>
-# include <mln/core/image/graph_image.hh>
+# include <mln/core/site_set/p_vertices.hh>
 
 namespace mln
 {
@@ -48,16 +47,15 @@ namespace mln
      *  the background.
      *
      * \param[in,out] ima      The image to be drawn.
-     * \param[in]     pg       The p_graph which contains vertices and edges
-     *                         positions.
+     * \param[in]     pv       The p_vertices which contains vertices positions.
      * \param[in]     vertex_v   The value to assign to pixels which contains
      *                         vertices.
      * \param[in]     edge_v   The value to assign to pixels which contains
      *                         edges.
      */
-    template <typename I, typename P>
+    template <typename I, typename G, typename F>
     void
-    draw_graph(Image<I>& ima, const p_graph<P>& pg,
+    draw_graph(Image<I>& ima, const p_vertices<G, F>& pv,
 	  mln_value(I) vertex_v, mln_value(I) edge_v);
 
     /*! \brief Draw an image \p ima from a mln::graph_image \p gi.
@@ -72,37 +70,39 @@ namespace mln
      */
     // FIXME: The type of the last argument cannot always been
     // constructed from `int'!  We should remove this last argument.
-    template <typename I,  typename P, typename V>
-    void
-    draw_graph(Image<I>& ima, const graph_image<P, V>& gi,
-	 mln_value(I) edge_v = 1);
+//    template <typename I,  typename P, typename V>
+//    void
+//    draw_graph(Image<I>& ima, const graph_image<P, V>& gi,
+//	 mln_value(I) edge_v = 1);
 
 # ifndef MLN_INCLUDE_ONLY
 
     // FIXME: Add assertions on the size of the image: it must be large
     // enough to hold the representation of the graph/graph_image.
 
-    template <typename I, typename P>
+    template <typename I, typename G, typename F>
     inline
     void
-    draw_graph(Image<I>& ima, const p_graph<P>& pg,
+    draw_graph(Image<I>& ima, const p_vertices<G, F>& pv,
 	  mln_value(I) vertex_v, mln_value(I) edge_v)
     {
       // Debug the background.
       level::fill(ima, 0);
+
       // Debug the lines (edges).
-      for (unsigned l = 0; l < pg.nedges(); ++l)
-	line (exact(ima),
-	      // FIXME: Too low-level.  See similar remarks
-	      // in mln/core/image/graph_image.hh
-	      pg.gr_->vertex_data(pg.gr_->edge(l).v1()),
-	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
-	      edge_v);
+      const G& g = pv.graph();
+      typedef p_vertices<G, F> pv_t;
+      mln_edge_iter(G) ei(g);
+      for_all(ei)
+	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), edge_v);
+
       // Debug the points (vertices).
-      for (unsigned p = 0; p < pg.nsites(); ++p)
- 	exact(ima)(pg.gr_->vertex_data(p)) = vertex_v;
+      mln_piter(pv_t) p(pv);
+      for_all(p)
+	exact(ima)(p) = vertex_v;
     }
 
+/*
     template <typename I,  typename P, typename V>
     inline
     void
@@ -116,8 +116,9 @@ namespace mln
 	line (exact(ima), gi.vertex1(l), gi.vertex2(l), edge_v);
       // Debug the points (vertices).
       for (unsigned p = 0; p < gi.domain().nvertices(); ++p)
- 	exact(ima)(gi.domain().point_from_id(p)) = gi.vertex_values()[p];
+	exact(ima)(gi.domain().point_from_id(p)) = gi.vertex_values()[p];
     }
+*/
 
 # endif // ! MLN_INCLUDE_ONLY
 

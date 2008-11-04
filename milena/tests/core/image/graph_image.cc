@@ -121,7 +121,7 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  g.print_debug(std::cout);
+  //g.print_debug(std::cout);
 
   /*----------------------.
   | Graph image support.  |
@@ -171,7 +171,7 @@ int main()
 
   // We use the value 9 in debug::graph to represent edges to distinguish it
   // from vertices holding a value of 1.
-    debug::graph(ima_rep, pv, 1, 9);
+    debug::draw_graph(ima_rep, pv, 1, 9);
     debug::println(ima_rep);
   }
 
@@ -181,8 +181,9 @@ int main()
 
   // iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
+  unsigned i = 10;
   for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
+    mln_assertion(ima(p) == i++);
 
   {
     // Window - Forward iteration

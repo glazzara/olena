@@ -33,20 +33,7 @@
 #include <mln/util/graph.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_vertices.hh>
-
-template <typename G>
-struct my_fun
-{
-  typedef mln::point2d result;
-
-  const result& operator()(const mln::util::vertex<G>& v) const
-  {
-    static mln::point2d res(0, 0);
-    res.row() = v.id();
-    return res;
-  }
-
-};
+#include <mln/fun/i2v/array.hh>
 
 int main()
 {
@@ -68,8 +55,14 @@ int main()
   g.add_edge (5, 3);
   g.add_edge (2, 1);
 
-  typedef p_vertices<util::graph, my_fun<util::graph> > p_vertices;
-  p_vertices pv(g, my_fun<util::graph>());
+  // Map vertices to sites.
+  typedef fun::i2v::array<point2d> F;
+  F f(5);
+  for (unsigned i = 0; i < 5; ++i)
+    f(i) = point2d(i, 0);
+
+  typedef p_vertices<util::graph, F> p_vertices;
+  p_vertices pv(g, f);
 
   {
     mln_fwd_piter_(p_vertices) p(pv);
