@@ -82,15 +82,28 @@ namespace mln
       {
 	template <typename I, typename O>
 	inline
-	void not__(const I& input, O& output)
+	void not_(const I& input, O& output)
 	{
-	  trace::entering("logical::impl::generic::not__");
+	  trace::entering("logical::impl::generic::not_");
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    output(p) = ! input(p);
 
-	  trace::exiting("logical::impl::generic::not__");
+	  trace::exiting("logical::impl::generic::not_");
+	}
+
+	template <typename I>
+	inline
+	void not_inplace(I& inout)
+	{
+	  trace::entering("logical::impl::generic::not_");
+
+	  mln_piter(I) p(inout.domain());
+	  for_all(p)
+	    inout(p) = ! inout(p);
+
+	  trace::exiting("logical::impl::generic::not_");
 	}
       }
 
@@ -109,7 +122,7 @@ namespace mln
 
       mln_concrete(I) output;
       initialize(output, input);
-      impl::not__(mln_trait_image_speed(I)(), exact(input), output);
+      impl::not_(mln_trait_image_speed(I)(), exact(input), output);
 
       trace::exiting("logical::not");
       return output;
@@ -122,7 +135,7 @@ namespace mln
       trace::entering("logical::not_inplace");
 
       mln_precondition(exact(input).has_data());
-      impl::not__(mln_trait_image_speed(I)(), exact(input), exact(input));
+      impl::not_inplace(mln_trait_image_speed(I)(), exact(input));
 
       trace::exiting("logical::not_inplace");
     }
