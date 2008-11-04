@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LINEAR_ALL_HH
 # define MLN_LINEAR_ALL_HH
 
-/*! \file mln/linear/all.hh
- *
- * \brief File that includes all linear image processing routines.
- */
+/// \file mln/linear/all.hh
+///
+/// File that includes all linear image processing routines.
 
 
 namespace mln
@@ -43,8 +43,7 @@ namespace mln
 
     /// Namespace of linear image processing routines implementation details.
     namespace impl
-    {
-    }
+    {}
 
     /// Specializations of local linear routines.
     namespace local
@@ -52,21 +51,21 @@ namespace mln
 
       /// Namespace of local linear routines implementation details.
       namespace impl
-      {
-      }
+      {}
 
     }
   }
-
 }
 
+
 # include <mln/linear/convolve.hh>
+# include <mln/linear/convolve_directional.hh>
 # include <mln/linear/gaussian.hh>
 # include <mln/linear/lap.hh>
-# include <mln/linear/line_convolve.hh>
 # include <mln/linear/line_x2_convolve.hh>
 # include <mln/linear/log.hh>
 //# include <mln/linear/sobel.hh>
 //# include <mln/linear/local/convolve.hh>
+
 
 #endif // ! MLN_LINEAR_ALL_HH

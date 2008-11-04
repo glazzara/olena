@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,59 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_W_WINDOW_LINE_HH
-# define MLN_MAKE_W_WINDOW_LINE_HH
+/// \file tests/make/w_window_directional.cc
+///
+/// Tests on mln::make::w_window_directional.
 
-/*! \file mln/make/w_window_line.hh
- *
- * \brief Routine to create an horizontal mln::w_window.
- */
-
-# include <mln/core/w_window.hh>
-# include <mln/literal/zero.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/make/w_window_directional.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace make
-  {
+  int vals[] = { -1, 0, 1 };
+  w_window2d_int w_win = make::w_window_directional(right, vals);
 
-    /*! \brief Create an horizontal centered and symmetrical
-     *  mln::w_window.
-     *
-     * The free parameter \c D is a type of delta-point. 
-     *
-     * \pre The window length \c L has to be odd.
-     *
-     * \return A window.
-     */
-    template <typename D, typename W, unsigned L>
-    mln::w_window<D,W> w_window_line(W (&w)[L]);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename D, typename W, unsigned L>
-    inline
-    mln::w_window<D,W> w_window_line(W (&w)[L])
-    {
-      mln_precondition(L % 2 == 1);
-      mln::w_window<D,W> w_win;
-      D dp = literal::zero;
-      for (unsigned i = 0; i < L; ++i)
-	{
-	  dp[D::dim - 1] = i - L / 2;
-	  w_win.insert(w[i], dp);
-	}
-      return w_win;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_W_WINDOW_LINE_HH
+  int sum = 0;
+  for (unsigned i = 0; i < w_win.size(); ++i)
+    sum += w_win.w(i);
+  mln_assertion(sum == 0);
+}

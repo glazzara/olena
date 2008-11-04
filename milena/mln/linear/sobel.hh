@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,11 @@
 #ifndef MLN_LINEAR_SOBEL_HH
 # define MLN_LINEAR_SOBEL_HH
 
-/*! \file mln/linear/sobel.hh
- *
- *  \brief Sobel filter.
- *
- *  \todo Extends to the case of other dimensions (only the 2-d case
- *  is handled here).
- */
+/// \file mln/linear/sobel.hh
+///
+/// Sobel filter.
+/// \todo Extends to the case of other dimensions (only the 2-d case
+/// is handled here).
 
 # include <mln/trait/ch_value.hh>
 # include <mln/trait/value/nature.hh>

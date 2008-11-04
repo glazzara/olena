@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,61 +26,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_LINE_CONVOLVE_HH
-# define MLN_LINEAR_LINE_CONVOLVE_HH
+#ifndef MLN_MAKE_W_WINDOW_DIRECTIONAL_HH
+# define MLN_MAKE_W_WINDOW_DIRECTIONAL_HH
 
-/*! \file mln/linear/line_convolve.hh
- *
- * \brief Convolution by a line-shaped kernel.
- */
+/// \file mln/make/w_window_directional.hh
+///
+/// Routine to create a directional mln::w_window.
 
-# include <mln/linear/convolve.hh>
-# include <mln/make/w_window_line.hh>
-
+# include <mln/core/w_window.hh>
+# include <mln/core/concept/gdpoint.hh>
+# include <mln/literal/zero.hh>
 
 
 namespace mln
 {
 
-  namespace linear
+  namespace make
   {
 
-    /*! Convolution of an image \p input by a line-shaped weighted
-     *  window defined by the array of \p weights.
-     *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
-     * \warning The weighted window is used as-is, considering that
-     * its symmetrization is handled by the client.
-     *
-     * \pre output.domain = input.domain
-     *
-     * \todo Optimize.
-     */
-    template <typename I, typename W, unsigned N, typename O>
-    void line_convolve(const Image<I>& input, W (&weights)[N],
-		       Image<O>& output);
+    /// Create a directional centered weighted window.
+    ///
+    /// \param[in] dp A delta-point to set the orientation. 
+    /// \param[in] weights An array of weights.
+    /// \return A weighted window.
+    ///
+    /// The window length \c L has to be odd.
+    template <typename D, typename W, unsigned L>
+    mln::w_window<D,W>
+    w_window_directional(const Gdpoint<D>& dp, W (&weights)[L]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename W, unsigned N, typename O>
+    template <typename D, typename W, unsigned L>
     inline
-    void line_convolve(const Image<I>& input, W (&weights)[N],
-		       Image<O>& output)
+    mln::w_window<D,W>
+    w_window_directional(const Gdpoint<D>& dp_, W (&weights)[L])
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      linear::convolve(input,
-		       make::w_window_line<mln_dpsite(I)>(weights),
-		       output);
+      mlc_bool(L % 2 == 1)::check();
+      int half = L / 2;
+
+      const D& dp = exact(dp_);
+      D zero = literal::zero;
+      mln_precondition(dp != zero);
+
+      mln::w_window<D,W> w_win;
+      for (int i = - half; i <= half; ++i)
+	if (weights[half + i] != 0)
+	  w_win.insert(weights[half + i], zero + dp * i);
+      return w_win;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::linear
+  } // end of namespace mln::make
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_LINE_CONVOLVE_HH
+#endif // ! MLN_MAKE_W_WINDOW_DIRECTIONAL_HH

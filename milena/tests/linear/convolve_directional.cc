@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,9 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/line_convolve.cc
+/*! \file tests/linear/convolve_directional.cc
  *
- * \brief Tests on mln::linear::line_convolve.
+ * \brief Tests on mln::linear::convolve_directional.
  */
 
 #include <mln/core/image/image2d.hh>
@@ -40,7 +41,7 @@
 
 #include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
-#include <mln/linear/line_convolve.hh>
+#include <mln/linear/convolve_directional.hh>
 
 #include "tests/data.hh"
 
@@ -54,12 +55,10 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
 
-  image2d<float> tmp(lena.domain());
   float ws[] = { .11, .11, .11, .11, .11, .11, .11, .11, .11 };
-  linear::line_convolve(lena, ws, tmp);
+  image2d<float> tmp = linear::convolve_directional(lena, 1, ws);
   
-  level::transform(tmp, math::round<int_u8>(), out);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(level::transform(tmp, math::round<int_u8>()),
+		"out.pgm");
 }

@@ -54,7 +54,7 @@ namespace mln
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre output.domain = input.domain
+     * \pre input.has_data
      */
     template <typename I, typename W>
     mln_ch_convolve(I, W)

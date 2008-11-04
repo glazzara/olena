@@ -29,12 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_GDPOINT_HH
 # define MLN_CORE_CONCEPT_GDPOINT_HH
 
-/*! \file mln/core/concept/delta_point_site.hh
- *
- * \brief Definition of the concept of mln::Gdpoint.
- *
- * \todo Add support for (s * dp)...
- */
+/// \file mln/core/concept/delta_point_site.hh
+///
+/// Definition of the concept of mln::Gdpoint.
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/grids.hh>
@@ -52,6 +49,8 @@ namespace mln
   namespace trait
   {
 
+    // FIXME: Add promotion.
+
     template < typename L, typename R >
     struct set_binary_< op::plus,
 			mln::Gdpoint, L, mln::Gdpoint, R >
@@ -64,6 +63,14 @@ namespace mln
 			mln::Gdpoint, L, mln::Gdpoint, R >
     {
       typedef L ret;
+    };
+
+    template < typename D, typename S >
+    struct set_binary_< op::times,
+			mln::Gdpoint, D,
+			mln::value::Scalar, S >
+    {
+      typedef D ret;
     };
 
     template <typename D>
@@ -122,6 +129,10 @@ namespace mln
   template <typename L, typename R>
   L // FIXME: promote!
   operator-(const Gdpoint<L>& lhs, const Gdpoint<R>& rhs);
+
+  template <typename D, typename S>
+  D // FIXME: promote!
+  operator*(const Gdpoint<D>& lhs, const value::Scalar<S>& rhs);
 
 
 
@@ -189,6 +200,14 @@ namespace mln
   {
     mlc_equal(mln_grid(L), mln_grid(R))::check();
     L tmp = exact(lhs).to_vec() - exact(rhs).to_vec();
+    return tmp;
+  }
+
+  template <typename D, typename S>
+  D // FIXME: promote!
+  operator*(const Gdpoint<D>& lhs, const value::Scalar<S>& rhs)
+  {
+    D tmp = exact(lhs).to_vec() * exact(rhs);
     return tmp;
   }
 

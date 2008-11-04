@@ -1,3 +1,27 @@
+2008-11-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp directional convolution (was convolve_line).
+
+	* mln/core/concept/gdpoint.hh: Handle "Gdpoint * Scalar".
+	(set_binary_): New specialization.
+	(operator*): New overload.
+	(todo): Remove.
+	* mln/linear/log.hh: Update.
+	* mln/linear/sobel.hh: Update doc style.
+	* mln/linear/convolve.hh (pre): Fix.
+	* mln/linear/line_convolve.hh: Rename as...
+	* mln/linear/convolve_directional.hh: ...this and update.
+	* mln/linear/all.hh: Update.
+	* tests/linear/log.cc: Update.
+	* tests/linear/line_convolve.cc: Rename as...
+	* tests/linear/convolve_directional.cc: ...this.
+	* tests/linear/Makefile.am: Update.
+	* mln/make/w_window_line.hh: Rename as...
+	* mln/make/w_window_directional.hh: ...this and update.
+	* mln/make/all.hh: Update.
+	* tests/make/w_window_directional.cc: New.
+	* tests/make/Makefile.am: Update.
+
 2008-11-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix include problem in dilation with a fwd decl.

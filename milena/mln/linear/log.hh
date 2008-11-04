@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LINEAR_LOG_HH
 # define MLN_LINEAR_LOG_HH
 
-/*! \file mln/linear/log.hh
- *
- * \brief Laplacian of Gaussian.
- */
+/// \file mln/linear/log.hh
+///
+/// Laplacian of Gaussian.
 
 # include <mln/linear/convolve.hh>
 # include <mln/make/w_window2d.hh>
@@ -44,17 +44,21 @@ namespace mln
   namespace linear
   {
 
-    template <typename I, typename O>
-    void LoG_5x5(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    LoG_5x5(const Image<I>& input);
 
-    template <typename I, typename O>
-    void LoG_7x7(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    LoG_7x7(const Image<I>& input);
 
-    template <typename I, typename O>
-    void LoG_13x13(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    LoG_13x13(const Image<I>& input);
 
-    template <typename I, typename O>
-    void LoG_17x17(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    LoG_17x17(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -62,26 +66,32 @@ namespace mln
     // LoG_5x5  (Cf. Sonka et al., pages 85-86)
     // This is also a "mexican hat".
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void LoG_5x5(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    LoG_5x5(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::LoG_5x5");
+      mln_precondition(exact(input).has_data());
       int ws[] = { +0,  0, -1,  0,  0,
 		   +0, -1, -2, -1,  0,
 		   -1, -2, 16, -2, -1,
 		   +0, -1, -2, -1,  0,
 		   +0,  0, -1,  0,  0 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::LoG_5x5");
+      return output;
     }
 
     // LoG 7x7  (Cf. Russ, p. 250)
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void LoG_7x7(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    LoG_7x7(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::LoG_7x7");
+      mln_precondition(exact(input).has_data());
       int ws[] = { +0,  0, -1, -1, -1,  0,  0, 
 		   +0, -1, -3, -3, -3, -1,  0,
 		   -1, -3,  0,  7,  0, -3, -1,
@@ -89,16 +99,20 @@ namespace mln
 		   -1, -3,  0,  7,  0, -3, -1,
 		   +0, -1, -3, -3, -3, -1,  0,
 		   +0,  0, -1, -1, -1,  0,  0 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::LoG_7x7");
+      return output;
     }
 
     // LoG 13x13  (Cf. Russ, p. 250)
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void LoG_13x13(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    LoG_13x13(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::LoG_13x13");
+      mln_precondition(exact(input).has_data());
       int ws[] = { +0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
 		   +0,  0,  0, -1, -1, -2, -2, -2, -1, -1,  0,  0,  0,
 		   +0,  0, -2, -2, -3, -3, -4, -3, -3, -2, -2,  0,  0,
@@ -112,17 +126,20 @@ namespace mln
 		   +0,  0, -2, -2, -3, -3, -4, -3, -3, -2, -2,  0,  0,
 		   +0,  0,  0, -1, -1, -2, -2, -2, -1, -1,  0,  0,  0,
 		   +0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      return output;
     }
 
 
     // LoG 17x17  (Cf. Sonka et al., pages 85-86)
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void LoG_17x17(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    LoG_17x17(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::LoG_17x17");
+      mln_precondition(exact(input).has_data());
       int ws[] = { +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0,
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
 		   +0, 0,-1,-1,-1,-2,-3,-3,-3,-3,-3,-2,-1,-1,-1, 0, 0,
@@ -140,7 +157,9 @@ namespace mln
 		   +0, 0,-1,-1,-1,-2,-3,-3,-3,-3,-3,-2,-1,-1,-1, 0, 0,
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
 		   +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::LoG_17x17");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

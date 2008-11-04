@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,18 +53,16 @@ int main()
 
   border::thickness = 2;
 
-  image2d<int_u8> lena;
+  image2d<int_u8> lena, out;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  image2d<int> tmp(lena.domain());
-  linear::LoG_5x5(lena, tmp);
+  image2d<float> tmp = linear::LoG_5x5(lena);
   {
-    int min, max;
+    float min, max;
     estim::min_max(tmp, min, max);
     mln_assertion(min == -929 && max == 1260);
   }
 
-  image2d<int_u8> out(lena.domain());
   level::stretch(tmp, out);
   io::pgm::save(out, "out.pgm");
   {

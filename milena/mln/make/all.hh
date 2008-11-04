@@ -29,10 +29,9 @@
 #ifndef MLN_MAKE_ALL_HH
 # define MLN_MAKE_ALL_HH
 
-/*! \file mln/make/all.hh
- *
- * \brief File that includes all make routines.
- */
+/// \file mln/make/all.hh
+///
+/// File that includes all make routines.
 
 
 namespace mln
@@ -64,7 +63,8 @@ namespace mln
 # include <mln/make/w_window2d_int.hh>
 # include <mln/make/w_window3d.hh>
 # include <mln/make/w_window3d_int.hh>
-# include <mln/make/w_window_line.hh>
+# include <mln/make/w_window_directional.hh>
 # include <mln/make/win_chamfer.hh>
+
 
 #endif // ! MLN_MAKE_ALL_HH
