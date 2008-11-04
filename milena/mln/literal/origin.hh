@@ -48,8 +48,13 @@ namespace mln
     };
 
     /// Literal origin.
-    // FIXME: Make this a proper global (issue #43).
-    static const origin_t origin = origin_t();
+    extern const origin_t& origin;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const origin_t& origin = origin_t();
+
+# endif
 
   } // end of namespace mln::literal
 

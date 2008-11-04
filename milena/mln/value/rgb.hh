@@ -55,11 +55,24 @@ namespace mln
     struct black_t;
     struct white_t;
 
+    struct light_gray_t;
+    struct medium_gray_t;
+    struct dark_gray_t;
+
     struct red_t;
-    struct dark_red_t;
-    struct dark_orange_t;
-    struct blue_t;
     struct green_t;
+    struct blue_t;
+    struct brown_t;
+    struct lime_t;
+    struct orange_t;
+    struct pink_t;
+    struct purple_t;
+    struct teal_t;
+    struct violet_t;
+    struct cyan_t;
+    struct magenta_t;
+    struct yellow_t;
+    struct olive_t;
     /// \}
   }
 
@@ -154,9 +167,8 @@ namespace mln
   namespace value
   {
 
-    /*! \brief Color class for red-green-blue where every component is
-     * n-bit encoded.
-     */
+    /// \brief Color class for red-green-blue where every component is
+    /// n-bit encoded.
     template <unsigned n>
     struct rgb
       :
@@ -165,7 +177,7 @@ namespace mln
       public internal::value_like_< algebra::vec< 3, int_u<n> >, // Equivalent.
 				    algebra::vec< 3, int_u<n> >, // Encoding.
 				    algebra::vec< 3, int >,      // Interoperation.
-				    rgb<n> >                   // Exact.
+				    rgb<n> >			 // Exact.
     {
     public:
 
@@ -204,11 +216,24 @@ namespace mln
       rgb<n>(const mln::literal::white_t&);
       rgb<n>(const mln::literal::black_t&);
 
-      rgb<n>(const mln::literal::blue_t&);
+      rgb<n>(const mln::literal::light_gray_t&);
+      rgb<n>(const mln::literal::medium_gray_t&);
+      rgb<n>(const mln::literal::dark_gray_t&);
+
       rgb<n>(const mln::literal::red_t&);
-      rgb<n>(const mln::literal::dark_red_t&);
-      rgb<n>(const mln::literal::dark_orange_t&);
+      rgb<n>(const mln::literal::blue_t&);
       rgb<n>(const mln::literal::green_t&);
+      rgb<n>(const mln::literal::brown_t&);
+      rgb<n>(const mln::literal::lime_t&);
+      rgb<n>(const mln::literal::orange_t&);
+      rgb<n>(const mln::literal::pink_t&);
+      rgb<n>(const mln::literal::purple_t&);
+      rgb<n>(const mln::literal::teal_t&);
+      rgb<n>(const mln::literal::violet_t&);
+      rgb<n>(const mln::literal::cyan_t&);
+      rgb<n>(const mln::literal::magenta_t&);
+      rgb<n>(const mln::literal::yellow_t&);
+      rgb<n>(const mln::literal::olive_t&);
       /// \}
 
       /// Assignment.
@@ -292,7 +317,7 @@ namespace mln
     operator/(const rgb<n>& lhs, const mln::value::scalar_<S>& s);
     /// \}
 
-    
+
 # ifndef MLN_INCLUDE_ONLY
 
     /*---------------.
@@ -361,28 +386,37 @@ namespace mln
 
     template <unsigned n>
     inline
+    rgb<n>::rgb(const mln::literal::light_gray_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.75;
+      this->v_[1] = mln_max(int_u<n>) * 0.75;
+      this->v_[2] = mln_max(int_u<n>) * 0.75;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::medium_gray_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.50;
+      this->v_[1] = mln_max(int_u<n>) * 0.50;
+      this->v_[2] = mln_max(int_u<n>) * 0.50;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::dark_gray_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.25;
+      this->v_[1] = mln_max(int_u<n>) * 0.25;
+      this->v_[2] = mln_max(int_u<n>) * 0.25;
+    }
+
+    template <unsigned n>
+    inline
     rgb<n>::rgb(const mln::literal::red_t&)
     {
       this->v_[0] = mln_max(int_u<n>);
       this->v_[1] = 0;
-      this->v_[2] = 0;
-    }
-
-    template <unsigned n>
-    inline
-    rgb<n>::rgb(const mln::literal::dark_red_t&)
-    {
-      this->v_[0] = mln_max(int_u<n>) / 3;
-      this->v_[1] = 0;
-      this->v_[2] = 0;
-    }
-
-    template <unsigned n>
-    inline
-    rgb<n>::rgb(const mln::literal::dark_orange_t&)
-    {
-      this->v_[0] = mln_max(int_u<n>) / 3;
-      this->v_[1] = mln_max(int_u<n>) / 3;
       this->v_[2] = 0;
     }
 
@@ -402,6 +436,105 @@ namespace mln
       this->v_[0] = 0;
       this->v_[1] = 0;
       this->v_[2] = mln_max(int_u<n>);
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::brown_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.75;
+      this->v_[1] = mln_max(int_u<n>) * 0.50;
+      this->v_[2] = mln_max(int_u<n>) * 0.25;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::lime_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.75;
+      this->v_[1] = mln_max(int_u<n>);
+      this->v_[2] = 0;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::orange_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = mln_max(int_u<n>) * 0.50;
+      this->v_[2] = 0;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::pink_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = mln_max(int_u<n>) * 0.75;
+      this->v_[2] = mln_max(int_u<n>) * 0.75;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::purple_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.75;
+      this->v_[1] = 0;
+      this->v_[2] = mln_max(int_u<n>) * 0.25;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::teal_t&)
+    {
+      this->v_[0] = 0;
+      this->v_[1] = mln_max(int_u<n>) * 0.50;
+      this->v_[2] = mln_max(int_u<n>) * 0.50;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::violet_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.50;
+      this->v_[1] = 0;
+      this->v_[2] = mln_max(int_u<n>) * 0.50;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::cyan_t&)
+    {
+      this->v_[0] = 0;
+      this->v_[1] = mln_max(int_u<n>);
+      this->v_[2] = mln_max(int_u<n>);
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::magenta_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = 0;
+      this->v_[2] = mln_max(int_u<n>);
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::yellow_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>);
+      this->v_[1] = mln_max(int_u<n>);
+      this->v_[2] = 0;
+    }
+
+    template <unsigned n>
+    inline
+    rgb<n>::rgb(const mln::literal::olive_t&)
+    {
+      this->v_[0] = mln_max(int_u<n>) * 0.50;
+      this->v_[1] = mln_max(int_u<n>) * 0.50;
+      this->v_[2] = 0;
     }
 
     template <unsigned n>

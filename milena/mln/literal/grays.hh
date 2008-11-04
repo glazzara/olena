@@ -42,13 +42,36 @@ namespace mln
   {
 
     /// Type of literal grays.
+    struct light_gray_t : public Literal<light_gray_t>
+    {
+    };
+
     struct medium_gray_t : public Literal<medium_gray_t>
     {
     };
 
+    struct dark_gray_t : public Literal<dark_gray_t>
+    {
+    };
+
+    /// Literal light gray.
+    extern const light_gray_t& light_gray;
+
     /// Literal medium_gray.
-    // FIXME: Make this a proper global (issue #43).
-    static const medium_gray_t medium_gray = medium_gray_t();
+    extern const medium_gray_t& medium_gray;
+
+    /// Literal dark gray.
+    extern const dark_gray_t& dark_gray;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const light_gray_t& light_gray = light_gray_t();
+
+    const medium_gray_t& medium_gray = medium_gray_t();
+
+    const dark_gray_t& dark_gray = dark_gray_t();
+
+# endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::literal
 

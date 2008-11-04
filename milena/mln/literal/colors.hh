@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -41,23 +41,8 @@ namespace mln
   namespace literal
   {
 
-    /// Type of literal blue.
-    struct blue_t : public Literal<blue_t>
-    {
-    };
-
     /// Type of literal red.
     struct red_t : public Literal<red_t>
-    {
-    };
-
-    /// Type of literal dark red.
-    struct dark_red_t : public Literal<dark_red_t>
-    {
-    };
-
-    /// Type of literal dark orange.
-    struct dark_orange_t : public Literal<dark_orange_t>
     {
     };
 
@@ -66,26 +51,139 @@ namespace mln
     {
     };
 
+    /// Type of literal blue.
+    struct blue_t : public Literal<blue_t>
+    {
+    };
+
+    /// Type of literal brown.
+    struct brown_t : public Literal<brown_t>
+    {
+    };
+
+    /// Type of literal lime.
+    struct lime_t : public Literal<lime_t>
+    {
+    };
+
+    /// Type of literal orange.
+    struct orange_t : public Literal<orange_t>
+    {
+    };
+
+    /// Type of literal pink.
+    struct pink_t : public Literal<pink_t>
+    {
+    };
+
+    /// Type of literal purple.
+    struct purple_t : public Literal<purple_t>
+    {
+    };
+
+    /// Type of literal teal.
+    struct teal_t : public Literal<teal_t>
+    {
+    };
+
+    /// Type of literal violet.
+    struct violet_t : public Literal<violet_t>
+    {
+    };
+
+    /// Type of literal cyan.
+    struct cyan_t : public Literal<cyan_t>
+    {
+    };
+
+    /// Type of literal magenta.
+    struct magenta_t : public Literal<magenta_t>
+    {
+    };
+
+    /// Type of literal yellow.
+    struct yellow_t : public Literal<yellow_t>
+    {
+    };
+
+    /// Type of literal olive.
+    struct olive_t : public Literal<olive_t>
+    {
+    };
 
     /// Literal red.
-    // FIXME: Make this a proper global (issue #43).
-    static const red_t red = red_t();
-
-    /// Literal dark red.
-    // FIXME: Make this a proper global (issue #43).
-    static const dark_red_t dark_red = dark_red_t();
-
-    /// Literal red.
-    // FIXME: Make this a proper global (issue #43).
-    static const dark_orange_t dark_orange = dark_orange_t();
+    extern const red_t& red;
 
     /// Literal green.
-    // FIXME: Make this a proper global (issue #43).
-    static const green_t green = green_t();
+    extern const green_t& green;
 
     /// Literal blue.
-    // FIXME: Make this a proper global (issue #43).
-    static const blue_t blue = blue_t();
+    extern const blue_t& blue;
+
+    /// Literal brown.
+    extern const brown_t& brown;
+
+    /// Literal lime.
+    extern const lime_t& lime;
+
+    /// Literal orange.
+    extern const orange_t& orange;
+
+    /// Literal pink.
+    extern const pink_t& pink;
+
+    /// Literal purple.
+    extern const purple_t& purple;
+
+    /// Literal teal.
+    extern const teal_t& teal;
+
+    /// Literal violet.
+    extern const violet_t& violet;
+
+    /// Literal cyan.
+    extern const cyan_t& cyan;
+
+    /// Literal magenta.
+    extern const magenta_t& magenta;
+
+    /// Literal yellow.
+    extern const yellow_t& yellow;
+
+    /// Literal olive.
+    extern const olive_t& olive;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const red_t& red = red_t();
+
+    const green_t& green = green_t();
+
+    const blue_t& blue = blue_t();
+
+    const brown_t& brown = brown_t();
+
+    const lime_t& lime = lime_t();
+
+    const orange_t& orange = orange_t();
+
+    const pink_t& pink = pink_t();
+
+    const purple_t& purple = purple_t();
+
+    const teal_t& teal = teal_t();
+
+    const violet_t& violet = violet_t();
+
+    const cyan_t& cyan = cyan_t();
+
+    const magenta_t& magenta = magenta_t();
+
+    const yellow_t& yellow = yellow_t();
+
+    const olive_t& olive = olive_t();
+
+# endif
 
   } // end of namespace mln::literal
 
