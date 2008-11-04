@@ -1,5 +1,19 @@
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add trace::stop and trace::resume.
+
+	* mln/trace/all.hh: add new includes.
+	* mln/trace/entering.hh: update copyright.
+	* mln/trace/quiet.hh: Add new variables.
+
+	* mln/trace/resume.hh,
+	* mln/trace/stop.hh: new routines.
+
+	* mln/core/routine/initialize.hh: Use trace::stop and trace::resume.
+
+
+2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add more colors and fix global constants initialization in mln/values
 
 	* mln/literal/colors.hh,

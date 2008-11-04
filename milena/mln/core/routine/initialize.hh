@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -61,7 +61,9 @@ namespace mln
     mln_precondition(! exact(target).has_data());
     mln_precondition(exact(model).has_data());
 
+    trace::stop();
     init_(tag::image, exact(target), exact(model));
+    trace::resume();
 
     mln_postcondition(exact(target).has_data());
     trace::exiting("core::initialize");

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,6 +46,8 @@ namespace mln
 # include <mln/trace/quiet.hh>
 # include <mln/trace/entering.hh>
 # include <mln/trace/exiting.hh>
+# include <mln/trace/stop.hh>
+# include <mln/trace/resume.hh>
 
 
 #endif // ! MLN_TRACE_ALL_HH

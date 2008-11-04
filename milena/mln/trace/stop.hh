@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -16,7 +16,7 @@
 // Boston, MA 02111-1307, USA.
 //
 // As a special exception, you may use this file as part of a free
-// software library without restriction.  Specificenteringy, if other files
+// software library without restriction.  Specificstopy, if other files
 // instantiate templates or use macros or inline functions from this
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
@@ -25,13 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRACE_QUIET_HH
-# define MLN_TRACE_QUIET_HH
+#ifndef MLN_TRACE_STOP_HH
+# define MLN_TRACE_STOP_HH
 
-/*! \file mln/trace/quiet.hh
- *
- * \brief Definition of the trace quiet Boolean value.
- */
+/// \file mln/trace/stop.hh
+/// Stop printing traces except if trace::full_trace is enabled.
+/// \sa mln::trace::resume
+
+# include <string>
+# include <iostream>
+
+# include <mln/trace/quiet.hh>
 
 
 namespace mln
@@ -40,20 +44,23 @@ namespace mln
   namespace trace
   {
 
-    static bool quiet = true;
-    static unsigned tab  = 0;
-    static bool full_trace = false;
+    void stop();
 
-    namespace internal
+# ifndef MLN_INCLUDE_ONLY
+
+    inline
+    void stop()
     {
+      internal::is_quiet = quiet;
+      if (!full_trace)
+	quiet = true;
+    }
 
-      static bool is_quiet = quiet;
-
-    } // end of namespace mln::trace::internal
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::trace
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRACE_QUIET_HH
+#endif // ! MLN_TRACE_STOP_HH
