@@ -51,7 +51,7 @@ namespace mln
     inline
     mln_concrete(I)
     subsampling(const Image<I>& input,
-                const mln_dpsite(I)& first_p,
+                const mln_deduce(I, site, delta)& first_p,
                 const mln_coord(I)& gap);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -65,7 +65,7 @@ namespace mln
       inline
       mln_concrete(image2d<T>)
       subsampling_(const image2d<T>& input,
-                   const mln_dpoint(image2d<T>)& first_p,
+                   const mln_deduce(image2d<T>, site, delta)& first_p,
                    const mln_coord(image2d<T>)& gap)
       {
 	trace::entering("subsampling::impl::subsampling_");
@@ -92,7 +92,7 @@ namespace mln
     inline
     mln_concrete(I)
     subsampling(const Image<I>& input,
-                const mln_dpsite(I)& first_p,
+                const mln_deduce(I, site, delta)& first_p,
                 const mln_coord(I)& gap)
     {
       trace::entering("subsampling::subsampling");
