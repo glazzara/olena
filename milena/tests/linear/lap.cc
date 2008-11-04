@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,9 +34,11 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
 
 #include <mln/border/thickness.hh>
 #include <mln/linear/lap.hh>
+#include <mln/level/stretch.hh>
 
 #include "tests/data.hh"
 
@@ -47,8 +50,8 @@ int main()
 
   border::thickness = 1;
 
-  image2d<int_u8> lena;
+  image2d<int_u8> lena, out;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int> tmp(lena.domain());
-  linear::lap_4(lena, tmp);
+  level::stretch(linear::lap_4(lena), out);
+  io::pgm::save(out, "out.pgm");
 }

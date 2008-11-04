@@ -45,6 +45,7 @@
 
 // metal
 # include <mln/metal/is_a.hh>
+# include <mln/metal/is_not_a.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/is_not.hh>
 # include <mln/metal/equal.hh>

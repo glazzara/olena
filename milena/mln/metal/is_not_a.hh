@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,44 +25,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/convolve.cc
- *
- * \brief Tests on mln::linear::convolve.
- */
+#ifndef MLN_METAL_IS_NOT_A_HH
+# define MLN_METAL_IS_NOT_A_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
+/// \file mln/metal/is_not_a.hh
+///
+/// Definition of a type that means "is not a".
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-#include <mln/math/round.hh>
-#include <mln/level/transform.hh>
-
-#include <mln/core/alias/w_window2d_float.hh>
-#include <mln/border/thickness.hh>
-#include <mln/linear/convolve.hh>
-
-#include "tests/data.hh"
+# include <mln/metal/is_a.hh>
 
 
-int main()
+# define mlc_is_not_a(T, M) mln::metal::is_not_a< T, M >
+
+
+
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  border::thickness = 2;
+  namespace metal
+  {
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
+    /// "is_not_a" static Boolean expression.
+    template <typename T, template <class> class M>
+    struct is_not_a : not_< is_a<T, M> >::eval
+    {
+    };
 
-  float ws[] = { .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04 };
-  w_window2d_float w = make::w_window2d(ws);
-  image2d<float> tmp = linear::convolve(lena, w);
+  } // end of namespace mln::metal
 
-  io::pgm::save(level::transform(tmp, math::round<int_u8>()),
-		"out.pgm");
-}
+} // end of namespace mln
+
+
+#endif // ! MLN_METAL_IS_NOT_A_HH

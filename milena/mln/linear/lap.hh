@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,65 +47,85 @@ namespace mln
 
     // FIXME: Doc!
 
-    template <typename I, typename O>
-    void lap_4(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    lap_4(const Image<I>& input);
 
-    template <typename I, typename O>
-    void lap_8(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    lap_8(const Image<I>& input);
 
-    template <typename I, typename O>
-    void lap_x(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    lap_x(const Image<I>& input);
 
-    template <typename I, typename O>
-    void lap_o(const Image<I>& input, Image<O>& output);
+    template <typename I>
+    mln_ch_convolve(I, int)
+    lap_o(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     // Laplacian operators (Cf. Sonka et al., p. 81)
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void lap_4(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    lap_4(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::lap_4");
+      mln_precondition(exact(input).has_data());
       int ws[] = { 0,  1,  0,
 		   1, -4,  1,
 		   0,  1,  0 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::lap_4");
+      return output;
     }
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void lap_8(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    lap_8(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::lap_8");
+      mln_precondition(exact(input).has_data());
       int ws[] = { 1,  1,  1,
 		   1, -8,  1,
 		   1,  1,  1 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::lap_8");
+      return output;
     }
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void lap_x(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    lap_x(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::lap_x");
+      mln_precondition(exact(input).has_data());
       int ws[] = { +2, -1, +2,
 		   -1, -4, -1,
 		   +2, -1, +2 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::lap_x");
+      return output;
     }
 
-    template <typename I, typename O>
+    template <typename I>
     inline
-    void lap_o(const Image<I>& input, Image<O>& output)
+    mln_ch_convolve(I, int)
+    lap_o(const Image<I>& input)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::lap_o");
+      mln_precondition(exact(input).has_data());
       int ws[] = { -1, +2, -1,
 		   +2, -4, +2,
 		   -1, +2, -1 };
-      convolve(input, make::w_window2d(ws), output);
+      mln_ch_convolve(I, int) output = convolve(input, make::w_window2d(ws));
+      trace::exiting("linear::lap_o");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

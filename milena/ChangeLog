@@ -1,3 +1,19 @@
+2008-11-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make convolution return the straightforward type.
+
+	* mln/core/concept/object.hh: Add metal include.
+	* mln/metal/is_not_a.hh: New.
+	* mln/metal/all.hh: Update.
+	* mln/metal/is_a.hh (U): Rename as...
+	(M): ...this; more appropriate.
+	* mln/linear/ch_convolve.hh: New.
+	* mln/linear/convolve.hh: Fix return type.
+	* mln/linear/lap.hh: Update.
+	* mln/accu/convolve.hh: Add check.
+	* tests/linear/convolve.cc: Update.
+	* tests/linear/lap.cc: Update.
+
 2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix Sanity.

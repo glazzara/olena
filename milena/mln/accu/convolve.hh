@@ -52,7 +52,8 @@ namespace mln
      */
     template <typename T1, typename T2,
 	      typename R = mln_sum_x(T1, T2)>
-    struct convolve : public mln::accu::internal::base< R, convolve<T1,T2,R> >
+    struct convolve : public mln::accu::internal::base< R, convolve<T1,T2,R> >,
+		      private metal::converts_to< mln_sum_x(T1, T2), R >::check_t
     {
       typedef std::pair<T1,T2> argument;
 

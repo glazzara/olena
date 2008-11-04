@@ -29,18 +29,15 @@
 #ifndef MLN_LINEAR_CONVOLVE_HH
 # define MLN_LINEAR_CONVOLVE_HH
 
-/*! \file mln/linear/convolve.hh
- *
- * \brief Convolution.
- *
- * \todo Introduce an accumulator.
- */
+/// \file mln/linear/convolve.hh
+///
+/// Convolution.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/extension/adjust_duplicate.hh>
+# include <mln/linear/ch_convolve.hh>
 # include <mln/accu/convolve.hh>
-
+# include <mln/extension/adjust_duplicate.hh>
 
 
 namespace mln
@@ -60,7 +57,7 @@ namespace mln
      * \pre output.domain = input.domain
      */
     template <typename I, typename W>
-    mln_concrete(I)
+    mln_ch_convolve(I, W)
     convolve(const Image<I>& input, const Weighted_Window<W>& w_win);
 
 
@@ -95,7 +92,7 @@ namespace mln
       {
 
 	template <typename I, typename W>
-	mln_concrete(I)
+	mln_ch_convolve(I, W)
 	convolve(const Image<I>& input_,
 		 const Weighted_Window<W>& w_win_)
 	{
@@ -107,7 +104,7 @@ namespace mln
 
 	  extension::adjust_duplicate(input, w_win);
 	  
-	  typedef mln_concrete(I) O;
+	  typedef mln_ch_convolve(I, W) O;
 	  O output;
 	  initialize(output, input);
 
@@ -132,7 +129,7 @@ namespace mln
 
 
       template <typename I, typename W>
-      mln_concrete(I)
+      mln_ch_convolve(I, W)
       convolve_fastest(const Image<I>& input_,
 		       const Weighted_Window<W>& w_win_)
       {
@@ -144,7 +141,7 @@ namespace mln
 
 	extension::adjust_duplicate(input, w_win);
 
-	typedef mln_concrete(I) O;
+	typedef mln_ch_convolve(I, W) O;
 	O output;
 	initialize(output, input);
  	mln_pixter(O) p_out(output);
@@ -176,7 +173,7 @@ namespace mln
     {
 
       template <typename I, typename W>
-      mln_concrete(I)
+      mln_ch_convolve(I, W)
       convolve_dispatch(trait::image::speed::any,
 			const Image<I>& input,
 			const Weighted_Window<W>& w_win)
@@ -185,7 +182,7 @@ namespace mln
       }
 
       template <typename I, typename W>
-      mln_concrete(I)
+      mln_ch_convolve(I, W)
       convolve_dispatch(trait::image::speed::fastest,
 			const Image<I>& input,
 			const Weighted_Window<W>& w_win)
@@ -194,7 +191,7 @@ namespace mln
       }
 
       template <typename I, typename W>
-      mln_concrete(I)
+      mln_ch_convolve(I, W)
       convolve_dispatch(const Image<I>& input,
 			const Weighted_Window<W>& w_win)
       {
@@ -208,14 +205,14 @@ namespace mln
     // Facade.
 
     template <typename I, typename W>
-    mln_concrete(I)
+    mln_ch_convolve(I, W)
     convolve(const Image<I>& input, const Weighted_Window<W>& w_win)
     {
       trace::entering("linear::convolve");
 
       internal::convolve_tests(input, w_win);
 
-      mln_concrete(I) output;
+      mln_ch_convolve(I, W) output;
       output = internal::convolve_dispatch(mln_trait_image_speed(I)(),
 					   input, w_win);
 
