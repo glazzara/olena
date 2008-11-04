@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
+// Copyright (C) 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,22 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PPM_SAVE_HH
-# define MLN_IO_PPM_SAVE_HH
+#ifndef MLN_IO_TXT_SAVE_HH
+# define MLN_IO_TXT_SAVE_HH
 
 /*!
- * \file   mln/io/ppm/save.hh
+ * \file   mln/io/txt/save.hh
  *
- * \brief Define a function which saves an image of kind ppm into
+ * \brief Define a function which saves an image of kind TXT into
  * given path.
  *
  */
 
+# include <iostream>
+# include <fstream>
+
 # include <mln/core/concept/image.hh>
 
-# include <mln/metal/templated_by.hh>
+# include <mln/metal/is.hh>
 
-# include <mln/io/pnm/save.hh>
 
 namespace mln
 {
@@ -49,37 +51,52 @@ namespace mln
   namespace io
   {
 
-    namespace ppm
+    namespace txt
     {
 
-      /*! Save a Milena image as a ppm image.
+      /*! Save a Milena image as a txt image.
        *
-       * \param[in] ima The image to save.
-       * \param[in,out] filename the destination.
+       * \param[in] ima_ The image to save. Must be an image of char.
+       * \param[in] filename the destination.
        */
-      template <typename I>
-      void save(const Image<I>& ima, const std::string& filename);
+      void
+      save(const image2d<char>& ima, const std::string& filename);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename I>
       inline
-      void save(const Image<I>& ima, const std::string& filename)
+      void
+      save(const image2d<char>& ima, const std::string& filename)
       {
-	mln::metal::templated_by<mln_value(I), value::rgb >::check();
+	trace::entering("mln::io::txt::save");
 
-	//call the generic function for pnm files
-	io::pnm::save(PPM, exact(ima), filename);
+	mln_precondition(ima.has_data());
+	std::ofstream ostr(filename.c_str());
+	unsigned col = 0;
+	typedef image2d<char> I;
+	mln_piter_(I) p(ima.domain());
+	for_all(p)
+	{
+	  ostr << ima(p);
+	  if (++col == ima.ncols())
+	  {
+	    ostr << std::endl;
+	    col = 0;
+	  }
+	}
+	ostr.close();
+
+	trace::exiting("mln::io::txt::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::ppm
+    } // end of namespace mln::io::txt
 
   } // end of namespace mln::io
 
 } // end of namespace mln
 
 
-#endif // ! MLN_IO_PPM_SAVE_HH
+#endif // ! MLN_IO_TXT_SAVE_HH

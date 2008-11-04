@@ -1,5 +1,27 @@
 2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add io::txt::save.
+
+	* mln/io/all.hh: update.
+
+	* mln/io/fits/load.hh,
+	* mln/io/pbm/load.hh,
+	* mln/io/pbm/save.hh,
+	* mln/io/pfm/load.hh,
+	* mln/io/pfm/save.hh,
+	* mln/io/pgm/load.hh,
+	* mln/io/pgm/save.hh,
+	* mln/io/pnm/save.hh,
+	* mln/io/ppm/load.hh,
+	* mln/io/ppm/save.hh: Update copyright.
+
+	* mln/io/txt/save.hh: save an image<char> to a txt file.
+	
+	* mln/io/off/all.hh,
+	* mln/io/txt/all.hh: new missing 'all' headers.
+
+2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add debug::colorize.
 
 	* mln/debug/colorize.hh: create a color image from a labeled image.
