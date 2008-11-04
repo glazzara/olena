@@ -63,11 +63,12 @@ namespace mln
 
       point2d word_end = word_start;
       word_end.last_coord() += word.length() - 1;
-      mln_precondition(inout.has(word_end));
+      if (!inout.has(word_end))
+	trace::warning("Cannot write text outside the image domain");
 
       const unsigned n = word.length();
       point2d p = word_start;
-      for (unsigned i = 0; i < n; ++i)
+      for (unsigned i = 0; i < n && inout.has(p); ++i)
 	{
 	  inout(p) = word[i];
 	  p += right;

@@ -48,6 +48,7 @@ namespace mln
 # include <mln/trace/exiting.hh>
 # include <mln/trace/stop.hh>
 # include <mln/trace/resume.hh>
+# include <mln/trace/warning.hh>
 
 
 #endif // ! MLN_TRACE_ALL_HH

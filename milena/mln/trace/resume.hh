@@ -33,9 +33,6 @@
 /// Resume traces.
 /// \sa mln::trace::stop
 
-# include <string>
-# include <iostream>
-
 # include <mln/trace/quiet.hh>
 
 

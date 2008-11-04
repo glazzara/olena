@@ -1,3 +1,17 @@
+2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+	
+	Add trace::warning.
+
+	* mln/trace/warning.hh: new file.
+
+	* mln/trace/all.hh: include warning.hh.
+
+	* mln/trace/resume.hh,
+	* mln/trace/stop.hh: cleanup includes.
+	
+	* mln/debug/put_word.hh: use trace::warning.
+
+
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve trace output.

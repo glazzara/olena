@@ -16,7 +16,7 @@
 // Boston, MA 02111-1307, USA.
 //
 // As a special exception, you may use this file as part of a free
-// software library without restriction.  Specificstopy, if other files
+// software library without restriction.  Specificwarningy, if other files
 // instantiate templates or use macros or inline functions from this
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
@@ -25,13 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRACE_STOP_HH
-# define MLN_TRACE_STOP_HH
+#ifndef MLN_TRACE_WARNING_HH
+# define MLN_TRACE_WARNING_HH
 
-/// \file mln/trace/stop.hh
-/// Stop printing traces except if trace::full_trace is enabled.
-/// \sa mln::trace::resume
+/// \file mln/trace/warning.hh
+/// Display warning message in trace output.
 
+# include <string>
 # include <iostream>
 
 # include <mln/trace/quiet.hh>
@@ -43,16 +43,17 @@ namespace mln
   namespace trace
   {
 
-    void stop();
+    void warning(const std::string& message);
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    void stop()
+    void warning(const std::string& message)
     {
-      internal::is_quiet = quiet;
-      if (!full_trace)
-	quiet = true;
+      if (!quiet)
+	std::cout << "Warning: "
+		  << message
+		  << std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -62,4 +63,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRACE_STOP_HH
+#endif // ! MLN_TRACE_WARNING_HH
