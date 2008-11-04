@@ -50,14 +50,31 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    void exiting(const std::string& str)
+    void exiting(const std::string& scope)
     {
       if (quiet)
 	return;
+
+      timeval after_time;
+      gettimeofday(&after_time, 0);
+      bool has_inner_trace = (internal::max_tab == tab);
       --tab;
-      for (unsigned i = 0; i < tab; ++i)
-	std::cout << "  ";
-      std::cout << "}  " << str << std::endl;
+
+      if (!has_inner_trace)
+        for (unsigned i = 0; i < tab; ++i)
+	 std::cout << "  ";
+
+      std::cout << "} ";
+
+      if (!has_inner_trace)
+	std::cout << scope << " ";
+
+      std::cout << "- "
+		<< (after_time.tv_usec - internal::start_time.tv_usec) / 1000.
+		<< "ms ";
+
+      if (has_inner_trace || (internal::max_tab - tab > 1))
+	std::cout << std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

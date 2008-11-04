@@ -54,10 +54,16 @@ namespace mln
     {
       if (quiet)
 	return;
+
+      if ((tab != 0) && (internal::max_tab == tab))
+	std::cout << std::endl;
+
       for (unsigned i = 0; i < tab; ++i)
 	std::cout << "  ";
-      std::cout << scope << " {" << std::endl;
-      ++tab;
+      std::cout << scope << " {";
+
+      internal::max_tab = ++tab;
+      gettimeofday(&internal::start_time, 0);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

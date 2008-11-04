@@ -1,5 +1,14 @@
 2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve trace output.
+
+	* mln/trace/entering.hh,
+	* mln/trace/exiting.hh,
+	* mln/trace/quiet.hh:
+	Avoid useless ends of line and add a timer.
+
+2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add trace::stop and trace::resume.
 
 	* mln/trace/all.hh: add new includes.

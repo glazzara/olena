@@ -33,6 +33,8 @@
  * \brief Definition of the trace quiet Boolean value.
  */
 
+# include <ctime>
+# include <sys/time.h>
 
 namespace mln
 {
@@ -44,9 +46,12 @@ namespace mln
     static unsigned tab  = 0;
     static bool full_trace = false;
 
+
     namespace internal
     {
 
+      static unsigned max_tab  = 0;
+      static timeval start_time;
       static bool is_quiet = quiet;
 
     } // end of namespace mln::trace::internal
