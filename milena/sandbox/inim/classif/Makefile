@@ -6,7 +6,7 @@ ICCVG_SRC=iccvg04.cc
 ICCVG=iccvg
 ICCVG_DBG=iccvg_dbg
 
-IMG?=..//../img/lena.ppm
+IMG?=../../img/lena.ppm
 DIV?=4
 LAMBDA?=10
 

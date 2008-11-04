@@ -39,9 +39,11 @@ SUBDIRS =					\
   topo						\
   trace						\
   trait						\
+  unit_test					\
   util						\
   value						\
   win
+
 
 check_PROGRAMS =				\
   all_headers 					\
