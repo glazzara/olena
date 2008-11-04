@@ -1095,13 +1095,9 @@ namespace mln
 	{
 	}
 
-	template <typename V>
-	void neutral(const V&) { return mln_max(V); }
-	void neutral(const bool&) { return true; }
-
 	void init()
 	{
-	  extension::adjust_fill(input, win, neutral(mln_value(I)()));
+	  extension::adjust_fill(input, win, accu);
 	  initialize(output, input);
 	}
 
