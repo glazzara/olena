@@ -795,6 +795,13 @@ processing, or another image. Trying to access the site value from an empty
 image leads to an error at run-time.
 Img1b is defined on a domain but does not have data yet.\\
 
+Sometimes, you may want to initialize an image from another one:
+\doxycode{ima2d-7}
+\var{img2b} is declared without specifying a domain. Its border size is set to
+the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
+ with the same domain and border/extension as \var{img2a}. The data is not
+ copied though. Other routines like \code{level::fill} can be called in order to
+ do so (See also \ref{fillop}).
 
 
 %================================================
@@ -1601,144 +1608,50 @@ First, create a graph which looks like the following:
 
 First we need to add vertices:
 
-\begin{lstlisting}
-util::graph g;
-
-for (unsigned i = 0; i < 5; ++i)
-  g.add_vertex () // Associated to vertex 'i';
-\end{lstlisting}
+\doxycode{graph-add-vertex}
 
 Finally, populate the graph with edges:
-\begin{lstlisting}
-g.add_edge(0, 1); // Associated to edge 0.
-g.add_edge(1, 2); // Associated to edge 1.
-g.add_edge(1, 3); // Associated to edge 2.
-g.add_edge(3, 4); // Associated to edge 3.
-g.add_edge(4, 2); // Associated to edge 4.
-\end{lstlisting}
+\doxycode{graph-add-edges}
 
 Now there is a graph topology and we want to associate elements of this graph
 to a site in the image.
 The idea is to use specific site sets such as \type{p\_vertices} and
 \type{p\_edges}.
-Let's associate the vertices with sites. To do so we need to create a functor
-which for a given vertex returns a site.
-
-\begin{lstlisting}[frame=single]
-struct assoc_fun : public Function_v2v< assoc_fun >
-{
-  typedef const point2d& result;
-
-  inline
-  const point2d& operator()(const vertex<graph::util>& v) const
-  {
-    ...
-  }
-
-};
-\end{lstlisting}
+Let's associate the vertices with sites. To do so we need a function which maps
+a vertex id to a site, e.g. a \type{point2d} here.
+\doxycode{graph-i2v-vertex}
 
 Then declare a \type{p\_vertices}:
-\begin{lstlisting}[frame=single]
-p_vertices<util::graph, assoc_fun> pv(g, assoc_fun());
-\end{lstlisting}
+\doxycode{graph-p-vertices}
 
 Thanks to the \type{p\_vertices} there is now a mapping between vertices and sites.
-We may like to map data to it. The idea is to provide a function which returns the associated data
-according to the site given as parameter. Combining this function and the
-\type{p\_vertices}, we get an image. Since this is an image, you can use it with
+We may like to map data to it. The idea is to provide a function which returns
+the associated data according to the site given as parameter. Combining this
+function and the \type{p\_vertices}, we get an image which can be used with
 algorithms and \code{for\_all} loops.
 
-\begin{lstlisting}[frame=single]
-
-template <typename I>
-mln_rvalue(I) my_data_fun(mln_site(I) site)
-{
-  ...
-}
-
-void my_fun()
-{
-  ...
-  // Constructs an image 
-  mln_VAR(graph_vertices_ima, my_data_fun | pv);
-
-  //Prints each vertex
-  mln_piter p(graph_vertices_ima);
-  for_all(p)
-    std::Cout << p << std::endl;
-  ...
-}
-\end{lstlisting}
+\doxycode{graph-data}
 
 Note that like any image in Olena, graph images share their data. Therefore,
 while constructing a graph image from a graph and a function, the graph is not
 copied and this is NOT a costly operation.
 
-Like other images, graph images also have an overloaded \code{operator()} to access the
-data associated to a vertex or an edge.
-\begin{lstlisting}
-  //Prints each edge's associated value.
-  mln_piter p(graph_edge_ima);
-  for_all(p)
-    std::cout << graph_edge_ima(p) << std::endl;
-
-  //Prints each vertex's associated value.
-  mln_piter p(graph_vertex_ima);
-  for_all(p)
-    std::cout << graph_vertex_ima(p) << std::endl;
-\end{lstlisting}
-
 Of course, creating a graph image is not necessary and you can work directly
 with the graph and container/function mapping indexes and data.
 
-\begin{lstlisting}
-// Iterator on vertices.
-mln_Viter V(g);
+\doxycode{graph-iter}
 
-// Prints each vertex and its associated value.
-for_all(V)
-{
-  std::cout << V << " : " << my_data_fun(V) << std::endl;
-}
-\end{lstlisting}
-
-Graphes have iterators like any other site sets and also provide
+Graphs have iterators like any other site sets and also provide
 specific iterators in order to iterate over graphes in a more intuitive way.
 
-\begin{lstlisting}
-// Iterator on vertices.
-mln_Viter V(g);
+Iteration over the adjacent edges of all the vertices:
+\doxycode{graph-iter-vertex}
 
-// Iterator on V's edges.
-mln_Eiter n(g, V);
+Iteration over the adjacent edges of all the edges:
+\doxycode{graph-iter-edge-nbh-edge}
 
-// Prints the graph
-// List all edges for each vertex.
-for_all(V)
-{
-  std::cout << V << " : ";
-  for_all(n)
-    std::cout << n << " ";
-  std::cout << std::endl;
-}
-
-// Iterator on edges.
-mln_Eiter E(g);
-
-// Iterator on vertices adjacent to E.
-mln_Viter n(g, E);
-
-// Prints the graph
-// List all adjacent vertices for each edge.
-for_all(E)
-{
-  std::cout << E << " : ";
-  for_all(n)
-    std::cout << n << " ";
-  std::cout << std::endl;
-}
-\end{lstlisting}
+Iteration over the adjacent vertices of all the vertices:
+\doxycode{graph-iter-vertex-nbh-vertex}
 
 //FIXME talk about p\_vertices and p\_edges.
 
