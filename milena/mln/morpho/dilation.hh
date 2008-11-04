@@ -44,6 +44,10 @@ namespace mln
   namespace morpho
   {
 
+    // FIXME: fwd decl to fix problem with includes.hh.
+    template <typename I, typename W>
+    mln_concrete(I)
+    erosion(const Image<I>& input, const Window<W>& win);
 
     /// Morphological dilation using windows.
     ///
@@ -90,7 +94,7 @@ namespace mln
       dilation_as_erosion_dual(const Image<I>& input, const Window<W>& win)
       {
 	trace::entering("morpho::impl::dilation_as_erosion_dual");
-	
+
 	mln_concrete(I) output = morpho::erosion(morpho::complementation(input),
 						 win);
 	morpho::complementation_inplace(output);
@@ -117,7 +121,7 @@ namespace mln
 
     } // end of namespace mln::morpho::internal
 
-    
+
 
 
     // ----------------------------------------- //
