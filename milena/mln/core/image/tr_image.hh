@@ -202,7 +202,7 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p) const
   {
-    algebra::vec<I::psite::dim, float> v = p;
+    algebra::vec<I::psite::dim, float> v = p.to_vec();
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }
 
@@ -211,7 +211,7 @@ namespace mln
   mln_value(I)
   tr_image<S,I,T>::operator()(const psite& p)
   {
-    algebra::vec<I::psite::dim, float> v = p;
+    algebra::vec<I::psite::dim, float> v = p.to_vec();
     return this->data_->ima_(this->data_->tr_.inv()(v));
   }
 

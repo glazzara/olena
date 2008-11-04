@@ -32,7 +32,7 @@
 
 
 #include <iostream>
-#include <mln/fun/x2x/geom/rotation.hh>
+#include <mln/fun/x2x/rotation.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/core/image/tr_image.hh>
@@ -50,18 +50,18 @@ int main()
   debug::iota(in);
   debug::println(in);
 
-  fun::x2x::geom::rotation<3,float> rot1(1.67, literal::zero);
+  fun::x2x::rotation<3, float> rot1(1.67, literal::zero);
 
   tr_image<mln_pset_(image3d<int_u8>),
 	  image3d<int_u8>,
-	  fun::x2x::geom::rotation<3,float> >
+	  fun::x2x::rotation<3, float> >
       inter(out.domain(), in, rot1);
 
   image3d<int_u8>::fwd_piter p(out.domain());
 
   for_all(p)
     {
-      algebra::vec<3,int> vec = p.to_site().to_vec();
+      algebra::vec<3, int> vec = p.to_site().to_vec();
       if (inter.has(p))
 	out(p) = inter(vec);
       else

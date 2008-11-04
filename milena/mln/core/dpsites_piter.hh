@@ -155,7 +155,7 @@ namespace mln
   bool
   dpsites_fwd_piter<V>::is_valid_() const
   {
-    return i_ != this->s_->std_vector().size();
+    return i_ != this->s_->to_vec().size();
   }
 
   template <typename V>
@@ -163,7 +163,7 @@ namespace mln
   void
   dpsites_fwd_piter<V>::invalidate_()
   {
-    i_ = this->s_->std_vector().size();
+    i_ = this->s_->to_vec().size();
   }
 
   template <typename V>
@@ -187,7 +187,7 @@ namespace mln
   mln_psite(V)
   dpsites_fwd_piter<V>::compute_p_() const
   {
-    return *this->c_ + this->s_->std_vector()[i_];
+    return *this->c_ + this->s_->to_vec()[i_];
   }
 
 
@@ -229,7 +229,7 @@ namespace mln
   void
   dpsites_bkd_piter<V>::do_start_()
   {
-    i_ = this->s_->std_vector().size() - 1;
+    i_ = this->s_->to_vec().size() - 1;
   }
 
   template <typename V>
@@ -245,7 +245,7 @@ namespace mln
   mln_psite(V)
   dpsites_bkd_piter<V>::compute_p_() const
   {
-    return *this->c_ + this->s_->std_vector()[i_];
+    return *this->c_ + this->s_->to_vec()[i_];
   }
 
 # endif // ! MLN_INCLUDE_ONLY

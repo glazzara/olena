@@ -33,8 +33,8 @@
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/site_set/p_set.hh>
-#include <mln/core/image/graph_psite.hh>
-#include <mln/core/site_set/p_graph_piter.hh>
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/util/graph.hh>
 
 
 int main()
@@ -46,21 +46,22 @@ int main()
   | mln::p_array_piter.                                     |
   `--------------------------------------------------------*/
 
-  // Graph.
+  // Graph
 
-  // Points associated to vertices.
-  std::vector<point2d> points;
-  points.push_back(point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(point2d(4,4)); // Point associated to vertex 4.
+  //Vertices
+  typedef fun::i2v::array<point2d> fpoint_t;
+  fpoint_t points(5);
+  points(0) = point2d(0,0); // Point associated to vertex 0.
+  points(1) = point2d(2,2); // Point associated to vertex 1.
+  points(2) = point2d(0,4); // Point associated to vertex 2.
+  points(3) = point2d(4,3); // Point associated to vertex 3.
+  points(4) = point2d(4,4); // Point associated to vertex 4.
 
   // Edges.
-  util::graph<point2d> g;
+  util::graph g;
   // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex (points[i]);
+    g.add_vertex();
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -69,10 +70,11 @@ int main()
   g.add_edge(4, 2);
 
 
+
   // Graph point set.
-  typedef p_graph<point2d> pg_t;
-  p_graph<point2d> pg(g);
-  typedef graph_psite<point2d> gpsite_t;
+  typedef p_vertices<util::graph, fpoint_t> pv_t;
+  typedef mln_psite_(pv_t) gpsite_t;
+  pv_t pv(g, points);
 
   {
     // Array of graph point sites.
@@ -80,7 +82,7 @@ int main()
     pa_t pa;
 
     // Tests: copying all psites from PG to PA.
-    mln_piter_(pg_t) p(pg);
+    mln_piter_(pv_t) p(pv);
     for_all (p)
       pa.append(p);
 
@@ -97,7 +99,7 @@ int main()
     ps_t ps;
 
     // Tests: copying all psites from PG to PS.
-    mln_piter_(pg_t) p(pg);
+    mln_piter_(pv_t) p(pv);
     for_all (p)
       ps.insert(p);
 

@@ -38,11 +38,9 @@ int main()
 {
   using namespace mln;
 
-  const unsigned border = 2;
-
   /// Test with box1d
   {
-    box1d b1(make::point1d(40), make::point1d(42));
+    box1d b1(point1d(40), point1d(42));
     box_runstart_piter<point1d> p1(b1);
     for_all(p1)
     {
@@ -56,7 +54,7 @@ int main()
 
   /// Test with box2d
   {
-    box2d b2(make::point2d(1,2), make::point2d(5,8));
+    box2d b2(point2d(1,2), point2d(5,8));
     box_runstart_piter<point2d> p2(b2);
     int i = 1;
     for_all(p2)
@@ -70,7 +68,7 @@ int main()
 
 //   Test with image 3d
   {
-    box3d b3(make::point3d(1,2,3), make::point3d(5,8,7));
+    box3d b3(point3d(1,2,3), point3d(5,8,7));
     box_runstart_piter<point3d> p3(b3);
     int i = 1;
     int j = 2;

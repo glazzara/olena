@@ -95,7 +95,7 @@ namespace mln
 	    for (unsigned j = 0; j < real_len_r; ++j)
 	      {
 		for (unsigned i = 0; i < real_len_c; ++i)
-		  std::cout << format(input[k * (real_len_r * real_len_c) + j * real_len_c + i])
+		  std::cout << format(input.point_at_index(k * (real_len_r * real_len_c) + j * real_len_c + i))
 			    << ' ';
 		std::cout << std::endl;
 	      }

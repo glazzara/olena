@@ -78,8 +78,8 @@ namespace mln
 		typename I, typename O>
       void
       line_tests(const Image<I>& input_,
-		 const mln_site(I)& p_start, unsigned len,
-		 unsigned half_length,
+		 const mln_site(I)&, unsigned,
+		 unsigned,
 		 Image<O>& output_)
       {
 	mlc_is_a(Meta_Accu, Meta_Accumulator)::check();

@@ -42,6 +42,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
+# include <mln/math/abs.hh>
 
 # include <mln/util/pix.hh>
 # include <mln/literal/zero.hh>

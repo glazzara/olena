@@ -69,6 +69,8 @@ namespace mln
 	void update_id(unsigned v_id);
 	/// \}
 
+	/// Getters.
+	/// \{
 	/// Return the target (the site set).
         const target* target_() const; // Hook to the target.
 
@@ -77,6 +79,11 @@ namespace mln
 
 	/// Return the graph associated to the target of this psite.
 	const graph_t& graph() const;
+
+	/// Return the graph associated to the target of this psite.
+	unsigned id() const;
+
+	/// \}
 
 	/// Check whether it is valid.
 	bool is_valid() const;
@@ -110,11 +117,43 @@ namespace mln
         V v_;
      };
 
-    } // end of namespace internal
-
     template <typename V, typename P, typename S, typename E>
     std::ostream&
-    operator<<(std::ostream& ostr, internal::graph_psite_base<V, P, S, E>& p);
+    operator<<(std::ostream& ostr, graph_psite_base<V, P, S, E>& p);
+
+    /// Comparison of two mln::graph_psite_base<V, P, S, E> instances.
+    /// \{
+    /* FIXME: Shouldn't those comparisons be part of a much general
+       mechanism?  */
+
+    /// \brief Is \a lhs equal to \a rhs?
+    ///
+    /// \pre Arguments \a lhs and \a rhs must belong to the same
+    /// mln::p_vertices.
+    template <typename V, typename P, typename S, typename E>
+    bool
+    operator==(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+
+    /// \brief Is \a lhs not equal to \a rhs?
+    ///
+    /// \pre Arguments \a lhs and \a rhs must belong to the same
+    /// mln::p_vertices.
+    template <typename V, typename P, typename S, typename E>
+    bool
+    operator!=(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+
+    /// \brief Is \a lhs ``less'' than \a rhs?
+    ///
+    /// This comparison is required by algorithms sorting psites.
+    ///
+    /// \pre Arguments \a lhs and \a rhs must belong to the same
+    /// mln::p_vertices.
+    template <typename V, typename P, typename S, typename E>
+    bool
+    operator< (const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+    /// \}
+
+  } // end of namespace internal
 
 } // end of namespace mln
 
@@ -192,6 +231,14 @@ namespace mln
         return t_->graph();
       }
 
+      template <typename v, typename p, typename s, typename e>
+      inline
+      unsigned
+      graph_psite_base<v, p, s, e>::id() const
+      {
+        return v_.id();
+      }
+
       template <typename V, typename P, typename S, typename E>
       inline
       bool
@@ -225,14 +272,43 @@ namespace mln
         return t_->function()(v_.id());
       }
 
-    } // end of namespace internal
 
-    template <typename V, typename P, typename S, typename E>
-    std::ostream&
-    operator<<(std::ostream& ostr, internal::graph_psite_base<V, P, S, E>& p)
-    {
-      return ostr << p.subj_();
-    }
+      template <typename V, typename P, typename S, typename E>
+      std::ostream&
+      operator<<(std::ostream& ostr, graph_psite_base<V, P, S, E>& p)
+      {
+	return ostr << p.unproxy_();
+      }
+
+      /*--------------.
+      | Comparisons.  |
+      `--------------*/
+
+      template <typename V, typename P, typename S, typename E>
+      bool
+      operator==(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      {
+	mln_assertion(lhs.target_() == rhs.target_());
+	return lhs.id() == rhs.id();
+      }
+
+      template <typename V, typename P, typename S, typename E>
+      bool
+      operator!=(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      {
+	mln_assertion(lhs.target_() == rhs.target_());
+	return lhs.id() != rhs.id();
+      }
+
+      template <typename V, typename P, typename S, typename E>
+      bool
+      operator< (const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      {
+	mln_assertion(lhs.target_() == rhs.target_());
+	return lhs.id() < rhs.id();
+      }
+
+    } // end of namespace internal
 
 } // end of namespace mln
 

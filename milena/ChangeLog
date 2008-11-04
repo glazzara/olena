@@ -1,3 +1,32 @@
+2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+	* milena/mln/accu/line.hh: avoid compilation warnings.
+
+	* milena/mln/accu/volume.hh: Fix missing include.
+
+	* milena/mln/core/dpsites_piter.hh: use to_vec() instead of
+	std_vector().
+
+	* milena/mln/core/image/tr_image.hh: call to_vec();
+
+	* milena/mln/debug/println_with_border.spe.hh: use point_at_index()
+	instead of operator[].
+
+	* milena/mln/trait/value_.hh: change max card value for low
+	quantification.
+
+	* milena/mln/util/internal/graph_psite_base.hh: Add missing operators.
+
+	* milena/tests/core/image/tr_image.cc: fix include.
+
+	* milena/tests/core/other/box_runstart_piter.cc: remove make::
+	prefix.
+	
+	* milena/tests/core/other/point_set_compatibility.cc: update test
+	according last changes in p_vertices.
+
 2008-11-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update level stretch so that output is returned.
