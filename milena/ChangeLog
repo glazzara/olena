@@ -1,5 +1,15 @@
 2008-11-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update level stretch so that output is returned.
+
+	* mln/level/stretch.hh: Change sig to return output.
+	* tests/level/stretch.cc: Update.
+	* tests/level/stretch_full.cc: Update.
+	* tests/linear/lap.cc: Update.
+	* tests/linear/log.cc: Update.
+
+2008-11-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Revamp directional convolution (was convolve_line).
 
 	* mln/core/concept/gdpoint.hh: Handle "Gdpoint * Scalar".

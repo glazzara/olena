@@ -26,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/lap.cc
- *
- * \brief Tests on mln::linear::lap_4.
- */
+/// \file tests/linear/lap.cc
+///
+/// Tests on mln::linear::lap_4.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -50,8 +49,9 @@ int main()
 
   border::thickness = 1;
 
-  image2d<int_u8> lena, out;
+  image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  level::stretch(linear::lap_4(lena), out);
-  io::pgm::save(out, "out.pgm");
+
+  io::pgm::save(level::stretch(int_u8(), linear::lap_4(lena)),
+		"out.pgm");
 }

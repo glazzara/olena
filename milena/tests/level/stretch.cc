@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,11 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/stretch.cc
- *
- * \brief Tests on mln::level::stretch.
- */
-
+/// \file tests/level/stretch.cc
+///
+/// Tests on mln::level::stretch.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/level/stretch.hh>
@@ -47,18 +46,16 @@ int main()
     { 1000, 2000, 3000 },
     { 1000, 2000, 3000 }
   };
-  image2d<int> ima(make::image(vs));
-
-  image2d<int_u8> out(3, 3);
+  image2d<int> ima = make::image(vs);
+  image2d<int_u8> out = level::stretch(int_u8(), ima);
 
   int_u8 ws[3][3] = {
     { 0, 127, 255 },
     { 0, 127, 255 },
     { 0, 127, 255 }
   };
-
-  image2d<int_u8> ref(make::image(ws));
-  level::stretch(ima, out);
+  image2d<int_u8> ref = make::image(ws);
+  
   box_fwd_piter_<point2d> p(out.domain());
   for_all(p)
     mln_assertion(out(p) == ref(p));

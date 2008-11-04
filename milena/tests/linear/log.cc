@@ -26,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/log.cc
- *
- * \brief Tests on mln::linear.
- */
+/// \file tests/linear/log.cc
+///
+/// Tests on mln::linear.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -63,7 +62,7 @@ int main()
     mln_assertion(min == -929 && max == 1260);
   }
 
-  level::stretch(tmp, out);
+  out = level::stretch(int_u8(), tmp);
   io::pgm::save(out, "out.pgm");
   {
     int_u8 min, max;

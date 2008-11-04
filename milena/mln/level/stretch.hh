@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,14 @@
 #ifndef MLN_LEVEL_STRETCH_HH
 # define MLN_LEVEL_STRETCH_HH
 
-/*! \file mln/level/stretch.hh
- *
- * \brief Transform with fun::stretch the contents of an image into
- * another one.
- */
+/// \file mln/level/stretch.hh
+///
+/// Transform linearly the contents of an image into another one in a
+/// stretching way.
+///
+/// \todo Make it work with other types than scalars (e.g., vectors).
+///
+/// \todo Think about adding a stretch_inplace(?)
 
 # include <mln/estim/min_max.hh>
 # include <mln/value/int_u.hh>
@@ -46,15 +50,18 @@ namespace mln
   namespace level
   {
 
-    /*! Stretch the values of \p input so that they can be stored in \p output.
+    /*! Stretch the values of \p input so that they can be stored in
+     *  \p output.
      *
-     * \param[in] input The input image.
+     * \param[in] v       A value to set the output value type.
+     * \param[in] input   The input image.
      * \param[out] output The result image.
      *
-     * \pre \p output.domain == \p input.domain
+     * \pre input.has_data
      */
-    template <typename I, typename O>
-    void stretch(const Image<I>& input, Image<O>& output);
+    template <typename V, typename I>
+    mln_ch_value(I, V)
+    stretch(V v, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -62,45 +69,58 @@ namespace mln
     namespace impl
     {
 
-      // FIXME: The first argument seems to have no effect.
-      template <unsigned n, typename I, typename O>
+      template <typename V, typename I>
       inline
-      void stretch(value::int_u<n>,
-		   const Image<I>& input, Image<O>& output)
+      mln_ch_value(I, V)
+      stretch(V, const Image<I>& input)
       {
 	trace::entering("level::impl::stretch");
+
+	mlc_converts_to(float, V)::check();
+
+	mln_ch_value(I, V) output;
 
 	mln_value(I) min_, max_;
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)
 	  {
-	    float min = float(min_), max = float(max_);
-	    const float epsilon = mln_epsilon(float);
-	    float m = 0.0f - 0.5f + epsilon;
-	    float M = mln_max(value::int_u<n>) + 0.5f - epsilon;
-	    float a = (M - m) / (max - min);
-	    float b = (m * max - M * min) / (max - min);
-	    fun::v2v::linear<float, float, int> f(a, b);
+	    float
+	      min = float(min_),
+	      max = float(max_),
+	      epsilon = mln_epsilon(float),
+	      m = 0.0f - 0.5f + epsilon,
+	      M = mln_max(V) + 0.5f - epsilon,
+	      a = (M - m) / (max - min),
+	      b = (m * max - M * min) / (max - min);
+	    fun::v2v::linear<float, float, V> f(a, b);
 	    output = level::transform(input, f);
 	  }
+	else
+	  {
+	    initialize(output, input);
+	    // trace::warning("output has no significative data!");
+	  }
+
 	trace::exiting("level::impl::stretch");
+	return output;
       }
 
     } // end of namespace mln::level::impl
 
 
-    template <typename I, typename O>
+    template <typename V, typename I>
     inline
-    void stretch(const Image<I>& input, Image<O>& output)
+    mln_ch_value(I, V)
+    stretch(V, const Image<I>& input)
     {
       trace::entering("level::stretch");
 
-      initialize(output, input);
+      mln_precondition(exact(input).has_data());
 
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::stretch(mln_value(O)(), input, output);
+      mln_ch_value(I, V) output = impl::stretch(V(), input);
 
       trace::exiting("level::stretch");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
