@@ -43,6 +43,8 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
+
+//FIXME: Add fitsio dependency
 # include <fitsio.h>
 
 namespace mln

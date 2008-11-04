@@ -50,6 +50,7 @@ namespace mln
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
+# include <mln/debug/graph.hh>
 
 
 #endif // ! MLN_DEBUG_ALL_HH

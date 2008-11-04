@@ -1,3 +1,32 @@
+2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix Sanity.
+
+	* tests/all_headers.cc: Make this test pass.
+
+	* mln/core/site_set/p_graph.hh: Fix wrong use of graph.
+	* mln/core/image/translate_image.hh: Make it compile.
+	* mln/core/image/all.hh: Complete headers inclusion.
+
+	* mln/util/tree.hh,
+	* mln/core/concept/window.hh: Gcc 4.3 fix.
+	* mln/core/site_set/p_centered.hh: Update.
+	* mln/core/window.hh: Update.
+	* mln/win/multiple_size.hh: Update.
+	* mln/win/multiple.hh: Update.
+
+	* mln/core/internal/image_value_morpher.hh: Add FIXME doxygen.
+	* mln/linear/local/convolve.hh: Fix namespace.
+	* mln/value/stack.hh: Make proper inheritens.
+	* mln/border/equalize.hh: Make it compile.
+	* mln/set/all.hh: Fix inclusion.
+	* mln/io/fits/load.hh: Add FIXME dependency.
+
+	* mln/draw/graph.hh: Move...
+	* mln/debug/graph.hh: ...here.
+	* mln/debug/all.hh: Update.
+	* mln/draw/all.hh: Update.
+
 2008-11-03  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Create doc/benchmark/morpho, add bench for erosion.

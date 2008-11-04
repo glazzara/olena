@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DRAW_GRAPH_HH
-# define MLN_DRAW_GRAPH_HH
+#ifndef MLN_DEBUG_DRAW_GRAPH_HH
+# define MLN_DEBUG_DRAW_GRAPH_HH
 
-/// \file mln/draw/graph.hh
+/// \file mln/debug/draw_graph.hh
 /// \brief Draw an (classical) image from a mln::graph_image.
 
 # include <mln/pw/image.hh>
@@ -40,12 +40,8 @@
 namespace mln
 {
 
-  namespace draw
+  namespace debug
   {
-    /* FIXME: `draw::graph' is not a good name.  These functions do not
-       actually _draw_ the graph/graph_image; it *converts* it to a
-       printable image.  These functions should be put elsewhere
-       (e.g., in debug::).  */
 
     /*! \brief Draw an image \p ima from a mln::p_graph \p pg, with
      *  value \p vertex_v for vertices, value \p edge_v for edges and 0 for
@@ -61,7 +57,7 @@ namespace mln
      */
     template <typename I, typename P>
     void
-    graph(Image<I>& ima, const p_graph<P>& pg,
+    draw_graph(Image<I>& ima, const p_graph<P>& pg,
 	  mln_value(I) vertex_v, mln_value(I) edge_v);
 
     /*! \brief Draw an image \p ima from a mln::graph_image \p gi.
@@ -78,7 +74,7 @@ namespace mln
     // constructed from `int'!  We should remove this last argument.
     template <typename I,  typename P, typename V>
     void
-    graph(Image<I>& ima, const graph_image<P, V>& gi,
+    draw_graph(Image<I>& ima, const graph_image<P, V>& gi,
 	 mln_value(I) edge_v = 1);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -89,12 +85,12 @@ namespace mln
     template <typename I, typename P>
     inline
     void
-    graph(Image<I>& ima, const p_graph<P>& pg,
+    draw_graph(Image<I>& ima, const p_graph<P>& pg,
 	  mln_value(I) vertex_v, mln_value(I) edge_v)
     {
-      // Draw the background.
+      // Debug the background.
       level::fill(ima, 0);
-      // Draw the lines (edges).
+      // Debug the lines (edges).
       for (unsigned l = 0; l < pg.nedges(); ++l)
 	line (exact(ima),
 	      // FIXME: Too low-level.  See similar remarks
@@ -102,7 +98,7 @@ namespace mln
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v1()),
 	      pg.gr_->vertex_data(pg.gr_->edge(l).v2()),
 	      edge_v);
-      // Draw the points (vertices).
+      // Debug the points (vertices).
       for (unsigned p = 0; p < pg.nsites(); ++p)
  	exact(ima)(pg.gr_->vertex_data(p)) = vertex_v;
     }
@@ -110,23 +106,23 @@ namespace mln
     template <typename I,  typename P, typename V>
     inline
     void
-    graph(Image<I>& ima, const graph_image<P, V>& gi,
+    draw_graph(Image<I>& ima, const graph_image<P, V>& gi,
 	  mln_value(I) edge_v)
     {
-      // Draw the background.
+      // Debug the background.
       level::fill(ima, 0);
-      // Draw the lines (edges).
+      // Debug the lines (edges).
       for (unsigned l = 0; l < gi.domain().nedges(); ++l)
 	line (exact(ima), gi.vertex1(l), gi.vertex2(l), edge_v);
-      // Draw the points (vertices).
+      // Debug the points (vertices).
       for (unsigned p = 0; p < gi.domain().nvertices(); ++p)
  	exact(ima)(gi.domain().point_from_id(p)) = gi.vertex_values()[p];
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-   } // end of namespace mln::draw
+   } // end of namespace mln::debug
 
 } // end of namespace mln
 
-#endif // MLN_GRAPH_PSITE_HH
+#endif // MLN_DEBUG_DRAW_GRAPH_HH

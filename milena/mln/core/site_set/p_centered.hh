@@ -253,7 +253,7 @@ namespace mln
   {
     this->change_target(s);
     q_.center_at(s.center());
-    q_.change_target(s.window());
+    q_.change_target(s.window_());
   }
 
   template <typename W>

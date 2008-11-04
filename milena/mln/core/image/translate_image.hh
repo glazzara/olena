@@ -38,6 +38,7 @@
 # include <mln/core/internal/image_identity.hh>
 # include <mln/core/alias/box2d.hh>
 
+//FIXME: Fix this image morpher.
 
 namespace mln
 {
@@ -76,13 +77,11 @@ namespace mln
     {
       typedef trait::image::category::domain_morpher category;
 
-      typedef mln_trait_image_access(I)     access;
-      typedef mln_trait_image_space(I)      space;
+      typedef mln_trait_image_value_access(I)     access;
+      typedef mln_trait_image_localization(I)      space;
       typedef mln_trait_image_size(I)       size;
-      typedef mln_trait_image_support(I)    support;
-      typedef mln_trait_image_border(I)     border;
-      typedef mln_trait_image_io_from_(I)   io;
-      typedef mln_trait_image_data_from_(I) data;
+      //typedef mln_trait_image_io_from_(I)   io;
+      //typedef mln_trait_image_data_from_(I) data;
 
     };
 
@@ -100,8 +99,7 @@ namespace mln
   struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
   {
 
-    typedef mln::internal::image_morpher< I, mln_pset(I), translate_image<I> > super_;
-    typedef line_piter_<mln_psite(I)> line_piter;
+    typedef mln::internal::image_morpher< I, mln_value(I), mln_pset(I), translate_image<I> > super_;
 
     /// Return type of read-write access.
     typedef mln_morpher_lvalue(I) lvalue;

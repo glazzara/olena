@@ -94,7 +94,7 @@ namespace mln
 
     /*! \brief Constructor without argument.
      *
-     * The constructed window is empty. 
+     * The constructed window is empty.
      */
     window();
 
@@ -119,7 +119,7 @@ namespace mln
      * w.r.t. the ordering of delta-points.
      */
     typedef dpsites_fwd_piter< window<D> > fwd_qiter;
-      
+
     /*! \brief Site_Iterator type to browse the points of a basic window
      * w.r.t. the reverse ordering of delta-points.
      */
@@ -162,10 +162,10 @@ namespace mln
     /// \{ Insertion of a delta-point with different numbers of
     /// arguments (coordinates) w.r.t. the dimension.
     window<D>& insert(const mln_coord(D)& dind); // For 1D or index access.
-      
+
     window<D>& insert(const mln_coord(D)& drow,
 		      const mln_coord(D)& dcol); // For 2D.
-      
+
     window<D>& insert(const mln_coord(D)& dsli,
 		      const mln_coord(D)& drow,
 		      const mln_coord(D)& dcol); // For 3D.

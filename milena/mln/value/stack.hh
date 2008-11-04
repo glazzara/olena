@@ -109,7 +109,7 @@ namespace mln
       // here.
       typedef trait::image::category::value_morpher category;
 
-      typedef trait::image::value::vectorial value;
+      typedef trait::image::nature::vectorial nature;
       /* FIXME: Setting the speed trait of a stack_image to `fast' is
          a bad approximation.
 
@@ -146,7 +146,9 @@ namespace mln
      */
     template <unsigned n, typename I>
     struct stack_image
-      : public mln::internal::image_value_morpher< I, stack_image<n,I> >
+      : public mln::internal::image_value_morpher< I,
+                                                   algebra::vec<n, mln_value(I)>,
+                                                   stack_image<n,I> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;

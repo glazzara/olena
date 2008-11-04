@@ -277,7 +277,7 @@ namespace mln
       for (unsigned w = 0; w < nw; ++w)
 	{
 	  ostr << " #" << w << ':';
-	  win.window(w).print(ostr);
+	  win.window_(w).print(ostr);
 	}
       ostr << " ]";
     }

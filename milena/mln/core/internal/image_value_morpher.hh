@@ -45,6 +45,7 @@ namespace mln
   namespace internal
   {
 
+    //FIXME: Fix doxygen.
 
     /*! A base class for image morphers w.r.t. value.
      * Parameter \p S is a point set type.

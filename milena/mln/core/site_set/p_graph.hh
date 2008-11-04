@@ -70,7 +70,7 @@ namespace mln
     typedef p_graph<P> self_;
     typedef internal::site_set_base_< P, self_ > super_;
 
-    typedef util::graph<P> graph;
+    typedef util::graph graph;
 
     /// \brief Construct a graph psite set from a graph of points.
     ///
@@ -201,7 +201,7 @@ namespace mln
   inline
   p_graph<P>::p_graph(const graph& gr)
     // Create a deep, managed copy of GR.
-    : gr_ (new util::graph<P>(gr))
+    : gr_ (new util::graph(gr))
   {
   }
 

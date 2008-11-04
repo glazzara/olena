@@ -103,7 +103,7 @@ namespace mln
 
       void set_window(unsigned i, const W& win);
 
-      const W& window(unsigned i) const;
+      const W& window_(unsigned i) const;
 
       unsigned nwindows() const;
 
@@ -206,7 +206,7 @@ namespace mln
     template <typename W, typename F>
     inline
     const W&
-    multiple<W,F>::window(unsigned i) const
+    multiple<W,F>::window_(unsigned i) const
     {
       mln_precondition(i < win_.nelements());
       return win_[i];

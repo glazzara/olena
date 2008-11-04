@@ -46,6 +46,6 @@ namespace mln
 # include <mln/set/inter.hh>
 # include <mln/set/is_subset_of.hh>
 # include <mln/set/sym_diff.hh>
-# include <mln/set/union.hh>
+# include <mln/set/uni.hh>
 
 #endif // ! MLN_SET_ALL_HH
