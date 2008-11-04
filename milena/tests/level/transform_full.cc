@@ -76,9 +76,9 @@ namespace mln
   {
     const I& ref = exact(ref_);
 
-    I out (ref.domain());
+    mln_ch_value(I, mln_result_(mysqrt)) out;
     {
-      level::transform(ref, mysqrt(), out);
+      out = level::transform(ref, mysqrt());
       mln_piter(I) p (ref.domain ());
       for_all(p)
 	mln_assertion ((mln_value(I))(ref(p) % 42) == out(p) );

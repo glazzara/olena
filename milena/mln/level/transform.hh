@@ -93,11 +93,10 @@ namespace mln
         (void) output;
 
         // Properties check
-	// FIXME: Re-activate!
-//         mln_precondition((mlc_is(mln_trait_image_pw_io(O),
-//                             trait::image::pw_io::read_write)::value ||
-//                      mlc_is(mln_trait_image_vw_io(O),
-//                             trait::image::vw_io::read_write)::value));
+        mln_precondition((mlc_is(mln_trait_image_pw_io(O),
+                                 trait::image::pw_io::read_write)::value ||
+                          mlc_is(mln_trait_image_vw_io(O),
+                                 trait::image::vw_io::read_write)::value));
 
         // FIXME Convert test
 	mlc_converts_to(mln_result(F), mln_value(O))::check();
@@ -118,29 +117,31 @@ namespace mln
       {
 
         // Generic implementation.
-	template <typename I, typename F, typename O>
+	template <typename I, typename F>
 	inline
-	void transform(const Image<I>& input_, const Function_v2v<F>& f_,
-			Image<O>& output_)
+        mln_ch_value(I, mln_result(F))
+        transform(const Image<I>& input_, const Function_v2v<F>& f_)
 	{
           trace::entering("level::impl::generic::transform");
 
-
 	  const I& input  = exact(input_);
 	  const F& f      = exact(f_);
-          O& output       = exact(output_);
+
+          mln_precondition(exact(input).has_data());
+          mln_ch_value(I, mln_result(F)) output;
+          initialize(output, input);
 
           level::internal::transform_tests(input, f, output);
-
-          mlc_is(mln_trait_image_pw_io(O),
+          mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                  trait::image::pw_io::read_write)::check();
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
 	    output(p) = f(input(p));
 
-
 	  trace::exiting("level::impl::generic::transform");
+
+          return output;
 	}
 
       } // end of namespace mln::level::impl::generic
@@ -150,21 +151,6 @@ namespace mln
 
     // Facade.
 
-      template <typename I, typename F, typename O>
-      inline
-      void transform(const Image<I>& input, const Function_v2v<F>& f,
-                      Image<O>& output)
-      {
-        trace::entering("level::transform");
-
-        mln_precondition(exact(output).domain() >= exact(input).domain());
-	impl::internal::transform_dispatch_(exact(input), exact(f), exact(output));
-
-        trace::exiting("level::transform");
-      }
-
-
-
     template <typename I, typename F>
     inline
     mln_ch_value(I, mln_result(F))
@@ -172,12 +158,11 @@ namespace mln
     {
       trace::entering("level::transform");
 
-      mln_precondition(exact(input).has_data());
       mln_ch_value(I, mln_result(F)) output;
-      initialize(output, input);
-      transform(input, f, output);
+      output = impl::internal::transform_dispatch_(exact(input), exact(f));
 
       trace::exiting("level::transform");
+
       return output;
     }
 

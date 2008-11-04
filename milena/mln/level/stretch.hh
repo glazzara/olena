@@ -81,7 +81,7 @@ namespace mln
 	    float a = (M - m) / (max - min);
 	    float b = (m * max - M * min) / (max - min);
 	    fun::v2v::linear<float, float, int> f(a, b);
-	    level::transform(input, f, output);
+	    output = level::transform(input, f);
 	  }
 	trace::exiting("level::impl::stretch");
       }
