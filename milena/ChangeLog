@@ -1,3 +1,12 @@
+2008-11-04  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Use memcpy_ in level::paste.
+
+	* mln/core/image/image1d.hh: Replace array by buffer in element method.
+	* mln/level/memcpy_.hh: Replace operator[] by element().
+	* mln/level/paste.spe.hh: Add paste_fastest and update dispatch.
+	* mln/level/fill_with_value.spe.hh: Update doc.
+
 2008-11-04  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix previous patch.

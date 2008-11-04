@@ -210,7 +210,6 @@ namespace mln
       }
 
 
-      /// FIXME:
       // This specialization is only here to deal with image which have
       // non-updated properties (vw_io).
       template <typename I, typename V>

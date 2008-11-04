@@ -39,6 +39,8 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LEVEL_PASTE_HH
 
+# include <mln/core/pixel.hh>
+# include <mln/level/fill_with_value.hh>
 # include <mln/level/memcpy_.hh>
 
 
@@ -114,21 +116,34 @@ namespace mln
         trace::entering("level::impl::paste_fast");
       }
 
-
       template <typename I, typename J>
-      void paste_fast_singleton(const Image<I>& input_, Image<J>& output_)
+      void paste_fastest(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("level::impl::paste_fast_singleton");
+        trace::entering("level::impl::paste_fastest");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
 
         level::internal::paste_tests(input, output);
 
-        mln_pixter(J) po(output);
+        pixel<const I> src (input);
+        pixel<J> dst(output);
+        *(src.address_()) = input.buffer();
+        *(dst.address_()) = output.buffer();
 
-        for_all(po)
-          po.val() = input.val();
+        memcpy_(dst, src, input.nelements());
+
+        trace::entering("level::impl::paste_fastest");
+      }
+
+      template <typename I, typename J>
+      void paste_singleton(const Image<I>& input_, Image<J>& output_)
+      {
+        trace::entering("level::impl::paste_fast_singleton");
+
+        const I& input  = exact(input_);
+
+        level::fill_with_value(output_, input.val());
 
         trace::entering("level::impl::paste_fast_singleton");
       }
@@ -152,10 +167,10 @@ namespace mln
         const I& input  = exact(input_);
         J& output       = exact(output_);
 
-        if (input.domain() == output.domain())
-          impl::paste_fast(input, output);
+        if (input.border() == output.border())
+          impl::paste_fastest(input, output);
         else
-          impl::generic::paste(input, output);
+          impl::paste_fast(input, output);
       }
 
       template <typename I, typename J>
@@ -167,7 +182,7 @@ namespace mln
                   const Image<I>& input,
                   Image<J>& output)
       {
-        impl::paste_fast(input, output);
+        impl::paste_fastest(input, output);
       }
 
 
@@ -196,11 +211,11 @@ namespace mln
       template <typename I, typename J>
       inline
       void paste_(trait::image::value_storage::singleton,
-                  trait::image::value_storage::one_block,
+                  trait::image::value_storage::any,
                   const Image<I>& input,
                   Image<J>& output)
       {
-        impl::paste_fast_singleton(input, output);
+        impl::paste_singleton(input, output);
       }
 
 
@@ -219,7 +234,8 @@ namespace mln
         if (mlc_is(mln_trait_image_value_alignement(I),
                    trait::image::value_alignement::with_grid)::value &&
             mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value)
+                   trait::image::value_alignement::with_grid)::value &&
+            input.domain() == output.domain())
           {
             paste_(mln_trait_image_value_access(I)(),
                    mln_trait_image_value_access(J)(),

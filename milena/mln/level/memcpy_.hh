@@ -125,13 +125,18 @@ namespace mln
       mln_precondition(dest.ima().has_data());
       mln_precondition(src.ima().has_data());
 
-      mln_precondition(&dest.val() >= &dest.ima()[0]);
-      mln_precondition(&dest.val() < &dest.ima()[0] + dest.ima().nelements());
-      mln_precondition(&dest.val() + n <= &dest.ima()[0] + dest.ima().nelements());
+      mln_precondition(&dest.val() >= &dest.ima().element(0));
+      mln_precondition(&dest.val() < &dest.ima().element(0) +
+                       dest.ima().nelements());
 
-      mln_precondition(&src.val() >= &src.ima()[0]);
-      mln_precondition(&src.val() < &src.ima()[0] + src.ima().nelements());
-      mln_precondition(&src.val() + n <= &src.ima()[0] + src.ima().nelements());
+      mln_precondition(&dest.val() + n <= &dest.ima().element(0) +
+                       dest.ima().nelements());
+
+      mln_precondition(&src.val() >= &src.ima().element(0));
+      mln_precondition(&src.val() < &src.ima().element(0) +
+                       src.ima().nelements());
+      mln_precondition(&src.val() + n <= &src.ima().element(0) +
+                       src.ima().nelements());
 
       impl::memcpy__(dest, src, n);
 

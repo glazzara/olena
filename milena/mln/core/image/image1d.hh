@@ -448,7 +448,7 @@ namespace mln
   image1d<T>::element(unsigned ind) const
   {
     mln_precondition(this->has(point1d(ind)));
-    return this->data_->array_[ind];
+    return this->data_->buffer_[ind];
   }
 
   template <typename T>
@@ -457,7 +457,7 @@ namespace mln
   image1d<T>::element(unsigned ind)
   {
     mln_precondition(this->has(point1d(ind)));
-    return this->data_->array_[ind];
+    return this->data_->buffer_[ind];
   }
 
   template <typename T>
