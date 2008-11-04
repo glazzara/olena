@@ -44,8 +44,10 @@ SUBDIRS =					\
   win
 
 check_PROGRAMS =				\
-  all_headers
+  all_headers 					\
+  essential_headers
 
 all_headers_SOURCES = all_headers.cc
+essential_headers_SOURCES = essential_headers.cc
 
 TESTS = $(check_PROGRAMS)

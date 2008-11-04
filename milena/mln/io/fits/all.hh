@@ -45,6 +45,6 @@ namespace mln
 
 }
 
-# include <mln/io/fits/load.hh>
+//# include <mln/io/fits/load.hh>
 
 #endif // ! MLN_IO_FITS_ALL_HH

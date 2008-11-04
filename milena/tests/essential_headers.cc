@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,54 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_ALL_HH
-# define MLN_UTIL_ALL_HH
-
-/*! \file mln/util/all.hh
+/*! \file tests/essential_headers.cc
  *
- * \brief File that includes all util-related routines.
+ * \brief Tests with essential headers. (check norris tests 2)
  */
 
+#include <mln/essential/1d.hh>
+#include <mln/essential/2d.hh>
+#include <mln/essential/3d.hh>
 
-namespace mln
+int main ()
 {
 
-  /// Namespace of tools using for more complex algorithm.
-  namespace util {
-
-    /// Implementation namespace of util namespace.
-    namespace impl {}
-
-  }
-
 }
-
-# include <mln/util/array.hh>
-# include <mln/util/branch_iter.hh>
-# include <mln/util/branch_iter_ind.hh>
-# include <mln/util/dindex.hh>
-# include <mln/util/eat.hh>
-# include <mln/util/graph.hh>
-# include <mln/util/greater_point.hh>
-# include <mln/util/greater_psite.hh>
-# include <mln/util/ignore.hh>
-# include <mln/util/index.hh>
-# include <mln/util/lazy_set.hh>
-# include <mln/util/lemmings.hh>
-# include <mln/util/multi_site.hh>
-# include <mln/util/nil.hh>
-# include <mln/util/ord.hh>
-# include <mln/util/ord_pair.hh>
-# include <mln/util/pix.hh>
-# include <mln/util/set.hh>
-# include <mln/util/site_pair.hh>
-//# include <mln/util/timer.hh>
-# include <mln/util/tracked_ptr.hh>
-# include <mln/util/tree.hh>
-# include <mln/util/tree_fast.hh>
-# include <mln/util/tree_fast_to_image.hh>
-# include <mln/util/tree_to_fast.hh>
-//# include <mln/util/tree_to_image.hh>
-# include <mln/util/yes.hh>
-
-#endif // ! MLN_UTIL_ALL_HH

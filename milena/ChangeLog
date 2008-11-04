@@ -1,5 +1,21 @@
 2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make all_headers and essential_headers compile.
+
+	* mln/core/image/all.hh,
+	* mln/debug/all.hh,
+	* mln/io/all.hh,
+	* mln/io/fits/all.hh,
+	* mln/make/all.hh,
+	* mln/util/all.hh: comment headers causing compilation errors.
+
+	* tests/all_headers.cc: fix copyright.
+
+	* tests/essential_headers.cc,
+	* tests/Makefile.am: add essential_headers test.
+
+2008-11-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
 	* milena/mln/accu/line.hh: avoid compilation warnings.

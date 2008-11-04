@@ -48,7 +48,7 @@
 # include <mln/core/image/flat_image.hh>
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/core/image/fi_adaptor.hh>
+//# include <mln/core/image/fi_adaptor.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/decorated_image.hh>
 # include <mln/core/image/extended.hh>
@@ -61,11 +61,11 @@
 //# include <mln/core/image/graph_image.hh>
 # include <mln/core/image/graph_neighborhood_piter.hh>
 # include <mln/core/image/graph_window_piter.hh>
-# include <mln/core/image/hexa.hh>
-# include <mln/core/image/hexa_piter.hh>
+//# include <mln/core/image/hexa.hh>
+//# include <mln/core/image/hexa_piter.hh>
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
-# include <mln/core/image/image2d_h.hh>
+//# include <mln/core/image/image2d_h.hh>
 # include <mln/core/image/image3d.hh>
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/interpolated.hh>
@@ -76,15 +76,15 @@
 //# include <mln/core/image/line_graph_neighborhood_piter.hh>
 //# include <mln/core/image/line_graph_psite.hh>
 //# include <mln/core/image/line_graph_window_piter.hh>
-# include <mln/core/image/mono_obased_rle_encode.hh>
-# include <mln/core/image/mono_obased_rle_image.hh>
-# include <mln/core/image/mono_rle_encode.hh>
-# include <mln/core/image/mono_rle_image.hh>
-# include <mln/core/image/obased_rle_encode.hh>
-# include <mln/core/image/obased_rle_image.hh>
+//# include <mln/core/image/mono_obased_rle_encode.hh>
+//# include <mln/core/image/mono_obased_rle_image.hh>
+//# include <mln/core/image/mono_rle_encode.hh>
+//# include <mln/core/image/mono_rle_image.hh>
+//# include <mln/core/image/obased_rle_encode.hh>
+//# include <mln/core/image/obased_rle_image.hh>
 # include <mln/core/image/plain.hh>
-# include <mln/core/image/rle_encode.hh>
-# include <mln/core/image/rle_image.hh>
+//# include <mln/core/image/rle_encode.hh>
+//# include <mln/core/image/rle_image.hh>
 # include <mln/core/image/safe.hh>
 # include <mln/core/image/sparse_encode.hh>
 # include <mln/core/image/sparse_image.hh>
@@ -94,8 +94,8 @@
 # include <mln/core/image/translate_image.hh>
 # include <mln/core/image/tr_image.hh>
 # include <mln/core/image/tr_mesh.hh>
-# include <mln/core/image/value_enc_image.hh>
-# include <mln/core/image/value_encode.hh>
+//# include <mln/core/image/value_enc_image.hh>
+//# include <mln/core/image/value_encode.hh>
 
 
 #endif // ! MLN_CORE_IMAGE_ALL_HH

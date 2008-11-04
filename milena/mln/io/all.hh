@@ -46,8 +46,8 @@ namespace mln
 
 }
 
-# include <mln/io/fits/all.hh>
-# include <mln/io/off/all.hh>
+//# include <mln/io/fits/all.hh>
+//# include <mln/io/off/all.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>

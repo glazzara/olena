@@ -48,7 +48,7 @@ namespace mln
 
 # include <mln/debug/colorize.hh>
 # include <mln/debug/format.hh>
-# include <mln/debug/graph.hh>
+//# include <mln/debug/graph.hh>
 # include <mln/debug/iota.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
