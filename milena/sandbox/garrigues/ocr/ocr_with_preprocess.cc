@@ -58,12 +58,13 @@
 #include <mln/logical/not.hh>
 
 #include "tesseract_wrap.hh"
+#include <mln/subsampling/subsampling.hh>
 
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
 
-#if 0
-# define TEST(Var)						\
+#if 1
+# define OCR_TEST(Var)						\
   {								\
     image2d<int_u8> tmp = clone(cast_image<int_u8>(Var));	\
     float score = 0.f;						\
@@ -72,7 +73,7 @@
     delete[] s;							\
   }
 #else
-# define TEST(Var)
+# define OCR_TEST(Var)
 #endif
 
 
@@ -92,80 +93,69 @@ int main(int argc, char** argv)
   mln::border::thickness = 0;
 
   io::pbm::load(input, argv[1]);
-  TEST(input);
+  OCR_TEST(input);
 
   // Resize
-  //std::cerr << "Enlarge the image" << std::endl;
   image2d<int_u8> enlarged = enlarge(logical::not_(input), 2);
-  //image2d<bool> enlarged = geom::resize(logical::not_(input), 4);
-  io::pgm::save(enlarged, "1_enlarge.pgm");
-  TEST(enlarged);
+  io::pgm::save(enlarged, std::string(argv[2]) + "_1_enlarge.pgm");
+  OCR_TEST(enlarged);
 
   // Blur.
-  //std::cerr << "Blur the enlarged image" << std::endl;
-//   image2d<int_u8> blur = linear::gaussian(fun::p2v::ternary(pw::value(enlarged), pw::cst(int_u8(255)), pw::cst(int_u8(0))) | enlarged.domain(),
-//					  4);
-  image2d<int_u8> blur = linear::gaussian(clone(enlarged), 1);
+  image2d<int_u8> blur = linear::gaussian(enlarged, 2);
 
-  io::pgm::save(blur, "2_gaussian.pgm");
-  TEST(blur);
-
-  // Crest.
-//   image2d<bool> c = crest(enlarged, blur, c4());
-//   io::pbm::save(c, "3_crest.pbm");
-
-
+  io::pgm::save(blur, std::string(argv[2]) + "_2_gaussian.pgm");
+  OCR_TEST(blur);
 
   // Threshold
   image2d<bool> binary;
   {
-    //std::cerr << "Threshold the blur image" << std::endl;
-
-//     // Compute the histogram.
-//     histo::data<int_u8> h = histo::compute(blur);
-//     image1d<std::size_t> h_ima = convert::to_image(h);
-
-//     // Blur the histogram.
-//     h_ima = linear::gaussian(h_ima, 4);
-
-//     // Get the maxima.
-//     unsigned n;
-//     image1d<std::size_t> maxs = regional_maxima(h_ima, c2(), n);
-//     mln_piter()
-
-
     initialize(binary, blur);
     mln_piter_(image2d<int_u8>) p(blur.domain());
     for_all(p)
       binary(p) = blur(p) > 100;
 
-    io::pbm::save(binary, "3_threshold.pbm");
-    TEST(binary);
+    io::pbm::save(binary, std::string(argv[2]) + "_3_threshold.pbm");
+    OCR_TEST(binary);
   }
 
   // Skeleton
-  //std::cerr << "Compute the skeleton" << std::endl;
   image2d<bool> skel = skeleton(binary, 4);
-  io::pbm::save(skel, "4_skeleton.pbm");
-  TEST(skel);
+  io::pbm::save(skel, std::string(argv[2]) + "_4_skeleton.pbm");
+  OCR_TEST(skel);
 
   // Dilation
-  //std::cerr << "Dilate the skeleton" << std::endl;
-  win::octagon2d oct(7);
-  for (unsigned i = 0; i < 1; i++)
-    skel = morpho::dilation(skel, oct);
+  image2d<bool> dilate;
+  win::octagon2d oct(5);
+  { // FIXME?
+#if 1
+    image2d<int_u8> tmp;
+    initialize(tmp, skel);
+    initialize(dilate, skel);
+    mln_piter_(image2d<int_u8>) p(tmp.domain());
+    for_all(p)
+      tmp(p) = skel(p);
+    tmp = morpho::dilation(tmp, oct);
+    for_all(p)
+      dilate(p) = tmp(p);
+#else
+    // Should be using this but it doesn't work :(
+    dilate = morpho::dilation(skel, oct);
+#endif
+  }
 
-  io::pbm::save(skel, "5_dilation.pbm");
-  TEST(skel);
+  io::pbm::save(dilate, std::string(argv[2]) + "_5_dilation.pbm");
+  OCR_TEST(dilate);
 
-  io::pbm::save(skel, argv[2]);
+  // Subsampling
+  image2d<bool> subsampled = subsampling::subsampling(dilate, dpoint2d(1,1), 2);
+  io::pbm::save(subsampled, std::string(argv[2]) + "_6_subsampling.pbm");
+  OCR_TEST(subsampled);
 
-  //std::cerr << "Text recognition" << std::endl;
-  //char* s = tesseract("fra", clone(logical::not_(skel)));
+  io::pbm::save(subsampled, argv[2]);
+
   {
-    image2d<int_u8> tmp = clone(cast_image<int_u8>(skel));
     float score = 0;
-    char* s = tesseract("fra", tmp, &score);
+    char* s = tesseract("fra", subsampled, &score);
     std::cerr << "Tesseract result: (score " << score << ")" << std::endl;
     std::cout << s;
     delete[] s;

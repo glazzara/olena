@@ -74,7 +74,7 @@ struct TessWrap : public TessBaseAPI
 template <typename T>
 char*	tesseract(const char* lang, const mln::image2d<T>& input, float* score)
 {
-  assert(!score);
+  assert(score);
   TessWrap::InitWithLanguage(NULL, NULL, lang, NULL, false, 0, NULL);
   char* s = TessWrap::TesseractRect(
 			  (unsigned char*) input.buffer(),

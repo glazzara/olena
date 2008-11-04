@@ -87,7 +87,7 @@ namespace mln
     mln_niter_(neighb2d) n(nbh, p);
     for_all(p)
     {
-      if  (!input(p) || dist_map(p) < 20)
+      if  (!input(p) || dist_map(p) < 10)
 	continue;
 
       unsigned nb_eq = 0;
@@ -120,7 +120,7 @@ namespace mln
 
     int vals[] = { 0, 9, 0, 9, 0,
 		   9, 6, 4, 6, 9,
-		   0, 4, 0, 4, 0,     // Values of distaces.
+		   0, 4, 0, 4, 0,     // Values of distances.
 		   9, 6, 4, 6, 9,
 		   0, 9, 0, 9, 0 };
 
