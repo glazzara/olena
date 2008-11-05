@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_EXTENSION_ALL_HH
 # define MLN_EXTENSION_ALL_HH
 
-/*! \file mln/extension/all.hh
- *
- * \brief File that includes all extension materials.
- *
- * \todo Also include "extension images" + "extended"?
- */
+/// \file mln/extension/all.hh
+///
+/// \brief File that includes all extension materials.
+///
+/// \todo Also include "extension images" + "extended"?
 
 
 namespace mln
@@ -45,8 +44,11 @@ namespace mln
 } // end of namespace mln
 
 
+# include <mln/extension/adjust.hh>
 # include <mln/extension/fill.hh>
 # include <mln/extension/adjust_fill.hh>
+# include <mln/extension/duplicate.hh>
+# include <mln/extension/adjust_duplicate.hh>
 
 
 #endif // ! MLN_EXTENSION_ALL_HH

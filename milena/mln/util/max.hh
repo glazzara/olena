@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,61 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_ADJUST_HH
-# define MLN_BORDER_ADJUST_HH
+#ifndef MLN_UTIL_MAX_HH
+# define MLN_UTIL_MAX_HH
 
-/// \file mln/border/adjust.hh
+/// \file mln/util/max.hh
 ///
-/// Define a function that adjusts the thickness of an image
-/// virtual border.
+/// Definition of a binary max based on the ordering relationship.
 
-# include <mln/border/resize.hh>
+# include <mln/util/ord.hh>
+
 
 
 namespace mln
 {
 
-  namespace border
+  namespace util
   {
 
-    /*! Adjust the virtual (outer) border of image \p ima so that its
-     *  size is at least \p min_thickness.
-     *
-     * \param[in,out] ima The image whose border is to be adjusted.
-     * \param[in] min_thickness The expected border minimum thickness.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \warning If the image border is already larger than \p
-     * min_thickness, this routine is a no-op.
-     */
-    template <typename I>
-    void adjust(const Image<I>& ima, unsigned min_thickness);
+
+    template <typename T>
+    bool max(const T& lhs, const T& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I>
+    template <typename T>
     inline
-    void adjust(const Image<I>& ima, unsigned min_thickness)
+    bool max(const T& lhs, const T& rhs)
     {
-      trace::entering("border::adjust");
-
-      mln_precondition(exact(ima).has_data());
-
-      if (border::get(ima) < min_thickness)
-	border::resize(ima, min_thickness);
-
-      mln_postcondition(border::get(ima) >= min_thickness);
-
-      trace::exiting("border::adjust");
+      return ord_strict(lhs, rhs) ? lhs : rhs;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::border
+  } // end of namespace mln::util
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_ADJUST_HH
+#endif // ! MLN_UTIL_MAX_HH

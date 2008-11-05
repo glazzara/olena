@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +28,15 @@
 #ifndef MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
 # define MLN_CORE_EXTENSION_ADJUST_DUPLICATE_HH
 
-/*! \file mln/extension/adjust_duplicate.hh
- *
- * \brief Adjust the size of the domain extension then duplicate the
- * image inner boundary.
- *
- * \todo Fix doc.
- */
+/// \file mln/extension/adjust_duplicate.hh
+///
+/// Adjust the size of the domain extension then duplicate the image
+/// inner boundary.
+///
+/// \todo Fix doc.
 
-# include <mln/border/adjust.hh>
-# include <mln/border/duplicate.hh>
-# include <mln/geom/delta.hh>
+# include <mln/extension/adjust.hh>
+# include <mln/extension/duplicate.hh>
 
 
 namespace mln
@@ -47,13 +45,7 @@ namespace mln
   namespace extension
   {
 
-    /*! Fill the domain extension of image \p ima by duplicating the
-     *  image inner boundary.
-     *
-     * \param[in,out] ima The image whose domain extension is to be filled.
-     *
-     * \pre \p ima has to be initialized.
-     */
+    /// Adjust then duplicate.
     template <typename I, typename W>
     void adjust_duplicate(const Image<I>& ima,
 			  const Window<W>& win);
@@ -74,34 +66,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      template <typename I>
-      void do_adjust_duplicate(const I& ima,
-			       unsigned delta)
-      {
-	mln_precondition(exact(ima).has_data());
-	// mln_precondition(exact(win_like).is_valid());
-
-	border::adjust(ima, delta);
-	border::duplicate(ima);
-      }
-
-      template <typename I, typename W>
-      void do_adjust_duplicate(const I& ima,
-			       const W& win_like)
-      {
-	mln_precondition(exact(ima).has_data());
-	// mln_precondition(exact(win_like).is_valid());
-
-	border::adjust(ima, geom::delta(win_like));
-	border::duplicate(ima);
-      }
-
-    } // end of namespace mln::extension::impl
-
-
     // Facades.
 
     template <typename I, typename W>
@@ -109,7 +73,8 @@ namespace mln
 			  const Window<W>& win)
     {
       trace::entering("extension::adjust_duplicate");
-      impl::do_adjust_duplicate(ima, win);
+      extension::adjust(ima, win);
+      extension::duplicate(ima);
       trace::exiting("extension::adjust_duplicate");
     }
 
@@ -118,7 +83,8 @@ namespace mln
 			  const Weighted_Window<W>& wwin)
     {
       trace::entering("extension::adjust_duplicate");
-      impl::do_adjust_duplicate(ima, wwin);
+      extension::adjust(ima, wwin);
+      extension::duplicate(ima);
       trace::exiting("extension::adjust_duplicate");
     }
 
@@ -127,7 +93,8 @@ namespace mln
 			  const Neighborhood<N>& nbh)
     {
       trace::entering("extension::adjust_duplicate");
-      impl::do_adjust_duplicate(ima, nbh);
+      extension::adjust(ima, nbh);
+      extension::duplicate(ima);
       trace::exiting("extension::adjust_duplicate");
     }
 
@@ -136,7 +103,8 @@ namespace mln
 			  unsigned delta)
     {
       trace::entering("extension::adjust_duplicate");
-      impl::do_adjust_duplicate(ima, delta);
+      extension::adjust(ima, delta);
+      extension::duplicate(ima);
       trace::exiting("extension::adjust_duplicate");
     }
 

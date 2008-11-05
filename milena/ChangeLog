@@ -1,3 +1,27 @@
+2008-11-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make 2 x 1D convolution work again.
+
+	* mln/linear/line_x2_convolve.hh: Rename as...
+	* mln/linear/convolve_2x1d.hh: ...this.
+	Revamp.
+	* tests/linear/convolve_2x1d.cc: New.
+	* tests/linear/Makefile.am: Update.
+	* mln/linear/convolve_directional.hh: .
+	* mln/border/resize.hh (todo): Remove; we use level::fill.
+	(include): Fix missing level/fill.
+	(resize_): Remove useless code.
+	* mln/border/duplicate.hh: Update doc style.
+	* mln/border/adjust.hh: Likewise.
+	(adjust): Remove useless code; add postcondition.
+	* mln/extension/adjust.hh: New.
+	* mln/extension/duplicate.hh: New.
+	* mln/extension/adjust_duplicate.hh: Update.
+	* mln/extension/adjust_fill.hh: Update.
+	* mln/extension/all.hh: Update.
+	* mln/util/ord.hh: Add doc.
+	* mln/util/max.hh: New.
+
 2008-11-05  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix missing include in gdpoint and void as lvalue in point wise image.

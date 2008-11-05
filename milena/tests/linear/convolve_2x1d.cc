@@ -26,61 +26,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_ADJUST_HH
-# define MLN_BORDER_ADJUST_HH
-
-/// \file mln/border/adjust.hh
+/// \file tests/linear/convolve_2x1d.cc
 ///
-/// Define a function that adjusts the thickness of an image
-/// virtual border.
+/// Tests on mln::linear::convolve_2x1d.
 
-# include <mln/border/resize.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+
+#include <mln/io/pgm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/math/round.hh>
+#include <mln/level/transform.hh>
+
+#include <mln/core/alias/w_window2d_float.hh>
+#include <mln/border/thickness.hh>
+#include <mln/linear/convolve_2x1d.hh>
+
+#include "tests/data.hh"
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace border
-  {
+  border::thickness = 5;
 
-    /*! Adjust the virtual (outer) border of image \p ima so that its
-     *  size is at least \p min_thickness.
-     *
-     * \param[in,out] ima The image whose border is to be adjusted.
-     * \param[in] min_thickness The expected border minimum thickness.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \warning If the image border is already larger than \p
-     * min_thickness, this routine is a no-op.
-     */
-    template <typename I>
-    void adjust(const Image<I>& ima, unsigned min_thickness);
+  image2d<int_u8> lena;
+  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I>
-    inline
-    void adjust(const Image<I>& ima, unsigned min_thickness)
-    {
-      trace::entering("border::adjust");
-
-      mln_precondition(exact(ima).has_data());
-
-      if (border::get(ima) < min_thickness)
-	border::resize(ima, min_thickness);
-
-      mln_postcondition(border::get(ima) >= min_thickness);
-
-      trace::exiting("border::adjust");
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::border
-
-} // end of namespace mln
-
-
-#endif // ! MLN_BORDER_ADJUST_HH
+  float
+    w = 1.f / 11,
+    v = 1.f / 3;
+  float hws[] = { w, w, w, w, w,   w,   w, w, w, w, w };
+  float vws[] = { v, v, v };
+  image2d<float> tmp = linear::convolve_2x1d(lena, hws, vws);
+  
+  io::pgm::save(level::transform(tmp, math::round<int_u8>()),
+		"out.pgm");
+}

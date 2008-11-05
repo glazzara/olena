@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +28,14 @@
 #ifndef MLN_CORE_EXTENSION_ADJUST_FILL_HH
 # define MLN_CORE_EXTENSION_ADJUST_FILL_HH
 
-/*! \file mln/extension/adjust_fill.hh
- *
- * \brief Adjust then fill the domain extension.
- *
- * \todo Fix doc.
- */
+/// \file mln/extension/adjust_fill.hh
+///
+/// Adjust then fill the domain extension.
+///
+/// \todo Fix doc.
 
-# include <mln/border/adjust.hh>
+# include <mln/extension/adjust.hh>
 # include <mln/extension/fill.hh>
-# include <mln/geom/delta.hh>
 
 
 namespace mln
@@ -46,16 +44,7 @@ namespace mln
   namespace extension
   {
 
-    /*! Fill the domain extension of image \p ima with the
-     *  single value \p v.
-     *
-     * \param[in,out] ima The image whose domain extension is to be filled.
-     * \param[in] val The value to assign.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \todo Optimize with memset if possible.
-     */
+    /// Adjust then fill.
     template <typename I, typename W>
     void adjust_fill(const Image<I>& ima,
 		     const Window<W>& win,
@@ -76,37 +65,8 @@ namespace mln
 		     unsigned delta,
 		     const mln_value(I)& val);
 
+
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      template <typename I, typename V>
-      void do_adjust_fill(const I& ima,
-			  unsigned delta,
-			  const V& val)
-      {
-	mln_precondition(exact(ima).has_data());
-	// mln_precondition(exact(win_like).is_valid());
-
-	border::adjust(ima, delta);
-	extension::fill(ima, val);
-      }
-
-      template <typename I, typename W, typename V>
-      void do_adjust_fill(const I& ima,
-			  const W& win_like,
-			  const V& val)
-      {
-	mln_precondition(exact(ima).has_data());
-	// mln_precondition(exact(win_like).is_valid());
-
-	border::adjust(ima, geom::delta(win_like));
-	extension::fill(ima, val);
-      }
-
-    } // end of namespace mln::extension::impl
-
 
     // Facades.
 
@@ -116,7 +76,8 @@ namespace mln
 		     const mln_value(I)& val)
     {
       trace::entering("extension::adjust_fill");
-      impl::do_adjust_fill(ima, win, val);
+      extension::adjust(ima, win);
+      extension::fill(ima, val);
       trace::exiting("extension::adjust_fill");
     }
 
@@ -126,7 +87,8 @@ namespace mln
 		     const mln_value(I)& val)
     {
       trace::entering("extension::adjust_fill");
-      impl::do_adjust_fill(ima, wwin, val);
+      extension::adjust(ima, wwin);
+      extension::fill(ima, val);
       trace::exiting("extension::adjust_fill");
     }
 
@@ -136,7 +98,8 @@ namespace mln
 		     const mln_value(I)& val)
     {
       trace::entering("extension::adjust_fill");
-      impl::do_adjust_fill(ima, nbh, val);
+      extension::adjust(ima, nbh);
+      extension::fill(ima, val);
       trace::exiting("extension::adjust_fill");
     }
 
@@ -146,7 +109,8 @@ namespace mln
 		     const mln_value(I)& val)
     {
       trace::entering("extension::adjust_fill");
-      impl::do_adjust_fill(ima, delta, val);
+      extension::adjust(ima, delta);
+      extension::fill(ima, val);
       trace::exiting("extension::adjust_fill");
     }
 
@@ -158,4 +122,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_EXTENSION_FILL_HH
+#endif // ! MLN_CORE_EXTENSION_ADJUST_FILL_HH

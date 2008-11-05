@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,16 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LINEAR_LINE_X2_CONVOLVE_HH
-# define MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#ifndef MLN_LINEAR_CONVOLVE_2X1D_HH
+# define MLN_LINEAR_CONVOLVE_2X1D_HH
 
-/*! \file mln/linear/line_x2_convolve.hh
- *
- * \brief 2D convolution by a couple of line kernels.
- */
+/// \file mln/linear/convolve_2x1d.hh
+///
+/// 2D convolution by a couple of line kernels.
 
-# include <mln/linear/line_convolve.hh>
-# include <mln/core/image/t_image.hh>
+# include <mln/linear/convolve_directional.hh>
+# include <mln/extension/adjust.hh>
+# include <mln/util/max.hh>
 
 
 
@@ -47,40 +48,44 @@ namespace mln
     /*! Convolution of an image \p input by two weighted line-shapes
      *  windows.
      *
-     * \warning Computation of \p output(p) is performed with the
-     * value type of \p output.
-     *
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre output.domain = input.domain
+     * \pre input.has_data
      */
     template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output);
+	      typename W, unsigned Sh, unsigned Sv>
+    mln_ch_convolve(I, W)
+    convolve_2x1d(const Image<I>& input,
+		  W (&horizontal_weights)[Sh],
+		  W (&  vertical_weights)[Sv]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I,
-	      typename W, unsigned Nr, unsigned Nc,
-	      typename O>
-    inline
-    void line_x2_convolve(const Image<I>& input,
-			  W (&row_weights)[Nr], W (&col_weights)[Nc],
-			  Image<O>& output)
+	      typename W, unsigned Sh, unsigned Sv>
+    mln_ch_convolve(I, W)
+    convolve_2x1d(const Image<I>& input,
+		  W (&horizontal_weights)[Sh],
+		  W (&  vertical_weights)[Sv])
     {
-      // FIXME: Check 2D.
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("linear::convolve_2x1d");
 
-      O tmp(exact(output).domain());
-      linear::line_convolve(input, row_weights, tmp);
+      mlc_bool(Sh % 2 == 1)::check();
+      mlc_bool(Sv % 2 == 1)::check();
 
-      t_image<O> swap_output = swap_coords(output, 0, 1);
-      linear::line_convolve(swap_coords(tmp, 0, 1), col_weights, swap_output);
+      mln_precondition(exact(input).has_data());
+
+      extension::adjust(input, util::max(Sh / 2, Sv / 2));
+
+      mln_ch_convolve(I, W) tmp, output;
+      // Horizontal kernel so columns (index 1) are varying.
+      tmp    = linear::convolve_directional(input, 1, horizontal_weights);
+      output = linear::convolve_directional(  tmp, 0,   vertical_weights);
+
+      trace::exiting("linear::convolve_2x1d");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -90,4 +95,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LINEAR_LINE_X2_CONVOLVE_HH
+#endif // ! MLN_LINEAR_CONVOLVE_2X1D_HH

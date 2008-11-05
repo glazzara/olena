@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +34,6 @@
  * \brief Define a function that resizes the virtual border of an
  * image.
  *
- * \todo Use level::fill!!!
- *
  * \todo Test with a primary image with no notion of border; I guess
  * it does not work.
  */
@@ -42,8 +41,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/clone.hh>
 # include <mln/border/get.hh>
-// # include <mln/level/fill.hh>
-// # include <mln/level/paste.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
@@ -110,26 +108,16 @@ namespace mln
       template <typename I>
       inline
       void resize_(trait::image::ext_domain::none,
-		   const I& ima, unsigned thickness)
+		   const I&, unsigned)
       {
-	// Avoid a warning about an undefined variable when NDEBUG
-	// is not defined.
-	(void) ima;
-	(void) thickness;
-
 	// No-op.
       }
 
       template <typename I>
       inline
       void resize_(trait::image::ext_domain::fixed,
-		   const I& ima, unsigned thickness)
+		   const I&, unsigned)
       {
-	// Avoid a warning about an undefined variable when NDEBUG
-	// is not defined.
-	(void) ima;
-	(void) thickness;
-
 	// No-op.
       }
 

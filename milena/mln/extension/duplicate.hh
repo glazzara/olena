@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,61 +25,50 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_BORDER_ADJUST_HH
-# define MLN_BORDER_ADJUST_HH
+#ifndef MLN_CORE_EXTENSION_DUPLICATE_HH
+# define MLN_CORE_EXTENSION_DUPLICATE_HH
 
-/// \file mln/border/adjust.hh
+/// \file mln/extension/duplicate.hh
 ///
-/// Define a function that adjusts the thickness of an image
-/// virtual border.
+/// Duplicate the values of the image inner boundary in the domain
+/// extension.
+///
+/// \todo Fix doc.
 
-# include <mln/border/resize.hh>
+# include <mln/border/duplicate.hh>
 
 
 namespace mln
 {
 
-  namespace border
+  namespace extension
   {
 
-    /*! Adjust the virtual (outer) border of image \p ima so that its
-     *  size is at least \p min_thickness.
-     *
-     * \param[in,out] ima The image whose border is to be adjusted.
-     * \param[in] min_thickness The expected border minimum thickness.
-     *
-     * \pre \p ima has to be initialized.
-     *
-     * \warning If the image border is already larger than \p
-     * min_thickness, this routine is a no-op.
-     */
+    /// Assign the contents of the domain extension by duplicating the
+    /// values of the inner boundary of image \p ima.
     template <typename I>
-    void adjust(const Image<I>& ima, unsigned min_thickness);
+    void duplicate(const Image<I>& ima);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Facade.
+
     template <typename I>
-    inline
-    void adjust(const Image<I>& ima, unsigned min_thickness)
+    void duplicate(const Image<I>& ima)
     {
-      trace::entering("border::adjust");
-
-      mln_precondition(exact(ima).has_data());
-
-      if (border::get(ima) < min_thickness)
-	border::resize(ima, min_thickness);
-
-      mln_postcondition(border::get(ima) >= min_thickness);
-
-      trace::exiting("border::adjust");
+      trace::entering("extension::duplicate");
+      border::duplicate(ima);
+      trace::exiting("extension::duplicate");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::border
+  } // end of namespace mln::extension
 
 } // end of namespace mln
 
 
-#endif // ! MLN_BORDER_ADJUST_HH
+#endif // ! MLN_CORE_EXTENSION_DUPLICATE_HH

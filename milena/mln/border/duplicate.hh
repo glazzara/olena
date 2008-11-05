@@ -29,10 +29,9 @@
 #ifndef MLN_BORDER_DUPLICATE_HH
 # define MLN_BORDER_DUPLICATE_HH
 
-/*! \file mln/border/duplicate.hh
- *
- * \brief Define function that fills border using nearest pixels.
- */
+/// \file mln/border/duplicate.hh
+///
+/// Define function that fills border using nearest pixels.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/primary.hh>

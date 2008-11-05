@@ -70,6 +70,9 @@ namespace mln
     convolve_directional(const Image<I>& input, unsigned dir, W (&weights)[S])
     {
       trace::entering("linear::convolve_directional");
+
+      mlc_bool(S % 2 == 1)::check();
+
       mln_precondition(exact(input).has_data());
       typedef mln_site(I) P;
       mln_precondition(dir < P::dim);

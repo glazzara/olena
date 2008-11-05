@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,10 @@
 #ifndef MLN_UTIL_ORD_HH
 # define MLN_UTIL_ORD_HH
 
-/*! \file mln/util/ord.hh
- *
- * \brief Definition of an ordering type and routine.
- */
+/// \file mln/util/ord.hh
+///
+/// Definition of an ordering type and routine.
+
 
 # include <mln/core/concept/object.hh>
 # include <mln/trait/op/ord.hh>
@@ -45,7 +45,7 @@ namespace mln
   {
 
     /// Function-object that defines an ordering between objects with
-    /// type \p T.
+    /// type \p T: \a lhs R \a rhs.  Its meaning is "lhs less-than rhs."
     template <typename T>
     struct ord
     {
@@ -54,9 +54,12 @@ namespace mln
 
 
 
+    /// Routine to test if \a lhs is strictly "less-than" \a rhs.
     template <typename T>
     bool ord_strict(const T& lhs, const T& rhs);
 
+
+    /// Routine to test if \a lhs is "less-than or equal-to" \a rhs.
     template <typename T>
     bool ord_weak(const T& lhs, const T& rhs);
 
