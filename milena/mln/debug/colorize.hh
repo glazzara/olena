@@ -48,8 +48,8 @@ namespace mln
 
     namespace colorize_
     {
-      static unsigned min_value = 20;
-      static unsigned max_value = 220;
+      extern unsigned min_value;
+      extern unsigned max_value;
     }
 
 
@@ -69,6 +69,12 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    namespace colorize_
+    {
+      unsigned min_value = 20;
+      unsigned max_value = 220;
+    }
 
 
     namespace internal

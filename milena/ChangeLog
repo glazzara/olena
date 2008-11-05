@@ -1,3 +1,13 @@
+2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix the initialization of all global constants.	(#43)
+
+	* mln/border/thickness.hh,
+	* mln/debug/colorize.hh,
+	* mln/tag/init.hh,
+	* mln/trace/quiet.hh: use extern and move implementation within
+	MLN_INCLUDE_ONLY.
+
 2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix mln/accu/maj_h.hh.

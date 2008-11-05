@@ -47,13 +47,23 @@ namespace mln
     struct extension_t {};
     struct function_t  {};
 
-    // FIXME: Make these proper globals (issue #43).
-    static const image_t     image     = image_t();
-    static const domain_t    domain    = domain_t();
-    static const bbox_t      bbox      = bbox_t();
-    static const border_t    border    = border_t();
-    static const extension_t extension = extension_t();
-    static const function_t  function  = function_t();
+    extern const image_t&     image;
+    extern const domain_t&    domain;
+    extern const bbox_t&      bbox;
+    extern const border_t&    border;
+    extern const extension_t& extension;
+    extern const function_t&  function;
+
+# ifndef MLN_INCLUDE_ONLY
+
+    const image_t&     image     = image_t();
+    const domain_t&    domain    = domain_t();
+    const bbox_t&      bbox      = bbox_t();
+    const border_t&    border    = border_t();
+    const extension_t& extension = extension_t();
+    const function_t&  function  = function_t();
+
+# endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::tag
 

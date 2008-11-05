@@ -42,19 +42,37 @@ namespace mln
   namespace trace
   {
 
-    static bool quiet = true;
-    static unsigned tab  = 0;
-    static bool full_trace = false;
+    extern bool quiet;
+    extern unsigned tab ;
+    extern bool full_trace;
 
 
     namespace internal
     {
 
-      static unsigned max_tab  = 0;
-      static timeval start_time;
-      static bool is_quiet = quiet;
+      extern unsigned max_tab ;
+      extern timeval start_time;
+      extern bool is_quiet;
 
     } // end of namespace mln::trace::internal
+
+# ifndef MLN_INCLUDE_ONLY
+
+    bool quiet = true;
+    unsigned tab  = 0;
+    bool full_trace = false;
+
+
+    namespace internal
+    {
+
+      unsigned max_tab  = 0;
+      timeval start_time;
+      bool is_quiet = quiet;
+
+    } // end of namespace mln::trace::internal
+
+# endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::trace
 
