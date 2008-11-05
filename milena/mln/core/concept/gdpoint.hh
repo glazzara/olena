@@ -36,7 +36,7 @@
 # include <mln/core/concept/object.hh>
 # include <mln/core/grids.hh>
 # include <mln/trait/all.hh>
-
+# include <mln/value/scalar.hh>
 
 namespace mln
 {
@@ -113,7 +113,7 @@ namespace mln
   // Operators.
 
   template <typename D>
-  std::ostream& 
+  std::ostream&
   operator<<(std::ostream& ostr, const Gdpoint<D>& dp);
 
 

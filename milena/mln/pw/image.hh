@@ -132,7 +132,7 @@ namespace mln
       typedef mln_result(F) rvalue;
 
       /// Return type of read-write access.
-      typedef void lvalue; // FIXME
+      typedef rvalue lvalue;
 
       /// Constructor without argument.
       image();
@@ -152,8 +152,8 @@ namespace mln
       /// Read-only access of pixel value at point site \p p.
       mln_result(F) operator()(const mln_psite(S)& p) const;
 
-      /// Read-write access is present but disabled.
-      void operator()(const mln_psite(S)&);
+      /// Read-write access is present but return a temporary value.
+      mln_result(F) operator()(const mln_psite(S)&);
     };
 
   } // end of namespace mln::pw
@@ -267,10 +267,11 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    void
-    image<F,S>::operator()(const mln_psite(S)&)
+    mln_result(F)
+    image<F,S>::operator()(const mln_psite(S)& p)
     {
-      mln_invariant(0); // FIXME: Turn into a compile-time error...
+      mln_precondition(this->data_->pset_.has(p));
+      return this->data_->f_(p);
     }
 
   } // end of namespace mln::pw
