@@ -34,10 +34,14 @@ int main(int argc, const char * argv[])
       // Normalization
       unsigned m, M;
       estim::min_max(co, m, M);
+      std::cout << "max : " << M << std::endl;
       double norm = 255./M;
       mln_piter_ (image2d<unsigned>) p (co.domain());
       for_all(p)
+      {
+	//	std::cout << co(p) << " ; ";
 	co(p) *= norm;
+      }
 
       io::pgm::save(cast_image<int_u<8> >(co), name.append("_mco.pgm"));
     }

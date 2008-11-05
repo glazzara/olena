@@ -83,7 +83,7 @@ namespace mln
 // 	    sqrt3_3 * rgb.green() +
 // 	    sqrt3_3 * rgb.blue();
 
-	  hsi.inty() = (rgb.red() + rgb.green() + rgb.blue()) / 3;
+	  hsi.inty() = (double) (rgb.red() + rgb.green() + rgb.blue()) / 3 / mln_max(typename T_rgb::red_t);
 
 	  typename T_rgb::red_t min = rgb.red();
 	  if (rgb.green() < min)
@@ -94,18 +94,18 @@ namespace mln
 
 
 	  if (hsi.inty())
-	    hsi.sat() = (1 - (double) 3 * min / (double)(rgb.red() + rgb.green() + rgb.blue())) * 100;
+	    hsi.sat() = (1 - (double) 3 * min / (double)(rgb.red() + rgb.green() + rgb.blue()));
 	  else
 	    hsi.sat() = 0; // this is black for any value of saturation
 
 	  if (hsi.sat())
 	    hsi.hue() = acos( 0.5 * (2 * rgb.red() - rgb.green() - rgb.blue()) /
-			      std::sqrt((rgb.red() - rgb.green()) * (rgb.red() - rgb.green()) + (rgb.red() - rgb.blue()) * (rgb.green() - rgb.blue()))) / 3.1415 * 180.0;
+			      std::sqrt((rgb.red() - rgb.green()) * (rgb.red() - rgb.green()) + (rgb.red() - rgb.blue()) * (rgb.green() - rgb.blue()))) / 3.1416;
 	    else
 	      hsi.hue() = 0; // this is grey for any value of hue
 
  	  if (hsi.hue() < 0)
- 	    hsi.hue() = hsi.hue() + 360.0;
+ 	    hsi.hue() = hsi.hue() + 1.0;
 
  	  mln_invariant(hsi.hue() >= 0);
  	  mln_invariant(hsi.hue() < 360);

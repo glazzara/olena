@@ -47,7 +47,7 @@ int main ()
 
   };
 
-  image2d<int> ima(make::image2d(vs));
+  image2d<int> ima(make::image(vs));
   thru<mln::fun::v2v::abs<int>, image2d<int> > out(ima);
 
  box_fwd_piter_<point2d> p(ima.domain());

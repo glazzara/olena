@@ -49,7 +49,7 @@ namespace mln
     namespace impl
     {
       template <typename F, typename I, class C>
-      struct shell_;
+      struct shell_ { };
 
       template <typename F, typename I>
       struct shell_<F, I, Function_v2w2v<void> >

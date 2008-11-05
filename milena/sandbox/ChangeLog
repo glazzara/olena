@@ -1,3 +1,28 @@
+2008-11-05  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Update some files and add test suite for nature.
+
+	* abraham/tests/core/image/thru_v2v.cc,
+	  abraham/tests/core/image/thru_const.cc:
+	    make::image2d to make::image .
+	* abraham/mln/level/transform.hh: Remove.
+	* abraham/mln/core/image/shell.hh: Remove.
+	* abraham/mln/fun/meta/to_enc.hh: New
+	    Make this functor meta.
+	* abraham/mln/fun/v2v/rgb_to_hsi.hh:
+	    Corrected version of rgb to hsi conversion.
+	* abraham/mln/binarization/binarization.hh: Remove.
+	* abraham/mln/transform: New.
+	* abraham/mln/transform/fft.hh: New.
+	* abraham/mln/value/shell.hh:
+	    Support Function_v2v.
+	* nature/histo_hsi.cc: .
+	* nature/hom.cc: .
+	* nature/mco.cc: .
+	* nature/nature.cc: New.
+	* nature/opening.cc: .
+	* nature/test.sh: New.
+
 2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: CLassif: Reduce nb of included files.

@@ -49,7 +49,7 @@ int main(int argc, const char * argv[])
       image2d<int_u8> ima;
       io::pgm::load(ima, argv[i]);
 
-      win::rectangle2d rect(5, 5);
+      win::rectangle2d rect(1, 1);
       border::thickness = 11;
 
       std::string name(argv[i]);
