@@ -1,3 +1,9 @@
+2008-11-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix a bug in the paste routine.
+
+	* mln/level/paste.spe.hh: Update.
+
 2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	#87 Add unit (sanity) tests to Milena.

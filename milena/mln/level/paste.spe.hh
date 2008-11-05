@@ -139,13 +139,13 @@ namespace mln
       template <typename I, typename J>
       void paste_singleton(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("level::impl::paste_fast_singleton");
+        trace::entering("level::impl::paste_singleton");
 
         const I& input  = exact(input_);
 
         level::fill_with_value(output_, input.val());
 
-        trace::entering("level::impl::paste_fast_singleton");
+        trace::entering("level::impl::paste_singleton");
       }
 
     } // end of namespace impl.
@@ -167,7 +167,8 @@ namespace mln
         const I& input  = exact(input_);
         J& output       = exact(output_);
 
-        if (input.border() == output.border())
+        if (input.border() == output.border() &&
+            sizeof(mln_value(I)) == sizeof(mln_value(J)))
           impl::paste_fastest(input, output);
         else
           impl::paste_fast(input, output);
@@ -182,7 +183,10 @@ namespace mln
                   const Image<I>& input,
                   Image<J>& output)
       {
-        impl::paste_fastest(input, output);
+        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+          impl::paste_fastest(input, output);
+        else
+          impl::paste_fast(input, output);
       }
 
 
