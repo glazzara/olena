@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -102,7 +102,7 @@ namespace mln
       mln_precondition(exact(input).domain() == exact(output).domain());
 
       fun::v2v::saturate<mln_value(O)> f;
-      level::transform(input, f, output);
+      output = level::transform(input, f);
 
       trace::exiting("level::saturate");
     }
@@ -118,7 +118,7 @@ namespace mln
       mln_precondition(exact(input).domain() == exact(output).domain());
 
       fun::v2v::saturate<mln_value(O)> f(min, max);
-      level::transform(input, f, output);
+      output = level::transform(input, f);
 
       trace::exiting("level::saturate");
     }

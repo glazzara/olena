@@ -70,7 +70,7 @@ namespace mln
 	trace::entering("binarization::impl::binarization_");
 	mln_concrete_ch_value(I, bool) output(input.domain());
 
-	level::transform(input, fun, output);
+	output = level::transform(input, fun);
 
 	trace::exiting("binarization::impl::binarization_");
 	return output;

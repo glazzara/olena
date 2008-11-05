@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -64,7 +64,7 @@ namespace mln
       trace::entering("level::to_enc");
 
       mln_precondition(exact(output).domain() == exact(input).domain());
-      level::transform(input, fun::v2v::enc< mln_value(I) >(), output);
+      output = level::transform(input, fun::v2v::enc< mln_value(I) >());
 
       trace::exiting("level::to_enc");
     }

@@ -1,3 +1,18 @@
+2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update use of level::transform().
+
+        * mln/binarization/binarization.hh,
+        * mln/level/abs.hh,
+        * mln/level/saturate.hh,
+        * mln/level/to_enc.hh,
+        * tests/io/pgm/pgm16.cc,
+        * tests/io/pgm/pgm19.cc,
+        * tests/io/pgm/pgm27.cc,
+        * tests/value/float01.cc: Update here.
+
+	* mln/level/transform.hh: Remove useless prototype.
+
 2008-11-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make 2 x 1D convolution work again.

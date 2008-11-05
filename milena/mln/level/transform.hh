@@ -53,23 +53,15 @@ namespace mln
   namespace level
   {
 
-    /*! Transform the image \p input through a function \p f to set
-     *  the \p output image.
+    /*! Transform the image \p input through a function \p f
      *
      * \param[in] input The input image.
      * \param[in] f The function.
-     * \param[out] output The result image.
      *
      * This routine runs: \n
      * for all p of \p input, \p output(p) = \p f( \p input(p) ).
      *
-     * \pre \p output.domain >= \p input.domain
      */
-    template <typename I, typename F, typename O>
-    void transform(const Image<I>& input, const Function_v2v<F>& f,
-		   Image<O>& output);
-
-
     template <typename I, typename F>
     mln_ch_value(I, mln_result(F))
     transform(const Image<I>& input, const Function_v2v<F>& f);
