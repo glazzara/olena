@@ -1,3 +1,9 @@
+2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix mln/accu/maj_h.hh.
+
+	* mln/accu/maj_h.hh: Add critical update.
+
 2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update use of level::transform().

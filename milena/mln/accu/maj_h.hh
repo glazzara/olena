@@ -158,7 +158,8 @@ namespace mln
     {
       h_.take(other.h_);
 
-      //FIXME: t_ is wrong then
+      if (valid_)
+        valid_ = false;
     }
 
     template <typename T>
