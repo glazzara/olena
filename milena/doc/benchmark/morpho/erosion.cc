@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -77,6 +78,7 @@ int main()
   win::diag2d diag2d(31);
   win::backdiag2d backdiag2d(31);
   win::octagon2d oct(6 * 3 + 1);
+  win::disk2d disk(6 * 3 + 1);
   image2d<int_u8> out;
   image2d<int_u8> ref;
 //   trace::quiet = false;
@@ -284,6 +286,26 @@ int main()
     t.start();
     out = morpho::erosion(lena, oct);
     std::cout << "dispach on octagon: " << t << std::endl;
+    bool test = out == ref;
+    mln_assertion(test);
+    std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
+  }
+
+
+  std::cout << "-------------------------- Disk: " << std::endl;
+
+  // Disk
+  {
+    t.start();
+    ref = morpho::impl::generic::erosion_on_function(lena, disk);
+    std::cout << "generic on disk: " << t << std::endl;
+    io::pgm::save(ref, "out_disk_ref.pgm");
+  }
+
+  {
+    t.start();
+    out = morpho::erosion(lena, disk);
+    std::cout << "dispach on disk: " << t << std::endl;
     bool test = out == ref;
     mln_assertion(test);
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
