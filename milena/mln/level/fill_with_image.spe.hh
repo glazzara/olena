@@ -39,6 +39,11 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LEVEL_FILL_WITH_IMAGE_HH
 
+# include <mln/level/memcpy_.hh>
+# include <mln/level/fill_with_value.hh>
+
+# include <mln/core/pixel.hh>
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -70,6 +75,26 @@ namespace mln
       }
 
       template <typename I, typename J>
+      void fill_with_image_fastest(Image<I>& ima_, const Image<J>& data_)
+      {
+        trace::entering("level::impl::fill_with_image_fastest");
+
+        I& ima = exact(ima_);
+        const J& data      = exact(data_);
+
+        level::internal::fill_with_image_tests(ima, data);
+
+        pixel<const I> src (data);
+        pixel<J> dst(ima);
+        *(src.address_()) = data.buffer();
+        *(dst.address_()) = ima.buffer();
+
+        memcpy_(dst, src, ima.nelements());
+
+        trace::exiting("level::impl::fill_with_image_fastest");
+      }
+
+      template <typename I, typename J>
       void fill_with_image_fast(Image<I>& ima_, const Image<J>& data_)
       {
         trace::entering("level::impl::fill_with_image_fast");
@@ -93,22 +118,15 @@ namespace mln
 
 
       template <typename I, typename J>
-      void fill_with_image_fast_singleton(Image<I>& ima_,
-                                          const Image<J>& data_)
+      void fill_with_image_singleton(Image<I>& ima_,
+                                     const Image<J>& data_)
       {
-        trace::entering("level::impl::fill_with_image_fast_singleton");
+        trace::entering("level::impl::fill_with_image_singleton");
 
-        I& ima               = exact(ima_);
-        const J& data        = exact(data_);
+        const J& data  = exact(data_);
+        level::fill_with_value(ima_, data.val());
 
-        level::internal::fill_with_image_tests(ima, data);
-
-        mln_pixter(I) pi(ima);
-
-        for_all(pi)
-          pi.val() = data.val();
-
-        trace::exiting("level::impl::fill_with_image_fast_singleton");
+        trace::exiting("level::impl::fill_with_image_singleton");
       }
 
     } // end of namespace mln::level::impl
@@ -131,10 +149,11 @@ namespace mln
         I& ima        = exact(ima_);
         const J& data = exact(data_);
 
-        if (ima.domain() == data.domain())
-          impl::fill_with_image_fast(ima, data);
+        if (ima.border() == data.border() &&
+            sizeof(mln_value(I)) == sizeof(mln_value(J)))
+          impl::fill_with_image_fastest(ima, data);
         else
-          impl::generic::fill_with_image(ima, data);
+          impl::fill_with_image_fast(ima, data);
       }
 
       template <typename I, typename J>
@@ -146,7 +165,10 @@ namespace mln
                             Image<I>& ima,
                             const Image<J>& data)
       {
-        impl::fill_with_image_fast(ima, data);
+        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+          impl::fill_with_image_fastest(ima, data);
+        else
+          impl::fill_with_image_fast(ima, data);
       }
 
 
@@ -174,12 +196,12 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      void fill_with_image_(trait::image::value_storage::one_block,
+      void fill_with_image_(trait::image::value_storage::any,
                             trait::image::value_storage::singleton,
                             Image<I>& ima,
                             const Image<J>& data)
       {
-        impl::generic::fill_with_image(ima, data);
+        impl::fill_with_image_singleton(ima, data);
       }
 
       template <typename I, typename J>
@@ -197,7 +219,8 @@ namespace mln
         if (mlc_is(mln_trait_image_value_alignement(I),
                    trait::image::value_alignement::with_grid)::value &&
             mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value)
+                   trait::image::value_alignement::with_grid)::value &&
+            ima.domain() == data.domain())
           {
             fill_with_image_(mln_trait_image_value_access(I)(),
                              mln_trait_image_value_access(J)(),

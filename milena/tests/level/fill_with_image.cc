@@ -218,5 +218,4 @@ int main()
 
     mln_assertion(out == extend_ima);
   }
-
 }

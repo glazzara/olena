@@ -1,5 +1,12 @@
 2008-11-05  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Use memcpy_ in level::fill_with_image.
+
+	* tests/level/fill_with_image.cc: Update tests.
+	* mln/level/fill_with_image.spe.hh: Add a fastest specialization.
+
+2008-11-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Fix a bug in the paste routine.
 
 	* mln/level/paste.spe.hh: Update.
