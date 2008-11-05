@@ -18,7 +18,9 @@
 #include <mln/util/array.hh>
 #include <mln/labeling/compute.hh>
 
-#include <mln/geom/all.hh>
+#include <mln/geom/nrows.hh>
+#include <mln/geom/ncols.hh>
+#include <mln/geom/nslis.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/pgm/save.hh>

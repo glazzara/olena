@@ -1,3 +1,11 @@
+2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: CLassif: Reduce nb of included files.
+
+	* inim/classif/display.hh,
+	* inim/classif/iccvg04.cc,
+	* inim/classif/v2.cc,: Rewrite geom inclusion.
+
 2008-11-04  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
 
 	Rewrite binarization in milena style.

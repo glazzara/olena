@@ -29,7 +29,9 @@
 # define MLN__DISPLAY_HH
 
 #include <mln/io/ppm/save.hh>
-#include <mln/geom/all.hh>
+#include <mln/geom/nrows.hh>
+#include <mln/geom/ncols.hh>
+#include <mln/geom/nslis.hh>
 #include <mln/value/all.hh>
 #include <mln/core/image/image3d.hh>
 
