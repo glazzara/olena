@@ -86,7 +86,7 @@ namespace mln
       typedef bkd_piter;
 
       bool has(const psite& p) const;
-      std::size_t nsites() const; // If relevant.
+      unsigned nsites() const; // If relevant.
 
       bool has_data() const;
 
@@ -194,7 +194,7 @@ namespace mln
     m1 = 0;
 
     // Only some image types feature the 'nsites' method.
-//     std::size_t (E::*m2)() const = & E::nsites;
+//     unsigned (E::*m2)() const = & E::nsites;
 //     m2 = 0;
 
     bool (E::*m3)() const = & E::has_data;

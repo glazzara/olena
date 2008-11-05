@@ -94,10 +94,10 @@ namespace mln
 
     /// \brief Return The number of points (sites) of the set, i.e.,
     /// the number of \em edges.
-    size_t nsites() const;
+    unsigned nsites() const;
 
     /// Return The number of edges in the graph.
-    std::size_t nedges() const;
+    unsigned nedges() const;
 
     /// Is this site set valid?
     bool is_valid() const;
@@ -162,7 +162,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  size_t
+  unsigned
   p_edges<G, F>::nsites() const
   {
     return nedges();
@@ -170,7 +170,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  std::size_t
+  unsigned
   p_edges<G, F>::nedges() const
   {
     return this->g_->e_nmax();

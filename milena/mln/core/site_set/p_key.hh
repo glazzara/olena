@@ -115,10 +115,10 @@ namespace mln
     bool is_valid() const;
 
     /// Give the number of sites.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
 
-    /// Insertion element associated type. 
+    /// Insertion element associated type.
     typedef std::pair<K,P> i_element;
 
     /// Insert a pair \p k_p (key k, site p).
@@ -132,7 +132,7 @@ namespace mln
 
 
 
-    /// Removal element associated type. 
+    /// Removal element associated type.
     typedef P r_element;
 
     /// Remove a site \p p.
@@ -192,7 +192,7 @@ namespace mln
     k_t k_;
 
     // Number of sites.
-    std::size_t n_;
+    unsigned n_;
 
     // Run invariance tests and return the result.
     bool run_() const;
@@ -242,10 +242,10 @@ namespace mln
     mln_invariant(run_());
     return true;
   }
-  
+
   template <typename K, typename P>
   inline
-  std::size_t
+  unsigned
   p_key<K,P>::nsites() const
   {
     mln_invariant(run_());
@@ -421,7 +421,7 @@ namespace mln
     // Update s_.
     s_[new_k] += s;
     s_.erase(k_s);
-    
+
     mln_invariant(run_());
   }
 
@@ -486,7 +486,7 @@ namespace mln
 //       mem_q += i->second.memory_size();
 //     return p_.memory_size() + sizeof(q_) + sizeof(n_);
   }
-  
+
   template <typename K, typename P>
   inline
   const p_set<P>&
@@ -526,7 +526,7 @@ namespace mln
     mln_invariant(run_());
     return b_.has(key);
   }
-  
+
   template <typename K, typename P>
   inline
   const util::set<K>&

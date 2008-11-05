@@ -108,7 +108,7 @@ namespace mln
 
 
     /// Give the number of sites.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
 
     /// Push a site \p p in the queue.
@@ -195,7 +195,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_queue<P>::nsites() const
   {
     return q_.size();

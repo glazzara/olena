@@ -106,7 +106,7 @@ namespace mln
        *
        * \pre The image has to be initialized.
        */
-      std::size_t nelements() const;
+      unsigned nelements() const;
     };
 
   } // end of namespace mln::doc

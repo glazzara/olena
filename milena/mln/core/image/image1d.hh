@@ -213,7 +213,7 @@ namespace mln
     T& element(unsigned ind);
 
     /// Give the number of cells (points including border ones).
-    std::size_t nelements() const;
+    unsigned nelements() const;
 
 
 
@@ -389,7 +389,7 @@ namespace mln
 
   template <typename T>
   inline
-  std::size_t
+  unsigned
   image1d<T>::nelements() const
   {
     mln_precondition(this->has_data());

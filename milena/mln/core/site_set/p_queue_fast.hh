@@ -95,7 +95,7 @@ namespace mln
     p_queue_fast();
 
     /// Reserve \p n cells.
-    void reserve(std::size_t n);
+    void reserve(typename p_array<P>::size_type n);
 
     /// Test if \p p belongs to this site set.
     bool has(const psite& p) const;
@@ -110,7 +110,7 @@ namespace mln
     bool compute_has(const P& p) const;
 
     /// Give the number of sites.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
 
     /// Push a site \p p in the queue.
@@ -175,9 +175,9 @@ namespace mln
   template <typename P>
   inline
   void
-  p_queue_fast<P>::reserve(std::size_t n)
+  p_queue_fast<P>::reserve(typename p_array<P>::size_type n)
   {
-    q_.reserve();
+    q_.reserve(n);
   }
 
   template <typename P>
@@ -236,7 +236,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_queue_fast<P>::nsites() const
   {
     mln_invariant(end_ >= begin_);

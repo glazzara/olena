@@ -124,11 +124,11 @@ namespace mln
       /// \{
       /// \brief Return the total number of faces, whatever their
       /// dimension.
-      std::size_t nfaces() const;
+      unsigned nfaces() const;
 
       /// \brief Return the number of \p N-faces.
       template <unsigned N>
-      std::size_t nfaces() const;
+      unsigned nfaces() const;
       /// \}
 
       /// \brief Dynamic manipulators.
@@ -141,7 +141,7 @@ namespace mln
       /// since each n_faces_set is checked (the present implementation
       /// does not provide a direct access to n_faces_set through a
       /// dynamic value of the dimension).
-      std::size_t nfaces(unsigned n) const;
+      unsigned nfaces(unsigned n) const;
       /// \}
 
       /// Pretty-printing.
@@ -578,7 +578,7 @@ namespace mln
 
     template <unsigned D>
     inline
-    std::size_t
+    unsigned
     complex<D>::nfaces() const
     {
       return fold_left_(internal::add_size(), 0);
@@ -587,7 +587,7 @@ namespace mln
     template <unsigned D>
     template <unsigned N>
     inline
-    std::size_t
+    unsigned
     complex<D>::nfaces() const
     {
       return data_->internal::faces_set_mixin<N, D>::faces_.size();
@@ -600,7 +600,7 @@ namespace mln
 
     template <unsigned D>
     inline
-    std::size_t
+    unsigned
     complex<D>::nfaces(unsigned n) const
     {
       // Ensure N is compatible with D.

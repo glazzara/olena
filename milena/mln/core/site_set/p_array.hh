@@ -83,6 +83,7 @@ namespace mln
   {
     typedef p_array<P> self_;
   public:
+    typedef typename std::vector<P>::size_type size_type;
 
     /// Element associated type.
     typedef P element;
@@ -108,7 +109,7 @@ namespace mln
 
 
     /// Reserve \p n cells.
-    void reserve(std::size_t n);
+    void reserve(size_type n);
 
 
     /// Test is \p p belongs to this site set.
@@ -125,7 +126,7 @@ namespace mln
     void change(const psite& p, const P& new_p);
 
     /// Give the number of sites.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
 
     /// Append a point \p p.
@@ -338,7 +339,7 @@ namespace mln
   template <typename P>
   inline
   void
-  p_array<P>::reserve(std::size_t n)
+  p_array<P>::reserve(size_type n)
   {
     vect_.reserve(n);
   }

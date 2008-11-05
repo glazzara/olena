@@ -186,7 +186,7 @@ namespace mln
     {
       static void run()
       {
-	std::size_t (E::*m)() const = & E::nsites;
+	unsigned (E::*m)() const = & E::nsites;
 	m = 0;
       }
     };

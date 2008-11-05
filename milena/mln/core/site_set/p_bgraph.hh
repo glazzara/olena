@@ -78,10 +78,10 @@ namespace mln
     p_bgraph (graph* gr);
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
-    std::size_t nlines() const;
+    unsigned nlines() const;
 
     /// Give the exact bounding box.
     const box<P>& bbox() const;
@@ -130,7 +130,7 @@ namespace mln
 
   template<typename P>
   inline
-  std::size_t
+  unsigned
   p_bgraph<P>::nsites() const
   {
     return boost::num_vertices(*gr_);
@@ -138,7 +138,7 @@ namespace mln
 
   template<typename P>
   inline
-  std::size_t
+  unsigned
   p_bgraph<P>::nlines() const
   {
     return boost::num_edges(gr_->nedges());

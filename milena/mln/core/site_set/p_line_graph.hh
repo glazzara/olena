@@ -109,12 +109,12 @@ namespace mln
     /// `known'.)
     /* FIXME: Return type should be std::size_t (see
        mln/core/concept/site_set.hh). */
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
     /// Return The number of vertices in the graph.
-    std::size_t nvertices() const;
+    unsigned nvertices() const;
     /// Return The number of edges in the graph.
-    std::size_t nedges() const;
+    unsigned nedges() const;
 
     /// Is this site set valid?
     bool is_valid() const;
@@ -196,7 +196,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_line_graph<P>::nsites() const
   {
     return nedges();
@@ -204,7 +204,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_line_graph<P>::nvertices() const
   {
     return this->gr_->nvertices();
@@ -212,7 +212,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_line_graph<P>::nedges() const
   {
     return this->gr_->nedges();

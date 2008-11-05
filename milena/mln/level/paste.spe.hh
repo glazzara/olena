@@ -77,7 +77,7 @@ namespace mln
 //       {
 // 	trace::entering("level::impl::paste_lines_");
 // 	typedef mln_psite(I) P;
-// 	std::size_t n = data.bbox().len(P::dim - 1);
+// 	unsigned n = data.bbox().len(P::dim - 1);
 // 	// FIXME: Works only for raw data images
 // 	// FIXME: For linear data images, we should get the len for each line...
 

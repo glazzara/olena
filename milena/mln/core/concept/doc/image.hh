@@ -176,7 +176,7 @@ namespace mln
 
       /*! \brief Give the number of points of the image domain. 
        */
-      std::size_t nsites() const;
+      unsigned nsites() const;
     };
 
 

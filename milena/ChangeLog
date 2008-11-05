@@ -1,3 +1,37 @@
+2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Supress non-critical std::size_t.
+
+	Mainly replace size_t nsites() by unsigned nsites().
+	Arguable, but make it compile on 64bits.
+
+	* mln/topo/complex.hh,
+	* mln/core/site_set/p_complex.hh,
+	* mln/core/site_set/p_line_graph.hh,
+	* mln/core/site_set/p_priority.hh,
+	* mln/core/site_set/p_faces.hh,
+	* mln/core/site_set/p_queue.hh,
+	* mln/core/site_set/p_key.hh,
+	* mln/core/site_set/p_queue_fast.hh,
+	* mln/core/site_set/p_graph.hh,
+	* mln/core/site_set/p_bgraph.hh,
+	* mln/core/site_set/p_run.hh,
+	* mln/core/site_set/p_line2d.hh,
+	* mln/core/site_set/p_array.hh,
+	* mln/core/site_set/p_vertices.hh,
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_set.hh,
+	* mln/core/image/image1d.hh,
+	* mln/core/image/fi_adaptor.hh,
+	* mln/core/concept/box.hh,
+	* mln/core/concept/doc/image.hh,
+	* mln/core/concept/doc/box.hh,
+	* mln/core/concept/doc/image_fastest.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/level/paste.spe.hh,
+	* mln/convert/to_image.hh: Supress non-critical size_t.
+
 2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation issue.

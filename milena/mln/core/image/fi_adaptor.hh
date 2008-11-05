@@ -170,7 +170,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Give the number of cells.
-    std::size_t nelements() const;
+    unsigned nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
@@ -306,7 +306,7 @@ namespace mln
   }
 
   template <typename I>
-  std::size_t
+  unsigned
   fi_adaptor<I>::nelements() const
   {
     mln_precondition(this->has_data());

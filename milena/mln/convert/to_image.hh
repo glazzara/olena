@@ -77,9 +77,9 @@ namespace mln
     mln_image_from_grid(mln_site(N)::grid, bool)
     to_image(const Neighborhood<N>& nbh);
 
-    /// Convert an histo \p h into an image1d<std::size_t>.
+    /// Convert an histo \p h into an image1d<unsigned>.
     template <typename T>
-    image1d<std::size_t>
+    image1d<unsigned>
     to_image(const histo::data<T>& h);
 
 
@@ -136,12 +136,12 @@ namespace mln
 
     template <typename T>
     inline
-    image1d<std::size_t>
+    image1d<unsigned>
     to_image(const histo::data<T>& h)
     {
       T	v_min = h.vset()[0],
 	v_max = h.vset()[h.vset().nvalues() - 1];
-      image1d<std::size_t> ima(make::box1d(v_min, v_max));
+      image1d<unsigned> ima(make::box1d(v_min, v_max));
       for (unsigned i = 0; i < h.vset().nvalues(); ++i)
 	ima(point1d(i)) = h[i];
       return ima;

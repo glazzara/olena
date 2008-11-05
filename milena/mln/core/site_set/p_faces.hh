@@ -118,12 +118,10 @@ namespace mln
     /// (Required by the mln::Site_Set concept, since the property
     /// trait::site_set::nsites::known of this site set is set to
     /// `known'.)
-    /* FIXME: Return type should be std::size_t (see
-       mln/core/concept/site_set.hh). */
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
     /// Return The number of faces in the complex.
-    std::size_t nfaces() const;
+    unsigned nfaces() const;
 
     // FIXME: Add nfaces(unsigned) routines?  Yes, if this can
     // simplify (and lighten) the implementation of piters, psites,
@@ -212,7 +210,7 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  std::size_t
+  unsigned
   p_faces<N, D, P>::nsites() const
   {
     return nfaces();
@@ -220,7 +218,7 @@ namespace mln
 
   template <unsigned N, unsigned D, typename P>
   inline
-  std::size_t
+  unsigned
   p_faces<N, D, P>::nfaces() const
   {
     return cplx_.template nfaces<N>();

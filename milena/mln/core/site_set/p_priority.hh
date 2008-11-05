@@ -114,13 +114,13 @@ namespace mln
     bool is_valid() const;
 
     /// Give the number of sites.
-    std::size_t nsites() const;
+    unsigned nsites() const;
 
 
     /// Push in the queue with \p priority the element \p e.
     void push(const P& priority, const element& e);
 
-    /// Insertion element associated type. 
+    /// Insertion element associated type.
     typedef std::pair<P, element> i_element;
 
     /// Insert a pair \p p_e (priority p, element e).
@@ -181,7 +181,7 @@ namespace mln
 
     util::set<P> p_;
     q_type_      q_;
-    std::size_t  n_;
+    unsigned     n_;
 
     // Run invariance tests and return the result.
     bool run_() const;
@@ -222,10 +222,10 @@ namespace mln
     mln_invariant(run_());
     return true;
   }
-  
+
   template <typename P, typename Q>
   inline
-  std::size_t
+  unsigned
   p_priority<P,Q>::nsites() const
   {
     mln_invariant(run_());
@@ -315,7 +315,7 @@ namespace mln
       mem_q += i->second.memory_size();
     return p_.memory_size() + sizeof(q_) + sizeof(n_);
   }
-  
+
   template <typename P, typename Q>
   inline
   const Q&
@@ -367,7 +367,7 @@ namespace mln
     mln_precondition(! this->is_empty()); // Also test invariants.
     return p_.first_element();
   }
-  
+
   template <typename P, typename Q>
   inline
   const util::set<P>&
@@ -408,7 +408,7 @@ namespace mln
     typename std::map<P,Q>::const_iterator i;
     for (i = q_.begin(); i != q_.end(); ++i)
       if (! p_.has(i->first))
-	// A priority is unknown (for a known queue)! 
+	// A priority is unknown (for a known queue)!
 	return false;
 
     return true;

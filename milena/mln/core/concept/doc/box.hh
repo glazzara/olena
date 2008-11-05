@@ -74,7 +74,7 @@ namespace mln
        *
        * \warning This method is final for all box classes.
        */
-      std::size_t nsites() const;
+      unsigned nsites() const;
     };
 
   } // end of namespace mln::doc
