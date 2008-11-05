@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -398,7 +399,9 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, accu);
+	  // extension::adjust_fill is performed in the routine
+	  // because it has to be done before the initialization of
+	  // the fast iterators (q_*).
 	  initialize(output, input);
 	  accu.init();
 	  p = input.domain().pmin() - dps[0];
@@ -456,6 +459,10 @@ namespace mln
 	typedef mlc_is(mln_trait_image_kind(I),
 		       trait::image::kind::binary) is_binary;
 	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	extension::adjust_fill(input,
+			       geom::delta(win) + 1,
+			       A());
 
 	typedef erosion_arbitrary_2d_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win));
@@ -753,7 +760,9 @@ namespace mln
 
 	void init()
 	{
-	  extension::adjust_fill(input, win, accu);
+	  // extension::adjust_fill is performed in the routine
+	  // because it has to be done before the initialization of
+	  // the fast iterators (q_l and q_r).
 	  initialize(output, input);
 	}
 
@@ -794,6 +803,10 @@ namespace mln
 	typedef mlc_is(mln_trait_image_kind(I),
 		       trait::image::kind::binary) is_binary;
 	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+
+	extension::adjust_fill(input,
+			       geom::delta(win) + 1,
+			       A());
 
 	typedef erosion_directional_nd_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win), dir);

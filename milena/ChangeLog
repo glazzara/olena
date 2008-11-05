@@ -1,3 +1,18 @@
+2008-11-05  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix extension handling in fastest functors of morpho erosion.
+
+	* tests/morpho/erosion.cc: Stress test while setting border
+	thickness to 0.
+	Fix copyright layout.
+	* mln/morpho/erosion.spe.hh
+	(erosion_arbitrary_2d_fastest_functor): Move extension handling
+	into...
+	(erosion_arbitrary_2d_fastest): ...this routine.
+	(erosion_directional_nd_fastest_functor): Move extension handling
+	into...
+	(erosion_directional_nd_fastest): ...this routine.
+
 2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix the initialization of all global constants.	(#43)

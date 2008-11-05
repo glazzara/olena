@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/erosion.cc
- *
- * \brief Test on mln::morpho::erosion.
- */
+/// \file tests/morpho/erosion.cc
+///
+/// Test on mln::morpho::erosion.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/win/all.hh>
@@ -43,12 +43,14 @@
 
 #include "tests/data.hh"
 
+
 int main()
 {
   using namespace mln;
   using value::int_u8;
 
-  border::thickness = 20;
+  border::thickness = 0;
+
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
@@ -61,6 +63,7 @@ int main()
   image2d<int_u8> out;
   image2d<int_u8> ref;
 
+//   trace::quiet = false;
 
   // Rectangle
   {
