@@ -1,3 +1,9 @@
+2008-11-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issue.
+
+	* mln/core/dpsites_piter.hh: use std_vector() instead of to_vec().
+
 2008-11-05  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Use memcpy_ in level::fill_with_image.
