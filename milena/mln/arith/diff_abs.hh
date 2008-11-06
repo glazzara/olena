@@ -25,41 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
+#ifndef MLN_ARITH_DIFF_ABS_HH
+# define MLN_ARITH_DIFF_ABS_HH
 
-/*! \file mln/arith/all.hh
+/*! \file mln/arith/diff_abs.hh
  *
- * \brief File that includes all arithmetic materials.
+ * \brief Point-wise addition between images.
+ *
+ * \todo Speedup; some versions are not optimal.
  */
 
+# include <mln/arith/includes.hh>
+# include <mln/fun/vv2v/diff_abs.hh>
+# include <mln/level/transform.hh>
 
 namespace mln
 {
 
-  /// Namespace of arithmetic.
   namespace arith
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    /*! Point-wise absolute difference of images \p lhs and \p rhs.
+     *
+     * \param[in] lhs First operand image.
+     * \param[in] rhs Second operand image.
+     * \result The result image.
+     *
+     * \pre \p lhs.domain == \p rhs.domain
+     */
+    template <typename I>
+    mln_concrete(I)
+    diff_abs(const Image<I>& lhs, const Image<I>& rhs);
 
-      }
 
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename I>
+    inline
+    mln_concrete(I)
+    diff_abs(const Image<I>& lhs, const Image<I>& rhs)
+    {
+      trace::entering("arith::diff_abs");
+      mln_precondition(exact(lhs).has_data());
+      mln_precondition(exact(rhs).has_data());
+      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+
+      mln_concrete(I) output = level::transform(lhs, rhs, fun::vv2v::diff_abs<mln_value(I)>());
+
+      trace::exiting("arith::diff_abs");
+      return output;
     }
 
-  }
+  } // end of namespace mln::arith
 
-}
+# endif // ! MLN_INCLUDE_ONLY
 
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
+} // end of namespace mln
 
 
-#endif // ! MLN_ARITH_ALL_HH
+#endif // ! MLN_ARITH_DIFF_ABS_HH

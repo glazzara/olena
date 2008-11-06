@@ -1,3 +1,27 @@
+2008-11-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add arith::diff_abs.
+
+	* mln/arith/all.hh: add diff_abs.hh.
+	* mln/arith/diff_abs.hh: New, compute the absolute difference between
+	two images.
+	* mln/fun/vv2v/diff_abs.hh: New, diff_abs vv2v function.
+	* mln/level/transform.hh: Add a generic version of transform working
+	with 2 images and a vv2v functions.
+	* mln/math/all.hh: add diff_abs.hh.
+	* mln/math/diff_abs.hh: New, compute the absolute difference between
+	two values.
+	* tests/arith/Makefile.am: Add diff_abs test.
+	* tests/arith/diff_abs.cc: New, test arith::diff_abs.
+	* mln/core/clock_neighb.hh: Start to clean this neighboorhood.
+
+
+	Fix erosion on octogone.
+
+	* mln/morpho/erosion.spe.hh: Fix erosion on octogone by decomposing
+	the octogone with a vline, a hline, a diagonal and a backdiagonal. All
+	of these elements have a width of (width(oct) + 2) / 3.
+
 2008-11-06  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add fill_with_image_line specialization in fill_with_image routine.

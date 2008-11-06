@@ -30,7 +30,7 @@
 
 /*! \file mln/core/clock_neighb.hh
  *
- * \brief Definition of the generic neighborhood class mln::clock_neighb_.
+ * \brief Definition of the generic neighborhood class mln::clock_neighb.
  */
 
 # include <mln/core/concept/neighborhood.hh>
@@ -47,27 +47,27 @@ namespace mln
 
   /*! \brief Generic neighborhood class.
    *
-   * This neighborhood of window is just like a set of delta-points.
-   * The parameter is \c D, type of delta-point.
+   * This neighborhood of window is just like a set of delta-psites.
+   * The parameter is \c D, type of delta-psite.
    */
   template <typename D>
-  struct clock_neighb_ : public Neighborhood< clock_neighb_ <D> >
+  struct clock_neighb : public Neighborhood< clock_neighb <D> >
   {
     /// Dpsite associated type.
-    typedef D dpoint;
+    typedef D dpsite;
 
     /// Site associated type.
     typedef mln_psite(D) point;
 
-    /*! \brief Site_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
+    /*! \brief Site_Iterator type to browse the psites of a generic
+     * neighborhood w.r.t. the ordering of delta-psites.
      */
     typedef dpsites_fwd_piter<D> fwd_niter;
 
-    /*! \brief Site_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
+    /*! \brief Site_Iterator type to browse the psites of a generic
+     * neighborhood w.r.t. the reverse ordering of delta-psites.
      *
-     * !!! Be careful the start delta point become the last now.
+     * !!! Be careful the start delta psite become the last now.
      */
     typedef dpsites_bkd_piter<D> bkd_niter;
 
@@ -80,18 +80,18 @@ namespace mln
      * The constructed neighborhood is empty. You have to use insert()
      * to proceed to the neighborhood definition.
      */
-    clock_neighb_();
+    clock_neighb();
 
-    /*! \brief Insert a delta-point \p dp in the neighborhood
+    /*! \brief Insert a delta-psite \p dp in the neighborhood
      *  definition.
      *
-     * \param[in] dp The delta-point to insert.
+     * \param[in] dp The delta-psite to insert.
      *
-     * This method also insert the symmetrical delta-point, - \p dp,
+     * This method also insert the symmetrical delta-psite, - \p dp,
      * in the neighborhood definition; thus the client has not to
      * ensure the symmetry property; that is automatic.
      */
-    clock_neighb_<D>& append(const D& dp);
+    clock_neighb<D>& append(const D& dp);
     /// \}
     const std::vector<D>& vect() const
     {
@@ -106,14 +106,14 @@ namespace mln
 
   template <typename D>
   inline
-  clock_neighb_<D>::clock_neighb_()
+  clock_neighb<D>::clock_neighb()
   {
   }
 
   template <typename D>
   inline
-  clock_neighb_<D>&
-  clock_neighb_<D>::append(const D& dp)
+  clock_neighb<D>&
+  clock_neighb<D>::append(const D& dp)
   {
     vec_.push_back(dp);
     return *this;

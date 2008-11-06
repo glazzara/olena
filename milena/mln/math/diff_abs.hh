@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,41 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
+#ifndef MLN_MATH_DIFF_ABS_HH
+# define MLN_MATH_DIFF_ABS_HH
 
-/*! \file mln/arith/all.hh
+/*! \file mln/math/diff_abs.hh
  *
- * \brief File that includes all arithmetic materials.
+ * \brief Define diff_abs routine.
  */
 
 
 namespace mln
 {
 
-  /// Namespace of arithmetic.
-  namespace arith
+  namespace math
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    template <typename T>
+    T diff_abs(const T& v1, const T& v2);
 
-      }
 
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    inline
+    T diff_abs(const T& v1, const T& v2)
+    {
+      return abs(v1 - v2);
     }
 
-  }
+# endif // ! MLN_INCLUDE_ONLY
 
-}
+  } // end of namespace mln::math
 
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
+} // end of namespace mln
 
 
-#endif // ! MLN_ARITH_ALL_HH
+#endif // ! MLN_MATH_DIFF_ABS_HH

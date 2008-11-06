@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,41 +25,54 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
+#ifndef MLN_FUN_VV2V_DIFF_ABS_HH
+# define MLN_FUN_VV2V_DIFF_ABS_HH
 
-/*! \file mln/arith/all.hh
- *
- * \brief File that includes all arithmetic materials.
- */
+/// \file mln/fun/vv2v/diff_abs.hh
+/// \brief Computing the absolute difference between two values using
+/// a functor.
+
+# include <mln/core/concept/function.hh>
+# include <mln/math/diff_abs.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of arithmetic.
-  namespace arith
+  namespace fun
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    namespace vv2v
+    {
 
+      // FIXME: Doc.
+
+      /// \brief A functor computing the diff_absimum of two values.
+      template <typename V>
+      struct diff_abs : public Function_vv2v< diff_abs<V> >
+      {
+	typedef V result;
+	V operator()(const V& v1, const V& v2) const;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      V
+      diff_abs<V>::operator()(const V& v1, const V& v2) const
+      {
+	return mln::math::diff_abs(v1, v2);
       }
 
-    }
+# endif // ! MLN_INCLUDE_ONLY
 
-  }
+    } // end of namespace mln::fun::vv2v
 
-}
+  } // end of namespace mln::fun
 
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
+} // end of namespace mln
 
 
-#endif // ! MLN_ARITH_ALL_HH
+#endif // ! MLN_FUN_VV2V_DIFF_ABS_HH

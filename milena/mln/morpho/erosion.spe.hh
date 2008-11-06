@@ -295,12 +295,13 @@ namespace mln
 
 	const I& input = exact(input_);
 
-	const unsigned len = win.length() / 3 + 1;
+	const unsigned len = (win.length() + 2) / 3;
 
-	mln_concrete(I) temp_1, temp_2, output;
-	temp_1 = morpho::erosion(input,  win::hline2d(len));
-	temp_2 = morpho::erosion(temp_1, win::diag2d(len));
-	output = morpho::erosion(temp_2, win::backdiag2d(len));
+	mln_concrete(I) output;
+	output = morpho::erosion(input,  win::hline2d(len));
+	output = morpho::erosion(output,  win::vline2d(len));
+	output = morpho::erosion(output, win::diag2d(len));
+	output = morpho::erosion(output, win::backdiag2d(len));
 
 	trace::exiting("morpho::impl::erosion_(win::octagon2d)");
 	return output;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,41 +25,49 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ARITH_ALL_HH
-# define MLN_ARITH_ALL_HH
-
-/*! \file mln/arith/all.hh
+/*! \file tests/arith/diff_abs.cc
  *
- * \brief File that includes all arithmetic materials.
+ * \brief Tests on mln::arith::diff_abs.
  */
 
+#include <mln/core/image/image2d.hh>
+#include <mln/debug/iota.hh>
+#include <mln/arith/diff_abs.hh>
+#include <mln/level/compare.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of arithmetic.
-  namespace arith
+  trace::quiet = false;
+
   {
-    /// Implementation namespace of arith namespace.
-    namespace impl {
+    image2d<int> ima(3,3);
 
-      /// Generic implementation namespace of arith namespace.
-      namespace generic {
+    int vs1[3][3] = {
+      {0, 1, 2},
+      {3, 4, 5},
+      {6, 7, 8}
+    };
 
-      }
 
-    }
+    int vs2[3][3] = {
+      {1, 0, 5},
+      {8, 5, 6},
+      {9, 5, 2}
+    };
 
+    int vs_ref[3][3] = {
+      {1, 1, 3},
+      {5, 1, 1},
+      {3, 2, 6}
+    };
+
+    image2d<int> ima1 = make::image(vs1);
+    image2d<int> ima2 = make::image(vs2);
+    image2d<int> ref = make::image(vs_ref);
+
+    mln_assertion (arith::diff_abs(ima1, ima2) == ref);
   }
 
 }
-
-# include <mln/arith/diff_abs.hh>
-# include <mln/arith/min.hh>
-# include <mln/arith/minus.hh>
-# include <mln/arith/plus.hh>
-# include <mln/arith/revert.hh>
-# include <mln/arith/times.hh>
-
-
-#endif // ! MLN_ARITH_ALL_HH

@@ -44,6 +44,7 @@ namespace mln
 
 
 # include <mln/math/abs.hh>
+# include <mln/math/diff_abs.hh>
 # include <mln/math/jacobi.hh>
 # include <mln/math/max.hh>
 # include <mln/math/min.hh>
