@@ -194,9 +194,7 @@ namespace mln
                                     trait::image::vw_io::read_write,
                                     Image<I>& ima, const V& val)
       {
-        // FIXME
-        //impl::fill_with_value_cell_wise(ima, val);
-        impl::generic::fill_with_value(ima, val);
+        impl::fill_with_value_cell_wise(ima, val);
       }
 
 

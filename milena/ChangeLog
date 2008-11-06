@@ -1,3 +1,10 @@
+2008-11-06  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add paste_lines specialization for the level::paste routine.
+
+	* mln/level/paste.spe.hh: Add paste_lines.
+	* mln/level/fill_with_value.spe.hh: Fix a dispatch.
+
 2008-11-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Tiny fix in windows.

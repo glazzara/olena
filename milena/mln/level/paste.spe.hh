@@ -42,6 +42,8 @@
 # include <mln/core/pixel.hh>
 # include <mln/level/fill_with_value.hh>
 # include <mln/level/memcpy_.hh>
+# include <mln/core/box_runstart_piter.hh>
+# include <mln/border/all.hh>
 
 
 
@@ -71,28 +73,6 @@ namespace mln
 	void paste(const Image<I>& input, Image<J>& output);
       }
 
-//       template <typename I, typename J>
-//       inline
-//       void paste_lines_(const I& data, J& destination)
-//       {
-// 	trace::entering("level::impl::paste_lines_");
-// 	typedef mln_psite(I) P;
-// 	unsigned n = data.bbox().len(P::dim - 1);
-// 	// FIXME: Works only for raw data images
-// 	// FIXME: For linear data images, we should get the len for each line...
-
-// 	typename I::line_piter p(data.domain()); // FIXME: Alias mln_line_piter!
-// 	//	mln_line_piter(I) p(data.domain());
-// 	for_all(p)
-// 	{
-//           FIXME: TYPE pix = make::pixel(destination, p);
-// 	  memcpy_(pix,
-// 		  make::pixel(data, p),
-// 		  n);
-// 	  }
-// 	trace::exiting("level::impl::paste_lines_");
-//       }
-
 
       template <typename I, typename J>
       void paste_fast(const Image<I>& input_, Image<J>& output_)
@@ -113,7 +93,7 @@ namespace mln
           po.val() = pi.val();
           po.next();
         }
-        trace::entering("level::impl::paste_fast");
+        trace::exiting("level::impl::paste_fast");
       }
 
       template <typename I, typename J>
@@ -133,7 +113,27 @@ namespace mln
 
         memcpy_(dst, src, input.nelements());
 
-        trace::entering("level::impl::paste_fastest");
+        trace::exiting("level::impl::paste_fastest");
+      }
+
+      template <typename I, typename J>
+      inline
+      void paste_lines(const Image<I>& input_, Image<J>& output_)
+      {
+	trace::entering("level::impl::paste_lines");
+
+        const I& input = exact(input_);
+        J& output      = exact(output_);
+
+
+	mln_box_runstart_piter(I) p(input.domain());
+	for_all(p)
+	{
+          pixel<J> dst(output, p);
+	  memcpy_(dst, make::pixel(input, p), p.run_length());
+        }
+
+	trace::exiting("level::impl::paste_lines");
       }
 
       template <typename I, typename J>
@@ -145,7 +145,7 @@ namespace mln
 
         level::fill_with_value(output_, input.val());
 
-        trace::entering("level::impl::paste_singleton");
+        trace::exiting("level::impl::paste_singleton");
       }
 
     } // end of namespace impl.
@@ -164,12 +164,17 @@ namespace mln
                   const Image<I>& input_,
                   Image<J>& output_)
       {
-        const I& input  = exact(input_);
-        J& output       = exact(output_);
+        const I& input = exact(input_);
+        J& output      = exact(output_);
 
-        if (input.border() == output.border() &&
-            sizeof(mln_value(I)) == sizeof(mln_value(J)))
-          impl::paste_fastest(input, output);
+        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+        {
+          if (border::get(input) == border::get(output) &&
+              input.domain() == output.domain())
+            impl::paste_fastest(input, output);
+          else
+            impl::paste_lines(input, output);
+        }
         else
           impl::paste_fast(input, output);
       }
@@ -180,11 +185,20 @@ namespace mln
                   mln::trait::image::value_access::direct,
                   mln::trait::image::ext_domain::none,
                   mln::trait::image::ext_domain::none,
-                  const Image<I>& input,
-                  Image<J>& output)
+                  const Image<I>& input_,
+                  Image<J>& output_)
       {
+        const I& input = exact(input_);
+        J& output      = exact(output_);
+
+
         if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-          impl::paste_fastest(input, output);
+        {
+          if (input.domain() == output.domain())
+            impl::paste_fastest(input, output);
+          else
+            impl::paste_lines(input, output);
+        }
         else
           impl::paste_fast(input, output);
       }
@@ -238,8 +252,7 @@ namespace mln
         if (mlc_is(mln_trait_image_value_alignement(I),
                    trait::image::value_alignement::with_grid)::value &&
             mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value &&
-            input.domain() == output.domain())
+                   trait::image::value_alignement::with_grid)::value)
           {
             paste_(mln_trait_image_value_access(I)(),
                    mln_trait_image_value_access(J)(),
