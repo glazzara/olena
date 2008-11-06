@@ -46,7 +46,7 @@ namespace mln
   {
 
     /*! Assign the virtual (outer) border of image \p ima with the
-     *  dupplicate of the inner border of this image.
+     *  duplicate of the inner border of this image.
      *
      * \param[in,out] ima The image whose border is to be duplicated.
      *

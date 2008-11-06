@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_SYM_HH
 # define MLN_WIN_SYM_HH
 
-/*! \file mln/win/sym.hh
- *
- * \brief Give the symmetrical object.
- */
+/// \file mln/win/sym.hh
+///
+/// Give the symmetrical object.
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
@@ -61,8 +61,11 @@ namespace mln
     inline
     W sym(const Window<W>& win)
     {
+      trace::entering("win::sym");
+      // mln_precondition(win.is_valid());
       W tmp = exact(win);
       tmp.sym();
+      trace::exiting("win::sym");
       return tmp;
     }
 
@@ -70,8 +73,11 @@ namespace mln
     inline
     W sym(const Weighted_Window<W>& w_win)
     {
+      trace::entering("win::sym");
+      // mln_precondition(win.is_valid());
       W tmp = exact(w_win);
       tmp.sym();
+      trace::exiting("win::sym");
       return tmp;
     }
 

@@ -116,6 +116,9 @@ namespace mln
     const mln::window<D>& win() const;
 
 
+    /// Test if the window is symmetric.
+    bool is_symmetric() const;
+
     /// Apply a central symmetry to the window.
     void sym();
 
@@ -278,11 +281,24 @@ namespace mln
 
   template <typename D, typename W>
   inline
+  bool
+  w_window<D,W>::is_symmetric() const
+  {
+    if (! win_.is_symmetric())
+      return false;
+    w_window<D,W> tmp;
+    tmp.sym();
+    return *this == tmp;
+  }
+
+  template <typename D, typename W>
+  inline
   void
   w_window<D,W>::sym()
   {
     w_window<D,W> tmp;
-    for (unsigned i = 0; i < this->size(); ++i)
+    unsigned n = this->size();
+    for (unsigned i = 0; i < n; ++i)
       tmp.insert(this->w(i), - this->dp(i));
     *this = tmp;
   }

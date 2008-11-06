@@ -1,3 +1,12 @@
+2008-11-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Tiny fix in windows.
+
+	* mln/core/w_window.hh (is_symmetric): New.
+	* mln/border/duplicate.hh: Fix typo.
+	* mln/win/sym.hh: Fix copyright.
+	(sym): Add trace.
+
 2008-11-05  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	* doc/benchmark/morpho/erosion.cc: Add bench on erosion with disk2d.
