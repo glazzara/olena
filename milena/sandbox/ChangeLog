@@ -1,3 +1,20 @@
+2008-11-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix Update and Revamp Classif.
+
+	* inim/classif/max_tree.hh,
+	* inim/classif/display.hh,
+	* inim/classif/iccvg04.cc,
+	* inim/classif/proj.hh,
+	* inim/classif/v2.cc: Moved and update...
+	* inim/classif/src/max_tree.hh,
+	* inim/classif/src/display.hh,
+	* inim/classif/src/iccvg04.cc,
+	* inim/classif/src/proj.hh,
+	* inim/classif/src/v2.cc: ...here.
+
+	* inim/classif/Makefile: .
+
 2008-11-05  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Update some files and add test suite for nature.

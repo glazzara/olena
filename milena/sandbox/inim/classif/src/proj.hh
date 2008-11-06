@@ -45,7 +45,8 @@ namespace mln
     image2d<A> acc(geom::nslis(input), geom::nrows(input));
     mln_piter(image3d<T>) p(input.domain());
     for_all(p) // 3d
-      acc.at(p.sli(), p.row()).take(input(p));
+      if (input(p) != literal::zero)
+        acc.at(p.sli(), p.row()).take(input(p));
 
     image2d<mln_result(A)> output(acc.domain());
     level::paste(acc, output);
@@ -57,11 +58,10 @@ namespace mln
   save_class(const image3d<T>& histo, const image3d<U>& ws,
              K mean, const char * fn)
   {
-
-    accu::max<value::int_u8> max_1;
+    accu::maj_h<value::int_u8> max_1;
     image2d<value::int_u8> hproj = proj(histo, max_1);
 
-    accu::max<value::int_u8> max_2;
+    accu::maj_h<value::int_u8> max_2;
     image2d<value::int_u8> proj_class = proj(ws, max_2);
 
     //std::cout << histo;
@@ -71,7 +71,7 @@ namespace mln
     level::fill(out, literal::white);
     mln_piter(image2d<value::int_u8>) p(hproj.domain());
     for_all(p)
-      if (hproj(p) > 0)
+     if (hproj(p) > 0)
         out(p) = convert::to<value::rgb8>(mean[proj_class(p)]);
 
     io::ppm::save(out, fn);

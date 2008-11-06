@@ -30,6 +30,8 @@
 #include <mln/algebra/vec.hh>
 #include <mln/algebra/vec.hh>
 
+#include <mln/literal/all.hh>
+
 #include <mln/level/stretch.hh>
 
 #include <sys/stat.h>
@@ -77,6 +79,7 @@ template <typename I, typename J, typename K>
 void
 classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 {
+  unsigned border = 0;
   unsigned count[nbasins + 1];
   memset(count, 0, (nbasins + 1) * sizeof (unsigned));
 
@@ -92,17 +95,17 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
     int w = ws(p3);
 
     //check if we are not on a border of the WS
-    if (w != 0)
-    {
-      count[w] += histo(p3);
-      sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
-    }
+    if (w == 0)
+      border++;
+    count[w] += histo(p3);
+    sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
 
     std::cerr << "p3 : " << p3 << " == " <<
       convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
   }
 
-  for (int i = 1; i < nbasins + 1; ++i)
+  std::cout << border << std::endl;
+  for (int i = 0; i < nbasins + 1; ++i)
   {
     std::cout << "sum[" << i << "] = " << sum[i] * f << " / " << count[i]  << " == ";
     sum[i] = (sum[i] * f) / count[i];
@@ -119,7 +122,10 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
     int w = ws(point3d(coul.red() / f, coul.green() / f, coul.blue() / f));
 
     //if w == 0, out(pi) = 0 ie is part of a border of the watershed
-    out(pi) = convert::to<value::rgb8>(sum[w]);
+    if (w == 0)
+      out(pi) = literal::red;
+    else
+      out(pi) = convert::to<value::rgb8>(sum[w]);
 
     std::cerr << "out(" << pi << ") = sum[" << w << "]; //"
               << sum[w] << " : rgb8(" << sum[w] << ")" << std::endl;
@@ -161,7 +167,7 @@ int main(int argc, char **argv)
   //watershed over histo_closure
   unsigned nbasins = 0;
   image3d<unsigned> ws = morpho::meyer_wst(arith::revert(histo_filtered),
-					   c6(), nbasins);
+                                           c6(), nbasins);
   std::cout << "nbassins : " << nbasins << std::endl;
 
   //classify image
