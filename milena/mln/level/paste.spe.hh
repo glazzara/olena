@@ -32,7 +32,6 @@
  *
  * \brief Specializations for mln::level::paste.
  *
- * \todo Rewrite the dispatch!!!
  */
 
 # ifndef MLN_LEVEL_PASTE_HH
@@ -43,7 +42,7 @@
 # include <mln/level/fill_with_value.hh>
 # include <mln/level/memcpy_.hh>
 # include <mln/core/box_runstart_piter.hh>
-# include <mln/border/all.hh>
+# include <mln/border/get.hh>
 
 
 
@@ -125,6 +124,7 @@ namespace mln
         const I& input = exact(input_);
         J& output      = exact(output_);
 
+        level::internal::paste_tests(input, output);
 
 	mln_box_runstart_piter(I) p(input.domain());
 	for_all(p)

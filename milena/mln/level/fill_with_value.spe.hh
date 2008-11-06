@@ -31,7 +31,6 @@
 /// \file mln/level/fill_with_value.spe.hh
 /// Specializations for mln::level::fill_with_value.
 ///
-/// \todo See todos in mln/level/fill.hh
 
 # ifndef MLN_LEVEL_FILL_WITH_VALUE_HH
 #  error "Forbidden inclusion of *.spe.hh"

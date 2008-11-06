@@ -57,6 +57,21 @@ int main()
   using namespace mln;
   const unsigned size = 100;
 
+  // tests in two dimension
+  {
+    box2d b(point2d(1,2), point2d(2,4));
+    image2d<int> ima(b, 2);
+    debug::iota(ima);
+
+    box2d b2(point2d(-1,-2), point2d(3,6));
+    image2d<int> ima2(b2, 0);
+    debug::iota(ima2);
+
+    level::fill_with_image(ima, ima2); // Not so fast version...
+    mln_assertion(ima == (ima2 | b));
+  }
+
+
   // 2d tests
   {
     image2d<unsigned int> ima(size, size);

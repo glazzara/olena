@@ -32,7 +32,6 @@
  *
  * \brief Specializations for mln::level::fill_with_image.
  *
- * \todo Add specializations then rewrite the dispatch.
  */
 
 # ifndef MLN_LEVEL_FILL_WITH_IMAGE_HH
@@ -41,9 +40,9 @@
 
 # include <mln/level/memcpy_.hh>
 # include <mln/level/fill_with_value.hh>
-
 # include <mln/core/pixel.hh>
-
+# include <mln/core/box_runstart_piter.hh>
+# include <mln/border/get.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -116,6 +115,26 @@ namespace mln
         trace::exiting("level::impl::fill_with_image_fast");
       }
 
+      template <typename I, typename J>
+      inline
+      void fill_with_image_lines(Image<I>& ima_, const Image<J>& data_)
+      {
+	trace::entering("level::impl::fill_with_image_lines");
+
+        I& ima        = exact(ima_);
+        const J& data = exact(data_);
+
+        level::internal::fill_with_image_tests(ima, data);
+
+	mln_box_runstart_piter(I) p(ima.domain());
+	for_all(p)
+	{
+          pixel<J> dst(ima, p);
+	  memcpy_(dst, make::pixel(data, p), p.run_length());
+        }
+
+	trace::exiting("level::impl::fill_with_image_lines");
+      }
 
       template <typename I, typename J>
       void fill_with_image_singleton(Image<I>& ima_,
@@ -149,9 +168,14 @@ namespace mln
         I& ima        = exact(ima_);
         const J& data = exact(data_);
 
-        if (ima.border() == data.border() &&
-            sizeof(mln_value(I)) == sizeof(mln_value(J)))
-          impl::fill_with_image_fastest(ima, data);
+        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
+        {
+          if (border::get(ima) == border::get(data) &&
+              ima.domain() == data.domain())
+            impl::fill_with_image_fastest(ima, data);
+          else
+            impl::fill_with_image_lines(ima, data);
+        }
         else
           impl::fill_with_image_fast(ima, data);
       }
@@ -162,11 +186,19 @@ namespace mln
                             mln::trait::image::value_access::direct,
                             mln::trait::image::ext_domain::none,
                             mln::trait::image::ext_domain::none,
-                            Image<I>& ima,
-                            const Image<J>& data)
+                            Image<I>& ima_,
+                            const Image<J>& data_)
       {
+        I& ima        = exact(ima_);
+        const J& data = exact(data_);
+
         if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-          impl::fill_with_image_fastest(ima, data);
+        {
+          if (ima.domain() == data.domain())
+            impl::fill_with_image_fastest(ima, data);
+          else
+            impl::fill_with_image_lines(ima, data);
+        }
         else
           impl::fill_with_image_fast(ima, data);
       }
@@ -219,8 +251,7 @@ namespace mln
         if (mlc_is(mln_trait_image_value_alignement(I),
                    trait::image::value_alignement::with_grid)::value &&
             mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value &&
-            ima.domain() == data.domain())
+                   trait::image::value_alignement::with_grid)::value)
           {
             fill_with_image_(mln_trait_image_value_access(I)(),
                              mln_trait_image_value_access(J)(),
