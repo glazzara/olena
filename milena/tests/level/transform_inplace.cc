@@ -25,53 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_IMAGE2D_HH
-# define MLN_MAKE_IMAGE2D_HH
-
-/// \file mln/make/image2d.hh
+/// \file tests/level/transform_inplace.cc
 ///
-/// Routine to create a 2D image from a 1D array.
+/// Tests on mln::level::transform_inplace
 
-# include <mln/core/image/image2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/routine/clone.hh>
+#include <mln/fun/v2v/inc.hh>
+#include <mln/fun/v2v/dec.hh>
+#include <mln/debug/iota.hh>
+
+#include <mln/level/transform_inplace.hh>
+#include <mln/level/compare.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  const unsigned size = 50;
 
-  namespace make
-  {
+  image2d<int> ref(3, 3);
+  debug::iota(ref);
 
-    /*! \brief Create an image2d from an 2D array of values.
-     *
-     * \param[in] values 2D array.
-     *
-     * \return A 2D image.
-     */
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S]);
+  image2d<int> ima = clone(ref);
+  level::transform_inplace(ima, fun::v2v::inc<int>());
+  level::transform_inplace(ima, fun::v2v::dec<int>());
 
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S])
-    {
-      mlc_bool(S != 0)::check();
-      enum { s = mlc_sqrt_int(S) };
-      metal::bool_<(s * s == S)>::check();
-      mln::image2d<V> tmp;
-      convert::from_to(values, tmp);
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_IMAGE2D_HH
+  mln_assertion(ima == ref);
+}

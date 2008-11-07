@@ -38,11 +38,17 @@
 # include <mln/trait/ch_value.hh>
 # include <mln/value/ops.hh>
 
+# include <mln/algebra/vec.hh>
+
 
 /// Define the result of the convolution of an image with type \p I
 /// with a weighted window of type \p W or weights of type \p W.
 # define mln_ch_convolve(I, W) \
   typename mln::linear::ch_convolve<I, W>::ret
+
+# define mln_ch_convolve_grad(I, W) \
+  typename mln::trait::ch_value< I, algebra::vec< I::site::dim, typename mln::linear::ch_convolve<I,W>::ret::value > >::ret
+
 
 
 namespace mln

@@ -25,53 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_IMAGE2D_HH
-# define MLN_MAKE_IMAGE2D_HH
+#ifndef MLN_FUN_VV2V_VEC_HH
+# define MLN_FUN_VV2V_VEC_HH
 
-/// \file mln/make/image2d.hh
+/// \file mln/fun/vv2v/vec.hh
 ///
-/// Routine to create a 2D image from a 1D array.
+/// computing the vecimum of two values using a functor.
 
-# include <mln/core/image/image2d.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/algebra/vec.hh>
 
 
 namespace mln
 {
 
-  namespace make
+  namespace fun
   {
 
-    /*! \brief Create an image2d from an 2D array of values.
-     *
-     * \param[in] values 2D array.
-     *
-     * \return A 2D image.
-     */
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S]);
+    namespace vv2v
+    {
 
+      // FIXME: Doc.
+
+      /// \brief A functor computing the vecimum of two values.
+      template <typename V>
+      struct vec : public Function_vv2v< vec<V> >
+      {
+	typedef algebra::vec<2,V> result;
+	algebra::vec<2,V> operator()(const V& v1, const V& v2) const;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S])
-    {
-      mlc_bool(S != 0)::check();
-      enum { s = mlc_sqrt_int(S) };
-      metal::bool_<(s * s == S)>::check();
-      mln::image2d<V> tmp;
-      convert::from_to(values, tmp);
-      return tmp;
-    }
+      template <typename V>
+      inline
+      algebra::vec<2,V>
+      vec<V>::operator()(const V& v1, const V& v2) const
+      {
+	algebra::vec<2,V> tmp;
+	tmp.set(v1, v2);
+	return tmp;
+      }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::make
+    } // end of namespace mln::fun::vv2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_IMAGE2D_HH
+#endif // ! MLN_FUN_VV2V_VEC_HH

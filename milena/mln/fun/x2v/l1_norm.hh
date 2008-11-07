@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,50 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/sobel.cc
- *
- * \brief Tests on mln::linear::sobel.
- */
+#ifndef MLN_FUN_X2V_L1_NORM_HH
+# define MLN_FUN_X2V_L1_NORM_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/level/saturate.hh>
-#include <mln/level/stretch.hh>
+/// \file mln/fun/x2v/l1_norm.hh
+///
+/// Define the L1-norm of an algebraic vector.
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/border/thickness.hh>
-#include <mln/linear/sobel.hh>
-
-#include <mln/debug/println.hh>
-
-#include "tests/data.hh"
+# include <mln/core/concept/function.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/math/abs.hh>
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  border::thickness = 1;
+  namespace fun
+  {
 
-  image2d<int_u8> input;
-  io::pgm::load(input, MLN_IMG_DIR "/tiny.pgm");
+    namespace x2v
+    {
 
-  // Create unused objects, for test purpose.
-  linear::sobel_h(input);
-  linear::sobel_v(input);
-  linear::sobel(input);
+      template <typename V>
+      struct l1_norm : public Function_v2v< l1_norm<V> >
+      {
+	typedef mln_coord(V) C;
+        typedef mln_sum(C) result;
 
-  linear::sobel_norm(input);
+        result operator()(const V& v) const;
+      };
 
-  image2d<float> result = linear::sobel_norm(input);
-  image2d<int_u8> output (result.domain());
-  level::stretch (result, output);
-  debug::println (output);
 
-  image2d<int_u8> output_sat (output.domain());
-  level::saturate(output, output_sat);
-  io::pgm::save(output_sat, "out.pgm");
-}
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      typename l1_norm<V>::result
+      l1_norm<V>::operator()(const V& v) const
+      {
+	result res = 0;
+	for (unsigned i = 0; i < V::dim; ++i)
+	  res += mln::math::abs(v[i]);
+	return res;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::x2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_X2V_L1_NORM_HH

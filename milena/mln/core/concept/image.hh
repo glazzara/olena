@@ -251,13 +251,13 @@ namespace mln
       mlc_converts_to(V, mln_value(I))::check();
       typedef mln_site(I) P;
       enum { d = P::dim,
-	     s = mlc_root(d,S)::value / 2 };
-      metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+	     s = mlc_root(d, S)::value };
+      metal::bool_<(mlc_pow_int(s, d) == S)>::check();
 
       I& to = exact(to_);
       mln_precondition(! to.has_data());
 
-      box<P> b(all_to(0), all_to(2 * s));
+      box<P> b(all_to(0), all_to(s - 1));
       to.init_(b);
       mln_fwd_piter(box<P>) p(b);
       unsigned i = 0;

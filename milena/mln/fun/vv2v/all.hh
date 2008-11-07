@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_FUN_VV2V_ALL_HH
 # define MLN_FUN_VV2V_ALL_HH
 
-/*! \file mln/fun/vv2v/all.hh
- *
- * \brief File that includes all functions from point to value.
- */
+/// \file mln/fun/vv2v/all.hh
+///
+/// File that includes all functions from point to value.
 
 
 namespace mln
@@ -40,7 +39,7 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from point to value.
+    /// Namespace of functions from a couple of values to a value.
     namespace vv2v
     {
     }
@@ -51,5 +50,7 @@ namespace mln
 
 # include <mln/fun/vv2v/max.hh>
 # include <mln/fun/vv2v/min.hh>
+# include <mln/fun/vv2v/vec.hh>
+
 
 #endif // ! MLN_FUN_VV2V_ALL_HH

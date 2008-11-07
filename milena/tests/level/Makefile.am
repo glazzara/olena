@@ -28,6 +28,7 @@ check_PROGRAMS =				\
   sort_psites_full				\
   stretch					\
   transform					\
+  transform_inplace				\
   update
 
 abs_SOURCES = abs.cc
@@ -52,6 +53,7 @@ saturate_SOURCES = saturate.cc
 sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc
 transform_SOURCES = transform.cc
+transform_inplace_SOURCES = transform_inplace.cc
 update_SOURCES = update.cc
 
 # Lengthy tests.

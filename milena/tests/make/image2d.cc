@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/make/image2d.cc
- *
- * \brief Tests on mln::make::image2d.
- */
+/// \file tests/make/image2d.cc
+///
+/// Tests on mln::make::image2d.
 
 #include <mln/make/image2d.hh>
 
@@ -44,4 +43,10 @@ int main()
 		  0, 1, 0, 0, 0 };
   image2d<bool> ima = make::image2d(vals);
   mln_assertion(ima.domain() == box2d(5,5));
+
+  bool vs[] = { 1, 0,
+		1, 1 };
+  image2d<bool> tiny = make::image2d(vs);
+  mln_assertion(tiny.domain() == box2d(2,2));
+
 }

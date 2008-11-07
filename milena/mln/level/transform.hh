@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,9 +40,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-
 # include <mln/value/set.hh>
-
 
 // Specializations are in:
 # include <mln/level/transform.spe.hh>
@@ -53,7 +52,7 @@ namespace mln
   namespace level
   {
 
-    /*! Transform the image \p input through a function \p f
+    /*! Transform the image \p input through a function \p f.
      *
      * \param[in] input The input image.
      * \param[in] f The function.
@@ -67,95 +66,74 @@ namespace mln
     transform(const Image<I>& input, const Function_v2v<F>& f);
 
 
-    /*! Transform two images \p ima1 \p ima2 through a function \p f
+    /*! Transform two images \p input1 \p input2 through a function \p f.
      *
-     * \param[in] input The input image.
+     * \param[in] input1 The 1st input image.
+     * \param[in] input2 The 2nd input image.
      * \param[in] f The function.
      *
      * This routine runs: \n
-     * for all p of \p input, \p output(p) = \p f( \p input(p) ).
-     *
+     * for all p of \p input, \p output(p) = \p f( \p input1(p), \p input2(p) ).
      */
-    template <typename I, typename J, typename F>
-    mln_ch_value(I, mln_result(F))
-    transform(const Image<I>& ima1,
-	      const Image<J>& ima2,
+    template <typename I1, typename I2, typename F>
+    mln_ch_value(I1, mln_result(F))
+    transform(const Image<I1>& input1,
+	      const Image<I2>& input2,
 	      const Function_vv2v<F>& f);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     namespace internal
     {
-      template <typename I, typename F, typename O>
+
+      template <typename I, typename F>
       inline
       void transform_tests(const Image<I>& input,
-                           const Function_v2v<F>& f,
-                           Image<O>& output)
+                           const Function_v2v<F>& f)
       {
+        // Dynamic test.
+	mln_precondition(exact(input).has_data());
+
 	// Avoid a warning about an undefined variable when NDEBUG
 	// is not defined.
 	(void) input;
         (void) f;
-        (void) output;
-
-        // Properties check
-        mln_precondition((mlc_is(mln_trait_image_pw_io(O),
-                                 trait::image::pw_io::read_write)::value ||
-                          mlc_is(mln_trait_image_vw_io(O),
-                                 trait::image::vw_io::read_write)::value));
-
-        // FIXME Convert test
-	mlc_converts_to(mln_result(F), mln_value(O))::check();
-
-
-        // Dynamic tests
-	mln_precondition(exact(input).has_data());
-        mln_precondition(exact(output).domain() >= exact(input).domain());
       }
 
-      template <typename I, typename J, typename F, typename O>
+      template <typename I1, typename I2, typename F>
       inline
-      void transform_tests(const Image<I>& ima1,
-			   const Image<J>& ima2,
-                           const Function_v2v<F>& f,
-                           Image<O>& output)
+      void transform_tests(const Image<I1>& input1,
+			   const Image<I2>& input2,
+                           const Function_vv2v<F>& f)
       {
+        // Dynamic tests.
+	mln_precondition(exact(input1).has_data());
+	mln_precondition(exact(input2).has_data());
+	mln_precondition(exact(input2).domain() == exact(input1).domain());
+
 	// Avoid a warning about an undefined variable when NDEBUG
 	// is not defined.
-	(void) ima1;
-	(void) ima2;
+	(void) input1;
+	(void) input2;
         (void) f;
-        (void) output;
-
-        // Properties check
-        mln_precondition((mlc_is(mln_trait_image_pw_io(O),
-                                 trait::image::pw_io::read_write)::value ||
-                          mlc_is(mln_trait_image_vw_io(O),
-                                 trait::image::vw_io::read_write)::value));
-
-        // FIXME Convert test
-	mlc_converts_to(mln_result(F), mln_value(O))::check();
-
-
-        // Dynamic tests
-	mln_precondition(exact(ima1).has_data());
-	mln_precondition(exact(ima2).has_data());
-	mln_precondition(exact(ima1).domain() == exact(ima2).domain());
-        mln_precondition(exact(output).domain() >= exact(ima1).domain());
       }
 
     } // end of namespace mln::level::internal
+
 
 
     namespace impl
     {
 
 
+      // Generic implementations.
+
+
       namespace generic
       {
 
-        // Generic implementation.
 	template <typename I, typename F>
 	inline
         mln_ch_value(I, mln_result(F))
@@ -166,11 +144,11 @@ namespace mln
 	  const I& input  = exact(input_);
 	  const F& f      = exact(f_);
 
-          mln_precondition(exact(input).has_data());
+	  level::internal::transform_tests(input, f);
+
           mln_ch_value(I, mln_result(F)) output;
           initialize(output, input);
 
-          level::internal::transform_tests(input, f, output);
           mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                  trait::image::pw_io::read_write)::check();
 
@@ -179,36 +157,33 @@ namespace mln
 	    output(p) = f(input(p));
 
 	  trace::exiting("level::impl::generic::transform");
-
           return output;
 	}
 
 
-        // Generic implementation.
-	template <typename I, typename J, typename F>
+	template <typename I1, typename I2, typename F>
 	inline
-        mln_ch_value(I, mln_result(F))
-	  transform(const Image<I>& ima1_,
-		    const Image<J>& ima2_,
+        mln_ch_value(I1, mln_result(F))
+	  transform(const Image<I1>& input1_,
+		    const Image<I2>& input2_,
 		    const Function_vv2v<F>& f_)
 	{
           trace::entering("level::impl::generic::transform");
 
-	  const I& ima1  = exact(ima1_);
-	  const I& ima2  = exact(ima2_);
-	  const F& f      = exact(f_);
+	  const I1& input1  = exact(input1_);
+	  const I2& input2  = exact(input2_);
+	  const  F& f       = exact(f_);
 
-          mln_ch_value(I, mln_result(F)) output;
-          initialize(output, ima1);
+	  level::internal::transform_tests(input1, input2, f);
 
-//           level::internal::transform_tests(ima1, ima2, f, output);
+          mln_ch_value(I1, mln_result(F)) output;
+          initialize(output, input1);
 
-	  mln_piter(I) p(ima1.domain());
+	  mln_piter(I1) p(input1.domain());
 	  for_all(p)
-	    output(p) = f(ima1(p), ima2(p));
+	    output(p) = f(input1(p), input2(p));
 
 	  trace::exiting("level::impl::generic::transform");
-
           return output;
 	}
 
@@ -217,7 +192,8 @@ namespace mln
 
     } // end of namespace mln::level::impl
 
-    // Facade.
+
+    // Facades.
 
     template <typename I, typename F>
     inline
@@ -226,30 +202,31 @@ namespace mln
     {
       trace::entering("level::transform");
 
+      internal::transform_tests(input, f);
+
       mln_ch_value(I, mln_result(F)) output;
-      output = impl::internal::transform_dispatch_(exact(input), exact(f));
+      output = impl::internal::transform_dispatch(exact(input), exact(f));
 
       trace::exiting("level::transform");
-
       return output;
     }
 
-    template <typename I, typename J, typename F>
+    template <typename I1, typename I2, typename F>
     inline
-    mln_ch_value(I, mln_result(F))
-    transform(const Image<I>& ima1,
-	      const Image<J>& ima2,
+    mln_ch_value(I1, mln_result(F))
+    transform(const Image<I1>& input1,
+	      const Image<I2>& input2,
 	      const Function_vv2v<F>& f)
     {
       trace::entering("level::transform");
 
-      mln_ch_value(I, mln_result(F)) output;
-      output = impl::generic::transform(exact(ima1), exact(ima2), exact(f));
+      internal::transform_tests(input1, input2, f);
+
+      mln_ch_value(I1, mln_result(F)) output;
+      output = impl::generic::transform(input1, input2, f);
 
       trace::exiting("level::transform");
-
       return output;
-
     }
 
 

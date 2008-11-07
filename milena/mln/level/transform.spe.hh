@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_LEVEL_TRANSFORM_SPE_HH
 # define MLN_LEVEL_TRANSFORM_SPE_HH
 
-/*! \file mln/level/transform.spe.hh
- *
- * \brief Specializations for mln::level::transform.
- *
- */
+/// \file mln/level/transform.spe.hh
+///
+/// Specializations for mln::level::transform.
 
 # ifndef MLN_LEVEL_TRANSFORM_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -58,11 +57,17 @@ namespace mln
 
     namespace internal
     {
-      template <typename I, typename F, typename O>
+
+      template <typename I, typename F>
       inline
       void transform_tests(const Image<I>& input,
-                           const Function_v2v<F>& f,
-                           Image<O>& output);
+                           const Function_v2v<F>& f);
+
+      template <typename I1, typename I2, typename F>
+      inline
+      void transform_tests(const Image<I1>& input1, const Image<I2>& input2,
+                           const Function_v2v<F>& f);
+
     }
 
 
@@ -76,28 +81,27 @@ namespace mln
       {
 	template <typename I, typename F>
         mln_ch_value(I, mln_result(F))
-        transform(const Image<I>& input_,
-                  const Function_v2v<F>& f_);
+	  transform(const Image<I>& input_,
+		    const Function_v2v<F>& f_);
       }
 
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-      transform_lowq(const Image<I>& input_,
-                     const Function_v2v<F>& f_)
+	transform_lowq(const Image<I>& input_,
+		       const Function_v2v<F>& f_)
       {
 	trace::entering("level::impl::transform_lowq");
 
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-
-        mln_precondition(exact(input).has_data());
-        mln_ch_value(I, mln_result(F)) output;
-        initialize(output, input);
-
-        level::internal::transform_tests(input, f, output);
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
+
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.values_eligible(), f);
@@ -113,21 +117,20 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-      transform_taken(const Image<I>& input_,
-                      const Function_v2v<F>& f_)
+	transform_taken(const Image<I>& input_,
+			const Function_v2v<F>& f_)
       {
         trace::entering("level::impl::transform_taken");
 
-	const I& input  = exact(input_);
-	const F& f      = exact(f_);
-
-        mln_precondition(exact(input).has_data());
-        mln_ch_value(I, mln_result(F)) output;
-        initialize(output, input);
-
-        level::internal::transform_tests(input, f, output);
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
+
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.taken_values(), f);
@@ -144,19 +147,17 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-      transform_singleton(const Image<I>& input_,
-                          const Function_v2v<F>& f_)
+	transform_singleton(const Image<I>& input_,
+			    const Function_v2v<F>& f_)
       {
         trace::entering("level::impl::transform_singleton");
 
 	const I& input  = exact(input_);
 	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
 
-        mln_precondition(exact(input).has_data());
         mln_ch_value(I, mln_result(F)) output;
         initialize(output, input);
-
-        level::internal::transform_tests(input_, f_, output);
 
         mln_result(F) val = f(input.val());
         fill_with_value(output, val);
@@ -168,22 +169,19 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-      transform_fast(const Image<I>& input_,
-                     const Function_v2v<F>& f_)
+	transform_fast(const Image<I>& input_,
+		       const Function_v2v<F>& f_)
       {
         trace::entering("level::impl::transform_fast");
 
-        typedef mln_ch_value(I, mln_result(F)) O;
 
         const I& input = exact(input_);
         const F& f     = exact(f_);
+        level::internal::transform_tests(input, f);
 
-        mln_precondition(exact(input).has_data());
-        mln_ch_value(I, mln_result(F)) output;
+        typedef mln_ch_value(I, mln_result(F)) O;
+        O output;
         initialize(output, input);
-
-
-        level::internal::transform_tests(input, f, output);
 
         mln_pixter(const I) pi(input);
         mln_pixter(O) po(output);
@@ -203,20 +201,18 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-      transform_fast_lowq(const Image<I>& input_,
-                          const Function_v2v<F>& f_)
+	transform_fast_lowq(const Image<I>& input_,
+			    const Function_v2v<F>& f_)
       {
         trace::entering("level::impl::transform_fast_lowq");
-        typedef mln_ch_value(I, mln_result(F)) O;
 
         const I& input = exact(input_);
 	const F& f     = exact(f_);
+        level::internal::transform_tests(input, f);
 
-        mln_precondition(exact(input).has_data());
-        mln_ch_value(I, mln_result(F)) output;
+        typedef mln_ch_value(I, mln_result(F)) O;
+        O output;
         initialize(output, input);
-
-        level::internal::transform_tests(input, f, output);
 
         value::lut_vec<mln_vset(I), mln_result(F)>
           lut(input.values_eligible(), f);
@@ -247,10 +243,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::undef,
-                            mln::trait::image::quant::any,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::undef,
+			     mln::trait::image::quant::any,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return impl::generic::transform(input, f);
         }
@@ -258,10 +254,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::vw_set::any,
-                            mln::trait::image::quant::any,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::vw_set::any,
+			     mln::trait::image::quant::any,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return impl::generic::transform(input, f);
         }
@@ -269,10 +265,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::vw_set::uni,
-                            mln::trait::image::quant::any,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::vw_set::uni,
+			     mln::trait::image::quant::any,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return impl::transform_taken(input, f);
         }
@@ -281,10 +277,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::vw_set::any,
-                            mln::trait::image::quant::low,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::vw_set::any,
+			     mln::trait::image::quant::low,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return impl::transform_lowq(input, f);
         }
@@ -294,10 +290,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::quant::any,
-                            mln::trait::image::value_access::direct,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::quant::any,
+			     mln::trait::image::value_access::direct,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return transform_fast(input, f);
         }
@@ -306,10 +302,10 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::quant::low,
-                            mln::trait::image::value_access::direct,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::quant::low,
+			     mln::trait::image::value_access::direct,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return transform_fast_lowq(input, f);
         }
@@ -319,35 +315,35 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::quant::any,
-                            mln::trait::image::value_access::any,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::quant::any,
+			     mln::trait::image::value_access::any,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
-          return transform_dispatch_(mln_trait_image_vw_set(I)(),
-                                     mln_trait_image_quant(I)(),
-                                     input, f);
+          return transform_dispatch(mln_trait_image_vw_set(I)(),
+				    mln_trait_image_quant(I)(),
+				    input, f);
         }
 
 
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::value_storage::any,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::value_storage::any,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
-          return transform_dispatch_(mln_trait_image_vw_set(I)(),
-                                     mln_trait_image_quant(I)(),
-                                     input, f);
+          return transform_dispatch(mln_trait_image_vw_set(I)(),
+				    mln_trait_image_quant(I)(),
+				    input, f);
         }
 
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::value_storage::singleton,
-                            const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(mln::trait::image::value_storage::singleton,
+			     const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
           return transform_singleton(input, f);
         }
@@ -355,33 +351,33 @@ namespace mln
         template <typename I, typename F>
         inline
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(mln::trait::image::value_storage::one_block,
-                            const Image<I>& input_,
-                            const Function_v2v<F>& f_)
+	  transform_dispatch(mln::trait::image::value_storage::one_block,
+			     const Image<I>& input_,
+			     const Function_v2v<F>& f_)
         {
           const I& input  = exact(input_);
 
           /// Check alignement property
           if (mlc_is(mln_trait_image_value_alignement(I),
                      trait::image::value_alignement::with_grid)::value)
-            return transform_dispatch_(mln_trait_image_quant(I)(),
-                                       mln_trait_image_value_access(I)(),
-                                       input, f_);
+            return transform_dispatch(mln_trait_image_quant(I)(),
+				      mln_trait_image_value_access(I)(),
+				      input, f_);
           else
-            return transform_dispatch_(mln_trait_image_vw_set(I)(),
-                                       mln_trait_image_quant(I)(),
-                                       input, f_);
+            return transform_dispatch(mln_trait_image_vw_set(I)(),
+				      mln_trait_image_quant(I)(),
+				      input, f_);
         }
 
 
 
         template <typename I, typename F>
         mln_ch_value(I, mln_result(F))
-        transform_dispatch_(const Image<I>& input,
-                            const Function_v2v<F>& f)
+	  transform_dispatch(const Image<I>& input,
+			     const Function_v2v<F>& f)
         {
-          return transform_dispatch_(mln_trait_image_value_storage(I)(),
-                                     input, f);
+          return transform_dispatch(mln_trait_image_value_storage(I)(),
+				    input, f);
         }
 
       }

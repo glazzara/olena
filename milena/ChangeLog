@@ -1,3 +1,27 @@
+2008-11-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Revamp linear sobel and cleanup level transform.
+
+	* mln/linear/ch_convolve.hh (mln_ch_convolve_grad): New.
+	* mln/linear/sobel_2d.hh: New.
+	* mln/linear/sobel.hh: Remove; obsolete.
+	* tests/linear/sobel.cc: Remove; obsolete.
+	* tests/linear/sobel_2d.cc: New.
+	* tests/linear/Makefile.am: Update.
+
+	* mln/fun/x2v/l1_norm.hh: New.
+	* mln/fun/vv2v/vec.hh: New.
+	* mln/fun/vv2v/all.hh: Update.
+	* mln/level/transform.spe.hh: Cleanup.
+	* mln/level/transform.hh: Cleanup.
+	* mln/level/transform_inplace.hh: New.
+	* tests/level/transform_inplace.cc: New.
+	* tests/level/Makefile.am: Update.
+
+	* mln/make/image2d.hh: Relax check; it was too strong.
+	* mln/core/concept/image.hh: Likewise.
+	* tests/make/image2d.cc: Augment.
+
 2008-11-06  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add arith::diff_abs.
