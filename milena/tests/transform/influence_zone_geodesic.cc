@@ -25,26 +25,34 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_ALL_HH
-# define MLN_TRANSFORM_ALL_HH
-
-/// \file mln/transform/all.hh
+/// \file tests/transform/influence_zone_geodesic.cc
 ///
-/// File that includes all transforms.
+/// Test on mln::transform::influence_zone_geodesic.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/make/image2d.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/transform/influence_zone_geodesic.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /// Namespace of transforms.
-  namespace transform {}
+  int_u8 vals[] =
+    { 1, 1, 0, 0, 0, 0, 3,
+      1, 1, 1, 0, 0, 0, 0, 
+      0, 1, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 2, 0,
+      0, 0, 0, 0, 2, 2, 0,
+      0, 0, 0, 0, 0, 0, 0 };
+  image2d<int_u8> input = make::image2d(vals);
 
-} // end of namespace mln
-
-
-# include <mln/transform/distance.hh>
-# include <mln/transform/distance_geodesic.hh>
-# include <mln/transform/influence_zone_geodesic.hh>
-
-
-#endif // ! MLN_TRANSFORM_ALL_HH
+  image2d<int_u8> output = transform::influence_zone_geodesic(input, c4(), int_u8(1));
+  debug::println(output);
+}

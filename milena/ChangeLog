@@ -1,3 +1,13 @@
+2008-11-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a couple of geodesic transforms.
+
+	* mln/transform/influence_zone_geodesic.hh: New.
+	* mln/transform/all.hh: Update.
+	* tests/transform/influence_zone_geodesic.cc: New.
+	* mln/transform/distance_geodesic.hh: New.
+	* tests/transform/distance_geodesic.cc: New.
+
 2008-11-07  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add directional filters for the gaussian and its derivatives.

@@ -25,26 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_ALL_HH
-# define MLN_TRANSFORM_ALL_HH
-
-/// \file mln/transform/all.hh
+/// \file tests/transform/distance_geodesic.cc
 ///
-/// File that includes all transforms.
+/// Test on mln::transform::distance_geodesic.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/level/fill.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/transform/distance_geodesic.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  /// Namespace of transforms.
-  namespace transform {}
+  image2d<bool> input(9, 9);
+  level::fill(input, false);
+  input.at(4, 4) = true;
 
-} // end of namespace mln
-
-
-# include <mln/transform/distance.hh>
-# include <mln/transform/distance_geodesic.hh>
-# include <mln/transform/influence_zone_geodesic.hh>
-
-
-#endif // ! MLN_TRANSFORM_ALL_HH
+  image2d<int_u8> output = transform::distance_geodesic(input, c4(), int_u8(4));
+  debug::println(output);
+}
