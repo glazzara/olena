@@ -44,6 +44,8 @@
 
 #include "tests/data.hh"
 
+#include <mln/trace/all.hh>
+
 
 
 int main()
@@ -54,6 +56,5 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   image2d<value::int_u8> out = linear::gaussian(lena, 5.1f);
-
   io::pgm::save(out, "out.pgm");
  }

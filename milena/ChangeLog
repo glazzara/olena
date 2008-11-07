@@ -1,3 +1,10 @@
+2008-11-07  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add directional filters for the gaussian and its derivatives.
+
+	* tests/linear/gaussian.cc: Update tests.
+	* mln/linear/gaussian.hh: Add directional filters.
+
 2008-11-07  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Revamp linear sobel and cleanup level transform.

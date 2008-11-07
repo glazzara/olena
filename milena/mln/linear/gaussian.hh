@@ -43,6 +43,8 @@
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
 
+# include <mln/trait/image/props.hh>
+
 # include <mln/extension/adjust_fill.hh>
 # include <mln/level/stretch.hh>
 
@@ -50,6 +52,8 @@
 
 # include <vector>
 # include <cmath>
+
+# include <mln/debug/println.hh>
 
 namespace mln
 {
@@ -202,16 +206,16 @@ namespace mln
 
 	mln_psite(I) current(start + d + d + d + d);
 	for (mln_coord(I) i = 4; i < len; ++i)
-	  {
-	    tmp1[i] =
-	      c.n[0] * ima(current)
-	      + c.n[1] * ima(current - d)
-	      + c.n[2] * ima(current - d - d)
-	      + c.n[3] * ima(current - d - d - d)
-	      - c.d[1] * tmp1[i - 1] - c.d[2] * tmp1[i - 2]
-	      - c.d[3] * tmp1[i - 3] - c.d[4] * tmp1[i - 4];
-	    current = current + d;
-	  }
+        {
+          tmp1[i] =
+            c.n[0] * ima(current)
+            + c.n[1] * ima(current - d)
+            + c.n[2] * ima(current - d - d)
+            + c.n[3] * ima(current - d - d - d)
+            - c.d[1] * tmp1[i - 1] - c.d[2] * tmp1[i - 2]
+            - c.d[3] * tmp1[i - 3] - c.d[4] * tmp1[i - 4];
+          current = current + d;
+        }
 
 	// Non causal part
 
@@ -235,25 +239,24 @@ namespace mln
 	current = finish - d - d - d ;
 
 	for (int i = len - 5; i >= 0; --i)
-	  {
-	    tmp2[i] =
-	      c.nm[1] * ima(current)
-	      + c.nm[2] * ima(current + d)
-	      + c.nm[3] * ima(current + d + d)
-	      + c.nm[4] * ima(current + d + d + d)
-	      - c.dm[1] * tmp2[i + 1] - c.dm[2] * tmp2[i + 2]
-	      - c.dm[3] * tmp2[i + 3] - c.dm[4] * tmp2[i + 4];
-	    current = current - d;
-	  }
+	{
+          tmp2[i] =
+            c.nm[1] * ima(current)
+            + c.nm[2] * ima(current + d)
+            + c.nm[3] * ima(current + d + d)
+            + c.nm[4] * ima(current + d + d + d)
+            - c.dm[1] * tmp2[i + 1] - c.dm[2] * tmp2[i + 2]
+            - c.dm[3] * tmp2[i + 3] - c.dm[4] * tmp2[i + 4];
+          current = current - d;
+        }
 
 	// Combine results from causal and non-causal parts.
-
 	current = start;
 	for (int i = 0; i < len; ++i)
-	  {
-	    ima(current) = tmp1[i] + tmp2[i];
-	    current = current + d;
-	  }
+	{
+          ima(current) = tmp1[i] + tmp2[i];
+          current = current + d;
+	}
       }
 
 
@@ -331,8 +334,10 @@ namespace mln
 	float scale0 = 1 + exp2b0 - 2 * cos0 * expb0;
 	scale0 *= scale0 * scale0;
 
-	float scaleA = a1 * sin0 * expb0 * (1 + expb0 * (2 * cos0 * (1 + exp2b0) + exp2b0 - 6)) +
-		       a0 * expb0 * (2 * expb0 * (2 - cos0 * cos0) * (1 - exp2b0) - cos0 * (1 - exp2b0 * exp2b0));
+	float scaleA = a1 * sin0 * expb0 *
+          (1 + expb0 * (2 * cos0 * (1 + exp2b0) + exp2b0 - 6)) +
+          a0 * expb0 * (2 * expb0 * (2 - cos0 * cos0) *
+                        (1 - exp2b0) - cos0 * (1 - exp2b0 * exp2b0));
 
 	float expb1 = exp(b1);
 	float exp2b1 = exp(2.0 * b1);
@@ -340,8 +345,10 @@ namespace mln
 	float scale1 = 1 + exp2b1 - 2 * cos1 * expb1;
 	scale1 *= scale1 * scale1;
 
-	float scaleC = c1 * sin1 * expb1 * (1 + expb1 * (2 * cos1 * (1 + exp2b1) + exp2b1 - 6)) +
-		       c0 * expb1 * (2 * expb1 * (2 - cos1 * cos1) * (1 - exp2b1) - cos1 * (1 - exp2b1 * exp2b1));
+	float scaleC = c1 * sin1 * expb1 *
+          (1 + expb1 * (2 * cos1 * (1 + exp2b1) + exp2b1 - 6)) +
+          c0 * expb1 * (2 * expb1 * (2 - cos1 * cos1) *
+                        (1 - exp2b1) - cos1 * (1 - exp2b1 * exp2b1));
 
 	float sumA = scaleA / scale0;
 	float sumC = scaleC / scale1;
@@ -350,39 +357,124 @@ namespace mln
 	return (sumA + sumC);
       }
 
+
       template <class I, class F>
       inline
       void
-      generic_filter_(Image<I>& img_, const F& coef)
+      generic_filter_(trait::image::dimension::one_d,
+                      Image<I>& img_, const F& coef, int dir)
+      {
+	I& img = exact(img_);
+        mln_precondition(dir < I::site::dim);
+
+
+        recursivefilter_<mln_value(I)>(img, coef,
+                                       point1d(-img.border()),
+                                       point1d(geom::ninds(img) - 1 +
+                                               img.border()),
+                                       geom::ninds(img) + 2 * img.border(),
+                                       dpoint1d(1));
+      }
+
+      template <class I, class F>
+      inline
+      void
+      generic_filter_(trait::image::dimension::two_d,
+                      Image<I>& img_, const F& coef, int dir)
       {
 	I& img = exact(img_);
 
-	// Apply on rows.
-	for (unsigned j = 0; j < geom::ncols(img); ++j)
-	  recursivefilter_< mln_value(I) >(img, coef,
-				  point2d(-img.border(), j),
-				  point2d(geom::nrows(img) - 1 + img.border(), j),
-				  geom::nrows(img) + 2 * img.border(),
-				  dpoint2d(1, 0));
+        mln_precondition(dir < I::site::dim);
 
-	// Apply on columns.
-	for (unsigned i = 0; i < geom::nrows(img); ++i)
-	  recursivefilter_< mln_value(I) >(img, coef,
-				  point2d(i, -img.border()),
-				  point2d(i, geom::ncols(img) - 1 + img.border()),
-				  geom::ncols(img) + 2 * img.border(),
-				  dpoint2d(0, 1));
+
+        if (dir == 0)
+        {
+          // Apply on rows.
+          for (unsigned j = 0; j < geom::ncols(img); ++j)
+            recursivefilter_<mln_value(I)>(img, coef,
+                                           point2d(-img.border(), j),
+                                           point2d(geom::nrows(img) - 1 +
+                                                   img.border(), j),
+                                           geom::nrows(img) + 2 * img.border(),
+                                           dpoint2d(1, 0));
+        }
+
+        if (dir == 1)
+        {
+          // Apply on columns.
+          for (unsigned i = 0; i < geom::nrows(img); ++i)
+            recursivefilter_<mln_value(I)>(img, coef,
+                                           point2d(i, -img.border()),
+                                           point2d(i, geom::ncols(img) - 1 +
+                                                   img.border()),
+                                           geom::ncols(img) + 2 * img.border(),
+                                           dpoint2d(0, 1));
+        }
       }
+
+      template <class I, class F>
+      inline
+      void
+      generic_filter_(trait::image::dimension::three_d,
+                      Image<I>& img_, const F& coef, int dir)
+      {
+	I& img = exact(img_);
+        mln_precondition(dir < I::site::dim);
+
+        if (dir == 0)
+        {
+          // Apply on slices.
+          for (unsigned j = 0; j < geom::nrows(img); ++j)
+            for (unsigned k = 0; k < geom::ncols(img); ++k)
+              recursivefilter_<mln_value(I)>(img, coef,
+                                             point3d(-img.border(), j , k),
+                                             point3d(geom::nslis(img) - 1 +
+                                                     img.border(), j, k),
+                                             geom::nslis(img) + 2 *
+                                             img.border(),
+                                             dpoint3d(1, 0, 0));
+        }
+
+
+        if (dir == 1)
+        {
+          // Apply on rows.
+          for (unsigned i = 0; i < geom::nslis(img); ++i)
+            for (unsigned k = 0; k < geom::ncols(img); ++k)
+              recursivefilter_<mln_value(I)>(img, coef,
+                                             point3d(i, -img.border(), k),
+                                             point3d(i, geom::nrows(img) - 1 +
+                                                     img.border(), k),
+                                             geom::nrows(img) + 2 *
+                                             img.border(),
+                                             dpoint3d(0, 1, 0));
+        }
+
+        if (dir == 2)
+        {
+          // Apply on columns.
+          for (unsigned i = 0; i < geom::nslis(img); ++i)
+            for (unsigned j = 0; j < geom::nrows(img); ++i)
+              recursivefilter_<mln_value(I)>(img, coef,
+                                             point3d(i, j, -img.border()),
+                                             point3d(i, j, geom::ncols(img) -
+                                                     1 + img.border()),
+                                             geom::ncols(img) + 2 *
+                                             img.border(),
+                                             dpoint3d(0, 0, 1));
+        }
+      }
+
 
 
       template <class I, class F, class O>
       inline
       void
       generic_filter_common_(trait::value::nature::scalar,
-                       const Image<I>& in,
-		       const F& coef,
-		       float sigma,
-                       Image<O>& out)
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out)
       {
 	mln_ch_value(O, float) work_img(exact(in).domain());
 	level::paste(in, work_img);
@@ -391,23 +483,50 @@ namespace mln
 	// On tiny sigma, Derich algorithm doesn't work.
 	// It is the same thing that to convolve with a Dirac.
 	if (sigma > 0.006)
-	  generic_filter_(work_img, coef);
-	/* Convert the result image to the user-requested datatype.
-	   FIXME: We are making an unnecessary copy in case the
-	   user expects a ntg::float_s image.  */
-	//level::stretch(work_img, out);
+          for (int i = 0; i < I::site::dim; ++i)
+            generic_filter_(mln_trait_image_dimension(I)(),
+                            work_img, coef, i);
+
+	// FIXME deal with overflow problem
+        // for instance, when we paste a float image into a int_u8 images.
 	level::paste(work_img, out);
       }
+
+      template <class I, class F, class O>
+      inline
+      void
+      generic_filter_common_(trait::value::nature::scalar,
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out,
+                             int dir)
+      {
+	mln_ch_value(O, float) work_img(exact(in).domain());
+	level::paste(in, work_img);
+	extension::adjust_fill(work_img, 4, 0);
+
+	// On tiny sigma, Derich algorithm doesn't work.
+	// It is the same thing that to convolve with a Dirac.
+	if (sigma > 0.006)
+	  generic_filter_(mln_trait_image_dimension(I)(),
+                          work_img, coef, dir);
+
+	// FIXME deal with overflow problem
+        // for instance, when we paste a float image into a int_u8 images.
+	level::paste(work_img, out);
+      }
+
 
 
       template <class I, class F, class O>
       inline
       void
       generic_filter_common_(trait::value::nature::vectorial,
-                       const Image<I>& in,
-		       const F& coef,
-		       float sigma,
-                       Image<O>& out)
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out)
       {
         // typedef algebra::vec<3, float> vec3f;
         // mln_ch_value(O, vec3f) work_img(exact(in).domain());
@@ -417,13 +536,145 @@ namespace mln
 	// On tiny sigma, Derich algorithm doesn't work.
 	// It is the same thing that to convolve with a Dirac.
 	if (sigma > 0.006)
-	  generic_filter_(out, coef);
+          for (int i = 0; i < I::site::dim; ++i)
+            generic_filter_(mln_trait_image_dimension(I)(),
+                            out, coef, i);
+      }
+
+      template <class I, class F, class O>
+      inline
+      void
+      generic_filter_common_(trait::value::nature::vectorial,
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out,
+                             int dir)
+      {
+        // typedef algebra::vec<3, float> vec3f;
+        // mln_ch_value(O, vec3f) work_img(exact(in).domain());
+        // FIXME : paste does not work (rgb8 -> vec3f).
+        level::paste(in, out);
+
+	// On tiny sigma, Derich algorithm doesn't work.
+	// It is the same thing that to convolve with a Dirac.
+	if (sigma > 0.006)
+	  generic_filter_(mln_trait_image_dimension(I)(),
+                          out, coef, dir);
       }
 
     } // end of namespace mln::linear::impl
 
+
     // Facade.
 
+
+    /*! Apply an approximated gaussian filter of \p sigma on \p input.
+     * on a specific direction \p dir
+     * if \p dir = 0, the filter is applied on the first image dimension.
+     * if \p dir = 1, the filter is applied on the second image dimension.
+     * And so on...
+     *
+     * \pre input.has_data
+     * \pre dir < dimension(input)
+     */
+    template <class I>
+    inline
+    mln_concrete(I)
+    gaussian(const Image<I>& input, float sigma, int dir)
+    {
+      mln_precondition(exact(input).has_data());
+      mln_precondition(dir < I::site::dim);
+
+      mln_concrete(I) output;
+      initialize(output, input);
+      impl::recursivefilter_coef_ coef(1.68f, 3.735f,
+                                       1.783f, 1.723f,
+                                       -0.6803f, -0.2598f,
+                                       0.6318f, 1.997f,
+                                       sigma, impl::gaussian_norm_coef_);
+
+      impl::generic_filter_common_(mln_trait_value_nature(mln_value(I))(),
+				   input, coef, sigma, output, dir);
+      return output;
+    }
+
+
+    /*! Apply an approximated first derivative gaussian filter of \p sigma on
+     * \p input.
+     * on a specific direction \p dir
+     * if \p dir = 0, the filter is applied on the first image dimension.
+     * if \p dir = 1, the filter is applied on the second image dimension.
+     * And so on...
+     *
+     * \pre input.has_data
+     * \pre dir < dimension(input)
+     */
+    template <class I>
+    inline
+    mln_concrete(I)
+    gaussian_1st_derivative(const Image<I>& input, float sigma, int dir)
+    {
+      mln_precondition(exact(input).has_data());
+      mln_precondition(dir < I::site::dim);
+
+      mln_concrete(I) output;
+      initialize(output, input);
+
+      impl::recursivefilter_coef_
+        coef(-0.6472f, -4.531f,
+             1.527f, 1.516f,
+             0.6494f, 0.9557f,
+             0.6719f, 2.072f,
+             sigma, impl::gaussian_1st_deriv_coef_norm_);
+
+      impl::generic_filter_common_(mln_trait_value_nature(mln_value(I))(),
+				   input, coef, sigma, output, dir);
+      return output;
+    }
+
+    /*! Apply an approximated second derivative gaussian filter of \p sigma on
+     * \p input.
+     * on a specific direction \p dir
+     * if \p dir = 0, the filter is applied on the first image dimension.
+     * if \p dir = 1, the filter is applied on the second image dimension.
+     * And so on...
+     *
+     * \pre input.has_data
+     * \pre dir < dimension(input)
+     */
+    template <class I>
+    inline
+    mln_concrete(I)
+    gaussian_2nd_derivative(const Image<I>& input, float sigma, int dir)
+    {
+      mln_precondition(exact(input).has_data());
+      mln_precondition(dir < I::site::dim);
+
+      mln_concrete(I) output;
+      initialize(output, input);
+
+      impl::recursivefilter_coef_
+        coef(-1.331f, 3.661f,
+             1.24f, 1.314f,
+             0.3225f, -1.738f,
+             0.748f, 2.166f,
+             sigma, impl::gaussian_2nd_deriv_coef_norm_);
+
+      impl::generic_filter_common_(mln_trait_value_nature(mln_value(I))(),
+				   input, coef, sigma, output, dir);
+      return output;
+    }
+
+
+
+
+
+    /*! Apply an approximated gaussian filter of \p sigma on \p input.
+     * This filter is applied in all the input image direction.
+     *
+     * \pre input.has_data
+     */
     template <class I>
     inline
     mln_concrete(I)
@@ -446,6 +697,13 @@ namespace mln
       return output;
     }
 
+
+    /*! Apply an approximated first derivative gaussian filter of \p sigma on
+     * \p input
+     * This filter is applied in all the input image direction.
+     *
+     * \pre input.has_data
+     */
     template <class I>
     inline
     mln_concrete(I)
@@ -467,6 +725,13 @@ namespace mln
       return output;
     }
 
+
+    /*! Apply an approximated second derivative gaussian filter of \p sigma on
+     * \p input
+     * This filter is applied in all the input image direction.
+     *
+     * \pre input.has_data
+     */
     template <class I>
     inline
     mln_concrete(I)
