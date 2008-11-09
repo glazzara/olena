@@ -53,7 +53,6 @@ fill_histo(const I& ima, int f)
   const value::int_u8 v = 255 / f; // FIXME
   image3d<unsigned> histo(v,v,v);
   level::fill(histo, 0);
-  unsigned i = 0;
 
   mln_piter(I) p(ima.domain());
   for_all(p)
@@ -162,7 +161,6 @@ int main(int argc, char **argv)
   //compute opening_volume of histo
   image3d<unsigned> histo_filtered(histo.domain());
   morpho::opening_volume(histo, c6(), lambda, histo_filtered);
-
 
   //watershed over histo_closure
   unsigned nbasins = 0;

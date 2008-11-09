@@ -40,7 +40,7 @@ namespace mln
 
   template <typename T, typename A>
   image2d<mln_result(A)>
-  proj(const image3d<T>& input, A a)
+  proj(const image3d<T>& input, A)
   {
     image2d<A> acc(geom::nslis(input), geom::nrows(input));
     mln_piter(image3d<T>) p(input.domain());
@@ -69,11 +69,15 @@ namespace mln
     image2d<value::rgb8> out(proj_class.domain());
 
     level::fill(out, literal::white);
-    mln_piter(image2d<value::int_u8>) p(hproj.domain());
+    mln_piter(image2d<value::int_u8>) p(proj_class.domain());
     for_all(p)
-     if (hproj(p) > 0)
-        out(p) = convert::to<value::rgb8>(mean[proj_class(p)]);
-
+      if (hproj(p) > 0)
+        {
+          if (proj_class(p) > 0)
+            out(p) = convert::to<value::rgb8>(mean[proj_class(p)]);
+          else
+            out(p) = literal::red;
+        }
     io::ppm::save(out, fn);
   }
 

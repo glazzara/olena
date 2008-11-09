@@ -21,18 +21,18 @@ LOG=> stdout.log 2> stderr.log
 
 
 $(ICCVG): $(ICCVG_SRC)
-	g++ $(ICCVG_INCLUDES) -O1 -DNDEBUG $(ICCVG_SRC) -o $(ICCVG)
+	g++ $(ICCVG_INCLUDES) -Wall -W -O1 -DNDEBUG $(ICCVG_SRC) -o $(ICCVG)
 
 
 $(ICCVG_DBG): $(ICCVG_SRC)
-	g++ $(ICCVG_INCLUDES) -O0 -g3 -ggdb3 $(ICCVG_SRC) -o $(ICCVG_DBG)
+	g++ $(ICCVG_INCLUDES) -Wall -W -O0 -g3 -ggdb3 $(ICCVG_SRC) -o $(ICCVG_DBG)
 
 $(V2): $(V2_SRC)
-	g++ $(V2_INCLUDES) -O1 -DNDEBUG $(V2_SRC) -o $(V2)
+	g++ $(V2_INCLUDES) -Wall -W -O1 -DNDEBUG $(V2_SRC) -o $(V2)
 
 
 $(V2_DBG): $(V2_SRC) .dep_v2
-	g++ $(V2_INCLUDES) -O0 -g3 -ggdb3 $(V2_SRC) -o $(V2_DBG)
+	g++ $(V2_INCLUDES) -Wall -W -O0 -g3 -ggdb3 $(V2_SRC) -o $(V2_DBG)
 
 
 .PHONY:clean check check-debug valgrind .dep_iccvg .dep_v2

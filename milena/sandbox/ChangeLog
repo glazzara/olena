@@ -1,3 +1,11 @@
+2008-11-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Update palette proj.
+
+	* inim/classif/src/iccvg04.cc: Fix warning.
+	* inim/classif/src/proj.hh: Update palette prj.
+	* inim/classif/Makefile: Add warning flag.
+
 2008-11-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix Update and Revamp Classif.
