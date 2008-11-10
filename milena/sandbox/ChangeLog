@@ -1,3 +1,25 @@
+2008-11-10  Dalila Benboudjema  <dalila@lrde.epita.fr>
+
+	Add a new sandbox for Dalila.
+	* dalila/Makefile: New.
+	* dalila/demat.hh: New.
+	* dalila/images/factures/facture.pbm: New.
+	* dalila/images/factures/facture2.pbm: New.
+	* dalila/images/factures/facture3.pbm: New.
+	* dalila/images/factures: New.
+	* dalila/images/photos/chavez.pbm: New.
+	* dalila/images/photos/family.pbm: New.
+	* dalila/images/photos/garden.pbm: New.
+	* dalila/images/photos/garden_crop.pbm: New.
+	* dalila/images/photos/revolution.pbm: New.
+	* dalila/images/photos/revolution2.pbm: New.
+	* dalila/images/photos: New.
+	* dalila/images: New.
+	* dalila/photo.cc: New.
+	* dalila/start.sh: New.
+	* dalila/table.cc: New.
+	* dalila: New.
+
 2008-11-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Update palette proj.
