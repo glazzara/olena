@@ -1,5 +1,26 @@
 2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add accu snake_2d and transform; revamp accu compute.
+
+	* tests/accu/snake_2d.cc: New.
+	* mln/accu/snake_2d.hh: New.
+	* mln/accu/transform.hh: New.
+	* mln/core/image/image2d.hh (include): Re-activate make/image2d.
+	* tests/accu/transform.cc: New.
+	* tests/accu/compute.cc (FIXME): Fix.
+	* tests/accu/Makefile.am: Update.
+	* mln/accu/min.hh: Fix (c) and upgrade doc layout.
+	* mln/accu/count.hh: Likewise.
+	(untake): New.
+	* mln/accu/compute.hh: Revamp w.r.t. convention.
+	* mln/transform/influence_zone_geodesic.hh: Fix guard.
+	* mln/transform/distance.hh: Upgrade doc layout.
+	* mln/transform/distance_geodesic.hh: Fix guard.
+	* tests/transform/Makefile.am: Update.
+	* mln/morpho/erosion.hh: Fix layout.
+
+2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rely on a canvas to compute iz and distance transforms.
 
 	* tests/transform/influence_zone_geodesic.cc: Slight change.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +30,12 @@
 # define MLN_ACCU_COUNT_HH
 
 /// \file mln/accu/count.hh
+///
 /// \brief Define an accumulator that counts.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
+
 
 namespace mln
 {
@@ -55,6 +58,9 @@ namespace mln
       void take(const argument&);
       void take(const count<T>& other);
 
+      void untake(const argument&);
+      void untake(const count<T>& other);
+
       /// Force the value of the counter to \a c.
       void set_value(unsigned c);
       /// \}
@@ -71,6 +77,7 @@ namespace mln
       unsigned count_;
     };
 
+
     namespace meta
     {
 
@@ -85,6 +92,7 @@ namespace mln
       };
 
     } // end of namespace mln::accu::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -115,9 +123,27 @@ namespace mln
     template <typename T>
     inline
     void
+    count<T>::untake(const argument&)
+    {
+      mln_precondition(count_ > 0);
+      --count_;
+    }
+
+    template <typename T>
+    inline
+    void
     count<T>::take(const count<T>& other)
     {
       count_ += other.count_;
+    }
+
+    template <typename T>
+    inline
+    void
+    count<T>::untake(const count<T>& other)
+    {
+      mln_precondition(other.count_ <= count_);
+      count_ -= other.count_;
     }
 
     template <typename T>

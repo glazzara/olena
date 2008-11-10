@@ -49,7 +49,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
     
     namespace internal
     {
@@ -107,4 +106,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORM_DISTANCE_HH
+#endif // ! MLN_TRANSFORM_INFLUENCE_ZONE_GEODESIC_HH

@@ -19,6 +19,8 @@ check_PROGRAMS =				\
   nil						\
   pair						\
   rank						\
+  snake_2d					\
+  transform					\
   tuple
 
 all_accus_SOURCES = all_accus.cc
@@ -37,6 +39,8 @@ min_max_SOURCES = min_max.cc
 nil_SOURCES = nil.cc
 pair_SOURCES = pair.cc
 rank_SOURCES = rank.cc
+snake_2d_SOURCES = snake_2d.cc
+transform_SOURCES = transform.cc
 tuple_SOURCES = tuple.cc
 
 TESTS = $(check_PROGRAMS)

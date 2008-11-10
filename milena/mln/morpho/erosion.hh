@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_MORPHO_EROSION_HH
 
 /// \file mln/morpho/erosion.hh
+///
 /// \brief Morphological erosion.
 
 # include <mln/morpho/includes.hh>
@@ -63,11 +65,13 @@ namespace mln
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
+
+	mln_precondition(input.has_data());
+	mln_precondition(! win.is_empty());
+	// mln_precondition(win.is_valid());
+
 	(void) input;
 	(void) win;
-
-	mln_precondition(exact(input).has_data());
-	mln_precondition(! exact(win).is_empty());
       }
 
     } // end of mln::morpho::internal

@@ -28,10 +28,11 @@
 #ifndef MLN_TRANSFORM_DISTANCE_HH
 # define MLN_TRANSFORM_DISTANCE_HH
 
-/*! \file mln/transform/distance.hh
- *
- * \brief Discrete distance transform.
-  */
+/// \file mln/transform/distance.hh
+///
+/// Discrete distance transform.
+///
+/// \todo Make a canvas out of it.
 
 # include <vector>
 # include <mln/core/concept/image.hh>

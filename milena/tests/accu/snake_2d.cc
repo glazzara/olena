@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,24 +25,28 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/compute.cc
+/// \file tests/accu/snake_2d.cc
 ///
-/// Tests on mln::accu::compute.
+/// Tests on mln::accu::snake_2d.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/value/int_u8.hh>
-
+#include <mln/accu/snake_2d.hh>
 #include <mln/accu/count.hh>
-#include <mln/accu/compute.hh>
+#include <mln/win/rectangle2d.hh>
+#include <mln/pw/all.hh>
+#include <mln/level/compare.hh>
 
 
 int main()
 {
   using namespace mln;
-  using typename value::int_u8;
 
-  unsigned n = 3;
-  image2d<int_u8> ima(n, n);
-  unsigned c = accu::compute(accu::meta::count(), ima);
-  mln_assertion(c = n * n);
+  image2d<int> ima(4, 5);
+  win::rectangle2d rec(3, 3);
+
+  image2d<unsigned>
+    out = accu::snake_2d(accu::meta::count(), ima, rec),
+    ref(ima.domain());
+
+  mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
 }

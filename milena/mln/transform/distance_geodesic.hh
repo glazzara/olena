@@ -104,4 +104,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORM_DISTANCE_HH
+#endif // ! MLN_TRANSFORM_DISTANCE_GEODESIC_HH

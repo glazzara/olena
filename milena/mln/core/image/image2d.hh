@@ -691,7 +691,7 @@ namespace mln
 
 
 # include <mln/make/image.hh>
-// # include <mln/make/image2d.hh>
+# include <mln/make/image2d.hh>
 
 
 #endif // ! MLN_CORE_IMAGE_IMAGE2D_HH
