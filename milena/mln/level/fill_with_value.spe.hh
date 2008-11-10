@@ -77,8 +77,8 @@ namespace mln
       {
 	trace::entering("level::impl::fill_with_value_one_block");
 
-
 	I& ima = exact(ima_);
+
 	internal::fill_with_value_tests(ima, val);
         mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
                                   trait::image::pw_io::read_write)::value ||

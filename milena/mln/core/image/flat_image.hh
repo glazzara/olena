@@ -252,6 +252,9 @@ namespace mln
     mln_precondition(this->has_data());
     mln_precondition(old_val == this->data_->val_);
     this->data_->val_ = new_val;
+
+    /// Avoid warning when NDEBUG is set
+    (void) old_val;
   }
 
   template <typename T, typename S>

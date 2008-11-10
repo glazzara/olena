@@ -49,7 +49,7 @@
 # define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
 # define mln_trait_value_kind_(V)           mln::trait::value_< V >::kind
 # define mln_trait_value_quant(V)  typename mln::trait::value_< V >::quant
-# define mln_trait_value_quant_(V)          mln::trait::value_< V >::quant
+# define mln_trait_value_quant_(V)          mln::trait::bvalue_< V >::quant
 
 
 # define mln_nbits(V)    mln::trait::value_< V >::nbits
@@ -67,8 +67,9 @@
 
 
 
+/// FIXME: check that the -1 is correct
 # define mln_value_quant_from_(C)			\
-   mlc_if(mln::metal::bool_<( C > 65536 || C == 0 )>,	\
+   mlc_if(mln::metal::bool_<( C > 65536 || C == 0 || C == -1)>,	\
 	  mln::trait::value::quant::high,		\
 	  mln::trait::value::quant::low)
 

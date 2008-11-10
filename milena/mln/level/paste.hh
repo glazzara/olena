@@ -88,6 +88,7 @@ namespace mln
 	mln_precondition(exact(input).has_data());
 	mln_precondition(exact(input).domain() <= exact(output).domain());
 
+        // Avoid warning when compiling with NDEBUG
 	(void)input;
 	(void)output;
       }
