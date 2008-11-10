@@ -63,7 +63,7 @@ namespace mln
 
     // attached data:
     int lambda;
-    mln_ch_value(I, int) volume;
+    mln_ch_value(I, int) height;
     mln_ch_value(Ic, value::rgb8) color;
 
 
@@ -86,12 +86,12 @@ namespace mln
 	initialize(parent, f);
 	initialize(resp, f);
 	initialize(zpar, f);
-	initialize(volume, f);
+	initialize(height, f);
         initialize(color, f);
 
 	mln::level::fill(deja_vu, false);
         mln::level::fill(color, value::rgb8(255, 255, 255));
-        mln::level::fill(volume, 0);
+        mln::level::fill(height, 0);
 
 	s = level::sort_psites_increasing(f);
       }
@@ -124,15 +124,15 @@ namespace mln
 	}
       }
 
-      // third pass: Merging region with volume < lambda
+      // third pass: Merging region with height < lambda
        {
          mln_fwd_piter(S) p(s);
  	for_all(p)
  	{
-          if (resp(p) && (volume(p) < lambda))
+          if (resp(p) && (height(p) < lambda))
            {
              resp(p) = false;
-             update_data(parent(p), volume(p), color(p));
+             update_data(parent(p), height(p), color(p));
            }
  	}
        }
@@ -191,8 +191,8 @@ namespace mln
 
     void init_data(const point& p)
     {
-      // init volume
-      volume(p) = f(p);
+      // init height
+      height(p) = f(p);
 
 
       // init color
@@ -224,8 +224,8 @@ namespace mln
       {
         resp(p) = false;
 
-        // merge volume
-        volume(r) += volume(p);
+        // merge height
+        height(r) += height(r) > height(p) ? height(r) : height(p);
 
         // merge color
         color(r) = (color(r) + color(p)) / 2;
@@ -234,8 +234,8 @@ namespace mln
 
     void update_data(const point& p, int val, value::rgb8 c)
     {
-      // update volume
-      volume(p) += val;
+      // update height
+      height(p) = height(p) > val ? height(p) : val;
       // update color
       color(p) = (color(p) + c) / 2;
 

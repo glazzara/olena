@@ -39,7 +39,6 @@
 
 # include "src/distance.hh"
 
-
 namespace mln
 {
   template <typename I, typename N, typename Ic, typename Nc>
@@ -62,10 +61,11 @@ namespace mln
     mln_ch_value(I, point) zpar;
 
     // attached data:
-    int lambda;
-    mln_ch_value(I, int) volume;
-    mln_ch_value(Ic, value::rgb8) color;
-
+    unsigned lambda;
+    mln_ch_value(I, value::rgb8) color;
+    //mln_ch_value(Ic, value::rgb8) values;
+    //initialize(values, ref);
+    //mln_ch_value(I, int) comp;
 
     min_tree_(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
               int lambda)
@@ -86,12 +86,10 @@ namespace mln
 	initialize(parent, f);
 	initialize(resp, f);
 	initialize(zpar, f);
-	initialize(volume, f);
-        initialize(color, f);
+	initialize(color, f);
 
 	mln::level::fill(deja_vu, false);
         mln::level::fill(color, value::rgb8(255, 255, 255));
-        mln::level::fill(volume, 0);
 
 	s = level::sort_psites_increasing(f);
       }
@@ -124,18 +122,19 @@ namespace mln
 	}
       }
 
-      // third pass: Merging region with volume < lambda
-       {
-         mln_fwd_piter(S) p(s);
- 	for_all(p)
- 	{
-          if (resp(p) && (volume(p) < lambda))
-           {
-             resp(p) = false;
-             update_data(parent(p), volume(p), color(p));
-           }
- 	}
-       }
+      // third pass: Merging region with distance(color) < lambda
+      {
+	mln_fwd_piter(S) p(s);
+	for_all(p)
+	{
+          point q = parent(p);
+          if (resp(p) && distance(color(p), color(q)) < lambda)
+          {
+            resp(p) = false;
+            update_data(q, color(p));
+          }
+	}
+      }
 
     } // end of run()
 
@@ -191,11 +190,6 @@ namespace mln
 
     void init_data(const point& p)
     {
-      // init volume
-      volume(p) = f(p);
-
-
-      // init color
       int red =0, green = 0, blue = 0;
 
       mln_niter(Nc) n(nbhc, p);
@@ -214,7 +208,6 @@ namespace mln
       color(p).green() = green;
       color(p).blue() = blue;
 
-
       resp(p) = true;
     }
 
@@ -223,24 +216,15 @@ namespace mln
       if (f(p) == f(r))
       {
         resp(p) = false;
-
-        // merge volume
-        volume(r) += volume(p);
-
-        // merge color
         color(r) = (color(r) + color(p)) / 2;
       }
     }
 
-    void update_data(const point& p, int val, value::rgb8 c)
+    void update_data(const point& p, value::rgb8 val)
     {
-      // update volume
-      volume(p) += val;
-      // update color
-      color(p) = (color(p) + c) / 2;
-
+      color(p) = (color(p) + val) / 2;
       if (parent(p) != p && !resp(p))
-        update_data(parent(p), val, color(p));
+        update_data(parent(p), color(p));
     }
 
   };
@@ -308,7 +292,6 @@ namespace mln
 	}
     return output;
   }
-
 
   template <typename I>
   I display_edge(const I& ima, unsigned zoom)
@@ -404,8 +387,6 @@ cells2image(const mln::image2d<T>& input)
 }
 
 
-
-
 template <typename I, typename N, typename Ic, typename Nc>
 unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
                   int lambda)
@@ -472,7 +453,6 @@ unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
 
   return nnodes;
 }
-
 
 
 template <typename I>

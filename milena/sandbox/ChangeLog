@@ -1,3 +1,13 @@
+2008-11-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	INIM: Add the final code for edges dectection.
+
+	* ballas/color/min_tree_area_filter.cc: Update
+	* ballas/color/min_tree_color.cc,
+	* ballas/color/min_tree_volume_filter.cc: Update output.
+	* ballas/color/min_tree_height_filter.cc: New min tree filter.
+	* ballas/color/min_tree_color_v2.cc: New, color filter.
+
 2008-11-10  Dalila Benboudjema  <dalila@lrde.epita.fr>
 
 	Add a new sandbox for Dalila.

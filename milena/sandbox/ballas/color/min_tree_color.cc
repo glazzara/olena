@@ -38,6 +38,14 @@
 
 # include <mln/debug/println.hh>
 
+# if 0
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/neighborhood.hh>
+# include <mln/util/pix.hh>
+# include <mln/morpho/includes.hh>
+# include <mln/level/sort_psites.hh>
+#endif
+
 # include "src/distance.hh"
 
 namespace mln
