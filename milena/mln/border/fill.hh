@@ -117,7 +117,7 @@ namespace mln
       {
 	trace::entering("border::impl::fill_size_n");
 
-	const I& ima = exact(ima_);
+	I& ima = const_cast<I&>( exact(ima_) );
 	internal::fill_tests(ima, v);
 
 	typedef mln_psite(I) P;
@@ -129,11 +129,11 @@ namespace mln
 	  {
 	    unsigned end = ima.index_of_point (pl);
 	    for (unsigned i = st; i < end; ++i)
-	      (const_cast<I&>(ima)).element(i) = v;
+	      ima.element(i) = v;
 	    st = end + len_r;
 	  }
 	for (unsigned i = st; i < ima.nelements (); ++i)
-	  const_cast<I&>(ima).element(i) = v;
+	  ima.element(i) = v;
 
 	trace::exiting("border::impl::fill_size_n");
       }

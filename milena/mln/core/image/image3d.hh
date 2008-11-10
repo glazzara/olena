@@ -30,7 +30,8 @@
 # define MLN_CORE_IMAGE_IMAGE3D_HH
 
 /// \file mln/core/image/image3d.hh
-/// \brief Definition of the basic mln::image3d class.
+///
+/// Definition of the basic mln::image3d class.
 
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -192,16 +193,18 @@ namespace mln
     /// Read-write access to the image value located at point \p p.
     T& operator()(const point3d& p);
 
-    /// Read-only access to the image value located at offset \p o.
-    const T& element(unsigned o) const;
+    /// Read-only access to the image value located at index \p i.
+    const T& element(unsigned i) const;
 
-    /// Read-write access to the image value located at offset \p o.
-    T& element(unsigned o);
+    /// Read-write access to the image value located at index \p i.
+    T& element(unsigned i);
 
-    /// Read-only access to the image value located at (\p ind).
+    /// Read-only access to the image value located at (\p sli, \p
+    /// row, \p col).
     const T& at(int sli, int row, int col) const;
 
-    /// Read-write access to the image value located at (\p ind).
+    /// Read-write access to the image value located at (\p sli, \p
+    /// row, \p col).
     T& at(int sli, int row, int col);
 
 
@@ -463,19 +466,19 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image3d<T>::element(unsigned o) const
+  image3d<T>::element(unsigned i) const
   {
-    mln_precondition(o < nelements());
-    return *(data_->buffer_ + o);
+    mln_precondition(i < nelements());
+    return *(data_->buffer_ + i);
   }
 
   template <typename T>
   inline
   T&
-  image3d<T>::element(unsigned o)
+  image3d<T>::element(unsigned i)
   {
-    mln_precondition(o < nelements());
-    return *(data_->buffer_ + o);
+    mln_precondition(i < nelements());
+    return *(data_->buffer_ + i);
   }
 
   template <typename T>

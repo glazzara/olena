@@ -1,5 +1,23 @@
 2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make erosion work on nD images.
+
+	* mln/core/image/image1d.hh: Layout doc.
+	(element): Precise doc.  Fix precondition.
+	(element): Rename ind as i (less ambiguous).
+	* mln/core/image/image3d.hh: Fix doc.
+	(element): Rename o as i to be consistent.
+	* mln/border/fill.hh (fill_size_n): Factor const cast.
+	* mln/win/segment1d.hh: Upgrade doc style.
+	* mln/win/line.hh: Likewise.
+	* mln/morpho/erosion.spe.hh: Likewise.
+	(erosion_chooses_arbitrary): Remove; such a test has to be a
+	static chek (at compile-time!)
+	(erosion_dispatch_wrt_arbitrary_win): New.
+	(erosion_dispatch_wrt_win): Turn dispatch into static.
+
+2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	De-activate fastest labeling level.
 
 	* tests/labeling/level.cc: Update.

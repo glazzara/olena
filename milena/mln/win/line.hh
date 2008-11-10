@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_LINE_HH
 # define MLN_WIN_LINE_HH
 
-/*! \file mln/win/line.hh
- *
- * \brief Definition of the mln::win::line window.
- */
+/// \file mln/win/line.hh
+///
+/// Definition of the mln::win::line window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/dpoint.hh>

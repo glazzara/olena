@@ -30,7 +30,8 @@
 # define MLN_CORE_IMAGE_IMAGE1D_HH
 
 /// \file mln/core/image/image1d.hh
-/// \brief Definition of the basic mln::image1d class.
+///
+/// Definition of the basic mln::image1d class.
 
 # include <mln/core/internal/fixme.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -206,11 +207,13 @@ namespace mln
     /// Give a hook to the value buffer.
     T* buffer();
 
-    /// Read-only access to the image value located at (\p ind).
-    const T& element(unsigned ind) const;
+    /// Read-only access to the \p i-th image value (including the
+    /// border).
+    const T& element(unsigned i) const;
 
-    /// Read-write access to the image value located at (\p ind).
-    T& element(unsigned ind);
+    /// Read-write access to the \p i-th image value (including the
+    /// border).
+    T& element(unsigned i);
 
     /// Give the number of cells (points including border ones).
     unsigned nelements() const;
@@ -445,19 +448,19 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image1d<T>::element(unsigned ind) const
+  image1d<T>::element(unsigned i) const
   {
-    mln_precondition(this->has(point1d(ind)));
-    return this->data_->buffer_[ind];
+    mln_precondition(i < nelements());
+    return this->data_->buffer_[i];
   }
 
   template <typename T>
   inline
   T&
-  image1d<T>::element(unsigned ind)
+  image1d<T>::element(unsigned i)
   {
-    mln_precondition(this->has(point1d(ind)));
-    return this->data_->buffer_[ind];
+    mln_precondition(i < nelements());
+    return this->data_->buffer_[i];
   }
 
   template <typename T>

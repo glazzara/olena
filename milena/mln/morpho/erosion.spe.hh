@@ -52,13 +52,13 @@
 # include <mln/canvas/browsing/backdiagonal2d.hh>
 
 
-/*! \file mln/morpho/erosion.spe.hh
- *
- * \brief Specialization for mln::morpho::erosion.
- *
- * \todo Warning: we should also have the "arbitrary" versions working
- * on sets (not only on functions!)
- */
+/// \file mln/morpho/erosion.spe.hh
+///
+/// Specialization for mln::morpho::erosion.
+///
+/// \todo Warning: we should also have the "arbitrary" versions working
+/// on sets (not only on functions!)
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -1231,26 +1231,6 @@ namespace mln
       // dispatch for arbitrary elements
 
       template <typename I, typename W>
-      bool
-      erosion_chooses_arbitrary(const I&, const W& win)
-      {
-	return
-	  win.size() >= 10 // size is not too small
-	  &&
-	  // 2d case only
-	  mlc_equal(mln_trait_image_dimension(I),
-		    trait::image::dimension::two_d)::value
-	  &&
-	  // on a grid
-	  mlc_is_a(mln_site(I),
-		   Gpoint)::value
-	  &&
-	  // continuous data
-	  mlc_not_equal(mln_trait_image_value_storage(I),
-			trait::image::value_storage::disrupted)::value;
-      }
-
-      template <typename I, typename W>
       mln_concrete(I)
       erosion_dispatch_for_arbitrary(trait::image::speed::fastest,
 				     const I& input, const W& win)
@@ -1372,20 +1352,42 @@ namespace mln
 	return ima;
       }
 
+
       // dispatch w.r.t. win
+
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_arbitrary_win(metal::true_,
+					 const I& input, const W& win)
+      {
+	return erosion_dispatch_for_arbitrary(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_arbitrary_win(metal::false_,
+					 const I& input, const W& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
+      }
 
       template <typename I, typename W>
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const W& win)
       {
-	// FIXME: De-activate because, when win is multiple,
-	// win::shift does not work.  We have to introduce
-	// props from windows, then re-write win::shift.
-
-	if (erosion_chooses_arbitrary(input, win))
-	  return erosion_dispatch_for_arbitrary(input, win);
-	else
-	  return erosion_dispatch_for_generic(input, win);
+	// FIXME:
+	// The test "win.size() >= 10" (size is not too small) has been
+	// de-activated...
+	  enum { test = mlc_equal(mln_trait_image_dimension(I),
+				  trait::image::dimension::two_d)::value
+		 &&
+		        mlc_is_a(mln_site(I), Gpoint)::value
+		 &&
+		        mlc_not_equal(mln_trait_image_value_storage(I),
+				      trait::image::value_storage::disrupted)::value };
+	return erosion_dispatch_wrt_arbitrary_win(metal::bool_<test>(),
+						  input, win);
       }
 
       template <typename I>
