@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_LABELING_LEVEL_HH
 # define MLN_LABELING_LEVEL_HH
 
-/*! \file mln/labeling/level.hh
- *
- * \brief Connected component labeling of the image objects at a given
- * level.
- */
+/// \file mln/labeling/level.hh
+///
+/// Connected component labeling of the image objects at a given
+/// level.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>

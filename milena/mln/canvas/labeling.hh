@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +30,10 @@
 # define MLN_CANVAS_LABELING_HH
 
 /// \file mln/canvas/labeling.hh
-/// \brief Connected component labeling of the object part in a binary
-/// image.
+///
+/// Connected component labeling of the object part in a binary image.
+///
+/// \todo Make the fastest version work.
 
 # include <mln/core/concept/image.hh>
 # include <mln/level/fill.hh>
@@ -159,7 +162,7 @@ namespace mln
       mln::level::fill(deja_vu, false);
       initialize(parent, f.input);
       initialize(output, f.input);
-      mln::level::fill(output, literal::zero);
+      mln::level::fill(output, L(literal::zero));
       nlabels = 0;
     }
 
@@ -271,7 +274,7 @@ namespace mln
     {
       initialize(parent, f.input);
       for (unsigned p = 0; p < parent.nelements(); ++p)
-	parent[p] = p; // make_set
+	parent.element(p) = p; // make_set
       initialize(output, f.input);
       mln::level::fill(output, 0); // FIXME: Use literal::zero.
       nlabels = 0;
@@ -315,11 +318,11 @@ namespace mln
 		      status = false;
 		      return;
 		    }
-		  output[p] = ++nlabels;
+		  output(p) = ++nlabels;
 		}
 	    }
 	  else
-	    output[p] = output[parent[p]];
+	    output(p) = output(parent.element(p));
 	}
       status = true;
     }
@@ -328,17 +331,17 @@ namespace mln
     bool
     labeling_fastest<F>::is_root(unsigned p) const
     {
-      return parent[p] == p;
+      return parent.element(p) == p;
     }
 
     template <typename F>
     unsigned
     labeling_fastest<F>::find_root(unsigned x)
     {
-      if (parent[x] == x)
+      if (parent.element(x) == x)
 	return x;
       else
-	return parent[x] = find_root(parent[x]);
+	return parent.element(x) = find_root(parent.element(x));
     }
 
     template <typename F>
@@ -348,7 +351,7 @@ namespace mln
       unsigned r = find_root(n);
       if (r != p)
 	{
-	  parent[r] = p;
+	  parent.element(r) = p;
 	  f.merge_attr(r, p);
 	}
     }

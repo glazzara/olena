@@ -1,5 +1,22 @@
 2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	De-activate fastest labeling level.
+
+	* tests/labeling/level.cc: Update.
+	* mln/canvas/labeling.hh (todo): New.
+	(init): Fix warning with g++-4.3.
+	Some updates.
+	* mln/labeling/level.hh: Upgrade doc style.
+	Fix copyright.
+	* mln/labeling/level.spe.hh: Likewise.
+	(todo): New.
+	(level_): De-activate fastest dispatch; the underlying code
+	cannot work!  E.g., p is a pixter on input, yet used in accessing
+	output.
+	(level_fastest_functor): Update.
+
+2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add accu snake_2d and transform; revamp accu compute.
 
 	* tests/accu/snake_2d.cc: New.

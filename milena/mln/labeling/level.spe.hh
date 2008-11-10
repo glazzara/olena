@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,11 @@
 #ifndef MLN_LABELING_LEVEL_SPE_HH
 # define MLN_LABELING_LEVEL_SPE_HH
 
-/*! \file mln/labeling/level.spe.hh
- *
- * \brief Specialization for mln::labeling::level.
- */
+/// \file mln/labeling/level.spe.hh
+///
+/// Specialization for mln::labeling::level.
+///
+/// \todo Re-activate the fastest version in dispatch...
 
 # ifndef MLN_LABELING_LEVEL_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -99,8 +101,8 @@ namespace mln
 	const N& nbh;
         const S& s;
 
-	bool handles(unsigned p) const         { return input[p] == val; }
-	bool equiv(unsigned n, unsigned) const { return input[n] == val; }
+	bool handles(unsigned p) const         { return input.element(p) == val; }
+	bool equiv(unsigned n, unsigned) const { return input.element(n) == val; }
 
  	void init()                          {}
 	bool labels(unsigned) const          { return true;  }
@@ -157,14 +159,14 @@ namespace mln
 	return generic::level_(input, val, nbh, nlabels);
       }
 
-      template <typename I, typename N, typename L>
-      mln_ch_value(I, L)
-	level_(trait::image::speed::fastest,
-	       const I& input, const mln_value(I)& val, const N& nbh,
-	       L& nlabels)
-      {
-	return level_fastest_(input, val, nbh, nlabels);
-      }
+//       template <typename I, typename N, typename L>
+//       mln_ch_value(I, L)
+// 	level_(trait::image::speed::fastest,
+// 	       const I& input, const mln_value(I)& val, const N& nbh,
+// 	       L& nlabels)
+//       {
+// 	return level_fastest_(input, val, nbh, nlabels);
+//       }
 
 
     } // end of namespace mln::labeling::impl
