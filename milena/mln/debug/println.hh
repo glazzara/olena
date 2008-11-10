@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_DEBUG_PRINTLN_HH
 # define MLN_DEBUG_PRINTLN_HH
 
-/*! \file mln/debug/println.hh
- *
- * \brief Print an image on the standard output.
- *
- * \todo Revamp.
- */
+/// \file mln/debug/println.hh
+///
+/// Print an image on the standard output.
+///
+/// \todo Revamp.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
@@ -42,6 +42,7 @@
 
 // Specializations are in:
 # include <mln/debug/println.spe.hh>
+
 
 namespace mln
 {
@@ -52,6 +53,11 @@ namespace mln
     /// Print the image \p input on the standard output.
     template <typename I>
     void println(const Image<I>& input);
+
+    /// Print the message \p msg and the image \p input on the
+    /// standard output.
+    template <typename I>
+    void println(const std::string& msg, const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -75,7 +81,8 @@ namespace mln
     } // end of namespace mln::debug::impl
 
 
-    // Facade.
+    // Facades.
+
     template <typename I>
     inline
     void
@@ -85,6 +92,13 @@ namespace mln
       impl::println(geom::bbox(exact(input).domain()),
 		    exact(input));
       trace::exiting("debug::println");
+    }
+
+    template <typename I>
+    void println(const std::string& msg, const Image<I>& input)
+    {
+      std::cout << msg << std::endl;
+      println(input);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -32,13 +32,8 @@
 ///
 /// Discrete geodesic distance transform.
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/site_set/p_queue_fast.hh>
-# include <mln/core/routine/clone.hh>
-# include <mln/level/fill.hh>
-
-# include <mln/debug/println.hh>
+# include <mln/canvas/distance_geodesic.hh>
+# include <mln/literal/zero.hh>
 
 
 namespace mln
@@ -55,99 +50,54 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    
+    namespace internal
     {
 
-      namespace generic
+      template <typename I>
+      struct iz_functor
       {
+	typedef mln_value(I) V;
+	typedef mln_site(I)  P;
 
-	template <typename I, typename N, typename D>
-	mln_concrete(I)
-	influence_zone_geodesic(const Image<I>& input_, const Neighborhood<N>& nbh_,
-				D max)
+	mln_concrete(I) output;
+
+	void init(const I& input)
 	{
-	  trace::entering("transform::impl::generic::influence_zone_geodesic");
-
-	  const I& input = exact(input_);
-	  const N& nbh   = exact(nbh_);
-
-	  mln_precondition(input.has_data());
-
-	  mln_ch_value(I, D) dmap; // Distance map is aux data.
-	  initialize(dmap, input);
-
-	  typedef mln_site(I) P;
-	  p_queue_fast<P> q;
-
-	  mln_concrete(I) output = clone(input);
-
-	  // Initialization.
-	  {
-	    level::fill(dmap, max);
-	    mln_piter(I) p(input.domain());
-	    mln_niter(N) n(nbh, p);
-	    for_all(p)
-	      if (input(p) != 0) // p in a component
-		{
-		  dmap(p) = 0;
-		  for_all(n)
-		    if (input.domain().has(n) && input(n) == 0) // n in background
-		      {
-			q.push(p);
-			break;
-		      }
-		}
-	  }
-
-	  // Propagation.
-	  {
-	    P p;
-	    mln_niter(N) n(nbh, p);
-	    while (! q.is_empty())
-	      {
-		p = q.pop_front();
-		if (dmap(p) == max)
-		  {
-		    // Saturation so stop.
-		    q.clear();
-		    break;
-		  }
-		for_all(n)
-		  if (input.domain().has(n) && dmap(n) == max)
-		    {
-		      dmap(n) = dmap(p) + 1;
-		      output(n) = output(p);
-		      q.push(n);
-		    }
-	      }
-	  }
-
-	  trace::exiting("transform::impl::generic::influence_zone_geodesic");
-	  return output;
+	  output = clone(input);
 	}
+	bool inqueue_p_wrt_input_p(const V& input_p)
+	{
+	  return input_p != 0u;
+	}
+	bool inqueue_p_wrt_input_n(const V& input_n)
+	{
+	  return input_n == 0u;
+	}
+	void process(const P& p, const P& n)
+	{
+	  output(n) = output(p);
+	}
+      };
 
-      } // end of namespace mln::transform::impl::generic
+    } // end of namespace mln::transform::internal
 
-    } // end of namespace mln::transform::impl
-
-
-    // Facade.
 
     template <typename I, typename N, typename D>
-    inline
     mln_concrete(I)
     influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh,
-			    D distance_max)
+			    D max)
     {
       trace::entering("transform::influence_zone_geodesic");
 
-      // FIXME: tests.
+      mln_precondition(exact(input).has_data());
+      // mln_precondition(exact(nbh).is_valid());
 
-      mln_concrete(I) output;
-      output = impl::generic::influence_zone_geodesic(input, nbh, distance_max);
+      internal::iz_functor<I> f;
+      (void) mln::canvas::distance_geodesic(input, nbh, max, f);
 
       trace::exiting("transform::influence_zone_geodesic");
-      return output;
+      return f.output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

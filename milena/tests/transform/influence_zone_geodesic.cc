@@ -53,6 +53,6 @@ int main()
       0, 0, 0, 0, 0, 0, 0 };
   image2d<int_u8> input = make::image2d(vals);
 
-  image2d<int_u8> output = transform::influence_zone_geodesic(input, c4(), int_u8(1));
+  image2d<int_u8> output = transform::influence_zone_geodesic(input, c4(), int_u8(2));
   debug::println(output);
 }

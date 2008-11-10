@@ -32,10 +32,7 @@
 ///
 /// Discrete geodesic distance transform.
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/site_set/p_queue_fast.hh>
-# include <mln/level/fill.hh>
+# include <mln/canvas/distance_geodesic.hh>
 
 
 
@@ -53,91 +50,48 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    
+    namespace internal
     {
 
-      namespace generic
+      template <typename I>
+      struct distance_functor
       {
+	typedef mln_value(I) V;
+	typedef mln_site(I)  P;
 
-	template <typename I, typename N, typename D>
-	mln_ch_value(I, D)
-	  distance_geodesic(const Image<I>& input_, const Neighborhood<N>& nbh_, D max)
+	void init(const I&)
 	{
-	  trace::entering("transform::impl::generic::distance_geodesic");
-
-	  const I& input = exact(input_);
-	  const N& nbh   = exact(nbh_);
-
-	  mln_precondition(input.has_data());
-
-	  mln_ch_value(I, D) output;
-	  initialize(output, input);
-
-	  typedef mln_site(I) P;
-	  p_queue_fast<P> q;
-
-	  // Initialization.
-	  {
-	    level::fill(output, max);
-	    mln_piter(I) p(input.domain());
-	    mln_niter(N) n(nbh, p);
-	    for_all(p)
-	      if (input(p) == true) // p in object
-		{
-		  output(p) = 0;
-		  for_all(n)
-		    if (input.domain().has(n) && input(n) == false) // n in background
-		      {
-			q.push(p);
-			break;
-		      }
-		}
-	  }
-
-	  // Propagation.
-	  {
-	    P p;
-	    mln_niter(N) n(nbh, p);
-	    while (! q.is_empty())
-	      {
-		p = q.pop_front();
-		for_all(n)
-		  if (input.domain().has(n) && output(n) == max)
-		    {
-		      output(n) = output(p) + 1;
-		      if (output(n) == max)
-			{
-			  // Saturation so stop.
-			  q.clear();
-			  break;
-			}
-		      q.push(n);
-		    }
-	      }
-	  }
-
-	  trace::exiting("transform::impl::generic::distance_geodesic");
-	  return output;
 	}
+	bool inqueue_p_wrt_input_p(const V& input_p)
+	{
+	  return input_p == true;
+	}
+	bool inqueue_p_wrt_input_n(const V& input_n)
+	{
+	  return input_n == false;
+	}
+	void process(const P&, const P&)
+	{
+	}
+      };
 
-      } // end of namespace mln::transform::impl::generic
+    } // end of namespace mln::transform::internal
 
-    } // end of namespace mln::transform::impl
-
-
-    // Facade.
 
     template <typename I, typename N, typename D>
     inline
     mln_ch_value(I, D)
-      distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
+    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
     {
       trace::entering("transform::distance_geodesic");
 
-      // FIXME: tests.
+      mln_precondition(exact(input).has_data());
+      // mln_precondition(exact(nbh).is_valid());
 
       mln_ch_value(I, D) output;
-      output = impl::generic::distance_geodesic(input, nbh, max);
+      internal::distance_functor<I> f;
+      output = mln::canvas::distance_geodesic(input, nbh, max, f);
 
       trace::exiting("transform::distance_geodesic");
       return output;
