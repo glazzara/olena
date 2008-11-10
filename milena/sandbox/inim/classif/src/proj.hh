@@ -34,6 +34,7 @@
 #include <mln/accu/mean.hh>
 #include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
+#include <mln/literal/colors.hh>
 
 namespace mln
 {
@@ -67,8 +68,8 @@ namespace mln
     //std::cout << histo;
 
     image2d<value::rgb8> out(proj_class.domain());
-
     level::fill(out, literal::white);
+
     mln_piter(image2d<value::int_u8>) p(proj_class.domain());
     for_all(p)
       if (hproj(p) > 0)

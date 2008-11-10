@@ -93,9 +93,7 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
     point3d p3(ima(p).red() / f, ima(p).green() / f, ima(p).blue() / f);
     int w = ws(p3);
 
-    //check if we are not on a border of the WS
-    if (w == 0)
-      border++;
+    //Even if we are not on a border of the WS
     count[w] += histo(p3);
     sum[w] += histo(p3) * convert::to< algebra::vec<3, value::int_u8> >(p3);
 
@@ -103,7 +101,7 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
       convert::to<algebra::vec<3, value::int_u8> >(p3) << std::endl;
   }
 
-  std::cout << border << std::endl;
+  std::cout << "dyke point : " << count[0] << std::endl;
   for (int i = 0; i < nbasins + 1; ++i)
   {
     std::cout << "sum[" << i << "] = " << sum[i] * f << " / " << count[i]  << " == ";
@@ -132,6 +130,7 @@ classify_image(const I& ima, const J& histo, const K& ws, int nbasins, int f)
 
   io::ppm::save(out, "out.ppm");
   save_class(histo, ws, sum, "palette.ppm");
+  display(histo, ws, sum, "histo");
 }
 
 bool usage(int argc, char ** argv)

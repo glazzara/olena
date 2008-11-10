@@ -1,3 +1,12 @@
+2008-11-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Update gif creation.
+
+	* inim/classif/src/display.hh: Display watershed class.
+	* inim/classif/src/iccvg04.cc: Modify output info.
+	* inim/classif/src/proj.hh: Beautify.
+	* inim/classif/Makefile: Remove warning in non debug.
+
 2008-11-10  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	INIM: Add the final code for edges dectection.

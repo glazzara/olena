@@ -34,6 +34,7 @@
 #include <mln/geom/nslis.hh>
 #include <mln/value/all.hh>
 #include <mln/core/image/image3d.hh>
+#include <mln/literal/colors.hh>
 
 #include <sys/stat.h>
 #include <sstream>
@@ -44,29 +45,30 @@
 namespace mln
 {
 
-  template <typename I>
-  void display(const I& ima, const char * dir)
+  template <typename I, typename J, typename K>
+  void display(const I& histo, const J& ws, K mean, const char * dir)
   {
     mkdir(dir, 0777);
     chdir(dir);
 
-    image2d< mln_value(I) > out(geom::nrows(ima), geom::ncols(ima));
+    image2d< value::rgb8 > out(geom::nrows(histo), geom::ncols(histo));
+    level::fill(out, literal::white);
 
-    for (int s = 0; s < geom::nslis(ima); ++s)
+    for (int s = 0; s < geom::nslis(histo); ++s)
       {
-        // image2d< value::int_u8 > out(geom::nrows(ima), geom::ncols(ima));
-        for (int r = 0; r < geom::nrows(ima); ++r)
-          {
-            for (int c = 0; c < geom::ncols(ima); ++c)
+        for (int r = 0; r < geom::nrows(histo); ++r)
+          for (int c = 0; c < geom::ncols(histo); ++c)
+            if (histo(point3d(s,r,c)) > 0)
               {
-                out(point2d(r, c)) = ima(point3d(s, r, c));
+                if (ws(point3d(s,r,c)) > 0)
+                  out(point2d(r, c)) = convert::to<value::rgb8>(mean[ws(point3d(s,r,c))]);
+                else
+                  out(point2d(r, c)) = literal::red;
               }
-          }
 
         std::ostringstream is;
-        is << "out_" << s << ".pgm";
-
-        io::pgm::save(out, is.str());
+        is << "out_00" << s << ".ppm";
+        io::ppm::save(out, is.str());
       }
 
     chdir("..");
