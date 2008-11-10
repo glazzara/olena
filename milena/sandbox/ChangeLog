@@ -1,3 +1,16 @@
+2008-11-11  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add FFT to nature.
+
+	* nature/fft.cc: New.
+	* nature/nature.cc: Add a FFT test.
+	* nature/opening.cc: .
+	* nature/co_occurence.hh: .
+	* nature/Makefile: Add special rule to use FFTW.
+	* abraham/tests/transform/fft.cc: New.
+	* abraham/tests/transform/fft_.cc: New.
+	* abraham/mln/transform/fft.hh: conversion to milena.
+
 2008-11-10  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Final Upgrade.

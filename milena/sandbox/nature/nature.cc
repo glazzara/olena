@@ -28,8 +28,11 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/cast_image.hh>
 #include <mln/core/image/thru.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/ppm/load.hh>
+#include <mln/io/pgm/save.hh>
+#include <mln/io/pbm/save.hh>
 
 #include <mln/histo/compute.hh>
 
@@ -56,7 +59,11 @@
 
 #include <mln/estim/mean.hh>
 
+#include <mln/transform/fft.hh>
+
 #include "co_occurence.hh"
+
+#include <math.h>
 
 using namespace mln;
 using namespace value;
@@ -382,10 +389,91 @@ int main (int argc, const char * argv [])
 
   std::cout << "Test 3 : rectangle detection[" << cpt << "]" << std::endl
 	    << "Photo : +" << 50 - cpt << std::endl
-	    << "Screenshot : +" << cpt * 5 << std::endl
+	    << "Screenshot : +" << cpt * 8 << std::endl
 	    << "Text : +" << 50 + cpt * max / 10 << std::endl
 	    << "Drawing : +" << 2 * (50 - cpt) << std::endl << std::endl;
 
+
+  // Last but not least : text detection thanks to FFT
+
+  transform::fft<double> fourier(morpho::opening(uinty, win::hline2d(20)));
+  fourier.transform();
+
+  std::string name(argv[1]);
+  name.erase(name.length() - 4);
+  image2d<int_u8> fft = fourier.transformed_image_log_magn<int_u8>(true);
+  mln_piter_(image2d<int_u8>) q (fft.domain());
+  max = 0;
+  for_all(q)
+    if (fft(q) > max)
+      max = fft(q);
+
+  image2d<bool> fftb = binarization::threshold(fft, max * 4 / 10);
+
+  // Find the line that best fits the points
+
+  unsigned
+    center_r = fft.nrows() / 2,
+    center_c = fft.ncols() / 2;
+
+  double arg = 0, coeff = 0;
+
+  for_all(q)
+    if (fftb(q))
+      {
+	double dist =
+	  (center_c - q.col()) * (center_c - q.col()) +
+	  (center_r - q.row()) * (center_r - q.row());
+
+	if (!dist)
+	  continue;
+
+	double angle = acos (abs(center_r - q.row()) / sqrt(dist));
+	while (angle > M_PI)
+	  angle -= M_PI;
+	while (angle < 0)
+	  angle += M_PI;
+
+	arg = (arg * coeff + dist * angle) / (coeff + dist);
+
+	coeff += dist;
+
+      }
+
+  //  std::cout << "arg : " << arg << " coeff : " << coeff << std::endl;
+  double a  = tan(arg);
+
+  // Now compute the mean distance of the points to the line
+
+  double b = center_c - a * center_r;
+  double dist = 0;
+  coeff = 0;
+
+  for_all(q)
+    if (fftb(q))
+      {
+	double d = abs(a * q.row() - q.col() + b) / sqrt(a * a + 1);
+	dist += d * d;
+	coeff ++;
+      }
+
+  dist /= coeff;
+
+  dist = dist / (log(fftb.nelements()) / log(10));
+
+  score[PHOTO] += dist * 25;
+  score[SCREENSHOT] += dist * 25;
+  score[TEXT] += (1 + cos(arg)) * 2 * (4 - dist) * 50;
+  score[DRAWING] += dist * 25;
+
+  std::cout << "Test 4 : Fourier distance[" << dist << "]" << std::endl
+	    << "Photo : +" << dist * 25 << std::endl
+	    << "Screenshot : +" << dist * 25 << std::endl
+	    << "Text : +" << (1 + cos(arg)) * (4 - dist) * 25 << std::endl
+	    << "Drawing : +" << dist * 25 << std::endl << std::endl;
+
+
+  // io::pbm::save(binarization::threshold(fft, max * 4 / 10), name.append("_fft.pbm"));
 
   // Print the result !
 

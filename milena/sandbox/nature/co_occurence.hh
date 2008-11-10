@@ -53,6 +53,7 @@ namespace mln
   image2d<unsigned> co_occurence (const Image<I> &ima_, const Gdpoint<D> &dp_)
   {
     mln::metal::equal<mln_psite(I), mln_psite(D)>::check();
+    // FIXME : check thaat Image<I> is quant low
 
     const I &ima = exact(ima_);
     const D &dp = exact(dp_);
@@ -63,7 +64,7 @@ namespace mln
     mln_piter(I) p(ima.domain());
     for_all(p)
       if (ima.domain().has(p + dp))
-	mco(point2d(ima(p), ima(p + dp)))++;
+	mco.at(ima(p), ima(p + dp))++;
 
     return mco;
   }

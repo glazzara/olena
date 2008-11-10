@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,35 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/win/rectangle2d.hh>
+#include <mln/transform/fft.hh>
 
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/morpho/opening.hh>
-
-int main(int argc, const char * argv[])
+int main ()
 {
-  using namespace mln;
-  using value::int_u8;
 
-  if (argc < 2) {
-    std::cerr << "usage: " << argv[0] << " in.pgm [other_files.pgm]" << std::endl;
-    return 1;
-  }
-
-  for (int i = 1; i < argc; ++i)
-    {
-      image2d<int_u8> ima;
-      io::pgm::load(ima, argv[i]);
-
-      win::rectangle2d rect(3, 3);
-      border::thickness = 11;
-
-      std::string name(argv[i]);
-      name.erase(name.length() - 4);
-      io::pgm::save(morpho::opening(ima, rect), name.append("_opened.pgm"));
-    }
 }

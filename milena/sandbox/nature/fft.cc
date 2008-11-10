@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+//                                                                  -*- c++ -*-
+// Copyright (C) 2004  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -12,8 +13,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this library; see the file COPYING.  If not, write to
-// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-// Boston, MA 02111-1307, USA.
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
 //
 // As a special exception, you may use this file as part of a free
 // software library without restriction.  Specifically, if other files
@@ -25,14 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-
+#include <mln/transform/fft.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/value/int_u8.hh>
-#include <mln/morpho/opening.hh>
+using namespace mln;
+using namespace transform;
+using namespace value;
 
 int main(int argc, const char * argv[])
 {
@@ -49,11 +50,12 @@ int main(int argc, const char * argv[])
       image2d<int_u8> ima;
       io::pgm::load(ima, argv[i]);
 
-      win::rectangle2d rect(3, 3);
-      border::thickness = 11;
+      fft<double> fourier(ima);
+
+      fourier.transform();
 
       std::string name(argv[i]);
       name.erase(name.length() - 4);
-      io::pgm::save(morpho::opening(ima, rect), name.append("_opened.pgm"));
+      io::pgm::save(fourier.transformed_image_log_magn<int_u8>(true), name.append("_fft.pgm"));
     }
 }
