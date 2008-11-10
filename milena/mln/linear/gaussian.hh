@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2008 EPITA Research and Development
+// Copyright (C) 2001, 2002, 2003, 2004, 2008 EPITA Research and
 // Laboratory
 //
 // This file is part of the Olena Library.  This library is free

@@ -50,6 +50,7 @@
 #include <mln/labeling/regional_maxima.hh>
 #include <mln/morpho/dilation.hh>
 #include <mln/win/octagon2d.hh>
+#include <mln/border/resize.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -63,12 +64,13 @@
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
 
+//     image2d<int_u8> tmp = clone(cast_image<int_u8>(Var));	\
+
 #if 1
 # define OCR_TEST(Var)						\
   {								\
-    image2d<int_u8> tmp = clone(cast_image<int_u8>(Var));	\
     float score = 0.f;						\
-    char* s = tesseract("fra", tmp, &score);			\
+    char* s = tesseract("fra", Var, &score);			\
     std::cerr << #Var << ": " << score << std::endl << s;	\
     delete[] s;							\
   }
@@ -93,10 +95,11 @@ int main(int argc, char** argv)
   mln::border::thickness = 0;
 
   io::pbm::load(input, argv[1]);
-  OCR_TEST(input);
+//   OCR_TEST(input);
 
   // Resize
   image2d<int_u8> enlarged = enlarge(logical::not_(input), 2);
+  image2d<bool> big = geom::resize(logical::not_(input), 4);
   io::pgm::save(enlarged, std::string(argv[2]) + "_1_enlarge.pgm");
   OCR_TEST(enlarged);
 
@@ -124,25 +127,9 @@ int main(int argc, char** argv)
   OCR_TEST(skel);
 
   // Dilation
-  image2d<bool> dilate;
   win::octagon2d oct(5);
-  { // FIXME?
-#if 1
-    image2d<int_u8> tmp;
-    initialize(tmp, skel);
-    initialize(dilate, skel);
-    mln_piter_(image2d<int_u8>) p(tmp.domain());
-    for_all(p)
-      tmp(p) = skel(p);
-    tmp = morpho::dilation(tmp, oct);
-    for_all(p)
-      dilate(p) = tmp(p);
-#else
-    // Should be using this but it doesn't work :(
-    dilate = morpho::dilation(skel, oct);
-#endif
-  }
-
+  image2d<bool> dilate = morpho::dilation(skel, oct);
+  border::resize(dilate, 0);
   io::pbm::save(dilate, std::string(argv[2]) + "_5_dilation.pbm");
   OCR_TEST(dilate);
 
@@ -152,6 +139,26 @@ int main(int argc, char** argv)
   OCR_TEST(subsampled);
 
   io::pbm::save(subsampled, argv[2]);
+
+
+  image2d<bool> K = crest(big, blur, c4());
+  OCR_TEST(K);
+  io::pbm::save(K, std::string(argv[2]) + "_7_K.pbm");
+
+  image2d<bool> skel_on_gaussian = skeleton_with_constraint(big, 4, K, arith::revert(blur));
+  OCR_TEST(skel_on_gaussian);
+  io::pbm::save(skel_on_gaussian, std::string(argv[2]) + "_8_skeleton_on_blur.pbm");
+
+  // Dilation
+  image2d<bool> dilate_on_gaussian = morpho::dilation(skel_on_gaussian, oct);
+  border::resize(dilate_on_gaussian, 0);
+  io::pbm::save(dilate_on_gaussian, std::string(argv[2]) + "_9_dilation_on_gaussian.pbm");
+  OCR_TEST(dilate_on_gaussian);
+
+  // Subsampling
+  image2d<bool> subsampled_on_gaussian = subsampling::subsampling(dilate_on_gaussian, dpoint2d(1,1), 2);
+  io::pbm::save(subsampled_on_gaussian, std::string(argv[2]) + "_91_subsampling_on_gaussian.pbm");
+  OCR_TEST(subsampled_on_gaussian);
 
   {
     float score = 0;

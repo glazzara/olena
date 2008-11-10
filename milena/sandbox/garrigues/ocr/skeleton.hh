@@ -83,11 +83,11 @@ namespace mln
     initialize(is_crest, input);
     level::fill(is_crest, false);
 
-    mln_piter_(image2d<value::int_u8>) p(dist_map.domain());
+    mln_piter_(image2d<bool>) p(input.domain());
     mln_niter_(neighb2d) n(nbh, p);
     for_all(p)
     {
-      if  (!input(p) || dist_map(p) < 10)
+      if  (!input(p) || dist_map(p) < 0)
 	continue;
 
       unsigned nb_eq = 0;
@@ -108,32 +108,18 @@ namespace mln
     return is_crest;
   }
 
+
   image2d<bool>
-  skeleton(const image2d<bool>& input, unsigned nbh_i)
+  skeleton_with_constraint(const image2d<bool>& input,
+			   unsigned nbh_i,
+			   const image2d<bool>& K,
+			   const image2d<value::int_u8>& priority)
   {
     mln_assertion(nbh_i == 4 || nbh_i == 8);
 
     neighb2d nbh = int_to_neighb(nbh_i);
     image2d<bool> output;
     initialize(output, input);
-
-
-    int vals[] = { 0, 9, 0, 9, 0,
-		   9, 6, 4, 6, 9,
-		   0, 4, 0, 4, 0,     // Values of distances.
-		   9, 6, 4, 6, 9,
-		   0, 9, 0, 9, 0 };
-
-    image2d<value::int_u8> dist_map_n = transform::distance(value::int_u8(), logical::not_(input), nbh, make::w_window2d_int(vals));
-    image2d<value::int_u8> dist_map = arith::revert(dist_map_n);
-
-    io::pgm::save(dist_map, "distance.pgm");
-    io::pgm::save(dist_map_n, "distance_n.pgm");
-
-    // Make K
-    image2d<bool> K = crest(input, dist_map_n, nbh);
-
-    io::pbm::save(K, "K.pbm");
 
     typedef mln_site_(image2d<bool>) P;
     p_priority<value::int_u8, p_queue_fast<P> > q;
@@ -147,7 +133,7 @@ namespace mln
       for_all(p)
 	if (!input(p) &&
 	    is_simple_point2d(input, nbh_i, p)) // p is a simple point of background
-	  q.push(dist_map(p), p);
+	  q.push(priority(p), p);
     }
 
     // Propagation.
@@ -169,12 +155,38 @@ namespace mln
 	  {
  	    output(n) = false; // Remove n from object
 	    //  	    save_state(output);
-	    q.push(dist_map(n), n);
+	    q.push(priority(n), n);
 	  }
       }
     }
 
     return output;
+  }
+
+
+  image2d<bool>
+  skeleton(const image2d<bool>& input, unsigned nbh_i)
+  {
+    mln_assertion(nbh_i == 4 || nbh_i == 8);
+    neighb2d nbh = int_to_neighb(nbh_i);
+
+    int vals[] = { 0, 9, 0, 9, 0,
+		   9, 6, 4, 6, 9,
+		   0, 4, 0, 4, 0,     // Values of distances.
+		   9, 6, 4, 6, 9,
+		   0, 9, 0, 9, 0 };
+
+    image2d<value::int_u8> dist_map_n = transform::distance(value::int_u8(), logical::not_(input), nbh, make::w_window2d_int(vals));
+    image2d<value::int_u8> dist_map = arith::revert(dist_map_n);
+
+    io::pgm::save(dist_map, "distance.pgm");
+    io::pgm::save(dist_map_n, "distance_n.pgm");
+
+    // Make K
+    image2d<bool> K = crest(input, dist_map_n, nbh);
+    io::pbm::save(K, "K.pbm");
+
+    return skeleton_with_constraint(input, nbh_i, K, dist_map);
   }
 
 } // end of namespace mln

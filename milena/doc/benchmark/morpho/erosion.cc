@@ -41,6 +41,7 @@
 
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/erosion.hh>
+#include <mln/arith/diff_abs.hh>
 
 #include "tests/data.hh"
 #include "tests/timer.hh"
@@ -84,7 +85,7 @@ int main()
 //   trace::quiet = false;
   timer t;
 
-
+  /*
   // Rectangle
   std::cout << "-------------------------- Rectangle: " << std::endl;
 
@@ -271,9 +272,9 @@ int main()
     mln_assertion(test);
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
   }
-
+  */
   std::cout << "-------------------------- Octagon: " << std::endl;
-
+  border::thickness = 0;
   // Octagon
   {
     t.start();
@@ -286,6 +287,9 @@ int main()
     t.start();
     out = morpho::erosion(lena, oct);
     std::cout << "dispach on octagon: " << t << std::endl;
+    io::pgm::save(out, "out_oct.pgm");
+    io::pgm::save(arith::diff_abs(out, ref), "diff.pgm");
+
     bool test = out == ref;
     mln_assertion(test);
     std::cout << "     " << (test ? "OK" : "KO!!!") << std::endl;
