@@ -153,6 +153,7 @@ struct max_tree_
     return mean_color;
   }
 
+  // Filter method
   template<typename X>
   void lumberjack(const X& ima, const mln_value(X)& lambda)
   {
@@ -177,8 +178,9 @@ struct max_tree_
     std::cout << std::endl;
   }
 
+  // Fusion method
   template<typename X>
-  void nuclear_fusion(const X& ima, const mln_value(X)& lambda)
+  void nuclear_fusion(const X& ima, double lambda)
   {
     unsigned progress = 0;
     unsigned step = s.nsites() / 100;
@@ -188,8 +190,9 @@ struct max_tree_
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
-      if (fabs(1 - ima(new_parent(p)) / ima(p)) < lambda)
-	is_active(p) = false;
+      if (ima(p) != 0)
+        if (fabs(1. - ima(new_parent(p)) / (double) ima(p)) < lambda)
+          is_active(p) = false;
 
       ++progress;
       if (progress % step == 0)

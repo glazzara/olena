@@ -55,16 +55,16 @@ namespace mln
     level::fill(out, literal::white);
 
     for (int s = 0; s < geom::nslis(histo); ++s)
-      {
-        for (int r = 0; r < geom::nrows(histo); ++r)
-          for (int c = 0; c < geom::ncols(histo); ++c)
-            if (histo(point3d(s,r,c)) > 0)
-              {
-                if (ws(point3d(s,r,c)) > 0)
-                  out(point2d(r, c)) = convert::to<value::rgb8>(mean[ws(point3d(s,r,c))]);
-                else
-                  out(point2d(r, c)) = literal::red;
-              }
+    {
+      for (int r = 0; r < geom::nrows(histo); ++r)
+        for (int c = 0; c < geom::ncols(histo); ++c)
+          if (histo(point3d(s,r,c)) > 0)
+          {
+            if (ws(point3d(s,r,c)) > 0)
+              out(point2d(r, c)) = convert::to<value::rgb8>(mean[ws(point3d(s,r,c))]);
+            else
+              out(point2d(r, c)) = literal::red;
+          }
 
         std::ostringstream is;
         is << "out_00" << s << ".ppm";

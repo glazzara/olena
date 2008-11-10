@@ -1,3 +1,12 @@
+2008-11-10  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Final Upgrade.
+
+	* inim/classif/src/max_tree.hh: Fix comment.
+	* inim/classif/src/proj.hh: Add specific projection.
+	* inim/classif/src/v2.cc: Add efficient technique based
+	histo value merging.
+
 2008-11-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	INIM: Classif: Update gif creation.

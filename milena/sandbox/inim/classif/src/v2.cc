@@ -30,7 +30,6 @@ fill_histo(const I& ima, int f)
   const value::int_u8 v = 256 / f; // FIXME
   image3d<unsigned> histo(v,v,v);
   level::fill(histo, 0);
-  unsigned i = 0;
 
   mln_piter(I) p(ima.domain());
   for_all(p)
@@ -55,11 +54,11 @@ compute_density(const I& weight, const I& volume)
 }
 
 template <typename I, typename J, typename N>
-unsigned
+void
 process_max_tree(const I& ima, const J& histo, const N& nbh,
-                 double density_lambda, unsigned volume_lambda,
-		 unsigned nb_represent_lambda, unsigned color_lambda,
-		 unsigned div_factor)
+                 double density_lambda, double value_lambda,
+                 unsigned volume_lambda, unsigned nb_represent_lambda,
+                 unsigned color_lambda, unsigned div_factor)
 {
   max_tree_<J,N> run(histo, nbh);
 
@@ -70,11 +69,18 @@ process_max_tree(const I& ima, const J& histo, const N& nbh,
   image3d< algebra::vec<3, double> > mean_color	  = run.compute_mean_color();
   image3d<double> density			  = compute_density(nb_represent, volume);
 
-  // Density closing
+  // Density fusion
   if (density_lambda > 0.00001)
   {
-    std::cout << "Density cutting" << std::endl;
+    std::cout << "Density fusion" << std::endl;
     run.nuclear_fusion(density, density_lambda);
+  }
+
+  // value fusion
+  if (value_lambda > 0.00001)
+  {
+    std::cout << "Value fusion" << std::endl;
+    run.nuclear_fusion(histo, value_lambda);
   }
 
   // Volume cutting
@@ -115,7 +121,9 @@ process_max_tree(const I& ima, const J& histo, const N& nbh,
     for_all(p)
       if (run.is_active(p))
       {
-	std::cerr << mean_color(p)  << "\t\t" << nb_class << "\t\t" << density(p) << "\t\t" << volume(p) << "\t\t" << nb_represent(p) << std::endl;
+	std::cerr << mean_color(p)  << "\t\t" << nb_class
+                  << "\t\t" << density(p) << "\t\t" << volume(p)
+                  << "\t\t" << nb_represent(p) << std::endl;
 	++nb_class;
       }
 
@@ -125,13 +133,21 @@ process_max_tree(const I& ima, const J& histo, const N& nbh,
 
   // Write the image w.r.t. the max tree
   run.to_ppm(ima, "out.ppm", div_factor, mean_color);
+
+  //proj
+  save_class_v2(ima, histo, mean_color, run.new_parent,
+                div_factor, "histo.ppm");
 }
 
 bool usage(int argc, char ** argv)
 {
-  if (argc != 7)
+  if (argc != 8)
   {
-    std::cout << "usage: " << argv[0] << " image div_factor density_lambda volume_lambda nb_represent_lambda color_lambda" << std::endl;
+    std::cout << "usage: " << argv[0] << " image div_factor "
+              << "density_lambda value_lambda volume_lambda "
+              << "nb_represent_lambda color_lambda" << std::endl;
+    std::cout << "Help: A value of 0 for any lambda means "
+              << "the related action won't be performed" << std::endl;
     return false;
   }
 
@@ -149,17 +165,15 @@ int main(int argc, char* argv[])
 
   int div_factor = atoi(argv[2]);
   float density_lambda = atof(argv[3]);
-  unsigned volume_lambda = atoi(argv[4]);
-  unsigned nb_represent_lambda = atoi(argv[5]);
-  unsigned color_lambda = atoi(argv[6]);
+  float value_lambda = atof(argv[4]);
+  unsigned volume_lambda = atoi(argv[5]);
+  unsigned nb_represent_lambda = atoi(argv[6]);
+  unsigned color_lambda = atoi(argv[7]);
 
   //make histo
   image3d<unsigned> histo = fill_histo(ima, div_factor);
 
-  //proj
-  accu::mean<unsigned, unsigned, unsigned> mean;
-  image2d<unsigned> phisto = proj(histo, mean);
-
   // Process max_tree
-  process_max_tree(ima, histo, c6(), density_lambda, volume_lambda, nb_represent_lambda, color_lambda, div_factor);
+  process_max_tree(ima, histo, c6(), density_lambda, value_lambda,
+                   volume_lambda, nb_represent_lambda, color_lambda, div_factor);
 }
