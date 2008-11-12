@@ -470,6 +470,55 @@ namespace mln
       template <class I, class F, class O>
       inline
       void
+      generic_filter_common_(trait::value::nature::floating,
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out)
+      {
+	mln_ch_value(O, float) work_img(exact(in).domain());
+	level::paste(in, work_img);
+	extension::adjust_fill(work_img, 4, 0);
+
+	// On tiny sigma, Derich algorithm doesn't work.
+	// It is the same thing that to convolve with a Dirac.
+	if (sigma > 0.006)
+          for (int i = 0; i < I::site::dim; ++i)
+            generic_filter_(mln_trait_image_dimension(I)(),
+                            work_img, coef, i);
+
+        // We don't need to convert work_img
+	level::paste(work_img, out);
+      }
+
+      template <class I, class F, class O>
+      inline
+      void
+      generic_filter_common_(trait::value::nature::floating,
+                             const Image<I>& in,
+                             const F& coef,
+                             float sigma,
+                             Image<O>& out,
+                             int dir)
+      {
+	mln_ch_value(O, float) work_img(exact(in).domain());
+	level::paste(in, work_img);
+	extension::adjust_fill(work_img, 4, 0);
+
+	// On tiny sigma, Derich algorithm doesn't work.
+	// It is the same thing that to convolve with a Dirac.
+	if (sigma > 0.006)
+	  generic_filter_(mln_trait_image_dimension(I)(),
+                          work_img, coef, dir);
+
+        // We don't need to convert work_img
+	level::paste(work_img, out);
+      }
+
+
+      template <class I, class F, class O>
+      inline
+      void
       generic_filter_common_(trait::value::nature::scalar,
                              const Image<I>& in,
                              const F& coef,
@@ -487,9 +536,8 @@ namespace mln
             generic_filter_(mln_trait_image_dimension(I)(),
                             work_img, coef, i);
 
-	// FIXME deal with overflow problem
-        // for instance, when we paste a float image into a int_u8 images.
-	level::paste(work_img, out);
+        // Convert work_img into result type
+	level::paste(level::stretch(mln_value(I)(), work_img), out);
       }
 
       template <class I, class F, class O>
@@ -512,9 +560,8 @@ namespace mln
 	  generic_filter_(mln_trait_image_dimension(I)(),
                           work_img, coef, dir);
 
-	// FIXME deal with overflow problem
-        // for instance, when we paste a float image into a int_u8 images.
-	level::paste(work_img, out);
+        // Convert work_img into result type
+	level::paste(level::stretch(mln_value(I)(), work_img), out);
       }
 
 
@@ -565,9 +612,7 @@ namespace mln
 
     } // end of namespace mln::linear::impl
 
-
     // Facade.
-
 
     /*! Apply an approximated gaussian filter of \p sigma on \p input.
      * on a specific direction \p dir

@@ -1,3 +1,11 @@
+2008-11-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Fix conversion problems in linear::gaussian.
+
+	* tests/linear/gaussian.cc: Update tests.
+	* mln/linear/gaussian.hh: Fix conversion issues.
+	* doc/tutorial/design/include/imagetours.tex: Update documentation.
+
 2008-11-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make erosion work on nD images.
