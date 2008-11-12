@@ -1,5 +1,15 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes.
+
+	* mln/topo/adj_m_face_iter.hh
+	(mln::topo::internal::adj_m_face_iterator<D>::update_adj_faces__)
+	* mln/core/image/complex_image.hh
+	(mln::internal::data< complex_image<D, G, V> >::data):
+	Here.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Work around a bug of Apple g++ 4.0.
 
 	* mln/topo/adj_m_face_iter.hh

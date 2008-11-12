@@ -61,7 +61,7 @@ namespace mln
     struct data< complex_image<D, G, V> >
     {
       data(const p_complex<D, G>& pc,
-	    const metal::vec< D + 1, std::vector<V> >& values);
+	   const metal::vec< D + 1, std::vector<V> >& values);
 
       metal::vec< D + 1, std::vector<V> > values_;
       const p_complex<D, G> pc_;

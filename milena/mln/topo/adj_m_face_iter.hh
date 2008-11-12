@@ -35,6 +35,7 @@
 /// complex.
 
 # include <set>
+# include <vector>
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
 # include <mln/topo/face.hh>
@@ -328,7 +329,7 @@ namespace mln
 		if (g->sign())
 		  {
 		    for (typename faces_t::const_iterator h = q_faces.begin();
-		     h != q_faces.end(); ++h)
+			 h != q_faces.end(); ++h)
 		      // Don't insert a face twice.
 		      if (work_faces_set.find(*h) == work_faces_set.end())
 			{
