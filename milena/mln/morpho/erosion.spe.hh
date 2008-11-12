@@ -58,6 +58,8 @@
 ///
 /// \todo Warning: we should also have the "arbitrary" versions working
 /// on sets (not only on functions!)
+///
+/// \todo HERE Factor dispatch for lines...
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -1383,6 +1385,8 @@ namespace mln
 				  trait::image::dimension::two_d)::value
 		 &&
 		        mlc_is_a(mln_site(I), Gpoint)::value
+		 &&
+		        mln_is_simple_window(W)::value
 		 &&
 		        mlc_not_equal(mln_trait_image_value_storage(I),
 				      trait::image::value_storage::disrupted)::value };

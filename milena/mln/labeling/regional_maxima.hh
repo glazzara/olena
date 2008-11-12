@@ -30,8 +30,8 @@
 # define MLN_LABELING_REGIONAL_MAXIMA_HH
 
 /// \file mln/labeling/regional_maxima.hh
-/// \brief Connected component labeling of the regional maxima of an
-/// image.
+///
+/// Connected component labeling of the regional maxima of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -57,8 +57,8 @@ namespace mln
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
-		      L& nlabels);
+    regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
+		    L& nlabels);
 
 
 
@@ -118,10 +118,10 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	regional_maxima_(const I& input, const N& nbh,
+	regional_maxima(const I& input, const N& nbh,
 			 L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::regional_maxima_");
+	  trace::entering("labeling::impl::generic::regional_maxima");
 
 	  // FIXME: abort if L is not wide enough to encode the set of
 	  // maxima.
@@ -131,7 +131,7 @@ namespace mln
 	  canvas::labeling<F> run(f);
 	  nlabels = run.nlabels;
 
-	  trace::exiting("labeling::impl::generic::regional_maxima_");
+	  trace::exiting("labeling::impl::generic::regional_maxima");
 	  return run.output;
 	}
 
@@ -150,13 +150,13 @@ namespace mln
 		      L& nlabels)
     {
       trace::entering("labeling::regional_maxima");
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output =
-	impl::generic::regional_maxima_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::generic::regional_maxima(input, nbh, nlabels);
 
       trace::exiting("labeling::regional_maxima");
       return output;

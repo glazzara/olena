@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,10 @@
 #ifndef MLN_LABELING_COMPUTE_HH
 # define MLN_LABELING_COMPUTE_HH
 
-/*! \file mln/labeling/compute.hh
- *
- * \brief Compute accumulators onto sites/values of each labeled component
- * of an image.
- */
+/// \file mln/labeling/compute.hh
+///
+/// Compute accumulators onto sites/values of each labeled component
+/// of an image.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/util/array.hh>

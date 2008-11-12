@@ -30,8 +30,8 @@
 # define MLN_LABELING_REGIONAL_MINIMA_HH
 
 /// \file mln/labeling/regional_minima.hh
-/// \brief Connected component labeling of the regional minima of an
-/// image.
+///
+/// Connected component labeling of the regional minima of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -124,9 +124,9 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	regional_minima_(const I& input, const N& nbh, L& nlabels)
+	regional_minima(const I& input, const N& nbh, L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::regional_minima_");
+	  trace::entering("labeling::impl::generic::regional_minima");
 
 	  // FIXME: abort if L is not wide enough to encode the set of
 	  // minima.
@@ -136,7 +136,7 @@ namespace mln
 	  canvas::labeling<F> run(f);
 	  nlabels = run.nlabels;
 
-	  trace::exiting("labeling::impl::generic::regional_minima_");
+	  trace::exiting("labeling::impl::generic::regional_minima");
 	  return run.output;
 	}
 
@@ -155,13 +155,13 @@ namespace mln
 		      L& nlabels)
     {
       trace::entering("labeling::regional_minima");
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output =
-	impl::generic::regional_minima_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::generic::regional_minima(input, nbh, nlabels);
 
       trace::exiting("labeling::regional_minima");
       return output;

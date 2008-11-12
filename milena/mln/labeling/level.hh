@@ -67,6 +67,32 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Tests.
+
+    namespace internal
+    {
+
+      template <typename I, typename N, typename L>
+      void
+      level_tests(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		  L& nlabels)
+      {
+	mln_precondition(exact(input).has_data());
+	// mln_precondition(exact(nbh).is_valid());
+
+	(void) input;
+	(void) val;
+	(void) nbh;
+	(void) nlabels;
+      }
+
+    } // end of namespace mln::labeling::internal
+
+
+
+    // Generic implementation.
+
     namespace impl
     {
 
@@ -92,7 +118,7 @@ namespace mln
 	bool equiv(const P& n, const P&) const { return input(n) == val; }
 
  	void init()                          {}
-	bool labels(const P&) const          { return true;  }
+	bool labels(const P&) const          { return true; }
 	void do_no_union(const P&, const P&) {}
 	void init_attr(const P&)             {}
 	void merge_attr(const P&, const P&)  {}
@@ -101,7 +127,7 @@ namespace mln
 
 	const mln_value(I_)& val;
 
-	level_functor(const I_& input, const mln_value(I_)& val, const N_& nbh)
+	level_functor(const I& input, const mln_value(I)& val, const N& nbh)
 	  : input(input),
 	    nbh(nbh),
 	    s(input.domain()),
@@ -117,19 +143,22 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  level_(const I& input, const mln_value(I)& val, const N& nbh,
-		 L& nlabels)
+	level(const Image<I>& input, const mln_value(I)& val,
+	      const Neighborhood<N>& nbh,
+	      L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::level_");
+	  trace::entering("labeling::impl::generic::level");
+
+	  internal::level_tests(input, val, nbh, nlabels);
 
 	  typedef level_functor<I,N,L> F;
-	  F f(input, val, nbh);
+	  F f(exact(input), val, exact(nbh));
 	  canvas::labeling<F> run(f);
 	  
 	  nlabels = run.nlabels;
 	  // FIXME: Handle run.status
 
-	  trace::exiting("labeling::impl::generic::level_");
+	  trace::exiting("labeling::impl::generic::level");
 	  return run.output;
 	}
 
@@ -139,20 +168,36 @@ namespace mln
     } // end of namespace mln::labeling::impl
 
 
+    // Dispatch.
+
+    namespace internal
+    {
+
+      template <typename I, typename N, typename L>
+      mln_ch_value(I, L)
+      level_dispatch(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+		     L& nlabels)
+      {
+	return impl::generic::level(input, val, nbh, nlabels);
+      }
+
+    } // end of namespace mln::labeling::internal
+
+
 
     // Facade.
 
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      level(const Image<I>& input, const mln_value(I)& val,
-	    const Neighborhood<N>& nbh, L& nlabels)
+    level(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
+	  L& nlabels)
     {
       trace::entering("labeling::level");
-      mln_precondition(exact(input).has_data());
 
-      mln_ch_value(I, L) output =
-	impl::level_(mln_trait_image_speed(I)(),
-		     exact(input), val, exact(nbh), nlabels);
+      internal::level_tests(input, val, nbh, nlabels);
+
+      mln_ch_value(I, L) output;
+      output = internal::level_dispatch(input, val, nbh, nlabels);
 
       trace::exiting("labeling::level");
       return output;

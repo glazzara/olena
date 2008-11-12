@@ -28,10 +28,12 @@
 #ifndef MLN_LABELING_ALL_HH
 # define MLN_LABELING_ALL_HH
 
-/*! \file mln/labeling/all.hh
- *
- * \brief File that includes all labeling routines.
- */
+/// \file mln/labeling/all.hh
+///
+/// File that includes all labeling routines.
+///
+/// \todo Many files in this directory have to be updated with the
+/// test and dispatch mechanisms.
 
 
 namespace mln
@@ -47,9 +49,7 @@ namespace mln
       namespace generic {}
 
     }
-
   }
-
 }
 
 # include <mln/labeling/background.hh>
@@ -60,5 +60,6 @@ namespace mln
 # include <mln/labeling/level.hh>
 # include <mln/labeling/regional_maxima.hh>
 # include <mln/labeling/regional_minima.hh>
+
 
 #endif // ! MLN_LABELING_ALL_HH

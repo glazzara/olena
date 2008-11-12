@@ -29,11 +29,10 @@
 #ifndef MLN_LABELING_BACKGROUND_HH
 # define MLN_LABELING_BACKGROUND_HH
 
-/*! \file mln/labeling/background.hh
- *
- * \brief Connected component labeling of the background in a binary
- * image.
- */
+/// \file mln/labeling/background.hh
+///
+/// Connected component labeling of the background in a binary
+/// image.
 
 # include <mln/labeling/level.hh>
 
@@ -59,27 +58,28 @@ namespace mln
      *
      * \see mln::labeling::level
      */
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
     background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels);
+	       L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
+    template <typename I, typename N, typename L>
     inline
-    mln_ch_value(I, unsigned)
+    mln_ch_value(I, L)
     background(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels)
+	       L& nlabels)
     {
       trace::entering("labeling::background");
+
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).has_data());
+      // mln_precondition(exact(nbh).is_valid());
 
-      mln_ch_value(I, unsigned) output =
-	labeling::level(input, false, nbh, nlabels);
+      mln_ch_value(I, L) output = labeling::level(input, false, nbh, nlabels);
 
       trace::exiting("labeling::background");
       return output;

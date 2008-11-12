@@ -1,3 +1,20 @@
+2008-11-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update labeling routines to modern conventions.
+
+	* mln/morpho/erosion.spe.hh
+	(erosion_dispatch_wrt_win): Add check over win simplicity.
+	* mln/labeling/flat_zones.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/foreground.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/regional_maxima.hh,
+	* mln/labeling/compute.hh,
+	* mln/labeling/level.spe.hh,
+	* mln/labeling/background.hh: Partial update w.r.t. routine
+	naming and style.
+	* mln/labeling/all.hh (todo): New.
+
 2008-11-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix conversion problems in linear::gaussian.

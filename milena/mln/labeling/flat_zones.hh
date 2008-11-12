@@ -29,10 +29,9 @@
 #ifndef MLN_LABELING_FLAT_ZONES_HH
 # define MLN_LABELING_FLAT_ZONES_HH
 
-/*! \file mln/labeling/flat_zones.hh
- *
- * \brief Connected component labeling of the flat zones of an image.
- */
+/// \file mln/labeling/flat_zones.hh
+///
+/// Connected component labeling of the flat zones of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -93,7 +92,7 @@ namespace mln
 
 	// end of requirements
 
-	flat_zones_functor(const I_& input, const N_& nbh)
+	flat_zones_functor(const I& input, const N& nbh)
 	  : input(input),
 	    nbh(nbh),
 	    s(input.domain())
@@ -108,16 +107,16 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	flat_zones_(const I& input, const N& nbh, L& nlabels)
+	  flat_zones(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::flat_zones_");
+	  trace::entering("labeling::impl::generic::flat_zones");
 
 	  typedef flat_zones_functor<I,N,L> F;
-	  F f(input, nbh);
+	  F f(exact(input), exact(nbh));
 	  canvas::labeling<F> run(f);
 	  nlabels = run.nlabels;
 
-	  trace::exiting("labeling::impl::generic::flat_zones_");
+	  trace::exiting("labeling::impl::generic::flat_zones");
 	  return run.output;
 	}
 
@@ -136,13 +135,13 @@ namespace mln
 	       L& nlabels)
     {
       trace::entering("labeling::flat_zones");
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output =
-	impl::generic::flat_zones_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::generic::flat_zones(input, nbh, nlabels);
 
       trace::exiting("labeling::flat_zones");
       return output;
