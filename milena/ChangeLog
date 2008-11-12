@@ -1,5 +1,13 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Exercise mln::io::load on OFF file (with float data).
+
+	* tests/io/off/load_float.cc: New test.
+	* tests/io/off/Makefile.am (check_PROGRAMS): Add load_float.
+	(load_float_SOURCES): New.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a loading routine for floating-point value 2-complex images.
 
 	* mln/io/off/load.hh
