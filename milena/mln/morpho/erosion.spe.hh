@@ -1444,17 +1444,15 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_a(mln_pset(I), Box) test_box;
-	    typedef mlc_equal(mln_trait_image_quant(I),
-			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_box, test_lowq) tests;
-	    return erosion_dispatch_wrt_win(typename tests::eval (),
+	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
 					    input, win);
 	  }
       }
 
       /// \}
-
 
 
       /// Handling win::vline2d.
@@ -1486,11 +1484,10 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_a(mln_pset(I), Box) test_box;
-	    typedef mlc_equal(mln_trait_image_quant(I),
-			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_box, test_lowq) tests;
-	    return erosion_dispatch_wrt_win(typename tests::eval (),
+	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
 					    input, win);
 	  }
       }
@@ -1527,14 +1524,12 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_not(mln_trait_image_kind(I),
-			       mln::trait::image::kind::logic) test_not_logic;
-	    typedef mlc_is_a(mln_pset(I), Box) test_box;
-	    typedef mlc_equal(mln_trait_image_quant(I),
-			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_not_logic, test_box) temp;
-	    typedef mlc_and(temp, test_lowq) tests;
-	    return erosion_dispatch_wrt_win(typename tests::eval (),
+	    enum { test = mlc_is_not(mln_trait_image_kind(I),
+				     mln::trait::image::kind::logic)::value
+		   && mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
 					    input, win);
 	  }
       }
@@ -1571,14 +1566,12 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    typedef mlc_is_not(mln_trait_image_kind(I),
-			       mln::trait::image::kind::logic) test_not_logic;
-	    typedef mlc_is_a(mln_pset(I), Box) test_box;
-	    typedef mlc_equal(mln_trait_image_quant(I),
-			      mln::trait::image::quant::low) test_lowq;
-	    typedef mlc_and(test_not_logic, test_box) temp;
-	    typedef mlc_and(temp, test_lowq) tests;
-	    return erosion_dispatch_wrt_win(typename tests::eval (),
+	    enum { test = mlc_is_not(mln_trait_image_kind(I),
+				     mln::trait::image::kind::logic)::value
+		   && mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
 					    input, win);
 	  }
       }

@@ -1,5 +1,21 @@
 2008-11-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Allow some state to be transmitted fom meta cuu to accu.
+
+	* mln/core/concept/meta_accumulator.hh (unmeta): New.
+	* mln/core/concept/object.hh (include): Add metal abort.
+	* mln/metal/abort.hh: Upgrade doc style.
+	* mln/accu/rank.hh: Likewise.
+	(rank::k): New method.
+	(rank::n): New method.
+	(meta::rank): New attributes, resp. k and n.
+	(unmeta): New overload for meta::rank.
+	* mln/accu/transform.hh: Use unmeta.
+	* tests/accu/rank.cc: Augment.
+	* mln/morpho/erosion.spe.hh: Shorten checks in lines dispatch.
+
+2008-11-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update labeling routines to modern conventions.
 
 	* mln/morpho/erosion.spe.hh

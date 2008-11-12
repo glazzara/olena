@@ -29,10 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_OBJECT_HH
 # define MLN_CORE_CONCEPT_OBJECT_HH
 
-/*! \file mln/core/concept/object.hh
- *
- * \brief Definition of the top Milena class mln::Object.
- */
+/// \file mln/core/concept/object.hh
+///
+/// Definition of the top Milena class mln::Object.
 
 # include <cassert>
 # include <iostream>
@@ -44,6 +43,7 @@
 # include <mln/trace/all.hh>
 
 // metal
+# include <mln/metal/abort.hh>
 # include <mln/metal/is_a.hh>
 # include <mln/metal/is_not_a.hh>
 # include <mln/metal/is.hh>

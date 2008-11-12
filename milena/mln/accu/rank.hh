@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,12 @@
 #ifndef MLN_ACCU_RANK_HH
 # define MLN_ACCU_RANK_HH
 
-/*! \file mln/accu/rank.hh
- *
- * \brief Define an rank accumulator.
- *
- * \todo It should be renamed as rank_h since it relies on histogram
- * (thus low quantization).
- */
+/// \file mln/accu/rank.hh
+///
+/// Define an rank accumulator.
+///
+/// \todo It should be renamed as rank_h since it relies on histogram
+/// (thus low quantization).
 
 # include <vector>
 # include <mln/accu/internal/base.hh>
@@ -80,6 +79,12 @@ namespace mln
       /// Always true here.
       bool is_valid() const;
 
+      /// Give the rank.
+      unsigned k() const;
+
+      /// Give the total number of elements. 
+      unsigned n() const;
+
     protected:
 
       unsigned k_; // 0 <= k_ < n
@@ -112,13 +117,22 @@ namespace mln
       struct rank : public Meta_Accumulator< rank >
       {
 	template <typename T>
-	  struct with
-	  {
-	    typedef accu::rank<T> ret;
-	  };
+	struct with
+	{
+	  typedef accu::rank<T> ret;
+	};
+	unsigned k, n;
       };
 
     } // end of namespace mln::accu::meta
+
+
+    template <typename T>
+    rank<T> unmeta(const meta::rank& m, T)
+    {
+      rank<T> a(m.k, m.n);
+      return a;
+    }
 
 
 
@@ -137,7 +151,21 @@ namespace mln
       init();
     }
 
+    template <typename T>
+    inline
+    unsigned
+    rank<T>::k() const
+    {
+      return k_;
+    }
 
+    template <typename T>
+    inline
+    unsigned
+    rank<T>::n() const
+    {
+      return n_;
+    }
 
     template <typename T>
     inline

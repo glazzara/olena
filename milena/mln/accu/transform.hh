@@ -148,7 +148,7 @@ namespace mln
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
     transform(const Image<I>& input,
-	      const Meta_Accumulator<A>&,
+	      const Meta_Accumulator<A>& a,
 	      const Window<W>& win)
     {
       trace::entering("accu::transform");
@@ -157,9 +157,10 @@ namespace mln
       // mln_precondition(exact(win).is_valid());
 
       typedef mln_accu_with(A, mln_value(I)) A_;
-      A_ a;
+      A_ a_ = accu::unmeta(exact(a), mln_value(I)());
+
       mln_ch_value(I, mln_result(A_)) output;
-      output = internal::transform_dispatch(input, a, win);
+      output = internal::transform_dispatch(input, a_, win);
 
       trace::exiting("accu::transform");
       return output;
