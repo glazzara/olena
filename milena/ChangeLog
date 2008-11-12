@@ -1,3 +1,10 @@
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
+	Properly handle command-line arguments in apps/statues/.
+
+	* apps/statues/mesh-segm.cc, apps/statues/mesh-skel.cc:
+	Use the right element from argv.
+
 2008-11-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Allow some state to be transmitted fom meta cuu to accu.

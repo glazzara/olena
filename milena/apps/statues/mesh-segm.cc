@@ -39,8 +39,6 @@
 
 #include <TriMesh.h>
 
-#include <mln/value/rgb8.hh>
-
 #include <mln/core/alias/point3d.hh>
 #include <mln/core/alias/point3d.hh>
 
@@ -62,7 +60,8 @@ int main(int argc, char* argv[])
 {
   if (argc != 4)
     {
-      std::cerr << "usage: " << argv[1] << " input.off lambda output.off";
+      std::cerr << "usage: " << argv[0] << " input.off lambda output.off"
+		<< std::endl;
       exit(1);
     }
 
