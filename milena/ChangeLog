@@ -1,5 +1,14 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a factoring functor to save OFF image files.
+
+	* mln/io/off/save.hh (mln::io::off::internal::off_saver): New.
+	Use it to factor...
+	(mln::io::off::save(const bin_2complex_image3df&, const std::string&)):
+	...this routine.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes.
 
 	* mln/topo/adj_m_face_iter.hh
