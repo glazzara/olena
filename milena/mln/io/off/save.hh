@@ -66,6 +66,16 @@ namespace mln
       void save(const bin_2complex_image3df& ima,
 		const std::string& filename);
 
+      /** \brief Save an 8-bit grey-level OFF image into a complex image.
+
+	  \param[in] ima      The image to save.
+	  \param[in] filename The name of the file where to save the image.
+
+	  Only data is attached to 2-faces is saved; the OFF file
+	  cannot store data attached to faces of other dimensions.  */
+      void save(const int_u8_2complex_image3df& ima,
+		const std::string& filename);
+
 
       namespace internal
       {
@@ -96,6 +106,14 @@ namespace mln
 	  void write_face_data(std::ostream& ostr, const value& v) const;
 	};
 
+
+	struct int_u8_off_saver
+	  : public off_saver< int_u8_2complex_image3df, int_u8_off_saver >
+	{
+	  /// \brief Save face data.
+	  void write_face_data(std::ostream& ostr, const value& v) const;
+	};
+
       } // end of namespace mln::io::off::internal
 
 
@@ -111,6 +129,14 @@ namespace mln
       {
 	trace::entering("mln::io::off::save");
 	internal::bin_off_saver()(ima, filename);
+	trace::exiting("mln::io::off::save");
+      }
+
+      void
+      save(const int_u8_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::off::save");
+	internal::int_u8_off_saver()(ima, filename);
 	trace::exiting("mln::io::off::save");
       }
 
@@ -305,6 +331,22 @@ namespace mln
 				       const value& /* v */) const
 	{
 	  // Do nothing (no data associated to faces).
+	}
+
+	void
+	int_u8_off_saver::write_face_data(std::ostream& ostr,
+					  const value& v) const
+	{
+	  /* Using RGBA colors to represent an 8-bit integer value.
+
+	     Each channel (R, G, B) of the color V is an integer in
+	     the range 0..255.  A fourth channel, A, controls the
+	     transparency.
+
+	     We just set the same value for each channel, as the OFF
+	     file format does not support gray-level values as-is.  */
+	  ostr << ' ' << v << ' ' << v << ' ' << v
+	       << ' ' << 1.0f << std::endl;
 	}
 	/* \} */
 
