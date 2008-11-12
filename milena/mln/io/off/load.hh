@@ -32,6 +32,7 @@
 /// \brief Input loading function for OFF files.
 ///
 /// \see http://shape.cs.princeton.edu/benchmark/documentation/off_format.html
+/// \see https://people.scs.fsu.edu/~burkardt/html/off_format.html
 
 # include <cstdlib>
 
@@ -40,6 +41,7 @@
 
 # include <string>
 
+# include <mln/core/concept/object.hh>
 # include <mln/core/alias/complex_image.hh>
 
 
@@ -63,231 +65,395 @@ namespace mln
 
       namespace internal
       {
-	/// A stream manipulator eating comments starting with a `#'
-	/// and ending at an end of line
-	std::istream& eat_comment (std::istream& istr);
-      }
+
+	template <typename I, typename E>
+	struct off_loader : public Object<E>
+	{
+	  typedef off_loader<I, E> self;
+
+	  /// Dimension of the built complex.
+	  static const unsigned D = 2;
+	  /// Type of the set of values.
+	  typedef metal::vec<D + 1, std::vector< mln_value(I) > > values;
+	  /// Type of the domain.
+	  typedef mln_pset(I) domain;
+
+	  /// \brief Constructor, with static checks.
+	  off_loader();
+
+	  /// Load an image from \a filename into \a ima.
+	  void operator()(I& ima, const std::string& filename);
+
+	  /// A stream manipulator eating comments starting with a `#'
+	  /// and ending at an end of line.
+	  static std::istream& eat_comment(std::istream& istr);
+	};
+
+
+	struct bin_off_loader
+	  : public off_loader< bin_2complex_image3df, bin_off_loader >
+	{
+	  /// \brief Read face data.
+	  ///
+	  /// Dummy, does nothings (but required by the super class).
+	  void read_face_data(std::istream& istr);
+
+	  /// \brief Assign values to image.
+	  void assign(values& vs, const domain& s);
+
+	  /// \brief Pre-allocate data.
+	  ///
+	  /// Dummy, does nothings (but required by the super class).
+	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
+	};
+
+      } // end of namespace mln::io::off::internal
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      void load(bin_2complex_image3df& ima, const std::string& filename)
+      /*----------.
+      | Facades.  |
+      `----------*/
+
+      void
+      load(bin_2complex_image3df& ima, const std::string& filename)
       {
 	trace::entering("mln::io::off::load");
-
-	const std::string me = "mln::io::off::load";
-
-	std::ifstream istr(filename.c_str());
-	if (!istr)
-	{
-	  std::cerr << me << ": `" << filename << "' not found." << std::endl;
-	  /* FIXME: Too violent.  We should allow the use of
-	     exceptions, at least to have Milena's code behave
-	     correctly in interpreted environments (std::exit() or
-	     std::abort() causes the termination of a Python
-	     interpreter, for instance!).  */
-	  std::exit(1);
-	}
-
-	/*---------.
-	| Header.  |
-	`---------*/
-
-	/* ``The .off files in the Princeton Shape Benchmark conform
-	   to the following standard''. */
-
-	/* ``OFF files are all ASCII files beginning with the keyword
-	   OFF. ''  */
-	std::string type;
-	istr >> internal::eat_comment >> type;
-	if (type != "OFF")
-	  {
-	    std::cerr << me << ": `" << filename << "': ill-formed header."
-		      << std::endl;
-	    std::exit(1);
-	  }
-
-	/* ``The next line states the number of vertices, the number
-	   of faces, and the number of edges. The number of edges can
-	   be safely ignored.'' */
-	unsigned nvertices, nfaces, nedges;
-	istr >> internal::eat_comment >> nvertices
-	     >> internal::eat_comment >> nfaces
-	     >> internal::eat_comment >> nedges;
-
-	/*-------.
-	| Data.  |
-	`-------*/
-
-	/* FIXME: Maybe we could sugar all this (using make_whatever
-	   helpers?).  */
-
-	// --------- //
-	// Complex.  //
-	// --------- //
-
-	const unsigned D = 2;
-	topo::complex<D> c;
-
-	// ------------------------------------------ //
-	// Vertices & geometry (vertices locations).  //
-	// ------------------------------------------ //
-
-	/* ``The vertices are listed with x, y, z coordinates, written
-	   one per line. */
-
-	/* FIXME: We should have a faster way to create a bunch of
-	   0-faces (vertices).  */
-	for (unsigned v = 0; v < nvertices; ++v)
-	    c.add_face();
-
-	typedef point3df P;
-	typedef mln_coord_(P) C;
-	typedef geom::complex_geometry<D, P> G;
-	G geom;
-	for (unsigned v = 0; v < nvertices; ++v)
-	  {
-	    C x, y, z;
-	    istr >> internal::eat_comment >> x
-		 >> internal::eat_comment >> y
-		 >> internal::eat_comment >> z;
-	    geom.add_location(point3df(x, y, z));
-	  }
-
-	// --------------- //
-	// Faces & edges.  //
-	// --------------- //
-
-	/* After the list of vertices, the faces are listed, with one
-	   face per line. For each face, the number of vertices is
-	   specified, followed by indices into the list of
-	   vertices.''  */
-
-	// An adjacenty matrix recording the edges seen so far.
-	typedef std::vector< std::vector<bool> > complex_edges_t;
-	complex_edges_t complex_edges (nvertices,
-				       std::vector<bool>(nvertices, false));
-
-	for (unsigned f = 0; f < nfaces; ++f)
-	  {
-	    unsigned nface_vertices;
-	    istr >> internal::eat_comment >> nface_vertices;
-	    if (nface_vertices <= 2)
-	      {
-		std::cerr << me << ": `" << filename
-			  << "': ill-formed face (" << nface_vertices
-			  << " vertices)" << std::endl;
-		std::exit(1);
-	      }
-
-	    // The edges of the face.
-	    topo::n_faces_set<1, D> face_edges_set;
-	    face_edges_set.reserve(nface_vertices);
-
-	    // The first vertex id of the face.
-	    unsigned first_vertex_id;
-	    istr >> internal::eat_comment >> first_vertex_id;
-	    // The current vertex id initialized with the first id.
-	    unsigned vertex_id = first_vertex_id;
-	    if (first_vertex_id >= nvertices)
-	      {
-		std::cerr << me << ": `" << filename
-			  << "': invalid vertex id " << first_vertex_id
-			  << std::endl;
-		std::exit(1);
-	      }
-	    // Iterate on vertices and form edges.    
-	    for (unsigned v = 0; v < nface_vertices; ++v)
-	      {
-		/* The next vertex id.  The pair (vertex_id, next_vertex_id)
-		   is an edge of the mesh/complex.  */
-		unsigned next_vertex_id;
-		/* When V is the id of the last vertex of the face F,
-		   set next_vertex_id to first_vertex_id; otherwise,
-		   read it from the input.  */
-		if (v == nface_vertices - 1)
-		  next_vertex_id = first_vertex_id;
-		else
-		  {
-		    istr >> internal::eat_comment >> next_vertex_id;
-		    if (next_vertex_id >= nvertices)
-		      {
-			std::cerr << me << ": `" << filename
-				  << "': invalid vertex id " << next_vertex_id
-				  << std::endl;
-			std::exit(1);
-		      }
-		  }
-		// The ends of the current edge.
-		topo::n_face<0, D> vertex(c, vertex_id);
-		topo::n_face<0, D> next_vertex(c, next_vertex_id);
-		// The current edge.
-		topo::algebraic_n_face<1, D> edge;
-		// If the edge has been constructed yet, create it;
-		// otherwise, retrieve its id from the complex.
-		if (!complex_edges[vertex_id][next_vertex_id])
-		  {
-		    complex_edges[vertex_id][next_vertex_id] = true;
-		    complex_edges[next_vertex_id][vertex_id] = true;
-		    edge =
-		      make_algebraic_n_face(c.add_face(vertex - next_vertex),
-					    true);
-		  }
-		else
-		  {
-		    edge = topo::edge(vertex, next_vertex);
-		    mln_assertion(edge.is_valid());
-		  }
-		// Record this edge.
- 		face_edges_set += edge;
-		// Next vertex.
-		vertex_id = next_vertex_id;
-	      }
-	    
-	    // Add face.
-	    c.add_face(face_edges_set);
-	  }
-
-	/*--------.
-	| Image.  |
-	`--------*/
-
-	// Value type.
-	typedef bool V;
-
-	// Site set.
-	p_complex<D, G> pc(c, geom);
-
-	// Values.
-	metal::vec<D + 1, std::vector<V> > values;
-	for (unsigned i = 0; i <= D; ++i)
-	  values[i].insert(values[i].begin(), pc.cplx().nfaces(i), true);
-
-	// Image.
-	ima.init_(pc, values);
-
-	/*--------------.
-	| End of file.  |
-	`--------------*/
-
-	istr >> internal::eat_comment;
-	if (!istr.eof())
-	  {
-	    std::cerr << me << ": `" << filename
-		      << "': end of file not reached" << std::endl;
-	    std::exit(1);
-	  }
-	istr.close();
-
+	internal::bin_off_loader()(ima, filename);
 	trace::exiting("mln::io::off::load");
       }
 
 
+      /*-------------------------.
+      | Actual implementations.  |
+      `-------------------------*/
+
+      // -------- //
+      // Canvas.  //
+      // -------- //
+
       namespace internal
       {
-	/// A stream manipulator eating comments starting with a `#'
-	/// and ending at an end of line
-	std::istream& eat_comment (std::istream& istr)
+
+	template <typename I, typename E>
+	inline
+	off_loader<I, E>::off_loader()
+	{
+	  // Concept checking.
+	  void (E::*m1)(std::istream&) = &E::read_face_data;
+	  m1 = 0;
+	  void (E::*m2)(unsigned, unsigned, unsigned) = &E::reserve;
+	  m2 = 0;
+	  void (E::*m3)(values&, const domain&) = &E::assign;
+	  m3 = 0;
+	}
+
+
+	template <typename I, typename E>
+	inline
+	void
+	off_loader<I, E>::operator()(I& ima, const std::string& filename)
+	{
+	  const std::string me = "mln::io::off::load";
+
+	  std::ifstream istr(filename.c_str());
+	  if (!istr)
+	    {
+	      std::cerr << me << ": `" << filename << "' not found."
+			<< std::endl;
+	      /* FIXME: Too violent.  We should allow the use of
+		 exceptions, at least to have Milena's code behave
+		 correctly in interpreted environments (std::exit() or
+		 std::abort() causes the termination of a Python
+		 interpreter, for instance!).  */
+	      std::exit(1);
+	    }
+
+	  /*---------.
+	  | Header.  |
+	  `---------*/
+
+	  /* ``The .off files in the Princeton Shape Benchmark conform
+	     to the following standard''. */
+
+	  /* ``OFF files are all ASCII files beginning with the keyword
+	     OFF. ''  */
+	  std::string type;
+	  istr >> &self::eat_comment >> type;
+	  if (type != "OFF")
+	    {
+	      std::cerr << me << ": `" << filename << "': ill-formed header."
+			<< std::endl;
+	      std::exit(1);
+	    }
+
+	  /* ``The next line states the number of vertices, the number
+	     of faces, and the number of edges. The number of edges can
+	     be safely ignored.'' */
+	  unsigned nvertices, nfaces, nedges;
+	  istr >> &self::eat_comment >> nvertices
+	       >> &self::eat_comment >> nfaces
+	       >> &self::eat_comment >> nedges;
+
+	  /// Possilby pre-allocate data.
+	  exact(this)->reserve(nvertices, nedges, nfaces);
+
+	  /*-------.
+	  | Data.  |
+	  `-------*/
+
+	  /* FIXME: Maybe we could sugar all this (using make_whatever
+	     helpers?).  */
+
+	  // --------- //
+	  // Complex.  //
+	  // --------- //
+
+	  const unsigned D = 2;
+	  topo::complex<D> c;
+
+	  // ------------------------------------------ //
+	  // Vertices & geometry (vertices locations).  //
+	  // ------------------------------------------ //
+
+	  /* ``The vertices are listed with x, y, z coordinates, written
+	     one per line.''  */
+
+	  /* FIXME: We should have a faster way to create a bunch of
+	     0-faces (vertices).  */
+	  for (unsigned v = 0; v < nvertices; ++v)
+	    c.add_face();
+
+	  typedef point3df P;
+	  typedef mln_coord_(P) C;
+	  typedef geom::complex_geometry<D, P> G;
+	  G geom;
+	  for (unsigned v = 0; v < nvertices; ++v)
+	    {
+	      C x, y, z;
+	      istr >> &self::eat_comment >> x
+		   >> &self::eat_comment >> y
+		   >> &self::eat_comment >> z;
+	      geom.add_location(point3df(x, y, z));
+	    }
+
+	  // --------------- //
+	  // Faces & edges.  //
+	  // --------------- //
+
+	  /* ``After the list of vertices, the faces are listed, with
+	     one face per line. For each face, the number of vertices
+	     is specified, followed by indices into the list of
+	     vertices.''  */
+
+	  // An adjacenty matrix recording the edges seen so far.
+	  typedef std::vector< std::vector<bool> > complex_edges_t;
+	  complex_edges_t complex_edges (nvertices,
+					 std::vector<bool>(nvertices, false));
+
+	  for (unsigned f = 0; f < nfaces; ++f)
+	    {
+	      unsigned nface_vertices;
+	      istr >> &self::eat_comment >> nface_vertices;
+	      if (nface_vertices <= 2)
+		{
+		  std::cerr << me << ": `" << filename
+			    << "': ill-formed face (having "
+			    << nface_vertices << ' '
+			    << (nface_vertices < 2 ? "vertex" : "vertices")
+			    << ')' << std::endl;
+		  std::exit(1);
+		}
+
+	      // The edges of the face.
+	      topo::n_faces_set<1, D> face_edges_set;
+	      face_edges_set.reserve(nface_vertices);
+
+	      // The first vertex id of the face.
+	      unsigned first_vertex_id;
+	      istr >> &self::eat_comment >> first_vertex_id;
+	      // The current vertex id initialized with the first id.
+	      unsigned vertex_id = first_vertex_id;
+	      if (first_vertex_id >= nvertices)
+		{
+		  std::cerr << me << ": `" << filename
+			    << "': invalid vertex id " << first_vertex_id
+			    << std::endl;
+		  std::exit(1);
+		}
+	      // Iterate on vertices and form edges.
+	      for (unsigned v = 0; v < nface_vertices; ++v)
+		{
+		  /* The next vertex id.  The pair (vertex_id,
+		     next_vertex_id) is an edge of the
+		     mesh/complex.  */
+		  unsigned next_vertex_id;
+		  /* When V is the id of the last vertex of the face F,
+		     set next_vertex_id to first_vertex_id; otherwise,
+		     read it from the input.  */
+		  if (v == nface_vertices - 1)
+		    next_vertex_id = first_vertex_id;
+		  else
+		    {
+		      istr >> &self::eat_comment >> next_vertex_id;
+		      if (next_vertex_id >= nvertices)
+			{
+			  std::cerr << me << ": `" << filename
+				    << "': invalid vertex id "
+				    << next_vertex_id << std::endl;
+			  std::exit(1);
+			}
+		    }
+		  // The ends of the current edge.
+		  topo::n_face<0, D> vertex(c, vertex_id);
+		  topo::n_face<0, D> next_vertex(c, next_vertex_id);
+		  // The current edge.
+		  topo::algebraic_n_face<1, D> edge;
+		  // If the edge has been constructed yet, create it;
+		  // otherwise, retrieve its id from the complex.
+		  if (!complex_edges[vertex_id][next_vertex_id])
+		    {
+		      complex_edges[vertex_id][next_vertex_id] = true;
+		      complex_edges[next_vertex_id][vertex_id] = true;
+		      edge =
+			make_algebraic_n_face(c.add_face(vertex -
+							 next_vertex),
+					      true);
+		    }
+		  else
+		    {
+		      edge = topo::edge(vertex, next_vertex);
+		      mln_assertion(edge.is_valid());
+		    }
+		  // Record this edge.
+		  face_edges_set += edge;
+		  // Next vertex.
+		  vertex_id = next_vertex_id;
+		}
+
+	      // Possibly read a value (depends on the actual format).
+	      exact(this)->read_face_data(istr);
+
+	      // Add face.
+	      c.add_face(face_edges_set);
+	    }
+
+	  /*--------.
+	  | Image.  |
+	  `--------*/
+
+	  // Site set.
+	  domain s(c, geom);
+
+	  // Values
+	  values vs;
+	  exact(this)->assign(vs, s);
+
+	  // Image.
+	  ima.init_(s, vs);
+
+	  /*--------------.
+	  | End of file.  |
+	  `--------------*/
+
+	  istr >> &self::eat_comment;
+	  if (!istr.eof())
+	    {
+	      std::cerr << me << ": `" << filename
+			<< "': end of file not reached" << std::endl;
+	      std::exit(1);
+	    }
+	  istr.close();
+	}
+
+
+	// ---------------- //
+	// Specific parts.  //
+	// ---------------- //
+
+	/* FIXME: We do not honor the part
+
+	     ``Line breaks are significant here: the color description
+	     begins after VertN and ends with the end of the line (or
+	     the next # comment).
+
+	  in the following comment.  */
+
+	/** \brief Reading values.
+
+	    From https://people.scs.fsu.edu/~burkardt/html/off_format.html:
+
+	    ``Following these [coordinates] are the face descriptions,
+	    typically written with one line per face. Each has the
+	    form
+
+            N  Vert1 Vert2 ... VertN  [color]
+
+            Here N is the number of vertices on this face, and Vert1
+            through VertN are indices into the list of vertices (in
+            the range 0..NVertices-1).
+
+	    The optional color may take several forms. Line breaks
+	    are significant here: the color description begins after
+	    VertN and ends with the end of the line (or the next #
+	    comment). A color may be:
+
+	    nothing
+	        the default color
+	    one integer
+	    	index into "the" colormap; see below
+	    three or four integers
+	    	RGB and possibly alpha values in the range 0..255
+	    three or four floating-point numbers
+	        RGB and possibly alpha values in the range 0..1
+
+	    For the one-integer case, the colormap is currently read
+	    from the file `cmap.fmap' in Geomview's `data'
+	    directory. Some better mechanism for supplying a colormap
+	    is likely someday.
+
+	    The meaning of "default color" varies. If no face of the
+	    object has a color, all inherit the environment's default
+	    material color. If some but not all faces have colors, the
+	    default is gray (R,G,B,A=.666).''
+
+	    \{ */
+	void
+	bin_off_loader::read_face_data(std::istream& /* istr */)
+	{
+	  // Do nothing (no data associated to faces).
+	}
+	/* \} */
+
+
+	void
+	bin_off_loader::reserve(unsigned /* nvertices */,
+				unsigned /* nedges */,
+				unsigned /* nfaces */)
+	{
+	  // Do nothing (no data associated to faces).
+	}
+
+
+	void
+	bin_off_loader::assign(values& vs, const domain& s)
+	{
+	  // Default values.
+	  for (unsigned i = 0; i <= D; ++i)
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), true);
+	}
+
+
+	// --------- //
+	// Helpers.  //
+	// --------- //
+
+	template <typename I, typename E>
+	inline
+	std::istream&
+	off_loader<I, E>::eat_comment(std::istream& istr)
 	{
 	  // Skip whitespace and newlines.
 	  std::ws(istr);
@@ -304,9 +470,12 @@ namespace mln
 	    }
 	  return istr;
 	}
-      }
+
+      } // end of namespace mln::io::off::internal
+
 
 # endif // ! MLN_INCLUDE_ONLY
+
 
     } // end of namespace mln::io::off
 

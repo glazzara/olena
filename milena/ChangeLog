@@ -1,5 +1,18 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Introduce a factoring functor to load OFF image files.
+
+	* mln/io/off/load.hh
+	(mln::io::off::internal::off_loader)
+	(mln::io::off::internal::bin_off_loader):
+	New classes.
+	Use it to factor...
+	(mln::io::off::load(bin_2complex_image3df&, const std::string&)):
+	...this function.
+	(mln::io::off::internal::eat_comment): Remove.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add new typedefs for commonly-used complex-based images.
 
 	* mln/core/alias/complex_geometry.hh: New.
