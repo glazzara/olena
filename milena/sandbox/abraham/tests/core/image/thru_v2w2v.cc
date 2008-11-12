@@ -47,7 +47,7 @@ int main ()
 
   };
 
-  image2d<double> ima(make::image2d(vs));
+  image2d<double> ima(make::image(vs));
   thru<mln::fun::v2w2v::cos<double>, image2d<double> > out(ima);
 
   double i = 0;

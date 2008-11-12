@@ -91,6 +91,7 @@ namespace mln
 
 	mln_value(I) min() { return mln_min(mln_value(I)); }
 	mln_value(I) max() { return mln_max(mln_value(I)); }
+	void revert () { level = max() - level + min(); }
 
       }; // struct node
 
@@ -171,15 +172,15 @@ namespace mln
     template <class I, class N>
     topo_wst<I, N>::topo_wst(const Image<I>& i,
 			   const Neighborhood<N>& n)
-      : pima(exact(i)),
-	nbh(exact(n)),
+      : nbh(exact(n)),
 	Par_node(exact(i).domain(), exact(i).border()),
 	Par_tree(exact(i).domain(), exact(i).border()),
 	Rnk_tree(exact(i).domain(), exact(i).border()),
 	Rnk_node(exact(i).domain(), exact(i).border()),
 	subtreeRoot(exact(i).domain(), exact(i).border()),
 	nodes(exact(i).domain(), exact(i).border()),
-	isproc(exact(i).domain(), exact(i).border())
+	isproc(exact(i).domain(), exact(i).border()),
+	pima(exact(i))
     {
     }
 
@@ -227,7 +228,11 @@ namespace mln
       BuildComponentTree();
       compressTree();
       arith::revert_inplace(pima);
-      arith::revert_inplace(nodes);
+      // arith::revert_inplace(nodes);
+      mln_piter(image2d<node>) p (nodes.domain());
+      for_all(p)
+	nodes(p).revert();
+
       build_euler_tour();
       build_minim();
       topo_watershed();

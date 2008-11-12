@@ -1,3 +1,14 @@
+2008-11-12  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make topological watershed work.
+
+	* abraham/tests/core/image/thru_v2w2v.cc:
+	    make::image2d -> make::image.
+	* abraham/mln/morpho/topo_wst.hh:
+	    fix reversion of tree .
+	* abraham/mln/value/shell.hh:
+	    add traits.
+
 2008-11-11  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add FFT to nature.

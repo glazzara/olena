@@ -41,8 +41,19 @@ namespace mln
     struct shell;
   }
 
-  // FIXME : traits
 
+
+  namespace trait
+  {
+
+    template <typename F, typename I>
+    struct value_< mln::value::shell<F, I> >
+      :
+      value_< mln_result(F) >
+    {
+    };
+
+  } // end of namespace trait
 
   namespace value
   {
