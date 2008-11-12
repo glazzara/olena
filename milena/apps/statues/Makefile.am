@@ -14,7 +14,9 @@ AM_LDFLAGS = $(GLFLAGS)
 LDADD = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 
 
-bin_PROGRAMS = mesh-segm mesh-skel
+bin_PROGRAMS = mesh-curv mesh-segm mesh-skel
+
+mesh_curv_SOURCES = mesh-curv.cc io.hh
 mesh_segm_SOURCES = mesh-segm.cc io.hh
 mesh_skel_SOURCES = mesh-skel.cc io.hh
 

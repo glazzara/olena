@@ -1,5 +1,15 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a program adding curvature information to OFF files.
+
+	* apps/statues/mesh-curv.cc: New.
+	* apps/statues/io.hh (write_faces_asc_float, write_off_float):
+	New functions.
+	* apps/statues/Makefile.am (bin_PROGRAMS): Add mesh-curv.
+	(mesh_curv_SOURCES): New.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise mln::io::load on OFF file (with float data).
 
 	* tests/io/off/load_float.cc: New test.
