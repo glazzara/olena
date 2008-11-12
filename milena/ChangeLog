@@ -1,5 +1,13 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Work around a bug of Apple g++ 4.0.
+
+	* mln/topo/adj_m_face_iter.hh
+	(mln::topo::internal::adj_m_face_iterator<D>::update_adj_faces__):
+	Please Apple g++ 4.0 by casting an iterator to the expected type.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add meshes with curvature information.
 
 	* mesh/bunny-holefilled-curv.off,

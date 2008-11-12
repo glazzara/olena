@@ -339,7 +339,12 @@ namespace mln
 		else
 		  {
 		    for (typename faces_t::const_reverse_iterator h =
-			   q_faces.rbegin(); h != q_faces.rend(); ++h)
+			   q_faces.rbegin();
+			 /* This is crazy.  With Apple g++ 4.0, this
+			    code won't compile without this cast!
+			    This is solved in MacPorts g++ 4.3.  */
+			 h != (typename faces_t::const_reverse_iterator) q_faces.rend();
+			 ++h)
 		      // Don't insert a face twice.
 		      if (work_faces_set.find(*h) == work_faces_set.end())
 			{
