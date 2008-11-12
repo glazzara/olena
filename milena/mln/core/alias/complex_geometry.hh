@@ -25,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALIAS_BIN_2COMPLEX_IMAGE3DF_HH
-# define MLN_CORE_ALIAS_BIN_2COMPLEX_IMAGE3DF_HH
+#ifndef MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH
+# define MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH
 
-/// \file mln/core/alias/bin_2complex_image3df.hh
-/// \brief Definition of the mln::bin_2complex_image3df alias.
+/// \file mln/core/alias/complex_geometry.hh
+/// \brief Definition of mln::geom::complex_geometry aliases.
 
-# include <mln/core/image/complex_image.hh>
 # include <mln/geom/complex_geometry.hh>
 # include <mln/core/alias/point3df.hh>
 
@@ -39,13 +38,11 @@
 namespace mln
 {
 
-  /// \brief Type alias for a binary image based on a 2-complex, where
-  /// 0-faces are located at floating-point 3-dimensional points.
-  typedef
-  mln::complex_image<2, mln::geom::complex_geometry<2,point3df>, bool>
-  bin_2complex_image3df;
+  /// \brief Type alias for the geometry of a 2-complex located in a
+  /// 3-dimensional space (with floating-point coordinates).
+  typedef mln::geom::complex_geometry<2,point3df> space_2complex_geometry;
 
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_ALIAS_BIN_2COMPLEX_IMAGE3DF_HH
+#endif // ! MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH

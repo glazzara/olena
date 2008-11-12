@@ -40,7 +40,7 @@
 
 # include <string>
 
-# include <mln/core/alias/bin_2complex_image3df.hh>
+# include <mln/core/alias/complex_image.hh>
 
 
 namespace mln

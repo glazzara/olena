@@ -1,5 +1,23 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add new typedefs for commonly-used complex-based images.
+
+	* mln/core/alias/complex_geometry.hh: New.
+	Use it...
+	* mln/core/alias/bin_2complex_image3df.hh: ...here.
+	Rename as...
+	* mln/core/alias/complex_image.hh: ...this.
+	Adjust
+	(mln::int_u8_2complex_image3df)
+	(mln::float_2complex_image3df)
+	(mln::rgb8_2complex_image3df):
+	New typedefs.
+	* mln/io/off/load.hh,
+	* mln/io/off/save.hh
+	Adjust clients.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Properly handle command-line arguments in apps/statues/.
 
 	* apps/statues/mesh-segm.cc, apps/statues/mesh-skel.cc:
