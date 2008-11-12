@@ -87,6 +87,16 @@ namespace mln
       void save(const float_2complex_image3df& ima,
 		const std::string& filename);
 
+      /** \brief Save a 3x8-bit RGB (color) OFF image into a complex image.
+
+	  \param[in] ima      The image to save.
+	  \param[in] filename The name of the file where to save the image.
+
+	  Only data is attached to 2-faces is saved; the OFF file
+	  cannot store data attached to faces of other dimensions.  */
+      void save(const rgb8_2complex_image3df& ima,
+		const std::string& filename);
+
 
       namespace internal
       {
@@ -136,6 +146,14 @@ namespace mln
 	  void write_face_data(std::ostream& ostr, const value& v) const;
 	};
 
+
+	struct rgb8_off_saver
+	  : public off_saver< rgb8_2complex_image3df, rgb8_off_saver >
+	{
+	  /// \brief Save face data.
+	  void write_face_data(std::ostream& ostr, const value& v) const;
+	};
+
       } // end of namespace mln::io::off::internal
 
 
@@ -167,6 +185,14 @@ namespace mln
       {
 	trace::entering("mln::io::off::save");
 	internal::float_off_saver()(ima, filename);
+	trace::exiting("mln::io::off::save");
+      }
+
+      void
+      save(const rgb8_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::off::save");
+	internal::rgb8_off_saver()(ima, filename);
 	trace::exiting("mln::io::off::save");
       }
 
@@ -397,6 +423,19 @@ namespace mln
 	  mln_assertion(0.0f <= v);
 	  mln_assertion(v <= 1.0f);
 	  ostr << ' ' << v << ' ' << v << ' ' << v
+	       << ' ' << 1.0f << std::endl;
+	}
+
+	void
+	rgb8_off_saver::write_face_data(std::ostream& ostr,
+					const value& v) const
+	{
+	  /* RGBA color.
+
+	     Each channel (R, G, B) of the color V is an integer in
+	     the range 0..255.  A fourth channel, A, controls the
+	     transparency.  */
+	  ostr << ' ' << v.red() << ' ' << v.green() << ' ' << v.blue()
 	       << ' ' << 1.0f << std::endl;
 	}
 	/* \} */
