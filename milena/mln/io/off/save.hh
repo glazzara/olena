@@ -76,6 +76,17 @@ namespace mln
       void save(const int_u8_2complex_image3df& ima,
 		const std::string& filename);
 
+      /** \brief Save a floating-point value grey-level OFF image into
+	  a complex image.
+
+	  \param[in] ima      The image to save.
+	  \param[in] filename The name of the file where to save the image.
+
+	  Only data is attached to 2-faces is saved; the OFF file
+	  cannot store data attached to faces of other dimensions.  */
+      void save(const float_2complex_image3df& ima,
+		const std::string& filename);
+
 
       namespace internal
       {
@@ -114,6 +125,17 @@ namespace mln
 	  void write_face_data(std::ostream& ostr, const value& v) const;
 	};
 
+
+	/* FIXME: We should turn float_off_saver into a
+	   float01_off_saver (see FIXME/comment in implementation
+	   below).  */
+	struct float_off_saver
+	  : public off_saver< float_2complex_image3df, float_off_saver >
+	{
+	  /// \brief Save face data.
+	  void write_face_data(std::ostream& ostr, const value& v) const;
+	};
+
       } // end of namespace mln::io::off::internal
 
 
@@ -137,6 +159,14 @@ namespace mln
       {
 	trace::entering("mln::io::off::save");
 	internal::int_u8_off_saver()(ima, filename);
+	trace::exiting("mln::io::off::save");
+      }
+
+      void
+      save(const float_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::off::save");
+	internal::float_off_saver()(ima, filename);
 	trace::exiting("mln::io::off::save");
       }
 
@@ -345,6 +375,27 @@ namespace mln
 
 	     We just set the same value for each channel, as the OFF
 	     file format does not support gray-level values as-is.  */
+	  ostr << ' ' << v << ' ' << v << ' ' << v
+	       << ' ' << 1.0f << std::endl;
+	}
+
+	/* FIXME: We should turn float_off_saver into a
+	   float01_off_saver to avoid the assertions below.  */
+	void
+	float_off_saver::write_face_data(std::ostream& ostr,
+					 const value& v) const
+	{
+	  /* Using RGBA colors to represent a floating-point value.
+
+	     Each channel (R, G, B) of the color V is a floating-point
+	     number in the range 0..1.  A fourth channel, A, controls
+	     the transparency.
+
+	     We just set the same value for each channel, as the OFF
+	     file format does not support gray-level values as
+	     such.  */
+	  mln_assertion(0.0f <= v);
+	  mln_assertion(v <= 1.0f);
 	  ostr << ' ' << v << ' ' << v << ' ' << v
 	       << ' ' << 1.0f << std::endl;
 	}
