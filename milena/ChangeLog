@@ -1,5 +1,14 @@
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a loading routine for floating-point value 2-complex images.
+
+	* mln/io/off/load.hh
+	(mln::io::off::internal::float_off_loader): New class.
+	(mln::io::off::load(float_2complex_image3df&, const std::string&)):
+	New.
+
+2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
+
 	Introduce a factoring functor to load OFF image files.
 
 	* mln/io/off/load.hh

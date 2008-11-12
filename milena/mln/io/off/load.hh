@@ -63,6 +63,16 @@ namespace mln
 	  existence of faces.  */
       void load(bin_2complex_image3df& ima, const std::string& filename);
 
+      /** \brief Load a floating-point OFF image into a complex image.
+
+	  \param[out] ima      A reference to the image to construct.
+	  \param[in]  filename The name of the file to load.
+
+	  Read floating-point data is attached to 2-faces only;
+	  1-faces and 0-faces are set to 0.0f.  */
+      void load(float_2complex_image3df& ima, const std::string& filename);
+
+
       namespace internal
       {
 
@@ -107,6 +117,23 @@ namespace mln
 	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
 	};
 
+
+	struct float_off_loader
+	  : public off_loader< float_2complex_image3df, float_off_loader >
+	{
+	  /// \brief Read face data.
+	  void read_face_data(std::istream& istr);
+
+	  /// \brief Pre-allocate data.
+	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
+
+	  /// \brief Assign values to image.
+	  void assign(values& vs, const domain& s);
+
+	  /// \brief 2-face floating-point values.
+	  std::vector<float> face_value;
+	};
+
       } // end of namespace mln::io::off::internal
 
 
@@ -122,6 +149,14 @@ namespace mln
       {
 	trace::entering("mln::io::off::load");
 	internal::bin_off_loader()(ima, filename);
+	trace::exiting("mln::io::off::load");
+      }
+
+      void
+      load(float_2complex_image3df& ima, const std::string& filename)
+      {
+	trace::entering("mln::io::off::load");
+	internal::float_off_loader()(ima, filename);
 	trace::exiting("mln::io::off::load");
       }
 
@@ -425,6 +460,31 @@ namespace mln
 	{
 	  // Do nothing (no data associated to faces).
 	}
+
+	void
+	float_off_loader::read_face_data(std::istream& istr)
+	{
+	  /* We just use R and ignore G, B and A (transparency) when
+	     considering the value (``color'') associated to a face as
+	     a (scalar) floating-point value (though it really is an
+	     RGB triplet).
+
+	     To ensure consistency, we /might/ (later) check that R, G
+	     and B are equal---or better, ``almost equal'', as they
+	     are floats.
+
+	     Moreover, R must (and G, B and A should) be
+	     floating-point values between 0 and 1, according to the
+	     OFF file format definition.  */
+	  // FIXME: `A' should be optional.
+	  float r, g, b, a;
+	  istr >> r >> g >> b >> a;
+	  mln_assertion(0.0f <= r);  mln_assertion(r <= 1.0f);
+	  mln_assertion(0.0f <= g);  mln_assertion(g <= 1.0f);
+	  mln_assertion(0.0f <= b);  mln_assertion(b <= 1.0f);
+	  mln_assertion(0.0f <= a);  mln_assertion(a <= 1.0f);
+	  face_value.push_back(r);
+	}
 	/* \} */
 
 
@@ -436,6 +496,14 @@ namespace mln
 	  // Do nothing (no data associated to faces).
 	}
 
+	void
+	float_off_loader::reserve(unsigned /* nvertices */,
+				  unsigned /* nedges */,
+				  unsigned nfaces)
+	{
+	  face_value.reserve(nfaces);
+	}
+
 
 	void
 	bin_off_loader::assign(values& vs, const domain& s)
@@ -443,6 +511,16 @@ namespace mln
 	  // Default values.
 	  for (unsigned i = 0; i <= D; ++i)
 	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), true);
+	}
+
+	void
+	float_off_loader::assign(values& vs, const domain& s)
+	{
+	  // Default values for n-face with n in [0, D[.
+	  for (unsigned i = 0; i < D; ++i)
+	    vs[i].insert(vs[i].begin(), s.cplx().nfaces(i), 0.0f);
+	  // Values for D-faces.
+	  vs[D] = face_value;
 	}
 
 
