@@ -29,7 +29,7 @@
 #ifndef MLN_DEBUG_DRAW_GRAPH_HH
 # define MLN_DEBUG_DRAW_GRAPH_HH
 
-/// \file mln/debug/draw_graph.hh
+/// \file mln/debug/graph.hh
 /// \brief Draw an (classical) image from a mln::graph_image.
 
 # include <mln/pw/image.hh>

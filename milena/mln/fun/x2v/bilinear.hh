@@ -34,7 +34,7 @@
 # include <mln/convert/to.hh>
 # include <mln/algebra/vec.hh>
 
-/*! \file mln/fun/x2x/bilinear.hh
+/*! \file mln/fun/x2v/bilinear.hh
  *
  * \brief Define a bilinear interpolation of values from an underlying image
  */

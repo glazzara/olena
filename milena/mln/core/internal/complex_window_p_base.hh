@@ -28,7 +28,7 @@
 #ifndef MLN_CORE_IMAGE_COMPLEX_WINDOW_P_BASE_HH
 # define MLN_CORE_IMAGE_COMPLEX_WINDOW_P_BASE_HH
 
-/// \file mln/core/image/complex_window_p_base.hh
+/// \file mln/core/internal/complex_window_p_base.hh
 /// \brief Definition of a generic window centered on the face
 /// of a complex, based on a pair of (forward and backward) complex
 /// iterators.  The center (site) is part of the window.

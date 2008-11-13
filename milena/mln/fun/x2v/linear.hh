@@ -28,7 +28,7 @@
 #ifndef MLN_FUN_X2X_LINEAR_HH
 # define MLN_FUN_X2X_LINEAR_HH
 
-/*! \file mln/fun/x2x/linear.hh
+/*! \file mln/fun/x2v/linear.hh
  *
  * \brief Define a linear interpolation of values from an underlying image
  */

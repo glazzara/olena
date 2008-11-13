@@ -31,7 +31,7 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/internal/graph_nbh_iter_base.hh>
 
-/// \file   mln/util/internal/graph_vertex_nbh_vertex_iter.hh
+/// \file   mln/util/internal/graph_nbh_iter.hh
 /// \brief  Implementation for graph vertex iterators centered to a vertex.
 
 namespace mln

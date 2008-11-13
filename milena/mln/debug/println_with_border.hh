@@ -81,7 +81,7 @@ namespace mln
     {
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
-      impl::println_with_border(exact(input).bbox(), exact(input));
+      impl::println_with_border(geom::bbox(exact(input)), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

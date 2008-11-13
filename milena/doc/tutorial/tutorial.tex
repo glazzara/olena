@@ -6,6 +6,7 @@
 \usepackage{color}
 \usepackage{html}
 \usepackage{tikz}
+\usepackage{pgf}
 
 \newcommand{\img}[4]{
 \begin{figure}[ht!]
@@ -66,7 +67,19 @@ showstringspaces=false,linewidth=14cm}
 
 \newcommand{\doxycode}[1]{
 \backslash endhtmlonly%
-\backslash include #1.tex%
+\backslash include #1.cc%
+\backslash htmlonly%
+}
+
+\newcommand{\doxyoutput}[1]{
+\backslash endhtmlonly%
+\backslash include #1.txt%
+\backslash htmlonly%
+}
+
+\newcommand{\doxyfigure}[2]{
+\backslash endhtmlonly%
+\backslash image html #1.png%
 \backslash htmlonly%
 }
 
@@ -88,7 +101,12 @@ $$
 \renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
 \renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
 \renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
-\renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1}}
+\renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1.cc}}
+\renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
+\renewcommand{\doxyfigure}[2]{%
+\pgfimage[width=#2]{figures/#1}%
+\label{#1}%
+}
 \renewenvironment{doxymath}
 {
   $$
@@ -117,6 +135,14 @@ $$
 \newcommand{\hpath}[1]{%
 \textit{#1}%
 }
+
+\newcommand{\must}{%
+\textbf{must}
+}
+\newcommand{\should}{%
+\textbf{should}
+}
+
 
 \usetikzlibrary{er}
 
@@ -211,9 +237,11 @@ $$
 
 \begin{document}
 
+% Doxygen use only - Generate the left menu.
 \begin{htmlonly}
 \backslash endhtmlonly
 \backslash page tutorial Tutorial
+- \backslash subpage installation
 - \backslash subpage foreword
 - \backslash subpage site
 - \backslash subpage siteset
@@ -227,12 +255,27 @@ $$
 - \backslash subpage arithmops
 - \backslash subpage mathtools
 - \backslash subpage globalvars
+- \backslash subpage macros
 \backslash htmlonly
 \end{htmlonly}
 
 \begin{latexonly}
 \tableofcontents
 \end{latexonly}
+
+%====================================
+\doxychapter{installation}{Installation}
+
+%**************************
+\doxysection{requirements}{Requirements}
+
+%**************************
+\doxysection{getolena}{Getting Olena}
+
+%**************************
+\doxysection{buildingolena}{Building Olena}
+
+
 
 %====================================
 \doxychapter{foreword}{Foreword}
@@ -297,6 +340,24 @@ Olena's tarball is structured as follow:
   \item swilena: Python bindings for Olena.
 \end{itemize}
 
+\doxysection{compilehint}{Writing and compiling a program with Olena}
+
+Before writing your first program, please be ware of these hints:
+
+\begin{itemize}
+  \item By default, Olena enables a lot of internal pre and post conditions.
+  Usually, this is a useful feature and it \should be enabled. It can heavily
+  slow down a program though and these tests can be disabled by compiling
+  using \code{-DNDEBUG}.
+  \begin{verbatim}
+g++ -DNDEBUG -Ipath/to/mln my_program.cc
+  \end{verbatim}
+
+  \item If you decide to use optimization flags to compile for debugging,
+  prefer using \code{-O1}. It is much faster to compile and it gives good
+  performance results.
+
+\end{itemize}
 
 %====================================
 \clearpage
@@ -498,7 +559,7 @@ FIXME & FIXME \\
 %**************************
 \doxysection{imapossvalues}{Possible value types}
 
-Every image type must take its type of value as parameter.
+Every image type \must take its type of value as parameter.
 The value type can be one of the builtins one:
 \begin{itemize}
   \item \type{bool}
@@ -537,7 +598,7 @@ Value type & underlying data type \\
 
 All these types are available in mln/value and accessible in the
 \namespace{mln::value} namespace.
-Most of the time, the name of the header which must be included to use one of these data
+Most of the time, the name of the header which \must be included to use one of these data
 types is actually ``type\_name.hh". For instance, for \type{rgb8} the header will be
 \header{rgb8.hh}.
 
@@ -595,14 +656,14 @@ exactly equivalent.
 
 \doxycode{ima2d-1}
 Output:
-\doxycode{ima2d-1-output}
+\doxyoutput{ima2d-1}
 
 
 To know if a site belongs to an image domain or not, a method ``\code{has()}'' is
 available.
 \doxycode{point-1}
 Output:
-\doxycode{point-1-output}
+\doxyoutput{point-1}
 
 Since the notion of site is independent from the image it applies on, we can
 form expressions where a site passed to several images:
@@ -626,7 +687,7 @@ as shown in the following example.
 
 Output:
 
-\doxycode{borderthickness-output}
+\doxyoutput{borderthickness}
 
 It is important to note that to display the border in the ouput, we use a
 special debug function, \code{debug::println\_with\_border}. Indeed, the border and the
@@ -691,15 +752,38 @@ information.
   in consideration the extension/border if it exists. The default border
   thickness is set to 3 as shown by the following example.
 
-[FIXME: Add example has(p) when p is in the border and border::thickness
-modified.]
+\doxycode{ima-has}
 
-Most of the time, this is the good behavior. For instance, if a rotation of 20
-degrees is applied to an image, sites which were not previously in the domain
+Output:
+
+\doxyoutput{ima-has}
+
+Most of the time, this is the good behavior. For instance, if a rotation
+is applied to an image, sites which were not previously in the domain
 will be part of it. Thanks to the extension/border, these sites will be
-associated to the value they had when they were part of the extension/border.
+associated to the value of the extension/border.
+
+In the following example, the extension is set to a constant color \var{yellow}.
+It means that whatever the new sites computed through the rotation, it will be
+part of the image and a value will be available. Site which were previously in
+the extension/border, will be associated to \var{yellow} in the output image.
+
+\doxycode{ima2d-rot}
+
+Output:
+
+\bigskip
+
+\begin{tabular}{c c}
+\doxyfigure{ima2d-rot-1}{4cm} & \doxyfigure{ima2d-rot-2}{4cm} \\
+\multicolumn{2}{c}{\var{ima1} and its border before rotation (left) and \var{ima2}
+  and its border after rotation} \\
+\end{tabular}
+
+\bigskip
 
 [Image+bord rotation 20degres, avant, apres]
+
 
 Sometimes taking the domain in consideration  may not be the expected behavior.
 If you do not want to use the extension/border for a specific routine, simply
@@ -716,9 +800,6 @@ Note that:
 
 \code{border::get(ima.domain())} == \code{border::get(ima | ima.domain())} == 0
 \end{center}
-
-So it is also valid to write:
-\doxycode{extension-ignore2}
 
 
 %================================================
@@ -817,7 +898,7 @@ Most of the time, images can be modified and these two methods can be used both
 to read a value and modify it. Both methods are equivalent. 
 \doxycode{ima2d-3}
 Output:
-\doxycode{ima2d-3-output}
+\doxyoutput{ima2d-3-output}
 
 Usually, you will want to use the functional way, ``\code{ima(Site)}'', more
 particularly while iterating over all the sites through an iterator. This use
@@ -847,7 +928,7 @@ provided in \hpath{mln/geom} in the following files:
 
 \doxycode{ima-size}
 Output:
-\doxycode{ima-size-output}
+\doxyoutput{ima-size}
 
 
 %================================================
@@ -868,13 +949,14 @@ Voir les vset => attendre que ca soit ameliore?
 
 In Olena, there are both the window and neighborhood concept. A window can be
 defined on any sites around a central site which may also be included.
-A neighborhood is more restrictive and must not include the central site.
+A neighborhood is more restrictive and \must not include the central site.
 Therefore these two concepts are really similar and are detailed together in
 this section. 
 
 By default, structural elements are centered. The central site is located at the
-origin of the grid: ``\var{literal::origin}''. With image2d, the central site is
-(0,0).
+origin of the grid: ``\var{literal::origin}''. With \type{image2d}, the central site is
+(0,0). Centered structural elements \must have an odd size.
+
 
 
 \doxysection{sedef}{Define an element}
@@ -968,10 +1050,14 @@ Another way to define the same window is to provide a bool array:
 \doxycode{win-create-2}
 
 \textbf{Note that despite the different ways of defining these windows,
-  ``'var{win}'' == ``\var{win2}''}.
-The boolean array must always have an odd size.
+  ``var{win}'' == ``\var{win2}''}.
+The boolean array \must always have an odd size.
 While creating a windows thanks to a bool array/matrix, the window's center is the
 central site of the array/matrix.
+
+\textbf{This way of defining a window is very powerful since it enables the possibility
+of having non-square windows such as:}
+
 
 
 \subsubsection{Neighborhood}
@@ -1094,11 +1180,11 @@ owns the method ``\code{coord row() const}'' which is defined as
 \doxysection{sitesdpoint}{Dpoint}
 Dpoints are relative sites. They are usually used in window and neighborhood
 definitions. Since the central site is not constant, windows and neighborhoods
-must be recomputed and dpoints help in doing that.
+\must be recomputed and dpoints help in doing that.
 
 \doxycode{dpoint-1}
 Output:
-\doxycode{dpoint-1-output}
+\doxyoutput{dpoint-1}
 
 
 
@@ -1175,7 +1261,7 @@ use the \code{for\_all} loop: \code{level::fill()} and \code{level::paste()}.
 
 Important note: macros for iterators exist in two versions:
 ``\code{mln\_*iter}'' and ``\code{mln\_*iter\_}''. The difference is that the
-first version must be used in templated function whereas the second one must be
+first version \must be used in templated function whereas the second one \must be
 used in non templated functions. 
 
 If you want a list of all the macros available in Olena, please refert to
@@ -1286,7 +1372,7 @@ data for the sites (5, 5) to (14, 14) (so it has 100 sites).
 
 \doxycode{paste-call-1}
 Output:
-\doxycode{paste-call-1-output}
+\doxyoutput{paste-call-1}
 
 Before pasting, the couple of images looked like:
 
@@ -1328,10 +1414,10 @@ Consider the following image:
 Then label this image thanks to \code{labeling::blobs()}:
 \doxycode{ima2d-decl-2-blobs}
 Output:
-\doxycode{ima2d-decl-2-blobs-output}
+\doxyoutput{ima2d-decl-2-blobs-full}
 
 Note that this routine returns the number of components in its third parameter.
-This parameter \textbf{must} be of the same type as the returned image value.
+This parameter \must be of the same type as the returned image value.
 
 
 %**************************
@@ -1358,7 +1444,7 @@ algorithm a version which returns a new image and another which works in place.
 Sample code:
 \doxycode{logical-not}
 Output:
-\doxycode{logical-not-output}
+\doxyoutput{logical-not}
 
 %**************************
 \doxysection{compute}{Compute}
@@ -1433,9 +1519,9 @@ It exists two versions of each accumulator.
   \type{accu::meta::bbox}.
 \end{itemize}
 
-Note that when an accumulator is passed to \code{*::compute()}, it must be instanciated.You cannot write:
+Note that when an accumulator is passed to \code{*::compute()}, it \must be instanciated.You cannot write:
 \doxycode{accu-wrong-instanciation}
-Instead, you must write:
+Instead, you \must write:
 \doxycode{accu-right-instanciation}
 
 \doxysubsection{exlblcompute}{Example with labeling::compute()}
@@ -1449,7 +1535,7 @@ Consider the following image:
 Then label this image thanks to \code{labeling::blobs()}:
 \doxycode{ima2d-decl-2-blobs}
 Output:
-\doxycode{ima2d-decl-2-blobs-output}
+\doxyoutput{ima2d-decl-2-blobs-full}
 
 Then, use \code{labeling::compute()} with the bbox accumulator:
 \doxycode{labeling-compute-call}
@@ -1462,7 +1548,7 @@ In this case, it returns an array of \type{box2d}.
 set the background to 0, we will want to iterate from 1 to nlabels included.
 \doxycode{labeling-compute-result}
 Output:
-\doxycode{labeling-compute-result-output}
+\doxyoutput{labeling-compute-full}
 
 
 \subsection{Routines based on accumulators and *::compute()}
@@ -1516,7 +1602,7 @@ You can easily get a \type{Function\_p2b} by comparing the value returned
 by a \type{Function\_p2v} to another Value.
 The following sample codes illustrate this feature.
 
-In order to use C functions as predicate, they must have one of the following
+In order to use C functions as predicate, they \must have one of the following
 prototype if you work on 2D images:
 \doxycode{predicate-1}
 Of course, you just need to change the point type if you use another image
@@ -1553,15 +1639,15 @@ When writing:
 
 \doxycode{ima2d-restricted-1}
 
-\var{sub\_D} must be included in \code{ima.domain()}.
+\var{sub\_D} \must be included in \code{ima.domain()}.
 
 Let's have an image, \var{imab}, like this:
-\doxycode{ima2d-display-output-1}
+\doxyoutput{ima2d-display-output-1}
 
 Extract a sub image from \var{imab} with sites having their value set to 1.
 \doxycode{mln_var-2}
 Then, \var{imab1} looks like:
-\doxycode{ima2d-display-output-2}
+\doxyoutput{ima2d-display-output-2}
 
 Now, if we want to extract a sub image it may fail, depending on the site set
 used:
@@ -1604,7 +1690,7 @@ Specific data can be associated to each vertex and/or edges.
 
 First, create a graph which looks like the following:
 
-\doxycode{graph-output-1}
+\doxyoutput{graph-output-1}
 
 First we need to add vertices:
 
@@ -1694,12 +1780,26 @@ trace::quiet & Enable trace printing & true/false \\
 %====================================
 \newpage
 \clearpage
-\doxychapter{macros}{Useful Macros}
+\doxychapter{macros}{Useful macros}
+\renewcommand{\arraystretch}{2}
+
+\doxysection{vardeclmacros}{Variable declaration macros}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_VAR(N, V)	      & N : name of the variable. & \\
+		      & V : value to assign to N. & Declare a variable N of type N\_t and
+  assign the value V. \\
+
+mln\_const\_VAR(N, V) & N : name of the variable. & \\
+		      & V : value to assign to N. & Declare a const variable N of type N\_t
+  and assign the value V. \\
+\end{tabular}
+
 
 \doxysection{macrositerators}{Iterator type macros}
 
 \doxysubsection{macrosdefit}{Default iterator types}
-\renewcommand{\arraystretch}{2}
 \begin{tabular}{l|p{4cm}|p{6cm}}
 Name & Arguments & Description \\
 \hline
@@ -1793,6 +1893,18 @@ mln\_bkd\_qixter(I, W)	& I : image type,		    & \\
 mln\_bkd\_nixter(I, N)	& I : image type,		    & \\
 			& N : neighborhood type		    & Type of the pixel
   backward iterator of a neighborhood on an image of type I. \\
+\end{tabular}
+
+
+\doxysubsection{macrosbkdit}{Graph iterators}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_vertex\_iter(G)		  & G : graph type & Iterator on vertices. \\
+mln\_edge\_iter(G)		  & G : graph type & Iterator on edges. \\
+mln\_vertex\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacent to a vertex. \\
+mln\_vertex\_nbh\_vertex\_iter(G) & G : graph type & Iterator on the vertices adjacent to a vertex. \\
+mln\_edge\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacent to an edge. \\
 \end{tabular}
 
 \end{document}

@@ -31,7 +31,7 @@
 /*!
  * \file mln/core/routine/extend.hh
  *
- * \brief Definition of a morpher that extends the domain of an image.
+ * \brief Definition of a morpher that extends the extended domain of an image.
  *
  * \todo Use the 'instant' mechanism.
  * \todo Deal with ambiguities.

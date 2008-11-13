@@ -1,6 +1,4 @@
-#include <mln/core/image/image2d.hh>
-#include <mln/logical/not.hh>
-#include <mln/debug/println.hh>
+#include <mln/essential/2d.hh>
 int main()
 {
   using namespace mln;
@@ -9,7 +7,7 @@ int main()
     {1, 0},
     {0, 1}
   };
-  image2d<bool> ima = make::image2d(vals);
+  image2d<bool> ima = make::image(vals);
   std::cout << "ima:" << std::endl;
   debug::println(ima);
 

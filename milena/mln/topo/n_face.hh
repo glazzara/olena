@@ -99,7 +99,7 @@ namespace mln
 
       /* FIXME: We should not provide lower_dim_adj_faces() when N ==
 	 0 nor higher_dim_adj_faces() when N == D.  */
-      /// \Return an array of face handles pointing to adjacent (n-1)-faces.
+      /// Return an array of face handles pointing to adjacent (n-1)-faces.
       std::vector< algebraic_n_face<N - 1, D> > lower_dim_adj_faces() const;
       /// Return an array of face handles pointing to adjacent (n+1)-faces.
       std::vector< algebraic_n_face<N + 1, D> > higher_dim_adj_faces() const;

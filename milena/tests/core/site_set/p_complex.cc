@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/p_complex.cc
+/// \file tests/core/site_set/p_complex.cc
 /// \brief Test of mln::p_complex and mln::geom::complex_geometry.
 
 #include <algorithm>

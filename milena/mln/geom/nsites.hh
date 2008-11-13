@@ -28,10 +28,8 @@
 #ifndef MLN_GEOM_NSITES_HH
 # define MLN_GEOM_NSITES_HH
 
-/*! \file mln/geom/nsites.hh
- *
- * \brief Compute the number of sites of an image or a site set.
- */
+/// \file mln/geom/nsites.hh
+/// Compute the number of sites of an image or a site set.
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/image.hh>
@@ -50,7 +48,6 @@ namespace mln
     /// Compute the number of sites of the image \p input.
     template <typename I>
     unsigned nsites(const Image<I>& input);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -72,7 +69,7 @@ namespace mln
 	  trace::entering("geom::impl::generic::nsites");
 	  const S& s = exact(s_);
 	  mln_precondition(s.is_valid());
-	  
+
 	  unsigned n = 0;
 	  mln_piter(S) p(s);
 	  for_all(p)
@@ -80,7 +77,7 @@ namespace mln
 
 	  trace::exiting("geom::impl::generic::nsites");
 	  return n;
-	}      
+	}
 
       } // end of namespace mln::geom::impl::generic
 
@@ -112,7 +109,7 @@ namespace mln
 			       const Site_Set<S>& s)
       {
 	return impl::generic::nsites(s);
-      }      
+      }
 
       template <typename S>
       inline
@@ -120,7 +117,7 @@ namespace mln
 			       const Site_Set<S>& s)
       {
 	return impl::nsites_method(s);
-      }      
+      }
 
       // Dispatch facade.
 
@@ -130,12 +127,12 @@ namespace mln
       {
 	return nsites_dispatch(mln_trait_site_set_nsites(S)(),
 			       s);
-      }      
+      }
 
     } // end of namespace mln::geom::internal
 
 
-    
+
     // Facades.
 
     template <typename S>

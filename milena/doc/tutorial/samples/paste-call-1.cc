@@ -1,8 +1,4 @@
-#include <mln/core/image/image2d.hh>
-#include <mln/make/box2d.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
-#include <mln/debug/println.hh>
+#include <mln/essential/2d.hh>
 int main()
 {
   using namespace mln;
