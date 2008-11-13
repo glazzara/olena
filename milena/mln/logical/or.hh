@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,12 @@
 #ifndef MLN_LOGICAL_OR_HH
 # define MLN_LOGICAL_OR_HH
 
-/*! \file mln/logical/or.hh
- *
- * \brief Point-wise "logical or" between binary images.
- *
- * \todo Add static assertion and save one iterator in in-place version.
- */
+/// \file mln/logical/or.hh
+///
+/// Point-wise "logical or" between binary images.
 
-# include <mln/core/concept/image.hh>
-
-
-// Specializations are in:
-# include <mln/logical/or.spe.hh>
+# include <mln/logical/includes.hh>
+# include <mln/fun/vv2v/lor.hh>
 
 
 namespace mln
@@ -57,7 +52,8 @@ namespace mln
      * \pre \p lhs.domain == \p rhs.domain
      */
     template <typename L, typename R>
-    mln_concrete(L) or_(const Image<L>& lhs, const Image<R>& rhs);
+    mln_ch_fun_vv2v(lor, L, R)
+    or_(const Image<L>& lhs, const Image<R>& rhs);
 
 
     /*! Point-wise in-place "logical or" of image \p rhs in image \p lhs.
@@ -66,7 +62,7 @@ namespace mln
      * \param[in] rhs Second operand image.
      *
      * It performs: \n
-     *   for all p of lhs.domain \n
+     *   for all p of rhs.domain \n
      *     lhs(p) = lhs(p) or rhs(p)
      *
      * \pre \p rhs.domain >= \p lhs.domain
@@ -77,42 +73,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      namespace generic
-      {
-	template <typename L, typename R, typename O>
-	inline
-	void or__(const L& lhs, const R& rhs, O& output)
-	{
-	  trace::entering("logical::impl::generic::or__");
-
-	  mln_piter(L) p(lhs.domain());
-	  for_all(p)
-	    output(p) = lhs(p) || rhs(p);
-
-	  trace::exiting("logical::impl::generic::or__");
-	}
-      }
-
-    } // end of namespace mln::logical::impl
-
-
-    // Facades.
-
     template <typename L, typename R>
     inline
-    mln_concrete(L) or_(const Image<L>& lhs, const Image<R>& rhs)
+    mln_ch_fun_vv2v(lor, L, R)
+    or_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::or_");
 
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      internal::tests(lhs, rhs);
 
-      mln_concrete(L) output;
-      initialize(output, lhs);
-      impl::or__(mln_trait_image_speed(L)(), exact(lhs),
-		 mln_trait_image_speed(R)(), exact(rhs), output);
+      mln_fun_vv2v(lor, L, R) f;
+      mln_ch_fun_vv2v(lor, L, R) output = level::transform(lhs, rhs, f);
 
       trace::exiting("logical::or_");
       return output;
@@ -124,10 +95,13 @@ namespace mln
     {
       trace::entering("logical::or_inplace");
 
-      mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
+      mlc_converts_to(mln_fun_vv2v_result(lor, L, R),
+		      mln_value(L))::check();
 
-      impl::or__(mln_trait_image_speed(L)(), exact(lhs),
-		 mln_trait_image_speed(R)(), exact(rhs), exact(lhs));
+      internal::tests(lhs, rhs);
+
+      mln_fun_vv2v(lor, L, R) f;
+      level::transform_inplace(lhs, rhs, f);
 
       trace::exiting("logical::or_inplace");
     }

@@ -1,3 +1,22 @@
+2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update logical binary routines.
+
+	* mln/trait/op/all.hh (include): Remove duplicate.
+	* mln/fun/vv2v/lxor.hh: New.
+	* mln/fun/vv2v/lor.hh: New.
+	* mln/fun/vv2v/land_not.hh: New.
+	* mln/fun/vv2v/all.hh: Update.
+	* mln/logical/or.hh,
+	* mln/logical/and_not.hh,
+	* mln/logical/and.hh: Rely on level transform.
+	* mln/logical/or.spe.hh,
+	* mln/logical/and_not.spe.hh: Remove; obsolete.
+	* mln/logical/xor.hh: New.
+	* mln/logical/all.hh: Update.
+	* tests/logical/xor.cc: New.
+	* tests/logical/Makefile.am: Update.
+
 2008-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make level/median* tests compile.

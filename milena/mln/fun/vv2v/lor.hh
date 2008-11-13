@@ -1,4 +1,4 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,58 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// GUARD NOT REQUIRED: all included files already have guards.
+#ifndef MLN_FUN_VV2V_LOR_HH
+# define MLN_FUN_VV2V_LOR_HH
 
-/*!
- * \file   mln/trait/op/all.hh
- *
- * \brief  FIXME
- *
- */
+/// \file mln/fun/vv2v/lor.hh
+///
+/// Functor that computes "logical or" between two values.
+
+# include <mln/core/concept/function.hh>
+# include <mln/trait/op/or.hh>
 
 
 namespace mln
 {
 
-  namespace trait
+  namespace fun
   {
-    /// Namespace of traits related to operators.
-    namespace op {}
-  }
+
+    namespace vv2v
+    {
+
+      /// Functor computing logical-or between two values.
+      template <typename L, typename R = L>
+      struct lor : public Function_vv2v< lor<L,R> >
+      {
+	typedef mln_trait_op_or(L, R) result;
+	result operator()(const L& v1, const R& v2) const;
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename L, typename R>
+      inline
+      typename lor<L,R>::result
+      lor<L,R>::operator()(const L& v1, const R& v2) const
+      {
+	return v1 || v2;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::vv2v
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-# include <mln/trait/op/plus.hh>
-# include <mln/trait/op/minus.hh>
-# include <mln/trait/op/times.hh>
-# include <mln/trait/op/div.hh>
-# include <mln/trait/op/mod.hh>
-
-# include <mln/trait/op/uplus.hh>
-# include <mln/trait/op/uminus.hh>
-
-# include <mln/trait/op/preinc.hh>
-# include <mln/trait/op/postinc.hh>
-# include <mln/trait/op/predec.hh>
-# include <mln/trait/op/postdec.hh>
-
-# include <mln/trait/op/eq.hh>
-# include <mln/trait/op/neq.hh>
-
-# include <mln/trait/op/less.hh>
-# include <mln/trait/op/leq.hh>
-# include <mln/trait/op/geq.hh>
-# include <mln/trait/op/greater.hh>
-
-# include <mln/trait/op/and.hh>
-# include <mln/trait/op/or.hh>
-# include <mln/trait/op/xor.hh>
-
-# include <mln/trait/op/lor.hh>
-
-# include <mln/trait/op/not.hh>
-
-// Ordering.
-# include <mln/trait/op/ord.hh>
-
+#endif // ! MLN_FUN_VV2V_LOR_HH

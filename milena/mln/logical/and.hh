@@ -32,8 +32,6 @@
 /// \file mln/logical/and.hh
 ///
 /// Point-wise "logical and" between binary images.
-///
-/// \todo Add static assertion and save one iterator in in-place version.
 
 # include <mln/logical/includes.hh>
 # include <mln/fun/vv2v/land.hh>

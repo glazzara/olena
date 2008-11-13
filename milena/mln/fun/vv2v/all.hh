@@ -51,6 +51,9 @@ namespace mln
 # include <mln/fun/vv2v/macros.hh>
 
 # include <mln/fun/vv2v/land.hh>
+# include <mln/fun/vv2v/land_not.hh>
+# include <mln/fun/vv2v/lor.hh>
+# include <mln/fun/vv2v/lxor.hh>
 # include <mln/fun/vv2v/max.hh>
 # include <mln/fun/vv2v/min.hh>
 # include <mln/fun/vv2v/vec.hh>

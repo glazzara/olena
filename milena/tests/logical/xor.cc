@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,58 +26,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-// GUARD NOT REQUIRED: all included files already have guards.
+/// \file tests/logical/xor.cc
+///
+/// Tests on mln::logical::xor.
 
-/*!
- * \file   mln/trait/op/all.hh
- *
- * \brief  FIXME
- *
- */
+#include <mln/core/image/image2d.hh>
+#include <mln/logical/xor.hh>
+#include <mln/level/compare.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace trait
-  {
-    /// Namespace of traits related to operators.
-    namespace op {}
-  }
+  bool vs[3][3] = {
+    {1, 0, 1},
+    {0, 1, 0},
+    {1, 0, 1}
+  };
 
-} // end of namespace mln
+  bool us[3][3] = {
+    {1, 1, 1},
+    {0, 1, 0},
+    {1, 1, 1}
+  };
 
+  bool ws[3][3] = {
+    {0, 1, 0},
+    {0, 0, 0},
+    {0, 1, 0}
+  };
 
-# include <mln/trait/op/plus.hh>
-# include <mln/trait/op/minus.hh>
-# include <mln/trait/op/times.hh>
-# include <mln/trait/op/div.hh>
-# include <mln/trait/op/mod.hh>
+  image2d<bool> ima1 = make::image(vs);
+  image2d<bool> ima2 = make::image(us);
+  image2d<bool> ref  = make::image(ws);
 
-# include <mln/trait/op/uplus.hh>
-# include <mln/trait/op/uminus.hh>
-
-# include <mln/trait/op/preinc.hh>
-# include <mln/trait/op/postinc.hh>
-# include <mln/trait/op/predec.hh>
-# include <mln/trait/op/postdec.hh>
-
-# include <mln/trait/op/eq.hh>
-# include <mln/trait/op/neq.hh>
-
-# include <mln/trait/op/less.hh>
-# include <mln/trait/op/leq.hh>
-# include <mln/trait/op/geq.hh>
-# include <mln/trait/op/greater.hh>
-
-# include <mln/trait/op/and.hh>
-# include <mln/trait/op/or.hh>
-# include <mln/trait/op/xor.hh>
-
-# include <mln/trait/op/lor.hh>
-
-# include <mln/trait/op/not.hh>
-
-// Ordering.
-# include <mln/trait/op/ord.hh>
-
+  mln_assertion (logical::xor_(ima1, ima2) == ref);
+}

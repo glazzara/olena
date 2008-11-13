@@ -55,6 +55,7 @@ namespace mln
 # include <mln/logical/and_not.hh>
 # include <mln/logical/not.hh>
 # include <mln/logical/or.hh>
+# include <mln/logical/xor.hh>
 
 
 #endif // ! MLN_LOGICAL_ALL_HH

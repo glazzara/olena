@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LOGICAL_AND_NOT_HH
-# define MLN_LOGICAL_AND_NOT_HH
+#ifndef MLN_LOGICAL_XOR_HH
+# define MLN_LOGICAL_XOR_HH
 
-/// \file mln/logical/and_not.hh
+/// \file mln/logical/xor.hh
 ///
-/// Point-wise "logical and-not" between binary images.
+/// Point-wise "logical xor" between binary images.
 
 # include <mln/logical/includes.hh>
-# include <mln/fun/vv2v/land_not.hh>
+# include <mln/fun/vv2v/lxor.hh>
 
 
 namespace mln
@@ -43,7 +43,7 @@ namespace mln
   namespace logical
   {
 
-    /*! Point-wise "logical and-not" between images \p lhs and \p rhs.
+    /*! Point-wise "logical xor" between images \p lhs and \p rhs.
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -52,58 +52,58 @@ namespace mln
      * \pre \p lhs.domain == \p rhs.domain
      */
     template <typename L, typename R>
-    mln_ch_fun_vv2v(land_not, L, R)
-    and_not(const Image<L>& lhs, const Image<R>& rhs);
+    mln_ch_fun_vv2v(lxor, L, R)
+    xor_(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /*! Point-wise in-place "logical and-not" of image \p rhs in image \p lhs.
+    /*! Point-wise in-place "logical xor" of image \p rhs in image \p lhs.
      *
      * \param[in,out] lhs First operand image.
      * \param[in] rhs Second operand image.
      *
      * It performs: \n
      *   for all p of rhs.domain \n
-     *     lhs(p) = lhs(p) and not rhs(p)
+     *     lhs(p) = lhs(p) xor rhs(p)
      *
      * \pre \p rhs.domain >= \p lhs.domain
      */
     template <typename L, typename R>
-    void and_not_inplace(Image<L>& lhs, const Image<R>& rhs);
+    void xor_inplace(Image<L>& lhs, const Image<R>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename L, typename R>
     inline
-    mln_ch_fun_vv2v(land_not, L, R)
-    and_not(const Image<L>& lhs, const Image<R>& rhs)
+    mln_ch_fun_vv2v(lxor, L, R)
+    xor_(const Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::and_not");
+      trace::entering("logical::xor_");
 
       internal::tests(lhs, rhs);
 
-      mln_fun_vv2v(land_not, L, R) f;
-      mln_ch_fun_vv2v(land_not, L, R) output = level::transform(lhs, rhs, f);
+      mln_fun_vv2v(lxor, L, R) f;
+      mln_ch_fun_vv2v(lxor, L, R) output = level::transform(lhs, rhs, f);
 
-      trace::exiting("logical::and_not");
+      trace::exiting("logical::xor_");
       return output;
     }
 
     template <typename L, typename R>
     inline
-    void and_not_inplace(Image<L>& lhs, const Image<R>& rhs)
+    void xor_inplace(Image<L>& lhs, const Image<R>& rhs)
     {
-      trace::entering("logical::and_not_inplace");
+      trace::entering("logical::xor_inplace");
 
-      mlc_converts_to(mln_fun_vv2v_result(land_not, L, R),
+      mlc_converts_to(mln_fun_vv2v_result(lxor, L, R),
 		      mln_value(L))::check();
 
       internal::tests(lhs, rhs);
 
-      mln_fun_vv2v(land_not, L, R) f;
+      mln_fun_vv2v(lxor, L, R) f;
       level::transform_inplace(lhs, rhs, f);
 
-      trace::exiting("logical::and_not_inplace");
+      trace::exiting("logical::xor_inplace");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -113,4 +113,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_LOGICAL_AND_NOT_HH
+#endif // ! MLN_LOGICAL_XOR_HH
