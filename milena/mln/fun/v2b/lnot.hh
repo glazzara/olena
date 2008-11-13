@@ -25,12 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_V2B_ALL_HH
-# define MLN_FUN_V2B_ALL_HH
+#ifndef MLN_FUN_V2B_LNOT_HH
+# define MLN_FUN_V2B_LNOT_HH
 
-/// \file mln/fun/v2b/all.hh
+/// \file mln/fun/v2b/lnot.hh
 ///
-/// File that includes all functions from value to logic value.
+/// Functor that computes "logical not" on a value.
+
+# include <mln/core/concept/function.hh>
 
 
 namespace mln
@@ -39,15 +41,35 @@ namespace mln
   namespace fun
   {
 
-    /// Namespace of functions from value to logic value.
-    namespace v2b {}
+    namespace v2b
+    {
 
-  }
-}
+      /// Functor computing logical-not on a value.
+      template <typename V>
+      struct lnot : public Function_v2b< lnot<V> >
+      {
+	typedef V result;
+	V operator()(const V& v) const;
+      };
 
 
-# include <mln/fun/v2b/lnot.hh>
-# include <mln/fun/v2b/threshold.hh>
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename V>
+      inline
+      V
+      lnot<V>::operator()(const V& v) const
+      {
+	return ! v;
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::fun::v2b
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
 
 
-#endif // ! MLN_FUN_V2B_ALL_HH
+#endif // ! MLN_FUN_V2B_LNOT_HH

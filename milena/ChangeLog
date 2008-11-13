@@ -1,5 +1,13 @@
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update unary logical not.
+
+	* mln/fun/v2b/lnot.hh: New.
+	* mln/fun/v2b/all.hh: Update.
+	* mln/logical/not.hh: Rely on level transform.
+
+2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update logical binary routines.
 
 	* mln/trait/op/all.hh (include): Remove duplicate.
