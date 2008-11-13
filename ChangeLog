@@ -1,3 +1,9 @@
+2008-11-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update configure.ac for the tutorial.
+
+	* configure.ac: Add tutorial/samples Makefiles.
+
 2008-11-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Put Licence to 70 cols.
