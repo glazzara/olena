@@ -1,3 +1,20 @@
+2008-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make level/median* tests compile.
+
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh: use def::coord.
+
+	* mln/level/naive/median.hh,
+	* mln/level/median.hh: update initialization of accu::median.
+
+	* mln/trace/entering.hh,
+	* mln/trace/exiting.hh,
+	* mln/util/timer.hh: Fix doc.
+
+	* tests/level/median_.cc: Fix test.
+
+	* doc/tutorial/samples/out.ppm: should not be there. Removed.
+
 2008-11-13  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Temporary fix in complex_image properties.

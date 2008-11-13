@@ -34,7 +34,7 @@ int main()
 
 
   {
-    win::rectangle2d rect(20, 20);
+    win::rectangle2d rect(21, 21);
     border::thickness = 6;
 
     image2d<int_u8> lena;

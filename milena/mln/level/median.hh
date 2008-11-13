@@ -188,7 +188,7 @@ namespace mln
       struct median_dir_t
       {
 	typedef I_ I;
-	enum { dim = I::point::dim };
+	enum { dim = I::site::dim };
 
 	// i/o
 	const I& input;
@@ -210,7 +210,7 @@ namespace mln
 	    output(exact(output)),
 	    // aux data
 	    p(),
-	    med(input.values_eligible())
+	    med()
 	{
 	}
 

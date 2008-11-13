@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_UTIL_TIMER_HH
 # define MLN_UTIL_TIMER_HH
 
-/*! \file mln/util/timer.hh
- *
- * \brief Definition of a timer.
- */
+/// \file mln/util/timer.hh
+///
+/// Definition of a timer.
 
 # include <mln/core/concept/proxy.hh>
 # include <ctime>
@@ -43,9 +42,7 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Timer structure.
-     *
-     */
+    /// Timer structure.
     class timer : public Proxy< timer >,
 		  public internal::proxy_impl<float, timer>
     {
@@ -162,7 +159,7 @@ namespace mln
 	time_ + float(std::clock()) / CLOCKS_PER_SEC - start_ :
 	time_;
     }
-    
+
     inline
     float
     timer::subj_()

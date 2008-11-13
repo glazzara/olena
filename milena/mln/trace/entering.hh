@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TRACE_ENTERING_HH
 # define MLN_TRACE_ENTERING_HH
 
-/*! \file mln/trace/entering.hh
- *
- * \brief Definition of the trace entering procedure.
- */
+/// \file mln/trace/entering.hh
+///
+/// Definition of the trace entering procedure.
 
 # include <string>
 # include <iostream>

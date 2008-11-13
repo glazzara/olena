@@ -118,8 +118,7 @@ namespace mln
 
 	mln_psite(I) pt, pu;
 
-	typedef mln_coord(I)& coord_ref;
-	coord_ref
+	def::coord&
 	  ct = pt[f.dir],
 	  cu = pu[f.dir],
 	  p_dir = f.p[f.dir];
