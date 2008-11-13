@@ -448,6 +448,7 @@ namespace mln
     quat::quat(unsigned one, float theta, const algebra::vec<3,float>& uv)
     {
       mln_precondition(one == 1);
+      (void) one;
       set_unit(theta, uv);
     }
 

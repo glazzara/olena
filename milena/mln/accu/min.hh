@@ -46,8 +46,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic min accumulator class.
-     *
+    /// Generic min accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>

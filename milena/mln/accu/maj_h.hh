@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,10 @@
 #ifndef MLN_ACCU_MAJ_H_HH
 # define MLN_ACCU_MAJ_H_HH
 
-/*! \file mln/accu/maj_h.hh
- *
- * \brief Define an accumulator that computes a maj_h.
- */
+/// \file mln/accu/maj_h.hh
+///
+/// Define an accumulator that computes a maj_h.
+
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -48,8 +48,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic maj_h accumulator class.
-     *
+    /// Generic maj_h accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>

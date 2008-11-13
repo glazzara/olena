@@ -28,17 +28,18 @@
 #ifndef MLN_ACCU_VOLUME_HH
 # define MLN_ACCU_VOLUME_HH
 
-/** \file mln/accu/volume.hh
-    \brief Define an accumulator that computes the volume of a
-    component through one of its pixels.
-
+/// \file mln/accu/volume.hh
+/// Define an accumulator that computes the volume of a
+/// component through one of its pixels.
+/*!
     This accumulator uses an mln::util::pix (pixel) to update the
     reference level, area and volume information of the component.
 
     The class mln/accu/volume is not a general-purpose accumulator;
     it is used to implement volume-based connected filters.
     \see mln::morpho::closing_volume
-    \see mln::morpho::opening_volume  */
+    \see mln::morpho::opening_volume
+*/
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -53,7 +54,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Volume accumulator class.
+    /// Volume accumulator class.
     ///
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
@@ -61,7 +62,7 @@ namespace mln
     struct volume
       : public mln::accu::internal::base< unsigned , volume<I> >
     {
-      /// \brief The accumulated data type.
+      /// The accumulated data type.
       ///
       /// The volume of component is represented by the volume of its
       /// root pixel.  See mln::morpho::closing_volume and

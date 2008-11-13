@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,9 @@
 #ifndef MLN_ACCU_ESSENTIAL_HH_
 # define MLN_ACCU_ESSENTIAL_HH_
 
-/*! \file mln/accu/essential.hh
- *
- * \brief File that includes the most useful accumulator types.
- *
- */
+/// \file mln/accu/essential.hh
+///
+/// File that includes the most useful accumulator types.
 
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>

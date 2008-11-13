@@ -61,7 +61,7 @@ namespace mln
 	struct f_accu
 	{
 	  template <typename V, typename A>
-	  V operator()(const V& input_p, const A& a) const
+	  V operator()(const V& /*input_p*/, const A& a) const
 	  {
 	    return a.to_result();
 	  }

@@ -29,16 +29,15 @@
 #ifndef MLN_ACCU_ALL_HH
 # define MLN_ACCU_ALL_HH
 
-/*! \file mln/accu/all.hh
- *
- * \brief File that includes all accumulator types.
- *
- * \todo Update accumulators s.a. count so that they are like min_/min.
- *
- * \todo Propagate those updates to mln/estim/.
- *
- * \todo Update the include list...
- */
+/// \file mln/accu/all.hh
+///
+/// File that includes all accumulator types.
+///
+/// \todo Update accumulators s.a. count so that they are like min_/min.
+///
+/// \todo Propagate those updates to mln/estim/.
+///
+/// \todo Update the include list...
 
 
 namespace mln

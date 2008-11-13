@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MIN_H_HH
 # define MLN_ACCU_MIN_H_HH
 
-/*! \file mln/accu/min_h.hh
- *
- * \brief Define a generic min accumulator class based on histogram.
- */
+/// \file mln/accu/min_h.hh
+///
+/// Define a generic min accumulator class based on histogram.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
@@ -46,9 +45,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic min function based on histogram over a value
-     * set with type \c V.
-     */
+    /// Generic min function based on histogram over a value
+    /// set with type \c V.
     template <typename V>
     struct min_h : public mln::accu::internal::base< const V& , min_h<V> >
     {
@@ -102,9 +100,7 @@ namespace mln
     namespace meta
     {
 
-      /*!
-       * \brief Meta accumulator for min.
-       */
+      /// Meta accumulator for min.
       struct min_h : public Meta_Accumulator< min_h >
       {
 	template <typename T>

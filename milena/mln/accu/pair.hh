@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_PAIR_HH
 # define MLN_ACCU_PAIR_HH
 
-/*! \file mln/accu/pair.hh
- *
- * \brief Define a pair of accumulators.
- */
+/// \file mln/accu/pair.hh
+///
+/// Define a pair of accumulators.
 
 # include <utility>
 
@@ -49,12 +49,11 @@ namespace mln
   {
 
 
-    /*! \brief Generic pair of accumulators.
-     *
-     * The parameter \c T is the type of values.
-     *
-     * \todo Check that, when T is not provided, A1 and A2 have the same value.
-     */
+    /// Generic pair of accumulators.
+    ///
+    /// The parameter \c T is the type of values.
+    ///
+    /// \todo Check that, when T is not provided, A1 and A2 have the same value.
     template <typename A1, typename A2, typename T = mln_argument(A1)>
     struct pair : public mln::accu::internal::base< std::pair<mln_result(A1), mln_result(A2)>,
 						    pair<A1,A2,T> >
@@ -65,7 +64,8 @@ namespace mln
       typedef mln_result(A2) result_2;
 
       pair();
-      pair(const A1& a1, const A2& a2);
+// FIXME: not implemented. Do we want it?
+//      pair(const A1& a1, const A2& a2);
 
       /// Manipulators.
       /// \{

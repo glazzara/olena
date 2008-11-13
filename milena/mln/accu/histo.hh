@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,12 @@
 #ifndef MLN_ACCU_HISTO_HH
 # define MLN_ACCU_HISTO_HH
 
-/*! \file mln/accu/histo.hh
- *
- * \brief Define a generic histogram accumulator class.
- *
- * \todo Use histo::data instead of std::vector!
- */
+/// \file mln/accu/histo.hh
+///
+/// Define a generic histogram accumulator class.
+///
+/// \todo Use histo::data instead of std::vector!
+
 
 # include <vector>
 # include <algorithm>
@@ -51,9 +51,9 @@ namespace mln
   {
 
 
-    /*!
-     * \brief Generic histogram class over a value set with type \c V.
-     */
+    ///
+    /// Generic histogram class over a value set with type \c V.
+    ///
     template <typename V>
     struct histo :
       public mln::accu::internal::base<const std::vector<unsigned>& ,

@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,10 @@
 #ifndef MLN_ACCU_LAND_HH
 # define MLN_ACCU_LAND_HH
 
-/*! \file mln/accu/land.hh
- *
- * \brief Define a 'logical-and' accumulator.
- */
+/// \file mln/accu/land.hh
+///
+/// Define a 'logical-and' accumulator.
+///
 
 # include <mln/accu/internal/base.hh>
 

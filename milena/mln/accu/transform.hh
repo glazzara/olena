@@ -49,13 +49,13 @@ namespace mln
 
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_result(A))
-    transform(const Image<I>& input, 
+    transform(const Image<I>& input,
 	      const Accumulator<A>& a,
 	      const Window<W>& win);
 
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform(const Image<I>& input, 
+    transform(const Image<I>& input,
 	      const Meta_Accumulator<A>& a,
 	      const Window<W>& win);
 
@@ -69,7 +69,7 @@ namespace mln
 
       namespace generic
       {
-	
+
 	template <typename I, typename A, typename W>
 	mln_ch_value(I, mln_result(A))
 	transform(const Image<I>& input_,
@@ -86,7 +86,7 @@ namespace mln
 	  // mln_precondition(win.is_valid());
 
 	  extension::adjust(input, win);
-	  
+
 	  mln_ch_value(I, mln_result(A)) output;
 	  initialize(output, input);
 
@@ -105,7 +105,7 @@ namespace mln
 	}
 
       } // end of namespace mln::accu::impl::generic
-      
+
     } // end of namespace mln::accu::impl
 
 

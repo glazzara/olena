@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,14 @@
 #ifndef MLN_ACCU_RANK_BOOL_HH
 # define MLN_ACCU_RANK_BOOL_HH
 
-/*! \file mln/accu/rank_bool.hh
- *
- * \brief Define an rank accumulator.
- *
- * \todo There is no-arg-ctor so this accumulator does not support
- * deferred initialization!
- *
- * \todo Add untake routines...
- */
+/// \file mln/accu/rank_bool.hh
+///
+/// Define an rank accumulator.
+///
+/// \todo There is no-arg-ctor so this accumulator does not support
+/// deferred initialization!
+///
+/// \todo Add untake routines...
 
 # include <mln/accu/internal/base.hh>
 
@@ -50,9 +50,7 @@ namespace mln
     // Fwd declaration.
     template <typename T> struct rank;
 
-    /*! \brief rank accumulator class for Boolean.
-     *
-     */
+    /// rank accumulator class for Boolean.
     template <>
     struct rank<bool> : public mln::accu::internal::base< bool, rank<bool> >
     {

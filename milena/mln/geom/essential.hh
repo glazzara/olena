@@ -54,4 +54,14 @@ namespace mln
 # include <mln/geom/size3d.hh>
 # include <mln/geom/nsites.hh>
 
+# include <mln/geom/max_col.hh>
+# include <mln/geom/max_ind.hh>
+# include <mln/geom/max_row.hh>
+# include <mln/geom/max_sli.hh>
+
+# include <mln/geom/min_col.hh>
+# include <mln/geom/min_ind.hh>
+# include <mln/geom/min_row.hh>
+# include <mln/geom/min_sli.hh>
+
 #endif // ! MLN_GEOM_ESSENTIAL_HH

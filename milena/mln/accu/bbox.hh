@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_BBOX_HH
 # define MLN_ACCU_BBOX_HH
 
-/*! \file mln/accu/bbox.hh
- *
- * \brief Define an accumulator that computes a bbox.
- */
+/// \file mln/accu/bbox.hh
+///
+/// Define an accumulator that computes a bbox.
 
 # include <mln/core/site_set/box.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -45,8 +44,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic bbox accumulator class.
-     *
+    /// Generic bbox accumulator class.
+    /*!
      * The parameter \c P is the type of points.
      */
     template <typename P>

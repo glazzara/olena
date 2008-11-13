@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MAX_HH
 # define MLN_ACCU_MAX_HH
 
-/*! \file mln/accu/max.hh
- *
- * \brief Define an accumulator that computes a max.
- */
+/// \file mln/accu/max.hh
+///
+/// Define an accumulator that computes a max.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -46,10 +45,9 @@ namespace mln
   {
 
 
-    /*! \brief Generic max accumulator class.
-     *
-     * The parameter \c T is the type of values.
-     */
+    /// Generic max accumulator class.
+    ///
+    /// The parameter \c T is the type of values.
     template <typename T>
     struct max : public mln::accu::internal::base< const T& , max<T> >
     {

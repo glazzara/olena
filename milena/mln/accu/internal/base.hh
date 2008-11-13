@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_ACCU_INTERNAL_BASE_HH
 # define MLN_ACCU_INTERNAL_BASE_HH
 
-/*! \file mln/accu/internal/base.hh
- *
- * \brief Define a base class for implementation of accumulator
- * classes.
- */
+/// \file mln/accu/internal/base.hh
+///
+/// Define a base class for implementation of accumulator
+/// classes.
 
 # include <mln/core/concept/accumulator.hh>
 
@@ -46,9 +46,8 @@ namespace mln
     namespace internal
     {
 
-      /*! Generic min accumulator class.
-       * Base class for implementation of accumulator classes.
-       */
+      /// Generic min accumulator class.
+      /// Base class for implementation of accumulator classes.
       template <typename R, typename E>
       class base : public Accumulator<E>,
 		   public mln::internal::proxy_impl< R, E >

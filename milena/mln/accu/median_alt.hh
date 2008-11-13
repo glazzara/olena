@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MEDIAN_ALT_HH
 # define MLN_ACCU_MEDIAN_ALT_HH
 
-/*! \file mln/accu/median_alt.hh
- *
- * \brief Define alternative generic median accumulator class.
- */
+/// \file mln/accu/median_alt.hh
+///
+/// Define alternative generic median accumulator class.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
@@ -44,9 +43,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic median_alt function based on histogram over a
-     * value set with type \c S.
-     */
+    /// Generic median_alt function based on histogram over a
+    /// value set with type \c S.
     template <typename S>
     struct median_alt : public mln::accu::internal::base< const mln_value(S)&, median_alt<S> >
     {
@@ -103,14 +101,26 @@ namespace mln
 
       struct median_alt : public Meta_Accumulator< median_alt >
       {
+	median_alt(const Value_Set<S>& s_) : s(s_) {}
+
 	template <typename V>
 	struct with
 	{
 	  typedef accu::median_alt<V> ret;
 	};
+
+	Value_Set<S> s;
       };
 
     } // end of namespace mln::accu::meta
+
+
+    template <typename T>
+    median_alt<T> unmeta(const meta::median_alt& m, T)
+    {
+      median_alt<T> a(m.s);
+      return a;
+    }
 
 
     template <typename T>

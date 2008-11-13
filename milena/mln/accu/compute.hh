@@ -47,8 +47,8 @@ namespace mln
   namespace accu
   {
 
-    /*! \brief Make an accumulator compute the pixels of the image \p input.
-     *
+    /// Make an accumulator compute the pixels of the image \p input.
+    /*!
      * \param[in] input The input image.
      *
      * This routine runs: \n
@@ -62,8 +62,8 @@ namespace mln
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /*! \brief Make an accumulator compute the pixels of the image \p input.
-     *
+    /// Make an accumulator compute the pixels of the image \p input.
+    /*!
      * \param[in] input The input image.
      *
      * This routine runs: \n

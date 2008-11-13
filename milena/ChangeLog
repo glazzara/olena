@@ -1,5 +1,52 @@
 2008-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* mln/accu/all.hh,
+	* mln/accu/bbox.hh,
+	* mln/accu/compute.hh,
+	* mln/accu/convolve.hh,
+	* mln/accu/count.hh,
+	* mln/accu/count_adjacent_vertices.hh,
+	* mln/accu/essential.hh,
+	* mln/accu/height.hh,
+	* mln/accu/histo.hh,
+	* mln/accu/internal/base.hh,
+	* mln/accu/land.hh,
+	* mln/accu/line.hh,
+	* mln/accu/maj_h.hh,
+	* mln/accu/max.hh,
+	* mln/accu/max_h.hh,
+	* mln/accu/mean.hh,
+	* mln/accu/median_alt.hh,
+	* mln/accu/median_h.hh,
+	* mln/accu/min.hh,
+	* mln/accu/min_h.hh,
+	* mln/accu/min_max.hh,
+	* mln/accu/nil.hh,
+	* mln/accu/p.hh,
+	* mln/accu/pair.hh,
+	* mln/accu/rank.hh,
+	* mln/accu/rank_bool.hh,
+	* mln/accu/rank_high_quant.hh,
+	* mln/accu/snake_2d.hh,
+	* mln/accu/sum.hh,
+	* mln/accu/take.hh,
+	* mln/accu/transform.hh,
+	* mln/accu/tuple.hh,
+	* mln/accu/v.hh,
+	* mln/accu/volume.hh: Update comments and add missing unmeta.
+
+	* mln/morpho/elementary/like_ero_fun.hh,
+	* mln/algebra/quat.hh: Fix warnings.
+
+	* mln/geom/essential.hh,
+	* mln/value/essential.hh: Fix includes.
+
+	* tests/accu/rank.cc: Use a new constructor for accu::meta::rank.
+
+2008-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tutorial.
 
 	* doc/Doxyfile.in: Add new example/include paths.

@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_CONVOLVE_HH
 # define MLN_ACCU_CONVOLVE_HH
 
-/*! \file mln/accu/convolve.hh
- *
- * \brief Define an accumulator that computes a convolution.
- */
+/// \file mln/accu/convolve.hh
+///
+/// Define an accumulator that computes a convolution.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/value/ops.hh>
@@ -45,11 +44,11 @@ namespace mln
   {
 
 
-    /*! \brief Generic convolution accumulator class.
-     *
-     * Parameters \c T1 and \c T2 are the type of values to be
-     * convolved.  Parameter \c R is the result type.
-     */
+    /// Generic convolution accumulator class.
+    ///
+    /// Parameters \c T1 and \c T2 are the type of values to be
+    /// convolved.  Parameter \c R is the result type.
+    ///
     template <typename T1, typename T2,
 	      typename R = mln_sum_x(T1, T2)>
     struct convolve : public mln::accu::internal::base< R, convolve<T1,T2,R> >,

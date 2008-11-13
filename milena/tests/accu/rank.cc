@@ -55,9 +55,7 @@ int main()
   using value::int_u8;
 
   {
-    accu::meta::rank r;
-    r.k = 4;
-    r.n = 9;
+    accu::meta::rank r(4, 9);
     accu::rank<int_u8> a = accu::unmeta(r, int_u8());
     mln_assertion(a.k() == 4 && a.n() == 9);
 //     Meta_Accumulator<accu::meta::rank>& R = r;

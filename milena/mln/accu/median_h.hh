@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MEDIAN_H_HH
 # define MLN_ACCU_MEDIAN_H_HH
 
-/*! \file mln/accu/median_h.hh
- *
- * \brief Define a generic median accumulator class.
- */
+/// \file mln/accu/median_h.hh
+///
+/// Define a generic median accumulator class.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
@@ -45,9 +44,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic median function based on histogram over a value
-     * set with type \c V.
-     */
+    /// Generic median function based on histogram over a value
+    /// set with type \c V.
     template <typename V>
     struct median_h : public mln::accu::internal::base< const V&, median_h<V> >
     {
@@ -77,13 +75,13 @@ namespace mln
     protected:
 
       mutable accu::histo<V> h_;
-      const value::set<V>& s_; // derived from h_
+      const value::set<V>& s_;	// derived from h_
 
       mutable unsigned sum_minus_, sum_plus_;
 
       mutable bool valid_;
-      mutable unsigned i_; // the median_h index
-      mutable argument t_;       // the median_h value
+      mutable unsigned i_;	// the median_h index
+      mutable argument t_;	// the median_h value
 
       // Auxiliary methods
       void update_() const;

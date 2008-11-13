@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_ACCU_MIN_MAX_HH
 # define MLN_ACCU_MIN_MAX_HH
 
-/*! \file mln/accu/min_max.hh
- *
- * \brief Define an accumulator that computes a min and a max.
- *
- * \todo A macro to create such accumulators.
- */
+/// \file mln/accu/min_max.hh
+///
+/// Define an accumulator that computes a min and a max.
+///
+/// \todo A macro to create such accumulators.
 
 # include <utility>
 
@@ -50,8 +49,8 @@ namespace mln
   namespace accu
   {
 
-    /*! \brief Generic min and max accumulator class.
-     *
+    /// Generic min and max accumulator class.
+    /*!
      * The parameter \c V is the type of values.
      */
     template <typename V>

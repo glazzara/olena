@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MAX_H_HH
 # define MLN_ACCU_MAX_H_HH
 
-/*! \file mln/accu/max_h.hh
- *
- * \brief Define a generic max accumulator class based on histogram.
- */
+/// \file mln/accu/max_h.hh
+///
+/// Define a generic max accumulator class based on histogram.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
@@ -45,9 +44,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic max function based on histogram over a value set with
-     * type \c V.
-     */
+    /// Generic max function based on histogram over a value set with
+    /// type \c V.
     template <typename V>
     struct max_h : public mln::accu::internal::base< const V&, max_h<V> >
     {

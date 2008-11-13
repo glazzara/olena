@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_RANK_HH
 # define MLN_ACCU_RANK_HH
 
-/*! \file mln/accu/rank.hh
- *
- * \brief Define an rank accumulator.
- */
+/// \file mln/accu/rank.hh
+///
+/// Define an rank accumulator.
 
 # include <vector>
 # include <mln/accu/internal/base.hh>
@@ -47,8 +47,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic rank accumulator class.
-     *
+    /// Generic rank accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>
@@ -93,13 +93,26 @@ namespace mln
 
       struct rank : public Meta_Accumulator< rank >
       {
+	rank(unsigned k_, unsigned n_) : k(k_), n(n_) {}
+
 	template <typename T>
 	  struct with
 	  {
 	    typedef accu::rank<T> ret;
 	  };
+
+	unsigned k;
+	unsigned n;
       };
 
+    }
+
+
+    template <typename T>
+    rank<T> unmeta(const meta::rank& m, T)
+    {
+      rank<T> a(m.k, m.n);
+      return a;
     }
 
 

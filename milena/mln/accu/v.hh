@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_ACCU_V_HH
 # define MLN_ACCU_V_HH
 
-/*! \file mln/accu/v.hh
- *
- * \brief Define an accumulator that computes a min and a max.
- */
+/// \file mln/accu/v.hh
+///
+/// Define an accumulator that computes a min and a max.
+
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -89,11 +90,11 @@ namespace mln
       struct val : public Meta_Accumulator< val<mA> >
       {
 	template <typename V>
-	  struct with
-	  {
-	    typedef mln_accu_with(mA, mln_value(V)) A;
-	    typedef val<A> ret;
-	  };
+	struct with
+	{
+	  typedef mln_accu_with(mA, mln_value(V)) A;
+	  typedef val<A> ret;
+	};
       };
 
     }

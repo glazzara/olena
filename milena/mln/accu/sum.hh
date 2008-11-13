@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_SUM_HH
 # define MLN_ACCU_SUM_HH
 
-/*! \file mln/accu/sum.hh
- *
- * \brief Define an accumulator that computes a sum.
- */
+/// \file mln/accu/sum.hh
+///
+/// Define an accumulator that computes a sum.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -50,8 +50,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic sum accumulator class.
-     *
+    /// Generic sum accumulator class.
+    /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the value sum; the default type of
      * \c S is the summation type (property) of \c T.

@@ -75,7 +75,7 @@ namespace mln
 	mln_precondition(input.has_data());
 	mln_precondition(! win.is_empty());
 	// mln_precondition(! win.is_valid());
-	
+
 	(void) input;
 	(void) win;
       }

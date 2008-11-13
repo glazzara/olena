@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_ACCU_MEAN_HH
 # define MLN_ACCU_MEAN_HH
 
-/*! \file mln/accu/mean.hh
- *
- * \brief Define an accumulator that computes a mean.
- *
- * \todo Use accu::pair just like in accu::min_max.
- */
+/// \file mln/accu/mean.hh
+///
+/// Define an accumulator that computes a mean.
+///
+/// \todo Use accu::pair just like in accu::min_max.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/count.hh>
@@ -47,8 +46,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic mean accumulator class.
-     *
+    /// Generic mean accumulator class.
+    /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the sum of values; the default type of
      * \c S is the summation type (property) of \c T.  Parameter \c M

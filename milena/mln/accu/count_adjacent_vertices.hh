@@ -30,7 +30,7 @@
 # define MLN_ACCU_COUNT_ADJACENT_VERTICES_HH
 
 /// \file mln/accu/count_adjacent_vertices.hh
-/// \brief Define an accumulator that counts the vertices adjacent to a
+/// Define an accumulator that counts the vertices adjacent to a
 /// set of line graph psite.
 
 # include <mln/accu/internal/base.hh>
@@ -44,7 +44,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Accumulator class counting the number of vertices
+    /// Accumulator class counting the number of vertices
     /// adjacent to a set of mln::line_graph_psite (i.e., a set of
     /// edges).
     ///
@@ -90,7 +90,7 @@ namespace mln
     namespace meta
     {
 
-      /// \brief Meta accumulator for count_adjacent_vertices.
+      /// Meta accumulator for count_adjacent_vertices.
       struct count_adjacent_vertices
 	: public Meta_Accumulator< count_adjacent_vertices >
       {

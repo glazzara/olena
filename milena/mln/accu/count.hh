@@ -31,7 +31,7 @@
 
 /// \file mln/accu/count.hh
 ///
-/// \brief Define an accumulator that counts.
+/// Define an accumulator that counts.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -43,7 +43,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Generic counter accumulator class.
+    /// Generic counter accumulator class.
     /// The parameter \a T is the type to be count.
     template <typename T>
     struct count : public mln::accu::internal::base< unsigned , count<T> >
@@ -81,7 +81,7 @@ namespace mln
     namespace meta
     {
 
-      /// \brief Meta accumulator for count.
+      /// Meta accumulator for count.
       struct count : public Meta_Accumulator< count >
       {
 	template <typename T>

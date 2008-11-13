@@ -50,8 +50,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic rank accumulator class.
-     *
+    /// Generic rank accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>
@@ -82,7 +82,7 @@ namespace mln
       /// Give the rank.
       unsigned k() const;
 
-      /// Give the total number of elements. 
+      /// Give the total number of elements.
       unsigned n() const;
 
     protected:
@@ -116,12 +116,16 @@ namespace mln
 
       struct rank : public Meta_Accumulator< rank >
       {
+	rank(unsigned k_, unsigned n_) : k(k_), n(n_) {}
+
 	template <typename T>
 	struct with
 	{
 	  typedef accu::rank<T> ret;
 	};
-	unsigned k, n;
+
+	unsigned k;
+	unsigned n;
       };
 
     } // end of namespace mln::accu::meta

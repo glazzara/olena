@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_ACCU_TUPLE_HH
 # define MLN_ACCU_TUPLE_HH
 
-/*! \file mln/accu/tuple.hh
- *
- * \brief Define a tuple of accumulators.
- */
+/// \file mln/accu/tuple.hh
+///
+/// Define a tuple of accumulators.
+
 
 # include <utility>
 
@@ -65,10 +66,9 @@ namespace mln
       template <unsigned n, typename T> struct tuplehelper;
     }
 
-    /*! \brief Generic tuple of accumulators.
-     *
+    /// Generic tuple of accumulators.
+    /*!
      * The parameter \c T is the type of values.
-     *
      */
     template <typename A, unsigned n, BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(10, typename T, boost::tuples::null_type)>
     struct tuple

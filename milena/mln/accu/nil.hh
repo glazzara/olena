@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_ACCU_NIL_HH
 # define MLN_ACCU_NIL_HH
 
-/*! \file mln/accu/nil.hh
- *
- * \brief Define an accumulator that does nothing.
- *
- * \todo A macro to generate the meta version.
- */
+/// \file mln/accu/nil.hh
+///
+/// Define an accumulator that does nothing.
+///
+/// \todo A macro to generate the meta version.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -47,9 +47,7 @@ namespace mln
   namespace accu
   {
 
-    /*!
-     * \brief Define an accumulator that does nothing.
-     */
+    /// Define an accumulator that does nothing.
     template <typename T>
     struct nil : public mln::accu::internal::base< util::ignore , nil<T> >
     {

@@ -29,17 +29,18 @@
 #ifndef MLN_ACCU_HEIGHT_HH
 # define MLN_ACCU_HEIGHT_HH
 
-/** \file mln/accu/height.hh
-    \brief Define an accumulator that computes the height of a
-    component through one of its pixels.
-
+/// \file mln/accu/height.hh
+/// Define an accumulator that computes the height of a
+/// component through one of its pixels.
+/*
     This accumulator uses an mln::util::pix (pixel) to update the
     height information of the component.
 
     The class mln/accu/height is not a general-purpose accumulator;
     it is used to implement height-based connected filters.
     \see mln::morpho::closing_height
-    \see mln::morpho::opening_height  */
+    \see mln::morpho::opening_height
+*/
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -54,7 +55,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Height accumulator class.
+    /// Height accumulator class.
     ///
     /// The parameter \p I is the image type on which the accumulator
     /// of pixels is built.
@@ -62,7 +63,7 @@ namespace mln
     struct height
       : public mln::accu::internal::base< unsigned , height<I> >
     {
-      /// \brief The accumulated data type.
+      /// The accumulated data type.
       ///
       /// The height of component is represented by the height of its
       /// root pixel.  See mln::morpho::closing_height and
@@ -104,7 +105,7 @@ namespace mln
     namespace meta
     {
 
-      /// \brief Meta accumulator for height.
+      /// Meta accumulator for height.
       struct height : public Meta_Accumulator< height >
       {
 	template <typename I>
