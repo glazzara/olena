@@ -39,7 +39,7 @@ library.
 %%However, the $site$ concept allows Milena to deal with complicated image type
 %%(for instance see the \verb+graph_image+ type).
 
-An image is composed by a set of localized objects ($sites$): the definition domain of the image.
+An image is composed by a set of localized objects ($sites$), the definition domain of the image.
 A value is associated to each site of the image. This is the destination domain
 of the image.
 To access to a value  localized at the site p in an image named $ima$, we
@@ -75,10 +75,10 @@ image types parameters:
 
 %% Primary image definition
 
-Primary images are a major category of Milena image type.
+Primary images are a major category of the Milena image types.
 Primary images are not based on another image type.
 They are sufficient to define themselves.
-Thus, a primary image types directly holds in memory its data (values).
+Thus, a primary image types directly holds its data (values) in memory.
 
 
 \begin{itemize}
@@ -145,7 +145,7 @@ Here, the image morphers rest upon another image (the input image(s) which
 will be transformed).
 Since, it extends an image, an image morpher is also an image type.
 
-The Milena library provide different kinds of morphers.
+The Milena library provides different kinds of morphers.
 Domain morphers only modify the domain (the set of points/sites composing the image) of the input image.
 Value morphers only change the input image values (cast the values into another
 type\ldots{})

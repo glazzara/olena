@@ -85,9 +85,11 @@ namespace mln
 
       // Value.
       typedef trait::image::value_access::direct           value_access;
-      // FIXME: Is that right?
-      typedef trait::image::vw_io::read_write              vw_io;
-      typedef trait::image::vw_set::multi                  vw_set;
+      // FIXME: This image is value wise read_write, and provides
+      // an access to its values throught a multi-set,
+      // but we need to add the corresponding interface in the class.
+      typedef trait::image::vw_io::none                    vw_io;
+      typedef trait::image::vw_set::none                   vw_set;
       typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
       typedef trait::image::value_alignement::irrelevant   value_alignement;

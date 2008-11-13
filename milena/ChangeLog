@@ -1,3 +1,10 @@
+2008-11-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Temporary fix in complex_image properties.
+
+	* doc/tutorial/design/include/imagetours.tex: Update documentation.
+	* mln/core/image/complex_image.hh: Fix properties.
+
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make logical and use level transform.
