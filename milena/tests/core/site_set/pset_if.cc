@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/pset_if.cc
- *
- * \brief Tests on mln::p_if.
- */
+/// \file tests/core/site_set/pset_if.cc
+///
+/// Tests on mln::p_if.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
@@ -44,10 +44,10 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion(geom::nsites((box_8x8 | fun::p2b::chess)) == 32);
+  mln_assertion(geom::nsites((box_8x8 | fun::p2b::chess())) == 32);
 
   {
-    p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess);
-    mln_precondition(s == (box_8x8 | fun::p2b::chess));
+    p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess());
+    mln_precondition(s == (box_8x8 | fun::p2b::chess()));
   }
 }

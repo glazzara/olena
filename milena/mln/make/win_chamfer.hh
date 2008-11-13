@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008  EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,12 +29,9 @@
 #ifndef MLN_MAKE_WIN_CHAMFER_HH
 # define MLN_MAKE_WIN_CHAMFER_HH\
 
-/*!
- * \file   mln/make/win_chamfer.hh
- * 
- * \brief  Routine to create chamfer mln::w_window2d_int.
- *
- */
+/// \file   mln/make/win_chamfer.hh
+///
+/// Routine to create chamfer mln::w_window2d_int.
 
 
 # include <mln/core/alias/w_window2d_int.hh>
@@ -48,6 +45,33 @@ namespace mln
   {
 
     template<int d10, int d11>
+    const mln::w_window2d_int mk_chamfer_3x3_int();
+
+    template<int d10, int d11, int d21>
+    const mln::w_window2d_int mk_chamfer_5x5_int();
+
+    const mln::w_window2d_float mk_chamfer_3x3_float(float d10, float d11);
+
+    const mln::w_window2d_float
+    mk_chamfer_5x5_float(float d10, float d11, float d21);
+
+    const mln::w_window2d_float mk_chamfer_exact();
+
+  } // end of namespace mln::make
+
+} // end of namespace mln
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+namespace mln
+{
+
+  namespace make
+  {
+
+    template<int d10, int d11>
+    inline
     const mln::w_window2d_int
     mk_chamfer_3x3_int()
     {
@@ -59,6 +83,7 @@ namespace mln
     }
 
     template<int d10, int d11, int d21>
+    inline
     const mln::w_window2d_int
     mk_chamfer_5x5_int()
     {
@@ -71,6 +96,7 @@ namespace mln
       return (make::w_window2d(ws));
     }
 
+    inline
     const mln::w_window2d_float
     mk_chamfer_3x3_float(float d10, float d11)
     {
@@ -81,6 +107,7 @@ namespace mln
       return (make::w_window2d(ws));
     }
 
+    inline
     const mln::w_window2d_float
     mk_chamfer_5x5_float(float d10, float d11, float d21)
     {
@@ -93,6 +120,7 @@ namespace mln
       return (make::w_window2d(ws));
     }
 
+    inline
     const mln::w_window2d_float
     mk_chamfer_exact()
     {
@@ -107,5 +135,7 @@ namespace mln
   } // end of namespace mln::make
 
 } // end of namespace mln
+
+# endif // !MLN_INCLUDE_ONLY
 
 #endif // ! MLN_MAKE_WIN_CHAMFER_HH

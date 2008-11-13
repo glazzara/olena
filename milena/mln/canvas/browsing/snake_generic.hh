@@ -45,9 +45,8 @@ namespace mln
     namespace browsing
     {
 
+      /// Multidimentional Browsing in a given-way.
       /*!
-       * \brief Multidimentional Browsing in a given-way.
-       *
        * F shall feature: \n
        * { \n
        *   --- as attributes: \n
@@ -80,13 +79,14 @@ namespace mln
 
 	template <typename F>
 	void operator()(F& f) const;
-      }
 
-      snake_generic;
+      };
 
-
+      extern const snake_generic_t snake_generic;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const snake_generic_t snake_generic;
 
       template <typename F>
       inline
@@ -97,16 +97,14 @@ namespace mln
 	mln_precondition(f.input.has_data());
 
 	// p init
- 	f.p = f.input.bbox().pmin();// - f.dps[0];
+	f.p = f.input.bbox().pmin();// - f.dps[0];
 
 	std::vector< int > directions(f.moves.size(), 0);
 	unsigned deph = 0;
 	unsigned total_deph = f.moves.size() / 2 + 1;
 
 	// initialization
-	trace::entering("canvas::browsing::snake_generic::init");
 	f.init();
-	trace::exiting("canvas::browsing::snake_generic::init");
 
 	bool first = true;
 	directions[deph] = 1;
@@ -124,7 +122,7 @@ namespace mln
 	  {
 	    // Go up the tree
 	    deph--;
-	    if  (deph >= 1)
+	    if (deph >= 1)
 	      // Change directions
 	      directions[deph] = directions[deph] == 1 ? 0 : 1;
 	    continue;

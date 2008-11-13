@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/transform.cc
- *
- * \brief Tests on mln::level::transform
- */
+/// \file tests/level/transform.cc
+///
+/// Tests on mln::level::transform
 
 #include <cmath>
 
@@ -123,7 +122,7 @@ int main()
   /// pw image test
   {
 
-    const pw::image<fun::p2v::iota_t, box2d> ima(fun::p2v::iota,
+    const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
                                                  make::box2d(2,2, 5,5));
     image2d<short unsigned int> out(8, 8);
 
@@ -147,11 +146,11 @@ int main()
   // image if test
   {
     typedef image2d<unsigned short> I;
-    typedef image_if<I, fun::p2b::chess_t> II;
+    typedef image_if<I, fun::p2b::chess> II;
 
     I ima(size, size);
     I out(size, size);
-    II ima_if = ima | fun::p2b::chess;
+    II ima_if = ima | fun::p2b::chess();
 
     level::fill_with_value(ima, 0);
     debug::iota(ima);

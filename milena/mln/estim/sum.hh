@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_ESTIM_SUM_HH
 # define MLN_ESTIM_SUM_HH
 
-/*! \file mln/estim/sum.hh
- *
- * \brief Compute the sum pixel value.
- *
- * \todo Sum works on level so move into mln/level; otherwise on pix then ambiguous.
- */
+/// \file mln/estim/sum.hh
+///
+/// Compute the sum pixel value.
+///
+/// \todo Sum works on level so move into mln/level; otherwise on pix then ambiguous.
 
 # include <mln/accu/sum.hh>
 # include <mln/level/compute.hh>
@@ -45,8 +45,8 @@ namespace mln
   namespace estim
   {
 
-    /*! \brief Compute the sum value of the pixels of image \p input.
-     *
+    /// Compute the sum value of the pixels of image \p input.
+    /*!
      * \param[in] input The image.
      * \return The sum value.
      */
@@ -54,8 +54,8 @@ namespace mln
     mln_sum(mln_value(I)) sum(const Image<I>& input);
 
 
-    /*! \brief Compute the sum value of the pixels of image \p input.
-     *
+    /// Compute the sum value of the pixels of image \p input.
+    /*!
      * \param[in] input The image.
      * \param[out] result The sum value.
      */

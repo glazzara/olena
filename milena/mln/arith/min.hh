@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ARITH_MIN_HH
 # define MLN_ARITH_MIN_HH
 
-/*! \file mln/arith/min.hh
- *
- * \brief Point-wise min between images.
- */
+/// \file mln/arith/min.hh
+///
+/// Point-wise min between images.
 
 # include <mln/core/concept/image.hh>
 
@@ -45,8 +45,8 @@ namespace mln
   namespace arith
   {
 
-    /*! Point-wise min of images \p lhs and \p rhs.
-     *
+    /// Point-wise min of images \p lhs and \p rhs.
+    /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
      * \result The result image.
@@ -58,8 +58,8 @@ namespace mln
     min(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /*! Point-wise min of image \p lhs in image \p rhs.
-     *
+    /// Point-wise min of image \p lhs in image \p rhs.
+    /*!
      * \param[in,out] lhs First operand image.
      * \param[in] rhs Second operand image.
      *

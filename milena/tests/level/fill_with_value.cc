@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/fill_with_value.cc
- *
- * \brief Tests on mln::level::fill_with_value
- */
+/// \file tests/level/fill_with_value.cc
+///
+/// Tests on mln::level::fill_with_value
 
 
 #include <mln/level/fill_with_value.hh>
@@ -91,12 +91,12 @@ int main()
 
   {
     typedef image2d<unsigned char> I;
-    typedef image_if<I, fun::p2b::chess_t> II;
+    typedef image_if<I, fun::p2b::chess> II;
 
     I ima(size, size);
     level::fill_with_value(ima, 51);
 
-    II ima_if = ima | fun::p2b::chess;
+    II ima_if = ima | fun::p2b::chess();
     level::fill_with_value(ima_if, 42);
 
     II::piter p(ima_if.domain());

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_DISPLAY_SAVE_HH
 # define MLN_DISPLAY_SAVE_HH
 
-/*! \file mln/display/save.hh
- *
- * \brief Definition of function which saves an image on a temporary
- * files.
- */
+/// \file mln/display/save.hh
+///
+/// Definition of function which saves an image on a temporary
+/// files.
 
 # include <mln/trait/image_from_grid.hh>
 # include <mln/core/image/image_if.hh>
@@ -49,22 +49,20 @@ namespace mln
   namespace display
   {
 
-    /*! Map which stocks the location of the saved file by the id of
-     *  the image.
-     *
-     */
-    std::map<void*, std::string> map_saved_image_tmp_;
+    /// Map which stocks the location of the saved file by the id of
+    /// the image.
+    extern std::map<void*, std::string> map_saved_image_tmp_;
 
-    /*! Save an image in a temporary file in ppm format.
-     *
-     * \param[in] input_ the image to save.
-     *
-     */
+    /// Save an image in a temporary file in ppm format.
+    ///
+    /// \param[in] input_ the image to save.
     template <typename I>
     void
     save(const Image<I>& input_);
 
 # ifndef MLN_INCLUDE_ONLY
+
+    std::map<void*, std::string> map_saved_image_tmp_;
 
     namespace impl
     {

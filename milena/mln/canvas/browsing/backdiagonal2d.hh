@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_BACKDIAGONAL2D_HH
 # define MLN_CANVAS_BROWSING_BACKDIAGONAL2D_HH
 
-/*! \file mln/canvas/browsing/backdiagonal2d.hh
- *
- * \brief Backdiagonal2d browsing of an image.
- */
+/// \file mln/canvas/browsing/backdiagonal2d.hh
+///
+/// Backdiagonal2d browsing of an image.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
@@ -45,9 +45,8 @@ namespace mln
     namespace browsing
     {
 
+      /// Browsing in a certain direction.
       /*!
-       * \brief Browsing in a certain direction.
-       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -86,11 +85,13 @@ namespace mln
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      backdiagonal2d;
+      extern const backdiagonal2d_t backdiagonal2d;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const backdiagonal2d_t backdiagonal2d;
 
       template <typename F>
       inline
@@ -118,10 +119,7 @@ namespace mln
 	f.p[0] = pmax[0];
 	f.p[1] = pmin[1];
 
-	trace::entering("canvas::browsing::backdiagonal2d::init");
 	f.init();
-	trace::exiting("canvas::browsing::backdiagonal2d::init");
-
 
 	while (f.input.domain().has(f.p))
 	{
@@ -157,9 +155,7 @@ namespace mln
 	  f.p = start_diag + dp_second;
 	}
 
-	trace::entering("canvas::browsing::backdiagonal2d::final");
 	f.final();
-	trace::exiting("canvas::browsing::backdiagonal2d::final");
 	trace::exiting("canvas::browsing::backdiagonal2d");
       }
 

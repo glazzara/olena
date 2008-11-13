@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
 # define MLN_CANVAS_BROWSING_DIR_STRUCT_ELT_INCR_UPDATE_HH
 
-/*! \file mln/canvas/browsing/dir_struct_elt_incr_update.hh
- *
- * \brief Directional browsing of an image with structuring element.
- */
+/// \file mln/canvas/browsing/dir_struct_elt_incr_update.hh
+///
+/// Directional browsing of an image with structuring element.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
@@ -44,10 +44,9 @@ namespace mln
 
     namespace browsing
     {
-      
+
+      /// Browsing in a certain direction with a segment.
       /*!
-       * \brief Browsing in a certain direction with a segment.
-       *
        * This canvas browse all the point of an image 'input' of type
        * 'I', of dimension 'dim' in the direction 'dir' with
        * considering weigh the 'length' nearest points.
@@ -90,11 +89,13 @@ namespace mln
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      dir_struct_elt_incr_update;
+      extern const dir_struct_elt_incr_update_t dir_struct_elt_incr_update;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const dir_struct_elt_incr_update_t dir_struct_elt_incr_update;
 
       template <typename F>
       inline
@@ -116,7 +117,7 @@ namespace mln
 	  pmax_dir_minus_half_length = pmax_dir - f.length / 2;
 
 	mln_psite(I) pt, pu;
-	
+
 	typedef mln_coord(I)& coord_ref;
 	coord_ref
 	  ct = pt[f.dir],
@@ -124,41 +125,27 @@ namespace mln
 	  p_dir = f.p[f.dir];
 
 	f.p = pmin;
-	
-	trace::entering("canvas::browsing::dir_struct_elt_incr_update::init");
+
 	f.init();
-	trace::exiting("canvas::browsing::dir_struct_elt_incr_update::init");
-	
+
 	do
 	{
 	  pt = f.p;
 	  pu = f.p;
 
-	  trace::entering("canvas::browsing::dir_struct_elt_incr_update::init_line");
 	  f.init_line();
-	  trace::exiting("canvas::browsing::dir_struct_elt_incr_update::init_line");
 
 	  // initialization (before first point of the line)
 	  for (ct = pmin_dir; ct < pmin_dir_plus_half_length; ++ ct)
 	    if (f.input.has(pt))
-	    {
-	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
-	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
-	    }
 
 	  // left columns (just take new points)
 	  for (p_dir = pmin_dir; p_dir <= pmin_dir_plus_half_length; ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
-	    {
-	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
-	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
-	    }
-	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
-	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  // middle columns (both take and untake)
@@ -166,38 +153,22 @@ namespace mln
 	  for (; p_dir <= pmax_dir_minus_half_length; ++cu, ++p_dir, ++ct)
 	  {
 	    if (f.input.has(pt))
-	    {
-	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::add_point");
 	      f.add_point(pt);
-	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::add_point");
-	    }
 	    if (f.input.has(pu))
-	    {
-	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::remove_point");
 	      f.remove_point(pu);
-	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::remove_point");
-	    }
-	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
-	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  // right columns (now just untake old points)
 	  for (; p_dir <= pmax_dir; ++cu, ++p_dir)
 	  {
 	    if (f.input.has(pu))
-	    {
-	      trace::entering("canvas::browsing::dir_struct_elt_incr_update::remove_point");
 	      f.remove_point(pu);
-	      trace::exiting("canvas::browsing::dir_struct_elt_incr_update::remove_point");
-	    }
-	    trace::entering("canvas::browsing::dir_struct_elt_incr_update::next");
 	    f.next();
-	    trace::exiting("canvas::browsing::dir_struct_elt_incr_update::next");
 	  }
 
 	  p_dir = pmin_dir;
-	  
+
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
 	    if (c == int(f.dir))
@@ -211,9 +182,7 @@ namespace mln
 	  }
 	} while (f.p != pmin);
 
-	trace::entering("canvas::browsing::dir_struct_elt_incr_update::final");
 	f.final();
-	trace::exiting("canvas::browsing::dir_struct_elt_incr_update::final");
 	trace::exiting("canvas::browsing::dir_struct_elt_incr_update");
       }
 

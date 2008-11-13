@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_ARITH_DIFF_ABS_HH
 # define MLN_ARITH_DIFF_ABS_HH
 
-/*! \file mln/arith/diff_abs.hh
- *
- * \brief Point-wise addition between images.
- *
- * \todo Speedup; some versions are not optimal.
- */
+/// \file mln/arith/diff_abs.hh
+///
+/// Point-wise addition between images.
+///
+/// \todo Speedup; some versions are not optimal.
 
 # include <mln/arith/includes.hh>
 # include <mln/fun/vv2v/diff_abs.hh>
@@ -45,8 +45,8 @@ namespace mln
   namespace arith
   {
 
-    /*! Point-wise absolute difference of images \p lhs and \p rhs.
-     *
+    /// Point-wise absolute difference of images \p lhs and \p rhs.
+    /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
      * \result The result image.
@@ -76,9 +76,9 @@ namespace mln
       return output;
     }
 
-  } // end of namespace mln::arith
-
 # endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::arith
 
 } // end of namespace mln
 

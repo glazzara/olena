@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 # define MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 
-/*! \file mln/canvas/browsing/directional.hh
- *
- * \brief Directional browsing of an image.
- */
+/// \file mln/canvas/browsing/directional.hh
+///
+/// Directional browsing of an image.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
@@ -45,9 +45,8 @@ namespace mln
     namespace browsing
     {
 
+      /// Browsing in a certain direction.
       /*!
-       * \brief Browsing in a certain direction.
-       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -94,17 +93,20 @@ namespace mln
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      directional;
+      extern const directional_t directional;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const directional_t directional;
 
       template <typename F>
       inline
       void
       directional_t::operator()(F& f) const
       {
+	trace::entering("canvas::browsing::directional");
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
@@ -145,6 +147,7 @@ namespace mln
 	} while (f.p != pmin);
 
 	f.final();
+	trace::exiting("canvas::browsing::directional");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

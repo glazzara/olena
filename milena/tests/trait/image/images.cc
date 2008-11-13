@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/trait/image/images.cc
- *
- * \brief Tests on mln::trait::images.
- */
+/// \file tests/trait/image/images.cc
+///
+/// \brief Tests on mln::trait::images.
 
 #include <mln/core/image/image2d.hh>
 
@@ -53,10 +53,10 @@ int main()
 
   std::cout << std::endl
 	    << "image_if< image2d >: ";
-  mln::trait::image::print< image_if<I, fun::p2b::chess_t> >(std::cout);
+  mln::trait::image::print< image_if<I, fun::p2b::chess> >(std::cout);
 
 
   std::cout << std::endl
 	    << "image_if< sub_image< image2d > >: ";
-  mln::trait::image::print< image_if<Isub, fun::p2b::chess_t> >(std::cout);
+  mln::trait::image::print< image_if<Isub, fun::p2b::chess> >(std::cout);
 }

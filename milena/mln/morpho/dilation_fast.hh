@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_MORPHO_DILATION_FAST_HH
 # define MLN_MORPHO_DILATION_FAST_HH
 
-/*! \file mln/morpho/dilation_fast.hh
- *
- * \brief Dilation filtering of an image with arbitrary s.e.
- *
- * \todo Add fastest versions.
- */
+/// \file mln/morpho/dilation_fast.hh
+///
+/// Dilation filtering of an image with arbitrary s.e.
+///
+/// \todo Add fastest versions.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
@@ -52,9 +52,9 @@ namespace mln
   namespace morpho
   {
 
-    /*! Compute in \p output the dilation filter of image \p input by
-     *  the window \p win.
-     *
+    /// Compute in \p output the dilation filter of image \p input by
+    /// the window \p win.
+    /*!
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
      * \param[out] output The output image.
@@ -79,7 +79,7 @@ namespace mln
 
       template <typename I, typename W, typename O>
       struct dilation_fast_t
-      { 
+      {
 	typedef mln_psite(I)  P;
 	typedef mln_dpsite(I) D;
 
@@ -186,7 +186,7 @@ namespace mln
 		      Image<O>& output)
     {
       mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::dilation_fast_(exact(input), exact(win), exact(output)); 
+      impl::dilation_fast_(exact(input), exact(win), exact(output));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

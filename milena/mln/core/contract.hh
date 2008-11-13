@@ -67,6 +67,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  inline
   bool implies(bool lexpr, bool rexpr)
   {
     return ! (rexpr) || (lexpr);

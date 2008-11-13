@@ -48,20 +48,18 @@ namespace mln
 
       // FIXME: Doc!
 
-      struct chess_t : public Function_p2b< chess_t >
+      struct chess : public Function_p2b< chess >
       {
 	typedef bool result;
 	bool operator()(const point2d& p) const;
-      }
-
-      chess;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       inline
       bool
-      chess_t::operator()(const point2d& p) const
+      chess::operator()(const point2d& p) const
       {
 	return (p.row() + p.col()) % 2 == 0;
       }

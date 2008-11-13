@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_MORPHO_HIT_OR_MISS_HH
 # define MLN_MORPHO_HIT_OR_MISS_HH
 
-/*! \file mln/morpho/hit_or_miss.hh
- *
- * \brief Morphological hit-or-miss.
- *
- * \todo Save memory.
- */
+/// \file mln/morpho/hit_or_miss.hh
+///
+/// Morphological hit-or-miss.
+///
+/// \todo Save memory.
 
 # include <mln/morpho/includes.hh>
 # include <mln/pw/all.hh>
@@ -49,12 +49,12 @@ namespace mln
   {
 
 
-    bool constrained_hit_or_miss = true;
+    extern bool constrained_hit_or_miss;
 
 
-    /*! Morphological hit-or-miss.
-     *
-     * This operator is HMT_(Bh,Bm) = e_Bh /\ (e_Bm o C). 
+    /// Morphological hit-or-miss.
+    /*!
+     * This operator is HMT_(Bh,Bm) = e_Bh /\ (e_Bm o C).
      */
     template <typename I, typename Wh, typename Wm>
     mln_concrete(I)
@@ -62,8 +62,8 @@ namespace mln
 		  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /*! Morphological hit-or-miss opening.
-     *
+    /// Morphological hit-or-miss opening.
+    /*!
      * This operator is HMTope_(Bh,Bm) = d_(-Bh) o HMT_(Bh,Bm).
      */
     template <typename I, typename Wh, typename Wm>
@@ -72,8 +72,8 @@ namespace mln
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /*! Morphological hit-or-miss opening of the background.
-     *
+    /// Morphological hit-or-miss opening of the background.
+    /*!
      * This operator is HMTopeBG = HMTope_(Bm,Bh) o C = d_(-Bm) o HMT_(Bh,Bm).
      */
     template <typename I, typename Wh, typename Wm>
@@ -82,8 +82,8 @@ namespace mln
 				     const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /*! Morphological hit-or-miss closing.
-     *
+    /// Morphological hit-or-miss closing.
+    /*!
      * This operator is C o HMTope o C.
      */
     template <typename I, typename Wh, typename Wm>
@@ -92,8 +92,8 @@ namespace mln
 			  const Window<Wh>& win_hit, const Window<Wm>& win_miss);
 
 
-    /*! Morphological hit-or-miss closing of the background.
-     *
+    /// Morphological hit-or-miss closing of the background.
+    /*!
      * This operator is C o HMTopeBG o C.
      */
     template <typename I, typename Wh, typename Wm>
@@ -105,6 +105,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    bool constrained_hit_or_miss = true;
 
     namespace internal
     {

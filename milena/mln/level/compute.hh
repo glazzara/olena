@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LEVEL_COMPUTE_HH
 # define MLN_LEVEL_COMPUTE_HH
 
-/*! \file mln/level/compute.hh
- *
- * \brief Compute an accumulator onto image pixel values.
- */
+/// \file mln/level/compute.hh
+///
+/// Compute an accumulator onto image pixel values.
 
 # include <mln/level/update.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -44,8 +44,8 @@ namespace mln
   namespace level
   {
 
-    /*! Compute an accumulator onto the pixel values of the image \p input.
-     *
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /*!
      * \param[in] a An accumulator.
      * \param[in] input The input image.
      * \return The accumulator result.
@@ -57,8 +57,8 @@ namespace mln
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /*! Compute an accumulator onto the pixel values of the image \p input.
-     *
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /*!
      * \param[in] a A meta-accumulator.
      * \param[in] input The input image.
      * \return The accumulator result.
@@ -97,7 +97,7 @@ namespace mln
     compute(const Meta_Accumulator<A>&, const Image<I>& input)
     {
       mln_accu_with(A, mln_value(I)) accu;
-      return compute(accu, input); // Call the previous version.
+      return level::compute(accu, input); // Call the previous version.
     }
 
 # endif // ! MLN_INCLUDE_ONLY

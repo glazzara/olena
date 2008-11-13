@@ -29,6 +29,83 @@
 	* mln/logical/includes.hh: New.
 	* mln/logical/all.hh: Update.
 
+2008-11-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make Olena compile with MLN_INCLUDE_ONLY and cleanup comments.
+
+	* mln/arith/diff_abs.hh: Fix bad namespace closure.
+
+	* mln/morpho/dilation_fast.hh,
+	* mln/trait/image/print.hh,
+	* mln/trait/op/ord.hh,
+	* mln/level/median.hh,
+	* mln/estim/mean.hh,
+	* mln/estim/min_max.hh,
+	* mln/estim/sum.hh,
+	* mln/estim/all.hh,
+	* mln/estim/essential.hh,
+	* mln/arith/diff_abs.hh,
+	* mln/arith/min.hh,
+	* mln/arith/min.spe.hh,
+	* mln/arith/minus.hh,
+	* mln/arith/plus.hh,
+	* mln/arith/revert.hh,
+	* mln/arith/revert.spe.hh,
+	* mln/arith/times.hh,
+	* mln/arith/times.spe.hh: Cleanup comments.
+	 
+	* mln/morpho/hit_or_miss.hh,
+	* mln/display/save.hh,
+	* mln/canvas/browsing/backdiagonal2d.hh,
+	* mln/canvas/browsing/diagonal2d.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* mln/canvas/browsing/directional.hh,
+	* mln/canvas/browsing/essential.hh,
+	* mln/canvas/browsing/fwd.hh,
+	* mln/canvas/browsing/hyper_directional.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/canvas/browsing/snake_vert.hh: Fix wrong declaration of global
+	variables.
+
+	* mln/value/float01.hh,
+	* mln/core/contract.hh: add missing inline.
+
+	* mln/fun/p2b/chess.hh,
+	* mln/fun/p2v/iota.hh: remove global variables.
+
+	* mln/fun/v2v/rgb_to_hsi.hh: Split interface and implementation.
+
+	* mln/geom/chamfer.hh: Fix compilation issue.
+
+	* mln/make/win_chamfer.hh: Move implementation between
+	MLN_INCLUDE_ONLY guards.
+
+	* tests/Makefile.am,
+	* tests/global_vars1.cc,
+	* tests/global_vars2.cc: Add a new test to check whether global
+	variables are declared correctly or not.
+
+	* tests/border/find_full.cc,
+	* tests/border/get_full.cc,
+	* tests/convert/to_image.cc,
+	* tests/core/image/cast_image.cc,
+	* tests/core/image/image_if.cc,
+	* tests/core/site_set/pset_if.cc,
+	* tests/level/fill_with_image.cc,
+	* tests/level/fill_with_value.cc,
+	* tests/level/paste.cc,
+	* tests/level/transform.cc,
+	* tests/trait/image/images.cc: update according the new use of
+	p2v::iota and p2b::chess.
+
+	* tests/pw/image.cc: Make it a real test.
+
+	* mln/level/compute.hh: Fix ambiguity.
+
+	* tests/border/get.cc,
+	* tests/border/resize_image_if.cc: Fix tests.
+	
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Specialize accu tranform for fastest images.

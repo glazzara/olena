@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/image_if.cc
- *
- * \brief Tests on mln::image_if.
- */
+/// \file tests/core/image/image_if.cc
+///
+/// Tests on mln::image_if.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image_if.hh>
@@ -42,13 +42,13 @@ int main()
 
   typedef image2d<int> I;
   I ima(8, 8);
-  // debug::println(ima | fun::p2b::chess);
+  // debug::println(ima | fun::p2b::chess());
   // FIXME: is this line corret?
-  ///mln_assertion((ima | fun::p2b::chess).nsites() == 32);
+  ///mln_assertion((ima | fun::p2b::chess()).nsites() == 32);
 
   {
-    typedef image_if<I, fun::p2b::chess_t> II;
-    II ima_ref = ima | fun::p2b::chess;
+    typedef image_if<I, fun::p2b::chess> II;
+    II ima_ref = ima | fun::p2b::chess();
     debug::println(ima_ref);
     {
       II ima_ref_;

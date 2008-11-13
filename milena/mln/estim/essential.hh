@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ESTIM_ESSENTIAL_HH
 # define MLN_ESTIM_ESSENTIAL_HH
 
-/*! \file mln/estim/essential.hh
- *
- * \brief File that includes essential estimation materials.
- */
+/// \file mln/estim/essential.hh
+///
+/// File that includes essential estimation materials.
 
 # include <mln/estim/all.hh>
 

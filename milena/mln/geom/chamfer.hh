@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_CHAMFER_HH
 # define MLN_GEOM_CHAMFER_HH
 
-/*! \file mln/geom/chamfer.hh
- *
- * \brief Connected component chamfer of the image objects.
- */
+/// \file mln/geom/chamfer.hh
+///
+/// Connected component chamfer of the image objects.
 
 # include <mln/level/fill.hh>
 # include <mln/core/alias/w_window2d_int.hh>
@@ -53,7 +53,7 @@ namespace mln
 
     /// Apply chamfer algorithm to a binary image.
     template <typename I, typename W>
-    mln_ch_value( I, unsigned )
+    mln_ch_value(I, unsigned)
       chamfer(const Image<I>& input_, const W& w_win_,
 	      unsigned max = mln_max(unsigned));
 
@@ -131,9 +131,6 @@ namespace mln
 
     } // end of namespace mln::geom::impl
 
-#endif // !MLN_INCLUDE_ONLY
-
-
     // Facade.
 
     template <typename I, typename W>
@@ -141,9 +138,10 @@ namespace mln
       chamfer(const Image<I>& input_, const W& w_win_,
 	      unsigned max = mln_max(unsigned))
     {
-      return impl::chamfer_(exact (input_), exact(w_win_), max);
+      return impl::chamfer_t<I, W>(exact (input_), exact(w_win_), max);
     }
 
+#endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::geom
 

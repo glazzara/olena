@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,20 +26,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pw/image.cc
- *
- * \brief Tests on mln::pw::image.
- */
+/// \file tests/pw/image.cc
+///
+/// Tests on mln::pw::image.
 
 #include <mln/fun/p2b/chess.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/pw/image.hh>
-#include <mln/debug/println.hh>
+#include <mln/core/var.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  debug::println( fun::p2b::chess | make::box2d(8, 8) );
+  mln_VAR(ima, fun::p2b::chess() | make::box2d(8, 8));
+  mln_piter_(ima_t) p(ima.domain());
+  unsigned i = 0;
+  for_all(p)
+  {
+    if (p.row() % 2)
+      mln_assertion(ima(p) == (p.col() % 2));
+    else
+      mln_assertion(ima(p) == !(p.col() % 2));
+    ++i;
+  }
+  mln_assertion(i == 64);
 }

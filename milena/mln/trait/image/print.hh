@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TRAIT_IMAGE_PRINT_HH
 # define MLN_TRAIT_IMAGE_PRINT_HH
 
-/*! \file mln/trait/image/print.hh
- *
- * \brief Print the collection of traits for an image type.
- */
+/// \file mln/trait/image/print.hh
+///
+/// Print the collection of traits for an image type.
 
 # include <iostream>
 # include <mln/trait/images.hh>

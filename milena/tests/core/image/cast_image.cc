@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/cast_image.cc
- *
- * \brief Tests on mln::cast_image.
- */
+/// \file tests/core/image/cast_image.cc
+///
+/// Tests on mln::cast_image.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/fun/p2b/chess.hh>
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
 
   image2d<bool> ima(8, 8);
-  level::fill(ima, fun::p2b::chess);
+  level::fill(ima, fun::p2b::chess());
   debug::println(ima);
   debug::println( cast_image<int>(ima) );
 }

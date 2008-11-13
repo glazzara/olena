@@ -53,7 +53,7 @@ int main()
 	       0, 1, 0,   // < center point
 	       1, 0, 1 };
 
-  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess, 0);
+  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess(), 0);
   window2d win_X = convert::to<window2d>(X);
   mln_assertion(convert::to_image(win_X) == ima_X);
 }

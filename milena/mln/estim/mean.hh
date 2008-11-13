@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ESTIM_MEAN_HH
 # define MLN_ESTIM_MEAN_HH
 
-/*! \file mln/estim/mean.hh
- *
- * \brief Compute the mean pixel value.
- */
+/// \file mln/estim/mean.hh
+///
+/// Compute the mean pixel value.
 
 # include <mln/accu/mean.hh>
 # include <mln/level/compute.hh>
@@ -43,8 +43,8 @@ namespace mln
   namespace estim
   {
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
+    /// Compute the mean value of the pixels of image \p input.
+    /*!
      * \param[in] input The image.
      * \return The mean value.
      */
@@ -52,8 +52,8 @@ namespace mln
     mln_sum(mln_value(I)) mean(const Image<I>& input);
 
 
-    /*! \brief Compute the mean value of the pixels of image \p input.
-     *
+    /// Compute the mean value of the pixels of image \p input.
+    /*!
      * \param[in] input The image.
      * \param[out] result The mean value.
      *

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_SNAKE_VERT_HH
 # define MLN_CANVAS_BROWSING_SNAKE_VERT_HH
 
-/*! \file mln/canvas/browsing/snake_vert.hh
- *
- * \brief Browsing in a snake-way, forward.
- */
+/// \file mln/canvas/browsing/snake_vert.hh
+///
+/// Browsing in a snake-way, forward.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/geom/size2d.hh>
@@ -46,9 +46,8 @@ namespace mln
     namespace browsing
     {
 
+      /// Browsing in a snake-way, forward.
       /*!
-       * \brief Browsing in a snake-way, forward.
-       *
        * This canvas browse all the point of an image 'input' like
        * this :
        *
@@ -88,13 +87,13 @@ namespace mln
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      snake_vert;
-
-
+      extern const snake_vert_t snake_vert;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const snake_vert_t snake_vert;
 
       template <typename F>
       inline
@@ -102,8 +101,8 @@ namespace mln
       snake_vert_t::operator()(F& f) const
       {
 	// Fixme: check the dimension of the input
-// 	mlc_equal(mln_trait_image_dimension(I)(),
-// 		  trait::image::dimension::two_d)::check();
+//	mlc_equal(mln_trait_image_dimension(I)(),
+//		  trait::image::dimension::two_d)::check();
 	trace::entering("canvas::browsing::snake_vert");
 	mln_precondition(f.input.has_data());
 	int
@@ -116,36 +115,28 @@ namespace mln
 	def::coord& col = f.p.col();
 
 	// initialization
-	trace::entering("canvas::browsing::snake_vert::init");
 	f.init();
-	trace::exiting("canvas::browsing::snake_vert::init");
 
 	bool down = true;
 	for (col = min_col; col <= max_col; ++col)
 	  // FIXME: Add "if (f.input.has(p))"?
 	  {
 	    // go fwd
-	    trace::entering("canvas::browsing::snake_vert::init");
 	    f.fwd();
-	    trace::exiting("canvas::browsing::snake_vert::init");
 
 	    if (down)
 	      // browse col down.
 	      while (row < max_row)
 		{
 		  ++row;
-		  trace::entering("canvas::browsing::snake_vert::down");
 		  f.down();
-		  trace::exiting("canvas::browsing::snake_vert::down");
 		}
 	    else
 	      // browse col up.
 	      while (row > min_row)
 		{
 		  --row;
-		  trace::entering("canvas::browsing::snake_vert::up");
 		  f.up();
-		  trace::exiting("canvas::browsing::snake_vert::up");
 		}
 
 	    // change browsing

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_TRAIT_OP_ORD_HH
 # define MLN_TRAIT_OP_ORD_HH
 
-/*! \file mln/trait/op/ord.hh
- *
- * \brief Declaration of an ordering operator trait.
- */
+/// \file mln/trait/op/ord.hh
+///
+/// Declaration of an ordering operator trait.
 
 # include <mln/trait/op/decl.hh>
 
@@ -62,7 +61,6 @@ namespace mln
       };
 
     } // end of namespace mln::trait::op
-    
 
 
     template <template <class> class Category, typename T>
@@ -77,14 +75,14 @@ namespace mln
 
   namespace internal
   {
-    
+
     template <typename T>
     struct ord_less
     {
       bool strict(const T& lhs, const T& rhs) const;
       bool weak(const T& lhs, const T& rhs) const;
     };
-    
+
     template <typename T>
     struct ord_vec
     {
