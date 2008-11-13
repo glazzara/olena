@@ -1,3 +1,12 @@
+2008-11-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix wrong includes and missing namespaces.
+
+	* mln/linear/all.hh,
+	* mln/make/essential.hh: Fix wrong includes.
+
+	* mln/make/win_chamfer.hh: fix missing namespaces.
+
 2008-11-12  Roland Levillain  <roland@lrde.epita.fr>
 
 	Add a saving routine for rgb8 (color) 2-complex images.

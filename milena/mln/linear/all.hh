@@ -58,11 +58,12 @@ namespace mln
 }
 
 
+# include <mln/linear/ch_convolve.hh>
 # include <mln/linear/convolve.hh>
+# include <mln/linear/convolve_2x1d.hh>
 # include <mln/linear/convolve_directional.hh>
 # include <mln/linear/gaussian.hh>
 # include <mln/linear/lap.hh>
-# include <mln/linear/line_x2_convolve.hh>
 # include <mln/linear/log.hh>
 //# include <mln/linear/sobel.hh>
 //# include <mln/linear/local/convolve.hh>
