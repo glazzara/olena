@@ -31,6 +31,8 @@
 /// \file mln/level/transform_inplace.hh
 ///
 /// Transform inplace the contents of an image through a function.
+///
+/// \todo Take into account more properties; see level/transform.hh.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
@@ -75,6 +77,9 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    // Tests.
+
     namespace internal
     {
 
@@ -116,7 +121,7 @@ namespace mln
 	mln_precondition(exact(aux).has_data());
 	mln_precondition(exact(aux).domain() == exact(ima).domain());
 
-	// Avoid a warning.
+	// Avoid warnings.
 	(void) ima;
 	(void) aux;
         (void) f;
@@ -128,13 +133,12 @@ namespace mln
     namespace impl
     {
 
+      // Generic implementations.
 
       namespace generic
       {
 
-        // Generic implementation.
 	template <typename I, typename F>
-	inline
         void
         transform_inplace(Image<I>& ima_, const Function_v2v<F>& f_)
 	{
@@ -155,10 +159,7 @@ namespace mln
 	  trace::exiting("level::impl::generic::transform_inplace");
 	}
 
-
-        // Generic implementation.
 	template <typename I1, typename I2, typename F>
-	inline
         void
 	transform_inplace(Image<I1>& ima_, const Image<I2>& aux_,
 			  const Function_vv2v<F>& f_)
@@ -184,20 +185,131 @@ namespace mln
       } // end of namespace mln::level::impl::generic
 
 
+      template <typename I, typename F>
+      void
+      transform_inplace_fastest(Image<I>& ima_, const Function_v2v<F>& f_)
+      {
+	trace::entering("level::impl::transform_inplace_fastest");
+
+	mlc_is(mln_trait_image_pw_io(I),
+	       trait::image::pw_io::read_write)::check();
+
+	I& ima = exact(ima_);
+	const F& f = exact(f_);
+	
+	level::internal::transform_inplace_tests(ima, f);
+	
+	mln_pixter(I) p(ima);
+	for_all(p)
+	  p.val() = f(p.val());
+	
+	trace::exiting("level::impl::transform_inplace_fastest");
+      }
+
+
+      template <typename I1, typename I2, typename F>
+      void
+      transform_inplace_fastest(Image<I1>& ima_, const Image<I2>& aux_,
+				const Function_vv2v<F>& f_)
+      {
+	trace::entering("level::impl::transform_inplace_fastest");
+
+	mlc_is(mln_trait_image_pw_io(I1),
+	       trait::image::pw_io::read_write)::check();
+
+	I1&       ima = exact(ima_);
+	const I2& aux = exact(aux_);
+	const F&  f   = exact(f_);
+	
+	level::internal::transform_inplace_tests(ima, aux, f);
+	
+	mln_pixter(I1) pi(ima);
+	mln_pixter(const I2) pa(aux);
+	for_all_2(pi, pa)
+	  pi.val() = f(pi.val(), pa.val());
+	
+	trace::exiting("level::impl::transform_inplace_fastest");
+      }
+
+
     } // end of namespace mln::level::impl
+
+
+
+    // Dispatch.
+
+    namespace internal
+    {
+
+      // (ima, f) version.
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::speed::any,
+				 Image<I>& ima, const Function_v2v<F>& f)
+      {
+	level::impl::generic::transform_inplace(ima, f);
+      }
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::speed::fastest,
+				 Image<I>& ima, const Function_v2v<F>& f)
+      {
+	level::impl::transform_inplace_fastest(ima, f);
+      }
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(Image<I>& ima, const Function_v2v<F>& f)
+      {
+	transform_inplace_dispatch(mln_trait_image_speed(I)(),
+				   ima, f);
+      }
+
+      // (ima, aux, f) version.
+
+      template <typename I1, typename I2, typename F>
+      void
+      transform_inplace_dispatch(trait::image::speed::any,
+				 trait::image::speed::any,
+				 Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+      {
+	level::impl::generic::transform_inplace(ima, aux, f);
+      }
+
+      template <typename I1, typename I2, typename F>
+      void
+      transform_inplace_dispatch(trait::image::speed::fastest,
+				 trait::image::speed::fastest,
+				 Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+      {
+	level::impl::transform_inplace_fastest(ima, aux, f);
+      }
+
+      template <typename I1, typename I2, typename F>
+      void
+      transform_inplace_dispatch(Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+      {
+	transform_inplace_dispatch(mln_trait_image_speed(I1)(),
+				   mln_trait_image_speed(I2)(),
+				   ima, aux, f);
+      }
+
+    } // end of namespace mln::level::internal
+
 
 
     // Facades.
 
     template <typename I, typename F>
-    inline
     void
     transform_inplace(Image<I>& ima, const Function_v2v<F>& f)
     {
       trace::entering("level::transform_inplace");
 
-      level::internal::transform_inplace_tests(ima, f);
-      impl::generic::transform_inplace(ima, f);
+      internal::transform_inplace_tests(ima, f);
+      internal::transform_inplace_dispatch(ima, f);
 
       trace::exiting("level::transform_inplace");
     }
@@ -209,8 +321,8 @@ namespace mln
     {
       trace::entering("level::transform_inplace");
 
-      level::internal::transform_inplace_tests(ima, aux, f);
-      impl::generic::transform_inplace(ima, aux, f);
+      internal::transform_inplace_tests(ima, aux, f);
+      internal::transform_inplace_dispatch(ima, aux, f);
 
       trace::exiting("level::transform_inplace");
     }

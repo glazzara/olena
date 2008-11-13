@@ -89,7 +89,6 @@ namespace mln
     {
 
       template <typename I, typename F>
-      inline
       void transform_tests(const Image<I>& input,
                            const Function_v2v<F>& f)
       {
@@ -103,9 +102,7 @@ namespace mln
       }
 
       template <typename I1, typename I2, typename F>
-      inline
-      void transform_tests(const Image<I1>& input1,
-			   const Image<I2>& input2,
+      void transform_tests(const Image<I1>& input1, const Image<I2>& input2,
                            const Function_vv2v<F>& f)
       {
         // Dynamic tests.
@@ -135,7 +132,6 @@ namespace mln
       {
 
 	template <typename I, typename F>
-	inline
         mln_ch_value(I, mln_result(F))
         transform(const Image<I>& input_, const Function_v2v<F>& f_)
 	{
@@ -162,7 +158,6 @@ namespace mln
 
 
 	template <typename I1, typename I2, typename F>
-	inline
         mln_ch_value(I1, mln_result(F))
 	  transform(const Image<I1>& input1_,
 		    const Image<I2>& input2_,
@@ -193,7 +188,9 @@ namespace mln
     } // end of namespace mln::level::impl
 
 
+
     // Facades.
+
 
     template <typename I, typename F>
     inline
@@ -205,17 +202,17 @@ namespace mln
       internal::transform_tests(input, f);
 
       mln_ch_value(I, mln_result(F)) output;
-      output = impl::internal::transform_dispatch(exact(input), exact(f));
+      output = internal::transform_dispatch(input, f);
 
       trace::exiting("level::transform");
       return output;
     }
 
+
     template <typename I1, typename I2, typename F>
     inline
     mln_ch_value(I1, mln_result(F))
-    transform(const Image<I1>& input1,
-	      const Image<I2>& input2,
+    transform(const Image<I1>& input1, const Image<I2>& input2,
 	      const Function_vv2v<F>& f)
     {
       trace::entering("level::transform");
@@ -223,7 +220,7 @@ namespace mln
       internal::transform_tests(input1, input2, f);
 
       mln_ch_value(I1, mln_result(F)) output;
-      output = impl::generic::transform(input1, input2, f);
+      output = internal::transform_dispatch(input1, input2, f);
 
       trace::exiting("level::transform");
       return output;

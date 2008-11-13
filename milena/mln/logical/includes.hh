@@ -25,32 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/transform_inplace.cc
-///
-/// Tests on mln::level::transform_inplace
+#ifndef MLN_LOGICAL_INCLUDES_HH
+# define MLN_LOGICAL_INCLUDES_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/routine/clone.hh>
-#include <mln/fun/v2v/inc.hh>
-#include <mln/fun/v2v/dec.hh>
-#include <mln/debug/iota.hh>
+/// \file mln/logical/includes.hh
 
-#include <mln/level/transform_inplace.hh>
-#include <mln/level/compare.hh>
+
+# include <mln/core/concept/image.hh>
+# include <mln/level/transform.hh>
+# include <mln/level/transform_inplace.hh>
+# include <mln/fun/vv2v/macros.hh>
 
 
 
-int main()
+# ifndef MLN_INCLUDE_ONLY
+
+namespace mln
 {
-  using namespace mln;
-  const unsigned size = 50;
 
-  image2d<int> ref(size, size);
-  debug::iota(ref);
+  namespace logical
+  {
 
-  image2d<int> ima = clone(ref);
-  level::transform_inplace(ima, fun::v2v::inc<int>());
-  level::transform_inplace(ima, fun::v2v::dec<int>());
+    namespace internal
+    {
 
-  mln_assertion(ima == ref);
-}
+      template <typename L, typename R>
+      inline
+      void
+      tests(const Image<L>& lhs_, const Image<R>& rhs_)
+      {
+	const L& lhs = exact(lhs_);
+	const R& rhs = exact(rhs_);
+
+	mln_precondition(lhs.has_data());
+	mln_precondition(rhs.has_data());
+	mln_precondition(rhs.domain() == lhs.domain());
+
+	(void) lhs;
+	(void) rhs;
+      }
+      
+    } // end of namespace mln::logical::internal
+
+  } // end of namespace mln::logical
+
+} // end of namespace mln
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+#endif // ! MLN_LOGICAL_INCLUDES_HH

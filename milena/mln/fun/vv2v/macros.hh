@@ -25,32 +25,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/transform_inplace.cc
+#ifndef MLN_FUN_VV2V_MACROS_HH
+# define MLN_FUN_VV2V_MACROS_HH
+
+/// \file mln/fun/vv2v/macros.hh
 ///
-/// Tests on mln::level::transform_inplace
-
-#include <mln/core/image/image2d.hh>
-#include <mln/core/routine/clone.hh>
-#include <mln/fun/v2v/inc.hh>
-#include <mln/fun/v2v/dec.hh>
-#include <mln/debug/iota.hh>
-
-#include <mln/level/transform_inplace.hh>
-#include <mln/level/compare.hh>
+/// Define a bunch of macros related to a binary function and a couple
+/// of images.
 
 
+#define mln_fun_vv2v(F, L, R)  mln::fun::vv2v::F< mln_value(L), mln_value(R) >
 
-int main()
-{
-  using namespace mln;
-  const unsigned size = 50;
 
-  image2d<int> ref(size, size);
-  debug::iota(ref);
+#define mln_fun_vv2v_result(F, L, R)  typename mln_fun_vv2v(F, L, R)::result
 
-  image2d<int> ima = clone(ref);
-  level::transform_inplace(ima, fun::v2v::inc<int>());
-  level::transform_inplace(ima, fun::v2v::dec<int>());
 
-  mln_assertion(ima == ref);
-}
+#define mln_ch_fun_vv2v(F, L, R)						\
+  typename mln::trait::ch_value< L,						\
+                                 typename mln_fun_vv2v(F, L, R)::result >::ret
+
+
+#endif // ! MLN_FUN_VV2V_MACROS_HH

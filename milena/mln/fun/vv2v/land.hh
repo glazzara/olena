@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,68 +25,52 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LOGICAL_AND_SPE_HH
-# define MLN_LOGICAL_AND_SPE_HH
+#ifndef MLN_FUN_VV2V_LAND_HH
+# define MLN_FUN_VV2V_LAND_HH
 
-/*! \file mln/logical/and.spe.hh
- *
- * \brief Specializations for mln::logical::and.
- *
- */
+/// \file mln/fun/vv2v/land.hh
+///
+/// Functor that computes "logical and" between two values.
 
-# ifndef MLN_LOGICAL_AND_HH
-#  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LOGICAL_AND_HH
+# include <mln/core/concept/function.hh>
+# include <mln/trait/op/and.hh>
 
-# include <mln/core/concept/image.hh>
-
-# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
 
-  namespace logical
+  namespace fun
   {
 
-    namespace impl
+    namespace vv2v
     {
 
-      namespace generic
+      /// Functor computing logical-and between two values.
+      template <typename L, typename R = L>
+      struct land : public Function_vv2v< land<L,R> >
       {
-	template <typename L, typename R, typename O>
-	void and__(const L& lhs, const R& rhs, O& output);
-      }
+	typedef mln_trait_op_and(L, R) result;
+	result operator()(const L& v1, const R& v2) const;
+      };
 
-      template <typename L, typename R, typename O>
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename L, typename R>
       inline
-      void and__(trait::image::speed::any, const L& lhs,
-		 trait::image::speed::any, const R& rhs, O& output)
+      typename land<L,R>::result
+      land<L,R>::operator()(const L& v1, const R& v2) const
       {
-	generic::and__(lhs, rhs, output);
+	return v1 && v2;
       }
-
-      template <typename L, typename R, typename O>
-      inline
-      void and__(trait::image::speed::fastest, const L& lhs,
-		 trait::image::speed::fastest, const R& rhs, O& output)
-      {
-	trace::entering("logical::impl::and__");
-
-	mln_pixter(const L) lp(lhs);
-	mln_pixter(const R) rp(rhs);
-	mln_pixter(O)       op(output);
-	for_all_3(lp, rp, op)
-	  op.val() = lp.val() && rp.val();
-
-	trace::exiting("logical::impl::and__");
-      }
-
-    } // end of namespace mln::logical::impl
-
-  } // end of namespace mln::logical
-
-} // end of namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-#endif // ! MLN_LOGICAL_AND_SPE_HH
+    } // end of namespace mln::fun::vv2v
+
+  } // end of namespace mln::fun
+
+} // end of namespace mln
+
+
+#endif // ! MLN_FUN_VV2V_LAND_HH

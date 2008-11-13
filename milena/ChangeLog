@@ -1,5 +1,29 @@
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make logical and use level transform.
+
+	* mln/level/transform.spe.hh: Layout.
+	(transform_tests): Fix sig.
+	(transform_fastest): New impl.
+	(transform_dispatch): Move out of impl and augment.
+	* mln/level/transform.hh: Call dispatch.
+	* mln/level/transform_inplace.hh (todo): New.
+	(transform_inplace_fastest): New impl.
+	(transform_inplace_dispatch): New.
+	* tests/level/transform_inplace.cc: Fix warning.
+	* mln/fun/vv2v/min.hh: Add second parm with default.
+	* mln/fun/vv2v/macros.hh: New.
+	* mln/fun/vv2v/land.hh: New.
+	* mln/fun/vv2v/all.hh: Update.
+	* mln/logical/and.hh: Fix return type in sig.
+	(and__): Remove.
+	Use level transform.
+	* mln/logical/and.spe.hh: Remove.
+	* mln/logical/includes.hh: New.
+	* mln/logical/all.hh: Update.
+
+2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Specialize accu tranform for fastest images.
 
 	* mln/accu/snake_2d.hh (todo): New.
