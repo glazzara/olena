@@ -97,38 +97,6 @@ namespace mln
 
       template <typename I, typename W>
       mln_concrete(I)
-      erosion_on_function_fastest(const Image<I>& input_, const Window<W>& win_)
-      {
-	trace::entering("morpho::impl::erosion_on_function_fastest");
-
-	typedef mln_concrete(I) O;
-	const I& input = exact(input_);
-	const W& win = exact(win_);
-
-	extension::adjust_fill(input, win, mln_max(mln_value(I)));
-
-	O output;
-	initialize(output, input);
-
-	mln_pixter(const I) p(input);
-	mln_pixter(O) o(output);
-	mln_qixter(const I, W) q(p, win);
-	accu::min<mln_value(I)> min;
-	for_all_2(p, o)
-	{
-	  min.init();
-	  for_all(q)
-	    min.take(q.val());
-	  o.val() = min.to_result();
-	}
-
-	trace::exiting("morpho::impl::erosion_on_function_fastest");
-
-	return output;
-      }
-
-      template <typename I, typename W>
-      mln_concrete(I)
       erosion_on_set_fastest(const Image<I>& input_, const Window<W>& win_)
       {
 	trace::entering("morpho::impl::erosion_on_set_fastest");
@@ -1168,32 +1136,6 @@ namespace mln
 
     namespace internal
     {
-
-      // dispatch for the generic version
-
-      // FIXME: De-activate because when the window is multiple, the access
-      // win.dp(i), used in dpoints_pixter, is impossible.
-
-      //       template <typename I, typename W>
-      //       mln_concrete(I)
-      //       erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
-      // 				   trait::image::speed::fastest,
-      // 				   const I& input, const W& win)
-      //       {
-      // 	if (win.is_centered())
-      // 	  return impl::erosion_on_set_centered_fastest(input, win);
-      // 	else
-      // 	  return impl::erosion_on_set_fastest(input, win);
-      //       }
-
-      //       template <typename I, typename W>
-      //       mln_concrete(I)
-      //       erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
-      // 				   trait::image::speed::fastest,
-      // 				   const I& input, const W& win)
-      //       {
-      // 	return impl::erosion_on_function_fastest(input, win);
-      //       }
 
       template <typename I, typename W>
       mln_concrete(I)

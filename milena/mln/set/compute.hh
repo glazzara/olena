@@ -30,9 +30,12 @@
 
 /// \file mln/set/compute.hh
 ///
-/// Compute an accumulator on a site set.
+/// Compute an accumulator on a site set or a binary image.
+///
+/// \todo Add a version with a binary image as input.
 
 # include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/site_set.hh>
 
 

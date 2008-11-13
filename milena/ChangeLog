@@ -1,3 +1,15 @@
+2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make morpho erosion generic impl rely on accu transform.
+
+	* mln/set/compute.hh (todo): New.
+	* mln/morpho/erosion.hh
+	(erosion_on_function): Rely on accu transform.
+	* mln/morpho/erosion.spe.hh
+	(erosion_on_function_fastest) Remove; useless since
+	accu::transform is specialized for fastest input.
+	(dispatch for the generic version): Remove; useless.
+
 2008-11-13  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update dispatch of level::transform_inplace routine.
