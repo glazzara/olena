@@ -18,7 +18,8 @@
                   |
                   + -- computed
 
-=> Definition: This property indicates if the image value are stored in memory.
+=> Definition: This property indicates if the image value. are stored in
+memory.
 
 - direct: Images store all their values in memory, we can take a reference
 of the values.

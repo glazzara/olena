@@ -1,3 +1,12 @@
+2008-11-13  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update dispatch of level::transform_inplace routine.
+
+	* tests/level/transform_inplace.cc: Add new tests.
+	* doc/technical/designs/properties/values.txt: Fix typos.
+	* mln/level/transform.spe.hh: Minor changes.
+	* mln/level/transform_inplace.hh: Update routine disptach.
+
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add set compute with an accumulator.

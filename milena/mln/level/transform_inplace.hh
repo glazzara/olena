@@ -36,6 +36,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
+# include <mln/value/set.hh>
+# include <mln/value/lut_vec.hh>
 
 
 namespace mln
@@ -184,6 +186,75 @@ namespace mln
 
       } // end of namespace mln::level::impl::generic
 
+      /// Specialized implementation
+
+      template <typename I, typename F>
+      void
+      transform_inplace_lowq(Image<I>& input_,
+                             const Function_v2v<F>& f_)
+      {
+	trace::entering("level::impl::transform_inplace_lowq");
+
+        mlc_is(mln_trait_image_pw_io(I),
+               trait::image::pw_io::read_write)::check();
+
+	I& input  = exact(input_);
+	const F& f      = exact(f_);
+
+        level::internal::transform_inplace_tests(input, f);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.values_eligible(), f);
+
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  input(p) = lut(input(p));
+
+	trace::exiting("level::impl::transform_inplace_lowq");
+      }
+
+      template <typename I, typename F>
+      void
+      transform_inplace_taken(Image<I>& input_,
+                              const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_inplace_taken");
+
+        mlc_is(mln_trait_image_pw_io(I),
+               trait::image::pw_io::read_write)::check();
+
+	I& input  = exact(input_);
+	const F& f      = exact(f_);
+
+        level::internal::transform_inplace_tests(input, f);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.taken_values(), f);
+
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  input(p) = lut(input(p));
+
+	trace::exiting("level::impl::transform_inplace_taken");
+      }
+
+
+      template <typename I, typename F>
+      void
+      transform_inplace_singleton(Image<I>& input_,
+                                  const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_inplace_singleton");
+
+	I& input  = exact(input_);
+	const F& f      = exact(f_);
+
+        level::internal::transform_inplace_tests(input, f);
+
+        input.val() = f(input.val());
+
+	trace::exiting("level::impl::transform_inplace_singleton");
+      }
 
       template <typename I, typename F>
       void
@@ -191,19 +262,39 @@ namespace mln
       {
 	trace::entering("level::impl::transform_inplace_fastest");
 
-	mlc_is(mln_trait_image_pw_io(I),
-	       trait::image::pw_io::read_write)::check();
-
 	I& ima = exact(ima_);
 	const F& f = exact(f_);
-	
+
 	level::internal::transform_inplace_tests(ima, f);
-	
+
 	mln_pixter(I) p(ima);
 	for_all(p)
 	  p.val() = f(p.val());
-	
+
 	trace::exiting("level::impl::transform_inplace_fastest");
+      }
+
+
+      template <typename I, typename F>
+      void
+      transform_inplace_fastest_lowq(Image<I>& input_,
+                                     const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_inplace_fastest_lowq");
+
+        I& input = exact(input_);
+	const F& f     = exact(f_);
+
+        level::internal::transform_inplace_tests(input, f);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.values_eligible(), f);
+
+        mln_pixter(I) pi(input);
+        for_all(pi)
+          pi.val() = lut(pi.val());
+
+	trace::exiting("level::impl::transform_inplace_fastest_lowq");
       }
 
 
@@ -220,14 +311,14 @@ namespace mln
 	I1&       ima = exact(ima_);
 	const I2& aux = exact(aux_);
 	const F&  f   = exact(f_);
-	
+
 	level::internal::transform_inplace_tests(ima, aux, f);
-	
+
 	mln_pixter(I1) pi(ima);
 	mln_pixter(const I2) pa(aux);
 	for_all_2(pi, pa)
 	  pi.val() = f(pi.val(), pa.val());
-	
+
 	trace::exiting("level::impl::transform_inplace_fastest");
       }
 
@@ -243,55 +334,137 @@ namespace mln
 
       // (ima, f) version.
 
+      /// Dispatch on quantization
       template <typename I, typename F>
       void
-      transform_inplace_dispatch(trait::image::speed::any,
-				 Image<I>& ima, const Function_v2v<F>& f)
+      transform_inplace_dispatch(trait::image::vw_set::any,
+                                 trait::image::quant::any,
+                                 Image<I>& ima, const Function_v2v<F>& f)
       {
-	level::impl::generic::transform_inplace(ima, f);
+        level::impl::generic::transform_inplace(ima, f);
       }
 
       template <typename I, typename F>
       void
-      transform_inplace_dispatch(trait::image::speed::fastest,
-				 Image<I>& ima, const Function_v2v<F>& f)
+      transform_inplace_dispatch(trait::image::vw_set::uni,
+                                 trait::image::quant::any,
+                                 Image<I>& ima, const Function_v2v<F>& f)
       {
-	level::impl::transform_inplace_fastest(ima, f);
+        level::impl::transform_inplace_taken(ima, f);
       }
 
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::vw_set::any,
+                                 trait::image::quant::low,
+                                 Image<I>& ima, const Function_v2v<F>& f)
+      {
+        level::impl::transform_inplace_lowq(ima, f);
+      }
+
+
+
+      /// Dispatch for fast image
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch_fast(trait::image::quant::any,
+                                      Image<I>& ima, const Function_v2v<F>& f)
+      {
+        level::impl::transform_inplace_fastest(ima, f);
+      }
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch_fast(trait::image::quant::low,
+                                      Image<I>& ima, const Function_v2v<F>& f)
+      {
+        level::impl::transform_inplace_fastest_lowq(ima, f);
+      }
+
+
+
+
+      /// Dispatch on value storage
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::value_storage::any,
+                                 trait::image::value_access::any,
+                                 Image<I>& ima, const Function_v2v<F>& f)
+      {
+        transform_inplace_dispatch(mln_trait_image_vw_set(I)(),
+                                   mln_trait_image_quant(I)(),
+                                   ima, f);
+      }
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::value_storage::singleton,
+                                 trait::image::value_access::any,
+                                 Image<I>& ima, const Function_v2v<F>& f)
+      {
+        level::impl::transform_inplace_singleton(ima, f);
+      }
+
+
+      template <typename I, typename F>
+      void
+      transform_inplace_dispatch(trait::image::value_storage::one_block,
+                                 trait::image::value_access::direct,
+                                 Image<I>& ima, const Function_v2v<F>& f)
+      {
+        transform_inplace_dispatch_fast(mln_trait_image_quant(I)(),
+                                        ima, f);
+      }
+
+
+
+
+      /// First dispatch
       template <typename I, typename F>
       void
       transform_inplace_dispatch(Image<I>& ima, const Function_v2v<F>& f)
       {
-	transform_inplace_dispatch(mln_trait_image_speed(I)(),
+	transform_inplace_dispatch(mln_trait_image_value_storage(I)(),
+                                   mln_trait_image_value_access(I)(),
 				   ima, f);
       }
+
+
 
       // (ima, aux, f) version.
 
       template <typename I1, typename I2, typename F>
       void
-      transform_inplace_dispatch(trait::image::speed::any,
+      transform_inplace_dispatch(trait::image::value_alignement::any,
+                                 trait::image::value_alignement::any,
+                                 trait::image::speed::any,
 				 trait::image::speed::any,
-				 Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+				 Image<I1>& ima, const Image<I2>& aux,
+                                 const Function_vv2v<F>& f)
       {
 	level::impl::generic::transform_inplace(ima, aux, f);
       }
 
       template <typename I1, typename I2, typename F>
       void
-      transform_inplace_dispatch(trait::image::speed::fastest,
+      transform_inplace_dispatch(trait::image::value_alignement::with_grid,
+                                 trait::image::value_alignement::with_grid,
+                                 trait::image::speed::fastest,
 				 trait::image::speed::fastest,
-				 Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+				 Image<I1>& ima, const Image<I2>& aux,
+                                 const Function_vv2v<F>& f)
       {
 	level::impl::transform_inplace_fastest(ima, aux, f);
       }
 
       template <typename I1, typename I2, typename F>
       void
-      transform_inplace_dispatch(Image<I1>& ima, const Image<I2>& aux, const Function_vv2v<F>& f)
+      transform_inplace_dispatch(Image<I1>& ima, const Image<I2>& aux,
+                                 const Function_vv2v<F>& f)
       {
-	transform_inplace_dispatch(mln_trait_image_speed(I1)(),
+	transform_inplace_dispatch(mln_trait_image_value_alignement(I1)(),
+                                   mln_trait_image_value_alignement(I2)(),
+                                   mln_trait_image_speed(I1)(),
 				   mln_trait_image_speed(I2)(),
 				   ima, aux, f);
       }
