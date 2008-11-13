@@ -32,8 +32,6 @@
 ///
 /// Transform an image by applying locally an accumulator on its
 /// values.
-///
-/// \todo Specialize for fastest images.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -49,15 +47,15 @@ namespace mln
 
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_result(A))
-    transform(const Image<I>& input,
-	      const Accumulator<A>& a,
-	      const Window<W>& win);
+      transform(const Image<I>& input, 
+		const Accumulator<A>& a,
+		const Window<W>& win);
 
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform(const Image<I>& input,
-	      const Meta_Accumulator<A>& a,
-	      const Window<W>& win);
+      transform(const Image<I>& input, 
+		const Meta_Accumulator<A>& a,
+		const Window<W>& win);
 
 
 
@@ -67,26 +65,28 @@ namespace mln
     namespace impl
     {
 
+      // Generic version.
+
       namespace generic
       {
-
+	
 	template <typename I, typename A, typename W>
 	mln_ch_value(I, mln_result(A))
-	transform(const Image<I>& input_,
-		  const Accumulator<A>& a_,
-		  const Window<W>& win_)
+	  transform(const Image<I>& input_,
+		    const Accumulator<A>& a_,
+		    const Window<W>& win_)
 	{
 	  trace::entering("accu::impl::generic::transform");
 
 	  const I& input = exact(input_);
-	  A a = exact(a_);
 	  const W& win   = exact(win_);
+	  A a = exact(a_);
 
 	  mln_precondition(input.has_data());
 	  // mln_precondition(win.is_valid());
 
 	  extension::adjust(input, win);
-
+	  
 	  mln_ch_value(I, mln_result(A)) output;
 	  initialize(output, input);
 
@@ -106,32 +106,85 @@ namespace mln
 
       } // end of namespace mln::accu::impl::generic
 
+	
+      // Fastest version.
+
+      template <typename I, typename A, typename W>
+      mln_ch_value(I, mln_result(A))
+      transform_fastest(const Image<I>& input_, const Accumulator<A>& a_, const Window<W>& win_)
+      {
+	trace::entering("accu::impl::transform_fastest");
+
+	const I& input = exact(input_);
+	const W& win   = exact(win_);
+	A a = exact(a_);
+
+	mln_precondition(input.has_data());
+	// mln_precondition(win.is_valid());
+
+	extension::adjust(input, win);
+	  
+	typedef mln_ch_value(I, mln_result(A)) O;
+	O output;
+	initialize(output, input);
+	mln_pixter(O) o(output);
+
+	mln_pixter(const I)    p(input);
+	mln_qixter(const I, W) q(p, win);
+	for_all_2(p, o)
+	  {
+	    a.init();
+	    for_all(q)
+	      a.take(q.val());
+	    o.val() = a.to_result();
+	  }
+
+	trace::exiting("accu::impl::transform_fastest");
+	return output;
+      }
+
+      
     } // end of namespace mln::accu::impl
 
+
+    // Dispatch.
 
     namespace internal
     {
 
       template <typename I, typename A, typename W>
-      inline
       mln_ch_value(I, mln_result(A))
-      transform_dispatch(const Image<I>& input,
-			 const Accumulator<A>& a,
-			 const Window<W>& win)
+      transform_dispatch(trait::image::speed::any,
+			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return impl::generic::transform(input, a, win);
+      }
+
+      template <typename I, typename A, typename W>
+      mln_ch_value(I, mln_result(A))
+      transform_dispatch(trait::image::speed::fastest,
+			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
+      {
+	return impl::transform_fastest(input, a, win);
+      }
+
+      template <typename I, typename A, typename W>
+      mln_ch_value(I, mln_result(A))
+      transform_dispatch(const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
+      {
+	return transform_dispatch(mln_trait_image_speed(I)(),
+				  input, a, win);
       }
 
     } // end of namespace mln::accu::internal
 
 
+    // Facades.
 
     template <typename I, typename A, typename W>
     inline
     mln_ch_value(I, mln_result(A))
-    transform(const Image<I>& input,
-	      const Accumulator<A>& a,
-	      const Window<W>& win)
+    transform(const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
     {
       trace::entering("accu::transform");
 
@@ -147,9 +200,7 @@ namespace mln
 
     template <typename I, typename A, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform(const Image<I>& input,
-	      const Meta_Accumulator<A>& a,
-	      const Window<W>& win)
+    transform(const Image<I>& input, const Meta_Accumulator<A>& a, const Window<W>& win)
     {
       trace::entering("accu::transform");
 

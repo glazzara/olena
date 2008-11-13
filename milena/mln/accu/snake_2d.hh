@@ -31,6 +31,8 @@
 /// \file mln/accu/snake_2d.hh
 ///
 /// Run an accumulator in a snake-like browsing.
+///
+/// \todo Make it n-D.
 
 #include <mln/core/concept/image.hh>
 #include <mln/core/concept/meta_accumulator.hh>

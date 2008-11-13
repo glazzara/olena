@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_CANVAS_BROWSING_SNAKE_GENERIC_HH
 # define MLN_CANVAS_BROWSING_SNAKE_GENERIC_HH
 
-/*! \file mln/canvas/browsing/snake_generic.hh
- *
- * \brief Browsing in a snake-way, forward.
- */
+/// \file mln/canvas/browsing/snake_generic.hh
+///
+/// Browsing in a snake-way, forward.
 
-# include <stack>
 # include <mln/core/concept/browsing.hh>
+
 
 namespace mln
 {
