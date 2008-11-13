@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,31 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_SET_ALL_HH
-# define MLN_SET_ALL_HH
-
-/// \file mln/set/all.hh
+/// \file tests/set/compute.cc
 ///
-/// File that includes all set-related routines.
+/// Tests on mln::set::compute.
+
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/accu/count.hh>
+#include <mln/set/compute.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of image processing routines related to pixel sets.
-  namespace set {}
-
+  p_set<point2d> s;
+  mln_assertion(set::compute(accu::meta::count(), s) == 0);
 }
-
-
-# include <mln/set/compute.hh>
-# include <mln/set/diff.hh>
-# include <mln/set/inter.hh>
-# include <mln/set/get.hh>
-# include <mln/set/has.hh>
-# include <mln/set/is_subset_of.hh>
-# include <mln/set/sym_diff.hh>
-# include <mln/set/uni.hh>
-
-
-#endif // ! MLN_SET_ALL_HH

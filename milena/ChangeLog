@@ -1,5 +1,16 @@
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add set compute with an accumulator.
+
+	* tests/set/compute.cc: New.
+	* tests/set/Makefile.am: Update.
+	* tests/set/diff.cc: Upgrade doc style.
+	Fix clumsy include.
+	* mln/set/compute.hh: New.
+	* mln/set/all.hh: Update.
+
+2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update unary logical not.
 
 	* mln/fun/v2b/lnot.hh: New.
