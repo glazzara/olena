@@ -1,3 +1,10 @@
+2008-11-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add a .cc file, correct some little things.
+
+	* markov/markov.cc: New.
+	* markov/markov.hh: .
+
 2008-11-14  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Pseudo-code of the canvas of the algorithm.
