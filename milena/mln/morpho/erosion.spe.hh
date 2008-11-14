@@ -161,6 +161,9 @@ namespace mln
 
 
 
+      // Line case.
+
+
       template <typename I, typename G, unsigned Dir, typename C>
       inline
       mln_concrete(I)
@@ -210,6 +213,10 @@ namespace mln
       }
 
 
+
+      // Particular windows.
+
+
       template <typename I>
       inline
       mln_concrete(I)
@@ -250,7 +257,6 @@ namespace mln
       }
 
 
-
       template <typename I, typename W>
       inline
       mln_concrete(I)
@@ -268,7 +274,6 @@ namespace mln
 	trace::exiting("morpho::impl:erosion_arbitrary_2d");
 	return output;
       }
-
 
 
       template <typename I, typename W>
@@ -290,350 +295,32 @@ namespace mln
       }
 
 
-
-      // Diagonal2d non fastest.
-      template <typename I_, typename W, typename A>
-      struct erosion_diagonal2d_functor
-      {
-	typedef I_ I;
-	typedef mln_deduce(I, psite, delta) dpsite;
-
-	const I& input;
-	const W& win;
-	mln_concrete(I) output;
-	A accu;
-
-	mln_psite(I) p;
-	enum { dim = I::site::dim };
-	unsigned dir;
-
-	window2d win_left, win_right;
-
-	mln_qiter(window2d) q_l, q_r;
-
-	erosion_diagonal2d_functor(const I& input, const W& win)
-	  : input(input),
-	    win(win),
-	    accu(),
-	    dir(dir),
-	    win_left(win::shift(win, dpsite(1, -1)) - win),
-	    win_right(win - win::shift(win, dpsite(1, -1))),
-	    q_l(win_left, p),
-	    q_r(win_right, p)
-	{
-	}
-
-	void init()
-	{
-	  extension::adjust_fill(input, win, accu);
-	  initialize(output, input);
-	}
-
-	void next()
-	{
-	  for_all(q_l)
-	    accu.untake(input(q_l));
-	  for_all(q_r)
-	    accu.take(input(q_r));
-	  output(p) = accu;
-	}
-
-
-	void init_diag()
-	{
-	  accu.init();
-	  p = p - dpsite(-1, 1);
-	  mln_qiter(W) q(win, p);
-	  for_all(q)
-	    accu.take(input(q));
-	  p = p + dpsite(-1, 1);
-	}
-
-	void final()
-	{
-	}
-
-      };
-
-      // Backdiagonal2d non fastest.
       template <typename I, typename W>
       inline
       mln_concrete(I)
-      erosion_diagonal2d(const Image<I>& input, const Window<W>& win)
+      erosion_diagonal_2d(const Image<I>& input, const Window<W>& win)
       {
-	trace::entering("morpho::impl:erosion_diagonal2d");
+	trace::entering("morpho::impl:erosion_diagonal_2d");
 
-	typedef mlc_is(mln_trait_image_kind(I),
-		       trait::image::kind::binary) is_binary;
+	typedef mlc_is(mln_trait_image_kind(I), trait::image::kind::binary) is_binary;
 	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+	A a;
 
-	typedef erosion_diagonal2d_functor<I, W, A> F;
-	F f(exact(input), exact(win));
-	canvas::browsing::diagonal2d(f);
+	extension::adjust_fill(input, geom::delta(win) + 1, a);
+	mln_concrete(I) output = accu::transform_diagonal(a, input, win);
 
-	trace::exiting("morpho::impl:erosion_diagonal2d");
-
-	return f.output;
+	trace::exiting("morpho::impl:erosion_diagonal_2d");
+	return output;
       }
 
 
-
-      template <typename I_, typename W, typename A>
-      struct erosion_backdiagonal2d_functor
-      {
-	typedef I_ I;
-	typedef mln_deduce(I, psite, delta) dpsite;
-
-	const I& input;
-	const W& win;
-	mln_concrete(I) output;
-	A accu;
-
-	mln_psite(I) p;
-	enum { dim = I::site::dim };
-	unsigned dir;
-
-	window2d win_left, win_right;
-
-	mln_qiter(window2d) q_l, q_r;
-
-	erosion_backdiagonal2d_functor(const I& input, const W& win)
-	  : input(input),
-	    win(win),
-	    accu(),
-	    dir(dir),
-	    win_left(win::shift(win, dpsite(-1, -1)) - win),
-	    win_right(win - win::shift(win, dpsite(-1, -1))),
-	    q_l(win_left, p),
-	    q_r(win_right, p)
-	{
-	}
-
-	void init()
-	{
-	  extension::adjust_fill(input, win, accu);
-	  initialize(output, input);
-	}
-
-	void next()
-	{
-	  for_all(q_l)
-	    accu.untake(input(q_l));
-	  for_all(q_r)
-	    accu.take(input(q_r));
-	  output(p) = accu;
-	}
-
-
-	void init_diag()
-	{
-	  accu.init();
-	  p = p - dpsite(1, 1);
-	  mln_qiter(W) q(win, p);
-	  for_all(q)
-	    accu.take(input(q));
-	  p = p + dpsite(1, 1);
-	}
-
-	void final()
-	{
-	}
-
-      };
-
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_backdiagonal2d(const Image<I>& input, const Window<W>& win)
-      {
-	trace::entering("morpho::impl:erosion_backdiagonal2d");
-
-	typedef mlc_is(mln_trait_image_kind(I),
-		       trait::image::kind::binary) is_binary;
-	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
-
-	typedef erosion_backdiagonal2d_functor<I, W, A> F;
-	F f(exact(input), exact(win));
-	canvas::browsing::backdiagonal2d(f);
-
-	trace::exiting("morpho::impl:erosion_backdiagonal2d");
-
-	return f.output;
-      }
-
-
-
-      // Diagonal2d fastest.
-      template <typename I_, typename W, typename A>
-      struct erosion_diagonal2d_fastest_functor
-      {
-	typedef I_ I;
-	typedef mln_deduce(I, psite, delta) dpsite;
-
-	const I& input;
-	const W& win;
-	mln_concrete(I) output;
-	A accu;
-
-	mln_psite(I) p;
-	enum { dim = I::site::dim };
-	unsigned dir;
-
-	window2d win_left, win_right;
-
-	mln_qixter(const I, window2d) q_l, q_r;
-
-	erosion_diagonal2d_fastest_functor(const I& input, const W& win)
-	  : input(input),
-	    win(win),
-	    accu(),
-	    dir(dir),
-	    win_left(win::shift(win, dpsite(1, -1)) - win),
-	    win_right(win - win::shift(win, dpsite(1, -1))),
-	    q_l(input, win_left, p),
-	    q_r(input, win_right, p)
-	{
-	}
-
-	void init()
-	{
-	  extension::adjust_fill(input, win, accu);
-	  initialize(output, input);
-	}
-
-	void next()
-	{
-	  for_all(q_l)
-	    accu.untake(q_l.val());
-	  for_all(q_r)
-	    accu.take(q_r.val());
-	  output(p) = accu;
-	}
-
-
-	void init_diag()
-	{
-	  accu.init();
-	  p = p - dpsite(-1, 1);
-	  mln_qixter(const I, W) q(input, win, p);
-	  for_all(q)
-	    accu.take(q.val());
-	  p = p + dpsite(-1, 1);
-	}
-
-	void final()
-	{
-	}
-
-      };
-
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_diagonal2d_fastest(const Image<I>& input, const Window<W>& win)
-      {
-	trace::entering("morpho::impl:erosion_diagonal2d_fastest");
-
-	typedef mlc_is(mln_trait_image_kind(I),
-		       trait::image::kind::binary) is_binary;
-	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
-
-	typedef erosion_diagonal2d_fastest_functor<I, W, A> F;
-	F f(exact(input), exact(win));
-	canvas::browsing::diagonal2d(f);
-
-	trace::exiting("morpho::impl:erosion_diagonal2d_fastest");
-
-	return f.output;
-      }
-
-
-
-      // Backdiagonal2d fastest.
-      template <typename I_, typename W, typename A>
-      struct erosion_backdiagonal2d_fastest_functor
-      {
-	typedef I_ I;
-	typedef mln_deduce(I, psite, delta) dpsite;
-
-	const I& input;
-	const W& win;
-	mln_concrete(I) output;
-	A accu;
-
-	mln_psite(I) p;
-	enum { dim = I::site::dim };
-	unsigned dir;
-
-	window2d win_left, win_right;
-
-	mln_qixter(const I, window2d) q_l, q_r;
-
-	erosion_backdiagonal2d_fastest_functor(const I& input, const W& win)
-	  : input(input),
-	    win(win),
-	    accu(),
-	    dir(dir),
-	    win_left(win::shift(win, dpsite(-1, -1)) - win),
-	    win_right(win - win::shift(win, dpsite(-1, -1))),
-	    q_l(input, win_left, p),
-	    q_r(input, win_right, p)
-	{
-	}
-
-	void init()
-	{
-	  extension::adjust_fill(input, win, accu);
-	  initialize(output, input);
-	}
-
-	void next()
-	{
-	  for_all(q_l)
-	    accu.untake(q_l.val());
-	  for_all(q_r)
-	    accu.take(q_r.val());
-	  output(p) = accu;
-	}
-
-
-	void init_diag()
-	{
-	  accu.init();
-	  p = p - dpsite(1, 1);
-	  mln_qixter(const I, W) q(input, win, p);
-	  for_all(q)
-	    accu.take(q.val());
-	  p = p + dpsite(1, 1);
-	}
-
-	void final()
-	{
-	}
-
-      };
-
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_backdiagonal2d_fastest(const Image<I>& input, const Window<W>& win)
-      {
-	trace::entering("morpho::impl:erosion_backdiagonal2d_fastest");
-
-	typedef mlc_is(mln_trait_image_kind(I),
-		       trait::image::kind::binary) is_binary;
-	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
-
-	typedef erosion_backdiagonal2d_fastest_functor<I, W, A> F;
-	F f(exact(input), exact(win));
-	canvas::browsing::backdiagonal2d(f);
-
-	trace::exiting("morpho::impl:erosion_backdiagonal2d_fastest");
-
-	return f.output;
-      }
 
     } // end of namespace mln::morpho::impl
+
+
+
+
+    // Dispatch.
 
 
     namespace internal
@@ -675,67 +362,6 @@ namespace mln
 
 
 
-      // dispatch for diagonal2d w.r.t. speed
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_diagonal2d(trait::image::speed::fastest,
-				      const I& input, const W& win)
-      {
-	return impl::erosion_diagonal2d_fastest(input, win);
-      }
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_diagonal2d(trait::image::speed::any,
-				       const I& input, const W& win)
-      {
-	return impl::erosion_diagonal2d(input, win);
-      }
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_diagonal2d(const I& input, const W& win)
-      {
-	trace::entering("morpho::erosion_dispatch_for_diagonal2d");
-	mln_concrete(I) ima =
-	  erosion_dispatch_for_diagonal2d(mln_trait_image_speed(I)(),
-					  input, win);
-	trace::exiting("morpho::erosion_dispatch_for_diagonal2d");
-	return ima;
-      }
-
-
-      // dispatch for backdiagonal2d w.r.t. speed
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_backdiagonal2d(trait::image::speed::fastest,
-				      const I& input, const W& win)
-      {
-	return impl::erosion_backdiagonal2d_fastest(input, win);
-      }
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_backdiagonal2d(trait::image::speed::any,
-				       const I& input, const W& win)
-      {
-	return impl::erosion_backdiagonal2d(input, win);
-      }
-
-      template <typename I, typename W>
-      mln_concrete(I)
-      erosion_dispatch_for_backdiagonal2d(const I& input, const W& win)
-      {
-	trace::entering("morpho::erosion_dispatch_for_backdiagonal2d");
-	mln_concrete(I) ima =
-	  erosion_dispatch_for_backdiagonal2d(mln_trait_image_speed(I)(),
-					      input, win);
-	trace::exiting("morpho::erosion_dispatch_for_backdiagonal2d");
-	return ima;
-      }
-
 
       // dispatch w.r.t. win
 
@@ -776,6 +402,8 @@ namespace mln
 						  input, win);
       }
 
+
+
       template <typename I>
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const win::rectangle2d& win)
@@ -785,6 +413,7 @@ namespace mln
 	else
 	  return impl::erosion_rectangle2d(input, win);
       }
+
 
       template <typename I>
       mln_concrete(I)
@@ -877,28 +506,30 @@ namespace mln
       /// \}
 
 
-      /// Handling win::diag2d.
+
+
+      /// Handling diagonals.
       /// \{
 
-      template <typename I>
+      template <typename I, typename W>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::true_,
-			       const I& input, const win::diag2d& win)
+      erosion_dispatch_diagonal(metal::true_,
+				const I& input, const W& win)
       {
-	return erosion_dispatch_for_diagonal2d(input, win);
+	return impl::erosion_diagonal_2d(input, win);
       }
 
-      template <typename I>
+      template <typename I, typename W>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::false_,
-			       const I& input, const win::diag2d& win)
+      erosion_dispatch_diagonal(metal::false_,
+				const I& input, const W& win)
       {
 	return erosion_dispatch_for_generic(input, win);
       }
 
-      template <typename I>
+      template <typename I, typename W>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(const I& input, const win::diag2d& win)
+      erosion_dispatch_diagonal(const I& input, const W& win)
       {
 	if (win.size() == 1)
 	  return clone(input);
@@ -911,51 +542,24 @@ namespace mln
 		   && mlc_is_a(mln_pset(I), Box)::value
 		   && mlc_equal(mln_trait_image_quant(I),
 				mln::trait::image::quant::low)::value };
-	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
-					    input, win);
+	    return erosion_dispatch_diagonal(metal::bool_<test>(),
+					     input, win);
 	  }
       }
 
-      /// \}
-
-
-      /// Handling win::backdiag2d.
-      /// \{
 
       template <typename I>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::true_,
-			       const I& input, const win::backdiag2d& win)
+      erosion_dispatch_wrt_win(const I& input, const win::diag2d& win)
       {
-	return erosion_dispatch_for_backdiagonal2d(input, win);
-      }
-
-      template <typename I>
-      mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::false_,
-			       const I& input, const win::backdiag2d& win)
-      {
-	return erosion_dispatch_for_generic(input, win);
+	return erosion_dispatch_diagonal(input, win);
       }
 
       template <typename I>
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const win::backdiag2d& win)
       {
-	if (win.size() == 1)
-	  return clone(input);
-	else if (win.size() == 3)
-	  return erosion_dispatch_for_generic(input, win);
-	else
-	  {
-	    enum { test = mlc_is_not(mln_trait_image_kind(I),
-				     mln::trait::image::kind::logic)::value
-		   && mlc_is_a(mln_pset(I), Box)::value
-		   && mlc_equal(mln_trait_image_quant(I),
-				mln::trait::image::quant::low)::value };
-	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
-					    input, win);
-	  }
+	return erosion_dispatch_diagonal(input, win);
       }
 
       /// \}

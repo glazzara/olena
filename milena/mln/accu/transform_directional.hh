@@ -40,7 +40,6 @@
 #include <mln/core/concept/image.hh>
 #include <mln/core/concept/meta_accumulator.hh>
 #include <mln/core/alias/window2d.hh>
-#include <mln/win/diff.hh>
 #include <mln/win/shift.hh>
 #include <mln/geom/delta.hh>
 #include <mln/literal/zero.hh>

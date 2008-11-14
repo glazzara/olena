@@ -1,3 +1,34 @@
+2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move diagonal-related code out of erosion, then factor.
+
+	* mln/accu/transform_diagonal.hh: New file.
+	* mln/morpho/erosion.spe.hh
+	(erosion_diagonal2d_functor),
+	(erosion_diagonal2d_fastest_functor),
+	(erosion_backdiagonal2d_functor),
+	(erosion_backdiagonal2d_fastest_functor): Move and rename as...
+	* mln/accu/transform_diagonal.hh
+	(diagonal_functor, diagonal_fastest_functor),
+	(backdiagonal_functor, backdiagonal_fastest_functor): ...these.
+	* mln/morpho/erosion.spe.hh (erosion_diagonal2d): Rename as...
+	(erosion_diagonal_2d): ...this; it is the only impl routine.
+	(erosion_backdiagonal2d),
+	(erosion_diagonal2d_fastest),
+	(erosion_backdiagonal2d_fastest): Remove these impl routines.
+	Thanks to factorization in accu::transform_diagonal, those are
+	now useless.
+	(erosion_dispatch_for_diagonal2d),
+	(erosion_dispatch_for_backdiagonal2d): Factor into...
+	(erosion_dispatch_diagonal): ...this new dispatch routine.
+	Now both diagonals are handled by the same code.
+
+	* mln/morpho/includes.hh: Update.
+	* mln/accu/transform_directional.hh
+	(diff): Remove useless include.
+	* mln/win/line.hh: Upgrade doc style.
+	(dir): New constant.
+
 2008-11-14  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update graph related classes.

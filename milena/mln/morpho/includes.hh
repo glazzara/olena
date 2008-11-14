@@ -55,6 +55,7 @@
 # include <mln/accu/transform.hh>
 # include <mln/accu/transform_stop.hh>
 # include <mln/accu/transform_directional.hh>
+# include <mln/accu/transform_diagonal.hh>
 
 # include <mln/fun/v2v/saturate.hh>
 

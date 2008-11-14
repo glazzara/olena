@@ -73,12 +73,12 @@ namespace mln
     template <typename M, unsigned i, typename C>
     struct line : public internal::classical_window_base< dpoint<M, C>, line<M,i,C> >
     {
-      /*! \brief Constructor.
-       *
-       * \param[in] length Length of the line.
-       *
-       * \pre \p length is odd.
-       */
+      /// Direction.
+      enum { dir = i };
+
+      /// Constructor.
+      /// \param[in] length Length of the line.
+      /// \pre \p length is odd.
       line(unsigned length);
 	
       /// Give the line length.
@@ -87,15 +87,14 @@ namespace mln
       /// Give the line size, that is, its length.
       unsigned size() const;
 	
-      /*! \brief Give the maximum coordinate gap between the window
-       * center and a window point.
-       */
+      /// Give the maximum coordinate gap between the window
+      /// center and a window point.
       unsigned delta_() const;
 
       void print_(std::ostream& ostr) const;
-		
-      protected:
-	unsigned length_;
+
+    protected:
+      unsigned length_;
     };
 
  
