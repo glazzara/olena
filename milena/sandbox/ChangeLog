@@ -1,3 +1,8 @@
+2008-11-14  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Create the sandbox for the Markov project.
+	* markov: New.
+
 2008-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add support for table extraction.
