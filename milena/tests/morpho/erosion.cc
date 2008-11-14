@@ -65,7 +65,9 @@ int main()
 
 //   trace::quiet = false;
 
+
   // Rectangle
+
   {
     ref = morpho::impl::generic::erosion_on_function(lena, rec);
   }
@@ -77,18 +79,14 @@ int main()
   }
 
   {
-    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, rec);
-    bool test = out == ref;
-    mln_assertion(test);
-  }
-
-  {
     out = morpho::impl::erosion_arbitrary_2d(lena, rec);
     bool test = out == ref;
     mln_assertion(test);
   }
 
-  //Hline
+
+  // Hline
+
   {
     ref = morpho::impl::generic::erosion_on_function(lena, hline);
   }
@@ -100,19 +98,14 @@ int main()
   }
 
   {
-    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, hline);
-    bool test = out == ref;
-    mln_assertion(test);
-  }
-
-
-  {
     out = morpho::impl::erosion_arbitrary_2d(lena, hline);
     bool test = out == ref;
     mln_assertion(test);
   }
 
-  //Vline
+
+  // Vline
+
   {
     ref = morpho::impl::generic::erosion_on_function(lena, vline);
   }
@@ -123,14 +116,6 @@ int main()
     mln_assertion(test);
   }
 
-
-  {
-    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, vline);
-    bool test = out == ref;
-    mln_assertion(test);
-  }
-
-
   {
     out = morpho::impl::erosion_arbitrary_2d(lena, vline);
     bool test = out == ref;
@@ -138,7 +123,7 @@ int main()
   }
 
 
-  //Diag2d
+  // Diag2d
 
   {
     ref = morpho::impl::generic::erosion_on_function(lena, diag2d);
@@ -150,21 +135,14 @@ int main()
     mln_assertion(test);
   }
 
-
-  {
-    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, diag2d);
-    bool test = out == ref;
-    mln_assertion(test);
-  }
-
-
   {
     out = morpho::impl::erosion_arbitrary_2d(lena, diag2d);
     bool test = out == ref;
     mln_assertion(test);
   }
 
-  //Backdiag2d
+
+  // Backdiag2d
 
   {
     ref = morpho::impl::generic::erosion_on_function(lena, backdiag2d);
@@ -176,14 +154,6 @@ int main()
     mln_assertion(test);
   }
 
-
-  {
-    out = morpho::impl::erosion_arbitrary_2d_fastest(lena, backdiag2d);
-    bool test = out == ref;
-    mln_assertion(test);
-  }
-
-
   {
     out = morpho::impl::erosion_arbitrary_2d(lena, backdiag2d);
     bool test = out == ref;
@@ -193,6 +163,7 @@ int main()
 
 
   // Octagon
+
   {
     ref = morpho::impl::generic::erosion_on_function(lena, oct);
     io::pgm::save(ref, "out_oct_ref.pgm");

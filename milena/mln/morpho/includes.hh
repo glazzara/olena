@@ -51,8 +51,10 @@
 # include <mln/accu/max_h.hh>
 # include <mln/accu/rank.hh>
 
+# include <mln/accu/snake_2d.hh>
 # include <mln/accu/transform.hh>
 # include <mln/accu/transform_stop.hh>
+# include <mln/accu/transform_directional.hh>
 
 # include <mln/fun/v2v/saturate.hh>
 

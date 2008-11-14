@@ -1,5 +1,32 @@
 2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Migrate generic code from morpho erosion to new files in accu.
+
+	* mln/morpho/erosion.spe.hh
+	(erosion_arbitrary_2d_fastest_functor): Move and rename as...
+	* mln/accu/snake_2d.hh (snake_2d_fastest_functor): ...this.
+	(todo): New.
+	(snake_2d): Move code into (and call it)...
+	(snake_2d_dispatch): ...these new routines.
+
+	* mln/morpho/erosion.spe.hh (dp_directional): Move into...
+	* mln/accu/transform_directional.hh: ...this new file.
+	* mln/morpho/erosion.spe.hh: .
+	(dp_directional, erosion_directional_nd_functor),
+	(erosion_directional_nd_fastest_functor): Move and rename as...
+	* mln/accu/transform_directional.hh
+	(directional_functor, directional_fastest_functor): ...these.
+	(transform_directional, transform_directional_dispatch): New.
+
+	* mln/morpho/erosion.spe.hh (erosion_on_set_fastest): Remove.
+	It is obsolete since handled by accu::transform, called by...
+	(generic::erosion_on_set): ...this.
+
+	* mln/morpho/includes.hh (include): Update.
+	* tests/morpho/erosion.cc: Update.
+
+2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add accu transform stop and make erosion rely on it.
 
 	* mln/accu/land_basic.hh: New.
