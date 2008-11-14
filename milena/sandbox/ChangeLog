@@ -1,3 +1,9 @@
+2008-11-14  Antoine Leblanc  <crucuny@gmail.com>
+
+	Random class.
+	* markov/random.hh: Random class.
+	* markov/random.hxx: Implementation.
+
 2008-11-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	[Markov] Add temperator generator.
