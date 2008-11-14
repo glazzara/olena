@@ -4,45 +4,30 @@
 # include <cmath>
 # include <random.hh>
 # include <T_gen.hh>
+# include <mln/binarization/threshold.hh>
 
 namespace mln
 {
 
-  /* I think we don't need it anymore...
-  inline
-  const neighb2d& neighb_h1()
-  {
-    static neighb2d it;
-    if (it.size() == 0)
-      {
-	static const bool vals[] = { 0, 0, 0,
-				     0, 0, 1,
-				     0, 0, 0 };
-	convert::from_to(vals, it);
-      }
-    return it;
-  }
-  */
-
   template <typename I, typename N>
-  double compute_energy(const I& ima, const N& nbh, bool xi, const mln_piter(I)& p)
+  double compute_energy(const I& ima, const N& nbh, bool xi, const mln_site(I) &p)
   {
     // Compute u(x,y)
     double u;
     if (xi)
       u = (double) ima(p) / mln_max(mln_value(I));
     else
-      u = (double) (1 - ima(p)) / mln_max(mln_value(I));
+      u = 1. - (double) ima(p) / mln_max(mln_value(I));
 
-    // u(x) is cst donc osef
+    // u(x) is cst so we don't care
 
-    // u voisinage
+    double diff_sum = 0;
 
     mln_niter(N) n(nbh, p);
     for_all(n)
-      // treat each point here ;), no need to make weird neighborhoods
-      // make sth with |ima(p) - ima(n)|
-      abs(ima(p) - ima(n));
+      diff_sum += abs(ima(p) - ima(n));
+
+    return u + 10 * diff_sum;
   }
 
   template <typename I, typename N> // I == int_u8
@@ -52,16 +37,17 @@ namespace mln
     const N &nbh = exact(nbh_);
 
     double epsilon = 0.001;
-    mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
-    // G temp(start_temp);
-    temperature_generator temp(start_temp, 0.99);
+
+    //    mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
+    mln_ch_value(I, bool) out = binarization::threshold(ima, 255 / 2); // FIXME : max
+
+    temperature_generator gtemp(start_temp, 0.99);
+    double temp = start_temp;
 
     Random<bool> v_random(0, 1); // mettre max et min ?
     Random<double> p_random(0., 1.); // idem
 
-    // init(ima, out); ca empeche de compiloter
-
-    while (temp < epsilon)
+    while (temp > epsilon)
       {
 	mln_piter(I) p(ima.domain());
 
@@ -74,11 +60,12 @@ namespace mln
 
 	  double d_u = abs(up - u);
 
-	  double proba = 0.5; // FIXME
+	  double proba = exp(-d_u / temp);
 
-	  if (d_u < 0 or (p_random.get() > proba))
+	  if (d_u < 0 || (p_random.get() > proba))
 	    out(p) = v;
 	}
+	temp = gtemp;
       }
 
     return out;
