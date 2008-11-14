@@ -1,3 +1,39 @@
+2008-11-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update graph related classes.
+
+	* mln/core/internal/graph_neighborhood_base.hh,
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/line_graph_elt_neighborhood.hh,
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/image/graph_elt_window.hh,
+	* mln/core/image/line_graph_elt_window.hh: refactor.
+
+	* mln/make/voronoi.hh,
+	* mln/core/internal/line_graph_vicinity_piter.hh,
+	* mln/core/image/line_graph_window_piter.hh,
+	* mln/core/image/line_graph_neighborhood_piter.hh: update according
+	the new graph structure.
+
+	* mln/core/site_set/p_graph.hh,
+	* mln/core/site_set/p_line_graph.hh,
+	* mln/core/site_set/p_line_graph_piter.hh,
+	* mln/core/image/line_graph_psite.hh: deprecated and deleted.
+
+	* tests/core/site_set/p_vertices.cc,
+	* mln/util/graph.hh
+	* mln/util/internal/graph_vertex_impl.hh,
+	* mln/util/internal/graph_edge_impl.hh: fix comments.
+
+	* mln/util/internal/graph_edge_psite.hh: fix initialization.
+
+	* tests/core/site_set/p_edges.cc,
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc: fix tests.
+
+        * mln/make/all.hh
+	* mln/make/essential.hh: uncomment inclusion of voronoi.hh.
+
 2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Migrate generic code from morpho erosion to new files in accu.

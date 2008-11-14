@@ -55,7 +55,7 @@ namespace mln
 # include <mln/make/pixel.hh>
 # include <mln/make/point2d_h.hh>
 # include <mln/make/vec.hh>
-//# include <mln/make/voronoi.hh>
+# include <mln/make/voronoi.hh>
 # include <mln/make/w_window.hh>
 # include <mln/make/w_window1d.hh>
 # include <mln/make/w_window1d_int.hh>

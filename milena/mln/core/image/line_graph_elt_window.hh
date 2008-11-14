@@ -30,66 +30,62 @@
 # define MLN_CORE_IMAGE_LINE_GRAPH_ELT_WINDOW_HH
 
 /// \file mln/core/image/line_graph_elt_window.hh
-/// \brief Definition of the elementary ``window'' on a line graph.
-
-/* FIXME: Have a consistent naming: we have window (without '_') but
-   point_, neighb_, etc.  */
-
-/* FIXME: Factor those classes:
-   - mln::graph_elt_window
-   - mln::graph_elt_neighborhood
-   - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.
-
-   See https://trac.lrde.org/olena/ticket/139.  */
-
-/* FIXME: Due to the poor interface of mln::p_line_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
+/// Definition of the elementary ``window'' on a line graph.
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/image/line_graph_psite.hh>
+# include <mln/core/internal/graph_window_base.hh>
+# include <mln/util/internal/graph_edge_psite.hh>
 # include <mln/core/image/line_graph_window_piter.hh>
 
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P, typename W> class line_graph_window_fwd_piter;
-  template <typename P, typename W> class line_graph_window_bkd_piter;
+
+  /// Forward declaration
+  template <typename G, typename F> class line_graph_elt_window;
+
+  namespace trait
+  {
+
+    ///FIXME: check that!
+    template <typename G, typename F>
+    struct window_< mln::line_graph_elt_window<G, F> >
+    {
+      typedef trait::window::size::unknown       size;
+      typedef trait::window::support::irregular  support;
+      typedef trait::window::definition::varying definition;
+    };
+
+  } // end of namespace mln::trait
 
 
   /// \brief Elementary window on line graph class.
-  template <typename P>
-  class line_graph_elt_window : public Window< line_graph_elt_window<P> >
+  template <typename G, typename F>
+  class line_graph_elt_window : public graph_window_base<
+					G,
+					F,
+					internal::edge_psite<G, F>,
+					line_graph_elt_window<G, F> >
   {
-    typedef line_graph_elt_window<P> self_;
+    typedef line_graph_elt_window<G, F> self_;
 
   public:
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the window.
-    typedef line_graph_psite<P> psite;
-    /// The type of site corresponding to the window.
-    typedef mln_site(psite) site;
-    // The type of the set of window sites (edge ids adjacent to the
-    // reference psite).
-    typedef std::set<util::edge_id> sites_t;
+    typedef internal::edge_psite<G, F> psite;
 
-    // FIXME: This is a dummy value.
-    typedef void dpsite;
-
-    /// \brief Site_Iterator type to browse the psites of the window
+    /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of edges.
-    typedef line_graph_window_fwd_piter<P, self_> fwd_qiter;
+    typedef line_graph_window_fwd_piter<G, F, self_> fwd_qiter;
 
-    /// \brief Site_Iterator type to browse the psites of the window
+    /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of edges.
-    typedef line_graph_window_bkd_piter<P, self_> bkd_qiter;
+    typedef line_graph_window_bkd_piter<G, F, self_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
-    /// \}
+
 
     /// Services for iterators.
     /// \{
@@ -98,105 +94,30 @@ namespace mln
     void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
 
-    /// Interface of the concept Window.
-    /// \{
-    /// Is the window is empty?
-    bool is_empty() const;
-    /// Is the window centered?
-    bool is_centered() const;
-    /// Is the window symmetric?
-    // FIXME: We should define this more precisely.
-    bool is_symmetric() const;
-    /// Return the maximum coordinate gap between the window center
-    /// and a window point.
-    /* FIXME: This method returns a dummy value (0), since the delta
-       of a window on a line_graph
-
-       1. is not constant (line graph edges are not necessarily
-          aligned on a regular grid);
-
-       2. depends on the underlying line_graph, too.
-
-       It raises another question: should delta() be part of the
-       concept ``Window''?  */
-    unsigned delta() const;
-    /// Apply a central symmetry to the target window.
-    self_& sym();
-    /// \}
+  protected:
+    typedef graph_window_base<G, F, psite, self_> super_;
+    typedef typename super_::sites_t sites_t;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename P>
+  template <typename G, typename F>
   template <typename Piter>
   inline
   void
-  line_graph_elt_window<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
+  line_graph_elt_window<G, F>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
+    unsigned central_edge = piter.center().e().id();
     sites_t& sites = piter.sites();
     sites.clear();
-    /* FIXME: Move this computation out of the window. In fact,
-       this should be a service of the graph, also proposed by the
-       p_line_graph.  */
-    // Ajacent edges connected through vertex 1.
-    /* We don't need to explicitely insert the reference piter (edge
-       id) itself into SITES, since it is part of the set of edges
-       adjacent to VERTEX1 and VERTEX2, and will therefore be
-       automatically added.  */
-    util::vertex_id id1 = piter.center().first_id();
-    const util::vertex<P>& vertex1 = piter.center().site_set().gr_->vertex(id1);
-    for (std::vector<util::edge_id>::const_iterator e =
-	   vertex1.edges.begin(); e != vertex1.edges.end(); ++e)
-      sites.insert(*e);
-    // Ajacent edges connected through vertex 2.
-    util::vertex_id id2 = piter.center().second_id();
-    const util::vertex<P>& vertex2 = piter.center().site_set().gr_->vertex(id2);
-    for (std::vector<util::edge_id>::const_iterator e =
-	   vertex2.edges.begin(); e != vertex2.edges.end(); ++e)
-      sites.insert(*e);
-  }
 
-  template <typename P>
-  inline
-  bool
-  line_graph_elt_window<P>::is_empty() const
-  {
-    return false;
-  }
+    const G& g = piter.center().site_set().graph();
 
-  template <typename P>
-  inline
-  bool
-  line_graph_elt_window<P>::is_centered() const
-  {
-    return false;
-  }
-
-  template <typename P>
-  inline
-  bool
-  line_graph_elt_window<P>::is_symmetric() const
-  {
-    return true;
-  }
-
-  template <typename P>
-  inline
-  unsigned
-  line_graph_elt_window<P>::delta() const
-  {
-    // Dummy value (see the interface of the method above).
-    return 0;
-  }
-
-  template <typename P>
-  inline
-  line_graph_elt_window<P>&
-  line_graph_elt_window<P>::sym()
-  {
-    return *this;
+    sites.insert(central_edge);
+    for (unsigned i = 0; i < g.e_nmax_nbh_edges(central_edge); ++i)
+      sites.insert(g.e_ith_nbh_edge(central_edge, i));
   }
 
 # endif // ! MLN_INCLUDE_ONLY

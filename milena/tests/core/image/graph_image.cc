@@ -46,12 +46,10 @@
 #include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/fun/i2v/array.hh>
-#include <mln/fun/p2v/iota.hh>
 
 #include <mln/util/graph.hh>
 
 #include <mln/debug/graph.hh>
-//#include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 #include <mln/core/concept/function.hh>
 
@@ -101,18 +99,18 @@ int main()
   */
 
   // Points associated to vertices.
-  typedef fun::i2v::array<point2d> fpoint_t;
-  fpoint_t points(5);
-  points(0) = point2d(0,0); // Point associated to vertex 0.
-  points(1) = point2d(2,2); // Point associated to vertex 1.
-  points(2) = point2d(0,4); // Point associated to vertex 2.
-  points(3) = point2d(4,3); // Point associated to vertex 3.
-  points(4) = point2d(4,4); // Point associated to vertex 4.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to vertex 0.
+  sites(1) = point2d(2,2); // Point associated to vertex 1.
+  sites(2) = point2d(0,4); // Point associated to vertex 2.
+  sites(3) = point2d(4,3); // Point associated to vertex 3.
+  sites(4) = point2d(4,4); // Point associated to vertex 4.
 
   // Edges.
   util::graph g;
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
+  for (unsigned i = 0; i < sites.size(); ++i)
     g.add_vertex();
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -127,8 +125,8 @@ int main()
   | Graph image support.  |
   `----------------------*/
 
-  typedef p_vertices<util::graph, fpoint_t> S;
-  S pv(g, points);
+  typedef p_vertices<util::graph, fsite_t> S;
+  S pv(g, sites);
 
   /*-------------.
   | Graph image.  |
@@ -187,7 +185,7 @@ int main()
 
   {
     // Window - Forward iteration
-    typedef graph_elt_window<util::graph, fpoint_t> win_t;
+    typedef graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
     mln_qiter_(win_t) q(win, p);
     for_all (p)
@@ -201,7 +199,7 @@ int main()
 
   {
     // Window - Backward iteration
-    typedef graph_elt_window<util::graph, fpoint_t> win_t;
+    typedef graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
     mln_bkd_qiter_(win_t) q(win, p);
     for_all (p)
@@ -215,29 +213,33 @@ int main()
 
   {
     // Neighborhood - Forward iteration
-    typedef graph_elt_neighborhood<util::graph, fpoint_t> neigh_t;
+    typedef graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
     neigh_t neigh;
     mln_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
-		<< "including the site itself:" << std::endl;
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
       for_all (n)
+      {
+	mln_assertion(n != p);
 	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+      }
     }
   }
 
   {
     // Neighborhood - Backward iteration
-    typedef graph_elt_neighborhood<util::graph, fpoint_t> neigh_t;
+    typedef graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
     neigh_t neigh;
     mln_bkd_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
-		<< "including the site itself:" << std::endl;
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
       for_all (n)
+      {
+	mln_assertion(n != p);
 	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+      }
     }
   }
   std::cout << std::endl;

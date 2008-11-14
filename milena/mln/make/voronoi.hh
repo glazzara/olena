@@ -29,18 +29,18 @@
 #ifndef MLN_MAKE_VORONOI_HH
 # define MLN_MAKE_VORONOI_HH
 
-/*! \file mln/make/voronoi.hh
- *
- * \brief Routine to construct a Voronoi mln::p_graph.
- */
+/// \file mln/make/voronoi.hh
+///
+/// Routine to construct a Voronoi mln::p_graph.
 
 # include <vector>
 # include <map>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/site_set/p_graph.hh>
+# include <mln/core/site_set/p_vertices.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
+# include <mln/util/graph.hh>
 
 namespace mln
 {
@@ -48,10 +48,9 @@ namespace mln
   namespace make
   {
 
+    /// Apply the Voronoi algorithm on \p ima_ with the original
+    /// image \p orig_ for node computing with neighborhood \p nbh.
     /*!
-     *  \brief Apply the Voronoi algorithm on \p ima_ with the original
-     *  image \p orig_ for node computing with neighborhood \p nbh.
-     *
      * \param[in] ima_ The labeling image.
      * \param[in] orig_ The original image.
      * \param[in] nbh The neighborhood for computing algorithm.
@@ -59,7 +58,7 @@ namespace mln
      * \return The computed graph.
      */
     template <typename I, typename N>
-    p_graph<mln_psite(I)>
+    p_vertices<util::graph, fun::i2v::array<mln_site(I)> >
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh);
@@ -68,7 +67,7 @@ namespace mln
 
     template <typename I, typename N>
     inline
-    p_graph<mln_psite(I)>
+    p_vertices<util::graph, fun::i2v::array<mln_site(I)> >
     voronoi (Image<I>& ima_,
 	     Image<I>& orig_,
 	     const Neighborhood<N>& nbh)
@@ -79,11 +78,11 @@ namespace mln
 
       I& ima = exact(ima_);
       I& orig = exact(orig_);
-      util::graph<void> gr;
+      util::graph gr;
       V min, max;
       estim::min_max (ima, min, max);
       unsigned nb = max - min + 1;
-      std::vector<P> v(nb);
+      fun::i2v::array<P> v(nb);
       std::vector< accu::mean< X > > tab_mean (nb);
       std::map<std::pair<V, V>, bool> m;
 
@@ -120,7 +119,7 @@ namespace mln
 	  gr.add_vertex();
 
 	  /// FIXME
- 	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
+	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
 				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 
@@ -128,7 +127,7 @@ namespace mln
       for (; it != m.end (); ++it)
 	gr.add_edge((*it).first.first, (*it).first.second);
 
-      p_graph<P> res(gr, v);
+      p_vertices<util::graph, fun::i2v::array<P> > res(gr, v);
       return res;
     }
 

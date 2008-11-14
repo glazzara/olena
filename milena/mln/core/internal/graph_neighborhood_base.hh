@@ -25,64 +25,68 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_INTERNAL_GRAPH_EDGE_IMPL_HH
-# define MLN_CORE_INTERNAL_GRAPH_EDGE_IMPL_HH
+#ifndef MLN_CORE_INTERNAL_GRAPH_NEIGHBORHOOD_BASE_HH
+# define MLN_CORE_INTERNAL_GRAPH_NEIGHBORHOOD_BASE_HH
 
-/// \file mln/util/internal/graph_edge_impl.hh
+/// \file mln/internal/graph_neighborhood_base.hh
 ///
-/// Define a couple of implementation classes to provide methods
-/// to classes of generalized edges.
-
-# include <mln/core/internal/force_exact.hh>
-
+/// FIXME: doc
 
 namespace mln
 {
 
-  namespace util
+  template <typename G, typename F, typename P, typename E>
+  class graph_neighborhood_base : public Neighborhood< E >
   {
+    typedef graph_neighborhood_base<G, F, P, E> self_;
 
-    namespace internal
-    {
+  public:
+    /// Associated types.
+    /// \{
+    /// The type of site corresponding to the neighborhood.
+    typedef mln_site(P) site;
 
-      /// Implementation class to equip generalized edge classes.
-      template <typename G>
-      class edge_impl_
-      {
-	protected:
-	  edge_impl_();
-      };
+    // The type of the set of neighborhood sites (ids adjacent to the
+    // reference psite).
+    typedef std::set<unsigned> sites_t;
+    /// \}
 
-    } // end of namespace internal
+    /// Conversions.
+    /// \{
+    /// The window type corresponding to this neighborhood.
+    typedef E window;
+    /// Create a window corresponding to this neighborhood.
+    E win() const;
+    /// \}
 
-  } // end of namespace util
+  protected:
+    graph_neighborhood_base();
+  };
 
 } // end of namespace mln
 
-#ifndef MLN_INCLUDE_ONLY
+# ifndef MLN_INCLUDE_ONLY
 
 namespace mln
 {
 
-  namespace util
+  template <typename G, typename F, typename P, typename E>
+  inline
+  graph_neighborhood_base<G, F, P, E>::graph_neighborhood_base()
   {
+  }
 
-    namespace internal
-    {
-
-    template <typename G>
-    inline
-    edge_impl_<G>::edge_impl_()
-    {
-    }
-
-    } // end of namespace internal
-
-  } // end of namespace util
+  template <typename G, typename F, typename P, typename E>
+  inline
+  E
+  graph_neighborhood_base<G, F, P, E>::win() const
+  {
+    return E();
+  }
 
 } // end of namespace mln
 
-#endif // ! MLN_INCLUDE_ONLY
+# endif // !MLN_INCLUDE_ONLY
 
+#endif // !MLN_CORE_INTERNAL_GRAPH_NEIGHBORHOOD_BASE_HH
 
-#endif // ! MLN_CORE_INTERNAL_GRAPH_EDGE_IMPL_HH

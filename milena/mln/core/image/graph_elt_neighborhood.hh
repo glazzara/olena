@@ -30,19 +30,12 @@
 # define MLN_CORE_IMAGE_GRAPH_ELT_NEIGHBORHOOD_HH
 
 /// \file mln/core/image/graph_elt_neighborhood.hh
-/// \brief Definition of the elementary ``neighborhood'' on a graph.
-
-/* FIXME: Factor those classes:
-   - mln::graph_elt_window
-   - mln::graph_elt_neighborhood
-   - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.
-
-   See https://trac.lrde.org/olena/ticket/139.  */
+/// Definition of the elementary ``neighborhood'' on a graph.
 
 # include <set>
 
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/internal/graph_neighborhood_base.hh>
 # include <mln/util/internal/graph_vertex_psite.hh>
 # include <mln/core/image/graph_neighborhood_piter.hh>
 
@@ -56,10 +49,13 @@ namespace mln
   template <typename G, typename F, typename N> class graph_neighborhood_bkd_piter;
 
 
-  /// \brief Elementary neighborhood on graph class.
+  /// Elementary neighborhood on graph class.
   template <typename G, typename F>
   class graph_elt_neighborhood
-    : public Neighborhood< graph_elt_neighborhood<G, F> >
+    : public graph_neighborhood_base<G,
+				     F,
+				     internal::vertex_psite<G, F>,
+				     graph_elt_neighborhood<G, F> >
   {
     typedef graph_elt_neighborhood<G, F> self_;
 
@@ -68,17 +64,12 @@ namespace mln
     /// \{
     /// The type of psite corresponding to the neighborhood.
     typedef internal::vertex_psite<G, F> psite;
-    /// The type of site corresponding to the neighborhood.
-    typedef mln_site(psite) site;
-    // The type of the set of neighbors (vertex ids adjacent to the
-    // reference psite).
-    typedef std::set<unsigned> sites_t;
 
-    /// \brief Site_Iterator type to browse the psites of the
+    /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of vertices.
     typedef graph_neighborhood_fwd_piter<G, F, self_> fwd_niter;
 
-    /// \brief Site_Iterator type to browse the psites of the
+    /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the reverse ordering of vertices.
     typedef graph_neighborhood_bkd_piter<G, F, self_> bkd_niter;
 
@@ -86,13 +77,6 @@ namespace mln
     typedef fwd_niter niter;
     /// \}
 
-    /// Conversions.
-    /// \{
-    /// The window type corresponding to this neighborhood.
-    typedef graph_elt_window<G, F> window;
-    /// Create a window corresponding to this neighborhood.
-    window win() const;
-    /// \}
 
     /// Services for iterators.
     /// \{
@@ -100,18 +84,14 @@ namespace mln
     template <typename Piter>
     void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
+
+  protected:
+    typedef graph_neighborhood_base<G, F, psite, self_> super_;
+    typedef typename super_::sites_t sites_t;
   };
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-  template <typename G, typename F>
-  inline
-  graph_elt_window<G, F>
-  graph_elt_neighborhood<G, F>::win() const
-  {
-    return graph_elt_window<G, F>();
-  }
 
   template <typename G, typename F>
   template <typename Piter>

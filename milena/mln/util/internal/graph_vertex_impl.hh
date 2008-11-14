@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,10 @@
 #ifndef MLN_CORE_INTERNAL_GRAPH_VERTEX_IMPL_HH
 # define MLN_CORE_INTERNAL_GRAPH_VERTEX_IMPL_HH
 
-/*! \file mln/util/internal/graph_vertex_impl.hh
- *
- * \brief Define a couple of implementation classes to provide methods
- * to classes of generalized vertexs.
- */
+/// \file mln/util/internal/graph_vertex_impl.hh
+///
+/// Define a couple of implementation classes to provide methods
+/// to classes of generalized vertexs.
 
 # include <mln/core/internal/force_exact.hh>
 

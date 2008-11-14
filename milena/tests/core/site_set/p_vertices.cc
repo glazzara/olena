@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_vertices.cc
- *
- * \brief Tests on mln::p_vertices.
- */
+/// \file tests/core/site_set/p_vertices.cc
+///
+/// Tests on mln::p_vertices.
 
 #include <mln/util/graph.hh>
 #include <mln/core/alias/point2d.hh>

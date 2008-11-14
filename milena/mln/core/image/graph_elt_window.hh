@@ -30,17 +30,10 @@
 # define MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_HH
 
 /// \file mln/core/image/graph_elt_window.hh
-/// \brief Definition of the elementary ``window'' on a graph.
-
-/* FIXME: Factor those classes:
-   - mln::graph_elt_window
-   - mln::graph_elt_neighborhood
-   - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.
-
-   See https://trac.lrde.org/olena/ticket/139.  */
+/// Definition of the elementary ``window'' on a graph.
 
 # include <mln/core/concept/window.hh>
+# include <mln/core/internal/graph_window_base.hh>
 # include <mln/util/internal/graph_vertex_psite.hh>
 # include <mln/core/image/graph_window_piter.hh>
 
@@ -68,24 +61,20 @@ namespace mln
 
   /// \brief Elementary window on graph class.
   template <typename G, typename F>
-  class graph_elt_window : public Window< graph_elt_window<G, F> >
+  class graph_elt_window : public graph_window_base<
+				    G,
+				    F,
+				    internal::vertex_psite<G, F>,
+				    graph_elt_window<G, F> >
+
   {
     typedef graph_elt_window<G, F> self_;
-    typedef mln_result(F) P;
 
   public:
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the window.
     typedef internal::vertex_psite<G, F> psite;
-    /// The type of site corresponding to the window.
-    typedef mln_site(psite) site;
-    // The type of the set of window sites (vertex ids adjacent to the
-    // reference psite).
-    typedef std::set<unsigned> sites_t;
-
-    // FIXME: This is a dummy value.
-    typedef void dpsite;
 
     /// \brief Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.
@@ -106,31 +95,9 @@ namespace mln
     void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
 
-    /// Interface of the concept Window.
-    /// \{
-    /// Is the window is empty?
-    bool is_empty() const;
-    /// Is the window centered?
-    bool is_centered() const;
-    /// Is the window symmetric?
-    // FIXME: We should define this more precisely.
-    bool is_symmetric() const;
-    /// Return the maximum coordinate gap between the window center
-    /// and a window point.
-    /* FIXME: This method returns a dummy value (0), since the delta
-       of a window on a graph
-
-       1. is not constant (graph vertices are not necessarily aligned on
-          a regular grid);
-
-       2. depends on the underlying graph, too.
-
-       It raises another question: should delta() be part of the
-       concept ``Window''?  */
-    unsigned delta() const;
-    /// Apply a central symmetry to the target window.
-    self_& sym();
-    /// \}
+  protected:
+    typedef graph_window_base<G, F, psite, self_> super_;
+    typedef typename super_::sites_t sites_t;
   };
 
 
@@ -152,47 +119,6 @@ namespace mln
     sites.insert(central_vertex);
     for (unsigned i = 0; i < g.v_nmax_nbh_vertices(central_vertex); ++i)
       sites.insert(g.v_ith_nbh_vertex(central_vertex, i));
-  }
-
-  template <typename G, typename F>
-  inline
-  bool
-  graph_elt_window<G, F>::is_empty() const
-  {
-    return false;
-  }
-
-  template <typename G, typename F>
-  inline
-  bool
-  graph_elt_window<G, F>::is_centered() const
-  {
-    return false;
-  }
-
-  template <typename G, typename F>
-  inline
-  bool
-  graph_elt_window<G, F>::is_symmetric() const
-  {
-    return true;
-  }
-
-  template <typename G, typename F>
-  inline
-  unsigned
-  graph_elt_window<G, F>::delta() const
-  {
-    // Dummy value (see the interface of the method above).
-    return 0;
-  }
-
-  template <typename G, typename F>
-  inline
-  graph_elt_window<G, F>&
-  graph_elt_window<G, F>::sym()
-  {
-    return *this;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

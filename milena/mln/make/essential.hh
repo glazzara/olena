@@ -40,9 +40,9 @@
 # include <mln/make/pix.hh>
 # include <mln/make/pixel.hh>
 # include <mln/make/vec.hh>
-//# include <mln/make/voronoi.hh>
+# include <mln/make/voronoi.hh>
 # include <mln/make/w_window.hh>
 # include <mln/make/w_window_directional.hh>
-//# include <mln/make/win_chamfer.hh>
+# include <mln/make/win_chamfer.hh>
 
 #endif // ! MLN_MAKE_ESSENTIAL_HH

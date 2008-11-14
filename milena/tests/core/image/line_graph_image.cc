@@ -31,9 +31,41 @@
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/line_graph_image.hh>
+#include <mln/pw/all.hh>
+
+//#include <mln/core/image/line_graph_image.hh>
 #include <mln/core/image/line_graph_elt_window.hh>
-#include <mln/core/image/line_graph_window_piter.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/site_set/p_edges.hh>
+
+#include <mln/fun/i2v/array.hh>
+
+#include <mln/util/graph.hh>
+
+#include <mln/core/var.hh>
+
+template <typename S>
+struct viota_t : public mln::Function_p2v< viota_t<S> >
+{
+  typedef unsigned result;
+
+  viota_t(unsigned size)
+  {
+    v_.resize(size);
+    for (unsigned i = 0; i < size; ++i)
+      v_[i] = 10 + i;
+  }
+
+  unsigned
+  operator()(const mln_psite(S)& p) const
+  {
+    return v_[p.e().id()];
+  }
+
+  protected:
+    std::vector<result> v_;
+};
+
 
 
 int main()
@@ -48,7 +80,7 @@ int main()
 
             0 1 2 3 4               0 1 2 3 4
          .-----------	         .-----------
-         |		         |	     
+         |		         |
        0 |  0       2	       0 |  *       *
        1 |    \   / |	       1 |    0   1 |
        2 |      1   |	       2 |      *   4
@@ -57,19 +89,19 @@ int main()
 
   */
 
-  // Points associated to vertices.
-  std::vector<point2d> points;
-  points.push_back(point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(point2d(4,4)); // Point associated to vertex 4.
+  // Sites associated to edges.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to edge 0.
+  sites(1) = point2d(2,2); // Point associated to edge 1.
+  sites(2) = point2d(0,4); // Point associated to edge 2.
+  sites(3) = point2d(4,3); // Point associated to edge 3.
+  sites(4) = point2d(4,4); // Point associated to edge 4.
 
-  // Edges.
-  util::graph<point2d> g;
+  util::graph g;
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex (points[i]);
+  for (unsigned i = 0; i < sites.size(); ++i)
+    g.add_vertex();
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -81,33 +113,18 @@ int main()
   | Line graph image support.  |
   `---------------------------*/
 
-  p_line_graph<point2d> plg(g);
-
-  // Check adjacencies of edge 1.
-  mln_assertion( plg.adjacent(1, 0));
-  mln_assertion(!plg.adjacent(1, 1));
-  mln_assertion( plg.adjacent(1, 2));
-  mln_assertion(!plg.adjacent(1, 3));
-  mln_assertion( plg.adjacent(1, 4));
+  typedef p_edges<util::graph, fsite_t> S;
+  S pe(g, sites);
 
   /*-------------------.
   | Line graph image.  |
   `-------------------*/
 
-  // Values ("empty" vectors).
-  std::vector<int> vertex_values(5);
-  std::vector<int> edge_values(5);
-  // FIXME: hand-made iota's.
-  for (unsigned i = 0; i < vertex_values.size(); ++i)
-    vertex_values[i] = i;
-  for (unsigned i = 0; i < edge_values.size(); ++i)
-    edge_values[i] = i;
+  // Graph values.
+  viota_t<S> iota(5);
 
-  // Line graph image.
-  /* FIXME: We probably don't want to build line_graph_images by hand;
-     provide helpers and/or conversion functions.  */
-  typedef line_graph_image<point2d, int> ima_t;
-  ima_t ima(plg, vertex_values, edge_values);
+  // Create line graph image.
+  mln_const_VAR(ima, (iota | pe));
 
   /*------------.
   | Iterators.  |
@@ -115,20 +132,68 @@ int main()
 
   // Manual iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
+  unsigned i = 10;
   for_all (p)
-    std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
+    mln_assertion(ima(p) == i++);
 
-  // Manual iterations over the neighborhoods of each point site of IMA.
-  typedef line_graph_elt_window<point2d> win_t;
-  win_t win;
-  mln_qiter_(win_t) q(win, p);
-  for_all (p)
   {
-    std::cout << "sites adjacent to " << p << " (" << ima(p) << "), "
-	      << "including the site itself:" << std::endl;
-    for_all (q)
-      std::cout << "  " << q << " (level = " << ima(q) << ")"
-		<< std::endl;
+    // Window - Forward iteration
+    typedef line_graph_elt_window<util::graph, fsite_t> win_t;
+    win_t win;
+    mln_qiter_(win_t) q(win, p);
+    for_all (p)
+    {
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
+		<< "including the site itself:" << std::endl;
+      for_all (q)
+	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
+    }
   }
+
+  {
+    // Window - Backward iteration
+    typedef line_graph_elt_window<util::graph, fsite_t> win_t;
+    win_t win;
+    mln_bkd_qiter_(win_t) q(win, p);
+    for_all (p)
+    {
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
+		<< "including the site itself:" << std::endl;
+      for_all (q)
+	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
+    }
+  }
+  {
+    // Neighborhood - Forward iteration
+    typedef line_graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
+    neigh_t neigh;
+    mln_niter_(neigh_t) n(neigh, p);
+    for_all (p)
+    {
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
+      for_all (n)
+      {
+	mln_assertion(n != p);
+	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+      }
+    }
+  }
+
+  {
+    // Neighborhood - Backward iteration
+    typedef line_graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
+    neigh_t neigh;
+    mln_bkd_niter_(neigh_t) n(neigh, p);
+    for_all (p)
+    {
+      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
+      for_all (n)
+      {
+	mln_assertion(n != p);
+	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+      }
+    }
+  }
+
   std::cout << std::endl;
 }

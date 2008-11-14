@@ -30,27 +30,13 @@
 # define MLN_CORE_IMAGE_LINE_GRAPH_ELT_NEIGHBORHOOD_HH
 
 /// \file mln/core/image/line_graph_elt_neighborhood.hh
-/// \brief Definition of the elementary ``neighborhood'' on a line graph.
-
-/* FIXME: Have a consistent naming: we have window (without '_') but
-   point_, neighb_, etc.  */
-
-/* FIXME: Factor those classes:
-   - mln::graph_elt_window
-   - mln::graph_elt_neighborhood
-   - mln::line_graph_elt_window
-   - mln::line_graph_elt_neighborhood.
-
-   See https://trac.lrde.org/olena/ticket/139.  */
-
-/* FIXME: Due to the poor interface of mln::p_line_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
+/// Definition of the elementary ``neighborhood'' on a line graph.
 
 # include <set>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/image/line_graph_psite.hh>
+# include <mln/core/internal/graph_neighborhood_base.hh>
+# include <mln/util/internal/graph_edge_psite.hh>
 # include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 # include <mln/core/image/line_graph_elt_window.hh>
@@ -58,47 +44,33 @@
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P, typename N> class line_graph_neighborhood_fwd_piter;
-  template <typename P, typename N> class line_graph_neighborhood_bkd_piter;
 
-
-  /// \brief Elementary neighborhood on line graph class.
-  template <typename P>
+  /// Elementary neighborhood on line graph class.
+  template <typename G, typename F>
   class line_graph_elt_neighborhood
-    : public Neighborhood< line_graph_elt_neighborhood<P> >
+    : public graph_neighborhood_base<G,
+				     F,
+				     internal::edge_psite<G, F>,
+				     line_graph_elt_neighborhood<G, F> >
   {
-    typedef line_graph_elt_neighborhood<P> self_;
+    typedef line_graph_elt_neighborhood<G, F> self_;
 
   public:
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the neighborhood.
-    typedef line_graph_psite<P> psite;
-    /// The type of site corresponding to the neighborhood.
-    typedef mln_site(psite) site;
-    // The type of the set of neighbors (edge ids adjacent to the
-    // reference psite).
-    typedef std::set<util::edge_id> sites_t;
+    typedef internal::edge_psite<G, F> psite;
 
-    /// \brief Site_Iterator type to browse the psites of the
+    /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of edges.
-    typedef line_graph_neighborhood_fwd_piter<P, self_> fwd_niter;
+    typedef line_graph_neighborhood_fwd_piter<G, F, self_> fwd_niter;
 
-    /// \brief Site_Iterator type to browse the psites of the
+    /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the reverse ordering of edges.
-    typedef line_graph_neighborhood_bkd_piter<P, self_> bkd_niter;
+    typedef line_graph_neighborhood_bkd_piter<G, F, self_> bkd_niter;
 
     /// The default niter type.
     typedef fwd_niter niter;
-    /// \}
-
-    /// Conversions.
-    /// \{
-    /// The window type corresponding to this neighborhood.
-    typedef line_graph_elt_window<P> window;
-    /// Create a window corresponding to this neighborhood.
-    window to_window() const;
     /// \}
 
     /// Services for iterators.
@@ -107,50 +79,35 @@ namespace mln
     template <typename Piter>
     void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
+
+  protected:
+    typedef graph_neighborhood_base<G, F, psite, self_> super_;
+    typedef typename super_::sites_t sites_t;
   };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename P>
-  inline
-  line_graph_elt_window<P>
-  line_graph_elt_neighborhood<P>::to_window() const
-  {
-    return line_graph_elt_window<P>();
-  }
-
-  template <typename P>
+  template <typename G, typename F>
   template <typename Piter>
   inline
   void
-  line_graph_elt_neighborhood<P>::compute_sites_(Site_Iterator<Piter>& piter_) const
+  line_graph_elt_neighborhood<G, F>::compute_sites_(Site_Iterator<Piter>& piter_) const
   {
     Piter& piter = exact(piter_);
-    util::edge_id ref_edge_id = piter.center().edge_id();
+    unsigned central_edge = piter.center().e().id();
     sites_t& sites = piter.sites();
     sites.clear();
-    /* FIXME: Move this computation out of the neighborhood. In fact,
-       this should be a service of the graph, also proposed by the
-       p_line_graph.  */
-    // Ajacent edges connected through vertex 1.
-    util::vertex_id id1 = piter.center().first_id();
-    const util::vertex<P>& vertex1 = piter.center().site_set().gr_->vertex(id1);
-    for (std::vector<util::edge_id>::const_iterator e =
-	   vertex1.edges.begin(); e != vertex1.edges.end(); ++e)
-      // We explicitly enforce that the reference piter edge id is
-      // *not* inserted into SITES.
-      if (*e != ref_edge_id)
-	sites.insert(*e);
-    // Ajacent edges connected through vertex 2.
-    util::vertex_id id2 = piter.center().second_id();
-    const util::vertex<P>& vertex2 = piter.center().site_set().gr_->vertex(id2);
-    for (std::vector<util::edge_id>::const_iterator e =
-	   vertex2.edges.begin(); e != vertex2.edges.end(); ++e)
-      // Same remark as above.
-      if (*e != ref_edge_id)
-	sites.insert(*e);
+
+    const G& g = piter.center().site_set().graph();
+
+    for (unsigned i = 0; i < g.e_nmax_nbh_edges(central_edge); ++i)
+    {
+      unsigned n = g.e_ith_nbh_edge(central_edge, i);
+      if (n != central_edge)
+	sites.insert(g.e_ith_nbh_edge(central_edge, i));
+    }
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_edges.cc
- *
- * \brief Tests on mln::p_edges.
- */
+/// \file tests/core/site_set/p_edges.cc
+///
+/// Tests on mln::p_edges.
 
 #include <mln/util/graph.hh>
 #include <mln/core/alias/point2d.hh>
@@ -40,10 +40,10 @@ struct my_fun
 {
   typedef mln::point2d result;
 
-  const result& operator()(const mln::util::edge<G>& v) const
+  const result& operator()(unsigned v) const
   {
     static mln::point2d res(0, 0);
-    res.row() = v.id();
+    res.row() = v;
     return res;
   }
 };

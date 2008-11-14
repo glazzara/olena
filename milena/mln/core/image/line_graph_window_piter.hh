@@ -34,25 +34,21 @@
 
 # include <mln/core/internal/line_graph_vicinity_piter.hh>
 
-/* FIXME: Due to the poor interface of mln::p_line_graph and
-   mln::util::graph, we show to much implementation details here.
-   Enrich their interfaces to avoid that.  */
-
 namespace mln
 {
 
   /*------------------------------------.
-  | line_graph_window_fwd_piter<P, W>.  |
+  | line_graph_window_fwd_piter<G, F, W>.  |
   `------------------------------------*/
 
   /// \brief Forward iterator on line graph window.
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   class line_graph_window_fwd_piter
-    : public internal::line_graph_vicinity_piter_<P, W,
-						  line_graph_window_fwd_piter<P, W> >
+    : public internal::line_graph_vicinity_piter_<mln_result(F), W,
+						  line_graph_window_fwd_piter<G, F, W> >
   {
-    typedef line_graph_window_fwd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, W, self_> super_;
+    typedef line_graph_window_fwd_piter<G, F, W> self_;
+    typedef internal::line_graph_vicinity_piter_<mln_result(F), W, self_> super_;
 
   public:
     /// The Point_Site type.
@@ -85,21 +81,21 @@ namespace mln
 
   private:
     /// An iterator on the set of adjacent edges.
-    typename super_::sites_t::const_iterator i_; 
+    typename super_::sites_t::const_iterator i_;
   };
 
 
   /*------------------------------------.
-  | line_graph_window_bkd_piter<P, W>.  |
+  | line_graph_window_bkd_piter<G, F, W>.  |
   `------------------------------------*/
 
   /// \brief Backward iterator on line graph window.
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   class line_graph_window_bkd_piter
-    : public internal::line_graph_vicinity_piter_<P, W, line_graph_window_bkd_piter<P, W> >
+    : public internal::line_graph_vicinity_piter_<mln_result(F), W, line_graph_window_bkd_piter<G, F, W> >
   {
-    typedef line_graph_window_bkd_piter<P, W> self_;
-    typedef internal::line_graph_vicinity_piter_<P, W, self_> super_;
+    typedef line_graph_window_bkd_piter<G, F, W> self_;
+    typedef internal::line_graph_vicinity_piter_<mln_result(F), W, self_> super_;
 
   public:
     /// The Point_Site type.
@@ -132,7 +128,7 @@ namespace mln
 
   private:
     /// An iterator on the set of adjacent edges.
-    typename super_::sites_t::const_reverse_iterator i_; 
+    typename super_::sites_t::const_reverse_iterator i_;
   };
 
 
@@ -140,126 +136,126 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
   /*------------------------------------.
-  | line_graph_window_fwd_piter<P, W>.  |
+  | line_graph_window_fwd_piter<G, F, W>.  |
   `------------------------------------*/
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
-  line_graph_window_fwd_piter<P, W>::line_graph_window_fwd_piter()
+  line_graph_window_fwd_piter<G, F, W>::line_graph_window_fwd_piter()
   {
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   template <typename Pref>
   inline
-  line_graph_window_fwd_piter<P, W>::line_graph_window_fwd_piter(const Window<W>& win,
+  line_graph_window_fwd_piter<G, F, W>::line_graph_window_fwd_piter(const Window<W>& win,
 								 const Pref& p_ref)
      : super_(p_ref)
   {
     this->change_target(exact(win));
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   bool
-  line_graph_window_fwd_piter<P, W>::is_valid_() const
+  line_graph_window_fwd_piter<G, F, W>::is_valid_() const
   {
     return i_ != this->sites_.end();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_fwd_piter<P, W>::invalidate_()
+  line_graph_window_fwd_piter<G, F, W>::invalidate_()
   {
     i_ = this->sites_.end();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_fwd_piter<P, W>::do_start_()
+  line_graph_window_fwd_piter<G, F, W>::do_start_()
   {
     this->site_set().compute_sites_(*this);
     i_ = this->sites_.begin();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_fwd_piter<P, W>::do_next_()
+  line_graph_window_fwd_piter<G, F, W>::do_next_()
   {
     ++i_;
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   mln_psite(W)
-  line_graph_window_fwd_piter<P, W>::compute_p_() const
+  line_graph_window_fwd_piter<G, F, W>::compute_p_() const
   {
-    return line_graph_psite<P>(this->center().site_set(), *i_);
+    return internal::edge_psite<G, F>(this->center().site_set(), *i_);
   }
 
 
   /*------------------------------------.
-  | line_graph_window_bkd_piter<P, W>.  |
+  | line_graph_window_bkd_piter<G, F, W>.  |
   `------------------------------------*/
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
-  line_graph_window_bkd_piter<P, W>::line_graph_window_bkd_piter()
+  line_graph_window_bkd_piter<G, F, W>::line_graph_window_bkd_piter()
   {
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   template <typename Pref>
   inline
-  line_graph_window_bkd_piter<P, W>::line_graph_window_bkd_piter(const Window<W>& win,
-								 const Pref& p_ref)
+  line_graph_window_bkd_piter<G, F, W>::line_graph_window_bkd_piter(const Window<W>& win,
+								    const Pref& p_ref)
     : super_(p_ref)
   {
     this->change_target(exact(win));
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   bool
-  line_graph_window_bkd_piter<P, W>::is_valid_() const
+  line_graph_window_bkd_piter<G, F, W>::is_valid_() const
   {
     return i_ != this->sites_.rend();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_bkd_piter<P, W>::invalidate_()
+  line_graph_window_bkd_piter<G, F, W>::invalidate_()
   {
     i_ = this->sites_.rend();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_bkd_piter<P, W>::do_start_()
+  line_graph_window_bkd_piter<G, F, W>::do_start_()
   {
     this->site_set().compute_sites_(*this);
     i_ = this->sites_.rbegin();
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   void
-  line_graph_window_bkd_piter<P, W>::do_next_()
+  line_graph_window_bkd_piter<G, F, W>::do_next_()
   {
     ++i_;
   }
 
-  template <typename P, typename W>
+  template <typename G, typename F, typename W>
   inline
   mln_psite(W)
-  line_graph_window_bkd_piter<P, W>::compute_p_() const
+  line_graph_window_bkd_piter<G, F, W>::compute_p_() const
   {
-    return line_graph_psite<P>(this->center().site_set(), *i_);
+    return internal::edge_psite<G, F>(this->center().site_set(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

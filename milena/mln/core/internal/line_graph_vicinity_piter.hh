@@ -36,8 +36,6 @@
 # include <set>
 
 # include <mln/core/internal/site_relative_iterator_base.hh>
-# include <mln/core/site_set/p_line_graph.hh>
-# include <mln/core/image/line_graph_psite.hh>
 
 /* FIXME: Factor those classes:
 
@@ -47,9 +45,6 @@
 
 namespace mln
 {
-  // Fwd decls.
-  template <typename P> class p_line_graph;
-  template <typename P> class line_graph_psite;
 
   // FIXME: Consider renaming line_graph_vicinity_piter_ as
   // line_graph_relative_piter_.
@@ -72,7 +67,7 @@ namespace mln
       typedef void mesh;
 
       // The type of the set of vicinity sites (adjacent edge ids).
-      typedef std::set<util::edge_id> sites_t;
+      typedef std::set<unsigned> sites_t;
 
     public:
       /// Return the set of sites (adjacent edge ids).
@@ -119,7 +114,7 @@ namespace mln
 
     template <typename P, typename S, typename E>
     inline
-    std::set<util::edge_id>&
+    std::set<unsigned>&
     line_graph_vicinity_piter_<P, S, E>::sites()
     {
       return sites_;

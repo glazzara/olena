@@ -30,7 +30,7 @@
 # define MLN_UTIL_GRAPH_HH
 
 /// \file mln/util/graph.hh
-/// \brief Definitions of undirected graphs.
+/// Definitions of undirected graphs.
 
 # include <mln/util/internal/graph_base.hh>
 # include <mln/util/internal/graph_iter.hh>

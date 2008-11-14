@@ -30,6 +30,7 @@
 
 # include <mln/core/concept/pseudo_site.hh>
 # include <mln/util/internal/graph_psite_base.hh>
+# include <mln/util/internal/graph_edge.hh>
 
 namespace mln
 {
@@ -112,7 +113,7 @@ namespace mln
       template <typename G, typename F>
       inline
       edge_psite<G, F>::edge_psite(const target_t& t, unsigned id)
-	: super_(id)
+	: super_(t, id)
       {
       }
 
