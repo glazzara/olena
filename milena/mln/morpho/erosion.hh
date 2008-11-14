@@ -34,7 +34,6 @@
 /// \brief Morphological erosion.
 
 # include <mln/morpho/includes.hh>
-# include <mln/accu/transform.hh>
 
 // Specializations are in:
 # include <mln/morpho/erosion.spe.hh>
@@ -109,27 +108,15 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-	erosion_on_set(const Image<I>& input_, const Window<W>& win_)
+	erosion_on_set(const Image<I>& input, const Window<W>& win)
 	{
 	  trace::entering("morpho::impl::generic::erosion_on_set");
 
-	  const I& input = exact(input_);
-	  const W& win = exact(win_);
+	  internal::erosion_tests(input, win);
 
 	  extension::adjust_fill(input, win, true);
-
 	  mln_concrete(I) output;
-	  initialize(output, input);
-
-	  mln_piter(I) p(input.domain());
-	  mln_qiter(W) q(win, p);
-	  for_all(p)
-	  {
-	    for_all(q) if (input.has(q))
-	      if (input(q) == false)
-		break;
-	    output(p) = ! q.is_valid();
-	  }
+	  output = accu::transform_stop(input, accu::land_basic(), win);
 
 	  trace::exiting("morpho::impl::generic::erosion_on_set");
 	  return output;

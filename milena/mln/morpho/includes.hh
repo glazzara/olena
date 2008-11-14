@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,9 @@
 #ifndef MLN_MORPHO_INCLUDES_HH
 # define MLN_MORPHO_INCLUDES_HH
 
-/*! \file mln/morpho/includes.hh
- *
- * \brief Basic list of includes for all files in mln/morpho/.
- *
- * \todo Re-activate the border/all include when ready.
- */
+/// \file mln/morpho/includes.hh
+///
+/// Basic list of includes for all files in mln/morpho/.
 
 
 # include <mln/core/concept/image.hh>
@@ -45,12 +43,16 @@
 # include <mln/value/ops.hh>
 
 # include <mln/accu/land.hh>
+# include <mln/accu/land_basic.hh>
 // # include <mln/accu/lor.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 # include <mln/accu/min_h.hh>
 # include <mln/accu/max_h.hh>
 # include <mln/accu/rank.hh>
+
+# include <mln/accu/transform.hh>
+# include <mln/accu/transform_stop.hh>
 
 # include <mln/fun/v2v/saturate.hh>
 

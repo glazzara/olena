@@ -58,7 +58,6 @@ namespace mln
 
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
-# include <mln/accu/convolve.hh>
 //# include <mln/accu/count_adjacent_vertices.hh>
 # include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
@@ -77,6 +76,13 @@ namespace mln
 # include <mln/accu/sum.hh>
 # include <mln/accu/tuple.hh>
 # include <mln/accu/volume.hh>
+
+// Routines.
+
+# include <mln/accu/convolve.hh>
+# include <mln/accu/snake_2d.hh>
+# include <mln/accu/transform.hh>
+# include <mln/accu/transform_stop.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

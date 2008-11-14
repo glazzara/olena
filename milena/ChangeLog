@@ -1,3 +1,14 @@
+2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add accu transform stop and make erosion rely on it.
+
+	* mln/accu/land_basic.hh: New.
+	* mln/accu/transform_stop.hh: New.
+	* mln/accu/all.hh: Update.
+	* mln/morpho/erosion.hh
+	(erosion_on_set): Rely on accu::transform_stop.
+	* mln/morpho/includes.hh: Update.
+
 2008-11-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make morpho erosion generic impl rely on accu transform.
