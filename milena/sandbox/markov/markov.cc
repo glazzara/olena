@@ -26,6 +26,7 @@
 // Public License.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -47,6 +48,10 @@ int main(int argc, const char * argv[])
   image2d<int_u8> ima;
   io::pgm::load(ima, argv[1]);
 
+
   int temperature = atoi(argv[2]);
-  io::pgm::save(markov(ima, temperature), name.append("_markoved.pbm"));
+
+  std::string name(argv[1]);
+  name.erase(name.length() - 4);
+  io::pbm::save(markov(ima, c4(), temperature), name.append("_markoved.pbm"));
 }

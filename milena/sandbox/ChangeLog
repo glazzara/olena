@@ -1,5 +1,12 @@
 2008-11-14  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	It now compiles.
+
+	* markov/markov.cc: add name modification.
+	* markov/markov.hh: many little fixes.
+
+2008-11-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Add a .cc file, correct some little things.
 
 	* markov/markov.cc: New.

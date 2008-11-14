@@ -2,10 +2,13 @@
 # define MARKOV_HH_
 
 # include <cmath>
+# include <random.hh>
+# include <T_gen.hh>
 
 namespace mln
 {
 
+  /* I think we don't need it anymore...
   inline
   const neighb2d& neighb_h1()
   {
@@ -19,49 +22,59 @@ namespace mln
       }
     return it;
   }
+  */
 
-  double compute_energy(const Image2d<int_u8>& ima, bool xi, const point2d& p)
+  template <typename I, typename N>
+  double compute_energy(const I& ima, const N& nbh, bool xi, const mln_piter(I)& p)
   {
     // Compute u(x,y)
     double u;
-    if (v)
-      u = ima(p) / 255;
+    if (xi)
+      u = (double) ima(p) / mln_max(mln_value(I));
     else
-      u = 1 - ima(p) / 255;
+      u = (double) (1 - ima(p)) / mln_max(mln_value(I));
 
     // u(x) is cst donc osef
 
     // u voisinage
+
+    mln_niter(N) n(nbh, p);
+    for_all(n)
+      // treat each point here ;), no need to make weird neighborhoods
+      // make sth with |ima(p) - ima(n)|
+      abs(ima(p) - ima(n));
   }
 
-  template <typename I, typename G, typename R> // I == int_u8
-  markov(const Image<I>& ima_, unsigned start_temp)
+  template <typename I, typename N> // I == int_u8
+  mln_ch_value(I, bool) markov(const Image<I>& ima_, const Neighborhood<N> nbh_, unsigned start_temp)
   {
-    exact(I) &ima = ima_;
+    const I &ima = exact(ima_);
+    const N &nbh = exact(nbh_);
 
-    double espilon = 0.001;
+    double epsilon = 0.001;
     mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
-    G temp(start_temp);
+    // G temp(start_temp);
+    temperature_generator temp(start_temp, 0.99);
 
-    R v_random(0, 1);
-    R p_random(0., 1.);
+    Random<bool> v_random(0, 1); // mettre max et min ?
+    Random<double> p_random(0., 1.); // idem
 
-    init(ima, out);
+    // init(ima, out); ca empeche de compiloter
 
-    while (temp.value() < epsilon)
+    while (temp < epsilon)
       {
-	mln_piter p(ima.domain());
+	mln_piter(I) p(ima.domain());
 
 	for_all(p)
 	{
 	  bool v = v_random.get();
 
-	  u = compute_energy(ima, out(p), p);
-	  up = compute_energy(ima, v, p);
+	  double u = compute_energy(ima, nbh, out(p), p);
+	  double up = compute_energy(ima, nbh, v, p);
 
-	  d_u = abs(up - u);
+	  double d_u = abs(up - u);
 
-	  proba = ...;
+	  double proba = 0.5; // FIXME
 
 	  if (d_u < 0 or (p_random.get() > proba))
 	    out(p) = v;
