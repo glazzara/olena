@@ -1,3 +1,9 @@
+2008-11-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	[Markov] Add temperator generator.
+
+	* markov/T_gen.hh: New.
+
 2008-11-14  Maxime van Noppen  <yabo@lrde.epita.fr>
 
 	Create the sandbox for the Markov project.
