@@ -25,14 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_SNAKE_2D_HH
-# define MLN_ACCU_SNAKE_2D_HH
+#ifndef MLN_ACCU_TRANSFORM_SNAKE_HH
+# define MLN_ACCU_TRANSFORM_SNAKE_HH
 
-/// \file mln/accu/snake_2d.hh
+/// \file mln/accu/transform_snake.hh
 ///
 /// Run an accumulator in a snake-like browsing.
-///
-/// \todo Rename as transform_snake_2d.
 ///
 /// \todo Make it n-D.
 ///
@@ -40,14 +38,16 @@
 ///
 /// \todo Pass the accumulator to the function-object.
 
-#include <mln/core/concept/image.hh>
-#include <mln/core/concept/meta_accumulator.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/win/diff.hh>
-#include <mln/win/shift.hh>
-#include <mln/geom/delta.hh>
-#include <mln/extension/adjust.hh>
-#include <mln/canvas/browsing/snake_generic.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/win/diff.hh>
+# include <mln/win/shift.hh>
+# include <mln/geom/delta.hh>
+# include <mln/extension/adjust.hh>
+
+# include <mln/canvas/browsing/snake_fwd.hh>
+# include <mln/canvas/browsing/snake_generic.hh>
 
 
 
@@ -60,12 +60,12 @@ namespace mln
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
-    snake_2d(const Accumulator<A>&, const Image<I>& input, const Window<W>& win);
+    transform_snake(const Accumulator<A>&, const Image<I>& input, const Window<W>& win);
 
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    snake_2d(const Meta_Accumulator<A>&, const Image<I>& input, const Window<W>& win);
+    transform_snake(const Meta_Accumulator<A>&, const Image<I>& input, const Window<W>& win);
 
 
 
@@ -76,7 +76,7 @@ namespace mln
 
 
       template <typename I, typename W>
-      void snake_2d_tests(const Image<I>& input_, const Window<W>& win_)
+      void transform_snake_tests(const Image<I>& input_, const Window<W>& win_)
       {
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
@@ -93,9 +93,9 @@ namespace mln
       // Functor.
 
       template <typename I, typename W, typename A>
-      struct snake_2d_functor
+      struct transform_snake_functor
       {
-	typedef snake_2d_functor<I,W, A> self;
+	typedef transform_snake_functor<I,W, A> self;
 	typedef void (self::*move_fun)();
 	typedef mln_deduce(I, psite, delta) dpsite;
 
@@ -129,7 +129,7 @@ namespace mln
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
 
-	snake_2d_functor(const Image<I>& input, const Window<W>& win)
+	transform_snake_functor(const Image<I>& input, const Window<W>& win)
 	  : input(exact(input)),
 	    win(exact(win)),
 	    accu(),
@@ -245,15 +245,15 @@ namespace mln
       // Functor (fastest version).
 
       template <typename I, typename W, typename A>
-      struct snake_2d_fastest_functor
+      struct transform_snake_fastest_functor
       {
-	typedef snake_2d_fastest_functor<I,W,A> self;
+	typedef transform_snake_fastest_functor<I,W,A> self;
 	typedef void (self::*move_fun)();
 	typedef mln_deduce(I, psite, delta) dpsite;
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;
@@ -282,7 +282,7 @@ namespace mln
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
 
-	snake_2d_fastest_functor(const I& input, const W& win)
+	transform_snake_fastest_functor(const I& input, const W& win)
 	  : input(input),
 	    win(win),
 	    accu(),
@@ -393,11 +393,11 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      snake_2d_dispatch(trait::image::speed::any,
+      transform_snake_dispatch(trait::image::speed::any,
 			const Accumulator<A>& /* FIXME a */,
 			const Image<I>& input, const Window<W>& win)
       {
-	typedef snake_2d_functor<I, W, A> F;
+	typedef transform_snake_functor<I, W, A> F;
 	F f(exact(input), exact(win));  // FIXME: Pass a to f.
 	canvas::browsing::snake_generic(f);
 	return f.output;
@@ -406,11 +406,11 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      snake_2d_dispatch(trait::image::speed::fastest,
-			const Accumulator<A>& /* FIXME a*/,
-			const Image<I>& input, const Window<W>& win)
+      transform_snake_dispatch(trait::image::speed::fastest,
+			       const Accumulator<A>& /* FIXME a*/,
+			       const Image<I>& input, const Window<W>& win)
       {
-	typedef snake_2d_fastest_functor<I, W, A> F;
+	typedef transform_snake_fastest_functor<I, W, A> F;
 	F f(exact(input), exact(win));  // FIXME: Pass a to f.
 	canvas::browsing::snake_generic(f);
 	return f.output;
@@ -419,10 +419,10 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      snake_2d_dispatch(const Accumulator<A>& a,
-			const Image<I>& input, const Window<W>& win)
+      transform_snake_dispatch(const Accumulator<A>& a,
+			       const Image<I>& input, const Window<W>& win)
       {
-	return snake_2d_dispatch(mln_trait_image_speed(I)(),
+	return transform_snake_dispatch(mln_trait_image_speed(I)(),
 				 a, input, win);
       }
 
@@ -434,18 +434,18 @@ namespace mln
     template <typename A, typename I, typename W>
     inline
     mln_ch_value(I, mln_result(A))
-    snake_2d(const Accumulator<A>& a,
-	     const Image<I>& input, const Window<W>& win)
+    transform_snake(const Accumulator<A>& a,
+		    const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::snake_2d");
+      trace::entering("accu::transform_snake");
 
-      internal::snake_2d_tests(input, win);
+      internal::transform_snake_tests(input, win);
 
       extension::adjust(input, geom::delta(win) + 1);
       mln_ch_value(I, mln_result(A)) output;
-      output = internal::snake_2d_dispatch(a, input, win);
+      output = internal::transform_snake_dispatch(a, input, win);
 
-      trace::exiting("accu::snake_2d");
+      trace::exiting("accu::transform_snake");
       return output;
     }
 
@@ -453,21 +453,21 @@ namespace mln
     template <typename A, typename I, typename W>
     inline
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    snake_2d(const Meta_Accumulator<A>& a,
-	     const Image<I>& input, const Window<W>& win)
+    transform_snake(const Meta_Accumulator<A>& a,
+		    const Image<I>& input, const Window<W>& win)
     {
-      trace::entering("accu::snake_2d");
+      trace::entering("accu::transform_snake");
 
-      internal::snake_2d_tests(input, win);
+      internal::transform_snake_tests(input, win);
 
       typedef mln_accu_with(A, mln_value(I)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());
 
       extension::adjust(input, geom::delta(win) + 1);
       mln_ch_value(I, mln_result(A_)) output;
-      output = internal::snake_2d_dispatch(a_, input, win);
+      output = internal::transform_snake_dispatch(a_, input, win);
 
-      trace::exiting("accu::snake_2d");
+      trace::exiting("accu::transform_snake");
       return output;
     }
 
@@ -479,4 +479,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_SNAKE_2D_HH
+#endif // ! MLN_ACCU_TRANSFORM_SNAKE_HH

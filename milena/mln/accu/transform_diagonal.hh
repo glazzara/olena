@@ -40,6 +40,7 @@
 #include <mln/core/concept/image.hh>
 #include <mln/core/concept/meta_accumulator.hh>
 #include <mln/core/alias/window2d.hh>
+#include <mln/win/diff.hh>
 #include <mln/win/shift.hh>
 #include <mln/geom/delta.hh>
 #include <mln/extension/adjust.hh>
@@ -62,15 +63,13 @@ namespace mln
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
     transform_diagonal(const Accumulator<A>&,
-		       const Image<I>& input, const Window<W>& win,
-		       unsigned dir);
+		       const Image<I>& input, const Window<W>& win);
 
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
     transform_diagonal(const Meta_Accumulator<A>&,
-		       const Image<I>& input, const Window<W>& win,
-		       unsigned dir);
+		       const Image<I>& input, const Window<W>& win);
 
 
 
@@ -110,7 +109,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;
@@ -174,7 +173,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;
@@ -241,7 +240,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;
@@ -304,7 +303,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;

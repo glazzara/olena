@@ -80,9 +80,12 @@ namespace mln
 // Routines.
 
 # include <mln/accu/convolve.hh>
-# include <mln/accu/snake_2d.hh>
 # include <mln/accu/transform.hh>
 # include <mln/accu/transform_stop.hh>
+
+# include <mln/accu/transform_directional.hh>
+# include <mln/accu/transform_diagonal.hh>
+# include <mln/accu/transform_snake.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

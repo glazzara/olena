@@ -39,17 +39,8 @@
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 
-# include <mln/win/shift.hh>
-# include <mln/win/diff.hh>
-
 # include <mln/accu/min_h.hh>
 # include <mln/accu/line.hh>
-
-# include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/canvas/browsing/snake_generic.hh>
-# include <mln/canvas/browsing/directional.hh>
-# include <mln/canvas/browsing/diagonal2d.hh>
-# include <mln/canvas/browsing/backdiagonal2d.hh>
 
 
 /// \file mln/morpho/erosion.spe.hh
@@ -248,7 +239,7 @@ namespace mln
 
 	mln_concrete(I) output;
 	output = morpho::erosion(input,  win::hline2d(len));
-	output = morpho::erosion(output,  win::vline2d(len));
+	output = morpho::erosion(output, win::vline2d(len));
 	output = morpho::erosion(output, win::diag2d(len));
 	output = morpho::erosion(output, win::backdiag2d(len));
 
@@ -269,7 +260,7 @@ namespace mln
 	A a;
 
 	extension::adjust_fill(input, geom::delta(win) + 1, a);
-	mln_concrete(I) output = accu::snake_2d(a, input, win);
+	mln_concrete(I) output = accu::transform_snake(a, input, win);
 
 	trace::exiting("morpho::impl:erosion_arbitrary_2d");
 	return output;
@@ -408,10 +399,11 @@ namespace mln
       mln_concrete(I)
       erosion_dispatch_wrt_win(const I& input, const win::rectangle2d& win)
       {
+	if (win.size() == 1)
+	  return clone(input);
 	if (win.size() <= 9) // FIXME: Hard-coded!
 	  return erosion_dispatch_for_generic(input, win);
-	else
-	  return impl::erosion_rectangle2d(input, win);
+	return impl::erosion_rectangle2d(input, win);
       }
 
 
@@ -420,34 +412,35 @@ namespace mln
       erosion_dispatch_wrt_win(const I& input, const win::octagon2d& win)
       {
 	if (win.length() < 5)
-	  return morpho::impl::erosion_arbitrary_2d(input, win);
+	  return impl::erosion_arbitrary_2d(input, win);
 	else
 	  return impl::erosion_octagon2d(input, win);
       }
 
 
-      /// Handling win::hline2d.
+
+      /// Handling win::line(s).
       /// \{
 
-      template <typename I>
+      template <typename I, typename W>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::true_,
-			       const I& input, const win::hline2d& win)
+      erosion_dispatch_line(metal::true_,
+			    const I& input, const W& win)
       {
-	return impl::erosion_directional(input, win, 1);
+	return impl::erosion_directional(input, win, W::dir);
       }
 
-      template <typename I>
+      template <typename I, typename W>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::false_,
-			       const I& input, const win::hline2d& win)
+      erosion_dispatch_line(metal::false_,
+			    const I& input, const W& win)
       {
 	return erosion_dispatch_for_generic(input, win);
       }
 
-      template <typename I>
+      template <typename I, typename M, unsigned i, typename C>
       mln_concrete(I)
-      erosion_dispatch_wrt_win(const I& input, const win::hline2d& win)
+      erosion_dispatch_wrt_win(const I& input, const win::line<M,i,C>& win)
       {
 	if (win.size() == 1)
 	  return clone(input);
@@ -458,48 +451,8 @@ namespace mln
 	    enum { test = mlc_is_a(mln_pset(I), Box)::value
 		   && mlc_equal(mln_trait_image_quant(I),
 				mln::trait::image::quant::low)::value };
-	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
-					    input, win);
-	  }
-      }
-
-      /// \}
-
-
-      /// Handling win::vline2d.
-      /// \{
-
-      template <typename I>
-      mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::true_,
-			       const I& input, const win::vline2d& win)
-      {
-	return impl::erosion_directional(input, win, 0);
-      }
-
-      template <typename I>
-      mln_concrete(I)
-      erosion_dispatch_wrt_win(metal::false_,
-			       const I& input, const win::vline2d& win)
-      {
-	return erosion_dispatch_for_generic(input, win);
-      }
-
-      template <typename I>
-      mln_concrete(I)
-      erosion_dispatch_wrt_win(const I& input, const win::vline2d& win)
-      {
-	if (win.size() == 1)
-	  return clone(input);
-	else if (win.size() == 3)
-	  return erosion_dispatch_for_generic(input, win);
-	else
-	  {
-	    enum { test = mlc_is_a(mln_pset(I), Box)::value
-		   && mlc_equal(mln_trait_image_quant(I),
-				mln::trait::image::quant::low)::value };
-	    return erosion_dispatch_wrt_win(metal::bool_<test>(),
-					    input, win);
+	    return erosion_dispatch_line(metal::bool_<test>(),
+					 input, win);
 	  }
       }
 
@@ -537,9 +490,7 @@ namespace mln
 	  return erosion_dispatch_for_generic(input, win);
 	else
 	  {
-	    enum { test = mlc_is_not(mln_trait_image_kind(I),
-				     mln::trait::image::kind::logic)::value
-		   && mlc_is_a(mln_pset(I), Box)::value
+	    enum { test = mlc_is_a(mln_pset(I), Box)::value
 		   && mlc_equal(mln_trait_image_quant(I),
 				mln::trait::image::quant::low)::value };
 	    return erosion_dispatch_diagonal(metal::bool_<test>(),
@@ -563,6 +514,7 @@ namespace mln
       }
 
       /// \}
+
 
 
       // The dispatch entry point.

@@ -1,5 +1,34 @@
 2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Factor code for erosion on lines.
+
+	* mln/accu/transform_directional.hh (include): Layout.
+	(output): Fix typedef.
+	* mln/accu/transform_diagonal.hh: Likewise.
+	Fix declaration signature.
+	* tests/accu/transform_directional.cc: New.
+	* tests/accu/transform_diagonal.cc: New.
+	* mln/accu/all.hh: Update.
+	* mln/morpho/erosion.spe.hh
+	(erosion_dispatch_wrt_win): Handle the case win.size == 1.
+	Remove useless qualif morpho::.
+	(erosion_dispatch_wrt_win): Factor code for hline2d and vline2d
+	into...
+	(erosion_dispatch_line): ...this new overloaded routine.
+	(erosion_dispatch_diagonal): Remove check on kind::logic cause it
+	also works on this case. 
+
+	To be consistent:
+	* mln/accu/snake_2d.hh: Rename as...
+	* mln/accu/transform_snake.hh: ...this.
+	* mln/morpho/erosion.spe.hh (erosion_arbitrary_2d): Update.
+	* mln/morpho/includes.hh: Update.
+	* tests/accu/snake_2d.cc: Rename as...
+	* tests/accu/transform_snake.cc: ...this.
+	* tests/accu/Makefile.am: Update.
+
+2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move diagonal-related code out of erosion, then factor.
 
 	* mln/accu/transform_diagonal.hh: New file.

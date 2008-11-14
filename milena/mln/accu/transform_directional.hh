@@ -37,14 +37,15 @@
 /// \todo Pass the accumulator to the function-object.
 
 
-#include <mln/core/concept/image.hh>
-#include <mln/core/concept/meta_accumulator.hh>
-#include <mln/core/alias/window2d.hh>
-#include <mln/win/shift.hh>
-#include <mln/geom/delta.hh>
-#include <mln/literal/zero.hh>
-#include <mln/extension/adjust.hh>
-#include <mln/canvas/browsing/directional.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/meta_accumulator.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/win/diff.hh>
+# include <mln/win/shift.hh>
+# include <mln/geom/delta.hh>
+# include <mln/literal/zero.hh>
+# include <mln/extension/adjust.hh>
+# include <mln/canvas/browsing/directional.hh>
 
 
 
@@ -119,7 +120,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 	enum { dim = I::site::dim };
 
@@ -190,7 +191,7 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_concrete(I) output;
+	mln_ch_value(I, mln_result(A)) output;
 	A accu;
 
 	mln_psite(I) p;

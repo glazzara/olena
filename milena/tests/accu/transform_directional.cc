@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/accu/snake_2d.cc
+/// \file tests/accu/transform_directional.cc
 ///
-/// Tests on mln::accu::snake_2d.
+/// Tests on mln::accu::transform_directional.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/accu/snake_2d.hh>
+#include <mln/accu/transform_directional.hh>
 #include <mln/accu/count.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/pw/all.hh>
@@ -44,9 +44,11 @@ int main()
   image2d<int> ima(4, 5);
   win::rectangle2d rec(3, 3);
 
-  image2d<unsigned>
-    out = accu::snake_2d(accu::meta::count(), ima, rec),
-    ref(ima.domain());
-
-  mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
+  for (unsigned dir = 0; dir < 2; ++dir)
+  {
+    image2d<unsigned>
+      out = accu::transform_directional(accu::meta::count(), ima, rec, dir),
+      ref(ima.domain());
+    mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
+  }
 }
