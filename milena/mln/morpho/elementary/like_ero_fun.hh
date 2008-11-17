@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -48,7 +48,7 @@ namespace mln
       template <typename A, typename F,
 		typename I, typename N>
       mln_concrete(I)
-      like_ero_fun(const Meta_Accumulator<A>&, const F& f,
+      like_ero_fun(const Meta_Accumulator<A>& a, const F& f,
 		   const Image<I>& input, const Neighborhood<N>& nbh);
 
 
@@ -79,7 +79,7 @@ namespace mln
 	  template <typename A, typename F,
 		    typename I, typename N>
 	  mln_concrete(I)
-	  like_ero_fun(const Meta_Accumulator<A>&, const F& f,
+	  like_ero_fun(const Meta_Accumulator<A>& a_, const F& f,
 		       const Image<I>& input_, const Neighborhood<N>& nbh_)
 	  {
 	    trace::entering("morpho::elementary::impl::generic::like_ero_fun");
@@ -87,7 +87,7 @@ namespace mln
 	    const I& input = exact(input_);
 	    const N& nbh   = exact(nbh_);
 
-	    mln_accu_with(A, mln_value(I)) a;
+	    mln_accu_with(A, mln_value(I)) a = accu::unmeta(exact(a_), mln_value(I)());
 	    extension::adjust_fill(input, nbh, a);
 
 	    mln_concrete(I) output;
@@ -113,7 +113,7 @@ namespace mln
 	template <typename A, typename F,
 		  typename I, typename N>
 	mln_concrete(I)
-	like_ero_fun_fastest(const Meta_Accumulator<A>&, const F& f,
+	like_ero_fun_fastest(const Meta_Accumulator<A>& a_, const F& f,
 			     const Image<I>& input_, const Neighborhood<N>& nbh_)
 	{
 	  trace::entering("morpho::elementary::impl::like_ero_fun_fastest");
@@ -121,7 +121,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const N& nbh   = exact(nbh_);
 
-	  mln_accu_with(A, mln_value(I)) a;
+	  mln_accu_with(A, mln_value(I)) a = accu::unmeta(exact(a_), mln_value(I)());
 	  extension::adjust_fill(input, nbh, a);
 
 	  mln_concrete(I) output;

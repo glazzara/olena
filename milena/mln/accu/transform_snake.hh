@@ -60,12 +60,12 @@ namespace mln
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
-    transform_snake(const Accumulator<A>&, const Image<I>& input, const Window<W>& win);
+    transform_snake(const Accumulator<A>& a, const Image<I>& input, const Window<W>& win);
 
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform_snake(const Meta_Accumulator<A>&, const Image<I>& input, const Window<W>& win);
+    transform_snake(const Meta_Accumulator<A>& a, const Image<I>& input, const Window<W>& win);
 
 
 
@@ -101,8 +101,9 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_ch_value(I, mln_result(A)) output;
 	A accu;
+
+	mln_ch_value(I, mln_result(A)) output;
 
 	mln_psite(I) p;
 
@@ -129,10 +130,10 @@ namespace mln
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
 
-	transform_snake_functor(const Image<I>& input, const Window<W>& win)
+	transform_snake_functor(const Image<I>& input, const Window<W>& win, const Accumulator<A>& a)
 	  : input(exact(input)),
 	    win(exact(win)),
-	    accu(),
+	    accu(exact(a)),
 
 	    win_left_fwd(win::shift(win, mln::left) - win),
 	    win_right_fwd(win - win::shift(win, mln::left)),
@@ -253,8 +254,9 @@ namespace mln
 
 	const I& input;
 	const W& win;
-	mln_ch_value(I, mln_result(A)) output;
 	A accu;
+
+	mln_ch_value(I, mln_result(A)) output;
 
 	mln_psite(I) p;
 
@@ -282,10 +284,10 @@ namespace mln
 	std::vector<move_fun> moves;
 	std::vector<dpsite> dps;
 
-	transform_snake_fastest_functor(const I& input, const W& win)
+	transform_snake_fastest_functor(const I& input, const W& win, const A& a)
 	  : input(input),
 	    win(win),
-	    accu(),
+	    accu(a),
 
 	    win_left_fwd(win::shift(win, mln::left) - win),
 	    win_right_fwd(win - win::shift(win, mln::left)),
@@ -394,11 +396,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_snake_dispatch(trait::image::speed::any,
-			const Accumulator<A>& /* FIXME a */,
+			const Accumulator<A>& a,
 			const Image<I>& input, const Window<W>& win)
       {
 	typedef transform_snake_functor<I, W, A> F;
-	F f(exact(input), exact(win));  // FIXME: Pass a to f.
+	F f(exact(input), exact(win), exact(a));
 	canvas::browsing::snake_generic(f);
 	return f.output;
       }
@@ -407,11 +409,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_snake_dispatch(trait::image::speed::fastest,
-			       const Accumulator<A>& /* FIXME a*/,
+			       const Accumulator<A>& a,
 			       const Image<I>& input, const Window<W>& win)
       {
 	typedef transform_snake_fastest_functor<I, W, A> F;
-	F f(exact(input), exact(win));  // FIXME: Pass a to f.
+	F f(exact(input), exact(win), exact(a));
 	canvas::browsing::snake_generic(f);
 	return f.output;
       }

@@ -68,9 +68,9 @@ namespace mln
 	
 	template <typename I, typename A, typename W>
 	mln_ch_value(I, mln_result(A))
-	  transform_stop(const Image<I>& input_,
-		    const Accumulator<A>& a_,
-		    const Window<W>& win_)
+	transform_stop(const Image<I>& input_,
+		       const Accumulator<A>& a_,
+		       const Window<W>& win_)
 	{
 	  trace::entering("accu::impl::generic::transform_stop");
 
@@ -159,7 +159,7 @@ namespace mln
       template <typename I, typename A, typename W>
       mln_ch_value(I, mln_result(A))
       transform_stop_dispatch(trait::image::speed::any,
-			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
+			      const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return impl::generic::transform_stop(input, a, win);
       }
@@ -167,7 +167,7 @@ namespace mln
       template <typename I, typename A, typename W>
       mln_ch_value(I, mln_result(A))
       transform_stop_dispatch(trait::image::speed::fastest,
-			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
+			      const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return impl::transform_stop_fastest(input, a, win);
       }
@@ -177,7 +177,7 @@ namespace mln
       transform_stop_dispatch(const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return transform_stop_dispatch(mln_trait_image_speed(I)(),
-				  input, a, win);
+				       input, a, win);
       }
 
     } // end of namespace mln::accu::internal

@@ -150,12 +150,14 @@ namespace mln
     template <typename A, typename I, typename J>
     inline
     util::array<mln_accu_with(A, mln_value(I))::result>
-    compute(const Meta_Accumulator<A>&,
+    compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
 	    const Image<J>& label, mln_value(J) nlabels)
     {
-      mln_accu_with(A, mln_value(I)) accu;
-      return compute(accu, input, label, nlabels);
+      typedef mln_accu_with(A, mln_value(I)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_value(I)());
+
+      return compute(a_, input, label, nlabels);
     }
 
 
@@ -190,11 +192,13 @@ namespace mln
     template <typename A, typename J>
     inline
     util::array<mln_accu_with(A, mln_psite(J))::result>
-    compute(const Meta_Accumulator<A>&,
+    compute(const Meta_Accumulator<A>& a,
 	    const Image<J>& label, mln_value(J) nlabels)
     {
-      mln_accu_with(A, mln_psite(J)) accu;
-      return compute(accu, label, nlabels);
+      typedef mln_accu_with(A, mln_psite(J)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_psite(J)());
+
+      return compute(a_, label, nlabels);
     }
 
 

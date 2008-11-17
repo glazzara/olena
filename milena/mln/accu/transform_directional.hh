@@ -58,14 +58,14 @@ namespace mln
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
-    transform_directional(const Accumulator<A>&,
+    transform_directional(const Accumulator<A>& a,
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir);
 
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform_directional(const Meta_Accumulator<A>&,
+    transform_directional(const Meta_Accumulator<A>& a,
 			  const Image<I>& input, const Window<W>& win,
 			  unsigned dir);
 
@@ -135,10 +135,10 @@ namespace mln
 	q_l,
 	  q_r;
 
-	directional_functor(const I& input, const W& win, int dir)
+	directional_functor(const I& input, const W& win, const A& a, int dir)
 	  : input(input),
 	    win(win),
-	    accu(),
+	    accu(a),
 	    dir(dir),
 	    win_left(win::shift(win, -dp_directional<dpsite>(dir)) - win),
 	    win_right(win - win::shift(win, -dp_directional<dpsite>(dir))),
@@ -202,10 +202,10 @@ namespace mln
 
 	mln_qixter(const I, window2d) q_l, q_r;
 
-	directional_fastest_functor(const I& input, const W& win, unsigned dir)
+	directional_fastest_functor(const I& input, const W& win, const A& a, unsigned dir)
 	  : input(input),
 	    win(win),
-	    accu(),
+	    accu(a),
 	    dir(dir),
 	    win_left(win::shift(win, -dp_directional<dpsite>(dir)) - win),
 	    win_right(win - win::shift(win, -dp_directional<dpsite>(dir))),
@@ -254,12 +254,12 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_directional_dispatch(trait::image::speed::any,
-				     const Accumulator<A>& /* FIXME a */,
+				     const Accumulator<A>& a,
 				     const Image<I>& input, const Window<W>& win,
 				     unsigned dir)
       {
 	typedef directional_functor<I, W, A> F;
-	F f(exact(input), exact(win), dir); // FIXME: Pass a to f.
+	F f(exact(input), exact(win), exact(a), dir);
 	canvas::browsing::directional(f);
 	return f.output;
       }
@@ -268,12 +268,12 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_directional_dispatch(trait::image::speed::fastest,
-				     const Accumulator<A>& /* FIXME a*/,
+				     const Accumulator<A>& a,
 				     const Image<I>& input, const Window<W>& win,
 				     unsigned dir)
       {
 	typedef directional_fastest_functor<I, W, A> F;
-	F f(exact(input), exact(win), dir); // FIXME: Pass a to f.
+	F f(exact(input), exact(win), exact(a), dir);
 	canvas::browsing::directional(f);
 	return f.output;
       }

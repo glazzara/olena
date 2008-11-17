@@ -62,13 +62,13 @@ namespace mln
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_result(A))
-    transform_diagonal(const Accumulator<A>&,
+    transform_diagonal(const Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win);
 
 
     template <typename A, typename I, typename W>
     mln_ch_value(I, mln_accu_with(A, mln_value(I))::result)
-    transform_diagonal(const Meta_Accumulator<A>&,
+    transform_diagonal(const Meta_Accumulator<A>& a,
 		       const Image<I>& input, const Window<W>& win);
 
 
@@ -114,17 +114,15 @@ namespace mln
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
-	unsigned dir;
 
 	window2d win_left, win_right;
 
 	mln_qiter(window2d) q_l, q_r;
 
-	diagonal_functor(const I& input, const W& win)
+	diagonal_functor(const I& input, const W& win, const A& a)
 	  : input(input),
 	    win(win),
-	    accu(),
-	    dir(dir),
+	    accu(a),
 	    win_left(win::shift(win, dpsite(1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(1, -1))),
 	    q_l(win_left, p),
@@ -178,17 +176,15 @@ namespace mln
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
-	unsigned dir;
 
 	window2d win_left, win_right;
 
 	mln_qiter(window2d) q_l, q_r;
 
-	backdiagonal_functor(const I& input, const W& win)
+	backdiagonal_functor(const I& input, const W& win, const A& a)
 	  : input(input),
 	    win(win),
-	    accu(),
-	    dir(dir),
+	    accu(a),
 	    win_left(win::shift(win, dpsite(-1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(-1, -1))),
 	    q_l(win_left, p),
@@ -245,17 +241,15 @@ namespace mln
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
-	unsigned dir;
 
 	window2d win_left, win_right;
 
 	mln_qixter(const I, window2d) q_l, q_r;
 
-	diagonal_fastest_functor(const I& input, const W& win)
+	diagonal_fastest_functor(const I& input, const W& win, const A& a)
 	  : input(input),
 	    win(win),
-	    accu(),
-	    dir(dir),
+	    accu(a),
 	    win_left(win::shift(win, dpsite(1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(1, -1))),
 	    q_l(input, win_left, p),
@@ -308,17 +302,15 @@ namespace mln
 
 	mln_psite(I) p;
 	enum { dim = I::site::dim };
-	unsigned dir;
 
 	window2d win_left, win_right;
 
 	mln_qixter(const I, window2d) q_l, q_r;
 
-	backdiagonal_fastest_functor(const I& input, const W& win)
+	backdiagonal_fastest_functor(const I& input, const W& win, const A& a)
 	  : input(input),
 	    win(win),
-	    accu(),
-	    dir(dir),
+	    accu(a),
 	    win_left(win::shift(win, dpsite(-1, -1)) - win),
 	    win_right(win - win::shift(win, dpsite(-1, -1))),
 	    q_l(input, win_left, p),
@@ -366,11 +358,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_diagonal_dispatch(trait::image::speed::any,
-				  const Accumulator<A>& /* FIXME a */,
+				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::diag2d& win)
       {
 	typedef diagonal_functor<I, win::diag2d, A> F;
-	F f(exact(input), win); // FIXME: Pass a to f.
+	F f(exact(input), win, exact(a));
 	canvas::browsing::diagonal2d(f);
 	return f.output;
       }
@@ -379,11 +371,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_diagonal_dispatch(trait::image::speed::any,
-				  const Accumulator<A>& /* FIXME a */,
+				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::backdiag2d& win)
       {
 	typedef backdiagonal_functor<I, win::backdiag2d, A> F;
-	F f(exact(input), win); // FIXME: Pass a to f.
+	F f(exact(input), win, exact(a));
 	canvas::browsing::backdiagonal2d(f);
 	return f.output;
       }
@@ -392,11 +384,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_diagonal_dispatch(trait::image::speed::fastest,
-				  const Accumulator<A>& /* FIXME a*/,
+				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::diag2d& win)
       {
 	typedef diagonal_fastest_functor<I, win::diag2d, A> F;
-	F f(exact(input), win); // FIXME: Pass a to f.
+	F f(exact(input), win, exact(a));
 	canvas::browsing::diagonal2d(f);
 	return f.output;
       }
@@ -405,11 +397,11 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(A))
       transform_diagonal_dispatch(trait::image::speed::fastest,
-				  const Accumulator<A>& /* FIXME a*/,
+				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::backdiag2d& win)
       {
 	typedef backdiagonal_fastest_functor<I, win::backdiag2d, A> F;
-	F f(exact(input), win); // FIXME: Pass a to f.
+	F f(exact(input), win, exact(a));
 	canvas::browsing::backdiagonal2d(f);
 	return f.output;
       }

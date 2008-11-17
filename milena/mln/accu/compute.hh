@@ -142,15 +142,16 @@ namespace mln
     template <typename A, typename I>
     inline
     mln_accu_with(A, util::pix<I>)::result
-    compute(const Meta_Accumulator<A>&, const Image<I>& input)
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
       trace::entering("accu::compute");
 
       mln_precondition(exact(input).has_data());
 
       typedef mln_accu_with(A, util::pix<I>) A_;
-      A_ a;
-      mln_result(A_) output = internal::compute_dispatch(a, input);
+      A_ a_ = accu::unmeta(exact(a), util::pix<I>());
+
+      mln_result(A_) output = internal::compute_dispatch(a_, input);
 
       trace::exiting("accu::compute");
       return output;

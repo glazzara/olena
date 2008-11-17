@@ -94,10 +94,12 @@ namespace mln
     template <typename A, typename I>
     inline
     mln_accu_with(A, mln_value(I))::result
-    compute(const Meta_Accumulator<A>&, const Image<I>& input)
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
-      mln_accu_with(A, mln_value(I)) accu;
-      return level::compute(accu, input); // Call the previous version.
+      typedef mln_accu_with(A, mln_value(I)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_value(I)());
+
+      return level::compute(a_, input); // Call the previous version.
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,3 +1,19 @@
+2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Use unmeta and handle accu object when needed.
+
+	* mln/level/compute.hh,
+	* mln/accu/compute.hh,
+	* mln/morpho/elementary/like_ero_fun.hh,
+	* mln/labeling/compute.hh: Use unmeta.
+
+	* mln/accu/transform_directional.hh,
+	* mln/accu/transform_diagonal.hh,
+	* mln/accu/transform_snake.hh: Handle the accu object.
+	(FIXME): Remove.
+
+	* mln/accu/transform_stop.hh: Layout.
+
 2008-11-17 Guillaume Lazzara <guillaume.lazzara@lrde.epita.fr>
 
 	Introduce a dual graph class.
