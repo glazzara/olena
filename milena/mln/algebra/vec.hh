@@ -1,4 +1,5 @@
 // Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_ALGEBRA_VEC_HH
 # define MLN_ALGEBRA_VEC_HH
 
-/*!
- * \file  mln/algebra/vec.hh
- *
- * \brief Definition of a generic vector class.
- */
+/// \file  mln/algebra/vec.hh
+///
+/// Definition of a generic vector class.
 
 # include <iostream>
 # include <cmath>
@@ -533,7 +532,7 @@ namespace mln
     vec<n, mln_trait_op_div(T, S)>
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
-      mln_precondition(value::equiv(s) != literal::zero);
+      mln_precondition(value::equiv(s) != (S)(literal::zero));
       vec<n, mln_trait_op_div(T, S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] / s.to_equiv();

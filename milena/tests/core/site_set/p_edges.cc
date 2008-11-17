@@ -34,7 +34,9 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_edges.hh>
 
+
 // Function mapping an edge to a specific site.
+
 template <typename G>
 struct my_fun
 {
@@ -48,31 +50,32 @@ struct my_fun
   }
 };
 
+
 int main()
 {
   using namespace mln;
 
   // Create a graph.
   util::graph g;
-  g.add_vertex (); // 0
-  g.add_vertex (); // 1
-  g.add_vertex (); // 2
-  g.add_vertex (); // 3
-  g.add_vertex (); // 4
-  g.add_vertex (); // 5
-  g.add_edge (0, 1);
-  g.add_edge (0, 2);
-  g.add_edge (3, 4);
-  g.add_edge (4, 5);
-  g.add_edge (5, 4);
-  g.add_edge (1, 0);
-  g.add_edge (5, 3);
-  g.add_edge (2, 1);
+  g.add_vertex(); // 0
+  g.add_vertex(); // 1
+  g.add_vertex(); // 2
+  g.add_vertex(); // 3
+  g.add_vertex(); // 4
+  g.add_vertex(); // 5
+  g.add_edge(0, 1);
+  g.add_edge(0, 2);
+  g.add_edge(3, 4);
+  g.add_edge(4, 5);
+  g.add_edge(5, 4);
+  g.add_edge(1, 0);
+  g.add_edge(5, 3);
+  g.add_edge(2, 1);
 
   typedef p_edges<util::graph, my_fun<util::graph> > p_edges;
   p_edges pv(g, my_fun<util::graph>());
 
-  // Forward iterator
+  // Forward iterator.
   {
     mln_fwd_piter_(p_edges) p(pv);
     unsigned i = 0;
@@ -80,14 +83,14 @@ int main()
       mln_assertion(p.p_hook_().e().id() == i++);
     mln_assertion(i == g.e_nmax());
   }
-  // Backward iterator
+
+  // Backward iterator.
   {
     mln_bkd_piter_(p_edges) p(pv);
     unsigned i = g.e_nmax() - 1;
     for_all(p)
       mln_assertion(p.p_hook_().e().id() == i--);
-    mln_assertion(i == UINT_MAX);
+    mln_assertion(i == mln_max(unsigned));
   }
 
-  return 0;
 }

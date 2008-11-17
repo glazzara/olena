@@ -1,5 +1,26 @@
 2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Some fixes in graph-related materials.
+
+	* tests/core/site_set/p_vertices.cc: Layout.
+	(UINT_MAX): Fix warning; use mln_max(unsigned).
+	* tests/core/site_set/p_edges.cc: Likewise.
+	* mln/core/site_set/p_vertices.hh (graph_t): (Re-)New.
+	* mln/core/site_set/p_edges.hh: .
+	It is used so it is featured!
+	* mln/algebra/vec.hh: Upgrade doc style.
+	(operator/): Fix warning with g++-4.3.
+	* mln/util/internal/graph_edge.hh (graph): Fix return sig.
+	* mln/util/internal/graph_vertex.hh: Likewise.
+	* mln/util/internal/graph_edge_psite.hh: Layout.
+	(e): Fix missing update; inherited attr is elt_.
+	* mln/util/internal/graph_vertex_psite.hh: Likewise.
+	* mln/util/internal/graph_psite_base.hh: Layout.
+	(super): Remove; unused.
+	Layout.
+
+2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Cleanup basic graph class and related materials.
 
 	* mln/core/site_set/p_graph_piter.hh: Upgrade doc style.

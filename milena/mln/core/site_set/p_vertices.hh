@@ -75,6 +75,10 @@ namespace mln
 
   public:
 
+    /// Graph associated type.
+    typedef G graph_t;
+
+
     /// Type of graph vertex.
     typedef util::vertex<G> vertex;
 

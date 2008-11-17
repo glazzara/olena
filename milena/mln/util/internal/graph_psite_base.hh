@@ -32,126 +32,122 @@
 ///
 /// Base implementation for graph based psites.
 
-# include <mln/core/concept/pseudo_site.hh>
+# include <mln/core/internal/pseudo_site_base.hh>
+
+
 
 namespace mln
 {
 
+  // Forward declaration.
   template <typename G, typename F> class p_vertices;
 
-} // end of namespace mln
 
+  namespace internal
+  {
 
-namespace mln
-{
-
-    namespace internal
+    template <typename S, typename E>
+    class graph_psite_base : public internal::pseudo_site_base_< const mln_site(S)&,
+								 E >
     {
+    public:
 
-      template <typename S, typename E>
-      class graph_psite_base : public internal::pseudo_site_base_< const mln_site(S)&,
-								   E >
-      {
-        typedef Pseudo_Site< graph_psite_base<S,E> > super;
+      // This associated type is important to know that this particular
+      // pseudo site knows the site set it refers to.
+      typedef S target;
 
-      public:
-
-	// This associated type is important to know that this particular
-	// pseudo site knows the site set it refers to.
-	typedef S target;
-
-	// As a Proxy:
-	const mln_site(S)& subj_();
+      // As a Proxy:
+      const mln_site(S)& subj_();
 
 
-	/// Setters.
-	/// \{
-	/// Change the targe site set.
-        void change_target(const S& new_target);
-	/// Update the underlying element's id.
-	/// This element can be an edge, a vertex...
-	void update_id(unsigned elt_id);
-	/// \}
+      /// Setters.
+      /// \{
+      /// Change the targe site set.
+      void change_target(const S& new_target);
+      /// Update the underlying element's id.
+      /// This element can be an edge, a vertex...
+      void update_id(unsigned elt_id);
+      /// \}
 
-	/// Getters.
-	/// \{
-	/// Return the target (the site set).
-        const S* target_() const; // Hook to the target.
+      /// Getters.
+      /// \{
+      /// Return the target (the site set).
+      const S* target_() const; // Hook to the target.
 
-	/// Return the site set (the target).
-        const S& site_set() const;
+      /// Return the site set (the target).
+      const S& site_set() const;
 
-	/// Return the graph associated to the target of this psite.
-	const typename S::graph_t& graph() const;
+      /// Return the graph associated to the target of this psite.
+      const typename S::graph_t& graph() const;
 
-	/// Return the id of the graph element designated by this psite.
-	unsigned id() const;
+      /// Return the id of the graph element designated by this psite.
+      unsigned id() const;
 
-	/// \}
+      /// \}
 
-	/// Check whether it is valid.
-	bool is_valid() const;
-	/// Invalidate this psite.
-	void invalidate();
+      /// Check whether it is valid.
+      bool is_valid() const;
+      /// Invalidate this psite.
+      void invalidate();
 
-	/// Conversion towards the graph element (vertex or edge).
-	operator const typename S::graph_element&() const;
+      /// Conversion towards the graph element (vertex or edge).
+      operator const typename S::graph_element&() const;
 
-      protected:
+    protected:
 
-	/// Constructors.
+      /// Constructors.
 
-	/// \{
-        graph_psite_base();
-	/// \p t A site set.
-	/// \sa p_vertices, p_edges.
-        graph_psite_base(const S& s);
-	/// \p t A site set.
-	/// \sa p_vertices, p_edges.
-	/// \p id The id of the element associated to this psite.
-        graph_psite_base(const S& , unsigned id);
-	/// \}
+      /// \{
+      graph_psite_base();
+      /// \p t A site set.
+      /// \sa p_vertices, p_edges.
+      graph_psite_base(const S& s);
+      /// \p t A site set.
+      /// \sa p_vertices, p_edges.
+      /// \p id The id of the element associated to this psite.
+      graph_psite_base(const S& , unsigned id);
+      /// \}
 
-	const S* s_;
-        typename S::graph_element elt_;
-     };
+      const S* s_;
+      typename S::graph_element elt_;
+    };
 
 
-    /// Comparison of two mln::graph_psite_base<S,E> instances.
-    /// \{
-    /* FIXME: Shouldn't those comparisons be part of a much general
-       mechanism?  */
+  /// Comparison of two mln::graph_psite_base<S,E> instances.
+  /// \{
+  /* FIXME: Shouldn't those comparisons be part of a much general
+     mechanism?  */
 
-    /// \brief Is \a lhs equal to \a rhs?
-    ///
-    /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::p_vertices.
-    template <typename S, typename E>
-    bool
-    operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
+  /// \brief Is \a lhs equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_vertices.
+  template <typename S, typename E>
+  bool
+  operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
 
-    /// \brief Is \a lhs not equal to \a rhs?
-    ///
-    /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::p_vertices.
-    template <typename S, typename E>
-    bool
-    operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
+  /// \brief Is \a lhs not equal to \a rhs?
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_vertices.
+  template <typename S, typename E>
+  bool
+  operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
 
-    /// \brief Is \a lhs ``less'' than \a rhs?
-    ///
-    /// This comparison is required by algorithms sorting psites.
-    ///
-    /// \pre Arguments \a lhs and \a rhs must belong to the same
-    /// mln::p_vertices.
-    template <typename S, typename E>
-    bool
-    operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
-    /// \}
+  /// \brief Is \a lhs ``less'' than \a rhs?
+  ///
+  /// This comparison is required by algorithms sorting psites.
+  ///
+  /// \pre Arguments \a lhs and \a rhs must belong to the same
+  /// mln::p_vertices.
+  template <typename S, typename E>
+  bool
+  operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
+  /// \}
 
-  } // end of namespace internal
+} // end of namespace internal
 
-} // end of namespace mln
+  } // end of namespace mln
 
 
 

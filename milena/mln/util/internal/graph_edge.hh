@@ -134,7 +134,7 @@ namespace mln
     struct subject_impl< const util::edge<G>, E >
     {
 	unsigned id() const;
-        const mlc_const(G)& graph() const;
+        const G& graph() const;
         unsigned v_other(unsigned id_v)	const;
 	bool is_valid() const;
 	unsigned v1() const;
@@ -213,7 +213,7 @@ namespace mln
 
     template <typename G>
     inline
-    const typename edge<G>::G&
+    const G&
     edge<G>::graph() const
     {
       return g_;
@@ -339,7 +339,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    const mlc_const(G)&
+    const G&
     subject_impl< const util::edge<G>, E >::graph() const
     {
       return exact_().get_subject().graph();

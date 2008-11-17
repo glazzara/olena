@@ -117,7 +117,7 @@ namespace mln
     struct subject_impl< const util::vertex<G>, E >
     {
 	bool is_valid() const;
-	const mlc_const(G)& graph() const;
+	const G& graph() const;
 	unsigned id() const;
 
 	unsigned other(unsigned id_e) const;
@@ -279,7 +279,7 @@ namespace mln
 
     template<typename G>
     inline
-    const typename vertex<G>::G&
+    const G&
     vertex<G>::graph() const
     {
       return g_;
@@ -316,7 +316,7 @@ namespace mln
 
     template <typename G, typename E>
     inline
-    const mlc_const(G)&
+    const G&
     subject_impl< const util::vertex<G>, E >::graph() const
     {
       return exact_().get_subject().graph();

@@ -72,53 +72,44 @@ namespace mln
     };
 
 
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
-
-  namespace internal
+  template <typename G, typename F>
+  inline
+  edge_psite<G, F>::edge_psite()
   {
+  }
 
-    template <typename G, typename F>
-    inline
-    edge_psite<G, F>::edge_psite()
-    {
-    }
+  template <typename G, typename F>
+  inline
+  edge_psite<G, F>::edge_psite(const p_edges<G,F>& s)
+    : super_(s)
+  {
+  }
 
-    template <typename G, typename F>
-    inline
-    edge_psite<G, F>::edge_psite(const p_edges<G,F>& s)
-      : super_(s)
-    {
-    }
+  template <typename G, typename F>
+  inline
+  edge_psite<G, F>::edge_psite(const p_edges<G,F>& s, unsigned id)
+    : super_(s, id)
+  {
+  }
 
-    template <typename G, typename F>
-    inline
-    edge_psite<G, F>::edge_psite(const p_edges<G,F>& s, unsigned id)
-      : super_(s, id)
-    {
-    }
+  template <typename G, typename F>
+  inline
+  const util::edge<G>&
+  edge_psite<G, F>::e() const
+  {
+    return this->elt_;
+  }
 
-    template <typename G, typename F>
-    inline
-    const util::edge<G>&
-    edge_psite<G, F>::e() const
-    {
-      return this->v_;
-    }
+# endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace internal
+} // end of namespace internal
 
-} // end of namespace mln
+  } // end of namespace mln
 
-# endif // !MLN_INCLUDE_ONLY
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
+#endif // ! MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
 

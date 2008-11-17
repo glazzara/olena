@@ -66,53 +66,43 @@ namespace mln
     };
 
 
-  } // end of namespace mln::internal
-
-} // end of namespace mln
-
-
-
 
 # ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
+  template <typename G, typename F>
+  inline
+  vertex_psite<G, F>::vertex_psite()
+  {
+  }
 
-    namespace internal
-    {
+  template <typename G, typename F>
+  inline
+  vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s)
+    : super_(s)
+  {
+  }
 
-      template <typename G, typename F>
-      inline
-      vertex_psite<G, F>::vertex_psite()
-      {
-      }
+  template <typename G, typename F>
+  inline
+  vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s, unsigned i)
+    : super_(s, i)
+  {
+  }
 
-      template <typename G, typename F>
-      inline
-      vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s)
-	: super_(s)
-      {
-      }
+  template <typename G, typename F>
+  inline
+  const util::vertex<G>&
+  vertex_psite<G, F>::v() const
+  {
+    return this->elt_;
+  }
 
-      template <typename G, typename F>
-      inline
-      vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s, unsigned i)
-	: super_(s, i)
-      {
-      }
+# endif // ! MLN_INCLUDE_ONLY
 
-      template <typename G, typename F>
-      inline
-      const util::vertex<G>&
-      vertex_psite<G, F>::v() const
-      {
-        return this->v_;
-      }
+} // end of namespace internal
 
-    } // end of namespace internal
+  } // end of namespace mln
 
-} // end of namespace mln
-# endif // !MLN_INCLUDE_ONLY
 
 #endif // !MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
 

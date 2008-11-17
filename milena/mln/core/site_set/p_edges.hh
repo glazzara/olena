@@ -39,8 +39,10 @@
 
 namespace mln
 {
+
   // Forward declaration.
   template <typename G, typename F> struct p_edges;
+
 
   namespace trait
   {
@@ -65,6 +67,9 @@ namespace mln
     typedef internal::site_set_base_< mln_result(F), self_ > super_;
 
   public:
+
+    /// Graph associated type.
+    typedef G graph_t;
 
     /// Type of graph edge.
     typedef util::edge<G> edge;

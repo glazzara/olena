@@ -34,25 +34,26 @@
 #include <mln/core/site_set/p_vertices.hh>
 #include <mln/fun/i2v/array.hh>
 
+
 int main()
 {
   using namespace mln;
 
   util::graph g;
-  g.add_vertex (); // 0
-  g.add_vertex (); // 1
-  g.add_vertex (); // 2
-  g.add_vertex (); // 3
-  g.add_vertex (); // 4
-  g.add_vertex (); // 5
-  g.add_edge (0, 1);
-  g.add_edge (0, 2);
-  g.add_edge (3, 4);
-  g.add_edge (4, 5);
-  g.add_edge (5, 4);
-  g.add_edge (1, 0);
-  g.add_edge (5, 3);
-  g.add_edge (2, 1);
+  g.add_vertex(); // 0
+  g.add_vertex(); // 1
+  g.add_vertex(); // 2
+  g.add_vertex(); // 3
+  g.add_vertex(); // 4
+  g.add_vertex(); // 5
+  g.add_edge(0, 1);
+  g.add_edge(0, 2);
+  g.add_edge(3, 4);
+  g.add_edge(4, 5);
+  g.add_edge(5, 4);
+  g.add_edge(1, 0);
+  g.add_edge(5, 3);
+  g.add_edge(2, 1);
 
   // Map vertices to sites.
   typedef fun::i2v::array<point2d> F;
@@ -63,6 +64,7 @@ int main()
   typedef p_vertices<util::graph, F> p_vertices;
   p_vertices pv(g, f);
 
+  // Forward iterator.
   {
     mln_fwd_piter_(p_vertices) p(pv);
     unsigned i = 0;
@@ -70,13 +72,14 @@ int main()
       mln_assertion(p.p_hook_().v().id() == i++);
     mln_assertion(i == g.v_nmax());
   }
+
+  // Backward iterator.
   {
     mln_bkd_piter_(p_vertices) p(pv);
     unsigned i = g.v_nmax() - 1;
     for_all(p)
       mln_assertion(p.p_hook_().v().id() == i--);
-    mln_assertion(i == UINT_MAX);
+    mln_assertion(i == mln_max(unsigned));
   }
 
-  return 0;
 }
