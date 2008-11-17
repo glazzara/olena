@@ -62,6 +62,9 @@ namespace mln
 
 	/// Return current index
 	unsigned index() const;
+
+	/// Conversion operator. Returns the element id.
+	operator unsigned() const;
 	/// \}
 
 	/// Proxy.
@@ -75,6 +78,7 @@ namespace mln
 
 	P p_;
     };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -122,6 +126,13 @@ namespace mln
     inline
     unsigned
     graph_iter_base<G, P, E>::index() const
+    {
+      return p_.id();
+    }
+
+    template <typename G, typename P, typename E>
+    inline
+    graph_iter_base<G, P, E>::operator unsigned() const
     {
       return p_.id();
     }

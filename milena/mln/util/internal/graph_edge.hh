@@ -110,12 +110,16 @@ namespace mln
     };
 
     template <typename G>
-    bool
-    operator==(const util::edge<G>& lhs, const util::edge<G>& rhs);
+    std::ostream&
+    operator<<(std::ostream& ostr, edge<G>& p);
 
     template <typename G>
     bool
-    operator< (const util::edge<G>& lhs, const util::edge<G>& rhs);
+    operator==(const edge<G>& lhs, const edge<G>& rhs);
+
+    template <typename G>
+    bool
+    operator< (const edge<G>& lhs, const edge<G>& rhs);
 
   } // End of namespace mln::util
 
@@ -283,12 +287,17 @@ namespace mln
       return g_.e_ith_nbh_edge(id_, i);
     }
 
-
+    template <typename G>
+    std::ostream&
+    operator<<(std::ostream& ostr, edge<G>& p)
+    {
+      return ostr << p.id();
+    }
 
     template <typename G>
     inline
     bool
-    operator==(const util::edge<G>& lhs, const util::edge<G>& rhs)
+    operator==(const edge<G>& lhs, const edge<G>& rhs)
     {
       return lhs.pair_vertex_ == rhs.pair_vertex_;
     }
@@ -296,7 +305,7 @@ namespace mln
     template <typename G>
     inline
     bool
-    operator< (const util::edge<G>& lhs, const util::edge<G>& rhs)
+    operator< (const edge<G>& lhs, const edge<G>& rhs)
     {
       return lhs.pair_vertex_ < rhs.pair_vertex_;
     }

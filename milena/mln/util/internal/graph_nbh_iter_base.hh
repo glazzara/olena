@@ -61,6 +61,9 @@ namespace mln
 
 	/// Return current index
 	unsigned index() const;
+
+	/// Conversion operator. Returns the element ID.
+	operator unsigned() const;
 	/// \}
 
 	/// Proxy.
@@ -141,6 +144,13 @@ namespace mln
     nbh_iterator_base<G, C, P, E>::index() const
     {
       return i_;
+    }
+
+    template <typename G, typename C, typename P, typename E>
+    inline
+    nbh_iterator_base<G, C, P, E>::operator unsigned() const
+    {
+      return p_.id();
     }
 
     template <typename G, typename C, typename P, typename E>

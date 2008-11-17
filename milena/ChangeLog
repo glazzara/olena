@@ -1,3 +1,21 @@
+2008-11-17 Guillaume Lazzara <guillaume.lazzara@lrde.epita.fr>
+
+	Introduce a dual graph class.
+
+	* mln/core/concept/graph.hh: does not force add_* methods.
+
+	* mln/util/dual_graph.hh: new class.
+
+	* mln/util/graph.hh: cleanup comments
+
+	* mln/util/internal/graph_edge.hh: add missing operator<<.
+
+	* mln/util/internal/graph_nbh_iter_base.hh,
+	* mln/util/internal/graph_iter_base.hh: add operator unsigned().
+
+	* tests/util/Makefile.am,
+	* tests/util/dual_graph.cc: Add a new test.
+
 2008-11-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Factor code for erosion on lines.

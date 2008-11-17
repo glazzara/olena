@@ -113,8 +113,6 @@ namespace mln
     m1 = 0;
     unsigned (E::*m2)(unsigned id_e, unsigned id_v) const = & E::v_other;
     m2 = 0;
-    unsigned (E::*m3)() = & E::add_vertex;
-    m3 = 0;
     size_t (E::*m4)() const = & E::v_nmax;
     m4 = 0;
     bool (E::*m5)(unsigned id_v) const = & E::has_v;
