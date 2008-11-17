@@ -28,12 +28,13 @@
 #ifndef MLN_CORE_SITE_SET_P_EDGES_HH
 # define MLN_CORE_SITE_SET_P_EDGES_HH
 
-  /// \file mln/core/site_set/p_edges.hh
-  /// \brief Definition of a site set based on graph edges.
+/// \file mln/core/site_set/p_edges.hh
+///
+/// Definition of a site set based on graph edges.
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
-# include <mln/util/internal/graph_edge_psite.hh>
+# include <mln/core/site_set/p_edges_psite.hh>
 # include <mln/util/graph.hh>
 
 
@@ -90,7 +91,7 @@ namespace mln
     typedef mln_site(super_) element;
 
     /// Point_Site associated type.
-    typedef internal::edge_psite<G, F> psite;
+    typedef p_edges_psite<G, F> psite;
 
     /// Forward Site_Iterator associated type.
     typedef p_graph_piter< self_, mln_edge_fwd_iter(G) > fwd_piter;

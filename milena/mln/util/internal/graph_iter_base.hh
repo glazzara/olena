@@ -37,7 +37,6 @@
 
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/proxy.hh>
-# include <mln/util/internal/graph_edge.hh>
 
 
 namespace mln

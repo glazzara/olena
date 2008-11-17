@@ -194,7 +194,7 @@ namespace mln
   mln_psite(N)
   line_graph_neighborhood_fwd_piter<G, F, N>::compute_p_() const
   {
-    return internal::edge_psite<G, F>(this->center().site_set(), *i_);
+    return p_edges_psite<G, F>(this->center().site_set(), *i_);
   }
 
 
@@ -256,7 +256,7 @@ namespace mln
   mln_psite(N)
   line_graph_neighborhood_bkd_piter<G, F, N>::compute_p_() const
   {
-    return internal::edge_psite<G, F>(this->center().site_set(), *i_);
+    return p_edges_psite<G, F>(this->center().site_set(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

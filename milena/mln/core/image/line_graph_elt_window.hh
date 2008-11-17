@@ -30,11 +30,12 @@
 # define MLN_CORE_IMAGE_LINE_GRAPH_ELT_WINDOW_HH
 
 /// \file mln/core/image/line_graph_elt_window.hh
+///
 /// Definition of the elementary ``window'' on a line graph.
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/internal/graph_window_base.hh>
-# include <mln/util/internal/graph_edge_psite.hh>
+# include <mln/core/site_set/p_edges_psite.hh>
 # include <mln/core/image/line_graph_window_piter.hh>
 
 
@@ -64,7 +65,7 @@ namespace mln
   class line_graph_elt_window : public graph_window_base<
 					G,
 					F,
-					internal::edge_psite<G, F>,
+					p_edges_psite<G, F>,
 					line_graph_elt_window<G, F> >
   {
     typedef line_graph_elt_window<G, F> self_;
@@ -73,7 +74,7 @@ namespace mln
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the window.
-    typedef internal::edge_psite<G, F> psite;
+    typedef p_edges_psite<G, F> psite;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of edges.

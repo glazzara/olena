@@ -190,7 +190,7 @@ namespace mln
   mln_psite(W)
   graph_window_fwd_piter<G, F, W>::compute_p_() const
   {
-    return internal::vertex_psite<G, F>(this->center().site_set(), *i_);
+    return p_vertices_psite<G, F>(this->center().site_set(), *i_);
   }
 
 
@@ -252,7 +252,7 @@ namespace mln
   mln_psite(W)
   graph_window_bkd_piter<G, F, W>::compute_p_() const
   {
-    return internal::vertex_psite<G, F>(this->center().site_set(), *i_);
+    return p_vertices_psite<G, F>(this->center().site_set(), *i_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

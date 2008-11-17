@@ -1,5 +1,41 @@
 2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename some graph-related files and classes.
+
+	* mln/util/internal/graph_edge.hh: Rename as...
+	* mln/util/edge.hh: ...this.
+	* mln/util/internal/graph_vertex.hh: Rename as...
+	* mln/util/vertex.hh: ...this.
+	* mln/util/all.hh: Update.
+
+	* mln/util/internal/graph_psite_base.hh: Rename as...
+	* mln/core/internal/graph_psite_base.hh: ...this.
+
+	* mln/util/internal/graph_vertex_psite.hh: Rename as...
+	* mln/core/site_set/p_vertices_psite.hh: ...this.
+	(internal::graph_vertex_psite): Rename as...
+	(p_vertices_psite): ...this.
+	* mln/util/internal/graph_edge_psite.hh: Rename as...
+	* mln/core/site_set/p_edges_psite.hh: ...this.
+	(internal::graph_edge_psite): Rename as...
+	(p_edges_psite): ...this.
+
+	* mln/util/internal/graph_iter.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/util/internal/graph_iter_base.hh,
+	* mln/core/site_set/p_vertices.hh,
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/image/line_graph_neighborhood_piter.hh,
+	* mln/core/image/line_graph_window_piter.hh,
+	* mln/core/image/line_graph_elt_window.hh,
+	* mln/core/image/line_graph_elt_neighborhood.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/graph_neighborhood_piter.hh,
+	* mln/core/image/graph_elt_neighborhood.hh,
+	* mln/core/image/graph_elt_window.hh: Update.
+
+2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Some fixes in graph-related materials.
 
 	* tests/core/site_set/p_vertices.cc: Layout.

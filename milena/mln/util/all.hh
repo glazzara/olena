@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_UTIL_ALL_HH
 # define MLN_UTIL_ALL_HH
 
-/*! \file mln/util/all.hh
- *
- * \brief File that includes all util-related routines.
- */
+/// \file mln/util/all.hh
+///
+/// File that includes all util-related routines.
 
 
 namespace mln
@@ -52,6 +52,7 @@ namespace mln
 # include <mln/util/branch_iter_ind.hh>
 # include <mln/util/dindex.hh>
 # include <mln/util/eat.hh>
+# include <mln/util/edge.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/greater_point.hh>
 # include <mln/util/greater_psite.hh>
@@ -73,6 +74,7 @@ namespace mln
 # include <mln/util/tree_fast_to_image.hh>
 # include <mln/util/tree_to_fast.hh>
 //# include <mln/util/tree_to_image.hh>
+# include <mln/util/vertex.hh>
 # include <mln/util/yes.hh>
 
 #endif // ! MLN_UTIL_ALL_HH

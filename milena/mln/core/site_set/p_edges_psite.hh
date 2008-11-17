@@ -25,15 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
-# define MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
+#ifndef MLN_CORE_SITE_SET_P_EDGES_PSITE_HH
+# define MLN_CORE_SITE_SET_P_EDGES_PSITE_HH
 
-/// \file mln/util/internal/graph_edge_psite.hh
+/// \file mln/core/site_set/p_edges_psite.hh
 ///
 /// Implementation of p_edges psite.
 
-# include <mln/util/internal/graph_psite_base.hh>
-# include <mln/util/internal/graph_edge.hh>
+# include <mln/core/internal/graph_psite_base.hh>
+# include <mln/util/edge.hh>
 
 
 namespace mln
@@ -43,33 +43,28 @@ namespace mln
   template <typename G, typename F> class p_edges;
 
 
-  namespace internal
+  template <typename G, typename F>
+  class p_edges_psite :
+    public internal::graph_psite_base< p_edges<G,F>, p_edges_psite<G,F> >
   {
+    typedef p_edges_psite<G,F> self_;
+    typedef internal::graph_psite_base<p_edges<G,F>, self_> super_;
 
+  public:
 
-    template <typename G, typename F>
-    class edge_psite :
-      public graph_psite_base< p_edges<G,F>,
-			       edge_psite<G,F> >
-    {
-      typedef edge_psite<G,F> self_;
-      typedef graph_psite_base<p_edges<G,F>, self_> super_;
+    /// Constructors
+    /// \{
+    p_edges_psite();
+    p_edges_psite(const p_edges<G,F>& s);
+    p_edges_psite(const p_edges<G,F>& s, unsigned);
+    /// \}
 
-    public:
-
-      /// Constructors
-      /// \{
-      edge_psite();
-      edge_psite(const p_edges<G,F>& s);
-      edge_psite(const p_edges<G,F>& s, unsigned);
-      /// \}
-
-      /// Accessors
-      /// \{
-      /// Return the underlying edge.
-      const util::edge<G>& e() const;
-      /// \}
-    };
+    /// Accessors
+    /// \{
+    /// Return the underlying edge.
+    const util::edge<G>& e() const;
+    /// \}
+  };
 
 
 
@@ -78,38 +73,36 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  edge_psite<G, F>::edge_psite()
+  p_edges_psite<G, F>::p_edges_psite()
   {
   }
-
+  
   template <typename G, typename F>
   inline
-  edge_psite<G, F>::edge_psite(const p_edges<G,F>& s)
+  p_edges_psite<G, F>::p_edges_psite(const p_edges<G,F>& s)
     : super_(s)
   {
   }
-
+  
   template <typename G, typename F>
   inline
-  edge_psite<G, F>::edge_psite(const p_edges<G,F>& s, unsigned id)
+  p_edges_psite<G, F>::p_edges_psite(const p_edges<G,F>& s, unsigned id)
     : super_(s, id)
   {
   }
-
+  
   template <typename G, typename F>
   inline
   const util::edge<G>&
-  edge_psite<G, F>::e() const
+  p_edges_psite<G, F>::e() const
   {
     return this->elt_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-} // end of namespace internal
-
-  } // end of namespace mln
+} // end of namespace mln
 
 
-#endif // ! MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
+#endif // ! MLN_CORE_SITE_SET_P_EDGES_PSITE_HH
 

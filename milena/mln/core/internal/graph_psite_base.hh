@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_PSITE_BASE_HH
-# define MLN_UTIL_INTERNAL_GRAPH_PSITE_BASE_HH
+#ifndef MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
+# define MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
 
-/// \file mln/util/internal/graph_psite_base.hh
+/// \file mln/core/internal/graph_psite_base.hh
 ///
 /// Base implementation for graph based psites.
 
@@ -113,11 +113,11 @@ namespace mln
     };
 
 
-  /// Comparison of two mln::graph_psite_base<S,E> instances.
-  /// \{
   /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
-
+    
+  /// Comparison of two mln::graph_psite_base<S,E> instances.
+  /// \{
   /// \brief Is \a lhs equal to \a rhs?
   ///
   /// \pre Arguments \a lhs and \a rhs must belong to the same
@@ -145,161 +145,153 @@ namespace mln
   operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
   /// \}
 
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::graph_psite_base()
+    : s_(0)
+  {
+  }
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::graph_psite_base(const S& s)
+  {
+    change_target(s);
+  }
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::graph_psite_base(const S& s, unsigned id)
+  {
+    change_target(s);
+    update_id(id);
+  }
+
+  template <typename S, typename E>
+  inline
+  void
+  graph_psite_base<S,E>::change_target(const S& new_target)
+  {
+    s_ = & new_target;
+    elt_.change_graph(new_target.graph());
+  }
+
+  template <typename S, typename E>
+  inline
+  void
+  graph_psite_base<S,E>::update_id(unsigned id)
+  {
+    elt_.update_id(id);
+  }
+
+  template <typename S, typename E>
+  inline
+  const S*
+  graph_psite_base<S,E>::target_() const
+  {
+    return s_;
+  }
+
+  template <typename S, typename E>
+  inline
+  const S&
+  graph_psite_base<S,E>::site_set() const
+  {
+    mln_precondition(s_ != 0);
+    return *s_;
+  }
+
+  template <typename S, typename E>
+  inline
+  const typename S::graph_t&
+  graph_psite_base<S,E>::graph() const
+  {
+    mln_precondition(s_ != 0);
+    return s_->graph();
+  }
+
+  template <typename S, typename E>
+  inline
+  unsigned
+  graph_psite_base<S,E>::id() const
+  {
+    return elt_.id();
+  }
+
+  template <typename S, typename E>
+  inline
+  bool
+  graph_psite_base<S,E>::is_valid() const
+  {
+    return s_ != 0 && s_->is_valid() && elt_.is_valid();
+  }
+
+  template <typename S, typename E>
+  inline
+  void
+  graph_psite_base<S,E>::invalidate()
+  {
+    s_ = 0;
+    elt_.invalidate();
+  }
+
+  template <typename S, typename E>
+  inline
+  const mln_site(S)&
+  graph_psite_base<S,E>::subj_()
+  {
+    mln_precondition(s_ != 0);
+    return s_->function()(elt_.id());
+  }
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::operator const typename S::graph_element&() const
+  {
+    mln_precondition(is_valid());
+    return elt_;
+  }
+
+
+  /*--------------.
+    | Comparisons.  |
+    `--------------*/
+
+  template <typename S, typename E>
+  bool
+  operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() == rhs.id();
+  }
+
+  template <typename S, typename E>
+  bool
+  operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() != rhs.id();
+  }
+
+  template <typename S, typename E>
+  bool
+  operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
+  {
+    mln_assertion(lhs.target_() == rhs.target_());
+    return lhs.id() < rhs.id();
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
 } // end of namespace internal
 
   } // end of namespace mln
 
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-namespace mln
-{
-
-    namespace internal
-    {
-
-      template <typename S, typename E>
-      inline
-      graph_psite_base<S,E>::graph_psite_base()
-	: s_(0)
-      {
-      }
-
-      template <typename S, typename E>
-      inline
-      graph_psite_base<S,E>::graph_psite_base(const S& s)
-      {
-        change_target(s);
-      }
-
-      template <typename S, typename E>
-      inline
-      graph_psite_base<S,E>::graph_psite_base(const S& s, unsigned id)
-      {
-	change_target(s);
-	update_id(id);
-      }
-
-      template <typename S, typename E>
-      inline
-      void
-      graph_psite_base<S,E>::change_target(const S& new_target)
-      {
-        s_ = & new_target;
-	elt_.change_graph(new_target.graph());
-      }
-
-      template <typename S, typename E>
-      inline
-      void
-      graph_psite_base<S,E>::update_id(unsigned id)
-      {
-	elt_.update_id(id);
-      }
-
-      template <typename S, typename E>
-      inline
-      const S*
-      graph_psite_base<S,E>::target_() const
-      {
-        return s_;
-      }
-
-      template <typename S, typename E>
-      inline
-      const S&
-      graph_psite_base<S,E>::site_set() const
-      {
-	mln_precondition(s_ != 0);
-        return *s_;
-      }
-
-      template <typename S, typename E>
-      inline
-      const typename S::graph_t&
-      graph_psite_base<S,E>::graph() const
-      {
-	mln_precondition(s_ != 0);
-        return s_->graph();
-      }
-
-      template <typename S, typename E>
-      inline
-      unsigned
-      graph_psite_base<S,E>::id() const
-      {
-        return elt_.id();
-      }
-
-      template <typename S, typename E>
-      inline
-      bool
-      graph_psite_base<S,E>::is_valid() const
-      {
-	return s_ != 0 && s_->is_valid() && elt_.is_valid();
-      }
-
-      template <typename S, typename E>
-      inline
-      void
-      graph_psite_base<S,E>::invalidate()
-      {
-	s_ = 0;
-	elt_.invalidate();
-      }
-
-      template <typename S, typename E>
-      inline
-      const mln_site(S)&
-      graph_psite_base<S,E>::subj_()
-      {
-	mln_precondition(s_ != 0);
-        return s_->function()(elt_.id());
-      }
-
-      template <typename S, typename E>
-      inline
-      graph_psite_base<S,E>::operator const typename S::graph_element&() const
-      {
-	mln_precondition(is_valid());
-	return elt_;
-      }
-
-
-      /*--------------.
-      | Comparisons.  |
-      `--------------*/
-
-      template <typename S, typename E>
-      bool
-      operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-      {
-	mln_assertion(lhs.target_() == rhs.target_());
-	return lhs.id() == rhs.id();
-      }
-
-      template <typename S, typename E>
-      bool
-      operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-      {
-	mln_assertion(lhs.target_() == rhs.target_());
-	return lhs.id() != rhs.id();
-      }
-
-      template <typename S, typename E>
-      bool
-      operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
-      {
-	mln_assertion(lhs.target_() == rhs.target_());
-	return lhs.id() < rhs.id();
-      }
-
-    } // end of namespace internal
-
-} // end of namespace mln
-
-# endif // !MLN_INCLUDE_ONLY
-
-#endif // !MLN_UTIL_INTERNAL_GRAPH_PSITE_BASE_HH
+#endif // ! MLN_CORE_INTERNAL_GRAPH_PSITE_BASE_HH
 

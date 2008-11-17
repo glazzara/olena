@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_VERTEX_HH
-# define MLN_UTIL_INTERNAL_GRAPH_VERTEX_HH
+#ifndef MLN_UTIL_VERTEX_HH
+# define MLN_UTIL_VERTEX_HH
 
 # include <mln/util/internal/graph_vertex_impl.hh>
 
-/// \file mln/util/internal/graph_vertex.hh
+/// \file mln/util/vertex.hh
 ///
 /// Implementation of a graph vertex.
 
@@ -43,6 +43,7 @@ namespace mln
   {
 
     /// Vertex of a graph \p G.
+
     template<typename G>
     class vertex : public internal::vertex_impl_<G>
     {
@@ -51,101 +52,116 @@ namespace mln
       /// Graph associated type.
       typedef G graph_t;
       
-	/// Constructors.
-	/// \{
-	vertex();
-	explicit vertex(const G& g);
-        vertex(const G& g, unsigned id);
-	/// \}
+      /// Constructors.
+      /// \{
+      vertex();
+      explicit vertex(const G& g);
+      vertex(const G& g, unsigned id);
+      /// \}
 
-        /// Check whether the vertex is still part of the graph.
-        bool is_valid() const;
-	/// Invalidate that vertex.
-	void invalidate();
+      /// Check whether the vertex is still part of the graph.
+      bool is_valid() const;
+      /// Invalidate that vertex.
+      void invalidate();
 
-        unsigned other(unsigned id_e) const;
+      unsigned other(unsigned id_e) const;
 
-	/// Returns the ith edge starting from this vertex.
-        unsigned ith_nbh_edge(unsigned i) const;
+      /// Returns the ith edge starting from this vertex.
+      unsigned ith_nbh_edge(unsigned i) const;
 
-	/// Returns the number max of edges starting from this vertex.
-	/// If g_ is a sub graph of another graph, nmax will be retrived from
-	/// the initial graph.
-	unsigned nmax_nbh_edges() const;
+      /// Returns the number max of edges starting from this vertex.
+      /// If g_ is a sub graph of another graph, nmax will be retrived from
+      /// the initial graph.
+      unsigned nmax_nbh_edges() const;
 
-	/// Returns the ith vertex adjacent to this vertex.
-        unsigned ith_nbh_vertex(unsigned i) const;
+      /// Returns the ith vertex adjacent to this vertex.
+      unsigned ith_nbh_vertex(unsigned i) const;
 
-	/// Returns the number max of vertices adjacent to this vertex.
-	unsigned nmax_nbh_vertices() const;
+      /// Returns the number max of vertices adjacent to this vertex.
+      unsigned nmax_nbh_vertices() const;
 
-	/// Change the parent graph of that vertex.
-	void change_graph(const G& g);
+      /// Change the parent graph of that vertex.
+      void change_graph(const G& g);
 
-	/// Update the vertex id.
-	void update_id(unsigned id);
+      /// Update the vertex id.
+      void update_id(unsigned id);
 
-	/// Returns the graph pointer this vertex belongs to.
-	const G& graph() const;
+      /// Returns the graph pointer this vertex belongs to.
+      const G& graph() const;
 
-	/// Returns the vertex id.
-	unsigned id() const;
+      /// Returns the vertex id.
+      unsigned id() const;
 
-      protected:
-        G g_;
-        unsigned id_;
+    protected:
+      G g_;
+      unsigned id_;
     };
 
-    /// Comparison operator. Test whether two vertices have the same id.
+
+    /// Push the vertex \p v in the output stream \p ostr.
+    template <typename G>
+    std::ostream&
+    operator<<(std::ostream& ostr, const vertex<G>& v);
+
+    /// Equality operator.  Test whether two vertices have the same
+    /// id.
     template<typename G>
     bool
-    operator==(const util::vertex<G>& v1, const util::vertex<G>& v2);
+    operator==(const vertex<G>& v1, const vertex<G>& v2);
 
-    /// Inferior operator. Test whether lhs.id() < rhs.id().
+
+    /// Less operator.  Test whether lhs.id() < rhs.id().
     template<typename G>
     bool
-    operator<(const util::vertex<G>& lhs, const util::vertex<G>& rhs);
-
-  } // End of namespace mln::util
+    operator<(const vertex<G>& lhs, const vertex<G>& rhs);
 
 
-/// subject_impl specialization (Proxy)
-/// \{
+  } // end of namespace mln::util
+
+
+
   namespace internal
   {
+
+    /// \{
+    /// subject_impl specialization (Proxy)
+
     template <typename G, typename E>
     struct subject_impl< const util::vertex<G>, E >
     {
-	bool is_valid() const;
-	const G& graph() const;
-	unsigned id() const;
+      bool is_valid() const;
+      const G& graph() const;
+      unsigned id() const;
 
-	unsigned other(unsigned id_e) const;
-	unsigned ith_nbh_edge(unsigned i) const;
-	unsigned nmax_nbh_edges() const;
-        unsigned ith_nbh_vertex(unsigned i) const;
-	unsigned nmax_nbh_vertices() const;
+      unsigned other(unsigned id_e) const;
+      unsigned ith_nbh_edge(unsigned i) const;
+      unsigned nmax_nbh_edges() const;
+      unsigned ith_nbh_vertex(unsigned i) const;
+      unsigned nmax_nbh_vertices() const;
 
-      private:
-	const E& exact_() const;
+    private:
+      const E& exact_() const;
     };
 
     template <typename G, typename E>
     struct subject_impl<       util::vertex<G>, E > :
-           subject_impl< const util::vertex<G>, E >
+      subject_impl< const util::vertex<G>, E >
     {
-	void invalidate();
-	void change_graph(const G& g);
-	void update_id(unsigned id);
+      void invalidate();
+      void change_graph(const G& g);
+      void update_id(unsigned id);
 
-      private:
-	E& exact_();
+    private:
+      E& exact_();
     };
+
+    /// \}
 
   } // end of namespace mln::internal
 
-} // End of namespace mln
-/// \}
+} // end of namespace mln
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -155,24 +171,6 @@ namespace mln
 
   namespace util
   {
-
-    template<typename G>
-    inline
-    bool
-    operator==(const util::vertex<G>& v1, const util::vertex<G>& v2)
-    {
-      return v1.id() == v2.id();
-    }
-
-    template<typename G>
-    inline
-    bool
-    operator<(const util::vertex<G>& lhs, const util::vertex<G>& rhs)
-    {
-      return lhs.id() < rhs.id();
-    }
-
-
 
     template <typename G>
     inline
@@ -293,7 +291,33 @@ namespace mln
       return id_;
     }
 
+
+    template <typename G>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const vertex<G>& v)
+    {
+      return ostr << v.id();
+    }
+
+    template<typename G>
+    inline
+    bool
+    operator==(const vertex<G>& v1, const vertex<G>& v2)
+    {
+      return v1.id() == v2.id();
+    }
+
+    template<typename G>
+    inline
+    bool
+    operator<(const vertex<G>& lhs, const vertex<G>& rhs)
+    {
+      return lhs.id() < rhs.id();
+    }
+
   } // end of namespace mln::util
+
 
   namespace internal
   {
@@ -406,10 +430,10 @@ namespace mln
 
   } // end of namespace mln::internal
 
-} // End of namespace mln
+} // end of namespace mln
 
-# endif // !MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_VERTEX_HH
+#endif // ! MLN_UTIL_VERTEX_HH
 

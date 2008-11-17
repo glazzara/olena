@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
-# define MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
+#ifndef MLN_UTIL_EDGE_HH
+# define MLN_UTIL_EDGE_HH
 
-/// \file mln/util/internal/graph_edge.hh
+/// \file mln/util/edge.hh
 ///
 /// Definition of a graph edge.
 
@@ -42,73 +42,74 @@ namespace mln
   {
 
     /*-------.
-    | Edge.  |
-    `-------*/
+      | Edge.  |
+      `-------*/
 
     /// Edge of a graph \p G.
     template <typename G>
     class edge : public internal::edge_impl_<G>
     {
-      public:
+    public:
 
       /// Graph associated type.
       typedef G graph_t;
 
-	/// Constructors
-	/// \{
-	edge();
-	explicit edge(const G& g);
-        edge(const G& g, unsigned id);
-	/// \}
+      /// Constructors
+      /// \{
+      edge();
+      explicit edge(const G& g);
+      edge(const G& g, unsigned id);
+      /// \}
 
 
-        /// Misc.
-	/// \{
-	/// Return whether is points to a known edge.
-	bool is_valid() const;
-	/// Invalidate that vertex.
-	void invalidate();
+      /// Misc.
+      /// \{
+      /// Return whether is points to a known edge.
+      bool is_valid() const;
+      /// Invalidate that vertex.
+      void invalidate();
 
-	/// Return the edge id.
-	unsigned id() const;
+      /// Return the edge id.
+      unsigned id() const;
 
-	/// Set id_ with \p id;
-	void update_id(unsigned id);
+      /// Set id_ with \p id;
+      void update_id(unsigned id);
 
-	/// Return a reference to the graph holding this edge.
-        const G& graph() const;
+      /// Return a reference to the graph holding this edge.
+      const G& graph() const;
 
-	/// Set g_ with \p g;
-	void change_graph(const G& g);
-	/// \}
-
-
-        /// Vertex and edges oriented.
-	/// \{
-	/// Return the vertex id of this edge which is different from \p id_v.
-        unsigned v_other(unsigned id_v)	const;
-	/// \}
+      /// Set g_ with \p g;
+      void change_graph(const G& g);
+      /// \}
 
 
-	/// Edge oriented.
-	/// \{
-	/// Return the lowest vertex id adjacent to this edge.
-	unsigned v1() const;
+      /// Vertex and edges oriented.
+      /// \{
+      /// Return the vertex id of this edge which is different from \p id_v.
+      unsigned v_other(unsigned id_v)	const;
+      /// \}
 
-	/// Return the highest vertex id adjacent to this edge.
-	unsigned v2() const;
 
-	/// Return the number max of adjacent edges.
-	size_t nmax_nbh_edges() const;
+      /// Edge oriented.
+      /// \{
+      /// Return the lowest vertex id adjacent to this edge.
+      unsigned v1() const;
 
-	/// Return the \p i th adjacent edge.
-	unsigned ith_nbh_edge(unsigned i) const;
-	/// \}
+      /// Return the highest vertex id adjacent to this edge.
+      unsigned v2() const;
 
-      private:
-	G g_;
-	unsigned id_;
+      /// Return the number max of adjacent edges.
+      size_t nmax_nbh_edges() const;
+
+      /// Return the \p i th adjacent edge.
+      unsigned ith_nbh_edge(unsigned i) const;
+      /// \}
+
+    private:
+      G g_;
+      unsigned id_;
     };
+
 
     template <typename G>
     std::ostream&
@@ -122,50 +123,54 @@ namespace mln
     bool
     operator< (const edge<G>& lhs, const edge<G>& rhs);
 
-  } // End of namespace mln::util
+  } // end of namespace mln::util
 
 
-  /// subject_impl specialization (Proxy)
-  /// \{
+
   namespace internal
   {
+
+    /// subject_impl specialization (Proxy)
+    /// \{
 
     template <typename G, typename E>
     struct subject_impl< const util::edge<G>, E >
     {
-	unsigned id() const;
-        const G& graph() const;
-        unsigned v_other(unsigned id_v)	const;
-	bool is_valid() const;
-	unsigned v1() const;
-	unsigned v2() const;
-	size_t nmax_nbh_edges() const;
-	unsigned ith_nbh_edge(unsigned i) const;
+      unsigned id() const;
+      const G& graph() const;
+      unsigned v_other(unsigned id_v)	const;
+      bool is_valid() const;
+      unsigned v1() const;
+      unsigned v2() const;
+      size_t nmax_nbh_edges() const;
+      unsigned ith_nbh_edge(unsigned i) const;
 
 
-      private:
-	const E& exact_() const;
+    private:
+      const E& exact_() const;
     };
 
     template <typename G, typename E>
     struct subject_impl<       util::edge<G>, E > :
-           subject_impl< const util::edge<G>, E >
+      subject_impl< const util::edge<G>, E >
     {
       void update_id(unsigned id);
       void change_graph(const mlc_const(G)& g);
       void invalidate();
 
-      private:
-	E& exact_();
+    private:
+      E& exact_();
     };
 
+    /// \}
+
   } // end of namespace mln::internal
-  /// \}
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*---------------------.
+  /*---------------------.
     | Operators on edges.  |
     `---------------------*/
 
@@ -290,6 +295,7 @@ namespace mln
     }
 
     template <typename G>
+    inline
     std::ostream&
     operator<<(std::ostream& ostr, const edge<G>& p)
     {
@@ -314,12 +320,14 @@ namespace mln
 
   } // end of namespace mln::util
 
+
+
   namespace internal
   {
 
     /*----------------------------------`
-    | subject_impl< const util::edge<G> |
-    \----------------------------------*/
+      | subject_impl< const util::edge<G> |
+      \----------------------------------*/
 
     template <typename G, typename E>
     inline
@@ -395,8 +403,8 @@ namespace mln
 
 
     /*----------------------------------`
-    | subject_impl<       util::edge<G> |
-    \----------------------------------*/
+      | subject_impl<       util::edge<G> |
+      \----------------------------------*/
 
     template <typename G, typename E>
     inline
@@ -422,11 +430,12 @@ namespace mln
       return exact_().get_subject().invalidate();
     }
 
-  } // End of namespace mln::internal
+  } // end of namespace mln::internal
 
-# endif // !MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
-} // End of namespace mln
+} // end of namespace mln
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
+
+#endif // ! MLN_UTIL_EDGE_HH
 

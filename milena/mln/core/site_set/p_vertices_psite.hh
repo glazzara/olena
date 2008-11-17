@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
-# define MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
+#ifndef MLN_CORE_SITE_SET_P_VERTICES_PSITE_HH
+# define MLN_CORE_SITE_SET_P_VERTICES_PSITE_HH
 
-/// \file mln/util/internal/graph_vertex_psite.hh
+/// \file mln/core/site_set/p_vertices_psite.hh
 ///
 /// Implementation of p_vertices psite.
 
 # include <mln/core/concept/pseudo_site.hh>
-# include <mln/util/internal/graph_psite_base.hh>
-# include <mln/util/internal/graph_vertex.hh>
+# include <mln/core/internal/graph_psite_base.hh>
+# include <mln/util/vertex.hh>
 
 
 namespace mln
@@ -43,27 +43,24 @@ namespace mln
   // Forward declaration.
   template <typename G, typename F> class p_vertices;
 
-  
-  namespace internal
+
+
+  template <typename G, typename F>
+  class p_vertices_psite :
+
+    public internal::graph_psite_base< p_vertices<G,F>, p_vertices_psite<G,F> >
   {
+    typedef p_vertices_psite<G,F> self_;
+    typedef internal::graph_psite_base<p_vertices<G,F>, self_> super_;
 
+  public:
 
-    template <typename G, typename F>
-    class vertex_psite :
-      public graph_psite_base< p_vertices<G,F>,
-			       vertex_psite<G,F> >
-    {
-      typedef vertex_psite<G,F> self_;
-      typedef graph_psite_base<p_vertices<G,F>, self_> super_;
+    p_vertices_psite();
+    p_vertices_psite(const p_vertices<G,F>& s);
+    p_vertices_psite(const p_vertices<G,F>& s, unsigned id);
 
-    public:
-
-      vertex_psite();
-      vertex_psite(const p_vertices<G,F>& s);
-      vertex_psite(const p_vertices<G,F>& s, unsigned id);
-
-      const util::vertex<G>& v() const;
-    };
+    const util::vertex<G>& v() const;
+  };
 
 
 
@@ -71,20 +68,20 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  vertex_psite<G, F>::vertex_psite()
+  p_vertices_psite<G, F>::p_vertices_psite()
   {
   }
 
   template <typename G, typename F>
   inline
-  vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s)
+  p_vertices_psite<G, F>::p_vertices_psite(const p_vertices<G,F>& s)
     : super_(s)
   {
   }
 
   template <typename G, typename F>
   inline
-  vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s, unsigned i)
+  p_vertices_psite<G, F>::p_vertices_psite(const p_vertices<G,F>& s, unsigned i)
     : super_(s, i)
   {
   }
@@ -92,17 +89,15 @@ namespace mln
   template <typename G, typename F>
   inline
   const util::vertex<G>&
-  vertex_psite<G, F>::v() const
+  p_vertices_psite<G, F>::v() const
   {
     return this->elt_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-} // end of namespace internal
-
-  } // end of namespace mln
+} // end of namespace mln
 
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
+#endif // ! MLN_CORE_SITE_SET_P_VERTICES_PSITE_HH
 

@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/internal/graph_neighborhood_base.hh>
-# include <mln/util/internal/graph_vertex_psite.hh>
+# include <mln/core/site_set/p_vertices_psite.hh>
 # include <mln/core/image/graph_neighborhood_piter.hh>
 
 # include <mln/core/image/graph_elt_window.hh>
@@ -54,7 +54,7 @@ namespace mln
   class graph_elt_neighborhood
     : public graph_neighborhood_base<G,
 				     F,
-				     internal::vertex_psite<G, F>,
+				     p_vertices_psite<G, F>,
 				     graph_elt_neighborhood<G, F> >
   {
     typedef graph_elt_neighborhood<G, F> self_;
@@ -63,7 +63,7 @@ namespace mln
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the neighborhood.
-    typedef internal::vertex_psite<G, F> psite;
+    typedef p_vertices_psite<G, F> psite;
 
     /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of vertices.

@@ -34,13 +34,9 @@
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
-# include <mln/util/internal/graph_vertex_psite.hh>
+# include <mln/core/site_set/p_vertices_psite.hh>
 # include <mln/util/graph.hh>
 
-  //# include <mln/util/tracked_ptr.hh>
-
-  //# include <mln/core/image/graph_psite.hh>
-  //# include <mln/core/site_set/p_vertices_piter.hh>
 
 
 namespace mln
@@ -52,8 +48,9 @@ namespace mln
 
   namespace trait
   {
+
     template <typename G, typename F>
-      struct site_set_< p_vertices<G, F> >
+      struct site_set_< p_vertices<G,F> >
       {
 	typedef trait::site_set::nsites::known   nsites;
 	// FIXME: !
@@ -61,16 +58,17 @@ namespace mln
 	typedef trait::site_set::contents::fixed contents;
 	typedef trait::site_set::arity::unique   arity;
       };
+
   } // end of namespace mln::trait
 
 
 
   template <typename G, typename F>
   class p_vertices
-    : public internal::site_set_base_< mln_result(F), p_vertices<G, F> >
+    : public internal::site_set_base_< mln_result(F), p_vertices<G,F> >
   {
 
-    typedef p_vertices<G, F> self_;
+    typedef p_vertices<G,F> self_;
     typedef internal::site_set_base_< mln_result(F), self_ > super_;
 
   public:
@@ -104,7 +102,7 @@ namespace mln
     typedef mln_site(super_) element;
 
     /// Point_Site associated type.
-    typedef internal::vertex_psite<G, F> psite;
+    typedef p_vertices_psite<G,F> psite;
 
     /// Forward Site_Iterator associated type.
     typedef p_graph_piter< self_, mln_vertex_fwd_iter(G) > fwd_piter;
@@ -170,7 +168,7 @@ namespace mln
   /// same graph.
   template <typename G, typename F>
   bool
-  operator==(const p_vertices<G, F>& lhs, const p_vertices<G, F>& rhs);
+  operator==(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs);
 
 
   /* FIXME: Extend the `ord' mechanism instead of this ill-defined
@@ -186,7 +184,7 @@ namespace mln
   /// relations.
   template <typename G, typename F>
   bool
-  operator<=(const p_vertices<G, F>& lhs, const p_vertices<G, F>& rhs);
+  operator<=(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs);
 
 
 
@@ -194,14 +192,14 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  p_vertices<G, F>::p_vertices()
+  p_vertices<G,F>::p_vertices()
     : f_(0)
   {
   }
 
   template <typename G, typename F>
   inline
-  p_vertices<G, F>::p_vertices(const G& g, const F& f)
+  p_vertices<G,F>::p_vertices(const G& g, const F& f)
     : g_ (&g), f_(f)
   {
   }
@@ -209,7 +207,7 @@ namespace mln
   template <typename G, typename F>
   inline
   unsigned
-  p_vertices<G, F>::nsites() const
+  p_vertices<G,F>::nsites() const
   {
     return nvertices();
   }
@@ -217,7 +215,7 @@ namespace mln
   template <typename G, typename F>
   inline
   unsigned
-  p_vertices<G, F>::nvertices() const
+  p_vertices<G,F>::nvertices() const
   {
     return this->g_->v_nmax();
   }
@@ -225,7 +223,7 @@ namespace mln
   template <typename G, typename F>
   inline
   bool
-  p_vertices<G, F>::is_valid() const
+  p_vertices<G,F>::is_valid() const
   {
     return g_ != 0;
   }
@@ -233,7 +231,7 @@ namespace mln
   template <typename G, typename F>
   inline
   void
-  p_vertices<G, F>::invalidate()
+  p_vertices<G,F>::invalidate()
   {
     g_ = 0;
   }
@@ -241,7 +239,7 @@ namespace mln
   template <typename G, typename F>
   inline
   bool
-  p_vertices<G, F>::has(const psite& p) const
+  p_vertices<G,F>::has(const psite& p) const
   {
     mln_precondition(is_valid());
     return has(p.v());
@@ -251,7 +249,7 @@ namespace mln
   template <typename G2>
   inline
   bool
-  p_vertices<G, F>::has(const util::vertex<G2>& p) const
+  p_vertices<G,F>::has(const util::vertex<G2>& p) const
   {
     mln_precondition(is_valid());
     return
@@ -265,7 +263,7 @@ namespace mln
   template <typename G, typename F>
   inline
   std::size_t
-  p_vertices<G, F>::memory_size() const
+  p_vertices<G,F>::memory_size() const
   {
     // FIXME: Dummy; implement (see other site sets).
     abort();
@@ -275,7 +273,7 @@ namespace mln
   template <typename G, typename F>
   inline
   const mln_result(F)&
-  p_vertices<G, F>::operator()(const psite& p) const
+  p_vertices<G,F>::operator()(const psite& p) const
   {
     mln_precondition(g_.has(p.v()));
     return (*this)(p.v().id());
@@ -284,7 +282,7 @@ namespace mln
   template <typename G, typename F>
   inline
   const mln_result(F)&
-  p_vertices<G, F>::operator()(const util::vertex<G>& v) const
+  p_vertices<G,F>::operator()(const util::vertex<G>& v) const
   {
     mln_precondition(g_->has_v(v));
     return (*this)(v.id());
@@ -293,7 +291,7 @@ namespace mln
   template <typename G, typename F>
   inline
   const mln_result(F)&
-  p_vertices<G, F>::operator()(unsigned id_v) const
+  p_vertices<G,F>::operator()(unsigned id_v) const
   {
     mln_precondition(g_->has_v(id_v));
     return f_(id_v);
@@ -302,7 +300,7 @@ namespace mln
   template <typename G, typename F>
   inline
   const G&
-  p_vertices<G, F>::graph() const
+  p_vertices<G,F>::graph() const
   {
     mln_precondition(is_valid());
     return *g_;
@@ -311,21 +309,21 @@ namespace mln
   template <typename G, typename F>
   inline
   const F&
-  p_vertices<G, F>::function() const
+  p_vertices<G,F>::function() const
   {
     return f_;
   }
 
   template <typename G, typename F>
   bool
-  operator==(const p_vertices<G, F>& lhs, const p_vertices<G, F>& rhs)
+  operator==(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs)
   {
     return (*lhs.g_) == (*rhs.g_);
   }
 
   template <typename G, typename F>
   bool
-  operator<=(const p_vertices<G, F>& lhs, const p_vertices<G, F>& rhs)
+  operator<=(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs)
   {
     return lhs == rhs;
   }

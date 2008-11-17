@@ -30,12 +30,11 @@
 # define MLN_UTIL_INTERNAL_GRAPH_BASE_HH
 
 /// \file mln/util/internal/graph_base.hh
-/// \brief Factored implementation of undirected graphs.
+///
+/// Factored implementation of undirected graphs.
 
 # include <cstddef>
-
 # include <algorithm>
-
 # include <vector>
 # include <set>
 # include <ostream>
@@ -45,8 +44,8 @@
 # include <mln/core/concept/proxy.hh>
 # include <mln/core/internal/data.hh>
 
-# include <mln/util/internal/graph_edge.hh>
-# include <mln/util/internal/graph_vertex.hh>
+# include <mln/util/edge.hh>
+# include <mln/util/vertex.hh>
 # include <mln/util/ord_pair.hh>
 # include <mln/util/tracked_ptr.hh>
 

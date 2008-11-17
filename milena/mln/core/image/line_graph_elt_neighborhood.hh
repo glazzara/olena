@@ -30,13 +30,14 @@
 # define MLN_CORE_IMAGE_LINE_GRAPH_ELT_NEIGHBORHOOD_HH
 
 /// \file mln/core/image/line_graph_elt_neighborhood.hh
+///
 /// Definition of the elementary ``neighborhood'' on a line graph.
 
 # include <set>
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/internal/graph_neighborhood_base.hh>
-# include <mln/util/internal/graph_edge_psite.hh>
+# include <mln/core/site_set/p_edges_psite.hh>
 # include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 # include <mln/core/image/line_graph_elt_window.hh>
@@ -50,7 +51,7 @@ namespace mln
   class line_graph_elt_neighborhood
     : public graph_neighborhood_base<G,
 				     F,
-				     internal::edge_psite<G, F>,
+				     p_edges_psite<G, F>,
 				     line_graph_elt_neighborhood<G, F> >
   {
     typedef line_graph_elt_neighborhood<G, F> self_;
@@ -59,7 +60,7 @@ namespace mln
     /// Associated types.
     /// \{
     /// The type of psite corresponding to the neighborhood.
-    typedef internal::edge_psite<G, F> psite;
+    typedef p_edges_psite<G, F> psite;
 
     /// Site_Iterator type to browse the psites of the
     /// neighborhood w.r.t. the ordering of edges.

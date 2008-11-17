@@ -28,19 +28,23 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 # define MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 
-# include <mln/core/concept/iterator.hh>
-# include <mln/util/internal/graph_vertex.hh>
-# include <mln/util/internal/graph_edge.hh>
-# include <mln/util/internal/graph_iter_base.hh>
+/// \file mln/util/internal/graph_iter.hh
+///
+/// Implementation for graph iterators.
 
-/// \file   mln/util/internal/graph_iter.hh
-/// \brief  Implementation for graph iterators.
+# include <mln/util/internal/graph_iter_base.hh>
+# include <mln/util/vertex.hh>
+# include <mln/util/edge.hh>
+
+
 
 namespace mln
 {
 
   namespace internal
   {
+
+    /// Forward vertex iterator.
 
     template<typename G>
     class vertex_fwd_iterator
@@ -69,6 +73,8 @@ namespace mln
     };
 
 
+    /// Backward vertex iterator.
+
     template<typename G>
     class vertex_bkd_iterator
       : public graph_iter_base<G, util::vertex<G>, vertex_bkd_iterator<G> >
@@ -95,7 +101,9 @@ namespace mln
 	friend class graph_iter_base<G, util::vertex<G>, vertex_bkd_iterator<G> >;
     };
 
+
     /// Forward edge iterator.
+
     template <typename G>
     class edge_fwd_iterator
       : public graph_iter_base<G, util::edge<G>, edge_fwd_iterator<G> >
@@ -121,6 +129,9 @@ namespace mln
 	using super_::p_;
 	friend class graph_iter_base<G, util::edge<G>, edge_fwd_iterator<G> >;
     };
+
+
+    /// Backward edge iterator.
 
     template <typename G>
     class edge_bkd_iterator
@@ -150,7 +161,9 @@ namespace mln
 
 
 
+
 # ifndef MLN_INCLUDE_ONLY
+
 
     /*--------------------`
     | vertex_fwd_iterator |
@@ -290,11 +303,12 @@ namespace mln
       return p_.id() - 1;
     }
 
-# endif // !MLN_INCLUDE_ONLY
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::internal
 
 } // end of namespace mln
+
 
 #endif // ! MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 
