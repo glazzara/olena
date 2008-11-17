@@ -30,8 +30,11 @@
 
 # include <mln/util/internal/graph_vertex_impl.hh>
 
-/// \file   mln/util/internal/graph_vertex.hh
-/// \brief  Implementation of a graph vertex.
+/// \file mln/util/internal/graph_vertex.hh
+///
+/// Implementation of a graph vertex.
+
+
 
 namespace mln
 {
@@ -39,19 +42,20 @@ namespace mln
   namespace util
   {
 
-    /// \brief Vertex of a graph \p G.
+    /// Vertex of a graph \p G.
     template<typename G>
     class vertex : public internal::vertex_impl_<G>
     {
-      typedef mlc_unconst(G) graph_t;
+    public:
 
-      public:
-
+      /// Graph associated type.
+      typedef G graph_t;
+      
 	/// Constructors.
 	/// \{
 	vertex();
-	explicit vertex(const graph_t& g);
-        vertex(const graph_t& g, unsigned id);
+	explicit vertex(const G& g);
+        vertex(const G& g, unsigned id);
 	/// \}
 
         /// Check whether the vertex is still part of the graph.
@@ -78,17 +82,17 @@ namespace mln
 	/// Change the parent graph of that vertex.
 	void change_graph(const G& g);
 
-	/// Update vertex id.
+	/// Update the vertex id.
 	void update_id(unsigned id);
 
 	/// Returns the graph pointer this vertex belongs to.
-	const graph_t&  graph() const;
+	const G& graph() const;
 
-	/// Returns vertex id.
+	/// Returns the vertex id.
 	unsigned id() const;
 
       protected:
-        graph_t g_;
+        G g_;
         unsigned id_;
     };
 
@@ -173,23 +177,24 @@ namespace mln
     template <typename G>
     inline
     vertex<G>::vertex()
-      : id_(0)
     {
+      invalidate();
     }
 
     template <typename G>
     inline
-    vertex<G>::vertex(const graph_t& g)
-      : g_(g), id_(g_.v_nmax())
+    vertex<G>::vertex(const G& g)
+      : g_(g)
     {
+      invalidate();
     }
 
     template<typename G>
     inline
-    vertex<G>::vertex(const graph_t& g, unsigned id)
+    vertex<G>::vertex(const G& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(g_.has_v(id));
+      mln_precondition(/* FIXME: g_.is_valid() && */ g_.has_v(id));
     }
 
     template<typename G>
@@ -197,7 +202,7 @@ namespace mln
     bool
     vertex<G>::is_valid() const
     {
-      return g_.has_v(id_);
+      return /* FIXME: g_.is_valid() && */ g_.has_v(id_);
     }
 
     template<typename G>
@@ -205,7 +210,7 @@ namespace mln
     void
     vertex<G>::invalidate()
     {
-      id_ = g_.v_nmax();
+      id_ = mln_max(unsigned);
     }
 
 
@@ -274,7 +279,7 @@ namespace mln
 
     template<typename G>
     inline
-    const typename vertex<G>::graph_t&
+    const typename vertex<G>::G&
     vertex<G>::graph() const
     {
       return g_;

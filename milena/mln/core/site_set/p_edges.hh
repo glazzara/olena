@@ -58,27 +58,32 @@ namespace mln
 
   template <typename G, typename F>
   class p_edges
-    : public internal::site_set_base_< typename F::result, p_edges<G, F> >
+    : public internal::site_set_base_< mln_result(F), p_edges<G, F> >
   {
-    typedef util::edge<G> edge_t;
 
     typedef p_edges<G, F> self_;
-    typedef internal::site_set_base_< typename F::result, self_ > super_;
+    typedef internal::site_set_base_< mln_result(F), self_ > super_;
 
   public:
-    /// Type of the graph this site set is based on.
-    typedef G graph_t;
 
-    /// \brief Construct a graph edge psite set from a graph and a function.
+    /// Type of graph edge.
+    typedef util::edge<G> edge;
+
+    /// Type of graph element this site set focuses on.
+    typedef util::edge<G> graph_element;
+
+
+    /// Construct a graph edge psite set from a graph and a function.
     ///
     /// \param gr The graph upon which the graph edge psite set is built.
     /// \param f the function mapping edges and sites.
-    p_edges(const graph_t& gr, const F& f);
+    p_edges(const G& gr, const F& f);
 
     /// Associated types.
     /// \{
     /// Element associated type.
     typedef mln_site(super_) element;
+
     /// Point_Site associated type.
     typedef internal::edge_psite<G, F> psite;
 
@@ -117,13 +122,14 @@ namespace mln
     /// Accessors.
     /// \{
     /// Return the graph associated to this site set
-    const graph_t& graph() const;
+    const G& graph() const;
     /// Return the mapping function.
     const F& function() const;
     /// \}
 
   private:
-    mlc_const(graph_t)* g_;
+
+    const G* g_;
     F f_;
   };
 
@@ -155,7 +161,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  p_edges<G, F>::p_edges(const graph_t& g, const F& f)
+  p_edges<G, F>::p_edges(const G& g, const F& f)
     : g_ (&g), f_(f)
   {
   }
@@ -223,7 +229,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  const typename p_edges<G, F>::graph_t&
+  const G&
   p_edges<G, F>::graph() const
   {
     mln_precondition(is_valid());

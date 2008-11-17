@@ -28,65 +28,54 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_EDGE_PSITE_HH
 
-# include <mln/core/concept/pseudo_site.hh>
+/// \file mln/util/internal/graph_edge_psite.hh
+///
+/// Implementation of p_edges psite.
+
 # include <mln/util/internal/graph_psite_base.hh>
 # include <mln/util/internal/graph_edge.hh>
 
+
 namespace mln
 {
 
+  // Forward declaration.
   template <typename G, typename F> class p_edges;
 
-} // end of namespace mln
 
-/// \file mln/util/internal/graph_edge_psite.hh
-/// \brief Implementation of p_edges psite.
+  namespace internal
+  {
 
-namespace mln
-{
 
-    namespace internal
+    template <typename G, typename F>
+    class edge_psite :
+      public graph_psite_base< p_edges<G,F>,
+			       edge_psite<G,F> >
     {
+      typedef edge_psite<G,F> self_;
+      typedef graph_psite_base<p_edges<G,F>, self_> super_;
 
-      template <typename G, typename F>
-      class edge_psite :
-	public graph_psite_base<util::edge<G>, typename F::result,
-				p_edges<G, F>,
-				edge_psite<G, F> >
-      {
-	typedef edge_psite<G, F> self_;
-	typedef p_edges<G, F> target_t;
-        typedef graph_psite_base<util::edge<G>, typename F::result, target_t, self_> super_;
-	typedef util::edge<G> edge_t;
+    public:
 
-      public:
-	/// Associated Types
-	/// \{
-	/// Site type, the return type of the mapping function \p F here.
-        typedef typename F::result site;
-	/// \}
+      /// Constructors
+      /// \{
+      edge_psite();
+      edge_psite(const p_edges<G,F>& s);
+      edge_psite(const p_edges<G,F>& s, unsigned);
+      /// \}
 
-	/// Constructors
-	/// \{
-        edge_psite();
-        edge_psite(const target_t& t);
-        edge_psite(const target_t& t, unsigned);
-	/// \}
+      /// Accessors
+      /// \{
+      /// Return the underlying edge.
+      const util::edge<G>& e() const;
+      /// \}
+    };
 
-	/// Accessors
-	/// \{
-	/// Return the underlying edge.
-        const edge_t& e() const;
-	/// \}
 
-      protected:
-	/// The underlying edge (inherited).
-	using super_::v_;
-     };
-
-    } // end of namespace internal
+  } // end of namespace mln::internal
 
 } // end of namespace mln
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -94,38 +83,38 @@ namespace mln
 namespace mln
 {
 
-    namespace internal
+  namespace internal
+  {
+
+    template <typename G, typename F>
+    inline
+    edge_psite<G, F>::edge_psite()
     {
+    }
 
-      template <typename G, typename F>
-      inline
-      edge_psite<G, F>::edge_psite()
-      {
-      }
+    template <typename G, typename F>
+    inline
+    edge_psite<G, F>::edge_psite(const p_edges<G,F>& s)
+      : super_(s)
+    {
+    }
 
-      template <typename G, typename F>
-      inline
-      edge_psite<G, F>::edge_psite(const target_t& t)
-	: super_(t)
-      {
-      }
+    template <typename G, typename F>
+    inline
+    edge_psite<G, F>::edge_psite(const p_edges<G,F>& s, unsigned id)
+      : super_(s, id)
+    {
+    }
 
-      template <typename G, typename F>
-      inline
-      edge_psite<G, F>::edge_psite(const target_t& t, unsigned id)
-	: super_(t, id)
-      {
-      }
+    template <typename G, typename F>
+    inline
+    const util::edge<G>&
+    edge_psite<G, F>::e() const
+    {
+      return this->v_;
+    }
 
-      template <typename G, typename F>
-      inline
-      const typename edge_psite<G, F>::edge_t&
-      edge_psite<G, F>::e() const
-      {
-        return v_;
-      }
-
-    } // end of namespace internal
+  } // end of namespace internal
 
 } // end of namespace mln
 

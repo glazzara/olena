@@ -28,8 +28,9 @@
 #ifndef MLN_CORE_SITE_SET_P_VERTICES_HH
 # define MLN_CORE_SITE_SET_P_VERTICES_HH
 
-  /// \file mln/core/site_set/p_vertices.hh
-  /// \brief Definition of a point set based on a graph.
+/// \file mln/core/site_set/p_vertices.hh
+///
+/// Definition of a point set based on a graph.
 
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/site_set/p_graph_piter.hh>
@@ -41,10 +42,13 @@
   //# include <mln/core/image/graph_psite.hh>
   //# include <mln/core/site_set/p_vertices_piter.hh>
 
+
 namespace mln
 {
+
   // Forward declaration.
   template <typename G, typename F> struct p_vertices;
+
 
   namespace trait
   {
@@ -60,33 +64,41 @@ namespace mln
   } // end of namespace mln::trait
 
 
+
   template <typename G, typename F>
   class p_vertices
-    : public internal::site_set_base_< typename F::result, p_vertices<G, F> >
+    : public internal::site_set_base_< mln_result(F), p_vertices<G, F> >
   {
-    typedef util::vertex<G> vertex_t;
 
     typedef p_vertices<G, F> self_;
-    typedef internal::site_set_base_< typename F::result, self_ > super_;
+    typedef internal::site_set_base_< mln_result(F), self_ > super_;
 
   public:
 
-    /// Type of the graph this site set is based on.
-    typedef G graph_t;
+    /// Type of graph vertex.
+    typedef util::vertex<G> vertex;
 
-    /// \brief Construct a graph psite set from a graph of points.
-    /// \{
+
+    /// Type of graph element this site set focuses on.
+    typedef util::vertex<G> graph_element;
+
+
+    /// Constructor without argument.
     p_vertices();
 
+    /// Construct a graph psite set from a graph of points.
     /// \param gr The graph upon which the graph psite set is built.
     /// \param f the function which maps a vertex to a site.
-    p_vertices(const graph_t& gr, const F& f);
+    p_vertices(const G& gr, const F& f);
     /// \}
+
 
     /// Associated types.
     /// \{
+
     /// Element associated type.
     typedef mln_site(super_) element;
+
     /// Point_Site associated type.
     typedef internal::vertex_psite<G, F> psite;
 
@@ -98,7 +110,9 @@ namespace mln
 
     /// Site_Iterator associated type.
     typedef fwd_piter piter;
+
     /// \}
+
 
     /// \brief Return The number of points (sites) of the set, i.e.,
     /// the number of \em vertices.
@@ -109,8 +123,9 @@ namespace mln
     /// Return The number of vertices in the graph.
     unsigned nvertices() const;
 
-    /// Is this site set valid?
+    /// Test this site set validity.
     bool is_valid() const;
+
     /// Invalidate this site set.
     void invalidate();
 
@@ -134,13 +149,13 @@ namespace mln
     /// Accessors.
     /// \{
     /// Return the graph associated to this site set (const version)
-    const graph_t& graph() const;
+    const G& graph() const;
     /// Return the association function.
     const F& function() const;
     /// \}
 
   private:
-    mlc_const(graph_t)* g_;
+    const G* g_;
     F f_;
   };
 
@@ -182,7 +197,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  p_vertices<G, F>::p_vertices(const graph_t& g, const F& f)
+  p_vertices<G, F>::p_vertices(const G& g, const F& f)
     : g_ (&g), f_(f)
   {
   }
@@ -282,7 +297,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  const typename p_vertices<G, F>::graph_t&
+  const G&
   p_vertices<G, F>::graph() const
   {
     mln_precondition(is_valid());

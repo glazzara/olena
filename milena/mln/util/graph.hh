@@ -30,19 +30,21 @@
 # define MLN_UTIL_GRAPH_HH
 
 /// \file mln/util/graph.hh
-/// Definitions of undirected graphs.
+///
+/// Definition of a basic undirected graph.
 
 # include <mln/util/internal/graph_base.hh>
 # include <mln/util/internal/graph_iter.hh>
 # include <mln/util/internal/graph_nbh_iter.hh>
 # include <mln/util/ord_pair.hh>
 
+
 namespace mln
 {
 
   namespace util
   {
-    /// Fwd declaration.
+    /// Forward declaration.
     class graph;
   }
 
@@ -134,6 +136,8 @@ namespace mln
 
       graph();
 
+
+
       /// Vertex oriented.
       /// \{
       /// Shortcuts factoring the insertion of vertices and edges.
@@ -170,7 +174,6 @@ namespace mln
       /// Returns the \p i th vertex adjacent to the vertex \p id_v.
       unsigned v_ith_nbh_vertex(unsigned id_v, unsigned i) const;
       /// \}
-
 
 
 
@@ -218,6 +221,9 @@ namespace mln
   } // end of namespace mln::util
 
 } // end of namespace mln
+
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 

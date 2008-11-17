@@ -83,7 +83,7 @@ namespace mln
 	/// Misc. methods
 	/// \{
 	/// Returns the graph id, the "this" pointer.
-	const void * const graph_id() const;
+	const void* graph_id() const;
 	/// \}
 
 	/// Vertex oriented methods
@@ -158,10 +158,10 @@ namespace mln
 
       template<typename E>
       inline
-      const void * const
+      const void*
       graph_base<E>::graph_id() const
       {
-	return static_cast<const void * const>(data_.ptr_);
+	return static_cast<const void*>(data_.ptr_);
       }
 
       /*-------------------------.

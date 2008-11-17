@@ -109,7 +109,7 @@ namespace mln
     //typedef mln_bkd_piter(E) bkd_piter;
 
     // Check methods
-    const void * const(E::*m1)() const = & E::graph_id;
+    const void* (E::*m1)() const = & E::graph_id;
     m1 = 0;
     unsigned (E::*m2)(unsigned id_e, unsigned id_v) const = & E::v_other;
     m2 = 0;

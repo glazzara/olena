@@ -28,53 +28,49 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_VERTEX_PSITE_HH
 
+/// \file mln/util/internal/graph_vertex_psite.hh
+///
+/// Implementation of p_vertices psite.
+
 # include <mln/core/concept/pseudo_site.hh>
 # include <mln/util/internal/graph_psite_base.hh>
 # include <mln/util/internal/graph_vertex.hh>
 
+
 namespace mln
 {
 
+  // Forward declaration.
   template <typename G, typename F> class p_vertices;
 
-} // end of namespace mln
+  
+  namespace internal
+  {
 
-/// \file mln/util/internal/graph_vertex_psite.hh
-/// \brief Implementation of p_vertices psite.
 
-namespace mln
-{
-
-    namespace internal
+    template <typename G, typename F>
+    class vertex_psite :
+      public graph_psite_base< p_vertices<G,F>,
+			       vertex_psite<G,F> >
     {
+      typedef vertex_psite<G,F> self_;
+      typedef graph_psite_base<p_vertices<G,F>, self_> super_;
 
-      template <typename G, typename F>
-      class vertex_psite :
-	public graph_psite_base<util::vertex<G>, typename F::result,
-				p_vertices<G, F>,
-				vertex_psite<G, F> >
-      {
-	typedef vertex_psite<G, F> self_;
-	typedef p_vertices<G, F> target_t;
-        typedef graph_psite_base<util::vertex<G>, typename F::result, target_t, self_> super_;
-	typedef util::vertex<G> vertex_t;
+    public:
 
-      public:
-        typedef typename F::result site;
+      vertex_psite();
+      vertex_psite(const p_vertices<G,F>& s);
+      vertex_psite(const p_vertices<G,F>& s, unsigned id);
 
-        vertex_psite();
-        vertex_psite(const target_t& t);
-        vertex_psite(const target_t& t, unsigned id);
+      const util::vertex<G>& v() const;
+    };
 
-        const vertex_t& v() const;
 
-      protected:
-	using super_::v_;
-     };
-
-    } // end of namespace internal
+  } // end of namespace mln::internal
 
 } // end of namespace mln
+
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,24 +89,24 @@ namespace mln
 
       template <typename G, typename F>
       inline
-      vertex_psite<G, F>::vertex_psite(const target_t& t)
-	: super_(t)
+      vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s)
+	: super_(s)
       {
       }
 
       template <typename G, typename F>
       inline
-      vertex_psite<G, F>::vertex_psite(const target_t& t, unsigned i)
-	: super_(t, i)
+      vertex_psite<G, F>::vertex_psite(const p_vertices<G,F>& s, unsigned i)
+	: super_(s, i)
       {
       }
 
       template <typename G, typename F>
       inline
-      const typename vertex_psite<G, F>::vertex_t&
+      const util::vertex<G>&
       vertex_psite<G, F>::v() const
       {
-        return v_;
+        return this->v_;
       }
 
     } // end of namespace internal

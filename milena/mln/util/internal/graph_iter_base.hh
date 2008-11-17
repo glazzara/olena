@@ -28,12 +28,17 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_ITER_BASE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_ITER_BASE_HH
 
+/// \file mln/util/internal/graph_iter_base.hh
+///
+/// Base implementation for graph iterators.
+///
+/// \todo Have special types for ids (vertex_id) to disambiguate the
+/// conversion op.
+
 # include <mln/core/concept/iterator.hh>
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/internal/graph_edge.hh>
 
-/// \file   mln/util/internal/graph_iter_base.hh
-/// \brief  Base implementation for graph iterators.
 
 namespace mln
 {
@@ -41,10 +46,10 @@ namespace mln
   namespace internal
   {
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     class graph_iter_base
       : public Proxy< E >,
-	public internal::proxy_impl< const P&, E >
+	public internal::proxy_impl< const Elt&, E >
     {
       public:
 	/// Iterator interface
@@ -67,80 +72,80 @@ namespace mln
 	operator unsigned() const;
 	/// \}
 
-	/// Proxy.
-	/// \{
 	/// Proxy subject
-	const P& subj_();
-	/// \}
+	const Elt& subj_();
 
       protected:
 	graph_iter_base(const G& g);
 
-	P p_;
+	Elt p_;
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
-    graph_iter_base<G, P, E>::graph_iter_base(const G& g)
-      : p_(P(g))
+    graph_iter_base<G, Elt, E>::graph_iter_base(const G& g)
+      : p_(Elt(g))
     {
       invalidate();
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
     bool
-    graph_iter_base<G, P, E>::is_valid() const
+    graph_iter_base<G, Elt, E>::is_valid() const
     {
       return p_.is_valid();
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
     void
-    graph_iter_base<G, P, E>::invalidate()
+    graph_iter_base<G, Elt, E>::invalidate()
     {
       p_.invalidate();
+      mln_postcondition(! is_valid());
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
     void
-    graph_iter_base<G, P, E>::start()
+    graph_iter_base<G, Elt, E>::start()
     {
       p_.update_id(exact(this)->start_id_());
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
     void
-    graph_iter_base<G, P, E>::next()
+    graph_iter_base<G, Elt, E>::next()
     {
+      mln_precondition(is_valid());
       p_.update_id(exact(this)->next_id_());
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
     unsigned
-    graph_iter_base<G, P, E>::index() const
+    graph_iter_base<G, Elt, E>::index() const
     {
       return p_.id();
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
-    graph_iter_base<G, P, E>::operator unsigned() const
+    graph_iter_base<G, Elt, E>::operator unsigned() const
     {
       return p_.id();
     }
 
-    template <typename G, typename P, typename E>
+    template <typename G, typename Elt, typename E>
     inline
-    const P&
-    graph_iter_base<G, P, E>::subj_()
+    const Elt&
+    graph_iter_base<G, Elt, E>::subj_()
     {
       return p_;
     }

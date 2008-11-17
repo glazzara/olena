@@ -1,5 +1,61 @@
 2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup basic graph class and related materials.
+
+	* mln/core/site_set/p_graph_piter.hh: Upgrade doc style.
+	(operator<<): Remove; useless.
+	* mln/core/site_set/p_vertices.hh
+	(vertex, graph_element): New typedefs.
+	(graph_t): Remove; use explicitly G instead.
+	* mln/core/site_set/p_edges.hh
+	(edge, graph_element): New typedefs.
+	(graph_t): Remove; use explicitly G instead.
+	* mln/util/graph.hh: Layout.
+	* mln/util/internal/graph_base.hh (graph_id): Fix return type.
+	That avoids a warning at compile-time.
+	* mln/core/concept/graph.hh: Update.
+	* mln/util/internal/graph_iter.hh: Layout.
+	* mln/util/internal/graph_edge.hh: Upgrade doc style.
+	(operator<<): Fix missing const.
+	(edge::edge): Prefer invalidate over id_ set to 0.
+	(FIXME): New.
+	(invalidate): Set id_ to unsigned max value; less error-prone.
+	(graph_t): Use instead explicit...
+	(G): ...parameter type.
+	* mln/util/internal/graph_edge_psite.hh: Upgrade doc style.
+	(target_t, edge_t): Use instead the explicit...
+	(p_edges, util::edge): ...types.
+	* mln/util/internal/graph_vertex.hh
+	(vertex::vertex): Prefer invalidate over id_ set to 0.
+	(FIXME): New.
+	(invalidate): Set id_ to unsigned max value; less error-prone.
+	(graph_t): Use instead explicit...
+	(G): ...parameter type.
+	Fix doc.
+	* mln/util/internal/graph_psite_base.hh: Fix doc.
+	(V, P): Remove these useless parameters, now deduce from S.
+	(v_): Rename this attribute as...
+	(elt_): ...this; more explicit name.
+	(target): Prefer to use the explicit...
+	(S): ...type.
+	(t_): Rename as...
+	(s_): ...this; consistent with other classes.
+	(q_subject): Remove; obsolete.
+	(to_site): Remove; inherited.
+	(operator<<): Remove; useless.
+	(operator graph_element): New conversion operator.
+	(site_set, graph, subj_): Fix missing precondition.
+	* mln/util/internal/graph_vertex_psite.hh: Fix doc.
+	(target_t, vertex_t): Prefer to use explicit...
+	(p_vertices, util::vertex): ...types.
+	* mln/util/internal/graph_iter_base.hh
+	(P): Rename this parameter as...
+	(Elt): ...this; more explicit.
+	(invalidate): Fix missing postcondition.
+	(next): Fix missing precondition.
+
+2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Use unmeta and handle accu object when needed.
 
 	* mln/level/compute.hh,

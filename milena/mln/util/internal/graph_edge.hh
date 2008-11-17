@@ -28,11 +28,12 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_EDGE_HH
 
+/// \file mln/util/internal/graph_edge.hh
+///
+/// Definition of a graph edge.
+
 # include <mln/util/internal/graph_edge_impl.hh>
 
-/*! \file mln/util/internal/graph_edge.hh
- * \brief Definition of a graph edge.
- */
 
 namespace mln
 {
@@ -44,20 +45,21 @@ namespace mln
     | Edge.  |
     `-------*/
 
-    /// \brief Edge of a graph \p G.
+    /// Edge of a graph \p G.
     template <typename G>
     class edge : public internal::edge_impl_<G>
     {
-      typedef mlc_unconst(G) graph_t;
-
       public:
+
+      /// Graph associated type.
+      typedef G graph_t;
+
 	/// Constructors
 	/// \{
 	edge();
-	explicit edge(const graph_t& g);
-        edge(const graph_t& g, unsigned id);
+	explicit edge(const G& g);
+        edge(const G& g, unsigned id);
 	/// \}
-
 
 
         /// Misc.
@@ -74,12 +76,11 @@ namespace mln
 	void update_id(unsigned id);
 
 	/// Return a reference to the graph holding this edge.
-        const graph_t& graph() const;
+        const G& graph() const;
 
 	/// Set g_ with \p g;
-	void change_graph(const graph_t& g);
+	void change_graph(const G& g);
 	/// \}
-
 
 
         /// Vertex and edges oriented.
@@ -105,13 +106,13 @@ namespace mln
 	/// \}
 
       private:
-	graph_t g_;
+	G g_;
 	unsigned id_;
     };
 
     template <typename G>
     std::ostream&
-    operator<<(std::ostream& ostr, edge<G>& p);
+    operator<<(std::ostream& ostr, const edge<G>& p);
 
     template <typename G>
     bool
@@ -174,23 +175,24 @@ namespace mln
     template <typename G>
     inline
     edge<G>::edge()
-      : id_(0)
     {
+      invalidate();
     }
 
     template <typename G>
     inline
-    edge<G>::edge(const graph_t& g)
-      : g_(g), id_(g.e_nmax())
+    edge<G>::edge(const G& g)
+      : g_(g)
     {
+      invalidate();
     }
 
     template <typename G>
     inline
-    edge<G>::edge(const graph_t& g, unsigned id)
+    edge<G>::edge(const G& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(g.has_e(id));
+      mln_precondition(/* FIXME: g_.is_valid() && */ g.has_e(id));
     }
 
     template <typename G>
@@ -211,7 +213,7 @@ namespace mln
 
     template <typename G>
     inline
-    const typename edge<G>::graph_t&
+    const typename edge<G>::G&
     edge<G>::graph() const
     {
       return g_;
@@ -220,7 +222,7 @@ namespace mln
     template <typename G>
     inline
     void
-    edge<G>::change_graph(const graph_t& g)
+    edge<G>::change_graph(const G& g)
     {
       g_ = g;
     }
@@ -230,7 +232,7 @@ namespace mln
     bool
     edge<G>::is_valid() const
     {
-      return g_.has_e(id_);
+      return /* FIXME: g_.is_valid() && */ g_.has_e(id_);
     }
 
     template <typename G>
@@ -238,7 +240,7 @@ namespace mln
     void
     edge<G>::invalidate()
     {
-      id_ = g_.e_nmax();
+      id_ = mln_max(unsigned);
     }
 
 
@@ -289,7 +291,7 @@ namespace mln
 
     template <typename G>
     std::ostream&
-    operator<<(std::ostream& ostr, edge<G>& p)
+    operator<<(std::ostream& ostr, const edge<G>& p)
     {
       return ostr << p.id();
     }

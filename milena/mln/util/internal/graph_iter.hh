@@ -148,6 +148,8 @@ namespace mln
 	friend class graph_iter_base<G, util::edge<G>, edge_bkd_iterator<G> >;
     };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     /*--------------------`
@@ -290,9 +292,9 @@ namespace mln
 
 # endif // !MLN_INCLUDE_ONLY
 
-  } // End of namespace mln::internal
+  } // end of namespace mln::internal
 
-} // End of namespace mln
+} // end of namespace mln
 
-#endif // !MLN_UTIL_INTERNAL_GRAPH_ITER_HH
+#endif // ! MLN_UTIL_INTERNAL_GRAPH_ITER_HH
 

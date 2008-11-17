@@ -30,15 +30,17 @@
 # define MLN_CORE_SITE_SET_P_GRAPH_PITER_HH
 
 /// \file mln/core/site_set/p_graph_piter.hh
-/// \brief Definition of point iterator on graph-based point set.
+///
+/// Definition of point iterator on graph-based point set.
 
 # include <mln/core/internal/site_set_iterator_base.hh>
-//# include <mln/core/site_set/p_graph.hh>
-//# include <mln/core/image/graph_psite.hh>
+
+
 
 namespace mln
 {
-  // Fwd decls.
+
+  // Forward declaration.
   template <typename S, typename I> class graph_psite;
 
 
@@ -46,7 +48,7 @@ namespace mln
   | p_graph_piter<S,I>.  |
   `------------------------*/
 
-  /// \brief Generic iterator on point sites of a mln::S.
+  /// Generic iterator on point sites of a mln::S.
   template <typename S, typename I>
   class p_graph_piter
     : public internal::site_set_iterator_base< S,
@@ -57,7 +59,8 @@ namespace mln
     typedef I iter;
 
   public:
-    /// Construction and assignment.
+
+    /// Constructors.
     /// \{
     p_graph_piter();
     p_graph_piter(const S& pv);
@@ -77,10 +80,12 @@ namespace mln
     /// \}
 
   private:
+
     /// Update the psite corresponding to this iterator.
     void update_();
 
   private:
+
     /// The psite corresponding to this iterator.
     using super_::p_;
 
@@ -89,11 +94,6 @@ namespace mln
   };
 
 
-  /// Print an mln::p_graph_piter<S,I>.
-  template <typename S, typename I>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const p_graph_piter<S,I>& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -106,7 +106,7 @@ namespace mln
   inline
   p_graph_piter<S,I>::p_graph_piter()
   {
-    mln_postcondition(!this->is_valid());
+    mln_postcondition(! this->is_valid());
   }
 
   template <typename S, typename I>
@@ -115,7 +115,7 @@ namespace mln
     : iter_(pv.graph())
   {
     this->change_target(pv);
-    mln_postcondition(!this->is_valid());
+    mln_postcondition(! this->is_valid());
   }
 
   template <typename S, typename I>
@@ -150,8 +150,8 @@ namespace mln
   p_graph_piter<S,I>::next_()
   {
     iter_.next();
-      if (this->is_valid())
-	update_();
+    if (this->is_valid())
+      update_();
   }
 
   template <typename S, typename I>
@@ -164,19 +164,9 @@ namespace mln
     p_.update_id(iter_.id());
   }
 
-
-
-  template <typename S, typename I>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const p_graph_piter<S,I>& p)
-  {
-    return ostr << p.unproxy_();
-  }
-
 # endif // ! MLN_INCLUDE_ONLY
 
-} // end of mln
+} // end of namespace mln
 
 
 #endif // ! MLN_CORE_SITE_SET_P_GRAPH_PITER_HH

@@ -28,6 +28,10 @@
 #ifndef MLN_UTIL_INTERNAL_GRAPH_PSITE_BASE_HH
 # define MLN_UTIL_INTERNAL_GRAPH_PSITE_BASE_HH
 
+/// \file mln/util/internal/graph_psite_base.hh
+///
+/// Base implementation for graph based psites.
+
 # include <mln/core/concept/pseudo_site.hh>
 
 namespace mln
@@ -37,8 +41,6 @@ namespace mln
 
 } // end of namespace mln
 
-/// \file mln/util/internal/graph_psite_base.hh
-/// \brief Base implementation for graph based psites.
 
 namespace mln
 {
@@ -46,41 +48,43 @@ namespace mln
     namespace internal
     {
 
-      template <typename V, typename P, typename S, typename E>
-      class graph_psite_base : public mln::Pseudo_Site<E>,
-	  public internal::proxy_impl<const P&, E>
+      template <typename S, typename E>
+      class graph_psite_base : public internal::pseudo_site_base_< const mln_site(S)&,
+								   E >
       {
-        typedef Pseudo_Site< graph_psite_base<V, P, S, E> > super;
-	typedef typename S::graph_t graph_t;
+        typedef Pseudo_Site< graph_psite_base<S,E> > super;
 
-        public:
-	/// Associated types.
-	/// \{
-        typedef P site;
+      public:
+
+	// This associated type is important to know that this particular
+	// pseudo site knows the site set it refers to.
 	typedef S target;
-	/// \}
+
+	// As a Proxy:
+	const mln_site(S)& subj_();
+
 
 	/// Setters.
 	/// \{
 	/// Change the targe site set.
-        void change_target(const target& new_target);
+        void change_target(const S& new_target);
 	/// Update the underlying element's id.
 	/// This element can be an edge, a vertex...
-	void update_id(unsigned v_id);
+	void update_id(unsigned elt_id);
 	/// \}
 
 	/// Getters.
 	/// \{
 	/// Return the target (the site set).
-        const target* target_() const; // Hook to the target.
+        const S* target_() const; // Hook to the target.
 
 	/// Return the site set (the target).
-        const target& site_set() const;
+        const S& site_set() const;
 
 	/// Return the graph associated to the target of this psite.
-	const graph_t& graph() const;
+	const typename S::graph_t& graph() const;
 
-	/// Return the graph associated to the target of this psite.
+	/// Return the id of the graph element designated by this psite.
 	unsigned id() const;
 
 	/// \}
@@ -90,38 +94,30 @@ namespace mln
 	/// Invalidate this psite.
 	void invalidate();
 
-	/// Pseudo site Interface
-	/// \{
-	/// Subject type.
-	typedef const site& q_subject;
-	/// Return the subject.
-        const site& subj_();
-	/// Return the underlying site.
-	const site& to_site() const;
-	/// \}
+	/// Conversion towards the graph element (vertex or edge).
+	operator const typename S::graph_element&() const;
 
       protected:
+
 	/// Constructors.
+
 	/// \{
         graph_psite_base();
 	/// \p t A site set.
 	/// \sa p_vertices, p_edges.
-        graph_psite_base(const target& t);
+        graph_psite_base(const S& s);
 	/// \p t A site set.
 	/// \sa p_vertices, p_edges.
 	/// \p id The id of the element associated to this psite.
-        graph_psite_base(const target& t, unsigned id);
+        graph_psite_base(const S& , unsigned id);
 	/// \}
 
-	mlc_const(target)* t_;
-        V v_;
+	const S* s_;
+        typename S::graph_element elt_;
      };
 
-    template <typename V, typename P, typename S, typename E>
-    std::ostream&
-    operator<<(std::ostream& ostr, graph_psite_base<V, P, S, E>& p);
 
-    /// Comparison of two mln::graph_psite_base<V, P, S, E> instances.
+    /// Comparison of two mln::graph_psite_base<S,E> instances.
     /// \{
     /* FIXME: Shouldn't those comparisons be part of a much general
        mechanism?  */
@@ -130,17 +126,17 @@ namespace mln
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::p_vertices.
-    template <typename V, typename P, typename S, typename E>
+    template <typename S, typename E>
     bool
-    operator==(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+    operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
 
     /// \brief Is \a lhs not equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::p_vertices.
-    template <typename V, typename P, typename S, typename E>
+    template <typename S, typename E>
     bool
-    operator!=(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+    operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
 
     /// \brief Is \a lhs ``less'' than \a rhs?
     ///
@@ -148,14 +144,15 @@ namespace mln
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::p_vertices.
-    template <typename V, typename P, typename S, typename E>
+    template <typename S, typename E>
     bool
-    operator< (const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs);
+    operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
     /// \}
 
   } // end of namespace internal
 
 } // end of namespace mln
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -166,143 +163,137 @@ namespace mln
     namespace internal
     {
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
-      graph_psite_base<V, P, S, E>::graph_psite_base()
-	: t_(0)
+      graph_psite_base<S,E>::graph_psite_base()
+	: s_(0)
       {
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
-      graph_psite_base<V, P, S, E>::graph_psite_base(const target& t)
-        : t_(0)
+      graph_psite_base<S,E>::graph_psite_base(const S& s)
       {
-        change_target(t);
+        change_target(s);
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
-      graph_psite_base<V, P, S, E>::graph_psite_base(const target& t, unsigned id)
-        : t_(0)
+      graph_psite_base<S,E>::graph_psite_base(const S& s, unsigned id)
       {
-	change_target(t);
+	change_target(s);
 	update_id(id);
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
       void
-      graph_psite_base<V, P, S, E>::change_target(const target& new_target)
+      graph_psite_base<S,E>::change_target(const S& new_target)
       {
-        t_ = &new_target;
-	v_.change_graph(new_target.graph());
+        s_ = & new_target;
+	elt_.change_graph(new_target.graph());
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
       void
-      graph_psite_base<V, P, S, E>::update_id(unsigned id)
+      graph_psite_base<S,E>::update_id(unsigned id)
       {
-	v_.update_id(id);
+	elt_.update_id(id);
       }
 
-      template <typename v, typename p, typename s, typename e>
+      template <typename S, typename E>
       inline
-      const typename graph_psite_base<v, p, s, e>::target*
-      graph_psite_base<v, p, s, e>::target_() const
+      const S*
+      graph_psite_base<S,E>::target_() const
       {
-        return t_;
+        return s_;
       }
 
-      template <typename v, typename p, typename s, typename e>
+      template <typename S, typename E>
       inline
-      const typename graph_psite_base<v, p, s, e>::target&
-      graph_psite_base<v, p, s, e>::site_set() const
+      const S&
+      graph_psite_base<S,E>::site_set() const
       {
-        return *t_;
+	mln_precondition(s_ != 0);
+        return *s_;
       }
 
-      template <typename v, typename p, typename s, typename e>
+      template <typename S, typename E>
       inline
-      const typename graph_psite_base<v, p, s, e>::graph_t&
-      graph_psite_base<v, p, s, e>::graph() const
+      const typename S::graph_t&
+      graph_psite_base<S,E>::graph() const
       {
-        return t_->graph();
+	mln_precondition(s_ != 0);
+        return s_->graph();
       }
 
-      template <typename v, typename p, typename s, typename e>
+      template <typename S, typename E>
       inline
       unsigned
-      graph_psite_base<v, p, s, e>::id() const
+      graph_psite_base<S,E>::id() const
       {
-        return v_.id();
+        return elt_.id();
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
       bool
-      graph_psite_base<V, P, S, E>::is_valid() const
+      graph_psite_base<S,E>::is_valid() const
       {
-	return t_ != 0 && t_->is_valid() && v_.is_valid();
+	return s_ != 0 && s_->is_valid() && elt_.is_valid();
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
       void
-      graph_psite_base<V, P, S, E>::invalidate()
+      graph_psite_base<S,E>::invalidate()
       {
-	t_ = 0;
-	v_.invalidate();
+	s_ = 0;
+	elt_.invalidate();
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
-      const typename graph_psite_base<V, P, S, E>::site&
-      graph_psite_base<V, P, S, E>::subj_()
+      const mln_site(S)&
+      graph_psite_base<S,E>::subj_()
       {
-        return to_site();
+	mln_precondition(s_ != 0);
+        return s_->function()(elt_.id());
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       inline
-      const typename graph_psite_base<V, P, S, E>::site&
-      graph_psite_base<V, P, S, E>::to_site() const
+      graph_psite_base<S,E>::operator const typename S::graph_element&() const
       {
-        return t_->function()(v_.id());
+	mln_precondition(is_valid());
+	return elt_;
       }
 
-
-      template <typename V, typename P, typename S, typename E>
-      std::ostream&
-      operator<<(std::ostream& ostr, graph_psite_base<V, P, S, E>& p)
-      {
-	return ostr << p.unproxy_();
-      }
 
       /*--------------.
       | Comparisons.  |
       `--------------*/
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       bool
-      operator==(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      operator==(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
       {
 	mln_assertion(lhs.target_() == rhs.target_());
 	return lhs.id() == rhs.id();
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       bool
-      operator!=(const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      operator!=(const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
       {
 	mln_assertion(lhs.target_() == rhs.target_());
 	return lhs.id() != rhs.id();
       }
 
-      template <typename V, typename P, typename S, typename E>
+      template <typename S, typename E>
       bool
-      operator< (const graph_psite_base<V, P, S, E>& lhs, const graph_psite_base<V, P, S, E>& rhs)
+      operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs)
       {
 	mln_assertion(lhs.target_() == rhs.target_());
 	return lhs.id() < rhs.id();
