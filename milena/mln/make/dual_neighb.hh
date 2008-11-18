@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_MAKE_DUAL_NEIGHB_HH
 # define MLN_MAKE_DUAL_NEIGHB_HH
 
-/*! \file mln/make/dual_neighb.hh
- *
- * \brief Routine to create a dual neighborhood.
- */
+/// \file mln/make/dual_neighb.hh
+///
+/// Routine to create a dual neighborhood.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -47,7 +46,7 @@ namespace mln
   {
 
     template <typename I, typename N>
-    neighb< win::multiple_size< mln_window(N), pw::value_<I> > >
+    neighb< win::multiple_size< 2, mln_window(N), pw::value_<I> > >
     dual_neighb(const Image<I>& ima,
 		const Neighborhood<N>& nbh_true,
 		const Neighborhood<N>& nbh_false);
@@ -59,7 +58,7 @@ namespace mln
 
     template <typename I, typename N>
     inline
-    neighb< win::multiple_size< mln_window(N), pw::value_<I> > >
+    neighb< win::multiple_size< 2, mln_window(N), pw::value_<I> > >
     dual_neighb(const Image<I>& ima_,
 		const Neighborhood<N>& nbh_true_,
 		const Neighborhood<N>& nbh_false_)
@@ -73,7 +72,7 @@ namespace mln
       const N& nbh_false = exact(nbh_false_);
       mln_precondition(ima.has_data());
 
-      typedef win::multiple_size< mln_window(N), pw::value_<I> > W;
+      typedef win::multiple_size< 2, mln_window(N), pw::value_<I> > W;
       W win(pw::value(ima));
       win.set_window(false, nbh_false.win()); // 0
       win.set_window(true,  nbh_true .win()); // 1

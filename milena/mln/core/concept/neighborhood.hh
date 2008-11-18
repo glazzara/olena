@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,9 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 # define MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 
-/*! \file mln/core/concept/neighborhood.hh
- * \brief Definition of the concept of mln::Neighborhood.
- */
+/// \file mln/core/concept/neighborhood.hh
+///
+/// Definition of the concept of mln::Neighborhood.
 
 # include <mln/core/concept/object.hh>
 # include <mln/trait/windows.hh>
@@ -42,7 +43,9 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Neighborhood;
 
-  // Neighborhood category flag type.
+
+  /// Neighborhood category flag type.
+
   template <>
   struct Neighborhood<void>
   {
@@ -50,11 +53,11 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation classes that are neighborhoods.
-   *
-   * \see mln::doc::Neighborhood for a complete documentation of this
-   * class contents.
-   */
+  /// \brief Base class for implementation classes that are neighborhoods.
+  ///
+  /// \see mln::doc::Neighborhood for a complete documentation of this
+  /// class contents.
+
   template <typename E>
   struct Neighborhood : public Object<E>
   {
@@ -77,6 +80,9 @@ namespace mln
   };
 
 
+
+  template <typename L, typename R>
+  bool operator==(const Neighborhood<L>& lhs, const Neighborhood<R>& rhs);
 
 
   template <typename N>
@@ -108,6 +114,12 @@ namespace mln
   }
 
 
+  template <typename L, typename R>
+  inline
+  bool operator==(const Neighborhood<L>& lhs, const Neighborhood<R>& rhs)
+  {
+    return exact(lhs).win() == exact(rhs).win();
+  }
 
   template <typename N>
   inline

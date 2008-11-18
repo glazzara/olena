@@ -28,18 +28,14 @@
 #ifndef MLN_CORE_NEIGHB_HH
 # define MLN_CORE_NEIGHB_HH
 
-/*! \file mln/core/neighb.hh
- *
- * \brief Definition of a window-to-neighborhood adapter.
- *
- * \todo Introduce properties so that we can deal properly with
- * optional methods.
- *
- * \todo See if the impl of from_to is fine.  What about removing the
- * origin?  etc.
- */
+/// \file mln/core/neighb.hh
+///
+/// Definition of a window-to-neighborhood adapter.
+///
+///
+/// \todo See if the impl of from_to is fine.  What about removing the
+/// origin?  etc.
 
-# include <mln/core/concept/window.hh>
 # include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
@@ -53,16 +49,14 @@ namespace mln
   template <typename W> class neighb_bkd_niter;
 
 
-  /*! \brief Adapter class from window to neighborhood.
-   */
+
+  /// Adapter class from window to neighborhood.
+
   template <typename W>
-  class neighb : public internal::neighborhood_base< mln_dpsite(W), neighb<W> >,
+  class neighb : public internal::neighborhood_base< W, neighb<W> >,
 		 private mlc_is_a(W, Window)::check_t
   {
   public:
-
-    /// Window associated type.
-    typedef W window;
 
     /// Forward site iterator associated type.
     typedef neighb_fwd_niter<W> fwd_niter;
@@ -87,27 +81,11 @@ namespace mln
     void change_window(const W& new_win);
 
 
-    // Optional methods...
-
-    /// Give the neighborhood size, i.e., the number of elements it
-    /// contains.
-    unsigned size() const;
-
-    /// Give the maximum coordinate gap between the neighborhood
-    /// center and a neighboring point.
-    unsigned delta() const;
-
-    /// Give the maximum coordinate gap between the neighborhood
-    /// center and a neighboring point.
-    const mln_dpsite(W)& dp(unsigned i) const;
-
-    // end of Optional methods.
-
-
     /// \internal Hook to the window.
     W& hook_win_();
 
   private:
+
     W win_;
   };
 
@@ -234,40 +212,6 @@ protected:
   {
     mln_precondition(new_win.is_neighbable_());
     win_ = new_win;
-  }
-
-  template <typename W>
-  inline
-  unsigned
-  neighb<W>::size() const
-  {
-    mlc_is(mln_trait_window_size(W),
-	   trait::window::size::fixed)::check(); 
-    return win_.size();
-  }
-
-  template <typename W>
-  inline
-  unsigned
-  neighb<W>::delta() const
-  {
-    mlc_is(mln_trait_window_support(W),
-	   trait::window::support::regular)::check();
-    mlc_is_not(mln_trait_window_definition(W),
-	       trait::window::definition::varying)::check();
-    return win_.delta();
-  }
-
-  template <typename W>
-  inline
-  const mln_dpsite(W)&
-  neighb<W>::dp(unsigned i) const
-  {
-    mlc_is(mln_trait_window_support(W),
-	   trait::window::support::regular)::check();
-    mlc_is(mln_trait_window_definition(W),
-	   trait::window::definition::unique)::check();
-    return win_.dp(i);
   }
 
   template <typename W>

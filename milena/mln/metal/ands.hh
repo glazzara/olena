@@ -25,46 +25,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/make/dual_neighb.cc
+#ifndef MLN_METAL_ANDS_HH
+# define MLN_METAL_ANDS_HH
+
+/// \file mln/metal/ands.hh
 ///
-/// Tests on mln::make::dual_neighb.
+/// Definition of a multiple-"and"s Boolean expression.
 
-#include <mln/make/dual_neighb.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/image/image2d.hh>
+# include <mln/metal/bool.hh>
 
 
-
-template <typename I, typename N>
-unsigned count(const I& ima, const N& nbh)
+namespace mln
 {
-  mln_piter(I) p(ima.domain());
-  mln_niter(N) n(nbh, p);
-  unsigned c = 0;
-  for_all(p)
-    for_all(n)
-      ++c;
-  return c;
-}
+
+  namespace metal
+  {
+    
+    /// Ands type.
+    template < typename E1,
+	       typename E2,
+	       typename E3,
+	       typename E4 = true_,
+	       typename E5 = true_,
+	       typename E6 = true_,
+	       typename E7 = true_,
+	       typename E8 = true_ >
+    struct ands : bool_<( E1::value &&
+			  E2::value &&
+			  E3::value &&
+			  E4::value &&
+			  E5::value &&
+			  E6::value &&
+			  E7::value &&
+			  E8::value )>
+    {};
 
 
-int main()
-{
-  using namespace mln;
+  } // end of namespace mln::metal
 
-  image2d<bool> ima(1, 2, 1);
-  ima.at(0, 0) = true;
-  ima.at(0, 1) = false;
+} // end of namespace mln
 
-  mln_assertion( count(ima, make::dual_neighb(ima, c4(), c8()))
-		 == c4().size() + c8().size() );
 
-  mln_assertion( make::dual_neighb(ima, c4(), c8()).foreground() == c4() );
-  mln_assertion( make::dual_neighb(ima, c4(), c8()).background() == c8() );
-
-  // We can observe that the neighboord is not restricted by the
-  // respective domains defined by ima(p) == false and ima(p) == true:
-  // for instance, at (0,0) we are in the *object* (ima(0,0) == true),
-  // thus the neighborhood is c4(), yet from p we browse neighbors n
-  // that are in the *background* (ima(n) == false).
-}
+#endif // ! MLN_METAL_ANDS_HH

@@ -1,3 +1,26 @@
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleanup optional methods in neighborhoods.
+
+	* tests/make/dual_neighb.cc: Test foreground and bg methods.
+	* mln/core/internal/neighborhood_base.hh
+	(neighborhood_extra_impl, neighborhood_impl): New.
+	(D): Change parameter into...
+	(W): ...this; that allows for factoring code here.
+	* mln/core/neighb.hh: Upgrade doc style.
+	Update inheritance.
+	(window, size, delta, dp): Move...
+	* mln/core/internal/neighborhood_base.hh
+	(neighborhood_impl): ...in this new class.
+	* mln/core/concept/neighborhood.hh: Upgrade doc style.
+	(operator==): New.
+	* mln/metal/ands.hh: New.
+	* mln/metal/all.hh: Update.
+	* mln/win/multiple_size.hh (n): New parameter.
+	(todo): New.
+	* mln/make/dual_neighb.hh: Upgrade doc style.
+	Update.
+
 2008-11-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Convert the labeling canvas into a routine.

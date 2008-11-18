@@ -54,6 +54,7 @@ namespace mln
 # include <mln/metal/none.hh>
 
 # include <mln/metal/abort.hh>
+# include <mln/metal/ands.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/bool.hh>
 # include <mln/metal/equal.hh>
