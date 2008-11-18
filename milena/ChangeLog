@@ -1,5 +1,20 @@
 2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Import skeleton from matthieu's sandbox.
+
+	* mln/topo/is_simple_2d.hh: New.
+	* mln/morpho/skeleton_constrained.hh: New.
+	* tests/morpho/skeleton_constrained.cc: New.
+	* tests/morpho/Makefile.am: Update.
+	* img/small.pbm: New.
+	* img/fly.pbm: New.
+	* mln/win/multiple_size.hh (i_): Change type to signed.
+	(size_): Change return type to int to prevent warning.
+	(is_valid_, invalidate_): Fix the case of the iterator
+	construction is deferred.
+
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Cleanup optional methods in neighborhoods.
 
 	* tests/make/dual_neighb.cc: Test foreground and bg methods.

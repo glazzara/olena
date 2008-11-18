@@ -159,8 +159,8 @@ namespace mln
       mln_psite(W) compute_p_() const;
 
     private:
-      unsigned i_;
-      unsigned size_() const;
+      int i_;
+      int size_() const;
     };
 
 
@@ -321,7 +321,7 @@ namespace mln
     bool
     multiple_size_qiter<n,W,F>::is_valid_() const
     {
-      return i_ < size_();
+      return i_ != -1 && i_ < size_();
     }
 
     template <unsigned n, typename W, typename F>
@@ -329,7 +329,7 @@ namespace mln
     void
     multiple_size_qiter<n,W,F>::invalidate_()
     {
-      i_ = size_();
+      i_ = -1;
     }
 
     template <unsigned n, typename W, typename F>
@@ -358,10 +358,10 @@ namespace mln
 
     template <unsigned n, typename W, typename F>
     inline
-    unsigned
+    int
     multiple_size_qiter<n,W,F>::size_() const
     {
-      return this->s_->size_around(*this->c_);
+      return int(this->s_->size_around(*this->c_));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
