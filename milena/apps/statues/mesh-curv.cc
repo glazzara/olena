@@ -39,10 +39,6 @@
 
 #include <TriMesh.h>
 
-#include <mln/accu/min_max.hh>
-#include <mln/fun/v2v/linear.hh>
-#include <mln/math/abs.hh>
-
 #include "io.hh"
 
 
@@ -73,47 +69,26 @@ int main(int argc, char* argv[])
 
   // Computes faces (triangles).
   mesh.need_faces();
-  // Computation of the mean curvature on each vertex of the mesh.
+  // Computation of the curvature on each vertex of the mesh.
   mesh.need_curvatures();
   std::vector<float> vertex_h_inv(mesh.vertices.size(), 0.f);
   for (unsigned v = 0; v < mesh.vertices.size(); ++v)
     {
       float h = (mesh.curv1[v] + mesh.curv2[v]) / 2;
-      float h_inv = 1 / pi * atan(-h) + pi / 2;
+      float h_inv = 1 / pi * (atan(-h) + pi / 2);
       vertex_h_inv[v] = h_inv;
     }
   // For each face of the mesh, computean an average curvature value
   // from the mean curvature at its vertices.
   std::vector<float> face_h_inv(mesh.faces.size(), 42.f);
-  mln::accu::min_max<float> acc;
   for (unsigned f = 0; f < mesh.faces.size(); ++f)
     {
       float h_inv = (vertex_h_inv[mesh.faces[f][0]] +
 		     vertex_h_inv[mesh.faces[f][1]] +
 		     vertex_h_inv[mesh.faces[f][2]]) / 3;
+      mln_invariant(0.f <= h_inv);
+      mln_invariant(h_inv <= 1.f);
       face_h_inv[f] = h_inv;
-      acc.take(h_inv);
-    }
-
-  /* Shrink the values of FACE_H_INV into the range 0..1, as these are
-     the only values accepted a an RGB floating-point component in the
-     OFF file format.  */
-  std::vector<float> normalized_face_h_inv(face_h_inv.size(), 0.0f);
-  std::pair<float, float> min_max(acc);
-  // FIXME: Taken from mln/level/stretch.hh (this should be factored).
-  float min = min_max.first;
-  float max = min_max.second;
-  // Don't normalize actually if the curvature is constants (i.e.,
-  // if min == max).
-  if (min != max)
-    {
-      float m = 0.0f;
-      float M = 1.0f;
-      float a = (M - m) / (max - min);
-      float b = (m * max - M * min) / (max - min);
-      mln::fun::v2v::linear<float, float, float> f(a, b);
-      std::transform(face_h_inv.begin(), face_h_inv.end(),
-		     normalized_face_h_inv.begin(), f);
     }
 
   // Taken and adapted from TriMesh_io.cc
@@ -124,7 +99,7 @@ int main(int argc, char* argv[])
 		<< " for writing." << std::endl;
       exit(2);
     }
-  write_off_float(mesh_ptr, normalized_face_h_inv, f_out);
+  write_off_float(mesh_ptr, face_h_inv, f_out);
   fclose(f_out);
 
   delete mesh_ptr;
