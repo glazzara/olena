@@ -1,3 +1,16 @@
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix warning in tests morpho elementary.
+
+	* tests/morpho/elementary/gradient.cc,
+	* tests/morpho/elementary/erosion.cc,
+	* tests/morpho/elementary/closing.cc,
+	* tests/morpho/elementary/top_hat.cc,
+	* tests/morpho/elementary/gradient_external.cc,
+	* tests/morpho/elementary/opening.cc,
+	* tests/morpho/elementary/dilation.cc,
+	* tests/morpho/elementary/gradient_internal.cc: Fix warning.
+
 2008-11-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Rename some graph-related files and classes.

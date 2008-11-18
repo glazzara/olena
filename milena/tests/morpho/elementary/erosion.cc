@@ -57,7 +57,7 @@ int main()
   }
 
   image2d<bool> msk(3, 3, 0);
-  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  level::fill(msk, pw::value(ima) >= pw::cst(5u));
   debug::println(msk);
   {
     image2d<bool> ero = morpho::elementary::erosion(msk, c4());

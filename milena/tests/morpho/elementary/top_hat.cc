@@ -56,7 +56,7 @@ int main()
   debug::println( morpho::elementary::top_hat_self_complementary(ima, c4()) );
 
   image2d<bool> msk(3, 3, 0);
-  level::fill(msk, pw::value(ima) >= pw::cst(5));
+  level::fill(msk, pw::value(ima) >= pw::cst(5u));
   debug::println(msk);
 
   debug::println( morpho::elementary::top_hat_white(msk, c4()) );
