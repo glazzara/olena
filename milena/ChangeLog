@@ -1,5 +1,23 @@
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add computed meshes (with curvature).
+
+	* mesh/bunny-holefilled-max-curv.off,
+	* mesh/bunny-holefilled-pinv-curv.off,
+	* mesh/cone-max-curv.off,
+	* mesh/cone-pinv-curv.off,
+	* mesh/cube-max-curv.off,
+	* mesh/cube-pinv-curv.off,
+	* mesh/socket-max-curv.off,
+	* mesh/socket-pinv-curv.off,
+	* mesh/teapot-max-curv.off,
+	* mesh/teapot-pinv-curv.off,
+	* mesh/tetrahedron-max-curv.off,
+	* mesh/tetrahedron-pinv-curv.off:
+	New.
+
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Generate meshes with curvature.
 
 	* mesh/Makefile.am (pinv_curv): New.
