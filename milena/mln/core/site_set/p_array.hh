@@ -384,7 +384,7 @@ namespace mln
 
   template <typename P>
   inline
-  std::size_t
+  unsigned
   p_array<P>::nsites() const
   {
     return vect_.size();
