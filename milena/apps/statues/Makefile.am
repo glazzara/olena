@@ -14,9 +14,10 @@ AM_LDFLAGS = $(GLFLAGS)
 LDADD = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 
 
-bin_PROGRAMS = mesh-pinv-curv mesh-segm mesh-skel
+bin_PROGRAMS = mesh-pinv-curv mesh-max-curv mesh-segm mesh-skel
 
 mesh_pinv_curv_SOURCES = mesh-pinv-curv.cc io.hh
+mesh_max_curv_SOURCES = mesh-max-curv.cc io.hh
 mesh_segm_SOURCES = mesh-segm.cc io.hh
 mesh_skel_SOURCES = mesh-skel.cc io.hh
 

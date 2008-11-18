@@ -1,5 +1,13 @@
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a program computing the maximum curvature on a mesh.
+
+	* apps/statues/mesh-max-curv.cc: New.
+	* apps/statues/Makefile.am (bin_PROGRAMS): Add mesh-max-curv.
+	(mesh_max_curv_SOURCES): New.
+
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Rename apps/statues/mesh-curv as apps/statues/mesh-pinv-curv.
 
 	* apps/statues/mesh-curv.cc: Rename as...
