@@ -89,7 +89,7 @@ int main()
   border::thickness = 1;
 
   image2d<bool> pic;
-  io::pbm::load(pic, MLN_IMG_DIR "/fly.pbm");
+  io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
 
   mln_VAR( nbh,
 	   make::dual_neighb(pic, c4(), c8()) );

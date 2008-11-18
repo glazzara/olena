@@ -1,5 +1,13 @@
 2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix connectivity number values for c4.
+
+	* tests/morpho/skeleton_constrained.cc: Use tiny image.
+	* mln/topo/is_simple_2d.hh
+	(connectivity_number_c4): Fix values.
+
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Prepare to debug morpho skeleton_constrained.
 
 	* tests/morpho/skeleton_constrained.cc: Add extra echos.
