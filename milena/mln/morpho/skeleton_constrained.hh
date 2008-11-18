@@ -31,12 +31,14 @@
 /// \file mln/morpho/skeleton_constrained.hh
 ///
 /// Compute a skeleton under constraints.
+///
+/// \todo Add an extension handling policy for the user to set it.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
-# include <mln/extension/adjust_fill.hh>
+# include <mln/extension/adjust_duplicate.hh>
 # include <mln/level/fill.hh>
 
 
@@ -72,7 +74,7 @@ namespace mln
       const K& constraint = exact(constraint_);
       const R& priority   = exact(priority_);
 
-      extension::adjust_fill(input, nbh, false);
+      extension::adjust_duplicate(input, nbh);
 
       // FIXME: Tests!
 
@@ -86,16 +88,17 @@ namespace mln
       {
 	initialize(output, input);
 	level::fill(output, input);
+	extension::adjust_duplicate(output, nbh);
 
 	mln_piter(I) p(input.domain());
 	for_all(p)
-	  if ( input(p) == false )
-// 	  if ( input(p) == false &&
-// 	       is_simple(input, nbh, p) ) // p is a simple point of the background.
+	  if ( input(p) == false &&
+	       is_simple(input, nbh, p) ) // p is a simple point of the background.
 	    {
 	      q.push(priority(p), p);
-	      // std::cout << "push " << p << std::endl;
+	      // std::cout << p << "  ";
 	    }
+	std::cout << std::endl;
       }
 
       // std::cout << std::endl << "propagation..." << std::endl;
@@ -108,16 +111,17 @@ namespace mln
 	  {
 	    p = q.pop_front();
 	    for_all(n)
-	      if ( output.domain().has(n) &&
+	      if ( output.has(n) &&
 		   output(n) == true &&
 		   constraint(n) == false &&
 		   is_simple(output, nbh, n) )
 		{
 		  output(n) = false; // Remove n from object.
 		  q.push(priority(n), n);
-		  // std::cout << "push " << n << std::endl;
+		  // std::cout << n << "  ";
 		}
 	  }
+	std::cout << std::endl;
       }
 
       return output;

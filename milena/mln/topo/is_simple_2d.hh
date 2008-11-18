@@ -135,11 +135,11 @@ namespace mln
 
     unsigned res = 0;
 
-    mln_bkd_niter(neighb2d) n(c8(), p);
+    mln_fwd_niter(neighb2d) n(c8(), p);
     for_all(n)
       {
 	res = (res << 1);
-	if (ima.domain().has(n) && ima(n) == b)
+	if (ima.has(n) && ima(n) == b)
 	  res = res | 1;
       }
 

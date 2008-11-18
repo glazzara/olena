@@ -47,6 +47,7 @@
 
 #include <mln/pw/value.hh>
 #include <mln/core/image/image_if.hh>
+#include <mln/extension/adjust_duplicate.hh>
 
 #include <mln/logical/not.hh>
 #include <mln/arith/revert.hh>
@@ -62,7 +63,9 @@ namespace mln
   void show_connectivity_numbers(const image2d<bool>& ima,
 				 const N& nbh)
   {
-    extension::adjust_fill(ima, nbh, false);
+    extension::adjust_duplicate(ima, nbh);
+
+    debug::println_with_border(ima);
 
     image2d<unsigned> when_true(ima.domain()), when_false(ima.domain());
     mln_piter(box2d) p(ima.domain());
@@ -83,11 +86,13 @@ int main()
   using namespace mln;
   using value::int_u8;
 
+  border::thickness = 1;
+
   image2d<bool> pic;
-  io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
+  io::pbm::load(pic, MLN_IMG_DIR "/fly.pbm");
 
   mln_VAR( nbh,
-	   make::dual_neighb(pic, c8(), c4()) );
+	   make::dual_neighb(pic, c4(), c8()) );
 
   show_connectivity_numbers(pic, nbh);
 
@@ -99,7 +104,7 @@ int main()
   image2d<int_u8> dmap = transform::distance_geodesic(logical::not_(pic),
 						      nbh.foreground(),
 						      mln_max(int_u8));
-  debug::println("dst =", dmap);
+  debug::println("dst =", dmap | pw::value(pic));
   dmap = arith::revert(dmap);
 
   mln_VAR( skl,
