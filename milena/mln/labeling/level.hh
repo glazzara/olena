@@ -153,13 +153,11 @@ namespace mln
 
 	  typedef level_functor<I,N,L> F;
 	  F f(exact(input), val, exact(nbh));
-	  canvas::labeling<F> run(f);
-	  
-	  nlabels = run.nlabels;
-	  // FIXME: Handle run.status
+	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
+	  // FIXME: Handle canvas status.
 
 	  trace::exiting("labeling::impl::generic::level");
-	  return run.output;
+	  return output;
 	}
 
       } // end of namespace mln::labeling::impl::generic
