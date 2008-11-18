@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-curv.cc
-/// \brief A program computing the mean curvature at each (2-)face of
-/// a mesh.
+/// \file apps/statues/mesh-pinv-curv.cc
+/// \brief A program computing the pseudo-inverse curvature at each
+/// (2-)face of a mesh.
 
 #include <cstdlib>
 #include <cmath>
@@ -75,6 +75,7 @@ int main(int argc, char* argv[])
   for (unsigned v = 0; v < mesh.vertices.size(); ++v)
     {
       float h = (mesh.curv1[v] + mesh.curv2[v]) / 2;
+      // Pseudo-inverse curvature.
       float h_inv = 1 / pi * (atan(-h) + pi / 2);
       vertex_h_inv[v] = h_inv;
     }

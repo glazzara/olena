@@ -1,5 +1,14 @@
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Rename apps/statues/mesh-curv as apps/statues/mesh-pinv-curv.
+
+	* apps/statues/mesh-curv.cc: Rename as...
+	* apps/statues/mesh-pinv-curv.cc: ...this.
+	Adjust.
+	* apps/statues/Makefile.am: Adjust.
+
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix and clean up apps/statues/mesh-curv.
 
 	* apps/statues/mesh-curv.cc (main): Fix the formula used to
