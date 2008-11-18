@@ -1,3 +1,7 @@
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/mesh/Makefile.
+
 2008-11-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update configure.ac for the tutorial.

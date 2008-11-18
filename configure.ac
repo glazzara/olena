@@ -146,6 +146,7 @@ AC_CONFIG_FILES([
       milena/doc/Makefile
       milena/doc/tutorial/Makefile
       milena/doc/tutorial/samples/Makefile
+      milena/mesh/Makefile
       milena/tools/Makefile
 ])
 
