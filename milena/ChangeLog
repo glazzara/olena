@@ -1,5 +1,13 @@
 2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup tests make dual_neighb.
+
+	* tests/make/dual_neighb.cc: Upgrade doc style.
+	(count): Remove std cout echo.
+	(main): Augment commentary.
+
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix warning in tests morpho elementary.
 
 	* tests/morpho/elementary/gradient.cc,

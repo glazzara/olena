@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/make/dual_neighb.cc
- *
- * \brief Tests on mln::make::dual_neighb.
- */
+/// \file tests/make/dual_neighb.cc
+///
+/// Tests on mln::make::dual_neighb.
 
 #include <mln/make/dual_neighb.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -44,7 +43,7 @@ unsigned count(const I& ima, const N& nbh)
   unsigned c = 0;
   for_all(p)
     for_all(n)
-    { std::cout << n << std::endl; ++c; }
+      ++c;
   return c;
 }
 
@@ -61,5 +60,8 @@ int main()
 		 == c4().size() + c8().size() );
 
   // We can observe that the neighboord is not restricted by the
-  // respective domains defined by ima(p) == false and true.
+  // respective domains defined by ima(p) == false and ima(p) == true:
+  // for instance, at (0,0) we are in the *object* (ima(0,0) == true),
+  // thus the neighborhood is c4(), yet from p we browse neighbors n
+  // that are in the *background* (ima(n) == false).
 }
