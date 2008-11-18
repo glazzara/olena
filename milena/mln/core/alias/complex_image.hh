@@ -47,12 +47,19 @@ namespace mln
   mln::complex_image<2, mln::space_2complex_geometry, bool>
   bin_2complex_image3df;
 
+  /// \brief Type alias for an 8-bit grey-level image based on a
+  /// 2-complex, where 0-faces are located at floating-point
+  /// 3-dimensional points.
+  typedef
+  mln::complex_image<2, mln::space_2complex_geometry, mln::value::int_u8>
+  int_u8_2complex_image3df;
+
   /// \brief Type alias for a grey-level image based on a 2-complex,
   /// where 0-faces are located at floating-point 3-dimensional
   /// points.
   typedef
-  mln::complex_image<2, mln::space_2complex_geometry, mln::value::int_u8>
-  int_u8_2complex_image3df;
+  mln::complex_image<2, mln::space_2complex_geometry, unsigned>
+  unsigned_2complex_image3df;
 
   /// \brief Type alias for a floating-point image based on a
   /// 2-complex, where 0-faces are located at floating-point

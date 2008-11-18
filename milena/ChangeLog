@@ -1,5 +1,16 @@
 2008-11-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	New application: surface segmentation using complex-based images.
+
+	* apps/statues/mesh-complex-segm.cc: New.
+	* apps/statues/Makefile.am (bin_PROGRAMS): Add mesh-complex-segm.
+	(mesh_complex_segm_SOURCES): New.
+	* apps/statues/test.in: Exercise mesh-complex-segm.
+	* mln/core/alias/complex_image.hh
+	(mln::unsigned_2complex_image3df): New typedef.
+
+2008-11-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	* mln/core/site_set/p_array.hh (nsites): Fix return type.
 
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>

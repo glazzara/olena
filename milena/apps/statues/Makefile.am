@@ -53,4 +53,12 @@ mesh_max_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
 mesh_max_curv_LDFLAGS = $(LDFLAGS_trimesh)
 mesh_max_curv_LDADD = $(LDADD_trimesh)
 
+## ---------------------------------------------------- ##
+## Complex-based applications, independent of Trimesh.  ##
+## ---------------------------------------------------- ##
+
+bin_PROGRAMS += mesh-complex-segm
+mesh_complex_segm_SOURCES = mesh-complex-segm.cc
+
+
 TESTS = test
