@@ -1,5 +1,20 @@
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
+	Reorganize apps/statues/Makefile.am.
+
+	* apps/statues/Makefile.am (AM_CPPFLAGS):
+	Move Trimesh-related part...
+	(CPPFLAGS_trimesh): ...here (new variable).
+	(AM_LDFLAGS, LDADD): Rename variables as...
+	(LDFLAGS_trimesh, LDADD_trimesh): ...these.
+	(mesh_segm_CPPFLAGS, mesh_segm_LDFLAGS, mesh_segm_LDADD)
+	(mesh_skel_CPPFLAGS, mesh_skel_LDFLAGS, mesh_skel_LDADD)
+	(mesh_pinv_curv_CPPFLAGS, mesh_pinv_curv_LDFLAGS, mesh_pinv_curv_LDADD)
+	(mesh_max_curv_CPPFLAGS, mesh_max_curv_LDFLAGS, mesh_max_curv_LDADD):
+	New variables.
+
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add computed meshes (with curvature).
 
 	* mesh/bunny-holefilled-max-curv.off,
