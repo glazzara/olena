@@ -48,6 +48,10 @@
 #include <mln/pw/value.hh>
 #include <mln/core/image/image_if.hh>
 
+#include <mln/logical/not.hh>
+#include <mln/arith/revert.hh>
+#include <mln/transform/distance_geodesic.hh>
+
 #include "tests/data.hh"
 
 
@@ -83,7 +87,7 @@ int main()
   io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
 
   mln_VAR( nbh,
-	   make::dual_neighb(pic, c4(), c8()) );
+	   make::dual_neighb(pic, c8(), c4()) );
 
   show_connectivity_numbers(pic, nbh);
 
@@ -91,13 +95,17 @@ int main()
   image2d<bool> K(pic.domain());
   level::fill(K, false);
 
-  image2d<int_u8> prior(pic.domain());
-  level::fill(prior, 1);
+
+  image2d<int_u8> dmap = transform::distance_geodesic(logical::not_(pic),
+						      nbh.foreground(),
+						      mln_max(int_u8));
+  debug::println("dst =", dmap);
+  dmap = arith::revert(dmap);
 
   mln_VAR( skl,
 	   morpho::skeleton_constrained(pic,
 					nbh, is_simple_2d_t(),
-					K, prior) );
+					K, dmap) );
 
   debug::println("pic =", pic);
   debug::println("skl =", skl);
