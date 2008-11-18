@@ -9,8 +9,8 @@
 namespace mln
 {
 
-  template <typename I, typename N>
-  double compute_energy(const I& ima, const N& nbh, bool xi, const mln_site(I) &p)
+  template <typename I, typename O, typename N>
+  double compute_energy(const I& ima, const O& out, const N& nbh, bool xi, const mln_site(I) &p)
   {
     // Compute u(x,y)
     double u;
@@ -25,18 +25,18 @@ namespace mln
 
     mln_niter(N) n(nbh, p);
     for_all(n)
-      diff_sum += abs(ima(p) - ima(n));
+    {
+      diff_sum += abs(out(p) - out(n));
+    }
 
-    return u + 10 * diff_sum;
+    return u + 100 * diff_sum;
   }
 
   template <typename I, typename N> // I == int_u8
-  mln_ch_value(I, bool) markov(const Image<I>& ima_, const Neighborhood<N> nbh_, unsigned start_temp)
+  mln_ch_value(I, bool) markov(const Image<I>& ima_, const Neighborhood<N>& nbh_, unsigned start_temp)
   {
     const I &ima = exact(ima_);
     const N &nbh = exact(nbh_);
-
-    double epsilon = 0.001;
 
     //    mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
     mln_ch_value(I, bool) out = binarization::threshold(ima, 255 / 2); // FIXME : max
@@ -47,25 +47,42 @@ namespace mln
     Random<bool> v_random(0, 1); // mettre max et min ?
     Random<double> p_random(0., 1.); // idem
 
-    while (temp > epsilon)
+    unsigned modifications = 42;
+    unsigned turn = 1;
+    bool gradient = false;
+
+    while (!gradient || modifications)
       {
 	mln_piter(I) p(ima.domain());
+	modifications = 0;
 
 	for_all(p)
 	{
 	  bool v = v_random.get();
 
-	  double u = compute_energy(ima, nbh, out(p), p);
-	  double up = compute_energy(ima, nbh, v, p);
+	  double u = compute_energy(ima, out, nbh, out(p), p);
+	  double up = compute_energy(ima, out, nbh, v, p);
 
-	  double d_u = abs(up - u);
-
+	  double d_u = up - u;
 	  double proba = exp(-d_u / temp);
 
-	  if (d_u < 0 || (p_random.get() > proba))
-	    out(p) = v;
+	  // std::cout << "Difference : " << d_u << std::endl;
+
+	  if (d_u < 0 || !gradient && (p_random.get() < proba))
+	    {
+	      out(p) = v;
+	      modifications ++;
+	    }
 	}
 	temp = gtemp;
+	std::cout << "Turn : " << turn << " Modifs : " << modifications << " Temp : " << temp << std::endl;
+	turn ++;
+	if (!gradient && !modifications)
+	  {
+	    std::cout << "Gradient !" << std::endl;
+	    modifications = 1;
+	    gradient = true;
+	  }
       }
 
     return out;

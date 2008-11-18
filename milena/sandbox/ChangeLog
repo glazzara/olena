@@ -1,3 +1,9 @@
+2008-11-18  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make the neighborhood energy count.
+
+	* markov/markov.hh: .
+
 2008-11-18  Dalila Benboudjema  <dalila@lrde.epita.fr>
 
 	Remove images.
