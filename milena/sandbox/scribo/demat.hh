@@ -64,7 +64,7 @@ namespace scribo
       settings_t()
       {
 	bbox_enlarge = 1;
-	ero_line_width = 101;
+	ero_line_width = 51;
 	bbox_distance = 25;
 	min_comp_size = 5;
       }
@@ -493,7 +493,6 @@ namespace scribo
 #endif
 
       boxes_t vboxes = component_boxes(vfilter);
-      erase_table_boxes(in, vboxes, (settings.ero_line_width / 2), 0);
 
       // Lignes horizontales
       std::cout << "Removing horizontal lines" << std::endl;
@@ -505,8 +504,9 @@ namespace scribo
 #endif
 
       boxes_t hboxes = component_boxes(hfilter);
-      erase_table_boxes(in, hboxes, (settings.ero_line_width / 2), 1);
 
+      erase_table_boxes(in, vboxes, (settings.ero_line_width / 2), 0);
+      erase_table_boxes(in, hboxes, (settings.ero_line_width / 2), 1);
 
 #ifndef NOUT
       image2d<rgb8> tmp = clone(output);

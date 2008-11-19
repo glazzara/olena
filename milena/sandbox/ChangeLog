@@ -1,3 +1,11 @@
+2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix table removal.
+
+	* scribo/demat.hh: erosion had to be called vertically and
+	horizontally before removing tables.
+
+
 2008-11-19  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Little fixes.
