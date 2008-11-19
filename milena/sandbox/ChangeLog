@@ -1,5 +1,11 @@
 2008-11-19  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Little fixes.
+
+	* markov/markov.hh: .
+
+2008-11-19  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Fix bad comparison sign.
 
 	* markov/markov.hh: .

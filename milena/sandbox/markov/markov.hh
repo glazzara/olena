@@ -22,14 +22,19 @@ namespace mln
     // u(x) is cst so we don't care
 
     double diff_sum = 0;
+    double coeff = 0;
 
     mln_niter(N) n(nbh, p);
     for_all(n)
-    {
-      diff_sum += abs(xi - out(n));
-    }
+      if (ima.domain().has(n))
+	{
+	  diff_sum += abs(xi - out(n));
+	  coeff ++;
+	}
 
-    return u + 0.25 * diff_sum;
+    diff_sum /= coeff;
+
+    return 0.5 * (u + diff_sum);
   }
 
   template <typename I, typename N> // I == int_u8
