@@ -58,15 +58,15 @@ namespace mln
 
     while (!gradient || modifications)
       {
-	mln_piter(I) p(ima.domain());
-	modifications = 0;
+        mln_piter(I) p(ima.domain());
+        modifications = 0;
 
-	for_all(p)
-	{
-	  bool v = v_random.get();
+        for_all(p)
+        {
+          bool v = v_random.get();
 
-	  double u = compute_energy(ima, out, nbh, out(p), p);
-	  double up = compute_energy(ima, out, nbh, v, p);
+          double u = compute_energy(ima, out, nbh, out(p), p);
+          double up = compute_energy(ima, out, nbh, v, p);
 
 	  double d_u = up - u;
 	  double proba = exp(-d_u / temp);

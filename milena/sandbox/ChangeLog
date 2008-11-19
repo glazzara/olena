@@ -1,3 +1,13 @@
+2008-11-19  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Start working on image reconstruction.
+
+	* jardonnet/igr/src/igr.cc(rgb->gs, |egrad|, vclosing and wst): New.
+	* jardonnet/igr/Makefile(tar, bin, deps): New.
+	* jardonnet/igr/check: New check directory.
+	* jardonnet/igr/check/s7.ppm: New test image.
+	* jardonnet/igr/check/tiny.ppm: New tiny test image.
+
 2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix table removal.
