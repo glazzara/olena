@@ -1,3 +1,15 @@
+2008-11-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Put algebraic_union_find into a routine.
+
+	* mln/canvas/morpho/algebraic_union_find.hh: algebraic_union_find is
+	now a routine. The old version (functor) is renamed as
+	algebraic_union_find_f.
+
+	* mln/morpho/closing_attribute.hh,
+	* mln/morpho/opening_attribute.hh: Update to use algebraic_union_find
+	as a routine instead of a functor.
+
 2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Cleanup labeling::compute.

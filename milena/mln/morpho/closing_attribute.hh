@@ -56,9 +56,73 @@ namespace mln
     namespace impl
     {
 
+      template <typename I, typename A_>
+      struct closing_attribute_t
+      {
+	// requirements from mln::canvas::morpho::algebraic_union_find
+
+	typedef A_ A;
+	typedef mln_psite(I) P;
+	typedef p_array<P> S;
+
+	mln_result(A) lambda;
+	const S s;
+
+	inline
+	void init()
+	{
+	  // FIXME: border::fill(input, mln_max(mln_value(I)));
+	}
+
+	inline
+	bool is_active(const A& attr) const
+	{
+	  return attr.to_result() < lambda;
+	}
+
+	inline
+	void inactivate(A& attr)
+	{
+	  attr.set_value(lambda);
+	}
+
+	// end of requirements
+
+	inline
+	closing_attribute_t(const Image<I>& input, mln_result(A) lambda)
+	  : lambda(lambda),
+	    s(level::sort_psites_increasing(exact(input)))
+	{
+	}
+
+      };
+
+    } // end of namespace mln::morpho::impl
+
+
+    template <typename A,
+	      typename I, typename N, typename O>
+    inline
+    void closing_attribute(const Image<I>& input,
+			   const Neighborhood<N>& nbh, mln_result(A) lambda,
+			   Image<O>& output)
+    {
+      typedef impl::closing_attribute_t<I, A> F;
+      F f(input, lambda);
+      canvas::morpho::algebraic_union_find(input, nbh, f, output);
+
+      mln_postcondition(output >= input);
+    }
+
+    // -----------------------------------------------------------
+    // Old code below.
+
+    namespace impl
+    {
+
       template <typename A_,
 		typename I_, typename N_, typename O_>
-      struct closing_attribute_t
+      struct closing_attribute_t_f
       {
 	typedef mln_psite(I_) P;
 
@@ -84,7 +148,7 @@ namespace mln
 	  // FIXME: border::fill(input, mln_max(mln_value(I)));
 	  /* FIXME: Shouldn't it be
 
-	       border::fill(input, mln_max(mln_value(I)))
+	     border::fill(input, mln_max(mln_value(I)))
 
 	     instead?  */
 	}
@@ -104,8 +168,8 @@ namespace mln
 	// end of requirements
 
 	inline
-	closing_attribute_t(const I_& input, const N_& nbh,
-			    mln_result(A) lambda, O_& output)
+	closing_attribute_t_f(const I_& input, const N_& nbh,
+			      mln_result(A) lambda, O_& output)
 	  : input(input), nbh(nbh), lambda(lambda), output(output),
 	    s(level::sort_psites_increasing(input))
 	{
@@ -119,18 +183,18 @@ namespace mln
     template <typename A,
 	      typename I, typename N, typename O>
     inline
-    void closing_attribute(const Image<I>& input_,
-			   const Neighborhood<N>& nbh_, mln_result(A) lambda,
-			   Image<O>& output_)
+    void closing_attribute_f(const Image<I>& input_,
+			     const Neighborhood<N>& nbh_, mln_result(A) lambda,
+			     Image<O>& output_)
     {
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       O& output = exact(output_);
       mln_precondition(output.domain() == input.domain());
 
-      typedef impl::closing_attribute_t<A,I,N,O> F;
+      typedef impl::closing_attribute_t_f<A,I,N,O> F;
       F f(input, nbh, lambda, output);
-      canvas::morpho::algebraic_union_find<F> run(f);
+      canvas::morpho::algebraic_union_find_f<F> run(f);
 
       mln_postcondition(output >= input);
     }
