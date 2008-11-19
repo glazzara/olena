@@ -1,5 +1,18 @@
 2008-11-19  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix clients of mln::canvas::labeling.
+
+	* mln/labeling/flat_zones.hh
+	(mln::labeling::impl::generic::flat_zones)
+	* mln/labeling/regional_maxima.hh
+	(mln::labeling::impl::generic::regional_maxima)
+	* mln/labeling/regional_minima.hh
+	(mln::labeling::impl::generic::regional_minima):
+	Catch up with the current implementation of mln::canvas::labeling
+	as a routine.
+
+2008-11-19  Roland Levillain  <roland@lrde.epita.fr>
+
 	New application: surface segmentation using complex-based images.
 
 	* apps/statues/mesh-complex-segm.cc: New.

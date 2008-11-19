@@ -132,12 +132,11 @@ namespace mln
 	  // minima.
 
 	  typedef impl::regional_minima_functor<I,N,L> F;
-	  F f(input, nbh);
-	  canvas::labeling<F> run(f);
-	  nlabels = run.nlabels;
+	  F f(exact(input), exact(nbh));
+	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
 
 	  trace::exiting("labeling::impl::generic::regional_minima");
-	  return run.output;
+	  return output;
 	}
 
       } // end of namespace mln::labeling::impl::generic

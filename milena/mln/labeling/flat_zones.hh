@@ -113,11 +113,10 @@ namespace mln
 
 	  typedef flat_zones_functor<I,N,L> F;
 	  F f(exact(input), exact(nbh));
-	  canvas::labeling<F> run(f);
-	  nlabels = run.nlabels;
+	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
 
 	  trace::exiting("labeling::impl::generic::flat_zones");
-	  return run.output;
+	  return output;
 	}
 
       } // end of namespace mln::labeling::impl::generic
