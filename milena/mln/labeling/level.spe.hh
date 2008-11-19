@@ -83,7 +83,7 @@ namespace mln
 
       } // end of namespace mln::labeling::impl::generic
 
-
+      /*
 
       // Fastest functor.
 
@@ -149,8 +149,9 @@ namespace mln
 	return run.output;
       }
 
-    } // end of namespace mln::labeling::impl
+      */
 
+    } // end of namespace mln::labeling::impl
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -48,10 +48,10 @@ namespace mln
   {
 
     // General version.
-    template <typename I, typename N, typename F>
-    mln_ch_value(I, typename F::L)
-      labeling(const Image<I>& input, const Neighborhood<N>& nbh,
-	       F& functor, typename F::L& nlabels);
+    template <typename I, typename N, typename F, typename L>
+    mln_ch_value(I, L)
+    labeling(const Image<I>& input, const Neighborhood<N>& nbh,
+	     F& functor, L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,63 +69,75 @@ namespace mln
 	return parent(x) = find_root(parent, parent(x));
     }
 
-    template <typename I, typename N, typename F>
-    mln_ch_value(I, typename F::L)
-      labeling(const Image<I>& input, const Neighborhood<N>& nbh,
-		 F& functor, typename F::L& nlabels)
+    template <typename I, typename N, typename F, typename L>
+    mln_ch_value(I, L)
+      labeling(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	       F& f, L& nlabels)
     {
       trace::entering("canvas::labeling");
 
-      typedef typename F::L L;
+      // FIXME: Test?!
+
+      const I& input = exact(input_);
+      const N& nbh   = exact(nbh_);
+
       typedef typename F::S S;
 
       // Local type.
-      typedef mln_psite(I) psite;
+      typedef mln_psite(I) P;
 
       // Auxiliary data.
-      mln_ch_value(I, bool)  deja_vu;
-      mln_ch_value(I, psite) parent;
+      mln_ch_value(I, bool) deja_vu;
+      mln_ch_value(I, P)    parent;
 
       // Output.
       mln_ch_value(I, L) output;
       bool status;
 
-      // Initialization. init();
+      // Initialization.
+
       {
-	initialize(deja_vu, functor.input);
+	initialize(deja_vu, input);
 	mln::level::fill(deja_vu, false);
-	initialize(parent, functor.input);
-	initialize(output, functor.input);
+
+	initialize(parent, input);
+
+	initialize(output, input);
 	mln::level::fill(output, L(literal::zero));
 	nlabels = 0;
-	functor.init(); // Client initialization.
+
+	f.init(); // Client initialization.
       }
 
-      // First Pass. pass_1();
+      // First Pass.
+
       {
-	mln_fwd_piter(S) p(functor.s);
-	mln_niter(N) n(functor.nbh, p);
-	for_all(p) if (functor.handles(p))
+	mln_fwd_piter(S) p(f.s);
+	mln_niter(N) n(nbh, p);
+	for_all(p) if (f.handles(p))
 	{
-	  // Make the set with p as root. make_set(p).
-	  parent(p) = p;
-	  functor.init_attr(p);
+
+	  // Make-Set.
+	  {
+	    parent(p) = p;
+ 	    f.init_attr(p);
+	  }
 
 	  for_all(n)
-	    if (functor.input.domain().has(n) && deja_vu(n))
+	    if (input.domain().has(n) && deja_vu(n))
 	    {
-	      if (functor.equiv(n, p))
+	      if (f.equiv(n, p))
 	      {
-		// Put p as root. do_union(n, p);
-		psite r = find_root(parent, n);
+		// Do-Union.
+		P r = find_root(parent, n);
 		if (r != p)
 		{
 		  parent(r) = p;
-		  functor.merge_attr(r, p);
+ 		  f.merge_attr(r, p);
 		}
 	      }
 	      else
-		functor.do_no_union(n, p);
+		f.do_no_union(n, p);
 	    }
 	  deja_vu(p) = true;
 	}
@@ -133,12 +145,12 @@ namespace mln
 
       // Second Pass. pass_2();
       {
-	mln_bkd_piter(S) p(functor.s);
-	for_all(p) if (functor.handles(p))
+	mln_bkd_piter(S) p(f.s);
+	for_all(p) if (f.handles(p))
 	{
 	  if (parent(p) == p) // if p is root
 	  {
-	    if (functor.labels(p))
+	    if (f.labels(p))
 	    {
 	      if (nlabels == mln_max(L))
 	      {
@@ -159,7 +171,15 @@ namespace mln
       return output;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
+
+
+
+
+    // -----------------------------------------------------------
+    // Old code below.
+
+
+    /*
 
     // Fastest version.
 
@@ -199,12 +219,6 @@ namespace mln
       void do_union(unsigned n, unsigned p);
 
     };
-
-# ifndef MLN_INCLUDE_ONLY
-
-    /*---------------------------.
-    | canvas::labeling_fastest.  |
-    `---------------------------*/
 
     template <typename F>
     labeling_fastest<F>::labeling_fastest(F& f)
@@ -308,6 +322,7 @@ namespace mln
 	}
     }
 
+*/
 
 # endif // ! MLN_INCLUDE_ONLY
 

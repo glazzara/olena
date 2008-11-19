@@ -96,44 +96,61 @@ namespace mln
     namespace impl
     {
 
+
+      struct labeling_functor_base
+      {
+ 	void init()                          {}
+
+	template <typename P>
+	bool handles(const P&) const         { return true; }
+
+	template <typename L, typename R>
+	bool equiv(const L&, const R&) const { return false; }
+
+	template <typename P>
+	bool labels(const P&) const          { return true; }
+
+	template <typename L, typename R>
+	void do_no_union(const L&, const R&) {}
+
+	template <typename P>
+	void init_attr(const P&)             {}
+
+	template <typename L, typename R>
+	void merge_attr(const L&, const R&)  {}
+      };
+
+
       // Generic functor.
 
-      template <typename I_, typename N_, typename L_>
-      struct level_functor
+      template <typename I>
+      struct level_functor : labeling_functor_base
       {
-	typedef mln_psite(I_) P;
-
-	// requirements from mln::canvas::labeling:
-
-	typedef I_ I;
-	typedef N_ N;
-	typedef L_ L;
-        typedef mln_pset(I) S;
+	typedef mln_psite(I) P;
 
 	const I& input;
-	const N& nbh;
+	const mln_value(I)& val;
+
+	// Requirements from mln::canvas::labeling.
+
+        typedef mln_pset(I) S;
         const S& s;
 
-	bool handles(const P& p) const         { return input(p) == val; }
-	bool equiv(const P& n, const P&) const { return input(n) == val; }
+ 	void init()                             {}
+	bool handles(const P& p) const          { return input(p) == val; }
+	bool equiv(const P& n, const P&) const  { return input(n) == val; }
+	bool labels(const P&) const             { return true; }
 
- 	void init()                          {}
-	bool labels(const P&) const          { return true; }
-	void do_no_union(const P&, const P&) {}
-	void init_attr(const P&)             {}
-	void merge_attr(const P&, const P&)  {}
+	// end of Requirements.
 
-	// end of requirements
-
-	const mln_value(I_)& val;
-
-	level_functor(const I& input, const mln_value(I)& val, const N& nbh)
-	  : input(input),
-	    nbh(nbh),
-	    s(input.domain()),
-	    val(val)
-	{}
+	level_functor(const Image<I>& input_, const mln_value(I)& val)
+	  : input(exact(input_)),
+	    val(val),
+	    s(input.domain())
+	{
+	}
       };
+
 
 
       // Generic implementation.
@@ -151,9 +168,9 @@ namespace mln
 
 	  internal::level_tests(input, val, nbh, nlabels);
 
-	  typedef level_functor<I,N,L> F;
-	  F f(exact(input), val, exact(nbh));
+	  level_functor<I> f(input, val);
 	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
+
 	  // FIXME: Handle canvas status.
 
 	  trace::exiting("labeling::impl::generic::level");

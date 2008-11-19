@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_UTIL_PIX_HH
 # define MLN_UTIL_PIX_HH
 
-/*! \file mln/util/pix.hh
- *
- * \brief Definition of an instant pix.
- */
+/// \file mln/util/pix.hh
+///
+/// Definition of an instant pix.
 
 # include <mln/core/concept/image.hh>
 
@@ -39,13 +39,11 @@
 namespace mln
 {
 
-  /// \brief Select namespace (FIXME doc).
+  /// Select namespace (FIXME doc).
   namespace select
   {
 
-    /*! \brief Structure p_of.
-     *
-     */
+    /// Structure p_of.
     template <typename P>
     struct p_of : P
     {
@@ -60,9 +58,9 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Structure pix.
-     *
-     */
+    /// Structure pix.
+    ///
+    ///
     template <typename I>
     struct pix
     {
@@ -73,33 +71,26 @@ namespace mln
       /// Value associated type.
       typedef mln_value(I) value;
 
-      /*! \brief Constructor.
-       *
-       * \param[in] ima The image.
-       * \param[in] p The p_site.
-       */
+      /// Constructor.
+      ///
+      /// \param[in] ima The image.
+      /// \param[in] p The p_site.
       pix(const Image<I>& ima, const mln_psite(I)& p);
 
-      /*! \brief The getter of the image associate to pix structure.
-       *
-       * \return The image ima_.
-       *
-       */
-      const I&          ima() const;
+      /// The getter of the image associate to pix structure.
+      ///
+      /// \return The image ima_.
+      const I& ima() const;
 
-      /*! \brief The getter of psite associate to pix structure.
-       *
-       * \return The psite p_.
-       *
-       */
+      /// The getter of psite associate to pix structure.
+      ///
+      /// \return The psite p_.
       const mln_psite(I)& p() const;
 
-      /*! \brief The getter of value associate to pix structure.
-       *
-       * \return The value of pix.
-       *
-       */
-      mln_rvalue(I)       v() const;
+      /// The getter of value associate to pix structure.
+      ///
+      /// \return The value of pix.
+      mln_rvalue(I) v() const;
 
     private:
 

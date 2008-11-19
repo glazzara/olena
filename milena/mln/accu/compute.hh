@@ -48,30 +48,30 @@ namespace mln
   {
 
     /// Make an accumulator compute the pixels of the image \p input.
-    /*!
-     * \param[in] input The input image.
-     *
-     * This routine runs: \n
-     *   a.take(make::pix(input, p));
-     *   on all pixels on the images.
-     *
-     * \warning This routine does not perform a.init().
-     */
+    ///
+    /// \param[in] input The input image.
+    ///
+    /// This routine runs: \n
+    ///   a.take(make::pix(input, p));
+    ///   on all pixels on the images.
+    ///
+    /// \warning This routine does not perform a.init().
+    ///
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
     /// Make an accumulator compute the pixels of the image \p input.
-    /*!
-     * \param[in] input The input image.
-     *
-     * This routine runs: \n
-     *   a.take(make::pix(input, p));
-     *   on all pixels on the images.
-     *
-     * \warning This routine does not perform a.init().
-     */
+    ///
+    /// \param[in] input The input image.
+    ///
+    /// This routine runs: \n
+    ///   a.take(make::pix(input, p));
+    ///   on all pixels on the images.
+    ///
+    /// \warning This routine does not perform a.init().
+    ///
     template <typename A, typename I>
     mln_accu_with(A, util::pix<I>)::result
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);
@@ -149,7 +149,9 @@ namespace mln
       mln_precondition(exact(input).has_data());
 
       typedef mln_accu_with(A, util::pix<I>) A_;
-      A_ a_ = accu::unmeta(exact(a), util::pix<I>());
+      util::pix<I>* pix_; // So we can pass a pixel below (pixel has
+			  // no ctor without arg).
+      A_ a_ = accu::unmeta(exact(a), *pix_);
 
       mln_result(A_) output = internal::compute_dispatch(a_, input);
 
