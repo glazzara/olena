@@ -45,10 +45,10 @@ int main()
   using namespace mln;
 
   std::cout << "allocate the image." << std::endl;
-  tiled_image2d<value::int_u8> ima(1024 * 1024, 1024 * 1.5);
+  tiled_image2d<value::int_u8> ima(30000, 30024);
   std::cout << "fill the image." << std::endl;
   debug::iota(ima);
 
-  std::cout << "save the image." << std::endl;
-  io::pgm::save(ima, "test.pgm");
+  //std::cout << "save the image." << std::endl;
+  //io::pgm::save(ima, "/tmp/test.pgm");
 }

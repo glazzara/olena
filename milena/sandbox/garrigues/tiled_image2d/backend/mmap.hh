@@ -42,8 +42,8 @@ namespace mln
     typedef Block block_type;
 
     mmap_backend(int fd, unsigned n_blocks)
-      : fd_(fd), size_(n_blocks) {
-
+      : fd_(fd), size_(n_blocks), n_loaded_(0) {
+      std::cout << "size: " << size_ << "blocks." << std::endl;
       assert(Block::nbytes % getpagesize() == 0);
       if (fd == -1) { perror("open"); exit(1); }
       assert(fd_ != -1);
@@ -97,6 +97,7 @@ namespace mln
       assert(n < size_);
       Block *b = loaded_[n];
       loaded_[n] = 0;
+      n_loaded_--;
       if (munmap(b->bytes, Block::nbytes) == -1)
 	perror("munmap");
     }
@@ -105,6 +106,7 @@ namespace mln
       assert(n < size_);
       Block *b = loaded_[n];
       if (!b) {
+	n_loaded_++;
 	b = (Block*) mmap(0, Block::nbytes, PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED, fd_, n * Block::nbytes);
 	if (b == (void*)-1)
 	  perror("mmap");
@@ -117,6 +119,7 @@ namespace mln
     Block** loaded_;
     int fd_;
     unsigned size_;
+    int n_loaded_;
   };
 
 

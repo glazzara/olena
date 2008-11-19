@@ -72,10 +72,10 @@ namespace mln
     template <typename T>
     struct data_< tiled_image2d<T> >
     {
-      typedef block<T, BLOCK_SIZE>          block;
-      typedef mmap_backend<block>   backend;
-      typedef lru_support<backend>  support;
-      typedef layout2d<BLOCK_SIDE, BLOCK_SIDE>      layout;
+      typedef typename tiled_image2d<T>::block block;
+      typedef typename tiled_image2d<T>::backend backend;
+      typedef typename tiled_image2d<T>::support support;
+      typedef typename tiled_image2d<T>::layout layout;
 
       data_(const box2d& b);
       ~data_();
@@ -153,10 +153,14 @@ namespace mln
     typedef mln::value::set<T> vset;
 
     /// Block type.
-    typedef block<T, BLOCK_SIZE> block;
+     typedef block<T, BLOCK_SIZE> block;
+    //typedef block<T, 10> block;
 
+
+    /// Backend type.
+    typedef mmap_backend<block>   backend;
     /// Support type.
-    typedef lru_support<mmap_backend<block> > support;
+    typedef lru_support<backend>  support;
     /// Layout type
     typedef layout2d<BLOCK_SIDE, BLOCK_SIDE>                       layout;
     /// Page type
@@ -245,7 +249,7 @@ namespace mln
 	support_(*new support(
 			       *new backend( open("/tmp/milena_tiled.image", O_RDWR | O_CREAT | O_TRUNC, 0664),
 					     layout::image_layout::size(geom::nrows(b), geom::ncols(b))),
-			       1500 // Fixme : size of lru cache.
+			       10 // Fixme : size of lru cache.
 			      )
 		 )
     {
