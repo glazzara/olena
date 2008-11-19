@@ -30,7 +30,7 @@
  * \brief Test on mln::level::fast_median.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -53,7 +53,7 @@ namespace mln
   template <typename I, typename W>
   void test(I& input, const W& win)
   {
-    mln_point(I) p;
+    mln_site(I) p;
     p.row() = p.col() = 1;
 
     {

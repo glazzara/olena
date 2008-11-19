@@ -29,7 +29,8 @@
 # define MLN_FUN_VV2V_MIN_HH
 
 /// \file mln/fun/vv2v/min.hh
-/// \brief computing the minimum of two values using a functor.
+///
+/// Functor that computes the minimum of two values.
 
 # include <mln/core/concept/function.hh>
 # include <mln/math/min.hh>
@@ -47,22 +48,23 @@ namespace mln
       // FIXME: Doc.
 
       /// \brief A functor computing the minimum of two values.
-      template <typename V>
-      struct min : public Function_vv2v< min<V> >
+      template <typename L, typename R = L>
+      struct min : public Function_vv2v< min<L,R> >,
+		   private mlc_converts_to(R,L)::check_t
       {
-	typedef V result;
-	V operator()(const V& v1, const V& v2) const;
+	typedef L result;
+	L operator()(const L& v1, const R& v2) const;
       };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename V>
+      template <typename L, typename R>
       inline
-      V
-      min<V>::operator()(const V& v1, const V& v2) const
+      L
+      min<L,R>::operator()(const L& v1, const R& v2) const
       {
-	return mln::math::min(v1, v2);
+	return mln::math::min(v1, L(v2));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

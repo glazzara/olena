@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,16 @@
 #ifndef MLN_ACCU_RANK_HH
 # define MLN_ACCU_RANK_HH
 
-/*! \file mln/accu/rank.hh
- *
- * \brief Define an rank accumulator.
- */
+/// \file mln/accu/rank.hh
+///
+/// Define an rank accumulator.
 
 # include <vector>
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/trait/value_.hh>
 # include <mln/util/pix.hh>
-# include <mln/core/inplace.hh>
+
 
 namespace mln
 {
@@ -47,25 +47,32 @@ namespace mln
   {
 
 
-    /*! \brief Generic rank accumulator class.
-     *
+    /// Generic rank accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct rank_ : public mln::accu::internal::base_< T, rank_<T> >
+    struct rank : public mln::accu::internal::base< const T&, rank<T> >
     {
       typedef T argument;
-      typedef T result;
 
-      rank_(unsigned k, unsigned n);
+      rank(unsigned k, unsigned n);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const rank_<T>& other);
+      void take(const rank<T>& other);
       void sort();
+      /// \}
 
-      T to_result() const;
+      /// Get the value of the accumulator.
+      const T& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -76,31 +83,44 @@ namespace mln
     };
 
 
-    template <typename I> struct rank_< util::pix<I> >;
+    template <typename I> struct rank< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for rank.
-     */
-    struct rank : public Meta_Accumulator< rank >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for rank.
+
+      struct rank : public Meta_Accumulator< rank >
       {
-	typedef rank_<T> ret;
+	rank(unsigned k_, unsigned n_) : k(k_), n(n_) {}
+
+	template <typename T>
+	  struct with
+	  {
+	    typedef accu::rank<T> ret;
+	  };
+
+	unsigned k;
+	unsigned n;
       };
-    };
+
+    }
 
 
-
-
+    template <typename T>
+    rank<T> unmeta(const meta::rank& m, T)
+    {
+      rank<T> a(m.k, m.n);
+      return a;
+    }
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     inline
-    rank_<T>::rank_(unsigned k, unsigned n)
+    rank<T>::rank(unsigned k, unsigned n)
       : k_(k),
 	n_(n),
 	is_sorted_(false)
@@ -112,14 +132,14 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::init()
+    rank<T>::init()
     {
       elts_.clear();
     }
 
     template <typename T>
     inline
-    void rank_<T>::take_as_init(const argument& t)
+    void rank<T>::take_as_init(const argument& t)
     {
       elts_.push_back(t);
       is_sorted_ = false;
@@ -127,7 +147,7 @@ namespace mln
 
     template <typename T>
     inline
-    void rank_<T>::take(const argument& t)
+    void rank<T>::take(const argument& t)
     {
       elts_.push_back(t);
       is_sorted_ = false;
@@ -136,7 +156,7 @@ namespace mln
     template <typename T>
     inline
     void
-    rank_<T>::take(const rank_<T>& other)
+    rank<T>::take(const rank<T>& other)
     {
       elts_.insert(elts_.end(),
 		   other.elts_.begin(),
@@ -146,11 +166,10 @@ namespace mln
 
     template <typename T>
     inline
-    T
-    rank_<T>::to_result() const
+    const T&
+    rank<T>::to_result() const
     {
-      // Fixme : Call to inplace to unconst (*this).
-      inplace(*this).sort();
+      const_cast<rank<T>&>(*this).sort();
 
       if (n_ == elts_.size())
 	return elts_[k_];
@@ -161,10 +180,18 @@ namespace mln
 
     template <typename T>
     inline
-    void
-    rank_<T>::sort()
+    bool
+    rank<T>::is_valid() const
     {
-      if (!is_sorted_)
+      return true;
+    }
+
+    template <typename T>
+    inline
+    void
+    rank<T>::sort()
+    {
+      if (! is_sorted_)
       {
 	is_sorted_ = true;
 	std::sort(elts_.begin(), elts_.end());
@@ -177,6 +204,6 @@ namespace mln
 
 } // end of namespace mln
 
-#include <mln/accu/rank_bool.hh>
+#include <mln/accu/rankbool.hh>
 
 #endif // ! MLN_ACCU_RANK_HH

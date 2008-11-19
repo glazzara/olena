@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,12 @@
 #ifndef MLN_LOGICAL_AND_NOT_HH
 # define MLN_LOGICAL_AND_NOT_HH
 
-/*! \file mln/logical/and_not.hh
- *
- * \brief Point-wise logical "and not" between binary images.
- *
- * \todo Add static assertion and save one iterator in in-place version.
- */
+/// \file mln/logical/and_not.hh
+///
+/// Point-wise "logical and-not" between binary images.
 
-# include <mln/core/concept/image.hh>
-
-
-// Specializations are in:
-# include <mln/logical/and_not.spe.hh>
+# include <mln/logical/includes.hh>
+# include <mln/fun/vv2v/land_not.hh>
 
 
 namespace mln
@@ -48,7 +43,7 @@ namespace mln
   namespace logical
   {
 
-    /*! Point-wise logical "and not" between images \p lhs and \p rhs.
+    /*! Point-wise "logical and-not" between images \p lhs and \p rhs.
      *
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -57,10 +52,11 @@ namespace mln
      * \pre \p lhs.domain == \p rhs.domain
      */
     template <typename L, typename R>
-    mln_concrete(L) and_not(const Image<L>& lhs, const Image<R>& rhs);
+    mln_ch_fun_vv2v(land_not, L, R)
+    and_not(const Image<L>& lhs, const Image<R>& rhs);
 
 
-    /*! Point-wise in-place logical "and not" of image \p rhs in image \p lhs.
+    /*! Point-wise in-place "logical and-not" of image \p rhs in image \p lhs.
      *
      * \param[in,out] lhs First operand image.
      * \param[in] rhs Second operand image.
@@ -77,42 +73,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      namespace generic
-      {
-	template <typename L, typename R, typename O>
-	inline
-	void and_not_(const L& lhs, const R& rhs, O& output)
-	{
-	  trace::entering("logical::impl::generic::and_not_");
-
-	  mln_piter(L) p(lhs.domain());
-	  for_all(p)
-	    output(p) = lhs(p) && ! rhs(p);
-
-	  trace::exiting("logical::impl::generic::and_not_");
-	}
-      }
-
-    } // end of namespace mln::logical::impl
-
-
-    // Facades.
-
     template <typename L, typename R>
     inline
-    mln_concrete(L) and_not(const Image<L>& lhs, const Image<R>& rhs)
+    mln_ch_fun_vv2v(land_not, L, R)
+    and_not(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_not");
 
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      internal::tests(lhs, rhs);
 
-      mln_concrete(L) output;
-      initialize(output, lhs);
-      impl::and_not_(mln_trait_image_speed(L)(), exact(lhs),
-		     mln_trait_image_speed(R)(), exact(rhs), output);
+      mln_fun_vv2v(land_not, L, R) f;
+      mln_ch_fun_vv2v(land_not, L, R) output = level::transform(lhs, rhs, f);
 
       trace::exiting("logical::and_not");
       return output;
@@ -124,10 +95,13 @@ namespace mln
     {
       trace::entering("logical::and_not_inplace");
 
-      mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
+      mlc_converts_to(mln_fun_vv2v_result(land_not, L, R),
+		      mln_value(L))::check();
 
-      impl::and_not_(mln_trait_image_speed(L)(), exact(lhs),
-		     mln_trait_image_speed(R)(), exact(rhs), exact(lhs));
+      internal::tests(lhs, rhs);
+
+      mln_fun_vv2v(land_not, L, R) f;
+      level::transform_inplace(lhs, rhs, f);
 
       trace::exiting("logical::and_not_inplace");
     }

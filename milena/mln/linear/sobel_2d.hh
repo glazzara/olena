@@ -1,0 +1,167 @@
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
+//
+// This file is part of the Olena Library.  This library is free
+// software; you can redistribute it and/or modify it under the terms
+// of the GNU General Public License version 2 as published by the
+// Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this library; see the file COPYING.  If not, write to
+// the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+// Boston, MA 02111-1307, USA.
+//
+// As a special exception, you may use this file as part of a free
+// software library without restriction.  Specifically, if other files
+// instantiate templates or use macros or inline functions from this
+// file, or you compile this file and link it with other files to
+// produce an executable, this file does not by itself cause the
+// resulting executable to be covered by the GNU General Public
+// License.  This exception does not however invalidate any other
+// reasons why the executable file might be covered by the GNU General
+// Public License.
+
+#ifndef MLN_LINEAR_SOBEL_2D_HH
+# define MLN_LINEAR_SOBEL_2D_HH
+
+/// \file mln/linear/sobel_2d.hh
+///
+/// Sobel_2d filter.
+/// \todo Extends to the case of other dimensions (only the 2-d case
+/// is handled here).
+
+# include <mln/trait/ch_value.hh>
+# include <mln/trait/value/nature.hh>
+
+# include <mln/metal/int.hh>
+
+# include <mln/arith/plus.hh>
+# include <mln/level/abs.hh>
+# include <mln/fun/x2v/l1_norm.hh>
+# include <mln/fun/vv2v/vec.hh>
+# include <mln/linear/convolve_2x1d.hh>
+
+
+
+namespace mln
+{
+
+  namespace linear
+  {
+
+    /// Sobel_2d gradient components.
+    /// \{
+    /// Compute the horizontal component of the 2D Sobel gradient.
+    template <typename I>
+    mln_ch_convolve(I, int)
+    sobel_2d_h(const Image<I>& input);
+
+    /// Compute the vertical component of the 2D Sobel gradient.
+    template <typename I>
+    mln_ch_convolve(I, int)
+    sobel_2d_v(const Image<I>& input);
+    /// \}
+
+    /// Compute the vertical component of the 2D Sobel gradient.
+    template <typename I>
+    mln_ch_convolve_grad(I, int)
+    sobel_2d(const Image<I>& input);
+    /// \}
+
+    /// Compute the L1 norm of the 2D Sobel gradient.
+    template <typename I>
+    mln_ch_convolve(I, int)
+    sobel_2d_l1_norm(const Image<I>& input);
+    /// \}
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    // Facades.
+
+    template <typename I>
+    inline
+    mln_ch_convolve(I, int)
+    sobel_2d_h(const Image<I>& input)
+    {
+      trace::entering("linear::sobel_2d_h");
+      mln_precondition(exact(input).has_data());
+
+      int wh[] = { -1, 0, 1 };
+      int wv[] = { 1,
+		   2,
+		   1 };
+      mln_ch_convolve(I, int) output = convolve_2x1d(input, wh, wv);
+
+      trace::exiting("linear::sobel_2d_h");
+      return output;
+    }
+
+
+    template <typename I>
+    inline
+    mln_ch_convolve(I, int)
+    sobel_2d_v(const Image<I>& input)
+    {
+      trace::entering("linear::sobel_2d_v");
+      mln_precondition(exact(input).has_data());
+
+      int wh[] = { 1, 2, 1 };
+      int wv[] = { -1,
+		    0,
+		   +1 };
+      mln_ch_convolve(I, int) output = convolve_2x1d(input, wh, wv);
+
+      trace::exiting("linear::sobel_2d_v");
+      return output;
+    }
+
+
+    template <typename I>
+    mln_ch_convolve_grad(I, int)
+    sobel_2d(const Image<I>& input)
+    {
+      trace::entering("linear::sobel_2d");
+      mln_precondition(exact(input).has_data());
+
+      typedef mln_ch_convolve(I, int) J;
+      J h = sobel_2d_h(input),
+	v = sobel_2d_v(input);
+      fun::vv2v::vec<mln_value(J)> f;
+      mln_ch_convolve_grad(I, int) output = level::transform(h, v, f);
+
+      trace::exiting("linear::sobel_2d");
+      return output;
+    }
+
+
+    template <typename I>
+    mln_ch_convolve(I, int)
+    sobel_2d_l1_norm(const Image<I>& input)
+    {
+      trace::entering("linear::sobel_2d_norm_l1");
+      mln_precondition(exact(input).has_data());
+
+      typedef mln_ch_convolve_grad(I, int) G;
+      G grad = sobel_2d(input);
+      fun::x2v::l1_norm<mln_value(G)> f;
+      mln_ch_convolve(I, int) output = level::transform(grad, f);
+
+      trace::exiting("linear::sobel_2d");
+      return output;
+    }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::linear
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LINEAR_SOBEL_2D_HH

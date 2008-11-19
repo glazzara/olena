@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,7 +47,11 @@ namespace mln
     /// Morphological area closing.
     template <typename I, typename N, typename O>
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output);
+		      unsigned lambda, Image<O>& output);
+
+    template <typename I, typename N>
+    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+				 unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -54,12 +59,22 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      std::size_t lambda, Image<O>& output)
+		      unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       typedef util::pix<I> pix_t;
       // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::count_<pix_t> >(input, nbh, lambda, output);
+      closing_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
+    }
+
+    template <typename I, typename N>
+    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+				 unsigned lambda)
+    {
+      mln_concrete(I) output;
+      initialize(output, input);
+      closing_area(input, nbh, lambda, output);
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,12 +30,12 @@
 # define MLN_ACCU_COUNT_ADJACENT_VERTICES_HH
 
 /// \file mln/accu/count_adjacent_vertices.hh
-/// \brief Define an accumulator that counts the vertices adjacent to a
+/// Define an accumulator that counts the vertices adjacent to a
 /// set of line graph psite.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/line_graph_image.hh>
+# include <mln/core/image/line_graph_image.hh>
 # include <mln/util/pix.hh>
 
 namespace mln
@@ -43,7 +44,7 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Accumulator class counting the number of vertices
+    /// Accumulator class counting the number of vertices
     /// adjacent to a set of mln::line_graph_psite (i.e., a set of
     /// edges).
     ///
@@ -53,26 +54,26 @@ namespace mln
     /// This accumulator is used by mln::closing_area_on_vertices and
     /// mln::opening_area_on_vertices.
     template <typename P, typename V>
-    struct count_adjacent_vertices_ 
-      : public mln::accu::internal::base_< std::size_t,
-					   count_adjacent_vertices_<P, V> >
+    struct count_adjacent_vertices
+      : public mln::accu::internal::base< unsigned,
+					  count_adjacent_vertices<P, V> >
     {
       typedef mln::util::pix< mln::line_graph_image<P, V> > argument;
 
-      count_adjacent_vertices_();
+      count_adjacent_vertices();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument& arg);
-      void take(const count_adjacent_vertices_<P, V>& other);
+      void take(const count_adjacent_vertices<P, V>& other);
 
-      /// Force the value of the counter to \a c. 
-      void set_value(std::size_t c);
+      /// Force the value of the counter to \a c.
+      void set_value(unsigned c);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
 
     protected:
       /// Update the value of the counter.
@@ -80,29 +81,34 @@ namespace mln
 
     protected:
       /// The value of the counter.
-      std::size_t count__;
+      unsigned count__;
       /// The set of adjacent vertices.
       std::set<util::vertex_id> vertices_;
     };
 
 
-    /// \brief Meta accumulator for count_adjacent_vertices.
-    struct count_adjacent_vertices
-      : public Meta_Accumulator< count_adjacent_vertices >
+    namespace meta
     {
-      template <typename P, typename V>
-      struct with
+
+      /// Meta accumulator for count_adjacent_vertices.
+      struct count_adjacent_vertices
+	: public Meta_Accumulator< count_adjacent_vertices >
       {
-	typedef count_adjacent_vertices_<P, V> ret;
+	template <typename P, typename V>
+	  struct with
+	  {
+	    typedef accu::count_adjacent_vertices<P, V> ret;
+	  };
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename P, typename V>
     inline
-    count_adjacent_vertices_<P, V>::count_adjacent_vertices_()
+    count_adjacent_vertices<P, V>::count_adjacent_vertices()
     {
       init();
     }
@@ -110,7 +116,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::init()
+    count_adjacent_vertices<P, V>::init()
     {
       vertices_.clear();
       update_();
@@ -119,7 +125,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::take(const argument& arg)
+    count_adjacent_vertices<P, V>::take(const argument& arg)
     {
       vertices_.insert(arg.p().first_id());
       vertices_.insert(arg.p().second_id());
@@ -129,7 +135,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::take(const count_adjacent_vertices_<P, V>& other)
+    count_adjacent_vertices<P, V>::take(const count_adjacent_vertices<P, V>& other)
     {
       vertices_.insert (other.vertices_.begin(), other.vertices_.end());
       update_();
@@ -137,8 +143,8 @@ namespace mln
 
     template <typename P, typename V>
     inline
-    std::size_t
-    count_adjacent_vertices_<P, V>::to_result() const
+    unsigned
+    count_adjacent_vertices<P, V>::to_result() const
     {
       return count__;
     }
@@ -146,7 +152,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::set_value(std::size_t c)
+    count_adjacent_vertices<P, V>::set_value(unsigned c)
     {
       count__ = c;
       /// Reset the other member.
@@ -156,7 +162,7 @@ namespace mln
     template <typename P, typename V>
     inline
     void
-    count_adjacent_vertices_<P, V>::update_()
+    count_adjacent_vertices<P, V>::update_()
     {
       count__ = vertices_.size();
     }

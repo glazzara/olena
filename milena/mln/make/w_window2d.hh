@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,10 +34,9 @@
  * \brief Routine to create an mln::w_window in the 2D case.
  */
 
-# include <cmath>
-
 # include <mln/core/w_window.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
+# include <mln/convert/from_to.hxx>
 
 
 namespace mln
@@ -49,32 +49,25 @@ namespace mln
      *
      * \param[in] weights Array.
      *
-     * \pre The array size, \c M, has to be a square of an odd integer.
+     * \pre The array size, \c S, has to be a square of an odd integer.
      *
      * \return A 2D weighted window.
      */
-    template <typename W, unsigned M>
-    mln::w_window<mln::dpoint2d, W> w_window2d(W (&weights)[M]);
+    template <typename W, unsigned S>
+    mln::w_window<mln::dpoint2d, W> w_window2d(W (&weights)[S]);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W, unsigned M>
+    template <typename W, unsigned S>
     inline
     mln::w_window<mln::dpoint2d, W>
-    w_window2d(W (&weights)[M])
+    w_window2d(W (&weights)[S])
     {
-      int h = unsigned(std::sqrt(float(M))) / 2;
-      mln_precondition((2 * h + 1) * (2 * h + 1) == M);
+      enum { s = mlc_sqrt_int(S) / 2 };
+      metal::bool_<(((2 * s + 1) * (2 * s + 1)) == S)>::check();
       mln::w_window<mln::dpoint2d, W> tmp;
-      unsigned i = 0;
-      for (int row = - h; row <= h; ++row)
-	for (int col = - h; col <= h; ++col)
-	  {
-	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint2d(row, col));
-	    i++;
-	  }
+      convert::from_to(weights, tmp);
       return tmp;
     }
 

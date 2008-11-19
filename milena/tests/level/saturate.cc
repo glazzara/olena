@@ -31,7 +31,7 @@
  */
 
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/saturate.hh>
 #include <mln/debug/iota.hh>
 
@@ -47,7 +47,7 @@ int main()
     { 6, 6, 6 }
   };
 
-  image2d<int> ref(make::image2d(vs));
+  image2d<int> ref(make::image(vs));
   debug::iota(ima);
   level::saturate_inplace(ima, 2, 6);
   box_fwd_piter_<point2d> p(ima.domain());

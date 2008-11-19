@@ -45,7 +45,7 @@ namespace mln
     /// levels with approximation.
     namespace approx
     {
-      /// \internal Implementation namespace of level::approx namespace.
+      /// Implementation namespace of level::approx namespace.
       namespace impl {}
     }
 

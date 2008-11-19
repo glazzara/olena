@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LOGICAL_ALL_HH
 # define MLN_LOGICAL_ALL_HH
 
-/*! \file mln/logical/all.hh
- *
- * \brief File that includes all logical operators.
- */
+/// \file mln/logical/all.hh
+///
+/// File that includes all logical operators.
 
 
 namespace mln
@@ -40,22 +40,22 @@ namespace mln
   /// Namespace of logic.
   namespace logical
   {
-    /// \internal Implementation namespace of logical namespace.
+    /// Implementation namespace of logical namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of logical namespace.
+      /// Generic implementation namespace of logical namespace.
       namespace generic {}
 
     }
-
   }
-
 }
 
+# include <mln/logical/includes.hh>
 # include <mln/logical/and.hh>
 # include <mln/logical/and_not.hh>
 # include <mln/logical/not.hh>
 # include <mln/logical/or.hh>
+# include <mln/logical/xor.hh>
 
 
 #endif // ! MLN_LOGICAL_ALL_HH

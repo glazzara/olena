@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_ARRAY_HH
-# define MLN_CORE_P_ARRAY_HH
+#ifndef MLN_CORE_SITE_SET_P_ARRAY_HH
+# define MLN_CORE_SITE_SET_P_ARRAY_HH
 
-/*! \file mln/core/p_array.hh
+/*! \file mln/core/site_set/p_array.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -65,7 +65,7 @@ namespace mln
    * This is a multi-set of points.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints().  FIXME: Explain!
+   * a call to nsites().  FIXME: Explain!
    *
    * \todo Make it work with P being a Point_Site.
    */
@@ -74,10 +74,10 @@ namespace mln
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
@@ -93,7 +93,7 @@ namespace mln
     bool has(const P& p) const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -120,7 +120,7 @@ namespace mln
     mutable bool bb_needs_update_;
 
     void update_bb_() const;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
   };
 
 
@@ -183,7 +183,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_array<P>::npoints() const
+  p_array<P>::nsites() const
   {
     return vect_.size();
   }
@@ -193,7 +193,7 @@ namespace mln
   const box_<P>&
   p_array<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       update_bb_();
     return bb_.to_result();
@@ -232,7 +232,7 @@ namespace mln
   const P&
   p_array<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return vect_[i];
   }
 
@@ -244,4 +244,4 @@ namespace mln
 # include <mln/core/p_array_piter.hh>
 
 
-#endif // ! MLN_CORE_P_ARRAY_HH
+#endif // ! MLN_CORE_SITE_SET_P_ARRAY_HH

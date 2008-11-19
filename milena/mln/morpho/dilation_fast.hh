@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,18 @@
 #ifndef MLN_MORPHO_DILATION_FAST_HH
 # define MLN_MORPHO_DILATION_FAST_HH
 
-/*! \file mln/morpho/dilation_fast.hh
- *
- * \brief Ero filtering of an image.
- *
- * \todo Add fastest versions.
- */
+/// \file mln/morpho/dilation_fast.hh
+///
+/// Dilation filtering of an image with arbitrary s.e.
+///
+/// \todo Add fastest versions.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/geom/shift.hh>
-# include <mln/set/diff.hh>
+# include <mln/core/alias/dpoint2d.hh>
+
+# include <mln/win/shift.hh>
+# include <mln/win/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/accu/max_h.hh>
@@ -51,9 +52,9 @@ namespace mln
   namespace morpho
   {
 
-    /*! Compute in \p output the dilation filter of image \p input by
-     *  the window \p win.
-     *
+    /// Compute in \p output the dilation filter of image \p input by
+    /// the window \p win.
+    /*!
      * \param[in] input The image to be filtered.
      * \param[in] win The window.
      * \param[out] output The output image.
@@ -62,7 +63,7 @@ namespace mln
      */
     template <typename I, typename W, typename O>
     void dilation_fast(const Image<I>& input, const Window<W>& win,
-		      Image<O>& output);
+		       Image<O>& output);
 
 
 
@@ -78,9 +79,9 @@ namespace mln
 
       template <typename I, typename W, typename O>
       struct dilation_fast_t
-      { 
-	typedef mln_point(I)  P;
-	typedef mln_dpoint(I) D;
+      {
+	typedef mln_psite(I)  P;
+	typedef mln_dpsite(I) D;
 
 	// i/o
 
@@ -107,12 +108,12 @@ namespace mln
 	  // aux data
 	  max(input.values()),
 	  p(),
-	  win_fp(set::diff(win, geom::shift(win, left))),
-	  win_fm(set::diff(geom::shift(win, left),  win)),
-	  win_bp(set::diff(win, geom::shift(win, right))),
-	  win_bm(set::diff(geom::shift(win, right), win)),
-	  win_dp(set::diff(win, geom::shift(win, up))),
-	  win_dm(set::diff(geom::shift(win, up),    win)),
+	  win_fp(win - win::shift(win, left)),
+	  win_fm(win::shift(win, left)  - win),
+	  win_bp(win - win::shift(win, right)),
+	  win_bm(win::shift(win, right) - win),
+	  win_dp(win - win::shift(win, up)),
+	  win_dm(win::shift(win, up)    - win),
 	  q_fp(win_fp, p),  q_fm(win_fm, p),
 	  q_bp(win_bp, p),  q_bm(win_bm, p),
 	  q_dp(win_dp, p),  q_dm(win_dm, p)
@@ -124,6 +125,8 @@ namespace mln
 	inline
 	void init()
 	{
+	  // FIXME: border::adjust(input, win.delta());
+	  extension::fill(input, mln_min(mln_value(I)));
 	  max.init();
 	  mln_qiter(W) q(win, p);
 	  for_all(q) if (input.has(q))
@@ -183,7 +186,7 @@ namespace mln
 		      Image<O>& output)
     {
       mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::dilation_fast_(exact(input), exact(win), exact(output)); 
+      impl::dilation_fast_(exact(input), exact(win), exact(output));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

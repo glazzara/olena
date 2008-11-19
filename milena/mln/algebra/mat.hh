@@ -92,11 +92,11 @@ namespace mln
       enum { N = n,
 	     M = m,
              dim = n * m };
-      
+
       static const mat<n,m,T> Id;
 
       mat();
-      
+
       mat(const literal::zero_t&);
 
       template <typename U>
@@ -251,7 +251,7 @@ namespace mln
     operator/(const mat<n,m,T>& lhs, const value::scalar_<S>& s);
 
     // <<
-    
+
     template <unsigned n, unsigned m, typename T>
     std::ostream&
     operator<<(std::ostream& ostr, const mat<n,m,T>& v);
@@ -263,7 +263,7 @@ namespace mln
     trans(const mat<n,m,T>& matrix);
 
     // trace
-    
+
     template<unsigned n, typename T> inline
     float tr(const mat<n,n,T>& m);
 
@@ -294,14 +294,14 @@ namespace mln
     mat<n,m,T>::mat()
     {
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     mat<n,m,T>::mat(const literal::zero_t&)
     {
       this->set_all(0);
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     template <typename U>
     inline
@@ -311,7 +311,7 @@ namespace mln
 	for (unsigned j = 0; j < m; ++j)
 	  data_[i][j] = rhs(i, j);
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     template <typename F>
     inline
@@ -335,7 +335,7 @@ namespace mln
 	  data_[i][j] = rhs(i, j);
       return *this;
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     const T&
@@ -344,7 +344,7 @@ namespace mln
       mln_precondition(i < n && j < m);
       return data_[i][j];
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     T&
@@ -353,7 +353,7 @@ namespace mln
       mln_precondition(i < n && j < m);
       return data_[i][j];
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     void mat<n,m,T>::set_all(const T& val)
@@ -362,14 +362,14 @@ namespace mln
 	for (unsigned j = 0; j < m; ++j)
 	  data_[i][j] = val;
     }
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     unsigned mat<n,m,T>::size() const
     {
       return n * m;
     }
-    
+
 
     // Operators.
 
@@ -483,7 +483,7 @@ namespace mln
     }
 
     // <<
-    
+
     template <unsigned n, unsigned m, typename T>
     inline
     std::ostream&
@@ -521,7 +521,7 @@ namespace mln
     }
 
 # endif // ! MLN_INCLUDE_ONLY
-    
+
   } // end of namespace mln::algebra
 
 } // end of namespace mln

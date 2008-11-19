@@ -34,9 +34,9 @@
  * mirroring effect.
  */
 
-# include <mln/core/image1d.hh>
-# include <mln/core/image2d.hh>
-# include <mln/core/image3d.hh>
+# include <mln/core/image/image1d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/image3d.hh>
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/fixme.hh>
@@ -73,13 +73,14 @@ namespace mln
 
       template <typename I>
       inline
-      void mirror_(const box1d&, const I& ima)
+      void mirror_(const box1d&, const I& ima_)
       {
 	trace::entering("border::impl::mirror_");
+	I& ima = const_cast<I&>(ima_);
 
- 	std::size_t border = ima.border ();
- 	std::size_t nbinds = geom::ninds(ima);
-	std::size_t min;
+ 	unsigned border = ima.border ();
+ 	unsigned nbinds = geom::ninds(ima);
+	unsigned min;
 
 	if (border > nbinds)
 	  min = nbinds;
@@ -88,90 +89,91 @@ namespace mln
 
 	/// left border
 	{
-	  std::size_t i = 0;
+	  unsigned i = 0;
 	  for (; i < min; ++i)
-	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(i));
+	    ima.element(border - 1 - i) = ima(point1d(i));
 
 	  for (; i < border; ++i)
-	    const_cast<I&>(ima)[border - 1 - i] = ima(point1d(min - 1));
+	    ima.element(border - 1 - i) = ima(point1d(min - 1));
 	}
 
 	/// right border
 	{
-	  std::size_t i = 0,
+	  unsigned i = 0,
 	              j = nbinds - 1;
 	  for (;
 	       i < min;
 	       ++i, --j)
-	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	    ima.element(border + nbinds + i) = ima(point1d(j));
 	  ++j;
 	  for (;
 	       i < border;
 	       ++i)
-	    const_cast<I&>(ima)[border + nbinds + i] = ima(point1d(j));
+	    ima.element(border + nbinds + i) = ima(point1d(j));
 	}
 	trace::exiting("border::impl::mirror_");
       }
 
       template <typename I>
       inline
-      void mirror_(const box2d&, const I& ima)
+      void mirror_(const box2d&, const I& ima_)
       {
 	trace::entering("border::impl::mirror_");
+	I& ima = const_cast<I&>(ima_);
 
-	std::size_t border = ima.border ();
-	std::size_t nbrows = geom::max_row(ima) - geom::min_row(ima);
-	std::size_t nbcols = geom::max_col(ima) - geom::min_col(ima);
-	std::size_t real_nbcols = (nbcols + 1) + 2 * border;
-	std::size_t start = real_nbcols * border + border;
-	std::size_t s = start;
+	unsigned border = ima.border ();
+	unsigned nbrows = geom::max_row(ima) - geom::min_row(ima);
+	unsigned nbcols = geom::max_col(ima) - geom::min_col(ima);
+	unsigned real_nbcols = (nbcols + 1) + 2 * border;
+	unsigned start = real_nbcols * border + border;
+	unsigned s = start;
 
 	// mirror top left corner
-	for (std::size_t i = 0; i < border; ++i)
-	  for (std::size_t j = 0; j < border; ++j)
-	  const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + j] = ima[s];
+	for (unsigned i = 0; i < border; ++i)
+	  for (unsigned j = 0; j < border; ++j)
+	  ima.element(i * ((nbcols + 1) + 2 * border) + j) = ima.element(s);
 
 	// mirror top left corner
 	s = start + nbcols;
-	for (std::size_t i = 0; i < border; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)] = ima[s];
+	for (unsigned i = 0; i < border; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)) = ima.element(s);
 
 	// mirror bottom left corner
 	s = start + (nbrows * real_nbcols);
-	for (std::size_t i = 1; i <= border; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s - i + (j * (real_nbcols))] = ima[s];
+	for (unsigned i = 1; i <= border; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(s - i + (j * (real_nbcols))) = ima.element(s);
 
 	// mirror bottom right corner
 	s = start + (nbrows * real_nbcols) + nbcols;
-	for (std::size_t i = 1; i <= border; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s];
+	for (unsigned i = 1; i <= border; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(s + i + (j * real_nbcols)) = ima.element(s);
 
 	// mirror top border
 	s = start;
-	for (std::size_t i = 0; i <= nbcols; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i - (j * real_nbcols)] = ima[s + i + ((j - 1)* real_nbcols)];
+	for (unsigned i = 0; i <= nbcols; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(s + i - (j * real_nbcols)) = ima.element(s + i + ((j - 1)* real_nbcols));
 
 	// mirror left border
 	s = start;
-	for (std::size_t i = 0; i <= nbrows; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
- 	  const_cast<I&>(ima)[s + (i * real_nbcols) - j] = ima[s + (i * real_nbcols) + (j - 1)];
+	for (unsigned i = 0; i <= nbrows; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+ 	  ima.element(s + (i * real_nbcols) - j) = ima.element(s + (i * real_nbcols) + (j - 1));
 
 	// mirror right border
 	s = start;
-	for (std::size_t i = 0; i <= nbrows; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + (i * real_nbcols + nbcols) + j] = ima[s + (i * real_nbcols + nbcols) - (j - 1)];
+	for (unsigned i = 0; i <= nbrows; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(s + (i * real_nbcols + nbcols) + j) = ima.element(s + (i * real_nbcols + nbcols) - (j - 1));
 
 	// mirror bottom border
 	s = start + (nbrows * real_nbcols);
-	for (std::size_t i = 0; i <= nbcols; ++i)
-	  for (std::size_t j = 1; j <= border; ++j)
-	    const_cast<I&>(ima)[s + i + (j * real_nbcols)] = ima[s + i - ((j - 1)* real_nbcols)];
+	for (unsigned i = 0; i <= nbcols; ++i)
+	  for (unsigned j = 1; j <= border; ++j)
+	    ima.element(s + i + (j * real_nbcols)) = ima.element(s + i - ((j - 1)* real_nbcols));
 
 	trace::exiting("border::impl::mirror_");
       }
@@ -198,7 +200,7 @@ namespace mln
       mln_precondition(ima.has_data());
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
 
       if (!ima.border ())
 	return;

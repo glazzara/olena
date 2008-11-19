@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_ACCU_MIN_MAX_HH
 # define MLN_ACCU_MIN_MAX_HH
 
-/*! \file mln/accu/min_max.hh
- *
- * \brief Define an accumulator that computes a min and a max.
- *
- * \todo A macro to create such accumulators.
- */
+/// \file mln/accu/min_max.hh
+///
+/// Define an accumulator that computes a min and a max.
+///
+/// \todo A macro to create such accumulators.
 
 # include <utility>
 
@@ -50,21 +49,26 @@ namespace mln
   namespace accu
   {
 
-    /*! \brief Generic min and max accumulator class.
-     *
+    /// Generic min and max accumulator class.
+    /*!
      * The parameter \c V is the type of values.
      */
     template <typename V>
-    struct min_max_ : public pair_< min_<V>, max_<V> >
+    struct min_max : public pair< min<V>, max<V> >
     {
     };
 
 
-    template <typename I> struct min_max_< util::pix<I> >;
+    template <typename I> struct min_max< util::pix<I> >;
 
 
-    // FIXME: Doc!
-    typedef pair<min,max> min_max;
+    namespace meta
+    {
+
+      // FIXME: Doc!
+      typedef meta::pair<meta::min,meta::max> min_max;
+
+    } // end of namespace mln::accu::meta
 
 
   } // end of namespace mln::accu

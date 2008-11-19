@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,8 +31,11 @@
 
 /*! \file mln/core/macros.hh
  *
- * \brief Definition of the set of milena macros.
+ * \brief Definition of the set of Milena macros.
  */
+
+
+# define mln_deduce(T, A1, A2) typename T::A1::A2
 
 
 // a
@@ -45,16 +49,11 @@
 
 // b
 
-/// Shortcuts to access the bkd_citer type associated to T.
+/// Shortcuts to access the element-backward-iterator type associated
+/// to T.
 /// \{
-# define mln_bkd_citer(T)  typename T::bkd_citer
-# define mln_bkd_citer_(T)          T::bkd_citer
-/// \}
-
-/// Shortcuts to access the (N-faces) bkd_fiter type associated to T.
-/// \{
-# define mln_bkd_fiter(N, T)  typename T::template bkd_fiter< N >::ret
-# define mln_bkd_fiter_(N, T)          T::         bkd_fiter< N >::ret
+# define mln_bkd_eiter(T)   typename T::bkd_eiter
+# define mln_bkd_eiter_(T)           T::bkd_eiter
 /// \}
 
 /// Shortcuts to access the bkd_niter type associated to T.
@@ -90,12 +89,6 @@
 
 // c
 
-/// Shortcuts to access the citer type associated to T.
-/// \{
-# define mln_citer(T)      typename T::fwd_citer
-# define mln_citer_(T)              T::fwd_citer
-/// \}
-
 /// Shortcuts to access the coord type associated to T.
 /// \{
 # define mln_coord(T)      typename T::coord
@@ -105,14 +98,38 @@
 
 // d
 
+/// Shortcuts to access the delta type associated to T.
+/// \{
+# define mln_delta(T)      typename T::delta
+# define mln_delta_(T)              T::delta
+/// \}
+
 /// Shortcuts to access the dpoint type associated to T.
 /// \{
 # define mln_dpoint(T)     typename T::dpoint
 # define mln_dpoint_(T)             T::dpoint
 /// \}
 
+/// Shortcuts to access the dpsite type associated to T.
+/// \{
+# define mln_dpsite(T)     typename T::dpsite
+# define mln_dpsite_(T)             T::dpsite
+/// \}
+
 
 // e
+
+/// Shortcuts to access the element-iterator type associated to T.
+/// \{
+# define mln_eiter(T)      typename T::eiter
+# define mln_eiter_(T)              T::eiter
+/// \}
+
+/// Shortcuts to access the element type associated to T.
+/// \{
+# define mln_element(T)        typename T::element
+# define mln_element_(T)                T::element
+/// \}
 
 /// Shortcuts to access the encoding type associated to T.
 /// \{
@@ -129,22 +146,11 @@
 
 // f
 
-/// Shortcuts to access the (N-faces) fiter type associated to T.
+/// Shortcuts to access the element-forward-iterator type associated
+/// to T.
 /// \{
-# define mln_fiter(N, T)   typename T::template fwd_fiter< N >::ret
-# define mln_fiter_(N, T)           T::         fwd_fiter< N >::ret
-/// \}
-
-/// Shortcuts to access the fwd_citer type associated to T.
-/// \{
-# define mln_fwd_citer(T)  typename T::fwd_citer
-# define mln_fwd_citer_(T)          T::fwd_citer
-/// \}
-
-/// Shortcuts to access the (N-faces) fwd_fiter type associated to T.
-/// \{
-# define mln_fwd_fiter(N, T)  typename T::template fwd_fiter< N >::ret
-# define mln_fwd_fiter_(N, T)          T::         fwd_fiter< N >::ret
+# define mln_fwd_eiter(T)   typename T::fwd_eiter
+# define mln_fwd_eiter_(T)           T::fwd_eiter
 /// \}
 
 /// Shortcuts to access the fwd_niter type associated to T.
@@ -171,7 +177,29 @@
 # define mln_fwd_viter_(T)          T::fwd_viter
 /// \}
 
+
+// g
+
+/// Shortcuts to access the geometry type associated to T.
+/// \{
+# define mln_geom(T)      typename T::geom
+# define mln_geom_(T)              T::geom
+/// \}
+
+/// Shortcuts to access the grid type associated to T.
+/// \{
+# define mln_grid(T)      typename T::grid
+# define mln_grid_(T)              T::grid
+/// \}
+
+
 // i
+
+/// Shortcuts to access the insertion-element type associated to T.
+/// \{
+# define mln_i_element(T)  typename T::i_element
+# define mln_i_element_(T)          T::i_element
+/// \}
 
 /// Shortcuts to access the image type associated to T.
 /// \{
@@ -208,8 +236,8 @@
 
 /// Shortcuts to access the type of point iterator (piter) associated to T.
 /// \{
-# define mln_piter(T)      typename T::fwd_piter
-# define mln_piter_(T)              T::fwd_piter
+# define mln_piter(T)      typename T::piter
+# define mln_piter_(T)              T::piter
 /// \}
 
 /// Shortcuts to access the type of point by line iterator
@@ -253,6 +281,18 @@
 # define mln_qiter_(T)              T::fwd_qiter
 /// \}
 
+/// Shortcuts to access the qualified-result type associated to T.
+/// \{
+# define mln_q_result(T)     typename T::q_result
+# define mln_q_result_(T)    T::q_result
+/// \}
+
+/// Shortcuts to access the qualified-subject type associated to T.
+/// \{
+# define mln_q_subject(T)      typename T::q_subject
+# define mln_q_subject_(T)              T::q_subject
+/// \}
+
 
 // n
 
@@ -264,6 +304,18 @@
 
 
 // r
+
+/// Shortcuts to access the removal-element type associated to T.
+/// \{
+# define mln_r_element(T)  typename T::r_element
+# define mln_r_element_(T)          T::r_element
+/// \}
+
+/// Shortcuts to access the regular type associated to T.
+/// \{
+# define mln_regular(T)     typename T::regular
+# define mln_regular_(T)    T::regular
+/// \}
 
 /// Shortcuts to access the result type associated to T.
 /// \{
@@ -278,6 +330,31 @@
 /// \}
 
 
+// s
+
+/// Shortcuts to access the site type associated to T.
+/// \{
+# define mln_site(T)      typename T::site
+# define mln_site_(T)              T::site
+/// \}
+
+// /// Shortcuts to access the subject type associated to T.
+// /// \{
+// # define mln_subject(T)      typename T::subject
+// # define mln_subject_(T)              T::subject
+// /// \}
+
+
+// t
+
+/// Shortcuts to access the target type associated to T.
+/// \{
+# define mln_target(T)      typename T::target
+# define mln_target_(T)              T::target
+/// \}
+
+
+
 // v
 
 /// Shortcuts to access the value type associated to T.
@@ -286,10 +363,16 @@
 # define mln_value_(T)              T::value
 /// \}
 
+/// Shortcuts to access the algebra::vector (vec) type associated to T.
+/// \{
+# define mln_vec(T)        typename T::vec
+# define mln_vec_(T)                T::vec
+/// \}
+
 /// Shortcuts to access the type of value set (vset) associated to T.
 /// \{
-# define mln_vset(T)       typename T::vset
-# define mln_vset_(T)               T::vset
+# define mln_vset(T)       typename T::t_eligible_values_set
+# define mln_vset_(T)               T::t_eligible_values_set
 /// \}
 
 /// Shortcuts to access the viter type associated to T.
@@ -347,5 +430,58 @@
 # define mln_nixter(I, N)  mln_fwd_nixter(I, N)
 # define mln_nixter_(I, N) mln_fwd_nixter_(I, N)
 
+/// Shortcuts to access the vertex iterator type associated to a graph G.
+/// \{
+# define mln_vertex_iter(G)	    typename G::vertex_iter
+# define mln_vertex_iter_(G)		     G::vertex_iter
+# define mln_vertex_fwd_iter(G)     typename G::vertex_fwd_iter
+# define mln_vertex_fwd_iter_(G)             G::vertex_fwd_iter
+# define mln_vertex_bkd_iter(G)     typename G::vertex_bkd_iter
+# define mln_vertex_bkd_iter_(G)             G::vertex_bkd_iter
+/// \}
+
+/// Shortcuts to access the edge iterator type associated to a graph G.
+/// \{
+# define mln_edge_iter(G)	  typename G::edge_iter
+# define mln_edge_iter_(G)		   G::edge_iter
+# define mln_edge_fwd_iter(G)     typename G::edge_fwd_iter
+# define mln_edge_fwd_iter_(G)             G::edge_fwd_iter
+# define mln_edge_bkd_iter(G)     typename G::edge_bkd_iter
+# define mln_edge_bkd_iter_(G)             G::edge_bkd_iter
+/// \}
+
+/// Shortcuts to access the vertex centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_vertex_nbh_vertex_iter(G)	       typename G::vertex_nbh_vertex_iter
+# define mln_vertex_nbh_vertex_iter_(G)			G::vertex_nbh_vertex_iter
+# define mln_vertex_nbh_vertex_fwd_iter(G)     typename G::vertex_nbh_vertex_fwd_iter
+# define mln_vertex_nbh_vertex_fwd_iter_(G)             G::vertex_nbh_vertex_fwd_iter
+# define mln_vertex_nbh_vertex_bkd_iter(G)     typename G::vertex_nbh_vertex_bkd_iter
+# define mln_vertex_nbh_vertex_bkd_iter_(G)             G::vertex_nbh_vertex_bkd_iter
+/// \}
+
+/// Shortcuts to access the vertex centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_vertex_nbh_edge_iter(G)	     typename G::vertex_nbh_edge_iter
+# define mln_vertex_nbh_edge_iter_(G)	              G::vertex_nbh_edge_iter
+# define mln_vertex_nbh_edge_fwd_iter(G)     typename G::vertex_nbh_edge_fwd_iter
+# define mln_vertex_nbh_edge_fwd_iter_(G)             G::vertex_nbh_edge_fwd_iter
+# define mln_vertex_nbh_edge_bkd_iter(G)     typename G::vertex_nbh_edge_bkd_iter
+# define mln_vertex_nbh_edge_bkd_iter_(G)             G::vertex_nbh_edge_bkd_iter
+/// \}
+
+/// Shortcuts to access the edge centered edge neighbors iterator type
+/// associated to a graph G.
+/// \{
+# define mln_edge_nbh_edge_iter(G)	 typename G::edge_nbh_edge_iter
+# define mln_edge_nbh_edge_iter_(G)		  G::edge_nbh_edge_iter
+# define mln_edge_nbh_edge_fwd_iter(G)   typename G::edge_nbh_edge_fwd_iter
+# define mln_edge_nbh_edge_fwd_iter_(G)           G::edge_nbh_edge_fwd_iter
+# define mln_edge_nbh_edge_bkd_iter(G)   typename G::edge_nbh_edge_bkd_iter
+# define mln_edge_nbh_edge_bkd_iter_(G)           G::edge_nbh_edge_bkd_iter
+/// \}
 
 #endif // ! MLN_CORE_MACROS_HH
+

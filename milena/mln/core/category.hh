@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,6 +32,9 @@
  *
  * \brief Definition of the category holder type.
  */
+
+# include <mln/metal/equal.hh>
+
 
 
 namespace mln
@@ -69,6 +72,45 @@ namespace mln
   {
     typedef typename category<T>::ret ret;
   };
+
+
+
+  // Utility meta-function: from a category and a type, get the super category.
+
+  namespace internal
+  {
+
+    template < typename Category, typename T >
+    struct helper_super_category_;
+
+    template < template <class> class Category, typename T >
+    struct helper_super_category_< Category<void>, T >
+    {
+      typedef typename Category<void>::super ret; // One super category: keep it.
+    };
+
+    template < template <class> class Category, typename S, typename T >
+    struct helper_super_category_< Category<S>, T >
+      :
+      private metal::equal< typename Category<void>::super, void* >::check_t
+    {
+      // New case.
+      typedef S ret;
+    };
+
+    // For bwd in-compatibility.
+    template < template <class> class Category, typename T >
+    struct helper_super_category_< Category<void*>, T >; 
+
+
+    template < typename Category, typename T >
+    struct super_category_ // Entry.
+    {
+      typedef typename helper_super_category_< Category, T >::ret ret;
+    };
+
+  } // end of namespace mln::internal
+
 
 } // end of namespace mln
 

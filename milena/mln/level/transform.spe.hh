@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_LEVEL_TRANSFORM_SPE_HH
 # define MLN_LEVEL_TRANSFORM_SPE_HH
 
-/*! \file mln/level/transform.spe.hh
- *
- * \brief Specializations for mln::level::transform.
- *
- */
+/// \file mln/level/transform.spe.hh
+///
+/// Specializations for mln::level::transform.
 
 # ifndef MLN_LEVEL_TRANSFORM_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -40,6 +39,8 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
+
+# include <mln/level/fill_with_value.hh>
 
 # include <mln/value/set.hh>
 # include <mln/value/lut_vec.hh>
@@ -54,6 +55,24 @@ namespace mln
   namespace level
   {
 
+    // Forward declarations.
+
+    namespace internal
+    {
+
+      template <typename I, typename F>
+      void transform_tests(const Image<I>& input,
+                           const Function_v2v<F>& f);
+
+      template <typename I1, typename I2, typename F>
+      void transform_tests(const Image<I1>& input1, const Image<I2>& input2,
+                           const Function_vv2v<F>& f);
+
+    }
+
+
+    // Implementations.
+
 
     namespace impl
     {
@@ -61,61 +80,368 @@ namespace mln
 
       namespace generic
       {
-	template <typename I, typename F, typename O>
-	void transform_(const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_);
+	// Forward declaration.
+
+	template <typename I, typename F>
+        mln_ch_value(I, mln_result(F))
+	  transform(const Image<I>& input_, const Function_v2v<F>& f_);
+
+        template <typename I1, typename I2, typename F>
+        mln_ch_value(I1, mln_result(F))
+          transform(const Image<I1>& input1,
+                    const Image<I2>& input2,
+                    const Function_vv2v<F>& f);
+
       }
 
-      template <typename I, typename F, typename O>
-      inline
-      void transform_(mln::trait::image::quant::any, // general case
-		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
-      {
-	generic::transform_(input_, f_, output_);
-      }
 
-
-      template <typename I, typename F, typename O>
-      inline
-      void transform_(mln::trait::image::quant::low, // low quantization
-		      const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_lowq(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-	trace::entering("level::impl::transform");
+	trace::entering("level::impl::transform_lowq");
+
+        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+               trait::image::pw_io::read_write)::check();
 
 	const I& input  = exact(input_);
 	const F& f      = exact(f_);
-	      O& output = exact(output_);
+        level::internal::transform_tests(input, f);
 
-	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values(), f);
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.values_eligible(), f);
+
 	mln_piter(I) p(input.domain());
 	for_all(p)
 	  output(p) = lut(input(p));
 
-	trace::exiting("level::impl::transform");
+	trace::exiting("level::impl::transform_lowq");
+        return output;
       }
 
 
-      // FIXME: Handle the cases of fastest images.
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_taken(const Image<I>& input_, const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_taken");
 
-//       template <typename I, typename F, typename O>
-//       void transform(metal::true_, // low quantization
-// 		     const Image<I>& input_, const Function_v2v<F>& f_, Image<O>& output_)
-//       {
-// 	const I& input  = exact(input_);
-// 	const F& f      = exact(f_);
-// 	      O& output = exact(output_);
+        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+               trait::image::pw_io::read_write)::check();
 
-// 	value::lut_vec<mln_vset(I), mln_result(F)> lut(input.values(), f);
-// 	mln_pixter(const I) pi(input); // FIXME
-// 	mln_pixter(O) po(output);
-// 	po.start();
-// 	for_all(pi)
-// 	  {
-// 	    po.val() = lut(pi.val());
-// 	    po.next();
-// 	  }
-//       }
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.taken_values(), f);
+
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  output(p) = lut(input(p));
+
+	trace::exiting("level::impl::transform_taken");
+        return output;
+      }
+
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_singleton(const Image<I>& input_, const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_singleton");
+
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
+
+        mln_result(F) val = f(input.val());
+        fill_with_value(output, val);
+
+	trace::exiting("level::impl::transform_singleton");
+        return output;
+      }
+
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_fast(const Image<I>& input_, const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_fast");
+
+
+        const I& input = exact(input_);
+        const F& f     = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        typedef mln_ch_value(I, mln_result(F)) O;
+        O output;
+        initialize(output, input);
+
+        mln_pixter(const I) pi(input);
+        mln_pixter(O) po(output);
+        po.start();
+        for_all(pi)
+        {
+          po.val() = f(pi.val());
+          po.next();
+        }
+
+	trace::exiting("level::impl::transform_fast");
+        return output;
+      }
+
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_fast_lowq(const Image<I>& input_, const Function_v2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_fast_lowq");
+
+        const I& input = exact(input_);
+	const F& f     = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        typedef mln_ch_value(I, mln_result(F)) O;
+        O output;
+        initialize(output, input);
+
+        value::lut_vec<mln_vset(I), mln_result(F)>
+          lut(input.values_eligible(), f);
+
+        mln_pixter(const I) pi(input);
+        mln_pixter(O) po(output);
+        for_all_2(pi, po)
+          po.val() = lut(pi.val());
+
+	trace::exiting("level::impl::transform_fast_lowq");
+        return output;
+      }
+
+
+      template <typename I1, typename I2, typename F>
+      mln_ch_value(I1, mln_result(F))
+	transform_fastest(const Image<I1>& input1_, const Image<I2>& input2_,
+			  const Function_vv2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_fastest");
+
+        const I1& input1 = exact(input1_);
+        const I2& input2 = exact(input2_);
+        const  F& f      = exact(f_);
+        level::internal::transform_tests(input1, input2, f);
+
+        typedef mln_ch_value(I1, mln_result(F)) O;
+        O output;
+        initialize(output, input1);
+        mln_pixter(O) po(output);
+
+        mln_pixter(const I1) pi1(input1);
+        mln_pixter(const I2) pi2(input2);
+        for_all_3(pi1, pi2, po)
+          po.val() = f(pi1.val(), pi2.val());
+
+	trace::exiting("level::impl::transform_fastest");
+        return output;
+      }
+
+
 
     } // end of namespace mln::level::impl
+
+
+
+    // Dispatch.
+
+    namespace internal
+    {
+
+      /// Deal with image not updated
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::undef,
+			   trait::image::quant::any,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::generic::transform(input, f);
+      }
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::vw_set::any,
+			   trait::image::quant::any,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::generic::transform(input, f);
+      }
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::vw_set::uni,
+			   trait::image::quant::any,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::transform_taken(input, f);
+      }
+
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::vw_set::any,
+			   trait::image::quant::low,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::transform_lowq(input, f);
+      }
+
+
+      /// FIXME check that is right
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::quant::any,
+			   trait::image::value_access::direct,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::transform_fast(input, f);
+      }
+
+      /// FIXME check that is right
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::quant::low,
+			   trait::image::value_access::direct,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::transform_fast_lowq(input, f);
+      }
+
+
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::quant::any,
+			   trait::image::value_access::any,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return transform_dispatch(mln_trait_image_vw_set(I)(),
+				  mln_trait_image_quant(I)(),
+				  input, f);
+      }
+
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::value_storage::any,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return transform_dispatch(mln_trait_image_vw_set(I)(),
+				  mln_trait_image_quant(I)(),
+				  input, f);
+      }
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::value_storage::singleton,
+			   const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return level::impl::transform_singleton(input, f);
+      }
+
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::value_storage::one_block,
+			   const Image<I>& input_, const Function_v2v<F>& f_)
+      {
+	const I& input  = exact(input_);
+
+	/// Check alignement property
+	if (mlc_is(mln_trait_image_value_alignement(I),
+		   trait::image::value_alignement::with_grid)::value)
+	  return transform_dispatch(mln_trait_image_quant(I)(),
+				    mln_trait_image_value_access(I)(),
+				    input, f_);
+	else
+	  return transform_dispatch(mln_trait_image_vw_set(I)(),
+				    mln_trait_image_quant(I)(),
+				    input, f_);
+      }
+
+
+
+      // Dispatch for transformation from a couple of images.
+
+      template <typename I1, typename I2, typename F>
+      mln_ch_value(I1, mln_result(F))
+	transform_dispatch_2(trait::image::value_alignement::any,
+                             trait::image::value_alignement::any,
+                             trait::image::speed::any,
+			     trait::image::speed::any,
+			     const Image<I1>& input1, const Image<I2>& input2,
+			     const Function_vv2v<F>& f)
+      {
+	return level::impl::generic::transform(input1, input2, f);
+      }
+
+      template <typename I1, typename I2, typename F>
+      mln_ch_value(I1, mln_result(F))
+	transform_dispatch_2(trait::image::value_alignement::with_grid,
+                             trait::image::value_alignement::with_grid,
+                             trait::image::speed::fastest,
+			     trait::image::speed::fastest,
+			     const Image<I1>& input1, const Image<I2>& input2,
+			     const Function_vv2v<F>& f)
+      {
+	return level::impl::transform_fastest(input1, input2, f);
+      }
+
+      // end of Dispatch for transformation from a couple of images.
+
+
+
+      // Dispatch entry points.
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(const Image<I>& input, const Function_v2v<F>& f)
+      {
+	return transform_dispatch(mln_trait_image_value_storage(I)(),
+				  input, f);
+      }
+
+      template <typename I1, typename I2, typename F>
+      mln_ch_value(I1, mln_result(F))
+	transform_dispatch(const Image<I1>& input1, const Image<I2>& input2,
+			   const Function_vv2v<F>& f)
+      {
+	return transform_dispatch_2(mln_trait_image_value_alignement(I1)(),
+                                    mln_trait_image_value_alignement(I2)(),
+                                    mln_trait_image_speed(I1)(),
+				    mln_trait_image_speed(I2)(),
+				    input1, input2, f);
+      }
+
+    } // end of namespace mln::level::internal
+
+
 
   } // end of namespace mln::level
 

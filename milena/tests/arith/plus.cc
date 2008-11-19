@@ -30,7 +30,7 @@
  * \brief Tests on mln::arith::plus.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/plus.hh>
 #include <mln/level/compare.hh>
@@ -52,7 +52,7 @@ int main()
     };
 
     ima += 2;
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
 
     mln_assertion (ima + 1 == ref);
   }
@@ -61,8 +61,8 @@ int main()
 
 
 
-// #include <mln/core/image2d.hh>
-// #include <mln/core/clone.hh>
+// #include <mln/core/image/image2d.hh>
+// #include <mln/core/routine/clone.hh>
 // #include <mln/value/int_u8.hh>
 
 // #include <mln/arith/plus.hh>

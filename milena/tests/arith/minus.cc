@@ -30,7 +30,7 @@
  * \brief Tests on mln::arith::minus.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/minus.hh>
 #include <mln/level/compare.hh>
@@ -51,7 +51,7 @@ int main()
       {6, 7, 8}
     };
 
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
 
     mln_assertion (ima - 1 == ref);
   }

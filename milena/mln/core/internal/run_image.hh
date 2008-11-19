@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,8 +34,8 @@
  */
 
 # include <mln/core/internal/image_primary.hh>
-# include <mln/core/p_runs.hh>
-# include <mln/core/runs_psite.hh>
+# include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_set_of.hh>
 
 namespace mln
 {
@@ -43,13 +43,13 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal Factorization class for run_image.
+    /*! Factorization class for run_image.
      * Parameter \c T is the type of the image value.
      * Parameter \c P is the type of the image point.
      * Parameter \c E is the Exact type of the image.
      */
     template <typename T, typename P, typename E>
-    class run_image_ : public internal::image_primary_< p_runs_<P>, E >
+    class run_image_ : public internal::image_primary< P, p_set_of< p_run<P> >, E >
     {
     protected:
       run_image_();
@@ -79,13 +79,13 @@ namespace mln
        *
        * \return The corresponding point.
        */
-      P point_at(const runs_psite<P>& ps) const;
+      P point_at(const mln_psite(p_set_of< p_run<P> >)& ps) const;
 
       /*! \brief Tell if the image has the given point site.
        *
        * \return True if the image has the point site, else false.
        */
-      bool has(const runs_psite<P>& ps) const;
+      bool has(const mln_psite(p_set_of< p_run<P> >)& ps) const;
     };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -101,8 +101,8 @@ namespace mln
     float
     run_image_<T, P, E>::compression() const
     {
-      return float(exact(this)->data_->size_mem()) /
-	float (sizeof(T) * exact(this)->data_->domain_.bbox().npoints());
+      return float(exact(this)->data_->memory_size()) /
+	float (sizeof(T) * exact(this)->data_->domain_.bbox().nsites());
     }
 
     template <typename T, typename P, typename E>
@@ -116,26 +116,26 @@ namespace mln
     template <typename T, typename P, typename E>
     inline
     P
-    run_image_<T, P, E>::point_at(const runs_psite<P>& ps) const
+    run_image_<T, P, E>::point_at(const mln_psite(p_set_of< p_run<P> >)& ps) const
     {
       const E* ima = exact(this);
-      mln_precondition(ps.p_of_run() < ima->data_->domain_.nruns());
-      mln_precondition(ps.p_in_run() < ima->data_->domain_[ps.p_of_run()].length());
-      return ima->data_->domain_[ps.p_of_run()][ps.p_in_run()];
+      mln_precondition(ps.index() < ima->data_->domain_.nsites());
+      mln_precondition(ps.p().index() < ima->data_->domain_[ps.index()].length());
+      return ima->data_->domain_[ps.index()][ps.p().index()];
     }
 
     template <typename T, typename P, typename E>
     inline
     bool
-    run_image_<T, P, E>::has(const runs_psite<P>& ps) const
+    run_image_<T, P, E>::has(const mln_psite(p_set_of< p_run<P> >)& ps) const
     {
       const E* ima = exact(this);
       if (!ima->has_data())
 	return false;
       else
-	return (ps.p_of_run() < ima->data_->domain_.nruns()
-		&& ps.p_in_run() < ima->data_->domain_[ps.p_of_run()].length()
-		&& ima->data_->domain_[ps.p_of_run()][ps.p_in_run()] == ps);
+	return (ps.index() < ima->data_->domain_.nsites()
+		&& ps.p().index() < ima->data_->domain_[ps.index()].length()
+		&& ima->data_->domain_[ps.index()][ps.p().index()] == ps);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

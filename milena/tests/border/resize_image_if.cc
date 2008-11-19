@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/resize_image_if.cc
- *
- * \brief Tests on mln::border::resize.
- */
+/// \file tests/border/resize_image_if.cc
+///
+/// Tests on mln::border::resize.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/border/get.hh>
@@ -70,8 +70,8 @@ int main()
 
   my_box2d f_b(b);
   image_if<I, my_box2d> imaif(ima, f_b);
-  mln_assertion( imaif.has  (point2d(2,2)) == false && 
-		 imaif.owns_(point2d(2,2)) == true );
+  mln_assertion( imaif.has(point2d(2,2)) == false && 
+		 ima.has(point2d(2,2)) == true );
 
 
   mln_assertion(border::get(imaif) == border);

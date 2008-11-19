@@ -57,7 +57,7 @@ accessible.
 
 *** boxes
 
-Boxes are defined on grids.  A n-d box is a pair (p_min, p_max).  A
+Boxes are defined on grids. A n-d box is a pair (p_min, p_max).  A
 n-d point is (coord_0, .., coord_(n-1)).  A DEFAULT ordering
 relationship is defined to be used with containers of points; it
 relies on the lexicographic ordering of the coordinates.  This default

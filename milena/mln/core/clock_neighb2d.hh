@@ -36,7 +36,7 @@
 
 # include <cmath>
 # include <mln/core/clock_neighb.hh>
-# include <mln/core/dpoint2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
@@ -104,10 +104,10 @@ namespace mln
       {
 	unsigned begin = 0;
 	std::vector<dpoint2d> v;
-	v.push_back(make::dpoint2d(0, 1));
-	v.push_back(make::dpoint2d(-1, 0));
-	v.push_back(make::dpoint2d(0, -1));
-	v.push_back(make::dpoint2d(1, 0));
+	v.push_back(dpoint2d(0, 1));
+	v.push_back(dpoint2d(-1, 0));
+	v.push_back(dpoint2d(0, -1));
+	v.push_back(dpoint2d(1, 0));
 
 	std::vector<dpoint2d>::const_iterator ite = v.begin ();
 	for (; (ite != v.end ()) && (dp != *ite); ++ite, ++begin)
@@ -133,14 +133,14 @@ namespace mln
 //       {
 	unsigned begin = 0;
 	std::vector<dpoint2d> v;
-	v.push_back(make::dpoint2d(0, 1));
-	v.push_back(make::dpoint2d(-1, 1));
-	v.push_back(make::dpoint2d(-1, 0));
-	v.push_back(make::dpoint2d(-1, -1));
-	v.push_back(make::dpoint2d(0, -1));
-	v.push_back(make::dpoint2d(1, -1));
-	v.push_back(make::dpoint2d(1, 0));
-	v.push_back(make::dpoint2d(1, 1));
+	v.push_back(dpoint2d(0, 1));
+	v.push_back(dpoint2d(-1, 1));
+	v.push_back(dpoint2d(-1, 0));
+	v.push_back(dpoint2d(-1, -1));
+	v.push_back(dpoint2d(0, -1));
+	v.push_back(dpoint2d(1, -1));
+	v.push_back(dpoint2d(1, 0));
+	v.push_back(dpoint2d(1, 1));
 
 	std::vector<dpoint2d>::const_iterator ite = v.begin ();
 	for (; (ite != v.end ()) && (dp != *ite); ++ite, ++begin)
@@ -162,10 +162,10 @@ namespace mln
 //     static clock_neighb2d it;
 //     if (flower)
 //       {
-// 	it.insert(make::dpoint2d(0, 1));
-// 	it.insert(make::dpoint2d(1,-1));
-// 	it.insert(make::dpoint2d(1, 0));
-// 	it.insert(make::dpoint2d(1, 1));
+// 	it.insert(dpoint2d(0, 1));
+// 	it.insert(dpoint2d(1,-1));
+// 	it.insert(dpoint2d(1, 0));
+// 	it.insert(dpoint2d(1, 1));
 // 	flower = false;
 //       }
 //     return it;
@@ -177,7 +177,7 @@ namespace mln
 //     static clock_neighb2d it;
 //     if (flower)
 //       {
-// 	it.insert(make::dpoint2d(0, 1));
+// 	it.insert(dpoint2d(0, 1));
 // 	flower = false;
 //       }
 //     return it;
@@ -189,7 +189,7 @@ namespace mln
 //     static clock_neighb2d it;
 //     if (flower)
 //       {
-// 	it.insert(make::dpoint2d(1, 0));
+// 	it.insert(dpoint2d(1, 0));
 // 	flower = false;
 //       }
 //     return it;

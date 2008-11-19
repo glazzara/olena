@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,14 +26,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/get.cc
- *
- * \brief Tests on mln::border::get.
- */
+/// \file tests/border/get.cc
+///
+/// Tests on mln::border::get.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/border/get.hh>
@@ -70,12 +70,12 @@ int main()
 
   sub_image<I, box2d> sub(ima, b);
   mln_assertion( sub.has  (point2d(2,2)) == false &&
-		 sub.owns_(point2d(2,2)) == false );
+		 sub.has(point2d(2,2)) == false );
   mln_assertion(border::get(sub) == 0);
 
   image_if<I, f_box2d_t> imaif(ima, f_b);
   mln_assertion( imaif.has  (point2d(2,2)) == false &&
-		 imaif.owns_(point2d(2,2)) == true );
+		 ima.has(point2d(2,2)) == true );
   mln_assertion(border::get(imaif) == 51);
 
   mln_assertion(border::get( (ima | b) | f_b ) == 0);

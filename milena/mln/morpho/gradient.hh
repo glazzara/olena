@@ -46,7 +46,7 @@ namespace mln
 
     /*! Morphological gradient.
      *
-     * This operator is d_B - e_B. 
+     * This operator is d_B - e_B.
      */
     template <typename I, typename W>
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win);
@@ -54,7 +54,7 @@ namespace mln
 
     /*! Morphological internal gradient.
      *
-     * This operator is Id - e_B. 
+     * This operator is Id - e_B.
      */
     template <typename I, typename W>
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win);
@@ -62,7 +62,7 @@ namespace mln
 
     /*! Morphological external gradient.
      *
-     * This operator is d_B - Id. 
+     * This operator is d_B - Id.
      */
     template <typename I, typename W>
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win);

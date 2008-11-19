@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +26,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/stretch_full.cc
- *
- * \brief Tests on mln::level::stretch.
- */
+/// \file tests/level/stretch_full.cc
+///
+/// Tests on mln::level::stretch.
+///
+/// \todo Make it pass.
 
-
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/int_u16.hh>
-
 #include <mln/value/int_s8.hh>
+#include <mln/value/int_u16.hh>
 #include <mln/value/int_s16.hh>
 
-
 #include <mln/debug/iota.hh>
-
 #include <mln/level/saturate.hh>
 #include <mln/level/stretch.hh>
 
@@ -55,16 +53,9 @@ namespace mln
   void
   chck(Image<I>& input_, Image<J>& output_)
   {
-    typedef mln_value(I) T;
-    typedef mln_value(J) V;
-    unsigned max_i = mln_max (T);
-    unsigned max_j = mln_max (V);
-    I& input = exact(input_);
+    I& input  = exact(input_);
     J& output = exact(output_);
-
-    level::stretch(input, output);
-
-    // FIXME: How to test that?
+    output = level::stretch(mln_value(J)(), input);
   }
 
   template <typename I, typename J>
@@ -72,9 +63,9 @@ namespace mln
   chk1d(unsigned cols)
   {
     {
-      image1d<I> input (cols);
+      image1d<I> input(cols);
       debug::iota(input);
-      image1d<J> output (cols);
+      image1d<J> output(cols);
       chck(input, output);
     }
 
@@ -86,9 +77,9 @@ namespace mln
   {
 
     {
-      image2d<I> input (rows, cols);
+      image2d<I> input(rows, cols);
       debug::iota(input);
-      image2d<J> output (rows, cols);
+      image2d<J> output(rows, cols);
       chck(input, output);
     }
 
@@ -100,9 +91,9 @@ namespace mln
   {
 
     {
-      image3d<I> input (slis, rows, cols);
+      image3d<I> input(slis, rows, cols);
       debug::iota(input);
-      image3d<J> output (slis, rows, cols);
+      image3d<J> output(slis, rows, cols);
       chck(input, output);
     }
 

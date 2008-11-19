@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,8 +32,8 @@
  * \todo Make this test not dummy!
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/image2d.hh>
+
 #include <mln/debug/iota.hh>
 #include <mln/level/memcpy_.hh>
 
@@ -47,10 +47,11 @@ int main()
   debug::iota(ima);
 
   point2d
-    src  = make::point2d(0, 2),
-    dest = make::point2d(1, 2);
+    src  = point2d(0, 2),
+    dest = point2d(1, 2);
 
-  level::memcpy_(inplace(make::pixel(ima, dest)),
+  pixel<I> pix = make::pixel(ima, dest);
+  level::memcpy_(pix,
 		 make::pixel(ima, src),
  		 2 + 2 * ima.border());
 

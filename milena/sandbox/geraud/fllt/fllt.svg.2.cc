@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/core/image_if_value.hh>
 
 #include <mln/value/int_u8.hh>
@@ -61,7 +61,7 @@ namespace mln
     void update_gN(const N_t& N, G& gN)
     {
       for (unsigned g = 0; g < 256; ++g)
-	if (N[g].npoints() != 0)
+	if (N[g].nsites() != 0)
 	  {
 	    gN = g;
 	    return;
@@ -76,7 +76,7 @@ namespace mln
     {
       for (unsigned i = 0; i < 256; ++i)
 	{
-	  if (N[i].npoints() == 0)
+	  if (N[i].nsites() == 0)
 	    continue;
 	  std::cout << i << ": " << N[i] << std::endl;
 	}
@@ -157,7 +157,7 @@ namespace mln
       
       typedef p_array<mln_point(I)> arr_t;
       arr_t A, R;
-      R.reserve(input.npoints());
+      R.reserve(input.nsites());
       arr_t N[256];
 
       accu::bbox<mln_point(I)> R_box;
@@ -209,7 +209,7 @@ namespace mln
 
 
 	// R <- R U A
-	if (A.npoints() == 0)
+	if (A.nsites() == 0)
 	  goto the_end;
 
 	R.append(A);
@@ -218,7 +218,7 @@ namespace mln
 	  mln_invariant(is(a) == in_A);
 	  is(a) = in_R;
 	}
-	mln_invariant(R.npoints() == (is | in_R).npoints());
+	mln_invariant(R.nsites() == (is | in_R).nsites());
 	R_box.take(A.bbox());
 
 	// N <- N U { x in nbh of A and not in R }

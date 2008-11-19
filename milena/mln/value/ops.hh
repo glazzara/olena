@@ -157,6 +157,9 @@ namespace mln
     operator % (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs);
 
 
+  // Swap arguments so that "scalar_ OP Object" is "Object OP
+  // scalar_".  As a consequence, the user only has to define what
+  // happens with a scalar as a rhs.
 
   template <typename S, typename O>
   mln_trait_op_plus(O, value::scalar_<S>)

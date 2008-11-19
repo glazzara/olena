@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::abs.
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/level/abs.hh>
 
 int main()
@@ -51,7 +51,7 @@ int main()
 
   };
 
-  image2d<int> ima(make::image2d(vs));
+  image2d<int> ima(make::image(vs));
   image2d<int> out(ima.domain());
   level::abs(ima, out);
   box_fwd_piter_<point2d> p(ima.domain());

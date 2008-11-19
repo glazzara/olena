@@ -233,7 +233,7 @@ namespace mln
       graylevel_f& operator=(const mln::literal::white_t&);
       /// \}
 
-      /// Convertion to graylevel<n>.
+      /// Conversion to graylevel<n>.
       template <unsigned n>
 	operator graylevel<n>() const;
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_SEGMENT1D_HH
 # define MLN_WIN_SEGMENT1D_HH
 
-/*! \file mln/win/segment1d.hh
- *
- * \brief Definition of the mln::win::segment1d window.
- */
+/// \file mln/win/segment1d.hh
+///
+/// Definition of the mln::win::segment1d window.
 
 # include <mln/win/line.hh>
 # include <mln/core/grids.hh>
@@ -52,7 +52,7 @@ namespace mln
      *  o x o \n
      * is defined with length = 3.
      */
-    typedef line<grid::tick, 0, int> segment1d;
+    typedef line<grid::tick, 0, def::coord> segment1d;
 
   } // end of namespace mln::win
 

@@ -31,16 +31,16 @@
  */
 
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/draw/label.hh>
 #include <mln/literal/all.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/labeling/blobs.hh>
 #include <mln/display/save_and_show.hh>
 

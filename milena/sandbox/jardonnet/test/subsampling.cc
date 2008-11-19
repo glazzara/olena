@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -16,7 +16,7 @@ int main(int argc, char*)
   io::pgm::load(img, "../../../img/lena.pgm");
 
   std::cout << geom::nrows(img) << geom::ncols(img)  << std::endl;
-  image2d<int_u8> output = subsampling::subsampling(img, make::dpoint2d(1,1), argc);
+  image2d<int_u8> output = subsampling::subsampling(img, dpoint2d(1,1), argc);
   
   io::pgm::save(output, "sub.pgm");
 }

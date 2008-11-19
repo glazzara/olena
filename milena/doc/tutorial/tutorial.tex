@@ -1,0 +1,1910 @@
+\documentclass{report}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{html}
+\usepackage{tikz}
+\usepackage{pgf}
+
+\newcommand{\img}[4]{
+\begin{figure}[ht!]
+	\begin{center}
+      \includegraphics[width=#2]{figures/#1}
+     \caption{#4\label{fig:#1}}
+   \end{center}
+ \end{figure}
+}
+
+\title{Olena - Tutorial
+}
+\author{LRDE}
+\date{}
+
+\definecolor{ccomment}{rgb}{0.5,0,0}
+\definecolor{cstring}{rgb}{0,0.32,0.5}
+\definecolor{cidentifier}{rgb}{0,0.5,0}
+\definecolor{cbg}{rgb}{0.95,0.95,0.95}
+
+%%%LISTINGS SETTINGS
+%begin{latexonly}
+\lstset{frameround=fttt}
+\lstloadlanguages{C++}
+\lstset{language=C++}
+
+\lstset{backgroundcolor=\color{cbg},
+basicstyle=\bfseries\color{black},
+identifierstyle=\color{black},
+stringstyle=\color{cstring},
+commentstyle=\color{ccomment},
+showstringspaces=false,linewidth=14cm}
+%end{latexonly}
+
+% #1 : sub page name
+% #2 : sub page title
+\newcommand{\doxychapter}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash page #1 #2%
+\backslash htmlonly%
+}
+
+% #1 : section name
+% #2 : section title
+\newcommand{\doxysection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash section #1 #2%
+\backslash htmlonly%
+}
+\newcommand{\doxysubsection}[2]{%
+\label{#1}
+\backslash endhtmlonly%
+\backslash subsection #1 #2%
+\backslash htmlonly%
+}
+
+\newcommand{\doxycode}[1]{
+\backslash endhtmlonly%
+\backslash include #1.cc%
+\backslash htmlonly%
+}
+
+\newcommand{\doxyoutput}[1]{
+\backslash endhtmlonly%
+\backslash include #1.txt%
+\backslash htmlonly%
+}
+
+\newcommand{\doxyfigure}[2]{
+\backslash endhtmlonly%
+\backslash image html #1.png%
+\backslash htmlonly%
+}
+
+\newenvironment{doxymath}
+{
+%\backslash endhtmlonly%
+%\backslash f\$
+%\begin{rawtext}
+$$
+}
+{
+$$
+%\end{rawtext}
+%\backslash f\$
+%\backslash htmlonly%
+}
+
+%\begin{latexonly}
+\renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
+\renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
+\renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
+\renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1.cc}}
+\renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
+\renewcommand{\doxyfigure}[2]{%
+\pgfimage[width=#2]{figures/#1}%
+\label{#1}%
+}
+\renewenvironment{doxymath}
+{
+  $$
+}
+{
+  $$
+}
+
+%\end{latexonly}
+
+\newcommand{\code}[1]{%
+\textit{#1}%
+}
+\newcommand{\var}[1]{%
+\textit{$#1$}%
+}
+\newcommand{\type}[1]{%
+\textit{#1}%
+}
+\newcommand{\namespace}[1]{%
+\textit{#1}%
+}
+\newcommand{\header}[1]{%
+\textit{#1}%
+}
+\newcommand{\hpath}[1]{%
+\textit{#1}%
+}
+
+\newcommand{\must}{%
+\textbf{must}
+}
+\newcommand{\should}{%
+\textbf{should}
+}
+
+
+\usetikzlibrary{er}
+
+\newcommand{\neighcfour}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\neighceight}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[fill=orange!20,draw=orange] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+  %Top left
+  \draw (-0.25,0.25) node[entity,draw] {};
+  %Top right
+  \draw (0.26,0.25) node[entity,draw] {};%
+  %Bottom left
+  \draw (-0.25,-0.25) node[entity,draw] {};%
+  %Bottom Right
+  \draw (0.26,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\wincfour}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[entity,draw] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\newcommand{\winceight}{%
+\begin{latexonly}
+\begin{tikzpicture}%
+  \tikzstyle{every entity}=[draw=blue!50,fill=blue!20,thick]%
+  %center
+  \draw (0,0) node[entity,draw] {} ;
+  %left
+  \draw (-0.25,0) node[entity,draw] {};
+  %right
+  \draw (0.26,0) node[entity,draw] {};%
+  %top
+  \draw (0,0.25) node[entity,draw] {};%
+  %bottom
+  \draw (0,-0.25) node[entity,draw] {};%
+  %Top left
+  \draw (-0.25,0.25) node[entity,draw] {};
+  %Top right
+  \draw (0.26,0.25) node[entity,draw] {};%
+  %Bottom left
+  \draw (-0.25,-0.25) node[entity,draw] {};%
+  %Bottom Right
+  \draw (0.26,-0.25) node[entity,draw] {};%
+\end{tikzpicture}%
+\end{latexonly}
+}
+
+\begin{document}
+
+% Doxygen use only - Generate the left menu.
+\begin{htmlonly}
+\backslash endhtmlonly
+\backslash page tutorial Tutorial
+- \backslash subpage installation
+- \backslash subpage foreword
+- \backslash subpage site
+- \backslash subpage siteset
+- \backslash subpage image
+- \backslash subpage winneigh
+- \backslash subpage sitesandco
+- \backslash subpage iterators
+- \backslash subpage imamemmgmt
+- \backslash subpage basicops
+- \backslash subpage graphandima
+- \backslash subpage arithmops
+- \backslash subpage mathtools
+- \backslash subpage globalvars
+- \backslash subpage macros
+\backslash htmlonly
+\end{htmlonly}
+
+\begin{latexonly}
+\tableofcontents
+\end{latexonly}
+
+%====================================
+\doxychapter{installation}{Installation}
+
+%**************************
+\doxysection{requirements}{Requirements}
+
+%**************************
+\doxysection{getolena}{Getting Olena}
+
+%**************************
+\doxysection{buildingolena}{Building Olena}
+
+
+
+%====================================
+\doxychapter{foreword}{Foreword}
+
+%**************************
+\doxysection{generality}{Generality}
+The following tutorial explains the basic concepts behind Olena and how to use 
+the most common objects and routines.
+This tutorial includes many code examples and figures. In order to make this
+tutorial easier to understand, we will mainly talk about 2D images. This is
+not so restrictive since 1D, 3D, $n$D images behave the same way.
+
+
+Since examples are based on 2D images pixels are actually "points" however we
+will call them "sites" which is the most generic name.\newline
+
+Here is also a list of common variable name conventions:
+\begin{figure}[ht!]
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Object} & \textbf{Variable name} \\ \hline
+  Site & p                            \\ \hline
+  Value & v                           \\ \hline
+  Neighboor & n                       \\ \hline
+  A site close to another site p & q  \\ \hline
+  \end{tabular}
+\end{figure}
+
+Olena is organized in a namespace hierarchy.  Everything is declared by Olena
+within the 'oln::' namespace, and possibly a sub-namespace such as
+'\namespace{oln::arith::}' (arithmetic operations on images), '\namespace{oln::morpho::}' (morphological
+operations), etc. Usually, the namespace hierarchy is mapped to the mln
+directory tree. For the sake of simplicity, we will neglect the '\namespace{oln::}'
+prefix in all the code examples.
+
+Methods provided by objects in the library are in constant time. If you need
+a specific method but you cannot find it, you may find an algorithm which can
+compute the information you need.
+
+%**************************
+\doxysection{dirtree}{Directory hierarchy}
+Olena's tarball is structured as follow:
+
+\begin{itemize}
+  \item milena
+    \begin{itemize}
+%      \item apps :
+      \item doc
+	\begin{itemize}
+	  \item benchmark: set of benchmark.
+	  \item examples: more examples.
+	  \item oldies: partialy not updated documentation. Not recommended for new users.
+	  \item technical: technical doc.
+	  \item tutorial: code sample and tutorial.
+	\end{itemize}
+      \item img: a set of sample images. 
+      \item mesh: a full example which uses Olena.
+      \item mln: the library. Contains only headers.
+      \item tests: test suite.
+%      \item tools : 
+    \end{itemize}
+  \item swilena: Python bindings for Olena.
+\end{itemize}
+
+\doxysection{compilehint}{Writing and compiling a program with Olena}
+
+Before writing your first program, please be ware of these hints:
+
+\begin{itemize}
+  \item By default, Olena enables a lot of internal pre and post conditions.
+  Usually, this is a useful feature and it \should be enabled. It can heavily
+  slow down a program though and these tests can be disabled by compiling
+  using \code{-DNDEBUG}.
+  \begin{verbatim}
+g++ -DNDEBUG -Ipath/to/mln my_program.cc
+  \end{verbatim}
+
+  \item If you decide to use optimization flags to compile for debugging,
+  prefer using \code{-O1}. It is much faster to compile and it gives good
+  performance results.
+
+\end{itemize}
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{site}{Site}
+
+Usually, when talking about images, we think about common images composed of a
+set of pixels.
+Since Olena is generic, we want to support many kind of images, even images
+which are not composed of a set of pixels, such as images having images as sites.
+
+In order to express this genericity, we have the ``site'' concept.
+This concept allows us to divide a pixel into two information:
+\begin{itemize}
+  \item The pixel location, e.g. its coordinates (the site itself).
+  \item The value.
+\end{itemize}
+
+Let's say we have a 2D grid like this:
+
+//FIXME
+[dessin de grille 2d, colonnes/lignes numerotees + repere x/y]
+Intersection == point 2d == milieu d'un pixel \\
+
+%FIXME: Find a way to get that figure in HTML output.
+\begin{latexonly}
+\begin{tikzpicture}[scale=2]
+
+\draw[blue!20, thick] (-2, -2) grid [right=0.5cm,above=0.5cm,step=1cm] (3, 3);
+\draw[line width=1mm] (-1, -1) grid [step=1cm] (3, 3);
+\draw[black,line width=2mm,->] (0, -2) node {y} -- (0, 4);
+\draw[black,line width=2mm,->] (-2, 3) node {x} -- (4, 3);
+
+\foreach \x in {-0.5, 0.5, 1.5, 2.5}
+  \foreach \y in {-0.5, 0.5, 1.5, 2.5}
+    \node at (\x, \y) [fill=blue!30] {};
+
+\draw[black] (2.5, 1.5) -- (4, 2) node {Point2d(2, 2)};
+\end{tikzpicture}
+\end{latexonly}
+
+On such a regular grid, in 2D, we usually use a 2D point as a site which
+means we have the following equivalence:
+
+\begin{center}
+  Intersection $\equiv$ point2d (2D site) $\equiv$ center of a pixel
+\end{center}
+
+The site does not store any value but refer to an area where we will be able
+to read its value.
+
+Sites may have a different types, depending on the image type:
+
+\begin{tabular}{l|l}
+Name & Description \\
+\hline
+\type{point2d} & 2D point on a regular grid \\
+\type{point} & Generic point ($n-D$) on a regular grid \\
+\type{util::vec} & Algebraic vector \\
+\type{util::vertex} & Graph vertex \\
+\type{util::edge} & Graph edge \\
+\end{tabular}
+
+[Illustration : grille + intersection + pmin() + pmax() + distance entre 2
+points en x et en y = 1]\\
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{siteset}{Site set}
+
+Site sets are used:
+\begin{enumerate}
+  \item To define an image definition domain.
+  \item As Site container.
+\end{enumerate}
+
+They do not actually store any image value. They only store site information.
+
+Here is a list of all the site set concepts which can be found in
+core/site\_set:
+
+\begin{tabular}{|l|p{8cm}|}
+\hline
+Site set    & Description \\
+\hline
+
+p\_array    & site array. \\
+\hline
+p\_box	    & compact domain defined on a regular grid (in 2D, a rectangle). \\
+\hline
+p\_if	    & site set verifying a predicate. \\
+\hline
+p\_queue    & site queue. \\
+\hline
+p\_run	    & site range. \\
+\hline
+p\_runs	    & site range set. \\
+\hline
+p\_set	    & mathematical site set. \\
+\hline
+p\_vaccess  & site set ordered by value. \\
+\hline
+p\_edges    & set of graph edges associated to sites. \\
+\hline
+p\_vertices & set of graph vertices associated to sites.\\
+\hline
+\end{tabular}
+
+All site sets are iterable. More detailed explanations are available in section \ref{iterators}.
+
+%**************************
+\doxysection{sitesetinterface}{Basic interface}
+Common basic interface:\\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+bool & is\_valid & - & X & Returns true if it has been initialized. The
+default constructor does not initialize it. \\ \hline
+
+bool & has & const P\& p & X &  \\ \hline
+\end{tabular} \\
+
+
+%**************************
+\doxysection{sitesetopinterface}{Optional interface}
+Site sets may have other methods depending on their type: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+size\_t & nsites & - & - & Return the number of sites. \\ \hline
+const Box\& & bbox & - & X &  Bounding box. Available only on grid site sets.
+\\ \hline
+\end{tabular} \\
+
+The previous methods are available depending on the site set. A box
+will have the bbox() method since it can be retrived in constant time: a box
+is it's own bounding box.
+
+\doxycode{box2d-1}
+
+A \type{p\_array} does not have the bbox 
+method since its sites do not have to be adjacent. Maintaining such information, in
+order to keep getting the bbox in constant time, would be time and memory
+consuming. Instead of providing a method directly in \type{p\_array}, an algorithm is
+available if this information is needed.
+\type{p\_array} and \type{box} both have a nsites method since the internal structure allows a
+constant time retrieval.
+
+\doxycode{box2d-2}
+
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{image}{Image}
+
+
+%**************************
+\doxysection{definition}{Definition}
+An image is composed both of:
+\begin{itemize}
+\item A function
+\begin{doxymath}
+ima : \left\{
+  \begin{array}{lll}
+    Site &\rightarrow & Value \\
+    p & \mapsto & ima(p)
+  \end{array}
+\right.
+\end{doxymath}
+\item A site set, also called the "domain".
+\end{itemize}
+
+%**************************
+\doxysection{imatypes}{Possible image types}
+
+Here is a short list of the main/usual image types you may want to use with
+Olena: \\
+\bigskip
+
+\begin{tabular}{l|l}
+Name & Description \\
+\hline
+\type{image1d} & 1D image \\
+\type{image2d} & 2D image \\
+\type{image3d} & 3D image \\
+\type{flat\_image} & Constant value image \\
+\type{image\_if} & Image defined by a function \\
+FIXME & FIXME \\
+\end{tabular}
+
+%**************************
+\doxysection{imapossvalues}{Possible value types}
+
+Every image type \must take its type of value as parameter.
+The value type can be one of the builtins one:
+\begin{itemize}
+  \item \type{bool}
+  \item \type{char}
+  \item \type{unsigned}
+  \item \type{int}
+  \item \type{short}
+  \item \type{long}
+  \item \type{float}
+  \item \type{double}
+\end{itemize}
+
+Other data types are also available:
+
+\begin{tabular}{l|l}
+Value type & underlying data type \\ 
+\hline
+\type{float01\_8} & \type{unsigned long} \\
+\type{float01\_16} & \type{unsigned long} \\
+\type{float01\_f} & \type{float} \\
+\type{gl8} & \type{unsigned char} \\
+\type{gl16} & \type{unsigned short} \\
+\type{glf} & \type{float} \\
+\type{hsi\_d} & \type{double} \\
+\type{hsi\_f} & \type{float} \\
+\type{int\_s8} & \type{char} \\
+\type{int\_s16} & \type{short} \\
+\type{int\_s32} & \type{int} \\
+\type{int\_u8} & \type{unsigned char} \\
+\type{int\_u16} & \type{unsigned short} \\
+\type{int\_u32} & \type{unsigned int} \\
+\type{rgb16} & \type{mln::util::vec$<$unsigned short$>$} \\
+\type{rgb8} & \type{mln::util::vec$<$unsigned char$>$} \\
+\end{tabular} \\
+
+
+All these types are available in mln/value and accessible in the
+\namespace{mln::value} namespace.
+Most of the time, the name of the header which \must be included to use one of these data
+types is actually ``type\_name.hh". For instance, for \type{rgb8} the header will be
+\header{rgb8.hh}.
+
+
+
+%----------------
+\doxysubsection{imavalues}{About value, rvalue and lvalue}
+
+//FIXME: to be rewritten or removed.
+
+Since the values are of a specific type, it exists a set of all the possible
+site values. This set is called "destination" set. It may be iterable and
+printable if it is finite and not too huge.
+
+Image types provide a method to access values, namely "\code{operator() const}".
+Yet, its signature is NOT "\code{value operator()(const site\& p) const}"
+but "\code{rvalue operator()(const psite\& p) const}".
+
+For instance, with \type{I} being \type{image2d$<$int\_u8$>$}, we have :
+
+\begin{center}
+    \type{I::value} == i\type{nt\_u8}  but  \type{I::rvalue} ==\type{const
+      int\_u8\&}
+\end{center}
+
+So copying the value when the call "\code{f(p)}" returns is avoided.
+In that case, it is a low-level implementation issue that makes rvalue
+be different from value.  In some other cases, the difference can be
+more fundamental.  For instance, a proxy is returned so that some extra
+code is performed if this value is eventually read.
+
+Likewise, lvalue is also used as return type for methods such as
+"\code{operator()}".
+The difference is that lvalue allows the data to be modified.
+
+With \type{I} being \type{image2d$<$int\_u8$>$}, we have :
+
+\begin{center}
+    \type{I::value} == \type{int\_u8}  but  \type{I::lvalue} == \type{int\_u8\&}
+\end{center}
+
+%**************************
+\doxysection{imadomain}{Domain}
+The site set contains the sites which compose the image. Sites are based on a
+grid so the image depends on that grid as well. 
+It means that a 2D images can only be defined by sites based on a 2D grid.
+Likewise, an \type{image2d} will always have its bouding box defined by a \type{box2d}.
+
+Being defined on a grid means that the image can be defined anywhere.
+For instance, defining a 2D image with a \type{box2d} starting from point (-20, -20)
+  to (-3, 5) is completely valid.
+
+The following example shows that the definition domain and the site set are
+exactly equivalent.
+
+\doxycode{ima2d-1}
+Output:
+\doxyoutput{ima2d-1}
+
+
+To know if a site belongs to an image domain or not, a method ``\code{has()}'' is
+available.
+\doxycode{point-1}
+Output:
+\doxyoutput{point-1}
+
+Since the notion of site is independent from the image it applies on, we can
+form expressions where a site passed to several images:
+\doxycode{ima2d-4}
+
+
+%================================================
+\doxysection{imaborder}{Border and extension}
+Olena provides extension mechanisms for the
+image domain. In the library, both the concept of border and of extension can be encountered.
+These concepts are useful in many algorithms and can avoid costly tests while
+working with sites located on image edges.
+
+A border is a finite extension provided to a basic image type, such as
+\type{image2d}. By default, every image is created with a border. The default width is
+defined through the global variable \var{border::thickness} defined in
+\header{mln/border/thickness.hh}. Since this is a variable, it can be changed
+as shown in the following example.
+
+\doxycode{borderthickness}
+
+Output:
+
+\doxyoutput{borderthickness}
+
+It is important to note that to display the border in the ouput, we use a
+special debug function, \code{debug::println\_with\_border}. Indeed, the border and the
+extension are considered as part of an image only in the algorithms. They are
+ignored while saving or printing an image.
+
+Some operations can be performed on the border. The functions are located in
+\hpath{mln/border}.\\
+
+FIXME: More details about border manipulation! border:get(), \ldots
+
+%
+\bigskip
+%
+\begin{tabular}{l|p{8cm}}
+Routine & Description \\ 
+\hline
+adjust & Increase the border thickness if it is inferior to a minimum. \\
+duplicate & Assign the border with the duplicate of the edges of this image.\\
+equalize & Equalize the border of two images so that their size is equal and is
+at least a minimum size.\\
+fill & Fill the border with a given value.\\
+find & Find the border thickness of an image.\\
+get & Get the border thickness of an image.\\
+mirror & Fills border using nearer pixels with a mirroring effect.\\
+resize & Set image border to a specific size.\\
+\end{tabular} \\
+
+
+On morphed images, decribed in section \ref{imamorphed}, the border concept
+does not exist and is generalized to the extension concept.
+A simple example of a morphed image is a sub-image. A sub image does not have
+border nor extension by default.
+Thanks to \header{mln/core/routine/extend.hh}, an extension can be defined through a
+function. This means that the extension can be infinite.
+Another point is that an image can be used as extension. For instance, in the
+case of a sub-image, you may be interested in extending the sub-image with the
+image itself.
+
+[FIXME: schema - voir cahier]
+
+The extension supports the following operations. These functions are located in
+\hpath{mln/extension}.\\
+
+%
+\bigskip
+%
+\begin{tabular}{l|p{10cm}}
+Routine & Description \\ 
+\hline
+fill & Fill the extension with a given value.\\
+\end{tabular} \\
+
+%----------------
+\subsection*{IMPORTANT NOTE}
+Many times, you may want to check if a site is part of the image before applying
+a treatment. All images provide a method ``\code{has(Site)}'' which can return this
+information.
+\textbf{Be careful though, calling \code{has()} on the image returns ``true'' if
+  the given site is part of the domain OR the the extension/border}. All
+  algorithms in Olena call that method which means that all the algorithms take
+  in consideration the extension/border if it exists. The default border
+  thickness is set to 3 as shown by the following example.
+
+\doxycode{ima-has}
+
+Output:
+
+\doxyoutput{ima-has}
+
+Most of the time, this is the good behavior. For instance, if a rotation
+is applied to an image, sites which were not previously in the domain
+will be part of it. Thanks to the extension/border, these sites will be
+associated to the value of the extension/border.
+
+In the following example, the extension is set to a constant color \var{yellow}.
+It means that whatever the new sites computed through the rotation, it will be
+part of the image and a value will be available. Site which were previously in
+the extension/border, will be associated to \var{yellow} in the output image.
+
+\doxycode{ima2d-rot}
+
+Output:
+
+\bigskip
+
+\begin{tabular}{c c}
+\doxyfigure{ima2d-rot-1}{4cm} & \doxyfigure{ima2d-rot-2}{4cm} \\
+\multicolumn{2}{c}{\var{ima1} and its border before rotation (left) and \var{ima2}
+  and its border after rotation} \\
+\end{tabular}
+
+\bigskip
+
+[Image+bord rotation 20degres, avant, apres]
+
+
+Sometimes taking the domain in consideration  may not be the expected behavior.
+If you do not want to use the extension/border for a specific routine, simply
+restrict the image to its domain.
+
+
+\doxycode{extension-ignore}
+
+Note that:
+\begin{center}
+\code{ima.domain().has()} $\equiv$ \code{(ima | ima.domain()).has()}
+
+  and
+
+\code{border::get(ima.domain())} == \code{border::get(ima | ima.domain())} == 0
+\end{center}
+
+
+%================================================
+\doxysection{imamorphed}{Morphed images}
+//FIXME: Write it!
+// Pas concrete, light, how to concrete
+%
+
+
+%================================================
+\doxysection{imainterface}{Interface}
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+I::pvset & domain & - & X - &  \\ \hline
+const Value\& & operator() & const point\& p & X & Used for reading. \\ \hline
+Value\& & operator() & const point\& p & - & Used for writing. \\ \hline
+const P\& & at & unsigned x,
+         unsigned y & X & Used for reading. \\ \hline
+P\& & at & unsigned x,
+         unsigned y & - & Used for writing. \\ \hline
+bool & has & const Point\& p & X & \\ \hline
+bool & has\_data & - & X & Returns true if the domain is defined. \\ \hline
+site\_id & id & - & X & Return the Id of the underlying shared data. \\ \hline
+I::vset & destination & - & X & Value set of all the possible site values in this
+Image. \\ \hline
+site\_set & bbox & - & - & Returns the bounding box of the domain. \\ \hline
+site\_set & bbox\_large & - & - & Returns the bouding box of the domain and the
+extended domain. \\ \hline
+
+\end{tabular}
+
+
+%================================================
+\doxysection{imaio}{Load and save images}
+
+Currently, Olena supports the following input image formats:
+\begin{itemize}
+  \item PBM
+  \item PFM
+  \item PGM
+  \item PNM
+  \item PPM 
+\end{itemize}
+
+This support is provided through two headers for each type, \header{save.hh} and
+\header{load.hh}.
+They are located in \hpath{mln/io/$<$image-format$>$/}.
+
+Once the right header is included, the image can be loaded:
+
+\doxycode{ima-load}
+
+Note that for the PBM format, you \textbf{MUST} use ``\type{bool}'' as value type. 
+No special value type is required for other formats though.
+
+\doxycode{ima-save}
+%
+
+%================================================
+\doxysection{imacreate}{Create an image}
+
+Loading an image is not mandatory, an image can be created from scratch. There
+are two possibilites to do so:
+
+\doxycode{ima2d-2}
+
+Img1a has no data and its definition domain is still unset.  We do
+not know yet the number of sites it contains. However, it is really useful to
+have such an "empty image" because it is a placeholder for the result of some
+processing, or another image. Trying to access the site value from an empty
+image leads to an error at run-time.
+Img1b is defined on a domain but does not have data yet.\\
+
+Sometimes, you may want to initialize an image from another one:
+\doxycode{ima2d-7}
+\var{img2b} is declared without specifying a domain. Its border size is set to
+the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
+ with the same domain and border/extension as \var{img2a}. The data is not
+ copied though. Other routines like \code{level::fill} can be called in order to
+ do so (See also \ref{fillop}).
+
+
+%================================================
+\doxysection{imaaccessmodval}{Access and modify values}
+
+There are several ways to access/modify an image ``\var{ima}'':
+\begin{itemize}
+\item \code{ima.at(x, y, \dots)}
+\item \code{ima(Site)}
+\end{itemize}
+
+Most of the time, images can be modified and these two methods can be used both
+to read a value and modify it. Both methods are equivalent. 
+\doxycode{ima2d-3}
+Output:
+\doxyoutput{ima2d-3-output}
+
+Usually, you will want to use the functional way, ``\code{ima(Site)}'', more
+particularly while iterating over all the sites through an iterator. This use
+case will be detailed further in section \ref{iterators}.
+
+
+
+%================================================
+\doxysection{imasize}{Image size}
+Most typical image types owns special methods to retrieve the image size.
+
+\begin{tabular}{l|l}
+Image type & Methods \\
+\hline
+image1d & length()\\
+image2d & ncols(), nrows()\\
+image3d & ncols(), nrows(), nslis() \\
+\end{tabular}
+
+If you need a more generic way to get the size, you can use the routines
+provided in \hpath{mln/geom} in the following files:
+\begin{itemize}
+  \item \header{ncols.hh}
+  \item \header{nrows.hh}
+  \item \header{nslis.hh}
+\end{itemize}
+
+\doxycode{ima-size}
+Output:
+\doxyoutput{ima-size}
+
+
+%================================================
+\doxysection{imaconvvals}{Conversion of image values}
+
+parler de level::compute/level::apply.
+parler de i2v et v2v.
+Voir les vset => attendre que ca soit ameliore?
+
+%====================================
+\clearpage
+\newpage
+%Ugly workaround to avoid missing chapter references in doxygen.
+\begin{htmlonly}
+\doxychapter{1}{}
+\end{htmlonly}
+\doxychapter{winneigh}{Structural elements: Window and neighborhood}
+
+In Olena, there are both the window and neighborhood concept. A window can be
+defined on any sites around a central site which may also be included.
+A neighborhood is more restrictive and \must not include the central site.
+Therefore these two concepts are really similar and are detailed together in
+this section. 
+
+By default, structural elements are centered. The central site is located at the
+origin of the grid: ``\var{literal::origin}''. With \type{image2d}, the central site is
+(0,0). Centered structural elements \must have an odd size.
+
+
+
+\doxysection{sedef}{Define an element}
+
+\doxysubsection{winwin}{Window}
+
+\subsubsection*{Generic Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+win\_c4p & 4-connectivity &  \wincfour \\
+win\_c8p & 8-connectivity & \winceight \\
+\end{tabular}
+%
+\bigskip
+% 
+
+\subsubsection*{1D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+segment1d & 1D segment & - \\
+\end{tabular}
+%
+\bigskip
+%
+
+\subsubsection*{2D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+backdiag2d & Back diagonal & - \\
+diag2d & 2D diagonal & - \\
+disk2d & 2D disk & - \\
+hline2d & 2D horizontal line & - \\
+octagon2d & 2D octogon & - \\
+rectangle2d & 2D rectangle & - \\
+vline2d & 2D vertical line & - \\
+\end{tabular}
+%
+\bigskip
+%
+
+\subsubsection*{3D Predefined windows}
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+cube3d & 3D Cube & - \\
+cuboid3d & Cuboid & - \\
+\end{tabular}
+
+These predefined windows can be passed directly to a function. The headers are
+located in \header{mln/core/alias/window*.hh}.
+
+
+
+\doxysubsection{neighborhood}{Neighborhood}
+
+Predefined neighborhood:\\
+
+\begin{tabular}{l|l|l}
+Name & Description & Representation \\
+\hline
+c4 & 4-connectivity &  \neighcfour \\
+c8 & 8-connectivity & \neighceight \\
+\end{tabular}
+
+These predefined neighborhood can be passed directly to a function. The headers are
+located in \header{mln/core/alias/neigh*.hh}.
+
+Use case example:
+\doxycode{ima2d-decl-2-blobs}
+
+\doxysubsection{customse}{Custom structural elements}
+
+\subsubsection{Windows}
+
+There are several ways to define a new window.
+The first and the most common way is to declare a window variable and insert
+dpoints:
+\doxycode{win-create-1}
+This code creates the following window where ``X'' is the central point from
+which the window is computed:
+\doxycode{win-create-1-display}
+
+Another way to define the same window is to provide a bool array:
+\doxycode{win-create-2}
+
+\textbf{Note that despite the different ways of defining these windows,
+  ``var{win}'' == ``\var{win2}''}.
+The boolean array \must always have an odd size.
+While creating a windows thanks to a bool array/matrix, the window's center is the
+central site of the array/matrix.
+
+\textbf{This way of defining a window is very powerful since it enables the possibility
+of having non-square windows such as:}
+
+
+
+\subsubsection{Neighborhood}
+
+
+\doxysubsection{sitedepse}{Site dependent structural elements}
+
+\doxysubsection{convneighwin}{Conversion between Neighborhoods and Windows}
+
+Windows are not convertible to a Neighborhood.
+Neighborhood are convertible to a window though.
+
+A neighborhood has a method ``\code{win()}'' which returns the definition window.
+Be ware that this window is not centered, thus does not include the central
+point.
+
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{sitesandco}{Sites, psites and dpoints}
+
+
+%**************************
+\doxysection{sitessite}{Need for site}
+
+As we have seen before, an image is defined on a grid. It has associated
+data and a site set which defines the domain of the image on that grid.
+Usually, we need to access a value by its coordinates. With default images it
+can be done easily, at no cost.
+
+Example with an \type{image2d}:
+\doxycode{ima2d-display-1}
+
+The site \var{x} is the point (0, 1).  The image values are stored in a
+multi-dimensional array. The point coordinates can be used directly. The site
+(0, 1) \textbf{is} the point (0, 1) and the data is stored at row 0 and column
+1.
+
+Here we have:
+
+  \type{I::site} == \type{I::psite} == \type{point2d}
+
+where, roughly, \type{point2d} = \{ row, column \}.
+
+%**************************
+\doxysection{sitespsite}{Need for psite}
+
+Sometimes, accessing a value in constant-time complexity, O(1), is not
+possible with a site object.
+
+Let's have a small example. Define a function returning a value for a given
+point:
+\clearpage
+\doxycode{fun-p2v-1}
+
+So, for each point having (0, x) as coordinate, this function will return 8,
+otherwise it will be 9.
+
+Then, define a \type{p\_array} with few \type{point2d}:
+\doxycode{parray-append}
+
+Now, create a point-wise image from this function and this \type{p\_array}:
+\doxycode{mln_var-1}
+
+Ima is actually that image:
+\doxycode{ima2d-display-2}
+
+However, in memory, since it is based on a \type{p\_array}, sites are stored in a
+vector.
+
+The site x is the point (3, 7) which corresponds to the cell 1 in the
+\type{p\_array}.
+\doxycode{parray-display-1}
+
+Obviously, we cannot check in constant time whether the site \var{x},
+  \type{point2d} here,
+is part of that image or not: knowing the point coordinates is not enough.
+That's why we need a different mechanism in order to access this information:
+the psites.
+
+Here we have:
+
+  \type{I::site} $==$ \type{point2d}  but  \type{I::psite} $==$
+  \type{pseudo\_site$<$point2d$>$}
+
+where, roughly, \type{pseudo\_site$<$point2d$>$} $=$ \{ i\_in\_p\_array, p\_array\_ptr
+\}.
+
+Psites contains all the needed information to access the values in
+constant-time.
+
+%**************************
+\doxysection{sitespsitensite}{From psite to site}
+
+In the last example there was an image of type \type{I} such as \type{I::site}
+!= \type{I::psite}. 
+In that case, an object of type \type{I::psite} is actually convertible towards an
+object of type \type{I::site}.  Furthermore, a \type{psite} shall behave as if it was a
+\type{site}.
+
+Design note: it seems impossible to offer through the interface of
+some \type{psite} what is expected from its corresponding \type{site}.  For instance, when a
+site has a given feature, say a method "\code{m}", then this
+method has to appear in the \type{psite} interface. However, thanks to
+inheritance, we fetch an interface and an implementation that delegates
+to the site.
+
+For instance, in the last example, \type{I::psite} has a method \code{row(}) because
+\type{I::site}, \type{point2d}, provides such a method.
+
+How it works: a \type{psite} inherits from \type{internal::site\_impl$<$site$>$} which is
+specialized for every site type; for instance,
+	    \type{internal::site\_impl$<$point2d$>$}
+owns the method ``\code{coord row() const}'' which is defined as
+``\code{return exact(this)-$>$to\_site().row()}''.
+
+%**************************
+\doxysection{sitesdpoint}{Dpoint}
+Dpoints are relative sites. They are usually used in window and neighborhood
+definitions. Since the central site is not constant, windows and neighborhoods
+\must be recomputed and dpoints help in doing that.
+
+\doxycode{dpoint-1}
+Output:
+\doxyoutput{dpoint-1}
+
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{iterators}{Iterators}
+
+Each container object in Olena like site sets or images have iterators.
+The iteration mechanism for images is directly derived from the mechanism
+for site sets.
+
+There are usually three kinds:
+\begin{itemize}
+\item \textbf{fwd\_iter}, depends on the container,
+\item \textbf{bkd\_iter}, iterates like forward but to the opposite way,
+\item \textbf{iter}, usually the same as fwd\_iter. It is guaranteed to
+iterate all over the elements.
+\end{itemize}
+Every iterable object have these three kinds of iterator. There are all
+bidirectional containers.
+Whatever the iterator used, the basic iterator has the only property of
+browsing every site once.
+
+The iterator type name depends on the data pointed by it: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Data type & Iterator Names \\ \hline
+Site & fwd\_piter, bkd\_piter, piter \\ \hline
+Value & fwd\_viter, bkd\_viter, viter \\ \hline
+Neighboors & fwd\_niter, bkd\_niter, niter \\ \hline
+\end{tabular} \\
+
+As you may have noticed, according to the data type, the word ``iter'' is prefixed
+by the usual name variable used for that data type. Sites variables are usually
+called ``p'' so the proper iterator is ``type{piter}''. (See the foreword)\\
+
+
+An iterator has the following interface: \\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Return Type & Name & Arguments & Const & Comments \\ \hline
+
+void & start & - & - & \\ \hline
+void & next & - & - & \\ \hline
+bool & is\_valid & - & - & Return false if created with the default
+constructor and not associated to a proper container.\\ \hline
+\end{tabular} \\
+
+
+Example of different forward iterations:
+\begin{itemize}
+  \item box2d: from top to bottom then from left to right.
+  \item p\_array$<$point2d$>$: from left to right.
+\end{itemize}
+
+A \code{for\_all()} macro is available to iterate over all the sites: \\
+
+\doxycode{forall-piter-1}
+
+Note that when you declare an iterator, prefer using the ``\code{mln\_*iter}'' macros.
+They resolve the iterator type automatically from the given container type
+passed as parameter. These macros can be used with any container like images or
+site sets.
+
+Here follow an example with the implemantions of the most basic routines which
+use the \code{for\_all} loop: \code{level::fill()} and \code{level::paste()}.
+
+\doxycode{fill}
+
+\doxycode{paste}
+
+Important note: macros for iterators exist in two versions:
+``\code{mln\_*iter}'' and ``\code{mln\_*iter\_}''. The difference is that the
+first version \must be used in templated function whereas the second one \must be
+used in non templated functions. 
+
+If you want a list of all the macros available in Olena, please refert to
+section \ref{macros}.
+
+
+%================================================
+\clearpage
+\doxychapter{imamemmgmt}{Memory management}
+
+In the Olena library, all image types behave like image2d:
+\begin{itemize}
+\item An "empty" image is actually a mathematical variable.
+
+      $\rightarrow$ just think in a mathemetical way when dealing with images;
+
+\item No dynamic memory allocation/deallocation is required.
+    the user never has to use "new / delete" (the C++ equivalent for the C
+    "malloc / free") so she does not have to manipulate pointers or to directly
+    access memory.
+    
+    $\rightarrow$ Olena prevents the user from making mistakes;
+
+\item Image data/values can be shared between several variables and the memory
+    used for image data is handled by the library.
+    
+    $\rightarrow$ Memory management is automatic.
+\end{itemize}
+
+%----------------
+\subsection*{Exemple with image2d}
+
+Images do not actually store the data in the class. Images store a pointer
+to an allocated space which can be shared with other objects. Once an image is
+assigned to another one, the two images share the same data so they have the
+same ID and point to the same memory space.
+Therefore, assigning an image to another one is NOT a costly operation. The new
+variable behaves like some mathematical variable.  Put differently it is just a
+name to designate an image:
+\doxycode{ima2d-5}
+
+If a deep copy of the image is needed, a clone() routine is available:
+\doxycode{ima2d-6-clone}
+
+
+
+%====================================
+\clearpage
+\newpage
+\doxychapter{basicops}{Basic routines}
+//FIXME : illustrer
+
+\begin{tabular}{l|p{8cm}}
+\hline
+Routine name & Description \\ \hline
+level::clone() & creates a deep copy of an object. Any shared data is
+duplicated. \\ 
+
+level::fill() & fill an object with a value. \\ 
+
+level::paste() & paste object data to another object. \\ 
+
+labeling::blobs() & find and label the different components of an image. \\
+
+logical::not\_()
+logical::not\_inplace() & Point-wise "logical not" \\
+
+*::compute() & compute an accumulator on specific elements. \\
+\hline
+\end{tabular} \\
+
+%**************************
+\doxysection{fillop}{Fill}
+First, create an image:
+\doxycode{ima2d-decl-1}
+
+Memory has been allocated so data can be stored but site values
+have not been initialized yet.  So we fill \var{imga} with the value 'a':
+
+\doxycode{fill-call-1}
+
+The ``\code{fill}'' algorithm is located in the sub-namespace "\namespace{mln::level}" since this
+algorithm deals with the ``level'' of site values.
+
+Note that the term "level" refers to the fact that an image can be considered as
+a landscape where the elevation at a particular location/site is given by
+the corresponding site value.
+
+The full name of this routine is ``\namespace{mln::level::fill}''.
+To access to a particular algorithm, the proper file shall be included.
+The file names of algorithms strictly map their C++ name; so
+\namespace{mln::level::fill} is defined in the file \header{mln/level/fill.hh}.
+
+%----------------
+\subsection*{Note}
+Most algorithms in Olena are constructed following the classical scheme: "output
+algo(input)", where the input image is only read. However some few algorithms
+take an input image in order to modify it.  To enforce this particular feature,
+the user shall explicitly state that the image is provided so that its data is
+modified "read/write". The algorithm call shall be ``\code{level::fill(ima.rw(),
+val)}''. When forgetting the ``\code{rw()}'' call it does not compile.
+
+
+%**************************
+\doxysection{pasteop}{Paste}
+We then define below a second image to play with.  As you can see this image has
+data for the sites (5, 5) to (14, 14) (so it has 100 sites).  
+
+\doxycode{paste-call-1}
+Output:
+\doxyoutput{paste-call-1}
+
+Before pasting, the couple of images looked like:
+
+//FIXME : ajouter des zolies zimages.
+
+so after pasting we get:
+
+//FIXME : ajouter des zolies zimages again.
+
+%----------------
+\subsection*{Note}
+With this simple example we can see that images defined on different domains (or
+set of sites) can interoperate.  The set of sites of an image is defined and
+can be accessed and printed. The following code:
+
+\doxycode{domain-display-1}
+
+Gives:
+\doxycode{domain-display-out-1}
+
+The notion of site sets plays an important role in Olena. Many tests are
+performed at run-time to ensure that the program is correct.
+
+For instance, the algorithm level::paste tests that the set of sites of imgb
+(whose values are to be pasted) is a subset of the destination image.
+
+
+
+%====================================
+\doxysection{blobs}{Blobs}
+
+\code{Labeling::blobs()} is used to label an image. It returns a new image with the
+component id as value for each site. The background has 0 as id therefore the
+component ids start from 1.
+
+Consider the following image:
+\doxycode{ima2d-decl-2}
+
+Then label this image thanks to \code{labeling::blobs()}:
+\doxycode{ima2d-decl-2-blobs}
+Output:
+\doxyoutput{ima2d-decl-2-blobs-full}
+
+Note that this routine returns the number of components in its third parameter.
+This parameter \must be of the same type as the returned image value.
+
+
+%**************************
+\doxysection{logicalnot}{Logical not}
+\begin{center}
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Header} & mln/logical/not.hh \\
+
+  \textbf{Full namespace} & mln::logical \\
+
+  \textbf{Routine(s)} & not\_(), 
+			not\_inplace() \\
+  \hline
+  \end{tabular}
+\end{center}
+
+\bigskip
+
+This small routine only works on binary images. It performs a point-wise
+"logical not" and therefore "negates" the image. There are two versions of that
+algorithm a version which returns a new image and another which works in place.
+
+Sample code:
+\doxycode{logical-not}
+Output:
+\doxyoutput{logical-not}
+
+%**************************
+\doxysection{compute}{Compute}
+
+There are several flavour of the compute routine, depending on what the kind of
+elements it computes.
+
+\begin{tabular}{l|p{8cm}}
+\hline
+labeling::compute() & compute an accumulator for each component in a labeled
+image. \\
+
+level::compute() & compute an accumulator on the values of an image.  \\
+\end{tabular}
+
+\doxysubsection{accu}{Accumulators}
+An accumulator is a special object accumulating data while iterating all over
+the image values or sites. Hereby follows a list of accumulators available in
+Olena.
+
+%----------------
+\subsubsection*{Accumulators on sites}
+\begin{tabular}{l|p{8cm}}
+Name & Description \\
+\hline
+bbox & Bounding boxes\\
+count\_adjacent\_vertices & Count adjacent vertices\\
+count & Count the number of sites\\
+height & \\
+volume & \\
+\end{tabular}
+
+%----------------
+\subsubsection*{Accumulators on values}
+\begin{tabular}{l|p{8cm}}
+Name & Description \\
+\hline
+histo & Histogram \\
+max & Max value \\
+max\_h & Max value (Hexa)\\
+mean & Mean value\\
+median\_alt & Median\\
+median\_h & Median (Hexa)\\
+min & Min value\\
+min\_h & Min value (Hexa)\\
+min\_max & Min and Max value\\
+rank\_bool & \\
+rank & \\
+rank\_high\_quant & \\
+sum & Sum the values\\
+\end{tabular}
+
+%----------------
+\subsubsection*{Special accumulators}
+\begin{tabular}{l|p{8cm}}
+Name & Description \\
+\hline
+pair & Pair of accumulators\\
+tuple & $n$-uplets of accumulators\\
+\end{tabular}
+
+Each accumulator can be used in \code{*::compute()}.
+It exists two versions of each accumulator.
+\begin{itemize}
+  \item \namespace{mln::accu::*}, this version require the site or value type as parameter.
+  For instance, for the bbox accumulator, the type would be
+  \type{accu::bbox<mln\_psite(I)>}, where \type{I} is the type of the image on which it will be
+  computed.
+  \item \namespace{mln::accu::meta::*}, this is usually the easiest version to use. The type
+  of site or value do not need to be specified and will be deduced at compile
+  time. For the bbox accumulator, the accumulator type would be
+  \type{accu::meta::bbox}.
+\end{itemize}
+
+Note that when an accumulator is passed to \code{*::compute()}, it \must be instanciated.You cannot write:
+\doxycode{accu-wrong-instanciation}
+Instead, you \must write:
+\doxycode{accu-right-instanciation}
+
+\doxysubsection{exlblcompute}{Example with labeling::compute()}
+
+In this example we will try to retrieve the bounding box of each component in an
+image.
+
+Consider the following image:
+\doxycode{ima2d-decl-2}
+
+Then label this image thanks to \code{labeling::blobs()}:
+\doxycode{ima2d-decl-2-blobs}
+Output:
+\doxyoutput{ima2d-decl-2-blobs-full}
+
+Then, use \code{labeling::compute()} with the bbox accumulator:
+\doxycode{labeling-compute-call}
+
+\code{Labeling::compute()} hold an accumulator for each component, which means it
+returns an array of accumulator results.
+In this case, it returns an array of \type{box2d}. 
+
+\textbf{Important note:} since \code{labeling::blobs()} labels the component from 1 and
+set the background to 0, we will want to iterate from 1 to nlabels included.
+\doxycode{labeling-compute-result}
+Output:
+\doxyoutput{labeling-compute-full}
+
+
+\subsection{Routines based on accumulators and *::compute()}
+In order to make the code cleaner, small routines are available for the
+most used accumulators. 
+
+Currently there are the following routines:\\
+
+\begin{tabular}{l|p{8cm}}
+Name & Description \\
+\hline
+nsites & Return the number of sites of an image or a site set.\\
+mean & Return the mean of the values of an image.\\
+min\_max & Return the min and max values of the values of an image.\\
+sum & Return the sum of the values of an image.
+\end{tabular}
+
+These routines can be found in \hpath{mln/estim}.
+For example, with \code{estim::nsites()} simply write:
+\doxycode{estim-sites}
+
+%====================================
+\doxysection{partima}{Working with parts of an image}
+
+Sometime it may be interesting to work only on some parts of the image or to
+extract only a sub set of that image. Olena enables that thoughout out the
+operator '$|$'.
+
+Three kinds of that operator exist:\\
+
+\begin{tabular}{|l|l|l|l|p{4cm}|}
+\hline
+Prototype & Comments \\ \hline
+
+Image $|$ Sub Domain & Create a new image.\\ \hline
+Image $|$ Function\_p2b & Do not create a new image but create a morpher.\\
+\hline
+Function\_p2v $|$ Sub Domain & Do not create a new image but create a morpher.\\
+\hline
+\end{tabular} \\
+
+A Sub Domain can be a site set, an image or any value returned by this
+operator.
+For a given site, \type{Function\_p2v} returns a value and \type{Function\_p2b} returns a
+boolean. These functions. are actually a sort of predicate. A common
+\type{Function\_p2v} is \code{pw::value(Image)}. It returns the
+point to value function used in the given image. C functions can also be used as
+predicate by passing the function pointer.
+
+You can easily get a \type{Function\_p2b} by comparing the value returned 
+by a \type{Function\_p2v} to another Value.
+The following sample codes illustrate this feature.
+
+In order to use C functions as predicate, they \must have one of the following
+prototype if you work on 2D images:
+\doxycode{predicate-1}
+Of course, you just need to change the point type if you use another image
+type. For instance, you would use \type{point3d} with 3D images.
+The returned value type \type{V} for \type{Function\_p2v} depends on the image value type.
+With \type{image2d$<$int$>$}, \type{V} would be \type{int}.
+
+In this section, all along the examples, the image "\var{ima}" will refer to the
+following declaration:
+\doxycode{ima2d-decl-2}
+
+A simple example is to fill only a part of an image with a specific value:
+\doxycode{fill-part-1}
+
+The two next examples extract a specific component from an image and fill a new
+image with red only in the extracted component's domain.
+\doxycode{fill-part-2}
+
+The previous example can be written more quickly:
+\doxycode{fill-part-3}
+
+Here is an example using a C function:
+\doxycode{fun-p2b-1}
+
+\doxycode{ima2d-restricted-display-1}
+
+%
+\medskip
+%
+%
+%----------------
+\subsection*{Important note}
+When writing:
+
+\doxycode{ima2d-restricted-1}
+
+\var{sub\_D} \must be included in \code{ima.domain()}.
+
+Let's have an image, \var{imab}, like this:
+\doxyoutput{ima2d-display-output-1}
+
+Extract a sub image from \var{imab} with sites having their value set to 1.
+\doxycode{mln_var-2}
+Then, \var{imab1} looks like:
+\doxyoutput{ima2d-display-output-2}
+
+Now, if we want to extract a sub image it may fail, depending on the site set
+used:
+\doxycode{ima2d-restricted-2}
+
+If you do not want this constraint, you may want to use an alternative
+operator:
+\doxycode{ima2d-restricted-3}
+
+In that case there is no restriction on the domain at all and the following example will work.
+\doxycode{mln_var-3}
+
+With this operator, an intersection is applied on the image domain and the
+site set.
+
+
+
+%====================================
+\newpage
+\clearpage
+%Ugly workaround to avoid missing chapter references in doxygen.
+\begin{htmlonly}
+\doxychapter{2}{}
+\end{htmlonly}
+\doxychapter{graphandima}{Graphes and images}
+
+FIXME: REWRITE
+
+%**************************
+\doxysection{graphdesc}{Description}
+Olena enables the possibility of using graphes with images.
+Graphes can help you to handle directly parts of an image and represent their
+relationship.
+Specific data can be associated to each vertex and/or edges.
+
+//FIXME: Add more explanations?
+
+%**************************
+\doxysection{graphexample}{Example}
+
+First, create a graph which looks like the following:
+
+\doxyoutput{graph-output-1}
+
+First we need to add vertices:
+
+\doxycode{graph-add-vertex}
+
+Finally, populate the graph with edges:
+\doxycode{graph-add-edges}
+
+Now there is a graph topology and we want to associate elements of this graph
+to a site in the image.
+The idea is to use specific site sets such as \type{p\_vertices} and
+\type{p\_edges}.
+Let's associate the vertices with sites. To do so we need a function which maps
+a vertex id to a site, e.g. a \type{point2d} here.
+\doxycode{graph-i2v-vertex}
+
+Then declare a \type{p\_vertices}:
+\doxycode{graph-p-vertices}
+
+Thanks to the \type{p\_vertices} there is now a mapping between vertices and sites.
+We may like to map data to it. The idea is to provide a function which returns
+the associated data according to the site given as parameter. Combining this
+function and the \type{p\_vertices}, we get an image which can be used with
+algorithms and \code{for\_all} loops.
+
+\doxycode{graph-data}
+
+Note that like any image in Olena, graph images share their data. Therefore,
+while constructing a graph image from a graph and a function, the graph is not
+copied and this is NOT a costly operation.
+
+Of course, creating a graph image is not necessary and you can work directly
+with the graph and container/function mapping indexes and data.
+
+\doxycode{graph-iter}
+
+Graphs have iterators like any other site sets and also provide
+specific iterators in order to iterate over graphes in a more intuitive way.
+
+Iteration over the adjacent edges of all the vertices:
+\doxycode{graph-iter-vertex}
+
+Iteration over the adjacent edges of all the edges:
+\doxycode{graph-iter-edge-nbh-edge}
+
+Iteration over the adjacent vertices of all the vertices:
+\doxycode{graph-iter-vertex-nbh-vertex}
+
+//FIXME talk about p\_vertices and p\_edges.
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{arithmops}{Arithmetical operators}
+
+FIXME write it
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{mathtools}{Mathematical tools}
+
+FIXME write it
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{globalvars}{Useful global variables}
+
+\begin{tabular}{l|p{8cm}|l}
+\hline
+Name & Description & Possible values \\
+\hline
+literal::zero & Generic zero value. Can be used with various types such as
+util::vec, dpoint\dots & n.a.\\
+& & \\
+literal::one & Generic one value. Can be used with various types such as
+util::vec, dpoint\dots & n.a.\\
+& & \\
+literal::origin & Generic value for the origin point on a grid.& n.a.\\
+& & \\
+border::thickness & Set the default border thickness of images & $[0-UINT_MAX]$\\
+& & \\
+trace::quiet & Enable trace printing & true/false \\
+\end{tabular}
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{macros}{Useful macros}
+\renewcommand{\arraystretch}{2}
+
+\doxysection{vardeclmacros}{Variable declaration macros}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_VAR(N, V)	      & N : name of the variable. & \\
+		      & V : value to assign to N. & Declare a variable N of type N\_t and
+  assign the value V. \\
+
+mln\_const\_VAR(N, V) & N : name of the variable. & \\
+		      & V : value to assign to N. & Declare a const variable N of type N\_t
+  and assign the value V. \\
+\end{tabular}
+
+
+\doxysection{macrositerators}{Iterator type macros}
+
+\doxysubsection{macrosdefit}{Default iterator types}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_eiter(T)	  & T : iterable container type	      & Type of the element
+  iterator of T \\
+
+mln\_niter(T)	  & T : iterable container/Image type & Type of the neighborhood
+ iterator of T \\
+
+mln\_piter(T)	  & T : iterable container/image type & Type of the site
+  iterator \\
+
+mln\_qiter(T)	  & T : iterable container/image type & Type of the window
+  neighbors iterator of T \\
+
+mln\_viter(T)	  & T : iterable value container type & Type of the value
+  iterator of T \\
+
+mln\_pixter(I)	  & I : image			      & Type of the pixel
+  iterator of I \\
+
+mln\_qixter(I, W) & I : image type,		      & \\
+		  & W : window Type		      & Type of the pixel iterator of a
+  window on an image of type I. \\
+
+mln\_nixter(I, N) & I : image type,		      & \\
+		  & N : neighborhood type	      & Type of the pixel iterator of a
+  neighborhood on an image of type I. \\
+\end{tabular}
+
+
+
+\doxysubsection{macrosfwdit}{Forward iterator types}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_fwd\_eiter(T)	& T : iterable container type	    & Type of the
+  element forward iterator of T \\
+
+mln\_fwd\_niter(T)	& T : iterable container/Image type & Type of the
+  neighborhood forward iterator of T \\
+
+mln\_fwd\_piter(T)	& T : iterable container/image type & Type of the site
+  forward iterator \\
+
+mln\_fwd\_qiter(T)	& T : iterable container/image type & Type of the window
+  neighbors forward iterator of T \\
+
+mln\_fwd\_viter(T)	& T : iterable value container type & Type of the value
+  forward iterator of T \\
+
+mln\_fwd\_pixter(I)	& I : image			    & Type of the pixel
+  forward iterator of I \\
+
+mln\_fwd\_qixter(I, W)	& I : image type,		    & \\
+			& W : window Type		    & Type of the pixel
+  forward iterator of a window on an image of type I. \\
+
+mln\_fwd\_nixter(I, N)	& I : image type,		    & \\
+			& N : neighborhood type		    & Type of the pixel
+  forward iterator of a neighborhood on an image of type I. \\
+\end{tabular}
+
+
+\doxysubsection{macrosbkdit}{Backward iterators}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_bkd\_eiter(T)	& T : iterable container type	    & Type of the
+  element backward iterator of T \\
+
+mln\_bkd\_niter(T)	& T : iterable container/Image type & Type of the
+  neighborhood backward iterator of T \\
+
+mln\_bkd\_piter(T)	& T : iterable container/image type & Type of the site
+  backward iterator \\
+
+mln\_bkd\_qiter(T)	& T : iterable container/image type & Type of the window
+  neighbors backward iterator of T \\
+
+mln\_bkd\_viter(T)	& T : iterable value container type & Type of the value
+  backward iterator of T \\
+
+mln\_bkd\_pixter(I)	& I : image			    & Type of the pixel
+  backward iterator of I \\
+
+mln\_bkd\_qixter(I, W)	& I : image type,		    & \\
+			& W : window Type		    & Type of the pixel
+  backward iterator of a window on an image of type I. \\
+
+mln\_bkd\_nixter(I, N)	& I : image type,		    & \\
+			& N : neighborhood type		    & Type of the pixel
+  backward iterator of a neighborhood on an image of type I. \\
+\end{tabular}
+
+
+\doxysubsection{macrosbkdit}{Graph iterators}
+\begin{tabular}{l|p{4cm}|p{6cm}}
+Name & Arguments & Description \\
+\hline
+mln\_vertex\_iter(G)		  & G : graph type & Iterator on vertices. \\
+mln\_edge\_iter(G)		  & G : graph type & Iterator on edges. \\
+mln\_vertex\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacent to a vertex. \\
+mln\_vertex\_nbh\_vertex\_iter(G) & G : graph type & Iterator on the vertices adjacent to a vertex. \\
+mln\_edge\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacent to an edge. \\
+\end{tabular}
+
+\end{document}

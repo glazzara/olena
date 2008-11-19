@@ -43,22 +43,22 @@ namespace mln
   {
 
 
-    /*! \internal A base class for primary images.
+    /*! A base class for primary images.
      *
      */
-    template <typename S, typename E>
-    struct image_primary_ : public image_base_<S, E>
+    template <typename T, typename S, typename E>
+    struct image_primary : public image_base<T, S, E>
     {
     protected:
-      image_primary_();
+      image_primary();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_primary_<S,E>::image_primary_()
+    image_primary<T, S, E>::image_primary()
     {
     }
 

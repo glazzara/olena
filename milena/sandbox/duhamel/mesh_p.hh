@@ -3,7 +3,7 @@
 
 # include <mln/core/concept/point.hh>
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
 # include "mesh_psite.hh"
@@ -22,13 +22,13 @@ namespace mln
     /// Point_Site associated type.
     typedef mesh_psite<P> psite;
     
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef mesh_p_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef mesh_p_piter_<P> bkd_piter;
 
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -43,10 +43,10 @@ namespace mln
 
 
   template<typename P>
-  class mesh_p_piter_ : public internal::point_iterator_base_< P, mesh_p_piter_<P> >
+  class mesh_p_piter_ : public internal::site_iterator_base_< P, mesh_p_piter_<P> >
   {
     typedef mesh_p_piter_<P> self_;
-    typedef internal::point_iterator_base_< P, self_ > super_;
+    typedef internal::site_iterator_base_< P, self_ > super_;
 
   public:
     
@@ -128,7 +128,7 @@ namespace mln
 
   template<typename P>
   std::size_t
-  mesh_p<P>::npoints() const
+  mesh_p<P>::nsites() const
   {
     return this->gr_.nb_node_;
   }

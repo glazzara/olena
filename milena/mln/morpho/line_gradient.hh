@@ -31,14 +31,18 @@
 /// \file mln/morpho/line_gradient.hh
 /// \brief Conversions to mln::line_graph_image.
 
+# include <functional>
+
 # include <map>
 # include <vector>
 
 # include <mln/math/abs.hh>
 
-# include <mln/core/image2d.hh>
-# include <mln/core/window2d.hh>
-# include <mln/core/line_graph_image.hh>
+# include <mln/util/ord.hh>
+
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/core/image/line_graph_image.hh>
 
 // FIXME: Generalize to other (input) images as well (image1d,
 // image3d, etc.).
@@ -74,7 +78,7 @@ namespace mln
 	 exhibits the lack of a service from util::graph (or a another,
 	 missing tool) regarding the retrieval of vertices' ids from
 	 points.  */
-      std::map<mln::point2d, util::vertex_id> points;
+      std::map< mln::point2d, util::vertex_id, util::ord<point2d> > points;
 
       // Vertices.
       std::vector<value_t> vertex_values;
@@ -94,18 +98,15 @@ namespace mln
       mln_fwd_qiter_(window2d) q(next_c4_win, p); 
       for_all (p)
 	for_all (q)
-	if (ima.has(q))
+	if (ima.domain().has(q))
 	  {
-	    // Avoid a warning about an undefined variable when the
-	    // NDEBUG is not defined.
-#ifdef NDEBUG
-	    g.add_edge(points[p], points[q]);
-#else // !NDEBUG
 	    util::edge_id id = g.add_edge(points[p], points[q]);
-#endif //!NDEBUG
+	    // Avoid a warning about an undefined variable when NDEBUG
+	    // is not defined.
+	    (void) id;
 	    // The computed value is a norm of the gradient between P and Q.
 	    edge_values.push_back(math::abs(ima(p) - ima(q)));
-	    mln_assertion(id != mln_max(util::edge_id));
+	    mln_assertion(id != mln_max(util::edge_id::equiv));
 	  }
 
       // Line graph point set.

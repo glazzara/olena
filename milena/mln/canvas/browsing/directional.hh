@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 # define MLN_CANVAS_BROWSING_DIRECTIONAL_HH
 
-/*! \file mln/canvas/browsing/directional.hh
- *
- * \brief Directional browsing of an image.
- */
+/// \file mln/canvas/browsing/directional.hh
+///
+/// Directional browsing of an image.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
@@ -44,10 +44,9 @@ namespace mln
 
     namespace browsing
     {
-      
+
+      /// Browsing in a certain direction.
       /*!
-       * \brief Browsing in a certain direction.
-       *
        * This canvas browse all the point of an image 'input' of type
        * 'I' and of dimension 'dim' in the direction 'dir'.
        *
@@ -74,16 +73,33 @@ namespace mln
        *   void final(); \n
        * } \n
        *
+       * Example : \n
+       *
+       *   1 0 0
+       *  2 0 0
+       * 3 0 0
+       *
+       *   4 0 0
+       *  5 0 0
+       * 6 0 0
+       *
+       *   7 0 0
+       *  8 0 0
+       * 9 0 0
+       *
+       *
        */
       struct directional_t : public Browsing< directional_t >
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      directional;
+      extern const directional_t directional;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const directional_t directional;
 
       template <typename F>
       inline
@@ -94,22 +110,28 @@ namespace mln
 	mln_precondition(f.dir < f.dim);
 	typedef typename F::I I;
 
-	mln_point(I)
+	mln_psite(I)
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
-	
+
 	f.p = pmin;
-	
-	trace::entering("canvas::browsing::directional::init");
+
 	f.init();
-	trace::exiting("canvas::browsing::directional::init");
-	
+
 	do
 	{
-	  trace::entering("canvas::browsing::directional::next");
-	  f.next();
-	  trace::exiting("canvas::browsing::directional::next");
-	  
+
+	  // Browse the run
+	  f.init_run();
+	  while (f.p[f.dir] <= pmax[f.dir])
+	  {
+	    f.next();
+	    ++f.p[f.dir];
+	  }
+	  f.p[f.dir] = pmin[f.dir];
+
+
+	  // Select the next run start
 	  for (int c = F::dim - 1; c >= 0; --c)
 	  {
 	    if (c == int(f.dir))
@@ -121,11 +143,10 @@ namespace mln
 	    }
 	    f.p[c] = pmin[c];
 	  }
+
 	} while (f.p != pmin);
 
-	trace::entering("canvas::browsing::directional::final");
 	f.final();
-	trace::exiting("canvas::browsing::directional::final");
 	trace::exiting("canvas::browsing::directional");
       }
 

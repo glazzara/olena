@@ -33,19 +33,18 @@
  * \brief Draw a random color image from a label image.
  */
 
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 
-# include <mln/trait/image_from_mesh.hh>
-# include <mln/core/image_if_value.hh>
+# include <mln/trait/image_from_grid.hh>
+# include <mln/core/image/sub_image.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/metal/is_not.hh>
-# include <mln/core/image_if_value.hh>
 # include <mln/debug/println.hh>
 
 namespace mln
@@ -65,19 +64,19 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     label(Image<I>& input, const value::rgb8& background);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     label(Image<I>& input, const value::rgb8& background)
     {
       typedef mln_value(I) V;
       typedef mln_ch_value(I, value::rgb8) O;
-      typedef const mln::pset_if<mln_pset(I), mln::fun::eq_p2b_expr_<mln::pw::value_<I>, mln::pw::cst_<V> > > F;
+      typedef sub_image<I,V> F;
 
       I in = exact(input);
       mln_precondition(in.has_data());
@@ -102,11 +101,11 @@ namespace mln
 	    break;
 	  }
 	V val = ref(p);
- 	image_if_value<I> ima_if = ref | val;
+	F ima_if = ref | val;
 	mln_piter(F) l (ima_if.domain());
 	for_all (l)
 	  out(l) = color;
- 	level::fill(ima_if, 0);
+	level::fill(ima_if, 0);
       }
       return out;
     }

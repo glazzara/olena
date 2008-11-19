@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,7 @@
  * \brief Routines to construct an mln::box2d.
  */
 
-# include <mln/core/box2d.hh>
-# include <mln/make/point2d.hh>
+# include <mln/core/alias/box2d.hh>
 
 
 namespace mln
@@ -68,8 +67,8 @@ namespace mln
      *
      * \return A 2D box.
      */
-    mln::box2d box2d(int min_row, int min_col,
-		     int max_row, int max_col);
+    mln::box2d box2d(def::coord min_row, def::coord min_col,
+		     def::coord max_row, def::coord max_col);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -78,18 +77,19 @@ namespace mln
     mln::box2d box2d(unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0);
-      mln::box2d tmp(make::point2d(0, 0),
-		     make::point2d(nrows - 1, ncols - 1));
+      mln::box2d tmp(point2d(0, 0),
+		     point2d(def::coord(nrows - 1),
+			     def::coord(ncols - 1)));
       return tmp;
     }
 
     inline
-    mln::box2d box2d(int min_row, int min_col,
-		     int max_row, int max_col)
+    mln::box2d box2d(def::coord min_row, def::coord min_col,
+		     def::coord max_row, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_col >= min_col);
-      mln::box2d tmp(make::point2d(min_row, min_col),
-		     make::point2d(max_row, max_col));
+      mln::box2d tmp(point2d(min_row, min_col),
+		     point2d(max_row, max_col));
       return tmp;
     }
 

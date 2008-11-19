@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,12 @@
 #ifndef MLN_LOGICAL_NOT_HH
 # define MLN_LOGICAL_NOT_HH
 
-/*! \file mln/logical/not.hh
- *
- * \brief Point-wise "logical not" of a binary image.
- *
- * \todo Add static assertion and save one iterator in in-place version.
- */
+/// \file mln/logical/not.hh
+///
+/// Point-wise "logical not" of a binary image.
 
-# include <mln/core/concept/image.hh>
-
-
-// Specializations are in:
-# include <mln/logical/not.spe.hh>
+# include <mln/logical/includes.hh>
+# include <mln/fun/v2b/lnot.hh>
 
 
 namespace mln
@@ -73,45 +68,21 @@ namespace mln
     void not_inplace(Image<I>& input);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace impl
-    {
-
-      namespace generic
-      {
-	template <typename I, typename O>
-	inline
-	void not__(const I& input, O& output)
-	{
-	  trace::entering("logical::impl::generic::not__");
-
-	  mln_piter(I) p(input.domain());
-	  for_all(p)
-	    output(p) = ! input(p);
-
-	  trace::exiting("logical::impl::generic::not__");
-	}
-      }
-
-    } // end of namespace mln::logical::impl
-
-
-    // Facades.
 
     template <typename I>
     inline
     mln_concrete(I) not_(const Image<I>& input)
     {
-      trace::entering("logical::not");
+      trace::entering("logical::not_");
 
       mln_precondition(exact(input).has_data());
 
-      mln_concrete(I) output;
-      initialize(output, input);
-      impl::not__(mln_trait_image_speed(I)(), exact(input), output);
+      fun::v2b::lnot<mln_value(I)> f;
+      mln_concrete(I) output = level::transform(input, f);
 
-      trace::exiting("logical::not");
+      trace::exiting("logical::not_");
       return output;
     }
 
@@ -122,7 +93,9 @@ namespace mln
       trace::entering("logical::not_inplace");
 
       mln_precondition(exact(input).has_data());
-      impl::not__(mln_trait_image_speed(I)(), exact(input), exact(input));
+
+      fun::v2b::lnot<mln_value(I)> f;
+      level::transform_inplace(input, f);
 
       trace::exiting("logical::not_inplace");
     }

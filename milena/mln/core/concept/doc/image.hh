@@ -80,7 +80,7 @@ namespace mln
        * \return True if accessing the image value at \p p is
        * possible, that is, does not abort the execution.
        */
-      bool owns_(const psite& p) const;
+      bool has(const psite& p) const;
 
       /*! \brief Give the definition domain of the image.
        *
@@ -117,11 +117,11 @@ namespace mln
 
 
       /*! \brief Point set associated type.
-       * \invariant This type has to derive from mln::Point_Set.
+       * \invariant This type has to derive from mln::Site_Set.
        */
       typedef void pset;
 
-      /*! \brief Point associated type.
+      /*! \brief Site associated type.
        * \invariant This type has to derive from mln::Point.
        */
       typedef void point;
@@ -136,19 +136,19 @@ namespace mln
        */
       typedef void coord;
 
-      /*! \brief Dpoint associated type.
+      /*! \brief Dpsite associated type.
        * \invariant This type has to derive from mln::Dpoint.
        */
       typedef void dpoint;
 
 
       /*! \brief Forward point iterator associated type.
-       * \invariant This type has to derive from mln::Point_Iterator.
+       * \invariant This type has to derive from mln::Site_Iterator.
        */
       typedef void fwd_piter;
 
       /*! \brief Backward point iterator associated type.
-       * \invariant This type has to derive from mln::Point_Iterator.
+       * \invariant This type has to derive from mln::Site_Iterator.
        */
       typedef void bkd_piter;
 
@@ -159,7 +159,7 @@ namespace mln
        *
        * \return True if \p p belongs to the image domain.
        *
-       * \invariant has(p) is true => owns_(p) is also true.
+       * \invariant has(p) is true => has(p) is also true.
        */
       bool has(const psite& p) const;
 
@@ -172,11 +172,11 @@ namespace mln
        *
        * \return A bounding box of the image domain.
        */
-      const box_<point>& bbox() const;
+      const box<point>& bbox() const;
 
       /*! \brief Give the number of points of the image domain. 
        */
-      std::size_t npoints() const;
+      unsigned nsites() const;
     };
 
 

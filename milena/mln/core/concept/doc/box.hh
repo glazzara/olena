@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,6 +26,7 @@
 // Public License.
 
 /*! \file mln/core/concept/doc/box.hh
+ *
  * \brief This file documents the concept of mln::Box.
  */
 
@@ -39,7 +40,7 @@ namespace mln
      * \see mln::Box
      */
     template <typename E>
-    struct Box : public Point_Set<E>
+    struct Box : public Site_Set<E>
     {
       /*! \brief Give the box "minimum" point.
        *
@@ -47,7 +48,7 @@ namespace mln
        * For instance, with mln::box2d, this minimum is the top left
        * point of the box.
        */
-      const point& pmin() const;
+      const site& pmin() const;
 
       /*! \brief Give the box "maximum" point.
        *
@@ -55,12 +56,12 @@ namespace mln
        * For instance, with mln::box2d, this maximum is the bottom
        * right point of the box.
        */
-      const point& pmax() const;
+      const site& pmax() const;
 
       /*! \brief Return the bounding box of this point set.
        *
        * Return the bounding box of this point set, so that is itself.
-       * This method is declared by the mln::Point_Set concept.
+       * This method is declared by the mln::Site_Set concept.
        *
        * \warning This method is final for all box classes.
        */
@@ -69,11 +70,11 @@ namespace mln
       /*! \brief Return the number of points of this box.
        *
        * Return the number of points of this box.  This method is
-       * declared by the mln::Point_Set concept.
+       * declared by the mln::Site_Set concept.
        *
        * \warning This method is final for all box classes.
        */
-      std::size_t npoints() const;
+      unsigned nsites() const;
     };
 
   } // end of namespace mln::doc

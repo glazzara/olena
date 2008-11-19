@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,52 +30,39 @@
 
 /*! \file mln/core/internal/image_base.hh
  *
- * \brief Definition of a base class for some images.
+ * \brief Definition of the common base class for all images.
+ *
+ * \todo Provide coord iff the site is a grid point.
  */
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/grids.hh>
 # include <mln/core/trait/qlf_value.hh>
 # include <mln/core/internal/check/image_all.hh>
+# include <mln/core/internal/data.hh>
+# include <mln/core/internal/morpher_lvalue.hh>
 # include <mln/util/tracked_ptr.hh>
+# include <mln/value/set.hh>
+# include <mln/value/super_value.hh>
 
+//              image_base
+//                   ^
+//                   |
+//       ---------------------------
+//      |                           |
+// image_primary               image_morpher
+//                                  ^
+//                                  |
+//              -----------------------------------------
+//             |                    |                    |
+//     image_domain_morpher  image_value_morpher   image_identity
 
 
 namespace mln
 {
 
-
   namespace internal
   {
-
-    /// \internal Class of image internal data.
-    /// FIXME: Say more about it!
-
-    template <typename I>
-    struct data_;
-
-  } // end of namespace mln::internal
-
-
-
-  namespace internal
-  {
-
-    /*! \internal Return the lvalue type when an image with type \c I is
-     *  morphed.
-     *
-     */
-    template <typename I>
-    struct morpher_lvalue_
-    {
-      typedef mln_lvalue(I) ret;
-    };
-
-    template <typename I>
-    struct morpher_lvalue_< const I >
-    {
-      typedef mln_rvalue(I) ret;
-    };
 
 
     template <typename E>
@@ -87,54 +74,64 @@ namespace mln
     };
 
 
-    /*! \internal A base class for images.
-     *  Parameter \p S is a point set type.
-     *
-     */
-    template <typename S, typename E>
-    struct image_base_
+
+    /// A base class for images.
+    /// Parameter \p T is the image value type.
+    /// Parameter \p S is the image site set type.
+    template <typename T, typename S, typename E>
+    struct image_base
       :
       public image_checked_<E>
 
     {
-      /// Point_Set associated type.
+      /// Coordinate associated type.
+      typedef mln_deduce(S, site, coord) coord;
+
+      /// Value associated type.
+      typedef T value;
+
+      /// Eligible-value-set associated type.
+      typedef mln::value::set<T> t_eligible_values_set;
+
+      // Return the set of the image eligigle values
+      const t_eligible_values_set& values_eligible() const;
+
+      /// Value space associated type.
+      typedef mln::value::set<
+	typename mln::value::super_value<T>::ret > t_values_space;
+
+      /// Return the value space of the image.
+      const t_values_space& values_space() const;
+
+
+      /// Site_Set associated type.
       typedef S pset;
-
-
-      /// Mesh associated type.
-      typedef mln_mesh(S) mesh;
 
       /// Point_Site associated type.
       typedef mln_psite(S) psite;
 
-      /// Point associated type.
-      typedef mln_point(S) point;
-
-      /// Dpoint associated type.
-      typedef mln_dpoint(point) dpoint;
-
-      /// Coordinate associated type.
-      typedef mln_coord(point) coord;
+      /// Site associated type.
+      typedef mln_site(S) site;
 
 
-      /// Forward Point_Iterator associated type.
+      /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter(S) fwd_piter;
 
-      /// Backward Point_Iterator associated type.
+      /// Backward Site_Iterator associated type.
       typedef mln_bkd_piter(S) bkd_piter;
+
+
+      /// Site_Iterator associated type; default definition is
+      /// fwd_piter.
+      typedef fwd_piter        piter;
+
 
 
       /// Test if \p p belongs to the image domain.
       bool has(const psite& p) const;
 
-      // FIXME: Keep this default (owns_ is based on has)?
-      bool owns_(const psite& p) const;
-
-      /// Give a bounding box of the image domain.
-      const box_<point>& bbox() const;
-
-      /// Give the number of points of the image domain.
-      std::size_t npoints() const;
+      /// Give the number of sites of the image domain.
+      std::size_t nsites() const;
 
       /// Test if this image has been initialized; default impl.
       bool has_data() const;
@@ -142,49 +139,56 @@ namespace mln
       // FIXME: Add void init_data(..);
 
 
-      /// Assignment operator.
-      image_base_& operator=(const image_base_& rhs);
+      /// Assignment operator (performs a shallow assignment).
+      image_base& operator=(const image_base& rhs);
 
-      /// Copy constructor.
-      image_base_(const image_base_& rhs);
+      /// Copy constructor (performs a shallow copy).
+      image_base(const image_base& rhs);
+
+      /// Give an identifier of this image.  When several image
+      /// variables designate the same image, they share the same
+      /// identifier.
+      const void* id_() const;
+
 
       /// Detach data from an image (free it if nobody else hold it).
       void destroy();
 
-      const util::tracked_ptr< internal::data_<E> >& hook_data_() const { return data_; }
-
-      const void* id_() const { return data_.ptr_; }
+      /// Hook to the image data.
+      const util::tracked_ptr< internal::data<E> >& hook_data_() const;
 
     protected:
-      image_base_();
+
+      /// Constructor without argument.
+      image_base();
 
       // Internal data, sharable by several images.
-      util::tracked_ptr< internal::data_<E> > data_;
+      util::tracked_ptr< internal::data<E> > data_;
     };
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base_<S,E>::image_base_()
+    image_base<T, S, E>::image_base()
     {
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base_<S,E>::image_base_(const image_base_& rhs)
+    image_base<T, S, E>::image_base(const image_base& rhs)
       : image_checked_<E>()
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
-    image_base_<S,E>&
-    image_base_<S,E>::operator=(const image_base_<S,E>& rhs)
+    image_base<T, S, E>&
+    image_base<T, S, E>::operator=(const image_base<T, S, E>& rhs)
     {
       mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
       if (& rhs == this) // || ! exact(rhs).has_data())
@@ -193,56 +197,72 @@ namespace mln
       return *this;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
+    inline
+    const void*
+    image_base<T, S, E>::id_() const
+    {
+      return data_.ptr_;
+    }
+
+    template <typename T, typename S, typename E>
     inline
     bool
-    image_base_<S,E>::has_data() const
+    image_base<T, S, E>::has_data() const
     {
       return data_ != 0;
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
     bool
-    image_base_<S,E>::has(const psite& p) const
+    image_base<T, S, E>::has(const psite& p) const
     {
       mln_precondition(exact(this)->has_data());
       return exact(this)->domain().has(p);
     }
 
-    template <typename S, typename E>
-    inline
-    bool
-    image_base_<S,E>::owns_(const psite& p) const
-    {
-      mln_precondition(exact(this)->has_data());
-      return exact(this)->has(p);
-    }
-
-    template <typename S, typename E>
-    inline
-    const box_<mln_point(S)>&
-    image_base_<S,E>::bbox() const
-    {
-      mln_precondition(exact(this)->has_data());
-      return exact(this)->domain().bbox();
-    }
-
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
     inline
     std::size_t
-    image_base_<S,E>::npoints() const
+    image_base<T, S, E>::nsites() const
     {
+      mlc_equal(mln_trait_site_set_nsites(S),
+		mln::trait::site_set::nsites::known)::check();
       mln_precondition(exact(this)->has_data());
-      return exact(this)->domain().npoints();
+      return exact(this)->domain().nsites();
     }
 
-    template <typename S, typename E>
+    template <typename T, typename S, typename E>
+    inline
+    const typename image_base<T, S, E>::t_eligible_values_set&
+    image_base<T, S, E>::values_eligible() const
+    {
+      return t_eligible_values_set::the();
+    }
+
+    template <typename T, typename S, typename E>
+    inline
+    const typename image_base<T, S, E>::t_values_space&
+    image_base<T, S, E>::values_space() const
+    {
+      return t_values_space::the();
+    }
+
+    template <typename T, typename S, typename E>
     inline
     void
-    image_base_<S,E>::destroy()
+    image_base<T, S, E>::destroy()
     {
       data_.clean_();
+    }
+
+    template <typename T, typename S, typename E>
+    inline
+    const util::tracked_ptr< internal::data<E> >&
+    image_base<T, S, E>::hook_data_() const
+    {
+      return data_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

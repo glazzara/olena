@@ -1,0 +1,39 @@
+
+	-*- outline -*-
+
+* design
+
+          Object
+             ^ 
+             |
+           Proxy
+            + subject
+             ^ 
+             |
+        Site_Proxy< Site, Exact >
+         + site : type = Site
+         + op site   
+             ^       
+       ______|______  
+     |              |
+Pseudo_Site    Site_Iterator
+     ^              ^
+     |              |
+
+
+
+       internal::psite_impl< Site, Exact >
+         // to be specialized...
+                   ^
+    ______________/
+   /
+pseudo_site_base_< Site, Exact >
+
+
+
+            internal::piter_impl
+                    + op psite, iff psite != site
+                      ^
+  ___________________/
+ /
+

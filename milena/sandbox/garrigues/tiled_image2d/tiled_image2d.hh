@@ -35,9 +35,9 @@
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>
-# include <mln/core/box2d.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/init.hh>
+# include <mln/core/alias/box2d.hh>
+
+# include <mln/core/routine/init.hh>
 # include <mln/core/line_piter.hh>
 
 # include <mln/geom/size2d.hh>
@@ -122,7 +122,7 @@ namespace mln
    * FIXME
    */
   template <typename T>
-  struct tiled_image2d : public internal::image_primary_< box2d, tiled_image2d<T> >
+  struct tiled_image2d : public internal::image_primary< box2d, tiled_image2d<T> >
   {
     // Warning: just to make effective types appear in Doxygen:
     typedef box2d   pset;
@@ -178,7 +178,7 @@ namespace mln
 
 
     /// Test if \p p is valid.
-    bool owns_(const point2d& p) const;
+    bool has(const point2d& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
@@ -187,7 +187,7 @@ namespace mln
     const box2d& domain() const;
 
     /// Give the number of cells (points including border ones).
-    std::size_t ncells() const;
+    std::size_t nelements() const;
 
     /// Read-only access to the image value located at point \p p.
     const T& operator()(const point2d& p) const;
@@ -320,16 +320,16 @@ namespace mln
   template <typename T>
   inline
   std::size_t
-  tiled_image2d<T>::ncells() const
+  tiled_image2d<T>::nelements() const
   {
     mln_precondition(this->has_data());
-    return this->data_->b_.npoints();
+    return this->data_->b_.nsites();
   }
 
   template <typename T>
   inline
   bool
-  tiled_image2d<T>::owns_(const point2d& p) const
+  tiled_image2d<T>::has(const point2d& p) const
   {
     mln_precondition(this->has_data());
     return this->data_->b_.has(p);
@@ -340,7 +340,7 @@ namespace mln
   const T&
   tiled_image2d<T>::operator()(const point2d& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     unsigned page_n = layout::image_layout::page_at(*this, p);
     // note: although the page instance goes
     // out of scope, the reference stays valid
@@ -354,7 +354,7 @@ namespace mln
   T&
   tiled_image2d<T>::operator()(const point2d& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     unsigned page_n = layout::image_layout::page_at(*this, p);
     // note: although the page instance goes
     // out of scope, the reference stays valid

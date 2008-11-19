@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,9 +32,9 @@
 
 #include <iterator>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+
 
 #include <mln/level/fill.hh>
 #include <mln/level/compare.hh>
@@ -46,9 +46,9 @@ int main()
 {
   using namespace mln;
 
-  point2d b = make::point2d(0,0), e = make::point2d(6,9);
-  line2d l(b, e);
-  mln_assertion(l.npoints() == 10);
+  point2d b = point2d(0,0), e = point2d(6,9);
+  p_line2d l(b, e);
+  mln_assertion(l.nsites() == 10);
 
   image2d<bool> ima(10,10);
   level::fill(ima, false);
@@ -62,7 +62,7 @@ int main()
 
   image2d<bool> ima3(10,10);
   level::fill(ima3, false);
-  level::fill(inplace(ima3 | l), true);
+  level::fill((ima3 | l).rw(), true);
 
   mln_assertion(ima3 == ima);
 }

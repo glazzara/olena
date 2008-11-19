@@ -46,7 +46,7 @@ namespace mln
     /// with naive approach.
     namespace naive
     {
-      /// \internal Implementation namespace of level::naive namespace.
+      /// Implementation namespace of level::naive namespace.
       namespace impl {}
     }
 

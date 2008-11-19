@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_TAKE_HH
 # define MLN_ACCU_TAKE_HH
 
-/*! \file mln/accu/take.hh
- *
- * \brief Define an accumulator that takes image pixels.
- */
+/// \file mln/accu/take.hh
+///
+/// Define an accumulator that takes image pixels.
 
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
@@ -44,8 +44,8 @@ namespace mln
   namespace accu
   {
 
-    /*! \brief Make an accumulator take the pixels of the image \p input.
-     *
+    /// Make an accumulator take the pixels of the image \p input.
+    /*!
      * \param[in] input The input image.
      * \param[in,out] a The accumulator.
      *

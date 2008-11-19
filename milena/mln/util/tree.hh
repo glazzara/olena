@@ -269,7 +269,7 @@ namespace mln
        *
        *  \return The tree of the current branch.
        */
-      tree<T>& tree();
+      tree<T>& util_tree();
 
     private:
       /// The tree of this branch.
@@ -554,8 +554,8 @@ namespace mln
 
     template <typename T>
     inline
-    util::tree<T>&
-    branch<T>::tree()
+    mln::util::tree<T>&
+    branch<T>::util_tree()
     {
       return tree_;
     }

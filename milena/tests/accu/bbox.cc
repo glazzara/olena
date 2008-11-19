@@ -31,8 +31,8 @@
  */
 
 
-#include <mln/core/point2d.hh>
-#include <mln/core/box2d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
 
 #include <mln/accu/bbox.hh>
 
@@ -41,10 +41,10 @@ int main()
   using namespace mln;
   accu::bbox<point2d> accu;
 
-  accu.take_as_init(make::point2d(0,0));
-  accu.take(make::point2d(0,5));
-  accu.take(make::point2d(5,0));
-  accu.take(make::point2d(5,5));
+  accu.take_as_init(point2d(0,0));
+  accu.take(point2d(0,5));
+  accu.take(point2d(5,0));
+  accu.take(point2d(5,5));
 
   mln_assertion(accu.to_result() == make::box2d(0,0,5,5));
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/compute.cc
- *
- * \brief Tests on mln::accu::compute.
- */
+/// \file tests/accu/compute.cc
+///
+/// Tests on mln::accu::compute.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
+#include <mln/accu/count.hh>
 #include <mln/accu/compute.hh>
-#include <mln/level/compute.hh>
 
-#include <mln/accu/min.hh>
 
 int main()
 {
   using namespace mln;
   using typename value::int_u8;
 
-  // FIXME : make this test compile
-//   int_u8 vs[3][3] = { {9,8,7},
-// 		      {6,5,4},
-// 		      {3,2,1} };
-
-//   image2d<int_u8> ima = make::image2d(vs);
-//   int a = accu::compute<accu::min>(ima);
-
-//   std::cout << a << std::endl;
+  unsigned n = 3;
+  image2d<int_u8> ima(n, n);
+  unsigned c = accu::compute(accu::meta::count(), ima);
+  mln_assertion(c = n * n);
 }

@@ -1,4 +1,5 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,16 @@
 #ifndef MLN_ALGEBRA_VEC_HH
 # define MLN_ALGEBRA_VEC_HH
 
-/*!
- * \file  mln/algebra/vec.hh
- *
- * \brief Definition of a generic vector class.
- */
+/// \file  mln/algebra/vec.hh
+///
+/// Definition of a generic vector class.
 
 # include <iostream>
 # include <cmath>
 
 # include <mln/core/concept/object.hh>
 
+# include <mln/literal/zero.hh>
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
@@ -47,20 +47,23 @@
 # include <mln/value/ops.hh>
 
 
+
 // FIXME: Document.
 
 
 namespace mln
 {
 
-  // Fwd decls.
+  // Forward declarations.
   namespace algebra {
     template <unsigned n, typename T> class vec;
+    template <unsigned d, typename C> class h_vec;
   }
+
   namespace literal {
     struct zero_t;
   }
-  template <unsigned d, typename C> struct h_vec;
+
 
 
 
@@ -80,6 +83,12 @@ namespace mln
       typedef mln_value_quant_from_(card)     quant;
 
       typedef algebra::vec<n, mln_sum(T)> sum;
+    };
+
+    template <unsigned n, typename T>
+    struct set_precise_unary_< op::ord, mln::algebra::vec<n,T> >
+    {
+      typedef mln::internal::ord_vec< mln::algebra::vec<n,T> > ret;
     };
 
   } // end of namespace mln::trait
@@ -191,7 +200,7 @@ namespace mln
 
 
       // Immersion of the vector into its homogeneous space.
-      h_vec<n, T> to_h_vec() const;
+      algebra::h_vec<n, T> to_h_vec() const;
 
 
       const T& operator[](unsigned i) const;
@@ -203,7 +212,7 @@ namespace mln
       unsigned size() const;
 
       const vec<n, T>& normalize();
-   
+
       /// Constructor; coordinates are set by function \p f.
       template <typename F>
       vec(const Function_i2v<F>& f);
@@ -326,8 +335,15 @@ namespace mln
     vec<3, mln_trait_op_times(T,U)> // FIXME: Sum of product...
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
 
+  } // end of namespace mln::algebra
+
+
+
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace algebra
+  {
 
     template <unsigned n, typename T>
     inline
@@ -516,7 +532,7 @@ namespace mln
     vec<n, mln_trait_op_div(T, S)>
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
-      mln_precondition(value::equiv(s) != literal::zero);
+      mln_precondition(value::equiv(s) != (S)(literal::zero));
       vec<n, mln_trait_op_div(T, S)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] / s.to_equiv();
@@ -557,13 +573,15 @@ namespace mln
     {
       P tmp;
       for (unsigned i = 0; i < P::dim; ++i)
-        tmp[i] = typename P::coord(v[i]);//round(v[i]);
+        tmp[i] = round(v[i]);
       return tmp;
     }
-    
-# endif // MLN_INCLUDE_ONLY
+
 
   } // end of namespace mln::algebra
+
+
+# endif // MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

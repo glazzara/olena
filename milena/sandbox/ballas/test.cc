@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,30 +40,30 @@ int main(void)
   image1d<float> ima1d3(5);
   image1d<double> ima1d4(5);
 
-  level::fill(inplace(ima1d1), 5);
-  level::fill(inplace(ima1d2), 5);
-  level::fill(inplace(ima1d3), 5);
-  level::fill(inplace(ima1d4), 5);
+  level::fill(ima1d1, 5);
+  level::fill(ima1d2, 5);
+  level::fill(ima1d3, 5);
+  level::fill(ima1d4, 5);
 
   image2d<char> ima2d1(5, 5);
   image2d<int> ima2d2(5, 5);
   image2d<float> ima2d3(5, 5);
   image2d<double> ima2d4(5, 5);
 
-  level::fill(inplace(ima2d1), 5);
-  level::fill(inplace(ima2d2), 5);
-  level::fill(inplace(ima2d3), 5);
-  level::fill(inplace(ima2d4), 5);
+  level::fill(ima2d1, 5);
+  level::fill(ima2d2, 5);
+  level::fill(ima2d3, 5);
+  level::fill(ima2d4, 5);
 
   image3d<char> ima3d1(5, 5, 5);
   image3d<int> ima3d2(5, 5, 5);
   image3d<float> ima3d3(5, 5, 5);
   image3d<double> ima3d4(5, 5, 5);
 
-  level::fill(inplace(ima3d1), 5);
-  level::fill(inplace(ima3d2), 5);
-  level::fill(inplace(ima3d3), 5);
-  level::fill(inplace(ima3d4), 5);
+  level::fill(ima3d1, 5);
+  level::fill(ima3d2, 5);
+  level::fill(ima3d3, 5);
+  level::fill(ima3d4, 5);
 
   return 0;
 }

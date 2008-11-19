@@ -38,7 +38,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/bexpr.hh>
-# include <mln/core/h_mat.hh>
+# include <mln/algebra/h_mat.hh>
 
 
 namespace mln
@@ -56,103 +56,102 @@ namespace mln
 
       namespace internal
       {
-	/// \internal
-	template <typename F, typename G, typename E, bool is_bij>
-	struct helper_composed_;
+        template <typename F, typename G, typename E, bool is_bij>
+        struct helper_composed_;
 
 
-	/// \internal Helper for describing a bijective composition.
-	template <typename F, typename G, typename E>
-	struct helper_composed_< F, G, E, true>
-	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
-	    public Bijection_x2x<E>
-	{
-	  typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
+        /// Helper for describing a bijective composition.
+        template <typename F, typename G, typename E>
+        struct helper_composed_< F, G, E, true>
+          : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
+            public Bijection_x2x<E>
+        {
+          typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 
-	  using super_::dim;
+          using super_::dim;
 
-	  /// Constructor without argument.
-	  helper_composed_();
-	  /// Constructor with the two transformation to be composed.
-	  helper_composed_(const F& f, const G& g);
+          /// Constructor without argument.
+          helper_composed_();
+          /// Constructor with the two transformation to be composed.
+          helper_composed_(const F& f, const G& g);
 
-	  using super_::operator();
+          using super_::operator();
 
-	  /// Set the new first transformation.
-	  void set_first(const F& f);
-	  /// Set the new second transformation.
-	  void set_second(const G& g);
+          /// Set the new first transformation.
+          void set_first(const F& f);
+          /// Set the new second transformation.
+          void set_second(const G& g);
 
-	  /// Type of the inverse function.
-	  typedef composed<mln_invert(G),mln_invert(F)> invert;
-	  /// Return the inverse function.
-	  invert inv() const;
+          /// Type of the inverse function.
+          typedef composed<mln_invert(G),mln_invert(F)> invert;
+          /// Return the inverse function.
+          invert inv() const;
 
-	  protected:
+        protected:
 
-	  F f_;
-	  G g_;
-	};
+          F f_;
+          G g_;
+        };
 
-	/// \internal Helper for describing a non bijective composition.
-	template <typename F, typename G, typename E>
-	struct helper_composed_< F, G, E, false>
-	  : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
-	    public Function_x2x<E>
-	{
-	  typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
+        /// Helper for describing a non bijective composition.
+        template <typename F, typename G, typename E>
+        struct helper_composed_< F, G, E, false>
+          : public fun::internal::x2x_linear_impl_<mln_result(F), E >,
+            public Function_x2x<E>
+        {
+          typedef fun::internal::x2x_linear_impl_<typename F::result, E > super_;
 
-	  using super_::dim;
+          using super_::dim;
 
-	  /// Constructor without argument.
-	  helper_composed_();
-	  /// Constructor with the two transformation to be composed.
-	  helper_composed_(const F& f, const G& g);
+          /// Constructor without argument.
+          helper_composed_();
+          /// Constructor with the two transformation to be composed.
+          helper_composed_(const F& f, const G& g);
 
-	  using super_::operator();
+          using super_::operator();
 
-	  /// Set the new first transformation.
-	  void set_first(const F& f);
-	  /// Set the new second transformation.
-	  void set_second(const G& g);
+          /// Set the new first transformation.
+          void set_first(const F& f);
+          /// Set the new second transformation.
+          void set_second(const G& g);
 
-	  protected:
+        protected:
 
-	  F f_;
-	  G g_;
-	};
+          F f_;
+          G g_;
+        };
 
       } // end of namespace mln::fun::x2x::internal
 
-      /*! \brief Represent a composition of two transformations.
-       *
-       */
+
+        /*! \brief Represent a composition of two transformations.
+         *
+         */
       template <typename F, typename G>
       struct composed
-	: public internal::helper_composed_<F, G, composed<F,G>,
-					    mlc_is(F, Bijection_x2x<F>)::value &&
-					    mlc_is(G, Bijection_x2x<G>)::value>,
-
-
-          private metal::and_< metal::bool_<(F::dim == G::dim)>,
-			       metal::is<mln_argument(F), mln_result(G)>
-                             >::check_t
+        : public internal::helper_composed_<F, G, composed<F,G>,
+                                            mlc_is(F, Bijection_x2x<F>)::value &&
+                                            mlc_is(G, Bijection_x2x<G>)::value>,
+                                                                               private metal::and_< metal::bool_<(F::dim == G::dim)>,
+                                                                                                    metal::is<mln_argument(F), mln_result(G)>
+                                                                                                    >::check_t
       {
-	/// Constructor without argument.
-	composed() {}
+        /// Constructor without argument.
+        composed() {}
 
-	/// Constructor with the two transformation to be composed.
-	composed(const F& f, const G& g)
-	  : internal::helper_composed_<F, G, composed<F,G>,
-	  mlc_is(F, Bijection_x2x<F>)::value &&
-	  mlc_is(G, Bijection_x2x<G>)::value>(f, g)
-	  {
-	  }
-      };
+        /// Constructor with the two transformation to be composed.
+        composed(const F& f, const G& g)
+          : internal::helper_composed_<F, G, composed<F,G>,
+                                       mlc_is(F, Bijection_x2x<F>)::value &&
+                                       mlc_is(G, Bijection_x2x<G>)::value>(f, g)
+                                       {
+                                       }
+};
 
-    } // end of namespace mln::fun::x2x
+} // end of namespace mln::fun::x2x
 
   } // end of namespace mln::fun
+
 
   /*! \brief Do a composition of two transformations
    *
@@ -175,88 +174,82 @@ namespace mln
       namespace internal
       {
 
-	// \internal Implementation of the bijective version.
+        // Implementation of the bijective version.
 
-	template <typename F, typename G, typename E>
-	inline
-	helper_composed_<F,G,E,true>::helper_composed_()
-	{
-	}
+        template <typename F, typename G, typename E>
+        inline
+        helper_composed_<F,G,E,true>::helper_composed_()
+        {
+        }
 
-	template <typename F, typename G, typename E>
-	inline
-	helper_composed_<F,G,E,true>::helper_composed_(const F& f, const G& g)
-	  :f_(f),
-	   g_(g)
-	{
-	  this->m_ = f_.mat() * g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        helper_composed_<F,G,E,true>::helper_composed_(const F& f, const G& g)
+          :f_(f),
+           g_(g)
+        {
+          this->m_ = f_.mat() * g_.mat();
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	typename helper_composed_<F,G,E,true>::invert
-	helper_composed_<F,G,E,true>::inv() const
-	{
-	  return compose(g_.inv(), f_.inv());
-	}
+        template <typename F, typename G, typename E>
+        inline
+        typename helper_composed_<F,G,E,true>::invert
+        helper_composed_<F,G,E,true>::inv() const
+        {
+          return compose(g_.inv(), f_.inv());
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	void
-	helper_composed_<F,G,E,true>::set_first(const F& f)
-	{
-	  this->f_ = f;
-	  this->m_ = this->f_.mat() * this->g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        void
+        helper_composed_<F,G,E,true>::set_first(const F& f)
+        {
+          this->f_ = f;
+          this->m_ = this->f_.mat() * this->g_.mat();
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	void
-	helper_composed_<F,G,E,true>::set_second(const G& g)
-	{
-	  this->g_ = g;
-	  this->m_ = this->f_.mat() * this->g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        void
+        helper_composed_<F,G,E,true>::set_second(const G& g)
+        {
+          this->g_ = g;
+          this->m_ = this->f_.mat() * this->g_.mat();
+        }
 
-	// \internal Implementation of the non bijective version.
-	template <typename F, typename G, typename E>
-	inline
-	helper_composed_<F,G,E,false>::helper_composed_()
-	{
-	}
+        // Implementation of the non bijective version.
+        template <typename F, typename G, typename E>
+        inline
+        helper_composed_<F,G,E,false>::helper_composed_()
+        {
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	helper_composed_<F,G,E,false>::helper_composed_(const F& f, const G& g)
-	  :f_(f),
-	   g_(g)
-	{
-	  this->m_ = f_.mat() * g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        helper_composed_<F,G,E,false>::helper_composed_(const F& f, const G& g)
+          :f_(f),
+           g_(g)
+        {
+          this->m_ = f_.mat() * g_.mat();
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	void
-	helper_composed_<F,G,E,false>::set_first(const F& f)
-	{
-	  this->f_ = f;
-	  this->m_ = this->f_.mat() * this->g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        void
+        helper_composed_<F,G,E,false>::set_first(const F& f)
+        {
+          this->f_ = f;
+          this->m_ = this->f_.mat() * this->g_.mat();
+        }
 
-	/// \internal
-	template <typename F, typename G, typename E>
-	inline
-	void
-	helper_composed_<F,G,E,false>::set_second(const G& g)
-	{
-	  this->g_ = g;
-	  this->m_ = this->f_.mat() * this->g_.mat();
-	}
+        template <typename F, typename G, typename E>
+        inline
+        void
+        helper_composed_<F,G,E,false>::set_second(const G& g)
+        {
+          this->g_ = g;
+          this->m_ = this->f_.mat() * this->g_.mat();
+        }
 
       } // end of namespace mln::fun::x2x::internal
 

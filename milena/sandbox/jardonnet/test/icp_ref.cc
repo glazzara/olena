@@ -1,4 +1,4 @@
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -72,23 +72,23 @@ int main(int argc, char* argv[])
   std::cout << "Pts processed        = " << registration::pts << std::endl;
 #endif
 
-  qk.apply_on(c, c, c.npoints());
+  qk.apply_on(c, c, c.nsites());
   
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
   level::fill(output, literal::white);
 
 /* FIXME: remove or plot mu_Ck and mu_Xk
   //plot mu_Ck
-  point3df mu_Ck = registration::center(c, c.npoints());
+  point3df mu_Ck = registration::center(c, c.nsites());
   draw::plot(output, point2d(mu_Ck[0], mu_Ck[1]), literal::green);
 
   //plot mu_X
-  point3df mu_X = registration::center(x, x.npoints());
+  point3df mu_X = registration::center(x, x.nsites());
   draw::plot(output, point2d(mu_X[0], mu_X[1]), literal::black);
 */
   
   //to 2d : projection (FIXME:if 3d)
-  for (unsigned i = 0; i < c.npoints(); i++)
+  for (unsigned i = 0; i < c.nsites(); i++)
     {
       point2d p(c[i][0], c[i][1]);
       if (output.has(p))
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
     }
 
   //ref image (black)
-  for (unsigned i = 0; i < x.npoints(); i++)
+  for (unsigned i = 0; i < x.nsites(); i++)
     {
       point2d px(x[i][0], x[i][1]);
       if (output.has(px))

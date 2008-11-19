@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +32,7 @@
 
 #include <iostream>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
@@ -133,13 +133,13 @@ int main()
     image2d<float01_16> out(lena.domain());
     image2d<float01_16> tmp(lena.domain());
 
-    level::transform(lena, tofloat01(), tmp);
+    tmp = level::transform(lena, tofloat01());
 
     level::median(tmp, rect, out);
     level::median(lena, rect, ref);
 
 
-    level::transform(out, to8bits(), lena);
+    lena = level::transform(out, to8bits());
 
     io::pgm::save(lena, "out.pgm");
     io::pgm::save(ref, "ref.pgm");

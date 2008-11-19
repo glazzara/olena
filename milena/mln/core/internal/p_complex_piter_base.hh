@@ -32,256 +32,158 @@
 /// \brief Definition of an implementation (factoring) class for
 /// iterators on mln::p_complex.
 
-# include <limits>
+# include <mln/core/internal/site_set_iterator_base.hh>
 
-# include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/p_complex.hh>
-# include <mln/core/complex_psite.hh>
-# include <mln/core/complex_iter.hh>
+/* FIXME: Rename internal::p_complex_piter_base_ to something else, as
+   it is also used for p_faces piters.  Maybe
+   internal::complex_piter_base_, but it is really close to
+   internal::complex_iter_base_... */
 
 namespace mln
 {
-  /* FIXME: Get rid of P?  */
-
-  // Forward declarations.
-  template <unsigned D, typename P> class p_complex;
-  template <unsigned D, typename P> class complex_psite;
 
   namespace internal
   {
 
-    /*---------------------------------.
-    | p_complex_piter_base_<I, P, E>.  |
-    `---------------------------------*/
+    /*------------------------------------.
+    | p_complex_piter_base_<I, S, P, E>.  |
+    `------------------------------------*/
+
+    // FIXME: P could probably be deduced from S.
 
     /// \brief Factoring class for iterators on mln::p_complex.
     ///
     /// \arg \p I The type of the underlying complex iterator.
-    /// \arg \p P The associated point type.
+    /// \arg \p S The associated site set type.
+    /// \arg \p P The associated site type.
     /// \arg \p E The type exact type of the iterator.
-    template <typename I, typename P, typename E>
-    class p_complex_piter_base_ : public point_iterator_base_< P, E >
+    template <typename I, typename S, typename P, typename E>
+    class p_complex_piter_base_
+      : public internal::site_set_iterator_base< S, E >
     {
-      typedef p_complex_piter_base_<I, P, E> self_;
-      typedef point_iterator_base_< P, E > super_;
+      typedef p_complex_piter_base_< I, S, P, E > self_;
+      typedef internal::site_set_iterator_base< S, E > super_;
 
       /// The type of the underlying complex iterator.
       typedef I iter;
 
     public:
-      typedef p_complex<iter::complex_dim, P> pset;
-      typedef complex_psite<iter::complex_dim, P> psite;
-      typedef P point;
-      typedef mln_coord(point) coord;
-
       /// Construction and assignment.
       /// \{
-      p_complex_piter_base_(const pset& pc);
-      p_complex_piter_base_(const self_& rhs);
-      self_& operator= (const self_& rhs);
+      p_complex_piter_base_();
+      p_complex_piter_base_(const S& pc);
       /// \}
 
       /// Manipulation.
       /// \{
+    public:
       /// Test if the iterator is valid.
-      bool is_valid() const;
+      bool is_valid_() const;
       /// Invalidate the iterator.
-      void invalidate();
-      /// Start an iteration.
-      void start();
+      void invalidate_();
 
+      /// Start an iteration.
+      void start_();
       /// Go to the next point.
       void next_();
-      /// Update the internal data of the iterator.
+
+    private:
+      /// Update the psite.
       void update_();
       /// \}
 
-      /// Conversion and accessors.
-      /// \{
-      /// Reference to the corresponding point.
-      // FIXME: Don't use this method (dummy value).
-      const point& to_point () const;
-      /// Reference to the corresponding point site.
-      const psite& to_psite () const;
-      /// Convert the iterator into a line graph psite.
-      operator psite() const;
-
-      /// Read-only access to the \a i-th coordinate.
-      // FIXME: Don't use this operator (dummy value).
-      coord operator[](unsigned i) const;
-      /// \}
-
-    private:
+    protected:
+      /// The psite corresponding to this iterator.
+      using super_::p_;
       /// The underlying complex iterator.
       iter iter_;
-      /// The psite corresponding to this iterator.
-      psite psite_;
-      /// \brief The point associated to this psite.
-      // FIXME: Actually, this is a dummy value!
-      point p_;
     };
 
 
-    /* FIXME: This hand-made delegation is painful.  We should rely on
-       the general mechanism provided by Point_Site.  But then again, we
-       need to refine/adjust the interface of Point_Site w.r.t. the
-       mandatory conversions to points.  */
-    template <typename I, typename P, typename E>
+    /// Print an mln::p_complex_piter_base_<I, S, P, E>.
+    template <typename I, typename S, typename P, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, P, E>& p);
-
+    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, S, P, E>& p);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    /*---------------------------------.
-    | p_complex_piter_base_<I, P, E>.  |
-    `---------------------------------*/
+    /*------------------------------------.
+    | p_complex_piter_base_<I, S, P, E>.  |
+    `------------------------------------*/
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
-    p_complex_piter_base_<I, P, E>::p_complex_piter_base_(const pset& pc)
-      // Initialize psite_ and p_ a dummy values.
-      : psite_(),
-	p_()
+    p_complex_piter_base_<I, S, P, E>::p_complex_piter_base_()
     {
+      mln_postcondition(!this->is_valid());
+    }
+
+    template <typename I, typename S, typename P, typename E>
+    inline
+    p_complex_piter_base_<I, S, P, E>::p_complex_piter_base_(const S& pc)
+    {
+      this->change_target(pc);
       iter_.set_cplx(pc.cplx());
-      mln_postcondition(!is_valid());
+      mln_postcondition(!this->is_valid());
     }
 
-    template <typename I, typename P, typename E>
-    inline
-    p_complex_piter_base_<I, P, E>::p_complex_piter_base_(const p_complex_piter_base_<I, P, E>& rhs)
-      : iter_(rhs.iter_),
-	psite_(rhs.psite_),
-	// Dummy value.
-	p_()
-    {
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    p_complex_piter_base_<I, P, E>&
-    p_complex_piter_base_<I, P, E>::operator=(const p_complex_piter_base_<I, P, E>& rhs)
-    {
-      if (&rhs == this)
-	return *this;
-      iter_ = rhs.iter_;
-      psite_ = rhs.psite_;
-      return *this;
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    mln_coord(P)
-    p_complex_piter_base_<I, P, E>::operator[](unsigned i) const
-    {
-      // Dummy value.
-      return p_[i];
-    }
-
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     bool
-    p_complex_piter_base_<I, P, E>::is_valid() const
+    p_complex_piter_base_<I, S, P, E>::is_valid_() const
     {
       return iter_.is_valid();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::invalidate()
+    p_complex_piter_base_<I, S, P, E>::invalidate_()
     {
       iter_.invalidate();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::start()
+    p_complex_piter_base_<I, S, P, E>::start_()
     {
       iter_.start();
-      update_();
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    void
-    p_complex_piter_base_<I, P, E>::next_()
-    {
-      iter_.next_();
-      if (is_valid())
+      if (this->is_valid())
 	update_();
     }
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     void
-    p_complex_piter_base_<I, P, E>::update_()
+    p_complex_piter_base_<I, S, P, E>::next_()
     {
+      iter_.next_();
+      if (this->is_valid())
+	update_();
+    }
+
+    template <typename I, typename S, typename P, typename E>
+    inline
+    void
+    p_complex_piter_base_<I, S, P, E>::update_()
+    {
+      mln_precondition(this->is_valid());
       // Update psite_.
-      psite_ = psite(iter_);
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    const P&
-    p_complex_piter_base_<I, P, E>::to_point() const
-    {
-      // Dummy value.
-      return p_;
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    const typename p_complex_piter_base_<I, P, E>::psite&
-    p_complex_piter_base_<I, P, E>::to_psite() const
-    {
-      /* We don't check whether the iterator is valid before returning
-	 the value using
-
-         mln_precondition(is_valid());
-
-	 since this method may be called *before* the iterator is
-	 actually initialized.  This is the case for instance when this
-	 point iterator (say, P) is used to initialize another iterator
-	 on window or neighborhood (say, Q); most of the time, for_all()
-	 is responsible for the initialization of P, but it takes place
-	 *after* the creation of Q.  */
-      return psite_;
-    }
-
-    template <typename I, typename P, typename E>
-    inline
-    p_complex_piter_base_<I, P, E>::operator psite() const
-    {
-      mln_precondition(is_valid());
-      return psite_;
+      typedef mln_psite(S) psite;
+      p_ = psite(exact(this)->site_set(), iter_);
     }
 
 
-    template <typename I, typename P, typename E>
+    template <typename I, typename S, typename P, typename E>
     inline
     std::ostream&
-    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, P, E>& p)
+    operator<<(std::ostream& ostr, const p_complex_piter_base_<I, S, P, E>& p)
     {
-      /* FIXME: We should use p.to_psite() here, but as it lacks the
-	 precondition the conversion operator has, so we use the latter.
-
-	 We should
-	 - rename `to_psite' as `to_psite_';
-	 - write a new `to_psite' routine checking the validity of the
-         iterator;
-	 - have the conversion operator to psite use this new `to_psite'
-         routine;
-	 - adjust former clients of `to_psite'
-
-	 This is a general remark that applies to all point/psite
-	 iterators of Milena.  */
-      return ostr << static_cast< mln_psite(E) >(p);
+      return ostr << p.unproxy_();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

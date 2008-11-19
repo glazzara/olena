@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,10 +42,10 @@ namespace mln
   namespace level
   {
 
-    /// \internal Implementation namespace of level namespace.
+    /// Implementation namespace of level namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of level namespace.
+      /// Generic implementation namespace of level namespace.
       namespace generic {}
 
     }
@@ -60,6 +60,7 @@ namespace mln
 # include <mln/level/assign.hh>
 # include <mln/level/compare.hh>
 # include <mln/level/compute.hh>
+# include <mln/level/convert.hh>
 # include <mln/level/fast_median.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/median.hh>
@@ -67,12 +68,13 @@ namespace mln
 # include <mln/level/memset_.hh>
 # include <mln/level/naive/all.hh>
 # include <mln/level/paste.hh>
+# include <mln/level/replace.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/sort_psites.hh>
 # include <mln/level/stretch.hh>
-# include <mln/level/take.hh>
 # include <mln/level/to_enc.hh>
 # include <mln/level/transform.hh>
+# include <mln/level/update.hh>
 # include <mln/level/was.median.hh>
 
 

@@ -50,28 +50,28 @@ namespace mln
      * \internal
      */
     template <typename I, typename E>
-    class image_value_morpher_ : public virtual image_morpher_<I, mln_pset(I), E>
+    class image_value_morpher : public virtual image_morpher<I, mln_pset(I), E>
     {
     public:
 
       const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
+      bool has(const mln_psite(I)& p) const;
 
     protected:
-      image_value_morpher_();
+      image_value_morpher();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename E>
-    image_value_morpher_<I,E>::image_value_morpher_()
+    image_value_morpher<I,E>::image_value_morpher()
     {
     }
 
     template <typename I, typename E>
     const mln_pset(I)&
-    image_value_morpher_<I,E>::domain() const
+    image_value_morpher<I,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
@@ -79,10 +79,10 @@ namespace mln
 
     template <typename I, typename E>
     bool
-    image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
+    image_value_morpher<I,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
+      return this->delegatee_()->has(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

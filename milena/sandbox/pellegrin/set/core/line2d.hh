@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_LINE2D_HH
-# define MLN_CORE_LINE2D_HH
+#ifndef MLN_CORE_SITE_SET_LINE2D_HH
+# define MLN_CORE_SITE_SET_LINE2D_HH
 
-/*! \file mln/core/line2d.hh
+/*! \file mln/core/site_set/p_line2d.hh
  *
  * \brief Definition of a point set class based on std::vector.
  */
@@ -37,7 +37,7 @@
 
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/math/all.hh>
 # include <trait/point_set.hh>
 
@@ -66,10 +66,10 @@ namespace mln
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<point2d> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<point2d> bkd_piter;
 
 
@@ -81,7 +81,7 @@ namespace mln
     bool has(const point2d& p) const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<point2d>& bbox() const;
@@ -129,7 +129,7 @@ namespace mln
 	int e = ddrow - dcol;
 	for (int i = 0; i < dcol; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    vect_.push_back(point2d(row, col));
 	    while (e >= 0)
 	      {
 		row += srow;
@@ -144,7 +144,7 @@ namespace mln
 	int e = ddcol - drow;
 	for (int i = 0; i < drow; ++i)
 	  {
-	    vect_.push_back(make::point2d(row, col));
+	    vect_.push_back(point2d(row, col));
 	    while (e >= 0)
 	      {
 		col += scol;
@@ -154,11 +154,11 @@ namespace mln
 	    e += ddcol;
 	  }
       }
-    vect_.push_back(make::point2d(row, col));
+    vect_.push_back(point2d(row, col));
     // bb_
-    bb_.pmin() = make::point2d(math::min(beg_.row(), end_.row()),
+    bb_.pmin() = point2d(math::min(beg_.row(), end_.row()),
 			       math::min(beg_.col(), end_.col()));
-    bb_.pmax() = make::point2d(math::max(beg_.row(), end_.row()),
+    bb_.pmax() = point2d(math::max(beg_.row(), end_.row()),
 			       math::max(beg_.col(), end_.col()));
   }
 
@@ -177,7 +177,7 @@ namespace mln
 
   inline
   std::size_t
-  line2d::npoints() const
+  line2d::nsites() const
   {
     return vect_.size();
   }
@@ -200,7 +200,7 @@ namespace mln
   const point2d&
   line2d::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return vect_[i];
   }
 
@@ -209,4 +209,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_LINE2D_HH
+#endif // ! MLN_CORE_SITE_SET_LINE2D_HH

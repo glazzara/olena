@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,30 +43,24 @@ namespace mln
   {
 
 
-    /*! \internal A base class for image morphers w.r.t. domain.
-     * Parameter \p S is a point set type.
+    /*! A base class for image morphers w.r.t. domain.
+     *
+     * Parameter \p I is the morphed image type.
+     * Parameter \p S is the morpher site set type.
+     * Parameter \p E is the exact (morpher image) type.
      *
      */
     template <typename I, typename S, typename E>
-    class image_domain_morpher_ : public image_morpher_<I, S, E>
+    class image_domain_morpher : public image_morpher<I, mln_value(I), S, E>
     {
     public:
-
-      /// Value_Set associated type.
-      typedef mln_vset(I) vset;
-
-      /// Value associated type.
-      typedef mln_value(I) value;
 
       /// Return type of read-only access.
       typedef mln_rvalue(I) rvalue;
 
       /// Return type of read-write access.
-      typedef typename internal::morpher_lvalue_<I>::ret lvalue;
+      typedef mln_morpher_lvalue(I) lvalue;
 
-
-      /// Give the set of values.
-      const vset& values() const;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const mln_psite(S)& p) const;
@@ -75,7 +69,9 @@ namespace mln
       lvalue operator()(const mln_psite(S)& p);
 
     protected:
-      image_domain_morpher_();
+
+      /// Constructor (protected) without argument.
+      image_domain_morpher();
     };
 
 
@@ -83,34 +79,29 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    image_domain_morpher_<I,S,E>::image_domain_morpher_()
+    image_domain_morpher<I,S,E>::image_domain_morpher()
     {
-    }
-
-    template <typename I, typename S, typename E>
-    inline
-    const mln_vset(I)&
-    image_domain_morpher_<I,S,E>::values() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->values();
     }
 
     template <typename I, typename S, typename E>
     inline
     mln_rvalue(I)
-    image_domain_morpher_<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
+      mln_precondition(exact(this)->has(p));
+      mln_precondition(this->delegatee_()->has(p));
       return this->delegatee_()->operator()(p);
     }
 
     template <typename I, typename S, typename E>
     inline
-    typename image_domain_morpher_<I,S,E>::lvalue
-    image_domain_morpher_<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_domain_morpher<I,S,E>::lvalue
+    image_domain_morpher<I,S,E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
+      mln_precondition(exact(this)->has(p));
+      mln_precondition(this->delegatee_()->has(p));
       return this->delegatee_()->operator()(p);
     }
 

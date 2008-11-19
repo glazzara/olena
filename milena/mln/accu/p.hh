@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_P_HH
 # define MLN_ACCU_P_HH
 
-/*! \file mln/accu/p.hh
- *
- * \brief Define an accumulator that computes a min and a max.
- */
+/// \file mln/accu/p.hh
+///
+/// Define an accumulator that computes a min and a max.
 
 # include <mln/core/concept/meta_accumulator.hh>
 
@@ -46,59 +46,67 @@ namespace mln
   {
 
 
-    /*!
-     * \brief Generic p of accumulators.
-     *
-     * The parameter \c V is the type of values.
-     */
+    ///Generic p of accumulators.
+    ///
+    /// The parameter \c V is the type of values.
     template <typename A>
-    struct p_ : public mln::accu::internal::base_< mln_result(A) , p_<A> >
+    struct p : public mln::accu::internal::base< const mln_result(A)& , p<A> >
     {
       typedef mln_argument(A)  argument;
-      typedef mln_result(A) result;
 
+      p();
+      p(const A& a);
 
-      p_();
-      p_(const A& a);
-
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const p_<A>& other);
+      void take(const p<A>& other);
+      /// \}
 
-      result to_result() const;
+      /// Get the value of the accumulator.
+      const mln_result(A)& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
       A a_;
     };
 
 
-    /*!
-     * \brief Meta accumulator for p.
-     */
-    template <typename mA>
-    struct p : public Meta_Accumulator< p<mA> >
+    namespace meta
     {
-      template <typename V>
-      struct with
+
+      /// Meta accumulator for p.
+
+      template <typename mA>
+      struct p : public Meta_Accumulator< p<mA> >
       {
-	typedef mln_accu_with(mA, mln_psite(V)) ret;
+	template <typename V>
+	struct with
+	{
+	  typedef p<V> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A>
     inline
-    p_<A>::p_()
+    p<A>::p()
     {
       init();
     }
 
     template <typename A>
     inline
-    p_<A>::p_(const A& a)
+    p<A>::p(const A& a)
       : a_(a)
     {
       init();
@@ -107,7 +115,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::init()
+    p<A>::init()
     {
       a_.init();
     }
@@ -115,7 +123,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take_as_init(const argument& t)
+    p<A>::take_as_init(const argument& t)
     {
       a_.take_as_init(t.p()); // FIXME: Generalize with "psite(t)".
     }
@@ -123,7 +131,7 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take(const argument& t)
+    p<A>::take(const argument& t)
     {
       a_.take(t.p());
     }
@@ -131,17 +139,25 @@ namespace mln
     template <typename A>
     inline
     void
-    p_<A>::take(const p_<A>& other)
+    p<A>::take(const p<A>& other)
     {
       a_.take(other.a_);
     }
 
     template <typename A>
     inline
-    typename p_<A>::result
-    p_<A>::to_result() const
+    const mln_result(A)&
+    p<A>::to_result() const
     {
       return a_.to_result();
+    }
+
+    template <typename A>
+    inline
+    bool
+    p<A>::is_valid() const
+    {
+      return a_.is_valid();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

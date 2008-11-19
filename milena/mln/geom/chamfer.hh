@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,21 @@
 #ifndef MLN_GEOM_CHAMFER_HH
 # define MLN_GEOM_CHAMFER_HH
 
-/*! \file mln/geom/chamfer.hh
- *
- * \brief Connected component chamfer of the image objects.
- */
+/// \file mln/geom/chamfer.hh
+///
+/// Connected component chamfer of the image objects.
 
 # include <mln/level/fill.hh>
-# include <mln/core/w_window2d_int.hh>
-# include <mln/core/w_window2d_float.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/alias/w_window2d_int.hh>
+# include <mln/core/alias/w_window2d_float.hh>
+# include <mln/core/image/sub_image.hh>
+
+# include <mln/core/image/image_if.hh>
 # include <mln/canvas/chamfer.hh>
+
+//FIXME: to be removed when ima | bool will be supported.
+// See init().
+# include <mln/pw/all.hh>
 
 namespace mln
 {
@@ -49,7 +53,7 @@ namespace mln
 
     /// Apply chamfer algorithm to a binary image.
     template <typename I, typename W>
-    mln_ch_value( I, unsigned )
+    mln_ch_value(I, unsigned)
       chamfer(const Image<I>& input_, const W& w_win_,
 	      unsigned max = mln_max(unsigned));
 
@@ -59,28 +63,44 @@ namespace mln
     namespace impl
     {
 
-      // \internal Functors.
+      // Functors.
 
       template <typename I_, typename W_>
       struct chamfer_t
       {
 	typedef I_ I;
+	typedef mln_ch_value(I, unsigned) O;
 	typedef W_ W;
-	typedef mln_point(I_) P;
+	typedef mln_site(I_) P;
 
 	// requirements from mln::canvas::chamfer:
 
 	const I& input;
 	const W& win;
 
-	mln_ch_value(I_, unsigned) output;
+	O output;
 	bool status;
 	unsigned max;
 
- 	inline
- 	void init()                            { initialize(output, exact(input));
-						 level::fill(inplace(output | (input | true).domain()),  0);
-						 level::fill(inplace(output | (input | false).domain()), max); }
+	void fill_output()
+	{
+	  mln_piter(O) p(output.domain());
+	  for_all(p)
+	  {
+	    if (input(p) == true)
+	      output(p) = 0;
+	    else
+	      output(p) = max;
+	  }
+	}
+
+	inline
+	void init()                            { initialize(output, exact(input));
+						 fill_output();
+						 // Was :
+						 // level::fill((output | (input | pw::cst(true)).domain()).rw(), 0);
+						 // level::fill((output | (input | pw::cst(false)).domain()).rw(), max);
+	}
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }
 
@@ -94,7 +114,7 @@ namespace mln
 	{}
       };
 
-      /// \internal Routines.
+      /// Routines.
 
       template <typename I, typename W>
       inline
@@ -111,9 +131,6 @@ namespace mln
 
     } // end of namespace mln::geom::impl
 
-#endif // !MLN_INCLUDE_ONLY
-
-
     // Facade.
 
     template <typename I, typename W>
@@ -121,9 +138,10 @@ namespace mln
       chamfer(const Image<I>& input_, const W& w_win_,
 	      unsigned max = mln_max(unsigned))
     {
-      return impl::chamfer_(exact (input_), exact(w_win_), max);
+      return impl::chamfer_t<I, W>(exact (input_), exact(w_win_), max);
     }
 
+#endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::geom
 

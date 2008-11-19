@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,25 +30,27 @@
  * \brief Tests on mln::convert::to_window.
  */
 
-#include <mln/core/dpoint2d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/box2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/alias/dpoint2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
 
 #include <mln/level/fill.hh>
 
 #include <mln/convert/to_window.hh>
 #include <mln/convert/to_p_set.hh>
 
+#include <mln/util/ord.hh>
+
 using namespace mln;
 
   void test(window2d ref, window2d cmp)
   {
-    mln_assertion(ref.ndpoints() == cmp.ndpoints());
-    for (unsigned i = 0; i < ref.ndpoints(); ++i)
+    mln_assertion(ref.size() == cmp.size());
+    for (unsigned i = 0; i < ref.size(); ++i)
       mln_assertion(ref.dp(i) == cmp.dp(i));
   }
 
@@ -61,7 +63,10 @@ int main()
     d(0,-1);
 
   window2d ref;
-  ref.insert(a).insert(b).insert(c).insert(d);
+  ref.insert(a);
+  ref.insert(b);
+  ref.insert(c);
+  ref.insert(d);
   // Reference constructed.
 
   // Nbh :
@@ -72,22 +77,21 @@ int main()
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
   level::fill(ima, false);
-  level::fill(inplace(ima | convert::to_p_set(ref)), true);
+  level::fill((ima | convert::to_p_set(ref)).rw(), true);
   window2d test_ima = convert::to_window(ima);
   test(ref, test_ima);
 
   // Window :
   p_set<point2d> setp;
-  setp
-    .insert(point2d::origin + a)
-    .insert(point2d::origin + b)
-    .insert(point2d::origin + c)
-    .insert(point2d::origin + d);
+  setp.insert(point2d::origin + a);
+  setp.insert(point2d::origin + b);
+  setp.insert(point2d::origin + c);
+  setp.insert(point2d::origin + d);
   window2d test_setp = convert::to_window(setp);
   test(ref, test_setp);
 
   // std::set :
-  std::set<dpoint2d> set;
+  std::set<dpoint2d, util::ord<dpoint2d> > set;
   set.insert(a);
   set.insert(b);
   set.insert(c);

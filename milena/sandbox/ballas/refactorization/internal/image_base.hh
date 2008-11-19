@@ -10,7 +10,7 @@ namespace mln
     /// Image base
     /// S is the point set type
     template <typename S, typename E>
-    struct image_base_ : public Image<E>
+    struct image_base : public Image<E>
     {
       typedef S pset;
       typedef typename S::psite psite;
@@ -22,7 +22,7 @@ namespace mln
       bool has(const psite& ps) const;
 
     protected:
-      image_base_();
+      image_base();
     };
 
     ///FIXME: is_ready
@@ -30,15 +30,15 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename S, typename E>
-    image_base_<S, E>::image_base_()
+    image_base<S, E>::image_base()
     {
     }
 
     template <typename S, typename E>
     bool
-    image_base_<S, E>::has(const psite& ps) const
+    image_base<S, E>::has(const psite& ps) const
     {
-      return exact(this)->owns_(ps);
+      return exact(this)->has(ps);
     }
 
 

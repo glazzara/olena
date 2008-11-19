@@ -40,7 +40,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb.hh>
@@ -121,7 +121,7 @@ namespace mln
       inline
       void load_raw_2d_contiguous(std::ifstream& file, I& ima)
       {
-	point2d p = make::point2d(0, ima.domain().pmin().col());
+	point2d p = point2d(0, ima.domain().pmin().col());
 	typedef mln_value(I) V;
 	const mln_coord(I)
 	  min_row = geom::min_row(ima),
@@ -159,6 +159,8 @@ namespace mln
       inline
       image2d<V> load(char type_, const std::string& filename)
       {
+	trace::entering("mln::io::pnm::load");
+
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -191,8 +193,10 @@ namespace mln
 	else
 	  if (type == (type_ - 3))
 	    pnm::load_ascii(file, ima);
-	return ima;
 
+	trace::entering("mln::io::pnm::load");
+
+	return ima;
       }
 
       /// An other way to load pnm files :
@@ -204,6 +208,8 @@ namespace mln
 		Image<I>& ima_,
 		const std::string& filename)
       {
+	trace::entering("mln::io::pnm::load");
+
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -240,6 +246,7 @@ namespace mln
 	  if (type == (type_ - 3))
 	    pnm::load_ascii(file, ima);
 
+	trace::exiting("mln::io::pnm::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

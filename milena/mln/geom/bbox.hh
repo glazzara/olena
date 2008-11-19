@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,14 +32,21 @@
  *
  * \brief Several routines to compute the precise bounding box of some
  * objects.
+ *
+ * \todo Re-activate precondition so introduce
+ * "set::nsites(Site_Set)"...
+ *
+ * \todo Add a static check "domain is ok for bbox (like grid)". 
+ *
+ * \todo Add the weighted_window case.
  */
 
+# include <mln/core/site_set/box.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/point_set.hh>
-# include <mln/core/concept/box.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/geom/pmin_pmax.hh>
+# include <mln/literal/zero.hh>
+# include <mln/accu/bbox.hh>
 
 
 namespace mln
@@ -48,97 +55,109 @@ namespace mln
   namespace geom
   {
 
-
-    /// Compute the precise bounding box of a window \p win when
-    /// centered at the origin.
-    template <typename W>
-    box_<mln_point(W)> bbox(const Window<W>& win);
-
-
-    /// Compute the precise bounding box of a weighted window \p w_win
-    /// when centered at the origin.
-    template <typename W>
-    box_<mln_point(W)> bbox(const Weighted_Window<W>& w_win);
+    /// Compute the precise bounding box of a point set \p pset.
+    template <typename S>
+    box<mln_site(S)> bbox(const Site_Set<S>& pset);
 
 
     /// Compute the precise bounding box of a point set \p pset.
-    template <typename S>
-    box_<mln_point(S)> bbox(const Point_Set<S>& pset);
-
-
-    /// Compute the precise bounding box of an image \p ima.
     template <typename I>
-    box_<mln_point(I)> bbox(const Image<I>& ima);
+    box<mln_site(I)> bbox(const Image<I>& ima);
+
+
+    /// Compute the precise bounding box of a window \p win.
+    template <typename W>
+    box<mln_psite(W)> bbox(const Window<W>& win);
+
+    /// Compute the precise bounding box of a weighted window \p win.
+    template <typename W>
+    box<mln_psite(W)> bbox(const Weighted_Window<W>& win);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename W>
-    inline
-    box_<mln_point(W)> bbox(const Window<W>& win_)
-    {
-      const W& win = exact(win_);
-      mln_precondition(! win.is_empty());
-
-      typedef mln_point(W) P;
-      mln_qiter(W) q(win, P::origin);
-      std::pair<P, P> pp = geom::pmin_pmax(q);
-
-      box_<P> tmp(pp.first, pp.second);
-      return tmp;
-    }
-
-    template <typename W>
-    inline
-    box_<mln_point(W)> bbox(const Weighted_Window<W>& w_win)
-    {
-      return bbox(exact(w_win).win());
-    }
-
-
     namespace impl
     {
 
       template <typename S>
-      inline
-      box_<mln_point(S)> bbox_(const Point_Set<S>& pset_)
+      box<mln_site(S)> bbox_(const trait::site_set::bbox::known&,
+			     const S& pset)
       {
-	const S& pset = exact(pset_);
-	typedef mln_point(S) P;
-	std::pair<P, P> pp = geom::pmin_pmax(pset);
-	box_<P> tmp(pp.first, pp.second);
-	return tmp;
+	return pset.bbox();
       }
 
-      template <typename B>
-      inline
-      box_<mln_point(B)> bbox_(const Box<B>& pset_)
+      template <typename S>
+      box<mln_site(S)> bbox_(trait::site_set::bbox::unknown,
+			     const S& pset)
       {
-	return exact(pset_);
+	typedef mln_site(S) P;
+	P pmin, pmax;
+
+	// Init with first point.
+	mln_piter(S) p(pset);
+	p.start();
+	mln_precondition(p.is_valid());
+	pmin = pmax = p;
+
+	// Update with remaining points.
+	for_all_remaining(p)
+	  for (unsigned i = 0; i < P::dim; ++i)
+	    if (p[i] < pmin[i])
+	      pmin[i] = p[i];
+	    else
+	      if (p[i] > pmax[i])
+		pmax[i] = p[i];
+
+	box<P> bb(pmin, pmax);
+	return bb;
       }
 
     } // end of namespace mln::geom::impl
 
+
+    // Facade.
+
     template <typename S>
     inline
-    box_<mln_point(S)> bbox(const Point_Set<S>& pset)
+    box<mln_site(S)> bbox(const Site_Set<S>& pset)
     {
-      mln_precondition(exact(pset).npoints() != 0);
-      box_<mln_point(S)> tmp = impl::bbox_(exact(pset));
-      mln_postcondition(tmp <= exact(pset).bbox());
-      return tmp;
+      trace::entering("geom::bbox");
+//       mln_precondition(set::is_empty(pset) != 0);
+
+      box<mln_site(S)> b = impl::bbox_(mln_trait_site_set_bbox(S)(),
+				       exact(pset));
+
+      trace::exiting("geom::bbox");
+      return b;
     }
 
-
     template <typename I>
-    inline
-    box_<mln_point(I)> bbox(const Image<I>& ima_)
+    box<mln_site(I)> bbox(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
-      return bbox(ima.domain());
+      return geom::bbox(ima.domain());
     }
+
+    template <typename W>
+    box<mln_psite(W)> bbox(const Window<W>& win)
+    {
+      typedef mln_psite(W) P;
+      accu::bbox<P> b;
+      P O = literal::origin;
+      mln_qiter(W) q(exact(win), O);
+      for_all(q)
+	b.take(q);
+      return b;
+    }
+
+    template <typename W>
+    box<mln_psite(W)> bbox(const Weighted_Window<W>& win)
+    {
+      return bbox(exact(win).win());
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

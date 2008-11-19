@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,18 @@
 #ifndef MLN_ACCU_SUM_HH
 # define MLN_ACCU_SUM_HH
 
-/*! \file mln/accu/sum.hh
- *
- * \brief Define an accumulator that computes a sum.
- */
+/// \file mln/accu/sum.hh
+///
+/// Define an accumulator that computes a sum.
 
 # include <mln/core/concept/meta_accumulator.hh>
-
 # include <mln/accu/internal/base.hh>
-# include <mln/trait/value_.hh>
-# include <mln/util/pix.hh>
-# include <mln/literal/zero.hh>
+
+# include <mln/util/pix.hh> // To prevent accu::sum to work on pixels (ambiguous).
+
+# include <mln/trait/value_.hh>      // For mln_sum.
+# include <mln/value/builtin/all.hh> // In the case of summing builtin values.
+# include <mln/literal/zero.hh>      // For initialization.
 
 
 namespace mln
@@ -48,25 +50,32 @@ namespace mln
   {
 
 
-    /*! \brief Generic sum accumulator class.
-     *
+    /// Generic sum accumulator class.
+    /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the value sum; the default type of
      * \c S is the summation type (property) of \c T.
      */
     template <typename T, typename S = mln_sum(T)>
-    struct sum_ : public mln::accu::internal::base_< S, sum_<T,S> >
+    struct sum : public mln::accu::internal::base< const S&, sum<T,S> >
     {
       typedef T argument;
-      typedef S result;
 
-      sum_();
+      sum();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take(const argument& t);
-      void take(const sum_<T,S>& other);
+      void take(const sum<T,S>& other);
+      /// \}
 
-      S to_result() const;
+      /// Get the value of the accumulator.
+      const S& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -75,28 +84,29 @@ namespace mln
 
 
     template <typename I, typename S>
-    struct sum_< util::pix<I>, S >;
+    struct sum< util::pix<I>, S >;
 
-
-    /*!
-     * \brief Meta accumulator for sum.
-     */
-    struct sum : public Meta_Accumulator< sum >
+    namespace meta
     {
-      template <typename T, typename S = mln_sum(T)>
-      struct with
-      {
-	typedef sum_<T, S> ret;
-      };
-    };
 
+      /// Meta accumulator for sum.
+      struct sum : public Meta_Accumulator< sum >
+      {
+	template <typename T, typename S = mln_sum(T)>
+	struct with
+	{
+	  typedef accu::sum<T, S> ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename S>
     inline
-    sum_<T,S>::sum_()
+    sum<T,S>::sum()
     {
       init();
     }
@@ -104,14 +114,14 @@ namespace mln
     template <typename T, typename S>
     inline
     void
-    sum_<T,S>::init()
+    sum<T,S>::init()
     {
       s_ = literal::zero;
     }
 
     template <typename T, typename S>
     inline
-    void sum_<T,S>::take(const argument& t)
+    void sum<T,S>::take(const argument& t)
     {
       s_ += t;
     }
@@ -119,17 +129,25 @@ namespace mln
     template <typename T, typename S>
     inline
     void
-    sum_<T,S>::take(const sum_<T,S>& other)
+    sum<T,S>::take(const sum<T,S>& other)
     {
       s_ += other.s_;
     }
 
     template <typename T, typename S>
     inline
-    S
-    sum_<T,S>::to_result() const
+    const S&
+    sum<T,S>::to_result() const
     {
       return s_;
+    }
+
+    template <typename T, typename S>
+    inline
+    bool
+    sum<T,S>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

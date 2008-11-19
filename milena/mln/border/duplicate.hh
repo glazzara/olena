@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,14 @@
 #ifndef MLN_BORDER_DUPLICATE_HH
 # define MLN_BORDER_DUPLICATE_HH
 
-/*! \file mln/border/duplicate.hh
- *
- * \brief Define function that fills border using nearest pixels.
- */
+/// \file mln/border/duplicate.hh
+///
+/// Define function that fills border using nearest pixels.
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/memset_.hh>
-# include <mln/core/line_piter.hh>
-# include <mln/core/pixel.hh>
+# include <mln/core/routine/primary.hh>
+# include <mln/core/box_runstart_piter.hh>
+# include <mln/border/get.hh>
 
 
 namespace mln
@@ -46,7 +46,7 @@ namespace mln
   {
 
     /*! Assign the virtual (outer) border of image \p ima with the
-     *  dupplicate of the inner border of this image.
+     *  duplicate of the inner border of this image.
      *
      * \param[in,out] ima The image whose border is to be duplicated.
      *
@@ -65,159 +65,197 @@ namespace mln
 
       template <typename I>
       inline
-      void duplicate_1d_(const I& ima)
+      void duplicate_1D(I& ima)
       {
-	trace::entering("border::impl::duplicate_1d_");
+	trace::entering("border::impl::duplicate_1D");
 
-	typedef mln_point(I) P;
-	typename I::line_piter pl(ima.domain());
- 	std::size_t len_c = exact(ima).bbox().len(P::dim - 1);
- 	std::size_t border = ima.border ();
+	typedef mln_psite(I) P;
+	mln_box_runstart_piter(I) pl(ima.domain());
+ 	unsigned len_c = ima.bbox().len(P::dim - 1);
+ 	unsigned border = ima.border();
 
-	for (std::size_t i = 0; i < border; ++i)
-	  const_cast<I&>(ima)[i] = ima[border];
+	for (unsigned i = 0; i < border; ++i)
+	  ima.element(i) = ima.element(border);
 
-	std::size_t st = border + len_c - 1;
-	for (std::size_t i = st + 1; i < ima.ncells (); ++i)
-	  const_cast<I&>(ima)[i] = ima[st];
+	unsigned st = border + len_c - 1;
+	for (unsigned i = st + 1; i < ima.nelements(); ++i)
+	  ima.element(i) = ima.element(st);
 
-	trace::exiting("border::impl::duplicate_1d_");
+	trace::exiting("border::impl::duplicate_1D");
       }
 
       template <typename I>
       inline
-      void duplicate_2d_(const I& ima)
+      void duplicate_2D(I& ima)
       {
-	trace::entering("border::impl::duplicate_2d_");
+	trace::entering("border::impl::duplicate_2D");
 
-	typedef mln_point(I) P;
-	typename I::line_piter pl(ima.domain());
- 	std::size_t border = ima.border ();
- 	std::size_t border_2x = 2 * ima.border ();
- 	std::size_t len_c = exact(ima).bbox().len(1);
- 	std::size_t len_r = exact(ima).bbox().len(0);
- 	std::size_t real_len_c = len_c + border_2x;
- 	std::size_t st;
+	typedef mln_psite(I) P;
+	mln_box_runstart_piter(I) pl(ima.domain());
+ 	unsigned border = ima.border();
+ 	unsigned border_2x = 2 * ima.border();
+ 	unsigned len_c = ima.bbox().len(1);
+ 	unsigned len_r = ima.bbox().len(0);
+ 	unsigned real_len_c = len_c + border_2x;
+ 	unsigned st;
 
 	// Duplicate
 	for_all (pl)
 	  {
- 	    st = ima.offset_at (pl);
-	    for (std::size_t i = 1; i <= border; ++i)
-	      const_cast<I&>(ima)[st - i] = ima[st];
+ 	    st = ima.index_of_point (pl);
+	    for (unsigned i = 1; i <= border; ++i)
+	      ima.element(st - i) = ima.element(st);
 	    st = st + len_c - 1;
-	    for (std::size_t i = 1; i <= border; ++i)
-	      const_cast<I&>(ima)[st + i] = ima[st];
+	    for (unsigned i = 1; i <= border; ++i)
+	      ima.element(st + i) = ima.element(st);
  	  }
 
 	// Duplicate n first * border line
 	st = real_len_c * border;
-	for (std::size_t k = 0; k < border; ++k)
-	  for (std::size_t i = 0; i < real_len_c; ++i)
-	    const_cast<I&>(ima)[k * real_len_c + i] = ima[st + i];
+	for (unsigned k = 0; k < border; ++k)
+	  for (unsigned i = 0; i < real_len_c; ++i)
+	    ima.element(k * real_len_c + i) = ima.element(st + i);
 
 	// Duplicate n last * border line
 	st = real_len_c * (border + len_r - 1);
-	for (std::size_t k = 1; k <= border; ++k)
-	  for (std::size_t i = st; i < st + real_len_c; ++i)
-	    const_cast<I&>(ima)[k * real_len_c + i] = ima[i];
+	for (unsigned k = 1; k <= border; ++k)
+	  for (unsigned i = st; i < st + real_len_c; ++i)
+	    ima.element(k * real_len_c + i) = ima.element(i);
 
-	trace::exiting("border::impl::duplicate_2d_");
+	trace::exiting("border::impl::duplicate_2D");
       }
 
       template <typename I>
       inline
-      void duplicate_3d_(const Image<I>& ima_)
+      void duplicate_3D(I& ima)
       {
-	trace::entering("border::impl::duplicate_3d_");
+	trace::entering("border::impl::duplicate_3D");
 
-	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
-	typename I::line_piter pl(ima.domain());
- 	std::size_t border = ima.border ();
- 	std::size_t border_2x = 2 * ima.border ();
- 	std::size_t len_c = exact(ima).bbox().len(P::dim - 1);
- 	std::size_t len_r = exact(ima).bbox().len(1);
- 	std::size_t len_s = exact(ima).bbox().len(0);
- 	std::size_t real_len_c = len_c + border_2x;
- 	std::size_t real_len_r = len_r + border_2x;
-	std::size_t face = real_len_c * real_len_r;
-	std::size_t st;
+	typedef mln_psite(I) P;
+	mln_box_runstart_piter(I) pl(ima.domain());
+ 	unsigned border = ima.border();
+ 	unsigned border_2x = 2 * ima.border();
+ 	unsigned len_c = ima.bbox().len(P::dim - 1);
+ 	unsigned len_r = ima.bbox().len(1);
+ 	unsigned len_s = ima.bbox().len(0);
+ 	unsigned real_len_c = len_c + border_2x;
+ 	unsigned real_len_r = len_r + border_2x;
+	unsigned face = real_len_c * real_len_r;
+	unsigned st;
 
-	pl.start ();
+	pl.start();
 
-	for (std::size_t k = 0; k < len_s; ++k)
+	for (unsigned k = 0; k < len_s; ++k)
 	  {
 
  	    // Duplicate
-	    for (std::size_t j = 0; j < len_r; ++j)
+	    for (unsigned j = 0; j < len_r; ++j)
 	      {
-		st = ima.offset_at (pl);
-		for (std::size_t i = 1; i <= border; ++i)
-		  const_cast<I&>(ima)[st - i] = ima[st];
+		st = ima.index_of_point (pl);
+		for (unsigned i = 1; i <= border; ++i)
+		  ima.element(st - i) = ima.element(st);
 		st = st + len_c - 1;
-		for (std::size_t i = 1; i <= border; ++i)
-		  const_cast<I&>(ima)[st + i] = ima[st];
-		pl.next ();
+		for (unsigned i = 1; i <= border; ++i)
+		  ima.element(st + i) = ima.element(st);
+		pl.next();
 	      }
 
 	    // Duplicate n last * border line
 	    st = border * face + k * face + border * real_len_c ;
-	    for (std::size_t j = 1; j <= border; ++j)
-	      for (std::size_t i = 0; i < real_len_c; ++i)
-		const_cast<I&>(ima)[st - j * real_len_c + i] = ima[st + i];
+	    for (unsigned j = 1; j <= border; ++j)
+	      for (unsigned i = 0; i < real_len_c; ++i)
+		ima.element(st - j * real_len_c + i) = ima.element(st + i);
 
 	    // Duplicate n last * border line
 	    st = border * face + k * face + (len_r + border - 1) * real_len_c ;
-	    for (std::size_t j = 1; j <= border; ++j)
-	      for (std::size_t i = 0; i < real_len_c; ++i)
-		const_cast<I&>(ima)[st + j * real_len_c + i] = ima[st + i];
+	    for (unsigned j = 1; j <= border; ++j)
+	      for (unsigned i = 0; i < real_len_c; ++i)
+		ima.element(st + j * real_len_c + i) = ima.element(st + i);
 	  }
 
 	// Duplicate n first * border face
 	st = border * face;
-	for (std::size_t k = 0; k < border; ++k)
-	  for (std::size_t i = 0; i < face; ++i)
-	    const_cast<I&>(ima)[k * face + i] = ima[st + i];
+	for (unsigned k = 0; k < border; ++k)
+	  for (unsigned i = 0; i < face; ++i)
+	    ima.element(k * face + i) = ima.element(st + i);
 
 	// Duplicate n last * border face
 	st = (len_s + border - 1) * face;
-	for (std::size_t k = 1; k <= border; ++k)
-	  for (std::size_t i = 0; i < face; ++i)
-	    const_cast<I&>(ima)[st + k * face + i] = ima[st + i];
+	for (unsigned k = 1; k <= border; ++k)
+	  for (unsigned i = 0; i < face; ++i)
+	    ima.element(st + k * face + i) = ima.element(st + i);
 
-	trace::exiting("border::impl::duplicate_3d_");
+	trace::exiting("border::impl::duplicate_3D");
       }
 
     } // end of namespace mln::border::impl
 
 
+    namespace internal
+    {
+
+      template <typename I>
+      void duplicate_dispatch_on(metal::int_<1>, I& ima)
+      {
+	impl::duplicate_1D(ima);
+      }
+
+      template <typename I>
+      void duplicate_dispatch_on(metal::int_<2>, I& ima)
+      {
+	impl::duplicate_2D(ima);
+      }
+
+      template <typename I>
+      void duplicate_dispatch_on(metal::int_<3>, I& ima)
+      {
+	impl::duplicate_3D(ima);
+      }
+
+      template <typename I>
+      void duplicate_dispatch_on(trait::image::speed::fastest,
+				 const Image<I>& ima)
+      {
+	typedef mln_site(I) P;
+	duplicate_dispatch_on(metal::int_<P::dim>(),
+			      const_cast<I&>(exact(ima)));
+      }
+
+      template <typename I>
+      void duplicate_dispatch_on(trait::image::speed::any,
+				 const Image<I>& ima)
+      {
+	// No-op.
+      }
+
+      template <typename I>
+      void duplicate_dispatch_on(const Image<I>& ima)
+      {
+	duplicate_dispatch_on(mln_trait_image_speed(I)(),
+			      ima);
+      }
+
+      template <typename I>
+      void duplicate_dispatch(const Image<I>& ima)
+      {
+	duplicate_dispatch_on(primary(ima));
+      }
+
+    } // end of namespace mln::border::internal
+
+
     // Facade.
 
     template <typename I>
-    inline
-    void duplicate(const Image<I>& ima_)
+    void duplicate(const Image<I>& ima)
     {
       trace::entering("border::duplicate");
+      mln_precondition(exact(ima).has_data());
 
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
-
-      mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
-
-      typedef mln_point(I) P;
-
-      if (!ima.border ())
-	return;
-
-      if (P::dim == 1)
-	impl::duplicate_1d_(ima);
-      if (P::dim == 2)
-	impl::duplicate_2d_(ima);
-      if (P::dim == 3)
-	impl::duplicate_3d_(ima);
+      if (border::get(ima) != 0)
+	internal::duplicate_dispatch(ima);
 
       trace::exiting("border::duplicate");
     }

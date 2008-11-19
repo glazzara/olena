@@ -37,6 +37,7 @@
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
+# include <mln/algebra/quat.hh>
 # include <cmath>
 
 namespace mln
@@ -47,6 +48,73 @@ namespace mln
 
     namespace x2x
     {
+
+      namespace internal
+      {
+        template < unsigned n, typename C >
+        algebra::h_mat<n, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        {
+          assert(!"get_h_mat : n not implemented");
+        }
+
+        template <typename C >
+        algebra::h_mat<3, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        {
+          algebra::h_mat<3, C> m_;
+
+          const float cos_a = cos(alpha_);
+          const float sin_a = sin(alpha_);
+          const float u = axis_[0];
+          const float v = axis_[1];
+          const float w = axis_[2];
+          const float u2 = u * u;
+          const float v2 = v * v;
+          const float w2 = w * w;
+          const float uvw2 = u2 + v2 + w2;
+
+          m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
+          m_(0,1) = (u*v * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,2) = (u*w * (1 - cos_a) + v * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(0,3) = 0;
+
+          m_(1,0) = (u*v * (1 - cos_a) + w * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,1) = (v2 + (u2 + w2) * cos_a) / uvw2;
+          m_(1,2) = (v*w * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(1,3) = 0;
+
+          m_(2,0) = (u*w * (1 - cos_a) - v * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,1) = (v*w * (1 - cos_a) + u * std::sqrt(uvw2) * sin_a) / uvw2;
+          m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
+          m_(2,3) = 0;
+
+          m_(2,0) = 0;
+          m_(2,1) = 0;
+          m_(2,1) = 0;
+          m_(2,3) = 1;
+
+          return m_;
+        }
+
+        template <typename C >
+        algebra::h_mat<2, C>
+        get_rot_h_mat(const float alpha_, const algebra::vec<2,C>&)
+        {
+          algebra::h_mat<2, C> m_;
+
+          const float cos_a = cos(alpha_);
+          const float sin_a = sin(alpha_);
+
+          m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
+          m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;
+          m_(2,0) = 0;     m_(2,1) = 0;      m_(2,2) = 1;
+
+          return m_;
+        }
+
+      } // end of namespace internal
+
 
       /*! \brief Represent a rotation function.
        *
@@ -66,7 +134,9 @@ namespace mln
 	/// Constructor without argument.
         rotation();
 	/// Constructor with grade alpha and a facultative direction (rotation axis).
-        rotation(float alpha, unsigned dir = 2);
+        rotation(float alpha, const algebra::vec<n,float>& axis);
+        /// Constructor with quaternion
+        rotation(const algebra::quat& q);
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
@@ -75,13 +145,13 @@ namespace mln
 	/// Set a new grade alpha.
         void set_alpha(float alpha);
 	/// Set a new rotation axis.
-        void set_dir(unsigned dir);
+        void set_axis(const algebra::vec<n,float>& axis);
 
       protected:
         void update();
 
         float alpha_;
-        unsigned dir_;
+        algebra::vec <n,float> axis_;
       };
 
 
@@ -95,13 +165,31 @@ namespace mln
 
       template <unsigned n, typename C>
       inline
-      rotation<n,C>::rotation(float alpha, unsigned dir)
+      rotation<n,C>::rotation(float alpha, const algebra::vec<n,float>& axis)
 	:alpha_(alpha),
-	 dir_(dir)
+	 axis_(axis)
       {
-	mln_precondition(dir == 2 || n == 3);
-	this->m_ = h_mat<n,C>::Id;
+	this->m_ = algebra::h_mat<n,C>::Id;
 	update();
+      }
+
+      template <unsigned n, typename C>
+      inline
+      rotation<n,C>::rotation(const algebra::quat& q)
+      {
+        mln_precondition(q.is_unit());
+        // FIXME: Should also work for 2d.
+        mln_precondition(n == 3);
+        float
+          w = q.to_vec()[0],
+          x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+          y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+          z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+        float t[16] = {1.f - y2 - z2,  xy - zw,  xz + yw, 0,
+                       xy + zw,  1.f - x2 - z2,  yz - xw, 0,
+                       xz - yw,  yz + xw,  1.f - x2 - y2, 0,
+                       0,              0,              0, 1};
+        this->m_(make::mat<4,4>(t));
       }
 
       template <unsigned n, typename C>
@@ -128,7 +216,7 @@ namespace mln
       rotation<n,C>
       rotation<n,C>::inv() const
       {
-	typename rotation::invert res(-alpha_, dir_);
+	typename rotation::invert res(-alpha_, axis_);
 	return res;
       }
 
@@ -144,34 +232,24 @@ namespace mln
       template <unsigned n, typename C>
       inline
       void
-      rotation<n,C>::set_dir(unsigned dir)
+      rotation<n,C>::set_axis(const algebra::vec<n,float>& axis)
       {
-	mln_precondition(dir == 2 || n == 3);
-	dir_ = dir;
+        axis_ = axis;
 	update();
       }
 
+      // Homogenous matrix for a rotation of a point (x,y,z)
+      // about the vector (u,v,w) by the angle alpha
       template <unsigned n, typename C>
       inline
       void
       rotation<n,C>::update()
       {
-	const float cos_a = cos(alpha_);
-	const float sin_a = sin(alpha_);
-	const algebra::vec<4,float> vec = make::vec(cos_a, -sin_a, sin_a, cos_a);
-
-	unsigned k = 0;
-	for (unsigned i = 0; i < n; ++i)
-	  for (unsigned j = 0; j < n; ++j)
-	  {
-	    if (j != this->dir_ && i != this->dir_)
-	      this->m_(i, j) = vec[k++];
-	    else
-	      this->m_(i, j) = (i == j);
-	  }
+        this->m_ = internal::get_rot_h_mat(alpha_, axis_);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
+
 
     } // end of namespace mln::fun::x2x
 

@@ -40,17 +40,19 @@ namespace mln
   /// Namespace of input/output handling.
   namespace io
   {
-    /// \internal Internal namespace of io namespace.
+    /// Internal namespace of io namespace.
     namespace internal {}
   }
 
 }
 
-# include <mln/io/fits/all.hh>
+//# include <mln/io/fits/all.hh>
+//# include <mln/io/off/all.hh>
 # include <mln/io/pbm/all.hh>
 # include <mln/io/pfm/all.hh>
 # include <mln/io/pgm/all.hh>
 # include <mln/io/pnm/all.hh>
 # include <mln/io/ppm/all.hh>
+# include <mln/io/txt/all.hh>
 
 #endif // ! MLN_IO_ALL_HH

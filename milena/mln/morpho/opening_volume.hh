@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +45,7 @@ namespace mln
     /// Morphological volume opening.
     template <typename I, typename N, typename O>
     void opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output);
+			unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -52,11 +53,11 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output)
+			unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::volume_<I> >(input, nbh, lambda, output);
+      opening_attribute< accu::volume<I> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

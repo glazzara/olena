@@ -1,6 +1,6 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/stretch.hh>
@@ -11,7 +11,7 @@
 #include <mln/core/mesh_image.hh>
 # include <mln/labeling/base.hh>
 # include <mln/debug/println.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/convert/to_window.hh>
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/concept/neighborhood.hh>

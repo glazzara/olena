@@ -44,7 +44,7 @@ main (void)
   std::cout << "Test 1d size= box [-6 .. -3]  with border=6 in value::int_u8"
 	    << std::endl;
 
-  box1d b(make::point1d(-6), make::point1d(-3));
+  box1d b(point1d(-6), point1d(-3));
   image1d_b<value::int_u8> ima(b, 6);
 
 //   image1d_b<value::int_u8> ima(5);

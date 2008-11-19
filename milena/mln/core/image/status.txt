@@ -1,0 +1,79 @@
+	-*- outline -*-
+
+* to be removed
+
+mln/core/internal/run_image.hh
+
+
+* internal
+
+... image_identity  (see todo)
+
+
+* primary
+
+** basic
+
+ok  image2d
+ok  pw::image
+
+ok  image1d
+ok  image3d
+
+ok  flat_image
+
+** run-based
+
+KO  mono_obased_rle_image
+KO  mono_rle_image
+KO  obased_rle_image
+KO  rle_image
+KO  sparse_image
+
+** graph-based
+
+KO  bgraph_image
+KO  graph_image
+KO  line_graph_image
+
+
+* morpher
+
+** value morpher
+
+ok  cast_image
+KO  value::stack_image
+
+** domain morpher
+
+ok  image_if
+ok  sub_image
+
+rm  image_if_interval
+rm  image_if_value
+
+KO  t_image
+KO  tr_image
+KO  translate_image
+
+** identity morpher
+
+new extension_ima
+new extension_fun
+new extension_val
+
+ok  plain
+ok  safe
+
+ok extended
+
+KO  decorated_image
+KO  interpolated
+
+
+
+* unknown!!!
+
+KO  fi_adaptor
+KO  hexa
+KO  value_enc_image

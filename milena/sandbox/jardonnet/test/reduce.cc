@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -19,7 +19,7 @@ int main(int argc, char*argv[])
 
   io::pbm::load(img, argv[1]);
 
-  image2d<bool> output = subsampling::subsampling(img, make::dpoint2d(2,2), argc);
+  image2d<bool> output = subsampling::subsampling(img, dpoint2d(2,2), argc);
   
   io::pbm::save(output, argv[2]);
 }

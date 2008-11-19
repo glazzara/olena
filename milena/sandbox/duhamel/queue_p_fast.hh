@@ -60,17 +60,17 @@ namespace mln
    * (i.e., no-op if multiple or allow multiple insertions).
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P>
   class queue_p_fast : public internal::point_set_base_< P, queue_p_fast<P> >
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef vec_p_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef vec_p_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
@@ -83,7 +83,7 @@ namespace mln
     bool empty() const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -179,7 +179,7 @@ namespace mln
 
   template <typename P>
   std::size_t
-  queue_p_fast<P>::npoints() const
+  queue_p_fast<P>::nsites() const
   {
     mln_precondition(this->end_ >= this->begin_);
     return (this->end_ - this->begin_);
@@ -189,7 +189,7 @@ namespace mln
   const box_<P>&
   queue_p_fast<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -263,7 +263,7 @@ namespace mln
   const P&
   queue_p_fast<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return q_[begin_ + i];
   }
 

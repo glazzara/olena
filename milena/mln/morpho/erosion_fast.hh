@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,9 +37,10 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/geom/shift.hh>
-# include <mln/set/diff.hh>
+# include <mln/core/alias/dpoint2d.hh>
+
+# include <mln/win/shift.hh>
+# include <mln/win/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/accu/min_h.hh>
@@ -79,8 +80,8 @@ namespace mln
       template <typename I, typename W, typename O>
       struct erosion_fast_t
       { 
-	typedef mln_point(I)  P;
-	typedef mln_dpoint(I) D;
+	typedef mln_psite(I)  P;
+	typedef mln_dpsite(I) D;
 
 	// i/o
 
@@ -107,12 +108,12 @@ namespace mln
 	  // aux data
 	  min(input.values()),
 	  p(),
-	  win_fp(set::diff(win, geom::shift(win, left))),
-	  win_fm(set::diff(geom::shift(win, left),  win)),
-	  win_bp(set::diff(win, geom::shift(win, right))),
-	  win_bm(set::diff(geom::shift(win, right), win)),
-	  win_dp(set::diff(win, geom::shift(win, up))),
-	  win_dm(set::diff(geom::shift(win, up),    win)),
+	  win_fp(win - win::shift(win, left)),
+	  win_fm(win::shift(win, left)  - win),
+	  win_bp(win - win::shift(win, right)),
+	  win_bm(win::shift(win, right) - win),
+	  win_dp(win - win::shift(win, up)),
+	  win_dm(win::shift(win, up)    - win),
 	  q_fp(win_fp, p),  q_fm(win_fm, p),
 	  q_bp(win_bp, p),  q_bm(win_bm, p),
 	  q_dp(win_dp, p),  q_dm(win_dm, p)

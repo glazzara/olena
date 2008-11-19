@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,14 +33,15 @@
  * \brief Definition of the mln::win::cube3d window.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint3d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/internal/classical_window_base.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(cube3d);
+
 
   namespace win
   {
@@ -64,29 +65,8 @@ namespace mln
      * o o o \n
      * is defined with length = 3.
      */
-    struct cube3d : public Window< cube3d >,
-		    public internal::dpoints_base_< dpoint3d, cube3d >
+    struct cube3d : public internal::classical_window_base< dpoint3d, cube3d >
     {
-      /// Point associated type.
-      typedef point3d point;
-
-      /// Dpoint associated type.
-      typedef dpoint3d dpoint;
-
-      /*! \brief Point_Iterator type to browse a cube such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a cube such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
       /*! \brief Constructor.
        *
        * \param[in] length Length, thus height, of the cube3d.
@@ -95,18 +75,6 @@ namespace mln
        */
       cube3d(unsigned length);
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
       /*! \brief Give the cube length, that is, its height.
        */
       unsigned length() const;
@@ -114,27 +82,13 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      cube3d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       unsigned length_;
     };
-
-
-    /*! \brief Print a cube3d window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A cube3d window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::cube3d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const cube3d& win);
 
 
 
@@ -149,19 +103,7 @@ namespace mln
       for (int sli = - dind; sli <= dind; ++sli)
 	for (int row = - dind; row <= dind; ++row)
 	  for (int col = - dind; col <= dind; ++col)
-	    insert(make::dpoint3d(sli, row, col));
-    }
-
-    inline
-    bool cube3d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool cube3d::is_symmetric() const
-    {
-      return true;
+	    insert(dpoint3d(sli, row, col));
     }
 
     inline
@@ -171,22 +113,15 @@ namespace mln
     }
 
     inline
-    unsigned cube3d::delta() const
+    unsigned cube3d::delta_() const
     {
       return length_ / 2;
     }
 
     inline
-    cube3d& cube3d::sym()
+    void cube3d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const cube3d& win)
-    {
-      ostr << "[cube3d: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[cube3d: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,17 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/sort_points_full.cc
+/*! \file tests/level/sort_psites_full.cc
  *
  * \brief Tests on mln::level::sort_points.
  */
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/sub_image.hh>
 
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/literal/origin.hh>
@@ -46,7 +46,7 @@
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-#include <mln/core/p_array.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/level/saturate.hh>

@@ -37,8 +37,8 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 
-# include <mln/core/box2d.hh>
-# include <mln/core/box3d.hh>
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/alias/box3d.hh>
 
 // Specializations are in:
 # include <mln/debug/println_with_border.spe.hh>
@@ -65,7 +65,7 @@ namespace mln
       void
       println_with_border(const S&, const I& input)
       {
- 	for (size_t i = 0; i < input.ncells(); i++)
+ 	for (size_t i = 0; i < input.nelements(); i++)
 	  std::cout << format(input.buffer()[i]) << ' ';
 	std::cout << std::endl;
       }
@@ -81,7 +81,7 @@ namespace mln
     {
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
-      impl::println_with_border(exact(input).bbox(), exact(input));
+      impl::println_with_border(geom::bbox(exact(input)), exact(input));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,7 +45,7 @@ namespace mln
     /// Morphological height closing.
     template <typename I, typename N, typename O>
     void closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output);
+			unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -52,11 +53,11 @@ namespace mln
     template <typename I, typename N, typename O>
     inline
     void closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			std::size_t lambda, Image<O>& output)
+			unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
       // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::height_<I> >(input, nbh, lambda, output);
+      closing_attribute< accu::height<I> >(input, nbh, lambda, output);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

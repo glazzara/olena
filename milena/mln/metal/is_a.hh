@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,14 +37,14 @@
 
 
 /// \brief Expand to a "metalic" boolean expression stating whether \a
-/// T is a subclass of \a U or not.
+/// T is a subclass of \a M or not.
 ///
-/// In the current implementation, \a U must be template class with
+/// In the current implementation, \a M must be template class with
 /// exactly one, non template parameter.
 ///
 /// This macro is the recommended user interface of the "is_a"
 /// facility.
-# define mlc_is_a(T, U) mln::metal::is_a<T, U>
+# define mlc_is_a(T, M) mln::metal::is_a<T, M>
 
 
 
@@ -66,12 +66,18 @@ namespace mln
 	static T* ptr();
       };
 
-      template <typename T, template <class> class U>
+      template <typename T>
+      struct make_< T& >
+      {
+	static T* ptr();
+      };
+
+      template <typename T, template <class> class M>
       struct helper_is_a_
       {
 
 	template<class V>
-	static yes_ selector(U<V>*);
+	static yes_ selector(M<V>*);
 	static no_  selector(...);
       };
 
@@ -83,14 +89,22 @@ namespace mln
      *
      * FIXME: Doc!
      */
-    template <typename T, template <class> class U>
-    struct is_a : bool_<( sizeof( internal::helper_is_a_< T, U >::selector(internal::make_< T >::ptr()) )
+    template <typename T, template <class> class M>
+    struct is_a : bool_<( sizeof( internal::helper_is_a_< T, M >::selector(internal::make_< T >::ptr()) )
 			  ==
 			  sizeof( internal::yes_ )  )>
     {};
     
-    template <typename T, template <class> class U>
-    struct is_a< const T, U > : is_a< T, U >::eval
+    template <typename T, template <class> class M>
+    struct is_a< const T, M > : is_a< T, M >::eval
+    {};
+    
+    template <typename T, template <class> class M>
+    struct is_a< T&, M > : is_a< T, M >::eval
+    {};
+    
+    template <typename T, template <class> class M>
+    struct is_a< const T&, M > : is_a< T, M >::eval
     {};
     
 

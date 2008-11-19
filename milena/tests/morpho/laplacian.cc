@@ -30,14 +30,14 @@
  * \brief Test on mln::morpho::laplacian.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u_sat.hh>
-#include <mln/core/cast_image.hh>
+#include <mln/core/image/cast_image.hh>
 #include <mln/pw/image.hh>
 #include <mln/arith/plus.hh>
 

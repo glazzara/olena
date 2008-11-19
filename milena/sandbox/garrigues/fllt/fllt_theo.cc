@@ -29,10 +29,10 @@
 #include <iostream>
 #include <sstream>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -46,7 +46,7 @@
 #include <mln/io/pgm/save.hh>
 
 
-#include <mln/core/cast_image.hh>
+#include <mln/core/image/cast_image.hh>
 
 namespace mln
 {
@@ -163,7 +163,7 @@ namespace mln
 	mln_niter(Nbh) x(nbh, a);
 
 	// Stop.
-	if (A.npoints() == 0)
+	if (A.nsites() == 0)
 	  goto end;
 
 	// R <- R U A
@@ -184,9 +184,9 @@ namespace mln
 
 
 #ifdef FLLTDEBUG
-	std::cout << "points of A : " << A.npoints() << std::endl;
+	std::cout << "points of A : " << A.nsites() << std::endl;
 #endif
-	mln_assertion(A.npoints() > 0);
+	mln_assertion(A.nsites() > 0);
 	R_box.take(A.bbox());
 	mln_assertion(R_box.is_valid());
 
@@ -214,7 +214,7 @@ namespace mln
 	// gN = min u(x) for all x in N
 	unsigned i;
 	for (i = 0; i < 256; ++i)
-	  if (N[i].npoints() != 0)
+	  if (N[i].nsites() != 0)
 	  {
 	    gN = i;
 	    break;
@@ -229,7 +229,7 @@ namespace mln
 #endif
 	if (i == 256)
 	  goto step_4c;
-	mln_assertion(N[gN].npoints() > 0);
+	mln_assertion(N[gN].nsites() > 0);
 
 	// FIXME: update the number of CC of the border of R
       }
@@ -249,8 +249,8 @@ namespace mln
 
 	  A = N[gN];
 	  N[gN].clear();
-	  mln_assertion(A.npoints() > 0);
-	  mln_assertion(N[gN].npoints() == 0);
+	  mln_assertion(A.nsites() > 0);
+	  mln_assertion(N[gN].nsites() == 0);
 	  goto step_3;
 	}
 	// b)
@@ -261,8 +261,8 @@ namespace mln
 #endif
 	  A = N[gN];
 	  N[gN].clear();
-	  mln_assertion(A.npoints() > 0);
-	  mln_assertion(N[gN].npoints() == 0);
+	  mln_assertion(A.nsites() > 0);
+	  mln_assertion(N[gN].nsites() == 0);
 	  goto step_3;
 	}
 	// c)

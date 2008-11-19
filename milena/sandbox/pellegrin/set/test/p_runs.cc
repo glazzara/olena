@@ -30,7 +30,7 @@
  * \brief Test on mln::p_runs_ and related tools.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/core/p_runs.hh>
 
 
@@ -52,23 +52,23 @@ int main()
   using namespace mln;
 
   point2d p, q, r;
-  p = make::point2d(2, 4);
-  q = make::point2d(18, 42);
-  r = make::point2d(50, 76);
+  p = point2d(2, 4);
+  q = point2d(18, 42);
+  r = point2d(50, 76);
 
   // Pset test
   p_runs_<point2d> ps;
   p_runs_<point2d> ps2;
 
   ps.insert(p_run<point2d>(p, 7));
-  mln_assertion(ps.npoints() == 7);
+  mln_assertion(ps.nsites() == 7);
 
   ps.insert(p_run<point2d>(q, 5));
-  mln_assertion(ps.npoints() == 12);
+  mln_assertion(ps.nsites() == 12);
 
   ps.insert(p_run<point2d>(r, 2));
 
-  ps.insert(p_run<point2d>(make::point2d(17,40), 6));
+  ps.insert(p_run<point2d>(point2d(17,40), 6));
 
   // Psite declaration
   runs_psite<point2d>  site(ps, 5, 0);

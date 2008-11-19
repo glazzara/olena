@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -102,11 +103,11 @@ namespace mln
       template <typename II>
       proxy<I>& operator=(const proxy<II>& rhs);
 
-      /// Convertion (read access); general version.
+      /// Conversion (read access); general version.
       template <typename V>
       operator V() const;
 
-      /// Convertion (read access); precise version.
+      /// Conversion (read access); precise version.
       operator mln_value(I)() const;
 
       /// Explicit read access.
@@ -140,11 +141,11 @@ namespace mln
       /// Destructor.
       ~proxy();
 
-      /// Convertion (read access); general version.
+      /// Conversion (read access); general version.
       template <typename V>
       operator V() const;
 
-      /// Convertion (read access); precise version.
+      /// Conversion (read access); precise version.
       operator mln_value(I)() const;
 
       /// Explicit read access.

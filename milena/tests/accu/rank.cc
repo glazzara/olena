@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/rank.cc
- *
- * \brief Tests on mln::accu::rank.
- */
+/// \file tests/accu/rank.cc
+///
+/// Tests on mln::accu::rank.
 
 #include <mln/accu/rank.hh>
 #include <mln/value/int_u8.hh>
 
-using namespace mln;
+
 
 template <typename A>
-void fill(Accumulator<A>& accu_)
+void fill(mln::Accumulator<A>& accu_)
 {
   A& accu = exact(accu_);
   accu.take(2);
@@ -49,50 +48,62 @@ void fill(Accumulator<A>& accu_)
   accu.take(5);
 }
 
+
 int main()
 {
+  using namespace mln;
+  using value::int_u8;
+
   {
-    accu::rank_<value::int_u8> accu(0, 8);
+    accu::meta::rank r(4, 9);
+    accu::rank<int_u8> a = accu::unmeta(r, int_u8());
+    mln_assertion(a.k() == 4 && a.n() == 9);
+//     Meta_Accumulator<accu::meta::rank>& R = r;
+//     accu::unmeta(R, int_u8());
+  }
+
+  {
+    accu::rank<int_u8> accu(0, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 1);
+    mln_assertion(accu.to_result() == 1u);
   }
   {
-    accu::rank_<value::int_u8> accu(1, 8);
+    accu::rank<int_u8> accu(1, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 2);
+    mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank_<value::int_u8> accu(2, 8);
+    accu::rank<int_u8> accu(2, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 2);
+    mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank_<value::int_u8> accu(3, 8);
+    accu::rank<int_u8> accu(3, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 3);
+    mln_assertion(accu.to_result() == 3u);
   }
   {
-    accu::rank_<value::int_u8> accu(4, 8);
+    accu::rank<int_u8> accu(4, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 4);
+    mln_assertion(accu.to_result() == 4u);
   }
   {
-    accu::rank_<value::int_u8> accu(5, 8);
+    accu::rank<int_u8> accu(5, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank_<value::int_u8> accu(6, 8);
+    accu::rank<int_u8> accu(6, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank_<value::int_u8> accu(7, 8);
+    accu::rank<int_u8> accu(7, 8);
     fill(accu);
-    mln_assertion(accu.to_result() == 5);
+    mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank_<bool> accu_bool(1, 5);
+    accu::rank<bool> accu_bool(1, 5);
     accu_bool.take(true);
     accu_bool.take(true);
     accu_bool.take(true);

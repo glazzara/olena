@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,24 +30,25 @@
  * \brief Tests on mln::convert::to_p_set.
  */
 
-#include <mln/core/point2d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/box2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
 
 #include <mln/level/fill.hh>
 
 #include <mln/convert/to_p_set.hh>
+#include <mln/util/ord.hh>
 
 using namespace mln;
 
   void test(p_set<point2d> ref, p_set<point2d> cmp)
   {
-    mln_assertion(ref.npoints() == cmp.npoints());
-    for (unsigned i = 0; i < ref.npoints(); ++i)
+    mln_assertion(ref.nsites() == cmp.nsites());
+    for (unsigned i = 0; i < ref.nsites(); ++i)
       mln_assertion(ref[i] == cmp[i]);
   }
 
@@ -60,7 +61,10 @@ int main()
     d(0,-1);
 
   p_set<point2d> ref;
-  ref.insert(a).insert(b).insert(c).insert(d);
+  ref.insert(a);
+  ref.insert(b);
+  ref.insert(c);
+  ref.insert(d);
   // Reference constructed.
 
   // Nbh :
@@ -71,7 +75,7 @@ int main()
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
   level::fill(ima, false);
-  level::fill(inplace(ima | ref), true);
+  level::fill((ima | ref).rw(), true);
   p_set<point2d> test_ima = convert::to_p_set(ima);
   test(ref, test_ima);
 
@@ -86,11 +90,13 @@ int main()
   test(ref, test_win);
 
   // std::set :
-  std::set<point2d> set;
+  std::set<point2d, util::ord<point2d> > set;
+
   set.insert(a);
   set.insert(b);
   set.insert(c);
   set.insert(d);
+
   p_set<point2d> test_set = convert::to_p_set(set);
   test(ref, test_set);
 }

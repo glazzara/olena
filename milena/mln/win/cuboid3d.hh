@@ -31,18 +31,19 @@
 /// \file mln/win/cuboid3d.hh
 /// \brief Definition of the mln::win::cuboid3d window.
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint3d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/internal/classical_window_base.hh>
+# include <mln/core/alias/dpoint3d.hh>
 
 
 namespace mln
 {
 
+  mln_internal_add_classical_window_trait(cuboid3d);
+
+
   namespace win
   {
- 
+
     /** \brief Cuboid defined on the 3-D square grid.
 
 	A cuboid3d is a 3-D window with cuboid (also known as
@@ -55,48 +56,27 @@ namespace mln
            o o o o o o o\n
           o o o o o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
             o o o o o o o\n
            o o o o o o o\n
           o o o x o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
             o o o o o o o\n
            o o o o o o o\n
           o o o o o o o\n
          o o o o o o o\n
-        o o o o o o \on
+        o o o o o o o\n
 
         is defined with depth = 3, height = 5 and width = 7.
 
         Reference:
           http://en.wikipedia.org/wiki/Cuboid
     */
-    struct cuboid3d : public Window< cuboid3d >,
-		      public internal::dpoints_base_< dpoint3d, cuboid3d >
+    struct cuboid3d : public internal::classical_window_base< dpoint3d, cuboid3d >
     {
-      /// Point Site associated type.
-      typedef point3d psite;
-
-      /// Point associated type.
-      typedef point3d point;
-
-      /// Dpoint associated type.
-      typedef dpoint3d dpoint;
-
-      /// \brief Point_Iterator type to browse a cuboid such as: "for
-      /// each slice (increasing), for each row (increasing), for each
-      /// column (increasing)."
-      typedef dpoints_fwd_piter<dpoint3d> fwd_qiter;
-
-      /// \brief Point_Iterator type to browse a cuboid such as: "for
-      /// each slice (decreasing), for each row (decreasing), for each
-      /// column (decreasing)."
-      typedef dpoints_bkd_piter<dpoint3d> bkd_qiter;
-
-
       /// \brief Constructor.
       ///
       /// \param[in] depth  The depth of the cuboid3d.
@@ -106,16 +86,6 @@ namespace mln
       /// \pre Argument \a depth, \a height and \a width must be odd.
       cuboid3d(unsigned depth, unsigned height, unsigned width);
 
-
-      /// Properties of the window.
-      /// \{
-      /// \brief Test if the window is centered.
-      /// \return \c true (always).
-      bool is_centered() const;
-      /// \brief Test if the window is symmetric.
-      /// \return \c true (always).
-      bool is_symmetric() const;
-      /// \}
 
       /// Accessors.
       /// \{
@@ -132,10 +102,9 @@ namespace mln
 
       /// \brief Give the maximum coordinate gap between the center of
       /// the window and a point of the window.
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      cuboid3d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       /// The depth of the cuboid (expressed as a number of slices).
@@ -147,17 +116,6 @@ namespace mln
     };
 
 
-    /// \brief Print a cuboid window \a win into the output stream \a ostr.
-    ///
-    /// \param[in,out] ostr An output stream.
-    /// \param[in] win A cuboid window.
-    ///
-    /// \return The modified output stream \a ostr.
-    ///
-    /// \relates mln::win::cuboid3d
-    std::ostream& operator<<(std::ostream& ostr, const cuboid3d& win);
-
- 
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -174,21 +132,7 @@ namespace mln
       for (int sli = -dsli; sli <= dsli; ++sli)
 	for (int row = -drow; row <= drow; ++row)
 	  for (int col = -dcol; col <= dcol; ++col)
-	    insert(make::dpoint3d(sli, row, col));
-    }
-
-    inline
-    bool
-    cuboid3d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool
-    cuboid3d::is_symmetric() const
-    {
-      return true;
+	    insert(dpoint3d(sli, row, col));
     }
 
     inline
@@ -221,7 +165,7 @@ namespace mln
 
     inline
     unsigned
-    cuboid3d::delta() const
+    cuboid3d::delta_() const
     {
       if (depth_ > height_)
 	if (depth_ > width_)
@@ -240,20 +184,12 @@ namespace mln
     }
 
     inline
-    cuboid3d&
-    cuboid3d::sym()
+    void
+    cuboid3d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream&
-    operator<<(std::ostream& ostr, const cuboid3d& win)
-    {
-      ostr << "[cuboid3d: width=" << win.depth()
-	   << ", depth=" << win.width()
-	   << ", height=" << win.height() << ']';
-      return ostr;
+      ostr << "[cuboid3d: width=" << depth_
+	   << ", depth=" << width_
+	   << ", height=" << height_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

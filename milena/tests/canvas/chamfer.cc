@@ -30,16 +30,14 @@
  * \brief Tests on mln::geom::chamfer.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if_value.hh>
-#include <mln/core/inplace.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+
 
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
-#include <mln/core/w_window2d_int.hh>
-#include <mln/core/w_window2d_float.hh>
-#include <mln/core/image_if_interval.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_float.hh>
 
 #include <mln/make/win_chamfer.hh>
 #include <mln/geom/chamfer.hh>
@@ -71,7 +69,7 @@ int main()
 	{16, 14, 12, 10,  8, 10, 12, 14, 16}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
   }
 
@@ -94,7 +92,7 @@ int main()
 	{12, 11, 10, 9, 8, 9, 10, 11, 12}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
   }
 
@@ -120,7 +118,7 @@ int main()
 	{12, 10, 9, 8, 8, 8, 9, 10, 12}
       };
 
-    image2d<unsigned> ref (make::image2d(r));
+    image2d<unsigned> ref (make::image(r));
     mln_assertion (out == ref);
 
   }

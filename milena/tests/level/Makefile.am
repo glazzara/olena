@@ -11,8 +11,12 @@ check_PROGRAMS =				\
   assign					\
   compare					\
   compute					\
+  convert					\
   fill						\
+  fill_with_value				\
+  fill_with_image				\
   median					\
+  median_					\
   median_dir					\
   median_fast					\
   median_hline2d				\
@@ -23,8 +27,9 @@ check_PROGRAMS =				\
   sort_psites					\
   sort_psites_full				\
   stretch					\
-  take						\
-  transform
+  transform					\
+  transform_inplace				\
+  update
 
 abs_SOURCES = abs.cc
 all_headers_SOURCES = all_headers.cc
@@ -32,8 +37,12 @@ apply_SOURCES = apply.cc
 assign_SOURCES = assign.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
+convert_SOURCES = convert.cc
 fill_SOURCES = fill.cc
+fill_with_value_SOURCES = fill_with_value.cc
+fill_with_image_SOURCES = fill_with_image.cc
 median_SOURCES = median.cc
+median__SOURCES = median_.cc
 median_dir_SOURCES = median_dir.cc
 median_fast_SOURCES = median_fast.cc
 median_hline2d_SOURCES = median_hline2d.cc
@@ -43,8 +52,9 @@ paste_SOURCES = paste.cc
 saturate_SOURCES = saturate.cc
 sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc
-take_SOURCES = take.cc
 transform_SOURCES = transform.cc
+transform_inplace_SOURCES = transform_inplace.cc
+update_SOURCES = update.cc
 
 # Lengthy tests.
 sort_psites_full_SOURCES = sort_psites_full.cc

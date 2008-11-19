@@ -1,11 +1,11 @@
 #include <string>
-#include <mln/core/image2d.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/math/max.hh>
 #include <mln/math/min.hh>
 #include <mln/math/sqr.hh>
 # include <mln/value/int_u.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/sub_image.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>

@@ -32,11 +32,12 @@
 
 #include <cmath>
 #include <mln/win/rectangle2d.hh>
-#include <mln/geom/sym.hh>
+#include <mln/win/sym.hh>
 
 #include <mln/convert/to_image.hh>
 
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,8 +48,8 @@ int main()
 
   mln_assertion(rec.is_centered());
   mln_assertion(rec.is_symmetric());
-  mln_assertion(rec == geom::sym(rec));
-  mln_assertion(rec.ndpoints() == h * w);
+  mln_assertion(rec == win::sym(rec));
+  mln_assertion(rec.size() == h * w);
 
   mln_assertion(rec.delta() == 2);
 

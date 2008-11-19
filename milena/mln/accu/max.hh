@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MAX_HH
 # define MLN_ACCU_MAX_HH
 
-/*! \file mln/accu/max.hh
- *
- * \brief Define an accumulator that computes a max.
- */
+/// \file mln/accu/max.hh
+///
+/// Define an accumulator that computes a max.
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -46,24 +45,30 @@ namespace mln
   {
 
 
-    /*! \brief Generic max accumulator class.
-     *
-     * The parameter \c T is the type of values.
-     */
+    /// Generic max accumulator class.
+    ///
+    /// The parameter \c T is the type of values.
     template <typename T>
-    struct max_ : public mln::accu::internal::base_< T , max_<T> >
+    struct max : public mln::accu::internal::base< const T& , max<T> >
     {
       typedef T argument;
-      typedef T result;
 
-      max_();
+      max();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const max_<T>& other);
+      void take(const max<T>& other);
+      /// \}
 
-      T to_result() const;
+      /// Get the value of the accumulator.
+      const T& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -71,20 +76,24 @@ namespace mln
     };
 
 
-    template <typename I> struct max_< util::pix<I> >;
+    template <typename I> struct max< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for max.
-     */
-    struct max : public Meta_Accumulator< max >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for max.
+
+      struct max : public Meta_Accumulator< max >
       {
-	typedef max_<T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef accu::max<T> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 
@@ -92,7 +101,7 @@ namespace mln
 
     template <typename T>
     inline
-    max_<T>::max_()
+    max<T>::max()
     {
       init();
     }
@@ -100,7 +109,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::init()
+    max<T>::init()
     {
       t_ = mln_min(T);
     }
@@ -108,7 +117,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take_as_init(const argument& t)
+    max<T>::take_as_init(const argument& t)
     {
       t_ = t;
     }
@@ -116,7 +125,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take(const argument& t)
+    max<T>::take(const argument& t)
     {
       if (t > t_)
 	t_ = t;
@@ -125,7 +134,7 @@ namespace mln
     template <typename T>
     inline
     void
-    max_<T>::take(const max_<T>& other)
+    max<T>::take(const max<T>& other)
     {
       if (other.t_ > t_)
 	t_ = other.t_;
@@ -133,10 +142,18 @@ namespace mln
 
     template <typename T>
     inline
-    T
-    max_<T>::to_result() const
+    const T&
+    max<T>::to_result() const
     {
       return t_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    max<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

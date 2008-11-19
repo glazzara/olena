@@ -266,13 +266,13 @@ int32_t ** LCApreprocess(ctree *CT,   int32_t *Euler, int32_t *Depth, int32_t *R
       }
     }
   }
-  #ifdef _DEBUG_
+  //#ifdef _DEBUG_
   for (i=0; i<logn; i++) {
     for (j=0; j<nbRepresent; j++)
       printf("M[%d][%d] = %d - ", i, j, Minim[i][j]);
     printf("\n");
   }
-  #endif
+  //#endif
   return Minim;
 }
 

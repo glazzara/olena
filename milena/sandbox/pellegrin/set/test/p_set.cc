@@ -32,8 +32,8 @@
 
 #include <iterator>
 
-#include <mln/core/point2d.hh>
-#include <mln/core/p_set.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/site_set/p_set.hh>
 
 
 
@@ -43,11 +43,11 @@ int main()
 
   p_set<point2d> ps;
   ps
-    .insert(make::point2d(6, 9))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(4, 2))
-    .insert(make::point2d(5, 1));
-  mln_assertion(ps.npoints() == 3);
+    .insert(point2d(6, 9))
+    .insert(point2d(4, 2))
+    .insert(point2d(4, 2))
+    .insert(point2d(5, 1));
+  mln_assertion(ps.nsites() == 3);
 
   std::cout << ps.bbox() << std::endl;
 

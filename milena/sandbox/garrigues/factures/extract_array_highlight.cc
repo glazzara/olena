@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/all.hh>
 #include <mln/io/pbm/all.hh>
 #include <mln/geom/resize.hh>
@@ -37,7 +37,7 @@
 #include <mln/win/disk2d.hh>
 
 #include <mln/pw/all.hh>
-#include <mln/core/inplace.hh>
+
 #include <mln/level/stretch.hh>
 #include <mln/level/median.hh>
 #include <mln/morpho/gradient.hh>
@@ -45,7 +45,7 @@
 #include <mln/labeling/level.hh>
 #include <mln/literal/all.hh>
 
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/accu/all.hh>
 
@@ -150,7 +150,7 @@ int main()
 
   // Binarisation.
   ima2d_bool bin(in.domain());
-  level::paste(inplace(pw::value(in) > pw::cst(50) | in.domain()), bin);
+  level::paste(pw::value(in) > pw::cst(50) | in.domain(), bin);
 
   image2d<value::rgb8> output_h = highlight_hlines(bin);
   image2d<value::rgb8> output_v = highlight_vlines(bin);

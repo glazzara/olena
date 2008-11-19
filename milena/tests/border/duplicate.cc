@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
  * \brief Tests on mln::border::duplicate.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/duplicate.hh>
 
@@ -42,34 +43,33 @@ main (void)
 {
   image2d<int> ima(3, 3, 1);
 
-  debug::iota (ima);
-  border::duplicate (ima);
+  debug::iota(ima);
+  border::duplicate(ima);
 
-  mln_assertion(ima[ 0] == 1);
-  mln_assertion(ima[ 1] == 1);
-  mln_assertion(ima[ 2] == 2);
-  mln_assertion(ima[ 3] == 3);
-  mln_assertion(ima[ 4] == 3);
-  mln_assertion(ima[ 5] == 1);
-  mln_assertion(ima[ 6] == 1);
-  mln_assertion(ima[ 7] == 2);
-  mln_assertion(ima[ 8] == 3);
-  mln_assertion(ima[ 9] == 3);
-  mln_assertion(ima[10] == 4);
-  mln_assertion(ima[11] == 4);
-  mln_assertion(ima[12] == 5);
-  mln_assertion(ima[13] == 6);
-  mln_assertion(ima[14] == 6);
-  mln_assertion(ima[15] == 7);
-  mln_assertion(ima[16] == 7);
-  mln_assertion(ima[17] == 8);
-  mln_assertion(ima[18] == 9);
-  mln_assertion(ima[19] == 9);
-  mln_assertion(ima[20] == 7);
-  mln_assertion(ima[21] == 7);
-  mln_assertion(ima[22] == 8);
-  mln_assertion(ima[23] == 9);
-  mln_assertion(ima[24] == 9);
-
+  mln_assertion(ima.element( 0) == 1);
+  mln_assertion(ima.element( 1) == 1);
+  mln_assertion(ima.element( 2) == 2);
+  mln_assertion(ima.element( 3) == 3);
+  mln_assertion(ima.element( 4) == 3);
+  mln_assertion(ima.element( 5) == 1);
+  mln_assertion(ima.element( 6) == 1);
+  mln_assertion(ima.element( 7) == 2);
+  mln_assertion(ima.element( 8) == 3);
+  mln_assertion(ima.element( 9) == 3);
+  mln_assertion(ima.element(10) == 4);
+  mln_assertion(ima.element(11) == 4);
+  mln_assertion(ima.element(12) == 5);
+  mln_assertion(ima.element(13) == 6);
+  mln_assertion(ima.element(14) == 6);
+  mln_assertion(ima.element(15) == 7);
+  mln_assertion(ima.element(16) == 7);
+  mln_assertion(ima.element(17) == 8);
+  mln_assertion(ima.element(18) == 9);
+  mln_assertion(ima.element(19) == 9);
+  mln_assertion(ima.element(20) == 7);
+  mln_assertion(ima.element(21) == 7);
+  mln_assertion(ima.element(22) == 8);
+  mln_assertion(ima.element(23) == 9);
+  mln_assertion(ima.element(24) == 9);
 }
 

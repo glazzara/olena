@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_MAKE_IMAGE2D_HH
 # define MLN_MAKE_IMAGE2D_HH
 
-/*! \file mln/make/image2d.hh
- *
- * \brief Routine to create an mln::image2d in the 2D case.
- */
+/// \file mln/make/image2d.hh
+///
+/// Routine to create a 2D image from a 1D array.
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 
 
 namespace mln
@@ -42,27 +41,29 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an image2d from an 2d array of values.
+    /*! \brief Create an image2d from an 2D array of values.
      *
-     * \param[in] values 2d array.
+     * \param[in] values 2D array.
      *
      * \return A 2D image.
      */
-    template <typename V, unsigned R, unsigned C>
-    mln::image2d<V> image2d(V (&values)[R][C]);
+    template <typename V, unsigned S>
+    mln::image2d<V>
+    image2d(V (&values)[S]);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, unsigned R, unsigned C>
-    inline
+    template <typename V, unsigned S>
     mln::image2d<V>
-    image2d(V (&values)[R][C])
+    image2d(V (&values)[S])
     {
-      mln::image2d<V> tmp(R, C);
-      for (unsigned row = 0; row < R; ++row)
-	for (unsigned col = 0; col < C; ++col)
-	    tmp(make::point2d(row, col)) = values[row][col];
+      mlc_bool(S != 0)::check();
+      enum { s = mlc_sqrt_int(S) };
+      metal::bool_<(s * s == S)>::check();
+      mln::image2d<V> tmp;
+      convert::from_to(values, tmp);
       return tmp;
     }
 

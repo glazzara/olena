@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_BROWSING_FWD_HH
 # define MLN_CANVAS_BROWSING_FWD_HH
 
-/*! \file mln/canvas/browsing/fwd.hh
- *
- * \brief Canvas for forward browsing.
- */
+/// \file mln/canvas/browsing/fwd.hh
+///
+/// Canvas for forward browsing.
 
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
@@ -46,9 +46,8 @@ namespace mln
     namespace browsing
     {
 
+      /// Canvas for forward browsing
       /*!
-       * \brief Canvas for forward browsing
-       *
        * This canvas browse all the points of an image 'input' of type
        * 'I' from left to right and from top to bottom
        *
@@ -77,12 +76,13 @@ namespace mln
       {
 	template <typename F>
 	void operator()(F& f) const;
-      }
+      };
 
-      fwd;
-      
+      extern const fwd_t fwd;
 
 # ifndef MLN_INCLUDE_ONLY
+
+      const fwd_t fwd;
 
       template <typename F>
       inline
@@ -93,19 +93,13 @@ namespace mln
 	mln_precondition(f.input.has_data());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
-	trace::entering("canvas::browsing::fwd::init");
 	f.init();
-	trace::exiting("canvas::browsing::fwd::init");
 	for_all(p)
 	  {
 	    f.p = p;
-	trace::entering("canvas::browsing::fwd::next");
 	    f.next();
-	trace::exiting("canvas::browsing::fwd::next");
 	  }
-	trace::entering("canvas::browsing::fwd::final");
 	f.final();
-	trace::exiting("canvas::browsing::fwd::final");
 	trace::exiting("canvas::browsing::fwd");
       }
 

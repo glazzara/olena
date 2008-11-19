@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_TRANSLATE_IMAGE_HH
-# define MLN_CORE_TRANSLATE_IMAGE_HH
+#ifndef MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
+# define MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
 
-/*! \file mln/core/translate_image.hh
+/*! \file mln/core/image/translate_image.hh
  *
  * \brief Definition of an image class FIXME
  */
@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 
 
 namespace mln
@@ -51,11 +51,11 @@ namespace mln
     template <typename I>
     struct data_< translate_image<I> >
     {
-      data_(I& ima, const mln_dpoint(I) dp);
+      data_(I& ima, const mln_dpsite(I) dp);
 
       I			    ima_;
       box2d		    bb_;
-      const mln_dpoint(I)   dp_;
+      const mln_dpsite(I)   dp_;
     };
 
   } // end of namespace mln::internal
@@ -66,7 +66,7 @@ namespace mln
   {
 
     template <typename I>
-    struct image_< translate_image<I> > : default_image_morpher_< I, mln_value(I),
+    struct image_< translate_image<I> > : default_image_morpher< I, mln_value(I),
 								  translate_image<I> >
     {
 
@@ -86,10 +86,10 @@ namespace mln
    *
    */
   template <typename I>
-  struct translate_image : public mln::internal::image_identity_< I, mln_pset(I), translate_image<I> >
+  struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
   {
 
-    typedef mln::internal::image_morpher_< I, mln_pset(I), translate_image<I> > super_;
+    typedef mln::internal::image_morpher< I, mln_pset(I), translate_image<I> > super_;
 
     /// Return type of read-write access.
     typedef typename internal::morpher_lvalue_<I>::ret lvalue;
@@ -101,14 +101,14 @@ namespace mln
     using super_::has_data;
 
     /// Constructors.
-    translate_image(I& ima, const mln_dpoint(I) dp);
+    translate_image(I& ima, const mln_dpsite(I) dp);
     translate_image();
 
     /// Return domain of translated_image.
     const box2d& domain() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_psite(I)& ) const;
+    bool has(const mln_psite(I)& ) const;
 
     /// Read-only access of pixel value at point site \p p.
     mln_rvalue(I) operator()(const mln_psite(I)& p) const;
@@ -127,7 +127,7 @@ namespace mln
     // internal::data_< translate_image<I,S> >
 
     template <typename I>
-    data_< translate_image<I> >::data_(I& ima, const mln_dpoint(I) dp)
+    data_< translate_image<I> >::data_(I& ima, const mln_dpsite(I) dp)
       : ima_ (ima),
 	dp_ (dp)
     {
@@ -144,7 +144,7 @@ namespace mln
   } // end of namespace mln::internal
 
   template <typename I>
-  translate_image<I>::translate_image(I& ima, const mln_dpoint(I) dp)
+  translate_image<I>::translate_image(I& ima, const mln_dpsite(I) dp)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data_< translate_image<I> >(ima, dp);
@@ -156,18 +156,18 @@ namespace mln
   }
 
   template <typename I>
-  bool translate_image<I>::owns_(const mln_psite(I)& p) const
+  bool translate_image<I>::has(const mln_psite(I)& p) const
   {
-    mln_point(I) np = p - this->data_->dp_;
-    return this->data_->ima_.owns_(np);
+    mln_psite(I) np = p - this->data_->dp_;
+    return this->data_->ima_.has(np);
   }
 
   template <typename I>
   mln_rvalue(I)
   translate_image<I>::operator()(const mln_psite(I)& p) const
   {
-    mln_assertion(this->owns_(p));
-    mln_point(I) np = p - this->data_->dp_;
+    mln_assertion(this->has(p));
+    mln_psite(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }
 
@@ -176,8 +176,8 @@ namespace mln
   typename translate_image<I>::lvalue
   translate_image<I>::operator()(const mln_psite(I)& p)
   {
-    mln_assertion(this->owns_(p));
-    mln_point(I) np = p - this->data_->dp_;
+    mln_assertion(this->has(p));
+    mln_psite(I) np = p - this->data_->dp_;
     return this->data_->ima_(np);
   }
 
@@ -193,4 +193,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_TRANSLATE_IMAGE_HH
+#endif // ! MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH

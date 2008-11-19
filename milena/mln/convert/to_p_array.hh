@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,7 +32,7 @@
 /// \file mln/convert/to_p_array.hh
 /// \brief Conversions to mln::p_array.
 
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 
@@ -44,7 +45,7 @@ namespace mln
 
     /// Convert a point set \p pset into a p_array (point set vector).
     template <typename S>
-    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset);
+    p_array<mln_psite(S)> to_p_array(const Site_Set<S>& pset);
 
 
     /// Convert a window \p win centered at point \p p into a p_array
@@ -64,11 +65,11 @@ namespace mln
 
     template <typename S>
     inline
-    p_array<mln_psite(S)> to_p_array(const Point_Set<S>& pset_)
+    p_array<mln_psite(S)> to_p_array(const Site_Set<S>& pset_)
     {
       const S& pset = exact(pset_);
       p_array<mln_psite(S)> v;
-      v.reserve(pset.npoints());
+//       v.reserve(pset.nsites());
       // FIXME: Why mln_fwd_piter and not mln_piter?
       mln_fwd_piter(S) p(pset);
       for_all(p)
@@ -78,11 +79,12 @@ namespace mln
 
     template <typename W>
     inline
-    p_array<mln_psite(W)> to_p_array(const Window<W>& win,
+    p_array<mln_psite(W)> to_p_array(const Window<W>& win_,
 				     const mln_psite(W)& p)
     {
+      const W& win = exact(win_);
       p_array<mln_psite(W)> v;
-      v.reserve(exact(win).ndpoints());
+      v.reserve(win.size());
       mln_qiter(W) q(win, p);
       for_all(q)
 	v.append(q);
@@ -91,12 +93,12 @@ namespace mln
 
     template <typename I>
     inline
-    p_array<mln_point(I)>
+    p_array<mln_psite(I)>
     to_p_array(const Image<I>& img_)
     {
       const I& img = exact(img_);
 
-      p_array<mln_point(I)> a;
+      p_array<mln_psite(I)> a;
 
       mln_piter(I) p(img.domain());
       for_all(p)

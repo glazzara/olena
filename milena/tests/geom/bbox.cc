@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/p_set.hh>
-#include <mln/core/point2d.hh>
-#include <mln/core/box2d.hh>
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/box2d.hh>
 
 #include <mln/geom/bbox.hh>
 
@@ -36,10 +36,10 @@ int main()
   using namespace mln;
   p_set<point2d> s;
 
-  s.insert(make::point2d(0,0));
-  s.insert(make::point2d(0,5));
-  s.insert(make::point2d(5,0));
-  s.insert(make::point2d(5,5));
+  s.insert(point2d(0,0));
+  s.insert(point2d(0,5));
+  s.insert(point2d(5,0));
+  s.insert(point2d(5,5));
 
   mln_assertion(geom::bbox(s) == make::box2d(0,0,5,5));
 }

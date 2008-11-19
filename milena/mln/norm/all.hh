@@ -40,7 +40,7 @@ namespace mln
   /// Namespace of norms.
   namespace norm {
 
-    /// \internal Implementation namespace of norm namespace.
+    /// Implementation namespace of norm namespace.
     namespace impl {}
 
   }

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/bbox.hh>
 
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/int.hh>
@@ -47,7 +48,7 @@ namespace mln
 
     /// Give the minimum row of an image.
     template <typename I>
-    mln_coord(I) min_row(const Image<I>& ima);
+    mln_deduce(I, site, coord) min_row(const Image<I>& ima);
 
     /// Give the minimum row of an box 2d or 3d.
     template <typename B>
@@ -58,10 +59,10 @@ namespace mln
 
     template <typename I>
     inline
-    mln_coord(I) min_row(const Image<I>& ima)
+    mln_deduce(I, site, coord) min_row(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmin().row();
+      return geom::bbox(ima).pmin().row();
     }
 
 

@@ -25,21 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/line_graph_image.cc
+/// \file tests/morpho/line_graph_image_wst.cc
 /// \brief Tests on the Watershed Transform on a mln::line_graph_image.
 
 #include <vector>
 
-#include <mln/core/point2d.hh>
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/line_graph_elt_neighborhood.hh>
-#include <mln/core/line_graph_neighborhood_piter.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 #include <mln/morpho/meyer_wst.hh>
-
-#include <mln/draw/graph.hh>
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
 
 
 int main()
@@ -71,15 +67,15 @@ int main()
   std::vector<int> vertex_values;
   // We don't really care about values on vertices, because the algorithm
   // won't see them.  So all are set to 0.
-  g.add_vertex (make::point2d(0, 0)); vertex_values.push_back (0); // Vertex 0.
-  g.add_vertex (make::point2d(0, 1)); vertex_values.push_back (0); // Vertex 1.
-  g.add_vertex (make::point2d(0, 2)); vertex_values.push_back (0); // Vertex 2.
-  g.add_vertex (make::point2d(0, 3)); vertex_values.push_back (0); // Vertex 3.
+  g.add_vertex (point2d(0, 0)); vertex_values.push_back (0); // Vertex 0.
+  g.add_vertex (point2d(0, 1)); vertex_values.push_back (0); // Vertex 1.
+  g.add_vertex (point2d(0, 2)); vertex_values.push_back (0); // Vertex 2.
+  g.add_vertex (point2d(0, 3)); vertex_values.push_back (0); // Vertex 3.
 
-  g.add_vertex (make::point2d(1, 0)); vertex_values.push_back (0); // Vertex 4.
-  g.add_vertex (make::point2d(1, 1)); vertex_values.push_back (0); // Vertex 5.
-  g.add_vertex (make::point2d(1, 2)); vertex_values.push_back (0); // Vertex 6.
-  g.add_vertex (make::point2d(1, 3)); vertex_values.push_back (0); // Vertex 7.
+  g.add_vertex (point2d(1, 0)); vertex_values.push_back (0); // Vertex 4.
+  g.add_vertex (point2d(1, 1)); vertex_values.push_back (0); // Vertex 5.
+  g.add_vertex (point2d(1, 2)); vertex_values.push_back (0); // Vertex 6.
+  g.add_vertex (point2d(1, 3)); vertex_values.push_back (0); // Vertex 7.
 
   // Edges.
   std::vector<int> edge_values;

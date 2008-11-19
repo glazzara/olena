@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,13 @@
 #ifndef MLN_LEVEL_NAIVE_MEDIAN_HH
 # define MLN_LEVEL_NAIVE_MEDIAN_HH
 
-/*! \file mln/level/naive/median.hh
- *
- * \brief Naive version of median filtering.
- */
+/// \file mln/level/naive/median.hh
+///
+/// Naive version of median filtering.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/window2d.hh>
-# include <mln/accu/median.hh>
+# include <mln/core/alias/window2d.hh>
+# include <mln/level/median.hh>
 
 
 namespace mln
@@ -47,9 +47,9 @@ namespace mln
     namespace naive
     {
 
-      /*! Compute in \p output the median filter of image \p input by
-       *  the window \p win.
-       *
+      /// Compute in \p output the median filter of image \p input by
+      ///  the window \p win.
+      /*!
        * \param[in] input The image to be filtered.
        * \param[in] win The window.
        * \param[in,out] output The output image.
@@ -79,7 +79,7 @@ namespace mln
 	{
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
-	  accu::median<mln_vset(I)> med(input.values());
+	  accu::median_h<mln_value(I)> med;
 
 	  for_all(p)
 	    {

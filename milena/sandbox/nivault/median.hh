@@ -36,16 +36,16 @@
 # include <mln/core/concept/image.hh>
 # include <mln/geom/size2d.hh>
 
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/vline2d.hh>
-# include <mln/core/t_image.hh>
+# include <mln/core/image/t_image.hh>
 # include <mln/core/dpoint.hh>
 
 # include <mln/accu/median.hh>
 # include <mln/canvas/browsing/snake_fwd.hh>
 
-# include <mln/geom/shift.hh>
+# include <mln/win/shift.hh>
 # include <mln/set/diff.hh>
 
 # include <mln/border/resize.hh>
@@ -90,7 +90,7 @@ namespace mln
       template <typename I, typename O>
       struct median_dir_t
       {
-	typedef mln_point(I) point;
+	typedef mln_psite(I) point;
 	enum { dim = point::dim };
 
 	// i/o
@@ -100,7 +100,7 @@ namespace mln
 	O& output;
 
 	// aux data
-	const mln_point(I)
+	const mln_psite(I)
 	  pmin = input.domain().pmin(),
 	  pmax = input.domain().pmax();
 	const mln_coord(I)
@@ -132,9 +132,9 @@ namespace mln
 	{
 	}
 
-	void process(const mln_point(I)& p_)
+	void process(const mln_psite(I)& p_)
 	{
-	  mln_point(I)
+	  mln_psite(I)
 	    p  = p_,
 	    pt = p,
 	    pu = p;
@@ -241,7 +241,7 @@ namespace mln
 		    Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       mln_precondition(dir < P::dim);
       mln_precondition(length % 2 == 1);
       impl::median_dir_(exact(input), exact(win), exact(output)); 

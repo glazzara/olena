@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/find_full.cc
- *
- * \brief Tests on mln::border::find.
- */
+/// \file tests/border/find_full.cc
+///
+/// Tests on mln::border::find.
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/sub_image.hh>
 
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 #include <mln/border/find.hh>
 #include <mln/literal/origin.hh>
@@ -45,7 +45,7 @@
 
 #include <mln/debug/iota.hh>
 #include <mln/border/find.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/routine/clone.hh>
 
 
 struct f_box1d_t : mln::Function_p2b< f_box1d_t >
@@ -98,7 +98,7 @@ int main()
   f_box1d_t f_b1(b1);
   f_box2d_t f_b2(b2);
   f_box3d_t f_b3(b3);
-  mln::fun::p2b::chess_t c_b;
+  mln::fun::p2b::chess c_b;
 
   {
     typedef image1d<int> I;
@@ -129,7 +129,7 @@ int main()
     image_if<I, f_box2d_t > imaif(ima, f_b2);
     mln_assertion(border::find(imaif) == 42);
 
-    image_if<I, fun::p2b::chess_t > imaif_chess(ima, c_b);
+    image_if<I, fun::p2b::chess > imaif_chess(ima, c_b);
     mln_assertion(border::find(imaif_chess) == 42);
 
 

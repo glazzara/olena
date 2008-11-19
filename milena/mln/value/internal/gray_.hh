@@ -125,7 +125,7 @@ namespace mln
     namespace internal
     {
 
-      /// \internal General gray-level class where n bits is not know at compile-time.
+      /// General gray-level class where n bits is not know at compile-time.
       /// This class is used for exchange between gray-level types purpose.
       template <unsigned n>
       class gray_
@@ -171,11 +171,11 @@ namespace mln
 	template <unsigned m>
 	operator gray_<m>() const;
 
-	/// Convertion to graylevel.
+	/// Conversion to graylevel.
 	template <unsigned m>
 	operator graylevel<m>() const;
 
-	/// Convertion to graylevel_f.
+	/// Conversion to graylevel_f.
  	operator graylevel_f() const;
 
       };

@@ -45,45 +45,20 @@ namespace mln
     template <typename E>
     struct Window : public Object<E>
     {
-      /*! \brief Point_Iterator type associated to this window to browse its
+      /*! \brief Site_Iterator type associated to this window to browse its
        * points.
        */
       typedef void qiter;
 
-      /*! \brief Point_Iterator type associated to this window to browse its
+      /*! \brief Site_Iterator type associated to this window to browse its
        * points in a forward way.
        */
       typedef void fwd_qiter;
 
-      /*! \brief Point_Iterator type associated to this window to browse its
+      /*! \brief Site_Iterator type associated to this window to browse its
        * points in a backward way.
        */
       typedef void bkd_qiter;
-
-      /*! \brief Test if the window is empty.
-       *
-       * A window of null size is empty.
-       */
-      bool is_empty() const;
-
-      /*! \brief Test if the window is centered.
-       *
-       * A window is centered is the origin belongs to the window.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the maximum coordinate gap between the window
-	center and a window point.
-       */
-      unsigned delta() const;
-
-      /*! \brief Apply a central symmetry to the target window.
-       */
-      E& sym();
     };
 
   } // end of namespace mln::doc

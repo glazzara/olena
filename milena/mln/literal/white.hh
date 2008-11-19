@@ -48,9 +48,13 @@ namespace mln
 
 
     /// Literal white.
-    // FIXME: Make this a proper global (issue #43).
-    static const white_t white = white_t();
+    extern const white_t& white;
 
+# ifndef MLN_INCLUDE_ONLY
+
+    const white_t& white = white_t();
+
+# endif
 
   } // end of namespace mln::literal
 

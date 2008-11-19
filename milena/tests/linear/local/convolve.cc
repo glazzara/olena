@@ -30,10 +30,10 @@
  * \brief Tests on mln::linear::local::convolve.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/w_window2d_int.hh>
+#include <mln/core/alias/w_window2d_int.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/core/pixel.hh>
 
@@ -54,7 +54,7 @@ int main()
   image2d<int_u8> ima(size, size);
   debug::iota(ima);
 
-  point2d p = make::point2d(1,1);
+  point2d p = point2d(1,1);
   w_window2d_int w_win = make::w_window(win::rectangle2d(size, size),
 					pw::cst(1));
 

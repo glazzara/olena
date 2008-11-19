@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
 #include <mln/level/fill.hh>
@@ -6,7 +6,7 @@
 #include <mln/border/fill.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/debug/println.hh>
-#include <mln/core/translate_image.hh>
+#include <mln/core/image/translate_image.hh>
 
 int main ()
 {
@@ -16,7 +16,7 @@ int main ()
 
   I ima (4, 2, 1);
   debug::iota (ima);
-  translate_image<I> tmp (ima, make::point2d (0,2) - make::point2d (0,0));
+  translate_image<I> tmp (ima, point2d (0,2) - point2d (0,0));
   std::cout << "orginal image domain : "
 	    << ima.domain ()
 	    << std::endl

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_ACCU_V_HH
 # define MLN_ACCU_V_HH
 
-/*! \file mln/accu/v.hh
- *
- * \brief Define an accumulator that computes a min and a max.
- */
+/// \file mln/accu/v.hh
+///
+/// Define an accumulator that computes a min and a max.
+
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
@@ -46,69 +47,70 @@ namespace mln
   {
 
 
-    /*!
-     * \brief Generic val of accumulators.
-     */
+
+    /// Generic val of accumulators.
     template <typename A>
-    struct val_ : public mln::accu::internal::base_< mln_result(A) , val_<A> >
+    struct val : public mln::accu::internal::base< const mln_result(A)& , val<A> >
     {
       typedef mln_argument(A)  argument;
-      typedef mln_result(A) result;
 
-      val_();
-      val_(const A& a);
+      val();
+      val(const A& a);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const val_<A>& other);
-
+      void take(const val<A>& other);
       template <typename I>
-      void take_as_init(const util::pix<I>& pix)
-      {
-	a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
-      }
-
+      void take_as_init(const util::pix<I>& pix);
       template <typename I>
-      void take(const util::pix<I>& pix)
-      {
-	a_.take(pix.v());
-      }
+      void take(const util::pix<I>& pix);
+      /// \}
 
-      result to_result() const;
+      /// Get the value of the accumulator.
+      const mln_result(A)& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
       A a_;
     };
 
 
-    /*!
-     * \brief Meta accumulator for val.
-     */
-    template <typename mA>
-    struct val : public Meta_Accumulator< val<mA> >
+    namespace meta
     {
-      template <typename V>
-      struct with
-      {
-	typedef mln_accu_with(mA, mln_value(V)) A;
-	typedef val_<A> ret;
-      };
-    };
 
+      /// Meta accumulator for val.
+
+      template <typename mA>
+      struct val : public Meta_Accumulator< val<mA> >
+      {
+	template <typename V>
+	struct with
+	{
+	  typedef mln_accu_with(mA, mln_value(V)) A;
+	  typedef val<A> ret;
+	};
+      };
+
+    }
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A>
     inline
-    val_<A>::val_()
+    val<A>::val()
     {
       init();
     }
 
     template <typename A>
     inline
-    val_<A>::val_(const A& a)
+    val<A>::val(const A& a)
       : a_(a)
     {
       init();
@@ -117,7 +119,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::init()
+    val<A>::init()
     {
       a_.init();
     }
@@ -125,7 +127,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take_as_init(const argument& t)
+    val<A>::take_as_init(const argument& t)
     {
       a_.take_as_init(t);
     }
@@ -133,7 +135,7 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take(const argument& t)
+    val<A>::take(const argument& t)
     {
       a_.take(t);
     }
@@ -141,18 +143,45 @@ namespace mln
     template <typename A>
     inline
     void
-    val_<A>::take(const val_<A>& other)
+    val<A>::take(const val<A>& other)
     {
       a_.take(other.a_);
     }
 
     template <typename A>
+    template <typename I>
     inline
-    typename val_<A>::result
-    val_<A>::to_result() const
+    void
+    val<A>::take_as_init(const util::pix<I>& pix)
+    {
+      a_.take_as_init(pix.v()); // FIXME: Generalize with "value(pix)".
+    }
+
+    template <typename A>
+    template <typename I>
+    inline
+    void
+    val<A>::take(const util::pix<I>& pix)
+    {
+      a_.take(pix.v());
+    }
+
+    template <typename A>
+    inline
+    const mln_result(A)&
+    val<A>::to_result() const
     {
       return a_.to_result();
     }
+
+    template <typename A>
+    inline
+    bool
+    val<A>::is_valid() const
+    {
+      return a_.is_valid();
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 

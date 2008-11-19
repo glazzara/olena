@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,8 +30,8 @@
  * \brief Tests on mln::border::duplicate.
  */
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/duplicate.hh>
 #include <mln/value/int_u8.hh>
@@ -50,7 +50,7 @@ namespace mln
     border::duplicate(ima);
 
     for (int i = 0; i < c; ++i)
-      mln_assertion(ima[i] == ref[i]);
+      mln_assertion(ima.element(i) == ref[i]);
   }
 
   template <typename T>
@@ -64,7 +64,7 @@ namespace mln
     border::duplicate(ima);
 
     for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima[i] == ref[i]);
+      mln_assertion(ima.element(i) == ref[i]);
   }
 
 }

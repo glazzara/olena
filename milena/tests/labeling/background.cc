@@ -30,9 +30,9 @@
  * \brief Test on mln::labeling::background.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/labeling/background.hh>
 #include <mln/logical/not.hh>
 

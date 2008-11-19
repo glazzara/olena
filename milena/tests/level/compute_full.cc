@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,17 +30,17 @@
  * \brief Tests on mln::level::compute.
  */
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/accu/min.hh>
@@ -113,11 +113,11 @@ namespace mln
 
 
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
-      I min = level::compute(ima, acu_min);
-      I max = level::compute(ima, acu_max);
+      I min = level::compute(acu_min, ima);
+      I max = level::compute(acu_max, ima);
       mln_assertion(min == real_min);
       mln_assertion(max == real_max);
     }
@@ -125,11 +125,11 @@ namespace mln
     {
       sub_image<image1d<I>, box1d> sub_ima (ima, b1);
 
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
-      I min = level::compute(sub_ima, acu_min);
-      I max = level::compute(sub_ima, acu_max);
+      I min = level::compute(acu_min, sub_ima);
+      I max = level::compute(acu_max, sub_ima);
       mln_assertion(min == real_min2);
       mln_assertion(max == real_max2);
     }
@@ -138,11 +138,11 @@ namespace mln
       f_box1d_t f_b(b1);
       image_if<image1d<I>, f_box1d_t> if_ima(ima, f_b);
 
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
-      I min = level::compute(if_ima, acu_min);
-      I max = level::compute(if_ima, acu_max);
+      I min = level::compute(acu_min, if_ima);
+      I max = level::compute(acu_max, if_ima);
       mln_assertion(min == real_min2);
       mln_assertion(max == real_max2);
     }
@@ -173,11 +173,11 @@ namespace mln
       }
 
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
-      I min = level::compute(ima, acu_min);
-      I max = level::compute(ima, acu_max);
+      I min = level::compute(acu_min, ima);
+      I max = level::compute(acu_max, ima);
 
       mln_assertion(min == real_min);
       mln_assertion(max == real_max);
@@ -204,11 +204,11 @@ namespace mln
     else
       real_max = (I)(slis * rows * cols);
     {
-      accu::min_<I> acu_min;
-      accu::max_<I> acu_max;
+      accu::min<I> acu_min;
+      accu::max<I> acu_max;
 
-      I min = level::compute(ima, acu_min);
-      I max = level::compute(ima, acu_max);
+      I min = level::compute(acu_min, ima);
+      I max = level::compute(acu_max, ima);
 
       mln_assertion(min == real_min);
       mln_assertion(max == real_max);

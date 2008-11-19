@@ -30,9 +30,9 @@
  * \brief Tests on mln::border::resize.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/border/get.hh>
@@ -68,7 +68,7 @@ int main()
   mln_assertion(border::get(ima) == border);
   sub_image<I, box2d> sub(ima, b);
   mln_assertion( sub.has  (point2d(2,2)) == false &&
-		 sub.owns_(point2d(2,2)) == false );
+		 sub.has(point2d(2,2)) == false );
 
   // A subimage has no border so it cannot be resized => we get a compilation error as expected.
   // border::resize(sub, new_border);

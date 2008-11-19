@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,11 @@
 /*! \file mln/core/concept/accumulator.hh
  *
  * \brief Definition of the concept of mln::Accumulator.
- *
- * \todo Rename value as argument + Add a conversion op.
  */
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/proxy.hh>
+# include <mln/metal/fix_return.hh>
+# include <mln/metal/const.hh>
 
 
 namespace mln
@@ -48,8 +48,9 @@ namespace mln
   template <>
   struct Accumulator<void>
   {
-    typedef Object<void> super;
+    typedef Proxy<void> super;
   };
+
 
 
   /*! \brief Base class for implementation of accumulators.
@@ -60,18 +61,23 @@ namespace mln
    * class contents.
    */
   template <typename E>
-  struct Accumulator : public Object<E>
+  struct Accumulator : public Proxy<E>
   {
     typedef Accumulator<void> category;
 
     /*
       typedef argument;
       typedef result;
+      typedef q_result;
+
       void init();
       void take(const argument& t);
       void take(const E& other);
-      result to_result() const;
-      operator result_() const;
+
+      q_result to_result() const;
+      operator q_result const;
+
+      bool is_valid() const;
      */
 
     // Default impl.
@@ -82,10 +88,6 @@ namespace mln
     Accumulator();
   };
 
-  template <typename E>
-  std::ostream&
-  operator<<(std::ostream& ostr, const Accumulator<E>& accu);
-
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -93,8 +95,9 @@ namespace mln
   inline
   Accumulator<E>::Accumulator()
   {
-    typedef mln_argument(E)  argument;
-    typedef mln_result(E) result;
+    typedef mln_argument(E) argument;
+    typedef mln_result(E)   result;
+    typedef mln_q_result(E) q_result;
 
     void (E::*m1)() = & E::init;
     m1 = 0;
@@ -102,10 +105,14 @@ namespace mln
     m2 = 0;
     void (E::*m3)(const E&) = & E::take;
     m3 = 0;
-    result (E::*m4)() const = & E::to_result;
+
+    q_result (E::*m4)() const = & E::to_result;
     m4 = 0;
-//     result (E::*m5)() const = & E::operator result;
-//     m5 = 0;
+    q_result (E::*m5)() const = & E::operator q_result;
+    m5 = 0;
+
+    bool (E::*m6)() const = & E::is_valid;
+    m6 = 0;
   }
 
   template <typename E>
@@ -115,14 +122,6 @@ namespace mln
   {
     exact(this)->init();
     exact(this)->take(t);
-  }
-
-  template <typename E>
-  inline
-  std::ostream&
-  operator<<(std::ostream& ostr, const Accumulator<E>& accu)
-  {
-    return ostr << exact(accu).to_result();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

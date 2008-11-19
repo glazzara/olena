@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,7 +33,7 @@
 /// \brief Pixel iterators on a 1-D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
-# include <mln/core/point1d.hh>
+# include <mln/core/alias/point1d.hh>
 # include <mln/geom/size1d.hh>
 
 namespace mln

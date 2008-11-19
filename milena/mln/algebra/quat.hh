@@ -110,7 +110,7 @@ namespace mln
 
       typedef mln::algebra::quat sum;
     };
-    
+
 
   } // end of namespace mln::trait
 
@@ -191,6 +191,10 @@ namespace mln
 
       /// Transform into unit quaternion.
       quat& set_unit();
+
+      /// Rotate using quaternion definition of a rotation
+      template <unsigned n>
+      algebra::vec<n,float> rotate(const algebra::vec<n,float>& v);
 
       /// Transform into unit quaternion.
       template <typename T>
@@ -412,10 +416,10 @@ namespace mln
     {
       if (about_equal(norm::l2(this->to_vec()), 0.f))
         return *this;
-      
+
       v_.normalize();
       mln_postcondition(this->is_unit());
-      
+
       return *this;
     }
 
@@ -428,6 +432,7 @@ namespace mln
       mln_precondition(theta > - pi - mln_epsilon(float)
 		       && theta < pi + mln_epsilon(float));
       mln_precondition(about_equal(norm::l2(uv), 1.f));
+      (void) pi;
 
       this->v_[0] = cos(theta);
       float sint = sin(theta);
@@ -443,6 +448,7 @@ namespace mln
     quat::quat(unsigned one, float theta, const algebra::vec<3,float>& uv)
     {
       mln_precondition(one == 1);
+      (void) one;
       set_unit(theta, uv);
     }
 
@@ -475,6 +481,13 @@ namespace mln
       set_unit(theta(), uv);
     }
 
+    template <unsigned n>
+    inline
+    algebra::vec<n,float>
+    quat::rotate(const algebra::vec<n,float>& v)
+    {
+      return ((*this) * quat(0. ,v) * (*this).inv()).v();
+    }
 
     // Operators.
 

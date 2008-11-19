@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_MORPHO_EROSION_HH
 
 /// \file mln/morpho/erosion.hh
+///
 /// \brief Morphological erosion.
 
 # include <mln/morpho/includes.hh>
@@ -52,36 +54,52 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      inline
+      void
+      erosion_tests(const Image<I>& input_, const Window<W>& win_)
+      {
+	const I& input = exact(input_);
+	const W& win   = exact(win_);
+
+	mln_precondition(input.has_data());
+	mln_precondition(! win.is_empty());
+	// mln_precondition(win.is_valid());
+
+	(void) input;
+	(void) win;
+      }
+
+    } // end of mln::morpho::internal
+
+
     namespace impl
     {
 
       namespace generic
       {
 
+
 	// On function.
 
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-        erosion_on_function_(const I& input, const W& win)
+	erosion_on_function(const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_function_");
+	  trace::entering("morpho::impl::generic::erosion_on_function");
 
+	  internal::erosion_tests(input, win);
+
+	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
 	  mln_concrete(I) output;
-	  initialize(output, input);
+	  output = accu::transform(input, accu::meta::min(), win);
 
-	  accu::min_<mln_value(I)> min;
-	  mln_piter(I) p(input.domain());
-	  mln_qiter(W) q(win, p);
-	  for_all(p)
-	    {
-	      min.init();
-	      for_all(q) if (input.owns_(q))
-		min.take(input(q));
-	      output(p) = min;
-	    }
-
-	  trace::exiting("morpho::impl::generic::erosion_on_function_");
+	  trace::exiting("morpho::impl::generic::erosion_on_function");
 	  return output;
 	}
 
@@ -90,41 +108,17 @@ namespace mln
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-	erosion_on_set_(const I& input, const W& win)
+	erosion_on_set(const Image<I>& input, const Window<W>& win)
 	{
-	  trace::entering("morpho::impl::generic::erosion_on_set_");
+	  trace::entering("morpho::impl::generic::erosion_on_set");
 
-	  mln_piter(I) p(input.domain());
-	  mln_qiter(W) q(win, p);
+	  internal::erosion_tests(input, win);
+
+	  extension::adjust_fill(input, win, true);
 	  mln_concrete(I) output;
+	  output = accu::transform_stop(input, accu::land_basic(), win);
 
-	  if (win.is_centered())
-	    {
-	      output = clone(input);
-	      for_all(p)
-		if (input(p))
-		  for_all(q) if (input.owns_(q))
-		    if (! input(q))
-		      {
-			output(p) = false;
-			break;
-		      }
-	    }
-	  else
-	    {
-	      initialize(output, input);
-	      for_all(p)
-		{
-		  for_all(q) if (input.owns_(q))
-		    if (! input(q))
-		      break;
-		  // If there was no break (so q is not valid) then
-		  // output(p) <- true; otherwise, output(p) <- false.
-		  output(p) = ! q.is_valid();
-		}
-	    }
-
-	  trace::exiting("morpho::impl::generic::erosion_on_set_");
+	  trace::exiting("morpho::impl::generic::erosion_on_set");
 	  return output;
 	}
 
@@ -145,7 +139,8 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = impl::erosion_(exact(input), exact(win));
+      internal::erosion_tests(input, win);
+      mln_concrete(I) output = internal::erosion_dispatch(input, win);
 
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);

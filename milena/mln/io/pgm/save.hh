@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -63,7 +63,7 @@ namespace mln
     namespace pgm
     {
 
-      /*! Save a milena image as a pgm image.
+      /*! Save a Milena image as a pgm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.
@@ -83,8 +83,9 @@ namespace mln
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u >,
 	// 	  mln::metal::templated_by<mln_value(I), value::int_u_sat >
 	// 	  >::check();
-
+	trace::entering("mln::io::pgm::save");
 	io::pnm::save(PGM, exact(ima), filename);
+	trace::exiting("mln::io::pgm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

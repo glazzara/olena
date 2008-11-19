@@ -51,12 +51,14 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/routine/clone.hh>
 
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/line_graph_elt_neighborhood.hh>
-#include <mln/core/line_graph_neighborhood_piter.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>
@@ -108,13 +110,13 @@ int main(int argc, char* argv[])
   `-----------*/
 
   /* FIXME: I'm not sure this is the way it should be done.  Anyway,
-     we should implemented this as a canvas.  */
+     we should implement this as a canvas.  */
 
   typedef line_graph_elt_neighborhood<point2d> nbh_t;
   nbh_t nbh;
 
   unsigned area = 0;
-  unsigned max_area = input.npoints();
+  unsigned max_area = input.nsites();
   unsigned nregions = mln_max(unsigned);
   unsigned max_nregions = atoi(argv[1]);
 
@@ -161,8 +163,10 @@ int main(int argc, char* argv[])
   for_all(p)
     if (wshed(p) != wshed_label)
       {
-	wshed2d(p.to_psite().first()) = wshed(p);
-	wshed2d(p.to_psite().second()) = wshed(p);
+	// FIXME: Equip the iterator with first() and second()
+	// accessors?
+	wshed2d(p.unproxy_().first()) = wshed(p);
+	wshed2d(p.unproxy_().second()) = wshed(p);
       }
 
   // For each basin, compute the average gray level.

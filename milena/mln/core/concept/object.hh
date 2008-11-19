@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_OBJECT_HH
 # define MLN_CORE_CONCEPT_OBJECT_HH
 
-/*! \file mln/core/concept/object.hh
- *
- * \brief Definition of the top milena class mln::Object.
- */
+/// \file mln/core/concept/object.hh
+///
+/// Definition of the top Milena class mln::Object.
 
 # include <cassert>
 # include <iostream>
@@ -41,21 +41,31 @@
 # include <mln/core/contract.hh>
 # include <mln/core/internal/fixme.hh>
 # include <mln/trace/all.hh>
+
+// metal
+# include <mln/metal/abort.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/metal/is_not_a.hh>
 # include <mln/metal/is.hh>
+# include <mln/metal/is_not.hh>
+# include <mln/metal/equal.hh>
+# include <mln/metal/not_equal.hh>
+# include <mln/metal/converts_to.hh>
 # include <mln/metal/ret.hh>
+# include <mln/metal/unqualif.hh>
+# include <mln/metal/math/all.hh>
 
 
 /*! \mainpage Documentation of milena
  *
  * \section intro_sec Introduction
  *
- * This is the documentation of milena.
+ * This is the documentation of Milena.
  *
  * \section tools_subsec Tools required.
  * FIXME.
  *
- * \section mln_sec Overview of milena.
+ * \section mln_sec Overview of Milena.
  *
  * <UL>
  * <LI> \ref mln
@@ -139,13 +149,13 @@
  */
 namespace mln
 {
-  /// \internal Implementation namespace of mln namespace.
+  /// Implementation namespace of mln namespace.
   namespace impl {}
 
-  /// \internal Internal namespace of mln namespace.
+  /// Internal namespace of mln namespace.
   namespace internal
   {
-    /// \internal FIXME : doc
+    /// FIXME : doc
     namespace check {}
   }
 
@@ -160,7 +170,7 @@ namespace mln
   };
 
 
-  /*! \brief Base class for almost every class defined in milena.
+  /*! \brief Base class for almost every class defined in Milena.
    *
    * The parameter \a E is the exact type.
    */
@@ -187,8 +197,8 @@ namespace mln
 } // end of namespace mln
 
 
-# include <mln/core/exact.hh>
-# include <mln/core/ops.hh>
+# include <mln/core/routine/exact.hh>
+# include <mln/core/routine/ops.hh>
 
 
 #endif // ! MLN_CORE_CONCEPT_OBJECT_HH

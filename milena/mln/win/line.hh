@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,19 +29,32 @@
 #ifndef MLN_WIN_LINE_HH
 # define MLN_WIN_LINE_HH
 
-/*! \file mln/win/line.hh
- *
- * \brief Definition of the mln::win::line window.
- */
+/// \file mln/win/line.hh
+///
+/// Definition of the mln::win::line window.
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/dpoint.hh>
-# include <mln/core/dpoints_piter.hh>
 
 
 namespace mln
 {
+
+  // Forward declaration.
+  namespace win { template <typename M, unsigned i, typename C> struct line; }
+
+
+  namespace trait
+  {
+
+    template <typename M, unsigned i, typename C>
+    struct window_< mln::win::line<M,i,C> > : classical_window_
+    {
+    };
+
+  } // end of namespace trait
+
+
 
   namespace win
   {
@@ -57,76 +71,31 @@ namespace mln
      * \see mln::win::hline2d for an exemple of his use.
      */
     template <typename M, unsigned i, typename C>
-    struct line : public Window< line<M,i,C> >,
-		  public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+    struct line : public internal::classical_window_base< dpoint<M, C>, line<M,i,C> >
     {
-      /// Point associated type.
-      typedef point_<M, int> point;
+      /// Direction.
+      enum { dir = i };
 
-      /// Psite associated type.
-      typedef point psite;
-
-      /// Dpoint associated type.
-      typedef dpoint_<M, int> dpoint;
-
-      /// Point_Iterator type to browse a line forward
-      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
-
-      /// Point_Iterator type to browse a line backward
-      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
-
-      /// Same as fwd_qiter
-      typedef fwd_qiter qiter;
-
-      /*! \brief Constructor.
-       *
-       * \param[in] length Length of the line.
-       *
-       * \pre \p length is odd.
-       */
+      /// Constructor.
+      /// \param[in] length Length of the line.
+      /// \pre \p length is odd.
       line(unsigned length);
-
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
 	
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-	
-      /*! \brief Give the hline length, that is, its width.
-       */
+      /// Give the line length.
       unsigned length() const;
 	
-      /*! \brief Give the maximum coordinate gap between the window
-       * center and a window point.
-       */
-      unsigned delta() const;
+      /// Give the line size, that is, its length.
+      unsigned size() const;
+	
+      /// Give the maximum coordinate gap between the window
+      /// center and a window point.
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      line<M,i,C>& sym();
-		
-      protected:
-	unsigned length_;
+      void print_(std::ostream& ostr) const;
+
+    protected:
+      unsigned length_;
     };
-
-
-    /*! \brief Print an line window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win An line window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::line
-     */
-    template <typename M, unsigned i, typename C>
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win);
 
  
 
@@ -140,28 +109,14 @@ namespace mln
     {
       metal::bool_< i < M::dim >::check();
       mln_precondition(length % 2 == 1);
+      dpoint<M,C> n;
+      n.set_all(0);
       const int dc = length / 2;
       for (int c = - dc; c <= dc; ++c)
       {
-	dpoint n;
-	n.set_all(0);
 	n[i] = c;
 	this->insert(n);
       }
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
-    bool line<M,i,C>::is_centered() const
-    {
-      return true;
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
-    bool line<M,i,C>::is_symmetric() const
-    {
-      return true;
     }
 
     template <typename M, unsigned i, typename C>
@@ -173,24 +128,24 @@ namespace mln
 
     template <typename M, unsigned i, typename C>
     inline
-    unsigned line<M,i,C>::delta() const
+    unsigned line<M,i,C>::size() const
+    {
+      return length_;
+    }
+
+    template <typename M, unsigned i, typename C>
+    inline
+    unsigned line<M,i,C>::delta_() const
     {
       return length_ / 2;
     }
 
     template <typename M, unsigned i, typename C>
     inline
-    line<M,i,C>& line<M,i,C>::sym()
+    void
+    line<M,i,C>::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    template <typename M, unsigned i, typename C>
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const line<M,i,C>& win)
-    {
-      ostr << "[line: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[line: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

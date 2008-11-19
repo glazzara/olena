@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/extrema_components.cc
+/// \file tests/morpho/meyer_wst.cc
 // /\brief Test on mln::morpho::extrema_components
 
 #include <iostream>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/value/int_u8.hh>
 

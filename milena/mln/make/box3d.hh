@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,7 @@
  * \brief Routines to construct an mln::box3d.
  */
 
-# include <mln/core/box3d.hh>
-# include <mln/make/point3d.hh>
+# include <mln/core/alias/box3d.hh>
 
 
 namespace mln
@@ -45,9 +44,9 @@ namespace mln
 
     /*! \brief Create an mln::box3d.
      *
-     * \param[in] nslis Number of slis.
+     * \param[in] nslis Number of slices.
      * \param[in] nrows Number of rows.
-     * \param[in] ncols Number of cols.
+     * \param[in] ncols Number of columns.
      *
      * \pre \p ninds != 0 and \p ncols != 0 and \p nslis != 0.
      *
@@ -60,12 +59,12 @@ namespace mln
      *
      * \overload
      *
-     * \param[in] min_sli Sliex of the top most sli.
-     * \param[in] max_sli Sliex of the botton most sli.
-     * \param[in] min_row Rowex of the top most row.
-     * \param[in] max_row Rowex of the botton most row.
-     * \param[in] min_col Colex of the top most col.
-     * \param[in] max_col Colex of the botton most col.
+     * \param[in] min_sli Index of the lowest slice.
+     * \param[in] max_sli Index of the highest slice.
+     * \param[in] min_row Index of the top most row.
+     * \param[in] max_row Index of the botton most row.
+     * \param[in] min_col Index of the left most column.
+     * \param[in] max_col Index of the right most column.
      *
      * \pre \p max_sli >= \p min_sli.
      * \pre \p max_row >= \p min_row.
@@ -73,9 +72,9 @@ namespace mln
      *
      * \return A 3D box.
      */
-    mln::box3d box3d(int min_sli, int max_sli,
-		     int min_row, int max_row,
-		     int min_col, int max_col);
+    mln::box3d box3d(def::coord min_sli, def::coord max_sli,
+		     def::coord min_row, def::coord max_row,
+		     def::coord min_col, def::coord max_col);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -84,19 +83,19 @@ namespace mln
     mln::box3d box3d(unsigned nslis, unsigned nrows, unsigned ncols)
     {
       mln_precondition(nrows != 0 && ncols != 0 && nslis != 0);
-      mln::box3d tmp(make::point3d(0, 0, 0),
-		     make::point3d(nslis - 1, nrows - 1, ncols - 1));
+      mln::box3d tmp(point3d(0, 0, 0),
+		     point3d(nslis - 1, nrows - 1, ncols - 1));
       return tmp;
     }
 
     inline
-    mln::box3d box3d(int min_sli, int max_sli,
-		     int min_row, int max_row,
-		     int min_col, int max_col)
+    mln::box3d box3d(def::coord min_sli, def::coord max_sli,
+		     def::coord min_row, def::coord max_row,
+		     def::coord min_col, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_sli >= min_sli && max_col >= min_col);
-      mln::box3d tmp(make::point3d(min_sli, min_row, min_col),
-		     make::point3d(max_sli, max_row, max_col));
+      mln::box3d tmp(point3d(min_sli, min_row, min_col),
+		     point3d(max_sli, max_row, max_col));
       return tmp;
     }
 

@@ -46,7 +46,7 @@ namespace mln
 
       typedef typename F::I I;
       typedef typename F::W W;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       chamfer(F& f)
 	: f(f)
@@ -75,7 +75,7 @@ namespace mln
 	
 	/// Bkd pass.
 	{
-	  W w_win_b = geom::sym(f.win);
+	  W w_win_b = win::sym(f.win);
 	  
 	  mln_bkd_piter(I) p(f.input.domain());
 	  mln_qiter(W) q(w_win_b, p);

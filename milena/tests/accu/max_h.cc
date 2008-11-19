@@ -39,7 +39,7 @@ int main()
   using namespace mln;
   using namespace mln::value;
 
-  accu::max_h< set<int_u8> > a;
+  accu::max_h<int_u8> a;
 
   a.take(1);
   a.take(1);

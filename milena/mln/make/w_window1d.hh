@@ -36,7 +36,7 @@
 # include <cmath>
 
 # include <mln/core/w_window.hh>
-# include <mln/core/dpoint1d.hh>
+# include <mln/core/alias/dpoint1d.hh>
 
 
 namespace mln
@@ -71,7 +71,7 @@ namespace mln
       for (int ind = - h; ind <= h; ++ind)
 	  {
 	    if (weights[i] != 0)
-	      tmp.insert(weights[i], make::dpoint1d(ind));
+	      tmp.insert(weights[i], dpoint1d(ind));
 	    i++;
 	  }
       return tmp;

@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/builtin.cc
+/*! \file tests/value/builtin/builtin.cc
  *
  * \brief Tests on mln::trait::op with a builtin.
  */

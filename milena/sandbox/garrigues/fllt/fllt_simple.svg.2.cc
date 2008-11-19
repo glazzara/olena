@@ -29,11 +29,11 @@
 #include <iostream>
 #include <sstream>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -47,7 +47,7 @@
 #include <mln/io/pgm/save.hh>
 
 
-#include <mln/core/cast_image.hh>
+#include <mln/core/image/cast_image.hh>
 
 namespace mln
 {
@@ -151,19 +151,19 @@ namespace mln
 
       // C6 neigboohood.
       arr_dp_t neighb_c6[2];
-      neighb_c6[0].push_back(make::dpoint2d(-1,-1));
-      neighb_c6[0].push_back(make::dpoint2d(-1,0));
-      neighb_c6[0].push_back(make::dpoint2d(-1,1));
-      neighb_c6[0].push_back(make::dpoint2d(0,-1));
-      neighb_c6[0].push_back(make::dpoint2d(0,1));
-      neighb_c6[0].push_back(make::dpoint2d(1,0));
+      neighb_c6[0].push_back(dpoint2d(-1,-1));
+      neighb_c6[0].push_back(dpoint2d(-1,0));
+      neighb_c6[0].push_back(dpoint2d(-1,1));
+      neighb_c6[0].push_back(dpoint2d(0,-1));
+      neighb_c6[0].push_back(dpoint2d(0,1));
+      neighb_c6[0].push_back(dpoint2d(1,0));
 
-      neighb_c6[1].push_back(make::dpoint2d(1,-1));
-      neighb_c6[1].push_back(make::dpoint2d(1,0));
-      neighb_c6[1].push_back(make::dpoint2d(1,1));
-      neighb_c6[1].push_back(make::dpoint2d(0,-1));
-      neighb_c6[1].push_back(make::dpoint2d(0,1));
-      neighb_c6[1].push_back(make::dpoint2d(-1,0));
+      neighb_c6[1].push_back(dpoint2d(1,-1));
+      neighb_c6[1].push_back(dpoint2d(1,0));
+      neighb_c6[1].push_back(dpoint2d(1,1));
+      neighb_c6[1].push_back(dpoint2d(0,-1));
+      neighb_c6[1].push_back(dpoint2d(0,1));
+      neighb_c6[1].push_back(dpoint2d(-1,0));
 
       // Variables.
       I u = mln::clone(input);
@@ -209,7 +209,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	if (N_box.is_valid())
-	  level::fill(inplace(is | N_box.to_result()), in_O);
+	  level::fill((is | N_box.to_result()).rw(), in_O);
 
 	N_box.init();
 	R_box.init();
@@ -228,7 +228,7 @@ namespace mln
 	mln_piter(arr_t) a(*A);
 
 	// Stop.
-	if (A->npoints() == 0)
+	if (A->nsites() == 0)
 	  goto end;
 
 	// R <- R U A
@@ -249,9 +249,9 @@ namespace mln
 
 
 #ifdef FLLTDEBUG
-	std::cout << "points of A : " << A->npoints() << std::endl;
+	std::cout << "points of A : " << A->nsites() << std::endl;
 #endif
-	mln_assertion(A->npoints() > 0);
+	mln_assertion(A->nsites() > 0);
 	R_box.take(A->bbox());
 	mln_assertion(R_box.is_valid());
 
@@ -291,7 +291,7 @@ namespace mln
 #endif
 
 	// Stop if N is empty.
-	if (N->npoints() == 0)
+	if (N->nsites() == 0)
 	  goto step_1;
 	else
 	{

@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/exact.hh>
+# include <mln/core/routine/exact.hh>
 
 namespace mln
 {
@@ -43,14 +43,14 @@ namespace mln
    * \brief Give a point of an image.
    */
   template <typename I>
-  mln_point(I) a_point_of(const Image<I>& ima);
+  mln_psite(I) a_point_of(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   template <typename I>
   inline
-  mln_point(I) a_point_of(const Image<I>& ima_)
+  mln_psite(I) a_point_of(const Image<I>& ima_)
   {
     const I& ima = exact(ima_);
     mln_piter(I) p(ima.domain());

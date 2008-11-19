@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,15 @@
 #ifndef MLN_MAKE_ALL_HH
 # define MLN_MAKE_ALL_HH
 
-/*! \file mln/make/all.hh
- *
- * \brief File that includes all make routines.
- */
+/// \file mln/make/all.hh
+///
+/// File that includes all make routines.
 
 
 namespace mln
 {
 
-  /// Namespace of routines that help to make milena's objects.
+  /// Namespace of routines that help to make Milena's objects.
   namespace make {}
 
 }
@@ -46,30 +46,25 @@ namespace mln
 # include <mln/make/box2d.hh>
 # include <mln/make/box2d_h.hh>
 # include <mln/make/box3d.hh>
-# include <mln/make/dpoint1d.hh>
-# include <mln/make/dpoint2d.hh>
 # include <mln/make/dpoint2d_h.hh>
-# include <mln/make/dpoint3d.hh>
+# include <mln/make/dual_neighb.hh>
+# include <mln/make/graph.hh>
+# include <mln/make/image.hh>
+# include <mln/make/image2d.hh>
 # include <mln/make/mat.hh>
-# include <mln/make/pixel.hh>
 # include <mln/make/pix.hh>
-# include <mln/make/point1d.hh>
-# include <mln/make/point2d.hh>
+# include <mln/make/pixel.hh>
 # include <mln/make/point2d_h.hh>
-# include <mln/make/point3d.hh>
 # include <mln/make/vec.hh>
 # include <mln/make/voronoi.hh>
-# include <mln/make/win_chamfer.hh>
-# include <mln/make/window1d.hh>
-# include <mln/make/window2d.hh>
-# include <mln/make/window3d.hh>
+# include <mln/make/w_window.hh>
 # include <mln/make/w_window1d.hh>
 # include <mln/make/w_window1d_int.hh>
 # include <mln/make/w_window2d.hh>
 # include <mln/make/w_window2d_int.hh>
 # include <mln/make/w_window3d.hh>
 # include <mln/make/w_window3d_int.hh>
-# include <mln/make/w_window.hh>
-# include <mln/make/w_window_line.hh>
+# include <mln/make/w_window_directional.hh>
+# include <mln/make/win_chamfer.hh>
 
 #endif // ! MLN_MAKE_ALL_HH

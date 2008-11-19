@@ -30,19 +30,22 @@
  * \brief Test on mln::morpho::hit_or_miss.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/win/rectangle2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/geom/shift.hh>
-#include <mln/set/diff.hh>
+#include <mln/core/alias/window2d.hh>
+
+#include <mln/win/shift.hh>
+#include <mln/win/diff.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/level/fill.hh>
 
 #include <mln/morpho/hit_or_miss.hh>
+
+# include <mln/convert/to.hh>
 
 #include "tests/data.hh"
 
@@ -52,9 +55,9 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  window2d win_hit = geom::shift(win::rectangle2d(3, 3),
-				 make::dpoint2d(+1, +1));
-  window2d win_miss = mln::set::diff(win::rectangle2d(5, 5), win_hit);
+  window2d win_hit = win::shift(win::rectangle2d(3, 3),
+				dpoint2d(+1, +1));
+  window2d win_miss = win::rectangle2d(5, 5) - win_hit;
 
   {
     bool hit[] = { 0, 0, 0, 0, 0,
@@ -62,7 +65,7 @@ int main()
 		   0, 0, 1, 1, 1,
 		   0, 0, 1, 1, 1,
 		   0, 0, 1, 1, 1 };
-    window2d win_hit_ = make::window2d(hit);
+    window2d win_hit_ = convert::to<window2d>(hit);
     mln_precondition(win_hit_ == win_hit);
 
     bool miss[] = { 1, 1, 1, 1, 1,
@@ -70,7 +73,7 @@ int main()
 		    1, 1, 0, 0, 0,
 		    1, 1, 0, 0, 0,
 		    1, 1, 0, 0, 0 };
-    window2d win_miss_ = make::window2d(miss);
+    window2d win_miss_ = convert::to<window2d>(miss);
     mln_precondition(win_miss_ == win_miss);
   }
 

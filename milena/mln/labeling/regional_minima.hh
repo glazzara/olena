@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +30,8 @@
 # define MLN_LABELING_REGIONAL_MINIMA_HH
 
 /// \file mln/labeling/regional_minima.hh
-/// \brief Connected component labeling of the regional minima of an
-/// image.
+///
+/// Connected component labeling of the regional minima of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -88,9 +89,16 @@ namespace mln
 	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) ==
                                                           input(p); }
-	void do_no_union(const P& n, const P& p) { mln_invariant(input(n) <
-								 input(p));
-	                                           attr(p) = false; }
+	void do_no_union(const P& n, const P& p)
+	{
+	  // Avoid a warning about an undefined variable when NDEBUG
+	  // is not defined.
+	  (void)n;
+
+	  mln_invariant(input(n) < input(p));
+	  attr(p) = false;
+	}
+
 	void init_attr(const P&)                 {}
 	void merge_attr(const P& r, const P& p)  { attr(p) = attr(p) &&
                                                    attr(r); }
@@ -116,20 +124,19 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	regional_minima_(const I& input, const N& nbh, L& nlabels)
+	regional_minima(const I& input, const N& nbh, L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::regional_minima_");
+	  trace::entering("labeling::impl::generic::regional_minima");
 
 	  // FIXME: abort if L is not wide enough to encode the set of
 	  // minima.
 
 	  typedef impl::regional_minima_functor<I,N,L> F;
-	  F f(input, nbh);
-	  canvas::labeling<F> run(f);
-	  nlabels = run.nlabels;
+	  F f(exact(input), exact(nbh));
+	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
 
-	  trace::exiting("labeling::impl::generic::regional_minima_");
-	  return run.output;
+	  trace::exiting("labeling::impl::generic::regional_minima");
+	  return output;
 	}
 
       } // end of namespace mln::labeling::impl::generic
@@ -147,13 +154,13 @@ namespace mln
 		      L& nlabels)
     {
       trace::entering("labeling::regional_minima");
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output =
-	impl::generic::regional_minima_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::generic::regional_minima(input, nbh, nlabels);
 
       trace::exiting("labeling::regional_minima");
       return output;

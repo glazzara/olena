@@ -38,7 +38,7 @@ namespace mln
     bool
     pset_base_<P, E>::has(const P& ps) const
     {
-      return exact(this)->owns_(ps);
+      return exact(this)->has(ps);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

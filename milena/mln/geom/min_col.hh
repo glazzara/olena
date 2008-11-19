@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/geom/bbox.hh>
 
 
 namespace mln
@@ -58,7 +59,7 @@ namespace mln
     mln_coord(I) min_col(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
-      return exact(ima).bbox().pmin().col();
+      return geom::bbox(ima).pmin().col();
     }
 
 

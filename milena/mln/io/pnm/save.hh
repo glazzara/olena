@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -41,7 +41,7 @@
 # include <fstream>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 
 # include <mln/value/rgb.hh>
 # include <mln/value/rgb8.hh>
@@ -64,7 +64,7 @@ namespace mln
     namespace pnm
     {
 
-      /*! Save a milena image as a pnm image.
+      /*! Save a Milena image as a pnm image.
        *
        * \param[in] type The type of the image to save (can be PPM,
        * PGM, PBM).
@@ -177,12 +177,14 @@ namespace mln
       inline
       void save(const int type, const Image<I>& ima_, const std::string& filename)
       {
+	trace::entering("mln::io::pnm::save");
 	const I& ima = exact(ima_);
 	std::ofstream file(filename.c_str());
 	io::pnm::save_header(type, ima, filename, file);
 
 	impl::save_data_(file,
 			 mln_trait_image_speed(I)(), ima);
+	trace::exiting("mln::io::pnm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

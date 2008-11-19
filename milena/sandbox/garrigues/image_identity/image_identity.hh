@@ -50,20 +50,20 @@ namespace mln
      * \internal
      */
     template <typename I, typename S, typename E>
-    class image_identity_ : public image_domain_morpher_<I, S, E>,
-			    public image_value_morpher_<I, E>
+    class image_identity : public image_domain_morpher<I, S, E>,
+			    public image_value_morpher<I, E>
     {
     public:
 
     protected:
-      image_identity_();
+      image_identity();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename S, typename E>
-    image_identity_<I,S,E>::image_identity_()
+    image_identity<I,S,E>::image_identity()
     {
     }
 

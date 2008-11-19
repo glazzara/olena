@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/box2d.hh>
+# include <mln/core/alias/box2d.hh>
 # include <mln/level/paste.hh>
 # include <mln/draw/line.hh>
 # include <mln/pw/image.hh>
@@ -74,15 +74,15 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
 
-      mln_point(I) pmin = exact(b).pmin();
-      mln_point(I) pmax = exact(b).pmax();
+      mln_psite(I) pmin = exact(b).pmin();
+      mln_psite(I) pmax = exact(b).pmax();
 
       mln_precondition(exact(ima).has(pmin) && exact(ima).has(pmax));
 
-      mln_point(I) p1 (pmin[0], pmin[1]);
-      mln_point(I) p2 (pmax[0], pmin[1]);
-      mln_point(I) p3 (pmin[0], pmax[1]);
-      mln_point(I) p4 (pmax[0], pmax[1]);
+      mln_psite(I) p1 (pmin[0], pmin[1]);
+      mln_psite(I) p2 (pmax[0], pmin[1]);
+      mln_psite(I) p3 (pmin[0], pmax[1]);
+      mln_psite(I) p4 (pmax[0], pmax[1]);
 
       draw::line (ima, p1, p2, v);
       draw::line (ima, p2, p4, v);

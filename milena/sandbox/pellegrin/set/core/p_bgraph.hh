@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_BGRAPH_HH
-# define MLN_CORE_P_BGRAPH_HH
+#ifndef MLN_CORE_SITE_SET_P_BGRAPH_HH
+# define MLN_CORE_SITE_SET_P_BGRAPH_HH
 
-/// \file mln/core/p_bgraph.hh
+/// \file mln/core/site_set/p_bgraph.hh
 /// \brief Definition of a point set based on a boost graph.
 
 # include <utility>
@@ -37,8 +38,8 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/internal/boost_graph.hh>
-# include <mln/core/bgraph_psite.hh>
-# include <mln/core/p_bgraph_piter.hh>
+# include <mln/core/image/bgraph_psite.hh>
+# include <mln/core/site_set/p_bgraph_piter.hh>
 # include <trait/point_set.hh>
 
 
@@ -70,10 +71,10 @@ namespace mln
     /// Point_Site associated type.
     typedef bgraph_psite<P> psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_bgraph_piter_<P> bkd_piter;
 
     /// Graph vertex/edge identifier
@@ -92,7 +93,7 @@ namespace mln
     p_bgraph (graph* gr);
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
     std::size_t nlines() const;
@@ -145,7 +146,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_bgraph<P>::npoints() const
+  p_bgraph<P>::nsites() const
   {
     return boost::num_vertices(*gr_);
   }
@@ -175,7 +176,7 @@ namespace mln
       // Check whether P is compatible with this psite set.
       (&p.pg() == this) &&
       // Check that the node id of P belongs to the range of valid node ids.
-      (p.id() < this->npoints());
+      (p.id() < this->nsites());
   }
 
 
@@ -231,4 +232,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_BGRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_BGRAPH_HH

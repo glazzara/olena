@@ -30,7 +30,7 @@
  * \brief Tests on mln::arith::revert.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/arith/revert.hh>
 #include <mln/level/compare.hh>
@@ -52,7 +52,7 @@ int main()
       { -8, -9, -10}
     };
 
-    image2d<int> ref(make::image2d(vs));
+    image2d<int> ref(make::image(vs));
     arith::revert_inplace(ima);
 
     mln_assertion (ima == ref);

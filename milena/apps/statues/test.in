@@ -7,3 +7,7 @@ mesh_dir=@top_srcdir@/milena/mesh
 time ./mesh-segm $mesh_dir/socket.off 25 socket-segm.off
 time ./mesh-segm $mesh_dir/teapot.off 50 teapot-segm.off
 time ./mesh-segm $mesh_dir/bunny-holefilled.off 500 bunny-holefilled-segm.off
+
+time ./mesh-complex-segm $mesh_dir/socket-max-curv.off 25 socket-max-curv-segm.off
+time ./mesh-complex-segm $mesh_dir/teapot-max-curv.off 50 teapot-max-curv-segm.off
+time ./mesh-complex-segm $mesh_dir/bunny-holefilled-pinv-curv.off 500 bunny-holefilled-pinv-curv-segm.off

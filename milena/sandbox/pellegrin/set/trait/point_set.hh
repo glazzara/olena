@@ -47,15 +47,15 @@ namespace mln
   template <typename P> struct p_bgraph;
   template <typename P> struct p_graph;
   template <typename P> struct p_line_graph;
-  template <typename P, typename T> struct p_priority_queue;
-  template <typename P, typename T> struct p_priority_queue_fast;
-  template <typename P, typename T, unsigned S> struct p_priority_queue_fast_with_array;
+  template <typename P, typename T> struct p_priority;
+  template <typename P, typename T> struct p_priority_fast;
+  template <typename P, typename T, unsigned S> struct p_priority_fast_with_array;
   template <typename P> struct p_queue;
   template <typename P> struct p_queue_fast;
   template <typename P> struct p_run;
   template <typename P> struct p_runs_;
   template <typename P> struct p_set;
-  template <typename S, typename F> struct pset_if;
+  template <typename S, typename F> struct p_if;
 
   namespace trait
   {

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,17 @@
 #ifndef MLN_LABELING_LEVEL_SPE_HH
 # define MLN_LABELING_LEVEL_SPE_HH
 
-/*! \file mln/labeling/level.spe.hh
- *
- * \brief Specialization for mln::labeling::level.
- */
+/// \file mln/labeling/level.spe.hh
+///
+/// Specialization for mln::labeling::level.
+///
+/// \todo Re-activate the fastest version in dispatch...
 
 # ifndef MLN_LABELING_LEVEL_HH
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LABELING_LEVEL_HH
 
-# include <mln/border/adjust.hh>
-# include <mln/border/fill.hh>
+# include <mln/extension/adjust_fill.hh>
 # include <mln/value/other.hh>
 
 
@@ -76,12 +77,13 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	  level_(const I& input, const mln_value(I)& val, const N& nbh,
-		 L& nlabels);
+	level(const Image<I>& input, const mln_value(I)& val,
+	      const Neighborhood<N>& nbh,
+	      L& nlabels);
 
       } // end of namespace mln::labeling::impl::generic
 
-
+      /*
 
       // Fastest functor.
 
@@ -99,8 +101,8 @@ namespace mln
 	const N& nbh;
         const S& s;
 
-	bool handles(unsigned p) const         { return input[p] == val; }
-	bool equiv(unsigned n, unsigned) const { return input[n] == val; }
+	bool handles(unsigned p) const         { return input.element(p) == val; }
+	bool equiv(unsigned n, unsigned) const { return input.element(n) == val; }
 
  	void init()                          {}
 	bool labels(unsigned) const          { return true;  }
@@ -122,17 +124,19 @@ namespace mln
       };
 
 
-      // Fastest routine.
+      // Fastest implementation.
 
       template <typename I, typename N, typename L>
       mln_ch_value(I, L)
-	level_fastest_(const I& input, const mln_value(I)& val, const N& nbh,
-		       L& nlabels)
+      level_fastest(const Image<I>& input, const mln_value(I)& val,
+		    const Neighborhood<N>& nbh,
+		    L& nlabels)
       {
-	trace::entering("labeling::impl::level_fastest_");
+	trace::entering("labeling::impl::level_fastest");
 
-	border::adjust(input, nbh.delta());
-	border::fill(input, value::other(val));
+	// FIXME: HERE
+
+	extension::adjust_fill(input, nbh.delta(), value::other(val));
 
 	typedef level_fastest_functor<I,N,L> F;
 	F f(input, val, nbh);
@@ -141,34 +145,13 @@ namespace mln
 	nlabels = run.nlabels;
 	// FIXME: Handle run.status
 
-	trace::exiting("labeling::impl::level_fastest_");
+	trace::exiting("labeling::impl::level_fastest");
 	return run.output;
       }
 
-
-      // Disjunction between "fastest" and "not fastest".
-
-      template <typename I, typename N, typename L>
-      mln_ch_value(I, L)
-	level_(trait::image::speed::any,
-	       const I& input, const mln_value(I)& val, const N& nbh,
-	       L& nlabels)
-      {
-	return generic::level_(input, val, nbh, nlabels);
-      }
-
-      template <typename I, typename N, typename L>
-      mln_ch_value(I, L)
-	level_(trait::image::speed::fastest,
-	       const I& input, const mln_value(I)& val, const N& nbh,
-	       L& nlabels)
-      {
-	return level_fastest_(input, val, nbh, nlabels);
-      }
-
+      */
 
     } // end of namespace mln::labeling::impl
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

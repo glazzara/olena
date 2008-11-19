@@ -60,7 +60,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = dilation(erosion(input, win), geom::sym(win));
+      mln_concrete(I) output = dilation(erosion(input, win), win::sym(win));
 
       // FIXME: Is this postcondition always true, even if the
       // structuring element is not centered?

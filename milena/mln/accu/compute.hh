@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,15 @@
 #ifndef MLN_ACCU_COMPUTE_HH
 # define MLN_ACCU_COMPUTE_HH
 
-/*! \file mln/accu/compute.hh
- *
- * \brief Define an accumulator that computes image pixels.
- */
+/// \file mln/accu/compute.hh
+///
+/// Compute an accumulator on image pixels, i.e., couples (site,
+/// value).
+///
+/// \todo Specialize for fastest images.
 
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/metal/is_a.hh>
 # include <mln/util/pix.hh>
 
 
@@ -46,61 +47,116 @@ namespace mln
   namespace accu
   {
 
-    /*! \brief Make an accumulator compute the pixels of the image \p input.
-     *
-     * \param[in] input The input image.
-     *
-     * This routine runs: \n
-     *   a.take(make::pix(input, p));
-     *   on all pixels on the images.
-     *
-     * \warning This routine does not perform a.init().
-     */
+    /// Make an accumulator compute the pixels of the image \p input.
+    ///
+    /// \param[in] input The input image.
+    ///
+    /// This routine runs: \n
+    ///   a.take(make::pix(input, p));
+    ///   on all pixels on the images.
+    ///
+    /// \warning This routine does not perform a.init().
+    ///
     template <typename A, typename I>
     mln_result(A)
-    compute(const Image<I>& input);
+    compute(const Accumulator<A>& a, const Image<I>& input);
 
 
-    /*! \brief Make an accumulator compute the pixels of the image \p input.
-     *
-     * \param[in] input The input image.
-     *
-     * This routine runs: \n
-     *   a.take(make::pix(input, p));
-     *   on all pixels on the images.
-     *
-     * \warning This routine does not perform a.init().
-     */
+    /// Make an accumulator compute the pixels of the image \p input.
+    ///
+    /// \param[in] input The input image.
+    ///
+    /// This routine runs: \n
+    ///   a.take(make::pix(input, p));
+    ///   on all pixels on the images.
+    ///
+    /// \warning This routine does not perform a.init().
+    ///
     template <typename A, typename I>
     mln_accu_with(A, util::pix<I>)::result
-    compute(const Image<I>& input);
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+    namespace impl
+    {
+
+      namespace generic
+      {
+	
+	template <typename A, typename I>
+	mln_result(A)
+	compute(const Accumulator<A>&, const Image<I>& input_)
+	{
+	  trace::entering("accu::impl::generic::compute");
+
+	  const I& input = exact(input_);
+	  mln_precondition(input.has_data());
+
+	  A a;
+	  mln_piter(I) p(input.domain());
+	  for_all(p)
+	    a.take(make::pix(input, p));
+
+	  trace::exiting("accu::impl::generic::compute");
+	  return a.to_result();
+	}
+
+      } // end of namespace mln::accu::impl::generic
+      
+    } // end of namespace mln::accu::impl
+
+
+    namespace internal
+    {
+
+      template <typename A, typename I>
+      inline
+      mln_result(A)
+      compute_dispatch(const Accumulator<A>& a, const Image<I>& input)
+      {
+	return impl::generic::compute(a, input);
+      }
+
+    } // end of namespace mln::accu::internal
+
+
+
     template <typename A, typename I>
     inline
     mln_result(A)
-    compute(const Image<I>& input_)
+    compute(const Accumulator<A>& a, const Image<I>& input)
     {
-      mlc_is_a(A, Accumulator)::check();
-      const I& input = exact(input_);
-      A a;
-      mln_piter(I) p(input.domain());
-      for_all(p)
-	a.take(make::pix(input, p));
-      return a.to_result();
+      trace::entering("accu::compute");
+
+      mln_precondition(exact(input).has_data());
+      mln_result(A) output = internal::compute_dispatch(a, input);
+
+      trace::exiting("accu::compute");
+      return output;
     }
 
     template <typename A, typename I>
     inline
     mln_accu_with(A, util::pix<I>)::result
-    compute(const Image<I>& input)
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
-      mlc_is_a(A, Meta_Accumulator)::check();
+      trace::entering("accu::compute");
+
+      mln_precondition(exact(input).has_data());
+
       typedef mln_accu_with(A, util::pix<I>) A_;
-      return compute<A_>(input);
+      util::pix<I>* pix_; // So we can pass a pixel below (pixel has
+			  // no ctor without arg).
+      A_ a_ = accu::unmeta(exact(a), *pix_);
+
+      mln_result(A_) output = internal::compute_dispatch(a_, input);
+
+      trace::exiting("accu::compute");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

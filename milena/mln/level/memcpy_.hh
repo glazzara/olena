@@ -118,20 +118,25 @@ namespace mln
       typedef mln_image(Pd) Id;
       metal::is_not_const<Id>::check();
       typedef mln_image(Ps) Is;
-      Pd& dest = internal::force_exact<Pd>(dest_);
-      Ps& src  = internal::force_exact<Ps>(src_);
+      Pd& dest = mln::internal::force_exact<Pd>(dest_);
+      Ps& src  = mln::internal::force_exact<Ps>(src_);
 
       mln_precondition(sizeof(mln_value(Id)) == sizeof(mln_value(Is)));
       mln_precondition(dest.ima().has_data());
       mln_precondition(src.ima().has_data());
 
-      mln_precondition(&dest.val() >= &dest.ima()[0]);
-      mln_precondition(&dest.val() < &dest.ima()[0] + dest.ima().ncells());
-      mln_precondition(&dest.val() + n <= &dest.ima()[0] + dest.ima().ncells());
+      mln_precondition(&dest.val() >= &dest.ima().element(0));
+      mln_precondition(&dest.val() < &dest.ima().element(0) +
+                       dest.ima().nelements());
 
-      mln_precondition(&src.val() >= &src.ima()[0]);
-      mln_precondition(&src.val() < &src.ima()[0] + src.ima().ncells());
-      mln_precondition(&src.val() + n <= &src.ima()[0] + src.ima().ncells());
+      mln_precondition(&dest.val() + n <= &dest.ima().element(0) +
+                       dest.ima().nelements());
+
+      mln_precondition(&src.val() >= &src.ima().element(0));
+      mln_precondition(&src.val() < &src.ima().element(0) +
+                       src.ima().nelements());
+      mln_precondition(&src.val() + n <= &src.ima().element(0) +
+                       src.ima().nelements());
 
       impl::memcpy__(dest, src, n);
 

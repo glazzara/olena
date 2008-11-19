@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,11 +31,14 @@
 /*! \file mln/core/internal/image_morpher.hh
  *
  *  \brief Definition of a base class for image morphers.
+ *
+ * \todo Add the appropriate checks in .rw().
  */
 
 # include <mln/core/internal/image_base.hh>
 # include <mln/metal/const.hh>
 # include <mln/metal/is_const.hh>
+# include <mln/metal/is_not_const.hh>
 
 
 namespace mln
@@ -44,15 +47,15 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for images that are morphers. Parameter
+    /*! A base class for images that are morphers. Parameter
      * \c I is the underlying-morphed image type.
-     *
      */
-    template <typename I, typename S, typename E>
-    class image_morpher_ : public image_base_<S, E>
+    template <typename I, typename T, typename S, typename E>
+    class image_morpher : public image_base<T, S, E>
     {
     public:
 
+      /// Delegatee associated type.
       typedef I delegatee;
 
       /// Return the delegatee_ pointer; default code.
@@ -61,18 +64,33 @@ namespace mln
       /// Return the delegatee_ pointer (non-const version); default code.
       I* delegatee_();
 
+
+      /// Give the morphed image (mutable version).
+      I& unmorph_();
+
+      /// Give the morphed image (const version).
+      mlc_const(I)& unmorph_() const;
+
+
       /* \brief Test if this image has been initialized; default impl.
        *
        * This default impl is stronger than the one inherited from
-       * image_base_.
+       * image_base because it also tests that the morphed image is
+       * also initialized.
        */
       bool has_data() const;
 
-      /// Convertion to the underlying (morphed) image.
+      /// Conversion to the underlying (morphed) image.
       operator I() const; // FIXME: Very dangerous? Remove?
 
+
+      /// State that the morpher is writable.  This allows for C++ to
+      /// use it as a mutable object even if it is a temporary object.
+      E& rw();
+
+
     protected:
-      image_morpher_();
+      image_morpher();
     };
 
   } // end of namespace mln::internal
@@ -87,12 +105,11 @@ namespace mln
 //     template <typename Subject, typename T,
 // 	      typename I, typename S, typename E>
 //     void init_(Subject s, T& target,
-// 	       const internal::image_morpher_<I,S,E>& model);
+// 	       const internal::image_morpher<I,S,E>& model);
 
 // FIXME: Lines above have been inactivated because they are either
 // prioritary or ambiguous.
 
-    /// \internal
     template <typename Subject, typename T,
 	      typename J>
     void init_(Subject s, T& target, const Image<J>& model);
@@ -106,45 +123,78 @@ namespace mln
   namespace internal
   {
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
-    image_morpher_<I,S,E>::image_morpher_()
+    image_morpher<I, T, S, E>::image_morpher()
     {
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     mlc_const(I)*
-    image_morpher_<I,S,E>::delegatee_() const
+    image_morpher<I, T, S, E>::delegatee_() const
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     I*
-    image_morpher_<I,S,E>::delegatee_()
+    image_morpher<I, T, S, E>::delegatee_()
     {
       return this->data_ == 0 ? 0 : & this->data_->ima_;
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
-    image_morpher_<I,S,E>::operator I() const
+    I&
+    image_morpher<I, T, S, E>::unmorph_()
+    {
+      I* ptr = delegatee_();
+      mln_assertion(ptr != 0);
+      return *ptr;
+    }
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    mlc_const(I)&
+    image_morpher<I, T, S, E>::unmorph_() const
+    {
+      mlc_const(I)* ptr = delegatee_();
+      mln_assertion(ptr != 0);
+      return *ptr;
+    }
+
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    image_morpher<I, T, S, E>::operator I() const
     {
       mln_precondition(exact(this)->has_data());
       return * this->delegatee_();
     }
 
-    template <typename I, typename S, typename E>
+    template <typename I, typename T, typename S, typename E>
     inline
     bool
-    image_morpher_<I,S,E>::has_data() const
+    image_morpher<I, T, S, E>::has_data() const
     {
       return
 	this->data_ != 0 &&
 	this->delegatee_() != 0 &&
 	this->delegatee_()->has_data();
+    }
+
+    template <typename I, typename T, typename S, typename E>
+    inline
+    E&
+    image_morpher<I, T, S, E>::rw()
+    {
+      mlc_is_not_const(I)::check();
+      mlc_equal(mln_trait_image_value_io(I),
+		mln::trait::image::value_io::read_write)::check();
+      // FIXME Nicolas: pw_io == read_write OR vw_io == read_write...
+      return exact(*this);
     }
 
   } // end of namespace mln::internal
@@ -154,7 +204,7 @@ namespace mln
 //   template <typename Subject, typename T,
 // 	    typename I, typename S, typename E>
 //   void init_(Subject s, T& target,
-// 	     const internal::image_morpher_<I,S,E>& model)
+// 	     const internal::image_morpher<I,S,E>& model)
 //   {
 //     std::cout << "deleg... ";
 //     // FIXME: Precondition.
@@ -166,8 +216,8 @@ namespace mln
     inline
     void init_(Subject s, T& target, const Image<J>& model_)
     {
-      // FIXME: Precondition.
-      // FIXME: Properly check that J is an internal::image_morpher_.
+      mlc_is(mln_trait_image_category(J),
+	     trait::image::category::morpher)::check();
       const J& model = exact(model_);
       init_(s, target, * model.delegatee_());
     }

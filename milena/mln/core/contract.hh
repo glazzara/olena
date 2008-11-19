@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,21 +35,47 @@
 
 # include <cassert>
 
+// Define a preprocessor constant HAS_NDEBUG reflecting the existence
+// of NDEBUG, as avised by the section Conditional Compilation of the
+// GNU Coding Standards
+// (http://www.gnu.org/prep/standards/html_node/Conditional-Compilation.html).
+#ifdef NDEBUG
+#define HAS_NDEBUG 1
+#else
+#define HAS_NDEBUG 0
+#endif
 
 /// Assertion.
-# define mln_assertion(expr)     assert(expr)
+# define mln_assertion(expr)     assert((bool)(expr))
 
 /// Invariant.
-# define mln_invariant(expr)     assert(expr)
+# define mln_invariant(expr)     assert((bool)(expr))
 
 /// Precondition.
-# define mln_precondition(expr)  assert(expr)
+# define mln_precondition(expr)  assert((bool)(expr))
 
 /// Postcondition.
-# define mln_postcondition(expr) assert(expr)
+# define mln_postcondition(expr) assert((bool)(expr))
 
-/// Implication.
-# define mln_implies(lexpr, repxr) assert(! (rexpr) || (lexpr))
+
+namespace mln
+{
+
+  /// Implication.
+  bool implies(bool lexpr, bool rexpr);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+  inline
+  bool implies(bool lexpr, bool rexpr)
+  {
+    return ! (rexpr) || (lexpr);
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+} // end of namespace mln
 
 
 #endif // ! MLN_CORE_CONTRACT_HH

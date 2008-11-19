@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,23 +29,45 @@
 #ifndef MLN_CORE_W_WINDOW_HH
 # define MLN_CORE_W_WINDOW_HH
 
-/*! \file mln/core/w_window.hh
- *
- * \brief Definition of the generic weighted window class mln::w_window.
- */
+/// \file mln/core/w_window.hh
+///
+/// Definition of the generic weighted window class mln::w_window.
+///
+/// \todo Generalize W_Window -> Image.
 
 # include <map>
 
+# include <mln/core/internal/weighted_window_base.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/site_set/box.hh>
 # include <mln/core/window.hh>
-# include <mln/core/concept/weighted_window.hh>
+# include <mln/core/dpsites_piter.hh>
+
+# include <mln/value/ops.hh>
+# include <mln/util/ord.hh>
+# include <mln/geom/bbox.hh> // FIXME: We may have some dep trouble with this include.
+# include <mln/literal/zero.hh>
+# include <mln/convert/to.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declarations.
+  template <typename D,  typename W> struct w_window;
   template <typename It, typename W> struct with_w_;
 
+
+  namespace trait
+  {
+
+    template <typename D, typename W>
+    struct window_< mln::w_window<D,W> > : window_< mln::window<D> >
+    {
+      // Same traits as its corresponding window.
+    };
+
+  } // end of namespace mln::trait
 
 
   /*! \brief Generic w_window class.
@@ -54,26 +77,21 @@ namespace mln
    * the type of weights.
    */
   template <typename D, typename W>
-  struct w_window : public Weighted_Window< w_window<D,W> >
+  struct w_window : public internal::weighted_window_base< mln::window<D>,
+							   w_window<D,W> >
   {
-    /// Point associated type.
-    typedef mln_point(D) point;
-
-    /// Dpoint associated type.
-    typedef D dpoint;
+    /// Dpsite associated type.
+    typedef D dpsite;
 
     /// Weight associated type.
     typedef W weight;
 
-    /// Window associated type.
-    typedef mln::window<D> window;
 
+    /// Site_Iterator type to browse (forward) the points of a generic w_window.
+    typedef with_w_< dpsites_fwd_piter< w_window<D, W> >, W > fwd_qiter;
 
-    /// Point_Iterator type to browse (forward) the points of a generic w_window.
-    typedef with_w_< dpoints_fwd_piter<D>, W > fwd_qiter;
-
-    /// Point_Iterator type to browse (backward) the points of a generic w_window.
-    typedef with_w_< dpoints_bkd_piter<D>, W > bkd_qiter;
+    /// Site_Iterator type to browse (backward) the points of a generic w_window.
+    typedef with_w_< dpsites_bkd_piter< w_window<D, W> >, W > bkd_qiter;
 
 
     /// Constructor without argument.
@@ -91,27 +109,46 @@ namespace mln
     const std::vector<W>& weights() const;
 
 
-    // Give the \p i-th delta-point.
-    const D& dp(unsigned i) const;
-
-    /// Give the number of delta-points.
-    unsigned ndpoints() const;
-
     /// Give access to the vector of delta-points.
-    const std::vector<D>& vect() const;
+    const std::vector<D>& std_vector() const;
 
     /// Give the corresponding window.
     const mln::window<D>& win() const;
 
 
-    /// Apply a central symmetry to the target window.
-    w_window<D,W>& sym();
+    /// Test if the window is symmetric.
+    bool is_symmetric() const;
+
+    /// Apply a central symmetry to the window.
+    void sym();
+
+    /// Clear this window.
+    void clear();
 
   protected:
-    
+
     mln::window<D> win_;
     std::vector<W> wei_;
   };
+
+
+  namespace convert
+  {
+
+    template <typename I, typename D, typename W>
+    inline
+    void
+    from_to(const Image<I>& from, w_window<D,W>& to);
+
+    template <typename D, typename W, typename I>
+    void
+    from_to(const w_window<D,W>& from, Image<I>& to);
+
+    template <typename V, unsigned S, typename D, typename W>
+    void
+    from_to(const V (&weight)[S], w_window<D,W>& to);
+
+  } // end of namespace mln::convert
 
 
   /* \brief Print a weighted window \p w_win into an output stream \p ostr.
@@ -188,29 +225,10 @@ namespace mln
 
   template <typename D, typename W>
   inline
-  const D&
-  w_window<D,W>::dp(unsigned i) const
-  {
-    mln_precondition(i < win_.ndpoints());
-    mln_invariant(wei_.size() == win_.ndpoints());
-    return win_.dp(i);
-  }
-
-  template <typename D, typename W>
-  inline
-  unsigned
-  w_window<D,W>::ndpoints() const
-  {
-    mln_invariant(wei_.size() == win_.ndpoints());
-    return win_.ndpoints();
-  }
-
-  template <typename D, typename W>
-  inline
   const std::vector<D>&
-  w_window<D,W>::vect() const
+  w_window<D,W>::std_vector() const
   {
-    return win_.vect();
+    return win_.std_vector();
   }
 
   template <typename D, typename W>
@@ -227,7 +245,7 @@ namespace mln
   w_window<D,W>::w(unsigned i) const
   {
     mln_precondition(i < wei_.size());
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     return wei_[i];
   }
 
@@ -236,7 +254,7 @@ namespace mln
   w_window<D,W>&
   w_window<D,W>::insert(const W& w, const D& d)
   {
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     mln_precondition(! win_.has(d));
 
     if (w == W(0)) // FIXME: Implicit restriction "W scalar"...
@@ -244,8 +262,8 @@ namespace mln
       return *this;
 
     // memorization: d_i -> w_i
-    std::map<D, W> memo_wei_;
-    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+    std::map<D, W, util::ord<D> > memo_wei_;
+    for (unsigned i = 0; i < win_.size(); ++i)
       memo_wei_[win_.dp(i)] = wei_[i];
 
     // insertion of d and w:
@@ -253,25 +271,141 @@ namespace mln
     memo_wei_[d] = w;
 
     // re-mapping: w_i <- d_i
-    wei_.resize(win_.ndpoints());
-    for (unsigned i = 0; i < win_.ndpoints(); ++i)
+    wei_.resize(win_.size());
+    for (unsigned i = 0; i < win_.size(); ++i)
       wei_[i] = memo_wei_[win_.dp(i)];
 
-    mln_invariant(wei_.size() == win_.ndpoints());
+    mln_invariant(wei_.size() == win_.size());
     return *this;
   }
 
   template <typename D, typename W>
   inline
-  w_window<D,W>&
+  bool
+  w_window<D,W>::is_symmetric() const
+  {
+    if (! win_.is_symmetric())
+      return false;
+    w_window<D,W> tmp;
+    tmp.sym();
+    return *this == tmp;
+  }
+
+  template <typename D, typename W>
+  inline
+  void
   w_window<D,W>::sym()
   {
     w_window<D,W> tmp;
-    for (unsigned i = 0; i < this->ndpoints(); ++i)
+    unsigned n = this->size();
+    for (unsigned i = 0; i < n; ++i)
       tmp.insert(this->w(i), - this->dp(i));
     *this = tmp;
-    return *this;
   }
+
+  template <typename D, typename W>
+  inline
+  void
+  w_window<D,W>::clear()
+  {
+    win_.clear();
+    wei_.clear();
+  }
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename I, typename D, typename W>
+    void
+    from_to(const Image<I>& from_, w_window<D,W>& to)
+    {
+      mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
+      mlc_converts_to(mln_value(I), W)::check();
+      const I& ima = exact(from_);
+      to.clear();
+      mln_value(I) zero = literal::zero;
+      mln_piter(I) p(ima.domain());
+      for_all(p)
+	if (ima(p) != zero)
+	  to.insert(ima(p), convert::to<D>(p));
+    }
+
+    template <typename D, typename W, typename I>
+    void
+    from_to(const w_window<D,W>& w_win, Image<I>& ima_)
+    {
+      typedef mln_site(I) P;
+      mlc_converts_to(D, mln_delta(P))::check();
+      mlc_converts_to(W, mln_value(I))::check();
+
+      I& ima = exact(ima_);
+      mln_precondition(! ima.has_data());
+      // mln_precondition(w_win.is_valid());
+
+      ima.init_(geom::bbox(w_win));
+      {
+	// level::fill(ima, literal::zero) is:
+	mln_value(I) zero = literal::zero;
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  ima(p) = zero;
+      }
+      unsigned n = w_win.size();
+      for (unsigned i = 0; i < n; ++i)
+	ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
+    }
+
+    // FIXME: Sample code (below) to generalize the code above:
+
+//     template <typename W>
+//     inline
+//     mln_image_from(W, mln_weight(W)) to_image(const Weighted_Window<W>& w_win_)
+//     {
+//       const W& w_win = exact(w_win_);
+//       mln_precondition(! w_win.is_empty());
+
+//       typedef mln_psite(W) P;
+//       box<P> b = geom::bbox(w_win);
+//       mln_image_from(W, mln_weight(W)) ima(b);
+//       // Fill the image with zeros, as (weighted) windows are not
+//       // necessarily box-shaped (there might be holes corresponding to
+//       // null weights).
+//       level::fill(ima, literal::zero);
+//       P O = P::origin;
+//       mln_qiter(W) q(w_win, O);
+//       for_all(q)
+// 	ima(q) = q.w();
+//       return ima;
+//     }
+
+    template <typename V, unsigned S, typename D, typename W>
+    void
+    from_to(const V (&weight)[S], w_window<D,W>& to)
+    {
+      mlc_bool(S != 0)::check();
+      mlc_converts_to(V, W)::check();
+      enum { d = D::dim,
+	     s = mlc_root(d,S)::value / 2 };
+      metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+      to.clear();
+      typedef mln_site(D) P;
+      box<P> b(all_to(-s), all_to(+s));
+      mln_fwd_piter(box<P>) p(b);
+      unsigned i = 0;
+      V zero = literal::zero;
+      for_all(p)
+      {
+	if (weight[i] != zero)
+	  to.insert(weight[i], convert::to<D>(p));
+	++i;
+      }
+    }
+
+  } // end of namespace mln::convert
+
 
   // operators
 
@@ -280,8 +414,8 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win)
   {
     ostr << '[';
-    for (unsigned i = 0; i < w_win.win().ndpoints(); ++i)
-      ostr << w_win.vect()[i] << ':' << w_win.w(i) << ' ';
+    for (unsigned i = 0; i < w_win.win().size(); ++i)
+      ostr << w_win.dp(i) << ':' << w_win.w(i) << ' ';
     return ostr << ']';
   }
 
@@ -289,7 +423,7 @@ namespace mln
   inline
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs)
   {
-    if (lhs.ndpoints() != rhs.ndpoints())
+    if (lhs.size() != rhs.size())
       return false;
     if (lhs.win() != rhs.win())
       return false;

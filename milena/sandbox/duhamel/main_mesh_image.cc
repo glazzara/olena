@@ -1,12 +1,12 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
 #include <mln/core/mesh_p.hh>
 #include <mln/core/mesh_psite.hh>
 #include <mln/draw/mesh.hh>
 #include <mln/core/mesh_image.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/interpolated.hh>
 
 using namespace mln;
 
@@ -33,12 +33,12 @@ main (void)
  // g.print_debug ();
 
  std::vector<point2d> v;
- v.push_back (make::point2d (1,1));
- v.push_back (make::point2d (10,1));
- v.push_back (make::point2d (19,2));
- v.push_back (make::point2d (19,19));
- v.push_back (make::point2d (10,10));
- v.push_back (make::point2d (1,19));
+ v.push_back (point2d (1,1));
+ v.push_back (point2d (10,1));
+ v.push_back (point2d (19,2));
+ v.push_back (point2d (19,19));
+ v.push_back (point2d (10,10));
+ v.push_back (point2d (1,19));
 
 
  image2d_b<int> ima (20, 20, 1);

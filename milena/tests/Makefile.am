@@ -15,6 +15,7 @@ SUBDIRS =					\
   display					\
   draw						\
   estim						\
+  extension					\
   fun						\
   geom						\
   histo						\
@@ -24,6 +25,7 @@ SUBDIRS =					\
   linear					\
   literal					\
   logical					\
+  make						\
   math						\
   metal						\
   morpho					\
@@ -34,15 +36,22 @@ SUBDIRS =					\
   subsampling					\
   tag						\
   test						\
+  topo						\
   trace						\
   trait						\
+  unit_test					\
   util						\
   value						\
   win
 
+
 check_PROGRAMS =				\
-  all_headers
+  all_headers 					\
+  essential_headers 				\
+  global_vars
 
 all_headers_SOURCES = all_headers.cc
+essential_headers_SOURCES = essential_headers.cc
+global_vars_SOURCES = global_vars1.cc global_vars2.cc
 
 TESTS = $(check_PROGRAMS)

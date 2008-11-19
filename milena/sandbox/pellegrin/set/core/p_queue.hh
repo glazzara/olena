@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_QUEUE_HH
-# define MLN_CORE_P_QUEUE_HH
+#ifndef MLN_CORE_SITE_SET_P_QUEUE_HH
+# define MLN_CORE_SITE_SET_P_QUEUE_HH
 
-/*! \file mln/core/p_queue.hh
+/*! \file mln/core/site_set/p_queue.hh
  *
  * \brief Definition of a point set class based on std::deque.
  */
@@ -73,17 +73,17 @@ namespace mln
    * (i.e., no-op if multiple or allow multiple insertions).
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P>
   class p_queue : public internal::point_set_base_< P, p_queue<P> >
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
@@ -96,7 +96,7 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -200,7 +200,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_queue<P>::npoints() const
+  p_queue<P>::nsites() const
   {
     return q_.size();
   }
@@ -210,7 +210,7 @@ namespace mln
   const box_<P>&
   p_queue<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -299,7 +299,7 @@ namespace mln
   const P&
   p_queue<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return q_[i];
   }
 
@@ -308,4 +308,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_QUEUE_HH
+#endif // ! MLN_CORE_SITE_SET_P_QUEUE_HH

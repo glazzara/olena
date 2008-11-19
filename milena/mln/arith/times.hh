@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_ARITH_TIMES_HH
 # define MLN_ARITH_TIMES_HH
 
-/*! \file mln/arith/times.hh
- *
- * \brief Point-wise multiplication between images.
- *
- * \todo Speedup; some versions are not optimal.
- */
+/// \file mln/arith/times.hh
+///
+/// Point-wise multiplication between images.
+///
+/// \todo Speedup; some versions are not optimal.
 
 # include <mln/arith/includes.hh>
 
@@ -88,8 +88,8 @@ namespace mln
   namespace arith
   {
 
-    /*! Point-wise addition of images \p lhs and \p rhs.
-     *
+    /// Point-wise addition of images \p lhs and \p rhs.
+    /*!
      * \param[in] lhs First operand image.
      * \param[in] rhs Second operand image.
      * \param[out] output The result image.
@@ -100,8 +100,8 @@ namespace mln
     void times(const Image<L>& lhs, const Image<R>& rhs, Image<O>& output);
 
 
-    /*! Point-wise addition of the value \p val to image \p input.
-     *
+    /// Point-wise addition of the value \p val to image \p input.
+    /*!
      * \param[in] input The image.
      * \param[in] val The value.
      * \param[out] output The result image.
@@ -112,8 +112,8 @@ namespace mln
     void times_cst(const Image<I>& input, const V& val, Image<O>& output);
 
 
-    /*! Point-wise addition of image \p rhs in image \p lhs.
-     *
+    /// Point-wise addition of image \p rhs in image \p lhs.
+    /*!
      * \param[in] lhs First operand image (subject to addition).
      * \param[in,out] rhs Second operand image (to be added to \p lhs).
      *

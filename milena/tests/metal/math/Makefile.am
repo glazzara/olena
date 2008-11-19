@@ -3,8 +3,10 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  pow
+  pow						\
+  root
 
 pow_SOURCES = pow.cc
+root_SOURCES = root.cc
 
 TESTS = $(check_PROGRAMS)

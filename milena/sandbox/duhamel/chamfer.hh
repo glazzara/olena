@@ -34,8 +34,8 @@
  */
 
 # include <mln/level/fill.hh>
-# include <mln/core/w_window2d_int.hh>
-# include <mln/core/w_window2d_float.hh>
+# include <mln/core/alias/w_window2d_int.hh>
+# include <mln/core/alias/w_window2d_float.hh>
 
 # include "canvas_chamfer.hh"
 
@@ -76,8 +76,8 @@ namespace mln
 	unsigned max;
 
  	void init()                            { initialize(output, exact(input));
-						 level::fill(inplace(output | (input | true).domain()),  0);
-						 level::fill(inplace(output | (input | false).domain()), max); }
+	  level::fill((output | (input | true).domain()).rw(),  0);
+	  level::fill((output | (input | false).domain()).rw(), max); }
 	bool handles(const P& p) const         { return input(p) == false; }
 
 	// end of requirements

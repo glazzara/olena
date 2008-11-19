@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_METAL_ALL_HH
 # define MLN_METAL_ALL_HH
 
-/*! \file mln/metal/all.hh
- *
- * \brief File that includes all meta-programming tools.
- */
+/// \file mln/metal/all.hh
+///
+/// File that includes all meta-programming tools.
+
 
 namespace mln
 {
@@ -39,10 +40,10 @@ namespace mln
   /// Namespace of meta-programming tools.
   namespace metal
   {
-    /// \internal Implementation namespace of metal namespace.
+    /// Implementation namespace of metal namespace.
     namespace impl {}
 
-    /// \internal Internal namespace of metal namespace.
+    /// Internal namespace of metal namespace.
     namespace internal {}
 
   }
@@ -53,14 +54,18 @@ namespace mln
 # include <mln/metal/none.hh>
 
 # include <mln/metal/abort.hh>
+# include <mln/metal/ands.hh>
 # include <mln/metal/bexpr.hh>
 # include <mln/metal/bool.hh>
 # include <mln/metal/equal.hh>
+# include <mln/metal/not_equal.hh>
 # include <mln/metal/if.hh>
 
 # include <mln/metal/converts_to.hh>
 # include <mln/metal/is.hh>
+# include <mln/metal/is_not.hh>
 # include <mln/metal/is_a.hh>
+# include <mln/metal/is_not_a.hh>
 # include <mln/metal/goes_to.hh>
 
 # include <mln/metal/const.hh>

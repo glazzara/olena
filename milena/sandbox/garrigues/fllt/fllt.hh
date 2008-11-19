@@ -35,15 +35,15 @@
  *
  */
 
-# include <mln/core/image2d.hh>
-# include <mln/core/p_set.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/neighb2d.hh>
-# include <mln/core/pset_if_piter.hh>
-# include <mln/core/pset_if.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/site_set/p_set.hh>
+
+# include <mln/core/alias/neighb2d.hh>
+# include <mln/core/p_if_piter.hh>
+# include <mln/core/site_set/p_if.hh>
+# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/core/a_point_of.hh>
 
 # include <mln/debug/println.hh>

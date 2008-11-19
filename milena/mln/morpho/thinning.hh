@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -58,6 +58,35 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
+
+      template <typename I, typename Wfg, typename Wbg>
+      inline
+      void
+      thinning_tests(const Image<I>&    input_,
+		     const Window<Wfg>& win_fg_,
+		     const Window<Wbg>& win_bg_)
+      {
+	const I&   input  = exact(input_);
+	const Wfg& win_fg = exact(win_fg_);
+	const Wbg& win_bg = exact(win_bg_);
+
+	// Tests.
+	mln_precondition(input.has_data());
+	mln_precondition(win_bg.is_centered());
+	mln_precondition(! win_bg.is_empty());
+	mln_precondition((win_fg && win_bg).is_empty());
+
+	// Avoid warnings.
+	(void) input_;
+	(void) win_fg_;
+	(void) win_bg_;
+      }
+
+    } // end of namespace mln::morpho::internal
+
+
     template <typename I, typename Wfg, typename Wbg>
     inline
     mln_concrete(I)
@@ -65,10 +94,9 @@ namespace mln
 	       const Window<Wfg>& win_fg, const Window<Wbg>& win_bg)
     {
       trace::entering("morpho::thinning");
-      mln_precondition(exact(input).has_data());
-      mln_precondition(exact(win_fg).is_centered());
-      mln_precondition(! exact(win_bg).is_empty());
-      mln_precondition(set::inter(exact(win_fg), exact(win_bg)).is_empty());
+
+
+      internal::thinning_tests(input, win_fg, win_bg);
 
       mln_concrete(I) output = morpho::minus( input,
 					      hit_or_miss(input, win_fg, win_bg) );

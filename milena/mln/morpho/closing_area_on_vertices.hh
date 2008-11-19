@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,7 +34,7 @@
 /// \brief Morphological area closing on a line graph image computing
 /// the area in terms of adjacent vertices.
 
-# include <mln/core/line_graph_image.hh>
+# include <mln/core/image/line_graph_image.hh>
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/count_adjacent_vertices.hh>
 
@@ -49,7 +50,7 @@ namespace mln
     template <typename P, typename V, typename N, typename O>
     void closing_area_on_vertices(const line_graph_image<P, V>& input,
 				  const Neighborhood<N>& nbh,
-				  std::size_t lambda, Image<O>& output);
+				  unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -58,10 +59,10 @@ namespace mln
     inline
     void closing_area_on_vertices(const line_graph_image<P, V>& input,
 				  const Neighborhood<N>& nbh,
-				  std::size_t lambda, Image<O>& output)
+				  unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef accu::count_adjacent_vertices_<P, V> attribute_t;
+      typedef accu::count_adjacent_vertices<P, V> attribute_t;
       // FIXME: Change sig of closing_attribute!
       closing_attribute<attribute_t>(input, nbh, lambda, output);
     }

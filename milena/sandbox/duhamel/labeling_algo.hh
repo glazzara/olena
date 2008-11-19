@@ -1,12 +1,12 @@
 # include <mln/core/queue_p.hh>
 # include "queue_p_fast.hh"
-# include <mln/core/clone.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/debug/println.hh>
 
 
 #include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/debug/println.hh>
@@ -82,7 +82,7 @@ namespace mln
 
       for_all(p)
 	{
-	  X x = mln_point(I)(p);
+	  X x = mln_psite(I)(p);
 	  tab_mean[ima(p) - min].take(x);
 	  for_all (n) if (ima.has(n))
 	    if (ima(p) != ima(n))
@@ -92,7 +92,7 @@ namespace mln
       for (unsigned i = 0; i < nb; ++i)
 	{
 	  gr.add_node ();
- 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+ 	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
 				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 
@@ -132,7 +132,7 @@ namespace mln
 	  {
 	    if (orig(p) != 0)
 	      {
-		X x = mln_point(I)(p);
+		X x = mln_psite(I)(p);
 		tab_mean[orig(p) - min].take(x);
 	      }
 	  }
@@ -153,7 +153,7 @@ namespace mln
       for (unsigned i = 0; i < nb; ++i)
 	{
 	  gr.add_node ();
- 	  v[i] = make::point2d ((unsigned)tab_mean[i].to_result ()[0],
+ 	  v[i] = point2d ((unsigned)tab_mean[i].to_result ()[0],
 				(unsigned)tab_mean[i].to_result ()[1]);
 	}
 
@@ -250,7 +250,7 @@ namespace mln
 	    q.push(p);
 	    break;
 	  }
-      std::cout << "init => q has " << q.npoints() << " points"
+      std::cout << "init => q has " << q.nsites() << " points"
 		<< std::endl;
     }
 

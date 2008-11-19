@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,12 +30,12 @@
  * \brief Tests on mln::display::color::pretty.
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
-# include <mln/core/p_set.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/inplace.hh>
+# include <mln/core/site_set/p_set.hh>
+# include <mln/core/image/sub_image.hh>
+
 # include <mln/value/rgb8.hh>
 # include <mln/display/color_pretty.hh>
 # include <mln/level/compare.hh>
@@ -55,7 +55,7 @@ int main()
     s.insert(point2d(0, 0));
     s.insert(point2d(1, 1));
 
-    sub_image<image2d<int_u8>, p_set<point2d > > input = inplace(ima | s);
+    sub_image<image2d<int_u8>, p_set<point2d > > input = ima | s;
     image2d<value::rgb8> out = display::color_pretty(input);
 
     value::rgb8 vs[2][2] = {
@@ -63,7 +63,7 @@ int main()
       {value::rgb8(255, 0, 0), value::rgb8(51, 51, 51)}
     };
 
-    image2d<value::rgb8> ref (make::image2d(vs));
+    image2d<value::rgb8> ref (make::image(vs));
     mln_assertion (ref == out);
   }
 
@@ -87,7 +87,7 @@ int main()
       {value::rgb8(0, 0, 255), value::rgb8(0, 0, 0)}
     };
 
-    image2d<value::rgb8> ref (make::image2d(vs));
+    image2d<value::rgb8> ref (make::image(vs));
     mln_assertion (ref == out);
   }
 }

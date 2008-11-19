@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,67 +26,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/all_headers.cc
- *
- * \brief Tests with all headers. (check norris tests)
- */
+/// \file tests/all_headers.cc
+///
+/// Tests with all headers. (check norris tests)
 
-
-#include <mln/test/all.hh>
-//#include <mln/convert/all.hh>
-#include <mln/estim/all.hh>
-#include <mln/debug/all.hh>
-#include <mln/histo/all.hh>
-#include <mln/pw/all.hh>
-#include <mln/geom/all.hh>
-#include <mln/core/trait/all.hh>
-//#include <mln/fun/i2v/all.hh>
-//#include <mln/fun/p2b/all.hh>
-//#include <mln/fun/p2v/all.hh>
-//#include <mln/fun/v2v/all.hh>
-//#include <mln/fun/x2x/all.hh>
-//#include <mln/fun/all.hh>
-#include <mln/math/all.hh>
-//#include <mln/set/all.hh>
-#include <mln/draw/all.hh>
-#include <mln/metal/math/all.hh>
-#include <mln/metal/all.hh>
-#include <mln/morpho/all.hh>
-#include <mln/io/pfm/all.hh>
-#include <mln/io/pgm/all.hh>
-//#include <mln/io/fits/all.hh>
-#include <mln/io/ppm/all.hh>
-#include <mln/io/pbm/all.hh>
-#include <mln/io/pnm/all.hh>
-//#include <mln/io/all.hh>
-#include <mln/level/naive/all.hh>
-#include <mln/level/approx/all.hh>
-#include <mln/level/all.hh>
-#include <mln/arith/all.hh>
-#include <mln/linear/all.hh>
-#include <mln/logical/all.hh>
-#include <mln/canvas/morpho/all.hh>
-#include <mln/canvas/browsing/all.hh>
-#include <mln/canvas/all.hh>
-#include <mln/accu/all.hh>
-#include <mln/norm/all.hh>
-#include <mln/value/internal/all.hh>
-#include <mln/value/all.hh>
-#include <mln/value/concept/all.hh>
-#include <mln/value/builtin/all.hh>
-#include <mln/make/all.hh>
-#include <mln/border/all.hh>
-#include <mln/labeling/all.hh>
 #include <mln/util/all.hh>
+#include <mln/fun/p2v/all.hh>
+#include <mln/fun/x2x/all.hh>
+#include <mln/fun/v2v/all.hh>
+#include <mln/fun/i2v/all.hh>
+#include <mln/fun/all.hh>
+#include <mln/fun/x2v/all.hh>
+#include <mln/fun/p2b/all.hh>
+#include <mln/extension/all.hh>
+#include <mln/histo/all.hh>
+#include <mln/trait/op/all.hh>
 #include <mln/trait/all.hh>
 #include <mln/trait/value/all.hh>
-#include <mln/trait/op/all.hh>
-#include <mln/tag/all.hh>
-#include <mln/trace/all.hh>
-#include <mln/literal/all.hh>
-#include <mln/display/all.hh>
 #include <mln/win/all.hh>
+#include <mln/core/routine/all.hh>
+#include <mln/core/trait/all.hh>
+#include <mln/core/def/all.hh>
+#include <mln/core/internal/check/image_all.hh>
+#include <mln/core/image/all.hh>
+#include <mln/core/site_set/all.hh>
+#include <mln/io/pbm/all.hh>
+#include <mln/io/pfm/all.hh>
+#include <mln/io/pgm/all.hh>
+#include <mln/io/all.hh>
+#include <mln/io/fits/all.hh>
+#include <mln/io/pnm/all.hh>
+#include <mln/io/ppm/all.hh>
+#include <mln/make/all.hh>
+#include <mln/canvas/morpho/all.hh>
+#include <mln/canvas/all.hh>
+#include <mln/canvas/browsing/all.hh>
+#include <mln/estim/all.hh>
+#include <mln/arith/all.hh>
+#include <mln/display/all.hh>
+#include <mln/test/all.hh>
+#include <mln/border/all.hh>
+#include <mln/trace/all.hh>
+#include <mln/debug/all.hh>
+#include <mln/morpho/elementary/all.hh>
+#include <mln/morpho/all.hh>
+#include <mln/accu/all.hh>
+#include <mln/pw/all.hh>
+#include <mln/linear/all.hh>
+#include <mln/metal/all.hh>
+#include <mln/metal/math/all.hh>
+#include <mln/set/all.hh>
+#include <mln/convert/impl/all.hh>
+#include <mln/convert/all.hh>
+#include <mln/geom/all.hh>
+#include <mln/literal/all.hh>
+#include <mln/level/approx/all.hh>
+#include <mln/level/all.hh>
+#include <mln/level/naive/all.hh>
+#include <mln/math/all.hh>
+#include <mln/norm/all.hh>
+#include <mln/logical/all.hh>
+#include <mln/draw/all.hh>
+#include <mln/value/builtin/all.hh>
+#include <mln/value/all.hh>
+#include <mln/value/internal/all.hh>
+#include <mln/value/concept/all.hh>
+#include <mln/tag/all.hh>
+#include <mln/labeling/all.hh>
 
+#include <mln/essential/1d.hh>
+#include <mln/essential/2d.hh>
+#include <mln/essential/3d.hh>
 
 int main ()
 {

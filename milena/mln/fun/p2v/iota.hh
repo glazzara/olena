@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_P2V_IOTA_HH
 # define MLN_FUN_P2V_IOTA_HH
 
-/*! \file mln/fun/p2v/iota.hh
- *
- * \brief Iota function.
- */
+/// \file mln/fun/p2v/iota.hh
+///
+/// Iota function.
 
 # include <mln/core/concept/function.hh>
 
@@ -45,11 +45,11 @@ namespace mln
     namespace p2v
     {
 
-      struct iota_t : public Function_p2v< iota_t >
+      struct iota : public Function_p2v< iota >
       {
 	typedef unsigned result;
 
-	iota_t();
+	iota();
 
 	template <typename P>
 	unsigned operator()(const P&) const;
@@ -59,15 +59,13 @@ namespace mln
 
       protected:
 	mutable unsigned i_;
-      }
-
-      iota;
+      };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
       inline
-      iota_t::iota_t()
+      iota::iota()
       {
 	reset();
       }
@@ -75,21 +73,21 @@ namespace mln
       template <typename P>
       inline
       unsigned
-      iota_t::operator()(const P&) const
+      iota::operator()(const P&) const
       {
 	return ++i_;
       }
 
       inline
       unsigned
-      iota_t::value() const
+      iota::value() const
       {
 	return i_;
       }
 
       inline
       void
-      iota_t::reset() const
+      iota::reset() const
       {
 	i_ = 0;
       }

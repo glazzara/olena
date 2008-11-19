@@ -55,28 +55,51 @@ namespace mln
       namespace generic
       {
 	template <typename I, typename O>
-	void not__(const I& input, O& output);
+	void not_(const I& input, O& output);
+
+	template <typename I>
+	void not_inplace(I& inout);
       }
 
       template <typename I, typename O>
       inline
-      void not__(trait::image::speed::any, const I& input, O& output)
+      void not_(trait::image::speed::any, const I& input, O& output)
       {
-	generic::not__(input, output);
+	generic::not_(input, output);
+      }
+
+      template <typename I>
+      inline
+      void not_inplace(trait::image::speed::any, I& inout)
+      {
+	generic::not_inplace(inout);
       }
 
       template <typename I, typename O>
       inline
-      void not__(trait::image::speed::fastest, const I& input, O& output)
+      void not_(trait::image::speed::fastest, const I& input, O& output)
       {
-	trace::entering("logical::impl::not__");
+	trace::entering("logical::impl::not_");
 
 	mln_pixter(const I) ip(input);
 	mln_pixter(O)       op(output);
 	for_all_2(ip, op)
 	  op.val() = ! ip.val();
 
-	trace::exiting("logical::impl::not__");
+	trace::exiting("logical::impl::not_");
+      }
+
+      template <typename I>
+      inline
+      void not_inplace(trait::image::speed::fastest, I& inout)
+      {
+	trace::entering("logical::impl::not_inplace");
+
+	mln_pixter(I) p(inout);
+	for_all(p)
+	  p.val() = ! p.val();
+
+	trace::exiting("logical::impl::not_inplace");
       }
 
     } // end of namespace mln::logical::impl

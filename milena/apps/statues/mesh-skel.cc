@@ -39,14 +39,12 @@
 
 #include <TriMesh.h>
 
-#include <mln/value/rgb8.hh>
-
-#include <mln/core/point3d.hh>
-#include <mln/make/point3d.hh>
+#include <mln/core/alias/point3d.hh>
+#include <mln/core/alias/point3d.hh>
 
 #include <mln/util/graph.hh>
-#include <mln/core/graph_image.hh>
-#include <mln/core/graph_elt_neighborhood.hh>
+#include <mln/core/image/graph_image.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/morpho/closing_area.hh>
 #include <mln/labeling/regional_minima.hh>
@@ -62,7 +60,8 @@ int main(int argc, char* argv[])
 {
   if (argc != 4)
     {
-      std::cerr << "usage: " << argv[1] << " input.off lambda output.off";
+      std::cerr << "usage: " << argv[0] << " input.off lambda output.off"
+		<< std::endl;
       exit(1);
     }
 
@@ -127,7 +126,7 @@ int main(int argc, char* argv[])
   mln::util::graph<mln::point3d> g;
   // Populate the graph with vertices.
   for (unsigned i = 0; i < mesh.faces.size(); ++i)
-    g.add_vertex (mln::make::point3d(i, i, i));
+    g.add_vertex (mln::point3d(i, i, i));
 
   // Populate the graph with edges.
   mesh.need_across_edge();

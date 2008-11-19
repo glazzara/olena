@@ -30,7 +30,7 @@
  * \brief Test on mln::level::median.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TRACE_EXITING_HH
 # define MLN_TRACE_EXITING_HH
 
-/*! \file mln/trace/exiting.hh
- *
- * \brief Definition of the trace exiting procedure.
- */
+/// \file mln/trace/exiting.hh
+///
+/// Definition of the trace exiting procedure.
 
 # include <string>
 # include <iostream>
@@ -50,14 +50,31 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    void exiting(const std::string&)
+    void exiting(const std::string& scope)
     {
       if (quiet)
 	return;
+
+      timeval after_time;
+      gettimeofday(&after_time, 0);
+      bool has_inner_trace = (internal::max_tab == tab);
       --tab;
-      for (unsigned i = 0; i < tab; ++i)
-	std::cout << "  ";
-      std::cout << "}" << std::endl;
+
+      if (!has_inner_trace)
+        for (unsigned i = 0; i < tab; ++i)
+	 std::cout << "  ";
+
+      std::cout << "} ";
+
+      if (!has_inner_trace)
+	std::cout << scope << " ";
+
+      std::cout << "- "
+		<< (after_time.tv_usec - internal::start_time.tv_usec) / 1000.
+		<< "ms ";
+
+      if (has_inner_trace || (internal::max_tab - tab > 1))
+	std::cout << std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

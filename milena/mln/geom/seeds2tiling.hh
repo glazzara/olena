@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,8 +37,8 @@
 # include <map>
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/p_queue.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/site_set/p_queue.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
@@ -48,17 +49,18 @@ namespace mln
   namespace geom
   {
 
-    /*! Take a labeled image \p ima_ with seeds and extend them
-     *  until creating tiles.
-     *
-     * \param[in,out] ima_ The labeled image with seed.
-     * \param[in] nbh The neighborhood to use on this algorithm.
-     *
-     * \pre \p ima_ has to be initialized.
-     *
-     */
+    /// \brief Take a labeled image \p ima_ with seeds and extend them
+    /// until creating tiles.
+    ///
+    /// \param[in,out] ima_ The labeled image with seed.
+    /// \param[in] nbh The neighborhood to use on this algorithm.
+    ///
+    /// \pre \p ima_ has to be initialized.
+    ///
+    /// \{
     template <typename I, typename N>
     I seeds2tiling (Image<I>& ima_, const Neighborhood<N>& nbh);
+    /// \}
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -69,12 +71,13 @@ namespace mln
       inline
       I
       seeds2tiling (Image<I>& ima_,
-		    const Neighborhood<N>& nbh)
+		    const Neighborhood<N>& nbh_)
       {
 	trace::entering("geom::impl::seed2tiling");
 
 	I& ima = exact(ima_);
 	I out = clone(ima_);
+	const N& nbh = exact(nbh_);
 	p_queue<mln_psite(I)> q;
 
 	// Init.
@@ -105,8 +108,8 @@ namespace mln
 		  if (out(n) != 0)
 		    out(p) = out(n);
 		  else
-		    q.push_force(n); // n may already be in the queue,
-				     // yet we then queue again this psite
+		    q.push(n); // n may already be in the queue,
+			       // yet we then queue again this psite
 		}
 	    }
 	}
@@ -118,7 +121,7 @@ namespace mln
     } // end of namespace mln::geom::impl
 
 
-    /// Facade
+    // Facade
     template <typename I, typename N>
     inline
     I seeds2tiling(Image<I>& ima_, const Neighborhood<N>& nbh)

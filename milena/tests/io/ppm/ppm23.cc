@@ -30,7 +30,7 @@
  * \brief Test on mln::io::ppm::load and mln::io::ppm::save.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/value/rgb8.hh>

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_EXACT_HH
-# define MLN_CORE_EXACT_HH
+#ifndef MLN_CORE_ROUTINE_EXACT_HH
+# define MLN_CORE_ROUTINE_EXACT_HH
 
-/*! \file mln/core/exact.hh
+/*! \file mln/core/routine/exact.hh
  * \brief Definition of the mln::exact downcast routines.
  */
 
@@ -92,4 +92,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_EXACT_HH
+#endif // ! MLN_CORE_ROUTINE_EXACT_HH

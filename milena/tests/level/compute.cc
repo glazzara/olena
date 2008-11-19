@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::compute.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/compute.hh>
 #include <mln/debug/iota.hh>
 #include <mln/accu/min.hh>
@@ -43,11 +43,13 @@ int main()
 
   const unsigned size = 200;
   image2d<int> ima(size, size);
-  accu::min_<int> acu_min;
-  accu::max_<int> acu_max;
   debug::iota(ima);
-  int min = level::compute(ima, acu_min);
-  int max = level::compute(ima, acu_max);
+
+  accu::min<int> m;
+  int min = level::compute(m, ima);
   mln_assertion(min == 1);
+
+  accu::max<int> M;
+  int max = level::compute(M, ima);
   mln_assertion(max == 40000);
 }

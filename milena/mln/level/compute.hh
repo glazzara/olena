@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,12 @@
 #ifndef MLN_LEVEL_COMPUTE_HH
 # define MLN_LEVEL_COMPUTE_HH
 
-/*! \file mln/level/compute.hh
- *
- * \brief Compute an accumulator onto image pixel values.
- */
+/// \file mln/level/compute.hh
+///
+/// Compute an accumulator onto image pixel values.
 
+# include <mln/level/update.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/level/take.hh>
-# include <mln/metal/is_a.hh>
 
 
 
@@ -45,62 +44,62 @@ namespace mln
   namespace level
   {
 
-    /*! Compute an accumulator onto the pixel values of the image \p input.
-     *
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /*!
+     * \param[in] a An accumulator.
      * \param[in] input The input image.
-     * \param[in] a The accumulator.
      * \return The accumulator result.
      *
-     * This routine runs: \n
-     *   tmp = \p a \n
-     *   tmp.init() \n
-     *   level::take(\p input, tmp) \n
-     *   return tmp.to_result() \n
+     * It fully relies on level::update.
      */
-    template <typename I, typename A>
+    template <typename A, typename I>
     mln_result(A)
-    compute(const Image<I>& input, const Accumulator<A>& a);
+    compute(const Accumulator<A>& a, const Image<I>& input);
 
+
+    /// Compute an accumulator onto the pixel values of the image \p input.
+    /*!
+     * \param[in] a A meta-accumulator.
+     * \param[in] input The input image.
+     * \return The accumulator result.
+     */
     template <typename A, typename I>
     mln_accu_with(A, mln_value(I))::result
-    compute(const Image<I>& input);
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename A>
-    inline
-    mln_result(A)
-    compute(const Image<I>& input, const Accumulator<A>& a_)
-    {
-      trace::entering("level::compute");
 
-      mln_precondition(exact(input).has_data());
-      A a = exact(a_); // Cpy.
-      a.init();
-      level::take(input, a);
-
-      trace::exiting("level::compute");
-      return a.to_result();
-    }
+    // Facades.
 
     template <typename A, typename I>
     inline
     mln_result(A)
-    compute(const Image<I>& input)
+    compute(const Accumulator<A>& a_, const Image<I>& input)
     {
-      mln_precondition(exact(input).has_data());
-      return level::compute(input, A());
+      trace::entering("level::compute");
+
+      A a = exact(a_);
+      level::internal::update_tests(a, input);
+
+      a.init();
+      level::internal::update_dispatch(a, input);
+
+      trace::exiting("level::compute");
+      return a;
     }
 
     template <typename A, typename I>
     inline
     mln_accu_with(A, mln_value(I))::result
-    compute(const Image<I>& input)
+    compute(const Meta_Accumulator<A>& a, const Image<I>& input)
     {
-      mlc_is_a(A, Meta_Accumulator)::check();
-      return compute(input,
-		     mln_accu_with(A, mln_value(I))());
+      typedef mln_accu_with(A, mln_value(I)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_value(I)());
+
+      return level::compute(a_, input); // Call the previous version.
     }
 
 # endif // ! MLN_INCLUDE_ONLY

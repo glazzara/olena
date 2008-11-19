@@ -46,12 +46,10 @@ namespace mln
     namespace internal
     {
 
-      /// \internal
       template <typename T, typename E, bool is_lowq = false>
       struct set_selector_ // no inheritance
       {};
 
-      /// \internal
       template <typename T, typename E>
       struct set_selector_< T, E, true > // lowq so iterable
 	:

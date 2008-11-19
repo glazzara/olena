@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +30,10 @@
 # define MLN_CANVAS_LABELING_HH
 
 /// \file mln/canvas/labeling.hh
-/// \brief Connected component labeling of the object part in a binary
-/// image.
+///
+/// Connected component labeling of the object part in a binary image.
+///
+/// \todo Make the fastest version work.
 
 # include <mln/core/concept/image.hh>
 # include <mln/level/fill.hh>
@@ -45,52 +48,138 @@ namespace mln
   {
 
     // General version.
+    template <typename I, typename N, typename F, typename L>
+    mln_ch_value(I, L)
+    labeling(const Image<I>& input, const Neighborhood<N>& nbh,
+	     F& functor, L& nlabels);
 
-    template <typename F>
-    struct labeling
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+    template <typename I>
+    static inline
+    mln_psite(I)
+    find_root(I& parent,
+	      const mln_psite(I)& x)
     {
-      // Functor.
-      F& f;
+      if (parent(x) == x)
+	return x;
+      else
+	return parent(x) = find_root(parent, parent(x));
+    }
 
-      typedef typename F::I I;
-      typedef typename F::N N;
-      typedef typename F::L L;
+    template <typename I, typename N, typename F, typename L>
+    mln_ch_value(I, L)
+      labeling(const Image<I>& input_, const Neighborhood<N>& nbh_,
+	       F& f, L& nlabels)
+    {
+      trace::entering("canvas::labeling");
+
+      // FIXME: Test?!
+
+      const I& input = exact(input_);
+      const N& nbh   = exact(nbh_);
+
       typedef typename F::S S;
 
       // Local type.
-      typedef mln_psite(I) psite;
+      typedef mln_psite(I) P;
 
       // Auxiliary data.
-      mln_ch_value(I, bool)  deja_vu;
-      mln_ch_value(I, psite) parent;
+      mln_ch_value(I, bool) deja_vu;
+      mln_ch_value(I, P)    parent;
 
       // Output.
       mln_ch_value(I, L) output;
-      L nlabels;
       bool status;
 
-      // Ctor.
-      labeling(F& f);
+      // Initialization.
 
-      void init();
+      {
+	initialize(deja_vu, input);
+	mln::level::fill(deja_vu, false);
 
-      void pass_1();
+	initialize(parent, input);
 
-      void pass_2();
+	initialize(output, input);
+	mln::level::fill(output, L(literal::zero));
+	nlabels = 0;
+
+	f.init(); // Client initialization.
+      }
+
+      // First Pass.
+
+      {
+	mln_fwd_piter(S) p(f.s);
+	mln_niter(N) n(nbh, p);
+	for_all(p) if (f.handles(p))
+	{
+
+	  // Make-Set.
+	  {
+	    parent(p) = p;
+ 	    f.init_attr(p);
+	  }
+
+	  for_all(n)
+	    if (input.domain().has(n) && deja_vu(n))
+	    {
+	      if (f.equiv(n, p))
+	      {
+		// Do-Union.
+		P r = find_root(parent, n);
+		if (r != p)
+		{
+		  parent(r) = p;
+ 		  f.merge_attr(r, p);
+		}
+	      }
+	      else
+		f.do_no_union(n, p);
+	    }
+	  deja_vu(p) = true;
+	}
+      }
+
+      // Second Pass. pass_2();
+      {
+	mln_bkd_piter(S) p(f.s);
+	for_all(p) if (f.handles(p))
+	{
+	  if (parent(p) == p) // if p is root
+	  {
+	    if (f.labels(p))
+	    {
+	      if (nlabels == mln_max(L))
+	      {
+		status = false;
+		return output;
+	      }
+	      output(p) = ++nlabels;
+	    }
+	  }
+	  else
+	    output(p) = output(parent(p));
+	}
+	status = true;
+
+      }
+
+      trace::exiting("canvas::labeling");
+      return output;
+    }
 
 
-      // Auxiliary methods.
 
-      void make_set(const psite& p);
 
-      bool is_root(const psite& p) const;
 
-      psite find_root(const psite& x);
+    // -----------------------------------------------------------
+    // Old code below.
 
-      void do_union(const psite& n, const psite& p);
 
-    };
-
+    /*
 
     // Fastest version.
 
@@ -131,126 +220,6 @@ namespace mln
 
     };
 
-# ifndef MLN_INCLUDE_ONLY
-
-    /*-------------------.
-    | canvas::labeling.  |
-    `-------------------*/
-
-    template <typename F>
-    labeling<F>::labeling(F& f)
-      : f(f)
-    {
-      trace::entering("canvas::labeling");
-
-      init();
-      f.init(); // Client initialization.
-      pass_1();
-      pass_2();
-
-      trace::exiting("canvas::labeling");
-    }
-
-    template <typename F>
-    void
-    labeling<F>::init()
-    {
-      initialize(deja_vu, f.input);
-      mln::level::fill(deja_vu, false);
-      initialize(parent, f.input);
-      initialize(output, f.input);
-      mln::level::fill(output, literal::zero);
-      nlabels = 0;
-    }
-
-    template <typename F>
-    void
-    labeling<F>::pass_1()
-    {
-      mln_fwd_piter(S) p(f.s);
-      mln_niter(N) n(f.nbh, p);
-      for_all(p) if (f.handles(p))
-	{
-	  make_set(p);
-	  for_all(n)
-	    if (f.input.has(n) && deja_vu(n))
-	      {
-		if (f.equiv(n, p))
-		  do_union(n, p);
-		else
-		  f.do_no_union(n, p);
-	      }
-	  deja_vu(p) = true;
-	}
-    }
-
-    template <typename F>
-    void
-    labeling<F>::pass_2()
-    {
-      mln_bkd_piter(S) p(f.s);
-      for_all(p) if (f.handles(p))
-	{
-	  if (is_root(p))
-	    {
-	      if (f.labels(p))
-		{
-		  if (nlabels == mln_max(L))
-		    {
-		      status = false;
-		      return;
-		    }
-		  output(p) = ++nlabels;
-		}
-	    }
-	  else
-	    output(p) = output(parent(p));
-	}
-      status = true;
-    }
-
-    template <typename F>
-    void
-    labeling<F>::make_set(const psite& p)
-    {
-      parent(p) = p;
-      f.init_attr(p);
-    }
-
-    template <typename F>
-    bool
-    labeling<F>::is_root(const psite& p) const
-    {
-      return parent(p) == p;
-    }
-
-    template <typename F>
-    typename labeling<F>::psite
-    labeling<F>::find_root(const psite& x)
-    {
-      if (parent(x) == x)
-	return x;
-      else
-	return parent(x) = find_root(parent(x));
-    }
-
-    template <typename F>
-    void
-    labeling<F>::do_union(const psite& n, const psite& p)
-    {
-      psite r = find_root(n);
-      if (r != p)
-	{
-	  parent(r) = p;
-	  f.merge_attr(r, p);
-	}
-    }
-
-
-    /*---------------------------.
-    | canvas::labeling_fastest.  |
-    `---------------------------*/
-
     template <typename F>
     labeling_fastest<F>::labeling_fastest(F& f)
       : f(f)
@@ -270,8 +239,8 @@ namespace mln
     labeling_fastest<F>::init()
     {
       initialize(parent, f.input);
-      for (unsigned p = 0; p < parent.ncells(); ++p)
-	parent[p] = p; // make_set
+      for (unsigned p = 0; p < parent.nelements(); ++p)
+	parent.element(p) = p; // make_set
       initialize(output, f.input);
       mln::level::fill(output, 0); // FIXME: Use literal::zero.
       nlabels = 0;
@@ -283,7 +252,7 @@ namespace mln
     {
       mln_bkd_pixter(const I) p(f.input);
 
-      typedef window<mln_dpoint(I)> W;
+      typedef window<mln_dpsite(I)> W;
       W win = mln::convert::to_upper_window(f.nbh);
       mln_qixter(const I, W) n(p, win);
 
@@ -315,11 +284,11 @@ namespace mln
 		      status = false;
 		      return;
 		    }
-		  output[p] = ++nlabels;
+		  output(p) = ++nlabels;
 		}
 	    }
 	  else
-	    output[p] = output[parent[p]];
+	    output(p) = output(parent.element(p));
 	}
       status = true;
     }
@@ -328,17 +297,17 @@ namespace mln
     bool
     labeling_fastest<F>::is_root(unsigned p) const
     {
-      return parent[p] == p;
+      return parent.element(p) == p;
     }
 
     template <typename F>
     unsigned
     labeling_fastest<F>::find_root(unsigned x)
     {
-      if (parent[x] == x)
+      if (parent.element(x) == x)
 	return x;
       else
-	return parent[x] = find_root(parent[x]);
+	return parent.element(x) = find_root(parent.element(x));
     }
 
     template <typename F>
@@ -348,11 +317,12 @@ namespace mln
       unsigned r = find_root(n);
       if (r != p)
 	{
-	  parent[r] = p;
+	  parent.element(r) = p;
 	  f.merge_attr(r, p);
 	}
     }
 
+*/
 
 # endif // ! MLN_INCLUDE_ONLY
 

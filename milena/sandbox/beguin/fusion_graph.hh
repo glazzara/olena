@@ -7,11 +7,11 @@
 
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
-#include <mln/core/neighb2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/win/rectangle2d.hh>
 
 //#include "map.hh"

@@ -1,4 +1,4 @@
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
@@ -21,18 +21,17 @@ void usage(char *argv[])
 
 int main(int argc, char* argv[])
 {
-  if (argc != 5)
-    usage(argv);
-
+  // usage
   float q = std::atof(argv[3]);
   int   e = std::atoi(argv[4]);
-
+  if (argc != 5)
+    usage(argv);
   if (q < 1 or e < 1)
     usage(argv);
-  
+
   using namespace mln;
   typedef image3d< bool > I3d;
-  
+
   image2d< bool > img1;
   image2d< bool > img2;
 
@@ -43,17 +42,18 @@ int main(int argc, char* argv[])
   //convert to image3d
   I3d cloud   = convert::to_image3d(img1);
   I3d surface = convert::to_image3d(img2);
-  
+
   //build p_arrays.
-  p_array<mln_point_(I3d)> c = convert::to_p_array(cloud);
-  p_array<mln_point_(I3d)> x = convert::to_p_array(surface); 
+  p_array<mln_psite_(I3d)> c = convert::to_p_array(cloud);
+  p_array<mln_psite_(I3d)> x = convert::to_p_array(surface);
 
   //working box
-  const box_<mln_point_(I3d)> working_box = enlarge(bigger(c.bbox(),x.bbox()),100);
-  
+  const box<mln_psite_(I3d)> working_box =
+    enlarge(bigger(c.bbox(),x.domain()),100);
+
   //Make a lazy_image map via function closest_point
-  closest_point<mln_point_(I3d)> fun(x, working_box);
-  lazy_image< closest_point<mln_point_(I3d)> > map(fun);
+  closest_point<mln_psite_(I3d)> fun(x, working_box);
+  lazy_image< closest_point<mln_psite_(I3d)> > map(fun);
 
   quat7<3> qk = registration::icp(c, map, q, e, x);
 
@@ -61,44 +61,44 @@ int main(int argc, char* argv[])
   std::cout << "closest_point(Ck[i]) = " << fun.i << std::endl;
   std::cout << "Pts processed        = " << registration::pts << std::endl;
 #endif
-  
-  qk.apply_on(c, c, c.npoints());
-  
+
+  qk.apply_on(c, c, c.nsites());
+
   float stddev, mean;
   registration::mean_stddev(c, map, mean, stddev);
-  
+
 #ifndef NDEBUG
   std::cout << "mean : " << mean << std::endl;
   std::cout << "stddev : " << stddev << std::endl;
 #endif
 
-  std::vector<float> length(c.npoints());
-  for (size_t i = 0; i < c.npoints(); i++)
+  std::vector<float> length(c.nsites());
+  for (size_t i = 0; i < c.nsites(); i++)
     length[i] = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
 
-  
+
   // final transform
   quat7<3> fqk = registration::final_qk2(c, map, 2*stddev);
-  fqk.apply_on(c, c, c.npoints());
+  fqk.apply_on(c, c, c.nsites());
 
 
   //init output image
   image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
   level::fill(output, literal::white);
- 
-  
+
+
   //print x
-  for (size_t i = 0; i < x.npoints(); i++)
+  for (size_t i = 0; i < x.nsites(); i++)
     {
       //Xk points
       point2d px(x[i][0], x[i][1]);
       if (output.has(px))
         output(px) = literal::black;
     }
-  
-  
+
+
   //to 2d : projection (FIXME:if 3d)
-  for (size_t i = 0; i < c.npoints(); i++)
+  for (size_t i = 0; i < c.nsites(); i++)
     {
       //Ck points
       point2d p(c[i][0], c[i][1]);
@@ -117,6 +117,6 @@ int main(int argc, char* argv[])
     }
 
   io::ppm::save(output, "registred.ppm");
-  
+
 }
 

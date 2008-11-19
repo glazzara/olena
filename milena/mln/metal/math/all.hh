@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,7 @@ namespace mln
     /// Namespace of static mathematical functions.
     namespace math
     {
-      /// \internal Implementation namespace of metal::math namespace.
+      /// Implementation namespace of metal::math namespace.
       namespace impl {}
     }
 
@@ -54,6 +54,7 @@ namespace mln
 
 
 # include <mln/metal/math/pow.hh>
+# include <mln/metal/math/root.hh>
 # include <mln/metal/math/sqrt.hh>
 # include <mln/metal/math/max.hh>
 // ...

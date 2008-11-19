@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/point_site.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 # include <mln/metal/templated_by.hh>
@@ -51,36 +51,42 @@ namespace mln
   namespace convert
   {
 
-    /// Convert a neighborhood \p nbh into a point set.
+    /// Convert a neighborhood \p nbh into a site set.
     template <typename N>
-    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh);
+    p_set<mln_psite(N)>
+    to_p_set(const Neighborhood<N>& nbh);
 
-    /// Convert a binary image \p ima into a point set.
+    /// Convert a binary image \p ima into a site set.
     template <typename I>
-    p_set<mln_point(I)> to_p_set(const Image<I>& ima);
+    p_set<mln_psite(I)>
+    to_p_set(const Image<I>& ima);
 
-    /// Convert a Window \p win into a point set.
+    /// Convert a Window \p win into a site set.
     template <typename W>
-    p_set<mln_point(W)> to_p_set(const Window<W>& win);
+    p_set<mln_psite(W)>
+    to_p_set(const Window<W>& win);
 
-    /// Convert an std::set \p s of points into a point set.
-    template <typename P>
-    p_set<P> to_p_set(const std::set<P>& s);
+    /// Convert an std::set \p s of sites into a site set.
+    /// C is the comparison functor.
+    template <typename P, typename C>
+    p_set<P>
+    to_p_set(const std::set<P, C>& s);
 
-    /// Convert any point set \p ps into a 'mln::p_set' point set.
+    /// Convert any site set \p ps into a 'mln::p_set' site set.
     template <typename S>
-    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps);
+    p_set<mln_psite(S)>
+    to_p_set(const Site_Set<S>& ps);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename N>
     inline
-    p_set<mln_point(N)> to_p_set(const Neighborhood<N>& nbh_)
+    p_set<mln_psite(N)>
+    to_p_set(const Neighborhood<N>& nbh_)
     {
       const N& nbh = exact(nbh_);
-      typedef mln_dpoint(N) D;
-      typedef mln_point(N) P;
+      typedef mln_psite(N) P;
       p_set<P> pset;
       mln_niter(N) n(nbh, P::origin);
       for_all(n)
@@ -90,7 +96,8 @@ namespace mln
 
     template <typename I>
     inline
-    p_set<mln_point(I)> to_p_set(const Image<I>& ima_)
+    p_set<mln_psite(I)>
+    to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
@@ -98,8 +105,7 @@ namespace mln
       // FIXME: Check that ima is binary!
 //       mln::metal::templated_by<mln_value(I), bool >::check();
 
-      typedef mln_dpoint(I) D;
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       p_set<P> pset;
       mln_piter(I) p(ima.domain());
       for_all(p)
@@ -110,10 +116,10 @@ namespace mln
 
     template <typename W>
     inline
-    p_set<mln_point(W)> to_p_set(const Window<W>& win)
+    p_set<mln_psite(W)>
+    to_p_set(const Window<W>& win)
     {
-      typedef mln_dpoint(W) D;
-      typedef mln_point(W) P;
+      typedef mln_psite(W) P;
       p_set<P> pset;
       mln_qiter(W) q(exact(win), P::origin);
       for_all(q)
@@ -121,13 +127,15 @@ namespace mln
       return pset;
     }
 
-    template <typename P>
+    template <typename P, typename C>
     inline
-    p_set<P> to_p_set(const std::set<P>& s)
+    p_set<P>
+    to_p_set(const std::set<P, C>& s)
     {
+      P titi;
       mln::metal::is_a<P, Point_Site>::check();
       p_set<P> pset;
-      for (typename std::set<P>::const_iterator i = s.begin();
+      for (typename std::set<P, C>::const_iterator i = s.begin();
 	   i != s.end(); ++i)
 	pset.insert(*i);
       return pset;
@@ -135,7 +143,8 @@ namespace mln
 
     template <typename S>
     inline
-    p_set<mln_psite(S)> to_p_set(const Point_Set<S>& ps_)
+    p_set<mln_psite(S)>
+    to_p_set(const Site_Set<S>& ps_)
     {
       const S& ps = exact(ps_);
       p_set<mln_psite(S)> tmp;

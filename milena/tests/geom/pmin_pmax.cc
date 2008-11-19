@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/point2d.hh>
-#include <mln/core/p_set.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/site_set/p_set.hh>
 
 #include <mln/geom/pmin_pmax.hh>
 
@@ -37,14 +37,14 @@ int main()
   p_set<point2d> p;
   point2d min, max;
 
-  p.insert(make::point2d(0,0));
-  p.insert(make::point2d(-1,2));
-  p.insert(make::point2d(-3,4));
-  p.insert(make::point2d(7,6));
-  p.insert(make::point2d(5,8));
+  p.insert(point2d(0,0));
+  p.insert(point2d(-1,2));
+  p.insert(point2d(-3,4));
+  p.insert(point2d(7,6));
+  p.insert(point2d(5,8));
 
   geom::pmin_pmax(p, min, max);
 
-  mln_assertion(min == (make::point2d(-3 ,0)));
-  mln_assertion(max == (make::point2d( 7 ,8)));
+  mln_assertion(min == (point2d(-3 ,0)));
+  mln_assertion(max == (point2d( 7 ,8)));
 }

@@ -30,8 +30,8 @@
  * \brief Tests on mln::p_queue.
  */
 
-#include <mln/core/point2d.hh>
-#include <mln/core/p_queue.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/site_set/p_queue.hh>
 
 
 
@@ -41,17 +41,17 @@ int main()
 
   p_queue<point2d> q;
   q
-    .push(make::point2d(6, 9))
-    .push(make::point2d(5, 1))
-    .push(make::point2d(4, 2));
-  mln_assertion(q.npoints() == 3);
+    .push(point2d(6, 9))
+    .push(point2d(5, 1))
+    .push(point2d(4, 2));
+  mln_assertion(q.nsites() == 3);
 
   std::cout << q.bbox() << std::endl;
   std::cout << q << std::endl;
 
   q.pop();
-  mln_assertion(q.npoints() == 2);
+  mln_assertion(q.nsites() == 2);
   point2d p = q.front();
-  mln_assertion(q.npoints() == 2);
-  mln_assertion(p == make::point2d(5, 1));
+  mln_assertion(q.nsites() == 2);
+  mln_assertion(p == point2d(5, 1));
 }

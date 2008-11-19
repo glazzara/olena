@@ -6,7 +6,7 @@ namespace mln
 
   namespace registration
   {
-    
+
     template <typename P, typename M>
     void mean_stddev(const p_array<P>& c,
 		     const M&          map,
@@ -14,22 +14,22 @@ namespace mln
 		     float& stddev)
     {
       //mean + length
-      std::vector<float> length(c.npoints());
+      std::vector<float> length(c.nsites());
       mean = 0;
 
-      for (size_t i = 0; i < c.npoints(); i++)
+      for (unsigned i = 0; i < c.nsites(); i++)
 	{
-	  float f = norm::l2(algebra::vec<3,int> (c[i] - map(c[i])));
+	  float f = norm::l2(convert::to< algebra::vec<P::dim,int> > (c[i] - map(c[i])));
 	  length[i] = f;
 	  mean += f;
 	}
-      mean /= c.npoints();
-  
+      mean /= c.nsites();
+
       //standar variation
       stddev = 0;
-      for (size_t i = 0; i < c.npoints(); i++)
+      for (unsigned i = 0; i < c.nsites(); i++)
 	stddev += (length[i] - mean) * (length[i] - mean);
-      stddev /= c.npoints();
+      stddev /= c.nsites();
       stddev = math::sqrt(stddev);
     }
 
@@ -42,12 +42,12 @@ namespace mln
 	     float       nstddev)
     {
       p_array<P> newc;
-      algebra::vec<3,float> mu_newc(literal::zero);
+      algebra::vec<P::dim,float> mu_newc(literal::zero);
 
-      for (size_t i = 0; i < c.npoints(); ++i)
+      for (unsigned i = 0; i < c.nsites(); ++i)
 	{
-          algebra::vec<3,float> ci = c[i];
-	  algebra::vec<3,float> xki = map(c[i]);
+          algebra::vec<P::dim,float> ci = c[i];
+	  algebra::vec<P::dim,float> xki = map(c[i]);
 
 	  if (norm::l2(ci - xki) < nstddev)
 	    {
@@ -55,11 +55,11 @@ namespace mln
 	      mu_newc += ci;
 	    }
 	}
-      if (newc.npoints() == 0)
+      if (newc.nsites() == 0)
         return quat7<P::dim>();
-      mu_newc /= newc.npoints();
+      mu_newc /= newc.nsites();
 
-      quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.npoints());
+      quat7<P::dim> qk = match(newc, mu_newc, newc, map, newc.nsites());
 
       //qk._qT = - qk._qT; // FIXME : why?
 
@@ -74,27 +74,27 @@ namespace mln
 	      float       nstddev)
     {
       //mu_Xk = center map(Ck)
-      algebra::vec<3,float> mu_Xk(literal::zero);
-      algebra::vec<3,float> mu_C(literal::zero);
-      
+      algebra::vec<P::dim,float> mu_Xk(literal::zero);
+      algebra::vec<P::dim,float> mu_C(literal::zero);
+
       float nb_point = 0;
-      for (size_t i = 0; i < c.npoints(); ++i)
-	{
-	  algebra::vec<3,float> xki = map(c[i]);
-	  algebra::vec<3,float> ci = c[i];
-	  
-	  if (norm::l2(ci - xki) > nstddev)
-	    {
-	      mu_C += ci;
-	      mu_Xk += xki;
-	      nb_point++;
-	    }
-	}
+      for (unsigned i = 0; i < c.nsites(); ++i)
+        {
+          algebra::vec<P::dim,float> xki = map(c[i]);
+          algebra::vec<P::dim,float> ci = c[i];
+
+          if (norm::l2(ci - xki) > nstddev)
+            {
+              mu_C += ci;
+              mu_Xk += xki;
+              nb_point++;
+            }
+        }
       mu_C  /= nb_point;
       mu_Xk /= nb_point;
 
       // qT
-      const algebra::vec<3,float> qT = mu_C - mu_Xk;
+      const algebra::vec<P::dim,float> qT = mu_C - mu_Xk;
 
       // qR
       quat7<P::dim> qk = final_qk(c, map, nstddev);
@@ -102,8 +102,8 @@ namespace mln
 
       return qk;
     }
-    
-    
+
+
   } // end of namespace mln::registration
 
 }

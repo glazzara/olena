@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -69,7 +70,7 @@ namespace mln
 	typedef O_ O;
 	typedef p_array<P> S;
 	typedef util::pix<I> pix_t;
-      
+
 	const I& input;
 	const N& nbh;
 	mln_result(A) lambda;
@@ -99,9 +100,9 @@ namespace mln
 	{
 	  attr.set_value(lambda);
 	}
-      
+
 	// end of requirements
-      
+
 	inline
 	closing_attribute_t(const I_& input, const N_& nbh,
 			    mln_result(A) lambda, O_& output)

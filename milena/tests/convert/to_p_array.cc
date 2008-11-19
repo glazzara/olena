@@ -30,9 +30,9 @@
  * \brief Tests on mln::convert::to_p_array.
  */
 
-#include <mln/core/point1d.hh>
-#include <mln/core/point2d.hh>
-#include <mln/core/p_array.hh>
+#include <mln/core/alias/point1d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/site_set/p_array.hh>
 
 #include <mln/win/segment1d.hh>
 #include <mln/win/rectangle2d.hh>
@@ -44,21 +44,21 @@ int main()
   using namespace mln;
 
   typedef p_array<point1d> vec1d;
-  point1d p1 = make::point1d(6);
+  point1d p1 = point1d(6);
   win::segment1d win1d(5);
   vec1d v1(convert::to_p_array(win1d, p1));
 
-  for (size_t i=0; i < v1.npoints(); i++)
+  for (size_t i=0; i < v1.nsites(); i++)
     std::cout << (v1[i]);
 
   std::cout << "\n";
 
   typedef p_array<point2d> vec2d;
-  point2d p2 = make::point2d(10,10);
+  point2d p2 = point2d(10,10);
   win::rectangle2d win2d(3, 3);
   vec2d v2(convert::to_p_array(win2d, p2));
 
-  for (size_t i=0; i < v2.npoints(); i++)
+  for (size_t i=0; i < v2.nsites(); i++)
     std::cout << (v2[i]);
 
 }

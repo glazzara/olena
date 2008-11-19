@@ -43,7 +43,7 @@
 namespace mln
 {
 
-  namespace metal
+  namespace algebra
   {
 
     template <unsigned n, typename T>

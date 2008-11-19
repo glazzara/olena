@@ -46,9 +46,9 @@ namespace mln
      * \pre \p img has to be initialized.
      */
     template<typename I, typename T>
-    std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_point(I))>
+    std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_psite(I))>
     chamfer(const Image<I>& input_,
-	    w_window<mln_dpoint(I), T> chamfer);
+	    w_window<mln_dpsite(I), T> chamfer);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -67,18 +67,18 @@ namespace mln
       template<typename Q, typename I, typename T>
       inline
       void
-      chamfer_pass(const w_window<mln_dpoint(I), T> chamfer,
+      chamfer_pass(const w_window<mln_dpsite(I), T> chamfer,
 		   const I& input,
 		   mln_ch_value(I, T)& outputDistance,
-		   mln_ch_value(I, mln_point(I))& outputNearest)
+		   mln_ch_value(I, mln_psite(I))& outputNearest)
       {
-	typedef w_window<mln_dpoint(I), T> W;
+	typedef w_window<mln_dpsite(I), T> W;
 
 	Q p(input.domain());
 	mln_qiter(W) q(chamfer, p);
 	for_all(p)
 	{
-	  std::pair<T, mln_point(I)> min(mln_max(T), p);
+	  std::pair<T, mln_psite(I)> min(mln_max(T), p);
 
 	  for_all(q)
 	    if (input.has(q) && outputDistance(q) != mln_max(T))
@@ -108,11 +108,11 @@ namespace mln
 
     template<typename I, typename T>
     inline
-    std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_point(I))>
+    std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_psite(I))>
     chamfer(const Image<I>& input_,
-	    w_window<mln_dpoint(I), T> chamfer)
+	    w_window<mln_dpsite(I), T> chamfer)
     {
-      typedef w_window<mln_dpoint(I), T> W;
+      typedef w_window<mln_dpsite(I), T> W;
 
       const I& input = exact(input_);
       mln_precondition(input.has_data());
@@ -120,7 +120,7 @@ namespace mln
       mln_ch_value(I, T) outputDistance;
       initialize(outputDistance, input);
 
-      mln_ch_value(I, mln_point(I)) outputNearest;
+      mln_ch_value(I, mln_psite(I)) outputNearest;
       initialize(outputNearest, input);
 
       // Initialization.
@@ -143,7 +143,7 @@ namespace mln
       impl::chamfer_pass<mln_bkd_piter(I)>
 	(chamfer, input, outputDistance, outputNearest);
 
-      return std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_point(I))>
+      return std::pair<mln_ch_value(I, T), mln_ch_value(I, mln_psite(I))>
 	(outputDistance, outputNearest);
     }
 
@@ -157,7 +157,7 @@ namespace mln
 
 // #include <iostream>
 // #include <mln/debug/println.hh>
-// #include <mln/core/image2d.hh>
+// #include <mln/core/image/image2d.hh>
 // #include <mln/make/win_chamfer.hh>
 // #include <mln/level/fill.hh>
 

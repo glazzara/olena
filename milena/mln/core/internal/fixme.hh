@@ -40,7 +40,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A FIXME class to make explicit in code that a type is
+    /*! A FIXME class to make explicit in code that a type is
      *  not yet implemented.
      *
      */

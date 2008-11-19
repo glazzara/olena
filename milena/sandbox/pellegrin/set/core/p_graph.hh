@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,19 +26,19 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_GRAPH_HH
-# define MLN_CORE_P_GRAPH_HH
+#ifndef MLN_CORE_SITE_SET_P_GRAPH_HH
+# define MLN_CORE_SITE_SET_P_GRAPH_HH
 
 # include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/graph.hh>
-# include <mln/core/graph_psite.hh>
-# include <mln/core/p_graph_piter.hh>
+# include <mln/core/image/graph_psite.hh>
+# include <mln/core/site_set/p_graph_piter.hh>
 # include <trait/point_set.hh>
 
 
-/// \file mln/core/p_graph.hh
+/// \file mln/core/site_set/p_graph.hh
 /// \brief Definition of a point set based on graph.
 
 namespace mln
@@ -71,14 +72,14 @@ namespace mln
     /// Point_Site associated type.
     typedef graph_psite<P> psite;
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_graph_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_graph_piter_<P> bkd_piter;
 
     /// Return The number of points (i.e., nodes) in the graph.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Return The number of lines (i.e., edges) in the graph.
     std::size_t nlines() const;
@@ -131,7 +132,7 @@ namespace mln
     // FIXME: Warning: if the underlying graph is updated later, this
     // won't be taken into account by this p_graph!
     accu::bbox<P> a;
-    for (unsigned i = 0; i < npoints(); ++i)
+    for (unsigned i = 0; i < nsites(); ++i)
       a.take(gr_.node_data(i));
     bb_ = a.to_result();
   }
@@ -141,7 +142,7 @@ namespace mln
   template<typename P>
   inline
   std::size_t
-  p_graph<P>::npoints() const
+  p_graph<P>::nsites() const
   {
     return this->gr_.nnodes();
   }
@@ -221,8 +222,8 @@ namespace mln
   {
     // FIXME: Likewise, this is inefficient.
 
-    assert (lhs < this->npoints());
-    assert (rhs < this->npoints());
+    assert (lhs < this->nsites());
+    assert (rhs < this->nsites());
 
     if (rhs == lhs)
       return true;
@@ -259,4 +260,4 @@ namespace mln
 } // end of mln
 
 
-#endif // MLN_CORE_P_GRAPH_HH
+#endif // MLN_CORE_SITE_SET_P_GRAPH_HH

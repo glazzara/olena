@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +26,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/erosion.cc
- *
- * \brief Test on mln::morpho::erosion.
- */
+/// \file tests/morpho/erosion.cc
+///
+/// Test on mln::morpho::erosion.
 
-#include <mln/core/image2d.hh>
-#include <mln/win/rectangle2d.hh>
-#include <mln/win/octagon2d.hh>
-#include <mln/win/diag2d.hh>
-#include <mln/win/backdiag2d.hh>
-#include <mln/core/window2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/win/all.hh>
+
+#include <mln/debug/iota.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
 #include <mln/morpho/erosion.hh>
-
-#include <mln/pw/value.hh>
-#include <mln/pw/cst.hh>
-#include <mln/fun/ops.hh>
-
-#include <mln/convert/to_p_array.hh>
-#include <mln/convert/to_window.hh>
 
 #include "tests/data.hh"
 
@@ -59,60 +49,130 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  unsigned
-    l_oct = 11,  L_oct = 6 * l_oct + 1,
-    l_rec = 29,  L_rec = 2 * l_rec + 1;
-
-  //    l_
-  // oct rec  err
-  //  0   0    3
-  //  0   1    5
-  //  1   2   15
-  //  1   3    9
-  //  2   5   11
-  //  3   8    9
-  //  5  13   15
-  //  8  21   11
-  // 11  29    1
-  // 25  66   15
+  border::thickness = 0;
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  // trace::quiet = false;
+  win::rectangle2d rec(21, 21);
+  win::hline2d hline(31);
+  win::vline2d vline(31);
+  win::diag2d diag2d(31);
+  win::backdiag2d backdiag2d(31);
+  win::octagon2d oct(6 * 3 + 1);
+  image2d<int_u8> out;
+  image2d<int_u8> ref;
 
-  { 
-    win::rectangle2d rec(L_rec, L_rec);
-    io::pgm::save(morpho::erosion(lena, rec),
-		  "out1.pgm");
+//   trace::quiet = false;
+
+
+  // Rectangle
+
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, rec);
   }
 
   {
-    win::octagon2d oct(L_oct);
-    io::pgm::save(morpho::erosion(lena, oct),
- 		  "out2.pgm");
+    out = morpho::erosion(lena, rec);
+    bool test = out == ref;
+    mln_assertion(test);
   }
 
-//   { 
-//     p_array<point2d> vec = convert::to_p_array(rec, point2d::zero);
-//     window2d win = convert::to_window(vec);
+  {
+    out = morpho::impl::erosion_arbitrary_2d(lena, rec);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
 
-//     image2d<int_u8> out(lena.domain());
-//     level::ero(lena, win, out);
-//     morpho::erosion(lena, win, out);
-//     io::pgm::save(out, "out.pgm");
-//   }
 
-//   {
-//     image2d<bool> bin(lena.domain()), out(lena.domain());
-//     level::fill(bin, pw::value(lena) > pw::cst(127));
-//     morpho::erosion(bin, rec, out);
+  // Hline
 
-//     image2d<int_u8> test(lena.domain());
-//     image2d<int_u8>::fwd_piter p(lena.domain());
-//     for_all(p)
-//       test(p) = out(p) ? 255 : 0;
-//     io::pgm::save(test, "test.pgm");
-//   }
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, hline);
+  }
+
+  {
+    out = morpho::erosion(lena, hline);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+  {
+    out = morpho::impl::erosion_arbitrary_2d(lena, hline);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+
+  // Vline
+
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, vline);
+  }
+
+  {
+    out = morpho::erosion(lena, vline);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+  {
+    out = morpho::impl::erosion_arbitrary_2d(lena, vline);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+
+  // Diag2d
+
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, diag2d);
+  }
+
+  {
+    out = morpho::erosion(lena, diag2d);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+  {
+    out = morpho::impl::erosion_arbitrary_2d(lena, diag2d);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+
+  // Backdiag2d
+
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, backdiag2d);
+  }
+
+  {
+    out = morpho::erosion(lena, backdiag2d);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+  {
+    out = morpho::impl::erosion_arbitrary_2d(lena, backdiag2d);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
+
+
+
+  // Octagon
+
+  {
+    ref = morpho::impl::generic::erosion_on_function(lena, oct);
+    io::pgm::save(ref, "out_oct_ref.pgm");
+  }
+
+  {
+    out = morpho::erosion(lena, oct);
+    bool test = out == ref;
+    mln_assertion(test);
+  }
 
 }

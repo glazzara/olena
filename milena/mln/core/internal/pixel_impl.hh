@@ -43,7 +43,7 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal Implementation class to equip generalized pixel
+    /*! Implementation class to equip generalized pixel
      *  classes based on mutable images.
      *
      */
@@ -95,7 +95,7 @@ namespace mln
     };
 
 
-    /*! \internal Implementation class to equip generalized pixel
+    /*! Implementation class to equip generalized pixel
      *  classes based on constant images.
      *
      */

@@ -36,14 +36,14 @@
 #include <vector>
 #include <utility>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
-#include <mln/core/p_graph.hh>
-#include <mln/core/graph_psite.hh>
+#include <mln/core/site_set/p_graph.hh>
+#include <mln/core/image/graph_psite.hh>
 #include <mln/draw/graph.hh>
-#include <mln/core/graph_image.hh>
+#include <mln/core/image/graph_image.hh>
 #include <mln/level/compare.hh>
 
 
@@ -90,12 +90,12 @@ main ()
       {0, 1, 0},
       {0, 0, 2}
     };
-    image2d<int> ref (make::image2d(vs));
+    image2d<int> ref (make::image(vs));
 
     // Points associated to nodes.
     points_type points;
-    points.push_back (make::point2d (0,0)); // Point associated to node 0.
-    points.push_back (make::point2d (2,2)); // Point associated to node 1.
+    points.push_back (point2d (0,0)); // Point associated to node 0.
+    points.push_back (point2d (2,2)); // Point associated to node 1.
 
     // Edges.
     edges_type edges;
@@ -117,15 +117,15 @@ main ()
       {0, 0, 0, 1, 1},
       {0, 0, 0, 2, 2},
     };
-    image2d<int> ref (make::image2d(vs));
+    image2d<int> ref (make::image(vs));
 
     // Points associated to nodes.
     points_type points;
-    points.push_back (make::point2d (0,0)); // Point associated to node 0.
-    points.push_back (make::point2d (2,2)); // Point associated to node 1.
-    points.push_back (make::point2d (0,4)); // Point associated to node 2.
-    points.push_back (make::point2d (4,3)); // Point associated to node 3.
-    points.push_back (make::point2d (4,4)); // Point associated to node 4.
+    points.push_back (point2d (0,0)); // Point associated to node 0.
+    points.push_back (point2d (2,2)); // Point associated to node 1.
+    points.push_back (point2d (0,4)); // Point associated to node 2.
+    points.push_back (point2d (4,3)); // Point associated to node 3.
+    points.push_back (point2d (4,4)); // Point associated to node 4.
 
     // Edges.
     edges_type edges;

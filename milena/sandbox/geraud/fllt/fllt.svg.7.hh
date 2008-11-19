@@ -31,14 +31,14 @@
 
 #include <iomanip>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/core/image_if_value.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/p_queue_fast.hh>
-#include <mln/core/cast_image.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/site_set/p_queue_fast.hh>
+#include <mln/core/image/cast_image.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
@@ -94,11 +94,11 @@ namespace mln
     /// Tell if his parent if brighter or not.  Nb : if the parent
     /// if brighter, the node come from the lower level set
     bool brighter;
-    unsigned npoints;
+    unsigned nsites;
     bool tagged;
     bool set_id;
 
-    fllt_node_elt(bool set_id) : npoints(0), tagged(false), set_id(set_id) {}
+    fllt_node_elt(bool set_id) : nsites(0), tagged(false), set_id(set_id) {}
   };
 
 
@@ -124,7 +124,7 @@ namespace mln
   void update_gN(const N_t& N, G& gN, lower<V>)
   {
     for (unsigned g = 0; g < 256; ++g)
-      if (N[g]->npoints() != 0)
+      if (N[g]->nsites() != 0)
       {
 	gN = g;
 	return;
@@ -138,7 +138,7 @@ namespace mln
   {
     for (int g = 255; g >= 0; --g)
     {
-      if (N[g]->npoints() != 0)
+      if (N[g]->nsites() != 0)
       {
 	gN = g;
 	return;
@@ -154,7 +154,7 @@ namespace mln
   {
     for (unsigned i = 0; i < 256; ++i)
     {
-      if (N[i]->npoints() == 0)
+      if (N[i]->nsites() == 0)
 	continue;
       std::cout << i << ": " << *N[i] << std::endl;
     }
@@ -196,7 +196,7 @@ namespace mln
 
     image2d<value::int_u8> out = clone(cast_image<value::int_u8>(is));
 
-    mln_assertion(R_box.npoints() > 0);
+    mln_assertion(R_box.nsites() > 0);
     mln_piter_(box2d) p(R_box);
     for_all(p)
       if (is(p) == in_R)
@@ -533,7 +533,7 @@ namespace mln
       deja_vu(x0) = in_R;
       smallest_shapes(x0) = current_cc;
       current_cc->elt().points.append(x0);
-      current_cc->elt().npoints++;
+      current_cc->elt().nsites++;
 
     }
 
@@ -548,7 +548,7 @@ namespace mln
 
 
       // R <- R U A
-      if (A->npoints() == 0)
+      if (A->nsites() == 0)
 	goto the_end;
 
       // N <- N U { x in nbh of A and not in R }
@@ -588,7 +588,7 @@ namespace mln
 	else
 	  blob(Set(), deja_vu, N, in_N, N_box, current_cc);
 
-	n_holes += current_cc->elt().holes.npoints();
+	n_holes += current_cc->elt().holes.nsites();
 
 	node_type* child = current_cc;
 	current_cc = new node_type(Set::id);

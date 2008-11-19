@@ -55,25 +55,25 @@ namespace mln
       ///
       /// \param ima  The underlying image.
       /// \param box  The bounding box (domain) of the morphed image.
-      data_(I& ima, mln::box_<mln_point(I)>& box);
+      data_(I& ima, mln::box_<mln_psite(I)>& box);
       
       /// Underlying image.
       I ima_;
       
       /// The bounding box of the morphed image.
-      mln::box_<mln_point(I)> box_;
+      mln::box_<mln_psite(I)> box_;
     };
 
   } // end of namespace mln::internal
 
   template <typename I>
   class sub_sampled_image
-    : public internal::image_morpher_< I, mln_pset(I), sub_sampled_image<I> >
+    : public internal::image_morpher< I, mln_pset(I), sub_sampled_image<I> >
   {
   public:
     /// Super type.
     typedef
-    internal::image_morpher_< I, mln_pset(I), sub_sampled_image<I> > super_;
+    internal::image_morpher< I, mln_pset(I), sub_sampled_image<I> > super_;
     
     /// Point_Site associated type.
     typedef mln_psite(I) psite;
@@ -95,33 +95,33 @@ namespace mln
 
 
     /// Give the definition domain.
-    const box_<mln_point(I)>& domain() const;
+    const box_<mln_psite(I)>& domain() const;
 
     /// Test if this image has been initialized.
     bool has_data() const;
 
     /// Test if a pixel value is accessible at \p p.
-    bool owns_(const mln_point(I)& p) const;
+    bool has(const mln_psite(I)& p) const;
 
     /// Give the set of values of the image.
     const vset& values() const;
     
     /// Read-only access of pixel value at point site \p p.
-    mln_rvalue(I) operator()(const mln_point(I)& p) const;
+    mln_rvalue(I) operator()(const mln_psite(I)& p) const;
     
     /// Read-write access of pixel value at point site \p p.
-    lvalue operator()(const mln_point(I)& p);
+    lvalue operator()(const mln_psite(I)& p);
   public:
-    sub_sampled_image(I& ima, const mln_point(I)& first_p, int gap);
+    sub_sampled_image(I& ima, const mln_psite(I)& first_p, int gap);
 
-    void set_sampling(const mln_point(I)& first_p, int gap);
+    void set_sampling(const mln_psite(I)& first_p, int gap);
 
   protected:
     
     /// Compute physical coordinates.
-    mln_point(I) translate_coords_(const mln_point(I)& p) const;
+    mln_psite(I) translate_coords_(const mln_psite(I)& p) const;
     
-    const mln_point(I)& first_p;
+    const mln_psite(I)& first_p;
     int gap;
   };
 
@@ -135,7 +135,7 @@ namespace mln
 
     template <typename I>
     inline
-    data_< sub_sampled_image<I> >::data_(I& ima, mln::box_<mln_point(I)>& box)
+    data_< sub_sampled_image<I> >::data_(I& ima, mln::box_<mln_psite(I)>& box)
       : ima_(ima), box_(box)
     {
     }
@@ -144,17 +144,17 @@ namespace mln
   
   
   template <typename I>
-  sub_sampled_image<I>::sub_sampled_image(I& ima, const mln_point(I)& first_p, int gap)
+  sub_sampled_image<I>::sub_sampled_image(I& ima, const mln_psite(I)& first_p, int gap)
     : first_p(first_p), gap(gap)
   {
-    box_<mln_point(I)> box(ima.bbox().pmin(),ima.bbox().pmax());
+    box_<mln_psite(I)> box(ima.bbox().pmin(),ima.bbox().pmax());
     this->data_ = new internal::data_< sub_sampled_image<I> >(ima, box);
   }
 
   
   template <typename I>
   inline
-  const box_<mln_point(I)>&
+  const box_<mln_psite(I)>&
   sub_sampled_image<I>::domain() const
   {
     mln_precondition(this->has_data());
@@ -184,37 +184,37 @@ namespace mln
   template <typename I>
   inline
   bool
-  sub_sampled_image<I>::owns_(const mln_point(I)& p) const
+  sub_sampled_image<I>::has(const mln_psite(I)& p) const
   {
     mln_precondition(this->has_data());
-    return this->delegatee_()->owns_(translate_coords_(p));
+    return this->delegatee_()->has(translate_coords_(p));
   }
   
   template <typename I>
   inline
   mln_rvalue(I)
-  sub_sampled_image<I>::operator()(const mln_point(I)& p) const
+  sub_sampled_image<I>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(translate_coords_(p));
   }
   
   template <typename I>
   inline
   typename internal::morpher_lvalue_<I>::ret
-  sub_sampled_image<I>::operator()(const mln_point(I)& p)
+  sub_sampled_image<I>::operator()(const mln_psite(I)& p)
   {
-    mln_precondition(this->owns_(p));
+    mln_precondition(this->has(p));
     return (*this->delegatee_())(translate_coords_(p));
   }
 
   template <typename I>
   inline
-  mln_point(I)
-  sub_sampled_image<I>::translate_coords_(const mln_point(I)& p) const
+  mln_psite(I)
+  sub_sampled_image<I>::translate_coords_(const mln_psite(I)& p) const
   {
    
-    return mln_point(I)(algebra::vec<2, int>(p) * gap + algebra::vec<2, int>(first_p));
+    return mln_psite(I)(algebra::vec<2, int>(p) * gap + algebra::vec<2, int>(first_p));
   }
   
   

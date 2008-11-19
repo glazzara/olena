@@ -26,7 +26,7 @@
 // Public License.
 
 # include <string>
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/debug/println.hh>
 # include <mln/logical/not.hh>

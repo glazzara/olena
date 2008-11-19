@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_ACCU_MEDIAN_ALT_HH
 # define MLN_ACCU_MEDIAN_ALT_HH
 
-/*! \file mln/accu/median_alt.hh
- *
- * \brief Define alternative generic median accumulator class.
- */
+/// \file mln/accu/median_alt.hh
+///
+/// Define alternative generic median accumulator class.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
@@ -44,21 +43,28 @@ namespace mln
   {
 
 
-    /*! \brief Generic median_alt function based on histogram over a
-     * value set with type \c S.
-     */
+    /// Generic median_alt function based on histogram over a
+    /// value set with type \c S.
     template <typename S>
-    struct median_alt : public mln::accu::internal::base_< mln_value(S), median_alt<S> >
+    struct median_alt : public mln::accu::internal::base< const mln_value(S)&, median_alt<S> >
     {
       typedef mln_value(S) argument;
 
       median_alt(const Value_Set<S>& s);
 
+      /// Manipulators.
+      /// \{
       void   take(const argument& t);
       void untake(const argument& t);
       void init();
+      /// \}
 
-      argument to_result() const;
+      /// Get the value of the accumulator.
+      const argument& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
       // FIXME: remove
       void debug__() const
@@ -72,17 +78,49 @@ namespace mln
     protected:
 
       histo<S> h_;
-      const S& s_; // derived from h_
+      /// derived from h_
+      const S& s_;
 
-      std::size_t sum_minus_, sum_plus_;
+      unsigned sum_minus_, sum_plus_;
 
-      std::size_t i_; // the median index
-      argument t_;       // the median argument
+      /// the median index
+      unsigned i_;
+      /// the median argument
+      argument t_;
 
       // Auxiliary methods
       void go_minus_();
       void go_plus_();
     };
+
+
+    namespace meta
+    {
+
+      /// Meta accumulator for median_alt.
+
+      struct median_alt : public Meta_Accumulator< median_alt >
+      {
+	median_alt(const Value_Set<S>& s_) : s(s_) {}
+
+	template <typename V>
+	struct with
+	{
+	  typedef accu::median_alt<V> ret;
+	};
+
+	Value_Set<S> s;
+      };
+
+    } // end of namespace mln::accu::meta
+
+
+    template <typename T>
+    median_alt<T> unmeta(const meta::median_alt& m, T)
+    {
+      median_alt<T> a(m.s);
+      return a;
+    }
 
 
     template <typename T>
@@ -205,6 +243,33 @@ namespace mln
 	}
     }
 
+    template <typename S>
+    inline
+    void
+    median_alt<S>::init()
+    {
+      h_.init();
+      sum_minus_ = 0;
+      sum_plus_ = 0;
+      i_ = (mln_max(argument) - mln_min(argument)) / 2;
+      t_ = s_[i_];
+    }
+
+    template <typename S>
+    inline
+    const typename median_alt<S>::argument&
+    median_alt<S>::to_result() const
+    {
+      return t_;
+    }
+
+    template <typename S>
+    inline
+    bool
+    median_alt<S>::is_valid() const
+    {
+      return true;
+    }
 
     template <typename S>
     inline
@@ -239,27 +304,6 @@ namespace mln
 	}
       while (2 * sum_plus_ > h_.sum());
       t_ = s_[i_];
-    }
-
-
-    template <typename S>
-    inline
-    void
-    median_alt<S>::init()
-    {
-      h_.init();
-      sum_minus_ = 0;
-      sum_plus_ = 0;
-      i_ = (mln_max(argument) - mln_min(argument)) / 2;
-      t_ = s_[i_];
-    }
-
-    template <typename S>
-    inline
-    typename median_alt<S>::argument
-    median_alt<S>::to_result() const
-    {
-      return t_;
     }
 
     template <typename S>

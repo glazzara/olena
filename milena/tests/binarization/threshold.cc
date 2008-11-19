@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/binarization/thresholding.cc
+/// \file tests/binarization/threshold.cc
 /// \brief Test on mln::binarization::threshold.
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/binarization/threshold.hh>
 #include <mln/level/all.hh>
 

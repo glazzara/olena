@@ -50,7 +50,7 @@ namespace mln
 
     /*! \brief An "efficient" mathematical set class.
      *
-     * \internal
+     * 
      *
      * This set class is designed to store a mathematical set and to
      * present it to the user as a linear array (std::vector).
@@ -357,7 +357,7 @@ namespace mln
       needs_update_ = false;
     }
 
-    // FIXME : ambiguous with point_set operator <<
+    // FIXME : ambiguous with site_set operator <<
     //     template <typename E>
     //     std::ostream& operator<<(std::ostream& ostr,
     // 			     const lazy_set_<E>& s)

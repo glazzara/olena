@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,11 +33,10 @@
  * \brief Set theoretic difference (non-symmetrical) of a couple of
  * sets.
  *
- * \todo Add a diff(Point_Set& in_place, Function_p2b).
+ * \todo Add a diff(Site_Set& in_place, Function_p2b).
  */
 
 # include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_window.hh>
 # include <mln/convert/to_p_set.hh>
 # include <mln/metal/equal.hh>
 
@@ -51,59 +50,39 @@ namespace mln
 
     /*! \brief Set theoretic difference of \p lhs and \p rhs.
      *
-     * \relates mln::Window
+     * \relates mln::Site_Set
      */
     template <typename Wl, typename Wr>
-    window<mln_dpoint(Wl)>
-    diff(const Window<Wl>& lhs, const Window<Wr>& rhs);
-
-    /*! \brief Set theoretic difference of \p lhs and \p rhs.
-     *
-     * \relates mln::Point_Set
-     */
-    template <typename Wl, typename Wr>
-    p_set<mln_point(Wl)>
-    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs);
+    p_set<mln_psite(Wl)>
+    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename Wl, typename Wr>
     inline
-    window<mln_dpoint(Wl)>
-    diff(const Window<Wl>& lhs, const Window<Wr>& rhs)
+    p_set<mln_psite(Wl)>
+    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
     {
-      trace::entering("set::diff");
-      mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
-      typedef mln_dpoint(Wl) D;
-      std::set<D>
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_difference(sl.begin(), sl.end(),
-			  sr.begin(), sr.end(),
-			  std::inserter(s, s.begin()));
-      trace::exiting("set::diff");
-      return convert::to_window(s);
-    }
+      // Avoid a warning about an undefined variable when NDEBUG
+      // is not defined.
+      (void) lhs;
+      (void) rhs;
 
-    template <typename Wl, typename Wr>
-    inline
-    p_set<mln_point(Wl)>
-    diff(const Point_Set<Wl>& lhs, const Point_Set<Wr>& rhs)
-    {
       trace::entering("set::diff");
-      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
-      typedef mln_point(Wl) P;
-      std::set<P>
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_difference(sl.begin(), sl.end(),
-			  sr.begin(), sr.end(),
-			  std::inserter(s, s.begin()));
+      p_set<mln_psite(Wl)> s;
+      abort();
+//       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
+//       typedef mln_point(Wl) P;
+//       std::set<P>
+// 	sl = convert::to_std_set(lhs),
+// 	sr = convert::to_std_set(rhs),
+// 	s;
+//       std::set_difference(sl.begin(), sl.end(),
+// 			  sr.begin(), sr.end(),
+// 			  std::inserter(s, s.begin()));
       trace::exiting("set::diff");
-      return convert::to_p_set(s);
+      return s;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

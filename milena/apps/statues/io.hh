@@ -35,6 +35,8 @@
 
 #include <TriMesh.h>
 
+#include <mln/value/rgb8.hh>
+
 
 /// Taken from TriMesh_io.cc
 /// \{
@@ -83,6 +85,11 @@ inline void write_verts_asc(TriMesh *mesh, FILE *f,
 
 /// Taken and adapted from TriMesh_io.cc
 /// \{
+
+/*----------------------.
+| OFF with color data.  |
+`----------------------*/
+
 /// Write a bunch of faces to an ASCII file with colors.
 inline void write_faces_asc_colored(TriMesh *mesh,
 				    const std::vector<mln::value::rgb8>& colors,
@@ -115,8 +122,49 @@ inline void write_off_colored(TriMesh *mesh,
   write_verts_asc(mesh, f, "", 0, 0, false, 0, "");
   write_faces_asc_colored(mesh, colors, f, "3 ", "");
 }
+
+/*----------------------.
+| OFF with float data.  |
+`----------------------*/
+
+/// Write a bunch of faces to an ASCII file with colors.
+inline void write_faces_asc_float(TriMesh *mesh,
+				  const std::vector<float>& values,
+				  FILE *f,
+				  const char *before_face,
+				  const char *after_line)
+{
+  mesh->need_faces();
+  for (int i = 0; i < mesh->faces.size(); i++)
+    {
+      //            Vertices    Color
+      //            -------- ------------
+      //            V0 V1 V2  R  G  B  A
+      fprintf(f, "%s%d %d %d %f %f %f 1.0%s\n",
+	      before_face,
+	      mesh->faces[i][0], mesh->faces[i][1], mesh->faces[i][2],
+	      values[i], values[i], values[i],
+	      after_line);
+    }
+}
+
+/// Write an off file with floating-point values.
+inline void write_off_float(TriMesh *mesh, const std::vector<float>& values,
+			    FILE *f)
+{
+  fprintf(f, "OFF\n");
+  mesh->need_faces();
+  fprintf(f, "%lu %lu 0\n", (unsigned long) mesh->vertices.size(),
+	  (unsigned long) mesh->faces.size());
+  write_verts_asc(mesh, f, "", 0, 0, false, 0, "");
+  write_faces_asc_float(mesh, values, f, "3 ", "");
+}
 /// \}
 
+
+/*---------------------------------------.
+| OFF without data (``binary values'').  |
+`---------------------------------------*/
 
 /// Taken and adapted from TriMesh_io.cc
 /// \{

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_RUN_HH
-# define MLN_CORE_P_RUN_HH
+#ifndef MLN_CORE_SITE_SET_P_RUN_HH
+# define MLN_CORE_SITE_SET_P_RUN_HH
 
-/*! \file mln/core/p_run.hh
+/*! \file mln/core/site_set/p_run.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -71,10 +71,10 @@ namespace mln
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_run_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_run_bkd_piter_<P> bkd_piter;
 
     /// Constructor without argument.
@@ -90,7 +90,7 @@ namespace mln
     bool has(const P& p) const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the length of the run.
     std::size_t length() const;
@@ -110,7 +110,7 @@ namespace mln
   protected:
 
     accu::bbox<P> bb_;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
 
     /// The first point of the run.
     P p_;
@@ -186,7 +186,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_run<P>::npoints() const
+  p_run<P>::nsites() const
   {
     mln_precondition(is_valid_);
     return len_;
@@ -207,7 +207,7 @@ namespace mln
   p_run<P>::operator[](unsigned i) const
   {
     mln_precondition(is_valid_);
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     P p = p_;
     p[P::dim - 1] += i;
     return p;
@@ -227,7 +227,7 @@ namespace mln
   p_run<P>::bbox() const
   {
     mln_precondition(is_valid_);
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     return bb_.to_result();
   }
 
@@ -245,6 +245,6 @@ namespace mln
 
 } // end of namespace mln
 
-# include <mln/core/p_run_piter.hh>
+# include <mln/core/site_set/p_run_piter.hh>
 
-#endif // ! MLN_CORE_P_RUN_HH
+#endif // ! MLN_CORE_SITE_SET_P_RUN_HH

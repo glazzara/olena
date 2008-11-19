@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,12 +33,11 @@
  * \brief Declaration of the "binary and" operator trait.
  */
 
-# include <mln/trait/solve.hh>
+# include <mln/trait/op/decl.hh>
 
 
 # define mln_trait_op_and(L, R)  typename mln::trait::op::and_< L , R >::ret
 # define mln_trait_op_and_(L, R)          mln::trait::op::and_< L , R >::ret
-
 
 
 namespace mln
@@ -60,6 +59,9 @@ namespace mln
   } // end of namespace mln::trait
 
 } // end of namespace mln
+
+
+# include <mln/trait/solve.hh>
 
 
 #endif // ! MLN_TRAIT_OP_AND_HH

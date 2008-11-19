@@ -45,7 +45,7 @@ main (void)
 	    << std::endl
 	    << std::endl;
 
-  box2d b(make::point2d(2, 6), make::point2d(3, 8));
+  box2d b(point2d(2, 6), point2d(3, 8));
   image2d_b<int> ima(b, 3);
 
   border::fill (ima, 8);

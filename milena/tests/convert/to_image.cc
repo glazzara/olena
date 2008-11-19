@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,22 +26,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert/to_image.cc
- *
- * \brief Tests on mln::convert::to_image.
- */
+/// \file tests/convert/to_image.cc
+/// Tests on mln::convert::to_image.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/pset_if.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/site_set/p_if.hh>
 #include <mln/fun/p2b/chess.hh>
 #include <mln/level/compare.hh>
 
 #include <mln/convert/to_image.hh>
-
-
-#include <mln/debug/println.hh>
-
+#include <mln/convert/to.hh>
 
 
 int main()
@@ -57,9 +53,7 @@ int main()
 	       0, 1, 0,   // < center point
 	       1, 0, 1 };
 
-  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess, 0);
-  window2d win_X = make::window2d(X);
+  image2d<bool> ima_X = convert::to_image(box_3x3 | fun::p2b::chess(), 0);
+  window2d win_X = convert::to<window2d>(X);
   mln_assertion(convert::to_image(win_X) == ima_X);
-
-  // FIXME: nbh!
 }

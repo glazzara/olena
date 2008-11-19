@@ -25,14 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core_pset_if.cc
+/*! \file tests/core_p_if.cc
  *
- * \brief Tests on mln::pset_if.
+ * \brief Tests on mln::p_if.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/p_set.hh>
-#include <mln/core/pset_if.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/site_set/p_if.hh>
 #include <mln/fun/p2b/chess.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_p_set.hh>
@@ -43,7 +43,7 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion((box_8x8 | fun::p2b::chess).npoints() == 32);
+  mln_assertion((box_8x8 | fun::p2b::chess).nsites() == 32);
 
   {
     p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess);

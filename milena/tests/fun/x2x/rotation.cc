@@ -32,11 +32,11 @@
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/core/interpolated.hh>
+#include <mln/core/image/interpolated.hh>
 #include <mln/make/vec.hh>
 
 #include "tests/data.hh"
@@ -60,7 +60,7 @@ int main()
   for_all(p)
     {
       algebra::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
-      if (inter.owns_(v))
+      if (inter.has(v))
 	out(p) = inter(v);
       else
 	out(p) = 255;

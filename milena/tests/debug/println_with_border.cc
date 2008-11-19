@@ -30,8 +30,8 @@
  * \brief Test on mln::debug::println_with_border.
  */
 
-#include <mln/core/image2d.hh>
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image1d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>

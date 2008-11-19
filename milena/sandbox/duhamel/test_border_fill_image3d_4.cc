@@ -45,7 +45,7 @@ main (void)
 	    << std::endl
 	    << std::endl;
 
-  box3d b(make::point3d(-7, -8, -6), make::point3d(-5, -4, -1));
+  box3d b(point3d(-7, -8, -6), point3d(-5, -4, -1));
   image3d_b<int> i4(b, 1);
   border::fill (i4, 2);
   debug::println_with_border(i4);

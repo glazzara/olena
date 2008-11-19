@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,12 +31,12 @@
  * \brief Test on mln::morpho::dilation.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/win/octagon2d.hh>
 #include <mln/win/diag2d.hh>
 #include <mln/win/backdiag2d.hh>
-#include <mln/core/window2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -48,8 +49,14 @@
 #include <mln/pw/cst.hh>
 #include <mln/fun/ops.hh>
 
-#include <mln/core/neighb2d.hh>
-#include <mln/neighb/image.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+  /* FIXME: Re-enable these tests for Olena 1.1, when associated
+     neighborhoods (i.e., the neighb::image morpher) are supported and
+     shipped.  */
+#if 0
+#  include <mln/neighb/image.hh>
+#endif
 
 #include "tests/data.hh"
 

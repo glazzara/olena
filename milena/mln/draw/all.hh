@@ -43,7 +43,6 @@ namespace mln
 }
 
 # include <mln/draw/box.hh>
-# include <mln/draw/graph.hh>
 # include <mln/draw/label.hh>
 # include <mln/draw/line.hh>
 # include <mln/draw/plot.hh>

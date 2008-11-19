@@ -34,9 +34,9 @@
  *
  */
 
-# include <mln/trait/image_from_mesh.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/image2d.hh>
+# include <mln/trait/image_from_grid.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/display/save.hh>
 
 # include <map>

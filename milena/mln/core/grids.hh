@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,6 +34,7 @@
  */
 
 # include <mln/core/concept/regular_grid.hh>
+# include <mln/core/def/coord.hh>
 # include <mln/metal/bool.hh>
 
 

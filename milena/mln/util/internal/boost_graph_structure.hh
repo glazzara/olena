@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,7 +27,7 @@
 // Public License.
 
 
-/// \file mln/util/internal/boost_graph_struture.hh
+/// \file mln/util/internal/boost_graph_structure.hh
 /// \brief Operations that interract with the boost_graph structure.
 
 #ifndef MLN_UTIL_INTERNAL_BOOST_GRAPH_STRUCTURE_HH_

@@ -25,37 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/p_priority_queue_fast_with_array.cc
+/*! \file tests/core/p_priority_fast_with_array.cc
  *
- * \brief Tests on mln::p_priority_queue_fast_with_array.
+ * \brief Tests on mln::p_priority_fast_with_array.
  */
 
-#include <mln/core/point2d.hh>
-#include <mln/core/p_priority_queue_fast_with_array.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/p_priority_fast_with_array.hh>
 
 int main ()
 {
   using namespace mln;
 
-  p_priority_queue_fast_with_array<point2d, unsigned, 20> q;
+  p_priority_fast_with_array<point2d, unsigned, 20> q;
   point2d p1 (6, 9);
   point2d p2 (5, 1);
   point2d p3 (4, 2);
 
   mln_assertion (q.is_empty ());
-  mln_assertion (q.npoints () == 0);
+  mln_assertion (q.nsites () == 0);
 
   q.push_force (p3);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 1);
+  mln_assertion (q.nsites () == 1);
 
   q.push_force (p1, 3);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 2);
+  mln_assertion (q.nsites () == 2);
 
   q.push_force (p2, 5);
   mln_assertion (!q.is_empty ());
-  mln_assertion (q.npoints () == 3);
+  mln_assertion (q.nsites () == 3);
 
   std::cout << q.bbox () << std::endl;
   std::cout << q << std::endl;
@@ -66,7 +66,7 @@ int main ()
   mln_assertion (q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 3);
+  mln_assertion (q.nsites () == 3);
   mln_assertion (q.front () == p2);
   q.pop ();
 
@@ -74,7 +74,7 @@ int main ()
   mln_assertion (!q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 2);
+  mln_assertion (q.nsites () == 2);
   mln_assertion (q.front () == p1);
   q.pop ();
 
@@ -82,14 +82,14 @@ int main ()
   mln_assertion (!q.has (p2));
   mln_assertion (q.has (p3));
 
-  mln_assertion (q.npoints () == 1);
+  mln_assertion (q.nsites () == 1);
   mln_assertion (q.front () == p3);
   q.pop ();
 
   mln_assertion (!q.has (p1));
   mln_assertion (!q.has (p2));
   mln_assertion (!q.has (p3));
-  mln_assertion (q.npoints () == 0);
+  mln_assertion (q.nsites () == 0);
 
   mln_assertion (q.is_empty ());
 

@@ -30,7 +30,7 @@
  * \brief Tests on mln::canvas::browsing::snake_fwd.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/snake_fwd.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
@@ -41,7 +41,7 @@
 template <typename I, typename F>
 struct assign_browsing_functor
 {
-  enum { dim = I::point::dim };
+  enum { dim = I::site::dim };
 
 
   I input;

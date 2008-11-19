@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_SET_HH
-# define MLN_CORE_P_SET_HH
+#ifndef MLN_CORE_SITE_SET_P_SET_HH
+# define MLN_CORE_SITE_SET_P_SET_HH
 
-/*! \file mln/core/p_set.hh
+/*! \file mln/core/site_set/p_set.hh
  *
  * \brief Definition of a point set class based on std::set.
  */
@@ -36,7 +36,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/internal/set_of.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_array.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <trait/point_set.hh>
 
 
@@ -73,10 +73,10 @@ namespace mln
 
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
@@ -89,7 +89,7 @@ namespace mln
     using super_::vect;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Insert a point \p p.
     p_set<P>& insert(const P& p);
@@ -110,7 +110,7 @@ namespace mln
   protected:
 
     accu::bbox<P> bb_;
-    // FIXME: Add invariant  bb_.is_valid() <=> npoints() != 0
+    // FIXME: Add invariant  bb_.is_valid() <=> nsites() != 0
   };
 
 
@@ -133,7 +133,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_set<P>::npoints() const
+  p_set<P>::nsites() const
   {
     return this->super_::nelements();
   }
@@ -165,7 +165,7 @@ namespace mln
   const P&
   p_set<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return this->super_::element(i);
   }
 
@@ -183,7 +183,7 @@ namespace mln
   const box_<mln_point(P)>&
   p_set<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     return bb_.to_result();
   }
 
@@ -192,4 +192,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_SET_HH
+#endif // ! MLN_CORE_SITE_SET_P_SET_HH

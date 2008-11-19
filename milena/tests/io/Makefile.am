@@ -4,6 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
   fits						\
+  off						\
   pbm						\
   pfm						\
   pgm						\

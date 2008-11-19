@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,15 +31,21 @@
 /*! \file mln/debug/println.spe.hh
  *
  * \brief  Specializations for mln::debug::println.
+ *
+ * \todo Clean-up code.
  */
 
 # ifndef MLN_DEBUG_PRINTLN_HH
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_DEBUG_PRINTLN_HH
 
+# include <sstream>
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
+# include <mln/debug/put_word.hh>
+# include <mln/level/fill.hh>
+# include <mln/accu/max.hh>
 
 
 namespace mln
@@ -53,36 +59,62 @@ namespace mln
     namespace impl
     {
 
-# ifdef MLN_CORE_BOX2D_HH
+# ifdef MLN_CORE_SITE_SET_BOX2D_HH
 
-      // 2D version.
-      template <typename I>
+      // 2D versions.
+
       inline
       void
-      println(const box2d& b, const I& input)
+      println(const box2d& b, const image2d<char>& input)
       {
-	point2d p;
-	int& row = p.row();
-	int& col = p.col();
-	const int
-	  max_row = b.max_row(),
-	  max_col = b.max_col();
-
-	for (row = b.min_row(); row <= max_row; ++row)
+	for (int row = b.min_row(); row <= b.max_row(); ++row)
 	{
-	  for (col = b.min_col(); col <= max_col; ++col)
-	    if (input.has(p))
-	      std::cout << format(input(p)) << ' ';
-	    else
-	      std::cout << "  ";
+	  for (int col = b.min_col(); col <= b.max_col(); ++col)
+	    std::cout << input.at(row, col) << ' ';
 	  std::cout << std::endl;
 	}
 	std::cout << std::endl;
       }
 
-# endif // MLN_CORE_BOX2D_HH
 
-# ifdef MLN_CORE_IMAGE2D_H_HH
+      template <typename I>
+      inline
+      void
+      println(const box2d& b, const I& input)
+      {
+	accu::max<unsigned> len_;
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  {
+	    std::ostringstream o;
+	    o << format(input(p));
+	    len_.take(o.str().length());
+	  }
+	unsigned len = len_ + 1;
+
+	image2d<char> output(b.nrows(), b.ncols() * len, 0);
+	level::fill(output, ' ');
+	for_all(p)
+	  {
+	    std::ostringstream oss;
+	    oss << format(input(p));
+	    point2d w( p.row() - b.min_row(),
+		      (p.col() - b.min_col()) * len);
+	    put_word(output, w, oss.str());
+	  }
+
+	for (unsigned row = 0; row < b.nrows(); ++row)
+	{
+	  for (unsigned col = 0; col < b.ncols() * len; ++col)
+	    std::cout << output.at(row, col);
+	  std::cout << std::endl;
+	}
+	std::cout << std::endl;
+      }
+
+# endif // MLN_CORE_SITE_SET_BOX2D_HH
+
+# ifdef MLN_CORE_IMAGE_IMAGE2D_H_HH
 
       // Hexa version.
       template <typename I>
@@ -97,7 +129,7 @@ namespace mln
 
 	for_all(p)
 	  {
-	    if (input.has(p))
+	    if (input.domain().has(p))
 	      std::cout << format(input(p)) << "     ";
 	    else
 	      std::cout << "      ";
@@ -115,10 +147,10 @@ namespace mln
 	std::cout << std::endl;
       }
 
-# endif // MLN_CORE_IMAGE2D_H_HH
+# endif // MLN_CORE_IMAGE_IMAGE2D_H_HH
 
 
-# ifdef MLN_CORE_BOX3D_HH
+# ifdef MLN_CORE_SITE_SET_BOX3D_HH
 
       // 3D version.
       template <typename I>
@@ -126,9 +158,9 @@ namespace mln
       println(const box3d& b, const I& input)
       {
 	point3d p;
-	int& sli = p.sli();
-	int& row = p.row();
-	int& col = p.col();
+	def::coord& sli = p.sli();
+	def::coord& row = p.row();
+	def::coord& col = p.col();
 	const int
 	  max_row = b.max_row(),
 	  max_sli = b.max_sli(),
@@ -141,7 +173,7 @@ namespace mln
 	    for (int i = max_row; i >= row; --i)
 	      std::cout << ' ';
 	    for (col = b.min_col(); col <= max_col; ++col)
-	      if (input.has(p))
+	      if (input.domain().has(p))
 		std::cout << format(input(p)) << ' ';
 	      else
 		std::cout << "  ";
@@ -151,7 +183,7 @@ namespace mln
 	}
       }
 
-# endif // MLN_CORE_BOX3D_HH
+# endif // MLN_CORE_SITE_SET_BOX3D_HH
 
     } // end of namespace mln::debug::impl
 

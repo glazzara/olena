@@ -42,25 +42,25 @@ namespace mln
     template <typename E>
     struct Neighborhood : public Object<E>
     {
-      /*! \brief Point_Iterator type associated to this neighborhood to browse
+      /*! \brief Site_Iterator type associated to this neighborhood to browse
        * neighbors.
        */
       typedef void niter;
 
-      /*! \brief Point_Iterator type associated to this neighborhood to browse
+      /*! \brief Site_Iterator type associated to this neighborhood to browse
        * neighbors in a forward way.
        */
       typedef void fwd_niter;
 
-      /*! \brief Point_Iterator type associated to this neighborhood to browse
+      /*! \brief Site_Iterator type associated to this neighborhood to browse
        * neighbors in a backward way.
        */
       typedef void bkd_niter;
 
-      /// Dpoint associated type.
+      /// Dpsite associated type.
       typedef void dpoint;
 
-      /// Point associated type.
+      /// Site associated type.
       typedef void  point;
     };
 

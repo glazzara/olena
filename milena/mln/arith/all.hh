@@ -40,10 +40,10 @@ namespace mln
   /// Namespace of arithmetic.
   namespace arith
   {
-    /// \internal Implementation namespace of arith namespace.
+    /// Implementation namespace of arith namespace.
     namespace impl {
 
-      /// \internal Generic implementation namespace of arith namespace.
+      /// Generic implementation namespace of arith namespace.
       namespace generic {
 
       }
@@ -54,6 +54,7 @@ namespace mln
 
 }
 
+# include <mln/arith/diff_abs.hh>
 # include <mln/arith/min.hh>
 # include <mln/arith/minus.hh>
 # include <mln/arith/plus.hh>

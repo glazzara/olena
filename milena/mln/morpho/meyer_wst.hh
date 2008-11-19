@@ -39,8 +39,6 @@
       eaux. In: Actes du 8ème Congrès AFCET, Lyon-Villeurbanne, France
       (1991), pages 847--859.  */
 
-# include <queue>
-
 # include <mln/trait/ch_value.hh>
 
 // FIXME: See below.
@@ -48,6 +46,9 @@
 # include <mln/morpho/includes.hh>
 # include <mln/literal/zero.hh>
 # include <mln/labeling/regional_minima.hh>
+
+# include <mln/core/site_set/p_queue_fast.hh>
+# include <mln/core/site_set/p_priority.hh>
 
 
 namespace mln
@@ -104,13 +105,20 @@ namespace mln
 
     template <typename L, typename I, typename N>
     mln_ch_value(I, L)
-    meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
+    meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)
     {
+      trace::entering("morpho::meyer_wst");
       /* FIXME: Ensure the input image has scalar values.  */
+
+      const I input = exact(input_);
+      const N nbh = exact(nbh_);
 
       typedef L marker;
       const marker unmarked = literal::zero;
+
+      typedef mln_value(I) V;
+      const V max = mln_max(V);
 
       // Initialize the output with the markers (minima components).
       mln_ch_value(I, marker) output =
@@ -119,13 +127,13 @@ namespace mln
       typedef mln_psite(I) psite;
 
       // Ordered queue.
-      /* FIXME: Milena probably already provides an ordered queue
-	 facility via the mln::p_priority_queue class.  Try to use it
-	 instead, and get rid of mln/util/greater_psite.hh.  */
-      typedef
-	std::priority_queue< psite, std::vector<psite>, util::greater_psite<I> >
-	ordered_queue_type;
-      ordered_queue_type queue(util::make_greater_psite(input));
+      typedef p_queue_fast<psite> Q;
+      p_priority<V, Q> queue;
+
+      // In_queue structure to avoid processing sites several times.
+      mln_ch_value(I, bool) in_queue;
+      initialize(in_queue, input);
+      level::fill(in_queue, false);
 
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to
@@ -135,18 +143,19 @@ namespace mln
       for_all (p)
 	if (output(p) == unmarked)
 	  for_all(n)
-	    if (output.has(n) && output(n) != unmarked)
+	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
-		queue.push(p);
+		queue.push(max - input(p), p);
+		in_queue(p) = true;
 		break;
 	      }
 
       /* Until the queue is empty, extract a psite P from the
          hierarchical queue, at the highest priority level, that is,
          the lowest level.  */
-      while (!queue.empty())
+      while (! queue.is_empty())
 	{
-	  psite p = queue.top();
+	  psite p = queue.front();
 	  queue.pop();
 	  // Last seen marker adjacent to P.
 	  marker adjacent_marker = unmarked;
@@ -154,7 +163,7 @@ namespace mln
 	  bool single_adjacent_marker_p = true;
 	  mln_niter(N) n(nbh, p);
 	  for_all(n)
-	    if (output.has(n) && output(n) != unmarked)
+	    if (output.domain().has(n) && output(n) != unmarked)
 	      {
 		if (adjacent_marker == unmarked)
 		  {
@@ -176,10 +185,15 @@ namespace mln
 	    {
 	      output(p) = adjacent_marker;
 	      for_all(n)
-		if (output.has(n) && output(n) == unmarked)
-		  queue.push(n);
+		if (output.domain().has(n) && output(n) == unmarked
+		    && ! in_queue(n))
+		  {
+		    queue.push(max - input(n), n);
+		    in_queue(n) = true;
+		  }
 	    }
 	}
+      trace::exiting("morpho::meyer_wst");
       return output;
     }
 

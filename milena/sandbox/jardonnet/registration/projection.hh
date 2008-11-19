@@ -15,11 +15,11 @@ namespace mln
                   std::pair<T1,T2>& map,
                   p_array<P>& Xk)
     {
-      assert(Ck.npoints() == Xk.npoints());
+      assert(Ck.nsites() == Xk.nsites());
       
       float err = 0.f;
 
-      for (size_t i = 0; i < Ck.npoints(); ++i)
+      for (size_t i = 0; i < Ck.nsites(); ++i)
         {
           //FIXME: bof
           if (map.second.has(Ck[i]))
@@ -30,7 +30,7 @@ namespace mln
               err += map.first(Ck[i]);
             }
         }
-      return err /= Ck.npoints();
+      return err /= Ck.nsites();
     }
     
     template <typename P>
@@ -41,16 +41,16 @@ namespace mln
                  p_array<P>& Xk,
                  float& err)
     {
-      assert(Ck.npoints() == Xk.npoints());
+      assert(Ck.nsites() == Xk.nsites());
 
       err = 0.f;
 
-      for (size_t i = 0; i < Ck.npoints(); ++i)
+      for (size_t i = 0; i < Ck.nsites(); ++i)
         {
           algebra::vec<P::dim,float> Cki = Ck[i];
           algebra::vec<P::dim,float> best_x = X[0];
           float best_d = norm::l2(Cki - best_x);
-          for (size_t j = 1; j < X.npoints(); ++j)
+          for (size_t j = 1; j < X.nsites(); ++j)
             {
               algebra::vec<P::dim,float> Xj = X[j];
               float d = norm::l2(Cki - Xj);
@@ -63,7 +63,7 @@ namespace mln
           Xk.hook_()[i] = algebra::to_point<P>(best_x);
           err += best_d;
         }
-      err /= Ck.npoints();
+      err /= Ck.nsites();
     }
   
         
@@ -73,7 +73,7 @@ namespace mln
               lazy_image<T>& map,
               const size_t c_length) // first: closest points, second: is_computed
     {
-      //assert(Ck.npoints() == Xk.npoints()); //FIXME:
+      //assert(Ck.nsites() == Xk.nsites()); //FIXME:
 
       for (size_t i = 0; i < c_length; ++i)
         Xk.hook_()[i] = map(Ck[i]);

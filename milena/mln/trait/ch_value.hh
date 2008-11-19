@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +35,7 @@
  */
 
 # include <mln/tag/skeleton.hh>
-# include <mln/trait/image_from_mesh.hh>
+# include <mln/trait/image_from_grid.hh>
 
 
 # define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
@@ -61,8 +62,14 @@ namespace mln
     namespace impl
     {
 
-      // Decl.
+      // Declaration.
       template <typename I, typename V> struct ch_value_;
+
+      template <typename I, typename V>
+      struct ch_value_< tag::image_<I>,  V  >
+      {
+	typedef mln_ch_value(I, V) ret;
+      };
 
       template < template <class> class M, typename T,
 		 typename V >
@@ -92,6 +99,20 @@ namespace mln
 	typedef M< P, V > ret;
       };
 
+      template < template <class, class> class M, typename I1, typename I2,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I1>, tag::image_<I2> >,  V  >
+      {
+	typedef M< mln_ch_value(I1, V), mln_ch_value(I2, V) > ret;
+      };
+
+      template < template <class, class> class M, typename I, typename E,
+		 typename V >
+      struct ch_value_<  M< tag::image_<I>, tag::ext_<E> >,  V  >
+      {
+	typedef M< mln_ch_value(I, V), E > ret;
+      };
+
       // For mln::value::stack_image<n,I>.
       template < template <unsigned, class> class M, unsigned n, typename I,
 		 typename V >
@@ -110,12 +131,12 @@ namespace mln
 	typedef mln_ch_value(I, V) ret;
       };
 
-      // For mln::complex_image<D, P, T>.
+      // For mln::complex_image<D, G, T>.
       template < template <unsigned, class, class> class M,
-		 unsigned D, typename P, typename T, typename V >
-      struct ch_value_<  M< D, tag::psite_<P>, tag::value_<T> >,  V  >
+		 unsigned D, typename G, typename T, typename V >
+      struct ch_value_<  M< D, tag::psite_<G>, tag::value_<T> >,  V  >
       {
-	typedef M< D, P, V > ret;
+	typedef M< D, G, V > ret;
       };
 
       // For mln::neighb::image<I, N>.
@@ -137,10 +158,20 @@ namespace mln
 		 typename V >
       struct ch_value_<  M< tag::function_<F>, tag::pset_<S> >,  V  >
       {
-	typedef typename S::mesh mesh;
-	// FIXME: from_psite instead? coord=int!?
-	typedef typename image_from_mesh< mesh, V >::ret ret;
+        // FIXME: what about S::site having no grid?
+        typedef mln_deduce(S, site, grid) grid;
+        typedef typename image_from_grid< grid, V >::ret ret;
       };
+
+      template < template <class, class> class M, typename T, typename S,
+		 typename V >
+      struct ch_value_<  M< tag::value_<T>, tag::pset_<S> >,  V  >
+      {
+        // FIXME: what about S::site having no grid?
+        typedef mln_deduce(S, site, grid) grid;
+        typedef typename image_from_grid< grid, V >::ret ret;
+      };
+
 
       template < template <class, class> class M, typename I, typename F,
 		 typename V >

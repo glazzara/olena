@@ -33,7 +33,7 @@
  * \brief Routine to construct an mln::point2d_h.
  */
 
-# include <mln/core/point2d_h.hh>
+# include <mln/core/alias/point2d_h.hh>
 
 
 namespace mln

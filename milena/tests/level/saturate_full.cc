@@ -31,9 +31,9 @@
  */
 
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
@@ -41,7 +41,7 @@
 #include <mln/value/int_s16.hh>
 
 
-#include <mln/core/clone.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/level/saturate.hh>
 #include <mln/debug/iota.hh>
 

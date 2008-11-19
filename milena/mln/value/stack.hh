@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -50,14 +51,14 @@ namespace mln
   {
 
 
-    /*! \internal data structure for stack_image.
+    /*! data structure for stack_image.
      *
      */
     template <unsigned n, typename I>
-    struct data_< value::stack_image<n, I> >
+    struct data< value::stack_image<n, I> >
     {
     public:
-      data_(const algebra::vec<n,I>& imas);
+      data(const algebra::vec<n,I>& imas);
       algebra::vec<n,I> imas_;
       I& ima_;
     };
@@ -101,7 +102,7 @@ namespace mln
 
     template <unsigned n, typename I>
     struct image_< mln::value::stack_image<n, I> >
-      : default_image_morpher_< I,
+      : default_image_morpher< I,
 				algebra::vec<n, mln_value(I)>,
 				mln::value::stack_image<n, I> >
     {
@@ -109,7 +110,7 @@ namespace mln
       // here.
       typedef trait::image::category::value_morpher category;
 
-      typedef trait::image::value::vectorial value;
+      typedef trait::image::nature::vectorial nature;
       /* FIXME: Setting the speed trait of a stack_image to `fast' is
          a bad approximation.
 
@@ -146,12 +147,14 @@ namespace mln
      */
     template <unsigned n, typename I>
     struct stack_image
-      : public mln::internal::image_value_morpher_< I, stack_image<n,I> >
+      : public mln::internal::image_value_morpher< I,
+                                                   algebra::vec<n, mln_value(I)>,
+                                                   stack_image<n,I> >
     {
       /// Point_Site associated type.
       typedef mln_psite(I) psite;
 
-      /// Point_Set associated type.
+      /// Site_Set associated type.
       typedef mln_pset(I) pset;
 
       /// Value associated type.
@@ -165,9 +168,6 @@ namespace mln
 
       /// Return type of read-write access.
       typedef typename internal::helper_stack_image_lvalue_<n,I>::ret lvalue;
-
-      /// Value set associated type.
-      typedef mln::value::set<value> vset;
 
 
       /// Skeleton.
@@ -191,9 +191,6 @@ namespace mln
       /// Read-write access of pixel value at point site \p p.
       lvalue operator()(const psite&);
       void write_(const psite& p, const value& v);
-
-      /// Give the set of values of the image.
-      const vset& values() const;
     };
 
 
@@ -214,11 +211,11 @@ namespace mln
 
   namespace internal
   {
-    // internal::data_< cast_image_<T,I> >
+    // internal::data< cast_image_<T,I> >
 
     template <unsigned n, typename I>
     inline
-    data_< value::stack_image<n,I> >::data_(const algebra::vec<n,I>& imas)
+    data< value::stack_image<n,I> >::data(const algebra::vec<n,I>& imas)
       : imas_(imas),
 	ima_(imas_[0])
     {
@@ -241,7 +238,7 @@ namespace mln
     inline
     stack_image<n,I>::stack_image(const algebra::vec<n,I>& imas)
     {
-      this->data_ = new mln::internal::data_< stack_image<n, I> >(imas);
+      this->data_ = new mln::internal::data< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
       {
 	mln_precondition(imas[i].has_data());
@@ -262,7 +259,7 @@ namespace mln
     typename stack_image<n,I>::rvalue
     stack_image<n,I>::read_(const psite& p) const
     {
-      mln_precondition(this->owns_(p));
+      mln_precondition(this->has(p));
       algebra::vec<n, mln_value(I)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = this->data_->imas_[i].operator()(p);
@@ -282,7 +279,7 @@ namespace mln
     void
     stack_image<n,I>::write_(const psite& p, const value& v)
     {
-      mln_precondition(this->owns_(p));
+      mln_precondition(this->has(p));
       // FIXME!!!
       for (unsigned i = 0; i < n; ++i)
 	this->data_->imas_[i].operator()(p) = v[i];
@@ -294,14 +291,6 @@ namespace mln
     stack_image<n,I>::operator()(const psite& p)
     {
       return internal::helper_stack_image_lvalue_<n,I>::make(*this, p);
-    }
-
-    template <unsigned n, typename I>
-    inline
-    const mln::value::set< algebra::vec<n, mln_value(I)> >&
-    stack_image<n,I>::values() const
-    {
-      return vset::the();
     }
 
     // stack(..)

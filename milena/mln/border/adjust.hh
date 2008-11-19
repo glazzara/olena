@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_BORDER_ADJUST_HH
 # define MLN_BORDER_ADJUST_HH
 
-/*! \file mln/border/adjust.hh
- *
- * \brief Define a function that adjusts the thickness of an image
- * virtual border.
- */
+/// \file mln/border/adjust.hh
+///
+/// Define a function that adjusts the thickness of an image
+/// virtual border.
 
 # include <mln/border/resize.hh>
 
@@ -62,13 +62,11 @@ namespace mln
 
     template <typename I>
     inline
-    void adjust(const Image<I>& ima_, unsigned min_thickness)
+    void adjust(const Image<I>& ima, unsigned min_thickness)
     {
       trace::entering("border::adjust");
 
-      mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(exact(ima).has_data());
 
       if (border::get(ima) < min_thickness)
 	border::resize(ima, min_thickness);

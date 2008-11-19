@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -145,37 +145,13 @@ namespace mln
   bool operator==(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
 
 
-  /*! \brief Ordering "less than" comparison between a couple of
-   *  point sites \p lhs and \p rhs.
-   *
-   * \param[in] lhs A first point site.
-   * \param[in] rhs A second point site.
-   *
-   * This test is based on a lexicographical ordering over coordinates.
-   *
-   * \warning In the general case this ordering relationship is \em
-   * not bound to the way of browsing a domain with a forward point
-   * iterator.
-   *
-   * \pre Both \p lhs and \p rhs have to be defined on the same
-   * topology; otherwise this test does not compile.
-   *
-   * \return True if \p lhs is before \p rhs in the sense of the
-   * coordinates lexicographic comparison, otherwise false.
-   *
-   * \relates mln::Point_Site
-   */
-  template <typename L, typename R>
-  bool operator<(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
-
-
   /*! \brief Difference between a couple of point site \p lhs and \p
    *  rhs.
    *
    * \param[in] lhs A first point site.
    * \param[in] rhs A second point site.
    *
-   * \warning There is no type promotion in milena so the client
+   * \warning There is no type promotion in Milena so the client
    * has to make sure that both points are defined with the same
    * type of coordinates.
    *
@@ -195,38 +171,42 @@ namespace mln
   operator-(const Point_Site<L>& lhs, const Point_Site<R>& rhs);
 
 
-  /*! \brief Add a delta-point \p rhs to a point site \p lhs.
-   *
-   * \param[in] p  A point site.
-   * \param[in] dp A delta-point.
-   *
-   * The type of \p dp has to compatible with the type of \p p.
-   *
-   * \return A point (temporary object).
-   *
-   * \relates mln::Point_Site
-   * \see mln::Delta_Point_Site
-   */
+  /// \brief Add a delta-point \p rhs to a point site \p lhs.
+  ///
+  /// \param[in] p  A point site.
+  /// \param[in] dp A delta-point.
+  ///
+  /// The type of \p dp has to compatible with the type of \p p.
+  ///
+  /// \return A point (temporary object).
+  ///
+  /// \relates mln::Point_Site
+  /// \see mln::Delta_Point_Site
+  ///
+  /// \{
   template <typename P, typename D>
   mln_point(P)
   operator+(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+  /// }
 
 
-  /*! \brief Substract a delta-point \p rhs to a point site \p lhs.
-   *
-   * \param[in] p A point site.
-   * \param[in] dp A delta-point.
-   *
-   * The type of \p dp has to compatible with the type of \p p.
-   *
-   * \return A point (temporary object).
-   *
-   * \see mln::Dpoint
-   * \see mln::Delta_Point_Site
-   */
+  /// \brief Substract a delta-point \p dp to a point site \p p.
+  ///
+  /// \param[in] p A point site.
+  /// \param[in] dp A delta-point.
+  ///
+  /// The type of \p dp has to compatible with the type of \p p.
+  ///
+  /// \return A point (temporary object).
+  ///
+  /// \see mln::Dpoint
+  /// \see mln::Delta_Point_Site
+  ///
+  /// \{
   template <typename P, typename D>
   mln_point(P)
   operator-(const Point_Site<P>& p, const Delta_Point_Site<D>& dp);
+  /// \}
 
 
   /*! \brief Print a point site \p p into the output stream \p ostr.
@@ -283,22 +263,6 @@ namespace mln
 
   // FIXME: Remove, or factor in a lower class (Théo removed it from
   // the cleanup-2008 branch).
-  template <typename L, typename R>
-  inline
-  bool operator<(const Point_Site<L>& lhs_, const Point_Site<R>& rhs_)
-  {
-    mln::metal::bool_<(int(L::dim) == int(R::dim))>::check();
-    const L& lhs = exact(lhs_);
-    const R& rhs = exact(rhs_);
-    for (unsigned i = 0; i < L::dim; ++i)
-      {
-	if (lhs[i] == rhs[i])
-	  continue;
-	return lhs[i] < rhs[i];
-      }
-    return false;
-  }
-
   template <typename L, typename R>
   inline
   mln_dpoint(L) // FIXME: promote!

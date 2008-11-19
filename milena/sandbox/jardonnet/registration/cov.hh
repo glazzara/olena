@@ -53,7 +53,7 @@ namespace mln
     cov(const p_array<P>& a1,
         const p_array<P>& a2)
     {
-      mln_precondition(a1.npoints() == a2.npoints());
+      mln_precondition(a1.nsites() == a2.nsites());
 
       //centers of mass
       algebra::vec<P::dim,float> mu_a1 = math::exp_value(a1);
@@ -61,7 +61,7 @@ namespace mln
 
       //covariance matrix
       algebra::mat<P::dim,P::dim,float> Mk(literal::zero);
-      for (unsigned i = 0; i < a1.npoints(); ++i)
+      for (unsigned i = 0; i < a1.nsites(); ++i)
         {
           // FIXME: ugly cast.
           algebra::vec<P::dim,float> a1i  = a1[i];
@@ -69,7 +69,7 @@ namespace mln
           Mk += make::mat(a1i - mu_a1) * trans(make::mat(a2i - mu_a2));
         }
       
-      return Mk / a1.npoints();
+      return Mk / a1.nsites();
     }
     
   # endif // ! MLN_INCLUDE_ONLY

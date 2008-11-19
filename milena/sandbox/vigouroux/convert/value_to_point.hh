@@ -27,8 +27,8 @@
 
 #ifndef OLENA_VALUE_TO_POINT
 # define OLENA_VALUE_TO_POINT
-# include <oln/core/point1d.hh>
-# include <oln/core/point3d.hh>
+# include <oln/core/alias/point1d.hh>
+# include <oln/core/alias/point3d.hh>
 # include <ntg/int.hh>
 # include <ntg/color/color.hh>
 # include <oln/convert/conversion.hh>

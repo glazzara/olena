@@ -59,16 +59,16 @@ namespace mln
     namespace impl
     {
 
-      template <typename I, typename S, typename E>
+      template <typename I, typename T, typename S, typename E>
       inline
-      unsigned find__(const mln::internal::image_morpher_<I,S,E>& ima)
+      unsigned find__(const mln::internal::image_morpher<I, T, S, E>& ima)
       {
 	return border::find(*ima.delegatee_());
       }
 
-      template <typename S, typename E>
+      template <typename T, typename S, typename E>
       inline
-      unsigned find__(const mln::internal::image_base_<S,E>&)
+      unsigned find__(const mln::internal::image_base<T, S, E>&)
       {
 	return 0;
       }

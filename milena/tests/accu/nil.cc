@@ -30,7 +30,7 @@
  * \brief Tests on mln::accu::nil.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/accu/nil.hh>
@@ -41,6 +41,9 @@ int main()
 {
   using namespace mln;
   image2d<value::int_u8> ima(3, 3);
-  accu::nil a;
-  level::compute<accu::nil>(ima);
+
+  accu::nil<value::int_u8> a;
+  level::compute(a, ima);
+
+  level::compute(accu::meta::nil(), ima);
 }

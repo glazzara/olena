@@ -20,7 +20,7 @@ namespace mln
 		  << " from " << ((*p).elt().set_id == lower<V>::id ?
 				  "lower" : "upper") << " level set."
 		  << std::endl
-		  << " npoints = " << (*p).elt().npoints << std::endl
+		  << " nsites = " << (*p).elt().nsites << std::endl
 		  << " holes = " << (*p).elt().holes << std::endl;
 
 	std::cout << std::endl;
@@ -31,7 +31,7 @@ namespace mln
 	for_all(n)
 	  tmp.append((*n).elt().points);
 
-	if ((*p).elt().points.npoints() > 0)
+	if ((*p).elt().points.nsites() > 0)
 	  debug::println(ima | tmp);
 	tmp.clear();
 

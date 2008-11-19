@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,8 +38,8 @@
 # include <vector>
 
 # include <mln/core/concept/pixel_iterator.hh>
-# include <mln/core/concept/point_site.hh>
 # include <mln/core/internal/pixel_impl.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
@@ -70,7 +71,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_fwd_pixter(I& image,
 		       const Dps& dps,
-		       const Point_Site<Pref>& p_ref);
+		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
     /// 
@@ -122,7 +123,7 @@ namespace mln
     /// Reference value the image
     mln_qlf_value(I)** value_ref_;
     /// Reference pixel / point in the image
-    const mln_point(I)* p_ref_;
+    const mln_psite(I)* p_ref_;
     /// \}
   };
 
@@ -153,7 +154,7 @@ namespace mln
     template <typename Dps, typename Pref>
     dpoints_bkd_pixter(I& image,
 		       const Dps& dps,
-		       const Point_Site<Pref>& p_ref);
+		       const Pref& p_ref);
 
     /// \brief Constructor (using a generalized pixel).
     /// 
@@ -191,7 +192,7 @@ namespace mln
   private:
     /// \brief Offset of each delta-point.
     ///
-    /// offset_[dps.ndpoints() - 1] is absolute, while other offsets
+    /// offset_[dps.size() - 1] is absolute, while other offsets
     /// are relative (i.e., offset_[i] is the memory difference to go
     /// from pixel i+1 to pixel i.
     std::vector<int> offset_;
@@ -205,7 +206,7 @@ namespace mln
     /// Reference value the image
     mln_qlf_value(I)** value_ref_;
     /// Reference pixel / point in the image
-    const mln_point(I)* p_ref_;
+    const mln_psite(I)* p_ref_;
     /// \}
   };
 
@@ -222,11 +223,14 @@ namespace mln
   inline
   dpoints_fwd_pixter<I>::dpoints_fwd_pixter(I& image,
 					    const Dps& dps,
-					    const Point_Site<Pref>& p_ref)
+					    const Pref& p_ref)
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_point();
+
+    mlc_converts_to(Pref, const mln_psite(I)&)::check();
+    p_ref_ = & static_cast< const mln_psite(I)& >(p_ref);
+
     value_ref_ = 0;
     init_(dps);
   }
@@ -264,12 +268,12 @@ namespace mln
   void
   dpoints_fwd_pixter<I>::init_(const Dps& dps)
   {
-    for (unsigned i = 0; i < dps.ndpoints(); ++i)
-      offset_.push_back(this->image_.offset(dps.dp(i)));
+    for (unsigned i = 0; i < dps.size(); ++i)
+      offset_.push_back(this->image_.delta_index(dps.dp(i)));
     // offset_[0] is absolute
     // other offsets are relative:
-    if (dps.ndpoints() > 1)
-      for (unsigned i = dps.ndpoints() - 1; i > 0; --i)
+    if (dps.size() > 1)
+      for (unsigned i = dps.size() - 1; i > 0; --i)
 	offset_[i] -= offset_[i - 1];
     invalidate();
   }
@@ -333,11 +337,11 @@ namespace mln
   inline
   dpoints_bkd_pixter<I>::dpoints_bkd_pixter(I& image,
 					    const Dps& dps,
-					    const Point_Site<Pref>& p_ref)
+					    const Pref& p_ref)
     : super_(image)
   {
     mln_precondition(image.has_data());
-    p_ref_ = & exact(p_ref).to_point();
+    internal::get_adr(p_ref_, p_ref);
     value_ref_ = 0;
     init_(dps);
   }
@@ -375,12 +379,12 @@ namespace mln
   void
   dpoints_bkd_pixter<I>::init_(const Dps& dps)
   {
-    for (unsigned i = 0; i < dps.ndpoints(); ++i)
-      offset_.push_back(this->image_.offset(dps.dp(i)));
-    // offset_[ndpoints() - 1] is absolute
+    for (unsigned i = 0; i < dps.size(); ++i)
+      offset_.push_back(this->image_.delta_index(dps.dp(i)));
+    // offset_[size() - 1] is absolute
     // other offsets are relative:
-    if (dps.ndpoints() > 1)
-      for (unsigned i = 0; i < dps.ndpoints() - 1; ++i)
+    if (dps.size() > 1)
+      for (unsigned i = 0; i < dps.size() - 1; ++i)
 	offset_[i] -= offset_[i + 1];
     invalidate();
   }

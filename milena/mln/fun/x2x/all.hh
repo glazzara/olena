@@ -44,7 +44,7 @@ namespace mln
     namespace x2x
     {
 
-      /// \internal Internal namespace of functions form vector to vector.
+      /// Internal namespace of functions form vector to vector.
       namespace internal
       {
       }
@@ -57,7 +57,6 @@ namespace mln
 # include <mln/fun/x2x/composed.hh>
 # include <mln/fun/x2x/rotation.hh>
 # include <mln/fun/x2x/translation.hh>
-
 
 
 #endif // ! MLN_FUN_X2X_ALL_HH

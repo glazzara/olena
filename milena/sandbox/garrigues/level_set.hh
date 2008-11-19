@@ -39,18 +39,18 @@
 # include "lower.hh"
 # include "upper.hh"
 
-# include <mln/core/image2d.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/point2d.hh>
 
-# include <mln/core/p_set.hh>
-# include <mln/core/inplace.hh>
-# include <mln/core/neighb2d.hh>
+# include <mln/core/site_set/p_set.hh>
+
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/core/clock_neighb2d.hh>
-# include <mln/core/pset_if_piter.hh>
-# include <mln/core/pset_if.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/image_if.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/p_if_piter.hh>
+# include <mln/core/site_set/p_if.hh>
+# include <mln/core/image/sub_image.hh>
+# include <mln/core/image/image_if.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/core/a_point_of.hh>
 
 # include <mln/debug/println.hh>
@@ -152,14 +152,14 @@ namespace mln
 // 	image2d<bool> d(make::box2d(-1, -1, 1, 1));
 // 	level::fill(d, 0);
 // 	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
-// 	mln_fwd_niter(clock_neighb2d)   dn(nbh , make::point2d(0, 0));
+// 	mln_fwd_niter(clock_neighb2d)   dn(nbh , point2d(0, 0));
 // 	for_all_2(n, dn)
 // 	  {
 // 	    d(dn) =
 // 	      env.shape(n);
 // 	  }
 // 	std::cout << "update cc lower : " << p << std::endl;
-// 	if (env.R.npoints())
+// 	if (env.R.nsites())
 // 	  debug::println(env.u | env.R);
 
 // 	debug::println(d);
@@ -289,7 +289,7 @@ namespace mln
 	}
 
       // gn <- min u(x) x belongs to N.
-      if ((env.u | set::inter(env.N, env.u.domain())).npoints() > 0)
+      if ((env.u | set::inter(env.N, env.u.domain())).nsites() > 0)
 	env.gn = level::compute< typename F::accu_for_gn >(env.u | set::inter(env.N, env.u.domain()));
       else
       {
@@ -317,7 +317,7 @@ namespace mln
       // Create a new conected component.
       // FIXME : we can make it faster.
 
-      if ((env.R.bbox() < env.u.domain()) || (env.R.npoints() == env.u.domain().npoints()))
+      if ((env.R.bbox() < env.u.domain()) || (env.R.nsites() == env.u.domain().nsites()))
       {
 	mln_piter(p_set<P>) p(env.R);
 	env.current_region = new fllt_node(P, V)();
@@ -347,7 +347,7 @@ namespace mln
 	mln_piter(p_set<P>) z(env.N);
 	for_all(z)
 	  {
-	    mln_assertion(border_ima.owns_(z));
+	    mln_assertion(border_ima.has(z));
 	    border_ima(z) = true;
 	  }
 	unsigned n;
@@ -355,7 +355,7 @@ namespace mln
 
 // 	std::cout << "labeling : " << n << std::endl;
 // 	std::cout << "nous : " << env.n_cc << std::endl;
-// 	if (env.R.npoints())
+// 	if (env.R.nsites())
 // 	  debug::println(env.u | env.R);
 
 	if (n > 1)

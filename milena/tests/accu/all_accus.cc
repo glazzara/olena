@@ -29,7 +29,7 @@
 /// \brief Tests on all_accus files in mln/accu.
 
 #include <mln/accu/all.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 #include <mln/value/set.hh>
 
 
@@ -39,16 +39,16 @@ int main()
   using namespace mln::accu;
 
   bbox<point2d> b;
-  count_<int> c;
-  histo< value::set<bool> > h;
-  max_<int> ma;
-  mean_<int> me;
+  count<int> c;
+  mln::accu::histo<bool> h;
+  max<int> ma;
+  mean<int> me;
   // median< value::set<bool> > med; // FIXME: bool has no min so workaround!
-  min_<int> mi;
+  min<int> mi;
   // min_h< value::set<bool> > mh;   // OK: do not work since bool has
                                      // no min/max :)
-  min_max_<int> mm;
-  nil n;
-  pair_< min_<int>, max_<int> > p;
-  sum_<int> s;
+  min_max<int> mm;
+  nil<int> n;
+  pair< min<int>, max<int> > p;
+  sum<int> s;
 }

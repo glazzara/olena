@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_LABELING_FOREGROUND_HH
 # define MLN_LABELING_FOREGROUND_HH
 
-/*! \file mln/labeling/foreground.hh
- *
- * \brief Connected component labeling of the object part in a binary
- * image.
- */
+/// \file mln/labeling/foreground.hh
+///
+/// Connected component labeling of the object part in a binary
+/// image.
 
 # include <mln/labeling/level.hh>
 
@@ -58,27 +58,28 @@ namespace mln
      *
      * \see mln::labeling::level
      */
-    template <typename I, typename N>
-    mln_ch_value(I, unsigned)
+    template <typename I, typename N, typename L>
+    mln_ch_value(I, L)
     foreground(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels);
+	       L& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N>
+    template <typename I, typename N, typename L>
     inline
-    mln_ch_value(I, unsigned)
+    mln_ch_value(I, L)
     foreground(const Image<I>& input, const Neighborhood<N>& nbh,
-	       unsigned& nlabels)
+	       L& nlabels)
     {
       trace::entering("labeling::foreground");
+
       mlc_equal(mln_trait_image_kind(I),
 		mln::trait::image::kind::binary)::check();
       mln_precondition(exact(input).has_data());
+      // mln_precondition(exact(nbh).is_valid());
 
-      mln_ch_value(I, unsigned) output =
-	labeling::level(input, true, nbh, nlabels);
+      mln_ch_value(I, L) output = labeling::level(input, true, nbh, nlabels);
 
       trace::exiting("labeling::foreground");
       return output;

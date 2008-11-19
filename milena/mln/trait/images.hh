@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,6 +33,8 @@
  * \brief Some base trait types for images.
  *
  * \todo Split this file into many.
+ *
+ * \todo the 'nature' prop is not set yet in image types.
  */
 
 # include <iostream>
@@ -48,36 +50,47 @@
 # include <mln/metal/is_const.hh>
 
 
+
 # define mln_trait_image_category(I) typename mln::trait::image_< I >::category
-
-# define mln_trait_image_kind(I)     typename mln::trait::image_< I >::kind
-# define mln_trait_image_quant(I)    typename mln::trait::image_< I >::quant
-# define mln_trait_image_value(I)    typename mln::trait::image_< I >::value
-
-# define mln_trait_image_access(I)   typename mln::trait::image_< I >::access
-# define mln_trait_image_space(I)    typename mln::trait::image_< I >::space
-# define mln_trait_image_size(I)     typename mln::trait::image_< I >::size
-# define mln_trait_image_support(I)  typename mln::trait::image_< I >::support
-
-# define mln_trait_image_border(I)   typename mln::trait::image_< I >::border
-# define mln_trait_image_neighb(I)   typename mln::trait::image_< I >::neighb
-# define mln_trait_image_data(I)     typename mln::trait::image_< I >::data
-# define mln_trait_image_io(I)       typename mln::trait::image_< I >::io
 # define mln_trait_image_speed(I)    typename mln::trait::image_< I >::speed
+# define mln_trait_image_size(I)     typename mln::trait::image_< I >::size
+
+# define mln_trait_image_value_access(I)     typename mln::trait::image_< I >::value_access
+# define mln_trait_image_value_storage(I)    typename mln::trait::image_< I >::value_storage
+# define mln_trait_image_value_browsing(I)   typename mln::trait::image_< I >::value_browsing
+# define mln_trait_image_value_io(I)         typename mln::trait::image_< I >::value_io
+# define mln_trait_image_pw_io(I)            typename mln::trait::image_< I >::pw_io
+# define mln_trait_image_vw_io(I)            typename mln::trait::image_< I >::vw_io
+# define mln_trait_image_vw_set(I)           typename mln::trait::image_< I >::vw_set
+# define mln_trait_image_value_alignement(I) typename mln::trait::image_< I>::value_alignement
+
+# define mln_trait_image_localization(I) typename mln::trait::image_< I >::localization
+# define mln_trait_image_dimension(I)    typename mln::trait::image_< I >::dimension
+
+# define mln_trait_image_ext_domain(I) typename mln::trait::image_< I >::ext_domain
+# define mln_trait_image_ext_value(I)  typename mln::trait::image_< I >::ext_value
+# define mln_trait_image_ext_io(I)     typename mln::trait::image_< I >::ext_io
+
+# define mln_trait_image_kind(I)   typename mln::trait::image_< I >::kind
+# define mln_trait_image_nature(I) typename mln::trait::image_< I >::nature
+# define mln_trait_image_quant(I)  typename mln::trait::image_< I >::quant
 
 
-// for io: I const => read_only, otherwise like I
-# define mln_trait_image_io_from_(I) \
-mlc_if( mlc_is_const(I), mln::trait::image::io::read_only, mln_trait_image_io(I) )
+// For value_io: I const => read_only, otherwise like I
 
-// for data: if raw or linear => stored, otherwise like I (i.e., either stored or computed)
-#define mln_trait_image_data_from_(I) typename							\
-mln::metal::if_< mln::metal::or_< mlc_equal( mln_trait_image_data(I),				\
-					     mln::trait::image::data::raw),			\
-                                  mlc_equal( mln_trait_image_data(I),				\
-					     mln::trait::image::data::linear) >,		\
-	         mln::trait::image::data::stored,						\
-                 mln_trait_image_data(I) >::ret
+# define mln_internal_trait_image_value_io_from(I)	\
+							\
+  mlc_if( mlc_is_const(I),				\
+	  mln::trait::image::value_io::read_only,	\
+	  mln_trait_image_value_io(I) )
+
+
+# define mln_internal_trait_image_speed_from(I)						\
+											\
+  mlc_if( mlc_equal( mln_trait_image_speed(I), mln::trait::image::speed::fastest ),	\
+	  mln::trait::image::speed::fast,						\
+	  mln_trait_image_speed(I) )
+
 
 
 namespace mln
@@ -107,28 +120,34 @@ namespace mln
     template <typename I>
     struct undefined_image_
     {
-      typedef undef category; // primary, domain_morpher, value_morpher,
-                              // or identity_morpher < morpher
+      // misc
+      typedef undef category;
+      typedef undef speed;
+      typedef undef size;
 
-      // related to I::value
-      typedef undef kind;     // color, gray, binary < logic < label, data
-      typedef undef quant;    // low or high
-      typedef undef value;    // scalar, vectorial, structed, pointer
-      // FIXME: Make the difference between homogeneous and heterogeneous vectors...
+      // value
+      typedef undef vw_io;
+      typedef undef vw_set;
+      typedef undef value_alignement;
+      typedef undef value_access;
+      typedef undef value_storage;
+      typedef undef value_browsing;
+      typedef undef value_io;
 
-      // related to I::pset
-      typedef undef access;   // random, browsing
-      // FIXME: Wouldn't it be nicer to use metal::int_<DIM>?
-      typedef undef space;    // one_d, two_d, three_d
-      typedef undef size;     // huge or regular
-      typedef undef support;  // irregular, aligned < regular
+      // site
+      typedef undef pw_io;
+      typedef undef localization;
+      typedef undef dimension;
 
-      // global
-      typedef undef border;   // none, { stored, computed } < some
-      typedef undef neighb;   // none, some
-      typedef undef data;     // raw < linear < stored, computed
-      typedef undef io;       // read_only < read, write_only < write, read_write < both read'n write
-      typedef undef speed;    // slow, fast, or fastest
+      // extended domain
+      typedef undef ext_domain;
+      typedef undef ext_value;
+      typedef undef ext_io;
+
+      // data (I::value)
+      typedef undef kind;
+      typedef undef nature;
+      typedef undef quant;
     };
 
 
@@ -160,31 +179,39 @@ namespace mln
 
       // speed is fast by default (neither "fastest" nor "slow")
       typedef trait::image::speed::fast speed;
-
-      // neighb is absent by default.
-      typedef trait::image::neighb::none neighb;
     };
 
 
     template <typename D, typename T, typename I>
-    struct default_image_morpher_ : default_image_<T, I>
+    struct default_image_morpher : default_image_<T, I>
     {
-      // value-related => delegation
-      typedef typename image_<D>::kind  kind;
-      typedef typename image_<D>::quant quant;
-      typedef typename image_<D>::value value;
+      // misc => delegation except for 'category'
+      typedef typename image_<D>::size  size;
+      typedef mln_internal_trait_image_speed_from(D) speed; // un-fastest
 
-      // domain-related => delegation
-      typedef typename image_<D>::access  access;
-      typedef typename image_<D>::space   space;
-      typedef typename image_<D>::size    size;
-      typedef typename image_<D>::support support;
+      // value => delegation
+      typedef typename image_<D>::vw_io            vw_io;
+      typedef typename image_<D>::vw_set           vw_set;
+      typedef typename image_<D>::value_alignement value_alignement;
+      typedef typename image_<D>::value_access     value_access;
+      typedef typename image_<D>::value_storage    value_storage;
+      typedef typename image_<D>::value_browsing   value_browsing;
+      typedef mln_internal_trait_image_value_io_from(D) value_io; // un-write when D is const
 
-      // mostly global-related => delegation
-      typedef typename image_<D>::border border;
-      typedef typename image_<D>::neighb neighb;
-      typedef typename image_<D>::data   data;
-      typedef typename image_<D>::io     io;
+      // site => delegation
+      typedef typename image_<D>::pw_io        pw_io;
+      typedef typename image_<D>::localization localization;
+      typedef typename image_<D>::dimension    dimension;
+
+      // extended domain => delegation
+      typedef typename image_<D>::ext_domain ext_domain;
+      typedef typename image_<D>::ext_value  ext_value;
+      typedef typename image_<D>::ext_io     ext_io;
+
+      // data (I::value) => delegation
+      typedef typename image_<D>::nature nature;
+      typedef typename image_<D>::kind   kind;
+      typedef typename image_<D>::quant  quant;
     };
 
 

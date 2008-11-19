@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_PRIORITY_QUEUE_HH
-# define MLN_CORE_P_PRIORITY_QUEUE_HH
+#ifndef MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH
+# define MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH
 
-/*! \file mln/core/p_priority_queue.hh
+/*! \file mln/core/site_set/p_priority.hh
  *
  * \brief Definition of a point set class based on p_queue with
  * priority features.
@@ -43,7 +43,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_queue.hh>
+# include <mln/core/site_set/p_queue.hh>
 # include <trait/point_set.hh>
 
 
@@ -51,7 +51,7 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P, typename T> struct p_priority_queue;
+  template <typename P, typename T> struct p_priority;
   template <typename P> struct p_array_fwd_piter_;
   template <typename P> struct p_array_bkd_piter_;
 
@@ -59,8 +59,8 @@ namespace mln
   {
 
     template <typename P, typename T>
-    struct point_set_< p_priority_queue<P, T> >
-    : public default_point_set_< p_priority_queue<P, T> >
+    struct point_set_< p_priority<P, T> >
+    : public default_point_set_< p_priority<P, T> >
     {
       typedef trait::point_set::arity::unique   arity;
       typedef trait::point_set::has_speed::slow has_speed;
@@ -75,21 +75,21 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P, typename T>
-  class p_priority_queue : public internal::point_set_base_< P, p_priority_queue<P, T> >
+  class p_priority : public internal::point_set_base_< P, p_priority<P, T> >
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    p_priority_queue();
+    p_priority();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -98,16 +98,16 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    size_t npoints() const;
+    size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
 
     /// Push force a point \p p in the queue.
-    p_priority_queue<P, T>& push_force(const P& p, T prio = 0);
+    p_priority<P, T>& push_force(const P& p, T prio = 0);
 
     /// Push a point \p p in the queue.
-    p_priority_queue<P, T>& push(const P& p, T prio = 0);
+    p_priority<P, T>& push(const P& p, T prio = 0);
 
     /// Pop (remove) the front point \p p from the queue; \p p is the
     /// least recently inserted point.
@@ -151,7 +151,7 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  p_priority_queue<P, T>::p_priority_queue()
+  p_priority<P, T>::p_priority()
   {
     vect_needs_update_ = false;
     bb_needs_update_ = false;
@@ -160,10 +160,10 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  p_priority_queue<P, T>::vect_update_() const
+  p_priority<P, T>::vect_update_() const
   {
     vect_.clear();
-    vect_.reserve(npoints());
+    vect_.reserve(nsites());
 
     typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
 
@@ -176,14 +176,14 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  p_priority_queue<P, T>::bb_update_() const
+  p_priority<P, T>::bb_update_() const
   {
     bb_.init();
 
     typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
 
     for (; it != q_.end (); ++it)
-      for (unsigned i = 0; i < (*it).second.npoints (); ++i)
+      for (unsigned i = 0; i < (*it).second.nsites (); ++i)
 	bb_.take((*it).second[i]);
     bb_needs_update_ = false;
   }
@@ -192,7 +192,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  p_priority_queue<P, T>::has(const P& p) const
+  p_priority<P, T>::has(const P& p) const
   {
     typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
 
@@ -205,7 +205,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  p_priority_queue<P, T>::is_empty() const
+  p_priority<P, T>::is_empty() const
   {
     typename std::map<T, p_queue<P> >::const_iterator it = q_.begin ();
 
@@ -218,7 +218,7 @@ namespace mln
   template <typename P, typename T>
   inline
   size_t
-  p_priority_queue<P, T>::npoints() const
+  p_priority<P, T>::nsites() const
   {
     unsigned res = 0;
 
@@ -226,16 +226,16 @@ namespace mln
 
     for (; it != q_.end (); ++it)
       if (!(*it).second.is_empty ())
- 	res += (*it).second.npoints();
+ 	res += (*it).second.nsites();
     return res;
   }
 
   template <typename P, typename T>
   inline
   const box_<P>&
-  p_priority_queue<P, T>::bbox() const
+  p_priority<P, T>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -243,8 +243,8 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  p_priority_queue<P, T>&
-  p_priority_queue<P, T>::push_force(const P& p, T prio)
+  p_priority<P, T>&
+  p_priority<P, T>::push_force(const P& p, T prio)
   {
     q_[prio].push_force (p);
     if (! vect_needs_update_)
@@ -257,8 +257,8 @@ namespace mln
 
   template <typename P, typename T>
   inline
-  p_priority_queue<P, T>&
-  p_priority_queue<P, T>::push(const P& p, T prio)
+  p_priority<P, T>&
+  p_priority<P, T>::push(const P& p, T prio)
   {
     if (! has(p))
       return this->push_force(p, prio);
@@ -269,7 +269,7 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  p_priority_queue<P, T>::pop()
+  p_priority<P, T>::pop()
   {
     typename std::map<T, p_queue<P> >::reverse_iterator it = q_.rbegin ();
 
@@ -287,7 +287,7 @@ namespace mln
   template <typename P, typename T>
   inline
   const P&
-  p_priority_queue<P, T>::front() const
+  p_priority<P, T>::front() const
   {
     mln_precondition(! q_.empty());
 
@@ -302,7 +302,7 @@ namespace mln
   template <typename P, typename T>
   inline
   const P&
-  p_priority_queue<P, T>::pop_front()
+  p_priority<P, T>::pop_front()
   {
     const P& res = this->front();
 
@@ -313,7 +313,7 @@ namespace mln
   template <typename P, typename T>
   inline
   void
-  p_priority_queue<P, T>::clear()
+  p_priority<P, T>::clear()
   {
     typename std::map<T, p_queue<P> >::iterator it = q_.begin ();
 
@@ -327,7 +327,7 @@ namespace mln
   template <typename P, typename T>
   inline
   const std::vector<P>&
-  p_priority_queue<P, T>::vect() const
+  p_priority<P, T>::vect() const
   {
     if (vect_needs_update_)
       vect_update_();
@@ -337,9 +337,9 @@ namespace mln
   template <typename P, typename T>
   inline
   const P&
-  p_priority_queue<P, T>::operator[](unsigned i) const
+  p_priority<P, T>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
 
     typename std::map<T, p_queue<P> >::const_reverse_iterator it = q_.rbegin ();
     unsigned cpt = 0;
@@ -347,7 +347,7 @@ namespace mln
     for (; it != q_.rend (); ++it)
       {
 	if (!(*it).second.is_empty ())
-	  for (cpt = 0; cpt < (*it).second.npoints (); ++cpt)
+	  for (cpt = 0; cpt < (*it).second.nsites (); ++cpt)
 	    {
 	      if (i == 0)
 		return (*it).second[cpt];
@@ -362,4 +362,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_PRIORITY_QUEUE_HH
+#endif // ! MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_HH

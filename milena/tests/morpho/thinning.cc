@@ -30,11 +30,11 @@
  * \brief Test on mln::morpho::thinning.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/win/rectangle2d.hh>
-#include <mln/core/window2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/load.hh>
@@ -42,6 +42,8 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/morpho/thinning.hh>
+
+#include<mln/convert/to.hh>
 
 #include "tests/data.hh"
 
@@ -54,12 +56,12 @@ int main()
   bool fg[] = { 0, 0, 0,
 		0, 1, 0,
 		0, 0, 0 };
-  window2d win_fg = make::window2d(fg);
+  window2d win_fg = convert::to<window2d>(fg);
 
   bool bg[] = { 0, 0, 0,
 		1, 0, 1,
 		0, 0, 0 };
-  window2d win_bg = make::window2d(bg);
+  window2d win_bg = convert::to<window2d>(bg);
 
   border::thickness = 2;
 

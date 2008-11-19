@@ -1,9 +1,9 @@
-#include <mln/core/point3d.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point3d.hh>
+#include <mln/core/alias/point2d.hh>
 #include "thinning.hh"
 #include <mln/level/paste.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/sub_image.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>

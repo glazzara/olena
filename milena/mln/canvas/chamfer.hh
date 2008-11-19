@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/internal/image_morpher.hh>
-# include <mln/geom/sym.hh>
+# include <mln/win/sym.hh>
 
 namespace mln
 {
@@ -50,7 +50,7 @@ namespace mln
     {
       typedef typename F::I I;
       typedef typename F::W W;
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       F& f;
 
@@ -86,7 +86,7 @@ namespace mln
 	mln_qiter(W) q(f.win, p);
 
 	for_all(p) if (f.handles (p))
-	  for_all(q) if (f.input.has(q))
+	  for_all(q) if (f.input.domain().has(q))
 	    if (f.output(q) != f.max
 		&& f.output(q) + q.w() < f.output(p))
 	      f.output(p) = f.output(q) + q.w();
@@ -94,13 +94,13 @@ namespace mln
 
       /// Bkd pass.
       {
-	W w_win_b = geom::sym(f.win);
+	W w_win_b = win::sym(f.win);
 
 	mln_bkd_piter(I) p(f.input.domain());
 	mln_qiter(W) q(w_win_b, p);
 
 	for_all(p) if (f.handles (p))
-	  for_all(q) if (f.input.has(q))
+	  for_all(q) if (f.input.domain().has(q))
 	    if (f.output(q) != f.max
 		&& f.output(q) + q.w() < f.output(p))
 	      f.output(p) = f.output(q) + q.w();

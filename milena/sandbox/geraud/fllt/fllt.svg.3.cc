@@ -25,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 #include <mln/core/image_if_value.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/sub_image.hh>
 
 #include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
@@ -62,7 +62,7 @@ namespace mln
     void update_gN(const N_t& N, G& gN)
     {
       for (unsigned g = 0; g < 256; ++g)
-	if (N[g].npoints() != 0)
+	if (N[g].nsites() != 0)
 	  {
 	    gN = g;
 	    return;
@@ -77,7 +77,7 @@ namespace mln
     {
       for (unsigned i = 0; i < 256; ++i)
 	{
-	  if (N[i].npoints() == 0)
+	  if (N[i].nsites() == 0)
 	    continue;
 	  std::cout << i << ": " << N[i] << std::endl;
 	}
@@ -189,7 +189,7 @@ namespace mln
       {
 	// R <- 0 and N <- 0
 	if (N_box.is_valid() != 0)
-	  level::fill(inplace(is | N_box.to_result()), in_O);
+	  level::fill((is | N_box.to_result()).rw(), in_O);
 	clear_N(N);
 	N_box.init();
 
@@ -212,7 +212,7 @@ namespace mln
 
 
 	// R <- R U A
-	if (A.npoints() == 0)
+	if (A.nsites() == 0)
 	  goto the_end;
 
 	for_all(a)

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,5 +43,6 @@ int main()
   int res = metal::math::pow_int<2,3>::value;
   mln_assertion(res == 8);
 
-  std::cout << metal::math::pow< int_<2>, int_<3> >::ret().name() << std::endl;
+  std::string s = metal::math::pow< int_<2>, int_<3> >::ret().name();
+  mln_assertion(s == "metal::int_<8>");
 }

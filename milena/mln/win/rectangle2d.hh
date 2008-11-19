@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,20 +31,24 @@
 /*! \file mln/win/rectangle2d.hh
  *
  * \brief Definition of the mln::win::rectangle2d window.
+ *
+ * \todo Reactivate includes at EOF.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/internal/classical_window_base.hh>
+# include <mln/core/alias/dpoint2d.hh>
+# include <mln/core/def/coord.hh>
 
 
 namespace mln
 {
 
+  mln_internal_add_classical_window_trait(rectangle2d);
+
+
   namespace win
   {
- 
+
     /*! \brief Rectangular window defined on the 2D square grid.
      *
      * A rectangle2d is a 2D window with rectangular shape.  It is
@@ -56,29 +60,8 @@ namespace mln
      *  o o o o o \n
      * is defined with height = 3 and width = 5.
      */
-    struct rectangle2d : public Window< rectangle2d >,
-			 public internal::dpoints_base_< dpoint2d, rectangle2d >
+    struct rectangle2d : public internal::classical_window_base< dpoint2d, rectangle2d >
     {
-      /// Point Site associated type.
-      typedef point2d psite;
-
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
-
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a rectangle such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
-
-
       /*! \brief Constructor.
        *
        * \param[in] height Height of the rectangle2d.
@@ -89,56 +72,32 @@ namespace mln
       rectangle2d(unsigned height, unsigned width);
 
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
-      /*! \brief Give the rectangle height.
-       */
+      /// Give the rectangle height.
       unsigned height() const;
 
-      /*! \brief Give the rectangle width.
-       */
+      /// Give the rectangle width.
       unsigned width() const;
 
-      /*! \brief Give the rectangle area.
-       */
+      /// Give the rectangle area.
       unsigned area() const;
 
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      rectangle2d& sym();
+
+      /// Give the std vector of delta-points.
+      const std::vector<dpoint2d>& std_vector() const;
+
+      void print_(std::ostream& ostr) const;
 
     protected:
+
       unsigned height_, width_;
     };
 
 
-    /*! \brief Print a rectangle window \p win into the output stream \p
-     *  ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A rectangle window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::rectangle2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win);
-
- 
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -148,22 +107,12 @@ namespace mln
 	width_(width)
     {
       mln_precondition(height % 2 == 1 && width % 2 == 1);
-      const int drow = height / 2, dcol = width / 2;
-      for (int row = - drow; row <= drow; ++row)
-	for (int col = - dcol; col <= dcol; ++col)
-	  insert(make::dpoint2d(row, col));
-    }
+      const def::coord  drow = (def::coord) (height / 2);
+      const def::coord dcol = (def::coord) (width / 2);
 
-    inline
-    bool rectangle2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool rectangle2d::is_symmetric() const
-    {
-      return true;
+      for (def::coord row = (def::coord) -drow; row <= drow; ++row)
+	for (def::coord col = (def::coord) -dcol; col <= dcol; ++col)
+	  this->insert(dpoint2d(row, col));
     }
 
     inline
@@ -185,22 +134,23 @@ namespace mln
     }
 
     inline
-    unsigned rectangle2d::delta() const
+    unsigned rectangle2d::delta_() const
     {
       return width_ > height_ ? width_ / 2 : height_ / 2;
     }
 
     inline
-    rectangle2d& rectangle2d::sym()
+    const std::vector<dpoint2d>&
+    rectangle2d::std_vector() const
     {
-      return *this;
+      return win_.std_vector();
     }
 
     inline
-    std::ostream& operator<<(std::ostream& ostr, const rectangle2d& win)
+    void
+    rectangle2d::print_(std::ostream& ostr) const
     {
-      ostr << "[rectangle2d: width=" << win.width() << ", height=" << win.height() << ']';
-      return ostr;
+      ostr << "[rectangle2d: width=" << width_ << ", height=" << height_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

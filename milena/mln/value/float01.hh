@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_FLOAT01_HH
 # define MLN_VALUE_FLOAT01_HH
 
-/*! \file mln/value/float01.hh
- *
- * \brief Define a generic class for float.
- */
+/// \file mln/value/float01.hh
+///
+/// Define a generic class for float.
 
 # include <iostream>
 # include <utility>
@@ -93,7 +93,7 @@ namespace mln
       /// Return an equivalent gray encoded on \p nbits bits.
       const float01 to_nbits(unsigned nbits) const;
 
-      /// Convertion to float.
+      /// Conversion to float.
       operator float() const;
 
 //       template <unsigned n>
@@ -151,7 +151,7 @@ namespace mln
 
 
     // Float01.
-
+    inline
     float01::float01()
       : nbits_(0) // FIXME: Cost at run-time...
     {

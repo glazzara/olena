@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,13 +43,14 @@ namespace mln
   {
 
     // With param.
+    template <typename D> struct data_     { typedef D param; };
+    template <typename E> struct ext_      { typedef E param; };
+    template <typename F> struct function_ { typedef F param; };
     template <typename I> struct image_    { typedef I param; };
-    template <typename V> struct value_    { typedef V param; };
+    template <typename N> struct neighb_   { typedef N param; };
     template <typename P> struct psite_    { typedef P param; };
     template <typename S> struct pset_     { typedef S param; };
-    template <typename D> struct data_     { typedef D param; };
-    template <typename F> struct function_ { typedef F param; };
-    template <typename N> struct neighb_   { typedef N param; };
+    template <typename V> struct value_    { typedef V param; };
 
     // With value.
     template <unsigned u> struct unsigned_ { enum { value = u }; };

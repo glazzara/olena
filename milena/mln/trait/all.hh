@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,13 +43,13 @@ namespace mln
   namespace trait
   {
 
-    /// \internal Image namespace of trait namespace.
+    /// Image namespace of trait namespace.
     namespace image {}
 
-    /// \internal Implementation namespace of trait namespace.
+    /// Implementation namespace of trait namespace.
     namespace impl {}
 
-    /// \internal Internal namespace of trait namespace.
+    /// Internal namespace of trait namespace.
     namespace internal {}
 
   }

@@ -30,7 +30,7 @@
  * \brief Test on mln::io::fits::load.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>

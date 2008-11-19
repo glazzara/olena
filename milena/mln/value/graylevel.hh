@@ -236,7 +236,7 @@ namespace mln
     //     |gray||              |gray_f |gray_f |gray_f |
     //     |--------------------------------------------|
 
-    //     Valid Convertions are :
+    //     Valid Conversions are :
 
 //     gray_f -> gray_<n>
 //     gray_f -> graylevel<n>
@@ -310,10 +310,10 @@ namespace mln
 
     namespace internal
     {
-      // \internal Fwd decl;
+      // Fwd decl;
       template <typename T> struct convert_;
 
-      // \internal convert for graylevel.
+      // convert for graylevel.
       template <unsigned n>
       struct convert_< graylevel<n> >
       {

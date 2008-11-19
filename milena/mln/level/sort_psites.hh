@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +39,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/histo/compute.hh>
+# include <mln/util/ord.hh>
+# include <mln/geom/nsites.hh>
 
 
 namespace mln
@@ -89,8 +92,10 @@ namespace mln
 	bool operator()(const mln_psite(I)& lhs,
 			const mln_psite(I)& rhs) const
 	{
-	  return ima_(lhs) < ima_(rhs) || (ima_(lhs) == ima_(rhs)
-					   && lhs < rhs);
+	  return util::ord_strict(ima_(lhs), ima_(rhs))
+	    || (ima_(lhs) == ima_(rhs)
+		&&
+		util::ord_strict(lhs, rhs));
 	}
       };
 
@@ -109,8 +114,10 @@ namespace mln
 	bool operator()(const mln_psite(I)& lhs,
 			const mln_psite(I)& rhs) const
 	{
-	  return ima_(lhs) > ima_(rhs) || (ima_(lhs) == ima_(rhs)
-					   && lhs > rhs);
+	  return util::ord_strict(ima_(rhs), ima_(lhs))
+	    || (ima_(lhs) == ima_(rhs)
+		&&
+		util::ord_strict(rhs, lhs));
 	}
       };
 
@@ -124,7 +131,7 @@ namespace mln
 			      const I& input)
       {
 	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
-	std::sort(v.hook_().begin(), v.hook_().end(),
+	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_less_<I>(input));
 	return v;
       }
@@ -136,11 +143,11 @@ namespace mln
 			      const I& input)
       {
 	typedef mln_vset(I) S;
-	const S& vset = input.values();
+	const S& vset = input.values_eligible();
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<S> h = histo::compute(input);
+	histo::data<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
@@ -149,7 +156,7 @@ namespace mln
 	  loc[i] = loc[i-1] + h[i-1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(geom::nsites(input));
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;
@@ -168,7 +175,7 @@ namespace mln
 			      const I& input)
       {
 	p_array<mln_psite(I)> v = convert::to_p_array(input.domain());
-	std::sort(v.hook_().begin(), v.hook_().end(),
+	std::sort(v.hook_std_vector_().begin(), v.hook_std_vector_().end(),
 		  value_psite_greater_<I>(input));
 	return v;
       }
@@ -180,11 +187,11 @@ namespace mln
 			      const I& input)
       {
 	typedef mln_vset(I) S;
-	const S& vset = input.values();
+	const S& vset = input.values_eligible();
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<S> h = histo::compute(input);
+	histo::data<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
@@ -193,7 +200,7 @@ namespace mln
 	  loc[i] = loc[i+1] + h[i+1];
 
 	// computing output data
-	std::vector<mln_psite(I)> vec(input.npoints());
+	std::vector<mln_psite(I)> vec(geom::nsites(input));
 	mln_fwd_piter(I) p(input.domain());
 	for_all(p)
 	  vec[loc[vset.index_of(input(p))]++] = p;

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
  * \brief Tests on mln::accu::min.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>
@@ -47,15 +47,8 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute< accu::min >(ima) == 1);
-  mln_assertion(level::compute< accu::min_<int> >(ima) == 1);
+  mln_assertion(level::compute(accu::meta::min(), ima) == 1);
 
-//   accu::compute< accu::nil >(ima); // No-op.
-
-//   accu::compute< accu::min >(ima);
-
-  mln_assertion(accu::compute< accu::val<accu::min> >(ima) == 1);
-
-//   std::cout << accu::compute< accu::min >(ima)
-// 	    << std::endl;
+  accu::min<int> m;
+  mln_assertion(level::compute(m, ima) == 1);
 }

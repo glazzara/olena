@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_MIN_HH
 # define MLN_ACCU_MIN_HH
 
-/*! \file mln/accu/min.hh
- *
- * \brief Define an accumulator that computes a min.
- */
+/// \file mln/accu/min.hh
+///
+/// Define an accumulator that computes a min.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
@@ -46,24 +46,31 @@ namespace mln
   {
 
 
-    /*! \brief Generic min accumulator class.
-     *
+    /// Generic min accumulator class.
+    /*!
      * The parameter \c T is the type of values.
      */
     template <typename T>
-    struct min_ : public mln::accu::internal::base_< T, min_<T> >
+    struct min : public mln::accu::internal::base< const T&, min<T> >
     {
       typedef T argument;
-      typedef T result;
 
-      min_();
+      min();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const min_<T>& other);
+      void take(const min<T>& other);
+      /// \}
 
-      T to_result() const;
+      /// Get the value of the accumulator.
+      const T& to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -71,23 +78,25 @@ namespace mln
     };
 
 
-    template <typename I> struct min_< util::pix<I> >;
+    template <typename I> struct min< util::pix<I> >;
 
 
-    /*!
-     * \brief Meta accumulator for min.
-     */
-    struct min : public Meta_Accumulator< min >
+
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for min.
+
+      struct min : public Meta_Accumulator< min >
       {
-	typedef min_<T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef accu::min<T> ret;
+	};
       };
-    };
 
-
-
+    } // end of namespace mln::accu::meta
 
 
 
@@ -95,7 +104,7 @@ namespace mln
 
     template <typename T>
     inline
-    min_<T>::min_()
+    min<T>::min()
     {
       init();
     }
@@ -103,21 +112,21 @@ namespace mln
     template <typename T>
     inline
     void
-    min_<T>::init()
+    min<T>::init()
     {
       t_ = mln_max(T);
     }
 
     template <typename T>
     inline
-    void min_<T>::take_as_init(const argument& t)
+    void min<T>::take_as_init(const argument& t)
     {
       t_ = t;
     }
 
     template <typename T>
     inline
-    void min_<T>::take(const argument& t)
+    void min<T>::take(const argument& t)
     {
       if (t < t_)
 	t_ = t;
@@ -126,7 +135,7 @@ namespace mln
     template <typename T>
     inline
     void
-    min_<T>::take(const min_<T>& other)
+    min<T>::take(const min<T>& other)
     {
       if (other.t_ < t_)
 	t_ = other.t_;
@@ -134,10 +143,18 @@ namespace mln
 
     template <typename T>
     inline
-    T
-    min_<T>::to_result() const
+    const T&
+    min<T>::to_result() const
     {
       return t_;
+    }
+
+    template <typename T>
+    inline
+    bool
+    min<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

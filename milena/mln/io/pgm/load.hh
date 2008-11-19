@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -41,7 +41,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/value/int_u8.hh>
 
@@ -57,7 +57,7 @@ namespace mln
     namespace pgm
     {
 
-      /*! Load a pgm image in a milena image.
+      /*! Load a pgm image in a Milena image.
        *
        * \param[out] ima A reference to the image which will receive
        * data.
@@ -68,7 +68,7 @@ namespace mln
 		const std::string& filename);
 
 
-      /*! Load a pgm image in a milena image. To use this routine, you
+      /*! Load a pgm image in a Milena image. To use this routine, you
        *  should specialize the template whith the value type of the
        *  image loaded. (ex : load<value::int_u8>("...") )
        *
@@ -85,7 +85,10 @@ namespace mln
       inline
       image2d<V> load(const std::string& filename)
       {
-	return io::pnm::load<V>(PGM, filename);
+	trace::entering("mln::io::pgm::load");
+	image2d<V> ima = io::pnm::load<V>(PGM, filename);
+	trace::exiting("mln::io::pgm::load");
+	return ima;
       }
 
       template <typename I>
@@ -93,7 +96,9 @@ namespace mln
       void load(Image<I>& ima,
 	    const std::string& filename)
       {
+	trace::entering("mln::io::pgm::load");
 	io::pnm::load<I>(PGM, ima, filename);
+	trace::exiting("mln::io::pgm::load");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

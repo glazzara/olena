@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,15 +30,18 @@
 
 /*! \file mln/convert/all.hh
  *
- * \brief File that includes all convertion-related routines.
+ * \brief File that includes all conversion-related routines.
  */
 
 
 namespace mln
 {
-  /// Namespace of convertion routines.
+  /// Namespace of conversion routines.
   namespace convert {}
 }
+
+# include <mln/convert/from_to.hh>
+# include <mln/convert/to.hh>
 
 # include <mln/convert/to_dpoint.hh>
 # include <mln/convert/to_fun.hh>
@@ -48,6 +51,5 @@ namespace mln
 # include <mln/convert/to_tiles.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/convert/to_window.hh>
-# include <mln/convert/to_w_window.hh>
 
 #endif // ! MLN_CONVERT_ALL_HH

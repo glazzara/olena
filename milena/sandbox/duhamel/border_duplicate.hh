@@ -73,7 +73,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
  	std::size_t len_c = exact(ima).bbox().len(P::dim - 1);
  	std::size_t border = ima.border ();
@@ -82,7 +82,7 @@ namespace mln
 	  const_cast<I&>(ima)[i] = ima[border];
 
 	std::size_t st = border + len_c - 1;
-	for (std::size_t i = st + 1; i < ima.ncells (); ++i)
+	for (std::size_t i = st + 1; i < ima.nelements (); ++i)
 	  const_cast<I&>(ima)[i] = ima[st];
       }
 
@@ -92,7 +92,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
  	std::size_t border = ima.border ();
  	std::size_t border_2x = 2 * ima.border ();
@@ -104,7 +104,7 @@ namespace mln
 	// Duplicate
 	for_all (pl)
 	  {
- 	    st = ima.offset_at (pl);
+ 	    st = ima.index_of_point (pl);
 	    for (std::size_t i = 1; i <= border; ++i)
 	      const_cast<I&>(ima)[st - i] = ima[st];
 	    st = st + len_c - 1;
@@ -131,7 +131,7 @@ namespace mln
 	const I& ima = exact(ima_);
 	mln_precondition(ima.has_data());
 
-	typedef mln_point(I) P;
+	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
  	std::size_t border = ima.border ();
  	std::size_t border_2x = 2 * ima.border ();
@@ -151,7 +151,7 @@ namespace mln
  	    // Duplicate
 	    for (std::size_t j = 0; j < len_r; ++j)
 	      {
-		st = ima.offset_at (pl);
+		st = ima.index_of_point (pl);
 		for (std::size_t i = 1; i <= border; ++i)
 		  const_cast<I&>(ima)[st - i] = ima[st];
 		st = st + len_c - 1;
@@ -196,7 +196,7 @@ namespace mln
     template <typename I>
     void duplicate(const Fast_Image<I>& ima_)
     {
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
 

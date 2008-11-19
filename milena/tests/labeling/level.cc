@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/labeling/level.cc
- *
- * \brief Test on mln::labeling::level.
- */
+/// \file tests/labeling/level.cc
+///
+/// Test on mln::labeling::level.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 
@@ -40,7 +40,7 @@
 #include <mln/labeling/level.hh>
 #include <mln/level/paste.hh>
 #include <mln/pw/all.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 
 #include <mln/debug/println.hh>
 
@@ -60,8 +60,9 @@ int main()
     {
       image2d<unsigned> labels = labeling::level(lena, l, c4(), n);
       unsigned npix =
-	accu::compute<accu::count>(labels | (pw::value(labels) != pw::cst(0u)));
+	accu::compute(accu::meta::count(),
+		      labels | (pw::value(labels) != pw::cst(0u)));
       npixels += npix;
     }
-  mln_assertion(npixels == lena.npoints());
+  mln_assertion(npixels == lena.nsites());
 }

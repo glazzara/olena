@@ -33,7 +33,7 @@
  */
 
 #include <mln/util/lemmings.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 int main ()
 {
@@ -46,13 +46,13 @@ int main ()
 		    {3, 3, 4, 4},
 		    {3, 3, 4, 4}};
 
-  I ima = make::image2d<int>(vals);
+  I ima = make::image<int>(vals);
   
-  mln_point_(I) pt1(1, 0);
-  mln_point_(I) pt2(0, 2);
-  mln_point_(I) pt3(2, 3);
-  mln_point_(I) pt4(3, 1);
-  mln_point_(I) pt5(1, 1);
+  mln_site_(I) pt1(1, 0);
+  mln_site_(I) pt2(0, 2);
+  mln_site_(I) pt3(2, 3);
+  mln_site_(I) pt4(3, 1);
+  mln_site_(I) pt5(1, 1);
 
   mln_value_(I) vl1 = ima(pt1);
   mln_value_(I) vl2 = ima(pt2);
@@ -60,11 +60,11 @@ int main ()
   mln_value_(I) vl4 = ima(pt4);
   mln_value_(I) vl5 = ima(pt5);
 
-  mln_point_(I) ptl1 = util::lemmings(ima, pt1, right, vl1);
-  mln_point_(I) ptl2 = util::lemmings(ima, pt2, down, vl2);
-  mln_point_(I) ptl3 = util::lemmings(ima, pt3, left, vl3);
-  mln_point_(I) ptl4 = util::lemmings(ima, pt4, up, vl4);
-  mln_point_(I) ptl5 = util::lemmings(ima, pt5, up, vl5);
+  mln_site_(I) ptl1 = util::lemmings(ima, pt1, right, vl1);
+  mln_site_(I) ptl2 = util::lemmings(ima, pt2, down, vl2);
+  mln_site_(I) ptl3 = util::lemmings(ima, pt3, left, vl3);
+  mln_site_(I) ptl4 = util::lemmings(ima, pt4, up, vl4);
+  mln_site_(I) ptl5 = util::lemmings(ima, pt5, up, vl5);
 
   mln_assertion(ptl1 == point2d(1, 2));
   mln_assertion(ptl2 == point2d(2, 2));

@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,16 +42,28 @@ namespace mln
 
 }
 
+
+// Types.
+
 # include <mln/win/backdiag2d.hh>
 # include <mln/win/cube3d.hh>
+# include <mln/win/cuboid3d.hh>
 # include <mln/win/diag2d.hh>
 # include <mln/win/disk2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/line.hh>
+# include <mln/win/multiple.hh>
+# include <mln/win/multiple_size.hh>
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 # include <mln/win/segment1d.hh>
 # include <mln/win/vline2d.hh>
+
+// Routines.
+
+# include <mln/win/diff.hh>
+# include <mln/win/shift.hh>
+# include <mln/win/sym.hh>
 
 
 

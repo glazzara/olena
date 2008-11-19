@@ -31,8 +31,8 @@
  */
 
 # include <mln/core/image2d_b.hh>
-# include <mln/core/sub_image.hh>
-# include <mln/core/neighb2d.hh>
+# include <mln/core/image/sub_image.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/stretch.hh>
@@ -64,7 +64,7 @@ int main()
 
   image2d_b<int> input(in.domain());
   level::fill(input, lab);
-  lab(make::point2d (0,0)) = 0;
+  lab(point2d (0,0)) = 0;
 
   inte = geom::seeds2tiling(lab, c4 ());
   border::fill (inte, 0);

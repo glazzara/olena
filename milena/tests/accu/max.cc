@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,7 @@
  * \brief Tests on mln::accu::max.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 
 #include <mln/accu/nil.hh>
@@ -47,16 +47,7 @@ int main()
   using namespace mln;
   image2d<int> ima(3, 3);
   debug::iota(ima);
-  mln_assertion(level::compute< accu::max >(ima) == 9);
-  mln_assertion(level::compute< accu::max_<int> >(ima) == 9);
-
-  accu::compute< accu::nil >(ima); // No-op.
-
-  // FIXME : what's the difference between
-  //  accu::compute< accu::max >(ima);
-
-  mln_assertion( accu::compute< accu::val<accu::max> >(ima) == 9);
-
-//   std::cout << accu::compute< accu::max >(ima)
-// 	    << std::endl;
+  mln_assertion(level::compute(accu::meta::max(), ima) == 9);
+  accu::max<int> M;
+  mln_assertion(level::compute(M, ima) == 9);
 }

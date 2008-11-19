@@ -30,12 +30,12 @@
  * \brief Test on mln::morpho::rank_filter.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/win/octagon2d.hh>
 #include <mln/win/diag2d.hh>
 #include <mln/win/backdiag2d.hh>
-#include <mln/core/window2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>

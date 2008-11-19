@@ -30,14 +30,14 @@
 
 #include <cmath>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 
-#include <mln/core/window2d.hh>
+#include <mln/core/alias/window2d.hh>
 #include <mln/win/rectangle2d.hh>
 
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/Rd.hh>
@@ -70,7 +70,7 @@ int main()
 //     { 0, 1, 0,
 //       0, 1, 0,
 //       1, 0, 0 };
-//   window2d win = make::window2d(w);
+//   window2d win = convert::to<window2d>(w);
 //   std::cout << win << std::endl;
 //   std::cout << c8() << std::endl;
 

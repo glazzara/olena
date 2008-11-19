@@ -31,8 +31,8 @@
  */
 
 #include <mln/set/is_subset_of.hh>
-#include <mln/core/p_set.hh>
-#include <mln/core/point2d.hh>
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/alias/point2d.hh>
 
 int main()
 {
@@ -43,28 +43,25 @@ int main()
     p_set<point2d> pst2;
     p_set<point2d> pst3;
     p_set<point2d> pst4;
-    pst1
-      .insert(point2d( 2, 7))
-      .insert(point2d( 2, 1))
-      .insert(point2d(-4, 0))
-      .insert(point2d( 0, 0))
-      .insert(point2d( 1, 1))
-      .insert(point2d( 6, 5));
-    pst2
-      .insert(point2d( 2, 7))
-      .insert(point2d(-2, 1))
-      .insert(point2d(-4, 0))
-      .insert(point2d( 1,-1))
-      .insert(point2d( 6, 5));
-    pst3
-      .insert(point2d( 2, 7))
-      .insert(point2d( 2, 1))
-      .insert(point2d(-4, 0))
-      .insert(point2d( 0, 0))
-      .insert(point2d( 1, 1))
-      .insert(point2d( 6, 5))
-      .insert(point2d(-2, 1))
-      .insert(point2d( 1,-1));
+    pst1.insert(point2d( 2, 7));
+    pst1.insert(point2d( 2, 1));
+    pst1.insert(point2d(-4, 0));
+    pst1.insert(point2d( 0, 0));
+    pst1.insert(point2d( 1, 1));
+    pst1.insert(point2d( 6, 5));
+    pst2.insert(point2d( 2, 7));
+    pst2.insert(point2d(-2, 1));
+    pst2.insert(point2d(-4, 0));
+    pst2.insert(point2d( 1,-1));
+    pst2.insert(point2d( 6, 5));
+    pst3.insert(point2d( 2, 7));
+    pst3.insert(point2d( 2, 1));
+    pst3.insert(point2d(-4, 0));
+    pst3.insert(point2d( 0, 0));
+    pst3.insert(point2d( 1, 1));
+    pst3.insert(point2d( 6, 5));
+    pst3.insert(point2d(-2, 1));
+    pst3.insert(point2d( 1,-1));
 
     mln_assertion(set::is_subset_of(pst1, pst3));
     mln_assertion(set::is_subset_of(pst2, pst3));

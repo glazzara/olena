@@ -1,0 +1,234 @@
+-*- outline -*-
+
+
+* Image Values
+
+An image is an application:
+     ima: Domain -> Destination
+             p   ->   ima(p)
+
+Domain is a set of the point, or more generally sites, that compose the
+image. Destination is a set containing the values of the image. Each value
+of the image belongs to the Destination set.
+
+Yet, Destination can have several definitions. In the following, we will
+details these definitions.
+
+
+
+** E: values space
+
+E is a mathematical set. It contains, at least, all the values that the image
+can possibly take. All the image values are in the value spaces E.
+So for all p, ima(p) belongs to E.
+For instance, the value space of an image can be the rgb set, the int_u8 set
+or the gl8 set(gray level coded on 8 bits)...
+
+All the image provide the method .destination() which returns E.
+However, E is not always iterable in Milena. For performance issues, E is
+iterable only if the value are coded on less than 24 bits.
+
+If E is iterable, the following code:
+
+Code A)
+  for all v in ima.destination()
+   print v;
+
+prints all the values contained in the values space.
+
+** V: eligible values set.
+
+Like E, V is a mathematical set. It contains all the values that the image can possibly take. So if v belongs to V, ima(p) <- v is possible without any
+conversions.
+
+For instance, consider the set S composed by the colors RED, BLUE, ORANGE.
+S = (RED, BLUE, ORANGE).
+
+S is a subset of the rgb set. Indeed, the colors RED, BLUE, ORANGE are members
+of the rgb set. So, consider ima, an image defined with S as eligible value
+set. ima admits the rgb set as values space (the rgb set is the superset of S).
+However, ima can take only value from the S set (and not from the rgb set). So,
+ima(p) <- WHITE will not work.
+
+All the image provide the method .values_eligible() which returns S.
+
+Why do we introduce the eligible value set, since its definition is close to
+the value space?
+In the previous example, we can't apply Code A on ima. For performance reasons,
+we don't want to iter on the rgb set. But, it is possible to iterate over the
+ima values; since the ima eligible values set is a restriction of the rgb set.
+
+If we apply the following code on ima,
+
+code B)
+  for all v in ima.values_eligible()
+    print v
+
+the result will be:
+  RED BLUE ORANGE
+
+V can also be the value spaces itself. An image cab have all the rgb colors as
+eligible values. In this case, we can't iterate over the image eligible values.
+
+
+** Vp: values taken set
+
+Vp is a mathematical set that contains the values currently taken by an image.
+So for all p in the image domain, ima(p) belongs to Vp.
+If an image provides the access to its Vp, the image interface has the
+method .values_taken() which returns its Vp.
+
+
+For instance consider the following 2d image:
+
+ -----
+| R   | R stands for Red
+|  BGB| B stands for Blue
+|  OO | G stands for Green
+ -----  O stands for orange.
+
+
+The following code:
+
+code C)
+  for all v in ima.values_taken()
+    print v
+
+prints:
+
+RBGO
+
+If the image admits (RED, BLUE, GREEN, WHITE, ORANGE) as eligible values set,
+the code B results is:
+RBGWO (W stands for white).
+
+
+
+
+** C: value cells
+
+All the milena image types are composed by cell.
+A cell is a location in RAM or in a file that stores an image value.
+
+For instance consider the following 2d images:
+
+    0 1 2 3 4
+   ----------
+0 |          |
+1 |   R G R  |
+2 |          |
+3 |     O   W|
+4 |          |
+   ----------
+
+This image is composed by 5 cells: R, G, R, O, W.
+Each cell correspond to a point 2d (respectively (1, 1), (1, 2), (1, 3),
+(1, 4)).
+
+
+C is the list of cells that is currently composing the image.
+Some image types provide an access to the cells list through the method
+.values_cell() which returns C.
+
+For instance, if we apply the following code the the previous image:
+
+code D)
+  for all v in ima.values_cells()
+    print v
+
+the result will be:
+RGROW, we print the list of cells composing the image.
+
+C is not a mathematical set. Indeed, in cell list a member can be duplicate.
+In the previous example R is present twice in the cells list.
+
+* Example1
+
+Consider the following rle image:
+
+ima =  -----
+      | R   |
+      |  BBB|
+      |  OO |
+      |   RR|
+       -----
+
+This image encoded by runs (a run is a succession of points).
+Furthermore, only one value is associated to each run.
+
+So, in memory, the image will be encoded this way:
+
+ima = ({p, {R, 1}}, {q, {B, 3}}, {r, {O, 2}}, {s, {R, 2}} )
+       ^^^              ^^^             ^^^
+     run start        run value         run len
+
+where p, q, r are point at the beginning of a run:
+       -----
+      | p   |
+      |  q  |
+      |  r  |
+      |   s |
+       -----
+
+The run values correspond to the image cells.
+So if we apply the code D to this image, the result will be:
+RBOR
+
+If we apply the code C to this image, the result will be:
+RBO
+
+* Example2
+
+Consider the following sparse image:
+
+ima =  -----
+      | R   |
+      |  BGB|
+      |  OG |
+      |   RR|
+       -----
+
+This image is also encoded by runs.
+But here, several values can be associated to each run.
+
+So, in memory, the image will be encoded this way:
+
+ima = ({p, (R)}, {q, (B, G, B)}, {r, {O, G}}, {s, {R, R}} )
+       ^^^              ^^^             ^^^
+     run start        run values
+
+where p, q, r are point at the beginning of a run.
+
+The different values in each run correspond to the image cells.
+So if we apply the code D to this image, the result will be:
+RBGBOGRR
+
+If we apply the code C to this image, the result will be:
+RGBO
+
+* Example3
+
+Consider the following 2d image:
+
+ima =  -----
+      |GROOG|
+      |BRBGB|
+       -----
+
+Every pixel can have a different values, so all the pixels are stored in
+memory.Thus, a cell is associated to each pixel of the image.
+So if we apply the code D to this image, the result will be:
+GROOGBRBGB
+
+If we apply the code C to this image, the result will be:
+RGBO
+
+
+* Order relationship
+
+E <= V <= V = E*
+
+
+* Image properties related to the values
+
+FIXME

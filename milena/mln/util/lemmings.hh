@@ -49,14 +49,14 @@ namespace mln
     template <typename I>
     struct lemmings_ : public Object< lemmings_<I> >
     {
-      lemmings_(const Image<I>& ima, const mln_point(I)& pt,
-		const mln_dpoint(I)& dpt, const mln_value(I)& val);
+      lemmings_(const Image<I>& ima, const mln_psite(I)& pt,
+		const mln_dpsite(I)& dpt, const mln_value(I)& val);
 
-      mln_point(I) operator()();
+      mln_psite(I) operator()();
 
       const I& ima_;
-      mln_point(I) pt_;
-      const mln_dpoint(I)& dpt_;
+      mln_psite(I) pt_;
+      const mln_dpsite(I)& dpt_;
       const mln_value(I)& val_;
     };
 
@@ -74,9 +74,9 @@ namespace mln
     ** ima.
     */
     template <typename I>
-    mln_point(I)
-    lemmings(const Image<I>& ima, const mln_point(I)& pt,
-	     const mln_dpoint(I)& dpt, const mln_value(I)& val);
+    mln_psite(I)
+    lemmings(const Image<I>& ima, const mln_psite(I)& pt,
+	     const mln_dpsite(I)& dpt, const mln_value(I)& val);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -84,8 +84,8 @@ namespace mln
 
     template <typename I>
     inline
-    lemmings_<I>::lemmings_(const Image<I>& ima, const mln_point(I)& pt,
-			    const mln_dpoint(I)& dpt, const mln_value(I)& val)
+    lemmings_<I>::lemmings_(const Image<I>& ima, const mln_psite(I)& pt,
+			    const mln_dpsite(I)& dpt, const mln_value(I)& val)
       : ima_(exact(ima)),
 	pt_(pt),
 	dpt_(dpt),
@@ -94,7 +94,7 @@ namespace mln
     }
 
     template <typename I>
-    mln_point(I)
+    mln_psite(I)
     lemmings_<I>::operator()()
     {
       while (ima_.domain().has(pt_) && ima_(pt_) == val_)
@@ -103,9 +103,9 @@ namespace mln
     }
 
     template <typename I>
-    mln_point(I)
-    lemmings(const Image<I>& ima, const mln_point(I)& pt,
-	     const mln_dpoint(I)& dpt, const mln_value(I)& val)
+    mln_psite(I)
+    lemmings(const Image<I>& ima, const mln_psite(I)& pt,
+	     const mln_dpsite(I)& dpt, const mln_value(I)& val)
     {
       lemmings_<I> lm(ima, pt, dpt, val);
       return lm();

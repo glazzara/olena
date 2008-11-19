@@ -29,11 +29,11 @@
 #include <iostream>
 #include <sstream>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -51,8 +51,8 @@
 #include <mln/util/tree_to_image.hh>
 #include <mln/util/branch_iter_ind.hh>
 
-#include <mln/core/cast_image.hh>
-#include <mln/core/p_queue_fast.hh>
+#include <mln/core/image/cast_image.hh>
+#include <mln/core/site_set/p_queue_fast.hh>
 
 namespace mln
 {
@@ -138,18 +138,18 @@ namespace mln
       /// Tell if his parent if brighter or not.  Nb : if the parent
       /// if brighter, the node come from the lower level set
       bool brighter;
-      unsigned npoints;
+      unsigned nsites;
 
     };
 
     template <typename P, typename V>
-    void add_npoints_to(fllt_node(P, V)* node, unsigned npoints)
+    void add_nsites_to(fllt_node(P, V)* node, unsigned nsites)
     {
       mln_assertion(node);
 
-      node->elt().npoints += npoints;
+      node->elt().nsites += nsites;
       if (node->parent())
-	add_npoints_to(node->parent(), npoints);
+	add_nsites_to(node->parent(), nsites);
     }
 
 
@@ -187,10 +187,10 @@ namespace mln
       	  std::cout << "               |" << std::endl;
       	  std::cout << "region : " << &*p
 		    << " value = " << (*p).elt().value << std::endl
-		    << " npoints = " << (*p).elt().npoints << std::endl
+		    << " nsites = " << (*p).elt().nsites << std::endl
 		    << std::endl;
 
-	  if ((*p).elt().points.npoints() > 0)
+	  if ((*p).elt().points.nsites() > 0)
 	    debug::println(ima | (*p).elt().points);
       	  std::cout << std::endl;
       	}
@@ -207,7 +207,7 @@ namespace mln
       level::fill(output, 255);
       for_all(p)
 	{
-	  if ((*p).elt().npoints > limit)
+	  if ((*p).elt().nsites > limit)
 	  {
 	    mln_piter(p_array<point2d>) q((*p).elt().points);
 	    for_all(q)
@@ -312,19 +312,19 @@ namespace mln
 
       // C6 neigboohood.
       arr_dp_t neighb_c6[2];
-      neighb_c6[0].push_back(make::dpoint2d(-1,-1));
-      neighb_c6[0].push_back(make::dpoint2d(-1,0));
-      neighb_c6[0].push_back(make::dpoint2d(-1,1));
-      neighb_c6[0].push_back(make::dpoint2d(0,1));
-      neighb_c6[0].push_back(make::dpoint2d(1,0));
-      neighb_c6[0].push_back(make::dpoint2d(0,-1));
+      neighb_c6[0].push_back(dpoint2d(-1,-1));
+      neighb_c6[0].push_back(dpoint2d(-1,0));
+      neighb_c6[0].push_back(dpoint2d(-1,1));
+      neighb_c6[0].push_back(dpoint2d(0,1));
+      neighb_c6[0].push_back(dpoint2d(1,0));
+      neighb_c6[0].push_back(dpoint2d(0,-1));
 
-      neighb_c6[1].push_back(make::dpoint2d(-1,0));
-      neighb_c6[1].push_back(make::dpoint2d(0,1));
-      neighb_c6[1].push_back(make::dpoint2d(1,1));
-      neighb_c6[1].push_back(make::dpoint2d(1,0));
-      neighb_c6[1].push_back(make::dpoint2d(1,-1));
-      neighb_c6[1].push_back(make::dpoint2d(0,-1));
+      neighb_c6[1].push_back(dpoint2d(-1,0));
+      neighb_c6[1].push_back(dpoint2d(0,1));
+      neighb_c6[1].push_back(dpoint2d(1,1));
+      neighb_c6[1].push_back(dpoint2d(1,0));
+      neighb_c6[1].push_back(dpoint2d(1,-1));
+      neighb_c6[1].push_back(dpoint2d(0,-1));
 
       // Variables.
       image2d<map_cell<node_type> > map(input.domain().to_larger(1));
@@ -372,7 +372,7 @@ namespace mln
 	current_cc = new node_type();
 	++cc_cpt;
 	current_cc->elt().value = g;
-	current_cc->elt().npoints = 0;
+	current_cc->elt().nsites = 0;
 	if (cc_cpt > 1)
 	  current_parent = 0;
 #ifdef FLLTDEBUG
@@ -387,7 +387,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	if (N_box.is_valid())
-	  level::fill(inplace(is | N_box.to_result()), in_O);
+	  level::fill((is | N_box.to_result()).rw(), in_O);
 
 	N_box.init();
 	R_box.init();
@@ -414,7 +414,7 @@ namespace mln
 	mln_piter(arr_t) a(*A);
 
 	// Stop.
-	if (A->npoints() == 0)
+	if (A->nsites() == 0)
 	  goto end;
 
 	// R <- R U A
@@ -426,7 +426,7 @@ namespace mln
 	  mln_assertion(map(a).belongs_to == 0);
 	  map(a).belongs_to = current_cc;
 	  current_cc->elt().points.append(a);
-	  current_cc->elt().npoints++;
+	  current_cc->elt().nsites++;
 	  tagged(a) = true;
 	  is(a) = in_R;
 #ifdef FLLTDEBUG
@@ -439,9 +439,9 @@ namespace mln
 
 
 #ifdef FLLTDEBUG
-	std::cout << "points of A : " << A->npoints() << std::endl;
+	std::cout << "points of A : " << A->nsites() << std::endl;
 #endif
-	mln_assertion(A->npoints() > 0);
+	mln_assertion(A->nsites() > 0);
 	R_box.take(A->bbox());
 	mln_assertion(R_box.is_valid());
 
@@ -495,10 +495,10 @@ namespace mln
 #endif
 
 	// Stop if N[g] is empty.
-	if (N[g]->npoints() == 0)
+	if (N[g]->nsites() == 0)
 	{
-	  add_npoints_to(current_parent, current_cc->elt().npoints);
-	  // Was : current_parent->elt().npoints += current_cc->elt().npoints;
+	  add_nsites_to(current_parent, current_cc->elt().nsites);
+	  // Was : current_parent->elt().nsites += current_cc->elt().nsites;
 	  current_cc->set_parent(current_parent);
 	  erase_exterior_border(map, N_box, current_cc, neighb_c6);
 	  goto step_1;

@@ -1,0 +1,10 @@
+obsolete              replacement
+-----------------    --------------
+point             ->  gpoint
+point_site        ->  pseudo_site
+
+dpoint            ->  gdpoint
+delta_point_site  -> 
+
+point_iterator    ->  site_iterator
+point_set         ->  site_set

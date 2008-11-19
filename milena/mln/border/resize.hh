@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,13 +33,15 @@
  *
  * \brief Define a function that resizes the virtual border of an
  * image.
+ *
+ * \todo Test with a primary image with no notion of border; I guess
+ * it does not work.
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/clone.hh>
-# include <mln/level/fill.hh>
-# include <mln/metal/is.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/border/get.hh>
+# include <mln/level/fill.hh>
 
 
 namespace mln
@@ -68,12 +71,14 @@ namespace mln
     namespace impl
     {
 
+      // Effective resizing.
+
       template <typename I>
       inline
       void resize_(trait::image::category::morpher,
-		   const I& ima_, unsigned thickness)
+		   const I& ima, unsigned thickness)
       {
-	return resize(*ima_.delegatee_(), thickness);
+	return resize(*ima.delegatee_(), thickness);
       }
 
       template <typename I>
@@ -81,11 +86,62 @@ namespace mln
       void resize_(trait::image::category::primary,
 		   const I& ima_, unsigned thickness)
       {
-	I& ima = const_cast<I&> (ima_);
+	I& ima = const_cast<I&>(ima_);
 
 	mln_concrete(I) memo = clone(ima);
 	ima.resize_(thickness);
 	level::fill(ima, memo);
+      }
+
+// ext_domain:   /any/
+//                 |
+//                 + -- none
+//                 |
+//                 + -- /some/
+//                        |
+//                        + -- fixed
+//                        |     |
+//                        |     + -- infinite
+//                        |
+//                        + -- extendable
+
+      template <typename I>
+      inline
+      void resize_(trait::image::ext_domain::none,
+		   const I&, unsigned)
+      {
+	// No-op.
+      }
+
+      template <typename I>
+      inline
+      void resize_(trait::image::ext_domain::fixed,
+		   const I&, unsigned)
+      {
+	// No-op.
+      }
+
+      template <typename I>
+      inline
+      void resize_(trait::image::ext_domain::extendable,
+		   const I& ima, unsigned thickness)
+      {
+	if (border::get(ima) == thickness)
+	  return; // No-op.
+	resize_(mln_trait_image_category(I)(),
+		ima, thickness);
+	mln_postcondition(border::get(ima) == thickness);
+      }
+
+
+      // Selector.
+
+      template <typename I>
+      inline
+      void resize_(const I& ima, unsigned thickness)
+      {
+	resize_(mln_trait_image_ext_domain(I)(),
+		ima, thickness);
       }
 
     } // end of namespace mln::border::resize
@@ -99,17 +155,10 @@ namespace mln
     {
       trace::entering("border::resize");
 
-      mlc_is(mln_trait_image_border(I), trait::image::border::some)::check();
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
 
-      if (border::get(ima) == thickness)
-	return; // No-op.
-      // Otherwise: do-it.
-      impl::resize_(mln_trait_image_category(I)(),
-		    ima, thickness);
-
-      mln_postcondition(border::get(ima) == thickness);
+      impl::resize_(ima, thickness);
 
       trace::exiting("border::resize");
     }

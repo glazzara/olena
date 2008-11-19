@@ -2,28 +2,36 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS = elementary
+
 check_PROGRAMS =				\
   artificial_line_graph_image_wst		\
   closing_area					\
   closing_height				\
   closing_volume				\
   combined					\
+  complex_image_morpho				\
+  complex_image_wst				\
   contrast					\
   dilation					\
   dilation_max_h				\
   erosion					\
   erosion_min_h					\
   gradient					\
+  graph_image_morpho				\
+  graph_image_wst				\
   hit_or_miss					\
   laplacian					\
   lena_line_graph_image_wst1			\
   lena_line_graph_image_wst2			\
   line_graph_image_wst				\
+  line_graph_image_morpho			\
   meyer_wst					\
   meyer_wst_long				\
   opening_area					\
   opening_height				\
   opening_volume				\
+  skeleton_constrained				\
   thinning
 
 # -------------- #
@@ -49,8 +57,18 @@ hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc
 thinning_SOURCES = thinning.cc
 
+graph_image_morpho_SOURCES = graph_image_morpho.cc
+graph_image_wst_SOURCES = graph_image_wst.cc
+
+line_graph_image_morpho_SOURCES = line_graph_image_morpho.cc
 line_graph_image_wst_SOURCES = line_graph_image_wst.cc
+
+complex_image_morpho_SOURCES = complex_image_morpho.cc
+complex_image_wst_SOURCES = complex_image_wst.cc
+
 meyer_wst_SOURCES = meyer_wst.cc
+
+skeleton_constrained_SOURCES = skeleton_constrained.cc
 
 combined_SOURCES = combined.cc
 

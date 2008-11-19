@@ -1,6 +1,6 @@
 #include <mln/core/image2d_b.hh>
-#include <mln/core/sub_image.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/debug/println.hh>
@@ -68,7 +68,7 @@ namespace mln
 	gr.add_node ();
 	int tmp_x = y[(*ite).first] / c[(*ite).first];
 	int tmp_y = x[(*ite).first] / c[(*ite).first];
-	v[m[(*ite).first]] = (make::point2d(tmp_x, tmp_y));
+	v[m[(*ite).first]] = (point2d(tmp_x, tmp_y));
       }
     typename std::vector< std::vector<value::int_u8> >::iterator it = vec.begin ();
     for (; it != vec.end (); ++it)

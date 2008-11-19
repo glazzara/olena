@@ -127,7 +127,7 @@ namespace mln
 		      const W&                    w_win,
 		      R& result)
 	{
-	  const P& p = internal::force_exact<P>(p_);
+	  const P& p = mln::internal::force_exact<P>(p_);
 	  mln_precondition(p.ima().border() >= w_win.delta());
 
 	  R tmp = 0;

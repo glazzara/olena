@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ACCU_PAIR_HH
 # define MLN_ACCU_PAIR_HH
 
-/*! \file mln/accu/pair.hh
- *
- * \brief Define a pair of accumulators.
- */
+/// \file mln/accu/pair.hh
+///
+/// Define a pair of accumulators.
 
 # include <utility>
 
@@ -49,31 +49,44 @@ namespace mln
   {
 
 
-    /*! \brief Generic pair of accumulators.
-     *
-     * The parameter \c T is the type of values.
-     *
-     * \todo Check that, when T is not provided, A1 and A2 have the same value.
-     */
+    /// Generic pair of accumulators.
+    ///
+    /// The parameter \c T is the type of values.
+    ///
+    /// \todo Check that, when T is not provided, A1 and A2 have the same value.
     template <typename A1, typename A2, typename T = mln_argument(A1)>
-    struct pair_ : public mln::accu::internal::base_< std::pair< mlc_unqualif(mln_result(A1)) , mlc_unqualif(mln_result(A2)) > , pair_<A1,A2,T> >
+    struct pair : public mln::accu::internal::base< std::pair<mln_result(A1), mln_result(A2)>,
+						    pair<A1,A2,T> >
     {
       typedef T argument;
 
-      typedef mlc_unqualif(mln_result(A1))  result_1;
-      typedef mlc_unqualif(mln_result(A2))  result_2;
-      typedef std::pair<result_1, result_2> result;
+      typedef mln_result(A1) result_1;
+      typedef mln_result(A2) result_2;
 
-      pair_();
-      pair_(const A1& a1, const A2& a2);
+      pair();
+// FIXME: not implemented. Do we want it?
+//      pair(const A1& a1, const A2& a2);
 
+      /// Manipulators.
+      /// \{
       void init();
       void take_as_init(const argument& t);
       void take(const argument& t);
-      void take(const pair_<A1,A2,T>& other);
+      void take(const pair<A1,A2,T>& other);
+      /// \}
 
-      result to_result() const;
+      /// Get the value of the accumulator.
+      /// \{
+      std::pair<mln_result(A1), mln_result(A2)> to_result() const;
       void get_result(result_1& r1, result_2& r2) const;
+      /// \}
+
+      mln_result(A1) first() const;
+      mln_result(A2) second() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
@@ -81,27 +94,31 @@ namespace mln
       A2 a2_;
     };
 
-    /*!
-     * \brief Meta accumulator for pair.
-     */
-    template <typename A1, typename A2>
-    struct pair : public Meta_Accumulator< pair<A1,A2> >
+
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for pair.
+      template <typename A1, typename A2>
+      struct pair : public Meta_Accumulator< pair<A1,A2> >
       {
-	typedef mln_accu_with(A1, T) A1_T;
-	typedef mln_accu_with(A2, T) A2_T;
-	typedef pair_<A1_T, A2_T, T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef mln_accu_with(A1, T) A1_T;
+	  typedef mln_accu_with(A2, T) A2_T;
+	  typedef accu::pair<A1_T, A2_T, T> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename A1, typename A2, typename T>
     inline
-    pair_<A1,A2,T>::pair_()
+    pair<A1,A2,T>::pair()
     {
       init();
     }
@@ -109,7 +126,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::init()
+    pair<A1,A2,T>::init()
     {
       a1_.init();
       a2_.init();
@@ -118,7 +135,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take_as_init(const argument& t)
+    pair<A1,A2,T>::take_as_init(const argument& t)
     {
       a1_.take_as_init(t);
       a2_.take_as_init(t);
@@ -127,7 +144,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take(const argument& t)
+    pair<A1,A2,T>::take(const argument& t)
     {
       a1_.take(t);
       a2_.take(t);
@@ -136,7 +153,7 @@ namespace mln
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::take(const pair_<A1,A2,T>& other)
+    pair<A1,A2,T>::take(const pair<A1,A2,T>& other)
     {
       a1_.take(other.a1_);
       a2_.take(other.a2_);
@@ -144,21 +161,45 @@ namespace mln
 
     template <typename A1, typename A2, typename T>
     inline
-    typename pair_<A1,A2,T>::result
-    pair_<A1,A2,T>::to_result() const
+    std::pair<mln_result(A1), mln_result(A2)>
+    pair<A1,A2,T>::to_result() const
     {
-      result tmp(a1_.to_result(), a2_.to_result());
+      std::pair<mln_result(A1), mln_result(A2)> tmp(a1_.to_result(), a2_.to_result());
       return tmp;
     }
 
     template <typename A1, typename A2, typename T>
     inline
     void
-    pair_<A1,A2,T>::get_result(result_1& r1,
-			    result_2& r2) const
+    pair<A1,A2,T>::get_result(result_1& r1,
+			       result_2& r2) const
     {
       r1 = a1_.to_result();
       r2 = a2_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    mln_result(A1)
+    pair<A1,A2,T>::first() const
+    {
+      return a1_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    mln_result(A2)
+    pair<A1,A2,T>::second() const
+    {
+      return a2_.to_result();
+    }
+
+    template <typename A1, typename A2, typename T>
+    inline
+    bool
+    pair<A1,A2,T>::is_valid() const
+    {
+      return a1_.is_valid() && a2_.is_valid();
     }
 
 # endif // ! MLN_INCLUDE_ONLY

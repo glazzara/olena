@@ -42,10 +42,10 @@ namespace mln
     /// Namespace of pfm input/output handling.
     namespace pfm
     {
-      /// \internal Implementation namespace of pfm namespace.
+      /// Implementation namespace of pfm namespace.
       namespace impl {}
 
-      /// \internal Internal namespace of pfm namespace.
+      /// Internal namespace of pfm namespace.
       namespace internal {}
     }
   }

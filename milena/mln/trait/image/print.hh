@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TRAIT_IMAGE_PRINT_HH
 # define MLN_TRAIT_IMAGE_PRINT_HH
 
-/*! \file mln/trait/image/print.hh
- *
- * \brief Print the collection of traits for an image type.
- */
+/// \file mln/trait/image/print.hh
+///
+/// Print the collection of traits for an image type.
 
 # include <iostream>
 # include <mln/trait/images.hh>
@@ -53,10 +53,10 @@ namespace mln
     {
 
       template <typename I>
-      void print(std::ostream& ostr);
+      void print(std::ostream& ostr = std::cout);
 
       template <typename I>
-      void print(const Image<I>& ima, std::ostream& ostr);
+      void print(const Image<I>& ima, std::ostream& ostr = std::cout);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -69,17 +69,20 @@ namespace mln
 	typedef mln::trait::image_<I> the;
 	ostr << "{ "
 	     << typename the::category().name() << ", "
-	     << typename the::data()    .name() << ", "
-	     << typename the::kind()    .name() << ", "
-	     << typename the::quant()   .name() << ", "
-	     << typename the::value()   .name() << ", "
-	     << typename the::access()  .name() << ", "
-	     << typename the::space()   .name() << ", "
-	     << typename the::size()    .name() << ", "
-	     << typename the::support() .name() << ", "
-	     << typename the::border()  .name() << ", "
-	     << typename the::io()      .name() << ", "
-	     << typename the::speed()   .name() << " }" << std::endl;
+	     << typename the::speed().name() << ", "
+	     << typename the::size().name() << ", "
+	     << typename the::value_access().name() << ", "
+	     << typename the::value_storage().name() << ", "
+	     << typename the::value_browsing().name() << ", "
+	     << typename the::value_io().name() << ", "
+	     << typename the::localization().name() << ", "
+	     << typename the::dimension().name() << ", "
+	     << typename the::ext_domain().name() << ", "
+	     << typename the::ext_value().name() << ", "
+	     << typename the::ext_io().name() << ", "
+	     << typename the::kind().name() << ", "
+	     << typename the::nature().name() << ", "
+	     << typename the::quant().name() << " }" << std::endl;
       }
 
       template <typename I>

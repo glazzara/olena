@@ -42,10 +42,10 @@ namespace mln
     /// Namespace of pbm input/output handling.
     namespace pbm
     {
-      /// \internal Namespace of pbm's implementation details.
+      /// Namespace of pbm's implementation details.
       namespace impl {}
 
-      /// \internal Internal namespace of pbm namespace.
+      /// Internal namespace of pbm namespace.
       namespace internal {}
     }
   }

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,48 +46,49 @@ namespace mln
   namespace internal
   {
 
+    //FIXME: Fix doxygen.
 
-    /*! \internal A base class for image morphers w.r.t. value.
+    /*! A base class for image morphers w.r.t. value.
      * Parameter \p S is a point set type.
-     *
+     * Parameter \p P is a value type.
      */
-    template <typename I, typename E>
-    class image_value_morpher_ : public image_morpher_<I, mln_pset(I), E>
+    template <typename I, typename T, typename E>
+    class image_value_morpher : public image_morpher<I, T, mln_pset(I), E>
     {
     public:
 
       const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
+      bool has(const mln_psite(I)& p) const;
 
     protected:
-      image_value_morpher_();
+      image_value_morpher();
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
-    image_value_morpher_<I,E>::image_value_morpher_()
+    image_value_morpher<I,T,E>::image_value_morpher()
     {
     }
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
     const mln_pset(I)&
-    image_value_morpher_<I,E>::domain() const
+    image_value_morpher<I,T,E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
     }
 
-    template <typename I, typename E>
+    template <typename I, typename T, typename E>
     inline
     bool
-    image_value_morpher_<I,E>::owns_(const mln_psite(I)& p) const
+    image_value_morpher<I,T,E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
+      return this->delegatee_()->has(p);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

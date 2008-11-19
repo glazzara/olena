@@ -60,14 +60,14 @@
 
 namespace mln
 {
-  
+
   namespace registration
   {
 
 #ifndef NDEBUG
     static unsigned pts = 0;
 #endif
-    
+
     /*! Registration FIXME : doxy
      *
      *
@@ -77,7 +77,7 @@ namespace mln
     mln_concrete(I)
     icp(const Image<I>& cloud,
         const Image<J>& surface);
-    
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -112,31 +112,31 @@ namespace mln
         buf_qk.store(qk);
 
         save_(qk,C,X,map,2);
-      
+
         qk.apply_on(C, Ck, c_length);
 
         save_(qk,C,X,map,2);
 
         unsigned int k = 0;
-       
+
         do {
           //compute qk
           qk = match(C, mu_C, Ck, map, c_length);
 
           buf_qk.store(qk);
-         
+
           //Ck+1 = qk(C)
           qk.apply_on(C, Ck, c_length);
 
           d_k_1 = d_k;
-          
+
           // d_k = d(Yk, Pk+1)
           //     = d(closest(qk-1(P)), qk(P))
           d_k = rms(C, map, c_length, buf_qk[1], qk);
 
           // e_k = d(closest(qk-1(P)), qk-1(P))
           e_k = rms(C, map, c_length, buf_qk[1], buf_qk[1]);
-          
+
 #ifndef NDEBUG
           save_(qk,C,X,map,2);
           //print info
@@ -167,13 +167,13 @@ namespace mln
         const p_array<P>& x)
     {
       trace::entering("registration::icp");
-      
+
       mln_precondition(P::dim == 3);
-      mln_precondition(cloud.npoints() != 0);
+      mln_precondition(cloud.nsites() != 0);
 
       shuffle(cloud);
 
-      //init rigid transform qk 
+      //init rigid transform qk
       quat7<P::dim> qk;
 
 #ifndef NDEBUG       // FIXME: theo
@@ -183,17 +183,17 @@ namespace mln
       mln_piter(p_array<P>) p(x);
       for_all(p)
       {
-        point2d qp = make::point2d(p[0], p[1]);
+        point2d qp = point2d(p[0], p[1]);
         if (tmp.has(qp))
           tmp(qp) = literal::white;
       }
 #endif
-     
+
       //run icp
       for (int e = nb_it-1; e >= 0; e--)
         {
-          
-          size_t l = cloud.npoints() / std::pow(q, e);
+
+          size_t l = cloud.nsites() / std::pow(q, e);
           l = (l<1) ? 1 : l;
           impl::icp_(cloud, map, qk, l, x, 1e-3);
 
@@ -209,18 +209,18 @@ namespace mln
             for_all(p)
             {
               algebra::vec<3,float> p_ = P(p), qp_ = qk(p_);
-              point2d qp = make::point2d(int(qp_[0]), int(qp_[1]));
+              point2d qp = point2d(int(qp_[0]), int(qp_[1]));
               if (tmp.has(qp))
                 tmp(qp) = c;
             }
             if (e == 0)
               io::ppm::save(tmp, "tmp.ppm");
           }
-#endif 
+#endif
         }
 
       trace::exiting("registration::icp");
-      
+
       return qk;
     }
 

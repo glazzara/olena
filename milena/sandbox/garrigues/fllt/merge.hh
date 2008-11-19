@@ -94,10 +94,10 @@ namespace mln
 		 const image2d<fllt_node(P, V)*>& hole_reg)
     {
 //       std::cout << "[Start fill_a_shape] " << &node << " "
-// 		<< node.elt().holes.npoints()
+// 		<< node.elt().holes.nsites()
 // 		<< " holes." << std::endl;
 
-      if (node.elt().holes.npoints() == 0)
+      if (node.elt().holes.nsites() == 0)
       {
 	//	std::cout << "[End fill_a_shape]" << std::endl;
 	return;
@@ -190,7 +190,7 @@ namespace mln
       fllt_tree(P, V)* main_tree = &lower_tree;
       fllt_tree(P, V)* other_tree = &upper_tree;
 
-      if (lower_tree.root()->elt().points.npoints() >= ima.domain().npoints())
+      if (lower_tree.root()->elt().points.nsites() >= ima.domain().nsites())
       {
 	main_tree = &upper_tree;
 	other_tree = &lower_tree;

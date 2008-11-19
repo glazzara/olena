@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,46 +43,28 @@
 # include <mln/pw/cst.hh>
 # include <mln/metal/is_a.hh>
 
-# include <mln/core/line_graph_elt_neighborhood.hh>
-# include <mln/core/line_graph_elt_window.hh>
-
 
 namespace mln
 {
 
   namespace convert
   {
-    // Return type trait of neighborhood-to-window conversions.
-
-    /* FIXME: This trait should probably be moved elsewhere.  And/or
-       it could encapsulate the conversion function, too. */
-
-    // Default case.
-    template <typename N>
-    struct nbh_to_win_trait
-    { typedef window<mln_dpoint(N)> ret; };
-
-    // Case of line_graph_elt_neighborhood<P>.
-    template <typename P>
-    struct nbh_to_win_trait< line_graph_elt_neighborhood<P> >
-    { typedef line_graph_elt_window<P> ret; };
-
 
     /// Convert a neighborhood \p nbh into a window.
     template <typename N>
-    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh);
+    mln_window(N) to_window(const Neighborhood<N>& nbh);
 
     /// Convert a binary image \p ima into a window.
     template <typename I>
-    window<mln_dpoint(I)> to_window(const Image<I>& ima);
+    window<mln_dpsite(I)> to_window(const Image<I>& ima);
 
-    /// Convert a point set \p pset into a window.
+    /// Convert a site set \p pset into a window.
     template <typename S>
-    window<mln_dpoint(S)> to_window(const Point_Set<S>& pset);
+    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset);
 
-    /// Convert an std::set \p s of delta-points into a window.
-    template <typename D>
-    window<D> to_window(const std::set<D>& s);
+    /// Convert an std::set \p s of delta-sites into a window.
+    template <typename D, typename C>
+    window<D> to_window(const std::set<D, C>& s);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -90,40 +73,11 @@ namespace mln
     | Neighborhood-to-window conversions.  |
     `-------------------------------------*/
 
-    namespace impl
-    {
-
-      template <typename N>
-      inline
-      window<mln_dpoint(N)> to_window(const N& nbh_)
-      {
-	const N& nbh = exact(nbh_);
-	typedef mln_dpoint(N) D;
-	typedef mln_point(D) P;
-	window<D> win;
-	mln_niter(N) n(nbh, P::origin);
-	for_all(n)
-	  win.insert(n - P::origin);
-	return win;
-      }
-
-      template <typename P>
-      inline
-      line_graph_elt_window<P>
-      to_window(const line_graph_elt_neighborhood<P>& /* nbh_ */ )
-      {
-	return line_graph_elt_window<P>();
-      }
-      
-    } // end of namepace mln::convert::impl
-
-
-    // Facade.
     template <typename N>
     inline
-    typename nbh_to_win_trait<N>::ret to_window(const Neighborhood<N>& nbh)
+    mln_window(N) to_window(const Neighborhood<N>& nbh)
     {
-      return impl::to_window(exact(nbh));
+      return exact(nbh).win();
     }
 
     /*------------------------------.
@@ -131,9 +85,9 @@ namespace mln
     `------------------------------*/
 
     /* FIXME: According to milena/core/concepts/README, windows are
-       not necessarily based on a set of dpoints.  So the current
-       algorithm won't work on non dpoint-set-based windows.  In the
-       general case (of windows not being a set of dpoints), the
+       not necessarily based on a set of dpsites.  So the current
+       algorithm won't work on non dpsite-set-based windows.  In the
+       general case (of windows not being a set of dpsites), the
        window resulting from this conversion (as well as the iterators
        based on such windows!) should depend on the initial
        neighborhood (i.e., delegate the actual iteration to the
@@ -141,13 +95,14 @@ namespace mln
        depth in milena/core/concepts/README.  */
     template <typename I>
     inline
-    window<mln_dpoint(I)> to_window(const Image<I>& ima_)
+    window<mln_dpsite(I)> to_window(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
-      typedef mln_dpoint(I) D;
-      typedef mln_point(D) P;
+      typedef mln_dpsite(I) D;
+      typedef mln_site(D) P;
+
       window<D> win;
       mln_piter(I) p(ima.domain());
       for_all(p)
@@ -162,7 +117,7 @@ namespace mln
 
     template <typename S>
     inline
-    window<mln_dpoint(S)> to_window(const Point_Set<S>& pset)
+    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
     }
@@ -171,14 +126,14 @@ namespace mln
     | std::set-to-window conversions.  |
     `---------------------------------*/
 
-    template <typename D>
+    template <typename D, typename C>
     inline
-    window<D> to_window(const std::set<D>& s)
+    window<D> to_window(const std::set<D, C>& s)
     {
       // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();
       mln::metal::is_a<D, Delta_Point_Site>::check();
       window<D> win;
-      for (typename std::set<D>::const_iterator i = s.begin();
+      for (typename std::set<D, C>::const_iterator i = s.begin();
 	   i != s.end(); ++i)
 	win.insert(*i);
       return win;

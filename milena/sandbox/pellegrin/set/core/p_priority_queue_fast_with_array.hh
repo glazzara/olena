@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH
-# define MLN_CORE_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH
+#ifndef MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH
+# define MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH
 
-/*! \file mln/core/p_priority_queue_fast_with_array.hh
+/*! \file mln/core/p_priority_fast_with_array.hh
  *
  * \brief Definition of a point set class based on p_queue with
  * priority features.
@@ -43,7 +43,7 @@
 # include <mln/core/internal/point_set_base.hh>
 # include <mln/core/p_array_piter.hh>
 # include <mln/accu/bbox.hh>
-# include <mln/core/p_queue_fast.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
 # include <trait/point_set.hh>
 
 
@@ -51,7 +51,7 @@ namespace mln
 {
 
   // Fwd decls.
-  template <typename P, typename T, unsigned S> struct p_priority_queue_fast_with_array;
+  template <typename P, typename T, unsigned S> struct p_priority_fast_with_array;
   template <typename P> struct p_array_fwd_piter_;
   template <typename P> struct p_array_bkd_piter_;
 
@@ -59,8 +59,8 @@ namespace mln
   {
 
     template <typename P, typename T, unsigned S>
-    struct point_set_< p_priority_queue_fast_with_array<P, T, S> >
-    : public default_point_set_< p_priority_queue_fast_with_array<P, T, S> >
+    struct point_set_< p_priority_fast_with_array<P, T, S> >
+    : public default_point_set_< p_priority_fast_with_array<P, T, S> >
     {
       typedef trait::point_set::arity::multiple arity;
       typedef trait::point_set::has_speed::fast has_speed;
@@ -75,21 +75,21 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P, typename T, unsigned S>
-  class p_priority_queue_fast_with_array : public internal::point_set_base_< P, p_priority_queue_fast_with_array<P, T, S> >
+  class p_priority_fast_with_array : public internal::point_set_base_< P, p_priority_fast_with_array<P, T, S> >
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
-    p_priority_queue_fast_with_array();
+    p_priority_fast_with_array();
 
     /// Test is \p p belongs to this point set.
     bool has(const P& p) const;
@@ -98,16 +98,16 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    unsigned npoints() const;
+    unsigned nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
 
     /// Push force a point \p p in the queue.
-    p_priority_queue_fast_with_array<P, T, S>& push_force(const P& p, T prio = 0);
+    p_priority_fast_with_array<P, T, S>& push_force(const P& p, T prio = 0);
 
     /// Push a point \p p in the queue.
-    p_priority_queue_fast_with_array<P, T, S>& push(const P& p, T prio = 0);
+    p_priority_fast_with_array<P, T, S>& push(const P& p, T prio = 0);
 
     /// Pop (remove) the front point \p p from the queue; \p p is the
     /// least recently inserted point.
@@ -151,7 +151,7 @@ namespace mln
 
   template <typename P, typename T, unsigned S>
   inline
-  p_priority_queue_fast_with_array<P, T, S>::p_priority_queue_fast_with_array()
+  p_priority_fast_with_array<P, T, S>::p_priority_fast_with_array()
   {
     vect_needs_update_ = false;
     bb_needs_update_ = false;
@@ -165,10 +165,10 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   void
-  p_priority_queue_fast_with_array<P, T, S>::vect_update_() const
+  p_priority_fast_with_array<P, T, S>::vect_update_() const
   {
     vect_.clear();
-    vect_.reserve(npoints());
+    vect_.reserve(nsites());
 
     for (unsigned i = 0; i < S; ++i)
       std::copy(q_[i].vect().begin(), q_[i].vect().end(),
@@ -179,12 +179,12 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   void
-  p_priority_queue_fast_with_array<P, T, S>::bb_update_() const
+  p_priority_fast_with_array<P, T, S>::bb_update_() const
   {
     bb_.init();
 
     for (unsigned i = 0; i < S; ++i)
-      for (unsigned j = 0; j < q_[i].npoints (); ++j)
+      for (unsigned j = 0; j < q_[i].nsites (); ++j)
 	bb_.take(q_[i][j]);
     bb_needs_update_ = false;
   }
@@ -193,7 +193,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   bool
-  p_priority_queue_fast_with_array<P, T, S>::has(const P& p) const
+  p_priority_fast_with_array<P, T, S>::has(const P& p) const
   {
     for (unsigned i = 0; i < S; ++i)
       if (q_[i].has (p))
@@ -204,7 +204,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   bool
-  p_priority_queue_fast_with_array<P, T, S>::is_empty() const
+  p_priority_fast_with_array<P, T, S>::is_empty() const
   {
     for (unsigned i = 0; i < S; ++i)
       if (!q_[i].is_empty ())
@@ -215,13 +215,13 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   unsigned
-  p_priority_queue_fast_with_array<P, T, S>::npoints() const
+  p_priority_fast_with_array<P, T, S>::nsites() const
   {
     unsigned res = 0;
 
     for (unsigned i = 0; i < S; ++i)
       if (!q_[i].is_empty ())
-	res += q_[i].npoints();
+	res += q_[i].nsites();
 
     return res;
   }
@@ -229,9 +229,9 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   const box_<P>&
-  p_priority_queue_fast_with_array<P, T, S>::bbox() const
+  p_priority_fast_with_array<P, T, S>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -239,8 +239,8 @@ namespace mln
 
   template <typename P, typename T, unsigned S>
   inline
-  p_priority_queue_fast_with_array<P, T, S>&
-  p_priority_queue_fast_with_array<P, T, S>::push_force(const P& p, T prio)
+  p_priority_fast_with_array<P, T, S>&
+  p_priority_fast_with_array<P, T, S>::push_force(const P& p, T prio)
   {
     q_[prio].push_force (p);
     if (! vect_needs_update_)
@@ -254,8 +254,8 @@ namespace mln
 
   template <typename P, typename T, unsigned S>
   inline
-  p_priority_queue_fast_with_array<P, T, S>&
-  p_priority_queue_fast_with_array<P, T, S>::push(const P& p, T prio)
+  p_priority_fast_with_array<P, T, S>&
+  p_priority_fast_with_array<P, T, S>::push(const P& p, T prio)
   {
     if (! has(p))
       return this->push_force(p, prio);
@@ -266,7 +266,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   void
-  p_priority_queue_fast_with_array<P, T, S>::pop()
+  p_priority_fast_with_array<P, T, S>::pop()
   {
     for (unsigned i = S - 1; i != UINT_MAX; --i)
       if (!q_[i].is_empty ())
@@ -282,7 +282,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   const P&
-  p_priority_queue_fast_with_array<P, T, S>::front() const
+  p_priority_fast_with_array<P, T, S>::front() const
   {
     mln_precondition(! is_empty());
 
@@ -295,7 +295,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   const P&
-  p_priority_queue_fast_with_array<P, T, S>::pop_front()
+  p_priority_fast_with_array<P, T, S>::pop_front()
   {
     const P& res = this->front();
 
@@ -306,7 +306,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   void
-  p_priority_queue_fast_with_array<P, T, S>::clear()
+  p_priority_fast_with_array<P, T, S>::clear()
   {
     for (unsigned i = 0; i < S; ++i)
       q_[i].clear ();
@@ -318,7 +318,7 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   const std::vector<P>&
-  p_priority_queue_fast_with_array<P, T, S>::vect() const
+  p_priority_fast_with_array<P, T, S>::vect() const
   {
     if (vect_needs_update_)
       vect_update_();
@@ -328,15 +328,15 @@ namespace mln
   template <typename P, typename T, unsigned S>
   inline
   const P&
-  p_priority_queue_fast_with_array<P, T, S>::operator[](unsigned n) const
+  p_priority_fast_with_array<P, T, S>::operator[](unsigned n) const
   {
-    mln_precondition(n < npoints());
+    mln_precondition(n < nsites());
     unsigned i = S - 1;
     unsigned cpt = 0;
 
     for (; i != UINT_MAX; --i)
       if (!q_[i].is_empty ())
-	for (cpt = 0; cpt < q_[i].npoints (); ++cpt, --n)
+	for (cpt = 0; cpt < q_[i].nsites (); ++cpt, --n)
 	  if (n == 0)
 	    return q_[i][cpt];
     mln_assertion (false);
@@ -348,4 +348,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH
+#endif // ! MLN_CORE_SITE_SET_P_PRIORITY_QUEUE_FAST_WITH_ARRAY_HH

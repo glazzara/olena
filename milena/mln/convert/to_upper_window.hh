@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -46,7 +47,7 @@ namespace mln
 
     /// Convert a window \p nbh into an upper window.
     template <typename W>
-    window<mln_dpoint(W)> to_upper_window(const Window<W>& win);
+    window<mln_dpsite(W)> to_upper_window(const Window<W>& win);
 
     /// Convert a neighborhood \p nbh into an upper window.
     template <typename N>
@@ -66,10 +67,10 @@ namespace mln
        depth in milena/core/concepts/README.  */
     template <typename W>
     inline
-    window<mln_dpoint(W)> to_upper_window(const Window<W>& win_)
+    window<mln_dpsite(W)> to_upper_window(const Window<W>& win_)
     {
       const W& input_win = exact(win_);
-      typedef mln_dpoint(W) D;
+      typedef mln_dpsite(W) D;
       typedef mln_point(D) P;
       window<D> win;
       mln_qiter(W) q(input_win, P::origin);

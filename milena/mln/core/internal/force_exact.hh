@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -40,7 +41,7 @@ namespace mln
   namespace internal
   {
 
-    /** \internal Violent cast.
+    /** Violent cast.
 
 	This cast is an alternative to the mln::exact cast.  It is
 	used for objects that do not derive from mln::Object.

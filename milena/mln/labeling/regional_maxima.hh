@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +30,8 @@
 # define MLN_LABELING_REGIONAL_MAXIMA_HH
 
 /// \file mln/labeling/regional_maxima.hh
-/// \brief Connected component labeling of the regional maxima of an
-/// image.
+///
+/// Connected component labeling of the regional maxima of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -56,8 +57,8 @@ namespace mln
      */
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
-      regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
-		      L& nlabels);
+    regional_maxima(const Image<I>& input, const Neighborhood<N>& nbh,
+		    L& nlabels);
 
 
 
@@ -117,21 +118,20 @@ namespace mln
 
 	template <typename I, typename N, typename L>
 	mln_ch_value(I, L)
-	regional_maxima_(const I& input, const N& nbh,
+	regional_maxima(const I& input, const N& nbh,
 			 L& nlabels)
 	{
-	  trace::entering("labeling::impl::generic::regional_maxima_");
+	  trace::entering("labeling::impl::generic::regional_maxima");
 
 	  // FIXME: abort if L is not wide enough to encode the set of
 	  // maxima.
 
 	  typedef impl::regional_maxima_functor<I,N,L> F;
-	  F f(input, nbh);
-	  canvas::labeling<F> run(f);
-	  nlabels = run.nlabels;
+	  F f(exact(input), exact(nbh));
+	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
 
-	  trace::exiting("labeling::impl::generic::regional_maxima_");
-	  return run.output;
+	  trace::exiting("labeling::impl::generic::regional_maxima");
+	  return output;
 	}
 
       } // end of namespace mln::labeling::impl::generic
@@ -149,13 +149,13 @@ namespace mln
 		      L& nlabels)
     {
       trace::entering("labeling::regional_maxima");
+
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
       mln_precondition(input.has_data());
 
       // Calls the only (generic) impl.
-      mln_ch_value(I, L) output =
-	impl::generic::regional_maxima_(input, nbh, nlabels);
+      mln_ch_value(I, L) output = impl::generic::regional_maxima(input, nbh, nlabels);
 
       trace::exiting("labeling::regional_maxima");
       return output;

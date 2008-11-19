@@ -112,7 +112,7 @@ namespace mln
       /// Self decrement.
       label<n>& operator--();
 
-      /// Convertion to unsigned.
+      /// Conversion to unsigned.
       const enc& to_enc() const;
 
       /// Unit value.
@@ -127,7 +127,6 @@ namespace mln
     namespace internal
     {
 
-      /// \internal
       template <unsigned n>
       struct convert_< label<n> >
       {

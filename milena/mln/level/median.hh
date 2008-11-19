@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,22 +29,22 @@
 #ifndef MLN_LEVEL_MEDIAN_HH
 # define MLN_LEVEL_MEDIAN_HH
 
-/*! \file mln/level/median.hh
- *
- * \brief Median filtering of an image.
- *
- * \todo Add versions for fastest and semi-linear images.
- */
+/// \file mln/level/median.hh
+///
+/// Median filtering of an image.
+///
+/// \todo Add versions for fastest and semi-linear images.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/window.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/geom/shift.hh>
-# include <mln/set/diff.hh>
+# include <mln/core/alias/dpoint2d.hh>
+
+# include <mln/win/shift.hh>
+# include <mln/win/diff.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
 # include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
-# include <mln/accu/median.hh>
+# include <mln/accu/median_h.hh>
 
 
 namespace mln
@@ -96,9 +97,9 @@ namespace mln
 
       template <typename I, typename W, typename O>
       struct median_t
-      { 
-	typedef mln_point(I)  P;
-	typedef mln_dpoint(I) D;
+      {
+	typedef mln_psite(I)  P;
+	typedef mln_dpsite(P) D;
 
 	// i/o
 
@@ -108,10 +109,10 @@ namespace mln
 
 	// aux data
 
-	accu::median<mln_vset(I)> med;
+	accu::median_h<mln_value(I)> med;
 	P p;
 	window<D>    win_fp, win_fm, win_bp, win_bm, win_dp, win_dm;
-	mln_qiter(W)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
+	mln_qiter(window<D>)   q_fp,   q_fm,   q_bp,   q_bm,   q_dp,   q_dm;
 
 	// ctor
 
@@ -123,14 +124,14 @@ namespace mln
 	  win(exact(win_)),
 	  output(exact(output_)),
 	  // aux data
-	  med(input.values()),
+	  med(),
 	  p(),
-	  win_fp(set::diff(win, geom::shift(win, left))),
-	  win_fm(set::diff(geom::shift(win, left),  win)),
-	  win_bp(set::diff(win, geom::shift(win, right))),
-	  win_bm(set::diff(geom::shift(win, right), win)),
-	  win_dp(set::diff(win, geom::shift(win, up))),
-	  win_dm(set::diff(geom::shift(win, up),    win)),
+	  win_fp(win - win::shift(win, left)),
+	  win_fm(win::shift(win, left)  - win),
+	  win_bp(win - win::shift(win, right)),
+	  win_bm(win::shift(win, right) - win),
+	  win_dp(win - win::shift(win, up)),
+	  win_dm(win::shift(win, up)    - win),
 	  q_fp(win_fp, p),  q_fm(win_fm, p),
 	  q_bp(win_bp, p),  q_bm(win_bm, p),
 	  q_dp(win_dp, p),  q_dm(win_dm, p)
@@ -143,9 +144,10 @@ namespace mln
 	void init()
 	{
 	  med.init();
+	  p = input.domain().pmin() + up;
 	  mln_qiter(W) q(win, p);
 	  for_all(q) if (input.has(q))
-	    med.take(input(q));
+            med.take(input(q));
 	}
 
 	inline
@@ -174,7 +176,7 @@ namespace mln
 	  for_all(q_bm) if (input.has(q_bm))
 	    med.untake(input(q_bm));
 	  for_all(q_bp) if (input.has(q_bp))
-	    med.take(input(q_bp));
+            med.take(input(q_bp));
 	  output(p) = med.to_result();
 	}
 
@@ -186,7 +188,7 @@ namespace mln
       struct median_dir_t
       {
 	typedef I_ I;
-	enum { dim = I::point::dim };
+	enum { dim = I::site::dim };
 
 	// i/o
 	const I& input;
@@ -195,8 +197,8 @@ namespace mln
 	O& output;
 
 	// aux data
-	mln_point(I) p;
-	accu::median<mln_vset(I)> med;
+	mln_psite(I) p;
+	accu::median_h<mln_value(I)> med;
 
 	// ctor
 	inline
@@ -208,7 +210,7 @@ namespace mln
 	    output(exact(output)),
 	    // aux data
 	    p(),
-	    med(input.values())
+	    med()
 	{
 	}
 
@@ -224,13 +226,13 @@ namespace mln
 	}
 
 	inline
-	void add_point(mln_point(I) pt)
+	void add_point(mln_psite(I) pt)
 	{
 	  med.take(input(pt));
 	}
 
 	inline
-	void remove_point(mln_point(I) pu)
+	void remove_point(mln_psite(I) pu)
 	{
 	  med.untake(input(pu));
 	}
@@ -303,16 +305,17 @@ namespace mln
     {
       trace::entering("level::median_dir");
 
-      mlc_is(mln_trait_image_io(O), trait::image::io::write)::check();
-      mlc_is(mln_trait_image_support(I), trait::image::support::aligned)::check();
+      mlc_is(mln_trait_image_value_io(O), trait::image::value_io::read_write)::check();
+      mlc_is(mln_trait_image_localization(I),
+	     trait::image::localization::basic_grid)::check();
       mlc_converts_to(mln_value(I), mln_value(O))::check();
 
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef mln_point(I) P;
+      typedef mln_psite(I) P;
       mln_precondition(dir < P::dim);
       mln_precondition(length % 2 == 1);
 
-      impl::median_dir_(exact(input), dir, length, exact(output)); 
+      impl::median_dir_(exact(input), dir, length, exact(output));
 
       trace::exiting("level::median_dir");
     }

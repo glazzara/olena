@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,41 +33,25 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_MORPHO_EROSION_HH
 
+# include <mln/core/alias/window2d.hh>
+# include <mln/core/alias/dpoint2d.hh>
+
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 
+# include <mln/accu/min_h.hh>
+# include <mln/accu/line.hh>
 
-/*! \file mln/morpho/erosion.spe.hh
- *
- * \brief Specialization for mln::morpho::erosion.
- *
- * Dispatch of erosion(input, win, output):
- *
- *  If win = rectangle
- *    -> particular case
- *  Else If win = octagon
- *    -> particular case
- *  Else
- *    (If win is quite agglomerated (disjonction)
- *       -> using incremental algorithm 
- *     Else
- *       -> using conventional algorithm)
- *    If input value kind = logical
- *      -> If image is Fast
- *           -> particular case on sets
- *         Else
- *           -> general case on sets
- *    Else
- *      If input value are high quantified
- *        -> using conventional accumulator
- *      Else
- *        -> using histogram based accumulator
- *      If image is Fast
- *        -> particular case on functions
- *      Else
- *        -> general case on functions
- *    
- */
+
+/// \file mln/morpho/erosion.spe.hh
+///
+/// Specialization for mln::morpho::erosion.
+///
+/// \todo Warning: we should also have the "arbitrary" versions working
+/// on sets (not only on functions!)
+///
+/// \todo HERE Factor dispatch for lines...
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -85,286 +70,158 @@ namespace mln
     namespace impl
     {
 
+
       namespace generic
       {
 	// Fwd decl.
 	// Implementation is in mln/morpho/erosion.hh.
 	template <typename I, typename W>
 	mln_concrete(I)
-	erosion_on_function_(const I& input, const W& win);
+	erosion_on_function(const Image<I>& input_, const Window<W>& win_);
 
 	// Fwd decl.
 	// Implementation is in mln/morpho/erosion.hh.
 	template <typename I, typename W>
 	mln_concrete(I)
-	erosion_on_set_(const I& input, const W& win);
+	erosion_on_set(const Image<I>& input_, const Window<W>& win_);
       }
 
 
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_iterative_(trait::image::kind::any,
-			   trait::image::speed::any,
-			   const I& input, const W& win)
-      {
-	return generic::erosion_on_function_(input, win);
-      }
-
+      // On set with centered window.
 
       template <typename I, typename W>
-      inline
       mln_concrete(I)
-      erosion_iterative_(trait::image::kind::any,
-			 trait::image::speed::fastest,
-			 const I& input, const W& win)
+      erosion_on_set_centered(const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::erosion_iterative_(kind::any, speed::fastest)");
-
-	border::adjust(input, win.delta());
+	trace::entering("morpho::impl::erosion_on_set_centered");
 
 	typedef mln_concrete(I) O;
-	O output;
-	initialize(output, input);
-	mln_assertion(border::get(output) == border::get(input));
+	const I& input = exact(input_);
+	const W& win = exact(win_);
 
-	border::fill(input, mln_max(mln_value(I)));
+	extension::adjust_fill(input, win, true);
+
+	O output;
+	output = clone(input);
+
+	mln_piter(I) p(input.domain());
+	mln_qiter(W) q(win, p);
+	for_all(p)
+	  if (input(p) == true)
+	    for_all(q) if (input.has(q))
+	      if (input(q) == false)
+	      {
+		output(p) = false;
+		break;
+	      }
+	trace::exiting("morpho::impl::erosion_on_set_centered");
+
+	return output;
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_on_set_centered_fastest(const Image<I>& input_, const Window<W>& win_)
+      {
+	trace::entering("morpho::impl::erosion_on_set_centered_fastest");
+
+	typedef mln_concrete(I) O;
+	const I& input = exact(input_);
+	const W& win = exact(win_);
+
+	extension::adjust_fill(input, win, true);
+
+	O output;
+	output = clone(input);
 
 	mln_pixter(const I) p(input);
-	mln_pixter(O) o(output);
 	mln_qixter(const I, W) q(p, win);
-	accu::min_<mln_value(I)> min;
-	for_all_2(p, o)
-	  {
-	    min.init();
+	mln_pixter(O) p_out(output);
+	for_all_2(p, p_out)
+	  if (p.val() == true)
 	    for_all(q)
-	      min.take(q.val());
-	    o.val() = min.to_result();
-	  }
-	trace::exiting("morpho::impl::erosion_iterative_(kind::any, speed::fastest)");
+	      if (q.val() == false)
+	      {
+		p_out.val() = false;
+		break;
+	      }
+	trace::exiting("morpho::impl::erosion_on_set_centered_fastest");
+
 	return output;
       }
 
 
-      template <typename I, typename W>
+
+      // Line case.
+
+
+      template <typename I, typename G, unsigned Dir, typename C>
       inline
       mln_concrete(I)
-      erosion_iterative_(trait::image::kind::logic,
-			 trait::image::speed::any,
-			 const I& input, const W& win)
+      erosion_line_on_function(const Image<I>& input_, const win::line<G,Dir,C>& win)
       {
-	return generic::erosion_on_set_(input, win);
-      }
+	trace::entering("morpho::impl::erosion_line");
 
+	typedef mln_site(I) P;
+	enum { dim = P::dim };
 
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_iterative_(trait::image::kind::logic,
-			 trait::image::speed::fastest,
-			 const I& input, const W& win)
-      {
-	trace::entering("morpho::impl::erosion_iterative_(kind::logic, speed::fastest)");
+	const I& input = exact(input_);
 
-	border::adjust(input, win.delta());
-	border::fill(input, true);
-	typedef mln_concrete(I) O;
-	O output;
+	mln_concrete(I) output;
+	initialize(output, input);
 
-	mln_pixter(const I) p(input);
-	mln_qixter(const I, W) q(p, win);
+	mln_psite(I)
+	  pmin = input.domain().pmin(),
+	  pmax = input.domain().pmax(),
+	  p = pmin;
 
-	if (win.is_centered())
+	const unsigned len = input.domain().len(Dir);
+	const unsigned win_half_length = win.length() / 2;
+
+	do
 	  {
-	    output = clone(input);
+	    accu::line< accu::meta::min_h, Dir >(input,
+						 p, len,
+						 win_half_length,
+						 output);
 
-	    mln_pixter(O) p_out(output);
-	    for_all_2(p, p_out)
-	      // Consider P only if its value is `true' (the erosion
-	      // is anti-extensive).
-	      if (p.val())
-		for_all(q)
-		  if (! q.val())
-		    {
-		      // Assign `false' to the value of P_OUT as soon
-		      // as a `false' value is found in its vicinity.
-		      p_out.val() = false;
-		      break;
-		    }
-	  }
-	else
-	  {
-	    initialize(output, input);
-	    level::fill(output, input);
-
-	    mln_pixter(O) p_out(output);
-	    for_all_2(p, p_out)
-	      for_all(q)
+	    for (int c = dim - 1; c >= 0; --c)
 	      {
-		// Stop as soon as a `false' value is found the
-		// window.
-		if (! q.val())
-		  break;
-		// If a `false' value was not found, then Q is now
-		// invalid (past the end of the window), and vice
-		// versa.  Use this information to assign P_OUT.
-		p_out.val() = ! q.is_valid();
+		if (c == int(Dir))
+		  continue;
+		if (p[c] != pmax[c])
+		  {
+		    ++p[c];
+		    break;
+		  }
+		p[c] = pmin[c];
 	      }
 	  }
+	while (p != pmin);
 
-	trace::exiting("morpho::impl::erosion_iterative_(kind::logic, speed::fastest)");
+	trace::exiting("morpho::impl::erosion_line");
 	return output;
       }
 
-      // Facade.
-
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_iterative_(const I& input, const W& win)
-      {
-	return erosion_iterative_(mln_trait_image_kind(I)(),
-				  mln_trait_image_speed(I)(),
-				  input, win);
-      }
 
 
-
-
-      //       // Old code.
-
-
-
-      //       // Stage 5: dispatch w.r.t. fast property
-      //       //   |
-      //       //   V
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_set_wrt_fast(trait::image::speed::any, const I& input,
-      // 				const W& win, O& output)
-      //       {
-      // 	generic::erosion_on_set(input, win, output);
-      //       }
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_set_wrt_fast(trait::image::speed::fastest, const I& input,
-      // 				const W& win, O& output)
-      //       {
-      // 	impl::erosion_on_set_fast(input, win, output);
-      //       }
-
-      //       template <typename I, typename W, typename O, typename A>
-      //       void erosion_fun_wrt_fast(trait::image::speed::any, const I& input,
-      // 				const W& win, O& output, A& min)
-      //       {
-      // 	generic::erosion_on_function(input, win, output, min);
-      //       }
-
-      //       template <typename I, typename W, typename O, typename A>
-      //       void erosion_fun_wrt_fast(trait::image::speed::fastest, const I& input,
-      // 				const W& win, O& output, A& min)
-      //       {
-      // 	impl::erosion_on_function_fast(input, win, output, min);
-      //       }
-
-      //       //   ^
-      //       //   |
-      //       // end of stage 5 (dispatch w.r.t. fast property)
-
-      //       // Stage 4: dispatch w.r.t. data quantification
-      //       //   |
-      //       //   V
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_wrt_data(trait::image::quant::high, const I& input,
-      // 			    const W& win, O& output)
-      //       {
-      // 	accu::min_<mln_value(I)> min;
-      // 	impl::erosion_fun_wrt_fast(mln_trait_image_speed(I)(), input,
-      // 				   win, output, min);
-      //       }
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_wrt_data(trait::image::quant::low, const I& input,
-      // 			    const W& win, O& output)
-      //       {
-      // 	accu::min_h<mln_vset(I)> min;
-      // 	impl::erosion_fun_wrt_fast(mln_trait_image_speed(I)(), input,
-      // 				   win, output, min);
-      //       }
-
-      //       //   ^
-      //       //   |
-      //       // end of stage 4 (dispatch w.r.t. the data quantification)
-
-      //       // Stage 3: dispatch w.r.t. the value type
-      //       //   |
-      //       //   V
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_wrt_value(const I& input, const W& win, O& output)
-      //       {
-      // 	if (mlc_is(mln_trait_image_kind(I), trait::image::kind::logic)::value)
-      // 	  impl::erosion_set_wrt_fast(mln_trait_image_speed(I)(), input,
-      // 				     win, output);
-      // 	//           |
-      // 	//           `--> call stage 5: dispatch w.r.t. fast property
-      // 	else
-      // 	  impl::erosion_wrt_data(mln_trait_image_quant(I)(), input,
-      // 				 win, output);
-      // 	//           |
-      // 	//           `--> call stage 4: dispatch w.r.t. the data quantification
-      //       }
-
-      //       //   ^
-      //       //   |
-      //       // end of stage 3 (dispatch w.r.t. the value type)
-
-
-
-      //       // Stage 2: dispatch w.r.t. the window morphology
-      //       //   |
-      //       //   V
-
-      //       template <typename I, typename W, typename O>
-      //       void erosion_wrt_mor(const I& input, const W& win, O& output)
-      //       {
-      // 	// FIXME : Choose the right algorithm between :
-      // 	impl::erosion_wrt_value(input, win, output);
-      // 	// and :
-      // 	// impl::erosion_incr_wrt_value(input, win, output);
-      //       }
-
-      //       //   ^
-      //       //   |
-      //       // end of stage 2 (dispatch w.r.t. the window morphology)
-
-
-
-
-
-      template <typename I, typename W>
-      inline
-      mln_concrete(I)
-      erosion_(const I& input, const W& win)
-      {
-	// FIXME
-	return impl::erosion_iterative_(input, win);
-      }
+      // Particular windows.
 
 
       template <typename I>
       inline
       mln_concrete(I)
-	erosion_(const I& input, const win::rectangle2d& win)
+      erosion_rectangle2d(const Image<I>& input_, const win::rectangle2d& win)
       {
-	trace::entering("morpho::impl::erosion_(win::rectangle2d)");
+	trace::entering("morpho::impl::erosion_rectangle2d");
+
+	const I& input = exact(input_);
 
 	mln_concrete(I) temp, output;
 	temp   = morpho::erosion(input, win::hline2d(win.width()));
 	output = morpho::erosion(temp,  win::vline2d(win.height()));
 
-	trace::exiting("morpho::impl::erosion_(win::rectangle2d)");
+	trace::exiting("morpho::impl::erosion_rectangle2d");
 	return output;
       }
 
@@ -372,24 +229,304 @@ namespace mln
       template <typename I>
       inline
       mln_concrete(I)
-      erosion_(const I& input, const win::octagon2d& win)
+      erosion_octagon2d(const Image<I>& input_, const win::octagon2d& win)
       {
-	trace::entering("morpho::impl::erosion_(win::octagon2d)");
-	const unsigned len = win.length() / 3 + 1;
+	trace::entering("morpho::impl::erosion_octagon2d");
 
-	mln_concrete(I) temp_1, temp_2, output;
-	temp_1 = morpho::erosion(input,  win::hline2d(len));
-	temp_2 = morpho::erosion(temp_1, win::vline2d(len));
-	temp_1 = morpho::erosion(temp_2, win::diag2d(len));
-	output = morpho::erosion(temp_1, win::backdiag2d(len));
+	const I& input = exact(input_);
+
+	const unsigned len = (win.length() + 2) / 3;
+
+	mln_concrete(I) output;
+	output = morpho::erosion(input,  win::hline2d(len));
+	output = morpho::erosion(output, win::vline2d(len));
+	output = morpho::erosion(output, win::diag2d(len));
+	output = morpho::erosion(output, win::backdiag2d(len));
 
 	trace::exiting("morpho::impl::erosion_(win::octagon2d)");
 	return output;
       }
 
 
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      erosion_arbitrary_2d(const Image<I>& input, const Window<W>& win)
+      {
+	trace::entering("morpho::impl:erosion_arbitrary_2d");
+
+	typedef mlc_is(mln_trait_image_kind(I), trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+	A a;
+
+	extension::adjust_fill(input, geom::delta(win) + 1, a);
+	mln_concrete(I) output = accu::transform_snake(a, input, win);
+
+	trace::exiting("morpho::impl:erosion_arbitrary_2d");
+	return output;
+      }
+
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      erosion_directional(const Image<I>& input, const Window<W>& win, unsigned dir)
+      {
+	trace::entering("morpho::impl:erosion_directional");
+
+	typedef mlc_is(mln_trait_image_kind(I), trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+	A a;
+
+	extension::adjust_fill(input, geom::delta(win) + 1, a);
+	mln_concrete(I) output = accu::transform_directional(a, input, win, dir);
+
+	trace::exiting("morpho::impl:erosion_directional");
+	return output;
+      }
+
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      erosion_diagonal_2d(const Image<I>& input, const Window<W>& win)
+      {
+	trace::entering("morpho::impl:erosion_diagonal_2d");
+
+	typedef mlc_is(mln_trait_image_kind(I), trait::image::kind::binary) is_binary;
+	typedef mlc_if(is_binary, accu::land, accu::min_h<mln_value(I)>) A;
+	A a;
+
+	extension::adjust_fill(input, geom::delta(win) + 1, a);
+	mln_concrete(I) output = accu::transform_diagonal(a, input, win);
+
+	trace::exiting("morpho::impl:erosion_diagonal_2d");
+	return output;
+      }
+
+
 
     } // end of namespace mln::morpho::impl
+
+
+
+
+    // Dispatch.
+
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::logic, // On sets.
+				   trait::image::speed::any,
+				   const I& input, const W& win)
+      {
+	if (win.is_centered())
+	  return impl::erosion_on_set_centered(input, win);
+	else
+	  return impl::generic::erosion_on_set(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(trait::image::kind::any, // On functions.
+				   trait::image::speed::any,
+				   const I& input, const W& win)
+      {
+	return impl::generic::erosion_on_function(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_for_generic(const I& input, const W& win) // Entry point.
+      {
+	trace::entering("morpho::erosion_dispatch_for_generic");
+	mln_concrete(I) ima =
+	  erosion_dispatch_for_generic(mln_trait_image_kind(I)(),
+				       mln_trait_image_speed(I)(),
+				       input, win);
+	trace::entering("morpho::erosion_dispatch_for_generic");
+	return ima;
+      }
+
+
+
+
+      // dispatch w.r.t. win
+
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_arbitrary_win(metal::true_,
+					 const I& input, const W& win)
+      {
+	return morpho::impl::erosion_arbitrary_2d(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_arbitrary_win(metal::false_,
+					 const I& input, const W& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const W& win)
+      {
+	// FIXME:
+	// The test "win.size() >= 10" (size is not too small) has been
+	// de-activated...
+	  enum { test = mlc_equal(mln_trait_image_dimension(I),
+				  trait::image::dimension::two_d)::value
+		 &&
+		        mlc_is_a(mln_site(I), Gpoint)::value
+		 &&
+		        mln_is_simple_window(W)::value
+		 &&
+		        mlc_not_equal(mln_trait_image_value_storage(I),
+				      trait::image::value_storage::disrupted)::value };
+	return erosion_dispatch_wrt_arbitrary_win(metal::bool_<test>(),
+						  input, win);
+      }
+
+
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::rectangle2d& win)
+      {
+	if (win.size() == 1)
+	  return clone(input);
+	if (win.size() <= 9) // FIXME: Hard-coded!
+	  return erosion_dispatch_for_generic(input, win);
+	return impl::erosion_rectangle2d(input, win);
+      }
+
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::octagon2d& win)
+      {
+	if (win.length() < 5)
+	  return impl::erosion_arbitrary_2d(input, win);
+	else
+	  return impl::erosion_octagon2d(input, win);
+      }
+
+
+
+      /// Handling win::line(s).
+      /// \{
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_line(metal::true_,
+			    const I& input, const W& win)
+      {
+	return impl::erosion_directional(input, win, W::dir);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_line(metal::false_,
+			    const I& input, const W& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
+      }
+
+      template <typename I, typename M, unsigned i, typename C>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::line<M,i,C>& win)
+      {
+	if (win.size() == 1)
+	  return clone(input);
+	else if (win.size() == 3)
+	  return erosion_dispatch_for_generic(input, win);
+	else
+	  {
+	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_line(metal::bool_<test>(),
+					 input, win);
+	  }
+      }
+
+      /// \}
+
+
+
+
+      /// Handling diagonals.
+      /// \{
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_diagonal(metal::true_,
+				const I& input, const W& win)
+      {
+	return impl::erosion_diagonal_2d(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_diagonal(metal::false_,
+				const I& input, const W& win)
+      {
+	return erosion_dispatch_for_generic(input, win);
+      }
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch_diagonal(const I& input, const W& win)
+      {
+	if (win.size() == 1)
+	  return clone(input);
+	else if (win.size() == 3)
+	  return erosion_dispatch_for_generic(input, win);
+	else
+	  {
+	    enum { test = mlc_is_a(mln_pset(I), Box)::value
+		   && mlc_equal(mln_trait_image_quant(I),
+				mln::trait::image::quant::low)::value };
+	    return erosion_dispatch_diagonal(metal::bool_<test>(),
+					     input, win);
+	  }
+      }
+
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::diag2d& win)
+      {
+	return erosion_dispatch_diagonal(input, win);
+      }
+
+      template <typename I>
+      mln_concrete(I)
+      erosion_dispatch_wrt_win(const I& input, const win::backdiag2d& win)
+      {
+	return erosion_dispatch_diagonal(input, win);
+      }
+
+      /// \}
+
+
+
+      // The dispatch entry point.
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      erosion_dispatch(const Image<I>& input, const Window<W>& win)
+      {
+	return erosion_dispatch_wrt_win(exact(input), exact(win));
+      }
+
+    } // end of namespace mln::morpho::internal
 
   } // end of namespace mln::morpho
 

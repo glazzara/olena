@@ -30,7 +30,7 @@
  * \brief Test on mln::io::pgm::load and mln::io::pgm::save.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/value/int_u8.hh>
@@ -82,13 +82,13 @@ int main()
     image2d<int_u8> lena = io::pgm::load<int_u8>(MLN_IMG_DIR "/lena.pgm");
     image2d<int_u16> out(lena.domain());
 
-    level::transform(lena, to16bits(), out);
+    out = level::transform(lena, to16bits());
     io::pgm::save(out, "out16.pgm");
 
     image2d<int_u16> lena2 = io::pgm::load<int_u16>("out16.pgm");
 
     image2d<int_u8> out2(lena.domain());
-    level::transform(lena2, to8bits(), out2);
+    out2 = level::transform(lena2, to8bits());
     io::pgm::save(out2, "out8.pgm");
   }
 

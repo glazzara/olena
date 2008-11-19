@@ -30,7 +30,7 @@
  * \brief Tests on mln::logical::not.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/logical/not.hh>
 #include <mln/level/compare.hh>
 
@@ -51,8 +51,8 @@ int main()
     {0, 1, 0}
   };
 
-  image2d<bool> ima (make::image2d(vs));
-  image2d<bool> ref (make::image2d(ws));
+  image2d<bool> ima (make::image(vs));
+  image2d<bool> ref (make::image(ws));
 
   mln_assertion (logical::not_(ima) == ref);
 }

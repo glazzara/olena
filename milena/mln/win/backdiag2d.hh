@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,14 +33,15 @@
  * \brief Definition of the mln::win::backdiag2d window.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/internal/classical_window_base.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(backdiag2d);
+
 
   namespace win
   {
@@ -58,29 +59,8 @@ namespace mln
      *          o \n
      * is defined with length = 5.
      */
-    struct backdiag2d : public Window< backdiag2d >,
-			public internal::dpoints_base_< dpoint2d, backdiag2d >
+    struct backdiag2d : public internal::classical_window_base< dpoint2d, backdiag2d >
     {
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
       /*! \brief Constructor.
        *
        * \param[in] length Length, thus width, of the diagonal line.
@@ -89,18 +69,6 @@ namespace mln
        */
       backdiag2d(unsigned length);
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
       /*! \brief Give the diagonal length, that is, its width.
        */
       unsigned length() const;
@@ -108,27 +76,13 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
-      /// Apply a central symmetry to the target window.
-      backdiag2d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       unsigned length_;
     };
-
-
-    /*! \brief Print an diagonal line window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win A diagonal line window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::backdiag2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const backdiag2d& win);
 
  
 
@@ -141,19 +95,7 @@ namespace mln
       mln_precondition(length % 2 == 1);
       const int dcol = length / 2;
       for (int col = - dcol; col <= dcol; ++col)
-	insert(make::dpoint2d(col, col));
-    }
-
-    inline
-    bool backdiag2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool backdiag2d::is_symmetric() const
-    {
-      return true;
+	insert(dpoint2d(col, col));
     }
 
     inline
@@ -163,22 +105,15 @@ namespace mln
     }
 
     inline
-    unsigned backdiag2d::delta() const
+    unsigned backdiag2d::delta_() const
     {
       return length_ / 2;
     }
 
     inline
-    backdiag2d& backdiag2d::sym()
+    void backdiag2d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const backdiag2d& win)
-    {
-      ostr << "[diag 2d: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[backdiag 2d: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

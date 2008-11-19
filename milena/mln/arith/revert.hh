@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_ARITH_REVERT_HH
 # define MLN_ARITH_REVERT_HH
 
-/*! \file mln/arith/revert.hh
- *
- * \brief Point-wise revert (min -> max and max -> min) of images.
- *
- * \todo Add static assertion and save one iterator in in-place version.
- */
+/// \file mln/arith/revert.hh
+///
+/// Point-wise revert (min -> max and max -> min) of images.
+///
+/// \todo Add static assertion and save one iterator in in-place version.
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/value_.hh>
@@ -52,8 +52,8 @@ namespace mln
   namespace arith
   {
 
-    /*! Point-wise reversion of image \p input.
-     *
+    /// Point-wise reversion of image \p input.
+    /*!
      * \param[in] input the input image.
      * \result The result image.
      *
@@ -67,8 +67,8 @@ namespace mln
     mln_concrete(I) revert(const Image<I>& input);
 
 
-    /*! Point-wise in-place reversion of image \p input.
-     *
+    /// Point-wise in-place reversion of image \p input.
+    /*!
      * \param[in,out] input The target image.
      *
      * \pre \p input.has_data

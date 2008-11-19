@@ -1,4 +1,5 @@
-// Copyright (C) 2005, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2005, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +38,7 @@ namespace mln {
 
     /** \brief A ``greater than'' functor comparing psites w.r.t. the
         values they refer to in an image.
-       
+
         This functor used in useful to implement ordered queues of
         psites.  */
     template <typename I>
@@ -73,7 +74,7 @@ namespace mln {
 
     template <typename I>
     bool
-    greater_psite<I>::operator()(const mln_psite(I)& x, const mln_psite(I)& y)
+    greater_psite<I>::operator()(const psite& x, const psite& y)
     {
       return ima_(x) > ima_(y);
     }

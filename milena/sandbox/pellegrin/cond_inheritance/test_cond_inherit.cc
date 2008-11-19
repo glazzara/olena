@@ -32,7 +32,7 @@
 
 #include <iostream>
 #include <string>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/io/pgm/load.hh>
 
 #include "p_set.hh"

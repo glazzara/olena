@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,13 @@
 #ifndef MLN_ACCU_MAX_H_HH
 # define MLN_ACCU_MAX_H_HH
 
-/*! \file mln/accu/max_h.hh
- *
- * \brief Define a generic max accumulator class based on histogram.
- */
+/// \file mln/accu/max_h.hh
+///
+/// Define a generic max accumulator class based on histogram.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/histo.hh>
+# include <mln/util/pix.hh>
 
 
 namespace mln
@@ -44,38 +44,45 @@ namespace mln
   {
 
 
-    /*! \brief Generic max function based on histogram over a value set with
-     * type \c S.
-     */
-    template <typename S>
-    struct max_h : public mln::accu::internal::base_< mln_value(S) , max_h<S> >
+    /// Generic max function based on histogram over a value set with
+    /// type \c V.
+    template <typename V>
+    struct max_h : public mln::accu::internal::base< const V&, max_h<V> >
     {
-      typedef mln_value(S) argument;
-      typedef argument result;
+      typedef V argument;
 
-      max_h(const Value_Set<S>& s);
       max_h();
 
+      /// Manipulators.
+      /// \{
       void init();
       void   take(const argument& t);
       void   take_as_init(const argument& t);
-      void   take(const max_h<S>& other);
+      void   take(const max_h<V>& other);
       void untake(const argument& t);
+      /// \}
 
       unsigned card() const { return h_.sum(); }
 
-      argument to_result() const;
+      /// Get the value of the accumulator.
+      const argument& to_result() const;
 
-      const accu::histo<S>& histo() const;
+      const accu::histo<V>& histo() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
+
+      void debug_print_() const;
 
     protected:
 
-      mutable accu::histo<S> h_;
-      const S& s_; // derived from h_
+      mutable accu::histo<V> h_;
+      const value::set<V>& s_; // derived from h_
 
-      mutable std::size_t sum_;
+      mutable unsigned sum_;
       mutable bool valid_;
-      mutable std::size_t i_; // the max index
+      mutable unsigned i_; // the max index
       mutable argument t_;       // the max argument
 
       // Auxiliary methods
@@ -85,37 +92,49 @@ namespace mln
     };
 
 
+
+    template <typename I> struct max_h< util::pix<I> >;
+
+
+    namespace meta
+    {
+
+      /// Meta accumulator for max.
+      struct max_h : public Meta_Accumulator< max_h >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef accu::max_h<T> ret;
+	};
+      };
+
+    } // end of namespace mln::meta
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename V>
     inline
-    max_h<S>::max_h(const Value_Set<S>& s)
-      : h_(s),
-	s_(h_.vset())
-    {
-      init();
-    }
-
-    template <typename S>
-    inline
-    max_h<S>::max_h()
+    max_h<V>::max_h()
       : h_(),
 	s_(h_.vset())
     {
       init();
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take(const argument& t)
+    max_h<V>::take(const argument& t)
     {
-      h_.take(t);
-      if (h_.sum() == 1)
+      if (h_.sum() == 0)
 	{
 	  this->take_as_init(t);
 	  return;
 	}
+      h_.take(t);
       if (t > t_)
 	{
 	  ++sum_;
@@ -123,10 +142,10 @@ namespace mln
 	}
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take(const max_h<S>& other)
+    max_h<V>::take(const max_h<V>& other)
     {
       // h_
       h_.take(other.h_);
@@ -136,10 +155,10 @@ namespace mln
       // FIXME: Optimize.
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::untake(const argument& t)
+    max_h<V>::untake(const argument& t)
     {
       mln_precondition(h_(t) != 0);
       h_.untake(t);
@@ -159,10 +178,10 @@ namespace mln
 	  valid_ = false;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::update_() const
+    max_h<V>::update_() const
     {
       if (sum_ != 0)
 	go_plus_();
@@ -172,10 +191,25 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::go_minus_() const
+    max_h<V>::go_plus_() const
+    {
+      do
+	{
+	  ++i_;
+	  if (h_[i_] != 0)
+	    sum_ -= h_[i_];
+	}
+      while (sum_ != 0);
+      t_ = s_[i_];
+    }
+
+    template <typename V>
+    inline
+    void
+    max_h<V>::go_minus_() const
     {
       do
 	--i_;
@@ -183,24 +217,10 @@ namespace mln
       t_ = s_[i_];
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::go_plus_() const
-    {
-      do
-      {
-	++i_;
-	if (h_[i_] != 0)
-	  sum_ -= h_[i_];
-      } while (sum_ != 0);
-      t_ = s_[i_];
-    }
-
-    template <typename S>
-    inline
-    void
-    max_h<S>::init()
+    max_h<V>::init()
     {
       h_.init();
       sum_ = 0;
@@ -209,10 +229,10 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
     void
-    max_h<S>::take_as_init(const argument& t)
+    max_h<V>::take_as_init(const argument& t)
     {
       h_.take(t);
       sum_ = 0;
@@ -221,27 +241,47 @@ namespace mln
       valid_ = true;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    typename max_h<S>::argument
-    max_h<S>::to_result() const
+    const typename max_h<V>::argument&
+    max_h<V>::to_result() const
     {
       if (! valid_)
 	update_();
       return t_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    const accu::histo<S>&
-    max_h<S>::histo() const
+    const accu::histo<V>&
+    max_h<V>::histo() const
     {
       return h_;
     }
 
-    template <typename S>
+    template <typename V>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const max_h<S>& m)
+    bool
+    max_h<V>::is_valid() const
+    {
+      return true;
+    }
+
+    template <typename V>
+    inline
+    void
+    max_h<V>::debug_print_() const
+    {
+      std::cout << "h={" << h_ << "} ";
+      std::cout << "sum=" << sum_ << ' '
+		<< "valid=" << valid_ << ' '
+		<< "i=" << i_ << ' '
+		<< "t=" << t_ << std::endl;
+    }
+
+    template <typename V>
+    inline
+    std::ostream& operator<<(std::ostream& ostr, const max_h<V>& m)
     {
       return ostr << m.to_result();
     }

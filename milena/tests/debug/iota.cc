@@ -30,7 +30,7 @@
  * \brief Tests on mln::debug::iota.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -48,7 +48,7 @@ int main()
 		     {9, 10,11,12},
 		     {13,14,15,16} };
 
-    image2d<int> ref = make::image2d(vs);
+    image2d<int> ref = make::image(vs);
     image2d<int> ima(4, 4);
 
     debug::iota(ima);

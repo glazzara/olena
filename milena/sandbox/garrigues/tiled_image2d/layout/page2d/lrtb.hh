@@ -28,7 +28,7 @@
 #ifndef layout_page2d_lrtb_hh
 #define layout_page2d_lrtb_hh
 
-#include <mln/core/point2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 namespace mln
 {

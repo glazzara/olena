@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,15 @@
 #ifndef MLN_LINEAR_CONVOLVE_HH
 # define MLN_LINEAR_CONVOLVE_HH
 
-/*! \file mln/linear/convolve.hh
- *
- * \brief Convolution.
- */
+/// \file mln/linear/convolve.hh
+///
+/// Convolution.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/border/resize.hh>
-# include <mln/border/duplicate.hh>
-
+# include <mln/linear/ch_convolve.hh>
+# include <mln/accu/convolve.hh>
+# include <mln/extension/adjust_duplicate.hh>
 
 
 namespace mln
@@ -54,138 +54,170 @@ namespace mln
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre output.domain = input.domain
+     * \pre input.has_data
      */
-    template <typename I, typename W, typename O>
-    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
-		  Image<O>& output);
+    template <typename I, typename W>
+    mln_ch_convolve(I, W)
+    convolve(const Image<I>& input, const Weighted_Window<W>& w_win);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    // Tests.
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      void
+      convolve_tests(const Image<I>& input,
+		     const Weighted_Window<W>& w_win)
+      {
+	mln_precondition(exact(input).has_data());
+	// mln_precondition(exact(w_win).is_valid());
+	(void) input;
+	(void) w_win;
+      }
+
+    }  // end of namespace mln::linear::internal
+
+
+    // Implementation.
+
     namespace impl
     {
-      /* FIXME: We must clean up the interface of
-	 mln::linear::impl::convolve_:
 
-	 - either allow certain patterns of speed traits (e.g.,
-	   any/any, fastest/fastest, fastest/any, etc.).  In this
-	   case, the generic version should abort at compile time;
-
-	 - or accept all combinations (which is the current case), and
-           default to the slowest one (presumably any/any).
-       */
-
-      // Fwd decl.
-      template <typename I, typename W, typename O>
-      inline
-      void convolve_(const I& input,
-		     const Weighted_Window<W>& w_win_,
-		     O& output);
-
-      /// Default version, delegating to the generic version.
-      template <typename Speed_I, typename I, typename W,
-		typename Speed_O, typename O>
-      inline
-      void convolve_(Speed_I, const I& input,
-		     const Weighted_Window<W>& w_win_,
-		     Speed_O, O& output)
+      namespace generic
       {
-	/* Don't delegate using such a call:
 
-	   \code
-	   impl::convolve_(trait::image::speed::any(), input,
-			   w_win_,
-			   trait::image::speed::any(), output);
-	   \endcode
+	template <typename I, typename W>
+	mln_ch_convolve(I, W)
+	convolve(const Image<I>& input_,
+		 const Weighted_Window<W>& w_win_)
+	{
+	  trace::entering("linear::impl::generic::convolve");
 
-	   since it would end up with infinite recursion.  The reason
-	   is that the compiler would select this function (in which
-	   you read this very comment), instead of the next one (with
-	   input and output speed traits set to `any'), to resolve the
-	   call.  This is because C++ overloading rules favor the
-	   generic function over the more specialized one.  And we
-	   cannot use explicit partial specialization, since it just
-	   doesn't exist for functions.
+	  const I& input = exact(input_);
+	  const W& w_win = exact(w_win_);
+	  internal::convolve_tests(input, w_win);
 
-	   Hence the chosen solution: create and call another
-	   overloading for mln::linear::impl::convolve_, with no
-	   unnatural selection behavior.  */
-	impl::convolve_(input, w_win_, output);
-      }
+	  extension::adjust_duplicate(input, w_win);
+	  
+	  typedef mln_ch_convolve(I, W) O;
+	  O output;
+	  initialize(output, input);
 
-      template <typename I, typename W, typename O>
-      inline
-      void convolve_(trait::image::speed::any, const I& input,
-		     const Weighted_Window<W>& w_win_,
-		     trait::image::speed::any, O& output)
-      {
-	// Delegate the call to the generic version.
-	impl::convolve_(input, w_win_, output);
-      }
+	  accu::convolve<mln_value(I), mln_weight(W)> a;
 
-      /// A factored implementation of the most generic version of
-      ///  mln::linear::impl::convolve_.
-      template <typename I, typename W, typename O>
-      inline
-      void convolve_(const I& input,
-		     const Weighted_Window<W>& w_win_,
-		     O& output)
-      {
-	const W& w_win = exact(w_win_);
+	  mln_piter(I) p(input.domain());
+	  mln_qiter(W) q(w_win, p);
 
-	mln_piter(I) p(input.domain());
-	mln_qiter(W) q(w_win, p);
-
-	for_all(p)
+	  for_all(p)
 	  {
-	    mln_value(O) v = 0;
+	    a.init();
 	    for_all(q) if (input.has(q))
-	      v += input(q) * q.w();
-	    output(p) = v;
+	      a.take(input(q), q.w());
+	    output(p) = a.to_result();
 	  }
-      }
+	  
+	  trace::exiting("linear::impl::generic::convolve");
+	  return output;
+	}
 
-      template <typename I, typename W, typename O>
-      inline
-      void convolve_(trait::image::speed::fastest, const I& input,
-		     const Weighted_Window<W>& w_win_,
-		     trait::image::speed::fastest, O& output)
+      } // end of namespace mln::linear::impl::generic
+
+
+      template <typename I, typename W>
+      mln_ch_convolve(I, W)
+      convolve_fastest(const Image<I>& input_,
+		       const Weighted_Window<W>& w_win_)
       {
+	trace::entering("linear::impl::convolve_fastest");
+
+	const I& input = exact(input_);
 	const W& w_win = exact(w_win_);
+	internal::convolve_tests(input, w_win);
 
-	border::resize(input, w_win.delta());
-	border::duplicate(input);
+	extension::adjust_duplicate(input, w_win);
 
- 	mln_pixter(O)          p_out(output);
+	typedef mln_ch_convolve(I, W) O;
+	O output;
+	initialize(output, input);
+ 	mln_pixter(O) p_out(output);
+
+	accu::convolve<mln_value(I), mln_weight(W)> a;
 
 	mln_pixter(const I)    p(input);
 	mln_qixter(const I, W) q(p, w_win);
 
  	for_all_2(p, p_out)
 	  {
-	    mln_value(O) v = 0;
+	    a.init();
 	    unsigned i = 0;
 	    for_all(q)
-	      v += w_win.w(i++) * q.val();
- 	    p_out.val() = v;
+	      a.take(q.val(), w_win.w(i++));
+ 	    p_out.val() = a.to_result();
 	  }
+
+	trace::exiting("linear::impl::convolve_fastest");
+	return output;
       }
 
     } // end of namespace mln::linear::impl
 
 
+    // Dispatch.
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      mln_ch_convolve(I, W)
+      convolve_dispatch(trait::image::speed::any,
+			const Image<I>& input,
+			const Weighted_Window<W>& w_win)
+      {
+	return impl::generic::convolve(input, w_win);
+      }
+
+      template <typename I, typename W>
+      mln_ch_convolve(I, W)
+      convolve_dispatch(trait::image::speed::fastest,
+			const Image<I>& input,
+			const Weighted_Window<W>& w_win)
+      {
+	return impl::convolve_fastest(input, w_win);
+      }
+
+      template <typename I, typename W>
+      mln_ch_convolve(I, W)
+      convolve_dispatch(const Image<I>& input,
+			const Weighted_Window<W>& w_win)
+      {
+	return convolve_dispatch(mln_trait_image_speed(I)(),
+				 input, w_win);
+      }
+
+    }  // end of namespace mln::linear::internal
+
+
     // Facade.
 
-    template <typename I, typename W, typename O>
-    inline
-    void convolve(const Image<I>& input, const Weighted_Window<W>& w_win,
-		  Image<O>& output)
+    template <typename I, typename W>
+    mln_ch_convolve(I, W)
+    convolve(const Image<I>& input, const Weighted_Window<W>& w_win)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      impl::convolve_(mln_trait_image_speed(I)(), exact(input),
-		      exact(w_win),
-		      mln_trait_image_speed(O)(), exact(output));
+      trace::entering("linear::convolve");
+
+      internal::convolve_tests(input, w_win);
+
+      mln_ch_convolve(I, W) output;
+      output = internal::convolve_dispatch(mln_trait_image_speed(I)(),
+					   input, w_win);
+
+      trace::exiting("linear::convolve");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_QUEUE_FAST_HH
-# define MLN_CORE_P_QUEUE_FAST_HH
+#ifndef MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
+# define MLN_CORE_SITE_SET_P_QUEUE_FAST_HH
 
-/*! \file mln/core/p_queue_fast.hh
+/*! \file mln/core/site_set/p_queue_fast.hh
  *
  * \brief Definition of a point set class faster but needs more memory
  * space.
@@ -72,17 +72,17 @@ namespace mln
    * \todo Make it work with P being a Point_Site.
    *
    * \warning We have some troubles with point set comparison based on
-   * a call to npoints() when this container is multiple.
+   * a call to nsites() when this container is multiple.
    */
   template <typename P>
   class p_queue_fast : public internal::point_set_base_< P, p_queue_fast<P> >
   {
   public:
 
-    /// Forward Point_Iterator associated type.
+    /// Forward Site_Iterator associated type.
     typedef p_array_fwd_piter_<P> fwd_piter;
 
-    /// Backward Point_Iterator associated type.
+    /// Backward Site_Iterator associated type.
     typedef p_array_bkd_piter_<P> bkd_piter;
 
     /// Constructor.
@@ -95,7 +95,7 @@ namespace mln
     bool is_empty() const;
 
     /// Give the number of points.
-    std::size_t npoints() const;
+    std::size_t nsites() const;
 
     /// Give the exact bounding box.
     const box_<P>& bbox() const;
@@ -202,7 +202,7 @@ namespace mln
   template <typename P>
   inline
   std::size_t
-  p_queue_fast<P>::npoints() const
+  p_queue_fast<P>::nsites() const
   {
     mln_precondition(this->end_ >= this->begin_);
     return (this->end_ - this->begin_);
@@ -213,7 +213,7 @@ namespace mln
   const box_<P>&
   p_queue_fast<P>::bbox() const
   {
-    mln_precondition(npoints() != 0);
+    mln_precondition(nsites() != 0);
     if (bb_needs_update_)
       bb_update_();
     return bb_.to_result();
@@ -306,7 +306,7 @@ namespace mln
   const P&
   p_queue_fast<P>::operator[](unsigned i) const
   {
-    mln_precondition(i < npoints());
+    mln_precondition(i < nsites());
     return q_[begin_ + i];
   }
 
@@ -315,4 +315,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_QUEUE_FAST_HH
+#endif // ! MLN_CORE_SITE_SET_P_QUEUE_FAST_HH

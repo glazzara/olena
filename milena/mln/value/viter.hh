@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/value/viter.hh
  *
  * \brief Definition of iterators on value sets.
+ *
+ * \todo Proxify it!
  */
 
 # include <mln/core/concept/value_iterator.hh>
@@ -54,11 +56,13 @@ namespace mln
       /// Value associated type.
       typedef mln_value(S) value;
 
+      /// Constructor without argument.
+      fwd_viter_();
+
       /// Constructor.
       fwd_viter_(const Value_Set<S>& s);
 
-      /// Convertion into a value.
-      operator mln_value(S) () const;
+      void change_target(const S& s);
 
       /// Test if the iterator is valid.
       bool is_valid() const;
@@ -71,11 +75,17 @@ namespace mln
 
       /// Go to the next value.
       void next_();
-      
+
+      /// Conversion into a value.
+      operator mln_value(S) () const;
+
+      /// Give the current index.
+      unsigned index_() const;
+
     private:
 
-      const S& s_;
-      std::size_t i_;
+      const S* s_;
+      unsigned i_;
     };
 
 
@@ -91,11 +101,13 @@ namespace mln
       /// Value associated type.
       typedef mln_value(S) value;
 
+      /// Constructor without argument.
+      bkd_viter_();
+
       /// Constructor.
       bkd_viter_(const Value_Set<S>& s);
 
-      /// Convertion into a value.
-      operator mln_value(S) () const;
+      void change_target(const S& s);
 
       /// Test if the iterator is valid.
       bool is_valid() const;
@@ -108,11 +120,17 @@ namespace mln
 
       /// Go to the next value.
       void next_();
-      
+
+      /// Conversion into a value.
+      operator mln_value(S) () const;
+
+      /// Give the current index.
+      unsigned index_() const;
+
     private:
 
-      const S& s_;
-      std::size_t i_;
+      const S* s_;
+      unsigned i_;
     };
 
 
@@ -124,18 +142,25 @@ namespace mln
 
     template <typename S>
     inline
-    fwd_viter_<S>::fwd_viter_(const Value_Set<S>& s)
-      : s_(exact(s))
+    fwd_viter_<S>::fwd_viter_()
+      : s_(0)
     {
-      invalidate();
     }
 
     template <typename S>
     inline
-    fwd_viter_<S>::operator mln_value(S) () const
+    fwd_viter_<S>::fwd_viter_(const Value_Set<S>& s)
     {
-      mln_precondition(is_valid());
-      return s_[i_];
+      change_target(exact(s));
+    }
+
+    template <typename S>
+    inline
+    void
+    fwd_viter_<S>::change_target(const S& s)
+    {
+      s_ = &s;
+      invalidate();
     }
 
     template <typename S>
@@ -143,7 +168,7 @@ namespace mln
     bool
     fwd_viter_<S>::is_valid() const
     {
-      return i_ < s_.nvalues();
+      return s_ != 0 && i_ < s_->nvalues();
     }
 
     template <typename S>
@@ -151,7 +176,7 @@ namespace mln
     void
     fwd_viter_<S>::invalidate()
     {
-      i_ = s_.nvalues();
+      i_ = s_->nvalues();
     }
 
     template <typename S>
@@ -170,23 +195,46 @@ namespace mln
       ++i_;
     }
 
+    template <typename S>
+    inline
+    fwd_viter_<S>::operator mln_value(S) () const
+    {
+      mln_precondition(is_valid());
+      return (*s_)[i_];
+    }
+
+    template <typename S>
+    inline
+    unsigned
+    fwd_viter_<S>::index_() const
+    {
+      return i_;
+    }
+
 
     // bkd_viter_<S>
 
     template <typename S>
     inline
-    bkd_viter_<S>::bkd_viter_(const Value_Set<S>& s)
-      : s_(exact(s))
+    bkd_viter_<S>::bkd_viter_()
+      : s_(0)
     {
-      invalidate();
     }
 
     template <typename S>
     inline
-    bkd_viter_<S>::operator mln_value(S) () const
+    bkd_viter_<S>::bkd_viter_(const Value_Set<S>& s)
     {
-      mln_precondition(is_valid());
-      return s_[i_];
+      change_target(exact(s));
+    }
+
+    template <typename S>
+    inline
+    void
+    bkd_viter_<S>::change_target(const S& s)
+    {
+      s_ = &s;
+      invalidate();
     }
 
     template <typename S>
@@ -194,7 +242,7 @@ namespace mln
     bool
     bkd_viter_<S>::is_valid() const
     {
-      return i_ != s_.nvalues();
+      return s_ != 0 && i_ != s_->nvalues();
     }
 
     template <typename S>
@@ -202,7 +250,7 @@ namespace mln
     void
     bkd_viter_<S>::invalidate()
     {
-      i_ = s_.nvalues();
+      i_ = s_->nvalues();
     }
 
     template <typename S>
@@ -210,7 +258,7 @@ namespace mln
     void
     bkd_viter_<S>::start()
     {
-      i_ = s_.nvalues() - 1;
+      i_ = s_->nvalues() - 1;
     }
 
     template <typename S>
@@ -224,6 +272,22 @@ namespace mln
 	  return;
 	}
       --i_;
+    }
+
+    template <typename S>
+    inline
+    bkd_viter_<S>::operator mln_value(S) () const
+    {
+      mln_precondition(is_valid());
+      return (*s_)[i_];
+    }
+
+    template <typename S>
+    inline
+    unsigned
+    bkd_viter_<S>::index_() const
+    {
+      return i_;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

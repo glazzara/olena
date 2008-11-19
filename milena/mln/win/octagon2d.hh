@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,14 +33,15 @@
  * \brief Definition of the mln::win::octagon2d window.
  */
 
-# include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint2d.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/internal/classical_window_base.hh>
+# include <mln/core/alias/dpoint2d.hh>
 
 
 namespace mln
 {
+
+  mln_internal_add_classical_window_trait(octagon2d);
+
 
   namespace win
   {
@@ -62,29 +63,8 @@ namespace mln
      *     o o o \n
      * is defined with L = 7 (l = 1).
      */
-    struct octagon2d : public Window< octagon2d >,
-		       public internal::dpoints_base_< dpoint2d, octagon2d >
+    struct octagon2d : public internal::classical_window_base< dpoint2d, octagon2d >
     {
-      /// Point associated type.
-      typedef point2d point;
-
-      /// Dpoint associated type.
-      typedef dpoint2d dpoint;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (increasing), for each column (increasing)."
-       */
-      typedef dpoints_fwd_piter<dpoint2d> fwd_qiter;
-
-      /*! \brief Point_Iterator type to browse a hline such as: "for each row
-       * (decreasing), for each column (decreasing)."
-       */
-      typedef dpoints_bkd_piter<dpoint2d> bkd_qiter;
-
-      /*! \brief Same as fwd_qiter.
-       */
-      typedef fwd_qiter qiter;
-
       /*! \brief Constructor.
        *
        * \param[in] length Length, of the octagon.
@@ -93,18 +73,6 @@ namespace mln
        */
       octagon2d(unsigned length);
 
-      /*! \brief Test if the window is centered.
-       *
-       * \return True.
-       */
-      bool is_centered() const;
-
-      /*! \brief Test if the window is symmetric.
-       *
-       * \return true.
-       */
-      bool is_symmetric() const;
-
       /*! \brief Give the octagon length, that is, its width.
        */
       unsigned length() const;
@@ -112,31 +80,17 @@ namespace mln
       /*! \brief Give the maximum coordinate gap between the window
        * center and a window point.
        */
-      unsigned delta() const;
+      unsigned delta_() const;
 
       /*! \brief Give the area.
        */
       unsigned area() const;
 
-      /// Apply a central symmetry to the target window.
-      octagon2d& sym();
+      void print_(std::ostream& ostr) const;
 
     protected:
       unsigned length_;
     };
-
-
-    /*! \brief Print an octagon window \p win into the output
-     *  stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] win An octagon window.
-     *
-     * \return The modified output stream \p ostr.
-     *
-     * \relates mln::win::octagon2d
-     */
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win);
 
 
 
@@ -174,25 +128,13 @@ namespace mln
     }
 
     inline
-    bool octagon2d::is_centered() const
-    {
-      return true;
-    }
-
-    inline
-    bool octagon2d::is_symmetric() const
-    {
-      return true;
-    }
-
-    inline
     unsigned octagon2d::length() const
     {
       return length_;
     }
 
     inline
-    unsigned octagon2d::delta() const
+    unsigned octagon2d::delta_() const
     {
       return length_ / 2;
     }
@@ -205,16 +147,9 @@ namespace mln
     }
 
     inline
-    octagon2d& octagon2d::sym()
+    void octagon2d::print_(std::ostream& ostr) const
     {
-      return *this;
-    }
-
-    inline
-    std::ostream& operator<<(std::ostream& ostr, const octagon2d& win)
-    {
-      ostr << "[octagon2d: length=" << win.length() << ']';
-      return ostr;
+      ostr << "[octagon2d: length=" << length_ << ']';
     }
 
 # endif // ! MLN_INCLUDE_ONLY

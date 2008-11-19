@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,12 @@
 #ifndef MLN_LOGICAL_AND_HH
 # define MLN_LOGICAL_AND_HH
 
-/*! \file mln/logical/and.hh
- *
- * \brief Point-wise "logical and" between binary images.
- *
- * \todo Add static assertion and save one iterator in in-place version.
- */
+/// \file mln/logical/and.hh
+///
+/// Point-wise "logical and" between binary images.
 
-# include <mln/core/concept/image.hh>
-
-
-// Specializations are in:
-# include <mln/logical/and.spe.hh>
+# include <mln/logical/includes.hh>
+# include <mln/fun/vv2v/land.hh>
 
 
 namespace mln
@@ -57,7 +52,8 @@ namespace mln
      * \pre \p lhs.domain == \p rhs.domain
      */
     template <typename L, typename R>
-    mln_concrete(L) and_(const Image<L>& lhs, const Image<R>& rhs);
+    mln_ch_fun_vv2v(land, L, R)
+    and_(const Image<L>& lhs, const Image<R>& rhs);
 
 
     /*! Point-wise in-place "logical and" of image \p rhs in image \p lhs.
@@ -77,44 +73,17 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
-    {
-
-      namespace generic
-      {
-
-	template <typename L, typename R, typename O>
-	inline
-	void and__(const L& lhs, const R& rhs, O& output)
-	{
-	  trace::entering("logical::impl::generic::and__");
-
-	  mln_piter(L) p(lhs.domain());
-	  for_all(p)
-	    output(p) = lhs(p) && rhs(p);
-
-	  trace::exiting("logical::impl::generic::and__");
-	}
-
-      } // end of namespace mln::logical::impl::generic
-
-    } // end of namespace mln::logical::impl
-
-
-    // Facades.
-
     template <typename L, typename R>
     inline
-    mln_concrete(L) and_(const Image<L>& lhs, const Image<R>& rhs)
+    mln_ch_fun_vv2v(land, L, R)
+    and_(const Image<L>& lhs, const Image<R>& rhs)
     {
       trace::entering("logical::and_");
 
-      mln_precondition(exact(rhs).domain() == exact(lhs).domain());
+      internal::tests(lhs, rhs);
 
-      mln_concrete(L) output;
-      initialize(output, lhs);
-      impl::and__(mln_trait_image_speed(L)(), exact(lhs),
-		  mln_trait_image_speed(R)(), exact(rhs), output);
+      mln_fun_vv2v(land, L, R) f;
+      mln_ch_fun_vv2v(land, L, R) output = level::transform(lhs, rhs, f);
 
       trace::exiting("logical::and_");
       return output;
@@ -126,10 +95,13 @@ namespace mln
     {
       trace::entering("logical::and_inplace");
 
-      mln_precondition(exact(rhs).domain() >= exact(lhs).domain());
+      mlc_converts_to(mln_fun_vv2v_result(land, L, R),
+		      mln_value(L))::check();
 
-      impl::and__(mln_trait_image_speed(L)(), exact(lhs),
-		  mln_trait_image_speed(R)(), exact(rhs), exact(lhs));
+      internal::tests(lhs, rhs);
+
+      mln_fun_vv2v(land, L, R) f;
+      level::transform_inplace(lhs, rhs, f);
 
       trace::exiting("logical::and_inplace");
     }

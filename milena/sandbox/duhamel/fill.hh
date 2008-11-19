@@ -91,7 +91,7 @@ namespace mln
       point2d u = min;
       point2d v = min + down;
       std::size_t k = ima.offset (down);
-      std::size_t max = ima.ncells() / k;
+      std::size_t max = ima.nelements() / k;
       
       for (std::size_t i = 0; i < k; ++i)
 	*ptr++ = value;

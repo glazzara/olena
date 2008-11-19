@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,8 +33,7 @@
  * \brief Routines to construct an mln::box1d.
  */
 
-# include <mln/core/box1d.hh>
-# include <mln/make/point1d.hh>
+# include <mln/core/alias/box1d.hh>
 
 
 namespace mln
@@ -45,7 +44,7 @@ namespace mln
 
     /*! \brief Create an mln::box1d.
      *
-     * \param[in] ninds Number of inds.
+     * \param[in] ninds Number of indices.
      *
      * \pre \p ninds != 0 and \p ncols != 0.
      *
@@ -58,14 +57,14 @@ namespace mln
      *
      * \overload
      *
-     * \param[in] min_ind Index of the top most ind.
-     * \param[in] max_ind Index of the botton most ind.
+     * \param[in] min_ind Minimum index.
+     * \param[in] max_ind Maximum index.
      *
      * \pre \p max_ind >= \p min_ind.
      *
      * \return A 1D box.
      */
-    mln::box1d box1d(int min_ind, int max_ind);
+    mln::box1d box1d(def::coord min_ind, def::coord max_ind);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -74,18 +73,17 @@ namespace mln
     mln::box1d box1d(unsigned ninds)
     {
       mln_precondition(ninds != 0);
-      mln::box1d tmp(make::point1d(0),
-		     make::point1d(ninds - 1));
+      mln::box1d tmp(point1d(0),
+		     point1d(ninds - 1));
       return tmp;
     }
 
     inline
-    mln::box1d box1d(int min_ind, int max_ind)
+    mln::box1d box1d(def::coord min_ind, def::coord max_ind)
     {
       mln_precondition(max_ind >= min_ind);
-      mln::box1d tmp(make::point1d(min_ind),
-		     make::point1d(max_ind));
-      return tmp;
+      return mln::box1d(point1d(min_ind),
+                        point1d(max_ind));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -42,7 +42,7 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/io/pnm/load_header.hh>
 
 namespace mln
@@ -55,7 +55,7 @@ namespace mln
     {
 
 
-      /*! Load a pbm image in a milena image.
+      /*! Load a pbm image in a Milena image.
        *
        * \param[out] ima A reference to the image2d<bool> which will receive
        * data.
@@ -100,7 +100,7 @@ namespace mln
 	inline
 	void load_raw_2d(std::ifstream& file, I& ima)
 	{
-	  point2d p = make::point2d(0, ima.domain().pmin().col());
+	  point2d p = point2d(0, ima.domain().pmin().col());
 	  typedef mln_value(I) V;
 	  const mln_coord(I)
 	    min_row = geom::min_row(ima),
@@ -131,6 +131,7 @@ namespace mln
       inline
       image2d<bool> load(const std::string& filename)
       {
+	trace::entering("mln::io::pbm::load");
 	std::ifstream file(filename.c_str());
 	if (! file)
 	{
@@ -148,6 +149,9 @@ namespace mln
 	else
 	  if (type == '1')
 	    internal::load_ascii(file, ima);
+
+	trace::exiting("mln::io::pbm::load");
+
 	return ima;
       }
 

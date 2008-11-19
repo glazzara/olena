@@ -1,4 +1,5 @@
-// Copyright (C) 2005, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2005, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,14 +38,14 @@ namespace mln {
 
     /** \brief A ``greater than'' functor comparing points w.r.t. the
         values they refer to in an image.
-       
+
         This functor used in useful to implement ordered queues of
         points.  */
     template <typename I>
     class greater_point
     {
     public:
-      typedef mln_point(I) point;
+      typedef mln_psite(I) point;
 
       greater_point(const Image<I>& ima);
 
@@ -73,7 +74,7 @@ namespace mln {
 
     template <typename I>
     bool
-    greater_point<I>::operator()(const mln_point(I)& x, const mln_point(I)& y)
+    greater_point<I>::operator()(const point& x, const point& y)
     {
       return ima_(x) > ima_(y);
     }

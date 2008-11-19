@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,6 +31,8 @@
 /*! \file mln/pw/image.hh
  *
  * \brief FIXME.
+ *
+ * \todo Relax Function_p2v into Function_v2v.
  */
 
 # include <mln/core/internal/image_primary.hh>
@@ -52,18 +54,18 @@ namespace mln
    */
   template <typename F, typename S>
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps);
+  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps);
 
 
 
   namespace internal
   {
 
-    /// \internal Data structure for mln::pw::image
+    /// Data structure for mln::pw::image
     template <typename F, typename S>
-    struct data_< mln::pw::image<F,S> >
+    struct data< mln::pw::image<F,S> >
     {
-      data_(const F& f, const S& ps);
+      data(const F& f, const S& ps);
       F f_;
       S pset_;
     };
@@ -81,18 +83,29 @@ namespace mln
     struct image_< pw::image<F,S> > : default_image_< mlc_unqualif(mln_result(F)),
 						      pw::image<F,S> >
     {
+      // misc
       typedef trait::image::category::primary category;
+      typedef trait::image::speed::fast       speed;
+      typedef trait::image::size::regular     size;
 
-      typedef trait::image::value::fixme     value;
+      // value
+      typedef trait::image::vw_io::none                    vw_io;
+      typedef trait::image::vw_set::none                   vw_set;
+      typedef trait::image::value_access::computed         value_access;
+      typedef trait::image::value_storage::disrupted       value_storage;
+      typedef trait::image::value_browsing::site_wise_only value_browsing;
+      typedef trait::image::value_alignement::irrelevant   value_alignement;
+      typedef trait::image::value_io::read_only            value_io;
 
-      typedef trait::image::access::browsing access;
-      typedef trait::image::space::fixme_    space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::fixme_  support;
+      // site / domain
+      typedef trait::image::pw_io::read         pw_io;
+      typedef /* FIXME: depends on S */  undef  localization;
+      typedef /* FIXME: depends on S */  undef  dimension;
 
-      typedef trait::image::border::none     border;
-      typedef trait::image::data::computed   data;
-      typedef trait::image::io::read_only    io;
+      // extended domain
+      typedef trait::image::ext_domain::none      ext_domain;
+      typedef trait::image::ext_value::irrelevant ext_value;
+      typedef trait::image::ext_io::irrelevant    ext_io;
     };
 
   } // end of namespace mln::trait
@@ -105,7 +118,8 @@ namespace mln
      *
      */
     template <typename F, typename S>
-    struct image : public internal::image_primary_< S, image<F,S> >
+    struct image :
+      public internal::image_primary<mln_result(F), S, image<F,S> >
     {
       /// Skeleton.
       typedef image< tag::function_<F>, tag::pset_<S> > skeleton;
@@ -118,60 +132,80 @@ namespace mln
       typedef mln_result(F) rvalue;
 
       /// Return type of read-write access.
-      typedef void lvalue; // FIXME
-
-      /// Value set associated type.
-      typedef mln::value::set<mln_result(F)> vset;
-
+      typedef rvalue lvalue;
 
       /// Constructor without argument.
       image();
 
       /// Constructor.
-      image(const Function_p2v<F>& f, const Point_Set<S>& ps);
+      image(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
-
-      /// Test if a pixel value is accessible at \p p.
-      bool owns_(const mln_psite(S)& p) const;
+      /// Initialize an empty image.
+      void init_(const Function_p2v<F>& f, const Site_Set<S>& ps);
 
       /// Give the definition domain.
       const S& domain() const;
 
+      /// Return the function which computes a site value.
+      F function() const;
+
       /// Read-only access of pixel value at point site \p p.
       mln_result(F) operator()(const mln_psite(S)& p) const;
 
-      /// Read-write access is present but disabled.
-      void operator()(const mln_psite(S)&);
-
-      /// Give the set of values of the image.
-      const vset& values() const;
+      /// Read-write access is present but return a temporary value.
+      mln_result(F) operator()(const mln_psite(S)&);
     };
 
   } // end of namespace mln::pw
 
+  template <typename F, typename S>
+  void init_(tag::function_t, Function_p2v<F>& target,
+	      const mln::pw::image<F,S>& model);
+
+  template <typename F, typename S, typename J>
+  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // init_
+
+  template <typename F, typename S>
+  void init_(tag::function_t, Function_p2v<F>& target,
+	      const mln::pw::image<F,S>& model)
+  {
+    target = model.function();
+  }
+
+  template <typename F, typename S, typename J>
+  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model)
+  {
+    F f;
+    init_(tag::function, f, model);
+    S s;
+    init_(tag::domain, s, model);
+    target.init_(f, s);
+  }
 
   // Operator.
 
   template <typename F, typename S>
   inline
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Point_Set<S>& ps)
+  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps)
   {
     pw::image<F,S> tmp(f, ps);
     return tmp;
   }
 
-  // internal::data_< pw::image<F,S> >
+  // internal::data< pw::image<F,S> >
 
   namespace internal
   {
-    /// \internal
+
     template <typename F, typename S>
     inline
-    data_< pw::image<F,S> >::data_(const F& f, const S& ps)
+    data< mln::pw::image<F,S> >::data(const F& f, const S& ps)
       : f_(f),
 	pset_(ps)
     {
@@ -192,16 +226,17 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    image<F,S>::image(const Function_p2v<F>& f, const Point_Set<S>& ps)
+    image<F,S>::image(const Function_p2v<F>& f, const Site_Set<S>& ps)
     {
-      this->data_ = new internal::data_< pw::image<F,S> >(exact(f), exact(ps));
+      this->data_ = new internal::data< pw::image<F,S> >(exact(f), exact(ps));
     }
 
     template <typename F, typename S>
     inline
-    bool image<F,S>::owns_(const mln_psite(S)& p) const
+    void
+    image<F,S>::init_(const Function_p2v<F>& f, const Site_Set<S>& ps)
     {
-      return this->data_->pset_.has(p);
+      this->data_ = new internal::data< image<F,S> >(exact(f), exact(ps));
     }
 
     template <typename F, typename S>
@@ -214,8 +249,17 @@ namespace mln
 
     template <typename F, typename S>
     inline
+    F
+    image<F,S>:: function() const
+    {
+      return this->data_->f_;
+    }
+
+
+    template <typename F, typename S>
+    inline
     mln_result(F)
-      image<F,S>::operator()(const mln_psite(S)& p) const
+    image<F,S>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->data_->pset_.has(p));
       return this->data_->f_(p);
@@ -223,18 +267,11 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    void
-    image<F,S>::operator()(const mln_psite(S)&)
+    mln_result(F)
+    image<F,S>::operator()(const mln_psite(S)& p)
     {
-      mln_invariant(0); // FIXME: Turn into a compile-time error...
-    }
-
-    template <typename F, typename S>
-    inline
-    const mln::value::set<mln_result(F)>&
-    image<F,S>::values() const
-    {
-      return vset::the();
+      mln_precondition(this->data_->pset_.has(p));
+      return this->data_->f_(p);
     }
 
   } // end of namespace mln::pw

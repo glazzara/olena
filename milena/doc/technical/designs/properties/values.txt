@@ -1,0 +1,240 @@
+-*- outline -*-
+
+                    Values related properties
+
+
+* What is this file about
+ -> Are the image properties about the values sufficient/correct?
+ -> What are the piece of interface related to each property?
+ -> How these values properties affect the fill/paste/transform process?
+
+* Image values properties:
+
+** value_access: /any/
+                  |
+                  + -- direct
+                  |
+                  + -- semi_direct
+                  |
+                  + -- computed
+
+=> Definition: This property indicates if the image value. are stored in
+memory.
+
+- direct: Images store all their values in memory, we can take a reference
+of the values.
+
+- semi_direct: Images store partially their value in memory, we can't take
+a reference on them. For instance, images that compute a value at the first
+access and store it in a buffer to speed up the next access, are semi-direct.
+
+- computed: All the image values are computed on the fly, at each access.
+
+
+** value_storage:/any/
+                  |
+                  + -- /organized/
+                  |      |
+                  |      + -- singleton
+                  |      |
+                  |      + -- one_block
+                  |      |
+                  |      + -- piecewise
+                  |
+                  + -- none
+
+
+*** Definition:
+ Indicate how the value are stored in memory
+
+- singleton: The image has only one values, this values is store in memory.
+   01
+   --
+0 |ee|  values in memory
+1 |ee|     ==========>   [e]
+   --
+
+
+
+- one_block: All the image values are stored in a buffer in memory.
+
+   01
+   --
+0 |ef|  values in memory
+1 |ge|     ==========>   [e, f, g, e]
+   --
+
+- piece_wise: The values are stored in several memory locations.
+
+example 1) RLE Image
+
+   013456
+   ------
+0 |ee    |  values in memory
+1 |  fff |     ==========>   [e], [f], [g]
+3 |   ggg|
+4 |      |
+   ------
+
+example 2) Sparse Image
+
+   013456
+   ------
+0 |ef    |  values in memory
+1 | faaff|     ==========>   [e, f], [f, a, a, f, f], [l, l, o, g, g]
+3 | llogg|
+4 |      |
+   ------
+
+- none: We don't have any information about the value storage.
+
+*** Methods related:
+ value_storage == singleton
+   => ima.value()        -> return the image value
+
+ value_storage == one_block (what about the fastest image?)
+   => image.nelements()  -> return the number of elements in memory
+   => image.buffer()     -> return the start adress of the ima buffer
+
+ value_storage == piece_wise
+   => image.pieces()     -> return all the pieces composing the image.
+
+** value_browsing:/any/
+                    |
+                    + -- site_wise_only
+                    |
+                    + -------- cell_wise
+                    |                 |
+                    + -- value_wise   |
+                                 \    |
+                                   -- + -- cell_and_value_wise
+
+=> Methods related:
+ value_browsing == value_wise
+   => ima.values_taken()               -> return the current values taken by
+                                          ima
+   => ima.sites(v)                     -> return the sites associated to the
+                                          value v
+// FIXME these method depend on value_taken more than ima
+   => ima.change_value(oldVal, newVal) -> change the value oldVal to newVal
+   => ima.apply(f)                     -> apply f (a function v2v) to all the
+                                          values
+
+ value_browsing == cell_wise
+   => ima.values_cell()                -> return the cells composing the image
+
+ value_browsing == cell_and_value_wise
+  method of value_wise property value + cell_wise property value
+
+
+** site_wise_io:/any/
+                  |
+                  + -- read_only
+                  |
+                  + -- read_write
+
+=> Definition:
+  Indicates the io permissions for the site access.
+  It replaces the property value_access.
+
+- read_only: We can only read the image values.
+- read_write: We can read and write the image values.
+
+ **Note**: RLE images are read only for the access sites.
+
+FIXME: Do we need a value_wise_io
+
+
+* Impact on the fill and paste algorithms
+
+** fill
+
+Fill an image ima with a value v.
+
+*** values_storage == oneblock
+// Replace by Memcopy?
+const unsigned n = ima.nelements();
+mln_value(I)* ptr = ima.buffer();
+for (unsigned i = 0; i < n; ++i)
+  *ptr++ = val;
+**** Method related
+-> nelements
+-> buffer
+
+*** value_storage == piece_wise
+// MemCopy on the runs?
+mln_miter(I::miter) mit(image.pieces())
+for_all(miter)
+   for (unsigned i = 0; i < miter.size(); ++i)
+    *miter.buffer[i] = v;
+**** Method/Type related
+  -> I::miter
+  -> ima.pieces
+
+*** value_browsing == value_wise
+// direct access to the value
+mln_viter(mln_taken_values(I)) viter(I.taken_values();
+for_all(viter);
+  ima.changes_values(viter, v);
+**** Method related:
+ -> iterator on value taken
+ -> change_values
+
+*** generic case
+mln_piter(I) p(ima.domain());
+for_all(p)
+  ima(p) = v;
+
+** Paste
+
+Paste value data from an image source to destination.
+
+*** values_storage == oneblock (for source an destination)
+// Replace by Memcopy?
+const unsigned n = ima.nelements();
+mln_value(I)* ptr_src = source.buffer();
+mln_value(I)* ptr_dest = destination.buffer();
+for (unsigned i = 0; i < n; ++i)
+  *ptr_src++ = *ptr_dest++;
+
+
+*** generic case
+mln_piter(I) p(source.domain());
+for_all(p)
+  destination(p) = source(p);
+
+* To keep in Mind
+
+-image storage in memory
+
+=> Computed
+  [...]
+
+=> All is store
+
+    0 1 2 3 4
+   ----------
+0 |eeeeeeeeee|
+1 |errrbbbgge|
+2 |ebbbggrrre|
+3 |errbbbrrbe| // e is the extended border
+4 |eeeeeeeeee|
+   ----------
+
+
+=> Run
+
+    0 1 2 3 4
+   ----------
+0 |          |
+1 |   rbrrb  |
+2 |          |
+3 |     bbbbb|
+4 |grgbb     |
+   ----------
+
+=> Values oriented
+
+r : (5,2), (4, 2), (6, 2)
+g : (5,4), (4, 4), (6, 3)
+b : (2,2), (1, 2), (3, 2)

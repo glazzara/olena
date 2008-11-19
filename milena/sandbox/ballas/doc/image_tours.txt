@@ -47,7 +47,7 @@ Properties are a way to classify the images depends or their types.
 
   Some operators are only defined in special cases. Properties provide a way to
 check that the operator's input types respect the operator requirements.
-frf
+
 *** Specialization of an Algorithm
 
 Example:

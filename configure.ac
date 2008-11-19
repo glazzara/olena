@@ -144,6 +144,9 @@ AC_CONFIG_FILES([
     external/Makefile
     milena/Makefile
       milena/doc/Makefile
+      milena/doc/tutorial/Makefile
+      milena/doc/tutorial/samples/Makefile
+      milena/mesh/Makefile
       milena/tools/Makefile
 ])
 
@@ -170,10 +173,16 @@ AC_CONFIG_FILES([
       milena/tests/canvas/morpho/Makefile
     milena/tests/convert/Makefile
     milena/tests/core/Makefile
+      milena/tests/core/alias/Makefile
+      milena/tests/core/image/Makefile
+      milena/tests/core/other/Makefile
+      milena/tests/core/routine/Makefile
+      milena/tests/core/site_set/Makefile
     milena/tests/debug/Makefile
     milena/tests/display/Makefile
     milena/tests/draw/Makefile
     milena/tests/estim/Makefile
+    milena/tests/extension/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
       milena/tests/fun/p2b/Makefile
@@ -185,6 +194,7 @@ AC_CONFIG_FILES([
     milena/tests/histo/Makefile
     milena/tests/io/Makefile
       milena/tests/io/fits/Makefile
+      milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
       milena/tests/io/pfm/Makefile
       milena/tests/io/pgm/Makefile
@@ -210,12 +220,14 @@ AC_CONFIG_FILES([
     milena/tests/subsampling/Makefile
     milena/tests/tag/Makefile
     milena/tests/test/Makefile
+    milena/tests/topo/Makefile
     milena/tests/trace/Makefile
     milena/tests/trait/Makefile
       milena/tests/trait/image/Makefile
       milena/tests/trait/op/Makefile
       milena/tests/trait/value/Makefile
     milena/tests/util/Makefile
+    milena/tests/unit_test/Makefile
     milena/tests/value/Makefile
       milena/tests/value/builtin/Makefile
       milena/tests/value/concept/Makefile

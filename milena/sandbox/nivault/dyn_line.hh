@@ -34,9 +34,9 @@
  */
 
 # include <mln/core/concept/window.hh>
-# include <mln/core/internal/dpoints_base.hh>
+# include <mln/core/internal/dpsites_impl.hh>
 # include <mln/core/dpoint.hh>
-# include <mln/core/dpoints_piter.hh>
+# include <mln/core/dpsites_piter.hh>
 
 
 namespace mln
@@ -47,7 +47,7 @@ namespace mln
  
     template <typename M, typename C>
     struct dyn_line : public Window< dyn_line<M,C> >,
-		      public internal::dpoints_base_<dpoint_<M, C>, point_<M, C> >
+		      public internal::dpsites_impl<dpoint_<M, C>, point_<M, C> >
     {
       /// Point associated type.
       typedef point_<M, int> point;
@@ -55,11 +55,11 @@ namespace mln
       /// Dpoint associated type.
       typedef dpoint_<M, int> dpoint;
 
-      /// Point_Iterator type to browse a dyn_line forward
-      typedef dpoints_fwd_piter<dpoint> fwd_qiter;
+      /// Site_Iterator type to browse a dyn_line forward
+      typedef dpsites_fwd_piter<dpoint> fwd_qiter;
 
-      /// Point_Iterator type to browse a dyn_line backward
-      typedef dpoints_bkd_piter<dpoint> bkd_qiter;
+      /// Site_Iterator type to browse a dyn_line backward
+      typedef dpsites_bkd_piter<dpoint> bkd_qiter;
 
       /// Same as fwd_qiter
       typedef fwd_qiter qiter;

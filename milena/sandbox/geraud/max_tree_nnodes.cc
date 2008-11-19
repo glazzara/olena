@@ -6,8 +6,8 @@
 # include <mln/morpho/includes.hh>
 # include <mln/level/sort_psites.hh>
 
-# include <mln/core/image2d.hh>
-# include <mln/core/neighb2d.hh>
+# include <mln/core/image/image2d.hh>
+# include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/io/pgm/load.hh>
 
@@ -19,7 +19,7 @@ namespace mln
   template <typename I, typename N>
   struct max_tree_
   {
-    typedef mln_point(I) point;
+    typedef mln_site(I) point;
     typedef p_array<point> S;
 
     // in:
@@ -30,7 +30,6 @@ namespace mln
     S s;
     mln_ch_value(I, bool)  deja_vu;
     mln_ch_value(I, point) parent;
-    mln_ch_value(I, point) neighb;
     mln_ch_value(I, point) zpar;
 
     max_tree_(const I& f, const N& nbh)
@@ -45,7 +44,6 @@ namespace mln
       // init
       {
 	initialize(deja_vu, f);
-	initialize(neighb, f);
 	mln::level::fill(deja_vu, false);
 	initialize(parent, f);
 	initialize(zpar, f);

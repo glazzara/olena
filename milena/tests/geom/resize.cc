@@ -32,9 +32,9 @@
  *  \brief Tests on mln::geom::resize.
  */
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/geom/resize.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -60,7 +60,7 @@ main ()
 	{105, 107, 109, 111, 113, 115, 117, 119}
       };
 
-    image2d<int> ref(make::image2d(ws));
+    image2d<int> ref(make::image(ws));
 
     mln_assertion (out == ref);
   }

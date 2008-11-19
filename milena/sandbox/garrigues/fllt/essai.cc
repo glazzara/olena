@@ -1,6 +1,6 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/sub_image.hh>
 
 #include <mln/core/image_if_value.hh>
 
@@ -22,8 +22,8 @@ using value::int_u8;
 //   {
 //     bb_.init();
 //     level::fill(ima_, false);
-//     bb_.take(make::point2d(2,2));
-//     bb_.take(make::point2d(2,3));
+//     bb_.take(point2d(2,2));
+//     bb_.take(point2d(2,3));
 //   }
 
 //   sub_image<image2d<value::int_u8>, box2d> image()

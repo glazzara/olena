@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,12 @@
 #ifndef MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 # define MLN_CORE_CONCEPT_NEIGHBORHOOD_HH
 
-/*! \file mln/core/concept/neighborhood.hh
- * \brief Definition of the concept of mln::Neighborhood.
- */
+/// \file mln/core/concept/neighborhood.hh
+///
+/// Definition of the concept of mln::Neighborhood.
 
 # include <mln/core/concept/object.hh>
+# include <mln/trait/windows.hh>
 
 
 namespace mln
@@ -41,7 +43,9 @@ namespace mln
   // Fwd decl.
   template <typename E> struct Neighborhood;
 
-  // Neighborhood category flag type.
+
+  /// Neighborhood category flag type.
+
   template <>
   struct Neighborhood<void>
   {
@@ -49,28 +53,42 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation classes that are neighborhoods.
-   *
-   * \see mln::doc::Neighborhood for a complete documentation of this
-   * class contents.
-   */
+  /// \brief Base class for implementation classes that are neighborhoods.
+  ///
+  /// \see mln::doc::Neighborhood for a complete documentation of this
+  /// class contents.
+
   template <typename E>
   struct Neighborhood : public Object<E>
   {
     typedef Neighborhood<void> category;
 
     /*
-      typedef niter;
+      typedef     niter;
       typedef fwd_niter;
       typedef bkd_niter;
 
-      typedef dpoint;
-      typedef  point;
+      typedef window;
+      either
+        const window& win() const;
+      or
+        window win() const;
     */
 
   protected:
     Neighborhood();
   };
+
+
+
+  template <typename L, typename R>
+  bool operator==(const Neighborhood<L>& lhs, const Neighborhood<R>& rhs);
+
+
+  template <typename N>
+  std::ostream&
+  operator<<(std::ostream&ostr, const Neighborhood<N>& nbh);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -79,11 +97,36 @@ namespace mln
   inline
   Neighborhood<E>::Neighborhood()
   {
-    typedef mln_niter(E) niter;
+    typedef mln_niter(E)         niter;
     typedef mln_fwd_niter(E) fwd_niter;
     typedef mln_bkd_niter(E) bkd_niter;
-    typedef mln_dpoint(E) dpoint;
-    typedef mln_point(E)   point;
+
+    typedef mln_window(E) window;
+    bool m = (& E::win) == (& E::win);
+    m = 0;
+# if 0
+    /* FIXME: Disabled, as win() can either return a const reference
+       or a copy of the window (see documentation above).  Hence the
+       simpler, relaxed check above (m0).  */
+    const window& (E::*m1)() const = & E::win;
+    m = m1;
+# endif
+  }
+
+
+  template <typename L, typename R>
+  inline
+  bool operator==(const Neighborhood<L>& lhs, const Neighborhood<R>& rhs)
+  {
+    return exact(lhs).win() == exact(rhs).win();
+  }
+
+  template <typename N>
+  inline
+  std::ostream&
+  operator<<(std::ostream&ostr, const Neighborhood<N>& nbh)
+  {
+    return ostr << exact(nbh).win();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

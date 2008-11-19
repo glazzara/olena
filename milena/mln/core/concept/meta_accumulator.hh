@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
 # define MLN_CORE_CONCEPT_META_ACCUMULATOR_HH
 
-/*! \file mln/core/concept/meta_accumulator.hh
- *
- * \brief Definition of the concept of mln::Meta_Accumulator.
- */
+/// \file mln/core/concept/meta_accumulator.hh
+///
+/// Definition of the concept of mln::Meta_Accumulator.
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/accumulator.hh>
@@ -83,6 +82,23 @@ namespace mln
   };
 
 
+  namespace accu
+  {
+
+    // To be specialized when some state (attributes) have to be transfered
+    // from the meta-accumulator to the accumulator.
+    // Warning: the first argument has to be an object with the exact type.
+    template <typename M, typename T>
+    mln_accu_with(M, T)
+    unmeta(const M&, T);
+
+    template <typename M, typename T>
+    void
+    unmeta(const Meta_Accumulator<M>&, T); // Safety.
+
+  } // end of namespace mln::accu
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -92,6 +108,21 @@ namespace mln
   {
     // FIXME: Check "with" on E.
   }
+
+  namespace accu
+  {
+
+    template <typename M, typename T>
+    inline
+    mln_accu_with(M, T)
+    unmeta(const M&, T)
+    {
+      mlc_is_a(M, Meta_Accumulator)::check();
+      mln_accu_with(M, T) a;
+      return a;
+    }
+
+  } // end of namespace mln::accu
 
 # endif // ! MLN_INCLUDE_ONLY
 

@@ -35,7 +35,7 @@
  *
  */
 
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/util/tree.hh>
 # include <mln/util/branch_iter_ind.hh>
 
@@ -68,10 +68,10 @@ namespace mln
     {
     public:
 
-      /// Forward Point_Iterator associated type.
+      /// Forward Site_Iterator associated type.
       typedef mln_fwd_piter_(box2d) fwd_piter;
 
-      /// Backward Point_Iterator associated type.
+      /// Backward Site_Iterator associated type.
       typedef mln_bkd_piter_(box2d) bkd_piter;
 
       /// Constructor.
@@ -96,14 +96,14 @@ namespace mln
       const box2d& bbox() const;
 
       /// Give the number of points.
-      unsigned npoints() const;
+      unsigned nsites() const;
 
       /// Hook to the image2d containing the points.
       sub_image<image2d<value::int_u8>, box2d> image();
 
     private:
       image2d<value::int_u8> ima_;
-      unsigned npoints_;
+      unsigned nsites_;
       accu::bbox<point2d> bb_;
     };
 
@@ -115,7 +115,7 @@ namespace mln
       : ima_(b)
     {
       bb_.init();
-      npoints_ = 0;
+      nsites_ = 0;
 
       level::fill(ima_, false);
     }
@@ -127,7 +127,7 @@ namespace mln
     {
       bb_.take(p);
       ima_(p) = domain;
-      npoints_++;
+      nsites_++;
       return *this;
     }
 
@@ -153,7 +153,7 @@ namespace mln
     void
     ran_domains::clear()
     {
-      if (npoints_ == 0)
+      if (nsites_ == 0)
 	return;
 
       //       unsigned bb_nrows  = geom::nrows(bb_.to_result());
@@ -171,7 +171,7 @@ namespace mln
       //       else
       level::fill(ima_, false);
 
-      npoints_ = 0;
+      nsites_ = 0;
       bb_.init();
     }
 
@@ -180,22 +180,22 @@ namespace mln
     const box2d&
     ran_domains::bbox() const
     {
-      mln_precondition(npoints_ != 0);
+      mln_precondition(nsites_ != 0);
       return bb_.to_result();
     }
 
     inline
     unsigned
-    ran_domains::npoints() const
+    ran_domains::nsites() const
     {
-      return npoints_;
+      return nsites_;
     }
 
     inline
     sub_image<image2d<value::int_u8>, box2d>
     ran_domains::image()
     {
-      mln_precondition(npoints_ > 0);
+      mln_precondition(nsites_ > 0);
       mln_assertion(ima_.has_data());
       return ima_ | bb_.to_result();
     }

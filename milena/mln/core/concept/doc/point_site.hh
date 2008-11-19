@@ -54,12 +54,12 @@ namespace mln
        */
       typedef void mesh;
 
-      /*! \brief Point associated type.
+      /*! \brief Site associated type.
        * \invariant This type has to derive from mln::Point.
        */
       typedef void point;
 
-      /*! \brief Dpoint associated type.
+      /*! \brief Dpsite associated type.
        * \invariant This type has to derive from mln::Dpoint.
        */
       typedef void dpoint;

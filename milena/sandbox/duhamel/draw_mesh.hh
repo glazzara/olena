@@ -3,7 +3,7 @@
 
 # include <mln/pw/image.hh>
 # include <mln/core/image2d_b.hh>
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/level/fill.hh>
 # include <mln/draw/line.hh>
 # include <mln/core/mesh_p.hh>
@@ -20,7 +20,7 @@ namespace mln
 	     point2d p2,
 	     mln_value(I) link_v)
     {
-      mln_dpoint(I) d = p1 - p2;
+      mln_dpsite(I) d = p1 - p2;
 
       std::cout << "dx = "
 		<< d[0]
@@ -33,20 +33,20 @@ namespace mln
 	  if (d[1])
 	    if (d[1] > 0)
 	      for (int y = p1[1]; y > p2[1]; --y)
-		exact(ima)(make::point2d(p1[0],y)) = link_v;
+		exact(ima)(point2d(p1[0],y)) = link_v;
 	    else
 	      for (int y = p1[1]; y < p2[1]; ++y)
-		exact(ima)(make::point2d(p1[0],y)) = link_v;
+		exact(ima)(point2d(p1[0],y)) = link_v;
 	}
       else // d[0] != 0
 	{
 	  if (!d[1])
 	    if (d[0] > 0)
 	      for (int x = p1[0]; x > p2[0]; --x)
-		exact(ima)(make::point2d(x, p1[1])) = link_v;
+		exact(ima)(point2d(x, p1[1])) = link_v;
 	    else
 	      for (int x = p1[0]; x < p2[0]; ++x)
-		exact(ima)(make::point2d(x, p1[1])) = link_v;
+		exact(ima)(point2d(x, p1[1])) = link_v;
 	  else // d[0] != 0 && d[1] != 0
 	    {
 	      float e = 0;
@@ -61,7 +61,7 @@ namespace mln
 			  e -= (float)d[1];
 			  for (int y = p1[1] - 1; y > p2[1]; --y)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[0];
 			      if (e >= 0)
 				{
@@ -77,7 +77,7 @@ namespace mln
 			  e -= (float)d[0];
 			  for (int x = p1[0] - 1; x > p2[0]; --x)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[1];
 			      if (e > 0)
 				{
@@ -96,7 +96,7 @@ namespace mln
 			  e += (float)d[1];
 			  for (int y = p1[1] + 1; y < p2[1]; ++y)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[0];
 			      if (e >= 0)
 				{
@@ -112,7 +112,7 @@ namespace mln
 			  e += (float)d[0];
 			  for (int x = p1[0] - 1; x > p2[0]; --x)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[1];
 			      if (e <= 0)
 				{
@@ -134,7 +134,7 @@ namespace mln
 			  e += (float)d[1];
 			  for (int y = p1[1] - 1; y > p2[1]; --y)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[0];
 			      if (e < 0)
 				{
@@ -150,7 +150,7 @@ namespace mln
 			  e -= (float)d[0];
 			  for (int x = p1[0] + 1; x < p2[0]; ++x)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e -= (float)d[1];
 			      if (e < 0)
 				{
@@ -169,7 +169,7 @@ namespace mln
 			  e -= (float)d[1];
 			  for (int y = p1[1] + 1; y < p2[1]; ++y)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[0];
 			      if (e < 0)
 				{
@@ -185,7 +185,7 @@ namespace mln
 			  e -= (float)d[0];
 			  for (int x = p1[0] + 1; x < p2[0]; ++x)
 			    {
-			      exact(ima)(make::point2d(x,y)) = link_v;
+			      exact(ima)(point2d(x,y)) = link_v;
 			      e += (float)d[1];
 			      if (e <= 0)
 				{

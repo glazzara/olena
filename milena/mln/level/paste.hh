@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/inplace.hh>
+
 
 
 // Specializations are in:
@@ -49,29 +49,51 @@ namespace mln
   namespace level
   {
 
-    /*!
-     *  \brief Paste the contents of image \p data into the image \p
-     *  destination.
-     *
-     * \param[in] data The input image providing pixels values.
-     * \param[in,out] destination The image in which values are
-     * assigned.
-     *
-     * This routine runs: \n
-     * for all p of \p data, \p destination(p) = \p data(p).
-     *
-     * \warning The definition domain of \p data has to be included in
-     * the one of \p destination; so using mln::safe_image does not
-     * make pasting outside the destination domain work.
-     *
-     * \pre \p data.domain <= \p destination.domain
-     */
+    /// \brief Paste the contents of image \p input into the image \p
+    /// output.
+    ///
+    /// \param[in] input The input image providing pixels values.
+    /// \param[in,out] output The image in which values are
+    /// assigned.
+    ///
+    /// This routine runs: \n
+    /// for all p of \p input, \p output(p) = \p input(p).
+    ///
+    /// \warning The definition domain of \p input has to be included in
+    /// the one of \p output; so using mln::safe_image does not
+    /// make pasting outside the output domain work.
+    ///
+    /// \pre \p input.domain <= \p output.domain
+    ///
+    /// \{
     template <typename I, typename J>
-    void paste(const Image<I>& data, Image<J>& destination);
+    void paste(const Image<I>& input, Image<J>& output);
+    /// \}
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+    namespace internal
+    {
+
+      template <typename I, typename J>
+      inline
+      void paste_tests(const Image<I>& input, Image<J>& output)
+      {
+	mlc_is(mln_trait_image_pw_io(J), trait::image::pw_io::read_write)::
+          check();
+	mlc_converts_to(mln_value(I), mln_value(J))::check();
+
+	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).domain() <= exact(output).domain());
+
+        // Avoid warning when compiling with NDEBUG
+	(void)input;
+	(void)output;
+      }
+
+    } // end of namespace mln::level::internal
 
     namespace impl
     {
@@ -81,15 +103,21 @@ namespace mln
 
 	template <typename I, typename J>
 	inline
-	void paste_(const I& data, J& destination)
+	void paste(const Image<I>& input_, Image<J>& output_)
 	{
-	  trace::entering("level::impl::generic::paste_");
+	  trace::entering("level::impl::generic::paste");
 
-	  mln_piter(I) p(data.domain());
+	  level::internal::paste_tests(input_, output_);
+
+	  const I& input  = exact(input_);
+	  J& output = exact(output_);
+
+
+	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    destination(p) = data(p);
+	    output(p) = input(p);
 
-	  trace::exiting("level::impl::generic::paste_");
+	  trace::exiting("level::impl::generic::paste");
 	}
 
       } // end of namespace mln::level::impl::generic
@@ -101,19 +129,13 @@ namespace mln
 
     template <typename I, typename J>
     inline
-    void paste(const Image<I>& data_, Image<J>& destination_)
+    void paste(const Image<I>& input, Image<J>& output)
     {
       trace::entering("level::paste");
 
-      const I& data  = exact(data_);
-      J& destination = exact(destination_);
 
-      mlc_is(mln_trait_image_io(J), trait::image::io::write)::check();
-      mlc_converts_to(mln_value(I), mln_value(J))::check();
-      mln_precondition(data.domain() <= destination.domain());
-
-      impl::paste_(mln_trait_image_data(I)(), data,
-		   mln_trait_image_data(J)(), destination);
+      internal::paste_tests(input, output);
+      internal::paste_(input, output);
 
       trace::exiting("level::paste");
     }

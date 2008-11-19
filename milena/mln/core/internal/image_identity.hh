@@ -31,6 +31,9 @@
 /*! \file mln/core/internal/image_identity.hh
  *
  * \brief Definition of a base class for image morphers w.r.t. identity.
+ *
+ * \todo Move "fastest impl" elsewhere; it can be used by some other
+ * classes.
  */
 
 # include <mln/core/internal/image_morpher.hh>
@@ -43,17 +46,92 @@ namespace mln
   {
 
 
-    /*! \internal A base class for image morphers w.r.t. identity.
+    // Fastest.
+
+    template <typename trait_speed, typename I, typename E>
+    struct image_identity_impl__fastest
+    {
+      // Nothing.
+    };
+
+    template <typename I, typename E>
+    struct image_identity_impl__fastest< mln::trait::image::speed::fastest, I, E >
+    {
+    private:
+
+      mlc_const(I)& del_() const
+      {
+	return * internal::force_exact<const E>(*this).delegatee_();
+      }
+
+      I& del_()
+      {
+	return * internal::force_exact<E>(*this).delegatee_();
+      }
+
+    public:
+
+      int delta_index(const mln_deduce(I, psite, delta)& dp) const
+      {
+	return del_().delta_index(dp);
+      }
+
+      mln_site(I) point_at_index(unsigned i) const
+      {
+	return del_().point_at_index(i);
+      }
+
+      unsigned border() const
+      {
+	return del_().border();
+      }
+
+      mln_qlf_value(I)* buffer()
+      {
+	return del_().buffer();
+      }
+
+      const mln_value(I)* buffer() const
+      {
+	return del_().buffer();
+      }
+
+      mln_rvalue(I) element(unsigned i) const
+      {
+	return del_().element(i);
+      }
+
+      mln_lvalue(I) element(unsigned i)
+      {
+	return del_().element(i);
+      }
+
+      unsigned nelements() const
+      {
+	return del_().nelements();
+      }
+    };
+
+    // Facade.
+
+    template <typename I, typename E>
+    struct image_identity_impl
+      : image_identity_impl__fastest< mln_trait_image_speed(E), I, E >
+    {
+    };
+
+
+
+    /*! A base class for image morphers w.r.t. identity.
      * Parameter \p S is a point set type.
      *
      */
     template <typename I, typename S, typename E>
-    class image_identity_ : public image_morpher_<I, S, E>
+    class image_identity
+      : public image_identity_impl<I, E>,
+	public image_morpher<I, mln_value(I), S, E>
     {
     public:
-
-      /// Value_Set associated type.
-      typedef mln_vset(I) vset;
 
       /// Value associated type.
       typedef mln_value(I) value;
@@ -62,11 +140,7 @@ namespace mln
       typedef mln_rvalue(I) rvalue;
 
       /// Return type of read-write access.
-      typedef typename internal::morpher_lvalue_<I>::ret lvalue;
-
-
-      /// Give the set of values.
-      const vset& values() const;
+      typedef mln_morpher_lvalue(I) lvalue;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const mln_psite(S)& p) const;
@@ -76,36 +150,28 @@ namespace mln
 
       // FIXME Matthieu: Doc!  Cf. core/concept/doc/image
       const mln_pset(I)& domain() const;
-      bool owns_(const mln_psite(I)& p) const;
+      bool has(const mln_psite(I)& p) const;
 
     protected:
 
       /// Constructor.
-      image_identity_();
+      image_identity();
     };
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I, typename S, typename E>
     inline
-    image_identity_<I,S,E>::image_identity_()
+    image_identity<I, S, E>::image_identity()
     {
-    }
-
-    template <typename I, typename S, typename E>
-    inline
-    const mln_vset(I)&
-    image_identity_<I,S,E>::values() const
-    {
-      mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->values();
     }
 
     template <typename I, typename S, typename E>
     inline
     mln_rvalue(I)
-    image_identity_<I,S,E>::operator()(const mln_psite(S)& p) const
+    image_identity<I, S, E>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -113,8 +179,8 @@ namespace mln
 
     template <typename I, typename S, typename E>
     inline
-    typename image_identity_<I,S,E>::lvalue
-    image_identity_<I,S,E>::operator()(const mln_psite(S)& p)
+    typename image_identity<I, S, E>::lvalue
+    image_identity<I, S, E>::operator()(const mln_psite(S)& p)
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->operator()(p);
@@ -123,7 +189,7 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     const mln_pset(I)&
-    image_identity_<I,S,E>::domain() const
+    image_identity<I, S, E>::domain() const
     {
       mln_precondition(this->delegatee_() != 0);
       return this->delegatee_()->domain();
@@ -132,11 +198,12 @@ namespace mln
     template <typename I, typename S, typename E>
     inline
     bool
-    image_identity_<I,S,E>::owns_(const mln_psite(I)& p) const
+    image_identity<I, S, E>::has(const mln_psite(I)& p) const
     {
       mln_precondition(this->delegatee_() != 0);
-      return this->delegatee_()->owns_(p);
+      return this->delegatee_()->has(p);
     }
+
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::internal

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -72,7 +73,7 @@ namespace mln
      * \pre \p p + \p n is <= \p input size.
      */
     template <typename I>
-    void memset_(I& input, const mln_point(I)& p,
+    void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n);
 
 
@@ -128,11 +129,11 @@ namespace mln
       typedef mln_image(P) I;
       metal::is_not_const<I>::check();
 
-      P& pix = internal::force_exact<P>(pix_);
+      P& pix = mln::internal::force_exact<P>(pix_);
       mln_precondition(pix.ima().has_data());
       mln_precondition(& pix.val() >= & pix.ima()[0]);
-      mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().ncells());
-      mln_precondition(& pix.val() + n <= & pix.ima()[0] + pix.ima().ncells());
+      mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().nelements());
+      mln_precondition(& pix.val() + n <= & pix.ima()[0] + pix.ima().nelements());
 
       impl::memset__(pix, v, n);
 
@@ -141,7 +142,7 @@ namespace mln
 
     template <typename I>
     inline
-    void memset_(I& input, const mln_point(I)& p,
+    void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
       trace::entering("level::memset_");
@@ -149,8 +150,8 @@ namespace mln
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       mln_precondition(input.has_data());
-      mln_precondition(input.owns_(p));
-      mln_precondition(input.offset_at(p) + n <= input.ncells());
+      mln_precondition(input.has(p));
+      mln_precondition(input.index_of_point(p) + n <= input.nelements());
 
       pixel<I> pix(input, p);
       impl::memset__(pix, v, n);

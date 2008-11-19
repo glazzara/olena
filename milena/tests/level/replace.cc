@@ -30,7 +30,7 @@
  * \brief Tests on mln::level::replace.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/level/replace.hh>
 #include <mln/level/compare.hh>
 
@@ -47,7 +47,7 @@ int main()
 
   };
 
-  image2d<int> rhs = make::image2d(vs);
+  image2d<int> rhs = make::image(vs);
 
   level::replace(rhs, 10, 11);
 
@@ -58,6 +58,6 @@ int main()
     {  8, 9, 11  },
   };
 
-  mln_assertion(make::image2d(vs_ref) == rhs);
+  mln_assertion(make::image(vs_ref) == rhs);
 
 }

@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
-# include <mln/core/concept/point_set.hh>
+# include <mln/core/concept/site_set.hh>
 
 
 namespace mln
@@ -60,7 +60,7 @@ namespace mln
      * \param[in] f The predicate.
      */
     template <typename S, typename F>
-    bool predicate(const Point_Set<S>& pset, const Function_p2b<F>& f);
+    bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f);
 
   
 # ifndef MLN_INCLUDE_ONLY
@@ -94,7 +94,7 @@ namespace mln
 
       template <typename S, typename F>
       inline
-      bool predicate_(const Point_Set<S>& pset, const F& f)
+      bool predicate_(const Site_Set<S>& pset, const F& f)
       {
 	mln_piter(S) p(exact(pset));
 	for_all(p)
@@ -119,7 +119,7 @@ namespace mln
 
     template <typename S, typename F>
     inline
-    bool predicate(const Point_Set<S>& pset, const Function_p2b<F>& f)
+    bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f)
     {
       return impl::predicate_(exact(pset), exact(f));
     }

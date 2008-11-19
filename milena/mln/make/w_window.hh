@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -47,13 +47,13 @@ namespace mln
     /*! \brief Create a mln::w_window from a window and a weight
      *  function.
      *
-     * \param[in] win The window.
+     * \param[in] win A simple window.
      * \param[in] wei A weight function.
      *
-     * \return A  weighted window.
+     * \return A weighted window.
      */
     template <typename W, typename F>
-    mln::w_window<mln_dpoint(W), mln_result(F)>
+    mln::w_window<mln_dpsite(W), mln_result(F)>
     w_window(const Window<W>& win, const Function_p2v<F>& wei);
 
 
@@ -61,18 +61,27 @@ namespace mln
 
     template <typename W, typename F>
     inline
-    mln::w_window<mln_dpoint(W), mln_result(F)>
+    mln::w_window<mln_dpsite(W), mln_result(F)>
     w_window(const Window<W>& win_, const Function_p2v<F>& wei_)
     {
+      trace::entering("make::w_window");
+
+      mln_is_simple_window(W)::check();
+
       const W& win = exact(win_);
       const F& wei = exact(wei_);
       mln_precondition(! win.is_empty());
-      typedef mln_dpoint(W) D;
-      typedef mln_point(D)  P;
+
+      typedef mln_dpsite(W) D;
       mln::w_window<D, mln_result(F)> w_win;
-      mln_qiter(W) q(win, P::origin);
+
+      typedef mln_psite(D) P;
+      P O = literal::origin;
+      mln_qiter(W) q(win, O);
       for_all(q)
-	w_win.insert(wei(q), q - P::origin);
+	w_win.insert(wei(q), q - O);
+
+      trace::exiting("make::w_window");
       return w_win;
     }
 

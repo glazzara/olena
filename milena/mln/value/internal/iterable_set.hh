@@ -53,7 +53,7 @@ namespace mln
     namespace internal
     {
 
-      /*! \internal Class that defines the set of values of type \c T.
+      /*! Class that defines the set of values of type \c T.
        * This is the exhaustive iterable_set of values obtainable from type \c T.
        */
       template <typename T, typename E>
@@ -79,6 +79,7 @@ namespace mln
 
 	/// Give the number of values.
 	unsigned nvalues() const;
+
       };
 
 

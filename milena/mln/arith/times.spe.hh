@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_ARITH_TIMES_SPE_HH
 # define MLN_ARITH_TIMES_SPE_HH
 
-/*! \file mln/arith/times.spe.hh
- *
- * \brief Specializations for mln::arith::times.
- *
- */
+/// \file mln/arith/times.spe.hh
+///
+/// Specializations for mln::arith::times.
 
 # ifndef MLN_ARITH_TIMES_HH
 #  error "Forbidden inclusion of *.spe.hh"

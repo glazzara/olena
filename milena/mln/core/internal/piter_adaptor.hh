@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -31,10 +31,14 @@
 /*! \file mln/core/internal/piter_adaptor.hh
  *
  * \brief Definition of iterators on points of boxes.
+ *
+ * \todo Rename as site_iterator_adaptor_base.
+ *
+ * \todo Distinguish between adaptors of site_set_iterator,
+ * site_relative_iterator, etc. (?)
  */
 
-# include <mln/core/internal/point_iterator_base.hh>
-# include <mln/core/concept/box.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 
 
 namespace mln
@@ -43,115 +47,125 @@ namespace mln
   namespace internal
   {
 
-    /*! \internal A base class for point iterator adaptors.
+    /*! A base class for point iterator adaptors.
+     *
      * Parameter \c Pi is the type of the point iterator adaptee;
      * parameter E is the exact type.
      */
-    template <typename Pi, typename E>
-    class piter_adaptor_ : public internal::point_iterator_base_< mln_psite(Pi), E >
+    template <typename Pi, typename S, typename E>
+    class piter_adaptor_ : public internal::site_iterator_base< S, E >
     {
-      typedef internal::point_iterator_base_< mln_psite(Pi), E > super_;
     public:
 
-      // Make dim definition from super class available.
-      enum { dim = super_::dim };
+      /// Constructor without argument.
+      piter_adaptor_();
 
       /// Constructor from a point iterator \p piter.
       piter_adaptor_(const Pi& piter);
 
-      /// Convertion to point.
-      operator mln_point(Pi) () const;
-
-      /// Reference to the corresponding point.
-      const mln_point(Pi)& to_point() const;
-
-      /// Give the i-th coordinate.
-      mln_coord(Pi) operator[](unsigned i) const;
-
       /// Test the iterator validity.
-      bool is_valid() const;
+      bool is_valid_() const;
 
       /// Invalidate the iterator.
-      void invalidate();
+      void invalidate_();
 
       /// Start an iteration.
-      void start();
+      void start_();
 
       /// Go to the next point.
       void next_();
 
+      /// Hook to the current location.
+      const mln_psite(S)& p_hook_() const;
+
+      /// Change the site set targeted by this iterator. 
+      void change_target(const S& s);
+
+      /// Change the site set targeted by pi_.  This default impl is a
+      /// no-op.  This method might be overridden.
+      void pi_change_target_(const S& s);
+
     protected:
 
-      Pi piter_; // own copy
+      /// The adaptee site iterator.
+      Pi pi_;
     };
-
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
-    piter_adaptor_<Pi,E>::piter_adaptor_(const Pi& piter)
-      : piter_(piter)
+    piter_adaptor_<Pi,S,E>::piter_adaptor_()
     {
-      invalidate();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
-    piter_adaptor_<Pi,E>::operator mln_point(Pi) () const
+    piter_adaptor_<Pi,S,E>::piter_adaptor_(const Pi& pi)
+      : pi_(pi)
     {
-      return piter_;
+      invalidate_();
     }
 
-    template <typename Pi, typename E>
-    inline
-    const mln_point(Pi)&
-    piter_adaptor_<Pi,E>::to_point() const
-    {
-      return piter_.to_point();
-    }
-
-    template <typename Pi, typename E>
-    inline
-    mln_coord(Pi)
-    piter_adaptor_<Pi,E>::operator[](unsigned i) const
-    {
-      assert(i < dim);
-      return piter_[i];
-    }
-
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     bool
-    piter_adaptor_<Pi,E>::is_valid() const
+    piter_adaptor_<Pi,S,E>::is_valid_() const
     {
-      return piter_.is_valid();
+      return pi_.is_valid();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::invalidate()
+    piter_adaptor_<Pi,S,E>::invalidate_()
     {
-      piter_.invalidate();
+      pi_.invalidate();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::start()
+    piter_adaptor_<Pi,S,E>::start_()
     {
-      piter_.start();
+      pi_.start();
     }
 
-    template <typename Pi, typename E>
+    template <typename Pi, typename S, typename E>
     inline
     void
-    piter_adaptor_<Pi,E>::next_()
+    piter_adaptor_<Pi,S,E>::next_()
     {
-      piter_.next();
+      pi_.next();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    const mln_psite(S)&
+    piter_adaptor_<Pi,S,E>::p_hook_() const
+    {
+      return pi_.p_hook_();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    void
+    piter_adaptor_<Pi,S,E>::change_target(const S& s)
+    {
+      this->s_ = & s;
+      // p might be also updated since it can hold a pointer towards
+      // the set it designates, so:
+      exact(this)->pi_change_target_(s);
+      // Last:
+      this->invalidate();
+    }
+
+    template <typename Pi, typename S, typename E>
+    inline
+    void
+    piter_adaptor_<Pi,S,E>::pi_change_target_(const S& s)
+    {
     }
 
 # endif // ! MLN_INCLUDE_ONLY

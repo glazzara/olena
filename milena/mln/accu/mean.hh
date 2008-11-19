@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_ACCU_MEAN_HH
 # define MLN_ACCU_MEAN_HH
 
-/*! \file mln/accu/mean.hh
- *
- * \brief Define an accumulator that computes a mean.
- *
- * \todo Use accu::pair just like in accu::min_max.
- */
+/// \file mln/accu/mean.hh
+///
+/// Define an accumulator that computes a mean.
+///
+/// \todo Use accu::pair just like in accu::min_max.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/count.hh>
@@ -47,8 +46,8 @@ namespace mln
   {
 
 
-    /*! \brief Generic mean accumulator class.
-     *
+    /// Generic mean accumulator class.
+    /*!
      * Parameter \c T is the type of values that we sum.  Parameter \c
      * S is the type to store the sum of values; the default type of
      * \c S is the summation type (property) of \c T.  Parameter \c M
@@ -58,51 +57,63 @@ namespace mln
     template <typename T,
 	      typename S = mln_sum(T),
 	      typename M = S>
-    struct mean_ : public mln::accu::internal::base_< M , mean_<T,S,M> >
+    struct mean : public mln::accu::internal::base< M , mean<T,S,M> >
     {
       typedef T argument;
       typedef M result;
 
-      mean_();
+      mean();
 
+      /// Manipulators.
+      /// \{
       void init();
       void take(const argument& t);
-      void take(const mean_<T,S,M>& other);
+      void take(const mean<T,S,M>& other);
+      /// \}
 
+      /// Get the value of the accumulator.
       M to_result() const;
+      operator M () const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
 
-      accu::count_<T> count_;
-      accu::sum_<T,S>   sum_;
+      accu::count<T> count_;
+      accu::sum<T,S>   sum_;
     };
 
 
 
     template <typename I, typename S, typename M>
-    struct mean_< util::pix<I>, S,M >;
+    struct mean< util::pix<I>, S,M >;
 
 
-    /*!
-     * \brief Meta accumulator for mean.
-     */
-    struct mean : public Meta_Accumulator< mean >
+    namespace meta
     {
-      template < typename T,
-		 typename S = mln_sum(T),
-		 typename M = S >
-      struct with
+
+      /// Meta accumulator for mean.
+      struct mean : public Meta_Accumulator< mean >
       {
-	typedef mean_<T,S,M> ret;
+	template < typename T,
+		   typename S = mln_sum(T),
+		   typename M = S >
+	struct with
+	{
+	  typedef accu::mean<T,S,M> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T, typename S, typename M>
     inline
-    mean_<T,S,M>::mean_()
+    mean<T,S,M>::mean()
     {
       init();
     }
@@ -110,7 +121,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     void
-    mean_<T,S,M>::init()
+    mean<T,S,M>::init()
     {
       count_.init();
       sum_.init();
@@ -118,7 +129,7 @@ namespace mln
 
     template <typename T, typename S, typename M>
     inline
-    void mean_<T,S,M>::take(const argument& t)
+    void mean<T,S,M>::take(const argument& t)
     {
       count_.take(t);
       sum_.take(t);
@@ -127,7 +138,7 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     void
-    mean_<T,S,M>::take(const mean_<T,S,M>& other)
+    mean<T,S,M>::take(const mean<T,S,M>& other)
     {
       count_.take(other.count_);
       sum_.take(other.sum_);
@@ -136,9 +147,24 @@ namespace mln
     template <typename T, typename S, typename M>
     inline
     M
-    mean_<T,S,M>::to_result() const
+    mean<T,S,M>::to_result() const
     {
       return sum_.to_result() / count_.to_result();
+    }
+
+    template <typename T, typename S, typename M>
+    inline
+    mean<T,S,M>::operator M() const
+    {
+      return M(sum_.to_result() / count_.to_result());
+    }
+
+    template <typename T, typename S, typename M>
+    inline
+    bool
+    mean<T,S,M>::is_valid() const
+    {
+      return count_.to_result() != 0;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

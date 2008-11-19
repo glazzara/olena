@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/tree.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/level/fill.hh>
 
 namespace mln
@@ -159,7 +159,7 @@ namespace mln
 	const J& ima = exact(ima_);
 	image2d<bool> out (ima.bbox ());
 
-	level::fill(out, false);
+        level::fill(out, false);
 	mln_piter(p_set<P>) p (s);
 	for_all (p)
 	  out(p) = true;

@@ -4,11 +4,11 @@
  */
 
 #include <iostream>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -16,8 +16,8 @@
 #include <mln/level/paste.hh>
 #include <mln/value/int_u8.hh>
 
-#include <mln/core/sub_image.hh>
-#include <mln/core/image_if.hh>
+#include <mln/core/image/sub_image.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/pw/value.hh>
 
 #include "../dt/dmap.hh"

@@ -28,8 +28,8 @@
 /// \file tests/core/p_bgraph.cc
 /// \brief Tests on mln::p_bgraph (the psite based on boost-graph).
 
-#include "../core/p_bgraph.hh"
-#include <mln/core/point2d.hh>
+#include "../core/site_set/p_bgraph.hh"
+#include <mln/core/alias/point2d.hh>
 #include <mln/util/internal/boost_graph.hh>
 #include <boost/typeof/std/utility.hpp>
 
@@ -62,11 +62,11 @@ int main()
   for (int i = 0; i < num_edges; ++i)
     boost::add_edge(edge_array[i].first, edge_array[i].second, g);
 
-  g[0] = make::point2d(0, 0);
-  g[1] = make::point2d(0, 1);
-  g[2] = make::point2d(1, 0);
-  g[3] = make::point2d(1, 1);
-  g[4] = make::point2d(0, 2);
+  g[0] = point2d(0, 0);
+  g[1] = point2d(0, 1);
+  g[2] = point2d(1, 0);
+  g[3] = point2d(1, 1);
+  g[4] = point2d(0, 2);
 
   /*-----------.
   | p_bgraph.  |

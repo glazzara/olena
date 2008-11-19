@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -41,8 +41,10 @@
 # include <fstream>
 # include <string>
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>
+
+//FIXME: Add fitsio dependency
 # include <fitsio.h>
 
 namespace mln
@@ -55,7 +57,7 @@ namespace mln
     namespace fits
     {
 
-      /*! Load a fits image in a milena image.
+      /*! Load a fits image in a Milena image.
        *
        * \param[out] ima A reference to the image2d<float> which will receive
        * data.
@@ -88,6 +90,8 @@ namespace mln
       inline
       image2d<float> load(const std::string& filename)
       {
+	trace::entering("mln::io::fits::load");
+
 	fitsfile *fptr;
 	int status,  nfound, anynull;
 	long naxes[2];
@@ -106,7 +110,7 @@ namespace mln
 
 	nullval  = 0; // don't check null values
 
-	point2d p(make::point2d(0, 0));
+	point2d p(point2d(0, 0));
 
 	for (p.row() = 0; p.row() < nrows; ++p.row())
 	{
@@ -123,6 +127,8 @@ namespace mln
 
 	if (fits_close_file(fptr, &status))
 	  fits_exit(status);
+
+	trace::exiting("mln::io::fits::load");
 
 	return output;
       }

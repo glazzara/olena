@@ -31,7 +31,7 @@
  */
 
 
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image1d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/border/resize.hh>

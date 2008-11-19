@@ -31,7 +31,7 @@
  */
 
 #include <mln/border/fill.hh>
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/println_with_border.hh>
 
@@ -48,11 +48,11 @@ check(int size, int border)
   border::fill (ima, 42);
   for(int i = 0; i < ww; ++i)
     if ((i / w < border) || (i / w > border + size))
-      mln_assertion (ima[i] == 42u);
+      mln_assertion (ima.element(i) == 42u);
     else
       if ((i % w < border) &&
 	  (border + size <= i % w))
-	mln_assertion (ima[i] == 42u);
+	mln_assertion (ima.element(i) == 42u);
 }
 
 int

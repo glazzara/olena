@@ -49,14 +49,14 @@
 
 #include <vector>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/point2d.hh>
-#include <mln/core/window2d.hh>
-#include <mln/core/neighb2d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/neighb2d.hh>
 
-#include <mln/core/line_graph_image.hh>
-#include <mln/core/line_graph_elt_neighborhood.hh>
-#include <mln/core/line_graph_neighborhood_piter.hh>
+#include <mln/core/image/line_graph_image.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/image/line_graph_neighborhood_piter.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>
@@ -168,10 +168,10 @@ int main()
     // Process points on odd rows and odd columns
     if (p_out[0] % 2 == 1 && p_out[1] % 2 == 1)
       output(p_out) =
-	(output(p_out + make::dpoint2d(-1, -1)) +
-	 output(p_out + make::dpoint2d(-1, +1)) +
-	 output(p_out + make::dpoint2d(+1, -1)) +
-	 output(p_out + make::dpoint2d(+1, +1))) / 4;
+	(output(p_out + dpoint2d(-1, -1)) +
+	 output(p_out + dpoint2d(-1, +1)) +
+	 output(p_out + dpoint2d(+1, -1)) +
+	 output(p_out + dpoint2d(+1, +1))) / 4;
   }
   // Draw the watershed.
   /* FIXME: We should draw the watershed on another image and

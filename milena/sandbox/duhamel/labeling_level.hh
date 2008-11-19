@@ -36,7 +36,7 @@
 
 # include <mln/labeling/base.hh>
 # include <mln/debug/println.hh>
-# include <mln/core/window2d.hh>
+# include <mln/core/alias/window2d.hh>
 # include <mln/convert/to_window.hh>
 # include <mln/core/concept/dpoint.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -101,7 +101,7 @@ namespace mln
 	mln_bkd_pixter(const I) p(f.input);
 	//	mln_nixter(const I, N) n(p, f.nbh);
 
-	typedef window<mln_dpoint(I)> W;
+	typedef window<mln_dpsite(I)> W;
 	W win = convert::to_upper_window(f.nbh);
 	mln_qixter(const I, W) n(p, win);
 	

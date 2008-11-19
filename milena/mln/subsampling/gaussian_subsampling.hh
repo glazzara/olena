@@ -56,7 +56,7 @@ namespace mln
     inline
     mln_concrete(I)
     gaussian_subsampling(const Image<I>& input, float sigma
-                         const mln_dpoint(I)& first_p,
+                         const mln_dpsite(I)& first_p,
                          const mln_coord(I)& gap);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -66,7 +66,7 @@ namespace mln
     inline
     mln_concrete(I)
     gaussian_subsampling(const Image<I>& input, float sigma,
-                         const mln_dpoint(I)& first_p,
+                         const mln_dpsite(I)& first_p,
                          const mln_coord(I)& gap)
     {
       trace::entering("subsampling::gaussian_subsampling");

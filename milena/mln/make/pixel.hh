@@ -43,18 +43,18 @@ namespace mln
 
     /// Create a mln::pixel from a constant image \p ima and a point \p p.
     template <typename I>
-    mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p);
+    mln::pixel<const I> pixel(const Image<I>& ima, const mln_psite(I)& p);
 
     /// Create a mln::pixel from a mutable image \p ima and a point \p p.
     template <typename I>
-    mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p);
+    mln::pixel<I> pixel(Image<I>& ima, const mln_psite(I)& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    mln::pixel<const I> pixel(const Image<I>& ima, const mln_point(I)& p)
+    mln::pixel<const I> pixel(const Image<I>& ima, const mln_psite(I)& p)
     {
       mln::pixel<const I> tmp(exact(ima), p);
       return tmp;
@@ -62,7 +62,7 @@ namespace mln
 
     template <typename I>
     inline
-    mln::pixel<I> pixel(Image<I>& ima, const mln_point(I)& p)
+    mln::pixel<I> pixel(Image<I>& ima, const mln_psite(I)& p)
     {
       mln::pixel<I> tmp(exact(ima), p);
       return tmp;

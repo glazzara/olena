@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,15 @@
 #ifndef MLN_ACCU_ALL_HH
 # define MLN_ACCU_ALL_HH
 
-/*! \file mln/accu/all.hh
- *
- * \brief File that includes all accumulator types.
- *
- * \todo Update accumulators s.a. count so that they are like min_/min.
- *
- * \todo Propagate those updates to mln/estim/.
- */
+/// \file mln/accu/all.hh
+///
+/// File that includes all accumulator types.
+///
+/// \todo Update accumulators s.a. count so that they are like min_/min.
+///
+/// \todo Propagate those updates to mln/estim/.
+///
+/// \todo Update the include list...
 
 
 namespace mln
@@ -44,9 +46,10 @@ namespace mln
   /// Namespace of accumulators.
   namespace accu
   {
-    /// \internal Implementation namespace of accumulator namespace.
+    /// Implementation namespace of accumulator namespace.
     namespace impl {}
-    /// \internal Internal namespace of accumulators.
+
+    /// Internal namespace of accumulators.
     namespace internal {}
   }
 
@@ -55,16 +58,35 @@ namespace mln
 
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
+# include <mln/accu/center.hh>
+//# include <mln/accu/count_adjacent_vertices.hh>
+# include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
+# include <mln/accu/land.hh>
+# include <mln/accu/line.hh>
 # include <mln/accu/max.hh>
+# include <mln/accu/max_h.hh>
 # include <mln/accu/mean.hh>
-# include <mln/accu/median.hh>
+# include <mln/accu/median_h.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/min_h.hh>
 # include <mln/accu/min_max.hh>
 # include <mln/accu/nil.hh>
 # include <mln/accu/pair.hh>
+# include <mln/accu/rank.hh>
 # include <mln/accu/sum.hh>
+# include <mln/accu/tuple.hh>
+# include <mln/accu/volume.hh>
+
+// Routines.
+
+# include <mln/accu/convolve.hh>
+# include <mln/accu/transform.hh>
+# include <mln/accu/transform_stop.hh>
+
+# include <mln/accu/transform_directional.hh>
+# include <mln/accu/transform_diagonal.hh>
+# include <mln/accu/transform_snake.hh>
 
 
 #endif // ! MLN_ACCU_ALL_HH

@@ -32,7 +32,7 @@
  *
  * \brief Factor code for value classes defined over another type.
  *
- * \internal
+ * 
  */
 
 # include <mln/core/concept/value.hh>
@@ -48,7 +48,7 @@ namespace mln
     namespace internal
     {
 
-      /*! \internal Base class for value classes defined over another
+      /*! Base class for value classes defined over another
        *  type. Parameters are \c V the equivalent value type and
        *  \c E the exact value type.
        */
@@ -85,7 +85,7 @@ namespace mln
       };
 
 
-      /*! \internal General definition of the "equal to" operator between
+      /*! General definition of the "equal to" operator between
        * value-like types.
        *
        */
@@ -93,7 +93,7 @@ namespace mln
       bool operator==(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
 
-      /*! \internal General definition of the "less than" operator
+      /*! General definition of the "less than" operator
        *  between value-like types.
        *
        */

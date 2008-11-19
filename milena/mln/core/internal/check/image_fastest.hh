@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,10 +32,11 @@
  *
  * \brief Class that statically checks the interface of fastest
  * images.
+ *
+ * \todo Check and convert p in index_of_point towards E::psite.
  */
 
 # include <mln/core/internal/force_exact.hh>
-
 
 namespace mln
 {
@@ -46,31 +47,31 @@ namespace mln
     namespace check
     {
 
-      /*! \internal FIXME
+      /*! FIXME
        */
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {
 
-	/*! \brief Give the offset of the point \p p.
+	/*! \brief Give the offset of the site \p p.
 	 *
-	 * \param[in] p A generalized point.
+	 * \param[in] p A site.
 	 *
 	 * \warning This method is final.
 	 *
 	 * \pre The image has to be initialized and to own the point \p p.
-	 * \post p == point_at_offset(result)
+	 * \post p == point_at_index(result)
 	 */
 	template <typename P>
 	unsigned
-	offset_at(const Point_Site<P>& p) const;
+	index_of_point(const P& p) const;
 
       protected:
 	image_fastest_();
       };
 
 
-      /// \internal
+      /// 
       template <typename E>
       struct image_fastest_< E, metal::false_ >
       {
@@ -84,15 +85,17 @@ namespace mln
       inline
       image_fastest_<E,B>::image_fastest_()
       {
-	typedef mln_point(E)   point;
-	typedef mln_dpoint(E) dpoint;
+	typedef mln_site(E)        site;
+ 	typedef mln_psite(E)      psite;
+ 	typedef mln_delta(psite) dpsite;
+
 
 	typedef mln_fwd_pixter(E) fwd_pixter;
 	typedef mln_bkd_pixter(E) bkd_pixter;
 
-	int (E::*m1)(const dpoint&) const = & E::offset;
+	int (E::*m1)(const dpsite&) const = & E::delta_index;
 	m1 = 0;
-	point (E::*m2)(unsigned) const = & E::point_at_offset;
+	site (E::*m2)(unsigned) const = & E::point_at_index;
 	m2 = 0;
 	unsigned (E::*m3)() const = & E::border;
 	m3 = 0;
@@ -107,13 +110,16 @@ namespace mln
 	typedef mln_rvalue(E) rvalue;
 	typedef mln_lvalue(E) lvalue;
 
-	rvalue (E::*m6)(unsigned) const = & E::operator[];
+	rvalue (E::*m6)(unsigned) const = & E::element;
 	m6 = 0;
-	lvalue (E::*m7)(unsigned) = & E::operator[];
+	lvalue (E::*m7)(unsigned) = & E::element;
 	m7 = 0;
 
-	std::size_t (E::*m8)() const = & E::ncells;
+	unsigned (E::*m8)() const = & E::nelements;
 	m8 = 0;
+
+	unsigned (E::*m9)(const psite& p) const = & E::index_of_point;
+	m9 = 0;
 
 	// FIXME: how to check that qixter are defined when W is unknown!
       }
@@ -121,18 +127,16 @@ namespace mln
       template <typename E, typename B>
       template <typename P>
       inline
-      unsigned // FIXME: std::size_t?
-      image_fastest_<E,B>::offset_at(const Point_Site<P>& p_) const
+      unsigned
+      image_fastest_<E,B>::index_of_point(const P& p) const
       {
-	// FIXME: check that P is mln_point(E)
 	const E* this_ = & internal::force_exact<E>(*this);
-	const P& p = exact(p_);
 	mln_precondition(this_->has_data());
-	mln_precondition(this_->owns_(p));
-	
-	unsigned o = & this_->operator()(p) - this_->buffer();
-	mln_postcondition(p == this_->point_at_offset(o));
-	return o;
+	mln_precondition(this_->has(p));
+
+	unsigned i = & this_->operator()(p) - this_->buffer();
+	mln_postcondition(p == this_->point_at_index(i));
+	return i;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

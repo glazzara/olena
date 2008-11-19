@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,8 +38,9 @@
 
 
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/core/p_priority_queue_fast.hh>
-# include <mln/core/clone.hh>
+# include <mln/core/site_set/p_priority.hh>
+# include <mln/core/site_set/p_queue_fast.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
@@ -50,24 +52,24 @@ namespace mln
   namespace geom
   {
 
-    /*! Take a labeled image \p ima_ with seeds and extend them until
-     *  creating tiles rounder than the primary version.
-     *
-     * \param[in,out] ima_   The labeled image with seed.
-     * \param[in]     win_w  The weight window using by geom::chamfer to
-     *                       compute distance.
-     * \param[in]     max    Unsigned using by geom::chamfer to compute
-     *                       the distance.
-     * \param[in]     nbh    The neighborhood to use on this algorithm.
-     *
-     * \pre \p ima_ has to be initialized.
-     *
-     */
+    /// \brief Take a labeled image \p ima_ with seeds and extend them until
+    /// creating tiles rounder than the primary version.
+    ///
+    /// \param[in,out] ima_   The labeled image with seed.
+    /// \param[in]     w_win  The weight window using by geom::chamfer to
+    ///                       compute distance.
+    /// \param[in]     max    Unsigned using by geom::chamfer to compute
+    ///                       the distance.
+    /// \param[in]     nbh_   The neighborhood to use on this algorithm.
+    ///
+    /// \pre \p ima_ has to be initialized.
+    ///
+    /// \{
     template <typename I, typename N>
     I
     seeds2tiling_roundness (Image<I>& ima_, const w_window2d_int& w_win,
-			    unsigned max, const Neighborhood<N>& nbh);
-
+			    unsigned max, const Neighborhood<N>& nbh_);
+    /// \}
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -79,21 +81,22 @@ namespace mln
       inline
       I
       seeds2tiling_roundness(Image<I>& ima_, const w_window2d_int& w_win,
-			     unsigned max, const Neighborhood<N>& nbh)
+			     unsigned max, const Neighborhood<N>& nbh_)
       {
 	trace::entering("geom::impl::seed2tiling_roundness");
 
 	I& ima = exact(ima_);
+	const N& nbh = exact(nbh_);
 	image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
 	I out = clone(ima_);
-	p_priority_queue_fast<mln_psite(I), unsigned> q;
+	p_priority<mln_psite(I), p_queue_fast<unsigned> > q;
 
 	// Init.
 	{
 	  mln_piter(I) p(ima.domain());
 
 	  for_all(p)
-	    q.push_force(p, max - dist(p));
+	    q.push(p, max - dist(p));
 	}
 
 
@@ -101,7 +104,7 @@ namespace mln
 	{
 	  while (! q.is_empty())
 	    {
-	      mln_psite(I) p = q.front();
+	      mln_psite(I) p = q.highest_priority();
 	      q.pop();
 	      if (out(p) != 0) // p has already been processed so ignore
 		continue;
@@ -120,7 +123,7 @@ namespace mln
     } // end of namespace mln::geom::impl
 
 
-    /// Facade
+    // Facade
     template <typename I, typename N>
     inline
     I
@@ -145,4 +148,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
+#endif // ! MLN_GEOM_SEEDS3TILING_ROUNDNESS_HH

@@ -2,10 +2,10 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/fast_image.hh>
-# include <mln/core/sparse_image.hh>
-# include <mln/core/sparse_encode.hh>
-# include <mln/core/rle_image.hh>
-# include <mln/core/rle_encode.hh>
+# include <mln/core/image/sparse_image.hh>
+# include <mln/core/image/sparse_encode.hh>
+# include <mln/core/image/rle_image.hh>
+# include <mln/core/image/rle_encode.hh>
 
 namespace mln
 {
@@ -15,7 +15,7 @@ namespace mln
     template <typename I>
     void paste(const I& data_, I& destination_)
     {
-      imacpy_ (destination_, data_, destination_.ncells());
+      imacpy_ (destination_, data_, destination_.nelements());
     }
 
     template <typename I, typename J>

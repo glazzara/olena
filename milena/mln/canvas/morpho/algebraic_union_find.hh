@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -92,7 +93,7 @@ namespace mln
 	      {
 		make_set(p);
 		for_all(n)
-		  if (f.input.has(n) && deja_vu(n))
+		  if (f.input.domain().has(n) && deja_vu(n))
 		    do_union(n, p);
 		deja_vu(p) = true;
 	      }
@@ -121,7 +122,7 @@ namespace mln
 	{
 	  parent(p) = p;
 	  /* FIXME: What if the value_type of DATA (i.e., A) were not
-	     based on a accu::count_<mln::pix>?  Currently, nothing
+	     based on a accu::count<mln::pix>?  Currently, nothing
 	     enforces this, but the code below expects this line to be
 	     valid:
 
@@ -138,7 +139,7 @@ namespace mln
 	     be passed as an argument to the canvas' ctor.
 
 	     Of course, we might want to restrict attributes to the
-	     accumulator accu::count_<mln::pix> (which is perfectly
+	     accumulator accu::count<mln::pix> (which is perfectly
 	     acceptable), but then this class should statically check
 	     the conformance of the template parameter A to this
 	     constraint.  */

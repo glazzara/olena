@@ -35,7 +35,7 @@
  *
  */
 
-# include <mln/core/image2d.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/set/is_subset_of.hh>
 
@@ -89,7 +89,7 @@ namespace mln
 		 const image2d<fllt_node(P, V)*>& node_reg,
 		 const image2d<fllt_node(P, V)*>& hole_reg)
     {
-      if (node.elt().holes.npoints() == 0)
+      if (node.elt().holes.nsites() == 0)
       {
 	return;
       }
@@ -177,7 +177,7 @@ namespace mln
       fllt_tree(P, V)* main_tree = &lower_tree;
       fllt_tree(P, V)* other_tree = &upper_tree;
 
-      if (lower_tree.root()->elt().points.npoints() >= ima.domain().npoints())
+      if (lower_tree.root()->elt().points.nsites() >= ima.domain().nsites())
       {
 	main_tree = &upper_tree;
 	other_tree = &lower_tree;

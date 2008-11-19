@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,10 +30,11 @@
 
 /*! \file mln/core/point.hh
  *
- * \brief Definition of the generic point class mln::point_.
+ * \brief Definition of the generic point class mln::point.
  */
 
-# include <mln/core/concept/point.hh>
+# include <mln/core/def/coord.hh>
+# include <mln/core/concept/gpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all_to.hh>
 
@@ -41,14 +42,16 @@
 # include <mln/metal/is_not.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
-# include <mln/core/h_vec.hh>
+# include <mln/algebra/h_vec.hh>
+# include <mln/util/yes.hh>
 
 
 namespace mln
 {
 
   /// \{ Fwd decls.
-  template <typename M, typename C> struct dpoint_;
+  template <typename G, typename C> struct  point;
+  template <typename G, typename C> struct dpoint;
   namespace literal {
     struct zero_t;
     struct one_t;
@@ -60,11 +63,13 @@ namespace mln
   namespace internal
   {
 
-    template <typename M, typename C>
+    // Helper point_to_.
+
+    template <typename G, typename C>
     struct point_to_
     {
-      typedef algebra::vec<M::dim, C> algebra_vec;
-      typedef mln::h_vec<M::dim, C> h_vec;
+      typedef algebra::vec<G::dim, C> metal_vec;
+      typedef mln::algebra::h_vec<G::dim, C> h_vec;
     };
 
   } // end of namespace mln::internal
@@ -76,30 +81,41 @@ namespace mln
    * Parameters are \c n the dimension of the space and \c C the
    * coordinate type in this space.
    */
-  template <typename M, typename C>
-  struct point_ : public Point< point_<M,C> >,
-		  public internal::mutable_coord_impl_< M::dim, C, point_<M,C> >
+  template <typename G, typename C>
+  struct point : public Gpoint< point<G,C> >,
+		 public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
   {
+    // FIXME: Temporary hack.
+    typedef point site;
+    typedef point psite;
+
+
     /*! \var dim
      * \brief Dimension of the space.
      * \invariant dim > 0 
      */
-    enum { dim = M::dim };
+    enum { dim = G::dim };
 
-    /// Mesh associated type.
-    typedef M mesh;
+    /// Grid associated type.
+    typedef G grid;
 
-    /// Dpoint associated type.
-    typedef dpoint_<M,C> dpoint;
+    /// Delta associated type.
+    typedef dpoint<G,C> delta;
+
+    /// DPsite associated type.
+    typedef dpoint<G,C> dpsite;
 
     /// Coordinate associated type.
     typedef C coord;
+
+    /// Algebra vector (vec) associated type.
+    typedef algebra::vec<G::dim, C> vec;
 
     /*! \brief Read-only access to the \p i-th coordinate value.
      * \param[in] i The coordinate index.
      * \pre \p i < \c dim
      */
-    C  operator[](unsigned i) const;
+    const C& operator[](unsigned i) const;
 
     /*! \brief Read-write access to the \p i-th coordinate value.
      * \param[in] i The coordinate index.
@@ -107,103 +123,166 @@ namespace mln
      */
     C& operator[](unsigned i);
 
+
+    /// Read-only access to the last coordinate.
+    const C& last_coord() const;
+
+    /// Read-write access to the last coordinate.
+    C& last_coord();
+
+
     /// Constructor without argument.
-    point_();
+    point();
+
+    /// Constructor from an algebra vector.
+    template <typename C2>
+    point(const algebra::vec<dim,C2>& v);
 
     /// \{ Constructors with different numbers of arguments
     /// (coordinates) w.r.t. the dimension.
-    point_(C ind);
-    point_(C row, C col);
-    point_(C sli, C row, C col);
+    explicit point(C ind);
+    point(C row, C col);
+    point(C sli, C row, C col);
     /// \}
 
     /// \{ Constructors/assignments with literals.
-    point_(const literal::origin_t&);
-    point_<M,C>& operator=(const literal::origin_t&);
+    point(const literal::origin_t&);
+    point<G,C>& operator=(const literal::origin_t&);
     // Works only in 1D:
-    point_(const literal::zero_t&);
-    point_<M,C>& operator=(const literal::zero_t&);
-    point_(const literal::one_t&);
-    point_<M,C>& operator=(const literal::one_t&);
+    point(const literal::zero_t&);
+    point<G,C>& operator=(const literal::zero_t&);
+    point(const literal::one_t&);
+    point<G,C>& operator=(const literal::one_t&);
     /// \}
 
     /// Constructor; coordinates are set by function \p f.
     template <typename F>
-    point_(const Function_i2v<F>& f);
+    point(const Function_i2v<F>& f);
 
     /// Set all coordinates to the value \p c.
     void set_all(C c);
 
     /// Origin point (all coordinates are 0).
-    static const point_<M,C> origin;
+    static const point<G,C> origin;
 
     /// Shifting by \p dp.
-    point_<M,C>& operator+=(const dpoint& dp);
+    point<G,C>& operator+=(const delta& dp);
 
     /// Shifting by \p the inverse of dp.
-    point_<M,C>& operator-=(const dpoint& dp);
-
-    /// Type of the array of coordinates.
-    typedef algebra::vec<M::dim, C> vec_t;
+    point<G,C>& operator-=(const delta& dp);
 
     /// Hook to coordinates.
-    operator typename internal::point_to_<M, C>::algebra_vec () const;
-    operator algebra::vec<M::dim, float> () const;
+    operator typename internal::point_to_<G, C>::metal_vec () const;
+  /* FIXME: Seems highly non-generic!  Moreover, causes
+     overloading/duplicate errors with the previous operator when
+     C == float.  Disable it for the moment.
+
+     This (non documented change, even in ChangeLog) change was
+     introduce by revision 1224, see
+     https://trac.lrde.org/olena/changeset/1224#file2
+     https://www.lrde.epita.fr/pipermail/olena-patches/2007-October/001592.html
+  */
+#if 0
+    operator algebra::vec<G::dim, float> () const;
+#endif
+
+    /// Explicit conversion towards mln::algebra::vec.
+    const algebra::vec<G::dim, C>& to_vec() const;
 
     /// Transform to point in homogene coordinate system.
-    h_vec<M::dim, C> to_h_vec() const;
+    algebra::h_vec<G::dim, C> to_h_vec() const;
+
+    /// Point with all coordinates set to the maximum value.
+    static const point<G,C>& plus_infty();
+
+    /// Point with all coordinates set to the mininum value.
+    static const point<G,C>& minus_infty();
 
   protected:
-    algebra::vec<M::dim, C> coord_;
+    algebra::vec<G::dim, C> coord_;
   };
+
+
+
+  /// FIXME...
+  template <typename G, typename C>
+  const algebra::vec<G::dim - 1, C>& cut_(const point<G,C>& p);
+
+  template <typename C>
+  const util::yes& cut_(const point<grid::tick,C>& p);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  C point_<M,C>::operator[](unsigned i) const
+  const C& point<G,C>::operator[](unsigned i) const
   {
     assert(i < dim);
     return this->coord_[i];
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  C& point_<M,C>::operator[](unsigned i)
+  C& point<G,C>::operator[](unsigned i)
   {
     assert(i < dim);
     return this->coord_[i];
   }
+
+  template <typename G, typename C>
+  inline
+  const C&
+  point<G,C>::last_coord() const
+  {
+    return this->coord_[dim - 1];
+  }
+
+  template <typename G, typename C>
+  inline
+  C&
+  point<G,C>::last_coord()
+  {
+    return this->coord_[dim - 1];
+  }
+
 
   // Constructors.
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>::point_()
+  point<G,C>::point()
   {
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
+  template <typename C2>
   inline
-  point_<M,C>::point_(C ind)
+  point<G,C>::point(const algebra::vec<dim,C2>& v)
+  {
+    coord_ = v;
+  }
+
+  template <typename G, typename C>
+  inline
+  point<G,C>::point(C ind)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = ind;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>::point_(C row, C col)
+  point<G,C>::point(C row, C col)
   {
     metal::bool_<(dim == 2)>::check();
     coord_[0] = row;
     coord_[1] = col;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>::point_(C sli, C row, C col)
+  point<G,C>::point(C sli, C row, C col)
   {
     metal::bool_<(dim == 3)>::check();
     coord_[0] = sli;
@@ -211,10 +290,10 @@ namespace mln
     coord_[2] = col;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   template <typename F>
   inline
-  point_<M,C>::point_(const Function_i2v<F>& f_)
+  point<G,C>::point(const Function_i2v<F>& f_)
   {
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
@@ -222,117 +301,162 @@ namespace mln
       coord_[i] = f(i);
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>::point_(const literal::origin_t&)
+  point<G,C>::point(const literal::origin_t&)
   {
     coord_.set_all(0);
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>&
-  point_<M,C>::operator=(const literal::origin_t&)
+  point<G,C>&
+  point<G,C>::operator=(const literal::origin_t&)
   {
     coord_.set_all(0);
     return *this;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>::point_(const literal::zero_t&)
+  point<G,C>::point(const literal::zero_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>&
-  point_<M,C>::operator=(const literal::zero_t&)
-  {
-    metal::bool_<(dim == 1)>::check();
-    coord_[0] = 1;
-    return *this;
-  }
-
-  template <typename M, typename C>
-  inline
-  point_<M,C>::point_(const literal::one_t&)
-  {
-    metal::bool_<(dim == 1)>::check();
-    coord_[0] = 1;
-  }
-
-  template <typename M, typename C>
-  inline
-  point_<M,C>&
-  point_<M,C>::operator=(const literal::one_t&)
+  point<G,C>&
+  point<G,C>::operator=(const literal::zero_t&)
   {
     metal::bool_<(dim == 1)>::check();
     coord_[0] = 1;
     return *this;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  void point_<M,C>::set_all(C c)
+  point<G,C>::point(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+  }
+
+  template <typename G, typename C>
+  inline
+  point<G,C>&
+  point<G,C>::operator=(const literal::one_t&)
+  {
+    metal::bool_<(dim == 1)>::check();
+    coord_[0] = 1;
+    return *this;
+  }
+
+  template <typename G, typename C>
+  inline
+  void point<G,C>::set_all(C c)
   {
     coord_.set_all(c);
   }
 
-  template <typename M, typename C>
-  const point_<M,C> point_<M,C>::origin = all_to(0);
+  template <typename G, typename C>
+  const point<G,C> point<G,C>::origin = all_to(0);
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>&
-  point_<M,C>::operator+=(const dpoint& dp)
+  point<G,C>&
+  point<G,C>::operator+=(const delta& dp)
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] += dp[i];
     return *this;
   }
 
-  template <typename M, typename C>
+  template <typename G, typename C>
   inline
-  point_<M,C>&
-  point_<M,C>::operator-=(const dpoint& dp)
+  point<G,C>&
+  point<G,C>::operator-=(const delta& dp)
   {
     for (unsigned i = 0; i < dim; ++i)
       coord_[i] -= dp[i];
     return *this;
   }
-  
-  
-  template <typename M, typename C>
+
+  template <typename G, typename C>
   inline
-  point_<M,C>::operator typename internal::point_to_<M, C>::algebra_vec () const
+  point<G,C>::operator typename internal::point_to_<G, C>::metal_vec () const
   {
-    return coord_; // FIXME: Is-it OK?
+    return coord_; // FIXME: Is it OK?
   }
-  
-  
-  template <typename M, typename C>
+
+  // FIXME: See declaration of this member above.
+#if 0
+  template <typename G, typename C>
   inline
-  point_<M,C>::operator algebra::vec<M::dim, float> () const
+  point<G,C>::operator algebra::vec<G::dim, float> () const
   {
-    mlc_is_not(C,float)::check();
     algebra::vec<dim, float> tmp;
     for (unsigned int i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
     return tmp;
   }
-  
-  template <typename M, typename C>
+#endif
+
+  template <typename G, typename C>
   inline
-  h_vec<M::dim, C> point_<M,C>::to_h_vec() const
+  const algebra::vec<G::dim, C>&
+  point<G,C>::to_vec() const
   {
-    h_vec<M::dim, C> tmp;
+    return coord_;
+  }
+  
+  template <typename G, typename C>
+  inline
+  algebra::h_vec<G::dim, C> point<G,C>::to_h_vec() const
+  {
+    algebra::h_vec<G::dim, C> tmp;
     for (unsigned i = 0; i < dim; ++i)
       tmp[i] = coord_[i];
-    tmp[M::dim] = 1;
+    tmp[G::dim] = 1;
     return tmp;
+  }
+
+
+  template <typename G, typename C>
+  inline
+  const point<G,C>&
+  point<G,C>::plus_infty()
+  {
+    static const point<G,C> the_(all_to(mln_max(C)));
+    return the_;
+  }
+
+  template <typename G, typename C>
+  inline
+  const point<G,C>&
+  point<G,C>::minus_infty()
+  {
+    static const point<G,C> the_(all_to(mln_min(C)));
+    return the_;
+  }
+
+
+  template <typename G, typename C>
+  inline
+  const algebra::vec<G::dim - 1, C>&
+  cut_(const point<G,C>& p)
+  {
+    return *(const algebra::vec<G::dim - 1, C>*)(& p.to_vec());
+  }
+
+  template <typename C>
+  inline
+  const util::yes&
+  cut_(const point<grid::tick,C>& p)
+  {
+    util::yes* the_;
+    return *the_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

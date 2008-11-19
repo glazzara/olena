@@ -32,12 +32,12 @@
 
 #include <cmath>
 
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/sub_image.hh>
 
-#include <mln/core/image_if.hh>
+#include <mln/core/image/image_if.hh>
 #include <mln/fun/p2b/chess.hh>
 
 #include <mln/literal/origin.hh>
@@ -76,9 +76,9 @@ namespace mln
   {
     const I& ref = exact(ref_);
 
-    I out (ref.domain());
+    mln_ch_value(I, mln_result_(mysqrt)) out;
     {
-      level::transform(ref, mysqrt(), out);
+      out = level::transform(ref, mysqrt());
       mln_piter(I) p (ref.domain ());
       for_all(p)
 	mln_assertion ((mln_value(I))(ref(p) % 42) == out(p) );

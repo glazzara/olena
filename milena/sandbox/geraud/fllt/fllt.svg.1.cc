@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image2d.hh>
-#include <mln/core/neighb2d.hh>
-#include <mln/core/p_array.hh>
-#include <mln/core/clone.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/routine/clone.hh>
 
 #include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
@@ -59,7 +59,7 @@ namespace mln
     unsigned compute_gN(const N_t& N)
     {
       for (unsigned i = 0; i < 256; ++i)
-	if (N[i].npoints() != 0)
+	if (N[i].nsites() != 0)
 	  return i;
       mln_invariant(0);
       return 0;

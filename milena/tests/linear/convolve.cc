@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +31,7 @@
  * \brief Tests on mln::linear::convolve.
  */
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -38,7 +39,7 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/core/w_window2d_float.hh>
+#include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
 #include <mln/linear/convolve.hh>
 
@@ -54,7 +55,6 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8>  out(lena.domain());
 
   float ws[] = { .04, .04, .04, .04, .04,
 		 .04, .04, .04, .04, .04,
@@ -62,10 +62,8 @@ int main()
 		 .04, .04, .04, .04, .04,
 		 .04, .04, .04, .04, .04 };
   w_window2d_float w = make::w_window2d(ws);
+  image2d<float> tmp = linear::convolve(lena, w);
 
-  image2d<float> tmp(lena.domain());
-  linear::convolve(lena, w, tmp);
-  level::transform(tmp, math::round<int_u8>(), out);
-
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(level::transform(tmp, math::round<int_u8>()),
+		"out.pgm");
 }

@@ -1,6 +1,6 @@
 #include "thinning.hh"
-#include <mln/core/image2d.hh>
-#include <mln/core/sub_image.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/level/paste.hh>

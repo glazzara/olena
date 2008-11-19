@@ -34,13 +34,12 @@
  *  with red value for undefined point site.
  */
 
-# include <mln/trait/image_from_mesh.hh>
-# include <mln/core/image_if_value.hh>
-# include <mln/core/image2d.hh>
+# include <mln/trait/image_from_grid.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
-# include <mln/core/p_set.hh>
+# include <mln/core/site_set/p_set.hh>
 # include <mln/metal/is_not.hh>
 
 namespace mln
@@ -52,7 +51,7 @@ namespace mln
     /*! Return new image colored from an image \p input_. with the
      *  color red for the pixels not in the domain of \p input_.
      *
-     * \param[in] ima The image in gray level to color.
+     * \param[in] input_ The image in gray level to color.
      *
      * \return colored image from \p input_ in rgb8 with red for the
      * color filled when the point is in bounding box of \p input_ but
@@ -63,14 +62,14 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_);
 
 
     /*! Return new image colored from an image \p input_. with the
      *  color red for the pixels not in the domain of \p input_.
      *
-     * \param[in] ima The image whose domain let to define the domain
+     * \param[in] input_ The image whose domain let to define the domain
      * of the returned image.
      * \param[in] s1_ The p_set where the points will be colored in red.
      * \param[in] s2_ The p_set where the points will be colored in green.
@@ -80,11 +79,11 @@ namespace mln
      *
      */
     template <typename I>
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const p_set<mln_point(I) >& s1_,
-		     const p_set<mln_point(I) >& s2_,
-		     const p_set<mln_point(I) >& s3_);
+		     const p_set<mln_psite(I) >& s1_,
+		     const p_set<mln_psite(I) >& s2_,
+		     const p_set<mln_psite(I) >& s3_);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -117,7 +116,7 @@ namespace mln
 
       template <typename I>
       inline
-      typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+      typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
       color_pretty(const Image<I>& input_)
       {
 	trace::entering("display::impl::color_pretty");
@@ -140,11 +139,11 @@ namespace mln
 
       template <typename I>
       inline
-      typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+      typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
       color_pretty_rgb(const Image<I>& input_,
-		       const p_set<mln_point(I) >& s1_,
-		       const p_set<mln_point(I) >& s2_,
-		       const p_set<mln_point(I) >& s3_)
+		       const p_set<mln_psite(I) >& s1_,
+		       const p_set<mln_psite(I) >& s2_,
+		       const p_set<mln_psite(I) >& s3_)
       {
 	trace::entering("display::impl::color_pretty_rgb");
 
@@ -154,21 +153,21 @@ namespace mln
 	level::fill(output, value::rgb8(0, 0, 0));
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s1_);
+	  mln_piter(p_set<mln_psite(I) >) p(s1_);
 
 	  for_all(p)
 	    output(p).red() = 255;
 	}
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s2_);
+	  mln_piter(p_set<mln_psite(I) >) p(s2_);
 
 	  for_all(p)
 	    output(p).green() = 255;
 	}
 
 	{
-	  mln_piter(p_set<mln_point(I) >) p(s3_);
+	  mln_piter(p_set<mln_psite(I) >) p(s3_);
 
 	  for_all(p)
 	    output(p).blue() = 255;
@@ -186,7 +185,7 @@ namespace mln
 
     template <typename I>
     inline
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty(const Image<I>& input_)
     {
       trace::entering("display::color_pretty");
@@ -205,11 +204,11 @@ namespace mln
 
     template <typename I>
     inline
-    typename trait::image_from_mesh < mln_mesh(I), value::rgb8 >::ret
+    typename trait::image_from_grid < mln_mesh(I), value::rgb8 >::ret
     color_pretty_rgb(const Image<I>& input_,
-		     const p_set<mln_point(I) >& s1_,
-		     const p_set<mln_point(I) >& s2_,
-		     const p_set<mln_point(I) >& s3_)
+		     const p_set<mln_psite(I) >& s1_,
+		     const p_set<mln_psite(I) >& s2_,
+		     const p_set<mln_psite(I) >& s3_)
     {
       trace::entering("display::color_pretty_rgb");
 

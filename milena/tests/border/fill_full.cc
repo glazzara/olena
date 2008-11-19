@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,9 +32,9 @@
 
 #include <mln/border/fill.hh>
 #include <mln/level/fill.hh>
-#include <mln/core/image1d.hh>
-#include <mln/core/image2d.hh>
-#include <mln/core/image3d.hh>
+#include <mln/core/image/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 #include <mln/value/int_s8.hh>
@@ -58,13 +58,13 @@ check1d(unsigned row, unsigned border, T& value, T& v)
 
   unsigned i = 0;
   for(i = 0; i < border; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
   unsigned bo = border + row;
   for(; i < bo; ++i)
-    mln_assertion (ima[i] == v);
+    mln_assertion (ima.element(i) == v);
   bo += border;
   for(; i < bo; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
 }
 
 template <typename T>
@@ -83,18 +83,18 @@ check2d(unsigned row, unsigned col, unsigned border, T& value, T& v)
   unsigned ww = r * c;
 
   for(i = 0; i < bo; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
   bo += c * row;
   for(; i < bo; ++i)
     {
       unsigned cur = i % c;
       if (cur < border || cur >= u)
-	mln_assertion (ima[i] == value);
+	mln_assertion (ima.element(i) == value);
       else
-	mln_assertion (ima[i] == v);
+	mln_assertion (ima.element(i) == v);
     }
   for(; i < ww; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
 }
 
 template <typename T>
@@ -113,18 +113,18 @@ check3d(unsigned sli, unsigned row, unsigned col, unsigned border, T& value, T& 
   unsigned ww = r * c;
 
   for(i = 0; i < bo; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
   bo += c * row;
   for(; i < bo; ++i)
     {
       unsigned cur = i % c;
       if (cur < border || cur >= u)
-	mln_assertion (ima[i] == value);
+	mln_assertion (ima.element(i) == value);
       else
-	mln_assertion (ima[i] == v);
+	mln_assertion (ima.element(i) == v);
     }
   for(; i < ww; ++i)
-    mln_assertion (ima[i] == value);
+    mln_assertion (ima.element(i) == value);
 }
 
 

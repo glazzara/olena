@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -40,7 +40,7 @@
 # include <iostream>
 # include <fstream>
 
-# include <mln/core/point2d.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/metal/equal.hh>
 # include <mln/metal/bexpr.hh>
@@ -55,7 +55,7 @@ namespace mln
     namespace pfm
     {
 
-      /*! Save a milena image as a pfm image.
+      /*! Save a Milena image as a pfm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.
@@ -94,7 +94,7 @@ namespace mln
 	    max_row = geom::max_row(ima);
 
 	  //image2d<float>& ima_ = const_cast< image2d<float>& >(ima);
-	  point2d p(make::point2d(0, 0));
+	  point2d p(point2d(0, 0));
 	  for (p.row() = min_row; p.row() <= max_row; ++p.row())
 	    file.write((const char*)(&(ima(p))),
 		       sizeof(float) * ncols);
@@ -108,8 +108,10 @@ namespace mln
       inline
       void save(const Image<I>& ima, const std::string& filename)
       {
+	trace::entering("mln::io::pfm::save");
 	mln::metal::equal<mln_value(I), float >::check();
 	impl::save_(exact(ima), filename);
+	trace::exiting("mln::io::pfm::save");
       }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -112,15 +112,13 @@ namespace mln
   template <>
   struct category< my::test >
   {
-    typedef my::Built_In<void> ret;
-    typedef my::Integer<void>  super;
+    typedef my::Built_In< my::Integer<void> > ret;
   };
 
 //   template <>
 //   struct category< int >
 //   {
-//     typedef my::Built_In<void> ret;
-//     typedef my::Integer<void>  super;
+//     typedef my::Built_In< my::Integer<void> > ret;
 //   };
 
   namespace trait

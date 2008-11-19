@@ -10,11 +10,11 @@
 
 #include <mln/debug/println_with_border.hh>
 
-# include <mln/core/sparse_image.hh>
-# include <mln/core/sparse_encode.hh>
+# include <mln/core/image/sparse_image.hh>
+# include <mln/core/image/sparse_encode.hh>
 
-# include <mln/core/rle_image.hh>
-# include <mln/core/rle_encode.hh>
+# include <mln/core/image/rle_image.hh>
+# include <mln/core/image/rle_encode.hh>
 
 namespace mln
 {

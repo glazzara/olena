@@ -1,3 +1,318 @@
+2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/mesh/Makefile.
+
+2008-11-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update configure.ac for the tutorial.
+
+	* configure.ac: Add tutorial/samples Makefiles.
+
+2008-11-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Put Licence to 70 cols.
+
+	* milena/doc/benchmark/morpho/erosion.cc: .
+	* milena/mln/accu/count_adjacent_vertices.hh: .
+	* milena/mln/accu/height.hh: .
+	* milena/mln/border/fill.hh: .
+	* milena/mln/border/get.hh: .
+	* milena/mln/canvas/morpho/algebraic_union_find.hh: .
+	* milena/mln/convert/to_p_array.hh: .
+	* milena/mln/convert/to_upper_window.hh: .
+	* milena/mln/convert/to_window.hh: .
+	* milena/mln/core/alias/dpoint1d.hh: .
+	* milena/mln/core/alias/dpoint2d.hh: .
+	* milena/mln/core/alias/dpoint2d_h.hh: .
+	* milena/mln/core/alias/dpoint3d.hh: .
+	* milena/mln/core/alias/point1d.hh: .
+	* milena/mln/core/alias/point2d.hh: .
+	* milena/mln/core/alias/point2d_h.hh: .
+	* milena/mln/core/alias/point3d.hh: .
+	* milena/mln/core/alias/point3df.hh: .
+	* milena/mln/core/alias/window1d.hh: .
+	* milena/mln/core/alias/window3d.hh: .
+	* milena/mln/core/dpoints_pixter.hh: .
+	* milena/mln/core/image/bgraph_image.hh: .
+	* milena/mln/core/image/bgraph_psite.hh: .
+	* milena/mln/core/image/decorated_image.hh: .
+	* milena/mln/core/image/fi_adaptor.hh: .
+	* milena/mln/core/image/graph_elt_neighborhood.hh: .
+	* milena/mln/core/image/graph_elt_window.hh: .
+	* milena/mln/core/image/graph_image.hh: .
+	* milena/mln/core/image/graph_neighborhood_piter.hh: .
+	* milena/mln/core/image/graph_window_piter.hh: .
+	* milena/mln/core/image/line_graph_elt_neighborhood.hh: .
+	* milena/mln/core/image/line_graph_elt_window.hh: .
+	* milena/mln/core/image/line_graph_image.hh: .
+	* milena/mln/core/image/line_graph_neighborhood_piter.hh: .
+	* milena/mln/core/image/line_graph_psite.hh: .
+	* milena/mln/core/image/line_graph_window_piter.hh: .
+	* milena/mln/core/internal/force_exact.hh: .
+	* milena/mln/core/internal/image_value_morpher.hh: .
+	* milena/mln/core/internal/line_graph_vicinity_piter.hh: .
+	* milena/mln/core/internal/pixel_iterator_base.hh: .
+	* milena/mln/core/pixter1d.hh: .
+	* milena/mln/core/pixter2d.hh: .
+	* milena/mln/core/pixter3d.hh: .
+	* milena/mln/core/site_set/p_bgraph.hh: .
+	* milena/mln/core/site_set/p_bgraph_piter.hh: .
+	* milena/mln/core/site_set/p_edges.hh: .
+	* milena/mln/core/site_set/p_graph.hh: .
+	* milena/mln/core/site_set/p_graph_piter.hh: .
+	* milena/mln/core/site_set/p_line_graph.hh: .
+	* milena/mln/core/site_set/p_line_graph_piter.hh: .
+	* milena/mln/core/site_set/p_vertices.hh: .
+	* milena/mln/core/trait/qlf_value.hh: .
+	* milena/mln/debug/graph.hh: .
+	* milena/mln/geom/seeds2tiling.hh: .
+	* milena/mln/geom/seeds2tiling_roundness.hh: .
+	* milena/mln/labeling/background.hh: .
+	* milena/mln/labeling/flat_zones.hh: .
+	* milena/mln/labeling/foreground.hh: .
+	* milena/mln/labeling/regional_maxima.hh: .
+	* milena/mln/labeling/regional_minima.hh: .
+	* milena/mln/level/memset_.hh: .
+	* milena/mln/linear/gaussian.hh: .
+	* milena/mln/make/voronoi.hh: .
+	* milena/mln/math/abs.hh: .
+	* milena/mln/metal/abort.hh: .
+	* milena/mln/morpho/closing_area.hh: .
+	* milena/mln/morpho/closing_area_on_vertices.hh: .
+	* milena/mln/morpho/closing_attribute.hh: .
+	* milena/mln/morpho/closing_height.hh: .
+	* milena/mln/morpho/closing_volume.hh: .
+	* milena/mln/morpho/opening_area.hh: .
+	* milena/mln/morpho/opening_area_on_vertices.hh: .
+	* milena/mln/morpho/opening_attribute.hh: .
+	* milena/mln/morpho/opening_height.hh: .
+	* milena/mln/morpho/opening_volume.hh: .
+	* milena/mln/set/inter.hh: .
+	* milena/mln/tag/skeleton.hh: .
+	* milena/mln/trait/ch_value.hh: .
+	* milena/mln/util/graph.hh: .
+	* milena/mln/util/greater_point.hh: .
+	* milena/mln/util/greater_psite.hh: .
+	* milena/mln/util/internal/boost_graph.hh: .
+	* milena/mln/util/internal/boost_graph_access.hh: .
+	* milena/mln/util/internal/boost_graph_property.hh: .
+	* milena/mln/util/internal/boost_graph_structure.hh: .
+	* milena/mln/util/internal/graph_base.hh: .
+	* milena/mln/util/ord_pair.hh: .
+	* milena/mln/value/int_u_sat.hh: .
+	* milena/mln/value/proxy.hh: .
+	* milena/mln/value/stack.hh: .
+	* milena/mln/win/line.hh: .
+	* milena/sandbox/garrigues/ocr/check.sh: .
+	* milena/sandbox/garrigues/ocr/ocr_with_preprocess.cc: .
+	* milena/sandbox/garrigues/ocr/skeleton.hh: .
+	* milena/sandbox/jardonnet/array/old/1d.hh: .
+	* milena/sandbox/jardonnet/array/old/2d.hh: .
+	* milena/sandbox/jardonnet/array/old/3d.hh: .
+	* milena/sandbox/jardonnet/array/old/all.hh: .
+	* milena/sandbox/jardonnet/array/old/nd.hh: .
+	* milena/sandbox/jardonnet/array/old/objs.hh: .
+	* milena/sandbox/levillain/morpho/lower_completion.hh: .
+	* milena/sandbox/levillain/morpho/shortest_path_watershed.hh: .
+	* milena/sandbox/nivault/dmap.hh: .
+	* milena/sandbox/pellegrin/set/core/p_bgraph.hh: .
+	* milena/sandbox/pellegrin/set/core/p_graph.hh: .
+	* milena/sandbox/pellegrin/set/core/p_line_graph.hh: .
+	* milena/sandbox/vigouroux/color.hh: .
+	* milena/sandbox/vigouroux/color/color.hh: .
+	* milena/sandbox/vigouroux/color/hsi.hh: .
+	* milena/sandbox/vigouroux/color/hsl.hh: .
+	* milena/sandbox/vigouroux/color/hsv.hh: .
+	* milena/sandbox/vigouroux/color/nrgb.hh: .
+	* milena/sandbox/vigouroux/color/rgb.hh: .
+	* milena/sandbox/vigouroux/color/xyz.hh: .
+	* milena/sandbox/vigouroux/color/yiq.hh: .
+	* milena/sandbox/vigouroux/color/yuv.hh: .
+	* milena/sandbox/vigouroux/convert/abstract/colorconv.hh: .
+	* milena/sandbox/vigouroux/convert/abstract/conversion.hh: .
+	* milena/sandbox/vigouroux/convert/basics.hh: .
+	* milena/sandbox/vigouroux/convert/bound.hh: .
+	* milena/sandbox/vigouroux/convert/cast.hh: .
+	* milena/sandbox/vigouroux/convert/conversion.hh: .
+	* milena/sandbox/vigouroux/convert/conversion_ng_se.hh: .
+	* milena/sandbox/vigouroux/convert/force.hh: .
+	* milena/sandbox/vigouroux/convert/nrgbxyz.hh: .
+	* milena/sandbox/vigouroux/convert/rgbhsi.hh: .
+	* milena/sandbox/vigouroux/convert/rgbhsl.hh: .
+	* milena/sandbox/vigouroux/convert/rgbhsv.hh: .
+	* milena/sandbox/vigouroux/convert/rgbnrgb.hh: .
+	* milena/sandbox/vigouroux/convert/rgbxyz.hh: .
+	* milena/sandbox/vigouroux/convert/rgbyiq.hh: .
+	* milena/sandbox/vigouroux/convert/rgbyuv.hh: .
+	* milena/sandbox/vigouroux/convert/stretch.hh: .
+	* milena/tests/timer.hh: .
+
+2008-11-04  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Update configure.ac for unit_test.
+
+	* configure.ac: Add unit_test Makefile.
+
+2008-11-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Remove a std::size_t.
+
+	In my opinion nelements must not return size_t.
+	* milena/mln/core/site_set/p_image.hh,
+	* milena/mln/core/image/image3d.hh: Here.
+
+2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Clean-up from_to, add some new overloads, and fix (c).
+
+	* milena/tests/core/other/w_window.cc: New.
+	* milena/tests/core/other/Makefile.am: Update.
+	* milena/tests/core/alias/window2d.cc: Remove echos.
+	* milena/mln/make/image2d.hh: New.
+	* milena/tests/make/image2d.cc: New.
+	* milena/tests/make/Makefile.am: Update.
+	* milena/tests/convert/to_image.cc: Fix copyright.
+	(include): Remove; useless.
+	* milena/mln/core/alias/window2d.hh: Fix include.
+	* milena/mln/core/w_window.hh (from_to): New overload.
+	* milena/mln/core/dpoint.hh: Fix (c).
+	* milena/mln/core/concept/weighted_window.hh: Fix (c).
+	* milena/mln/core/concept/object.hh: Include all metal math.
+	Include metal converts_to.
+	* milena/mln/core/concept/window.hh (from_to): New overload.
+	(todo): New.
+	* milena/mln/core/concept/image.hh (from_to): New overload.
+	* milena/mln/core/concept/gpoint.hh: Fix doc.
+	* milena/mln/core/concept/gdpoint.hh (from_to): New overload.
+	* milena/mln/core/def/all.hh: New.
+	* milena/mln/core/window.hh: Fix copyright.
+	* milena/mln/linear/convolve.hh: Fix warning + copyright.
+	* milena/mln/make/image.hh (image): New overload for 3D.
+	* milena/mln/make/w_window2d.hh: Fix copyright.
+	Remove useless include.
+	* milena/mln/convert/to_image.hh
+	(mln_image_from, helper_dim_, helper_image_from_): Remove.
+	Redundant with image_from_grid.
+	(to_image): Update and use convert::from_to.
+	* milena/mln/convert/from_to.hxx: Layout and update.
+
+2008-10-31  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Introduce make::image.
+
+	When there is no ambiguity, the user can call make::image.
+
+	* milena/mln/make/image2d.hh: Rename as...
+	* milena/mln/make/image.hh: ...this.
+	Import code from...
+	* milena/mln/make/image1d.hh: ...this removed file.
+	* milena/mln/make/all.hh: Update.
+	* milena/tests/debug/iota.cc,
+	* milena/tests/draw/graph.cc,
+	* milena/tests/level/abs.cc,
+	* milena/tests/level/replace.cc,
+	* milena/tests/level/stretch.cc,
+	* milena/tests/level/apply.cc,
+	* milena/tests/level/compare.cc,
+	* milena/tests/level/saturate.cc,
+	* milena/tests/arith/minus.cc,
+	* milena/tests/arith/times.cc,
+	* milena/tests/arith/plus.cc,
+	* milena/tests/arith/revert.cc,
+	* milena/tests/accu/compute.cc,
+	* milena/tests/geom/resize.cc,
+	* milena/tests/geom/seed2tiling_roundness.cc,
+	* milena/tests/geom/seed2tiling.cc,
+	* milena/tests/display/color_pretty.cc,
+	* milena/tests/logical/or.cc,
+	* milena/tests/logical/not.cc,
+	* milena/tests/logical/and_not.cc,
+	* milena/tests/logical/and.cc,
+	* milena/tests/canvas/chamfer.cc,
+	* milena/tests/util/tree_to_image.cc,
+	* milena/tests/util/lemmings.cc,
+	* milena/tests/util/tree_fast_to_image.cc,
+	* milena/tests/labeling/compute.cc,
+	* milena/mln/core/image/image1d.hh: Update.
+	* milena/mln/core/image/image2d.hh: Update.
+	(todo): New.
+	* milena/mln/core/w_window.hh (from_to): New overload.
+	* milena/mln/make/w_window2d.hh: Change tests into checks.
+	* milena/mln/convert/from_to.hxx: Update.
+	* milena/mln/canvas/browsing/directional.hh: .
+	* milena/tests/core/alias/w_window2d_int.cc: Add alt code.
+
+2008-10-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a generic discrete distance transform.
+
+	* milena/mln/transform: New.
+	* milena/mln/transform/distance.hh: New.
+	* milena/tests/transform: New directory.
+	* milena/tests/transform/Makefile.am: New.
+	* milena/tests/transform/distance.cc: New.
+	* milena/sandbox/geraud/skel.cc: Layout.
+	* milena/sandbox/geraud/dmap.cc: Update.
+
+	Slight change in w_window.
+
+	* milena/mln/core/w_window.hh (from_to): Prepare new overload.
+	For that, add some new meta-code:
+	* milena/mln/metal/math/root.hh: New.
+	* milena/mln/metal/math/all.hh: Update.
+	* milena/mln/metal/math/sqrt.hh (todo): New.
+	* milena/tests/metal/math/root.cc: New.
+	* milena/tests/metal/math/pow.cc: Remove echo.
+	* milena/tests/metal/math/Makefile.am: Update.
+	* milena/tests/morpho/Makefile.am (SUBDIRS): Fix missing.
+
+2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Few updates.
+
+	* milena/tests/draw/line.cc: Fix missing update.
+	* milena/mln/draw/line.hh: Make it safe.
+	* milena/mln/morpho/closing_volume.hh (closing_volume): New
+	overload with output as return.
+	* milena/mln/morpho/all.hh: Better doc.
+	(include): Update.
+	* milena/sandbox/geraud/wst_edge.cc: Prefer volume closing over
+	area closing.
+
+2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fun::v2v::convert and level::convert.
+
+	* milena/mln/fun/v2v/convert.hh: New.
+	* milena/mln/fun/v2v/cast.hh (todo): New.
+	* milena/mln/level/convert.hh: New.
+	* milena/tests/level/convert.cc: New.
+	* milena/tests/level/Makefile.am: Update.
+	* milena/mln/value/rgb.hh (todo): New.
+	(from_to): New overload for bool->rgbn.
+	* milena/mln/convert/from_to.hxx
+	(from_to): New decl for bool->rgbn.
+	* milena/sandbox/scribo/demat.hh
+	(include): Remove obsolete dependency.
+
+2008-10-15  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/io/off/Makefile.
+
+2008-09-24  Roland Levillain  <roland@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/topo/Makefile.
+
+2008-09-17  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* configure.ac: Add tests/extension to configure.ac.
+
+2008-09-05  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Update configure.ac.
+
+	* configure.ac: add the new Makefiles present in tests/core/....
+
 2008-08-11  Roland Levillain  <roland@lrde.epita.fr>
 
 	* build-aux/with-swilena.m4: Require SWIG 1.3.31.

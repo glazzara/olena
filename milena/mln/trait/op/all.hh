@@ -1,4 +1,4 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRAIT_OP_ALL_HH
-# define MLN_TRAIT_OP_ALL_HH
+// GUARD NOT REQUIRED: all included files already have guards.
 
 /*!
  * \file   mln/trait/op/all.hh
@@ -74,7 +73,10 @@ namespace mln
 # include <mln/trait/op/or.hh>
 # include <mln/trait/op/xor.hh>
 
+# include <mln/trait/op/lor.hh>
+
 # include <mln/trait/op/not.hh>
 
+// Ordering.
+# include <mln/trait/op/ord.hh>
 
-#endif // ! MLN_TRAIT_OP_ALL_HH

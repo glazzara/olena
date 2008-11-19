@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -36,7 +36,7 @@
 # include <vector>
 # include <algorithm>
 
-# include <mln/core/concept/value_set.hh>
+# include <mln/value/set.hh>
 
 
 namespace mln
@@ -46,101 +46,120 @@ namespace mln
   {
 
 
-    /*! Generic histogram class over a value set with type \c S.
+    /*! Generic histogram class over a value set with type \c T.
      */
-    template <typename S>
+    template <typename T>
     struct data
     {
-      typedef mln_value(S) value;
+      typedef T value;
 
-      data(const Value_Set<S>& s);
+      data();
 
       void clear();
 
-      std::size_t operator()(const value& v) const;
-      std::size_t& operator()(const value& v);
+      unsigned operator()(const T& v) const;
+      unsigned& operator()(const T& v);
 
-      const std::vector<std::size_t>& vect() const;
-      const S& vset() const;
-      std::size_t operator[](unsigned i) const;
-      
+      const std::vector<unsigned>& vect() const;
+      const mln::value::set<T>& vset() const;
+      unsigned operator[](unsigned i) const;
+      unsigned& operator[](unsigned i);
+
+      unsigned nvalues() const;
+
     protected:
 
-      const S& s_;
-      std::vector<std::size_t> h_;
+      const mln::value::set<T>& s_;
+      std::vector<unsigned> h_;
     };
 
 
-    template <typename S>
-    std::ostream& operator<<(std::ostream& ostr, const data<S>& h);
+    template <typename T>
+    std::ostream& operator<<(std::ostream& ostr, const data<T>& h);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename S>
+    template <typename T>
     inline
-    data<S>::data(const Value_Set<S>& s)
-      : s_(exact(s)),
+    data<T>::data()
+      : s_(mln::value::set<T>::the()),
 	h_(s_.nvalues(), 0)
     {
       clear();
     }
 
-    template <typename S>
+    template <typename T>
     inline
     void
-    data<S>::clear()
+    data<T>::clear()
     {
       std::fill(h_.begin(), h_.end(), 0);
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    std::size_t
-    data<S>::operator()(const value& v) const
+    unsigned
+    data<T>::operator()(const T& v) const
     {
       return h_[s_.index_of(v)];
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    std::size_t&
-    data<S>::operator()(const value& v)
+    unsigned&
+    data<T>::operator()(const T& v)
     {
       return h_[s_.index_of(v)];
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    const S&
-    data<S>::vset() const
+    const mln::value::set<T>&
+    data<T>::vset() const
     {
       return s_;
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    std::size_t
-    data<S>::operator[](unsigned i) const
+    unsigned
+    data<T>::operator[](unsigned i) const
     {
       mln_precondition(i < s_.nvalues());
-      return h_[i];      
+      return h_[i];
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    const std::vector<std::size_t>&
-    data<S>::vect() const
+    unsigned&
+    data<T>::operator[](unsigned i)
+    {
+      mln_precondition(i < s_.nvalues());
+      return h_[i];
+    }
+
+    template <typename T>
+    inline
+    const std::vector<unsigned>&
+    data<T>::vect() const
     {
       return h_;
     }
 
-    template <typename S>
+    template <typename T>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const data<S>& h)
+    unsigned data<T>::nvalues() const
     {
-      mln_viter(S) v(h.vset());
+      return h_.size();
+    }
+
+    template <typename T>
+    inline
+    std::ostream& operator<<(std::ostream& ostr, const data<T>& h)
+    {
+      mln_viter(mln::value::set<T>) v(h.vset());
       for_all(v)
 	if (h(v) != 0)
 	  ostr << v << ':' << h(v) << ' ';

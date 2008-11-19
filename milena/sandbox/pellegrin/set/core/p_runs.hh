@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_P_RUNS_HH
-# define MLN_CORE_P_RUNS_HH
+#ifndef MLN_CORE_SITE_SET_P_RUNS_HH
+# define MLN_CORE_SITE_SET_P_RUNS_HH
 
 /*! \file mln/core/p_runs.hh
  *
@@ -37,9 +37,9 @@
 # include <utility>
 
 # include <mln/core/internal/point_set_base.hh>
-# include <mln/core/internal/point_iterator_base.hh>
+# include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/runs_psite.hh>
-# include <mln/core/p_run.hh>
+# include <mln/core/site_set/p_run.hh>
 # include <mln/accu/bbox.hh>
 # include <mln/util/lazy_set.hh>
 # include <trait/point_set.hh>
@@ -88,7 +88,7 @@ namespace mln
     const box_<P>& bbox() const;
 
     /// Give the number of points.
-    typename std::size_t npoints() const;
+    typename std::size_t nsites() const;
 
     /// Insert a range, start at point \p p wit len \p len.
     void insert(const p_run<P>& pr);
@@ -114,7 +114,7 @@ namespace mln
   protected:
 
     /// Number of points.
-    typename std::size_t npoints_;
+    typename std::size_t nsites_;
 
     /// Points container
     util::lazy_set_<p_run<P> > con_;
@@ -128,7 +128,7 @@ namespace mln
   template <typename P>
   inline
   p_runs_<P>::p_runs_() :
-    npoints_(0)
+    nsites_(0)
   {
   }
 
@@ -155,9 +155,9 @@ namespace mln
   template <typename P>
   inline
   typename std::size_t
-  p_runs_<P>::npoints() const
+  p_runs_<P>::nsites() const
   {
-    return npoints_;
+    return nsites_;
   }
 
   template <typename P>
@@ -198,7 +198,7 @@ namespace mln
     fb_.take(pr.bbox().pmin());
     fb_.take(pr.bbox().pmax());
     // update size
-    npoints_ += pr.npoints();
+    nsites_ += pr.nsites();
   }
 
   template <typename P>
@@ -269,11 +269,11 @@ namespace mln
    * Parameter \c E is the exact type of the iterator
    */
   template <typename P, typename E>
-  class p_runs_piter_ : public internal::point_iterator_base_< runs_psite<P>, E >
+  class p_runs_piter_ : public internal::site_iterator_base_< runs_psite<P>, E >
   {
   public:
 
-    /// Convertion into a point.
+    /// Conversion into a point.
     operator P () const;
 
     /// Reference to the corresponding point.
@@ -355,7 +355,7 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convertion into a point-site.
+    /// Conversion into a point-site.
     operator runs_psite<P> () const;
 
   protected:
@@ -457,7 +457,7 @@ namespace mln
     /// Go to the next point.
     void next_();
 
-    /// Convertion into a point-site.
+    /// Conversion into a point-site.
     operator runs_psite<P> () const;
 
   protected:
@@ -538,4 +538,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_P_RUNS_HH
+#endif // ! MLN_CORE_SITE_SET_P_RUNS_HH

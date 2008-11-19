@@ -3,12 +3,14 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  compute					\
   diff						\
   inter						\
   is_subset_of					\
   sym_diff					\
   uni
 
+compute_SOURCES = compute.cc
 diff_SOURCES = diff.cc
 inter_SOURCES = inter.cc
 is_subset_of_SOURCES = is_subset_of.cc

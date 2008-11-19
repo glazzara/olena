@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image1d.hh>
 
 #include <mln/geom/max_ind.hh>
 

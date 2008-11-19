@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,17 +31,42 @@
 
 /*! \file mln/core/concept/window.hh
  * \brief Definition of the concept of mln::Window.
+ *
+ * \todo Operator== should test if the cmp is possible.
+ *
+ * \todo Add an is_valid() method.
+ *
+ * \todo The is_centered() method could also exist when the window is
+ * not regular...
  */
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
+# include <mln/trait/windows.hh>
+
+# include <mln/core/site_set/p_array.hh>
+# include <mln/core/internal/geom_bbox.hh> // For use in convert::from_to.
+# include <mln/convert/from_to.hxx>
+
+
+
+# define mln_is_simple_window(W)							\
+											\
+mln::metal::and_< mlc_is(mln_trait_window_size(W),					\
+			 mln::trait::window::size::fixed),				\
+		  mln::metal::and_< mlc_is(mln_trait_window_support(W),			\
+					   mln::trait::window::support::regular),	\
+				    mlc_is(mln_trait_window_definition(W),		\
+					   mln::trait::window::definition::unique) > >
+
 
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Window;
+
 
   // Window category flag type.
   template <>
@@ -61,20 +87,13 @@ namespace mln
     typedef Window<void> category;
 
     /*
-      typedef point;
-      typedef dpoint;
+      typedef   site;
+      typedef  psite;
+      typedef dpsite;
 
-      typedef qiter;
+      typedef     qiter;
       typedef fwd_qiter;
       typedef bkd_qiter;
-
-      bool is_empty() const;
-      bool is_centered() const;
-      bool is_symmetric() const;
-
-      unsigned delta() const;
-
-      E& sym();
     */
 
   protected:
@@ -82,62 +101,236 @@ namespace mln
   };
 
 
-  /*! \brief Equality comparison between windows \p lhs and \p rhs.
-   *
-   * \relates mln::Window
-   *
-   * \todo Move into mln/set/compare.hh and delegate to replace this special impl.
-   */
   template <typename Wl, typename Wr>
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs);
+
+
+  template <typename W>
+  std::ostream& operator<<(std::ostream& ostr, const Window<W>& win);
+
+
+
+  namespace convert
+  {
+
+    template <typename W, typename I>
+    void
+    from_to(const Window<W>& from, Image<I>& to);
+
+  } // end of namespace mln::convert
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+  namespace internal
+  {
+
+    // size: fixed or unknown.
+
+    template <typename trait_size, typename E>
+    struct window_size_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_size_check< mln::trait::window::size::fixed, E >
+    {
+      static void run()
+      {
+	unsigned (E::*m)() const = & E::size;
+	m = 0;
+      }
+    };
+
+    // support: regular or irregular.
+
+    template <typename trait_support, typename E>
+    struct window_support_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_support_check< mln::trait::window::support::regular, E >
+    {
+      static void run_extra()
+      {
+	// Associated type.
+	typedef mln_regular(E) regular;
+
+	// Methods.
+	bool (E::*m1)() const = &E::is_centered;
+	m1 = 0;
+	bool (E::*m2)() const = &E::is_symmetric;
+	m2 = 0;
+	void (E::*m3)() = &E::sym;
+	m3 = 0;
+	unsigned (E::*m4)() const = &E::delta;
+	m4 = 0;
+      }
+
+      static void run(mln::trait::window::definition::unique)
+      {
+	typedef mln_dpsite(E) D;
+	const D& (E::*m1)(unsigned) const = &E::dp;
+	m1 = 0;
+	bool (E::*m2)(const D&) const = &E::has;
+	m2 = 0;
+	run_extra();
+      }
+
+      static void run(mln::trait::window::definition::n_ary)
+      {
+	run_extra();
+      }
+
+      static void run(mln::trait::window::definition::varying)
+      {
+	/* No requirement. */
+      }
+
+      static void run()
+      {
+	run(mln_trait_window_definition(E)());
+      }
+    };
+
+    // definition: unique, n_ary, or varying.
+
+    template <typename trait_definition, typename E>
+    struct window_definition_check
+    {
+      static void run() { /* No requirement. */ }
+    };
+
+    template <typename E>
+    struct window_definition_check< mln::trait::window::definition::multiple, E >
+    {
+      static void run()
+      {
+	typedef mln_element(E) W;
+	void (E::*m1)(unsigned, const W&) = &E::set_window;
+	m1 = 0;
+	const W& (E::*m2)(unsigned) const = &E::window;
+	m2 = 0;
+	unsigned (E::*m3)() const = &E::nwindows;
+	m3 = 0;
+      }
+    };
+
+  } // end of namespace mln::internal
+
+
   template <typename E>
   inline
   Window<E>::Window()
   {
-    typedef  mln_point(E)  point;
-    typedef mln_dpoint(E) dpoint;
+    // Check properties.
+    mlc_not_equal( mln_trait_window_size(E),       mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_window_support(E),    mln::trait::undef )::check();
+    mlc_not_equal( mln_trait_window_definition(E), mln::trait::undef )::check();
 
+    // Check associated types.
+    typedef   mln_site(E)   site;
+    typedef  mln_psite(E)  psite;
+    typedef mln_dpsite(E) dpsite;
     typedef     mln_qiter(E)     qiter;
     typedef mln_fwd_qiter(E) fwd_qiter;
     typedef mln_bkd_qiter(E) bkd_qiter;
 
-    bool (E::*m1)() const = & E::is_empty;
-    m1 = 0;
-    bool (E::*m2)() const = & E::is_centered;
-    m2 = 0;
-    bool (E::*m3)() const = & E::is_symmetric;
-    m3 = 0;
-    unsigned (E::*m4)() const = & E::delta;
-    m4 = 0;
-    E& (E::*m5)() = & E::sym;
-    m5 = 0;
+    // Check methods depending upon properties.
+    internal::window_size_check      < mln_trait_window_size(E),       E >::run();
+    internal::window_support_check   < mln_trait_window_support(E),    E >::run();
+    internal::window_definition_check< mln_trait_window_definition(E), E >::run();
   }
 
   template <typename Wl, typename Wr>
   inline
   bool operator==(const Window<Wl>& lhs, const Window<Wr>& rhs)
   {
-    // FIXME: Same grid!
-    typedef mln_point(Wl) P;
-
-    mln_fwd_qiter(Wl) ql(exact(lhs), P::origin);
-    mln_fwd_qiter(Wr) qr(exact(rhs), P::origin);
-
-    for (ql.start(),      qr.start();
-	 ql.is_valid() && qr.is_valid();
-	 ql.next(),       qr.next())
-      if (ql != qr)
-	return false; // difference found
-
-    // both windows are equal only if both browsings are completed at
-    // the same time:
-    return ! ql.is_valid() && ! qr.is_valid();
+    return exact(lhs).std_vector() == exact(rhs).std_vector();
   }
+
+
+  // Operator <<.
+
+  namespace internal
+  {
+
+    template <typename W>
+    inline
+    void print(trait::window::definition::unique,
+	       std::ostream& ostr, const W& win) // FIXME: Add Window<W> to win?
+    {
+      win.print(ostr);
+    }
+
+    template <typename W>
+    inline
+    void print(trait::window::definition::multiple,
+	       std::ostream& ostr, const W& win) // FIXME: Add Window<W> to win?
+    {
+      ostr << "[";
+      const unsigned nw = win.nwindows();
+      for (unsigned w = 0; w < nw; ++w)
+	{
+	  ostr << " #" << w << ':';
+	  win.window_(w).print(ostr);
+	}
+      ostr << " ]";
+    }
+    
+  } // end of namespace mln::internal
+
+  template <typename W>
+  inline
+  std::ostream& operator<<(std::ostream& ostr, const Window<W>& win)
+  {
+    mlc_is(mln_trait_window_support(W),
+	   trait::window::support::regular)::check();
+    mlc_is_not(mln_trait_window_definition(W),
+	       trait::window::definition::varying)::check();
+    // FIXME: test on is_empty?
+    internal::print(mln_trait_window_definition(W)(),
+		    ostr, exact(win));
+    return ostr;
+  }
+
+
+  namespace convert
+  {
+
+    template <typename W, typename I>
+    void
+    from_to(const Window<W>& win_, Image<I>& ima_)
+    {
+      mln_is_simple_window(W)::check();
+      typedef mln_psite(I) P;
+      mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
+      mlc_equal(mln_value(I), bool)::check();
+
+      const W& win = exact(win_);
+      I& ima = exact(ima_);
+
+      // mln_precondition(win.is_valid());
+      mln_precondition(! ima.has_data());
+
+      // Hack (below) to avoid circular dependency.
+      ima.init_(mln::internal::geom_bbox(win));
+      {
+	// level::fill(ima, false) is:
+	mln_piter(I) p(ima.domain());
+	for_all(p)
+	  ima(p) = false;
+      }
+      unsigned n = win.size();
+      for (unsigned i = 0; i < n; ++i)
+	ima(convert::to<P>(win.dp(i))) = true;
+    }
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

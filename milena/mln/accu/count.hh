@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,10 +30,12 @@
 # define MLN_ACCU_COUNT_HH
 
 /// \file mln/accu/count.hh
-/// \brief Define an accumulator that counts.
+///
+/// Define an accumulator that counts.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
+
 
 namespace mln
 {
@@ -40,50 +43,63 @@ namespace mln
   namespace accu
   {
 
-    /// \brief Generic counter accumulator class.
+    /// Generic counter accumulator class.
     /// The parameter \a T is the type to be count.
     template <typename T>
-    struct count_ : public mln::accu::internal::base_< std::size_t , count_<T> >
+    struct count : public mln::accu::internal::base< unsigned , count<T> >
     {
       typedef T argument;
 
-      count_();
+      count();
 
       /// Manipulators.
       /// \{
       void init();
       void take(const argument&);
-      void take(const count_<T>& other);
+      void take(const count<T>& other);
 
-      /// Force the value of the counter to \a c. 
-      void set_value(std::size_t c);
+      void untake(const argument&);
+      void untake(const count<T>& other);
+
+      /// Force the value of the counter to \a c.
+      void set_value(unsigned c);
       /// \}
 
       /// Get the value of the accumulator.
-      std::size_t to_result() const;
+      unsigned to_result() const;
+
+      /// Check whether this accu is able to return a result.
+      /// Always true here.
+      bool is_valid() const;
 
     protected:
       /// The value of the counter.
-      std::size_t count__;
+      unsigned count_;
     };
 
 
-    /// \brief Meta accumulator for count.
-    struct count : public Meta_Accumulator< count >
+    namespace meta
     {
-      template <typename T>
-      struct with
+
+      /// Meta accumulator for count.
+      struct count : public Meta_Accumulator< count >
       {
-	typedef count_<T> ret;
+	template <typename T>
+	struct with
+	{
+	  typedef accu::count<T> ret;
+	};
       };
-    };
+
+    } // end of namespace mln::accu::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
     inline
-    count_<T>::count_()
+    count<T>::count()
     {
       init();
     }
@@ -91,41 +107,67 @@ namespace mln
     template <typename T>
     inline
     void
-    count_<T>::init()
+    count<T>::init()
     {
-      count__ = 0;
+      count_ = 0;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::take(const argument&)
+    count<T>::take(const argument&)
     {
-      ++count__;
+      ++count_;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::take(const count_<T>& other)
+    count<T>::untake(const argument&)
     {
-      count__ += other.count__;
-    }
-
-    template <typename T>
-    inline
-    std::size_t
-    count_<T>::to_result() const
-    {
-      return count__;
+      mln_precondition(count_ > 0);
+      --count_;
     }
 
     template <typename T>
     inline
     void
-    count_<T>::set_value(std::size_t c)
+    count<T>::take(const count<T>& other)
     {
-      count__ = c;
+      count_ += other.count_;
+    }
+
+    template <typename T>
+    inline
+    void
+    count<T>::untake(const count<T>& other)
+    {
+      mln_precondition(other.count_ <= count_);
+      count_ -= other.count_;
+    }
+
+    template <typename T>
+    inline
+    unsigned
+    count<T>::to_result() const
+    {
+      return count_;
+    }
+
+    template <typename T>
+    inline
+    void
+    count<T>::set_value(unsigned c)
+    {
+      count_ = c;
+    }
+
+    template <typename T>
+    inline
+    bool
+    count<T>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,24 +1,1209 @@
-2008-09-12  Alexandre Abraham  <abraham@lrde.epita.fr>
+2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
-	Fix Bugs In Watershed.
+	Fix table removal.
 
-	* abraham/tests/morpho/test_component_tree.cc: Update some printing
-	  functions.
-	* abraham/tests/morpho/test_watershed.cc: Idem.
-	* abraham/tests/morpho/test_watershed_topo.cc: Make it clean.
-	* abraham/tests/morpho/ref/src/lib/lwshedtopo.c: Remove debug printing.
-	* abraham/mln/morpho/basic_najman.hh: Fix bugs
-	  basic_najman::compressTree: New
-	  basic_najman::removeOneSonNodes(): New.
+	* scribo/demat.hh: erosion had to be called vertically and
+	horizontally before removing tables.
 
-2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
-	Sandbox: Update access.hh.
+2008-11-19  Alexandre Abraham  <abraham@lrde.epita.fr>
 
-	After Theo:        
+	Little fixes.
 
-	* jardonnet/virtual/access.hh: Concept check, Type sum ...
-	* jardonnet/virtual/access.cc: Update testes.
+	* markov/markov.hh: .
+
+2008-11-19  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix bad comparison sign.
+
+	* markov/markov.hh: .
+
+2008-11-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix the code that computes connexity numbers.
+
+	* garrigues/ocr/compute_local_configurations.cc: Fix.
+
+2008-11-18  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make the neighborhood energy count.
+
+	* markov/markov.hh: .
+
+2008-11-18  Dalila Benboudjema  <dalila@lrde.epita.fr>
+
+	Remove images.
+	* images/factures/facture.pbm: Remove.
+	* images/factures/facture2.pbm: Remove.
+	* images/factures/facture3.pbm: Remove.
+	* images/factures: Remove.
+	* images/photos/chavez.pbm: Remove.
+	* images/photos/family.pbm: Remove.
+	* images/photos/garden.pbm: Remove.
+	* images/photos/garden_crop.pbm: Remove.
+	* images/photos/revolution.pbm: Remove.
+	* images/photos/revolution2.pbm: Remove.
+	* images/photos: Remove.
+	* images: Remove.
+
+2008-11-15  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix some constants.
+
+	* markov/markov.hh: .
+
+2008-11-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	It now compiles.
+
+	* markov/markov.cc: add name modification.
+	* markov/markov.hh: many little fixes.
+
+2008-11-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add a .cc file, correct some little things.
+
+	* markov/markov.cc: New.
+	* markov/markov.hh: .
+
+2008-11-14  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Pseudo-code of the canvas of the algorithm.
+	* markov.hh: New.
+
+2008-11-14  Antoine Leblanc  <crucuny@gmail.com>
+
+	Random class.
+	* markov/random.hh: Random class.
+	* markov/random.hxx: Implementation.
+
+2008-11-14  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	[Markov] Add temperator generator.
+
+	* markov/T_gen.hh: New.
+
+2008-11-14  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Create the sandbox for the Markov project.
+	* markov: New.
+
+2008-11-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add support for table extraction.
+
+	* scribo/demat.hh: update.
+
+2008-11-12  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make topological watershed work.
+
+	* abraham/tests/core/image/thru_v2w2v.cc:
+	    make::image2d -> make::image.
+	* abraham/mln/morpho/topo_wst.hh:
+	    fix reversion of tree .
+	* abraham/mln/value/shell.hh:
+	    add traits.
+
+2008-11-11  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add FFT to nature.
+
+	* nature/fft.cc: New.
+	* nature/nature.cc: Add a FFT test.
+	* nature/opening.cc: .
+	* nature/co_occurence.hh: .
+	* nature/Makefile: Add special rule to use FFTW.
+	* abraham/tests/transform/fft.cc: New.
+	* abraham/tests/transform/fft_.cc: New.
+	* abraham/mln/transform/fft.hh: conversion to milena.
+
+2008-11-10  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Final Upgrade.
+
+	* inim/classif/src/max_tree.hh: Fix comment.
+	* inim/classif/src/proj.hh: Add specific projection.
+	* inim/classif/src/v2.cc: Add efficient technique based
+	histo value merging.
+
+2008-11-10  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Update gif creation.
+
+	* inim/classif/src/display.hh: Display watershed class.
+	* inim/classif/src/iccvg04.cc: Modify output info.
+	* inim/classif/src/proj.hh: Beautify.
+	* inim/classif/Makefile: Remove warning in non debug.
+
+2008-11-10  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	INIM: Add the final code for edges dectection.
+
+	* ballas/color/min_tree_area_filter.cc: Update
+	* ballas/color/min_tree_color.cc,
+	* ballas/color/min_tree_volume_filter.cc: Update output.
+	* ballas/color/min_tree_height_filter.cc: New min tree filter.
+	* ballas/color/min_tree_color_v2.cc: New, color filter.
+
+2008-11-10  Dalila Benboudjema  <dalila@lrde.epita.fr>
+
+	Add a new sandbox for Dalila.
+	* dalila/Makefile: New.
+	* dalila/demat.hh: New.
+	* dalila/images/factures/facture.pbm: New.
+	* dalila/images/factures/facture2.pbm: New.
+	* dalila/images/factures/facture3.pbm: New.
+	* dalila/images/factures: New.
+	* dalila/images/photos/chavez.pbm: New.
+	* dalila/images/photos/family.pbm: New.
+	* dalila/images/photos/garden.pbm: New.
+	* dalila/images/photos/garden_crop.pbm: New.
+	* dalila/images/photos/revolution.pbm: New.
+	* dalila/images/photos/revolution2.pbm: New.
+	* dalila/images/photos: New.
+	* dalila/images: New.
+	* dalila/photo.cc: New.
+	* dalila/start.sh: New.
+	* dalila/table.cc: New.
+	* dalila: New.
+
+2008-11-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Update palette proj.
+
+	* inim/classif/src/iccvg04.cc: Fix warning.
+	* inim/classif/src/proj.hh: Update palette prj.
+	* inim/classif/Makefile: Add warning flag.
+
+2008-11-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix Update and Revamp Classif.
+
+	* inim/classif/max_tree.hh,
+	* inim/classif/display.hh,
+	* inim/classif/iccvg04.cc,
+	* inim/classif/proj.hh,
+	* inim/classif/v2.cc: Moved and update...
+	* inim/classif/src/max_tree.hh,
+	* inim/classif/src/display.hh,
+	* inim/classif/src/iccvg04.cc,
+	* inim/classif/src/proj.hh,
+	* inim/classif/src/v2.cc: ...here.
+
+	* inim/classif/Makefile: .
+
+2008-11-05  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Update some files and add test suite for nature.
+
+	* abraham/tests/core/image/thru_v2v.cc,
+	  abraham/tests/core/image/thru_const.cc:
+	    make::image2d to make::image .
+	* abraham/mln/level/transform.hh: Remove.
+	* abraham/mln/core/image/shell.hh: Remove.
+	* abraham/mln/fun/meta/to_enc.hh: New
+	    Make this functor meta.
+	* abraham/mln/fun/v2v/rgb_to_hsi.hh:
+	    Corrected version of rgb to hsi conversion.
+	* abraham/mln/binarization/binarization.hh: Remove.
+	* abraham/mln/transform: New.
+	* abraham/mln/transform/fft.hh: New.
+	* abraham/mln/value/shell.hh:
+	    Support Function_v2v.
+	* nature/histo_hsi.cc: .
+	* nature/hom.cc: .
+	* nature/mco.cc: .
+	* nature/nature.cc: New.
+	* nature/opening.cc: .
+	* nature/test.sh: New.
+
+2008-11-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: CLassif: Reduce nb of included files.
+
+	* inim/classif/display.hh,
+	* inim/classif/iccvg04.cc,
+	* inim/classif/v2.cc,: Rewrite geom inclusion.
+
+2008-11-04  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Rewrite binarization in milena style.
+	* inim/binarization/binarization.cc: New.
+	* inim/binarization/binarization.hh: New.
+
+2008-11-04  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Cleanup OCR preprocessing.
+	* garrigues/ocr/ocr_with_preprocess.cc: Cleanup.
+
+	* garrigues/ocr/skeleton.hh,
+	  garrigues/ocr/tesseract_wrap.hh: Fix typos.
+
+2008-11-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add tesseract support for Scribo.
+
+	* scribo/demat.hh: Use tesseract and store the result in an image of
+	char.
+
+
+2008-11-03  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	INIM: Move classif work in the inim directory.
+
+	* classif: Move ...
+	* inim/classif: ... Here.
+
+	* inim/classif/Makefile: Update relative include directory.
+
+	* inim/classif/proj.hh: Trailing update.
+
+2008-11-03  Antoine Leblanc  <leblanc@lrde.epita.fr>
+
+	INIM binarization proof-of-concept update
+	* inim/binarization/proof-of-concept/configure.in: -I directive updated.
+	* inim/binarization/proof-of-concept/src/gradient.cc: binarization added.
+	* inim/binarization/proof-of-concept/src/util.hxx: colors inverted in
+	  order to respect object/background usual values.
+
+2008-11-03  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	INIM: Add a README file.
+
+	* ballas/color/README: New.
+
+2008-11-03  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Inim: Add the code related to edge detection in the sandbox.
+
+	* ballas/color: New.
+	* ballas/color/min_tree_volume_filter.cc: Min tree using volume filter.
+	* ballas/color/reference.cc: Method using a gradient.
+	* ballas/color/min_tree_area_filter.cc: Min tree using area filter.
+	* ballas/color/min_tree_color.cc: Min tree using filter based on color.
+	* ballas/color/reference2.cc: Method using the laplacien.
+	* ballas/color/src: New.
+	* ballas/color/src/graph.hh,
+	* ballas/color/src/io.hh,
+	* ballas/color/src/distance.hh,
+	* ballas/color/src/convert.hh: New, factorize some code.
+	* ballas/color/laplacien.cc: Laplacien tests.
+
+2008-11-03  Antoine Leblanc  <leblanc@lrde.epita.fr>
+
+	INIM binarization proof of concept
+	* inim/binarization/proof-of-concept/ChangeLog: New.
+	* inim/binarization/proof-of-concept/Makefile: New.
+	* inim/binarization/proof-of-concept/bin: New.
+	* inim/binarization/proof-of-concept/build/Makefile: New.
+	* inim/binarization/proof-of-concept/build/configure.in: New.
+	* inim/binarization/proof-of-concept/build: New.
+	* inim/binarization/proof-of-concept/check/Makefile: New.
+	* inim/binarization/proof-of-concept/check/graph.sh: New.
+	* inim/binarization/proof-of-concept/check/histo.gp: New.
+	* inim/binarization/proof-of-concept/check: New.
+	* inim/binarization/proof-of-concept/configure.in: New.
+	* inim/binarization/proof-of-concept/configure: New.
+	* inim/binarization/proof-of-concept/scripts/flower: New.
+	* inim/binarization/proof-of-concept/scripts/init_tar.sh: New.
+	* inim/binarization/proof-of-concept/scripts/todo.sh: New.
+	* inim/binarization/proof-of-concept/scripts: New.
+	* inim/binarization/proof-of-concept/src/basic.cc: New.
+	* inim/binarization/proof-of-concept/src/gradient.cc: New.
+	* inim/binarization/proof-of-concept/src/snake2d.hh: New.
+	* inim/binarization/proof-of-concept/src/util.hxx: New.
+	* inim/binarization/proof-of-concept/src: New.
+	* inim/binarization/proof-of-concept: New.
+
+2008-11-03  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix projection.
+
+	* nature/proj.cc: .
+
+2008-11-03  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix 1d to 2d problem.
+
+	* nature/proj.cc: use an unsigned to iterate over the image.
+
+2008-11-02  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add closing, udate filter parameters.
+
+	* nature/closing.cc: New.
+	* nature/gradient.cc: .
+	* nature/histo_hsi.cc: .
+	* nature/hom.cc: .
+	* nature/opening.cc: .
+
+2008-11-02  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Cleanup OCR preprocessing.
+	* garrigues/ocr/ocr_with_preprocess.cc,
+	  garrigues/ocr/ocr_without_preprocess.cc: Cleanup the call to
+	  tesseract.
+
+	* garrigues/ocr/tesseract_wrap.hh: New.
+	  Provide a Tesseract wrapper which is also able to compute an
+	  approximate confidence value of the recognition based on tesseract
+	  internal data.
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Big cleanup.
+	* max_tree.hh: Factorize code in generic methods.
+	* v2.cc: Comment and clean code.
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Merge the filter chain.
+	* max_tree.hh: Add a new_parent image to avoid computing them all
+	* the time.
+	* v2.cc: Define a filter chain order.
+
+2008-11-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Work on density.
+
+	* classif/max_tree.hh (density closing|fusion): Add.
+	* classif/v2.cc: Add parameter.
+
+2008-11-01  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Updating filters.
+
+	* nature/erosion.cc: More user friendly.
+	* nature/gradient.cc: .
+	* nature/hom.cc: Now working.
+	* nature/mco.cc: Now working on every images.
+	* nature/opening.cc: .
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Allow to chain filters.
+	* max_tree.hh: Here.
+	* v2.cc: Chain filters.
+
+2008-11-01  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Add some debug infos and some filters on max trees.
+	* max_tree.hh,
+	* v2.cc: Here.
+
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Fix snake2d and add test.
+	* inim/binarization/snake2d.cc: New.
+	* inim/binarization/snake2d.hh: New.
+	* inim/binarization/snake_2d.hh: Remove.
+
+2008-10-31  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve Skeleton computation.
+
+	* garrigues/ocr/check_simple_point.cc: New. check the analysis of the
+	local configuration of a pixel.
+	* garrigues/ocr/enlarge.hh: Add routine for int_u8 images.
+	* garrigues/ocr/ocr_with_preprocess.cc: Add the use of skeleton in the
+	ocr preprocessing.
+	* garrigues/ocr/simple_point.cc: .
+	* garrigues/ocr/simple_point.hh: .
+	* garrigues/ocr/skel.cc: Remove.
+	* garrigues/ocr/skeleton.cc: Remove.
+	* garrigues/ocr/skeleton.old.cc: New.
+	* garrigues/ocr/skeleton.old.hh: New.
+
+	* garrigues/ocr/Makefile: .
+	* garrigues/ocr/check.sh: .
+
+2008-10-31  Vivien Delmon  <vivien.delmon@lrde.epita.fr>
+
+	Add snake_2d.
+	* inim/binarization/snake_2d.hh: New, The snake_2d function takes an
+	  accumulator, an image and a window and return the ouput image of
+	  the accumulator applies on the input image.
+	* inim/binarization: New.
+	* inim: New.
+
+2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Make use of maj_h. Fix Makefile.
+
+	* classif/proj.hh: Make use of majority.
+	* classif/Makefile: Proper dependencies.
+
+2008-10-30  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add co-occurence matrix computing.
+
+	* nature/co_occurence.hh: New
+	    (mln::co_occurence) : compute co-occurence matrix.
+	* nature/mco.cc: New
+	    Dummy test.
+
+2008-10-30  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Add skeleton algorithm.
+	* garrigues/ocr/skel.cc: New.
+
+2008-10-30  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add is_curve_extremum to detect curve extrema.
+
+	* garrigues/ocr/simple_point.hh: (is_curve_extremum) Tell if a point
+	is a curve extremum.
+
+2008-10-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Make palette.
+
+	* classif/iccvg04.cc: Beautify.
+	* classif/proj.hh: Add palette creation.
+	* classif/v2.cc: Avoid useless implicit cast.
+	* classif/Makefile: Change default streching.
+
+2008-10-30  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make shell a value.
+
+	* abraham/mln/value/shell.hh: New
+	    mln::value::shell is now a value.
+	* abraham/mln/core/image/thru.hh: change namespace of shell.
+
+2008-10-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update and add more debug.
+
+	* scribo/demat.hh,
+	* scribo/photo.cc,
+	* scribo/table.cc:
+	Update usage and add more debug.
+
+2008-10-29  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* garrigues/ocr/compute_local_configurations.cc: New, A program to
+	compute the number of connected component in a local configuration.
+
+2008-10-29  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add simple point computation to ocr preprocessing.
+
+	* garrigues/ocr/simple_point.hh: New ,Tell if a point is simple or
+	not. A point of an object is simple if in its c8 neiborhood, there is
+	exactly one connected component of the object, and only one connected
+	component of the background
+
+	Examples : ( | == object, - = background)
+
+         - - |
+         | P | Here P is simple in the c4 and c8 case.
+         | | |
+
+         - | -
+         | P | Here P is never simple.
+         | | |
+
+	* garrigues/ocr/simple_point.cc: New. A simple test that shows all the
+	simple points of a binary image.
+
+2008-10-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve code for Scribo.
+
+	* scribo/demat.hh: New output showing the table matrix.
+
+	* scribo/main.cc: Move and update the code...
+
+	* scribo/photo.cc,
+	* scribo/table.cc: Here. Add New main() functions.
+
+2008-10-29  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Implement a simple filter on the max_tree.
+	* Makefile: Add nice rules.
+	* max_tree.hh: Add to_ppm, compute_mean_colors and number_of_nodes.
+	* v2.cc: Fix the getopt.
+
+2008-10-29  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	INIM : nature filters and little bug fixes.
+
+	* abraham/mln/trait: New.
+	* abraham/mln/trait/images.hh: New
+	    (mln::trait::default_image_morpher) : Adjust quant according
+	      to new value quant..
+	* abraham/mln/morpho/hit_or_miss.hh: New
+	    (mln::morpho::hit_or_miss) : First implementation of hit or
+	      miss algorithm.
+	* abraham/mln/level/transform.hh: New
+	    (mln::level::transform) : Add procedure.
+	* abraham/mln/core/image/thru.hh:
+	    Temporary trait modification.
+	* abraham/mln/core/image/shell.hh:
+	    Add include of function.hh.
+	* abraham/mln/fun/meta/hue.hh: New
+	    Allow direct access to hue.
+	* abraham/mln/fun/meta/inty.hh: New
+	    Allow direct access to intensity..
+	* abraham/mln/fun/meta/sat.hh: New
+	    Allow direct access to saturation..
+	* abraham/mln/fun/v2v: New.
+	* abraham/mln/fun/v2v/rgb_to_hsi.hh: New
+	    Fix wrong conversion formula.
+	* abraham/mln/binarization: New.
+	* abraham/mln/binarization/binarization.hh: New
+	    Fix call to level::transform procedure (output must be empty).
+	* abraham/mln/value: New.
+	* abraham/mln/value/builtin: New.
+	* abraham/mln/value/builtin/symbolics.hh: New
+	    Add min and max for bool traits.
+	* nature/erosion.cc: New
+	    Test of erosion filter.
+	* nature/gradient.cc: New
+	    Test of gradient filter.
+	* nature/histo_hsi.cc: New
+	    Decompose image in hsi format.
+	* nature/hom.cc: New
+	    First hit or miss test.
+	* nature/opening.cc: New
+	    Test of opening filter.
+	* nature/Makefile: New.
+
+2008-10-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a distance by propagation sample code.
+
+	* geraud/skel.cc: New.
+
+2008-10-29  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Update OCR preprocessing.
+	* garrigues/ocr/ocr_with_preprocess.cc: Apply gaussian blur and
+	  naive thresholding.
+
+2008-10-28  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Compute volume of max tree nodes.
+	* Makefile: Little fix.
+	* max_tree.hh: Compute the volume.
+	* v2.cc: Call the volume routine.
+
+2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add some bench tests on ocr preprocessing.
+
+	* garrigues/ocr/Makefile: New, compile an ocr with preprocess
+	and an other one without.
+	* garrigues/ocr/check.sh: New, script to bench ocr preprocessing.
+	* garrigues/ocr/ocr.cc: Rename as...
+	* garrigues/ocr/ocr_with_preprocess.cc: ...this.
+	* garrigues/ocr/ocr_without_preprocess.cc: New. version without
+	preprocess.
+
+2008-10-28  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	* garrigues/ocr/ocr.cc: Updates dues to gaussian's facade changes.
+
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Update max tree version.
+
+	* classif/v2.cc: Update.
+
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Start working on max_tree version.
+
+	* classif/max_tree.hh: max_tree struct.
+	* classif/iccvg04.cc: minor fix.
+	* classif/display.hh: Put display here.
+	* classif/v2.cc: STart max_tree.
+
+2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Work on a new classification method based on max_trees.
+	* max_tree.hh: New.
+	* v2.cc: New.
+
+2008-10-27  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Fix bug in the mean color computation.
+	* Makefile: Fix.
+	* iccvg04.cc: Use double values instead of unsigned.
+
+2008-10-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use more routines provided by Olena.
+
+	* scribo/demat.hh: Use more routines provided by Olena:
+	  - not_inplace
+	  - level::convert
+	  - box::center()
+
+	* scribo/main.cc: Update usage.
+
+2008-10-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update classification.
+
+	* classif/iccvg04.cc: Swap filtering and reverting so that
+	  lambda is more intuitive.
+
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif: Add projection.
+
+	* classif/iccvg04.cc: Fix wrong init.
+	* classif/proj.hh: Add generic proj.
+
+2008-10-27  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make meta-functions work with thru morpher.
+
+	* abraham/tests/fun/meta/red.cc: Update example.
+	* abraham/mln/core/image/thru.hh: .
+	* abraham/mln/core/image/shell.hh: Fix result value.
+	* abraham/mln/core/concept/meta_fun.hh:
+	    (mln::meta::impl) : now templated by return type
+	                        (necessary to typedef result).
+	* abraham/mln/fun/meta/red.hh: .
+
+2008-10-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Clean up classification.
+
+	* classif/iccvg04.cc: Clean it up.
+
+2008-10-25  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	INIM: classif: Fix iccvg04.
+
+	* classif/iccvg04.cc: Cleanup. Fix wrong initialization.
+
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update morpho classif for LN.
+
+	* geraud/laurent/classif.cc: Update.
+
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update morphological classification for LN.
+
+	* geraud/laurent/classif.cc: Update.
+
+2008-10-24  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Add some debug infos and an uber-simple getopt.
+	* iccvg04.cc: Here.
+
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add demo code for Laurent N.
+
+	* geraud/toto: Remove.
+	* geraud/laurent: New.
+	* geraud/laurent/wst2d.cc: New.
+	* geraud/laurent/wst3d.cc: New.
+	* geraud/laurent/classif.cc: New.
+	* geraud/laurent/segmentation.hh: New.
+
+2008-10-24  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Enhance the build-system.
+	* Makefile: Make a nice and usefull Makefile.
+
+2008-10-24  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add bijective functors, 2-way functors and meta-fun.
+
+	* abraham/tests/morpho/test_component_tree.cc: Remove
+	    This test was outdated.
+	* abraham/tests/morpho/test_watershed.cc:
+	    Clean.
+	* abraham/tests/morpho/test_watershed_topo.cc:
+	    Clean.
+	* abraham/tests/fun/meta: New.
+	* abraham/tests/fun/meta/red.cc: New
+	    (mln::meta::red) : meta function to access red in rgb.
+	* abraham/tests/core/image/thru_norm.cc: New
+	    test for norm functor.
+	* abraham/tests/core/image/thru_v2v.cc: New
+	    test for abs functor.
+	* abraham/tests/core/image/thru.cc: Remove.
+	* abraham/tests/core/image/thru_const.cc: New
+	    test of writing in a const image.
+	* abraham/tests/core/image/thru_v2w2v.cc: New
+	    test for cosinus functor.
+	* abraham/tests/core/concept: New.
+	* abraham/tests/core/concept/test.cc: New.
+	* abraham/mln/morpho/najman_wst.hh: New
+	    M-W watershed.
+	* abraham/mln/morpho/basic_najman.hh:
+	    Obsolete, will eventually be removed.
+	* abraham/mln/morpho/topo_wst.hh: New
+	    1 pass topological watershed.
+	* abraham/mln/core/image/thru.hh:
+	    (mln::thru): see an image throught a function.
+	* abraham/mln/core/image/shell.hh: New
+	    (mln::shell): value shell.
+	* abraham/mln/core/concept/function.hh:
+	    Add bijective and 2-way function.
+	* abraham/mln/core/concept/meta_fun.hh: New
+	    Add concept for meta function.
+	* abraham/mln/fun/meta: New.
+	* abraham/mln/fun/meta/red.hh: New
+	    red fun object.
+	* abraham/mln/fun/v2w_w2v/norm.hh:
+	    2-way functor.
+	* vigouroux/tests.cc: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_cmy.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_xyz.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_hsi.hh: Rename image_if_value > image_if.
+	* vigouroux/color/rgb_to_yuv.hh: Rename image_if_value > image_if.
+
+2008-10-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a processing chain about segmentation on edges.
+
+	* geraud/wst_edge.cc: New.
+
+2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Fix the skeleton algorithm introduced by aroumougame.
+	* garrigues/ocr/skeleton.cc,
+	  garrigues/ocr/skeleton.hh: New.
+	  The code has been updated to work with the current version of
+	  milena. However, the code itself has to be cleaned and improved.
+
+2008-10-24  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Update OCR using tesseract.
+	* garrigues/ocr/enlarge.hh: New.
+	  New enlargement algorithm better than the naive resize.
+
+	* garrigues/ocr/ocr.cc: Provide sample code to link milena against
+	  tesseract.
+
+2008-10-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix an endless loop.
+
+	* scribo/demat.hh: Fix a endless loop. 
+
+2008-10-22  Maxime van Noppen  <yabo@lrde.epita.fr>
+
+	Work on ICCVG04 for INIM.
+	* Makefile: Make a smarter Makefile.
+	* iccvg04.cc: Enhance the classification routine.
+
+2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update of the ICIP'07 max-tree canonization code.
+
+	* scribo/demat.hh (trace): Set on.
+	* geraud/max_tree_nnodes.cc (neighb): Remove useless.
+	(mln_point): Update.
+
+2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve debug output.
+
+	* scribo/demat.hh: 
+	Use color images for debug output.
+	Improve the way the small components are erased.
+
+	* scribo/main.cc: Improve usage output.
+
+2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classif++.
+
+	* classif/iccvg04.cc: iccvg04.cc.
+	* classif/Makefile: Makefile.
+
+2008-10-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM: Classification: Clean up directory.
+
+	* classif/images,
+	* classif/images/caf_0009.jpg,
+	* classif/images/caf_0028.jpg,
+	* classif/images/edfverso06.JPG,
+	* classif/images/capture.png,
+	* classif/images/vpc_0001.jpg,
+	* classif/images/caf_0010.jpg,
+	* classif/images/caf_0013.jpg,
+	* classif/images/caf_0005.jpg,
+	* classif/images/caf_0034.jpg: Remove.
+
+2008-10-22  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update classif main.
+
+	* classif/iccvg04.cc: Update.
+
+2008-10-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix bad deletion of small components.
+
+	* scribo/demat.hh:
+	  - Correctly relabel.
+	  - Correctly erase components.
+
+2008-10-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Extract text bboxes for Scribo.
+
+	* scribo/main.cc: Change usage message.
+	
+	* scribo/demat.hh:
+	  - Cleanup.
+	  - Remove too small components using level::transform.
+	  - Support text bboxes extraction.
+
+2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Work on ICCVG04 classification method
+	* iccvg04.cc: Add a general display function for 3d images.
+
+2008-10-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Work on INIM classification
+	* classif/Makefile: Change flags.
+	* classif/iccvg04.cc: Implement classification method of ICCVG04.
+	* classif/scoolNBR.ppm: Remove.
+
+2008-10-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Improve OCR preprocessing.
+
+	* garrigues/ocr/ocr.cc: Add resize + gaussian blur.
+	* garrigues/ocr/resize.hh: New. Enlarge an image.
+
+2008-10-18  Jimmy Ma  <jimmy.ma@lrde.epita.fr>
+
+	Create a ocr directory.
+	* garrigues/ocr/ocr.cc: New.
+	* garrigues/ocr: New.
+
+2008-10-17  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Get and display character bboxes.
+
+	* sandbox/scribo/demat.hh: update. 
+	Does not create text bboxes yet.
+
+2008-10-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update the prototype of labeling::compute().
+
+	* sandbox/scribo/demat.hh: update according the new
+	prototype.
+
+2008-10-15  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM Classification++.
+
+	* classif/iccvg04.cc: Revamp + Area Closure.
+	* classif/plotscript: Basic plotting script.
+	* classif/chiche.pgm: Revamp chiche.
+
+2008-10-14  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Use labeling::compute for Scribo.
+	* scribo/remove_tables.hh: split in...
+	* scribo/demat.hh,
+	* scribo/main.cc: ...these two files.
+	Update the code in order to use labeling::compute.
+
+2008-10-14  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	INIM Bootstrap Classification.
+
+	Bootstrap classification:
+	* classif/Makefile: New.
+	* classif/iccvg04.cc: New.
+
+	Add test image:
+	* classif/chiche.pgm: New.
+	* classif/images/caf_0009.jpg: New.
+	* classif/images/caf_0028.jpg: New.
+	* classif/images/edfverso06.JPG: New.
+	* classif/images/capture.png: New.
+	* classif/images/vpc_0001.jpg: New.
+	* classif/images/caf_0010.jpg: New.
+	* classif/images/caf_0013.jpg: New.
+	* classif/images/caf_0005.jpg: New.
+	* classif/images/caf_0034.jpg: New.
+	* classif/lena.ppm: New.
+	* classif/scoolNBR.ppm: New.
+
+2008-10-13  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* scribo/remove_tables.cc:
+	New small example to remove table borders in a document such as a
+	bill.
+
+2008-10-13  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add different types of function and tests.
+
+	+ abraham/tests/fun: New.
+	+ abraham/tests/fun/v2w2v: New
+	    Bijective function.
+	+ abraham/tests/fun/v2w2v/cos.cc: New
+	    Bijective functor cosinus.
+	+ abraham/tests/fun/v2w_w2v: New
+	    Two way function.
+	+ abraham/tests/fun/v2w_w2v/norm.cc: New
+	    Two way functor norm.
+	+ abraham/tests/core: New.
+	+ abraham/tests/core/image: New.
+	+ abraham/tests/core/image/violent_cast_image.cc: New
+	    Dummy test.
+	+ abraham/tests/core/image/thru.cc: New
+	    Dummy test.
+	+ abraham/mln/level: New.
+	+ abraham/mln/level/thru.hh: New.
+	+ abraham/mln/core/site_set: New.
+	+ abraham/mln/core/site_set/p_priority_queue.hh: New
+	    Useful for Watershed.
+	+ abraham/mln/core/image: New.
+	+ abraham/mln/core/image/violent_cast_image.hh: New
+	    Allow to cast an image violently.
+	* abraham/mln/core/concept/function.hh:
+	    Add bijective and two ways function concepts.
+	* abraham/mln/fun/v2w_w2v/norm.hh:
+	    Add invert functions.
+
+2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a diff main file.
+
+	* geraud/Rd/diff_pgm.cc: New.
+
+2008-10-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment line iteration sandbox code.
+
+	* geraud/browsing/fwd.cc: Add some code closer to what we
+	expect.
+
+2008-10-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	New sample code for line-based processing.
+
+	* geraud/browsing: New.
+	* geraud/browsing/fwd.cc: New.
+	* geraud/browsing/fwd.hh: New.
+
+2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Prototype for bijective and 2 ways functions.
+
+	Not tested yet so it goes to sandbox
+
+	* abraham/mln/fun: New.
+	* abraham/mln/fun/v2w2v: New.
+	* abraham/mln/fun/v2w2v/cos.hh: New
+	    Example of bijective function using cosinus.
+	* abraham/mln/fun/v2w_w2v: New.
+	* abraham/mln/fun/v2w_w2v/norm.hh: New
+	    Example of 2 way function using norm.
+	* abraham/mln/core: New.
+	* abraham/mln/core/concept: New.
+	* abraham/mln/core/concept/function.hh: New
+	    Definition of bijective and 2 way function concepts
+	    (Function_v2w2v and Function_v2w_w2v).
+	* abraham/mln/math: New.
+	* abraham/mln/math/cos.hh: New
+	    templated mln::math::cos function.
+	* abraham/mln/math/acos.hh: New
+ 	    templated mln::math::acos function.
+
+2008-10-06  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Huge cleanup, remove useless code and improve genericity.
+
+	* abraham/mln/morpho/basic_najman.hh:
+	  Remove useless code,
+	  Remove useless incrementations,
+	  Introduce sites.
+
+2008-10-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Registration: Start to use milena transformations.
+
+	* jardonnet/test/registration.cc: Add use of milena trasformation.
+	* jardonnet/registration/quat7.hh: Replace quat7 by a generic T.
+	* jardonnet/registration/registration.hh: Replace quat7 by a generic T..
+
+	Start working on .hxx creation using perl:
+	* jardonnet/perl/hxx.pl: Script.
+
+	* jardonnet/perl/test,
+	* jardonnet/perl/test/ops.hh,
+	* jardonnet/perl/test/c.hh,
+	* jardonnet/perl/test/i2v,
+	* jardonnet/perl/test/i2v/all.hh,
+	* jardonnet/perl/test/i2v/all_to.hh,
+	* jardonnet/perl/test/i2v/array.hh,
+	* jardonnet/perl/test/x2x,
+	* jardonnet/perl/test/x2x/all.hh,
+	* jardonnet/perl/test/x2x/geom,
+	* jardonnet/perl/test/x2x/geom/composed.hh,
+	* jardonnet/perl/test/x2x/geom/translation.hh,
+	* jardonnet/perl/test/x2x/geom/rotation.hh,
+	* jardonnet/perl/test/x2x/interpol,
+	* jardonnet/perl/test/x2x/interpol/bilinear.hh,
+	* jardonnet/perl/test/x2x/interpol/test.cc,
+	* jardonnet/perl/test/x2x/interpol/linear.hh,
+	* jardonnet/perl/test/p2b,
+	* jardonnet/perl/test/p2b/chess.hh,
+	* jardonnet/perl/test/p2b/all.hh,
+	* jardonnet/perl/test/p2b/has.hh,
+	* jardonnet/perl/test/vv2v,
+	* jardonnet/perl/test/vv2v/min.hh,
+	* jardonnet/perl/test/vv2v/max.hh,
+	* jardonnet/perl/test/all.hh,
+	* jardonnet/perl/test/p2v,
+	* jardonnet/perl/test/p2v/elifs.hh,
+	* jardonnet/perl/test/p2v/ternary.hh,
+	* jardonnet/perl/test/p2v/all.hh,
+	* jardonnet/perl/test/p2v/iota.hh,
+	* jardonnet/perl/test/cast.hh,
+	* jardonnet/perl/test/v2b,
+	* jardonnet/perl/test/v2b/threshold.hh,
+	* jardonnet/perl/test/internal,
+	* jardonnet/perl/test/internal/x2x_linear_impl.hh,
+	* jardonnet/perl/test/internal/selector.hh,
+	* jardonnet/perl/test/v2v,
+	* jardonnet/perl/test/v2v/abs.hh,
+	* jardonnet/perl/test/v2v/enc.hh,
+	* jardonnet/perl/test/v2v/saturate.hh,
+	* jardonnet/perl/test/v2v/all.hh,
+	* jardonnet/perl/test/v2v/inc.hh,
+	* jardonnet/perl/test/v2v/linear.hh,
+	* jardonnet/perl/test/v2v/cast.hh,
+	* jardonnet/perl/test/v2v/norm.hh,
+	* jardonnet/perl/test/v2v/dec.hh,
+	* jardonnet/perl/test/v2v/id.hh,
+	* jardonnet/perl/test/v2v/rgb_to_hsi.hh: Add test files.
+
+2008-10-01  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing parentheses in sandbox Rd by union-find.
+
+	* geraud/Rd/union_find.hh: Fix.
+
+2008-09-30  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: continue to revamp registration.
+
+	* jardonnet/test/registration.cc: Make use of lazy_image.
+	* jardonnet/registration/final_qk.hh: Remove use of size_t.
+	* jardonnet/registration/cloud.hh,
+	* jardonnet/registration/save.hh,
+	* jardonnet/registration/update_qk.hh,
+	* jardonnet/registration/registration.hh: Replace quat7 by generique T.
+	* jardonnet/registration/tools.hh,
+	* jardonnet/registration/quat7.hh,
+	* jardonnet/registration/rotation.hh: Remove Whitespace.
+
+	* jardonnet/virtual/access.hh: Minor fix.
+
+2008-09-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Start revamp registration.
+
+	* jardonnet/test/registration.cc: Simple registration test.
+	* jardonnet/registration/registration.hh: Simple registration.
+	* jardonnet/registration/multiscale.hh: Multiscale registration.
+
+
+	* jardonnet/test/icp.cc,
+	* jardonnet/registration/icp.hh,
+	* jardonnet/registration/final_qk.hh,
+	* jardonnet/registration/save.hh,
+	* jardonnet/registration/tools.hh,
+	* jardonnet/registration/icp_ref.hh,
+	* jardonnet/registration/quat7.hh: Upgrade to 'clean-up'.
+
+	* jardonnet/test/Makefile: Add rules.
+
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Update test.
+
+	* jardonnet/virtual/access.cc: Update test.
+
+2008-09-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Add basic test for tr_image over interpolated.
+
+	* jardonnet/virtual/access.cc: Instanciate and use updated morphers.
+
+2008-09-24  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Make use of interpolated image.
+
+	* jardonnet/virtual/access.hh (bilinear): Fix rounding error.
+	* jardonnet/virtual/access.cc (test2): Add, make use of interpolated.
+	* jardonnet/virtual/bilinear.ppm: Fixed result.
+
+2008-09-22  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox fix and check rgb bilinear interpolation.
+
+	* jardonnet/virtual/access.hh: Fix wrong type.
+	* jardonnet/virtual/bilinear.ppm: bilinear result.
+	* jardonnet/virtual/access.cc: Handle border.
+	* jardonnet/virtual/nn.ppm: NNeighbor result.
+	* jardonnet/virtual/lena.ppm: Add test image.
+
+2008-09-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox : Update test on virtually transformed image.
+
+	* jardonnet/virtual/access.hh: Update test.
+	* jardonnet/virtual/lena.pgm: Add test image.
+	* jardonnet/virtual/access.cc: Update.
+	* jardonnet/virtual/Makefile: Add warning.
+
+2008-09-17  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some morphological reconstruction algorithms in sandbox.
+
+	* geraud/Rd: New directory.
+	* geraud/Rd/hybrid.hh,
+	* geraud/Rd/queue_based.hh,
+	* geraud/Rd/parallel.cc,
+	* geraud/Rd/parallel_wo.cc,
+	* geraud/Rd/union_find.hh,
+	* geraud/Rd/parallel.hh,
+	* geraud/Rd/diff.cc,
+	* geraud/Rd/sequential_bench.cc,
+	* geraud/Rd/sequential.cc,
+	* geraud/Rd/utils.hh,
+	* geraud/Rd/deco.cc,
+	* geraud/Rd/hybrid.cc,
+	* geraud/Rd/queue_based.cc,
+	* geraud/Rd/sequential_bench.hh,
+	* geraud/Rd/min.cc,
+	* geraud/Rd/sequential.hh,
+	* geraud/Rd/debase.union_find.hh,
+	* geraud/Rd/union_find.cc,
+	* geraud/Rd/svg.queue_based.hh: New files.
+
+2008-09-09  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Sandbox: Sync access.hh/.cc with trunk.
+
+	* jardonnet/virtual/access.hh: Sync with trunk.
+	* jardonnet/virtual/access.cc: Sync with trunk.
 
 2008-09-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
@@ -176,6 +1361,12 @@
 	* jardonnet/registration/quat7.hh: Fix: signed -> unsigned.
 	* jardonnet/registration/icp_ref.hh: Add saving before start.
 
+2008-06-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add kruskal algorithm in a sample morphological chain.
+
+	* geraud/cs2d/kruskal.cc: New.
+
 2008-06-18  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 
@@ -275,6 +1466,13 @@
 	* jardonnet/test/img/c10.pbm,
 	* jardonnet/test/img/c11.pbm: New test images.
 
+2008-06-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some tutorial-like files about cubical complex.
+
+	* geraud/cs2d/tuto.cc: New.
+	* geraud/cs2d/tuto_bis.cc: New.
+
 2008-06-09 Aroune Aroumougame  <aroune.aroumougame@gmail.com>
 
 	Thinning test files.
@@ -302,6 +1500,18 @@
 	* jardonnet/test/icp_ref.cc: Fix p_array initialisation.
 	* jardonnet/registration/icp_ref.hh (impl::icp) : Update :
 	Stop if e_k < d_k.
+
+2008-06-06  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a 2D simplicial complex (toy code) + a double-window type.
+
+	* geraud/cs2d: New directory.
+	* geraud/cs2d/cs2d.cc: New.
+	* geraud/cs2d/dbl_neighb.cc: New.
+	* geraud/cs2d/cs2d.hh: New.
+	* geraud/cs2d/cs2d_utils.hh: New.
+	* geraud/cs2d/dbl_neighb.hh: New.
+	* geraud/cs2d/cs2d_morpho.hh: New.
 
 2008-06-04  Roland Levillain  <roland@lrde.epita.fr>
 
@@ -923,9 +2133,9 @@
 
 	Make Tikz output able to valuate pixels.
 
-	* sandbox/abraham/io/tikz/save_header.hh: New
+	* abraham/io/tikz/save_header.hh: New
 	(mln::io::tikz::save_header) Write the header of the LaTeX file.
-	* sandbox/abraham/io/tikz/save.hh:
+	* abraham/io/tikz/save.hh:
 	(mln::io::tikz::save) Can now take another image in argument to put
 	values on pixels.
 

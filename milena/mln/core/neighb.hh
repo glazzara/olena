@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,141 +28,345 @@
 #ifndef MLN_CORE_NEIGHB_HH
 # define MLN_CORE_NEIGHB_HH
 
-/*! \file mln/core/neighb.hh
- *
- * \brief Definition of the generic neighborhood class mln::neighb_.
- */
+/// \file mln/core/neighb.hh
+///
+/// Definition of a window-to-neighborhood adapter.
+///
+///
+/// \todo See if the impl of from_to is fine.  What about removing the
+/// origin?  etc.
 
-# include <mln/core/concept/neighborhood.hh>
-# include <mln/core/internal/dpoints_base.hh>
-# include <mln/core/dpoint.hh>
+# include <mln/core/internal/neighborhood_base.hh>
+# include <mln/core/internal/site_relative_iterator_base.hh>
+
 
 
 namespace mln
 {
 
-  // fwd decls
-  template <typename D> class dpoints_fwd_piter;
-  template <typename D> class dpoints_bkd_piter;
- 
+  // Forward declarations.
+  template <typename W> class neighb_fwd_niter;
+  template <typename W> class neighb_bkd_niter;
 
-  /*! \brief Generic neighborhood class.
-   *
-   * This neighborhood of window is just like a set of delta-points.
-   * The parameter is \c D, type of delta-point.
-   */
-  template <typename D>
-  struct neighb_ : public Neighborhood< neighb_<D> >,
-		   public internal::dpoints_base_<D, neighb_<D> >
+
+
+  /// Adapter class from window to neighborhood.
+
+  template <typename W>
+  class neighb : public internal::neighborhood_base< W, neighb<W> >,
+		 private mlc_is_a(W, Window)::check_t
   {
-    /// Dpoint associated type.
-    typedef D dpoint;
+  public:
 
-    /// Point associated type.
-    typedef mln_point(D) point;
+    /// Forward site iterator associated type.
+    typedef neighb_fwd_niter<W> fwd_niter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the ordering of delta-points.
-     */
-    typedef dpoints_fwd_piter<D> fwd_niter;
+    /// Backward site iterator associated type.
+    typedef neighb_bkd_niter<W> bkd_niter;
 
-    /*! \brief Point_Iterator type to browse the points of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-points.
-     */
-    typedef dpoints_bkd_piter<D> bkd_niter;
-
-    /*! \brief Same as fwd_niter.
-     */
+    /// Site iterator associated type.
     typedef fwd_niter niter;
 
-    /*! \brief Constructor without argument.
-     *
-     * The constructed neighborhood is empty. You have to use insert()
-     * to proceed to the neighborhood definition.
-     */
-    neighb_();
 
-    /*! \brief Insert a delta-point \p dp in the neighborhood
-     *  definition.
-     *
-     * \param[in] dp The delta-point to insert.
-     *
-     * This method also insert the symmetrical delta-point, - \p dp,
-     * in the neighborhood definition; thus the client has not to
-     * ensure the symmetry property; that is automatic.
-     */
-    neighb_<D>& insert(const D& dp);
+    /// Constructor without argument.
+    neighb();
 
-    /// \{ Insertion of a delta-point with different numbers of
-    /// arguments (coordinates) w.r.t. the dimension.
-    neighb_<D>& insert(const mln_coord(D)& dind); // For 1D.
+    /// Constructor from a window \p win.
+    neighb(const W& win);
 
-    neighb_<D>& insert(const mln_coord(D)& drow,
-		       const mln_coord(D)& dcol); // For 2D.
+    /// Get the corresponding window.
+    const W& win() const;
 
-    neighb_<D>& insert(const mln_coord(D)& dsli,
-		       const mln_coord(D)& drow,
-		       const mln_coord(D)& dcol); // For 3D.
-    /// \}
+    /// Change the corresponding window.
+    void change_window(const W& new_win);
+
+
+    /// \internal Hook to the window.
+    W& hook_win_();
+
+  private:
+
+    W win_;
   };
+
+
+
+  namespace convert
+  {
+
+    template <typename W>
+    void
+    from_to(const mln::neighb<W>& from, W& to);
+
+    template <typename W>
+    void
+    from_to(const W& from, mln::neighb<W>& to);
+
+  } // end of namespace convert
+
+
+
+  // neighb_fwd_niter<W>
+
+  template <typename W>
+  class neighb_fwd_niter
+    : public internal::site_relative_iterator_base< neighb<W>,
+						    neighb_fwd_niter<W> >
+  {
+  public:
+
+    /// Constructor without argument.
+    neighb_fwd_niter();
+
+    template <typename P>
+    neighb_fwd_niter(const neighb<W>& nbh, const P& c);
+
+    /// Test the iterator validity.
+    bool is_valid_() const;
+
+    /// Invalidate the iterator.
+    void invalidate_();
+
+    /// Start an iteration.
+    void do_start_();
+
+    /// Go to the next point.
+    void do_next_();
+
+    /// Compute the current psite.
+    mln_psite(W) compute_p_() const;
+
+  protected:
+
+    mln_fwd_qiter(W) i_;
+  };
+
+
+
+// neighb_bkd_niter<W>
+
+template <typename W>
+class neighb_bkd_niter
+  : public internal::site_relative_iterator_base< neighb<W>,
+						  neighb_bkd_niter<W> >
+{
+public:
+
+  /// Constructor without argument.
+  neighb_bkd_niter();
+
+  template <typename P>
+  neighb_bkd_niter(const neighb<W>& nbh, const P& c);
+
+  /// Test the iterator validity.
+  bool is_valid_() const;
+
+  /// Invalidate the iterator.
+  void invalidate_();
+
+  /// Start an iteration.
+  void do_start_();
+
+  /// Go to the next point.
+  void do_next_();
+
+  /// Compute the current psite.
+  mln_psite(W) compute_p_() const;
+
+protected:
+
+  mln_bkd_qiter(W) i_;
+};
+
  
 
 # ifndef MLN_INCLUDE_ONLY
 
-  template <typename D>
+  // neighb<W>
+
+  template <typename W>
   inline
-  neighb_<D>::neighb_()
+  neighb<W>::neighb()
   {
   }
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb_<D>&
-  neighb_<D>::insert(const D& dp)
+  neighb<W>::neighb(const W& win)
   {
-    mln_precondition(! has(dp));
-    typedef internal::set_of_<D> super;
-    this->super::insert( dp);
-    this->super::insert(-dp);
-    return *this;
+    change_window(win);
   }
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& dind)
+  const W&
+  neighb<W>::win() const
   {
-    D dp(dind);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
+    return win_;
   }
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  void
+  neighb<W>::change_window(const W& new_win)
   {
-    D dp(drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
+    mln_precondition(new_win.is_neighbable_());
+    win_ = new_win;
   }
 
-  template <typename D>
+  template <typename W>
   inline
-  neighb_<D>&
-  neighb_<D>::insert(const mln_coord(D)& dsli, const mln_coord(D)& drow, const mln_coord(D)& dcol)
+  W&
+  neighb<W>::hook_win_()
   {
-    D dp(dsli, drow, dcol);
-    mln_precondition(! has(dp));
-    return this->insert(dp);
+    return win_;
   }
 
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename W>
+    void
+    from_to(const mln::neighb<W>& from, W& to)
+    {
+      to = from.win();
+    }
+
+    template <typename W>
+    void
+    from_to(const W& from, mln::neighb<W>& to)
+    {
+      to.change_window(from);
+    }
+
+  } // end of namespace convert
+
+
+  // neighb_fwd_niter<W>
+
+  template <typename W>
+  inline
+  neighb_fwd_niter<W>::neighb_fwd_niter()
+  {
+  }
+
+  template <typename W>
+  template <typename P>
+  inline
+  neighb_fwd_niter<W>::neighb_fwd_niter(const neighb<W>& nbh, const P& c)
+  {
+    this->change_target(nbh);
+    this->center_at(c);
+    i_.center_at(c); // Always before change_target for this kind of iter.
+    i_.change_target(nbh.win());
+  }
+
+  template <typename W>
+  inline
+  bool
+  neighb_fwd_niter<W>::is_valid_() const
+  {
+    return i_.is_valid();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::invalidate_()
+  {
+    i_.invalidate();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::do_start_()
+  {
+    i_.start();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_fwd_niter<W>::do_next_()
+  {
+    i_.next();
+  }
+
+  template <typename W>
+  inline
+  mln_psite(W)
+  neighb_fwd_niter<W>::compute_p_() const
+  {
+    return i_.compute_p_();
+  }
+
+
+  // neighb_bkd_niter<W>
+
+  template <typename W>
+  inline
+  neighb_bkd_niter<W>::neighb_bkd_niter()
+  {
+  }
+
+  template <typename W>
+  template <typename P>
+  inline
+  neighb_bkd_niter<W>::neighb_bkd_niter(const neighb<W>& nbh, const P& c)
+  {
+    this->change_target(nbh);
+    this->center_at(c);
+    i_.center_at(c); // Always before change_target for this kind of iter.
+    i_.change_target(nbh.win());
+  }
+
+  template <typename W>
+  inline
+  bool
+  neighb_bkd_niter<W>::is_valid_() const
+  {
+    return i_.is_valid();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::invalidate_()
+  {
+    i_.invalidate();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::do_start_()
+  {
+    i_.start();
+  }
+
+  template <typename W>
+  inline
+  void
+  neighb_bkd_niter<W>::do_next_()
+  {
+    i_.next();
+  }
+
+  template <typename W>
+  inline
+  mln_psite(W)
+  neighb_bkd_niter<W>::compute_p_() const
+  {
+    return i_.compute_p_();
+  }
+ 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
-
-# include <mln/core/dpoints_piter.hh>
 
 
 #endif // ! MLN_CORE_NEIGHB_HH

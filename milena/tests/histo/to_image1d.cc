@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,8 +32,8 @@
 
 #include <iterator>
 
-#include <mln/core/image2d.hh>
-#include <mln/core/image1d.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/image1d.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -51,7 +51,7 @@ int main()
   using value::int_u8;
 
   {
-    accu::histo< value::set<bool> > h;
+    accu::histo<bool> h;
 
     for (unsigned i = 0; i < 5; ++i)
       h.take(false);
@@ -66,9 +66,9 @@ int main()
   {
     image2d<int_u8> ima(3, 3);
     debug::iota(ima);
-    ima(make::point2d(0,1)) = 255;
+    ima(point2d(0,1)) = 255;
     debug::println(ima);
-    histo::data< value::set<int_u8> > h = histo::compute(ima);
+    histo::data<int_u8> h = histo::compute(ima);
     std::cout << h << std::endl;
 
     image1d<std::size_t> ima2 = convert::to_image(h);

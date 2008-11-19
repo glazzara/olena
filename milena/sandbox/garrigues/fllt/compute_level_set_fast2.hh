@@ -130,7 +130,7 @@ namespace mln
       // gn <- min u(x) x belongs to N.
 
       image_sub_if_value tmp(r_a_n.image() | SET_N);
-      finished = tmp.npoints() == 0;
+      finished = tmp.nsites() == 0;
 
       if (!finished)
  	gn = level::compute< typename F::accu_for_gn >(u | tmp.domain());
@@ -175,7 +175,7 @@ namespace mln
 
       // This is faster.
 
-//       if (N.npoints() >= 0)
+//       if (N.nsites() >= 0)
 //       {
       image_sub_if_value tmp(r_a_n.image() | SET_N);
       image_sub_if_value::fwd_piter qn(tmp.domain());
@@ -215,7 +215,7 @@ namespace mln
       // FIXME : we can make it faster.
 
       // FIXME : rewrite this test.
-      // if ((R.bbox() < u.domain()) || (R.npoints() == u.domain().npoints()))
+      // if ((R.bbox() < u.domain()) || (R.nsites() == u.domain().nsites()))
 //       {
       image_sub_if_value tmp(r_a_n.image() | SET_R);
       image_sub_if_value::fwd_piter p(tmp.domain());
@@ -244,13 +244,13 @@ namespace mln
 // 	static image2d<bool> border_ima(tmp.domain());
 // 	level::fill(border_ima, false);
 
-// 	//       level::fill(inplace(border_ima | N), true);
+// 	//       level::fill((border_ima | N).rw(), true);
 // 	//       std::cout << "tmp border = " << tmp.border () << std::endl;
 // 	//       std::cout << "ima border = " << border_ima.border () << std::endl;
 // 	mln_piter(p_image2d<P>) z(N);
 // 	for_all(z)
 // 	  {
-// 	    mln_assertion(border_ima.owns_(z));
+// 	    mln_assertion(border_ima.has(z));
 // 	    border_ima(z) = true;
 // 	  }
 // 	unsigned n;
@@ -284,10 +284,10 @@ namespace mln
       update_set(u, r_a_n, g);
 
       //       std::cout << "A :" << std::endl;
-      //       if (A.npoints())
+      //       if (A.nsites())
       // 	debug::println(u | A);
       //       std::cout << "N :" << std::endl;
-      //       if (N.npoints())
+      //       if (N.nsites())
       // 	debug::println(u | N);
 
 //       std::cout << "exiting step_fast 4_1" << std::endl;
@@ -307,10 +307,10 @@ namespace mln
       update_set(u,r_a_n,g);
 
       //       std::cout << "A :" << std::endl;
-      //       if (A.npoints())
+      //       if (A.nsites())
       // 	debug::println(u | A);
       //       std::cout << "N :" << std::endl;
-      //       if (N.npoints())
+      //       if (N.nsites())
       // 	debug::println(u | N);
 
 //       std::cout << "exiting step_fast 4_2" << std::endl;

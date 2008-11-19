@@ -1,4 +1,4 @@
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include "color/my_hsi.hh"
 #include "color/rgb_to_hsi.hh"
@@ -11,14 +11,14 @@
 #include <mln/math/round.hh>
 #include <mln/level/transform.hh>
 
-#include <mln/core/w_window2d_float.hh>
+#include <mln/core/alias/w_window2d_float.hh>
 #include <mln/border/thickness.hh>
 #include <mln/linear/convolve.hh>
 
 # include <mln/display/save.hh>
 # include <mln/display/show.hh>
 
-#include <mln/core/image2d.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
 #include <mln/make/pixel.hh>
 

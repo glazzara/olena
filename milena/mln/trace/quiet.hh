@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -33,6 +33,8 @@
  * \brief Definition of the trace quiet Boolean value.
  */
 
+# include <ctime>
+# include <sys/time.h>
 
 namespace mln
 {
@@ -40,8 +42,37 @@ namespace mln
   namespace trace
   {
 
-    static bool quiet = true;
-    static unsigned tab  = 0;
+    extern bool quiet;
+    extern unsigned tab ;
+    extern bool full_trace;
+
+
+    namespace internal
+    {
+
+      extern unsigned max_tab ;
+      extern timeval start_time;
+      extern bool is_quiet;
+
+    } // end of namespace mln::trace::internal
+
+# ifndef MLN_INCLUDE_ONLY
+
+    bool quiet = true;
+    unsigned tab  = 0;
+    bool full_trace = false;
+
+
+    namespace internal
+    {
+
+      unsigned max_tab  = 0;
+      timeval start_time;
+      bool is_quiet = quiet;
+
+    } // end of namespace mln::trace::internal
+
+# endif // !MLN_INCLUDE_ONLY
 
   } // end of namespace mln::trace
 

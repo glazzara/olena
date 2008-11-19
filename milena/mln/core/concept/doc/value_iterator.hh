@@ -46,7 +46,7 @@ namespace mln
        */
       typedef void value;
 
-      /*! \brief Convertion into a value.
+      /*! \brief Conversion into a value.
        *
        * \return A value.
        */

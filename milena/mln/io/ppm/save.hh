@@ -1,4 +1,4 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
 // Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
@@ -52,7 +52,7 @@ namespace mln
     namespace ppm
     {
 
-      /*! Save a milena image as a ppm image.
+      /*! Save a Milena image as a ppm image.
        *
        * \param[in] ima The image to save.
        * \param[in,out] filename the destination.
