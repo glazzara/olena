@@ -1,5 +1,11 @@
 2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add an example using make::graph.
+
+	* doc/examples/mk_graph.cc: new example.
+
+2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Revamp labeling::compute.
 
 	* mln/labeling/compute.hh: Add compute_dispatch and compute_tests.
