@@ -36,6 +36,8 @@
 # include <mln/core/def/all.hh>
 # include <mln/core/grids.hh>
 
+//FIXME: have a forward declaration.
+# include <vector>
 
 namespace mln
 {
@@ -63,6 +65,16 @@ namespace mln
   namespace algebra {
     template <unsigned n, typename T> class vec;
     template <unsigned d, typename C> class h_vec;
+  }
+
+  namespace fun {
+    namespace i2v {
+      template <typename T> class array;
+    }
+  }
+
+  namespace util {
+    template <typename T> class array;
   }
 
   namespace value {
@@ -205,6 +217,18 @@ namespace mln
     template <typename D, typename W, typename I>
     void
     from_to(const w_window<D,W>& from, Image<I>& to);
+
+
+
+    // util::array<T> -> fun::i2v::array<T>
+    template <typename T>
+    void
+    from_to(const util::array<T>& from, fun::i2v::array<T>& to);
+
+    // std::vector<T> -> fun::i2v::array<T>
+    template <typename T>
+    void
+    from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
 
   } // end of namespace mln::convert
 

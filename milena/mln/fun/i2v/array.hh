@@ -28,18 +28,52 @@
 #ifndef MLN_FUN_I2V_ARRAY_HH
 # define MLN_FUN_I2V_ARRAY_HH
 
-/*! \file mln/fun/i2v/array.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/i2v/array.hh
+///
+/// Function mapping an Id i to a value v.
 
 # include <vector>
 # include <algorithm>
 # include <mln/core/concept/function.hh>
+# include <mln/util/array.hh>
 
 
 namespace mln
 {
+
+
+  /// Forward declaration.
+  namespace fun
+  {
+
+    namespace i2v
+    {
+
+      template <typename T>
+      class array;
+
+    } // end of namespace mln::fun::i2v
+
+  } // end of namespace mln::fun
+
+
+
+  namespace convert
+  {
+
+    template <typename T>
+    inline
+    void
+    from_to(const util::array<T>& from, fun::i2v::array<T>& to);
+
+    template <typename T>
+    inline
+    void
+    from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
+
+  } // end of namespace mln::convert
+
+
 
   namespace fun
   {
@@ -54,8 +88,22 @@ namespace mln
 
 	typedef T result;
 
+	/// Constructors
+	/// \{
+
+	/// Default.
 	array();
+	/// Constructs a function with \p nvalues.
 	array(unsigned n);
+
+	/// Used in from_to(). Constructs that function from an util::array.
+	/// Always prefer using from_to instead of this constructor.
+	array(const util::array<T>& from);
+	/// Used in from_to(). Constructs that function from an std::vector.
+	/// Always prefer using from_to instead of this constructor.
+	array(const std::vector<T>& from);
+
+	/// \}
 
 	void resize(unsigned n);
 	unsigned size() const;
@@ -74,6 +122,34 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename T>
+    inline
+    void
+    from_to(const util::array<T>& from, fun::i2v::array<T>& to)
+    {
+      to = fun::i2v::array<T>(from);
+    }
+
+    template <typename T>
+    inline
+    void
+    from_to(const std::vector<T>& from, fun::i2v::array<T>& to)
+    {
+      to = fun::i2v::array<T>(from);
+    }
+
+  } // end of namespace mln::convert
+
+
+
+  /// fun::i2v::array
+
   namespace fun
   {
 
@@ -91,6 +167,22 @@ namespace mln
       array<T>::array(unsigned n)
       {
 	resize(n);
+      }
+
+      template <typename T>
+      inline
+      array<T>::array(const util::array<T>& from)
+	: v_(from.std_vector())
+      {
+
+      }
+
+      template <typename T>
+      inline
+      array<T>::array(const std::vector<T>& from)
+	: v_(from)
+      {
+
       }
 
       template <typename T>

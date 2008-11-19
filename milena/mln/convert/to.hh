@@ -1,5 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
-//
+// (LRDE)
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
 // of the GNU General Public License version 2 as published by the
@@ -28,12 +28,11 @@
 #ifndef MLN_CONVERT_TO_HH
 # define MLN_CONVERT_TO_HH
 
-/*! \file mln/convert/to.hh
- *
- * \brief General conversion procedure given the destination type.
- *
- * \todo Prefer a static check that fails in the "unknown" case.
- */
+/// \file mln/convert/to.hh
+///
+/// General conversion procedure given the destination type.
+///
+/// \todo Prefer a static check that fails in the "unknown" case.
 
 # include <mln/core/routine/exact.hh>
 # include <mln/metal/equal.hh>

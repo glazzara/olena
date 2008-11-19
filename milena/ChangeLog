@@ -1,5 +1,17 @@
 2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new from_to for fun::i2v::array.
+
+	* mln/convert/from_to.hxx,
+	* mln/fun/i2v/array.hh: add two from_to;
+	  - from_to(util::array, fun::i2v::array)
+	  - from_to(std::vector, fun::i2v::array)
+	
+	* mln/convert/to.hh,
+	* doc/examples/labeling_algo.cc: cleanup.
+
+2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix wrong declaration of global variables.
 
 	* mln/core/alias/dpoint1d.hh,
