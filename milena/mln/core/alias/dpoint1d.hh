@@ -29,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_DPOINT1D_HH
 # define MLN_CORE_ALIAS_DPOINT1D_HH
 
-/*! \file mln/core/alias/dpoint1d.hh
- *
- * \brief Definition of the mln::dpoint1d alias and of its
- * construction routine.
- */
+/// \file mln/core/alias/dpoint1d.hh
+///
+/// Definition of the mln::dpoint1d alias and of its
+/// construction routine.
 
 # include <mln/core/dpoint.hh>
 # include <mln/core/grids.hh>
@@ -43,9 +42,8 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 1D square
-   * grid with integer coordinates.
-   */
+  /// Type alias for a delta-point defined on the 1D square
+  /// grid with integer coordinates.
   typedef dpoint<mln::grid::tick, def::coord> dpoint1d;
 
 
@@ -58,10 +56,20 @@ namespace mln
 namespace mln
 {
 
-  /*!
-   * \brief Definition of a shortcut for delta point in 1d.
-   * \{
-   */
+  /// Definition of a shortcut for delta point in 1d.
+  /// \{
+
+  extern const dpoint1d before;
+  extern const dpoint1d after;
+
+  extern const dpoint1d ind_dec;
+  extern const dpoint1d ind_inc;
+
+  /// \}
+
+
+
+# ifndef MLN_INCLUDE_ONLY
 
   const dpoint1d before = dpoint1d( -1 );
   const dpoint1d after  = dpoint1d( +1 );
@@ -69,8 +77,8 @@ namespace mln
   const dpoint1d ind_dec = before;
   const dpoint1d ind_inc = after;
 
-  /*! \}
-   */
+# endif // ! MLN_INCLUDE_ONLY
+
 
 } // end of namespace mln
 

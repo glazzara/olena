@@ -28,11 +28,10 @@
 #ifndef MLN_CORE_P_LINE2D_HH
 # define MLN_CORE_P_LINE2D_HH
 
-/*! \file mln/core/site_set/p_line2d.hh
- *
- * \brief Definition of a 2D discrete line of points (based on
- * p_array).
- */
+/// \file mln/core/site_set/p_line2d.hh
+///
+/// Definition of a 2D discrete line of points (based on
+/// p_array).
 
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/alias/box2d.hh>
@@ -70,8 +69,7 @@ namespace mln
 
 
 
-  /*! \brief 2D line point set class.
-   */
+  /// 2D line point set class.
   class p_line2d : public internal::site_set_base_< point2d, p_line2d >
   {
     typedef p_line2d self_;
@@ -136,7 +134,7 @@ namespace mln
 
     /// Return the corresponding std::vector of points.
     const std::vector<point2d>& std_vector() const;
-    
+
   protected:
 
     p_array<point2d> arr_;

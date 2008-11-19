@@ -29,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_DPOINT2D_HH
 # define MLN_CORE_ALIAS_DPOINT2D_HH
 
-/*! \file mln/core/alias/dpoint2d.hh
- *
- * \brief Definition of the mln::dpoint2d alias and of its
- * construction routine.
- */
+/// \file mln/core/alias/dpoint2d.hh
+///
+/// Definition of the mln::dpoint2d alias and of its
+/// construction routine.
 
 # include <mln/core/dpoint.hh>
 # include <mln/core/def/coord.hh>
@@ -42,9 +41,8 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 2D square
-   * grid with integer coordinates.
-   */
+  /// Type alias for a delta-point defined on the 2D square
+  /// grid with integer coordinates.
   typedef dpoint<mln::grid::square, def::coord> dpoint2d;
 
 
@@ -53,22 +51,30 @@ namespace mln
 
 # include <mln/core/alias/point2d.hh>
 
-
 namespace mln
 {
 
-  /*!
-   * \brief Definition of a shortcut for delta point in 2d.
-   * \{
-   */
+  /// Definition of a shortcut for delta point in 2d.
+  /// \{
+
+  extern const dpoint2d up;
+  extern const dpoint2d down;
+  extern const dpoint2d left;
+  extern const dpoint2d right;
+
+  /// \}
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
   const dpoint2d up    = dpoint2d( -1,  0 );
   const dpoint2d down  = dpoint2d( +1,  0 );
   const dpoint2d left  = dpoint2d(  0, -1 );
   const dpoint2d right = dpoint2d(  0, +1 );
 
-  /*!
-   * \}
-   */
+# endif // ! MLN_INCLUDE_ONLY
+
 
 } // end of namespace mln
 

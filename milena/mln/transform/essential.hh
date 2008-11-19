@@ -28,10 +28,9 @@
 #ifndef MLN_TRANSFORM_ESSENTIAL_HH
 # define MLN_TRANSFORM_ESSENTIAL_HH
 
-/*! \file mln/transform/essential.hh
- *
- * \brief File that includes essential "point-wise" expression tools.
- */
+/// \file mln/transform/essential.hh
+///
+/// File that includes essential "point-wise" expression tools.
 
 // NOTHING YET
 

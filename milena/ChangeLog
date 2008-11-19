@@ -1,5 +1,23 @@
 2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix wrong declaration of global variables.
+
+	* mln/core/alias/dpoint1d.hh,
+	* mln/core/alias/dpoint2d.hh,
+	* mln/core/alias/dpoint3d.hh: Split declaration and reference to
+	global variables.
+
+	* tests/all_headers.cc,
+	* tests/global_vars1.cc,
+	* tests/global_vars2.cc: update tests. Include essential headers.
+
+	* mln/core/all.hh,
+	* mln/core/site_set/p_line2d.hh,
+	* mln/transform/essential.hh,
+	* mln/transform/influence_zone_geodesic.hh: cleanup.
+
+2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update graph related classes.
 
 	* mln/accu/center.hh: New accu.

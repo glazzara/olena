@@ -29,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_DPOINT3D_HH
 # define MLN_CORE_ALIAS_DPOINT3D_HH
 
-/*! \file mln/core/alias/dpoint3d.hh
- *
- * \brief Definition of the mln::dpoint3d alias and of its
- * construction routine.
- */
+/// \file mln/core/alias/dpoint3d.hh
+///
+/// Definition of the mln::dpoint3d alias and of its
+/// construction routine.
 
 # include <mln/core/dpoint.hh>
 # include <mln/core/grids.hh>
@@ -42,9 +41,8 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a delta-point defined on the 3D square
-   * grid with integer coordinates.
-   */
+  /// Type alias for a delta-point defined on the 3D square
+  /// grid with integer coordinates.
   typedef dpoint<mln::grid::cube, def::coord> dpoint3d;
 
 
@@ -57,10 +55,21 @@ namespace mln
 namespace mln
 {
 
-  /*!
-   * \brief Definition of a shortcut for delta point in 3d.
-   * \{
-   */
+  /// Definition of a shortcut for delta point in 3d.
+  /// \{
+
+  extern const dpoint3d sagittal_dec;
+  extern const dpoint3d sagittal_inc;
+  extern const dpoint3d axial_dec;
+  extern const dpoint3d axial_inc;
+  extern const dpoint3d coronal_dec;
+  extern const dpoint3d coronal_inc;
+
+  /// \}
+
+
+# ifndef MLN_INCLUDE_ONLY
+
   const dpoint3d sagittal_dec = dpoint3d( 0,  0, -1);
   const dpoint3d sagittal_inc = dpoint3d( 0,  0, +1);
   const dpoint3d axial_dec    = dpoint3d( 0, -1,  0);
@@ -68,9 +77,8 @@ namespace mln
   const dpoint3d coronal_dec  = dpoint3d(-1,  0,  0);
   const dpoint3d coronal_inc  = dpoint3d(+1,  0,  0);
 
-  /*!
-   * \}
-   */
+# endif // ! MLN_INCLUDE_ONLY
+
 
 } // end of namespace mln
 

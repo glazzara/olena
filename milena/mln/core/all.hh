@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,9 @@
 #ifndef MLN_CORE_ALL_HH_
 # define MLN_CORE_ALL_HH_
 
-/*! \file mln/core/all.hh
- *
- * \brief File that includes all the core routines.
- *
- */
+/// \file mln/core/all.hh
+///
+/// File that includes all the core routines.
 
 # include <mln/core/a_point_of.hh>
 # include <mln/core/category.hh>
@@ -63,5 +61,5 @@
 # include <mln/core/routine/all.hh>
 # include <mln/core/site_set/all.hh>
 
-#endif // !MLN_CORE_ALL_HH_
+#endif // ! MLN_CORE_ALL_HH_
 

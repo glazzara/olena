@@ -93,6 +93,10 @@
 #include <mln/tag/all.hh>
 #include <mln/labeling/all.hh>
 
+#include <mln/essential/1d.hh>
+#include <mln/essential/2d.hh>
+#include <mln/essential/3d.hh>
+
 int f1();
 
 int main ()

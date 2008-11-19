@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/all_headers.cc
- *
- * \brief Tests with all headers. (check norris tests)
- */
+/// \file tests/all_headers.cc
+///
+/// Tests with all headers. (check norris tests)
 
 #include <mln/util/all.hh>
 #include <mln/fun/p2v/all.hh>
@@ -94,7 +94,9 @@
 #include <mln/tag/all.hh>
 #include <mln/labeling/all.hh>
 
-
+#include <mln/essential/1d.hh>
+#include <mln/essential/2d.hh>
+#include <mln/essential/3d.hh>
 
 int main ()
 {
