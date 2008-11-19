@@ -1,3 +1,11 @@
+2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp labeling::compute.
+
+	* mln/labeling/compute.hh: Add compute_dispatch and compute_tests.
+
+	* tests/labeling/compute.cc: Fix comments.
+
 2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new from_to for fun::i2v::array.
