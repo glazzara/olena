@@ -1,5 +1,13 @@
 2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup labeling::compute.
+
+	* mln/labeling/compute.hh: Refactor and cleanup.
+
+	* mln/util/array.hh: add a two new constructors.
+
+2008-11-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add an example using make::graph.
 
 	* doc/examples/mk_graph.cc: new example.

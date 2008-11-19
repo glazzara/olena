@@ -82,6 +82,13 @@ namespace mln
       /// Constructor without arguments.
       array();
 
+      /// Construct a new array and resize it to \n elements.
+      array(unsigned n);
+
+      /// Construct a new array, resize it to \n elements and fill it
+      /// with \p default_value.
+      array(unsigned n, const T& value);
+
 
       /// Reserve memory for \p n elements.
       void reserve(unsigned n);
@@ -242,6 +249,20 @@ namespace mln
     template <typename T>
     inline
     array<T>::array()
+    {
+    }
+
+    template <typename T>
+    inline
+    array<T>::array(unsigned n)
+      : v_(n)
+    {
+    }
+
+    template <typename T>
+    inline
+    array<T>::array(unsigned n, const T& value)
+      : v_(n, value)
     {
     }
 
