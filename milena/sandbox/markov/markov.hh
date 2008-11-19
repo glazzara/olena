@@ -26,10 +26,10 @@ namespace mln
     mln_niter(N) n(nbh, p);
     for_all(n)
     {
-      diff_sum += abs(out(p) - out(n));
+      diff_sum += abs(xi - out(n));
     }
 
-    return u + 100 * diff_sum;
+    return u + 0.25 * diff_sum;
   }
 
   template <typename I, typename N> // I == int_u8
@@ -66,9 +66,9 @@ namespace mln
 	  double d_u = up - u;
 	  double proba = exp(-d_u / temp);
 
-	  // std::cout << "Difference : " << d_u << std::endl;
+	  // std::cout << "u : " << u << " up : " << up << "Difference : " << d_u << std::endl;
 
-	  if (d_u < 0 || !gradient && (p_random.get() < proba))
+	  if (d_u < 0 || !gradient && (p_random.get() > proba))
 	    {
 	      out(p) = v;
 	      modifications ++;
