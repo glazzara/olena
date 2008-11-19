@@ -299,7 +299,7 @@ namespace mln
     std::ostream&
     operator<<(std::ostream& ostr, const edge<G>& p)
     {
-      return ostr << p.id();
+      return ostr << "(" << p.v1() << "," << p.v2() << ")";
     }
 
     template <typename G>

@@ -48,6 +48,7 @@ namespace mln
 # include <mln/make/box3d.hh>
 # include <mln/make/dpoint2d_h.hh>
 # include <mln/make/dual_neighb.hh>
+# include <mln/make/graph.hh>
 # include <mln/make/image.hh>
 # include <mln/make/image2d.hh>
 # include <mln/make/mat.hh>

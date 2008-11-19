@@ -62,6 +62,9 @@ namespace mln
       typedef std::set<util::ord_pair<unsigned> > edges_set_t;
 
       data();
+      /// Constructor.
+      /// Allocate enough space in order to support \p nvertices vertices.
+      data(unsigned nvertices);
       ~data();
 
       /// The vertices.
@@ -134,18 +137,28 @@ namespace mln
       /// \}
       /// \}
 
+      /// Constructor.
       graph();
+      /// Construct a graph with \p nvertices vertices.
+      graph(unsigned nvertices);
 
 
 
       /// Vertex oriented.
       /// \{
+
       /// Shortcuts factoring the insertion of vertices and edges.
       /// \{
+
       /// Add a vertex.
       ///
       /// \return The id of the new vertex.
       unsigned add_vertex();
+
+      /// Add \p n vertices to the graph.
+      ///
+      /// \return A range of vertex ids.
+      std::pair<unsigned, unsigned> add_vertices(unsigned n);
 
       /// Return the vertex whose id is \a v.
       /// \{
@@ -239,6 +252,12 @@ namespace mln
     }
 
     inline
+    data<util::graph>::data(unsigned nvertices)
+    {
+      vertices_.resize(nvertices);
+    }
+
+    inline
     data<util::graph>::~data()
     {
     }
@@ -254,6 +273,12 @@ namespace mln
       this->data_ = new mln::internal::data<util::graph>();
     }
 
+    inline
+    graph::graph(unsigned nvertices)
+    {
+      this->data_ = new mln::internal::data<util::graph>(nvertices);
+    }
+
     /*---------------.
     | Vertex related |
     `---------------*/
@@ -267,6 +292,18 @@ namespace mln
       data_->vertices_.resize(data_->vertices_.size() + 1);
 
       return v_nmax() - 1;
+    }
+
+    inline
+    std::pair<unsigned, unsigned>
+    graph::add_vertices(unsigned n)
+    {
+      /* FIXME: This is not thread-proof (these two lines should
+         form an atomic section).  */
+      data_->vertices_.resize(data_->vertices_.size() + n);
+
+      return std::make_pair(v_nmax() - n,
+			    v_nmax() - 1);
     }
 
     inline

@@ -33,6 +33,7 @@
 /// File that includes the most useful accumulator types.
 
 # include <mln/accu/bbox.hh>
+# include <mln/accu/center.hh>
 # include <mln/accu/count.hh>
 # include <mln/accu/histo.hh>
 # include <mln/accu/max.hh>

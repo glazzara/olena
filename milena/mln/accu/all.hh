@@ -58,6 +58,7 @@ namespace mln
 
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
+# include <mln/accu/center.hh>
 //# include <mln/accu/count_adjacent_vertices.hh>
 # include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>

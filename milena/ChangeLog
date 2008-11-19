@@ -1,3 +1,28 @@
+2008-11-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update graph related classes.
+
+	* mln/accu/center.hh: New accu.
+
+	* mln/accu/all.hh,
+	* mln/accu/essential.hh: add center.hh.
+
+	* mln/make/all.hh,
+	* mln/make/essential.hh,
+	* mln/debug/essential.hh,
+	* mln/debug/all.hh: update includes.
+
+	* mln/debug/graph.hh: Rename as...
+	* mln/debug/draw_graph.hh: ...this.
+
+	* mln/make/graph.hh: Add make::graph().
+
+	* mln/util/array.hh: cleanup.
+
+	* mln/util/edge.hh: cleanup comments.
+
+	* mln/util/graph.hh: add new constructors.
+
 2008-11-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update canvas labelingand labeling level.

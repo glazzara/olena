@@ -29,10 +29,9 @@
 #ifndef MLN_MAKE_ESSENTIAL_HH
 # define MLN_MAKE_ESSENTIAL_HH
 
-/*! \file mln/make/essential.hh
- *
- * \brief File that includes essential make routines.
- */
+/// \file mln/make/essential.hh
+///
+/// File that includes essential make routines.
 
 # include <mln/make/dual_neighb.hh>
 # include <mln/make/image.hh>

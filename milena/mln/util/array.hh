@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,12 @@
 #ifndef MLN_UTIL_ARRAY_HH
 # define MLN_UTIL_ARRAY_HH
 
-/*! \file mln/util/array.hh
- *
- * \brief Definition of mln::util::array.
- *
- * \todo Zed: Add a lazy removal method (based on an extra attribute
- * std::vector<bool> has_).  Then add a purge/compress method.
- */
+/// \file mln/util/array.hh
+///
+/// Definition of mln::util::array.
+///
+/// \todo Zed: Add a lazy removal method (based on an extra attribute
+/// std::vector<bool> has_).  Then add a purge/compress method.
 
 # include <vector>
 # include <iostream>
@@ -55,15 +54,12 @@ namespace mln
     template <typename T> class array_bkd_iter;
 
 
-    /*! \brief A dynamic array class.
-     *
-     *
-     *
-     * Elements are stored by copy.  Implementation is lazy.
-     *
-     * The parameter \c T is the element type, which shall not be
-     * const-qualified.
-     */
+    /// A dynamic array class.
+    ///
+    /// Elements are stored by copy.  Implementation is lazy.
+    ///
+    /// The parameter \c T is the element type, which shall not be
+    /// const-qualified.
     template <typename T>
     class array : public Object< mln::util::array<T> >
     {
@@ -141,7 +137,7 @@ namespace mln
     /// Operator<<.
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
-    			     const mln::util::array<T>& a);
+			     const mln::util::array<T>& a);
 
 
 
@@ -239,7 +235,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
 
     // util::array<T>
 
@@ -546,7 +541,7 @@ namespace mln
 
     template <typename T>
     std::ostream& operator<<(std::ostream& ostr,
-    			     const mln::util::array<T>& a)
+			     const mln::util::array<T>& a)
     {
       ostr << '[';
       const unsigned n = a.nelements();
