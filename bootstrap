@@ -97,5 +97,8 @@ require automake 1.9.4
 # Tell what's going on.
 set -x
 
+# Generate unit test files.
+run milena/tests/unit_tests build_unit_test.sh
+
 # Install the GNU Build System.
 autoreconf -f -v -i

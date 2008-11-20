@@ -1,3 +1,9 @@
+2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Generate unit test files on bootstrap.
+
+	* bootstrap: generate unit test files.
+
 2008-11-18  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/mesh/Makefile.
