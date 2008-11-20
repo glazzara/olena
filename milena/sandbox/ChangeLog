@@ -1,5 +1,11 @@
 2008-11-20  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Fix random() = 1.
+
+	* markov/markov.hh: .
+
+2008-11-20  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Mixin working for op_less.
 
 	* abraham/tests/morpho/test_watershed_topo.cc: .

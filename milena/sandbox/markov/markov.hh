@@ -34,7 +34,7 @@ namespace mln
 
     diff_sum /= coeff;
 
-    return 0.5 * (u + diff_sum);
+    return 1 * (u + diff_sum);
   }
 
   template <typename I, typename N> // I == int_u8
@@ -46,15 +46,16 @@ namespace mln
     //    mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
     mln_ch_value(I, bool) out = binarization::threshold(ima, 255 / 2); // FIXME : max
 
-    temperature_generator gtemp(start_temp, 0.99);
+    temperature_generator gtemp(start_temp, 0.8);
     double temp = start_temp;
 
-    Random<bool> v_random(0, 1); // mettre max et min ?
+    Random<int> v_random(0, 1); // mettre max et min ?
     Random<double> p_random(0., 1.); // idem
 
     unsigned modifications = 42;
     unsigned turn = 1;
     bool gradient = false;
+    int diffneg = 0;
 
     while (!gradient || modifications)
       {
@@ -64,6 +65,7 @@ namespace mln
         for_all(p)
         {
           bool v = v_random.get();
+	  // std::cout << "Random : " << v << std::endl;
 
           double u = compute_energy(ima, out, nbh, out(p), p);
           double up = compute_energy(ima, out, nbh, v, p);
@@ -73,14 +75,16 @@ namespace mln
 
 	  // std::cout << "u : " << u << " up : " << up << "Difference : " << d_u << std::endl;
 
-	  if (d_u < 0 || !gradient && (p_random.get() > proba))
+	  if (d_u < 0 || !gradient && (p_random.get() < proba))
 	    {
+	      if (d_u < 0)
+		diffneg ++;
 	      out(p) = v;
 	      modifications ++;
 	    }
 	}
 	temp = gtemp;
-	std::cout << "Turn : " << turn << " Modifs : " << modifications << " Temp : " << temp << std::endl;
+	std::cout << "Turn : " << turn << " Modifs : " << modifications << " DiffNeg : " << diffneg << " Temp : " << temp << std::endl;
 	turn ++;
 	if (!gradient && !modifications)
 	  {
@@ -88,6 +92,7 @@ namespace mln
 	    modifications = 1;
 	    gradient = true;
 	  }
+	diffneg = 0;
       }
 
     return out;
