@@ -1,8 +1,6 @@
 #!/bin/sh
 
-#FIXME: Launch this script during bootstrap
-
-HEADERS=`find ../../mln -name "*.hh" | sed s/"\.\.\/\.\.\/"//g`
+HEADERS=`find ../../mln -name "*.hh" | grep -vE "*.spe.hh" | sed s/"\.\.\/\.\.\/"//g`
 
 rm -f Makefile.am
 rm -f *.hh *.cc

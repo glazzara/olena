@@ -1,4 +1,100 @@
 2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update unit tests.
+
+	* tests/unit_test/Makefile.am: update list of tests.
+
+	* tests/unit_test/mln_accu_center.cc,
+	* tests/unit_test/mln_accu_land_basic.cc,
+	* tests/unit_test/mln_accu_transform.cc,
+	* tests/unit_test/mln_accu_transform_diagonal.cc,
+	* tests/unit_test/mln_accu_transform_directional.cc,
+	* tests/unit_test/mln_accu_transform_snake.cc,
+	* tests/unit_test/mln_accu_transform_stop.cc,
+	* tests/unit_test/mln_arith_diff_abs.cc,
+	* tests/unit_test/mln_canvas_distance_geodesic.cc,
+	* tests/unit_test/mln_core_alias_complex_geometry.cc,
+	* tests/unit_test/mln_core_alias_complex_image.cc,
+	* tests/unit_test/mln_core_internal_graph_neighborhood_base.cc,
+	* tests/unit_test/mln_core_internal_graph_psite_base.cc,
+	* tests/unit_test/mln_core_internal_graph_window_base.cc,
+	* tests/unit_test/mln_core_site_set_p_edges_psite.cc,
+	* tests/unit_test/mln_core_site_set_p_vertices_psite.cc,
+	* tests/unit_test/mln_debug_draw_graph.cc,
+	* tests/unit_test/mln_extension_adjust.cc,
+	* tests/unit_test/mln_extension_duplicate.cc,
+	* tests/unit_test/mln_fun_internal_array_base.cc,
+	* tests/unit_test/mln_fun_l2l_relabel.cc,
+	* tests/unit_test/mln_fun_v2b_lnot.cc,
+	* tests/unit_test/mln_fun_vv2v_diff_abs.cc,
+	* tests/unit_test/mln_fun_vv2v_land.cc,
+	* tests/unit_test/mln_fun_vv2v_land_not.cc,
+	* tests/unit_test/mln_fun_vv2v_lor.cc,
+	* tests/unit_test/mln_fun_vv2v_lxor.cc,
+	* tests/unit_test/mln_fun_vv2v_macros.cc,
+	* tests/unit_test/mln_fun_vv2v_vec.cc,
+	* tests/unit_test/mln_fun_x2v_l1_norm.cc,
+	* tests/unit_test/mln_labeling_relabel.cc,
+	* tests/unit_test/mln_level_domain.cc,
+	* tests/unit_test/mln_level_transform_inplace.cc,
+	* tests/unit_test/mln_linear_convolve_2x1d.cc,
+	* tests/unit_test/mln_linear_sobel_2d.cc,
+	* tests/unit_test/mln_logical_includes.cc,
+	* tests/unit_test/mln_logical_xor.cc,
+	* tests/unit_test/mln_make_graph.cc,
+	* tests/unit_test/mln_make_relabelfun.cc,
+	* tests/unit_test/mln_math_diff_abs.cc,
+	* tests/unit_test/mln_metal_ands.cc,
+	* tests/unit_test/mln_morpho_skeleton_constrained.cc,
+	* tests/unit_test/mln_set_compute.cc,
+	* tests/unit_test/mln_topo_is_simple_2d.cc,
+	* tests/unit_test/mln_transform_distance_geodesic.cc,
+	* tests/unit_test/mln_transform_influence_zone_geodesic.cc,
+	* tests/unit_test/mln_util_dual_graph.cc,
+	* tests/unit_test/mln_util_edge.cc,
+	* tests/unit_test/mln_util_max.cc,
+	* tests/unit_test/mln_util_vertex.cc,
+	* tests/unit_test/mln_value_label_16.cc,
+	* tests/unit_test/mln_value_label_8.cc: new tests.
+
+	* tests/unit_test/mln_util_internal_graph_edge.cc,
+	* tests/unit_test/mln_util_internal_graph_edge_psite.cc,
+	* tests/unit_test/mln_util_internal_graph_psite_base.cc,
+	* tests/unit_test/mln_core_alias_bin_2complex_image3df.cc,
+	* tests/unit_test/mln_core_image_line_graph_psite.cc,
+	* tests/unit_test/mln_core_site_set_p_graph.cc,
+	* tests/unit_test/mln_core_site_set_p_line_graph.cc,
+	* tests/unit_test/mln_core_site_set_p_line_graph_piter.cc,
+	* tests/unit_test/mln_debug_graph.cc,
+	* tests/unit_test/mln_linear_line_x2_convolve.cc,
+	* tests/unit_test/mln_linear_sobel.cc,
+	* tests/unit_test/mln_logical_and_not_spe.cc,
+	* tests/unit_test/mln_logical_and_spe.cc,
+	* tests/unit_test/mln_logical_or_spe.cc,
+	* tests/unit_test/mln_util_internal_graph_vertex.cc,
+	* tests/unit_test/mln_util_internal_graph_vertex_psite.cc: removed.
+	File were removed or renamed.
+
+	* mln_arith_min_spe.cc,
+	* mln_arith_revert_spe.cc,
+	* mln_arith_times_spe.cc,
+	* mln_debug_iota_spe.cc,
+	* mln_debug_println_spe.cc,
+	* mln_debug_println_with_border_spe.cc,
+	* mln_histo_compute_spe.cc,
+	* mln_labeling_level_spe.cc,
+	* mln_level_apply_spe.cc,
+	* mln_level_assign_spe.cc,
+	* mln_level_fill_with_image_spe.cc,
+	* mln_level_fill_with_value_spe.cc,
+	* mln_level_paste_spe.cc,
+	* mln_level_transform_spe.cc,
+	* mln_logical_not_spe.cc,
+	* mln_morpho_erosion_spe.cc: removed. Can't include directly .spe.hh
+	files.
+
+
+2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
       
 	Add labeling::relabel.
 
