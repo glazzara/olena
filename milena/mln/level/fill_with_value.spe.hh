@@ -80,12 +80,12 @@ namespace mln
 	I& ima = exact(ima_);
 
 	internal::fill_with_value_tests(ima, val);
-        mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
-                                  trait::image::pw_io::read_write)::value ||
-                           mlc_is(mln_trait_image_vw_io(I),
-                                  trait::image::vw_io::read_write)::value) &&
-                          mlc_is(mln_trait_image_value_access(I),
-                                 trait::image::value_access::direct)::value));
+        mlc_and(mlc_or(mlc_is(mln_trait_image_pw_io(I),
+                              trait::image::pw_io::read_write),
+                       mlc_is(mln_trait_image_vw_io(I),
+                              trait::image::vw_io::read_write)),
+                mlc_is(mln_trait_image_value_access(I),
+                       trait::image::value_access::direct))::check();
 
         level::memset_(ima, ima.point_at_index(0), val, ima.nelements());
 
@@ -118,12 +118,13 @@ namespace mln
 	I& ima = exact(ima_);
 
 	internal::fill_with_value_tests(ima, val);
-        mln_precondition(((mlc_is(mln_trait_image_pw_io(I),
-                                  trait::image::pw_io::read_write)::value ||
-                           mlc_is(mln_trait_image_vw_io(I),
-                                  trait::image::vw_io::read_write)::value) &&
-                          mlc_is(mln_trait_image_value_access(I),
-                                 trait::image::value_access::direct)::value));
+        mlc_and(
+                mlc_or(mlc_is(mln_trait_image_pw_io(I),
+                              trait::image::pw_io::read_write),
+                       mlc_is(mln_trait_image_vw_io(I),
+                              trait::image::vw_io::read_write)),
+                mlc_is(mln_trait_image_value_access(I),
+                       trait::image::value_access::direct))::check();
 
 	ima.val() = val;
 
@@ -197,7 +198,6 @@ namespace mln
       }
 
 
-
       template <typename I, typename V>
       void fill_with_value_dispatch(trait::image::value_storage::disrupted,
                                     trait::image::vw_io::any,
@@ -205,18 +205,6 @@ namespace mln
       {
         impl::generic::fill_with_value(ima, val);
       }
-
-
-      // This specialization is only here to deal with image which have
-      // non-updated properties (vw_io).
-      template <typename I, typename V>
-      void fill_with_value_dispatch(trait::image::value_storage::any,
-                                    trait::undef,
-                                    Image<I>& ima, const V& val)
-      {
-        impl::generic::fill_with_value(ima, val);
-      }
-
 
 
       template <typename I,  typename V>
