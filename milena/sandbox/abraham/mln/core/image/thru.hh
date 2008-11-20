@@ -118,6 +118,8 @@ namespace mln
 
     /// Mutable access is for reading and writing.
     lvalue operator()(const mln_psite(I)& p);
+
+    F f;
   };
 
 # ifndef MLN_INCLUDE_ONLY
@@ -164,7 +166,7 @@ namespace mln
   thru<F,I>::operator()(const mln_psite(I)& p) const
   {
     mln_precondition(this->data_->ima_.has(p));
-    return F()( this->data_->ima_(p) );
+    return f( this->data_->ima_(p) );
   }
 
   template <typename F, typename I>

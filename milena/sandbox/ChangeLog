@@ -1,3 +1,15 @@
+2008-11-20  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Mixin working for op_less.
+
+	* abraham/tests/morpho/test_watershed_topo.cc: .
+	* abraham/tests/morpho/Makefile: .
+	* abraham/tests/value/mixin.cc: New.
+	* abraham/mln/core/image/thru.hh: .
+	* abraham/mln/value/mixin.hh: New.
+	* abraham/mln/value/op_less.hh: New.
+	* abraham/mln/value/shell.hh: .
+
 2008-11-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Clean and Fix tiled_image2d.

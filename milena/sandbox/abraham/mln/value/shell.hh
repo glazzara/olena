@@ -48,8 +48,7 @@ namespace mln
 
     template <typename F, typename I>
     struct value_< mln::value::shell<F, I> >
-      :
-      value_< mln_result(F) >
+      : value_< mln_result(F) >
     {
     };
 

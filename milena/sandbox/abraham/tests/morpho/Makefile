@@ -2,7 +2,7 @@ SRC=$(wildcard *.cc)
 OBJ=$(SRC:.cc=.o)
 EXEC=$(SRC:.cc=)
 CC=g++
-CXXFLAGS=-Wall -W -I ../../ -I ../../../../ -g
+CXXFLAGS=-Wall -W -I ../../ -I ../../../../ -O3 -DNDEBUG
 
 all: $(EXEC)
 
