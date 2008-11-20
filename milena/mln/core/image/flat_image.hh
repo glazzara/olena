@@ -78,6 +78,7 @@ namespace mln
 
       // value
       typedef trait::image::vw_io::read_write               vw_io;
+      /// FIXME this property should be set to uni
       typedef trait::image::vw_set::none                    vw_set;
       typedef trait::image::value_access::direct            value_access;
       typedef trait::image::value_storage::singleton        value_storage;

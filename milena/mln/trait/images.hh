@@ -84,6 +84,19 @@
 	  mln::trait::image::value_io::read_only,	\
 	  mln_trait_image_value_io(I) )
 
+# define mln_internal_trait_image_pw_io_from(I)         \
+							\
+  mlc_if( mlc_is_const(I),				\
+	  mln::trait::image::pw_io::read,               \
+	  mln_trait_image_pw_io(I) )
+
+
+# define mln_internal_trait_image_vw_io_from(I)         \
+							\
+  mlc_if( mlc_is_const(I),				\
+	  mln::trait::image::vw_io::read,               \
+	  mln_trait_image_vw_io(I) )
+
 
 # define mln_internal_trait_image_speed_from(I)						\
 											\
@@ -189,19 +202,25 @@ namespace mln
       typedef typename image_<D>::size  size;
       typedef mln_internal_trait_image_speed_from(D) speed; // un-fastest
 
-      // value => delegation
-      typedef typename image_<D>::vw_io            vw_io;
-      typedef typename image_<D>::vw_set           vw_set;
+      // Image geometry
+      typedef typename image_<D>::localization localization;
+      typedef typename image_<D>::dimension    dimension;
+
+      // Memory organization
       typedef typename image_<D>::value_alignement value_alignement;
       typedef typename image_<D>::value_access     value_access;
       typedef typename image_<D>::value_storage    value_storage;
       typedef typename image_<D>::value_browsing   value_browsing;
-      typedef mln_internal_trait_image_value_io_from(D) value_io; // un-write when D is const
+      // un-write when D is const
+      typedef mln_internal_trait_image_value_io_from(D) value_io;
 
-      // site => delegation
-      typedef typename image_<D>::pw_io        pw_io;
-      typedef typename image_<D>::localization localization;
-      typedef typename image_<D>::dimension    dimension;
+      // value wise access => delegation
+      typedef mln_internal_trait_image_vw_io_from(D) vw_io;
+      typedef typename image_<D>::vw_set             vw_set;
+
+
+      // site wise access => delegation
+      typedef mln_internal_trait_image_pw_io_from(D) pw_io;
 
       // extended domain => delegation
       typedef typename image_<D>::ext_domain ext_domain;

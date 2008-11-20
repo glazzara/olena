@@ -1,3 +1,10 @@
+2008-11-20  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Cleanup image traits.
+
+	* mln/trait/images.hh: Update trait delegation to morpher.
+	* mln/core/image/flat_image.hh: Add documentation.
+
 2008-11-19  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Put algebraic_union_find into a routine.
