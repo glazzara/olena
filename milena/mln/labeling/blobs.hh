@@ -29,13 +29,12 @@
 #ifndef MLN_LABELING_BLOBS_HH
 # define MLN_LABELING_BLOBS_HH
 
-/*! \file mln/labeling/blobs.hh
- *
- * \brief Connected component labeling of the binary objects of a binary
- *  image using a queue-based algorithm.
- *
- * \todo Handle abort in a nice way...
- */
+/// \file mln/labeling/blobs.hh
+///
+/// Connected component labeling of the binary objects of a binary
+/// image using a queue-based algorithm.
+///
+/// \todo Handle abort in a nice way...
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -50,19 +49,19 @@ namespace mln
   namespace labeling
   {
 
-    /*! Connected component labeling of the binary objects of a binary
-     *  image.
-     *
-     * \param[in]  input    The input image.
-     * \param[in]  nbh      The connexity of the objects.
-     * \param[out] nlabels  The number of labels.
-     * \return              The label image.
-     *
-     * \pre The input image has to be binary (checked at compile-time).
-     *
-     * A fast queue is used so that the algorithm is not recursive and
-     * can handle large binary objects (blobs).
-     */
+    /// Connected component labeling of the binary objects of a binary
+    ///  image.
+    ///
+    /// \param[in]  input    The input image.
+    /// \param[in]  nbh      The connexity of the objects.
+    /// \param[out] nlabels  The number of labels.
+    /// \return              The label image.
+    ///
+    /// \pre The input image has to be binary (checked at compile-time).
+    ///
+    /// A fast queue is used so that the algorithm is not recursive and
+    /// can handle large binary objects (blobs).
+    ///
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     blobs(const Image<I>& input, const Neighborhood<N>& nbh,
@@ -88,15 +87,15 @@ namespace mln
 	  p_queue_fast<P> qu;
 
 	  // Initialization.
-	  nlabels = 0;
+	  nlabels = literal::zero;
 	  mln_ch_value(I, L) output;
 	  initialize(output, input);
-	  level::fill(output, 0);
+	  level::fill(output, literal::zero);
 
 	  // Loop.
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    if (input(p) && ! output(p)) // Object point, not labeled yet.
+	    if (input(p) && output(p) == literal::zero) // Object point, not labeled yet.
 	      {
 		// Label this point component.
 		if (nlabels == mln_max(L))
@@ -113,7 +112,7 @@ namespace mln
 		    cur = qu.front();
 		    qu.pop();
 		    for_all(n) if (input.has(n))
-		      if (input(n) && ! output(n))
+		      if (input(n) && output(n) == literal::zero)
 			{
 			  mln_invariant(! qu.compute_has(n));
 			  qu.push(n);

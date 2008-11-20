@@ -25,16 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_I2V_ARRAY_HH
-# define MLN_FUN_I2V_ARRAY_HH
+#ifndef MLN_FUN_INTERNAL_ARRAY_BASE_HH
+# define MLN_FUN_INTERNAL_ARRAY_BASE_HH
 
-/// \file mln/fun/i2v/array.hh
+/// \file mln/fun/internal/array_base.hh
 ///
 /// Function mapping an Id i to a value v.
 
 # include <vector>
 # include <algorithm>
-# include <mln/fun/internal/array_base.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/util/array.hh>
 
@@ -42,74 +41,53 @@
 namespace mln
 {
 
-  /// Forward declaration.
   namespace fun
   {
 
-    namespace i2v
+    namespace internal
     {
 
       template <typename T>
-      class array;
-
-    } // end of namespace mln::fun::i2v
-
-  } // end of namespace mln::fun
-
-
-
-  namespace convert
-  {
-
-    template <typename T>
-    inline
-    void
-    from_to(const util::array<T>& from, fun::i2v::array<T>& to);
-
-    template <typename T>
-    inline
-    void
-    from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
-
-  } // end of namespace mln::convert
-
-
-  namespace fun
-  {
-
-    namespace i2v
-    {
-
-      template <typename T>
-      class array : public Function_i2v< array<T> >,
-		    public internal::array_base<T>
+      class array_base
       {
-	typedef internal::array_base<T> super_base_;
-
       public:
+
+	typedef T result;
+
+	void resize(unsigned n);
+	unsigned size() const;
+
+	const T& operator()(unsigned i) const;
+	T& operator()(unsigned i);
+
+
+      protected:
+
+	std::vector<T> v_;
 
 	/// Constructors
 	/// \{
 
 	/// Default.
-	array();
-	/// Constructs a function with \p nvalues.
-	array(unsigned n);
-	/// Constructs a function with \p nvalues and \p val as default value.
-	array(unsigned n, const T& val);
+	array_base();
+	/// Constructs an array with \p nvalues.
+	array_base(unsigned n);
 
-	/// Used in from_to(). Constructs that function from an util::array.
+	/// Constructs an array with \p nvalues and \p val as value.
+	array_base(unsigned n, const T& val);
+
+	/// Used in from_to(). Constructs that object from an util::array.
 	/// Always prefer using from_to instead of this constructor.
-	array(const util::array<T>& from);
-	/// Used in from_to(). Constructs that function from an std::vector.
+	array_base(const util::array<T>& from);
+	/// Used in from_to(). Constructs that object from an std::vector.
 	/// Always prefer using from_to instead of this constructor.
-	array(const std::vector<T>& from);
+	array_base(const std::vector<T>& from);
 
 	/// \}
 
       };
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::internal
 
   } // end of namespace mln::fun
 
@@ -118,83 +96,92 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // convert::from_to
-
-  namespace convert
-  {
-
-    template <typename T>
-    inline
-    void
-    from_to(const util::array<T>& from, fun::i2v::array<T>& to)
-    {
-      to = fun::i2v::array<T>(from);
-    }
-
-    template <typename T>
-    inline
-    void
-    from_to(const std::vector<T>& from, fun::i2v::array<T>& to)
-    {
-      to = fun::i2v::array<T>(from);
-    }
-
-  } // end of namespace mln::convert
-
-
-
-  /// fun::i2v::array
+  /// fun::internal::array_base
 
   namespace fun
   {
 
-    namespace i2v
+    namespace internal
     {
 
       template <typename T>
       inline
-      array<T>::array()
+      array_base<T>::array_base()
       {
       }
 
       template <typename T>
       inline
-      array<T>::array(unsigned n)
-	: super_base_(n)
+      array_base<T>::array_base(unsigned n)
+	: v_(n)
       {
       }
 
       template <typename T>
       inline
-      array<T>::array(const util::array<T>& from)
-	: super_base_(from)
+      array_base<T>::array_base(unsigned n, const T& val)
+	: v_(n, val)
+      {
+      }
+
+      template <typename T>
+      inline
+      array_base<T>::array_base(const util::array<T>& from)
+	: v_(from.std_vector())
       {
 
       }
 
       template <typename T>
       inline
-      array<T>::array(const std::vector<T>& from)
-	: super_base_(from)
+      array_base<T>::array_base(const std::vector<T>& from)
+	: v_(from)
       {
 
       }
 
-    } // end of namespace mln::fun::i2v
+      template <typename T>
+      inline
+      void
+      array_base<T>::resize(unsigned n)
+      {
+	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      unsigned
+      array_base<T>::size() const
+      {
+	return v_.size();
+      }
+
+      template <typename T>
+      inline
+      const T&
+      array_base<T>::operator()(unsigned i) const
+      {
+	mln_precondition(i < v_.size());
+	return v_[i];
+      }
+
+      template <typename T>
+      inline
+      T&
+      array_base<T>::operator()(unsigned i)
+      {
+	mln_precondition(i < v_.size());
+	return v_[i];
+      }
+
+    } // end of namespace mln::fun::internal
 
   } // end of namespace mln::fun
 
-  template <typename T>
-  inline
-  fun::i2v::array<T> array(T t)
-  {
-    fun::i2v::array<T> tmp(t);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_I2V_ARRAY_HH
+#endif // ! MLN_FUN_INTERNAL_ARRAY_BASE_HH

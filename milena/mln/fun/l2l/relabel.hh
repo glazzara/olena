@@ -25,18 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_I2V_ARRAY_HH
-# define MLN_FUN_I2V_ARRAY_HH
+#ifndef MLN_FUN_L2L_ARRAY_HH
+# define MLN_FUN_L2L_ARRAY_HH
 
-/// \file mln/fun/i2v/array.hh
+/// \file mln/fun/l2l/array.hh
 ///
-/// Function mapping an Id i to a value v.
+/// Function mapping a label to a new one.
+/// \sa mln::labeling::relabel
 
 # include <vector>
 # include <algorithm>
 # include <mln/fun/internal/array_base.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/util/array.hh>
+# include <mln/metal/converts_to.hh>
 
 
 namespace mln
@@ -46,13 +48,13 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace l2l
     {
 
-      template <typename T>
-      class array;
+      template <typename L>
+      class relabel;
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::l2l
 
   } // end of namespace mln::fun
 
@@ -61,15 +63,17 @@ namespace mln
   namespace convert
   {
 
-    template <typename T>
+    template <typename L>
     inline
     void
-    from_to(const util::array<T>& from, fun::i2v::array<T>& to);
+    from_to(const util::array<L>& from,
+	    fun::l2l::relabel<L>& to);
 
-    template <typename T>
+    template <typename L>
     inline
     void
-    from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
+    from_to(const std::vector<L>& from,
+	    fun::l2l::relabel<L>& to);
 
   } // end of namespace mln::convert
 
@@ -77,33 +81,30 @@ namespace mln
   namespace fun
   {
 
-    namespace i2v
+    namespace l2l
     {
 
-      template <typename T>
-      class array : public Function_i2v< array<T> >,
-		    public internal::array_base<T>
+      template <typename L>
+      class relabel : public Function_l2l< relabel<L> >,
+		      public internal::array_base<L>
       {
-	typedef internal::array_base<T> super_base_;
+	typedef internal::array_base<L> super_base_;
 
       public:
 
-	/// Constructors
-	/// \{
-
 	/// Default.
-	array();
+	relabel();
 	/// Constructs a function with \p nvalues.
-	array(unsigned n);
-	/// Constructs a function with \p nvalues and \p val as default value.
-	array(unsigned n, const T& val);
+	relabel(unsigned n);
+	/// Constructs a function with \p nvalues and \p label as default label.
+	relabel(unsigned n, const L& label);
 
 	/// Used in from_to(). Constructs that function from an util::array.
 	/// Always prefer using from_to instead of this constructor.
-	array(const util::array<T>& from);
+	relabel(const util::array<L>& from);
 	/// Used in from_to(). Constructs that function from an std::vector.
 	/// Always prefer using from_to instead of this constructor.
-	array(const std::vector<T>& from);
+	relabel(const std::vector<L>& from);
 
 	/// \}
 
@@ -123,78 +124,87 @@ namespace mln
   namespace convert
   {
 
-    template <typename T>
+    template <typename L>
     inline
     void
-    from_to(const util::array<T>& from, fun::i2v::array<T>& to)
+    from_to(const util::array<L>& from, fun::l2l::relabel<L>& to)
     {
-      to = fun::i2v::array<T>(from);
+      to = fun::l2l::relabel<L>(from);
     }
 
-    template <typename T>
+    template <typename L>
     inline
     void
-    from_to(const std::vector<T>& from, fun::i2v::array<T>& to)
+    from_to(const std::vector<L>& from, fun::l2l::relabel<L>& to)
     {
-      to = fun::i2v::array<T>(from);
+      to = fun::l2l::relabel<L>(from);
     }
 
   } // end of namespace mln::convert
 
 
 
-  /// fun::i2v::array
+  /// fun::l2l::relabel
 
   namespace fun
   {
 
-    namespace i2v
+    namespace l2l
     {
 
-      template <typename T>
+      template <typename L>
       inline
-      array<T>::array()
+      relabel<L>::relabel()
       {
+	// FIXME: Too restrictive?
+	mlc_converts_to(L, unsigned)::check();
       }
 
-      template <typename T>
+      template <typename L>
       inline
-      array<T>::array(unsigned n)
+      relabel<L>::relabel(unsigned n)
 	: super_base_(n)
       {
+	// FIXME: Too restrictive?
+	mlc_converts_to(L, unsigned)::check();
       }
 
-      template <typename T>
+      template <typename L>
       inline
-      array<T>::array(const util::array<T>& from)
+      relabel<L>::relabel(unsigned n, const L& label)
+	: super_base_(n, label)
+      {
+	// FIXME: Too restrictive?
+	mlc_converts_to(L, unsigned)::check();
+      }
+
+      template <typename L>
+      inline
+      relabel<L>::relabel(const util::array<L>& from)
 	: super_base_(from)
       {
-
+	// FIXME: Too restrictive?
+	mlc_converts_to(L, unsigned)::check();
       }
 
-      template <typename T>
+      template <typename L>
       inline
-      array<T>::array(const std::vector<T>& from)
+      relabel<L>::relabel(const std::vector<L>& from)
 	: super_base_(from)
       {
-
+	// FIXME: Too restrictive?
+	mlc_converts_to(L, unsigned)::check();
       }
 
-    } // end of namespace mln::fun::i2v
-
-  } // end of namespace mln::fun
-
-  template <typename T>
-  inline
-  fun::i2v::array<T> array(T t)
-  {
-    fun::i2v::array<T> tmp(t);
-    return tmp;
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
+
+
+    } // end of namespace mln::fun::l2l
+
+  } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_I2V_ARRAY_HH
+#endif // ! MLN_FUN_L2L_ARRAY_HH

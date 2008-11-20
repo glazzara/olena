@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_VALUE_LABEL_HH
 # define MLN_VALUE_LABEL_HH
 
-/*! \file mln/value/label.hh
- *
- * \brief Define a generic class for labels.
- */
+/// \file mln/value/label.hh
+///
+/// Define a generic class for labels.
 
 # include <mln/metal/math/pow.hh>
 # include <mln/value/concept/symbolic.hh>
@@ -44,11 +43,14 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace value {
     template <unsigned n> struct label;
   }
 
+  namespace literal {
+    struct zero_t;
+  }
 
 
   namespace trait
@@ -59,6 +61,7 @@ namespace mln
     {
     private:
       typedef mln::value::label<n> self_;
+
     public:
 
       enum {
@@ -71,7 +74,7 @@ namespace mln
       typedef mln_value_quant_from_(card)    quant;
 
       static const self_ min() { return 0; }
-      static const self_ max() { return card - 1; }
+      static const self_ max() { return mlc_pow_int(2, n) - 1; }
     };
 
   } // end of namespace trait
@@ -82,20 +85,22 @@ namespace mln
   {
 
 
-    /*! \brief Label value class.
-     *
-     * The parameter \c n is the number of encoding bits.
-     */
+    /// Label value class.
+    ///
+    /// The parameter \c n is the number of encoding bits.
+    ///
     template <unsigned n>
-    struct label : public Symbolic< label<n> >
+    struct label
+      : public Symbolic< label<n> >,
+	public internal::value_like_< unsigned,    // Equivalent.
+				      typename internal::encoding_unsigned_<n>::ret, // Enc.
+				      int,    // Interoperation.
+				      label<n> >   // Exact.
+
     {
     public:
-
       /// Encoding associated type.
       typedef typename internal::encoding_unsigned_<n>::ret enc;
-
-      /// Equivalent associated type.
-      typedef typename internal::encoding_unsigned_<n>::ret equiv;
 
       /// Constructor without argument.
       label();
@@ -103,8 +108,17 @@ namespace mln
       /// Constructor from an (unsigned) integer.
       label(unsigned i);
 
+      /// Constructor from literal::zero.
+      label(const literal::zero_t& v);
+
+      /// Conversion to an unsigned integer.
+      operator unsigned() const;
+
       /// Assignment from an (unsigned) integer.
       label<n>& operator=(unsigned i);
+
+      /// Assignment from literal::zero.
+      label<n>& operator=(const literal::zero_t& v);
 
       /// Self increment.
       label<n>& operator++();
@@ -112,11 +126,11 @@ namespace mln
       /// Self decrement.
       label<n>& operator--();
 
+      /// Return the next value.
+      label<n> next() const;
+
       /// Conversion to unsigned.
       const enc& to_enc() const;
-
-      /// Unit value.
-      static const label<n> one;
 
     protected:
 
@@ -124,48 +138,17 @@ namespace mln
     };
 
 
-    namespace internal
-    {
-
-      template <unsigned n>
-      struct convert_< label<n> >
-      {
-	static label<n> value_at_index(unsigned i)
-	{
-	  return i;
-	}
-	static unsigned index_of_value(const label<n>& v)
-	{
-	  return v.to_enc();
-	}
-      };
-
-    } // end of mln::value::internal
-
-
-
     // Safety.
     template <> struct label<0>;
     template <> struct label<1>;
 
-
-    /// Equality comparison.
-    template <unsigned n>
-    bool operator==(const label<n>& lhs, const label<n>& rhs);
-
-    /// Ordering comparison.
-    template <unsigned n>
-    bool operator<(const label<n>& lhs, const label<n>& rhs);
-
-
-
-    /*! \brief Print a label \p l into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] l A label.
-     *
-     * \return The modified output stream \p ostr.
-     */
+    /// Print a label \p l into the output stream \p ostr.
+    ///
+    /// \param[in,out] ostr An output stream.
+    /// \param[in] l A label.
+    ///
+    /// \return The modified output stream \p ostr.
+    ///
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const label<n>& l);
 
@@ -182,8 +165,21 @@ namespace mln
     inline
     label<n>::label(unsigned i)
     {
-      mln_precondition(i <= mln_max(enc));
       v_ = enc(i);
+    }
+
+    template <unsigned n>
+    inline
+    label<n>::label(const literal::zero_t&)
+    {
+      v_ = 0;
+    }
+
+    template <unsigned n>
+    inline
+    label<n>::operator unsigned() const
+    {
+      return to_enc();
     }
 
     template <unsigned n>
@@ -193,6 +189,15 @@ namespace mln
     {
       mln_precondition(i <= mln_max(enc));
       v_ = enc(i);
+      return *this;
+    }
+
+    template <unsigned n>
+    inline
+    label<n>&
+    label<n>::operator=(const literal::zero_t&)
+    {
+      v_ = 0;
       return *this;
     }
 
@@ -217,7 +222,12 @@ namespace mln
     }
 
     template <unsigned n>
-    const label<n> label<n>::one = 1;
+    inline
+    label<n>
+    label<n>::next() const
+    {
+      return label<n>(v_ + 1);
+    }
 
     template <unsigned n>
     inline
@@ -225,20 +235,6 @@ namespace mln
     label<n>::to_enc() const
     {
       return v_;
-    }
-
-    template <unsigned n>
-    inline
-    bool operator==(const label<n>& lhs, const label<n>& rhs)
-    {
-      return lhs.to_enc() == rhs.to_enc();
-    }
-
-    template <unsigned n>
-    inline
-    bool operator<(const label<n>& lhs, const label<n>& rhs)
-    {
-      return lhs.to_enc() < rhs.to_enc();
     }
 
     template <unsigned n>

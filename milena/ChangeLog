@@ -1,3 +1,32 @@
+2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
+      
+	Add labeling::relabel.
+
+	* mln/core/concept/function.hh: add Function_l2b and Function_l2l.
+
+	* mln/fun/i2v/array.hh: inherits from array_base.
+
+	* mln/fun/internal/array_base.hh: base implementation for functions
+	based on an array.
+
+	* mln/fun/l2l/relabel.hh: l2l function used in labeling::relabel.
+
+	* mln/labeling/blobs.hh: use literal::zero and compare output(p) to
+	literal::zero instead of using operator!.
+
+	* mln/labeling/relabel.hh: new routine.
+
+	* mln/make/relabelfun.hh: new. Create a l2l function from a l2b
+	function.
+
+	* mln/value/label.hh: update. Make it work.
+
+	* mln/value/label_16.hh,
+	* mln/value/label_8.hh: New aliases.
+
+	* tests/labeling/Makefile.am,
+	* tests/labeling/relabel.cc: add a new test for labeling::relabel.
+
 2008-11-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Bench the diff between canvas as class v. as procedure.

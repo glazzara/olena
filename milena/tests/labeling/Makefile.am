@@ -10,7 +10,8 @@ check_PROGRAMS =				\
   foreground					\
   level						\
   regional_maxima				\
-  regional_minima
+  regional_minima 				\
+  relabel
 
 background_SOURCES = background.cc
 blobs_SOURCES = blobs.cc
@@ -20,5 +21,6 @@ foreground_SOURCES = foreground.cc
 level_SOURCES = level.cc
 regional_maxima_SOURCES = regional_maxima.cc
 regional_minima_SOURCES = regional_minima.cc
+relabel_SOURCES = relabel.cc
 
 TESTS = $(check_PROGRAMS)
