@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_INT_U_HH
 # define MLN_VALUE_INT_U_HH
 
-/*! \file mln/value/int_u.hh
- *
- * \brief Define a generic class for unsigned integers.
- */
+/// \file mln/value/int_u.hh
+///
+/// Define a generic class for unsigned integers.
 
 # include <mln/trait/all.hh> // FIXME!
 
@@ -51,13 +51,13 @@ namespace mln
 
   namespace value
   {
-    // Fwd decls.
+    // Forward declaration.
     template <unsigned n> struct int_u;
   }
 
   namespace literal
   {
-    // Fwd decls.
+    // Forward declarations.
     struct zero_t;
     struct one_t;
   }
@@ -104,10 +104,9 @@ namespace mln
   namespace value
   {
 
-    /*! \brief Unsigned integer value class.
-     *
-     * The parameter is \c n the number of encoding bits.
-     */
+    /// Unsigned integer value class.
+    ///
+    /// The parameter is \c n the number of encoding bits.
     template <unsigned n>
     struct int_u
       :
@@ -154,13 +153,13 @@ namespace mln
 
 
 
-    /*! \brief Print an unsigned integer \p i into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] i An unsigned integer.
-     *
-     * \return The modified output stream \p ostr.
-     */
+    /// \brief Print an unsigned integer \p i into the output stream \p ostr.
+    ///
+    /// \param[in,out] ostr An output stream.
+    /// \param[in] i An unsigned integer.
+    ///
+    /// \return The modified output stream \p ostr.
+    ///
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const int_u<n>& i);
 

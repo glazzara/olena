@@ -49,7 +49,7 @@
 
 #include <mln/util/graph.hh>
 
-#include <mln/debug/graph.hh>
+#include <mln/debug/draw_graph.hh>
 #include <mln/debug/println.hh>
 #include <mln/core/concept/function.hh>
 

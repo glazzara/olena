@@ -45,24 +45,24 @@ namespace mln
   {
 
     /// Compute an accumulator onto the pixel values of the image \p input.
-    /*!
-     * \param[in] a An accumulator.
-     * \param[in] input The input image.
-     * \return The accumulator result.
-     *
-     * It fully relies on level::update.
-     */
+    ///
+    /// \param[in] a An accumulator.
+    /// \param[in] input The input image.
+    /// \return The accumulator result.
+    ///
+    /// It fully relies on level::update.
+    ///
     template <typename A, typename I>
     mln_result(A)
     compute(const Accumulator<A>& a, const Image<I>& input);
 
 
     /// Compute an accumulator onto the pixel values of the image \p input.
-    /*!
-     * \param[in] a A meta-accumulator.
-     * \param[in] input The input image.
-     * \return The accumulator result.
-     */
+    ///
+    /// \param[in] a A meta-accumulator.
+    /// \param[in] input The input image.
+    /// \return The accumulator result.
+    ///
     template <typename A, typename I>
     mln_accu_with(A, mln_value(I))::result
     compute(const Meta_Accumulator<A>& a, const Image<I>& input);

@@ -29,16 +29,15 @@
 #ifndef MLN_DEBUG_DRAW_GRAPH_HH
 # define MLN_DEBUG_DRAW_GRAPH_HH
 
-/// \file mln/debug/graph.hh
+/// \file mln/debug/draw_graph.hh
 ///
 /// \brief Draw an (classical) image from a mln::graph_image.
 ///
 /// \todo write a version for graph images.
 
-# include <mln/pw/image.hh>
-# include <mln/level/fill.hh>
-# include <mln/draw/line.hh>
 # include <mln/core/site_set/p_vertices.hh>
+# include <mln/draw/line.hh>
+# include <mln/level/fill.hh>
 
 namespace mln
 {

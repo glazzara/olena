@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_DEBUG_COLORIZE_HH
 # define MLN_DEBUG_COLORIZE_HH
 
-/*! \file mln/debug/colorize.hh
- *
- * \brief Fill an image with successive values.
- */
+/// \file mln/debug/colorize.hh
+///
+/// Fill an image with successive values.
 
 # include <mln/core/concept/image.hh>
 # include <mln/fun/i2v/array.hh>
@@ -64,8 +64,8 @@ namespace mln
      * \param[in] labeled_image A labeled image (\sa labeling::blobs).
      * \param[in] nlabels Number of labels.
      */
-    template <typename I, typename J>
-    mln_concrete(I) colorize(const Image<J>& labeled_image, mln_value(J) nlabels);
+    template <typename I, typename L>
+    mln_concrete(I) colorize(const Image<L>& labeled_image, mln_value(L) nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,10 +93,10 @@ namespace mln
 
     }
 
-    template <typename I, typename J>
+    template <typename I, typename L>
     inline
     mln_concrete(I)
-    colorize(const Image<J>& input, mln_value(J) nlabels)
+    colorize(const Image<L>& input, mln_value(L) nlabels)
     {
       trace::entering("debug::colorize");
       mln_precondition(exact(input).has_data());
@@ -109,8 +109,10 @@ namespace mln
 	unsigned i = f.size() + diff_size;
 	// We want to treat comp 0 differently since it is the background.
 	if (i == 0)
+	{
 	  i = 1;
-	f(0) = literal::black;
+	  f(0) = literal::black;
+	}
 	for (; i < f.size(); ++i)
 	  f(i) = internal::random_color();
       }

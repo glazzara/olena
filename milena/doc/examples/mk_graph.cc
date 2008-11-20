@@ -47,7 +47,7 @@
 int main(int argc, char *argv[])
 {
   using namespace mln;
-  using value::int_u8;
+  using value::int_u16;
 
   if (argc < 2)
   {
@@ -59,13 +59,13 @@ int main(int argc, char *argv[])
   logical::not_inplace(ima);
 
   // Create a label image and compute the influence zones.
-  int_u8 nlabels;
-  image2d<int_u8> lbl = labeling::blobs(ima, c8(), nlabels);
+  int_u16 nlabels;
+  image2d<int_u16> lbl = labeling::blobs(ima, c8(), nlabels);
   io::ppm::save(debug::colorize< image2d<value::rgb8> >(lbl, nlabels),
 		"1_blobs.ppm");
-  image2d<int_u8> iz = transform::influence_zone_geodesic(lbl,
-							   c8(),
-							   lbl.ncols());
+  image2d<int_u16> iz = transform::influence_zone_geodesic(lbl,
+							  c8(),
+							  lbl.ncols());
   io::ppm::save(debug::colorize< image2d<value::rgb8> >(iz, nlabels),
 		"2_influence_zone_geodesic.ppm");
 

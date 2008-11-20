@@ -1,5 +1,22 @@
 2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Cleanup various files.
+
+	* doc/examples/mk_graph.cc: use int_u16 instead of int_u8.
+
+	* mln/debug/colorize.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/level/compute.hh,
+	* mln/literal/zero.hh,
+	* mln/value/concept/symbolic.hh,
+	* mln/value/int_u.hh,
+	* mln/value/internal/value_like.hh: Cleanup comments.
+
+	* tests/core/image/graph_image.cc: Fix includes.
+
+
+2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update unit tests.
 
 	* tests/unit_test/Makefile.am: update list of tests.

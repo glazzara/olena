@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007. 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_CONCEPT_SYMBOLIC_HH
 # define MLN_VALUE_CONCEPT_SYMBOLIC_HH
 
-/*! \file mln/value/concept/symbolic.hh
- *
- * \brief Define a generic class for symbolic values.
- */
+/// \file mln/value/concept/symbolic.hh
+///
+/// Define a generic class for symbolic values.
 
 # include <mln/core/concept/value.hh>
 
@@ -39,7 +39,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace value { template <typename E> struct Symbolic; }
 
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,9 @@
 #ifndef MLN_VALUE_INTERNAL_VALUE_LIKE_HH
 # define MLN_VALUE_INTERNAL_VALUE_LIKE_HH
 
-/*! \file mln/value/internal/value_like.hh
- *
- * \brief Factor code for value classes defined over another type.
- *
- * 
- */
+/// \file mln/value/internal/value_like.hh
+///
+/// Factor code for value classes defined over another type.
 
 # include <mln/core/concept/value.hh>
 # include <mln/core/internal/force_exact.hh>
@@ -48,10 +46,10 @@ namespace mln
     namespace internal
     {
 
-      /*! Base class for value classes defined over another
-       *  type. Parameters are \c V the equivalent value type and
-       *  \c E the exact value type.
-       */
+      /// Base class for value classes defined over another
+      /// type. Parameters are \c V the equivalent value type and
+      /// \c E the exact value type.
+      ///
       template < typename V, // Equivalent.
 		 typename C, // Encoding.
 		 typename N, // Interoperation.
@@ -85,18 +83,16 @@ namespace mln
       };
 
 
-      /*! General definition of the "equal to" operator between
-       * value-like types.
-       *
-       */
+      /// General definition of the "equal to" operator between
+      /// value-like types.
+      ///
       template <typename V, typename C, typename N, typename E>
       bool operator==(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
 
-      /*! General definition of the "less than" operator
-       *  between value-like types.
-       *
-       */
+      /// General definition of the "less than" operator
+      /// between value-like types.
+      ///
       template <typename V, typename C, typename N, typename E>
       bool operator<(const value_like_<V,C,N,E>& lhs, const value_like_<V,C,N,E>& rhs);
 
