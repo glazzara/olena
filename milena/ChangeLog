@@ -1,5 +1,17 @@
 2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add new from_to overloads.
+
+	* mln/convert/from_to.hxx: add new definitions.
+
+	* mln/core/concept/accumulator.hh: add default from_to.
+
+	* mln/labeling/compute.hh: use from_to.
+
+	* mln/util/array.hh: add from_to(array<T1>, array<T2>).
+
+2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup various files.
 
 	* doc/examples/mk_graph.cc: use int_u16 instead of int_u8.

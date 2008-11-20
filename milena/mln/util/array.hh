@@ -49,6 +49,28 @@ namespace mln
   namespace util
   {
 
+    /// Forward declaration.
+    template <typename T>
+    class array;
+
+  } // end of namespace mln::util
+
+
+
+  namespace convert
+  {
+
+    template <typename T1, typename T2>
+    void
+    from_to(const util::array<T1>& from, util::array<T2>& to);
+
+  } // end of namespace mln::convert
+
+
+
+  namespace util
+  {
+
     // Forward declarations.
     template <typename T> class array_fwd_iter;
     template <typename T> class array_bkd_iter;
@@ -239,9 +261,32 @@ namespace mln
       const array<T>* a_;
     };
 
+  } // end of namespace mln::util
+
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename T1, typename T2>
+    void
+    from_to(const util::array<T1>& from, util::array<T2>& to)
+    {
+      to.resize(from.nelements());
+      for (unsigned i = 0; i < from.nelements(); ++i)
+	from_to(from[i], to[i]);
+    }
+
+  } // end of namespace mln::convert
+
+
+  namespace util
+  {
 
     // util::array<T>
 
@@ -576,11 +621,13 @@ namespace mln
       return ostr;
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of namespace mln::util
 
-} // end of namespace mln
 
+# endif // ! MLN_INCLUDE_ONLY
+
+
+
+} // end of namespace mln
 
 #endif // ! MLN_UTIL_ARRAY_HH

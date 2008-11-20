@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_ACCUMULATOR_HH
 # define MLN_CORE_CONCEPT_ACCUMULATOR_HH
 
-/*! \file mln/core/concept/accumulator.hh
- *
- * \brief Definition of the concept of mln::Accumulator.
- */
+/// \file mln/core/concept/accumulator.hh
+///
+/// Definition of the concept of mln::Accumulator.
 
 # include <mln/core/concept/proxy.hh>
 # include <mln/metal/fix_return.hh>
@@ -41,8 +41,19 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Accumulator;
+
+
+  namespace convert
+  {
+
+    template <typename A>
+    void
+    from_to(const Accumulator<A>& from, mln_result(A)& to);
+
+  } // end of namespace mln::convert
+
 
   // Accumulator category flag type.
   template <>
@@ -53,13 +64,13 @@ namespace mln
 
 
 
-  /*! \brief Base class for implementation of accumulators.
-   *
-   * The parameter \a E is the exact type.
-   *
-   * \see mln::doc::Accumulator for a complete documentation of this
-   * class contents.
-   */
+  /// \brief Base class for implementation of accumulators.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  /// \see mln::doc::Accumulator for a complete documentation of this
+  /// class contents.
+  ///
   template <typename E>
   struct Accumulator : public Proxy<E>
   {
@@ -90,6 +101,29 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  // convert::from_to
+
+  namespace convert
+  {
+
+    template <typename A>
+    void
+    from_to(const Accumulator<A>& from_, mln_result(A)& to)
+    {
+      const A& from = exact(from_);
+      if (from.is_valid())
+	to = from.to_result();
+      else
+	to = mln_result(A)();
+    }
+
+  } // end of namespace mln::convert
+
+
+
+  // Accumulator<E>
 
   template <typename E>
   inline

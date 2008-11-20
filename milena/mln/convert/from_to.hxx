@@ -45,6 +45,7 @@ namespace mln
 
   // Forward declarations.
 
+  template <typename E> struct Accumulator;
   template <typename E> struct Gdpoint;
   template <typename E> struct Gpoint;
   template <typename E> struct Image;
@@ -229,6 +230,17 @@ namespace mln
     template <typename T>
     void
     from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
+
+    // util::array<T1> -> util::array<T2>
+    template <typename T1, typename T2>
+    void
+    from_to(const util::array<T1>& from, util::array<T2>& to);
+
+
+    // Accumulator<A> -> mln_result(A)
+    template <typename A>
+    void
+    from_to(const Accumulator<A>& from, mln_result(A)& to);
 
   } // end of namespace mln::convert
 

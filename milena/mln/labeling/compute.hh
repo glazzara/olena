@@ -37,6 +37,7 @@
 # include <mln/core/concept/accumulator.hh>
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/util/array.hh>
+# include <mln/convert/to.hh>
 
 
 namespace mln
@@ -55,12 +56,12 @@ namespace mln
     /// \return A mln::p_array of accumulator result. One result per component in
     ///	  \p label.
     ///
-    template <typename A, typename I, typename J>
+    template <typename A, typename I, typename L>
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
 	    const Image<I>& input,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels);
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
 
     /// Compute an accumulator onto the pixel values of the image \p input.
     ///  for each component of the image \p label.
@@ -72,12 +73,12 @@ namespace mln
     /// \return A mln::p_array of accumulator result. One result per component in
     ///	  \p label.
     ///
-    template <typename A, typename I, typename J>
+    template <typename A, typename I, typename L>
     util::array<mln_accu_with(A, mln_value(I))::result>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels);
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
 
     /// Compute an accumulator onto the pixel sites of each component domain of
     /// \p label.
@@ -88,11 +89,11 @@ namespace mln
     /// \return A mln::p_array of accumulator result. One result per component in
     ///	  \p label.
     ///
-    template <typename A, typename J>
+    template <typename A, typename L>
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels);
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
 
     /// Compute an accumulator onto the pixel sites of each component domain of
     /// \p label.
@@ -103,11 +104,11 @@ namespace mln
     /// \return A mln::p_array of accumulator result. One result per component in
     ///	  \p label.
     ///
-    template <typename A, typename J>
-    util::array<mln_accu_with(A, mln_psite(J))::result>
+    template <typename A, typename L>
+    util::array<mln_accu_with(A, mln_psite(L))::result>
     compute(const Meta_Accumulator<A>& a,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels);
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels);
 
 
 
@@ -116,12 +117,12 @@ namespace mln
     namespace internal
     {
 
-      template <typename A, typename J>
+      template <typename A, typename L>
       inline
       void
       compute_tests(const Accumulator<A>& a,
-		    const Image<J>& label,
-		    const mln_value(J)& nlabels)
+		    const Image<L>& label,
+		    const mln_value(L)& nlabels)
       {
 	mln_precondition(exact(label).has_data());
 	(void) a;
@@ -130,13 +131,13 @@ namespace mln
       }
 
 
-      template <typename A, typename I, typename J>
+      template <typename A, typename I, typename L>
       inline
       void
       compute_tests(const Accumulator<A>& a,
 		    const Image<I>& input,
-		    const Image<J>& label,
-		    const mln_value(J)& nlabels)
+		    const Image<L>& label,
+		    const mln_value(L)& nlabels)
       {
 	mln_precondition(exact(input).has_data());
 	mln_precondition(exact(label).has_data());
@@ -157,49 +158,44 @@ namespace mln
       namespace generic
       {
 
-	template <typename A, typename J>
+	template <typename A, typename L>
 	inline
 	util::array<mln_result(A)>
 	compute(const Accumulator<A>& a_,
-		const Image<J>& label_,
-		const mln_value(J)& nlabels)
+		const Image<L>& label_,
+		const mln_value(L)& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, label_, nlabels);
 
 	  const A& a = exact(a_);
-	  const J& label = exact(label_);
+	  const L& label = exact(label_);
 
 	  util::array<A> accus(nlabels + 1, a);
 
-	  mln_piter(J) p(label.domain());
+	  mln_piter(L) p(label.domain());
 	  for_all(p)
 	    accus[label(p)].take(p);
 
-	  util::array<mln_result(A)> arr(nlabels + 1);
-	  for (unsigned i = 0; i < accus.nelements(); ++i)
-	    if (accus[i].is_valid())
-	      arr[i] = accus[i];
-
 	  trace::exiting("labeling::impl::generic::compute");
-	  return arr;
+	  return convert::to< util::array<mln_result(A)> >(accus);
 	}
 
 
-	template <typename A, typename I, typename J>
+	template <typename A, typename I, typename L>
 	inline
 	util::array<mln_result(A)>
 	compute(const Accumulator<A>& a_,
 		const Image<I>& input_,
-		const Image<J>& label_,
-		const mln_value(J)& nlabels)
+		const Image<L>& label_,
+		const mln_value(L)& nlabels)
 	{
 	  trace::entering("labeling::impl::generic::compute");
 	  internal::compute_tests(a_, input_, label_, nlabels);
 
 	  const A& a = exact(a_);
 	  const I& input = exact(input_);
-	  const J& label = exact(label_);
+	  const L& label = exact(label_);
 
 	  util::array<A> accus (nlabels + 1, a);
 
@@ -207,13 +203,8 @@ namespace mln
 	  for_all(p)
 	    accus[label(p)].take(input(p));
 
-	  util::array<mln_result(A)> res(nlabels + 1);
-	  for (unsigned i = 0; i < accus.nelements(); ++i)
-	    if (accus[i].is_valid())
-	      res[i] = accus[i];
-
 	  trace::exiting("labeling::impl::generic::compute");
-	  return res;
+	  return convert::to< util::array<mln_result(A)> >(accus);
 	}
 
       } // end of namespace mln::labeling::impl::internal
@@ -225,24 +216,24 @@ namespace mln
     namespace internal
     {
 
-      template <typename A, typename J>
+      template <typename A, typename L>
       inline
       util::array<mln_result(A)>
       compute_dispatch(const Accumulator<A>& a,
-		       const Image<J>& label,
-		       const mln_value(J)& nlabels)
+		       const Image<L>& label,
+		       const mln_value(L)& nlabels)
       {
 	return impl::generic::compute(a, label, nlabels);
       }
 
 
-      template <typename A, typename I, typename J>
+      template <typename A, typename I, typename L>
       inline
       util::array<mln_result(A)>
       compute_dispatch(const Accumulator<A>& a,
 		       const Image<I>& input,
-		       const Image<J>& label,
-		       const mln_value(J)& nlabels)
+		       const Image<L>& label,
+		       const mln_value(L)& nlabels)
       {
 	return impl::generic::compute(a, input, label, nlabels);
       }
@@ -253,13 +244,13 @@ namespace mln
 
     /// Facades.
 
-    template <typename A, typename I, typename J>
+    template <typename A, typename I, typename L>
     inline
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
 	    const Image<I>& input,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels)
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
     {
       trace::entering("labeling::compute");
 
@@ -272,13 +263,13 @@ namespace mln
       return res;
     }
 
-    template <typename A, typename I, typename J>
+    template <typename A, typename I, typename L>
     inline
     util::array<mln_accu_with(A, mln_value(I))::result>
     compute(const Meta_Accumulator<A>& a,
 	    const Image<I>& input,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels)
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
     {
       typedef mln_accu_with(A, mln_value(I)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());
@@ -287,12 +278,12 @@ namespace mln
     }
 
 
-    template <typename A, typename J>
+    template <typename A, typename L>
     inline
     util::array<mln_result(A)>
     compute(const Accumulator<A>& a,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels)
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
     {
       trace::entering("labeling::compute");
 
@@ -306,15 +297,15 @@ namespace mln
     }
 
 
-    template <typename A, typename J>
+    template <typename A, typename L>
     inline
-    util::array<mln_accu_with(A, mln_psite(J))::result>
+    util::array<mln_accu_with(A, mln_psite(L))::result>
     compute(const Meta_Accumulator<A>& a,
-	    const Image<J>& label,
-	    const mln_value(J)& nlabels)
+	    const Image<L>& label,
+	    const mln_value(L)& nlabels)
     {
-      typedef mln_accu_with(A, mln_psite(J)) A_;
-      A_ a_ = accu::unmeta(exact(a), mln_psite(J)());
+      typedef mln_accu_with(A, mln_psite(L)) A_;
+      A_ a_ = accu::unmeta(exact(a), mln_psite(L)());
 
       return internal::compute_dispatch(a_, label, nlabels);
     }
