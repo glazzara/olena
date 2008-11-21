@@ -7,6 +7,11 @@ fatal ()
   exit 1
 }
 
+stderr ()
+{
+    echo >&2 "$0: $@"
+}
+
 awk_strverscmp='
   # Use only awk features that work with 7th edition Unix awk (1978).
   # My, what an old awk you have, Mr. Solaris!
@@ -87,6 +92,23 @@ require ()
   esac
 }
 
+# run DIRECTORY COMMAND-LINE
+# --------------------------
+# "set -e" doesn't work for subshells!
+run ()
+{
+    (
+        stderr "$@"
+        cd "$1"
+        shift
+        if ! "$@"; then
+            fatal "unexpected failure: $@"
+            exit 1
+        fi
+    )
+}
+
+
 # Failures do matter.
 set -e
 
@@ -94,11 +116,11 @@ set -e
 require autoconf 2.59
 require automake 1.9.4
 
+# Generate unit test files.
+run milena/tests/unit_test ./build_unit_test.sh
+
 # Tell what's going on.
 set -x
-
-# Generate unit test files.
-run milena/tests/unit_tests build_unit_test.sh
 
 # Install the GNU Build System.
 autoreconf -f -v -i
