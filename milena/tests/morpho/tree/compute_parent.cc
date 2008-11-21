@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,27 +25,56 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_MORPHO_ALL_HH
-# define MLN_CANVAS_MORPHO_ALL_HH
-
-/// \file mln/canvas/morpho/all.hh
+/// \file tests/morpho/tree/compute_parent.cc
 ///
-/// File that includes morphological canvas-related routines.
+/// Tests on mln::morpho::tree::compute_parent.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/debug/iota.hh>
+
+#include <mln/core/var.hh>
+#include <mln/core/image/image_if.hh>
+#include <mln/pw/value.hh>
+
+#include <mln/morpho/tree/compute_parent.hh>
 
 
-namespace mln
+int main()
 {
-  namespace canvas
+  using namespace mln;
+
   {
+    bool vals[] = { 1, 1, 1,
+		    0, 1, 0,
+		    0, 0, 1  };
+    image2d<bool> ima = make::image2d(vals);
+    mln_VAR(sub, ima | pw::value(ima));
+    debug::println(sub);
 
-    /// Namespace of morphological canvas.
-    namespace morpho {}
-
+    mln_VAR(par, morpho::tree::compute_parent(sub, c4(), sub.domain()));
+    debug::println(par);
   }
+
+/*
+  {
+    image2d<unsigned> ima(3, 3);
+    debug::iota(ima);
+    debug::println(ima);
+    
+    debug::println( morpho::tree::compute_parent(ima, c4(), ima.domain()) );
+  }
+
+
+  {
+    image2d<unsigned> ima(3, 3);
+    level::fill(ima, 0);
+    debug::println(ima);
+    
+    debug::println( morpho::tree::compute_parent(ima, c4(), ima.domain()) );
+  }
+*/
+
 }
-
-
-# include <mln/canvas/morpho/algebraic_union_find.hh>
-
-
-#endif // ! MLN_CANVAS_MORPHO_ALL_HH

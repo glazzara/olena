@@ -1,3 +1,16 @@
+2008-11-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a morpho tree computation.
+
+	* mln/morpho/tree: New directory.
+	* mln/morpho/tree/compute_parent.hh: New; revamp of...
+	* sandbox/geraud/max_tree_nnodes.cc: ...this file.
+	* tests/morpho/tree: New directory.
+	* tests/morpho/tree/compute_parent.cc: 
+	* tests/morpho/tree/Makefile.am: New.
+	* tests/morpho/Makefile.am: Update.
+	* mln/canvas/morpho/all.hh: Upgrade doc style.
+
 2008-11-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add new from_to overloads.
