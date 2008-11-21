@@ -1,3 +1,27 @@
+2008-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add reference files for example outputs used in the tutorial.
+
+	* doc/doc.mk: add new path variables.
+
+	* doc/tutorial/figures/ima2d-rot-1.ppm
+	* doc/tutorial/figures/ima2d-rot-2.ppm
+	* doc/tutorial/outputs/borderthickness.txt
+	* doc/tutorial/outputs/dpoint-1.txt
+	* doc/tutorial/outputs/graph-data-full.txt
+	* doc/tutorial/outputs/ima-has.txt
+	* doc/tutorial/outputs/ima-size.txt
+	* doc/tutorial/outputs/ima2d-1.txt
+	* doc/tutorial/outputs/ima2d-decl-2-blobs-full.txt
+	* doc/tutorial/outputs/ima2d-rot.txt
+	* doc/tutorial/outputs/labeling-compute-full.txt
+	* doc/tutorial/outputs/logical-not.txt
+	* doc/tutorial/outputs/paste-call-1.txt
+	* doc/tutorial/outputs/point-1.txt: reference files.
+
+	* doc/tutorial/samples/Makefile.am: diff the generated files to their
+	reference.
+
 2008-11-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some reference code in morpho tree.

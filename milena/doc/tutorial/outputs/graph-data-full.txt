@@ -1,0 +1,5 @@
+graph_vertices_ima((0, 0)) = 10
+graph_vertices_ima((2, 2)) = 11
+graph_vertices_ima((0, 4)) = 12
+graph_vertices_ima((4, 3)) = 13
+graph_vertices_ima((4, 4)) = 14
