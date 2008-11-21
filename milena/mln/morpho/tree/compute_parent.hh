@@ -49,9 +49,21 @@ namespace mln
     namespace tree
     {
 
-      // Remember:
-      //   p is root iff parent(p) == p
-      //   p is node iff either p is root or f(parent(p)) != f(p)
+      /// Compute a tree with a parent relationship between sites.
+      ///
+      /// Warning: \p s translates the ordering related to the
+      /// "natural" childhood relationship.  The parenthood is thus
+      /// inverted w.r.t. to \p s.
+      ///
+      /// It is very convenient since all processing upon the parent
+      /// tree are performed following \p s (in the default "forward"
+      /// way).
+      ///
+      /// FIXME: Put it more clearly...
+      ///
+      /// The parent result image verifies: \n
+      /// - p is root iff parent(p) == p \n
+      /// - p is a node iff either p is root or f(parent(p)) != f(p).
 
       template <typename I, typename N, typename S>
       mln_ch_value(I, mln_psite(I))

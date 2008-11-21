@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MORPHO_ALL_HH
 # define MLN_MORPHO_ALL_HH
 
-/*! \file mln/morpho/all.hh
- *
- * \brief File that includes all morpho-related routines.
- */
+/// \file mln/morpho/all.hh
+///
+/// File that includes all morpho-related routines.
 
 
 namespace mln
@@ -82,7 +82,11 @@ namespace mln
 # include <mln/morpho/thinning.hh>
 # include <mln/morpho/top_hat.hh>
 
+
+// Sub-directories.
+
 # include <mln/morpho/elementary/all.hh>
+# include <mln/morpho/tree/all.hh>
 
 
 
