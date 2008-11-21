@@ -1,3 +1,9 @@
+2008-11-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move tree computation out from sandbox to mln morpho tree.
+
+	* geraud/max_tree_nnodes.cc: Move out.
+
 2008-11-20  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix random() = 1.
