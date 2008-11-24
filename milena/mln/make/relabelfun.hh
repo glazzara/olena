@@ -75,8 +75,7 @@ namespace mln
       for (label_t i = 1; i <= nlabels; ++i)
 	if (fl2b(i))
 	{
-	  fl2l(i) = i;
-	  ++tmp_nlabels;
+	  fl2l(i) = ++tmp_nlabels;
 	}
       new_nlabels = tmp_nlabels;
       trace::exiting("mln::make::relabelfun");

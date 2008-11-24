@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_VALUE_ESSENTIAL_HH
 # define MLN_VALUE_ESSENTIAL_HH
 
-/*! \file mln/value/essential.hh
- *
- * \brief File that includes essential "value types"-related materials.
- */
+/// \file mln/value/essential.hh
+///
+/// File that includes essential "value types"-related materials.
 
 # include <mln/value/concept/essential.hh>
 # include <mln/value/builtin/essential.hh>
@@ -49,6 +48,9 @@
 # include <mln/value/int_u8.hh>
 # include <mln/value/int_u16.hh>
 # include <mln/value/int_u32.hh>
+
+# include <mln/value/label_8.hh>
+# include <mln/value/label_16.hh>
 
 # include <mln/value/rgb8.hh>
 # include <mln/value/rgb16.hh>

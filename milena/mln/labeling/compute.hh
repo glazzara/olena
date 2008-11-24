@@ -32,6 +32,8 @@
 ///
 /// Compute accumulators onto sites/values of each labeled component
 /// of an image.
+///
+/// \todo write fastest version.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/accumulator.hh>
@@ -171,7 +173,7 @@ namespace mln
 	  const A& a = exact(a_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus(nlabels + 1, a);
+	  util::array<A> accus(nlabels.next(), a);
 
 	  mln_piter(L) p(label.domain());
 	  for_all(p)
@@ -197,7 +199,7 @@ namespace mln
 	  const I& input = exact(input_);
 	  const L& label = exact(label_);
 
-	  util::array<A> accus (nlabels + 1, a);
+	  util::array<A> accus (nlabels.next(), a);
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)

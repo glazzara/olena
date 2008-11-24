@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,13 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_ALL_HH
-# define MLN_VALUE_ALL_HH
+#ifndef MLN_FUN_L2L_ESSENTIAL_HH
+# define MLN_FUN_L2L_ESSENTIAL_HH
 
-/// \file mln/value/all.hh
+/// \file mln/fun/l2l/essential.hh
 ///
-/// File that includes all "value types"-related materials.
+/// File that includes essential functions from label to label.
 
+# include <mln/fun/l2l/all.hh>
 
-namespace mln
-{
-
-  /// Namespace of materials related to pixel value types.
-  namespace value
-  {
-    /// Implementation namespace of value namespace.
-    namespace impl {}
-  }
-
-}
-
-
-# include <mln/value/aliases.hh>
-# include <mln/value/label.hh>
-# include <mln/trait/value_.hh>
-# include <mln/value/proxy.hh>
-
-# include <mln/value/interval.hh>
-
-
-// FIXME: that includes concept/image.hh!
-
-// # include <mln/value/cast.hh>
-// # include <mln/value/stack.hh>
-
-
-
-#endif // ! MLN_VALUE_ALL_HH
+#endif // ! MLN_FUN_L2L_ESSENTIAL_HH

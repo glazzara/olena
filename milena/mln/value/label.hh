@@ -129,12 +129,6 @@ namespace mln
       /// Return the next value.
       label<n> next() const;
 
-      /// Conversion to unsigned.
-      const enc& to_enc() const;
-
-    protected:
-
-      enc v_;
     };
 
 
@@ -165,21 +159,21 @@ namespace mln
     inline
     label<n>::label(unsigned i)
     {
-      v_ = enc(i);
+      this->v_ = enc(i);
     }
 
     template <unsigned n>
     inline
     label<n>::label(const literal::zero_t&)
     {
-      v_ = 0;
+      this->v_ = 0;
     }
 
     template <unsigned n>
     inline
     label<n>::operator unsigned() const
     {
-      return to_enc();
+      return this->to_enc();
     }
 
     template <unsigned n>
@@ -188,7 +182,7 @@ namespace mln
     label<n>::operator=(unsigned i)
     {
       mln_precondition(i <= mln_max(enc));
-      v_ = enc(i);
+      this->v_ = enc(i);
       return *this;
     }
 
@@ -197,7 +191,7 @@ namespace mln
     label<n>&
     label<n>::operator=(const literal::zero_t&)
     {
-      v_ = 0;
+      this->v_ = 0;
       return *this;
     }
 
@@ -206,8 +200,8 @@ namespace mln
     label<n>&
     label<n>::operator++()
     {
-      mln_precondition(v_ < mln_max(enc));
-      ++v_;
+      mln_precondition(this->v_ < mln_max(enc));
+      ++this->v_;
       return *this;
     }
 
@@ -216,8 +210,8 @@ namespace mln
     label<n>&
     label<n>::operator--()
     {
-      mln_precondition(v_ != 0);
-      --v_;
+      mln_precondition(this->v_ != 0);
+      --this->v_;
       return *this;
     }
 
@@ -226,22 +220,14 @@ namespace mln
     label<n>
     label<n>::next() const
     {
-      return label<n>(v_ + 1);
-    }
-
-    template <unsigned n>
-    inline
-    const mln_enc(label<n>)&
-    label<n>::to_enc() const
-    {
-      return v_;
+      return label<n>(this->v_ + 1);
     }
 
     template <unsigned n>
     inline
     std::ostream& operator<<(std::ostream& ostr, const label<n>& i)
     {
-      return ostr << i.to_enc();
+      return ostr << debug::format(i.to_equiv());
     }
 
 # endif // ! MLN_INCLUDE_ONLY

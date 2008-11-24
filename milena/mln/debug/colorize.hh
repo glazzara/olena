@@ -100,12 +100,15 @@ namespace mln
     {
       trace::entering("debug::colorize");
       mln_precondition(exact(input).has_data());
+      // FIXME: we want to be sure that this is a label.
+      mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 
+      unsigned label_count = nlabels.next();
       static fun::i2v::array<mln_value(I)> f(0);
-      int diff_size = f.size() - (nlabels + 1);
+      int diff_size = f.size() - label_count;
       if (diff_size < 0)
       {
-	f.resize(nlabels + 1);
+	f.resize(label_count);
 	unsigned i = f.size() + diff_size;
 	// We want to treat comp 0 differently since it is the background.
 	if (i == 0)
@@ -116,7 +119,7 @@ namespace mln
 	for (; i < f.size(); ++i)
 	  f(i) = internal::random_color();
       }
-      mln_precondition(f.size() == (nlabels + 1));
+      mln_precondition(f.size() == (label_count));
       mln_concrete(I) output = level::transform(input, f);
 
       trace::exiting("debug::colorize");

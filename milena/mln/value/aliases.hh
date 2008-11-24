@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +28,25 @@
 #ifndef MLN_VALUE_ALIASES_HH
 # define MLN_VALUE_ALIASES_HH
 
-/*! \file mln/value/aliases.hh
- *
- * \brief File that includes all aliases of value types.
- */
+/// \file mln/value/aliases.hh
+///
+/// File that includes all aliases of value types.
 
+# include <mln/value/float01_8.hh>
+# include <mln/value/float01_16.hh>
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/int_u16.hh>
+# include <mln/value/int_u32.hh>
 
 # include <mln/value/int_s8.hh>
+# include <mln/value/int_s16.hh>
+# include <mln/value/int_s32.hh>
 
+# include <mln/value/label_8.hh>
+# include <mln/value/label_16.hh>
+
+# include <mln/value/rgb8.hh>
+# include <mln/value/rgb16.hh>
 
 #endif // ! MLN_VALUE_ALIASES_HH

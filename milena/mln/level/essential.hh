@@ -47,6 +47,7 @@
 # include <mln/level/replace.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/transform.hh>
+# include <mln/level/transform_inplace.hh>
 # include <mln/level/update.hh>
 
 # include <mln/level/approx/essential.hh>

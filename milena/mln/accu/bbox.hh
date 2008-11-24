@@ -45,9 +45,9 @@ namespace mln
 
 
     /// Generic bbox accumulator class.
-    /*!
-     * The parameter \c P is the type of points.
-     */
+    ///
+    /// The parameter \c P is the type of points.
+    ///
     template <typename P>
     struct bbox : public mln::accu::internal::base< const box<P>& , bbox<P> >
     {

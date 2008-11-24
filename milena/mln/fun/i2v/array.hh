@@ -166,6 +166,13 @@ namespace mln
 
       template <typename T>
       inline
+      array<T>::array(unsigned n, const T& val)
+	: super_base_(n, val)
+      {
+      }
+
+      template <typename T>
+      inline
       array<T>::array(const util::array<T>& from)
 	: super_base_(from)
       {

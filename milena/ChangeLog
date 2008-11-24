@@ -1,5 +1,31 @@
 2008-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* mln/fun/l2l/all.hh
+	* mln/fun/l2l/essential.hh: new headers.
+
+	* mln/value/all.hh,
+	* mln/accu/bbox.hh: Fix comments.
+
+	* mln/fun/i2v/array.hh: add missing constructor implementation.
+
+	* mln/value/essential.hh,
+	* mln/value/aliases.hh,
+	* mln/level/essential.hh,
+	* mln/labeling/essential.hh: update includes.
+
+	* mln/make/relabelfun.hh: Fix a bug. New component ids were not set
+	correclty.
+
+	* mln/value/label.hh: Fix a duplicate attribute.
+
+	* mln/labeling/compute.hh,
+	* mln/debug/colorize.hh: use label::next() instead of operator '+' to
+	get the next label.
+
+2008-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update rank_filter.
 
 	* mln/accu/rank_bool.hh: Add untake() and remove unnecessary
