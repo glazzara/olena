@@ -1,3 +1,17 @@
+2008-11-24  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Start /filtering to n components/ procedure.
+
+	* jardonnet/n_cmpt/Makefile (all,debug): New.
+	* jardonnet/n_cmpt: New.
+	* jardonnet/n_cmpt/n_cmpt.cc: New. Lauch procedure.
+	* jardonnet/n_cmpt/check: New.
+	* jardonnet/n_cmpt/check/tiny.pgm: New test image.
+	* jardonnet/n_cmpt/check/mg_ima.pgm: New test image.
+	* jardonnet/n_cmpt/n_cmpt.hh: Modified version of algebraic unionfind.
+
+	* jardonnet/igr/check/check: New check script.
+
 2008-11-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Move tree computation out from sandbox to mln morpho tree.
