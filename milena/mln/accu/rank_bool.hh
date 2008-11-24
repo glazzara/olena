@@ -56,7 +56,8 @@ namespace mln
     {
       typedef bool argument;
 
-      rank(unsigned k, unsigned n);
+      rank();
+      rank(unsigned k);
 
       /// Manipulators.
       /// \{
@@ -64,6 +65,8 @@ namespace mln
       void take_as_init(const argument& t);
       void take(const argument& t);
       void take(const rank<bool>& other);
+      void untake(const argument& t);
+      void untake(const rank<bool>& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -75,22 +78,24 @@ namespace mln
 
     protected:
       unsigned nfalse_;
-      unsigned k_; // 0 <= k_ < n
-      unsigned n_;
+      unsigned k_; // 0 <= k_
     };
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    rank<bool>::rank(unsigned k, unsigned n)
-      : k_(k),
-	n_(n)
+    rank<bool>::rank()
     {
-      mln_assertion(k_ < n_);
       init();
     }
 
+    inline
+    rank<bool>::rank(unsigned k)
+      : k_(k)
+    {
+      init();
+    }
 
     inline
     void
@@ -99,20 +104,28 @@ namespace mln
       nfalse_ = 0;
     }
 
-
     inline
     void rank<bool>::take_as_init(const argument& t)
     {
       nfalse_ = t ? 0 : 1;
     }
 
-
     inline
     void rank<bool>::take(const argument& t)
     {
-      nfalse_ += !t;
+      if (t == false)
+	++nfalse_;
     }
 
+    inline
+    void rank<bool>::untake(const argument& t)
+    {
+      if (t == false)
+	{
+	  mln_assertion(nfalse_ > 0);
+	  --nfalse_;
+	}
+    }
 
     inline
     void
@@ -121,12 +134,18 @@ namespace mln
       nfalse_ += other.nfalse_;
     }
 
+    inline
+    void
+    rank<bool>::untake(const rank<bool>& other)
+    {
+      mln_precondition(other.nfalse_ <= nfalse_);
+      nfalse_ -= other.nfalse_;
+    }
 
     inline
     bool
     rank<bool>::to_result() const
     {
-      mln_assertion(nfalse_ <= n_);
       return k_ >= nfalse_;
     }
 
@@ -134,7 +153,7 @@ namespace mln
     bool
     rank<bool>::is_valid() const
     {
-      return nfalse_ <= n_;
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

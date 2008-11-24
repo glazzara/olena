@@ -33,6 +33,7 @@ check_PROGRAMS =				\
   opening_area					\
   opening_height				\
   opening_volume				\
+  rank_filter 					\
   skeleton_constrained				\
   thinning
 
@@ -69,6 +70,8 @@ complex_image_morpho_SOURCES = complex_image_morpho.cc
 complex_image_wst_SOURCES = complex_image_wst.cc
 
 meyer_wst_SOURCES = meyer_wst.cc
+
+rank_filter_SOURCES = rank_filter.cc
 
 skeleton_constrained_SOURCES = skeleton_constrained.cc
 

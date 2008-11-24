@@ -55,55 +55,55 @@ int main()
   using value::int_u8;
 
   {
-    accu::meta::rank r(4, 9);
+    accu::meta::rank r(4);
     accu::rank<int_u8> a = accu::unmeta(r, int_u8());
-    mln_assertion(a.k() == 4 && a.n() == 9);
+    mln_assertion(a.k() == 4);
 //     Meta_Accumulator<accu::meta::rank>& R = r;
 //     accu::unmeta(R, int_u8());
   }
 
   {
-    accu::rank<int_u8> accu(0, 8);
+    accu::rank<int_u8> accu(0);
     fill(accu);
     mln_assertion(accu.to_result() == 1u);
   }
   {
-    accu::rank<int_u8> accu(1, 8);
+    accu::rank<int_u8> accu(1);
     fill(accu);
     mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank<int_u8> accu(2, 8);
+    accu::rank<int_u8> accu(2);
     fill(accu);
     mln_assertion(accu.to_result() == 2u);
   }
   {
-    accu::rank<int_u8> accu(3, 8);
+    accu::rank<int_u8> accu(3);
     fill(accu);
     mln_assertion(accu.to_result() == 3u);
   }
   {
-    accu::rank<int_u8> accu(4, 8);
+    accu::rank<int_u8> accu(4);
     fill(accu);
     mln_assertion(accu.to_result() == 4u);
   }
   {
-    accu::rank<int_u8> accu(5, 8);
+    accu::rank<int_u8> accu(5);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<int_u8> accu(6, 8);
+    accu::rank<int_u8> accu(6);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<int_u8> accu(7, 8);
+    accu::rank<int_u8> accu(7);
     fill(accu);
     mln_assertion(accu.to_result() == 5u);
   }
   {
-    accu::rank<bool> accu_bool(1, 5);
+    accu::rank<bool> accu_bool(1);
     accu_bool.take(true);
     accu_bool.take(true);
     accu_bool.take(true);

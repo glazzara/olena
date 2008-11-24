@@ -1,3 +1,20 @@
+2008-11-24  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update rank_filter.
+
+	* mln/accu/rank_bool.hh: Add untake() and remove unnecessary
+	attributes.
+
+	* mln/morpho/rank_filter.hh: Add rank_filter_directional. It is used
+	with win::line.
+
+	* mln/accu/rank.hh: update constructor and add untake(accu::rank).
+
+	* tests/accu/rank.cc,
+	* tests/morpho/rank_filter.cc: fix tests.
+
+	* tests/morpho/Makefile.am: add rank_filter test.
+
 2008-11-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add reference files for example outputs used in the tutorial.

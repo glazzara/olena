@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_MORPHO_RANK_FILTER_HH
 # define MLN_MORPHO_RANK_FILTER_HH
 
-/*! \file mln/morpho/rank_filter.hh
- *
- * \brief Morphological rank_filter.
- */
+/// \file mln/morpho/rank_filter.hh
+///
+/// Morphological rank_filter.
 
 # include <mln/morpho/includes.hh>
 # include <mln/convert/to_p_array.hh>
@@ -42,8 +41,7 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological rank_filter.
-     */
+    /// Morphological rank_filter.
     template <typename I, typename W>
     mln_concrete(I)
     rank_filter(const Image<I>& input, const Window<W>& win);
@@ -51,45 +49,114 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
+
+    namespace internal
+    {
+
+      template <typename I, typename W>
+      inline
+      void
+      rank_filter_tests(const Image<I>& input_, const Window<W>& win_, unsigned k)
+      {
+	const I& input = exact(input_);
+	const W& win = exact(win_);
+
+	mln_precondition(input.has_data());
+	mln_precondition(! win.is_empty());
+	(void) input;
+	(void) win;
+	(void) k;
+      }
+
+    } // end of namespace mln::morpho::internal
+
+
     namespace impl
     {
 
       namespace generic
       {
 
-	// On function.
-
 	template <typename I, typename W>
 	inline
 	mln_concrete(I)
-        rank_filter_(const I& input, const W& win, unsigned k)
+	rank_filter(const Image<I>& input_, const Window<W>& win_, unsigned k)
 	{
-	  trace::entering("morpho::impl::generic::rank_filter_");
+	  trace::entering("morpho::impl::generic::rank_filter");
+
+	  internal::rank_filter_tests(input_, win_, k);
+
+	  const I& input = exact(input_);
+	  const W& win = exact(win_);
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
-	  accu::rank<mln_value(I)> accu(k, convert::to_p_array(win, mln_psite(I)()).nsites());
+	  accu::rank<mln_value(I)> accu(k);
+	  extension::adjust_fill(input, geom::delta(win) + 1, accu);
 	  mln_piter(I) p(input.domain());
 	  mln_qiter(W) q(win, p);
 	  for_all(p)
-	    {
-	      accu.init();
-	      for_all(q)
-		if (input.has(q))
-		  accu.take(input(q));
-// 		else
-// 		  accu.take(mln_value(I)(literal::zero));
-	      output(p) = accu;
-	    }
+	  {
+	    accu.init();
+	    for_all(q)
+	      if (input.has(q))
+		accu.take(input(q));
+	    //else
+	    //  accu.take(mln_value(I)(literal::zero));
+	    output(p) = accu;
+	  }
 
-	  trace::exiting("morpho::impl::generic::rank_filter_");
+	  trace::exiting("morpho::impl::generic::rank_filter");
 	  return output;
 	}
 
       } // end of namespace mln::morpho::impl::generic
 
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      rank_filter_directional(const Image<I>& input, const Window<W>& win, unsigned k, unsigned dir)
+      {
+	trace::entering("morpho::impl::generic::rank_filter_directional");
+
+	internal::rank_filter_tests(input, win, k);
+
+	accu::rank<mln_value(I)> accu(k);
+	extension::adjust_fill(input, geom::delta(win) + 1, accu);
+	mln_concrete(I) output = accu::transform_directional(accu, input, win, dir);
+
+	trace::exiting("morpho::impl::generic::rank_filter_directional");
+	return output;
+      }
+
     } // end of namespace mln::morpho::impl
+
+
+    namespace internal
+    {
+
+      template <typename I, typename M, unsigned i, typename C>
+      inline
+      mln_concrete(I)
+      rank_filter_dispatch(const Image<I>& input, const win::line<M, i, C> & win, unsigned k)
+      {
+	return impl::rank_filter_directional(input, win, k, i);
+      }
+
+
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      rank_filter_dispatch(const Image<I>& input, const Window<W>& win, unsigned k)
+      {
+	return impl::generic::rank_filter(input, win, k);
+      }
+
+    } // end of namespace mln::morpho::internal
 
 
 
@@ -104,7 +171,7 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      mln_concrete(I) output = impl::generic::rank_filter_(exact(input), exact(win), k);
+      mln_concrete(I) output = internal::rank_filter_dispatch(exact(input), exact(win), k);
 
       trace::exiting("morpho::rank_filter");
       return output;

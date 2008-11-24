@@ -25,16 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/rank_filter.cc
- *
- * \brief Test on mln::morpho::rank_filter.
- */
+/// \file tests/morpho/rank_filter.cc
+///
+/// Test on mln::morpho::rank_filter.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
-#include <mln/win/octagon2d.hh>
-#include <mln/win/diag2d.hh>
-#include <mln/win/backdiag2d.hh>
 #include <mln/core/alias/window2d.hh>
 
 #include <mln/io/pgm/load.hh>
@@ -52,9 +48,6 @@
 #include <mln/pw/cst.hh>
 #include <mln/fun/ops.hh>
 
-#include <mln/convert/to_p_array.hh>
-#include <mln/convert/to_window.hh>
-
 #include "tests/data.hh"
 
 
@@ -70,23 +63,23 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/small.pgm");
 
   {
-    win::octagon2d oct(31);
     image2d<int_u8> out;
     out = morpho::rank_filter(lena, rec, 0);
 
     image2d<int_u8> ref(lena.domain());
     ref = morpho::erosion(lena, rec);
+
     mln_assertion(ref == out);
   }
 
 
   {
-    win::octagon2d oct(31);
     image2d<int_u8> out;
-    out = morpho::rank_filter(lena, rec, 21 * 21 - 1);
+    out = morpho::rank_filter(lena, rec, 21 * 21);
 
     image2d<int_u8> ref(lena.domain());
     ref = morpho::dilation(lena, rec);
+
     mln_assertion(ref == out);
   }
 

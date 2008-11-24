@@ -51,16 +51,16 @@ namespace mln
 
 
     /// Generic rank accumulator class.
-    /*!
-     * The parameter \c T is the type of values.
-     */
+    ///
+    /// The parameter \c T is the type of values.
     template <typename T>
     struct rank : public mln::accu::internal::base< const T&, rank<T> >
     {
       typedef T argument;
       typedef mln::value::set<T> S;
 
-      rank(unsigned k, unsigned n);
+      rank();
+      explicit rank(unsigned k);
 
       /// Manipulators.
       /// \{
@@ -68,6 +68,7 @@ namespace mln
       void   take(const argument& t);
       void   take(const rank<T>& other);
       void untake(const argument& t);
+      void untake(const rank<T>& other);
       /// \}
 
       unsigned card() const { return h_.sum(); }
@@ -82,13 +83,9 @@ namespace mln
       /// Give the rank.
       unsigned k() const;
 
-      /// Give the total number of elements.
-      unsigned n() const;
-
     protected:
 
       unsigned k_; // 0 <= k_ < n
-      unsigned n_;
 
       mutable accu::histo<T> h_;
       const S& s_; // derived from h_
@@ -97,7 +94,7 @@ namespace mln
 
       mutable bool valid_;
       mutable unsigned i_; // the median index
-      mutable argument t_;       // the median value
+      mutable argument t_; // the median value
 
       // Auxiliary methods
       void update_() const;
@@ -116,7 +113,7 @@ namespace mln
 
       struct rank : public Meta_Accumulator< rank >
       {
-	rank(unsigned k_, unsigned n_) : k(k_), n(n_) {}
+	rank(unsigned k_) : k(k_) {}
 
 	template <typename T>
 	struct with
@@ -125,7 +122,6 @@ namespace mln
 	};
 
 	unsigned k;
-	unsigned n;
       };
 
     } // end of namespace mln::accu::meta
@@ -134,7 +130,7 @@ namespace mln
     template <typename T>
     rank<T> unmeta(const meta::rank& m, T)
     {
-      rank<T> a(m.k, m.n);
+      rank<T> a(m.k);
       return a;
     }
 
@@ -143,15 +139,23 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+
     template <typename T>
     inline
-    rank<T>::rank(unsigned k, unsigned n)
+    rank<T>::rank()
+      : h_(),
+	s_(h_.vset())
+    {
+      init();
+    }
+
+    template <typename T>
+    inline
+    rank<T>::rank(unsigned k)
       : k_(k),
-	n_(n),
 	h_(),
 	s_(h_.vset())
     {
-      mln_assertion(k_ < n_);
       init();
     }
 
@@ -161,14 +165,6 @@ namespace mln
     rank<T>::k() const
     {
       return k_;
-    }
-
-    template <typename T>
-    inline
-    unsigned
-    rank<T>::n() const
-    {
-      return n_;
     }
 
     template <typename T>
@@ -219,6 +215,26 @@ namespace mln
 	--sum_minus_;
       else if (t > t_)
 	--sum_plus_;
+
+      if (valid_)
+	valid_ = false;
+    }
+
+    template <typename T>
+    inline
+    void
+    rank<T>::untake(const rank<T>& other)
+    {
+      // h_
+      h_.untake(other.h_);
+
+      // sum_minus_
+      for (unsigned i = 0; i < i_; ++i)
+	sum_minus_ -= other.h_[i];
+
+      // sum_plus_
+      for (unsigned i = i_ + 1; i < h_.nvalues(); ++i)
+	sum_plus_ -= other.h_[i];
 
       if (valid_)
 	valid_ = false;
