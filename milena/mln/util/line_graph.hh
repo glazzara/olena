@@ -26,10 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_UTIL_DUAL_GRAPH_HH
-# define MLN_UTIL_DUAL_GRAPH_HH
+#ifndef MLN_UTIL_LINE_GRAPH_HH
+# define MLN_UTIL_LINE_GRAPH_HH
 
-/// \file mln/util/dual_graph.hh
+/// \file mln/util/line_graph.hh
 /// Definitions of undirected graphs.
 
 # include <mln/util/internal/graph_base.hh>
@@ -44,7 +44,7 @@ namespace mln
   {
     /// Fwd declaration.
     template <typename G>
-    class dual_graph;
+    class line_graph;
   }
 
 
@@ -53,7 +53,7 @@ namespace mln
 
     /// Data structure for \c mln::image2d<T>.
     template <typename G>
-    struct data< util::dual_graph<G> >
+    struct data< util::line_graph<G> >
     {
 
       typedef std::vector<std::vector<unsigned> > vertices_t;
@@ -76,12 +76,12 @@ namespace mln
   namespace util
   {
 
-    /// Undirected dual graph of a graph of type \tparam G.
+    /// Undirected line graph of a graph of type \tparam G.
     template <typename G>
-    class dual_graph : public internal::graph_base< dual_graph<G> >
+    class line_graph : public internal::graph_base< line_graph<G> >
     {
       /// The super class.
-      typedef internal::graph_base< dual_graph<G> > super;
+      typedef internal::graph_base< line_graph<G> > super;
 
       typedef typename super::vertex_t vertex_t;
       typedef typename super::edge_t edge_t;
@@ -100,23 +100,52 @@ namespace mln
       /// \{
       /// Vertex iterators
       /// \{
-      typedef mln::internal::vertex_fwd_iterator< dual_graph<G> >
+      typedef mln::internal::vertex_fwd_iterator< line_graph<G> >
 	vertex_fwd_iter;
-      typedef mln::internal::vertex_bkd_iterator< dual_graph<G> >
+      typedef mln::internal::vertex_bkd_iterator< line_graph<G> >
 	vertex_bkd_iter;
       typedef vertex_fwd_iter vertex_iter;
+      /// \}
 
-      typedef mln::internal::edge_fwd_iterator< dual_graph<G> >
+      /// Edge iterators
+      /// \{
+      typedef mln::internal::edge_fwd_iterator< line_graph<G> >
 	edge_fwd_iter;
-      typedef mln::internal::edge_bkd_iterator< dual_graph<G> >
+      typedef mln::internal::edge_bkd_iterator< line_graph<G> >
 	edge_bkd_iter;
       typedef edge_fwd_iter edge_iter;
+      /// \}
 
+      /// Edge nbh edge iterators
+      /// \{
+      typedef mln::internal::edge_nbh_edge_fwd_iterator< line_graph<G> >
+	edge_nbh_edge_fwd_iter;
+      typedef mln::internal::edge_nbh_edge_bkd_iterator< line_graph<G> >
+	edge_nbh_edge_bkd_iter;
+      typedef edge_nbh_edge_fwd_iter edge_nbh_edge_iter;
+      /// \}
+
+      /// Vertex nbh vertex iterators
+      /// \{
+      typedef mln::internal::vertex_nbh_vertex_fwd_iterator< line_graph<G> >
+	vertex_nbh_vertex_fwd_iter;
+      typedef mln::internal::vertex_nbh_vertex_bkd_iterator< line_graph<G> >
+	vertex_nbh_vertex_bkd_iter;
+      typedef vertex_nbh_vertex_fwd_iter vertex_nbh_vertex_iter;
+      /// \}
+
+      /// Vertex nbh edge iterators
+      /// \{
+      typedef mln::internal::vertex_nbh_edge_fwd_iterator< line_graph<G> >
+	vertex_nbh_edge_fwd_iter;
+      typedef mln::internal::vertex_nbh_edge_bkd_iterator< line_graph<G> >
+	vertex_nbh_edge_bkd_iter;
+      typedef vertex_nbh_edge_fwd_iter vertex_nbh_edge_iter;
       /// \}
       /// \}
 
-      dual_graph();
-      dual_graph(const G& g);
+      line_graph();
+      line_graph(const G& g);
 
       /// Vertex oriented.
       /// \{
@@ -190,6 +219,10 @@ namespace mln
       using super::data_;
     };
 
+    template <typename G>
+    std::ostream&
+    operator<<(std::ostream& ostr, const line_graph<G>& g);
+
   } // end of namespace mln::util
 
 } // end of namespace mln
@@ -204,15 +237,18 @@ namespace mln
 
     template <typename G>
     inline
-    data< util::dual_graph<G> >::data()
+    data< util::line_graph<G> >::data()
     {
     }
 
     template <typename G>
     inline
-    data< util::dual_graph<G> >::data(const G& g)
+    data< util::line_graph<G> >::data(const G& g)
     {
       g_ = g;
+
+      // Initialize vertices and edges.
+      std::set<util::ord_pair<unsigned> > edges_set;
       vertices_.resize(g.e_nmax());
       mln_edge_iter(G) e(g);
       mln_edge_nbh_edge_iter(G) ne(e);
@@ -220,14 +256,20 @@ namespace mln
       for_all(e)
 	for_all(ne)
 	{
-	  vertices_[e].push_back(edges_.size());
-	  edges_.push_back(util::ord_pair<unsigned>(e, ne));
+	  util::ord_pair<unsigned> edge(e, ne);
+	  if (edges_set.find(edge) == edges_set.end())
+	  {
+	    vertices_[e].push_back(edges_.size());
+	    vertices_[ne].push_back(edges_.size());
+	    edges_set.insert(edge);
+	    edges_.push_back(edge);
+	  }
 	}
     }
 
     template <typename G>
     inline
-    data< util::dual_graph<G> >::~data()
+    data< util::line_graph<G> >::~data()
     {
     }
 
@@ -238,16 +280,16 @@ namespace mln
 
     template <typename G>
     inline
-    dual_graph<G>::dual_graph()
+    line_graph<G>::line_graph()
     {
-      this->data_ = new mln::internal::data< util::dual_graph<G> >();
+      this->data_ = new mln::internal::data< util::line_graph<G> >();
     }
 
     template <typename G>
     inline
-    dual_graph<G>::dual_graph(const G& g)
+    line_graph<G>::line_graph(const G& g)
     {
-      this->data_ = new mln::internal::data< util::dual_graph<G> >(g);
+      this->data_ = new mln::internal::data< util::line_graph<G> >(g);
     }
 
     /*---------------.
@@ -256,8 +298,8 @@ namespace mln
 
     template <typename G>
     inline
-    typename dual_graph<G>::vertex_t
-    dual_graph<G>::vertex(unsigned id_v) const
+    typename line_graph<G>::vertex_t
+    line_graph<G>::vertex(unsigned id_v) const
     {
       mln_assertion(has_v(id_v));
       return vertex_t(*this, id_v);
@@ -267,7 +309,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    dual_graph<G>::v_nmax() const
+    line_graph<G>::v_nmax() const
     {
       return data_->g_.e_nmax();
     }
@@ -275,7 +317,7 @@ namespace mln
     template <typename G>
     inline
     bool
-    dual_graph<G>::has_v(unsigned id_v) const
+    line_graph<G>::has_v(unsigned id_v) const
     {
       return data_->g_.has_e(id_v);
     }
@@ -284,7 +326,7 @@ namespace mln
     template <typename G2>
     inline
     bool
-    dual_graph<G>::has_v(const util::vertex<G2>& v) const
+    line_graph<G>::has_v(const util::vertex<G2>& v) const
     {
       //FIXME: not sure...
       return v.graph().is_subgraph_of(*this) && has_v(v.id());
@@ -293,16 +335,16 @@ namespace mln
     template <typename G>
     inline
     size_t
-    dual_graph<G>::v_nmax_nbh_edges(unsigned id_v) const
+    line_graph<G>::v_nmax_nbh_edges(unsigned id_v) const
     {
       mln_precondition(has_v(id_v));
-      return data_->g_.e_nmax_nbh_edges(id_v);
+      return data_->vertices_[id_v].size();
     }
 
     template <typename G>
     inline
     unsigned
-    dual_graph<G>::v_ith_nbh_edge(unsigned id_v, unsigned i) const
+    line_graph<G>::v_ith_nbh_edge(unsigned id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
       if (i >= v_nmax_nbh_edges(id_v))
@@ -313,7 +355,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    dual_graph<G>::v_nmax_nbh_vertices(unsigned id_v) const
+    line_graph<G>::v_nmax_nbh_vertices(unsigned id_v) const
     {
       mln_precondition(has_v(id_v));
       return v_nmax_nbh_edges(id_v);
@@ -322,7 +364,7 @@ namespace mln
     template <typename G>
     inline
     unsigned
-    dual_graph<G>::v_ith_nbh_vertex(unsigned id_v, unsigned i) const
+    line_graph<G>::v_ith_nbh_vertex(unsigned id_v, unsigned i) const
     {
       mln_precondition(has_v(id_v));
 
@@ -337,8 +379,8 @@ namespace mln
 
     template <typename G>
     inline
-    typename dual_graph<G>::edge_t
-    dual_graph<G>::edge(unsigned e) const
+    typename line_graph<G>::edge_t
+    line_graph<G>::edge(unsigned e) const
     {
       mln_assertion(e < e_nmax());
       return edge_t(*this, e);
@@ -347,7 +389,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    dual_graph<G>::e_nmax() const
+    line_graph<G>::e_nmax() const
     {
       return data_->edges_.size();
     }
@@ -355,7 +397,7 @@ namespace mln
     template <typename G>
     inline
     bool
-    dual_graph<G>::has_e(unsigned id_e) const
+    line_graph<G>::has_e(unsigned id_e) const
     {
       return id_e < data_->edges_.size();
     }
@@ -364,7 +406,7 @@ namespace mln
     template <typename G2>
     inline
     bool
-    dual_graph<G>::has_e(const util::edge<G2>& e) const
+    line_graph<G>::has_e(const util::edge<G2>& e) const
     {
       return e.graph().is_subgraph_of(*this) && has_e(e.id());
     }
@@ -372,7 +414,7 @@ namespace mln
     template <typename G>
     inline
     unsigned
-    dual_graph<G>::v1(unsigned id_e) const
+    line_graph<G>::v1(unsigned id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].first();
@@ -381,7 +423,7 @@ namespace mln
     template <typename G>
     inline
     unsigned
-    dual_graph<G>::v2(unsigned id_e) const
+    line_graph<G>::v2(unsigned id_e) const
     {
       mln_precondition(has_e(id_e));
       return data_->edges_[id_e].second();
@@ -390,7 +432,7 @@ namespace mln
     template <typename G>
     inline
     size_t
-    dual_graph<G>::e_nmax_nbh_edges(unsigned id_e) const
+    line_graph<G>::e_nmax_nbh_edges(unsigned id_e) const
     {
       mln_precondition(has_e(id_e));
       return v_nmax_nbh_edges(v1(id_e)) + v_nmax_nbh_edges(v2(id_e));
@@ -399,7 +441,7 @@ namespace mln
     template <typename G>
     inline
     unsigned
-    dual_graph<G>::e_ith_nbh_edge(unsigned id_e, unsigned i) const
+    line_graph<G>::e_ith_nbh_edge(unsigned id_e, unsigned i) const
     {
       mln_precondition(has_e(id_e));
       if (i >= e_nmax_nbh_edges(id_e))
@@ -416,9 +458,29 @@ namespace mln
     template <typename G2>
     inline
     bool
-    dual_graph<G>::is_subgraph_of(const G2& g) const
+    line_graph<G>::is_subgraph_of(const G2& g) const
     {
-      return g.graph_id() == this->graph_id();
+      return g.id() == this->id();
+    }
+
+    // FIXME: move to graph_base
+    template <typename G>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const line_graph<G>& g)
+    {
+      typedef line_graph<G> LG;
+      mln_vertex_iter(LG) v(g);
+      mln_vertex_nbh_edge_iter(LG) e(v);
+      for_all(v)
+      {
+	ostr << "v(" << v << ") : ";
+	for_all(e)
+	  ostr << e << " ";
+	ostr << std::endl;
+      }
+
+      return ostr;
     }
 
   } // end of namespace mln::util
@@ -428,4 +490,4 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_UTIL_DUAL_GRAPH_HH
+#endif // ! MLN_UTIL_LINE_GRAPH_HH

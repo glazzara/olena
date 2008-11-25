@@ -88,7 +88,7 @@ namespace mln
 	  const I& iz = exact(iz_);
 
 	  util::graph g;
-	  g.add_vertices(nlabels + 1);
+	  g.add_vertices(nlabels.next());
 
 	  mln_piter(I) p(iz.domain());
 	  for_all(p)

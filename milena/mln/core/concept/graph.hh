@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,15 @@
 #ifndef MLN_CORE_CONCEPT_GRAPH_HH
 # define MLN_CORE_CONCEPT_GRAPH_HH
 
-/*! \file mln/core/concept/graph.hh
- * \brief Definition of the concept of mln::Graph.
- */
+/// \file mln/core/concept/graph.hh
+///
+/// Definition of the concept of mln::Graph.
 
 namespace mln
 {
 
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Graph;
 
   // Graph category flag type.
@@ -46,11 +46,11 @@ namespace mln
     typedef Object<void> super;
   };
 
-  /*! \brief Base class for implementation of graph classes.
-   *
-   * \see mln::doc::Graph for a complete documentation of this class
-   * contents.
-   */
+  /// Base class for implementation of graph classes.
+  ///
+  /// \see mln::doc::Graph for a complete documentation of this class
+  /// contents.
+  ///
   template <typename E>
   struct Graph : public Object<E>
   {
@@ -67,7 +67,7 @@ namespace mln
       typedef bkd_piter;
 
       // Misc.
-      const E& graph_id() const;
+      const E& id() const;
       template<typename G2>
       bool is_subgraph_of(const G2& gr) const;
 
@@ -109,7 +109,7 @@ namespace mln
     //typedef mln_bkd_piter(E) bkd_piter;
 
     // Check methods
-    const void* (E::*m1)() const = & E::graph_id;
+    const void* (E::*m1)() const = & E::id;
     m1 = 0;
     unsigned (E::*m2)(unsigned id_e, unsigned id_v) const = & E::v_other;
     m2 = 0;

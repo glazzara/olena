@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright(C) 2008 EPITA Research and Development Laboratory(LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,71 +25,71 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file   tests/util/dual_graph.cc
-/// test of mln::util::dual_graph
+/// \file   tests/util/line_graph.cc
+/// test of mln::util::line_graph
 
 #include <mln/util/graph.hh>
-#include <mln/util/dual_graph.hh>
+#include <mln/util/line_graph.hh>
 #include <iostream>
 
-int main ()
+int main()
 {
   using namespace mln;
 
   util::graph g;
 
-  g.add_vertex (); // 0
-  g.add_vertex (); // 1
-  g.add_vertex (); // 2
-  g.add_vertex (); // 3
-  g.add_vertex (); // 4
-  g.add_vertex (); // 5
-  g.add_edge (0, 1);
-  g.add_edge (1, 0); // Not inserted twice
-  g.add_edge (0, 2);
-  g.add_edge (3, 4);
-  g.add_edge (4, 5);
-  g.add_edge (5, 4); // Not inserted twice
-  g.add_edge (5, 3);
-  g.add_edge (2, 1);
+  g.add_vertex(); // 0
+  g.add_vertex(); // 1
+  g.add_vertex(); // 2
+  g.add_vertex(); // 3
+  g.add_vertex(); // 4
+  g.add_vertex(); // 5
+  g.add_edge(0, 1);
+  g.add_edge(1, 0); // Not inserted twice
+  g.add_edge(0, 2);
+  g.add_edge(3, 4);
+  g.add_edge(4, 5);
+  g.add_edge(5, 4); // Not inserted twice
+  g.add_edge(5, 3);
+  g.add_edge(2, 1);
 
-  typedef util::dual_graph<util::graph> DG;
-  DG dg(g);
+  typedef util::line_graph<util::graph> LG;
+  LG lg(g);
 
-  // Vertex iter and edge iter
+  // Vertex and edge forward iterators.
   {
     unsigned i = 0;
-    mln_vertex_fwd_iter_(DG) v(dg);
+    mln_vertex_fwd_iter_(LG) v(lg);
     for_all(v)
-      std::cout << v.index() << std::endl;
-//      mln_assertion(i++ == v.index());
-    //mln_assertion(i != 0);
+      mln_assertion(i++ == v.index());
+    mln_assertion(i != 0);
 
     i = 0;
-    mln_edge_fwd_iter_(util::graph) e(g);
+    mln_edge_fwd_iter_(LG) e(lg);
     for_all(e)
-      std::cout << e << std::endl;
-//      mln_assertion(i++ == e.index());
-//    mln_assertion(i != 0);*/
+      mln_assertion(i++ == e.index());
+    mln_assertion(i != 0);
   }
-/*  {
-    unsigned i = g.v_nmax() - 1;
-    mln_vertex_bkd_iter_(util::graph) v(g);
+
+  // Vertex and edge backward iterators.
+  {
+    unsigned i = lg.v_nmax() - 1;
+    mln_vertex_bkd_iter_(LG) v(lg);
     for_all(v)
       mln_assertion(i-- == v.index());
-    mln_assertion(i != g.v_nmax() - 1);
+    mln_assertion(i != lg.v_nmax() - 1);
 
-    i = g.e_nmax() - 1;
-    mln_edge_bkd_iter_(util::graph) e(g);
+    i = lg.e_nmax() - 1;
+    mln_edge_bkd_iter_(LG) e(lg);
     for_all(e)
       mln_assertion(i-- == e.index());
-    mln_assertion(i != g.e_nmax() - 1);
+    mln_assertion(i != lg.e_nmax() - 1);
   }
 
-  // vertex iter + Edge nbh iter
+  // Vertex and edge nbh forward iterators
   {
-    mln_vertex_fwd_iter_(util::graph) v(g);
-    mln_vertex_nbh_edge_fwd_iter_(util::graph) n(v);
+    mln_vertex_fwd_iter_(LG) v(lg);
+    mln_vertex_nbh_edge_fwd_iter_(LG) n(v);
     for_all(v)
     {
       unsigned i = 0;
@@ -98,9 +98,11 @@ int main ()
       mln_assertion(i != 0);
     }
   }
+
+  // Vertex and edge nbh backward iterators.
   {
-    mln_vertex_bkd_iter_(util::graph) v(g);
-    mln_vertex_nbh_edge_bkd_iter_(util::graph) e(v);
+    mln_vertex_bkd_iter_(LG) v(lg);
+    mln_vertex_nbh_edge_bkd_iter_(LG) e(v);
     for_all(v)
     {
       unsigned i = v.nmax_nbh_edges();
@@ -109,10 +111,12 @@ int main ()
       mln_assertion((v.nmax_nbh_edges() == 0 && i == 0) || i != v.nmax_nbh_edges());
     }
   }
-
+  std::cout << g << std::endl;
+  std::cout << "----" << std::endl;
+  std::cout << lg << std::endl;
   {
-    mln_edge_fwd_iter_(util::graph) e(g);
-    mln_edge_nbh_edge_fwd_iter_(util::graph) n(e);
+    mln_edge_fwd_iter_(LG) e(lg);
+    mln_edge_nbh_edge_fwd_iter_(LG) n(e);
     for_all(e)
     {
       unsigned i = 0;
@@ -124,8 +128,8 @@ int main ()
     }
   }
   {
-    mln_edge_bkd_iter_(util::graph) e(g);
-    mln_edge_nbh_edge_bkd_iter_(util::graph) n(e);
+    mln_edge_bkd_iter_(LG) e(lg);
+    mln_edge_nbh_edge_bkd_iter_(LG) n(e);
     for_all(e)
     {
       //std::cout << "== e.id() = " << e.id() << std::endl;
@@ -138,10 +142,9 @@ int main ()
 
     }
   }
-
   {
-    mln_vertex_fwd_iter_(util::graph) v(g);
-    mln_vertex_nbh_vertex_fwd_iter_(util::graph) n(v);
+    mln_vertex_fwd_iter_(LG) v(lg);
+    mln_vertex_nbh_vertex_fwd_iter_(LG) n(v);
     for_all(v)
     {
       unsigned i = 0;
@@ -151,8 +154,8 @@ int main ()
     }
   }
   {
-    mln_vertex_bkd_iter_(util::graph) v(g);
-    mln_vertex_nbh_vertex_bkd_iter_(util::graph) n(v);
+    mln_vertex_bkd_iter_(LG) v(lg);
+    mln_vertex_nbh_vertex_bkd_iter_(LG) n(v);
     for_all(v)
     {
       unsigned i = v.nmax_nbh_vertices();
@@ -160,5 +163,5 @@ int main ()
 	--i;
       mln_assertion(i == 0);
     }
-  }*/
+  }
 }

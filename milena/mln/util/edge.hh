@@ -41,7 +41,7 @@ namespace mln
   namespace util
   {
 
-    /*-------.
+      /*-------.
       | Edge.  |
       `-------*/
 

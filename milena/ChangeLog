@@ -1,5 +1,25 @@
 2008-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix line_graph (formerly dual_graph)
+
+	* mln/make/graph.hh: Fix use of label<n>.
+
+	* mln/util/edge.hh: cleanup comment.
+
+	* mln/util/dual_graph.hh: rename as...
+	* mln/util/line_graph.hh: ... this. Fiw wrong initialization.
+
+	* tests/util/Makefile.am: update.
+
+	* tests/util/dual_graph.cc: rename as...
+	* tests/util/line_graph.cc: ... this. Enable all the tests.
+
+	* mln/core/concept/graph.hh,
+	* mln/util/internal/graph_base.hh,
+	* mln/util/graph.hh: rename graph_id to id.
+
+2008-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix labeling::compute tests.
 
 	* mln/labeling/compute.hh: Check if the image is a labeled image and

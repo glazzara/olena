@@ -82,7 +82,7 @@ namespace mln
 	/// Misc. methods
 	/// \{
 	/// Returns the graph id, the "this" pointer.
-	const void* graph_id() const;
+	const void* id() const;
 	/// \}
 
 	/// Vertex oriented methods
@@ -158,7 +158,7 @@ namespace mln
       template<typename E>
       inline
       const void*
-      graph_base<E>::graph_id() const
+      graph_base<E>::id() const
       {
 	return static_cast<const void*>(data_.ptr_);
       }
@@ -248,7 +248,7 @@ namespace mln
   operator==(const util::internal::graph_base<E>& lhs,
 	     const util::internal::graph_base<E>& rhs)
   {
-    return lhs.graph_id() == rhs.graph_id();
+    return lhs.id() == rhs.id();
   }
 
 } // end of namespace mln

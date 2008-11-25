@@ -6,7 +6,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 check_PROGRAMS =				\
   branch_iter					\
   branch_iter_ind				\
-  dual_graph 					\
+  line_graph 					\
   eat						\
   graph						\
   lazy_set					\
@@ -20,7 +20,7 @@ check_PROGRAMS =				\
 
 branch_iter_SOURCES = branch_iter.cc
 branch_iter_ind_SOURCES = branch_iter_ind.cc
-dual_graph_SOURCES = dual_graph.cc
+line_graph_SOURCES = line_graph.cc
 eat_SOURCES = eat.cc
 graph_SOURCES = graph.cc
 lazy_set_SOURCES = lazy_set.cc

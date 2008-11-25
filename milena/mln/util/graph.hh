@@ -231,6 +231,9 @@ namespace mln
 
     };
 
+    std::ostream&
+    operator<<(std::ostream& ostr, const graph& g);
+
   } // end of namespace mln::util
 
 } // end of namespace mln
@@ -480,7 +483,25 @@ namespace mln
     bool
     graph::is_subgraph_of(const G2& g) const
     {
-      return g.graph_id() == this->graph_id();
+      return g.id() == this->id();
+    }
+
+    // FIXME: move to graph_Base.
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const graph& g)
+    {
+      mln_vertex_iter_(graph) v(g);
+      mln_vertex_nbh_edge_iter_(graph) e(v);
+      for_all(v)
+      {
+	ostr << "v(" << v << ") : ";
+	for_all(e)
+	  ostr << e << " ";
+	ostr << std::endl;
+      }
+
+      return ostr;
     }
 
   } // end of namespace mln::util
