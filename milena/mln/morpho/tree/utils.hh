@@ -31,6 +31,8 @@
 /// \file mln/morpho/tree/utils.hh
 ///
 /// Utilities.
+///
+/// \todo Remove this file after ./data.hh is completed!
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_array.hh>

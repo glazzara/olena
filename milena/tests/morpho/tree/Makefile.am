@@ -4,9 +4,11 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
   compute_tree					\
+  data	 					\
   max
 
-compute_tree_SOURCES = compute_tree_.cc
-max_SOURCES = max_.cc
+compute_tree_SOURCES = compute_tree.cc
+data_SOURCES = data.cc
+max_SOURCES = max.cc
 
 TESTS = $(check_PROGRAMS)

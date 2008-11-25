@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,13 @@
 #ifndef MLN_CORE_IMAGE_SAFE_HH
 # define MLN_CORE_IMAGE_SAFE_HH
 
-/*!
- * \file mln/core/image/safe.hh
- *
- * \brief Definition of a morpher that makes image become accessible
- * at undefined location.
- *
- * \todo Use 'instant' as the routine safe returns.
- */
+///
+/// \file mln/core/image/safe.hh
+///
+/// \brief Definition of a morpher that makes image become accessible
+/// at undefined location.
+///
+/// \todo Use 'instant' as the routine safe returns.
 
 # include <mln/core/internal/image_identity.hh>
 
@@ -162,6 +162,7 @@ namespace mln
   void
   safe_image<I>::init_(I& ima, const mln_value(I)& default_value)
   {
+    mln_precondition(! this->has_data());
     mln_precondition(ima.has_data());
     this->data_ = new internal::data< safe_image<I> >(ima, default_value);
   }

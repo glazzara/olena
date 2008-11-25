@@ -25,32 +25,62 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_ALL_HH
-# define MLN_MORPHO_TREE_ALL_HH
-
-/// \file mln/morpho/tree/all.hh
+/// \file tests/morpho/tree/parent.cc
 ///
-/// File that includes all morphological tree-related routines.
+/// Tests on mln::morpho::tree::parent.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/pw/image.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/debug/iota.hh>
+#include <mln/morpho/elementary/dilation.hh>
+
+#include <mln/core/site_set/p_array.hh>
+#include <mln/level/sort_psites.hh>
+
+#include <mln/morpho/tree/data.hh>
 
 
-namespace mln
+int main()
 {
-  namespace morpho
+  using namespace mln;
+
+  typedef image2d<unsigned> I;
+  I ima(3, 3);
+  debug::iota(ima);
+
+  ima = morpho::elementary::dilation(ima, c8());
+  debug::println("ima = ", ima);
+
+  typedef p_array<point2d> S;
+  S s = level::sort_psites_increasing(ima);
+
+  typedef morpho::tree::data<I,S> tree_t;
+  tree_t t(ima, s, c4());
+
+  debug::println( "parent  = ", t.parent_image() | t.domain() );
+  debug::println( "on node = ", t.parent_image() | t.nodes()  );
+
   {
-
-    /// Namespace of morphological tree-related routines.
-    namespace tree
-    {}
-
+    std::cout << "nodes = ";
+    tree_t::nodes_t::piter p(t.nodes());
+    for_all(p)
+      std::cout << p << ' ';
+    std::cout << std::endl
+	      << std::endl;
   }
+
+
+  {
+    image2d<unsigned> area(ima.domain());
+    level::fill(area, 1);
+    tree_t::piter p(t.domain());
+    for_all(p)
+      if (! t.is_root(p))
+	area(t.parent(p)) += area(p);
+    debug::println("area = ", area | t.nodes());
+  }
+
 }
-
-
-# include <mln/morpho/tree/compute_parent.hh>
-# include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/max.hh>
-# include <mln/morpho/tree/utils.hh>
-
-
-
-#endif // ! MLN_MORPHO_TREE_ALL_HH
