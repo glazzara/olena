@@ -127,6 +127,7 @@ namespace mln
 		    const mln_value(L)& nlabels)
       {
 	mln_precondition(exact(label).has_data());
+	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) label;
 	(void) nlabels;
@@ -143,7 +144,7 @@ namespace mln
       {
 	mln_precondition(exact(input).has_data());
 	mln_precondition(exact(label).has_data());
-
+	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) input;
 	(void) label;
@@ -276,7 +277,7 @@ namespace mln
       typedef mln_accu_with(A, mln_value(I)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_value(I)());
 
-      return internal::compute_dispatch(a_, input, label, nlabels);
+      return compute(a_, input, label, nlabels);
     }
 
 
@@ -309,7 +310,7 @@ namespace mln
       typedef mln_accu_with(A, mln_psite(L)) A_;
       A_ a_ = accu::unmeta(exact(a), mln_psite(L)());
 
-      return internal::compute_dispatch(a_, label, nlabels);
+      return compute(a_, label, nlabels);
     }
 
 
