@@ -1,3 +1,13 @@
+2008-11-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Test skeletonization with pixel superiority index.
+
+	* garrigues/ocr/ocr_with_preprocess.cc: Apply the skeletonisation
+	using infomation of the grayscale image.
+
+	* garrigues/ocr/skeleton.hh: Use the pixel superiority index criteria
+	to detect crests.
+
 2008-11-25  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update n_cmpt.

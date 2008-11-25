@@ -92,6 +92,7 @@ namespace mln
 
       unsigned nb_eq = 0;
       unsigned nb_gt = 0;
+      unsigned nb_lt = 0;
       for_all(n)
 	if (input.domain().has(n))
 	{
@@ -99,10 +100,15 @@ namespace mln
 	    nb_eq++;
 	  else if (dist_map(n) > dist_map(p))
 	    nb_gt++;
+	  else
+	    nb_lt++;
 	}
 
-      if ((nb_gt == 1 && nb_eq == 0) ||
-	  (nb_gt == 0))
+
+//       if ((nb_gt == 1 && nb_eq == 0) ||
+// 	  (nb_gt == 0))
+
+      if ((nb_lt + nb_eq) > 5) // Pixel Superiority index
 	is_crest(p) = true;
     }
     return is_crest;
