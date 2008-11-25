@@ -33,6 +33,8 @@
 # include <mln/level/fill.hh>
 # include <mln/util/pix.hh>
 # include <mln/level/sort_psites.hh>
+# include <mln/accu/count.hh>
+# include <mln/accu/volume.hh>
 
 namespace mln
 {
@@ -77,6 +79,7 @@ namespace mln
       typedef mln_psite(I) P;
 
       typedef accu::volume<I> A;
+      //typedef accu::count<unsigned> A;
       typedef mln_psite(I) P;
       typedef p_array<P> S;
 
@@ -87,8 +90,10 @@ namespace mln
       mln_ch_value(O, P)     parent;
 
       int n_cmpt = input.domain().nsites();
-      int lambda = 10;
-      std::cout << "trying lambda = 10" << std::endl;
+
+      std::cout << "Number of sites = " << n_cmpt << std::endl;
+
+      unsigned lambda = 2;
 
       // init
       {
@@ -96,61 +101,80 @@ namespace mln
         initialize(parent, input);
       }
 
-      // first pass
-      {
+      bool last = false;
 
-        do {
+      // first pass
+      do {
+        std::cout << "lambda=" << lambda << "-------" << std::endl;
+
+          // init
           mln_ch_value(O, A)     data;
           initialize(data, input);
-
           mln::level::fill(deja_vu, false);
-
           {
             mln_fwd_piter(S) p(s);
             for_all(p)
               parent(p) = p;
           }
 
+          // process
           mln_fwd_piter(S) p(s); // s required.
           mln_niter(N) n(nbh, p);
           for_all(p)
           {
             // Make set.
-            {
-              data(p).take_as_init(make::pix(input, p)); // FIXME: algebraic so p!
-            }
-
+            data(p).take_as_init(make::pix(input, p)); // FIXME: algebraic so p!
+            //data(p).take_as_init(1);
             for_all(n)
+            {
               if (input.domain().has(n) && deja_vu(n))
+              {
+                //do_union(n, p);
+                P r = find_root(parent, n);
+                if (r != p)
                 {
-                  //do_union(n, p);
-                  P r = find_root(parent, n);
-                  if (r != p)
+                  //std::cout << data(p).to_result() << std::endl;
+                  if (input(r) == input(p) || (data(p).to_result() <= lambda))
+                    // Either a flat zone or the component of r is still growing.
+                  {
+                    if(--n_cmpt < limit)
                     {
-                      if (input(r) == input(p) || (data(p).to_result() < lambda))
-                        // Either a flat zone or the component of r is still growing.
-                        {
-                          data(p).take(data(r));
-                          parent(r) = p;
-                          if(--n_cmpt <= limit)
-                            {
-                              std::cout << "limit reached at " << n_cmpt << std::endl;
-                              goto step2;
-                            }
-                        }
-                      else
-                        data(p).set_value(lambda);
+                      std::cout << "find less than " << limit << " cmpts" << std::endl;
+                      std::cout << "Using last lambda" << std::endl;
+                      lambda /= 1.5;
+                      last = true;
+                      goto end;
                     }
+                    data(p).take(data(r));
+                    parent(r) = p;
+                  }
+                  else
+                  {
+                    data(p).set_value(lambda);
+                  }
+
                 }
+              }
+            }
             deja_vu(p) = true;
           }
-          n_cmpt =  input.domain().nsites();
-          lambda *= 1.1;
-          std::cout << "trying lambda = " << lambda << std::endl;
-        }while (1);
-      }
+
+          if (n_cmpt == limit)
+          {
+            std::cout << "EXACT MATCH. n_cpmt = " << n_cmpt << std::endl;
+            goto step2;
+          }
+
+          if (last)
+            goto step2;
+
+          lambda *= 1.5;
+      end:
+          n_cmpt = input.domain().nsites();
+      } while(1);
 
     step2:
+      std::cout << "FINAL. n_cpmt = " << n_cmpt << std::endl;
       // second pass
       {
         mln_bkd_piter(S) p(s);
