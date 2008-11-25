@@ -2,15 +2,15 @@ SUBDIRS = samples
 
 .PHONY: tuto
 
-TUTO_DIR = "milena/doc/tutorial"
-TEXINPUTS = $(top_srcdir)/$(TUTO_DIR):$(top_builddir)/$(TUTO_DIR):
+include $(top_srcdir)/milena/doc/doc.mk
+TEXINPUTS = $(TUTORIAL_SRCDIR):$(TUTORIAL_BUILDDIR):
 
 tuto:
-	TEXINPUTS=$(TEXINPUTS) pdflatex $(top_srcdir)/$(TUTO_DIR)/tutorial.tex
+	TEXINPUTS=$(TEXINPUTS) pdflatex $(TUTORIAL_SRCDIR)/tutorial.tex
 
 tuto_html:
-	chmod u+x $(top_srcdir)/$(TUTO_DIR)/todoxygen.sh
-	$(top_srcdir)/$(TUTO_DIR)/todoxygen.sh $(top_srcdir)/$(TUTO_DIR)/tutorial.tex $(top_builddir)/$(TUTO_DIR)
+	chmod u+x $(TUTORIAL_SRCDIR)/todoxygen.sh
+	$(TUTORIAL_SRCDIR)/todoxygen.sh $(TUTORIAL_SRCDIR)/tutorial.tex $(TUTORIAL_BUILDDIR)
 
 clean-local:
 	rm -f *.aux *.toc *.log *.bbl *blg *.lot *.out *~

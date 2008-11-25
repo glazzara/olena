@@ -14,24 +14,24 @@ complete-doc: html_complete
 
 user-doc: html_user tutorial
 
-html_complete: tuto_html figures Doxyfile
+html_complete: figures Doxyfile tuto_html 
 	$(DOXYGEN) Doxyfile_complete
 
-html_user: tuto_html figures Doxyfile
+html_user: figures Doxyfile tuto_html 
 	$(DOXYGEN) Doxyfile_user
 
 figures: all
 	@failcom='exit 1'; 							\
-	list='${wildcard $(FIGURES_DIR)/*.p*m}'; for img in $$list; do 		\
+	list='${wildcard $(FIGURES_BUILDDIR)/*.p*m}'; for img in $$list; do 		\
 	  echo "Converting $$img to png"; 					\
-	  convert $$img $(FIGURES_DIR)/`basename $$img .ppm`.png 		\
+	  convert $$img $(FIGURES_BUILDDIR)/`basename $$img .ppm`.png 		\
 	    || eval $$failcom; 							\
 	done; 
 
 tuto_html:
 	$(MAKE) -C tutorial tuto_html
 
-tuto: all
+tuto: all figures
 	$(MAKE) -C tutorial tuto
 
 edit = sed -e "s|@ID@|$$Id|" 					\

@@ -2,7 +2,7 @@
 int main()
 {
   using namespace mln;
-  using value::int_u8;
+  using value::label8;
 
   bool vals[6][5] = {
       {0, 1, 1, 0, 0},
@@ -14,8 +14,8 @@ int main()
   };
   image2d<bool> ima = make::image(vals);
 
-  int_u8 nlabels;
-  image2d<int_u8> lbl = labeling::blobs(ima, c4(), nlabels);
+  label8 nlabels;
+  image2d<label8> lbl = labeling::blobs(ima, c4(), nlabels);
 
   debug::println(lbl);
 }
