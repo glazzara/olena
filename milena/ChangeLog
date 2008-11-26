@@ -1,3 +1,9 @@
+2008-11-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Temporarily disable the compilation of some examples.
+
+	* Makefile.am: comment non compiling examples.
+
 2008-11-26  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Fix a bug in fill_with_image routine.
