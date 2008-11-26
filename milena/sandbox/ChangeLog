@@ -1,3 +1,9 @@
+2008-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Try an auto dual area filter using TUFA.
+
+	* garrigues/area_filter_auto_dual.cc: New, the test.
+
 2008-11-25  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Test skeletonization with pixel superiority index.
