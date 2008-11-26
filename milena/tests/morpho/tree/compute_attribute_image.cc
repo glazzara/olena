@@ -25,33 +25,57 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_TREE_ALL_HH
-# define MLN_MORPHO_TREE_ALL_HH
-
-/// \file mln/morpho/tree/all.hh
+/// \file tests/morpho/tree/compute_attribute_image.cc
 ///
-/// File that includes all morphological tree-related routines.
+/// Tests on mln::morpho::tree::compute_attribute_image.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/level/sort_psites.hh>
+
+#include <mln/debug/println.hh>
+#include <mln/core/var.hh>
+
+#include <mln/morpho/tree/data.hh>
+#include <mln/morpho/tree/compute_attribute_image.hh>
+
+#include <mln/accu/count.hh>
+#include <mln/accu/volume.hh>
 
 
-namespace mln
+int main()
 {
-  namespace morpho
+  using namespace mln;
+
   {
+    unsigned vals[] = { 5, 6, 6,
+			8, 9, 9,
+			8, 9, 9  };
 
-    /// Namespace of morphological tree-related routines.
-    namespace tree
-    {}
+    typedef image2d<unsigned> I;
+    I f = make::image2d(vals);
+    debug::println(f);
 
+    typedef p_array<point2d> S;
+    S s = level::sort_psites_increasing(f);
+
+    morpho::tree::data<I,S> t(f, s, c4());
+    debug::println(t.parent_image());
+
+    typedef util::pix<I> Px;
+
+    {
+      accu::count<Px> a;
+      image2d<unsigned> area = morpho::tree::compute_attribute_image(a, t);
+      debug::println(area);
+    }
+
+    {
+      accu::volume<I> v;
+      image2d<unsigned> volume = morpho::tree::compute_attribute_image(v, t);
+      debug::println(volume);
+    }
   }
+
 }
-
-
-# include <mln/morpho/tree/compute_attribute_image.hh>
-# include <mln/morpho/tree/compute_parent.hh>
-# include <mln/morpho/tree/data.hh>
-# include <mln/morpho/tree/max.hh>
-# include <mln/morpho/tree/utils.hh>
-
-
-
-#endif // ! MLN_MORPHO_TREE_ALL_HH

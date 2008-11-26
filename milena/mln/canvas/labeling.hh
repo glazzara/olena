@@ -56,120 +56,150 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+    // Tests.
 
-    template <typename I>
-    static inline
-    mln_psite(I)
-    find_root(I& parent,
-	      const mln_psite(I)& x)
+    namespace internal
     {
-      if (parent(x) == x)
-	return x;
-      else
-	return parent(x) = find_root(parent, parent(x));
-    }
 
-    template <typename I, typename N, typename F, typename L>
-    mln_ch_value(I, L)
-      labeling(const Image<I>& input_, const Neighborhood<N>& nbh_,
-	       F& f, L& nlabels)
-    {
-      trace::entering("canvas::labeling");
-
-      // FIXME: Test?!
-
-      const I& input = exact(input_);
-      const N& nbh   = exact(nbh_);
-
-      typedef typename F::S S;
-
-      // Local type.
-      typedef mln_psite(I) P;
-
-      // Auxiliary data.
-      mln_ch_value(I, bool) deja_vu;
-      mln_ch_value(I, P)    parent;
-
-      // Output.
-      mln_ch_value(I, L) output;
-      bool status;
-
-      // Initialization.
-
+      template <typename I, typename N, typename F, typename L>
+      void
+      labeling_tests(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		     const F& f, const L& nlabels)
       {
-	initialize(deja_vu, input);
-	mln::level::fill(deja_vu, false);
+	const I& input = exact(input_);
+	const N& nbh   = exact(nbh_);
 
-	initialize(parent, input);
+	mln_precondition(input.has_data());
+	// mln_precondition(nbh.is_valid());
 
-	initialize(output, input);
-	mln::level::fill(output, L(literal::zero));
-	nlabels = 0;
-
-	f.init(); // Client initialization.
+	(void) input;
+	(void) nbh;
       }
 
-      // First Pass.
+    } // end of namespace mln::canvas::internal
 
+
+
+    // Implementations.
+
+    namespace impl
+    {
+
+      namespace generic
       {
-	mln_fwd_piter(S) p(f.s);
-	mln_niter(N) n(nbh, p);
-	for_all(p) if (f.handles(p))
+
+	template <typename I>
+	static inline
+	mln_psite(I)
+	find_root(I& parent, const mln_psite(I)& x)
 	{
-
-	  // Make-Set.
-	  {
-	    parent(p) = p;
- 	    f.init_attr(p);
-	  }
-
-	  for_all(n)
-	    if (input.domain().has(n) && deja_vu(n))
-	    {
-	      if (f.equiv(n, p))
-	      {
-		// Do-Union.
-		P r = find_root(parent, n);
-		if (r != p)
-		{
-		  parent(r) = p;
- 		  f.merge_attr(r, p);
-		}
-	      }
-	      else
-		f.do_no_union(n, p);
-	    }
-	  deja_vu(p) = true;
-	}
-      }
-
-      // Second Pass. pass_2();
-      {
-	mln_bkd_piter(S) p(f.s);
-	for_all(p) if (f.handles(p))
-	{
-	  if (parent(p) == p) // if p is root
-	  {
-	    if (f.labels(p))
-	    {
-	      if (nlabels == mln_max(L))
-	      {
-		status = false;
-		return output;
-	      }
-	      output(p) = ++nlabels;
-	    }
-	  }
+	  if (parent(x) == x)
+	    return x;
 	  else
-	    output(p) = output(parent(p));
+	    return parent(x) = find_root(parent, parent(x));
 	}
-	status = true;
 
-      }
+	template <typename I, typename N, typename F, typename L>
+	mln_ch_value(I, L)
+	labeling(const Image<I>& input_, const Neighborhood<N>& nbh_,
+		 F& f, L& nlabels)
+	{
+	  trace::entering("canvas::impl::generic::labeling");
 
-      trace::exiting("canvas::labeling");
-      return output;
-    }
+	  // FIXME: Test?!
+
+	  const I& input = exact(input_);
+	  const N& nbh   = exact(nbh_);
+
+	  typedef typename F::S S;
+
+	  // Local type.
+	  typedef mln_psite(I) P;
+
+	  // Auxiliary data.
+	  mln_ch_value(I, bool) deja_vu;
+	  mln_ch_value(I, P)    parent;
+
+	  // Output.
+	  mln_ch_value(I, L) output;
+	  bool status;
+
+	  // Initialization.
+	  {
+	    initialize(deja_vu, input);
+	    mln::level::fill(deja_vu, false);
+
+	    initialize(parent, input);
+
+	    initialize(output, input);
+	    mln::level::fill(output, L(literal::zero));
+	    nlabels = 0;
+
+	    f.init(); // Client initialization.
+	  }
+
+	  // First Pass.
+	  {
+	    mln_fwd_piter(S) p(f.s);
+	    mln_niter(N) n(nbh, p);
+	    for_all(p) if (f.handles(p))
+	      {
+		// Make-Set.
+		parent(p) = p;
+		f.init_attr(p);
+
+		for_all(n)
+		  if (input.domain().has(n) && deja_vu(n))
+		    {
+		      if (f.equiv(n, p))
+			{
+			  // Do-Union.
+			  P r = find_root(parent, n);
+			  if (r != p)
+			    {
+			      parent(r) = p;
+			      f.merge_attr(r, p);
+			    }
+			}
+		      else
+			f.do_no_union(n, p);
+		    }
+		deja_vu(p) = true;
+	      }
+	  }
+
+	  // Second Pass.
+	  {
+	    mln_bkd_piter(S) p(f.s);
+	    for_all(p) if (f.handles(p))
+	      {
+		if (parent(p) == p) // if p is root
+		  {
+		    if (f.labels(p))
+		      {
+			if (nlabels == mln_max(L))
+			  {
+			    status = false;
+			    return output;
+			  }
+			output(p) = ++nlabels;
+		      }
+		  }
+		else
+		  output(p) = output(parent(p));
+	      }
+	    status = true;
+	  }
+
+	  trace::exiting("canvas::impl::generic::labeling");
+	  return output;
+	}
+	
+      } // end of namespace mln::canvas::impl::generic
+
+    } // end of namespace mln::canvas::impl
+
+
 
 
 
@@ -186,146 +216,185 @@ namespace mln
     template <typename F>
     struct labeling_fastest
     {
-      // Functor.
-      F& f;
+    // Functor.
+    F& f;
 
-      typedef typename F::I I;
-      typedef typename F::N N;
-      typedef typename F::L L;
+    typedef typename F::I I;
+    typedef typename F::N N;
+    typedef typename F::L L;
 
-      // Auxiliary data.
-      mln_ch_value(I, unsigned) parent;
+    // Auxiliary data.
+    mln_ch_value(I, unsigned) parent;
 
-      // Output.
-      mln_ch_value(I, L) output;
-      L nlabels;
-      bool status;
+    // Output.
+    mln_ch_value(I, L) output;
+    L nlabels;
+    bool status;
 
-      // Ctor.
-      labeling_fastest(F& f);
+    // Ctor.
+    labeling_fastest(F& f);
 
-      void init();
+    void init();
 
-      void pass_1();
+    void pass_1();
 
-      void pass_2();
+    void pass_2();
 
-      // Auxiliary methods.
+    // Auxiliary methods.
 
-      bool is_root(unsigned p) const;
+    bool is_root(unsigned p) const;
 
-      unsigned find_root(unsigned x);
+    unsigned find_root(unsigned x);
 
-      void do_union(unsigned n, unsigned p);
+    void do_union(unsigned n, unsigned p);
 
     };
 
     template <typename F>
     labeling_fastest<F>::labeling_fastest(F& f)
-      : f(f)
+    : f(f)
     {
-      trace::entering("canvas::labeling_fastest");
+    trace::entering("canvas::labeling_fastest");
 
-      init();
-      f.init(); // Client initialization.
-      pass_1();
-      pass_2();
+    init();
+    f.init(); // Client initialization.
+    pass_1();
+    pass_2();
 
-      trace::exiting("canvas::labeling_fastest");
+    trace::exiting("canvas::labeling_fastest");
     }
 
     template <typename F>
     void
     labeling_fastest<F>::init()
     {
-      initialize(parent, f.input);
-      for (unsigned p = 0; p < parent.nelements(); ++p)
-	parent.element(p) = p; // make_set
-      initialize(output, f.input);
-      mln::level::fill(output, 0); // FIXME: Use literal::zero.
-      nlabels = 0;
+    initialize(parent, f.input);
+    for (unsigned p = 0; p < parent.nelements(); ++p)
+    parent.element(p) = p; // make_set
+    initialize(output, f.input);
+    mln::level::fill(output, 0); // FIXME: Use literal::zero.
+    nlabels = 0;
     }
 
     template <typename F>
     void
     labeling_fastest<F>::pass_1()
     {
-      mln_bkd_pixter(const I) p(f.input);
+    mln_bkd_pixter(const I) p(f.input);
 
-      typedef window<mln_dpsite(I)> W;
-      W win = mln::convert::to_upper_window(f.nbh);
-      mln_qixter(const I, W) n(p, win);
+    typedef window<mln_dpsite(I)> W;
+    W win = mln::convert::to_upper_window(f.nbh);
+    mln_qixter(const I, W) n(p, win);
 
-      for_all(p) if (f.handles(p))
-	{
-	  f.init_attr(p);
-	  for_all(n)
-	    if (f.equiv(n, p))
-	      do_union(n, p);
-	    else
-	      f.do_no_union(n, p);
-	}
+    for_all(p) if (f.handles(p))
+    {
+    f.init_attr(p);
+    for_all(n)
+    if (f.equiv(n, p))
+    do_union(n, p);
+    else
+    f.do_no_union(n, p);
+    }
     }
 
     template <typename F>
     void
     labeling_fastest<F>::pass_2()
     {
-      mln_fwd_pixter(const I) p(f.input);
+    mln_fwd_pixter(const I) p(f.input);
 
-      for_all(p) if (f.handles(p))
-	{
-	  if (is_root(p))
-	    {
-	      if (f.labels(p))
-		{
-		  if (nlabels == mln_max(L))
-		    {
-		      status = false;
-		      return;
-		    }
-		  output(p) = ++nlabels;
-		}
-	    }
-	  else
-	    output(p) = output(parent.element(p));
-	}
-      status = true;
+    for_all(p) if (f.handles(p))
+    {
+    if (is_root(p))
+    {
+    if (f.labels(p))
+    {
+    if (nlabels == mln_max(L))
+    {
+    status = false;
+    return;
+    }
+    output(p) = ++nlabels;
+    }
+    }
+    else
+    output(p) = output(parent.element(p));
+    }
+    status = true;
     }
 
     template <typename F>
     bool
     labeling_fastest<F>::is_root(unsigned p) const
     {
-      return parent.element(p) == p;
+    return parent.element(p) == p;
     }
 
     template <typename F>
     unsigned
     labeling_fastest<F>::find_root(unsigned x)
     {
-      if (parent.element(x) == x)
-	return x;
-      else
-	return parent.element(x) = find_root(parent.element(x));
+    if (parent.element(x) == x)
+    return x;
+    else
+    return parent.element(x) = find_root(parent.element(x));
     }
 
     template <typename F>
     void
     labeling_fastest<F>::do_union(unsigned n, unsigned p)
     {
-      unsigned r = find_root(n);
-      if (r != p)
-	{
-	  parent.element(r) = p;
-	  f.merge_attr(r, p);
-	}
+    unsigned r = find_root(n);
+    if (r != p)
+    {
+    parent.element(r) = p;
+    f.merge_attr(r, p);
+    }
     }
 
-*/
+    */
+
+
+
+    // Dispatch.
+
+    namespace internal
+    {
+
+      template <typename I, typename N, typename F, typename L>
+      inline
+      mln_ch_value(I, L)
+      labeling_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
+			F& functor, L& nlabels)
+      {
+	return impl::generic::labeling(input, nbh, functor, nlabels);
+      }
+
+    } // end of namespace mln::canvas::internal
+
+
+
+    // Facade.
+
+    template <typename I, typename N, typename F, typename L>
+    inline
+    mln_ch_value(I, L)
+    labeling(const Image<I>& input, const Neighborhood<N>& nbh,
+	     F& functor, L& nlabels)
+    {
+      trace::entering("canvas::labeling");
+      
+      internal::labeling_tests(input, nbh, functor, nlabels);
+      
+      mln_ch_value(I, L) output;
+      output = internal::labeling_dispatch(input, nbh, functor, nlabels);
+      
+      trace::exiting("canvas::labeling");
+      return output;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
-
 
   } // end of namespace mln::canvas
 

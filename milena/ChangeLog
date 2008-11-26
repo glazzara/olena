@@ -1,3 +1,17 @@
+2008-11-26  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add attribute image computation from a morpho tree.
+
+	* mln/morpho/tree/compute_attribute_image.hh: New.
+	* mln/morpho/tree/all.hh: Update.
+	* mln/morpho/tree/data.hh (function): New typedef.
+	(f): New method.
+	* mln/canvas/labeling.hh: Fix indentation.
+	Add dispatch.
+	* tests/morpho/tree/compute_attribute_image.cc: New.
+	* tests/morpho/tree/Makefile.am: Update.
+	* doc/examples/tuto_bis.cc (main): Fix missing update.
+
 2008-11-25  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix line_graph (formerly dual_graph)

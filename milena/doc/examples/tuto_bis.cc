@@ -223,7 +223,7 @@ int main()
   image2d<int> ima(3, 5);
 
   mln_VAR(cell, ima | is_cell);
-  level::fill(cell, fun::p2v::iota);
+  level::fill(cell, fun::p2v::iota());
   debug::println(cell);
   // 1   2   3 
   //      

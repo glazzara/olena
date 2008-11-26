@@ -54,6 +54,10 @@ namespace mln
       public:
 
 
+	/// Associated type of the function f.
+	typedef I function;
+
+
 	/// Ctor.
 	template <typename N>
 	data(const Image<I>& f, const Site_Set<S>& s, const Neighborhood<N>& nbh);
@@ -133,6 +137,11 @@ namespace mln
 	unsigned nroots() const
 	{
 	  return nroots_;
+	}
+
+	const I& f() const
+	{
+	  return f_;
 	}
 
       protected:
