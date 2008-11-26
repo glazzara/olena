@@ -290,7 +290,7 @@ namespace mln
       inline
       mln_ch_value(I, mln_result(F))
 	transform_dispatch(trait::image::vw_set::uni,
-			   trait::image::quant::any,
+			   trait::image::quant::low,
 			   const Image<I>& input, const Function_v2v<F>& f)
       {
 	return level::impl::transform_taken(input, f);
@@ -308,7 +308,6 @@ namespace mln
       }
 
 
-      /// FIXME check that is right
       template <typename I, typename F>
       inline
       mln_ch_value(I, mln_result(F))
@@ -319,7 +318,6 @@ namespace mln
 	return level::impl::transform_fast(input, f);
       }
 
-      /// FIXME check that is right
       template <typename I, typename F>
       inline
       mln_ch_value(I, mln_result(F))

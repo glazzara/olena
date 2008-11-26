@@ -105,8 +105,7 @@ namespace mln
 	typedef typename T::function I;
 	mln_ch_value(I, mln_result(A)) output;
 	initialize(output, acc);
-	// level::fill(output, acc);
-	level::paste(acc, output);
+	level::fill(output, acc);
 
 	trace::exiting("morpho::tree::compute_attribute_image");
 	return output;

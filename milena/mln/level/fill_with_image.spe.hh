@@ -83,8 +83,8 @@ namespace mln
 
         level::internal::fill_with_image_tests(ima, data);
 
-        pixel<const I> src (data);
-        pixel<J> dst(ima);
+        pixel<const J> src (data);
+        pixel<I> dst(ima);
         *(src.address_()) = data.buffer();
         *(dst.address_()) = ima.buffer();
 
@@ -129,7 +129,7 @@ namespace mln
 	mln_box_runstart_piter(I) p(ima.domain());
 	for_all(p)
 	{
-          pixel<J> dst(ima, p);
+          pixel<I> dst(ima, p);
 	  memcpy_(dst, make::pixel(data, p), p.run_length());
         }
 
@@ -143,6 +143,8 @@ namespace mln
         trace::entering("level::impl::fill_with_image_singleton");
 
         const J& data  = exact(data_);
+        level::internal::fill_with_image_tests(ima_, data);
+
         level::fill_with_value(ima_, data.val());
 
         trace::exiting("level::impl::fill_with_image_singleton");

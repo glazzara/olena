@@ -118,13 +118,10 @@ namespace mln
 	I& ima = exact(ima_);
 
 	internal::fill_with_value_tests(ima, val);
-        mlc_and(
-                mlc_or(mlc_is(mln_trait_image_pw_io(I),
-                              trait::image::pw_io::read_write),
-                       mlc_is(mln_trait_image_vw_io(I),
-                              trait::image::vw_io::read_write)),
-                mlc_is(mln_trait_image_value_access(I),
-                       trait::image::value_access::direct))::check();
+        mlc_or(mlc_is(mln_trait_image_pw_io(I),
+                      trait::image::pw_io::read_write),
+               mlc_is(mln_trait_image_vw_io(I),
+                      trait::image::vw_io::read_write))::check();
 
 	ima.val() = val;
 
@@ -145,13 +142,7 @@ namespace mln
       void fill_with_value_dispatch(trait::image::value_access::direct,
                                     Image<I>& ima, const V& val)
       {
-        if (mlc_is(mln_trait_image_pw_io(I),
-                   trait::image::pw_io::read_write)::value ||
-            mlc_is(mln_trait_image_vw_io(I),
-                   trait::image::vw_io::read_write)::value)
-          impl::fill_with_value_one_block(ima, val);
-        else
-          impl::generic::fill_with_value(ima, val);
+        impl::fill_with_value_one_block(ima, val);
       }
 
       template <typename I, typename V>
