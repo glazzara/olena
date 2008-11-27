@@ -3,9 +3,10 @@ int main()
 {
   using namespace mln;
 
-  image2d<char> imgb(make::box2d(5,5, 7,8));
+  // \{
+  image2d<unsigned char> imgb(make::box2d(5,5, 7,8));
   // Initialize imga with the same domain as imgb.
-  image2d<char> imga(imgb.domain());
+  image2d<unsigned char> imga(imgb.domain());
 
   // Initialize the image values.
   level::fill(imgb, 'b');
@@ -14,4 +15,5 @@ int main()
   level::paste(imgb, imga);
 
   debug::println(imga);
+  // \}
 }

@@ -1,3 +1,171 @@
+2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Upgrade tutorial.
+
+	* Doxyfile.in: add new path to included files.
+	
+	* tutorial/Makefile.am,
+	* Makefile.am: update target dependencies.
+	
+	* doc.mk: add new global variables.
+	
+	* tutorial/figures/fill-subdomain-1.pbm,
+	* tutorial/figures/fill-subdomain-2.ppm,
+	* tutorial/figures/fill-subdomain-3.ppm,
+	* tutorial/figures/fill-subdomain-4.ppm,
+	* tutorial/figures/fill-subimage-cfun-1.ppm,
+	* tutorial/figures/ima_save.pbm,
+	* tutorial/figures/labeling-compute-1.pbm,
+	* tutorial/figures/labeling-compute-2.ppm,
+	* tutorial/figures/logical-not-1.pbm,
+	* tutorial/figures/logical-not-2.pbm,
+	* tutorial/figures/logical-not-3.pbm: add new reference figures.
+
+	* tutorial/outputs/accu-right-instanciation.txt,
+	* tutorial/outputs/box2d-bbox.txt,
+	* tutorial/outputs/domain-display.txt,
+	* tutorial/outputs/estim-sites.txt,
+	* tutorial/outputs/extension-ignore.txt,
+	* tutorial/outputs/fill-call-1.txt,
+	* tutorial/outputs/fill-part-image.txt,
+	* tutorial/outputs/fill-subdomain-shorter.txt,
+	* tutorial/outputs/fill-subdomain.txt,
+	* tutorial/outputs/fill-subimage-cfun.txt,
+	* tutorial/outputs/fill.txt,
+	* tutorial/outputs/forall-piter.txt,
+	* tutorial/outputs/fun-p2v-1.txt,
+	* tutorial/outputs/graph-data-full.txt,
+	* tutorial/outputs/graph-data.txt,
+	* tutorial/outputs/graph-iter.txt,
+	* tutorial/outputs/ima-save.txt,
+	* tutorial/outputs/ima2d-2.txt,
+	* tutorial/outputs/ima2d-3.txt,
+	* tutorial/outputs/ima2d-4.txt,
+	* tutorial/outputs/ima2d-5.txt,
+	* tutorial/outputs/ima2d-6-clone.txt,
+	* tutorial/outputs/ima2d-7.txt,
+	* tutorial/outputs/ima2d-decl-2-blobs-full.txt,
+	* tutorial/outputs/ima2d-decl-2-blobs.txt,
+	* tutorial/outputs/ima2d-decl-2.txt,
+	* tutorial/samples/ima2d-display-1.cc,
+	* tutorial/outputs/ima2d-display-1.txt,
+	* tutorial/samples/ima2d-display-2.cc,
+	* tutorial/outputs/ima2d-display-2.txt,
+	* tutorial/outputs/labeling-compute-1,
+	* tutorial/outputs/labeling-compute.txt,
+	* tutorial/outputs/logical-not.txt,
+	* tutorial/outputs/mln_var.txt,
+	* tutorial/outputs/parray-append.txt,
+	* tutorial/outputs/parray-bbox.txt,
+	* tutorial/samples/parray-display-1.cc,
+	* tutorial/outputs/parray-display-1.txt,
+	* tutorial/outputs/paste-call-1.txt,
+	* tutorial/outputs/paste.txt,
+	* tutorial/outputs/predicate-1.txt,
+	* tutorial/samples/win-create-1-display.cc,
+	* tutorial/outputs/win-create-1-display.txt,
+	* tutorial/outputs/win-create-1.txt,
+	* tutorial/outputs/win-create-2.txt: Update and add new reference
+	outputs.
+
+	* tutorial/samples/accu-wrong-instanciation.cc: rename as...
+	* tutorial/samples/accu-wrong-instanciation.cc.raw: ...this.
+
+	* tutorial/samples/ima-load.cc: rename as...
+	* tutorial/samples/ima-load.cc.raw: ...this.
+
+	* tutorial/samples/ima2d-restricted-1.cc: rename as...
+	* tutorial/samples/ima2d-restricted-1.cc.raw: ...this.
+
+	* tutorial/samples/ima2d-restricted-2.cc: rename as...
+	* tutorial/samples/ima2d-restricted-2.cc.raw: ...this.
+
+	* tutorial/samples/ima2d-restricted-3.cc: rename as...
+	* tutorial/samples/ima2d-restricted-3.cc.raw: ...this.
+
+	* tutorial/samples/labeling-compute-full.cc: rename as...
+	* tutorial/samples/labeling-compute.cc: ...this.
+
+	* tutorial/samples/Makefile.am,
+	* tutorial/samples/accu-right-instanciation.cc,
+	* tutorial/samples/borderthickness.cc,
+	* tutorial/samples/dpoint-1.cc,
+	* tutorial/samples/estim-sites.cc,
+	* tutorial/samples/extension-ignore.cc,
+	* tutorial/samples/fill-call-1.cc,
+	* tutorial/samples/fill.cc,
+	* tutorial/samples/fun-p2v-1.cc,
+	* tutorial/samples/graph-data.cc,
+	* tutorial/samples/graph-iter.cc,
+	* tutorial/samples/ima-has.cc,
+	* tutorial/samples/ima-save.cc,
+	* tutorial/samples/ima-size.cc,
+	* tutorial/samples/ima2d-1.cc,
+	* tutorial/samples/ima2d-2.cc,
+	* tutorial/samples/ima2d-3.cc,
+	* tutorial/samples/ima2d-4.cc,
+	* tutorial/samples/ima2d-5.cc,
+	* tutorial/samples/ima2d-6-clone.cc,
+	* tutorial/samples/ima2d-7.cc,
+	* tutorial/samples/ima2d-rot.cc,
+	* tutorial/samples/logical-not.cc,
+	* tutorial/samples/parray-append.cc,
+	* tutorial/samples/paste-call-1.cc,
+	* tutorial/samples/paste.cc,
+	* tutorial/samples/point-1.cc,
+	* tutorial/samples/predicate-1.cc,
+	* tutorial/samples/win-create-1.cc,
+	* tutorial/samples/win-create-2.cc,
+	* tutorial/tutorial.tex: make samples compile.
+
+	* tutorial/samples/fill-part-image.cc,
+	* tutorial/samples/fill-subdomain-shorter.cc,
+	* tutorial/samples/fill-subdomain.cc,
+	* tutorial/samples/fill-subimage-cfun.cc,
+	* tutorial/samples/domain-display.cc,
+	* tutorial/samples/box2d-bbox.cc,
+	* tutorial/samples/forall-piter.cc,
+	* tutorial/samples/mln_var.cc,
+	* tutorial/samples/parray-bbox.cc: Improve samples.
+
+	* tutorial/samples/box2d-1.cc,
+	* tutorial/samples/box2d-2.cc,
+	* tutorial/samples/domain-display-1.cc,
+	* tutorial/samples/domain-display-out-1.cc,
+	* tutorial/samples/fill-part-1.cc,
+	* tutorial/samples/fill-part-2.cc,
+	* tutorial/samples/fill-part-3.cc,
+	* tutorial/samples/forall-piter-1.cc,
+	* tutorial/samples/fun-p2b-1.cc,
+	* tutorial/samples/graph-add-edges.cc,
+	* tutorial/samples/graph-add-vertex.cc,
+	* tutorial/samples/graph-data-full.cc,
+	* tutorial/samples/graph-i2v-vertex.cc,
+	* tutorial/samples/graph-iter-edge-nbh-edge.cc,
+	* tutorial/samples/graph-iter-vertex-nbh-vertex.cc,
+	* tutorial/samples/graph-iter-vertex.cc,
+	* tutorial/samples/graph-p-vertices.cc,
+	* tutorial/samples/ima2d-decl-1.cc,
+	* tutorial/samples/ima2d-decl-2-blobs-full.cc,
+	* tutorial/samples/ima2d-decl-2-blobs.cc,
+	* tutorial/samples/ima2d-decl-2.cc,
+	* tutorial/samples/ima2d-restricted-display-1.cc,
+	* tutorial/samples/labeling-compute-call.cc,
+	* tutorial/samples/labeling-compute-result.cc,
+	* tutorial/samples/mln_var-1.cc,
+	* tutorial/samples/mln_var-2.cc,
+	* tutorial/samples/mln_var-3.cc,
+	* tutorial/samples/win-create-3.cc: not needed anymore. Mostly
+	generated.
+
+	* tutorial/todoxygen.sh: move to...
+	* tutorial/tools/todoxygen.sh: ...here.
+
+	* tutorial/tools/sample_utils.hh: new set of functions to help writing
+	doc examples.
+
+	* tutorial/tools/split_sample.sh: new script to split example files.
+
 2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a test on p_vaccess.

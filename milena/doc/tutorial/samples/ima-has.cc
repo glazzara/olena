@@ -3,6 +3,7 @@ int main()
 {
   using namespace mln;
 
+  // \{
   // Default border size is set to 0.
 
   // Image defined on a box2d from
@@ -35,4 +36,5 @@ int main()
 
   std::cout << "ima2.has(2, 5) : "
 	    << ima2.has(point2d(2, 5)) << std::endl;
+  // \}
 }

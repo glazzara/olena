@@ -1,4 +1,0 @@
-bool row_oddity(mln::point2d p)
-{
-  return p.row() % 2;
-}

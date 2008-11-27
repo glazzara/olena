@@ -65,7 +65,15 @@ showstringspaces=false,linewidth=14cm}
 \backslash htmlonly%
 }
 
-\newcommand{\doxycode}[1]{
+% #1 - part number (Optional)
+% #2 - file name
+\newcommand{\doxycode}[2][1]{
+\backslash endhtmlonly%
+\backslash include #2-#1.cc%
+\backslash htmlonly%
+}
+
+\newcommand{\doxyrawcode}[1]{
 \backslash endhtmlonly%
 \backslash include #1.cc%
 \backslash htmlonly%
@@ -74,6 +82,15 @@ showstringspaces=false,linewidth=14cm}
 \newcommand{\doxyoutput}[1]{
 \backslash endhtmlonly%
 \backslash include #1.txt%
+\backslash htmlonly%
+}
+
+% Include file '#1' from a splitted output.
+% #1 - part number (Optional)
+% #2 - file name
+\newcommand{\doxymoutput}[2][1]{
+\backslash endhtmlonly%
+\backslash include #2-#1.txt%
 \backslash htmlonly%
 }
 
@@ -101,8 +118,10 @@ $$
 \renewcommand{\doxychapter}[2]{\chapter{#2}\label{#1}}
 \renewcommand{\doxysection}[2]{\section{#2}\label{#1}}
 \renewcommand{\doxysubsection}[2]{\subsection{#2}\label{#1}}
-\renewcommand{\doxycode}[1]{\lstinputlisting[frame=single]{samples/#1.cc}}
+\renewcommand{\doxycode}[2][1]{\lstinputlisting[frame=single]{samples/#2-#1.cc}}
+\renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{samples/#1.cc.raw}}
 \renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
+\renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/splitted/#2-#1.txt}}
 \renewcommand{\doxyfigure}[2]{%
 \pgfimage[width=#2]{figures/#1}%
 \label{#1}%
@@ -502,7 +521,9 @@ The previous methods are available depending on the site set. A box
 will have the bbox() method since it can be retrived in constant time: a box
 is it's own bounding box.
 
-\doxycode{box2d-1}
+\doxycode{box2d-bbox}
+Output:
+\doxyoutput{box2d-bbox}
 
 A \type{p\_array} does not have the bbox 
 method since its sites do not have to be adjacent. Maintaining such information, in
@@ -512,7 +533,9 @@ available if this information is needed.
 \type{p\_array} and \type{box} both have a nsites method since the internal structure allows a
 constant time retrieval.
 
-\doxycode{box2d-2}
+\doxycode{parray-bbox}
+Output:
+\doxyoutput{parray-bbox}
 
 
 
@@ -668,6 +691,8 @@ Output:
 Since the notion of site is independent from the image it applies on, we can
 form expressions where a site passed to several images:
 \doxycode{ima2d-4}
+Output:
+\doxyoutput{ima2d-4}
 
 
 %================================================
@@ -775,9 +800,9 @@ Output:
 \bigskip
 
 \begin{tabular}{c c}
-\doxyfigure{ima2d-rot-1}{4cm} & \doxyfigure{ima2d-rot-2}{4cm} \\
+\doxyfigure{ima2d-rot-1}{3cm} & \doxyfigure{ima2d-rot-2}{3cm} \\
 \multicolumn{2}{c}{\var{ima1} and its border before rotation (left) and \var{ima2}
-  and its border after rotation} \\
+  and its border after rotation (right).} \\
 \end{tabular}
 
 \bigskip
@@ -795,10 +820,6 @@ restrict the image to its domain.
 Note that:
 \begin{center}
 \code{ima.domain().has()} $\equiv$ \code{(ima | ima.domain()).has()}
-
-  and
-
-\code{border::get(ima.domain())} == \code{border::get(ima | ima.domain())} == 0
 \end{center}
 
 
@@ -853,7 +874,7 @@ They are located in \hpath{mln/io/$<$image-format$>$/}.
 
 Once the right header is included, the image can be loaded:
 
-\doxycode{ima-load}
+\doxyrawcode{ima-load}
 
 Note that for the PBM format, you \textbf{MUST} use ``\type{bool}'' as value type. 
 No special value type is required for other formats though.
@@ -1044,7 +1065,7 @@ dpoints:
 \doxycode{win-create-1}
 This code creates the following window where ``X'' is the central point from
 which the window is computed:
-\doxycode{win-create-1-display}
+\doxyoutput{win-create-1-display}
 
 Another way to define the same window is to provide a bool array:
 \doxycode{win-create-2}
@@ -1091,7 +1112,7 @@ Usually, we need to access a value by its coordinates. With default images it
 can be done easily, at no cost.
 
 Example with an \type{image2d}:
-\doxycode{ima2d-display-1}
+\doxyoutput{ima2d-display-1}
 
 The site \var{x} is the point (0, 1).  The image values are stored in a
 multi-dimensional array. The point coordinates can be used directly. The site
@@ -1122,17 +1143,17 @@ Then, define a \type{p\_array} with few \type{point2d}:
 \doxycode{parray-append}
 
 Now, create a point-wise image from this function and this \type{p\_array}:
-\doxycode{mln_var-1}
+\doxycode[1]{mln_var}
 
 Ima is actually that image:
-\doxycode{ima2d-display-2}
+\doxyoutput{ima2d-display-2}
 
 However, in memory, since it is based on a \type{p\_array}, sites are stored in a
 vector.
 
 The site x is the point (3, 7) which corresponds to the cell 1 in the
 \type{p\_array}.
-\doxycode{parray-display-1}
+\doxyoutput{parray-display-1}
 
 Obviously, we cannot check in constant time whether the site \var{x},
   \type{point2d} here,
@@ -1245,7 +1266,9 @@ Example of different forward iterations:
 
 A \code{for\_all()} macro is available to iterate over all the sites: \\
 
-\doxycode{forall-piter-1}
+\doxycode{forall-piter}
+Output:
+\doxyoutput{forall-piter}
 
 Note that when you declare an iterator, prefer using the ``\code{mln\_*iter}'' macros.
 They resolve the iterator type automatically from the given container type
@@ -1305,6 +1328,8 @@ name to designate an image:
 
 If a deep copy of the image is needed, a clone() routine is available:
 \doxycode{ima2d-6-clone}
+Output:
+\doxyoutput{ima2d-6-clone}
 
 
 
@@ -1336,12 +1361,12 @@ logical::not\_inplace() & Point-wise "logical not" \\
 %**************************
 \doxysection{fillop}{Fill}
 First, create an image:
-\doxycode{ima2d-decl-1}
+\doxycode[1]{fill-call-1}
 
 Memory has been allocated so data can be stored but site values
 have not been initialized yet.  So we fill \var{imga} with the value 'a':
 
-\doxycode{fill-call-1}
+\doxycode[2]{fill-call-1}
 
 The ``\code{fill}'' algorithm is located in the sub-namespace "\namespace{mln::level}" since this
 algorithm deals with the ``level'' of site values.
@@ -1364,6 +1389,7 @@ the user shall explicitly state that the image is provided so that its data is
 modified "read/write". The algorithm call shall be ``\code{level::fill(ima.rw(),
 val)}''. When forgetting the ``\code{rw()}'' call it does not compile.
 
+\doxycode[3]{fill-call-1}
 
 %**************************
 \doxysection{pasteop}{Paste}
@@ -1388,10 +1414,10 @@ With this simple example we can see that images defined on different domains (or
 set of sites) can interoperate.  The set of sites of an image is defined and
 can be accessed and printed. The following code:
 
-\doxycode{domain-display-1}
+\doxycode{domain-display}
 
 Gives:
-\doxycode{domain-display-out-1}
+\doxycode{domain-display}
 
 The notion of site sets plays an important role in Olena. Many tests are
 performed at run-time to ensure that the program is correct.
@@ -1409,12 +1435,21 @@ component id as value for each site. The background has 0 as id therefore the
 component ids start from 1.
 
 Consider the following image:
-\doxycode{ima2d-decl-2}
+\doxycode[1]{labeling-compute}
+
+Output: \\
+\begin{center}
+\doxyfigure{labeling-compute-1}{3cm}
+\end{center}
 
 Then label this image thanks to \code{labeling::blobs()}:
-\doxycode{ima2d-decl-2-blobs}
-Output:
-\doxyoutput{ima2d-decl-2-blobs-full}
+\doxycode[2]{labeling-compute}
+    
+Output: \\
+
+\begin{center}
+\doxyfigure{labeling-compute-2}{3cm}
+\end{center}
 
 Note that this routine returns the number of components in its third parameter.
 This parameter \must be of the same type as the returned image value.
@@ -1440,11 +1475,31 @@ This parameter \must be of the same type as the returned image value.
 This small routine only works on binary images. It performs a point-wise
 "logical not" and therefore "negates" the image. There are two versions of that
 algorithm a version which returns a new image and another which works in place.
+Example:
 
-Sample code:
-\doxycode{logical-not}
-Output:
-\doxyoutput{logical-not}
+Make a binary image:
+\doxycode[1]{logical-not}
+\begin{center}
+\doxyfigure{logical-not-1}{3cm}
+\end{center}
+
+Return the result in a new image:
+\doxycode[2]{logical-not}
+\begin{center}
+\begin{tabular}{c c}
+\doxyfigure{logical-not-1}{3cm} & \doxyfigure{logical-not-2}{3cm} \\
+\multicolumn{2}{c}{\var{ima} (left) and \var{ima_neg} (right) after having
+  called logical::not\_().} \\
+\end{tabular}
+\end{center}
+
+Or, work in place:
+\doxycode[3]{logical-not}
+Then, \var{ima} looks like:
+\begin{center}
+\doxyfigure{logical-not-3}{3cm}
+\end{center}
+
 
 %**************************
 \doxysection{compute}{Compute}
@@ -1520,7 +1575,7 @@ It exists two versions of each accumulator.
 \end{itemize}
 
 Note that when an accumulator is passed to \code{*::compute()}, it \must be instanciated.You cannot write:
-\doxycode{accu-wrong-instanciation}
+\doxyrawcode{accu-wrong-instanciation}
 Instead, you \must write:
 \doxycode{accu-right-instanciation}
 
@@ -1530,15 +1585,15 @@ In this example we will try to retrieve the bounding box of each component in an
 image.
 
 Consider the following image:
-\doxycode{ima2d-decl-2}
+\doxycode[1]{labeling-compute}
 
 Then label this image thanks to \code{labeling::blobs()}:
-\doxycode{ima2d-decl-2-blobs}
+\doxycode[2]{labeling-compute}
 Output:
-\doxyoutput{ima2d-decl-2-blobs-full}
+\doxymoutput[1]{labeling-compute}
 
 Then, use \code{labeling::compute()} with the bbox accumulator:
-\doxycode{labeling-compute-call}
+\doxycode[3]{labeling-compute}
 
 \code{Labeling::compute()} hold an accumulator for each component, which means it
 returns an array of accumulator results.
@@ -1546,9 +1601,9 @@ In this case, it returns an array of \type{box2d}.
 
 \textbf{Important note:} since \code{labeling::blobs()} labels the component from 1 and
 set the background to 0, we will want to iterate from 1 to nlabels included.
-\doxycode{labeling-compute-result}
+\doxycode[4]{labeling-compute}
 Output:
-\doxyoutput{labeling-compute-full}
+\doxymoutput[2]{labeling-compute}
 
 
 \subsection{Routines based on accumulators and *::compute()}
@@ -1566,8 +1621,8 @@ min\_max & Return the min and max values of the values of an image.\\
 sum & Return the sum of the values of an image.
 \end{tabular}
 
-These routines can be found in \hpath{mln/estim}.
-For example, with \code{estim::nsites()} simply write:
+These routines can be found in \hpath{mln/geom} and in \hpath{mln/estim}.
+For example, with \code{geom::nsites()} simply write:
 \doxycode{estim-sites}
 
 %====================================
@@ -1612,23 +1667,63 @@ With \type{image2d$<$int$>$}, \type{V} would be \type{int}.
 
 In this section, all along the examples, the image "\var{ima}" will refer to the
 following declaration:
-\doxycode{ima2d-decl-2}
+\doxycode[1]{fill-part-image}
+Output:
+\begin{center}
+\doxyfigure{fill-subdomain-1}{3cm}
+\end{center}
 
+\doxysubsection{restrictsiteset}{Restrict an image with a site set}
 A simple example is to fill only a part of an image with a specific value:
-\doxycode{fill-part-1}
+\doxycode[2]{fill-part-image}
 
-The two next examples extract a specific component from an image and fill a new
-image with red only in the extracted component's domain.
-\doxycode{fill-part-2}
+Output:
+\doxyoutput{fill-part-image}
+
+\doxysubsection{restrictpred}{Restrict an image with a predicate}
+In the following example, we aim at extracting a component from an image and
+create a new image with it. 
+
+First, find and label the components.
+\doxycode[2]{fill-subdomain}
+Output:
+\begin{center}
+\doxyfigure{fill-subdomain-2}{3cm}
+\end{center}
+
+Then, restrict the image to the sites being part of component 2.
+\doxycode[3]{fill-subdomain}
+
+\var{lbl\_2} is a new image. \var{lbl\_2} looks like:
+\begin{center}
+\doxyfigure{fill-subdomain-3}{3cm}
+\end{center}
+
+Finally, create a new color image, fill it with black and fill the sites part of
+component 2 with red.
+\doxycode[4]{fill-subdomain}
+Output:
+\begin{center}
+\doxyfigure{fill-subdomain-4}{3cm}
+\end{center}
 
 The previous example can be written more quickly:
-\doxycode{fill-part-3}
+\doxycode[2]{fill-subdomain-shorter}
 
-Here is an example using a C function:
-\doxycode{fun-p2b-1}
+\doxysubsection{restrictcfun}{Restrict an image with a C function}
+In this example, the image is restricted to its odd lines. A new image is
+created in which odd lines are in red and others in black.
 
-\doxycode{ima2d-restricted-display-1}
+Here is the simple C function used as predicate:
+\doxycode[1]{fill-subimage-cfun}
 
+Restrict the image with it:
+\doxycode[3]{fill-subimage-cfun}
+
+Output:
+\begin{center}
+\doxyfigure{fill-subimage-cfun-1}{3cm}
+\end{center}
 %
 \medskip
 %
@@ -1637,7 +1732,7 @@ Here is an example using a C function:
 \subsection*{Important note}
 When writing:
 
-\doxycode{ima2d-restricted-1}
+\doxyrawcode{ima2d-restricted-1}
 
 \var{sub\_D} \must be included in \code{ima.domain()}.
 
@@ -1645,20 +1740,22 @@ Let's have an image, \var{imab}, like this:
 \doxyoutput{ima2d-display-output-1}
 
 Extract a sub image from \var{imab} with sites having their value set to 1.
-\doxycode{mln_var-2}
+\doxycode[2]{mln_var}
 Then, \var{imab1} looks like:
 \doxyoutput{ima2d-display-output-2}
 
 Now, if we want to extract a sub image it may fail, depending on the site set
 used:
-\doxycode{ima2d-restricted-2}
+\doxyrawcode{ima2d-restricted-2}
 
 If you do not want this constraint, you may want to use an alternative
 operator:
-\doxycode{ima2d-restricted-3}
+\doxyrawcode{ima2d-restricted-3}
 
 In that case there is no restriction on the domain at all and the following example will work.
-\doxycode{mln_var-3}
+\doxycode[3]{mln_var}
+Output:
+\doxyoutput{mln_var}
 
 With this operator, an intersection is applied on the image domain and the
 site set.
@@ -1694,10 +1791,10 @@ First, create a graph which looks like the following:
 
 First we need to add vertices:
 
-\doxycode{graph-add-vertex}
+\doxycode[2]{graph-data}
 
 Finally, populate the graph with edges:
-\doxycode{graph-add-edges}
+\doxycode[3]{graph-data}
 
 Now there is a graph topology and we want to associate elements of this graph
 to a site in the image.
@@ -1705,10 +1802,10 @@ The idea is to use specific site sets such as \type{p\_vertices} and
 \type{p\_edges}.
 Let's associate the vertices with sites. To do so we need a function which maps
 a vertex id to a site, e.g. a \type{point2d} here.
-\doxycode{graph-i2v-vertex}
+\doxycode[4]{graph-data}
 
 Then declare a \type{p\_vertices}:
-\doxycode{graph-p-vertices}
+\doxycode[5]{graph-data}
 
 Thanks to the \type{p\_vertices} there is now a mapping between vertices and sites.
 We may like to map data to it. The idea is to provide a function which returns
@@ -1716,28 +1813,41 @@ the associated data according to the site given as parameter. Combining this
 function and the \type{p\_vertices}, we get an image which can be used with
 algorithms and \code{for\_all} loops.
 
-\doxycode{graph-data}
+\doxycode[1]{graph-data}
+\doxycode[6]{graph-data}
+
+Output:
+\doxyoutput{graph-data}
 
 Note that like any image in Olena, graph images share their data. Therefore,
 while constructing a graph image from a graph and a function, the graph is not
 copied and this is NOT a costly operation.
 
 Of course, creating a graph image is not necessary and you can work directly
-with the graph and container/function mapping indexes and data.
+with the graph and container/function mapping sites and data.
 
 \doxycode{graph-iter}
+Output:
+\doxymoutput[1]{graph-iter}
 
 Graphs have iterators like any other site sets and also provide
 specific iterators in order to iterate over graphes in a more intuitive way.
 
 Iteration over the adjacent edges of all the vertices:
-\doxycode{graph-iter-vertex}
+\doxycode[2]{graph-iter}
+Output:
+\doxymoutput[2]{graph-iter}
 
 Iteration over the adjacent edges of all the edges:
-\doxycode{graph-iter-edge-nbh-edge}
+\doxycode[3]{graph-iter}
+Output:
+\doxymoutput[3]{graph-iter}
+
 
 Iteration over the adjacent vertices of all the vertices:
-\doxycode{graph-iter-vertex-nbh-vertex}
+\doxycode[4]{graph-iter}
+Output:
+\doxymoutput[4]{graph-iter}
 
 //FIXME talk about p\_vertices and p\_edges.
 

@@ -6,33 +6,27 @@ SUBDIRS = tutorial
 
 DOXYGEN = doxygen
 
-.PHONY: doc user-doc complete-doc html_complete html_user
+.PHONY: doc user-doc complete-doc html_complete html_user tuto
 
 doc: complete-doc
 
 complete-doc: html_complete
 
-user-doc: html_user tutorial
+user-doc: html_user tuto
 
-html_complete: figures Doxyfile tuto_html 
+html_complete: Doxyfile tuto_html 
 	$(DOXYGEN) Doxyfile_complete
 
-html_user: figures Doxyfile tuto_html 
+html_user: Doxyfile tuto_html 
 	$(DOXYGEN) Doxyfile_user
 
-figures: all
-	@failcom='exit 1'; 							\
-	list='${wildcard $(FIGURES_BUILDDIR)/*.p*m}'; for img in $$list; do 		\
-	  echo "Converting $$img to png"; 					\
-	  convert $$img $(FIGURES_BUILDDIR)/`basename $$img .ppm`.png 		\
-	    || eval $$failcom; 							\
-	done; 
-
 tuto_html:
-	$(MAKE) -C tutorial tuto_html
 
-tuto: all figures
+tuto: all
 	$(MAKE) -C tutorial tuto
+
+fix-refdata:
+	$(MAKE) -C tutorial fix-refdata
 
 edit = sed -e "s|@ID@|$$Id|" 					\
 	   -e 's,@PACKAGE_NAME\@,$(PACKAGE_NAME),g' 		\

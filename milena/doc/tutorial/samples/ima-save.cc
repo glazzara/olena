@@ -1,9 +1,20 @@
-# include <mln/core/io/pgm/save.hh>
+# include <mln/essential/2d.hh>
 int main()
 {
-  mln::image2d<mln::value::int_u8> ima;
+  using namespace mln;
+
+  // \{
+  bool vals[5][5] = {
+    {1, 0, 1, 0, 0},
+    {0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 0},
+    {0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0}
+  };
+  image2d<bool> ima = make::image(vals);
 
   // ...
 
-  io::pgm::save(ima, "my_image.pgm");
+  io::pbm::save(ima, "../figures/ima_save.pbm");
+  // \}
 }

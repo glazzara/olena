@@ -1,8 +1,16 @@
-image2d<int> ima3 = clone(ima1); // Makes a deep copy.
+#include <mln/essential/2d.hh>
+int main()
+{
+  using namespace mln;
 
-ima3(p) = 3;
+  // \{
+  image2d<int> ima1(5, 5);
+  image2d<int> ima3 = clone(ima1); // Makes a deep copy.
 
-// prints "3 - 2"
-std::cout << ima3(p) << " - " << ima1(p) << std::endl;
-// prints "false"
-std::cout << (ima3.id() == ima1.id()) << std::endl;
+  point2d p(2, 2);
+  ima3(p) = 3;
+
+  std::cout << ima3(p) << " - " << ima1(p) << std::endl;
+  std::cout << (ima3.id_() == ima1.id_()) << std::endl;
+  // \}
+}

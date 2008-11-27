@@ -1,8 +1,13 @@
 #include <mln/essential/2d.hh>
+#include <doc/tutorial/tools/sample_utils.hh>
 int main()
 {
   using namespace mln;
 
+  const char *IMA1_PPM = "ima2d-rot";
+  const char *IMA2_PPM = "ima2d-rot";
+
+  // \{
   border::thickness = 30;
 
   // Declare the image to be rotated.
@@ -23,8 +28,7 @@ int main()
   // Draw the domain bounding box
   draw::box(ima1, geom::bbox(ima1_), literal::red);
   // Save the image, including its border.
-  io::ppm::save(ima1 | extended_domain,
-		"../figures/ima2d-rot-1.ppm");
+  doc::ppmsave(ima1 | extended_domain, IMA1_PPM);
 
   // Define and apply a point-wise rotation
   fun::x2x::rotation<2,float> rot1(0.5, literal::zero);
@@ -37,6 +41,7 @@ int main()
   }
 
   draw::box(ima2, ima2.bbox(), literal::red);
-  io::ppm::save(ima2 | extended_domain,
-		"../figures/ima2d-rot-2.ppm");
+  doc::ppmsave(ima2 | extended_domain, IMA2_PPM);
+  // \}
+
 }

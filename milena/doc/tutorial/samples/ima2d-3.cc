@@ -2,9 +2,12 @@
 #include <mln/core/alias/box2d.hh>
 int main()
 {
+  using namespace mln;
+
+  // \{
   box2d b(2,3);
-  image2d<int> ima(b);
-  
+  image2d<value::int_u8> ima(b);
+
   // On image2d, Site <=> point2d
   point2d p(1, 2);
 
@@ -21,8 +24,9 @@ int main()
   // Associate '2' as value for the site/point2d (1,2).
   // The value is returned by reference
   // and can be changed as well.
-  ima(p) = 2; 
+  ima(p) = 2;
   std::cout << "ima.at(1,2) = " << ima.at(1,2)
 	    << std::endl;
   std::cout << "ima(p) = " << ima(p) << std::endl;
+  // \}
 }

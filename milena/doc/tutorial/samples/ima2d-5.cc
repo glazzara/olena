@@ -1,13 +1,21 @@
-image2d<int> ima1(box2d(2, 3));
-image2d<int> ima2;
-point2d p(1,2);
+#include <mln/essential/2d.hh>
+int main()
+{
+  using namespace mln;
 
-ima2 = ima1; // ima1.id() == ima2.id()
-// and both point to the same memory area.
+  // \{
+  image2d<int> ima1(box2d(2, 3));
+  image2d<int> ima2;
+  point2d p(1,2);
 
-ima2(p) = 2; // ima1 is modified as well.
+  ima2 = ima1; // ima1.id() == ima2.id()
+  // and both point to the same memory area.
 
-// prints "2 - 2"
-std::cout << ima2(p) << " - " << ima1(p) << std::endl;
-// prints "true"
-std::cout << (ima2.id() == ima1.id()) << std::endl;
+  ima2(p) = 2; // ima1 is modified as well.
+
+  // prints "2 - 2"
+  std::cout << ima2(p) << " - " << ima1(p) << std::endl;
+  // prints "true"
+  std::cout << (ima2.id_() == ima1.id_()) << std::endl;
+  // \}
+}
