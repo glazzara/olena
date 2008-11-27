@@ -30,7 +30,10 @@
 # define MLN_MORPHO_CLOSING_ATTRIBUTE_HH
 
 /// \file mln/morpho/closing_attribute.hh
-/// \brief Morphological attribute closing.
+///
+/// Morphological attribute closing.
+///
+/// \todo How to pass dynamic data (e.g., k of accu::rank) to the routine?
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
@@ -45,10 +48,11 @@ namespace mln
   {
 
     /// Morphological attribute closing.
-    template <typename A,
-	      typename I, typename N, typename O>
-    void closing_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
-			   mln_result(A) lambda, Image<O>& output);
+    template <typename A, typename I, typename N>
+    mln_concrete(I)
+    closing_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      mln_result(A) lambda);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -68,19 +72,16 @@ namespace mln
 	mln_result(A) lambda;
 	const S s;
 
-	inline
 	void init()
 	{
 	  // FIXME: border::fill(input, mln_max(mln_value(I)));
 	}
 
-	inline
 	bool is_active(const A& attr) const
 	{
 	  return attr.to_result() < lambda;
 	}
 
-	inline
 	void inactivate(A& attr)
 	{
 	  attr.set_value(lambda);
@@ -88,7 +89,6 @@ namespace mln
 
 	// end of requirements
 
-	inline
 	closing_attribute_t(const Image<I>& input, mln_result(A) lambda)
 	  : lambda(lambda),
 	    s(level::sort_psites_increasing(exact(input)))
@@ -100,22 +100,33 @@ namespace mln
     } // end of namespace mln::morpho::impl
 
 
-    template <typename A,
-	      typename I, typename N, typename O>
+    template <typename A, typename I, typename N>
     inline
-    void closing_attribute(const Image<I>& input,
-			   const Neighborhood<N>& nbh, mln_result(A) lambda,
-			   Image<O>& output)
+    mln_concrete(I)
+    closing_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      mln_result(A) lambda)
     {
+      trace::entering("morpho::closing_attribute");
+
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      initialize(output, input);
+
       typedef impl::closing_attribute_t<I, A> F;
       F f(input, lambda);
       canvas::morpho::algebraic_union_find(input, nbh, f, output);
 
       mln_postcondition(output >= input);
+
+      trace::exiting("morpho::closing_attribute");
+      return output;
     }
 
-    // -----------------------------------------------------------
-    // Old code below.
+
+    /* -----------------------------------------------------------
+
+       Old code below.
 
     namespace impl
     {
@@ -146,11 +157,9 @@ namespace mln
 	void init()
 	{
 	  // FIXME: border::fill(input, mln_max(mln_value(I)));
-	  /* FIXME: Shouldn't it be
-
-	     border::fill(input, mln_max(mln_value(I)))
-
-	     instead?  */
+	  // FIXME: Shouldn't it be
+	  //   border::fill(input, mln_max(mln_value(I)))
+	  //   instead?
 	}
 
 	inline
@@ -198,6 +207,8 @@ namespace mln
 
       mln_postcondition(output >= input);
     }
+
+    */
 
 # endif // ! MLN_INCLUDE_ONLY
 

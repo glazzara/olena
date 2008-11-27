@@ -29,10 +29,9 @@
 #ifndef MLN_MORPHO_CLOSING_AREA_HH
 # define MLN_MORPHO_CLOSING_AREA_HH
 
-/*! \file mln/morpho/closing_area.hh
- *
- * \brief Morphological area closing.
- */
+/// \file mln/morpho/closing_area.hh
+///
+/// Morphological area closing.
 
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/count.hh>
@@ -45,35 +44,29 @@ namespace mln
   {
 
     /// Morphological area closing.
-    template <typename I, typename N, typename O>
-    void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      unsigned lambda, Image<O>& output);
-
     template <typename I, typename N>
-    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-				 unsigned lambda);
+    mln_concrete(I)
+    closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		 unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
-    inline
-    void closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      unsigned lambda, Image<O>& output)
-    {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef util::pix<I> pix_t;
-      // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
-    }
-
     template <typename I, typename N>
-    mln_concrete(I) closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
-				 unsigned lambda)
+    inline
+    mln_concrete(I)
+    closing_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		 unsigned lambda)
     {
+      trace::entering("morpho::closing_area");
+      typedef util::pix<I> pix_t;
+
+      mln_precondition(exact(input).has_data());
+
       mln_concrete(I) output;
-      initialize(output, input);
-      closing_area(input, nbh, lambda, output);
+      output = closing_attribute< accu::count<pix_t> >(input, nbh, lambda);
+
+      trace::exiting("morpho::closing_area");
       return output;
     }
 

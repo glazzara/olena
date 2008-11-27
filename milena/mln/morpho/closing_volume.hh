@@ -30,9 +30,8 @@
 # define MLN_MORPHO_CLOSING_VOLUME_HH
 
 /// \file mln/morpho/closing_volume.hh
-/// \brief Morphological volume closing.
 ///
-/// \todo Clean!
+/// Morphological volume closing.
 
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/volume.hh>
@@ -45,33 +44,29 @@ namespace mln
   {
 
     /// Morphological volume closing.
-    template <typename I, typename N, typename O>
-    void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output);
-
     template <typename I, typename N>
     mln_concrete(I)
-    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh, unsigned lambda)
-    {
-      mln_concrete(I) output;
-      initialize(output, input);
-      closing_volume(input, nbh, lambda, output);
-      return output;
-    }
+    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename I, typename N>
     inline
-    void closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output)
+    mln_concrete(I)
+    closing_volume(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda)
     {
       trace::entering("morpho::closing_volume");
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::volume<I> >(input, nbh, lambda, output);
+
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      output = closing_attribute< accu::volume<I> >(input, nbh, lambda);
+
       trace::exiting("morpho::closing_volume");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

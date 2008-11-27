@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/closing_area.cc
- *
- * \brief Test on mln::morpho::closing_area.
- */
+/// \file tests/morpho/closing_area.cc
+///
+/// Test on mln::morpho::closing_area.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -50,8 +50,5 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
-
-  morpho::closing_area(lena, c4(), 510, out);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(morpho::closing_area(lena, c4(), 510), "out.pgm");
 }

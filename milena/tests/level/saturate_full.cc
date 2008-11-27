@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,11 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/saturate_full.cc
- *
- * \brief Tests on mln::level::saturate.
- */
-
+/// \file tests/level/saturate_full.cc
+///
+/// Tests on mln::level::saturate.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -50,6 +49,9 @@
 
 namespace mln
 {
+
+  /*
+
   template <typename I, typename J>
   void
   chck(I& ref, J& out, mln_value(I) min, mln_value(I) max)
@@ -127,12 +129,16 @@ namespace mln
     chck(ima, out, min, max);
   }
 
+  */
+
 }
 
 
 int main()
 {
   using namespace mln;
+
+  /*
 
   unsigned slis_start = 1;
   unsigned slis_end   = 3;
@@ -237,5 +243,6 @@ int main()
   }
   std::cerr << "OK" << std::endl;
 
+  */
 
 }

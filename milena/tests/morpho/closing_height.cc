@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,7 +27,8 @@
 // Public License.
 
 /// \file tests/morpho/closing_height.cc
-/// \brief Test on mln::morpho::closing_height.
+///
+/// Test on mln::morpho::closing_height.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -46,8 +48,5 @@ int main()
 
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
-
-  morpho::closing_height(lena, c4(), 20, out);
-  io::pgm::save(out, "out.pgm");
+  io::pgm::save(morpho::closing_height(lena, c4(), 20), "out.pgm");
 }

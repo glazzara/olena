@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/saturate.cc
- *
- * \brief Tests on mln::level::saturate.
- */
+/// \file tests/level/saturate.cc
+///
+/// Tests on mln::level::saturate.
 
 
 #include <mln/core/image/image2d.hh>
@@ -47,7 +47,7 @@ int main()
     { 6, 6, 6 }
   };
 
-  image2d<int> ref(make::image(vs));
+  image2d<int> ref = make::image(vs);
   debug::iota(ima);
   level::saturate_inplace(ima, 2, 6);
   box_fwd_piter_<point2d> p(ima.domain());

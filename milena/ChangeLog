@@ -1,5 +1,22 @@
 2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Update some routines so that they return output.
+
+	* mln/morpho/closing_volume.hh,
+	* mln/morpho/closing_area.hh,
+	* mln/morpho/closing_height.hh,
+	* mln/morpho/closing_attribute.hh,
+	* tests/morpho/closing_volume.cc,
+	* tests/morpho/closing_height.cc,
+	* tests/morpho/closing_area.cc,
+	* mln/level/saturate.hh,
+	* tests/level/saturate.cc,
+	* tests/level/saturate_full.cc: Update to current style, i.e.,
+	with 'output' as return.
+	* mln/morpho/tree/compute_attribute_image.hh: Add commentaries.
+
+2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix morpho attribute image computation.
 
 	* tests/morpho/tree/compute_attribute_image.cc

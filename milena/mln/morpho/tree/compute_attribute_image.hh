@@ -37,7 +37,6 @@
 # include <mln/core/concept/image.hh>
 # include <mln/util/pix.hh>
 # include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
 
 
 
@@ -84,25 +83,40 @@ namespace mln
       {
 	trace::entering("morpho::tree::compute_attribute_image");
 
-	const A& a = exact(a_);
-
 	typedef typename T::function I;
 	mln_ch_value(I, A) acc;
 	initialize(acc, t.f());
 
 	{
+	  // Transmit "dynamic data" (state) of 'a' to every values of
+	  // 'acc'.  It is usually a no-op (so useless) except for a
+	  // few accumulators, e.g., for accu::rank which has the 'k'
+	  // attribute.
+	  A a = exact(a_);
+	  level::fill(acc, a);
+	}
+	{
+	  // Initialize every attribute with the corresponding pixel.
 	  mln_piter(I) p(t.f().domain());
 	  for_all(p)
 	    acc(p).take_as_init(make::pix(t.f(), p));
 	}
 	{
 	  mln_piter(T) p(t.domain());
+	  // Propagate attribute from a site to its parent.
 	  for_all(p)
 	    if (! t.is_root(p))
 	      acc(t.parent(p)).take(acc(p));
+	  // Back-propagate attribute from a node to sites of its
+	  // component.  Below, p is a non-node component site and
+	  // parent(p) is a node, that is, the site representative of
+	  // the component p belongs to.
 	  for_all(p)
 	    if (! t.is_a_node(p))
-	      acc(p) = acc(t.parent(p));
+	      {
+		mln_assertion(t.is_a_node(t.parent(p)));
+		acc(p) = acc(t.parent(p));
+	      }
 	}
 
 	typedef typename T::function I;

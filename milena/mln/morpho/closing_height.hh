@@ -30,7 +30,10 @@
 # define MLN_MORPHO_CLOSING_HEIGHT_HH
 
 /// \file mln/morpho/closing_height.hh
-/// \brief Morphological height closing.
+///
+/// Morphological height closing.
+///
+/// \todo The test result looks very weird...  Debug!
 
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/height.hh>
@@ -43,21 +46,29 @@ namespace mln
   {
 
     /// Morphological height closing.
-    template <typename I, typename N, typename O>
-    void closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output);
+    template <typename I, typename N>
+    mln_concrete(I)
+    closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename I, typename N>
     inline
-    void closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output)
+    mln_concrete(I)
+    closing_height(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      // FIXME: Change sig of closing_attribute!
-      closing_attribute< accu::height<I> >(input, nbh, lambda, output);
+      trace::entering("morpho::closing_height");
+
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      output = closing_attribute< accu::height<I> >(input, nbh, lambda);
+
+      trace::exiting("morpho::closing_height");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
