@@ -1,5 +1,17 @@
 2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix morpho attribute image computation.
+
+	* tests/morpho/tree/compute_attribute_image.cc
+	(main): Use relevant input image to test.
+	* mln/math/diff_abs.hh: Upgrade doc style.
+	(diff_abs): Use a test to be more robuste; remind that
+	1u - 2u is not equal to -1 in C!
+	* mln/morpho/tree/compute_attribute_image.hh: Fix.
+	Non-nodes have to fetch the attribute of their component.
+
+2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update tests on morpho compute parent tree.
 
 	* tests/core/site_set/p_vaccess.cc: Layout.

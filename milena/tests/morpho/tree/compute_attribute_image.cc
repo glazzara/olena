@@ -49,11 +49,11 @@ int main()
   using namespace mln;
 
   {
-    unsigned vals[] = { 5, 6, 6,
-			8, 9, 9,
-			8, 9, 9  };
+    unsigned char vals[] = { 3, 2, 1,
+			     3, 2, 3,
+			     3, 4, 1 };
 
-    typedef image2d<unsigned> I;
+    typedef image2d<unsigned char> I;
     I f = make::image2d(vals);
     debug::println(f);
 

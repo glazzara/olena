@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MATH_DIFF_ABS_HH
 # define MLN_MATH_DIFF_ABS_HH
 
-/*! \file mln/math/diff_abs.hh
- *
- * \brief Define diff_abs routine.
- */
+/// \file mln/math/diff_abs.hh
+///
+/// \brief Define diff_abs routine.
 
 
 namespace mln
@@ -50,7 +50,7 @@ namespace mln
     inline
     T diff_abs(const T& v1, const T& v2)
     {
-      return abs(v1 - v2);
+      return v1 > v2 ? v1 - v2 : v2 - v1;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

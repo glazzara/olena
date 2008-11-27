@@ -100,6 +100,9 @@ namespace mln
 	  for_all(p)
 	    if (! t.is_root(p))
 	      acc(t.parent(p)).take(acc(p));
+	  for_all(p)
+	    if (! t.is_a_node(p))
+	      acc(p) = acc(t.parent(p));
 	}
 
 	typedef typename T::function I;
