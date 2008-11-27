@@ -1,4 +1,13 @@
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+	
+	Add new examples.
+
+	* doc/examples/erosion.cc: Apply a vertical and a horizontal erosion
+	on a given image.
+
+	* doc/examples/graph.cc: Show how to use graphes with images.
+
+2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.
 
