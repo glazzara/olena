@@ -1,5 +1,27 @@
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* mln/accu/center.hh: make it compute the mass center instead of the
+	bbox center.
+
+	* mln/core/site_set/p_graph_piter.hh: add element();
+
+	* mln/debug/colorize.hh: Pass the color type as arguments instead of
+	passing the return type as template parameter.
+	
+	* mln/debug/draw_graph.hh: add a new signature.
+
+	* mln/literal/colors.hh,
+	* mln/level/convert.hh: update comments.
+
+	* mln/level/transform.spe.hh: add new specializations/dispatches when
+	the function is of type Function_i2v.
+
+	* mln/value/label.hh: Fix missing include.
+
+2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update unit_tests and labeling::compute test.
 
 	* tests/labeling/compute.cc: use label8 instead of int_u8 as labeled

@@ -97,9 +97,9 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_lowq(const Image<I>& input_, const Function_v2v<F>& f_)
+	transform_lowq_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-	trace::entering("level::impl::transform_lowq");
+	trace::entering("level::impl::transform_lowq_v2v");
 
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
@@ -118,6 +118,31 @@ namespace mln
 	for_all(p)
 	  output(p) = lut(input(p));
 
+	trace::exiting("level::impl::transform_lowq_v2v");
+        return output;
+      }
+
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_lowq_i2v(const Image<I>& input_, const Function_i2v<F>& f_)
+      {
+	trace::entering("level::impl::transform_lowq");
+
+        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+               trait::image::pw_io::read_write)::check();
+
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
+
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  output(p) = f(input(p));
+
 	trace::exiting("level::impl::transform_lowq");
         return output;
       }
@@ -125,9 +150,9 @@ namespace mln
 
       template <typename I, typename F>
       mln_ch_value(I, mln_result(F))
-	transform_taken(const Image<I>& input_, const Function_v2v<F>& f_)
+	transform_taken_v2v(const Image<I>& input_, const Function_v2v<F>& f_)
       {
-        trace::entering("level::impl::transform_taken");
+        trace::entering("level::impl::transform_taken_v2v");
 
         mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
                trait::image::pw_io::read_write)::check();
@@ -146,7 +171,32 @@ namespace mln
 	for_all(p)
 	  output(p) = lut(input(p));
 
-	trace::exiting("level::impl::transform_taken");
+	trace::exiting("level::impl::transform_taken_v2v");
+        return output;
+      }
+
+
+      template <typename I, typename F>
+      mln_ch_value(I, mln_result(F))
+	transform_taken_i2v(const Image<I>& input_, const Function_i2v<F>& f_)
+      {
+        trace::entering("level::impl::transform_taken_i2v");
+
+        mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
+               trait::image::pw_io::read_write)::check();
+
+	const I& input  = exact(input_);
+	const F& f      = exact(f_);
+        level::internal::transform_tests(input, f);
+
+        mln_ch_value(I, mln_result(F)) output;
+        initialize(output, input);
+
+	mln_piter(I) p(input.domain());
+	for_all(p)
+	  output(p) = f(input(p));
+
+	trace::exiting("level::impl::transform_taken_i2v");
         return output;
       }
 
@@ -189,12 +239,8 @@ namespace mln
 
         mln_pixter(const I) pi(input);
         mln_pixter(O) po(output);
-        po.start();
-        for_all(pi)
-        {
+	for_all_2(pi, po)
           po.val() = f(pi.val());
-          po.next();
-        }
 
 	trace::exiting("level::impl::transform_fast");
         return output;
@@ -226,7 +272,6 @@ namespace mln
 	trace::exiting("level::impl::transform_fast_lowq");
         return output;
       }
-
 
       template <typename I1, typename I2, typename F>
       mln_ch_value(I1, mln_result(F))
@@ -293,9 +338,18 @@ namespace mln
 			   trait::image::quant::low,
 			   const Image<I>& input, const Function_v2v<F>& f)
       {
-	return level::impl::transform_taken(input, f);
+	return level::impl::transform_taken_v2v(input, f);
       }
 
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::vw_set::uni,
+			   trait::image::quant::low,
+			   const Image<I>& input, const Function_i2v<F>& f)
+      {
+	return level::impl::transform_taken_i2v(input, f);
+      }
 
       template <typename I, typename F>
       inline
@@ -304,9 +358,18 @@ namespace mln
 			   trait::image::quant::low,
 			   const Image<I>& input, const Function_v2v<F>& f)
       {
-	return level::impl::transform_lowq(input, f);
+	return level::impl::transform_lowq_v2v(input, f);
       }
 
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::vw_set::any,
+			   trait::image::quant::low,
+			   const Image<I>& input, const Function_i2v<F>& f)
+      {
+	return level::impl::transform_lowq_i2v(input, f);
+      }
 
       template <typename I, typename F>
       inline
@@ -328,7 +391,15 @@ namespace mln
 	return level::impl::transform_fast_lowq(input, f);
       }
 
-
+      template <typename I, typename F>
+      inline
+      mln_ch_value(I, mln_result(F))
+	transform_dispatch(trait::image::quant::low,
+			   trait::image::value_access::direct,
+			   const Image<I>& input, const Function_i2v<F>& f)
+      {
+	return level::impl::transform_fast(input, f);
+      }
 
       template <typename I, typename F>
       inline
@@ -339,7 +410,7 @@ namespace mln
       {
 	return transform_dispatch(mln_trait_image_vw_set(I)(),
 				  mln_trait_image_quant(I)(),
-				  input, f);
+				  input, exact(f));
       }
 
 
@@ -351,7 +422,7 @@ namespace mln
       {
 	return transform_dispatch(mln_trait_image_vw_set(I)(),
 				  mln_trait_image_quant(I)(),
-				  input, f);
+				  input, exact(f));
       }
 
       template <typename I, typename F>
@@ -376,11 +447,11 @@ namespace mln
 		   trait::image::value_alignement::with_grid)::value)
 	  return transform_dispatch(mln_trait_image_quant(I)(),
 				    mln_trait_image_value_access(I)(),
-				    input, f_);
+				    input, exact(f_));
 	else
 	  return transform_dispatch(mln_trait_image_vw_set(I)(),
 				    mln_trait_image_quant(I)(),
-				    input, f_);
+				    input, exact(f_));
       }
 
 
@@ -422,7 +493,7 @@ namespace mln
 	transform_dispatch(const Image<I>& input, const Function_v2v<F>& f)
       {
 	return transform_dispatch(mln_trait_image_value_storage(I)(),
-				  input, f);
+				  input, exact(f));
       }
 
       template <typename I1, typename I2, typename F>

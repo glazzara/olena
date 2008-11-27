@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_LITERAL_COLORS_HH
 # define MLN_LITERAL_COLORS_HH
 
-/*! \file mln/literal/colors.hh
- * \brief Definition of the colors literal.
- *
- */
+/// \file mln/literal/colors.hh
+///
+/// Definition of the colors literal.
 
 # include <mln/core/concept/literal.hh>
 

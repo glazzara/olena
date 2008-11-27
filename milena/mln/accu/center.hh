@@ -30,7 +30,7 @@
 
 /// \file mln/accu/center.hh
 ///
-/// Define an accumulator that computes the center of a site set.
+/// Define an accumulator that computes the mass center of a site set.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/bbox.hh>
@@ -66,7 +66,8 @@ namespace mln
       bool is_valid() const;
 
     protected:
-      accu::bbox<P> bbox_;
+      algebra::vec<P::dim, float> center_;
+      unsigned nsites_;
     };
 
     namespace meta
@@ -102,14 +103,16 @@ namespace mln
     void
     center<P>::init()
     {
-      bbox_.init();
+      center_ = literal::zero;
+      nsites_ = 0;
     }
 
     template <typename P>
     inline
     void center<P>::take(const argument& t)
     {
-      bbox_.take(t);
+      center_ += t.to_vec();
+      ++nsites_;
     }
 
     template <typename P>
@@ -117,7 +120,8 @@ namespace mln
     void
     center<P>::take(const center<P>& other)
     {
-      bbox_.take(other.bbox_);
+      center_ += other.center_;
+      nsites_ += other.nsites_;
     }
 
     template <typename P>
@@ -125,14 +129,14 @@ namespace mln
     P
     center<P>::to_result() const
     {
-      return bbox_.to_result().center();
+      return P(center_ / nsites_);
     }
 
     template <typename P>
     inline
     center<P>::operator P() const
     {
-      return P(bbox_.to_result().center());
+      return to_result();
     }
 
     template <typename P>
@@ -140,7 +144,7 @@ namespace mln
     bool
     center<P>::is_valid() const
     {
-      return bbox_.is_valid();
+      return nsites_ > 0;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

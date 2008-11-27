@@ -79,6 +79,9 @@ namespace mln
     void next_();
     /// \}
 
+    /// Return the underlying graph element.
+    mln_q_subject(iter) element();
+
   private:
 
     /// Update the psite corresponding to this iterator.
@@ -89,7 +92,7 @@ namespace mln
     /// The psite corresponding to this iterator.
     using super_::p_;
 
-    /// The underlying vertex iterator.
+    /// The underlying graph iterator.
     iter iter_;
   };
 
@@ -152,6 +155,14 @@ namespace mln
     iter_.next();
     if (this->is_valid())
       update_();
+  }
+
+  template <typename S, typename I>
+  inline
+  mln_q_subject(I)
+  p_graph_piter<S,I>::element()
+  {
+    return iter_.subj_();
   }
 
   template <typename S, typename I>

@@ -36,6 +36,7 @@
 /// \todo write a version for graph images.
 
 # include <mln/core/site_set/p_vertices.hh>
+# include <mln/core/site_set/p_edges.hh>
 # include <mln/draw/line.hh>
 # include <mln/level/fill.hh>
 
@@ -58,8 +59,13 @@ namespace mln
     template <typename I, typename G, typename F>
     void
     draw_graph(Image<I>& ima, const p_vertices<G, F>& pv,
-	  mln_value(I) vertex_v, mln_value(I) edge_v);
+	       mln_value(I) vertex_v, mln_value(I) edge_v);
 
+
+    template <typename I, typename G, typename F, typename E>
+    void
+    draw_graph(Image<I>& ima,
+	       const p_vertices<G, F>& pv, const Function<E>& fcolor);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -73,13 +79,10 @@ namespace mln
     inline
     void
     draw_graph(Image<I>& ima,
-	  const p_vertices<G, F>& pv,
-	  mln_value(I) vertex_v,
-	  mln_value(I) edge_v)
+	       const p_vertices<G, F>& pv,
+	       mln_value(I) vertex_v,
+	       mln_value(I) edge_v)
     {
-      // Fill the background.
-      level::fill(ima, literal::black);
-
       // Draw edges.
       const G& g = pv.graph();
       typedef p_vertices<G, F> pv_t;
@@ -94,7 +97,28 @@ namespace mln
 	  exact(ima)(p) = vertex_v;
     }
 
+    // FIXME: Refactor + be more restrictive on the function type.
+    template <typename I, typename G, typename F, typename E>
+    inline
+    void
+    draw_graph(Image<I>& ima,
+	       const p_vertices<G, F>& pv, const Function<E>& fcolor_)
+    {
+      const E& fcolor = exact(fcolor_);
 
+      // Draw edges.
+      const G& g = pv.graph();
+      typedef p_vertices<G, F> pv_t;
+      mln_edge_iter(G) ei(g);
+      for_all(ei)
+	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), fcolor(ei));
+
+      // Draw vertices.
+      mln_piter(pv_t) p(pv);
+      for_all(p)
+	if (exact(ima).has(p))
+	  exact(ima)(p) = fcolor(p.element());
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

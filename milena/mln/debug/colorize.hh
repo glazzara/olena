@@ -61,11 +61,15 @@ namespace mln
      * variables mln::debug::colorize_::min_value and
      * mln::debug::colorize_::max_value.
      *
+     * \param[in] value value type used in the returned image.
      * \param[in] labeled_image A labeled image (\sa labeling::blobs).
      * \param[in] nlabels Number of labels.
      */
-    template <typename I, typename L>
-    mln_concrete(I) colorize(const Image<L>& labeled_image, mln_value(L) nlabels);
+    template <typename V, typename L>
+    mln_ch_value(L, V)
+    colorize(const V& value,
+	     const Image<L>& labeled_image,
+	     const mln_value(L)& nlabels);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -93,18 +97,22 @@ namespace mln
 
     }
 
-    template <typename I, typename L>
+    template <typename V, typename L>
     inline
-    mln_concrete(I)
-    colorize(const Image<L>& input, mln_value(L) nlabels)
+    mln_ch_value(L, V)
+    colorize(const V& value,
+	     const Image<L>& input,
+	     const mln_value(L)& nlabels)
     {
       trace::entering("debug::colorize");
       mln_precondition(exact(input).has_data());
+      // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
       mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
+      (void) value;
 
       unsigned label_count = nlabels.next();
-      static fun::i2v::array<mln_value(I)> f(0);
+      static fun::i2v::array<V> f(0);
       int diff_size = f.size() - label_count;
       if (diff_size < 0)
       {
@@ -119,8 +127,8 @@ namespace mln
 	for (; i < f.size(); ++i)
 	  f(i) = internal::random_color();
       }
-      mln_precondition(f.size() == (label_count));
-      mln_concrete(I) output = level::transform(input, f);
+      mln_assertion(f.size() >= (label_count));
+      mln_ch_value(L, V) output = level::transform(input, f);
 
       trace::exiting("debug::colorize");
       return output;

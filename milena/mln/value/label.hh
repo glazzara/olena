@@ -32,12 +32,13 @@
 ///
 /// Define a generic class for labels.
 
+# include <mln/debug/format.hh>
 # include <mln/metal/math/pow.hh>
+# include <mln/trait/value_.hh>
 # include <mln/value/concept/symbolic.hh>
 # include <mln/value/internal/value_like.hh>
 # include <mln/value/internal/convert.hh>
 # include <mln/value/internal/encoding.hh>
-# include <mln/trait/value_.hh>
 
 
 namespace mln
