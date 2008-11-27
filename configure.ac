@@ -208,11 +208,14 @@ AC_CONFIG_FILES([
       milena/tests/linear/local/Makefile
     milena/tests/literal/Makefile
     milena/tests/logical/Makefile
+    milena/tests/make/Makefile
     milena/tests/math/Makefile
     milena/tests/metal/Makefile
       milena/tests/metal/make/Makefile
       milena/tests/metal/math/Makefile
     milena/tests/morpho/Makefile
+    milena/tests/morpho/elementary/Makefile
+    milena/tests/morpho/tree/Makefile
     milena/tests/neighb/Makefile
     milena/tests/norm/Makefile
     milena/tests/pw/Makefile
