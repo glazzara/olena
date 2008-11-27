@@ -1,3 +1,9 @@
+2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+  
+	Add a missing Makefile.am
+
+	* milena/tests/morpho/elementary/Makefile.am: new.
+
 2008-11-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Temporarily disable the compilation of some examples.
