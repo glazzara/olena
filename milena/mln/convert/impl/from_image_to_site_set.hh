@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +28,13 @@
 #ifndef MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
 # define MLN_CONVERT_IMPL_FROM_IMAGE_TO_SITE_SET_HH
 
-/*! \file mln/convert/from_to.hh
- *
- * \brief General conversion procedure from an image to a site_set.
- *
- * \todo Augment code + add checks.
- *
- * \todo Add (?) the case p_run-based -> site set.
- */
+/// \file mln/convert/from_to.hh
+///
+/// General conversion procedure from an image to a site_set.
+///
+/// \todo Augment code + add checks.
+///
+/// \todo Add (?) the case p_run-based -> site set.
 
 # include <utility>
 # include <mln/core/concept/image.hh>
@@ -122,6 +121,18 @@ namespace mln
  		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(v, p_run<P>(start, q));
 	  }
+      }
+
+
+      template <typename I, typename P, typename S>
+      void
+      from_image_to_site_set_(const I& input, const Gpoint<P>&,
+			      S& s,           const std::pair< mln_value(I), P >&)
+      {
+	s.clear();
+	mln_fwd_piter(I) p(input.domain());
+	for_all(p)
+	  s.insert(input(p), p);
       }
 
 

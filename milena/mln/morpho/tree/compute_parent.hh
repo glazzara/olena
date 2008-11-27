@@ -101,6 +101,20 @@ namespace mln
 	}
 
 
+	// Z-Find-Root.
+
+	template <typename T>
+	inline
+	mln_psite(T)
+	zfind_root(T& zpar, const mln_psite(T)& x)
+	{
+	  mlc_equal(mln_value(T), mln_psite(T))::check();
+	  if (zpar(x) == x)
+	    return x;
+	  else
+	    return zpar(x) = zfind_root(zpar, zpar(x));
+	}
+
       }  // end of namespace mln::morpho::tree::internal
 
 
@@ -113,21 +127,6 @@ namespace mln
 
 	namespace generic
 	{
-
-	  // Z-Find-Root.
-
-	  template <typename T>
-	  inline
-	  mln_psite(T) zfind_root(T& zpar, const mln_psite(T)& x)
-	  {
-	    mlc_equal(mln_value(T), mln_psite(T))::check();
-	    if (zpar(x) == x)
-	      return x;
-	    else
-	      return zpar(x) = zfind_root(zpar, zpar(x));
-	  }
-
-	  // Compute-Parent.
 
 	  template <typename I, typename N, typename S>
 	  inline
@@ -163,34 +162,34 @@ namespace mln
 	    mln_bkd_piter(S) p(s);
 	    mln_niter(N) n(nbh, p);
 	    for_all(p)
-	      {
-		// Make-Set.
-		parent(p) = p;
-		zpar(p) = p;
+	    {
+	      // Make-Set.
+	      parent(p) = p;
+	      zpar(p) = p;
 
-		for_all(n)
-		  if (f.domain().has(n) && deja_vu(n))
-		    {
-		      // Do-Union.
-		      P r = zfind_root(zpar, n);
-		      if (r != p)
-			{
-			  parent(r) = p;
-			  zpar(r) = p;
-			}
-		    }
-		deja_vu(p) = true;
-	      }
+	      for_all(n)
+		if (f.domain().has(n) && deja_vu(n))
+		  {
+		    // Do-Union.
+		    P r = internal::zfind_root(zpar, n);
+		    if (r != p)
+		      {
+			parent(r) = p;
+			zpar(r) = p;
+		      }
+		  }
+	      deja_vu(p) = true;
+	    }
 
 	    // Canonization.
 	    {
 	      mln_fwd_piter(S) p(s);
 	      for_all(p)
-		{
-		  P q = parent(p);
-		  if (f(parent(q)) == f(q))
-		    parent(p) = parent(q);
-		}
+	      {
+		P q = parent(p);
+		if (f(parent(q)) == f(q))
+		  parent(p) = parent(q);
+	      }
 	    }
 
 	    trace::exiting("morpho::tree::impl::generic::compute_parent");
@@ -200,7 +199,6 @@ namespace mln
 	}  // end of namespace mln::morpho::tree::impl::generic
 
       }  // end of namespace mln::morpho::tree::impl
-
 
 
       // Dispatch.

@@ -25,63 +25,43 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_HH
-# define MLN_CONVERT_TO_HH
-
-/// \file mln/convert/to.hh
+/// \file tests/core/site_set/p_vaccess.cc
 ///
-/// General conversion procedure given the destination type.
-///
-/// \todo Prefer a static check that fails in the "unknown" case.
+/// Tests on mln::p_vaccess.
 
-# include <mln/core/routine/exact.hh>
-# include <mln/metal/equal.hh>
-# include <mln/trace/all.hh>
-# include <mln/convert/from_to.hxx>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/core/site_set/p_vaccess.hh>
+#include <mln/debug/println.hh>
+#include <mln/convert/to.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace convert
+  unsigned char vals[] = { 1, 2, 1,
+			   2, 2, 3,
+			   3, 4, 1 };
+  image2d<unsigned char> ima = make::image2d(vals);
+
+  debug::println(ima);
+
+  typedef p_array<point2d> Arr;
+  typedef p_vaccess<unsigned char, Arr> S;
+
+  S s = convert::to<S>(ima);
+  
+  mln_viter_(S::vset) v(s.values());
+  for_all(v)
   {
+    if (s(v).nsites() == 0)
+      continue;
+    std::cout << int(v) << ": ";
+    mln_piter_(Arr) p(s(v));
+    for_all(p)
+      std::cout << p << ' ';
+    std::cout << std::endl;
+  }
 
-
-    /// Conversion of the object \p from towards an object with type \c T.
-    template <typename T, typename O>
-    T
-    to(const O& from);
-
-    // This is no "Object" here to remain as general as possible.  For
-    // instance, the conversion "float -> glf" should occur.
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename T, typename O>
-    inline
-    T
-    to(const O& from)
-    {
-      mlc_equal(T, mln_exact(T))::check();
-      mlc_equal(O, mln_exact(O))::check();
-      trace::entering("convert::to");
-
-      T tmp;
-      from_to(from, tmp);
-
-      trace::exiting("convert::to");
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
-
-
-# include <mln/convert/from_to.hh>
-
-
-#endif // ! MLN_CONVERT_TO_HH
+}

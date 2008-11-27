@@ -1,3 +1,20 @@
+2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add a test on p_vaccess.
+
+	* doc/tutorial/examples/p_vaccess.cc: Fix missing update.
+	* tests/core/site_set/p_vaccess.cc: New.
+	* tests/core/site_set/Makefile.am: Update.
+	* mln/convert/to.hh (include): New: from_to.hh
+	so that user of convert::to does not have to also include
+	convert::from_to.
+	* mln/convert/impl/from_image_to_site_set.hh
+	(from_image_to_site_set_): New overload for s containing
+	pairs like (v,p).
+	Upgrade doc style.
+	* mln/morpho/tree/compute_parent.hh
+	(zfind_root): Move from impl::generic to internal.
+
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
   
 	Add a missing Makefile.am

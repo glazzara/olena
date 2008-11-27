@@ -13,6 +13,7 @@ check_PROGRAMS =				\
   p_queue_fast					\
   p_set						\
   pset_if 					\
+  p_vaccess 					\
   p_vertices
 
 p_array_SOURCES = p_array.cc
@@ -24,6 +25,7 @@ p_queue_SOURCES = p_queue.cc
 p_queue_fast_SOURCES = p_queue_fast.cc
 p_set_SOURCES = p_set.cc
 pset_if_SOURCES = pset_if.cc
+p_vaccess_SOURCES = p_vaccess.cc
 p_vertices_SOURCES = p_vertices.cc
 p_edges_SOURCES = p_edges.cc
 
