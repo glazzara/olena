@@ -64,10 +64,7 @@ namespace mln
                          unsigned limit,
                          Image<O>& output_)
     {
-      trace::entering("canvas::morpho::algebraic_union_find");
-
       std::cout << "limit = " << limit << std::endl;
-
 
       const I& input = exact(input_);
       const N& nbh = exact(nbh_);
@@ -105,7 +102,7 @@ namespace mln
 
       // first pass
       do {
-        std::cout << "lambda=" << lambda << "-------" << std::endl;
+          std::cout << "lambda=" << lambda << "-------" << std::endl;
 
           // init
           mln_ch_value(O, A)     data;
@@ -184,8 +181,6 @@ namespace mln
           else
             output(p) = output(parent(p));
       }
-
-      trace::exiting("canvas::morpho::algebraic_union_find");
     }
 
 # endif // ! MLN_INCLUDE_ONLY

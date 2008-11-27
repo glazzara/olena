@@ -1,3 +1,12 @@
+2008-11-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Start new version using value iteration.
+
+	* jardonnet/n_cmpt/n_cmpt2.hh: New version.
+	* jardonnet/n_cmpt/n_cmpt2.cc: New version.
+	* jardonnet/n_cmpt/Makefile (n_cmpt2): Add rule.
+	* jardonnet/n_cmpt/n_cmpt.hh: Minor fix.
+
 2008-11-26  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Try an auto dual area filter using TUFA.
