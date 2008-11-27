@@ -39,26 +39,58 @@
 namespace mln
 {
 
-  namespace value
+//   namespace value
+//   {
+//     template <unsigned int n>
+//     struct op_less< mln::value::rgb<n> >
+//     {
+//       bool operator()(const mln::value::rgb<n> &a, const mln::value::rgb<n> &b)
+//       {
+// 	return a.red() < b.red();
+//       }
+//     };
+//   }
+
+  struct red_only
   {
-    template <unsigned int n>
-    struct op_less< mln::value::rgb<n> >
+    template <unsigned n>
+    bool less(const value::rgb<n>& a, const value::rgb<n>& b)
     {
-      bool operator()(const mln::value::rgb<n> &a, const mln::value::rgb<n> &b)
-      {
-	return a.red() < b.red();
-      }
-    };
-  }
+      return a.red() < b.red();
+    }
+  };
+
 }
+
+
+template <typename T, typename A>
+const T& my_violent_cast(const A& a)
+{
+  return *(const T*)(const void*)(&a);
+}
+
+
+template <typename T, typename A>
+T& my_violent_cast(A& a)
+{
+  return *(T*)(void*)(&a);
+}
+
 
 int main ()
 {
-  mln::value::rgb8 r(12, 13, 14);
-  mln::value::rgb8 s(13, 14, 15);
+  using namespace mln;
 
-  std::cout
-    << ( *(mln::value::mixin<mln::value::rgb8, mln::value::op_less>*)(void*) &r <
-	 *(mln::value::mixin<mln::value::rgb8, mln::value::op_less>*)(void*) &s )
-    << std::endl;
+  value::rgb8 r(12, 13, 14);
+  value::rgb8 s(13, 14, 15);
+
+  typedef value::mixin<value::rgb8,red_only> Rgb;
+
+  std::cout << ( my_violent_cast<Rgb>(r) < my_violent_cast<Rgb>(s) ) << std::endl;
+
+
+//   std::cout
+//     << ( *(value::mixin<value::rgb8, value::op_less>*)(void*) &r <
+// 	 *(value::mixin<value::rgb8, value::op_less>*)(void*) &s )
+//     << std::endl;
 }

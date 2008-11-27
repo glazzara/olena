@@ -35,16 +35,17 @@
 
 namespace mln
 {
+
   namespace value
   {
-    template <typename T, template <typename> class F>
+    template <typename T, typename F>
     struct mixin;
   }
 
   namespace trait
   {
 
-    template <typename T, template <typename> class F>
+    template <typename T, typename F>
     struct value_< mln::value::mixin<T, F> >
       : value_< T > // FIXME
     {
@@ -52,23 +53,59 @@ namespace mln
 
   } // end of namespace trait
 
+
   namespace value
   {
 
-    template <typename T, template <typename> class F>
-    struct mixin : T, Value < mixin<T, F> >, internal::value_like_ <T, mln_enc(T), mixin<T, F>, mixin<T, F> >
+    template <typename T, typename F>
+    struct mixin : T // , Value < mixin<T, F> >, internal::value_like_ <T, mln_enc(T), mixin<T, F>, mixin<T, F> >
     {
-      typedef T value;
+      // typedef T value;
 
-      // Ctor ?
+      mixin()
+      {
+      }
 
-      // operator (T) ();
+      mixin(const T& t)
+	: T(t)
+      {
+      }
 
+      mixin(const mixin& rhs)
+	: T(rhs)
+      {
+      }
+
+      mixin& operator=(const mixin& rhs)
+      {
+	// FIXME: (?) Test if (this == &rhs)...
+	this->T::operator=(rhs);
+	return *this;
+      }
+
+      mixin& operator=(const T& t)
+      {
+	// FIXME: (?) Test if (this == &t)...
+	this->T::operator=(t);
+	return *this;
+      }
     };
+
+  } // end of namespace mln::value
+
+
+  template <typename T, typename F>
+  bool operator < (const value::mixin<T,F>& lhs, const value::mixin<T,F>& rhs)
+  {
+    static F f;
+    return f.less(lhs, rhs);
   }
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
+  /*
   namespace value
   {
 
@@ -86,13 +123,15 @@ namespace mln
 
     // Ctor
 
-    // template <typename T, template <typename> class F>
+    // template <typename T, typename F>
     // mixin<T, F>::operator(T)()
     // {
     //   return (T)*this;
     // }
 
   }
+
+*/
 
 /*
   template <typename F, typename I>
