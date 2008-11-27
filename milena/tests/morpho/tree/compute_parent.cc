@@ -31,13 +31,13 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-
-#include <mln/debug/println.hh>
-#include <mln/debug/iota.hh>
-
 #include <mln/core/var.hh>
 #include <mln/core/image/image_if.hh>
+#include <mln/core/site_set/p_array.hh>
+
+#include <mln/level/sort_psites.hh>
 #include <mln/pw/value.hh>
+#include <mln/debug/println.hh>
 
 #include <mln/morpho/tree/compute_parent.hh>
 
@@ -55,26 +55,20 @@ int main()
     debug::println(sub);
 
     mln_VAR(par, morpho::tree::compute_parent(sub, c4(), sub.domain()));
-    debug::println(par);
+    debug::println("par =", par);
   }
-
-/*
-  {
-    image2d<unsigned> ima(3, 3);
-    debug::iota(ima);
-    debug::println(ima);
-    
-    debug::println( morpho::tree::compute_parent(ima, c4(), ima.domain()) );
-  }
-
 
   {
-    image2d<unsigned> ima(3, 3);
-    level::fill(ima, 0);
+    unsigned char vals[] = { 3, 2, 1,
+			     3, 2, 3,
+			     3, 4, 1 };
+    image2d<unsigned char> ima = make::image2d(vals);
     debug::println(ima);
-    
-    debug::println( morpho::tree::compute_parent(ima, c4(), ima.domain()) );
+
+    typedef p_array<point2d> S;
+    S s = level::sort_psites_increasing(ima);
+    mln_VAR(par, morpho::tree::compute_parent(ima, c4(), s));
+    debug::println("par =", par);
   }
-*/
 
 }

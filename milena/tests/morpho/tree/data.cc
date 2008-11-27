@@ -31,14 +31,10 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/pw/image.hh>
-
-#include <mln/debug/println.hh>
-#include <mln/debug/iota.hh>
-#include <mln/morpho/elementary/dilation.hh>
-
 #include <mln/core/site_set/p_array.hh>
+
 #include <mln/level/sort_psites.hh>
+#include <mln/debug/println.hh>
 
 #include <mln/morpho/tree/data.hh>
 
@@ -47,11 +43,12 @@ int main()
 {
   using namespace mln;
 
-  typedef image2d<unsigned> I;
-  I ima(3, 3);
-  debug::iota(ima);
+  typedef image2d<unsigned char> I;
+  unsigned char vals[] = { 3, 2, 1,
+			   3, 2, 3,
+			   3, 4, 1 };
+  I ima = make::image2d(vals);
 
-  ima = morpho::elementary::dilation(ima, c8());
   debug::println("ima = ", ima);
 
   typedef p_array<point2d> S;

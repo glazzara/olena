@@ -58,6 +58,7 @@ int main()
     if (s(v).nsites() == 0)
       continue;
     std::cout << int(v) << ": ";
+
     mln_piter_(Arr) p(s(v));
     for_all(p)
       std::cout << p << ' ';

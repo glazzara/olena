@@ -1,3 +1,18 @@
+2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update tests on morpho compute parent tree.
+
+	* tests/core/site_set/p_vaccess.cc: Layout.
+	* tests/morpho/tree/compute_parent.cc
+	(main): Re-activate code and use a relevant image.
+	(include): Update.
+	* tests/morpho/tree/data.cc: Likewise.
+	* mln/core/site_set/p_vaccess.hh: Update doc style.
+	(pset): New typedef.
+	(t_eligible_values_set): Fix missing typedef required by
+	value iterators.
+	* img/fly.pgm: New.
+
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
 	
 	Add new examples.

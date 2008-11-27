@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_SITE_SET_P_VACCESS_HH
 # define MLN_CORE_SITE_SET_P_VACCESS_HH
 
-/*! \file mln/core/site_set/p_vaccess.hh
- *
- * \todo Fix the FIXMEs.
- */
+/// \file mln/core/site_set/p_vaccess.hh
+///
+/// \todo Fix the FIXMEs.
 
 # include <utility>
 # include <mln/core/site_set/p_double.hh>
@@ -81,7 +81,10 @@ namespace mln
 
     /// Value_Set associated type.
     typedef mln::value::set<V> vset;
+    typedef vset t_eligible_values_set;  // FIXME: Required by value set iterators...
 
+    /// Inner site set associated type.
+    typedef S pset;
 
     /// Psite associated type.
     typedef p_double_psite<self_, S> psite;
