@@ -42,6 +42,7 @@
 int main()
 {
   using namespace mln;
+  using value::label8;
   using value::int_u8;
 
   int_u8 vals[6][5] = {
@@ -53,29 +54,39 @@ int main()
     {2, 0, 0, 0, 0}
   };
   image2d<int_u8> ima = make::image(vals);
-  int_u8 nlabels = 3;
+
+  label8 lblvals[6][5] = {
+    {0, 1, 1, 0, 0},
+    {0, 1, 1, 0, 0},
+    {0, 0, 0, 0, 0},
+    {2, 2, 0, 3, 0},
+    {2, 0, 3, 3, 3},
+    {2, 0, 0, 0, 0}
+  };
+  image2d<label8> lbl = make::image(lblvals);
+  label8 nlabels = 3;
 
   accu::sum<int_u8> sum;
-  util::array<float> sums = labeling::compute(sum, ima, ima, nlabels);
+  util::array<float> sums = labeling::compute(sum, ima, lbl, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
   mln_assertion(sums[2] == 8);
   mln_assertion(sums[3] == 12);
 
-  sums = labeling::compute(accu::meta::sum(), ima, ima, nlabels);
+  sums = labeling::compute(accu::meta::sum(), ima, lbl, nlabels);
   mln_assertion(sums[0] == 0);
   mln_assertion(sums[1] == 4);
   mln_assertion(sums[2] == 8);
   mln_assertion(sums[3] == 12);
 
   accu::count<mln_site_(image2d<int_u8>)> count;
-  util::array<unsigned int> counts = labeling::compute(count, ima, nlabels);
+  util::array<unsigned int> counts = labeling::compute(count, lbl, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);
   mln_assertion(counts[2] == 4);
   mln_assertion(counts[3] == 4);
 
-  counts = labeling::compute(accu::meta::count(), ima, nlabels);
+  counts = labeling::compute(accu::meta::count(), lbl, nlabels);
   mln_assertion(counts[0] == 18);
   mln_assertion(counts[1] == 4);
   mln_assertion(counts[2] == 4);

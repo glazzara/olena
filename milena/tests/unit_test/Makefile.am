@@ -68,7 +68,6 @@ mln_registration_registration\
 mln_registration_essential\
 mln_registration_icp\
 mln_util_graph\
-mln_util_dual_graph\
 mln_util_max\
 mln_util_lazy_set\
 mln_util_set\
@@ -95,6 +94,7 @@ mln_util_ignore\
 mln_util_greater_psite\
 mln_util_timer\
 mln_util_yes\
+mln_util_line_graph\
 mln_util_ord\
 mln_util_tree_fast_to_image\
 mln_util_tree\
@@ -217,6 +217,8 @@ mln_fun_i2v_array\
 mln_fun_i2v_all_to\
 mln_fun_i2v_essential\
 mln_fun_l2l_relabel\
+mln_fun_l2l_all\
+mln_fun_l2l_essential\
 mln_fun_x2x_composed\
 mln_fun_x2x_all\
 mln_fun_x2x_translation\
@@ -577,6 +579,11 @@ mln_morpho_closing_area_on_vertices\
 mln_morpho_closing_volume\
 mln_morpho_minus\
 mln_morpho_gradient\
+mln_morpho_tree_max\
+mln_morpho_tree_compute_parent\
+mln_morpho_tree_all\
+mln_morpho_tree_utils\
+mln_morpho_tree_data\
 mln_morpho_opening_area_on_vertices\
 mln_morpho_min\
 mln_morpho_closing\
@@ -1066,7 +1073,6 @@ mln_registration_registration_SOURCES = mln_registration_registration.cc
 mln_registration_essential_SOURCES = mln_registration_essential.cc
 mln_registration_icp_SOURCES = mln_registration_icp.cc
 mln_util_graph_SOURCES = mln_util_graph.cc
-mln_util_dual_graph_SOURCES = mln_util_dual_graph.cc
 mln_util_max_SOURCES = mln_util_max.cc
 mln_util_lazy_set_SOURCES = mln_util_lazy_set.cc
 mln_util_set_SOURCES = mln_util_set.cc
@@ -1093,6 +1099,7 @@ mln_util_ignore_SOURCES = mln_util_ignore.cc
 mln_util_greater_psite_SOURCES = mln_util_greater_psite.cc
 mln_util_timer_SOURCES = mln_util_timer.cc
 mln_util_yes_SOURCES = mln_util_yes.cc
+mln_util_line_graph_SOURCES = mln_util_line_graph.cc
 mln_util_ord_SOURCES = mln_util_ord.cc
 mln_util_tree_fast_to_image_SOURCES = mln_util_tree_fast_to_image.cc
 mln_util_tree_SOURCES = mln_util_tree.cc
@@ -1215,6 +1222,8 @@ mln_fun_i2v_array_SOURCES = mln_fun_i2v_array.cc
 mln_fun_i2v_all_to_SOURCES = mln_fun_i2v_all_to.cc
 mln_fun_i2v_essential_SOURCES = mln_fun_i2v_essential.cc
 mln_fun_l2l_relabel_SOURCES = mln_fun_l2l_relabel.cc
+mln_fun_l2l_all_SOURCES = mln_fun_l2l_all.cc
+mln_fun_l2l_essential_SOURCES = mln_fun_l2l_essential.cc
 mln_fun_x2x_composed_SOURCES = mln_fun_x2x_composed.cc
 mln_fun_x2x_all_SOURCES = mln_fun_x2x_all.cc
 mln_fun_x2x_translation_SOURCES = mln_fun_x2x_translation.cc
@@ -1575,6 +1584,11 @@ mln_morpho_closing_area_on_vertices_SOURCES = mln_morpho_closing_area_on_vertice
 mln_morpho_closing_volume_SOURCES = mln_morpho_closing_volume.cc
 mln_morpho_minus_SOURCES = mln_morpho_minus.cc
 mln_morpho_gradient_SOURCES = mln_morpho_gradient.cc
+mln_morpho_tree_max_SOURCES = mln_morpho_tree_max.cc
+mln_morpho_tree_compute_parent_SOURCES = mln_morpho_tree_compute_parent.cc
+mln_morpho_tree_all_SOURCES = mln_morpho_tree_all.cc
+mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
+mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
 mln_morpho_opening_area_on_vertices_SOURCES = mln_morpho_opening_area_on_vertices.cc
 mln_morpho_min_SOURCES = mln_morpho_min.cc
 mln_morpho_closing_SOURCES = mln_morpho_closing.cc

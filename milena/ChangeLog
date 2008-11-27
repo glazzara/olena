@@ -1,5 +1,26 @@
 2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update unit_tests and labeling::compute test.
+
+	* tests/labeling/compute.cc: use label8 instead of int_u8 as labeled
+	image value type.
+
+	* tests/unit_test/Makefile.am: update unit tests list.
+
+	* tests/unit_test/mln_fun_l2l_all.cc,
+	* tests/unit_test/mln_fun_l2l_essential.cc,
+	* tests/unit_test/mln_morpho_tree_all.cc,
+	* tests/unit_test/mln_morpho_tree_compute_parent.cc,
+	* tests/unit_test/mln_morpho_tree_data.cc,
+	* tests/unit_test/mln_morpho_tree_max.cc,
+	* tests/unit_test/mln_morpho_tree_utils.cc,
+	* tests/unit_test/mln_util_line_graph.cc: new unit tests.
+
+	* tests/unit_test/mln_util_dual_graph.cc: delete. Dual_graph does not
+	exist anymore.
+
+2008-11-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Upgrade tutorial.
 
 	* Doxyfile.in: add new path to included files.
