@@ -20,6 +20,7 @@ check_PROGRAMS =				\
 ##  dilation_max_h				\
   erosion					\
 ##  erosion_min_h					\
+  general					\
   gradient					\
 ##  graph_image_morpho				\
 ##  graph_image_wst				\
@@ -56,6 +57,7 @@ closing_volume_SOURCES = closing_volume.cc
 opening_volume_SOURCES = opening_volume.cc
 
 contrast_SOURCES = contrast.cc
+general_SOURCES = general.cc
 gradient_SOURCES = gradient.cc
 hit_or_miss_SOURCES = hit_or_miss.cc
 laplacian_SOURCES = laplacian.cc

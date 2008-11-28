@@ -33,9 +33,14 @@
 ///
 /// Morphological dilation.
 ///
-/// \todo Revamp.
+/// \todo The overloads are hidden and I don't know why!
 
 # include <mln/morpho/includes.hh>
+# include <mln/morpho/general.hh>
+# include <mln/accu/lor.hh>
+# include <mln/accu/lor_basic.hh>
+# include <mln/accu/max.hh>
+# include <mln/accu/max_h.hh>
 
 
 namespace mln
@@ -44,98 +49,129 @@ namespace mln
   namespace morpho
   {
 
-    // FIXME: fwd decl to fix problem with includes.hh.
-    template <typename I, typename W>
-    mln_concrete(I)
-    erosion(const Image<I>& input, const Window<W>& win);
-
-    /// Morphological dilation using windows.
-    ///
-    /// \{
-    /// Perform a morphological dilation of \a input using \a win and
-    /// return the result.
+    /// Morphological dilation.
     template <typename I, typename W>
     mln_concrete(I)
     dilation(const Image<I>& input, const Window<W>& win);
-    /// \}
-
-
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    // Tests.
 
-    namespace internal
+    struct dilation_op
     {
 
-      template <typename I, typename W>
-      void
-      dilation_tests(const Image<I>& input_, const Window<W>& win_)
+      template <typename I>
+      mln_morpho_select_accu(I, lor_basic, max)
+      accu(const Image<I>&) const
       {
-	const I& input = exact(input_);
-	const W& win   = exact(win_);
-	mln_precondition(input.has_data());
-	// mln_precondition(win.is_valid());
-	(void) input;
-	(void) win;
+	mln_morpho_select_accu(I, lor_basic, max) tmp;
+	return tmp;
       }
 
-    } // end of namespace mln::morpho::internal
+      template <typename I>
+      mln_morpho_select_accu(I, lor, max_h)
+      accu_incr(const Image<I>&) const
+      {
+	mln_morpho_select_accu(I, lor, max_h) tmp;
+	return tmp;
+      }
 
+      template <typename I>
+      mln_value(I) neutral(const Image<I>&) const
+      {
+	return internal::neutral<I>::infimum();
+      }
 
-    // Implementations.
+    };
+
 
     namespace impl
     {
 
+
+      // On set with centered window (overloads).
+
       template <typename I, typename W>
       mln_concrete(I)
-      dilation_as_erosion_dual(const Image<I>& input, const Window<W>& win)
+      general_on_set_centered(const dilation_op&,
+			      const Image<I>& input_, const Window<W>& win_)
       {
-	trace::entering("morpho::impl::dilation_as_erosion_dual");
+	trace::entering("morpho::impl::general_on_set_centered__dilation");
 
-	mln_concrete(I) output = morpho::erosion(morpho::complementation(input),
-						 win);
-	morpho::complementation_inplace(output);
+	typedef mln_concrete(I) O;
+	const I& input = exact(input_);
+	const W& win = exact(win_);
 
-	trace::exiting("morpho::impl::dilation_as_erosion_dual");
+	extension::adjust_fill(input, win, false);
+
+	O output;
+	output = clone(input);
+
+	mln_piter(I) p(input.domain());
+	mln_qiter(W) q(win, p);
+	for_all(p)
+	  if (input(p) == false)
+	    for_all(q) if (input.has(q))
+	      if (input(q) == true)
+	      {
+		output(p) = true;
+		break;
+	      }
+
+	trace::exiting("morpho::impl::general_on_set_centered__dilation");
 	return output;
       }
 
-    } // end of namespace mln::morpho::impl
-
-
-
-    // Dispatch.
-
-    namespace internal
-    {
 
       template <typename I, typename W>
       mln_concrete(I)
-      dilation_dispatch(const Image<I>& input, const Window<W>& win)
+      general_on_set_centered_fastest(const dilation_op&,
+				      const Image<I>& input_, const Window<W>& win_)
       {
-	return impl::dilation_as_erosion_dual(input, win);
+	trace::entering("morpho::impl::general_on_set_centered_fastest__dilation");
+
+	typedef mln_concrete(I) O;
+	const I& input = exact(input_);
+	const W& win = exact(win_);
+
+	extension::adjust_fill(input, win, false);
+
+	O output;
+	output = clone(input);
+
+	mln_pixter(const I) p(input);
+	mln_qixter(const I, W) q(p, win);
+	mln_pixter(O) p_out(output);
+	for_all_2(p, p_out)
+	  if (p.val() == false)
+	    for_all(q)
+	      if (q.val() == true)
+	      {
+		p_out.val() = true;
+		break;
+	      }
+
+	trace::exiting("morpho::impl::general_on_set_centered_fastest__dilation");
+	return output;
       }
 
-    } // end of namespace mln::morpho::internal
+    } // end of namespace morpho::impl
 
-
-
-
-    // ----------------------------------------- //
-    // Facade for window-based implementations.  //
-    // ----------------------------------------- //
 
     template <typename I, typename W>
+    inline
     mln_concrete(I)
     dilation(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::dilation");
+      mln_precondition(exact(input).has_data());
+      mln_precondition(! exact(win).is_empty());
 
-      internal::dilation_tests(input, win);
-      mln_concrete(I) output = internal::dilation_dispatch(input, win);
+      mln_concrete(I) output = general(dilation_op(), input, win);
+
+      if (exact(win).is_centered())
+	mln_postcondition(output >= input);
 
       trace::exiting("morpho::dilation");
       return output;

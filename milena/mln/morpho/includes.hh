@@ -42,13 +42,6 @@
 
 # include <mln/value/ops.hh>
 
-# include <mln/accu/land.hh>
-# include <mln/accu/land_basic.hh>
-// # include <mln/accu/lor.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/max.hh>
-# include <mln/accu/min_h.hh>
-# include <mln/accu/max_h.hh>
 # include <mln/accu/rank.hh>
 
 # include <mln/accu/transform.hh>

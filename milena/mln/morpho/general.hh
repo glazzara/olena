@@ -173,8 +173,6 @@ namespace mln
       internal::general_tests(op, input, win);
       mln_concrete(I) output = internal::general_dispatch(op, input, win);
 
-      if (exact(win).is_centered())
-	mln_postcondition(output <= input);
       trace::exiting("morpho::general");
       return output;
     }

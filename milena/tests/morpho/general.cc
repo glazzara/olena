@@ -37,6 +37,7 @@
 
 #include <mln/win/all.hh>
 #include <mln/morpho/erosion.hh>
+#include <mln/morpho/dilation.hh>
 
 #include "tests/data.hh"
 
@@ -55,14 +56,15 @@ int main()
   win::backdiag2d  backdiag2d(7);
   win::octagon2d   oct(2 * 3 + 1);
 
-  morpho::erosion_op ero;
+  morpho::erosion_op  ero;
+  morpho::dilation_op dil;
 
   {
     image2d<int_u8> lena, out, ref;
-    io::pgm::load(lena, MLN_IMG_DIR "/tiny.pgm");
+    io::pgm::load(lena, MLN_IMG_DIR "/small.pgm");
 
 
-    // Rectangle.
+    // Rectangle (erosion).
 
     ref = morpho::impl::generic::general_on_function(ero, lena, rec);
 
@@ -76,6 +78,23 @@ int main()
     mln_assertion(out == ref);
 
     out = morpho::impl::general_directional(ero, lena, rec, 1);
+    mln_assertion(out == ref);
+
+
+    // Rectangle (dilation).
+
+    ref = morpho::impl::generic::general_on_function(dil, lena, rec);
+
+    out = morpho::impl::general_rectangle2d(dil, lena, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_arbitrary_2d(dil, lena, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_directional(dil, lena, rec, 0);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_directional(dil, lena, rec, 1);
     mln_assertion(out == ref);
 
     /*
@@ -106,9 +125,11 @@ int main()
     trace::quiet = false;
 
     image2d<bool> pic;
-    io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
+    io::pbm::load(pic, MLN_IMG_DIR "/small.pbm");
 
+    // morpho::impl::general_on_set_centered_fastest(ero, pic, win::rectangle2d(3,3));
     morpho::general(ero, pic, win::rectangle2d(3,3));
+    morpho::general(dil, pic, win::rectangle2d(3,3));
 
     trace::quiet = true;
   }
@@ -118,9 +139,9 @@ int main()
 
   {
     image2d<bool> pic, out, ref;
-    io::pbm::load(pic, MLN_IMG_DIR "/tiny.pbm");
+    io::pbm::load(pic, MLN_IMG_DIR "/small.pbm");
 
-    // Rectangle.
+    // Rectangle (erosion).
 
     ref = morpho::impl::generic::general_on_set(ero, pic, rec);
 
@@ -140,6 +161,29 @@ int main()
     mln_assertion(out == ref);
 
     out = morpho::impl::general_directional(ero, pic, rec, 1);
+    mln_assertion(out == ref);
+
+
+    // Rectangle (dilation).
+
+    ref = morpho::impl::generic::general_on_set(dil, pic, rec);
+
+    out = morpho::impl::general_on_set_centered(dil, pic, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_on_set_centered_fastest(dil, pic, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_rectangle2d(dil, pic, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_arbitrary_2d(dil, pic, rec);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_directional(dil, pic, rec, 0);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_directional(dil, pic, rec, 1);
     mln_assertion(out == ref);
   }
 

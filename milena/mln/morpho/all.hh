@@ -63,6 +63,7 @@ namespace mln
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/erosion_fast.hh>
 # include <mln/morpho/erosion.hh>
+# include <mln/morpho/general.hh>
 # include <mln/morpho/gradient.hh>
 # include <mln/morpho/hit_or_miss.hh>
 # include <mln/morpho/includes.hh>

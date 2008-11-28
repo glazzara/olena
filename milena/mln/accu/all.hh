@@ -63,7 +63,10 @@ namespace mln
 # include <mln/accu/height.hh>
 # include <mln/accu/histo.hh>
 # include <mln/accu/land.hh>
+# include <mln/accu/land_basic.hh>
 # include <mln/accu/line.hh>
+# include <mln/accu/lor.hh>
+# include <mln/accu/lor_basic.hh>
 # include <mln/accu/max.hh>
 # include <mln/accu/max_h.hh>
 # include <mln/accu/mean.hh>

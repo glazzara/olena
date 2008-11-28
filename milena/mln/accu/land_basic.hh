@@ -44,7 +44,7 @@ namespace mln
   namespace accu
   {
 
-    /// "Logical-and" accumulator class.  Conversely to accu::lands,
+    /// "Logical-and" accumulator class.  Conversely to accu::land,
     /// this version does not have the 'untake' method but features
     /// the 'can_stop' method.
     struct land_basic : public mln::accu::internal::base< bool, land_basic >
@@ -159,4 +159,5 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_ACCU_AND_HH
+
+#endif // ! MLN_ACCU_LAND_BASIC_HH

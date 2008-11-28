@@ -26,14 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_ACCU_LAND_HH
-# define MLN_ACCU_LAND_HH
+#ifndef MLN_ACCU_LOR_HH
+# define MLN_ACCU_LOR_HH
 
-/// \file mln/accu/land.hh
+/// \file mln/accu/lor.hh
 ///
-/// Define a 'logical-and' accumulator.
+/// Define a 'logical-or' accumulator.
 ///
-/// \todo Have land be parameterized.
+/// \todo Have lor be parameterized.
 
 # include <mln/accu/internal/base.hh>
 
@@ -44,12 +44,12 @@ namespace mln
   namespace accu
   {
 
-    /// "Logical-and" accumulator class.
-    struct land : public mln::accu::internal::base< bool, land >
+    /// "Logical-or" accumulator class.
+    struct lor : public mln::accu::internal::base< bool, lor >
     {
       typedef bool argument;
 
-      land();
+      lor();
 
       /// Manipulators.
       /// \{
@@ -57,10 +57,10 @@ namespace mln
       void take_as_init(const argument& t);
 
       void take(const argument& t);
-      void take(const land& other);
+      void take(const lor& other);
 
       void untake(const argument& t);
-      void untake(const land& other);
+      void untake(const lor& other);
       /// \}
 
       /// Get the value of the accumulator.
@@ -71,21 +71,21 @@ namespace mln
       bool is_valid() const;
 
     protected:
-      unsigned nfalse_;
+      unsigned ntrue_;
     };
 
 
     namespace meta
     {
 
-      /// Meta accumulator for land.
+      /// Meta accumulator for lor.
 
-      struct land : public Meta_Accumulator< land >
+      struct lor : public Meta_Accumulator< lor >
       {
 	template <typename T>
 	struct with
 	{
-	  typedef accu::land ret;
+	  typedef accu::lor ret;
 	};
       };
 
@@ -96,63 +96,63 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    land::land()
+    lor::lor()
     {
       init();
     }
 
     inline
     void
-    land::init()
+    lor::init()
     {
-      nfalse_ = 0;
+      ntrue_ = 0;
     }
 
     inline
-    void land::take_as_init(const argument& t)
+    void lor::take_as_init(const argument& t)
     {
-      nfalse_ = t ? 0 : 1;
+      ntrue_ = t ? 1 : 0;
     }
 
     inline
-    void land::take(const argument& t)
+    void lor::take(const argument& t)
     {
-      if (t == false)
-	++nfalse_;
-    }
-
-    inline
-    void
-    land::take(const land& other)
-    {
-      nfalse_ += other.nfalse_;
-    }
-
-    inline
-    void land::untake(const argument& t)
-    {
-      if (t == false)
-	--nfalse_;
+      if (t == true)
+	++ntrue_;
     }
 
     inline
     void
-    land::untake(const land& other)
+    lor::take(const lor& other)
     {
-      mln_precondition(other.nfalse_ <= nfalse_);
-      nfalse_ -= other.nfalse_;
+      ntrue_ += other.ntrue_;
+    }
+
+    inline
+    void lor::untake(const argument& t)
+    {
+      if (t == true)
+	--ntrue_;
+    }
+
+    inline
+    void
+    lor::untake(const lor& other)
+    {
+      mln_precondition(other.ntrue_ <= ntrue_);
+      ntrue_ -= other.ntrue_;
     }
 
     inline
     bool
-    land::to_result() const
+    lor::to_result() const
     {
-      return nfalse_ == 0;
+      return ntrue_ != 0;
     }
 
     inline
     bool
-    land::is_valid() const
+    lor::is_valid() const
     {
       return true;
     }
@@ -164,4 +164,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_ACCU_LAND_HH
+#endif // ! MLN_ACCU_LOR_HH

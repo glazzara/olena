@@ -32,9 +32,15 @@
 /// \file mln/morpho/erosion.hh
 ///
 /// Morphological erosion.
+///
+/// \todo The overloads are hidden and I don't know why!
 
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
+# include <mln/accu/land.hh>
+# include <mln/accu/land_basic.hh>
+# include <mln/accu/min.hh>
+# include <mln/accu/min_h.hh>
 
 
 namespace mln
@@ -50,7 +56,6 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
-
 
     struct erosion_op
     {
@@ -151,6 +156,7 @@ namespace mln
       }
 
     } // end of namespace morpho::impl
+
 
 
     template <typename I, typename W>

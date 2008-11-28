@@ -1,3 +1,30 @@
+2008-11-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make morphological dilation use the general code.
+
+	* mln/accu/lor.hh: New.
+	* mln/accu/lor_basic.hh: New.
+	* mln/accu/land_basic.hh: Fix guard.
+	* mln/accu/land.hh: Fix guard.
+	* mln/accu/all.hh: Update.
+	* mln/morpho/includes.hh (include): Move accumulators to...
+	* mln/morpho/erosion.hh: ...here and...
+	* mln/morpho/dilation.hh: ...here.
+	* mln/morpho/erosion.hh (todo): New.
+	Copy this file to...
+	* mln/morpho/dilation.hh: ...this revamped file.
+	(todo): New.
+	(dilation_op): New.
+	(general_on_set_centered, general_on_set_centered_fastest): Up.
+	(dilation): Use general.
+	* mln/morpho/general.hh (general): Remove erroneous
+	postcondition.
+	* mln/morpho/all.hh: Update.
+	* tests/morpho/general.cc (tiny): Replace by...
+	(small): ...this.
+	Augment with dilation.
+	* tests/morpho/Makefile.am: Update.
+
 2008-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix more tests.
