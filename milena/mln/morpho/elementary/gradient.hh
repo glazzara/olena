@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -62,6 +63,8 @@ namespace mln
 	{
 	  mln_precondition(exact(input).has_data());
 	  // mln_precondition(exact(nbh).is_valid());
+	  (void) input;
+	  (void) nbh;
 	}
 
       } // end of namespace mln::morpho::elementary::tests

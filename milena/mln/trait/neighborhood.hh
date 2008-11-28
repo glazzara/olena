@@ -49,6 +49,9 @@ namespace mln
   namespace trait
   {
 
+    // Forward declaration.
+    struct undef;
+
     struct undefined_neighborhood
     {
       typedef undef kind;

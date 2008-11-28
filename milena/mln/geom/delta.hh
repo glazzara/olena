@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_GEOM_DELTA_HH
 # define MLN_GEOM_DELTA_HH
 
-/*! \file mln/geom/delta.hh
- *
- * \todo Add doc.
- */
+/// \file mln/geom/delta.hh
+///
+/// \todo Add doc.
+
 
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/weighted_window.hh>
@@ -68,14 +69,16 @@ namespace mln
 			      trait::window::definition::any,
 			      const W& win)
       {
+	(void) win;
 	return 0;
       }
 
       template <typename W>
       unsigned delta_dispatch(trait::window::support::regular,
 			      trait::window::definition::varying,
-			      const W&)
+			      const W& win)
       {
+	(void) win;
 	return 0;
       }
 

@@ -28,6 +28,7 @@
 #ifndef MLN_UTIL_VERTEX_HH
 # define MLN_UTIL_VERTEX_HH
 
+# include <iostream>
 # include <mln/util/internal/graph_vertex_impl.hh>
 
 /// \file mln/util/vertex.hh

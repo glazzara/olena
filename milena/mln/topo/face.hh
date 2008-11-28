@@ -35,6 +35,7 @@
 #include <vector>
 
 #include <mln/core/contract.hh>
+#include <mln/metal/bool.hh>
 
 
 namespace mln

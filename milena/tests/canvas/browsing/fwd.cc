@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/fwd.cc
- *
- * \brief Tests on mln::canvas::browsing::fwd.hh
- */
+/// \file tests/canvas/browsing/fwd.cc
+///
+/// Tests on mln::canvas::browsing::fwd.hh
 
 #include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/fwd.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
-
-// FIXME: Move code below into mln/canvas/browsing/iota.hh.
 
 
 template <typename I_, typename F>
@@ -88,6 +85,5 @@ int main()
   using namespace mln;
   image2d<unsigned> ima2(3, 3);
 
-  my_test(ima2, fun::p2v::iota, canvas::browsing::fwd);
-  debug::println(ima2);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::fwd);
 }

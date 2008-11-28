@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/convert/to_p_array.cc
- *
- * \brief Tests on mln::convert::to_p_array.
- */
+/// \file tests/convert/to_p_array.cc
+///
+/// Tests on mln::convert::to_p_array.
 
 #include <mln/core/alias/point1d.hh>
 #include <mln/core/alias/point2d.hh>
@@ -48,17 +47,22 @@ int main()
   win::segment1d win1d(5);
   vec1d v1(convert::to_p_array(win1d, p1));
 
-  for (size_t i=0; i < v1.nsites(); i++)
-    std::cout << (v1[i]);
-
-  std::cout << "\n";
+  {
+    unsigned col = 4;
+    for (size_t i=0; i < v1.nsites(); i++)
+      mln_assertion(v1[i] == point1d(col++));
+  }
 
   typedef p_array<point2d> vec2d;
   point2d p2 = point2d(10,10);
   win::rectangle2d win2d(3, 3);
   vec2d v2(convert::to_p_array(win2d, p2));
 
-  for (size_t i=0; i < v2.nsites(); i++)
-    std::cout << (v2[i]);
-
+  unsigned row = 9;
+  for (unsigned col = 0; col < v2.nsites(); ++col)
+  {
+    if (col > 0 && !(col%3))
+      ++row;
+    mln_assertion(v2[col] == point2d(row, 9 + (col%3)));
+  }
 }

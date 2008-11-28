@@ -10,6 +10,7 @@ check_PROGRAMS =				\
   diff						\
   disk2d					\
   hline2d					\
+  inter 					\
   octagon2d					\
   rectangle2d					\
   segment1d					\
@@ -24,6 +25,7 @@ diag2d_SOURCES = diag2d.cc
 diff_SOURCES = diff.cc
 disk2d_SOURCES = disk2d.cc
 hline2d_SOURCES = hline2d.cc
+inter_SOURCES = inter.cc
 octagon2d_SOURCES = octagon2d.cc
 rectangle2d_SOURCES = rectangle2d.cc
 segment1d_SOURCES = segment1d.cc

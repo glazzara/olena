@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_SET_HH
 # define MLN_VALUE_SET_HH
 
-/*! \file mln/value/set.hh
- *
- * \brief Define some basic sets of values from value types.
- */
+/// \file mln/value/set.hh
+///
+/// Define some basic sets of values from value types.
 
 # include <mln/value/internal/iterable_set.hh>
 # include <mln/trait/value_.hh>
@@ -60,10 +60,10 @@ namespace mln
 
 
 
-    /*! \brief Class that defines the set of values of type \c T.
-     *
-     * This is the exhaustive set of values obtainable from type \c T.
-     */
+    /// Class that defines the set of values of type \c T.
+    ///
+    /// This is the exhaustive set of values obtainable from type \c T.
+    ///
     template <typename T>
     struct set : public internal::set_selector_< T, set<T>,
 						 mlc_equal( mln_trait_value_quant(T),
@@ -73,7 +73,6 @@ namespace mln
       /// Return a singleton.
       static const set<T>& the();
     };
-
 
 
 # ifndef MLN_INCLUDE_ONLY

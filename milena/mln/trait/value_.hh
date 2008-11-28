@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TRAIT_VALUE__HH
 # define MLN_TRAIT_VALUE__HH
 
-/*! \file mln/trait/value_.hh
- *
- * \brief Some base trait types for value types.
- */
+/// \file mln/trait/value_.hh
+///
+/// Some base trait types for value types.
 
 # include <iostream>
 # include <string>
@@ -49,7 +49,7 @@
 # define mln_trait_value_kind(V)   typename mln::trait::value_< V >::kind
 # define mln_trait_value_kind_(V)           mln::trait::value_< V >::kind
 # define mln_trait_value_quant(V)  typename mln::trait::value_< V >::quant
-# define mln_trait_value_quant_(V)          mln::trait::bvalue_< V >::quant
+# define mln_trait_value_quant_(V)          mln::trait::value_< V >::quant
 
 
 # define mln_nbits(V)    mln::trait::value_< V >::nbits

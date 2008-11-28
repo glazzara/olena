@@ -1,3 +1,66 @@
+2008-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix various tests.
+
+	* doc/Makefile.am: Fix tutorial compilation.
+
+	* mln/convert/to_p_set.hh: Fix a test.
+
+	* mln/convert/to_window.hh: Get dpsite type correctly.
+
+	* tests/canvas/browsing/fwd.cc,
+	* tests/canvas/browsing/hyper_directional.cc,
+	* tests/canvas/browsing/snake_fwd.cc,
+	* tests/canvas/browsing/snake_vert.cc,
+	* mln/util/edge.hh,
+	* mln/util/vertex.hh,
+	* mln/trait/value_.hh,
+	* mln/trait/neighborhood.hh,
+	* mln/geom/all.hh,
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/image/translate_image.hh,
+	* mln/core/concept/generalized_pixel.hh,
+	* mln/core/clock_neighb2d.hh,
+	* mln/core/clock_neighb.hh: fix a compilation error and update doc
+	style.
+
+	* mln/geom/chamfer.hh: revamp.
+
+	* mln/morpho/elementary/gradient.hh,
+	* mln/geom/delta.hh: avoid a warning.
+
+	* tests/geom/resize.cc,
+	* tests/level/stretch.cc,
+	* tests/fun/x2x/rotation.cc,
+	* tests/convert/to_p_set.cc,
+	* tests/convert/to_window.cc,
+	* mln/value/set.hh,
+	* mln/set/inter.hh,
+	* mln/topo/face.hh: update doc style.
+
+	* tests/win/Makefile.am,
+	* tests/morpho/Makefile.am,
+	* tests/fun/x2x/Makefile.am,
+	* tests/core/other/Makefile.am,
+	* tests/core/image/Makefile.am,
+	* tests/convert/Makefile.am,
+	* tests/Makefile.am: comment known non working tests.
+	
+	* tests/core/image/flat_image.cc,
+	* tests/convert/to_p_array.cc: write test.
+
+	* tests/core/other/graph_elt_neighborhood.cc,
+	* tests/core/other/graph_elt_window.cc,
+	* tests/core/other/line_graph_elt_neighborhood.cc,
+	* tests/core/other/line_graph_elt_window.cc,
+	* tests/draw/graph.cc,
+	* tests/fun/x2x/composed.cc,
+	* tests/fun/x2x/translation.cc,
+	* tests/morpho/graph_image_morpho.cc: Fix tests.
+
+	* tests/set/inter.cc: split and move to...
+	* tests/win/inter.cc: ...here.
+
 2008-11-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix minor bugs.

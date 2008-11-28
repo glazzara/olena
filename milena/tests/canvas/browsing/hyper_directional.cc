@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/hyper_directional.cc
- *
- * \brief Tests on mln::canvas::browsing::hyper_directional.
- */
+/// \file tests/canvas/browsing/hyper_directional.cc
+///
+/// Tests on mln::canvas::browsing::hyper_directional.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
@@ -36,8 +35,6 @@
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
 #include <mln/level/fill.hh>
-
-// FIXME: Move code below into mln/canvas/browsing/iota.hh.
 
 
 template <typename I_, typename F>
@@ -99,23 +96,23 @@ int main()
   image3d<unsigned> ima3(3, 3, 3);
 
   level::fill(ima2, 0);
-  my_test(ima2, fun::p2v::iota, canvas::browsing::hyper_directional, 0);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::hyper_directional, 0);
   debug::println(ima2);
 
   level::fill(ima2, 0);
-  my_test(ima2, fun::p2v::iota, canvas::browsing::hyper_directional, 1);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::hyper_directional, 1);
   debug::println(ima2);
 
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 0);
+  my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 0);
   debug::println(ima3);
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 1);
+  my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 1);
   debug::println(ima3);
 
   level::fill(ima3, 0);
-  my_test(ima3, fun::p2v::iota, canvas::browsing::hyper_directional, 2);
+  my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 2);
   debug::println(ima3);
 }

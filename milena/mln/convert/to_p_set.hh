@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_CONVERT_TO_P_SET_HH
 # define MLN_CONVERT_TO_P_SET_HH
 
-/*! \file mln/convert/to_p_set.hh
- *
- * \brief Conversions to mln::p_set.
- */
+/// \file mln/convert/to_p_set.hh
+///
+/// Conversions to mln::p_set.
 
 # include <set>
- 
+
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/point_site.hh>
@@ -133,7 +133,7 @@ namespace mln
     to_p_set(const std::set<P, C>& s)
     {
       P titi;
-      mln::metal::is_a<P, Point_Site>::check();
+      mln::metal::is_a<P, Site>::check();
       p_set<P> pset;
       for (typename std::set<P, C>::const_iterator i = s.begin();
 	   i != s.end(); ++i)

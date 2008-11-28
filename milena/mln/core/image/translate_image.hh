@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
 # define MLN_CORE_IMAGE_TRANSLATE_IMAGE_HH
 
-/*! \file mln/core/image/translate_image.hh
- *
- * \brief Definition of an image which be translated by a delta point.
- */
+/// \file mln/core/image/translate_image.hh
+///
+/// Definition of an image which be translated by a delta point.
 
 # include <cmath>
 
@@ -53,7 +53,7 @@ namespace mln
     template <typename I>
     struct data< translate_image<I> >
     {
-      data(I& ima, const mln_dpsite(I) dp);
+      data(I& ima, const mln_site(I)::dpsite dp);
 
       I			    ima_;
 
@@ -61,7 +61,7 @@ namespace mln
       box2d		    bb_;
 
       /// Delta point of translation.
-      const mln_dpsite(I)   dp_;
+      const mln_site(I)::dpsite   dp_;
     };
 
   } // end of namespace mln::internal
@@ -77,29 +77,27 @@ namespace mln
     {
       typedef trait::image::category::domain_morpher category;
 
-      typedef mln_trait_image_value_access(I)     access;
-      typedef mln_trait_image_localization(I)      space;
-      typedef mln_trait_image_size(I)       size;
+      typedef mln_trait_image_value_access(I)     value_access;
+      typedef mln_trait_image_localization(I)     localization;
+      typedef mln_trait_image_size(I)		  size;
       //typedef mln_trait_image_io_from_(I)   io;
       //typedef mln_trait_image_data_from_(I) data;
-
     };
 
   } // end of namespace mln::trait
 
 
 
-  /*! \brief Translate image class.
-   *
-   * The parameter \c I is the type of image.  This image class
-   * makes a translation of a delta point.
-   *
-   */
+  /// \brief Translate image class.
+  ///
+  /// The parameter \c I is the type of image.  This image class
+  /// makes a translation of a delta point.
+  ///
   template <typename I>
   struct translate_image : public mln::internal::image_identity< I, mln_pset(I), translate_image<I> >
   {
 
-    typedef mln::internal::image_morpher< I, mln_value(I), mln_pset(I), translate_image<I> > super_;
+    typedef mln::internal::image_identity< I, mln_pset(I), translate_image<I> > super_;
 
     /// Return type of read-write access.
     typedef mln_morpher_lvalue(I) lvalue;
@@ -111,7 +109,7 @@ namespace mln
     using super_::has_data;
 
     /// Constructors.
-    translate_image(I& ima, const mln_dpsite(I) dp);
+    translate_image(I& ima, const mln_site(I)::dpsite dp);
     translate_image();
 
     /// Return domain of translated_image.
@@ -138,7 +136,7 @@ namespace mln
 
     template <typename I>
     inline
-    data< translate_image<I> >::data(I& ima, const mln_dpsite(I) dp)
+    data< translate_image<I> >::data(I& ima, const mln_site(I)::dpsite dp)
       : ima_ (ima),
 	dp_ (dp)
     {
@@ -156,7 +154,7 @@ namespace mln
 
   template <typename I>
   inline
-  translate_image<I>::translate_image(I& ima, const mln_dpsite(I) dp)
+  translate_image<I>::translate_image(I& ima, const mln_site(I)::dpsite dp)
   {
     mln_precondition(ima.has_data());
     this->data_ = new internal::data< translate_image<I> >(ima, dp);

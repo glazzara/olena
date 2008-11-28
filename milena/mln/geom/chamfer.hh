@@ -33,17 +33,8 @@
 ///
 /// Connected component chamfer of the image objects.
 
-# include <mln/level/fill.hh>
-# include <mln/core/alias/w_window2d_int.hh>
-# include <mln/core/alias/w_window2d_float.hh>
-# include <mln/core/image/sub_image.hh>
-
-# include <mln/core/image/image_if.hh>
 # include <mln/canvas/chamfer.hh>
 
-//FIXME: to be removed when ima | bool will be supported.
-// See init().
-# include <mln/pw/all.hh>
 
 namespace mln
 {
@@ -54,8 +45,8 @@ namespace mln
     /// Apply chamfer algorithm to a binary image.
     template <typename I, typename W>
     mln_ch_value(I, unsigned)
-      chamfer(const Image<I>& input_, const W& w_win_,
-	      unsigned max = mln_max(unsigned));
+    chamfer(const Image<I>& input_, const W& w_win_,
+	    unsigned max = mln_max(unsigned));
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -114,37 +105,36 @@ namespace mln
 	{}
       };
 
-      /// Routines.
-
-      template <typename I, typename W>
-      inline
-      mln_ch_value(I, unsigned)
-	chamfer_(const Image<I>& input_, const W& w_win_,
-		 unsigned max = mln_max(unsigned))
-      {
-	typedef chamfer_t<I, W> F;
-
-	F f(exact(input_), exact(w_win_), max);
-	canvas::chamfer<F> run(f);
-	return f.output;
-      }
-
     } // end of namespace mln::geom::impl
+
+
 
     // Facade.
 
     template <typename I, typename W>
     mln_ch_value(I, unsigned)
-      chamfer(const Image<I>& input_, const W& w_win_,
-	      unsigned max = mln_max(unsigned))
+    chamfer(const Image<I>& input_, const W& w_win_,
+	    unsigned max = mln_max(unsigned))
     {
-      return impl::chamfer_t<I, W>(exact (input_), exact(w_win_), max);
+      trace::entering("mln::geom::chamfer");
+      // FIXME: check that input_ is binary.
+
+      const I& input = exact(input_);
+      const W& w_win = exact(w_win_);
+
+      typedef impl::chamfer_t<I, W> F;
+
+      F f(input, w_win, max);
+      canvas::chamfer<F> run(f);
+
+      trace::exiting("mln::geom::chamfer");
+      return f.output;
     }
 
-#endif // !MLN_INCLUDE_ONLY
+#endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::geom
 
 }  // end of namespace mln
 
-#endif // !MLN_GEOM_CHAMFER_HH
+#endif // ! MLN_GEOM_CHAMFER_HH

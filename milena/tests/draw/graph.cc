@@ -25,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/draw/graph.cc
- *
- *  \brief Tests on mln::draw::graph.
- *
- *  Build a graph, convert it to an image, and compare it with a
- *  reference images.
- */
+/// \file tests/draw/graph.cc
+///
+/// Tests on mln::draw::graph.
+///
+/// Build a graph, convert it to an image, and compare it with a
+/// reference images.
 
 #include <vector>
 #include <utility>
@@ -40,10 +39,9 @@
 #include <mln/core/alias/point2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/util/graph.hh>
-#include <mln/core/site_set/p_graph.hh>
-#include <mln/core/image/graph_psite.hh>
-#include <mln/draw/graph.hh>
-#include <mln/core/image/graph_image.hh>
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/core/site_set/p_vertices_psite.hh>
+#include <mln/debug/draw_graph.hh>
 #include <mln/level/compare.hh>
 
 
@@ -57,27 +55,32 @@ using namespace mln;
 // FIXME: We might want to extract NROWS and NCOLS from REF instead of
 // getting them from the caller.
 void
-test (points_type& points, const edges_type& edges,
+test(points_type& points, const edges_type& edges,
       unsigned nrows, unsigned ncols, const mln::image2d<int>& ref)
 {
   // Graph.
-  util::graph<mln::point2d> g;
+  typedef util::graph G;
+  G g;
   // Populate the graph with nodes.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex(points[i]);
+  g.add_vertices(points.size());
   // Populate the graph with edges.
   for (edges_type::const_iterator i = edges.begin(); i != edges.end(); ++i)
     g.add_edge(i->first, i->second);
 
-  mln::p_graph<point2d> pg(g);
+  // Associate vertices to sites.
+  typedef fun::i2v::array<mln::point2d> F;
+  F fpoints(points);
+
+  mln::p_vertices<G, F> pg(g, fpoints);
 
   image2d<int> ima(nrows, ncols);
-  draw::graph (ima, pg, 2, 1);
-  mln_assertion (ima == ref);
+  level::fill(ima, literal::zero);
+  debug::draw_graph(ima, pg, 2, 1);
+  mln_assertion(ima == ref);
 }
 
 int
-main ()
+main()
 {
   /*---------.
   | Test 1.  |
@@ -90,18 +93,18 @@ main ()
       {0, 1, 0},
       {0, 0, 2}
     };
-    image2d<int> ref (make::image(vs));
+    image2d<int> ref(make::image(vs));
 
     // Points associated to nodes.
     points_type points;
-    points.push_back (point2d (0,0)); // Point associated to node 0.
-    points.push_back (point2d (2,2)); // Point associated to node 1.
+    points.push_back(point2d(0,0)); // Point associated to node 0.
+    points.push_back(point2d(2,2)); // Point associated to node 1.
 
     // Edges.
     edges_type edges;
-    edges.push_back (std::make_pair (0, 1));
+    edges.push_back(std::make_pair(0, 1));
 
-    test (points, edges, 3, 3, ref);
+    test(points, edges, 3, 3, ref);
   }
 
 
@@ -117,24 +120,24 @@ main ()
       {0, 0, 0, 1, 1},
       {0, 0, 0, 2, 2},
     };
-    image2d<int> ref (make::image(vs));
+    image2d<int> ref(make::image(vs));
 
     // Points associated to nodes.
     points_type points;
-    points.push_back (point2d (0,0)); // Point associated to node 0.
-    points.push_back (point2d (2,2)); // Point associated to node 1.
-    points.push_back (point2d (0,4)); // Point associated to node 2.
-    points.push_back (point2d (4,3)); // Point associated to node 3.
-    points.push_back (point2d (4,4)); // Point associated to node 4.
+    points.push_back(point2d(0,0)); // Point associated to node 0.
+    points.push_back(point2d(2,2)); // Point associated to node 1.
+    points.push_back(point2d(0,4)); // Point associated to node 2.
+    points.push_back(point2d(4,3)); // Point associated to node 3.
+    points.push_back(point2d(4,4)); // Point associated to node 4.
 
     // Edges.
     edges_type edges;
-    edges.push_back (std::make_pair (0, 1));
-    edges.push_back (std::make_pair (1, 2));
-    edges.push_back (std::make_pair (1, 3));
-    edges.push_back (std::make_pair (3, 4));
-    edges.push_back (std::make_pair (4, 2));
+    edges.push_back(std::make_pair(0, 1));
+    edges.push_back(std::make_pair(1, 2));
+    edges.push_back(std::make_pair(1, 3));
+    edges.push_back(std::make_pair(3, 4));
+    edges.push_back(std::make_pair(4, 2));
 
-    test (points, edges, 5, 5, ref);
+    test(points, edges, 5, 5, ref);
   }
 }

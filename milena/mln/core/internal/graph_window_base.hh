@@ -28,6 +28,8 @@
 #ifndef MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 
+# include <set>
+
 /// \file mln/internal/graph_window_base.hh
 ///
 /// FIXME: doc

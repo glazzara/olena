@@ -29,11 +29,10 @@
 #ifndef MLN_SET_INTER_HH
 # define MLN_SET_INTER_HH
 
-/*! \file mln/set/inter.hh
- *
- * \brief Several routines to compute the intersection between a
- * couple of site sets.
- */
+/// \file mln/set/inter.hh
+///
+/// Several routines to compute the intersection between a
+/// couple of site sets.
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_p_set.hh>
@@ -48,10 +47,10 @@ namespace mln
   namespace set
   {
 
-    /*! \brief Intersection between a couple of point sets.
-     *
-     * \relates mln::Site_Set
-     */
+    /// Intersection between a couple of point sets.
+    ///
+    /// \relates mln::Site_Set
+    ///
     template <typename Wl, typename Wr>
     p_set<mln_psite(Wl)>
     inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);

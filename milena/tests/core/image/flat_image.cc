@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/flat_image.cc
- *
- * \brief Tests on mln::flat_image.
- */
+/// \file tests/core/image/flat_image.cc
+///
+/// Tests on mln::flat_image.
 
 #include <mln/core/image/flat_image.hh>
 #include <mln/core/alias/box2d.hh>
@@ -39,14 +39,21 @@ int main()
 {
     using namespace mln;
 
+    short val = 6;
+    typedef flat_image<short, box2d> I;
+    I test(val, box2d(3, 4));
+
     {
-      flat_image<short, box2d> test;
-      std::cout << test.values_eligible() << std::endl;
-      std::cout << test.values_space() << std::endl;
+      mln_piter_(I) p(test.domain());
+      for_all(p)
+	mln_assertion(test(p) == val);
     }
 
     {
-      flat_image<value::sign, box2d> test;
-      std::cout << test.values_eligible() << std::endl;
+      val = 9;
+      test.val() = 9;
+      mln_piter_(I) p(test.domain());
+      for_all(p)
+	mln_assertion(test(p) == val);
     }
 }

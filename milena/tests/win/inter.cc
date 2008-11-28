@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -26,37 +26,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/stretch.cc
+/// \file tests/win/inter.cc
 ///
-/// Tests on mln::level::stretch.
+/// Tests on mln::set::inter.
 
-#include <mln/core/image/image2d.hh>
-#include <mln/level/stretch.hh>
-#include <mln/debug/iota.hh>
-#include <mln/value/int_u8.hh>
+#include <mln/win/inter.hh>
+#include <mln/core/alias/dpoint2d.hh>
+#include <mln/core/alias/window2d.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  int vs[3][3] = {
-    { 1000, 2000, 3000 },
-    { 1000, 2000, 3000 },
-    { 1000, 2000, 3000 }
-  };
-  image2d<int> ima = make::image(vs);
-  image2d<int_u8> out = level::stretch(int_u8(), ima);
-
-  int_u8 ws[3][3] = {
-    { 0, 127, 255 },
-    { 0, 127, 255 },
-    { 0, 127, 255 }
-  };
-  image2d<int_u8> ref = make::image(ws);
-
-  box_fwd_piter_<point2d> p(out.domain());
-  for_all(p)
-    mln_assertion(out(p) == ref(p));
+  {
+    window2d win1;
+    win1.insert( 2, 7);
+    win1.insert( 2, 1);
+    win1.insert(-4, 0);
+    win1.insert( 0, 0);
+    win1.insert( 1, 1);
+    win1.insert( 6, 5);
+    window2d win2;
+    win2.insert( 2, 7);
+    win2.insert(-2, 1);
+    win2.insert(-4, 0);
+    win2.insert( 1,-1);
+    win2.insert( 6, 5);
+    window2d win3 = set::inter(win1, win2);
+    mln_assertion(!win3.has(dpoint2d( 2, 1)));
+    mln_assertion(!win3.has(dpoint2d( 0, 0)));
+    mln_assertion(!win3.has(dpoint2d( 1, 1)));
+    mln_assertion(win3.has(dpoint2d( 2, 7)));
+    mln_assertion(!win3.has(dpoint2d(-2, 1)));
+    mln_assertion(win3.has(dpoint2d(-4, 0)));
+    mln_assertion(!win3.has(dpoint2d( 1,-1)));
+    mln_assertion(win3.has(dpoint2d( 6, 5)));
+  }
 }
+

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_CORE_CLOCK_NEIGHB_HH
 # define MLN_CORE_CLOCK_NEIGHB_HH
 
-/*! \file mln/core/clock_neighb.hh
- *
- * \brief Definition of the generic neighborhood class mln::clock_neighb.
- */
+/// \file mln/core/clock_neighb.hh
+///
+/// Definition of the generic neighborhood class mln::clock_neighb.
+
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/dpoint.hh>
@@ -45,11 +46,11 @@ namespace mln
   template <typename D> class dpsites_bkd_piter;
 
 
-  /*! \brief Generic neighborhood class.
-   *
-   * This neighborhood of window is just like a set of delta-psites.
-   * The parameter is \c D, type of delta-psite.
-   */
+  /// Generic neighborhood class.
+  ///
+  /// This neighborhood of window is just like a set of delta-psites.
+  /// The parameter is \c D, type of delta-psite.
+  ///
   template <typename D>
   struct clock_neighb : public Neighborhood< clock_neighb <D> >
   {
@@ -57,40 +58,39 @@ namespace mln
     typedef D dpsite;
 
     /// Site associated type.
-    typedef mln_psite(D) point;
+    typedef mln_psite(D) site;
 
-    /*! \brief Site_Iterator type to browse the psites of a generic
-     * neighborhood w.r.t. the ordering of delta-psites.
-     */
+    /// Site_Iterator type to browse the psites of a generic
+    /// neighborhood w.r.t. the ordering of delta-psites.
+    ///
     typedef dpsites_fwd_piter<D> fwd_niter;
 
-    /*! \brief Site_Iterator type to browse the psites of a generic
-     * neighborhood w.r.t. the reverse ordering of delta-psites.
-     *
-     * !!! Be careful the start delta psite become the last now.
-     */
+    /// Site_Iterator type to browse the psites of a generic
+    /// neighborhood w.r.t. the reverse ordering of delta-psites.
+    ///
+    /// !!! Be careful the start delta psite become the last now.
+    ///
     typedef dpsites_bkd_piter<D> bkd_niter;
 
-    /*! \brief Same as fwd_niter.
-     */
+    /// Same as fwd_niter.
     typedef fwd_niter niter;
 
-    /*! \brief Constructor without argument.
-     *
-     * The constructed neighborhood is empty. You have to use insert()
-     * to proceed to the neighborhood definition.
-     */
+    /// Constructor without argument.
+    ///
+    /// The constructed neighborhood is empty. You have to use insert()
+    /// to proceed to the neighborhood definition.
+    ///
     clock_neighb();
 
-    /*! \brief Insert a delta-psite \p dp in the neighborhood
-     *  definition.
-     *
-     * \param[in] dp The delta-psite to insert.
-     *
-     * This method also insert the symmetrical delta-psite, - \p dp,
-     * in the neighborhood definition; thus the client has not to
-     * ensure the symmetry property; that is automatic.
-     */
+    /// Insert a delta-psite \p dp in the neighborhood
+    ///  definition.
+    ///
+    /// \param[in] dp The delta-psite to insert.
+    ///
+    /// This method also insert the symmetrical delta-psite, - \p dp,
+    /// in the neighborhood definition; thus the client has not to
+    /// ensure the symmetry property; that is automatic.
+    ///
     clock_neighb<D>& append(const D& dp);
     /// \}
     const std::vector<D>& vect() const

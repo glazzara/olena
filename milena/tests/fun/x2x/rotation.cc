@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fun/x2x/rotation.cc
- *
- * \brief Tests on mln::fun::x2x::rotation.
- */
+/// \file tests/fun/x2x/rotation.cc
+///
+/// Tests on mln::fun::x2x::rotation.
+///
 
 #include <iostream>
 #include <mln/fun/x2x/rotation.hh>
@@ -47,16 +47,20 @@ int main()
   using namespace mln;
   using value::int_u8;
 
+  algebra::vec<2,float> axis;
+  axis[0] = 0;
+  axis[1] = 1;
+
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
   interpolated<image2d<int_u8> > inter(lena);
 
-  fun::x2x::rotation<2,float> rot1(0.1);
+  fun::x2x::rotation<2,float> rot1(0.1, axis);
 
   image2d<int_u8>::fwd_piter p(out.domain());
-  
+
   for_all(p)
     {
       algebra::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
@@ -67,7 +71,7 @@ int main()
     }
   io::pgm::save(out, "out.pgm");
 
-  fun::x2x::rotation<2,float> rot2(3.14116);
+  fun::x2x::rotation<2,float> rot2(3.14116, axis);
   mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[0] -
 		     make::vec(0.0, -1.0)[0]) <= 0.125);
   mln_assertion(fabs(rot2(make::vec(0.0, 1.0))[1] -

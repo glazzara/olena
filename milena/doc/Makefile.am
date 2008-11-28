@@ -21,6 +21,7 @@ html_user: Doxyfile tuto_html
 	$(DOXYGEN) Doxyfile_user
 
 tuto_html:
+	$(MAKE) -C tutorial tuto_html
 
 tuto: all
 	$(MAKE) -C tutorial tuto

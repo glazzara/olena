@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,14 @@
 #ifndef MLN_SET_DIFF_HH
 # define MLN_SET_DIFF_HH
 
-/*! \file mln/set/diff.hh
- *
- * \brief Set theoretic difference (non-symmetrical) of a couple of
- * sets.
- *
- * \todo Add a diff(Site_Set& in_place, Function_p2b).
- */
+/// \file mln/set/diff.hh
+///
+/// Set theoretic difference (non-symmetrical) of a couple of
+/// sets.
+///
+/// \todo Add a diff(Site_Set& in_place, Function_p2b).
+/// \todo Fix this function!
+
 
 # include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_p_set.hh>
@@ -48,10 +50,10 @@ namespace mln
   namespace set
   {
 
-    /*! \brief Set theoretic difference of \p lhs and \p rhs.
-     *
-     * \relates mln::Site_Set
-     */
+    /// Set theoretic difference of \p lhs and \p rhs.
+    ///
+    /// \relates mln::Site_Set
+    ///
     template <typename Wl, typename Wr>
     p_set<mln_psite(Wl)>
     diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);

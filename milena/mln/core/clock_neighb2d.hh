@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_CLOCK_NEIGHB2D_HH
 # define MLN_CORE_CLOCK_NEIGHB2D_HH
 
-/*! \file mln/core/clock_neighb2d.hh
- *
- * \brief Definition of the mln::clock_neighb2d alias and of some classical
- * 2D clock_neighborhoods.
- */
+/// \file mln/core/clock_neighb2d.hh
+///
+/// Definition of the mln::clock_neighb2d alias and of some classical
+/// 2D clock_neighborhoods.
 
 # include <cmath>
 # include <mln/core/clock_neighb.hh>
@@ -42,53 +42,51 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a clock_neighborhood defined on the 2D square
-   * grid with integer coordinates.
-   */
-  typedef clock_neighb_<dpoint2d> clock_neighb2d;
+  /// Type alias for a clock_neighborhood defined on the 2D square
+  /// grid with integer coordinates.
+  ///
+  typedef clock_neighb<dpoint2d> clock_neighb2d;
 
 
-  /*! \brief 4-connectivity clock_neighborhood on the 2D grid.
-   *
-   *  - o -
-   *  o x o
-   *  - o -
-   *
-   * \return A clock_neighb2d.
-   */
+  /// 4-connectivity clock_neighborhood on the 2D grid.
+  ///
+  /// - o -
+  /// o x o
+  /// - o -
+  ///
+  /// \return A clock_neighb2d.
   const clock_neighb2d cc4(dpoint2d& dp);
 
 
-  /*! \brief 8-connectivity clock_neighborhood on the 2D grid.
-   *
-   *  o o o
-   *  o x o
-   *  o o o
-   *
-   * \return A clock_neighb2d.
-   */
+  /// 8-connectivity clock_neighborhood on the 2D grid.
+  ///
+  /// o o o
+  /// o x o
+  /// o o o
+  ///
+  /// \return A clock_neighb2d.
   const clock_neighb2d cc8(dpoint2d& dp);
 
 
-//   /*! \brief Horizontal 2-connectivity clock_neighborhood on the 2D grid.
-//    *
-//    *  - - -
-//    *  o x o
-//    *  - - -
-//    *
-//    * \return A clock_neighb2d.
-//    */
+//   /// Horizontal 2-connectivity clock_neighborhood on the 2D grid.
+//   ///
+//   /// - - -
+//   /// o x o
+//   /// - - -
+//   ///
+//   /// \return A clock_neighb2d.
+//   ///
 //   const clock_neighb2d& c2_row();
 
 
-//   /*! \brief Vertical 2-connectivity clock_neighborhood on the 2D grid.
-//    *
-//    *  - o -
-//    *  - x -
-//    *  - o -
-//    *
-//    * \return A clock_neighb2d.
-//    */
+//   /// Vertical 2-connectivity clock_neighborhood on the 2D grid.
+//   ///
+//   /// - o -
+//   /// - x -
+//   /// - o -
+//   ///
+//   /// \return A clock_neighb2d.
+//   ///
 //   const clock_neighb2d& c2_col();
 
 

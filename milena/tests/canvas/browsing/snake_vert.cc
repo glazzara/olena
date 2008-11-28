@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/canvas/browsing/snake_vert.cc
- *
- * \brief Tests on mln::canvas::browsing::snake_vert.
- */
+/// \file tests/canvas/browsing/snake_vert.cc
+///
+/// Tests on mln::canvas::browsing::snake_vert.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/canvas/browsing/snake_vert.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
 
-// FIXME: Move code below into mln/canvas/browsing/iota.hh.
-
+unsigned res[2][7] = { { 1, 4, 5, 8,  9, 12, 13 },
+		       { 2, 3, 6, 7, 10, 11, 14 } };
 
 template <typename I, typename F>
 struct assign_browsing_functor
@@ -59,8 +58,7 @@ struct assign_browsing_functor
   void next()
   {
     input(p) = f(p);
-//     mln_assertion(input(p) - 1 == p[0] * input.domain().ncols()
-// 		  + ( (p[0] % 2) ? input.domain().ncols() - 1 - p[1] : p[1]));
+    mln_assertion(input(p) == res[p.row()][p.col()]);
   }
   void fwd()  { next(); }
   void up()  { next(); }
@@ -91,6 +89,5 @@ int main()
   using namespace mln;
   image2d<unsigned> ima2(2, 7);
 
-  my_test(ima2, fun::p2v::iota, canvas::browsing::snake_vert);
-  debug::println(ima2);
+  my_test(ima2, fun::p2v::iota(), canvas::browsing::snake_vert);
 }

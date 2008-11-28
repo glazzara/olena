@@ -32,6 +32,9 @@
 
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/site_set/p_edges.hh>
+
+#include <mln/util/graph.hh>
 
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
@@ -61,18 +64,20 @@ int main()
   */
 
   // Points associated to vertices.
-  std::vector<p_t> points;
-  points.push_back(point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(point2d(4,4)); // Point associated to vertex 4.
+  typedef fun::i2v::array<p_t> F;
+  F points(5);
+  points(0) = point2d(0,0); // Point associated to vertex 0.
+  points(1) = point2d(2,2); // Point associated to vertex 1.
+  points(2) = point2d(0,4); // Point associated to vertex 2.
+  points(3) = point2d(4,3); // Point associated to vertex 3.
+  points(4) = point2d(4,4); // Point associated to vertex 4.
 
   // Edges.
-  mln::util::graph<p_t> g;
+  typedef mln::util::graph G;
+  G g;
   // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex (points[i]);
+    g.add_vertex ();
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -85,11 +90,11 @@ int main()
   `------------------*/
 
   // Line graph psite set.
-  p_line_graph<p_t> plg(g);
+  p_edges<G, F> pe(g, points);
   // Line graph point site.
-  line_graph_psite<p_t> p(plg, 1);
+  p_edges_psite<G, F> p(pe, 1);
   // ``Sliding'' window of a psite of PLG.
-  typedef line_graph_elt_window<p_t> win_t;
+  typedef line_graph_elt_window<G, F> win_t;
   win_t win;
 
   mln_fwd_qiter_(win_t) fq(win, p);

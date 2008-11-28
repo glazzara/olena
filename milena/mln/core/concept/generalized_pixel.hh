@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
 # define MLN_CORE_CONCEPT_GENERALIZED_PIXEL_HH
 
-/*! \file mln/core/concept/generalized_pixel.hh
- *
- * \brief Definition of the concept of mln::Generalized_Pixel.
- */
+/// \file mln/core/concept/generalized_pixel.hh
+///
+/// Definition of the concept of mln::Generalized_Pixel.
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/internal/force_exact.hh>
@@ -41,17 +41,17 @@
 namespace mln
 {
 
-  /*! \brief Base class for implementation classes that are pixels or that
-   *  have the behavior of pixels.
-   *
-   * \warning This class does \em not derive from mln::Object; it is
-   * for use as a parallel hierarchy.
-   *
-   * \see mln::doc::Generalized_Pixel for a complete documentation of this
-   * class contents.
-   *
-   * \todo (later) Add an access to the targetted image.
-   */
+  /// Base class for implementation classes that are pixels or that
+  ///  have the behavior of pixels.
+  ///
+  /// \warning This class does \em not derive from mln::Object; it is
+  /// for use as a parallel hierarchy.
+  ///
+  /// \see mln::doc::Generalized_Pixel for a complete documentation of this
+  /// class contents.
+  ///
+  /// \todo (later) Add an access to the targetted image.
+  ///
   template <typename E>
   struct Generalized_Pixel
   {
@@ -68,7 +68,7 @@ namespace mln
     operator unsigned() const // FIXME: Change to std::size_t
     {
       const E& it_ = internal::force_exact<E>(*this);
-      return & it_.val() - & it_.ima()[0];
+      return & it_.val() - & it_.ima().buffer()[0];
     }
 
   protected:

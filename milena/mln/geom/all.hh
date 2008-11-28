@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_GEOM_ALL_HH
 # define MLN_GEOM_ALL_HH
 
-/*! \file mln/geom/all.hh
- *
- * \brief File that includes all geometry related things.
- */
+/// \file mln/geom/all.hh
+///
+/// File that includes all geometry related things.
 
 
 namespace mln
@@ -48,6 +47,8 @@ namespace mln
 
 # include <mln/geom/bbox.hh>
 # include <mln/geom/chamfer.hh>
+# include <mln/geom/complex_geometry.hh>
+# include <mln/geom/delta.hh>
 # include <mln/geom/max_col.hh>
 # include <mln/geom/max_ind.hh>
 # include <mln/geom/max_row.hh>
@@ -59,6 +60,7 @@ namespace mln
 # include <mln/geom/ncols.hh>
 # include <mln/geom/ninds.hh>
 # include <mln/geom/nrows.hh>
+# include <mln/geom/nsites.hh>
 # include <mln/geom/nslis.hh>
 # include <mln/geom/pmin_pmax.hh>
 # include <mln/geom/resize.hh>
@@ -67,8 +69,5 @@ namespace mln
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
-# include <mln/geom/complex_geometry.hh>
-# include <mln/geom/nsites.hh>
-# include <mln/geom/delta.hh>
 
 #endif // ! MLN_GEOM_ALL_HH

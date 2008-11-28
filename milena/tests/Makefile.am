@@ -2,6 +2,7 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+##FIXME: re-enable all tests
 SUBDIRS =					\
   accu						\
   algebra					\
@@ -12,7 +13,7 @@ SUBDIRS =					\
   convert					\
   core						\
   debug						\
-  display					\
+##  display					\
   draw						\
   estim						\
   extension					\

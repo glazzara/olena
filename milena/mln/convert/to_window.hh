@@ -29,14 +29,13 @@
 #ifndef MLN_CONVERT_TO_WINDOW_HH
 # define MLN_CONVERT_TO_WINDOW_HH
 
-/*! \file mln/convert/to_window.hh
- *
- * \brief Conversions to mln::window.
- */
+/// \file mln/convert/to_window.hh
+///
+/// Conversions to mln::window.
 
 # include <set>
- 
-# include <mln/core/concept/delta_point_site.hh>
+
+# include <mln/core/concept/gdpoint.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/window.hh>
 # include <mln/pw/image.hh>
@@ -56,11 +55,11 @@ namespace mln
 
     /// Convert a binary image \p ima into a window.
     template <typename I>
-    window<mln_dpsite(I)> to_window(const Image<I>& ima);
+    window<mln_site(I)::dpsite> to_window(const Image<I>& ima);
 
     /// Convert a site set \p pset into a window.
     template <typename S>
-    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset);
+    window<mln_site(S)::dpsite> to_window(const Site_Set<S>& pset);
 
     /// Convert an std::set \p s of delta-sites into a window.
     template <typename D, typename C>
@@ -95,13 +94,13 @@ namespace mln
        depth in milena/core/concepts/README.  */
     template <typename I>
     inline
-    window<mln_dpsite(I)> to_window(const Image<I>& ima_)
+    window<mln_site(I)::dpsite> to_window(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // FIXME: Check that ima is binary!
-      typedef mln_dpsite(I) D;
-      typedef mln_site(D) P;
+      typedef mln_site(I) P;
+      typedef mln_dpsite(P) D;
 
       window<D> win;
       mln_piter(I) p(ima.domain());
@@ -111,13 +110,14 @@ namespace mln
       return win;
     }
 
+
     /*----------------------------------.
     | Point set-to-window conversions.  |
     `----------------------------------*/
 
     template <typename S>
     inline
-    window<mln_dpsite(S)> to_window(const Site_Set<S>& pset)
+    window<mln_site(S)::dpsite> to_window(const Site_Set<S>& pset)
     {
       return to_window(pw::cst(true) | pset);
     }
@@ -131,7 +131,8 @@ namespace mln
     window<D> to_window(const std::set<D, C>& s)
     {
       // FIXME: Was: mln::metal::is_a<D, Dpoint>::check();
-      mln::metal::is_a<D, Delta_Point_Site>::check();
+      //	  OR mln::metal::is_a<D, Delta_Point_Site>::check();
+      mln::metal::is_a<D, Gdpoint>::check();
       window<D> win;
       for (typename std::set<D, C>::const_iterator i = s.begin();
 	   i != s.end(); ++i)

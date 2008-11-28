@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/fun/x2x/composed.cc
- *
- * \brief Tests on mln::fun::x2x::composed.
- */
+/// \file tests/fun/x2x/composed.cc
+///
+/// Tests on mln::fun::x2x::composed.
 
 
 #include <iostream>
@@ -50,7 +49,11 @@ int main()
 
   algebra::vec<3,float> vec1 = make::vec(a, b, c);
   fun::x2x::translation<3,float> tr(all_to(1.6));
-  fun::x2x::rotation<3,float> rot(0.3, 1);
+  algebra::vec<3,float> axis;
+  axis[0] = 0;
+  axis[1] = 1;
+  axis[0] = 0;
+  fun::x2x::rotation<3,float> rot(0.3, axis);
 
   std::cout << "vec : " << vec1 << std::endl;
   std::cout << "tr(vec) : " << tr(vec1) << std::endl;

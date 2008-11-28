@@ -32,6 +32,7 @@
 ///
 /// Definition of a graph edge.
 
+# include <iostream>
 # include <mln/util/internal/graph_edge_impl.hh>
 
 
