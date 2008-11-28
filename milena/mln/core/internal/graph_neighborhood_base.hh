@@ -32,6 +32,9 @@
 ///
 /// FIXME: doc
 
+# include <set>
+# include <mln/core/concept/neighborhood.hh>
+
 namespace mln
 {
 

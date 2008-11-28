@@ -98,6 +98,8 @@ namespace mln
 			   const Image<I>& ima, unsigned thickness)
       {
 	// No-op.
+	(void) ima;
+	(void) thickness;
       }
 
       template <typename I>

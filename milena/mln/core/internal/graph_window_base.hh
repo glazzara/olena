@@ -29,6 +29,7 @@
 # define MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 
 # include <set>
+# include <mln/core/concept/window.hh>
 
 /// \file mln/internal/graph_window_base.hh
 ///

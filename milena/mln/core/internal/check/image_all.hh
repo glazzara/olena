@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_INTERNAL_CHECK_IMAGE_ALL_HH
 # define MLN_CORE_INTERNAL_CHECK_IMAGE_ALL_HH
 
-/*! \file mln/core/internal/check/image_all.hh
- *
- * \brief File that includes all image-related internal checks.
- */
+/// \file mln/core/internal/check/image_all.hh
+///
+/// File that includes all image-related internal checks.
 
-
+# include <mln/trait/images.hh>
 # include <mln/core/internal/check/image_fastest.hh>
 // ...
 

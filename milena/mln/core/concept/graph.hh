@@ -32,6 +32,8 @@
 ///
 /// Definition of the concept of mln::Graph.
 
+# include <mln/core/concept/object.hh>
+
 namespace mln
 {
 

@@ -31,11 +31,12 @@
 /// \file mln/topo/face.hh
 /// \brief Face of a complex.
 
-#include <limits>
-#include <vector>
+# include <iostream>
+# include <limits>
+# include <vector>
 
-#include <mln/core/contract.hh>
-#include <mln/metal/bool.hh>
+# include <mln/core/contract.hh>
+# include <mln/metal/bool.hh>
 
 
 namespace mln

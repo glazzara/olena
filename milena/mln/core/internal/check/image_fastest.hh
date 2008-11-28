@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,18 @@
 #ifndef MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 # define MLN_CORE_INTERNAL_CHECK_IMAGE_FASTEST_HH
 
-/*! \file mln/core/internal/check/image_fastest.hh
- *
- * \brief Class that statically checks the interface of fastest
- * images.
- *
- * \todo Check and convert p in index_of_point towards E::psite.
- */
+/// \file mln/core/internal/check/image_fastest.hh
+///
+/// Class that statically checks the interface of fastest
+/// images.
+///
+/// \todo Check and convert p in index_of_point towards E::psite.
 
+
+# include <mln/metal/bool.hh>
+# include <mln/core/macros.hh>
+# include <mln/core/trait/pixter.hh>
+# include <mln/core/trait/qlf_value.hh>
 # include <mln/core/internal/force_exact.hh>
 
 namespace mln
@@ -47,21 +52,20 @@ namespace mln
     namespace check
     {
 
-      /*! FIXME
-       */
+      /// FIXME
       template < typename E, typename B = metal::true_ >
       struct image_fastest_
       {
 
-	/*! \brief Give the offset of the site \p p.
-	 *
-	 * \param[in] p A site.
-	 *
-	 * \warning This method is final.
-	 *
-	 * \pre The image has to be initialized and to own the point \p p.
-	 * \post p == point_at_index(result)
-	 */
+	/// \brief Give the offset of the site \p p.
+	///
+	/// \param[in] p A site.
+	///
+	/// \warning This method is final.
+	///
+	/// \pre The image has to be initialized and to own the point \p p.
+	/// \post p == point_at_index(result)
+	///
 	template <typename P>
 	unsigned
 	index_of_point(const P& p) const;
@@ -71,7 +75,6 @@ namespace mln
       };
 
 
-      /// 
       template <typename E>
       struct image_fastest_< E, metal::false_ >
       {
@@ -86,8 +89,8 @@ namespace mln
       image_fastest_<E,B>::image_fastest_()
       {
 	typedef mln_site(E)        site;
- 	typedef mln_psite(E)      psite;
- 	typedef mln_delta(psite) dpsite;
+	typedef mln_psite(E)      psite;
+	typedef mln_delta(psite) dpsite;
 
 
 	typedef mln_fwd_pixter(E) fwd_pixter;

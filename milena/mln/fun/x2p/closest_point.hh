@@ -30,7 +30,8 @@
 
 # include <mln/algebra/vec.hh>
 # include <mln/norm/l2.hh>
-
+# include <mln/core/site_set/p_array.hh>
+# include <mln/core/site_set/box.hh>
 
 namespace mln
 {

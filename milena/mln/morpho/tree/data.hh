@@ -34,7 +34,7 @@
 
 # include <mln/morpho/tree/compute_parent.hh>
 # include <mln/core/image/sub_image.hh>
-
+# include <mln/core/site_set/p_array.hh>
 
 
 namespace mln

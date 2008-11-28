@@ -33,6 +33,7 @@
 ///
 /// Browsing in a snake-way, forward.
 
+# include <vector>
 # include <mln/core/concept/browsing.hh>
 
 

@@ -29,13 +29,15 @@
 # define MLN_TOPO_N_FACE_HH
 
 /// \file mln/topo/n_face.hh
+///
 /// \brief n-face of a complex.
 
-#include <limits>
-#include <vector>
+# include <iostream>
+# include <limits>
+# include <vector>
 
-#include <mln/core/contract.hh>
-
+# include <mln/core/contract.hh>
+# include <mln/metal/bool.hh>
 
 namespace mln
 {

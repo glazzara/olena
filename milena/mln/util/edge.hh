@@ -33,8 +33,8 @@
 /// Definition of a graph edge.
 
 # include <iostream>
-# include <mln/util/internal/graph_edge_impl.hh>
-
+# include <mln/util/internal/edge_impl.hh>
+# include <mln/core/concept/proxy.hh>
 
 namespace mln
 {

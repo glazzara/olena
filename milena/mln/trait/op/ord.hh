@@ -33,7 +33,7 @@
 /// Declaration of an ordering operator trait.
 
 # include <mln/trait/op/decl.hh>
-
+# include <mln/trait/solve.hh>
 
 
 namespace mln

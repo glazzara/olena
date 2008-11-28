@@ -1,4 +1,5 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008  EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,15 @@
 #ifndef MLN_METAL_VEC_HH
 # define MLN_METAL_VEC_HH
 
-/*!
- * \file  mln/metal/vec.hh
- *
- * \brief Definition of a generic vector class.
- */
+/// \file  mln/metal/vec.hh
+///
+/// Definition of a generic vector class.
 
 # include <iostream>
 # include <cmath>
 
 # include <mln/core/concept/object.hh>
+# include <mln/algebra/h_vec.hh>
 
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>

@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,8 +29,10 @@
 #ifndef MLN_REGISTRATION_GET_ROT_HH
 # define MLN_REGISTRATION_GET_ROT_HH
 
+# include <mln/core/site_set/p_array.hh>
 # include <mln/fun/x2x/all.hh>
 # include <mln/algebra/quat.hh>
+# include <mln/algebra/vec.hh>
 # include <mln/math/jacobi.hh>
 
 namespace mln

@@ -36,6 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/accumulator.hh>
+# include <mln/core/concept/meta_accumulator.hh>
 
 
 namespace mln

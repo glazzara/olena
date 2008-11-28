@@ -35,6 +35,7 @@
 
 # include <vector>
 
+# include <mln/core/concept/object.hh>
 
 namespace mln
 {

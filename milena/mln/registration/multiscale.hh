@@ -28,7 +28,11 @@
 #ifndef MLN_REGISTRATION_MULTISCALE_HH
 # define MLN_REGISTRATION_MULTISCALE_HH
 
+# include <mln/core/concept/image.hh>
+# include <mln/core/image/lazy_image.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/registration/icp.hh>
+# include <mln/registration/registration.hh>
 # include <mln/fun/x2p/closest_point.hh>
 
 namespace mln

@@ -1,5 +1,5 @@
-// Copyright (C) 2008 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,18 +29,14 @@
 #ifndef MLN_IO_TXT_SAVE_HH
 # define MLN_IO_TXT_SAVE_HH
 
-/*!
- * \file   mln/io/txt/save.hh
- *
- * \brief Define a function which saves an image of kind TXT into
- * given path.
- *
- */
+/// \file   mln/io/txt/save.hh
+///
+/// \brief Save an image as txt file.
 
 # include <iostream>
 # include <fstream>
 
-# include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 
 # include <mln/metal/is.hh>
 
@@ -54,11 +50,10 @@ namespace mln
     namespace txt
     {
 
-      /*! Save a Milena image as a txt image.
-       *
-       * \param[in] ima_ The image to save. Must be an image of char.
-       * \param[in] filename the destination.
-       */
+      /// Save an image as txt file.
+      ///
+      /// \param[in] ima_ The image to save. Must be an image of char.
+      /// \param[in] filename the destination.
       void
       save(const image2d<char>& ima, const std::string& filename);
 

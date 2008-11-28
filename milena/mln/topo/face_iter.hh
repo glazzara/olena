@@ -34,6 +34,7 @@
 
 # include <mln/topo/internal/complex_set_iterator_base.hh>
 # include <mln/topo/face.hh>
+# include <mln/topo/face_iter.hh>
 
 // FIXME: Factor a bit more? (Using complex_set_iterator_base.)
 

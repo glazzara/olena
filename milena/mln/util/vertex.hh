@@ -29,7 +29,8 @@
 # define MLN_UTIL_VERTEX_HH
 
 # include <iostream>
-# include <mln/util/internal/graph_vertex_impl.hh>
+# include <mln/util/internal/vertex_impl.hh>
+# include <mln/core/concept/proxy.hh>
 
 /// \file mln/util/vertex.hh
 ///
@@ -52,7 +53,7 @@ namespace mln
 
       /// Graph associated type.
       typedef G graph_t;
-      
+
       /// Constructors.
       /// \{
       vertex();

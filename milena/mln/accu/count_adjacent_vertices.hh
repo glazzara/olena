@@ -31,11 +31,11 @@
 
 /// \file mln/accu/count_adjacent_vertices.hh
 /// Define an accumulator that counts the vertices adjacent to a
-/// set of line graph psite.
+/// set of p_edges psites.
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/core/image/line_graph_image.hh>
+# include <mln/pw/image.hh>
 # include <mln/util/pix.hh>
 
 namespace mln
@@ -45,20 +45,20 @@ namespace mln
   {
 
     /// Accumulator class counting the number of vertices
-    /// adjacent to a set of mln::line_graph_psite (i.e., a set of
+    /// adjacent to a set of mln::p_edges_psite (i.e., a set of
     /// edges).
     ///
-    /// The type to be count is mln::util::pix< mln::line_graph_image<P, V> >
-    /// where \p P and \p V are the parameters of this class.
+    /// The type to be count is mln::util::pix< pw::image<F, S> >
+    /// where \p F and \p S are the parameters of this class.
     ///
     /// This accumulator is used by mln::closing_area_on_vertices and
     /// mln::opening_area_on_vertices.
-    template <typename P, typename V>
+    template <typename F, typename S>
     struct count_adjacent_vertices
       : public mln::accu::internal::base< unsigned,
-					  count_adjacent_vertices<P, V> >
+					  count_adjacent_vertices<F,S> >
     {
-      typedef mln::util::pix< mln::line_graph_image<P, V> > argument;
+      typedef mln::util::pix< pw::image<F,S> > argument;
 
       count_adjacent_vertices();
 
@@ -66,7 +66,7 @@ namespace mln
       /// \{
       void init();
       void take(const argument& arg);
-      void take(const count_adjacent_vertices<P, V>& other);
+      void take(const count_adjacent_vertices<F,S>& other);
 
       /// Force the value of the counter to \a c.
       void set_value(unsigned c);
@@ -83,7 +83,7 @@ namespace mln
       /// The value of the counter.
       unsigned count__;
       /// The set of adjacent vertices.
-      std::set<util::vertex_id> vertices_;
+      std::set<unsigned> vertices_;
     };
 
 
@@ -94,10 +94,10 @@ namespace mln
       struct count_adjacent_vertices
 	: public Meta_Accumulator< count_adjacent_vertices >
       {
-	template <typename P, typename V>
+	template <typename F, typename S>
 	  struct with
 	  {
-	    typedef accu::count_adjacent_vertices<P, V> ret;
+	    typedef accu::count_adjacent_vertices<F,S> ret;
 	  };
       };
 
@@ -106,63 +106,63 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
-    count_adjacent_vertices<P, V>::count_adjacent_vertices()
+    count_adjacent_vertices<F,S>::count_adjacent_vertices()
     {
       init();
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     void
-    count_adjacent_vertices<P, V>::init()
+    count_adjacent_vertices<F,S>::init()
     {
       vertices_.clear();
       update_();
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     void
-    count_adjacent_vertices<P, V>::take(const argument& arg)
+    count_adjacent_vertices<F,S>::take(const argument& arg)
     {
-      vertices_.insert(arg.p().first_id());
-      vertices_.insert(arg.p().second_id());
+      vertices_.insert(arg.p().v1());
+      vertices_.insert(arg.p().v2());
       update_();
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     void
-    count_adjacent_vertices<P, V>::take(const count_adjacent_vertices<P, V>& other)
+    count_adjacent_vertices<F,S>::take(const count_adjacent_vertices<F,S>& other)
     {
       vertices_.insert (other.vertices_.begin(), other.vertices_.end());
       update_();
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     unsigned
-    count_adjacent_vertices<P, V>::to_result() const
+    count_adjacent_vertices<F,S>::to_result() const
     {
       return count__;
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     void
-    count_adjacent_vertices<P, V>::set_value(unsigned c)
+    count_adjacent_vertices<F,S>::set_value(unsigned c)
     {
       count__ = c;
       /// Reset the other member.
       vertices_.clear();
     }
 
-    template <typename P, typename V>
+    template <typename F, typename S>
     inline
     void
-    count_adjacent_vertices<P, V>::update_()
+    count_adjacent_vertices<F,S>::update_()
     {
       count__ = vertices_.size();
     }

@@ -30,6 +30,8 @@
 
 # include <mln/core/concept/proxy.hh>
 # include <mln/util/internal/graph_nbh_iter_base.hh>
+# include <mln/util/vertex.hh>
+# include <mln/util/edge.hh>
 
 /// \file   mln/util/internal/graph_nbh_iter.hh
 /// \brief  Implementation for graph vertex iterators centered to a vertex.

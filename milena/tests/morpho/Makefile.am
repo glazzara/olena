@@ -8,7 +8,7 @@ SUBDIRS =					\
   tree
 
 check_PROGRAMS =				\
-  artificial_line_graph_image_wst		\
+##  artificial_line_graph_image_wst		\
   closing_area					\
   closing_height				\
   closing_volume				\
@@ -21,7 +21,7 @@ check_PROGRAMS =				\
   erosion					\
 ##  erosion_min_h					\
   gradient					\
-  graph_image_morpho				\
+##  graph_image_morpho				\
 ##  graph_image_wst				\
   hit_or_miss					\
   laplacian					\
@@ -82,8 +82,8 @@ combined_SOURCES = combined.cc
 # Complex tests.  #
 # --------------- #
 
-artificial_line_graph_image_wst_SOURCES = artificial_line_graph_image_wst.cc
-artificial_line_graph_image_wst_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
+##artificial_line_graph_image_wst_SOURCES = artificial_line_graph_image_wst.cc
+##artificial_line_graph_image_wst_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)
 
 dilation_SOURCES = dilation.cc
 dilation_CXXFLAGS = $(TESTS_CXXFLAGS_SPEED)

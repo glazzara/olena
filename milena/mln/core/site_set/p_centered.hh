@@ -38,6 +38,7 @@
  */
 
 # include <mln/core/internal/site_set_base.hh>
+# include <mln/core/internal/site_set_iterator_base.hh>
 
 
 namespace mln

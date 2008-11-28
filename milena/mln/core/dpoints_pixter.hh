@@ -37,6 +37,7 @@
 # include <cassert>
 # include <vector>
 
+# include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/pixel_iterator.hh>
 # include <mln/core/internal/pixel_impl.hh>
 # include <mln/metal/converts_to.hh>

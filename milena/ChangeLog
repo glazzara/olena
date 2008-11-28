@@ -1,3 +1,60 @@
+2008-11-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix more tests.
+
+	* mln/accu/count_adjacent_vertices.hh: make it work with the
+new graph images.
+
+	* mln/accu/median_alt.hh: fix compilation issue.
+
+	* mln/util/multi_site.hh,
+	* mln/util/vertex.hh,
+	* mln/util/internal/graph_nbh_iter.hh,
+	* mln/core/internal/pixel_impl.hh,
+	* mln/core/internal/set_of.hh,
+	* mln/core/site_set/box_piter.hh,
+	* mln/core/site_set/p_centered.hh,
+	* mln/fun/p2b/has.hh,
+	* mln/fun/x2p/closest_point.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/io/txt/save.hh,
+	* mln/metal/vec.hh,
+	* mln/morpho/internal/elementary.hh,
+	* mln/morpho/tree/data.hh,
+	* mln/registration/get_rot.hh,
+	* mln/registration/get_rtransf.hh,
+	* mln/registration/multiscale.hh,
+	* mln/topo/face.hh,
+	* mln/topo/face_iter.hh,
+	* mln/topo/n_face.hh,
+	* mln/trait/op/ord.hh,
+	* mln/util/edge.hh,
+	* mln/core/dpoints_pixter.hh,
+	* mln/core/internal/check/image_all.hh,
+	* mln/core/internal/check/image_fastest.hh,
+	* mln/core/internal/graph_neighborhood_base.hh,
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/concept/graph.hh,
+	* mln/canvas/browsing/snake_generic.hh,
+	* mln/accu/rank_high_quant.hh: fix includes.
+
+	* mln/border/resize.hh: avoid a warning.
+
+	* mln/core/internal/image_if_base.hh: removed since it is unused and
+	not updated.
+
+	* mln/util/internal/graph_edge_impl.hh: rename as...
+	* mln/util/internal/edge_impl.hh: ... this.
+
+	* mln/util/internal/graph_vertex_impl.hh: rename as...
+	* mln/util/internal/vertex_impl.hh: ... this.
+	
+	* tests/morpho/Makefile.am: disable more tests.
+
+	* tests/unit_test/build_unit_test.sh: do not include mln/core/doc
+	headers.
+
+
 2008-11-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make morpho erosion rely on a general code.

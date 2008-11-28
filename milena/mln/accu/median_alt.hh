@@ -99,24 +99,24 @@ namespace mln
 
       /// Meta accumulator for median_alt.
 
-      struct median_alt : public Meta_Accumulator< median_alt >
+      template <typename T>
+      struct median_alt : public Meta_Accumulator< median_alt<T> >
       {
-	median_alt(const Value_Set<S>& s_) : s(s_) {}
+	median_alt(const Value_Set<T>& s_) : s(s_) {}
 
-	template <typename V>
 	struct with
 	{
-	  typedef accu::median_alt<V> ret;
+	  typedef accu::median_alt<T> ret;
 	};
 
-	Value_Set<S> s;
+	Value_Set<T> s;
       };
 
     } // end of namespace mln::accu::meta
 
 
     template <typename T>
-    median_alt<T> unmeta(const meta::median_alt& m, T)
+    median_alt<T> unmeta(const meta::median_alt<T>& m, T)
     {
       median_alt<T> a(m.s);
       return a;

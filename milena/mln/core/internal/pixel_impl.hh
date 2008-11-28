@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,12 @@
 #ifndef MLN_CORE_INTERNAL_PIXEL_IMPL_HH
 # define MLN_CORE_INTERNAL_PIXEL_IMPL_HH
 
-/*! \file mln/core/internal/pixel_impl.hh
- *
- * \brief Define a couple of implementation classes to provide methods
- * to classes of generalized pixels.
- */
+/// \file mln/core/internal/pixel_impl.hh
+///
+/// Define a couple of implementation classes to provide methods
+/// to classes of generalized pixels.
 
+# include <mln/core/concept/image.hh>
 # include <mln/core/internal/force_exact.hh>
 
 
@@ -43,10 +43,8 @@ namespace mln
   namespace internal
   {
 
-    /*! Implementation class to equip generalized pixel
-     *  classes based on mutable images.
-     *
-     */
+    /// Implementation class to equip generalized pixel
+    /// classes based on mutable images.
     template <typename I, typename E>
     class pixel_impl_
     {
@@ -95,10 +93,8 @@ namespace mln
     };
 
 
-    /*! Implementation class to equip generalized pixel
-     *  classes based on constant images.
-     *
-     */
+    /// Implementation class to equip generalized pixel
+    /// classes based on constant images.
     template <typename I, typename E>
     class pixel_impl_< const I, E >
     {

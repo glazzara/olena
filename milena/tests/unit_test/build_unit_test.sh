@@ -1,6 +1,6 @@
 #!/bin/sh
 
-HEADERS=`find ../../mln -name "*.hh" | grep -vE "*.spe.hh" | sed s/"\.\.\/\.\.\/"//g`
+HEADERS=`find ../../mln -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed s/"\.\.\/\.\.\/"//g`
 
 rm -f Makefile.am
 rm -f *.hh *.cc

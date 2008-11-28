@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,24 +29,24 @@
 #ifndef MLN_CORE_SITE_SET_BOX_PITER_HH
 # define MLN_CORE_SITE_SET_BOX_PITER_HH
 
-/*! \file mln/core/site_set/box_piter.hh
- *
- * \brief Definition of iterators on points of boxes.
- */
+/// \file mln/core/site_set/box_piter.hh
+///
+/// Definition of iterators on points of boxes.
 
 # include <mln/core/internal/site_set_iterator_base.hh>
 # include <mln/core/concept/box.hh>
+# include <mln/core/site_set/box.hh>
 
 
 namespace mln
 {
 
-  /*! \brief A generic forward iterator on points of boxes.
-   *
-   * The parameter \c P is the type of points.
-   *
-   * \see mln::box_
-   */
+  /// \brief A generic forward iterator on points of boxes.
+  ///
+  /// The parameter \c P is the type of points.
+  ///
+  /// \see mln::box
+  ///
   template <typename P>
   class box_fwd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_fwd_piter_<P> >
@@ -61,10 +62,10 @@ namespace mln
     /// Constructor without argument.
     box_fwd_piter_();
 
-    /*! \brief Constructor.
-     *
-     * \param[in] b A box.
-     */
+    /// Constructor.
+    ///
+    /// \param[in] b A box.
+    ///
     box_fwd_piter_(const box<P>& b);
 
     /// Test the iterator validity.
@@ -86,12 +87,12 @@ namespace mln
 
 
 
-  /*! \brief A generic backward iterator on points of boxes.
-   *
-   * The parameter \c P is the type of points.
-   *
-   * \see mln::box_
-   */
+  /// A generic backward iterator on points of boxes.
+  ///
+  /// The parameter \c P is the type of points.
+  ///
+  /// \see mln::box
+  ///
   template <typename P>
   class box_bkd_piter_ : public internal::site_set_iterator_base< box<P>,
 								  box_bkd_piter_<P> >
@@ -107,10 +108,10 @@ namespace mln
     /// Constructor without argument.
     box_bkd_piter_();
 
-    /*! \brief Constructor.
-     *
-     * \param[in] b A box.
-     */
+    /// Constructor.
+    ///
+    /// \param[in] b A box.
+    ///
     box_bkd_piter_(const box<P>& b);
 
     /// Test the iterator validity.

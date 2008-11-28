@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +28,16 @@
 #ifndef MLN_CORE_INTERNAL_SET_OF_HH
 # define MLN_CORE_INTERNAL_SET_OF_HH
 
-/*! \file mln/core/internal/set_of.hh
- *
- * \brief Definition of mln::set_of_ for internal use only.
- */
+/// \file mln/core/internal/set_of.hh
+///
+/// \brief Definition of mln::set_of_ for internal use only.
 
 # include <vector>
 # include <set>
 # include <iterator>
 # include <algorithm>
 
+# include <mln/core/contract.hh>
 # include <mln/core/internal/force_exact.hh>
 
 

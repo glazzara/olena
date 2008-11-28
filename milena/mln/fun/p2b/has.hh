@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,12 @@
 #ifndef MLN_FUN_P2B_HAS_HH
 # define MLN_FUN_P2B_HAS_HH
 
-/*! \file mln/fun/p2b/has.hh
- *
- * \brief Function "psite-> bool" that maps the call "ima.has(p)".
- */
+/// \file mln/fun/p2b/has.hh
+///
+/// Function "psite-> bool" that maps the call "ima.has(p)".
 
+
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/metal/const.hh>
 # include <mln/metal/unconst.hh>

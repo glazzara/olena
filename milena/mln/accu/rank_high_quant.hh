@@ -204,6 +204,6 @@ namespace mln
 
 } // end of namespace mln
 
-#include <mln/accu/rankbool.hh>
+#include <mln/accu/rank_bool.hh>
 
 #endif // ! MLN_ACCU_RANK_HH

@@ -29,15 +29,15 @@
 #ifndef MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
 # define MLN_GEOM_SEEDS2TILING_ROUNDNESS_HH
 
-/*! \file mln/geom/seeds2tiling_roundness.hh
- *
- * \brief seeds2tiling with a method which makes tiles more roundness.
- */
+/// \file mln/geom/seeds2tiling_roundness.hh
+///
+/// seeds2tiling with a method which makes tiles more roundness.
 
 # include <map>
 
-
+# include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/site_set/p_priority.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/routine/clone.hh>
