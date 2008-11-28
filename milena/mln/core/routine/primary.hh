@@ -28,13 +28,12 @@
 #ifndef MLN_CORE_ROUTINE_PRIMARY_HH
 # define MLN_CORE_ROUTINE_PRIMARY_HH
 
-/*! \file mln/core/routine/primary.hh
- *
- * \brief FIXME
- *
- * \todo We also need to get the extension image to handle border
- * routines.
- */
+/// \file mln/core/routine/primary.hh
+///
+/// Get the primary image behind any image.
+///
+/// \todo We also need to get the extension image to handle border
+/// routines.
 
 # include <mln/core/concept/image.hh>
 
@@ -53,6 +52,7 @@ namespace mln
   template <typename I>
   const typename internal::primary_type<I>::ret&
   primary(const Image<I>& input);
+
 
 
 # ifndef MLN_INCLUDE_ONLY

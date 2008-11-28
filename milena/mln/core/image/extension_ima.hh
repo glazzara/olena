@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,15 @@
 #ifndef MLN_CORE_IMAGE_EXTENSION_IMA_HH
 # define MLN_CORE_IMAGE_EXTENSION_IMA_HH
 
-/*!
- * \file mln/core/image/extension_ima.hh
- *
- * \brief Definition of a morpher that extends the domain of an image
- * with a function.
- *
- * \todo Use the 'instant' mechanism.
- * \todo Use an envelop as lvalue to test extension writing.
- */
+/// \file mln/core/image/extension_ima.hh
+///
+/// Definition of a morpher that extends the domain of an image
+/// with a function.
+///
+/// \todo Use an envelop as lvalue to test extension writing.
+///
+/// \todo Handle the couple of cases: either J is value_io::read_write
+/// or value_io::read_only; then ext_io can be read_write...
 
 # include <mln/core/internal/image_identity.hh>
 # include <mln/level/fill_with_value.hh>
@@ -80,7 +80,7 @@ namespace mln
       // extended domain
       typedef trait::image::ext_domain::extendable ext_domain;
       typedef trait::image::ext_value::multiple    ext_value;
-      typedef mln_trait_image_value_io(J)          ext_io;
+      typedef trait::image::ext_io::read_only      ext_io; // FIXME: Too restrictive?
     };
 
     template <typename I, typename J, typename V>

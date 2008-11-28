@@ -31,7 +31,7 @@
 
 /// \file mln/math/diff_abs.hh
 ///
-/// \brief Define diff_abs routine.
+/// Define diff_abs routine.
 
 
 namespace mln

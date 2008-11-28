@@ -29,17 +29,18 @@
 #ifndef MLN_BORDER_RESIZE_HH
 # define MLN_BORDER_RESIZE_HH
 
-/*! \file mln/border/resize.hh
- *
- * \brief Define a function that resizes the virtual border of an
- * image.
- *
- * \todo Test with a primary image with no notion of border; I guess
- * it does not work.
- */
+/// \file mln/border/resize.hh
+///
+/// Define a function that resizes the virtual border of an
+/// image.
+///
+/// \todo This code is not complete: an image can be composed of
+/// several images whose multiple borders have to be resized!  For
+/// instance an image extended by an image, or a stack of images.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/clone.hh>
+# include <mln/core/routine/primary.hh>
 # include <mln/border/get.hh>
 # include <mln/level/fill.hh>
 
@@ -71,94 +72,66 @@ namespace mln
     namespace impl
     {
 
-      // Effective resizing.
-
       template <typename I>
       inline
-      void resize_(trait::image::category::morpher,
-		   const I& ima, unsigned thickness)
+      void resize(I& ima, unsigned thickness)
       {
-	return resize(*ima.delegatee_(), thickness);
-      }
-
-      template <typename I>
-      inline
-      void resize_(trait::image::category::primary,
-		   const I& ima_, unsigned thickness)
-      {
-	I& ima = const_cast<I&>(ima_);
+	if (border::get(ima) == thickness)
+	  return; // No-op.
 
 	mln_concrete(I) memo = clone(ima);
 	ima.resize_(thickness);
 	level::fill(ima, memo);
-      }
 
-// ext_domain:   /any/
-//                 |
-//                 + -- none
-//                 |
-//                 + -- /some/
-//                        |
-//                        + -- fixed
-//                        |     |
-//                        |     + -- infinite
-//                        |
-//                        + -- extendable
-
-      template <typename I>
-      inline
-      void resize_(trait::image::ext_domain::none,
-		   const I&, unsigned)
-      {
-	// No-op.
-      }
-
-      template <typename I>
-      inline
-      void resize_(trait::image::ext_domain::fixed,
-		   const I&, unsigned)
-      {
-	// No-op.
-      }
-
-      template <typename I>
-      inline
-      void resize_(trait::image::ext_domain::extendable,
-		   const I& ima, unsigned thickness)
-      {
-	if (border::get(ima) == thickness)
-	  return; // No-op.
-	resize_(mln_trait_image_category(I)(),
-		ima, thickness);
 	mln_postcondition(border::get(ima) == thickness);
       }
 
+    } // end of namespace mln::border::impl
 
-      // Selector.
+
+    namespace internal
+    {
 
       template <typename I>
       inline
-      void resize_(const I& ima, unsigned thickness)
+      void resize_dispatch(trait::image::ext_domain::any,
+			   const Image<I>& ima, unsigned thickness)
       {
-	resize_(mln_trait_image_ext_domain(I)(),
-		ima, thickness);
+	// No-op.
       }
 
-    } // end of namespace mln::border::resize
+      template <typename I>
+      inline
+      void resize_dispatch(trait::image::ext_domain::extendable,
+			   const Image<I>& ima, unsigned thickness)
+      {
+	// Effective resizing.
+	impl::resize(const_cast<I&>(exact(ima)), thickness);
+      }
+
+      template <typename I>
+      inline
+      void resize_dispatch(const Image<I>& ima, unsigned thickness)
+      {
+	resize_dispatch(mln_trait_image_ext_domain(I)(),
+			ima, thickness);
+      }
+
+    } // end of namespace mln::border::internal
 
 
     /// Facade.
 
     template <typename I>
     inline
-    void resize(const Image<I>& ima_, unsigned thickness)
+    void resize(const Image<I>& ima, unsigned thickness)
     {
       trace::entering("border::resize");
 
-      const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(exact(ima).has_data());
 
-      impl::resize_(ima, thickness);
+      // Try to resize the primary image behind ima.
+      internal::resize_dispatch(primary(ima), thickness);
 
       trace::exiting("border::resize");
     }

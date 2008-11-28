@@ -140,4 +140,4 @@ namespace mln
 }  // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_TREE_MAX_HH
+#endif // ! MLN_MORPHO_TREE_UTILS_HH

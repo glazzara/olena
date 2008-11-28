@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,13 @@
 #ifndef MLN_CORE_IMAGE_EXTENDED_HH
 # define MLN_CORE_IMAGE_EXTENDED_HH
 
-/*!
- * \file mln/core/image/extended.hh
- *
- * \brief Definition of morpher that makes an image become restricted
- * given by a point set.
- *
- * \todo Add a special case for "ima | box"; think about some other
- * special cases...
- */
+/// \file mln/core/image/extended.hh
+///
+/// Definition of morpher that makes an image become restricted
+/// given by a point set.
+///
+/// \todo Add a special case for "ima | box"; think about some other
+/// special cases...
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/site_set/box.hh>

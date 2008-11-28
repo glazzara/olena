@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +44,7 @@
 
 # include <mln/accu/internal/base.hh>
 # include <mln/core/concept/meta_accumulator.hh>
-# include <mln/math/abs.hh>
+# include <mln/math/diff_abs.hh>
 
 # include <mln/util/pix.hh>
 # include <mln/literal/zero.hh>
@@ -171,7 +172,7 @@ namespace mln
 	 the former.  */
       volume_ +=
 	other.volume_  +
-	other.area__ * math::abs(other.ref_level__ - ref_level__);
+	other.area__ * math::diff_abs(other.ref_level__, ref_level__);
       // Member ref_level__ is not touched.
     }
 

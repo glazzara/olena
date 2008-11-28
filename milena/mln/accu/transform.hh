@@ -95,7 +95,7 @@ namespace mln
 	  for_all(p)
 	  {
 	    a.init();
-	    for_all(q)
+	    for_all(q) if (input.has(q))
 	      a.take(input(q));
 	    output(p) = a.to_result();
 	  }

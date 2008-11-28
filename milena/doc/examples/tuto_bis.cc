@@ -2,6 +2,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image_if.hh>
+# include <mln/core/image/sub_image.hh>
 # include <mln/core/image/extended.hh>
 # include <mln/core/routine/extend.hh>
 
@@ -23,6 +24,8 @@
 # include <mln/extension/fill.hh>
 
 # include <mln/morpho/meyer_wst.hh>
+# include <mln/morpho/gradient.hh>
+# include <mln/morpho/dilation.hh>
 
 # include <mln/debug/println.hh>
 
@@ -30,29 +33,6 @@
 
 namespace mln
 {
-
-  namespace border
-  {
-
-    template <typename I>
-    void
-    fill(I& ima, const mln_value(I)& v)
-    {
-      const int nrows = ima.nrows();
-      const int ncols = ima.ncols();
-      for (int r = -1; r <= nrows; ++r)
-	{
-	  ima.at(r, -1) = v;
-	  ima.at(r, ncols) = v;
-	}
-      for (int c = -1; c <= ncols; ++c)
-	{
-	  ima.at(-1, c) = v;
-	  ima.at(nrows, c) = v;
-	}
-    }
-
-  } // mln::border
 
   namespace accu
   {
@@ -85,54 +65,6 @@ namespace mln
     }
 
   } // mln::accu
-
-  namespace morpho
-  {
-
-    template <typename I, typename N>
-    mln_concrete(I)
-      gradient(const I& input, const N& nbh)
-    {
-      mln_concrete(I) output;
-      initialize(output, input);
-      accu::min_max<mln_value(I)> mm;
-
-      mln_piter(I) p(input.domain());
-      mln_niter(N) n(nbh, p);
-      for_all(p)
-	{
-	  mm.init();
-	  for_all(n) if (input.has(n))
-	    mm.take(input(n));
-	  output(p) = mm.second() - mm.first();
-	}
-      return output;
-    }
-
-    template <typename I, typename N>
-    mln_concrete(I)
-      dilation(const I& input, const N& nbh)
-    {
-      typedef mln_value(I) V;
-      // FIXME: extension::fill(input, mln_min(V));
-
-      mln_concrete(I) output;
-      initialize(output, input);
-      accu::max<V> m;
-
-      mln_piter(I) p(input.domain());
-      mln_niter(N) n(nbh, p);
-      for_all(p)
-	{
-	  m.init();
-	  for_all(n) if (input.has(n))
-	    m.take(input(n));
-	  output(p) = m;
-	}
-      return output;
-    }
-    
-  } // mln::morpho
 
 
 } // mln
@@ -208,19 +140,8 @@ int main()
 
 
 
-//   {
-//     p_centered<e2e_t::window> wc(e2e.to_window(), literal::origin);
-//     std::cout << wc << std::endl;
-
-//     p_set<point2d> s;
-//     s += wc;
-//     std::cout << s << std::endl;
-//   }
-
-
-  border::thickness = 0;
-
-  image2d<int> ima(3, 5);
+  image2d<unsigned> ima_(3, 5);
+  mln_VAR(ima, ima_ | ima_.domain());
 
   mln_VAR(cell, ima | is_cell);
   level::fill(cell, fun::p2v::iota());
@@ -229,18 +150,15 @@ int main()
   //      
   // 4   5   6 
 
+  mln_VAR(edge, extend((ima | is_edge).rw(), ima));
 
-
-  mln_VAR(edge, extend((ima | is_edge).rw(),
-		       pw::value(ima)));
-  level::paste(morpho::gradient(edge, e2c), edge);
+  level::paste(morpho::gradient(edge, e2c.win()), edge);
   //                                  ^^^
   //                         edge -> neighboring cells
   debug::println(edge);
   //   1   1   
   // 3   3   3 
   //   1   1
-
 
   image2d<unsigned> label(ima.bbox(), 0);
   level::fill(label, 9);
@@ -313,7 +231,7 @@ int main()
 
 
   level::paste(morpho::dilation(extend(lab, label),
-				c4()),
+				c4().win()),
 	       label);
 
   debug::println(label);
@@ -351,6 +269,6 @@ int main()
 //   //
 //   // 5   5   5 
 
-
   // DONE!
+
 }

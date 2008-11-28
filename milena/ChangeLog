@@ -1,3 +1,30 @@
+2008-11-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix minor bugs.
+
+	* doc/examples/tuto_bis.cc
+	(fill, gradient, dilation): Remove dedicated code; instead use
+	library routines. Their proper arg is nbh.win(). 
+	(ima): Ensure there is no outer border.
+	(include): Update.
+	* mln/core/image/extended.hh: Upgrade doc style.
+	* mln/core/image/extension_ima.hh: Likewise.
+	(ext_io): Fix wrong definition.
+	(todo): New.
+	* mln/core/routine/primary.hh: Upgrade doc style.
+	* mln/math/diff_abs.hh: Fix doc.
+	* mln/accu/transform.hh (transform): Fix missing test.
+	* mln/accu/transform_stop.hh: Likewise.
+	* mln/accu/volume.hh: Use diff_abs instead of abs.
+	Remember that (1u - 2u) is not equal to -1 in C.
+	* mln/border/resize.hh: Revamp.
+	(todo): Done.
+	(todo): New.
+	* mln/border/adjust.hh: Remove erroneous post-condition.
+	* mln/morpho/tree/utils.hh: Fix guard.
+	* mln/canvas/labeling.hh: Fix warning.
+	* mln/extension/fill.hh: Upgrade doc style.
+
 2008-11-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update some routines so that they return output.

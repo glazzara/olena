@@ -71,7 +71,8 @@ namespace mln
       if (border::get(ima) < min_thickness)
 	border::resize(ima, min_thickness);
 
-      mln_postcondition(border::get(ima) >= min_thickness);
+      // We cannot run here a postcondition since we do not know if
+      // ima (or an underlying image) has a border or not.
 
       trace::exiting("border::adjust");
     }

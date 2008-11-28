@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,12 @@
 #ifndef MLN_CORE_EXTENSION_FILL_HH
 # define MLN_CORE_EXTENSION_FILL_HH
 
-/*! \file mln/extension/fill.hh
- *
- * \brief Define function that fills domain extension.
- *
- *
- * \todo Test the compatibility between val and mln_value(I) because,
- * while unmorphing, this type can change...
- */
+/// \file mln/extension/fill.hh
+///
+/// Define function that fills domain extension.
+///
+/// \todo Test the compatibility between val and mln_value(I) because,
+/// while unmorphing, this type can change...
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/image/props.hh>

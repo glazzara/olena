@@ -74,6 +74,8 @@ namespace mln
 
 	(void) input;
 	(void) nbh;
+	(void) f;
+	(void) nlabels;
       }
 
     } // end of namespace mln::canvas::internal
