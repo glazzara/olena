@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,16 @@
 #ifndef MLN_MORPHO_GRADIENT_HH
 # define MLN_MORPHO_GRADIENT_HH
 
-/*! \file mln/morpho/gradient.hh
- *
- * \brief Morphological gradient.
- *
- * \todo Save memory.
- */
+/// \file mln/morpho/gradient.hh
+///
+/// Morphological gradient.
+///
+/// It is based on dilation and erosion so that handling side effects
+/// (with extension domains) is easy.  It does *not* rely on
+/// morpho::general (what the extension initialization would be in
+/// that case?!)
+///
+/// \todo Save memory.
 
 # include <mln/morpho/includes.hh>
 
@@ -44,31 +49,30 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological gradient.
-     *
-     * This operator is d_B - e_B.
-     */
+    /// Morphological gradient.
+    ///
+    /// This operator is d_B - e_B.
     template <typename I, typename W>
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win);
 
 
-    /*! Morphological internal gradient.
-     *
-     * This operator is Id - e_B.
-     */
+    /// Morphological internal gradient.
+    ///
+    /// This operator is Id - e_B.
     template <typename I, typename W>
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win);
 
 
-    /*! Morphological external gradient.
-     *
-     * This operator is d_B - Id.
-     */
+    /// Morphological external gradient.
+    ///
+    /// This operator is d_B - Id.
     template <typename I, typename W>
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win);
 
 
+
 # ifndef MLN_INCLUDE_ONLY
+
 
     template <typename I, typename W>
     inline

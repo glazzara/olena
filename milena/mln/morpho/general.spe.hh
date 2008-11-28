@@ -338,7 +338,7 @@ namespace mln
 
       template <typename Op, typename I, typename W>
       mln_concrete(I)
-      general_dispatch_wrt_win(const I& input, const W& win)
+      general_dispatch_wrt_win(const Op& op, const I& input, const W& win)
       {
 	// FIXME:
 	// The test "win.size() >= 10" (size is not too small) has been
@@ -353,7 +353,7 @@ namespace mln
 		        mlc_not_equal(mln_trait_image_value_storage(I),
 				      trait::image::value_storage::disrupted)::value };
 	return general_dispatch_wrt_arbitrary_win(metal::bool_<test>(),
-						  input, win);
+						  op, input, win);
       }
 
 

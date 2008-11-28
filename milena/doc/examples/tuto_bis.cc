@@ -139,9 +139,9 @@ int main()
   mln_VAR( e2e, make::double_neighb2d(is_row_odd, e2e_h, e2e_v) );
 
 
-
-  image2d<unsigned> ima_(3, 5);
-  mln_VAR(ima, ima_ | ima_.domain());
+  box2d domain(3, 5);
+  image2d<unsigned> ima_(domain);
+  mln_VAR(ima, ima_ | domain);
 
   mln_VAR(cell, ima | is_cell);
   level::fill(cell, fun::p2v::iota());
@@ -160,7 +160,7 @@ int main()
   // 3   3   3 
   //   1   1
 
-  image2d<unsigned> label(ima.bbox(), 0);
+  image2d<unsigned> label(domain, 0);
   level::fill(label, 9);
   debug::println(label);
   // 9 9 9 9 9 
