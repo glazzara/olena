@@ -32,6 +32,8 @@
 /// \file mln/accu/land_basic.hh
 ///
 /// Define a basic 'logical-and' accumulator.
+///
+/// \todo Have land_basic be parameterized.
 
 # include <mln/accu/internal/base.hh>
 
@@ -75,6 +77,24 @@ namespace mln
     protected:
       bool res_;
     };
+
+
+    namespace meta
+    {
+
+      /// Meta accumulator for land_basic.
+
+      struct land_basic : public Meta_Accumulator< land_basic >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef accu::land_basic ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY

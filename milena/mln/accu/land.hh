@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,6 +33,7 @@
 ///
 /// Define a 'logical-and' accumulator.
 ///
+/// \todo Have land_basic be parameterized.
 
 # include <mln/accu/internal/base.hh>
 
@@ -71,6 +73,24 @@ namespace mln
     protected:
       unsigned nfalse_;
     };
+
+
+    namespace meta
+    {
+
+      /// Meta accumulator for land.
+
+      struct land : public Meta_Accumulator< land >
+      {
+	template <typename T>
+	struct with
+	{
+	  typedef accu::land ret;
+	};
+      };
+
+    } // end of namespace mln::accu::meta
+
 
 
 # ifndef MLN_INCLUDE_ONLY

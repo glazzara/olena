@@ -31,12 +31,10 @@
 
 /// \file mln/morpho/erosion.hh
 ///
-/// \brief Morphological erosion.
+/// Morphological erosion.
 
 # include <mln/morpho/includes.hh>
-
-// Specializations are in:
-# include <mln/morpho/erosion.spe.hh>
+# include <mln/morpho/general.hh>
 
 
 namespace mln
@@ -45,8 +43,7 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological erosion.
-     */
+    /// Morphological erosion.
     template <typename I, typename W>
     mln_concrete(I)
     erosion(const Image<I>& input, const Window<W>& win);
@@ -55,80 +52,106 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-    namespace internal
+    struct erosion_op
     {
 
-      template <typename I, typename W>
-      inline
-      void
-      erosion_tests(const Image<I>& input_, const Window<W>& win_)
+      template <typename I>
+      mln_morpho_select_accu(I, land_basic, min)
+      accu(const Image<I>&) const
       {
-	const I& input = exact(input_);
-	const W& win   = exact(win_);
-
-	mln_precondition(input.has_data());
-	mln_precondition(! win.is_empty());
-	// mln_precondition(win.is_valid());
-
-	(void) input;
-	(void) win;
+	mln_morpho_select_accu(I, land_basic, min) tmp;
+	return tmp;
       }
 
-    } // end of mln::morpho::internal
+      template <typename I>
+      mln_morpho_select_accu(I, land, min_h)
+      accu_incr(const Image<I>&) const
+      {
+	mln_morpho_select_accu(I, land, min_h) tmp;
+	return tmp;
+      }
+
+      template <typename I>
+      mln_value(I) neutral(const Image<I>&) const
+      {
+	return internal::neutral<I>::supremum();
+      }
+
+    };
 
 
     namespace impl
     {
 
-      namespace generic
+
+      // On set with centered window (overloads).
+
+      template <typename I, typename W>
+      mln_concrete(I)
+      general_on_set_centered(const erosion_op&,
+			      const Image<I>& input_, const Window<W>& win_)
       {
+	trace::entering("morpho::impl::general_on_set_centered__erosion");
+
+	typedef mln_concrete(I) O;
+	const I& input = exact(input_);
+	const W& win = exact(win_);
+
+	extension::adjust_fill(input, win, true);
+
+	O output;
+	output = clone(input);
+
+	mln_piter(I) p(input.domain());
+	mln_qiter(W) q(win, p);
+	for_all(p)
+	  if (input(p) == true)
+	    for_all(q) if (input.has(q))
+	      if (input(q) == false)
+	      {
+		output(p) = false;
+		break;
+	      }
+
+	trace::exiting("morpho::impl::general_on_set_centered__erosion");
+	return output;
+      }
 
 
-	// On function.
+      template <typename I, typename W>
+      mln_concrete(I)
+      general_on_set_centered_fastest(const erosion_op&,
+				      const Image<I>& input_, const Window<W>& win_)
+      {
+	trace::entering("morpho::impl::general_on_set_centered_fastest__erosion");
 
-	template <typename I, typename W>
-	inline
-	mln_concrete(I)
-	erosion_on_function(const Image<I>& input, const Window<W>& win)
-	{
-	  trace::entering("morpho::impl::generic::erosion_on_function");
+	typedef mln_concrete(I) O;
+	const I& input = exact(input_);
+	const W& win = exact(win_);
 
-	  internal::erosion_tests(input, win);
+	extension::adjust_fill(input, win, true);
 
-	  extension::adjust_fill(input, win, mln_max(mln_value(I)));
-	  mln_concrete(I) output;
-	  output = accu::transform(input, accu::meta::min(), win);
+	O output;
+	output = clone(input);
 
-	  trace::exiting("morpho::impl::generic::erosion_on_function");
-	  return output;
-	}
+	mln_pixter(const I) p(input);
+	mln_qixter(const I, W) q(p, win);
+	mln_pixter(O) p_out(output);
+	for_all_2(p, p_out)
+	  if (p.val() == true)
+	    for_all(q)
+	      if (q.val() == false)
+	      {
+		p_out.val() = false;
+		break;
+	      }
 
-	// On set.
+	trace::exiting("morpho::impl::general_on_set_centered_fastest__erosion");
+	return output;
+      }
 
-	template <typename I, typename W>
-	inline
-	mln_concrete(I)
-	erosion_on_set(const Image<I>& input, const Window<W>& win)
-	{
-	  trace::entering("morpho::impl::generic::erosion_on_set");
+    } // end of namespace morpho::impl
 
-	  internal::erosion_tests(input, win);
-
-	  extension::adjust_fill(input, win, true);
-	  mln_concrete(I) output;
-	  output = accu::transform_stop(input, accu::land_basic(), win);
-
-	  trace::exiting("morpho::impl::generic::erosion_on_set");
-	  return output;
-	}
-
-      } // end of namespace mln::morpho::impl::generic
-
-    } // end of namespace mln::morpho::impl
-
-
-
-    // Facades.
 
     template <typename I, typename W>
     inline
@@ -139,11 +162,11 @@ namespace mln
       mln_precondition(exact(input).has_data());
       mln_precondition(! exact(win).is_empty());
 
-      internal::erosion_tests(input, win);
-      mln_concrete(I) output = internal::erosion_dispatch(input, win);
+      mln_concrete(I) output = general(erosion_op(), input, win);
 
       if (exact(win).is_centered())
 	mln_postcondition(output <= input);
+
       trace::exiting("morpho::erosion");
       return output;
     }
