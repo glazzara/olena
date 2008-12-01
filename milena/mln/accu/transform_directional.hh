@@ -253,7 +253,7 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_directional_dispatch(trait::image::speed::any,
+      transform_directional_dispatch(metal::false_,
 				     const Accumulator<A>& a,
 				     const Image<I>& input, const Window<W>& win,
 				     unsigned dir)
@@ -267,7 +267,7 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_directional_dispatch(trait::image::speed::fastest,
+      transform_directional_dispatch(metal::true_,
 				     const Accumulator<A>& a,
 				     const Image<I>& input, const Window<W>& win,
 				     unsigned dir)
@@ -285,7 +285,7 @@ namespace mln
 				     const Image<I>& input, const Window<W>& win,
 				     unsigned dir)
       {
-	return transform_directional_dispatch(mln_trait_image_speed(I)(),
+	return transform_directional_dispatch(mln_is_fastest_IW(I, W)(),
 					      a, input, win, dir);
       }
 

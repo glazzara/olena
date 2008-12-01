@@ -395,9 +395,9 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_snake_dispatch(trait::image::speed::any,
-			const Accumulator<A>& a,
-			const Image<I>& input, const Window<W>& win)
+      transform_snake_dispatch(metal::false_,
+			       const Accumulator<A>& a,
+			       const Image<I>& input, const Window<W>& win)
       {
 	typedef transform_snake_functor<I, W, A> F;
 	F f(exact(input), exact(win), exact(a));
@@ -408,7 +408,7 @@ namespace mln
       template <typename A, typename I, typename W>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_snake_dispatch(trait::image::speed::fastest,
+      transform_snake_dispatch(metal::true_,
 			       const Accumulator<A>& a,
 			       const Image<I>& input, const Window<W>& win)
       {
@@ -424,8 +424,8 @@ namespace mln
       transform_snake_dispatch(const Accumulator<A>& a,
 			       const Image<I>& input, const Window<W>& win)
       {
-	return transform_snake_dispatch(mln_trait_image_speed(I)(),
-				 a, input, win);
+	return transform_snake_dispatch(mln_is_fastest_IW(I, W)(),
+					a, input, win);
       }
 
     } // end of namespace mln::accu::internal

@@ -357,7 +357,7 @@ namespace mln
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_diagonal_dispatch(trait::image::speed::any,
+      transform_diagonal_dispatch(metal::false_,
 				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::diag2d& win)
       {
@@ -367,10 +367,10 @@ namespace mln
 	return f.output;
       }
 
-      template <typename A, typename I>
+      template <typename B, typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_diagonal_dispatch(trait::image::speed::any,
+      transform_diagonal_dispatch(metal::false_,
 				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::backdiag2d& win)
       {
@@ -383,7 +383,7 @@ namespace mln
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_diagonal_dispatch(trait::image::speed::fastest,
+      transform_diagonal_dispatch(metal::true_,
 				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::diag2d& win)
       {
@@ -396,7 +396,7 @@ namespace mln
       template <typename A, typename I>
       inline
       mln_ch_value(I, mln_result(A))
-      transform_diagonal_dispatch(trait::image::speed::fastest,
+      transform_diagonal_dispatch(metal::true_,
 				  const Accumulator<A>& a,
 				  const Image<I>& input, const win::backdiag2d& win)
       {
@@ -412,7 +412,7 @@ namespace mln
       transform_diagonal_dispatch(const Accumulator<A>& a,
 				  const Image<I>& input, const Window<W>& win)
       {
-	return transform_diagonal_dispatch(mln_trait_image_speed(I)(),
+	return transform_diagonal_dispatch(mln_is_fastest_IW(I, W)(),
 					   a, input, exact(win));
       }
 

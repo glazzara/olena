@@ -60,6 +60,13 @@ mln::metal::and_< mlc_is(mln_trait_window_size(W),					\
 					   mln::trait::window::definition::unique) > >
 
 
+# define mln_is_fastest_IW(I, W)		\
+						\
+mlc_and(mlc_is(mln_trait_image_speed(I),	\
+	       trait::image::speed::fastest),	\
+	mln_is_simple_window(W))
+
+
 
 namespace mln
 {

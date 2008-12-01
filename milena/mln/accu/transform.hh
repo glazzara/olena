@@ -154,7 +154,7 @@ namespace mln
 
       template <typename I, typename A, typename W>
       mln_ch_value(I, mln_result(A))
-      transform_dispatch(trait::image::speed::any,
+      transform_dispatch(metal::false_,
 			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return impl::generic::transform(input, a, win);
@@ -162,7 +162,7 @@ namespace mln
 
       template <typename I, typename A, typename W>
       mln_ch_value(I, mln_result(A))
-      transform_dispatch(trait::image::speed::fastest,
+      transform_dispatch(metal::true_,
 			 const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
 	return impl::transform_fastest(input, a, win);
@@ -172,7 +172,7 @@ namespace mln
       mln_ch_value(I, mln_result(A))
       transform_dispatch(const Image<I>& input, const Accumulator<A>& a, const Window<W>& win)
       {
-	return transform_dispatch(mln_trait_image_speed(I)(),
+	return transform_dispatch(mln_is_fastest_IW(I, W)(),
 				  input, a, win);
       }
 
