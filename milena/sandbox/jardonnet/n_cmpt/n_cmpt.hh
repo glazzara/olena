@@ -86,7 +86,7 @@ namespace mln
       mln_ch_value(O, bool)  deja_vu;
       mln_ch_value(O, P)     parent;
 
-      int n_cmpt = input.domain().nsites();
+      unsigned n_cmpt = input.domain().nsites();
 
       std::cout << "Number of sites = " << n_cmpt << std::endl;
 

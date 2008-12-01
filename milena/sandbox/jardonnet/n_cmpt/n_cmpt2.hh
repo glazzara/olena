@@ -30,6 +30,11 @@
 
 # include <mln/level/fill.hh>
 # include <mln/core/site_set/p_vaccess.hh>
+# include <mln/level/sort_psites.hh>
+# include <mln/accu/volume.hh>
+# include <mln/morpho/tree/data.hh>
+# include <mln/morpho/tree/compute_attribute_image.hh>
+# include <mln/value/int_u.hh>
 
 namespace mln
 {
@@ -43,71 +48,92 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
+  template <typename I>
+  inline
+  mln_psite(I)
+  find_root(I& parent,
+            const mln_psite(I)& x)
+  {
+    if (parent(x) == x)
+      return x;
+    else
+      return parent(x) = find_root(parent, parent(x));
+  }
 
-  template <typename I, typename N, typename O>
-  void n_cmpt(const Image<I>& input_,
-              const Neighborhood<N>& nbh_,
-              unsigned limit,
-              Image<O>& output_)
+  template <typename I, typename N>
+  I n_cmpt(const Image<I>& input_,
+           const Neighborhood<N>& nbh_,
+           unsigned limit)
   {
     const I& input = exact(input_);
     const N& nbh = exact(nbh_);
-    O& output = exact(output_);
-
+    typedef I O;
+    O output(input.domain());
     mln_precondition(output.domain() == input.domain());
 
-    image2d<unsigned> v_ima = level::compute_volume(input);
+    // compute volume image
+    typedef p_array<mln_psite(I)> S;
+    typedef accu::volume<I> A;
+    S sp = level::sort_psites_increasing(input);
+    morpho::tree::data<I,S> t(input, sp, c4());
+    image2d<unsigned> volume = morpho::tree::compute_attribute_image(A(), t);
 
     // Local type
     typedef mln_psite(I) P;
-    typedef accu::volume<I> A;
-    typedef p_vaccess<unsigned, p_array<point2d> > PV;
 
     // Auxiliary data.
     mln_ch_value(O, bool)  deja_vu;
     mln_ch_value(O, P)     parent;
-    PV arr;
-    fill(arr, input);
+    initialize(deja_vu, input);
+    initialize(parent, input);
+    bool       last = false;
+    unsigned n_cmpt = input.domain().nsites();
 
-    mln_fwd_piter(PV) v(arr);
+    // Construct iterable value set
+    typedef p_array<P> Arr;
+//     typedef p_vaccess<value::int_u<10>, Arr> SV;
+//     SV s = convert::to<SV>(volume);
+    for
+    Arr s = convert::to<Arr>(volume);
+
+    mln_piter(Arr) last_v(s.nsites());
+    mln_piter(Arr) v(s.nsites());
     for_all(v)
     {
       std::cout << "lambda=" << v << "-------" << std::endl;
+
       // init
       mln_ch_value(O, A)  data;
       initialize(data, input);
       mln::level::fill(deja_vu, false);
       {
-        mln_fwd_piter(S) p(s);
+        mln_fwd_piter(S) p(sp);
         for_all(p)
           parent(p) = p;
       }
 
       // process
-      mln_fwd_piter(S) p(s); // s required.
+      mln_fwd_piter(Arr) p(s(v));
       mln_niter(N) n(nbh, p);
       for_all(p)
       {
-        // Make set.
-        data(p).take_as_init(make::pix(input, p)); // FIXME: algebraic so p!
-        //data(p).take_as_init(1);
+        data(p).take_as_init(make::pix(input, p));
         for_all(n)
         {
           if (input.domain().has(n) && deja_vu(n))
           {
-            //do_union(n, p);
+            // do_union(n, p);
             P r = find_root(parent, n);
             if (r != p)
             {
-              //std::cout << data(p).to_result() << std::endl;
-              if (input(r) == input(p) || (data(p).to_result() <= lambda))
-                // Either a flat zone or the component of r is still growing.
+              if (input(r) == input(p) || (data(p).to_result() <= (value::int_u<10>(v))))
+              // Either a flat zone or the component of r is still growing.
               {
                 if(--n_cmpt < limit)
                 {
                   std::cout << "find less than " << limit << " cmpts" << std::endl;
                   std::cout << "Using last lambda" << std::endl;
-                  v--;
+                  v = last_v;
                   last = true;
                   goto end;
                 }
@@ -115,9 +141,7 @@ namespace mln
                 parent(r) = p;
               }
               else
-              {
-                data(p).set_value(lambda);
-              }
+                data(p).set_value(value::int_u<10>(v));
             }
           }
         }
@@ -127,17 +151,20 @@ namespace mln
         goto step2;
     end:
       n_cmpt = input.domain().nsites();
+      last_v = v;
     }
-
+  step2:
     // second pass
     {
-      mln_bkd_piter(S) p(s);
+      mln_bkd_piter(S) p(sp);
       for_all(p)
         if (parent(p) == p) // p is root.
           output(p) = input(p);
         else
           output(p) = output(parent(p));
     }
+
+    return output;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

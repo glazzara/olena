@@ -7,7 +7,6 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-
 #include "n_cmpt2.hh"
 
 using namespace mln;
@@ -15,7 +14,7 @@ using namespace mln::value;
 
 bool usage(int argc, char ** argv)
 {
-  if (argc != 2)
+  if (argc != 3)
   {
     std::cout << argv[0] << " ima.pgm n_cmpt" << std::endl;
     return false;
@@ -31,7 +30,8 @@ int main(int argc, char ** argv)
   image2d<int_u8> ima;
   io::pgm::load(ima, argv[1]);
 
-  unsigned n_cmpt = atoi(argv[2]);
+  unsigned limit = atoi(argv[2]);
 
-  n_cmpt(ima, c4(), n_cmpt, out);
+  io::pgm::save(n_cmpt(ima, c4(), limit),
+                "out.pgm");
 }
