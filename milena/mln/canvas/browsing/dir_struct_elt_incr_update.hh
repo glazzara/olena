@@ -110,7 +110,7 @@ namespace mln
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
 
-	const mln_coord(I)
+	const mln_deduce(I, site, coord)
 	  pmin_dir = pmin[f.dir],
 	  pmax_dir = pmax[f.dir],
 	  pmin_dir_plus_half_length = pmin_dir + f.length / 2,

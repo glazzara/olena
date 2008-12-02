@@ -123,7 +123,7 @@ namespace mln
       {
 	point2d p = point2d(0, ima.domain().pmin().col());
 	typedef mln_value(I) V;
-	const mln_coord(I)
+	const mln_deduce(I, site, coord)
 	  min_row = geom::min_row(ima),
 	  max_row = geom::max_row(ima);
 

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_MIN_ROW_HH
 # define MLN_GEOM_MIN_ROW_HH
 
-/*! \file mln/geom/min_row.hh
- *
- * \brief Give the minimum row of an image.
- */
+/// \file mln/geom/min_row.hh
+///
+/// Give the minimum row of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/geom/bbox.hh>
@@ -52,7 +52,7 @@ namespace mln
 
     /// Give the minimum row of an box 2d or 3d.
     template <typename B>
-    mln_coord(B::point) min_row(const Box<B>& b);
+    mln_deduce(B, point, coord) min_row(const Box<B>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -68,7 +68,7 @@ namespace mln
 
     template <typename B>
     inline
-    mln_coord(B::point) min_row(const Box<B>& b)
+    mln_deduce(B, point, coord) min_row(const Box<B>& b)
     {
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       return exact(b).pmin().row();

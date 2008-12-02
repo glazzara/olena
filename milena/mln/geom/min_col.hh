@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_MIN_COL_HH
 # define MLN_GEOM_MIN_COL_HH
 
-/*! \file mln/geom/min_col.hh
- *
- * \brief Give the minimum column of an image.
- */
+/// \file mln/geom/min_col.hh
+///
+/// Give the minimum column of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/geom/bbox.hh>
@@ -45,18 +45,18 @@ namespace mln
 
     /// Give the minimum column of an image.
     template <typename I>
-    mln_coord(I) min_col(const Image<I>& ima);
+    mln_deduce(I, site, coord) min_col(const Image<I>& ima);
 
     /// Give the minimum column of an box 2d or 3d.
     template <typename B>
-    mln_coord(B::point) min_col(const Box<B>& b);
+    mln_deduce(B, point, coord) min_col(const Box<B>& b);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    mln_coord(I) min_col(const Image<I>& ima)
+    mln_deduce(I, site, coord) min_col(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
       return geom::bbox(ima).pmin().col();
@@ -65,7 +65,7 @@ namespace mln
 
     template <typename B>
     inline
-    mln_coord(B::point) min_col(const Box<B>& b)
+    mln_deduce(B, point, coord) min_col(const Box<B>& b)
     {
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       return exact(b).pmin().col();

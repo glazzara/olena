@@ -1,5 +1,30 @@
 2008-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix wrong use of mln_coord().
+
+	* canvas/browsing/dir_struct_elt_incr_update.hh,
+	* core/image/image1d.hh,
+	* core/image/image2d.hh,
+	* core/internal/image_base.hh,
+	* geom/max_col.hh,
+	* geom/max_ind.hh,
+	* geom/max_row.hh,
+	* geom/max_sli.hh,
+	* geom/min_col.hh,
+	* geom/min_ind.hh,
+	* geom/min_row.hh,
+	* geom/min_sli.hh,
+	* io/pbm/load.hh,
+	* io/pfm/load.hh,
+	* io/pfm/save.hh,
+	* io/pnm/load.hh,
+	* linear/gaussian.hh,
+	* subsampling/gaussian_subsampling.hh,
+	* subsampling/subsampling.hh: Use mln_deduce(I, site, coord) instead
+	of mln_coord(I) which is not valid anymore.
+
+2008-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tutorial generation.
 
 	* doc/Doxyfile.in: add a missing example path.

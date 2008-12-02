@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_SUBSAMPLING_SUBSAMPLING_HH
 # define MLN_SUBSAMPLING_SUBSAMPLING_HH
 
-/*! \file mln/binarization/threshold.hh
- *
- * \brief Produce a subsampled image
- */
+/// \file mln/binarization/threshold.hh
+///
+/// Produce a subsampled image
 
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
@@ -41,18 +40,15 @@ namespace mln
 {
 
   namespace subsampling
-  {    
+  {
 
-    /*! Subsampling FIXME : doxy
-     *
-     *
-     */
+    /// Subsampling FIXME : doxy
     template <typename I>
     inline
     mln_concrete(I)
     subsampling(const Image<I>& input,
                 const mln_deduce(I, site, delta)& first_p,
-                const mln_coord(I)& gap);
+                const mln_deduce(I, site, coord)& gap);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -77,7 +73,7 @@ namespace mln
             {
               point2d p1(i, j);
               point2d p2(first_p[0] + i * gap, first_p[1] + j * gap);
-              
+
               output(p1) = input(p2);
             }
 
@@ -93,14 +89,14 @@ namespace mln
     mln_concrete(I)
     subsampling(const Image<I>& input,
                 const mln_deduce(I, site, delta)& first_p,
-                const mln_coord(I)& gap)
+                const mln_deduce(I, site, coord)& gap)
     {
       trace::entering("subsampling::subsampling");
       mln_precondition(exact(input).has_data());
 
       mln_concrete(I) output(geom::nrows(input) / gap,
                              geom::ncols(input) / gap); // FIXME: only 2d here
-    
+
       output = impl::subsampling_(exact(input), first_p, gap);
 
       trace::exiting("subsampling::subsampling");

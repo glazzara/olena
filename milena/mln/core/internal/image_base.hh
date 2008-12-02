@@ -84,9 +84,6 @@ namespace mln
       public image_checked_<E>
 
     {
-      /// Coordinate associated type.
-      typedef mln_deduce(S, site, coord) coord;
-
       /// Value associated type.
       typedef T value;
 

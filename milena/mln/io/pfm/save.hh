@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -89,7 +89,7 @@ namespace mln
 	  unsigned int
 	    ncols = geom::ncols(ima);
 
-	  const mln_coord(I)
+	  const mln_deduce(I, site, coord)
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima);
 

@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_SUBSAMPLING_GAUSSIAN_SUBSAMPLING_HH
 # define MLN_SUBSAMPLING_GAUSSIAN_SUBSAMPLING_HH
 
-/*! \file mln/binarization/threshold.hh
- *
- * \brief Produce a subsampled image
- */
+/// \file mln/binarization/threshold.hh
+///
+/// Produce a subsampled image
 
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
@@ -46,18 +46,15 @@ namespace mln
 {
 
   namespace subsampling
-  {    
+  {
 
-    /*! Gaussian subsampling FIXME : doxy
-     *
-     *
-     */
+    /// Gaussian subsampling FIXME : doxy
     template <typename I>
     inline
     mln_concrete(I)
     gaussian_subsampling(const Image<I>& input, float sigma
                          const mln_dpsite(I)& first_p,
-                         const mln_coord(I)& gap);
+                         const mln_deduce(I, site, coord)& gap);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -67,7 +64,7 @@ namespace mln
     mln_concrete(I)
     gaussian_subsampling(const Image<I>& input, float sigma,
                          const mln_dpsite(I)& first_p,
-                         const mln_coord(I)& gap)
+                         const mln_deduce(I, site, coord)& gap)
     {
       trace::entering("subsampling::gaussian_subsampling");
       mln_precondition(exact(input).has_data());

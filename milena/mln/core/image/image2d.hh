@@ -123,20 +123,17 @@ namespace mln
 
 
 
-  /*! \brief Basic 2D image class.
-   *
-   * The parameter \c T is the type of pixel values.  This image class
-   * stores data in memory and has a virtual border with constant
-   * thickness around data.
-   */
+  /// Basic 2D image class.
+  ///
+  /// The parameter \c T is the type of pixel values.  This image class
+  /// stores data in memory and has a virtual border with constant
+  /// thickness around data.
+  ///
   template <typename T>
   class image2d : public internal::image_primary< T, mln::box2d, image2d<T> >
   {
     typedef internal::image_primary< T, mln::box2d, image2d<T> > super_;
   public:
-
-    /// Coordinate associated type.
-    typedef int coord;
 
     /// Value associated type.
     typedef T         value;

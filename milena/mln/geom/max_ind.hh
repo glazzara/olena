@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_MAX_IND_HH
 # define MLN_GEOM_MAX_IND_HH
 
-/*! \file mln/geom/max_ind.hh
- *
- * \brief Give the maximum ind of an image.
- */
+/// \file mln/geom/max_ind.hh
+///
+/// Give the maximum ind of an image.
 
 # include <mln/core/concept/image.hh>
 
@@ -44,14 +44,14 @@ namespace mln
 
     /// Give the maximum ind of an image.
     template <typename I>
-    mln_coord(I) max_ind(const Image<I>& ima);
+    mln_deduce(I, site, coord) max_ind(const Image<I>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
     inline
-    mln_coord(I) max_ind(const Image<I>& ima)
+    mln_deduce(I, site, coord) max_ind(const Image<I>& ima)
     {
       mln_precondition(exact(ima).has_data());
       return exact(ima).bbox().pmax().ind();

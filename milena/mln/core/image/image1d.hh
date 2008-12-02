@@ -130,9 +130,6 @@ namespace mln
   {
     typedef internal::image_primary< T, mln::box1d, image1d<T> > super_;
 
-    /// Coordinate associated type.
-    typedef int coord;
-
     /// Value associated type.
     typedef T         value;
 

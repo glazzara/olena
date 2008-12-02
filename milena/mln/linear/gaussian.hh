@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2008 EPITA Research and
-// Laboratory
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,12 @@
 #ifndef MLN_LINEAR_GAUSSIAN_HH
 # define MLN_LINEAR_GAUSSIAN_HH
 
-/*! \file mln/linear/gaussian.hh
- *
- * \brief Gaussian filter.
- *
- * \todo Add a clean reference David Deriche
- *	 Recursively implementing the gaussian and its derivatives (1993)
- */
+/// \file mln/linear/gaussian.hh
+///
+/// Gaussian filter.
+///
+/// \todo Add a clean reference David Deriche
+///	 Recursively implementing the gaussian and its derivatives (1993)
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/point2d.hh>
@@ -61,10 +60,10 @@ namespace mln
   namespace linear
   {
 
-    /*! Gaussian filter of an image \p input
-     *
-     * \pre output.domain = input.domain
-     */
+    /// Gaussian filter of an image \p input
+    ///
+    /// \pre output.domain = input.domain
+    ///
     template <class I>
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma);
@@ -84,9 +83,9 @@ namespace mln
       struct recursivefilter_coef_
       {
 
-	/*!
-	** \brief Constructor.
-	*/
+	///
+	/// Constructor.
+	///
 	recursivefilter_coef_(float a0, float a1,
 			      float b0, float b1,
 			      float c0, float c1,
@@ -205,7 +204,7 @@ namespace mln
 	  - c.d[3] * tmp1[0];
 
 	mln_psite(I) current(start + d + d + d + d);
-	for (mln_coord(I) i = 4; i < len; ++i)
+	for (mln_deduce(I, site, coord) i = 4; i < len; ++i)
         {
           tmp1[i] =
             c.n[0] * ima(current)

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_MAX_COL_HH
 # define MLN_GEOM_MAX_COL_HH
 
-/*! \file mln/geom/max_col.hh
- *
- * \brief Give the maximum column of an image.
- */
+/// \file mln/geom/max_col.hh
+///
+/// Give the maximum column of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/geom/bbox.hh>
@@ -49,7 +49,7 @@ namespace mln
 
     /// Give the maximum col of an box 2d or 3d.
     template <typename B>
-    mln_coord(B::point) max_col(const Box<B>& b);
+    mln_deduce(B, point, coord) max_col(const Box<B>& b);
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -64,7 +64,7 @@ namespace mln
 
     template <typename B>
     inline
-    mln_coord(B::point) max_col(const Box<B>& b)
+    mln_deduce(B, point, coord) max_col(const Box<B>& b)
     {
       metal::not_<metal::equal<metal::int_<B::dim>, metal::int_<1> > >::check();
       return exact(b).pmax().col();

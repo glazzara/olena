@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,10 @@
 #ifndef MLN_IO_PBM_LOAD_HH
 # define MLN_IO_PBM_LOAD_HH
 
-/*!
- * \file   mln/io/pbm/load.hh
- *
- * \brief Define a function which loads an image of kind pbm with
- * given path.
- *
- */
+/// \file   mln/io/pbm/load.hh
+///
+/// Define a function which loads an image of kind pbm with
+/// given path.
 
 
 # include <iostream>
@@ -55,21 +52,21 @@ namespace mln
     {
 
 
-      /*! Load a pbm image in a Milena image.
-       *
-       * \param[out] ima A reference to the image2d<bool> which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /// Load a pbm image in a Milena image.
+      ///
+      /// \param[out] ima A reference to the image2d<bool> which will receive
+      /// data.
+      /// \param[in] filename The source.
+      ///
       void load(image2d<bool>& ima,
 		const std::string& filename);
 
-      /*! Load a pbm image in a image2d<float>.
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d<float> which contains loaded data.
-       */
+      /// Load a pbm image in a image2d<float>.
+      ///
+      /// \param[in] filename The image source.
+      ///
+      /// \return An image2d<float> which contains loaded data.
+      ///
       image2d<bool> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY
@@ -102,7 +99,7 @@ namespace mln
 	{
 	  point2d p = point2d(0, ima.domain().pmin().col());
 	  typedef mln_value(I) V;
-	  const mln_coord(I)
+	  const mln_deduce(I, site, coord)
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima),
 	    min_col = geom::min_col(ima),
