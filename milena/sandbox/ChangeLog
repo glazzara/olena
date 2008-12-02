@@ -1,3 +1,10 @@
+2008-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Improve component cleanup.
+
+	* scribo/demat.hh: Remove components which does not include more than
+	3 bounding boxes.
+
 2008-12-01  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	N components extraction based on value iterator.

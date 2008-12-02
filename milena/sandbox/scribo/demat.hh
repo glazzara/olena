@@ -82,6 +82,7 @@ namespace scribo
       unsigned max_dist_lines;
       int max_txt_box_height;
       unsigned rank_filter;
+      bool treat_tables;
     };
 
 
@@ -159,7 +160,7 @@ namespace scribo
     void save_lbl_image(const image2d<V>& lbl, unsigned nlabels,
 		        const char *filename)
     {
-      image2d<rgb8> output = debug::colorize<image2d<rgb8>, image2d<V> >(lbl, nlabels);
+      image2d<rgb8> output = debug::colorize(rgb8(), lbl, nlabels);
       io::ppm::save(output, output_file(filename));
     }
 
@@ -318,12 +319,12 @@ namespace scribo
 
     /// Connect lines if they are close to each other.
     void
-    connect_lines(const image2d<bool>& in,
-		  const util::array<int>& aligned_lines,
+    connect_lines(const util::array<int>& aligned_lines,
 		  util::array<box2d>& boxes,
-		  unsigned dim)
+		  unsigned dim,
+		  unsigned dim_size)
     {
-      image1d<int> l(in.nrows());
+      image1d<int> l(dim_size);
       level::fill(l, -1);
 
       for_all_elements(i, aligned_lines)
@@ -360,8 +361,8 @@ namespace scribo
 					  geom::max_col(in), tblboxes.first,
 					  1);
 
-      connect_lines(in, rows, tblboxes.first, 0);
-      connect_lines(in, cols, tblboxes.second, 1);
+      connect_lines(rows, tblboxes.first, 0, in.nrows());
+      connect_lines(cols, tblboxes.second, 1, in.ncols());
 
       image2d<bool> res;
       initialize(res, in);
@@ -534,7 +535,7 @@ namespace scribo
       // Lignes verticales
       std::cout << "Removing vertical lines" << std::endl;
       win::vline2d vline(settings.ero_line_width);
-      image2d<bool> vfilter = morpho::rank_filter(in, win_c4p(), settings.rank_filter);
+      image2d<bool> vfilter = morpho::rank_filter(in, vline, settings.rank_filter);
 
 #ifndef NOUT
       io::pbm::save(vfilter, output_file("vertical-erosion.pbm"));
@@ -622,7 +623,7 @@ namespace scribo
       /// Return false if the components is smaller than a given size.
       bool operator()(const label16& l) const
       {
-	return nsitecomp_[l].first >= settings.min_comp_size;
+	return nsitecomp_[l] >= settings.min_comp_size;
       }
 
       const util::array<R>& nsitecomp_;
@@ -656,24 +657,27 @@ namespace scribo
 
     void
     cleanup_components(image2d<label16>& lbl,
-		       label16& nlabels, bool treat_tables)
+		       label16& nlabels)
     {
       std::cout << "Cleanup components..." << std::endl;
 
       typedef accu::count<mln_psite_(image2d<label16>)> accu_count_t;
       typedef accu::bbox<mln_psite_(image2d<label16>)> accu_bbox_t;
       typedef accu::pair<accu_count_t, accu_bbox_t> accu_pair_t;
-      typedef mln_result_(accu_pair_t) accu_res_t;
-      typedef util::array<accu_res_t> nsitecomp_t;
+      typedef mln_result_(accu_pair_t) accu_pair_res_t;
+      typedef mln_result_(accu_count_t) accu_count_res_t;
 
-      nsitecomp_t nsitecomp = labeling::compute(accu_pair_t(), lbl, nlabels);
-      if (treat_tables)
+      if (settings.treat_tables)
       {
-	remove_small_comps<accu_res_t> fl2b(nsitecomp);
+	typedef util::array<accu_count_res_t> nsitecomp_t;
+	nsitecomp_t nsitecomp = labeling::compute(accu_count_t(), lbl, nlabels);
+	remove_small_comps<accu_count_res_t> fl2b(nsitecomp);
 	labeling::relabel_inplace(lbl, nlabels, fl2b);
       } else
       {
-	remove_smallandlarge_comps<accu_res_t> fl2b(nsitecomp);
+	typedef util::array<accu_pair_res_t> nsitecomp_t;
+	nsitecomp_t nsitecomp = labeling::compute(accu_pair_t(), lbl, nlabels);
+	remove_smallandlarge_comps<accu_pair_res_t> fl2b(nsitecomp);
 	labeling::relabel_inplace(lbl, nlabels, fl2b);
       }
     }
@@ -693,16 +697,53 @@ namespace scribo
 	tboxes[relabel_fun(i)].take(cboxes[i]);
 
       //Update labels
+      //FIXME: use labeling::Relabel
       level::transform_inplace(lbl, relabel_fun);
 
 #ifndef NOUT
       save_lbl_image(lbl, ncomp, "lbl-grouped-boxes.pgm");
 #endif
 
+      //FIXME: use from_to
       util::array<box2d> result;
       for_all_ncomponents(i, ncomp)
 	if (tboxes[i].is_valid())
 	  result.append(tboxes[i].to_result());
+
+#ifndef NOUT
+      image2d<label16> lbl2 = clone(lbl);
+      util::array<unsigned> treated(g.v_nmax(), mln_max(unsigned));
+      util::set<unsigned> comp_vertices;
+      mln_vertex_iter_(util::graph) v(g);
+      for_all(v)
+	if (treated[v.id()] == mln_max(unsigned))
+	{
+	  std::queue<unsigned> queue;
+	  queue.push(v.id());
+	  comp_vertices.insert(v.id());
+	  while (!queue.empty())
+	  {
+	    util::vertex<util::graph> current_v = g.vertex(queue.front());
+	    queue.pop();
+	    for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
+	      if (!comp_vertices.has(current_v.ith_nbh_vertex(nv)))
+	      {
+		comp_vertices.insert(current_v.ith_nbh_vertex(nv));
+		queue.push(current_v.ith_nbh_vertex(nv));
+	      }
+	  }
+	  unsigned compsize = comp_vertices.nelements();
+	  for (unsigned i = 0; i < comp_vertices.nelements(); ++i)
+	    treated[comp_vertices[i]] = compsize;
+	  comp_vertices.clear();
+	}
+
+      for_all_ncomponents(i, ncomp)
+	if (tboxes[i].is_valid())
+	  if (treated[i] < 3)
+	    level::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
+      save_lbl_image(lbl2, ncomp, "lbl-grouped-boxes-cleaned.pgm");
+#endif
 
       return result;
     }
@@ -789,7 +830,7 @@ namespace scribo
       std::cout << "map text to cells" << std::endl;
       label16 nlabels;
       image2d<label16> tblelbl = labeling::background(table, c8(), nlabels);
-      image2d<rgb8> color = debug::colorize<image2d<rgb8>, image2d<label16> >(tblelbl, nlabels);
+      image2d<rgb8> color = debug::colorize(rgb8(), tblelbl, nlabels);
 # ifndef NOUT
       io::ppm::save(color, output_file("cells-labels.ppm"));
 
@@ -826,10 +867,13 @@ namespace scribo
     using value::rgb8;
     using value::label16;
 
+
+    //Useful debug variables
     border::thickness = 3;
     trace::quiet = true;
 
-    //Useful debug variables
+
+    internal::settings.treat_tables = treat_tables;
     internal::input_file = basename(argv[1]);
 
     //Load image
@@ -846,7 +890,7 @@ namespace scribo
     //Label and remove small components.
     label16 nlabels;
     image2d<label16> lbl = labeling::blobs(in, c8(), nlabels);
-    internal::cleanup_components(lbl, nlabels, treat_tables);
+    internal::cleanup_components(lbl, nlabels);
 
     std::pair<util::array<box2d>,
 		    util::array<box2d> > tblboxes;
@@ -859,7 +903,7 @@ namespace scribo
       table = internal::rebuild_table(in, tblboxes);
 
       lbl = labeling::blobs(in, c8(), nlabels);
-      internal::cleanup_components(lbl, nlabels, treat_tables);
+      internal::cleanup_components(lbl, nlabels);
 
 #ifndef NOUT
       internal::save_lbl_image(lbl, nlabels, "lbl-small-comps-removed.pgm");
