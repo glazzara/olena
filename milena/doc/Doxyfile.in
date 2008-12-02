@@ -86,6 +86,7 @@ EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
 EXCLUDE_SYMBOLS	       =
 EXAMPLE_PATH           = @top_srcdir@/milena/doc/tutorial/samples   \
+			 @top_builddir@/milena/doc/tutorial/samples \
 			 @top_builddir@/milena/doc/tutorial/outputs \ 
 			 @top_builddir@/milena/doc/tutorial/outputs/splitted \ 
 			 @top_srcdir@/milena/doc/tutorial/outputs 

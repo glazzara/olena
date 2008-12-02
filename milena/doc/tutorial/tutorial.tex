@@ -94,9 +94,9 @@ showstringspaces=false,linewidth=14cm}
 \backslash htmlonly%
 }
 
-\newcommand{\doxyfigure}[2]{
+\newcommand{\doxyfigure}[3][1]{
 \backslash endhtmlonly%
-\backslash image html #1.png%
+\backslash image html #2-#1.png%
 \backslash htmlonly%
 }
 
@@ -122,8 +122,8 @@ $$
 \renewcommand{\doxyrawcode}[1]{\lstinputlisting[frame=single]{samples/#1.cc.raw}}
 \renewcommand{\doxyoutput}[1]{\lstinputlisting[frame=single]{outputs/#1.txt}}
 \renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/splitted/#2-#1.txt}}
-\renewcommand{\doxyfigure}[2]{%
-\pgfimage[width=#2]{figures/#1}%
+\renewcommand{\doxyfigure}[3][1]{%
+\pgfimage[width=#3]{figures/#2-#1}%
 \label{#1}%
 }
 \renewenvironment{doxymath}
@@ -800,7 +800,7 @@ Output:
 \bigskip
 
 \begin{tabular}{c c}
-\doxyfigure{ima2d-rot-1}{3cm} & \doxyfigure{ima2d-rot-2}{3cm} \\
+\doxyfigure[1]{ima2d-rot}{3cm} & \doxyfigure[2]{ima2d-rot}{3cm} \\
 \multicolumn{2}{c}{\var{ima1} and its border before rotation (left) and \var{ima2}
   and its border after rotation (right).} \\
 \end{tabular}
@@ -1053,7 +1053,7 @@ These predefined neighborhood can be passed directly to a function. The headers 
 located in \header{mln/core/alias/neigh*.hh}.
 
 Use case example:
-\doxycode{ima2d-decl-2-blobs}
+\doxycode[2]{labeling-compute}
 
 \doxysubsection{customse}{Custom structural elements}
 
@@ -1439,7 +1439,7 @@ Consider the following image:
 
 Output: \\
 \begin{center}
-\doxyfigure{labeling-compute-1}{3cm}
+\doxyfigure[1]{labeling-compute}{3cm}
 \end{center}
 
 Then label this image thanks to \code{labeling::blobs()}:
@@ -1448,7 +1448,7 @@ Then label this image thanks to \code{labeling::blobs()}:
 Output: \\
 
 \begin{center}
-\doxyfigure{labeling-compute-2}{3cm}
+\doxyfigure[2]{labeling-compute}{3cm}
 \end{center}
 
 Note that this routine returns the number of components in its third parameter.
@@ -1480,14 +1480,14 @@ Example:
 Make a binary image:
 \doxycode[1]{logical-not}
 \begin{center}
-\doxyfigure{logical-not-1}{3cm}
+\doxyfigure[1]{logical-not}{3cm}
 \end{center}
 
 Return the result in a new image:
 \doxycode[2]{logical-not}
 \begin{center}
 \begin{tabular}{c c}
-\doxyfigure{logical-not-1}{3cm} & \doxyfigure{logical-not-2}{3cm} \\
+\doxyfigure[1]{logical-not}{3cm} & \doxyfigure[2]{logical-not}{3cm} \\
 \multicolumn{2}{c}{\var{ima} (left) and \var{ima_neg} (right) after having
   called logical::not\_().} \\
 \end{tabular}
@@ -1497,7 +1497,7 @@ Or, work in place:
 \doxycode[3]{logical-not}
 Then, \var{ima} looks like:
 \begin{center}
-\doxyfigure{logical-not-3}{3cm}
+\doxyfigure[3]{logical-not}{3cm}
 \end{center}
 
 
@@ -1590,7 +1590,7 @@ Consider the following image:
 Then label this image thanks to \code{labeling::blobs()}:
 \doxycode[2]{labeling-compute}
 Output:
-\doxymoutput[1]{labeling-compute}
+\doxyfigure[2]{labeling-compute}{3cm}
 
 Then, use \code{labeling::compute()} with the bbox accumulator:
 \doxycode[3]{labeling-compute}
@@ -1603,7 +1603,7 @@ In this case, it returns an array of \type{box2d}.
 set the background to 0, we will want to iterate from 1 to nlabels included.
 \doxycode[4]{labeling-compute}
 Output:
-\doxymoutput[2]{labeling-compute}
+\doxyoutput{labeling-compute}
 
 
 \subsection{Routines based on accumulators and *::compute()}
@@ -1670,7 +1670,7 @@ following declaration:
 \doxycode[1]{fill-part-image}
 Output:
 \begin{center}
-\doxyfigure{fill-subdomain-1}{3cm}
+\doxyfigure[1]{fill-subdomain}{3cm}
 \end{center}
 
 \doxysubsection{restrictsiteset}{Restrict an image with a site set}
@@ -1688,7 +1688,7 @@ First, find and label the components.
 \doxycode[2]{fill-subdomain}
 Output:
 \begin{center}
-\doxyfigure{fill-subdomain-2}{3cm}
+\doxyfigure[2]{fill-subdomain}{3cm}
 \end{center}
 
 Then, restrict the image to the sites being part of component 2.
@@ -1696,7 +1696,7 @@ Then, restrict the image to the sites being part of component 2.
 
 \var{lbl\_2} is a new image. \var{lbl\_2} looks like:
 \begin{center}
-\doxyfigure{fill-subdomain-3}{3cm}
+\doxyfigure[3]{fill-subdomain}{3cm}
 \end{center}
 
 Finally, create a new color image, fill it with black and fill the sites part of
@@ -1704,7 +1704,7 @@ component 2 with red.
 \doxycode[4]{fill-subdomain}
 Output:
 \begin{center}
-\doxyfigure{fill-subdomain-4}{3cm}
+\doxyfigure[4]{fill-subdomain}{3cm}
 \end{center}
 
 The previous example can be written more quickly:
@@ -1722,7 +1722,7 @@ Restrict the image with it:
 
 Output:
 \begin{center}
-\doxyfigure{fill-subimage-cfun-1}{3cm}
+\doxyfigure[1]{fill-subimage-cfun}{3cm}
 \end{center}
 %
 \medskip
