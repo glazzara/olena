@@ -117,7 +117,7 @@ namespace mln
       // tester minima de ima == minima de attr
       //mln_assertion(min == min_v);
 
-      mln_ch_value(I, util::set<mln_psite(I)>) ima_set =  minima_sets(volume);
+      mln_ch_value(I, util::set<mln_psite(I)>) volume_set =  minima_sets(volume);
 
       // number of minima
       int cmpts = count_minima(min_v);
@@ -126,13 +126,16 @@ namespace mln
 
       // prepare union find
       typedef mln_psite(V) P;
+      //data
+      mln_ch_value(V, accu::volume<V>)  data;
+      initialize(data, volume);
+      //deja_vu
       mln_ch_value(V, bool)  deja_vu;
-      initialize(deja_vu, ima);
-      mln_ch_value(V, P)     parent;
-      initialize(parent, ima);
-      mln_ch_value(V, A)  data;
-      initialize(data, ima);
+      initialize(deja_vu, volume);
       mln::level::fill(deja_vu, false);
+      //parent
+      mln_ch_value(V, P) parent;
+      initialize(parent, volume);
       {
         mln_fwd_piter(S) p(sp);
         for_all(p)
@@ -145,7 +148,7 @@ namespace mln
       for_all(p)
       {
         // Make set.
-        data(p).take_as_init(make::pix(ima, p));
+        data(p).take_as_init(make::pix(volume, p));
         for_all(n)
         {
           if (volume.domain().has(n) && deja_vu(n))
@@ -154,26 +157,32 @@ namespace mln
             P r = find_root(parent, n);
             if (r != p)
             {
-              if (ima(r) != ima(p) && (data(p).to_result() > lambda))
+              if (volume(r) != volume(p) && (data(p).to_result() > lambda))
               {
                 data(p).set_value(lambda);
                 continue;
               }
 
-              if (ima(r) != ima(p))
+              if (volume(r) != volume(p))
               {
-                std::cout << "1: ima(r) != ima(p)" << std::endl;
-                if (not ima_set(p).is_empty())
+                std::cout << "1: volume"<<r<<" != volume"<<p<<"" << " with data"<<p<< " = " <<
+                  data(p).to_result() << std::endl;
+                if (not volume_set(p).is_empty())
                 {
-                  std::cout << "2: not ima_set(p).is_empty()" << std::endl;
-                  if (ima_set(p) != ima_set(r))
+                  std::cout << "2: not volume_set"<<p<<".is_empty()" << std::endl;
+                  if (volume_set(p) != volume_set(r))
                   {
-                    std::cout << "3: ima_set(p) != ima_set(r)" << std::endl;
+                    std::cout << "3: volume_set"<<p<<" != volume_set"<<r<< std::endl;
                     cmpts--;
                   }
                 }
               }
-              ima_set(p).insert(ima_set(r));
+              // propagate set
+              volume_set(p).insert(volume_set(r));
+              assert(data(p).to_result() != 0);
+              // propagate attribute
+              data(p).take(data(r));
+              // build tree
               parent(r) = p;
             }
           }

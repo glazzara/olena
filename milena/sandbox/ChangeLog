@@ -1,5 +1,11 @@
 2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Update n_cmpt3.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Minor fix and display.
+
+2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Attribute filtering v3.
 
 	* jardonnet/n_cmpt/n_cmpt3.hh: Make use of an image of set.
