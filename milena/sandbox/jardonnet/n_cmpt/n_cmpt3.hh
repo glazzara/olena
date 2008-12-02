@@ -49,21 +49,6 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template<typename I>
-    mln_ch_value(I, util::set<mln_psite(I)>)
-    minima_sets(const I& ima)
-    {
-      mln_ch_value(I, util::set<mln_psite(I)>) ima_set(ima.domain());
-
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-      {
-        if (ima(p) != literal::zero)
-          ima_set(p).insert(p);
-      }
-      return ima_set;
-    }
-
     template <typename I>
     inline
     mln_psite(I)
@@ -96,6 +81,8 @@ namespace mln
     {
       unsigned label;
 
+      debug::println(ima);
+
       // get /ima/ regional minima
       mln_ch_value(I, unsigned) min = labeling::regional_minima(ima, nbh, label);
       std::cout << "/ima/ regional minima" << std::endl;
@@ -105,9 +92,12 @@ namespace mln
       typedef p_array<mln_psite(I)> S;
       typedef image2d<unsigned> V;
       typedef accu::volume<I> A;
+
       S sp = level::sort_psites_decreasing(ima);
       morpho::tree::data<I,S> t(ima, sp, nbh);
       V volume = morpho::tree::compute_attribute_image(A(), t);
+      sp = level::sort_psites_increasing(volume);
+      debug::println(volume);
 
       // get /volume/ regional minima
       mln_ch_value(I, unsigned) min_v = labeling::regional_minima(volume, nbh, label);
@@ -117,38 +107,39 @@ namespace mln
       // tester minima de ima == minima de attr
       //mln_assertion(min == min_v);
 
-      mln_ch_value(I, util::set<mln_psite(I)>) volume_set =  minima_sets(volume);
+      mln_ch_value(I, util::set<unsigned>) volume_set;
+      initialize(volume_set, min_v);
 
       // number of minima
-      int cmpts = count_minima(min_v);
+      int cmpts = label;
 
       std::cout << "Nb of regionnal minima : " << cmpts << std::endl;
 
       // prepare union find
       typedef mln_psite(V) P;
       //data
-      mln_ch_value(V, accu::volume<V>)  data;
-      initialize(data, volume);
+      mln_ch_value(V, accu::volume<V>)  data(volume.domain());
       //deja_vu
-      mln_ch_value(V, bool)  deja_vu;
-      initialize(deja_vu, volume);
+      mln_ch_value(V, bool)  deja_vu(volume.domain());
       mln::level::fill(deja_vu, false);
       //parent
-      mln_ch_value(V, P) parent;
-      initialize(parent, volume);
+      mln_ch_value(V, P) parent(volume.domain());
       {
         mln_fwd_piter(S) p(sp);
         for_all(p)
+        {
           parent(p) = p;
+          if (min_v(p) != 0) // p in a reg min of the attribute image
+            volume_set(p).insert(min_v(p));
+        }
       }
+      debug::println(volume_set);
 
       // union find sur volume
       mln_fwd_piter(S) p(sp);
       mln_niter(N) n(nbh, p);
       for_all(p)
       {
-        // Make set.
-        data(p).take_as_init(make::pix(volume, p));
         for_all(n)
         {
           if (volume.domain().has(n) && deja_vu(n))
@@ -157,31 +148,30 @@ namespace mln
             P r = find_root(parent, n);
             if (r != p)
             {
-              if (volume(r) != volume(p) && (data(p).to_result() > lambda))
-              {
-                data(p).set_value(lambda);
-                continue;
-              }
+              if (volume(p) > lambda)
+                goto step2;
+//              if (volume(r) != volume(p) && (data(p).to_result() > lambda))
+//               {
+//                 data(p).set_value(lambda);
+//                 continue;
+//               }
 
-              if (volume(r) != volume(p))
-              {
-                std::cout << "1: volume"<<r<<" != volume"<<p<<"" << " with data"<<p<< " = " <<
-                  data(p).to_result() << std::endl;
-                if (not volume_set(p).is_empty())
-                {
-                  std::cout << "2: not volume_set"<<p<<".is_empty()" << std::endl;
-                  if (volume_set(p) != volume_set(r))
-                  {
-                    std::cout << "3: volume_set"<<p<<" != volume_set"<<r<< std::endl;
-                    cmpts--;
-                  }
-                }
-              }
+//               if (volume(r) != volume(p))
+//               {
+//                 std::cout << "1: volume"<<r<<" != volume"<<p<<"" << " with data"<<p<< " = " <<
+//                   data(p).to_result() << std::endl;
+//                 if (not volume_set(p).is_empty())
+//                 {
+//                   std::cout << "2: not volume_set"<<p<<".is_empty()" << std::endl;
+//                   if (volume_set(p) != volume_set(r))
+//                   {
+//                     std::cout << "3: volume_set"<<p<<" != volume_set"<<r<< std::endl;
+//                     cmpts--;
+//                   }
+//                 }
+//               }
               // propagate set
               volume_set(p).insert(volume_set(r));
-              assert(data(p).to_result() != 0);
-              // propagate attribute
-              data(p).take(data(r));
               // build tree
               parent(r) = p;
             }
@@ -190,18 +180,21 @@ namespace mln
         deja_vu(p) = true;
       }
 
-      std::cout << "Nb cmpts after processing : " << cmpts << std::endl;
+      debug::println(volume_set);
+    step2:
+//       std::cout << "Nb cmpts after processing : " << cmpts << std::endl;
 
       // second pass
       I output(ima.domain());
       {
-      mln_bkd_piter(S) p(sp);
-      for_all(p)
-        if (parent(p) == p) // p is root.
-          output(p) = ima(p);
-        else
-          output(p) = output(parent(p));
+        mln_bkd_piter(S) p(sp);
+        for_all(p)
+         if (parent(p) == p) // p is root.
+           output(p) = ima(p);
+         else
+           output(p) = output(parent(p));
       }
+
       return output;
     }
 

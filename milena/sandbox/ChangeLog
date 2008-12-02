@@ -1,5 +1,12 @@
 2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Check correct filtering.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Update, Fix, Remove.
+	* jardonnet/n_cmpt/test3.cc: Volume closing.
+
+2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Update n_cmpt3.
 
 	* jardonnet/n_cmpt/n_cmpt3.hh: Minor fix and display.
