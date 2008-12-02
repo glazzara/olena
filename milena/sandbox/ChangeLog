@@ -1,3 +1,12 @@
+2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Attribute filtering v3.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Make use of an image of set.
+	* jardonnet/n_cmpt/n_cmpt3.cc: New.
+	* jardonnet/n_cmpt/Makefile: Add rule.
+	* jardonnet/n_cmpt/check/test4.pgm: New test image.
+
 2008-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Improve component cleanup.
