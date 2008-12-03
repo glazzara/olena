@@ -42,6 +42,7 @@
 
 # include <mln/trait/value/all.hh>
 # include <mln/metal/math/pow.hh>
+# include <mln/core/def/low_quant_nbits.hh>
 
 
 # define mln_trait_value_nature(V) typename mln::trait::value_< V >::nature
@@ -68,13 +69,22 @@
 
 
 /// FIXME: check that the -1 is correct
-# define mln_value_quant_from_(C)			\
-   mlc_if(mln::metal::bool_<( C > 65536 || C == 0 || C == -1)>,	\
-	  mln::trait::value::quant::high,		\
-	  mln::trait::value::quant::low)
+# define mln_value_quant_from_(C)					\
+  mlc_if(mln::metal::bool_<( int(C) > int(mlc_pow_int(2, mln::def::low_quant_nbits)) \
+			     || C == 0					\
+			     || C == -1)>,				\
+	 mln::trait::value::quant::high,				\
+	 mln::trait::value::quant::low)
 
+
+/// Give the cardinality of the set of values having N bits.
+// 
+// Technical note:
+// This macro might seem weird, yet it is NOT.  We have to change the value
+// of N, even when N is less than the low quant threshold, because otherwise
+// the call to mlc_pow_int would lead to compilation errors.
 # define mln_value_card_from_(N)		\
-   (N <= 12					\
+  (int(N) <= int(mln::def::low_quant_nbits)	\
    ? mlc_pow_int((N <= 16 ? 2 : 1),		\
 		 (N <= 16 ? N : 1))		\
    : 0)

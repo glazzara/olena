@@ -25,27 +25,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_DEF_ALL_HH
-# define MLN_CORE_DEF_ALL_HH
+#ifndef MLN_CORE_DEF_LOW_QUANT_NBITS_HH
+# define MLN_CORE_DEF_LOW_QUANT_NBITS_HH
 
-/// mln/core/def/all.hh
+/// \file mln/core/def/low_quant_nbits.hh
 ///
-/// File that includes all core definitions.
+/// Definition of the low v. high quantization threshold.
 
 
 namespace mln
 {
 
-  /// Namespace for core definitions.
   namespace def
-  {}
-
-}
+  {
 
 
-# include <mln/core/def/coord.hh>
-# include <mln/core/def/coordf.hh>
-# include <mln/core/def/low_quant_nbits.hh>
+    /// Definition of the number of bits of the low quantization
+    /// threshold.
+    enum { low_quant_nbits = 12 };
 
 
-#endif // ! MLN_CORE_DEF_ALL_HH
+  } // end of namespace mln::def
+
+} // end of namespace mln
+
+
+#endif // ! MLN_CORE_DEF_LOW_QUANT_NBITS_HH

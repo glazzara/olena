@@ -1,3 +1,12 @@
+2008-12-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Turn the low/high quant nbits threshold into a definition.
+
+	* mln/core/def/low_quant_nbits.hh: New.
+	* mln/core/def/all.hh: Update.
+	* mln/trait/value_.hh (mln_value_quant_from_): Update.
+	(mln_value_card_from_): Update.  Add tech doc.
+
 2008-12-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.
