@@ -45,6 +45,11 @@
 # include <mln/essential/2d.hh>
 # include <mln/morpho/elementary/dilation.hh>
 # include <mln/labeling/background.hh>
+# include <mln/transform/influence_zone_geodesic.hh>
+# include <mln/debug/draw_graph.hh>
+# include <mln/make/graph.hh>
+# include <mln/util/graph.hh>
+# include <mln/util/line_graph.hh>
 
 #include <tesseract/baseapi.h>
 
@@ -72,6 +77,7 @@ namespace scribo
 	max_comp_size = 1000;
 	max_dist_lines = 10;
 	max_txt_box_height = 100;
+	max_cos = 0.994;
       }
 
       unsigned bbox_enlarge;
@@ -83,6 +89,7 @@ namespace scribo
       int max_txt_box_height;
       unsigned rank_filter;
       bool treat_tables;
+      float max_cos;
     };
 
 
@@ -415,68 +422,6 @@ namespace scribo
       draw::line(ima, point2d(0, line), point2d(ima.nrows(), line), v);
     }
 
-/*
-    void
-    extract_matrix(const image2d<bool>& in,
-		   std::pair<util::array<box2d>, util::array<box2d> > tboxes)
-    {
-      std::cout << "Extracting matrix..." << std::endl;
-
-      image1d<unsigned> hend(in.ncols()),
-			hrow(in.nrows()),
-			vend(in.nrows()),
-			vcol(in.ncols());
-
-      level::fill(hend, 0);
-      level::fill(hrow, 0);
-      level::fill(vend, 0);
-      level::fill(vcol, 0);
-
-      for_all_components(i, tboxes.first)
-      {
-	++vend.at(tboxes.first[i].pmin().row());
-	++vend.at(tboxes.first[i].pmax().row());
-	++vcol.at(tboxes.first[i].center().col());
-      }
-
-      for_all_components(i, tboxes.second)
-      {
-	++hend.at(tboxes.second[i].pmin().col());
-	++hend.at(tboxes.second[i].pmax().col());
-	++hrow.at(tboxes.second[i].center().row());
-      }
-
-#ifndef NOUT
-      image2d<rgb8> tmp(in.domain());
-      level::fill(tmp, literal::black);
-
-      for (unsigned i = 1; i < in.ncols(); ++i)
-      {
-	if (hend.at(i) > 0)
-	  draw_col(tmp, i, literal::orange);
-	if (vcol.at(i) > 0)
-	  draw_col(tmp, i, literal::orange);
-      }
-
-      for (unsigned i = 1; i < in.nrows(); ++i)
-      {
-	if (hrow.at(i) > 0)
-	  draw_row(tmp, i, literal::magenta);
-	if (vend.at(i) > 0)
-	  draw_row(tmp, i, literal::magenta);
-      }
-
-      for_all_components(i, tboxes.first)
-	draw_line(tmp, 0, tboxes.first[i], literal::green);
-
-      for_all_components(i, tboxes.second)
-	draw_line(tmp, 1, tboxes.second[i], literal::red);
-
-      io::ppm::save(tmp, output_file("matrix.ppm"));
-#endif
-
-    }
-*/
     /// \}
     //-****************************************************
     /// End of functions related to the table extraction
@@ -581,18 +526,20 @@ namespace scribo
     //-***************************************
     /// \{
 
-    fun::i2v::array<label16>
+    fun::l2l::relabel<label16>
     make_relabel_fun(const util::graph& g)
     {
-      fun::i2v::array<label16> fun(g.v_nmax(), mln_max(label16));
+      fun::l2l::relabel<label16> fun(g.v_nmax(), mln_max(label16));
 
+      // The first vertex (id 0) IS the background (component 0).
+      unsigned ncomp = 0;
       mln_vertex_iter_(util::graph) v(g);
       for_all(v)
 	if (fun(v.id()) == mln_max(label16))
 	{
 	  std::queue<unsigned> queue;
 	  queue.push(v.id());
-	  fun(v.id()) = v.id();
+	  fun(v.id()) = ncomp;
 	  while (!queue.empty())
 	  {
 	    util::vertex<util::graph> current_v = g.vertex(queue.front());
@@ -600,10 +547,11 @@ namespace scribo
 	    for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
 	      if (fun(current_v.ith_nbh_vertex(nv)) == mln_max(label16))
 	      {
-		fun(current_v.ith_nbh_vertex(nv)) = v.id();
+		fun(current_v.ith_nbh_vertex(nv)) = ncomp;
 		queue.push(current_v.ith_nbh_vertex(nv));
 	      }
 	  }
+	  ++ncomp;
 	}
 
       return fun;
@@ -687,28 +635,28 @@ namespace scribo
     /// Merge bboxes according to their left box neighbor.
     util::array< box2d >
     group_bboxes(const util::graph& g, image2d<label16>& lbl,
-		 util::array<box2d>& cboxes, unsigned ncomp)
+		 util::array<box2d>& cboxes, label16& nlabels)
     {
-      fun::i2v::array<label16> relabel_fun = make_relabel_fun(g);
+      fun::l2l::relabel<label16> relabel_fun = make_relabel_fun(g);
 
       util::array< accu::bbox<point2d> > tboxes;
-      tboxes.resize(ncomp + 1);
-      for_all_ncomponents(i, ncomp)
+      tboxes.resize(nlabels.next());
+      for_all_ncomponents(i, nlabels)
 	tboxes[relabel_fun(i)].take(cboxes[i]);
 
       //Update labels
-      //FIXME: use labeling::Relabel
-      level::transform_inplace(lbl, relabel_fun);
+      labeling::relabel_inplace(lbl, nlabels, relabel_fun);
 
 #ifndef NOUT
-      save_lbl_image(lbl, ncomp, "lbl-grouped-boxes.pgm");
+      save_lbl_image(lbl, nlabels, "lbl-grouped-boxes.pgm");
 #endif
 
-      //FIXME: use from_to
-      util::array<box2d> result;
-      for_all_ncomponents(i, ncomp)
+      util::array<box2d> result(1);
+      for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
 	  result.append(tboxes[i].to_result());
+
+      nlabels = result.nelements();
 
 #ifndef NOUT
       image2d<label16> lbl2 = clone(lbl);
@@ -738,11 +686,11 @@ namespace scribo
 	  comp_vertices.clear();
 	}
 
-      for_all_ncomponents(i, ncomp)
+      for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
 	  if (treated[i] < 3)
 	    level::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
-      save_lbl_image(lbl2, ncomp, "lbl-grouped-boxes-cleaned.pgm");
+      save_lbl_image(lbl2, nlabels, "lbl-grouped-boxes-cleaned.ppm");
 #endif
 
       return result;
@@ -796,7 +744,7 @@ namespace scribo
     util::array<box2d>
     extract_text(image2d<bool>& in,
 		 image2d<label16>& lbl,
-		 const label16& nlabels)
+		 label16& nlabels)
     {
       std::cout << "extract text" << std::endl;
 
@@ -812,8 +760,6 @@ namespace scribo
       io::ppm::save(tmp, output_file("character-bboxes.ppm"));
 #endif
 
-      //merge_bboxes(cboxes, lbl, nlabels);
-
       //Link character bboxes to their left neighboor if possible.
       util::graph g = link_character_bboxes(lbl, cboxes, nlabels);
 
@@ -822,6 +768,89 @@ namespace scribo
 
       return tboxes;
     }
+
+
+
+    struct gcolor_t : public mln::Function< gcolor_t >
+    {
+      typedef mln::value::rgb8 result;
+
+      template <typename G>
+	mln::value::rgb8
+	operator()(const mln::util::vertex<G>&) const
+	{
+	  return mln::literal::cyan;
+	}
+
+      template <typename G>
+	mln::value::rgb8
+	operator()(const mln::util::edge<G>&) const
+	{
+	  return mln::literal::magenta;
+	}
+
+    };
+
+    struct gcolorarr_t : public mln::Function< gcolorarr_t >
+    {
+      typedef mln::value::rgb8 result;
+
+      gcolorarr_t(unsigned n, const mln::value::rgb8& val)
+	: v_(n, val)
+      {
+      }
+
+      template <typename G>
+	const mln::value::rgb8&
+	operator()(const mln::util::vertex<G>& v) const
+	{
+	  return v_[v.id()];
+	}
+
+      template <typename G>
+	const mln::value::rgb8&
+	operator()(const mln::util::edge<G>& e) const
+	{
+	  return v_[e.id()];
+	}
+
+      template <typename G>
+	mln::value::rgb8&
+	operator()(const mln::util::vertex<G>& v)
+	{
+	  return v_[v.id()];
+	}
+
+      template <typename G>
+	mln::value::rgb8&
+	operator()(const mln::util::edge<G>& e)
+	{
+	  return v_[e.id()];
+	}
+
+      std::vector<mln::value::rgb8> v_;
+    };
+
+
+
+    template <typename P>
+      struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
+    {
+      typedef float result;
+
+      float operator()(const P& p) const
+      {
+	mln::algebra::vec<2,float> v;
+	v[0] = 0;
+	v[1] = 1;
+	float norm = mln::math::sqrt(std::pow(p.to_vec()[0], 2)
+	    + std::pow(p.to_vec()[1], 2));
+	// FIXME: missing proxy_impl for point and line2d?
+	float res = (v * p.to_vec()) / norm;
+	return res;
+      }
+
+    };
 
 
 
@@ -844,6 +873,71 @@ namespace scribo
 # endif
     }
 
+
+    void merge_aligned_text_boxes(const image2d<bool>& in, util::array<box2d>& tboxes,
+				  image2d<label16>& lbl, label16& nlabels)
+    {
+      std::cout << "Merging aligned text boxes" << std::endl;
+
+      image2d<label16> lbl_iz = clone(lbl);
+      io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), output_file("tboxes-lbl.ppm"));
+
+      image2d<label16> iz = transform::influence_zone_geodesic(lbl_iz, c8(), settings.bbox_distance);
+#ifndef NOUT
+      io::ppm::save(debug::colorize(rgb8(), iz, nlabels), output_file("tboxes-iz.ppm"));
+#endif
+
+      typedef util::graph G;
+      G g = make::graph(iz | (pw::value(iz) != pw::cst(0u)), nlabels);
+
+      // Compute the component centers and use them as vertex.
+      //FIXME: Add fun::vertex2p
+      typedef fun::i2v::array<point2d> fv2p_t;
+      fv2p_t fv2p(nlabels.next());
+
+      for_all_elements(i, tboxes)
+	fv2p(i) = tboxes[i].center();
+//      util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
+//      fv2p_t fv2p = convert::to<fv2p_t>(centers);
+
+      // Create a p_vertices.
+      p_vertices<G, fv2p_t> pv(g, fv2p);
+
+      typedef util::line_graph<G> LG;
+      LG lg(g);
+
+      // Find lines (sites) associated to edges in g.
+      typedef fun::i2v::array<p_line2d> i2e_t;
+      util::array<p_line2d> lines;
+      mln_edge_iter_(G) e(g);
+      for_all(e)
+	lines.append(p_line2d(fv2p(e.v1()), fv2p(e.v2())));
+
+      // Map lines to vertices in lg.
+      typedef p_vertices<LG, i2e_t> pvlg_t;
+      pvlg_t pvlg(lg, convert::to<i2e_t>(lines));
+
+      // Construct an image from a p_edges and a function mapping
+      // lines to angles.
+      typedef lg_vertex_values<p_line2d> lgv2v_t;
+      lgv2v_t lgv2v;
+
+      mln_VAR(lg_ima, lgv2v | pvlg);
+
+      gcolorarr_t ecolor(pvlg.nsites(), literal::olive);
+      mln_piter_(lg_ima_t) p(lg_ima.domain());
+      for_all (p)
+	if ((lg_ima(p) > settings.max_cos) || (lg_ima(p) < - settings.max_cos))
+	    ecolor(p.element()) = literal::cyan;
+
+#ifndef NOUT
+      image2d<rgb8> output = level::convert(rgb8(), in);
+      internal::draw_component_boxes(output, tboxes);
+      debug::draw_graph(output, pvlg, gcolor_t(), ecolor);
+      io::ppm::save(output, internal::output_file("aligned-bboxes-merged.ppm"));
+#endif
+
+    }
 
     /// \}
     //-----------------------------------------------
@@ -890,7 +984,10 @@ namespace scribo
     //Label and remove small components.
     label16 nlabels;
     image2d<label16> lbl = labeling::blobs(in, c8(), nlabels);
-    internal::cleanup_components(lbl, nlabels);
+
+    /// Do we really want to cleanup before removing tables?
+    if (!treat_tables)
+      internal::cleanup_components(lbl, nlabels);
 
     std::pair<util::array<box2d>,
 		    util::array<box2d> > tblboxes;
@@ -899,10 +996,11 @@ namespace scribo
     if (treat_tables)
     {
       tblboxes = internal::extract_tables(in);
-//      internal::extract_matrix(in, tblboxes);
       table = internal::rebuild_table(in, tblboxes);
 
+      /// relabel since the table has been removed.
       lbl = labeling::blobs(in, c8(), nlabels);
+      /// Do we really want to cleanup again?
       internal::cleanup_components(lbl, nlabels);
 
 #ifndef NOUT
@@ -912,6 +1010,8 @@ namespace scribo
 
     util::array<box2d> tboxes =
       internal::extract_text(in, lbl, nlabels);
+
+    internal::merge_aligned_text_boxes(in, tboxes, lbl, nlabels);
 
     if (treat_tables)
       internal::maptext_to_cells(in, table, tboxes);
