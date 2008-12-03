@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CANVAS_ALL_HH
 # define MLN_CANVAS_ALL_HH
 
-/*! \file mln/canvas/all.hh
- *
- * \brief File that includes all canvas-related routines.
- */
+/// \file mln/canvas/all.hh
+///
+/// File that includes all canvas-related routines.
 
 
 namespace mln
@@ -40,15 +40,20 @@ namespace mln
   /// Namespace of canvas.
   namespace canvas
   {
+
     /// Implementation namespace of canvas namespace.
     namespace impl {}
-  }
 
+  }
 }
+
 
 # include <mln/canvas/browsing/all.hh>
 # include <mln/canvas/morpho/all.hh>
 # include <mln/canvas/chamfer.hh>
+# include <mln/canvas/distance_front.hh>
+# include <mln/canvas/distance_geodesic.hh>
 # include <mln/canvas/labeling.hh>
+
 
 #endif // ! MLN_CANVAS_ALL_HH

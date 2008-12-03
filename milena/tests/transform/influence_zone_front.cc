@@ -25,55 +25,42 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_DISTANCE_GEODESIC_HH
-# define MLN_TRANSFORM_DISTANCE_GEODESIC_HH
-
-/// \file mln/transform/distance_geodesic.hh
+/// \file tests/transform/influence_zone_front.cc
 ///
-/// Discrete geodesic distance transform.
+/// Test on mln::transform::influence_zone_front.
 
-# include <mln/canvas/distance_geodesic.hh>
-# include <mln/transform/internal/distance_functor.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/make/w_window2d_int.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/transform/influence_zone_front.hh>
 
 
-
-namespace mln
+int main()
 {
+  using namespace mln;
+  using value::int_u8;
 
-  namespace transform
-  {
+  int_u8 vals[] =
+    { 1, 1, 0, 0, 0, 0, 3,
+      1, 1, 1, 0, 0, 0, 0, 
+      0, 1, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 2, 0,
+      0, 0, 0, 0, 2, 2, 0,
+      0, 0, 0, 0, 0, 0, 0 };
+  image2d<int_u8> input = make::image2d(vals);
 
-    /// Discrete geodesic distance transform.
-    template <typename I, typename N, typename D>
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max);
+  int ws[] = { 0, 9, 0, 9, 0,
+	       9, 6, 4, 6, 9,
+	       0, 4, 0, 4, 0,
+	       9, 6, 4, 6, 9,
+	       0, 9, 0, 9, 0 };
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N, typename D>
-    inline
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
-    {
-      trace::entering("transform::distance_geodesic");
-
-      mln_precondition(exact(input).has_data());
-      // mln_precondition(exact(nbh).is_valid());
-
-      mln_ch_value(I, D) output;
-      internal::distance_functor<I> f;
-      output = mln::canvas::distance_geodesic(input, nbh, max, f);
-
-      trace::exiting("transform::distance_geodesic");
-      return output;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::transform
-
-} // end of namespace mln
-
-
-#endif // ! MLN_TRANSFORM_DISTANCE_GEODESIC_HH
+  image2d<int_u8> output;
+  output = transform::influence_zone_front(input,
+					   c4(), make::w_window2d_int(ws));
+  debug::println(output);
+}

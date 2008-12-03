@@ -30,10 +30,10 @@
 
 /// \file mln/transform/influence_zone_geodesic.hh
 ///
-/// Discrete geodesic distance transform.
+/// Geodesic influence zone transform.
 
 # include <mln/canvas/distance_geodesic.hh>
-# include <mln/literal/zero.hh>
+# include <mln/transform/internal/influence_zone_functor.hh>
 
 
 namespace mln
@@ -42,45 +42,21 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform.
+    /// Geodesic influence zone transform.
     template <typename I, typename N, typename D>
     mln_concrete(I)
-    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max);
+    influence_zone_geodesic(const Image<I>& input,
+			    const Neighborhood<N>& nbh, D max);
+
+
+    /// Geodesic influence zone transform.
+    template <typename I, typename N>
+    mln_concrete(I)
+    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-    namespace internal
-    {
-
-      template <typename I>
-      struct iz_functor
-      {
-	typedef mln_value(I) V;
-	typedef mln_site(I)  P;
-
-	mln_concrete(I) output;
-
-	void init(const I& input)
-	{
-	  output = clone(input);
-	}
-	bool inqueue_p_wrt_input_p(const V& input_p)
-	{
-	  return input_p != 0u;
-	}
-	bool inqueue_p_wrt_input_n(const V& input_n)
-	{
-	  return input_n == 0u;
-	}
-	void process(const P& p, const P& n)
-	{
-	  output(n) = output(p);
-	}
-      };
-
-    } // end of namespace mln::transform::internal
-
 
     template <typename I, typename N, typename D>
     mln_concrete(I)
@@ -92,11 +68,18 @@ namespace mln
       mln_precondition(exact(input).has_data());
       // mln_precondition(exact(nbh).is_valid());
 
-      internal::iz_functor<I> f;
+      internal::influence_zone_functor<I> f;
       (void) mln::canvas::distance_geodesic(input, nbh, max, f);
 
       trace::exiting("transform::influence_zone_geodesic");
       return f.output;
+    }
+
+    template <typename I, typename N>
+    mln_concrete(I)
+    influence_zone_geodesic(const Image<I>& input, const Neighborhood<N>& nbh)
+    {
+      return influence_zone_geodesic(input, nbh, mln_max(unsigned));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -25,37 +25,77 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/transform/distance.cc
- *
- * \brief Test on mln::transform::distance.
- */
+#ifndef MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
+# define MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/make/w_window2d_int.hh>
-#include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
-#include <mln/debug/println.hh>
+/// \file mln/transform/internal/distance_functor.hh
+///
+/// Distance functor.
 
-#include <mln/transform/distance.hh>
+# include <mln/core/macros.hh>
 
 
-int main()
+
+namespace mln
 {
-  using namespace mln;
-  using value::int_u8;
 
-  image2d<bool> input(9, 9);
-  level::fill(input, false);
-  input.at(4, 4) = true;
+  namespace transform
+  {
+    
+    namespace internal
+    {
 
-  int vals[] = { 0, 9, 0, 9, 0,
-		 9, 6, 4, 6, 9,
-		 0, 4, 0, 4, 0,
-		 9, 6, 4, 6, 9,
-		 0, 9, 0, 9, 0 };
+      template <typename I>
+      struct distance_functor
+      {
+	typedef mln_value(I) V;
+	typedef mln_site(I)  P;
 
-  image2d<int_u8> output = transform::distance(int_u8(), input,
-					       c4(), make::w_window2d_int(vals));
-  debug::println(output);
-}
+	void init(const I&);
+	bool inqueue_p_wrt_input_p(const V& input_p);
+	bool inqueue_p_wrt_input_n(const V& input_n);
+	void process(const P&, const P&);
+      };
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+      template <typename I>
+      inline
+      void
+      distance_functor<I>::init(const I&)
+      {
+      }
+
+      template <typename I>
+      inline
+      bool
+      distance_functor<I>::inqueue_p_wrt_input_p(const V& input_p)
+      {
+	return input_p == true;
+      }
+
+      template <typename I>
+      inline
+      bool
+      distance_functor<I>::inqueue_p_wrt_input_n(const V& input_n)
+      {
+	return input_n == false;
+      }
+
+      template <typename I>
+      inline
+      void distance_functor<I>::process(const P&, const P&)
+      {
+      }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::transform::internal
+
+  } // end of namespace mln::transform
+
+} // end of namespace mln
+
+
+#endif // ! MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH

@@ -25,16 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_DISTANCE_GEODESIC_HH
-# define MLN_TRANSFORM_DISTANCE_GEODESIC_HH
+#ifndef MLN_TRANSFORM_INFLUENCE_ZONE_FRONT_HH
+# define MLN_TRANSFORM_INFLUENCE_ZONE_FRONT_HH
 
-/// \file mln/transform/distance_geodesic.hh
+/// \file mln/transform/influence_zone_front.hh
 ///
-/// Discrete geodesic distance transform.
+/// Influence zone transform.
 
-# include <mln/canvas/distance_geodesic.hh>
-# include <mln/transform/internal/distance_functor.hh>
-
+# include <mln/canvas/distance_front.hh>
+# include <mln/transform/internal/influence_zone_functor.hh>
 
 
 namespace mln
@@ -43,30 +42,45 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform.
-    template <typename I, typename N, typename D>
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max);
+    /// Influence zone transform.
+    template <typename I, typename N, typename W, typename D>
+    mln_concrete(I)
+    influence_zone_front(const Image<I>& input,
+			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max);
+
+    /// Influence zone transform.
+    template <typename I, typename N, typename W>
+    mln_concrete(I)
+    influence_zone_front(const Image<I>& input,
+			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename D>
-    inline
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
+    template <typename I, typename N, typename W, typename D>
+    mln_concrete(I)
+    influence_zone_front(const Image<I>& input,
+			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win, D max)
     {
-      trace::entering("transform::distance_geodesic");
+      trace::entering("transform::influence_zone_front");
 
       mln_precondition(exact(input).has_data());
       // mln_precondition(exact(nbh).is_valid());
+      // mln_precondition(exact(w_win).is_valid());
 
-      mln_ch_value(I, D) output;
-      internal::distance_functor<I> f;
-      output = mln::canvas::distance_geodesic(input, nbh, max, f);
+      internal::influence_zone_functor<I> f;
+      (void) mln::canvas::distance_front(input, nbh, w_win, max, f);
 
-      trace::exiting("transform::distance_geodesic");
-      return output;
+      trace::exiting("transform::influence_zone_front");
+      return f.output;
+    }
+
+    template <typename I, typename N, typename W>
+    mln_concrete(I)
+    influence_zone_front(const Image<I>& input,
+			 const Neighborhood<N>& nbh, const Weighted_Window<W>& w_win)
+    {
+      return influence_zone_front(input, nbh, w_win, mln_max(unsigned));
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -76,4 +90,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORM_DISTANCE_GEODESIC_HH
+#endif // ! MLN_TRANSFORM_INFLUENCE_ZONE_FRONT_HH

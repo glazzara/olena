@@ -25,16 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_DISTANCE_GEODESIC_HH
-# define MLN_TRANSFORM_DISTANCE_GEODESIC_HH
+#ifndef MLN_TRANSFORM_INTERNAL_ALL_HH
+# define MLN_TRANSFORM_INTERNAL_ALL_HH
 
-/// \file mln/transform/distance_geodesic.hh
+/// \file mln/transform/internal/all.hh
 ///
-/// Discrete geodesic distance transform.
-
-# include <mln/canvas/distance_geodesic.hh>
-# include <mln/transform/internal/distance_functor.hh>
-
+/// File that includes all internals of mln/transform.
 
 
 namespace mln
@@ -43,37 +39,15 @@ namespace mln
   namespace transform
   {
 
-    /// Discrete geodesic distance transform.
-    template <typename I, typename N, typename D>
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename I, typename N, typename D>
-    inline
-    mln_ch_value(I, D)
-    distance_geodesic(const Image<I>& input, const Neighborhood<N>& nbh, D max)
-    {
-      trace::entering("transform::distance_geodesic");
-
-      mln_precondition(exact(input).has_data());
-      // mln_precondition(exact(nbh).is_valid());
-
-      mln_ch_value(I, D) output;
-      internal::distance_functor<I> f;
-      output = mln::canvas::distance_geodesic(input, nbh, max, f);
-
-      trace::exiting("transform::distance_geodesic");
-      return output;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
+    namespace internal {}
 
   } // end of namespace mln::transform
 
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORM_DISTANCE_GEODESIC_HH
+# include <mln/transform/internal/distance_functor.hh>
+# include <mln/transform/internal/influence_zone_functor.hh>
+
+
+#endif // ! MLN_TRANSFORM_INTERNAL_ALL_HH

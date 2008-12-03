@@ -1,3 +1,39 @@
+2008-12-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add front computation of distance and influence zone.
+
+	* mln/transform/internal: New directory.
+	* mln/transform/internal/all.hh: New.
+	* mln/transform/distance_geodesic.hh: Copy to...
+	* mln/transform/distance_front.hh: ...this new file.
+	Update.
+	* mln/transform/distance_geodesic.hh
+	(distance_functor): Move into...
+	* mln/transform/internal/distance_functor.hh: ...this new file.
+	Split decl and def.
+	* mln/transform/influence_zone_geodesic.hh
+	(iz_functor): Move into...
+	* mln/transform/internal/influence_zone_functor.hh: ...this new
+	file.
+	(iz_functor): Rename as...
+	(influence_zone_functor): ...this.
+	Split decl and def.
+	* mln/transform/distance.hh: Remove.
+	* mln/transform/influence_zone_front.hh: New.
+	* mln/transform/all.hh: Update.
+	* mln/canvas/distance_front.hh: New.
+	* mln/canvas/all.hh: Update.
+
+	* tests/transform/distance.cc: Copy to...
+	* tests/transform/influence_zone_front.cc: ...this new file.
+	(vals): Rename as...
+	(ws): ...this less ambiguous name.
+	Update.
+	* tests/transform/distance.cc: Rename as...
+	* tests/transform/distance_front.cc: ...this.
+	Update.
+	* tests/transform/Makefile.am: Update.
+
 2008-12-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix wrong use of mln_coord().
