@@ -49,6 +49,21 @@ namespace mln
     /// \input[in]  label the labeled image.
     /// \input[in]  nlabels the number of labels in \p label.
     /// \input[out] new_nlabels the number of labels after relabeling.
+    /// \input[in]  f function returning whether a label must be replaced
+    ///		      by the background.
+    ///
+    /// \return the relabeled image.
+    template <typename I, typename F>
+    mln_concrete(I)
+    relabel(const Image<I>&	    label,
+	    const mln_value(I)&	    nlabels,
+	    mln_value(I)&	    new_nlabels,
+	    const Function_l2b<F>&  fl2b);
+
+    /// Remove components and relabel a labeled image.
+    /// \input[in]  label the labeled image.
+    /// \input[in]  nlabels the number of labels in \p label.
+    /// \input[out] new_nlabels the number of labels after relabeling.
     /// \input[in]  f function returning the new component id for each pixel
     /// value.
     ///
@@ -58,7 +73,19 @@ namespace mln
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
 	    mln_value(I)&	    new_nlabels,
-	    const Function_l2b<F>&  fl2b);
+	    const Function_l2l<F>&  fl2l);
+
+    /// Remove components and relabel a labeled image inplace.
+    /// \input[in, out] label the labeled image.
+    /// \input[in, out] nlabels the number of labels in \p label.
+    /// \input[in]  f function returning whether a label must be replaced
+    ///		      by the background.
+    ///
+    template <typename I, typename F>
+    void
+    relabel_inplace(Image<I>&		    label,
+		    mln_value(I)&	    nlabels,
+		    const Function_l2b<F>&  fl2b);
 
     /// Remove components and relabel a labeled image inplace.
     /// \input[in, out] label the labeled image.
@@ -70,10 +97,49 @@ namespace mln
     void
     relabel_inplace(Image<I>&		    label,
 		    mln_value(I)&	    nlabels,
-		    const Function_l2b<F>&  fl2b);
+		    const Function_l2l<F>&  fl2l);
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+
+    namespace internal
+    {
+
+      template <typename I, typename F>
+      void
+      relabel_tests(const Image<I>&	    label,
+		    const mln_value(I)&	    nlabels,
+		    mln_value(I)&	    new_nlabels,
+		    const Function<F>&	    f)
+      {
+        // FIXME: we may want to check that it is exactly a label.
+        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+        mln_precondition(exact(label).has_data());
+	(void) label;
+	(void) nlabels;
+	(void) new_nlabels;
+	(void) f;
+      }
+
+      template <typename I, typename F>
+      inline
+      void
+      relabel_inplace_tests(Image<I>&		    label,
+			    mln_value(I)&	    nlabels,
+			    const Function<F>&	    f)
+      {
+        // FIXME: we may want to check that it is exactly a label.
+        mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
+        mln_precondition(exact(label).has_data());
+	(void) label;
+	(void) nlabels;
+	(void) f;
+      }
+
+    } // end of namespace mln::labeling::internal
+
 
 
     template <typename I, typename F>
@@ -86,17 +152,36 @@ namespace mln
     {
       trace::entering("labeling::relabel");
 
-      // FIXME: we may want to check that it is exactly a label.
-      mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-      mln_precondition(exact(label).has_data());
+      internal::relabel_tests(label, nlabels, new_nlabels, fl2b);
 
       typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
       fl2l_t fl2l = make::relabelfun(fl2b, nlabels, new_nlabels);
+      mln_concrete(I) output = relabel(label, nlabels, new_nlabels, fl2b);
+
+      trace::exiting("labeling::relabel");
+      return output;
+    }
+
+
+
+    template <typename I, typename F>
+    inline
+    mln_concrete(I)
+    relabel(const Image<I>&	    label,
+	    const mln_value(I)&	    nlabels,
+	    mln_value(I)&	    new_nlabels,
+	    const Function_l2l<F>&  fl2l)
+    {
+      trace::entering("labeling::relabel");
+
+      internal::relabel_tests(label, nlabels, new_nlabels, fl2l);
+
       mln_concrete(I) output = level::transform(label, fl2l);
 
       trace::exiting("labeling::relabel");
       return output;
     }
+
 
 
     template <typename I, typename F>
@@ -106,17 +191,33 @@ namespace mln
 		    mln_value(I)&	    nlabels,
 		    const Function_l2b<F>&  fl2b)
     {
-      trace::entering("labeling::relabel");
+      trace::entering("labeling::relabel_inplace");
 
-      // FIXME: we may want to check that it is exactly a label.
-      mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-      mln_precondition(exact(label).has_data());
+      internal::relabel_inplace_tests(label, nlabels, fl2b);
 
       typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
       fl2l_t fl2l = make::relabelfun(fl2b, nlabels, nlabels);
+      relabel_inplace(label, nlabels, fl2l);
+
+      trace::exiting("labeling::relabel_inplace");
+    }
+
+
+
+    template <typename I, typename F>
+    inline
+    void
+    relabel_inplace(Image<I>&		    label,
+		    mln_value(I)&	    nlabels,
+		    const Function_l2l<F>&  fl2l)
+    {
+      trace::entering("labeling::relabel_inplace");
+
+      internal::relabel_inplace_tests(label, nlabels, fl2l);
+
       level::transform_inplace(label, fl2l);
 
-      trace::exiting("labeling::relabel");
+      trace::exiting("labeling::relabel_inplace");
     }
 
 

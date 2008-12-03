@@ -135,6 +135,9 @@ namespace mln
     /// Return the corresponding std::vector of points.
     const std::vector<point2d>& std_vector() const;
 
+    // Return the corresponding algebra::vec.
+    algebra::vec<2, float> to_vec() const;
+
   protected:
 
     p_array<point2d> arr_;
@@ -269,6 +272,17 @@ namespace mln
   p_line2d::std_vector() const
   {
     return arr_.std_vector();
+  }
+
+  // FIXME: make it more generic?
+  inline
+  algebra::vec<2, float>
+  p_line2d::to_vec() const
+  {
+    algebra::vec<2, float> res;
+    res[0] = end().row() - begin().row();
+    res[1] = end().col() - begin().col();
+    return res;
   }
 
   inline

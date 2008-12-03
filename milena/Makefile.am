@@ -2,11 +2,11 @@
 
 ##FIXME
 SUBDIRS = 	\
-##  mesh 	 	\
+  mesh 	 	\
   doc 		\
   tests 	
-##  tools 	\
-##  apps
+  tools 	\
+  apps
 
 .PHONY: doc
 doc:

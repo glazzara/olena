@@ -1,3 +1,43 @@
+2008-12-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+	* doc/examples/graph.cc: update example. Improve graph output.
+
+	* mln/core/site_set/p_line2d.hh: add to_vec().
+
+	* mln/debug/draw_graph.hh: Add a specialization for line_graph.
+
+	* mln/labeling/relabel.hh: Add new overloads.
+
+	* mln/util/line_graph.hh: add graph().
+
+	* doc/tutorial/outputs/labeling-compute-1, 
+	* doc/tutorial/outputs/labeling-compute.txt: update reference output
+	files for tutorial.
+
+	* mln/fun/l2l/relabel.hh: fix wrong namespace closure.
+
+	* tests/convert/Makefile.am: comment a test.
+
+	* tests/morpho/tree/Makefile.am: rename a test.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_accu_lor.cc,
+	* tests/unit_test/mln_accu_lor_basic.cc,
+	* tests/unit_test/mln_core_internal_image_if_base.cc,
+	* tests/unit_test/mln_level_domain.cc,
+	* tests/unit_test/mln_morpho_general.cc,
+	* tests/unit_test/mln_morpho_tree_compute_attribute_image.cc,
+	* tests/unit_test/mln_util_internal_edge_impl.cc,
+	* tests/unit_test/mln_util_internal_graph_edge_impl.cc,
+	* tests/unit_test/mln_util_internal_graph_vertex_impl.cc,
+	* tests/unit_test/mln_util_internal_vertex_impl.cc: update unit tests.
+
+	* Makefile.am: Uncomment targets.
+
+	* tests/util/Makefile.am: fix wrong target name.
+
 2008-12-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add front computation of distance and influence zone.

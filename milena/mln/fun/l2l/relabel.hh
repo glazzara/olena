@@ -110,7 +110,7 @@ namespace mln
 
       };
 
-    } // end of namespace mln::fun::i2v
+    } // end of namespace mln::fun::l2l
 
   } // end of namespace mln::fun
 
@@ -196,13 +196,11 @@ namespace mln
 	mlc_converts_to(L, unsigned)::check();
       }
 
-
-# endif // ! MLN_INCLUDE_ONLY
-
-
     } // end of namespace mln::fun::l2l
 
   } // end of namespace mln::fun
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

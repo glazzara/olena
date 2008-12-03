@@ -11,7 +11,7 @@ check_PROGRAMS =				\
   graph						\
   lazy_set					\
   lemmings					\
-  ordpair					\
+  ord_pair					\
   tree						\
   tree_fast					\
   tree_fast_to_image				\
@@ -25,7 +25,7 @@ eat_SOURCES = eat.cc
 graph_SOURCES = graph.cc
 lazy_set_SOURCES = lazy_set.cc
 lemmings_SOURCES = lemmings.cc
-ordpair_SOURCES = ordpair.cc
+ord_pair_SOURCES = ord_pair.cc
 tree_SOURCES = tree.cc
 tree_fast_SOURCES = tree_fast.cc
 tree_fast_to_image_SOURCES = tree_to_image.cc

@@ -213,6 +213,9 @@ namespace mln
       /// Return true if g and *this have the same graph_id.
       template <typename G2>
       bool is_subgraph_of(const G2& g) const;
+
+      /// Return the underlying graph
+      const G& graph() const;
       /// \}
 
     protected:
@@ -461,6 +464,14 @@ namespace mln
     line_graph<G>::is_subgraph_of(const G2& g) const
     {
       return g.id() == this->id();
+    }
+
+    template <typename G>
+    inline
+    const G&
+    line_graph<G>::graph() const
+    {
+      return this->data_->g_;
     }
 
     // FIXME: move to graph_base

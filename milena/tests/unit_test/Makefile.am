@@ -74,14 +74,14 @@ mln_util_set\
 mln_util_tree_to_image\
 mln_util_lemmings\
 mln_util_greater_point\
-mln_util_internal_graph_edge_impl\
 mln_util_internal_graph_iter_base\
 mln_util_internal_boost_graph_access\
 mln_util_internal_boost_graph_structure\
 mln_util_internal_graph_iter\
 mln_util_internal_graph_nbh_iter\
+mln_util_internal_vertex_impl\
+mln_util_internal_edge_impl\
 mln_util_internal_graph_base\
-mln_util_internal_graph_vertex_impl\
 mln_util_internal_boost_graph\
 mln_util_internal_graph_nbh_iter_base\
 mln_util_internal_boost_graph_property\
@@ -319,6 +319,7 @@ mln_value_essential\
 mln_accu_tuple\
 mln_accu_min_h\
 mln_accu_max\
+mln_accu_lor\
 mln_accu_rank\
 mln_accu_transform_stop\
 mln_accu_maj_h\
@@ -348,6 +349,7 @@ mln_accu_min\
 mln_accu_transform_directional\
 mln_accu_compute\
 mln_accu_mean\
+mln_accu_lor_basic\
 mln_accu_transform_diagonal\
 mln_accu_nil\
 mln_accu_bbox\
@@ -373,7 +375,6 @@ mln_level_fill_with_image\
 mln_level_transform\
 mln_level_fill_with_value\
 mln_level_stretch\
-mln_level_domain\
 mln_level_was_median\
 mln_level_compute\
 mln_level_convert\
@@ -563,6 +564,7 @@ mln_morpho_line_gradient\
 mln_morpho_hit_or_miss\
 mln_morpho_closing_height\
 mln_morpho_plus\
+mln_morpho_general\
 mln_morpho_erosion_fast\
 mln_morpho_internal_elementary\
 mln_morpho_contrast\
@@ -584,6 +586,7 @@ mln_morpho_tree_compute_parent\
 mln_morpho_tree_all\
 mln_morpho_tree_utils\
 mln_morpho_tree_data\
+mln_morpho_tree_compute_attribute_image\
 mln_morpho_opening_area_on_vertices\
 mln_morpho_min\
 mln_morpho_closing\
@@ -703,7 +706,6 @@ mln_core_internal_exact\
 mln_core_internal_p_complex_piter_base\
 mln_core_internal_pixel_iterator_base\
 mln_core_internal_classical_window_base\
-mln_core_internal_image_if_base\
 mln_core_internal_data\
 mln_core_internal_force_exact\
 mln_core_internal_image_base\
@@ -1079,14 +1081,14 @@ mln_util_set_SOURCES = mln_util_set.cc
 mln_util_tree_to_image_SOURCES = mln_util_tree_to_image.cc
 mln_util_lemmings_SOURCES = mln_util_lemmings.cc
 mln_util_greater_point_SOURCES = mln_util_greater_point.cc
-mln_util_internal_graph_edge_impl_SOURCES = mln_util_internal_graph_edge_impl.cc
 mln_util_internal_graph_iter_base_SOURCES = mln_util_internal_graph_iter_base.cc
 mln_util_internal_boost_graph_access_SOURCES = mln_util_internal_boost_graph_access.cc
 mln_util_internal_boost_graph_structure_SOURCES = mln_util_internal_boost_graph_structure.cc
 mln_util_internal_graph_iter_SOURCES = mln_util_internal_graph_iter.cc
 mln_util_internal_graph_nbh_iter_SOURCES = mln_util_internal_graph_nbh_iter.cc
+mln_util_internal_vertex_impl_SOURCES = mln_util_internal_vertex_impl.cc
+mln_util_internal_edge_impl_SOURCES = mln_util_internal_edge_impl.cc
 mln_util_internal_graph_base_SOURCES = mln_util_internal_graph_base.cc
-mln_util_internal_graph_vertex_impl_SOURCES = mln_util_internal_graph_vertex_impl.cc
 mln_util_internal_boost_graph_SOURCES = mln_util_internal_boost_graph.cc
 mln_util_internal_graph_nbh_iter_base_SOURCES = mln_util_internal_graph_nbh_iter_base.cc
 mln_util_internal_boost_graph_property_SOURCES = mln_util_internal_boost_graph_property.cc
@@ -1324,6 +1326,7 @@ mln_value_essential_SOURCES = mln_value_essential.cc
 mln_accu_tuple_SOURCES = mln_accu_tuple.cc
 mln_accu_min_h_SOURCES = mln_accu_min_h.cc
 mln_accu_max_SOURCES = mln_accu_max.cc
+mln_accu_lor_SOURCES = mln_accu_lor.cc
 mln_accu_rank_SOURCES = mln_accu_rank.cc
 mln_accu_transform_stop_SOURCES = mln_accu_transform_stop.cc
 mln_accu_maj_h_SOURCES = mln_accu_maj_h.cc
@@ -1353,6 +1356,7 @@ mln_accu_min_SOURCES = mln_accu_min.cc
 mln_accu_transform_directional_SOURCES = mln_accu_transform_directional.cc
 mln_accu_compute_SOURCES = mln_accu_compute.cc
 mln_accu_mean_SOURCES = mln_accu_mean.cc
+mln_accu_lor_basic_SOURCES = mln_accu_lor_basic.cc
 mln_accu_transform_diagonal_SOURCES = mln_accu_transform_diagonal.cc
 mln_accu_nil_SOURCES = mln_accu_nil.cc
 mln_accu_bbox_SOURCES = mln_accu_bbox.cc
@@ -1378,7 +1382,6 @@ mln_level_fill_with_image_SOURCES = mln_level_fill_with_image.cc
 mln_level_transform_SOURCES = mln_level_transform.cc
 mln_level_fill_with_value_SOURCES = mln_level_fill_with_value.cc
 mln_level_stretch_SOURCES = mln_level_stretch.cc
-mln_level_domain_SOURCES = mln_level_domain.cc
 mln_level_was_median_SOURCES = mln_level_was_median.cc
 mln_level_compute_SOURCES = mln_level_compute.cc
 mln_level_convert_SOURCES = mln_level_convert.cc
@@ -1568,6 +1571,7 @@ mln_morpho_line_gradient_SOURCES = mln_morpho_line_gradient.cc
 mln_morpho_hit_or_miss_SOURCES = mln_morpho_hit_or_miss.cc
 mln_morpho_closing_height_SOURCES = mln_morpho_closing_height.cc
 mln_morpho_plus_SOURCES = mln_morpho_plus.cc
+mln_morpho_general_SOURCES = mln_morpho_general.cc
 mln_morpho_erosion_fast_SOURCES = mln_morpho_erosion_fast.cc
 mln_morpho_internal_elementary_SOURCES = mln_morpho_internal_elementary.cc
 mln_morpho_contrast_SOURCES = mln_morpho_contrast.cc
@@ -1589,6 +1593,7 @@ mln_morpho_tree_compute_parent_SOURCES = mln_morpho_tree_compute_parent.cc
 mln_morpho_tree_all_SOURCES = mln_morpho_tree_all.cc
 mln_morpho_tree_utils_SOURCES = mln_morpho_tree_utils.cc
 mln_morpho_tree_data_SOURCES = mln_morpho_tree_data.cc
+mln_morpho_tree_compute_attribute_image_SOURCES = mln_morpho_tree_compute_attribute_image.cc
 mln_morpho_opening_area_on_vertices_SOURCES = mln_morpho_opening_area_on_vertices.cc
 mln_morpho_min_SOURCES = mln_morpho_min.cc
 mln_morpho_closing_SOURCES = mln_morpho_closing.cc
@@ -1708,7 +1713,6 @@ mln_core_internal_exact_SOURCES = mln_core_internal_exact.cc
 mln_core_internal_p_complex_piter_base_SOURCES = mln_core_internal_p_complex_piter_base.cc
 mln_core_internal_pixel_iterator_base_SOURCES = mln_core_internal_pixel_iterator_base.cc
 mln_core_internal_classical_window_base_SOURCES = mln_core_internal_classical_window_base.cc
-mln_core_internal_image_if_base_SOURCES = mln_core_internal_image_if_base.cc
 mln_core_internal_data_SOURCES = mln_core_internal_data.cc
 mln_core_internal_force_exact_SOURCES = mln_core_internal_force_exact.cc
 mln_core_internal_image_base_SOURCES = mln_core_internal_image_base.cc
