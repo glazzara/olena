@@ -87,8 +87,7 @@ int main(int argc, char ** argv)
   // Volume Closing
   ///////////////////
 
-  image2d<int_u8> o_ima(mg_ima.domain());
-  morpho::closing_volume(mg_ima, c4(), lambda, o_ima);
+  image2d<int_u8> o_ima = morpho::closing_volume(mg_ima, c4(), lambda);
 
   io::pgm::save(o_ima, "o_ima.ppm");
 

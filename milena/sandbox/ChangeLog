@@ -1,3 +1,11 @@
+2008-12-03  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update n_cmpt3.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Minor change.
+	* jardonnet/n_cmpt/test3.cc: Display output image.
+	* jardonnet/igr/src/igr.cc: Fix call to closing.
+
 2008-12-02  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Check correct filtering.

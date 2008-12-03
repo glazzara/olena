@@ -8,6 +8,9 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/morpho/closing_volume.hh>
+#include <mln/core/var.hh>
+
+#include <mln/debug/println.hh>
 
 using namespace mln;
 using namespace mln::value;
@@ -31,6 +34,9 @@ int main(int argc, char ** argv)
   io::pgm::load(ima, argv[1]);
   unsigned lambda = atoi(argv[2]);
 
-  io::pgm::save(morpho::closing_volume(ima, c4(), lambda),
-                "out.pgm");
+  mln_VAR(out, morpho::closing_volume(ima, c4(), lambda));
+
+  debug::println(out);
+
+  io::pgm::save(out,"out.pgm");
 }

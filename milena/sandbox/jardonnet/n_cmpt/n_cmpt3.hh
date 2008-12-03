@@ -81,6 +81,7 @@ namespace mln
     {
       unsigned label;
 
+      std::cout << "/ima/" << std::endl;
       debug::println(ima);
 
       // get /ima/ regional minima
@@ -97,6 +98,7 @@ namespace mln
       morpho::tree::data<I,S> t(ima, sp, nbh);
       V volume = morpho::tree::compute_attribute_image(A(), t);
       sp = level::sort_psites_increasing(volume);
+      std::cout << "/volume/" << std::endl;
       debug::println(volume);
 
       // get /volume/ regional minima
@@ -140,6 +142,8 @@ namespace mln
       mln_niter(N) n(nbh, p);
       for_all(p)
       {
+        //if (volume(p) > lambda)
+        // goto step2;
         for_all(n)
         {
           if (volume.domain().has(n) && deja_vu(n))
@@ -148,28 +152,6 @@ namespace mln
             P r = find_root(parent, n);
             if (r != p)
             {
-              if (volume(p) > lambda)
-                goto step2;
-//              if (volume(r) != volume(p) && (data(p).to_result() > lambda))
-//               {
-//                 data(p).set_value(lambda);
-//                 continue;
-//               }
-
-//               if (volume(r) != volume(p))
-//               {
-//                 std::cout << "1: volume"<<r<<" != volume"<<p<<"" << " with data"<<p<< " = " <<
-//                   data(p).to_result() << std::endl;
-//                 if (not volume_set(p).is_empty())
-//                 {
-//                   std::cout << "2: not volume_set"<<p<<".is_empty()" << std::endl;
-//                   if (volume_set(p) != volume_set(r))
-//                   {
-//                     std::cout << "3: volume_set"<<p<<" != volume_set"<<r<< std::endl;
-//                     cmpts--;
-//                   }
-//                 }
-//               }
               // propagate set
               volume_set(p).insert(volume_set(r));
               // build tree
@@ -181,6 +163,7 @@ namespace mln
       }
 
       debug::println(volume_set);
+
     step2:
 //       std::cout << "Nb cmpts after processing : " << cmpts << std::endl;
 
@@ -194,6 +177,10 @@ namespace mln
          else
            output(p) = output(parent(p));
       }
+
+      std::cout << "/output/" << std::endl;
+      debug::println(output);
+      assert(output != input);
 
       return output;
     }
