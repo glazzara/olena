@@ -32,7 +32,6 @@
 # include <mln/core/image/lazy_image.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/registration/icp.hh>
-# include <mln/registration/registration.hh>
 # include <mln/fun/x2p/closest_point.hh>
 
 namespace mln
@@ -54,6 +53,49 @@ namespace mln
 
     namespace impl
     {
+
+      // FIXME: move elsewhere
+      template <typename P>
+      void shuffle(p_array<P>& a)
+      {
+        for (unsigned int i = 0; i < a.nsites(); i++)
+        {
+          unsigned int r = rand() % a.nsites();
+          P tmp;
+          tmp = a[i];
+          a[i] = a[r];
+          a[r] = tmp;
+        }
+      }
+
+      template <typename P>
+      box<P> bigger(const box<P>& a, const box<P>& b)
+      {
+        P pmin,pmax;
+
+        for (unsigned i = 0; i < P::dim; i++)
+        {
+          pmin[i] = (a.pmin()[i] < b.pmin()[i]) ? a.pmin()[i] : b.pmin()[i];
+          pmax[i] = (a.pmax()[i] > b.pmax()[i]) ? a.pmax()[i] : b.pmax()[i];
+        }
+
+        return box<P>(pmin, pmax);
+      }
+
+      template <typename P>
+      inline
+      box<P>            //dif
+      enlarge(const box<P>& box, unsigned b)
+      {
+        mln::box<P> nbox(box);
+
+        for (unsigned i = 0; i < P::dim; ++i)
+        {
+          nbox.pmin()[i] -= b;
+          nbox.pmax()[i] += b;
+        }
+        return nbox;
+      }
 
       template <typename I, typename J>
       inline
@@ -83,11 +125,11 @@ namespace mln
 
         //run registration
         for (int e = nb_it-1; e >= 0; e--)
-          {
-            unsigned l = cloud.nsites() / std::pow(q, e);
-            l = (l<1) ? 1 : l;
-            impl::registration_(cloud, map, qk, l, 1e-3);
-          }
+        {
+          unsigned l = cloud.nsites() / std::pow(q, e);
+          l = (l < 1) ? 1 : l;
+          registration::impl::icp_(cloud, l, map, qk, 1e-3);
+        }
         return qk;
       }
 

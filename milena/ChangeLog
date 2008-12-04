@@ -1,5 +1,15 @@
 2008-12-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Fix registration test. Add multiscale test.
+
+	* tests/registration/multiscale.cc: Add this test.
+	* tests/registration/registration.cc: Fix this one.
+	* mln/registration/multiscale.hh: Pseudo fix it.
+	* mln/registration/registration.hh: Fix it.
+	* mln/registration/icp.hh: Fix signature.
+
+2008-12-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Add mirror function.
 
 	* mln/fun/p2p: Add p2p function.

@@ -83,7 +83,6 @@ namespace mln
         lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d>
           map(fun, fun.domain());
 
-
         //run registration
         return registration::icp(c, map, 1e-3);
 

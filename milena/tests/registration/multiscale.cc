@@ -31,9 +31,11 @@
  */
 
 #include <mln/io/pbm/all.hh>
-#include <mln/registration/registration.hh>
 
-int main(int argc, char **argv)
+#include <mln/registration/multiscale.hh>
+
+
+int main()
 {
   using namespace mln;
 
@@ -44,6 +46,7 @@ int main(int argc, char **argv)
   io::pbm::load(img1, MLN_IMG_DIR "/lena.pbm");
   io::pbm::load(img2, MLN_IMG_DIR "/lena.pbm");
 
-  registration::registration(img1,img2);
   //FIXME: Auto test result
+  //FIXME: Make it pass
+  registration::multiscale(img1,img2, 5, 2);
 }

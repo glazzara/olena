@@ -149,7 +149,7 @@ namespace mln
            const unsigned c_length,
            const M& map,
            T& qk,
-           const float  epsilon = 1e-3)
+           const float epsilon = 1e-3)
       {
 	trace::entering("registration::impl::icp_");
 
@@ -215,7 +215,7 @@ namespace mln
                T& qk,
                const float epsilon = 1e-3)
     {
-      impl::icp_(c, map, qk, c_length, epsilon);
+      impl::icp_(c, c_length, map, qk, epsilon);
     }
 
 # endif // ! MLN_INCLUDE_ONLY
