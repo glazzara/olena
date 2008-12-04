@@ -1,5 +1,11 @@
 2008-12-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix a graph test.
+
+	* tests/core/image/graph_image.cc: Fix.
+
+2008-12-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix some extra tests.
 
 	* mln/display/remove.hh,

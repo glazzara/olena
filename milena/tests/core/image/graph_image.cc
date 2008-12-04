@@ -185,11 +185,10 @@ int main()
     mln_assertion(ima(p) == i++);
 
   typedef graph_elt_window<util::graph, fsite_t> win_t;
-  typedef neighb<win_t> neigh_t;
-
+  win_t win;
+    
   {
     // Window - Forward iteration
-    win_t win;
     mln_qiter_(win_t) q(win, p);
     for_all (p)
     {
@@ -202,7 +201,6 @@ int main()
 
   {
     // Window - Backward iteration
-    win_t win;
     mln_bkd_qiter_(win_t) q(win, p);
     for_all (p)
     {
@@ -213,10 +211,13 @@ int main()
     }
   }
 
+  typedef neighb<win_t> neigh_t;
+
   {
     // Neighborhood - Forward iteration
-    neigh_t neigh(win_t());
+    neigh_t neigh(win);
     mln_niter_(neigh_t) n(neigh, p);
+
     for_all (p)
     {
       std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
@@ -230,7 +231,7 @@ int main()
 
   {
     // Neighborhood - Backward iteration
-    neigh_t neigh(win_t());
+    neigh_t neigh(win);
     mln_bkd_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
