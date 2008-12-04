@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,14 @@
 #ifndef MLN_DISPLAY_REMOVE_HH
 # define MLN_DISPLAY_REMOVE_HH
 
-/*! \file mln/display/remove.hh
- *
- * \brief Remove all temporary files create by display::save.
- *
- */
-
-# include <mln/trait/image_from_grid.hh>
-# include <mln/core/image/image_if.hh>
-# include <mln/core/image/image2d.hh>
-# include <mln/display/save.hh>
+/// \file mln/display/remove.hh
+///
+/// Remove all temporary files create by display::save.
 
 # include <map>
+# include <string>
+# include <mln/trace/all.hh>
+
 
 namespace mln
 {
@@ -47,11 +44,10 @@ namespace mln
   namespace display
   {
 
-    /*! Remove all temporary images which are created by the routine
-     *  save.
-     *
-     */
+    /// Remove all temporary images which are created by the routine
+    /// save.
     void remove();
+
 
 # ifndef MLN_INCLUDE_ONLY
 

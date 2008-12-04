@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/algebra/vec.cc
- *
- * \brief Test on mln::algebra::vec.
- */
+/// \file tests/algebra/vec.cc
+///
+/// Test on mln::algebra::vec.
 
 #include <mln/algebra/vec.hh>
 #include <mln/value/int_u8.hh>
@@ -49,5 +49,6 @@ int main()
   value::int_u8 i = 3;
   mln_assertion((i * v_f) == (value::scalar(i) * v_f));
 
-  mln_assertion((literal::zero + v_f) == v_f);
+  algebra::vec<3,float> O = literal::zero;
+  mln_assertion((O + v_f) == v_f);
 }

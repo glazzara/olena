@@ -51,91 +51,20 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
   win::rectangle2d rec(21, 21);
+  morpho::erosion(lena, rec);
+
   win::hline2d hline(31);
+  morpho::erosion(lena, hline);
+
   win::vline2d vline(31);
+  morpho::erosion(lena, vline);
+
   win::diag2d diag2d(31);
+  morpho::erosion(lena, diag2d);
+
   win::backdiag2d backdiag2d(31);
+  morpho::erosion(lena, backdiag2d);
+
   win::octagon2d oct(6 * 3 + 1);
-  image2d<int_u8> out;
-  image2d<int_u8> ref;
-
-
-//   trace::quiet = false;
-
-
-  // Rectangle
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, rec);
-
-    out = morpho::erosion(lena, rec);
-    mln_assertion(out == ref);
-
-    out = morpho::impl::erosion_arbitrary_2d(lena, rec);
-    mln_assertion(out == ref);
-  }
-
-
-  // Hline
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, hline);
-
-    out = morpho::erosion(lena, hline);
-    mln_assertion(out == ref);
-
-    out = morpho::impl::erosion_arbitrary_2d(lena, hline);
-    mln_assertion(out == ref);
-  }
-
-
-  // Vline
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, vline);
-
-    out = morpho::erosion(lena, vline);
-    mln_assertion(out == ref);
-
-    out = morpho::impl::erosion_arbitrary_2d(lena, vline);
-    mln_assertion(out == ref);
-  }
-
-
-  // Diag2d
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, diag2d);
-
-    out = morpho::erosion(lena, diag2d);
-    mln_assertion(out == ref);
-
-    out = morpho::impl::erosion_arbitrary_2d(lena, diag2d);
-    mln_assertion(out == ref);
-  }
-
-
-  // Backdiag2d
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, backdiag2d);
-
-    out = morpho::erosion(lena, backdiag2d);
-    mln_assertion(out == ref);
-
-    out = morpho::impl::erosion_arbitrary_2d(lena, backdiag2d);
-    mln_assertion(out == ref);
-  }
-
-
-
-  // Octagon
-
-  {
-    ref = morpho::impl::generic::erosion_on_function(lena, oct);
-    // io::pgm::save(ref, "out_oct_ref.pgm");
-    out = morpho::erosion(lena, oct);
-    mln_assertion(out == ref);
-  }
-
+  morpho::erosion(lena, oct);
 }

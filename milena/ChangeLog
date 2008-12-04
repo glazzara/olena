@@ -1,3 +1,17 @@
+2008-12-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix some extra tests.
+
+	* mln/display/remove.hh,
+	* mln/display/save.hh: Rename as...
+	* trash/display_remove.hh: ...this and...
+	* trash/display_save.hh: ...this.
+	* tests/display/all_headers.cc: Upgrade doc style.
+	* mln/display/all.hh: Update.
+	* tests/algebra/vec.cc: Fix.
+	* tests/morpho/erosion.cc: Cleanup.
+	Extra tests on specializations are performed by general.cc.
+
 2008-12-04  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Revamp neighborhoods and windows based on graph.
