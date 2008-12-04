@@ -30,12 +30,14 @@
 # define MLN_CORE_IMAGE_GRAPH_ELT_WINDOW_HH
 
 /// \file mln/core/image/graph_elt_window.hh
+///
 /// Definition of the elementary ``window'' on a graph.
 
 # include <mln/core/concept/window.hh>
+# include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/graph_window_base.hh>
-# include <mln/core/site_set/p_vertices_psite.hh>
 # include <mln/core/image/graph_window_piter.hh>
+# include <mln/core/site_set/p_vertices.hh>
 
 
 namespace mln
@@ -44,10 +46,21 @@ namespace mln
   /// Forward declaration
   template <typename G, typename F> class graph_elt_window;
 
+  namespace internal
+  {
+
+    template <typename G, typename F, typename E>
+    struct neighborhood_impl<graph_elt_window<G,F>,E>
+      : public neighborhood_extra_impl<graph_elt_window<G,F>,E>
+    {
+    };
+
+  } // end of namespace mln::internal
+
+
   namespace trait
   {
 
-    ///FIXME: check that!
     template <typename G, typename F>
     struct window_< mln::graph_elt_window<G, F> >
     {
@@ -61,67 +74,35 @@ namespace mln
 
   /// \brief Elementary window on graph class.
   template <typename G, typename F>
-  class graph_elt_window : public graph_window_base<
-				    G,
-				    F,
-				    p_vertices_psite<G, F>,
-				    graph_elt_window<G, F> >
+  class graph_elt_window : public graph_window_base<mln_result(F),
+						    graph_elt_window<G,F> >
 
   {
     typedef graph_elt_window<G, F> self_;
+    typedef mln_vertex_nbh_vertex_fwd_iter(G) nbh_fwd_iter_;
+    typedef mln_vertex_nbh_vertex_bkd_iter(G) nbh_bkd_iter_;
+
 
   public:
     /// Associated types.
     /// \{
+    typedef p_vertices<G,F> S;
     /// The type of psite corresponding to the window.
-    typedef p_vertices_psite<G, F> psite;
+    typedef mln_psite(S) psite;
 
-    /// \brief Site_Iterator type to browse the psites of the window
+    /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.
-    typedef graph_window_fwd_piter<G, F, self_> fwd_qiter;
+    typedef graph_window_piter<S,self_,nbh_fwd_iter_> fwd_qiter;
 
-    /// \brief Site_Iterator type to browse the psites of the window
+    /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of vertices.
-    typedef graph_window_bkd_piter<G, F, self_> bkd_qiter;
+    typedef graph_window_piter<S,self_,nbh_bkd_iter_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
     /// \}
 
-    /// Services for iterators.
-    /// \{
-    /// Compute the set of sites for this window around \a piter.
-    template <typename Piter>
-    void compute_sites_(Site_Iterator<Piter>& piter) const;
-    /// \}
-
-  protected:
-    typedef graph_window_base<G, F, psite, self_> super_;
-    typedef typename super_::sites_t sites_t;
   };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename G, typename F>
-  template <typename Piter>
-  inline
-  void
-  graph_elt_window<G, F>::compute_sites_(Site_Iterator<Piter>& piter_) const
-  {
-    Piter& piter = exact(piter_);
-    const G& g = piter.center().graph();
-
-    unsigned central_vertex = piter.center().v().id();
-    sites_t& sites = piter.sites();
-    sites.clear();
-
-    sites.insert(central_vertex);
-    for (unsigned i = 0; i < g.v_nmax_nbh_vertices(central_vertex); ++i)
-      sites.insert(g.v_ith_nbh_vertex(central_vertex, i));
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

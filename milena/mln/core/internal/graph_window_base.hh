@@ -28,7 +28,6 @@
 #ifndef MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 # define MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 
-# include <set>
 # include <mln/core/concept/window.hh>
 
 /// \file mln/internal/graph_window_base.hh
@@ -38,20 +37,16 @@
 namespace mln
 {
 
-  template <typename G, typename F, typename P, typename E>
-  class graph_window_base : public Window< E >
+  template <typename P, typename E>
+  class graph_window_base : public Window<E>
   {
-    typedef graph_window_base<G, F, P, E> self_;
+    typedef graph_window_base<P, E> self_;
 
   public:
     /// Associated types.
     /// \{
     /// The type of site corresponding to the window.
     typedef mln_site(P) site;
-
-    // The type of the set of window sites (ids adjacent to the
-    // reference psite).
-    typedef std::set<unsigned> sites_t;
 
     // FIXME: This is a dummy value.
     typedef void dpsite;
@@ -87,63 +82,62 @@ namespace mln
     graph_window_base();
   };
 
-} // end of namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
 
-  template <typename G, typename F, typename P, typename E>
+
+  template <typename P, typename E>
   inline
-  graph_window_base<G, F, P, E>::graph_window_base()
+  graph_window_base<P,E>::graph_window_base()
   {
   }
 
-  template <typename G, typename F, typename P, typename E>
+  template <typename P, typename E>
   inline
   bool
-  graph_window_base<G, F, P, E>::is_empty() const
-  {
-    return false;
-  }
-
-  template <typename G, typename F, typename P, typename E>
-  inline
-  bool
-  graph_window_base<G, F, P, E>::is_centered() const
+  graph_window_base<P,E>::is_empty() const
   {
     return false;
   }
 
-  template <typename G, typename F, typename P, typename E>
+  template <typename P, typename E>
   inline
   bool
-  graph_window_base<G, F, P, E>::is_symmetric() const
+  graph_window_base<P,E>::is_centered() const
+  {
+    return false;
+  }
+
+  template <typename P, typename E>
+  inline
+  bool
+  graph_window_base<P,E>::is_symmetric() const
   {
     return true;
   }
 
-  template <typename G, typename F, typename P, typename E>
+  template <typename P, typename E>
   inline
   unsigned
-  graph_window_base<G, F, P, E>::delta() const
+  graph_window_base<P,E>::delta() const
   {
     // Dummy value (see the interface of the method above).
     return 0;
   }
 
-  template <typename G, typename F, typename P, typename E>
+  template <typename P, typename E>
   inline
-  graph_window_base<G, F, P, E>&
-  graph_window_base<G, F, P, E>::sym()
+  graph_window_base<P,E>&
+  graph_window_base<P,E>::sym()
   {
     return *this;
   }
 
-} // end of namespace mln
 
 # endif // !MLN_INCLUDE_ONLY
+
+} // end of namespace mln
 
 #endif // !MLN_CORE_INTERNAL_GRAPH_WINDOW_BASE_HH
 

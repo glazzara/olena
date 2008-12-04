@@ -93,6 +93,9 @@ namespace mln
       /// Conversion towards the graph element (vertex or edge).
       operator const typename S::graph_element&() const;
 
+      /// Explicit conversion towards the graph element (vertex or edge).
+      const typename S::graph_element& element() const;
+
     protected:
 
       /// Constructors.
@@ -252,6 +255,15 @@ namespace mln
   template <typename S, typename E>
   inline
   graph_psite_base<S,E>::operator const typename S::graph_element&() const
+  {
+    mln_precondition(is_valid());
+    return elt_;
+  }
+
+  template <typename S, typename E>
+  inline
+  const typename S::graph_element&
+  graph_psite_base<S,E>::element() const
   {
     mln_precondition(is_valid());
     return elt_;

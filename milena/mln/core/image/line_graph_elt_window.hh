@@ -34,9 +34,10 @@
 /// Definition of the elementary ``window'' on a line graph.
 
 # include <mln/core/concept/window.hh>
+# include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/graph_window_base.hh>
-# include <mln/core/site_set/p_edges_psite.hh>
-# include <mln/core/image/line_graph_window_piter.hh>
+# include <mln/core/image/graph_window_piter.hh>
+# include <mln/core/site_set/p_edges.hh>
 
 
 namespace mln
@@ -45,10 +46,20 @@ namespace mln
   /// Forward declaration
   template <typename G, typename F> class line_graph_elt_window;
 
+  namespace internal
+  {
+
+    template <typename G, typename F, typename E>
+    struct neighborhood_impl<line_graph_elt_window<G,F>,E>
+      : public neighborhood_extra_impl<line_graph_elt_window<G,F>,E>
+    {
+    };
+
+  } // end of namespace mln::internal
+
   namespace trait
   {
 
-    ///FIXME: check that!
     template <typename G, typename F>
     struct window_< mln::line_graph_elt_window<G, F> >
     {
@@ -60,68 +71,35 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// \brief Elementary window on line graph class.
+  /// Elementary window on line graph class.
   template <typename G, typename F>
-  class line_graph_elt_window : public graph_window_base<
-					G,
-					F,
-					p_edges_psite<G, F>,
-					line_graph_elt_window<G, F> >
+  class line_graph_elt_window : public graph_window_base<mln_result(F),
+						  line_graph_elt_window<G, F> >
   {
     typedef line_graph_elt_window<G, F> self_;
+    typedef mln_edge_nbh_edge_fwd_iter(G) nbh_fwd_iter_;
+    typedef mln_edge_nbh_edge_bkd_iter(G) nbh_bkd_iter_;
 
   public:
     /// Associated types.
     /// \{
-    /// The type of psite corresponding to the window.
-    typedef p_edges_psite<G, F> psite;
+    typedef p_edges<G,F> S;
+    // The type of psite corresponding to the window.
+    typedef mln_psite(S) psite;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of edges.
-    typedef line_graph_window_fwd_piter<G, F, self_> fwd_qiter;
+    typedef graph_window_piter<S,self_,nbh_fwd_iter_> fwd_qiter;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of edges.
-    typedef line_graph_window_bkd_piter<G, F, self_> bkd_qiter;
+    typedef graph_window_piter<S,self_,nbh_bkd_iter_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;
-
-
-    /// Services for iterators.
-    /// \{
-    /// Compute the set of sites for this window around \a piter.
-    template <typename Piter>
-    void compute_sites_(Site_Iterator<Piter>& piter) const;
     /// \}
 
-  protected:
-    typedef graph_window_base<G, F, psite, self_> super_;
-    typedef typename super_::sites_t sites_t;
   };
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename G, typename F>
-  template <typename Piter>
-  inline
-  void
-  line_graph_elt_window<G, F>::compute_sites_(Site_Iterator<Piter>& piter_) const
-  {
-    Piter& piter = exact(piter_);
-    unsigned central_edge = piter.center().e().id();
-    sites_t& sites = piter.sites();
-    sites.clear();
-
-    const G& g = piter.center().site_set().graph();
-
-    sites.insert(central_edge);
-    for (unsigned i = 0; i < g.e_nmax_nbh_edges(central_edge); ++i)
-      sites.insert(g.e_ith_nbh_edge(central_edge, i));
-  }
-
-# endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
 

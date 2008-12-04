@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/core/image/graph_image.cc
-/// \brief Tests on mln::graph_image.
+///
+/// Tests on mln::graph_image.
 
 #include <vector>
 
@@ -35,8 +36,8 @@
 
 //#include <mln/core/image/line_graph_image.hh>
 #include <mln/core/image/line_graph_elt_window.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/core/site_set/p_edges.hh>
+#include <mln/core/neighb.hh>
 
 #include <mln/fun/i2v/array.hh>
 
@@ -130,17 +131,30 @@ int main()
   | Iterators.  |
   `------------*/
 
+  mln_edge_iter_(util::graph) ei(g);
+  mln_edge_nbh_edge_iter_(util::graph) en(ei);
+
+  for_all(ei)
+  {
+    std::cout << ei << std::endl;
+    for_all(en)
+      std::cout << en << std::endl;
+    std::cout << "-----" << std::endl;
+  }
+
   // Manual iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   unsigned i = 10;
   for_all (p)
     mln_assertion(ima(p) == i++);
 
+  typedef line_graph_elt_window<util::graph, fsite_t> win_t;
+  typedef neighb<win_t> neigh_t;
+
   {
     // Window - Forward iteration
-    typedef line_graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
-    mln_qiter_(win_t) q(win, p);
+    mln_fwd_qiter_(win_t) q(win, p);
     for_all (p)
     {
       std::cout << "neighbors of " << p << " (" << ima(p) << "), "
@@ -148,11 +162,11 @@ int main()
       for_all (q)
 	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
     }
+    std::cout << std::endl;
   }
 
   {
     // Window - Backward iteration
-    typedef line_graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
     mln_bkd_qiter_(win_t) q(win, p);
     for_all (p)
@@ -162,37 +176,38 @@ int main()
       for_all (q)
 	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
     }
+    std::cout << std::endl;
   }
   {
     // Neighborhood - Forward iteration
-    typedef line_graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
-    neigh_t neigh;
-    mln_niter_(neigh_t) n(neigh, p);
+    neigh_t neigh(win_t());
+    mln_fwd_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
       std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
       for_all (n)
       {
-	mln_assertion(n != p);
 	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+	mln_assertion(n != p);
       }
     }
+    std::cout << std::endl;
   }
 
   {
     // Neighborhood - Backward iteration
-    typedef line_graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
-    neigh_t neigh;
+    neigh_t neigh(win_t());
     mln_bkd_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
       std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
       for_all (n)
       {
-	mln_assertion(n != p);
 	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+	mln_assertion(n != p);
       }
     }
+    std::cout << std::endl;
   }
 
   std::cout << std::endl;

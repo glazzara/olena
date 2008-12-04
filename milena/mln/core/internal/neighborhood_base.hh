@@ -159,7 +159,7 @@ namespace mln
     neighborhood_impl<W,E>::size() const
     {
       mlc_is(mln_trait_window_size(W),
-	     trait::window::size::fixed)::check(); 
+	     trait::window::size::fixed)::check();
       return exact(this)->win().size();
     }
 

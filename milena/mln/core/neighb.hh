@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -178,7 +179,7 @@ protected:
   mln_bkd_qiter(W) i_;
 };
 
- 
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -363,7 +364,7 @@ protected:
   {
     return i_.compute_p_();
   }
- 
+
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

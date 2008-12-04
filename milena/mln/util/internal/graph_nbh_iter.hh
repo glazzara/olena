@@ -60,6 +60,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	vertex_nbh_vertex_fwd_iterator();
 	template <typename C>
 	vertex_nbh_vertex_fwd_iterator(const C& c);
 	/// \}
@@ -69,8 +70,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -98,6 +97,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	vertex_nbh_vertex_bkd_iterator();
 	template <typename C>
 	vertex_nbh_vertex_bkd_iterator(const C& c);
 	/// \}
@@ -107,8 +107,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -142,6 +140,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	vertex_nbh_edge_fwd_iterator();
 	template <typename C>
 	vertex_nbh_edge_fwd_iterator(const C& c);
 	/// \}
@@ -151,8 +150,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -182,6 +179,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	vertex_nbh_edge_bkd_iterator();
 	template <typename C>
 	vertex_nbh_edge_bkd_iterator(const C& c);
 	/// \}
@@ -191,8 +189,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -225,6 +221,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	edge_nbh_edge_fwd_iterator();
 	template <typename C>
 	edge_nbh_edge_fwd_iterator(const C& c);
 	/// \}
@@ -234,8 +231,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -264,6 +259,7 @@ namespace mln
       public:
 	/// Construction and assignment.
 	/// \{
+	edge_nbh_edge_bkd_iterator();
 	template <typename C>
 	edge_nbh_edge_bkd_iterator(const C& c);
 	/// \}
@@ -273,8 +269,6 @@ namespace mln
 	/// \{
 	/// Test if the iterator is valid.
 	bool is_valid_() const;
-	/// Invalidate the iterator.
-	void invalidate_();
 	/// \}
 
 	/// Start an iteration.
@@ -294,6 +288,11 @@ namespace mln
     | vertex_nbh_vertex_fwd_iterator |
     \-------------------------------*/
 
+    template <typename G>
+    inline
+    vertex_nbh_vertex_fwd_iterator<G>::vertex_nbh_vertex_fwd_iterator()
+    {
+    }
 
     template <typename G>
     template <typename C>
@@ -308,15 +307,7 @@ namespace mln
     bool
     vertex_nbh_vertex_fwd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_vertices();
-    }
-
-    template <typename G>
-    inline
-    void
-    vertex_nbh_vertex_fwd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().v_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_vertices();
     }
 
     template <typename G>
@@ -347,6 +338,11 @@ namespace mln
     | vertex_nbh_vertex_bkd_iterator |
     \-------------------------------*/
 
+    template <typename G>
+    inline
+    vertex_nbh_vertex_bkd_iterator<G>::vertex_nbh_vertex_bkd_iterator()
+    {
+    }
 
     template <typename G>
     template <typename C>
@@ -361,15 +357,7 @@ namespace mln
     bool
     vertex_nbh_vertex_bkd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_vertices();
-    }
-
-    template <typename G>
-    inline
-    void
-    vertex_nbh_vertex_bkd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().v_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_vertices();
     }
 
     template <typename G>
@@ -402,6 +390,12 @@ namespace mln
     \-----------------------------*/
 
     template <typename G>
+    inline
+    vertex_nbh_edge_fwd_iterator<G>::vertex_nbh_edge_fwd_iterator()
+    {
+    }
+
+    template <typename G>
     template <typename C>
     inline
     vertex_nbh_edge_fwd_iterator<G>::vertex_nbh_edge_fwd_iterator(const C& c)
@@ -414,15 +408,7 @@ namespace mln
     bool
     vertex_nbh_edge_fwd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_edges();
-    }
-
-    template <typename G>
-    inline
-    void
-    vertex_nbh_edge_fwd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().e_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_edges();
     }
 
     template <typename G>
@@ -454,6 +440,12 @@ namespace mln
     \-----------------------------*/
 
     template <typename G>
+    inline
+    vertex_nbh_edge_bkd_iterator<G>::vertex_nbh_edge_bkd_iterator()
+    {
+    }
+
+    template <typename G>
     template <typename C>
     inline
     vertex_nbh_edge_bkd_iterator<G>::vertex_nbh_edge_bkd_iterator(const C& c)
@@ -466,15 +458,7 @@ namespace mln
     bool
     vertex_nbh_edge_bkd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_edges();
-    }
-
-    template <typename G>
-    inline
-    void
-    vertex_nbh_edge_bkd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().e_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_edges();
     }
 
     template <typename G>
@@ -508,6 +492,12 @@ namespace mln
     \-----------------------------*/
 
     template <typename G>
+    inline
+    edge_nbh_edge_fwd_iterator<G>::edge_nbh_edge_fwd_iterator()
+    {
+    }
+
+    template <typename G>
     template <typename C>
     inline
     edge_nbh_edge_fwd_iterator<G>::edge_nbh_edge_fwd_iterator(const C& c)
@@ -520,15 +510,7 @@ namespace mln
     bool
     edge_nbh_edge_fwd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_edges();
-    }
-
-    template <typename G>
-    inline
-    void
-    edge_nbh_edge_fwd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().e_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_edges();
     }
 
     template <typename G>
@@ -552,9 +534,10 @@ namespace mln
     void
     edge_nbh_edge_fwd_iterator<G>::update_()
     {
-      // We shall encounter vertices which are part of the
-      // current edge.
-      // We do not want them to be part of the edge neighbors.
+      // We shall encounter the current edge in its neighborhood
+      // since it is computed thanks to the edge neighboors of its
+      // two vertices.
+      // We do not want the current edge to be part of its neighbors.
       unsigned e_id = this->c_->ith_nbh_edge(this->i_);
       while (e_id == this->c_->id())
       {
@@ -570,6 +553,12 @@ namespace mln
     \-----------------------------*/
 
     template <typename G>
+    inline
+    edge_nbh_edge_bkd_iterator<G>::edge_nbh_edge_bkd_iterator()
+    {
+    }
+
+    template <typename G>
     template <typename C>
     inline
     edge_nbh_edge_bkd_iterator<G>::edge_nbh_edge_bkd_iterator(const C& c)
@@ -582,15 +571,7 @@ namespace mln
     bool
     edge_nbh_edge_bkd_iterator<G>::is_valid_() const
     {
-      return this->i_ < this->c_->nmax_nbh_edges();
-    }
-
-    template <typename G>
-    inline
-    void
-    edge_nbh_edge_bkd_iterator<G>::invalidate_()
-    {
-      this->i_ = this->p_.graph().e_nmax();
+      return this->c_->is_valid() && this->i_ < this->c_->nmax_nbh_edges();
     }
 
     template <typename G>

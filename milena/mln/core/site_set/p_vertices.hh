@@ -76,6 +76,8 @@ namespace mln
     /// Graph associated type.
     typedef G graph_t;
 
+    /// Function associated type.
+    typedef F fun_t;
 
     /// Type of graph vertex.
     typedef util::vertex<G> vertex;

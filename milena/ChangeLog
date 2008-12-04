@@ -1,3 +1,68 @@
+2008-12-04  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Revamp neighborhoods and windows based on graph.
+
+	* tests/all_headers.cc,
+	* mln/all.hh: Add new 'all' header and update the related test.
+
+	* mln/core/neighb.hh,
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/core/internal/neighborhood_base.hh,
+	* mln/core/alias/neighb2d.hh: Fix comments.
+
+	* mln/core/internal/graph_neighborhood_base.hh,
+	* mln/core/image/line_graph_neighborhood_piter.hh,
+	* mln/core/image/line_graph_elt_neighborhood.hh,
+	* mln/core/image/graph_neighborhood_piter.hh,
+	* mln/core/image/graph_elt_neighborhood.hh: removed. Not needed
+	anymore. The neighborhood is deduced from the window.
+
+	* mln/core/image/line_graph_window_piter.hh,
+	* mln/core/image/line_graph_elt_window.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/image/graph_elt_window.hh: revamp. Use the new graph
+	iterators correctly.
+
+	* mln/core/internal/graph_psite_base.hh: add a new method element().
+
+	* mln/core/internal/line_graph_vicinity_piter.hh,
+	* mln/core/internal/graph_relative_piter.hh: removed. Not needed
+	anymore since graph and line graph share the same piter object.
+
+	* mln/core/internal/graph_window_base.hh: revamp and cleanup.
+
+	* mln/core/site_set/p_graph_piter.hh: add new methods such as graph().
+
+	* mln/core/site_set/p_edges.hh,
+	* mln/core/site_set/p_vertices.hh: add a new typedef for the function
+	type.
+
+	* mln/util/internal/graph_nbh_iter.hh: add default constructor.
+
+	* mln/util/internal/graph_nbh_iter_base.hh: fix invalidate_().
+
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc: fix tests.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_all.cc,
+	* tests/unit_test/mln_canvas_distance_front.cc,
+	* tests/unit_test/mln_core_image_graph_elt_neighborhood.cc,
+	* tests/unit_test/mln_core_image_line_graph_elt_neighborhood.cc,
+	* tests/unit_test/mln_core_image_line_graph_elt_piter.cc,
+	* tests/unit_test/mln_core_internal_graph_neighborhood_base.cc,
+	* tests/unit_test/mln_core_internal_graph_relative_piter.cc,
+	* tests/unit_test/mln_core_internal_line_graph_vicinity_piter.cc,
+	* tests/unit_test/mln_transform_distance.cc,
+	* tests/unit_test/mln_transform_distance_front.cc,
+	* tests/unit_test/mln_transform_influence_zone_front.cc,
+	* tests/unit_test/mln_transform_internal_all.cc,
+	* tests/unit_test/mln_transform_internal_distance_functor.cc,
+	* tests/unit_test/mln_transform_internal_influence_zone_functor.cc:
+	Update unit tests.
+
+	* tests/util/line_graph.cc: remove useless debug.
+
 2008-12-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make tests compile without warnings.

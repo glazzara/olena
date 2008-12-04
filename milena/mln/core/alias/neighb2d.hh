@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,13 @@
 #ifndef MLN_CORE_ALIAS_NEIGHB2D_HH
 # define MLN_CORE_ALIAS_NEIGHB2D_HH
 
-/*! \file mln/core/alias/neighb2d.hh
- *
- * \brief Definition of the mln::neighb2d alias and of some classical
- * 2D neighborhoods.
- *
- * \todo Add symmetry and non-centering tests in conversion.
- */
+/// \file mln/core/alias/neighb2d.hh
+///
+/// Definition of the mln::neighb2d alias and of some classical
+/// 2D neighborhoods.
+///
+/// \todo Add symmetry and non-centering tests in conversion.
+
 
 # include <cmath>
 # include <mln/core/alias/window2d.hh>
@@ -45,9 +45,9 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a neighborhood defined on the 2D square
-   * grid with integer coordinates.
-   */
+  /// Type alias for a neighborhood defined on the 2D square
+  /// grid with integer coordinates.
+  ///
   typedef neighb<window2d> neighb2d;
 
 }
@@ -56,47 +56,47 @@ namespace mln
 namespace mln
 {
 
-  /*! \brief 4-connectivity neighborhood on the 2D grid.
-   *
-   *  - o -
-   *  o x o
-   *  - o -
-   *
-   * \return A neighb2d.
-   */
+  /// 4-connectivity neighborhood on the 2D grid.
+  ///
+  ///  - o -
+  ///  o x o
+  ///  - o -
+  ///
+  /// \return A neighb2d.
+  ///
   const neighb2d& c4();
 
 
-  /*! \brief 8-connectivity neighborhood on the 2D grid.
-   *
-   *  o o o
-   *  o x o
-   *  o o o
-   *
-   * \return A neighb2d.
-   */
+  /// 8-connectivity neighborhood on the 2D grid.
+  ///
+  /// o o o
+  /// o x o
+  /// o o o
+  ///
+  /// \return A neighb2d.
+  ///
   const neighb2d& c8();
 
 
-  /*! \brief Horizontal 2-connectivity neighborhood on the 2D grid.
-   *
-   *  - - -
-   *  o x o
-   *  - - -
-   *
-   * \return A neighb2d.
-   */
+  /// Horizontal 2-connectivity neighborhood on the 2D grid.
+  ///
+  /// - - -
+  /// o x o
+  /// - - -
+  ///
+  /// \return A neighb2d.
+  ///
   const neighb2d& c2_row();
 
 
-  /*! \brief Vertical 2-connectivity neighborhood on the 2D grid.
-   *
-   *  - o -
-   *  - x -
-   *  - o -
-   *
-   * \return A neighb2d.
-   */
+  /// Vertical 2-connectivity neighborhood on the 2D grid.
+  ///
+  /// - o -
+  /// - x -
+  /// - o -
+  ///
+  /// \return A neighb2d.
+  ///
   const neighb2d& c2_col();
 
 

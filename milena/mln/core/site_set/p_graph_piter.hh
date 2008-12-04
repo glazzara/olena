@@ -82,6 +82,12 @@ namespace mln
     /// Return the underlying graph element.
     mln_q_subject(iter) element();
 
+    /// Return the graph associated to the target S.
+    const typename S::graph_t& graph() const;
+
+    /// Return the underlying iterator.
+    const iter& hook_iter_() const;
+
   private:
 
     /// Update the psite corresponding to this iterator.
@@ -162,7 +168,23 @@ namespace mln
   mln_q_subject(I)
   p_graph_piter<S,I>::element()
   {
-    return iter_.subj_();
+    return this->subj_();
+  }
+
+  template <typename S, typename I>
+  inline
+  const typename S::graph_t&
+  p_graph_piter<S,I>::graph() const
+  {
+    return this->site_set().graph();
+  }
+
+  template <typename S, typename I>
+  inline
+  const I&
+  p_graph_piter<S,I>::hook_iter_() const
+  {
+    return iter_;
   }
 
   template <typename S, typename I>

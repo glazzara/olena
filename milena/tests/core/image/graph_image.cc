@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/core/image/graph_image.cc
-/// \brief Tests on mln::graph_image.
+///
+/// Tests on mln::graph_image.
 
 #include <vector>
 
@@ -43,7 +44,6 @@
 #include <mln/fun/ops.hh>
 #include <mln/value/ops.hh>
 #include <mln/core/image/graph_elt_window.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
 
 #include <mln/fun/i2v/array.hh>
 
@@ -52,6 +52,7 @@
 #include <mln/debug/draw_graph.hh>
 #include <mln/debug/println.hh>
 #include <mln/core/concept/function.hh>
+#include <mln/core/neighb.hh>
 
 template <typename S>
 struct viota_t : public mln::Function_p2v< viota_t<S> >
@@ -183,9 +184,11 @@ int main()
   for_all (p)
     mln_assertion(ima(p) == i++);
 
+  typedef graph_elt_window<util::graph, fsite_t> win_t;
+  typedef neighb<win_t> neigh_t;
+
   {
     // Window - Forward iteration
-    typedef graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
     mln_qiter_(win_t) q(win, p);
     for_all (p)
@@ -199,7 +202,6 @@ int main()
 
   {
     // Window - Backward iteration
-    typedef graph_elt_window<util::graph, fsite_t> win_t;
     win_t win;
     mln_bkd_qiter_(win_t) q(win, p);
     for_all (p)
@@ -213,8 +215,7 @@ int main()
 
   {
     // Neighborhood - Forward iteration
-    typedef graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
-    neigh_t neigh;
+    neigh_t neigh(win_t());
     mln_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {
@@ -229,8 +230,7 @@ int main()
 
   {
     // Neighborhood - Backward iteration
-    typedef graph_elt_neighborhood<util::graph, fsite_t> neigh_t;
-    neigh_t neigh;
+    neigh_t neigh(win_t());
     mln_bkd_niter_(neigh_t) n(neigh, p);
     for_all (p)
     {

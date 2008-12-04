@@ -75,6 +75,7 @@ namespace mln
       protected:
 	/// Construction and assignment.
 	/// \{
+	nbh_iterator_base();
 	template <typename C2>
 	nbh_iterator_base(const C2& c);
 	/// \}
@@ -88,6 +89,12 @@ namespace mln
     };
 
 # ifndef MLN_INCLUDE_ONLY
+
+    template <typename G, typename C, typename P, typename E>
+    inline
+    nbh_iterator_base<G, C, P, E>::nbh_iterator_base()
+    {
+    }
 
     template <typename G, typename C, typename P, typename E>
     template <typename C2>
@@ -112,7 +119,7 @@ namespace mln
     void
     nbh_iterator_base<G, C, P, E>::invalidate()
     {
-      exact(this)->invalidate_();
+      i_ = mln_max(unsigned);
     }
 
     template <typename G, typename C, typename P, typename E>
@@ -168,7 +175,7 @@ namespace mln
     nbh_iterator_base<G, C, P, E>::center_at(const C2& c)
     {
       internal::get_adr(c_, c);
-      mln_precondition(c_ != 0);
+      mln_postcondition(c_ != 0);
 
       invalidate();
     }

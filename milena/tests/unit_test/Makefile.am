@@ -231,6 +231,7 @@ mln_fun_x2v_l1_norm\
 mln_fun_x2v_nneighbor\
 mln_fun_x2v_essential\
 mln_fun_essential\
+mln_all\
 mln_convert_to_p_set\
 mln_convert_to\
 mln_convert_to_upper_window\
@@ -473,6 +474,7 @@ mln_canvas_browsing_essential\
 mln_canvas_chamfer\
 mln_canvas_distance_geodesic\
 mln_canvas_all\
+mln_canvas_distance_front\
 mln_canvas_morpho_all\
 mln_canvas_morpho_algebraic_union_find\
 mln_canvas_morpho_essential\
@@ -711,14 +713,12 @@ mln_core_internal_force_exact\
 mln_core_internal_image_base\
 mln_core_internal_check_image_fastest\
 mln_core_internal_check_image_all\
-mln_core_internal_line_graph_vicinity_piter\
 mln_core_internal_fixme\
 mln_core_internal_morpher_lvalue\
 mln_core_internal_image_domain_morpher\
 mln_core_internal_image_primary\
 mln_core_internal_set_of\
 mln_core_internal_complex_window_p_base\
-mln_core_internal_graph_relative_piter\
 mln_core_internal_graph_window_base\
 mln_core_internal_piter_adaptor\
 mln_core_internal_weighted_window_base\
@@ -730,7 +730,6 @@ mln_core_internal_image_identity\
 mln_core_internal_pseudo_site_base\
 mln_core_internal_window_base\
 mln_core_internal_box_impl\
-mln_core_internal_graph_neighborhood_base\
 mln_core_internal_site_set_iterator_base\
 mln_core_contract\
 mln_core_all\
@@ -857,7 +856,6 @@ mln_core_image_lazy_image\
 mln_core_image_t_image\
 mln_core_image_hexa_piter\
 mln_core_image_value_enc_image\
-mln_core_image_graph_elt_neighborhood\
 mln_core_image_sub_image_if\
 mln_core_image_all\
 mln_core_image_mono_rle_image\
@@ -882,8 +880,8 @@ mln_core_image_image1d\
 mln_core_image_extension_val\
 mln_core_image_image_if\
 mln_core_image_hexa\
-mln_core_image_line_graph_elt_neighborhood\
 mln_core_image_extended\
+mln_core_image_line_graph_elt_piter\
 mln_core_image_image2d_h\
 mln_core_image_line_graph_neighborhood_piter\
 mln_core_image_line_graph_window_piter\
@@ -915,9 +913,13 @@ mln_test_all\
 mln_test_positive\
 mln_test_essential\
 mln_transform_distance_geodesic\
+mln_transform_internal_all\
+mln_transform_internal_distance_functor\
+mln_transform_internal_influence_zone_functor\
 mln_transform_all\
+mln_transform_influence_zone_front\
+mln_transform_distance_front\
 mln_transform_influence_zone_geodesic\
-mln_transform_distance\
 mln_transform_essential\
 mln_arith_includes\
 mln_arith_plus\
@@ -1238,6 +1240,7 @@ mln_fun_x2v_l1_norm_SOURCES = mln_fun_x2v_l1_norm.cc
 mln_fun_x2v_nneighbor_SOURCES = mln_fun_x2v_nneighbor.cc
 mln_fun_x2v_essential_SOURCES = mln_fun_x2v_essential.cc
 mln_fun_essential_SOURCES = mln_fun_essential.cc
+mln_all_SOURCES = mln_all.cc
 mln_convert_to_p_set_SOURCES = mln_convert_to_p_set.cc
 mln_convert_to_SOURCES = mln_convert_to.cc
 mln_convert_to_upper_window_SOURCES = mln_convert_to_upper_window.cc
@@ -1480,6 +1483,7 @@ mln_canvas_browsing_essential_SOURCES = mln_canvas_browsing_essential.cc
 mln_canvas_chamfer_SOURCES = mln_canvas_chamfer.cc
 mln_canvas_distance_geodesic_SOURCES = mln_canvas_distance_geodesic.cc
 mln_canvas_all_SOURCES = mln_canvas_all.cc
+mln_canvas_distance_front_SOURCES = mln_canvas_distance_front.cc
 mln_canvas_morpho_all_SOURCES = mln_canvas_morpho_all.cc
 mln_canvas_morpho_algebraic_union_find_SOURCES = mln_canvas_morpho_algebraic_union_find.cc
 mln_canvas_morpho_essential_SOURCES = mln_canvas_morpho_essential.cc
@@ -1718,14 +1722,12 @@ mln_core_internal_force_exact_SOURCES = mln_core_internal_force_exact.cc
 mln_core_internal_image_base_SOURCES = mln_core_internal_image_base.cc
 mln_core_internal_check_image_fastest_SOURCES = mln_core_internal_check_image_fastest.cc
 mln_core_internal_check_image_all_SOURCES = mln_core_internal_check_image_all.cc
-mln_core_internal_line_graph_vicinity_piter_SOURCES = mln_core_internal_line_graph_vicinity_piter.cc
 mln_core_internal_fixme_SOURCES = mln_core_internal_fixme.cc
 mln_core_internal_morpher_lvalue_SOURCES = mln_core_internal_morpher_lvalue.cc
 mln_core_internal_image_domain_morpher_SOURCES = mln_core_internal_image_domain_morpher.cc
 mln_core_internal_image_primary_SOURCES = mln_core_internal_image_primary.cc
 mln_core_internal_set_of_SOURCES = mln_core_internal_set_of.cc
 mln_core_internal_complex_window_p_base_SOURCES = mln_core_internal_complex_window_p_base.cc
-mln_core_internal_graph_relative_piter_SOURCES = mln_core_internal_graph_relative_piter.cc
 mln_core_internal_graph_window_base_SOURCES = mln_core_internal_graph_window_base.cc
 mln_core_internal_piter_adaptor_SOURCES = mln_core_internal_piter_adaptor.cc
 mln_core_internal_weighted_window_base_SOURCES = mln_core_internal_weighted_window_base.cc
@@ -1737,7 +1739,6 @@ mln_core_internal_image_identity_SOURCES = mln_core_internal_image_identity.cc
 mln_core_internal_pseudo_site_base_SOURCES = mln_core_internal_pseudo_site_base.cc
 mln_core_internal_window_base_SOURCES = mln_core_internal_window_base.cc
 mln_core_internal_box_impl_SOURCES = mln_core_internal_box_impl.cc
-mln_core_internal_graph_neighborhood_base_SOURCES = mln_core_internal_graph_neighborhood_base.cc
 mln_core_internal_site_set_iterator_base_SOURCES = mln_core_internal_site_set_iterator_base.cc
 mln_core_contract_SOURCES = mln_core_contract.cc
 mln_core_all_SOURCES = mln_core_all.cc
@@ -1864,7 +1865,6 @@ mln_core_image_lazy_image_SOURCES = mln_core_image_lazy_image.cc
 mln_core_image_t_image_SOURCES = mln_core_image_t_image.cc
 mln_core_image_hexa_piter_SOURCES = mln_core_image_hexa_piter.cc
 mln_core_image_value_enc_image_SOURCES = mln_core_image_value_enc_image.cc
-mln_core_image_graph_elt_neighborhood_SOURCES = mln_core_image_graph_elt_neighborhood.cc
 mln_core_image_sub_image_if_SOURCES = mln_core_image_sub_image_if.cc
 mln_core_image_all_SOURCES = mln_core_image_all.cc
 mln_core_image_mono_rle_image_SOURCES = mln_core_image_mono_rle_image.cc
@@ -1889,8 +1889,8 @@ mln_core_image_image1d_SOURCES = mln_core_image_image1d.cc
 mln_core_image_extension_val_SOURCES = mln_core_image_extension_val.cc
 mln_core_image_image_if_SOURCES = mln_core_image_image_if.cc
 mln_core_image_hexa_SOURCES = mln_core_image_hexa.cc
-mln_core_image_line_graph_elt_neighborhood_SOURCES = mln_core_image_line_graph_elt_neighborhood.cc
 mln_core_image_extended_SOURCES = mln_core_image_extended.cc
+mln_core_image_line_graph_elt_piter_SOURCES = mln_core_image_line_graph_elt_piter.cc
 mln_core_image_image2d_h_SOURCES = mln_core_image_image2d_h.cc
 mln_core_image_line_graph_neighborhood_piter_SOURCES = mln_core_image_line_graph_neighborhood_piter.cc
 mln_core_image_line_graph_window_piter_SOURCES = mln_core_image_line_graph_window_piter.cc
@@ -1922,9 +1922,13 @@ mln_test_all_SOURCES = mln_test_all.cc
 mln_test_positive_SOURCES = mln_test_positive.cc
 mln_test_essential_SOURCES = mln_test_essential.cc
 mln_transform_distance_geodesic_SOURCES = mln_transform_distance_geodesic.cc
+mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
+mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distance_functor.cc
+mln_transform_internal_influence_zone_functor_SOURCES = mln_transform_internal_influence_zone_functor.cc
 mln_transform_all_SOURCES = mln_transform_all.cc
+mln_transform_influence_zone_front_SOURCES = mln_transform_influence_zone_front.cc
+mln_transform_distance_front_SOURCES = mln_transform_distance_front.cc
 mln_transform_influence_zone_geodesic_SOURCES = mln_transform_influence_zone_geodesic.cc
-mln_transform_distance_SOURCES = mln_transform_distance.cc
 mln_transform_essential_SOURCES = mln_transform_essential.cc
 mln_arith_includes_SOURCES = mln_arith_includes.cc
 mln_arith_plus_SOURCES = mln_arith_plus.cc

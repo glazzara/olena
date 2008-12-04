@@ -111,9 +111,6 @@ int main()
       mln_assertion((v.nmax_nbh_edges() == 0 && i == 0) || i != v.nmax_nbh_edges());
     }
   }
-  std::cout << g << std::endl;
-  std::cout << "----" << std::endl;
-  std::cout << lg << std::endl;
   {
     mln_edge_fwd_iter_(LG) e(lg);
     mln_edge_nbh_edge_fwd_iter_(LG) n(e);
