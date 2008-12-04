@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,12 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*!
- *  \file   tests/util/tree_fast_to_image.cc
- *
- *  \brief  test of mln::util::tree_fast_to_image
- *
- */
+/// \file tests/util/tree_fast_to_image.cc
+///
+/// Test of mln::util::tree_fast_to_image.
 
 #include <mln/util/tree_fast.hh>
 #include <mln/core/contract.hh>
@@ -45,6 +43,7 @@
 #include <mln/util/tree_fast_to_image.hh>
 #include <mln/debug/println.hh>
 
+
 template <typename P, typename V>
 struct fllt_node
 {
@@ -54,13 +53,12 @@ struct fllt_node
 };
 
 
-int main (void)
+int main()
 {
   using namespace mln;
   using value::int_u8;
 
   typedef fllt_node<point2d , int_u8>  I;
-
 
   I s1;
   I s2;
@@ -131,7 +129,7 @@ int main (void)
 
   };
 
-  debug::printl (output);
+  debug::println(output);
   image2d<int_u8> ref (make::image(vs));
   mln_assertion(ref == output);
 }

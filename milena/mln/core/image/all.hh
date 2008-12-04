@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,9 @@
 #ifndef MLN_CORE_IMAGE_ALL_HH
 # define MLN_CORE_IMAGE_ALL_HH
 
-/*! \file mln/core/image/all.hh
- *
- * \brief File that includes all image types.
- *
- */
+/// \file mln/core/image/all.hh
+///
+/// File that includes all image types.
 
 
 //# include <mln/core/image/bgraph_image.hh>
@@ -91,7 +89,6 @@
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image/sub_image_if.hh>
 # include <mln/core/image/t_image.hh>
-# include <mln/core/image/translate_image.hh>
 # include <mln/core/image/tr_image.hh>
 # include <mln/core/image/tr_mesh.hh>
 //# include <mln/core/image/value_enc_image.hh>

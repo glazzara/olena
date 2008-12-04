@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/literal/zero.cc
- *
- * \brief Tests on mln::literal::zero.
- */
+/// \file tests/literal/zero.cc
+///
+/// Tests on mln::literal::zero.
 
 #include <mln/literal/zero.hh>
 #include <mln/literal/one.hh>
@@ -43,7 +43,7 @@ int main()
 
   unsigned char c;
   c = literal::zero;
-  mln_assertion(c == 0);
+  mln_assertion(c == 0u);
 
   double d;
   d = literal::zero;
@@ -54,5 +54,5 @@ int main()
   value::int_u8 u(literal::zero), uu;
   uu = literal::zero;
 
-  mln_assertion(u == 0 && 0 == u);
+  mln_assertion(u == 0u && 0u == u);
 }

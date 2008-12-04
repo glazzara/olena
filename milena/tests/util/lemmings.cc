@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*!
- *  \file   tests/util/lemmings.cc
- *
- *  \brief  test of mln::util::lemmings
- *
- */
+///
+/// \file tests/util/lemmings.cc
+///
+/// test of mln::util::lemmings
 
 #include <mln/util/lemmings.hh>
 #include <mln/core/image/image2d.hh>
+
 
 int main ()
 {
@@ -48,23 +48,26 @@ int main ()
 
   I ima = make::image<int>(vals);
   
-  mln_site_(I) pt1(1, 0);
-  mln_site_(I) pt2(0, 2);
-  mln_site_(I) pt3(2, 3);
-  mln_site_(I) pt4(3, 1);
-  mln_site_(I) pt5(1, 1);
+  point2d
+    pt1(1, 0),
+    pt2(0, 2),
+    pt3(2, 3),
+    pt4(3, 1),
+    pt5(1, 1);
 
-  mln_value_(I) vl1 = ima(pt1);
-  mln_value_(I) vl2 = ima(pt2);
-  mln_value_(I) vl3 = ima(pt3);
-  mln_value_(I) vl4 = ima(pt4);
-  mln_value_(I) vl5 = ima(pt5);
+  int
+    vl1 = ima(pt1),
+    vl2 = ima(pt2),
+    vl3 = ima(pt3),
+    vl4 = ima(pt4),
+    vl5 = ima(pt5);
 
-  mln_site_(I) ptl1 = util::lemmings(ima, pt1, right, vl1);
-  mln_site_(I) ptl2 = util::lemmings(ima, pt2, down, vl2);
-  mln_site_(I) ptl3 = util::lemmings(ima, pt3, left, vl3);
-  mln_site_(I) ptl4 = util::lemmings(ima, pt4, up, vl4);
-  mln_site_(I) ptl5 = util::lemmings(ima, pt5, up, vl5);
+  point2d
+    ptl1 = util::lemmings(ima, pt1, right, vl1),
+    ptl2 = util::lemmings(ima, pt2, down,  vl2),
+    ptl3 = util::lemmings(ima, pt3, left,  vl3),
+    ptl4 = util::lemmings(ima, pt4, up,    vl4),
+    ptl5 = util::lemmings(ima, pt5, up,    vl5);
 
   mln_assertion(ptl1 == point2d(1, 2));
   mln_assertion(ptl2 == point2d(2, 2));

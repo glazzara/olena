@@ -28,7 +28,7 @@
 
 /// \file tests/win/inter.cc
 ///
-/// Tests on mln::set::inter.
+/// Tests on mln::win::inter.
 
 #include <mln/win/inter.hh>
 #include <mln/core/alias/dpoint2d.hh>
@@ -53,7 +53,7 @@ int main()
     win2.insert(-4, 0);
     win2.insert( 1,-1);
     win2.insert( 6, 5);
-    window2d win3 = set::inter(win1, win2);
+    window2d win3 = win1 && win2;
     mln_assertion(!win3.has(dpoint2d( 2, 1)));
     mln_assertion(!win3.has(dpoint2d( 0, 0)));
     mln_assertion(!win3.has(dpoint2d( 1, 1)));

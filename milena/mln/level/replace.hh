@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_LEVEL_REPLACE_HH
 # define MLN_LEVEL_REPLACE_HH
 
-/*! \file mln/level/replace.hh
- *
- * \brief Replace the contents of an image into another one.
- *
- */
+/// \file mln/level/replace.hh
+///
+/// Replace the contents of an image into another one.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/image_if.hh>
@@ -40,6 +39,7 @@
 # include <mln/level/fill.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
+
 
 namespace mln
 {
@@ -52,11 +52,11 @@ namespace mln
      * \param[in] input The input image.
      * \param[in] old_value The value to be replaced...
      * \param[in] new_value ...by this one.
-     *
      */
     template <typename I>
-    void replace(Image<I>& input, const mln_value(I)& old_value,
-		 const mln_value(I)& new_value);
+    void replace(Image<I>& input,
+		 const mln_value(I)& old_value, const mln_value(I)& new_value);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -72,7 +72,11 @@ namespace mln
 		      const mln_value(I)& new_value)
 	{
 	  trace::entering("level::impl::generic::replace");
-	  level::fill((exact(input_) | pw::value(input_) == pw::cst(old_value)).rw(),  new_value);
+	  I& input = exact(input_);
+
+	  level::fill((input | (pw::value(input) == pw::cst(old_value))).rw(),
+		      new_value);
+
 	  trace::exiting("level::impl::generic::replace");
 	}
 
@@ -81,16 +85,18 @@ namespace mln
     } // end of namespace mln::level::impl
 
 
+
     // Facade.
     template <typename I>
-    void replace(Image<I>& input, const mln_value(I)& old_value,
-		 const mln_value(I)& new_value)
+    void replace(Image<I>& input,
+		 const mln_value(I)& old_value, const mln_value(I)& new_value)
     {
       trace::entering("level::replace");
 
       mln_precondition(exact(input).has_data());
 
       impl::generic::replace_<I>(exact(input), old_value, new_value);
+
       trace::exiting("level::replace");
     }
 

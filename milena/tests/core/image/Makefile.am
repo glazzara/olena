@@ -28,7 +28,6 @@ check_PROGRAMS =				\
   sub_image					\
   t_image					\
   tr_image					
-##  translate_image				\
 ##  value_enc_image
 
 ##bgraph_image_SOURCES = bgraph_image.cc
@@ -55,7 +54,6 @@ safe_image_SOURCES = safe_image.cc
 sub_image_SOURCES = sub_image.cc
 t_image_SOURCES = t_image.cc
 tr_image_SOURCES = tr_image.cc
-##translate_image_SOURCES = translate_image.cc
 ##value_enc_image_SOURCES = value_enc_image.cc
 
 # Tests depending on the FreeImagePlus library.

@@ -85,17 +85,18 @@ namespace mln
 	  P cur;
 	  mln_niter(N) n(nbh, cur);
 	  p_queue_fast<P> qu;
+	  const L zero = literal::zero;
 
 	  // Initialization.
 	  nlabels = literal::zero;
 	  mln_ch_value(I, L) output;
 	  initialize(output, input);
-	  level::fill(output, literal::zero);
+	  level::fill(output, zero);
 
 	  // Loop.
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    if (input(p) && output(p) == literal::zero) // Object point, not labeled yet.
+	    if (input(p) && output(p) == zero) // Object point, not labeled yet.
 	      {
 		// Label this point component.
 		if (nlabels == mln_max(L))
@@ -112,7 +113,7 @@ namespace mln
 		    cur = qu.front();
 		    qu.pop();
 		    for_all(n) if (input.has(n))
-		      if (input(n) && output(n) == literal::zero)
+		      if (input(n) && output(n) == zero)
 			{
 			  mln_invariant(! qu.compute_has(n));
 			  qu.push(n);

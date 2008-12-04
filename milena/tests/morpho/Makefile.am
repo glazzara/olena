@@ -17,9 +17,7 @@ check_PROGRAMS =				\
   complex_image_wst				\
   contrast					\
   dilation					\
-##  dilation_max_h				\
   erosion					\
-##  erosion_min_h					\
   general					\
   gradient					\
 ##  graph_image_morpho				\
@@ -45,9 +43,6 @@ check_PROGRAMS =				\
 
 # FIXME: Have erosion and dilation perform symmetric tests.
 erosion_SOURCES = erosion.cc
-
-##dilation_max_h_SOURCES = dilation_max_h.cc
-##erosion_min_h_SOURCES = erosion_min_h.cc
 
 opening_area_SOURCES = opening_area.cc
 closing_area_SOURCES = closing_area.cc

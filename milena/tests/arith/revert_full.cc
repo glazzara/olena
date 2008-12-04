@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/arith/revert_full.cc
- *
- * \brief Tests on mln::arith::revert.
- */
-
-
-
-
+/// \file tests/arith/revert_full.cc
+///
+/// Tests on mln::arith::revert.
+///
+/// \todo Rewrite this non-sense test file!!!
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/core/image/sub_image.hh>
-
 #include <mln/core/image/image_if.hh>
+
 #include <mln/fun/p2b/chess.hh>
-
 #include <mln/literal/origin.hh>
-
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-
 #include <mln/debug/iota.hh>
-
 #include <mln/arith/revert.hh>
 
 
@@ -108,7 +102,7 @@ namespace mln
 
     mln_piter(I) p (ima.domain ());
     for_all(p)
-      mln_assertion (ima(p) == mln_min(V) + mln_max(V) - ref(p));
+      mln_assertion (ima(p) == mln_value(J)(mln_min(V) + mln_max(V) - ref(p)));
   }
 
   template <typename V>
@@ -126,7 +120,6 @@ namespace mln
     unsigned col = 100;
 
 
-    (std::cerr << "in 1d ... ").flush ();
     {
       typedef image1d<V> I;
 
@@ -141,9 +134,6 @@ namespace mln
 	    chck (ref, ima);
 	  }
     }
-    std::cerr << "OK" << std::endl;
-
-    (std::cerr << "in 2d ... ").flush ();
     {
       typedef image2d<V> I;
 
@@ -159,9 +149,6 @@ namespace mln
 	      chck (ref, ima);
 	    }
     }
-    std::cerr << "OK" << std::endl;
-
-    (std::cerr << "in 3d ... ").flush ();
     {
       typedef image3d<V> I;
 
@@ -178,10 +165,6 @@ namespace mln
 	      chck (ref, ima);
 	    }
     }
-    std::cerr << "OK" << std::endl;
-
-
-    (std::cerr << "in subimage 1d ... ").flush ();
     {
       typedef image1d<V> I;
       typedef sub_image<I, box1d> J;
@@ -201,9 +184,6 @@ namespace mln
 	    chck (ref, ima);
 	  }
     }
-    std::cerr << "OK" << std::endl;
-
-    (std::cerr << "in subimage 2d ... ").flush ();
     {
       typedef image2d<V> I;
       typedef sub_image<I, box2d> J;
@@ -223,9 +203,6 @@ namespace mln
 	    chck (ref, ima);
 	  }
     }
-    std::cerr << "OK" << std::endl;
-
-    (std::cerr << "in subimage 3d ... ").flush ();
     {
       typedef image3d<V> I;
       typedef sub_image<I, box3d> J;
@@ -246,7 +223,6 @@ namespace mln
 	    chck (ref, ima);
 	  }
     }
-    std::cerr << "OK" << std::endl;
   }
 
 }
@@ -259,16 +235,10 @@ int main()
 {
   using namespace mln;
 
-  std::cerr << "Tests arith::revert:" << std::endl;
-  std::cerr << "on int:" << std::endl;
   chk<int>();
-  std::cerr << "on int_s8:" << std::endl;
   chk<value::int_s8>();
-  std::cerr << "on int_s16:" << std::endl;
   chk<value::int_s16>();
-  std::cerr << "on int_u8:" << std::endl;
   chk<value::int_u8>();
-  std::cerr << "on unsigned:" << std::endl;
   chk<unsigned>();
 }
 

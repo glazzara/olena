@@ -59,9 +59,7 @@ namespace mln
 # include <mln/morpho/closing.hh>
 # include <mln/morpho/complementation.hh>
 # include <mln/morpho/contrast.hh>
-# include <mln/morpho/dilation_fast.hh>
 # include <mln/morpho/dilation.hh>
-# include <mln/morpho/erosion_fast.hh>
 # include <mln/morpho/erosion.hh>
 # include <mln/morpho/general.hh>
 # include <mln/morpho/gradient.hh>

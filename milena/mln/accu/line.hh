@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_ACCU_LINE_HH
 
 /// \file mln/accu/line.hh
+///
 /// Run an accumulator on a line of images.
 ///
 /// \todo Suppress integer manipulations (redundant with ptr arith).
@@ -112,8 +114,8 @@ namespace mln
 		  typename I, typename O>
 	void
 	line(const Image<I>& input_,
-	     const mln_site(I)& p_start, unsigned len,
-	     unsigned half_length,
+	     const mln_site(I)& p_start, unsigned len_,
+	     unsigned half_length_,
 	     Image<O>& output_)
 	{
 	  typedef mln_site(I) P;
@@ -121,6 +123,10 @@ namespace mln
 
 	  const I& input = exact(input_);
 	  O& output = exact(output_);
+
+	  // Avoid warning in signed/unsigned comparison.
+	  const def::coord len = len_;
+	  const def::coord half_length = half_length_;
 
 	  // Checks and tests.
 	  internal::line_tests<Meta_Accu, Dir>(input,

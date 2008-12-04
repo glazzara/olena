@@ -75,7 +75,7 @@ namespace mln
 	\li \p I is the exact type of the input image.
 	\li \p N is the exact type of the neighborhood used to express
 	\a input's connexity.  */
-    template <typename L, typename I, typename N>
+    template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input, const Neighborhood<N>& nbh,
 	      L& nbasins);
@@ -103,7 +103,7 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename L, typename I, typename N>
+    template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     meyer_wst(const Image<I>& input_, const Neighborhood<N>& nbh_,
 	      L& nbasins)

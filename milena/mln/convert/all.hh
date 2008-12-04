@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,19 @@
 #ifndef MLN_CONVERT_ALL_HH
 # define MLN_CONVERT_ALL_HH
 
-/*! \file mln/convert/all.hh
- *
- * \brief File that includes all conversion-related routines.
- */
+/// \file mln/convert/all.hh
+///
+/// File that includes all conversion-related routines.
 
 
 namespace mln
 {
+
   /// Namespace of conversion routines.
   namespace convert {}
+
 }
+
 
 # include <mln/convert/from_to.hh>
 # include <mln/convert/to.hh>
@@ -48,8 +51,8 @@ namespace mln
 # include <mln/convert/to_image.hh>
 # include <mln/convert/to_rgb.hh>
 # include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_tiles.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/convert/to_window.hh>
+
 
 #endif // ! MLN_CONVERT_ALL_HH

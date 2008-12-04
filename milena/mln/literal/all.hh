@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,20 @@
 #ifndef MLN_LITERAL_ALL_HH
 # define MLN_LITERAL_ALL_HH
 
-/*! \file mln/literal/all.hh
- *
- * \brief File that includes all literals.
- */
+/// \file mln/literal/all.hh
+///
+/// File that includes all literals.
+
+// Technical note:
+//
+// With some recent g++ versions, we have a warning due to literal
+// conversions (namely: "type qualifiers ignored on function return
+// type").  This warning comes from the "operator T()" method
+// instantiated with T being a const type, for instance, when
+// literal::zero is given to a procedure expecting a "const int&"
+// object.   This warning will be avoided in very recent versions
+// of C++ thanks to the new compiling option -Wignore_qualifiers.
+
 
 namespace mln
 {

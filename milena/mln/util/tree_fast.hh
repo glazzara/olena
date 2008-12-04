@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,15 +30,12 @@
 # define MLN_UTIL_TREE_FAST_HH
 
 # include <vector>
-
 # include <mln/core/contract.hh>
 
-/*!
- * \file   mln/util/tree_fast.hh
- *
- * \brief  Definition of a fast generic general fast tree.
- *
- */
+/// \file mln/util/tree_fast.hh
+///
+/// Definition of a fast generic general fast tree.
+
 
 namespace mln
 {
@@ -63,7 +61,7 @@ namespace mln
        *
        *  \return the number of node of the tree.
        */
-      const unsigned size() const;
+      unsigned size() const;
 
 
       /*! \brief Check if the tree has \p elt.
@@ -115,6 +113,8 @@ namespace mln
       unsigned root_;
     };
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename T>
@@ -136,7 +136,7 @@ namespace mln
 
     template <typename T>
     inline
-    const unsigned
+    unsigned
     tree_fast<T>::size() const
     {
       return (data_.size ());
@@ -212,7 +212,6 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::util
-
 
 } // end of namespace mln
 

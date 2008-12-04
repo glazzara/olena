@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/compute_full.cc
- *
- * \brief Tests on mln::level::compute.
- */
+/// \file tests/level/compute_full.cc
+///
+/// Tests on mln::level::compute.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -194,7 +194,6 @@ namespace mln
     image3d<I> ima (slis, rows, cols);
     debug::iota (ima);
     I real_min = 1;
-    I real_min2 = 1;
     I real_max;
     if (slis * rows * cols >= (unsigned)mln_max(I))
       {

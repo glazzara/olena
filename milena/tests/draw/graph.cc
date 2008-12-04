@@ -74,7 +74,7 @@ test(points_type& points, const edges_type& edges,
   mln::p_vertices<G, F> pg(g, fpoints);
 
   image2d<int> ima(nrows, ncols);
-  level::fill(ima, literal::zero);
+  level::fill(ima, 0);
   debug::draw_graph(ima, pg, 2, 1);
   mln_assertion(ima == ref);
 }

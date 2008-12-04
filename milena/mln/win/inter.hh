@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_INTER_HH
 # define MLN_WIN_INTER_HH
 
-/*! \file mln/win/inter.hh
- *
- * \brief Define a function which inters a window with a delta-point.
- */
+/// \file mln/win/inter.hh
+///
+/// \brief Define a function which inters a window with a delta-point.
 
 # include <mln/core/window.hh>
 

@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/morpho/meyer_wst_long.cc
-// /\brief Test on mln::morpho::extrema_components
+///
+/// Test on mln::morpho::meyer_wst.
 
 #include <iostream>
 
@@ -36,7 +37,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/value/int_u16.hh>
+#include <mln/value/label_16.hh>
 
 #include <mln/morpho/gradient.hh>
 #include <mln/morpho/closing_area.hh>
@@ -47,9 +48,9 @@
 #include <mln/pw/cst.hh>
 #include <mln/pw/value.hh>
 
-#include <mln/display/color_pretty.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/ppm/save.hh>
+#include <mln/debug/colorize.hh>
 
 #include "tests/data.hh"
 
@@ -58,26 +59,19 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
-  using value::int_u16;
 
   image2d<int_u8> input;
   io::pgm::load(input, MLN_IMG_DIR "/lena.pgm");
 
-  image2d<int_u8> gradient =
-    morpho::gradient (input, convert::to_window(c4()));
-
-  // Simplify the input image.
-  image2d<int_u8> work(input.domain());
-  morpho::closing_area(gradient, c4(), 200, work);
+  image2d<int_u8>
+    grad = morpho::gradient(input, c4().win()),
+    clo  = morpho::closing_area(grad, c4(), 200);
 
   // Perform a Watershed Transform.
-  typedef int_u16 wst_val;
-  wst_val nbasins;
-  image2d<wst_val> ws = morpho::meyer_wst(work, c4(), nbasins);
-  std::cout << "nbasins = " << nbasins << std::endl;
+  typedef value::label16 L;
+  L nbasins;
+  image2d<L> ws = morpho::meyer_wst(clo, c4(), nbasins);
 
   // Save the image in color.
-  image2d<value::rgb8> input_plus_ws =
-    display::color_pretty(input | (pw::value(ws) != pw::cst(0)));
-  io::ppm::save(input_plus_ws, "out.ppm");
+  io::ppm::save(debug::colorize(value::rgb8(), ws, nbasins), "out.ppm");
 }

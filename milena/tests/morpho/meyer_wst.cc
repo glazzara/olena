@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/morpho/meyer_wst.cc
-// /\brief Test on mln::morpho::extrema_components
+///
+/// Test on mln::morpho::meyer_wst.
 
 #include <iostream>
 
@@ -52,9 +53,9 @@ int main()
   image2d<int_u8> input;
   io::pgm::load(input, MLN_IMG_DIR "/squares.pgm");
 
-  typedef int_u8 wst_val;
-  wst_val nbasins;
-  image2d<int_u8> output = morpho::meyer_wst(input, c4(), nbasins);
-  std::cout << "nbasins = " << nbasins << std::endl;
+  typedef int_u8 L;
+  L nbasins;
+  image2d<L> output = morpho::meyer_wst(input, c4(), nbasins);
+
   io::pgm::save(output, "out.pgm");
 }

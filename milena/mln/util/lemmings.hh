@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_UTIL_LEMMINGS_HH
 # define MLN_UTIL_LEMMINGS_HH
 
-/*! \file mln/util/lemmings.hh
- *
- * \brief Definition of an "lemmings" object.
- */
+/// \file mln/util/lemmings.hh
+///
+/// Definition of an "lemmings" object.
 
 # include <mln/core/concept/image.hh>
 # include <mln/set/is_subset_of.hh>
@@ -50,13 +50,13 @@ namespace mln
     struct lemmings_ : public Object< lemmings_<I> >
     {
       lemmings_(const Image<I>& ima, const mln_psite(I)& pt,
-		const mln_dpsite(I)& dpt, const mln_value(I)& val);
+		const mln_deduce(I, psite, delta)& dpt, const mln_value(I)& val);
 
       mln_psite(I) operator()();
 
       const I& ima_;
       mln_psite(I) pt_;
-      const mln_dpsite(I)& dpt_;
+      const mln_deduce(I, psite, delta)& dpt_;
       const mln_value(I)& val_;
     };
 
@@ -76,7 +76,8 @@ namespace mln
     template <typename I>
     mln_psite(I)
     lemmings(const Image<I>& ima, const mln_psite(I)& pt,
-	     const mln_dpsite(I)& dpt, const mln_value(I)& val);
+	     const mln_deduce(I, psite, delta)& dpt, const mln_value(I)& val);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -85,7 +86,7 @@ namespace mln
     template <typename I>
     inline
     lemmings_<I>::lemmings_(const Image<I>& ima, const mln_psite(I)& pt,
-			    const mln_dpsite(I)& dpt, const mln_value(I)& val)
+			    const mln_deduce(I, psite, delta)& dpt, const mln_value(I)& val)
       : ima_(exact(ima)),
 	pt_(pt),
 	dpt_(dpt),
@@ -105,7 +106,7 @@ namespace mln
     template <typename I>
     mln_psite(I)
     lemmings(const Image<I>& ima, const mln_psite(I)& pt,
-	     const mln_dpsite(I)& dpt, const mln_value(I)& val)
+	     const mln_deduce(I, psite, delta)& dpt, const mln_value(I)& val)
     {
       lemmings_<I> lm(ima, pt, dpt, val);
       return lm();

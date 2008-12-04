@@ -1,3 +1,106 @@
+2008-12-04  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make tests compile without warnings.
+
+	* trash: New directory.
+
+	Trash mln::neighb stuff.
+
+	* mln/neighb/essential.hh: Remove.
+	* mln/neighb/all.hh: Remove.
+	* mln/neighb/image.hh: Rename as...
+	* trash/neighb_image.hh: ...this.
+	* tests/neighb/image.cc: Rename as...
+	* trash/neighb_image.cc: ...this.
+	* mln/neighb/get.hh: Rename as...
+	* trash/neighb_get.hh: ...this.
+	* tests/neighb/Makefile.am: Remove.
+	* tests/neighb: Remove directory.
+	* mln/neighb: Remove directory.
+
+	Trash convert/to_tiles.
+
+	* mln/convert/to_tiles.hh: Rename as...
+	* trash/to_tiles.hh: ...this.
+	* tests/convert/to_tiles.cc: Rename as...
+	* trash/to_tiles.cc: ...this.
+
+	Trash display stuff.
+
+	* mln/display/show.hh: Rename as....
+	* trash/display_show.hh: ...this.
+	* tests/display/show.cc: Rename as....
+	* trash/display_show.cc: ...this.
+	* mln/display/save_and_show.hh: Rename as....
+	* trash/display_save_and_show.hh: ...this.
+	* tests/display/save_and_show.cc: Rename as....
+	* trash/save_and_show.cc: ...this.
+	* mln/display/color_pretty.hh: Rename as....
+	* trash/display_color_pretty.hh: ...this.
+	* tests/display/color_pretty.cc: Rename as....
+	* trash/display_color_pretty.cc: ...this.
+
+	Trash translate image.
+
+	* mln/core/image/translate_image.hh: Rename as...
+	* trash/translate_image.hh: ...this.
+	* mln/core/image/all.hh: Update.
+	* tests/core/image/translate_image.cc: Rename as...
+	* trash/translate_image.cc: ...this.
+
+	Remove obsolete files.
+
+	* mln/draw/label.hh: Remove.
+	* mln/draw/all.hh: Update.
+	* tests/draw/label.cc: Remove.
+	* mln/morpho/erosion_fast.hh: Remove.
+	* mln/morpho/dilation_fast.hh: Remove.
+	* mln/morpho/all.hh: Update.
+	* mln/morpho/essential.hh: Update.
+	* tests/morpho/dilation_max_h.cc: Remove.
+	* tests/morpho/erosion_min_h.cc: Remove.
+	* tests/morpho/temp.erosion.cc: Remove.
+	* tests/logical/or_full.cc: Remove.
+	* tests/logical/not_full.cc: Remove.
+	* tests/logical/and_not_full.cc: Remove.
+	* tests/logical/and_full.cc: Remove.
+
+	Update Makefiles.
+
+	* tests/convert/Makefile.am: Update.
+	* tests/core/image/Makefile.am: Update.
+	* tests/display/Makefile.am: Update.
+	* tests/morpho/Makefile.am: Update.
+
+	Fix some tests warnings and errors.
+
+	* mln/trait/value_.hh,
+	* mln/metal/converts_to.hh,
+	* mln/level/replace.hh,
+	* mln/accu/line.hh,
+	* mln/convert/all.hh,
+	* mln/win/inter.hh,
+	* mln/morpho/meyer_wst.hh,
+	* mln/util/tree_fast.hh,
+	* mln/util/lemmings.hh,
+	* mln/labeling/blobs.hh,
+	* tests/literal/zero.cc,
+	* tests/literal/one.cc,
+	* tests/draw/graph.cc,
+	* tests/arith/revert_full.cc,
+	* tests/level/compute_full.cc,
+	* tests/border/fill_full.cc,
+	* tests/win/inter.cc,
+	* tests/morpho/meyer_wst.cc,
+	* tests/morpho/meyer_wst_long.cc,
+	* tests/Makefile.am,
+	* tests/util/ord_pair.cc,
+	* tests/util/lemmings.cc,
+	* tests/util/tree_fast_to_image.cc: Fix.
+
+	* mln/literal/all.hh: Add a commentary about g++ warning.
+	Eventually use -Wignore_qualifiers.
+
 2008-12-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix registration test. Add multiscale test.

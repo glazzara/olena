@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_METAL_CONVERTS_TO_HH
 # define MLN_METAL_CONVERTS_TO_HH
 
-/*! \file mln/metal/converts_to.hh
- *
- * \brief Definition of a type that means "converts to".
- */
+/// \file mln/metal/converts_to.hh
+///
+/// Definition of a type that means "converts to".
 
 # include <mln/metal/is_a.hh>
 # include <mln/metal/const.hh>
@@ -69,6 +69,14 @@ namespace mln
     struct converts_to : bool_<( sizeof(internal::helper_converts_to_<T, U>::selector(*internal::make_<mlc_const(T)>::ptr()) )
 				 ==
 				 sizeof(internal::yes_) )>
+    {};
+
+    template <typename T, typename U>
+    struct converts_to<T*, U*> : converts_to<T, U>
+    {};
+
+    template <typename T, typename U>
+    struct converts_to<T**, U**> : false_
     {};
 
   } // end of namespace mln::metal

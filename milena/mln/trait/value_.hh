@@ -71,8 +71,8 @@
 /// FIXME: check that the -1 is correct
 # define mln_value_quant_from_(C)					\
   mlc_if(mln::metal::bool_<( int(C) > int(mlc_pow_int(2, mln::def::low_quant_nbits)) \
-			     || C == 0					\
-			     || C == -1)>,				\
+			     || int(C) == 0				\
+			     || int(C) == -1)>,				\
 	 mln::trait::value::quant::high,				\
 	 mln::trait::value::quant::low)
 
