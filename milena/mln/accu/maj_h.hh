@@ -118,6 +118,8 @@ namespace mln
     {
       init();
       valid_ = true;
+      //FIXME: Not generic
+      t_ = literal::zero;
     }
 
     template <typename T>

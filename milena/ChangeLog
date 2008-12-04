@@ -1,3 +1,11 @@
+2008-12-04  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add mirror function.
+
+	* mln/fun/p2p: Add p2p function.
+	* mln/fun/p2p/mirror.hh: Revert first dim.
+	* mln/accu/maj_h.hh: default value.
+
 2008-12-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Turn the low/high quant nbits threshold into a definition.
