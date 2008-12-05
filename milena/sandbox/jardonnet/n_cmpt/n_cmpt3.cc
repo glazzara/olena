@@ -5,6 +5,8 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/value/int_u8.hh>
 
+#include <mln/make/image.hh>
+
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
@@ -32,6 +34,9 @@ int main(int argc, char ** argv)
   io::pgm::load(ima, argv[1]);
   unsigned lambda = atoi(argv[2]);
 
-  io::pgm::save(n_cmpt::n_cmpt3(ima, c4(), lambda),
+  int_u8 tab[] = {2,3,1,0,2,3,2,2,1};
+  image1d<int_u8> ima1= make::image(tab);
+  
+  io::pgm::save(n_cmpt::n_cmpt3(ima1, c4(), lambda),
                 "out.pgm");
 }

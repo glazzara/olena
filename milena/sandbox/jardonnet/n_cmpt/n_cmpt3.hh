@@ -61,19 +61,6 @@ namespace mln
         return parent(x) = find_root(parent, parent(x));
     }
 
-    template < typename I >
-    unsigned count_minima(const I& ima)
-    {
-      unsigned cmpt = 0;
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-      {
-        if (ima(p) != literal::zero)
-          cmpt++;
-      }
-      return cmpt;
-    }
-
     template < typename I, typename N>
     I
     n_cmpt3(const I& ima, const N& nbh,
@@ -91,7 +78,7 @@ namespace mln
 
       // compute volume image
       typedef p_array<mln_psite(I)> S;
-      typedef image2d<unsigned> V;
+      typedef mln_ch_value(I,unsigned) V;
       typedef accu::volume<I> A;
 
       S sp = level::sort_psites_decreasing(ima);
@@ -152,20 +139,30 @@ namespace mln
             P r = find_root(parent, n);
             if (r != p)
             {
-              // propagate set
-              volume_set(p).insert(volume_set(r));
-              // build tree
-              parent(r) = p;
+              // One cmpt less if
+              if (volume(r) != volume(p)) // r and p have differerent volumes
+                if (not volume_set(p).is_empty()) // r already belong to a cmpt
+                  if (volume_set(p) != volume_set(r)) // cmpt r and p are different
+                    if (cmpts > lambda) // union is still alowed
+                      cmpts--;
+
+              if (cmpts > lambda ||
+                  volume(r) == volume(p) ||
+                  volume_set(p).is_empty())
+              {
+                parent(r) = p;
+                // propagate set
+                volume_set(p).insert(volume_set(r));
+              }
             }
           }
         }
         deja_vu(p) = true;
       }
 
-      debug::println(volume_set);
-
     step2:
-//       std::cout << "Nb cmpts after processing : " << cmpts << std::endl;
+      debug::println(volume_set);
+      std::cout << "Nb cmpts after processing : " << cmpts << std::endl;
 
       // second pass
       I output(ima.domain());

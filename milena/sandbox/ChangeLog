@@ -1,5 +1,12 @@
 2008-12-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Update n_cmpt3.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Update cmpts--.
+	* jardonnet/n_cmpt/n_cmpt3.cc: Try to use 1d image.
+
+2008-12-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Add test for big_chess.
 
 	* jardonnet/test/big_chess.cc: Here.
