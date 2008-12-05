@@ -1,3 +1,9 @@
+2008-12-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add test for big_chess.
+
+	* jardonnet/test/big_chess.cc: Here.
+
 2008-12-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	[Scribo] Use graph.
