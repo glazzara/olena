@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,12 @@
 #ifndef MLN_CORE_CONCEPT_SITE_ITERATOR_HH
 # define MLN_CORE_CONCEPT_SITE_ITERATOR_HH
 
-/*! \file mln/core/concept/site_iterator.hh
- *
- * \brief Definition of the concept of mln::Site_Iterator.
- *
- * \todo Fix mln/core/concept/doc/site_iterator.hh
- */
+/// \file mln/core/concept/site_iterator.hh
+///
+/// Definition of the concept of mln::Site_Iterator.
+///
+/// \todo Fix mln/core/concept/doc/site_iterator.hh
+
 
 # include <mln/core/concept/site_proxy.hh>
 # include <mln/core/concept/iterator.hh> // To fetch the macros.
@@ -42,15 +43,15 @@
 namespace mln
 {
 
-  /*! \brief Base class for implementation of classes of iterator on
-   *  points.
-   *
-   * An iterator on points is an iterator that browse over a set of
-   * points.
-   *
-   * \see mln::doc::Site_Iterator for a complete documentation of this class
-   * contents.
-   */
+  /// Base class for implementation of classes of iterator on
+  ///  points.
+  ///
+  /// An iterator on points is an iterator that browse over a set of
+  /// points.
+  ///
+  /// \see mln::doc::Site_Iterator for a complete documentation of this class
+  /// contents.
+  ///
   template <typename E>
   struct Site_Iterator : public Site_Proxy<E>
   {
@@ -62,14 +63,14 @@ namespace mln
       const ..& target_() const;
     */
 
-    /*! \brief Go to the next element.
-     *
-     * \warning This is a final method; iterator classes should not
-     * re-defined this method.  The actual "next" operation has to be
-     * defined through the \em next_ method.
-     *
-     * \pre The iterator is valid.
-     */ 
+    /// Go to the next element.
+    ///
+    /// \warning This is a final method; iterator classes should not
+    /// re-defined this method.  The actual "next" operation has to be
+    /// defined through the \em next_ method.
+    ///
+    /// \pre The iterator is valid.
+    ///
     void next(); // final
 
     // FIXME: Doc!!!

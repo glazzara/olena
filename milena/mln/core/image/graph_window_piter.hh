@@ -33,12 +33,12 @@
 ///
 /// Definition of a point iterator on a line_graph window.
 
-
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
 
 namespace mln
 {
+
 
   /// Forward iterator on line graph window.
   template <typename S, typename W, typename I>
@@ -57,8 +57,6 @@ namespace mln
 
     // FIXME: Dummy typedef.
     typedef void dpoint;
-    // FIXME: Dummy value.
-    typedef void mesh;
     /// \}
 
     /// Construction.
@@ -80,6 +78,16 @@ namespace mln
     void do_start_();
     /// Go to the next point.
     void do_next_();
+
+    /// Set the reference psite.
+    /* FIXME: Careful, this method overrides the (non virtual) method
+       internal::site_relative_iterator_base<S, E>::center_at.  See
+       FIXME above.  */
+    template <typename Pref>
+    void center_at(const Pref& c);
+
+    /// Return the graph element pointed by this iterator.
+    const mln_graph_element(S)& element() const;
 
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
@@ -104,10 +112,10 @@ namespace mln
   inline
   graph_window_piter<S,W,I>::graph_window_piter(const Window<W>& win,
 						const Pref& p_ref)
-     : iter_(p_ref.hook_iter_())
   {
-    this->change_target(exact(win));
     center_at(p_ref);
+    this->change_target(exact(win));
+    mln_postcondition(!this->is_valid());
   }
 
   template <typename S, typename W, typename I>
@@ -148,6 +156,24 @@ namespace mln
   graph_window_piter<S,W,I>::compute_p_() const
   {
     return mln_psite(S)(this->center().site_set(), iter_.id());
+  }
+
+  template <typename S, typename W, typename I>
+  template <typename Pref>
+  inline
+  void
+  graph_window_piter<S, W, I>::center_at(const Pref& c)
+  {
+    super_::center_at(c);
+    iter_.center_at(c.hook_iter_());
+  }
+
+  template <typename S, typename W, typename I>
+  inline
+  const mln_graph_element(S)&
+  graph_window_piter<S, W, I>::element() const
+  {
+    return iter_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,12 @@
 #ifndef MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
 # define MLN_CORE_INTERNAL_SITE_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/site_iterator_base.hh
- *
- * \brief Base class to factor code for site iterator classes.
- *
- * \todo Import tech doc from home.
- */
+/// \file mln/core/internal/site_iterator_base.hh
+///
+/// Base class to factor code for site iterator classes.
+///
+/// \todo Import tech doc from home.
+
 
 # include <mln/core/concept/site_iterator.hh>
 # include <mln/core/concept/pseudo_site.hh> // Use of if_possible::change_target.
@@ -49,16 +49,16 @@ namespace mln
   namespace internal
   {
 
-    /*! A base class for site iterators.
-     *
-     * NEVER DIRECTLY DERIVE FROM THIS CLASS.
-     *
-     * Instead derive EITHER from site_set_iterator_base OR from
-     * site_relative_iterator_base OR from piter_adaptor_.
-     *
-     * Parameter \c S is the targeted "site set definition" type.  It
-     * can be either a Site_Set, a Window, or a Neighborhood.
-     */
+    /// A base class for site iterators.
+    ///
+    /// NEVER DIRECTLY DERIVE FROM THIS CLASS.
+    ///
+    /// Instead derive EITHER from site_set_iterator_base OR from
+    /// site_relative_iterator_base OR from piter_adaptor_.
+    ///
+    /// Parameter \c S is the targeted "site set definition" type.  It
+    /// can be either a Site_Set, a Window, or a Neighborhood.
+    ///
     template <typename S, typename E>
     struct site_iterator_base : Site_Iterator<E>,
                                 proxy_impl< const mln_psite(S)&, E>
@@ -69,13 +69,13 @@ namespace mln
       /// Return the site it points to (as a Site_Proxy).
       const mln_site(S)& to_site() const;
 
-      /*! \brief Conversion towards the site it designates (as a Site_Proxy).
-       *
-       * \warning This is a final method; iterator classes should not
-       * re-defined this method.
-       *
-       * \pre The iterator is valid.
-       */ 
+      /// Conversion towards the site it designates (as a Site_Proxy).
+      ///
+      /// \warning This is a final method; iterator classes should not
+      /// re-defined this method.
+      ///
+      /// \pre The iterator is valid.
+      ///
       operator mln_site(S)() const;
 
       /// Give the subject (required by the Proxy interface).
@@ -83,7 +83,7 @@ namespace mln
 
       /// Give the target address.  It might be 0.
       const S*& target_();
-      
+
     protected:
 
       site_iterator_base();

@@ -76,6 +76,9 @@ namespace mln
     unsigned delta() const;
     /// Apply a central symmetry to the target window.
     self_& sym();
+
+    /// Is the window neighbable?
+    bool is_neighbable_() const;
     /// \}
 
   protected:
@@ -132,6 +135,14 @@ namespace mln
   graph_window_base<P,E>::sym()
   {
     return *this;
+  }
+
+  template <typename P, typename E>
+  inline
+  bool
+  graph_window_base<P,E>::is_neighbable_() const
+  {
+    return true;
   }
 
 

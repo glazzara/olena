@@ -1,3 +1,32 @@
+2008-12-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix bugs in graph.
+
+	* mln/core/internal/site_relative_iterator_base.hh,
+	* mln/core/internal/site_iterator_base.hh,
+	* mln/core/concept/site_iterator.hh: fix comments.
+
+	* mln/core/image/line_graph_elt_window.hh,
+	* mln/core/image/graph_elt_window.hh: change typedefs.
+
+	* mln/core/image/graph_window_piter.hh: add center_at().
+
+	* mln/core/internal/graph_window_base.hh: add is_neighbable_().
+
+	* mln/core/neighb.hh,
+	* mln/core/internal/neighb_niter_impl.hh: allow optional
+	implementation for neighborhood based on neighb.
+
+	* mln/core/macros.hh: add mln_graph_element.
+
+	* mln/util/internal/graph_nbh_iter_base.hh: fix center_at().
+
+	* mln/util/vertex.hh: update an assertion.
+
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc: make them real tests and
+	remove debug output.
+
 2008-12-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add big_chess functor.

@@ -194,7 +194,7 @@ namespace mln
     vertex<G>::vertex(const G& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(/* FIXME: g_.is_valid() && */ g_.has_v(id));
+      mln_assertion(is_valid());
     }
 
     template<typename G>
@@ -212,7 +212,6 @@ namespace mln
     {
       id_ = mln_max(unsigned);
     }
-
 
     template<typename G>
     inline

@@ -39,7 +39,7 @@
 
 # include <mln/core/internal/neighborhood_base.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
-
+# include <mln/core/internal/neighb_niter_impl.hh>
 
 
 namespace mln
@@ -103,7 +103,7 @@ namespace mln
     void
     from_to(const W& from, mln::neighb<W>& to);
 
-  } // end of namespace convert
+  } // end of namespace mln::convert
 
 
 
@@ -112,7 +112,8 @@ namespace mln
   template <typename W>
   class neighb_fwd_niter
     : public internal::site_relative_iterator_base< neighb<W>,
-						    neighb_fwd_niter<W> >
+						    neighb_fwd_niter<W> >,
+      public internal::neighb_niter_impl<W, neighb_fwd_niter<W> >
   {
   public:
 
@@ -149,7 +150,8 @@ namespace mln
 template <typename W>
 class neighb_bkd_niter
   : public internal::site_relative_iterator_base< neighb<W>,
-						  neighb_bkd_niter<W> >
+						  neighb_bkd_niter<W> >,
+    public internal::neighb_niter_impl<W, neighb_fwd_niter<W> >
 {
 public:
 

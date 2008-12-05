@@ -31,19 +31,13 @@
 
 #include <vector>
 
-#include <mln/accu/bbox.hh>
-#include <mln/core/alias/box2d.hh>
-#include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_vertices.hh>
-
-#include <mln/core/image/image_if.hh>
-#include <mln/core/image/sub_image.hh>
-#include <mln/core/var.hh>
-#include <mln/core/routine/ops.hh>
-#include <mln/literal/ops.hh>
-#include <mln/fun/ops.hh>
-#include <mln/value/ops.hh>
 #include <mln/core/image/graph_elt_window.hh>
+#include <mln/core/concept/function.hh>
+#include <mln/core/neighb.hh>
+#include <mln/core/var.hh>
+
+#include <mln/accu/bbox.hh>
 
 #include <mln/fun/i2v/array.hh>
 
@@ -51,8 +45,23 @@
 
 #include <mln/debug/draw_graph.hh>
 #include <mln/debug/println.hh>
-#include <mln/core/concept/function.hh>
-#include <mln/core/neighb.hh>
+
+
+
+// Expected neighbors for forward and backward iteration.
+static unsigned fwd[5][3] = { { 1, -1, -1 },
+			      { 0,  2,  3 },
+			      { 1,  4, -1 },
+			      { 1,  4, -1 },
+			      { 3,  2, -1 } };
+
+static unsigned bkd[5][3] = { { 1, -1, -1 },
+			      { 3,  2,  0 },
+			      { 4,  1, -1 },
+			      { 4,  1, -1 },
+			      { 2,  3, -1 } };
+
+
 
 template <typename S>
 struct viota_t : public mln::Function_p2v< viota_t<S> >
@@ -75,6 +84,7 @@ struct viota_t : public mln::Function_p2v< viota_t<S> >
   protected:
     std::vector<result> v_;
 };
+
 
 
 
@@ -140,6 +150,8 @@ int main()
   mln_const_VAR(ima, (iota | pv));
 
   {
+    // FIXME: Move this part to a special test case.
+
     // Compute the bounding box of 'ima'.
     accu::bbox<point2d> a;
     mln_piter_(ima_t) p(ima.domain());
@@ -171,7 +183,6 @@ int main()
   // We use the value 9 in debug::graph to represent edges to distinguish it
   // from vertices holding a value of 1.
     debug::draw_graph(ima_rep, pv, 1, 9);
-    debug::println(ima_rep);
   }
 
   /*------------.
@@ -186,16 +197,18 @@ int main()
 
   typedef graph_elt_window<util::graph, fsite_t> win_t;
   win_t win;
-    
+
   {
     // Window - Forward iteration
     mln_qiter_(win_t) q(win, p);
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
-		<< "including the site itself:" << std::endl;
+      i = 0;
       for_all (q)
-	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
+      {
+	mln_assertion(fwd[p.element().id()][i] == q.element().id());
+	++i;
+      }
     }
   }
 
@@ -204,44 +217,43 @@ int main()
     mln_bkd_qiter_(win_t) q(win, p);
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), "
-		<< "including the site itself:" << std::endl;
+      i = 0;
       for_all (q)
-	std::cout << "  " << q << " (level = " << ima(q) << ")" << std::endl;
+      {
+	mln_assertion(bkd[p.element().id()][i] == q.element().id());
+	++i;
+      }
     }
   }
 
-  typedef neighb<win_t> neigh_t;
-
+  typedef neighb<win_t> neighb_t;
+  neighb_t neigh(win);
   {
     // Neighborhood - Forward iteration
-    neigh_t neigh(win);
-    mln_niter_(neigh_t) n(neigh, p);
+    mln_niter_(neighb_t) n(neigh, p);
 
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
+      i = 0;
       for_all (n)
       {
-	mln_assertion(n != p);
-	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+	mln_assertion(fwd[p.element().id()][i] == n.element().id());
+	++i;
       }
     }
   }
 
   {
     // Neighborhood - Backward iteration
-    neigh_t neigh(win);
-    mln_bkd_niter_(neigh_t) n(neigh, p);
+    mln_bkd_niter_(neighb_t) n(neigh, p);
     for_all (p)
     {
-      std::cout << "neighbors of " << p << " (" << ima(p) << "), " << std::endl;
+      i = 0;
       for_all (n)
       {
-	mln_assertion(n != p);
-	std::cout << "  " << n << " (level = " << ima(n) << ")" << std::endl;
+	mln_assertion(bkd[p.element().id()][i] == n.element().id());
+	++i;
       }
     }
   }
-  std::cout << std::endl;
 }

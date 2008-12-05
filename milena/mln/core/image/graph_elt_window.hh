@@ -86,17 +86,17 @@ namespace mln
   public:
     /// Associated types.
     /// \{
-    typedef p_vertices<G,F> S;
+    typedef p_vertices<G,F> target;
     /// The type of psite corresponding to the window.
-    typedef mln_psite(S) psite;
+    typedef mln_psite(target) psite;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the ordering of vertices.
-    typedef graph_window_piter<S,self_,nbh_fwd_iter_> fwd_qiter;
+    typedef graph_window_piter<target,self_,nbh_fwd_iter_> fwd_qiter;
 
     /// Site_Iterator type to browse the psites of the window
     /// w.r.t. the reverse ordering of vertices.
-    typedef graph_window_piter<S,self_,nbh_bkd_iter_> bkd_qiter;
+    typedef graph_window_piter<target,self_,nbh_bkd_iter_> bkd_qiter;
 
     /// The default qiter type.
     typedef fwd_qiter qiter;

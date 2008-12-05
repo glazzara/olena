@@ -31,7 +31,7 @@
 # include <mln/core/concept/proxy.hh>
 
 /// \file   mln/util/internal/graph_nbh_iter_base.hh
-/// \brief  Base implementation for graph edge and vertex neighborhood iterator.
+/// Base implementation for graph edge and vertex neighborhood iterator.
 
 namespace mln
 {
@@ -64,6 +64,11 @@ namespace mln
 
 	/// Conversion operator. Returns the element ID.
 	operator unsigned() const;
+
+	/// Make \p c the center of this iterator.
+	template <typename C2>
+	void center_at(const C2& c);
+
 	/// \}
 
 	/// Proxy.
@@ -79,9 +84,6 @@ namespace mln
 	template <typename C2>
 	nbh_iterator_base(const C2& c);
 	/// \}
-
-	template <typename C2>
-	void center_at(const C2& c);
 
 	const C* c_; // Center
 	P p_;
@@ -176,6 +178,7 @@ namespace mln
     {
       internal::get_adr(c_, c);
       mln_postcondition(c_ != 0);
+      p_.change_graph(c.graph());
 
       invalidate();
     }

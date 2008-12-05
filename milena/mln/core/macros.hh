@@ -131,6 +131,12 @@
 # define mln_element_(T)                T::element
 /// \}
 
+/// Shortcuts to access the graph element type associated to T.
+/// \{
+# define mln_graph_element(T)        typename T::graph_element
+# define mln_graph_element_(T)                T::graph_element
+/// \}
+
 /// Shortcuts to access the encoding type associated to T.
 /// \{
 # define mln_enc(T)        typename T::enc

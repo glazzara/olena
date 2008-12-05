@@ -28,16 +28,16 @@
 #ifndef MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
 # define MLN_CORE_SITE_RELATIVE_ITERATOR_BASE_HH
 
-/*! \file mln/core/internal/site_relative_iterator_base.hh
- *
- * \brief Definition of forward and backward mln::dpoint_ based
- * iterators.
- *
- * \todo Add a method to get the site set (if the center is defined) or
- * the site set at a given center.
- *
- * \todo In start_ and next_, think about the commented code...
- */
+/// \file mln/core/internal/site_relative_iterator_base.hh
+///
+/// Definition of forward and backward mln::dpoint_ based
+/// iterators.
+///
+/// \todo Add a method to get the site set (if the center is defined) or
+/// the site set at a given center.
+///
+/// \todo In start_ and next_, think about the commented code...
+
 
 # include <vector>
 # include <mln/core/internal/site_iterator_base.hh>
@@ -50,16 +50,16 @@ namespace mln
   namespace internal
   {
 
-    /*! \brief A generic iterator on points of windows and of
-     *  neighborhoods.
-     *
-     * Parameter \c S is the targeted "site set definition" type.  It
-     * can be either a Window, or a Neighborhood.
-     *
-     * IMPORTANT: Sub-classes have to define do_start_, do_next_,
-     * is_valid_, invalidate_ and compute_p_.  They shall define
-     * NEITHER start_ NOR next_.
-     */
+    /// A generic iterator on points of windows and of
+    ///  neighborhoods.
+    ///
+    /// Parameter \c S is the targeted "site set definition" type.  It
+    /// can be either a Window, or a Neighborhood.
+    ///
+    /// IMPORTANT: Sub-classes have to define do_start_, do_next_,
+    /// is_valid_, invalidate_ and compute_p_.  They shall define
+    /// NEITHER start_ NOR next_.
+    ///
     template <typename S, typename E>
     class site_relative_iterator_base : public site_iterator_base< S, E >
     {
