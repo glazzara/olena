@@ -1,4 +1,29 @@
-2008-12-05  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update unit tests.
+
+	* milena/tests/unit_test/Makefile.am: Update.
+	
+	* milena/tests/unit_test/mln_convert_to_tiles.cc,
+	* milena/tests/unit_test/mln_core_image_graph_neighborhood_piter.cc,
+	* milena/tests/unit_test/mln_core_image_line_graph_elt_piter.cc,
+	* milena/tests/unit_test/mln_core_image_line_graph_neighborhood_piter.cc,
+	* milena/tests/unit_test/mln_core_image_line_graph_window_piter.cc,
+	* milena/tests/unit_test/mln_core_image_translate_image.cc,
+	* milena/tests/unit_test/mln_display_color_pretty.cc,
+	* milena/tests/unit_test/mln_display_remove.cc,
+	* milena/tests/unit_test/mln_display_save.cc,
+	* milena/tests/unit_test/mln_display_save_and_show.cc,
+	* milena/tests/unit_test/mln_display_show.cc,
+	* milena/tests/unit_test/mln_draw_label.cc,
+	* milena/tests/unit_test/mln_morpho_dilation_fast.cc,
+	* milena/tests/unit_test/mln_morpho_erosion_fast.cc,
+	* milena/tests/unit_test/mln_neighb_all.cc,
+	* milena/tests/unit_test/mln_neighb_essential.cc,
+	* milena/tests/unit_test/mln_neighb_get.cc,
+	* milena/tests/unit_test/mln_neighb_image.cc: remove.
+
+2008-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make milena/tools compile.
 
