@@ -1,3 +1,9 @@
+2008-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Disable milena/apps makefiles.
+
+	* configure.ac: do it here.
+
 2008-11-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing Makefiles in AC_CONFIG_FILES.

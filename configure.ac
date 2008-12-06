@@ -244,10 +244,11 @@ AC_CONFIG_FILES([
 
 # Ask for the creation of applications' Makefiles.
 # FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
-AC_CONFIG_FILES([
-  milena/apps/Makefile
-    milena/apps/statues/Makefile
-])
+# FIXME: ENABLE IT
+#AC_CONFIG_FILES([
+#  milena/apps/Makefile
+#    milena/apps/statues/Makefile
+#])
 
 # Configure tests.
 AC_CONFIG_FILES([milena/apps/statues/test],
