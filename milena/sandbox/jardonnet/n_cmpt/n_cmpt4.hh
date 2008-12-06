@@ -70,12 +70,12 @@ namespace mln
 
       std::cout << "/ima/" << std::endl;
       debug::println(ima);
-
+      /*
       // get /ima/ regional minima
       mln_ch_value(I, unsigned) min = labeling::regional_minima(ima, nbh, label);
       std::cout << "/ima/ regional minima" << std::endl;
       debug::println(min);
-
+*/
       // compute volume image
       typedef p_array<mln_psite(I)> S;
       typedef mln_ch_value(I,unsigned) V;
@@ -96,8 +96,9 @@ namespace mln
       // tester minima de ima == minima de attr
       //mln_assertion(min == min_v);
 
-      mln_ch_value(I, util::set<unsigned>) volume_set;
-      initialize(volume_set, min_v);
+      mln_ch_value(I, bool) fused;
+      initialize(fused, volume);
+      mln::level::fill(fused, false);
 
       // number of minima
       unsigned cmpts = label;
@@ -120,13 +121,12 @@ namespace mln
         {
           parent(p) = p;
           if (min_v(p) != 0) // p in a reg min of the attribute image
-            volume_set(p).insert(min_v(p));
+            fused(p) = true; // ok
         }
       }
 
       std::cout << "cmpts |      volume_set      | " << std::endl;
       std::cout << cmpts << " : ";
-      debug::println(volume_set);
       std::cout << std::endl;
 
       // union find sur volume
@@ -147,29 +147,24 @@ namespace mln
             {
               // One cmpt less if
               if (volume(r) != volume(p)) // r and p have differerent volumes
-                if (not volume_set(p).is_empty()) // p already belong to a cmpt
-                  if (volume_set(p) != volume_set(r)) // cmpt r and p are different
-                  {
-                    if (cmpts >= lambda) // unions still allowed
-                      cmpts--;
-                  }
-                  else
-                  {
-                    // should not happen since we test that (r != p)
-                    std::cout << "IT HAPPEND !!!!!!!!!!!!!!!!!!!" << std::endl;
-                    exit(42);
-                  }
+                if (fused(p)) // p already belong to a cmpt (fused for an another n)
+                  if (cmpts >= lambda) // union is still alowed
+                    cmpts--;
 
               if (cmpts >= lambda ||
                   volume(r) == volume(p) ||
-                  volume_set(p).is_empty())
+                  not fused(p))
               {
                 parent(r) = p;
                 // propagate set
-                volume_set(p).insert(volume_set(r));
+                fused(p) = true;
 
-                std::cout << "volume " << volume(p) << " - " << cmpts << " : " << std::endl;
-                debug::println(volume_set);
+                //min_v(p) = min_v(r); //FIXME: fusion may happend with a non minima value
+
+                fused(n) = true; // We cannot mark minima at init !   ... ?
+
+                std::cout << "volume " << volume(p) << " - " << cmpts << std::endl;
+                debug::println(fused);
               }
             }
           }
@@ -187,7 +182,15 @@ namespace mln
         mln_bkd_piter(S) p(sp);
         for_all(p)
          if (parent(p) == p) // p is root.
-           output(p) = ima(p);
+         {
+           //FIXME: if minimas have same values. Components are not visible.
+           //Using min_v instead of ima does not really fix it.
+           //see propagation of min_v values.
+           //Maybe this is only a part of the problem:
+           // n_cmpt4 claims that n components remain,
+           // which is visually false.
+           output(p) = ima(p); //(p[0] + p[1]) * 10;
+         }
          else
            output(p) = output(parent(p));
       }

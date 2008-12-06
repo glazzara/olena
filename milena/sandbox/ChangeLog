@@ -1,3 +1,18 @@
+2008-12-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add n_cmpt4 : version without util::set.
+
+	* jardonnet/n_cmpt/n_cmpt3.hh: Minor fix for test.
+	* jardonnet/n_cmpt/n_cmpt3.cc: Add 1d test.
+
+	* jardonnet/n_cmpt/n_cmpt4.hh: New version without util::set.
+	* jardonnet/n_cmpt/n_cmpt4.cc: New main.
+
+	* jardonnet/n_cmpt/Makefile: Add n_cmpt4 rules.
+
+	* jardonnet/n_cmpt/tiny_seg15.pgm: New.
+	* jardonnet/n_cmpt/seg15.pgm: New.
+
 2008-12-05  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update n_cmpt3.

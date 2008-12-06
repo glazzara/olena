@@ -11,7 +11,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include "n_cmpt3.hh"
+#include "n_cmpt4.hh"
 
 using namespace mln;
 using namespace mln::value;
@@ -35,11 +35,13 @@ int main(int argc, char ** argv)
   io::pgm::load(ima, argv[1]);
   unsigned lambda = atoi(argv[2]);
 
+  ima(point2d(0,3)) = 106;
+
   int_u8 tab[] = {2,3,1,0,2,3,4,5,1,1,0,5,6,8,7,1,1,2,3,4};
   image1d<int_u8> ima1= make::image(tab);
 
-  std::cout << "/output/" << std::endl;
-  //debug::println(n_cmpt::n_cmpt3(ima1, c2(), lambda));
+  //  std::cout << "/output/" << std::endl;
+  //  debug::println(n_cmpt::n_cmpt3(ima1, c2(), lambda));
 
   io::pgm::save(n_cmpt::n_cmpt3(ima, c4(), lambda),
                 "out.pgm");
