@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tools/seed2tiling.cc
- *
- * \brief Tool using mln::geom::seed2tiling.
- */
+/// \file tools/seed2tiling.cc
+///
+/// Tool using mln::geom::seed2tiling.
+
 
 
 # include <mln/core/image/image2d.hh>
@@ -48,7 +49,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>
-#include <mln/core/image_if_value.hh>
+#include <mln/core/image/image_if.hh>
 
 
 #include <mln/core/alias/w_window2d_int.hh>
@@ -80,8 +81,7 @@ int main(int argc, char* argv[])
     image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());
     border::fill (inte, 0);
 
-    image2d<int_u8> inte2(input.domain());
-    level::stretch(inte, inte2);
+    image2d<int_u8> inte2 = level::stretch(int_u8(), inte);
     io::pgm::save(inte2, "ima1.pgm");
 
     std::cout << "ima1 generate with seeds2tiling"
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
     inte = geom::seeds2tiling_roundness(lab, w_win, max, c4 ());
     border::fill(inte, 0);
 
-    level::stretch(inte, inte2);
+    inte2 = level::stretch(int_u8(), inte);
 
     io::pgm::save(inte2, "ima2.pgm");
     std::cout << "ima2 generate with seeds2tiling_roundness"

@@ -2,12 +2,13 @@
 
 ##FIXME
 SUBDIRS = 	\
-  mesh 	 	\
   doc 		\
-  tests 	
-  tools 	\
-  apps
+  mesh 	 	\
+  tests		\
+  tools
+#  apps
 
 .PHONY: doc
 doc:
 	$(MAKE) -C doc doc
+

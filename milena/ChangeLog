@@ -1,5 +1,17 @@
 2008-12-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make milena/tools compile.
+
+	* milena/Makefile.am: re-enable tools subdir.
+
+	* milena/tests/Makefile.am: re-enable display subdir.
+
+	* milena/tools/Makefile.am: disable area_flooding.
+
+	* milena/tools/seed2tiling.cc: make it compile.
+
+2008-12-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix bugs in graph.
 
 	* mln/core/internal/site_relative_iterator_base.hh,
