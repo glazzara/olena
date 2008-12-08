@@ -90,6 +90,9 @@ namespace mln
       /// Invalidate this psite.
       void invalidate();
 
+      /// Convertion towards the graph element Id.
+      operator unsigned() const;
+
       /// Conversion towards the graph element (vertex or edge).
       operator const typename S::graph_element&() const;
 
@@ -250,6 +253,14 @@ namespace mln
   {
     mln_precondition(s_ != 0);
     return s_->function()(elt_.id());
+  }
+
+  template <typename S, typename E>
+  inline
+  graph_psite_base<S,E>::operator unsigned() const
+  {
+    mln_precondition(is_valid());
+    return elt_.id();
   }
 
   template <typename S, typename E>

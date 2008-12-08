@@ -62,32 +62,6 @@ static unsigned bkd[5][3] = { { 1, -1, -1 },
 			      { 2,  3, -1 } };
 
 
-
-template <typename S>
-struct viota_t : public mln::Function_p2v< viota_t<S> >
-{
-  typedef unsigned result;
-
-  viota_t(unsigned size)
-  {
-    v_.resize(size);
-    for (unsigned i = 0; i < size; ++i)
-      v_[i] = 10 + i;
-  }
-
-  unsigned
-  operator()(const mln_psite(S)& p) const
-  {
-    return v_[p.v().id()];
-  }
-
-  protected:
-    std::vector<result> v_;
-};
-
-
-
-
 int main()
 {
   using namespace mln;
@@ -144,7 +118,10 @@ int main()
   `-------------*/
 
   // Graph values.
-  viota_t<S> iota(5);
+  typedef fun::i2v::array<unsigned> viota_t;
+  viota_t iota(pv.nsites());
+  for (unsigned i = 0; i < iota.size(); ++i)
+    iota(i) = 10 + i;
 
   // Create graph image.
   mln_const_VAR(ima, (iota | pv));

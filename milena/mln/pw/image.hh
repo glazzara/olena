@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,10 @@
 #ifndef MLN_PW_IMAGE_HH
 # define MLN_PW_IMAGE_HH
 
-/*! \file mln/pw/image.hh
- *
- * \brief FIXME.
- *
- * \todo Relax Function_p2v into Function_v2v.
- */
+/// \file mln/pw/image.hh
+///
+/// FIXME.
+
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/concept/function.hh>
@@ -49,12 +48,11 @@ namespace mln
 
 
 
-  /*! \brief FIXME
-   *
-   */
+  /// Construct an image from a function and a site set.
+  /// image = function | site_set.
   template <typename F, typename S>
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps);
+  operator | (const Function_v2v<F>& f, const Site_Set<S>& ps);
 
 
 
@@ -114,9 +112,8 @@ namespace mln
   namespace pw
   {
 
-    /*! \brief FIXME
-     *
-     */
+    /// FIXME
+    ///
     template <typename F, typename S>
     struct image :
       public internal::image_primary<mln_result(F), S, image<F,S> >
@@ -138,10 +135,10 @@ namespace mln
       image();
 
       /// Constructor.
-      image(const Function_p2v<F>& f, const Site_Set<S>& ps);
+      image(const Function_v2v<F>& f, const Site_Set<S>& ps);
 
       /// Initialize an empty image.
-      void init_(const Function_p2v<F>& f, const Site_Set<S>& ps);
+      void init_(const Function_v2v<F>& f, const Site_Set<S>& ps);
 
       /// Give the definition domain.
       const S& domain() const;
@@ -159,7 +156,7 @@ namespace mln
   } // end of namespace mln::pw
 
   template <typename F, typename S>
-  void init_(tag::function_t, Function_p2v<F>& target,
+  void init_(tag::function_t, Function_v2v<F>& target,
 	      const mln::pw::image<F,S>& model);
 
   template <typename F, typename S, typename J>
@@ -171,7 +168,7 @@ namespace mln
   // init_
 
   template <typename F, typename S>
-  void init_(tag::function_t, Function_p2v<F>& target,
+  void init_(tag::function_t, Function_v2v<F>& target,
 	      const mln::pw::image<F,S>& model)
   {
     target = model.function();
@@ -192,7 +189,7 @@ namespace mln
   template <typename F, typename S>
   inline
   pw::image<F,S>
-  operator | (const Function_p2v<F>& f, const Site_Set<S>& ps)
+  operator | (const Function_v2v<F>& f, const Site_Set<S>& ps)
   {
     pw::image<F,S> tmp(f, ps);
     return tmp;
@@ -226,7 +223,7 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    image<F,S>::image(const Function_p2v<F>& f, const Site_Set<S>& ps)
+    image<F,S>::image(const Function_v2v<F>& f, const Site_Set<S>& ps)
     {
       this->data_ = new internal::data< pw::image<F,S> >(exact(f), exact(ps));
     }
@@ -234,7 +231,7 @@ namespace mln
     template <typename F, typename S>
     inline
     void
-    image<F,S>::init_(const Function_p2v<F>& f, const Site_Set<S>& ps)
+    image<F,S>::init_(const Function_v2v<F>& f, const Site_Set<S>& ps)
     {
       this->data_ = new internal::data< image<F,S> >(exact(f), exact(ps));
     }

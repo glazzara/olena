@@ -1,5 +1,18 @@
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Allow construction of pw images using Function_v2v.
+
+	* mln/core/internal/graph_psite_base.hh: Add conversion to graph
+	element id (unsigned).
+
+	* mln/pw/image.hh: Allow construction of pw::image from Function_v2v
+	instead of Function_p2v.
+
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc: cleanup code.
+
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix build system. 
 
 	* Makefile.am: Split and move data related to headers distribution...
