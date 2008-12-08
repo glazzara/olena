@@ -28,9 +28,9 @@
 #ifndef MLN_VALUE_LABEL_8_HH
 # define MLN_VALUE_LABEL_8_HH
 
-/// \file mln/value/label8.hh
+/// \file mln/value/label_8.hh
 ///
-/// Define the alias value::label8.
+/// Define the alias value::label_8.
 
 # include <mln/value/label.hh>
 
@@ -43,7 +43,7 @@ namespace mln
 
 
     /// Alias for 8-bit labels.
-    typedef mln::value::label<8> label8;
+    typedef mln::value::label<8> label_8;
 
 
   } // end of namespace mln::value

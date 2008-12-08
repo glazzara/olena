@@ -4,7 +4,7 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
-  using value::label8;
+  using value::label_8;
 
 
   // \{
@@ -21,8 +21,8 @@ int main()
   doc::pbmsave(ima, "labeling-compute");
 
   // \{
-  label8 nlabels;
-  image2d<label8> lbl = labeling::blobs(ima, c4(), nlabels);
+  label_8 nlabels;
+  image2d<label_8> lbl = labeling::blobs(ima, c4(), nlabels);
   // \}
   doc::ppmsave(debug::colorize(rgb8(), lbl, nlabels),
 	       "labeling-compute");

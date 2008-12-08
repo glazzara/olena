@@ -10,7 +10,7 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
-  using value::label8;
+  using value::label_8;
 
 
   // \{

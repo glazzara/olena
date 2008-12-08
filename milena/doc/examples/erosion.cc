@@ -62,10 +62,10 @@ void clean_lines(mln::image2d<bool>& in,
 		 unsigned bbox_larger)
 {
   using namespace mln;
-  using value::label8;
+  using value::label_8;
 
-  label8 nlabels;
-  image2d<label8> lbl = labeling::blobs(ima, c4(), nlabels);
+  label_8 nlabels;
+  image2d<label_8> lbl = labeling::blobs(ima, c4(), nlabels);
 
   for (unsigned i = nlabels; i > 0; --i)
   {

@@ -122,13 +122,13 @@ namespace mln
       typedef p_vertices<G, F> pv_t;
       mln_edge_iter(G) ei(g);
       for_all(ei)
-	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor(ei.subj_()));
+	draw::line(exact(ima), pv(ei.v1()), pv(ei.v2()), ecolor(ei.id()));
 
       // Draw vertices.
       mln_piter(pv_t) p(pv);
       for_all(p)
 	if (exact(ima).has(p))
-	  exact(ima)(p) = vcolor(p.element());
+	  exact(ima)(p) = vcolor(p);
     }
 
     // FIXME: Refactor + be more restrictive on the function type.
@@ -152,13 +152,13 @@ namespace mln
       {
 	p_line2d l = pv(vi.id());
 	// Draw edges (Line graph vertices).
-	draw::line(exact(ima), l.begin(), l.end(), ecolor(vi.subj_()));
+	draw::line(exact(ima), l.begin(), l.end(), ecolor(vi.id()));
 
 	// Draw vertices (graph vertices).
 	if (exact(ima).has(l.begin()))
-	  exact(ima)(l.begin()) = vcolor(g.vertex(g.edge(vi).v1()));
+	  exact(ima)(l.begin()) = vcolor(g.edge(vi).v1());
 	if (exact(ima).has(l.end()))
-	  exact(ima)(l.end()) = vcolor(g.vertex(g.edge(vi).v2()));
+	  exact(ima)(l.end()) = vcolor(g.edge(vi).v2());
       }
     }
 

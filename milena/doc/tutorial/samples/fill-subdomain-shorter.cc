@@ -3,7 +3,7 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
-  using value::label8;
+  using value::label_8;
 
 
   // \{
@@ -21,8 +21,8 @@ int main()
   // Find and label the different components.
   // Fill the sites of component 2 with red.
   // \{
-  label8 nlabels;
-  image2d<label8> lab = labeling::blobs(ima, c4(), nlabels);
+  label_8 nlabels;
+  image2d<label_8> lab = labeling::blobs(ima, c4(), nlabels);
 
   image2d<rgb8> ima2;
   initialize(ima2, ima);

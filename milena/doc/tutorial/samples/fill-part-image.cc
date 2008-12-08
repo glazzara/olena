@@ -3,7 +3,7 @@ int main()
 {
   using namespace mln;
   using value::int_u8;
-  using value::label8;
+  using value::label_8;
 
 
   // \{

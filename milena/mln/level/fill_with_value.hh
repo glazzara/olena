@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,14 @@
 #ifndef MLN_LEVEL_FILL_WITH_VALUE_HH
 # define MLN_LEVEL_FILL_WITH_VALUE_HH
 
-/*! \file mln/level/fill_with_value.hh
- *
- * \brief Fill an image with a value, that is, set all pixel values to
- * the given value.
- *
- * \todo Move specializations in a extra file.
- * \toto Activate fill_with_value_cell_wise.
- * \todo Optimize when \p ima is large and sizeof(mln_value(I)) > 1.
- */
+/// \file mln/level/fill_with_value.hh
+///
+/// Fill an image with a value, that is, set all pixel values to
+/// the given value.
+///
+/// \todo Move specializations in a extra file.
+/// \todo Activate fill_with_value_cell_wise.
+/// \todo Optimize when \p ima is large and sizeof(mln_value(I)) > 1.
 
 # include <cstdlib>
 
@@ -54,7 +54,7 @@ namespace mln
   namespace level
   {
 
-    /// \brief Fill the whole image \p ima with the single value \p v.
+    /// Fill the whole image \p ima with the single value \p v.
     ///
     /// \param[in,out] ima The image to be filled.
     /// \param[in] val The value to assign to all sites.

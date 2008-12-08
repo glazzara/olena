@@ -28,9 +28,9 @@
 #ifndef MLN_VALUE_LABEL_16_HH
 # define MLN_VALUE_LABEL_16_HH
 
-/// \file mln/value/label16.hh
+/// \file mln/value/label_16.hh
 ///
-/// Define the alias value::label16.
+/// Define the alias value::label_16.
 
 # include <mln/value/label.hh>
 
@@ -43,7 +43,7 @@ namespace mln
 
 
     /// Alias for 16-bit integers.
-    typedef label<16> label16;
+    typedef label<16> label_16;
 
 
   } // end of namespace mln::value

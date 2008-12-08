@@ -35,70 +35,6 @@
 #include <mln/debug/colorize.hh>
 
 
-
-struct gcolor_t : public mln::Function< gcolor_t >
-{
-  typedef mln::value::rgb8 result;
-
-  template <typename G>
-  mln::value::rgb8
-  operator()(const mln::util::vertex<G>&) const
-  {
-    return mln::literal::cyan;
-  }
-
-  template <typename G>
-  mln::value::rgb8
-  operator()(const mln::util::edge<G>&) const
-  {
-    return mln::literal::magenta;
-  }
-
-};
-
-struct gcolorarr_t : public mln::Function< gcolorarr_t >
-{
-  typedef mln::value::rgb8 result;
-
-  gcolorarr_t(unsigned n, const mln::value::rgb8& val)
-    : v_(n, val)
-  {
-  }
-
-  template <typename G>
-  const mln::value::rgb8&
-  operator()(const mln::util::vertex<G>& v) const
-  {
-    return v_[v.id()];
-  }
-
-  template <typename G>
-  const mln::value::rgb8&
-  operator()(const mln::util::edge<G>& e) const
-  {
-    return v_[e.id()];
-  }
-
-  template <typename G>
-  mln::value::rgb8&
-  operator()(const mln::util::vertex<G>& v)
-  {
-    return v_[v.id()];
-  }
-
-  template <typename G>
-  mln::value::rgb8&
-  operator()(const mln::util::edge<G>& e)
-  {
-    return v_[e.id()];
-  }
-
-  std::vector<mln::value::rgb8> v_;
-};
-
-
-
-
 template <typename P>
 struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
 {
@@ -123,7 +59,7 @@ struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
 int main(int argc, char *argv[])
 {
   using namespace mln;
-  using value::label16;
+  using value::label_16;
   using value::rgb8;
 
   if (argc < 2)
@@ -138,14 +74,14 @@ int main(int argc, char *argv[])
   io::pbm::load(ima, argv[1]);
   logical::not_inplace(ima);
 
-  label16 nlabels;
-  image2d<label16> lbl = labeling::blobs(ima, c8(), nlabels);
+  label_16 nlabels;
+  image2d<label_16> lbl = labeling::blobs(ima, c8(), nlabels);
 
 #ifndef NOUT
   io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), "01-lbl.ppm");
 #endif
 
-  image2d<label16> iz = transform::influence_zone_geodesic(lbl, c8(), mln_max(int));
+  image2d<label_16> iz = transform::influence_zone_geodesic(lbl, c8(), mln_max(int));
 
 #ifndef NOUT
   io::ppm::save(debug::colorize(rgb8(), iz, nlabels), "02-iz.ppm");
@@ -165,7 +101,10 @@ int main(int argc, char *argv[])
 
 #ifndef NOUT
   image2d<rgb8> gima = level::convert(rgb8(), ima);
-  debug::draw_graph(gima, pv, gcolor_t(), gcolor_t());
+  debug::draw_graph(gima,
+		    pv,
+		    pw::cst(literal::cyan),
+		    pw::cst(literal::olive));
   io::ppm::save(gima, "03-graph.ppm");
 #endif
 
@@ -185,7 +124,10 @@ int main(int argc, char *argv[])
 
 #ifndef NOUT
   image2d<rgb8> lgima = level::convert(rgb8(), ima);
-  debug::draw_graph(lgima, pvlg, gcolor_t(), gcolor_t());
+  debug::draw_graph(lgima,
+		    pvlg,
+		    pw::cst(literal::cyan),
+		    pw::cst(literal::olive));
   io::ppm::save(lgima, "04-line-graph.ppm");
 #endif
 
@@ -201,16 +143,19 @@ int main(int argc, char *argv[])
   //
   // literal::olive: cos(angle) < max_cos and cos(angle) > - max_cos
   // literal::red: cos(angle) > max_cos or cos(angle) < - max_cos
-  gcolorarr_t ecolor(pvlg.nsites(), literal::olive);
+  typedef fun::i2v::array<value::rgb8> lgcolor_t;
+  lgcolor_t ecolor(pvlg.nsites());
   mln_piter_(lg_ima_t) p(lg_ima.domain());
   for_all (p)
     if ((lg_ima(p) > max_cos) || (lg_ima(p) < - max_cos))
-      ecolor(p.element()) = literal::red;
+      ecolor(p) = literal::red;
+    else
+      ecolor(p) = literal::olive;
 
 
 #ifndef NOUT
   image2d<rgb8> lgima2 = level::convert(rgb8(), ima);
-  debug::draw_graph(lgima2, pvlg, gcolor_t(), ecolor);
+  debug::draw_graph(lgima2, pvlg, pw::cst(literal::cyan), ecolor);
   io::ppm::save(lgima2, "05-line-graph-cleanup.ppm");
 #endif
 }

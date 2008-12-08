@@ -4,7 +4,7 @@ int main()
 {
   using namespace mln;
   using value::rgb8;
-  using value::label8;
+  using value::label_8;
 
 
   // \{
@@ -23,8 +23,8 @@ int main()
 
   // Find and label the different components.
   // \{
-  label8 nlabels;
-  image2d<label8> lbl = labeling::blobs(ima, c4(), nlabels);
+  label_8 nlabels;
+  image2d<label_8> lbl = labeling::blobs(ima, c4(), nlabels);
   // \}
 
   doc::ppmsave(debug::colorize(rgb8(), lbl, nlabels), "fill-subdomain");
@@ -34,7 +34,7 @@ int main()
   mln_VAR(lbl_2, lbl | (pw::value(lbl) == pw::cst(2u)));
   // \}
 
-  image2d<label8> tmp;
+  image2d<label_8> tmp;
   initialize(tmp, lbl);
   level::fill(tmp, 0);
   level::fill((tmp | lbl_2.domain()).rw(), 1);

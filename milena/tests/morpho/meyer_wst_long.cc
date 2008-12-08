@@ -68,7 +68,7 @@ int main()
     clo  = morpho::closing_area(grad, c4(), 200);
 
   // Perform a Watershed Transform.
-  typedef value::label16 L;
+  typedef value::label_16 L;
   L nbasins;
   image2d<L> ws = morpho::meyer_wst(clo, c4(), nbasins);
 

@@ -1,5 +1,31 @@
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* mln/value/label_16.hh
+	* mln/value/label_8.hh
+	* tests/labeling/relabel.cc
+	* tests/morpho/meyer_wst_long.cc
+	* doc/examples/erosion.cc
+	* doc/examples/graph.cc
+	* doc/tutorial/samples/fill-part-image.cc
+	* doc/tutorial/samples/fill-subdomain-shorter.cc
+	* doc/tutorial/samples/fill-subdomain.cc
+	* doc/tutorial/samples/fill-subimage-cfun.cc
+	* doc/tutorial/samples/labeling-compute.cc: rename label8 to label_8
+	and label16 to label_16.
+	
+	* doc/tutorial/tutorial.tex: fix wrong include.
+
+	* mln/core/site_set/p_graph_piter.hh: add a conversion toward the
+	graph element id.
+
+	* mln/debug/draw_graph.hh: update.
+
+	* mln/level/fill_with_value.hh: fix comments.
+
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Allow construction of pw images using Function_v2v.
 
 	* mln/core/internal/graph_psite_base.hh: Add conversion to graph

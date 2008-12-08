@@ -39,14 +39,14 @@
 
 struct not_to_removed : public mln::Function_l2b< not_to_removed >
 {
-  bool operator()(const mln::value::label16& l) const
+  bool operator()(const mln::value::label_16& l) const
   {
-    return l < mln::value::label16(3);
+    return l < mln::value::label_16(3);
   }
 };
 
 
-bool is_valid(const mln::value::label16& l)
+bool is_valid(const mln::value::label_16& l)
 {
   return l == 0u|| l == 1u || l == 2u;
 }
@@ -56,9 +56,9 @@ bool is_valid(const mln::value::label16& l)
 int main()
 {
   using namespace mln;
-  using value::label16;
+  using value::label_16;
 
-  label16 vals[6][5] = {
+  label_16 vals[6][5] = {
     {0, 1, 1, 0, 0},
     {0, 1, 1, 4, 0},
     {0, 0, 0, 0, 0},
@@ -67,29 +67,29 @@ int main()
     {2, 5, 5, 0, 0}
   };
 
-  image2d<label16> lbl = make::image(vals);
-  label16 nlabels = 5;
+  image2d<label_16> lbl = make::image(vals);
+  label_16 nlabels = 5;
 
 
   {
-    label16 new_nlabels;
-    image2d<label16> lbl2 = labeling::relabel(lbl,
+    label_16 new_nlabels;
+    image2d<label_16> lbl2 = labeling::relabel(lbl,
 					      nlabels,
 					      new_nlabels,
 					      not_to_removed());
     mln_assertion(new_nlabels == 2u);
-    mln_piter_(image2d<label16>) p(lbl2.domain());
+    mln_piter_(image2d<label_16>) p(lbl2.domain());
     for_all(p)
       mln_assertion(is_valid(lbl2(p)));
   }
 
   {
-    label16 new_nlabels;
+    label_16 new_nlabels;
     labeling::relabel_inplace(lbl,
 			      nlabels,
 			      not_to_removed());
     mln_assertion(nlabels == 2u);
-    mln_piter_(image2d<label16>) p(lbl.domain());
+    mln_piter_(image2d<label_16>) p(lbl.domain());
     for_all(p)
       mln_assertion(is_valid(lbl(p)));
   }
