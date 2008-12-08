@@ -1,5 +1,11 @@
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Generate list of headers to be distributed.
+
+	* bootstrap: generate milena/headers.mk at bootstrap.
+
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove deprecated makefile entries.
 
 	* configure.ac: update.
