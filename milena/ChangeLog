@@ -1,3 +1,19 @@
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix compilation issues.
+
+	* milena/doc/tutorial/Makefile.am,
+	* milena/Makefile.am: Add files to make dist.
+
+	* milena/mln/essential/routine.hh,
+	* milena/mln/core/image/all.hh,
+	* milena/mln/draw/essential.hh: fix headers.
+
+	* milena/tests/unit_test/mln_core_def_low_quant_nbits.cc,
+	* milena/tests/unit_test/mln_core_internal_neighb_niter_impl.cc,
+	* milena/tests/unit_test/mln_fun_p2b_big_chess.cc,
+	* milena/tests/unit_test/mln_fun_p2p_mirror.cc: new unit_tests.
+
 2008-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update unit tests.

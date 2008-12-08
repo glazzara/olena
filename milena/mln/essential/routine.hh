@@ -55,7 +55,6 @@
 # include <mln/math/essential.hh>
 # include <mln/metal/essential.hh>
 # include <mln/morpho/essential.hh>
-# include <mln/neighb/essential.hh>
 # include <mln/norm/essential.hh>
 # include <mln/pw/essential.hh>
 # include <mln/registration/essential.hh>

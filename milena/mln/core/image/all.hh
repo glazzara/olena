@@ -54,10 +54,8 @@
 # include <mln/core/image/extension_ima.hh>
 # include <mln/core/image/extension_val.hh>
 # include <mln/core/image/flat_image.hh>
-# include <mln/core/image/graph_elt_neighborhood.hh>
 # include <mln/core/image/graph_elt_window.hh>
 //# include <mln/core/image/graph_image.hh>
-# include <mln/core/image/graph_neighborhood_piter.hh>
 # include <mln/core/image/graph_window_piter.hh>
 //# include <mln/core/image/hexa.hh>
 //# include <mln/core/image/hexa_piter.hh>
@@ -68,12 +66,7 @@
 # include <mln/core/image/image_if.hh>
 # include <mln/core/image/interpolated.hh>
 # include <mln/core/image/lazy_image.hh>
-//# include <mln/core/image/line_graph_elt_neighborhood.hh>
-//# include <mln/core/image/line_graph_elt_window.hh>
-//# include <mln/core/image/line_graph_image.hh>
-//# include <mln/core/image/line_graph_neighborhood_piter.hh>
-//# include <mln/core/image/line_graph_psite.hh>
-//# include <mln/core/image/line_graph_window_piter.hh>
+# include <mln/core/image/line_graph_elt_window.hh>
 //# include <mln/core/image/mono_obased_rle_encode.hh>
 //# include <mln/core/image/mono_obased_rle_image.hh>
 //# include <mln/core/image/mono_rle_encode.hh>

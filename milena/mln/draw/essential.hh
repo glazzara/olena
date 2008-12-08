@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,11 @@
 #ifndef MLN_DRAW_ESSENTIAL_HH
 # define MLN_DRAW_ESSENTIAL_HH
 
-/*! \file mln/draw/essential.hh
- *
- * \brief File that includes essential draw-related routines.
- */
+/// \file mln/draw/essential.hh
+///
+/// File that includes essential draw-related routines.
 
 # include <mln/draw/box.hh>
-# include <mln/draw/label.hh>
 # include <mln/draw/line.hh>
 
 #endif // ! MLN_DRAW_ESSENTIAL_HH
