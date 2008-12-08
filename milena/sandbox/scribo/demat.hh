@@ -60,7 +60,7 @@ namespace scribo
   {
 
     using namespace mln;
-    using value::label16;
+    using value::label_16;
     using value::rgb8;
 
 
@@ -190,7 +190,7 @@ namespace scribo
     ///
     /// FIXME: For each text bbox, we create a new image. We may like to avoid that.
     void
-    text_recognition(const image2d<bool>& in, const image2d<label16>& lbl,
+    text_recognition(const image2d<bool>& in, const image2d<label_16>& lbl,
 		     const util::array<box2d>& tboxes)
     {
       /// Use txt bboxes here with Tesseract
@@ -443,8 +443,8 @@ namespace scribo
     component_boxes(const image2d<bool>& filter)
     {
       std::cout << "component boxes" << std::endl;
-      label16 nlabels = 0;
-      image2d<label16> lbl = labeling::blobs(filter, c8(), nlabels);
+      label_16 nlabels = 0;
+      image2d<label_16> lbl = labeling::blobs(filter, c8(), nlabels);
 
       return labeling::compute(accu::meta::bbox(), lbl, nlabels);
     }
@@ -472,7 +472,7 @@ namespace scribo
 		    util::array<box2d> >
     extract_tables(image2d<bool>& in)
     {
-      typedef image2d<label16> I;
+      typedef image2d<label_16> I;
       typedef accu::bbox<mln_psite_(I)> A;
       typedef util::array<mln_result_(A)> boxes_t;
 
@@ -526,16 +526,16 @@ namespace scribo
     //-***************************************
     /// \{
 
-    fun::l2l::relabel<label16>
+    fun::l2l::relabel<label_16>
     make_relabel_fun(const util::graph& g)
     {
-      fun::l2l::relabel<label16> fun(g.v_nmax(), mln_max(label16));
+      fun::l2l::relabel<label_16> fun(g.v_nmax(), mln_max(label_16));
 
       // The first vertex (id 0) IS the background (component 0).
       unsigned ncomp = 0;
       mln_vertex_iter_(util::graph) v(g);
       for_all(v)
-	if (fun(v.id()) == mln_max(label16))
+	if (fun(v.id()) == mln_max(label_16))
 	{
 	  std::queue<unsigned> queue;
 	  queue.push(v.id());
@@ -545,7 +545,7 @@ namespace scribo
 	    util::vertex<util::graph> current_v = g.vertex(queue.front());
 	    queue.pop();
 	    for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
-	      if (fun(current_v.ith_nbh_vertex(nv)) == mln_max(label16))
+	      if (fun(current_v.ith_nbh_vertex(nv)) == mln_max(label_16))
 	      {
 		fun(current_v.ith_nbh_vertex(nv)) = ncomp;
 		queue.push(current_v.ith_nbh_vertex(nv));
@@ -569,7 +569,7 @@ namespace scribo
       }
 
       /// Return false if the components is smaller than a given size.
-      bool operator()(const label16& l) const
+      bool operator()(const label_16& l) const
       {
 	return nsitecomp_[l] >= settings.min_comp_size;
       }
@@ -589,7 +589,7 @@ namespace scribo
       }
 
       /// Return false if the components is smaller than a given size.
-      bool operator()(const label16& l) const
+      bool operator()(const label_16& l) const
       {
 	return nsitecomp_[l].first >= settings.min_comp_size
 	    && nsitecomp_[l].first < settings.max_comp_size
@@ -604,13 +604,13 @@ namespace scribo
 
 
     void
-    cleanup_components(image2d<label16>& lbl,
-		       label16& nlabels)
+    cleanup_components(image2d<label_16>& lbl,
+		       label_16& nlabels)
     {
       std::cout << "Cleanup components..." << std::endl;
 
-      typedef accu::count<mln_psite_(image2d<label16>)> accu_count_t;
-      typedef accu::bbox<mln_psite_(image2d<label16>)> accu_bbox_t;
+      typedef accu::count<mln_psite_(image2d<label_16>)> accu_count_t;
+      typedef accu::bbox<mln_psite_(image2d<label_16>)> accu_bbox_t;
       typedef accu::pair<accu_count_t, accu_bbox_t> accu_pair_t;
       typedef mln_result_(accu_pair_t) accu_pair_res_t;
       typedef mln_result_(accu_count_t) accu_count_res_t;
@@ -634,10 +634,10 @@ namespace scribo
 
     /// Merge bboxes according to their left box neighbor.
     util::array< box2d >
-    group_bboxes(const util::graph& g, image2d<label16>& lbl,
-		 util::array<box2d>& cboxes, label16& nlabels)
+    group_bboxes(const util::graph& g, image2d<label_16>& lbl,
+		 util::array<box2d>& cboxes, label_16& nlabels)
     {
-      fun::l2l::relabel<label16> relabel_fun = make_relabel_fun(g);
+      fun::l2l::relabel<label_16> relabel_fun = make_relabel_fun(g);
 
       util::array< accu::bbox<point2d> > tboxes;
       tboxes.resize(nlabels.next());
@@ -659,7 +659,7 @@ namespace scribo
       nlabels = result.nelements();
 
 #ifndef NOUT
-      image2d<label16> lbl2 = clone(lbl);
+      image2d<label_16> lbl2 = clone(lbl);
       util::array<unsigned> treated(g.v_nmax(), mln_max(unsigned));
       util::set<unsigned> comp_vertices;
       mln_vertex_iter_(util::graph) v(g);
@@ -700,7 +700,7 @@ namespace scribo
 
     /// Update the lookup table \p left if a neighbor is found on the right of
     /// the current bbox.
-    void update_link(util::graph& g, image2d<label16>& lbl,
+    void update_link(util::graph& g, image2d<label_16>& lbl,
 		     const point2d& p, const point2d& c,
 		     unsigned i, int dmax)
     {
@@ -714,7 +714,7 @@ namespace scribo
     /// Map each character bbox to its left bbox neighbor if possible.
     /// Iterate to the right but link boxes to the left.
     util::graph
-    link_character_bboxes(image2d<label16>& lbl,
+    link_character_bboxes(image2d<label_16>& lbl,
 			  const util::array<box2d>& cboxes,
 			  unsigned ncomp)
     {
@@ -743,12 +743,12 @@ namespace scribo
 
     util::array<box2d>
     extract_text(image2d<bool>& in,
-		 image2d<label16>& lbl,
-		 label16& nlabels)
+		 image2d<label_16>& lbl,
+		 label_16& nlabels)
     {
       std::cout << "extract text" << std::endl;
 
-      typedef label16 V;
+      typedef label_16 V;
       typedef image2d<V> I;
       typedef util::array<box2d> boxes_t;
 
@@ -857,8 +857,8 @@ namespace scribo
     void maptext_to_cells(const image2d<bool>& in, const image2d<bool>& table, const util::array<box2d>& tboxes)
     {
       std::cout << "map text to cells" << std::endl;
-      label16 nlabels;
-      image2d<label16> tblelbl = labeling::background(table, c8(), nlabels);
+      label_16 nlabels;
+      image2d<label_16> tblelbl = labeling::background(table, c8(), nlabels);
       image2d<rgb8> color = debug::colorize(rgb8(), tblelbl, nlabels);
 # ifndef NOUT
       io::ppm::save(color, output_file("cells-labels.ppm"));
@@ -875,14 +875,14 @@ namespace scribo
 
 
     void merge_aligned_text_boxes(const image2d<bool>& in, util::array<box2d>& tboxes,
-				  image2d<label16>& lbl, label16& nlabels)
+				  image2d<label_16>& lbl, label_16& nlabels)
     {
       std::cout << "Merging aligned text boxes" << std::endl;
 
-      image2d<label16> lbl_iz = clone(lbl);
+      image2d<label_16> lbl_iz = clone(lbl);
       io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), output_file("tboxes-lbl.ppm"));
 
-      image2d<label16> iz = transform::influence_zone_geodesic(lbl_iz, c8(), settings.bbox_distance);
+      image2d<label_16> iz = transform::influence_zone_geodesic(lbl_iz, c8(), settings.bbox_distance);
 #ifndef NOUT
       io::ppm::save(debug::colorize(rgb8(), iz, nlabels), output_file("tboxes-iz.ppm"));
 #endif
@@ -959,7 +959,7 @@ namespace scribo
   {
     using namespace mln;
     using value::rgb8;
-    using value::label16;
+    using value::label_16;
 
 
     //Useful debug variables
@@ -982,8 +982,8 @@ namespace scribo
     internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;
 
     //Label and remove small components.
-    label16 nlabels;
-    image2d<label16> lbl = labeling::blobs(in, c8(), nlabels);
+    label_16 nlabels;
+    image2d<label_16> lbl = labeling::blobs(in, c8(), nlabels);
 
     /// Do we really want to cleanup before removing tables?
     if (!treat_tables)
