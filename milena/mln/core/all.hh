@@ -25,13 +25,23 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ALL_HH_
-# define MLN_CORE_ALL_HH_
+#ifndef MLN_CORE_ALL_HH
+# define MLN_CORE_ALL_HH
 
 /// \file mln/core/all.hh
 ///
 /// File that includes all the core routines.
 
+
+// Sub-directories.
+# include <mln/core/concept/all.hh>
+# include <mln/core/def/all.hh>
+# include <mln/core/image/all.hh>
+# include <mln/core/trait/all.hh>
+# include <mln/core/routine/all.hh>
+# include <mln/core/site_set/all.hh>
+
+// Local directory.
 # include <mln/core/a_point_of.hh>
 # include <mln/core/category.hh>
 # include <mln/core/clock_neighb.hh>
@@ -55,11 +65,5 @@
 # include <mln/core/tags.hh>
 # include <mln/core/var.hh>
 
-# include <mln/core/def/all.hh>
-# include <mln/core/image/all.hh>
-# include <mln/core/trait/all.hh>
-# include <mln/core/routine/all.hh>
-# include <mln/core/site_set/all.hh>
 
-#endif // ! MLN_CORE_ALL_HH_
-
+#endif // ! MLN_CORE_ALL_HH

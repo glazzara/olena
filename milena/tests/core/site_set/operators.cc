@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,64 +26,47 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_SET_IS_SUBSET_OF_HH
-# define MLN_SET_IS_SUBSET_OF_HH
+/// \file tests/core/site_set/operators.cc
+///
+/// Tests of operators on mln::Site_Set.
 
-/*! \file mln/set/is_subset_of.hh
- *
- * \brief Routine to test if a set is a subset of another.
- */
+#include <mln/core/site_set/p_set.hh>
+#include <mln/core/alias/point2d.hh>
 
-# include <mln/core/concept/site_set.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace set
-  {
-    /*! \brief Test if a point set is a subset of another point set.
-     *
-     * \relates mln::Site_Set
-     */
-    template <typename Pl, typename Pr>
-    bool
-    is_subset_of(const Site_Set<Pl>& lhs, const Site_Set<Pr>& rhs);
+  p_set<point2d> pst1, pst2, pst3, pst4;
+  pst1.insert(point2d( 2, 7));
+  pst1.insert(point2d( 2, 1));
+  pst1.insert(point2d(-4, 0));
+  pst1.insert(point2d( 0, 0));
+  pst1.insert(point2d( 1, 1));
+  pst1.insert(point2d( 6, 5));
+  pst2.insert(point2d( 2, 7));
+  pst2.insert(point2d(-2, 1));
+  pst2.insert(point2d(-4, 0));
+  pst2.insert(point2d( 1,-1));
+  pst2.insert(point2d( 6, 5));
+  pst3.insert(point2d( 2, 7));
+  pst3.insert(point2d( 2, 1));
+  pst3.insert(point2d(-4, 0));
+  pst3.insert(point2d( 0, 0));
+  pst3.insert(point2d( 1, 1));
+  pst3.insert(point2d( 6, 5));
+  pst3.insert(point2d(-2, 1));
+  pst3.insert(point2d( 1,-1));
 
-# ifndef MLN_INCLUDE_ONL
+  mln_assertion(pst1 <= pst3);
+  mln_assertion(pst2 <= pst3);
+  mln_assertion(pst3 <= pst3);
+  mln_assertion(pst4 <= pst1);
+  mln_assertion(pst4 <= pst2);
+  mln_assertion(pst4 <= pst3);
+  mln_assertion(pst4 <= pst4);
 
-    template <typename Pl, typename Pr>
-    bool
-    is_subset_of(const Site_Set<Pl>& lhs_, const Site_Set<Pr>& rhs_)
-    {
-      trace::entering("set::is_subset_of");
-      Pl lhs = exact(lhs_);
-      Pr rhs = exact(rhs_);
-
-      if (lhs.nsites() > rhs.nsites())
-      {
-	trace::exiting("set::is_subset_of");
-	return false;
-      }
-
-      mln_piter(Pl) p(lhs);
-      for_all(p)
-	{
-	  if (!rhs.has(p))
-	  {
-	    trace::exiting("set::is_subset_of");
-	    return false;
-	  }
-	}
-      trace::exiting("set::is_subset_of");
-      return true;
-    }
-
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::set
-
-} // end of namespace mln
-
-
-#endif // ! MLN_SET_SUBSET_HH
+//   mln_assertion(! (pst3 <= pst1));
+//   mln_assertion(! (pst3 <= pst2));
+}

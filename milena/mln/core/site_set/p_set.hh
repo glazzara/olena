@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_SITE_SET_P_SET_HH
 # define MLN_CORE_SITE_SET_P_SET_HH
 
-/*! \file mln/core/site_set/p_set.hh
- *
- * \brief Definition of a mathematical set of sites (based on
- * util::set).
- */
+/// \file mln/core/site_set/p_set.hh
+///
+/// Definition of a mathematical set of sites (based on
+/// util::set).
 
 # include <mln/core/site_set/p_array.hh>
 # include <mln/util/set.hh>

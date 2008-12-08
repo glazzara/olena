@@ -35,12 +35,13 @@
 /// sets.
 ///
 /// \todo Add a diff(Site_Set& in_place, Function_p2b).
-/// \todo Fix this function!
 
+# include <algorithm>
+# include <iterator>
 
-# include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_p_set.hh>
-# include <mln/metal/equal.hh>
+# include <mln/core/site_set/p_set.hh>
+# include <mln/convert/from_to.hh>
+# include <mln/util/ord.hh>
 
 
 
@@ -54,35 +55,33 @@ namespace mln
     ///
     /// \relates mln::Site_Set
     ///
-    template <typename Wl, typename Wr>
-    p_set<mln_psite(Wl)>
-    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
+    template <typename Sl, typename Sr>
+    p_set<mln_site(Sl)>
+    diff(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Wl, typename Wr>
+    template <typename Sl, typename Sr>
     inline
-    p_set<mln_psite(Wl)>
-    diff(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
+    p_set<mln_site(Sl)>
+    diff(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
-      // Avoid a warning about an undefined variable when NDEBUG
-      // is not defined.
-      (void) lhs;
-      (void) rhs;
-
       trace::entering("set::diff");
-      p_set<mln_psite(Wl)> s;
-      abort();
-//       mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
-//       typedef mln_point(Wl) P;
-//       std::set<P>
-// 	sl = convert::to_std_set(lhs),
-// 	sr = convert::to_std_set(rhs),
-// 	s;
-//       std::set_difference(sl.begin(), sl.end(),
-// 			  sr.begin(), sr.end(),
-// 			  std::inserter(s, s.begin()));
+
+      typedef mln_site(Sl) P;
+      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      std::set< P, util::ord<P> > sl, sr, sd;
+      convert::from_to(lhs, sl);
+      convert::from_to(rhs, sr);
+      std::set_difference(sl.begin(), sl.end(),
+			  sr.begin(), sr.end(),
+			  std::inserter(sd, sd.begin()),
+			  util::ord<P>());
+      p_set<P> s;
+      convert::from_to(sd, s);
+
       trace::exiting("set::diff");
       return s;
     }

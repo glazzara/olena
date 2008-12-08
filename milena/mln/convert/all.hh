@@ -50,7 +50,6 @@ namespace mln
 # include <mln/convert/to_fun.hh>
 # include <mln/convert/to_image.hh>
 # include <mln/convert/to_rgb.hh>
-# include <mln/convert/to_std_set.hh>
 # include <mln/convert/to_p_array.hh>
 # include <mln/convert/to_window.hh>
 

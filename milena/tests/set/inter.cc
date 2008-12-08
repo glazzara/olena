@@ -46,19 +46,21 @@ int main()
   pst1.insert(point2d( 0, 0));
   pst1.insert(point2d( 1, 1));
   pst1.insert(point2d( 6, 5));
+
   p_set<point2d> pst2;
   pst2.insert(point2d( 2, 7));
   pst2.insert(point2d(-2, 1));
   pst2.insert(point2d(-4, 0));
   pst2.insert(point2d( 1,-1));
   pst2.insert(point2d( 6, 5));
+
   p_set<point2d> pst3 = set::inter(pst1, pst2);
-  mln_assertion(!pst3.has(point2d( 2, 1)));
-  mln_assertion(!pst3.has(point2d( 0, 0)));
-  mln_assertion(!pst3.has(point2d( 1, 1)));
   mln_assertion(pst3.has(point2d( 2, 7)));
-  mln_assertion(!pst3.has(point2d(-2, 1)));
   mln_assertion(pst3.has(point2d(-4, 0)));
-  mln_assertion(!pst3.has(point2d( 1,-1)));
   mln_assertion(pst3.has(point2d( 6, 5)));
+  mln_assertion(! pst3.has(point2d( 2, 1)));
+  mln_assertion(! pst3.has(point2d( 0, 0)));
+  mln_assertion(! pst3.has(point2d( 1, 1)));
+  mln_assertion(! pst3.has(point2d(-2, 1)));
+  mln_assertion(! pst3.has(point2d( 1,-1)));
 }

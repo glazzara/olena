@@ -38,6 +38,8 @@
 
 //FIXME: have a forward declaration.
 # include <vector>
+# include <set>
+
 
 namespace mln
 {
@@ -241,6 +243,17 @@ namespace mln
     template <typename A>
     void
     from_to(const Accumulator<A>& from, mln_result(A)& to);
+
+
+    // Site_Set -> std::set
+    template <typename S, typename P, typename _C>
+    void
+    from_to(const Site_Set<S>& from, std::set<P,_C>& to);
+
+    // std::set -> Site_Set
+    template <typename P, typename _C, typename S>
+    void
+    from_to(const std::set<P,_C>& from, Site_Set<S>& to);
 
   } // end of namespace mln::convert
 

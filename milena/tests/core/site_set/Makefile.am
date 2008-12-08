@@ -3,6 +3,7 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
+  operators					\
   p_array					\
 ##  p_bgraph					\
   p_complex					\
@@ -16,6 +17,7 @@ check_PROGRAMS =				\
   p_vaccess 					\
   p_vertices
 
+operators_SOURCES = operators.cc
 p_array_SOURCES = p_array.cc
 ##p_bgraph_SOURCES = p_bgraph.cc
 p_complex_SOURCES = p_complex.cc

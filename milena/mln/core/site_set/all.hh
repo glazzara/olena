@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,13 @@
 #ifndef MLN_CORE_SITE_SET_ALL_HH
 # define MLN_CORE_SITE_SET_ALL_HH
 
-/*! \file mln/core/site_set/all.hh
- *
- * \brief File that includes all site_set types.
- */
+/// \file mln/core/site_set/all.hh
+///
+/// File that includes all site_set types.
 
 
 # include <mln/core/site_set/box.hh>
+# include <mln/core/site_set/operators.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/site_set/p_centered.hh>
 # include <mln/core/site_set/p_complex.hh>

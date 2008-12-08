@@ -34,7 +34,6 @@
 /// Definition of an "lemmings" object.
 
 # include <mln/core/concept/image.hh>
-# include <mln/set/is_subset_of.hh>
 
 
 namespace mln

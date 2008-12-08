@@ -1,3 +1,47 @@
+2008-12-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Make tests relative to mln::set pass.
+
+	* mln/core/concept/site_set.hh (operator): Move...
+	* mln/core/site_set/operators.hh: ...in this new file.
+	* mln/core/concept/site_set.hh
+	(todo): Remove; done.
+	(include): Update.
+	(from_to): New overload for std::set <-> Site_Set.
+	* mln/core/site_set/all.hh: Update.
+	* mln/core/site_set/p_set.hh: Upgrade doc style.
+	* mln/core/concept/all.hh: New.
+	* mln/core/all.hh: Update.
+	* mln/convert/to_std_set.hh: Remove; obsolete thanx to
+	from_to; see above.
+	* mln/convert/all.hh: Update.
+	* mln/convert/from_to.hxx: Update.
+	* mln/set/is_subset_of.hh: Remove.  It was redundant with...
+	* mln/core/site_set/operators.hh (operator<=): ...this.
+	* mln/set/inter.hh,
+	* mln/set/diff.hh,
+	* mln/set/uni.hh,
+	* mln/set/compute.hh,
+	* mln/set/sym_diff.hh: Update.
+	(Window): Remove related code.  It was redundant with
+	routines in...
+	* mln/win: ...this directory.
+	* mln/set/all.hh: Update.
+	* mln/util/lemmings.hh (include): Remove useless.
+	* tests/core/site_set/operators.cc: New.
+	* tests/set/uni.cc,
+	* tests/set/sym_diff.cc,
+	* tests/set/inter.cc: Update.
+	* tests/set/is_subset_of.cc: Remove.
+	* tests/set/Makefile.am: Update.
+
+	Subsequent changes.
+
+	* tests/unit_test/mln_convert_to_std_set.cc: Remove.
+	* tests/unit_test/mln_set_is_subset_of.cc: Remove.
+	* tests/unit_test/Makefile.am: Up.
+	* tests/core/site_set/Makefile.am: Up.
+
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation issues.

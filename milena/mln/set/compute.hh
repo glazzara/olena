@@ -45,23 +45,23 @@ namespace mln
   namespace set
   {
 
-    /*! Compute an accumulator onto the sites of a site set.
-     *
-     * \param[in] a An accumulator.
-     * \param[in] s A site set.
-     * \return The accumulator result.
-     */
+    /// Compute an accumulator onto the sites of a site set.
+    ///
+    /// \param[in] a An accumulator.
+    /// \param[in] s A site set.
+    /// \return The accumulator result.
+    ///
     template <typename A, typename S>
     mln_result(A)
     compute(const Accumulator<A>& a, const Site_Set<S>& s);
 
 
-    /*! Compute an accumulator onto the sites of a site set.
-     *
-     * \param[in] a A meta-accumulator.
-     * \param[in] s A site set.
-     * \return The accumulator result.
-     */
+    /// Compute an accumulator onto the sites of a site set.
+    ///
+    /// \param[in] a A meta-accumulator.
+    /// \param[in] s A site set.
+    // \return The accumulator result.
+    ///
     template <typename A, typename S>
     mln_accu_with(A, mln_site(S))::result
     compute(const Meta_Accumulator<A>& a, const Site_Set<S>& s);

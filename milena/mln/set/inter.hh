@@ -31,12 +31,13 @@
 
 /// \file mln/set/inter.hh
 ///
-/// Several routines to compute the intersection between a
-/// couple of site sets.
+/// Compute the intersection between a couple of site sets.
 
-# include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_p_set.hh>
-# include <mln/metal/equal.hh>
+# include <algorithm>
+# include <iterator>
+
+# include <mln/core/site_set/p_set.hh>
+# include <mln/convert/from_to.hh>
 # include <mln/util/ord.hh>
 
 
@@ -51,29 +52,34 @@ namespace mln
     ///
     /// \relates mln::Site_Set
     ///
-    template <typename Wl, typename Wr>
-    p_set<mln_psite(Wl)>
-    inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
+    template <typename Sl, typename Sr>
+    p_set<mln_site(Sl)>
+    inter(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Wl, typename Wr>
+    template <typename Sl, typename Sr>
     inline
-    p_set<mln_psite(Wl)>
-    inter(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
+    p_set<mln_site(Sl)>
+    inter(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
       trace::entering("set::inter");
-      mln::metal::equal<mln_psite(Wl), mln_psite(Wr)>::check();
-      typedef mln_psite(Wl) P;
-      std::set<P, util::ord<P> >
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
+
+      typedef mln_site(Sl) P;
+      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      std::set< P, util::ord<P> > sl, sr, si;
+      convert::from_to(lhs, sl);
+      convert::from_to(rhs, sr);
       std::set_intersection(sl.begin(), sl.end(),
 			    sr.begin(), sr.end(),
-			    std::inserter(s, s.begin()));
+			    std::inserter(si, si.begin()),
+			    util::ord<P>());
+      p_set<P> s;
+      convert::from_to(si, s);
+
       trace::exiting("set::inter");
-      return convert::to_p_set(s);
+      return s;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

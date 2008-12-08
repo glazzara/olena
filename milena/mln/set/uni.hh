@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,15 @@
 #ifndef MLN_SET_UNI_HH
 # define MLN_SET_UNI_HH
 
-/*! \file mln/set/uni.hh
- *
- * \brief Several routines to compute the union of a couple of sets.
- */
+/// \file mln/set/uni.hh
+///
+/// Compute the union of a couple of sets.
 
-# include <mln/convert/to_std_set.hh>
-# include <mln/convert/to_window.hh>
-# include <mln/convert/to_p_set.hh>
-# include <mln/metal/equal.hh>
+# include <algorithm>
+# include <iterator>
+
+# include <mln/core/site_set/p_set.hh>
+# include <mln/convert/from_to.hh>
 # include <mln/util/ord.hh>
 
 
@@ -46,61 +46,38 @@ namespace mln
   namespace set
   {
 
-    /*! \brief Union of a couple of windows.
-     *
-     * \relates mln::Window
-     */
-    template <typename Wl, typename Wr>
-    window<mln_dpoint(Wl)>
-    uni(const Window<Wl>& lhs, const Window<Wr>& rhs);
-
-    /*! \brief Union of a couple of point sets.
-     *
-     * \relates mln::Site_Set
-     */
-    template <typename Wl, typename Wr>
-    p_set<mln_point(Wl)>
-    uni(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs);
+    /// Union of a couple of point sets.
+    ///
+    /// \relates mln::Site_Set
+    ///
+    template <typename Sl, typename Sr>
+    p_set<mln_site(Sl)>
+    uni(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Wl, typename Wr>
+    template <typename Sl, typename Sr>
     inline
-    window<mln_dpoint(Wl)>
-    uni(const Window<Wl>& lhs, const Window<Wr>& rhs)
+    p_set<mln_site(Sl)>
+    uni(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
       trace::entering("set::uni");
-      mln::metal::equal<mln_dpoint(Wl), mln_dpoint(Wr)>::check();
-      typedef mln_dpoint(Wl) D;
-      std::set<D, util::ord<D> >
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
-      std::set_union(sl.begin(), sl.end(),
-		     sr.begin(), sr.end(),
-		     std::inserter(s, s.begin()));
-      trace::exiting("set::uni");
-      return convert::to_window(s);
-    }
 
-    template <typename Wl, typename Wr>
-    inline
-    p_set<mln_point(Wl)>
-    uni(const Site_Set<Wl>& lhs, const Site_Set<Wr>& rhs)
-    {
-      trace::entering("set::uni");
-      mln::metal::equal<mln_point(Wl), mln_point(Wr)>::check();
-      typedef mln_point(Wl) P;
-      std::set<P, util::ord<P> >
-	sl = convert::to_std_set(lhs),
-	sr = convert::to_std_set(rhs),
-	s;
+      typedef mln_site(Sl) P;
+      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      std::set< P, util::ord<P> > sl, sr, su;
+      convert::from_to(lhs, sl);
+      convert::from_to(rhs, sr);
       std::set_union(sl.begin(), sl.end(),
 		     sr.begin(), sr.end(),
-		     std::inserter(s, s.begin()));
+		     std::inserter(su, su.begin()),
+		     util::ord<P>());
+      p_set<P> s;
+      convert::from_to(su, s);
+
       trace::exiting("set::uni");
-      return convert::to_p_set(s);
+      return s;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
