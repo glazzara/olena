@@ -36,7 +36,9 @@ clean-local:
 	rm -f tutorial.pdf
 	rm -f *.haux *.hh *.html *.htoc
 
-EXTRA_DIST = \
+EXTRA_DIST = tutorial.tex
+
+EXTRA_DIST += \
 examples/cpp_issue.cc \
 examples/sub_image.cc \
 examples/sub_image_if.cc \
@@ -99,7 +101,6 @@ outputs/fill-call-1.txt \
 outputs/ima2d-rot.txt \
 outputs/paste-call-1.txt \
 outputs/fun-p2v-1.txt \
-outputs/labeling-compute-full.txt \
 outputs/estim-sites.txt \
 outputs/parray-append.txt \
 outputs/fill-subdomain.txt \

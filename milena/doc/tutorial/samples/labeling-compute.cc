@@ -36,10 +36,8 @@ int main()
   // \}
 
 
-  doc::begin_output();
   // \{
   for (unsigned i = 1; i <= nlabels; ++i)
     std::cout << boxes[i] << std::endl;
   // \}
-  doc::end_output();
 }

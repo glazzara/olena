@@ -1,3 +1,19 @@
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix build system. 
+
+	* Makefile.am: Split and move data related to headers distribution...
+	* headers.mk: here.
+
+	* doc/tutorial/Makefile.am: add tutorial.tex in DIST_FILES.
+
+	* doc/tutorial/outputs/labeling-compute-full.txt: removed. Not needed
+	anymore.
+
+	* doc/tutorial/samples/labeling-compute.cc: new reference file.
+
+	* mln/core/alias/point2d.hh: Update comments.
+
 2008-12-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make tests relative to mln::set pass.

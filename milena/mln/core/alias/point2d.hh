@@ -29,11 +29,10 @@
 #ifndef MLN_CORE_ALIAS_POINT2D_HH
 # define MLN_CORE_ALIAS_POINT2D_HH
 
-/*! \file mln/core/alias/point2d.hh
- *
- * \brief Definition of the mln::point2d alias and of its construction
- * routine.
- */
+/// \file mln/core/alias/point2d.hh
+///
+/// Definition of the mln::point2d alias and of its construction
+/// routine.
 
 # include <mln/core/point.hh>
 # include <mln/core/concept/site_proxy.hh> // For site_const_impl and site_mutable_impl.
@@ -43,9 +42,9 @@
 namespace mln
 {
 
-  /*! \brief Type alias for a point defined on the 2D square grid with
-   * integer coordinates.
-   */
+  /// Type alias for a point defined on the 2D square grid with
+  /// integer coordinates.
+  ///
   typedef point<grid::square, def::coord> point2d;
 
 
