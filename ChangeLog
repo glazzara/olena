@@ -1,3 +1,9 @@
+2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove deprecated makefile entries.
+
+	* configure.ac: update.
+
 2008-12-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Disable milena/apps makefiles.
