@@ -165,7 +165,7 @@ namespace mln
   graph_window_piter<S, W, I>::center_at(const Pref& c)
   {
     super_::center_at(c);
-    iter_.center_at(c.hook_iter_());
+    iter_.center_at(c.hook_elt_());
   }
 
   template <typename S, typename W, typename I>

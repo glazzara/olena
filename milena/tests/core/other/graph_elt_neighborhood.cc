@@ -26,21 +26,22 @@
 // Public License.
 
 /// \file tests/core/other/graph_elt_neighborhood.cc
-/// \brief Tests on mln::graph_elt_neighborhood.
+///
+/// Tests on mln::graph_elt_neighborhood.
 
 #include <iostream>
 
 #include <vector>
 
+#include <mln/core/neighb.hh>
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
+#include <mln/core/image/graph_elt_window.hh>
 #include <mln/core/site_set/p_vertices.hh>
 
 #include <mln/util/graph.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
-
+unsigned fwd_neighb[] = { 0, 2, 3 };
+unsigned bkd_neighb[] = { 3, 2, 0 };
 
 int main()
 {
@@ -77,9 +78,11 @@ int main()
   // Edges.
   typedef mln::util::graph G;
   G g;
+
   // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
     g.add_vertex ();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -92,20 +95,23 @@ int main()
   `-------------------------*/
 
   // Graph psite set.
-  p_vertices<G, F> pg(g, points);
+  typedef p_vertices<G, F> pv_t;
+  pv_t pg(g, points);
+
   // Graph point site.
-  p_vertices_psite<G, F> p(pg, 1);
+  mln_psite_(pv_t) p(pg, 1);
+
   // ``Sliding'' neighborhood of a psite of PG.
-  typedef graph_elt_neighborhood<G, F> nbh_t;
+  typedef neighb< graph_elt_window<G, F> > nbh_t;
   nbh_t nbh;
 
+  unsigned i = 0;
   mln_fwd_niter_(nbh_t) fq(nbh, p);
   for_all(fq)
-    std::cout << fq << " ";
-  std::cout << std::endl;
+    mln_assertion(fq.element().id() == fwd_neighb[i++]);
 
+  i = 0;
   mln_bkd_niter_(nbh_t) bq(nbh, p);
   for_all(bq)
-    std::cout << bq << " ";
-  std::cout << std::endl;
+    mln_assertion(bq.element().id() == bkd_neighb[i++]);
 }

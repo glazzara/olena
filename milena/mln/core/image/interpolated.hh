@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,13 @@
 #ifndef MLN_CORE_IMAGE_INTERPOLATED_HH
 # define MLN_CORE_IMAGE_INTERPOLATED_HH
 
-/*! \file mln/core/image/interpolated.hh
- *
- * \brief Definition of a morpher that makes an image become readable
- * with floating coordinates.
- *
- * \todo think having has(algebra::vec v) as a method
- */
+/// \file mln/core/image/interpolated.hh
+///
+/// Definition of a morpher that makes an image become readable
+/// with floating coordinates.
+///
+/// \todo think having has(algebra::vec v) as a method
+
 
 # include <cmath>
 
@@ -45,13 +46,13 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename I, template <class> class F> struct interpolated;
 
   namespace internal
   {
 
-    /// Data structure for \c mln::interpolated<I>.
+    /// Data structure for \c mln::interpolated<I, F>.
     template <typename I, template <class> class F>
     struct data< interpolated<I,F> >
     {
@@ -77,9 +78,8 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief Morpher that makes underlaying image being accessed with floating coordinate.
-   *
-   */
+  /// Morpher that makes underlaying image being accessed with floating coordinate.
+  ///
   template <typename I, template <class> class F>
   struct interpolated :
     public mln::internal::image_identity< I, mln_pset(I), interpolated<I,F> >

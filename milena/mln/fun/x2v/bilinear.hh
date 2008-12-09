@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_X2X_BILINEAR_HH
-# define MLN_FUN_X2X_BILINEAR_HH
+#ifndef MLN_FUN_X2V_BILINEAR_HH
+# define MLN_FUN_X2V_BILINEAR_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/concept/function.hh>
@@ -34,10 +34,9 @@
 # include <mln/convert/to.hh>
 # include <mln/algebra/vec.hh>
 
-/*! \file mln/fun/x2v/bilinear.hh
- *
- * \brief Define a bilinear interpolation of values from an underlying image
- */
+/// \file mln/fun/x2v/bilinear.hh
+///
+/// Define a bilinear interpolation of values from an underlying image
 
 namespace mln
 {
@@ -45,12 +44,11 @@ namespace mln
   namespace fun
   {
 
-    namespace x2x
+    namespace x2v
     {
 
-      /*! \brief Represent a bilinear interolation of values from an underlying image
-       *
-       */
+      /// Represent a bilinear interolation of values from an underlying image
+      ///
       template < typename I >
       struct bilinear
         : public fun::internal::selector_<const algebra::vec<3,float>,
@@ -125,11 +123,11 @@ namespace mln
 
 # endif // ! MLN_INCLUDE_ONLY
 
-    } // end of namespace mln::fun::x2x
+    } // end of namespace mln::fun::x2v
 
   } // end of namespace mln::fun
 
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_X2X_BILINEAR_HH
+#endif // ! MLN_FUN_X2V_BILINEAR_HH

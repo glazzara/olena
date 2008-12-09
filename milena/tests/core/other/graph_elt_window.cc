@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/core/other/graph_elt_window.cc
-/// \brief Tests on mln::graph_elt_window.
+///
+/// Tests on mln::graph_elt_window.
 
 #include <iostream>
 
@@ -38,8 +39,8 @@
 
 #include <mln/util/graph.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+unsigned fwd_neighb[] = { 0, 2, 3 };
+unsigned bkd_neighb[] = { 3, 2, 0 };
 
 
 int main()
@@ -77,9 +78,11 @@ int main()
   // Edges.
   typedef mln::util::graph G;
   G g;
+
   // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
     g.add_vertex ();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -92,20 +95,23 @@ int main()
   `------------------*/
 
   // Graph psite set.
-  p_vertices<G, F> pg(g, points);
+  typedef p_vertices<G, F> pg_t;
+  pg_t pg(g, points);
+
   // Graph point site.
-  p_vertices_psite<G, F> p(pg, 1);
+  mln_psite_(pg_t) p(pg, 1);
+
   // ``Sliding'' window of a psite of PG.
   typedef graph_elt_window<G, F> win_t;
   win_t win;
 
+  unsigned i = 0;
   mln_fwd_qiter_(win_t) fq(win, p);
   for_all(fq)
-    std::cout << fq << " ";
-  std::cout << std::endl;
+    mln_assertion(fq.element().id() == fwd_neighb[i++]);
 
+  i = 0;
   mln_bkd_qiter_(win_t) bq(win, p);
   for_all(bq)
-    std::cout << bq << " ";
-  std::cout << std::endl;
+    mln_assertion(bq.element().id() == bkd_neighb[i++]);
 }

@@ -1,5 +1,45 @@
 2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix various tests.
+
+	* headers.mk: Update distributed headers list.
+	
+	* mln/make/image.hh,
+	* mln/make/image2d.hh,
+	* mln/fun/v2v/convert.hh,
+	* mln/core/image/interpolated.hh,
+	* mln/convert/from_to.hh: update comments.
+
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/internal/graph_psite_base.hh,
+	* mln/core/site_set/p_graph_piter.hh: unify the hook returning the
+	underlying element of these piters/psite.
+
+	* mln/fun/x2v/bilinear.hh: Fix a wrong namespace.
+
+	* mln/value/stack.hh: add missing init_ member.
+
+	* tests/core/image/Makefile.am: re-enable interpolated test.
+
+	* tests/fun/x2x/rotation.cc,
+	* tests/core/image/interpolated.cc: Fix wrong template arguments.
+
+	* tests/core/other/graph_elt_neighborhood.cc,
+	* tests/core/other/graph_elt_window.cc,
+	* tests/core/other/line_graph_elt_neighborhood.cc,
+	* tests/core/other/line_graph_elt_window.cc: make them compile and
+	write a real test.
+
+	* tests/fun/x2x/Makefile.am: re-enable rotation test.
+
+	* tests/labeling/compute.cc: rename label type.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_core_concept_all.cc,
+	* tests/unit_test/mln_core_site_set_operators.cc: update unit tests.
+
+2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix a warning during configure.
 
 	* Makefile.am: use = instead of +=.

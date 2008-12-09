@@ -41,12 +41,12 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an image2d from an 2D array of values.
-     *
-     * \param[in] values 2D array.
-     *
-     * \return A 2D image.
-     */
+    /// Create an image2d from an 2D array of values.
+    ///
+    /// \param[in] values 2D array.
+    ///
+    /// \return A 2D image.
+    ///
     template <typename V, unsigned S>
     mln::image2d<V>
     image2d(V (&values)[S]);

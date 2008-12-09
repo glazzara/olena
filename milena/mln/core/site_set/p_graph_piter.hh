@@ -86,7 +86,7 @@ namespace mln
     const typename S::graph_t& graph() const;
 
     /// Return the underlying iterator.
-    const iter& hook_iter_() const;
+    const iter& hook_elt_() const;
 
     /// Convert towards the graph element id.
     operator unsigned() const;
@@ -185,7 +185,7 @@ namespace mln
   template <typename S, typename I>
   inline
   const I&
-  p_graph_piter<S,I>::hook_iter_() const
+  p_graph_piter<S,I>::hook_elt_() const
   {
     return iter_;
   }

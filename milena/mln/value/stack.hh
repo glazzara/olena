@@ -29,10 +29,9 @@
 #ifndef MLN_VALUE_STACK_HH
 # define MLN_VALUE_STACK_HH
 
-/*! \file mln/value/stack.hh
- *
- * \brief Definition of the stack image type.
- */
+/// \file mln/value/stack.hh
+///
+/// Definition of the stack image type.
 
 # include <mln/core/internal/image_value_morpher.hh>
 
@@ -44,16 +43,15 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace value { template <unsigned n, typename I> struct stack_image; }
 
   namespace internal
   {
 
 
-    /*! data structure for stack_image.
-     *
-     */
+    /// data structure for stack_image.
+    ///
     template <unsigned n, typename I>
     struct data< value::stack_image<n, I> >
     {
@@ -132,19 +130,19 @@ namespace mln
 
   namespace value
   {
-    /*! \brief Stack image class.
-     *
-     * mln::value::stack_image stores a vector of n images of the same
-     * domain.
-     *
-     * The parameter \c n is the number of images, \c I is the type of
-     * a stack element. Acces a value will compute a vector which
-     * contains n coordinates :
-     *                              [stack[0](p),
-     *                               stack[1](p),
-     *                               ... ,
-     *                               stack[n](p)]
-     */
+    /// Stack image class.
+    ///
+    /// mln::value::stack_image stores a vector of n images of the same
+    /// domain.
+    ///
+    /// The parameter \c n is the number of images, \c I is the type of
+    /// a stack element. Acces a value will compute a vector which
+    /// contains n coordinates :
+    ///                              [stack[0](p),
+    ///                               stack[1](p),
+    ///                               ... ,
+    ///                               stack[n](p)]
+    ///
     template <unsigned n, typename I>
     struct stack_image
       : public mln::internal::image_value_morpher< I,
@@ -180,6 +178,8 @@ namespace mln
       stack_image();
       /// \}
 
+      /// Initialize an empty image.
+      void init_(const algebra::vec<n,I>& imas);
 
       /// Test if this image has been initialized.
       bool has_data() const;
@@ -192,7 +192,6 @@ namespace mln
       lvalue operator()(const psite&);
       void write_(const psite& p, const value& v);
     };
-
 
     /// \{ Shortcut to build a stack with two images.
     template <typename I>
@@ -237,6 +236,14 @@ namespace mln
     template <unsigned n, typename I>
     inline
     stack_image<n,I>::stack_image(const algebra::vec<n,I>& imas)
+    {
+      init_(imas);
+    }
+
+    template <unsigned n, typename I>
+    inline
+    void
+    stack_image<n,I>::init_(const algebra::vec<n,I>& imas)
     {
       this->data_ = new mln::internal::data< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)

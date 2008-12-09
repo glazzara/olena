@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/interpolated.cc
- *
- * \brief Tests on mln::interpolated.
- */
+/// \file tests/core/image/interpolated.cc
+///
+/// Tests on mln::interpolated.
 
 
 #include <iostream>
@@ -41,24 +41,21 @@
 
 #include <mln/debug/println.hh>
 
+#include <mln/fun/x2v/bilinear.hh>
+
 
 
 int main()
 {
   using namespace mln;
 
-  const unsigned nrows = 4;
-  const unsigned ncols = 4;
-  const unsigned border = 4;
-
-  image2d<float> f(nrows, ncols, border);
   float tab[] = {1.,  3.,  5.,  7.,
 		 4.,  7.,  10., 13.,
 		 7.,  11., 15., 19.,
 		 10., 15., 20., 25.};
-  level::fill(f, tab);
+  image2d<float> f = make::image2d(tab);
 
-  interpolated< image2d<float> > inter(f);
+  interpolated<image2d<float>, fun::x2v::bilinear> inter(f);
 
   algebra::vec<2, float> v1 = make::vec(2.3, 0.6);
   algebra::vec<2, float> v2 = make::vec(3.2, 1.8);

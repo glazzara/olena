@@ -26,18 +26,20 @@
 // Public License.
 
 /// \file tests/core/other/line_graph_elt_neighborhood.cc
-/// \brief Tests on mln::line_graph_elt_neighborhood.
+///
+/// Tests on mln::line_graph_elt_neighborhood.
 
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
+#include <mln/core/neighb.hh>
 #include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
 
 #include <mln/util/graph.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+unsigned fwd_neighb[] = { 0, 2, 4 };
+unsigned bkd_neighb[] = { 4, 2, 0 };
 
 
 int main()
@@ -54,7 +56,7 @@ int main()
 
             0 1 2 3 4               0 1 2 3 4
          .-----------	         .-----------
-         |		         |	     
+         |		         |
        0 |  0       2	       0 |  *       *
        1 |    \   / |	       1 |    0   1 |
        2 |      1   |	       2 |      *   4
@@ -75,9 +77,11 @@ int main()
   // Edges.
   typedef mln::util::graph G;
   G g;
+
   // Populate the graph with vertices.
   for (unsigned i = 0; i < points.size(); ++i)
     g.add_vertex ();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -90,20 +94,23 @@ int main()
   `-------------------------*/
 
   // Line graph psite set.
-  p_edges<G, F> pe(g, points);
+  typedef p_edges<G, F> pe_t;
+  pe_t pe(g, points);
+
   // Line graph point site.
-  p_edges_psite<G, F> p(pe, 1);
+  mln_psite_(pe_t) p(pe, 1);
+
   // ``Sliding'' neighborhood of a psite of PLG.
-  typedef line_graph_elt_neighborhood<G, F> nbh_t;
+  typedef neighb< line_graph_elt_window<G, F> > nbh_t;
   nbh_t nbh;
 
+  unsigned i = 0;
   mln_fwd_niter_(nbh_t) fq(nbh, p);
   for_all(fq)
-    std::cout << fq << " ";
-  std::cout << std::endl;
+    mln_assertion(fq.element().id() == fwd_neighb[i++]);
 
+  i = 0;
   mln_bkd_niter_(nbh_t) bq(nbh, p);
   for_all(bq)
-    std::cout << bq << " ";
-  std::cout << std::endl;
+    mln_assertion(bq.element().id() == bkd_neighb[i++]);
 }

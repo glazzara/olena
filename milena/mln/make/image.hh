@@ -45,32 +45,32 @@ namespace mln
   namespace make
   {
 
-    /*! \brief Create an image1d from an 1D array of values.
-     *
-     * \param[in] values 1D array.
-     *
-     * \return A 1D image.
-     */
+    /// Create an image1d from an 1D array of values.
+    ///
+    /// \param[in] values 1D array.
+    ///
+    /// \return A 1D image.
+    ///
     template <typename V, unsigned L>
     mln::image1d<V> image(V (&values)[L]);
 
 
-    /*! \brief Create an image2d from an 2D array of values.
-     *
-     * \param[in] values 2D array.
-     *
-     * \return A 2D image.
-     */
+    /// Create an image2d from an 2D array of values.
+    ///
+    /// \param[in] values 2D array.
+    ///
+    /// \return A 2D image.
+    ///
     template <typename V, unsigned R, unsigned C>
     mln::image2d<V> image(V (&values)[R][C]);
 
 
-    /*! \brief Create an image3d from an 3D array of values.
-     *
-     * \param[in] values 3D array.
-     *
-     * \return A 3D image.
-     */
+    /// Create an image3d from an 3D array of values.
+    ///
+    /// \param[in] values 3D array.
+    ///
+    /// \return A 3D image.
+    ///
     template <typename V, unsigned S, unsigned R, unsigned C>
     mln::image3d<V> image(V (&values)[S][R][C]);
 

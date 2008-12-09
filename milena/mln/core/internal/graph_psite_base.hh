@@ -99,6 +99,9 @@ namespace mln
       /// Explicit conversion towards the graph element (vertex or edge).
       const typename S::graph_element& element() const;
 
+      /// Return the underlying element.
+      const typename S::graph_element& hook_elt_() const;
+
     protected:
 
       /// Constructors.
@@ -121,7 +124,7 @@ namespace mln
 
   /* FIXME: Shouldn't those comparisons be part of a much general
      mechanism?  */
-    
+
   /// Comparison of two mln::graph_psite_base<S,E> instances.
   /// \{
   /// \brief Is \a lhs equal to \a rhs?
@@ -277,6 +280,14 @@ namespace mln
   graph_psite_base<S,E>::element() const
   {
     mln_precondition(is_valid());
+    return elt_;
+  }
+
+  template <typename S, typename E>
+  inline
+  const typename S::graph_element&
+  graph_psite_base<S,E>::hook_elt_() const
+  {
     return elt_;
   }
 

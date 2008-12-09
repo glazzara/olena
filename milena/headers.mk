@@ -229,7 +229,6 @@ mln/convert/to_fun.hh \
 mln/convert/all.hh \
 mln/convert/to_window.hh \
 mln/convert/from_to.hh \
-mln/convert/to_std_set.hh \
 mln/convert/impl/from_value_to_value.hh \
 mln/convert/impl/all.hh \
 mln/convert/impl/from_image_to_site_set.hh \
@@ -673,6 +672,7 @@ mln/core/site_set/p_faces.hh \
 mln/core/site_set/p_set.hh \
 mln/core/site_set/p_queue.hh \
 mln/core/site_set/p_if.hh \
+mln/core/site_set/operators.hh \
 mln/core/site_set/p_mutable_array_of.hh \
 mln/core/site_set/p_edges_psite.hh \
 mln/core/site_set/complex_psite.hh \
@@ -812,6 +812,7 @@ mln/core/concept/value_set.hh \
 mln/core/concept/proxy.hh \
 mln/core/concept/site.hh \
 mln/core/concept/weighted_window.hh \
+mln/core/concept/all.hh \
 mln/core/concept/gpoint.hh \
 mln/core/concept/site_iterator.hh \
 mln/core/concept/point.hh \
@@ -997,7 +998,6 @@ mln/set/all.hh \
 mln/set/get.hh \
 mln/set/sym_diff.hh \
 mln/set/has.hh \
-mln/set/is_subset_of.hh \
 mln/set/diff.hh \
 mln/set/compute.hh \
 mln/set/essential.hh \

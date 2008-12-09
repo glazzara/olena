@@ -38,6 +38,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/core/image/interpolated.hh>
 #include <mln/make/vec.hh>
+#include <mln/fun/x2v/bilinear.hh>
 
 #include "tests/data.hh"
 
@@ -55,15 +56,15 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
-  interpolated<image2d<int_u8> > inter(lena);
+  interpolated<image2d<int_u8>, fun::x2x::bilinear> inter(lena);
 
   fun::x2x::rotation<2,float> rot1(0.1, axis);
 
-  image2d<int_u8>::fwd_piter p(out.domain());
+  mln_piter_(image2d<int_u8>) p(out.domain());
 
   for_all(p)
     {
-      algebra::vec<2,float> v = rot1.inv()((point2d::vec_t)(point2d)p);
+      algebra::vec<2,float> v = rot1.inv()(p.to_site().to_vec());
       if (inter.has(v))
 	out(p) = inter(v);
       else

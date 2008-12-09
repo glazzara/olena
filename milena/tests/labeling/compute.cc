@@ -42,7 +42,7 @@
 int main()
 {
   using namespace mln;
-  using value::label8;
+  using value::label_8;
   using value::int_u8;
 
   int_u8 vals[6][5] = {
@@ -55,7 +55,7 @@ int main()
   };
   image2d<int_u8> ima = make::image(vals);
 
-  label8 lblvals[6][5] = {
+  label_8 lblvals[6][5] = {
     {0, 1, 1, 0, 0},
     {0, 1, 1, 0, 0},
     {0, 0, 0, 0, 0},
@@ -63,8 +63,8 @@ int main()
     {2, 0, 3, 3, 3},
     {2, 0, 0, 0, 0}
   };
-  image2d<label8> lbl = make::image(lblvals);
-  label8 nlabels = 3;
+  image2d<label_8> lbl = make::image(lblvals);
+  label_8 nlabels = 3;
 
   accu::sum<int_u8> sum;
   util::array<float> sums = labeling::compute(sum, ima, lbl, nlabels);

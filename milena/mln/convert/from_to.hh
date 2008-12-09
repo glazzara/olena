@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +28,14 @@
 #ifndef MLN_CONVERT_FROM_TO_HH
 # define MLN_CONVERT_FROM_TO_HH
 
-/*! \file mln/convert/from_to.hh
- *
- * \brief General conversion procedure between two objects.
- *
- * \todo Test the effectiveness of guards.
- * \todo Add fwd decls.
- * \todo Dispatch code in appropriate files.
- */
+/// \file mln/convert/from_to.hh
+///
+/// General conversion procedure between two objects.
+///
+/// \todo Test the effectiveness of guards.
+/// \todo Add fwd decls.
+/// \todo Dispatch code in appropriate files.
+
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/gpoint.hh>
@@ -60,7 +60,6 @@ namespace mln
     template <typename F, typename T>
     void
     from_to(const Object<F>& from, Object<T>& to);
-
 
     template <typename T>
     void
@@ -109,7 +108,6 @@ namespace mln
     {
       mln::convert::impl::from_value_to_value(from, to);
     }
-
 
     // float -> Object
     template <typename T>

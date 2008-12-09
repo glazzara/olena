@@ -26,18 +26,20 @@
 // Public License.
 
 /// \file tests/core/other/line_graph_elt_window.cc
-/// \brief Tests on mln::line_graph_elt_window.
+///
+/// Tests on mln::line_graph_elt_window.
 
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/neighb.hh>
 #include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
 
 #include <mln/util/graph.hh>
 
-#include <mln/debug/iota.hh>
-#include <mln/debug/println.hh>
+unsigned fwd_neighb[] = { 0, 2, 4 };
+unsigned bkd_neighb[] = { 4, 2, 0 };
 
 
 int main()
@@ -97,13 +99,14 @@ int main()
   typedef line_graph_elt_window<G, F> win_t;
   win_t win;
 
+  unsigned i = 0;
   mln_fwd_qiter_(win_t) fq(win, p);
   for_all(fq)
-    std::cout << fq << " ";
-  std::cout << std::endl;
+    mln_assertion(fq.element().id() == fwd_neighb[i++]);
 
+  i = 0;
   mln_bkd_qiter_(win_t) bq(win, p);
   for_all(bq)
-    std::cout << bq << " ";
-  std::cout << std::endl;
+    mln_assertion(bq.element().id() == bkd_neighb[i++]);
+
 }
