@@ -1,3 +1,23 @@
+2008-12-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	The canvas
+
+	* garrigues/union_find/canvas/reconstruction.hh: New.
+	* garrigues/union_find/canvas: New.
+
+	Differents implementations of reconstruction.
+
+	* garrigues/union_find: New.
+	* garrigues/union_find/reconstructions.cc: New.
+	* garrigues/union_find/reconstructions.hh: New.
+
+	Some small test images.
+
+	* garrigues/union_find/images/marker.pbm: New.
+	* garrigues/union_find/images/marker_to_dilate.pbm: New.
+	* garrigues/union_find/images/mask.pbm: New.
+	* garrigues/union_find/images: New.
+
 2008-12-08  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Test watershed over attribute.
