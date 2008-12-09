@@ -21,9 +21,17 @@ template <typename T>
 T
 Random<T>::get () const
 {
-  return (sup_ - inf_) * (((double) rand ()) / RAND_MAX) + inf_;
+  double res = (sup_ - inf_) * (((double) rand ()) / RAND_MAX) + inf_;
+  return res;
 }
 
+template <>
+bool
+Random<bool>::get () const
+{
+  bool res = rand () > (RAND_MAX / 2);
 
+  return res;
+}
 
 #endif /* !RANDOM_HXX_ */

@@ -1,5 +1,12 @@
 2008-12-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	[Markov] Make the algotithm work.
+
+	* markov/markov.hh: Fix compute_energy and use of random.
+	* markov/random.hxx: Fix random on boolean.
+
+2008-12-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	The canvas
 
 	* garrigues/union_find/canvas/reconstruction.hh: New.

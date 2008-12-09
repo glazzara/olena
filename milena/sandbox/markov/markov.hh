@@ -2,9 +2,11 @@
 # define MARKOV_HH_
 
 # include <cmath>
+# include <iomanip>
 # include <random.hh>
 # include <T_gen.hh>
 # include <mln/binarization/threshold.hh>
+# include <mln/core/routine/clone.hh>
 
 namespace mln
 {
@@ -14,10 +16,10 @@ namespace mln
   {
     // Compute u(x,y)
     double u;
-    if (xi)
-      u = (double) ima(p) / mln_max(mln_value(I));
+    if (xi == ima(p))
+      u = 0;
     else
-      u = 1. - (double) ima(p) / mln_max(mln_value(I));
+      u = 1;
 
     // u(x) is cst so we don't care
 
@@ -34,7 +36,20 @@ namespace mln
 
     diff_sum /= coeff;
 
-    return 1 * (u + diff_sum);
+//     std::cout << "energy : " << (u + diff_sum) << std::endl;
+
+    return (u + diff_sum * 5);
+  }
+
+  template <typename I>
+  void dump(const Image<I>& ima)
+  {
+    static int id = 0;
+    std::stringstream filename, is_filename;
+    filename << "trace_" << std::setw(5) << std::setfill('0')
+	     << std::right << id++ << ".pbm";
+
+    io::pbm::save(ima, filename.str());
   }
 
   template <typename I, typename N> // I == int_u8
@@ -43,13 +58,15 @@ namespace mln
     const I &ima = exact(ima_);
     const N &nbh = exact(nbh_);
 
-    //    mln_ch_value(I, bool) out(ima.domain()); // FIXME: generalize, we might not do a binarisation
-    mln_ch_value(I, bool) out = binarization::threshold(ima, 255 / 2); // FIXME : max
+    mln_ch_value(I, bool) bin = binarization::threshold(ima, 255 / 2); // FIXME : max
+    mln_ch_value(I, bool) out(bin.domain());
+
+    io::pbm::save(out, "threshold.pbm");
 
     temperature_generator gtemp(start_temp, 0.8);
     double temp = start_temp;
 
-    Random<int> v_random(0, 1); // mettre max et min ?
+    Random<bool> v_random(0, 1); // mettre max et min ?
     Random<double> p_random(0., 1.); // idem
 
     unsigned modifications = 42;
@@ -59,23 +76,23 @@ namespace mln
 
     while (!gradient || modifications)
       {
-        mln_piter(I) p(ima.domain());
+	// Trace.
+// 	dump(out);
+
+        mln_piter(I) p(bin.domain());
         modifications = 0;
 
         for_all(p)
         {
           bool v = v_random.get();
-	  // std::cout << "Random : " << v << std::endl;
 
-          double u = compute_energy(ima, out, nbh, out(p), p);
-          double up = compute_energy(ima, out, nbh, v, p);
+          double u = compute_energy(bin, out, nbh, out(p), p);
+          double up = compute_energy(bin, out, nbh, v, p);
 
 	  double d_u = up - u;
 	  double proba = exp(-d_u / temp);
 
-	  // std::cout << "u : " << u << " up : " << up << "Difference : " << d_u << std::endl;
-
-	  if (d_u < 0 || !gradient && (p_random.get() < proba))
+	  if ((d_u < 0 || !gradient && (p_random.get() < proba)) && out(p) != v)
 	    {
 	      if (d_u < 0)
 		diffneg ++;
