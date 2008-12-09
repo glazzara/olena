@@ -208,6 +208,8 @@ namespace mln
 
     operator util::index() const;
 
+    void update_() const;
+
   private:
 
     const S* s_;
@@ -560,10 +562,17 @@ namespace mln
   const mln_element(S)&
   p_indexed_psite<S>::subj_()
   {
-    if (is_valid())
-      // Lazy update.
-      p_ = (*s_)[i_];
+    update_(); // In case of...
     return p_;
+  }
+
+  template <typename S>
+  inline
+  void
+  p_indexed_psite<S>::update_() const
+  {
+    if (is_valid())
+      p_ = (*s_)[i_];
   }
 
   template <typename S>
@@ -612,6 +621,7 @@ namespace mln
   p_indexed_fwd_piter<S>::start_()
   {
     p_.change_index(0);
+    p_.update_();
   }
 
   template <typename S>
@@ -620,6 +630,7 @@ namespace mln
   p_indexed_fwd_piter<S>::next_()
   {
     p_.inc_index();
+    p_.update_();
   }
 
   template <typename S>
@@ -669,6 +680,7 @@ namespace mln
   p_indexed_bkd_piter<S>::start_()
   {
     p_.change_index(s_->nsites() - 1);
+    p_.update_();
   }
 
   template <typename S>
@@ -677,6 +689,7 @@ namespace mln
   p_indexed_bkd_piter<S>::next_()
   {
     p_.dec_index();
+    p_.update_();
   }
 
   template <typename S>

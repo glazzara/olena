@@ -1,3 +1,16 @@
+2008-12-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix bug in p_array.
+
+	This bug arises when we write:
+	  for_all(p)   // in a p_array
+	    for_all(n) // around p
+	      here n has a direct access to the p_array::psite::p_
+	      which needs to be updated when p moves.
+	      unfortunatly there was a (too) lazy update.
+	* mln/core/site_set/p_array.hh (update_): New.
+	(subj_, start_, next_): Use update_.
+
 2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix various tests.
