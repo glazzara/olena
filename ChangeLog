@@ -1,3 +1,9 @@
+2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup and fix bootstrap.
+
+	* bootstrap: cleanup and fix.
+
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Generate list of headers to be distributed.
