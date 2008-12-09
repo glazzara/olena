@@ -1,3 +1,9 @@
+2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a warning during configure.
+
+	* Makefile.am: use = instead of +=.
+
 2008-12-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.

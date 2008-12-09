@@ -14,7 +14,7 @@ doc:
 
 include $(top_srcdir)/milena/headers.mk
 
-EXTRA_DIST += \
+EXTRA_DIST = \
 img/lena.pbm \
 img/fly.pbm \
 img/squares-lc.pgm \
