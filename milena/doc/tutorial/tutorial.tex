@@ -17,8 +17,7 @@
  \end{figure}
 }
 
-\title{Olena - Tutorial
-}
+\title{Olena - Quick Reference Guide}
 \author{LRDE}
 \date{}
 
@@ -100,6 +99,22 @@ showstringspaces=false,linewidth=14cm}
 \backslash htmlonly%
 }
 
+\newcommand{\doxyref}[1]{
+\backslash endhtmlonly%
+\backslash ref #1%
+\backslash htmlonly%
+}
+
+\newcommand{\doxysee}[1]{
+\backslash endhtmlonly%
+\backslash see #1%
+\backslash htmlonly%
+}
+
+\newcommand{\tutotoc}[2]{%
+\longleftarrow ~Go to \doxyref{#1} Go to \doxyref{#2}~ \longrightarrow%
+}
+
 \newenvironment{doxymath}
 {
 %\backslash endhtmlonly%
@@ -126,6 +141,9 @@ $$
 \pgfimage[width=#3]{figures/#2-#1}%
 \label{#1}%
 }
+\renewcommand{\doxyref}[1]{\ref{#1}}
+\renewcommand{\doxysee}[1]{\ref{#1}}
+\renewcommand{\tutotoc}[2]{}
 \renewenvironment{doxymath}
 {
   $$
@@ -136,11 +154,15 @@ $$
 
 %\end{latexonly}
 
+
 \newcommand{\code}[1]{%
 \textit{#1}%
 }
 \newcommand{\var}[1]{%
 \textit{$#1$}%
+}
+\newcommand{\val}[1]{%
+\textit{#1}%
 }
 \newcommand{\type}[1]{%
 \textit{#1}%
@@ -257,9 +279,20 @@ $$
 \begin{document}
 
 % Doxygen use only - Generate the left menu.
+%Write foreword below.
 \begin{htmlonly}
 \backslash endhtmlonly
+
 \backslash page tutorial Tutorial
+- \backslash subpage tutoforeword
+- \backslash subpage tutofirstimage
+- \backslash subpage tutochangeimage
+- \backslash subpage tutoconvimage
+- \backslash subpage tutodataimage
+- \backslash subpage tutowinneighb
+- \backslash subpage tutograph
+
+\backslash page quickref Quick Reference Guide
 - \backslash subpage installation
 - \backslash subpage foreword
 - \backslash subpage site
@@ -281,6 +314,72 @@ $$
 \begin{latexonly}
 \tableofcontents
 \end{latexonly}
+
+%====================================
+\doxychapter{tutoforeword}{Step 0: Foreword}
+
+- image2d
+- typical use case
+
+%====================================
+\doxychapter{tutofirstimage}{Step 1: Your first image}
+
+After this step you should know how to:
+\begin{itemize}
+\item create an image,
+\item display an image in console mode,
+\item save an image.
+\end{itemize}
+
+The full example can be found in \doxyref{tuto1_first_image.cc}.
+
+
+First, declare an array of bool which will represent the image grid. Each each
+cell in this grid is a site and each cell contains a value, \val{true} or
+\val{false}.
+\doxycode[1]{tuto1_first_image}
+
+From that grid, simply call make::image to get an image initialized with that
+data.
+\doxycode[2]{tuto1_first_image}
+This way of initializing an image is the most common one. However, there are
+several other ways described in section \doxyref{imacreate}.
+
+
+To be sure that the data is correctly initialized, it is possible to display the
+image in the standard output using debug::println.
+\doxycode[3]{tuto1_first_image}
+
+Finally, you may want to save the image. Since we use bool as image value, the
+PBM format is the best choice. Therefore, we use io::pbm::save.
+\doxycode[4]{tuto1_first_image}
+
+The output image looks like the following:
+\doxyfigure{tuto1_first_image}{3cm}
+
+In this first step we used a boolean image. Many other value types are available
+though. A more detailed description can be found in section
+\doxyref{imapossvalues}.
+Likewise, according to the value type, the proper file format must be chosen.
+The supported file formats are listed in section \doxyref{imaio}.
+
+\tutotoc{tutoforeword}{tutochangeimage}
+
+%====================================
+\doxychapter{tutochangeimage}{Step 2: Read and write images}
+
+%====================================
+\doxychapter{tutoconvimage}{Step 3: Conversion between image values}
+
+%====================================
+\doxychapter{tutodataimage}{Step 4: Fill and paste data}
+
+%====================================
+\doxychapter{tutowinneighb}{Step 5: Using structural elements with algorithms}
+
+%====================================
+\doxychapter{tutograph}{Step 6: Handle graphes with an image}
+
 
 %====================================
 \doxychapter{installation}{Installation}
@@ -487,7 +586,7 @@ p\_vertices & set of graph vertices associated to sites.\\
 \hline
 \end{tabular}
 
-All site sets are iterable. More detailed explanations are available in section \ref{iterators}.
+All site sets are iterable. More detailed explanations are available in section \doxyref{iterators}.
 
 %**************************
 \doxysection{sitesetinterface}{Basic interface}
@@ -742,7 +841,7 @@ resize & Set image border to a specific size.\\
 \end{tabular} \\
 
 
-On morphed images, decribed in section \ref{imamorphed}, the border concept
+On morphed images, decribed in section \doxyref{imamorphed}, the border concept
 does not exist and is generalized to the extension concept.
 A simple example of a morphed image is a sub-image. A sub image does not have
 border nor extension by default.
@@ -897,13 +996,20 @@ processing, or another image. Trying to access the site value from an empty
 image leads to an error at run-time.
 Img1b is defined on a domain but does not have data yet.\\
 
+An image can also be created and initialized at the same time:
+\doxycode[1]{labeling-compute}
+It constructs the following image: \\
+\begin{center}
+\doxyfigure[1]{labeling-compute}{3cm}
+\end{center}
+
 Sometimes, you may want to initialize an image from another one:
 \doxycode{ima2d-7}
 \var{img2b} is declared without specifying a domain. Its border size is set to
 the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
  with the same domain and border/extension as \var{img2a}. The data is not
  copied though. Other routines like \code{level::fill} can be called in order to
- do so (See also \ref{fillop}).
+ do so (See also \doxyref{fillop}).
 
 
 %================================================
@@ -923,7 +1029,7 @@ Output:
 
 Usually, you will want to use the functional way, ``\code{ima(Site)}'', more
 particularly while iterating over all the sites through an iterator. This use
-case will be detailed further in section \ref{iterators}.
+case will be detailed further in section \doxyref{iterators}.
 
 
 
@@ -1288,7 +1394,7 @@ first version \must be used in templated function whereas the second one \must b
 used in non templated functions. 
 
 If you want a list of all the macros available in Olena, please refert to
-section \ref{macros}.
+section \doxyref{macros}.
 
 
 %================================================

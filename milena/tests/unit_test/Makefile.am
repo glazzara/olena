@@ -2,1000 +2,1000 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-check_PROGRAMS = \
-mln_histo_all\
-mln_histo_data\
-mln_histo_compute\
-mln_histo_essential\
-mln_geom_pmin_pmax\
-mln_geom_max_row\
-mln_geom_chamfer\
-mln_geom_min_row\
-mln_geom_seeds2tiling\
-mln_geom_size1d\
-mln_geom_all\
-mln_geom_size2d\
-mln_geom_max_ind\
-mln_geom_max_col\
-mln_geom_size3d\
-mln_geom_ninds\
-mln_geom_nslis\
-mln_geom_delta\
-mln_geom_resize\
-mln_geom_nsites\
-mln_geom_min_col\
-mln_geom_complex_geometry\
-mln_geom_ncols\
-mln_geom_nrows\
-mln_geom_min_ind\
-mln_geom_bbox\
-mln_geom_seeds2tiling_roundness\
-mln_geom_min_sli\
-mln_geom_essential\
-mln_geom_max_sli\
-mln_draw_box\
-mln_draw_all\
-mln_draw_plot\
-mln_draw_line\
-mln_draw_essential\
-mln_pw_image\
-mln_pw_all\
-mln_pw_value\
-mln_pw_cst\
-mln_pw_var\
-mln_pw_essential\
-mln_literal_zero\
-mln_literal_ops\
-mln_literal_origin\
-mln_literal_grays\
-mln_literal_all\
-mln_literal_colors\
-mln_literal_black\
-mln_literal_one\
-mln_literal_white\
-mln_literal_essential\
-mln_registration_get_rtransf\
-mln_registration_internal_rms\
-mln_registration_get_rot\
-mln_registration_all\
-mln_registration_multiscale\
-mln_registration_registration\
-mln_registration_essential\
-mln_registration_icp\
-mln_util_graph\
-mln_util_max\
-mln_util_lazy_set\
-mln_util_set\
-mln_util_tree_to_image\
-mln_util_lemmings\
-mln_util_greater_point\
-mln_util_internal_graph_iter_base\
-mln_util_internal_boost_graph_access\
-mln_util_internal_boost_graph_structure\
-mln_util_internal_graph_iter\
-mln_util_internal_graph_nbh_iter\
-mln_util_internal_vertex_impl\
-mln_util_internal_edge_impl\
-mln_util_internal_graph_base\
-mln_util_internal_boost_graph\
-mln_util_internal_graph_nbh_iter_base\
-mln_util_internal_boost_graph_property\
-mln_util_ord_pair\
-mln_util_edge\
-mln_util_all\
-mln_util_dindex\
-mln_util_tracked_ptr\
-mln_util_ignore\
-mln_util_greater_psite\
-mln_util_timer\
-mln_util_yes\
-mln_util_line_graph\
-mln_util_ord\
-mln_util_tree_fast_to_image\
-mln_util_tree\
-mln_util_index\
-mln_util_multi_site\
-mln_util_branch_iter\
-mln_util_branch_iter_ind\
-mln_util_tree_to_fast\
-mln_util_array\
-mln_util_vertex\
-mln_util_pix\
-mln_util_tree_fast\
-mln_util_site_pair\
-mln_util_nil\
-mln_util_eat\
-mln_util_essential\
-mln_tag_init\
-mln_tag_skeleton\
-mln_tag_all\
-mln_tag_essential\
-mln_trace_entering\
-mln_trace_all\
-mln_trace_warning\
-mln_trace_exiting\
-mln_trace_resume\
-mln_trace_quiet\
-mln_trace_stop\
-mln_trace_essential\
-mln_make_graph\
-mln_make_double_neighb2d\
-mln_make_dpoint2d_h\
-mln_make_w_window\
-mln_make_image\
-mln_make_vec\
-mln_make_all\
-mln_make_dual_neighb\
-mln_make_w_window3d\
-mln_make_mat\
-mln_make_win_chamfer\
-mln_make_w_window2d_int\
-mln_make_box1d\
-mln_make_voronoi\
-mln_make_box2d\
-mln_make_w_window2d\
-mln_make_box3d\
-mln_make_relabelfun\
-mln_make_pixel\
-mln_make_pix\
-mln_make_box2d_h\
-mln_make_w_window1d\
-mln_make_image2d\
-mln_make_w_window_directional\
-mln_make_w_window3d_int\
-mln_make_essential\
-mln_make_w_window1d_int\
-mln_make_point2d_h\
-mln_display_all\
-mln_display_essential\
-mln_extension_adjust\
-mln_extension_duplicate\
-mln_extension_adjust_duplicate\
-mln_extension_all\
-mln_extension_adjust_fill\
-mln_extension_fill\
-mln_extension_essential\
-mln_fun_p2b_chess\
-mln_fun_p2b_all\
-mln_fun_p2b_has\
-mln_fun_p2b_big_chess\
-mln_fun_p2b_essential\
-mln_fun_p2p_mirror\
-mln_fun_x2p_closest_point\
-mln_fun_x2p_all\
-mln_fun_x2p_essential\
-mln_fun_ops\
-mln_fun_c\
-mln_fun_vv2v_max\
-mln_fun_vv2v_lor\
-mln_fun_vv2v_land_not\
-mln_fun_vv2v_vec\
-mln_fun_vv2v_all\
-mln_fun_vv2v_macros\
-mln_fun_vv2v_lxor\
-mln_fun_vv2v_diff_abs\
-mln_fun_vv2v_land\
-mln_fun_vv2v_min\
-mln_fun_vv2v_essential\
-mln_fun_internal_array_base\
-mln_fun_internal_x2x_linear_impl\
-mln_fun_internal_selector\
-mln_fun_p2v_ternary\
-mln_fun_p2v_iota\
-mln_fun_p2v_elifs\
-mln_fun_p2v_all\
-mln_fun_p2v_essential\
-mln_fun_all\
-mln_fun_v2b_lnot\
-mln_fun_v2b_all\
-mln_fun_v2b_threshold\
-mln_fun_v2b_essential\
-mln_fun_v2v_norm\
-mln_fun_v2v_linear\
-mln_fun_v2v_id\
-mln_fun_v2v_saturate\
-mln_fun_v2v_inc\
-mln_fun_v2v_all\
-mln_fun_v2v_dec\
-mln_fun_v2v_abs\
-mln_fun_v2v_cast\
-mln_fun_v2v_rgb_to_hsi\
-mln_fun_v2v_enc\
-mln_fun_v2v_convert\
-mln_fun_v2v_essential\
-mln_fun_cast\
-mln_fun_i2v_all\
-mln_fun_i2v_array\
-mln_fun_i2v_all_to\
-mln_fun_i2v_essential\
-mln_fun_l2l_relabel\
-mln_fun_l2l_all\
-mln_fun_l2l_essential\
-mln_fun_x2x_composed\
-mln_fun_x2x_all\
-mln_fun_x2x_translation\
-mln_fun_x2x_rotation\
-mln_fun_x2x_essential\
-mln_fun_x2v_linear\
-mln_fun_x2v_bilinear\
-mln_fun_x2v_all\
-mln_fun_x2v_l1_norm\
-mln_fun_x2v_nneighbor\
-mln_fun_x2v_essential\
-mln_fun_essential\
-mln_all\
-mln_convert_to_p_set\
-mln_convert_to\
-mln_convert_to_upper_window\
-mln_convert_to_image\
-mln_convert_to_fun\
-mln_convert_all\
-mln_convert_to_window\
-mln_convert_from_to\
-mln_convert_impl_from_value_to_value\
-mln_convert_impl_all\
-mln_convert_impl_from_image_to_site_set\
-mln_convert_to_dpoint\
-mln_convert_to_p_array\
-mln_convert_to_rgb\
-mln_convert_essential\
-mln_value_float01_f\
-mln_value_float01_16\
-mln_value_lut_vec\
-mln_value_glf\
-mln_value_other\
-mln_value_graylevel_f\
-mln_value_aliases\
-mln_value_label_16\
-mln_value_ops\
-mln_value_set\
-mln_value_int_u_sat\
-mln_value_float01_8\
-mln_value_int_u8\
-mln_value_equiv\
-mln_value_internal_integer\
-mln_value_internal_gray_f\
-mln_value_internal_all\
-mln_value_internal_value_like\
-mln_value_internal_iterable_set\
-mln_value_internal_encoding\
-mln_value_internal_convert\
-mln_value_internal_gray_\
-mln_value_internal_essential\
-mln_value_proxy\
-mln_value_viter\
-mln_value_graylevel\
-mln_value_all\
-mln_value_super_value\
-mln_value_builtin_symbolics\
-mln_value_builtin_ops\
-mln_value_builtin_all\
-mln_value_builtin_promotions\
-mln_value_builtin_integers\
-mln_value_builtin_floatings\
-mln_value_builtin_essential\
-mln_value_sign\
-mln_value_hsi\
-mln_value_interval\
-mln_value_gl16\
-mln_value_scalar\
-mln_value_float01\
-mln_value_cast\
-mln_value_int_u\
-mln_value_int_s8\
-mln_value_int_s16\
-mln_value_int_u16\
-mln_value_label\
-mln_value_rgb\
-mln_value_stack\
-mln_value_concept_integer\
-mln_value_concept_structured\
-mln_value_concept_built_in\
-mln_value_concept_all\
-mln_value_concept_scalar\
-mln_value_concept_data\
-mln_value_concept_floating\
-mln_value_concept_symbolic\
-mln_value_concept_vectorial\
-mln_value_concept_essential\
-mln_value_int_s\
-mln_value_rgb8\
-mln_value_int_s32\
-mln_value_float01_\
-mln_value_rgb16\
-mln_value_int_u32\
-mln_value_gl8\
-mln_value_label_8\
-mln_value_essential\
-mln_accu_tuple\
-mln_accu_min_h\
-mln_accu_max\
-mln_accu_lor\
-mln_accu_rank\
-mln_accu_transform_stop\
-mln_accu_maj_h\
-mln_accu_min_max\
-mln_accu_internal_base\
-mln_accu_transform_snake\
-mln_accu_rank_high_quant\
-mln_accu_count\
-mln_accu_median_h\
-mln_accu_all\
-mln_accu_land_basic\
-mln_accu_p\
-mln_accu_transform\
-mln_accu_median_alt\
-mln_accu_volume\
-mln_accu_sum\
-mln_accu_height\
-mln_accu_land\
-mln_accu_take\
-mln_accu_histo\
-mln_accu_pair\
-mln_accu_count_adjacent_vertices\
-mln_accu_convolve\
-mln_accu_v\
-mln_accu_rank_bool\
-mln_accu_min\
-mln_accu_transform_directional\
-mln_accu_compute\
-mln_accu_mean\
-mln_accu_lor_basic\
-mln_accu_transform_diagonal\
-mln_accu_nil\
-mln_accu_bbox\
-mln_accu_center\
-mln_accu_line\
-mln_accu_essential\
-mln_accu_max_h\
-mln_level_compare\
-mln_level_memset_\
-mln_level_transform_inplace\
-mln_level_replace\
-mln_level_memcpy_\
-mln_level_apply\
-mln_level_approx_all\
-mln_level_approx_essential\
-mln_level_approx_median\
-mln_level_saturate\
-mln_level_all\
-mln_level_paste\
-mln_level_fast_median\
-mln_level_abs\
-mln_level_fill_with_image\
-mln_level_transform\
-mln_level_fill_with_value\
-mln_level_stretch\
-mln_level_was_median\
-mln_level_compute\
-mln_level_convert\
-mln_level_to_enc\
-mln_level_naive_all\
-mln_level_naive_essential\
-mln_level_naive_median\
-mln_level_sort_psites\
-mln_level_update\
-mln_level_fill\
-mln_level_essential\
-mln_level_assign\
-mln_level_median\
-mln_math_jacobi\
-mln_math_max\
-mln_math_sqr\
-mln_math_all\
-mln_math_sign\
-mln_math_abs\
-mln_math_diff_abs\
-mln_math_round\
-mln_math_min\
-mln_math_sqrt\
-mln_math_essential\
-mln_math_round_sat\
-mln_binarization_includes\
-mln_binarization_all\
-mln_binarization_binarization\
-mln_binarization_threshold\
-mln_binarization_essential\
-mln_trait_site_set_props\
-mln_trait_site_set_print\
-mln_trait_promote\
-mln_trait_solve_binary\
-mln_trait_value_\
-mln_trait_all\
-mln_trait_value_all\
-mln_trait_value_nature\
-mln_trait_value_quant\
-mln_trait_value_kind\
-mln_trait_value_print\
-mln_trait_value_essential\
-mln_trait_images\
-mln_trait_window_props\
-mln_trait_window_print\
-mln_trait_ch_value\
-mln_trait_solve\
-mln_trait_solve_unary\
-mln_trait_op_postdec\
-mln_trait_op_mod\
-mln_trait_op_lor\
-mln_trait_op_neq\
-mln_trait_op_plus\
-mln_trait_op_xor\
-mln_trait_op_all\
-mln_trait_op_geq\
-mln_trait_op_uminus\
-mln_trait_op_not\
-mln_trait_op_times\
-mln_trait_op_less\
-mln_trait_op_decl\
-mln_trait_op_ord\
-mln_trait_op_and\
-mln_trait_op_or\
-mln_trait_op_predec\
-mln_trait_op_minus\
-mln_trait_op_div\
-mln_trait_op_leq\
-mln_trait_op_preinc\
-mln_trait_op_greater\
-mln_trait_op_postinc\
-mln_trait_op_uplus\
-mln_trait_op_essential\
-mln_trait_op_eq\
-mln_trait_concrete\
-mln_trait_windows\
-mln_trait_site_sets\
-mln_trait_image_from_grid\
-mln_trait_undef\
-mln_trait_image_props\
-mln_trait_image_print\
-mln_trait_neighborhood\
-mln_trait_essential\
-mln_canvas_labeling\
-mln_canvas_browsing_hyper_directional\
-mln_canvas_browsing_snake_generic\
-mln_canvas_browsing_backdiagonal2d\
-mln_canvas_browsing_snake_vert\
-mln_canvas_browsing_snake_fwd\
-mln_canvas_browsing_all\
-mln_canvas_browsing_diagonal2d\
-mln_canvas_browsing_fwd\
-mln_canvas_browsing_dir_struct_elt_incr_update\
-mln_canvas_browsing_directional\
-mln_canvas_browsing_essential\
-mln_canvas_chamfer\
-mln_canvas_distance_geodesic\
-mln_canvas_all\
-mln_canvas_distance_front\
-mln_canvas_morpho_all\
-mln_canvas_morpho_algebraic_union_find\
-mln_canvas_morpho_essential\
-mln_canvas_essential\
-mln_metal_is_const\
-mln_metal_none\
-mln_metal_equal\
-mln_metal_unptr\
-mln_metal_not_equal\
-mln_metal_is_ref\
-mln_metal_ret\
-mln_metal_unqualif\
-mln_metal_is_not\
-mln_metal_vec\
-mln_metal_is\
-mln_metal_bool\
-mln_metal_all\
-mln_metal_math_pow\
-mln_metal_math_max\
-mln_metal_math_all\
-mln_metal_math_root\
-mln_metal_math_sqrt\
-mln_metal_mat\
-mln_metal_is_not_const\
-mln_metal_fix_return\
-mln_metal_ands\
-mln_metal_const\
-mln_metal_is_unqualif\
-mln_metal_unconst\
-mln_metal_bexpr\
-mln_metal_array2d\
-mln_metal_is_not_a\
-mln_metal_is_a\
-mln_metal_array1d\
-mln_metal_if\
-mln_metal_unref\
-mln_metal_array\
-mln_metal_ref\
-mln_metal_same_point\
-mln_metal_int\
-mln_metal_abort\
-mln_metal_same_coord\
-mln_metal_templated_by\
-mln_metal_has_neighborhood\
-mln_metal_goes_to\
-mln_metal_is_not_ref\
-mln_metal_converts_to\
-mln_metal_essential\
-mln_metal_array3d\
-mln_algebra_vec\
-mln_algebra_all\
-mln_algebra_h_vec\
-mln_algebra_mat\
-mln_algebra_h_mat\
-mln_algebra_quat\
-mln_algebra_essential\
-mln_linear_convolve_2x1d\
-mln_linear_all\
-mln_linear_ch_convolve\
-mln_linear_gaussian\
-mln_linear_convolve\
-mln_linear_sobel_2d\
-mln_linear_local_convolve\
-mln_linear_lap\
-mln_linear_convolve_directional\
-mln_linear_log\
-mln_linear_essential\
-mln_morpho_thinning\
-mln_morpho_meyer_wst\
-mln_morpho_opening\
-mln_morpho_includes\
-mln_morpho_elementary_opening\
-mln_morpho_elementary_gradient_internal\
-mln_morpho_elementary_dilation\
-mln_morpho_elementary_laplacian\
-mln_morpho_elementary_all\
-mln_morpho_elementary_gradient_external\
-mln_morpho_elementary_like_ero_fun\
-mln_morpho_elementary_gradient\
-mln_morpho_elementary_like_ero_set\
-mln_morpho_elementary_closing\
-mln_morpho_elementary_top_hat\
-mln_morpho_elementary_erosion\
-mln_morpho_elementary_essential\
-mln_morpho_thin_fit\
-mln_morpho_skeleton_constrained\
-mln_morpho_complementation\
-mln_morpho_line_gradient\
-mln_morpho_hit_or_miss\
-mln_morpho_closing_height\
-mln_morpho_plus\
-mln_morpho_general\
-mln_morpho_internal_elementary\
-mln_morpho_contrast\
-mln_morpho_opening_area\
-mln_morpho_opening_height\
-mln_morpho_thickening\
-mln_morpho_dilation\
-mln_morpho_laplacian\
-mln_morpho_all\
-mln_morpho_opening_attribute\
-mln_morpho_opening_volume\
-mln_morpho_closing_area_on_vertices\
-mln_morpho_closing_volume\
-mln_morpho_minus\
-mln_morpho_gradient\
-mln_morpho_tree_max\
-mln_morpho_tree_compute_parent\
-mln_morpho_tree_all\
-mln_morpho_tree_utils\
-mln_morpho_tree_data\
-mln_morpho_tree_compute_attribute_image\
-mln_morpho_opening_area_on_vertices\
-mln_morpho_min\
-mln_morpho_closing\
-mln_morpho_top_hat\
-mln_morpho_erosion\
-mln_morpho_Rd\
-mln_morpho_closing_area\
-mln_morpho_thick_miss\
-mln_morpho_closing_attribute\
-mln_morpho_rank_filter\
-mln_morpho_essential\
-mln_topo_n_face_iter\
-mln_topo_face_iter\
-mln_topo_is_simple_2d\
-mln_topo_centered_iter_adapter\
-mln_topo_internal_complex_set_iterator_base\
-mln_topo_internal_complex_iterator_base\
-mln_topo_internal_complex_relative_iterator_base\
-mln_topo_internal_complex_relative_iterator_sequence\
-mln_topo_algebraic_n_face\
-mln_topo_attic_faces_iter\
-mln_topo_adj_lower_dim_connected_n_face_iter\
-mln_topo_n_face\
-mln_topo_adj_lower_higher_face_iter\
-mln_topo_all\
-mln_topo_face_data\
-mln_topo_static_n_face_iter\
-mln_topo_face\
-mln_topo_adj_m_face_iter\
-mln_topo_complex\
-mln_topo_adj_higher_face_iter\
-mln_topo_adj_lower_face_iter\
-mln_topo_complex_iterators\
-mln_topo_center_only_iter\
-mln_topo_adj_higher_dim_connected_n_face_iter\
-mln_topo_algebraic_face\
-mln_topo_n_faces_set\
-mln_topo_essential\
-mln_essential_1d\
-mln_essential_routine\
-mln_essential_3d\
-mln_essential_2d\
-mln_win_inter\
-mln_win_backdiag2d\
-mln_win_segment1d\
-mln_win_cuboid3d\
-mln_win_vline2d\
-mln_win_octagon2d\
-mln_win_all\
-mln_win_multiple_size\
-mln_win_cube3d\
-mln_win_shift\
-mln_win_sym\
-mln_win_diff\
-mln_win_multiple\
-mln_win_diag2d\
-mln_win_disk2d\
-mln_win_rectangle2d\
-mln_win_hline2d\
-mln_win_line\
-mln_win_essential\
-mln_core_clock_neighb\
-mln_core_pixter2d\
-mln_core_def_low_quant_nbits\
-mln_core_def_all\
-mln_core_def_coordf\
-mln_core_def_coord\
-mln_core_def_essential\
-mln_core_site_set_box\
-mln_core_site_set_p_vertices\
-mln_core_site_set_p_vaccess\
-mln_core_site_set_p_if_piter\
-mln_core_site_set_p_run_piter\
-mln_core_site_set_p_key\
-mln_core_site_set_p_double\
-mln_core_site_set_p_complex_piter\
-mln_core_site_set_p_complex\
-mln_core_site_set_p_image\
-mln_core_site_set_attic_p_complex_faces_piter\
-mln_core_site_set_attic_p_faces_piter\
-mln_core_site_set_p_priority\
-mln_core_site_set_p_set_of\
-mln_core_site_set_all\
-mln_core_site_set_p_edges\
-mln_core_site_set_box_piter\
-mln_core_site_set_p_faces\
-mln_core_site_set_p_set\
-mln_core_site_set_p_queue\
-mln_core_site_set_p_if\
-mln_core_site_set_operators\
-mln_core_site_set_p_mutable_array_of\
-mln_core_site_set_p_edges_psite\
-mln_core_site_set_complex_psite\
-mln_core_site_set_p_run\
-mln_core_site_set_p_n_faces_piter\
-mln_core_site_set_p_centered\
-mln_core_site_set_p_bgraph\
-mln_core_site_set_p_bgraph_piter\
-mln_core_site_set_p_array\
-mln_core_site_set_p_vertices_psite\
-mln_core_site_set_p_line2d\
-mln_core_site_set_p_queue_fast\
-mln_core_site_set_p_graph_piter\
-mln_core_site_set_essential\
-mln_core_dpsites_piter\
-mln_core_w_window\
-mln_core_grids\
-mln_core_dpoints_pixter\
-mln_core_internal_graph_psite_base\
-mln_core_internal_run_image\
-mln_core_internal_pixel_impl\
-mln_core_internal_site_set_base\
-mln_core_internal_image_value_morpher\
-mln_core_internal_site_iterator_base\
-mln_core_internal_complex_neighborhood_base\
-mln_core_internal_site_relative_iterator_base\
-mln_core_internal_site_set_impl\
-mln_core_internal_exact\
-mln_core_internal_p_complex_piter_base\
-mln_core_internal_neighb_niter_impl\
-mln_core_internal_pixel_iterator_base\
-mln_core_internal_classical_window_base\
-mln_core_internal_data\
-mln_core_internal_force_exact\
-mln_core_internal_image_base\
-mln_core_internal_check_image_fastest\
-mln_core_internal_check_image_all\
-mln_core_internal_fixme\
-mln_core_internal_morpher_lvalue\
-mln_core_internal_image_domain_morpher\
-mln_core_internal_image_primary\
-mln_core_internal_set_of\
-mln_core_internal_complex_window_p_base\
-mln_core_internal_graph_window_base\
-mln_core_internal_piter_adaptor\
-mln_core_internal_weighted_window_base\
-mln_core_internal_neighborhood_base\
-mln_core_internal_image_morpher\
-mln_core_internal_coord_impl\
-mln_core_internal_geom_bbox\
-mln_core_internal_image_identity\
-mln_core_internal_pseudo_site_base\
-mln_core_internal_window_base\
-mln_core_internal_box_impl\
-mln_core_internal_site_set_iterator_base\
-mln_core_contract\
-mln_core_all\
-mln_core_point\
-mln_core_neighb\
-mln_core_routine_initialize\
-mln_core_routine_primary\
-mln_core_routine_init\
-mln_core_routine_ops\
-mln_core_routine_all\
-mln_core_routine_clone\
-mln_core_routine_exact\
-mln_core_routine_extend\
-mln_core_routine_essential\
-mln_core_trait_op_mult\
-mln_core_trait_all\
-mln_core_trait_pixter\
-mln_core_trait_qlf_value\
-mln_core_trait_essential\
-mln_core_pixter1d\
-mln_core_category\
-mln_core_macros\
-mln_core_box_runstart_piter\
-mln_core_tags\
-mln_core_dpoint\
-mln_core_alias_dpoint2d_h\
-mln_core_alias_p_run2d\
-mln_core_alias_point3d\
-mln_core_alias_neighb3d\
-mln_core_alias_window3d\
-mln_core_alias_neighb2d\
-mln_core_alias_complex_image\
-mln_core_alias_w_window1d_float\
-mln_core_alias_neighb1d\
-mln_core_alias_w_window2d_float\
-mln_core_alias_w_window2d_int\
-mln_core_alias_box1d\
-mln_core_alias_box2d\
-mln_core_alias_window1d\
-mln_core_alias_point1d\
-mln_core_alias_box3d\
-mln_core_alias_dpoint3d\
-mln_core_alias_complex_geometry\
-mln_core_alias_w_window3d_float\
-mln_core_alias_box2d_h\
-mln_core_alias_point2d\
-mln_core_alias_window2d\
-mln_core_alias_p_runs2d\
-mln_core_alias_point3df\
-mln_core_alias_dpoint1d\
-mln_core_alias_w_window3d_int\
-mln_core_alias_dpoint2d\
-mln_core_alias_w_window1d_int\
-mln_core_alias_point2d_h\
-mln_core_window\
-mln_core_concept_site_proxy\
-mln_core_concept_point_site\
-mln_core_concept_box\
-mln_core_concept_generalized_pixel\
-mln_core_concept_graph\
-mln_core_concept_iterator\
-mln_core_concept_doc_point_site\
-mln_core_concept_doc_box\
-mln_core_concept_doc_generalized_pixel\
-mln_core_concept_doc_iterator\
-mln_core_concept_doc_image_fastest\
-mln_core_concept_doc_image\
-mln_core_concept_doc_value_set\
-mln_core_concept_doc_weighted_window\
-mln_core_concept_doc_pixel_iterator\
-mln_core_concept_doc_value_iterator\
-mln_core_concept_doc_dpoint\
-mln_core_concept_doc_window\
-mln_core_concept_doc_accumulator\
-mln_core_concept_doc_site_set\
-mln_core_concept_doc_object\
-mln_core_concept_doc_neighborhood\
-mln_core_concept_doc_point_iterator\
-mln_core_concept_pseudo_site\
-mln_core_concept_image\
-mln_core_concept_value_set\
-mln_core_concept_proxy\
-mln_core_concept_site\
-mln_core_concept_weighted_window\
-mln_core_concept_all\
-mln_core_concept_gpoint\
-mln_core_concept_site_iterator\
-mln_core_concept_point\
-mln_core_concept_literal\
-mln_core_concept_pixel_iterator\
-mln_core_concept_value_iterator\
-mln_core_concept_meta_accumulator\
-mln_core_concept_gdpoint\
-mln_core_concept_regular_grid\
-mln_core_concept_mesh\
-mln_core_concept_dpoint\
-mln_core_concept_function\
-mln_core_concept_window\
-mln_core_concept_value\
-mln_core_concept_accumulator\
-mln_core_concept_site_set\
-mln_core_concept_object\
-mln_core_concept_delta_point_site\
-mln_core_concept_neighborhood\
-mln_core_concept_browsing\
-mln_core_pixel\
-mln_core_clock_neighb2d\
-mln_core_pixter3d\
-mln_core_image_obased_rle_encode\
-mln_core_image_plain\
-mln_core_image_graph_image\
-mln_core_image_image3d\
-mln_core_image_decorated_image\
-mln_core_image_extension_ima\
-mln_core_image_flat_image\
-mln_core_image_complex_neighborhood_piter\
-mln_core_image_tr_mesh\
-mln_core_image_graph_elt_window\
-mln_core_image_obased_rle_image\
-mln_core_image_mono_obased_rle_image\
-mln_core_image_interpolated\
-mln_core_image_lazy_image\
-mln_core_image_t_image\
-mln_core_image_hexa_piter\
-mln_core_image_value_enc_image\
-mln_core_image_sub_image_if\
-mln_core_image_all\
-mln_core_image_mono_rle_image\
-mln_core_image_complex_image\
-mln_core_image_cast_image\
-mln_core_image_rle_encode\
-mln_core_image_complex_window_piter\
-mln_core_image_tr_image\
-mln_core_image_sub_image\
-mln_core_image_rle_image\
-mln_core_image_line_graph_elt_window\
-mln_core_image_mono_rle_encode\
-mln_core_image_bgraph_psite\
-mln_core_image_sparse_image\
-mln_core_image_bgraph_image\
-mln_core_image_complex_neighborhoods\
-mln_core_image_graph_window_piter\
-mln_core_image_sparse_encode\
-mln_core_image_safe\
-mln_core_image_extension_fun\
-mln_core_image_image1d\
-mln_core_image_extension_val\
-mln_core_image_image_if\
-mln_core_image_hexa\
-mln_core_image_extended\
-mln_core_image_image2d_h\
-mln_core_image_image2d\
-mln_core_image_ch_piter\
-mln_core_image_complex_windows\
-mln_core_image_fi_adaptor\
-mln_core_image_mono_obased_rle_encode\
-mln_core_image_line_graph_image\
-mln_core_image_value_encode\
-mln_core_image_essential\
-mln_core_a_point_of\
-mln_core_var\
-mln_core_essential\
-mln_core_faces_psite\
-mln_labeling_blobs\
-mln_labeling_background\
-mln_labeling_relabel\
-mln_labeling_all\
-mln_labeling_level\
-mln_labeling_flat_zones\
-mln_labeling_foreground\
-mln_labeling_regional_maxima\
-mln_labeling_compute\
-mln_labeling_regional_minima\
-mln_labeling_essential\
-mln_test_predicate\
-mln_test_all\
-mln_test_positive\
-mln_test_essential\
-mln_transform_distance_geodesic\
-mln_transform_internal_all\
-mln_transform_internal_distance_functor\
-mln_transform_internal_influence_zone_functor\
-mln_transform_all\
-mln_transform_influence_zone_front\
-mln_transform_distance_front\
-mln_transform_influence_zone_geodesic\
-mln_transform_essential\
-mln_arith_includes\
-mln_arith_plus\
-mln_arith_all\
-mln_arith_times\
-mln_arith_diff_abs\
-mln_arith_minus\
-mln_arith_min\
-mln_arith_revert\
-mln_arith_essential\
-mln_io_pgm_load\
-mln_io_pgm_all\
-mln_io_pgm_save\
-mln_io_ppm_load\
-mln_io_ppm_all\
-mln_io_ppm_save\
-mln_io_pfm_load\
-mln_io_pfm_all\
-mln_io_pfm_save\
-mln_io_all\
-mln_io_pbm_load\
-mln_io_pbm_all\
-mln_io_pbm_save\
-mln_io_pnm_max_component\
-mln_io_pnm_load\
-mln_io_pnm_load_header\
-mln_io_pnm_all\
-mln_io_pnm_macros\
-mln_io_pnm_save\
-mln_io_pnm_save_header\
-mln_io_txt_all\
-mln_io_txt_save\
-mln_io_abort\
-mln_io_fits_load\
-mln_io_fits_all\
-mln_io_off_load\
-mln_io_off_all\
-mln_io_off_save\
-mln_io_essential\
-mln_logical_includes\
-mln_logical_and_not\
-mln_logical_xor\
-mln_logical_all\
-mln_logical_not\
-mln_logical_and\
-mln_logical_or\
-mln_logical_essential\
-mln_norm_all\
-mln_norm_l1\
-mln_norm_l2\
-mln_norm_linfty\
-mln_norm_essential\
-mln_debug_iota\
-mln_debug_all\
-mln_debug_println_with_border\
-mln_debug_colorize\
-mln_debug_draw_graph\
-mln_debug_put_word\
-mln_debug_format\
-mln_debug_println\
-mln_debug_essential\
-mln_estim_min_max\
-mln_estim_all\
-mln_estim_sum\
-mln_estim_mean\
-mln_estim_essential\
-mln_set_uni\
-mln_set_inter\
-mln_set_all\
-mln_set_get\
-mln_set_sym_diff\
-mln_set_has\
-mln_set_diff\
-mln_set_compute\
-mln_set_essential\
-mln_border_adjust\
-mln_border_duplicate\
-mln_border_find\
-mln_border_thickness\
-mln_border_all\
-mln_border_mirror\
-mln_border_get\
-mln_border_equalize\
-mln_border_resize\
-mln_border_fill\
-mln_border_essential\
-mln_subsampling_gaussian_subsampling\
-mln_subsampling_all\
-mln_subsampling_subsampling\
+check_PROGRAMS =  \
+mln_histo_all \
+mln_histo_data \
+mln_histo_compute \
+mln_histo_essential \
+mln_geom_pmin_pmax \
+mln_geom_max_row \
+mln_geom_chamfer \
+mln_geom_min_row \
+mln_geom_seeds2tiling \
+mln_geom_size1d \
+mln_geom_all \
+mln_geom_size2d \
+mln_geom_max_ind \
+mln_geom_max_col \
+mln_geom_size3d \
+mln_geom_ninds \
+mln_geom_nslis \
+mln_geom_delta \
+mln_geom_resize \
+mln_geom_nsites \
+mln_geom_min_col \
+mln_geom_complex_geometry \
+mln_geom_ncols \
+mln_geom_nrows \
+mln_geom_min_ind \
+mln_geom_bbox \
+mln_geom_seeds2tiling_roundness \
+mln_geom_min_sli \
+mln_geom_essential \
+mln_geom_max_sli \
+mln_draw_box \
+mln_draw_all \
+mln_draw_plot \
+mln_draw_line \
+mln_draw_essential \
+mln_pw_image \
+mln_pw_all \
+mln_pw_value \
+mln_pw_cst \
+mln_pw_var \
+mln_pw_essential \
+mln_literal_zero \
+mln_literal_ops \
+mln_literal_origin \
+mln_literal_grays \
+mln_literal_all \
+mln_literal_colors \
+mln_literal_black \
+mln_literal_one \
+mln_literal_white \
+mln_literal_essential \
+mln_registration_get_rtransf \
+mln_registration_internal_rms \
+mln_registration_get_rot \
+mln_registration_all \
+mln_registration_multiscale \
+mln_registration_registration \
+mln_registration_essential \
+mln_registration_icp \
+mln_util_graph \
+mln_util_max \
+mln_util_lazy_set \
+mln_util_set \
+mln_util_tree_to_image \
+mln_util_lemmings \
+mln_util_greater_point \
+mln_util_internal_graph_iter_base \
+mln_util_internal_boost_graph_access \
+mln_util_internal_boost_graph_structure \
+mln_util_internal_graph_iter \
+mln_util_internal_graph_nbh_iter \
+mln_util_internal_vertex_impl \
+mln_util_internal_edge_impl \
+mln_util_internal_graph_base \
+mln_util_internal_boost_graph \
+mln_util_internal_graph_nbh_iter_base \
+mln_util_internal_boost_graph_property \
+mln_util_ord_pair \
+mln_util_edge \
+mln_util_all \
+mln_util_dindex \
+mln_util_tracked_ptr \
+mln_util_ignore \
+mln_util_greater_psite \
+mln_util_timer \
+mln_util_yes \
+mln_util_line_graph \
+mln_util_ord \
+mln_util_tree_fast_to_image \
+mln_util_tree \
+mln_util_index \
+mln_util_multi_site \
+mln_util_branch_iter \
+mln_util_branch_iter_ind \
+mln_util_tree_to_fast \
+mln_util_array \
+mln_util_vertex \
+mln_util_pix \
+mln_util_tree_fast \
+mln_util_site_pair \
+mln_util_nil \
+mln_util_eat \
+mln_util_essential \
+mln_tag_init \
+mln_tag_skeleton \
+mln_tag_all \
+mln_tag_essential \
+mln_trace_entering \
+mln_trace_all \
+mln_trace_warning \
+mln_trace_exiting \
+mln_trace_resume \
+mln_trace_quiet \
+mln_trace_stop \
+mln_trace_essential \
+mln_make_graph \
+mln_make_double_neighb2d \
+mln_make_dpoint2d_h \
+mln_make_w_window \
+mln_make_image \
+mln_make_vec \
+mln_make_all \
+mln_make_dual_neighb \
+mln_make_w_window3d \
+mln_make_mat \
+mln_make_win_chamfer \
+mln_make_w_window2d_int \
+mln_make_box1d \
+mln_make_voronoi \
+mln_make_box2d \
+mln_make_w_window2d \
+mln_make_box3d \
+mln_make_relabelfun \
+mln_make_pixel \
+mln_make_pix \
+mln_make_box2d_h \
+mln_make_w_window1d \
+mln_make_image2d \
+mln_make_w_window_directional \
+mln_make_w_window3d_int \
+mln_make_essential \
+mln_make_w_window1d_int \
+mln_make_point2d_h \
+mln_display_all \
+mln_display_essential \
+mln_extension_adjust \
+mln_extension_duplicate \
+mln_extension_adjust_duplicate \
+mln_extension_all \
+mln_extension_adjust_fill \
+mln_extension_fill \
+mln_extension_essential \
+mln_fun_p2b_chess \
+mln_fun_p2b_all \
+mln_fun_p2b_has \
+mln_fun_p2b_big_chess \
+mln_fun_p2b_essential \
+mln_fun_p2p_mirror \
+mln_fun_x2p_closest_point \
+mln_fun_x2p_all \
+mln_fun_x2p_essential \
+mln_fun_ops \
+mln_fun_c \
+mln_fun_vv2v_max \
+mln_fun_vv2v_lor \
+mln_fun_vv2v_land_not \
+mln_fun_vv2v_vec \
+mln_fun_vv2v_all \
+mln_fun_vv2v_macros \
+mln_fun_vv2v_lxor \
+mln_fun_vv2v_diff_abs \
+mln_fun_vv2v_land \
+mln_fun_vv2v_min \
+mln_fun_vv2v_essential \
+mln_fun_internal_array_base \
+mln_fun_internal_x2x_linear_impl \
+mln_fun_internal_selector \
+mln_fun_p2v_ternary \
+mln_fun_p2v_iota \
+mln_fun_p2v_elifs \
+mln_fun_p2v_all \
+mln_fun_p2v_essential \
+mln_fun_all \
+mln_fun_v2b_lnot \
+mln_fun_v2b_all \
+mln_fun_v2b_threshold \
+mln_fun_v2b_essential \
+mln_fun_v2v_norm \
+mln_fun_v2v_linear \
+mln_fun_v2v_id \
+mln_fun_v2v_saturate \
+mln_fun_v2v_inc \
+mln_fun_v2v_all \
+mln_fun_v2v_dec \
+mln_fun_v2v_abs \
+mln_fun_v2v_cast \
+mln_fun_v2v_rgb_to_hsi \
+mln_fun_v2v_enc \
+mln_fun_v2v_convert \
+mln_fun_v2v_essential \
+mln_fun_cast \
+mln_fun_i2v_all \
+mln_fun_i2v_array \
+mln_fun_i2v_all_to \
+mln_fun_i2v_essential \
+mln_fun_l2l_relabel \
+mln_fun_l2l_all \
+mln_fun_l2l_essential \
+mln_fun_x2x_composed \
+mln_fun_x2x_all \
+mln_fun_x2x_translation \
+mln_fun_x2x_rotation \
+mln_fun_x2x_essential \
+mln_fun_x2v_linear \
+mln_fun_x2v_bilinear \
+mln_fun_x2v_all \
+mln_fun_x2v_l1_norm \
+mln_fun_x2v_nneighbor \
+mln_fun_x2v_essential \
+mln_fun_essential \
+mln_all \
+mln_convert_to_p_set \
+mln_convert_to \
+mln_convert_to_upper_window \
+mln_convert_to_image \
+mln_convert_to_fun \
+mln_convert_all \
+mln_convert_to_window \
+mln_convert_from_to \
+mln_convert_impl_from_value_to_value \
+mln_convert_impl_all \
+mln_convert_impl_from_image_to_site_set \
+mln_convert_to_dpoint \
+mln_convert_to_p_array \
+mln_convert_to_rgb \
+mln_convert_essential \
+mln_value_float01_f \
+mln_value_float01_16 \
+mln_value_lut_vec \
+mln_value_glf \
+mln_value_other \
+mln_value_graylevel_f \
+mln_value_aliases \
+mln_value_label_16 \
+mln_value_ops \
+mln_value_set \
+mln_value_int_u_sat \
+mln_value_float01_8 \
+mln_value_int_u8 \
+mln_value_equiv \
+mln_value_internal_integer \
+mln_value_internal_gray_f \
+mln_value_internal_all \
+mln_value_internal_value_like \
+mln_value_internal_iterable_set \
+mln_value_internal_encoding \
+mln_value_internal_convert \
+mln_value_internal_gray_ \
+mln_value_internal_essential \
+mln_value_proxy \
+mln_value_viter \
+mln_value_graylevel \
+mln_value_all \
+mln_value_super_value \
+mln_value_builtin_symbolics \
+mln_value_builtin_ops \
+mln_value_builtin_all \
+mln_value_builtin_promotions \
+mln_value_builtin_integers \
+mln_value_builtin_floatings \
+mln_value_builtin_essential \
+mln_value_sign \
+mln_value_hsi \
+mln_value_interval \
+mln_value_gl16 \
+mln_value_scalar \
+mln_value_float01 \
+mln_value_cast \
+mln_value_int_u \
+mln_value_int_s8 \
+mln_value_int_s16 \
+mln_value_int_u16 \
+mln_value_label \
+mln_value_rgb \
+mln_value_stack \
+mln_value_concept_integer \
+mln_value_concept_structured \
+mln_value_concept_built_in \
+mln_value_concept_all \
+mln_value_concept_scalar \
+mln_value_concept_data \
+mln_value_concept_floating \
+mln_value_concept_symbolic \
+mln_value_concept_vectorial \
+mln_value_concept_essential \
+mln_value_int_s \
+mln_value_rgb8 \
+mln_value_int_s32 \
+mln_value_float01_ \
+mln_value_rgb16 \
+mln_value_int_u32 \
+mln_value_gl8 \
+mln_value_label_8 \
+mln_value_essential \
+mln_accu_tuple \
+mln_accu_min_h \
+mln_accu_max \
+mln_accu_lor \
+mln_accu_rank \
+mln_accu_transform_stop \
+mln_accu_maj_h \
+mln_accu_min_max \
+mln_accu_internal_base \
+mln_accu_transform_snake \
+mln_accu_rank_high_quant \
+mln_accu_count \
+mln_accu_median_h \
+mln_accu_all \
+mln_accu_land_basic \
+mln_accu_p \
+mln_accu_transform \
+mln_accu_median_alt \
+mln_accu_volume \
+mln_accu_sum \
+mln_accu_height \
+mln_accu_land \
+mln_accu_take \
+mln_accu_histo \
+mln_accu_pair \
+mln_accu_count_adjacent_vertices \
+mln_accu_convolve \
+mln_accu_v \
+mln_accu_rank_bool \
+mln_accu_min \
+mln_accu_transform_directional \
+mln_accu_compute \
+mln_accu_mean \
+mln_accu_lor_basic \
+mln_accu_transform_diagonal \
+mln_accu_nil \
+mln_accu_bbox \
+mln_accu_center \
+mln_accu_line \
+mln_accu_essential \
+mln_accu_max_h \
+mln_level_compare \
+mln_level_memset_ \
+mln_level_transform_inplace \
+mln_level_replace \
+mln_level_memcpy_ \
+mln_level_apply \
+mln_level_approx_all \
+mln_level_approx_essential \
+mln_level_approx_median \
+mln_level_saturate \
+mln_level_all \
+mln_level_paste \
+mln_level_fast_median \
+mln_level_abs \
+mln_level_fill_with_image \
+mln_level_transform \
+mln_level_fill_with_value \
+mln_level_stretch \
+mln_level_was_median \
+mln_level_compute \
+mln_level_convert \
+mln_level_to_enc \
+mln_level_naive_all \
+mln_level_naive_essential \
+mln_level_naive_median \
+mln_level_sort_psites \
+mln_level_update \
+mln_level_fill \
+mln_level_essential \
+mln_level_assign \
+mln_level_median \
+mln_math_jacobi \
+mln_math_max \
+mln_math_sqr \
+mln_math_all \
+mln_math_sign \
+mln_math_abs \
+mln_math_diff_abs \
+mln_math_round \
+mln_math_min \
+mln_math_sqrt \
+mln_math_essential \
+mln_math_round_sat \
+mln_binarization_includes \
+mln_binarization_all \
+mln_binarization_binarization \
+mln_binarization_threshold \
+mln_binarization_essential \
+mln_trait_site_set_props \
+mln_trait_site_set_print \
+mln_trait_promote \
+mln_trait_solve_binary \
+mln_trait_value_ \
+mln_trait_all \
+mln_trait_value_all \
+mln_trait_value_nature \
+mln_trait_value_quant \
+mln_trait_value_kind \
+mln_trait_value_print \
+mln_trait_value_essential \
+mln_trait_images \
+mln_trait_window_props \
+mln_trait_window_print \
+mln_trait_ch_value \
+mln_trait_solve \
+mln_trait_solve_unary \
+mln_trait_op_postdec \
+mln_trait_op_mod \
+mln_trait_op_lor \
+mln_trait_op_neq \
+mln_trait_op_plus \
+mln_trait_op_xor \
+mln_trait_op_all \
+mln_trait_op_geq \
+mln_trait_op_uminus \
+mln_trait_op_not \
+mln_trait_op_times \
+mln_trait_op_less \
+mln_trait_op_decl \
+mln_trait_op_ord \
+mln_trait_op_and \
+mln_trait_op_or \
+mln_trait_op_predec \
+mln_trait_op_minus \
+mln_trait_op_div \
+mln_trait_op_leq \
+mln_trait_op_preinc \
+mln_trait_op_greater \
+mln_trait_op_postinc \
+mln_trait_op_uplus \
+mln_trait_op_essential \
+mln_trait_op_eq \
+mln_trait_concrete \
+mln_trait_windows \
+mln_trait_site_sets \
+mln_trait_image_from_grid \
+mln_trait_undef \
+mln_trait_image_props \
+mln_trait_image_print \
+mln_trait_neighborhood \
+mln_trait_essential \
+mln_canvas_labeling \
+mln_canvas_browsing_hyper_directional \
+mln_canvas_browsing_snake_generic \
+mln_canvas_browsing_backdiagonal2d \
+mln_canvas_browsing_snake_vert \
+mln_canvas_browsing_snake_fwd \
+mln_canvas_browsing_all \
+mln_canvas_browsing_diagonal2d \
+mln_canvas_browsing_fwd \
+mln_canvas_browsing_dir_struct_elt_incr_update \
+mln_canvas_browsing_directional \
+mln_canvas_browsing_essential \
+mln_canvas_chamfer \
+mln_canvas_distance_geodesic \
+mln_canvas_all \
+mln_canvas_distance_front \
+mln_canvas_morpho_all \
+mln_canvas_morpho_algebraic_union_find \
+mln_canvas_morpho_essential \
+mln_canvas_essential \
+mln_metal_is_const \
+mln_metal_none \
+mln_metal_equal \
+mln_metal_unptr \
+mln_metal_not_equal \
+mln_metal_is_ref \
+mln_metal_ret \
+mln_metal_unqualif \
+mln_metal_is_not \
+mln_metal_vec \
+mln_metal_is \
+mln_metal_bool \
+mln_metal_all \
+mln_metal_math_pow \
+mln_metal_math_max \
+mln_metal_math_all \
+mln_metal_math_root \
+mln_metal_math_sqrt \
+mln_metal_mat \
+mln_metal_is_not_const \
+mln_metal_fix_return \
+mln_metal_ands \
+mln_metal_const \
+mln_metal_is_unqualif \
+mln_metal_unconst \
+mln_metal_bexpr \
+mln_metal_array2d \
+mln_metal_is_not_a \
+mln_metal_is_a \
+mln_metal_array1d \
+mln_metal_if \
+mln_metal_unref \
+mln_metal_array \
+mln_metal_ref \
+mln_metal_same_point \
+mln_metal_int \
+mln_metal_abort \
+mln_metal_same_coord \
+mln_metal_templated_by \
+mln_metal_has_neighborhood \
+mln_metal_goes_to \
+mln_metal_is_not_ref \
+mln_metal_converts_to \
+mln_metal_essential \
+mln_metal_array3d \
+mln_algebra_vec \
+mln_algebra_all \
+mln_algebra_h_vec \
+mln_algebra_mat \
+mln_algebra_h_mat \
+mln_algebra_quat \
+mln_algebra_essential \
+mln_linear_convolve_2x1d \
+mln_linear_all \
+mln_linear_ch_convolve \
+mln_linear_gaussian \
+mln_linear_convolve \
+mln_linear_sobel_2d \
+mln_linear_local_convolve \
+mln_linear_lap \
+mln_linear_convolve_directional \
+mln_linear_log \
+mln_linear_essential \
+mln_morpho_thinning \
+mln_morpho_meyer_wst \
+mln_morpho_opening \
+mln_morpho_includes \
+mln_morpho_elementary_opening \
+mln_morpho_elementary_gradient_internal \
+mln_morpho_elementary_dilation \
+mln_morpho_elementary_laplacian \
+mln_morpho_elementary_all \
+mln_morpho_elementary_gradient_external \
+mln_morpho_elementary_like_ero_fun \
+mln_morpho_elementary_gradient \
+mln_morpho_elementary_like_ero_set \
+mln_morpho_elementary_closing \
+mln_morpho_elementary_top_hat \
+mln_morpho_elementary_erosion \
+mln_morpho_elementary_essential \
+mln_morpho_thin_fit \
+mln_morpho_skeleton_constrained \
+mln_morpho_complementation \
+mln_morpho_line_gradient \
+mln_morpho_hit_or_miss \
+mln_morpho_closing_height \
+mln_morpho_plus \
+mln_morpho_general \
+mln_morpho_internal_elementary \
+mln_morpho_contrast \
+mln_morpho_opening_area \
+mln_morpho_opening_height \
+mln_morpho_thickening \
+mln_morpho_dilation \
+mln_morpho_laplacian \
+mln_morpho_all \
+mln_morpho_opening_attribute \
+mln_morpho_opening_volume \
+mln_morpho_closing_area_on_vertices \
+mln_morpho_closing_volume \
+mln_morpho_minus \
+mln_morpho_gradient \
+mln_morpho_tree_max \
+mln_morpho_tree_compute_parent \
+mln_morpho_tree_all \
+mln_morpho_tree_utils \
+mln_morpho_tree_data \
+mln_morpho_tree_compute_attribute_image \
+mln_morpho_opening_area_on_vertices \
+mln_morpho_min \
+mln_morpho_closing \
+mln_morpho_top_hat \
+mln_morpho_erosion \
+mln_morpho_Rd \
+mln_morpho_closing_area \
+mln_morpho_thick_miss \
+mln_morpho_closing_attribute \
+mln_morpho_rank_filter \
+mln_morpho_essential \
+mln_topo_n_face_iter \
+mln_topo_face_iter \
+mln_topo_is_simple_2d \
+mln_topo_centered_iter_adapter \
+mln_topo_internal_complex_set_iterator_base \
+mln_topo_internal_complex_iterator_base \
+mln_topo_internal_complex_relative_iterator_base \
+mln_topo_internal_complex_relative_iterator_sequence \
+mln_topo_algebraic_n_face \
+mln_topo_attic_faces_iter \
+mln_topo_adj_lower_dim_connected_n_face_iter \
+mln_topo_n_face \
+mln_topo_adj_lower_higher_face_iter \
+mln_topo_all \
+mln_topo_face_data \
+mln_topo_static_n_face_iter \
+mln_topo_face \
+mln_topo_adj_m_face_iter \
+mln_topo_complex \
+mln_topo_adj_higher_face_iter \
+mln_topo_adj_lower_face_iter \
+mln_topo_complex_iterators \
+mln_topo_center_only_iter \
+mln_topo_adj_higher_dim_connected_n_face_iter \
+mln_topo_algebraic_face \
+mln_topo_n_faces_set \
+mln_topo_essential \
+mln_essential_1d \
+mln_essential_routine \
+mln_essential_3d \
+mln_essential_2d \
+mln_win_inter \
+mln_win_backdiag2d \
+mln_win_segment1d \
+mln_win_cuboid3d \
+mln_win_vline2d \
+mln_win_octagon2d \
+mln_win_all \
+mln_win_multiple_size \
+mln_win_cube3d \
+mln_win_shift \
+mln_win_sym \
+mln_win_diff \
+mln_win_multiple \
+mln_win_diag2d \
+mln_win_disk2d \
+mln_win_rectangle2d \
+mln_win_hline2d \
+mln_win_line \
+mln_win_essential \
+mln_core_clock_neighb \
+mln_core_pixter2d \
+mln_core_def_low_quant_nbits \
+mln_core_def_all \
+mln_core_def_coordf \
+mln_core_def_coord \
+mln_core_def_essential \
+mln_core_site_set_box \
+mln_core_site_set_p_vertices \
+mln_core_site_set_p_vaccess \
+mln_core_site_set_p_if_piter \
+mln_core_site_set_p_run_piter \
+mln_core_site_set_p_key \
+mln_core_site_set_p_double \
+mln_core_site_set_p_complex_piter \
+mln_core_site_set_p_complex \
+mln_core_site_set_p_image \
+mln_core_site_set_attic_p_complex_faces_piter \
+mln_core_site_set_attic_p_faces_piter \
+mln_core_site_set_p_priority \
+mln_core_site_set_p_set_of \
+mln_core_site_set_all \
+mln_core_site_set_p_edges \
+mln_core_site_set_box_piter \
+mln_core_site_set_p_faces \
+mln_core_site_set_p_set \
+mln_core_site_set_p_queue \
+mln_core_site_set_p_if \
+mln_core_site_set_operators \
+mln_core_site_set_p_mutable_array_of \
+mln_core_site_set_p_edges_psite \
+mln_core_site_set_complex_psite \
+mln_core_site_set_p_run \
+mln_core_site_set_p_n_faces_piter \
+mln_core_site_set_p_centered \
+mln_core_site_set_p_bgraph \
+mln_core_site_set_p_bgraph_piter \
+mln_core_site_set_p_array \
+mln_core_site_set_p_vertices_psite \
+mln_core_site_set_p_line2d \
+mln_core_site_set_p_queue_fast \
+mln_core_site_set_p_graph_piter \
+mln_core_site_set_essential \
+mln_core_dpsites_piter \
+mln_core_w_window \
+mln_core_grids \
+mln_core_dpoints_pixter \
+mln_core_internal_graph_psite_base \
+mln_core_internal_run_image \
+mln_core_internal_pixel_impl \
+mln_core_internal_site_set_base \
+mln_core_internal_image_value_morpher \
+mln_core_internal_site_iterator_base \
+mln_core_internal_complex_neighborhood_base \
+mln_core_internal_site_relative_iterator_base \
+mln_core_internal_site_set_impl \
+mln_core_internal_exact \
+mln_core_internal_p_complex_piter_base \
+mln_core_internal_neighb_niter_impl \
+mln_core_internal_pixel_iterator_base \
+mln_core_internal_classical_window_base \
+mln_core_internal_data \
+mln_core_internal_force_exact \
+mln_core_internal_image_base \
+mln_core_internal_check_image_fastest \
+mln_core_internal_check_image_all \
+mln_core_internal_fixme \
+mln_core_internal_morpher_lvalue \
+mln_core_internal_image_domain_morpher \
+mln_core_internal_image_primary \
+mln_core_internal_set_of \
+mln_core_internal_complex_window_p_base \
+mln_core_internal_graph_window_base \
+mln_core_internal_piter_adaptor \
+mln_core_internal_weighted_window_base \
+mln_core_internal_neighborhood_base \
+mln_core_internal_image_morpher \
+mln_core_internal_coord_impl \
+mln_core_internal_geom_bbox \
+mln_core_internal_image_identity \
+mln_core_internal_pseudo_site_base \
+mln_core_internal_window_base \
+mln_core_internal_box_impl \
+mln_core_internal_site_set_iterator_base \
+mln_core_contract \
+mln_core_all \
+mln_core_point \
+mln_core_neighb \
+mln_core_routine_initialize \
+mln_core_routine_primary \
+mln_core_routine_init \
+mln_core_routine_ops \
+mln_core_routine_all \
+mln_core_routine_clone \
+mln_core_routine_exact \
+mln_core_routine_extend \
+mln_core_routine_essential \
+mln_core_trait_op_mult \
+mln_core_trait_all \
+mln_core_trait_pixter \
+mln_core_trait_qlf_value \
+mln_core_trait_essential \
+mln_core_pixter1d \
+mln_core_category \
+mln_core_macros \
+mln_core_box_runstart_piter \
+mln_core_tags \
+mln_core_dpoint \
+mln_core_alias_dpoint2d_h \
+mln_core_alias_p_run2d \
+mln_core_alias_point3d \
+mln_core_alias_neighb3d \
+mln_core_alias_window3d \
+mln_core_alias_neighb2d \
+mln_core_alias_complex_image \
+mln_core_alias_w_window1d_float \
+mln_core_alias_neighb1d \
+mln_core_alias_w_window2d_float \
+mln_core_alias_w_window2d_int \
+mln_core_alias_box1d \
+mln_core_alias_box2d \
+mln_core_alias_window1d \
+mln_core_alias_point1d \
+mln_core_alias_box3d \
+mln_core_alias_dpoint3d \
+mln_core_alias_complex_geometry \
+mln_core_alias_w_window3d_float \
+mln_core_alias_box2d_h \
+mln_core_alias_point2d \
+mln_core_alias_window2d \
+mln_core_alias_p_runs2d \
+mln_core_alias_point3df \
+mln_core_alias_dpoint1d \
+mln_core_alias_w_window3d_int \
+mln_core_alias_dpoint2d \
+mln_core_alias_w_window1d_int \
+mln_core_alias_point2d_h \
+mln_core_window \
+mln_core_concept_site_proxy \
+mln_core_concept_point_site \
+mln_core_concept_box \
+mln_core_concept_generalized_pixel \
+mln_core_concept_graph \
+mln_core_concept_iterator \
+mln_core_concept_doc_point_site \
+mln_core_concept_doc_box \
+mln_core_concept_doc_generalized_pixel \
+mln_core_concept_doc_iterator \
+mln_core_concept_doc_image_fastest \
+mln_core_concept_doc_image \
+mln_core_concept_doc_value_set \
+mln_core_concept_doc_weighted_window \
+mln_core_concept_doc_pixel_iterator \
+mln_core_concept_doc_value_iterator \
+mln_core_concept_doc_dpoint \
+mln_core_concept_doc_window \
+mln_core_concept_doc_accumulator \
+mln_core_concept_doc_site_set \
+mln_core_concept_doc_object \
+mln_core_concept_doc_neighborhood \
+mln_core_concept_doc_point_iterator \
+mln_core_concept_pseudo_site \
+mln_core_concept_image \
+mln_core_concept_value_set \
+mln_core_concept_proxy \
+mln_core_concept_site \
+mln_core_concept_weighted_window \
+mln_core_concept_all \
+mln_core_concept_gpoint \
+mln_core_concept_site_iterator \
+mln_core_concept_point \
+mln_core_concept_literal \
+mln_core_concept_pixel_iterator \
+mln_core_concept_value_iterator \
+mln_core_concept_meta_accumulator \
+mln_core_concept_gdpoint \
+mln_core_concept_regular_grid \
+mln_core_concept_mesh \
+mln_core_concept_dpoint \
+mln_core_concept_function \
+mln_core_concept_window \
+mln_core_concept_value \
+mln_core_concept_accumulator \
+mln_core_concept_site_set \
+mln_core_concept_object \
+mln_core_concept_delta_point_site \
+mln_core_concept_neighborhood \
+mln_core_concept_browsing \
+mln_core_pixel \
+mln_core_clock_neighb2d \
+mln_core_pixter3d \
+mln_core_image_obased_rle_encode \
+mln_core_image_plain \
+mln_core_image_graph_image \
+mln_core_image_image3d \
+mln_core_image_decorated_image \
+mln_core_image_extension_ima \
+mln_core_image_flat_image \
+mln_core_image_complex_neighborhood_piter \
+mln_core_image_tr_mesh \
+mln_core_image_graph_elt_window \
+mln_core_image_obased_rle_image \
+mln_core_image_mono_obased_rle_image \
+mln_core_image_interpolated \
+mln_core_image_lazy_image \
+mln_core_image_t_image \
+mln_core_image_hexa_piter \
+mln_core_image_value_enc_image \
+mln_core_image_sub_image_if \
+mln_core_image_all \
+mln_core_image_mono_rle_image \
+mln_core_image_complex_image \
+mln_core_image_cast_image \
+mln_core_image_rle_encode \
+mln_core_image_complex_window_piter \
+mln_core_image_tr_image \
+mln_core_image_sub_image \
+mln_core_image_rle_image \
+mln_core_image_line_graph_elt_window \
+mln_core_image_mono_rle_encode \
+mln_core_image_bgraph_psite \
+mln_core_image_sparse_image \
+mln_core_image_bgraph_image \
+mln_core_image_complex_neighborhoods \
+mln_core_image_graph_window_piter \
+mln_core_image_sparse_encode \
+mln_core_image_safe \
+mln_core_image_extension_fun \
+mln_core_image_image1d \
+mln_core_image_extension_val \
+mln_core_image_image_if \
+mln_core_image_hexa \
+mln_core_image_extended \
+mln_core_image_image2d_h \
+mln_core_image_image2d \
+mln_core_image_ch_piter \
+mln_core_image_complex_windows \
+mln_core_image_fi_adaptor \
+mln_core_image_mono_obased_rle_encode \
+mln_core_image_line_graph_image \
+mln_core_image_value_encode \
+mln_core_image_essential \
+mln_core_a_point_of \
+mln_core_var \
+mln_core_essential \
+mln_core_faces_psite \
+mln_labeling_blobs \
+mln_labeling_background \
+mln_labeling_relabel \
+mln_labeling_all \
+mln_labeling_level \
+mln_labeling_flat_zones \
+mln_labeling_foreground \
+mln_labeling_regional_maxima \
+mln_labeling_compute \
+mln_labeling_regional_minima \
+mln_labeling_essential \
+mln_test_predicate \
+mln_test_all \
+mln_test_positive \
+mln_test_essential \
+mln_transform_distance_geodesic \
+mln_transform_internal_all \
+mln_transform_internal_distance_functor \
+mln_transform_internal_influence_zone_functor \
+mln_transform_all \
+mln_transform_influence_zone_front \
+mln_transform_distance_front \
+mln_transform_influence_zone_geodesic \
+mln_transform_essential \
+mln_arith_includes \
+mln_arith_plus \
+mln_arith_all \
+mln_arith_times \
+mln_arith_diff_abs \
+mln_arith_minus \
+mln_arith_min \
+mln_arith_revert \
+mln_arith_essential \
+mln_io_pgm_load \
+mln_io_pgm_all \
+mln_io_pgm_save \
+mln_io_ppm_load \
+mln_io_ppm_all \
+mln_io_ppm_save \
+mln_io_pfm_load \
+mln_io_pfm_all \
+mln_io_pfm_save \
+mln_io_all \
+mln_io_pbm_load \
+mln_io_pbm_all \
+mln_io_pbm_save \
+mln_io_pnm_max_component \
+mln_io_pnm_load \
+mln_io_pnm_load_header \
+mln_io_pnm_all \
+mln_io_pnm_macros \
+mln_io_pnm_save \
+mln_io_pnm_save_header \
+mln_io_txt_all \
+mln_io_txt_save \
+mln_io_abort \
+mln_io_fits_load \
+mln_io_fits_all \
+mln_io_off_load \
+mln_io_off_all \
+mln_io_off_save \
+mln_io_essential \
+mln_logical_includes \
+mln_logical_and_not \
+mln_logical_xor \
+mln_logical_all \
+mln_logical_not \
+mln_logical_and \
+mln_logical_or \
+mln_logical_essential \
+mln_norm_all \
+mln_norm_l1 \
+mln_norm_l2 \
+mln_norm_linfty \
+mln_norm_essential \
+mln_debug_iota \
+mln_debug_all \
+mln_debug_println_with_border \
+mln_debug_colorize \
+mln_debug_draw_graph \
+mln_debug_put_word \
+mln_debug_format \
+mln_debug_println \
+mln_debug_essential \
+mln_estim_min_max \
+mln_estim_all \
+mln_estim_sum \
+mln_estim_mean \
+mln_estim_essential \
+mln_set_uni \
+mln_set_inter \
+mln_set_all \
+mln_set_get \
+mln_set_sym_diff \
+mln_set_has \
+mln_set_diff \
+mln_set_compute \
+mln_set_essential \
+mln_border_adjust \
+mln_border_duplicate \
+mln_border_find \
+mln_border_thickness \
+mln_border_all \
+mln_border_mirror \
+mln_border_get \
+mln_border_equalize \
+mln_border_resize \
+mln_border_fill \
+mln_border_essential \
+mln_subsampling_gaussian_subsampling \
+mln_subsampling_all \
+mln_subsampling_subsampling \
 mln_subsampling_essential
 
 mln_histo_all_SOURCES = mln_histo_all.cc

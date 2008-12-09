@@ -44,6 +44,9 @@ bin_PROGRAMS =			\
   win-create-1 			\
   win-create-2
 
+bin_PROGRAMS += \
+tuto1_first_image
+
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
 box2d_bbox_SOURCES = box2d-bbox.cc
@@ -83,6 +86,8 @@ point_1_SOURCES = point-1.cc
 predicate_1_SOURCES = predicate-1.cc
 win_create_1_SOURCES = win-create-1.cc
 win_create_2_SOURCES = win-create-2.cc
+
+tuto1_first_image_SOURCES = tuto1_first_image.cc
 
 all: clean-figures 
 	mkdir -p $(OUTPUTS_BUILDDIR) 

@@ -26,7 +26,7 @@ fig-convert:
 	  echo "Converting $$img to png"; 					\
 	  name=`basename $$img` 						\
 	  ext=`echo $$name | cut -d '.' -f 2`; 					\
-	  convert $$img $(FIGURES_BUILDDIR)/`basename $$img $$ext`png		\
+	  convert -scale 250 $$img $(FIGURES_BUILDDIR)/`basename $$img $$ext`png\
 	    || eval $$failcom; 							\
 	done; 
 

@@ -1,6 +1,10 @@
 #!/bin/sh
 
-HEADERS=`find ../../mln -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed s/"\.\.\/\.\.\/"//g`
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <mln_path>"
+fi
+
+HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed s/"\.\.\/\.\.\/"//g`
 
 rm -f Makefile.am
 rm -f *.hh *.cc
@@ -25,7 +29,7 @@ for i in $HEADERS; do
     echo "}"                                 >> $FILE_CC
 
 #build Makefile.am
-    echo "\\" >> Makefile.am
+    echo " \\" >> Makefile.am
     echo -n "${FILE_CC}" | sed s/"\.cc"// >> Makefile.am
 done
 
