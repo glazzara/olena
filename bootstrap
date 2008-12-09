@@ -133,7 +133,7 @@ require autoconf 2.59
 require automake 1.9.4
 
 # Generate unit test files.
-run milena/tests/unit_test ./build_unit_test.sh
+run milena/tests/unit_test ./build_unit_test.sh $PWD/milena/mln
 
 # Generate headers distribution config file.
 dist_headers

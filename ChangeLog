@@ -1,5 +1,11 @@
 2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update call to build_unit_test.sh
+
+	* bootstrap: update here.
+
+2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup and fix bootstrap.
 
 	* bootstrap: cleanup and fix.
