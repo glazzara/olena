@@ -4,6 +4,7 @@
 # include <cmath>
 # include <iomanip>
 # include <random.hh>
+# include <approx_exp.hh>
 # include <T_gen.hh>
 # include <mln/binarization/threshold.hh>
 # include <mln/core/routine/clone.hh>
@@ -11,35 +12,35 @@
 namespace mln
 {
 
-  template <typename I, typename O, typename N>
-  double compute_energy(const I& ima, const O& out, const N& nbh, bool xi, const mln_site(I) &p)
+  template <typename I, typename N>
+  inline
+  float compute_du(const I& ima, const I& out, const mln_site(I)& p, const N& nbh)
   {
-    // Compute u(x,y)
-    double u;
-    if (xi == ima(p))
-      u = 0;
-    else
-      u = 1;
+    // Compute du : energy of clique with the new value minus with the
+    // old value (p_out.val())
 
+    bool old_val = out(p);
+    // Compute u(x,y)
+    float du = 0;
+    if (old_val == ima(p))
+      du += 1;
+    else
+      du -= 1;
     // u(x) is cst so we don't care
 
-    double diff_sum = 0;
-    double coeff = 0;
+    // sum the differences between new_val and the neighboors.
+    int diff_sum = 0;
 
     mln_niter(N) n(nbh, p);
     for_all(n)
-      if (ima.domain().has(n))
-	{
-	  diff_sum += abs(xi - out(n));
-	  coeff ++;
-	}
+      if (old_val != out(n))
+	++diff_sum;
 
-    diff_sum /= coeff;
+    du -= float(5 * (2 * diff_sum - int(nbh.size()))) / nbh.size();
 
-//     std::cout << "energy : " << (u + diff_sum) << std::endl;
-
-    return (u + diff_sum * 5);
+    return du;
   }
+
 
   template <typename I>
   void dump(const Image<I>& ima)
@@ -58,50 +59,42 @@ namespace mln
     const I &ima = exact(ima_);
     const N &nbh = exact(nbh_);
 
-    mln_ch_value(I, bool) bin = binarization::threshold(ima, 255 / 2); // FIXME : max
-    mln_ch_value(I, bool) out(bin.domain());
-
-    io::pbm::save(out, "threshold.pbm");
+    typedef mln_ch_value(I, bool) O;
+    O bin = binarization::threshold(ima, 255 / 2); // FIXME : max
+    O out(bin.domain());
 
     temperature_generator gtemp(start_temp, 0.8);
-    double temp = start_temp;
+    approx_exp my_exp(-1000, 5, 100000);
+    float temp = start_temp;
 
     Random<bool> v_random(0, 1); // mettre max et min ?
-    Random<double> p_random(0., 1.); // idem
+    Random<float> p_random(0., 1.); // idem
 
     unsigned modifications = 42;
     unsigned turn = 1;
     bool gradient = false;
-    int diffneg = 0;
+
 
     while (!gradient || modifications)
       {
 	// Trace.
-// 	dump(out);
+	//dump(out);
 
-        mln_piter(I) p(bin.domain());
         modifications = 0;
-
-        for_all(p)
+	mln_piter(O) p_out(out.domain());
+        for_all(p_out) if (v_random.get())
         {
-          bool v = v_random.get();
+	  float d_u = compute_du(bin, out, p_out, nbh);
 
-          double u = compute_energy(bin, out, nbh, out(p), p);
-          double up = compute_energy(bin, out, nbh, v, p);
-
-	  double d_u = up - u;
-	  double proba = exp(-d_u / temp);
-
-	  if ((d_u < 0 || !gradient && (p_random.get() < proba)) && out(p) != v)
-	    {
-	      if (d_u < 0)
-		diffneg ++;
-	      out(p) = v;
-	      modifications ++;
-	    }
+	  if ((d_u < 0 || !gradient && (p_random.get() < my_exp(-d_u / temp))))
+	  {
+	    out(p_out) = !out(p_out);
+ 	    ++modifications;
+	  }
 	}
 	temp = gtemp;
-	std::cout << "Turn : " << turn << " Modifs : " << modifications << " DiffNeg : " << diffneg << " Temp : " << temp << std::endl;
+
+	std::cout << "Turn : " << turn << " Temp : " << temp << " Modifications : " << modifications << std::endl;
 	turn ++;
 	if (!gradient && !modifications)
 	  {
@@ -109,7 +102,6 @@ namespace mln
 	    modifications = 1;
 	    gradient = true;
 	  }
-	diffneg = 0;
       }
 
     return out;

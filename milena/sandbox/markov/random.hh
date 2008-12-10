@@ -6,14 +6,18 @@
 template <typename T>
 class Random
 {
-  public:
-    Random (T inf, T sup);
+public:
+  Random (T inf, T sup);
 
-    T get () const;
+  T get ();
+  T gen () const;
 
-  public:
-    T inf_;
-    T sup_;
+public:
+  static const unsigned size_ = 10000;
+  T inf_;
+  T sup_;
+  int i_;
+  T values_[size_];
 };
 
 

@@ -1,3 +1,12 @@
+2008-12-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	[Markov] Speed up the algorithm.
+
+	* markov/approx_exp.hh: New, exp using a lookup table.
+	* markov/markov.hh: compute delta u directly.
+	* markov/random.hh,
+	* markov/random.hxx: speed up random using a lookup table.
+
 2008-12-09  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	[Markov] Make the algotithm work.
