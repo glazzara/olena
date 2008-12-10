@@ -350,6 +350,9 @@ namespace mln
 		 &&
 		        mln_is_simple_window(W)::value
 		 &&
+		        mlc_equal(mln_trait_image_quant(I),
+				  trait::image::quant::low)::value
+		 &&
 		        mlc_not_equal(mln_trait_image_value_storage(I),
 				      trait::image::value_storage::disrupted)::value };
 	return general_dispatch_wrt_arbitrary_win(metal::bool_<test>(),

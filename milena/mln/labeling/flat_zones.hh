@@ -44,13 +44,13 @@ namespace mln
   namespace labeling
   {
 
-    /*! Connected component labeling of the flat zones of an image.
-     *
-     * \param[in]  input    The input image.
-     * \param[in]  nbh      The connexity of the flat zones.
-     * \param[out] nlabels  The number of labels.
-     * \return              The label image.
-     */
+    /// Connected component labeling of the flat zones of an image.
+    ///
+    /// \param[in]  input    The input image.
+    /// \param[in]  nbh      The connexity of the flat zones.
+    /// \param[out] nlabels  The number of labels.
+    /// \return              The label image.
+    ///
     template <typename I, typename N, typename L>
     mln_ch_value(I, L)
     flat_zones(const Image<I>& input, const Neighborhood<N>& nbh, L& nlabels);

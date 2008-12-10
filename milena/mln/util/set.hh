@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,13 @@
 #ifndef MLN_UTIL_SET_HH
 # define MLN_UTIL_SET_HH
 
-/*! \file mln/util/set.hh
- *
- * \brief Definition of mln::util::set.
- * 
- * \todo Clean code and test!
- *
- * \todo Zed: Group methods into 2 categories: when frozen, when not.
- */
+/// \file mln/util/set.hh
+///
+/// Definition of mln::util::set.
+///
+/// \todo Clean code and test!
+///
+/// \todo Zed: Group methods into 2 categories: when frozen, when not.
 
 # include <vector>
 # include <set>
@@ -58,27 +58,24 @@ namespace mln
     template <typename T> class set_bkd_iter;
 
 
-    /*! \brief An "efficient" mathematical set class.
-     *
-     * 
-     *
-     * This set class is designed to store a mathematical set and to
-     * present it to the user as a linear array (std::vector).
-     *
-     * Elements are stored by copy.  Implementation is lazy.
-     *
-     * The set has two states: frozen or not.  There is an automatic
-     * switch of state when the user modifies its contents (insert,
-     * remove, or clear) or access to its contents (op[i]).
-     *
-     * The parameter \c T is the element type, which shall not be
-     * const-qualified.
-     *
-     * The unicity of set elements is handled by the mln::util::ord
-     * mechanism.
-     *
-     * \see mln::util::ord
-     */
+    /// \brief An "efficient" mathematical set class.
+    ///
+    /// This set class is designed to store a mathematical set and to
+    /// present it to the user as a linear array (std::vector).
+    ///
+    /// Elements are stored by copy.  Implementation is lazy.
+    ///
+    /// The set has two states: frozen or not.  There is an automatic
+    /// switch of state when the user modifies its contents (insert,
+    /// remove, or clear) or access to its contents (op[i]).
+    ///
+    /// The parameter \c T is the element type, which shall not be
+    /// const-qualified.
+    ///
+    /// The unicity of set elements is handled by the mln::util::ord
+    /// mechanism.
+    ///
+    /// \see mln::util::ord
     template <typename T>
     class set : public Object< mln::util::set<T> >
     {
@@ -98,67 +95,67 @@ namespace mln
       typedef fwd_eiter eiter;
 
 
-      /*! \brief Insert an element \p elt into the set.
-       *
-       * \param[in] elt The element to be inserted.
-       *
-       * If \p elt is already in the set, this method is a no-op.
-       *
-       * \return The set itself after insertion.
-       */
+      /// \brief Insert an element \p elt into the set.
+      ///
+      /// \param[in] elt The element to be inserted.
+      ///
+      /// If \p elt is already in the set, this method is a no-op.
+      ///
+      /// \return The set itself after insertion.
+      ///
       set<T>& insert(const T& elt);
 
 
-      /*! \brief Insert the elements of \p other into the set.
-       *
-       * \param[in] other The set containing the elements to be inserted.
-       *
-       * \return The set itself after insertion.
-       */
+      /// \brief Insert the elements of \p other into the set.
+      ///
+      /// \param[in] other The set containing the elements to be inserted.
+      ///
+      /// \return The set itself after insertion.
+      ///
       template <typename U>
       set<T>& insert(const set<U>& other);
 
 
-      /*! \brief Remove an element \p elt into the set.
-       *
-       * \param[in] elt The element to be inserted.
-       *
-       * If \p elt is already in the set, this method is a no-op.
-       *
-       * \return The set itself after suppression.
-       */
+      /// \brief Remove an element \p elt into the set.
+      ///
+      /// \param[in] elt The element to be inserted.
+      ///
+      /// If \p elt is already in the set, this method is a no-op.
+      ///
+      /// \return The set itself after suppression.
+      ///
       set<T>& remove(const T& elt);
 
 
-      /*! \brief Empty the set.
-       *
-       * All elements contained in the set are destroyed so the set is
-       * emptied.
-       *
-       * \post is_empty() == true
-       */
+      /// \brief Empty the set.
+      ///
+      /// All elements contained in the set are destroyed so the set is
+      /// emptied.
+      ///
+      /// \post is_empty() == true
+      ///
       void clear();
 
 
-      /*! \brief Return the number of elements of the set.
-       */
+      /// \brief Return the number of elements of the set.
+      ///
       unsigned nelements() const;
 
 
-      /*! \brief Test if the set is empty.
-       */
+      /// \brief Test if the set is empty.
+      ///
       bool is_empty() const;
 
 
 
-      /*! \brief Return the i-th element of the set.
-       *
-       * \param[in] i Index of the element to retrieve.
-       *
-       * \pre i < nelements()
-       *
-       * The element is returned by reference and is constant.
-       */
+      /// \brief Return the i-th element of the set.
+      ///
+      /// \param[in] i Index of the element to retrieve.
+      ///
+      /// \pre i < nelements()
+      ///
+      /// The element is returned by reference and is constant.
+      ///
       const T& operator[](unsigned i) const;
 
       /// Return the first element of the set.
@@ -170,23 +167,23 @@ namespace mln
       const T last_element() const;
 
 
-      /*! \brief Test if the object \p elt belongs to the set.
-       *
-       * \param[in] elt A possible element of the set.
-       *
-       * \return True is \p elt is in the set.
-       */
+      /// \brief Test if the object \p elt belongs to the set.
+      ///
+      /// \param[in] elt A possible element of the set.
+      ///
+      /// \return True is \p elt is in the set.
+      ///
       bool has(const T& elt) const;
 
 
-      /*! \brief Give access to the set elements.
-       *
-       * The complexity of this method is O(1).
-       *
-       * \post The set is frozen.
-       *
-       * \return An array (std::vector) of elements.
-       */
+      /// \brief Give access to the set elements.
+      ///
+      /// The complexity of this method is O(1).
+      ///
+      /// \post The set is frozen.
+      ///
+      /// \return An array (std::vector) of elements.
+      ///
       const std::vector<T>& std_vector() const;
 
 
@@ -202,27 +199,27 @@ namespace mln
 
     private:
 
-      /*! \brief Array of elements.
-       *
-       * This structure is only updated (if required) when elements
-       * are accessed.
-       */
+      /// \brief Array of elements.
+      ///
+      /// This structure is only updated (if required) when elements
+      /// are accessed.
+      ///
       mutable std::vector<T> v_;
 
-      /*! \brief Set of elements.
-       *
-       * This structure is always up-to-date w.r.t. the set contents.
-       */
+      /// \brief Set of elements.
+      ///
+      /// This structure is always up-to-date w.r.t. the set contents.
+      ///
       mutable std::set< T, util::ord<T> > s_;
 
 
-      /*! \brief Freeze the contents of the set (update \a v_ from \a
-       * s_, then clear s_).
-       */
+      /// \brief Freeze the contents of the set (update \a v_ from \a
+      /// s_, then clear s_).
+      ///
       void freeze_() const;
 
-      /*! \brief Unfreeze the contents of the set.
-       */
+      /// \brief Unfreeze the contents of the set.
+      ///
       void unfreeze_() const;
 
       /// Tell if the set is frozen.

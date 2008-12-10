@@ -1,3 +1,12 @@
+2008-12-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix missing lowq test for morpho general with any elt.
+
+	* mln/morpho/general.spe.hh
+	(general_dispatch_wrt_win): Fix missing test about lowq.
+	* mln/labeling/flat_zones.hh: Upgrade doc style.
+	* mln/util/set.hh: Likewise.
+
 2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add depth first search canvas for graphes.
