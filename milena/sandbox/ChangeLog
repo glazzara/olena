@@ -1,3 +1,23 @@
+2008-12-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add some experimental code about TUFA and regional minima.
+
+	* geraud/tufa_2008: New directory.
+	* geraud/tufa_2008/steps.0.cc: New.
+	* geraud/tufa_2008/compute_a.cc: New.
+	* geraud/tufa_2008/steps.1.cc: New.
+	* geraud/tufa_2008/steps.2.cc: New.
+	* geraud/tufa_2008/closing.cc: New.
+	* geraud/tufa_2008/steps.3.cc: New.
+	* geraud/tufa_2008/opening.cc: New.
+	* geraud/tufa_2008/experiment.cc: New.
+	* geraud/tufa_2008/steps.2b.cc: New.
+	* geraud/tufa_2008/filter.cc: New.
+	* geraud/tufa_2008/wst_f_equal_wst_a.cc: New.
+	* geraud/tufa_2008/closed_gradient.cc: New.
+	* geraud/tufa_2008/fz_count.cc: New.
+	* geraud/tufa_2008/regmin_count.cc: New.
+
 2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	[Scribo] Make use of depth first search canvas.
