@@ -237,7 +237,6 @@ mln/convert/to_p_array.hh \
 mln/convert/from_to.hxx \
 mln/convert/to_rgb.hh \
 mln/convert/essential.hh \
-mln/value/label.hh.bak \
 mln/value/float01_f.hh \
 mln/value/float01_16.hh \
 mln/value/lut_vec.hh \
@@ -464,6 +463,7 @@ mln/canvas/browsing/all.hh \
 mln/canvas/browsing/diagonal2d.hh \
 mln/canvas/browsing/fwd.hh \
 mln/canvas/browsing/dir_struct_elt_incr_update.hh \
+mln/canvas/browsing/depth_first_search.hh \
 mln/canvas/browsing/directional.hh \
 mln/canvas/browsing/essential.hh \
 mln/canvas/chamfer.hh \

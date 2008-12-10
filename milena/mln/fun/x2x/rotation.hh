@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_X2X_ROTATION_HH
 # define MLN_FUN_X2X_ROTATION_HH
 
-/*! \file mln/fun/x2x/rotation.hh
- *
- * \brief Define a rotation function.
- */
+/// \file mln/fun/x2x/rotation.hh
+///
+/// Define a rotation function.
 
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
@@ -116,9 +116,7 @@ namespace mln
       } // end of namespace internal
 
 
-      /*! \brief Represent a rotation function.
-       *
-       */
+      /// Represent a rotation function.
       template <unsigned n, typename C>
       struct rotation
 	: fun::internal::x2x_linear_impl_< algebra::vec<n,C>, rotation<n,C> >

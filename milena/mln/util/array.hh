@@ -118,6 +118,9 @@ namespace mln
       /// Resize this array to \p n elements.
       void resize(unsigned n);
 
+      /// Resize this array to \p n elements with \p value as value.
+      void resize(unsigned n, const T& value);
+
 
       /// Add the element \p elt at the end of this array.
       array<T>& append(const T& elt);
@@ -325,6 +328,14 @@ namespace mln
     array<T>::resize(unsigned n)
     {
       v_.resize(n);
+    }
+
+    template <typename T>
+    inline
+    void
+    array<T>::resize(unsigned n, const T& value)
+    {
+      v_.resize(n, value);
     }
 
     template <typename T>

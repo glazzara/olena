@@ -31,7 +31,7 @@
 ///
 
 #include <iostream>
-#include <mln/fun/x2x/rotation.hh>
+#include <mln/fun/x2v/rotation.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
@@ -56,7 +56,7 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
-  interpolated<image2d<int_u8>, fun::x2x::bilinear> inter(lena);
+  interpolated<image2d<int_u8>, fun::x2v::bilinear> inter(lena);
 
   fun::x2x::rotation<2,float> rot1(0.1, axis);
 

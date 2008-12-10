@@ -1,3 +1,22 @@
+2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add depth first search canvas for graphes.
+
+	* mln/canvas/browsing/depth_first_search.hh: new canvas.
+
+	* mln/util/array.hh,
+	* mln/fun/internal/array_base.hh: add new resize() overload.
+
+	* mln/fun/x2x/rotation.hh: update doc.
+
+	* tests/fun/x2x/rotation.cc: fix wrong namespace.
+
+	* milena/tests/unit_test/Makefile.am,
+	* milena/tests/unit_test/mln_canvas_browsing_depth_first_search.cc:
+	add a new unit test.
+
+	* milena/headers.mk: update distributed headers.
+
 2008-12-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix 'implies' test and doc tutorial examples.

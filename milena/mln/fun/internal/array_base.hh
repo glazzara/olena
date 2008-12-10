@@ -55,6 +55,7 @@ namespace mln
 	typedef T result;
 
 	void resize(unsigned n);
+	void resize(unsigned n, const T& val);
 	unsigned size() const;
 
 	const T& operator()(unsigned i) const;
@@ -146,6 +147,14 @@ namespace mln
       array_base<T>::resize(unsigned n)
       {
 	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      void
+      array_base<T>::resize(unsigned n, const T& val)
+      {
+	v_.resize(n, val);
       }
 
       template <typename T>

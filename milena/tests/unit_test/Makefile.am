@@ -459,6 +459,7 @@ mln_canvas_browsing_all \
 mln_canvas_browsing_diagonal2d \
 mln_canvas_browsing_fwd \
 mln_canvas_browsing_dir_struct_elt_incr_update \
+mln_canvas_browsing_depth_first_search \
 mln_canvas_browsing_directional \
 mln_canvas_browsing_essential \
 mln_canvas_chamfer \
@@ -1454,6 +1455,7 @@ mln_canvas_browsing_all_SOURCES = mln_canvas_browsing_all.cc
 mln_canvas_browsing_diagonal2d_SOURCES = mln_canvas_browsing_diagonal2d.cc
 mln_canvas_browsing_fwd_SOURCES = mln_canvas_browsing_fwd.cc
 mln_canvas_browsing_dir_struct_elt_incr_update_SOURCES = mln_canvas_browsing_dir_struct_elt_incr_update.cc
+mln_canvas_browsing_depth_first_search_SOURCES = mln_canvas_browsing_depth_first_search.cc
 mln_canvas_browsing_directional_SOURCES = mln_canvas_browsing_directional.cc
 mln_canvas_browsing_essential_SOURCES = mln_canvas_browsing_essential.cc
 mln_canvas_chamfer_SOURCES = mln_canvas_chamfer.cc
