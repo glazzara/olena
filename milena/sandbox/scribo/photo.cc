@@ -58,7 +58,7 @@ int main(int argc, char*argv[])
     return 1;
   }
 
-  scribo::demat(argv, false);
+  scribo::demat_photo(argv);
 
   return 0;
 }

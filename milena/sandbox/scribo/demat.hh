@@ -51,7 +51,9 @@
 # include <mln/util/graph.hh>
 # include <mln/util/line_graph.hh>
 
-#include <tesseract/baseapi.h>
+# include <mln/canvas/browsing/depth_first_search.hh>
+
+# include <tesseract/baseapi.h>
 
 namespace scribo
 {
@@ -206,7 +208,7 @@ namespace scribo
 	{
 	  image2d<bool> b(tboxes[i], 0);
 	  level::fill(b, false);
-	  level::fill(b, in | (tboxes[i] | (pw::value(lbl) == pw::cst(i))));
+	  level::fill((b | (pw::value(lbl) == pw::cst(i))).rw(), true);
 
 	  char* s = TessBaseAPI::TesseractRect(
 	      (unsigned char*) b.buffer(),
@@ -526,39 +528,6 @@ namespace scribo
     //-***************************************
     /// \{
 
-    fun::l2l::relabel<label_16>
-    make_relabel_fun(const util::graph& g)
-    {
-      fun::l2l::relabel<label_16> fun(g.v_nmax(), mln_max(label_16));
-
-      // The first vertex (id 0) IS the background (component 0).
-      unsigned ncomp = 0;
-      mln_vertex_iter_(util::graph) v(g);
-      for_all(v)
-	if (fun(v.id()) == mln_max(label_16))
-	{
-	  std::queue<unsigned> queue;
-	  queue.push(v.id());
-	  fun(v.id()) = ncomp;
-	  while (!queue.empty())
-	  {
-	    util::vertex<util::graph> current_v = g.vertex(queue.front());
-	    queue.pop();
-	    for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
-	      if (fun(current_v.ith_nbh_vertex(nv)) == mln_max(label_16))
-	      {
-		fun(current_v.ith_nbh_vertex(nv)) = ncomp;
-		queue.push(current_v.ith_nbh_vertex(nv));
-	      }
-	  }
-	  ++ncomp;
-	}
-
-      return fun;
-    }
-
-
-
     template <typename R>
     struct remove_small_comps
       : Function_l2b< remove_small_comps<R> >
@@ -630,22 +599,88 @@ namespace scribo
       }
     }
 
+    struct make_relabel_fun_t
+    {
+      template <typename G>
+      void init(const Graph<G>& g)
+      {
+	l2l.resize(exact(g).v_nmax(), mln_max(label_16));
+	ncomp = 0;
+      }
 
+      void final()
+      {}
+
+      void next()
+      { ++ncomp; }
+
+      void update_treated(unsigned id)
+      { l2l(id) = ncomp; }
+
+      void update_queued(unsigned id)
+      { update_treated(id); }
+
+      bool to_be_treated(unsigned id)
+      { return l2l(id) == mln_max(label_16); }
+
+      bool to_be_queued(unsigned id)
+      { return to_be_treated(id); }
+
+      unsigned ncomp;
+      fun::l2l::relabel<label_16> l2l;
+    };
+
+    struct comp_size_t
+    {
+      template <typename G>
+      void init(const Graph<G>& g)
+      {
+	treated.resize(exact(g).v_nmax(), mln_max(label_16));
+      }
+
+      void final()
+      {}
+
+      void next()
+      {
+	unsigned compsize = comp_vertices.nelements();
+	for (unsigned i = 0; i < comp_vertices.nelements(); ++i)
+	  treated[comp_vertices[i]] = compsize;
+	comp_vertices.clear();
+      }
+
+      void update_treated(unsigned id)
+      { comp_vertices.insert(id); }
+
+      void update_queued(unsigned id)
+      { update_treated(id); }
+
+      bool to_be_treated(unsigned id)
+      { return treated[id] == mln_max(label_16); }
+
+      bool to_be_queued(unsigned id)
+      { return comp_vertices.has(id); }
+
+      util::set<unsigned> comp_vertices;
+      util::array<unsigned> treated;
+    };
 
     /// Merge bboxes according to their left box neighbor.
-    util::array< box2d >
+    util::array<box2d>
     group_bboxes(const util::graph& g, image2d<label_16>& lbl,
 		 util::array<box2d>& cboxes, label_16& nlabels)
     {
-      fun::l2l::relabel<label_16> relabel_fun = make_relabel_fun(g);
+      // Build relabel function.
+      make_relabel_fun_t f;
+      canvas::browsing::depth_first_search(g, f);
 
       util::array< accu::bbox<point2d> > tboxes;
       tboxes.resize(nlabels.next());
       for_all_ncomponents(i, nlabels)
-	tboxes[relabel_fun(i)].take(cboxes[i]);
+	tboxes[f.l2l(i)].take(cboxes[i]);
 
       //Update labels
-      labeling::relabel_inplace(lbl, nlabels, relabel_fun);
+      labeling::relabel_inplace(lbl, nlabels, f.l2l);
 
 #ifndef NOUT
       save_lbl_image(lbl, nlabels, "lbl-grouped-boxes.pgm");
@@ -656,39 +691,18 @@ namespace scribo
 	if (tboxes[i].is_valid())
 	  result.append(tboxes[i].to_result());
 
+      mln_assertion(result.nelements() == f.ncomp);
       nlabels = result.nelements();
+
 
 #ifndef NOUT
       image2d<label_16> lbl2 = clone(lbl);
-      util::array<unsigned> treated(g.v_nmax(), mln_max(unsigned));
-      util::set<unsigned> comp_vertices;
-      mln_vertex_iter_(util::graph) v(g);
-      for_all(v)
-	if (treated[v.id()] == mln_max(unsigned))
-	{
-	  std::queue<unsigned> queue;
-	  queue.push(v.id());
-	  comp_vertices.insert(v.id());
-	  while (!queue.empty())
-	  {
-	    util::vertex<util::graph> current_v = g.vertex(queue.front());
-	    queue.pop();
-	    for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
-	      if (!comp_vertices.has(current_v.ith_nbh_vertex(nv)))
-	      {
-		comp_vertices.insert(current_v.ith_nbh_vertex(nv));
-		queue.push(current_v.ith_nbh_vertex(nv));
-	      }
-	  }
-	  unsigned compsize = comp_vertices.nelements();
-	  for (unsigned i = 0; i < comp_vertices.nelements(); ++i)
-	    treated[comp_vertices[i]] = compsize;
-	  comp_vertices.clear();
-	}
+      comp_size_t comp_size;
+      canvas::browsing::depth_first_search(g, comp_size);
 
       for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
-	  if (treated[i] < 3)
+	  if (comp_size.treated[i] < 3)
 	    level::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
       save_lbl_image(lbl2, nlabels, "lbl-grouped-boxes-cleaned.ppm");
 #endif
@@ -769,72 +783,8 @@ namespace scribo
       return tboxes;
     }
 
-
-
-    struct gcolor_t : public mln::Function< gcolor_t >
-    {
-      typedef mln::value::rgb8 result;
-
-      template <typename G>
-	mln::value::rgb8
-	operator()(const mln::util::vertex<G>&) const
-	{
-	  return mln::literal::cyan;
-	}
-
-      template <typename G>
-	mln::value::rgb8
-	operator()(const mln::util::edge<G>&) const
-	{
-	  return mln::literal::magenta;
-	}
-
-    };
-
-    struct gcolorarr_t : public mln::Function< gcolorarr_t >
-    {
-      typedef mln::value::rgb8 result;
-
-      gcolorarr_t(unsigned n, const mln::value::rgb8& val)
-	: v_(n, val)
-      {
-      }
-
-      template <typename G>
-	const mln::value::rgb8&
-	operator()(const mln::util::vertex<G>& v) const
-	{
-	  return v_[v.id()];
-	}
-
-      template <typename G>
-	const mln::value::rgb8&
-	operator()(const mln::util::edge<G>& e) const
-	{
-	  return v_[e.id()];
-	}
-
-      template <typename G>
-	mln::value::rgb8&
-	operator()(const mln::util::vertex<G>& v)
-	{
-	  return v_[v.id()];
-	}
-
-      template <typename G>
-	mln::value::rgb8&
-	operator()(const mln::util::edge<G>& e)
-	{
-	  return v_[e.id()];
-	}
-
-      std::vector<mln::value::rgb8> v_;
-    };
-
-
-
     template <typename P>
-      struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
+    struct lg_vertex_values : public mln::Function_p2v< lg_vertex_values<P> >
     {
       typedef float result;
 
@@ -895,7 +845,7 @@ namespace scribo
       typedef fun::i2v::array<point2d> fv2p_t;
       fv2p_t fv2p(nlabels.next());
 
-      for_all_elements(i, tboxes)
+      for_all_components(i, tboxes)
 	fv2p(i) = tboxes[i].center();
 //      util::array<point2d> centers = labeling::compute(accu::center<point2d>(), iz, nlabels);
 //      fv2p_t fv2p = convert::to<fv2p_t>(centers);
@@ -924,16 +874,16 @@ namespace scribo
 
       mln_VAR(lg_ima, lgv2v | pvlg);
 
-      gcolorarr_t ecolor(pvlg.nsites(), literal::olive);
+      fun::i2v::array<value::rgb8> ecolor(pvlg.nsites(), literal::olive);
       mln_piter_(lg_ima_t) p(lg_ima.domain());
       for_all (p)
 	if ((lg_ima(p) > settings.max_cos) || (lg_ima(p) < - settings.max_cos))
-	    ecolor(p.element()) = literal::cyan;
+	    ecolor(p) = literal::cyan;
 
 #ifndef NOUT
       image2d<rgb8> output = level::convert(rgb8(), in);
       internal::draw_component_boxes(output, tboxes);
-      debug::draw_graph(output, pvlg, gcolor_t(), ecolor);
+      debug::draw_graph(output, pvlg, pw::cst(literal::cyan), ecolor);
       io::ppm::save(output, internal::output_file("aligned-bboxes-merged.ppm"));
 #endif
 
@@ -955,19 +905,63 @@ namespace scribo
 
   // Facade
 
-  void demat(char *argv[], bool treat_tables)
+  void demat_table(char *argv[])
   {
     using namespace mln;
     using value::rgb8;
     using value::label_16;
 
+    internal::settings.treat_tables = true;
+    internal::input_file = basename(argv[1]);
 
-    //Useful debug variables
-    border::thickness = 3;
-    trace::quiet = true;
+    //Load image
+    image2d<bool> in;
+    io::pbm::load(in, argv[1]);
+    logical::not_inplace(in);
+
+#ifndef NOUT
+    image2d<bool> in_bak = clone(in);
+#endif
+
+    internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;
+
+    std::pair<util::array<box2d>,
+	      util::array<box2d> > tblboxes = internal::extract_tables(in);
+    image2d<bool> table = internal::rebuild_table(in, tblboxes);
+
+    /// relabel since the table has been removed.
+    label_16 nlabels;
+    image2d<label_16> lbl = labeling::blobs(in, c8(), nlabels);
+    internal::cleanup_components(lbl, nlabels);
+
+#ifndef NOUT
+    internal::save_lbl_image(lbl, nlabels, "lbl-small-comps-removed.pgm");
+#endif
+
+    util::array<box2d> tboxes = internal::extract_text(in, lbl, nlabels);
+
+    internal::merge_aligned_text_boxes(in, tboxes, lbl, nlabels);
+
+    internal::maptext_to_cells(in, table, tboxes);
+
+#ifndef NOUT
+    std::cout << "Saving output" << std::endl;
+    image2d<rgb8> output = level::convert(rgb8(), in_bak);
+    internal::draw_component_boxes(output, tboxes);
+    io::ppm::save(output, internal::output_file("out.ppm"));
+#endif
+
+    internal::text_recognition(in, lbl, tboxes);
+  }
 
 
-    internal::settings.treat_tables = treat_tables;
+  void demat_photo(char *argv[])
+  {
+    using namespace mln;
+    using value::rgb8;
+    using value::label_16;
+
+    internal::settings.treat_tables = false;
     internal::input_file = basename(argv[1]);
 
     //Load image
@@ -985,36 +979,10 @@ namespace scribo
     label_16 nlabels;
     image2d<label_16> lbl = labeling::blobs(in, c8(), nlabels);
 
-    /// Do we really want to cleanup before removing tables?
-    if (!treat_tables)
-      internal::cleanup_components(lbl, nlabels);
+    internal::cleanup_components(lbl, nlabels);
 
-    std::pair<util::array<box2d>,
-		    util::array<box2d> > tblboxes;
-
-    image2d<bool> table;
-    if (treat_tables)
-    {
-      tblboxes = internal::extract_tables(in);
-      table = internal::rebuild_table(in, tblboxes);
-
-      /// relabel since the table has been removed.
-      lbl = labeling::blobs(in, c8(), nlabels);
-      /// Do we really want to cleanup again?
-      internal::cleanup_components(lbl, nlabels);
-
-#ifndef NOUT
-      internal::save_lbl_image(lbl, nlabels, "lbl-small-comps-removed.pgm");
-#endif
-    }
-
-    util::array<box2d> tboxes =
-      internal::extract_text(in, lbl, nlabels);
-
+    util::array<box2d> tboxes = internal::extract_text(in, lbl, nlabels);
     internal::merge_aligned_text_boxes(in, tboxes, lbl, nlabels);
-
-    if (treat_tables)
-      internal::maptext_to_cells(in, table, tboxes);
 
 #ifndef NOUT
     std::cout << "Saving output" << std::endl;

@@ -1,3 +1,12 @@
+2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	[Scribo] Make use of depth first search canvas.
+
+	* sandbox/scribo/demat.hh: use depth first search canvas.
+
+	* sandbox/scribo/photo.cc,
+	* sandbox/scribo/table.cc: Use a dedicated routine.
+
 2008-12-10  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	[Markov] Speed up the algorithm.
