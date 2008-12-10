@@ -4,7 +4,7 @@ if [ $# -ne 1 ]; then
   echo "Usage: $0 <mln_path>"
 fi
 
-HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed s/"\.\.\/\.\.\/"//g`
+HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
 
 rm -f Makefile.am
 rm -f *.hh *.cc
@@ -17,7 +17,7 @@ echo ""                                             >> Makefile.am
 echo -n "check_PROGRAMS = "                         >> Makefile.am
 
 for i in $HEADERS; do
-    FILE_CC=`echo $i | sed s/"\(\/\|\.\)"/_/g | sed s/_hh/\.cc/g`
+    FILE_CC=`echo $i | sed 's/[/.]/_/g' | sed 's/_hh/\.cc/g'`
 #Build .cc
     echo "// Unit test for $i."              >> $FILE_CC
     echo "// Generated file, do not modify." >> $FILE_CC
@@ -29,16 +29,17 @@ for i in $HEADERS; do
     echo "}"                                 >> $FILE_CC
 
 #build Makefile.am
+    TARGET=`echo "${FILE_CC}" | sed 's/\.cc//'`
     echo " \\" >> Makefile.am
-    echo -n "${FILE_CC}" | sed s/"\.cc"// >> Makefile.am
+    echo -n "${TARGET}" >> Makefile.am
 done
 
 #build Makefile.am
 echo "" >> Makefile.am
 echo "" >> Makefile.am
 for i in $HEADERS; do
-    FILE_CC=`echo $i | sed s/"\(\/\|\.\)"/_/g | sed s/_hh/\.cc/g`
-    NAME=`echo $FILE_CC | sed s/"\.cc"//`
+    FILE_CC=`echo $i | sed 's/[/.]/_/g' | sed 's/_hh/\.cc/g'`
+    NAME=`echo $FILE_CC | sed 's/\.cc//g'`
     echo "${NAME}_SOURCES = $FILE_CC" >> Makefile.am
 done
 echo "" >> Makefile.am

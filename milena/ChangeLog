@@ -1,3 +1,10 @@
+2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix unit test generation on mac.
+
+	* tests/unit_test/build_unit_test.sh: Fix non-compatible sed
+	expressions.
+
 2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update tutorial.
