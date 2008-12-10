@@ -35,7 +35,7 @@ int main()
     {0, 0, 1, 1, 1},
     {1, 1, 1, 0, 0}
   };
-  image2d<bool> ima = make::image2d(vals);
+  image2d<bool> ima = make::image(vals);
   debug::println(ima);
   
   typedef p_mutable_array_of< p_run<point2d> > Runs;

@@ -28,15 +28,14 @@
 #ifndef MLN_CORE_SITE_SET_P_ARRAY_HH
 # define MLN_CORE_SITE_SET_P_ARRAY_HH
 
-/*! \file mln/core/site_set/p_array.hh
- *
- * \brief Definition of a point set class based on std::vector.
- *
- * \todo Add a facade to index_of_in so that it dispatches when
- * calling it with Object<p_array_site>.
- *
- * \todo Use util::index (instead of int) as many times as possible.
- */
+/// \file mln/core/site_set/p_array.hh
+///
+/// Definition of a point set class based on std::vector.
+///
+/// \todo Add a facade to index_of_in so that it dispatches when
+/// calling it with Object<p_array_site>.
+///
+/// \todo Use util::index (instead of int) as many times as possible.
 
 # include <vector>
 
@@ -74,10 +73,10 @@ namespace mln
 
 
 
-  /*! \brief Site set class based on std::vector.
-   *
-   * This is a multi-set of sites.
-   */
+  /// Site set class based on std::vector.
+  ///
+  /// This is a multi-set of sites.
+  ///
   template <typename P>
   class p_array : public internal::site_set_base_< P, p_array<P> >
   {
@@ -172,8 +171,8 @@ namespace mln
 
 
 
-  // p_indexed_psite<P>
-
+  /// Psite class for indexed site sets such as p_array<P>.
+  ///
   template <typename S>
   class p_indexed_psite : public internal::pseudo_site_base_< const mln_element(S)&,
 							      p_indexed_psite<S> >
@@ -498,6 +497,7 @@ namespace mln
     : s_(& s),
       i_(i)
   {
+    update_();
   }
 
   template <typename S>
@@ -514,6 +514,7 @@ namespace mln
   p_indexed_psite<S>::change_index(int i)
   {
     i_ = i;
+    update_();
   }
 
   template <typename S>
@@ -522,6 +523,7 @@ namespace mln
   p_indexed_psite<S>::dec_index()
   {
     --i_;
+    update_();
   }
 
   template <typename S>
@@ -530,6 +532,7 @@ namespace mln
   p_indexed_psite<S>::inc_index()
   {
     ++i_;
+    update_();
   }
 
   template <typename S>
@@ -562,7 +565,8 @@ namespace mln
   const mln_element(S)&
   p_indexed_psite<S>::subj_()
   {
-    update_(); // In case of...
+    if (is_valid())
+      mln_invariant(p_ == (*s_)[i_]);
     return p_;
   }
 
@@ -621,7 +625,6 @@ namespace mln
   p_indexed_fwd_piter<S>::start_()
   {
     p_.change_index(0);
-    p_.update_();
   }
 
   template <typename S>
@@ -630,7 +633,6 @@ namespace mln
   p_indexed_fwd_piter<S>::next_()
   {
     p_.inc_index();
-    p_.update_();
   }
 
   template <typename S>
@@ -680,7 +682,6 @@ namespace mln
   p_indexed_bkd_piter<S>::start_()
   {
     p_.change_index(s_->nsites() - 1);
-    p_.update_();
   }
 
   template <typename S>
@@ -689,7 +690,6 @@ namespace mln
   p_indexed_bkd_piter<S>::next_()
   {
     p_.dec_index();
-    p_.update_();
   }
 
   template <typename S>

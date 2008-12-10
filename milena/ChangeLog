@@ -1,3 +1,20 @@
+2008-12-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix 'implies' test and doc tutorial examples.
+
+	* doc/tutorial/examples/image_if.cc,
+	* doc/tutorial/examples/image2d.cc,
+	* doc/tutorial/examples/sub_image_if.cc,
+	* doc/tutorial/examples/for_Z.cc,
+	* doc/tutorial/examples/p_run.cc,
+	* doc/tutorial/examples/p_mutable_array_of.cc:
+	Fix missing updates.
+	* mln/core/site_set/p_array.hh: Upgrade doc style.
+	(p_indexed_psite, change_index, dec_index, inc_index):
+	Use update_.
+	(subj_): Do not update_; instead, test that update is effective.
+	* mln/core/contract.hh (implies): Fix.
+
 2008-12-10  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix unit test generation on mac.

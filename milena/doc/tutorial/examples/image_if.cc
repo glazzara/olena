@@ -72,7 +72,7 @@ int main()
   // FIXME: border::fill(ima, 0);
   debug::iota(ima);
 
-  mln_VAR(ima_, ima | fun::p2b::chess);
+  mln_VAR(ima_, ima | fun::p2b::chess());
 
   debug::println(ima);
   debug::println(ima_);
@@ -80,7 +80,7 @@ int main()
   trait::image::print(ima_);
   std::cout << std::endl;
 
-  typedef p_if<box2d, fun::p2b::chess_t> S;
+  typedef p_if<box2d, fun::p2b::chess> S;
   ch_target(mln_fwd_piter_(S)(), ima_.domain());
 
   // mln_VAR(ima_e, extend(ima_, pw::value(ima)));

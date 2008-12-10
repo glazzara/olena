@@ -6,7 +6,7 @@
 # include <mln/debug/println.hh>
 
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/estim/nsites.hh>
+# include <mln/geom/nsites.hh>
 
 
 template <typename I, typename W, typename P>
@@ -45,7 +45,7 @@ int main()
   debug::iota(ima);
   debug::println(ima);
   mln_assertion(ima.nsites() == 6);
-  mln_assertion(estim::nsites(ima) == ima.nsites());
+  mln_assertion(geom::nsites(ima) == ima.nsites());
 
   window2d win;
   win

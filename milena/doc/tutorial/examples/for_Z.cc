@@ -135,7 +135,7 @@ int main()
     {1, 0, 1, 1, 1},
     {1, 0, 0, 0, 0}
   };
-  image2d<bool> ima = make::image2d(vals);
+  image2d<bool> ima = make::image(vals);
   debug::println(ima);
 
   int_u8 nlabels;

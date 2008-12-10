@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CONTRACT_HH
 # define MLN_CORE_CONTRACT_HH
 
-/*! \file mln/core/contract.hh
- *
- * \brief Definition of the set of contracts.
- */
+/// \file mln/core/contract.hh
+///
+/// Definition of the set of contracts.
 
 # include <cassert>
 
@@ -70,7 +70,7 @@ namespace mln
   inline
   bool implies(bool lexpr, bool rexpr)
   {
-    return ! (rexpr) || (lexpr);
+    return (! lexpr) || rexpr;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
