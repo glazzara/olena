@@ -81,9 +81,11 @@ namespace mln
       // sort ima psites
       typedef mln_psite(I) P;
       typedef p_array<P> S;
-      S sp = level::sort_psites_decreasing(ima);
+      S sp = level::sort_psites_increasing(ima);
 
-
+      // init watershed image
+      mln_ch_value(I, value::rgb8) wst(ima.domain());
+      mln::level::fill(wst, literal::black);
 
       // number of minima
       unsigned cmpts = label;
@@ -107,17 +109,16 @@ namespace mln
         {
           parent(p) = p;
           if (min(p) != 0) // p in a reg min of the attribute image
+          {
             fused(p) = true; // ok
+            wst(p) = literal::red;
+          }
         }
       }
 
       std::cout << "cmpts |      volume_set      | " << std::endl;
       std::cout << cmpts << " : ";
       std::cout << std::endl;
-
-      // init watershed image
-      mln_ch_value(I, value::rgb8) wst(ima.domain());
-      mln::level::fill(wst, literal::black);
 
       // union find
       mln_fwd_piter(S) p(sp);
@@ -138,8 +139,6 @@ namespace mln
                 if (cmpts >= lambda) // union is still alowed
                   if (fused(p)) // p already belong to a cmpt (fused for an another n)
                     cmpts--;
-                  else
-                    wst(p) = literal::red;
 
               if (cmpts >= lambda ||
                   ima(r) == ima(p) ||
@@ -156,6 +155,10 @@ namespace mln
                 std::cout << "ima " << ima(p) << " - " << cmpts << std::endl;
                 debug::println(fused);
               }
+
+              // mark limit point
+              if (parent(p) != parent(n))
+                wst(p) = literal::red;
             }
           }
         }
@@ -167,7 +170,7 @@ namespace mln
 
       io::ppm::save(wst, "wst.ppm");
 
-//  step2:
+      //  step2:
       std::cout << std::endl;
       std::cout << "cmpts : " << cmpts << std::endl;
 
