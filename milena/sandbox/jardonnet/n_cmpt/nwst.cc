@@ -11,7 +11,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include "n_cmpt4.hh"
+#include "nwst.hh"
 
 using namespace mln;
 using namespace mln::value;
@@ -43,6 +43,6 @@ int main(int argc, char ** argv)
   //  std::cout << "/output/" << std::endl;
   //  debug::println(n_cmpt::n_cmpt3(ima1, c2(), lambda));
 
-  io::pgm::save(n_cmpt::n_cmpt4(ima, c4(), lambda),
+  io::pgm::save(n_cmpt::n_cmpt3(ima, c4(), lambda),
                 "out.pgm");
 }

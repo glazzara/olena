@@ -33,6 +33,10 @@
 # include <mln/util/set.hh>
 
 # include <mln/debug/println.hh>
+# include <mln/debug/iota.hh>
+
+# include <mln/literal/colors.hh>
+# include <mln/io/ppm/save.hh>
 
 # include <mln/accu/volume.hh>
 # include <mln/morpho/tree/data.hh>
@@ -63,42 +67,23 @@ namespace mln
 
     template < typename I, typename N>
     I
-    n_cmpt4(const I& ima, const N& nbh,
+    n_cmpt3(const I& ima, const N& nbh,
             unsigned lambda)
     {
       unsigned label;
 
       std::cout << "/ima/" << std::endl;
       debug::println(ima);
-      /*
+
       // get /ima/ regional minima
       mln_ch_value(I, unsigned) min = labeling::regional_minima(ima, nbh, label);
-      std::cout << "/ima/ regional minima" << std::endl;
-      debug::println(min);
-*/
-      // compute volume image
-      typedef p_array<mln_psite(I)> S;
-      typedef mln_ch_value(I,unsigned) V;
-      typedef accu::volume<I> A;
 
+      // sort ima psites
+      typedef mln_psite(I) P;
+      typedef p_array<P> S;
       S sp = level::sort_psites_decreasing(ima);
-      morpho::tree::data<I,S> t(ima, sp, nbh);
-      V volume = morpho::tree::compute_attribute_image(A(), t);
-      sp = level::sort_psites_increasing(volume);
-      std::cout << "/volume/" << std::endl;
-      debug::println(volume);
 
-      // get /volume/ regional minima
-      mln_ch_value(I, unsigned) min_v = labeling::regional_minima(volume, nbh, label);
-      std::cout << "/volume/ regional minima" << std::endl;
-      debug::println(min_v);
 
-      // tester minima de ima == minima de attr
-      //mln_assertion(min == min_v);
-
-      mln_ch_value(I, bool) fused;
-      initialize(fused, volume);
-      mln::level::fill(fused, false);
 
       // number of minima
       unsigned cmpts = label;
@@ -106,21 +91,22 @@ namespace mln
       if (lambda > cmpts)
         std::cout << "warning : lambda value is to hight." << std::endl;
 
-      // prepare union find
-      typedef mln_psite(V) P;
-      //data
-      mln_ch_value(V, accu::volume<V>)  data(volume.domain());
-      //deja_vu
-      mln_ch_value(V, bool)  deja_vu(volume.domain());
+      //// prepare union find
+      // fused
+      mln_ch_value(I, bool) fused;
+      initialize(fused, ima);
+      mln::level::fill(fused, false);
+      // deja_vu
+      mln_ch_value(I, bool)  deja_vu(ima.domain());
       mln::level::fill(deja_vu, false);
       //parent
-      mln_ch_value(V, P) parent(volume.domain());
+      mln_ch_value(I, P) parent(ima.domain());
       {
         mln_fwd_piter(S) p(sp);
         for_all(p)
         {
           parent(p) = p;
-          if (min_v(p) != 0) // p in a reg min of the attribute image
+          if (min(p) != 0) // p in a reg min of the attribute image
             fused(p) = true; // ok
         }
       }
@@ -129,30 +115,34 @@ namespace mln
       std::cout << cmpts << " : ";
       std::cout << std::endl;
 
-      // union find sur volume
+      // init watershed image
+      mln_ch_value(I, value::rgb8) wst(ima.domain());
+      mln::level::fill(wst, literal::black);
+
+      // union find
       mln_fwd_piter(S) p(sp);
       mln_niter(N) n(nbh, p);
       for_all(p)
       {
         std::cout << p << std::endl;
-        //if (volume(p) > lambda)
-        // goto step2;
         for_all(n)
         {
-          if (volume.domain().has(n) && deja_vu(n))
+          if (ima.domain().has(n) && deja_vu(n))
           {
             //do_union(n, p);
             P r = find_root(parent, n);
             if (r != p)
             {
               // One cmpt less if
-              if (volume(r) != volume(p)) // r and p have differerent volumes
-                if (fused(p)) // p already belong to a cmpt (fused for an another n)
-                  if (cmpts >= lambda) // union is still alowed
+              if (ima(r) != ima(p)) // r and p have differerent volumes
+                if (cmpts >= lambda) // union is still alowed
+                  if (fused(p)) // p already belong to a cmpt (fused for an another n)
                     cmpts--;
+                  else
+                    wst(p) = literal::red;
 
               if (cmpts >= lambda ||
-                  volume(r) == volume(p) ||
+                  ima(r) == ima(p) ||
                   not fused(p))
               {
                 parent(r) = p;
@@ -163,7 +153,7 @@ namespace mln
 
                 fused(n) = true; // We cannot mark minima at init !   ... ?
 
-                std::cout << "volume " << volume(p) << " - " << cmpts << std::endl;
+                std::cout << "ima " << ima(p) << " - " << cmpts << std::endl;
                 debug::println(fused);
               }
             }
@@ -171,6 +161,11 @@ namespace mln
         }
         deja_vu(p) = true;
       }
+
+      I iota(ima.domain());
+      debug::iota(iota);
+
+      io::ppm::save(wst, "wst.ppm");
 
 //  step2:
       std::cout << std::endl;
@@ -183,13 +178,7 @@ namespace mln
         for_all(p)
          if (parent(p) == p) // p is root.
          {
-           //FIXME: if minimas have same values. Components are not visible.
-           //Using min_v instead of ima does not really fix it.
-           //see propagation of min_v values.
-           //Maybe this is only a part of the problem:
-           // n_cmpt4 claims that n components remain,
-           // which is visually false.
-           output(p) = ima(p); //(p[0] + p[1]) * 10;
+           output(p) = iota(p) * 10;
          }
          else
            output(p) = output(parent(p));

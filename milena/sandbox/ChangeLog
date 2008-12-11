@@ -1,5 +1,17 @@
 2008-12-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
+	Experimental nwst.
+
+	* jardonnet/n_cmpt/nwst.hh,
+	* jardonnet/n_cmpt/nwst.cc: Test N-watershed.
+
+	* jardonnet/n_cmpt/n_cmpt4.cc,
+	* jardonnet/n_cmpt/n_cmpt4.hh: Minor fix.
+
+	* jardonnet/n_cmpt/Makefile: Add nwst rules.
+
+2008-12-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
 	Work around different class but same parent(p) value.
 
 	* jardonnet/n_cmpt/n_cmpt5.cc: Same as v4.

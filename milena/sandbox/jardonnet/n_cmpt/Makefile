@@ -13,6 +13,9 @@ n_cmpt4: n_cmpt4.hh n_cmpt4.cc
 n_cmpt5: n_cmpt5.hh n_cmpt5.cc
 	g++ -I../../.. -Wall -W -Wextra n_cmpt5.cc -DNDEBUG -O1 -o n_cmpt5
 
+nwst: nwst.hh nwst.cc
+	g++ -I../../.. -Wall -W -Wextra nwst.cc -DNDEBUG -O1 -o nwst
+
 debug: n_cmpt.hh n_cmpt.cc
 	g++ -I../../.. -Wall -W -Wextra  n_cmpt.cc -g -g3 -o n_cmpt
 
@@ -27,4 +30,7 @@ Debug4: N_cmpt4.hh n_cmpt4.cc
 
 Debug5: N_cmpt5.hh n_cmpt5.cc
 	g++ -I../../.. -Wall -W -Wextra n_cmpt5.cc -g -g5 -o n_cmpt5
+
+Debugnwst: nwst.hh nwst.cc
+	g++ -I../../.. -Wall -W -Wextra nwst.cc -g -g5 -o nwst
 
