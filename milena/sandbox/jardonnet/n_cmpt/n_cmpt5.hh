@@ -186,15 +186,7 @@ namespace mln
         mln_bkd_piter(S) p(sp);
         for_all(p)
          if (parent(p) == p) // p is root.
-         {
-           //FIXME: if minimas have same values. Components are not visible.
-           //Using min_v instead of ima does not really fix it.
-           //see propagation of min_v values.
-           //Maybe this is only a part of the problem:
-           // n_cmpt4 claims that n components remain,
-           // which is visually false.
-           output(p) = iota(p) * 10; //(p[0] + p[1]) * 10;
-         }
+           output(p) = iota(p) * 10;
          else
            output(p) = output(parent(p));
       }

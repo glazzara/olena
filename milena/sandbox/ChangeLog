@@ -1,3 +1,10 @@
+2008-12-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Mark bad test in nwst.
+
+	* jardonnet/n_cmpt/nwst.hh: Wrong shed test.
+	* jardonnet/n_cmpt/n_cmpt5.hh: Beautify.
+
 2008-12-11  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Update nwst.

@@ -157,7 +157,7 @@ namespace mln
               }
 
               // mark limit point
-              if (parent(p) != parent(n))
+              if (parent(p) != parent(n)) // wrong
                 wst(p) = literal::red;
             }
           }
