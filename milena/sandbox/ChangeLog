@@ -1,3 +1,10 @@
+2008-12-12  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Comment, beautify, strengthen n_cmpt5.
+
+	* jardonnet/n_cmpt/n_cmpt5.hh: Comment. Add assertions.
+	* jardonnet/n_cmpt/Makefile: Fix rules.
+
 2008-12-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Mark bad test in nwst.

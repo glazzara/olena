@@ -25,12 +25,12 @@ debug2: n_cmpt2.hh n_cmpt2.cc
 debug3: n_cmpt3.hh n_cmpt3.cc
 	g++ -I../../.. -Wall -W -Wextra n_cmpt3.cc -g -g3 -o n_cmpt3
 
-Debug4: N_cmpt4.hh n_cmpt4.cc
-	g++ -I../../.. -Wall -W -Wextra n_cmpt4.cc -g -g4 -o n_cmpt4
+Debug4: n_cmpt4.hh n_cmpt4.cc
+	g++ -I../../.. -Wall -W -Wextra n_cmpt4.cc -g -g3 -o n_cmpt4
 
-Debug5: N_cmpt5.hh n_cmpt5.cc
-	g++ -I../../.. -Wall -W -Wextra n_cmpt5.cc -g -g5 -o n_cmpt5
+Debug5: n_cmpt5.hh n_cmpt5.cc
+	g++ -I../../.. -Wall -W -Wextra n_cmpt5.cc -g -g3 -o n_cmpt5
 
 Debugnwst: nwst.hh nwst.cc
-	g++ -I../../.. -Wall -W -Wextra nwst.cc -g -g5 -o nwst
+	g++ -I../../.. -Wall -W -Wextra nwst.cc -g -g3 -o nwst
 

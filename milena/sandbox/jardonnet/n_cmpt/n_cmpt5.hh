@@ -46,7 +46,7 @@ namespace mln
   {
 
     template < typename I >
-    void n_cmpt3(const I& (((((((ima))))))));
+    void n_cmpt5(const I& (((((((ima))))))));
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -67,17 +67,12 @@ namespace mln
     n_cmpt3(const I& ima, const N& nbh,
             unsigned lambda)
     {
-      unsigned label;
-
       std::cout << "/ima/" << std::endl;
       debug::println(ima);
-      /*
-      // get /ima/ regional minima
-      mln_ch_value(I, unsigned) min = labeling::regional_minima(ima, nbh, label);
-      std::cout << "/ima/ regional minima" << std::endl;
-      debug::println(min);
-*/
+
       // compute volume image
+      //---------------------
+
       typedef p_array<mln_psite(I)> S;
       typedef mln_ch_value(I,unsigned) V;
       typedef accu::volume<I> A;
@@ -89,31 +84,41 @@ namespace mln
       std::cout << "/volume/" << std::endl;
       debug::println(volume);
 
+
       // get /volume/ regional minima
+      //-----------------------------
+
+      unsigned label;
       mln_ch_value(I, unsigned) min_v = labeling::regional_minima(volume, nbh, label);
       std::cout << "/volume/ regional minima" << std::endl;
       debug::println(min_v);
 
-      // tester minima de ima == minima de attr
-      //mln_assertion(min == min_v);
+      // number of minima
+      unsigned cmpts = label;
+      if (lambda > cmpts)
+        std::cout << "warning : lambda value is to hight." << std::endl;
 
+      std::cout << cmpts << std::endl;
+
+
+      // two pass algo
+      //--------------
+
+      // init fused image
       mln_ch_value(I, bool) fused;
       initialize(fused, volume);
       mln::level::fill(fused, false);
 
-      // number of minima
-      unsigned cmpts = label;
-
-      if (lambda > cmpts)
-        std::cout << "warning : lambda value is to hight." << std::endl;
-
       // prepare union find
       typedef mln_psite(V) P;
+
       //data
       mln_ch_value(V, accu::volume<V>)  data(volume.domain());
+
       //deja_vu
       mln_ch_value(V, bool)  deja_vu(volume.domain());
       mln::level::fill(deja_vu, false);
+
       //parent
       mln_ch_value(V, P) parent(volume.domain());
       {
@@ -121,16 +126,14 @@ namespace mln
         for_all(p)
         {
           parent(p) = p;
+
+          // Mandatory since we propagate fused
           if (min_v(p) != 0) // p in a reg min of the attribute image
             fused(p) = true; // ok
         }
       }
 
-      std::cout << "cmpts |      volume_set      | " << std::endl;
-      std::cout << cmpts << " : ";
-      std::cout << std::endl;
-
-      // union find sur volume
+      // UNION FIND ON VOLUME
       mln_fwd_piter(S) p(sp);
       mln_niter(N) n(nbh, p);
       for_all(p)
@@ -157,14 +160,28 @@ namespace mln
                   not fused(p))
               {
                 parent(r) = p;
-                // propagate set
-                fused(p) = true;
 
-                //min_v(p) = min_v(r); //FIXME: fusion may happend with a non minima value
+                // This test is mandatory. Sometimes (--_) points are fused
+                // tought none of these points belongs to a component (attached
+                // to a local minima).  In this case fused(p) must not be true
+                // since it can be fused again without removing a component.
+                // looking if r is fused should be enought.
+                // This test force minima to be initialized fused.
+                if (fused(r))
+                  fused(p) = true;
 
-                fused(n) = true; // We cannot mark minima at init !   ... ?
+                // If I try to fuse with something never fused I am on a plateau.
+                // not fused(r) => ( volume(r) == volume(p) )
+                mln_invariant(fused(r) || volume(r) == volume(p));
+                // fused(r) and ( volume(r) == volume(p) ) happen on minima plateau.
 
-                std::cout << "volume " << volume(p) << " - " << cmpts << std::endl;
+                // fused(n) = true; // useless ? probably yes because when we
+                // want to know that we really fuse component, we look at
+                // fused(r) not n.
+                // fused(n) is not an invariant: --_. And it is ok (I think).
+                // We don't have to retro-propagate fused.
+
+                //std::cout << "volume " << volume(p) << " - " << cmpts << std::endl;
                 debug::println(fused);
               }
             }
@@ -176,7 +193,6 @@ namespace mln
       I iota(ima.domain());
       debug::iota(iota);
 
-//  step2:
       std::cout << std::endl;
       std::cout << "cmpts : " << cmpts << std::endl;
 
