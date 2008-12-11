@@ -1,3 +1,12 @@
+2008-12-11  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Work around different class but same parent(p) value.
+
+	* jardonnet/n_cmpt/n_cmpt5.cc: Same as v4.
+	* jardonnet/n_cmpt/n_cmpt5.hh: Same as v4. Use iota image.
+	* jardonnet/n_cmpt/Makefile: Add n_cmpt5 rules.
+	* jardonnet/TODO: Cleanup.
+
 2008-12-10  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some experimental code about TUFA and regional minima.
