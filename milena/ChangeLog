@@ -1,3 +1,15 @@
+2008-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add new macros mln_*ITER() to declare iterators.
+
+	* tests/core/other/category.cc,
+	* mln/core/macros.hh: update doc.
+
+	* mln/core/var.hh: add new macros here.
+
+	* tests/core/other/Makefile.am,
+	* tests/core/other/var.cc: new test to check macros.
+
 2008-12-11  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix many various tests.

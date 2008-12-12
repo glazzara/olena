@@ -29,10 +29,9 @@
 #ifndef MLN_CORE_MACROS_HH
 # define MLN_CORE_MACROS_HH
 
-/*! \file mln/core/macros.hh
- *
- * \brief Definition of the set of Milena macros.
- */
+/// \file mln/core/macros.hh
+///
+/// Definition of the set of Milena macros.
 
 
 # define mln_deduce(T, A1, A2) typename T::A1::A2

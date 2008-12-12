@@ -28,13 +28,18 @@
 #ifndef MLN_CORE_VAR_HH
 # define MLN_CORE_VAR_HH
 
-/*! \file mln/core/var.hh
- *
- * \brief Definition of the macro mln_VAR.  Warning: that macro relies
- * on an extention of g++ (typeof) so it is NOT standard C++.
- */
+/// \file mln/core/var.hh
+///
+/// This file contains various macros to declare variables.
+///
+/// Warning: that macro relies on an extention of g++ (typeof) so it is
+/// NOT standard C++.
 
+# include <mln/core/macros.hh>
 
+/// Definition of the macro mln_VAR.
+/// Deduce the type of Expr, create a variable of that type and assign the
+/// result to it.
 #define mln_VAR(Var, Expr)			\
 						\
   typeof(Expr) Var = Expr;			\
@@ -44,6 +49,186 @@
 						\
   const typeof(Expr) Var = Expr;		\
   typedef const typeof(Expr) Var##_t
+
+
+// mln_PITER
+
+/// Shortcuts to declare site iterators
+/// \{
+#define mln_PITER(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_piter(p##__obj_type) p(obj)
+
+#define mln_PITER_(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_piter_(p##__obj_type) p(obj)
+/// \}
+
+/// Shortcuts to declare site forward iterators
+/// \{
+#define mln_FWD_PITER(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_fwd_piter(p##__obj_type) p(obj)
+
+#define mln_FWD_PITER_(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_fwd_piter_(p##__obj_type) p(obj)
+/// \}
+
+/// Shortcuts to declare site backward iterators
+/// \{
+#define mln_BKD_PITER(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_bkd_piter(p##__obj_type) p(obj)
+
+#define mln_BKD_PITER_(p, obj)			\
+ typedef typeof(obj) p##__obj_type;		\
+ mln_bkd_piter_(p##__obj_type) p(obj)
+/// \}
+
+
+// mln_NITER
+
+/// Shortcuts to declare neighbor iterators
+/// \{
+#define mln_NITER(n, obj, p)			\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_niter(n##__obj_type) n(obj, p)
+
+#define mln_NITER_(n, obj, p)			\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_niter_(n##__obj_type) n(obj, p)
+/// \}
+
+/// Shortcuts to declare neighbor forward iterators
+/// \{
+#define mln_FWD_NITER(n, obj, p)		\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_fwd_niter(n##__obj_type) n(obj, p)
+
+#define mln_FWD_NITER_(n, obj, p)		\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_fwd_niter_(n##__obj_type) n(obj, p)
+/// \}
+
+/// Shortcuts to declare neighbor backward iterators
+/// \{
+#define mln_BKD_NITER(n, obj, p)		\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_bkd_niter(n##__obj_type) n(obj, p)
+
+#define mln_BKD_NITER_(n, obj, p)		\
+ typedef typeof(obj) n##__obj_type;		\
+ mln_bkd_niter_(n##__obj_type) n(obj, p)
+/// \}
+
+
+// mln_QITER
+
+/// Shortcuts to declare neighbor iterators on windows
+/// \{
+#define mln_QITER(q, obj, p)			\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_qiter(q##__obj_type) q(obj, p)
+
+#define mln_QITER_(q, obj, p)			\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_qiter_(q##__obj_type) q(obj, p)
+/// \}
+
+/// Shortcuts to declare neighbor forward iterators on windows
+/// \{
+#define mln_FWD_QITER(q, obj, p)		\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_fwd_qiter(q##__obj_type) q(obj, p)
+
+#define mln_FWD_QITER_(q, obj, p)		\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_fwd_qiter_(q##__obj_type) q(obj, p)
+/// \}
+
+/// Shortcuts to declare neighbor backward iterators on windows
+/// \{
+#define mln_BKD_QITER(q, obj, p)		\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_bkd_qiter(q##__obj_type) q(obj, p)
+
+#define mln_BKD_QITER_(q, obj, p)		\
+ typedef typeof(obj) q##__obj_type;		\
+ mln_bkd_qiter_(q##__obj_type) q(obj, p)
+/// \}
+
+
+// mln_EITER
+
+/// Shortcuts to declare element iterators
+/// \{
+#define mln_EITER(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_eiter(e##__obj_type) e(obj)
+
+#define mln_EITER_(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_eiter_(e##__obj_type) e(obj)
+/// \}
+
+/// Shortcuts to declare element forward iterators
+/// \{
+#define mln_FWD_EITER(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_fwd_eiter(e##__obj_type) e(obj)
+
+#define mln_FWD_EITER_(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_fwd_eiter_(e##__obj_type) e(obj)
+/// \}
+
+/// Shortcuts to declare element backward iterators
+/// \{
+#define mln_BKD_EITER(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_bkd_eiter(e##__obj_type) e(obj)
+
+#define mln_BKD_EITER_(e, obj)			\
+ typedef typeof(obj) e##__obj_type;		\
+ mln_bkd_eiter_(e##__obj_type) e(obj)
+/// \}
+
+
+// mln_VITER
+
+/// Shortcuts to declare value iterators
+/// \{
+#define mln_VITER(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_viter(v##__obj_type) v(obj)
+
+#define mln_VITER_(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_viter_(v##__obj_type) v(obj)
+/// \}
+
+/// Shortcuts to declare value forward iterators
+/// \{
+#define mln_FWD_VITER(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_fwd_viter(v##__obj_type) v(obj)
+
+#define mln_FWD_VITER_(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_fwd_viter_(v##__obj_type) v(obj)
+/// \}
+
+/// Shortcuts to declare value backward iterators
+/// \{
+#define mln_BKD_VITER(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_bkd_viter(v##__obj_type) v(obj)
+
+#define mln_BKD_VITER_(v, obj)			\
+ typedef typeof(obj) v##__obj_type;		\
+ mln_bkd_viter_(v##__obj_type) v(obj)
+/// \}
 
 
 #endif // ! MLN_CORE_VAR_HH
