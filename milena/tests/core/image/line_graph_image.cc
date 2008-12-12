@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright(C) 2007, 2008 EPITA Research and Development Laboratory(LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,30 +44,7 @@
 
 #include <mln/core/var.hh>
 
-
-// Expected neighbors for forward and backward iteration.
-static unsigned fwd[5][3] = { { 1,  2, -1 },
-			      { 0,  2,  4 },
-			      { 0,  1,  3 },
-			      { 2,  4, -1 },
-			      { 1,  3, -1 } };
-
-static unsigned bkd[5][3] = { { 2,  1, -1 },
-			      { 4,  2,  0 },
-			      { 3,  1,  0 },
-			      { 4,  2, -1 },
-			      { 3,  1, -1 } };
-
-
-int main()
-{
-  using namespace mln;
-
-  /*--------.
-  | Graph.  |
-  `--------*/
-
-  /* The graph and its corresponding line graph are as follows:
+/* The graph and its corresponding line graph are as follows:
 
             0 1 2 3 4               0 1 2 3 4
          .-----------	         .-----------
@@ -78,7 +55,30 @@ int main()
        3 |       \  |	       3 |       2  |
        4 |        3-4	       4 |        *3*
 
-  */
+*/
+
+
+// Expected neighbors for forward and backward iteration.
+static unsigned expected_fwd_nbh[5][3] = { { 1,  2, -1 },
+					   { 0,  2,  4 },
+					   { 0,  1,  3 },
+					   { 2,  4, -1 },
+					   { 1,  3, -1 } };
+
+static unsigned expected_bkd_nbh[5][3] = { { 2,  1, -1 },
+					   { 4,  2,  0 },
+					   { 3,  1,  0 },
+					   { 4,  2, -1 },
+					   { 3,  1, -1 } };
+
+
+int main()
+{
+  using namespace mln;
+
+  /*--------.
+  | Graph.  |
+  `--------*/
 
   // Sites associated to edges.
   typedef fun::i2v::array<point2d> fsite_t;
@@ -91,7 +91,7 @@ int main()
 
   util::graph g;
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < sites.size(); ++i)
+  for(unsigned i = 0; i < sites.size(); ++i)
     g.add_vertex();
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -114,11 +114,11 @@ int main()
   // Graph values.
   typedef fun::i2v::array<unsigned> viota_t;
   viota_t iota(pe.nsites());
-  for (unsigned i = 0; i < iota.size(); ++i)
+  for(unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
   // Create line graph image.
-  mln_const_VAR(ima, (iota | pe));
+  mln_const_VAR(ima,(iota | pe));
 
   /*------------.
   | Iterators.  |
@@ -130,7 +130,7 @@ int main()
   // Manual iteration over the domain of IMA.
   mln_piter_(ima_t) p(ima.domain());
   unsigned i = 10;
-  for_all (p)
+  for_all(p)
     mln_assertion(ima(p) == i++);
 
   typedef line_graph_elt_window<util::graph, fsite_t> win_t;
@@ -139,12 +139,12 @@ int main()
   {
     // Window - Forward iteration
     mln_fwd_qiter_(win_t) q(win, p);
-    for_all (p)
+    for_all(p)
     {
       i = 0;
-      for_all (q)
+      for_all(q)
       {
-	mln_assertion(fwd[p.element().id()][i] == q.element().id());
+	mln_assertion(expected_fwd_nbh[p.id()][i] == q.id());
 	++i;
       }
     }
@@ -153,12 +153,12 @@ int main()
   {
     // Window - Backward iteration
     mln_bkd_qiter_(win_t) q(win, p);
-    for_all (p)
+    for_all(p)
     {
       i = 0;
-      for_all (q)
+      for_all(q)
       {
-	mln_assertion(bkd[p.element().id()][i] == q.element().id());
+	mln_assertion(expected_bkd_nbh[p.id()][i] == q.id());
 	++i;
       }
     }
@@ -171,12 +171,12 @@ int main()
   {
     // Neighborhood - Forward iteration
     mln_fwd_niter_(neighb_t) n(neigh, p);
-    for_all (p)
+    for_all(p)
     {
       i = 0;
-      for_all (n)
+      for_all(n)
       {
-	mln_assertion(fwd[p.element().id()][i] == n.element().id());
+	mln_assertion(expected_fwd_nbh[p.id()][i] == n.id());
 	++i;
       }
     }
@@ -185,12 +185,12 @@ int main()
   {
     // Neighborhood - Backward iteration
     mln_bkd_niter_(neighb_t) n(neigh, p);
-    for_all (p)
+    for_all(p)
     {
       i = 0;
-      for_all (n)
+      for_all(n)
       {
-	mln_assertion(bkd[p.element().id()][i] == n.element().id());
+	mln_assertion(expected_bkd_nbh[p.id()][i] == n.id());
 	++i;
       }
     }

@@ -91,6 +91,12 @@ namespace mln
 
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
+
+    /// Convert towards the graph element id.
+    operator unsigned() const;
+
+    /// Return the graph element id.
+    unsigned id() const;
     /// \}
 
   private:
@@ -151,14 +157,6 @@ namespace mln
   }
 
   template <typename S, typename W, typename I>
-  inline
-  mln_psite(W)
-  graph_window_piter<S,W,I>::compute_p_() const
-  {
-    return mln_psite(S)(this->center().site_set(), iter_.id());
-  }
-
-  template <typename S, typename W, typename I>
   template <typename Pref>
   inline
   void
@@ -170,10 +168,33 @@ namespace mln
 
   template <typename S, typename W, typename I>
   inline
+  mln_psite(W)
+  graph_window_piter<S,W,I>::compute_p_() const
+  {
+    return mln_psite(S)(this->center().site_set(), iter_.id());
+  }
+
+  template <typename S, typename W, typename I>
+  inline
   const mln_graph_element(S)&
   graph_window_piter<S, W, I>::element() const
   {
     return iter_;
+  }
+
+  template <typename S, typename W, typename I>
+  inline
+  graph_window_piter<S, W, I>::operator unsigned() const
+  {
+    return iter_.id();
+  }
+
+  template <typename S, typename W, typename I>
+  inline
+  unsigned
+  graph_window_piter<S, W, I>::id() const
+  {
+    return iter_.id();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

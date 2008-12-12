@@ -91,6 +91,9 @@ namespace mln
     /// Convert towards the graph element id.
     operator unsigned() const;
 
+    /// Return the graph element id.
+    unsigned id() const;
+
   private:
 
     /// Update the psite corresponding to this iterator.
@@ -193,6 +196,14 @@ namespace mln
   template <typename S, typename I>
   inline
   p_graph_piter<S,I>::operator unsigned() const
+  {
+    return iter_.id();
+  }
+
+  template <typename S, typename I>
+  inline
+  unsigned
+  p_graph_piter<S,I>::id() const
   {
     return iter_.id();
   }

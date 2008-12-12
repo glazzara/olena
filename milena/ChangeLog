@@ -1,5 +1,17 @@
 2008-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add missing id() member in graph related piters.
+
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/internal/neighb_niter_impl.hh,
+	* mln/core/site_set/p_graph_piter.hh: add id().
+
+	* tests/core/image/graph_image.cc,
+	* tests/core/image/line_graph_image.cc: use id() instead of
+	element().id(). 
+
+2008-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add new macros mln_*ITER() to declare iterators.
 
 	* tests/core/other/category.cc,
