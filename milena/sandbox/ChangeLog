@@ -1,3 +1,10 @@
+2008-12-12  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Comment. Fix wrong fusing condition, dec condition.
+
+	* jardonnet/n_cmpt/n_cmpt5.cc: Comment. Change fusing/dec conditions.
+	* jardonnet/n_cmpt/n_cmpt5.hh: Remove old hack.
+
 2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Add a pseudo report of a discution with theo on my seminar.

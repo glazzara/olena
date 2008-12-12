@@ -149,16 +149,40 @@ namespace mln
             P r = find_root(parent, n);
             if (r != p)
             {
-              // One cmpt less if
-              if (volume(r) != volume(p)) // r and p have differerent volumes
-                if (fused(p)) // p already belong to a cmpt (fused for an another n)
-                  if (cmpts >= lambda) // union is still alowed
-                    cmpts--;
+              std::cout << "neighb: " << n << std::endl;
+              std::cout << "v(r): " << volume(r) << " v(p): "  << volume(p) << " f(p): " << fused(p) << std::endl;
 
-              if (cmpts >= lambda ||
-                  volume(r) == volume(p) ||
-                  not fused(p))
+              //if (volume(r) != volume(p)) // r and p have different volumes
+              // This check was wrong.
+              // you just fused with a minima.
+              // then you fuse with a neighbor already fused that has the same volume as you
+              // a)  1 50 1
+              //     2 2  2
+              // we don't have ( volume(r) == volume(p) ) => not fused(r)
+              // even if r and p are not minima
+
+              // problem :
+              // - when fusing minima    : same level, both fused. NOT DEC
+              // - when fusing cmpts (a) : same level, both fused. DEC
+
+              // One cmpt less if
+              if (fused(r) && min_v(p) == 0) // p is not a minima
+                if (fused(p)) // p already belong to a cmpt (fused for an another n)
+                  if (cmpts >= lambda) // union is still allowed
+                  {
+                    cmpts--;
+                    std::cout << "dec" << std::endl;
+                  }
+
+              mln_invariant(fused(r) || volume(r) == volume(p));
+
+              // Union made if
+              if (cmpts >= lambda || // union is still allowed or
+                  not fused(r) || // r not fused or
+                  not fused(p) || // p not fused or
+                  min_v(p) != 0) // p is a minima
               {
+                std::cout << "fuse" << p << n << std::endl;
                 parent(r) = p;
 
                 // This test is mandatory. Sometimes (--_) points are fused
@@ -169,6 +193,7 @@ namespace mln
                 // This test force minima to be initialized fused.
                 if (fused(r))
                   fused(p) = true;
+
 
                 // If I try to fuse with something never fused I am on a plateau.
                 // not fused(r) => ( volume(r) == volume(p) )
@@ -181,8 +206,8 @@ namespace mln
                 // fused(n) is not an invariant: --_. And it is ok (I think).
                 // We don't have to retro-propagate fused.
 
-                //std::cout << "volume " << volume(p) << " - " << cmpts << std::endl;
-                debug::println(fused);
+                std::cerr << "volume " << volume(p) << " - " << cmpts << std::endl;
+                //debug::println(fused);
               }
             }
           }
@@ -190,7 +215,7 @@ namespace mln
         deja_vu(p) = true;
       }
 
-      I iota(ima.domain());
+      mln_ch_value(I,value::int_u<16>) iota(ima.domain());
       debug::iota(iota);
 
       std::cout << std::endl;
@@ -202,7 +227,7 @@ namespace mln
         mln_bkd_piter(S) p(sp);
         for_all(p)
          if (parent(p) == p) // p is root.
-           output(p) = iota(p) * 10;
+           output(p) = iota(p);
          else
            output(p) = output(parent(p));
       }
