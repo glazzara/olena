@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -29,7 +29,7 @@
 # define MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_BASE_HH
 
 /** \file mln/topo/internal/complex_relative_iterator_base.hh
-    \brief Definition of an implementation (factoring) class for
+    Definition of an implementation (factoring) class for
     iterators on mln::complex.
 
     The hierarchy of classes in this file is as follows
@@ -68,11 +68,16 @@ namespace mln
     namespace internal
     {
 
+      // Forward declaration.
+      template <typename F, typename E>
+      class complex_iterator_base;
+
+
       /*----------------------------------------------------------.
       | topo::internal::complex_relative_iterator_base<C, F, E>.  |
       `----------------------------------------------------------*/
 
-      /// \brief Factoring class for relative iterators on mln::complex.
+      /// Factoring class for relative iterators on mln::complex.
       ///
       /// \arg \p C The type of the center face handle.
       /// \arg \p F The type of the face handle.
@@ -124,7 +129,7 @@ namespace mln
       | topo::internal::forward_complex_relative_iterator_base<C, F, E>.  |
       `------------------------------------------------------------------*/
 
-      /// \brief Factoring class for forward relative iterators on
+      /// Factoring class for forward relative iterators on
       /// mln::complex.
       ///
       /// \arg \p C The type of the center face handle.
@@ -175,7 +180,7 @@ namespace mln
       | topo::internal::backward_complex_relative_iterator_base<C, F, E>.  |
       `-------------------------------------------------------------------*/
 
-      /// \brief Factoring class for backward relative iterators on
+      /// Factoring class for backward relative iterators on
       /// mln::complex.
       ///
       /// \arg \p C The type of the center face handle.

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,11 @@
 #ifndef MLN_VALUE_INTERNAL_CONVERT_HH
 # define MLN_VALUE_INTERNAL_CONVERT_HH
 
-/*! \file mln/value/internal/convert.hh
- *
- * \brief Define a conversion between an index and an iterable value.
- */
+/// \file mln/value/internal/convert.hh
+///
+/// Define a conversion between an index and an iterable value.
 
+# include <mln/core/contract.hh>
 # include <mln/trait/value_.hh>
 
 

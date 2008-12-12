@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TOPO_ALL_HH
 # define MLN_TOPO_ALL_HH
 
-/*! \file mln/topo/all.hh
- *
- * \brief File that includes all "point-wise" expression tools.
- */
+/// \file mln/topo/all.hh
+///
+/// File that includes all topology related algorithms.
 
 
 namespace mln
@@ -42,22 +42,21 @@ namespace mln
 
 } // end of namespace mln
 
-
-# include <mln/core/topo/adj_higher_dim_connected_n_face_iter.hh>
-# include <mln/core/topo/adj_higher_face_iter.hh>
-# include <mln/core/topo/adj_lower_dim_connected_n_face_iter.hh>
-# include <mln/core/topo/adj_lower_face_iter.hh>
-# include <mln/core/topo/adj_lower_higher_face_iter.hh>
-# include <mln/core/topo/center_only_iter.hh>
-# include <mln/core/topo/centered_iter_adapter.hh>
-# include <mln/core/topo/complex.hh>
-# include <mln/core/topo/complex_iterators.hh>
-# include <mln/core/topo/face.hh>
-# include <mln/core/topo/face_data.hh>
-# include <mln/core/topo/face_iter.hh>
-# include <mln/core/topo/n_face.hh>
-# include <mln/core/topo/n_face_iter.hh>
-# include <mln/core/topo/n_faces_set.hh>
-# include <mln/core/topo/static_n_face_iter>
+# include <mln/topo/attic/faces_iter.hh>
+# include <mln/topo/adj_higher_dim_connected_n_face_iter.hh>
+# include <mln/topo/adj_higher_face_iter.hh>
+# include <mln/topo/adj_lower_dim_connected_n_face_iter.hh>
+# include <mln/topo/adj_lower_face_iter.hh>
+# include <mln/topo/adj_lower_higher_face_iter.hh>
+# include <mln/topo/center_only_iter.hh>
+# include <mln/topo/centered_iter_adapter.hh>
+# include <mln/topo/complex.hh>
+# include <mln/topo/complex_iterators.hh>
+# include <mln/topo/face.hh>
+# include <mln/topo/face_data.hh>
+# include <mln/topo/face_iter.hh>
+# include <mln/topo/n_face.hh>
+# include <mln/topo/n_face_iter.hh>
+# include <mln/topo/n_faces_set.hh>
 
 #endif // ! MLN_TOPO_ALL_HH

@@ -31,7 +31,7 @@
 ///
 
 #include <iostream>
-#include <mln/fun/x2v/rotation.hh>
+#include <mln/fun/x2x/rotation.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>

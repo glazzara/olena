@@ -31,10 +31,10 @@
 
 /// \file mln/morpho/closing_area.hh
 ///
-/// \brief Morphological area closing on a line graph image computing
+/// Morphological area closing on a line graph image computing
 /// the area in terms of adjacent vertices.
 
-# include <mln/core/image/line_graph_image.hh>
+# include <mln/core/site_set/p_edges.hh>
 # include <mln/morpho/closing_attribute.hh>
 # include <mln/accu/count_adjacent_vertices.hh>
 
@@ -47,22 +47,23 @@ namespace mln
 
     /// Morphological area closing on a mln::line_graph_image computing
     /// the area in terms of adjacent vertices.
-    template <typename P, typename V, typename N, typename O>
-    void closing_area_on_vertices(const line_graph_image<P, V>& input,
+    template <typename P2V, typename G, typename V2P, typename N, typename O>
+    void closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
 				  const Neighborhood<N>& nbh,
 				  unsigned lambda, Image<O>& output);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P, typename V, typename N, typename O>
+    template <typename P2V, typename G, typename V2P, typename N, typename O>
     inline
-    void closing_area_on_vertices(const line_graph_image<P, V>& input,
+    void closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
 				  const Neighborhood<N>& nbh,
 				  unsigned lambda, Image<O>& output)
     {
       mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef accu::count_adjacent_vertices<P, V> attribute_t;
+      typedef p_edges<G, V2P> pe_t;
+      typedef accu::count_adjacent_vertices<P2V, pe_t> attribute_t;
       // FIXME: Change sig of closing_attribute!
       closing_attribute<attribute_t>(input, nbh, lambda, output);
     }

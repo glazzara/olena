@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +30,8 @@
 # define MLN_MORPHO_LINE_GRADIENT_HH
 
 /// \file mln/morpho/line_gradient.hh
-/// \brief Conversions to mln::line_graph_image.
+///
+/// Conversions to mln::line_graph_image.
 
 # include <functional>
 
@@ -42,7 +44,11 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/window2d.hh>
-# include <mln/core/image/line_graph_image.hh>
+
+# include <mln/core/site_set/p_edges.hh>
+
+# include <mln/util/graph.hh>
+# include <mln/util/site_pair.hh>
 
 // FIXME: Generalize to other (input) images as well (image1d,
 // image3d, etc.).
@@ -53,68 +59,67 @@ namespace mln
   namespace morpho
   {
 
-    /// \brief Create a line graph image representing the gradient
+    /// Create a line graph image representing the gradient
     /// norm of a mln::image2d.
     /* FIXME: Currently, the adjacency is set to 4-c and cannot be
        changed.  */
-    template <typename T>
-    mln::line_graph_image<mln::point2d, T>
-    line_gradient(const mln::image2d<T>& ima);
+    template <typename F, typename S>
+    mln::pw::image<F, S>
+    line_gradient(const mln::image2d<mln_result(F)>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename T>
-    mln::line_graph_image<mln::point2d, T>
-    line_gradient(const mln::image2d<T>& ima)
+    template <typename F, typename S>
+    mln::pw::image<F, S>
+    line_gradient(const mln::image2d<mln_result(F)>& ima)
     {
       // FIXME: Precondition: Ensure the image is scalar.
-      typedef T value_t;
+      typedef mln_result(F) value_t;
 
-      util::graph<mln::point2d> g;
-
-      // Points.
-      /* FIXME: The need for such a structure during the conversion
-	 exhibits the lack of a service from util::graph (or a another,
-	 missing tool) regarding the retrieval of vertices' ids from
-	 points.  */
-      std::map< mln::point2d, util::vertex_id, util::ord<point2d> > points;
+      util::graph g;
 
       // Vertices.
-      std::vector<value_t> vertex_values;
+      image2d<unsigned> vpsite(ima.domain());
+      fun::i2v::array<mln::point2d> fv2p(ima.domain().nsites());
+      fun::i2v::array<value_t> vertex_values(ima.domain().nsites());
+
       mln_fwd_piter(image2d<value_t>) p(ima.domain());
       for_all (p)
       {
-	util::vertex_id id = g.add_vertex (p);
-	vertex_values.push_back (ima(p));
-	points[p] = id;
+	g.add_vertex();
+	unsigned id = g.v_nmax() - 1;
+	vpsite[p] = id;
+	fv2p(id) = p;
       }
 
       // Edges.
       // FIXME: The creation of this window should be generic.
       window2d next_c4_win;
       next_c4_win.insert(0, 1).insert(1, 0);
-      std::vector<value_t> edge_values;
-      mln_fwd_qiter_(window2d) q(next_c4_win, p); 
+      typedef fun::i2v::array<value_t> edge_values_t;
+      typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
+      edge_values_t edge_values;
+      edge_sites_t edge_sites;
+      mln_fwd_qiter_(window2d) q(next_c4_win, p);
       for_all (p)
 	for_all (q)
 	if (ima.domain().has(q))
 	  {
-	    util::edge_id id = g.add_edge(points[p], points[q]);
-	    // Avoid a warning about an undefined variable when NDEBUG
-	    // is not defined.
-	    (void) id;
+	    g.add_edge(vpsite(p), vpsite(q));
 	    // The computed value is a norm of the gradient between P and Q.
-	    edge_values.push_back(math::abs(ima(p) - ima(q)));
-	    mln_assertion(id != mln_max(util::edge_id::equiv));
+	    unsigned edge_id = edge_values.size();
+	    edge_values.resize(edge_values.size() + 1);
+	    edge_values(edge_id) = math::abs(ima(p) - ima(q));
 	  }
 
       // Line graph point set.
-      p_line_graph<mln::point2d> plg(g);
+      typedef p_edges<util::graph, edge_sites_t> pe_t;
+      pe_t plg(g, edge_sites);
 
       // Line graph image.
-      typedef line_graph_image<mln::point2d, value_t> ima_t;
-      ima_t lg_ima(plg, vertex_values, edge_values);
+      typedef pw::image<edge_values_t, pe_t> ima_t;
+      ima_t lg_ima = (edge_values | plg);
       return lg_ima;
     }
 

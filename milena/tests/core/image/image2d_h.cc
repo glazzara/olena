@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,31 +26,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/image2d_h.cc
- *
- * \brief Tests on mln::image2d_h
- */
+/// \file tests/core/image/image2d_h.cc
+///
+/// Tests on mln::image2d_h
 
 #include <mln/core/image/image2d_h.hh>
-
-#include <mln/value/int_u16.hh>
-#include <mln/trait/image/print.hh>
+#include <mln/value/int_u8.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
+//FIXME: Write a real test!!
 
 int main()
 {
   using namespace mln;
-  using value::int_u16;
+  using value::int_u8;
 
-  image2d_h<int_u16> h(50,50);
+  image2d_h<int_u8> h(3, 8);
 
-  debug::println(h);
-
+  // FIXME!! The values differs from the test core/image/hexa which
+  // may be a bug! debug::iota does not seem to behave correctly.
   debug::iota(h);
 
   debug::println(h);
 
-  trait::image::print(h, std::cout);
+//  mln_piter_(image2d_h<int_u8>) p(h.domain());
+
+//  for_all(p)
+//    std::cout << p << " - > " << h(p) << std::endl;
 }

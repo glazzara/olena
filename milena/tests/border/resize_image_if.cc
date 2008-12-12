@@ -66,15 +66,15 @@ int main()
   I ima(3,3, border);
 
   mln_assertion(border::get(ima) == border);
-  mln_assertion( ima.has(point2d(2,2)) == true );
+  mln_assertion(ima.has(point2d(2,2)) == true);
 
   my_box2d f_b(b);
   image_if<I, my_box2d> imaif(ima, f_b);
-  mln_assertion( imaif.has(point2d(2,2)) == false && 
-		 ima.has(point2d(2,2)) == true );
+  mln_assertion(imaif.has(point2d(2,2)) == false &&
+		  ima.has(point2d(2,2)) == true);
 
 
-  mln_assertion(border::get(imaif) == border);
+  mln_assertion(border::get(imaif) == 0);
   border::resize (imaif, new_border);
-  mln_assertion(border::get(imaif) == new_border);
+  mln_assertion(border::get(imaif) == 0);
 }

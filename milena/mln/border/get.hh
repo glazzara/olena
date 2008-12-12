@@ -29,13 +29,12 @@
 #ifndef MLN_BORDER_GET_HH
 # define MLN_BORDER_GET_HH
 
-/*! \file mln/border/get.hh
- *
- * \brief Define function that returns the real border thickness of image.
- */
+/// \file mln/border/get.hh
+///
+/// Define function that returns the real border thickness of image.
 
 # include <mln/trait/images.hh>
-
+# include <mln/trace/all.hh>
 
 namespace mln
 {
@@ -72,7 +71,7 @@ namespace mln
       unsigned get_(trait::image::ext_domain::some, trait::image::category::morpher,
 		    const I& ima)
       {
-	return border::get( *ima.delegatee_() );
+	return border::get(*ima.delegatee_());
       }
 
 

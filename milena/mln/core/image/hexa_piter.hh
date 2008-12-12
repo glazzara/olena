@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_IMAGE_HEXA_PITER_HH
 # define MLN_CORE_IMAGE_HEXA_PITER_HH
 
-/*! \file mln/core/image/hexa_piter.hh
- *
- * \brief Definition of iterators on hexagonal points.
- */
+/// \file mln/core/image/hexa_piter.hh
+///
+/// Definition of iterators on hexagonal points.
 
 # include <mln/core/internal/piter_adaptor.hh>
 
@@ -42,13 +42,13 @@
 namespace mln
 {
 
-  /*! \brief A generic forward iterator on points of subsets.
-   *
-   * Parameter \c S is a point set type; parameter F is a function
-   * from point to Boolean.
-   *
-   * \see mln::hexa
-   */
+  /// A generic forward iterator on points of subsets.
+  ///
+  /// Parameter \c S is a point set type; parameter F is a function
+  /// from point to Boolean.
+  ///
+  /// \see mln::hexa
+  ///
   template <typename S>
   class hexa_fwd_piter_
     : public internal::piter_adaptor_< mln_fwd_piter(S),
@@ -111,9 +111,9 @@ namespace mln
   void
   hexa_fwd_piter_<S>::start()
   {
-    this->piter_.start();
-    p_[0] = this->piter_[0];
-    p_[1] = this->piter_[1];
+    this->pi_.start();
+    p_[0] = this->pi_[0];
+    p_[1] = this->pi_[1];
   }
 
   template <typename S>
@@ -121,9 +121,9 @@ namespace mln
   void
   hexa_fwd_piter_<S>::next_()
   {
-    this->piter_.next();
-    p_[0] = this->piter_[0] * 2;
-    p_[1] = this->piter_[1] * 2 + this->piter_[0] % 2;
+    this->pi_.next();
+    p_[0] = this->pi_[0] * 2;
+    p_[1] = this->pi_[1] * 2 + this->pi_[0] % 2;
   }
 
   template <typename S>

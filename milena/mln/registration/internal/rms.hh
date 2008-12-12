@@ -28,6 +28,7 @@
 #ifndef MLN_REGISTRATION_INTERNAL_RMS_HH
 # define MLN_REGISTRATION_INTERNAL_RMS_HH
 
+# include <mln/norm/l2.hh>
 # include <mln/core/site_set/p_array.hh>
 
 namespace mln

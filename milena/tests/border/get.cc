@@ -66,17 +66,17 @@ int main()
   I ima(3,3, 51);
 
   mln_assertion(border::get(ima) == 51);
-  mln_assertion( ima.has(point2d(2,2)) == true );
+  mln_assertion(ima.has(point2d(2,2)) == true);
 
   sub_image<I, box2d> sub(ima, b);
-  mln_assertion( sub.has  (point2d(2,2)) == false &&
-		 sub.has(point2d(2,2)) == false );
+  mln_assertion(sub.has(point2d(2,2)) == false &&
+		sub.has(point2d(2,2)) == false);
   mln_assertion(border::get(sub) == 0);
 
   image_if<I, f_box2d_t> imaif(ima, f_b);
-  mln_assertion( imaif.has  (point2d(2,2)) == false &&
-		 ima.has(point2d(2,2)) == true );
-  mln_assertion(border::get(imaif) == 51);
+  mln_assertion(imaif.has(point2d(2,2)) == false &&
+		ima.has(point2d(2,2)) == true);
+  mln_assertion(border::get(imaif) == 0);
 
-  mln_assertion(border::get( (ima | b) | f_b ) == 0);
+  mln_assertion(border::get((ima | b) | f_b) == 0);
 }

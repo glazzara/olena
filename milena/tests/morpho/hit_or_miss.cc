@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/hit_or_miss.cc
- *
- * \brief Test on mln::morpho::hit_or_miss.
- */
+/// \file tests/morpho/hit_or_miss.cc
+///
+/// Test on mln::morpho::hit_or_miss.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -66,7 +66,7 @@ int main()
 		   0, 0, 1, 1, 1,
 		   0, 0, 1, 1, 1 };
     window2d win_hit_ = convert::to<window2d>(hit);
-    mln_precondition(win_hit_ == win_hit);
+    mln_assertion(win_hit_ == win_hit);
 
     bool miss[] = { 1, 1, 1, 1, 1,
 		    1, 1, 1, 1, 1,
@@ -74,7 +74,7 @@ int main()
 		    1, 1, 0, 0, 0,
 		    1, 1, 0, 0, 0 };
     window2d win_miss_ = convert::to<window2d>(miss);
-    mln_precondition(win_miss_ == win_miss);
+    mln_assertion(win_miss_ == win_miss);
   }
 
   border::thickness = 2;

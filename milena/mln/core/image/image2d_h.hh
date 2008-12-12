@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_IMAGE_IMAGE2D_H_HH
 # define MLN_CORE_IMAGE_IMAGE2D_H_HH
 
-/*! \file mln/core/image/image2d_h.hh
- *
- * \brief Definition of an alias for a 2d image based on an hexagonal
- * mesh.
- */
+/// \file mln/core/image/image2d_h.hh
+///
+/// Definition of an alias for a 2d image based on an hexagonal
+/// mesh.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/hexa.hh>

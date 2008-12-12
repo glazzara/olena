@@ -37,7 +37,7 @@
 #include <mln/debug/println.hh>
 
 
-struct not_to_removed : public mln::Function_l2b< not_to_removed >
+struct not_to_remove : public mln::Function_l2b< not_to_remove >
 {
   bool operator()(const mln::value::label_16& l) const
   {
@@ -76,7 +76,7 @@ int main()
     image2d<label_16> lbl2 = labeling::relabel(lbl,
 					      nlabels,
 					      new_nlabels,
-					      not_to_removed());
+					      not_to_remove());
     mln_assertion(new_nlabels == 2u);
     mln_piter_(image2d<label_16>) p(lbl2.domain());
     for_all(p)
@@ -87,7 +87,7 @@ int main()
     label_16 new_nlabels;
     labeling::relabel_inplace(lbl,
 			      nlabels,
-			      not_to_removed());
+			      not_to_remove());
     mln_assertion(nlabels == 2u);
     mln_piter_(image2d<label_16>) p(lbl.domain());
     for_all(p)

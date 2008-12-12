@@ -35,6 +35,7 @@
 ///
 /// \todo Have land be parameterized.
 
+# include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
 
 

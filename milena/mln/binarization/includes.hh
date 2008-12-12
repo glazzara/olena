@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,13 @@
 #ifndef MLN_BINARIZATION_INCLUDES_HH
 # define MLN_BINARIZATION_INCLUDES_HH
 
-/*! \file mln/binarization/includes.hh
- *
- * \brief Basic list of includes for all files in mln/binarization/.
- */
+/// \file mln/binarization/includes.hh
+///
+/// Basic list of includes for all files in mln/binarization/.
 
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/core/concept/neighborhood.hh>
-
-# include <mln/metal/has_neighborhood.hh>
 
 #endif // ! MLN_BINARIZATION_INCLUDES_HH

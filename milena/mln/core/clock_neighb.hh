@@ -35,13 +35,14 @@
 
 
 # include <mln/core/concept/neighborhood.hh>
+# include <mln/core/window.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/site_set/p_array.hh>
 
 namespace mln
 {
 
-  // fwd decls
+  // forward declarations
   template <typename D> class dpsites_fwd_piter;
   template <typename D> class dpsites_bkd_piter;
 
@@ -59,6 +60,9 @@ namespace mln
 
     /// Site associated type.
     typedef mln_psite(D) site;
+
+    /// Window associated type.
+    typedef window<dpsite> window;
 
     /// Site_Iterator type to browse the psites of a generic
     /// neighborhood w.r.t. the ordering of delta-psites.
@@ -93,11 +97,15 @@ namespace mln
     ///
     clock_neighb<D>& append(const D& dp);
     /// \}
-    const std::vector<D>& vect() const
-    {
-      return vec_;
-    }
 
+    /// Return the dpsites of this neighborhood.
+    const std::vector<D>& vect() const;
+
+    /// Return the corresponding window.
+    /// FIXME: not in constant time!
+    mln::window<D> win() const;
+
+  private:
     std::vector<D>	vec_;
   };
 
@@ -119,7 +127,24 @@ namespace mln
     return *this;
   }
 
+  template <typename D>
+  inline
+  const std::vector<D>&
+  clock_neighb<D>::vect() const
+  {
+    return vec_;
+  }
 
+  template <typename D>
+  inline
+  window<D>
+  clock_neighb<D>::win() const
+  {
+    window<D> result;
+    for (unsigned i = 0; i < vec_.size(); ++i)
+      result.insert(vec_[i]);
+    return result;
+  }
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln

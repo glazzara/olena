@@ -35,8 +35,8 @@
 ///
 /// \todo The overloads are hidden and I don't know why!
 
-# include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
+# include <mln/morpho/includes.hh>
 # include <mln/accu/land.hh>
 # include <mln/accu/land_basic.hh>
 # include <mln/accu/min.hh>

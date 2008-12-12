@@ -45,8 +45,16 @@ namespace mln
   namespace topo
   {
 
-    // Forward declaration.
+    // Forward declarations.
     template <unsigned D> class complex;
+
+    namespace internal
+    {
+
+      template <typename F, typename E>
+      class complex_set_iterator_base;
+
+    } // end of namespace mln::topo::internal
 
 
     /*-------------------------.

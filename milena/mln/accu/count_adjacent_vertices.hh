@@ -30,6 +30,7 @@
 # define MLN_ACCU_COUNT_ADJACENT_VERTICES_HH
 
 /// \file mln/accu/count_adjacent_vertices.hh
+///
 /// Define an accumulator that counts the vertices adjacent to a
 /// set of p_edges psites.
 

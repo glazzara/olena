@@ -4,7 +4,7 @@ if [ $# -ne 1 ]; then
   echo "Usage: $0 <mln_path>"
 fi
 
-HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
+HEADERS=`find $1 -name "*.hh" | grep -vE "*.spe.hh" | grep -v "mln/core/concept/doc" | sed -e 's/.*\/mln\/\(.*\)/mln\/\1/g' | sed 's/\.\.\/\.\.\///g'`
 
 rm -f Makefile.am
 rm -f *.hh *.cc

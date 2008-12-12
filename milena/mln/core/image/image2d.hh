@@ -30,7 +30,7 @@
 # define MLN_CORE_IMAGE_IMAGE2D_HH
 
 /// \file mln/core/image/image2d.hh
-/// \brief Definition of the basic mln::image2d class.
+/// Definition of the basic mln::image2d class.
 ///
 /// \todo Re-activate include at EOF when make::image2d is up again.
 

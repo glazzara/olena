@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,14 @@
 #ifndef MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 # define MLN_CORE_INTERNAL_PITER_ADAPTOR_HH
 
-/*! \file mln/core/internal/piter_adaptor.hh
- *
- * \brief Definition of iterators on points of boxes.
- *
- * \todo Rename as site_iterator_adaptor_base.
- *
- * \todo Distinguish between adaptors of site_set_iterator,
- * site_relative_iterator, etc. (?)
- */
+/// \file mln/core/internal/piter_adaptor.hh
+///
+/// \brief Definition of iterators on points of boxes.
+///
+/// \todo Rename as site_iterator_adaptor_base.
+///
+/// \todo Distinguish between adaptors of site_set_iterator,
+/// site_relative_iterator, etc. (?)
 
 # include <mln/core/internal/site_iterator_base.hh>
 
@@ -47,11 +47,11 @@ namespace mln
   namespace internal
   {
 
-    /*! A base class for point iterator adaptors.
-     *
-     * Parameter \c Pi is the type of the point iterator adaptee;
-     * parameter E is the exact type.
-     */
+    /// A base class for point iterator adaptors.
+    ///
+    /// Parameter \c Pi is the type of the point iterator adaptee;
+    /// parameter E is the exact type.
+    ///
     template <typename Pi, typename S, typename E>
     class piter_adaptor_ : public internal::site_iterator_base< S, E >
     {
@@ -78,7 +78,7 @@ namespace mln
       /// Hook to the current location.
       const mln_psite(S)& p_hook_() const;
 
-      /// Change the site set targeted by this iterator. 
+      /// Change the site set targeted by this iterator.
       void change_target(const S& s);
 
       /// Change the site set targeted by pi_.  This default impl is a
@@ -166,6 +166,7 @@ namespace mln
     void
     piter_adaptor_<Pi,S,E>::pi_change_target_(const S& s)
     {
+      this->pi_.change_target(s);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

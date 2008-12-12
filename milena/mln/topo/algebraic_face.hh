@@ -29,9 +29,11 @@
 # define MLN_TOPO_ALGEBRAIC_FACE_HH
 
 /// \file mln/topo/algebraic_face.hh
-/// \brief Algebraic face of a complex.
+///
+/// Algebraic face of a complex.
 
 #include <mln/topo/face.hh>
+#include <mln/topo/algebraic_n_face.hh>
 
 
 namespace mln
@@ -44,13 +46,13 @@ namespace mln
     template <unsigned D> class complex;
     template <unsigned N, unsigned D> class n_face;
     template <unsigned N, unsigned D> class face_data;
-    
+
 
     /*-------.
     | Face.  |
     `-------*/
 
-    /// \brief Algebraic face handle in a complex; the face dimension
+    /// Algebraic face handle in a complex; the face dimension
     /// is dynamic.
     ///
     /// Contrary to an mln::topo::algebraic_n_face, the dimension of an
@@ -111,7 +113,7 @@ namespace mln
     /// Comparison of two instances of mln::topo::algebraic_face.
     /// \{
 
-    /// \brief Is \a lhs equal to \a rhs?
+    /// Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
@@ -119,7 +121,7 @@ namespace mln
     bool operator==(const algebraic_face<D>& lhs,
 		    const algebraic_face<D>& rhs);
 
-    /// \brief Is \a lhs different from \a rhs?
+    /// Is \a lhs different from \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
@@ -127,7 +129,7 @@ namespace mln
     bool operator!=(const algebraic_face<D>& lhs,
 		    const algebraic_face<D>& rhs);
 
-    /// \brief Is \a lhs ``less'' than \a rhs?
+    /// Is \a lhs ``less'' than \a rhs?
     ///
     /// This comparison is required by algorithms sorting algebraic
     /// face handles.

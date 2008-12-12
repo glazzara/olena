@@ -62,7 +62,12 @@
 **
 */
 
+# include <queue>
+# include <mln/core/concept/iterator.hh>
+# include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/graph.hh>
+# include <mln/util/vertex.hh>
+
 
 namespace mln
 {
@@ -96,7 +101,7 @@ namespace mln
 
 	f.init(g);
 
-	mln_vertex_iter(util::graph) v(g);
+	mln_vertex_iter(G) v(g);
 	for_all(v)
 	  if (f.to_be_treated(v.id()))
 	  {
@@ -105,7 +110,7 @@ namespace mln
 	    f.update_treated(v.id());
 	    while (!queue.empty())
 	    {
-	      util::vertex<util::graph> current_v = g.vertex(queue.front());
+	      util::vertex<G> current_v = g.vertex(queue.front());
 	      queue.pop();
 	      for (unsigned nv = 0; nv < current_v.nmax_nbh_vertices(); ++nv)
 		if (f.to_be_queued(current_v.ith_nbh_vertex(nv)))

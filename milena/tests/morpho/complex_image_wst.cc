@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/morpho/complex_image_swt.cc
-/// \brief Testing Meyer's Watershed Transform on mln::complex_image.
+///
+/// Testing Meyer's Watershed Transform on mln::complex_image.
 
 #include <iostream>
 #include <fstream>
@@ -38,23 +39,24 @@
 #include <mln/literal/black.hh>
 #include <mln/literal/white.hh>
 
+#include <mln/core/concept/function.hh>
 #include <mln/core/alias/point2d.hh>
-
 #include <mln/core/site_set/p_faces.hh>
 #include <mln/core/image/complex_image.hh>
-
 // FIXME: Include these elsewhere? (In complex_image.hh?)
 #include <mln/core/image/complex_neighborhoods.hh>
 #include <mln/core/image/complex_neighborhood_piter.hh>
 
-#include <mln/debug/iota.hh>
 #include <mln/level/fill.hh>
+
 #include <mln/norm/l2.hh>
 
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/meyer_wst.hh>
 
-#include <mln/core/concept/function.hh>
+#include <mln/convert/to.hh>
+
+#include <mln/debug/iota.hh>
 
 // FIXME: To be put elsewhere (from milena/sandbox/geraud/wst_edge.cc).
 struct colorize : mln::Function_v2v< colorize >
@@ -92,12 +94,12 @@ int main()
        c   0     1     2     3
      r .------------------------
        |        v0      e3     v3
-     0 |         o-----------o                v0----e3----v3      
-       |        / \         /                / \         /   
-       |       /   \       /                /   \       /    
-     1 |   e0 /     e1    / e4             e0    e1    e4  
-       |     /       \   /                /       \   /      
-       |    /         \ /                /         \ /       
+     0 |         o-----------o                v0----e3----v3
+       |        / \         /                / \         /
+       |       /   \       /                /   \       /
+     1 |   e0 /     e1    / e4             e0    e1    e4
+       |     /       \   /                /       \   /
+       |    /         \ /                /         \ /
      2 |   o-----------o                v1----e2----v2
        | v1     e2      v2
 
@@ -168,7 +170,7 @@ int main()
     v.next();
     mln_invariant(!v.is_valid());
 
-    dist_ima(e) = 10 * norm::l2_distance(p1.to_vec(), p2.to_vec());
+    dist_ima(e) = convert::to<unsigned>(10 * norm::l2_distance(p1.to_vec(), p2.to_vec()));
   }
   // Initialize 0-faces to a dummy value, to prevent the watershed from
   // finding minima on 0-faces.
@@ -195,8 +197,7 @@ int main()
   `-----------------*/
 
   // Currently, does nothing (lambda = 1).
-  dist_ima_t closed_dist_ima (dist_ima.domain());
-  morpho::closing_area(dist_ima, nbh, 1, closed_dist_ima);
+  dist_ima_t closed_dist_ima = morpho::closing_area(dist_ima, nbh, 1);
 
   /*------.
   | WST.  |

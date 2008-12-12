@@ -32,6 +32,8 @@
 ///
 /// Optional implementation for neigbh_niter.
 
+# include <mln/core/macros.hh>
+# include <mln/core/internal/force_exact.hh>
 
 namespace mln
 {

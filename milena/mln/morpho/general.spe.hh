@@ -39,6 +39,11 @@
 # include <mln/win/octagon2d.hh>
 # include <mln/win/rectangle2d.hh>
 
+# include <mln/accu/transform_directional.hh>
+# include <mln/accu/transform_snake.hh>
+# include <mln/accu/transform_stop.hh>
+# include <mln/accu/transform_diagonal.hh>
+
 # include <mln/accu/min_h.hh>
 # include <mln/accu/line.hh>
 

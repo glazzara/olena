@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,10 @@
 #ifndef MLN_UTIL_TREE_TO_IMAGE_HH
 # define MLN_UTIL_TREE_TO_IMAGE_HH
 
-/*!
- *  \file   mln/util/tree_to_image.hh
- *
- *  \brief Definition of function which transform a tree into an
- *  image.
- *
- */
+/// \file   mln/util/tree_to_image.hh
+///
+/// Definition of function which transform a tree into an
+/// image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/util/tree.hh>
@@ -47,33 +45,30 @@ namespace mln
   namespace util
   {
 
-    /*! \brief Convert a tree into an image.
-     *
-     * \param[in] tree The tree to convert.
-     * \param[out] output_ The image containing tree informations.
-     *
-     */
+    /// Convert a tree into an image.
+    ///
+    /// \param[in] tree The tree to convert.
+    /// \param[out] output_ The image containing tree informations.
+    ///
     template <typename T, typename I>
     void
     tree_to_image (tree<T>& tree, Image<I>& output_);
 
-    /*! Display a tree.
-     *
-     * \param[in] ima_ The domain of output image.
-     * \param[in] tree The tree to display.
-     *
-     */
+    /// Display a tree.
+    ///
+    /// \param[in] ima_ The domain of output image.
+    /// \param[in] tree The tree to display.
+    ///
     template <typename I, typename J>
     void
     display_tree(const Image<J>& ima_, tree<I>& tree);
 
 
-    /*! Display an arborescence from \p tree_node.
-     *
-     * \param[in] ima_ The domain of output image.
-     * \param[in] tree_node The root tree_node to display.
-     *
-     */
+    /// Display an arborescence from \p tree_node.
+    ///
+    /// \param[in] ima_ The domain of output image.
+    /// \param[in] tree_node The root tree_node to display.
+    ///
     template <typename I, typename J>
     void
     display_branch(const Image<J>& ima_, tree_node<I>* tree_node);

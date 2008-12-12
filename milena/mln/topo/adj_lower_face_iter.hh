@@ -29,7 +29,7 @@
 # define MLN_TOPO_ADJ_LOWER_FACE_ITER_HH
 
 /// \file mln/topo/adj_lower_face_iter.hh
-/// \brief Definition of forward and backward iterators on the
+/// Definition of forward and backward iterators on the
 /// adjacent (n-1)-faces of a (reference) n-face in a complex.
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
@@ -42,15 +42,26 @@ namespace mln
   namespace topo
   {
 
-    // Forward declaration.
+    // Forward declarations.
     template <unsigned D> class complex;
+
+    namespace internal
+    {
+
+      template <typename C, typename F, typename E>
+      class forward_complex_relative_iterator_base;
+
+      template <typename C, typename F, typename E>
+      class backward_complex_relative_iterator_base;
+
+    } // end of namespace mln::topo::internal
 
 
     /*-----------------------------------.
     | topo::adj_lower_face_fwd_iter<D>.  |
     `-----------------------------------*/
 
-    /// \brief Forward iterator on all the adjacent (n-1)-faces of the
+    /// Forward iterator on all the adjacent (n-1)-faces of the
     /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
@@ -83,7 +94,7 @@ namespace mln
     | topo::adj_lower_face_bkd_iter<D>.  |
     `-----------------------------------*/
 
-    /// \brief Backward iterator on all the adjacent (n-1)-faces of the
+    /// Backward iterator on all the adjacent (n-1)-faces of the
     /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.

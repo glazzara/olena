@@ -29,7 +29,8 @@
 # define MLN_TRAIT_NEIGHBORHOOD_HH
 
 /// \file mln/trait/neighborhood.hh
-/// \brief Some base trait types for neighborhood types.
+///
+/// Some base trait types for neighborhood types.
 
 # include <string>
 
@@ -51,23 +52,6 @@ namespace mln
 
     // Forward declaration.
     struct undef;
-
-    struct undefined_neighborhood
-    {
-      typedef undef kind;
-    };
-
-
-    struct default_neighborhood : undefined_neighborhood
-    {
-      typedef trait::neighborhood::kind::generic kind;
-    };
-
-
-    template <typename V>
-    struct neighborhood : default_neighborhood
-    {
-    };
 
 
     /*----------------.
@@ -105,6 +89,24 @@ namespace mln
       };
     }
 
+
+
+    struct undefined_neighborhood_
+    {
+      typedef undef kind;
+    };
+
+
+    struct default_neighborhood_ : undefined_neighborhood_
+    {
+      typedef trait::neighborhood::kind::generic kind;
+    };
+
+
+    template <typename V>
+    struct neighborhood_ : default_neighborhood_
+    {
+    };
 
   } // end of namespace mln::trait
 

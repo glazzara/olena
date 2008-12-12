@@ -36,11 +36,15 @@
 /// \todo Have infimum and supremum for value types, apart from
 /// morphology!
 
-# include <mln/morpho/includes.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/concept/window.hh>
+# include <mln/core/concept/neighborhood.hh>
+
+# include <mln/extension/adjust_fill.hh>
+# include <mln/accu/transform.hh>
 
 // Specializations are in:
 # include <mln/morpho/general.spe.hh>
-
 
 
 # define mln_morpho_select_accu(I, S, F)				\

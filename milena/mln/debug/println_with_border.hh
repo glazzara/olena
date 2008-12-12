@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,18 +29,18 @@
 #ifndef MLN_DEBUG_PRINTLN_WITH_BORDER_HH
 # define MLN_DEBUG_PRINTLN_WITH_BORDER_HH
 
-/*! \file mln/debug/println_with_border.hh
- *
- * \brief Print an image on the standard output with its border.
- */
+/// \file mln/debug/println_with_border.hh
+///
+/// Print an image on the standard output with its border.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
-# include <mln/debug/format.hh>
-
 # include <mln/core/alias/box2d.hh>
 # include <mln/core/alias/box3d.hh>
 
+# include <mln/geom/bbox.hh>
+
+# include <mln/debug/format.hh>
 // Specializations are in:
 # include <mln/debug/println_with_border.spe.hh>
 
@@ -65,7 +66,7 @@ namespace mln
       void
       println_with_border(const S&, const I& input)
       {
- 	for (size_t i = 0; i < input.nelements(); i++)
+	for (size_t i = 0; i < input.nelements(); i++)
 	  std::cout << format(input.buffer()[i]) << ' ';
 	std::cout << std::endl;
       }

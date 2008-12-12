@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_DEBUG_PRINTLN_SPE_HH
 # define MLN_DEBUG_PRINTLN_SPE_HH
 
-/*! \file mln/debug/println.spe.hh
- *
- * \brief  Specializations for mln::debug::println.
- *
- * \todo Clean-up code.
- */
+/// \file mln/debug/println.spe.hh
+///
+/// Specializations for mln::debug::println.
+///
+/// \todo Clean-up code.
 
 # ifndef MLN_DEBUG_PRINTLN_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -47,19 +47,35 @@
 # include <mln/level/fill.hh>
 # include <mln/accu/max.hh>
 
+//FIXME: do not include all these headers
+# include <mln/core/alias/box2d.hh>
+# include <mln/core/alias/box2d_h.hh>
+# include <mln/core/alias/box3d.hh>
 
 namespace mln
 {
+  // Forward declaration.
+  template <typename I> class hexa;
 
   namespace debug
   {
 
-# ifndef MLN_INCLUDE_ONLY
-
     namespace impl
     {
 
-# ifdef MLN_CORE_SITE_SET_BOX2D_HH
+      void println(const box2d& b, const image2d<char>& input);
+
+      template <typename I>
+      void println(const box2d& b, const I& input);
+
+      template <typename I>
+      void println(const box2d_h& b, const hexa<I>& input);
+
+      template <typename I>
+      void println(const box3d& b, const I& input);
+
+
+# ifndef MLN_INCLUDE_ONLY
 
       // 2D versions.
 
@@ -112,16 +128,12 @@ namespace mln
 	std::cout << std::endl;
       }
 
-# endif // MLN_CORE_SITE_SET_BOX2D_HH
-
-# ifdef MLN_CORE_IMAGE_IMAGE2D_H_HH
-
       // Hexa version.
       template <typename I>
       void
       println(const box2d_h& b, const hexa<I>& input)
       {
-	typename hexa<I>::fwd_piter p(input.domain());
+	mln_piter(hexa<I>) p(input.domain());
 
 	int c = 1;
 	int r = 1;
@@ -146,11 +158,6 @@ namespace mln
 	  }
 	std::cout << std::endl;
       }
-
-# endif // MLN_CORE_IMAGE_IMAGE2D_H_HH
-
-
-# ifdef MLN_CORE_SITE_SET_BOX3D_HH
 
       // 3D version.
       template <typename I>
@@ -183,11 +190,9 @@ namespace mln
 	}
       }
 
-# endif // MLN_CORE_SITE_SET_BOX3D_HH
+# endif // ! MLN_INCLUDE_ONLY
 
     } // end of namespace mln::debug::impl
-
-# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::debug
 

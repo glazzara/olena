@@ -1,3 +1,96 @@
+2008-12-11  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix many various tests.
+
+	* tests/morpho/hit_or_miss.cc,
+	* mln/util/tree_to_image.hh,
+	* mln/topo/internal/complex_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_sequence.hh,
+	* mln/topo/algebraic_face.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image2d_h.hh,
+	* mln/core/alias/complex_geometry.hh,
+	* mln/accu/count_adjacent_vertices.hh: update comments.
+
+	* tests/fun/x2x/rotation.cc,
+	* mln/value/internal/convert.hh,
+	* mln/topo/all.hh,
+	* mln/morpho/opening_area_on_vertices.hh,
+	* mln/registration/internal/rms.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/general.hh,
+	* mln/morpho/general.spe.hh,
+	* mln/morpho/closing_area_on_vertices.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/fun/p2p/mirror.hh,
+	* mln/core/site_set/attic/p_complex_faces_piter.hh,
+	* mln/core/internal/neighb_niter_impl.hh,
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/convert/to.hh,
+	* mln/accu/land_basic.hh,
+	* mln/accu/lor.hh,
+	* mln/accu/lor_basic.hh,
+	* mln/binarization/includes.hh,
+	* mln/border/get.hh,
+	* mln/accu/land.hh: add missing/fix includes.
+
+	* mln/canvas/browsing/depth_first_search.hh: use template parameter G
+	instead of util::graph.
+
+	* mln/convert/from_to.hh: add a new overload from_to() for conversion
+	from a type T to itself.
+
+	* mln/core/clock_neighb.hh: add a missing typedef window and win()
+	member.
+
+	* mln/core/image/hexa.hh: remove duplicate method has() and try to fix
+	image properties.
+
+	* mln/core/image/hexa_piter.hh: update attribute name.
+
+	* mln/core/internal/piter_adaptor.hh: update change_target();
+	
+	* mln/debug/iota.spe.hh: cleanup.
+
+	* mln/debug/println.spe.hh: remove wrong ifndef.
+
+	* mln/labeling/relabel.hh: fix infinite recursion.
+
+	* mln/metal/has_neighborhood.hh: remove. Not needed anymore.
+
+
+	* mln/morpho/hit_or_miss.hh: improve dispatch and fix a wrong
+	precondition.
+
+	* mln/morpho/line_gradient.hh: update with the new graph structure.
+
+	* mln/subsampling/gaussian_subsampling.hh: add missing coma.
+	
+	* mln/topo/face_iter.hh,
+	* mln/topo/internal/complex_set_iterator_base.hh,
+	* mln/topo/internal/complex_relative_iterator_base.hh,
+	* mln/topo/adj_lower_face_iter.hh,
+	* mln/topo/adj_lower_higher_face_iter.hh,
+	* mln/topo/adj_higher_face_iter.hh: add missing forward declarations.
+
+	* mln/trait/neighborhood.hh: Fix wrong declaration order.
+
+	* tests/morpho/complex_image_wst.cc,
+	* tests/border/resize_image_if.cc,
+	* tests/border/get.cc: fix test.
+
+	* tests/border/resize_image3d_3.cc: write test.
+
+	* tests/core/image/Makefile.am: enable hexa and image2d_h tests.
+
+	* tests/core/image/hexa.cc,
+	* tests/core/image/image2d_h.cc: make the test compile.
+
+	* tests/labeling/relabel.cc: fix typo.
+
+	* tests/unit_test/build_unit_test.sh: do not compile headers
+	located in mln/concept/doc.
+
 2008-12-12  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Strengthen unit_test. Beautify file generation.

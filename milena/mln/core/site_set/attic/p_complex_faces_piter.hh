@@ -37,7 +37,7 @@
 
 # include <mln/core/site_set/p_complex.hh>
 # include <mln/core/internal/p_complex_piter_base.hh>
-# include <mln/topo/attic/complex_faces_iter.hh>
+# include <mln/topo/attic/faces_iter.hh>
 
 /* FIXME: p_complex_faces_fwd_piter_ and p_complex_faces_bkd_piter_
    are really long names: find something shorter.  */
@@ -61,13 +61,13 @@ namespace mln
   /// mln::p_complex<D, P>.
   template <unsigned N, unsigned D, typename P>
   class p_complex_faces_fwd_piter_
-    : public internal::p_complex_piter_base_< topo::complex_faces_fwd_iter_<N, D>,
+    : public internal::p_complex_piter_base_< topo::faces_fwd_iter_<N, D>,
 					      p_complex<D, P>,
 					      P,
 					      p_complex_faces_fwd_piter_<N, D, P> >
   {
     typedef p_complex_faces_fwd_piter_<N, D, P> self_;
-    typedef internal::p_complex_piter_base_< topo::complex_faces_fwd_iter_<N, D>,
+    typedef internal::p_complex_piter_base_< topo::faces_fwd_iter_<N, D>,
 					     p_complex<D, P>,
 					     P,
 					     self_ > super_;
@@ -91,13 +91,13 @@ namespace mln
   class p_complex_faces_bkd_piter_
   /* FIXME: Rename internal::p_complex_piter_base_ to something else,
      as it is also used for p_faces piters! */
-    : public internal::p_complex_piter_base_< topo::complex_faces_bkd_iter_<N, D>,
+    : public internal::p_complex_piter_base_< topo::faces_bkd_iter_<N, D>,
 					      p_complex<D, P>,
 					      P,
 					      p_complex_faces_bkd_piter_<N, D, P> >
   {
     typedef p_complex_faces_bkd_piter_<N, D, P> self_;
-    typedef internal::p_complex_piter_base_< topo::complex_faces_bkd_iter_<N, D>,
+    typedef internal::p_complex_piter_base_< topo::faces_bkd_iter_<N, D>,
 					     p_complex<D, P>,
 					     P,
 					     self_ > super_;

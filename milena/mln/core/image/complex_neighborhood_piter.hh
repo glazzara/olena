@@ -29,8 +29,10 @@
 # define MLN_CORE_IMAGE_COMPLEX_NEIGHBORHOOD_PITER_HH
 
 /// \file   mln/core/image/complex_neighborhood_piter.hh
-/// \brief  Definition of a site iterator on a complex neighborhood.
+///
+/// Definition of a site iterator on a complex neighborhood.
 
+# include <mln/core/concept/neighborhood.hh>
 # include <mln/core/internal/site_relative_iterator_base.hh>
 
 // FIXME: These might be factor-able, both between fwd/bkd and nbh/win.

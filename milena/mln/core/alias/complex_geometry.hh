@@ -29,7 +29,8 @@
 # define MLN_CORE_ALIAS_COMPLEX_GEOMETRY_HH
 
 /// \file mln/core/alias/complex_geometry.hh
-/// \brief Definition of mln::geom::complex_geometry aliases.
+///
+/// Definition of mln::geom::complex_geometry aliases.
 
 # include <mln/geom/complex_geometry.hh>
 # include <mln/core/alias/point3df.hh>

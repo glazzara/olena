@@ -29,7 +29,8 @@
 # define MLN_TOPO_ADJ_HIGHER_FACE_ITER_HH
 
 /// \file mln/topo/adj_higher_face_iter.hh
-/// \brief Definition of forward and backward iterators on the
+///
+/// Definition of forward and backward iterators on the
 /// adjacent (n+1)-faces of a (reference) n-face in a complex.
 
 # include <mln/topo/internal/complex_relative_iterator_base.hh>
@@ -42,8 +43,16 @@ namespace mln
   namespace topo
   {
 
-    // Forward declaration.
+    // Forward declarations.
     template <unsigned D> class complex;
+
+    namespace internal
+    {
+
+      template <typename F, typename E>
+      class complex_iterator_base;
+
+    } // end of namespace mln::topo::internal
 
 
     /*------------------------------------.

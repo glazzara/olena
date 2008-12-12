@@ -29,7 +29,8 @@
 # define MLN_TOPO_INTERNAL_COMPLEX_RELATIVE_ITERATOR_SEQUENCE_HH
 
 /// \file mln/topo/internal/complex_relative_iterator_sequence.hh
-/// \brief Definition of a meta complex relative iterator using two
+///
+/// Definition of a meta complex relative iterator using two
 /// complex relative iterators sequentially.
 
 # include <iosfwd>
@@ -48,7 +49,7 @@ namespace mln
 
     namespace internal
     {
-      /// \brief A meta relative iterator on the faces of a complex
+      /// A meta relative iterator on the faces of a complex
       /// using two complex relative iterators sequentially.
       ///
       /// The first relative iterator is used, and when it becomes

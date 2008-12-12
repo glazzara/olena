@@ -9,11 +9,11 @@ check_PROGRAMS =				\
   complex_image					\
   decorated_image				\
   flat_image					\
-##  hexa						\
+  hexa						\
   graph_image					\
   image1d					\
   image2d					\
-##  image2d_h					\
+  image2d_h					\
   image3d					\
   image_if					\
   interpolated					\
@@ -36,10 +36,10 @@ complex_image_SOURCES = complex_image.cc
 decorated_image_SOURCES = decorated_image.cc
 graph_image_SOURCES = graph_image.cc
 flat_image_SOURCES = flat_image.cc
-##hexa_SOURCES = hexa.cc
+hexa_SOURCES = hexa.cc
 image1d_SOURCES = image1d.cc
 image2d_SOURCES = image2d.cc
-##image2d_h_SOURCES = image2d_h.cc
+image2d_h_SOURCES = image2d_h.cc
 image3d_SOURCES = image3d.cc
 image_if_SOURCES = image_if.cc
 interpolated_SOURCES = interpolated.cc

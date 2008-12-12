@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,11 +31,10 @@
 # define MLN_CORE_IMAGE_HEXA_HH
 
 
-/*! \file mln/core/image/hexa.hh
- *
- * \brief Definition of a morpher that makes hexagonal the mesh of an
- * image.
- */
+/// \file mln/core/image/hexa.hh
+///
+/// Definition of a morpher that makes hexagonal the mesh of an
+/// image.
 
 # include <mln/core/internal/image_domain_morpher.hh>
 # include <mln/core/alias/point2d_h.hh>
@@ -65,7 +65,7 @@ namespace mln
 
   namespace trait
   {
-
+    /// FIXME: use the right properties.
     template <typename I>
     struct image_< hexa<I> > : default_image_morpher< I, mln_value(I),
 						       hexa<I> >
@@ -77,14 +77,14 @@ namespace mln
 
       typedef trait::image::category::domain_morpher category;
 
+      typedef mln_trait_image_pw_io(I)	    pw_io; // un-write when I const
+      typedef mln_trait_image_dimension(I)  dimension;
 
-      typedef mln_trait_image_border(I) border;  // have a border only if I does.
+      // Extended domain
+      typedef mln_trait_image_ext_domain(I) ext_domain;  // have a border only if I does.
+      typedef mln_trait_image_ext_value(I)  ext_value;
+      typedef mln_trait_image_ext_io(I)	    ext_io; // un-write when I const
 
-      typedef mln_trait_image_io_from_(I) io; // un-write when I const
-
-      typedef mln_trait_image_data_from_(I) data;
-
-      typedef trait::image::support::regular support;
       //       typedef mlc_if( I_data_are_linear_,
       // 		      trait::data::stored, // if linear then just stored
       // 		      I_data_ ) data;      // otherwise like I
@@ -156,7 +156,6 @@ namespace mln
     const box2d_h& domain() const;
 
     /// Test if \p p belongs to the image domain.
-    bool has(const psite& p) const;
     bool has(const psite& p) const;
 
     /// Read-only access of pixel value at hexa point site \p p.
@@ -266,14 +265,6 @@ namespace mln
     return this->data_->ima_.has(point2d(p[0] / 2, p[1] / 2));
   }
 
-
-  template <typename I>
-  inline
-  bool
-  hexa<I>::has(const psite& p) const
-  {
-    return this->has(p);
-  }
 
 # endif // ! MLN_INCLUDE_ONLY
 

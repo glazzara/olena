@@ -63,8 +63,11 @@ namespace mln
 
     template <typename T>
     void
-    from_to(const float& from, Object<T>& to);
+    from_to(const T& from, T& to);
 
+    template <typename T>
+    void
+    from_to(const float& from, Object<T>& to);
 
     template <typename T>
     void
@@ -87,6 +90,14 @@ namespace mln
       mlc_abort(F)::check();
     }
 
+    // T -> T
+    template <typename T>
+    inline
+    void
+    from_to(const T& from, T& to)
+    {
+      to = from;
+    }
 
     // Image -> Site_Set.
     template <typename I, typename S>

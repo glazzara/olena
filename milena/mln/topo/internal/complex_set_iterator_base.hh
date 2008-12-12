@@ -21,7 +21,7 @@
 // file, or you compile this file and link it with other files to
 // produce an executable, this file does not by itself cause the
 // resulting executable to be covered by the GNU General Public
-// License.  
+// License.
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
@@ -29,7 +29,8 @@
 # define MLN_TOPO_INTERNAL_COMPLEX_SET_ITERATOR_BASE_HH
 
 /// \file mln/topo/internal/complex_set_iterator_base.hh
-/// \brief Definition of an implementation (factoring) class for
+///
+/// Definition of an implementation (factoring) class for
 /// (set) iterators on faces of a complex.
 
 # include <mln/topo/internal/complex_iterator_base.hh>
@@ -43,7 +44,13 @@ namespace mln
 
     namespace internal
     {
-      /// \brief Factoring class for (set) iterators on mln::complex.
+
+      // Forward declaration.
+      template <typename F, typename E>
+      class complex_iterator_base;
+
+
+      /// Factoring class for (set) iterators on mln::complex.
       ///
       /// \arg \p F The type of the face handle.
       /// \arg \p E The type exact type of the iterator.

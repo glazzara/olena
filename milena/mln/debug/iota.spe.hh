@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_DEBUG_IOTA_SPE_HH
 # define MLN_DEBUG_IOTA_SPE_HH
 
-/*! \file mln/debug/iota.spe.hh
- *
- * \brief Specializations for mln::debug::iota.
- */
+/// \file mln/debug/iota.spe.hh
+///
+/// Specializations for mln::debug::iota.
 
 # ifndef MLN_DEBUG_IOTA_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -46,10 +46,14 @@ namespace mln
   namespace debug
   {
 
-# ifndef MLN_INCLUDE_ONLY
 
     namespace impl
     {
+
+      template <typename I>
+      void iota(trait::image::speed::fastest, I& input);
+
+# ifndef MLN_INCLUDE_ONLY
 
       template <typename I>
       inline
@@ -62,9 +66,9 @@ namespace mln
 	  p.val() = ++i % mln_max(mln_value(I));
       }
 
-    } // end of namespace mln::debug::impl
-
 # endif // ! MLN_INCLUDE_ONLY
+
+    } // end of namespace mln::debug::impl
 
   } // end of namespace mln::debug
 

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/border/resize_image3d_3.cc
- *
- * \brief Tests on mln::border::resize.
- */
+/// \file tests/border/resize_image3d_3.cc
+///
+/// Tests on mln::border::resize.
 
 
 #include <mln/core/image/image3d.hh>
@@ -41,33 +41,22 @@
 
 using namespace mln;
 
-int
-main (void)
+int main ()
 {
   unsigned border = 3;
   unsigned new_border = 1;
 
-  std::cout << std::endl
-	    << "Test 3d resize"
-	    << std::endl
-	    << std::endl;
   image3d<value::int_u8> ima(1, 3, 2, border);
   level::fill (ima, 2);
   border::fill(ima, 8);
 
-  std::cout << "before resize ("
-	    << border
-	    << ")"
-	    << std::endl;
-  debug::println_with_border(ima);
-  std::cout << std::endl;
-
+  mln_assertion(ima.has(point3d(-3, -3, -3)) == true);
+  mln_assertion(ima.has(point3d(-4, -4, -4)) == false);
 
   border::resize (ima, new_border);
-  std::cout << "after resize ("
-	    << new_border
-	    << ")"
-	    << std::endl;
-  debug::println_with_border(ima);
-  std::cout << std::endl;
+  mln_assertion(ima.border() == new_border);
+  mln_assertion(ima.has(point3d(-1, -1, -1)) == true);
+  mln_assertion(ima.has(point3d(-1, -2, -1)) == false);
+  mln_assertion(ima.has(point3d(-3, -3, -3)) == false);
+  mln_assertion(ima.has(point3d(-4, -4, -4)) == false);
 }

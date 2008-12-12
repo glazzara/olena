@@ -52,7 +52,7 @@ namespace mln
     template <typename I>
     inline
     mln_concrete(I)
-    gaussian_subsampling(const Image<I>& input, float sigma
+    gaussian_subsampling(const Image<I>& input, float sigma,
                          const mln_dpsite(I)& first_p,
                          const mln_deduce(I, site, coord)& gap);
 
