@@ -1,3 +1,24 @@
+2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Make level::compare use test::predicate.
+
+	* mln/level/compare.hh: .
+	* mln/test/predicate.hh: Add a version which works on two images.
+
+	Add the concept of vv2b function.
+
+	* mln/fun/vv2b: New.
+	* mln/core/concept/function.hh: .
+
+	Add some vv2b functions.
+
+	* mln/fun/vv2b/eq.hh: New.
+	* mln/fun/vv2b/ge.hh: New.
+	* mln/fun/vv2b/gt.hh: New.
+	* mln/fun/vv2b/implies.hh: New.
+	* mln/fun/vv2b/le.hh: New.
+	* mln/fun/vv2b/lt.hh: New.
+
 2008-12-12  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing id() member in graph related piters.

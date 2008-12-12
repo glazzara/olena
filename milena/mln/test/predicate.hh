@@ -54,6 +54,17 @@ namespace mln
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f);
 
 
+    /*! Test if all pixel values of \p lhs and \p rhs verify the
+     *  predicate \p f.
+     *
+     * \param[in] lhs The image.
+     * \param[in] rhs The image.
+     * \param[in] f The predicate.
+     */
+    template <typename I, typename J, typename F>
+    bool predicate(const Image<I>& lhs, const Image<J>& rhs, const Function_v2b<F>& f);
+
+
     /*! Test if all points of \p pset verify the predicate \p f.
      *
      * \param[in] pset The point set.
@@ -62,7 +73,7 @@ namespace mln
     template <typename S, typename F>
     bool predicate(const Site_Set<S>& pset, const Function_p2b<F>& f);
 
-  
+
 # ifndef MLN_INCLUDE_ONLY
 
     namespace impl
@@ -70,9 +81,8 @@ namespace mln
 
       template <typename I, typename F>
       inline
-      bool predicate_(trait::image::speed::any, const I& ima_, const F& f)
+      bool predicate_(trait::image::speed::any, const I& ima, const F& f)
       {
-	const I& ima = exact(ima_);
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	  if (! f(ima(p)))
@@ -82,12 +92,38 @@ namespace mln
 
       template <typename I, typename F>
       inline
-      bool predicate_(trait::image::speed::fastest, const I& ima_, const F& f)
+      bool predicate_(trait::image::speed::fastest, const I& ima, const F& f)
       {
-	const I& ima = exact(ima_);
 	mln_pixter(const I) pxl(ima);
 	for_all(pxl)
 	  if (! f(pxl.val()))
+	    return false;
+	return true;
+      }
+
+      template <typename I, typename J, typename F>
+      inline
+      bool predicate_(trait::image::speed::any,
+		      trait::image::speed::any,
+		      const I& lhs, const J& rhs, const F& f)
+      {
+	mln_piter(I) p(lhs.domain());
+	for_all(p)
+	  if (! f(lhs(p), rhs(p)))
+	    return false;
+	return true;
+      }
+
+      template <typename I, typename J, typename F>
+      inline
+      bool predicate_(trait::image::speed::fastest,
+		      trait::image::speed::fastest,
+		      const I& lhs, const J& rhs, const F& f)
+      {
+	mln_pixter(const I) pxl1(lhs);
+	mln_pixter(const I) pxl2(rhs);
+	for_all_2(pxl1, pxl2)
+	  if (! f(pxl1.val(), pxl2.val()))
 	    return false;
 	return true;
       }
@@ -114,6 +150,24 @@ namespace mln
     {
       mln_precondition(exact(ima).has_data());
       return impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
+			      exact(f));
+    }
+
+
+    template <typename I, typename J, typename F>
+    inline
+    bool predicate(const Image<I>& lhs_, const Image<J>& rhs_, const Function_vv2b<F>& f)
+    {
+      const I& lhs = exact(lhs_);
+      const J& rhs = exact(rhs_);
+
+      mln_precondition(lhs.has_data());
+      mln_precondition(rhs.has_data());
+      mln_precondition(lhs.domain() == rhs.domain());
+
+      return impl::predicate_(mln_trait_image_speed(I)(),
+			      mln_trait_image_speed(J)(),
+			      lhs, rhs,
 			      exact(f));
     }
 

@@ -34,6 +34,10 @@
  */
 
 # include <mln/core/concept/image.hh>
+# include <mln/fun/vv2b/eq.hh>
+# include <mln/fun/vv2b/le.hh>
+# include <mln/fun/vv2b/lt.hh>
+# include <mln/test/predicate.hh>
 
 
 namespace mln
@@ -82,42 +86,39 @@ namespace mln
   inline
   bool operator == (const Image<L>& lhs_, const Image<R>& rhs_)
   {
+    typedef fun::vv2b::eq<mln_value(L), mln_value(R)> F;
+
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
     mln_precondition(lhs.domain() == rhs.domain());
-    mln_piter(L) p(lhs.domain());
-    for_all(p)
-      if (! (lhs(p) == rhs(p)))
-	return false;
-    return true;
+
+    return test::predicate(lhs_, rhs_, F());
   }
 
   template <typename L, typename R>
   inline
   bool operator < (const Image<L>& lhs_, const Image<R>& rhs_)
   {
+    typedef fun::vv2b::lt<mln_value(L), mln_value(R)> F;
+
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
     mln_precondition(lhs.domain() == rhs.domain());
-    mln_piter(L) p(lhs.domain());
-    for_all(p)
-      if (! (lhs(p) < rhs(p)))
-	return false;
-    return true;
+
+    return test::predicate(lhs_, rhs_, F());
   }
 
   template <typename L, typename R> // required!
   inline
   bool operator <= (const Image<L>& lhs_, const Image<R>& rhs_)
   {
+    typedef fun::vv2b::le<mln_value(L), mln_value(R)> F;
+
     const L& lhs = exact(lhs_);
     const R& rhs = exact(rhs_);
     mln_precondition(lhs.domain() == rhs.domain());
-    mln_piter(L) p(lhs.domain());
-    for_all(p)
-      if (! (lhs(p) <= rhs(p)))
-	return false;
-    return true;
+
+    return test::predicate(lhs_, rhs_, F());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

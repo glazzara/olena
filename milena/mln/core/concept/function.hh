@@ -52,6 +52,7 @@ namespace mln
   template <typename E> struct Function_l2l;
 
   template <typename E> struct Function_vv2v;
+  template <typename E> struct Function_vv2b;
 
   /// Function category flag type.
   template <>
@@ -324,6 +325,28 @@ namespace mln
     Function_vv2v(const Function_vv2v&);
   };
 
+  /*------------------------.
+  | Value, Value -> Boolean.|
+  `------------------------*/
+
+  template <>
+  struct Function_vv2b<void> { typedef Function<void> super; };
+
+  /// Base class for implementation of function-objects from
+  /// a couple of values to a boolean.
+  ///
+  /// The parameter \a E is the exact type.
+  ///
+  template <typename E>
+  struct Function_vv2b : public Function<E>
+  {
+    typedef bool result;
+    typedef Function_vv2b<void> category;
+  protected:
+    Function_vv2b();
+    Function_vv2b(const Function_vv2b&);
+  };
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -479,6 +502,19 @@ namespace mln
   template <typename E>
   inline
   Function_vv2v<E>::Function_vv2v(const Function_vv2v<E>& rhs)
+    : Function<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_vv2b<E>::Function_vv2b()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_vv2b<E>::Function_vv2b(const Function_vv2b<E>& rhs)
     : Function<E>(rhs)
   {
   }
