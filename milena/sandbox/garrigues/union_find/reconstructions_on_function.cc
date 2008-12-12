@@ -26,32 +26,38 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-# include "reconstructions.hh"
+# include "reconstructions_on_function.hh"
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/image/image2d.hh>
-# include <mln/io/pbm/load.hh>
-# include <mln/io/pbm/save.hh>
+# include <mln/value/int_u8.hh>
+# include <mln/io/pgm/load.hh>
+# include <mln/io/pgm/save.hh>
+
+void usage(char** argv)
+{
+  std::cerr << "Usage: " << argv[0] << " (-dilation|-erosion) marker.pgm mask.pgm" << std::endl;
+  exit(1);
+}
 
 int main(int argc, char** argv)
 {
   using namespace mln;
-  typedef image2d<bool> I;
-
-  image2d<bool> marker;
-  image2d<bool> mask;
-  image2d<bool> output;
 
   if (argc < 2)
-  {
-    std::cerr << "Usage: " << argv[0] << " marker.pbm mask.pbm" << std::endl;
-    return 1;
-  }
+    usage(argv);
 
-  io::pbm::load(marker, argv[1]);
-  io::pbm::load(mask,   argv[2]);
+  typedef image2d<value::int_u8> I;
+  I marker;
+  I mask;
+  I output;
 
-  io::pbm::save(reconstruction_by_dilation    (marker, mask, c4()), "r1.pbm");
-  io::pbm::save(reconstruction_by_dilation_alt(marker, mask, c4()), "r2.pbm");
-  io::pbm::save(reconstruction_by_erosion     (marker, mask, c4()), "r3.pbm");
-  io::pbm::save(reconstruction_by_erosion_alt (marker, mask, c4()), "r4.pbm");
+  io::pgm::load(marker, argv[2]);
+  io::pgm::load(mask,   argv[3]);
+
+  if (std::string(argv[1]) == "-dilation")
+    io::pgm::save(reconstruction_on_function_by_dilation(marker, mask, c4()), "r_dilation.pgm");
+  else if (std::string(argv[1]) == "-erosion")
+    io::pgm::save(reconstruction_on_function_by_erosion (marker, mask, c4()), "r_erosion.pgm");
+  else
+    usage(argv);
 }

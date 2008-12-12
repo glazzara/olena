@@ -1,3 +1,20 @@
+2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Add reconstruction on function.
+
+	* canvas/reconstruction_on_function.hh: New, this canvas is able to
+	compute a reconstruction by dilation or by erosion on a function.
+	* reconstructions_on_function.hh: Using this canvas to implement
+	reconstructions on function.
+	* reconstructions_on_function.cc: New, a test.
+
+	* canvas/reconstruction.hh: Rename as...
+	* canvas/reconstruction_on_set.hh: ...this.
+	* reconstructions.cc: Rename as...
+	* reconstructions_on_set.cc: ...this.
+	* reconstructions.hh: Rename...
+	* reconstructions_on_set.hh: ...this.
+
 2008-12-12  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Comment, beautify, strengthen n_cmpt5.

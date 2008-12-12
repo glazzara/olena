@@ -26,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_RECONSTRUCTIONS_HH
-# define MLN_RECONSTRUCTIONS_HH
+#ifndef MLN_RECONSTRUCTIONS_ON_SET_HH
+# define MLN_RECONSTRUCTIONS_ON_SET_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
 
-# include "canvas/reconstruction.hh"
+# include "canvas/reconstruction_on_set.hh"
 
 namespace mln
 {
@@ -42,12 +42,12 @@ namespace mln
   namespace impl
   {
 
-    struct reconstruction_by_dilation_t
+    struct reconstruction_on_set_by_dilation_t
     {
       typedef image2d<bool> I;
       typedef mln_site_(I) P;
 
-      reconstruction_by_dilation_t (const I& marker, const I& mask, I& output)
+      reconstruction_on_set_by_dilation_t (const I& marker, const I& mask, I& output)
 	: marker(marker), mask(mask), output(output)
       {}
 
@@ -63,12 +63,12 @@ namespace mln
     };
 
 
-    struct reconstruction_by_dilation_alt_t
+    struct reconstruction_on_set_by_dilation_alt_t
     {
       typedef image2d<bool> I;
       typedef mln_site_(I) P;
 
-      reconstruction_by_dilation_alt_t (const I& marker, const I& mask, I& output)
+      reconstruction_on_set_by_dilation_alt_t (const I& marker, const I& mask, I& output)
 	: marker(marker), mask(mask), output(output)
       {}
 
@@ -84,12 +84,12 @@ namespace mln
     };
 
 
-    struct reconstruction_by_erosion_t
+    struct reconstruction_on_set_by_erosion_t
     {
       typedef image2d<bool> I;
       typedef mln_site_(I) P;
 
-      reconstruction_by_erosion_t (const I& marker, const I& mask, I& output)
+      reconstruction_on_set_by_erosion_t (const I& marker, const I& mask, I& output)
 	: marker(marker), mask(mask), output(output)
       {}
 
@@ -104,12 +104,12 @@ namespace mln
       I& output; // O
     };
 
-    struct reconstruction_by_erosion_alt_t
+    struct reconstruction_on_set_by_erosion_alt_t
     {
       typedef image2d<bool> I;
       typedef mln_site_(I) P;
 
-      reconstruction_by_erosion_alt_t (const I& marker, const I& mask, I& output)
+      reconstruction_on_set_by_erosion_alt_t (const I& marker, const I& mask, I& output)
 	: marker(marker), mask(mask), output(output)
       {}
 
@@ -128,11 +128,11 @@ namespace mln
 
 
   image2d<bool>
-  reconstruction_by_dilation(const image2d<bool>& marker,
+  reconstruction_on_set_by_dilation(const image2d<bool>& marker,
 		  const image2d<bool>& mask,
 		  const neighb2d& nbh)
   {
-    trace::entering("morpho::reconstruction_by_dilation");
+    trace::entering("morpho::reconstruction_on_set_by_dilation");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
@@ -140,21 +140,21 @@ namespace mln
     image2d<bool> output;
     initialize(output, marker);
 
-    typedef impl::reconstruction_by_dilation_t F;
+    typedef impl::reconstruction_on_set_by_dilation_t F;
     F f(marker, mask, output);
-    canvas::morpho::reconstruction(mask, nbh, f, output);
+    canvas::morpho::reconstruction_on_set(nbh, f);
 
-    trace::exiting("morpho::reconstruction_by_dilation");
+    trace::exiting("morpho::reconstruction_on_set_by_dilation");
     return output;
   }
 
 
   image2d<bool>
-  reconstruction_by_dilation_alt(const image2d<bool>& marker,
+  reconstruction_on_set_by_dilation_alt(const image2d<bool>& marker,
 		  const image2d<bool>& mask,
 		  const neighb2d& nbh)
   {
-    trace::entering("morpho::reconstruction_by_dilation_alt");
+    trace::entering("morpho::reconstruction_on_set_by_dilation_alt");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
@@ -162,21 +162,21 @@ namespace mln
     image2d<bool> output;
     initialize(output, marker);
 
-    typedef impl::reconstruction_by_dilation_alt_t F;
+    typedef impl::reconstruction_on_set_by_dilation_alt_t F;
     F f(marker, mask, output);
-    canvas::morpho::reconstruction(mask, nbh, f, output);
+    canvas::morpho::reconstruction_on_set(nbh, f);
 
-    trace::exiting("morpho::reconstruction_by_dilation_alt");
+    trace::exiting("morpho::reconstruction_on_set_by_dilation_alt");
     return output;
   }
 
 
   image2d<bool>
-  reconstruction_by_erosion(const image2d<bool>& marker,
+  reconstruction_on_set_by_erosion(const image2d<bool>& marker,
 		  const image2d<bool>& mask,
 		  const neighb2d& nbh)
   {
-    trace::entering("morpho::reconstruction_by_erosion");
+    trace::entering("morpho::reconstruction_on_set_by_erosion");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
@@ -184,21 +184,21 @@ namespace mln
     image2d<bool> output;
     initialize(output, marker);
 
-    typedef impl::reconstruction_by_erosion_t F;
+    typedef impl::reconstruction_on_set_by_erosion_t F;
     F f(marker, mask, output);
-    canvas::morpho::reconstruction(mask, nbh, f, output);
+    canvas::morpho::reconstruction_on_set(nbh, f);
 
-    trace::exiting("morpho::reconstruction_by_erosion");
+    trace::exiting("morpho::reconstruction_on_set_by_erosion");
     return output;
   }
 
 
   image2d<bool>
-  reconstruction_by_erosion_alt(const image2d<bool>& marker,
+  reconstruction_on_set_by_erosion_alt(const image2d<bool>& marker,
 		  const image2d<bool>& mask,
 		  const neighb2d& nbh)
   {
-    trace::entering("morpho::reconstruction_by_erosion_alt");
+    trace::entering("morpho::reconstruction_on_set_by_erosion_alt");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
@@ -206,15 +206,15 @@ namespace mln
     image2d<bool> output;
     initialize(output, marker);
 
-    typedef impl::reconstruction_by_erosion_alt_t F;
+    typedef impl::reconstruction_on_set_by_erosion_alt_t F;
     F f(marker, mask, output);
-    canvas::morpho::reconstruction(mask, nbh, f, output);
+    canvas::morpho::reconstruction_on_set(nbh, f);
 
-    trace::exiting("morpho::reconstruction_by_erosion_alt");
+    trace::exiting("morpho::reconstruction_on_set_by_erosion_alt");
     return output;
   }
 
 } // end of namespace mln.
 
 
-#endif // ! MLN_RECONSTRUCTIONS_HH
+#endif // ! MLN_RECONSTRUCTIONS_ON_SET_HH

@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CANVAS_ON_SET_HH
-# define MLN_CANVAS_ON_SET_HH
+#ifndef MLN_RECONSTRUCTION_ON_SET_HH
+# define MLN_RECONSTRUCTION_ON_SET_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/level/fill.hh>
@@ -63,31 +63,29 @@ namespace mln
 	  return parent(x) = find_root(parent, parent(x));
       }
 
-      template <typename N, typename F, typename I, typename O>
+      template <typename N, typename F>
       void
-      reconstruction(const Image<I>& mask_,
-		     const Neighborhood<N>& nbh_,
-		     F& f,
-		     O& output)
+      reconstruction_on_set(const Neighborhood<N>& nbh_,
+			    F& f)
       {
-	trace::entering("canvas::morpho::reconstruction");
+	trace::entering("canvas::morpho::reconstruction_on_set");
 
 	const N& nbh = exact(nbh_);
-	const I& mask = exact(mask_);
 
-	mln_precondition(mask.domain() == output.domain());
+	mln_precondition(f.mask.domain() == f.output.domain());
 
 	// Local type.
 	typedef typename F::P P;
+	typedef typename F::I I;
 
 	// Auxiliary data.
-	mln_ch_value(O, bool)  deja_vu;
-	mln_ch_value(O, P)     parent;
+	mln_ch_value(I, bool)  deja_vu;
+	mln_ch_value(I, P)     parent;
 
 	// init
 	{
-	  initialize(deja_vu, mask);
-	  initialize(parent, mask);
+	  initialize(deja_vu, f.mask);
+	  initialize(parent, f.mask);
 
 	  mln::level::fill(deja_vu, false);
 	  f.set_default_output(); // Client initialization.
@@ -95,7 +93,7 @@ namespace mln
 
 	// first pass
 	{
-	  mln_fwd_piter(I) p(mask.domain());
+	  mln_fwd_piter(I) p(f.mask.domain());
 	  mln_niter(N) n(nbh, p);
 	  for_all(p)
 	  {
@@ -105,7 +103,7 @@ namespace mln
 	      parent(p) = p;
 	      f.init(p);
 
-	      for_all(n) if (mask.domain().has(n))
+	      for_all(n) if (f.mask.domain().has(n))
 	      {
 		if (deja_vu(n) && f.is_in_D(n))
 		{
@@ -129,14 +127,14 @@ namespace mln
 
 	// second pass
 	{
-	  mln_bkd_piter(I) p(mask.domain());
+	  mln_bkd_piter(I) p(f.mask.domain());
 	  for_all(p)
 	    if (f.is_in_D(p))
 	      if (parent(p) != p) // if p is not a root.
-		output(p) = output(parent(p));
+		f.output(p) = f.output(parent(p));
 	}
 
-	trace::exiting("canvas::morpho::reconstruction");
+	trace::exiting("canvas::morpho::reconstruction_on_set");
       }
 
 
@@ -146,4 +144,4 @@ namespace mln
 
 } // end of namespace mln.
 
-#endif // ! MLN_CANVAS_ON_SET_HH
+#endif // ! MLN_RECONSTRUCTION_ON_SET_HH
