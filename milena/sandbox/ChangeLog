@@ -1,5 +1,10 @@
 2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Add a pseudo report of a discution with theo on my seminar.
+	* garrigues/union_find/reunion_avec_theo: New.
+
+2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add reconstruction on function.
 
 	* canvas/reconstruction_on_function.hh: New, this canvas is able to
