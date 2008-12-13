@@ -31,6 +31,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
+# include <mln/core/routine/clone.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/compare.hh>
 # include <mln/level/paste.hh>
@@ -38,6 +39,7 @@
 # include <mln/literal/zero.hh>
 # include <mln/math/max.hh>
 # include <mln/math/min.hh>
+# include <mln/accu/max.hh>
 
 # include "canvas/reconstruction_on_function.hh"
 
@@ -63,17 +65,8 @@ namespace mln
       {
       }
 
-      bool is_active(const P& p) { return mask(p) >= output(p); }
-      void set_default_output() { level::fill(output, literal::zero); }
-      void init(const P& p) { output(p) = marker(p); }
+      bool is_active(const P& p) { return output(p) <= mask(p); }
       void merge(const P& r, const P& p) { output(p) = math::max(output(p), output(r)); }
-      void visit_ext_border(const P& n, const P& p) {	(void) n; (void) p; }
-
-      void set_output_value(const P& p)
-      {
-	if (!is_active(p))
-	  output(p) = mask(p);
-      }
 
       const I& marker; // F
       const J& mask; // G
@@ -99,16 +92,7 @@ namespace mln
       }
 
       bool is_active(const P& p) { return mask(p) <= output(p); }
-      void set_default_output() { level::fill(output, literal::zero); }
-      void init(const P& p) { output(p) = marker(p); }
       void merge(const P& r, const P& p) { output(p) = math::min(output(p), output(r)); }
-      void visit_ext_border(const P& n, const P& p) {	(void) n; (void) p; }
-
-      void set_output_value(const P& p)
-      {
-	if (!is_active(p))
-	  output(p) = mask(p);
-      }
 
       const I& marker; // F
       const J& mask; // G
@@ -134,6 +118,7 @@ namespace mln
     mln_precondition(marker.has_data());
     mln_precondition(mask.has_data());
     mln_precondition(mask.domain() == marker.domain());
+    mln_precondition(marker <= mask);
 
     mln_concrete(I) output;
     initialize(output, marker);
@@ -142,7 +127,8 @@ namespace mln
     F f(marker, mask, output);
     canvas::morpho::reconstruction_on_function(nbh, f);
 
-    mln_precondition(marker <= output && output <= mask);
+//     mln_postcondition(marker <= output);
+//     mln_postcondition(output <= mask);
 
     trace::exiting("morpho::reconstruction_on_function_by_dilation");
     return output;
@@ -155,7 +141,7 @@ namespace mln
 					const Image<J>& mask_,
 					const Neighborhood<N>& nbh_)
   {
-    trace::entering("morpho::reconstruction_on_function_by_dilation");
+    trace::entering("morpho::reconstruction_on_function_by_erosion");
 
     const I& marker = exact(marker_);
     const J& mask   = exact(mask_);
@@ -164,6 +150,7 @@ namespace mln
     mln_precondition(marker.has_data());
     mln_precondition(mask.has_data());
     mln_precondition(mask.domain() == marker.domain());
+    mln_precondition(marker >= mask);
 
     mln_concrete(I) output;
     initialize(output, marker);
@@ -172,12 +159,76 @@ namespace mln
     F f(marker, mask, output);
     canvas::morpho::reconstruction_on_function(nbh, f);
 
-    mln_precondition(marker >= output && output >= mask);
+    mln_postcondition(marker >= output && output >= mask);
 
-    trace::exiting("morpho::reconstruction_on_function_by_dilation");
+    trace::exiting("morpho::reconstruction_on_function_by_erosion");
     return output;
   }
 
+
+  template <typename I, typename J, typename N>
+  mln_concrete(I)
+  reconstruction_on_function_by_dilation_slow(const Image<I>& marker_,
+					      const Image<J>& mask_,
+					      const Neighborhood<N>& nbh_)
+  {
+    trace::entering("morpho::reconstruction_on_function_by_dilation_slow");
+
+
+    const I& marker = exact(marker_);
+    const J& mask   = exact(mask_);
+    const N& nbh    = exact(nbh_);
+
+    mln_precondition(marker.has_data());
+    mln_precondition(mask.has_data());
+    mln_precondition(mask.domain() == marker.domain());
+    mln_precondition(marker <= mask);
+
+    typedef mln_concrete(I) O;
+    O output = clone(marker);
+    O output1 = clone(marker);
+    O* cur = &output;
+    O* prev = &output1;
+
+    accu::max<mln_value(O)> max;
+
+    mln_piter(I) p(output.domain());
+    mln_niter(N) n(nbh, p);
+
+    bool modif = true;
+    unsigned i = 0;
+    while (modif)
+    {
+      modif = false;
+      for_all(p)
+      {
+	max.take_as_init((*prev)(p));
+	for_all(n)
+	  max.take((*prev)(n));
+
+	(*cur)(p) = (*prev)(p);
+	if (max.to_result() == (*cur)(p) || (*cur)(p) == mask(p))
+	  continue;
+
+	modif = true;
+	if (max.to_result() < mask(p))
+	  (*cur)(p) = max.to_result();
+	else
+	  (*cur)(p) = mask(p);
+      }
+
+      // swap
+      O* tmp = cur;
+      cur = prev;
+      prev = tmp;
+    }
+
+    mln_postcondition(marker <= (*cur));
+    mln_postcondition((*cur) <= mask);
+
+    trace::exiting("morpho::reconstruction_on_function_by_dilation_slow");
+    return output;
+  }
 } // end of namespace mln.
 
 

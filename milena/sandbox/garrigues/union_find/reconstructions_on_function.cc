@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 {
   using namespace mln;
 
-  if (argc < 2)
+  if (argc < 3)
     usage(argv);
 
   typedef image2d<value::int_u8> I;
@@ -55,7 +55,10 @@ int main(int argc, char** argv)
   io::pgm::load(mask,   argv[3]);
 
   if (std::string(argv[1]) == "-dilation")
-    io::pgm::save(reconstruction_on_function_by_dilation(marker, mask, c4()), "r_dilation.pgm");
+  {
+    io::pgm::save(reconstruction_on_function_by_dilation(marker, mask, c8()), "r_dilation.pgm");
+//     io::pgm::save(reconstruction_on_function_by_dilation_slow(marker, mask, c8()), "r_dilation_ref.pgm");
+  }
   else if (std::string(argv[1]) == "-erosion")
     io::pgm::save(reconstruction_on_function_by_erosion (marker, mask, c4()), "r_erosion.pgm");
   else

@@ -39,6 +39,7 @@
 # include <mln/core/alias/neighb2d.hh>
 
 # include <mln/io/pbm/save.hh>
+# include <mln/io/pgm/save.hh>
 # include <mln/io/pbm/load.hh>
 
 namespace mln
@@ -85,15 +86,10 @@ namespace mln
 
 	// Method of F required
 	typedef mln_site(I) P;
-
-	void (F::*m1)() = & F::set_default_output;
+	bool (F::*m1)(const P&) = & F::is_active;
 	m1 = 0;
-	bool (F::*m2)(const P&) = & F::is_active;
+	void (F::*m2)(const P&, const P&) = & F::merge;
 	m2 = 0;
-	void (F::*m3)(const P&) = & F::init;
-	m3 = 0;
-	void (F::*m4)(const P&, const P&) = & F::merge;
-	m4 = 0;
 
 	// Dynamic tests.
 	mln_precondition(f.mask.domain() == f.output.domain());
@@ -116,6 +112,7 @@ namespace mln
 	typedef typename F::I I;
 	typedef typename F::S S;
 	typedef mln_site(I) P;
+	typedef mln_value(I) V;
 
 	// Auxiliary data.
 	mln_ch_value(I, bool)  deja_vu;
@@ -127,7 +124,7 @@ namespace mln
 	  initialize(parent, f.mask);
 
 	  mln::level::fill(deja_vu, false);
-	  f.set_default_output();
+	  level::fill(f.output, f.marker);
 	}
 
 	// first pass
@@ -138,17 +135,22 @@ namespace mln
 	  {
 	    // Make set.
 	    parent(p) = p;
-	    f.init(p);
 
 	    for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
 	    {
 	      //do_union(n, p);
 	      P r = find_root(parent, n);
-	      if (r != p && f.is_active(r))
-	      {
-		f.merge(r, p);
-		parent(r) = p;
-	      }
+	      if (r != p)
+		if (f.mask(r) == f.mask(p) or f.is_active(r))
+		{
+		  parent(r) = p;
+		  //  		f.merge(r, p);
+		  if (f.output(r) > f.output(p))
+		    f.output(p) = f.output(r); // increasing criterion
+		}
+		else
+		  f.output(p) = mln_max(V);
+
 	    }
 	    deja_vu(p) = true;
 	  }
@@ -158,7 +160,16 @@ namespace mln
 	{
 	  mln_bkd_piter(S) p(f.s);
 	  for_all(p)
-	    f.set_output_value(p);
+	  {
+	    if (parent(p) == p) // if p is a root.
+	    {
+	      if (f.output(p) == mln_max(V))
+		f.output(p) = f.mask(p);
+	    }
+	    else
+	      f.output(p) = f.output(parent(p));
+
+	  }
 	}
 
 	trace::exiting("canvas::morpho::reconstruction_on_function");

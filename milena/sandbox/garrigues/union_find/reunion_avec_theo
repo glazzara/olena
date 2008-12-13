@@ -13,7 +13,6 @@ Attention! les initialisation des images doivent savoir
 si on est fast ou pas.
 
 
-
 * Pour les opérateur auto duaux
 
 Coder la reconstruction auto duale (Rapide).

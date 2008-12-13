@@ -33,6 +33,7 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/level/fill.hh>
 # include <mln/level/paste.hh>
+# include <mln/level/compare.hh>
 
 # include "canvas/reconstruction_on_set.hh"
 
@@ -129,14 +130,14 @@ namespace mln
 
   image2d<bool>
   reconstruction_on_set_by_dilation(const image2d<bool>& marker,
-		  const image2d<bool>& mask,
-		  const neighb2d& nbh)
+				    const image2d<bool>& mask,
+				    const neighb2d& nbh)
   {
     trace::entering("morpho::reconstruction_on_set_by_dilation");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
-
+    mln_precondition(exact(marker) <= exact(mask));
     image2d<bool> output;
     initialize(output, marker);
 
@@ -151,13 +152,14 @@ namespace mln
 
   image2d<bool>
   reconstruction_on_set_by_dilation_alt(const image2d<bool>& marker,
-		  const image2d<bool>& mask,
-		  const neighb2d& nbh)
+					const image2d<bool>& mask,
+					const neighb2d& nbh)
   {
     trace::entering("morpho::reconstruction_on_set_by_dilation_alt");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;
     initialize(output, marker);
@@ -173,13 +175,14 @@ namespace mln
 
   image2d<bool>
   reconstruction_on_set_by_erosion(const image2d<bool>& marker,
-		  const image2d<bool>& mask,
-		  const neighb2d& nbh)
+				   const image2d<bool>& mask,
+				   const neighb2d& nbh)
   {
     trace::entering("morpho::reconstruction_on_set_by_erosion");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;
     initialize(output, marker);
@@ -195,13 +198,14 @@ namespace mln
 
   image2d<bool>
   reconstruction_on_set_by_erosion_alt(const image2d<bool>& marker,
-		  const image2d<bool>& mask,
-		  const neighb2d& nbh)
+				       const image2d<bool>& mask,
+				       const neighb2d& nbh)
   {
     trace::entering("morpho::reconstruction_on_set_by_erosion_alt");
 
     mln_precondition(exact(marker).has_data());
     mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;
     initialize(output, marker);

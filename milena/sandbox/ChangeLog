@@ -1,3 +1,14 @@
+2008-12-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
+	Fix some bugs in reconstructions.
+
+	* garrigues/union_find/canvas/reconstruction_on_function.hh: .
+	* garrigues/union_find/reconstructions_on_function.cc: .
+	* garrigues/union_find/reconstructions_on_function.hh: .
+	* garrigues/union_find/reconstructions_on_set.cc: .
+	* garrigues/union_find/reconstructions_on_set.hh: .
+	* garrigues/union_find/reunion_avec_theo: .
+
 2008-12-12  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Comment. Fix wrong fusing condition, dec condition.
