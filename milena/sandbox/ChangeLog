@@ -1,3 +1,10 @@
+2008-12-14  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add stuff for report.
+
+	* jardonnet/n_cmpt/tikz.hh: New. Generate tikz and various images.
+	* jardonnet/n_cmpt/tikz.cc: New.
+
 2008-12-13  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix some bugs in reconstructions.
