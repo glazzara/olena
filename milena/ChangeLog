@@ -1,3 +1,12 @@
+2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add functors.
+
+	* mln/fun/meta: New.
+	* mln/fun/meta/red.hh: red meta accessor.
+	* mln/fun/v2w2v: New.
+	* mln/fun/v2w_w2v: New.
+
 2008-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix unit tests.
