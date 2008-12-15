@@ -96,7 +96,7 @@ namespace mln
       // number of minima
       unsigned cmpts = label;
       if (lambda > cmpts)
-        std::cout << "warning : lambda value is to hight." << std::endl;
+        std::cout << "Warning: lambda value is too high!" << std::endl;
 
       std::cout << cmpts << std::endl;
 

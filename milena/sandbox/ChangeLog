@@ -1,3 +1,14 @@
+2008-12-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fetch Ugo's code to prepare merging it with 1st steps.
+
+	* jardonnet/n_cmpt/n_cmpt5.hh: Fix typo.
+	Copy to...
+	* geraud/tufa_2008/n_cmpt.cc: ...this new file.
+	Cleanup code.
+	Fix typos.
+	(main): New.
+
 2008-12-15  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Add stuff for report.
