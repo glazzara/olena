@@ -32,6 +32,10 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/util/set.hh>
 
+# include <mln/value/rgb8.hh>
+
+# include <mln/literal/all.hh>
+
 # include <mln/debug/println.hh>
 # include <mln/debug/iota.hh>
 
@@ -40,6 +44,33 @@
 # include <mln/morpho/tree/compute_attribute_image.hh>
 
 # include <mln/level/paste.hh>
+#include <mln/level/transform.hh>
+
+namespace mln
+{
+
+  struct colorize : Function_v2v< colorize >
+  {
+    typedef value::rgb8 result;
+    colorize(unsigned max)
+      : lut(max + 1)
+    {
+      lut[0] = literal::black;
+      for (unsigned i = 1; i <= max; ++i)
+        lut[i] = result(100 + std::rand() % 150,
+                        100 + std::rand() % 150,
+                        100 + std::rand() % 150);
+    }
+    result operator()(unsigned i) const
+    {
+      return lut[i];
+    }
+    std::vector<result> lut;
+  };
+
+} // mln
+
+
 
 namespace mln
 {
@@ -142,6 +173,11 @@ namespace mln
         }
       }
 
+      mln_ch_value(I,value::int_u<16>) iota(ima.domain());
+      debug::iota(iota);
+      colorize col(100);
+      int k = 0;
+
       // UNION FIND ON VOLUME
       mln_fwd_piter(S) p(sp);
       mln_niter(N) n(nbh, p);
@@ -203,6 +239,8 @@ namespace mln
                 if (fused(r))
                   fused(p) = true;
 
+                iota(p) = iota(r);
+
 
                 // If I try to fuse with something never fused I am on a plateau.
                 // not fused(r) => ( volume(r) == volume(p) )
@@ -222,10 +260,27 @@ namespace mln
           }
         }
         deja_vu(p) = true;
-      }
 
-      mln_ch_value(I,value::int_u<16>) iota(ima.domain());
-      debug::iota(iota);
+        I tik(ima.domain());
+        mln_bkd_piter(S) d(sp);
+        for_all(d)
+        {
+          if (parent(d) == d) // p is root.
+            tik(d) = iota(d) * 10;
+          else
+            tik(d) = tik(parent(d));
+        }
+
+        //mln_ch_value(I, value::rgb8) tik_rgb = level::transform(tik, col);
+
+        //tik_rgb(p) = literal::red;
+        tik(p) = 255;
+
+        std::ostringstream is;
+        is << "tik_00" << k++ << ".tex";
+
+        io::tikz::save(tik, is.str());
+      }
 
       std::cout << std::endl;
       std::cout << "cmpts : " << cmpts << std::endl;

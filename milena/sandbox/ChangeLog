@@ -1,3 +1,10 @@
+2008-12-15  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Add stuff for report.
+
+	* jardonnet/n_cmpt/tikz.hh: Save clustering steps.
+	* jardonnet/n_cmpt/tikz.cc: Update.
+
 2008-12-14  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Add stuff for report.

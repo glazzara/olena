@@ -15,7 +15,7 @@
 
 #include <cmath>
 
-#include "tickz.hh"
+#include "tikz.hh"
 
 using namespace mln;
 using namespace mln::value;
@@ -59,5 +59,5 @@ int main(int argc, char ** argv)
   int_u8 tab[] = {2,3,1,0,2,3,4,5,1,1,0,5,6,8,7,1,1,2,3,4};
   image1d<int_u8> ima1= make::image(tab);
 
-  n_cmpt::n_cmpt3(ima, c4(), lambda);
+  io::pgm::save(n_cmpt::n_cmpt3(ima, c4(), lambda), "out.pgm");
 }
