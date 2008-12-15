@@ -55,27 +55,32 @@ namespace mln
       typedef I_ I;
       typedef J_ J;
       typedef mln_site(I) P;
+      typedef mln_value(I) V;
       typedef p_array<mln_psite(I)> S;
 
       reconstruction_on_function_by_dilation_t (const I& marker, const J& mask, mln_concrete(I)& output)
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  s(level::sort_psites_decreasing(mask))
+	  s(level::sort_psites_decreasing(mask)),
+	  escape_value(mln_max(V))
       {
       }
 
-      bool is_active(const P& p) { return output(p) <= mask(p); }
+      bool is_active(const P& r, const P& p) { return output(r) <= mask(p); }
+      void escape(const P& p) { output(p) = escape_value; }
       void merge(const P& r, const P& p)
       {
 	if (output(r) > output(p))
 	  output(p) = output(r);
       }
 
+
       const I& marker; // F
       const J& mask; // G
       mln_concrete(I)& output; // O
       S s;
+      const V escape_value;
     };
 
 
@@ -85,23 +90,31 @@ namespace mln
       typedef I_ I;
       typedef J_ J;
       typedef mln_site(I) P;
+      typedef mln_value(I) V;
       typedef p_array<mln_psite(I)> S;
 
       reconstruction_on_function_by_erosion_t (const I& marker, const J& mask, mln_concrete(I)& output)
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  s(level::sort_psites_increasing(marker))
+	  s(level::sort_psites_increasing(mask)),
+	  escape_value(mln_min(V))
       {
       }
 
-      bool is_active(const P& p) { return mask(p) <= output(p); }
-      void merge(const P& r, const P& p) { output(p) = math::min(output(p), output(r)); }
+      bool is_active(const P& r, const P& p) { return output(r) >= mask(p); }
+      void escape(const P& p) { output(p) = escape_value; }
+      void merge(const P& r, const P& p)
+      {
+	if (output(r) < output(p))
+	  output(p) = output(r);
+      }
 
       const I& marker; // F
       const J& mask; // G
       mln_concrete(I)& output; // O
       S s;
+      const V escape_value;
     };
 
 
@@ -131,8 +144,8 @@ namespace mln
     F f(marker, mask, output);
     canvas::morpho::reconstruction_on_function(nbh, f);
 
-//     mln_postcondition(marker <= output);
-//     mln_postcondition(output <= mask);
+    mln_postcondition(marker <= output);
+    mln_postcondition(output <= mask);
 
     trace::exiting("morpho::reconstruction_on_function_by_dilation");
     return output;
@@ -163,7 +176,8 @@ namespace mln
     F f(marker, mask, output);
     canvas::morpho::reconstruction_on_function(nbh, f);
 
-    mln_postcondition(marker >= output && output >= mask);
+    mln_postcondition(marker >= output);
+    mln_postcondition(output >= mask);
 
     trace::exiting("morpho::reconstruction_on_function_by_erosion");
     return output;

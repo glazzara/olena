@@ -55,55 +55,68 @@ namespace mln
     template <typename I_, typename J_>
     struct self_dual_reconstruction_t
     {
-      // d1 : marker(p) < mask(p)
-      // d2 : marker(p) > mask(p)
+      // d1 : marker(p) < mask(p) -> dilation
+      // d2 : marker(p) > mask(p) -> erosion
 
       typedef I_ I;
       typedef J_ J;
       typedef mln_site(I) P;
+      typedef mln_value(I) V;
       typedef p_array<mln_psite(I)> S;
 
       self_dual_reconstruction_t (const I& marker, const J& mask, mln_concrete(I)& output)
 	: marker(marker),
 	  mask(mask),
-	  output(output)
-	  // 	  d1_s(level::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask)))),
-	  // 	  d2_s(level::sort_psites_decreasing(mask | (pw::value(marker) > pw::value(mask))))
+	  output(output),
+	  d1_s(level::sort_psites_decreasing(mask | (pw::value(marker) < pw::value(mask)))),
+	  d2_s(level::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask)))),
+	  d1_escape_value(mln_max(V)),
+	  d2_escape_value(mln_min(V))
       {
-	S d1, d2;
-	mln_piter(I) p(mask.domain());
-	for_all(p)
-	{
-	  if (is_in_d1(p))
-	    d1_s.append(p);
-	  else
-	    if (is_in_d2(p))
-	      d2_s.append(p);
-	}
-
       }
 
       bool is_in_d1(const P& p) { return marker(p) < mask(p); }
-      bool d1_is_active(const P& r, const P& p) { return output(r) <= mask(p); }
+      bool is_in_d2(const P& p) { return marker(p) > mask(p); }
+
+
+
+      bool d1_is_active(const P& r, const P& p)
+      {
+	mln_assertion(is_in_d1(r) && is_in_d1(p));
+	return output(r) <= mask(p);
+      }
+
       void d1_merge(const P& r, const P& p)
       {
+	mln_assertion(is_in_d1(r) && is_in_d1(p));
 	if (output(r) > output(p))
 	  output(p) = output(r);
       }
 
-      bool is_in_d2(const P& p) { return marker(p) > mask(p); }
-      bool d2_is_active(const P& r, const P& p) { return output(r) <= mask(p); }
+      void d1_escape(const P& p) { output(p) = d1_escape_value; }
+
+
+      bool d2_is_active(const P& r, const P& p)
+      {
+	mln_assertion(is_in_d2(r) && is_in_d2(p));
+	return output(r) >= mask(p);
+      }
+
       void d2_merge(const P& r, const P& p)
       {
+	mln_assertion(is_in_d2(r) && is_in_d2(p));
 	if (output(r) < output(p))
 	  output(p) = output(r);
       }
+
+      void d2_escape(const P& p) { output(p) = d2_escape_value; }
 
       const I& marker; // F
       const J& mask; // G
       mln_concrete(I)& output; // O
 
       S d1_s, d2_s;
+      const V d1_escape_value, d2_escape_value;
     };
 
   } // end of namespace mln::impl.

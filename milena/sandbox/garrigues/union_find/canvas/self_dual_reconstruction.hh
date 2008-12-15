@@ -144,6 +144,7 @@ namespace mln
 
 	      for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
 	      {
+		mln_assertion(f.is_in_d1(n));
 		//do_union(n, p);
 		P r = find_root(parent, n);
 		if (r != p)
@@ -153,12 +154,14 @@ namespace mln
 		    f.d1_merge(r, p);
 		  }
 		  else
-		    f.output(p) = mln_max(V);
+		    f.d1_escape(p);
 	      }
 
 	      deja_vu(p) = true;
 	    }
 	  }
+
+	  mln::level::fill(deja_vu, false);
 
 	  // Body of D2.
 	  {
@@ -171,6 +174,7 @@ namespace mln
 
 	      for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
 	      {
+		mln_assertion(f.is_in_d2(n));
 		//do_union(n, p);
 		P r = find_root(parent, n);
 		if (r != p)
@@ -180,8 +184,7 @@ namespace mln
 		    f.d2_merge(r, p);
 		  }
 		  else
-		    f.output(p) = mln_max(V);
-
+		    f.d2_escape(p);
 	      }
 
 	      deja_vu(p) = true;
@@ -197,7 +200,7 @@ namespace mln
 	    {
 	      if (parent(p) == p) // if p is a root.
 	      {
-		if (f.output(p) == mln_max(V))
+		if (f.output(p) == f.d1_escape_value)
 		  f.output(p) = f.mask(p);
 	      }
 	      else
@@ -211,7 +214,7 @@ namespace mln
 	    {
 	      if (parent(p) == p) // if p is a root.
 	      {
-		if (f.output(p) == mln_max(V))
+		if (f.output(p) == f.d2_escape_value)
 		  f.output(p) = f.mask(p);
 	      }
 	      else

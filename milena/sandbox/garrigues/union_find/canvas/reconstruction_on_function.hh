@@ -147,7 +147,7 @@ namespace mln
 		  f.merge(r, p);
 		}
 		else
-		  f.output(p) = mln_max(V);
+		  f.escape(p);
 
 	    }
 	    deja_vu(p) = true;
@@ -161,7 +161,7 @@ namespace mln
 	  {
 	    if (parent(p) == p) // if p is a root.
 	    {
-	      if (f.output(p) == mln_max(V))
+	      if (f.output(p) == f.escape_value)
 		f.output(p) = f.mask(p);
 	    }
 	    else
