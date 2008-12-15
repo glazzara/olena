@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_RECONSTRUCTION_ON_FUNCTION_HH
-# define MLN_RECONSTRUCTION_ON_FUNCTION_HH
+#ifndef MLN_SELF_DUAL_RECONSTRUCTION_HH
+# define MLN_SELF_DUAL_RECONSTRUCTION_HH
 
 # include <mln/core/image/image2d.hh>
 # include <mln/level/fill.hh>
@@ -44,7 +44,6 @@
 
 namespace mln
 {
-
 
   namespace canvas
   {
@@ -67,8 +66,8 @@ namespace mln
       template <typename N, typename F>
       inline
       void
-      reconstruction_on_function_tests(const Neighborhood<N>& nbh_,
-				       F& f)
+      self_dual_reconstruction_tests(const Neighborhood<N>& nbh_,
+				     F& f)
       {
 	// Static tests.
 
@@ -78,7 +77,8 @@ namespace mln
 	typedef typename F::S S;
 
 	// Attributs of f required.
-	(void) f.s;
+	(void) f.d1_s;
+	(void) f.d2_s;
 	(void) f.mask;
 	(void) f.marker;
 	(void) f.output;
@@ -86,10 +86,14 @@ namespace mln
 
 	// Method of F required
 	typedef mln_site(I) P;
-	bool (F::*m1)(const P&, const P&) = & F::is_active;
+	bool (F::*m1)(const P&, const P&) = & F::d1_is_active;
 	m1 = 0;
-	void (F::*m2)(const P&, const P&) = & F::merge;
+	void (F::*m2)(const P&, const P&) = & F::d1_merge;
 	m2 = 0;
+	bool (F::*m3)(const P&, const P&) = & F::d2_is_active;
+	m3 = 0;
+	void (F::*m4)(const P&, const P&) = & F::d2_merge;
+	m4 = 0;
 
 	// Dynamic tests.
 	mln_precondition(f.mask.domain() == f.output.domain());
@@ -98,13 +102,13 @@ namespace mln
 
       template <typename N, typename F>
       void
-      reconstruction_on_function(const Neighborhood<N>& nbh_,
-				 F& f)
+      self_dual_reconstruction(const Neighborhood<N>& nbh_,
+			       F& f)
       {
-	trace::entering("canvas::morpho::reconstruction_on_function");
+	trace::entering("canvas::morpho::self_dual_reconstruction");
 
 	// Tests.
-	reconstruction_on_function_tests(nbh_, f);
+	self_dual_reconstruction_tests(nbh_, f);
 
 	const N& nbh = exact(nbh_);
 
@@ -129,48 +133,95 @@ namespace mln
 
 	// first pass
 	{
-	  mln_fwd_piter(S) p(f.s);
-	  mln_niter(N) n(nbh, p);
-	  for_all(p)
+	  // Body of D1.
 	  {
-	    // Make set.
-	    parent(p) = p;
-
-	    for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
+	    mln_fwd_piter(S) p(f.d1_s);
+	    mln_niter(N) n(nbh, p);
+	    for_all(p)
 	    {
-	      //do_union(n, p);
-	      P r = find_root(parent, n);
-	      if (r != p)
-		if (f.is_active(r, p))
-		{
-		  parent(r) = p;
-		  f.merge(r, p);
-		}
-		else
-		  f.output(p) = mln_max(V);
+	      // Make set.
+	      parent(p) = p;
 
+	      for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
+	      {
+		//do_union(n, p);
+		P r = find_root(parent, n);
+		if (r != p)
+		  if (f.d1_is_active(r, p))
+		  {
+		    parent(r) = p;
+		    f.d1_merge(r, p);
+		  }
+		  else
+		    f.output(p) = mln_max(V);
+	      }
+
+	      deja_vu(p) = true;
 	    }
-	    deja_vu(p) = true;
+	  }
+
+	  // Body of D2.
+	  {
+	    mln_fwd_piter(S) p(f.d2_s);
+	    mln_niter(N) n(nbh, p);
+	    for_all(p)
+	    {
+	      // Make set.
+	      parent(p) = p;
+
+	      for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
+	      {
+		//do_union(n, p);
+		P r = find_root(parent, n);
+		if (r != p)
+		  if (f.d2_is_active(r, p))
+		  {
+		    parent(r) = p;
+		    f.d2_merge(r, p);
+		  }
+		  else
+		    f.output(p) = mln_max(V);
+
+	      }
+
+	      deja_vu(p) = true;
+	    }
 	  }
 	}
 
 	// second pass
 	{
-	  mln_bkd_piter(S) p(f.s);
-	  for_all(p)
 	  {
-	    if (parent(p) == p) // if p is a root.
+	    mln_bkd_piter(S) p(f.d1_s);
+	    for_all(p)
 	    {
-	      if (f.output(p) == mln_max(V))
-		f.output(p) = f.mask(p);
-	    }
-	    else
-	      f.output(p) = f.output(parent(p));
+	      if (parent(p) == p) // if p is a root.
+	      {
+		if (f.output(p) == mln_max(V))
+		  f.output(p) = f.mask(p);
+	      }
+	      else
+		f.output(p) = f.output(parent(p));
 
+	    }
+	  }
+	  {
+	    mln_bkd_piter(S) p(f.d2_s);
+	    for_all(p)
+	    {
+	      if (parent(p) == p) // if p is a root.
+	      {
+		if (f.output(p) == mln_max(V))
+		  f.output(p) = f.mask(p);
+	      }
+	      else
+ 		f.output(p) = f.output(parent(p));
+
+	    }
 	  }
 	}
 
-	trace::exiting("canvas::morpho::reconstruction_on_function");
+	trace::exiting("canvas::morpho::self_dual_reconstruction");
       }
 
 
@@ -180,4 +231,4 @@ namespace mln
 
 } // end of namespace mln.
 
-#endif // ! MLN_RECONSTRUCTION_ON_FUNCTION_HH
+#endif // ! MLN_SELF_DUAL_RECONSTRUCTION_HH

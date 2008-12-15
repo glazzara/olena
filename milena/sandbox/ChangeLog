@@ -1,3 +1,20 @@
+2008-12-15  Matthieu Garrigues  <matthieu.garrigues@gmail.com>
+
+	Try a self dual reconstruction.
+
+	* garrigues/union_find/leveling.cc: New.
+	* garrigues/union_find/canvas/self_dual_reconstruction.hh: New.
+
+	Fix reconstruction on function.
+
+	* garrigues/union_find/canvas/reconstruction_on_function.hh: .
+	* garrigues/union_find/reconstructions_on_function.hh: .
+	* garrigues/union_find/self_dual_reconstruction.hh: New.
+
+	Misc.
+
+	* garrigues/union_find/reunion_avec_theo: .
+
 2008-12-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fetch Ugo's code to prepare merging it with 1st steps.

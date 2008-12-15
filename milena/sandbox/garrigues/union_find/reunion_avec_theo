@@ -1,6 +1,6 @@
-Verifier les resultats bizarres.
+OK Verifier les resultats bizarres.
 
-1/ Ajouter le test d'inclusion pour les reconstruction_on_set
+OK 1/ Ajouter le test d'inclusion pour les reconstruction_on_set
    -> regarder si level compare utilise test/predicate
    -> sinon le faire, et fastestiser test/predicate
    -> level compare specialisation pour les boolean? test d'implication??

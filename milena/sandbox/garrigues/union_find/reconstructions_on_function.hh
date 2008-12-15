@@ -61,12 +61,16 @@ namespace mln
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  s(level::sort_psites_decreasing(marker))
+	  s(level::sort_psites_decreasing(mask))
       {
       }
 
       bool is_active(const P& p) { return output(p) <= mask(p); }
-      void merge(const P& r, const P& p) { output(p) = math::max(output(p), output(r)); }
+      void merge(const P& r, const P& p)
+      {
+	if (output(r) > output(p))
+	  output(p) = output(r);
+      }
 
       const I& marker; // F
       const J& mask; // G
