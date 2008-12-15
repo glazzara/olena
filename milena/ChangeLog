@@ -2,7 +2,8 @@
 
 	Add missing concept for bijective functions.
 
-	* mln/core/concept/function.hh: .
+	* mln/core/concept/function.hh: 
+	    Add Function_v2w2v and Function_v2w_w2v.
 
 2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
 
@@ -11,7 +12,11 @@
 	* mln/fun/meta: New.
 	* mln/fun/meta/red.hh: red meta accessor.
 	* mln/fun/v2w2v: New.
+	* mln/fun/v2w2v/cos.hh: New
+	    cos bijective functor.
 	* mln/fun/v2w_w2v: New.
+	* mln/fun/v2w_w2v/norm.hh: New
+	    norm 2 way functors.
 
 2008-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
 
