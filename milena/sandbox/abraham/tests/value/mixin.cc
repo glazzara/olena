@@ -83,14 +83,16 @@ int main ()
 
   value::rgb8 r(12, 13, 14);
   value::rgb8 s(13, 14, 15);
+  value::rgb8 t(13, 20, 17);
+
+  std::cout << mln_max(value::rgb8::red_t) << std::endl;
 
   typedef value::mixin<value::rgb8,red_only> Rgb;
 
-  std::cout << ( my_violent_cast<Rgb>(r) < my_violent_cast<Rgb>(s) ) << std::endl;
+  assert(my_violent_cast<Rgb>(r) < my_violent_cast<Rgb>(s));
+  assert(my_violent_cast<Rgb>(s) > my_violent_cast<Rgb>(r));
+  assert(my_violent_cast<Rgb>(s) == my_violent_cast<Rgb>(t));
+  assert(my_violent_cast<Rgb>(s) >= my_violent_cast<Rgb>(t));
 
-
-//   std::cout
-//     << ( *(value::mixin<value::rgb8, value::op_less>*)(void*) &r <
-// 	 *(value::mixin<value::rgb8, value::op_less>*)(void*) &s )
-//     << std::endl;
+  return 0;
 }

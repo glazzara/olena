@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,22 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_VALUE_OP_LESS_HH
-# define MLN_CORE_VALUE_OP_LESS_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/fun_image.hh>
+# include <mln/fun/v2w2v/cos.hh>
 
-namespace mln
+int main ()
 {
 
-  namespace value
+  using namespace mln;
+
+  typedef image2d<double>  I;
+
+  double vs[6][5] = {
+
+    { 12, -3, 8, -4, 6 },
+    { -2, 22, -1, 45, -1 },
+    { -1, -4, -4, -4, -1 },
+    { -1, -4, -3, -4, -1 },
+    { -1, -4, -5, -3, -1 },
+    { -1, -1, -1, -1, -1 }
+
+  };
+
+  image2d<double> ima(make::image(vs));
+  fun_image<mln::fun::v2w2v::cos<double>, image2d<double> > out(ima);
+
+  double i = 0;
+
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all (p)
   {
+    out(p) = i;
+    i += 1./40.;
+  }
 
-    template <typename T>
-    struct op_less
-    {
-      // Should have an operator() (T& lhs, T& rhs)
-    };
-
-  } // end of namespace value
-} // end of namespace mln
-
-#endif // ! MLN_CORE_VALUE_OP_LESS_HH
+  for_all (p)
+    std::cout << out(p) << std::endl;
+}

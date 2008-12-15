@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,33 +25,40 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_RED_HH
-# define MLN_FUN_META_RED_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/fun_image.hh>
+# include <mln/fun/v2w2v/cos.hh>
 
-# include <mln/core/concept/meta_fun.hh>
+int main ()
+{
 
-namespace mln {
+  using namespace mln;
 
-  namespace meta {
+  typedef const image2d<double>  I;
 
-    template <class T>
-    struct to_enc : impl< to_enc<T> > { typedef typename T::enc value; };
+  double vs[6][5] = {
+
+    { 12, -3, 8, -4, 6 },
+    { -2, 22, -1, 45, -1 },
+    { -1, -4, -4, -4, -1 },
+    { -1, -4, -3, -4, -1 },
+    { -1, -4, -5, -3, -1 },
+    { -1, -1, -1, -1, -1 }
 
   };
 
-  template <typename T>
-  struct function< meta::to_enc<T> > : public Function_v2v<function< meta::to_enc<T> > >
+  I ima(make::image(vs));
+  fun_image<mln::fun::v2w2v::cos<double>, I > out(ima);
+
+  double i = 0;
+
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all (p)
   {
-    typedef typename T::enc value;
+    out(p) = i;
+    i += 1./40.;
+  }
 
-    value read(const T& t)
-    {
-      return t.to_enc();
-    }
-
-  };
-
-
-};
-
-#endif // MLN_FUN_META_RED_HH
+  for_all (p)
+    std::cout << out(p) << std::endl;
+}

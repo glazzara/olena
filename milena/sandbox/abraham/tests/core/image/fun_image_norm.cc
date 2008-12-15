@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,20 +25,39 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_RED_HH
-# define MLN_FUN_META_RED_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/fun_image.hh>
+# include <mln/fun/v2w_w2v/norm.hh>
+# include <mln/algebra/vec.hh>
+# include <mln/level/fill.hh>
+# include <mln/core/image/violent_cast_image.hh>
 
-# include <mln/core/concept/meta_fun.hh>
+#include <mln/morpho/erosion.hh>
 
-namespace mln {
+int main ()
+{
 
-  namespace meta {
+  using namespace mln;
+  typedef image2d<algebra::vec<2, double> >  I;
 
-    template <class T>
-    struct red : impl< red<T> > { typedef T value; };
+  I ima(3, 2, 0);
 
-  };
+  ima(point2d(0,0)).set (1, 1);
+  ima(point2d(0,1)).set (1, 3);
+  ima(point2d(1,0)).set (4, 4);
+  ima(point2d(1,1)).set (-1, 3);
+  ima(point2d(2,0)).set (23, 23);
+  ima(point2d(2,1)).set (3, 1);
 
-};
+  fun_image<mln::fun::v2w_w2v::l1_norm<algebra::vec<2, double>, double>, I > out(ima);
+  // level::fill(out, 1);
 
-#endif // MLN_FUN_META_RED_HH
+  win::rectangle2d rect(3, 3);
+  morpho::erosion(out, rect);
+
+
+  box_fwd_piter_<point2d> p(ima.domain());
+
+  for_all (p)
+    std::cout << ima(p) << std::endl;
+}

@@ -1,6 +1,6 @@
 #include <mln/fun/meta/red.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/thru.hh>
+#include <mln/core/image/fun_image.hh>
 
 namespace mln
 {
@@ -52,7 +52,7 @@ int main ()
   c.r = 1;
   i(mln::point2d(2,1)) = c;
 
-  mln::thru<mln::meta::red <C>, mln::image2d<C> > out(i);
+  mln::fun_image<mln::meta::red <C>, mln::image2d<C> > out(i);
 
   mln_piter_(mln::image2d<C>) p(i.domain());
 

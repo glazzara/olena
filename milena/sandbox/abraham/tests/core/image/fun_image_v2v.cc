@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,32 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_HUE_HH
-# define MLN_FUN_META_HUE_HH
+# include <mln/core/image/image2d.hh>
+# include <mln/core/image/fun_image.hh>
+# include <mln/fun/v2v/abs.hh>
 
-# include <mln/value/hsi.hh>
-# include <mln/core/concept/meta_fun.hh>
+int main ()
+{
 
-namespace mln {
+  using namespace mln;
 
-  namespace meta {
+  typedef image2d<int>  I;
 
-    template <class H>
-    struct hue : impl< hue<H> > { typedef H value; };
+  int vs[6][5] = {
+
+    { -3, -3, -4, -4, -4 },
+    { -2, -1, -1, -1, -1 },
+    { -1, -4, -4, -4, -1 },
+    { -1, -4, -3, -4, -1 },
+    { -1, -4, -5, -3, -1 },
+    { -1, -1, -1, -1, -1 }
 
   };
 
-  template <class H, class S, class I>
-  struct function< meta::hue< value::hsi_<H, S, I> > > : public Function_v2w_w2v<function< meta::hue < value::hsi_<H, S, I> > > >
-  {
-    typedef value::hsi_<H, S, I> value;
+  image2d<int> ima(make::image(vs));
+  fun_image<mln::fun::v2v::abs<int>, image2d<int> > out(ima);
 
-    typedef H result;
-    H read(const value& h)
-    {
-      return h.hue();
-    }
-
-    typedef H& lresult;
-    H& write(value& h)
-    {
-      return h.hue();
-    }
-  };
-
-
-};
-
-#endif // MLN_FUN_META_HUE_HH
+ box_fwd_piter_<point2d> p(ima.domain());
+ for_all (p)
+   mln_assertion (out(p) >= 0);
+}

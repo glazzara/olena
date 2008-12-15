@@ -255,9 +255,9 @@ namespace mln
 	  site p = S[ip];
 	  MakeSet_node(p);
 	  MakeSet_tree(p);
-	  // 	      if (subtreeRoot.hold(p))
+	  //	      if (subtreeRoot.hold(p))
 	  subtreeRoot(p) = p;
-	  // 	      if (nodes.hold(p))
+	  //	      if (nodes.hold(p))
 	  nodes(p) = MakeNode(pima(p));
 	}
 
@@ -298,8 +298,8 @@ namespace mln
       //            for (int ip = 0; ip < int(S.size()); ++ip)
       //              {
       //                site p = S[ip];
-      // 	       M(p) = Find_node(p);
-      // 	     }
+      //	       M(p) = Find_node(p);
+      //	     }
 
       mln_piter(I) r(Par_node.domain());
       for_all(r)
@@ -528,7 +528,7 @@ namespace mln
       std::cout << "end" << std::endl;
 
       // Main loop
-      while(!l.is_empty())
+      while (!l.is_empty())
 	{
 	  site x = l.front();
 	  l.pop();
@@ -605,7 +605,7 @@ namespace mln
       //   ++position;
       // }
 
-      for(unsigned i=0; i < n.children.size(); ++i)
+      for (unsigned i=0; i < n.children.size(); ++i)
 	{
 	  build_euler_tour_rec(n.children[i], position, d+1);
 	  depth[position] = d; // Not optimized

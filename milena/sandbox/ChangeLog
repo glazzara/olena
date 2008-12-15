@@ -1,3 +1,41 @@
+2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add Autarkical Leveling, move files ot trunk.
+
+	* abraham/tests/morpho/levelings.cc: New
+	    Test for autorkical leveling.
+	* abraham/tests/morpho/red_erosion.cc: New
+	    Make red erosion with fun_image (not working yet).
+	* abraham/tests/morpho/red_erosion3.cc: New
+	    Make red erosion with mixin.
+	* abraham/tests/fun/meta/red.cc: Update.
+	* abraham/tests/core/image/fun_image_const.cc: New.
+	* abraham/tests/core/image/fun_image_norm.cc: New.
+	* abraham/tests/core/image/fun_image_v2v.cc: New.
+	* abraham/tests/core/image/fun_image_v2w2v.cc: New.
+	* abraham/tests/value/mixin.cc: Update.
+	* abraham/mln/morpho/autarkical_leveling.hh: New
+	    Autarkical leveling (see Golima).
+	* abraham/mln/morpho/topo_wst.hh: Update.
+	* abraham/mln/morpho/vector_median.hh: New
+	    Morphological operator needed for autarkical leveliing.
+	* abraham/mln/core/image/thru.hh: Move to trunk under the
+	    name fun_image.hh.
+	* abraham/mln/core/image/violent_cast_image.hh: Move to trunk.
+	* abraham/mln/core/concept/function.hh: Move to trunk.
+	* abraham/mln/fun/v2w2v: Move to trunk.
+	* abraham/mln/fun/v2w2v/cos.hh: Move to trunk.
+	* abraham/mln/fun/meta: Move to trunk.
+	* abraham/mln/fun/meta/hue.hh: Move to trunk.
+	* abraham/mln/fun/meta/inty.hh: Move to trunk.
+	* abraham/mln/fun/meta/sat.hh: Move to trunk.
+	* abraham/mln/fun/meta/to_enc.hh: Move to trunk.
+	* abraham/mln/fun/meta/red.hh: Move to trunk.
+	* abraham/mln/fun/v2w_w2v: Move to trunk.
+	* abraham/mln/fun/v2w_w2v/norm.hh: Move to trunk.
+	* abraham/mln/value/mixin.hh: Move to trunk.
+	* abraham/mln/value/op_less.hh: Move to trunk.
+
 2008-12-15  Matthieu Garrigues  <matthieu.garrigues@gmail.com>
 
 	Try a self dual reconstruction.
