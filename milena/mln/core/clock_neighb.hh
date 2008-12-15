@@ -137,10 +137,10 @@ namespace mln
 
   template <typename D>
   inline
-  window<D>
+  mln::window<D>
   clock_neighb<D>::win() const
   {
-    window<D> result;
+    mln::window<D> result;
     for (unsigned i = 0; i < vec_.size(); ++i)
       result.insert(vec_[i]);
     return result;

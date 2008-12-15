@@ -35,12 +35,20 @@
 /// image.
 
 # include <mln/core/concept/image.hh>
+# include <mln/core/image/image2d.hh>
 # include <mln/util/tree.hh>
 # include <mln/core/site_set/p_set.hh>
 # include <mln/level/fill.hh>
 
 namespace mln
 {
+
+  namespace level
+  {
+    template <typename I, typename D>
+    void fill(Image<I>& ima, const D& data);
+
+  }
 
   namespace util
   {
@@ -52,7 +60,7 @@ namespace mln
     ///
     template <typename T, typename I>
     void
-    tree_to_image (tree<T>& tree, Image<I>& output_);
+    tree_to_image(tree<T>& tree, Image<I>& output_);
 
     /// Display a tree.
     ///
@@ -133,7 +141,7 @@ namespace mln
 	const J& ima = exact(ima_);
 
 	mln_piter(p_set<point2d>) p(tree_node->elt().points);
-	for_all (p)
+	for_all(p)
 	  output(p) = true;
 	typename mln::util::tree_node<T>::children_t::iterator it = tree_node->children().begin();
 	for (;
@@ -152,11 +160,11 @@ namespace mln
 	trace::entering("util::impl::display_set");
 
 	const J& ima = exact(ima_);
-	image2d<bool> out (ima.bbox ());
+	image2d<bool> out(ima.bbox());
 
         level::fill(out, false);
-	mln_piter(p_set<P>) p (s);
-	for_all (p)
+	mln_piter(p_set<P>) p(s);
+	for_all(p)
 	  out(p) = true;
 
 	trace::exiting("util::impl::display_set");
@@ -170,7 +178,7 @@ namespace mln
     template <typename T, typename I>
     inline
     void
-    tree_to_image (tree<T>& tree, Image<I>& output_)
+    tree_to_image(tree<T>& tree, Image<I>& output_)
     {
       trace::entering("util::tree_to_image");
 
@@ -210,7 +218,7 @@ namespace mln
 
       const J& ima = exact(ima_);
 
-      image2d<bool> output (ima.domain ());
+      image2d<bool> output(ima.domain());
       level::fill(output, false);
       impl::display_branch_rec(ima, tree_node, output);
 

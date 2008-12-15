@@ -513,7 +513,6 @@ mln/metal/int.hh \
 mln/metal/abort.hh \
 mln/metal/same_coord.hh \
 mln/metal/templated_by.hh \
-mln/metal/has_neighborhood.hh \
 mln/metal/goes_to.hh \
 mln/metal/is_not_ref.hh \
 mln/metal/converts_to.hh \
@@ -841,7 +840,6 @@ mln/core/clock_neighb2d.hh \
 mln/core/pixter3d.hh \
 mln/core/image/obased_rle_encode.hh \
 mln/core/image/plain.hh \
-mln/core/image/graph_image.hh \
 mln/core/image/image3d.hh \
 mln/core/image/decorated_image.hh \
 mln/core/image/extension_ima.hh \
@@ -885,10 +883,8 @@ mln/core/image/image2d_h.hh \
 mln/core/image/image2d.hh \
 mln/core/image/ch_piter.hh \
 mln/core/image/complex_windows.hh \
-mln/core/image/fi_adaptor.hh \
 mln/core/image/mono_obased_rle_encode.hh \
 mln/core/image/status.txt \
-mln/core/image/line_graph_image.hh \
 mln/core/image/value_encode.hh \
 mln/core/image/essential.hh \
 mln/core/a_point_of.hh \

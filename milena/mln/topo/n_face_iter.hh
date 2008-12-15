@@ -29,13 +29,14 @@
 # define MLN_TOPO_N_FACE_ITER_HH
 
 /// \file mln/topo/n_face_iter.hh
-/// \brief Definition of forward and backward iterators on all the
+///
+/// Definition of forward and backward iterators on all the
 /// \a n-faces of a complex, \a n being a dynamic value.
 
 # include <mln/topo/internal/complex_set_iterator_base.hh>
 # include <mln/topo/face.hh>
 
-// FIXME: Factor a bit more? (Using complex_set_iterator_base.)
+// \todo Factor a bit more? (Using complex_set_iterator_base.)
 
 // FIXME: Rename the old commplex_faces_{fwd,bkd}_iter as
 // static_n_face_{fwd,bkd}_iter.
@@ -47,15 +48,24 @@ namespace mln
   namespace topo
   {
 
-    // Forward declaration.
+    // Forward declarations.
     template <unsigned D> class complex;
+
+    namespace internal
+    {
+
+      // Forward declaration.
+      template <typename F, typename E>
+      class complex_set_iterator_base;
+
+    } // end of namespace mln::topo::internal
 
 
     /*---------------------------.
     | topo::n_face_fwd_iter<D>.  |
     `---------------------------*/
 
-    /// \brief Forward iterator on all the faces of an mln::complex<D>.
+    /// Forward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
@@ -88,7 +98,7 @@ namespace mln
       void next_();
       /// \}
 
-      /// \brief Accessors.
+      /// Accessors.
       ///
       /// Shortcuts to face_'s accessors.
       /// \{
@@ -109,7 +119,7 @@ namespace mln
     | topo::n_face_bkd_iter<D>.  |
     `---------------------------*/
 
-    /// \brief Backward iterator on all the faces of an mln::complex<D>.
+    /// Backward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
@@ -142,7 +152,7 @@ namespace mln
       void next_();
       /// \}
 
-      /// \brief Accessors.
+      /// Accessors.
       ///
       /// Shortcuts to face_'s accessors.
       /// \{

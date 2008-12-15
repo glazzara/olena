@@ -1,4 +1,5 @@
 // Copyright (C) 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_METAL_REF_HH
 # define MLN_METAL_RFE_HH
 
-/*!
- * \file  mln/metal/ref.hh
- *
- * \brief FIXME.
- */
+/// \file  mln/metal/ref.hh
+///
+/// FIXME.
 
 
 # define mlc_ref(T) typename mln::metal::ref< T >::ret

@@ -1,4 +1,5 @@
 // Copyright (C) 2007.2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_IMAGE_MONO_OBASED_RLE_IMAGE_HH
 # define MLN_CORE_IMAGE_MONO_OBASED_RLE_IMAGE_HH
 
-/*! \file mln/core/image/mono_obased_rle_image.hh
- *
- * \brief Definition of an image with rle encoding.
- */
+/// \file mln/core/image/mono_obased_rle_image.hh
+///
+/// Definition of an image with rle encoding.
 
 # include <mln/core/internal/run_image.hh>
 # include <mln/core/site_set/p_run.hh>
@@ -44,7 +44,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename P, typename T> struct mono_obased_rle_image;
 
 
@@ -85,22 +85,23 @@ namespace mln
     {
       typedef trait::image::category::primary category;
 
-      typedef trait::image::access::browsing   access;
+      // FIXME: update with new properties.
+//      typedef trait::image::access::browsing   access;
       // FIXME: Put the right dimension.
-      typedef trait::image::space::two_d     space;
-      typedef trait::image::size::regular    size;
-      typedef trait::image::support::aligned support;
-
-      typedef trait::image::border::none     border;
-      typedef trait::image::data::linear     data;
-      typedef trait::image::io::read_only    io;
-      typedef trait::image::speed::slow      speed;
+//      typedef trait::image::space::two_d     space;
+//      typedef trait::image::size::regular    size;
+//      typedef trait::image::support::aligned support;
+//
+//      typedef trait::image::border::none     border;
+//      typedef trait::image::data::linear     data;
+//      typedef trait::image::io::read_only    io;
+//      typedef trait::image::speed::slow      speed;
     };
 
   } // end of namespace mln::trait
 
 
-  /*! \brief RLE image with objects based on mln::mono_rle_image.
+  /*! RLE image with objects based on mln::mono_rle_image.
    *
    *
    * Parameter \c P is the type of the image points.

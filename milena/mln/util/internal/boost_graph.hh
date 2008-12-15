@@ -30,7 +30,8 @@
 # define MLN_UTIL_INTERNAL_BOOST_GRAPH_HH
 
 /// \file mln/util/internal/boost_graph.hh
-/// \brief Definition of the boost::adjacenly_list decorator.
+///
+/// Definition of the boost::adjacenly_list decorator.
 
 # include <boost/graph/adjacency_list.hpp>
 
@@ -45,7 +46,7 @@ namespace mln
     namespace internal
     {
 
-      /// \brief Boost graph decorator base
+      /// Boost graph decorator base
       /// Graph class which rests on boost::adjacency_list class.
       template <typename VertexProperty = empty,
 		typename EdgeProperty = empty>

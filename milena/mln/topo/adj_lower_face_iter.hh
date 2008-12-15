@@ -29,6 +29,7 @@
 # define MLN_TOPO_ADJ_LOWER_FACE_ITER_HH
 
 /// \file mln/topo/adj_lower_face_iter.hh
+///
 /// Definition of forward and backward iterators on the
 /// adjacent (n-1)-faces of a (reference) n-face in a complex.
 
@@ -53,6 +54,9 @@ namespace mln
 
       template <typename C, typename F, typename E>
       class backward_complex_relative_iterator_base;
+
+      template <unsigned D>
+      struct algebraic_face;
 
     } // end of namespace mln::topo::internal
 

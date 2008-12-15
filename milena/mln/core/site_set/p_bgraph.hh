@@ -41,7 +41,8 @@
 
 
 /// \file mln/core/site_set/p_bgraph.hh
-/// \brief Definition of a point set based on a boost graph.
+///
+/// Definition of a point set based on a boost graph.
 
 namespace mln
 {
@@ -50,7 +51,7 @@ namespace mln
 
   template<typename P>
   struct p_bgraph
-    : public internal::site_set_base_< graph_psite<P>, p_bgraph<P> >
+    : public internal::site_set_base_< bgraph_psite<P>, p_bgraph<P> >
   {
     typedef util::internal::boost_graph<P, util::empty> graph;
 

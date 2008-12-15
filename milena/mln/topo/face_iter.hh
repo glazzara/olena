@@ -29,7 +29,7 @@
 # define MLN_TOPO_FACE_ITER_HH
 
 /// \file mln/topo/face_iter.hh
-/// \brief Definition of forward and backward iterators on all the
+/// Definition of forward and backward iterators on all the
 /// faces of a complex.
 
 # include <mln/topo/internal/complex_set_iterator_base.hh>
@@ -61,7 +61,7 @@ namespace mln
     | topo::face_fwd_iter<D>.  |
     `-------------------------*/
 
-    /// \brief Forward iterator on all the faces of an mln::complex<D>.
+    /// Forward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>
@@ -102,7 +102,7 @@ namespace mln
     | topo::face_bkd_iter<D>.  |
     `-------------------------*/
 
-    /// \brief Backward iterator on all the faces of an mln::complex<D>.
+    /// Backward iterator on all the faces of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
     template <unsigned D>

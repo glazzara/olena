@@ -1,3 +1,67 @@
+2008-12-15  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix unit tests.
+
+	* milena/headers.mk: do not distribute deleted headers.
+
+	* milena/mln/core/clock_neighb.hh: fix type ambiguity.
+
+	* milena/mln/core/image/mono_obased_rle_image.hh,
+	* milena/mln/core/image/mono_rle_image.hh,
+	* milena/mln/core/image/obased_rle_image.hh,
+	* milena/mln/core/image/rle_image.hh,
+	* milena/mln/core/image/value_enc_image.hh,
+	* milena/mln/core/image/bgraph_image.hh: Disable image properties
+	since they are not update with the new property names.
+
+	* milena/mln/core/image/bgraph_psite.hh: fix wrong include.
+ 
+	* milena/mln/core/image/fi_adaptor.hh, 
+	* milena/mln/core/image/graph_image.hh, 
+	* milena/mln/core/image/line_graph_image.hh: move to... 
+
+	* milena/trash/fi_adaptor.hh,
+	* milena/trash/graph_image.hh,
+	* milena/trash/line_graph_image.hh: ... here.
+
+
+	* milena/mln/core/site_set/p_bgraph.hh,
+	* milena/mln/metal/ref.hh,
+	* milena/mln/topo/adj_higher_face_iter.hh,
+	* milena/mln/topo/adj_lower_face_iter.hh,
+	* milena/mln/topo/adj_lower_higher_face_iter.hh,
+	* milena/mln/topo/face_iter.hh,
+	* milena/mln/topo/n_face_iter.hh,
+	* milena/mln/util/internal/boost_graph.hh,
+	* milena/mln/util/internal/boost_graph_structure.hh,
+	* milena/mln/util/tree_to_image.hh: Add missing
+	includes/forward declarations.
+
+	* milena/tests/unit_test/Makefile.am: update test list.
+
+	* milena/tests/unit_test/mln_core_concept_doc_accumulator.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_box.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_dpoint.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_generalized_pixel.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_image.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_image_fastest.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_iterator.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_neighborhood.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_object.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_pixel_iterator.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_point_iterator.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_point_site.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_site_set.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_value_iterator.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_value_set.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_weighted_window.cc,
+	* milena/tests/unit_test/mln_core_concept_doc_window.cc,
+	* milena/tests/unit_test/mln_core_image_fi_adaptor.cc,
+	* milena/tests/unit_test/mln_core_image_graph_image.cc,
+	* milena/tests/unit_test/mln_core_image_line_graph_image.cc,
+	* milena/tests/unit_test/mln_metal_has_neighborhood.cc: removed since
+	not needed anymore.
+
 2008-12-12  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Make level::compare use test::predicate.

@@ -30,7 +30,8 @@
 # define MLN_CORE_IMAGE_BGRAPH_IMAGE_HH
 
 /// \file mln/core/image/bgraph_image.hh
-/// \brief Definition of a boost-graph-based image.
+///
+/// Definition of a boost-graph-based image.
 
 # include <mln/trait/images.hh>
 # include <mln/core/internal/image_primary.hh>
@@ -44,7 +45,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration
   template <typename P, typename V> struct bgraph_image;
 
   namespace internal
@@ -77,28 +78,27 @@ namespace mln
     {
       typedef trait::image::category::primary category;
 
-      typedef trait::image::access::random                    access;
-      typedef typename trait::image::space_from_point<P>::ret space;
-      typedef trait::image::size::regular                     size;
-      typedef trait::image::support::irregular                support;
-
-      typedef trait::image::border::none                      border;
-      typedef trait::image::data::stored                      data;
-      typedef trait::image::io::read_write                    io;
-      typedef trait::image::speed::fast                       speed;
+      // FIXME: update with new properties.
+//      typedef trait::image::access::random                    access;
+//      typedef typename trait::image::space_from_point<P>::ret space;
+//      typedef trait::image::size::regular                     size;
+//      typedef trait::image::support::irregular                support;
+//
+//      typedef trait::image::border::none                      border;
+//      typedef trait::image::data::stored                      data;
+//      typedef trait::image::io::read_write                    io;
+//      typedef trait::image::speed::fast                       speed;
     };
 
   } // end of namespace mln::trait
 
-  /*! \brief Kind of image based on a boost graph structure.
-   *
-   */
+  /// Kind of image based on a boost graph structure.
   template <typename P, typename V>
   struct bgraph_image :
-    public internal::image_primary< p_bgraph<P>, bgraph_image<P, V> >
+    public internal::image_primary< V, p_bgraph<P>, bgraph_image<P, V> >
   {
 
-    typedef mln::internal::image_base< V, p_bgraph<P>, bgraph_image<P, V> >
+    typedef mln::internal::image_primary< V, p_bgraph<P>, bgraph_image<P, V> >
     super_;
 
     /// Value associated type.
@@ -152,7 +152,7 @@ namespace mln
     const P& node2(const typename p_bgraph<P>::edge_id& e) const;
 };
 
-  // Fwd decl.
+  // Initialization routine.
   template <typename P, typename V>
   void init_(tag::image_t,
 	     bgraph_image<P, V>& target, const bgraph_image<P, V>& model);

@@ -28,12 +28,16 @@
 
 
 /// \file mln/util/internal/boost_graph_structure.hh
-/// \brief Operations that interract with the boost_graph structure.
+///
+/// Operations that interract with the boost_graph structure.
 
 #ifndef MLN_UTIL_INTERNAL_BOOST_GRAPH_STRUCTURE_HH_
 # define MLN_UTIL_INTERNAL_BOOST_GRAPH_STRUCTURE_HH_
 
-/// fwd declaration
+# include <mln/util/internal/boost_graph.hh>
+
+
+/// forward declaration.
 namespace mln
 {
   namespace util
@@ -46,11 +50,12 @@ namespace mln
   }
 }
 
+
 namespace boost
 {
   namespace mlnu = mln::util::internal;
 
-  /// \brief Adds edge (u,v) to the graph and returns the edge descriptor for
+  /// Adds edge (u,v) to the graph and returns the edge descriptor for
   ///        the new edge.
   template <typename VProp, typename EProp>
   std::pair<typename mlnu::boost_graph<VProp, EProp>::edge_descriptor, bool>
@@ -59,7 +64,7 @@ namespace boost
 	   typename mlnu::boost_graph<VProp, EProp>& g);
 
 
-  /// \brief Adds edge (u,v) to the graph and attaches p as the value of the
+  /// Adds edge (u,v) to the graph and attaches p as the value of the
   ///        edge's internal property storage.
   template <typename VProp, typename EProp>
   std::pair<typename mlnu::boost_graph<VProp, EProp>::edge_descriptor, bool>
@@ -69,14 +74,14 @@ namespace boost
 	   edge_property_type& p,
 	   typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Removes the edge (u,v) from the graph.
+  /// Removes the edge (u,v) from the graph.
   template <typename VProp, typename EProp>
   void
   remove_edge(typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor u,
 	      typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor v,
 	      typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Removes the edge e from the graph.
+  /// Removes the edge e from the graph.
   /// This differs from the remove_edge(u, v, g) function in the case of
   /// a multigraph. This remove_edge(e, g) function removes a single edge,
   /// whereas the remove_edge(u, v, g) function removes all edges (u,v).
@@ -86,14 +91,14 @@ namespace boost
 	      typename mlnu::boost_graph<VProp, EProp>& g);
 
 
-  /// \brief Same as remove_edge(*iter, g)
+  /// Same as remove_edge(*iter, g)
   template <typename VProp, typename EProp>
   void
   remove_edge(typename mlnu::boost_graph<VProp, EProp>::out_edge_iterator iter,
 	      typename mlnu::boost_graph<VProp, EProp>& g);
 
 
-  /// \brief Removes all out-edges of vertex u from the graph that
+  /// Removes all out-edges of vertex u from the graph that
   ///        satisfy the predicate.
   template <typename VProp, typename EProp, class Predicate>
   void
@@ -108,19 +113,19 @@ namespace boost
 		    Predicate predicate,
 		    typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Removes all edges of vertex u from the graph that
+  /// Removes all edges of vertex u from the graph that
   ///        satisfy the predicate.
   template <typename VProp, typename EProp, class Predicate>
   void remove_edge_if(Predicate predicate,
 		      typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Adds a vertex to the graph.
+  /// Adds a vertex to the graph.
   ///        Returns the vertex descriptor for the new vertex.
   template <typename VProp, typename EProp>
   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor
   add_vertex(typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Adds a vertex to the graph with the specified properties.
+  /// Adds a vertex to the graph with the specified properties.
   ///        Returns the vertex descriptor for the new vertex.
   template <typename VProp, typename EProp>
   typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor
@@ -128,13 +133,13 @@ namespace boost
 	     vertex_property_type& p,
 	     typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Removes all edges to and from vertex u.
+  /// Removes all edges to and from vertex u.
   template <typename VProp, typename EProp>
   void
   clear_vertex(typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor u,
 	       typename mlnu::boost_graph<VProp, EProp>& g);
 
-  /// \brief Removes all out-edges to and from vertex u.
+  /// Removes all out-edges to and from vertex u.
   template <typename VProp, typename EProp>
   void
   clear_out_edges(typename mlnu::boost_graph<VProp, EProp>::vertex_descriptor u,
@@ -147,7 +152,7 @@ namespace boost
 		  typename mlnu::boost_graph<VProp, EProp>& g);
 
 
-  /// \brief Remove vertex u from the vertex set of the graph.
+  /// Remove vertex u from the vertex set of the graph.
   /// It is assumed that there are no edges to or from vertex u
   /// when it is removed
   template <typename VProp, typename EProp>

@@ -30,9 +30,10 @@
 # define MLN_CORE_IMAGE_BGRAPH_PSITE_HH
 
 /// \file mln/core/image/bgraph_psite.hh
-/// \brief Definition of a boost-graph-based point site.
+///
+/// Definition of a boost-graph-based point site.
 
-# include <mln/core/site_set/p_graph.hh>
+# include <mln/core/site_set/p_bgraph.hh>
 
 
 namespace mln
@@ -42,7 +43,7 @@ namespace mln
   template<typename P> class p_bgraph;
 
 
-  /// \brief Point site associated to a mln::graph_image.
+  /// Point site associated to a mln::graph_image.
   template<typename P>
   class bgraph_psite : public Point_Site< bgraph_psite<P> >
   {

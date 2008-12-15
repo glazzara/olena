@@ -47,6 +47,10 @@ namespace mln
 
     // Forward declaration.
     template <unsigned D> class complex;
+    template <unsigned D> class adj_lower_face_fwd_iter;
+    template <unsigned D> class adj_lower_face_bkd_iter;
+    template <unsigned D> class adj_higher_face_fwd_iter;
+    template <unsigned D> class adj_higher_face_bkd_iter;
 
     namespace internal
     {

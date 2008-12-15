@@ -43,23 +43,28 @@ namespace mln
   namespace topo
   {
 
-    // Forward declarations.
+    // Forward declaration.
     template <unsigned D> class complex;
 
     namespace internal
     {
 
-      template <typename F, typename E>
-      class complex_iterator_base;
+      template <typename C, typename F, typename E>
+      class forward_complex_relative_iterator_base;
 
-    } // end of namespace mln::topo::internal
+      template <typename C, typename F, typename E>
+      class backward_complex_relative_iterator_base;
 
+      template <unsigned D>
+      struct algebraic_face;
+
+    } // end of mln::topo::internal
 
     /*------------------------------------.
     | topo::adj_higher_face_fwd_iter<D>.  |
     `------------------------------------*/
 
-    /// \brief Forward iterator on all the adjacent (n+1)-faces of the
+    /// Forward iterator on all the adjacent (n+1)-faces of the
     /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
@@ -91,7 +96,7 @@ namespace mln
     | topo::adj_higher_face_bkd_iter<D>.  |
     `------------------------------------*/
 
-    /// \brief Backward iterator on all the adjacent (n+1)-faces of the
+    /// Backward iterator on all the adjacent (n+1)-faces of the
     /// n-face of an mln::complex<D>.
     ///
     /// \arg \p D The dimension of the complex this iterator belongs to.
