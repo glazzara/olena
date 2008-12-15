@@ -42,6 +42,8 @@ namespace mln
   // Fwd decls.
   template <typename E> struct Function;
   template <typename E> struct Function_v2v;
+  template <typename E> struct Function_v2w2v;
+  template <typename E> struct Function_v2w_w2v;
   template <typename E> struct Function_i2v;
   template <typename E> struct Function_p2v;
   template <typename E> struct Function_v2b;
@@ -101,6 +103,74 @@ namespace mln
   protected:
     Function_v2v();
     Function_v2v(const Function_v2v&);
+  };
+
+
+  /*----------------------------.
+  | Value <-> Value (Bijective) |
+  `----------------------------*/
+
+  // FIXME : should it also be a v2v function?
+
+  template <>
+  struct Function_v2w2v<void> { typedef Function<void> super; };
+
+  /*!
+   * \brief Base class for implementation of function-objects from
+   * value V to value W and vice versa.
+   *
+   * The parameter \a E is the exact type.
+   */
+
+  template <typename E>
+  struct Function_v2w2v : public Function<E>
+  {
+    typedef Function_v2w2v<void> category;
+
+    /*
+      result operator() (value);
+      value  f_1        (result);
+    */
+
+  protected:
+    Function_v2w2v();
+    Function_v2w2v(const Function_v2w2v&);
+  };
+
+
+  /*---------------------------.
+  | Value <-> Value (Two ways) |
+  `---------------------------*/
+
+  // FIXME : should it also be a v2v function?
+
+  template <>
+  struct Function_v2w_w2v<void> { typedef Function<void> super; };
+
+  /*!
+   * \brief Base class for implementation of function-objects from
+   * value V to value W and from W to V thanks to the previous
+   * value V.
+   *
+   * The parameter \a E is the exact type.
+   *
+   * eg: f  :  x     -> norm(x)
+   *     f_1: (x, n) -> x' := x / norm(x) * n
+   */
+
+  template <typename E>
+  struct Function_v2w_w2v : public Function<E>
+  {
+    typedef Function_v2w_w2v<void> category;
+
+    /*
+      result operator() (value);
+      value  f_1        (result, value);
+    */
+
+  protected:
+    Function_v2w_w2v();
+    Function_v2w_w2v(const Function_v2w_w2v&);
   };
 
 
@@ -373,6 +443,32 @@ namespace mln
   template <typename E>
   inline
   Function_v2v<E>::Function_v2v(const Function_v2v<E>& rhs)
+    : Function<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_v2w2v<E>::Function_v2w2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_v2w2v<E>::Function_v2w2v(const Function_v2w2v<E>& rhs)
+    : Function<E>(rhs)
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_v2w_w2v<E>::Function_v2w_w2v()
+  {
+  }
+
+  template <typename E>
+  inline
+  Function_v2w_w2v<E>::Function_v2w_w2v(const Function_v2w_w2v<E>& rhs)
     : Function<E>(rhs)
   {
   }

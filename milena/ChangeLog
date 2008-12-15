@@ -1,5 +1,11 @@
 2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Add missing concept for bijective functions.
+
+	* mln/core/concept/function.hh: .
+
+2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Add functors.
 
 	* mln/fun/meta: New.
