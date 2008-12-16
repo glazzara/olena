@@ -76,8 +76,14 @@ namespace mln
 
 
   template <typename I, typename A, typename N>
-  void run_run(const I& f, const A& a, const N& nbh)
+  mln_ch_value(I, util::set<unsigned>)
+    compute_labels(const I& f, const A& a, const N& nbh,
+		   unsigned n_objects,
+		   bool echo = false)
   {
+    if (echo)
+      debug::println("f =", f);
+
     typedef p_array<mln_psite(I)> S;
     S s = level::sort_psites_increasing(a);
     // s maps increasing attributes.
@@ -86,7 +92,6 @@ namespace mln
     mln_ch_value(I, bool) deja_vu;
     mln_ch_value(I, util::set<unsigned>) labels;
     unsigned nbassins, current_n;
-
 
     // Initialization.
     {
@@ -104,6 +109,15 @@ namespace mln
       // labels
       mln_ch_value(I, unsigned) regmin = labeling::regional_minima(a, nbh,
 								   nbassins);
+      if (n_objects >= nbassins)
+	{
+	  std::cerr << "The number of expected objects is higher than the number of regional minima!" << std::endl;
+	  std::abort();
+	}
+
+      if (echo)
+	debug::println("regmin(f) =", regmin);
+
       initialize(labels, f);
       for_all(p)
 	if (regmin(p) != 0) // p in a reg min of the attribute image
@@ -141,6 +155,27 @@ namespace mln
 			  {
 			    labels(p).insert(labels(r));
 			    --current_n;
+			    if (current_n == n_objects && echo)
+			      {
+				// Filtering.
+				mln_concrete(I) g;
+				initialize(g, f);
+				mln_bkd_piter(S) p(s);
+				for_all(p)
+				  if (par(p) == p)
+				    g(p) = f(p);
+				  else
+				    g(p) = g(par(p));
+				debug::println("g =", g);
+
+				// Testing.
+				unsigned n_result;
+				mln_ch_value(I, unsigned) g_regmin;
+				g_regmin = labeling::regional_minima(g, nbh, n_result);
+				debug::println("regmin(g) =", g_regmin);
+
+				mln_invariant(n_result == n_objects);
+			      }
 			  }		    
 		  }
 	      }
@@ -148,26 +183,47 @@ namespace mln
 	}
     }
 
-    std::cout << std::endl;
-    std::cout << "end = " << current_n << std::endl;
+    mln_invariant(current_n == 1); // All labels are merged into a single set.
+
+    return labels;
   }
 
 
 } // mln
 
 
+void usage(char* argv[])
+{
+  std::cerr << "usage: " << argv[0] << " input.pgm n echo" << std::endl;
+  std::cerr << "n: number of expected objects (n > 0)" << std::endl;
+  std::cerr << "echo: 0 (silent) or 1 (verbose)" << std::endl;
+  std::cerr << "merge using sets of labels from regional minima and save the highest label image" << std::endl;
+  std::abort();
+}
 
 
-int main(int, char* argv[])
+int main(int argc, char* argv[])
 {
   using namespace mln;
   using value::int_u8;
 
-  int_u8 n;
+  if (argc != 4)
+    usage(argv);
 
   typedef image2d<int_u8> I;
   I f;
+  // input image
   io::pgm::load(f, argv[1]);
+
+  // n
+  int n = std::atoi(argv[2]);
+  if (n <= 0)
+    usage(argv);
+
+  // echo
+  int echo = std::atoi(argv[3]);
+  if (echo != 0 && echo != 1)
+    usage(argv);
 
   typedef p_array<point2d> S;
   S s = level::sort_psites_decreasing(f);
@@ -179,6 +235,24 @@ int main(int, char* argv[])
   accu::count< util::pix<I> > attr;
 
   image2d<unsigned> a = morpho::tree::compute_attribute_image(attr, t);
-  run_run(f, a, c4());
+
+
+  image2d< util::set<unsigned> > labels = compute_labels(f, a, c4(), n, echo);
+  if (echo)
+    debug::println("labels =", labels);
+
+  {
+    image2d<unsigned> lab(f.domain());
+    mln_piter_(I) p(f.domain());
+    for_all(p)
+      {
+	mln_assertion(! labels(p).is_empty());
+	lab(p) = labels(p).last_element();
+      }
+    if (echo)
+      debug::println("max of labels (clearly NOT the objects image!) =", lab);
+
+    // We can observe that we do NOT get objects this way...
+  }
 
 }

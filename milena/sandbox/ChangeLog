@@ -1,3 +1,12 @@
+2008-12-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment the reference code to depict object labeling err.
+
+	* geraud/tufa_2008/steps.2.cc: Augment.
+	(label): Wrong object labeling image.
+	As a conclusion, labeling cannot come from the max label
+	propagated by the parent relationship.
+
 2008-12-15  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Finalize reconstructions.
