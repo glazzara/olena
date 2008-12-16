@@ -108,22 +108,6 @@ run ()
     )
 }
 
-# Generate milena/headers.mk
-# ------------------------------
-# List all the headers in order to make them part of distribution.
-dist_headers ()
-{
-  cd "milena"
-  echo "nobase_include_HEADERS = \\" > headers.mk
-  echo "generating headers.mk"
-  find mln -type f | sed -e 's/$/ \\/g' >> headers.mk
-
-  last_line=`tail -n 1 headers.mk | sed -e 's/\\\//g'` # remove '\' in last line
-  sed '$d' < headers.mk > headers.mk.tmp # remove last line
-  mv headers.mk.tmp headers.mk
-  echo $last_line >> headers.mk # put the cleaned last line back.
-  cd -
-}
 
 # Failures do matter.
 set -e
@@ -135,8 +119,8 @@ require automake 1.9.4
 # Generate unit test files.
 run milena/tests/unit_test ./build_unit_test.sh $PWD/milena/mln
 
-# Generate headers distribution config file.
-dist_headers
+# Generate milena/dist_headers.mk
+run milena ./generate_dist_headers.sh
 
 # Tell what's going on.
 set -x

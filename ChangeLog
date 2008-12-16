@@ -1,3 +1,9 @@
+2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
+	
+	Make use of milena/generate_dist_headers.sh.
+
+	* bootstrap: update here.
+
 2008-12-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Update call to build_unit_test.sh
