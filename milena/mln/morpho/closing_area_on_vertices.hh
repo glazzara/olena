@@ -47,25 +47,33 @@ namespace mln
 
     /// Morphological area closing on a mln::line_graph_image computing
     /// the area in terms of adjacent vertices.
-    template <typename P2V, typename G, typename V2P, typename N, typename O>
-    void closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-				  const Neighborhood<N>& nbh,
-				  unsigned lambda, Image<O>& output);
+    template <typename P2V, typename G, typename V2P, typename N>
+    pw::image<P2V, p_edges<G, V2P> >
+    closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+			     const Neighborhood<N>& nbh,
+			     unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P2V, typename G, typename V2P, typename N, typename O>
+    template <typename P2V, typename G, typename V2P, typename N>
     inline
-    void closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-				  const Neighborhood<N>& nbh,
-				  unsigned lambda, Image<O>& output)
+    pw::image<P2V, p_edges<G, V2P> >
+    closing_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+			     const Neighborhood<N>& nbh,
+			     unsigned lambda)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("morpho::closing_area_on_vertices");
+      mln_precondition(exact(input).has_data());
+
       typedef p_edges<G, V2P> pe_t;
       typedef accu::count_adjacent_vertices<P2V, pe_t> attribute_t;
-      // FIXME: Change sig of closing_attribute!
-      closing_attribute<attribute_t>(input, nbh, lambda, output);
+
+      pw::image<P2V, p_edges<G, V2P> > output;
+      output = closing_attribute<attribute_t>(input, nbh, lambda);
+
+      trace::exiting("morpho::closing_area_on_vertices");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

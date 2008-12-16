@@ -30,7 +30,8 @@
 # define MLN_MORPHO_OPENING_HEIGHT_HH
 
 /// \file mln/morpho/opening_height.hh
-/// \brief Morphological height opening.
+///
+/// Morphological height opening.
 
 # include <mln/morpho/opening_attribute.hh>
 # include <mln/accu/height.hh>
@@ -43,21 +44,28 @@ namespace mln
   {
 
     /// Morphological height opening.
-    template <typename I, typename N, typename O>
-    void opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output);
+    template <typename I, typename N>
+    mln_concrete(I)
+    opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename I, typename N>
     inline
-    void opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output)
+    mln_concrete(I)
+    opening_height(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::height<I> >(input, nbh, lambda, output);
+      trace::entering("morpho::opening_height");
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      output = opening_attribute< accu::height<I> >(input, nbh, lambda);
+
+      trace::exiting("morpho::opening_height");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

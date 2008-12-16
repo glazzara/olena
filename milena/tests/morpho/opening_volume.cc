@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/morpho/opening_volume.cc
-/// \brief Test on mln::morpho::opening_volume.
+///
+/// Test on mln::morpho::opening_volume.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -48,6 +49,6 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
-  morpho::opening_volume(lena, c4(), 10000, out);
+  out = morpho::opening_volume(lena, c4(), 10000);
   io::pgm::save(out, "out.pgm");
 }

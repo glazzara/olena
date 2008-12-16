@@ -30,7 +30,8 @@
 # define MLN_MORPHO_OPENING_VOLUME_HH
 
 /// \file mln/morpho/opening_volume.hh
-/// \brief Morphological volume opening.
+///
+/// Morphological volume opening.
 
 # include <mln/morpho/opening_attribute.hh>
 # include <mln/accu/volume.hh>
@@ -43,21 +44,28 @@ namespace mln
   {
 
     /// Morphological volume opening.
-    template <typename I, typename N, typename O>
-    void opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output);
+    template <typename I, typename N>
+    mln_concrete(I)
+    opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename I, typename N>
     inline
-    void opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
-			unsigned lambda, Image<O>& output)
+    mln_concrete(I)
+    opening_volume(const Image<I>& input, const Neighborhood<N>& nbh,
+		   unsigned lambda)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::volume<I> >(input, nbh, lambda, output);
+      trace::entering("morpho::opening_volume");
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      output = opening_attribute< accu::volume<I> >(input, nbh, lambda);
+
+      trace::exiting("morpho::opening_volume");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

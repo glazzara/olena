@@ -1,3 +1,21 @@
+2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Cleanup morpho.
+
+	* milena/mln/morpho/closing.hh,
+	* milena/mln/morpho/closing_area_on_vertices.hh,
+	* milena/mln/morpho/opening.hh,
+	* milena/mln/morpho/opening_area.hh,
+	* milena/mln/morpho/opening_area_on_vertices.hh,
+	* milena/mln/morpho/opening_attribute.hh,
+	* milena/mln/morpho/opening_height.hh,
+	* milena/mln/morpho/opening_volume.hh: return an image instead of
+	taking the output by argument.
+
+	* milena/tests/morpho/opening_area.cc,
+	* milena/tests/morpho/opening_height.cc,
+	* milena/tests/morpho/opening_volume.cc: update tests.
+
 2008-12-15  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add missing concept for bijective functions.

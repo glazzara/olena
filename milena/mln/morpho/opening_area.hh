@@ -29,10 +29,9 @@
 #ifndef MLN_MORPHO_OPENING_AREA_HH
 # define MLN_MORPHO_OPENING_AREA_HH
 
-/*! \file mln/morpho/opening_area.hh
- *
- * \brief Morphological area opening.
- */
+/// \file mln/morpho/opening_area.hh
+///
+/// Morphological area opening.
 
 # include <mln/morpho/opening_attribute.hh>
 # include <mln/accu/count.hh>
@@ -45,22 +44,30 @@ namespace mln
   {
 
     /// Morphological area opening.
-    template <typename I, typename N, typename O>
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      unsigned lambda, Image<O>& output);
+    template <typename I, typename N>
+    mln_concrete(I)
+    opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		 unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename I, typename N, typename O>
+    template <typename I, typename N>
     inline
-    void opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
-		      unsigned lambda, Image<O>& output)
+    mln_concrete(I)
+    opening_area(const Image<I>& input, const Neighborhood<N>& nbh,
+		 unsigned lambda)
     {
-      mln_precondition(exact(output).domain() == exact(input).domain());
+      trace::entering("morpho::opening_area");
       typedef util::pix<I> pix_t;
-      // FIXME: Change sig of opening_attribute!
-      opening_attribute< accu::count<pix_t> >(input, nbh, lambda, output);
+
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      output= opening_attribute< accu::count<pix_t> >(input, nbh, lambda);
+
+      trace::exiting("morpho::opening_area");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

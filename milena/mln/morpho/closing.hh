@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MORPHO_CLOSING_HH
 # define MLN_MORPHO_CLOSING_HH
 
-/*! \file mln/morpho/closing.hh
- *
- * \brief Morphological closing.
- */
+/// \file mln/morpho/closing.hh
+///
+/// Morphological closing.
 
 # include <mln/morpho/includes.hh>
 
@@ -42,10 +42,10 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological closing.
-     *
-     * This operator is e_{-B} o d_B.
-     */
+    /// Morphological closing.
+    ///
+    /// This operator is e_{-B} o d_B.
+    ///
     template <typename I, typename W>
     mln_concrete(I) closing(const Image<I>& input, const Window<W>& win);
 

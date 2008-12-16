@@ -30,7 +30,8 @@
 # define MLN_MORPHO_OPENING_ATTRIBUTE_HH
 
 /// \file mln/morpho/opening_attribute.hh
-/// \brief Morphological attribute opening.
+///
+/// Morphological attribute opening.
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
@@ -46,9 +47,10 @@ namespace mln
 
     /// Morphological attribute opening.
     template <typename A,
-	      typename I, typename N, typename O>
-    void opening_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
-			   mln_result(A) lambda, Image<O>& output);
+	      typename I, typename N>
+    mln_concrete(I)
+    opening_attribute(const Image<I>& input, const Neighborhood<N>& nbh,
+		      mln_result(A) lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -100,18 +102,26 @@ namespace mln
     } // end of namespace mln::morpho::impl
 
 
-    template <typename A,
-	      typename I, typename N, typename O>
+    template <typename A, typename I, typename N>
     inline
-    void opening_attribute(const Image<I>& input,
-			   const Neighborhood<N>& nbh, mln_result(A) lambda,
-			   Image<O>& output)
+    mln_concrete(I)
+    opening_attribute(const Image<I>& input,
+		      const Neighborhood<N>& nbh, mln_result(A) lambda)
     {
+      trace::entering("morpho::opening_attribute");
+
+      mln_precondition(exact(input).has_data());
+
+      mln_concrete(I) output;
+      initialize(output, input);
+
       typedef impl::opening_attribute_t<I, A> F;
       F f(input, lambda);
       canvas::morpho::algebraic_union_find(input, nbh, f, output);
 
       mln_postcondition(output <= input);
+      trace::exiting("morpho::opening_attribute");
+      return output;
     }
 
 

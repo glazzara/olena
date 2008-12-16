@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MORPHO_OPENING_HH
 # define MLN_MORPHO_OPENING_HH
 
-/*! \file mln/morpho/opening.hh
- *
- * \brief Morphological opening.
- */
+/// \file mln/morpho/opening.hh
+///
+/// Morphological opening.
 
 # include <mln/morpho/includes.hh>
 
@@ -42,10 +42,9 @@ namespace mln
   namespace morpho
   {
 
-    /*! Morphological opening.
-     *
-     * This operator is d_{-B} o e_B. 
-     */
+    /// Morphological opening.
+    ///
+    /// This operator is d_{-B} o e_B.
     template <typename I, typename W>
     mln_concrete(I) opening(const Image<I>& input, const Window<W>& win);
 

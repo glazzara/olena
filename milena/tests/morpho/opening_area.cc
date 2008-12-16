@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/morpho/opening_area.cc
- *
- * \brief Test on mln::morpho::opening_area.
- */
+/// \file tests/morpho/opening_area.cc
+///
+/// Test on mln::morpho::opening_area.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -52,6 +51,6 @@ int main()
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
   image2d<int_u8> out(lena.domain());
 
-  morpho::opening_area(lena, c4(), 510, out);
+  out = morpho::opening_area(lena, c4(), 510);
   io::pgm::save(out, "out.pgm");
 }
