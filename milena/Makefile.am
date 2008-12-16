@@ -35,3 +35,5 @@ img/small.pbm \
 img/lena.ppm \
 img/small.pgm
 
+EXTRA_DIST += 		\
+generate_dist_headers.sh

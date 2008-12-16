@@ -1,5 +1,18 @@
 2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Generate the distributed header list thanks to a specific script.
+
+	* generate_dist_headers.sh: generate the list of distributed headers.
+
+	* Makefile.am: include generate_dist_headers.sh in the distribution
+	tarball.
+
+	* headers.mk: Add comment saying that it is generated.
+
+	* doc/tutorial/samples/fill-subdomain-shorter.cc: fix a warning.
+
+2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Quick cleanup in io.
 
 	* milena/tests/io/off/load_bin.cc,

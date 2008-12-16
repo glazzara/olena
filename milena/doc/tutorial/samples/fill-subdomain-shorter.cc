@@ -28,6 +28,6 @@ int main()
   initialize(ima2, ima);
   level::fill(ima2, literal::black);
 
-  level::fill((ima2 | pw::value(lab) == pw::cst(2u)).rw(), literal::red);
+  level::fill((ima2 | (pw::value(lab) == pw::cst(2u))).rw(), literal::red);
   // \}
 }
