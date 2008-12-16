@@ -1,3 +1,16 @@
+2008-12-16  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Move some files to trunk.
+
+	* abraham/mln/morpho/autarkical_leveling.hh: Update.
+	* abraham/mln/morpho/vmt.hh: New
+	    For test purpose.
+	* abraham/mln/morpho/vector_median.hh: Update.
+	* abraham/mln/core/concept/meta_fun.hh: Move to trunk.
+	* abraham/mln/math/cos.hh: Move to trunk.
+	* abraham/mln/math/acos.hh: Move to trunk.
+	* abraham/mln/value/shell.hh: Move to trunk.
+
 2008-12-16  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment the reference code to depict object labeling err.

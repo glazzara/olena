@@ -37,11 +37,8 @@
 
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
-# include <mln/accu/land.hh>
-# include <mln/accu/land_basic.hh>
-# include <mln/accu/min.hh>
-# include <mln/accu/min_h.hh>
 # include <mln/norm/l2.hh>
+# include <mln/level/paste.hh>
 
 namespace mln
 {
@@ -74,42 +71,56 @@ namespace mln
 	const W& win = exact(win_);
 
 	O output;
+	O ref;
 	output = clone(input);
+	ref = clone(input);
 
-	bool modification = true;
-	
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
 	mln_qiter(W) r(win, p);
-	for_all(p)
+	bool stable = false;
+	while (!stable)
 	{
-	  mln_psite(W) v;
-	  double min_dist = std::numeric_limits<double>::infinity();
-	  bool same_side = true;
-
-	  for_all(q) if (input.domain().has(q))
+	  stable = true;
+	  for_all(p)
 	  {
-	    for_all(r) if (input.domain().has(r) && q!=r)
-	      if ((marker(q) - input(p)) * (marker(r) - input(p)) < 0)
-	      {
-		same_side = false;
-		break;
-	      }
+	    mln_psite(W) v;
+	    double min_dist = std::numeric_limits<double>::infinity();
+	    bool same_side = true;
 
-	    if (!same_side)
-	      break;
-
-	    double dist = norm::l2(input(p) - marker(q));
-	    if (dist < min_dist)
+	    for_all(q) if (ref.domain().has(q))
 	    {
-	      min_dist = dist;
-	      v = q;
+	      for_all(r) if (ref.domain().has(r) && q!=r)
+		if ((marker(q) - ref(p)) * (marker(r) - ref(p)) < 0)
+		{
+		  same_side = false;
+		  break;
+		}
+
+	      if (!same_side)
+		break;
+
+	      double dist = norm::l2(ref(p) - marker(q));
+	      if (dist < min_dist)
+	      {
+		min_dist = dist;
+		v = q;
+	      }
+	    }
+	    if (same_side)
+	    {
+	      if (output(p) != marker(v))
+		stable = false;
+	      output(p) = marker(v);
+	    }
+	    else
+	    {
+	      if (output(p) != ref(p))
+		stable = false;
+	      output(p) = ref(p);
 	    }
 	  }
-	  if (same_side)
-	    output(p) = marker(v);
-	  else
-	    output(p) = input(p);
+	  level::paste(output, ref);
 	}
 
 	trace::exiting("morpho::impl::general_on_set_centered__autarkical_leveling");

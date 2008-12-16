@@ -26,8 +26,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MORPHO_VECTOR_MEDIAN_HH
-# define MLN_MORPHO_VECTOR_MEDIAN_HH
+#ifndef MLN_MORPHO_VMT_HH
+# define MLN_MORPHO_VMT_HH
 
 /// \file mln/morpho/vector_median.hh
 ///
@@ -52,7 +52,7 @@ namespace mln
     /// Morphological vector_median.
     template <typename I, typename W>
     mln_concrete(I)
-    vector_median(const Image<I>& input, const Window<W>& win);
+    vmt(const Image<I>& input, const Window<W>& win);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -64,7 +64,7 @@ namespace mln
 
       template <typename I, typename W>
       mln_concrete(I)
-      vector_median(const Image<I>& input_, const Window<W>& win_)
+      vmt(const Image<I>& input_, const Window<W>& win_)
       {
 	trace::entering("morpho::impl::general_on_set_centered__vector_median");
 
@@ -77,7 +77,6 @@ namespace mln
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
-	mln_qiter(W) r(win, p);
 	for_all(p)
 	{
 	  mln_psite(W) v;
@@ -85,8 +84,6 @@ namespace mln
 	  for_all(q) if (input.domain().has(q))
 	  {
 	    double dist = norm::l2(input(p) - input(q));
-	    for_all(r) if (input.domain().has(r) && q!=r)
-	      dist += norm::l2(input(r) - input(q));
 	    if (dist < min_dist)
 	    {
 	      min_dist = dist;
@@ -107,7 +104,7 @@ namespace mln
     template <typename I, typename W>
     inline
     mln_concrete(I)
-    vector_median(const Image<I>& input, const Window<W>& win)
+    vmt(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::vector_median");
       mln_precondition(exact(input).has_data());
@@ -126,4 +123,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MORPHO_VECTOR_MEDIAN_HH
+#endif // ! MLN_MORPHO_VMT_HH
