@@ -52,6 +52,8 @@ namespace mln
 # include <mln/math/sign.hh>
 # include <mln/math/sqr.hh>
 # include <mln/math/sqrt.hh>
+# include <mln/math/cos.hh>
+# include <mln/math/acos.hh>
 
 
 

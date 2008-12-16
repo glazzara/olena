@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -37,7 +37,7 @@ namespace mln {
     template <class T>
     struct to_enc : impl< to_enc<T> > { typedef typename T::enc value; };
 
-  };
+  }
 
   template <typename T>
   struct function< meta::to_enc<T> > : public Function_v2v<function< meta::to_enc<T> > >
@@ -52,6 +52,6 @@ namespace mln {
   };
 
 
-};
+}
 
 #endif // MLN_FUN_META_RED_HH

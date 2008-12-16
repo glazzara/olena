@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,55 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_RED_HH
-# define MLN_FUN_META_RED_HH
+#ifndef MLN_CORE_CONCEPT_META_FUN_HH
+# define MLN_CORE_CONCEPT_META_FUN_HH
 
-# include <mln/core/concept/meta_fun.hh>
-# include <mln/value/rgb.hh>
+/*! \file mln/core/concept/meta_fun.hh
+ *
+ * \brief Definition of concept of meta function.
+ */
 
-namespace mln {
+# include <mln/core/concept/object.hh>
+# include <mln/core/concept/function.hh>
 
-  namespace meta {
+namespace mln
+{
 
-    template <class T>
-    struct red : impl< red<T> > { typedef T value; };
+  template <class M>
+  struct function;
 
-  }
-
-  template <unsigned n>
-  struct function< meta::red< value::rgb<n> > > : public Function_v2w_w2v<function< meta::red < value::rgb<n> > > >
+  namespace meta
   {
-    typedef value::rgb<n> value;
 
-    typedef typename value::red_t result;
-    result read(const value& c)
+    template <class M>
+    struct impl
     {
-      return c.red();
-    }
 
-    typedef result& lresult;
-    lresult write(value& c)
-    {
-      return c.red();
-    }
-  };
+      typedef function<M> F;
+      typedef typename F::value value;
+      typedef typename F::result result;
+      typedef typename F::lresult lresult;
+      typedef typename F::category category;
 
+      result
+      operator()(const value& t) const
+      {
+	F f;
+	return f.read(t);
+      }
 
-}
+      value&
+      f_1(result v, value& t)
+      {
+	F f;
+	f.write(t) = v;
+	return t;
+      }
 
-#endif // MLN_FUN_META_RED_HH
+    };
+
+  } // end of namespace meta
+
+} // end of namespace mln
+
+#endif // MLN_CORE_CONCEPT_META_FUN_HH

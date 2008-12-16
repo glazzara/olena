@@ -1,3 +1,36 @@
+2008-12-16  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Add functors and HSL color space.
+
+	* mln/core/image/violent_cast_image.hh: New
+	    Add capacity to cast value passing by void *.
+	* mln/core/concept/meta_fun.hh: New
+	    Meta function concept.
+	* mln/math/cos.hh: New
+	    Cosinus operation.
+	* mln/math/acos.hh: New
+	    Arc cosinus operation.
+	* mln/math/all.hh:
+	    Add cosinus and arcosinus headers.
+	* mln/value/mixin.hh: New
+	    Allow operator addition to values.
+	* mln/value/hsl.hh: New
+	    New color space.
+	* mln/value/shell.hh: New
+	    Value allowing to set values when using bijective functions.
+	* mln/fun/meta/hue.hh:
+	    Functor allowing direct access to hue.
+	* mln/fun/meta/inty.hh:
+	    Functor allowing direct access to intensity.
+	* mln/fun/meta/sat.hh:
+	    Functor allowing direct access to saturation.
+	* mln/fun/meta/to_enc.hh:
+	    Functor allowing direct access to encoding.
+	* mln/fun/meta/red.hh:
+	    Fix trailing ;.
+	* mln/fun/v2v/rgb_to_hsl.hh: New
+	    Conversion form rgb to hsl and vice versa.
+
 2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix tests.

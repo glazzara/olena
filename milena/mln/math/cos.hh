@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,40 +25,41 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_META_RED_HH
-# define MLN_FUN_META_RED_HH
+#ifndef MLN_MATH_COS_HH
+# define MLN_MATH_COS_HH
 
-# include <mln/core/concept/meta_fun.hh>
-# include <mln/value/rgb.hh>
+/*! \file mln/math/cos.hh
+ *
+ *  \brief Define the cosinus (cos) routine.
+ */
 
-namespace mln {
+# include <cmath>
 
-  namespace meta {
 
-    template <class T>
-    struct red : impl< red<T> > { typedef T value; };
+namespace mln
+{
 
-  }
-
-  template <unsigned n>
-  struct function< meta::red< value::rgb<n> > > : public Function_v2w_w2v<function< meta::red < value::rgb<n> > > >
+  namespace math
   {
-    typedef value::rgb<n> value;
 
-    typedef typename value::red_t result;
-    result read(const value& c)
+    template <typename T>
+    T cos(const T& v);
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    inline
+    T cos(const T& v)
     {
-      return c.red();
+      return std::cos(v);
     }
 
-    typedef result& lresult;
-    lresult write(value& c)
-    {
-      return c.red();
-    }
-  };
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::math
+
+} // end of namespace mln
 
 
-}
-
-#endif // MLN_FUN_META_RED_HH
+#endif // ! MLN_MATH_COS_HH

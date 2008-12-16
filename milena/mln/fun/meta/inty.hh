@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,7 +38,7 @@ namespace mln {
     template <class H>
     struct inty : impl< inty<H> > { typedef H value; };
 
-  };
+  }
 
   template <class H, class S, class I>
   struct function< meta::inty< value::hsi_<H, S, I> > > :
@@ -60,6 +60,6 @@ namespace mln {
   };
 
 
-};
+}
 
 #endif // MLN_FUN_META_INTY_HH
