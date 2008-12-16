@@ -179,7 +179,9 @@ mln_fun_vv2v_min \
 mln_fun_vv2v_essential \
 mln_fun_internal_array_base \
 mln_fun_internal_x2x_linear_impl \
+mln_fun_internal_ch_function_value_impl \
 mln_fun_internal_selector \
+mln_fun_v2w_w2v_norm \
 mln_fun_p2v_ternary \
 mln_fun_p2v_iota \
 mln_fun_p2v_elifs \
@@ -199,10 +201,18 @@ mln_fun_v2v_all \
 mln_fun_v2v_dec \
 mln_fun_v2v_abs \
 mln_fun_v2v_cast \
+mln_fun_v2v_ch_function_value \
 mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_enc \
 mln_fun_v2v_convert \
 mln_fun_v2v_essential \
+mln_fun_v2w2v_cos \
+mln_fun_vv2b_implies \
+mln_fun_vv2b_le \
+mln_fun_vv2b_gt \
+mln_fun_vv2b_ge \
+mln_fun_vv2b_lt \
+mln_fun_vv2b_eq \
 mln_fun_cast \
 mln_fun_i2v_all \
 mln_fun_i2v_array \
@@ -216,6 +226,11 @@ mln_fun_x2x_all \
 mln_fun_x2x_translation \
 mln_fun_x2x_rotation \
 mln_fun_x2x_essential \
+mln_fun_meta_red \
+mln_fun_meta_hue \
+mln_fun_meta_inty \
+mln_fun_meta_sat \
+mln_fun_meta_to_enc \
 mln_fun_x2v_linear \
 mln_fun_x2v_bilinear \
 mln_fun_x2v_all \
@@ -411,6 +426,7 @@ mln_trait_value_essential \
 mln_trait_images \
 mln_trait_window_props \
 mln_trait_window_print \
+mln_trait_ch_function_value \
 mln_trait_ch_value \
 mln_trait_solve \
 mln_trait_solve_unary \
@@ -828,6 +844,7 @@ mln_core_image_lazy_image \
 mln_core_image_t_image \
 mln_core_image_hexa_piter \
 mln_core_image_value_enc_image \
+mln_core_image_fun_image \
 mln_core_image_sub_image_if \
 mln_core_image_all \
 mln_core_image_mono_rle_image \
@@ -1154,7 +1171,9 @@ mln_fun_vv2v_min_SOURCES = mln_fun_vv2v_min.cc
 mln_fun_vv2v_essential_SOURCES = mln_fun_vv2v_essential.cc
 mln_fun_internal_array_base_SOURCES = mln_fun_internal_array_base.cc
 mln_fun_internal_x2x_linear_impl_SOURCES = mln_fun_internal_x2x_linear_impl.cc
+mln_fun_internal_ch_function_value_impl_SOURCES = mln_fun_internal_ch_function_value_impl.cc
 mln_fun_internal_selector_SOURCES = mln_fun_internal_selector.cc
+mln_fun_v2w_w2v_norm_SOURCES = mln_fun_v2w_w2v_norm.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
 mln_fun_p2v_iota_SOURCES = mln_fun_p2v_iota.cc
 mln_fun_p2v_elifs_SOURCES = mln_fun_p2v_elifs.cc
@@ -1174,10 +1193,18 @@ mln_fun_v2v_all_SOURCES = mln_fun_v2v_all.cc
 mln_fun_v2v_dec_SOURCES = mln_fun_v2v_dec.cc
 mln_fun_v2v_abs_SOURCES = mln_fun_v2v_abs.cc
 mln_fun_v2v_cast_SOURCES = mln_fun_v2v_cast.cc
+mln_fun_v2v_ch_function_value_SOURCES = mln_fun_v2v_ch_function_value.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
 mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
 mln_fun_v2v_essential_SOURCES = mln_fun_v2v_essential.cc
+mln_fun_v2w2v_cos_SOURCES = mln_fun_v2w2v_cos.cc
+mln_fun_vv2b_implies_SOURCES = mln_fun_vv2b_implies.cc
+mln_fun_vv2b_le_SOURCES = mln_fun_vv2b_le.cc
+mln_fun_vv2b_gt_SOURCES = mln_fun_vv2b_gt.cc
+mln_fun_vv2b_ge_SOURCES = mln_fun_vv2b_ge.cc
+mln_fun_vv2b_lt_SOURCES = mln_fun_vv2b_lt.cc
+mln_fun_vv2b_eq_SOURCES = mln_fun_vv2b_eq.cc
 mln_fun_cast_SOURCES = mln_fun_cast.cc
 mln_fun_i2v_all_SOURCES = mln_fun_i2v_all.cc
 mln_fun_i2v_array_SOURCES = mln_fun_i2v_array.cc
@@ -1191,6 +1218,11 @@ mln_fun_x2x_all_SOURCES = mln_fun_x2x_all.cc
 mln_fun_x2x_translation_SOURCES = mln_fun_x2x_translation.cc
 mln_fun_x2x_rotation_SOURCES = mln_fun_x2x_rotation.cc
 mln_fun_x2x_essential_SOURCES = mln_fun_x2x_essential.cc
+mln_fun_meta_red_SOURCES = mln_fun_meta_red.cc
+mln_fun_meta_hue_SOURCES = mln_fun_meta_hue.cc
+mln_fun_meta_inty_SOURCES = mln_fun_meta_inty.cc
+mln_fun_meta_sat_SOURCES = mln_fun_meta_sat.cc
+mln_fun_meta_to_enc_SOURCES = mln_fun_meta_to_enc.cc
 mln_fun_x2v_linear_SOURCES = mln_fun_x2v_linear.cc
 mln_fun_x2v_bilinear_SOURCES = mln_fun_x2v_bilinear.cc
 mln_fun_x2v_all_SOURCES = mln_fun_x2v_all.cc
@@ -1386,6 +1418,7 @@ mln_trait_value_essential_SOURCES = mln_trait_value_essential.cc
 mln_trait_images_SOURCES = mln_trait_images.cc
 mln_trait_window_props_SOURCES = mln_trait_window_props.cc
 mln_trait_window_print_SOURCES = mln_trait_window_print.cc
+mln_trait_ch_function_value_SOURCES = mln_trait_ch_function_value.cc
 mln_trait_ch_value_SOURCES = mln_trait_ch_value.cc
 mln_trait_solve_SOURCES = mln_trait_solve.cc
 mln_trait_solve_unary_SOURCES = mln_trait_solve_unary.cc
@@ -1803,6 +1836,7 @@ mln_core_image_lazy_image_SOURCES = mln_core_image_lazy_image.cc
 mln_core_image_t_image_SOURCES = mln_core_image_t_image.cc
 mln_core_image_hexa_piter_SOURCES = mln_core_image_hexa_piter.cc
 mln_core_image_value_enc_image_SOURCES = mln_core_image_value_enc_image.cc
+mln_core_image_fun_image_SOURCES = mln_core_image_fun_image.cc
 mln_core_image_sub_image_if_SOURCES = mln_core_image_sub_image_if.cc
 mln_core_image_all_SOURCES = mln_core_image_all.cc
 mln_core_image_mono_rle_image_SOURCES = mln_core_image_mono_rle_image.cc

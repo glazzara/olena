@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_GRAYLEVEL_F_HH
 # define MLN_VALUE_GRAYLEVEL_F_HH
 
-/*! \file mln/value/graylevel_f.hh
- *
- * \brief Definition of the mln::value::graylevel_f class.
- */
+/// \file mln/value/graylevel_f.hh
+///
+/// Definition of the mln::value::graylevel_f class.
 
 # include <iostream>
 
@@ -51,7 +51,7 @@ namespace mln
 
   namespace literal
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     struct black_t;
     struct medium_gray_t;
     struct white_t;
@@ -59,7 +59,7 @@ namespace mln
   }
   namespace value
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     namespace internal {class gray_f; }
     struct graylevel_f;
     template <unsigned n> struct graylevel;
@@ -467,7 +467,7 @@ namespace mln
 } // end of namespace mln
 
 
-#include <mln/value/internal/gray_f.hh>
-#include <mln/value/internal/gray_.hh>
+//# include <mln/value/internal/gray_f.hh>
+///# include <mln/value/internal/gray_.hh>
 
 #endif // ! MLN_VALUE_GRAYLEVEL_F_HH

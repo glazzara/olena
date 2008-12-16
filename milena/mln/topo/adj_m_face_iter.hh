@@ -30,7 +30,7 @@
 
 /// \file mln/topo/adj_m_face_iter.hh
 
-/// \brief Definition of forward and backward iterators on all the
+/// Definition of forward and backward iterators on all the
 /// m-faces transitively adjacent to a (reference) n-face in a
 /// complex.
 
@@ -59,7 +59,7 @@ namespace mln
     | topo::adj_m_face_fwd_iter<D>.  |
     `-------------------------------*/
 
-    /** \brief Forward iterator on all the m-faces transitively
+    /** Forward iterator on all the m-faces transitively
         adjacent to a (reference) n-face in a complex.
 
         \tparam D The dimension of the complex this iterator belongs to.
@@ -94,7 +94,7 @@ namespace mln
       adj_m_face_fwd_iter(const Fref& f_ref, unsigned m);
       /// \}
 
-      /// \brief Compute the set of faces adjacent to the reference face.
+      /// Compute the set of faces adjacent to the reference face.
       ///
       /// The computation is delegated to
       /// mln::topo::internal::adj_m_face_iterator.
@@ -106,7 +106,7 @@ namespace mln
     | topo::adj_m_face_bkd_iter<D>.  |
     `-------------------------------*/
 
-    /** \brief Backward iterator on all the m-faces transitively
+    /** Backward iterator on all the m-faces transitively
         adjacent to a (reference) n-face in a complex.
 
         \tparam D The dimension of the complex this iterator belongs to.
@@ -141,7 +141,7 @@ namespace mln
       adj_m_face_bkd_iter(const Fref& f_ref, unsigned m);
       /// \}
 
-      /// \brief Compute the set of faces adjacent to the reference face.
+      /// Compute the set of faces adjacent to the reference face.
       ///
       /// The computation is delegated to
       /// mln::topo::internal::adj_m_face_iterator.
@@ -289,7 +289,7 @@ namespace mln
 
 	if (center.n() == m_)
 	  return;
-  
+
 	typedef std::vector < topo::algebraic_face<D> > faces_t;
 	typedef std::set < topo::algebraic_face<D> > faces_set_t;
 

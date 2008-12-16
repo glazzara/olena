@@ -176,7 +176,9 @@ mln/fun/vv2v/min.hh \
 mln/fun/vv2v/essential.hh \
 mln/fun/internal/array_base.hh \
 mln/fun/internal/x2x_linear_impl.hh \
+mln/fun/internal/ch_function_value_impl.hh \
 mln/fun/internal/selector.hh \
+mln/fun/v2w_w2v/norm.hh \
 mln/fun/p2v/ternary.hh \
 mln/fun/p2v/iota.hh \
 mln/fun/p2v/elifs.hh \
@@ -196,10 +198,18 @@ mln/fun/v2v/all.hh \
 mln/fun/v2v/dec.hh \
 mln/fun/v2v/abs.hh \
 mln/fun/v2v/cast.hh \
+mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/rgb_to_hsi.hh \
 mln/fun/v2v/enc.hh \
 mln/fun/v2v/convert.hh \
 mln/fun/v2v/essential.hh \
+mln/fun/v2w2v/cos.hh \
+mln/fun/vv2b/implies.hh \
+mln/fun/vv2b/le.hh \
+mln/fun/vv2b/gt.hh \
+mln/fun/vv2b/ge.hh \
+mln/fun/vv2b/lt.hh \
+mln/fun/vv2b/eq.hh \
 mln/fun/cast.hh \
 mln/fun/i2v/all.hh \
 mln/fun/i2v/array.hh \
@@ -213,6 +223,11 @@ mln/fun/x2x/all.hh \
 mln/fun/x2x/translation.hh \
 mln/fun/x2x/rotation.hh \
 mln/fun/x2x/essential.hh \
+mln/fun/meta/red.hh \
+mln/fun/meta/hue.hh \
+mln/fun/meta/inty.hh \
+mln/fun/meta/sat.hh \
+mln/fun/meta/to_enc.hh \
 mln/fun/x2v/linear.hh \
 mln/fun/x2v/bilinear.hh \
 mln/fun/x2v/all.hh \
@@ -415,6 +430,7 @@ mln/trait/value/essential.hh \
 mln/trait/images.hh \
 mln/trait/window/props.hh \
 mln/trait/window/print.hh \
+mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/solve.hh \
 mln/trait/solve_unary.hh \
@@ -854,6 +870,7 @@ mln/core/image/lazy_image.hh \
 mln/core/image/t_image.hh \
 mln/core/image/hexa_piter.hh \
 mln/core/image/value_enc_image.hh \
+mln/core/image/fun_image.hh \
 mln/core/image/sub_image_if.hh \
 mln/core/image/all.hh \
 mln/core/image/mono_rle_image.hh \

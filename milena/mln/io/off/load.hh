@@ -29,7 +29,7 @@
 # define MLN_IO_OFF_LOAD_HH
 
 /// \file mln/io/off/load.hh
-/// \brief Input loading function for OFF files.
+/// Input loading function for OFF files.
 ///
 /// \see http://shape.cs.princeton.edu/benchmark/documentation/off_format.html
 /// \see https://people.scs.fsu.edu/~burkardt/html/off_format.html
@@ -54,7 +54,7 @@ namespace mln
     namespace off
     {
 
-      /** \brief Load a (binary) OFF image into a complex image.
+      /** Load a (binary) OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
@@ -63,7 +63,7 @@ namespace mln
 	  existence of faces.  */
       void load(bin_2complex_image3df& ima, const std::string& filename);
 
-      /** \brief Load a floating-point OFF image into a complex image.
+      /** Load a floating-point OFF image into a complex image.
 
 	  \param[out] ima      A reference to the image to construct.
 	  \param[in]  filename The name of the file to load.
@@ -88,7 +88,7 @@ namespace mln
 	  /// Type of the domain.
 	  typedef mln_pset(I) domain;
 
-	  /// \brief Constructor, with static checks.
+	  /// Constructor, with static checks.
 	  off_loader();
 
 	  /// Load an image from \a filename into \a ima.
@@ -103,15 +103,15 @@ namespace mln
 	struct bin_off_loader
 	  : public off_loader< bin_2complex_image3df, bin_off_loader >
 	{
-	  /// \brief Read face data.
+	  /// Read face data.
 	  ///
 	  /// Dummy, does nothings (but required by the super class).
 	  void read_face_data(std::istream& istr);
 
-	  /// \brief Assign values to image.
+	  /// Assign values to image.
 	  void assign(values& vs, const domain& s);
 
-	  /// \brief Pre-allocate data.
+	  /// Pre-allocate data.
 	  ///
 	  /// Dummy, does nothings (but required by the super class).
 	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
@@ -121,16 +121,16 @@ namespace mln
 	struct float_off_loader
 	  : public off_loader< float_2complex_image3df, float_off_loader >
 	{
-	  /// \brief Read face data.
+	  /// Read face data.
 	  void read_face_data(std::istream& istr);
 
-	  /// \brief Pre-allocate data.
+	  /// Pre-allocate data.
 	  void reserve(unsigned nvertices, unsigned nedges, unsigned nfaces);
 
-	  /// \brief Assign values to image.
+	  /// Assign values to image.
 	  void assign(values& vs, const domain& s);
 
-	  /// \brief 2-face floating-point values.
+	  /// 2-face floating-point values.
 	  std::vector<float> face_value;
 	};
 
@@ -416,7 +416,7 @@ namespace mln
 
 	  in the following comment.  */
 
-	/** \brief Reading values.
+	/** Reading values.
 
 	    From https://people.scs.fsu.edu/~burkardt/html/off_format.html:
 

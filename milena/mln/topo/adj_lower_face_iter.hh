@@ -55,10 +55,10 @@ namespace mln
       template <typename C, typename F, typename E>
       class backward_complex_relative_iterator_base;
 
-      template <unsigned D>
-      struct algebraic_face;
-
     } // end of namespace mln::topo::internal
+
+    template <unsigned D>
+    struct algebraic_face;
 
 
     /*-----------------------------------.

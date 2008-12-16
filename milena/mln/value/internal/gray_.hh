@@ -29,11 +29,9 @@
 #ifndef MLN_VALUE_INTERNAL_GRAY__HH
 # define MLN_VALUE_INTERNAL_GRAY__HH
 
-/*! \file mln/value/internal/gray_.hh
- *
- * \brief FIXME.
- *
- */
+/// \file mln/value/internal/gray_.hh
+///
+/// FIXME.
 
 # include <iostream>
 # include <cmath>
@@ -42,14 +40,16 @@
 # include <mln/metal/math/pow.hh>
 
 # include <mln/value/concept/integer.hh>
+# include <mln/value/internal/value_like.hh>
 
+# include <mln/value/graylevel_f.hh>
 
 namespace mln
 {
 
   namespace literal
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     struct black_t;
     struct white_t;
     /// \}
@@ -57,13 +57,15 @@ namespace mln
 
   namespace value
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
+    template <unsigned n>
+    struct graylevel;
     template <unsigned N> class graylevel;
     class graylevel_f;
     namespace internal
     {
       template <unsigned n> class gray_;
-      class gray_f;
+      struct gray_f;
     }
     /// \}
   }
@@ -176,41 +178,48 @@ namespace mln
 	operator graylevel<m>() const;
 
 	/// Conversion to graylevel_f.
- 	operator graylevel_f() const;
+	operator graylevel_f() const;
 
       };
 
 
     // Operators.
 
-    template <unsigned n>
-    std::ostream& operator<<(std::ostream& ostr, const gray_<n>& g);
+      template <unsigned n>
+      std::ostream& operator<<(std::ostream& ostr, const gray_<n>& g);
 
-    template <unsigned n, unsigned m>
-    bool operator==(const gray_<n>& lhs, const gray_<m>& rhs);
-    template <unsigned n, unsigned m>
-    bool operator<(const gray_<n>& lhs, const gray_<m>& rhs);
+      template <unsigned n, unsigned m>
+      bool operator==(const gray_<n>& lhs, const gray_<m>& rhs);
+      template <unsigned n, unsigned m>
+      bool operator<(const gray_<n>& lhs, const gray_<m>& rhs);
 
-    template <unsigned n, unsigned m>
-    mln_trait_op_plus(gray_<n>, gray_<m>)
-    operator+(const gray_<n>& lhs, const gray_<m>& rhs);
+      template <unsigned n, unsigned m>
+      mln_trait_op_plus(gray_<n>, gray_<m>)
+      operator+(const gray_<n>& lhs, const gray_<m>& rhs);
 
-    template <unsigned n, unsigned m>
-    mln_trait_op_minus(gray_<n>, gray_<m>)
-    operator-(const gray_<n>& lhs, const gray_<m>& rhs);
+      template <unsigned n, unsigned m>
+      mln_trait_op_minus(gray_<n>, gray_<m>)
+      operator-(const gray_<n>& lhs, const gray_<m>& rhs);
 
-    template <unsigned n>
-    gray_<n> operator*(int s, const gray_<n>& rhs);
-    template <unsigned n>
-    gray_<n> operator*(const gray_<n>& lhs, int s);
-    template <unsigned n>
-    gray_<n> operator/(const gray_<n>& lhs, int s);
+      template <unsigned n>
+      gray_<n> operator*(int s, const gray_<n>& rhs);
+      template <unsigned n>
+      gray_<n> operator*(const gray_<n>& lhs, int s);
+      template <unsigned n>
+      gray_<n> operator/(const gray_<n>& lhs, int s);
 
-  } // end of namespace mln::value::internal
+    } // end of namespace mln::value::internal
 
-} // end of namespace mln::value
+  } // end of namespace mln::value
+
+} // end of namespace mln
 
 
+# include <mln/value/internal/gray_f.hh>
+
+
+namespace mln
+{
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -583,7 +592,7 @@ namespace mln
 
 
     // Op / Builtin.
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     namespace internal
     {
       class gray_f;
@@ -717,6 +726,5 @@ namespace trait
 # endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
-
 
 #endif // ! MLN_INTERNAL_VALUE_GRAY__HH

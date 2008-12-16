@@ -29,10 +29,10 @@
 #ifndef MLN_VALUE_INTERNAL_GRAY_F_HH
 # define MLN_VALUE_INTERNAL_GRAY_F_HH
 
-/*! \file mln/value/internal/gray_f.hh
- *
- * \brief Definition of the mln::value::gray_f class.
- */
+/// \file mln/value/internal/gray_f.hh
+///
+/// Definition of the mln::value::gray_f class.
+
 
 # include <iostream>
 
@@ -46,13 +46,14 @@
 # include <mln/value/float01_f.hh>
 # include <mln/trait/value_.hh>
 
+# include <mln/value/graylevel_f.hh>
 
 namespace mln
 {
 
   namespace literal
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     struct black_t;
     struct medium_gray_t;
     struct white_t;
@@ -60,7 +61,7 @@ namespace mln
   }
   namespace value
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     namespace internal
     {
       template <unsigned n> class gray_;
@@ -198,6 +199,24 @@ namespace mln
       /// Op<<.
       std::ostream& operator<<(std::ostream& ostr, const gray_f& g);
 
+    } // end of namespace mln::value::internal
+
+  } // end of namespace mln::value
+
+} // end of namespace mln
+
+
+# include <mln/value/internal/gray_.hh>
+
+
+namespace mln
+{
+
+  namespace value
+  {
+
+    namespace internal
+    {
 
 # ifndef MLN_INCLUDE_ONLY
 

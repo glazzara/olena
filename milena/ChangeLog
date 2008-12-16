@@ -1,5 +1,44 @@
 2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix tests.
+
+	* milena/headers.mk: update includes part of the distribution.
+
+	* milena/mln/core/image/fun_image.hh
+	* milena/mln/fun/v2w_w2v/norm.hh
+	* milena/mln/io/off/load.hh: cleanup comments.
+
+	* milena/mln/topo/adj_higher_face_iter.hh
+	* milena/mln/topo/adj_lower_face_iter.hh
+	* milena/mln/topo/adj_m_face_iter.hh
+	* milena/mln/value/graylevel.hh
+	* milena/mln/value/graylevel_f.hh
+	* milena/mln/value/internal/gray_.hh
+	* milena/mln/value/internal/gray_f.hh: fix includes/forward
+	declarations.
+
+	* milena/tests/unit_test/Makefile.am,
+	* milena/tests/unit_test/mln_core_image_fun_image.cc,
+	* milena/tests/unit_test/mln_fun_internal_ch_function_value_impl.cc,
+	* milena/tests/unit_test/mln_fun_meta_hue.cc,
+	* milena/tests/unit_test/mln_fun_meta_inty.cc,
+	* milena/tests/unit_test/mln_fun_meta_red.cc,
+	* milena/tests/unit_test/mln_fun_meta_sat.cc,
+	* milena/tests/unit_test/mln_fun_meta_to_enc.cc,
+	* milena/tests/unit_test/mln_fun_v2v_ch_function_value.cc,
+	* milena/tests/unit_test/mln_fun_v2w2v_cos.cc,
+	* milena/tests/unit_test/mln_fun_v2w_w2v_norm.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_eq.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_ge.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_gt.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_implies.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_le.cc,
+	* milena/tests/unit_test/mln_fun_vv2b_lt.cc,
+	* milena/tests/unit_test/mln_trait_ch_function_value.cc: add new
+	unit tests.
+
+2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Cleanup morpho.
 
 	* milena/mln/morpho/closing.hh,

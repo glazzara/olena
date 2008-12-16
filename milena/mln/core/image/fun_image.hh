@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,10 @@
 #ifndef MLN_CORE_IMAGE_FUN_IMAGE_HH
 # define MLN_CORE_IMAGE_FUN_IMAGE_HH
 
-/*! \file mln/core/image/fun_image.hh
- *
- * \brief Definition of an image morpher that make the user see the
- * image through a function
- *
- */
+/// \file mln/core/image/fun_image.hh
+///
+/// Definition of an image morpher that make the user see the
+/// image through a function
 
 # include <mln/core/internal/image_value_morpher.hh>
 # include <mln/trait/images.hh>
@@ -45,7 +44,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename F, typename I> class fun_image;
 
   namespace internal
@@ -93,8 +92,7 @@ namespace mln
 
 
 
-  /*! \brief Class of image morpher which takes allow to view an image throught a morpher
-   */
+  /// Class of image morpher which takes allow to view an image throught a morpher
   template <typename F, typename I>
   struct fun_image :
     public internal::image_value_morpher< I, mln_result(F), fun_image<F,I> >
