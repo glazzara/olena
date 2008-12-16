@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/io/off/load_save_bin.cc
-/// \brief Test mln::io::off::load with and mln::io::off::save with an
+///
+/// Test mln::io::off::load with and mln::io::off::save with an
 /// mln::bin_2complex_image3df.
 
 #include <algorithm>

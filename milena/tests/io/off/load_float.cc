@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/io/off/load_float.cc
-/// \brief Test mln::io::off::load with an mln::float_2complex_image3df.
+///
+/// Test mln::io::off::load with an mln::float_2complex_image3df.
 
 #include <algorithm>
 #include <iterator>
@@ -36,6 +37,7 @@
 
 #include "tests/data.hh"
 
+// FIXME: write a test!
 
 int main()
 {
@@ -43,7 +45,7 @@ int main()
 
   typedef float_2complex_image3df ima_t;
   ima_t ima;
-  io::off::load(ima, MLN_MESH_DIR "/cone-curv.off");
+  io::off::load(ima, MLN_MESH_DIR "/cone-max-curv.off");
 
   std::cout << ima.domain().cplx() << std::endl;
 

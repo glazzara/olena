@@ -29,13 +29,10 @@
 #ifndef MLN_IO_FITS_LOAD_HH
 # define MLN_IO_FITS_LOAD_HH
 
-/*!
- * \file   mln/io/fits/load.hh
- *
- * \brief Define a function which loads an image of kind fits with
- * given path.
- *
- */
+/// \file   mln/io/fits/load.hh
+///
+/// Define a function which loads an image of kind fits with
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -57,21 +54,21 @@ namespace mln
     namespace fits
     {
 
-      /*! Load a fits image in a Milena image.
-       *
-       * \param[out] ima A reference to the image2d<float> which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /// Load a fits image in a Milena image.
+      ///
+      /// \param[out] ima A reference to the image2d<float> which will receive
+      /// data.
+      /// \param[in] filename The source.
+      ///
       void load(image2d<float>& ima,
 		const std::string& filename);
 
-      /*! Load a fits image in a image2d<float>.
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d<float> which contains loaded data.
-       */
+      /// Load a fits image in a image2d<float>.
+      ///
+      /// \param[in] filename The image source.
+      ///
+      /// \return An image2d<float> which contains loaded data.
+      ///
       image2d<float> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY

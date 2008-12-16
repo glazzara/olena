@@ -29,13 +29,10 @@
 #ifndef MLN_IO_PFM_SAVE_HH
 # define MLN_IO_PFM_SAVE_HH
 
-/*!
- * \file   mln/io/pfm/save.hh
- *
- * \brief Define a function which saves an image of kind pfm into
- * given path.
- *
- */
+/// \file   mln/io/pfm/save.hh
+///
+/// Define a function which saves an image of kind pfm into
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -55,11 +52,11 @@ namespace mln
     namespace pfm
     {
 
-      /*! Save a Milena image as a pfm image.
-       *
-       * \param[in] ima The image to save.
-       * \param[in,out] filename the destination.
-       */
+      /// Save a Milena image as a pfm image.
+      ///
+      /// \param[in] ima The image to save.
+      /// \param[in,out] filename the destination.
+      ///
       template <typename I>
       void save(const Image<I>& ima, const std::string& filename);
 
@@ -68,11 +65,9 @@ namespace mln
       namespace impl
       {
 
-	// FIXME: Argument FILENAME is not used; remove?
 	template <typename I>
 	inline
-	void save_header_(const I& ima, const std::string& filename,
-			  std::ofstream& file)
+	void save_header_(const I& ima, std::ofstream& file)
 	{
 	  file <<  geom::nrows(ima) << ' ' << geom::nrows(ima) << std::endl
 	       << "float" << std::endl;
@@ -83,11 +78,11 @@ namespace mln
 	void save_(const Image<I>& ima_, const std::string& filename)
 	{
 	  const I& ima = exact(ima_);
-	  std::ofstream file(filename.c_str());
-	  save_header_(ima, filename, file);
 
-	  unsigned int
-	    ncols = geom::ncols(ima);
+	  std::ofstream file(filename.c_str());
+	  save_header_(ima, file);
+
+	  unsigned int ncols = geom::ncols(ima);
 
 	  const mln_deduce(I, site, coord)
 	    min_row = geom::min_row(ima),

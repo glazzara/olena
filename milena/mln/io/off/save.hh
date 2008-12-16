@@ -29,7 +29,7 @@
 # define MLN_IO_OFF_SAVE_HH
 
 /// \file mln/io/off/save.hh
-/// \brief Input saving function for OFF files.
+/// Input saving function for OFF files.
 ///
 /// \see http://shape.cs.princeton.edu/benchmark/documentation/off_format.html
 /// \see https://people.scs.fsu.edu/~burkardt/html/off_format.html

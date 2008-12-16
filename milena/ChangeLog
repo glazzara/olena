@@ -1,3 +1,17 @@
+2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Quick cleanup in io.
+
+	* milena/tests/io/off/load_bin.cc,
+	* milena/tests/io/off/load_float.cc,
+	* milena/mln/io/fits/load.hh,
+	* milena/mln/io/off/save.hh,
+	* milena/mln/io/pfm/load.hh: update doc.
+
+	* milena/mln/io/pfm/save.hh: avoid a warning and update doc.
+
+	* milena/tests/io/off/load_float.cc: Fix test.
+
 2008-12-16  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Add functors and HSL color space.

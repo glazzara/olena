@@ -29,13 +29,10 @@
 #ifndef MLN_IO_PFM_LOAD_HH
 # define MLN_IO_PFM_LOAD_HH
 
-/*!
- * \file   mln/io/pfm/load.hh
- *
- * \brief Define a function which loads an image of kind pfm with
- * given path.
- *
- */
+/// \file   mln/io/pfm/load.hh
+///
+/// Define a function which loads an image of kind pfm with
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -53,21 +50,21 @@ namespace mln
     namespace pfm
     {
 
-      /*! Load a pfm image in a Milena image.
-       *
-       * \param[out] ima A reference to the image2d<float> which will receive
-       * data.
-       * \param[in] filename The source.
-       */
+      /// Load a pfm image in a Milena image.
+      ///
+      /// \param[out] ima A reference to the image2d<float> which will receive
+      /// data.
+      /// \param[in] filename The source.
+      ///
       void load(image2d<float>& ima,
 		const std::string& filename);
 
-      /*! Load a pfm image in a image2d<float>.
-       *
-       * \param[in] filename The image source.
-       *
-       * \return An image2d<float> which contains loaded data.
-       */
+      /// Load a pfm image in a image2d<float>.
+      ///
+      /// \param[in] filename The image source.
+      ///
+      /// \return An image2d<float> which contains loaded data.
+      ///
       image2d<float> load(const std::string& filename);
 
 # ifndef MLN_INCLUDE_ONLY

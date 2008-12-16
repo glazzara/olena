@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/io/off/load_bin.cc
-/// \brief Test mln::io::off::load with an mln::bin_2complex_image3df.
+///
+/// Test mln::io::off::load with an mln::bin_2complex_image3df.
 
 #include <algorithm>
 #include <iterator>
