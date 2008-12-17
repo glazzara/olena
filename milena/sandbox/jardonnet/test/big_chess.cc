@@ -8,9 +8,12 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/level/paste.hh>
-#include <mln/io/pgm/save.hh>
+
+#include <mln/io/ppm/load.hh>
+#include <mln/io/ppm/save.hh>
 
 #include <mln/fun/p2b/big_chess.hh>
 
@@ -19,9 +22,9 @@ using namespace mln::value;
 
 bool usage(int argc, char ** argv)
 {
-  if (argc != 3)
+  if (argc != 4)
   {
-    std::cout << argv[0] << " ima1.pgm ima2.pgm" << std::endl;
+    std::cout << argv[0] << " ima1.pgm ima2.pgm div" << std::endl;
     return false;
   }
   return true;
@@ -52,14 +55,16 @@ int main(int argc, char ** argv)
   if (not usage(argc,argv))
     return 1;
 
-  typedef image2d<int_u8> I;
+  typedef image2d<rgb8> I;
 
   I ima1;
   I ima2;
-  io::pgm::load(ima1, argv[1]);
-  io::pgm::load(ima2, argv[2]);
+  io::ppm::load(ima1, argv[1]);
+  io::ppm::load(ima2, argv[2]);
 
-  fun::p2b::big_chess<box2d> fun(ima1.domain(), 4);
+  int div = atoi(argv[3]);
+
+  fun::p2b::big_chess<box2d> fun(ima1.domain(), div);
 
   image_if< I, fun::p2b::big_chess<box2d> > visio = ima1 | fun;
 
@@ -67,5 +72,5 @@ int main(int argc, char ** argv)
 
   level::paste(visio, ima2);
 
-  io::pgm::save(ima2, "out.ppm");
+  io::ppm::save(ima2, "out.ppm");
 }

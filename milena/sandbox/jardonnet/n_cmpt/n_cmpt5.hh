@@ -39,6 +39,10 @@
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/compute_attribute_image.hh>
 
+# include <mln/pw/all.hh>
+
+# include <mln/core/image/image_if.hh>
+
 namespace mln
 {
 
@@ -133,6 +137,9 @@ namespace mln
         }
       }
 
+      mln_ch_value(I,value::int_u<16>) iota(ima.domain());
+      debug::iota(iota);
+
       // UNION FIND ON VOLUME
       mln_fwd_piter(S) p(sp);
       mln_niter(N) n(nbh, p);
@@ -175,6 +182,7 @@ namespace mln
                   }
 
               mln_invariant(fused(r) || volume(r) == volume(p));
+              //Note at the end of level every fake component have been processed.
 
               // Union made if
               if (cmpts >= lambda || // union is still allowed or
@@ -194,6 +202,7 @@ namespace mln
                 if (fused(r))
                   fused(p) = true;
 
+                iota(p) = iota(r);
 
                 // If I try to fuse with something never fused I am on a plateau.
                 // not fused(r) => ( volume(r) == volume(p) )
@@ -208,15 +217,14 @@ namespace mln
 
                 std::cerr << "volume " << volume(p) << " - " << cmpts << std::endl;
                 //debug::println(fused);
+
+                debug::println(iota | pw::value(fused) == pw::cst(true));
               }
             }
           }
         }
         deja_vu(p) = true;
       }
-
-      mln_ch_value(I,value::int_u<16>) iota(ima.domain());
-      debug::iota(iota);
 
       std::cout << std::endl;
       std::cout << "cmpts : " << cmpts << std::endl;

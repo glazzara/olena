@@ -1,3 +1,17 @@
+2008-12-17  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Spot differences between step2 and n_cmpt5.
+
+	* jardonnet/n_cmpt/prob.pgm: Test case.
+	* jardonnet/n_cmpt/fused_filter.cc: Version using boolean image.
+	* jardonnet/n_cmpt/ref_filter.cc: Version using set.
+
+	* jardonnet/n_cmpt/n_cmpt5.hh: Minor change.
+	* jardonnet/n_cmpt/fused: Log.
+	* jardonnet/n_cmpt/ref: Log.
+	* jardonnet/n_cmpt/Makefile: Add related rules.
+	* jardonnet/n_cmpt/diff_ref_fused_on_small: diff.
+
 2008-12-16  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Move some files to trunk.

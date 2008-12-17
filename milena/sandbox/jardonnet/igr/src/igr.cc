@@ -24,11 +24,6 @@
 
 #include <mln/value/hsi.hh>
 
-#include <mln/core/image/thru.hh>
-
-//FIXME: Alexandre' sandbox
-#include <mln/fun/meta/inty.hh>
-
 using namespace mln;
 using namespace value;
 
@@ -67,7 +62,7 @@ int main(int argc, char ** argv)
   mln_piter_(image2d<rgb8>) p(g_ima.domain());
   for_all(p)
   {
-    g_ima(p) = hsi(p).inty() * 255;
+    g_ima(p) = hsi(p).inty();
   }
 
   io::pgm::save(g_ima, "g_ima.ppm");
@@ -88,7 +83,6 @@ int main(int argc, char ** argv)
   ///////////////////
 
   image2d<int_u8> o_ima = morpho::closing_volume(mg_ima, c4(), lambda);
-
   io::pgm::save(o_ima, "o_ima.ppm");
 
 

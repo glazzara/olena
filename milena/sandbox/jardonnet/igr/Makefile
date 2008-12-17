@@ -6,7 +6,7 @@
 
 
 CXXC?=g++
-LFLAGS=-I../../abraham/ -I../../../
+LFLAGS= -I../../../
 CFLAGS=-W -Wall -Wextra -O1 -DNDEBUG
 
 PROJ=igr-reco
