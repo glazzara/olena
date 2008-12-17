@@ -1,3 +1,14 @@
+2008-12-17  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add an opt::at function.
+
+	* mln/core/image/cast_image.hh: Fix properties.
+	* mln/opt: New directory.
+	* mln/opt/at.hh: New function opt::at.
+	* mln/level/paste.spe.hh: Fix a bug.
+	* tests/opt,
+	* tests/opt/at.cc: New tests.
+
 2008-12-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Generate the distributed header list thanks to a specific script.

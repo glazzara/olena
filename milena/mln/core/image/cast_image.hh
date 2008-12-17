@@ -99,6 +99,7 @@ namespace mln
 		     trait::image::quant::high,
 		     trait::image::quant::low) quant;
 
+      typedef trait::image::category::value_morpher category;
       typedef trait::image::value_io::read_only value_io;
       typedef trait::image::pw_io::read pw_io;
       typedef trait::image::value_access::indirect value_access;

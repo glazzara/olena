@@ -143,7 +143,7 @@ namespace mln
 
         const I& input  = exact(input_);
 
-        level::fill_with_value(output_, input.val());
+        level::fill_with_value((output_ | input.domain()).rw(), input.val());
 
         trace::exiting("level::impl::paste_singleton");
       }
