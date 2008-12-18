@@ -106,8 +106,7 @@ namespace mln
 	/// Always prefer using from_to instead of this constructor.
 	relabel(const std::vector<L>& from);
 
-	/// \}
-
+	typedef metal::true_ is_mutable;
       };
 
     } // end of namespace mln::fun::l2l

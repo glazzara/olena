@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +29,13 @@
 #ifndef MLN_TRAIT_IMAGES_HH
 # define MLN_TRAIT_IMAGES_HH
 
-/*! \file mln/trait/images.hh
- *
- * \brief Some base trait types for images.
- *
- * \todo Split this file into many.
- *
- * \todo the 'nature' prop is not set yet in image types.
- */
+/// \file mln/trait/images.hh
+///
+/// Some base trait types for images.
+///
+/// \todo Split this file into many.
+///
+/// \todo the 'nature' prop is not set yet in image types.
 
 # include <iostream>
 # include <string>
@@ -113,7 +113,7 @@ namespace mln
   template <typename T> struct image1d;
   template <typename T> struct image2d;
   template <typename T> struct image3d;
-  namespace pw { template <typename F, typename S> struct image; }
+  namespace pw { template <typename F, typename S> class image; }
   template <typename P, typename T> class rle_image;
   template <typename P, typename T> class sparse_image;
 

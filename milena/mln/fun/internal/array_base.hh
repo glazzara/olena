@@ -53,6 +53,7 @@ namespace mln
       public:
 
 	typedef T result;
+	typedef metal::true_ is_mutable;
 
 	void resize(unsigned n);
 	void resize(unsigned n, const T& val);

@@ -1,3 +1,17 @@
+2008-12-18  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Handle data mutability in pw::image.
+
+	* mln/trait/images.hh: Upgrade doc style.
+	* mln/core/site_set/p_array.hh
+	(operator int, operator unsigned): New in p_indexed_psite.
+	* mln/core/concept/function.hh (is_mutable): New.
+	* mln/fun/l2l/relabel.hh: Likewise.
+	* mln/fun/i2v/array.hh: Likewise.
+	* mln/fun/internal/array_base.hh: Likewise.
+	* mln/pw/image.hh (value_io, pw_io): Allow mutability.
+	* tests/pw/image.cc: Add a test on a mutable image.
+
 2008-12-17  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add an opt::at function.

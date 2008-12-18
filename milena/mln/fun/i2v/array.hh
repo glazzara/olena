@@ -31,6 +31,9 @@
 /// \file mln/fun/i2v/array.hh
 ///
 /// Function mapping an Id i to a value v.
+///
+/// \todo Change design so that there is no multiple inheritance:
+///       array<T> : internal::array_base<T, E==array<T> > : Function_i2v<E>
 
 # include <vector>
 # include <algorithm>
@@ -107,6 +110,7 @@ namespace mln
 
 	/// \}
 
+	typedef metal::true_ is_mutable;
       };
 
     } // end of namespace mln::fun::i2v

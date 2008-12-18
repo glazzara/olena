@@ -31,7 +31,9 @@
 /// Tests on mln::pw::image.
 
 #include <mln/fun/p2b/chess.hh>
+#include <mln/fun/i2v/array.hh>
 #include <mln/core/alias/box2d.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/pw/image.hh>
 #include <mln/core/var.hh>
 
@@ -41,8 +43,10 @@ int main()
   using namespace mln;
 
   mln_VAR(ima, fun::p2b::chess() | make::box2d(8, 8));
-  mln_piter_(ima_t) p(ima.domain());
+  // trait::image::print(ima);
+
   unsigned i = 0;
+  mln_piter_(ima_t) p(ima.domain());
   for_all(p)
   {
     if (p.row() % 2)
@@ -52,4 +56,17 @@ int main()
     ++i;
   }
   mln_assertion(i == 64);
+
+  // A mutable pw::image.
+  {
+    p_array<int> arr; // Sites are ints (why not?)
+    arr.insert(51); // Site 51.
+    mln_VAR(ima, fun::i2v::array<int>(1) | arr); // An array psite converts to int so that works :-)
+    // trait::image::print(ima);
+
+    p_array<int>::psite p(ima.domain(), 0); // index 0 means the 1st element of arr
+    ima(p) = 7;
+    mln_assertion(ima(p) == 7);
+  }
+
 }

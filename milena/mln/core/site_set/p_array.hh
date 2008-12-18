@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -206,6 +207,8 @@ namespace mln
     bool is_valid() const;
 
     operator util::index() const;
+    operator int() const;      // To interoperate, e.g., with fun::i2v expecting an int. 
+    operator unsigned() const; // To avoid ambiguity when an unsigned is expected.
 
     void update_() const;
 
@@ -583,6 +586,21 @@ namespace mln
   inline
   p_indexed_psite<S>::operator util::index() const
   {
+    return i_;
+  }
+
+  template <typename S>
+  inline
+  p_indexed_psite<S>::operator int() const
+  {
+    return i_;
+  }
+
+  template <typename S>
+  inline
+  p_indexed_psite<S>::operator unsigned() const
+  {
+    mln_precondition(i_ >= 0);
     return i_;
   }
 
