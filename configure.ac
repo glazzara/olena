@@ -217,6 +217,7 @@ AC_CONFIG_FILES([
     milena/tests/morpho/elementary/Makefile
     milena/tests/morpho/tree/Makefile
     milena/tests/norm/Makefile
+    milena/tests/opt/Makefile
     milena/tests/pw/Makefile
     milena/tests/set/Makefile
     milena/tests/subsampling/Makefile
