@@ -442,7 +442,7 @@ namespace mln {
 	    }
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = this->trans_im.ncols() - 1; col > this->trans_im.ncols() / 2; --col)
-	    this->trans_im.at(row, col) = opt::at(this->trans_im, this->trans_im.nrows() - row - 1,
+	    at(this->trans_im, row, col) = opt::at(this->trans_im, this->trans_im.nrows() - row - 1,
 							    this->trans_im.ncols() - col - 1);
 	return this->trans_im;
       }

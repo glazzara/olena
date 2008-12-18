@@ -92,7 +92,7 @@
       }
       else
       {
-        v=1+(j*j-s[q]*s[q]+g.at(j,i)*g.at(j,i)-g.at(s[q],i)*opt::at(g, s[q],i))/(2*(j-s[q]));
+        v=1+(j*j-s[q]*s[q]+opt::at(g,j,i)*opt::at(g,j,i)-opt::at(g,s[q],i)*opt::at(g, s[q],i))/(2*(j-s[q]));
         if(v<h)
         {
           q++;
@@ -104,7 +104,7 @@
     
     for(int j= h-1; j>=0; j--)
     {
-      dt.at(j,i)= opt::at(g, s[q],i)*opt::at(g, s[q],i)+(j-s[q])*(j-s[q]);
+      opt::at(dt,j,i)= opt::at(g, s[q],i)*opt::at(g, s[q],i)+(j-s[q])*(j-s[q]);
       if(j==t[q])
         q--;
     }
@@ -184,7 +184,7 @@
   {
     for( int j=0; j<L; j++)
     {
-      dt.at(i,j) = opt::at(DTg, i,j);
+      opt::at(dt,i,j) = opt::at(DTg, i,j);
     }
   }
   return dt;

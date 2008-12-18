@@ -242,7 +242,7 @@ image2cells(const mln::image2d<T>& input)
 			 2 * input.ncols() - 1);
   for (int row = 0; row < input.nrows(); ++row)
     for (int col = 0; col < input.ncols(); ++col)
-      output.at(2 * row, 2 * col) = mln::opt::at(input, row, col);
+      mln::opt::at(output, 2 * row, 2 * col) = mln::opt::at(input, row, col);
   return output;
 }
 
@@ -255,7 +255,8 @@ cells2image(const mln::image2d<T>& input)
 			 (input.ncols() + 1) / 2);
   for (int row = 0; row < input.nrows(); row += 2)
     for (int col = 0; col < input.ncols(); col += 2)
-      output.at(row / 2, col / 2) = mln::opt::at(input, row, col);
+      mln::opt::at(output, row / 2, col / 2) =
+        mln::opt::at(input, row, col);
   return output;
 }
 

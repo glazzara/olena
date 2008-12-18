@@ -10,6 +10,7 @@
 # include <mln/value/rgb8.hh>
 
 # include <mln/level/fill.hh>
+# include <mln/opt/at.hh>
 
 # include <mln/core/image/image2d.hh>
 
@@ -54,7 +55,7 @@ create_graph(const I& ima, I& graph, mln_value(I) val)
 
   mln_piter(I) p(ima.domain());
   for_all(p)
-    graph.at(p.row() * 2, p.col() * 2) = ima(p);
+    mln::opt::at(graph, p.row() * 2, p.col() * 2) = ima(p);
 }
 
 

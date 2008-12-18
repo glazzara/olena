@@ -105,7 +105,8 @@ namespace mln
       image2d<T> output(nrows_, ncols_);
       for (int row = 0; row < nrows_; ++row)
 	for (int col = 0; col < ncols_; ++col)
-	  output.at(row, col) = mln::opt::at(input, row / coef, col / coef);
+          mln::opt::at(output, row, col) =
+            mln::opt::at(input, row / coef, col / coef);
       return output;
     }
 

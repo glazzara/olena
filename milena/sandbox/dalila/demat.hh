@@ -45,6 +45,8 @@
 # include <mln/core/site_set/p_vaccess.hh>
 # include <mln/core/site_set/p_set.hh>
 
+# include <mln/opt/at.hh>
+
 # include <mln/accu/bbox.hh>
 # include <mln/accu/count.hh>
 
@@ -199,16 +201,16 @@ namespace scribo
 
       for (unsigned i = 1; i < tboxes.first.nelements(); ++i)
       {
-	++vend.at(tboxes.first[i].pmin().row());
-	++vend.at(tboxes.first[i].pmax().row());
-	++vcol.at(tboxes.first[i].center().col());
+        opt::at(++vend, tboxes.first[i].pmin().row());
+        opt::at(++vend, tboxes.first[i].pmax().row());
+	opt::at(++vcol, tboxes.first[i].center().col());
       }
 
       for (unsigned i = 1; i < tboxes.second.nelements(); ++i)
       {
-	++hend.at(tboxes.second[i].pmin().col());
-	++hend.at(tboxes.second[i].pmax().col());
-	++hrow.at(tboxes.second[i].center().row());
+        opt::at(++hend, tboxes.second[i].pmin().col());
+	opt::at(++hend, tboxes.second[i].pmax().col());
+	opt::at(++hrow, tboxes.second[i].center().row());
       }
 
 #ifndef NOUT
@@ -217,17 +219,17 @@ namespace scribo
 
       for (unsigned i = 1; i < in.ncols(); ++i)
       {
-	if (hend.at(i) > 0)
+	if (opt::at(hend, i) > 0)
 	  draw_col(tmp, i, literal::orange);
-	if (vcol.at(i) > 0)
+	if (opt::at(vcol, i) > 0)
 	  draw_col(tmp, i, literal::orange);
       }
 
       for (unsigned i = 1; i < in.nrows(); ++i)
       {
-	if (hrow.at(i) > 0)
+	if (opt::at(hrow, i) > 0)
 	  draw_row(tmp, i, literal::magenta);
-	if (vend.at(i) > 0)
+	if (opt::at(vend, i) > 0)
 	  draw_row(tmp, i, literal::magenta);
       }
 

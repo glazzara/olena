@@ -1,5 +1,28 @@
 2008-12-18  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Replace some remaining .at by opt::at.
+
+	* sandbox/aroumougame/skeleton/sedt.hh,
+	* sandbox/dalila/demat.hh,
+	* sandbox/abraham/mln/transform/fft.hh,
+	* sandbox/ballas/color/min_tree_volume_filter.cc,
+	* sandbox/ballas/color/reference.cc,
+	* sandbox/ballas/color/min_tree_area_filter.cc,
+	* sandbox/ballas/color/min_tree_height_filter.cc,
+	* sandbox/ballas/color/min_tree_color.cc,
+	* sandbox/ballas/color/reference2.cc,
+	* sandbox/ballas/color/src/graph.hh,
+	* sandbox/ballas/color/min_tree_color_v2.cc,
+	* sandbox/geraud/wst_edge.cc,
+	* sandbox/geraud/fllt.svg.6.cc,
+	* sandbox/geraud/fllt/fllt.svg.2.cc,
+	* sandbox/geraud/fllt/fllt.svg.3.cc,
+	* sandbox/geraud/fllt/fllt.svg.4.cc,
+	* sandbox/geraud/fllt/fllt.svg.5.cc,
+	* sandbox/geraud/fllt/fllt.svg.6.cc: Update.
+
+2008-12-18  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Replace calls of the method .at by the function opt::at.
 
 	* mln/debug/println.spe.hh,
