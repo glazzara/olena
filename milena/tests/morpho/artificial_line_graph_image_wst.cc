@@ -76,6 +76,8 @@
 #include <mln/math/max.hh>
 #include <mln/math/abs.hh>
 
+#include <mln/opt/at.hh>
+
 #include "tests/data.hh"
 
 
@@ -100,7 +102,7 @@ int main()
   image2d<input_val_t> input (nrows, ncols);
   for (unsigned  r = 0; r < nrows; ++r)
     for (unsigned c = 0; c < ncols; ++c)
-      input.at(r,c) =
+      opt::at(input, r,c) =
 	((r / square_length) % 2 == (c / square_length) % 2)
 	? mln_min(input_val_t)
 	: mln_max(input_val_t);

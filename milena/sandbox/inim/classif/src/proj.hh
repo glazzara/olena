@@ -35,7 +35,8 @@
 #include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
 #include <mln/literal/colors.hh>
-#include <mln/make/vec.hh>
+#include <mln/make/vec.hh
+#include <mln/opt/at.hh>
 
 namespace mln
 {
@@ -48,7 +49,7 @@ namespace mln
     mln_piter(image3d<T>) p(input.domain());
     for_all(p) // 3d
       if (input(p) != literal::zero)
-        acc.at(p.sli(), p.row()).take(input(p));
+        opt::at(acc, p.sli(), p.row()).take(input(p));
 
     image2d<mln_result(A)> output(acc.domain());
     level::paste(acc, output);
@@ -91,7 +92,7 @@ namespace mln
     mln_piter(image3d<T>) p(input.domain());
     for_all(p) // 3d
       if (histo(p) != literal::zero)
-        acc.at(p.sli(), p.row()).take(input(p));
+        opt::at(acc, p.sli(), p.row()).take(input(p));
 
     image2d<mln_result(A)> output(acc.domain());
     level::paste(acc, output);

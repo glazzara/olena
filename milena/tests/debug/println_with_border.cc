@@ -35,6 +35,7 @@
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>
+#include <mln/opt/at.hh>
 
 
 using namespace mln;
@@ -46,17 +47,17 @@ int main()
 
   {
     image2d<bool> msk(3, 3);
-    msk.at(0, 0) = true;
-    msk.at(1, 0) = true;
-    msk.at(2, 0) = true;
+    opt::at(msk, 0, 0) = true;
+    opt::at(msk, 1, 0) = true;
+    opt::at(msk, 2, 0) = true;
 
-    msk.at(0, 1) = true;
-    msk.at(1, 1) = false;
-    msk.at(2, 1) = true;
+    opt::at(msk, 0, 1) = true;
+    opt::at(msk, 1, 1) = false;
+    opt::at(msk, 2, 1) = true;
 
-    msk.at(0, 2) = true;
-    msk.at(1, 2) = true;
-    msk.at(2, 2) = true;
+    opt::at(msk, 0, 2) = true;
+    opt::at(msk, 1, 2) = true;
+    opt::at(msk, 2, 2) = true;
 
     debug::println(msk);
     debug::println_with_border(msk);
@@ -64,9 +65,9 @@ int main()
 
   {
     image1d<bool> msk(3);
-    msk.at(0) = false;
-    msk.at(1) = true;
-    msk.at(2) = false;
+    opt::at(msk, 0) = false;
+    opt::at(msk, 1) = true;
+    opt::at(msk, 2) = false;
 
     debug::println(msk);
     debug::println_with_border(msk);

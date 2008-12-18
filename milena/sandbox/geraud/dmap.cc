@@ -8,6 +8,7 @@
 #include <mln/accu/max.hh>
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/opt/at.hh>
 
 
 namespace mln
@@ -107,7 +108,7 @@ int main()
   const unsigned n = 9;
   image2d<bool> ima(n, n);
   level::fill(ima, false);
-  ima.at(n / 2, n / 2) = true;
+  opt::at(ima, n / 2, n / 2) = true;
 
 //   int ws[] = { 3, 2, 3,
 // 	       2, 0, 2,

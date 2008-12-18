@@ -30,6 +30,7 @@
 
 #  include <mln/core/image/image2d.hh>
 #  include <mln/estim/min_max.hh>
+#  include <mln/opt/at.hh>
 
 #  include <complex>
 
@@ -116,8 +117,8 @@ namespace mln {
 	if (ordered)
 	  for (unsigned row = 0; row < new_im.nrows(); ++row)
 	    for (unsigned col = 0; col < new_im.ncols(); ++col)
-	      new_im.at(row, col) =
-		std::norm(trans_im.at((row + trans_im.nrows() / 2) % trans_im.nrows(),
+	      opt::at(new_im, row, col) =
+		std::norm(opt::at(trans_im, (row + trans_im.nrows() / 2) % trans_im.nrows(),
 				      (col + trans_im.ncols() / 2) % trans_im.ncols()));
 	else
 	  {
@@ -174,14 +175,14 @@ namespace mln {
 	  for (unsigned row = 0; row < new_im.nrows(); ++row)
 	    for (unsigned col = 0; col < new_im.ncols(); ++col)
 	      {
-		if (std::norm(trans_im.at((row + trans_im.nrows() / 2) % trans_im.nrows(),
+		if (std::norm(opt::at(trans_im, (row + trans_im.nrows() / 2) % trans_im.nrows(),
 					  (col + trans_im.ncols() / 2) %
 					  trans_im.ncols())) >= max * clip)
-		  new_im.at(row, col) = mln_max(R);
+		  opt::at(new_im, row, col) = mln_max(R);
 		else
-		  new_im.at(row, col) =
+		  opt::at(new_im, row, col) =
 		    (double) mln_max(R) *
-		    std::norm(trans_im.at((row + trans_im.nrows() / 2) % trans_im.nrows(),
+		    std::norm(opt::at(trans_im, (row + trans_im.nrows() / 2) % trans_im.nrows(),
 					  (col + trans_im.ncols() / 2) %
 					  trans_im.ncols())) / (max * clip);
       }
@@ -282,8 +283,8 @@ namespace mln {
 	if (ordered)
 	  for (unsigned row = 0; row < new_im.nrows(); ++row)
 	    for (unsigned col = 0; col < new_im.ncols(); ++col)
-	      new_im.at(row, col) =
-		log(a + b * std::norm(trans_im.at((row + trans_im.nrows() / 2) % trans_im.nrows(),
+	      opt::at(new_im, row, col) =
+		log(a + b * std::norm(opt::at(trans_im, (row + trans_im.nrows() / 2) % trans_im.nrows(),
 						  (col + trans_im.ncols() / 2) % trans_im.ncols()))) /
 		log (a + b * max) * mln_max(R);
 	else
@@ -413,7 +414,7 @@ namespace mln {
 
 	for (unsigned row = 0; row < original_im.nrows(); ++row)
 	  for (unsigned col = 0; col < original_im.ncols(); ++col)
-	    this->in[row * original_im.ncols() + col] = original_im.at(row, col);
+	    this->in[row * original_im.ncols() + col] = opt::at(original_im, row, col);
 
 	this->p = fftw_plan_dft_r2c_2d (original_im.nrows(), original_im.ncols(),
 					this->in, reinterpret_cast<fftw_complex*>(this->out), FFTW_ESTIMATE);
@@ -436,12 +437,12 @@ namespace mln {
 	  for (unsigned col = 0; col <= this->trans_im.ncols() / 2; ++col)
 	    {
 	      this->out[i] = std::complex<T> (this->out[i].real() / denom, this->out[i].imag() / denom);
-	      this->trans_im.at(row, col) = this->out[i];
+	      opt::at(this->trans_im, row, col) = this->out[i];
 	      ++i;
 	    }
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = this->trans_im.ncols() - 1; col > this->trans_im.ncols() / 2; --col)
-	    this->trans_im.at(row, col) = this->trans_im.at(this->trans_im.nrows() - row - 1,
+	    this->trans_im.at(row, col) = opt::at(this->trans_im, this->trans_im.nrows() - row - 1,
 							    this->trans_im.ncols() - col - 1);
 	return this->trans_im;
       }
@@ -459,7 +460,7 @@ namespace mln {
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = 0; col <= this->trans_im.ncols() / 2; ++col)
 	    this->out[row * (this->trans_im.ncols() / 2 + 1) + col] =
-	      this->trans_im.at(row, col).real();
+	      opt::at(this->trans_im, row, col).real();
 
 	fftw_execute(this->p_inv);
 
@@ -468,7 +469,7 @@ namespace mln {
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = 0; col < this->trans_im.ncols(); ++col)
 	    {
-	      new_im.at(row, col) = (this->in[i] >= mln_min(R) ?
+	      opt::at(new_im, row, col) = (this->in[i] >= mln_min(R) ?
 				     (this->in[i] <= mln_max(R) ?
 				      (R)this->in [i] :
 				      mln_min(R)) :

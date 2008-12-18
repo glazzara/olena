@@ -35,6 +35,7 @@
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/alias/point3d.hh>
 # include <mln/geom/size3d.hh>
+# include <mln/opt/at.hh>
 
 namespace mln
 {
@@ -133,14 +134,14 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      eor_(& image.at(geom::min_sli(image),
+      eor_(& opt::at(image, geom::min_sli(image),
 		      geom::min_row(image),
 		      geom::max_col(image)) + 1),
       next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
       next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
       sli_offset_((image.bbox().ncols() + border_x2_) *
 		  (image.bbox().nrows() + border_x2_)),
-      eos_(& image.at(geom::min_sli(image),
+      eos_(& opt::at(image, geom::min_sli(image),
 		      geom::max_row(image),
 		      geom::max_col(image)) + 1)
   {
@@ -177,14 +178,14 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      bor_(& image.at(geom::max_sli(image),
+      bor_(& opt::at(image, geom::max_sli(image),
 		      geom::max_row(image),
 		      geom::min_col(image)) - 1),
       next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
       next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
       sli_offset_((image.bbox().ncols() + border_x2_) *
 		  (image.bbox().nrows() + border_x2_)),
-      bos_(& image.at(geom::max_sli(image),
+      bos_(& opt::at(image, geom::max_sli(image),
 		      geom::min_row(image),
 		      geom::min_col(image)) - 1)
   {

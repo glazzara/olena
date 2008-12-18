@@ -30,6 +30,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
+#include <mln/opt/at.hh>
 #include <mln/debug/println.hh>
 
 #define CHECK(Condition)			\
@@ -77,11 +78,11 @@ int main ()
 
   for (int row = 40; row < im2.nrows() - 40; ++row)
     for (int col = 0; col < im2.ncols(); ++col)
-      im2.at(row, col) = 0;
+      opt::at(im2, row, col) = 0;
 
   for (int row = 0; row < im2.nrows(); ++row)
     for (int col = 40; col < im2.ncols() - 40; ++col)
-      im2.at(row, col) = 0;
+      opt::at(im2, row, col) = 0;
 
   out = fourier.transform_inv<int_u8>();
 

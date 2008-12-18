@@ -37,6 +37,7 @@
 # include <mln/core/dpoint.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/level/fill.hh>
+# include <mln/opt/at.hh>
 
 
 namespace mln
@@ -64,7 +65,7 @@ namespace mln
     mln_piter(I) p(ima.domain());
     for_all(p)
       if (ima.domain().has(p + dp))
-	mco.at(ima(p), ima(p + dp))++;
+	opt::at(mco, ima(p), ima(p + dp))++;
 
     return mco;
   }

@@ -61,6 +61,8 @@
 
 #include <mln/transform/fft.hh>
 
+#include <mln/opt/at.hh>
+
 #include "co_occurence.hh"
 
 #include <math.h>
@@ -174,14 +176,14 @@ int main (int argc, const char * argv [])
   // If there is a plain background, there will be a massive peak in the diagonal of the matrix
   unsigned max = 0;
   for (unsigned i = 0; i < mco.nrows(); i++)
-    if (mco.at(i, i) > max)
-      max = mco.at(i, i);
+    if (opt::at(mco, i, i) > max)
+      max = opt::at(mco, i, i);
 
   for (unsigned i = 0; i < mco.nrows() - 1; i++) {
-    if (mco.at(i + 1, i) > max)
-      max = mco.at(i + 1, i);
-    if (mco.at(i, i + 1) > max)
-      max = mco.at(i, i + 1);
+    if (opt::at(mco, i + 1, i) > max)
+      max = opt::at(mco, i + 1, i);
+    if (opt::at(mco, i, i + 1) > max)
+      max = opt::at(mco, i, i + 1);
   }
 
   max = max * 100 / input.nelements();

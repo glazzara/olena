@@ -33,6 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
+#include <mln/opt/at.hh>
 
 
 using namespace mln;
@@ -41,6 +42,6 @@ using namespace mln;
 int main()
 {
   image2d<bool> msk(3, 3);
-  msk.at(1, 1) = true;
+  opt::at(msk, 1, 1) = true;
   debug::println(msk);
 }

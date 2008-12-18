@@ -9,6 +9,8 @@
 # include <mln/core/alias/w_window2d_float.hh>
 # include <mln/core/image_if_interval.hh>
 
+# include <mln/opt/at.hh>
+
 # include "win_chamfer.hh"
 # include "chamfer.hh"
 
@@ -21,7 +23,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 0> ();
     image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
     debug::println(out | value::interval(0, 8));
@@ -29,7 +31,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = win_chamfer::mk_chamfer_3x3_int<2, 3> ();
     image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
     debug::println(out | value::interval(0, 8));
@@ -37,7 +39,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = win_chamfer::mk_chamfer_5x5_int<4, 6, 9> ();
     image2d_b<unsigned> out = geom::chamfer(ima, w_win, max);
     image2d_b<unsigned>::fwd_piter p(out.domain());

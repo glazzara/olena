@@ -25,6 +25,7 @@
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/gradient.hh>
 #include <mln/level/fill.hh>
+#include <mln/opt/at.hh>
 
 // DEBUG
 #include <mln/debug/all.hh>
@@ -81,7 +82,7 @@ main (int argc, char** argv)
   level::fill(hist, 0);
   image2d<value::int_u8>::fwd_piter p (in.domain ());
   for_all (p)
-    hist.at(in(p)) += (unsigned) strength_of<2> (grad (p));
+    opt::at(hist, in(p)) += (unsigned) strength_of<2> (grad (p));
 
   // Histo
   print_histo (hist, file_hist + "_1.histo");

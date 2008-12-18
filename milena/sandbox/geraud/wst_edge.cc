@@ -35,6 +35,8 @@
 # include <mln/morpho/meyer_wst.hh>
 # include <mln/morpho/closing_volume.hh>
 
+# include <mln/opt/at.hh>
+
 # include <mln/debug/println.hh>
 
 
@@ -88,13 +90,13 @@ namespace mln
       const int ncols = ima.ncols();
       for (int r = -1; r <= nrows; ++r)
 	{
-	  ima.at(r, -1) = v;
-	  ima.at(r, ncols) = v;
+	  opt::at(ima, r, -1) = v;
+	  opt::at(ima, r, ncols) = v;
 	}
       for (int c = -1; c <= ncols; ++c)
 	{
-	  ima.at(-1, c) = v;
-	  ima.at(nrows, c) = v;
+	  opt::at(ima, -1, c) = v;
+	  opt::at(ima, nrows, c) = v;
 	}
     }
 
@@ -216,14 +218,14 @@ namespace mln
 	  unsigned row = (p.row() / 2 + 1) * (zoom + 1) - 1;
 	  unsigned col = (p.col() / 2) * (zoom + 1);
 	  for (unsigned i = 0; i < zoom; ++i)
-	    output.at(row, col + i) = ima(p);
+	    opt::at(output, row, col + i) = ima(p);
 	}
       else // vertical edge
 	{
 	  unsigned row = (p.row() / 2) * (zoom + 1);
 	  unsigned col = (p.col() / 2 + 1) * (zoom + 1) - 1;
 	  for (unsigned i = 0; i < zoom; ++i)
-	    output.at(row + i, col) = ima(p);
+	    opt::at(output, row + i, col) = ima(p);
 	}
     return output;
   }
@@ -240,7 +242,7 @@ image2cells(const mln::image2d<T>& input)
 			 2 * input.ncols() - 1);
   for (int row = 0; row < input.nrows(); ++row)
     for (int col = 0; col < input.ncols(); ++col)
-      output.at(2 * row, 2 * col) = input.at(row, col);
+      output.at(2 * row, 2 * col) = mln::opt::at(input, row, col);
   return output;
 }
 
@@ -253,7 +255,7 @@ cells2image(const mln::image2d<T>& input)
 			 (input.ncols() + 1) / 2);
   for (int row = 0; row < input.nrows(); row += 2)
     for (int col = 0; col < input.ncols(); col += 2)
-      output.at(row / 2, col / 2) = input.at(row, col);
+      output.at(row / 2, col / 2) = mln::opt::at(input, row, col);
   return output;
 }
 

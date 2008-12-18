@@ -43,6 +43,8 @@
 # include <mln/draw/mesh.hh>
 # include <mln/geom/seeds2tiling.hh>
 # include <mln/make/voronoi.hh>
+# include <mln/make/voronoi.hh>
+# include <mln/opt/at.hh>
 
 int main()
 {
@@ -59,7 +61,7 @@ int main()
 
   image2d<int> input(in.domain());
   level::fill(input, lab);
-  lab.at(0,0) = 0;
+  opt::at(lab, 0,0) = 0;
 
   image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());
   border::fill(inte, 0);

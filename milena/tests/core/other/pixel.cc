@@ -33,6 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/pixel.hh>
 #include <mln/metal/equal.hh>
+#include <mln/opt/at.hh>
 
 
 int main()
@@ -47,12 +48,12 @@ int main()
   {
     pixel<I> pxl(ima, point2d(1, 1));
     pxl.val() = 51;
-    mln_assertion(ima.at(1, 1) == 51);
+    mln_assertion(opt::at(ima, 1, 1) == 51);
   }
 
   {
     pixel<const I> pxl(ima, point2d(1, 1));
-    ima.at(1, 1) = 51;
+    opt::at(ima, 1, 1) = 51;
     mln_assertion(unsigned(pxl) == 4);
     mln_assertion(pxl.val() == 51);
 

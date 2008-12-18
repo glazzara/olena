@@ -50,6 +50,7 @@
 # include <mln/make/graph.hh>
 # include <mln/util/graph.hh>
 # include <mln/util/line_graph.hh>
+# include <mln/opt/at.hh>
 
 # include <mln/canvas/browsing/depth_first_search.hh>
 
@@ -337,7 +338,7 @@ namespace scribo
       level::fill(l, -1);
 
       for_all_elements(i, aligned_lines)
-	l.at(aligned_lines[i]) = i;
+	opt::at(l, aligned_lines[i]) = i;
 
       for (unsigned i = 0; i < settings.max_dist_lines; ++i)
 	l = morpho::elementary::dilation(l, c2());
@@ -345,10 +346,10 @@ namespace scribo
       for_all_components(i, boxes)
       {
 	std::pair<point2d, point2d> cp = central_sites(boxes[i], dim);
-	if (l.at(cp.first[dim]) != -1)
-	  boxes[i].pmin()[dim] = aligned_lines[l.at(cp.first[dim])];
-	if (l.at(cp.second[dim]) != -1)
-	  boxes[i].pmax()[dim] = aligned_lines[l.at(cp.second[dim])];
+	if (opt::at(l, cp.first[dim]) != -1)
+	  boxes[i].pmin()[dim] = aligned_lines[opt::at(l, cp.first[dim])];
+	if (opt::at(l, cp.second[dim]) != -1)
+	  boxes[i].pmax()[dim] = aligned_lines[opt::at(l, cp.second[dim])];
       }
     }
 

@@ -3,6 +3,7 @@
 # include <mln/value/int_u8.hh>
 # include <mln/accu/min_h.hh>
 # include <mln/accu/max_h.hh>
+# include <mln/opt/at.hh>
 
 # include <mln/debug/println.hh>
 # include <mln/debug/iota.hh>
@@ -104,10 +105,10 @@ namespace mln
   // 		  << std::endl;
 
   // 	for (unsigned c = 0; c <= half; ++c)
-  // 	  std::cout << " take " << ima.at(row, c) << " ";
+  // 	  std::cout << " take " << opt::at(ima, row, c) << " ";
   // 	std::cout << std::endl;
 
-  // 	std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+  // 	std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
   // 	// ok (row, col) at line start
 
 
@@ -122,8 +123,8 @@ namespace mln
   // 	  {
   // 	    ++col;
   // 	    ++col_plus;
-  // 	    std::cout << " take " << ima.at(row, col_plus) << " ";
-  // 	    std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+  // 	    std::cout << " take " << opt::at(ima, row, col_plus) << " ";
+  // 	    std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
   // 	  }
 
   // 	std::cout << std::endl
@@ -138,9 +139,9 @@ namespace mln
   // 	    ++col;
   // 	    ++col_plus;
   // 	    ++col_minus;
-  // 	    std::cout << " take "   << ima.at(row, col_plus) << " ";
-  // 	    std::cout << " untake " << ima.at(row, col_minus) << " ";
-  // 	    std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+  // 	    std::cout << " take "   << opt::at(ima, row, col_plus) << " ";
+  // 	    std::cout << " untake " << opt::at(ima, row, col_minus) << " ";
+  // 	    std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
   // 	    // ok (row, col) at line middle
   // 	  }
   // 	std::cout << std::endl;
@@ -155,8 +156,8 @@ namespace mln
   // 	  {
   // 	    ++col;
   // 	    ++col_minus;
-  // 	    std::cout << " untake " << ima.at(row, col_minus) << " ";
-  // 	    std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+  // 	    std::cout << " untake " << opt::at(ima, row, col_minus) << " ";
+  // 	    std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
   // 	  }
   // 	std::cout << std::endl;
 
@@ -185,10 +186,10 @@ namespace mln
     unsigned col = col_start;
 
     for (unsigned c = 0; c <= half && c < len; ++c)
-      std::cout << " take " << ima.at(row, col + c) << " ";
+      std::cout << " take " << opt::at(ima, row, col + c) << " ";
     std::cout << std::endl;
 
-    std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+    std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
     // ok (row, col) at line start
 
     if (col == col_last)
@@ -206,8 +207,8 @@ namespace mln
 	++col;
 	++col_plus;
 	if (col_plus <= col_last)
-	  std::cout << " take " << ima.at(row, col_plus) << " ";
-	std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+	  std::cout << " take " << opt::at(ima, row, col_plus) << " ";
+	std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
       }
 
     if (col == col_last)
@@ -227,10 +228,10 @@ namespace mln
 	++col_plus;
 	++col_minus;
 	mln_invariant(col_plus >= col_start && col_plus <= col_last);
-	std::cout << " take "   << ima.at(row, col_plus) << " ";
+	std::cout << " take "   << opt::at(ima, row, col_plus) << " ";
 	mln_invariant(col_minus >= col_start && col_minus <= col_last);
-	std::cout << " untake " << ima.at(row, col_minus) << " ";
-	std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+	std::cout << " untake " << opt::at(ima, row, col_minus) << " ";
+	std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
 	// ok (row, col) at line middle
       }
     std::cout << std::endl;
@@ -248,8 +249,8 @@ namespace mln
 	++col;
 	++col_minus;
 	mln_invariant(col_minus >= col_start && col_minus <= col_last);
-	std::cout << " untake " << ima.at(row, col_minus) << " ";
-	std::cout << " -->  OK at " << ima.at(row, col) << std::endl;
+	std::cout << " untake " << opt::at(ima, row, col_minus) << " ";
+	std::cout << " -->  OK at " << opt::at(ima, row, col) << std::endl;
       }
     std::cout << std::endl;
 

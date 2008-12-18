@@ -47,6 +47,8 @@
 # include <mln/level/median.hh>
 # include <mln/win/hline2d.hh>
 
+# include <mln/opt/at.hh>
+
 namespace mln
 {
 
@@ -167,12 +169,12 @@ namespace mln
 	    // initialization (before first point of the row)
 	    med.init();
 	    for (ct = min_col; ct < min_col + half; ++ct)
-	      med.take(input.at(row, ct));
+	      med.take(opt::at(input, row, ct));
 
 	    // left columns (just take new points)
 	    for (col = min_col; col <= min_col + half; ++col, ++ct)
 	      {
-		med.take(input.at(row, ct));
+		med.take(opt::at(input, row, ct));
 		output(p) = med;
 	      }
 
@@ -180,15 +182,15 @@ namespace mln
 	    cu = min_col;
 	    for (; col <= max_col - half; ++cu, ++col, ++ct)
 	      {
-		med.take(input.at(row, ct));
-		med.untake(input.at(row, cu));
+		med.take(opt::at(input, row, ct));
+		med.untake(opt::at(input, row, cu));
 		output(p) = med;
 	      }
 
 	    // right columns (now just untake old points)
 	    for (; col <= max_col; ++cu, ++col)
 	      {
-		med.untake(input.at(row, cu));
+		med.untake(opt::at(input, row, cu));
 		output(p) = med;
 	      }
 	  }

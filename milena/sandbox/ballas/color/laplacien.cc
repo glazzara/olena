@@ -13,6 +13,7 @@
 
 #include <mln/core/var.hh>
 #include <mln/debug/println.hh>
+#include <mln/opt/at.hh>
 
 #include "src/io.hh"
 #include "src/graph.hh"
@@ -92,7 +93,7 @@ void process(Icolor& graph, const Icolor& input)
 //     if (laplacian(p) == 0u)
 //     {
 //       std::cout << "I'm here" << std::endl;
-//       graph.at(p.row() * 2, p.col() * 2) = value::rgb<8>(255, 0, 0);
+//       opt::at(graph, p.row() * 2, p.col() * 2) = value::rgb<8>(255, 0, 0);
 //     }
 
 }

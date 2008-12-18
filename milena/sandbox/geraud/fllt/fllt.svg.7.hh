@@ -40,6 +40,8 @@
 #include <mln/core/site_set/p_queue_fast.hh>
 #include <mln/core/image/cast_image.hh>
 
+#include <mln/opt/at.hh>
+
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 
@@ -178,7 +180,7 @@ namespace mln
     image2d<T> output(nrows_, ncols_);
     for (int row = 0; row < nrows_; ++row)
       for (int col = 0; col < ncols_; ++col)
-	output.at(row, col) = input.at(row / coef, col / coef);
+	opt::at(output, row, col) = opt::at(input, row / coef, col / coef);
     return output;
   }
 

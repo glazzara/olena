@@ -43,6 +43,8 @@
 #include <mln/geom/chamfer.hh>
 #include <mln/level/compare.hh>
 
+#include <mln/opt/at.hh>
+
 
 int main()
 {
@@ -53,7 +55,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 0> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
     unsigned r[9][9] =
@@ -75,7 +77,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 3> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
 
@@ -98,7 +100,7 @@ int main()
 
   {
     level::fill(ima, false);
-    ima.at(4,4) = true;
+    opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_5x5_int<4, 6, 9> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
     image2d<unsigned>::fwd_piter p(out.domain());

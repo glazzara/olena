@@ -35,6 +35,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image1d.hh>
 #include <mln/level/fill.hh>
+#include <mln/opt/at.hh>
 
 namespace mln
 {
@@ -47,7 +48,7 @@ namespace mln
 
     mln_piter(image2d<T>) p(input.domain());
     for_all(p) // 2d
-      out.at(p.row()) += input(p);
+      opt::at(out, p.row()) += input(p);
 
     mln_piter(image1d<T>) p2(out.domain());
     unsigned count = geom::ncols(input);

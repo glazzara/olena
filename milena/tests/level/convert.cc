@@ -35,6 +35,7 @@
 
 #include <mln/value/rgb8.hh>
 #include <mln/literal/grays.hh>
+#include <mln/opt/at.hh>
 
 
 int main()
@@ -47,10 +48,10 @@ int main()
   // bool -> rgb8
   {
     image2d<bool> ima(1, 2);
-    ima.at(0, 0) = false;
-    ima.at(0, 1) = true;
+    opt::at(ima, 0, 0) = false;
+    opt::at(ima, 0, 1) = true;
     image2d<rgb8> out = level::convert(rgb8(), ima);
-    mln_assertion(out.at(0, 0) == literal::black);
-    mln_assertion(out.at(0, 1) == literal::white);
+    mln_assertion(opt::at(out, 0, 0) == literal::black);
+    mln_assertion(opt::at(out, 0, 1) == literal::white);
   }
 }

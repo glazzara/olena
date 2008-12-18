@@ -2,6 +2,7 @@
 # include <mln/util/timer.hh>
 
 # include <mln/core/pixter2d.hh>
+# include <mln/opt/at.hh>
 
 
 int size;
@@ -45,7 +46,7 @@ float for_at()
   t.start();
   for (int row = 0; row < size; ++row)
     for (int col = 0; col < size; ++col)
-      ima.at(row, col) = 0;
+      mln::opt::at(ima, row, col) = 0;
   return t.read();
 }
 
@@ -80,7 +81,7 @@ float hybrid_1()
   mln::def::coord & row = p.row(), & col = p.col();
   for (row = 0; row < size; ++row)
     for (col = 0; col < size; ++col)
-      ima.at(row, col) = 0;
+      mln::opt::at(ima, row, col) = 0;
   return t.read();
 }
 

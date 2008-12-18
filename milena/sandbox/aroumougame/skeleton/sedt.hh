@@ -15,6 +15,7 @@
 #include <mln/geom/max_col.hh>
 #include <mln/geom/max_ind.hh>
 #include <mln/debug/println.hh>
+#include <mln/opt/at.hh>
 
  using namespace mln;
  
@@ -31,31 +32,31 @@
   
   for(int j=0; j<h; j++)
   {
-    if(!pic.at(j,0))
+    if(!opt::at(pic, j,0))
     {
-      g.at(j,0)=0;
+      opt::at(g, j,0)=0;
     }
     else
     {
-      g.at(j,0)=1023;
+      opt::at(g, j,0)=1023;
     }
     
     for(int i=1; i<w; i++)
     {
-      if(!pic.at(j,i))
+      if(!opt::at(pic, j,i))
       {
-        g.at(j,i)=0;
+        opt::at(g, j,i)=0;
       }
       else
       {
-        g.at(j,i)=g.at(j,i-1)+1;
+        opt::at(g, j,i)=opt::at(g, j,i-1)+1;
       }
     }
     
     for(int i=w-2; i>=0; i--)
     {
-      if(g.at(j,i+1)<g.at(j,i))
-        g.at(j,i)=1+g.at(j,i+1);
+      if(opt::at(g, j,i+1)<opt::at(g, j,i))
+        opt::at(g, j,i)=1+opt::at(g, j,i+1);
     }
   }
   
@@ -76,13 +77,13 @@
     
     for(int j=1; j<h; j++)
     {
-      tmp1 = g.at(s[q],i)*g.at(s[q],i)+(t[q]-s[q])*(t[q]-s[q]);
-      tmp2 = g.at(j,i)*g.at(j,i)+(t[q]-j)*(t[q]-j);
+      tmp1 = opt::at(g, s[q],i)*opt::at(g, s[q],i)+(t[q]-s[q])*(t[q]-s[q]);
+      tmp2 = opt::at(g, j,i)*opt::at(g, j,i)+(t[q]-j)*(t[q]-j);
       while((q>=0)&&( tmp1>tmp2 ))
       {
         q--;
-        tmp1 = g.at(s[q],i)*g.at(s[q],i)+(t[q]-s[q])*(t[q]-s[q]);
-        tmp2 = g.at(j,i)*g.at(j,i)+(t[q]-j)*(t[q]-j);
+        tmp1 = opt::at(g, s[q],i)*opt::at(g, s[q],i)+(t[q]-s[q])*(t[q]-s[q]);
+        tmp2 = opt::at(g, j,i)*opt::at(g, j,i)+(t[q]-j)*(t[q]-j);
       }
       if(q<0)
       {
@@ -91,7 +92,7 @@
       }
       else
       {
-        v=1+(j*j-s[q]*s[q]+g.at(j,i)*g.at(j,i)-g.at(s[q],i)*g.at(s[q],i))/(2*(j-s[q]));
+        v=1+(j*j-s[q]*s[q]+g.at(j,i)*g.at(j,i)-g.at(s[q],i)*opt::at(g, s[q],i))/(2*(j-s[q]));
         if(v<h)
         {
           q++;
@@ -103,7 +104,7 @@
     
     for(int j= h-1; j>=0; j--)
     {
-      dt.at(j,i)= g.at(s[q],i)*g.at(s[q],i)+(j-s[q])*(j-s[q]);
+      dt.at(j,i)= opt::at(g, s[q],i)*opt::at(g, s[q],i)+(j-s[q])*(j-s[q]);
       if(j==t[q])
         q--;
     }
@@ -125,7 +126,7 @@
   image2d<int> DTg(L, L);
  
   /* compute bound xM[ and verify that xM < L */
-  for (xM = 0; xM < L; xM++) if (CTg.at(0,xM) > R) break;
+  for (xM = 0; xM < L; xM++) if (opt::at(CTg, 0,xM) > R) break;
   if (xM >= L) printf ("WARNING xM is not < L\n");
     
   /* First scan: x++, y-- */
@@ -134,11 +135,11 @@
     k = 0; propag = 0;
     for (y = x; y >= 0; y--)
     {
-      if (CTg.at(y,x) > R)   /* outside the ball : background */
+      if (opt::at(CTg, y,x) > R)   /* outside the ball : background */
         propag = 1;
       else if (propag)  /* inside the ball, mark to dist. k*k from bg */
-      { k++; DTg.at(y,x) = k*k; }
-      else DTg.at(y,x) = -1; /* inside the ball, no distance propagated */
+      { k++; opt::at(DTg, y,x) = k*k; }
+      else opt::at(DTg, y,x) = -1; /* inside the ball, no distance propagated */
     }
   }
     
@@ -150,11 +151,11 @@
     /* Compute stacks indices Si[Sn]=x and values Sv[Sn]=DTg[x,y] */
     for (x = y; x <= xM; x++)
     {
-      dp = DTg.at(y,x);
+      dp = opt::at(DTg, y,x);
       if (dp < 0) continue;  /* Non propagated value */
             
       /* To speedup algorithm, stop at the second consecutive 0 */
-      if (dp == 0 && x > y && DTg.at(y,x-1)==0) break;
+      if (dp == 0 && x > y && opt::at(DTg, y,x-1)==0) break;
             
       while (Sn >= 2 && D_Intersec (Si[Sn-1], Sv[Sn-1], x, dp) < Sr[Sn-1])
         Sn--;  /* pop */
@@ -170,11 +171,11 @@
     /* Compute new DTg values using stacks */
     for (x = xM; x >= y; x--)
     {
-      if (DTg.at(y,x)==0) continue;
+      if (opt::at(DTg, y,x)==0) continue;
             
       while (Sn >= 2 && x < Sr[Sn-1]) Sn--;  /* pop */
                   
-      DTg.at(y,x) = (x-Si[Sn-1])*(x-Si[Sn-1]) + Sv[Sn-1];
+      opt::at(DTg, y,x) = (x-Si[Sn-1])*(x-Si[Sn-1]) + Sv[Sn-1];
     } 
   }
   
@@ -183,7 +184,7 @@
   {
     for( int j=0; j<L; j++)
     {
-      dt.at(i,j) = DTg.at(i,j);
+      dt.at(i,j) = opt::at(DTg, i,j);
     }
   }
   return dt;
@@ -197,7 +198,7 @@
   {
     for(int j=0; j <= i; j++)
     {
-      CTg.at(j,i) = i*i + j*j;
+      opt::at(CTg, j,i) = i*i + j*j;
     }
   }
   
@@ -230,9 +231,9 @@ std::vector< std::vector<int> > lutCol(image2d<value::int_u<32> >& CTg, int L, s
     for (y = 0; y <= x; y++)
 {
 
-    r1 = CTg.at(y,x) +1;
+    r1 = opt::at(CTg, y,x) +1;
 
-    r2 = CTg.at(y+Mlut[ind][1], x+Mlut[ind][0]) +1;
+    r2 = opt::at(CTg, y+Mlut[ind][1], x+Mlut[ind][0]) +1;
 
     if (r1 <= Rmax && r2 > Lut[ind][r1]) Lut[ind][r1] = r2;
 }
@@ -252,7 +253,7 @@ bool isMAg(int x, int y, std::vector< std::vector<int> >& Mlut, image2d<value::i
 {
   int xx, yy, val;
 
-  val = DTg.at(y, x);
+  val = opt::at(DTg, y, x);
 
   for (uint i = 0; i < Mlut.size(); i++)
   {
@@ -261,7 +262,7 @@ bool isMAg(int x, int y, std::vector< std::vector<int> >& Mlut, image2d<value::i
 
     if (0 <= yy && yy <= xx)
     {
-      if ( DTg.at(yy, xx) >= Lut[i][val] )
+      if ( opt::at(DTg, yy, xx) >= Lut[i][val] )
         return false;
     }
   }
@@ -288,7 +289,7 @@ std::vector< std::vector<int> > CompLutMask (image2d<value::int_u8>& DTg, std::v
     {
       for(int y=0; y<=x; y++)
       {
-        if(DTg.at(y,x) > 0 && isMAg(x, y, Mgl, DTg, Lut))
+        if(opt::at(DTg, y,x) > 0 && isMAg(x, y, Mgl, DTg, Lut))
         {
           std::vector<int> tmp(3);
           tmp[0] = x;
@@ -314,7 +315,7 @@ bool isMA(int x, int y, std::vector< std::vector<int> >& Mlut, image2d<value::in
 {
   int Vx, Vy, val, h, w;
 
-  val = DTg.at(y, x);
+  val = opt::at(DTg, y, x);
   h = geom::nrows(DTg);
   w = geom::ncols(DTg);
 
@@ -325,42 +326,42 @@ bool isMA(int x, int y, std::vector< std::vector<int> >& Mlut, image2d<value::in
 
     if((0 <= y-Vy) && (0 <= x-Vx))
     {
-      if ( DTg.at(y-Vy, x-Vx) >= Lut[i][val] )
+      if ( opt::at(DTg, y-Vy, x-Vx) >= Lut[i][val] )
         return false;
     }
     if((y+Vy < h) && (x+Vx < w))
     {
-      if ( DTg.at(y+Vy, x+Vx) >= Lut[i][val] )
+      if ( opt::at(DTg, y+Vy, x+Vx) >= Lut[i][val] )
         return false;
     }
     if((0 <= y-Vy) && (x+Vx < w))
     {
-      if ( DTg.at(y-Vy, x+Vx) >= Lut[i][val] )
+      if ( opt::at(DTg, y-Vy, x+Vx) >= Lut[i][val] )
         return false;
     }
     if((y+Vy < h) && (0 <= x-Vx))
     {
-      if ( DTg.at(y+Vy, x-Vx) >= Lut[i][val] )
+      if ( opt::at(DTg, y+Vy, x-Vx) >= Lut[i][val] )
         return false;
     }
     if((0 <= x-Vy) && (0 <= y-Vx))
     {
-      if ( DTg.at(y-Vx, x-Vy) >= Lut[i][val] )
+      if ( opt::at(DTg, y-Vx, x-Vy) >= Lut[i][val] )
         return false;
     }
     if((x+Vy < w) && (y+Vx < h))
     {
-      if ( DTg.at(y+Vx, x+Vy) >= Lut[i][val] )
+      if ( opt::at(DTg, y+Vx, x+Vy) >= Lut[i][val] )
         return false;
     }
     if((0 <= x-Vy) && (y+Vx < h))
     {
-      if ( DTg.at(y+Vx, x-Vy) >= Lut[i][val] )
+      if ( opt::at(DTg, y+Vx, x-Vy) >= Lut[i][val] )
         return false;
     }
     if((x+Vy < w) && (0 <= y-Vx))
     {
-      if ( DTg.at(y-Vx, x+Vy) >= Lut[i][val] )
+      if ( opt::at(DTg, y-Vx, x+Vy) >= Lut[i][val] )
         return false;
     }
 
@@ -378,11 +379,11 @@ bool isMA(int x, int y, std::vector< std::vector<int> >& Mlut, image2d<value::in
   {
     for(int j=0; j<h; j++)
     {
-      if(pic.at(j,i))
+      if(opt::at(pic, j,i))
       {
         if(!isMA(i, j, Mgl, dt, Lut))
         {
-          pic.at(j,i) = false;
+          opt::at(pic, j,i) = false;
         }
       }
     }

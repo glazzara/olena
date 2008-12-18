@@ -30,6 +30,7 @@ SUBDIRS =					\
   metal						\
   morpho					\
   norm						\
+  opt						\
   pw						\
   set						\
   subsampling					\

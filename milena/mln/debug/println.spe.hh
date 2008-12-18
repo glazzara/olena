@@ -46,6 +46,7 @@
 # include <mln/debug/put_word.hh>
 # include <mln/level/fill.hh>
 # include <mln/accu/max.hh>
+# include <mln/opt/at.hh>
 
 //FIXME: do not include all these headers
 # include <mln/core/alias/box2d.hh>
@@ -86,7 +87,7 @@ namespace mln
 	for (int row = b.min_row(); row <= b.max_row(); ++row)
 	{
 	  for (int col = b.min_col(); col <= b.max_col(); ++col)
-	    std::cout << input.at(row, col) << ' ';
+	    std::cout << opt::at(input, row, col) << ' ';
 	  std::cout << std::endl;
 	}
 	std::cout << std::endl;
@@ -122,7 +123,7 @@ namespace mln
 	for (unsigned row = 0; row < b.nrows(); ++row)
 	{
 	  for (unsigned col = 0; col < b.ncols() * len; ++col)
-	    std::cout << output.at(row, col);
+	    std::cout << opt::at(output, row, col);
 	  std::cout << std::endl;
 	}
 	std::cout << std::endl;

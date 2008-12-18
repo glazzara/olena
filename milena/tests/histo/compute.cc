@@ -42,6 +42,8 @@
 #include <mln/accu/histo.hh>
 #include <mln/histo/compute.hh>
 
+#include <mln/opt/at.hh>
+
 
 int main()
 {
@@ -66,7 +68,7 @@ int main()
   {
     image2d<int_u8> ima(3, 3);
     debug::iota(ima);
-    ima.at(0,0) = 2;
+    opt::at(ima, 0,0) = 2;
 
     histo::data<int_u8> h = histo::compute(ima);
     std::ostringstream oss;

@@ -35,6 +35,7 @@
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/alias/point2d.hh>
 # include <mln/geom/size2d.hh>
+# include <mln/opt/at.hh>
 
 namespace mln
 {
@@ -117,7 +118,7 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      eor_(& image.at(geom::min_row(image), geom::max_col(image)) + 1)
+      eor_(& opt::at(image, geom::min_row(image), geom::max_col(image)) + 1)
   {
     mln_precondition(image.has_data());
   }
@@ -146,7 +147,7 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      bor_(& image.at(geom::max_row(image), geom::min_col(image)) - 1)
+      bor_(& opt::at(image, geom::max_row(image), geom::min_col(image)) - 1)
   {
     mln_precondition(image.has_data());
   }

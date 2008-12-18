@@ -46,6 +46,7 @@
 #include <mln/labeling/regional_minima.hh>
 
 #include <mln/accu/count.hh>
+#include <mln/opt/at.hh>
 
 
 
@@ -59,10 +60,10 @@ namespace mln
     for (int r = 0; r < nr; ++r)
       {
 	for (int c = 0; c < nc; ++c)
-	  if (par.at(r,c) == point2d(r,c))
+	  if (opt::at(par, r,c) == point2d(r,c))
 	    std::cout << "(    ) ";
 	  else
-	    std::cout << par.at(r,c) << ' ';
+	    std::cout << opt::at(par, r,c) << ' ';
 	std::cout << std::endl;
       }
   }

@@ -34,6 +34,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/level/fill.hh>
 #include <mln/debug/println.hh>
+#include <mln/opt/at.hh>
 
 #include <mln/transform/distance_geodesic.hh>
 
@@ -45,7 +46,7 @@ int main()
 
   image2d<bool> input(9, 9);
   level::fill(input, false);
-  input.at(4, 4) = true;
+  opt::at(input, 4, 4) = true;
 
   image2d<int_u8> output = transform::distance_geodesic(input, c4(), int_u8(4));
   debug::println(output);

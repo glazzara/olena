@@ -34,6 +34,7 @@
 #include <mln/geom/ncols.hh>
 #include <mln/level/fill.hh>
 #include <mln/level/memset_.hh>
+#include <mln/opt/at.hh>
 
 
 int main()
@@ -48,6 +49,6 @@ int main()
 		 geom::ncols(ima) + 2 * ima.border() + 1);
   //                                                   ^
   //                                                   |
-  mln_assertion(ima.at(1,0) == X); // <----------------+
-  mln_assertion(ima.at(1,1) != X);
+  mln_assertion(opt::at(ima, 1,0) == X); // <----------------+
+  mln_assertion(opt::at(ima, 1,1) != X);
 }

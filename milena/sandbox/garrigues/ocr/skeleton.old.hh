@@ -33,6 +33,7 @@
 
 #include <mln/core/site_set/p_set.hh>
 #include <mln/math/sqrt.hh>
+#include <mln/opt/at.hh>
 
 namespace mln
 {
@@ -486,10 +487,10 @@ template <typename N>
   for(int i=0; i<w; i++)
     for(int j=0; j<h; j++)
   {
-    if(pic.at(j,i))
-      out.at(j,i) = 1;
+    if(opt::at(pic, j,i))
+      opt::at(out, j,i) = 1;
     else
-      out.at(j,i) = 0;
+      opt::at(out, j,i) = 0;
   }
   return out;
 }

@@ -36,6 +36,7 @@
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/image3d.hh>
+# include <mln/opt/at.hh>
 
 
 
@@ -97,7 +98,7 @@ namespace mln
       mln::image2d<V> tmp(R, C);
       for (unsigned row = 0; row < R; ++row)
 	for (unsigned col = 0; col < C; ++col)
-	    tmp.at(row, col) = values[row][col];
+	    opt::at(tmp, row, col) = values[row][col];
       return tmp;
     }
 
@@ -110,7 +111,7 @@ namespace mln
       for (unsigned sli = 0; sli < S; ++sli)
 	for (unsigned row = 0; row < R; ++row)
 	  for (unsigned col = 0; col < C; ++col)
-	    tmp.at(sli, row, col) = values[sli][row][col];
+	    opt::at(tmp, sli, row, col) = values[sli][row][col];
       return tmp;
     }
 

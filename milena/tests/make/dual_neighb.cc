@@ -32,6 +32,7 @@
 #include <mln/make/dual_neighb.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/image/image2d.hh>
+#include <mln/opt/at.hh>
 
 
 
@@ -53,8 +54,8 @@ int main()
   using namespace mln;
 
   image2d<bool> ima(1, 2, 1);
-  ima.at(0, 0) = true;
-  ima.at(0, 1) = false;
+  opt::at(ima, 0, 0) = true;
+  opt::at(ima, 0, 1) = false;
 
   mln_assertion( count(ima, make::dual_neighb(ima, c4(), c8()))
 		 == c4().size() + c8().size() );

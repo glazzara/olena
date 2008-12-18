@@ -7,6 +7,7 @@
 #include <mln/morpho/meyer_wst.hh>
 #include <mln/border/resize.hh>
 #include <mln/accu/maj_h.hh>
+#include <mln/opt/at.hh>
 #include "snake2d.hh"
 
 namespace mln
@@ -41,10 +42,10 @@ namespace mln
 	initialize(cla, input);
 	typename I::fwd_piter q (input.domain());
 	for_all (q)
-	  if (wst.at(input(q)) == 0)
-	    cla(q) = wst.at(input(q) + 1);
+	  if (opt::at(wst, input(q)) == 0)
+	    cla(q) = opt::at(wst, input(q) + 1);
 	  else
-	    cla(q) = wst.at(input(q));
+	    cla(q) = opt::at(wst, input(q));
 	border::resize(cla, 0);
 	I maj = snake2d(accu::meta::maj_h(), cla, win);
 	typename I::fwd_piter r (cla.domain());
