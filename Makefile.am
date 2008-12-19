@@ -4,6 +4,10 @@ ACLOCAL_AMFLAGS = -I build-aux
 
 SUBDIRS = build-aux external milena
 
+.PHONY: doc
+doc:
+	$(MAKE) -C milena doc
+
 if ENABLE_SWILENA
   SUBDIRS += swilena
 endif ENABLE_SWILENA

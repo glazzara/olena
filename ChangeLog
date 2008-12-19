@@ -1,3 +1,11 @@
+2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Enable the generation of version.hh.
+
+	* configure.ac: set the proper variables.
+
+	* Makefile.am: add doc target.
+
 2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add missing INSTALL and README.

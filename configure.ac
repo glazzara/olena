@@ -18,7 +18,18 @@ AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
 AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 nostdinc -Wall])
-AC_CONFIG_HEADERS([config.h] [milena/mln/version.hh])
+AC_CONFIG_HEADERS([config.h:config.hin] [milena/mln/version.hh])
+
+# Misc. variables.
+AC_DEFINE_UNQUOTED([MLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
+		   [Package Full name.])
+AC_DEFINE_UNQUOTED([MLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
+                   [Bug report address.])                           
+AC_DEFINE_UNQUOTED([MLN_PACKAGE_STRING], ["$PACKAGE_STRING"], 
+                   [Full name and version.])                        
+AC_DEFINE_UNQUOTED([MLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
+                   [Package Version.])
+
 
 ## --------------------- ##
 ## C++ compiler set up.  ##
