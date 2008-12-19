@@ -25,15 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/registration/registration.cc
- *
- * \brief Test on mln::registration::registration.cc
- */
+/// \file tests/registration/registration.cc
+///
+/// Test on mln::registration::registration.cc
+///
 
+#include "tests/data.hh"
 #include <mln/io/pbm/all.hh>
 #include <mln/registration/registration.hh>
 
-int main(int argc, char **argv)
+int main()
 {
   using namespace mln;
 
@@ -41,8 +42,8 @@ int main(int argc, char **argv)
   image2d< bool > img2;
 
   //load images
-  io::pbm::load(img1, MLN_IMG_DIR "/lena.pbm");
-  io::pbm::load(img2, MLN_IMG_DIR "/lena.pbm");
+  io::pbm::load(img1, MLN_IMG_DIR "/tiny.pbm");
+  io::pbm::load(img2, MLN_IMG_DIR "/tiny.pbm");
 
   registration::registration(img1,img2);
   //FIXME: Auto test result

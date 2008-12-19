@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/routine/clone.cc
- *
- *  \brief Tests on mln::clone.
- */
+/// \file tests/core/routine/clone.cc
+///
+/// Tests on mln::clone.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/sub_image.hh>

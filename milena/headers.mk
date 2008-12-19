@@ -199,6 +199,7 @@ mln/fun/v2v/inc.hh \
 mln/fun/v2v/all.hh \
 mln/fun/v2v/dec.hh \
 mln/fun/v2v/abs.hh \
+mln/fun/v2v/rgb_to_hsl.hh \
 mln/fun/v2v/cast.hh \
 mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/rgb_to_hsi.hh \
@@ -254,6 +255,7 @@ mln/convert/to_p_array.hh \
 mln/convert/from_to.hxx \
 mln/convert/to_rgb.hh \
 mln/convert/essential.hh \
+mln/value/shell.hh \
 mln/value/float01_f.hh \
 mln/value/float01_16.hh \
 mln/value/lut_vec.hh \
@@ -279,6 +281,7 @@ mln/value/internal/gray_.hh \
 mln/value/internal/essential.hh \
 mln/value/proxy.hh \
 mln/value/viter.hh \
+mln/value/hsl.hh \
 mln/value/graylevel.hh \
 mln/value/all.hh \
 mln/value/super_value.hh \
@@ -301,6 +304,7 @@ mln/value/int_s8.hh \
 mln/value/int_s16.hh \
 mln/value/int_u16.hh \
 mln/value/label.hh \
+mln/value/mixin.hh \
 mln/value/rgb.hh \
 mln/value/stack.hh \
 mln/value/concept/integer.hh \
@@ -406,12 +410,15 @@ mln/math/sqr.hh \
 mln/math/all.hh \
 mln/math/sign.hh \
 mln/math/abs.hh \
+mln/math/cos.hh \
 mln/math/diff_abs.hh \
 mln/math/round.hh \
 mln/math/min.hh \
 mln/math/sqrt.hh \
 mln/math/essential.hh \
+mln/math/acos.hh \
 mln/math/round_sat.hh \
+mln/opt/at.hh \
 mln/binarization/includes.hh \
 mln/binarization/all.hh \
 mln/binarization/binarization.hh \
@@ -758,6 +765,7 @@ mln/core/routine/all.hh \
 mln/core/routine/clone.hh \
 mln/core/routine/exact.hh \
 mln/core/routine/extend.hh \
+mln/core/routine/init.hxx \
 mln/core/routine/essential.hh \
 mln/core/trait/op_mult.hh \
 mln/core/trait/all.hh \
@@ -849,6 +857,7 @@ mln/core/concept/accumulator.hh \
 mln/core/concept/site_set.hh \
 mln/core/concept/proxy.hxx \
 mln/core/concept/object.hh \
+mln/core/concept/meta_fun.hh \
 mln/core/concept/delta_point_site.hh \
 mln/core/concept/status.txt \
 mln/core/concept/neighborhood.hh \
@@ -902,6 +911,7 @@ mln/core/image/image2d_h.hh \
 mln/core/image/image2d.hh \
 mln/core/image/ch_piter.hh \
 mln/core/image/complex_windows.hh \
+mln/core/image/violent_cast_image.hh \
 mln/core/image/mono_obased_rle_encode.hh \
 mln/core/image/status.txt \
 mln/core/image/value_encode.hh \

@@ -200,6 +200,7 @@ mln_fun_v2v_inc \
 mln_fun_v2v_all \
 mln_fun_v2v_dec \
 mln_fun_v2v_abs \
+mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_cast \
 mln_fun_v2v_ch_function_value \
 mln_fun_v2v_rgb_to_hsi \
@@ -254,6 +255,7 @@ mln_convert_to_dpoint \
 mln_convert_to_p_array \
 mln_convert_to_rgb \
 mln_convert_essential \
+mln_value_shell \
 mln_value_float01_f \
 mln_value_float01_16 \
 mln_value_lut_vec \
@@ -279,6 +281,7 @@ mln_value_internal_gray_ \
 mln_value_internal_essential \
 mln_value_proxy \
 mln_value_viter \
+mln_value_hsl \
 mln_value_graylevel \
 mln_value_all \
 mln_value_super_value \
@@ -301,6 +304,7 @@ mln_value_int_s8 \
 mln_value_int_s16 \
 mln_value_int_u16 \
 mln_value_label \
+mln_value_mixin \
 mln_value_rgb \
 mln_value_stack \
 mln_value_concept_integer \
@@ -400,12 +404,15 @@ mln_math_sqr \
 mln_math_all \
 mln_math_sign \
 mln_math_abs \
+mln_math_cos \
 mln_math_diff_abs \
 mln_math_round \
 mln_math_min \
 mln_math_sqrt \
 mln_math_essential \
+mln_math_acos \
 mln_math_round_sat \
+mln_opt_at \
 mln_binarization_includes \
 mln_binarization_all \
 mln_binarization_binarization \
@@ -822,6 +829,7 @@ mln_core_concept_value \
 mln_core_concept_accumulator \
 mln_core_concept_site_set \
 mln_core_concept_object \
+mln_core_concept_meta_fun \
 mln_core_concept_delta_point_site \
 mln_core_concept_neighborhood \
 mln_core_concept_browsing \
@@ -874,6 +882,7 @@ mln_core_image_image2d_h \
 mln_core_image_image2d \
 mln_core_image_ch_piter \
 mln_core_image_complex_windows \
+mln_core_image_violent_cast_image \
 mln_core_image_mono_obased_rle_encode \
 mln_core_image_value_encode \
 mln_core_image_essential \
@@ -1192,6 +1201,7 @@ mln_fun_v2v_inc_SOURCES = mln_fun_v2v_inc.cc
 mln_fun_v2v_all_SOURCES = mln_fun_v2v_all.cc
 mln_fun_v2v_dec_SOURCES = mln_fun_v2v_dec.cc
 mln_fun_v2v_abs_SOURCES = mln_fun_v2v_abs.cc
+mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_cast_SOURCES = mln_fun_v2v_cast.cc
 mln_fun_v2v_ch_function_value_SOURCES = mln_fun_v2v_ch_function_value.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
@@ -1246,6 +1256,7 @@ mln_convert_to_dpoint_SOURCES = mln_convert_to_dpoint.cc
 mln_convert_to_p_array_SOURCES = mln_convert_to_p_array.cc
 mln_convert_to_rgb_SOURCES = mln_convert_to_rgb.cc
 mln_convert_essential_SOURCES = mln_convert_essential.cc
+mln_value_shell_SOURCES = mln_value_shell.cc
 mln_value_float01_f_SOURCES = mln_value_float01_f.cc
 mln_value_float01_16_SOURCES = mln_value_float01_16.cc
 mln_value_lut_vec_SOURCES = mln_value_lut_vec.cc
@@ -1271,6 +1282,7 @@ mln_value_internal_gray__SOURCES = mln_value_internal_gray_.cc
 mln_value_internal_essential_SOURCES = mln_value_internal_essential.cc
 mln_value_proxy_SOURCES = mln_value_proxy.cc
 mln_value_viter_SOURCES = mln_value_viter.cc
+mln_value_hsl_SOURCES = mln_value_hsl.cc
 mln_value_graylevel_SOURCES = mln_value_graylevel.cc
 mln_value_all_SOURCES = mln_value_all.cc
 mln_value_super_value_SOURCES = mln_value_super_value.cc
@@ -1293,6 +1305,7 @@ mln_value_int_s8_SOURCES = mln_value_int_s8.cc
 mln_value_int_s16_SOURCES = mln_value_int_s16.cc
 mln_value_int_u16_SOURCES = mln_value_int_u16.cc
 mln_value_label_SOURCES = mln_value_label.cc
+mln_value_mixin_SOURCES = mln_value_mixin.cc
 mln_value_rgb_SOURCES = mln_value_rgb.cc
 mln_value_stack_SOURCES = mln_value_stack.cc
 mln_value_concept_integer_SOURCES = mln_value_concept_integer.cc
@@ -1392,12 +1405,15 @@ mln_math_sqr_SOURCES = mln_math_sqr.cc
 mln_math_all_SOURCES = mln_math_all.cc
 mln_math_sign_SOURCES = mln_math_sign.cc
 mln_math_abs_SOURCES = mln_math_abs.cc
+mln_math_cos_SOURCES = mln_math_cos.cc
 mln_math_diff_abs_SOURCES = mln_math_diff_abs.cc
 mln_math_round_SOURCES = mln_math_round.cc
 mln_math_min_SOURCES = mln_math_min.cc
 mln_math_sqrt_SOURCES = mln_math_sqrt.cc
 mln_math_essential_SOURCES = mln_math_essential.cc
+mln_math_acos_SOURCES = mln_math_acos.cc
 mln_math_round_sat_SOURCES = mln_math_round_sat.cc
+mln_opt_at_SOURCES = mln_opt_at.cc
 mln_binarization_includes_SOURCES = mln_binarization_includes.cc
 mln_binarization_all_SOURCES = mln_binarization_all.cc
 mln_binarization_binarization_SOURCES = mln_binarization_binarization.cc
@@ -1814,6 +1830,7 @@ mln_core_concept_value_SOURCES = mln_core_concept_value.cc
 mln_core_concept_accumulator_SOURCES = mln_core_concept_accumulator.cc
 mln_core_concept_site_set_SOURCES = mln_core_concept_site_set.cc
 mln_core_concept_object_SOURCES = mln_core_concept_object.cc
+mln_core_concept_meta_fun_SOURCES = mln_core_concept_meta_fun.cc
 mln_core_concept_delta_point_site_SOURCES = mln_core_concept_delta_point_site.cc
 mln_core_concept_neighborhood_SOURCES = mln_core_concept_neighborhood.cc
 mln_core_concept_browsing_SOURCES = mln_core_concept_browsing.cc
@@ -1866,6 +1883,7 @@ mln_core_image_image2d_h_SOURCES = mln_core_image_image2d_h.cc
 mln_core_image_image2d_SOURCES = mln_core_image_image2d.cc
 mln_core_image_ch_piter_SOURCES = mln_core_image_ch_piter.cc
 mln_core_image_complex_windows_SOURCES = mln_core_image_complex_windows.cc
+mln_core_image_violent_cast_image_SOURCES = mln_core_image_violent_cast_image.cc
 mln_core_image_mono_obased_rle_encode_SOURCES = mln_core_image_mono_obased_rle_encode.cc
 mln_core_image_value_encode_SOURCES = mln_core_image_value_encode.cc
 mln_core_image_essential_SOURCES = mln_core_image_essential.cc

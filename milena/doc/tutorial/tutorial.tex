@@ -17,9 +17,10 @@
  \end{figure}
 }
 
-\title{Olena - Quick Reference Guide}
+\title{Olena -- Quick Reference Guide}
 \author{LRDE}
 \date{}
+\makeindex
 
 \definecolor{ccomment}{rgb}{0.5,0,0}
 \definecolor{cstring}{rgb}{0,0.32,0.5}
@@ -27,18 +28,22 @@
 \definecolor{cbg}{rgb}{0.95,0.95,0.95}
 
 %%%LISTINGS SETTINGS
-%begin{latexonly}
+%\begin{latexonly}
 \lstset{frameround=fttt}
-\lstloadlanguages{C++}
-\lstset{language=C++}
-
-\lstset{backgroundcolor=\color{cbg},
-basicstyle=\bfseries\color{black},
-identifierstyle=\color{black},
-stringstyle=\color{cstring},
-commentstyle=\color{ccomment},
-showstringspaces=false,linewidth=14cm}
-%end{latexonly}
+\lstloadlanguages{[ISO]C++}
+\lstset{language=[ISO]C++,
+  captionpos=b,
+  basicstyle={\small\sffamily}, % normal small footnotesize scriptsize tiny
+  commentstyle=\itshape,
+  showstringspaces=false,
+  numberstyle=\tiny,
+  morekeywords={where, auto, concept, concept_map, axiom, late_check, final, abstract},
+  morecomment=[s]{/*}{*/},
+  backgroundcolor=\color{cbg},
+  identifierstyle=\color{black},
+  stringstyle=\color{cstring}
+}
+%\end{latexonly}
 
 % #1 : sub page name
 % #2 : sub page title
@@ -112,7 +117,9 @@ showstringspaces=false,linewidth=14cm}
 }
 
 \newcommand{\tutotoc}[2]{%
-\longleftarrow ~Go to \doxyref{#1} Go to \doxyref{#2}~ \longrightarrow%
+\begin{center}%
+  \longleftarrow ~Go to \doxyref{#1} \hspace{1cm} | \hspace{1cm} Go to \doxyref{#2}~ \longrightarrow%
+\end{center}%
 }
 
 \newenvironment{doxymath}
@@ -312,9 +319,23 @@ $$
 \end{htmlonly}
 
 \begin{latexonly}
+\maketitle
+
+\section*{Copying this document}
+Copyright \copyright{} 2006 LRDE.
+
+Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.2 or any later
+version published by the Free Software Foundation; with the Invariant Sections
+being just ``Copying this document'', no Front-Cover Texts, and no Back-Cover
+Texts.
+
+A copy of the license is provided in the file COPYING.DOC.
+
 \tableofcontents
 \end{latexonly}
 
+\begin{htmlonly}
 %====================================
 \doxychapter{tutoforeword}{Step 0: Foreword}
 
@@ -379,6 +400,8 @@ The supported file formats are listed in section \doxyref{imaio}.
 
 %====================================
 \doxychapter{tutograph}{Step 6: Handle graphes with an image}
+
+\end{htmlonly}
 
 
 %====================================
@@ -502,11 +525,11 @@ Intersection == point 2d == milieu d'un pixel \\
 
 %FIXME: Find a way to get that figure in HTML output.
 \begin{latexonly}
-\begin{tikzpicture}[scale=2]
+\begin{tikzpicture}[scale=1]
 
 \draw[blue!20, thick] (-2, -2) grid [right=0.5cm,above=0.5cm,step=1cm] (3, 3);
 \draw[line width=1mm] (-1, -1) grid [step=1cm] (3, 3);
-\draw[black,line width=2mm,->] (0, -2) node {y} -- (0, 4);
+\draw[black,line width=2mm,<-] (0, -2) node {y} -- (0, 4);
 \draw[black,line width=2mm,->] (-2, 3) node {x} -- (4, 3);
 
 \foreach \x in {-0.5, 0.5, 1.5, 2.5}

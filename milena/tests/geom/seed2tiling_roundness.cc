@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/geom/seed2tiling_roundness.cc
- *
- * \brief Tests on mln::geom::seed2tiling_roundness.
- */
+/// \file tests/geom/seed2tiling_roundness.cc
+///
+/// Tests on mln::geom::seed2tiling_roundness.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>

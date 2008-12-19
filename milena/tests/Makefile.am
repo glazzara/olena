@@ -32,6 +32,7 @@ SUBDIRS =					\
   norm						\
   opt						\
   pw						\
+  registration 					\
   set						\
   subsampling					\
   tag						\

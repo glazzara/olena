@@ -54,9 +54,8 @@ using namespace mln;
 
 // FIXME: We might want to extract NROWS and NCOLS from REF instead of
 // getting them from the caller.
-void
-test(points_type& points, const edges_type& edges,
-      unsigned nrows, unsigned ncols, const mln::image2d<int>& ref)
+void do_test(points_type& points, const edges_type& edges,
+	     unsigned nrows, unsigned ncols, const mln::image2d<int>& ref)
 {
   // Graph.
   typedef util::graph G;
@@ -104,7 +103,7 @@ main()
     edges_type edges;
     edges.push_back(std::make_pair(0, 1));
 
-    test(points, edges, 3, 3, ref);
+    do_test(points, edges, 3, 3, ref);
   }
 
 
@@ -138,6 +137,6 @@ main()
     edges.push_back(std::make_pair(3, 4));
     edges.push_back(std::make_pair(4, 2));
 
-    test(points, edges, 5, 5, ref);
+    do_test(points, edges, 5, 5, ref);
   }
 }

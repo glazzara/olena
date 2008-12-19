@@ -1,3 +1,35 @@
+2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix few tests.
+
+	* doc/tutorial/tutorial.tex: add copyright and improve input code
+	style.
+
+	* tests/Makefile.am: enable registration test.
+
+	* tests/core/routine/clone.cc,
+	* tests/geom/seed2tiling_roundness.cc: update comments.
+
+	* tests/draw/graph.cc,
+	* tests/registration/registration.cc: fix test.
+
+	* headers.mk: add new includes in distributed headers.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_core_concept_meta_fun.cc,
+	* tests/unit_test/mln_core_image_violent_cast_image.cc,
+	* tests/unit_test/mln_fun_v2v_rgb_to_hsl.cc,
+	* tests/unit_test/mln_math_acos.cc,
+	* tests/unit_test/mln_math_cos.cc,
+	* tests/unit_test/mln_opt_at.cc,
+	* tests/unit_test/mln_value_hsl.cc,
+	* tests/unit_test/mln_value_mixin.cc,
+	* tests/unit_test/mln_value_shell.cc: add new unit tests.
+
+	* tests/value/Makefile.am: disable graylevel and float related tests.
+
+	* tests/core/image/Makefile.am: disable tr_image test.
+
 2008-12-18  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Replace some remaining .at by opt::at.
