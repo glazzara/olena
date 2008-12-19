@@ -1,14 +1,24 @@
 2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add version.hh.
+
+	* headers.mk,
+	* generate_dist_headers.sh: make version.hh part of the distribution.
+
+	* mln/version.hh.in: base file used by autotools to generate
+	version.hh.
+
+2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make the doc part of the distribution.
 
 	* doc/Doxyfile.in: make the user doc lighter.
 
 	* doc/Makefile.am: add the doc as extra dist.
 
-	* mln/core/internal/graph_window_base.hh
-	* mln/core/site_set/box.hh
-	* mln/core/site_set/p_complex.hh
+	* mln/core/internal/graph_window_base.hh,
+	* mln/core/site_set/box.hh,
+	* mln/core/site_set/p_complex.hh,
 	* tests/morpho/complex_image_wst.cc,
 	* tests/morpho/tree/data.cc,
 	* trash/display_color_pretty.cc,

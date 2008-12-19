@@ -1,0 +1,11 @@
+/** The address where bug reports should be sent. */
+#undef MLN_PACKAGE_BUGREPORT
+
+/** The full name of this package. */
+#undef MLN_PACKAGE_NAME
+
+/** The full name and version of this package. */
+#undef MLN_PACKAGE_STRING
+
+/** The version of this package. */
+#undef MLN_PACKAGE_VERSION
