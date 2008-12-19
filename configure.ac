@@ -1,6 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
+m4_pattern_forbid([^MLN_])
+
 AC_PREREQ([2.61])
 
 
@@ -8,7 +10,7 @@ AC_PREREQ([2.61])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Olena], [1.0], [olena@lrde.epita.fr], [olena])
+AC_INIT([Olena], [1.0beta], [olena@lrde.epita.fr], [olena])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
@@ -16,7 +18,7 @@ AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
 AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 nostdinc -Wall])
-
+AC_CONFIG_HEADERS([config.h] [milena/mln/version.hh])
 
 ## --------------------- ##
 ## C++ compiler set up.  ##
@@ -136,7 +138,7 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
 ## --------------- ##
 
 # Ask for config.h.
-AM_CONFIG_HEADER([config.h])
+#AM_CONFIG_HEADER([config.h])
 
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
@@ -219,6 +221,7 @@ AC_CONFIG_FILES([
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
     milena/tests/pw/Makefile
+    milena/tests/registration/Makefile
     milena/tests/set/Makefile
     milena/tests/subsampling/Makefile
     milena/tests/tag/Makefile

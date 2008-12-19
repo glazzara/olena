@@ -1,3 +1,12 @@
+2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add missing INSTALL and README.
+
+	* configure.ac: add missing Makefile entry.
+
+	* INSTALL,
+	* README: new files.
+
 2008-12-18  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Add milena/tests/opt/Makefile in configure.ac.
