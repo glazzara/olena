@@ -1,3 +1,9 @@
+2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Do not parse trash directory during doc generation.
+
+	* doc/Doxygen.in: add trash to `Exclude'.
+
 2008-12-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Have site sets comparisons work again.

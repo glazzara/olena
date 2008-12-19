@@ -84,6 +84,7 @@ FILE_PATTERNS          = *.cc	\
 RECURSIVE              = YES
 EXCLUDE                = @top_srcdir@/milena/sandbox			\
                          @top_srcdir@/milena/mln/core/concept/proxy.hxx \
+                         @top_srcdir@/milena/trash			\
 			 @top_srcdir@/milena/doc/tutorial/samples
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
