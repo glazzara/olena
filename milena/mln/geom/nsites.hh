@@ -29,10 +29,11 @@
 # define MLN_GEOM_NSITES_HH
 
 /// \file mln/geom/nsites.hh
+///
 /// Compute the number of sites of an image or a site set.
 
-# include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/image.hh>
+# include <mln/set/card.hh>
 
 
 namespace mln
@@ -41,112 +42,12 @@ namespace mln
   namespace geom
   {
 
-    /// Compute the number of sites of the site set \p input.
-    template <typename S>
-    unsigned nsites(const Site_Set<S>& s);
-
     /// Compute the number of sites of the image \p input.
     template <typename I>
     unsigned nsites(const Image<I>& input);
 
 
 # ifndef MLN_INCLUDE_ONLY
-
-
-    // Implementations.
-
-    namespace impl
-    {
-
-      // Generic version.
-
-      namespace generic
-      {
-
-	template <typename S>
-	unsigned nsites(const Site_Set<S>& s_)
-	{
-	  trace::entering("geom::impl::generic::nsites");
-	  const S& s = exact(s_);
-	  mln_precondition(s.is_valid());
-
-	  unsigned n = 0;
-	  mln_piter(S) p(s);
-	  for_all(p)
-	    ++n;
-
-	  trace::exiting("geom::impl::generic::nsites");
-	  return n;
-	}
-
-      } // end of namespace mln::geom::impl::generic
-
-
-      // A single specialization.
-
-      template <typename S>
-      inline
-      unsigned nsites_method(const Site_Set<S>& s)
-      {
-	trace::entering("geom::impl::nsites_method");
-	unsigned n = exact(s).nsites();
-	trace::exiting("geom::impl::nsites_method");
-	return n;
-      }
-
-    } // end of namespace mln::geom::impl
-
-
-
-    // Dispatch.
-
-    namespace internal
-    {
-
-      template <typename S>
-      inline
-      unsigned nsites_dispatch(mln::trait::site_set::nsites::any,
-			       const Site_Set<S>& s)
-      {
-	return impl::generic::nsites(s);
-      }
-
-      template <typename S>
-      inline
-      unsigned nsites_dispatch(mln::trait::site_set::nsites::known,
-			       const Site_Set<S>& s)
-      {
-	return impl::nsites_method(s);
-      }
-
-      // Dispatch facade.
-
-      template <typename S>
-      inline
-      unsigned nsites_dispatch(const Site_Set<S>& s)
-      {
-	return nsites_dispatch(mln_trait_site_set_nsites(S)(),
-			       s);
-      }
-
-    } // end of namespace mln::geom::internal
-
-
-
-    // Facades.
-
-    template <typename S>
-    inline
-    unsigned nsites(const Site_Set<S>& s)
-    {
-      trace::entering("geom::nsites");
-      mln_precondition(exact(s).is_valid());
-
-      unsigned n = internal::nsites_dispatch(s);
-
-      trace::exiting("geom::nsites");
-      return n;
-    }
 
     template <typename I>
     inline
@@ -158,8 +59,8 @@ namespace mln
       mln_precondition(input.has_data());
       mln_precondition(input.domain().is_valid());
 
-      // Relies on the nsites routines on a site set.
-      unsigned n = internal::nsites_dispatch(input.domain());
+      // Relies on the card routine on a site set.
+      unsigned n = mln::set::internal::card_dispatch(input.domain());
 
       trace::exiting("geom::nsites");
       return n;

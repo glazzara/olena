@@ -174,13 +174,14 @@ namespace mln
   template <typename P>
   std::ostream& operator<<(std::ostream& ostr, const box<P>& b);
 
-  // Procedures
 
   /// Return the minimum box including box \p a and box \p b
   template <typename P>
   inline
   box<P>
   larger_than(const box<P> a, const box<P> b);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 

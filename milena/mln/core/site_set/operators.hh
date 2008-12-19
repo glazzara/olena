@@ -36,7 +36,9 @@
 /// \todo Re-vamp this file now!
 
 
+# include <algorithm>
 # include <mln/core/concept/site_set.hh>
+# include <mln/set/card.hh>
 
 # include <mln/util/yes.hh> // Temporary include.
 
@@ -45,10 +47,12 @@
 namespace mln
 {
 
+  template <typename E> struct Box;
 
 
   template <typename Sl, typename Sr>
-  Sl& operator+=(Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  Sl&
+  operator+=(Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
   /// Equality test between site sets \p lhs and \p rhs.
@@ -59,7 +63,8 @@ namespace mln
   /// \relates mln::Site_Set
   ///
   template <typename Sl, typename Sr>
-  bool operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  bool
+  operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -71,7 +76,8 @@ namespace mln
   /// \relates mln::Site_Set
   ///
   template <typename Sl, typename Sr>
-  bool operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  bool
+  operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -84,7 +90,8 @@ namespace mln
   /// \relates mln::Site_Set
   ///
   template <typename Sl, typename Sr>
-  bool operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+  bool
+  operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
 
 
 
@@ -99,11 +106,312 @@ namespace mln
   /// \relates mln::Site_Set
   ///
   template <typename S>
-  std::ostream& operator<<(std::ostream& ostr, const Site_Set<S>& set);
+  std::ostream&
+  operator<<(std::ostream& ostr, const Site_Set<S>& set);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+
+  namespace internal
+  {
+
+    template <typename Sl, typename Sr>
+    inline
+    std::set< mln_site(Sl), util::ord<mln_site(Sl)> >
+    sym_diff_std_set(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+    {
+      typedef mln_site(Sl) P;
+      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      std::set< P, util::ord<P> > sl, sr, sd;
+      convert::from_to(lhs, sl);
+      convert::from_to(rhs, sr);
+      std::set_symmetric_difference(sl.begin(), sl.end(),
+				    sr.begin(), sr.end(),
+				    std::inserter(sd, sd.begin()),
+				    util::ord<P>());
+      return sd;
+    }
+
+    template <typename S>
+    inline
+    std::set< mln_site(S), util::ord<mln_site(S)> >
+    to_std_set(const Site_Set<S>& s)
+    {
+      std::set< mln_site(S), util::ord<mln_site(S)> > std_s;
+      convert::from_to(s, std_s);
+      return std_s;
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    leq_std_set(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+    {
+      typedef mln_site(Sl) P;
+      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      std::set< P, util::ord<P> > sl, sr;
+      convert::from_to(lhs, sl);
+      convert::from_to(rhs, sr);
+      return std::includes(sr.begin(), sr.end(),
+			   sl.begin(), sl.end(),
+			   util::ord<P>());
+    }
+
+  } // end of namespace mln::internal
+
+
+  namespace impl
+  {
+
+    // Implementations for "operator ==" between site sets.
+
+    template <typename Bl, typename Br>
+    inline
+    bool
+    operator_equal_boxes(const Box<Bl>& lhs_, const Box<Br>& rhs_)
+    {
+      const Bl& lhs = exact(lhs_);
+      const Br& rhs = exact(rhs_);
+      if (lhs.is_empty() != rhs.is_empty())
+	return false;
+      if (lhs.is_empty() && rhs.is_empty())
+	return true;
+      return lhs.pmin() == rhs.pmin() && lhs.pmax() == rhs.pmax();
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_uniques(const Site_Set<Sl>& lhs,
+			   const Site_Set<Sr>& rhs)
+    {
+      if (set::card(lhs) != set::card(rhs))
+	return false;
+      return mln::internal::sym_diff_std_set(lhs, rhs).empty();
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_unique_multiple(const Site_Set<Sl>& lhs,
+				   const Site_Set<Sr>& rhs)
+    {
+      if (set::card(lhs) != set::card(rhs))
+	return false;
+      return mln::internal::to_std_set(lhs) == mln::internal::to_std_set(rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_multiples(const Site_Set<Sl>& lhs,
+			     const Site_Set<Sr>& rhs)
+    {
+      // FIXME: Approximate code...
+      if (set::card(lhs) != set::card(rhs))
+	return false;
+      return mln::internal::to_std_set(lhs) == mln::internal::to_std_set(rhs);
+    }
+
+
+    // Implementations for "operator <" between site sets.
+
+    template <typename Bl, typename Br>
+    inline
+    bool
+    operator_less_boxes(const Box<Bl>& lhs_, const Box<Br>& rhs_)
+    {
+      const Bl& lhs = exact(lhs_);
+      const Br& rhs = exact(rhs_);
+      if (rhs.is_empty())
+	return false;  // We cannot have "lhs < empty_set".
+      // From this line, rhs is not empty.
+      if (lhs.is_empty())
+	return true;  // We have "empty set < a non empty set".
+      // From here, both lhs and rhs are not empty.
+      if (set::card(lhs) >= set::card(rhs))
+	return false;
+      return lhs.crop_wrt(rhs) == lhs;
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_uniques(const Site_Set<Sl>& lhs,
+			  const Site_Set<Sr>& rhs)
+    {
+      if (set::card(lhs) >= set::card(rhs))
+	return false;
+      return mln::internal::leq_std_set(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_unique_multiple(const Site_Set<Sl>& lhs,
+				  const Site_Set<Sr>& rhs)
+    {
+      if (set::card(lhs) >= set::card(rhs))
+	return false;
+      return mln::internal::leq_std_set(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_multiples(const Site_Set<Sl>& lhs,
+			     const Site_Set<Sr>& rhs)
+    {
+      // FIXME: Approximate code...
+      if (set::card(lhs) >= set::card(rhs))
+	return false;
+      return mln::internal::leq_std_set(lhs, rhs);
+    }
+
+  } // end of namespace mln::impl
+
+
+
+
+  namespace internal
+  {
+
+    // Dispatch for "operator ==" between site sets.
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(trait::site_set::arity::unique,
+			    const Box<Sl>& lhs,
+			    trait::site_set::arity::unique,
+			    const Box<Sr>& rhs)
+    {
+      return impl::operator_equal_boxes(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(trait::site_set::arity::unique,
+			    const Site_Set<Sl>& lhs,
+			    trait::site_set::arity::unique,
+			    const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_equal_uniques(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(trait::site_set::arity::unique,
+			    const Site_Set<Sl>& lhs,
+			    trait::site_set::arity::multiple,
+			    const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_equal_unique_multiple(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(trait::site_set::arity::multiple,
+			    const Site_Set<Sl>& lhs,
+			    trait::site_set::arity::unique,
+			    const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_equal_unique_multiple(rhs, lhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(trait::site_set::arity::multiple,
+			    const Site_Set<Sl>& lhs,
+			    trait::site_set::arity::multiple,
+			    const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_equal_multiples(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_equal_dispatch(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+    {
+      return operator_equal_dispatch(mln_trait_site_set_arity(Sl)(), exact(lhs),
+				     mln_trait_site_set_arity(Sr)(), exact(rhs));
+    }
+
+
+    // Dispatch for "operator <" between site sets.
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(trait::site_set::arity::unique,
+			   const Box<Sl>& lhs,
+			   trait::site_set::arity::unique,
+			   const Box<Sr>& rhs)
+    {
+      return impl::operator_less_boxes(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(trait::site_set::arity::unique,
+			   const Site_Set<Sl>& lhs,
+			   trait::site_set::arity::unique,
+			   const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_less_uniques(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(trait::site_set::arity::unique,
+			   const Site_Set<Sl>& lhs,
+			   trait::site_set::arity::multiple,
+			   const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_less_unique_multiple(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(trait::site_set::arity::multiple,
+			   const Site_Set<Sl>& lhs,
+			   trait::site_set::arity::unique,
+			   const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_less_unique_multiple(rhs, lhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(trait::site_set::arity::multiple,
+			   const Site_Set<Sl>& lhs,
+			   trait::site_set::arity::multiple,
+			   const Site_Set<Sr>& rhs)
+    {
+      return impl::operator_less_multiples(lhs, rhs);
+    }
+
+    template <typename Sl, typename Sr>
+    inline
+    bool
+    operator_less_dispatch(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+    {
+      return operator_less_dispatch(mln_trait_site_set_arity(Sl)(), exact(lhs),
+				    mln_trait_site_set_arity(Sr)(), exact(rhs));
+    }
+
+  } // end of namespace mln::internal
 
 
   // Operator +=.
@@ -129,45 +437,10 @@ namespace mln
   template <typename Sl, typename Sr>
   inline
   bool
-  operator==(const Site_Set<Sl>&, const Site_Set<Sr>&)
+  operator==(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
   {
-//     // FIXME: Same grid!
-//     const Sl& lhs = exact(lhs_);
-//     const Sr& rhs = exact(rhs_);
-
-//     // exhaustive test:
-//     mln_fwd_piter(Sl) pl(lhs);
-//     mln_fwd_piter(Sr) pr(rhs);
-//     for (pl.start(),      pr.start();
-// 	 pl.is_valid() && pr.is_valid();
-// 	 pl.next(),       pr.next())
-//       if (pl != pr)
-// 	return false; // difference found
-
-//     // both sets are equal only if both browsings are completed
-//     // at the same time:
-//     return ! pl.is_valid() && ! pr.is_valid();
-    return util::yes(true);
-  }
-
-
-  // Operator <=.
-
-  template <typename Sl, typename Sr>
-  inline
-  bool
-  operator<=(const Site_Set<Sl>&, const Site_Set<Sr>&)
-  {
-//     // FIXME: Same grid!
-//     const Sl& lhs = exact(lhs_);
-//     const Sr& rhs = exact(rhs_);
-
-//     // exhaustive test:
-//     mln_piter(Sl) pl(lhs);
-//     for_all(pl)
-//       if (! rhs.has(pl))
-// 	return false;
-    return util::yes(true);
+    mlc_equal(mln_site(Sl), mln_site(Sr))::check();
+    return internal::operator_equal_dispatch(lhs, rhs);
   }
 
 
@@ -176,13 +449,24 @@ namespace mln
   template <typename Sl, typename Sr>
   inline
   bool
-  operator<(const Site_Set<Sl>&, const Site_Set<Sr>&)
+  operator<(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
   {
-//     // FIXME: Same grid!
-//     const Sl& lhs = exact(lhs_);
-//     const Sr& rhs = exact(rhs_);
-//     return lhs <= rhs && lhs != rhs;
-    return util::yes(true);
+    mlc_equal(mln_site(Sl), mln_site(Sr))::check();
+    return internal::operator_less_dispatch(lhs, rhs);
+  }
+
+
+  // Operator <=.
+
+  template <typename Sl, typename Sr>
+  inline
+  bool
+  operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+  {
+    mlc_equal(mln_site(Sl), mln_site(Sr))::check();
+    if (set::card(lhs) > set::card(rhs))
+      return false;
+    return lhs < rhs || lhs == rhs;
   }
 
 

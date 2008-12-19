@@ -1,3 +1,27 @@
+2008-12-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Have site sets comparisons work again.
+
+	* mln/core/site_set/box.hh: Layout.
+	* mln/core/site_set/operators.hh: Have it work.
+	* mln/core/concept/box.hh (is_empty): New.
+	* mln/core/concept/site_set.hh: Layout.
+	* mln/geom/nsites.hh (nistes): Rename site set overload as...
+	* mln/set/card.hh (card): ...this...
+	...in this new file.
+	* mln/set/sym_diff.hh: Add fwd decl.
+	* mln/set/unique.hh: New.
+	* mln/set/all.hh: Update.
+	* tests/core/site_set/operators.cc: Revamp.
+	* tests/geom/nsites.cc: New.
+	* tests/geom/Makefile.am: Update.
+	* tests/set/uni.cc: Fix include.
+	* tests/set/sym_diff.cc: Likewise.
+	* tests/set/inter.cc: Likewise.
+	* tests/set/unique.cc: New.
+	* tests/set/card.cc: New.
+	* tests/set/Makefile.am: Update.
+
 2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add version.hh.

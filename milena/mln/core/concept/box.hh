@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_CORE_CONCEPT_BOX_HH
 # define MLN_CORE_CONCEPT_BOX_HH
 
-/*! \file mln/core/concept/box.hh
- *
- * \brief Definition of the concept of mln::Box.
- */
+/// \file mln/core/concept/box.hh
+///
+/// Definition of the concept of mln::Box.
 
 # include <mln/core/concept/site_set.hh>
 
@@ -84,21 +84,13 @@ namespace mln
      */
     unsigned nsites() const;
 
+    /// Test if this box is empty.
+    bool is_empty() const;
+
   protected:
     Box();
   };
 
-
-
-  /*! \brief Equality test between boxes \p lhs and \p rhs.
-   *
-   * \param[in] lhs A box.
-   * \param[in] rhs Another box.
-   *
-   * \relates mln::Box
-   */
-  template <typename Bl, typename Br>
-  bool operator==(const Box<Bl>& lhs, const Box<Br>& rhs);
 
 
 
@@ -141,7 +133,10 @@ namespace mln
   inline
   unsigned Box<E>::len(unsigned i) const
   {
-    return 1 + exact(this)->pmax()[i] - exact(this)->pmin()[i];
+    return
+      exact(this)->is_valid()
+      ? 1 + exact(this)->pmax()[i] - exact(this)->pmin()[i]
+      : 0u;
   }
 
   template <typename E>
@@ -169,18 +164,17 @@ namespace mln
     return count;
   }
 
+  template <typename E>
+  inline
+  bool
+  Box<E>::is_empty() const
+  {
+    // A non-valid box is empty.
+    return ! exact(this)->is_valid();
+  }
+
 
   // Operators.
-
-  template <typename Bl, typename Br>
-  inline
-  bool operator==(const Box<Bl>& lhs_, const Box<Br>& rhs_)
-  {
-    // FIXME: Same grid!
-    const Bl& lhs = exact(lhs_);
-    const Br& rhs = exact(rhs_);
-    return lhs.pmin() == rhs.pmin() && lhs.pmax() == rhs.pmax();
-  }
 
   template <typename Bl, typename Br>
   inline

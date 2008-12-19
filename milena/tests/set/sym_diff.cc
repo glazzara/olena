@@ -31,7 +31,7 @@
 /// Tests on mln::set::sym_diff.
 
 #include <mln/set/sym_diff.hh>
-#include <mln/core/alias/dpoint2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 
 int main()
@@ -56,9 +56,9 @@ int main()
   mln_assertion(pst3.has(point2d( 2, 1)));
   mln_assertion(pst3.has(point2d( 0, 0)));
   mln_assertion(pst3.has(point2d( 1, 1)));
-  mln_assertion(!pst3.has(point2d( 2, 7)));
   mln_assertion(pst3.has(point2d(-2, 1)));
-  mln_assertion(!pst3.has(point2d(-4, 0)));
   mln_assertion(pst3.has(point2d( 1,-1)));
-  mln_assertion(!pst3.has(point2d( 6, 5)));
+  mln_assertion(! pst3.has(point2d( 2, 7)));
+  mln_assertion(! pst3.has(point2d(-4, 0)));
+  mln_assertion(! pst3.has(point2d( 6, 5)));
 }

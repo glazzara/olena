@@ -32,7 +32,8 @@
 /// \file mln/set/all.hh
 ///
 /// File that includes all set-related routines.
-
+///
+/// \todo Move geom::sites here (set::nsites).
 
 namespace mln
 {
@@ -43,6 +44,7 @@ namespace mln
 }
 
 
+# include <mln/set/card.hh>
 # include <mln/set/compute.hh>
 # include <mln/set/diff.hh>
 # include <mln/set/inter.hh>
@@ -50,6 +52,7 @@ namespace mln
 # include <mln/set/has.hh>
 # include <mln/set/sym_diff.hh>
 # include <mln/set/uni.hh>
+# include <mln/set/unique.hh>
 
 
 #endif // ! MLN_SET_ALL_HH

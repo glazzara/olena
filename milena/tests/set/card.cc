@@ -26,54 +26,24 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/site_set/operators.cc
+/// \file tests/set/card.cc
 ///
-/// Tests of operators on mln::Site_Set.
+/// Tests on mln::set::card.
 
-#include <mln/core/site_set/p_set.hh>
-#include <mln/core/routine/ops.hh>
+#include <mln/core/site_set/p_array.hh>
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/alias/box2d.hh>
+#include <mln/set/card.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  point2d a(0,0), b(1,1), c(2,2);
-
-  {
-    p_set<point2d> s1, s2;
-    s1.insert(a);
-    s2.insert(b);
-    mln_assertion(s1 != s2);
-    mln_assertion(! (s1 == s2));
-    mln_assertion(! (s1 < s2));
-    mln_assertion(! (s1 <= s2));
-    mln_assertion(! (s1 > s2));
-    mln_assertion(! (s1 >= s2));
-  }
-
-  {
-    p_set<point2d> s1, s2;
-    s1.insert(a);
-    s2.insert(b);
-    s2.insert(a);
-    mln_assertion(s1 != s2);
-    mln_assertion(s1 < s2);
-    mln_assertion(s1 <= s2);
-    mln_assertion(s2 > s1);
-    mln_assertion(! (s1 == s2));
-    mln_assertion(! (s1 > s2));
-    mln_assertion(! (s1 >= s2));
-  }
-
-  {
-    box2d
-      b1 = make::box2d(0,0, 1,1),
-      b2 = make::box2d(0,0, 1,2);
-    mln_assertion(b1 < b2);
-    mln_assertion(! (b1 < b1));
-    mln_assertion(! (b2 < b1));
-  }
+  p_array<point2d> a;
+  a.insert(point2d(1, 1));
+  a.insert(point2d(0, 0));
+  a.insert(point2d(0, 0));
+  a.insert(point2d(1, 1));
+  a.insert(point2d(1, 1));
+  mln_assertion(set::card(a) == a.nsites());
 }

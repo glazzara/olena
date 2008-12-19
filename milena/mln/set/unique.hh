@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,12 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_SET_SYM_DIFF_HH
-# define MLN_SET_SYM_DIFF_HH
+#ifndef MLN_SET_UNIQUE_HH
+# define MLN_SET_UNIQUE_HH
 
-/// \file mln/set/sym_diff.hh
+/// \file mln/set/unique.hh
 ///
-/// Set theoretic symmetrical difference of a couple of sets.
+/// Give the unique set.
 
 # include <algorithm>
 # include <iterator>
@@ -41,48 +40,38 @@
 # include <mln/util/ord.hh>
 
 
-
 namespace mln
 {
-
-  template <typename P> class p_set;
-  
 
   namespace set
   {
 
-    /// Set theoretic symmetrical difference of \p lhs and \p rhs.
+    /// Give the unique set of \p s.
     ///
     /// \relates mln::Site_Set
     ///
-    template <typename Sl, typename Sr>
-    p_set<mln_site(Sl)>
-    sym_diff(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs);
+    template <typename S>
+    p_set<mln_site(S)>
+    unique(const Site_Set<S>& s);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename Sl, typename Sr>
+    template <typename S>
     inline
-    p_set<mln_site(Sl)>
-    sym_diff(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
+    p_set<mln_site(S)>
+    unique(const Site_Set<S>& s)
     {
-      trace::entering("set::sym_diff");
+      trace::entering("set::unique");
 
-      typedef mln_site(Sl) P;
-      mlc_converts_to(mln_psite(Sr), P)::check(); 
-      std::set< P, util::ord<P> > sl, sr, sd;
-      convert::from_to(lhs, sl);
-      convert::from_to(rhs, sr);
-      std::set_symmetric_difference(sl.begin(), sl.end(),
-				    sr.begin(), sr.end(),
-				    std::inserter(sd, sd.begin()),
-				    util::ord<P>());
-      p_set<P> s;
-      convert::from_to(sd, s);
+      typedef mln_site(S) P;
+      std::set< P, util::ord<P> > s_;
+      convert::from_to(s, s_);
+      p_set<P> su;
+      convert::from_to(s_, su);
 
-      trace::exiting("set::sym_diff");
-      return s;
+      trace::exiting("set::unique");
+      return su;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -92,4 +81,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_SET_SYM_DIFF_HH
+#endif // ! MLN_SET_UNIQUE_HH

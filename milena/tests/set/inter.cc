@@ -31,8 +31,7 @@
 /// Tests on mln::set::inter.
 
 #include <mln/set/inter.hh>
-#include <mln/core/alias/dpoint2d.hh>
-#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/point2d.hh>
 
 
 int main()
