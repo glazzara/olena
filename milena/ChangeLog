@@ -1,5 +1,16 @@
 2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make the tutorial part of the distribution.
+
+	* milena/Makefile.am: add target `tutorial'.
+
+	* milena/doc/Doxyfile.in: Use short file names.
+
+	* milena/doc/Makefile.am,
+	* milena/doc/tutorial/Makefile.am: add documentation to EXTRA_DIST.
+
+2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix few tests.
 
 	* doc/tutorial/tutorial.tex: add copyright and improve input code

@@ -6,13 +6,13 @@ SUBDIRS = tutorial
 
 DOXYGEN = doxygen
 
-.PHONY: doc user-doc complete-doc html_complete html_user tuto
+.PHONY: doc user-doc complete-doc html_complete html_user tutorial
 
-doc: complete-doc
+doc: user-doc
 
 complete-doc: html_complete
 
-user-doc: html_user tuto
+user-doc: html_user
 
 html_complete: Doxyfile tuto_html 
 	$(DOXYGEN) Doxyfile_complete
@@ -23,8 +23,8 @@ html_user: Doxyfile tuto_html
 tuto_html:
 	$(MAKE) -C tutorial tuto_html
 
-tuto: all
-	$(MAKE) -C tutorial tuto
+tutorial: all
+	$(MAKE) -C tutorial tutorial
 
 fix-refdata:
 	$(MAKE) -C tutorial fix-refdata
@@ -55,10 +55,12 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY     
 
 
 
-EXTRA_DIST = Doxyfile.in
+EXTRA_DIST = 	\
+Doxyfile.in 
 
-CLEANFILES = Doxyfile_complete \
-	     Doxyfile_user
+CLEANFILES = 		\
+Doxyfile_complete 	\
+Doxyfile_user 		
 
 # Sed is used to generate Doxyfile from Doxyfile.in instead of
 # configure, because the former is way faster than the latter.

@@ -8,9 +8,12 @@ SUBDIRS = 	\
   tools
 #  apps
 
-.PHONY: doc
+.PHONY: doc tutorial
 doc:
 	$(MAKE) -C doc doc
+
+tutorial:
+	$(MAKE) -C doc tutorial
 
 include $(top_srcdir)/milena/headers.mk
 
