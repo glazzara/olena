@@ -2,7 +2,7 @@
 
 include $(top_srcdir)/milena/doc/doc.mk
 
-bin_PROGRAMS =			\
+noinst_PROGRAMS =		\
   accu-right-instanciation 	\
   borderthickness 		\
   box2d-bbox 			\
@@ -44,7 +44,7 @@ bin_PROGRAMS =			\
   win-create-1 			\
   win-create-2
 
-bin_PROGRAMS += \
+noinst_PROGRAMS += \
 tuto1_first_image
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
@@ -96,7 +96,7 @@ all: clean-figures
 
 run-samples: all
 	@failcom='exit 1'; 						\
-	list='$(bin_PROGRAMS)'; for bin in $$list; do 			\
+	list='$(noinst_PROGRAMS)'; for bin in $$list; do 		\
 	  echo "Running $$bin"; 					\
 	  ./$$bin > $(OUTPUTS_BUILDDIR)/$$bin.txt || eval $$failcom; 	\
 	done

@@ -28,6 +28,7 @@ ALIASES                =
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 BUILTIN_STL_SUPPORT    = YES
+IDL_PROPERTY_SUPPORT   = NO
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
 #---------------------------------------------------------------------------
@@ -48,16 +49,18 @@ HIDE_SCOPE_NAMES       = NO
 SHOW_INCLUDE_FILES     = YES
 INLINE_INFO            = YES
 SORT_MEMBER_DOCS       = YES
-SORT_BRIEF_DOCS        = NO
-SORT_BY_SCOPE_NAME     = NO
+SORT_BRIEF_DOCS        = YES
+SORT_BY_SCOPE_NAME     = YES
 GENERATE_TODOLIST      = YES
 GENERATE_TESTLIST      = YES
 GENERATE_BUGLIST       = YES
 GENERATE_DEPRECATEDLIST= YES
 ENABLED_SECTIONS       = 
 MAX_INITIALIZER_LINES  = 30
-SHOW_USED_FILES        = YES
-SHOW_DIRECTORIES       = YES
+SHOW_USED_FILES        = NO # Disabled for light doc
+SHOW_DIRECTORIES       = NO # Disabled for light doc
+SHOW_FILES	       = NO # Disabled for light doc
+SHOW_NAMESPACES	       = YES
 FILE_VERSION_FILTER    = 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -84,7 +87,7 @@ EXCLUDE                = @top_srcdir@/milena/sandbox			\
 			 @top_srcdir@/milena/doc/tutorial/samples
 EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = *spe.hh
-EXCLUDE_SYMBOLS	       =
+EXCLUDE_SYMBOLS	       = 
 EXAMPLE_PATH           = @top_srcdir@/milena/doc/tutorial/samples   \
 			 @top_builddir@/milena/doc/tutorial/samples \
 			 @top_builddir@/milena/doc/tutorial/outputs \ 
@@ -105,7 +108,7 @@ INLINE_SOURCES         = NO
 STRIP_CODE_COMMENTS    = YES
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
-REFERENCES_LINK_SOURCE = YES
+REFERENCES_LINK_SOURCE = NO
 USE_HTAGS              = NO
 VERBATIM_HEADERS       = YES
 #---------------------------------------------------------------------------
@@ -300,23 +303,23 @@ CLASS_DIAGRAMS         = YES
 HIDE_UNDOC_RELATIONS   = YES
 HAVE_DOT               = YES
 CLASS_GRAPH            = YES
-COLLABORATION_GRAPH    = YES
-GROUP_GRAPHS           = YES
+COLLABORATION_GRAPH    = NO # Disabled for light doc
+GROUP_GRAPHS           = NO # Disabled for light doc
 UML_LOOK               = NO
 TEMPLATE_RELATIONS     = YES
-INCLUDE_GRAPH          = YES
-INCLUDED_BY_GRAPH      = YES
+INCLUDE_GRAPH          = NO # Disabled for light doc
+INCLUDED_BY_GRAPH      = NO # Disabled for light doc
 CALL_GRAPH             = NO
 CALLER_GRAPH           = NO
 GRAPHICAL_HIERARCHY    = YES
-DIRECTORY_GRAPH        = YES
+DIRECTORY_GRAPH        = NO # Disabled for light doc
 DOT_IMAGE_FORMAT       = png
 DOT_PATH               = 
 DOTFILE_DIRS           = 
 MAX_DOT_GRAPH_DEPTH    = 1000
 DOT_TRANSPARENT        = NO
 DOT_MULTI_TARGETS      = NO
-GENERATE_LEGEND        = YES
+GENERATE_LEGEND        = NO # Disabled for light doc
 DOT_CLEANUP            = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to the search engine   

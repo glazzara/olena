@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/tree/parent.cc
+/// \file tests/morpho/tree/data.cc
 ///
-/// Tests on mln::morpho::tree::parent.
+/// Tests on mln::morpho::tree::data.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>

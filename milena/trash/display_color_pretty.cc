@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/display/color_pretty.cc
- *
- * \brief Tests on mln::display::color::pretty.
- */
+/// \file tests/display/color_pretty.cc
+///
+/// Tests on mln::display::color::pretty.
 
 # include <mln/core/image/image2d.hh>
 # include <mln/value/int_u8.hh>

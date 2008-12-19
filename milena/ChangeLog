@@ -1,3 +1,24 @@
+2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Make the doc part of the distribution.
+
+	* doc/Doxyfile.in: make the user doc lighter.
+
+	* doc/Makefile.am: add the doc as extra dist.
+
+	* mln/core/internal/graph_window_base.hh
+	* mln/core/site_set/box.hh
+	* mln/core/site_set/p_complex.hh
+	* tests/morpho/complex_image_wst.cc,
+	* tests/morpho/tree/data.cc,
+	* trash/display_color_pretty.cc,
+	* doc/benchmark/canvas.cc,
+	* doc/examples/erosion.cc: fix doxygen warnings.
+	
+	* doc/tutorial/samples/Makefile.am: do not install sample programs.
+
+	* mln/fun/l2l/relabel.hh: fix wrong guards.
+
 2008-12-18  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make the tutorial part of the distribution.

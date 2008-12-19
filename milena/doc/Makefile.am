@@ -51,12 +51,13 @@ edit_user = sed -e 's,OUTPUT_DIRECTORY       = ./complete/,OUTPUT_DIRECTORY     
 		-e 's,INTERNAL_DOCS          = YES,INTERNAL_DOCS          = NO,g'			\
 		-e 's,GENERATE_TODOLIST      = YES,GENERATE_TODOLIST      = NO,g'			\
 		-e 's,PROJECT_NUMBER         = \",PROJECT_NUMBER          = \"User documentation ,g'	\
-		-e 's,EXCLUDE_SYMBOLS	     =,EXCLUDE_SYMBOLS	       	  = *::internal*,g'	
+		-e 's,EXCLUDE_SYMBOLS	       =,EXCLUDE_SYMBOLS	  = *::internal* *_ mln::trait::*,g'	
 
 
 
-EXTRA_DIST = 	\
-Doxyfile.in 
+EXTRA_DIST = 			\
+Doxyfile.in 			\
+$(top_builddir)/milena/doc/user
 
 CLEANFILES = 		\
 Doxyfile_complete 	\

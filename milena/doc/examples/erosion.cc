@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file doc/examples/my_test.cc
+/// \file doc/examples/erosion.cc
 ///
 /// Test on mln::morpho::hit_or_miss.
 

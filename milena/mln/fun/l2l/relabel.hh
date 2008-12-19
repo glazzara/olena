@@ -25,10 +25,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_L2L_ARRAY_HH
-# define MLN_FUN_L2L_ARRAY_HH
+#ifndef MLN_FUN_L2L_RELABEL_HH
+# define MLN_FUN_L2L_RELABEL_HH
 
-/// \file mln/fun/l2l/array.hh
+/// \file mln/fun/l2l/relabel.hh
 ///
 /// Function mapping a label to a new one.
 /// \sa mln::labeling::relabel
@@ -204,4 +204,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_FUN_L2L_ARRAY_HH
+#endif // ! MLN_FUN_L2L_RELABEL_HH

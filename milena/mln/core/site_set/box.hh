@@ -176,7 +176,7 @@ namespace mln
 
   // Procedures
 
-  /// Return the minimum box including box \p a and box \b
+  /// Return the minimum box including box \p a and box \p b
   template <typename P>
   inline
   box<P>

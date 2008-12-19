@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file doc/bench/canvas.cc
+/// \file doc/benchmark/canvas.cc
 ///
 /// Test on mln::labeling::level.
 

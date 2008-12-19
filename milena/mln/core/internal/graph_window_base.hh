@@ -30,7 +30,7 @@
 
 # include <mln/core/concept/window.hh>
 
-/// \file mln/internal/graph_window_base.hh
+/// \file mln/core/internal/graph_window_base.hh
 ///
 /// FIXME: doc
 

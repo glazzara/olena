@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/morpho/complex_image_swt.cc
+/// \file tests/morpho/complex_image_wst.cc
 ///
 /// Testing Meyer's Watershed Transform on mln::complex_image.
 

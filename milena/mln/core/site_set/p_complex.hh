@@ -29,7 +29,8 @@
 # define MLN_CORE_SITE_SET_P_COMPLEX_HH
 
 /// \file mln/core/site_set/p_complex.hh
-/// \brief Definition of a point set based on a complex.
+///
+/// Definition of a point set based on a complex.
 
 # include <mln/core/internal/site_set_base.hh>
 
@@ -103,7 +104,7 @@ namespace mln
 
   /* FIXME: Aggregate site data (location).  */
 
-  /** \brief A complex psite set based on the N-faces of a complex
+  /** A complex psite set based on the N-faces of a complex
       of dimension \tparam D (a \p D-complex).
 
       \arg \p D The dimension of the complex.
@@ -118,9 +119,10 @@ namespace mln
     typedef internal::site_set_base_< complex_psite<D, G>, self_ > super_;
 
   public:
-    /// \brief Construct a complex psite set from a complex.
+    /// Construct a complex psite set from a complex.
     ///
     /// \param cplx The complex upon which the complex psite set is built.
+    /// \param geom FIXME
     p_complex(const topo::complex<D>& cplx, const G& geom);
 
     /// Associated types.
@@ -141,7 +143,7 @@ namespace mln
     typedef fwd_piter piter;
     /// \}
 
-    /// \brief Return The number of sites of the set, i.e., the number
+    /// Return The number of sites of the set, i.e., the number
     /// of \em faces.
     ///
     /// (Required by the mln::Site_Set concept, since the property
@@ -201,7 +203,7 @@ namespace mln
   };
 
 
-  /// \brief Comparison between two mln::p_complex's.
+  /// Comparison between two mln::p_complex's.
   ///
   /// Two mln::p_complex's are considered equal if they share the
   /// same complex.
@@ -209,7 +211,7 @@ namespace mln
   bool
   operator==(const p_complex<D, G>& lhs, const p_complex<D, G>& rhs);
 
-  /// \brief Inclusion of a mln::p_complex in another one.
+  /// Inclusion of a mln::p_complex in another one.
   ///
   /// This inclusion relation is very strict for the moment, since our
   /// infrastrure for complexs is simple: a mln::p_complex is included
