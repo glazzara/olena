@@ -1,5 +1,13 @@
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing update.
+
+	* headers.mk: Update.
+	* tests/unit_test/mln_level_assign.cc: Remove.
+	* tests/unit_test/Makefile.am: Update.
+
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move level::fill and level::paste into data::.
 
 	* mln/data: New directory.
