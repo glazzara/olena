@@ -371,7 +371,7 @@ namespace mln
       general_dispatch_wrt_win(const Op& op, const I& input, const win::rectangle2d& win)
       {
 	if (win.size() == 1)
-	  return clone(input);
+	  return duplicate(input);
 	if (win.size() <= 9) // FIXME: Hard-coded!
 	  return general_dispatch_for_generic(op, input, win);
 	return impl::general_rectangle2d(op, input, win);
@@ -414,7 +414,7 @@ namespace mln
       general_dispatch_wrt_win(const Op& op, const I& input, const win::line<M,i,C>& win)
       {
 	if (win.size() == 1)
-	  return clone(input);
+	  return duplicate(input);
 	else if (win.size() == 3)
 	  return general_dispatch_for_generic(op, input, win);
 	else
@@ -456,7 +456,7 @@ namespace mln
       general_dispatch_diagonal(const Op& op, const I& input, const W& win)
       {
 	if (win.size() == 1)
-	  return clone(input);
+	  return duplicate(input);
 	else if (win.size() == 3)
 	  return general_dispatch_for_generic(op, input, win);
 	else

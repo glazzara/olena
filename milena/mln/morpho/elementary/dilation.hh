@@ -72,7 +72,7 @@ namespace mln
 	  bool val[] =
 	    {
 	      0, // ext_value
-	      1, // do_clone
+	      1, // do_duplicate
 	      0, // on_input_p
 	      1, // on_input_n
 	      1, // output_p

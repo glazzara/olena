@@ -5,7 +5,7 @@ int main()
 
   // \{
   image2d<int> ima1(5, 5);
-  image2d<int> ima3 = clone(ima1); // Makes a deep copy.
+  image2d<int> ima3 = duplicate(ima1); // Makes a deep copy.
 
   point2d p(2, 2);
   ima3(p) = 3;

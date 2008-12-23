@@ -40,7 +40,7 @@
 #include <mln/value/int_s16.hh>
 
 
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/level/apply.hh>
 #include <mln/debug/iota.hh>
 
@@ -62,7 +62,7 @@ namespace mln
   void
   chck(I& ref)
   {
-    I out = clone (ref);
+    I out = duplicate (ref);
 
     mln_piter(I) p (ref.domain ());
 

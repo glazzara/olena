@@ -51,7 +51,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_u16.hh>
 
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
@@ -120,13 +120,13 @@ int main(int argc, char* argv[])
   unsigned nregions = mln_max(unsigned);
   unsigned max_nregions = atoi(argv[1]);
 
-  ima_t result = clone(lg_ima);
+  ima_t result = duplicate(lg_ima);
   while (area < max_area && nregions > max_nregions)
     {
       ++area;
       std::cerr << "area = " << area << " \t"
 		<< "nregions = " << nregions << std::endl;
-      ima_t work = clone(result);
+      ima_t work = duplicate(result);
       // Compute the closing.
       morpho::closing_area_on_vertices(work, nbh, area, result);
       // Compute the number of local minima (but get rid of the image,

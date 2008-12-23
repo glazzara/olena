@@ -105,7 +105,7 @@ namespace mln
 	extension::adjust_fill(input, win, true);
 
 	O output;
-	output = clone(input);
+	output = duplicate(input);
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);
@@ -137,7 +137,7 @@ namespace mln
 	extension::adjust_fill(input, win, true);
 
 	O output;
-	output = clone(input);
+	output = duplicate(input);
 
 	mln_pixter(const I) p(input);
 	mln_qixter(const I, W) q(p, win);

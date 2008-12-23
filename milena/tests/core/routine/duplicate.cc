@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,54 +26,45 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ROUTINE_CLONE_HH
-# define MLN_CORE_ROUTINE_CLONE_HH
+/// \file tests/core/routine/duplicate.cc
+///
+/// Tests on mln::duplicate.
 
-/*! \file mln/core/routine/clone.hh
- *
- * \brief Clone an image, that is, get an effective copy.
- */
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/sub_image.hh>
 
-# include <mln/core/concept/image.hh>
-# include <mln/core/routine/init.hh>
-# include <mln/data/fill.hh>
+#include <mln/debug/iota.hh>
+#include <mln/debug/println.hh>
+
+#include <mln/core/routine/duplicate.hh>
 
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
+  image2d<int> ima(3, 3, 51);
+  debug::iota(ima);
 
-  /*! \brief Clone the image \p model with the values of the image \p
-   *  data.
-   *
-   * \param[in] model The image to be cloneed.
-   * \result The clone.
-   *
-   * \pre model.has_data
-   */
-  template <typename I>
-  mln_concrete(I) clone(const Image<I>& model);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-  template <typename I>
-  inline
-  mln_concrete(I) clone(const Image<I>& model)
   {
-    // FIXME: Add a static check that mln_concrete(I) actually *is* concrete...
-    trace::entering("core::clone");
+    box2d b = make::box2d(2,2);
+    std::cout << border::find( duplicate(ima | b) ) << std::endl;
 
-    mln_concrete(I) tmp;
-    initialize(tmp, model);
-    data::fill(tmp, model);
-
-    trace::exiting("core::clone");
-    return tmp;
+    debug::println(ima | b);
+    debug::println(duplicate(ima | b));
   }
 
-# endif // ! MLN_INCLUDE_ONLY
+  {
+    image2d<int> ima_ = duplicate(ima);
+    std::cout << ima_.border() << std::endl;
+    ima_(point2d(1,1)) = 51;
+    debug::println(ima);
+  }
+  
+  {
+    image2d<int> ima_( ima );
+    ima_(point2d(1,1)) = 51;
+    debug::println(ima);
+  }
 
-} // end of namespace mln
-
-
-#endif // ! MLN_CORE_ROUTINE_CLONE_HH
+}

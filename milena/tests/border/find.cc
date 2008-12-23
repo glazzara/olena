@@ -35,7 +35,7 @@
 
 #include <mln/debug/iota.hh>
 #include <mln/border/find.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 
 
 
@@ -46,5 +46,5 @@ int main()
   debug::iota(ima);
 
   box2d b = make::box2d(2,2);
-  mln_assertion(border::find( clone(ima | b)) == 51);
+  mln_assertion(border::find( duplicate(ima | b)) == 51);
 }

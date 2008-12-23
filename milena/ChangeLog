@@ -1,5 +1,50 @@
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Rename mln::clone as mln::duplicate.
+
+	Clone is renamed for a couple of reasons:
+	- a kernel routine is named clone so the user can get strange
+	  errors when missing including mln/routine/clone;
+	- clone is a cs term and it is not very expressive for image
+	  processing partitioners.
+
+	* mln/core/routine/clone.hh: Rename as...
+	* mln/core/routine/duplicate.hh: ...this.
+	* tests/core/routine/clone.cc: Rename as...
+	* tests/core/routine/duplicate.cc: ...this.
+	* tests/unit_test/mln_core_routine_clone.cc: Rename as...
+	* tests/unit_test/mln_core_routine_duplicate.cc: ...this.
+
+	* mln/core/image/plain.hh,
+	* mln/core/routine/essential.hh,
+	* mln/core/routine/all.hh,
+	* mln/transform/internal/influence_zone_functor.hh,
+	* mln/border/resize.hh,
+	* mln/geom/seeds2tiling_roundness.hh,
+	* mln/geom/seeds2tiling.hh,
+	* mln/geom/resize.hh,
+	* mln/morpho/elementary/dilation.hh,
+	* mln/morpho/elementary/like_ero_set.hh,
+	* mln/morpho/elementary/gradient_internal.hh,
+	* mln/morpho/elementary/erosion.hh,
+	* mln/morpho/elementary/gradient_external.hh,
+	* mln/morpho/erosion.hh,
+	* mln/morpho/general.spe.hh,
+	* mln/morpho/dilation.hh,
+	* mln/morpho/includes.hh,
+	* mln/canvas/distance_geodesic.hh,
+	* tools/area_flooding.cc,
+	* tests/arith/plus.cc,
+	* tests/level/transform_inplace.cc,
+	* tests/level/apply_full.cc,
+	* tests/level/saturate_full.cc,
+	* tests/border/find_full.cc,
+	* tests/border/find.cc,
+	* doc/tutorial/samples/ima2d-6-clone.cc (clone): Replace by...
+	(duplicate): ...this.
+
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing updates in mln data guards.
 
 	* mln/data/paste.spe.hh,

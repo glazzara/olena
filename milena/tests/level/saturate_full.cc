@@ -40,7 +40,7 @@
 #include <mln/value/int_s16.hh>
 
 
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/level/saturate.hh>
 #include <mln/debug/iota.hh>
 

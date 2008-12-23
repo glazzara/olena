@@ -40,7 +40,7 @@
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/site_set/p_priority.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
@@ -88,7 +88,7 @@ namespace mln
 	I& ima = exact(ima_);
 	const N& nbh = exact(nbh_);
 	image2d<unsigned> dist = geom::chamfer(ima, w_win, max);
-	I out = clone(ima_);
+	I out = duplicate(ima_);
 	p_priority<mln_psite(I), p_queue_fast<unsigned> > q;
 
 	// Init.

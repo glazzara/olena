@@ -35,7 +35,7 @@
  */
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/metal/is_not_const.hh>
 
 
@@ -126,7 +126,7 @@ namespace mln
     template <typename I>
     inline
     data< plain<I> >::data(const I& ima)
-      : ima_(clone(ima))
+      : ima_(duplicate(ima))
     {
     }
 
@@ -196,7 +196,7 @@ namespace mln
   plain<I>::operator I () const
   {
     mln_precondition(this->has_data());
-    return clone(this->data_->ima_);
+    return duplicate(this->data_->ima_);
   }
 
 # endif // ! MLN_INCLUDE_ONLY

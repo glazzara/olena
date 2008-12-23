@@ -62,7 +62,7 @@ int main()
 
 
 // #include <mln/core/image/image2d.hh>
-// #include <mln/core/routine/clone.hh>
+// #include <mln/core/routine/duplicate.hh>
 // #include <mln/value/int_u8.hh>
 
 // #include <mln/arith/plus.hh>
@@ -85,7 +85,7 @@ int main()
 //     image2d<int> ref(3,3);
 //     debug::iota(ref);
 
-//     image2d<int> ima_i = clone(ref);
+//     image2d<int> ima_i = duplicate(ref);
 //     ima_i += ima_i;
 //     mln_assertion(ima_i == 2 * ref);
 

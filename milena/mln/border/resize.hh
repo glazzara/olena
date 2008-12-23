@@ -39,7 +39,7 @@
 /// instance an image extended by an image, or a stack of images.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/core/routine/primary.hh>
 # include <mln/border/get.hh>
 # include <mln/data/fill.hh>
@@ -79,7 +79,7 @@ namespace mln
 	if (border::get(ima) == thickness)
 	  return; // No-op.
 
-	mln_concrete(I) memo = clone(ima);
+	mln_concrete(I) memo = duplicate(ima);
 	ima.resize_(thickness);
 	data::fill(ima, memo);
 

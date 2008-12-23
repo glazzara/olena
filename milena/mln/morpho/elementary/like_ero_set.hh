@@ -67,7 +67,7 @@ namespace mln
 
 	    bool
 	      ext_value  = val[0],
-	      do_clone   = val[1],
+	      do_duplicate   = val[1],
 	      on_input_p = val[2],
 	      on_input_n = val[3],
 	      output_p   = val[4];
@@ -78,8 +78,8 @@ namespace mln
 	    extension::adjust_fill(input, nbh, ext_value);
 
 	    mln_concrete(I) output;
-	    if (do_clone)
-	      output = clone(input);
+	    if (do_duplicate)
+	      output = duplicate(input);
 	    else
 	    {
 	      initialize(output, input);
@@ -110,7 +110,7 @@ namespace mln
 
 	  bool
 	    ext_value  = val[0],
-	    do_clone   = val[1],
+	    do_duplicate   = val[1],
 	    on_input_p = val[2],
 	    on_input_n = val[3],
 	    output_p   = val[4];
@@ -121,8 +121,8 @@ namespace mln
 	  extension::adjust_fill(input, nbh, ext_value);
 
 	  mln_concrete(I) output;
-	  if (do_clone)
-	    output = clone(input);
+	  if (do_duplicate)
+	    output = duplicate(input);
 	  else
 	    {
 	      initialize(output, input);

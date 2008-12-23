@@ -45,7 +45,7 @@
 
 #include <mln/debug/iota.hh>
 #include <mln/border/find.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 
 
 struct f_box1d_t : mln::Function_p2b< f_box1d_t >

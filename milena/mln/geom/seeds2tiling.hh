@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_queue.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
@@ -76,7 +76,7 @@ namespace mln
 	trace::entering("geom::impl::seed2tiling");
 
 	I& ima = exact(ima_);
-	I out = clone(ima_);
+	I out = duplicate(ima_);
 	const N& nbh = exact(nbh_);
 	p_queue<mln_psite(I)> q;
 

@@ -39,7 +39,7 @@
 #include <mln/core/image/extension_val.hh>
 
 
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 
 
 #include <mln/fun/v2v/inc.hh>
@@ -63,7 +63,7 @@ int main()
     image2d<int> ref(size, size);
     debug::iota(ref);
 
-    image2d<int> ima = clone(ref);
+    image2d<int> ima = duplicate(ref);
     level::transform_inplace(ima, fun::v2v::inc<int>());
     level::transform_inplace(ima, fun::v2v::dec<int>());
 
@@ -75,7 +75,7 @@ int main()
     image1d<unsigned short> ref(size);
     debug::iota(ref);
 
-    image1d<unsigned short> ima = clone(ref);
+    image1d<unsigned short> ima = duplicate(ref);
     level::transform_inplace(ima, fun::v2v::inc<int>());
     level::transform_inplace(ima, fun::v2v::dec<int>());
 
@@ -88,7 +88,7 @@ int main()
     image3d<unsigned short> ref(size, size, size);
     debug::iota(ref);
 
-    image3d<unsigned short> ima = clone(ref);
+    image3d<unsigned short> ima = duplicate(ref);
     level::transform_inplace(ima, fun::v2v::inc<int>());
     level::transform_inplace(ima, fun::v2v::dec<int>());
 
@@ -115,7 +115,7 @@ int main()
     debug::iota(ref);
     II ref_if = ref | fun::p2b::chess();
 
-    I ima = clone(ref);
+    I ima = duplicate(ref);
     II ima_if = ima | fun::p2b::chess();
 
     level::transform_inplace(ima_if, fun::v2v::inc<int>());
@@ -134,7 +134,7 @@ int main()
     debug::iota(ref);
     II sub_ref(ref, make::box2d(4,4, 10,10));
 
-    I ima = clone(ref);
+    I ima = duplicate(ref);
     II sub_ima(ima, make::box2d(4,4, 10,10));
 
     level::transform_inplace(sub_ima, fun::v2v::inc<int>());
@@ -150,7 +150,7 @@ int main()
 
     I ref(size, size);
 
-    I ima = clone(ref);
+    I ima = duplicate(ref);
     II extend_ima(ima, 5);
 
     level::transform_inplace(extend_ima, fun::v2v::inc<int>());

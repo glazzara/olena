@@ -32,7 +32,7 @@
 ///
 /// Influence zone functor.
 
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 
 
 
@@ -67,7 +67,7 @@ namespace mln
       void
       influence_zone_functor<I>::init(const I& input)
       {
-	output = clone(input);
+	output = duplicate(input);
       }
 
       template <typename I>
