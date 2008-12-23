@@ -28,7 +28,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image/sub_image.hh>
 
@@ -155,7 +155,7 @@ namespace mln
       tag[0] = true;
 
       // Variables.
-      I u = mln::clone(input);
+      I u = mln::duplicate(input);
       mln_point(I) x0;
       mln_value(I) g, gN;
       mln_fwd_piter(I) p(input.domain());

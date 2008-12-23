@@ -28,7 +28,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/image_if_value.hh>
 
 #include <mln/value/int_u8.hh>
@@ -152,7 +152,7 @@ namespace mln
       mln_ch_value(I, unsigned) reg_min = labeling::regional_minima(input, nbh, l_max);
 
       // Variables.
-      I u = mln::clone(input);
+      I u = mln::duplicate(input);
       mln_point(I) x0;
       mln_value(I) g, gN;
       image2d<unsigned char> is(input.domain());

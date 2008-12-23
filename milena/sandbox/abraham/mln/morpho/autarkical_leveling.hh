@@ -72,8 +72,8 @@ namespace mln
 
 	O output;
 	O ref;
-	output = clone(input);
-	ref = clone(input);
+	output = duplicate(input);
+	ref = duplicate(input);
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);

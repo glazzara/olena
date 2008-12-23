@@ -1,6 +1,6 @@
 # include <mln/core/queue_p.hh>
 # include "queue_p_fast.hh"
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/debug/println.hh>
 
 
@@ -173,7 +173,7 @@ namespace mln
 	     const Neighborhood<N>& nbh)
   {
     I& ima = exact(ima_);
-    I out = clone(ima_);
+    I out = duplicate(ima_);
     queue_p<mln_psite(I)> q;
 
     // Init.
@@ -235,7 +235,7 @@ namespace mln
 	     const Neighborhood<N>& nbh)
   {
     I& ima = exact(ima_);
-    I out = clone(ima_);
+    I out = duplicate(ima_);
     queue_p<mln_psite(I)> q;
 
     // Init.

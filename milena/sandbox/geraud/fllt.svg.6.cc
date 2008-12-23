@@ -30,7 +30,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/site_set/p_queue_fast.hh>
@@ -196,7 +196,7 @@ namespace mln
       filename << "fllt_trace_" << std::setw(5) << std::setfill('0')
 	       << std::right << id++ << ".ppm";
 
-      image2d<value::int_u8> out = clone(cast_image<value::int_u8>(is));
+      image2d<value::int_u8> out = duplicate(cast_image<value::int_u8>(is));
 
       mln_assertion(R_box.nsites() > 0);
       mln_piter_(box2d) p(R_box);
@@ -558,7 +558,7 @@ namespace mln
       tag[0] = true;
 
       // Variables.
-      I u = mln::clone(input);
+      I u = mln::duplicate(input);
       P x0;
       V g, gN;
       mln_fwd_piter(I) p(input.domain());

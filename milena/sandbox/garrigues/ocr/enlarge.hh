@@ -11,7 +11,7 @@
 # include <mln/pw/value.hh>
 # include <mln/opt/at.hh>
 
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 
 
 float val(bool b) { return b ? 1 : 0; }
@@ -186,7 +186,7 @@ namespace mln
     using value::int_u8;
 
     if (n == 0)
-      return clone(fun::p2v::ternary(pw::value(input),
+      return duplicate(fun::p2v::ternary(pw::value(input),
 				     pw::cst(int_u8(255)),
 				     pw::cst(int_u8(0)))
 		   | input.domain());

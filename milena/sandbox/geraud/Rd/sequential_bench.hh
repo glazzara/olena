@@ -54,7 +54,7 @@ namespace mln
 	unsigned nloops = 0;
 
 	// initialisation
-	I o = clone(f);
+	I o = duplicate(f);
 	o.name_it("o");
 
 	bool stability;

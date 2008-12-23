@@ -57,7 +57,7 @@
 
 
 # include <mln/core/queue_p.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/accu/mean.hh>
 # include <mln/estim/min_max.hh>
 # include <mln/algebra/vec.hh>
@@ -77,7 +77,7 @@ namespace mln
 		       float max)
     {
       I& input = exact(input_);
-      I output = clone(input_);
+      I output = duplicate(input_);
       
       mln_piter(I) p1(input.domain());
       mln_piter(I) p2(input.domain());

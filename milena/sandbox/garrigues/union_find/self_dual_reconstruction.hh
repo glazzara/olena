@@ -31,7 +31,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
 # include <mln/data/paste.hh>

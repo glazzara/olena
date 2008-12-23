@@ -31,7 +31,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/site_set/p_queue_fast.hh>
@@ -206,7 +206,7 @@ namespace mln
 		<< std::right << id << ".pgm";
 
     //std::cout << " Save in " << filename.str() << std::endl;
-    image2d<value::int_u8> out(is.domain());// = clone(cast_image<value::int_u8>(is));
+    image2d<value::int_u8> out(is.domain());// = duplicate(cast_image<value::int_u8>(is));
     data::fill(out, 0);
     mln_assertion(R_box.nsites() > 0);
     mln_piter_(box2d) p(R_box);

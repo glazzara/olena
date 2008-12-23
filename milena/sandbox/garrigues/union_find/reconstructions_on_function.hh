@@ -31,7 +31,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
 # include <mln/data/paste.hh>
@@ -203,8 +203,8 @@ namespace mln
     mln_precondition(marker <= mask);
 
     typedef mln_concrete(I) O;
-    O output = clone(marker);
-    O output1 = clone(marker);
+    O output = duplicate(marker);
+    O output1 = duplicate(marker);
     O* cur = &output;
     O* prev = &output1;
 

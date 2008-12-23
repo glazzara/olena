@@ -129,7 +129,7 @@ namespace mln
       {
 	std::cout << "warning: number of expected objects is greater than number of regmins!" << std::endl;
 	std::cout << "aborting..." << std::endl;
-	return clone(t.f());
+	return duplicate(t.f());
       }
 
     // Compute attribute on nodes.

@@ -40,7 +40,7 @@
 # include <mln/core/image/cast_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/var.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/core/routine/ops.hh>
 # include <mln/core/site_set/p_vaccess.hh>
 # include <mln/core/site_set/p_set.hh>
@@ -317,7 +317,7 @@ namespace scribo
 
 
 #ifndef NOUT
-      image2d<rgb8> tmp = clone(output);
+      image2d<rgb8> tmp = duplicate(output);
       draw_component_boxes(tmp, vboxes);
       draw_component_boxes(tmp, hboxes);
       io::ppm::save(tmp, output_file("table-filtered.ppm", 3));
@@ -497,7 +497,7 @@ namespace scribo
       boxes_t cboxes = labeling::compute(accu::meta::bbox(), lbl, nlabels);
 
 #ifndef NOUT
-      image2d<rgb8> tmp = clone(output);
+      image2d<rgb8> tmp = duplicate(output);
       draw_component_boxes(tmp, cboxes);
       io::ppm::save(tmp, output_file("character-bboxes.ppm", 5));
 #endif

@@ -73,7 +73,7 @@ namespace mln
 	const W& win = exact(win_);
 
 	O output;
-	output = clone(input);
+	output = duplicate(input);
 
 	mln_piter(I) p(input.domain());
 	mln_qiter(W) q(win, p);

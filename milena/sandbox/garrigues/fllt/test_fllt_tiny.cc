@@ -1,6 +1,6 @@
 # include "fllt2.hh"
 # include <mln/core/image/image2d.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/data/fill.hh>
 # include <mln/io/pgm/load.hh>

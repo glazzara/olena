@@ -80,7 +80,7 @@ int main(int argc, char** argv)
   io::pbm::load(input, argv[1]);
 
   {
-    image2d<int_u8> tmp = clone(cast_image<int_u8>(input));
+    image2d<int_u8> tmp = duplicate(cast_image<int_u8>(input));
     float score = 0;
     char* s = tesseract("fra", tmp, &score);
     std::cerr << "Tesseract result: (score " << score << ")" << std::endl;

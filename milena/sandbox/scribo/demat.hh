@@ -697,7 +697,7 @@ namespace scribo
 
 
 #ifndef NOUT
-      image2d<label_16> lbl2 = clone(lbl);
+      image2d<label_16> lbl2 = duplicate(lbl);
       comp_size_t comp_size;
       canvas::browsing::depth_first_search(g, comp_size);
 
@@ -830,7 +830,7 @@ namespace scribo
     {
       std::cout << "Merging aligned text boxes" << std::endl;
 
-      image2d<label_16> lbl_iz = clone(lbl);
+      image2d<label_16> lbl_iz = duplicate(lbl);
       io::ppm::save(debug::colorize(rgb8(), lbl, nlabels), output_file("tboxes-lbl.ppm"));
 
       image2d<label_16> iz = transform::influence_zone_geodesic(lbl_iz, c8(), settings.bbox_distance);
@@ -921,7 +921,7 @@ namespace scribo
     logical::not_inplace(in);
 
 #ifndef NOUT
-    image2d<bool> in_bak = clone(in);
+    image2d<bool> in_bak = duplicate(in);
 #endif
 
     internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;
@@ -971,7 +971,7 @@ namespace scribo
     logical::not_inplace(in);
 
 #ifndef NOUT
-    image2d<bool> in_bak = clone(in);
+    image2d<bool> in_bak = duplicate(in);
 #endif
 
     internal::settings.max_comp_size = in.ncols() * in.nrows() * 0.05;

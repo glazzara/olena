@@ -132,7 +132,7 @@ extract_lines(I& text_image, O& output,
 	      int limits)
 {
   typedef image2d<unsigned> I_LABEL;
-  I image = clone(text_image);
+  I image = duplicate(text_image);
 
   point2d start = text_image.domain().pmin ();
   point2d end = text_image.domain().pmax ();

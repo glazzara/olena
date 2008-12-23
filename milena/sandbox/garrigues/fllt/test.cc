@@ -5,7 +5,7 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/image/cast_image.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/value/int_u8.hh>
 # include <mln/debug/println.hh>
 # include <mln/convert/to_w_window.hh>

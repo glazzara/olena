@@ -7,7 +7,7 @@
 # include <approx_exp.hh>
 # include <T_gen.hh>
 # include <mln/binarization/threshold.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 
 namespace mln
 {

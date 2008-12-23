@@ -31,7 +31,7 @@
 # include <vector>
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 
 # include <mln/util/ord.hh>
 

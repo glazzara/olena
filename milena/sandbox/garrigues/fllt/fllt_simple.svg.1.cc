@@ -33,7 +33,7 @@
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_array.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 
 #include <mln/value/int_u8.hh>
 
@@ -123,7 +123,7 @@ namespace mln
       filename << "fllt_u_" << std::setw(5) << std::setfill('0')
 	       << std::right << id++ << ".ppm";
 
-      image2d<value::int_u8> out = clone(u);
+      image2d<value::int_u8> out = duplicate(u);
       const unsigned in_R = 255;
 
       mln_piter_(box2d) p(R_box);
@@ -149,7 +149,7 @@ namespace mln
       const Nbh& nbh = exact(nbh_);
 
       // Variables.
-      I u = mln::clone(input);
+      I u = mln::duplicate(input);
       mln_point(I) x0;
       mln_value(I) g, gN;
       image2d<unsigned char> is(input.domain());

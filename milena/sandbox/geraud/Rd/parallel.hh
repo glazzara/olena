@@ -52,7 +52,7 @@ namespace mln
 	mln_piter(I) p(f.domain());
 
 	// initialisation
- 	I o = clone(f);
+ 	I o = duplicate(f);
 
 	bool stability;
 	do

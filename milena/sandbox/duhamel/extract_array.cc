@@ -53,7 +53,7 @@ template <typename I, typename W>
 mln_concrete(I)
 pseudo(const I& input, const W& win, const float ratio)
 {
-  I output = clone (input);
+  I output = duplicate (input);
   unsigned ko = win.length () - (unsigned)(ratio * win.length ());
   std::cout << "ko : " << ko << std::endl;
   mln_pixter(const I) p(input);

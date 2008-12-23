@@ -64,7 +64,7 @@
 // _COMPILATION_
 // g++ -DNDEBUG -O3 -I../../.. ocr.cc -L/usr/lib -ltesseract_full -lpthread
 
-//     image2d<int_u8> tmp = clone(cast_image<int_u8>(Var));	\
+//     image2d<int_u8> tmp = duplicate(cast_image<int_u8>(Var));	\
 
 #if 1
 # define OCR_TEST(Var)						\

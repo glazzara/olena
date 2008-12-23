@@ -32,7 +32,7 @@
 
 #include <vector>
 #include <mln/core/image/image2d.hh>
-#include <mln/core/routine/clone.hh>
+#include <mln/core/routine/duplicate.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/core/site_set/p_queue_fast.hh>
 #include <mln/labeling/blobs.hh>
@@ -70,7 +70,7 @@ namespace mln
   mln_concrete(I)
   influence_zones(const I& input, const N& nbh)
   {
-    mln_concrete(I) output = clone(input);
+    mln_concrete(I) output = duplicate(input);
 
     p_queue_fast<mln_site(I)> q;
 

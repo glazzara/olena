@@ -43,7 +43,7 @@
 # include <mln/core/site_set/p_if.hh>
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/image/image_if.hh>
-# include <mln/core/routine/clone.hh>
+# include <mln/core/routine/duplicate.hh>
 # include <mln/core/a_point_of.hh>
 
 # include <mln/debug/println.hh>

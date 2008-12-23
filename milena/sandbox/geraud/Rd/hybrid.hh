@@ -50,7 +50,7 @@ namespace mln
 	std::queue<point> q;
 
 	// initialisation
- 	I o = clone(f);
+ 	I o = duplicate(f);
 
 	unsigned n_init_pushs = 0, n_body_pushs = 0, n_pops = 0;
 

@@ -361,7 +361,7 @@ namespace mln
       V g, gn;
       point2d x0;
       image2d<unsigned> min_locals(ima.domain());
-      image2d<V> u = clone(ima);
+      image2d<V> u = duplicate(ima);
       border::fill(u, 0);
 
       //std::cout << "image U:" << std::endl;
