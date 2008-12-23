@@ -1,5 +1,13 @@
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a filter (closing area) with n.objects as parameter.
+
+	* geraud/tufa_2008/gradient.cc: New.
+	* geraud/tufa_2008/filter_n.cc: New.
+	* geraud/tufa_2008/wst.cc: New.
+
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Update fill, paste, memset_, and memcpy_.
 
 	* levillain/morpho/lower_completion.hh,
