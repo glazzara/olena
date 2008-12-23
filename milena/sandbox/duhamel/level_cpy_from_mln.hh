@@ -35,7 +35,7 @@
  */
 
 # include <mln/labeling/base.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -78,7 +78,7 @@ namespace mln
 	typedef mln_pset(I_) S;
 	const S& s;
 
- 	void init()                            { mln::level::fill(this->output, 0); }
+ 	void init()                            { mln::data::fill(this->output, 0); }
 	bool handles(const P& p) const         { return input(p) == val; }
  	bool equiv(const P& n, const P&) const { return input(n) == val; }
  

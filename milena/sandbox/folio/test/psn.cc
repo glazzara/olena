@@ -153,7 +153,7 @@ namespace mln
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>
@@ -175,7 +175,7 @@ int main()
 		  0, 0, 0, 0, 0,
 		  0, 0, 0, 1, 0,
 		  0, 0, 0, 0, 0};
-  level::fill(ima, vals);
+  data::fill(ima, vals);
 
   image2d<bool> msk(5,5);
   bool rest[] = { 1, 0, 1, 1, 1,
@@ -183,7 +183,7 @@ int main()
 		  1, 1, 0, 0, 0,
 		  1, 1, 0, 1, 1,
 		  1, 1, 1, 1, 1};
-  level::fill(msk, rest);
+  data::fill(msk, rest);
 
   int ws[] = { 2, 1, 2,
 	       1, 0, 1,

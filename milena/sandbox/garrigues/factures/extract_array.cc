@@ -63,7 +63,7 @@ int main()
 
   // Binarisation.
   ima2d_bool bin(small.domain());
-  level::paste(pw::value(small) > pw::cst(50) | small.domain(), bin);
+  data::paste(pw::value(small) > pw::cst(50) | small.domain(), bin);
 
   // Labeling.
   unsigned nlabels;

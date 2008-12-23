@@ -13,7 +13,7 @@
 #include <mln/core/image/interpolated.hh>
 #include <mln/core/image/tr_image.hh>
 #include <mln/core/var.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 template < template <class> class N,
            typename I, typename T>
@@ -84,7 +84,7 @@ int main()
   mln_VAR(rt,  compose(r,t));
   mln_VAR(tr_ima, transposed_image(interp.domain(), interp, rt));
 
-  //  level::fill(output, tr_ima);
+  //  data::fill(output, tr_ima);
 
 
   //border::adjust(interp, 20);

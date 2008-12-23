@@ -39,7 +39,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/accu/bbox.hh>
@@ -112,7 +112,7 @@ namespace mln
 
       accu::bbox<mln_point(I)> R_box;
 
-      level::fill(tagged, false);
+      data::fill(tagged, false);
       mln_piter(I) min(input.domain());
       min.start();
       // Step 1.
@@ -146,7 +146,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	R_box.init();
-	level::fill(is, in_O);
+	data::fill(is, in_O);
 	A.clear();
 	A.append(x0);
 	for (unsigned i = 0; i < 256; ++i)

@@ -279,7 +279,7 @@ int main(int argc, const char * argv[])
       name = argv[i];
       name.erase(name.length() - 4);
       //      image2d<bool> final(right.domain());
-      //      level::fill(final, false);
+      //      data::fill(final, false);
       //     mln_piter_(image2d<bool>) p(final.domain());
       //     for_all(p)
       //	final(p) = up_left(p) || up_right(p) || bottom_right(p) || bottom_left(p) || up(p) || bottom(p) || left(p) || right(p);

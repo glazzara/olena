@@ -39,7 +39,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/accu/bbox.hh>
@@ -116,7 +116,7 @@ namespace mln
       using value::rgb8;
 
       image2d<rgb8> temp(is.domain());
-      level::fill(temp, literal::black);
+      data::fill(temp, literal::black);
 
       mln_piter(I) p(is.domain());
       for_all(p)
@@ -163,7 +163,7 @@ namespace mln
 
       image2d<unsigned char> is(input.domain());
       const unsigned in_R = 1, in_N = 2, in_A = 3, in_O = 0;
-      level::fill(is, in_O);
+      data::fill(is, in_O);
       
       typedef p_array<mln_point(I)> arr_t;
       arr_t A;
@@ -192,7 +192,7 @@ namespace mln
       {
 	// R <- 0 and N <- 0
 	if (N_box.is_valid() != 0)
-	  level::fill((is | N_box.to_result()).rw(), in_O);
+	  data::fill((is | N_box.to_result()).rw(), in_O);
 	clear_N(N);
 	N_box.init();
 

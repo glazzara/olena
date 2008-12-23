@@ -40,7 +40,7 @@
 #include <mln/core/site_set/p_array.hh>
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/level/sort_psites.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -81,7 +81,7 @@ namespace mln
       for_all(p)
 	par(p) = p;
       initialize(deja_vu, f);
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
     }
 
     // First pass.

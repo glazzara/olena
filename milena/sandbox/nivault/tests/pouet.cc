@@ -9,7 +9,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/core/image2d_b.hh>
 
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 
 #include <iostream>
 
@@ -44,6 +44,6 @@ int main()
   image2d_b<value::int_u8> out(lena.domain());
 
   erosion_on_function(lena, h, out);
-  //level::paste(lena, out);
+  //data::paste(lena, out);
   io::pgm::save(out, "out.pgm");
 }

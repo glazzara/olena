@@ -390,7 +390,7 @@ template <typename N>
     p_set<point2d> proj;
 
     image2d<value::int_u8> bisector(h, w);
-    level::fill(bisector, 0);
+    data::fill(bisector, 0);
 
     for (uint i=0; i<Y.nsites(); i++)
     {
@@ -553,9 +553,9 @@ template <typename N>
 
     sub_image<I, S> es = pic | Z;
     I es1(pic.domain());
-    level::fill(es1, false);
+    data::fill(es1, false);
 
-    level::paste(es, es1);
+    data::paste(es, es1);
 
     mln::io::pbm::save(es1, "euclidean.pbm");
 
@@ -588,9 +588,9 @@ template <typename N>
 
     sub_image<I, S> skel = pic | Y;
     I test(pic.domain());
-    level::fill(test, false);
+    data::fill(test, false);
 
-    level::paste(skel, test);
+    data::paste(skel, test);
 
     mln::io::pbm::save(test, "Y.pbm");
 
@@ -601,9 +601,9 @@ template <typename N>
 
     sub_image<I, S> skeleton = pic | Z;
     I output(pic.domain());
-    level::fill(output, false);
+    data::fill(output, false);
 
-    level::paste(skeleton, output);
+    data::paste(skeleton, output);
 
     return output;
   }

@@ -37,7 +37,7 @@
 
 #include <mln/algebra/vec.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/debug/println.hh>
 
@@ -56,7 +56,7 @@ int main()
 		 4.,  7.,  10., 13.,
 		 7.,  11., 15., 19.,
 		 10., 15., 20., 25.};
-  level::fill(f, tab);
+  data::fill(f, tab);
 
   interpolated< image2d_b<float> > inter(f);
 

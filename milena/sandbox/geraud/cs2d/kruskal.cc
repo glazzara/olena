@@ -12,8 +12,8 @@
 # include <mln/debug/println.hh>
 # include <mln/debug/iota.hh>
 # include <mln/fun/p2v/iota.hh>
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/morpho/gradient.hh>
 # include <mln/morpho/meyer_wst.hh>
 
@@ -120,7 +120,7 @@ namespace mln
     box2d b(nrows * clen + 3 * (nrows - 1),
 	    ncols * clen + 3 * (ncols - 1));
     image2d<value::rgb8> output(b);
-    level::fill(output, literal::black);
+    data::fill(output, literal::black);
 
 
     //   0 1 2 3 4
@@ -271,7 +271,7 @@ int main()
   }
 
   mln_VAR(edge, ima | is_edge);
-  level::paste(morpho::gradient(edge, nbh_e2c), edge);
+  data::paste(morpho::gradient(edge, nbh_e2c), edge);
   //                                  ^^^^^^^
   //                         edge -> neighboring cells
 
@@ -285,7 +285,7 @@ int main()
   // Aux data.
   mln_ch_value_(edge_t, bool) T;
   initialize(T, edge);
-  level::fill(T, false);
+  data::fill(T, false);
 
   mln_ch_value_(cell_t, point2d) DS;
   initialize(DS, cell);

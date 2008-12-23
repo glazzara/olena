@@ -46,7 +46,7 @@
 # include <mln/win/vline2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/disk2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/labeling/blobs.hh>
 # include <mln/core/alias/neighb2d.hh>
 
@@ -65,7 +65,7 @@
 
 # include <mln/core/image_if_value.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/morpho/opening_area.hh>
@@ -292,7 +292,7 @@ main(int argc, char** argv)
 	  text_image(p) = val_image(p);
 
  	// Here is the good way to do the previous action.
-//  	  level::paste (val_ima, text_image);
+//  	  data::paste (val_ima, text_image);
       }
     }
 
@@ -314,7 +314,7 @@ main(int argc, char** argv)
 //   win::disk2d win (20);
 //   I_LABEL pr = morpho::dilation(gr_image2, win);
 //   I bool_ima (label_image.domain ());
-//   level::paste(pr, bool_ima);
+//   data::paste(pr, bool_ima);
 
 //   // Labeling the dilated image.
 //   unsigned nb_dilated_node_labels;

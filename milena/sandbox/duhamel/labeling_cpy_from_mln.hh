@@ -34,7 +34,7 @@
  * image.
  */
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/sort_points.hh>
 
 # include <mln/convert/to_window.hh>
@@ -75,7 +75,7 @@ namespace mln
 	// init
 	{
 	  f.nlabels = 0;
-	  mln::level::fill(deja_vu, false);
+	  mln::data::fill(deja_vu, false);
 	  f.init();
 	}
 	// first pass

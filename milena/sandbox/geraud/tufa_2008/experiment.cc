@@ -50,7 +50,7 @@
 #include <mln/morpho/opening.hh>
 #include <mln/morpho/closing_area.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/level/transform.hh>
 #include <mln/level/stretch.hh>

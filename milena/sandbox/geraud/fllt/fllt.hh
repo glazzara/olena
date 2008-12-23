@@ -45,8 +45,8 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/stretch.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
@@ -207,7 +207,7 @@ namespace mln
 
     //std::cout << " Save in " << filename.str() << std::endl;
     image2d<value::int_u8> out(is.domain());// = clone(cast_image<value::int_u8>(is));
-    level::fill(out, 0);
+    data::fill(out, 0);
     mln_assertion(R_box.nsites() > 0);
     mln_piter_(box2d) p(R_box);
     for_all(p)
@@ -234,7 +234,7 @@ namespace mln
     using value::rgb8;
 
     image2d<rgb8> temp(is.domain());
-    level::fill(temp, literal::black);
+    data::fill(temp, literal::black);
 
     mln_piter(I) p(is.domain());
     for_all(p)
@@ -276,7 +276,7 @@ namespace mln
 
     if (label == 0)
     {
-      level::fill(is_labeled, 0);
+      data::fill(is_labeled, 0);
       label++;
     }
 
@@ -595,13 +595,13 @@ namespace mln
     V g, gN;
     mln_fwd_piter(I) p(input.domain());
     p.start();
-    level::fill(smallest_shapes, 0);
+    data::fill(smallest_shapes, 0);
     node_type* current_cc;
 
     unsigned in_N = 1, in_R = 2;
 
     image2d<int> deja_vu(input.domain().to_larger(1));
-    level::fill(deja_vu, 0);
+    data::fill(deja_vu, 0);
 
     typedef p_array<P> arr_t;
     arr_t* A = new arr_t();

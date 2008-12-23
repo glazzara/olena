@@ -117,7 +117,7 @@ namespace mln
       bb_.init();
       nsites_ = 0;
 
-      level::fill(ima_, false);
+      data::fill(ima_, false);
     }
 
     template <char domain>
@@ -165,11 +165,11 @@ namespace mln
       // 	mln_line_piter_(image2d<value::int_u8>) p(bb_.to_result());
       // 	for_all(p)
       // 	{
-      // 	  level::memset_(ima_, p, false, bb_ncols);
+      // 	  data::memset_(ima_, p, false, bb_ncols);
       // 	}
       //       }
       //       else
-      level::fill(ima_, false);
+      data::fill(ima_, false);
 
       nsites_ = 0;
       bb_.init();

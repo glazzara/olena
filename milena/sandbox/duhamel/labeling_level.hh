@@ -182,7 +182,7 @@ namespace mln
     // 	typedef mln_pset(I_) S;
     // 	const S& s;
     
-    void init()                            { level::fill(this->output, 0); }
+    void init()                            { data::fill(this->output, 0); }
     bool handles(unsigned p) const         { return this->input[p] == val; }
     bool equiv(unsigned n, unsigned) const { return this->input[n] == val; }
 

@@ -33,8 +33,8 @@
 #include <mln/core/image_if_value.hh>
 #include <mln/core/image2d_b.hh>
 #include <mln/value/rgb8.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 
 
 #include <mln/trait/image_from_mesh.hh>
@@ -49,10 +49,10 @@ namespace mln
     const I& input = exact (input_);
 
     image2d_b<value::rgb8> output(input.domain().bbox());
-    level::fill(output, value::rgb8(255, 0, 0));
+    data::fill(output, value::rgb8(255, 0, 0));
 
 //     /// FIXME by :
-//     level::paste(input, output);
+//     data::paste(input, output);
     {
       mln_piter(I) p(input.domain());
 

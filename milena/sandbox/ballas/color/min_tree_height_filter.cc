@@ -27,8 +27,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/transform.hh>
 # include <mln/extension/fill.hh>
 # include <mln/opt/at.hh>
@@ -90,9 +90,9 @@ namespace mln
 	initialize(height, f);
         initialize(color, f);
 
-	mln::level::fill(deja_vu, false);
-        mln::level::fill(color, value::rgb8(255, 255, 255));
-        mln::level::fill(height, 0);
+	mln::data::fill(deja_vu, false);
+        mln::data::fill(color, value::rgb8(255, 255, 255));
+        mln::data::fill(height, 0);
 
 	s = level::sort_psites_increasing(f);
       }
@@ -288,7 +288,7 @@ namespace mln
     unsigned ncols = ima.ncols() / 2 + 1;
     I output(nrows * (zoom + 1) - 1,
 	     ncols * (zoom + 1) - 1);
-    level::fill(output, bg);
+    data::fill(output, bg);
 
     mln_VAR(edge, ima | is_edge);
     mln_piter(edge_t) p(edge.domain());
@@ -428,9 +428,9 @@ unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
 
   colorize colors(nnodes);
   image2d<value::rgb8> tmp(ref.domain());
-  level::fill(tmp, literal::black);
+  data::fill(tmp, literal::black);
   image2d<value::rgb8> tmp2(ref.domain());
-  level::fill(tmp, ref);
+  data::fill(tmp, ref);
 
   mln_piter(I) q(f.domain());
   unsigned int i = 0;
@@ -457,13 +457,13 @@ unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
   image2d<value::rgb8> to_display(tmp.domain());
   image2d<value::rgb8> to_display2(tmp2.domain());
 
-  level::fill(to_display, literal::black);
-  level::paste((tmp | is_edge), to_display);
-  level::paste(morpho::dilation(to_display, c4()), to_display);
+  data::fill(to_display, literal::black);
+  data::paste((tmp | is_edge), to_display);
+  data::paste(morpho::dilation(to_display, c4()), to_display);
 
-  level::fill(to_display2, literal::black);
-  level::paste((tmp2 | is_edge), to_display2);
-  level::paste(morpho::dilation(to_display2, c4()), to_display2);
+  data::fill(to_display2, literal::black);
+  data::paste((tmp2 | is_edge), to_display2);
+  data::paste(morpho::dilation(to_display2, c4()), to_display2);
 
 
   io::ppm::save(display_edge(tmp, literal::black, 3), "edge.ppm");

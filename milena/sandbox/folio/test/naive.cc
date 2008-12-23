@@ -115,7 +115,7 @@ namespace mln
 #include <iostream>
 #include <mln/debug/println.hh>
 #include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/fun/v2v/norm.hh>
 
 int main()
@@ -130,7 +130,7 @@ int main()
 		    0, 0, 0, 0, 0,
 		    0, 0, 0, 0, 0 };
 
-    level::fill(ima, vals);
+    data::fill(ima, vals);
     debug::println(ima);
 
     typedef fun::v2v::l2_norm< algebra::vec<2,float>, float > L2;

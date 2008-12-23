@@ -240,7 +240,7 @@ namespace mln
 #include <iostream>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>
@@ -267,13 +267,13 @@ int main()
   bool vals[] = { 1, 0, 0,
 		  0, 0, 0,
 		  0, 0, 0};
-  level::fill(ima, vals);
+  data::fill(ima, vals);
 
   image2d<bool> msk(3,3);
   bool rest[] = { 1, 0, 1,
 		  1, 0, 1,
 		  1, 1, 1};
-  level::fill(msk, rest);
+  data::fill(msk, rest);
 
   image2d<unsigned> out;
   out = dt::psn(ima | pw::value(msk), c4());

@@ -6,7 +6,7 @@
 # include <mln/convert/to_w_window.hh>
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/convert/to_image.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/io/pbm/load.hh>
@@ -37,7 +37,7 @@ int main()
   image2d<int> ima(make::image2d(vs));
   image2d<int_u8> out(ima.domain());
 
-  level::fill(out, ima);
+  data::fill(out, ima);
   io::pgm::save(out, "ima.pgm ");
   fllt::fllt(ima);
 

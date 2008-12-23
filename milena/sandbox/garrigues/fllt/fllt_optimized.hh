@@ -59,7 +59,7 @@ namespace mln
 		       fllt_tree(P, V)& tree)
     {
       fllt_branch_iter(P, V) p(tree.main_branch());
-      level::fill(output, 0);
+      data::fill(output, 0);
       for_all(p)
 	{
 	  //std::cout << (&*p) << ":" << p.deepness() << std::endl;
@@ -80,7 +80,7 @@ namespace mln
 		     unsigned limit)
     {
       fllt_branch_iter(P, V) p(tree.main_branch());
-      level::fill(output, 255);
+      data::fill(output, 255);
       for_all(p)
 	{
 	  if ((*p).elt().points.nsites() > limit)

@@ -40,7 +40,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
 #include <mln/accu/bbox.hh>
@@ -164,7 +164,7 @@ namespace mln
 
       unsigned n_step_1 = 0, n_step_3 = 0;
 
-      level::fill(tagged, false);
+      data::fill(tagged, false);
       mln_piter(I) min(input.domain());
       min.start();
       // Step 1.
@@ -192,7 +192,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	if (N_box.is_valid())
-	  level::fill((is | N_box.to_result()).rw(), in_O);
+	  data::fill((is | N_box.to_result()).rw(), in_O);
 
 	N_box.init();
 	R_box.init();

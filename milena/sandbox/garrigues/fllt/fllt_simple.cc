@@ -45,7 +45,7 @@
 #include <mln/io/pgm/load.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
@@ -343,7 +343,7 @@ namespace mln
 		     unsigned limit)
     {
       fllt_branch_iter_ind(P, V) p(tree.main_branch());
-      level::fill(output, 255);
+      data::fill(output, 255);
       for_all(p)
 	{
 	  if ((*p).elt().nsites > limit)
@@ -468,7 +468,7 @@ namespace mln
       unsigned cc_cpt = 0;
       bool parent_found = false;
 
-      level::fill(tagged, false);
+      data::fill(tagged, false);
       mln_piter(I) min(input.domain());
       min.start();
       // Step 1.
@@ -505,7 +505,7 @@ namespace mln
 	std::cout << "Step 2" << std::endl;
 #endif
 	if (N_box.is_valid())
-	  level::fill((is | N_box.to_result()).rw(), in_O);
+	  data::fill((is | N_box.to_result()).rw(), in_O);
 
 	N_box.init();
 	R_box.init();
@@ -709,7 +709,7 @@ int main()
 
 //   image2d<int> ima_(make::image2d(vs));
 //   image2d<int_u8> ima(ima_.domain());
-//   level::fill(ima, ima_);
+//   data::fill(ima, ima_);
 
   tree_type tree = my::fllt(ima);
 

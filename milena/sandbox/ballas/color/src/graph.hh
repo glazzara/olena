@@ -9,7 +9,7 @@
 # include <mln/value/int_u16.hh>
 # include <mln/value/rgb8.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/opt/at.hh>
 
 # include <mln/core/image/image2d.hh>
@@ -51,7 +51,7 @@ create_graph(const I& ima, I& graph, mln_value(I) val)
 {
   graph = I(ima.nrows() * 2 -1, ima.ncols() * 2 - 1);
 
-  mln::level::fill(graph, val);
+  mln::data::fill(graph, val);
 
   mln_piter(I) p(ima.domain());
   for_all(p)

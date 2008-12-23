@@ -41,7 +41,7 @@
 
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/closing_area.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
 
 
@@ -93,7 +93,7 @@ namespace mln
       for_all(p)
 	par(p) = p;
       initialize(deja_vu, f);
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
     }
 
     // First pass.

@@ -46,7 +46,7 @@
 
 # include <mln/make/w_window2d_int.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/debug/println.hh>
 
@@ -81,7 +81,7 @@ namespace mln
   {
     image2d<bool> is_crest;
     initialize(is_crest, input);
-    level::fill(is_crest, false);
+    data::fill(is_crest, false);
 
     mln_piter_(image2d<bool>) p(input.domain());
     mln_niter_(neighb2d) n(nbh, p);
@@ -134,7 +134,7 @@ namespace mln
     {
       p_priority<value::int_u8, p_queue_fast<P> > q_tmp;
 
-      level::fill(output, input);
+      data::fill(output, input);
       mln_piter_(image2d<bool>) p(input.domain());
       for_all(p)
 	if (!input(p) &&

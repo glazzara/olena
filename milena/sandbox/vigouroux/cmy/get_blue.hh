@@ -6,7 +6,7 @@
 #include <mln/display/show.hh>
 #include <mln/io/ppm/save.hh>
 #include <mln/display/save_and_show.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/math/round.hh>
 
 #include "../color/my_cmy.hh"

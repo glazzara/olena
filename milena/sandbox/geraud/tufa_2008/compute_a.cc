@@ -37,8 +37,8 @@
 
 #include <mln/core/site_set/p_array.hh>
 #include <mln/level/sort_psites.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/compare.hh>
 
 #include <mln/morpho/tree/data.hh>
@@ -109,11 +109,11 @@ namespace mln
 
       // deja_vu
       initialize(deja_vu, f);
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
 
       // flag
       initialize(flag, f);
-      level::fill(flag, true);
+      data::fill(flag, true);
 
       // attr
       initialize(attr, f);
@@ -191,7 +191,7 @@ namespace mln
 
     mln_ch_value(I, mln_result(A)) a;
     initialize(a, f);
-    level::paste(attr, a);
+    data::paste(attr, a);
 
     // Finalization.
     {
@@ -250,7 +250,7 @@ namespace mln
 
       image2d<bool> seen;
       initialize(seen, f);
-      level::fill(seen, false);
+      data::fill(seen, false);
 
       s = level::sort_psites_increasing(a);
       mln_bkd_piter(S) p(s);
@@ -305,11 +305,11 @@ namespace mln
 //       for_all(p)
 // 	par(p) = p;
 //       initialize(deja_vu, f);
-//       level::fill(deja_vu, false);
+//       data::fill(deja_vu, false);
 
 //       // flag
 //       initialize(flag, f);
-//       level::fill(flag, true);
+//       data::fill(flag, true);
 //     }
 
 

@@ -39,7 +39,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
@@ -118,7 +118,7 @@ namespace mln
       using value::rgb8;
 
       image2d<rgb8> temp(is.domain());
-      level::fill(temp, literal::black);
+      data::fill(temp, literal::black);
 
       mln_piter(I) p(is.domain());
       for_all(p)
@@ -165,10 +165,10 @@ namespace mln
 
 //       image2d<unsigned char> is(input.domain());
 //       const unsigned in_R = 1, in_N = 2, in_A = 3, in_O = 0;
-//       level::fill(is, in_O);
+//       data::fill(is, in_O);
       
       image2d<bool> deja_vu(input.domain());
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
 
       typedef p_array<mln_point(I)> arr_t;
       arr_t* A = new arr_t();
@@ -200,8 +200,8 @@ namespace mln
 	// R <- 0 and N <- 0
 	if (N_box.is_valid() != 0)
 	  {
-// 	    level::fill((is | N_box.to_result()).rw(), in_O);
-	    level::fill(deja_vu | N_box.to_result()), false);
+// 	    data::fill((is | N_box.to_result()).rw(), in_O);
+	    data::fill(deja_vu | N_box.to_result()), false);
 	  }
 	clear_N(N);
 	N_box.init();
@@ -305,7 +305,7 @@ namespace mln
 
 	    for (unsigned i = 0; i < 256; ++i)
 	      if (N[i]->nsites())
-		level::fill(deja_vu | *N[i]), false);
+		data::fill(deja_vu | *N[i]), false);
 		
 // 	    mln_invariant(deja_vu == ((pw::value(is) == pw::cst(in_R)) | input.domain()));
 

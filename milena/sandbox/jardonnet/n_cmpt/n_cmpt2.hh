@@ -28,7 +28,7 @@
 #ifndef MLN_N_CMPT2_HH
 # define MLN_N_CMPT2_HH
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/site_set/p_vaccess.hh>
 # include <mln/level/sort_psites.hh>
 # include <mln/accu/volume.hh>
@@ -105,7 +105,7 @@ namespace mln
       // init
       mln_ch_value(O, A)  data;
       initialize(data, input);
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       {
         mln_fwd_piter(S) p(sp);
         for_all(p)

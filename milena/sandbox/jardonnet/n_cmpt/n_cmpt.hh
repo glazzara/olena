@@ -30,7 +30,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 # include <mln/level/sort_psites.hh>
 # include <mln/accu/count.hh>
@@ -107,7 +107,7 @@ namespace mln
           // init
           mln_ch_value(O, A)     data;
           initialize(data, input);
-          mln::level::fill(deja_vu, false);
+          mln::data::fill(deja_vu, false);
           {
             mln_fwd_piter(S) p(s);
             for_all(p)

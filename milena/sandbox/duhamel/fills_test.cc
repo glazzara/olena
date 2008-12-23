@@ -38,7 +38,7 @@
 #include <mln/geom/nrows.hh>
 #include <mln/geom/ncols.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/debug/println_with_border.hh>
 

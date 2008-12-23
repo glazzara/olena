@@ -70,7 +70,7 @@ namespace oln
 	  // init
 
 	  std::cout << "0 ";
-	  level::fill(is_proc, false);
+	  data::fill(is_proc, false);
 	  S = histo_reverse_sort(g);
 
 	  // first pass
@@ -91,7 +91,7 @@ namespace oln
 	  // second pass
 
 	  std::cout << "2 ";
-	  level::fill(is_proc, false);
+	  data::fill(is_proc, false);
 	  for (int i = S.size() - 1; i >= 0; --i)
 	    {
 	      point p = S[i];

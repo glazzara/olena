@@ -44,7 +44,7 @@
 
 # include <mln/value/rgb8.hh>
 # include <mln/literal/all.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/ppm/save.hh>
 
 # include "tools.hh"
@@ -178,7 +178,7 @@ namespace mln
 
 #ifndef NDEBUG       // FIXME: theo
       image2d<value::rgb8> tmp(500,800);
-      level::fill(tmp, literal::black);
+      data::fill(tmp, literal::black);
       //write X
       mln_piter(p_array<P>) p(x);
       for_all(p)

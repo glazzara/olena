@@ -29,12 +29,12 @@
 # define MLN_PROJ_HH
 
 #include <mln/io/pgm/save.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/accu/mean.hh>
 #include <mln/literal/white.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image1d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
 
 namespace mln
@@ -44,7 +44,7 @@ namespace mln
   proj_nat(const image2d<T>& input)
   {
     image1d<float> out(geom::nrows(input));
-    level::fill(out, 0);
+    data::fill(out, 0);
 
     mln_piter(image2d<T>) p(input.domain());
     for_all(p) // 2d

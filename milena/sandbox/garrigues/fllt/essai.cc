@@ -5,7 +5,7 @@
 #include <mln/core/image_if_value.hh>
 
 #include <mln/accu/bbox.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 
 #include "types.hh"
@@ -21,7 +21,7 @@ using value::int_u8;
 //     : ima_(b)
 //   {
 //     bb_.init();
-//     level::fill(ima_, false);
+//     data::fill(ima_, false);
 //     bb_.take(point2d(2,2));
 //     bb_.take(point2d(2,3));
 //   }

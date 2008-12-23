@@ -38,7 +38,7 @@
 
 #include <mln/labeling/regional_minima.hh>
 #include <mln/labeling/flat_zones.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
 
 
@@ -94,7 +94,7 @@ namespace mln
 
       // deja_vu
       initialize(deja_vu, f);
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
     }
 
     // First pass.

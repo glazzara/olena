@@ -3,7 +3,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/debug/println.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/stretch.hh>
 #include <mln/accu/max.hh>
 #include <mln/io/pbm/load.hh>
@@ -107,7 +107,7 @@ int main()
 
   const unsigned n = 9;
   image2d<bool> ima(n, n);
-  level::fill(ima, false);
+  data::fill(ima, false);
   opt::at(ima, n / 2, n / 2) = true;
 
 //   int ws[] = { 3, 2, 3,

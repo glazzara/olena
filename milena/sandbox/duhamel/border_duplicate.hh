@@ -34,7 +34,7 @@
  */
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/memset_.hh>
+# include <mln/data/memset_.hh>
 //# include <mln/core/line_piter.hh>
 #include <mln/geom/nrows.hh>
 #include <mln/geom/ncols.hh>

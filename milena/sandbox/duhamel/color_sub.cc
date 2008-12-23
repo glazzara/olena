@@ -35,7 +35,7 @@
 
 # include <mln/value/int_u8.hh>
 # include <mln/value/rgb8.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/debug/println.hh>
 # include <mln/core/image2d_b.hh>
 # include <mln/debug/println.hh>

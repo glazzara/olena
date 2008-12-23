@@ -1,7 +1,7 @@
-- level/memset_
-- level/memcpy_
-- level/fill
-- level/paste
+- data/memset_
+- data/memcpy_
+- data/fill
+- data/paste
 
 - border/fill
 - border/mirror

@@ -44,7 +44,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
 # include <mln/literal/black.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/ppm/save.hh>
 
 # include "tools.hh"

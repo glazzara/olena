@@ -45,7 +45,7 @@
 # include <mln/value/rgb8.hh>
 # include <mln/literal/colors.hh>
 # include <mln/literal/black.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/ppm/save.hh>
 
 
@@ -184,7 +184,7 @@ namespace mln
 #ifndef NDEBUG       // FIXME: theo
       const box<P> working_box = enlarge(bigger(geom::bbox(cloud),geom::bbox(x)),5);
       image2d<value::rgb8> tmp(convert::to_box2d(working_box), 1);
-      level::fill(tmp, literal::black);
+      data::fill(tmp, literal::black);
       //write X
       mln_piter(p_array<P>) p(x);
       for_all(p)

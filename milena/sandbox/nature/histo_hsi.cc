@@ -53,7 +53,7 @@
 #include <mln/accu/histo.hh>
 #include <mln/histo/compute.hh>
 #include <mln/level/transform.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 using namespace mln;
 using namespace value;
@@ -80,7 +80,7 @@ void save_histo(Image<I> &i, std::string &name)
 
   image2d<bool> output(max, mln_card(float01_8), 0);
   std::cout << max << "x" << mln_card(float01_8) << std::endl;
-  level::fill(output, true);
+  data::fill(output, true);
 
   for_all(v)
     for (size_t i = 0; i < h(v); ++i)

@@ -47,7 +47,7 @@
 # include <mln/win/vline2d.hh>
 # include <mln/win/hline2d.hh>
 # include <mln/win/disk2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/labeling/blobs.hh>
 # include <mln/core/alias/neighb2d.hh>
 
@@ -68,7 +68,7 @@
 
 # include <mln/core/image_if_value.hh>
 # include <mln/core/image/sub_image.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/morpho/opening_area.hh>
@@ -148,7 +148,7 @@ IU8 projection(IB ima, int coord)
 
   IU projected(smb);
   IU8 projected_stretched(smb);
-  level::fill(projected, literal::zero);
+  data::fill(projected, literal::zero);
 
   mln_piter_(IB) p(ima.domain());
 

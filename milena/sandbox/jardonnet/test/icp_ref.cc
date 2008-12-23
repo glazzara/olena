@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
   qk.apply_on(c, c, c.nsites());
   
   image2d<value::rgb8> output(convert::to_box2d(working_box), 1);
-  level::fill(output, literal::white);
+  data::fill(output, literal::white);
 
 /* FIXME: remove or plot mu_Ck and mu_Xk
   //plot mu_Ck

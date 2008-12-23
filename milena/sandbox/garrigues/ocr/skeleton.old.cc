@@ -1,8 +1,8 @@
 
 #include <mln/core/alias/point2d.hh>
 #include "skeleton.hh"
-#include <mln/level/paste.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/paste.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>

@@ -54,7 +54,7 @@
 #include <mln/core/image/complex_neighborhood_piter.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/norm/l2.hh>
 
 #include <mln/morpho/closing_area.hh>
@@ -170,14 +170,14 @@ int main(int argc, char* argv[])
   std::cout << "n seeds = " << nlabels << std::endl;
   {
     image2d<int_u8> lab(label.domain());
-    level::paste(label, lab);
+    data::paste(label, lab);
     io::pgm::save(lab, "label.pgm");
   }
 
   image2d<unsigned> iz = influence_zones(label, c4());
   {
     image2d<int_u8> IZ(iz.domain());
-    level::paste(iz, IZ);
+    data::paste(iz, IZ);
     io::pgm::save(IZ, "iz.pgm");
   }
 //   debug::println( (pw::value(iz) - pw::cst(1)) | iz.domain() );
@@ -269,7 +269,7 @@ int main(int argc, char* argv[])
 
 
   image2d<int_u8> canvas(seeds.domain());
-  level::fill(canvas, 0);
+  data::fill(canvas, 0);
 
 
   /*---------------------.
@@ -288,7 +288,7 @@ int main(int argc, char* argv[])
 
   // Create and initialize an image based on PC.
   dist_ima_t dist_ima(pc);
-  level::fill(dist_ima, 0u);
+  data::fill(dist_ima, 0u);
 
   /*--------------------------------.
   | Complex-based image iterators.  |
@@ -400,7 +400,7 @@ int main(int argc, char* argv[])
 
 
   image2d<int_u8> canvas_wst(seeds.domain());
-  level::fill(canvas_wst, 255);
+  data::fill(canvas_wst, 255);
 
   for_all(e)
   {

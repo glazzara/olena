@@ -55,7 +55,7 @@ namespace mln
 		       fllt_tree(P, V)& tree)
     {
       fllt_branch_iter_ind(P, V) p(tree.main_branch());
-      level::fill(output, 0);
+      data::fill(output, 0);
       for_all(p)
 	{
 	  //std::cout << (&*p) << ":" << p.deepness() << std::endl;
@@ -76,7 +76,7 @@ namespace mln
 		     unsigned limit)
     {
       fllt_branch_iter_ind(P, V) p(tree.main_branch());
-      level::fill(output, 255);
+      data::fill(output, 255);
       for_all(p)
 	{
 	  if ((*p).elt().points.nsites() > limit)
@@ -184,14 +184,14 @@ namespace mln
 
       image2d<value::rgb8> out(ima.domain());
 
-      level::fill(out, literal::white);
+      data::fill(out, literal::white);
 
       if (R.nsites() != 0)
-	level::fill((out | R).rw(), literal::green);
+	data::fill((out | R).rw(), literal::green);
       if (A.nsites() != 0)
-	level::fill((out | A).rw(), literal::blue);
+	data::fill((out | A).rw(), literal::blue);
       if (N.nsites() != 0)
-	level::fill((out | N).rw(), literal::red);
+	data::fill((out | N).rw(), literal::red);
 
       io::ppm::save(out, filename.str());
     }

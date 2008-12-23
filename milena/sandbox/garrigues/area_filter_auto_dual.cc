@@ -30,7 +30,7 @@
 # define MLN_AREA_FILTER_HH
 
 # include <mln/core/image/image2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
 # include <mln/accu/count.hh>
@@ -88,7 +88,7 @@ namespace mln
     // init
     {
       initialize(deja_vu, input);
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       initialize(parent, input);
       initialize(data, input);
       f.init(); // init required.

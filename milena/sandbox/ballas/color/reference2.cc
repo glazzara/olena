@@ -28,8 +28,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/transform.hh>
 # include <mln/extension/fill.hh>
 
@@ -262,7 +262,7 @@ namespace mln
     unsigned ncols = ima.ncols() / 2 + 1;
     I output(nrows * (zoom + 1) - 1,
 	     ncols * (zoom + 1) - 1);
-    level::fill(output, bg);
+    data::fill(output, bg);
     mln_VAR( edge, ima | is_edge );
     mln_piter(edge_t) p(edge.domain());
     for_all(p)
@@ -361,21 +361,21 @@ do_it(I& input, int lambda, unsigned& nbasins)
 
   // FIXME until laplacian is working use gradient / closing_area / wst
 
-  level::paste(morpho::gradient(edge, e2c), edge);
-  level::paste(morpho::closing_volume(edge, e2e, lambda), edge);
-  level::fill(edge, morpho::meyer_wst(edge, e2e, nbasins));
+  data::paste(morpho::gradient(edge, e2c), edge);
+  data::paste(morpho::closing_volume(edge, e2e, lambda), edge);
+  data::fill(edge, morpho::meyer_wst(edge, e2e, nbasins));
 
   // Fill regions (with colorize) (won't work with laplacian...)
 
   colorize colors(nbasins);
 
   image2d<value::rgb8> cells(ima.domain());
-  level::fill(cells, literal::white);
-  level::paste(level::transform(edge, colors), cells);
+  data::fill(cells, literal::white);
+  data::paste(level::transform(edge, colors), cells);
   io::ppm::save(display_edge(cells, literal::white, 3), "tmp_edge.ppm");
 
   // Move the color of an edge which is non black in the cell
-  level::paste(morpho::dilation(cells, c4()), cells);
+  data::paste(morpho::dilation(cells, c4()), cells);
 
   return cells2image(cells);
 }

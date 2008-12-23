@@ -30,7 +30,7 @@
 
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pgm/save.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/accu/mean.hh>
 #include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
@@ -52,7 +52,7 @@ namespace mln
         opt::at(acc, p.sli(), p.row()).take(input(p));
 
     image2d<mln_result(A)> output(acc.domain());
-    level::paste(acc, output);
+    data::paste(acc, output);
     return output;
   }
 
@@ -70,7 +70,7 @@ namespace mln
     //std::cout << histo;
 
     image2d<value::rgb8> out(proj_class.domain());
-    level::fill(out, literal::white);
+    data::fill(out, literal::white);
 
     mln_piter(image2d<value::int_u8>) p(proj_class.domain());
     for_all(p)
@@ -95,7 +95,7 @@ namespace mln
         opt::at(acc, p.sli(), p.row()).take(input(p));
 
     image2d<mln_result(A)> output(acc.domain());
-    level::paste(acc, output);
+    data::paste(acc, output);
     return output;
   }
 
@@ -122,7 +122,7 @@ namespace mln
       proj_vec(out3d, histo, maj_2);
 
     image2d<value::rgb8> out(geom::nslis(histo), geom::nrows(histo));
-    level::fill(out, literal::white);
+    data::fill(out, literal::white);
 
     mln_piter(image2d<value::int_u8>) p1(out.domain());
     for_all(p1)

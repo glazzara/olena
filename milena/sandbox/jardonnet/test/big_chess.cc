@@ -10,7 +10,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/io/pgm/load.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 
 #include <mln/io/ppm/load.hh>
 #include <mln/io/ppm/save.hh>
@@ -70,7 +70,7 @@ int main(int argc, char ** argv)
 
   debug::println(visio);
 
-  level::paste(visio, ima2);
+  data::paste(visio, ima2);
 
   io::ppm::save(ima2, "out.ppm");
 }

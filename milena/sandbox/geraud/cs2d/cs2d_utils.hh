@@ -4,7 +4,7 @@
 # include <mln/literal/white.hh>
 # include <mln/literal/colors.hh>
 # include <mln/win/rectangle2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -151,7 +151,7 @@ namespace mln
     box2d b(cs.nrows() * clen + 3 * (cs.nrows() - 1),
 	    cs.ncols() * clen + 3 * (cs.ncols() - 1));
     image2d<R> output(b);
-    level::fill(output, literal::black);
+    data::fill(output, literal::black);
 
     // Cells.
     mln_piter(Cs::cell_t) c(cs.cell.domain());

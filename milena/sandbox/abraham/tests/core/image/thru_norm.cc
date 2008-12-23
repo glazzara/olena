@@ -29,7 +29,7 @@
 # include <mln/core/image/thru.hh>
 # include <mln/fun/v2w_w2v/norm.hh>
 # include <mln/algebra/vec.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/image/violent_cast_image.hh>
 
 
@@ -49,7 +49,7 @@ int main ()
   ima(point2d(2,1)).set (3, 1);
 
   thru<mln::fun::v2w_w2v::l1_norm<algebra::vec<2, double>, double>, I > out(ima);
-  level::fill(out, 1);
+  data::fill(out, 1);
 
   box_fwd_piter_<point2d> p(ima.domain());
 

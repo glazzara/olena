@@ -57,7 +57,7 @@ namespace mln
 	bool stability;
 	do
 	  {
-	    level::paste(o, o_); // memorisation
+	    data::paste(o, o_); // memorisation
 
 	    // opere
 	    for_all(p)

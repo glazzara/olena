@@ -7,13 +7,13 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/level/stretch.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/core/image/sub_image.hh>

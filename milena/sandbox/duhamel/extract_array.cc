@@ -42,7 +42,7 @@
 # include <mln/win/rectangle2d.hh>
 # include <mln/win/vline2d.hh>
 # include <mln/win/hline2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/literal/all.hh>
 # include <mln/value/rgb8.hh>
 

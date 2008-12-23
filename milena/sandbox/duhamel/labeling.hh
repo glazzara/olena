@@ -7,7 +7,7 @@
  * image.
  */
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include "fill.hh"
 # include <mln/level/sort_points.hh>
 
@@ -53,7 +53,7 @@ namespace mln
 	{
 	  f.nlabels = 0;
 // 	  fill_opt2 (deja_vu, false);
-// 	  mln::level::fill(deja_vu, false);
+// 	  mln::data::fill(deja_vu, false);
 	  f.init();
 	}
 	// first pass

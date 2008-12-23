@@ -43,7 +43,7 @@
 
 # include <queue>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/extrema_components.hh>
 # include <mln/morpho/lower_completion.hh>
 # include <mln/trait/value_.hh>
@@ -97,7 +97,7 @@ namespace mln {
 	// We keep a track of already processed points.
 	typename ch_value_type<I, bool>::ret processed (input.size(),
 							input.nbh_get());
-	level::fill (processed, false);
+	data::fill (processed, false);
 
 	// Initialize output with the minima components.
 	typename ch_value_type<I, DestValue>::ret output =
@@ -107,7 +107,7 @@ namespace mln {
 	typedef ntg_cumul_type(DestValue) cumul_type;
 	typedef typename ch_value_type<I, cumul_type>::ret dist_type;
 	dist_type dist (input.size(), input.nbh_get());
-	level::fill(dist, ntg_max_val(DestValue));
+	data::fill(dist, ntg_max_val(DestValue));
 	// Initialize distance with values of minima, and mark these
 	// points as processed (remember that points of INPUT who have
 	// a value greater than ntg_min_val(DestValue) belongs to a

@@ -59,7 +59,7 @@ void build_milena_image(GimpPixelRgn *in,
   std::cout << p1 << " : " << ima(p1) << std::endl;
   std::cout << p2 << " : " << ima(p2) << std::endl;
   std::cout << p3 << " : " << ima(p3) << std::endl;
-//  mln::level::fill(ima, mln::literal::blue);
+//  mln::data::fill(ima, mln::literal::blue);
 
   toto fun;
   mln::image2d<mln::value::rgb8> tmp2(ima.domain());

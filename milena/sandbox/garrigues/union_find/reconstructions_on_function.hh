@@ -32,9 +32,9 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/core/routine/clone.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/level/sort_psites.hh>
 # include <mln/literal/zero.hh>
 # include <mln/math/max.hh>

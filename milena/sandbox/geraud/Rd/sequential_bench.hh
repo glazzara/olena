@@ -62,7 +62,7 @@ namespace mln
 	  {
 	    ++nloops;
 
-	    level::paste(o, o_); // memorisation
+	    data::paste(o, o_); // memorisation
 
 	    // passe 1
 	    {

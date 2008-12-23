@@ -61,7 +61,7 @@
 # include <mln/border/fill.hh>
 
 # include <mln/level/compute.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 
@@ -125,8 +125,8 @@ namespace mln
 	N.clear();
 	A.clear();
 
-	level::fill(regions, 0);
-	level::fill(tagged, false);
+	data::fill(regions, 0);
+	data::fill(tagged, false);
 
 	u = clone(input);
 	border::fill(u, 0);
@@ -150,7 +150,7 @@ namespace mln
 //       // FIXME : debug.
 //       {
 // 	image2d<bool> d(make::box2d(-1, -1, 1, 1));
-// 	level::fill(d, 0);
+// 	data::fill(d, 0);
 // 	mln_fwd_niter(clock_neighb2d)   n(nbh , p);
 // 	mln_fwd_niter(clock_neighb2d)   dn(nbh , point2d(0, 0));
 // 	for_all_2(n, dn)
@@ -261,7 +261,7 @@ namespace mln
       env.A.insert(env.x0);
       // R <- {}
       env.R.clear();
-      level::fill(env.shape, false);
+      data::fill(env.shape, false);
       border::fill(env.shape, true);
       env.n_cc = 0;
       // N <- {}
@@ -342,7 +342,7 @@ namespace mln
 	// Count the number of conected components of the border of R.
 	static image2d<int>  tmp(env.u.domain().to_larger(1));
 	static image2d<bool> border_ima(tmp.domain());
-	level::fill(border_ima, false);
+	data::fill(border_ima, false);
 
 	mln_piter(p_set<P>) z(env.N);
 	for_all(z)

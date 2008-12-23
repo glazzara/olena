@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 
   //init output image
   image2d<value::rgb8> output(convert::to_box2d(working_box), 0);
-  level::fill(output, literal::white);
+  data::fill(output, literal::white);
 
 
   //print x

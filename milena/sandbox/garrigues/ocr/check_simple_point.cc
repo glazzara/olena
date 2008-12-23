@@ -2,7 +2,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/labeling/blobs.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include "simple_point.hh"
 
@@ -20,7 +20,7 @@ int main()
 
   for (unsigned i = 0; i < 256; i++)
   {
-    level::fill(ima, false);
+    data::fill(ima, false);
     int_u8 tmp = i;
 
     mln_niter_(neighb2d)   n(c8() , p);
@@ -41,7 +41,7 @@ int main()
 
   for (unsigned i = 0; i < 256; i++)
   {
-    level::fill(ima, false);
+    data::fill(ima, false);
     int_u8 tmp = i;
 
     mln_niter_(neighb2d)   n(c8() , p);

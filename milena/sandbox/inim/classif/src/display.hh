@@ -52,7 +52,7 @@ namespace mln
     chdir(dir);
 
     image2d< value::rgb8 > out(geom::nrows(histo), geom::ncols(histo));
-    level::fill(out, literal::white);
+    data::fill(out, literal::white);
 
     for (int s = 0; s < geom::nslis(histo); ++s)
     {

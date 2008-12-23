@@ -6,7 +6,7 @@
 # include <mln/convert/to_w_window.hh>
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/convert/to_image.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pbm/load.hh>
 # include <sstream>
@@ -25,7 +25,7 @@ int main()
       std::cout << path.str () << std::endl;
       image2d<value::int_u8> ima = io::pgm::load(path.str());
       image2d<int> ima_int(ima.domain());
-      level::fill(ima_int, ima);
+      data::fill(ima_int, ima);
       fllt::fllt(ima_int);
     }
 }

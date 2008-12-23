@@ -3,7 +3,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 # include <mln/morpho/includes.hh>
 # include <mln/level/sort_psites.hh>
@@ -44,7 +44,7 @@ struct max_tree_
     : f(f), nbh(nbh), is_active(f.domain()), new_parent(f.domain())
   {
     run();
-    level::fill(is_active, true);
+    data::fill(is_active, true);
 
     new_parent = parent;
   }
@@ -54,7 +54,7 @@ struct max_tree_
     // init
     {
       initialize(deja_vu, f);
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       initialize(parent, f);
       initialize(zpar, f);
       s = level::sort_psites_decreasing(f);
@@ -107,7 +107,7 @@ struct max_tree_
   {
     image3d<unsigned> nb_represent(f.domain());
 
-    level::fill(nb_represent, 0);
+    data::fill(nb_represent, 0);
     mln_fwd_piter(S) p(s);
 
     for_all(p)
@@ -124,7 +124,7 @@ struct max_tree_
   {
     image3d<unsigned> volume(f.domain());
 
-    level::fill(volume, 0);
+    data::fill(volume, 0);
     mln_fwd_piter(S) p(s);
 
     for_all(p)
@@ -259,7 +259,7 @@ struct max_tree_
     update_parents();
 
     J out(ima.domain());
-    level::fill(out, value::rgb8(0, 0, 0));
+    data::fill(out, value::rgb8(0, 0, 0));
 
     mln_piter(J) p(ima.domain());
     for_all(p)

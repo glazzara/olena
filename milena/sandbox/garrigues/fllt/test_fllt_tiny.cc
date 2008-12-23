@@ -2,7 +2,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/routine/clone.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/pgm/load.hh>
 
 int main()
@@ -14,6 +14,6 @@ int main()
 
    image2d<int> ima_int(ima.domain());
 
-   level::fill(ima_int, ima);
+   data::fill(ima_int, ima);
    fllt::fllt(ima_int);
 }

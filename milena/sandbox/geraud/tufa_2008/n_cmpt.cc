@@ -36,7 +36,7 @@
 #include <mln/debug/iota.hh>
 
 #include <mln/labeling/regional_minima.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/morpho/tree/data.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
@@ -97,7 +97,7 @@ namespace mln
     // init fused image
     mln_ch_value(I, bool) fused;
     initialize(fused, attr);
-    mln::level::fill(fused, false);
+    mln::data::fill(fused, false);
 
     // prepare union find
     typedef mln_psite(I) P;
@@ -105,7 +105,7 @@ namespace mln
     //deja_vu
     mln_ch_value(I, bool) deja_vu;
     initialize(deja_vu, f);
-    level::fill(deja_vu, false);
+    data::fill(deja_vu, false);
 
     //parent
     mln_ch_value(I, P) parent(attr.domain());

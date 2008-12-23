@@ -30,7 +30,7 @@
 # define MLN_SELF_DUAL_RECONSTRUCTION_HH
 
 # include <mln/core/image/image2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
 # include <mln/accu/count.hh>
@@ -127,8 +127,8 @@ namespace mln
 	  initialize(deja_vu, f.mask);
 	  initialize(parent, f.mask);
 
-	  mln::level::fill(deja_vu, false);
-	  level::fill(f.output, f.marker);
+	  mln::data::fill(deja_vu, false);
+	  data::fill(f.output, f.marker);
 	}
 
 	// first pass
@@ -161,7 +161,7 @@ namespace mln
 	    }
 	  }
 
-	  mln::level::fill(deja_vu, false);
+	  mln::data::fill(deja_vu, false);
 
 	  // Body of D2.
 	  {

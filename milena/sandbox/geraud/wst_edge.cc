@@ -27,8 +27,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/transform.hh>
 # include <mln/extension/fill.hh>
 
@@ -209,7 +209,7 @@ namespace mln
     unsigned ncols = ima.ncols() / 2 + 1;
     I output(nrows * (zoom + 1) - 1,
 	     ncols * (zoom + 1) - 1);
-    level::fill(output, bg);
+    data::fill(output, bg);
     mln_VAR( edge, ima | is_edge );
     mln_piter(edge_t) p(edge.domain());
     for_all(p)
@@ -302,7 +302,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
   mln_VAR(edge, extend((ima | is_edge).rw(),
 		       pw::value(ima)));
 
-  level::paste(morpho::gradient(edge, e2c), edge);
+  data::paste(morpho::gradient(edge, e2c), edge);
   //                                  ^^^
   //                         edge -> neighboring cells
 
@@ -318,7 +318,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
   }
 
 
-  level::paste( morpho::closing_volume(edge, e2e, lambda), edge );
+  data::paste( morpho::closing_volume(edge, e2e, lambda), edge );
   
 
   image2d<unsigned> label(ima.bbox(), 0);
@@ -328,7 +328,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
 
   mln_VAR(wst, label | is_edge);
 
-  level::fill(wst, morpho::meyer_wst(edge, e2e, nbasins));
+  data::fill(wst, morpho::meyer_wst(edge, e2e, nbasins));
   //                                       ^^^
   //                         edge -> neighboring edges
 
@@ -342,9 +342,9 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
 
   {
     image2d<value::rgb8> temp(label.domain());
-    level::fill(temp, literal::white);
+    data::fill(temp, literal::white);
 
-    level::paste( level::transform(label | is_edge,
+    data::paste( level::transform(label | is_edge,
 				   colors),
 		  temp );
     
@@ -357,7 +357,7 @@ do_it(I& ima, int lambda, const std::string& filename, unsigned& nbasins)
 
   mln_VAR(lab, label | is_cell);
 
-  level::paste(morpho::dilation(extend(lab, label),
+  data::paste(morpho::dilation(extend(lab, label),
 				c4()),
 	       label);
 

@@ -16,7 +16,7 @@
 #include <mln/io/ppm/save.hh>
 #include <mln/io/pgm/save.hh>
 
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/apply.hh>
 
 #include <mln/fun/v2v/rgb_to_hsi.hh>
@@ -56,7 +56,7 @@ int main(int argc, char ** argv)
   //FIXME: fix and use alexandre stuff
   /*  thru<to_hsi, image2d<hsi_f> > tmp(hsi_f);
   image2d<int_u8> g_ima;
-  level::paste(tmp, g_ima);*/
+  data::paste(tmp, g_ima);*/
 
   image2d<int_u8> g_ima(ima.domain());
   mln_piter_(image2d<rgb8>) p(g_ima.domain());

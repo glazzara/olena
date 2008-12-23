@@ -27,7 +27,7 @@
 
 
 #include <mln/level/sort_psites.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/site_set/p_set.hh>
 #include <mln/estim/min_max.hh>
@@ -161,7 +161,7 @@ namespace mln
 	S = level::sort_psites_increasing(pima);
 
 	// Clear the marker map
-	level::fill(isproc, false);
+	data::fill(isproc, false);
 	for (int ip = 0; ip < int(S.nsites()); ++ip)
 	  {
 	    site p = S[ip];
@@ -480,7 +480,7 @@ namespace mln
 	ordered_queue_type l(util::make_greater_psite(pima));
 
 	// Clear the marker map
-	level::fill(isproc, false);
+	data::fill(isproc, false);
 	mln_piter(I) it(pima.domain());
 
 	for_all(it)
@@ -647,8 +647,8 @@ namespace mln
 	std::cout << "Init" << std::endl;
 
 	// Flag C-maxima
-	level::fill(cmax, false);
-	level::fill(enqueued, false);
+	data::fill(cmax, false);
+	data::fill(enqueued, false);
 
 	mln_piter(I) it(Par_node.domain());
 	for_all(it)

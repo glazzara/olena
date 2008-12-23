@@ -201,15 +201,15 @@ namespace scribo
 
       TessBaseAPI::InitWithLanguage(NULL, NULL, "fra", NULL, false, 0, NULL);
       image2d<char> txt(in.domain());
-      level::fill(txt, ' ');
+      data::fill(txt, ' ');
 
       for_all_components(i, tboxes)
       {
 	if (tboxes[i].is_valid())
 	{
 	  image2d<bool> b(tboxes[i], 0);
-	  level::fill(b, false);
-	  level::fill((b | (pw::value(lbl) == pw::cst(i))).rw(), true);
+	  data::fill(b, false);
+	  data::fill((b | (pw::value(lbl) == pw::cst(i))).rw(), true);
 
 	  char* s = TessBaseAPI::TesseractRect(
 	      (unsigned char*) b.buffer(),
@@ -335,7 +335,7 @@ namespace scribo
 		  unsigned dim_size)
     {
       image1d<int> l(dim_size);
-      level::fill(l, -1);
+      data::fill(l, -1);
 
       for_all_elements(i, aligned_lines)
 	opt::at(l, aligned_lines[i]) = i;
@@ -376,7 +376,7 @@ namespace scribo
 
       image2d<bool> res;
       initialize(res, in);
-      level::fill(res, false);
+      data::fill(res, false);
       for_all_components(i, tblboxes.first)
 	draw::box(res, tblboxes.first[i], true);
       for_all_components(i, tblboxes.second)
@@ -384,7 +384,7 @@ namespace scribo
 
 # ifndef NOUT
       image2d<rgb8> out(in.domain());
-      level::fill(out, literal::black);
+      data::fill(out, literal::black);
       for_all_components(i, tblboxes.first)
 	draw::box(out, tblboxes.first[i], literal::red);
       for_all_components(i, tblboxes.second)
@@ -463,7 +463,7 @@ namespace scribo
       {
 	boxes[i].enlarge(dim, settings.bbox_enlarge);
 	boxes[i].crop_wrt(output.domain());
-	level::paste((pw::cst(false) | boxes[i] |
+	data::paste((pw::cst(false) | boxes[i] |
 		(pw::value(output) == pw::cst(true))), output);
       }
     }
@@ -704,7 +704,7 @@ namespace scribo
       for_all_ncomponents(i, nlabels)
 	if (tboxes[i].is_valid())
 	  if (comp_size.treated[i] < 3)
-	    level::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
+	    data::fill((lbl2 | (tboxes[i].to_result() | (pw::value(lbl2) == pw::cst(i)))).rw(), 0u);
       save_lbl_image(lbl2, nlabels, "lbl-grouped-boxes-cleaned.ppm");
 #endif
 
@@ -818,7 +818,7 @@ namespace scribo
 
       for_all_elements(i, tboxes)
 	if (tboxes[i].is_valid())
-	  level::paste(pw::cst(color(tboxes[i].center())) | (tboxes[i] | pw::value(in) == pw::cst(true)),
+	  data::paste(pw::cst(color(tboxes[i].center())) | (tboxes[i] | pw::value(in) == pw::cst(true)),
 		dbg);
       io::ppm::save(dbg, output_file("text2cell.ppm"));
 # endif

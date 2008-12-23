@@ -1,7 +1,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pbm/save.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 # include "simple_point.hh"
 
@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 
   I output;
   initialize(output, input);
-  level::fill(output, false);
+  data::fill(output, false);
 
   mln_piter_(I) p(input.domain());
   for_all(p)

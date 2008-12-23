@@ -35,7 +35,7 @@
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>

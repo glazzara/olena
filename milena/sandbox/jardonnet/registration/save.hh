@@ -57,7 +57,7 @@ namespace mln
 
       const box_<P> working_box = enlarge(bigger(ck.bbox(),x.bbox()),5);
       image2d<value::rgb8> out(convert::to_box2d(working_box), 1);
-      level::fill(out, literal::white);
+      data::fill(out, literal::white);
 
       //plot mu_Ck
       algebra::vec<P::dim,float> mu_Ck = geom::center(ck);

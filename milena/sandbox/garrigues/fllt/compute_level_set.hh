@@ -177,9 +177,9 @@ namespace mln
 	// Count the number of conected components of the border of R.
 	static image2d<unsigned>  tmp(u.domain().to_larger(1));
 	static image2d<bool> border_ima(tmp.domain());
-	level::fill(border_ima, false);
+	data::fill(border_ima, false);
 
-	//       level::fill((border_ima | N).rw(), true);
+	//       data::fill((border_ima | N).rw(), true);
 	//       std::cout << "tmp border = " << tmp.border () << std::endl;
 	//       std::cout << "ima border = " << border_ima.border () << std::endl;
 	mln_piter(p_set<P>) z(N);
@@ -318,8 +318,8 @@ namespace mln
       gn = 0;
       current_region = 0;
 
-      level::fill(regions, 0);
-      level::fill(tagged, false);
+      data::fill(regions, 0);
+      data::fill(tagged, false);
 
       // Get the locals extremums
       unsigned nlabels;

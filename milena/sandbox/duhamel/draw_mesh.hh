@@ -4,7 +4,7 @@
 # include <mln/pw/image.hh>
 # include <mln/core/image2d_b.hh>
 # include <mln/core/alias/point2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/draw/line.hh>
 # include <mln/core/mesh_p.hh>
 # include <mln/core/mesh_image.hh>
@@ -206,7 +206,7 @@ namespace mln
 	 mln_value(I) node_v,
 	 mln_value(I) link_v)
     {
-      level::fill(ima, 0);
+      data::fill(ima, 0);
 
       for (unsigned i = 0; i < m.gr_.nb_link_; ++i)
 	line (exact(ima),
@@ -222,7 +222,7 @@ namespace mln
     void
     mesh(Image<I>& ima, const mesh_image<P, V>& mesh)
     {
-      level::fill(ima, 0);
+      data::fill(ima, 0);
 
       for (unsigned i = 0; i < mesh.domain().gr_.nb_link_; ++i)
 	line (exact(ima),

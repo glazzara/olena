@@ -7,8 +7,8 @@
 
 # include <mln/debug/println.hh>
 # include <mln/fun/p2v/iota.hh>
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/morpho/dilation.hh>
 
 
@@ -54,7 +54,7 @@ int main()
   {
     image2d<char> ima(3, 5);
  
-    level::fill(ima, 'o');
+    data::fill(ima, 'o');
 
     debug::println(ima);
     // o o o o o 
@@ -66,9 +66,9 @@ int main()
     //        
     // o   o   o 
   
-    level::fill((ima | is_cell).rw(),  'c');
-    level::fill((ima | is_edge).rw(),  'e');
-    level::fill((ima | is_point).rw(), 'p');
+    data::fill((ima | is_cell).rw(),  'c');
+    data::fill((ima | is_edge).rw(),  'e');
+    data::fill((ima | is_point).rw(), 'p');
 
     debug::println(ima);
     // c e c e c 
@@ -79,13 +79,13 @@ int main()
   {
     image2d<int> ima(3, 5);
 
-    level::fill(ima, 0);
+    data::fill(ima, 0);
     debug::println(ima);
     // 0 0 0 0 0 
     // 0 0 0 0 0 
     // 0 0 0 0 0 
 
-    level::fill((ima | is_cell).rw(), fun::p2v::iota);
+    data::fill((ima | is_cell).rw(), fun::p2v::iota);
     debug::println(ima | is_cell);
     // 1   2   3 
     //      
@@ -125,7 +125,7 @@ int main()
     // En revanche, rien n'empêche de "coller" le résultat d'un
     // traitement dans l'image d'entrée :
 
-    level::paste(morpho::dilation(ima | is_edge, c4), ima);
+    data::paste(morpho::dilation(ima | is_edge, c4), ima);
 
     // Maintenant, le dilaté de "ima restreint à edge" est collé dans
     // 'ima' :
@@ -135,7 +135,7 @@ int main()
     // 4 0 5 0 6 
     // 4 5 5 6 6 
 
-    level::paste(morpho::dilation(ima | is_point, c4), ima);
+    data::paste(morpho::dilation(ima | is_point, c4), ima);
     debug::println(ima);
     // 1 2 2 3 3 
     // 4 5 5 6 6 

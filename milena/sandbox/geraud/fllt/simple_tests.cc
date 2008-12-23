@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 
   image2d<int> lena_(make::image2d(vs));
   image2d<int_u8> lena(lena_.domain());
-  level::fill(lena, lena_);
+  data::fill(lena, lena_);
 
   tree_type tree = fllt(lena);
   draw_tree(lena, tree);

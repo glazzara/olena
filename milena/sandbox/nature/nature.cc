@@ -37,7 +37,7 @@
 #include <mln/histo/compute.hh>
 
 #include <mln/level/transform.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/to_enc.hh>
 
 #include <mln/value/rgb8.hh>
@@ -164,7 +164,7 @@ int main (int argc, const char * argv [])
   image2d<int_u8> uinty (qinty.domain());
   {
     image2d<unsigned char> tmp = level::transform(qinty, fun::v2v::enc< float01_8 >());
-    level::paste(tmp, uinty);
+    data::paste(tmp, uinty);
     /*    mln_piter_(image2d<unsigned char>) p(tmp.domain());
     for_all(p)
       uinty(p) = tmp(p);

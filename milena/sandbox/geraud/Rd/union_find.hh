@@ -68,9 +68,9 @@ namespace mln
 
 	  // init
 
-	  level::fill(deja_vu, false);
+	  data::fill(deja_vu, false);
 	  S = histo_reverse_sort(g);
-	  level::paste(f, o); // Replace: for all p, make_set(p) { data(p) = f(p) }
+	  data::paste(f, o); // Replace: for all p, make_set(p) { data(p) = f(p) }
 
 	  // first pass
 

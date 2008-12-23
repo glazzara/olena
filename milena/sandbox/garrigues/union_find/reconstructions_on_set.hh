@@ -31,8 +31,8 @@
 
 # include <mln/core/image/image2d.hh>
 # include <mln/core/alias/neighb2d.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/level/compare.hh>
 
 # include "canvas/reconstruction_on_set.hh"
@@ -53,7 +53,7 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return mask(p); }
-      void set_default_output() { level::fill(output, false); }
+      void set_default_output() { data::fill(output, false); }
       void init(P p) { output(p) = marker(p); }
       void merge(P r, P p) { output(p) = output(p) || output(r); }
       void visit_ext_border(P n, P p) {	(void) n; (void) p; }
@@ -74,7 +74,7 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return mask(p) && !marker(p); }
-      void set_default_output() { level::paste(marker, output); }
+      void set_default_output() { data::paste(marker, output); }
       void init(P p) { output(p) = false; }
       void merge(P r, P p) { output(p) = output(p) || output(r); }
       void visit_ext_border(P n, P p) {	if (marker(n)) output(p) = true; }
@@ -95,7 +95,7 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return !mask(p); }
-      void set_default_output() { level::fill(output, true); }
+      void set_default_output() { data::fill(output, true); }
       void init(P p) { output(p) = marker(p); }
       void merge(P r, P p) { output(p) = output(p) && output(r); }
       void visit_ext_border(P n, P p) { (void) n; (void) p; }
@@ -115,7 +115,7 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return !mask(p) && marker(p); }
-      void set_default_output() { level::paste(mask, output); }
+      void set_default_output() { data::paste(mask, output); }
       void init(P p) { output(p) = true; }
       void merge(P r, P p) { output(p) = output(p) && output(r); }
       void visit_ext_border(P n, P p) {	if (!marker(n)) output(p) = false; }

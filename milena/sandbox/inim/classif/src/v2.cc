@@ -4,7 +4,7 @@
 
 #include <mln/value/all.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/geom/nrows.hh>
 #include <mln/geom/ncols.hh>
 #include <mln/geom/nslis.hh>
@@ -29,7 +29,7 @@ fill_histo(const I& ima, int f)
 {
   const value::int_u8 v = 256 / f; // FIXME
   image3d<unsigned> histo(v,v,v);
-  level::fill(histo, 0);
+  data::fill(histo, 0);
 
   mln_piter(I) p(ima.domain());
   for_all(p)

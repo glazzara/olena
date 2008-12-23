@@ -8,7 +8,7 @@
 # include <mln/io/pgm/save.hh>
 # include <mln/value/int_u8.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/debug/println.hh>
 
@@ -25,14 +25,14 @@ namespace mln
 
     mln_ch_value(I, bool) deja_vu;
     initialize(deja_vu, input);
-    level::fill(deja_vu, input);
+    data::fill(deja_vu, input);
 
     typedef mln_site(I) P;
     p_queue_fast<P> q;
 
     // Initialization.
     {
-      level::fill(output, M);
+      data::fill(output, M);
       mln_piter(I) p(input.domain());
       mln_niter(N) n(nbh, p);
       for_all(p)

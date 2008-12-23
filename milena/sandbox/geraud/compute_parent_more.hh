@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -90,7 +90,7 @@ namespace mln
 	S roots;
 
 	// Initialization.
-	level::fill(deja_vu, false);
+	data::fill(deja_vu, false);
 	unsigned nnodes = 0;
 
 	// Body.

@@ -34,7 +34,7 @@
 
 #include <mln/core/image/cast_image.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/iota.hh>

@@ -47,7 +47,7 @@ namespace mln
       {
 
 	mln_ch_value(I, bool) que(f.domain());
-	level::fill(que, false);
+	data::fill(que, false);
 
 	
 	if (echo) std::cout << std::endl;

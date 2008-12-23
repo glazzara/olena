@@ -6,7 +6,7 @@
 # include <mln/convert/to_w_window.hh>
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/convert/to_image.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pbm/load.hh>
 

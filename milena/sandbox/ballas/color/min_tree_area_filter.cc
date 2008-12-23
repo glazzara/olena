@@ -28,8 +28,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/transform.hh>
 # include <mln/extension/fill.hh>
 
@@ -100,9 +100,9 @@ namespace mln
 	initialize(area, f);
         //initialize(comp, f);
 
-	mln::level::fill(deja_vu, false);
-	//mln::level::fill(resp, false);
-        mln::level::fill(area, 0);
+	mln::data::fill(deja_vu, false);
+	//mln::data::fill(resp, false);
+        mln::data::fill(area, 0);
 
 	s = level::sort_psites_increasing(f);
       }
@@ -265,7 +265,7 @@ namespace mln
     unsigned ncols = ima.ncols() / 2 + 1;
     I output(nrows * (zoom + 1) - 1,
 	     ncols * (zoom + 1) - 1);
-    level::fill(output, bg);
+    data::fill(output, bg);
 
     mln_VAR(edge, ima | is_edge);
     mln_piter(edge_t) p(edge.domain());
@@ -404,7 +404,7 @@ unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
 
   colorize colors(nnodes);
   image2d<value::rgb8> tmp(ref.domain());
-  level::fill(tmp, ref);
+  data::fill(tmp, ref);
 
   mln_piter(I) q(f.domain());
   unsigned int i = 0;
@@ -428,9 +428,9 @@ unsigned min_tree(const I& f, const N& nbh, const Ic& ref, const Nc& nbhc,
 
   image2d<value::rgb8> to_display(tmp.domain());
 
-  level::fill(to_display, value::rgb8(255, 255, 255));
-  level::paste((tmp | is_edge), to_display);
-  level::paste(morpho::dilation(to_display, c4()), to_display);
+  data::fill(to_display, value::rgb8(255, 255, 255));
+  data::paste((tmp | is_edge), to_display);
+  data::paste(morpho::dilation(to_display, c4()), to_display);
 
   io::ppm::save(display_edge(tmp, literal::white, 3),
                 "edge.ppm");

@@ -72,8 +72,8 @@
 
 # include <mln/level/convert.hh>
 # include <mln/level/compute.hh>
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/level/apply.hh>
 # include <mln/level/transform.hh>
 
@@ -194,10 +194,10 @@ namespace scribo
 			vend(in.nrows()),
 			vcol(in.ncols());
 
-      level::fill(hend, 0);
-      level::fill(hrow, 0);
-      level::fill(vend, 0);
-      level::fill(vcol, 0);
+      data::fill(hend, 0);
+      data::fill(hrow, 0);
+      data::fill(vend, 0);
+      data::fill(vcol, 0);
 
       for (unsigned i = 1; i < tboxes.first.nelements(); ++i)
       {
@@ -215,7 +215,7 @@ namespace scribo
 
 #ifndef NOUT
       image2d<rgb8> tmp(in.domain());
-      level::fill(tmp, literal::black);
+      data::fill(tmp, literal::black);
 
       for (unsigned i = 1; i < in.ncols(); ++i)
       {
@@ -272,7 +272,7 @@ namespace scribo
       {
 	boxes[i].enlarge(dim, bbox_enlarge + 1);
 	boxes[i].crop_wrt(output.domain());
-	level::paste((pw::cst(false) | boxes[i] |
+	data::paste((pw::cst(false) | boxes[i] |
 		(pw::value(output) == pw::cst(true))), output);
       }
     }

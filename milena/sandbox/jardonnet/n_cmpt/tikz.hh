@@ -43,7 +43,7 @@
 # include <mln/morpho/tree/data.hh>
 # include <mln/morpho/tree/compute_attribute_image.hh>
 
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 #include <mln/level/transform.hh>
 
 namespace mln
@@ -115,7 +115,7 @@ namespace mln
       morpho::tree::data<I,S> t(ima, sp, nbh);
 
       V volume(ima.domain());
-      level::paste(morpho::tree::compute_attribute_image(A(), t),
+      data::paste(morpho::tree::compute_attribute_image(A(), t),
                    volume);
 
       sp = level::sort_psites_increasing(volume);
@@ -147,7 +147,7 @@ namespace mln
       // init fused image
       mln_ch_value(I, bool) fused;
       initialize(fused, volume);
-      mln::level::fill(fused, false);
+      mln::data::fill(fused, false);
 
       // prepare union find
       typedef mln_psite(V) P;
@@ -157,7 +157,7 @@ namespace mln
 
       //deja_vu
       mln_ch_value(V, bool)  deja_vu(volume.domain());
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
 
       //parent
       mln_ch_value(V, P) parent(volume.domain());

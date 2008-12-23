@@ -111,7 +111,7 @@ namespace mln
       // init fused image
       mln_ch_value(I, bool) fused;
       initialize(fused, volume);
-      mln::level::fill(fused, false);
+      mln::data::fill(fused, false);
 
       // prepare union find
       typedef mln_psite(V) P;
@@ -121,7 +121,7 @@ namespace mln
 
       //deja_vu
       mln_ch_value(V, bool)  deja_vu(volume.domain());
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
 
       //parent
       mln_ch_value(V, P) parent(volume.domain());

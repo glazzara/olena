@@ -8,8 +8,8 @@
 # include <mln/io/pgm/save.hh>
 # include <mln/io/ppm/save.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/morpho/dilation.hh>
 # include <mln/morpho/meyer_wst.hh>
@@ -66,11 +66,11 @@ int main(int argc, char* argv[])
   cs2d<int_u8, int_u8, int_u8> cs(lena.domain());
 
   fill_cells_with(cs, lena);
-  level::fill(cs.vertex, 0);
+  data::fill(cs.vertex, 0);
 
   cmorpho::dbl_neighb2d nbh_g;
   nbh_g.insert_odd(up).insert_even(left);
-  level::paste(cmorpho::gradient(cs.edge, nbh_g),
+  data::paste(cmorpho::gradient(cs.edge, nbh_g),
 	       cs.edge);
   // io::pgm::save(cs.impl, "grad.pgm");
 
@@ -79,18 +79,18 @@ int main(int argc, char* argv[])
     usage(argv);
 
   if (lambda != 0)
-    level::paste(morpho::closing_area(cs.edge, nbh_e, lambda), cs.edge);
+    data::paste(morpho::closing_area(cs.edge, nbh_e, lambda), cs.edge);
 
   cs2d<int_u8, bool, bool> cs_(lena.domain());
-  level::fill(cs_.impl, false);
+  data::fill(cs_.impl, false);
   fill_cells_with(cs_, lena);
 
   unsigned l;
-  level::fill(cs_.edge,
+  data::fill(cs_.edge,
 	      pw::value(cmorpho::meyer_wst(cs.edge, nbh_e, l)) == pw::cst(0));
   std::cout << "l = " << l << std::endl;
 
-  level::paste(morpho::dilation(cs_.vertex,
+  data::paste(morpho::dilation(cs_.vertex,
 				convert::to_window(c4())),
 	       cs_.vertex);
 
@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
   std::vector<int_u8> v(l + 1);
   accu::compute<accu::mean>(cs_.cell, label, v);
 
-  level::fill(cs_.cell, level::transform(label, v));
+  data::fill(cs_.cell, level::transform(label, v));
   io::pgm::save(cell_image(cs_), argv[3]);
 
 //   io::ppm::save(pack(cs_, colorize, 7), "log.ppm");

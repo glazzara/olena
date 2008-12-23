@@ -35,8 +35,8 @@
 
 # include <mln/util/ord.hh>
 
-# include <mln/level/fill_with_value.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill_with_value.hh>
+# include <mln/data/paste.hh>
 # include <mln/level/compare.hh>
 
 
@@ -188,7 +188,7 @@ namespace mln
 	
 	  // init
 
-	  level::fill_with_value(deja_vu, false);
+	  data::fill_with_value(deja_vu, false);
 	  S = histo_reverse_sort(f);
 
 	  // first pass

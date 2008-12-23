@@ -43,7 +43,7 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/ppm/save.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/debug/println.hh>
 #include <mln/labeling/regional_minima.hh>
@@ -219,7 +219,7 @@ namespace mln
       using value::rgb8;
 
       image2d<rgb8> temp(is.domain());
-      level::fill(temp, literal::black);
+      data::fill(temp, literal::black);
 
       mln_piter(I) p(is.domain());
       for_all(p)
@@ -262,7 +262,7 @@ namespace mln
 
       if (label == 0)
       {
-	level::fill(is_labeled, 0);
+	data::fill(is_labeled, 0);
 	label++;
       }
 
@@ -356,7 +356,7 @@ namespace mln
 
 //       if (label == 0)
 //       {
-// 	level::fill(is_labeled, 0);
+// 	data::fill(is_labeled, 0);
 // 	label++;
 //       }
 
@@ -563,13 +563,13 @@ namespace mln
       V g, gN;
       mln_fwd_piter(I) p(input.domain());
       p.start();
-      level::fill(smallest_shapes, 0);
+      data::fill(smallest_shapes, 0);
       node_type* current_cc;
 
       unsigned in_N = 1, in_R = 2;
 
       image2d<int> deja_vu(input.domain().to_larger(1));
-      level::fill(deja_vu, 0);
+      data::fill(deja_vu, 0);
 
       typedef p_array<P> arr_t;
       arr_t* A = new arr_t();
@@ -993,7 +993,7 @@ namespace mln
       const I& input = exact(input_);
 
       image2d<bool> ima(input.domain());
-      level::fill(ima, false);
+      data::fill(ima, false);
       compute_area_rec(tree.root(), ima);
     }
 
@@ -1006,7 +1006,7 @@ namespace mln
       fllt_tree(P, V) subtree(node);
       fllt_branch_iter_ind(P, V) s(fllt_branch(P, V)(subtree, *node));
       for_all(s)
-	level::fill(output | (*s).elt().points), (*s).elt().value);
+	data::fill(output | (*s).elt().points), (*s).elt().value);
     }
 
     void area_filter(image2d<value::int_u8>& output,
@@ -1018,7 +1018,7 @@ namespace mln
       typedef point2d P ;
       typedef value::int_u8 V;
 
-      level::fill(output, bg);
+      data::fill(output, bg);
       fllt_tree(P, V) subtree(node);
       fllt_branch_iter_ind(P, V) s(fllt_branch(P, V)(subtree, *node));
       for_all(s)
@@ -1040,7 +1040,7 @@ namespace mln
       }
 
       accu += (*node).elt().nsites;
-      level::fill(output | (*node).elt().points), g);
+      data::fill(output | (*node).elt().points), g);
 
       for (int i = 0; i < node->children().size();i++)
 	area_filter_min(output, node->children()[i], min_area, g, accu);
@@ -1125,7 +1125,7 @@ int main(int argc, char* argv[])
 
 //   image2d<int> lena_(make::image2d(vs));
 //   image2d<int_u8> lena(lena_.domain());
-//   level::fill(lena, lena_);
+//   data::fill(lena, lena_);
 
   tree_type tree = my::fllt(lena);
   compute_area(lena, tree);

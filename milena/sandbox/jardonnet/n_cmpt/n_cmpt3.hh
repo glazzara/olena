@@ -111,7 +111,7 @@ namespace mln
       mln_ch_value(V, accu::volume<V>)  data(volume.domain());
       //deja_vu
       mln_ch_value(V, bool)  deja_vu(volume.domain());
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       //parent
       mln_ch_value(V, P) parent(volume.domain());
       {

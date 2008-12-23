@@ -33,7 +33,7 @@
 
 # include <src/gimp-image.hh>
 # include <mln/core/alias/point2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/image/image2d.hh>
 # include <mln/value/rgb8.hh>
 # include <mln/literal/all.hh>

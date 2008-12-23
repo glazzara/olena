@@ -159,7 +159,7 @@ namespace mln
 // #include <mln/debug/println.hh>
 // #include <mln/core/image/image2d.hh>
 // #include <mln/make/win_chamfer.hh>
-// #include <mln/level/fill.hh>
+// #include <mln/data/fill.hh>
 
 // int main()
 // {
@@ -175,7 +175,7 @@ namespace mln
 // 		    0, 0, 0, 0, 0,
 // 		    0, 0, 0, 0, 0 };
 
-//     level::fill(ima, vals);
+//     data::fill(ima, vals);
 //     debug::println(ima);
 
 //     std::pair<image2d<int>, image2d<mln_point_(image2d<bool>)> >

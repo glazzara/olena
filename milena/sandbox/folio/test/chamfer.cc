@@ -3,7 +3,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/println.hh>
 #include <mln/make/win_chamfer.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pgm/save.hh>
@@ -26,7 +26,7 @@ int main()
 // 		    0, 0, 0, 0, 0,
 // 		    0, 0, 0, 0, 0 };
 
-//     level::fill(ima, vals);
+//     data::fill(ima, vals);
 //     debug::println(ima);
 
 //     std::pair<image2d<int>, image2d<mln_point_(image2d<bool>)> > out;

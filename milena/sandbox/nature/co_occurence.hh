@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/dpoint.hh>
 # include <mln/core/image/image2d.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/opt/at.hh>
 
 
@@ -59,7 +59,7 @@ namespace mln
     const I &ima = exact(ima_);
     const D &dp = exact(dp_);
     image2d<unsigned> mco(mln_card(mln_value(I)), mln_card(mln_value(I)), 0);
-    level::fill(mco, 0);
+    data::fill(mco, 0);
 
 
     mln_piter(I) p(ima.domain());

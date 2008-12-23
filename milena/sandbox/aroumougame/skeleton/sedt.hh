@@ -9,8 +9,8 @@
 #include <mln/io/pgm/save.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/level/paste.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/paste.hh>
+#include <mln/data/fill.hh>
 #include <mln/geom/max_row.hh>
 #include <mln/geom/max_col.hh>
 #include <mln/geom/max_ind.hh>

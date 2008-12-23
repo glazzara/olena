@@ -71,9 +71,9 @@ void process(Icolor& graph, const Icolor& input)
   convert_to_gl(gray_input, input);
 
 
-  //level::paste(morpho::dilation((gray_graph | is_cell), e2c.win()), gray_graph);
+  //data::paste(morpho::dilation((gray_graph | is_cell), e2c.win()), gray_graph);
 //   Igray save(gray_graph.bbox());
-//   level::paste(gray_graph | is_cell, save);
+//   data::paste(gray_graph | is_cell, save);
 //   IO::save(save, "tmp3.ppm");
 
   // Create the laplacian image

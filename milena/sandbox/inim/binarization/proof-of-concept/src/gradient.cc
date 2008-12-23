@@ -24,7 +24,7 @@
 #include <mln/geom/all.hh>
 #include <mln/morpho/closing_area.hh>
 #include <mln/morpho/gradient.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/opt/at.hh>
 
 // DEBUG
@@ -79,7 +79,7 @@ main (int argc, char** argv)
   initialize(grad, in);
   grad = morpho::gradient(in, win_c4p());
 
-  level::fill(hist, 0);
+  data::fill(hist, 0);
   image2d<value::int_u8>::fwd_piter p (in.domain ());
   for_all (p)
     opt::at(hist, in(p)) += (unsigned) strength_of<2> (grad (p));

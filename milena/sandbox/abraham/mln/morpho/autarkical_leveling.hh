@@ -38,7 +38,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/morpho/general.hh>
 # include <mln/norm/l2.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 
 namespace mln
 {
@@ -120,7 +120,7 @@ namespace mln
 	      output(p) = ref(p);
 	    }
 	  }
-	  level::paste(output, ref);
+	  data::paste(output, ref);
 	}
 
 	trace::exiting("morpho::impl::general_on_set_centered__autarkical_leveling");

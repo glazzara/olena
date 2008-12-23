@@ -3,8 +3,8 @@
 #include <mln/core/image/sub_image.hh>
 #include <mln/io/pbm/save.hh>
 #include <mln/io/pbm/load.hh>
-#include <mln/level/paste.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/paste.hh>
+#include <mln/data/fill.hh>
 
 int main()
 {
@@ -39,9 +39,9 @@ int main()
   
   sub_image<I, S> skeleton = pic | X;
   I output(pic.domain());
-  level::fill(output, false);
+  data::fill(output, false);
 
-  level::paste(skeleton, output);
+  data::paste(skeleton, output);
 
   mln::io::pbm::save(output, "skeleton2.pbm");
   std::cout << "image saved" << std::endl;

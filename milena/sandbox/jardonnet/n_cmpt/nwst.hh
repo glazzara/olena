@@ -85,7 +85,7 @@ namespace mln
 
       // init watershed image
       mln_ch_value(I, value::rgb8) wst(ima.domain());
-      mln::level::fill(wst, literal::black);
+      mln::data::fill(wst, literal::black);
 
       // number of minima
       unsigned cmpts = label;
@@ -97,10 +97,10 @@ namespace mln
       // fused
       mln_ch_value(I, bool) fused;
       initialize(fused, ima);
-      mln::level::fill(fused, false);
+      mln::data::fill(fused, false);
       // deja_vu
       mln_ch_value(I, bool)  deja_vu(ima.domain());
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       //parent
       mln_ch_value(I, P) parent(ima.domain());
       {

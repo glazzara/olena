@@ -38,7 +38,7 @@ namespace mln
     const I& input = exact(input_);
 
     image2d<bool> ima(input.domain());
-    level::fill(ima, false);
+    data::fill(ima, false);
     compute_area_rec(tree.root(), ima);
   }
 

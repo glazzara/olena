@@ -14,7 +14,7 @@
 #include <mln/labeling/regional_minima.hh>
 #include <mln/morpho/tree/compute_attribute_image.hh>
 #include <mln/morpho/closing_area.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/debug/iota.hh>
 
@@ -73,7 +73,7 @@ namespace mln
     // init fused image
     mln_ch_value(I, bool) fused;
     initialize(fused, a);
-    mln::level::fill(fused, false);
+    mln::data::fill(fused, false);
 
     // iota
     mln_ch_value(I,value::int_u<16>) iota(a.domain());
@@ -94,7 +94,7 @@ namespace mln
 
       // deja_vu
       initialize(deja_vu, f);
-      level::fill(deja_vu, false);
+      data::fill(deja_vu, false);
 
 
       if (n_objects >= nbassins)

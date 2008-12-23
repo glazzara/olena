@@ -52,7 +52,7 @@
 # include <mln/border/fill.hh>
 
 # include <mln/level/compute.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/accu/min.hh>
 # include <mln/accu/max.hh>
 

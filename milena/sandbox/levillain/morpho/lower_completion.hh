@@ -43,7 +43,7 @@
 
 # include <queue>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 namespace mln {
 
@@ -65,7 +65,7 @@ namespace mln {
       queue_type q;
       typename ch_value_type<I, bool>::ret processed(input.size(),
 						     input.nbh_get ());
-      level::fill (processed, false);
+      data::fill (processed, false);
 
       typedef ntg_cumul_type(DestValue) cumul_type;
       typename ch_value_type<I, cumul_type>::ret distance(input.size(),
