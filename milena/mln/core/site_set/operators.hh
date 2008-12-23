@@ -33,14 +33,11 @@
 ///
 /// Definition of operators on mln::Site_Set.
 ///
-/// \todo Re-vamp this file now!
+/// \todo Fix code for multi-sets.
 
 
 # include <algorithm>
 # include <mln/core/concept/site_set.hh>
-# include <mln/set/card.hh>
-
-# include <mln/util/yes.hh> // Temporary include.
 
 
 
@@ -159,6 +156,37 @@ namespace mln
 			   util::ord<P>());
     }
 
+
+    // card.
+
+    template <typename S>
+    inline
+    unsigned set_card_dispatch_(mln::trait::site_set::nsites::any,
+				const S& s)
+    {
+      unsigned n = 0;
+      mln_piter(S) p(s);
+      for_all(p)
+	++n;
+      return n;
+    }
+    
+    template <typename S>
+    inline
+    unsigned set_card_dispatch_(mln::trait::site_set::nsites::known,
+				const S& s)
+    {
+      return s.nsites();
+    }
+    
+    template <typename S>
+    inline
+    unsigned set_card(const Site_Set<S>& s)
+    {
+      return set_card_dispatch_(mln_trait_site_set_nsites(S)(),
+				exact(s));
+    }
+
   } // end of namespace mln::internal
 
 
@@ -187,7 +215,7 @@ namespace mln
     operator_equal_uniques(const Site_Set<Sl>& lhs,
 			   const Site_Set<Sr>& rhs)
     {
-      if (set::card(lhs) != set::card(rhs))
+      if (internal::set_card(lhs) != internal::set_card(rhs))
 	return false;
       return mln::internal::sym_diff_std_set(lhs, rhs).empty();
     }
@@ -198,7 +226,7 @@ namespace mln
     operator_equal_unique_multiple(const Site_Set<Sl>& lhs,
 				   const Site_Set<Sr>& rhs)
     {
-      if (set::card(lhs) != set::card(rhs))
+      if (internal::set_card(lhs) != internal::set_card(rhs))
 	return false;
       return mln::internal::to_std_set(lhs) == mln::internal::to_std_set(rhs);
     }
@@ -210,7 +238,7 @@ namespace mln
 			     const Site_Set<Sr>& rhs)
     {
       // FIXME: Approximate code...
-      if (set::card(lhs) != set::card(rhs))
+      if (internal::set_card(lhs) != internal::set_card(rhs))
 	return false;
       return mln::internal::to_std_set(lhs) == mln::internal::to_std_set(rhs);
     }
@@ -231,7 +259,7 @@ namespace mln
       if (lhs.is_empty())
 	return true;  // We have "empty set < a non empty set".
       // From here, both lhs and rhs are not empty.
-      if (set::card(lhs) >= set::card(rhs))
+      if (internal::set_card(lhs) >= internal::set_card(rhs))
 	return false;
       return lhs.crop_wrt(rhs) == lhs;
     }
@@ -242,7 +270,7 @@ namespace mln
     operator_less_uniques(const Site_Set<Sl>& lhs,
 			  const Site_Set<Sr>& rhs)
     {
-      if (set::card(lhs) >= set::card(rhs))
+      if (internal::set_card(lhs) >= internal::set_card(rhs))
 	return false;
       return mln::internal::leq_std_set(lhs, rhs);
     }
@@ -253,7 +281,7 @@ namespace mln
     operator_less_unique_multiple(const Site_Set<Sl>& lhs,
 				  const Site_Set<Sr>& rhs)
     {
-      if (set::card(lhs) >= set::card(rhs))
+      if (internal::set_card(lhs) >= internal::set_card(rhs))
 	return false;
       return mln::internal::leq_std_set(lhs, rhs);
     }
@@ -265,7 +293,7 @@ namespace mln
 			     const Site_Set<Sr>& rhs)
     {
       // FIXME: Approximate code...
-      if (set::card(lhs) >= set::card(rhs))
+      if (internal::set_card(lhs) >= internal::set_card(rhs))
 	return false;
       return mln::internal::leq_std_set(lhs, rhs);
     }
@@ -464,7 +492,7 @@ namespace mln
   operator<=(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
   {
     mlc_equal(mln_site(Sl), mln_site(Sr))::check();
-    if (set::card(lhs) > set::card(rhs))
+    if (internal::set_card(lhs) > internal::set_card(rhs))
       return false;
     return lhs < rhs || lhs == rhs;
   }

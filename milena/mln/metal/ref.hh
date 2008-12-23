@@ -27,9 +27,9 @@
 // Public License.
 
 #ifndef MLN_METAL_REF_HH
-# define MLN_METAL_RFE_HH
+# define MLN_METAL_REF_HH
 
-/// \file  mln/metal/ref.hh
+/// \file mln/metal/ref.hh
 ///
 /// FIXME.
 

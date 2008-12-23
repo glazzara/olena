@@ -1,5 +1,16 @@
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix minor bugs for 4 extra tests to pass.
+
+	* mln/core/site_set/operators.hh
+	(include): Remove dependency to set::card; it was cycling.
+	Remove temporary util::yes.
+	* mln/metal/ref.hh: Fix guard.
+	* mln/io/abort.hh: Add std::.
+	* mln/io/pnm/load_header.hh: Add std::.
+
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Rename mln::clone as mln::duplicate.
 
 	Clone is renamed for a couple of reasons:

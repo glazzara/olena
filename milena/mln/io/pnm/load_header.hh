@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,16 +29,15 @@
 #ifndef MLN_IO_PNM_LOAD_HEADER_HH
 # define MLN_IO_PNM_LOAD_HEADER_HH
 
-/*!
- * \file  mln/io/pnm/load_header.hh
- *
- * \brief Define a function which loads header for PNM image.
- *
- */
+/// \file  mln/io/pnm/load_header.hh
+///
+/// Define a function which loads header for PNM image.
 
+# include <cstdlib>
 # include <iostream>
 # include <fstream>
 # include <string>
+
 
 namespace mln
 {
@@ -95,7 +94,7 @@ namespace mln
 	  if (! test)
 	  {
 	    std::cerr << "error: badly formed header!";
-	    abort();
+	    std::abort();
 	  }
 	  return false;
 	}
@@ -114,7 +113,7 @@ namespace mln
 		      << "expected P" << ascii
 		      << " or P" << raw
 		      << ", get P" << type << "!";
-	    abort();
+	    std::abort();
 	  }
 	}
 

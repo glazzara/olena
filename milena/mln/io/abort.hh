@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,14 +29,13 @@
 #ifndef MLN_IO_ABORT_HH
 # define MLN_IO_ABORT_HH
 
-/*!
- * \file   mln/io/abort.hh
- *
- * \brief Define a function which aborts a process in io module.
- *
- */
+/// \file mln/io/abort.hh
+///
+/// Define a function which aborts a process in io module.
 
 # include <iostream>
+# include <cstdlib>
+
 
 namespace mln
 {
@@ -49,13 +48,14 @@ namespace mln
       /// The way to abort when an error occur in io processing.
       void abort();
 
+
 # ifndef MLN_INCLUDE_ONLY
 
       inline
       void abort()
       {
 	std::cerr << "I/O error, aborting." << std::endl;
-	exit(0);
+	std::exit(0);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
