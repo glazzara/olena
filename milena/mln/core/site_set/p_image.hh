@@ -41,7 +41,7 @@
 # include <mln/fun/ops.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 
 
 
@@ -271,7 +271,7 @@ namespace mln
     if (! is_valid())
       return; // No-op.
     nsites_ = 0;
-    level::fill_with_value(ima_, false);
+    data::fill_with_value(ima_, false);
   }
 
   template <typename I>

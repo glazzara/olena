@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/paste_full.cc
+/*! \file tests/data/paste_full.cc
  *
- * \brief Tests on mln::level::paste.
+ * \brief Tests on mln::data::paste.
  */
 
 
@@ -52,7 +52,7 @@
 #include <mln/debug/iota.hh>
 
 #include <mln/level/saturate.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 
 
 
@@ -113,7 +113,7 @@ namespace mln
     if (max_i > max_j)
       level::saturate_inplace(input, 0, (T)max_j);
 
-    level::paste(input, output);
+    data::paste(input, output);
 
     mln_piter(I) p (input.domain ());
     for_all(p)
@@ -274,7 +274,7 @@ int main()
   unsigned rows =  4;
   unsigned cols = 16;
 
-  std::cerr << "Tests level::paste:" << std::endl;
+  std::cerr << "Tests data::paste:" << std::endl;
   std::cerr << "on int:" << std::endl;
   ch<int>(slis, rows, cols);
   std::cerr << "on unsigned:" << std::endl;

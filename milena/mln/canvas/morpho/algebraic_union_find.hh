@@ -29,14 +29,13 @@
 #ifndef MLN_CANVAS_MORPHO_ALGEBRAIC_UNION_FIND_HH
 # define MLN_CANVAS_MORPHO_ALGEBRAIC_UNION_FIND_HH
 
-/*! \file mln/canvas/morpho/algebraic_union_find.hh
- *
- * \brief FIXME: Doc!
- */
+/// \file mln/canvas/morpho/algebraic_union_find.hh
+///
+/// FIXME: Doc!
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/util/pix.hh>
 
 
@@ -105,7 +104,7 @@ namespace mln
 	// init
 	{
 	  initialize(deja_vu, input);
-	  mln::level::fill(deja_vu, false);
+	  mln::data::fill(deja_vu, false);
 	  initialize(parent, input);
 	  initialize(data, input);
 	  f.init(); // init required.
@@ -192,7 +191,7 @@ namespace mln
 	  Change 2nd pass into:
 	  for_all(p) if (not is_root(p)) output(p) = output(parent(p));
 	  and add in init:
-	  mln::level::assign(output, input);
+	  mln::data::fill(output, input);
 	*/
 	trace::exiting("canvas::morpho::algebraic_union_find");
       }
@@ -231,7 +230,7 @@ namespace mln
       	  // init
       	  {
       	    initialize(deja_vu, f.input);
-      	    mln::level::fill(deja_vu, false);
+      	    mln::data::fill(deja_vu, false);
       	    initialize(parent, f.input);
       	    initialize(data, f.input);
       	    f.init();
@@ -265,7 +264,7 @@ namespace mln
       	    Change 2nd pass into:
 	    for_all(p) if (not is_root(p)) f.output(p) = f.output(parent(p));
       	    and add in init:
-	    mln::level::assign(f.output, f.input);
+	    mln::data::fill(f.output, f.input);
 	  */
 
       	} // end of run()

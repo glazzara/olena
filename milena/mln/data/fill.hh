@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_FILL_HH
 # define MLN_LEVEL_FILL_HH
 
-/*! \file mln/level/fill.hh
+/*! \file mln/data/fill.hh
  *
  * \brief Fill an image, that is, set pixel values.
  *
@@ -39,14 +39,14 @@
 # include <mln/pw/image.hh>
 # include <mln/convert/to_fun.hh>
 
-# include <mln/level/fill_with_image.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_image.hh>
+# include <mln/data/fill_with_value.hh>
 
 
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /*! Fill the whole image \p ima with the data provided by \p aux.
@@ -94,20 +94,20 @@ namespace mln
       template <typename I>
       void fill_dispatch_overload(I& ima, const mln_value(I)& v)
       {
-	mln::level::fill_with_value(ima, v);
+	mln::data::fill_with_value(ima, v);
       }
 
       template <typename I, typename J>
       void fill_dispatch_overload(I& ima, const Image<J>& data)
       {
-	mln::level::fill_with_image(ima, data);
+	mln::data::fill_with_image(ima, data);
       }
 
       template <typename I, typename F>
       void fill_dispatch_overload(I& ima, const Function<F>& f)
       {
 	mlc_converts_to(mln_result(F), mln_value(I))::check();
-	mln::level::fill_with_image(ima,
+	mln::data::fill_with_image(ima,
 				    exact(f) | ima.domain());
       }
 
@@ -115,7 +115,7 @@ namespace mln
       void fill_dispatch_overload(I& ima, R (*f)(A))
       {
 	mlc_converts_to(R, mln_value(I))::check();
-	mln::level::fill_with_image(ima,
+	mln::data::fill_with_image(ima,
 				    convert::to_fun(f) | ima.domain());
       }
 
@@ -130,7 +130,7 @@ namespace mln
 	  ima(p) = arr[i++];
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
 
     // Facade.
@@ -139,18 +139,18 @@ namespace mln
     inline
     void fill(Image<I>& ima, const D& data)
     {
-      trace::entering("level::fill");
+      trace::entering("data::fill");
 
       internal::fill_tests(ima, data);
       internal::fill_dispatch(ima, data);
 
-      trace::exiting("level::fill");
+      trace::exiting("data::fill");
     }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

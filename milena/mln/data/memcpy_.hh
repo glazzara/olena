@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,25 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_MEMCPY__HH
-# define MLN_LEVEL_MEMCPY__HH
+#ifndef MLN_DATA_MEMCPY__HH
+# define MLN_DATA_MEMCPY__HH
 
-/*! \file mln/level/memcpy_.hh
- *
- * \brief Same as std::memcpy but for fastest images.
- *
- * \todo Overload with images and points; Cf. memset_.
- */
+/// \file mln/data/memcpy_.hh
+///
+/// Same as std::memcpy but for fastest images.
+///
+/// \todo Overload with images and points; Cf. memset_.
 
 # include <cstring>
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 # include <mln/metal/is_not_const.hh>
 
+
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /*! Copy \p n pixels starting from pixel \p src to destination
@@ -75,7 +76,7 @@ namespace mln
       inline
       void memcpy__(Pd& dest, const Ps& src, std::size_t n)
       {
-	trace::entering("level::impl::memcpy__");
+	trace::entering("data::impl::memcpy__");
 
 	typedef mln_image(Pd) Id;
 	typedef mln_image(Ps) Is;
@@ -102,7 +103,7 @@ namespace mln
 	    *p_d++ = *p_s++;
 	}
 
-	trace::exiting("level::impl::memcpy__");
+	trace::exiting("data::impl::memcpy__");
       }
 
     }
@@ -113,7 +114,7 @@ namespace mln
 		 const Generalized_Pixel<Ps>& src_,
 		 std::size_t n)
     {
-      trace::entering("level::memcpy_");
+      trace::entering("data::memcpy_");
 
       typedef mln_image(Pd) Id;
       metal::is_not_const<Id>::check();
@@ -140,14 +141,14 @@ namespace mln
 
       impl::memcpy__(dest, src, n);
 
-      trace::exiting("level::memcpy_");
+      trace::exiting("data::memcpy_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_MEMCPY__HH
+#endif // ! MLN_DATA_MEMCPY__HH

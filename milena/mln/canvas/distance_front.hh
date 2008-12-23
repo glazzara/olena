@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/concept/weighted_window.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/accu/max.hh>
 
 
@@ -83,7 +83,7 @@ namespace mln
       // Distance map.
       mln_ch_value(I, D) dmap;
       initialize(dmap, input);
-      level::fill(dmap, max);
+      data::fill(dmap, max);
 
       // Mod determination.
       unsigned mod;

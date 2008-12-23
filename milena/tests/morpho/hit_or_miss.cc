@@ -41,7 +41,7 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/morpho/hit_or_miss.hh>
 

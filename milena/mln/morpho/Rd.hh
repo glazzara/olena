@@ -44,7 +44,7 @@
 
 # include <mln/trait/value_.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/compare.hh>
 
 # include <mln/util/greater_point.hh>
@@ -121,9 +121,9 @@ namespace mln
 	    parent(f.domain())
 	{
 	  // init
-	  level::fill(o, f);
+	  data::fill(o, f);
 	  S = histo_reverse_sort(g);
-	  level::fill(is_proc, false); // FIXME: rm
+	  data::fill(is_proc, false); // FIXME: rm
 
 	  // first pass
 	  for (unsigned i = 0; i < S.size(); ++i)

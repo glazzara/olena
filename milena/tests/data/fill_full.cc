@@ -25,9 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/fill_full.cc
+/*! \file tests/data/fill_full.cc
  *
- * \brief Tests on mln::level::fill
+ * \brief Tests on mln::data::fill
  */
 
 
@@ -53,7 +53,7 @@
 
 #include <mln/debug/iota.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/fun/p2v/iota.hh>
 
@@ -111,7 +111,7 @@ namespace mln
   {
     I& ima = exact(ima_);
 
-    level::fill(ima, v);
+    data::fill(ima, v);
 
     {
       mln_piter(I) p (ima.domain ());
@@ -359,7 +359,7 @@ int main()
 {
   using namespace mln;
 
-  std::cerr << "Tests level::fill:" << std::endl;
+  std::cerr << "Tests data::fill:" << std::endl;
   std::cerr << "on int:" << std::endl;
   chk<int>(1000);
   std::cerr << "on unsigned:" << std::endl;

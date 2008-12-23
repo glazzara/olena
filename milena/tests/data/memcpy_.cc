@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/memcpy_.cc
- *
- * \brief Tests on mln::level::memcpy_.
- *
- * \todo Make this test not dummy!
- */
+/// \file tests/data/memcpy_.cc
+///
+/// Tests on mln::data::memcpy_.
+///
+/// \todo Make this test not dummy!
 
 #include <mln/core/image/image2d.hh>
 
 #include <mln/debug/iota.hh>
-#include <mln/level/memcpy_.hh>
+#include <mln/data/memcpy_.hh>
 
 
 int main()
@@ -51,9 +51,9 @@ int main()
     dest = point2d(1, 2);
 
   pixel<I> pix = make::pixel(ima, dest);
-  level::memcpy_(pix,
-		 make::pixel(ima, src),
- 		 2 + 2 * ima.border());
+  data::memcpy_(pix,
+		make::pixel(ima, src),
+		2 + 2 * ima.border());
 
   mln_assertion(ima(dest) == ima(src));
 }

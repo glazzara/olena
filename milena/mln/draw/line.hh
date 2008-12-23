@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
 # include <mln/core/image/safe.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 
@@ -77,7 +77,7 @@ namespace mln
       I& ima = exact(ima_);
       mln_precondition(ima.has_data());
       // if (! ima.has(beg) ||  ! ima.has(end)) trace::warning("out");
-      level::paste(pw::cst(v) | p_line2d(beg, end),
+      data::paste(pw::cst(v) | p_line2d(beg, end),
 		   safe(ima).rw());
     }
 

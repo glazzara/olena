@@ -28,9 +28,9 @@
 #ifndef MLN_LEVEL_FILL_WITH_IMAGE_SPE_HH
 # define MLN_LEVEL_FILL_WITH_IMAGE_SPE_HH
 
-/*! \file mln/level/fill_with_image.spe.hh
+/*! \file mln/data/fill_with_image.spe.hh
  *
- * \brief Specializations for mln::level::fill_with_image.
+ * \brief Specializations for mln::data::fill_with_image.
  *
  */
 
@@ -38,8 +38,8 @@
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LEVEL_FILL_WITH_IMAGE_HH
 
-# include <mln/level/memcpy_.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/memcpy_.hh>
+# include <mln/data/fill_with_value.hh>
 # include <mln/core/pixel.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
@@ -50,7 +50,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     namespace internal
@@ -60,7 +60,7 @@ namespace mln
       inline
       void fill_with_image_tests(Image<I>& ima, const Image<J>& data);
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
 
 
@@ -76,12 +76,12 @@ namespace mln
       template <typename I, typename J>
       void fill_with_image_fastest(Image<I>& ima_, const Image<J>& data_)
       {
-        trace::entering("level::impl::fill_with_image_fastest");
+        trace::entering("data::impl::fill_with_image_fastest");
 
         I& ima = exact(ima_);
         const J& data      = exact(data_);
 
-        level::internal::fill_with_image_tests(ima, data);
+        data::internal::fill_with_image_tests(ima, data);
 
         pixel<const J> src (data);
         pixel<I> dst(ima);
@@ -90,18 +90,18 @@ namespace mln
 
         memcpy_(dst, src, ima.nelements());
 
-        trace::exiting("level::impl::fill_with_image_fastest");
+        trace::exiting("data::impl::fill_with_image_fastest");
       }
 
       template <typename I, typename J>
       void fill_with_image_fast(Image<I>& ima_, const Image<J>& data_)
       {
-        trace::entering("level::impl::fill_with_image_fast");
+        trace::entering("data::impl::fill_with_image_fast");
 
         I& ima               = exact(ima_);
         const J& data        = exact(data_);
 
-        level::internal::fill_with_image_tests(ima, data);
+        data::internal::fill_with_image_tests(ima, data);
 
         mln_pixter(I) pi(ima);
         mln_pixter(const J) d(data);
@@ -112,19 +112,19 @@ namespace mln
           pi.val() = d.val();
           d.next();
         }
-        trace::exiting("level::impl::fill_with_image_fast");
+        trace::exiting("data::impl::fill_with_image_fast");
       }
 
       template <typename I, typename J>
       inline
       void fill_with_image_lines(Image<I>& ima_, const Image<J>& data_)
       {
-	trace::entering("level::impl::fill_with_image_lines");
+	trace::entering("data::impl::fill_with_image_lines");
 
         I& ima        = exact(ima_);
         const J& data = exact(data_);
 
-        level::internal::fill_with_image_tests(ima, data);
+        data::internal::fill_with_image_tests(ima, data);
 
 	mln_box_runstart_piter(I) p(ima.domain());
 	for_all(p)
@@ -133,24 +133,24 @@ namespace mln
 	  memcpy_(dst, make::pixel(data, p), p.run_length());
         }
 
-	trace::exiting("level::impl::fill_with_image_lines");
+	trace::exiting("data::impl::fill_with_image_lines");
       }
 
       template <typename I, typename J>
       void fill_with_image_singleton(Image<I>& ima_,
                                      const Image<J>& data_)
       {
-        trace::entering("level::impl::fill_with_image_singleton");
+        trace::entering("data::impl::fill_with_image_singleton");
 
         const J& data  = exact(data_);
-        level::internal::fill_with_image_tests(ima_, data);
+        data::internal::fill_with_image_tests(ima_, data);
 
-        level::fill_with_value(ima_, data.val());
+        data::fill_with_value(ima_, data.val());
 
-        trace::exiting("level::impl::fill_with_image_singleton");
+        trace::exiting("data::impl::fill_with_image_singleton");
       }
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
 
@@ -275,9 +275,9 @@ namespace mln
                          ima, data);
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

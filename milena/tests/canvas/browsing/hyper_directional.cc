@@ -34,7 +34,7 @@
 #include <mln/canvas/browsing/hyper_directional.hh>
 #include <mln/fun/p2v/iota.hh>
 #include <mln/debug/println.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 
 template <typename I_, typename F>
@@ -95,24 +95,24 @@ int main()
   image2d<unsigned> ima2(3, 3);
   image3d<unsigned> ima3(3, 3, 3);
 
-  level::fill(ima2, 0);
+  data::fill(ima2, 0);
   my_test(ima2, fun::p2v::iota(), canvas::browsing::hyper_directional, 0);
   debug::println(ima2);
 
-  level::fill(ima2, 0);
+  data::fill(ima2, 0);
   my_test(ima2, fun::p2v::iota(), canvas::browsing::hyper_directional, 1);
   debug::println(ima2);
 
 
-  level::fill(ima3, 0);
+  data::fill(ima3, 0);
   my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 0);
   debug::println(ima3);
 
-  level::fill(ima3, 0);
+  data::fill(ima3, 0);
   my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 1);
   debug::println(ima3);
 
-  level::fill(ima3, 0);
+  data::fill(ima3, 0);
   my_test(ima3, fun::p2v::iota(), canvas::browsing::hyper_directional, 2);
   debug::println(ima3);
 }

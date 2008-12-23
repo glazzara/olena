@@ -32,7 +32,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image1d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/opt/at.hh>

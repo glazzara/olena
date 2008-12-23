@@ -38,7 +38,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/convert/to_window.hh>
 #include <mln/convert/to_p_set.hh>
@@ -76,8 +76,8 @@ int main()
 
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
-  level::fill(ima, false);
-  level::fill((ima | convert::to_p_set(ref)).rw(), true);
+  data::fill(ima, false);
+  data::fill((ima | convert::to_p_set(ref)).rw(), true);
   window2d test_ima = convert::to_window(ima);
   test(ref, test_ima);
 

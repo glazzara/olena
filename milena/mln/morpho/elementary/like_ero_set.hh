@@ -83,7 +83,7 @@ namespace mln
 	    else
 	    {
 	      initialize(output, input);
-	      level::fill(output, false);
+	      data::fill(output, false);
 	    }
 
 	    mln_piter(I) p(input.domain());
@@ -126,7 +126,7 @@ namespace mln
 	  else
 	    {
 	      initialize(output, input);
-	      level::fill(output, false);
+	      data::fill(output, false);
 	    }
 
 	  mln_pixter(const I) p_in(input);

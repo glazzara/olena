@@ -34,7 +34,7 @@
 #include <mln/core/image/sub_image.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 
 
@@ -43,11 +43,11 @@ int main()
   using namespace mln;
 
   image2d<int> ima(8, 8);
-  level::fill(ima, 0);
+  data::fill(ima, 0);
   debug::println(ima);
 
-  level::fill((ima | make::box2d(1,1, 3,3)).rw(),  5);
-  level::fill((ima | make::box2d(4,4, 6,6)).rw(),  1);
+  data::fill((ima | make::box2d(1,1, 3,3)).rw(),  5);
+  data::fill((ima | make::box2d(4,4, 6,6)).rw(),  1);
 
   debug::println(ima);
 }

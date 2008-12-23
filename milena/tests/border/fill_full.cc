@@ -33,7 +33,7 @@
 /// \todo Rewrite this non-sense test file!!!
 
 #include <mln/border/fill.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
@@ -55,7 +55,7 @@ void
 check1d(unsigned row, unsigned border, T& value, T& v)
 {
   image1d<T> ima(row, border);
-  level::fill (ima, v);
+  data::fill (ima, v);
   border::fill (ima, value);
 
   unsigned i = 0;
@@ -74,7 +74,7 @@ void
 check2d(unsigned row, unsigned col, unsigned border, T& value, T& v)
 {
   image2d<T> ima(row, col, border);
-  level::fill (ima, v);
+  data::fill (ima, v);
   border::fill (ima, value);
 
   unsigned c = col + 2 * border;
@@ -104,7 +104,7 @@ void
 check3d(unsigned sli, unsigned row, unsigned col, unsigned border, T& value, T& v)
 {
   image3d<T> ima(sli, row, col, border);
-  level::fill (ima, v);
+  data::fill (ima, v);
   border::fill (ima, value);
 
   unsigned c = col + 2 * border;

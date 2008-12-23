@@ -36,7 +36,7 @@
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/routine/clone.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -79,7 +79,7 @@ namespace mln
       // Initialization.
       {
 	functor.init(input); // <-- init
-	level::fill(dmap, max);
+	data::fill(dmap, max);
 	mln_piter(I) p(input.domain());
 	mln_niter(N) n(nbh, p);
 	for_all(p)

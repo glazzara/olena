@@ -37,7 +37,7 @@
 #include <mln/border/resize.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/border/fill.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 using namespace mln;
 
@@ -52,7 +52,7 @@ main (void)
 	    << std::endl
 	    << std::endl;
   image3d<value::int_u8> ima(3, 1, 2, border);
-  level::fill (ima, 2);
+  data::fill (ima, 2);
   border::fill(ima, 8);
 
   std::cout << "before resize ("

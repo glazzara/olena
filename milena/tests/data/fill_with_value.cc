@@ -26,12 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/fill_with_value.cc
+/// \file tests/data/fill_with_value.cc
 ///
-/// Tests on mln::level::fill_with_value
+/// Tests on mln::data::fill_with_value
 
 
-#include <mln/level/fill_with_value.hh>
+#include <mln/data/fill_with_value.hh>
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -54,7 +54,7 @@ int main()
   {
     typedef image1d<unsigned char> I;
     I ima(size);
-    level::fill_with_value(ima, 51);
+    data::fill_with_value(ima, 51);
     mln_piter_(I) p(ima.domain());
     for_all(p)
       mln_assertion(ima(p) == 51);
@@ -64,7 +64,7 @@ int main()
   {
     typedef image2d<unsigned char> I;
     I ima(size, size);
-    level::fill_with_value(ima, 51);
+    data::fill_with_value(ima, 51);
     mln_piter_(I) p(ima.domain());
     for_all(p)
       mln_assertion(ima(p) == 51);
@@ -73,7 +73,7 @@ int main()
   {
     typedef image3d<value::rgb8> I;
     I ima(size, size, size);
-    level::fill_with_value(ima, value::rgb8(255, 0, 255));
+    data::fill_with_value(ima, value::rgb8(255, 0, 255));
     mln_piter_(I) p(ima.domain());
     for_all(p)
       mln_assertion(ima(p) == value::rgb8(255, 0, 255));
@@ -82,7 +82,7 @@ int main()
 
   {
     flat_image<short, box2d> ima(5, make::box2d(2, 3));
-    level::fill_with_value(ima, 51);
+    data::fill_with_value(ima, 51);
     box2d::piter p(ima.domain());
     for_all(p)
       mln_assertion(ima(p) == 51);
@@ -94,10 +94,10 @@ int main()
     typedef image_if<I, fun::p2b::chess> II;
 
     I ima(size, size);
-    level::fill_with_value(ima, 51);
+    data::fill_with_value(ima, 51);
 
     II ima_if = ima | fun::p2b::chess();
-    level::fill_with_value(ima_if, 42);
+    data::fill_with_value(ima_if, 42);
 
     II::piter p(ima_if.domain());
     for_all(p)
@@ -110,7 +110,7 @@ int main()
     I ima(size, size);
     II sub_ima(ima, make::box2d(4,4, 10,10));
 
-    level::fill_with_value(sub_ima,  5);
+    data::fill_with_value(sub_ima,  5);
 
     II::piter p(sub_ima.domain());
     for_all(p)
@@ -123,7 +123,7 @@ int main()
     I ima(size, size);
     II extend_ima(ima, 5);
 
-    level::fill_with_value(extend_ima,  51);
+    data::fill_with_value(extend_ima,  51);
 
     II::piter p(extend_ima.domain());
     for_all(p)

@@ -34,7 +34,7 @@
 #include <mln/core/image/sub_image.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/core/alias/w_window2d_int.hh>
 #include <mln/core/alias/w_window2d_float.hh>
@@ -54,7 +54,7 @@ int main()
   image2d<bool> ima(9, 9);
 
   {
-    level::fill(ima, false);
+    data::fill(ima, false);
     opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 0> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
@@ -76,7 +76,7 @@ int main()
   }
 
   {
-    level::fill(ima, false);
+    data::fill(ima, false);
     opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2, 3> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);
@@ -99,7 +99,7 @@ int main()
   }
 
   {
-    level::fill(ima, false);
+    data::fill(ima, false);
     opt::at(ima, 4,4) = true;
     const w_window2d_int& w_win = make::mk_chamfer_5x5_int<4, 6, 9> ();
     image2d<unsigned> out = geom::chamfer(ima, w_win, max);

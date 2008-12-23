@@ -39,7 +39,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/trait/image/props.hh>
 # include <mln/border/fill.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 
 
 namespace mln

@@ -36,7 +36,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 
@@ -156,7 +156,7 @@ namespace mln
 	    initialize(zpar, f);
 
 	    // Initialization.
-	    level::fill(deja_vu, false);
+	    data::fill(deja_vu, false);
 
 	    // Body.
 	    mln_bkd_piter(S) p(s);

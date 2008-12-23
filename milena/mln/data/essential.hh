@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,30 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/fill.cc
- *
- * \brief Tests on mln::level::fill
- */
+#ifndef MLN_DATA_ESSENTIAL_HH
+# define MLN_DATA_ESSENTIAL_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
-
-int main()
-{
-  using namespace mln;
+/// \file mln/data/essential.hh
+///
+/// File that includes essential data-related routines.
 
 
-  unsigned u = 300;
-  unsigned char uc = u;
-  mln_assertion(uc == 44);
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 
-  {
-    const unsigned size = 3;
-    image2d<unsigned> ima(size, size);
-    level::fill(ima, u);
-    box_fwd_piter_<point2d> p(ima.domain());
-    for_all (p)
-      mln_assertion (ima(p) == u);
-  }
 
-}
+#endif // ! MLN_DATA_ESSENTIAL_HH

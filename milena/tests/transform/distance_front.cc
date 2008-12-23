@@ -33,7 +33,7 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/w_window2d_int.hh>
 #include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/opt/at.hh>
 
@@ -46,7 +46,7 @@ int main()
   using value::int_u8;
 
   image2d<bool> input(9, 9);
-  level::fill(input, false);
+  data::fill(input, false);
   opt::at(input, 4, 4) = true;
 
   int ws[] = { 0, 9, 0, 9, 0,

@@ -38,7 +38,7 @@
 #include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
@@ -62,7 +62,7 @@ int main (void)
   typedef fllt_node<point2d , int_u8>  I;
 
   image2d<int_u8> output (16, 16);
-  level::fill(output, 0);
+  data::fill(output, 0);
 
   I s1;
   I s2;

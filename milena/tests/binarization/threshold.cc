@@ -56,7 +56,7 @@ int main()
 
     image2d<int> lena(l.domain(), 0);
     
-    level::paste(l, lena);
+    data::paste(l, lena);
     
     io::pbm::save(binarization::threshold(lena, 50), "out2.pgm");
   }

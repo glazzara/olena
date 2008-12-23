@@ -41,7 +41,7 @@
 
 #include <mln/io/pbm/load.hh>
 #include <mln/io/pbm/save.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/debug/println_with_border.hh>
 
@@ -98,7 +98,7 @@ int main()
 
 
   image2d<bool> K(pic.domain());
-  level::fill(K, false);
+  data::fill(K, false);
 
 
   image2d<int_u8> dmap = transform::distance_geodesic(logical::not_(pic),

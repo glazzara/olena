@@ -33,8 +33,8 @@
 #include <mln/value/int_u8.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/bgraph_image.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/debug/println.hh>
 
 
@@ -98,8 +98,8 @@ int main()
   {
     using value::int_u8;
     image2d<int_u8> ima_(ima.bbox());
-    level::fill(ima_, 0);
-    level::paste(ima, ima_);
+    data::fill(ima_, 0);
+    data::paste(ima, ima_);
     debug::println(ima_);
   }
 

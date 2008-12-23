@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/image/image_if.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/pw/value.hh>
 # include <mln/pw/cst.hh>
 
@@ -74,7 +74,7 @@ namespace mln
 	  trace::entering("level::impl::generic::replace");
 	  I& input = exact(input_);
 
-	  level::fill((input | (pw::value(input) == pw::cst(old_value))).rw(),
+	  data::fill((input | (pw::value(input) == pw::cst(old_value))).rw(),
 		      new_value);
 
 	  trace::exiting("level::impl::generic::replace");

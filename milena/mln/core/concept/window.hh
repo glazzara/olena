@@ -327,7 +327,7 @@ namespace mln
       // Hack (below) to avoid circular dependency.
       ima.init_(mln::internal::geom_bbox(win));
       {
-	// level::fill(ima, false) is:
+	// data::fill(ima, false) is:
 	mln_piter(I) p(ima.domain());
 	for_all(p)
 	  ima(p) = false;

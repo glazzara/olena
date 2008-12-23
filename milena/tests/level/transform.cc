@@ -42,9 +42,9 @@
 #include <mln/core/image/extension_val.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/transform.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 
 #include <mln/core/var.hh>
 
@@ -101,7 +101,7 @@ int main()
   {
      image2d<unsigned short> ima(size, size);
 
-     level::fill_with_value(ima, 51);
+     data::fill_with_value(ima, 51);
      level::transform(ima, mysqrt());
 
   }
@@ -126,7 +126,7 @@ int main()
                                                  make::box2d(2,2, 5,5));
     image2d<short unsigned int> out(8, 8);
 
-    level::fill(out, 0);
+    data::fill(out, 0);
     out = level::transform(ima, mysqrt());
   }
 
@@ -135,7 +135,7 @@ int main()
     flat_image<short, box2d> ima(5, make::box2d(size, size));
     image2d<unsigned short> out(size, size);
 
-    level::fill_with_value(ima, 51);
+    data::fill_with_value(ima, 51);
     out = level::transform(ima, mysqrt());
 
     box2d::piter p(out.domain());
@@ -152,7 +152,7 @@ int main()
     I out(size, size);
     II ima_if = ima | fun::p2b::chess();
 
-    level::fill_with_value(ima, 0);
+    data::fill_with_value(ima, 0);
     debug::iota(ima);
     out = level::transform(ima_if, mysqrt());
 
@@ -171,8 +171,8 @@ int main()
     II cast(in);
     III out(size, size);
 
-    level::fill(in, 51);
-    level::fill(out, 42);
+    data::fill(in, 51);
+    data::fill(out, 42);
 
     out = level::transform(cast, mysqrt());
 
@@ -191,7 +191,7 @@ int main()
     II sub_ima(ima, make::box2d(4,4, 10,10));
     III out(size, size);
 
-    level::fill(ima, 51);
+    data::fill(ima, 51);
     out = level::transform(sub_ima, mysqrt());
 
     II::piter p(sub_ima.domain());
@@ -209,7 +209,7 @@ int main()
     II extend_ima(ima, 5);
     III out(size, size);
 
-    level::fill(ima, 51);
+    data::fill(ima, 51);
     out = level::transform(extend_ima, mysqrt());
 
     II::piter p(extend_ima.domain());

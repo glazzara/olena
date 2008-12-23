@@ -42,7 +42,7 @@
 # include <mln/core/routine/clone.hh>
 # include <mln/core/routine/primary.hh>
 # include <mln/border/get.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -81,7 +81,7 @@ namespace mln
 
 	mln_concrete(I) memo = clone(ima);
 	ima.resize_(thickness);
-	level::fill(ima, memo);
+	data::fill(ima, memo);
 
 	mln_postcondition(border::get(ima) == thickness);
       }

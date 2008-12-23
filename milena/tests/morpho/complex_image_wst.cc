@@ -47,7 +47,7 @@
 #include <mln/core/image/complex_neighborhoods.hh>
 #include <mln/core/image/complex_neighborhood_piter.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/norm/l2.hh>
 
@@ -149,7 +149,7 @@ int main()
 
   // Create and initialize an image based on PC.
   dist_ima_t dist_ima(pc);
-  level::fill(dist_ima, 0u);
+  data::fill(dist_ima, 0u);
 
   /*--------------------------------.
   | Complex-based image iterators.  |

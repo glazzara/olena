@@ -140,7 +140,7 @@ int main()
   point2d output_pmax(input.domain().pmax()[0] * 2,
 		      input.domain().pmax()[1] * 2);
   output_t output(box2d(output_pmin, output_pmax));
-  level::fill(output, literal::black);
+  data::fill(output, literal::black);
   mln_fwd_piter_(image2d<input_val_t>) p(input.domain());
   for_all(p)
   {

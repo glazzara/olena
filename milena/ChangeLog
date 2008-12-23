@@ -1,3 +1,170 @@
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Move level::fill and level::paste into data::.
+
+	* mln/data: New directory.
+
+	* mln/level/fill.hh,
+	* mln/level/fill_with_image.hh,
+	* mln/level/fill_with_image.spe.hh,
+	* mln/level/fill_with_value.hh,
+	* mln/level/fill_with_value.spe.hh,
+	* mln/level/memcpy_.hh,
+	* mln/level/memset_.hh,
+	* mln/level/paste.hh,
+	* mln/level/paste.spe.hh: Move and rename as...
+	* mln/data/fill.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/fill_with_image.spe.hh,
+	* mln/data/fill_with_value.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/memcpy_.hh,
+	* mln/data/memset_.hh,
+	* mln/data/paste.hh,
+	* mln/data/paste.spe.hh: ...these.
+	Update.
+	* mln/data/essential.hh: New.
+	* mln/data/all.hh: New.
+
+	* tests/data: New directory.
+
+	* tests/level/fill.cc,
+	* tests/level/fill_full.cc,
+	* tests/level/fill_with_image.cc,
+	* tests/level/fill_with_value.cc,
+	* tests/level/memcpy_.cc,
+	* tests/level/memset_.cc,
+	* tests/level/paste.cc,
+	* tests/level/paste_full.cc,
+	* tests/level/transform.cc: Move and rename as...
+	* tests/data/fill.cc,
+	* tests/data/fill_full.cc,
+	* tests/data/fill_with_image.cc,
+	* tests/data/fill_with_value.cc,
+	* tests/data/memcpy_.cc,
+	* tests/data/memset_.cc,
+	* tests/data/paste.cc: ...these.
+	Update.
+	* tests/data/Makefile.am: New.
+	* tests/unit_test/mln_level_fill.cc,
+	* tests/unit_test/mln_level_fill_with_image.cc,
+	* tests/unit_test/mln_level_fill_with_value.cc,
+	* tests/unit_test/mln_level_memcpy_.cc,
+	* tests/unit_test/mln_level_memset_.cc,
+	* tests/unit_test/mln_level_paste.cc: Move and rename as...
+	* tests/unit_test/mln_data_fill.cc,
+	* tests/unit_test/mln_data_fill_with_image.cc,
+	* tests/unit_test/mln_data_fill_with_value.cc,
+	* tests/unit_test/mln_data_memcpy_.cc,
+	* tests/unit_test/mln_data_memset_.cc,
+	* tests/unit_test/mln_data_paste.cc: ...these.
+	Update.
+
+	Assign is obsolete (it performed fill!)
+	* mln/level/assign.hh: Remove.
+	* mln/level/assign.spe.hh: Remove.
+	* tests/level/assign.cc: Remove.
+	* tests/level/assign_full.cc: Remove.
+
+	* mln/debug/println.spe.hh,
+	* mln/debug/draw_graph.hh,
+	* mln/core/site_set/p_image.hh,
+	* mln/core/image/extension_ima.hh,
+	* mln/core/w_window.hh,
+	* mln/core/routine/clone.hh,
+	* mln/core/concept/window.hh,
+	* mln/draw/line.hh,
+	* mln/draw/box.hh,
+	* mln/draw/plot.hh,
+	* mln/all.hh,
+	* mln/level/transform.spe.hh,
+	* mln/level/all.hh,
+	* mln/level/replace.hh,
+	* mln/level/essential.hh,
+	* mln/linear/gaussian.hh,
+	* mln/border/resize.hh,
+	* mln/convert/to_image.hh,
+	* mln/geom/resize.hh,
+	* mln/geom/chamfer.hh,
+	* mln/morpho/tree/compute_attribute_image.hh,
+	* mln/morpho/tree/compute_parent.hh,
+	* mln/morpho/elementary/like_ero_set.hh,
+	* mln/morpho/elementary/gradient.hh,
+	* mln/morpho/hit_or_miss.hh,
+	* mln/morpho/laplacian.hh,
+	* mln/morpho/Rd.hh,
+	* mln/morpho/includes.hh,
+	* mln/morpho/skeleton_constrained.hh,
+	* mln/morpho/meyer_wst.hh,
+	* mln/canvas/distance_front.hh,
+	* mln/canvas/morpho/algebraic_union_find.hh,
+	* mln/canvas/distance_geodesic.hh,
+	* mln/canvas/labeling.hh,
+	* mln/extension/fill.hh,
+	* mln/util/tree_to_image.hh,
+	* mln/labeling/blobs.hh,
+	* mln/labeling/level.hh,
+	* mln/labeling/regional_minima.hh,
+	* mln/labeling/regional_maxima.hh,
+	* tests/debug/println_with_border.cc,
+	* tests/debug/println.cc,
+	* tests/core/other/clock_test.cc,
+	* tests/core/image/sub_image.cc,
+	* tests/core/image/cast_image.cc,
+	* tests/core/image/sparse_image.cc,
+	* tests/core/image/obased_rle_image.cc,
+	* tests/core/image/value_enc_image.cc,
+	* tests/core/image/plain.cc,
+	* tests/core/image/bgraph_image.cc,
+	* tests/core/image/fi_adaptor.cc,
+	* tests/core/image/mono_rle_image.cc,
+	* tests/core/image/rle_image.cc,
+	* tests/core/image/mono_obased_rle_image.cc,
+	* tests/core/image/interpolated.cc,
+	* tests/draw/graph.cc,
+	* tests/draw/line.cc,
+	* tests/opt/at.cc,
+	* tests/level/transform_full.cc,
+	* tests/level/sort_psites_full.cc,
+	* tests/level/Makefile.am,
+	* tests/linear/gaussian.cc,
+	* tests/transform/distance_geodesic.cc,
+	* tests/transform/distance_front.cc,
+	* tests/border/fill_full.cc,
+	* tests/border/resize_image3d_1.cc,
+	* tests/border/resize_image3d_2.cc,
+	* tests/border/resize_image3d_3.cc,
+	* tests/test/positive.cc,
+	* tests/convert/to_p_set.cc,
+	* tests/convert/to_window.cc,
+	* tests/pw/value.cc,
+	* tests/binarization/threshold.cc,
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/dilation.cc,
+	* tests/morpho/tree/data.cc,
+	* tests/morpho/skeleton_constrained.cc,
+	* tests/morpho/elementary/gradient.cc,
+	* tests/morpho/elementary/closing.cc,
+	* tests/morpho/elementary/erosion.cc,
+	* tests/morpho/elementary/top_hat.cc,
+	* tests/morpho/elementary/gradient_external.cc,
+	* tests/morpho/elementary/opening.cc,
+	* tests/morpho/elementary/dilation.cc,
+	* tests/morpho/elementary/gradient_internal.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/rank_filter.cc,
+	* tests/morpho/complex_image_wst.cc,
+	* tests/morpho/hit_or_miss.cc,
+	* tests/morpho/combined.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc,
+	* tests/Makefile.am,
+	* tests/canvas/chamfer.cc,
+	* tests/canvas/browsing/hyper_directional.cc,
+	* tests/extension/fill.cc,
+	* tests/util/tree_to_image.cc,
+	* tests/util/tree_fast_to_image.cc,
+	* tests/labeling/level.cc: Update.
+
 2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Do not parse trash directory during doc generation.

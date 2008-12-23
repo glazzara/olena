@@ -347,7 +347,7 @@ namespace mln
 
       ima.init_(geom::bbox(w_win));
       {
-	// level::fill(ima, literal::zero) is:
+	// data::fill(ima, literal::zero) is:
 	mln_value(I) zero = literal::zero;
 	mln_piter(I) p(ima.domain());
 	for_all(p)
@@ -373,7 +373,7 @@ namespace mln
 //       // Fill the image with zeros, as (weighted) windows are not
 //       // necessarily box-shaped (there might be holes corresponding to
 //       // null weights).
-//       level::fill(ima, literal::zero);
+//       data::fill(ima, literal::zero);
 //       P O = P::origin;
 //       mln_qiter(W) q(w_win, O);
 //       for_all(q)

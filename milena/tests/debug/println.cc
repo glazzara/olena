@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/opt/at.hh>
 

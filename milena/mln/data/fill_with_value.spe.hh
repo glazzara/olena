@@ -28,15 +28,15 @@
 #ifndef MLN_LEVEL_FILL_WITH_VALUE_SPE_HH
 # define MLN_LEVEL_FILL_WITH_VALUE_SPE_HH
 
-/// \file mln/level/fill_with_value.spe.hh
-/// Specializations for mln::level::fill_with_value.
+/// \file mln/data/fill_with_value.spe.hh
+/// Specializations for mln::data::fill_with_value.
 ///
 
 # ifndef MLN_LEVEL_FILL_WITH_VALUE_HH
 #  error "Forbidden inclusion of *.spe.hh"
 # endif // ! MLN_LEVEL_FILL_WITH_VALUE_HH
 
-# include <mln/level/memset_.hh>
+# include <mln/data/memset_.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -44,7 +44,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     namespace internal
@@ -75,7 +75,7 @@ namespace mln
       inline
       void fill_with_value_one_block(Image<I>& ima_, const V& val)
       {
-	trace::entering("level::impl::fill_with_value_one_block");
+	trace::entering("data::impl::fill_with_value_one_block");
 
 	I& ima = exact(ima_);
 
@@ -87,16 +87,16 @@ namespace mln
                 mlc_is(mln_trait_image_value_access(I),
                        trait::image::value_access::direct))::check();
 
-        level::memset_(ima, ima.point_at_index(0), val, ima.nelements());
+        data::memset_(ima, ima.point_at_index(0), val, ima.nelements());
 
-	trace::exiting("level::impl::fill_with_value_one_block");
+	trace::exiting("data::impl::fill_with_value_one_block");
       }
 
       template <typename I, typename V>
       inline
       void fill_with_value_cell_wise(Image<I>& ima_, const V& val)
       {
-	trace::entering("level::impl::fill_with_value_cell_wise");
+	trace::entering("data::impl::fill_with_value_cell_wise");
 
 	I& ima = exact(ima_);
 
@@ -106,14 +106,14 @@ namespace mln
 	for_all(v)
 	  v.change_to(val);
 
-	trace::exiting("level::impl::fill_with_value_cell_wise");
+	trace::exiting("data::impl::fill_with_value_cell_wise");
       }
 
       template <typename I, typename V>
       inline
       void fill_with_value_singleton(Image<I>& ima_, const V& val)
       {
-        trace::entering("level::impl::fill_with_value_singleton");
+        trace::entering("data::impl::fill_with_value_singleton");
 
 	I& ima = exact(ima_);
 
@@ -125,10 +125,10 @@ namespace mln
 
 	ima.val() = val;
 
-	trace::exiting("level::impl::fill_with_value_singleton");
+	trace::exiting("data::impl::fill_with_value_singleton");
       }
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
 
@@ -206,10 +206,10 @@ namespace mln
                                  ima, val);
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

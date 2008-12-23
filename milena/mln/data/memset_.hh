@@ -26,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_MEMSET__HH
-# define MLN_LEVEL_MEMSET__HH
+#ifndef MLN_DATA_MEMSET__HH
+# define MLN_DATA_MEMSET__HH
 
-/*! \file mln/level/memset_.hh
- *
- * \brief Same as std::memset but for fastest images.
- */
+/// \file mln/data/memset_.hh
+///
+/// Same as std::memset but for fastest images.
 
 # include <cstring>
 
@@ -40,10 +39,11 @@
 # include <mln/core/pixel.hh>
 # include <mln/metal/is_not_const.hh>
 
+
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /*! Set \p n pixels at value \p v starting from pixel \p p.
@@ -86,7 +86,7 @@ namespace mln
       inline
       void memset__(P& pix, const mln_value(P)& v, std::size_t n)
       {
-	trace::entering("level::impl::memset_");
+	trace::entering("data::impl::memset_");
 
 	typedef mln_image(P) I;
 	if (n == 0)
@@ -113,10 +113,10 @@ namespace mln
 	      *ptr++ = v;
 	  }
 
-	trace::exiting("level::impl::memset_");
+	trace::exiting("data::impl::memset_");
       }
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     template <typename P>
@@ -124,7 +124,7 @@ namespace mln
     void memset_(Generalized_Pixel<P>& pix_,
 		 const mln_value(P)& v, std::size_t n)
     {
-      trace::entering("level::memset_");
+      trace::entering("data::memset_");
 
       typedef mln_image(P) I;
       metal::is_not_const<I>::check();
@@ -137,7 +137,7 @@ namespace mln
 
       impl::memset__(pix, v, n);
 
-      trace::exiting("level::memset_");
+      trace::exiting("data::memset_");
     }
 
     template <typename I>
@@ -145,7 +145,7 @@ namespace mln
     void memset_(I& input, const mln_psite(I)& p,
 		 const mln_value(I)& v, std::size_t n)
     {
-      trace::entering("level::memset_");
+      trace::entering("data::memset_");
 
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
@@ -156,14 +156,14 @@ namespace mln
       pixel<I> pix(input, p);
       impl::memset__(pix, v, n);
 
-      trace::exiting("level::memset_");
+      trace::exiting("data::memset_");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 
 
-#endif // ! MLN_LEVEL_MEMSET__HH
+#endif // ! MLN_DATA_MEMSET__HH

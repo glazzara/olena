@@ -37,7 +37,7 @@
 #include <mln/border/resize.hh>
 #include <mln/debug/println_with_border.hh>
 #include <mln/border/fill.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 using namespace mln;
 
@@ -47,7 +47,7 @@ int main ()
   unsigned new_border = 1;
 
   image3d<value::int_u8> ima(1, 3, 2, border);
-  level::fill (ima, 2);
+  data::fill (ima, 2);
   border::fill(ima, 8);
 
   mln_assertion(ima.has(point3d(-3, -3, -3)) == true);

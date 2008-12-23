@@ -36,7 +36,7 @@
 #include <mln/core/image/sub_image.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/draw/line.hh>
 #include <mln/debug/println.hh>
@@ -51,18 +51,18 @@ int main()
   mln_assertion(l.nsites() == 10);
 
   image2d<bool> ima(10,10);
-  level::fill(ima, false);
+  data::fill(ima, false);
   draw::line(ima, b, e, true);
 
   image2d<bool> ima2(10,10);
-  level::fill(ima2, false);
-  level::paste(pw::cst(true) | l, ima2);
+  data::fill(ima2, false);
+  data::paste(pw::cst(true) | l, ima2);
 
   mln_assertion(ima2 == ima);
 
   image2d<bool> ima3(10,10);
-  level::fill(ima3, false);
-  level::fill((ima3 | l).rw(), true);
+  data::fill(ima3, false);
+  data::fill((ima3 | l).rw(), true);
 
   mln_assertion(ima3 == ima);
 }

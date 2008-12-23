@@ -36,7 +36,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/sort_psites.hh>
 
 
@@ -85,7 +85,7 @@ namespace mln
 	const N& nbh;
 	S s;
 
- 	void init()                              { level::fill(attr, true); }
+ 	void init()                              { data::fill(attr, true); }
 	bool handles(const P&) const             { return true; }
 	bool labels(const P& p) const            { return attr(p); }
 	bool equiv(const P& n, const P& p) const { return input(n) ==

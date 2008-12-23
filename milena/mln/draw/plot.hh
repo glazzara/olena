@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/pw/image.hh>
 # include <mln/pw/cst.hh>
 
@@ -78,7 +78,7 @@ namespace mln
           mln_point(I) beg = p, end = p;
           beg[i] = beg[i] - 1;
           end[i] = end[i] + 1;
-          level::paste(pw::cst(v) | line2d(beg, end),
+          data::paste(pw::cst(v) | line2d(beg, end),
                        ima);
         }
     }

@@ -191,7 +191,7 @@ namespace mln
 	      mln_concrete(I)
 		ero_fg = erosion(input, win_hit),
 		dil_bg = dilation(input, win_miss);
-	      level::fill(output,
+	      data::fill(output,
 			  fun::p2v::ternary(pw::value(input) == pw::value(ero_fg)
 			    && pw::value(dil_bg) < pw::value(input),
 			    fun::cast<V>(pw::value(input) - pw::value(dil_bg)),
@@ -202,21 +202,21 @@ namespace mln
 	      mln_concrete(I)
 		ero_bg = erosion(input, win_miss),
 		dil_fg = dilation(input, win_hit);
-	      level::fill(output,
+	      data::fill(output,
 			  fun::p2v::ternary(pw::value(input) == pw::value(dil_fg)
 			    && pw::value(ero_bg) > pw::value(input),
 			    fun::cast<V>(pw::value(ero_bg) - pw::value(input)),
 			    pw::cst(zero_V)));
 	    }
 	    else
-	      level::fill(output, zero_V);
+	      data::fill(output, zero_V);
 	  }
 	  else // Unconstrained: UHMT.
 	  {
 	    mln_concrete(I)
 	      ero = erosion(input, win_hit),
 	      dil = dilation(input, win_miss);
-	    level::fill(output,
+	    data::fill(output,
 			fun::p2v::ternary(pw::value(dil) < pw::value(ero),
 			  fun::cast<V>(pw::value(ero) - pw::value(dil)),
 			  pw::cst(zero_V)));

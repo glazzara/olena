@@ -39,7 +39,7 @@
 /// or value_io::read_only; then ext_io can be read_write...
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 
 
 
@@ -278,7 +278,7 @@ namespace mln
   {
     mlc_equal(mln_trait_image_value_io(J),
 	      trait::image::value_io::read_write)::check();
-    level::fill_with_value(v);
+    data::fill_with_value(v);
   }
 
   // init_

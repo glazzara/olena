@@ -40,7 +40,7 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/level/transform.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <mln/core/alias/p_runs2d.hh>
@@ -146,8 +146,8 @@ int main()
     value_enc_image<point2d, int_u8> val_enc =
       value_encode(level::transform(labels, fold_t()));
 
-    level::fill(cmp, literal::zero);
-    level::paste(val_enc, cmp);
+    data::fill(cmp, literal::zero);
+    data::paste(val_enc, cmp);
     std::cout << val_enc.values().size() << std::endl;
 
     mln_assertion(cmp == level::transform(labels, fold_t()));

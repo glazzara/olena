@@ -39,7 +39,7 @@
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/core/site_set/p_priority.hh>
 # include <mln/extension/adjust_duplicate.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -87,7 +87,7 @@ namespace mln
       // Initialization.
       {
 	initialize(output, input);
-	level::fill(output, input);
+	data::fill(output, input);
 	extension::adjust_duplicate(output, nbh);
 
 	mln_piter(I) p(input.domain());

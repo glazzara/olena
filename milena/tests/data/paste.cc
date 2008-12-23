@@ -26,13 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/level/fill_with_value.cc
+/// \file tests/data/paste.cc
 ///
-/// Tests on mln::level::fill_with_value
-
-#include <mln/level/fill_with_value.hh>
-#include <mln/level/fill_with_image.hh>
-#include <mln/level/compare.hh>
+/// Tests on mln::data::paste.
 
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
@@ -43,6 +39,10 @@
 #include <mln/core/image/image_if.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/image/extension_val.hh>
+
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
+#include <mln/level/compare.hh>
 
 #include <mln/fun/p2b/chess.hh>
 #include <mln/fun/p2v/iota.hh>
@@ -55,7 +55,7 @@
 int main()
 {
   using namespace mln;
-  const unsigned size = 100;
+  const unsigned size = 50;
 
   // tests in two dimension
   {
@@ -67,90 +67,54 @@ int main()
     image2d<int> ima2(b2, 0);
     debug::iota(ima2);
 
-    level::fill_with_image(ima, ima2); // Not so fast version...
+    image2d<int> ima3(b, 2);
+
+    data::paste(ima, ima2); // Not so fast version...
     mln_assertion(ima == (ima2 | b));
-  }
 
-
-  // 2d tests
-  {
-    image2d<unsigned int> ima(size, size);
-    image2d<unsigned int> ima2(size, size);
-    debug::iota(ima2);
-
-    level::fill_with_image(ima, ima2);
-    mln_assertion(ima == ima2);
-  }
-
-  {
-    box2d b(point2d(1,2), point2d(2,4));
-    image2d<int> ima(b, 2);
-
-    box2d b2(point2d(-1,-2), point2d(3,6));
-    image2d<int> ima2(b2, 0);
-    debug::iota(ima2);
-
-    level::fill_with_image(ima, ima2);
-    mln_assertion(ima == (ima2 | b));
-  }
-
-  {
-    typedef image2d<unsigned char> I;
-    typedef image_if<I, fun::p2b::chess> II;
-
-    I ima(size, size);
-    I ima2(size, size);
-    level::fill_with_value(ima, 51);
-    level::fill_with_value(ima2, 42);
-
-    II ima_if = ima | fun::p2b::chess();
-    level::fill_with_image(ima_if, ima2);
-
-    II::piter p(ima_if.domain());
-    for_all(p)
-      mln_assertion(ima_if(p) == 42);
-
+    data::paste(ima, ima3); // Fast version...
+    mln_assertion(ima == ima3);
   }
 
   // tests in three dimension
   {
-    box3d b(point3d(1,2,1), point3d(2,4,3));
+    box3d b(point3d(1,2, 1), point3d(2,4, 3));
     image3d<int> ima(b, 2);
     debug::iota(ima);
 
-    box3d b2(point3d(-1,-2,-1), point3d(3,6,3));
+    box3d b2(point3d(-1,-2, -1), point3d(3,6, 3));
     image3d<int> ima2(b2, 2);
     debug::iota(ima2);
 
     image3d<int> ima3(b, 2);
 
-    level::fill_with_image(ima, ima2); // Not so fast version...
+    data::paste(ima, ima2); // Not so fast version...
     mln_assertion(ima == (ima2 | b));
 
-    level::fill_with_image(ima3, ima); // Fast version...
+    data::paste(ima, ima3); // Fast version...
     mln_assertion(ima == ima3);
   }
 
-  // image 1d test
+    /// image 1d test
   {
     image1d<unsigned short> ima(size);
     image1d<unsigned short> out(size);
 
     debug::iota(ima);
-    level::fill_with_image(out, ima);
+    data::paste(ima, out);
 
     mln_assertion(ima == out);
   }
 
 
-  // pw image test
+  /// pw image test
   {
     const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
-                                                 make::box2d(-2,-2, 15,15));
+                                                 make::box2d(2,2, 5,5));
     image2d<short unsigned int> out(8, 8);
 
-    level::fill(out, 0);
-    level::fill_with_image(out, ima);
+    data::fill(out, 0);
+    data::paste(ima, out);
   }
 
   // flat image test
@@ -158,8 +122,8 @@ int main()
     flat_image<short, box2d> ima(5, make::box2d(size, size));
     image2d<unsigned short> out(size, size);
 
-    level::fill_with_value(ima, 51);
-    level::fill_with_image(out, ima);
+    data::fill_with_value(ima, 51);
+    data::paste(ima, out);
 
     mln_assertion(ima == out);
   }
@@ -173,28 +137,27 @@ int main()
     I out(size, size);
     II ima_if = ima | fun::p2b::chess();
 
-    level::fill_with_value(ima, 42);
-    level::fill_with_value(out, 0);
-    level::fill_with_image(ima_if, ima);
+    data::fill_with_value(ima, 0);
+    debug::iota(ima);
+    data::paste(ima_if, out);
 
-    mln_piter_(II) p(ima_if.domain());
-    for_all(p)
-      mln_assertion(ima_if(p) == ima(p));
+    mln_assertion(ima_if == out);
   }
 
   // cast image test
   {
     typedef image2d<unsigned short> I;
     typedef cast_image_<int, I> II;
+    typedef image2d<unsigned short> III;
 
     I in(size, size);
     II cast(in);
-    I out(size, size);
+    III out(size, size);
 
-    level::fill(in, 51);
-    level::fill(out, 42);
+    data::fill(in, 51);
+    data::fill(out, 42);
 
-    level::fill_with_image(out, cast);
+    data::paste(cast, out);
 
     mln_assertion(cast == out);
   }
@@ -203,19 +166,18 @@ int main()
    {
      typedef image2d<int> I;
      typedef sub_image< image2d<int>, box2d > II;
+     typedef image2d<unsigned short> III;
 
      I ima(size, size);
-     I out(size, size);
      II sub_ima(ima, make::box2d(4,4, 10,10));
+     III out(size, size);
 
-
-     level::fill(ima, 51);
-     level::fill(out, 0);
-     level::fill_with_image(sub_ima, ima);
+     data::fill(ima, 51);
+     data::paste(sub_ima, out);
 
      II::piter p(sub_ima.domain());
      for_all(p)
-       mln_assertion(sub_ima(p) == ima(p));
+       mln_assertion(sub_ima(p) == out(p));
    }
 
    // extended image test
@@ -228,9 +190,11 @@ int main()
     II extend_ima(ima, 5);
     III out(size, size);
 
-    level::fill(ima, 51);
-    level::fill_with_image(out, extend_ima);
+    data::fill(ima, 51);
+    data::paste(extend_ima, out);
 
-    mln_assertion(out == extend_ima);
+    II::piter p(extend_ima.domain());
+    for_all(p)
+      mln_assertion(extend_ima(p) == out(p));
   }
 }

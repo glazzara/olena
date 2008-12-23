@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/test/positive.hh>
 
 
@@ -55,7 +55,7 @@ int main()
   typedef image2d<int> I;
 
   I ima(1,1);
-  level::fill(ima, 0);
+  data::fill(ima, 0);
 
   test_v2b(fun::v2v::id<mln_value_(I)>() >= pw::cst(0));
 

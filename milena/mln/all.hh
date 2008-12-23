@@ -32,6 +32,7 @@
 ///
 /// File that includes all the headers.
 
+#include <mln/data/all.hh>
 #include <mln/util/all.hh>
 #include <mln/fun/p2v/all.hh>
 #include <mln/fun/x2x/all.hh>

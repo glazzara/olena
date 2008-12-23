@@ -36,7 +36,7 @@
 #include <mln/core/site_set/p_set.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/level/stretch.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 #include <vector>
@@ -105,7 +105,7 @@ int main()
   tree.add_child(tree.root_, s6);
   tree.add_parent(s7);
   image2d<int_u8> output (16, 16);
-  level::fill(output, 0);
+  data::fill(output, 0);
   util::tree_fast_to_image(tree, output);
 
   int_u8 vs[16][16] = {

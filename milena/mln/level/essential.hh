@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,22 +28,18 @@
 #ifndef MLN_LEVEL_ESSENTIAL_HH
 # define MLN_LEVEL_ESSENTIAL_HH
 
-/*! \file mln/level/essential.hh
- *
- * \brief File that includes essential level-related routines.
- *
- */
+/// \file mln/level/essential.hh
+///
+/// File that includes essential level-related routines.
+
 
 # include <mln/level/abs.hh>
 # include <mln/level/apply.hh>
-# include <mln/level/assign.hh>
 # include <mln/level/compare.hh>
 # include <mln/level/compute.hh>
 # include <mln/level/convert.hh>
 # include <mln/level/fast_median.hh>
-# include <mln/level/fill.hh>
 # include <mln/level/median.hh>
-# include <mln/level/paste.hh>
 # include <mln/level/replace.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/transform.hh>
@@ -52,5 +48,6 @@
 
 # include <mln/level/approx/essential.hh>
 # include <mln/level/naive/essential.hh>
+
 
 #endif // ! MLN_LEVEL_ESSENTIAL_HH

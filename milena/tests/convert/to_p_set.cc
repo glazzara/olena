@@ -38,7 +38,7 @@
 #include <mln/core/alias/neighb2d.hh>
 
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/convert/to_p_set.hh>
 #include <mln/util/ord.hh>
@@ -74,8 +74,8 @@ int main()
 
   // Image :
   image2d<bool> ima(make::box2d(-6, -6, 6, 6));
-  level::fill(ima, false);
-  level::fill((ima | ref).rw(), true);
+  data::fill(ima, false);
+  data::fill((ima | ref).rw(), true);
   p_set<point2d> test_ima = convert::to_p_set(ima);
   test(ref, test_ima);
 

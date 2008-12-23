@@ -38,7 +38,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/util/tree.hh>
 # include <mln/core/site_set/p_set.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 namespace mln
 {
@@ -162,7 +162,7 @@ namespace mln
 	const J& ima = exact(ima_);
 	image2d<bool> out(ima.bbox());
 
-        level::fill(out, false);
+        data::fill(out, false);
 	mln_piter(p_set<P>) p(s);
 	for_all(p)
 	  out(p) = true;
@@ -219,7 +219,7 @@ namespace mln
       const J& ima = exact(ima_);
 
       image2d<bool> output(ima.domain());
-      level::fill(output, false);
+      data::fill(output, false);
       impl::display_branch_rec(ima, tree_node, output);
 
       trace::exiting("util::display_branch");

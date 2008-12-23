@@ -38,7 +38,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/level/transform.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/math/round.hh>
 
 #include <mln/linear/gaussian.hh>
@@ -61,7 +61,7 @@ int main()
 
 
   image2d<float> lenaf(lena.domain());
-  level::paste(lena, lenaf);
+  data::paste(lena, lenaf);
 
   image2d<float> outf = linear::gaussian(lenaf, 5.1f);
  }

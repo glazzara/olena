@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_PASTE_HH
 # define MLN_LEVEL_PASTE_HH
 
-/*! \file mln/level/paste.hh
+/*! \file mln/data/paste.hh
  *
  * \brief Paste the contents of an image into another one.
  *
@@ -39,14 +39,14 @@
 
 
 // Specializations are in:
-# include <mln/level/paste.spe.hh>
+# include <mln/data/paste.spe.hh>
 
 
 
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /// \brief Paste the contents of image \p input into the image \p
@@ -93,7 +93,7 @@ namespace mln
 	(void)output;
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
     namespace impl
     {
@@ -105,9 +105,9 @@ namespace mln
 	inline
 	void paste(const Image<I>& input_, Image<J>& output_)
 	{
-	  trace::entering("level::impl::generic::paste");
+	  trace::entering("data::impl::generic::paste");
 
-	  level::internal::paste_tests(input_, output_);
+	  data::internal::paste_tests(input_, output_);
 
 	  const I& input  = exact(input_);
 	  J& output = exact(output_);
@@ -117,12 +117,12 @@ namespace mln
 	  for_all(p)
 	    output(p) = input(p);
 
-	  trace::exiting("level::impl::generic::paste");
+	  trace::exiting("data::impl::generic::paste");
 	}
 
-      } // end of namespace mln::level::impl::generic
+      } // end of namespace mln::data::impl::generic
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     // Facade.
@@ -131,18 +131,18 @@ namespace mln
     inline
     void paste(const Image<I>& input, Image<J>& output)
     {
-      trace::entering("level::paste");
+      trace::entering("data::paste");
 
 
       internal::paste_tests(input, output);
       internal::paste_(input, output);
 
-      trace::exiting("level::paste");
+      trace::exiting("data::paste");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

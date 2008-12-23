@@ -44,7 +44,7 @@
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
 # include <mln/debug/put_word.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/accu/max.hh>
 # include <mln/opt/at.hh>
 
@@ -110,7 +110,7 @@ namespace mln
 	unsigned len = len_ + 1;
 
 	image2d<char> output(b.nrows(), b.ncols() * len, 0);
-	level::fill(output, ' ');
+	data::fill(output, ' ');
 	for_all(p)
 	  {
 	    std::ostringstream oss;

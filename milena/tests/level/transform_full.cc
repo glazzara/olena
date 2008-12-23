@@ -48,7 +48,7 @@
 #include <mln/value/int_s8.hh>
 #include <mln/value/int_s16.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/level/transform.hh>
 
 #include <mln/debug/iota.hh>

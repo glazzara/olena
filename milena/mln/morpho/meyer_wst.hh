@@ -133,7 +133,7 @@ namespace mln
       // In_queue structure to avoid processing sites several times.
       mln_ch_value(I, bool) in_queue;
       initialize(in_queue, input);
-      level::fill(in_queue, false);
+      data::fill(in_queue, false);
 
       // Insert every neighbor P of every marked area in a
       // hierarchical queue, with a priority level corresponding to

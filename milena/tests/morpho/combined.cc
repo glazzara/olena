@@ -31,7 +31,7 @@
 #include <cmath>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 
 #include <mln/core/alias/window2d.hh>
@@ -76,7 +76,7 @@ int main()
 
 //     {
 //   image2d<int> ima(b);
-//   level::fill(ima, 51);
+//   data::fill(ima, 51);
 //   debug::println(ima);
 
 //   std::cout << win << std::endl;
@@ -90,7 +90,7 @@ int main()
 
 //   {
 //     image2d<int> ima(b);
-//     level::fill(ima, cos_sin);
+//     data::fill(ima, cos_sin);
 //     debug::println(ima);
 
 //     std::cout << std::endl;

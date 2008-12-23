@@ -28,9 +28,9 @@
 #ifndef MLN_LEVEL_PASTE_SPE_HH
 # define MLN_LEVEL_PASTE_SPE_HH
 
-/*! \file mln/level/paste.spe.hh
+/*! \file mln/data/paste.spe.hh
  *
- * \brief Specializations for mln::level::paste.
+ * \brief Specializations for mln::data::paste.
  *
  */
 
@@ -39,8 +39,8 @@
 # endif // ! MLN_LEVEL_PASTE_HH
 
 # include <mln/core/pixel.hh>
-# include <mln/level/fill_with_value.hh>
-# include <mln/level/memcpy_.hh>
+# include <mln/data/fill_with_value.hh>
+# include <mln/data/memcpy_.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
 
@@ -51,7 +51,7 @@
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     namespace internal
@@ -76,12 +76,12 @@ namespace mln
       template <typename I, typename J>
       void paste_fast(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("level::impl::paste_fast");
+        trace::entering("data::impl::paste_fast");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
 
-        level::internal::paste_tests(input, output);
+        data::internal::paste_tests(input, output);
 
         mln_pixter(const I) pi(input);
         mln_pixter(J) po(output);
@@ -92,18 +92,18 @@ namespace mln
           po.val() = pi.val();
           po.next();
         }
-        trace::exiting("level::impl::paste_fast");
+        trace::exiting("data::impl::paste_fast");
       }
 
       template <typename I, typename J>
       void paste_fastest(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("level::impl::paste_fastest");
+        trace::entering("data::impl::paste_fastest");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
 
-        level::internal::paste_tests(input, output);
+        data::internal::paste_tests(input, output);
 
         pixel<const I> src (input);
         pixel<J> dst(output);
@@ -112,19 +112,19 @@ namespace mln
 
         memcpy_(dst, src, input.nelements());
 
-        trace::exiting("level::impl::paste_fastest");
+        trace::exiting("data::impl::paste_fastest");
       }
 
       template <typename I, typename J>
       inline
       void paste_lines(const Image<I>& input_, Image<J>& output_)
       {
-	trace::entering("level::impl::paste_lines");
+	trace::entering("data::impl::paste_lines");
 
         const I& input = exact(input_);
         J& output      = exact(output_);
 
-        level::internal::paste_tests(input, output);
+        data::internal::paste_tests(input, output);
 
 	mln_box_runstart_piter(I) p(input.domain());
 	for_all(p)
@@ -133,19 +133,19 @@ namespace mln
 	  memcpy_(dst, make::pixel(input, p), p.run_length());
         }
 
-	trace::exiting("level::impl::paste_lines");
+	trace::exiting("data::impl::paste_lines");
       }
 
       template <typename I, typename J>
       void paste_singleton(const Image<I>& input_, Image<J>& output_)
       {
-        trace::entering("level::impl::paste_singleton");
+        trace::entering("data::impl::paste_singleton");
 
         const I& input  = exact(input_);
 
-        level::fill_with_value((output_ | input.domain()).rw(), input.val());
+        data::fill_with_value((output_ | input.domain()).rw(), input.val());
 
-        trace::exiting("level::impl::paste_singleton");
+        trace::exiting("data::impl::paste_singleton");
       }
 
     } // end of namespace impl.
@@ -275,9 +275,9 @@ namespace mln
                input, output);
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

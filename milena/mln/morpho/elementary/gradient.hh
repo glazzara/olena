@@ -114,7 +114,7 @@ namespace mln
 
 	  mln_concrete(I) output;
 	  initialize(output, input);
-	  level::fill(output, false);
+	  data::fill(output, false);
 
 	  mln_piter(I) p(input.domain());
 	  mln_niter(N) n(nbh, p);

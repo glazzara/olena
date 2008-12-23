@@ -42,7 +42,7 @@
 #include <mln/io/pgm/save.hh>
 
 #include <mln/value/int_u8.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/morpho/dilation.hh>
 
 #include <mln/pw/value.hh>
@@ -86,7 +86,7 @@ int main()
 
   {
     image2d<bool> bin(lena.domain());
-    level::fill(bin, pw::value(lena) > pw::cst(127u));
+    data::fill(bin, pw::value(lena) > pw::cst(127u));
     image2d<bool> out = morpho::dilation(bin, rec);
 
     image2d<int_u8> test(lena.domain());

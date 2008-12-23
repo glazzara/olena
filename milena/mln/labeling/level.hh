@@ -37,7 +37,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/canvas/labeling.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 // The 'fastest' specialization is in:
 # include <mln/labeling/level.spe.hh>

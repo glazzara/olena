@@ -31,7 +31,7 @@
  */
 
 #include <mln/core/image/image2d.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/pw/all.hh>
 
 
@@ -40,7 +40,7 @@ int main()
   using namespace mln;
 
   image2d<int> ima(3, 3);
-  level::fill(ima, 0);
+  data::fill(ima, 0);
 
   point2d p(1, 1);
   ima(p) = 51;

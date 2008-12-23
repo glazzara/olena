@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/point2d.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
 
@@ -476,7 +476,7 @@ namespace mln
                              Image<O>& out)
       {
 	mln_ch_value(O, float) work_img(exact(in).domain());
-	level::paste(in, work_img);
+	data::paste(in, work_img);
 	extension::adjust_fill(work_img, 4, 0);
 
 	// On tiny sigma, Derich algorithm doesn't work.
@@ -487,7 +487,7 @@ namespace mln
                             work_img, coef, i);
 
         // We don't need to convert work_img
-	level::paste(work_img, out);
+	data::paste(work_img, out);
       }
 
       template <class I, class F, class O>
@@ -501,7 +501,7 @@ namespace mln
                              int dir)
       {
 	mln_ch_value(O, float) work_img(exact(in).domain());
-	level::paste(in, work_img);
+	data::paste(in, work_img);
 	extension::adjust_fill(work_img, 4, 0);
 
 	// On tiny sigma, Derich algorithm doesn't work.
@@ -511,7 +511,7 @@ namespace mln
                           work_img, coef, dir);
 
         // We don't need to convert work_img
-	level::paste(work_img, out);
+	data::paste(work_img, out);
       }
 
 
@@ -525,7 +525,7 @@ namespace mln
                              Image<O>& out)
       {
 	mln_ch_value(O, float) work_img(exact(in).domain());
-	level::paste(in, work_img);
+	data::paste(in, work_img);
 	extension::adjust_fill(work_img, 4, 0);
 
 	// On tiny sigma, Derich algorithm doesn't work.
@@ -536,7 +536,7 @@ namespace mln
                             work_img, coef, i);
 
         // Convert work_img into result type
-	level::paste(level::stretch(mln_value(I)(), work_img), out);
+	data::paste(level::stretch(mln_value(I)(), work_img), out);
       }
 
       template <class I, class F, class O>
@@ -550,7 +550,7 @@ namespace mln
                              int dir)
       {
 	mln_ch_value(O, float) work_img(exact(in).domain());
-	level::paste(in, work_img);
+	data::paste(in, work_img);
 	extension::adjust_fill(work_img, 4, 0);
 
 	// On tiny sigma, Derich algorithm doesn't work.
@@ -560,7 +560,7 @@ namespace mln
                           work_img, coef, dir);
 
         // Convert work_img into result type
-	level::paste(level::stretch(mln_value(I)(), work_img), out);
+	data::paste(level::stretch(mln_value(I)(), work_img), out);
       }
 
 
@@ -577,7 +577,7 @@ namespace mln
         // typedef algebra::vec<3, float> vec3f;
         // mln_ch_value(O, vec3f) work_img(exact(in).domain());
         // FIXME : paste does not work (rgb8 -> vec3f).
-        level::paste(in, out);
+        data::paste(in, out);
 
 	// On tiny sigma, Derich algorithm doesn't work.
 	// It is the same thing that to convolve with a Dirac.
@@ -600,7 +600,7 @@ namespace mln
         // typedef algebra::vec<3, float> vec3f;
         // mln_ch_value(O, vec3f) work_img(exact(in).domain());
         // FIXME : paste does not work (rgb8 -> vec3f).
-        level::paste(in, out);
+        data::paste(in, out);
 
 	// On tiny sigma, Derich algorithm doesn't work.
 	// It is the same thing that to convolve with a Dirac.

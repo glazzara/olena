@@ -83,7 +83,7 @@ namespace mln
 	unsigned n = (unsigned)(1 / ratio);
 
 	I output (new_cols);
-	level::fill(output, 0);
+	data::fill(output, 0);
 
 	for (unsigned j = 0; j < cols; ++j)
 	  {

@@ -28,7 +28,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/clock_neighb2d.hh>
 #include <mln/debug/println.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/labeling/level.hh>
 #include <mln/core/alias/neighb2d.hh>
 
@@ -150,7 +150,7 @@ int main ()
 		 a5, a6, a7};
 
 
-    level::fill(ima, t);
+    data::fill(ima, t);
 
     image2d<unsigned> out = labeling::level(ima, false, c8(), n);
     tmp = testc4(ima, p);
@@ -171,11 +171,11 @@ int main ()
 
 
     ///  0 before
-    level::fill(ima, u);
+    data::fill(ima, u);
     out = labeling::level(ima, false, c4(), m);
 
     ///  1 after
-    level::fill(ima, t);
+    data::fill(ima, t);
     image2d<unsigned> out2 = labeling::level(ima, false, c4(), n);
 
     int diff = n - m;

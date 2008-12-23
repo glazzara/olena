@@ -72,7 +72,7 @@ int main()
 
   {
     image2d<unsigned> area(ima.domain());
-    level::fill(area, 1);
+    data::fill(area, 1);
     tree_t::piter p(t.domain());
     for_all(p)
       if (! t.is_root(p))

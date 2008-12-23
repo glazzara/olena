@@ -32,7 +32,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/fun/p2b/chess.hh>
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 #include <mln/core/image/cast_image.hh>
 
@@ -42,7 +42,7 @@ int main()
   using namespace mln;
 
   image2d<bool> ima(8, 8);
-  level::fill(ima, fun::p2b::chess());
+  data::fill(ima, fun::p2b::chess());
   debug::println(ima);
   debug::println( cast_image<int>(ima) );
 }

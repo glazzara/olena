@@ -36,7 +36,7 @@
 /// \todo Make the fastest version work.
 
 # include <mln/core/concept/image.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/literal/zero.hh>
 # include <mln/convert/to_upper_window.hh>
 
@@ -129,12 +129,12 @@ namespace mln
 	  // Initialization.
 	  {
 	    initialize(deja_vu, input);
-	    mln::level::fill(deja_vu, false);
+	    mln::data::fill(deja_vu, false);
 
 	    initialize(parent, input);
 
 	    initialize(output, input);
-	    mln::level::fill(output, L(literal::zero));
+	    mln::data::fill(output, L(literal::zero));
 	    nlabels = 0;
 
 	    f.init(); // Client initialization.
@@ -274,7 +274,7 @@ namespace mln
     for (unsigned p = 0; p < parent.nelements(); ++p)
     parent.element(p) = p; // make_set
     initialize(output, f.input);
-    mln::level::fill(output, 0); // FIXME: Use literal::zero.
+    mln::data::fill(output, 0); // FIXME: Use literal::zero.
     nlabels = 0;
     }
 

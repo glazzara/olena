@@ -38,7 +38,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 
 
@@ -91,7 +91,7 @@ namespace mln
 	  nlabels = literal::zero;
 	  mln_ch_value(I, L) output;
 	  initialize(output, input);
-	  level::fill(output, zero);
+	  data::fill(output, zero);
 
 	  // Loop.
 	  mln_piter(I) p(input.domain());

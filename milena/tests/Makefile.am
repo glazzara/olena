@@ -11,6 +11,7 @@ SUBDIRS =					\
   canvas					\
   convert					\
   core						\
+  data						\
   debug						\
   display					\
   draw						\

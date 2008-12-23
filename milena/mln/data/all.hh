@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,24 +26,35 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/assign.cc
- *
- * \brief Tests on mln::level::assign.
- */
+#ifndef MLN_DATA_ALL_HH
+# define MLN_DATA_ALL_HH
 
-#include <mln/core/image/image2d.hh>
-#include <mln/level/assign.hh>
-#include <mln/level/compare.hh>
-#include <mln/debug/iota.hh>
+/// \file mln/data/all.hh
+///
+/// File that includes all data-related routines.
 
 
-int main()
+namespace mln
 {
-  using namespace mln;
 
-  const unsigned size = 1000;
-  image2d<int> rhs(size, size), lhs(rhs.domain());
-  debug::iota(rhs);
-  level::assign(lhs, rhs);
-  mln_assertion(lhs == rhs);
+  /// Namespace of image processing routines related to pixel data.
+  namespace data
+  {
+
+    /// Implementation namespace of data namespace.
+    namespace impl {
+
+      /// Generic implementation namespace of data namespace.
+      namespace generic {}
+
+    }
+  }
 }
+
+
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
+
+
+
+#endif // ! MLN_DATA_ALL_HH

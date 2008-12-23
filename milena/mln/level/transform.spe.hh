@@ -40,7 +40,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
 
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 
 # include <mln/value/set.hh>
 # include <mln/value/lut_vec.hh>
@@ -215,7 +215,7 @@ namespace mln
         initialize(output, input);
 
         mln_result(F) val = f(input.val());
-        fill_with_value(output, val);
+	data::fill_with_value(output, val);
 
 	trace::exiting("level::impl::transform_singleton");
         return output;

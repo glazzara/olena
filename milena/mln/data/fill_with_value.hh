@@ -29,7 +29,7 @@
 #ifndef MLN_LEVEL_FILL_WITH_VALUE_HH
 # define MLN_LEVEL_FILL_WITH_VALUE_HH
 
-/// \file mln/level/fill_with_value.hh
+/// \file mln/data/fill_with_value.hh
 ///
 /// Fill an image with a value, that is, set all pixel values to
 /// the given value.
@@ -45,13 +45,13 @@
 
 
 // Specializations are in:
-# include <mln/level/fill_with_value.spe.hh>
+# include <mln/data/fill_with_value.spe.hh>
 
 
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /// Fill the whole image \p ima with the single value \p v.
@@ -84,7 +84,7 @@ namespace mln
 	(void) ima;
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
 
     namespace impl
@@ -96,7 +96,7 @@ namespace mln
 	template <typename I, typename V>
 	void fill_with_value(Image<I>& ima_, const V& val)
 	{
-	  trace::entering("level::impl::generic::fill_with_value");
+	  trace::entering("data::impl::generic::fill_with_value");
 
 	  I& ima = exact(ima_);
 
@@ -109,12 +109,12 @@ namespace mln
 	  for_all(p)
 	    ima(p) = v;
 
-	  trace::exiting("level::impl::generic::fill_with_value");
+	  trace::exiting("data::impl::generic::fill_with_value");
 	}
 
-      } // end if namespace mln::level::impl::generic
+      } // end if namespace mln::data::impl::generic
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     // Facade.
@@ -123,18 +123,18 @@ namespace mln
     inline
     void fill_with_value(Image<I>& ima, const V& val)
     {
-      trace::entering("level::fill_with_value");
+      trace::entering("data::fill_with_value");
 
       internal::fill_with_value_tests(ima, val);
       internal::fill_with_value_dispatch(ima, val);
 
-      trace::exiting("level::fill_with_value");
+      trace::exiting("data::fill_with_value");
     }
 
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

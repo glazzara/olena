@@ -35,7 +35,7 @@
 #include <mln/value/int_u8.hh>
 #include <mln/value/rgb8.hh>
 
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/median.hh>
 
 #include <mln/display/show.hh>
@@ -75,7 +75,7 @@ int main()
 
     level::median(adaptor, rect, ima);
 
-    level::paste(ima, adaptor);
+    data::paste(ima, adaptor);
 
     display::save (adaptor);
     // FIXME: Don't use display::show in batch tests.

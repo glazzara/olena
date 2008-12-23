@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_LEVEL_ALL_HH
 # define MLN_LEVEL_ALL_HH
 
-/*! \file mln/level/all.hh
- *
- * \brief File that includes all level-related routines.
- *
- */
+/// \file mln/level/all.hh
+///
+/// File that includes all level-related routines.
 
 
 namespace mln
@@ -49,25 +48,21 @@ namespace mln
       namespace generic {}
 
     }
-
   }
-
 }
+
 
 # include <mln/level/abs.hh>
 # include <mln/level/apply.hh>
 # include <mln/level/approx/all.hh>
-# include <mln/level/assign.hh>
 # include <mln/level/compare.hh>
 # include <mln/level/compute.hh>
 # include <mln/level/convert.hh>
 # include <mln/level/fast_median.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/median.hh>
-# include <mln/level/memcpy_.hh>
-# include <mln/level/memset_.hh>
 # include <mln/level/naive/all.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/level/replace.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/sort_psites.hh>
@@ -76,7 +71,6 @@ namespace mln
 # include <mln/level/transform.hh>
 # include <mln/level/update.hh>
 # include <mln/level/was.median.hh>
-
 
 
 #endif // ! MLN_LEVEL_ALL_HH

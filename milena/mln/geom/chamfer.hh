@@ -89,8 +89,8 @@ namespace mln
 	void init()                            { initialize(output, exact(input));
 						 fill_output();
 						 // Was :
-						 // level::fill((output | (input | pw::cst(true)).domain()).rw(), 0);
-						 // level::fill((output | (input | pw::cst(false)).domain()).rw(), max);
+						 // data::fill((output | (input | pw::cst(true)).domain()).rw(), 0);
+						 // data::fill((output | (input | pw::cst(false)).domain()).rw(), max);
 	}
 	inline
 	bool handles(const P& p) const         { return input(p) == false; }

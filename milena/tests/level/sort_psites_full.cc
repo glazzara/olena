@@ -50,7 +50,7 @@
 #include <mln/debug/iota.hh>
 
 #include <mln/level/saturate.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/sort_psites.hh>
 
 

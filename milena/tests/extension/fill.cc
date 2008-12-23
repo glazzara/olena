@@ -34,7 +34,7 @@
 #include <mln/core/image/extended.hh>
 #include <mln/extension/fill.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 #include <mln/debug/println.hh>
 
 
@@ -46,7 +46,7 @@ int main()
 
   image2d<unsigned> ima(3, 3, border);
 
-  level::fill(ima, 0);
+  data::fill(ima, 0);
   extension::fill(ima, 9);
 
   box2d b = ima.bbox();

@@ -41,7 +41,7 @@
 # include <mln/core/concept/neighborhood.hh>
 
 # include <mln/geom/bbox.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/histo/data.hh>
 
 # include <mln/core/image/image1d.hh>
@@ -94,7 +94,7 @@ namespace mln
       const S& pset = exact(pset_);
       mln_image_from_grid(mln_site(S)::grid, bool) ima;
       ima.init_(geom::bbox(pset).to_larger(border));
-      level::fill(ima, false);
+      data::fill(ima, false);
       mln_piter(S) p(pset);
       for_all(p)
 	ima(p) = true;

@@ -37,7 +37,7 @@
 
 #include <mln/algebra/vec.hh>
 
-#include <mln/level/fill.hh>
+#include <mln/data/fill.hh>
 
 #include <mln/debug/println.hh>
 

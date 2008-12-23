@@ -35,7 +35,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/init.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 namespace mln
@@ -64,7 +64,7 @@ namespace mln
 
     mln_concrete(I) tmp;
     initialize(tmp, model);
-    level::fill(tmp, model);
+    data::fill(tmp, model);
 
     trace::exiting("core::clone");
     return tmp;

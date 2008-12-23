@@ -25,74 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_ASSIGN_SPE_HH
-# define MLN_LEVEL_ASSIGN_SPE_HH
-
-/*! \file mln/level/assign.spe.hh
+/*! \file tests/data/fill.cc
  *
- * \brief Specializations for mln::level::assign.
- *
+ * \brief Tests on mln::data::fill
  */
 
-# ifndef MLN_LEVEL_ASSIGN_HH
-#  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_ASSIGN_HH
+#include <mln/core/image/image2d.hh>
+#include <mln/data/fill.hh>
 
-# include <mln/core/concept/image.hh>
-
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace level
+
+  unsigned u = 300;
+  unsigned char uc = u;
+  mln_assertion(uc == 44);
+
   {
+    const unsigned size = 3;
+    image2d<unsigned> ima(size, size);
+    data::fill(ima, u);
+    box_fwd_piter_<point2d> p(ima.domain());
+    for_all (p)
+      mln_assertion (ima(p) == u);
+  }
 
-    namespace impl
-    {
-
-      namespace generic
-      {
-	template <typename L, typename R>
-	void assign_(L& target, const R& data);
-      }
-
-
-      // Disjunction.
-
-
-      template <typename L, typename R>
-      inline
-      void assign_(trait::image::speed::any, L& target,
-		   trait::image::speed::any, const R& data)
-      {
-	generic::assign_(target, data);
-      }
-
-      template <typename L, typename R>
-      inline
-      void assign_(trait::image::speed::fastest, L& target,
-		   trait::image::speed::fastest, const R& data)
-      {
-	trace::entering("level::impl::assign_");
-
-	mln_pixter(L) lhs(target);
-	mln_pixter(const R) rhs(data);
-	for_all_2(lhs, rhs)
-	  lhs.val() = rhs.val();
-
-	trace::exiting("level::impl::assign_");
-      }
-
-
-    } // end of namespace mln::level::impl
-
-  } // end of namespace mln::level
-
-} // end of namespace mln
-
-# endif // ! MLN_INCLUDE_ONLY
-
-#endif // ! MLN_LEVEL_ASSIGN_SPE_HH
+}

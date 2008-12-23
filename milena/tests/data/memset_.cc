@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +26,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/memset_.cc
- *
- * \brief Tests on mln::level::memset_.
- */
+/// \file tests/data/memset_.cc
+///
+/// Tests on mln::data::memset_.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/geom/ncols.hh>
-#include <mln/level/fill.hh>
-#include <mln/level/memset_.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/memset_.hh>
 #include <mln/opt/at.hh>
 
 
@@ -42,13 +42,13 @@ int main()
   using namespace mln;
 
   image2d<int> ima(3, 3);
-  level::fill(ima, 0);
+  data::fill(ima, 0);
   int X = 9;
-  level::memset_(ima, point2d(0,0),
-		 X,
-		 geom::ncols(ima) + 2 * ima.border() + 1);
-  //                                                   ^
-  //                                                   |
-  mln_assertion(opt::at(ima, 1,0) == X); // <----------------+
+  data::memset_(ima, point2d(0,0),
+		X,
+		geom::ncols(ima) + 2 * ima.border() + 1);
+  //                                                  ^
+  //                                                  |
+  mln_assertion(opt::at(ima, 1,0) == X); // <---------+
   mln_assertion(opt::at(ima, 1,1) != X);
 }

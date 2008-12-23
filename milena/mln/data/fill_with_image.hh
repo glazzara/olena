@@ -28,7 +28,7 @@
 #ifndef MLN_LEVEL_FILL_WITH_IMAGE_HH
 # define MLN_LEVEL_FILL_WITH_IMAGE_HH
 
-/*! \file mln/level/fill_with_image.hh
+/*! \file mln/data/fill_with_image.hh
  *
  * \brief Fill an image with the values from another image.
  *
@@ -39,13 +39,13 @@
 
 
 // Specializations are in:
-# include <mln/level/fill_with_image.spe.hh>
+# include <mln/data/fill_with_image.spe.hh>
 
 
 namespace mln
 {
 
-  namespace level
+  namespace data
   {
 
     /// Fill the image \p ima with the values of the image \p data.
@@ -87,7 +87,7 @@ namespace mln
 	mln_precondition(exact(ima).domain() <= exact(data).domain());
       }
 
-    } // end of namespace mln::level::internal
+    } // end of namespace mln::data::internal
 
 
     namespace impl
@@ -99,22 +99,22 @@ namespace mln
 	template <typename I, typename J>
 	void fill_with_image(Image<I>& ima_, const Image<J>& data_)
 	{
-	  trace::entering("level::impl::generic::fill_with_image");
+	  trace::entering("data::impl::generic::fill_with_image");
 	  I& ima = exact(ima_);
 	  const J& data = exact(data_);
 
-	  level::internal::fill_with_image_tests(ima, data);
+	  data::internal::fill_with_image_tests(ima, data);
 
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
 	    ima(p) = data(p);
 
-	  trace::exiting("level::impl::generic::fill_with_image");
+	  trace::exiting("data::impl::generic::fill_with_image");
 	}
 
-      } // end if namespace mln::level::impl::generic
+      } // end if namespace mln::data::impl::generic
 
-    } // end of namespace mln::level::impl
+    } // end of namespace mln::data::impl
 
 
     // Facade.
@@ -123,16 +123,16 @@ namespace mln
     inline
     void fill_with_image(Image<I>& ima, const Image<J>& data)
     {
-      trace::entering("level::fill_with_image");
+      trace::entering("data::fill_with_image");
 
       internal::fill_with_image_(ima, data);
 
-      trace::exiting("level::fill_with_image");
+      trace::exiting("data::fill_with_image");
     }
 
 # endif // ! MLN_INCLUDE_ONLY
 
-  } // end of namespace mln::level
+  } // end of namespace mln::data
 
 } // end of namespace mln
 

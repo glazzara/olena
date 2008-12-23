@@ -41,8 +41,8 @@
 #include <mln/core/image/image_if.hh>
 #include <mln/core/image/extension_val.hh>*/
 
-#include <mln/level/fill.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/fill.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/compare.hh>
 
 #include <mln/opt/at.hh>
@@ -78,7 +78,7 @@ int main()
     const II csub_ima(ima, make::box1d(4, 10));
     point1d p(5);
 
-    level::fill(ima, 51);
+    data::fill(ima, 51);
     mln_assertion(csub_ima(p) == opt::at(csub_ima, 5));
     opt::at(sub_ima, 5) = 12;
     mln_assertion(sub_ima(p) == 12);
@@ -92,7 +92,7 @@ int main()
     const II ccast(in);
     point1d p(5);
 
-    level::fill(in, 51);
+    data::fill(in, 51);
     mln_assertion(ccast(p) == opt::at(ccast, 5));
     // FIXME
     //opt::at(cast, 5) = 12;
@@ -120,7 +120,7 @@ int main()
     const II csub_ima(ima, make::box2d(4, 4, 10, 10));
     point2d p(5, 5);
 
-    level::fill(ima, 51);
+    data::fill(ima, 51);
     mln_assertion(csub_ima(p) == opt::at(csub_ima, 5, 5));
     opt::at(sub_ima, 5, 5) = 12;
     mln_assertion(sub_ima(p) == 12);
@@ -134,7 +134,7 @@ int main()
     const II ccast(in);
     point2d p(5,5);
 
-    level::fill(in, 51);
+    data::fill(in, 51);
     mln_assertion(ccast(p) == opt::at(ccast, 5, 5));
     // FIXME
     //opt::at(cast, 5) = 12;

@@ -38,7 +38,7 @@
 #include <mln/accu/count.hh>
 #include <mln/accu/compute.hh>
 #include <mln/labeling/level.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/pw/all.hh>
 #include <mln/core/image/image_if.hh>
 

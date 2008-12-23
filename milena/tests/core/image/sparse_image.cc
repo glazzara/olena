@@ -38,7 +38,7 @@
 
 #include <mln/labeling/blobs.hh>
 #include <mln/level/transform.hh>
-#include <mln/level/paste.hh>
+#include <mln/data/paste.hh>
 #include <mln/level/compare.hh>
 #include <mln/io/pgm/save.hh>
 
@@ -74,8 +74,8 @@ int main()
   std::cout << n << ", compression ratio: " << sparse.compression()
 	    << std::endl;
 
-  level::fill(cmp, literal::zero);
-  level::paste(sparse, cmp);
+  data::fill(cmp, literal::zero);
+  data::paste(sparse, cmp);
 
   mln_assertion(cmp == level::transform(labels, fold_t()));
 }

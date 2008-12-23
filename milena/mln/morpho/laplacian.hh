@@ -71,7 +71,7 @@ namespace mln
       mln_concrete(I)
 	d_I = morpho::minus(dilation(input, win), input),
 	e_I = morpho::minus(input, erosion(input, win));
-      level::fill(output, d_I - e_I);
+      data::fill(output, d_I - e_I);
 
       trace::exiting("morpho::laplacian");
     }

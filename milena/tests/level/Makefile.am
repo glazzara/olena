@@ -8,7 +8,6 @@ check_PROGRAMS =				\
   abs						\
   all_headers					\
   apply						\
-  assign					\
   compare					\
   compute					\
   convert					\
@@ -20,8 +19,6 @@ check_PROGRAMS =				\
   median_dir					\
   median_fast					\
   median_hline2d				\
-  memcpy_					\
-  memset_					\
   paste						\
   saturate					\
   sort_psites					\
@@ -34,7 +31,6 @@ check_PROGRAMS =				\
 abs_SOURCES = abs.cc
 all_headers_SOURCES = all_headers.cc
 apply_SOURCES = apply.cc
-assign_SOURCES = assign.cc
 compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
 convert_SOURCES = convert.cc
@@ -46,8 +42,6 @@ median__SOURCES = median_.cc
 median_dir_SOURCES = median_dir.cc
 median_fast_SOURCES = median_fast.cc
 median_hline2d_SOURCES = median_hline2d.cc
-memcpy__SOURCES = memcpy_.cc
-memset__SOURCES = memset_.cc
 paste_SOURCES = paste.cc
 saturate_SOURCES = saturate.cc
 sort_psites_SOURCES = sort_psites.cc
