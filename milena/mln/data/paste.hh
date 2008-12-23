@@ -25,8 +25,8 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_PASTE_HH
-# define MLN_LEVEL_PASTE_HH
+#ifndef MLN_DATA_PASTE_HH
+# define MLN_DATA_PASTE_HH
 
 /*! \file mln/data/paste.hh
  *
@@ -148,4 +148,4 @@ namespace mln
 
 
 
-#endif // ! MLN_LEVEL_PASTE_HH
+#endif // ! MLN_DATA_PASTE_HH

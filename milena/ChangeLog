@@ -1,5 +1,19 @@
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix missing updates in mln data guards.
+
+	* mln/data/paste.spe.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/fill.hh,
+	* mln/data/fill_with_image.spe.hh,
+	* mln/data/paste.hh,
+	* mln/data/fill_with_value.hh: Fix guards.
+	* mln/morpho/tree/compute_attribute_image.hh: Disambiguate.
+	* mln/morpho/tree/data.hh (f): New overload.
+
+2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix missing update.
 
 	* headers.mk: Update.

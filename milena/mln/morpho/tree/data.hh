@@ -144,6 +144,11 @@ namespace mln
 	  return f_;
 	}
 
+	mln_rvalue(I) f(const mln_psite(I)& p) const
+	{
+	  return f_(p);
+	}
+
       protected:
 
 	const I& f_;

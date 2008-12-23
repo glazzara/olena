@@ -25,16 +25,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LEVEL_FILL_WITH_VALUE_SPE_HH
-# define MLN_LEVEL_FILL_WITH_VALUE_SPE_HH
+#ifndef MLN_DATA_FILL_WITH_VALUE_SPE_HH
+# define MLN_DATA_FILL_WITH_VALUE_SPE_HH
 
 /// \file mln/data/fill_with_value.spe.hh
 /// Specializations for mln::data::fill_with_value.
 ///
 
-# ifndef MLN_LEVEL_FILL_WITH_VALUE_HH
+# ifndef MLN_DATA_FILL_WITH_VALUE_HH
 #  error "Forbidden inclusion of *.spe.hh"
-# endif // ! MLN_LEVEL_FILL_WITH_VALUE_HH
+# endif // ! MLN_DATA_FILL_WITH_VALUE_HH
 
 # include <mln/data/memset_.hh>
 
@@ -217,4 +217,4 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_LEVEL_FILL_WITH_VALUE_SPE_HH
+#endif // ! MLN_DATA_FILL_WITH_VALUE_SPE_HH

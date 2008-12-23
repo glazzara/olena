@@ -93,7 +93,7 @@ namespace mln
 	  // few accumulators, e.g., for accu::rank which has the 'k'
 	  // attribute.
 	  A a = exact(a_);
-	  data::fill(acc, a);
+	  mln::data::fill(acc, a);
 	}
 	{
 	  // Initialize every attribute with the corresponding pixel.
@@ -122,7 +122,7 @@ namespace mln
 	typedef typename T::function I;
 	mln_ch_value(I, mln_result(A)) output;
 	initialize(output, acc);
-	data::fill(output, acc);
+	mln::data::fill(output, acc);
 
 	trace::exiting("morpho::tree::compute_attribute_image");
 	return output;
