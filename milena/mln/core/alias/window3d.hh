@@ -30,7 +30,8 @@
 # define MLN_CORE_ALIAS_WINDOW3D_HH
 
 /// \file mln/core/alias/window3d.hh
-/// \brief Definition of the mln::window3d alias and of a construction
+///
+/// Definition of the mln::window3d alias and of a construction
 /// routine.
 
 # include <cmath>
@@ -42,7 +43,7 @@
 namespace mln
 {
 
-  /// \brief Type alias for a window with arbitrary shape, defined on
+  /// Type alias for a window with arbitrary shape, defined on
   /// the 3D square grid with integer coordinates.
   typedef window<mln::dpoint3d> window3d;
 
@@ -50,8 +51,13 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned M>
-    void from_to(bool const (&values)[M], window3d& win);
+    namespace over_load
+    {
+
+      template <unsigned M>
+      void from_to_(bool const (&values)[M], window3d& win);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -62,20 +68,25 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned M>
-    void
-    from_to(bool const (&values)[M], window3d& win)
+    namespace over_load
     {
-      const int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
-      mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
-      win.clear();
-      unsigned i = 0;
-      for (int sli = - h; sli <= h; ++sli)
-	for (int row = - h; row <= h; ++row)
-	  for (int col = - h; col <= h; ++col)
-	    if (values[i++])
-	      win.insert(sli, row, col);
-    }
+
+      template <unsigned M>
+      void
+      from_to_(bool const (&values)[M], window3d& win)
+      {
+	const int h = unsigned(std::pow(float(M), float(1. / 3.))) / 2;
+	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == M);
+	win.clear();
+	unsigned i = 0;
+	for (int sli = - h; sli <= h; ++sli)
+	  for (int row = - h; row <= h; ++row)
+	    for (int col = - h; col <= h; ++col)
+	      if (values[i++])
+		win.insert(sli, row, col);
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

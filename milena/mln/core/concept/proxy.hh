@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -43,7 +43,6 @@
 
 # include <mln/convert/from_to.hxx>
 # include <mln/core/concept/proxy.hxx>
-
 
 
 # define mln_decl_unop_proxy(Name, Symb)	\
@@ -125,8 +124,17 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declarations.
   template <typename E> struct Proxy;
+
+  namespace convert
+  {
+
+    template <typename F, typename T>
+    void from_to(const F& from, T& to);
+
+  }
+
 
 
   namespace trait
@@ -201,14 +209,19 @@ namespace mln
   };
 
 
-  // convert::from_to
+  // convert::from_to_
 
   namespace convert
   {
 
-    template <typename P, typename T>
-    void
-    from_to(const Proxy<P>& from, T& to);
+    namespace over_load
+    {
+
+      template <typename P, typename T>
+      void
+      from_to_(const Proxy<P>& from, T& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -288,17 +301,22 @@ namespace mln
 
 
 
-  // convert::from_to
+  // convert::from_to_
 
   namespace convert
   {
 
-    template <typename P, typename T>
-    void
-    from_to(const Proxy<P>& from, T& to)
+    namespace over_load
     {
-      from_to(exact(from).unproxy_(), to);
-    }
+
+      template <typename P, typename T>
+      void
+      from_to_(const Proxy<P>& from, T& to)
+      {
+	convert::from_to(exact(from).unproxy_(), to);
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

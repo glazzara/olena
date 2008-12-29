@@ -58,6 +58,29 @@ namespace mln
   template <typename It, typename W> struct with_w_;
 
 
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <typename I, typename D, typename W>
+      void
+      from_to_(const Image<I>& from, w_window<D,W>& to);
+
+      template <typename D, typename W, typename I>
+      void
+      from_to_(const w_window<D,W>& from, Image<I>& to);
+
+      template <typename V, unsigned S, typename D, typename W>
+      void
+      from_to_(const V (&weight)[S], w_window<D,W>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
   namespace trait
   {
 
@@ -70,12 +93,12 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /*! \brief Generic w_window class.
-   *
-   * This type of w_window is just like a set of delta-points.  The
-   * parameter \c D is the type of delta-points; the parameter \c W is
-   * the type of weights.
-   */
+  /// Generic w_window class.
+  ///
+  /// This type of w_window is just like a set of delta-points.  The
+  /// parameter \c D is the type of delta-points; the parameter \c W is
+  /// the type of weights.
+  ///
   template <typename D, typename W>
   struct w_window : public internal::weighted_window_base< mln::window<D>,
 							   w_window<D,W> >
@@ -132,35 +155,14 @@ namespace mln
   };
 
 
-  namespace convert
-  {
-
-    template <typename I, typename D, typename W>
-    inline
-    void
-    from_to(const Image<I>& from, w_window<D,W>& to);
-
-    template <typename D, typename W, typename I>
-    void
-    from_to(const w_window<D,W>& from, Image<I>& to);
-
-    template <typename V, unsigned S, typename D, typename W>
-    void
-    from_to(const V (&weight)[S], w_window<D,W>& to);
-
-  } // end of namespace mln::convert
-
-
-  /* \brief Print a weighted window \p w_win into an output stream \p ostr.
-   * \relates mln::w_window
-   */
+  /// Print a weighted window \p w_win into an output stream \p ostr.
+  /// \relates mln::w_window
   template <typename D, typename W>
   std::ostream& operator<<(std::ostream& ostr, const w_window<D,W>& w_win);
 
 
-  /* \brief Equality test between two weighted windows \p lhs and \p rhs.
-   * \relates mln::w_window
-   */
+  /// Equality test between two weighted windows \p lhs and \p rhs.
+  /// \relates mln::w_window
   template <typename D, typename Wl, typename Wr>
   bool operator==(const w_window<D,Wl>& lhs, const w_window<D,Wr>& rhs);
 
@@ -313,50 +315,54 @@ namespace mln
   }
 
 
-  // convert::from_to
+  // convert::from_to_
 
   namespace convert
   {
 
-    template <typename I, typename D, typename W>
-    void
-    from_to(const Image<I>& from_, w_window<D,W>& to)
+    namespace over_load
     {
-      mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
-      mlc_converts_to(mln_value(I), W)::check();
-      const I& ima = exact(from_);
-      to.clear();
-      mln_value(I) zero = literal::zero;
-      mln_piter(I) p(ima.domain());
-      for_all(p)
-	if (ima(p) != zero)
-	  to.insert(ima(p), convert::to<D>(p));
-    }
 
-    template <typename D, typename W, typename I>
-    void
-    from_to(const w_window<D,W>& w_win, Image<I>& ima_)
-    {
-      typedef mln_site(I) P;
-      mlc_converts_to(D, mln_delta(P))::check();
-      mlc_converts_to(W, mln_value(I))::check();
-
-      I& ima = exact(ima_);
-      mln_precondition(! ima.has_data());
-      // mln_precondition(w_win.is_valid());
-
-      ima.init_(geom::bbox(w_win));
+      template <typename I, typename D, typename W>
+      void
+      from_to_(const Image<I>& from_, w_window<D,W>& to)
       {
-	// data::fill(ima, literal::zero) is:
+	mlc_converts_to(mln_deduce(I, psite, delta), D)::check();
+	mlc_converts_to(mln_value(I), W)::check();
+	const I& ima = exact(from_);
+	to.clear();
 	mln_value(I) zero = literal::zero;
 	mln_piter(I) p(ima.domain());
 	for_all(p)
-	  ima(p) = zero;
+	  if (ima(p) != zero)
+	    to.insert(ima(p), convert::to<D>(p));
       }
-      unsigned n = w_win.size();
-      for (unsigned i = 0; i < n; ++i)
-	ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
-    }
+
+      template <typename D, typename W, typename I>
+      void
+      from_to_(const w_window<D,W>& w_win, Image<I>& ima_)
+      {
+	typedef mln_site(I) P;
+	mlc_converts_to(D, mln_delta(P))::check();
+	mlc_converts_to(W, mln_value(I))::check();
+
+	I& ima = exact(ima_);
+	mln_precondition(! ima.has_data());
+	// mln_precondition(w_win.is_valid());
+
+	ima.init_(geom::bbox(w_win));
+	{
+	  // data::fill(ima, literal::zero) is:
+	  mln_value(I) zero = literal::zero;
+	  mln_piter(I) p(ima.domain());
+	  for_all(p)
+	    ima(p) = zero;
+	}
+
+	unsigned n = w_win.size();
+	for (unsigned i = 0; i < n; ++i)
+	  ima(convert::to<P>(w_win.dp(i))) = w_win.w(i);
+      }
 
     // FIXME: Sample code (below) to generalize the code above:
 
@@ -381,28 +387,31 @@ namespace mln
 //       return ima;
 //     }
 
-    template <typename V, unsigned S, typename D, typename W>
-    void
-    from_to(const V (&weight)[S], w_window<D,W>& to)
-    {
-      mlc_bool(S != 0)::check();
-      mlc_converts_to(V, W)::check();
-      enum { d = D::dim,
-	     s = mlc_root(d,S)::value / 2 };
-      metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
-      to.clear();
-      typedef mln_site(D) P;
-      box<P> b(all_to(-s), all_to(+s));
-      mln_fwd_piter(box<P>) p(b);
-      unsigned i = 0;
-      V zero = literal::zero;
-      for_all(p)
+      template <typename V, unsigned S, typename D, typename W>
+      void
+      from_to_(const V (&weight)[S], w_window<D,W>& to)
       {
-	if (weight[i] != zero)
-	  to.insert(weight[i], convert::to<D>(p));
-	++i;
+	mlc_bool(S != 0)::check();
+	mlc_converts_to(V, W)::check();
+	enum { d = D::dim,
+	  s = mlc_root(d,S)::value / 2 };
+	metal::bool_<(mlc_pow_int(2 * s + 1, d) == S)>::check();
+	to.clear();
+	typedef mln_site(D) P;
+	box<P> b(all_to(-s), all_to(+s));
+	mln_fwd_piter(box<P>) p(b);
+	unsigned i = 0;
+	V zero = literal::zero;
+	for_all(p)
+	{
+	  if (weight[i] != zero)
+	    to.insert(weight[i], convert::to<D>(p));
+	  ++i;
+	}
+
       }
-    }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

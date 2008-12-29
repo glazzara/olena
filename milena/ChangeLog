@@ -1,3 +1,51 @@
+2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a dispatch in from_to.
+
+	* headers.mk: add new headers to the distribution.
+
+	* mln/convert/from_to.hh: overhaul in order to create the dispatch.
+	from_to() has now only one facade.
+
+	* mln/convert/from_to.hxx: add missing predeclarations and a new
+	namespace.
+
+	* mln/convert/impl/all.hh,
+	* mln/convert/impl/from_float_to_value.hh,
+	* mln/convert/impl/from_int_to_value.hh: add new dispatch while
+	converting from an int or a float.
+
+	* mln/core/alias/neighb2d.hh,
+	* mln/core/alias/window1d.hh,
+	* mln/core/alias/window2d.hh,
+	* mln/core/alias/window3d.hh,
+	* mln/core/concept/accumulator.hh,
+	* mln/core/concept/gdpoint.hh,
+	* mln/core/concept/gpoint.hh,
+	* mln/core/concept/image.hh,
+	* mln/core/concept/proxy.hh,
+	* mln/core/concept/site_set.hh,
+	* mln/core/concept/window.hh,
+	* mln/core/neighb.hh,
+	* mln/core/w_window.hh,
+	* mln/fun/i2v/array.hh,
+	* mln/fun/l2l/relabel.hh,
+	* mln/util/array.hh,
+	* mln/value/rgb.hh: put convert::from_to() declarations in
+	convert::over_load::.
+
+	* mln/core/internal/site_set_base.hh
+	* mln/math/round.hh
+	* mln/value/concept/integer.hh
+	* mln/value/concept/scalar.hh
+	* mln/value/int_u8.hh: update doc.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_convert_impl_from_float_to_value.cc,
+	* tests/unit_test/mln_convert_impl_from_int_to_value.cc,
+	* tests/unit_test/mln_set_card.cc,
+	* tests/unit_test/mln_set_unique.cc: add new unit tests.
+
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix minor bugs for 4 extra tests to pass.

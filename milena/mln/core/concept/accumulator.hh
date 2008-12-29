@@ -48,9 +48,14 @@ namespace mln
   namespace convert
   {
 
-    template <typename A>
-    void
-    from_to(const Accumulator<A>& from, mln_result(A)& to);
+    namespace over_load
+    {
+
+      template <typename A>
+      void
+      from_to_(const Accumulator<A>& from, mln_result(A)& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -103,21 +108,26 @@ namespace mln
 # ifndef MLN_INCLUDE_ONLY
 
 
-  // convert::from_to
+  // convert::from_to_
 
   namespace convert
   {
 
-    template <typename A>
-    void
-    from_to(const Accumulator<A>& from_, mln_result(A)& to)
+    namespace over_load
     {
-      const A& from = exact(from_);
-      if (from.is_valid())
-	to = from.to_result();
-      else
-	to = mln_result(A)();
-    }
+
+      template <typename A>
+      void
+      from_to_(const Accumulator<A>& from_, mln_result(A)& to)
+      {
+	const A& from = exact(from_);
+	if (from.is_valid())
+	  to = from.to_result();
+	else
+	  to = mln_result(A)();
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

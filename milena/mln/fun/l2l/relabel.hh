@@ -63,17 +63,22 @@ namespace mln
   namespace convert
   {
 
-    template <typename L>
-    inline
-    void
-    from_to(const util::array<L>& from,
-	    fun::l2l::relabel<L>& to);
+    namespace over_load
+    {
 
-    template <typename L>
-    inline
-    void
-    from_to(const std::vector<L>& from,
-	    fun::l2l::relabel<L>& to);
+      template <typename L>
+      inline
+      void
+      from_to_(const util::array<L>& from,
+	       fun::l2l::relabel<L>& to);
+
+      template <typename L>
+      inline
+      void
+      from_to_(const std::vector<L>& from,
+	       fun::l2l::relabel<L>& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -123,21 +128,26 @@ namespace mln
   namespace convert
   {
 
-    template <typename L>
-    inline
-    void
-    from_to(const util::array<L>& from, fun::l2l::relabel<L>& to)
+    namespace over_load
     {
-      to = fun::l2l::relabel<L>(from);
-    }
 
-    template <typename L>
-    inline
-    void
-    from_to(const std::vector<L>& from, fun::l2l::relabel<L>& to)
-    {
-      to = fun::l2l::relabel<L>(from);
-    }
+      template <typename L>
+      inline
+      void
+      from_to_(const util::array<L>& from, fun::l2l::relabel<L>& to)
+      {
+        to = fun::l2l::relabel<L>(from);
+      }
+
+      template <typename L>
+      inline
+      void
+      from_to_(const std::vector<L>& from, fun::l2l::relabel<L>& to)
+      {
+        to = fun::l2l::relabel<L>(from);
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

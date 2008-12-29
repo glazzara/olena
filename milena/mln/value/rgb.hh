@@ -28,16 +28,15 @@
 #ifndef MLN_VALUE_RGB_HH
 # define MLN_VALUE_RGB_HH
 
-/*! \file mln/value/rgb.hh
- *
- * \brief Color class for red-green-blue where every component is
- * n-bit encoded.
- *
- * \todo Split decl and def for from_to.
- *
- * \todo Introduce the concept of Color, then generalize from_to to
- * colors.
- */
+/// \file mln/value/rgb.hh
+///
+/// Color class for red-green-blue where every component is
+/// n-bit encoded.
+///
+/// \todo Split decl and def for from_to_.
+///
+/// \todo Introduce the concept of Color, then generalize from_to_ to
+/// colors.
 
 # include <mln/value/ops.hh>
 
@@ -51,7 +50,7 @@ namespace mln
 
   namespace literal
   {
-    /// \{ Fwd decls.
+    /// \{ Forward declarations.
     struct black_t;
     struct white_t;
 
@@ -77,10 +76,29 @@ namespace mln
   }
 
 
-  // Fwd decl.
+  // Forward declaration.
   namespace value {
     template <unsigned n> struct rgb;
   }
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // algebra::vec -> rgb.
+      template <typename T, unsigned m>
+      void from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to_);
+
+      // bool -> rgb.
+      template <unsigned m>
+      void from_to_(bool from, value::rgb<m>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
   namespace trait
@@ -167,7 +185,7 @@ namespace mln
   namespace value
   {
 
-    /// \brief Color class for red-green-blue where every component is
+    /// Color class for red-green-blue where every component is
     /// n-bit encoded.
     template <unsigned n>
     struct rgb
@@ -245,13 +263,12 @@ namespace mln
 
 
 
-    /*! \brief Print an rgb \p c into the output stream \p ostr.
-     *
-     * \param[in,out] ostr An output stream.
-     * \param[in] c An rgb.
-     *
-     * \return The modified output stream \p ostr.
-     */
+    /// Print an rgb \p c into the output stream \p ostr.
+    ///
+    /// \param[in,out] ostr An output stream.
+    /// \param[in] c An rgb.
+    ///
+    /// \return The modified output stream \p ostr.
     template <unsigned n>
     std::ostream& operator<<(std::ostream& ostr, const rgb<n>& c);
 
@@ -660,39 +677,44 @@ namespace mln
 
   namespace convert
   {
-    
-    // algebra::vec -> rgb.
-    template <typename T, unsigned m>
-    inline
-    void
-    from_to(const algebra::vec<3,T>& from, value::rgb<m>& to_)
-    {
-      value::rgb<m>& to = exact(to_);
-      algebra::vec<3, unsigned> tmp;
-      for (unsigned i = 0; i < 3; ++i)
-	tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to instead of cast.
 
-      to = value::rgb<m>(tmp);
-    }
-
-    // bool -> rgb.
-    template <unsigned m>
-    void
-    from_to(bool from, value::rgb<m>& to)
+    namespace over_load
     {
-      static literal::white_t* white_ = 0;
-      static literal::black_t* black_ = 0;
-      // We do not use literal::white (the object) so that we
-      // do not introduce any coupling with the file where
-      // literals are defined.
-      if (from)
-	to = *white_;
-      else
-	to = *black_;
-    }
-  
+
+      // algebra::vec -> rgb.
+      template <typename T, unsigned m>
+      inline
+      void
+      from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to_)
+      {
+	value::rgb<m>& to = exact(to_);
+	algebra::vec<3, unsigned> tmp;
+	for (unsigned i = 0; i < 3; ++i)
+	  tmp[i] = static_cast<unsigned>(from[i]); // FIXME: Use from_to_ instead of cast.
+
+	to = value::rgb<m>(tmp);
+      }
+
+      // bool -> rgb.
+      template <unsigned m>
+      void
+      from_to_(bool from, value::rgb<m>& to)
+      {
+	static literal::white_t* white_ = 0;
+	static literal::black_t* black_ = 0;
+	// We do not use literal::white (the object) so that we
+	// do not introduce any coupling with the file where
+	// literals are defined.
+	if (from)
+	  to = *white_;
+	else
+	  to = *black_;
+      }
+
+    } // end of namespace mln::convert::over_load
+
   } // end of namespace mln::convert
-  
+
 } // end of namespace mln
 
 

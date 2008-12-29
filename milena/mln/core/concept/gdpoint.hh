@@ -41,7 +41,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename E> struct Gdpoint;
 
 
@@ -91,8 +91,7 @@ namespace mln
   };
 
 
-  /*! \brief FIXME: Doc!
-   */
+  /// FIXME: Doc!
   template <typename E>
   struct Gdpoint : public Object<E>
   {
@@ -139,19 +138,24 @@ namespace mln
   namespace convert
   {
 
-    template <typename D>
-    void
-    from_to(const Gdpoint<D>& from, mln_site(D)& to);
+    namespace over_load
+    {
+
+      template <typename D>
+      void
+      from_to_(const Gdpoint<D>& from, mln_site(D)& to);
 
 //     template <typename D, unsigned n, typename T>
 //     void
-//     from_to(const Gdpoint<D>& from, algebra::vec<n,T>& to);
+//     from_to_(const Gdpoint<D>& from, algebra::vec<n,T>& to);
 
 //     template <unsigned n, typename T, typename D>
 //     void
-//     from_to(const algebra::vec<n,T>& from, Gdpoint<D>& to);
+//     from_to_(const algebra::vec<n,T>& from, Gdpoint<D>& to);
 
-  } // end of namespace::convert
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -215,18 +219,23 @@ namespace mln
   namespace convert
   {
 
-    template <typename D>
-    inline
-    void
-    from_to(const Gdpoint<D>& dp_, mln_site(D)& p)
+    namespace over_load
     {
-      enum { n = D::dim };
-      const D& dp = exact(dp_);
-      for (unsigned i = 0; i < n; ++i)
-	p[i] = dp[i];
-    }
 
-  } // end of namespace::convert
+      template <typename D>
+      inline
+      void
+      from_to_(const Gdpoint<D>& dp_, mln_site(D)& p)
+      {
+	enum { n = D::dim };
+	const D& dp = exact(dp_);
+	for (unsigned i = 0; i < n; ++i)
+	  p[i] = dp[i];
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

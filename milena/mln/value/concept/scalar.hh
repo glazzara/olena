@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_CONCEPT_SCALAR_HH
 # define MLN_VALUE_CONCEPT_SCALAR_HH
 
-/*! \file mln/value/concept/scalar.hh
- *
- * \brief Define a generic class for scalar values.
- */
+/// \file mln/value/concept/scalar.hh
+///
+/// Define a generic class for scalar values.
 
 # include <mln/core/concept/value.hh>
 # include <mln/literal/one.hh>

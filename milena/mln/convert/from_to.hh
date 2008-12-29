@@ -42,11 +42,11 @@
 # include <mln/value/concept/all.hh>
 
 # include <mln/convert/impl/all.hh>
+# include <mln/convert/from_to.hxx>
 
 # include <mln/algebra/vec.hh>
 # include <mln/metal/is.hh>
 # include <mln/metal/abort.hh>
-
 
 
 namespace mln
@@ -55,89 +55,151 @@ namespace mln
   namespace convert
   {
 
-
-    /// Guard.
     template <typename F, typename T>
     void
-    from_to(const Object<F>& from, Object<T>& to);
-
-    template <typename T>
-    void
-    from_to(const T& from, T& to);
-
-    template <typename T>
-    void
-    from_to(const float& from, Object<T>& to);
-
-    template <typename T>
-    void
-    from_to(const int& from, Object<T>& to);
-
+    from_to(const F& from, T& to);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
+    namespace internal
+    {
 
-    // Guard.
+
+      // F -> T
+      // if F convertible to T.
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(const metal::true_&, const Object<F>& from, Object<T>& to)
+      {
+	exact(to) = exact(from);
+      }
+
+
+      // Image -> Site_Set.
+      template <typename I, typename S>
+      inline
+      void
+      from_to_dispatch(const Image<I>& from, Site_Set<S>& to)
+      {
+	mlc_is(mln_trait_site_set_contents(S),
+	    mln::trait::site_set::contents::dynamic)::check();
+	mln_precondition(exact(from).has_data());
+	mln::convert::impl::from_image_to_site_set(from, to);
+      }
+
+
+      // Value -> Value
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(const Value<F>& from, Value<T>& to)
+      {
+	mln::convert::impl::from_value_to_value(from, to);
+      }
+
+
+      // F is NOT convertible to T.
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(const metal::false_&, const Object<F>& from, Object<T>& to)
+      {
+	over_load::from_to_(exact(from), exact(to));
+      }
+
+
+      // Builtin -> Builtin
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(metal::false_,  const F& from,
+		       metal::false_,  T&	to)
+      {
+	over_load::from_to_(from, exact(to));
+      }
+
+
+      // Object -> Builtin
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(metal::true_,  const F& from,
+		       metal::false_, T&       to)
+      {
+	over_load::from_to_(exact(from), to);
+      }
+
+
+      // Builtin -> Object
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(metal::false_, const F& from,
+		       metal::true_,  T&       to)
+      {
+	over_load::from_to_(from, exact(to));
+      }
+
+      // Object -> Object
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(metal::true_,  const F& from,
+		       metal::true_,  T&       to)
+      {
+	internal::from_to_dispatch(typename mlc_converts_to(F, T)::eval(),
+				   exact(from), exact(to));
+      }
+
+
+    } // end of namespace mln::convert::internal
+
+
+    namespace over_load
+    {
+
+
+      // Object -> Object (F not convertible towards T)
+      // No conversion exists!
+      template <typename F, typename T>
+      void
+      from_to_(const Object<F>&, Object<T>&)
+      {
+	// This particular from-to is not defined!
+	//
+	// Either this conversion is meaningless or an overload is
+	// missing.
+	mlc_abort(F)::check();
+      }
+
+
+      // Object -> Object
+      template <typename T>
+      inline
+      void
+      from_to_(const T& from, T& to)
+      {
+	exact(to) = exact(from);
+      }
+
+
+    } // end of namespace mln::convert::over_load
+
+
+
+    // Facade
+
     template <typename F, typename T>
-    void
-    from_to(const Object<F>&, Object<T>&)
-    {
-      // This particular from-to is not defined!
-      //
-      // Either this conversion is meaningless or an overload is
-      // missing.
-      mlc_abort(F)::check();
-    }
-
-    // T -> T
-    template <typename T>
     inline
     void
-    from_to(const T& from, T& to)
+    from_to(const F& from, T& to)
     {
-      to = from;
-    }
-
-    // Image -> Site_Set.
-    template <typename I, typename S>
-    inline
-    void
-    from_to(const Image<I>& from, Site_Set<S>& to)
-    {
-      mlc_is(mln_trait_site_set_contents(S),
-	     mln::trait::site_set::contents::dynamic)::check();
-      mln_precondition(exact(from).has_data());
-      mln::convert::impl::from_image_to_site_set(from, to);
-    }
-
-    // Value -> Value
-    template <typename F, typename T>
-    inline
-    void
-    from_to(const Value<F>& from, Value<T>& to)
-    {
-      mln::convert::impl::from_value_to_value(from, to);
-    }
-
-    // float -> Object
-    template <typename T>
-    inline
-    void
-    from_to(const float& from, Object<T>& to)
-    {
-      mlc_is_a(T, mln::value::Floating)::check();
-      exact(to) = from;
-    }
-
-    // int -> Object
-    template <typename T>
-    inline
-    void
-    from_to(const int& from, Object<T>& to)
-    {
-      mlc_is_a(T, mln::value::Integer)::check();
-      exact(to) = from;
+      typedef mlc_is_a(F, Object) F_is_object;
+      typedef mlc_is_a(T, Object) T_is_object;
+      internal::from_to_dispatch(F_is_object(), from,
+				 T_is_object(), to);
     }
 
 

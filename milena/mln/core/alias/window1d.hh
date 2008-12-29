@@ -49,8 +49,13 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned M>
-    void from_to(const bool (&values)[M], window1d& win);
+    namespace over_load
+    {
+
+      template <unsigned M>
+      void from_to_(const bool (&values)[M], window1d& win);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -61,18 +66,23 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned M>
-    void
-    from_to(bool const (&values)[M], window1d& win)
+    namespace over_load
     {
-      mlc_bool(M % 2 == 1)::check();
-      win.clear();
-      const int h = int(M) / 2;
-      unsigned i = 0;
-      for (int ind = - h; ind <= h; ++ind)
-	if (values[i++])
-	  win.insert(ind);
-    }
+
+      template <unsigned M>
+      void
+      from_to_(bool const (&values)[M], window1d& win)
+      {
+	mlc_bool(M % 2 == 1)::check();
+	win.clear();
+	const int h = int(M) / 2;
+	unsigned i = 0;
+	for (int ind = - h; ind <= h; ++ind)
+	  if (values[i++])
+	    win.insert(ind);
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

@@ -104,11 +104,16 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned S>
-    void from_to(const bool (&values)[S], neighb2d& nbh);
+    namespace over_load
+    {
 
-    template <unsigned R, unsigned C>
-    void from_to(bool const (&values)[R][C], neighb2d& nbh);
+      template <unsigned S>
+      void from_to_(const bool (&values)[S], neighb2d& nbh);
+
+      template <unsigned R, unsigned C>
+      void from_to_(bool const (&values)[R][C], neighb2d& nbh);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -176,27 +181,32 @@ namespace mln
   namespace convert
   {
 
-    template <unsigned S>
-    void
-    from_to(const bool (&values)[S], neighb2d& nbh)
+    namespace over_load
     {
-      enum { h = mlc_sqrt_int(S) / 2 };
-      mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
-      window2d& win = nbh.hook_win_();
-      convert::from_to(values, win);
-      mln_postcondition(win.is_neighbable_());
-    }
 
-    template <unsigned R, unsigned C>
-    void
-    from_to(bool const (&values)[R][C], neighb2d& nbh)
-    {
-      mlc_bool(R % 2 == 1)::check();
-      mlc_bool(C % 2 == 1)::check();
-      window2d& win = nbh.hook_win_();
-      convert::from_to(values, win);
-      mln_postcondition(win.is_neighbable_());
-    }
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S], neighb2d& nbh)
+      {
+	enum { h = mlc_sqrt_int(S) / 2 };
+	mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
+	window2d& win = nbh.hook_win_();
+	convert::from_to(values, win);
+	mln_postcondition(win.is_neighbable_());
+      }
+
+      template <unsigned R, unsigned C>
+      void
+      from_to_(bool const (&values)[R][C], neighb2d& nbh)
+      {
+	mlc_bool(R % 2 == 1)::check();
+	mlc_bool(C % 2 == 1)::check();
+	window2d& win = nbh.hook_win_();
+	convert::from_to(values, win);
+	mln_postcondition(win.is_neighbable_());
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

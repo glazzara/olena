@@ -48,6 +48,26 @@ namespace mln
   // Forward declarations.
   template <typename W> class neighb_fwd_niter;
   template <typename W> class neighb_bkd_niter;
+  template <typename W> class neighb;
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <typename W>
+      void
+      from_to_(const mln::neighb<W>& from, W& to);
+
+      template <typename W>
+      void
+      from_to_(const W& from, mln::neighb<W>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
 
@@ -89,21 +109,6 @@ namespace mln
 
     W win_;
   };
-
-
-
-  namespace convert
-  {
-
-    template <typename W>
-    void
-    from_to(const mln::neighb<W>& from, W& to);
-
-    template <typename W>
-    void
-    from_to(const W& from, mln::neighb<W>& to);
-
-  } // end of namespace mln::convert
 
 
 
@@ -226,26 +231,31 @@ protected:
   }
 
 
-  // convert::from_to
+  // mln::convert::from_to
 
   namespace convert
   {
 
-    template <typename W>
-    void
-    from_to(const mln::neighb<W>& from, W& to)
+    namespace over_load
     {
-      to = from.win();
-    }
 
-    template <typename W>
-    void
-    from_to(const W& from, mln::neighb<W>& to)
-    {
-      to.change_window(from);
-    }
+      template <typename W>
+      void
+      from_to_(const mln::neighb<W>& from, W& to)
+      {
+        to = from.win();
+      }
 
-  } // end of namespace convert
+      template <typename W>
+      void
+      from_to_(const W& from, mln::neighb<W>& to)
+      {
+        to.change_window(from);
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
   // neighb_fwd_niter<W>

@@ -45,12 +45,19 @@
 # include <mln/util/ord.hh>
 
 
-
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declarations.
   template <typename E> struct Site_Set;
+
+  namespace convert
+  {
+
+    template <typename F, typename T>
+    void from_to(const F& from, T& to);
+
+  }
 
 
   /// Site_Set category flag type.
@@ -61,11 +68,10 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation classes of site sets.
-   *
-   * \see mln::doc::Site_Set for a complete documentation of this
-   * class contents.
-   */
+  /// Base class for implementation classes of site sets.
+  ///
+  /// \see mln::doc::Site_Set for a complete documentation of this
+  /// class contents.
   template <typename E>
   struct Site_Set : public Object<E>
   {
@@ -95,13 +101,18 @@ namespace mln
   namespace convert
   {
 
-    template <typename S, typename P, typename _C>
-    void
-    from_to(const Site_Set<S>& from, std::set<P,_C>& to);
+    namespace over_load
+    {
 
-    template <typename P, typename _C, typename S>
-    void
-    from_to(const std::set<P,_C>& from, Site_Set<S>& to);
+      template <typename S, typename P, typename _C>
+      void
+      from_to_(const Site_Set<S>& from, std::set<P,_C>& to);
+
+      template <typename P, typename _C, typename S>
+      void
+      from_to_(const std::set<P,_C>& from, Site_Set<S>& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -132,33 +143,38 @@ namespace mln
   namespace convert
   {
 
-    template <typename S, typename P, typename _C>
-    inline
-    void
-    from_to(const Site_Set<S>& from_, std::set<P,_C>& to)
+    namespace over_load
     {
-      mlc_converts_to(mln_psite(S), P)::check();
-      const S& from = exact(from_);
-      to.clear();
-      mln_piter(S) p(from);
-      for_all(p)
-	to.insert(p);
-    }
+
+      template <typename S, typename P, typename _C>
+      inline
+      void
+      from_to_(const Site_Set<S>& from_, std::set<P,_C>& to)
+      {
+	mlc_converts_to(mln_psite(S), P)::check();
+	const S& from = exact(from_);
+	to.clear();
+	mln_piter(S) p(from);
+	for_all(p)
+	  to.insert(p);
+      }
 
 
-    template <typename P, typename _C, typename S>
-    inline
-    void
-    from_to(const std::set<P,_C>& from, Site_Set<S>& to_)
-    {
-      mlc_converts_to(P, mln_i_element(S))::check();
-      S& to = exact(to_);
-      to.clear();
-      for (typename std::set<P>::const_iterator i = from.begin();
-	   i != from.end();
-	   ++i)
-	to.insert(*i);
-    }
+      template <typename P, typename _C, typename S>
+      inline
+      void
+      from_to_(const std::set<P,_C>& from, Site_Set<S>& to_)
+      {
+	mlc_converts_to(P, mln_i_element(S))::check();
+	S& to = exact(to_);
+	to.clear();
+	for (typename std::set<P>::const_iterator i = from.begin();
+	    i != from.end();
+	    ++i)
+	  to.insert(*i);
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

@@ -29,16 +29,15 @@
 #ifndef MLN_CORE_CONCEPT_WINDOW_HH
 # define MLN_CORE_CONCEPT_WINDOW_HH
 
-/*! \file mln/core/concept/window.hh
- * \brief Definition of the concept of mln::Window.
- *
- * \todo Operator== should test if the cmp is possible.
- *
- * \todo Add an is_valid() method.
- *
- * \todo The is_centered() method could also exist when the window is
- * not regular...
- */
+/// \file mln/core/concept/window.hh
+/// Definition of the concept of mln::Window.
+///
+/// \todo Operator== should test if the cmp is possible.
+///
+/// \todo Add an is_valid() method.
+///
+/// \todo The is_centered() method could also exist when the window is
+/// not regular...
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/iterator.hh>
@@ -83,11 +82,10 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation classes that are windows.
-   *
-   * \see mln::doc::Window for a complete documentation of this class
-   * contents.
-   */
+  /// Base class for implementation classes that are windows.
+  ///
+  /// \see mln::doc::Window for a complete documentation of this class
+  /// contents.
   template <typename E>
   struct Window : public Object<E>
   {
@@ -120,9 +118,14 @@ namespace mln
   namespace convert
   {
 
-    template <typename W, typename I>
-    void
-    from_to(const Window<W>& from, Image<I>& to);
+    namespace over_load
+    {
+
+      template <typename W, typename I>
+      void
+      from_to_(const Window<W>& from, Image<I>& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -309,33 +312,38 @@ namespace mln
   namespace convert
   {
 
-    template <typename W, typename I>
-    void
-    from_to(const Window<W>& win_, Image<I>& ima_)
+    namespace over_load
     {
-      mln_is_simple_window(W)::check();
-      typedef mln_psite(I) P;
-      mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
-      mlc_equal(mln_value(I), bool)::check();
 
-      const W& win = exact(win_);
-      I& ima = exact(ima_);
-
-      // mln_precondition(win.is_valid());
-      mln_precondition(! ima.has_data());
-
-      // Hack (below) to avoid circular dependency.
-      ima.init_(mln::internal::geom_bbox(win));
+      template <typename W, typename I>
+      void
+      from_to(const Window<W>& win_, Image<I>& ima_)
       {
-	// data::fill(ima, false) is:
-	mln_piter(I) p(ima.domain());
-	for_all(p)
-	  ima(p) = false;
+	mln_is_simple_window(W)::check();
+	typedef mln_psite(I) P;
+	mlc_converts_to(mln_dpsite(W), mln_delta(P))::check();
+	mlc_equal(mln_value(I), bool)::check();
+
+	const W& win = exact(win_);
+	I& ima = exact(ima_);
+
+	// mln_precondition(win.is_valid());
+	mln_precondition(! ima.has_data());
+
+	// Hack (below) to avoid circular dependency.
+	ima.init_(mln::internal::geom_bbox(win));
+	{
+	  // data::fill(ima, false) is:
+	  mln_piter(I) p(ima.domain());
+	  for_all(p)
+	    ima(p) = false;
+	}
+	unsigned n = win.size();
+	for (unsigned i = 0; i < n; ++i)
+	  ima(convert::to<P>(win.dp(i))) = true;
       }
-      unsigned n = win.size();
-      for (unsigned i = 0; i < n; ++i)
-	ima(convert::to<P>(win.dp(i))) = true;
-    }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

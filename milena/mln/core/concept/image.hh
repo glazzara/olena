@@ -116,9 +116,14 @@ namespace mln
   namespace convert
   {
 
-    template <typename V, unsigned S, typename I>
-    void
-    from_to(const V (&values)[S], Image<I>& to);
+    namespace over_load
+    {
+
+      template <typename V, unsigned S, typename I>
+      void
+      from_to_(const V (&values)[S], Image<I>& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
@@ -243,27 +248,32 @@ namespace mln
   namespace convert
   {
 
-    template <typename V, unsigned S, typename I>
-    void
-    from_to(const V (&values)[S], Image<I>& to_)
+    namespace over_load
     {
-      mlc_bool(S != 0)::check();
-      mlc_converts_to(V, mln_value(I))::check();
-      typedef mln_site(I) P;
-      enum { d = P::dim,
-	     s = mlc_root(d, S)::value };
-      metal::bool_<(mlc_pow_int(s, d) == S)>::check();
 
-      I& to = exact(to_);
-      mln_precondition(! to.has_data());
+      template <typename V, unsigned S, typename I>
+      void
+      from_to_(const V (&values)[S], Image<I>& to_)
+      {
+	mlc_bool(S != 0)::check();
+	mlc_converts_to(V, mln_value(I))::check();
+	typedef mln_site(I) P;
+	enum { d = P::dim,
+	  s = mlc_root(d, S)::value };
+	metal::bool_<(mlc_pow_int(s, d) == S)>::check();
 
-      box<P> b(all_to(0), all_to(s - 1));
-      to.init_(b);
-      mln_fwd_piter(box<P>) p(b);
-      unsigned i = 0;
-      for_all(p)
-	to(p) = values[i++];
-    }
+	I& to = exact(to_);
+	mln_precondition(! to.has_data());
+
+	box<P> b(all_to(0), all_to(s - 1));
+	to.init_(b);
+	mln_fwd_piter(box<P>) p(b);
+	unsigned i = 0;
+	for_all(p)
+	  to(p) = values[i++];
+      }
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 

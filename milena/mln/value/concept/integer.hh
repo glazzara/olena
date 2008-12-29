@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_VALUE_CONCEPT_INTEGER_HH
 # define MLN_VALUE_CONCEPT_INTEGER_HH
 
-/*! \file mln/value/concept/integer.hh
- *
- * \brief Define a generic class for integer values.
- *
- * \todo Similar files needs to be cleaned-up.
- */
+/// \file mln/value/concept/integer.hh
+///
+/// Define a generic class for integer values.
+///
+/// \todo Similar files needs to be cleaned-up.
 
 # include <mln/value/concept/scalar.hh>
 
@@ -44,7 +44,7 @@ namespace mln
   namespace value
   {
 
-    // Fwd decl.
+    // Forward declaration.
     template <typename E> struct Integer;
 
 

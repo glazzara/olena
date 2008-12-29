@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_INTERNAL_SITE_SET_BASE_HH
 # define MLN_CORE_INTERNAL_SITE_SET_BASE_HH
 
-/*! \file mln/core/internal/site_set_base.hh
- *
- * \brief Definition of the common base class for all site set
- * classes.
- */
+/// \file mln/core/internal/site_set_base.hh
+///
+/// Definition of the common base class for all site set
+/// classes.
 
 # include <mln/core/concept/site_set.hh>
 # include <mln/core/concept/site_proxy.hh>
@@ -45,13 +45,12 @@ namespace mln
   {
 
 
-    /*! A base class for site set classes.
-     *
-     * \arg \p P The psite type of what is ``contained'' in the site
-     *           set, not the psite of the site set (which is
-     *           different, and defined by the site set itself).
-     * \arg \p E The exact type of the site set.
-     */
+    /// A base class for site set classes.
+    ///
+    /// \arg \p P The psite type of what is ``contained'' in the site
+    ///           set, not the psite of the site set (which is
+    ///           different, and defined by the site set itself).
+    /// \arg \p E The exact type of the site set.
     template <typename P, typename E>
     struct site_set_base_ : public Site_Set<E>
     {

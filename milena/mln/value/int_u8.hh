@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_INT_U8_HH
 # define MLN_VALUE_INT_U8_HH
 
-/*! \file mln/value/int_u8.hh
- *
- * \brief Define the alias value::int_u8.
- */
+/// \file mln/value/int_u8.hh
+///
+/// Define the alias value::int_u8.
 
 # include <mln/value/int_u.hh>
 

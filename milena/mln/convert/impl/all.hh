@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +28,14 @@
 #ifndef MLN_CONVERT_IMPL_ALL_HH
 # define MLN_CONVERT_IMPL_ALL_HH
 
-/*! \file mln/convert/impl/all.hh
- *
- * \brief File that includes all from-to conversion routines.
- */
+/// \file mln/convert/impl/all.hh
+///
+/// File that includes all from-to conversion routines.
 
 
+# include <mln/convert/impl/from_float_to_value.hh>
 # include <mln/convert/impl/from_image_to_site_set.hh>
+# include <mln/convert/impl/from_int_to_value.hh>
 # include <mln/convert/impl/from_value_to_value.hh>
 
 

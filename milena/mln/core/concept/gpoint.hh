@@ -29,10 +29,10 @@
 #ifndef MLN_CORE_CONCEPT_GPOINT_HH
 # define MLN_CORE_CONCEPT_GPOINT_HH
 
-/*! \file mln/core/concept/gpoint.hh
- *
- * \brief Definition of the concept of mln::Gpoint.
- */
+/// \file mln/core/concept/gpoint.hh
+///
+/// Definition of the concept of mln::Gpoint.
+
 
 # include <mln/core/concept/site.hh>
 # include <mln/core/concept/gdpoint.hh>
@@ -92,13 +92,12 @@ namespace mln
   };
 
 
-  /*! \brief Base class for implementation of point classes.
-   *
-   * A point is an element of a space.
-   *
-   * For instance, mln::point2d is the type of elements defined on the
-   * discrete square grid of the 2D plane.
-   */
+  /// Base class for implementation of point classes.
+  ///
+  /// A point is an element of a space.
+  ///
+  /// For instance, mln::point2d is the type of elements defined on the
+  /// discrete square grid of the 2D plane.
   template <typename E>
   struct Gpoint : public Site<E>
   {
@@ -118,25 +117,30 @@ namespace mln
   namespace convert
   {
 
-    template <typename P>
-    void
-    from_to(const Gpoint<P>& from, mln_delta(P)& to);
+    namespace over_load
+    {
 
-    template <typename P, unsigned n, typename T>
-    void
-    from_to(const Gpoint<P>& from, algebra::vec<n,T>& to);
+      template <typename P>
+      void
+      from_to_(const Gpoint<P>& from, mln_delta(P)& to);
 
-    template <unsigned n, typename T, typename P>
-    void
-    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to);
+      template <typename P, unsigned n, typename T>
+      void
+      from_to_(const Gpoint<P>& from, algebra::vec<n,T>& to);
 
-  } // end of namespace::convert
+      template <unsigned n, typename T, typename P>
+      void
+      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
 
-  /*! \brief Equality comparison between a couple of grid point \p lhs
-   *  and \p rhs.
-   *
+  /// Equality comparison between a couple of grid point \p lhs
+  ///  and \p rhs.
+  /*!
    * \param[in] lhs A first grid point.
    * \param[in] rhs A second grid point.
    *
@@ -152,10 +156,9 @@ namespace mln
   bool operator==(const Gpoint<L>& lhs, const Gpoint<R>& rhs);
 
 
-  /*! \brief Difference between a couple of grid point \p lhs and \p
-   *  rhs.
-   *
-   * \param[in] lhs A first grid point.
+  /// Difference between a couple of grid point \p lhs and \p
+  /// rhs.
+   /*! \param[in] lhs A first grid point.
    * \param[in] rhs A second grid point.
    *
    * \warning There is no type promotion in Milena so the client
@@ -178,9 +181,9 @@ namespace mln
   operator-(const Gpoint<L>& lhs, const Gpoint<R>& rhs);
 
 
-  /*! \brief Add a delta-point \p rhs to a grid point \p lhs.
-   *
-   * \param[in] p  A grid point.
+  /// Add a delta-point \p rhs to a grid point \p lhs.
+  ///
+  /*! \param[in] p  A grid point.
    * \param[in] dp A delta-point.
    *
    * The type of \p dp has to compatible with the type of \p p.
@@ -196,9 +199,9 @@ namespace mln
 
 
 
-  /*! \brief Substract a delta-point \p rhs to a grid point \p lhs.
-   *
-   * \param[in] p A grid point.
+  /// Substract a delta-point \p rhs to a grid point \p lhs.
+  ///
+  /*! \param[in] p A grid point.
    * \param[in] dp A delta-point.
    *
    * The type of \p dp has to compatible with the type of \p p.
@@ -213,9 +216,8 @@ namespace mln
   operator-(const Gpoint<P>& p, const Gdpoint<D>& dp);
 
 
-  /*! \brief Print a grid point \p p into the output stream \p ostr.
-   *
-   * \param[in,out] ostr An output stream.
+  /// Print a grid point \p p into the output stream \p ostr.
+  /*! \param[in,out] ostr An output stream.
    * \param[in] p A grid point.
    *
    * \return The modified output stream \p ostr.
@@ -226,9 +228,8 @@ namespace mln
   std::ostream& operator<<(std::ostream& ostr, const Gpoint<P>& p);
 
 
-  /*! \brief Shift a point \p by a delta-point \p dp.
-   *
-   * \param[in,out] p The targeted point.
+  /// Shift a point \p by a delta-point \p dp.
+  /*! \param[in,out] p The targeted point.
    * \param[in] dp A delta-point.
    * \return A reference to the point \p p once translated by \p dp.
    *
@@ -241,9 +242,8 @@ namespace mln
   P& operator+=(Gpoint<P>& p, const Gdpoint<D>& dp);
 
 
-  /*! \brief Shift a point \p by the negate of a delta-point \p dp.
-   *
-   * \param[in,out] p The targeted point.
+  /// Shift a point \p by the negate of a delta-point \p dp.
+  /*! \param[in,out] p The targeted point.
    * \param[in] dp A delta-point.
    * \return A reference to the point \p p once translated by - \p dp.
    *
@@ -255,9 +255,8 @@ namespace mln
   template <typename P, typename D>
   P& operator-=(Gpoint<P>& p, const Gdpoint<D>& dp);
 
-  /*! \brief Divise a point \p by a scalar \p s.
-   *
-   * \param[in,out] p The targeted point.
+  /// Divise a point \p by a scalar \p s.
+  /*! \param[in,out] p The targeted point.
    * \param[in] dp A scalar.
    * \return A reference to the point \p p once divised by \p s.
    *
@@ -287,51 +286,56 @@ namespace mln
   }
 
 
-  // convert::from_to
+  // convert::from_to_
 
   namespace convert
   {
 
-    // Gpoint -> delta
-    template <typename P>
-    inline
-    void
-    from_to(const Gpoint<P>& p_, mln_delta(P)& dp)
+    namespace over_load
     {
-      // Instead of "dp.to_vec() = exact(p).to_vec();" that
-      // does not compile (cause to_vec returns const), we
-      // have:
-      enum { n = P::dim };
-      const P& p = exact(p_);
-      for (unsigned i = 0; i < n; ++i)
-	dp[i] = p[i];
-    }
 
-    // Gpoint -> algebra::vec.
-    template <typename P, unsigned n, typename T>
-    inline
-    void
-    from_to(const Gpoint<P>& from_, algebra::vec<n,T>& to)
-    {
-      mlc_bool(n == P::dim)::check();
-      const P& from = exact(from_);
-      for (unsigned i = 0; i < n; ++i)
-	to[i] = static_cast< T >(from[i]); // FIXME: cast -> best effort...
-    }
+      // Gpoint -> delta
+      template <typename P>
+      inline
+      void
+      from_to_(const Gpoint<P>& p_, mln_delta(P)& dp)
+      {
+	// Instead of "dp.to_vec() = exact(p).to_vec();" that
+	// does not compile (cause to_vec returns const), we
+	// have:
+	enum { n = P::dim };
+	const P& p = exact(p_);
+	for (unsigned i = 0; i < n; ++i)
+	  dp[i] = p[i];
+      }
 
-    // algebra::vec -> Gpoint.
-    template <unsigned n, typename T, typename P>
-    inline
-    void
-    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to_)
-    {
-      mlc_bool(P::dim == n)::check();
-      P& to = exact(to_);
-      for (unsigned i = 0; i < n; ++i)
-	to[i] = static_cast< typename P::coord >(from[i]); // FIXME: cast -> best effort...
-    }
+      // Gpoint -> algebra::vec.
+      template <typename P, unsigned n, typename T>
+      inline
+      void
+      from_to_(const Gpoint<P>& from_, algebra::vec<n,T>& to)
+      {
+	mlc_bool(n == P::dim)::check();
+	const P& from = exact(from_);
+	for (unsigned i = 0; i < n; ++i)
+	  to[i] = static_cast< T >(from[i]); // FIXME: cast -> best effort...
+      }
 
-  } // end of namespace::convert
+      // algebra::vec -> Gpoint.
+      template <unsigned n, typename T, typename P>
+      inline
+      void
+      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to_)
+      {
+	mlc_bool(P::dim == n)::check();
+	P& to = exact(to_);
+	for (unsigned i = 0; i < n; ++i)
+	  to[i] = static_cast< typename P::coord >(from[i]); // FIXME: cast -> best effort...
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 
   // Operators.

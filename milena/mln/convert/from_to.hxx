@@ -106,154 +106,172 @@ namespace mln
   namespace convert
   {
 
-    // Guard.
-    template <typename F, typename T>
-    void
-    from_to(const Object<F>&, Object<T>&);
-    // end of Guard.
+    namespace over_load
+    {
+
+      // Guard.
+      template <typename F, typename T>
+      void
+      from_to_(const Object<F>&, Object<T>&);
+      // end of Guard.
 
 
-    // algebra::vec -> Gpoint.
-    template <unsigned n, typename T, typename P>
-    void
-    from_to(const algebra::vec<n,T>& from, Gpoint<P>& to_);
+      // algebra::vec -> Gpoint.
+      template <unsigned n, typename T, typename P>
+      void
+      from_to_(const algebra::vec<n,T>& from, Gpoint<P>& to_);
 
-    // algebra::vec -> rgb.
-    template <typename T, unsigned m>
-    void
-    from_to(const algebra::vec<3,T>& from, value::rgb<m>& to);
-
-
-    // bool -> rgb.
-    template <unsigned m>
-    void
-    from_to(bool from, value::rgb<m>& to);
+      // algebra::vec -> rgb.
+      template <typename T, unsigned m>
+      void
+      from_to_(const algebra::vec<3,T>& from, value::rgb<m>& to);
 
 
-    // C-array -> Image.
-    template <typename V, unsigned S, typename I>
-    void
-    from_to(const V (&values)[S], Image<I>& to);
-
-    // C-array -> w_window
-    template <typename V, unsigned S, typename D, typename W>
-    void
-    from_to(const V (&weight)[S], w_window<D,W>& to);
+      // bool -> rgb.
+      template <unsigned m>
+      void
+      from_to_(bool from, value::rgb<m>& to);
 
 
-    // C-array -> window2d
-    template <unsigned S>
-    void
-    from_to(const bool (&values)[S], window< dpoint<grid::square, def::coord> >& win);
-    template <unsigned R, unsigned C>
-    void
-    from_to(const bool (&values)[R][C], window< dpoint<grid::square, def::coord> >& win);
+      // C-array -> Image.
+      template <typename V, unsigned S, typename I>
+      void
+      from_to_(const V (&values)[S], Image<I>& to);
+
+      // C-array -> w_window
+      template <typename V, unsigned S, typename D, typename W>
+      void
+      from_to_(const V (&weight)[S], w_window<D,W>& to);
 
 
-    // Gdpoint -> point
-    template <typename D>
-    void
-    from_to(const Gdpoint<D>& from, mln_site(D)& to);
+      // C-array -> window2d
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S],
+	       window< dpoint<grid::square, def::coord> >& win);
+
+      template <unsigned R, unsigned C>
+      void
+      from_to_(const bool (&values)[R][C],
+	       window< dpoint<grid::square, def::coord> >& win);
+
+      // C-array -> neighb2d
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S],
+	       neighb< window< dpoint<grid::square, def::coord> > >& nbh);
+
+      template <unsigned R, unsigned C>
+      void
+      from_to_(bool const (&values)[R][C],
+	       neighb< window< dpoint<grid::square, def::coord> > >& nbh);
+
+      // Gdpoint -> point
+      template <typename D>
+      void
+      from_to_(const Gdpoint<D>& from, mln_site(D)& to);
 
 
-    // Value -> Value
-    template <typename F, typename T>
-    void
-    from_to(const Value<F>& from, Value<T>& to);
+      // Value -> Value
+      template <typename F, typename T>
+      void
+      from_to_(const Value<F>& from, Value<T>& to);
 
-    // float -> Object
-    template <typename T>
-    void
-    from_to(const float& from, Object<T>& to);
+      // float -> Value
+      template <typename V>
+      void
+      from_to_(const float& from, Value<V>& to);
 
-    // int -> Object
-    template <typename T>
-    void
-    from_to(const int& from, Object<T>& to);
+      // int -> Value
+      template <typename T>
+      void
+      from_to_(const int& from, Value<T>& to);
 
-    // Proxy -> T
-    template <typename P, typename T>
-    void
-    from_to(const Proxy<P>& from, T& to);
-
-
-    // Gpoint -> algebra::vec.
-    template <typename P, unsigned n, typename T>
-    void
-    from_to(const Gpoint<P>& from, algebra::vec<n,T>& to);
-
-    // Gpoint -> delta-point
-    template <typename P>
-    void
-    from_to(const Gpoint<P>& from, mln_delta(P)& to);
+      // Proxy -> T
+      template <typename P, typename T>
+      void
+      from_to_(const Proxy<P>& from, T& to);
 
 
-    // Image -> Site_Set.
-    template <typename I, typename S>
-    void
-    from_to(const Image<I>& from, Site_Set<S>& to);
+      // Gpoint -> algebra::vec.
+      template <typename P, unsigned n, typename T>
+      void
+      from_to_(const Gpoint<P>& from, algebra::vec<n,T>& to);
 
-    // Image -> w_window
-    template <typename I, typename D, typename W>
-    void
-    from_to(const Image<I>& from, w_window<D,W>& to);
-
-
-    // neighb<W> -> W
-    template <typename W>
-    void
-    from_to(const mln::neighb<W>& from, W& to);
-
-    // W -> neighb<W>
-    template <typename W>
-    void
-    from_to(const W& from, mln::neighb<W>& to);
+      // Gpoint -> delta-point
+      template <typename P>
+      void
+      from_to_(const Gpoint<P>& from, mln_delta(P)& to);
 
 
-    // Window -> Image
-    template <typename W, typename I>
-    void
-    from_to(const Window<W>& from, Image<I>& to);
+      // Image -> Site_Set.
+      template <typename I, typename S>
+      void
+      from_to_(const Image<I>& from, Site_Set<S>& to);
+
+      // Image -> w_window
+      template <typename I, typename D, typename W>
+      void
+      from_to_(const Image<I>& from, w_window<D,W>& to);
 
 
-    // w_window -> Image
-    template <typename D, typename W, typename I>
-    void
-    from_to(const w_window<D,W>& from, Image<I>& to);
+      // neighb<W> -> W
+      template <typename W>
+      void
+      from_to_(const mln::neighb<W>& from, W& to);
+
+      // W -> neighb<W>
+      template <typename W>
+      void
+      from_to_(const W& from, mln::neighb<W>& to);
+
+
+      // Window -> Image
+      template <typename W, typename I>
+      void
+      from_to_(const Window<W>& from, Image<I>& to);
+
+
+      // w_window -> Image
+      template <typename D, typename W, typename I>
+      void
+      from_to_(const w_window<D,W>& from, Image<I>& to);
 
 
 
-    // util::array<T> -> fun::i2v::array<T>
-    template <typename T>
-    void
-    from_to(const util::array<T>& from, fun::i2v::array<T>& to);
+      // util::array<T> -> fun::i2v::array<T>
+      template <typename T>
+      void
+      from_to_(const util::array<T>& from, fun::i2v::array<T>& to);
 
-    // std::vector<T> -> fun::i2v::array<T>
-    template <typename T>
-    void
-    from_to(const std::vector<T>& from, fun::i2v::array<T>& to);
+      // std::vector<T> -> fun::i2v::array<T>
+      template <typename T>
+      void
+      from_to_(const std::vector<T>& from, fun::i2v::array<T>& to);
 
-    // util::array<T1> -> util::array<T2>
-    template <typename T1, typename T2>
-    void
-    from_to(const util::array<T1>& from, util::array<T2>& to);
-
-
-    // Accumulator<A> -> mln_result(A)
-    template <typename A>
-    void
-    from_to(const Accumulator<A>& from, mln_result(A)& to);
+      // util::array<T1> -> util::array<T2>
+      template <typename T1, typename T2>
+      void
+      from_to_(const util::array<T1>& from, util::array<T2>& to);
 
 
-    // Site_Set -> std::set
-    template <typename S, typename P, typename _C>
-    void
-    from_to(const Site_Set<S>& from, std::set<P,_C>& to);
+      // Accumulator<A> -> mln_result(A)
+      template <typename A>
+      void
+      from_to_(const Accumulator<A>& from, mln_result(A)& to);
 
-    // std::set -> Site_Set
-    template <typename P, typename _C, typename S>
-    void
-    from_to(const std::set<P,_C>& from, Site_Set<S>& to);
+
+      // Site_Set -> std::set
+      template <typename S, typename P, typename _C>
+      void
+      from_to_(const Site_Set<S>& from, std::set<P,_C>& to);
+
+      // std::set -> Site_Set
+      template <typename P, typename _C, typename S>
+      void
+      from_to_(const std::set<P,_C>& from, Site_Set<S>& to);
+
+    } // end of namespace mln::convert::over_load
 
   } // end of namespace mln::convert
 
