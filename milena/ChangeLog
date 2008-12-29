@@ -1,4 +1,14 @@
-2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add forward declarations for all init_() functions.
+
+	* core/routine/init.hh: include init.hxx.
+
+	* core/routine/init.hxx: references all the init_() functions. Must be
+	updated each time a new init_() is added. This file must be used like
+	convert/from_to.hxx.
+
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix compilation issues.
 
@@ -22,7 +32,7 @@
 	* tests/unit_test/mln_data_all.cc
 	* tests/unit_test/mln_data_essential.cc: add new unit tests.
 
-2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a dispatch in from_to.
 

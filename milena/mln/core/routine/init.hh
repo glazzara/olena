@@ -28,23 +28,23 @@
 #ifndef MLN_CORE_ROUTINE_INIT_HH
 # define MLN_CORE_ROUTINE_INIT_HH
 
-/*! \file mln/core/routine/init.hh
- *
- * \brief Definition of function that initialize an image from another
- * one.
- */
+/// \file mln/core/routine/init.hh
+///
+/// Definition of function that initialize an image from another
+/// one.
 
 # include <mln/tag/init.hh>
 # include <mln/geom/bbox.hh>
 # include <mln/border/find.hh>
 
+# include <core/routine/init.hxx>
 
 
 namespace mln
 {
 
 
-  // Fwd decl.
+  // Forward declaration.
 
   template <typename Subject, typename T, typename M>
   void init_(Subject, T& target, const Object<M>& model);
