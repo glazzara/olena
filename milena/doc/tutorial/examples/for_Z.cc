@@ -17,7 +17,7 @@
 # include <mln/convert/to_fun.hh>
 # include <mln/debug/println.hh>
 # include <mln/labeling/blobs.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/geom/bbox.hh>
 
 
@@ -205,9 +205,9 @@ int main()
 
 
 //   image2d<rgb8> cool(ima.domain());
-//   level::fill(cool, literal::black);
+//   data::fill(cool, literal::black);
 
-//   level::fill( (cool | (pw::value(lab) == 1u)).rw(),
+//   data::fill( (cool | (pw::value(lab) == 1u)).rw(),
 // 	       literal::red );
 
 //   debug::println(cool);

@@ -32,8 +32,8 @@
 
 #include <oln/arith/plus.hh>    // arith
 
-#include <oln/level/fill.hh>    // level
-#include <oln/level/paste.hh>
+#include <oln/data/fill.hh>    // data
+#include <oln/data/paste.hh>
 
 #include <oln/debug/println.hh> // debug
 
@@ -166,20 +166,15 @@ int main()
   // Memory has been allocated so data can be stored but pixel values
   // have not been initialized yet.  So we fill img3a, that is, all
   // pixels of img3a, with the value 'a':
-  level::fill(img3a, 'a');
+  data::fill(img3a, 'a');
 
-  // The "fill" algorithm is located in the sub-namespace "level"
-  // since this algorithm deals with the "level" of pixel values.
+  // The "fill" algorithm is located in the sub-namespace "data"
+  // since this algorithm deals with the "data" of pixel values.
 
-  //         Note that the term "level" refers to the fact that an
-  //         image can be considered as a landscape where the
-  //         elevation at a particular location/point is given by the
-  //         corresponding pixel value.
-
-  // The full name of this routine is "oln::level::fill".  To access
+  // The full name of this routine is "oln::data::fill".  To access
   // to a particular algorithm, the proper file shall be included.
   // The file names of algorithms strictly map their C++ name; so
-  // oln::level::fill is defined in the file "oln/level/fill.hh".
+  // oln::data::fill is defined in the file "oln/data/fill.hh".
 
   // Most algorithms in Olena are constructed following the classical
   // scheme: "output algo(input)", where the input image is only read.
@@ -190,7 +185,7 @@ int main()
   // Obsolete:  explicitly state that the image is provided so that its data is
   // Obsolete:  modified "inplace".
 
-  // Obsolete:  The algorithm call shall be "level::fill(inplace(ima), val)".
+  // Obsolete:  The algorithm call shall be "data::fill(inplace(ima), val)".
   // Obsolete:  When forgetting the "inplace(..)" statement it does not compile.
 
 
@@ -201,10 +196,10 @@ int main()
   image1d<char> img3b(5, 14);
 
   // We initialize the image values.
-  level::fill(img3b, 'b');
+  data::fill(img3b, 'b');
 
   // Last we now paste the contents of img3b in img3a...
-  level::paste(img3b, img3a);
+  data::paste(img3b, img3a);
 
   // ...and print the result.
   debug::println(img3a);
@@ -242,7 +237,7 @@ int main()
   // tests are performed at run-time to ensure that the program is
   // correct.
 
-  // For instance, the algorithm level::paste tests that the set of
+  // For instance, the algorithm data::paste tests that the set of
   // points of img3b (whose values are to be pasted) is a subset of
   // the destination image.  We can reproduce this same test:
 

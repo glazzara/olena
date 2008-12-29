@@ -18,8 +18,8 @@
 # include <mln/fun/i2v/array.hh>
 # include <mln/fun/p2v/iota.hh>
 
-# include <mln/level/paste.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/paste.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/transform.hh>
 # include <mln/extension/fill.hh>
 
@@ -144,7 +144,7 @@ int main()
   mln_VAR(ima, ima_ | domain);
 
   mln_VAR(cell, ima | is_cell);
-  level::fill(cell, fun::p2v::iota());
+  data::fill(cell, fun::p2v::iota());
   debug::println(cell);
   // 1   2   3 
   //      
@@ -152,7 +152,7 @@ int main()
 
   mln_VAR(edge, extend((ima | is_edge).rw(), ima));
 
-  level::paste(morpho::gradient(edge, e2c.win()), edge);
+  data::paste(morpho::gradient(edge, e2c.win()), edge);
   //                                  ^^^
   //                         edge -> neighboring cells
   debug::println(edge);
@@ -161,7 +161,7 @@ int main()
   //   1   1
 
   image2d<unsigned> label(domain, 0);
-  level::fill(label, 9);
+  data::fill(label, 9);
   debug::println(label);
   // 9 9 9 9 9 
   // 9 9 9 9 9 
@@ -176,7 +176,7 @@ int main()
 
 
   unsigned nbasins;
-  level::fill(wst, morpho::meyer_wst(edge, e2e, nbasins));
+  data::fill(wst, morpho::meyer_wst(edge, e2e, nbasins));
   //                                       ^^^
   //                         edge -> neighboring edges
   debug::println(wst);
@@ -230,7 +230,7 @@ int main()
   // 9   9   9 
 
 
-  level::paste(morpho::dilation(extend(lab, label),
+  data::paste(morpho::dilation(extend(lab, label),
 				c4().win()),
 	       label);
 
@@ -263,7 +263,7 @@ int main()
   for (unsigned i = 1; i <= nbasins; ++i)
     std::cout << "mean value of basin #" << i << " is " << m(i) << std::endl; 
 
-//   level::fill(cell, level::transform(lab, m));
+//   data::fill(cell, level::transform(lab, m));
 //   debug::println(cell);
 //   // 2   2   2 
 //   //

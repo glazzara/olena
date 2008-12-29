@@ -11,7 +11,7 @@
 # include <mln/labeling/blobs.hh>
 # include <mln/geom/bbox.hh>
 
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/debug/println.hh>
 
 
@@ -47,7 +47,7 @@ void foo(const I& input)
 
   O output;
   initialize(output, input);
-  level::fill(output, 9);
+  data::fill(output, 9);
 
   std::cout << geom::bbox(output) << std::endl;
   debug::println(output);

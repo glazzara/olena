@@ -33,7 +33,7 @@
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 # include <mln/level/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
@@ -60,7 +60,7 @@ int main()
   std::vector<int_u8> vec;
 
   image2d<int> input(in.domain());
-  level::fill(input, lab);
+  data::fill(input, lab);
   opt::at(lab, 0,0) = 0;
 
   image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());

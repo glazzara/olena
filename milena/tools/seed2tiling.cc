@@ -36,7 +36,6 @@
 # include <mln/core/image/sub_image.hh>
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/fill.hh>
 # include <mln/level/stretch.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
@@ -71,22 +70,22 @@ int main(int argc, char* argv[])
   image2d<bool> input = io::pbm::load(argv[1]);
 
   {
-    const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2,3> ();
+    const w_window2d_int& w_win = make::mk_chamfer_3x3_int<2,3>();
 
     unsigned n;
     image2d<unsigned> lab = labeling::foreground(input, c4(), n);
     std::cout << "number of labels = " << n << std::endl;
 
 
-    image2d<unsigned> inte = geom::seeds2tiling(lab, c4 ());
-    border::fill (inte, 0);
+    image2d<unsigned> inte = geom::seeds2tiling(lab, c4());
+    border::fill(inte, 0);
 
     image2d<int_u8> inte2 = level::stretch(int_u8(), inte);
     io::pgm::save(inte2, "ima1.pgm");
 
     std::cout << "ima1 generate with seeds2tiling"
 	     << std::endl;
-    inte = geom::seeds2tiling_roundness(lab, w_win, max, c4 ());
+    inte = geom::seeds2tiling_roundness(lab, w_win, max, c4());
     border::fill(inte, 0);
 
     inte2 = level::stretch(int_u8(), inte);

@@ -1,7 +1,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/site_set/p_array.hh>
 # include <mln/debug/println.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 
 template <typename A>
@@ -10,7 +10,7 @@ void picture(const A& arr)
   using namespace mln;
 
   image2d<char> ima(5, 5);
-  level::fill(ima, '-');
+  data::fill(ima, '-');
   
   unsigned i = 0;
   mln_piter(A) p(arr);

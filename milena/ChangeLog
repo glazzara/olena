@@ -1,5 +1,28 @@
 2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Propagate renaming level::fill/paste as data::fill/paste (again).
+
+	* doc/examples/erosion.cc,
+	* doc/examples/labeling_algo.cc,
+	* doc/examples/tuto_bis.cc,
+	* doc/oldies/2008__tour1.cc,
+	* doc/oldies/2008__tour3.cc,
+	* doc/tutorial/examples/box.cc,
+	* doc/tutorial/examples/for_Z.cc,
+	* doc/tutorial/examples/image_safe.cc,
+	* doc/tutorial/examples/p_array.2.cc,
+	* doc/tutorial/examples/p_array.cc,
+	* doc/tutorial/examples/p_image.cc,
+	* doc/tutorial/examples/p_key.cc,
+	* doc/tutorial/examples/p_line2d.cc,
+	* doc/tutorial/examples/p_queue.cc,
+	* doc/tutorial/examples/p_vaccess.cc,
+	* doc/tutorial/examples/proxy.cc,
+	* doc/tutorial/examples/sub_image_if.cc,
+	* tools/seed2tiling.cc: update
+
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add forward declarations for all init_() functions.
 
 	* core/routine/init.hh: include init.hxx.

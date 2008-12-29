@@ -36,7 +36,7 @@
 #include <oln/core/gen/pw_value.hh>
 #include <oln/core/gen/fun_ops.hh>
 
-#include <oln/level/fill.hh>
+#include <oln/data/fill.hh>
 #include <oln/debug/fill.hh>
 #include <oln/debug/println.hh>
 
@@ -138,7 +138,7 @@ int main()
   // And now for a little test: what is the result of this code?
   {
     image2d<int> test(ima.points());
-    level::fill(test, ima);
+    data::fill(test, ima);
     (test + c4).at(1, 1) = 9;
     debug::println(test);
   }

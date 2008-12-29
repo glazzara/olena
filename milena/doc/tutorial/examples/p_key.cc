@@ -1,7 +1,7 @@
 # include <mln/core/image/image2d.hh>
 # include <mln/core/site_set/p_key.hh>
 # include <mln/debug/println.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/fun/v2v/inc.hh>
 # include <mln/fun/v2v/dec.hh>
@@ -13,7 +13,7 @@ void picture(const S& s)
   using namespace mln;
 
   image2d<char> ima(5, 5);
-  level::fill(ima, '-');
+  data::fill(ima, '-');
   
   mln_piter(S) p(s);
   for_all(p)

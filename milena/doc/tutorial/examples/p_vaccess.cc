@@ -2,8 +2,8 @@
 # include <mln/core/alias/neighb2d.hh>
 # include <mln/value/int_u8.hh>
 
-# include <mln/level/fill.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/fill.hh>
+# include <mln/data/paste.hh>
 # include <mln/debug/println.hh>
 # include <mln/util/timer.hh>
 # include <mln/labeling/blobs.hh>
@@ -121,19 +121,19 @@ int main()
 
     {
       image2d<int> ima_(arr.bbox());
-      level::fill(ima_, 0);
+      data::fill(ima_, 0);
       for (unsigned l = 1; l <= nlabels; ++l)
 	for (unsigned r = 0; r < arr(l).nelements(); ++r)
-	  level::paste(pw::cst(10 * l + r) | arr(l)[r], ima_);
+	  data::paste(pw::cst(10 * l + r) | arr(l)[r], ima_);
       debug::println(ima_);
     }
 
     {
       image2d<int> ima_(arr.bbox());
-      level::fill(ima_, 0);
+      data::fill(ima_, 0);
       for (unsigned l = 1; l <= nlabels; ++l)
 	if (arr(l).nsites() > 1)
-	  level::paste(pw::cst(l) | arr(l), ima_);
+	  data::paste(pw::cst(l) | arr(l), ima_);
       debug::println(ima_);
     }
   }
@@ -144,7 +144,7 @@ int main()
 //     mln_assertion(rs.bbox() == ima.bbox());
 
 //     image2d<int_u8> ima_(ima.domain());
-//     level::fill(ima_, 0);
+//     data::fill(ima_, 0);
 //     for (unsigned r = 0; r < rs.nelements(); ++r)
 //       {
 // 	mln_piter_(p_run2d) p(rs[r]);

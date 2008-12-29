@@ -39,7 +39,6 @@
 
 # include <mln/binarization/threshold.hh>
 # include <mln/morpho/hit_or_miss.hh>
-# include <mln/level/fill.hh>
 # include <mln/border/fill.hh>
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pgm/load.hh>
@@ -49,9 +48,8 @@
 # include <mln/morpho/opening.hh>
 # include <mln/trait/value_.hh>
 # include <mln/value/int_u8.hh>
-# include <mln/level/paste.hh>
+# include <mln/data/paste.hh>
 # include <mln/labeling/blobs.hh>
-# include <mln/level/fill.hh>
 # include <mln/pw/all.hh>
 # include <mln/convert/to_fun.hh>
 # include <mln/geom/bbox.hh>
@@ -69,7 +67,7 @@ void clean_lines(mln::image2d<bool>& in,
 
   for (unsigned i = nlabels; i > 0; --i)
   {
-    level::paste(pw::cst(false)
+    data::paste(pw::cst(false)
 		    | geom::bbox(lbl | (pw::value(lbl) == pw::cst(i))),//.to_larger(bbox_larger),
 		    in);
   }

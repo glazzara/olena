@@ -2,7 +2,7 @@
 # include <mln/core/site_set/p_queue.hh>
 # include <mln/core/site_set/p_queue_fast.hh>
 # include <mln/debug/println.hh>
-# include <mln/level/fill.hh>
+# include <mln/data/fill.hh>
 
 # include <mln/core/site_set/p_priority.hh>
 
@@ -14,7 +14,7 @@ void picture(const S& s)
   using namespace mln;
 
   image2d<char> ima(5, 5);
-  level::fill(ima, '-');
+  data::fill(ima, '-');
   
   unsigned i = 0;
   mln_piter(S) p(s);
