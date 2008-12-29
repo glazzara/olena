@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,10 @@
 #ifndef MLN_CORE_POINT_HH
 # define MLN_CORE_POINT_HH
 
-/*! \file mln/core/point.hh
- *
- * \brief Definition of the generic point class mln::point.
- */
+/// \file mln/core/point.hh
+///
+/// Definition of the generic point class mln::point.
+
 
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/gpoint.hh>
@@ -49,7 +50,7 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
+  /// \{ Forward declarations.
   template <typename G, typename C> struct  point;
   template <typename G, typename C> struct dpoint;
   namespace literal {
@@ -76,11 +77,10 @@ namespace mln
 
 
 
-  /*! \brief Generic point class.
-   *
-   * Parameters are \c n the dimension of the space and \c C the
-   * coordinate type in this space.
-   */
+  /// Generic point class.
+  ///
+  /// Parameters are \c n the dimension of the space and \c C the
+  /// coordinate type in this space.
   template <typename G, typename C>
   struct point : public Gpoint< point<G,C> >,
 		 public internal::mutable_coord_impl_< G::dim, C, point<G,C> >
@@ -90,10 +90,9 @@ namespace mln
     typedef point psite;
 
 
-    /*! \var dim
-     * \brief Dimension of the space.
-     * \invariant dim > 0 
-     */
+    /// \var dim
+    /// Dimension of the space.
+    /// \invariant dim > 0
     enum { dim = G::dim };
 
     /// Grid associated type.
@@ -111,16 +110,17 @@ namespace mln
     /// Algebra vector (vec) associated type.
     typedef algebra::vec<G::dim, C> vec;
 
-    /*! \brief Read-only access to the \p i-th coordinate value.
-     * \param[in] i The coordinate index.
-     * \pre \p i < \c dim
-     */
+    /// Algebra hexagonal vector (hvec) associated type.
+    typedef algebra::h_vec<G::dim, C> h_vec;
+
+    /// Read-only access to the \p i-th coordinate value.
+    /// \param[in] i The coordinate index.
+    /// \pre \p i < \c dim
     const C& operator[](unsigned i) const;
 
-    /*! \brief Read-write access to the \p i-th coordinate value.
-     * \param[in] i The coordinate index.
-     * \pre \p i < \c dim
-     */
+    /// Read-write access to the \p i-th coordinate value.
+    /// \param[in] i The coordinate index.
+    /// \pre \p i < \c dim
     C& operator[](unsigned i);
 
 
@@ -187,10 +187,10 @@ namespace mln
 #endif
 
     /// Explicit conversion towards mln::algebra::vec.
-    const algebra::vec<G::dim, C>& to_vec() const;
+    const vec& to_vec() const;
 
     /// Transform to point in homogene coordinate system.
-    algebra::h_vec<G::dim, C> to_h_vec() const;
+    h_vec to_h_vec() const;
 
     /// Point with all coordinates set to the maximum value.
     static const point<G,C>& plus_infty();
@@ -206,7 +206,7 @@ namespace mln
 
   /// FIXME...
   template <typename G, typename C>
-  const algebra::vec<G::dim - 1, C>& cut_(const point<G,C>& p);
+  const algebra::vec<point<G,C>::dim - 1, C>& cut_(const point<G,C>& p);
 
   template <typename C>
   const util::yes& cut_(const point<grid::tick,C>& p);
@@ -405,15 +405,16 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  const algebra::vec<G::dim, C>&
+  const typename point<G,C>::vec&
   point<G,C>::to_vec() const
   {
     return coord_;
   }
-  
+
   template <typename G, typename C>
   inline
-  algebra::h_vec<G::dim, C> point<G,C>::to_h_vec() const
+  typename point<G,C>::h_vec
+  point<G,C>::to_h_vec() const
   {
     algebra::h_vec<G::dim, C> tmp;
     for (unsigned i = 0; i < dim; ++i)
@@ -444,10 +445,10 @@ namespace mln
 
   template <typename G, typename C>
   inline
-  const algebra::vec<G::dim - 1, C>&
+  const algebra::vec<point<G,C>::dim - 1, C>&
   cut_(const point<G,C>& p)
   {
-    return *(const algebra::vec<G::dim - 1, C>*)(& p.to_vec());
+    return *(const algebra::vec<point<G,C>::dim - 1, C>*)(& p.to_vec());
   }
 
   template <typename C>

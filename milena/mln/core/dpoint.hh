@@ -29,10 +29,9 @@
 #ifndef MLN_CORE_DPOINT_HH
 # define MLN_CORE_DPOINT_HH
 
-/*! \file mln/core/dpoint.hh
- *
- * \brief Definition of the generic delta-point class mln::dpoint.
- */
+/// \file mln/core/dpoint.hh
+///
+/// Definition of the generic delta-point class mln::dpoint.
 
 # include <mln/core/def/coord.hh>
 # include <mln/core/concept/gdpoint.hh>
@@ -44,7 +43,7 @@
 namespace mln
 {
 
-  /// \{ Fwd decls.
+  /// \{ Forward declarations.
   template <typename G, typename C> struct point;
   namespace literal {
     struct zero_t;
@@ -53,19 +52,17 @@ namespace mln
   /// \}
 
 
-  /*! \brief Generic delta-point class.
-   *
-   * Parameters are \c G the dimension of the space and \c C the
-   * coordinate type in this space.
-   */
+  /// Generic delta-point class.
+  ///
+  /// Parameters are \c G the dimension of the space and \c C the
+  /// coordinate type in this space.
   template <typename G, typename C>
   struct dpoint : public Gdpoint< dpoint<G,C> >,
 		  public internal::mutable_coord_impl_< G::dim, C, dpoint<G,C> >
   {
-    /*! \var dim
-     * \brief Dimension of the space.
-     * \invariant dim > 0
-     */
+    /// \var dim
+    /// Dimension of the space.
+    /// \invariant dim > 0
     enum { dim = G::dim };
 
     /// Grid associated type.
@@ -83,16 +80,14 @@ namespace mln
     /// Algebra vector (vec) associated type.
     typedef algebra::vec<G::dim, C> vec;
 
-    /*! \brief Read-only access to the \p i-th coordinate value.
-     * \param[in] i The coordinate index.
-     * \pre \p i < \c dim
-     */
+    /// Read-only access to the \p i-th coordinate value.
+    /// \param[in] i The coordinate index.
+    /// \pre \p i < \c dim
     C  operator[](unsigned i) const;
 
-    /*! \brief Read-write access to the \p i-th coordinate value.
-     * \param[in] i The coordinate index.
-     * \pre \p i < \c dim
-     */
+    /// Read-write access to the \p i-th coordinate value.
+    /// \param[in] i The coordinate index.
+    /// \pre \p i < \c dim
     C& operator[](unsigned i);
 
     /// Constructor without argument.
@@ -126,10 +121,10 @@ namespace mln
 
     /// Conversion towards a algebra::vec.
     template <typename Q>
-    operator mln::algebra::vec<G::dim, Q>() const;
+    operator mln::algebra::vec<dpoint<G,C>::dim, Q>() const;
 
     /// Explicit conversion.
-    const mln::algebra::vec<G::dim, C>& to_vec() const;
+    const vec& to_vec() const;
 
   protected:
     mln::algebra::vec<G::dim, C> coord_;
@@ -251,14 +246,14 @@ namespace mln
   template <typename G, typename C>
   template <typename Q>
   inline
-  dpoint<G,C>::operator mln::algebra::vec<G::dim, Q> () const
+  dpoint<G,C>::operator mln::algebra::vec<dpoint<G,C>::dim, Q> () const
   {
     return coord_;
   }
 
   template <typename G, typename C>
   inline
-  const mln::algebra::vec<G::dim, C>&
+  const typename dpoint<G,C>::vec&
   dpoint<G,C>::to_vec() const
   {
     return coord_;

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_VALUE_BUILTIN_FLOATINGS_HH
 # define MLN_VALUE_BUILTIN_FLOATINGS_HH
 
-/*! \file mln/value/builtin/floatings.hh
- *
- * \brief Some definitions about built-in floating types.
- */
+/// \file mln/value/builtin/floatings.hh
+///
+/// Some definitions about built-in floating types.
 
-# include <limits>
+# include <mln/value/internal/limits.hh>
 
 # include <mln/value/concept/built_in.hh>
 # include <mln/value/concept/floating.hh>
@@ -74,17 +74,17 @@ namespace mln
 
       static float min()
       {
-	static const float min_ = std::numeric_limits<float>::min();
+	static const float min_ = mln::value::internal::limits<float>::min();
 	return min_;
       }
       static float max()
       {
-	static const float max_ = std::numeric_limits<float>::max();
+	static const float max_ = mln::value::internal::limits<float>::max();
 	return max_;
       }
       static float epsilon()
       {
-	static const float epsilon_ = std::numeric_limits<float>::epsilon();
+	static const float epsilon_ = mln::value::internal::limits<float>::epsilon();
 	return epsilon_;
       }
 
@@ -105,17 +105,17 @@ namespace mln
 
       static double min()
       {
-	static const double min_ = std::numeric_limits<double>::min();
+	static const double min_ = mln::value::internal::limits<double>::min();
 	return min_;
       }
       static double max()
       {
-	static const double max_ = std::numeric_limits<double>::max();
+	static const double max_ = mln::value::internal::limits<double>::max();
 	return max_;
       }
       static double epsilon()
       {
-	static const double epsilon_ = std::numeric_limits<double>::epsilon();
+	static const double epsilon_ = mln::value::internal::limits<double>::epsilon();
 	return epsilon_;
       }
 

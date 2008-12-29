@@ -1,5 +1,31 @@
 2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix issues with GCC 2.95.
+
+	* mln/value/internal/limits.hh: add support for std::numeric_limits with gcc 2.95.
+
+	* headers.mk: add limits.hh.
+
+	* mln/topo/complex.hh,
+	* mln/topo/face.hh,
+	* mln/topo/n_face.hh,
+	* mln/value/builtin/floatings.hh,
+	* mln/value/builtin/integers.hh: use value::internal::limits.
+
+
+	* mln/util/internal/graph_base.hh,
+	* mln/util/tree.hh: use <iostream> instead of <ostream>.
+
+	* mln/core/dpoint.hh,
+	* mln/core/point.hh: Help the compiler resolving 'G::dim' in method return type.
+
+	* mln/value/float01.hh: use '&&' operator instead of 'and'.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_value_internal_limits.cc: Add new unit test.
+
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tutorial according to the last renamings.
 
 	* apps/statues/mesh-complex-segm.cc,

@@ -30,12 +30,12 @@
 
 /// \file mln/topo/n_face.hh
 ///
-/// \brief n-face of a complex.
+/// n-face of a complex.
 
 # include <iostream>
-# include <limits>
 # include <vector>
 
+# include <mln/value/internal/limits.hh>
 # include <mln/core/contract.hh>
 # include <mln/metal/bool.hh>
 
@@ -55,7 +55,7 @@ namespace mln
     | n-Face.  |
     `---------*/
 
-    /// \brief \p N-face handle in a complex.
+    /// \p N-face handle in a complex.
     ///
     /// Contrary to an mln::topo::face, the dimension of an
     /// mln::topo::n_face is fixed.
@@ -108,11 +108,11 @@ namespace mln
       /// \}
 
     private:
-      /// \brief The complex the face belongs to.
+      /// The complex the face belongs to.
       ///
       /// A const mln::topo::n_face can be used to modify a complex.
       mutable complex<D> cplx_;
-      /// \brief The id of the face.
+      /// The id of the face.
       // FIXME: Rename as `id_'?
       unsigned face_id_;
     };
@@ -121,21 +121,21 @@ namespace mln
     /// Comparison of two instances of mln::topo::n_face.
     /// \{
 
-    /// \brief Is \a lhs equal to \a rhs?
+    /// Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool operator==(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
 
-    /// \brief Is \a lhs different from \a rhs?
+    /// Is \a lhs different from \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned N, unsigned D>
     bool operator!=(const n_face<N, D>& lhs, const n_face<N, D>& rhs);
 
-    /// \brief Is \a lhs ``less'' than \a rhs?
+    /// Is \a lhs ``less'' than \a rhs?
     ///
     /// This comparison is required by algorithms sorting face handles.
     ///
@@ -159,7 +159,7 @@ namespace mln
     template <unsigned N, unsigned D>
     inline
     n_face<N, D>::n_face()
-      : cplx_(), face_id_(std::numeric_limits<unsigned>::max())
+      : cplx_(), face_id_(value::internal::limits<unsigned>::max())
     {
       // Ensure N is compatible with D.
       metal::bool_< N <= D >::check();
@@ -188,7 +188,7 @@ namespace mln
     void
     n_face<N, D>::invalidate()
     {
-      set_face_id(std::numeric_limits<unsigned>::max());
+      set_face_id(value::internal::limits<unsigned>::max());
     }
 
     template <unsigned N, unsigned D>

@@ -29,12 +29,12 @@
 # define MLN_TOPO_FACE_HH
 
 /// \file mln/topo/face.hh
-/// \brief Face of a complex.
+/// Face of a complex.
 
 # include <iostream>
-# include <limits>
 # include <vector>
 
+# include <mln/value/internal/limits.hh>
 # include <mln/core/contract.hh>
 # include <mln/metal/bool.hh>
 
@@ -56,7 +56,7 @@ namespace mln
     | Face.  |
     `-------*/
 
-    /// \brief Face handle in a complex; the face dimension is dynamic.
+    /// Face handle in a complex; the face dimension is dynamic.
     ///
     /// Contrary to an mln::topo::n_face, the dimension of an
     /// mln::topo::face is not fixed.
@@ -121,14 +121,14 @@ namespace mln
       /// \}
 
     private:
-      /// \brief The complex the face belongs to.
+      /// The complex the face belongs to.
       ///
       /// A const face can be used to modify a complex.
       mutable complex<D> cplx_;
       /// The dimension of the face.
       // FIXME: Rename as `dim_'?
       unsigned n_;
-      /// \brief The id of the face.
+      /// The id of the face.
       // FIXME: Rename as `id_'?
       unsigned face_id_;
     };
@@ -137,21 +137,21 @@ namespace mln
     /// Comparison of two instances of mln::topo::face.
     /// \{
 
-    /// \brief Is \a lhs equal to \a rhs?
+    /// Is \a lhs equal to \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned D>
     bool operator==(const face<D>& lhs, const face<D>& rhs);
 
-    /// \brief Is \a lhs different from \a rhs?
+    /// Is \a lhs different from \a rhs?
     ///
     /// \pre Arguments \a lhs and \a rhs must belong to the same
     /// mln::topo::complex.
     template <unsigned D>
     bool operator!=(const face<D>& lhs, const face<D>& rhs);
 
-    /// \brief Is \a lhs ``less'' than \a rhs?
+    /// Is \a lhs ``less'' than \a rhs?
     ///
     /// This comparison is required by algorithms sorting face handles.
     ///
@@ -177,8 +177,8 @@ namespace mln
     inline
     face<D>::face()
       : cplx_(),
-	n_(std::numeric_limits<unsigned>::max()),
-	face_id_(std::numeric_limits<unsigned>::max())
+	n_(value::internal::limits<unsigned>::max()),
+	face_id_(value::internal::limits<unsigned>::max())
     {
     }
 
@@ -214,8 +214,8 @@ namespace mln
     void
     face<D>::invalidate()
     {
-      set_n(std::numeric_limits<unsigned>::max());
-      set_face_id(std::numeric_limits<unsigned>::max());
+      set_n(value::internal::limits<unsigned>::max());
+      set_face_id(value::internal::limits<unsigned>::max());
     }
 
     template <unsigned D>

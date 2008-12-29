@@ -254,7 +254,7 @@ namespace mln
     inline
     bool operator==(const float01& lhs, const float01& rhs)
     {
-      mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
+      mln_precondition(lhs.nbits() != 0 && rhs.nbits() != 0);
 
       if (rhs.nbits() == lhs.nbits())
 	return lhs.value_ind() == rhs.value_ind();
@@ -270,7 +270,7 @@ namespace mln
     inline
     bool operator<(const float01& lhs, const float01& rhs)
     {
-      mln_precondition(lhs.nbits() != 0 and rhs.nbits() != 0);
+      mln_precondition(lhs.nbits() != 0 && rhs.nbits() != 0);
       if (rhs.nbits() == lhs.nbits())
 	return lhs.value() < rhs.value();
       if (lhs.nbits() > rhs.nbits())

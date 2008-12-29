@@ -37,7 +37,7 @@
 # include <algorithm>
 # include <vector>
 # include <set>
-# include <ostream>
+# include <iostream>
 
 # include <mln/core/concept/object.hh>
 # include <mln/core/concept/graph.hh>

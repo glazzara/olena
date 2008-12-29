@@ -29,14 +29,13 @@
 # define MLN_TOPO_COMPLEX_HH
 
 /// \file mln/topo/complex.hh
-/// \brief Structures for general complexes.
+/// Structures for general complexes.
 ///
 /// A complex defines a topological space which can be used as a
 /// support for an image (i.e., as site sets).
 
 # include <cstddef>
 
-# include <limits>
 # include <iosfwd>
 
 # include <mln/metal/bool.hh>
@@ -82,7 +81,7 @@ namespace mln
     | Complex.  |
     `----------*/
 
-    /// \brief General complex of dimension \p D.
+    /// General complex of dimension \p D.
     template <unsigned D>
     class complex
     {
@@ -107,10 +106,10 @@ namespace mln
       /// Create a new \p D-complex.
       complex();
 
-      /// \brief Add a 0-face to the complex.
+      /// Add a 0-face to the complex.
       n_face<0u, D> add_face();
 
-      /// \brief Add a \p (N+1)-face to the complex (with \p N >= 0).
+      /// Add a \p (N+1)-face to the complex (with \p N >= 0).
       ///
       /// \param adjacent_faces The (\p N-1)-faces adjacent to the new
       /// \p N-face.
@@ -118,24 +117,24 @@ namespace mln
       n_face<N + 1, D> add_face(const n_faces_set<N, D>& adjacent_faces);
       /// \}
 
-      /// \brief Static manipulators.
+      /// Static manipulators.
       ///
       /// These methods use statically-known input.
       /// \{
-      /// \brief Return the total number of faces, whatever their
+      /// Return the total number of faces, whatever their
       /// dimension.
       unsigned nfaces() const;
 
-      /// \brief Return the number of \p N-faces.
+      /// Return the number of \p N-faces.
       template <unsigned N>
       unsigned nfaces() const;
       /// \}
 
-      /// \brief Dynamic manipulators.
+      /// Dynamic manipulators.
       ///
       /// These methods use input know as run time.
       /// \{
-      /// \brief Return the number of \a n-faces.
+      /// Return the number of \a n-faces.
       ///
       /// Warning, this function has a complexity linear in term of N,
       /// since each n_faces_set is checked (the present implementation
@@ -153,7 +152,7 @@ namespace mln
       void print_faces(std::ostream& ostr) const;
       /// \}
 
-      /// \brief Get the address of the data of this complex.
+      /// Get the address of the data of this complex.
       ///
       /// This address is a concise and useful information to print
       /// and track the actual content of this complex.
@@ -186,7 +185,7 @@ namespace mln
 
       /* FIXME: Replace F and ACCU by a Milena accumulator?  */
 
-      /** \brief Apply a kind of static fold left operator to the
+      /** Apply a kind of static fold left operator to the
 	  implicit list of n_faces_set using a functor \a f and a value \a
 	  accu.
 
@@ -198,13 +197,13 @@ namespace mln
       template <typename BinaryFunction, typename T>
       T fold_left_(const BinaryFunction& f, const T& accu) const;
 
-      /// \brief Apply a functor \a f to this list of \a n-faces.
+      /// Apply a functor \a f to this list of \a n-faces.
       template <typename UnaryFunction>
       typename UnaryFunction::result_type
       apply_if_dim_matches_(unsigned n, const UnaryFunction& f) const;
       /// \}
 
-      /// \brief Connect two algebraic faces.
+      /// Connect two algebraic faces.
       ///
       /// \param f1 An algebraic face of dimension \p N
       /// \param f2 A face of dimension \p N + 1
@@ -232,7 +231,7 @@ namespace mln
     | Complex data.  |
     `---------------*/
 
-    /** \brief Complex data.
+    /** Complex data.
 
 	Data is aggregated as follows in an mln::topo::complex<D>:
 
@@ -291,7 +290,7 @@ namespace mln
       template <unsigned N, unsigned D>
       struct faces_set_mixin;
 
-      /// \brief Complex data.
+      /// Complex data.
       template <unsigned D>
       struct complex_data : faces_set_mixin<D, D>
       {
@@ -319,7 +318,7 @@ namespace mln
       // mln::topo::internal::faces_set_mixin.  //
       // -------------------------------------- //
 
-      /// \brief Recursive mixins of set of faces.
+      /// Recursive mixins of set of faces.
       /// \{
       template <unsigned N, unsigned D> struct faces_set_mixin;
 
@@ -339,11 +338,11 @@ namespace mln
 
 	/// Functional meta-manipulators.
 	/// \{
-	/// \brief Fold left.
+	/// Fold left.
 	/// \see mln::complex<D>::fold_left_.
 	template <typename BinaryFunction, typename T>
 	T fold_left_(const BinaryFunction& f, const T& accu) const;
-	/// \brief Apply a functor \a f to the list of faces if \a n == \p D.
+	/// Apply a functor \a f to the list of faces if \a n == \p D.
 	/// \see mln::complex<D>::apply_if_dim_matches_.
 	template <typename UnaryFunction>
 	typename UnaryFunction::result_type
@@ -370,11 +369,11 @@ namespace mln
 
 	/// Functional meta-manipulators.
 	/// \{
-	/// \brief Fold left.
+	/// Fold left.
 	/// \see mln::complex<D>::fold_left_.
 	template <typename BinaryFunction, typename T>
 	T fold_left_(const BinaryFunction& f, const T& accu) const;
-	/// \brief Apply a functor \a f to the list of faces if \a n == \p N.
+	/// Apply a functor \a f to the list of faces if \a n == \p N.
 	/// \see mln::complex<D>::apply_if_dim_matches_.
 	template <typename UnaryFunction>
 	typename UnaryFunction::result_type
@@ -397,11 +396,11 @@ namespace mln
 
 	/// Functional meta-manipulators.
 	/// \{
-	/// \brief Fold left.
+	/// Fold left.
 	/// \see mln::complex<D>::fold_left_.
 	template <typename BinaryFunction, typename T>
 	T fold_left_(const BinaryFunction& f, const T& accu) const;
-	/// \brief Apply a functor \a f to the list of faces if \a n == 0.
+	/// Apply a functor \a f to the list of faces if \a n == 0.
 	/// \see mln::complex<D>::apply_if_dim_matches_.
 	template <typename UnaryFunction>
 	typename UnaryFunction::result_type
@@ -424,11 +423,11 @@ namespace mln
 
 	/// Functional meta-manipulators.
 	/// \{
-	/// \brief Fold left.
+	/// Fold left.
 	/// \see mln::complex<D>::fold_left_.
 	template <typename BinaryFunction, typename T>
 	T fold_left_(const BinaryFunction& f, const T& accu) const;
-	/// \brief Apply a functor \a f to the list of faces if \a n == 0.
+	/// Apply a functor \a f to the list of faces if \a n == 0.
 	/// \see mln::complex<D>::apply_if_dim_matches_.
 	template <typename UnaryFunction>
 	typename UnaryFunction::result_type

@@ -30,7 +30,7 @@
 
 # include <vector>
 # include <algorithm>
-# include <ostream>
+# include <iostream>
 # include <algorithm>
 # include <mln/core/contract.hh>
 

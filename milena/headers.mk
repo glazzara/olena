@@ -287,6 +287,7 @@ mln/value/internal/gray_f.hh \
 mln/value/internal/all.hh \
 mln/value/internal/value_like.hh \
 mln/value/internal/iterable_set.hh \
+mln/value/internal/limits.hh \
 mln/value/internal/encoding.hh \
 mln/value/internal/convert.hh \
 mln/value/internal/gray_.hh \

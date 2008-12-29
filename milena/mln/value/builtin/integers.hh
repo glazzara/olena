@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_VALUE_BUILTIN_INTEGERS_HH
 # define MLN_VALUE_BUILTIN_INTEGERS_HH
 
-/*! \file mln/value/builtin/integers.hh
- *
- * \brief Some definitions about built-in integer types.
- */
+/// \file mln/value/builtin/integers.hh
+///
+/// Some definitions about built-in integer types.
 
-# include <limits>
+# include <mln/value/internal/limits.hh>
 
 # include <mln/value/concept/built_in.hh>
 # include <mln/value/concept/integer.hh>
@@ -81,8 +81,8 @@ namespace mln
 	typedef trait::value::kind::data      kind;
 	typedef mln_value_quant_from_(card) quant;
 
-	static const E min() { return std::numeric_limits<E>::min(); }
-	static const E max() { return std::numeric_limits<E>::max(); }
+	static const E min() { return mln::value::internal::limits<E>::min(); }
+	static const E max() { return mln::value::internal::limits<E>::max(); }
 
 	typedef float sum;
       };
