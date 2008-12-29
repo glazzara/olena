@@ -29,13 +29,13 @@ int main()
   // contained in arr and fill these ones
   // with 0.
   // We must call "rw()" here.
-  level::fill((ima | arr).rw(), 0);
+  data::fill((ima | arr).rw(), 0);
 
   debug::println((ima | arr));
 
   mln_VAR(ima2, ima | arr);
   // We do not need to call "rw()" here.
-  level::fill(ima2, 0);
+  data::fill(ima2, 0);
   // \}
 
   debug::println(ima2);

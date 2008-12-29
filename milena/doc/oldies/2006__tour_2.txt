@@ -21,7 +21,7 @@ T: value type
 int[] values = { 'a', 'b', 'c',
                  'd', 'e', 'f' };
 image2d<char> ima(2, 3);
-level::fill(ima, values);
+data::fill(ima, values);
 debug::print(ima.bbox());
 
 // [(0, 0)..(1, 2)]
@@ -51,7 +51,7 @@ debug::print(ima, p);
 bbox2d bb = set(from(1,5), to(2,7));
 image2d<char> ima2(bb);
 ima2.set_name("ima2");
-level::fill(ima2, values);
+data::fill(ima2, values);
 debug::print(ima2);
 
 //    5 6 7

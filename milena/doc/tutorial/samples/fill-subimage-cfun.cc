@@ -30,9 +30,9 @@ int main()
   // \{
   image2d<rgb8> ima2;
   initialize(ima2, ima);
-  level::fill(ima2, literal::black);
+  data::fill(ima2, literal::black);
 
-  level::fill((ima2 | row_oddity).rw(), literal::red);
+  data::fill((ima2 | row_oddity).rw(), literal::red);
   // \}
 
   doc::ppmsave(ima2, "fill-subimage-cfun");

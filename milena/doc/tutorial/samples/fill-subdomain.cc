@@ -36,8 +36,8 @@ int main()
 
   image2d<label_8> tmp;
   initialize(tmp, lbl);
-  level::fill(tmp, 0);
-  level::fill((tmp | lbl_2.domain()).rw(), 1);
+  data::fill(tmp, 0);
+  data::fill((tmp | lbl_2.domain()).rw(), 1);
   doc::ppmsave(debug::colorize(rgb8(), tmp, 1), "fill-subdomain");
 
   // Create a black image from ima.
@@ -45,9 +45,9 @@ int main()
   // \{
   image2d<rgb8> ima2;
   initialize(ima2, ima);
-  level::fill(ima2, literal::black);
+  data::fill(ima2, literal::black);
 
-  level::fill((ima2 | lbl_2.domain()).rw(), literal::red);
+  data::fill((ima2 | lbl_2.domain()).rw(), literal::red);
   // \}
 
   doc::ppmsave(ima2, "fill-subdomain");

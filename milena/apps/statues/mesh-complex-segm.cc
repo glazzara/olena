@@ -146,7 +146,7 @@ int main(int argc, char* argv[])
   `---------*/
 
   mln::rgb8_2complex_image3df output(wshed.domain());
-  mln::level::fill(output, mln::literal::white);
+  mln::data::fill(output, mln::literal::white);
 
   // FIXME: Use a colorize functor instead.
   // Choose random colors for each basin number.

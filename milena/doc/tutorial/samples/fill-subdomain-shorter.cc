@@ -26,8 +26,8 @@ int main()
 
   image2d<rgb8> ima2;
   initialize(ima2, ima);
-  level::fill(ima2, literal::black);
+  data::fill(ima2, literal::black);
 
-  level::fill((ima2 | (pw::value(lab) == pw::cst(2u))).rw(), literal::red);
+  data::fill((ima2 | (pw::value(lab) == pw::cst(2u))).rw(), literal::red);
   // \}
 }

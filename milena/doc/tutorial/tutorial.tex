@@ -1031,7 +1031,7 @@ Sometimes, you may want to initialize an image from another one:
 \var{img2b} is declared without specifying a domain. Its border size is set to
 the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
  with the same domain and border/extension as \var{img2a}. The data is not
- copied though. Other routines like \code{level::fill} can be called in order to
+ copied though. Other routines like \code{data::fill} can be called in order to
  do so (See also \doxyref{fillop}).
 
 
@@ -1405,7 +1405,7 @@ passed as parameter. These macros can be used with any container like images or
 site sets.
 
 Here follow an example with the implemantions of the most basic routines which
-use the \code{for\_all} loop: \code{level::fill()} and \code{level::paste()}.
+use the \code{for\_all} loop: \code{data::fill()} and \code{data::paste()}.
 
 \doxycode{fill}
 
@@ -1474,9 +1474,9 @@ Routine name & Description \\ \hline
 level::clone() & creates a deep copy of an object. Any shared data is
 duplicated. \\ 
 
-level::fill() & fill an object with a value. \\ 
+data::fill() & fill an object with a value. \\ 
 
-level::paste() & paste object data to another object. \\ 
+data::paste() & paste object data to another object. \\ 
 
 labeling::blobs() & find and label the different components of an image. \\
 
@@ -1497,17 +1497,17 @@ have not been initialized yet.  So we fill \var{imga} with the value 'a':
 
 \doxycode[2]{fill-call-1}
 
-The ``\code{fill}'' algorithm is located in the sub-namespace "\namespace{mln::level}" since this
-algorithm deals with the ``level'' of site values.
+The ``\code{fill}'' algorithm is located in the sub-namespace "\namespace{mln::data}" since this
+algorithm deals with the site values.
 
 Note that the term "level" refers to the fact that an image can be considered as
 a landscape where the elevation at a particular location/site is given by
 the corresponding site value.
 
-The full name of this routine is ``\namespace{mln::level::fill}''.
+The full name of this routine is ``\namespace{mln::data::fill}''.
 To access to a particular algorithm, the proper file shall be included.
 The file names of algorithms strictly map their C++ name; so
-\namespace{mln::level::fill} is defined in the file \header{mln/level/fill.hh}.
+\namespace{mln::data::fill} is defined in the file \header{mln/data/fill.hh}.
 
 %----------------
 \subsection*{Note}
@@ -1515,7 +1515,7 @@ Most algorithms in Olena are constructed following the classical scheme: "output
 algo(input)", where the input image is only read. However some few algorithms
 take an input image in order to modify it.  To enforce this particular feature,
 the user shall explicitly state that the image is provided so that its data is
-modified "read/write". The algorithm call shall be ``\code{level::fill(ima.rw(),
+modified "read/write". The algorithm call shall be ``\code{data::fill(ima.rw(),
 val)}''. When forgetting the ``\code{rw()}'' call it does not compile.
 
 \doxycode[3]{fill-call-1}
@@ -1551,7 +1551,7 @@ Gives:
 The notion of site sets plays an important role in Olena. Many tests are
 performed at run-time to ensure that the program is correct.
 
-For instance, the algorithm level::paste tests that the set of sites of imgb
+For instance, the algorithm data::paste tests that the set of sites of imgb
 (whose values are to be pasted) is a subset of the destination image.
 
 

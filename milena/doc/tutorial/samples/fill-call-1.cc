@@ -8,11 +8,11 @@ int main()
   // \}
 
   // \{
-  level::fill(imga, 'a');
+  data::fill(imga, 'a');
   // \}
 
   // \{
-  level::fill((imga | box2d(1,2)).rw(), 'a');
+  data::fill((imga | box2d(1,2)).rw(), 'a');
   // \}
 
 }

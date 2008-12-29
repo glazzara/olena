@@ -6,7 +6,7 @@
 # include <mln/debug/println.hh>
 
 # include <mln/morpho/elementary/gradient.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 
 
 int main()
@@ -22,7 +22,7 @@ int main()
   debug::println(sub);
   debug::println(morpho::elementary::gradient(sub, c4()));
 
-  level::fill_with_value((ima | box2d(2,3)).rw(), 0);
+  data::fill_with_value((ima | box2d(2,3)).rw(), 0);
   debug::println(ima);
 
   trait::image::print(sub);

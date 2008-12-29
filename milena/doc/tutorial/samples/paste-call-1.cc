@@ -9,10 +9,10 @@ int main()
   image2d<unsigned char> imga(imgb.domain());
 
   // Initialize the image values.
-  level::fill(imgb, 'b');
+  data::fill(imgb, 'b');
 
   // Paste the content of imgb in imga.
-  level::paste(imgb, imga);
+  data::paste(imgb, imga);
 
   debug::println(imga);
   // \}

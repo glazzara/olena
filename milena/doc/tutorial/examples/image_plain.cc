@@ -2,7 +2,7 @@
 # include <mln/core/image/plain.hh>
 # include <mln/debug/println.hh>
 # include <mln/debug/iota.hh>
-# include <mln/level/fill_with_value.hh>
+# include <mln/data/fill_with_value.hh>
 # include <mln/opt/at.hh>
 
 
@@ -36,7 +36,7 @@ int main()
   debug::println(ima);
 
   image2d<I_> mos(2, 2);
-  level::fill_with_value(mos, ima);
-  level::fill_with_value(opt::at(mos, 1,1), 0);
+  data::fill_with_value(mos, ima);
+  data::fill_with_value(opt::at(mos, 1,1), 0);
   picture(mos);
 }

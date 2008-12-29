@@ -110,10 +110,10 @@ namespace mln
     labeling<F>::init()
     {
       initialize(deja_vu, f.input);
-      mln::level::fill(deja_vu, false);
+      mln::data::fill(deja_vu, false);
       initialize(parent, f.input);
       initialize(output, f.input);
-      mln::level::fill(output, L(literal::zero));
+      mln::data::fill(output, L(literal::zero));
       nlabels = 0;
     }
 

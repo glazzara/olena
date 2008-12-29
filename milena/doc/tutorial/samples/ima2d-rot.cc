@@ -12,14 +12,14 @@ int main()
 
   // Declare the image to be rotated.
   image2d<value::rgb8> ima1_(220, 220);
-  level::fill(ima1_, literal::cyan);
+  data::fill(ima1_, literal::cyan);
   border::fill(ima1_, literal::yellow);
   // Set an infinite extension.
   mln_VAR(ima1, extend(ima1_, pw::cst(literal::yellow)));
 
   // Declare the output image.
   image2d<value::rgb8> ima2(220, 220);
-  level::fill(ima2, literal::cyan);
+  data::fill(ima2, literal::cyan);
   border::fill(ima2, literal::yellow);
 
   box2d extended_domain= ima1.domain();

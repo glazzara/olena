@@ -1,5 +1,26 @@
 2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update tutorial according to the last renamings.
+
+	* apps/statues/mesh-complex-segm.cc,
+	* doc/benchmark/canvas.cc,
+	* doc/oldies/2006__tour_1.txt,
+	* doc/oldies/2006__tour_2.txt,
+	* doc/tutorial/examples/image_plain.cc,
+	* doc/tutorial/examples/sub_image.cc,
+	* doc/tutorial/samples/fill-call-1.cc,
+	* doc/tutorial/samples/fill-part-image.cc,
+	* doc/tutorial/samples/fill-subdomain-shorter.cc,
+	* doc/tutorial/samples/fill-subdomain.cc,
+	* doc/tutorial/samples/fill-subimage-cfun.cc,
+	* doc/tutorial/samples/ima2d-7.cc,
+	* doc/tutorial/samples/ima2d-rot.cc,
+	* doc/tutorial/samples/paste-call-1.cc,
+	* doc/tutorial/tutorial.tex: rename level::fill/paste as
+	data::fill/paste.
+
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix compilation issues.
 
 	* tests/unit_test/Makefile.am,
