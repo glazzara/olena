@@ -35,6 +35,7 @@
 /// the area in terms of adjacent vertices.
 
 # include <mln/pw/image.hh>
+# include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/p_edges.hh>
 # include <mln/morpho/opening_attribute.hh>
 # include <mln/accu/count_adjacent_vertices.hh>
@@ -58,9 +59,9 @@ namespace mln
 
     template <typename P2V, typename G, typename V2P, typename N>
     pw::image<P2V, p_edges<G, V2P> >
-    void opening_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-				  const Neighborhood<N>& nbh,
-				  unsigned lambda)
+    opening_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
+			     const Neighborhood<N>& nbh,
+			     unsigned lambda)
     {
       trace::entering("morpho::opening_area_on_vertices");
 

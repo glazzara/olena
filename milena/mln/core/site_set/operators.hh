@@ -44,7 +44,9 @@
 namespace mln
 {
 
+  // Forward declarations.
   template <typename E> struct Box;
+  namespace set { template <typename S> unsigned card(const Site_Set<S>& s); }
 
 
   template <typename Sl, typename Sr>

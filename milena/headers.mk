@@ -190,7 +190,6 @@ mln/fun/vv2v/min.hh \
 mln/fun/vv2v/essential.hh \
 mln/fun/internal/array_base.hh \
 mln/fun/internal/x2x_linear_impl.hh \
-mln/fun/internal/ch_function_value_impl.hh \
 mln/fun/internal/selector.hh \
 mln/fun/v2w_w2v/norm.hh \
 mln/fun/p2v/ternary.hh \
@@ -213,7 +212,6 @@ mln/fun/v2v/dec.hh \
 mln/fun/v2v/abs.hh \
 mln/fun/v2v/rgb_to_hsl.hh \
 mln/fun/v2v/cast.hh \
-mln/fun/v2v/ch_function_value.hh \
 mln/fun/v2v/rgb_to_hsi.hh \
 mln/fun/v2v/enc.hh \
 mln/fun/v2v/convert.hh \
@@ -442,7 +440,6 @@ mln/trait/value/essential.hh \
 mln/trait/images.hh \
 mln/trait/window/props.hh \
 mln/trait/window/print.hh \
-mln/trait/ch_function_value.hh \
 mln/trait/ch_value.hh \
 mln/trait/solve.hh \
 mln/trait/solve_unary.hh \
@@ -768,6 +765,7 @@ mln/core/routine/ops.hh \
 mln/core/routine/all.hh \
 mln/core/routine/exact.hh \
 mln/core/routine/extend.hh \
+mln/core/routine/init.hxx \
 mln/core/routine/essential.hh \
 mln/core/trait/op_mult.hh \
 mln/core/trait/all.hh \

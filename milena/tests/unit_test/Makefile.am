@@ -187,7 +187,6 @@ mln_fun_vv2v_min \
 mln_fun_vv2v_essential \
 mln_fun_internal_array_base \
 mln_fun_internal_x2x_linear_impl \
-mln_fun_internal_ch_function_value_impl \
 mln_fun_internal_selector \
 mln_fun_v2w_w2v_norm \
 mln_fun_p2v_ternary \
@@ -210,7 +209,6 @@ mln_fun_v2v_dec \
 mln_fun_v2v_abs \
 mln_fun_v2v_rgb_to_hsl \
 mln_fun_v2v_cast \
-mln_fun_v2v_ch_function_value \
 mln_fun_v2v_rgb_to_hsi \
 mln_fun_v2v_enc \
 mln_fun_v2v_convert \
@@ -436,7 +434,6 @@ mln_trait_value_essential \
 mln_trait_images \
 mln_trait_window_props \
 mln_trait_window_print \
-mln_trait_ch_function_value \
 mln_trait_ch_value \
 mln_trait_solve \
 mln_trait_solve_unary \
@@ -1196,7 +1193,6 @@ mln_fun_vv2v_min_SOURCES = mln_fun_vv2v_min.cc
 mln_fun_vv2v_essential_SOURCES = mln_fun_vv2v_essential.cc
 mln_fun_internal_array_base_SOURCES = mln_fun_internal_array_base.cc
 mln_fun_internal_x2x_linear_impl_SOURCES = mln_fun_internal_x2x_linear_impl.cc
-mln_fun_internal_ch_function_value_impl_SOURCES = mln_fun_internal_ch_function_value_impl.cc
 mln_fun_internal_selector_SOURCES = mln_fun_internal_selector.cc
 mln_fun_v2w_w2v_norm_SOURCES = mln_fun_v2w_w2v_norm.cc
 mln_fun_p2v_ternary_SOURCES = mln_fun_p2v_ternary.cc
@@ -1219,7 +1215,6 @@ mln_fun_v2v_dec_SOURCES = mln_fun_v2v_dec.cc
 mln_fun_v2v_abs_SOURCES = mln_fun_v2v_abs.cc
 mln_fun_v2v_rgb_to_hsl_SOURCES = mln_fun_v2v_rgb_to_hsl.cc
 mln_fun_v2v_cast_SOURCES = mln_fun_v2v_cast.cc
-mln_fun_v2v_ch_function_value_SOURCES = mln_fun_v2v_ch_function_value.cc
 mln_fun_v2v_rgb_to_hsi_SOURCES = mln_fun_v2v_rgb_to_hsi.cc
 mln_fun_v2v_enc_SOURCES = mln_fun_v2v_enc.cc
 mln_fun_v2v_convert_SOURCES = mln_fun_v2v_convert.cc
@@ -1445,7 +1440,6 @@ mln_trait_value_essential_SOURCES = mln_trait_value_essential.cc
 mln_trait_images_SOURCES = mln_trait_images.cc
 mln_trait_window_props_SOURCES = mln_trait_window_props.cc
 mln_trait_window_print_SOURCES = mln_trait_window_print.cc
-mln_trait_ch_function_value_SOURCES = mln_trait_ch_function_value.cc
 mln_trait_ch_value_SOURCES = mln_trait_ch_value.cc
 mln_trait_solve_SOURCES = mln_trait_solve.cc
 mln_trait_solve_unary_SOURCES = mln_trait_solve_unary.cc

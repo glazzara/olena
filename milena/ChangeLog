@@ -1,5 +1,29 @@
 2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation issues.
+
+	* mln/core/site_set/operators.hh: add missing forward declaration.
+
+	* mln/linear/local/convolve.hh: update declaration.
+
+	* mln/morpho/closing_area_on_vertices.hh: add a missing include.
+
+	* mln/morpho/opening_area_on_vertices.hh: fix wrong declaration.
+
+	* tests/core/site_set/p_array.cc,
+	* tests/core/site_set/pset_if.cc: fix an assertion.
+
+	* tests/linear/local/convolve.cc: update doc.
+
+	* tests/unit_test/Makefile.am,
+	* headers.mk: remove entries related to non commited files.
+
+	* tests/unit_test/mln_core_routine_duplicate.cc,
+	* tests/unit_test/mln_data_all.cc
+	* tests/unit_test/mln_data_essential.cc: add new unit tests.
+
+2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a dispatch in from_to.
 
 	* headers.mk: add new headers to the distribution.

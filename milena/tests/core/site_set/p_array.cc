@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +25,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/site_set/p_array.cc
- *
- * \brief Tests on mln::p_array.
- */
+/// \file tests/core/site_set/p_array.cc
+///
+/// Tests on mln::p_array.
 
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/site_set/p_array.hh>
@@ -51,5 +50,5 @@ int main()
   mln_psite_(Arr) p(arr, 0);
   mln_assertion(p.to_site() == x);
   mln_assertion(p.row() == 5);
-  mln_assertion(point2d(p) == x);
+  mln_assertion(p == x);
 }

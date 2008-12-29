@@ -36,7 +36,7 @@
 #include <mln/fun/p2b/chess.hh>
 #include <mln/convert/to_image.hh>
 #include <mln/convert/to_p_set.hh>
-#include <mln/geom/nsites.hh>
+#include <mln/set/card.hh>
 
 
 int main()
@@ -44,7 +44,7 @@ int main()
   using namespace mln;
 
   box2d box_8x8 = make::box2d(8, 8);
-  mln_assertion(geom::nsites((box_8x8 | fun::p2b::chess())) == 32);
+  mln_assertion(set::card((box_8x8 | fun::p2b::chess())) == 32);
 
   {
     p_set<point2d> s = convert::to_p_set(box_8x8 | fun::p2b::chess());

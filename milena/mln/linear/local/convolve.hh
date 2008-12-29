@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_LINEAR_LOCAL_CONVOLVE_HH
 # define MLN_LINEAR_LOCAL_CONVOLVE_HH
 
-/*! \file mln/linear/local/convolve.hh
- *
- * \brief Local convolution at a point.
- */
+/// \file mln/linear/local/convolve.hh
+///
+/// Local convolution at a point.
 
 # include <mln/core/concept/image.hh>
-# include <mln/core/concept/point_site.hh>
+# include <mln/core/concept/site.hh>
 # include <mln/core/concept/generalized_pixel.hh>
 # include <mln/core/concept/weighted_window.hh>
 # include <mln/metal/const.hh>
@@ -61,9 +61,9 @@ namespace mln
        */
       template <typename I, typename P, typename W, typename R>
       void convolve(const Image<I>&           input,
-		    const Point_Site<P>&      p,
+		    const Site<P>&	      p,
 		    const Weighted_Window<W>& w_win,
-		    R& result);
+		    R&			      result);
 
 
       /*! Local convolution around (generalized) pixel \p by the
@@ -78,7 +78,7 @@ namespace mln
       template <typename P, typename W, typename R>
       void convolve(const Generalized_Pixel<P>& p,
 		    const Weighted_Window<W>&   w_win,
-		    R& result);
+		    R&				result);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -88,14 +88,15 @@ namespace mln
 
 	template <typename I, typename P, typename W, typename R>
 	inline
-	void convolve(trait::image::speed::any, const I& input,
-		      const Point_Site<P>& p_,
-		      const W&             w_win,
-		      R& result)
+	void convolve(trait::image::speed::any,
+		      const I&	      input,
+		      const Site<P>&  p_,
+		      const W&        w_win,
+		      R&	      result)
 	{
 	  const P& p = exact(p_);
 
-	  R tmp = 0; // FIXME: zero?
+	  R tmp = literal::zero; // FIXME: zero?
 	  mln_qiter(W) q(w_win, p);
 	  for_all(q) if (input.has(q))
 	    tmp += input(q) * q.w();
@@ -104,10 +105,11 @@ namespace mln
 
 	template <typename I, typename P, typename W, typename R>
 	inline
-	void convolve(trait::image::speed::fastest, const I& input,
-		      const Point_Site<P>& p_,
-		      const W& w_win,
-		      R& result)
+	void convolve(trait::image::speed::fastest,
+		      const I&	      input,
+		      const Site<P>&  p_,
+		      const W&	      w_win,
+		      R&	      result)
 	{
 	  const P& p = exact(p_);
 
@@ -125,7 +127,7 @@ namespace mln
 	inline
 	void convolve(const Generalized_Pixel<P>& p_,
 		      const W&                    w_win,
-		      R& result)
+		      R&			  result)
 	{
 	  const P& p = mln::internal::force_exact<P>(p_);
 	  mln_precondition(p.ima().border() >= w_win.delta());
@@ -147,10 +149,10 @@ namespace mln
 
       template <typename I, typename P, typename W, typename R>
       inline
-      void convolve(const Image<I>& input,
-		    const Point_Site<P>& p,
-		    const Weighted_Window<W>&   w_win,
-		    R& result)
+      void convolve(const Image<I>&	      input,
+		    const Site<P>&	      p,
+		    const Weighted_Window<W>& w_win,
+		    R&			      result)
       {
 	mln_precondition(exact(input).has_data());
 	impl::convolve(mln_trait_image_speed(I)(), exact(input),
@@ -161,7 +163,7 @@ namespace mln
       inline
       void convolve(const Generalized_Pixel<P>& p,
 		    const Weighted_Window<W>&   w_win,
-		    R& result)
+		    R&				result)
       {
 	impl::convolve(p, exact(w_win), result);
       }
