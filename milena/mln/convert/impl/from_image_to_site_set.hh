@@ -37,8 +37,6 @@
 /// \todo Add (?) the case p_run-based -> site set.
 
 # include <utility>
-# include <mln/core/concept/image.hh>
-# include <mln/core/concept/site_set.hh>
 # include <mln/core/site_set/p_run.hh>
 # include <mln/metal/converts_to.hh>
 
@@ -46,6 +44,11 @@
 
 namespace mln
 {
+
+  // Forward declarations.
+  template <typename E> struct Site_Set;
+  template <typename E> struct Image;
+  template <typename E> struct Gpoint;
 
   namespace convert
   {

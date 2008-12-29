@@ -37,7 +37,7 @@
 # include <mln/geom/bbox.hh>
 # include <mln/border/find.hh>
 
-# include <core/routine/init.hxx>
+# include <mln/core/routine/init.hxx>
 
 
 namespace mln

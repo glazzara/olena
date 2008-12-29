@@ -37,6 +37,7 @@
 
 
 # include <algorithm>
+# include <mln/convert/from_to.hh>
 # include <mln/core/concept/site_set.hh>
 
 
@@ -122,7 +123,7 @@ namespace mln
     sym_diff_std_set(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
       typedef mln_site(Sl) P;
-      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      mlc_converts_to(mln_psite(Sr), P)::check();
       std::set< P, util::ord<P> > sl, sr, sd;
       convert::from_to(lhs, sl);
       convert::from_to(rhs, sr);
@@ -149,7 +150,7 @@ namespace mln
     leq_std_set(const Site_Set<Sl>& lhs, const Site_Set<Sr>& rhs)
     {
       typedef mln_site(Sl) P;
-      mlc_converts_to(mln_psite(Sr), P)::check(); 
+      mlc_converts_to(mln_psite(Sr), P)::check();
       std::set< P, util::ord<P> > sl, sr;
       convert::from_to(lhs, sl);
       convert::from_to(rhs, sr);
@@ -172,7 +173,7 @@ namespace mln
 	++n;
       return n;
     }
-    
+
     template <typename S>
     inline
     unsigned set_card_dispatch_(mln::trait::site_set::nsites::known,
@@ -180,7 +181,7 @@ namespace mln
     {
       return s.nsites();
     }
-    
+
     template <typename S>
     inline
     unsigned set_card(const Site_Set<S>& s)

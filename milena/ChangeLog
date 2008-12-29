@@ -1,5 +1,19 @@
 2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix compilation issues.
+
+	* tests/unit_test/Makefile.am,
+	* headers.mk: remove entries related to non-commited files.
+
+	* mln/convert/impl/from_image_to_site_set.hh,
+	* mln/convert/from_to.hh: Use forward declarations.
+
+	* mln/core/routine/init.hh: fix wrong include.
+
+	* mln/core/site_set/operators.hh: add a missing forward declaration.
+
+2008-12-29  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Propagate renaming level::fill/paste as data::fill/paste (again).
 
 	* doc/examples/erosion.cc,

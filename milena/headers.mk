@@ -777,7 +777,6 @@ mln/core/category.hh \
 mln/core/macros.hh \
 mln/core/box_runstart_piter.hh \
 mln/core/tags.hh \
-mln/core/w_window.hh.orig \
 mln/core/dpoint.hh \
 mln/core/alias/dpoint2d_h.hh \
 mln/core/alias/p_run2d.hh \
@@ -841,14 +840,12 @@ mln/core/concept/weighted_window.hh \
 mln/core/concept/all.hh \
 mln/core/concept/gpoint.hh \
 mln/core/concept/site_iterator.hh \
-mln/core/concept/window.hh.LOCAL.2903.hh \
 mln/core/concept/point.hh \
 mln/core/concept/literal.hh \
 mln/core/concept/pixel_iterator.hh \
 mln/core/concept/README \
 mln/core/concept/value_iterator.hh \
 mln/core/concept/meta_accumulator.hh \
-mln/core/concept/window.hh.BASE.2903.hh \
 mln/core/concept/gdpoint.hh \
 mln/core/concept/regular_grid.hh \
 mln/core/concept/mesh.hh \
@@ -864,8 +861,6 @@ mln/core/concept/meta_fun.hh \
 mln/core/concept/delta_point_site.hh \
 mln/core/concept/status.txt \
 mln/core/concept/neighborhood.hh \
-mln/core/concept/window.hh.orig \
-mln/core/concept/window.hh.REMOTE.2903.hh \
 mln/core/concept/browsing.hh \
 mln/core/pixel.hh \
 mln/core/clock_neighb2d.hh \

@@ -814,13 +814,11 @@ mln_core_concept_weighted_window \
 mln_core_concept_all \
 mln_core_concept_gpoint \
 mln_core_concept_site_iterator \
-mln_core_concept_window_LOCAL_2903.cc \
 mln_core_concept_point \
 mln_core_concept_literal \
 mln_core_concept_pixel_iterator \
 mln_core_concept_value_iterator \
 mln_core_concept_meta_accumulator \
-mln_core_concept_window_BASE_2903.cc \
 mln_core_concept_gdpoint \
 mln_core_concept_regular_grid \
 mln_core_concept_mesh \
@@ -834,7 +832,6 @@ mln_core_concept_object \
 mln_core_concept_meta_fun \
 mln_core_concept_delta_point_site \
 mln_core_concept_neighborhood \
-mln_core_concept_window_REMOTE_2903.cc \
 mln_core_concept_browsing \
 mln_core_pixel \
 mln_core_clock_neighb2d \
@@ -1820,13 +1817,11 @@ mln_core_concept_weighted_window_SOURCES = mln_core_concept_weighted_window.cc
 mln_core_concept_all_SOURCES = mln_core_concept_all.cc
 mln_core_concept_gpoint_SOURCES = mln_core_concept_gpoint.cc
 mln_core_concept_site_iterator_SOURCES = mln_core_concept_site_iterator.cc
-mln_core_concept_window_LOCAL_2903_SOURCES = mln_core_concept_window.cc_LOCAL_2903.cc
 mln_core_concept_point_SOURCES = mln_core_concept_point.cc
 mln_core_concept_literal_SOURCES = mln_core_concept_literal.cc
 mln_core_concept_pixel_iterator_SOURCES = mln_core_concept_pixel_iterator.cc
 mln_core_concept_value_iterator_SOURCES = mln_core_concept_value_iterator.cc
 mln_core_concept_meta_accumulator_SOURCES = mln_core_concept_meta_accumulator.cc
-mln_core_concept_window_BASE_2903_SOURCES = mln_core_concept_window.cc_BASE_2903.cc
 mln_core_concept_gdpoint_SOURCES = mln_core_concept_gdpoint.cc
 mln_core_concept_regular_grid_SOURCES = mln_core_concept_regular_grid.cc
 mln_core_concept_mesh_SOURCES = mln_core_concept_mesh.cc
@@ -1840,7 +1835,6 @@ mln_core_concept_object_SOURCES = mln_core_concept_object.cc
 mln_core_concept_meta_fun_SOURCES = mln_core_concept_meta_fun.cc
 mln_core_concept_delta_point_site_SOURCES = mln_core_concept_delta_point_site.cc
 mln_core_concept_neighborhood_SOURCES = mln_core_concept_neighborhood.cc
-mln_core_concept_window_REMOTE_2903_SOURCES = mln_core_concept_window.cc_REMOTE_2903.cc
 mln_core_concept_browsing_SOURCES = mln_core_concept_browsing.cc
 mln_core_pixel_SOURCES = mln_core_pixel.cc
 mln_core_clock_neighb2d_SOURCES = mln_core_clock_neighb2d.cc

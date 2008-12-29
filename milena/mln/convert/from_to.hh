@@ -33,24 +33,26 @@
 /// General conversion procedure between two objects.
 ///
 /// \todo Test the effectiveness of guards.
-/// \todo Add fwd decls.
 /// \todo Dispatch code in appropriate files.
 
-
-# include <mln/core/concept/object.hh>
-# include <mln/core/concept/gpoint.hh>
-# include <mln/value/concept/all.hh>
 
 # include <mln/convert/impl/all.hh>
 # include <mln/convert/from_to.hxx>
 
-# include <mln/algebra/vec.hh>
-# include <mln/metal/is.hh>
 # include <mln/metal/abort.hh>
+# include <mln/metal/converts_to.hh>
+# include <mln/metal/is.hh>
+# include <mln/metal/is_a.hh>
 
 
 namespace mln
 {
+
+  // Forward declarations.
+  template <typename E> struct Object;
+  template <typename E> struct Value;
+  template <typename E> struct Site_Set;
+  template <typename E> struct Image;
 
   namespace convert
   {
@@ -149,7 +151,8 @@ namespace mln
       from_to_dispatch(metal::true_,  const F& from,
 		       metal::true_,  T&       to)
       {
-	internal::from_to_dispatch(typename mlc_converts_to(F, T)::eval(),
+	typedef mlc_converts_to(F, T) F_converts_to_T;
+	internal::from_to_dispatch(F_converts_to_T(),
 				   exact(from), exact(to));
       }
 
