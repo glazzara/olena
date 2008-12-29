@@ -1,3 +1,11 @@
+2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix configure.ac and INSTALL files.
+
+	* configure.ac: here.
+
+	* INSTALL: fix content about DNDEBUG.
+
 2008-12-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Enable the generation of version.hh.

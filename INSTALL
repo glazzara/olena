@@ -143,15 +143,14 @@ for Olena. This is a problem for GCC 2.95 and probably other compilers.
 need other flags. If you know these flags, add them to `CXXFLAGS'.
 
 
-1.3.3 Debugging flags make Olena slow
--------------------------------------
+1.3.3 Debugging flags
+---------------------
 
-Because Olena depends on C++ optimizations to provide the best
-performance, and enabling debugging flags often disable optimizations,
-you are advised to override the `CXXFLAGS_OPTIMIZE' with any options
-that gives the best optimization/conformance tradeoff.  However, note
-that passing `-DNDEBUG' disable many sanity checks, while providing
-only a poor performance improvement.
+All over the code, many sanity checks are enabled by default. They are
+convenient since they make sure nothing wrong is passed to the functions.
+However, once the program is stable they may not be necessary anymore.
+Passing `-DNDEBUG' to the CXXFLAGS disable many sanity checks, while providing
+*high* performance improvement.
 
 
 

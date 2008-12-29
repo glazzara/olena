@@ -191,6 +191,7 @@ AC_CONFIG_FILES([
       milena/tests/core/other/Makefile
       milena/tests/core/routine/Makefile
       milena/tests/core/site_set/Makefile
+    milena/tests/data/Makefile
     milena/tests/debug/Makefile
     milena/tests/display/Makefile
     milena/tests/draw/Makefile
