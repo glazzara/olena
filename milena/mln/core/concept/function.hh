@@ -100,7 +100,7 @@ namespace mln
   struct Function_v2v : public Function<E>
   {
     typedef Function_v2v<void> category;
-    typedef metal::false_ is_mutable; // Meaning: no mutable result by default.
+    typedef void mutable_result; // Meaning: no mutable result by default.
   protected:
     Function_v2v();
     Function_v2v(const Function_v2v&);

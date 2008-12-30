@@ -38,7 +38,6 @@
 # include <vector>
 # include <algorithm>
 # include <mln/fun/internal/array_base.hh>
-# include <mln/core/concept/function.hh>
 # include <mln/util/array.hh>
 
 
@@ -89,10 +88,9 @@ namespace mln
     {
 
       template <typename T>
-      class array : public Function_i2v< array<T> >,
-		    public internal::array_base<T>
+      class array : public internal::array_base< T, array<T> >
       {
-	typedef internal::array_base<T> super_base_;
+	typedef internal::array_base< T, array<T> > super_base_;
 
       public:
 
@@ -112,10 +110,8 @@ namespace mln
 	/// Used in from_to(). Constructs that function from an std::vector.
 	/// Always prefer using from_to instead of this constructor.
 	array(const std::vector<T>& from);
-
 	/// \}
 
-	typedef metal::true_ is_mutable;
       };
 
     } // end of namespace mln::fun::i2v
@@ -125,6 +121,16 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // Init.
+
+  template <typename T1, typename T2>
+  void init_(tag::function_t,
+	     fun::i2v::array<T1>&	  f,
+	     const fun::i2v::array<T2>&	  model)
+  {
+    f.init_(model.size());
+  }
 
 
   // convert::from_to

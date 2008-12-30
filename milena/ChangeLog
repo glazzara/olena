@@ -1,5 +1,20 @@
 2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix data mutability in pw::image.
+
+	* mln/core/concept/function.hh: use a mutable_result type
+	instead of using a boolean. It avoids issues with the mutable type
+	which may differ from the result value of the function. Taking a
+	reference on the function result value *must* be different in order to
+	handle the case of a reference on an element in a vector of bool.
+
+	* mln/fun/i2v/array.hh,
+	* mln/fun/internal/array_base.hh,
+	* mln/fun/l2l/relabel.hh,
+	* mln/pw/image.hh: update in order to use the new mutable_result type.
+
+2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a call to center_at_() in
         site_relative_iterator_base::center_at() (ticket #176).
 

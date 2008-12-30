@@ -36,7 +36,6 @@
 # include <vector>
 # include <algorithm>
 # include <mln/fun/internal/array_base.hh>
-# include <mln/core/concept/function.hh>
 # include <mln/util/array.hh>
 # include <mln/metal/converts_to.hh>
 
@@ -90,12 +89,14 @@ namespace mln
     {
 
       template <typename L>
-      class relabel : public Function_l2l< relabel<L> >,
-		      public internal::array_base<L>
+      class relabel : public internal::array_base< L, relabel<L> >
       {
-	typedef internal::array_base<L> super_base_;
+	typedef internal::array_base< L, relabel<L> > super_base_;
 
       public:
+
+	/// Constructors
+	/// \{
 
 	/// Default.
 	relabel();
@@ -110,8 +111,8 @@ namespace mln
 	/// Used in from_to(). Constructs that function from an std::vector.
 	/// Always prefer using from_to instead of this constructor.
 	relabel(const std::vector<L>& from);
+	/// \}
 
-	typedef metal::true_ is_mutable;
       };
 
     } // end of namespace mln::fun::l2l
@@ -121,6 +122,16 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // Init.
+
+  template <typename T1, typename T2>
+  void init_(tag::function_t,
+	     fun::l2l::relabel<T1>&	  f,
+	     const fun::l2l::relabel<T2>& model)
+  {
+    f.init_(model.size());
+  }
 
 
   // convert::from_to

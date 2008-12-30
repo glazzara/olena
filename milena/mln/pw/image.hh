@@ -38,12 +38,13 @@
 # include <mln/core/concept/function.hh>
 # include <mln/value/set.hh>
 # include <mln/metal/unqualif.hh>
+# include <mln/metal/not_equal.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   namespace pw { template <typename F, typename S> class image; }
 
 
@@ -78,9 +79,14 @@ namespace mln
     // FIXME: the result type should *not* be qualified
 
     template <typename F, typename S>
-    struct image_< pw::image<F,S> > : default_image_< mlc_unqualif(mln_result(F)),
+    struct image_< pw::image<F,S> > : default_image_< mln_result(F),
 						      pw::image<F,S> >
     {
+    private:
+      typedef typename F::mutable_result mutable_result;
+      typedef mlc_not_equal(mutable_result, void) is_mutable;
+
+    public:
       // misc
       typedef trait::image::category::primary category;
       typedef trait::image::speed::fast       speed;
@@ -93,12 +99,12 @@ namespace mln
       typedef trait::image::value_storage::disrupted       value_storage;
       typedef trait::image::value_browsing::site_wise_only value_browsing;
       typedef trait::image::value_alignement::irrelevant   value_alignement;
-      typedef mlc_if(typename F::is_mutable,
+      typedef mlc_if(is_mutable,
 		     trait::image::value_io::read_write,
 		     trait::image::value_io::read_only)    value_io;
 
       // site / domain
-      typedef mlc_if(typename F::is_mutable,
+      typedef mlc_if(is_mutable,
 		     trait::image::pw_io::read_write,
 		     trait::image::pw_io::read) pw_io;
       typedef /* FIXME: depends on S */  undef  localization;
@@ -122,11 +128,16 @@ namespace mln
     class image :
       public internal::image_primary<mln_result(F), S, image<F,S> >
     {
+      typedef typename F::mutable_result mutable_result;
+      typedef mlc_not_equal(mutable_result, void) is_mutable;
+
     public:
 
       /// Skeleton.
       typedef image< tag::function_<F>, tag::pset_<S> > skeleton;
 
+      /// Function associated type.
+      typedef F function_t;
 
       /// Value associated type.
       typedef mln_result(F) value;
@@ -135,7 +146,7 @@ namespace mln
       typedef mln_result(F) rvalue;
 
       /// Return type of read-write access.
-      typedef mlc_if(typename F::is_mutable, mln_result(F)&, mln_result(F)) lvalue;
+      typedef mlc_if(is_mutable, mutable_result, mln_result(F)) lvalue;
 
       /// Constructor without argument.
       image();
@@ -153,23 +164,14 @@ namespace mln
       F function() const;
 
       /// Read-only access of pixel value at point site \p p.
-      mln_result(F) operator()(const mln_psite(S)& p) const;
+      rvalue operator()(const mln_psite(S)& p) const;
 
       /// Read-write access returns either a temporary value (copy) or
       /// a reference in the case of a mutable function (container).
-      lvalue operator()(const mln_psite(S)&);
+      lvalue operator()(const mln_psite(S)& p);
     };
 
   } // end of namespace mln::pw
-
-
-
-  template <typename F, typename S>
-  void init_(tag::function_t, Function_v2v<F>& target,
-	      const mln::pw::image<F,S>& model);
-
-  template <typename F, typename S, typename J>
-  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model);
 
 
 
@@ -178,19 +180,24 @@ namespace mln
   // init_
 
   template <typename F, typename S>
-  void init_(tag::function_t, Function_v2v<F>& target,
-	      const mln::pw::image<F,S>& model)
+  void init_(tag::function_t, F& f, const pw::image<F,S>& model)
   {
-    target = model.function();
+    f = model.function();
+  }
+
+  template <typename F1, typename F2, typename S>
+  void init_(tag::function_t, F1& f, const pw::image<F2,S>& model)
+  {
+    init_(tag::function, f, model.function());
   }
 
   template <typename F, typename S, typename J>
-  void init_(tag::image_t, mln::pw::image<F,S>& target, const J& model)
+  void init_(tag::image_t, pw::image<F,S>& target, const J& model)
   {
     F f;
-    init_(tag::function, f, model);
+    init_(tag::function, f, exact(model));
     S s;
-    init_(tag::domain, s, model);
+    init_(tag::domain, s, exact(model));
     target.init_(f, s);
   }
 
@@ -265,7 +272,7 @@ namespace mln
 
     template <typename F, typename S>
     inline
-    mln_result(F)
+    typename image<F,S>::rvalue
     image<F,S>::operator()(const mln_psite(S)& p) const
     {
       mln_precondition(this->data_->pset_.has(p));

@@ -36,6 +36,7 @@
 # include <algorithm>
 # include <mln/core/concept/function.hh>
 # include <mln/util/array.hh>
+# include <mln/tag/init.hh>
 
 
 namespace mln
@@ -47,24 +48,33 @@ namespace mln
     namespace internal
     {
 
-      template <typename T>
-      class array_base
+      template <typename T, typename E>
+      class array_base : public Function_i2v< E >
       {
       public:
 
+	/// Returned value types
+	/// \{
 	typedef T result;
-	typedef metal::true_ is_mutable;
+	typedef typename std::vector<T>::reference mutable_result;
 
+	/// Set the function size to \p n.
 	void resize(unsigned n);
+	/// Set the function size to \p n and initialize the value with
+	/// \p val.
 	void resize(unsigned n, const T& val);
+	/// Return the number of values.
 	unsigned size() const;
 
-	const T& operator()(unsigned i) const;
-	T& operator()(unsigned i);
+	/// Const access to the ith value.
+	result operator()(unsigned i) const;
+	/// Read-Write access to the ith value.
+	mutable_result operator()(unsigned i);
 
+	/// Initialize an empty function.
+	void init_(unsigned n);
 
       protected:
-
 	std::vector<T> v_;
 
 	/// Constructors
@@ -94,9 +104,7 @@ namespace mln
   } // end of namespace mln::fun
 
 
-
 # ifndef MLN_INCLUDE_ONLY
-
 
   /// fun::internal::array_base
 
@@ -106,82 +114,90 @@ namespace mln
     namespace internal
     {
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      array_base<T>::array_base()
+      array_base<T,E>::array_base()
       {
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      array_base<T>::array_base(unsigned n)
+      array_base<T,E>::array_base(unsigned n)
 	: v_(n)
       {
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      array_base<T>::array_base(unsigned n, const T& val)
+      array_base<T,E>::array_base(unsigned n, const T& val)
 	: v_(n, val)
       {
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      array_base<T>::array_base(const util::array<T>& from)
+      array_base<T,E>::array_base(const util::array<T>& from)
 	: v_(from.std_vector())
       {
 
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      array_base<T>::array_base(const std::vector<T>& from)
+      array_base<T,E>::array_base(const std::vector<T>& from)
 	: v_(from)
       {
 
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
       void
-      array_base<T>::resize(unsigned n)
+      array_base<T,E>::resize(unsigned n)
       {
 	v_.resize(n);
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
       void
-      array_base<T>::resize(unsigned n, const T& val)
+      array_base<T,E>::resize(unsigned n, const T& val)
       {
 	v_.resize(n, val);
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
       unsigned
-      array_base<T>::size() const
+      array_base<T,E>::size() const
       {
 	return v_.size();
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      const T&
-      array_base<T>::operator()(unsigned i) const
+      typename array_base<T,E>::result
+      array_base<T,E>::operator()(unsigned i) const
       {
 	mln_precondition(i < v_.size());
 	return v_[i];
       }
 
-      template <typename T>
+      template <typename T, typename E>
       inline
-      T&
-      array_base<T>::operator()(unsigned i)
+      typename array_base<T,E>::mutable_result
+      array_base<T,E>::operator()(unsigned i)
       {
 	mln_precondition(i < v_.size());
 	return v_[i];
+      }
+
+      template <typename T, typename E>
+      inline
+      void
+      array_base<T,E>::init_(unsigned n)
+      {
+	v_.resize(n);
       }
 
     } // end of namespace mln::fun::internal
