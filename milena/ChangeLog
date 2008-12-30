@@ -1,5 +1,16 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Disable graph-based applications depending on Trimesh.
+
+	* apps/statues/Makefile.am (bin_PROGRAMS)
+	(mesh_segm_SOURCES, mesh_segm_CPPFLAGS)
+	(mesh_segm_LDFLAGS, mesh_segm_LDADD)
+	(mesh_skel_SOURCES, mesh_skel_CPPFLAGS)
+	(mesh_skel_LDFLAGS, mesh_skel_LDADD):
+	Disable mesh-segm and mesh-skel.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a squared L2-norm.
 
 	* mln/norm/l2.hh (mln::norm::internal::sqr_l2_(const V&)):

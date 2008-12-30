@@ -25,17 +25,17 @@ LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 ## Graph-based applications, depending on Trimesh.  ##
 ## ------------------------------------------------ ##
 
-bin_PROGRAMS = mesh-segm mesh-skel
+# bin_PROGRAMS += mesh-segm mesh-skel
+# 
+# mesh_segm_SOURCES = mesh-segm.cc io.hh
+# mesh_segm_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
+# mesh_segm_LDFLAGS = $(LDFLAGS_trimesh)
+# mesh_segm_LDADD = $(LDADD_trimesh)
 
-mesh_segm_SOURCES = mesh-segm.cc io.hh
-mesh_segm_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-mesh_segm_LDFLAGS = $(LDFLAGS_trimesh)
-mesh_segm_LDADD = $(LDADD_trimesh)
-
-mesh_skel_SOURCES = mesh-skel.cc io.hh
-mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
-mesh_skel_LDFLAGS = $(LDFLAGS_trimesh)
-mesh_skel_LDADD = $(LDADD_trimesh)
+# mesh_skel_SOURCES = mesh-skel.cc io.hh
+# mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
+# mesh_skel_LDFLAGS = $(LDFLAGS_trimesh)
+# mesh_skel_LDADD = $(LDADD_trimesh)
 
 ## -------------------------------------------------- ##
 ## Complex-based applications, depending on Trimesh.  ##
