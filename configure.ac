@@ -273,6 +273,8 @@ AC_CONFIG_FILES([milena/apps/statues/test-mesh-segm],
 		[chmod +x milena/apps/statues/test-mesh-segm])
 AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-segm],
 		[chmod +x milena/apps/statues/test-mesh-complex-segm])
+AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-max-curv-segm],
+		[chmod +x milena/apps/statues/test-mesh-complex-max-curv-segm])
 
 
 AC_OUTPUT
