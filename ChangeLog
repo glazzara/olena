@@ -1,3 +1,7 @@
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
+	* COPYING: Fix indentation.
+
 2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix configure.ac and INSTALL files.
