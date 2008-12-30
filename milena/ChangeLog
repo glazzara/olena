@@ -1,5 +1,12 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Simplify the normalization of vectors.
+
+	* mln/algebra/vec.hh (mln::algebra::vec<n, T>::normalize):
+	Use mln::norm::l2 instead of ad hoc code.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	More complex-related aliases.
 
 	* mln/core/alias/complex_geometry.hh

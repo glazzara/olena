@@ -39,6 +39,7 @@
 # include <mln/core/concept/object.hh>
 
 # include <mln/literal/zero.hh>
+# include <mln/norm/l2.hh>
 # include <mln/trait/all.hh>
 # include <mln/trait/value_.hh>
 # include <mln/fun/i2v/all_to.hh>
@@ -64,7 +65,10 @@ namespace mln
     struct zero_t;
   }
 
-
+  namespace norm {
+    template <unsigned n, typename C>
+    mln_sum(C) l2(const algebra::vec<n,C>& vec);
+  }
 
 
   namespace trait
@@ -211,6 +215,18 @@ namespace mln
 
       unsigned size() const;
 
+      /* FIXME: What if the vector is null?  Even if we choose not to
+	 handle this case, we should *state* in the documentation the
+	 behavior of this method.
+
+	 I (Roland) have added an assertion to detect ``erroneous''
+	 cases, but we might want something different.
+	 ``Implementation defined'' or ``undefined behavior'' is fine
+	 by me, as long as the documentation mentions it.
+
+	 FWIW, Trimesh's developers chose to set all the coordinates
+	 of a vector being normalized to 1, when it norm is equal or
+	 lower (sic) to zero.  */
       const vec<n, T>& normalize();
 
       /// Constructor; coordinates are set by function \p f.
@@ -306,7 +322,8 @@ namespace mln
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
     // vec * vec
-
+    
+    /// Scalar product (dot product).
     template <unsigned n, typename T, typename U>
     mln_sum_x(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs);
@@ -331,6 +348,7 @@ namespace mln
 
     // vprod // FIXME: Generalize...
 
+    /// Vectorial product (cross product).
     template <typename T, typename U>
     vec<3, mln_trait_op_times(T,U)> // FIXME: Sum of product...
     vprod(const vec<3, T>& lhs, const vec<3, U>& rhs);
@@ -431,12 +449,10 @@ namespace mln
     inline
     const vec<n, T>& vec<n, T>::normalize()
     {
-      float n_l2 = 0;
+      float l2_norm = float(norm::l2(*this));
+      mln_assertion(l2_norm > 0.f);
       for (unsigned i = 0; i < n; ++i)
-	n_l2 += data_[i] * data_[i];
-      n_l2 = float(std::sqrt(n_l2));
-      for (unsigned i = 0; i < n; ++i)
-	data_[i] = static_cast<T>(data_[i] / n_l2);
+	data_[i] = static_cast<T>(data_[i] / l2_norm);
       return *this;
     }
 
