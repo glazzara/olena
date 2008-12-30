@@ -57,6 +57,9 @@ mesh_max_curv_LDADD = $(LDADD_trimesh)
 ## Complex-based applications, independent of Trimesh.  ##
 ## ---------------------------------------------------- ##
 
+noinst_HEADERS = trimesh/misc.hh
+EXTRA_DIST = trimesh/README
+
 bin_PROGRAMS += mesh-complex-segm
 mesh_complex_segm_SOURCES = mesh-complex-segm.cc
 

@@ -1,5 +1,17 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Port Trimesh's curvature computation routines to Milena.
+
+	* apps/statues/trimesh/: New directory.
+	* apps/statues/trimesh/misc.hh: New.
+	* apps/statues/trimesh/README: New.
+	* apps/statues/Makefile.am (noinst_HEADERS): New.
+	Add trimesh/misc.hh.
+	(EXTRA_DIST): New.
+	Add trimesh/README.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Simplify the normalization of vectors.
 
 	* mln/algebra/vec.hh (mln::algebra::vec<n, T>::normalize):
