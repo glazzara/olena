@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MAKE_POINT2D_H_HH
 # define MLN_MAKE_POINT2D_H_HH
 
-/*! \file mln/make/point2d_h.hh
- *
- * \brief Routine to construct an mln::point2d_h.
- */
+/// \file mln/make/point2d_h.hh
+///
+/// Routine to construct an mln::point2d_h.
 
 # include <mln/core/alias/point2d_h.hh>
 
@@ -49,13 +49,13 @@ namespace mln
      *
      * \return A 2D point.
      */
-    mln::point2d_h point2d_h(int row, int col);
+    mln::point2d_h point2d_h(def::coord row, def::coord col);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
     inline
-    mln::point2d_h point2d_h(int row, int col)
+    mln::point2d_h point2d_h(def::coord row, def::coord col)
     {
       mln::point2d_h tmp;
       tmp[0] = row;

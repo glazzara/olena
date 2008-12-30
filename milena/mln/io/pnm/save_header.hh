@@ -1,5 +1,5 @@
-// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 EPITA
-// Research and Development Laboratory
+// Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,12 +29,9 @@
 #ifndef MLN_IO_PNM_SAVE_HEADER_HH
 # define MLN_IO_PNM_SAVE_HEADER_HH
 
-/*!
- * \file   mln/io/pnm/save_header.hh
- *
- * \brief  Define a function which saves header for PNM image.
- *
- */
+/// \file   mln/io/pnm/save_header.hh
+///
+/// Define a function which saves header for PNM image.
 
 # include <iostream>
 # include <fstream>
@@ -44,6 +41,7 @@
 # include <mln/value/rgb.hh>
 # include <mln/geom/nrows.hh>
 # include <mln/geom/ncols.hh>
+
 
 namespace mln
 {
@@ -70,7 +68,7 @@ namespace mln
 
       template <typename I>
       inline
-      void save_header(const char type,
+      void save_header(char type,
 		       const I& ima, const std::string& filename,
 		       std::ofstream& file)
       {

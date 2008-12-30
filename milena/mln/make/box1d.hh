@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MAKE_BOX1D_HH
 # define MLN_MAKE_BOX1D_HH
 
-/*! \file mln/make/box1d.hh
- *
- * \brief Routines to construct an mln::box1d.
- */
+/// \file mln/make/box1d.hh
+///
+/// Routines to construct an mln::box1d.
 
 # include <mln/core/alias/box1d.hh>
 
@@ -74,7 +74,7 @@ namespace mln
     {
       mln_precondition(ninds != 0);
       mln::box1d tmp(point1d(0),
-		     point1d(ninds - 1));
+		     point1d(static_cast<def::coord>(ninds - 1)));
       return tmp;
     }
 

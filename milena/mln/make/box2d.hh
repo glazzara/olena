@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MAKE_BOX2D_HH
 # define MLN_MAKE_BOX2D_HH
 
-/*! \file mln/make/box2d.hh
- *
- * \brief Routines to construct an mln::box2d.
- */
+/// \file mln/make/box2d.hh
+///
+/// Routines to construct an mln::box2d.
 
 # include <mln/core/alias/box2d.hh>
 

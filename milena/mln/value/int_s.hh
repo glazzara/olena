@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_INT_S_HH
 # define MLN_VALUE_INT_S_HH
 
-/*! \file mln/value/int_s.hh
- *
- * \brief Define a generic class for signed integers.
- */
+/// \file mln/value/int_s.hh
+///
+/// Define a generic class for signed integers.
 
 # include <mln/value/ops.hh>
 
@@ -139,6 +139,9 @@ namespace mln
 
       /// Unit value.
       static const int_s<n> one;
+
+    private:
+      typedef typename internal::encoding_signed_<n>::ret enc_;
     };
 
 
@@ -184,7 +187,7 @@ namespace mln
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
-      this->v_ = i;
+      this->v_ = static_cast<enc_>(i);
     }
 
     template <unsigned n>
@@ -196,7 +199,7 @@ namespace mln
       static const int min = - max;
       mln_precondition(i >= min);
       mln_precondition(i <= max);
-      this->v_ = i;
+      this->v_ = static_cast<enc_>(i);
       return *this;
     }
 

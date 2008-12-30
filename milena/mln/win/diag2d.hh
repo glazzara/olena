@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_DIAG2D_HH
 # define MLN_WIN_DIAG2D_HH
 
-/*! \file mln/win/diag2d.hh
- *
- * \brief Definition of the mln::win::diag2d window.
- */
+/// \file mln/win/diag2d.hh
+///
+/// Definition of the mln::win::diag2d window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -93,9 +93,12 @@ namespace mln
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      const int dcol = length / 2;
-      for (int col = - dcol; col <= dcol; ++col)
-	insert(dpoint2d(-col, col));
+      const def::coord
+	dcol = static_cast<def::coord>(length) / 2,
+	minus_dcol = static_cast<def::coord>(-dcol);
+      for (def::coord col = minus_dcol; col <= dcol; ++col)
+	insert(dpoint2d(static_cast<def::coord>(-col),
+			col));
     }
 
     inline

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ALGEBRA_H_VEC_HH
 # define MLN_ALGEBRA_H_VEC_HH
 
-/*! \file mln/algebra/h_vec.hh
- *
- * \brief Definition of a vector with homogeneous coordinates.
- */
+/// \file mln/algebra/h_vec.hh
+///
+/// Definition of a vector with homogeneous coordinates.
 
 # include <mln/algebra/vec.hh>
 # include <mln/literal/one.hh>
@@ -150,7 +150,7 @@ namespace mln
 
       vec<d,C> tmp;
       for (unsigned i = 0; i < d; ++i)
-	tmp[i] = this->data_[i] / w;
+	tmp[i] = static_cast<C>(this->data_[i] / w);
       return tmp;
     }
 

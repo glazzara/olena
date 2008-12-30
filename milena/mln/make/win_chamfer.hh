@@ -1,4 +1,5 @@
-// Copyright (C) 2006, 2008  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-
 #ifndef MLN_MAKE_WIN_CHAMFER_HH
-# define MLN_MAKE_WIN_CHAMFER_HH\
+# define MLN_MAKE_WIN_CHAMFER_HH
 
-/// \file   mln/make/win_chamfer.hh
+/// \file mln/make/win_chamfer.hh
 ///
 /// Routine to create chamfer mln::w_window2d_int.
+///
+/// \todo Revamp!
 
+# include <cmath>
 
 # include <mln/core/alias/w_window2d_int.hh>
 # include <mln/core/alias/w_window2d_float.hh>
-# include <math.h>
+
 
 namespace mln
 {
@@ -45,46 +48,40 @@ namespace mln
   {
 
     template<int d10, int d11>
-    const mln::w_window2d_int mk_chamfer_3x3_int();
+    mln::w_window2d_int
+    mk_chamfer_3x3_int();
 
     template<int d10, int d11, int d21>
-    const mln::w_window2d_int mk_chamfer_5x5_int();
+    mln::w_window2d_int
+    mk_chamfer_5x5_int();
 
-    const mln::w_window2d_float mk_chamfer_3x3_float(float d10, float d11);
+    mln::w_window2d_float
+    mk_chamfer_3x3_float(float d10, float d11);
 
-    const mln::w_window2d_float
+    mln::w_window2d_float
     mk_chamfer_5x5_float(float d10, float d11, float d21);
 
-    const mln::w_window2d_float mk_chamfer_exact();
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
+    mln::w_window2d_float
+    mk_chamfer_exact();
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-namespace mln
-{
-
-  namespace make
-  {
-
     template<int d10, int d11>
     inline
-    const mln::w_window2d_int
+    mln::w_window2d_int
     mk_chamfer_3x3_int()
     {
       int ws[] = { d11, d10, d11,
 		   d10,   0,   0,
 		     0,   0,   0 };
 
-      return (make::w_window2d(ws));
+      return make::w_window2d(ws);
     }
 
     template<int d10, int d11, int d21>
     inline
-    const mln::w_window2d_int
+    mln::w_window2d_int
     mk_chamfer_5x5_int()
     {
       int ws[] = {   0, d21,   0, d21,   0,
@@ -93,22 +90,22 @@ namespace mln
 		     0,   0,   0,   0,   0,
 		     0,   0,   0,   0,   0 };
 
-      return (make::w_window2d(ws));
+      return make::w_window2d(ws);
     }
 
     inline
-    const mln::w_window2d_float
+    mln::w_window2d_float
     mk_chamfer_3x3_float(float d10, float d11)
     {
       float ws[] = { d11, d10, d11,
 		     d10,   0,   0,
 		       0,   0,   0 };
 
-      return (make::w_window2d(ws));
+      return make::w_window2d(ws);
     }
 
     inline
-    const mln::w_window2d_float
+    mln::w_window2d_float
     mk_chamfer_5x5_float(float d10, float d11, float d21)
     {
       float ws[] = {   0, d21,   0, d21,   0,
@@ -117,25 +114,26 @@ namespace mln
 		       0,   0,   0,   0,   0,
 		       0,   0,   0,   0,   0 };
 
-      return (make::w_window2d(ws));
+      return make::w_window2d(ws);
     }
 
     inline
-    const mln::w_window2d_float
+    mln::w_window2d_float
     mk_chamfer_exact()
     {
-      float r2 = sqrt(2);
+      float r2 = static_cast<float>(std::sqrt(2));
       float ws[] = { r2, 1, r2,
 		      1, 0,  0,
 		      0, 0,  0 };
 
-      return (make::w_window2d(ws));
+      return make::w_window2d(ws);
     }
+
+# endif // ! MLN_INCLUDE_ONLY
 
   } // end of namespace mln::make
 
 } // end of namespace mln
 
-# endif // !MLN_INCLUDE_ONLY
 
 #endif // ! MLN_MAKE_WIN_CHAMFER_HH

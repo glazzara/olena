@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -149,14 +150,15 @@ namespace mln
     M
     mean<T,S,M>::to_result() const
     {
-      return sum_.to_result() / count_.to_result();
+      S n = static_cast<S>(count_.to_result());
+      return static_cast<M>(sum_.to_result() / n);
     }
 
     template <typename T, typename S, typename M>
     inline
     mean<T,S,M>::operator M() const
     {
-      return M(sum_.to_result() / count_.to_result());
+      return to_result();
     }
 
     template <typename T, typename S, typename M>

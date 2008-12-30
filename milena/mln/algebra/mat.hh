@@ -1,4 +1,5 @@
-// Copyright (C) 2006  EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_ALGEBRA_MAT_HH
 # define MLN_ALGEBRA_MAT_HH
 
-/*!
- * \file  mln/algebra/mat.hh
- *
- * \brief Definition of a generic matrix class.
- */
+/// \file mln/algebra/mat.hh
+///
+/// Definition of a generic matrix class.
 
 # include <iostream>
 
@@ -309,7 +308,7 @@ namespace mln
     {
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
-	  data_[i][j] = rhs(i, j);
+	  data_[i][j] = static_cast<T>( rhs(i, j) );
     }
 
     template <unsigned n, unsigned m, typename T>
@@ -321,7 +320,7 @@ namespace mln
       const F& f = exact(f_);
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
-	  data_[i][j] = f(i * n + j);
+	  data_[i][j] = static_cast<T>( f(i * n + j) );
     }
 
     template <unsigned n, unsigned m, typename T>
@@ -332,7 +331,7 @@ namespace mln
     {
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
-	  data_[i][j] = rhs(i, j);
+	  data_[i][j] = static_cast<T>( rhs(i, j) );
       return *this;
     }
 

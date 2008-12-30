@@ -123,7 +123,7 @@ namespace mln
     inline
     void sum<T,S>::take(const argument& t)
     {
-      s_ += t;
+      s_ += static_cast<S>(t);
     }
 
     template <typename T, typename S>

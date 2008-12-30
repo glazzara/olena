@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -38,6 +39,7 @@
 
 #include <mln/convert/to_p_array.hh>
 
+
 int main()
 {
   using namespace mln;
@@ -48,7 +50,7 @@ int main()
   vec1d v1(convert::to_p_array(win1d, p1));
 
   {
-    unsigned col = 4;
+    def::coord col = 4;
     for (size_t i=0; i < v1.nsites(); i++)
       mln_assertion(v1[i] == point1d(col++));
   }
@@ -58,11 +60,11 @@ int main()
   win::rectangle2d win2d(3, 3);
   vec2d v2(convert::to_p_array(win2d, p2));
 
-  unsigned row = 9;
+  def::coord row = 9;
   for (unsigned col = 0; col < v2.nsites(); ++col)
   {
     if (col > 0 && !(col%3))
       ++row;
-    mln_assertion(v2[col] == point2d(row, 9 + (col%3)));
+    mln_assertion(v2[col] == point2d(row, static_cast<def::coord>(9 + (col%3))));
   }
 }

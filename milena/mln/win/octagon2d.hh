@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_OCTAGON2D_HH
 # define MLN_WIN_OCTAGON2D_HH
 
-/*! \file mln/win/octagon2d.hh
- *
- * \brief Definition of the mln::win::octagon2d window.
- */
+/// \file mln/win/octagon2d.hh
+///
+/// Definition of the mln::win::octagon2d window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -101,29 +101,42 @@ namespace mln
       : length_(length)
     {
       mln_precondition(length % 6 == 1);
-      const int y = length / 6;
-      const int x = y * 2;
-      const int z = y + x;
+      const def::coord
+	y = static_cast<def::coord>(length / 6),
+	x = static_cast<def::coord>(y * 2),
+	z = static_cast<def::coord>(y + x);
       insert(dpoint2d(0, 0));
-      for (int a = 1; a <= x; ++a)
-	for (int b = 0; b <= x; ++b)
+      for (def::coord a = 1; a <= x; ++a)
+	for (def::coord b = 0; b <= x; ++b)
 	{
+	  def::coord 
+	    _a = static_cast<def::coord>(-a),
+	    _b = static_cast<def::coord>(-b);
 	  insert(dpoint2d(a, b));
-	  insert(dpoint2d(-b, a));
-	  insert(dpoint2d(b, -a));
-	  insert(dpoint2d(-a, -b));
+	  insert(dpoint2d(_b, a));
+	  insert(dpoint2d(b, _a));
+	  insert(dpoint2d(_a, _b));
 	}
-      for (int a = x + 1; a <= z; ++a)
-	for (int b = -2 * x + a; b <= 2 * x - a; ++b)
+      const def::coord a_min = static_cast<def::coord>(x + 1);
+      for (def::coord a = a_min; a <= z; ++a)
 	{
-	  insert(dpoint2d(a, b));
-	  insert(dpoint2d(a, -b));
-	  insert(dpoint2d(-a, b));
-	  insert(dpoint2d(-a, -b));
-	  insert(dpoint2d(b, a));
-	  insert(dpoint2d(b, -a));
-	  insert(dpoint2d(-b, a));
-	  insert(dpoint2d(-b, -a));
+	  const def::coord
+	    b_min = static_cast<def::coord>(-2 * x + a),
+	    b_max = static_cast<def::coord>(2 * x - a);
+	  for (def::coord b = b_min; b <= b_max; ++b)
+	    {
+	      def::coord 
+		_a = static_cast<def::coord>(-a),
+		_b = static_cast<def::coord>(-b);
+	      insert(dpoint2d(a, b));
+	      insert(dpoint2d(a, _b));
+	      insert(dpoint2d(_a, b));
+	      insert(dpoint2d(_a, _b));
+	      insert(dpoint2d(b, a));
+	      insert(dpoint2d(b, _a));
+	      insert(dpoint2d(_b, a));
+	      insert(dpoint2d(_b, _a));
+	    }
 	}
     }
 

@@ -84,9 +84,9 @@ namespace mln
       void
       println(const box2d& b, const image2d<char>& input)
       {
-	for (int row = b.min_row(); row <= b.max_row(); ++row)
+	for (def::coord row = b.min_row(); row <= b.max_row(); ++row)
 	{
-	  for (int col = b.min_col(); col <= b.max_col(); ++col)
+	  for (def::coord col = b.min_col(); col <= b.max_col(); ++col)
 	    std::cout << opt::at(input, row, col) << ' ';
 	  std::cout << std::endl;
 	}
@@ -115,14 +115,16 @@ namespace mln
 	  {
 	    std::ostringstream oss;
 	    oss << format(input(p));
-	    point2d w( p.row() - b.min_row(),
-		      (p.col() - b.min_col()) * len);
+	    def::coord
+	      row = static_cast<def::coord>(p.row() - b.min_row()),
+	      col = static_cast<def::coord>((p.col() - b.min_col()) * len);
+	    point2d w(row, col);
 	    put_word(output, w, oss.str());
 	  }
 
-	for (unsigned row = 0; row < b.nrows(); ++row)
+      for (def::coord row = 0; row < def::coord(b.nrows()); ++row)
 	{
-	  for (unsigned col = 0; col < b.ncols() * len; ++col)
+	  for (def::coord col = 0; col < def::coord(b.ncols() * len); ++col)
 	    std::cout << opt::at(output, row, col);
 	  std::cout << std::endl;
 	}

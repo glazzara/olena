@@ -29,12 +29,10 @@
 #ifndef MLN_IO_PNM_LOAD_HH
 # define MLN_IO_PNM_LOAD_HH
 
-/*!
- * \file mln/io/pnm/load.hh
- *
- * \brief Define a function which loads an image of kind PNM 8/16bits with
- * given path.
- */
+/// \file mln/io/pnm/load.hh
+///
+/// Define a function which loads an image of kind PNM 8/16bits with
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -104,15 +102,15 @@ namespace mln
       inline
       void load_raw_2d_uncontiguous(std::ifstream& file, image2d<V>& ima)
       {
-	const int
+	const def::coord
 	  min_row = geom::min_row(ima),
 	  max_row = geom::max_row(ima),
 	  min_col = geom::min_col(ima),
 	  max_col = geom::max_col(ima);
 
 	point2d p;
-	for (p.row()  = min_row; p.row() <= max_row; ++p.row())
-	  for (p.col()  = min_col; p.col() <= max_col; ++p.col())
+	for (p.row() = min_row; p.row() <= max_row; ++p.row())
+	  for (p.col() = min_col; p.col() <= max_col; ++p.col())
 	    read_value(file, ima(p));
       }
 
@@ -171,7 +169,7 @@ namespace mln
 	char type = 0;
 	int nrows, ncols;
 	unsigned int maxval;
-	read_header(type_ - 3, type_, file, type,
+	read_header(static_cast<char>(type_ - 3), type_, file, type,
 		    nrows, ncols, maxval);
 
 	if (max_component(V()) != maxval)
@@ -223,7 +221,7 @@ namespace mln
 	char type = 0;
 	int nrows, ncols;
 	unsigned int maxval;
-	read_header(type_ - 3, type_, file, type,
+	read_header(static_cast<char>(type_ - 3), type_, file, type,
 		    nrows, ncols, maxval);
 
 	if (max_component(mln_value(I)()) != maxval)

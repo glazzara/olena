@@ -181,10 +181,10 @@ namespace mln
     // -----------------
 
     /// Read-only access to the image value located at (\p index).
-    const T& at(int index) const;
+    const T& at(def::coord index) const;
 
     /// Read-write access to the image value located at (\p index).
-    T& at(int index);
+    T& at(def::coord index);
 
 
     /// Fast Image method
@@ -426,7 +426,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image1d<T>::at(int index) const
+  image1d<T>::at(def::coord index) const
   {
     mln_precondition(this->has(point1d(index)));
     return this->data_->array_[index];
@@ -435,7 +435,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  image1d<T>::at(int index)
+  image1d<T>::at(def::coord index)
   {
     mln_precondition(this->has(point1d(index)));
     return this->data_->array_[index];
@@ -494,7 +494,8 @@ namespace mln
   image1d<T>::point_at_index(unsigned i) const
   {
     mln_precondition(i < nelements());
-    point1d p = point1d(i + this->data_->vb_.min_ind());
+    def::coord ind = static_cast<def::coord>(i + this->data_->vb_.min_ind());
+    point1d p = point1d(ind);
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }

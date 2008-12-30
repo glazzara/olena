@@ -63,7 +63,7 @@ namespace mln
 	unsigned i = 0;
 	mln_pixter(I) p(input);
 	for_all(p)
-	  p.val() = ++i % mln_max(mln_value(I));
+	  p.val() = static_cast<mln_value(I)>(++i % mln_max(mln_value(I)));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

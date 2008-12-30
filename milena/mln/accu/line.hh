@@ -125,8 +125,8 @@ namespace mln
 	  O& output = exact(output_);
 
 	  // Avoid warning in signed/unsigned comparison.
-	  const def::coord len = len_;
-	  const def::coord half_length = half_length_;
+	  const def::coord len = static_cast<def::coord>(len_);
+	  const def::coord half_length = static_cast<def::coord>(half_length_);
 
 	  // Checks and tests.
 	  internal::line_tests<Meta_Accu, Dir>(input,
@@ -136,7 +136,7 @@ namespace mln
 
 	  // Initialization.
 	  const def::coord start = p_start[Dir];
-	  const def::coord last = start + len - 1;
+	  const def::coord last = static_cast<def::coord>(start + len - 1);
 	  A a; // Accumulator.
 	  a.init();
 	  P p; // Current point.
@@ -159,7 +159,7 @@ namespace mln
 
 	  P p_plus = p_start;
 	  def::coord& plus = p_plus[Dir];
-	  plus += half_length;
+	  plus = static_cast<def::coord>(plus + half_length);
 
 	  while (cur < start + half_length && cur < last)
 	    {

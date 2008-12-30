@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_DISK2D_HH
 # define MLN_WIN_DISK2D_HH
 
-/*! \file mln/win/disk2d.hh
- *
- * \brief Definition of the mln::win::disk2d window.
- */
+/// \file mln/win/disk2d.hh
+///
+/// Definition of the mln::win::disk2d window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint2d.hh>
@@ -48,7 +48,7 @@ namespace mln
  
     /*! \brief Disk window defined on the 2D square grid.
      *
-     * An disk2d is centered and symmetric.
+     * A disk2d is centered and symmetric.
      *
      */
     struct disk2d : public internal::classical_window_base< dpoint2d, disk2d >
@@ -84,10 +84,12 @@ namespace mln
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      const int r = length / 2;
-      const int r2 = r * r;
-      for (int a = -r; a <= r; ++a)
-	for (int b = -r; b <= r; ++b)
+      const def::coord
+	r  = static_cast<def::coord>(length / 2),
+	minus_r = static_cast<def::coord>(-r),
+	r2 = static_cast<def::coord>(r * r);
+      for (def::coord a = minus_r; a <= r; ++a)
+	for (def::coord b = minus_r; b <= r; ++b)
 	  if (a * a + b * b <= r2)
 	    insert(dpoint2d(a, b));
     }

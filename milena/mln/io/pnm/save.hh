@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,10 @@
 #ifndef MLN_IO_PNM_SAVE_HH
 # define MLN_IO_PNM_SAVE_HH
 
-/*!
- * \file   mln/io/pnm/save.hh
- *
- * \brief Define a function which saves an image of kind PNM into
- * given path.
- *
- */
+/// \file mln/io/pnm/save.hh
+///
+/// Define a function which saves an image of kind PNM into
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -72,7 +69,8 @@ namespace mln
        * \param[in,out] filename the destination.
        */
       template <typename I>
-      void save(const int type, const Image<I>& ima_, const std::string& filename);
+      void save(char type, const Image<I>& ima_, const std::string& filename);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -116,7 +114,7 @@ namespace mln
 	void save_data_uncontiguous(std::ofstream& file,
 				    const I& ima)
 	{
-	  const int
+	  const def::coord
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima),
 	    min_col = geom::min_col(ima),
@@ -136,7 +134,7 @@ namespace mln
 				  const I& ima_)
 	{
 	  const I& ima = exact(ima_);
-	  const int
+	  const def::coord
 	    min_row = geom::min_row(ima),
 	    max_row = geom::max_row(ima);
 	  point2d p;
@@ -175,7 +173,7 @@ namespace mln
 
       template <typename I>
       inline
-      void save(const int type, const Image<I>& ima_, const std::string& filename)
+      void save(char type, const Image<I>& ima_, const std::string& filename)
       {
 	trace::entering("mln::io::pnm::save");
 	const I& ima = exact(ima_);

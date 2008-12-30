@@ -85,7 +85,8 @@ namespace mln
     {
       mlc_bool(L != 0)::check();
       mln::image1d<V> tmp(L);
-      for (unsigned ind = 0; ind < L; ++ind)
+      const def::coord ninds = static_cast<def::coord>(L);
+      for (def::coord ind = 0; ind < ninds; ++ind)
 	tmp(point1d(ind)) = values[ind];
       return tmp;
     }
@@ -96,9 +97,12 @@ namespace mln
     {
       mlc_bool(R != 0 && C != 0)::check();
       mln::image2d<V> tmp(R, C);
-      for (unsigned row = 0; row < R; ++row)
-	for (unsigned col = 0; col < C; ++col)
-	    opt::at(tmp, row, col) = values[row][col];
+      const def::coord
+	nrows = static_cast<def::coord>(R),
+	ncols = static_cast<def::coord>(C);
+      for (def::coord row = 0; row < nrows; ++row)
+	for (def::coord col = 0; col < ncols; ++col)
+	  opt::at(tmp, row, col) = values[row][col];
       return tmp;
     }
 
@@ -108,9 +112,13 @@ namespace mln
     {
       mlc_bool(S != 0 && R != 0 && C != 0)::check();
       mln::image3d<V> tmp(S, R, C);
-      for (unsigned sli = 0; sli < S; ++sli)
-	for (unsigned row = 0; row < R; ++row)
-	  for (unsigned col = 0; col < C; ++col)
+      const def::coord
+	nslis = static_cast<def::coord>(S),
+	nrows = static_cast<def::coord>(R),
+	ncols = static_cast<def::coord>(C);
+      for (def::coord sli = 0; sli < nslis; ++sli)
+	for (def::coord row = 0; row < nrows; ++row)
+	  for (def::coord col = 0; col < ncols; ++col)
 	    opt::at(tmp, sli, row, col) = values[sli][row][col];
       return tmp;
     }

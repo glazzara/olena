@@ -27,6 +27,7 @@
 // Public License.
 
 /// \file tests/convert/to_image.cc
+///
 /// Tests on mln::convert::to_image.
 
 #include <mln/core/image/image2d.hh>

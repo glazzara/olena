@@ -201,11 +201,11 @@ namespace mln
 
     /// Read-only access to the image value located at (\p sli, \p
     /// row, \p col).
-    const T& at(int sli, int row, int col) const;
+    const T& at(def::coord sli, def::coord row, def::coord col) const;
 
     /// Read-write access to the image value located at (\p sli, \p
     /// row, \p col).
-    T& at(int sli, int row, int col);
+    T& at(def::coord sli, def::coord row, def::coord col);
 
 
     /// Fast Image method
@@ -484,7 +484,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image3d<T>::at(int sli, int row, int col) const
+  image3d<T>::at(def::coord sli, def::coord row, def::coord col) const
   {
     mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
@@ -493,7 +493,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  image3d<T>::at(int sli, int row, int col)
+  image3d<T>::at(def::coord sli, def::coord row, def::coord col)
   {
     mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
@@ -533,9 +533,11 @@ namespace mln
   image3d<T>::point_at_index(unsigned o) const
   {
     mln_precondition(o < nelements());
-    point3d p = point3d(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli(),
-			      (o % (data_->vb_.len(1) * data_->vb_.len(2))) / data_->vb_.len(2) + data_->vb_.min_row(),
-			      o % data_->vb_.len(2) + data_->vb_.min_col());
+    def::coord
+      sli = static_cast<def::coord>(o / (data_->vb_.len(1) * data_->vb_.len(2)) + data_->vb_.min_sli()),
+      row = static_cast<def::coord>((o % (data_->vb_.len(1) * data_->vb_.len(2))) / data_->vb_.len(2) + data_->vb_.min_row()),
+      col = static_cast<def::coord>(o % data_->vb_.len(2) + data_->vb_.min_col());
+    point3d p = point3d(sli, row, col);
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + o);
     return p;
   }

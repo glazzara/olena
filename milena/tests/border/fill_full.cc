@@ -258,8 +258,8 @@ main (void)
 
   {
     typedef value::float01_8 T;
-    T value = T(0.9999);
-    T v = T(0.111);
+    T value = static_cast<T>(0.9999f);
+    T v = static_cast<T>(0.111f);
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)
@@ -273,8 +273,8 @@ main (void)
 
   {
     typedef value::float01_16 T;
-    T value = T(0.9999);
-    T v = T(0.111);
+    T value = static_cast<T>(0.9999f);
+    T v = static_cast<T>(0.111f);
 
     for (int i = 1; i < limits; ++i)
       for (int j = 1; j < limits; ++j)

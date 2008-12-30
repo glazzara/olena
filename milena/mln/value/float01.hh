@@ -1,5 +1,5 @@
-// Copyright (C) 2006, 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2006, 2007, 2008 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -167,16 +167,16 @@ namespace mln
 
     inline
     float01::float01(unsigned nbits, float val)
-      : nbits_(nbits),
-	val_(unsigned(val * internal::two_pow_n_minus_1(nbits)))
+      : nbits_(nbits)
     {
+      val_ = static_cast<unsigned long>(val * float(internal::two_pow_n_minus_1(nbits)));
     }
 
     inline
     float float01::value() const
     {
       mln_invariant(nbits_ != 0);
-      return double(val_) / internal::two_pow_n_minus_1(nbits_);
+      return float(val_) / float(internal::two_pow_n_minus_1(nbits_));
     }
 
     inline
@@ -228,7 +228,7 @@ namespace mln
     float01::operator float() const
     {
       mln_precondition(nbits_ != 0);
-      float tmp = float(val_) / internal::two_pow_n_minus_1(nbits_);
+      float tmp = float(val_) / float(internal::two_pow_n_minus_1(nbits_));
       return tmp;
     }
 

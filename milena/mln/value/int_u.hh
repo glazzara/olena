@@ -183,7 +183,7 @@ namespace mln
     {
       mln_precondition(i >= 0);
       mln_precondition(unsigned(i) <= mln_max(enc_));
-      this->v_ = enc_(i);
+      this->v_ = static_cast<enc_>(i);
     }
 
     template <unsigned n>
@@ -240,7 +240,7 @@ namespace mln
     {
       mln_precondition(i >= 0);
       mln_precondition(unsigned(i) <= mln_max(enc_));
-      this->v_ = i;
+      this->v_ = static_cast<enc_>(i);
       return *this;
     }
 

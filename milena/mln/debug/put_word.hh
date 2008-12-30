@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_DEBUG_PUT_WORD_HH
 # define MLN_DEBUG_PUT_WORD_HH
 
-/*! \file mln/debug/put_word.hh
- *
- * \brief Write a word in a 2D image of characters.
- */
+/// \file mln/debug/put_word.hh
+///
+/// Write a word in a 2D image of characters.
 
 # include <string>
 # include <mln/core/image/image2d.hh>
@@ -62,8 +61,10 @@ namespace mln
       mln_precondition(inout.has(word_start));
 
       point2d word_end = word_start;
-      word_end.last_coord() += word.length() - 1;
-      if (!inout.has(word_end))
+
+      word_end.last_coord() = static_cast<def::coord>(word_end.last_coord() + word.length() - 1);
+
+      if (! inout.has(word_end))
 	trace::warning("Cannot write text outside the image domain");
 
       const unsigned n = word.length();

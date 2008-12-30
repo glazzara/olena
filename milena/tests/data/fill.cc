@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,30 +26,25 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/data/fill.cc
- *
- * \brief Tests on mln::data::fill
- */
+/// \file tests/data/fill.cc
+///
+/// Tests on mln::data::fill
 
 #include <mln/core/image/image2d.hh>
 #include <mln/data/fill.hh>
+
 
 int main()
 {
   using namespace mln;
 
 
+  const unsigned size = 3;
+  image2d<unsigned> ima(size, size);
+
   unsigned u = 300;
-  unsigned char uc = u;
-  mln_assertion(uc == 44);
-
-  {
-    const unsigned size = 3;
-    image2d<unsigned> ima(size, size);
-    data::fill(ima, u);
-    box_fwd_piter_<point2d> p(ima.domain());
-    for_all (p)
-      mln_assertion (ima(p) == u);
-  }
-
+  data::fill(ima, u);
+  box_fwd_piter_<point2d> p(ima.domain());
+  for_all(p)
+    mln_assertion(ima(p) == u);
 }

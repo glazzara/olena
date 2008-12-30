@@ -49,25 +49,25 @@ namespace mln
 
     /// One dimension
     template <typename I>
-    mln_rvalue(I) at(const Image<I>& ima, int ind);
+    mln_rvalue(I) at(const Image<I>& ima, def::coord ind);
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int ind);
+    mln_lvalue(I) at(Image<I>& ima, def::coord ind);
 
 
     /// Two dimensions
     template <typename I>
-    mln_rvalue(I) at(const Image<I>& ima, int row, int col);
+    mln_rvalue(I) at(const Image<I>& ima, def::coord row, def::coord col);
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int row, int col);
+    mln_lvalue(I) at(Image<I>& ima, def::coord row, def::coord col);
 
     /// Three dimensions
     template <typename I>
-    mln_rvalue(I) at(const Image<I>& ima, int sli, int row, int col);
+    mln_rvalue(I) at(const Image<I>& ima, def::coord sli, def::coord row, def::coord col);
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int sli, int row, int col);
+    mln_lvalue(I) at(Image<I>& ima, def::coord sli, def::coord row, def::coord col);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -80,7 +80,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_1d_impl(trait::image::category::domain_morpher,
-                               const Image<I>& ima, int ind)
+                               const Image<I>& ima, def::coord ind)
       {
         point1d p(ind);
         return exact(ima)(p);
@@ -89,7 +89,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_1d_impl(trait::image::category::morpher,
-                               const Image<I>& ima, int ind)
+                               const Image<I>& ima, def::coord ind)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -99,7 +99,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_1d_impl(trait::image::category::primary,
-                               const Image<I>& ima, int ind)
+                               const Image<I>& ima, def::coord ind)
       {
         return exact(ima).at(ind);
       }
@@ -108,7 +108,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_1d_impl(trait::image::category::domain_morpher,
-                               Image<I>& ima, int ind)
+                               Image<I>& ima, def::coord ind)
       {
         mlc_is(mln_trait_image_pw_io(I),
                trait::image::pw_io::read_write)::check();
@@ -120,7 +120,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_1d_impl(trait::image::category::morpher,
-                               Image<I>& ima, int ind)
+                               Image<I>& ima, def::coord ind)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -130,7 +130,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_1d_impl(trait::image::category::primary,
-                               Image<I>& ima, int ind)
+                               Image<I>& ima, def::coord ind)
       {
         return exact(ima).at(ind);
       }
@@ -139,7 +139,7 @@ namespace mln
 
     template <typename I>
     inline
-    mln_rvalue(I) at(const Image<I>& ima, int ind)
+    mln_rvalue(I) at(const Image<I>& ima, def::coord ind)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::one_d)::check();
@@ -148,7 +148,7 @@ namespace mln
     }
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int ind)
+    mln_lvalue(I) at(Image<I>& ima, def::coord ind)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::one_d)::check();
@@ -165,7 +165,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_2d_impl(trait::image::category::domain_morpher,
-                               const Image<I>& ima, int row, int col)
+                               const Image<I>& ima, def::coord row, def::coord col)
       {
         point2d p(row, col);
         return exact(ima)(p);
@@ -174,7 +174,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_2d_impl(trait::image::category::morpher,
-                               const Image<I>& ima, int row, int col)
+                               const Image<I>& ima, def::coord row, def::coord col)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -184,7 +184,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_2d_impl(trait::image::category::primary,
-                               const Image<I>& ima, int row, int col)
+                               const Image<I>& ima, def::coord row, def::coord col)
       {
         return exact(ima).at(row, col);
       }
@@ -193,7 +193,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_2d_impl(trait::image::category::domain_morpher,
-                               Image<I>& ima, int row, int col)
+                               Image<I>& ima, def::coord row, def::coord col)
       {
         mlc_is(mln_trait_image_pw_io(I),
                trait::image::pw_io::read_write)::check();
@@ -205,7 +205,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_2d_impl(trait::image::category::morpher,
-                               Image<I>& ima, int row, int col)
+                               Image<I>& ima, def::coord row, def::coord col)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -215,7 +215,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_2d_impl(trait::image::category::primary,
-                               Image<I>& ima, int row, int col)
+                               Image<I>& ima, def::coord row, def::coord col)
       {
         return exact(ima).at(row, col);
       }
@@ -224,7 +224,7 @@ namespace mln
 
     template <typename I>
     inline
-    mln_rvalue(I) at(const Image<I>& ima, int row, int col)
+    mln_rvalue(I) at(const Image<I>& ima, def::coord row, def::coord col)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::two_d)::check();
@@ -233,7 +233,7 @@ namespace mln
     }
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int row, int col)
+    mln_lvalue(I) at(Image<I>& ima, def::coord row, def::coord col)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::two_d)::check();
@@ -249,7 +249,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_3d_impl(trait::image::category::domain_morpher,
-                               const Image<I>& ima, int sli, int row, int col)
+                               const Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         point3d p(sli, row, col);
         return exact(ima)(p);
@@ -258,7 +258,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_3d_impl(trait::image::category::morpher,
-                               const Image<I>& ima, int sli, int row, int col)
+                               const Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -268,7 +268,7 @@ namespace mln
       template <typename I>
       inline
       mln_rvalue(I) at_3d_impl(trait::image::category::primary,
-                               const Image<I>& ima, int sli, int row, int col)
+                               const Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         return exact(ima).at(sli, row, col);
       }
@@ -277,7 +277,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_3d_impl(trait::image::category::domain_morpher,
-                               Image<I>& ima, int sli, int row, int col)
+                               Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         mlc_is(mln_trait_image_pw_io(I),
                trait::image::pw_io::read_write)::check();
@@ -289,7 +289,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_3d_impl(trait::image::category::morpher,
-                               Image<I>& ima, int sli, int row, int col)
+                               Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         // FIXME: what about morpher that modify the image value?
         // (through a function for instance)
@@ -299,7 +299,7 @@ namespace mln
       template <typename I>
       inline
       mln_lvalue(I) at_3d_impl(trait::image::category::primary,
-                               Image<I>& ima, int sli, int row, int col)
+                               Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
         return exact(ima).at(sli, row, col);
       }
@@ -308,7 +308,7 @@ namespace mln
 
     template <typename I>
     inline
-    mln_rvalue(I) at(const Image<I>& ima, int sli, int row, int col)
+    mln_rvalue(I) at(const Image<I>& ima, def::coord sli, def::coord row, def::coord col)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::three_d)::check();
@@ -318,7 +318,7 @@ namespace mln
     }
 
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, int sli, int row, int col)
+    mln_lvalue(I) at(Image<I>& ima, def::coord sli, def::coord row, def::coord col)
     {
       mlc_is(mln_trait_image_dimension(I),
              trait::image::dimension::three_d)::check();

@@ -40,6 +40,7 @@
 # include <mln/algebra/vec.hh>
 # include <mln/metal/converts_to.hh>
 
+
 namespace mln
 {
 
@@ -232,7 +233,7 @@ namespace mln
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
     for (unsigned i = 0; i < dim; ++i)
-      coord_[i] = f(i);
+      coord_[i] = static_cast<C>(f(i));
   }
 
   template <typename G, typename C>

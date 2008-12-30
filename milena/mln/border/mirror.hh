@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,12 @@
 #ifndef MLN_BORDER_MIRROR_HH
 # define MLN_BORDER_MIRROR_HH
 
-/*! \file mln/border/mirror.hh
- *
- * \brief Define function that fills border using nearer pixels with a
- * mirroring effect.
- */
+/// \file mln/border/mirror.hh
+///
+/// Define function that fills border using nearer pixels with a
+/// mirroring effect.
+///
+/// \todo Awful code: rewrite it!
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
@@ -46,6 +48,7 @@
 # include <mln/geom/min_col.hh>
 # include <mln/geom/max_col.hh>
 # include <mln/geom/ninds.hh>
+
 
 namespace mln
 {
@@ -78,7 +81,7 @@ namespace mln
 	trace::entering("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
- 	unsigned border = ima.border ();
+ 	unsigned border = ima.border();
  	unsigned nbinds = geom::ninds(ima);
 	unsigned min;
 

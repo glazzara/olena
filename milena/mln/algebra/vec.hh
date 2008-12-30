@@ -383,7 +383,7 @@ namespace mln
       : super_()
     {
       for (unsigned i = 0; i < n; ++i)
-	data_[i] = rhs[i];
+	data_[i] = static_cast<T>(rhs[i]);
     }
 
     template <unsigned n, typename T>
@@ -392,7 +392,7 @@ namespace mln
     vec<n,T>& vec<n,T>::operator=(const vec<n, U>& rhs)
     {
       for (unsigned i = 0; i < n; ++i)
-	data_[i] = rhs[i];
+	data_[i] = static_cast<T>(rhs[i]);
       return *this;
     }
 
@@ -436,7 +436,7 @@ namespace mln
 	n_l2 += data_[i] * data_[i];
       n_l2 = sqrt(n_l2);
       for (unsigned i = 0; i < n; ++i)
-	data_[i] = T(data_[i] / n_l2);
+	data_[i] = static_cast<T>(data_[i] / n_l2);
       return *this;
     }
 
@@ -448,7 +448,7 @@ namespace mln
       mlc_converts_to(mln_result(F), T)::check();
       const F& f = exact(f_);
       for (unsigned i = 0; i < n; ++i)
-	data_[i] = f(i);
+	data_[i] = static_cast<T>(f(i));
     }
 
 
@@ -478,7 +478,8 @@ namespace mln
     vec<n, mln_trait_op_plus(T,U)>
     operator+(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      vec<n, mln_trait_op_plus(T,U)> tmp;
+      typedef mln_trait_op_plus(T,U) R;
+      vec<n, R> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] + rhs[i];
       return tmp;
@@ -489,7 +490,8 @@ namespace mln
     vec<n, mln_trait_op_minus(T,U)>
     operator-(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      vec<n, mln_trait_op_minus(T,U)> tmp;
+      typedef mln_trait_op_minus(T,U) R;
+      vec<n, R> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] - rhs[i];
       return tmp;
@@ -500,6 +502,7 @@ namespace mln
     mln_sum_x(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
+      typedef mln_sum_x(T,U) R;
       mln_sum_x(T,U) tmp(literal::zero);
       for (unsigned i = 0; i < n; ++i)
 	tmp += lhs[i] * rhs[i];
@@ -521,7 +524,8 @@ namespace mln
       // If we really want to propage the "scalar" status then
       // we shall allow for scalar(scalar(..)) !!!  => FIXME
 
-      vec<n, mln_trait_op_times(T, S)> tmp;
+      typedef mln_trait_op_times(T, S) R;
+      vec<n, R> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] * s.to_equiv();
       return tmp;
@@ -533,7 +537,8 @@ namespace mln
     operator/(const vec<n,T>& lhs, const mln::value::scalar_<S>& s)
     {
       mln_precondition(value::equiv(s) != (S)(literal::zero));
-      vec<n, mln_trait_op_div(T, S)> tmp;
+      typedef mln_trait_op_div(T, S) R;
+      vec<n, R> tmp;
       for (unsigned i = 0; i < n; ++i)
 	tmp[i] = lhs[i] / s.to_equiv();
       return tmp;

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_MAKE_BOX3D_HH
 # define MLN_MAKE_BOX3D_HH
 
-/*! \file mln/make/box3d.hh
- *
- * \brief Routines to construct an mln::box3d.
- */
+/// \file mln/make/box3d.hh
+///
+/// Routines to construct an mln::box3d.
 
 # include <mln/core/alias/box3d.hh>
 
@@ -84,7 +84,9 @@ namespace mln
     {
       mln_precondition(nrows != 0 && ncols != 0 && nslis != 0);
       mln::box3d tmp(point3d(0, 0, 0),
-		     point3d(nslis - 1, nrows - 1, ncols - 1));
+		     point3d(static_cast<def::coord>(nslis - 1),
+			     static_cast<def::coord>(nrows - 1),
+			     static_cast<def::coord>(ncols - 1)));
       return tmp;
     }
 

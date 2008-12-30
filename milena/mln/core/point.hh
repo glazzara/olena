@@ -298,7 +298,7 @@ namespace mln
     mlc_converts_to(mln_result(F), C)::check();
     const F& f = exact(f_);
     for (unsigned i = 0; i < dim; ++i)
-      coord_[i] = f(i);
+      coord_[i] = static_cast<C>( f(i) );
   }
 
   template <typename G, typename C>
@@ -369,7 +369,7 @@ namespace mln
   point<G,C>::operator+=(const delta& dp)
   {
     for (unsigned i = 0; i < dim; ++i)
-      coord_[i] += dp[i];
+      coord_[i] = static_cast<C>(coord_[i] + dp[i]);
     return *this;
   }
 

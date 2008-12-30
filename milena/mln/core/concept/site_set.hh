@@ -48,16 +48,8 @@
 namespace mln
 {
 
-  // Forward declarations.
+  // Forward declaration.
   template <typename E> struct Site_Set;
-
-  namespace convert
-  {
-
-    template <typename F, typename T>
-    void from_to(const F& from, T& to);
-
-  }
 
 
   /// Site_Set category flag type.

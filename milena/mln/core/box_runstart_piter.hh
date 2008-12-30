@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,17 @@
 #ifndef MLN_CORE_BOX_RUNSTART_PITER_HH
 # define MLN_CORE_BOX_RUNSTART_PITER_HH
 
-/*! \file mln/core/box_runstart_piter.hh
- *
- * \brief Definition of iterators on points by lines.
- *
- */
+/// \file mln/core/box_runstart_piter.hh
+///
+/// Definition of iterators on points by lines.
 
 # include <mln/core/internal/site_iterator_base.hh>
 # include <mln/core/site_set/box.hh>
 
-#define mln_box_runstart_piter(I) typename mln::box_runstart_piter< mln_psite(I) >
-#define mln_box_runstart_piter_(I) mln::box_runstart_piter<mln_psite(I)>
+
+#define mln_box_runstart_piter(I)  typename mln::box_runstart_piter<mln_psite(I)>
+#define mln_box_runstart_piter_(I)          mln::box_runstart_piter<mln_psite(I)>
+
 
 namespace mln
 {
@@ -111,7 +112,7 @@ namespace mln
   bool
   box_runstart_piter<P>::is_valid_() const
   {
-    return p_[0] != s_->pmax()[0] + 1;
+    return p_[0] != static_cast<mln_coord(P)>(s_->pmax()[0] + 1);
   }
 
   template <typename P>
@@ -119,7 +120,7 @@ namespace mln
   void
   box_runstart_piter<P>::invalidate_()
   {
-    p_[0] = s_->pmax()[0] + 1;
+    p_[0] = static_cast<mln_coord(P)>(s_->pmax()[0] + 1);
   }
 
   template <typename P>

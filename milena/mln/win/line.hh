@@ -111,8 +111,10 @@ namespace mln
       mln_precondition(length % 2 == 1);
       dpoint<M,C> n;
       n.set_all(0);
-      const int dc = length / 2;
-      for (int c = - dc; c <= dc; ++c)
+      const def::coord
+	dc = static_cast<def::coord>(length / 2),
+	minus_dc = static_cast<def::coord>(- dc);
+      for (def::coord c = minus_dc; c <= dc; ++c)
       {
 	n[i] = c;
 	this->insert(n);

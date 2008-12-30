@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,13 +29,10 @@
 #ifndef MLN_IO_PBM_SAVE_HH
 # define MLN_IO_PBM_SAVE_HH
 
-/*!
- * \file   mln/io/pbm/save.hh
- *
- * \brief Define a function which saves an image of kind pbm into
- * given path.
- *
- */
+/// \file mln/io/pbm/save.hh
+///
+/// Define a function which saves an image of kind pbm into
+/// given path.
 
 # include <iostream>
 # include <fstream>
@@ -86,27 +83,31 @@ namespace mln
 
 	  io::pnm::save_header(PBM, ima, filename, file);
 
-	  int ncols = geom::ncols(ima);
-	  int col = 0;
-	  int stride = 0;
+	  def::coord
+	    ncols = static_cast<def::coord>(geom::ncols(ima)),
+	    col = 0,
+	    stride = 0;
 	  unsigned char c = 0;
 
 	  mln_fwd_piter(I) p(ima.domain());
 	  for_all(p)
 	    {
-	      c <<= 1;
-	      c += (ima(p) == true ? 0 : 1); // In pbm, '0' means 'white' so 'object', thus 'true'!
+	      c = static_cast<unsigned char>(c << 1);
+	      if (ima(p) == false)
+		++c; // In pbm, '0' means 'white' so 'object', thus 'true'!
 	      if (++col >= ncols)
 		{
-		  c <<= (8 - stride - 1);
+		  c = static_cast<unsigned char>(c << (8 - stride - 1));
 		  file << c;
-		  c = col = stride = 0;
+		  c = 0;
+		  col = stride = 0;
 		}
 	      else
 		if (++stride >= 8)
 		  {
 		    file << c;
-		    c = stride = 0;
+		    c = 0;
+		    stride = 0;
 		  }
 	    }
 	  mln_postcondition(stride == 0);

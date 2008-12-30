@@ -107,12 +107,15 @@ namespace mln
       void
       from_to_(const bool (&values)[S], window2d& win)
       {
-	enum { h = mlc_sqrt_int(S) / 2 };
-	mlc_bool((2 * h + 1) * (2 * h + 1) == S)::check();
+	enum { H = mlc_sqrt_int(S) / 2 };
+	mlc_bool((2 * H + 1) * (2 * H + 1) == S)::check();
 	win.clear();
 	unsigned i = 0;
-	for (int row = - h; row <= h; ++row)
-	  for (int col = - h; col <= h; ++col)
+	const def::coord
+	  h  = static_cast<def::coord>(H),
+	  _h = static_cast<def::coord>(-h);
+	for (def::coord row = _h; row <= h; ++row)
+	  for (def::coord col = _h; col <= h; ++col)
 	    if (values[i++])
 	      win.insert(row, col);
       }
@@ -124,9 +127,13 @@ namespace mln
 	mlc_bool(R % 2 == 1)::check();
 	mlc_bool(C % 2 == 1)::check();
 	win.clear();
-	const int drow = int(R) / 2, dcol = int(C) / 2;
-	for (int row = - drow; row <= drow; ++row)
-	  for (int col = - dcol; col <= dcol; ++col)
+	const def::coord
+	  drow  = static_cast<def::coord>(R / 2),
+	  _drow = static_cast<def::coord>(- drow),
+	  dcol  = static_cast<def::coord>(C / 2),
+	  _dcol = static_cast<def::coord>(- dcol);
+	for (def::coord row = _drow; row <= drow; ++row)
+	  for (def::coord col = _dcol; col <= dcol; ++col)
 	    if (values[row + drow][col + dcol])
 	      win.insert(row, col);
       }

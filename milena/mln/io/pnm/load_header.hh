@@ -60,7 +60,7 @@ namespace mln
 	  // check magic
 	  if (istr.get() != 'P' )
 	    goto err;
-	  type = istr.get();
+	  type = static_cast<char>(istr.get());
 
 	  if (type < '1' || type > '6')
 	    goto err;

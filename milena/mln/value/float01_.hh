@@ -113,6 +113,9 @@ namespace mln
 
       /// Conversion to a float.
       operator float() const;
+
+    private:
+      typedef mln_enc(int_u<n>) enc_;
     };
 
 
@@ -166,7 +169,7 @@ namespace mln
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
-      this->v_ = int(val * (mln_card(float01_<n>) - 1)); // FIXME
+      this->v_ = static_cast<enc_>(val * (mln_card(float01_<n>) - 1)); // FIXME
     }
 
     template <unsigned n>
@@ -174,7 +177,7 @@ namespace mln
     float
     float01_<n>::value() const
     {
-      return float(this->v_) / (mln_card(float01_<n>) - 1); // FIXME
+      return float(this->v_) / float(mln_card(float01_<n>) - 1); // FIXME
     }
 
     template <unsigned n>
@@ -182,7 +185,7 @@ namespace mln
     void
     float01_<n>::set_ind(unsigned long val)
     {
-      this->v_ = val;
+      this->v_ = static_cast<enc_>(val);
     }
 
     template <unsigned n>
@@ -192,7 +195,7 @@ namespace mln
     {
       mln_precondition(val >= 0);
       mln_precondition(val <= 1);
-      this->v_ = int(val * (mln_card(float01_<n>) - 1)); // FIXME
+      this->v_ = static_cast<enc_>(val * (mln_card(float01_<n>) - 1)); // FIXME
       return *this;
     }
 
@@ -200,7 +203,7 @@ namespace mln
     inline
     float01_<n>::operator float() const
     {
-      return float(this->v_) / (mln_card(float01_<n>) - 1);
+      return float(this->v_) / float(mln_card(float01_<n>) - 1);
     }
 
 

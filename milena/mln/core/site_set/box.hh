@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_CORE_SITE_SET_BOX_HH
 # define MLN_CORE_SITE_SET_BOX_HH
 
-/*! \file mln/core/site_set/box.hh
- *
- * \brief This file defines a generic box class.
- *
- * \todo Test if the safety code in box::box() is not too slow.
- */
+/// \file mln/core/site_set/box.hh
+///
+/// This file defines a generic box class.
+///
+/// \todo Test if the safety code in box::box() is not too slow.
 
 # include <mln/core/concept/box.hh>
 # include <mln/core/internal/box_impl.hh>
@@ -357,8 +357,8 @@ namespace mln
 
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      tmp.pmin_[i] -= b;
-      tmp.pmax_[i] += b;
+      tmp.pmin_[i] = static_cast<mln_coord(P)>(tmp.pmin_[i] - b);
+      tmp.pmax_[i] = static_cast<mln_coord(P)>(tmp.pmax_[i] + b);
     }
     mln_postcondition(tmp.is_valid());
     return tmp;
@@ -372,7 +372,7 @@ namespace mln
     mln_precondition(is_valid());
     P center;
     for (unsigned i = 0; i < P::dim; ++i)
-      center[i] = pmin_[i] + ((pmax_[i] - pmin_[i]) / 2);
+      center[i] = static_cast<mln_coord(P)>(pmin_[i] + ((pmax_[i] - pmin_[i]) / 2));
     return center;
   }
 

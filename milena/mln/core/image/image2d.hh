@@ -205,10 +205,10 @@ namespace mln
     // -----------------
 
     /// Read-only access to the image value located at (\p row, \p col).
-    const T& at(int row, int col) const;
+    const T& at(def::coord row, def::coord col) const;
 
     /// Read-write access to the image value located at (\p row, \p col).
-    T& at(int row, int col);
+    T& at(def::coord row, def::coord col);
 
     /// Give the number of rows.
     unsigned nrows() const;
@@ -463,7 +463,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image2d<T>::at(int row, int col) const
+  image2d<T>::at(def::coord row, def::coord col) const
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
@@ -472,7 +472,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  image2d<T>::at(int row, int col)
+  image2d<T>::at(def::coord row, def::coord col)
   {
     mln_precondition(this->has(point2d(row, col)));
     return this->data_->array_[row][col];
@@ -569,8 +569,10 @@ namespace mln
   image2d<T>::point_at_index(unsigned i) const
   {
     mln_precondition(i < nelements());
-    point2d p = point2d(i / this->data_->vb_.len(1) + this->data_->vb_.min_row(),
-			      i % this->data_->vb_.len(1) + this->data_->vb_.min_col());
+    def::coord
+      row = static_cast<def::coord>(i / this->data_->vb_.len(1) + this->data_->vb_.min_row()),
+      col = static_cast<def::coord>(i % this->data_->vb_.len(1) + this->data_->vb_.min_col());
+    point2d p = point2d(row, col);
     mln_postcondition(& this->operator()(p) == this->data_->buffer_ + i);
     return p;
   }

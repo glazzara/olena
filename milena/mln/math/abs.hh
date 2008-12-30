@@ -29,10 +29,9 @@
 #ifndef MLN_MATH_ABS_HH
 # define MLN_MATH_ABS_HH
 
-/*! \file mln/math/abs.hh
- *
- *  \brief Define the absolute value (abs) routine.
- */
+/// \file mln/math/abs.hh
+///
+/// Define the absolute value (abs) routine.
 
 # include <cmath>
 # include <cstdlib>
@@ -77,7 +76,7 @@ namespace mln
     inline
     T abs(const T& v)
     {
-      return v >= 0 ? v : -v;
+      return v >= 0 ? v : static_cast<T>(-v);
     }
 
     inline int         abs(int v)         { return std::abs(v); }
