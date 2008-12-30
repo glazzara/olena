@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/octagon2d.cc
- *
- * \brief Tests on mln::win::octagon2d.
- */
+/// \file tests/win/octagon2d.cc
+///
+/// Tests on mln::win::octagon2d.
 
 #include <cmath>
 
 #include <mln/win/octagon2d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,17 +46,16 @@ int main()
 
   mln_assertion(oct.delta() == 6);
 
-  for (int x = -16; x <= 16; ++x)
-    for (int y = -16; y <= 16; ++y)
+  for (def::coord x = -16; x <= 16; ++x)
+    for (def::coord y = -16; y <= 16; ++y)
     {
-      mln_assertion(((abs(x) <= 6) && (abs(y) <= 6)) ||
-		    !oct.has(dpoint2d(x, y)));
-      mln_assertion((abs(x) + abs(y) <= static_cast<int>(l / 2 + l / 6)) ==
-		    (oct.has(dpoint2d(x, y))) ||
-		    abs(x) > 2 ||
-		    abs(y) > 2);
+      mln_assertion((std::abs(x) <= 6 && std::abs(y) <= 6) ||
+		    ! oct.has(dpoint2d(x, y)));
+      mln_assertion((std::abs(x) + std::abs(y) <= static_cast<int>(l / 2 + l / 6)) ==
+		    oct.has(dpoint2d(x, y)) ||
+		    std::abs(x) > 2 ||
+		    std::abs(y) > 2);
     }
 
   debug::println(convert::to_image(oct));
 }
-

@@ -243,7 +243,8 @@ namespace mln
   mln_trait_op_div(Vl, Vr)
   operator / (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
-    return value::equiv(lhs) / value::equiv(rhs);
+    typedef mln_trait_op_div(Vl, Vr) R;
+    return static_cast<R>(value::equiv(lhs)) / static_cast<R>(value::equiv(rhs));
   }
 
   template <typename Vl, typename Vr>

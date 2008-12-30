@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/hline2d.cc
- *
- * \brief Tests on mln::win::hline2d.
- */
+/// \file tests/win/hline2d.cc
+///
+/// Tests on mln::win::hline2d.
 
 #include <cmath>
 
 #include <mln/win/hline2d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,15 +46,14 @@ int main()
 
   mln_assertion(hline.delta() == 2);
 
-  for (int x = -5; x <= 5; ++x)
-    for (int y = -5; y <= 5; ++y)
+  for (def::coord x = -5; x <= 5; ++x)
+    for (def::coord y = -5; y <= 5; ++y)
     {
-      mln_assertion(((abs(x) <= 2) && (abs(y) <= 2)) ||
-		    !hline.has(dpoint2d(x, y)));
-      mln_assertion((0 == x) == (hline.has(dpoint2d(x, y))) ||
-		    abs(y) > 2);
+      mln_assertion((std::abs(x) <= 2 && std::abs(y) <= 2) ||
+		    ! hline.has(dpoint2d(x, y)));
+      mln_assertion((x == 0) == (hline.has(dpoint2d(x, y))) ||
+		    std::abs(y) > 2);
     }
 
   debug::println(convert::to_image(hline));
 }
-

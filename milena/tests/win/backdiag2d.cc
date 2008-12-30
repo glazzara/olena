@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/backdiag2d.cc
- *
- * \brief Tests on mln::win::backdiag2d.
- */
+/// \file tests/win/backdiag2d.cc
+///
+/// Tests on mln::win::backdiag2d.
 
 #include <cmath>
 
 #include <mln/win/backdiag2d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,16 +46,15 @@ int main()
   
   mln_assertion(diag.delta() == 4);
 
-  for (int x = -5; x <= 5; ++x)
-    for (int y = -5; y <= 5; ++y)
+  for (def::coord x = -5; x <= 5; ++x)
+    for (def::coord y = -5; y <= 5; ++y)
     {
-      mln_assertion(((abs(x) <= 4) && (abs(y) <= 4)) ||
-		    !diag.has(dpoint2d(y, x)));
-      mln_assertion((x == y) == (diag.has(dpoint2d(x, y))) ||
-		    abs(x) > 4 ||
-		    abs(y) > 4);
+      mln_assertion((std::abs(x) <= 4 && std::abs(y) <= 4) ||
+		    ! diag.has(dpoint2d(y, x)));
+      mln_assertion((x == y) == diag.has(dpoint2d(x, y)) ||
+		    std::abs(x) > 4 ||
+		    std::abs(y) > 4);
     }
 
   debug::println(convert::to_image(diag));
 }
-

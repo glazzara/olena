@@ -88,7 +88,7 @@ namespace mln
     {
       // FIXME: Add static_cast<Dest>?
       // FIXME: Add exact()?
-      return internal::cast_(&src, src);
+      return static_cast<Dest>(internal::cast_(&src, src));
     }
 
 # endif // ! MLN_INCLUDE_ONLY

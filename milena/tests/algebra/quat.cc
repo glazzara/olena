@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/quat.cc
- *
- * \brief Tests on mln::value::quat.
- */
+/// \file tests/algebra/quat.cc
+///
+/// Tests on mln::algebra::quat.
 
 #include <iostream>
 
@@ -43,7 +43,7 @@ int main()
   using namespace mln;
 
   algebra::quat q1(3.f, 4.f, 1.6f, 0.5f);
-  algebra::quat q2(1.2, make::vec(3, 6, 4));
+  algebra::quat q2(1.2f, make::vec(3, 6, 4));
   algebra::quat q3(make::vec(1.3, 3., -6., 4.));
 
   std::cout << q1 << std::endl;
@@ -52,7 +52,7 @@ int main()
 
   std::cout << q1.s() << std::endl;
 
-  q1.s() = 2.6;
+  q1.s() = 2.6f;
   std::cout << q1 << std::endl;
 
   std::cout << q1.v() << std::endl;

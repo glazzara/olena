@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/disk2d.cc
- *
- * \brief Tests on mln::win::disk2d.
- */
+/// \file tests/win/disk2d.cc
+///
+/// Tests on mln::win::disk2d.
 
 #include <cmath>
 
 #include <mln/win/disk2d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -48,17 +47,15 @@ int main()
 
   mln_assertion(disk.delta() == 27);
 
-  for (int x = -30; x <= 30; ++x)
-    for (int y = -30; y <= 30; ++y)
+  for (def::coord x = -30; x <= 30; ++x)
+    for (def::coord y = -30; y <= 30; ++y)
     {
-      mln_assertion(((abs(x) <= 27) && (abs(y) <= 27)) ||
-		    !disk.has(dpoint2d(y, x)));
-      mln_assertion(((x * x + y * y) <= static_cast<int>(l2)) ==
-		    (disk.has(dpoint2d(x, y))) ||
-		    abs(x) > 27 ||
-		    abs(y) > 27);
+      mln_assertion((std::abs(x) <= 27 && std::abs(y) <= 27) ||
+		    ! disk.has(dpoint2d(y, x)));
+      mln_assertion(((x * x + y * y) <= static_cast<int>(l2)) == disk.has(dpoint2d(x, y)) ||
+		    std::abs(x) > 27 ||
+		    std::abs(y) > 27);
     }
 
   debug::println(convert::to_image(disk));
 }
-

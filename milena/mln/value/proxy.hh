@@ -29,10 +29,9 @@
 #ifndef MLN_VALUE_PROXY_HH
 # define MLN_VALUE_PROXY_HH
 
-/*! \file mln/value/proxy.hh
- *
- * \brief Define a generic proxy class for an image pixel value.
- */
+/// \file mln/value/proxy.hh
+///
+/// Define a generic proxy class for an image pixel value.
 
 # include <mln/core/concept/value.hh>
 # include <mln/trait/value_.hh>

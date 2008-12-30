@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +25,17 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/cuboid3d.cc
- *
- * \brief Tests on mln::win::cuboid3d.
- */
+/// \file tests/win/cuboid3d.cc
+///
+/// Tests on mln::win::cuboid3d.
 
 #include <cmath>
+
 #include <mln/win/cuboid3d.hh>
 #include <mln/win/sym.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -52,16 +51,15 @@ int main()
 
   mln_assertion(cuboid.delta() == 3);
 
-  for (int s = -7; s <= 7; ++s)
-    for (int x = -7; x <= 7; ++x)
-      for (int y = -7; y <= 7; ++y)
+  for (def::coord s = -7; s <= 7; ++s)
+    for (def::coord x = -7; x <= 7; ++x)
+      for (def::coord y = -7; y <= 7; ++y)
     {
-      mln_assertion(((abs(s) <= 3 && abs(x) <= 1 && abs(y) <= 2)) ||
+      mln_assertion((std::abs(s) <= 3 && std::abs(x) <= 1 && std::abs(y) <= 2) ||
 		    !cuboid.has(dpoint3d(s, x, y)));
-      mln_assertion((abs(s) <= 3 && abs(x) <= 1 && abs(y) <= 2) ==
+      mln_assertion((std::abs(s) <= 3 && std::abs(x) <= 1 && std::abs(y) <= 2) ==
 		    (cuboid.has(dpoint3d(s, x, y))));
     }
   
   debug::println(convert::to_image(cuboid));
 }
-

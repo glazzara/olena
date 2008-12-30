@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/value/float01.cc
- *
- * \brief Tests on mln::value::float01.
- */
+/// \file tests/value/float01.cc
+///
+/// Tests on mln::value::float01.
 
 #include <iostream>
 
@@ -53,20 +53,20 @@ using namespace mln;
 using namespace mln::value;
 using  mln::value::int_u8;
 
-float fi(int) { return 0.5; }
+float fi(int) { return 0.5f; }
 int ii(int) { return 1; }
 
-float fd(double) { return 0.5; }
+float fd(double) { return 0.5f; }
 int id(double) { return 1; }
 
 
 struct tofloat01 : mln::Function_v2v<tofloat01>
 {
 
-  typedef float01_<16> result;
+  typedef float01_<12> result;
   result operator()(int_u8 v) const
   {
-    result ret(double(v) / (mln_max(int_u8)));
+    result ret = static_cast<float>(v) / static_cast<float>(mln_max(int_u8));
     //    std::cout << v << "-> "  << ret << std::endl;
     return ret;
   }
@@ -76,9 +76,9 @@ struct to8bits : mln::Function_v2v<to8bits>
 {
 
   typedef int_u8 result;
-  result operator()(float01_<16> v) const
+  result operator()(float01_<12> v) const
   {
-    result ret = int(v.value() * 255);
+    result ret = static_cast<int>(v.value() * 255);
     // FIXME: Dead code.
     //std::cout << v << "-> " << ret << std::endl;
     return ret;
@@ -96,13 +96,13 @@ int main()
   assert(approx_equal(b,a));
 
   std::cout << b << std::endl;
-  b = b + 0.2;
+  b = b + 0.2f;
   std::cout << b << std::endl;
-  b = b - 0.2;
+  b = b - 0.2f;
   std::cout << b << std::endl;
-  b = b * 1.5;
+  b = b * 1.5f;
   std::cout << b << std::endl;
-  b = b / 4.6;
+  b = b / 4.6f;
   std::cout << b << std::endl;
 
   b = b / 3;
@@ -110,14 +110,14 @@ int main()
   b = b * 1;
   std::cout << b << std::endl;
 
-  a = fi(a);
-  a = ii(a);
+  a = fi( static_cast<int>(a) );
+  a = static_cast<float>( ii( static_cast<int>(a) ) );
   a = fd(a);
-  a = id(a);
+  a = static_cast<float>( id(a) );
 
   b = a;
   a = b;
-  b = 0.34;
+  b = 0.34f;
   std::cout << b << std::endl;
   b = 0;
   std::cout << b << std::endl;
@@ -125,13 +125,15 @@ int main()
   std::cout << b << std::endl;
 
   {
+    typedef value::float01_<12> float01_12;
+
     std::cout << "convert" << std::endl;
     image2d<int_u8>
       lena = io::pgm::load<int_u8>("../img/lena.pgm"),
       ref(lena.domain());
 
-    image2d<float01_16> out(lena.domain());
-    image2d<float01_16> tmp(lena.domain());
+    image2d<float01_12> out(lena.domain());
+    image2d<float01_12> tmp(lena.domain());
 
     tmp = level::transform(lena, tofloat01());
 

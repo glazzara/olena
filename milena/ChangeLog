@@ -1,3 +1,34 @@
+2008-12-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix warnings due to g++ -Wconversion option.
+
+	* mln/value/proxy.hh,
+	* mln/value/cast.hh,
+	* mln/value/ops.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/io/fits/load.hh,
+	* tests/value/float01.cc,
+	* tests/value/Makefile.am,
+	* tests/win/cuboid3d.cc,
+	* tests/win/vline2d.cc,
+	* tests/win/cube3d.cc,
+	* tests/win/backdiag2d.cc,
+	* tests/win/octagon2d.cc,
+	* tests/win/disk2d.cc,
+	* tests/win/hline2d.cc,
+	* tests/win/segment1d.cc,
+	* tests/win/rectangle2d.cc: Fix warning with Wconversion.
+	Upgrade	file doc style.
+	Layout.
+
+	* mln/value/float01_.hh: Likewise.
+	(mln_card): Replace by...
+	(mln_max): ...this.  So work for n > 12.
+
+	* tests/value/quat.cc: Move in...
+	* tests/algebra/quat.cc: ...here; where it belongs!
+	* tests/algebra/Makefile.am: Update.
+
 2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix data mutability in pw::image.

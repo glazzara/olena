@@ -167,9 +167,9 @@ namespace mln
     inline
     float01_<n>::float01_(float val)
     {
-      mln_precondition(val >= 0);
-      mln_precondition(val <= 1);
-      this->v_ = static_cast<enc_>(val * (mln_card(float01_<n>) - 1)); // FIXME
+      mln_precondition(val >= 0.f);
+      mln_precondition(val <= 1.f);
+      this->v_ = static_cast<enc_>(val * (float(mln_max(enc_)) - 1.f)); // FIXME
     }
 
     template <unsigned n>
@@ -177,7 +177,7 @@ namespace mln
     float
     float01_<n>::value() const
     {
-      return float(this->v_) / float(mln_card(float01_<n>) - 1); // FIXME
+      return float(this->v_) / (float(mln_max(enc_)) - 1.f); // FIXME
     }
 
     template <unsigned n>
@@ -193,9 +193,9 @@ namespace mln
     float01_<n>&
     float01_<n>::operator=(float val)
     {
-      mln_precondition(val >= 0);
-      mln_precondition(val <= 1);
-      this->v_ = static_cast<enc_>(val * (mln_card(float01_<n>) - 1)); // FIXME
+      mln_precondition(val >= 0.f);
+      mln_precondition(val <= 1.f);
+      this->v_ = static_cast<enc_>(val * (float(mln_max(enc_)) - 1.f)); // FIXME
       return *this;
     }
 
@@ -203,7 +203,7 @@ namespace mln
     inline
     float01_<n>::operator float() const
     {
-      return float(this->v_) / float(mln_card(float01_<n>) - 1);
+      return float(this->v_) / (float(mln_max(enc_)) - 1.f);
     }
 
 

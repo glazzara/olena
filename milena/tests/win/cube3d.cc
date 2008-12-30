@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/cube3d.cc
- *
- * \brief Tests on mln::win::cube3d.
- */
+/// \file tests/win/cube3d.cc
+///
+/// Tests on mln::win::cube3d.
 
 #include <cmath>
 
 #include <mln/win/cube3d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,16 +46,15 @@ int main()
 
   mln_assertion(cube.delta() == 2);
 
-  for (int s = -5; s <= 5; ++s)
-    for (int x = -5; x <= 5; ++x)
-      for (int y = -5; y <= 5; ++y)
+  for (def::coord s = -5; s <= 5; ++s)
+    for (def::coord x = -5; x <= 5; ++x)
+      for (def::coord y = -5; y <= 5; ++y)
       {
-	mln_assertion(((abs(x) <= 2) && (abs(y) <= 2) && (abs(s) <= 2)) ||
-		      !cube.has(dpoint3d(s, y, x)));
-	mln_assertion((abs(x) <= 2 && abs(y) <= 2 && abs(s) <= 2) ==
+	mln_assertion((std::abs(x) <= 2 && std::abs(y) <= 2 && std::abs(s) <= 2) ||
+		      ! cube.has(dpoint3d(s, y, x)));
+	mln_assertion((std::abs(x) <= 2 && std::abs(y) <= 2 && std::abs(s) <= 2) ==
 		      (cube.has(dpoint3d(s, y, x))));
       }
 
   debug::println(convert::to_image(cube));
 }
-

@@ -1,5 +1,5 @@
 // Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 EPITA
-// Research and Development Laboratory
+// Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +29,7 @@
 #ifndef MLN_IO_FITS_LOAD_HH
 # define MLN_IO_FITS_LOAD_HH
 
-/// \file   mln/io/fits/load.hh
+/// \file mln/io/fits/load.hh
 ///
 /// Define a function which loads an image of kind fits with
 /// given path.
@@ -43,6 +43,7 @@
 
 //FIXME: Add fitsio dependency
 # include <fitsio.h>
+
 
 namespace mln
 {
@@ -98,7 +99,8 @@ namespace mln
 	if (fits_open_file(&fptr, filename.c_str(), READONLY, &status))
 	  fits_exit(status);
 
-	if (fits_read_keys_lng(fptr, "NAXIS", 1, 2, naxes, &nfound, &status))
+ 	char NAXIS[] = "NAXIS";
+	if (fits_read_keys_lng(fptr, NAXIS, 1, 2, naxes, &nfound, &status))
 	  fits_exit(status);
 
 	const int ncols = naxes[0], nrows = naxes[1];

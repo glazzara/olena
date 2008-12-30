@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,18 +26,16 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/segment1d.cc
- *
- * \brief Tests on mln::win::segment1d.
- */
+/// \file tests/win/segment1d.cc
+///
+/// Tests on mln::win::segment1d.
 
 #include <cmath>
 
 #include <mln/win/segment1d.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
+
 
 int main()
 {
@@ -47,12 +46,11 @@ int main()
 
   mln_assertion(segm.delta() == 2);
 
-  for (int x = -5; x <= 5; ++x)
+  for (def::coord x = -5; x <= 5; ++x)
     {
-      mln_assertion((abs(x) <= 2) || !segm.has(dpoint1d(x)));
-      mln_assertion((abs(x) <= 2) == (segm.has(dpoint1d(x))));
+      mln_assertion(std::abs(x) <= 2 || ! segm.has(dpoint1d(x)));
+      mln_assertion((std::abs(x) <= 2) == segm.has(dpoint1d(x)));
     }
 
   debug::println(convert::to_image(segm));
 }
-

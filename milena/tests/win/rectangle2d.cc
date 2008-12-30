@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,17 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/win/rectangle2d.cc
- *
- * \brief Tests on mln::win::rectangle2d.
- */
+/// \file tests/win/rectangle2d.cc
+///
+/// Tests on mln::win::rectangle2d.
 
 #include <cmath>
+
 #include <mln/win/rectangle2d.hh>
 #include <mln/win/sym.hh>
-
 #include <mln/convert/to_image.hh>
-
 #include <mln/debug/println.hh>
 
 
@@ -53,12 +52,11 @@ int main()
 
   mln_assertion(rec.delta() == 2);
 
-  for (int x = -5; x <= 5; ++x)
-    for (int y = -5; y <= 5; ++y)
+  for (def::coord x = -5; x <= 5; ++x)
+    for (def::coord y = -5; y <= 5; ++y)
     {
-      mln_assertion((abs(x) <= 1 && abs(y) <= 2) == (rec.has(dpoint2d(x, y))));
+      mln_assertion((std::abs(x) <= 1 && std::abs(y) <= 2) == rec.has(dpoint2d(x, y)));
     }
   
   debug::println(convert::to_image(rec));
 }
-

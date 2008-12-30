@@ -84,7 +84,7 @@ namespace mln
       R
       linear<V,T,R>::operator()(const V& v) const
       {
-	return convert::to<R>(a * static_cast<T>(v) + b);
+	return mln::convert::to<R>(a * static_cast<T>(v) + b);
       }
 
       template <typename V, typename T, typename R>
