@@ -46,6 +46,13 @@
 namespace mln
 {
 
+  // Forward declaration.
+  namespace algebra
+  {
+    template <unsigned n, typename T> class vec;
+  }
+
+
   namespace norm
   {
 
@@ -56,6 +63,15 @@ namespace mln
 
     template <unsigned n, typename C>
     mln_sum(C) l2(const algebra::vec<n,C>& vec);
+    /// \}
+
+    /// Squared L2-norm of a vector \a vec.
+    /// \{
+    template <unsigned n, typename C>
+    mln_sum(C) sqr_l2(const C (&vec)[n]);
+
+    template <unsigned n, typename C>
+    mln_sum(C) sqr_l2(const algebra::vec<n,C>& vec);
     /// \}
 
     /// L2-norm distance between vectors \a vec1 and \p vec2.
@@ -87,6 +103,17 @@ namespace mln
 	    m = static_cast<M>(m + sqr_v_i);
 	  }
 	return mln::math::sqrt(m);
+      }
+
+      template <unsigned n, typename C, typename V>
+      inline
+      mln_sum(C)
+      sqr_l2_(const V& vec)
+      {
+	mln_sum(C) m = 0;
+	for (unsigned i = 0; i < n; ++i)
+	  m += mln::math::sqr(vec[i]);
+	return m;
       }
 
       template <unsigned n, typename C, typename V>
@@ -126,6 +153,24 @@ namespace mln
     {
       return impl::l2_<n, C>(vec);
     }
+
+
+    template <unsigned n, typename C>
+    inline
+    mln_sum(C)
+    sqr_l2(const C (&vec)[n])
+    {
+      return impl::sqr_l2_<n, C>(vec);
+    }
+
+    template <unsigned n, typename C>
+    inline
+    mln_sum(C)
+    sqr_l2(const algebra::vec<n,C>& vec)
+    {
+      return impl::sqr_l2_<n, C>(vec);
+    }
+
 
     template <unsigned n, typename C>
     inline
