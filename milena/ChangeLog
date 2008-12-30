@@ -1,3 +1,11 @@
+2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix from_to dispatch.	
+
+	* mln/convert/from_to.hh: dispatch functions where not called at all.
+
+	* mln/convert/from_to.hxx: Add more forward declarations.
+
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	Start to factor code among tests on complex-based images.

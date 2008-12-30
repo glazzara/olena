@@ -106,6 +106,13 @@ namespace mln
   namespace convert
   {
 
+    // Facade
+
+    template <typename F, typename T>
+    void
+    from_to(const F& from, T& to);
+
+
     namespace over_load
     {
 
@@ -114,6 +121,16 @@ namespace mln
       void
       from_to_(const Object<F>&, Object<T>&);
       // end of Guard.
+
+      // Object -> Object
+      template <typename T>
+      void
+      from_to_(const Object<T>& from, Object<T>& to);
+
+      // Object -> Object
+      template <typename T>
+      void
+      from_to_(const T& from, T& to);
 
 
       // algebra::vec -> Gpoint.
@@ -181,6 +198,14 @@ namespace mln
       template <typename V>
       void
       from_to_(const float& from, Value<V>& to);
+
+      // float -> unsigned
+      void
+      from_to_(const float& from, unsigned& to);
+
+      // float -> int
+      void
+      from_to_(const float& from, int& to);
 
       // int -> Value
       template <typename T>

@@ -68,16 +68,22 @@ namespace mln
     {
 
 
-      // F -> T
-      // if F convertible to T.
+      // Default dispatch if the two arguments are objects.
+
+      // Object -> Object
       template <typename F, typename T>
       inline
       void
-      from_to_dispatch(const metal::true_&, const Object<F>& from, Object<T>& to)
+      from_to_dispatch(const Object<F>& from, Object<T>& to)
       {
-	exact(to) = exact(from);
+	typedef mlc_converts_to(F, T) F_converts_to_T;
+	internal::from_to_dispatch(F_converts_to_T(),
+				   exact(from), exact(to));
       }
 
+
+
+      // Dispatch to specific implementation.
 
       // Image -> Site_Set.
       template <typename I, typename S>
@@ -102,6 +108,20 @@ namespace mln
       }
 
 
+
+      // Dispatch related to convertible objects.
+
+      // F -> T
+      // if F convertible to T.
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(const metal::true_&, const Object<F>& from, Object<T>& to)
+      {
+	exact(to) = exact(from);
+      }
+
+
       // F is NOT convertible to T.
       template <typename F, typename T>
       inline
@@ -112,6 +132,10 @@ namespace mln
       }
 
 
+
+      // Dispatch entry points.
+      // Check whether arguments are an object or not.
+
       // Builtin -> Builtin
       template <typename F, typename T>
       inline
@@ -119,7 +143,7 @@ namespace mln
       from_to_dispatch(metal::false_,  const F& from,
 		       metal::false_,  T&	to)
       {
-	over_load::from_to_(from, exact(to));
+	over_load::from_to_(from, to);
       }
 
 
@@ -151,9 +175,7 @@ namespace mln
       from_to_dispatch(metal::true_,  const F& from,
 		       metal::true_,  T&       to)
       {
-	typedef mlc_converts_to(F, T) F_converts_to_T;
-	internal::from_to_dispatch(F_converts_to_T(),
-				   exact(from), exact(to));
+	internal::from_to_dispatch(exact(from), exact(to));
       }
 
 
@@ -182,9 +204,17 @@ namespace mln
       template <typename T>
       inline
       void
-      from_to_(const T& from, T& to)
+      from_to_(const Object<T>& from, Object<T>& to)
       {
 	exact(to) = exact(from);
+      }
+
+      template <typename T>
+      inline
+      void
+      from_to_(const T& from, T& to)
+      {
+	to = from;
       }
 
 
