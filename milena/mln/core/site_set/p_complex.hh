@@ -151,8 +151,10 @@ namespace mln
     /// `known'.)
     unsigned nsites() const;
 
-    /// Return The number of faces in the complex.
+    /// Return the number of faces in the complex.
     unsigned nfaces() const;
+    /// Return the number of \a n-faces in the complex.
+    unsigned nfaces(unsigned n) const;
 
     // FIXME: Add nfaces(unsigned) routines?  Yes, if this can
     // simplify (and lighten) the implementation of piters, psites,
@@ -248,6 +250,14 @@ namespace mln
   p_complex<D, G>::nfaces() const
   {
     return cplx_.nfaces();
+  }
+
+  template <unsigned D, typename G>
+  inline
+  unsigned
+  p_complex<D, G>::nfaces(unsigned n) const
+  {
+    return cplx_.nfaces(n);
   }
 
   template <unsigned D, typename G>

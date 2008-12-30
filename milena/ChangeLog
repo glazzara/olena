@@ -1,5 +1,12 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a missing accessor in mln::p_complex.
+
+	* mln/core/site_set/p_complex.hh
+	(mln::p_complex::nfaces(unsigned)): New accessor.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Fix complex-based image-related #include's.
 
 	* mln/core/internal/complex_neighborhood_base.hh: Include
