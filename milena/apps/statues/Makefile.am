@@ -61,4 +61,4 @@ bin_PROGRAMS += mesh-complex-segm
 mesh_complex_segm_SOURCES = mesh-complex-segm.cc
 
 
-TESTS = test
+TESTS = test-mesh-segm test-mesh-complex-segm
