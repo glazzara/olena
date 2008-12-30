@@ -39,6 +39,8 @@
 namespace mln
 {
 
+  // Forward declaration.
+  template <typename S, typename I> class p_graph_piter;
 
   /// Forward iterator on line graph window.
   template <typename S, typename W, typename I>
@@ -53,10 +55,6 @@ namespace mln
     /// Associated types
     /// \{
     typedef mln_result(S::fun_t) P;
-    enum { dim = P::dim };
-
-    // FIXME: Dummy typedef.
-    typedef void dpoint;
     /// \}
 
     /// Construction.
@@ -80,11 +78,12 @@ namespace mln
     void do_next_();
 
     /// Set the reference psite.
-    /* FIXME: Careful, this method overrides the (non virtual) method
-       internal::site_relative_iterator_base<S, E>::center_at.  See
-       FIXME above.  */
     template <typename Pref>
-    void center_at(const Pref& c);
+    void center_at_(const Pref& c);
+
+    /// Set the reference psite.
+    template <typename I2>
+    void center_at_(const p_graph_piter<S, I2>& c);
 
     /// Return the graph element pointed by this iterator.
     const mln_graph_element(S)& element() const;
@@ -119,7 +118,7 @@ namespace mln
   graph_window_piter<S,W,I>::graph_window_piter(const Window<W>& win,
 						const Pref& p_ref)
   {
-    center_at(p_ref);
+    this->center_at(p_ref);
     this->change_target(exact(win));
     mln_postcondition(!this->is_valid());
   }
@@ -160,9 +159,17 @@ namespace mln
   template <typename Pref>
   inline
   void
-  graph_window_piter<S, W, I>::center_at(const Pref& c)
+  graph_window_piter<S, W, I>::center_at_(const Pref& c)
   {
-    super_::center_at(c);
+    iter_.center_at(c.p_hook_());
+  }
+
+  template <typename S, typename W, typename I>
+  template <typename I2>
+  inline
+  void
+  graph_window_piter<S, W, I>::center_at_(const p_graph_piter<S, I2>& c)
+  {
     iter_.center_at(c.hook_elt_());
   }
 

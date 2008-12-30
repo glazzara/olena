@@ -56,7 +56,7 @@ namespace mln
     /// Parameter \c S is the targeted "site set definition" type.  It
     /// can be either a Window, or a Neighborhood.
     ///
-    /// IMPORTANT: Sub-classes have to define do_start_, do_next_,
+    /// IMPORTANT: Sub-classes have to define center_at_, do_start_, do_next_,
     /// is_valid_, invalidate_ and compute_p_.  They shall define
     /// NEITHER start_ NOR next_.
     ///
@@ -142,6 +142,7 @@ namespace mln
       mlc_converts_to(P, const mln_psite(S)&)::check();
       c_ = & static_cast< const mln_psite(S)& >(c);
       this->invalidate();
+      exact(this)->center_at_(c);
     }
 
     template <typename S, typename E>

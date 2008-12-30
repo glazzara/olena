@@ -1,5 +1,18 @@
 2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a call to center_at_() in
+        site_relative_iterator_base::center_at() (ticket #176).
+
+	* mln/core/dpsites_piter.hh,
+	* mln/core/image/complex_neighborhood_piter.hh,
+	* mln/core/image/graph_window_piter.hh,
+	* mln/core/neighb.hh: implement center_at_().
+
+	* mln/core/internal/site_relative_iterator_base.hh: call center_at_().
+	Derived classes must implement that method.
+
+2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix from_to dispatch.	
 
 	* mln/convert/from_to.hh: dispatch functions where not called at all.

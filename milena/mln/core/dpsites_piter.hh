@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_CORE_DPSITES_PITER_HH
 # define MLN_CORE_DPSITES_PITER_HH
 
-/*! \file mln/core/dpsites_piter.hh
- *
- * \brief Definition of forward and backward mln::dpoint_ based
- * iterators.
- */
+/// \file mln/core/dpsites_piter.hh
+///
+/// Definition of forward and backward mln::dpoint_ based
+/// iterators.
 
 # include <vector>
 # include <mln/core/internal/site_relative_iterator_base.hh>
@@ -41,23 +41,21 @@
 namespace mln
 {
 
-  /*! \brief A generic forward iterator on points of windows and of
-   *  neighborhoods.
-   *
-   * The parameter \c V is the type of std::vector enclosing
-   * structure.
-   */
+  /// A generic forward iterator on points of windows and of
+  ///  neighborhoods.
+  ///
+  /// The parameter \c V is the type of std::vector enclosing
+  /// structure.
   template <typename V>
   class dpsites_fwd_piter
     : public internal::site_relative_iterator_base< V, dpsites_fwd_piter<V> >
   {
   public:
 
-    /*! \brief Constructor.
-     *
-     * \param[in] v   Object that can provide an array of delta-points.
-     * \param[in] c Center point to iterate around.
-     */
+    /// Constructor.
+    ///
+    /// \param[in] v   Object that can provide an array of delta-points.
+    /// \param[in] c Center point to iterate around.
     template <typename P>
     dpsites_fwd_piter(const V& v, const P& c);
 
@@ -76,6 +74,10 @@ namespace mln
     /// Go to the next point.
     void do_next_();
 
+    /// Set the reference psite.
+    template <typename Pref>
+    void center_at_(const Pref&);
+
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
 
@@ -85,23 +87,21 @@ namespace mln
   };
 
 
-  /*! \brief A generic backward iterator on points of windows and of
-   *  neighborhoods.
-   *
-   * The parameter \c V is the type of std::vector enclosing
-   * structure.
-   */
+  /// A generic backward iterator on points of windows and of
+  ///  neighborhoods.
+  ///
+  /// The parameter \c V is the type of std::vector enclosing
+  /// structure.
   template <typename V>
   class dpsites_bkd_piter :
     public internal::site_relative_iterator_base< V, dpsites_bkd_piter<V> >
   {
   public:
 
-    /*! \brief Constructor.
-     *
-     * \param[in] v   Object that can provide an array of delta-points.
-     * \param[in] c   Center point to iterate around.
-     */
+    /// Constructor.
+    ///
+    /// \param[in] v   Object that can provide an array of delta-points.
+    /// \param[in] c   Center point to iterate around.
     template <typename P>
     dpsites_bkd_piter(const V& v, const P& c);
 
@@ -119,6 +119,10 @@ namespace mln
 
     /// Go to the next point.
     void do_next_();
+
+    /// Set the reference psite.
+    template <typename Pref>
+    void center_at_(const Pref&);
 
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
@@ -183,6 +187,14 @@ namespace mln
   }
 
   template <typename V>
+  template <typename Pref>
+  inline
+  void
+  dpsites_fwd_piter<V>::center_at_(const Pref&)
+  {
+  }
+
+  template <typename V>
   inline
   mln_psite(V)
   dpsites_fwd_piter<V>::compute_p_() const
@@ -238,6 +250,14 @@ namespace mln
   dpsites_bkd_piter<V>::do_next_()
   {
     --i_;
+  }
+
+  template <typename V>
+  template <typename Pref>
+  inline
+  void
+  dpsites_bkd_piter<V>::center_at_(const Pref&)
+  {
   }
 
   template <typename V>

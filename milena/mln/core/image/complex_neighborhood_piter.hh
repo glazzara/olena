@@ -41,9 +41,7 @@
    internal::site_relative_iterator_base?  I might duplicate things,
    since most of the implementation of this iterator is delegated to
    the underlying complex iter.  Moreover, change_target_() is
-   useless, and center_at() ``hides'' an existing method in (one of)
-   the super class(es) which is not sound, IMHO.  Think about
-   introducing base class replacement.  */
+   useless.  Think about introducing base class replacement.  */
 
 
 namespace mln
@@ -53,7 +51,7 @@ namespace mln
   | complex_neighborhood_fwd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Forward iterator on complex neighborhood.
+  /// Forward iterator on complex neighborhood.
   template <typename I, typename G, typename N>
   class complex_neighborhood_fwd_piter
     : public internal::site_relative_iterator_base< N,
@@ -90,16 +88,13 @@ namespace mln
     void do_next_();
 
     /// Set the reference psite.
-    /* FIXME: Careful, this method overrides the (non virtual) method
-       internal::site_relative_iterator_base<S, E>::center_at.  See
-       FIXME above.  */
     template <typename Pref>
-    void center_at(const Pref& c);
+    void center_at_(const Pref& c);
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
 
-    /// \brief Accessors.
+    /// Accessors.
     /// \{
     const iter_type& iter() const;
     iter_type& iter();
@@ -122,7 +117,7 @@ namespace mln
   | complex_neighborhood_bkd_piter<I, G, N>.  |
   `------------------------------------------*/
 
-  /// \brief Backward iterator on complex neighborhood.
+  /// Backward iterator on complex neighborhood.
   template <typename I, typename G, typename N>
   class complex_neighborhood_bkd_piter
     : public internal::site_relative_iterator_base< N,
@@ -159,16 +154,14 @@ namespace mln
     void do_next_();
 
     /// Set the reference psite.
-    /* FIXME: Careful, this method overrides the (non virtual) method
-       internal::site_relative_iterator_base<S, E>::center_at.  See
-       FIXME above.  */
     template <typename Pref>
-    void center_at(const Pref& c);
+    void center_at_(const Pref&);
+
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
 
-    /// \brief Accessors.
+    /// Accessors.
     /// \{
     const iter_type& iter() const;
     iter_type& iter();
@@ -207,7 +200,7 @@ namespace mln
 									  const Pref& p_ref)
   {
     this->change_target(exact(nbh));
-    center_at(p_ref);
+    this->center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
 
@@ -247,9 +240,8 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_neighborhood_fwd_piter<I, G, N>::center_at(const Pref& c)
+  complex_neighborhood_fwd_piter<I, G, N>::center_at_(const Pref& c)
   {
-    super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
@@ -305,7 +297,7 @@ namespace mln
 									  const Pref& p_ref)
   {
     this->change_target(exact(nbh));
-    center_at(p_ref);
+    this->center_at(p_ref);
     mln_postcondition(!this->is_valid());
   }
 
@@ -345,9 +337,8 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_neighborhood_bkd_piter<I, G, N>::center_at(const Pref& c)
+  complex_neighborhood_bkd_piter<I, G, N>::center_at_(const Pref& c)
   {
-    super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
