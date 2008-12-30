@@ -1,5 +1,14 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Fix complex-based image-related #include's.
+
+	* mln/core/internal/complex_neighborhood_base.hh: Include
+	mln/core/image/complex_neighborhood_piter.hh.
+	* mln/core/internal/complex_window_p_base.hh: Include
+	mln/core/image/complex_window_piter.hh
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Reorganize tests in apps/statues/.
 
 	* apps/statues/test.in: Split into...

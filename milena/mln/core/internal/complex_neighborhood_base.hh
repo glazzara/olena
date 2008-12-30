@@ -35,6 +35,7 @@
 
 # include <mln/core/concept/neighborhood.hh>
 # include <mln/core/site_set/complex_psite.hh>
+# include <mln/core/image/complex_neighborhood_piter.hh>
 
 // FIXME: Factor with mln::internal::complex_window_base.
 
