@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_DATA_FILL_HH
 # define MLN_DATA_FILL_HH
 
-/*! \file mln/data/fill.hh
- *
- * \brief Fill an image, that is, set pixel values.
- *
- * \todo Add a conversion "arr->fun" then get rid of the C array overload.
- */
+/// \file mln/data/fill.hh
+///
+/// Fill an image, that is, set pixel values.
+///
+/// \todo Add a conversion "arr->fun" then get rid of the C array overload.
 
 # include <mln/core/concept/function.hh>
 # include <mln/pw/image.hh>

@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_ALGEBRA_QUAT_HH
 # define MLN_ALGEBRA_QUAT_HH
 
-/*! \file mln/algebra/quat.hh
- *
- * \brief Define a class for quaternion algebra values.
- */
+/// \file mln/algebra/quat.hh
+///
+/// Define a class for quaternion algebra values.
 
 # include <cmath>
 
@@ -46,6 +46,7 @@
 # include <mln/norm/l2.hh>
 
 // FIXME: pow, exp etc... are def here and in value::...
+
 
 namespace mln
 {
@@ -427,15 +428,15 @@ namespace mln
     inline
     void quat::set_unit(float theta, const algebra::vec<3,T>& uv)
     {
-      static const float pi = 3.14159265358979323846;
+      static const float pi = 3.14159265358979323846f;
 
       mln_precondition(theta > - pi - mln_epsilon(float)
 		       && theta < pi + mln_epsilon(float));
       mln_precondition(about_equal(norm::l2(uv), 1.f));
       (void) pi;
 
-      this->v_[0] = cos(theta);
-      float sint = sin(theta);
+      this->v_[0] = std::cos(theta);
+      float sint = std::sin(theta);
       this->v_[1] = uv[0] * sint;
       this->v_[2] = uv[1] * sint;
       this->v_[3] = uv[2] * sint;
@@ -456,7 +457,7 @@ namespace mln
     float quat::theta() const
     {
       mln_precondition(is_unit());
-      return acos(s());
+      return std::acos(s());
     }
 
     inline
@@ -558,7 +559,7 @@ namespace mln
       float theta = norm::l2(v);
       mln_precondition(!about_equal(theta, 0.f));
       algebra::vec<3, float> uv = v / theta;
-      return quat(cos(theta), sin(theta) * uv);
+      return quat(std::cos(theta), std::sin(theta) * uv);
     }
 
 
@@ -611,11 +612,11 @@ namespace mln
     quat slerp(const quat& p, const quat& q, float h)
     {
       assert(interpol_ok(p, q, h));
-      float omega = acos(p.sprod(q));
+      float omega = std::acos(p.sprod(q));
       return
 	about_equal(omega, 0.f) ?
 	lerp(p, q, h) :
-	quat((sin((1-h)*omega) * p + sin(h*omega) * q) / sin(omega));
+	quat((std::sin((1-h)*omega) * p + std::sin(h*omega) * q) / std::sin(omega));
     }
 
     inline

@@ -26,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/convolve.cc
- *
- * \brief Tests on mln::linear::convolve.
- */
+/// \file tests/linear/convolve.cc
+///
+/// Tests on mln::linear::convolve.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -56,13 +55,14 @@ int main()
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  float ws[] = { .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04,
-		 .04, .04, .04, .04, .04 };
-  w_window2d_float w = make::w_window2d(ws);
-  image2d<float> tmp = linear::convolve(lena, w);
+  float w = .04f;
+  float ws[] = { w, w, w, w, w,
+		 w, w, w, w, w,
+		 w, w, w, w, w,
+		 w, w, w, w, w,
+		 w, w, w, w, w };
+  w_window2d_float w_win = make::w_window2d(ws);
+  image2d<float> tmp = linear::convolve(lena, w_win);
 
   io::pgm::save(level::transform(tmp, math::round<int_u8>()),
 		"out.pgm");

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_GEOM_ESSENTIAL_HH
 # define MLN_GEOM_ESSENTIAL_HH
 
-/*! \file mln/geom/essential.hh
- *
- * \brief File that includes essential geometry related things.
- */
+/// \file mln/geom/essential.hh
+///
+/// File that includes essential geometry related things.
 
 
 namespace mln
@@ -43,12 +42,11 @@ namespace mln
     /// Implementation namespace of geom namespace.
     namespace impl {}
   }
-
 }
+
 
 # include <mln/geom/bbox.hh>
 # include <mln/geom/chamfer.hh>
-# include <mln/geom/resize.hh>
 # include <mln/geom/size1d.hh>
 # include <mln/geom/size2d.hh>
 # include <mln/geom/size3d.hh>
@@ -63,5 +61,6 @@ namespace mln
 # include <mln/geom/min_ind.hh>
 # include <mln/geom/min_row.hh>
 # include <mln/geom/min_sli.hh>
+
 
 #endif // ! MLN_GEOM_ESSENTIAL_HH

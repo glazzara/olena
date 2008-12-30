@@ -22,7 +22,6 @@ check_PROGRAMS =				\
   paste						\
   saturate					\
   sort_psites					\
-  sort_psites_full				\
   stretch					\
   transform					\
   transform_inplace				\
@@ -49,8 +48,5 @@ stretch_SOURCES = stretch.cc
 transform_SOURCES = transform.cc
 transform_inplace_SOURCES = transform_inplace.cc
 update_SOURCES = update.cc
-
-# Lengthy tests.
-sort_psites_full_SOURCES = sort_psites_full.cc
 
 TESTS = $(check_PROGRAMS)

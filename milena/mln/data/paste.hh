@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,11 @@
 #ifndef MLN_DATA_PASTE_HH
 # define MLN_DATA_PASTE_HH
 
-/*! \file mln/data/paste.hh
- *
- * \brief Paste the contents of an image into another one.
- *
- */
+/// \file mln/data/paste.hh
+///
+/// Paste the contents of an image into another one.
 
 # include <mln/core/concept/image.hh>
-
-
 
 // Specializations are in:
 # include <mln/data/paste.spe.hh>
@@ -65,10 +62,8 @@ namespace mln
     ///
     /// \pre \p input.domain <= \p output.domain
     ///
-    /// \{
     template <typename I, typename J>
     void paste(const Image<I>& input, Image<J>& output);
-    /// \}
 
 
 
@@ -95,6 +90,7 @@ namespace mln
 
     } // end of namespace mln::data::internal
 
+
     namespace impl
     {
 
@@ -115,7 +111,7 @@ namespace mln
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)
-	    output(p) = input(p);
+	    output(p) = static_cast<mln_value(J)>(input(p));
 
 	  trace::exiting("data::impl::generic::paste");
 	}
@@ -132,7 +128,6 @@ namespace mln
     void paste(const Image<I>& input, Image<J>& output)
     {
       trace::entering("data::paste");
-
 
       internal::paste_tests(input, output);
       internal::paste_(input, output);

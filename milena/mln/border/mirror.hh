@@ -81,9 +81,10 @@ namespace mln
 	trace::entering("border::impl::mirror_");
 	I& ima = const_cast<I&>(ima_);
 
- 	unsigned border = ima.border();
- 	unsigned nbinds = geom::ninds(ima);
-	unsigned min;
+	def::coord
+	  border = static_cast<def::coord>(ima.border()),
+	  nbinds = static_cast<def::coord>(geom::ninds(ima)),
+	  min;
 
 	if (border > nbinds)
 	  min = nbinds;
@@ -92,18 +93,19 @@ namespace mln
 
 	/// left border
 	{
-	  unsigned i = 0;
+	  def::coord i = 0;
 	  for (; i < min; ++i)
 	    ima.element(border - 1 - i) = ima(point1d(i));
 
 	  for (; i < border; ++i)
-	    ima.element(border - 1 - i) = ima(point1d(min - 1));
+	    ima.element(border - 1 - i) = ima(point1d(static_cast<def::coord>(min - 1)));
 	}
 
 	/// right border
 	{
-	  unsigned i = 0,
-	              j = nbinds - 1;
+	  def::coord
+	    i = 0,
+	    j = static_cast<def::coord>(nbinds - 1);
 	  for (;
 	       i < min;
 	       ++i, --j)

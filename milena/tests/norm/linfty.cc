@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm/linfty.cc
- *
- *  \brief Test the L-infinity-norm.
- */
+/// \file tests/norm/linfty.cc
+///
+/// Test the L-infinity-norm.
 
 #include <tests/norm/common.hh>
 
@@ -62,9 +62,9 @@ int main()
   typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
-  float d = std::max(std::abs(4 - 2),
-		     std::max(std::abs(1 + 2),
-			      std::abs(0 - 4)));
+  float d = float(std::max(std::abs(4 - 2),
+			   std::max(std::abs(1 + 2),
+				    std::abs(0 - 4))));
 
   vec_t t, u;
   t.set(2, -2, 4);

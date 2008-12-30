@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,14 +28,12 @@
 #ifndef MLN_CORE_IMAGE_EXTENSION_VAL_HH
 # define MLN_CORE_IMAGE_EXTENSION_VAL_HH
 
-/*!
- * \file mln/core/image/extension_val.hh
- *
- * \brief Definition of a morpher that extends the domain of an image.
- *
- * \todo Use the 'instant' mechanism.
- * \todo Use an envelop as lvalue to test extension writing.
- */
+/// \file mln/core/image/extension_val.hh
+///
+/// \brief Definition of a morpher that extends the domain of an image.
+///
+/// \todo Use the 'instant' mechanism.
+/// \todo Use an envelop as lvalue to test extension writing.
 
 # include <mln/core/internal/image_identity.hh>
 
@@ -267,7 +265,7 @@ namespace mln
   void init_(tag::extension_t, V& target, const extension_val<I>& model)
   {
     mlc_converts_to(mln_value(I), V)::check();
-    target = model.extension();
+    target = static_cast<V>(model.extension());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

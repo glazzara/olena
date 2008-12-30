@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_VALUE_OPS_HH
 # define MLN_VALUE_OPS_HH
 
-/*! \file mln/value/ops.hh
- *
- * \brief Definitions of operators for value types.
- */
+/// \file mln/value/ops.hh
+///
+/// Definitions of operators for value types.
 
 # include <mln/trait/op/all.hh>
 # include <mln/value/builtin/all.hh>
@@ -216,7 +216,8 @@ namespace mln
   mln_trait_op_plus(Vl, Vr)
     operator + (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
-    return value::equiv(lhs) + value::equiv(rhs);
+    typedef mln_trait_op_plus(Vl, Vr) R;
+    return static_cast<R>(value::equiv(lhs)) + static_cast<R>(value::equiv(rhs));
   }
 
   template <typename Vl, typename Vr>
@@ -224,7 +225,8 @@ namespace mln
   mln_trait_op_minus(Vl, Vr)
     operator - (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
-    return value::equiv(lhs) - value::equiv(rhs);
+    typedef mln_trait_op_minus(Vl, Vr) R;
+    return static_cast<R>(value::equiv(lhs)) - static_cast<R>(value::equiv(rhs));
   }
 
   template <typename Vl, typename Vr>
@@ -232,7 +234,8 @@ namespace mln
   mln_trait_op_times(Vl, Vr)
   operator * (const value::Scalar<Vl>& lhs, const value::Scalar<Vr>& rhs)
   {
-    return value::equiv(lhs) * value::equiv(rhs);
+    typedef mln_trait_op_times(Vl, Vr) R;
+    return static_cast<R>(value::equiv(lhs)) * static_cast<R>(value::equiv(rhs));
   }
 
   template <typename Vl, typename Vr>
@@ -256,7 +259,8 @@ namespace mln
   mln_trait_op_uminus(S)
   operator - (const value::scalar_<S>& rhs)
   {
-    return - rhs.to_equiv();
+    typedef mln_trait_op_uminus(S) R;
+    return static_cast<R>(- rhs.to_equiv());
   }
 
   template <typename S, typename O>

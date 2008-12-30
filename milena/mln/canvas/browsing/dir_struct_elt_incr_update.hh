@@ -36,6 +36,7 @@
 # include <mln/core/concept/browsing.hh>
 # include <mln/core/concept/image.hh>
 
+
 namespace mln
 {
 
@@ -110,11 +111,12 @@ namespace mln
 	  pmin = f.input.domain().pmin(),
 	  pmax = f.input.domain().pmax();
 
-	const mln_deduce(I, site, coord)
+	typedef mln_deduce(I, site, coord) C;
+	const C
 	  pmin_dir = pmin[f.dir],
 	  pmax_dir = pmax[f.dir],
-	  pmin_dir_plus_half_length = pmin_dir + f.length / 2,
-	  pmax_dir_minus_half_length = pmax_dir - f.length / 2;
+	  pmin_dir_plus_half_length  = static_cast<C>(pmin_dir + f.length / 2),
+	  pmax_dir_minus_half_length = static_cast<C>(pmax_dir - f.length / 2);
 
 	mln_psite(I) pt, pu;
 

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,9 @@
 #ifndef MLN_DATA_PASTE_SPE_HH
 # define MLN_DATA_PASTE_SPE_HH
 
-/*! \file mln/data/paste.spe.hh
- *
- * \brief Specializations for mln::data::paste.
- *
- */
+/// \file mln/data/paste.spe.hh
+///
+/// Specializations for mln::data::paste.
 
 # ifndef MLN_DATA_PASTE_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -89,7 +88,7 @@ namespace mln
         po.start();
         for_all(pi)
         {
-          po.val() = pi.val();
+          po.val() = static_cast<mln_value(J)>(pi.val());
           po.next();
         }
         trace::exiting("data::impl::paste_fast");

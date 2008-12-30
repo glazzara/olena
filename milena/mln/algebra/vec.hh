@@ -434,7 +434,7 @@ namespace mln
       float n_l2 = 0;
       for (unsigned i = 0; i < n; ++i)
 	n_l2 += data_[i] * data_[i];
-      n_l2 = sqrt(n_l2);
+      n_l2 = float(std::sqrt(n_l2));
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = static_cast<T>(data_[i] / n_l2);
       return *this;

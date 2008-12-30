@@ -29,14 +29,13 @@
 #ifndef MLN_LEVEL_TRANSFORM_HH
 # define MLN_LEVEL_TRANSFORM_HH
 
-/*! \file mln/level/transform.hh
- *
- * \brief Transform the contents of an image into another one.
- *
- * \todo Clean this file + overload with pixel iterators.
- *
- * \todo Re-activate tests and make them static.
- */
+/// \file mln/level/transform.hh
+///
+/// Transform the contents of an image into another one.
+///
+/// \todo Clean this file + overload with pixel iterators.
+///
+/// \todo Re-activate tests and make them static.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
@@ -144,9 +143,6 @@ namespace mln
 
           mln_ch_value(I, mln_result(F)) output;
           initialize(output, input);
-
-          mlc_is(mln_trait_image_pw_io(mln_ch_value(I, mln_result(F))),
-                 trait::image::pw_io::read_write)::check();
 
 	  mln_piter(I) p(input.domain());
 	  for_all(p)

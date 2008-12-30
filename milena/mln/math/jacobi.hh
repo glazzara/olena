@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +28,16 @@
 #ifndef MLN_MATH_JACOBI_HH
 # define MLN_MATH_JACOBI_HH
 
+/// \file mln/math/jacobi.hh
+
+# include <cmath>
+
 # include <mln/algebra/quat.hh>
 # include <mln/algebra/mat.hh>
 
 // from num. rec. in C
 // FIXME: what about numrec licence?
+
 
 namespace mln
 {
@@ -42,11 +47,13 @@ namespace mln
 
     algebra::quat jacobi(algebra::mat < 4, 4, float >a);
 
+
 # ifndef MLN_INCLUDE_ONLY
 
   // FIXME: nD ?
 #define rotateJacobi(a,i,j,k,l) g=a(i,j);h=a(k,l);a(i,j)=g-s*(h+g*tau); \
     a(k,l)=h+s*(g-h*tau)
+
 
     algebra::quat jacobi(algebra::mat < 4, 4, float >a)
     {
@@ -57,23 +64,23 @@ namespace mln
       for (ip = 0; ip < 4; ip++)
         {
           for (iq = 0; iq < 4; iq++)
-            v(ip, iq) = 0.0;
-          v(ip, ip) = 1.0;
+            v(ip, iq) = 0.0f;
+          v(ip, ip) = 1.0f;
         }
       for (ip = 0; ip < 4; ip++)
         {
           b[ip] = d[ip] = a(ip, ip);
-          z[ip] = 0.0;
+          z[ip] = 0.0f;
         }
       while (1)
         {
-          sm = 0.0;
+          sm = 0.0f;
           for (ip = 0; ip < 3; ip++)
             {
               for (iq = ip + 1; iq < 4; iq++)
-                sm += fabs(a(ip, iq));
+                sm += std::fabs(a(ip, iq));
             }
-          if (sm < 1e-12)
+          if (sm < 1e-12f)
             {                   // 1e-12
               dd = d[0];
               iq = 0;
@@ -90,7 +97,7 @@ namespace mln
           if (i < 4)
             {
               i++;
-              tresh = 0.0125 * sm;
+              tresh = 0.0125f * sm;
             }
           else
             tresh = 0.0;
@@ -98,27 +105,26 @@ namespace mln
             {
               for (iq = ip + 1; iq < 4; iq++)
                 {
-                  g = 100.0 * fabs(a(ip, iq));
-                  if (i > 4 && (float)(fabs(d[ip])+g) ==
-                      (float)fabs(d[ip])
-                      && (float)(fabs(d[iq])+g) == (float)fabs(d[iq]))
-                    a(ip, iq) = 0.0;
-                  else if (fabs(a(ip, iq)) > tresh)
+                  g = 100.0f * std::fabs(a(ip, iq));
+                  if (i > 4 && std::fabs(d[ip]) + g == std::fabs(d[ip])
+                      && std::fabs(d[iq]) + g == std::fabs(d[iq]))
+                    a(ip, iq) = 0.0f;
+                  else if (std::fabs(a(ip, iq)) > tresh)
                     {
                       h = d[iq] - d[ip];
-                      if ((float)(fabs(h)+g) == (float)fabs(h)) // unsafe?
+                      if (std::fabs(h) + g == std::fabs(h)) // unsafe?
                         t = (a(ip, iq)) / h;
                       else
                         {
-                          theta = 0.5 * h / (a(ip, iq));
-                          t = 1.0 / (fabs(theta) + sqrt(1.0 +
-                                                        theta * theta));
-                          if (theta < 0.0)
+                          theta = 0.5f * h / (a(ip, iq));
+                          t = 1.0f / (std::fabs(theta) + std::sqrt(1.0f +
+							      theta * theta));
+                          if (theta < 0.0f)
                             t = -t;
                         }
-                      c = 1.0 / sqrt(1 + t * t);
+                      c = 1.0f / std::sqrt(1 + t * t);
                       s = t * c;
-                      tau = s / (1.0 + c);
+                      tau = s / (1.0f + c);
                       h = t * a(ip, iq);
                       z[ip] -= h;
                       z[iq] += h;
@@ -140,7 +146,7 @@ namespace mln
             {
               b[ip] += z[ip];
               d[ip] = b[ip];
-              z[ip] = 0.0;
+              z[ip] = 0.0f;
             }
         }
     }
@@ -151,5 +157,6 @@ namespace mln
 
 } // end of namespace mln
 
-#endif /* MLN_MATH_JACOBI_HH */
+
+#endif // ! MLN_MATH_JACOBI_HH
 

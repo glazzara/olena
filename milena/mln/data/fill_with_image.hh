@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_DATA_FILL_WITH_IMAGE_HH
 # define MLN_DATA_FILL_WITH_IMAGE_HH
 
-/*! \file mln/data/fill_with_image.hh
- *
- * \brief Fill an image with the values from another image.
- *
- * \todo Specialize with line_piter...
- */
+/// \file mln/data/fill_with_image.hh
+///
+/// Fill an image with the values from another image.
+///
+/// \todo Specialize with line_piter...
 
 # include <mln/core/concept/image.hh>
 
@@ -107,7 +106,7 @@ namespace mln
 
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
-	    ima(p) = data(p);
+	    ima(p) = static_cast<mln_value(I)>(data(p));
 
 	  trace::exiting("data::impl::generic::fill_with_image");
 	}

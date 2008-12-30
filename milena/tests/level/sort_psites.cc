@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/sort_psites.cc
- *
- * \brief Tests on mln::level::sort_psites.
- */
+/// \file tests/level/sort_psites.cc
+///
+/// Tests on mln::level::sort_psites.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
@@ -48,12 +48,13 @@ int main ()
   p_array<point2d> array_inc_ref;
   p_array<point2d> array_dec_ref;
 
-  for (int i = 0; i < 3; ++i)
-    for (int j = 0; j < 3; ++j)
+  typedef def::coord C;
+  for (C i = 0; i < 3; ++i)
+    for (C j = 0; j < 3; ++j)
       array_inc_ref.append(point2d(i, j));
 
-  for (int i = 2; i >= 0; --i)
-    for (int j = 2; j >= 0; --j)
+  for (C i = 2; i >= 0; --i)
+    for (C j = 2; j >= 0; --j)
       array_dec_ref.append(point2d(i, j));
 
   mln_assertion(array_inc == array_inc_ref);

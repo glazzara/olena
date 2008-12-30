@@ -26,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/linear/convolve_directional.cc
- *
- * \brief Tests on mln::linear::convolve_directional.
- */
+/// \file tests/linear/convolve_directional.cc
+///
+/// Tests on mln::linear::convolve_directional.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
@@ -56,7 +55,8 @@ int main()
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
 
-  float ws[] = { .11, .11, .11, .11, .11, .11, .11, .11, .11 };
+  float w = .11f;
+  float ws[] = { w, w, w, w, w, w, w, w, w };
   image2d<float> tmp = linear::convolve_directional(lena, 1, ws);
   
   io::pgm::save(level::transform(tmp, math::round<int_u8>()),

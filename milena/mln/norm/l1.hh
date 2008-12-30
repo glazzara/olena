@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,17 @@
 #ifndef MLN_NORM_L1_HH
 # define MLN_NORM_L1_HH
 
-/*! \file mln/norm/l1.hh
- *
- *  \brief Define some L1-norm related routines.
- *  \see http://mathworld.wolfram.com/L1-Norm.html for more information.
- */
+/// \file mln/norm/l1.hh
+///
+///  \brief Define some L1-norm related routines.
+///  \see http://mathworld.wolfram.com/L1-Norm.html for more information.
 
 # include <mln/math/abs.hh>
 # include <mln/algebra/vec.hh>
 
 // FIXME: Use mln_sum_x (to be renamed as mln_sum_product) instead of
 // mln_sum.
+
 
 namespace mln
 {
@@ -75,9 +76,13 @@ namespace mln
       mln_sum(C)
       l1_(const V& vec)
       {
-	mln_sum(C) m = 0;
+	typedef mln_sum(C) M;
+	M m = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  m += mln::math::abs (vec[i]);
+	  {
+	    M v_i = static_cast<M>(mln::math::abs(vec[i]));
+	    m = static_cast<M>(m + v_i);
+	  }
 	return m;
       }
 
@@ -86,9 +91,13 @@ namespace mln
       mln_sum(C)
       l1_distance_(const V& vec1, const V& vec2)
       {
-	mln_sum(C) d = 0;
+	typedef mln_sum(C) D;
+	D d = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  d += mln::math::abs (vec1[i] - vec2[i]);
+	  {
+	    D v1_v2 = static_cast<D>(mln::math::abs(vec1[i] - vec2[i]));
+	    d = static_cast<D>(d + v1_v2);
+	  }
 	return d;
       }
 

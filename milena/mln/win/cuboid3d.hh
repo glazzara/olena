@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,7 +29,8 @@
 # define MLN_WIN_CUBOID3D_HH
 
 /// \file mln/win/cuboid3d.hh
-/// \brief Definition of the mln::win::cuboid3d window.
+///
+/// Definition of the mln::win::cuboid3d window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint3d.hh>
@@ -126,12 +127,16 @@ namespace mln
 	width_(width)
     {
       mln_precondition(height % 2 == 1 && width % 2 == 1);
-      const int dsli = depth / 2;
-      const int drow = height / 2;
-      const int dcol = width / 2;
-      for (int sli = -dsli; sli <= dsli; ++sli)
-	for (int row = -drow; row <= drow; ++row)
-	  for (int col = -dcol; col <= dcol; ++col)
+      const def::coord
+	dsli = static_cast<def::coord>(depth / 2),
+	drow = static_cast<def::coord>(height / 2),
+	dcol = static_cast<def::coord>(width / 2),
+	minus_dsli = static_cast<def::coord>(- dsli),
+	minus_drow = static_cast<def::coord>(- drow),
+	minus_dcol = static_cast<def::coord>(- dcol);
+      for (def::coord sli = minus_dsli; sli <= dsli; ++sli)
+	for (def::coord row = minus_drow; row <= drow; ++row)
+	  for (def::coord col = minus_dcol; col <= dcol; ++col)
 	    insert(dpoint3d(sli, row, col));
     }
 

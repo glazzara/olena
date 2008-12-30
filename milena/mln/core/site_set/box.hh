@@ -314,8 +314,8 @@ namespace mln
     mln_precondition(is_valid());
     for (unsigned i = 0; i < P::dim; ++i)
     {
-      pmin_[i] -= b;
-      pmax_[i] += b;
+      pmin_[i] = static_cast<mln_coord(P)>(pmin_[i] - b);
+      pmax_[i] = static_cast<mln_coord(P)>(pmax_[i] + b);
     }
     mln_postcondition(is_valid());
   }
@@ -326,8 +326,8 @@ namespace mln
   box<P>::enlarge(unsigned dim, unsigned b)
   {
     mln_precondition(is_valid());
-    pmin_[dim] -= b;
-    pmax_[dim] += b;
+    pmin_[dim] = static_cast<mln_coord(P)>(pmin_[dim] - b);
+    pmax_[dim] = static_cast<mln_coord(P)>(pmax_[dim] + b);
     mln_postcondition(is_valid());
   }
 

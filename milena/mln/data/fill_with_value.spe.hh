@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,8 +29,8 @@
 # define MLN_DATA_FILL_WITH_VALUE_SPE_HH
 
 /// \file mln/data/fill_with_value.spe.hh
-/// Specializations for mln::data::fill_with_value.
 ///
+/// Specializations for mln::data::fill_with_value.
 
 # ifndef MLN_DATA_FILL_WITH_VALUE_HH
 #  error "Forbidden inclusion of *.spe.hh"
@@ -87,7 +87,8 @@ namespace mln
                 mlc_is(mln_trait_image_value_access(I),
                        trait::image::value_access::direct))::check();
 
-        data::memset_(ima, ima.point_at_index(0), val, ima.nelements());
+	mln_value(I) v = static_cast<mln_value(I)>(val);
+        data::memset_(ima, ima.point_at_index(0), v, ima.nelements());
 
 	trace::exiting("data::impl::fill_with_value_one_block");
       }
@@ -123,7 +124,7 @@ namespace mln
                mlc_is(mln_trait_image_vw_io(I),
                       trait::image::vw_io::read_write))::check();
 
-	ima.val() = val;
+	ima.val() = static_cast<mln_value(I)>(val);
 
 	trace::exiting("data::impl::fill_with_value_singleton");
       }

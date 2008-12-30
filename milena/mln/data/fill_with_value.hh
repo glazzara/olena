@@ -104,7 +104,7 @@ namespace mln
           mlc_is(mln_trait_image_pw_io(I),
                  trait::image::pw_io::read_write)::check();
 
-	  mln_value(I) v = exact(val);
+	  mln_value(I) v = static_cast<mln_value(I)>(exact(val));
 	  mln_piter(I) p(ima.domain());
 	  for_all(p)
 	    ima(p) = v;

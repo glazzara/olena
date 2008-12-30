@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,11 @@
 #ifndef MLN_NORM_L2_HH
 # define MLN_NORM_L2_HH
 
-/*! \file mln/norm/l2.hh
- *
- *  \brief Define some L2-norm related routines.
- *  \see http://mathworld.wolfram.com/L2-Norm.html for more information.
- */
+/// \file mln/norm/l2.hh
+///
+/// Define some L2-norm related routines.
+///
+/// \see http://mathworld.wolfram.com/L2-Norm.html for more information.
 
 # include <mln/math/sqr.hh>
 # include <mln/math/sqrt.hh>
@@ -78,9 +79,13 @@ namespace mln
       mln_sum(C)
       l2_(const V& vec)
       {
-	mln_sum(C) m = 0;
+	typedef mln_sum(C) M;
+	M m = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  m += mln::math::sqr(vec[i]);
+	  {
+	    M sqr_v_i = static_cast<M>(mln::math::sqr(vec[i]));
+	    m = static_cast<M>(m + sqr_v_i);
+	  }
 	return mln::math::sqrt(m);
       }
 
@@ -89,9 +94,13 @@ namespace mln
       mln_sum(C)
       l2_distance_(const V& vec1, const V& vec2)
       {
-	mln_sum(C) d = 0;
+	typedef mln_sum(C) D;
+	D d = 0;
 	for (unsigned i = 0; i < n; ++i)
-	  d += mln::math::sqr(vec1[i] - vec2[i]);
+	  {
+	    D sqr_v1_v2 = static_cast<D>(mln::math::sqr(vec1[i] - vec2[i]));
+	    d = static_cast<D>(d + sqr_v1_v2);
+	  }
 	return mln::math::sqrt(d);
       }
 

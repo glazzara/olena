@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,13 +29,12 @@
 #ifndef MLN_FUN_V2V_CAST_HH
 # define MLN_FUN_V2V_CAST_HH
 
-/*! \file mln/fun/v2v/cast.hh
- *
- * \brief FIXME.
- *
- * \todo The function is intrisically meta; how to handle that
- * particular case?
- */
+/// \file mln/fun/v2v/cast.hh
+///
+/// FIXME.
+///
+/// \todo The function is intrisically meta; how to handle that
+/// particular case?
 
 # include <mln/core/concept/function.hh>
 # include <mln/value/cast.hh>

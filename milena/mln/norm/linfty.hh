@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,12 @@
 #ifndef MLN_NORM_LINFTY_HH
 # define MLN_NORM_LINFTY_HH
 
-/*! \file mln/norm/linfty.hh
- *
- *  \brief Define some L-infinity-norm related routines.
- *  \see http://mathworld.wolfram.com/L-Infinity-Norm.html for more
- *  information.
- */
+/// \file mln/norm/linfty.hh
+///
+/// Define some L-infinity-norm related routines.
+///
+/// \see http://mathworld.wolfram.com/L-Infinity-Norm.html for more
+/// information.
 
 # include <mln/math/abs.hh>
 # include <mln/algebra/vec.hh>

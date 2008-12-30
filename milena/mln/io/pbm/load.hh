@@ -29,7 +29,7 @@
 #ifndef MLN_IO_PBM_LOAD_HH
 # define MLN_IO_PBM_LOAD_HH
 
-/// \file   mln/io/pbm/load.hh
+/// \file mln/io/pbm/load.hh
 ///
 /// Define a function which loads an image of kind pbm with
 /// given path.
@@ -115,7 +115,7 @@ namespace mln
 		if (i % 8 == 0)
 		  file.read((char*)(&c), 1);
 		ima(p) = !(c & 128);
-		c *= 2;
+		c = static_cast<char>(c * 2);
 		++i;
 	      }
 	  }

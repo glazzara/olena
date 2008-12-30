@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +28,9 @@
 #ifndef MLN_FUN_V2V_INC_HH
 # define MLN_FUN_V2V_INC_HH
 
-/*! \file mln/fun/v2v/inc.hh
- *
- * \brief Incrementation function.
- */
+/// \file mln/fun/v2v/inc.hh
+///
+/// Incrementation function.
 
 # include <mln/fun/internal/selector.hh>
 
@@ -63,7 +62,7 @@ namespace mln
       T
       inc<T>::operator()(const T& t) const
       {
-	return t + 1;
+	return static_cast<T>(t + 1);
       }
 
 # endif // ! MLN_INCLUDE_ONLY

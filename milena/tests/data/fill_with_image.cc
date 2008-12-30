@@ -149,7 +149,7 @@ int main()
                                                  make::box2d(-2,-2, 15,15));
     image2d<short unsigned int> out(8, 8);
 
-    data::fill(out, 0);
+    data::fill(out, (short unsigned int)0);
     data::fill_with_image(out, ima);
   }
 
@@ -191,8 +191,8 @@ int main()
     II cast(in);
     I out(size, size);
 
-    data::fill(in, 51);
-    data::fill(out, 42);
+    data::fill(in, (unsigned short)51);
+    data::fill(out, (unsigned short)42);
 
     data::fill_with_image(out, cast);
 

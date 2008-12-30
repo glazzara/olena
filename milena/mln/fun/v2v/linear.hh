@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,12 @@
 #ifndef MLN_FUN_V2V_LINEAR_HH
 # define MLN_FUN_V2V_LINEAR_HH
 
-/*! \file mln/fun/v2v/linear.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/v2v/linear.hh
+///
+/// FIXME.
 
 # include <mln/core/concept/function.hh>
+# include <mln/convert/to.hh>
 
 
 namespace mln
@@ -57,7 +58,11 @@ namespace mln
       struct linear : public Function_v2v< linear<V,T,R> >
       {
 	typedef R result;
+
 	R operator()(const V& v) const;
+
+	template <typename U> 
+	R operator()(const U& u) const;
 
 	linear(T a, T b);
 	T a, b;
@@ -79,7 +84,16 @@ namespace mln
       R
       linear<V,T,R>::operator()(const V& v) const
       {
-	return R(a * T(v) + b);
+	return convert::to<R>(a * static_cast<T>(v) + b);
+      }
+
+      template <typename V, typename T, typename R>
+      template <typename U>
+      inline
+      R
+      linear<V,T,R>::operator()(const U& u) const
+      {
+	return this->operator()(static_cast<V>(u));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

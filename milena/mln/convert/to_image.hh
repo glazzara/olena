@@ -140,10 +140,12 @@ namespace mln
     image1d<unsigned>
     to_image(const histo::data<T>& h)
     {
-      T	v_min = h.vset()[0],
-	v_max = h.vset()[h.vset().nvalues() - 1];
+      def::coord
+	n = static_cast<def::coord>(h.vset().nvalues()),
+	v_min = static_cast<def::coord>(h.vset()[0]),
+	v_max = static_cast<def::coord>(h.vset()[n - 1]);
       image1d<unsigned> ima(make::box1d(v_min, v_max));
-      for (unsigned i = 0; i < h.vset().nvalues(); ++i)
+      for (def::coord i = 0; i < n; ++i)
 	ima(point1d(i)) = h[i];
       return ima;
     }

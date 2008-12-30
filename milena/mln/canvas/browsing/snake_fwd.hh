@@ -105,7 +105,7 @@ namespace mln
 // 		  trait::image::dimension::two_d)::check();
 	trace::entering("canvas::browsing::snake_fwd");
 	mln_precondition(f.input.has_data());
-	int
+	def::coord
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
 	  min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);
 

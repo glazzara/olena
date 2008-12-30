@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_WIN_CUBE3D_HH
 # define MLN_WIN_CUBE3D_HH
 
-/*! \file mln/win/cube3d.hh
- *
- * \brief Definition of the mln::win::cube3d window.
- */
+/// \file mln/win/cube3d.hh
+///
+/// Definition of the mln::win::cube3d window.
 
 # include <mln/core/internal/classical_window_base.hh>
 # include <mln/core/alias/dpoint3d.hh>
@@ -99,10 +99,12 @@ namespace mln
       : length_(length)
     {
       mln_precondition(length % 2 == 1);
-      const int dind = length / 2;
-      for (int sli = - dind; sli <= dind; ++sli)
-	for (int row = - dind; row <= dind; ++row)
-	  for (int col = - dind; col <= dind; ++col)
+      const def::coord
+	d       = static_cast<def::coord>(length / 2),
+	minus_d = static_cast<def::coord>(- d);
+      for (def::coord sli = minus_d; sli <= d; ++sli)
+	for (def::coord row = minus_d; row <= d; ++row)
+	  for (def::coord col = minus_d; col <= d; ++col)
 	    insert(dpoint3d(sli, row, col));
     }
 

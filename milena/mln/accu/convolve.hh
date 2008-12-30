@@ -103,7 +103,7 @@ namespace mln
     void
     convolve<T1,T2,R>::take(const argument& t)
     {
-      s_ += t.first * t.second;
+      s_ = static_cast<S>(s_ + static_cast<S>(t.first) * static_cast<S>(t.second));
     }
 
     template <typename T1, typename T2, typename R>
@@ -111,7 +111,7 @@ namespace mln
     void
     convolve<T1,T2,R>::take(const T1& t1, const T2& t2)
     {
-      s_ += t1 * t2;
+      s_ = static_cast<S>(s_ + static_cast<S>(t1) * static_cast<S>(t2));
     }
 
     template <typename T1, typename T2, typename R>
@@ -119,7 +119,7 @@ namespace mln
     void
     convolve<T1,T2,R>::take(const convolve<T1,T2,R>& other)
     {
-      s_ += other.s_;
+      s_ = static_cast<S>(s_ + other.s_);
     }
 
     template <typename T1, typename T2, typename R>

@@ -29,11 +29,10 @@
 #ifndef MLN_VALUE_INT_U_SAT_HH
 # define MLN_VALUE_INT_U_SAT_HH
 
-/*! \file mln/value/int_u_sat.hh
- *
- * \brief Define a generic class for unsigned integers with saturation
- * behavior.
- */
+/// \file mln/value/int_u_sat.hh
+///
+/// Define a generic class for unsigned integers with saturation
+/// behavior.
 
 # include <mln/metal/math/pow.hh>
 # include <mln/value/internal/value_like.hh>
@@ -117,6 +116,9 @@ namespace mln
 
       /// Self subtraction.
       int_u_sat<n>& operator-=(int i);
+
+    private:
+      typedef mln_enc(int_u<n>) enc_;
     };
 
 
@@ -155,9 +157,9 @@ namespace mln
       // Explicitly cast I to unsigned to avoid a warning between
       // signed and unsigned values from the compiler.
       else if (static_cast<unsigned>(i) > max_)
-	this->v_ = max_;
+	this->v_ = static_cast<enc_>(max_);
       else
-	this->v_ = i;
+	this->v_ = static_cast<enc_>(i);
     }
 
     template <unsigned n>
@@ -178,9 +180,9 @@ namespace mln
       // Explicitly cast I to unsigned to avoid a warning between
       // signed and unsigned values from the compiler.
       else if (static_cast<unsigned>(i) > max_)
-	this->v_ = max_;
+	this->v_ = static_cast<enc_>(max_);
       else
-	this->v_ = i;
+	this->v_ = static_cast<enc_>(i);
       return *this;
     }
 

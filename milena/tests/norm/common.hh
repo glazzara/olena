@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,27 +33,32 @@
 
 #include <mln/math/abs.hh>
 
+
 // FIXME: We should have a almost_equal function somewhere in Milena.
-static const float epsilon = 0.0001;
+static const float epsilon = 0.0001f;
+
 
 namespace test
 {
 
   template <typename Norm, typename V>
   void
-  check_norm(const Norm norm, const V& vec1, const V& vec2)
+  check_norm(const Norm& norm, const V& vec1, const V& vec2)
   {
     assert(mln::math::abs(norm(vec1) - norm(vec2)) < epsilon);
   }
 
   template <typename Distance, typename V, typename S>
   void
-  check_distance (const Distance dist, const V& vec1, const V& vec2,
-		  const S& ref_val)
+  check_distance(const Distance& dist, const V& vec1, const V& vec2,
+		 const S& ref_val)
   {
-    assert(mln::math::abs(dist(vec1, vec2) - ref_val) < epsilon);
+    float delta = mln::math::abs(static_cast<float>(dist(vec1, vec2))
+				 - static_cast<float>(ref_val));
+    assert(delta < epsilon);
   }
 
-} // End of namespace test.
+} // end of namespace test.
 
-#endif // !TESTS_NORM_COMMON_HH
+
+#endif // ! TESTS_NORM_COMMON_HH

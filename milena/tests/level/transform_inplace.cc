@@ -27,7 +27,7 @@
 
 /// \file tests/level/transform_inplace.cc
 ///
-/// Tests on mln::level::transform_inplace
+/// Tests on mln::level::transform_inplace.
 
 
 #include <mln/core/image/image1d.hh>
@@ -37,19 +37,17 @@
 #include <mln/core/image/image_if.hh>
 #include <mln/core/image/sub_image.hh>
 #include <mln/core/image/extension_val.hh>
-
-
 #include <mln/core/routine/duplicate.hh>
-
 
 #include <mln/fun/v2v/inc.hh>
 #include <mln/fun/v2v/dec.hh>
+#include <mln/fun/p2b/chess.hh>
+
 #include <mln/debug/iota.hh>
 
 #include <mln/level/transform_inplace.hh>
 #include <mln/level/compare.hh>
 
-#include <mln/fun/p2b/chess.hh>
 
 
 int main()
@@ -60,24 +58,26 @@ int main()
 
   // image 2d tests
   {
-    image2d<int> ref(size, size);
+    typedef int T;
+    image2d<T> ref(size, size);
     debug::iota(ref);
 
-    image2d<int> ima = duplicate(ref);
-    level::transform_inplace(ima, fun::v2v::inc<int>());
-    level::transform_inplace(ima, fun::v2v::dec<int>());
+    image2d<T> ima = duplicate(ref);
+    level::transform_inplace(ima, fun::v2v::inc<T>());
+    level::transform_inplace(ima, fun::v2v::dec<T>());
 
     mln_assertion(ima == ref);
   }
 
   /// image 1d test
   {
-    image1d<unsigned short> ref(size);
+    typedef unsigned short T;
+    image1d<T> ref(size);
     debug::iota(ref);
 
-    image1d<unsigned short> ima = duplicate(ref);
-    level::transform_inplace(ima, fun::v2v::inc<int>());
-    level::transform_inplace(ima, fun::v2v::dec<int>());
+    image1d<T> ima = duplicate(ref);
+    level::transform_inplace(ima, fun::v2v::inc<T>());
+    level::transform_inplace(ima, fun::v2v::dec<T>());
 
     mln_assertion(ima == ref);
   }
@@ -85,30 +85,34 @@ int main()
 
   /// image 3d test
   {
-    image3d<unsigned short> ref(size, size, size);
+    typedef unsigned short T;
+    image3d<T> ref(size, size, size);
     debug::iota(ref);
 
-    image3d<unsigned short> ima = duplicate(ref);
-    level::transform_inplace(ima, fun::v2v::inc<int>());
-    level::transform_inplace(ima, fun::v2v::dec<int>());
+    image3d<T> ima = duplicate(ref);
+    level::transform_inplace(ima, fun::v2v::inc<T>());
+    level::transform_inplace(ima, fun::v2v::dec<T>());
 
     mln_assertion(ima == ref);
   }
 
   // flat image test
   {
-    flat_image<short, box2d> ref(5, make::box2d(size, size));
+    typedef short T;
+    flat_image<T, box2d>
+      ref(5, make::box2d(size, size)),
+      ima(5, make::box2d(size, size));
 
-    flat_image<short, box2d> ima(5, make::box2d(size, size));
-    level::transform_inplace(ima, fun::v2v::inc<int>());
-    level::transform_inplace(ima, fun::v2v::dec<int>());
+    level::transform_inplace(ima, fun::v2v::inc<T>());
+    level::transform_inplace(ima, fun::v2v::dec<T>());
 
     mln_assertion(ima == ref);
   }
 
   // image if test
   {
-    typedef image2d<unsigned short> I;
+    typedef unsigned short T;
+    typedef image2d<T> I;
     typedef image_if<I, fun::p2b::chess> II;
 
     I ref(size, size);
@@ -118,8 +122,8 @@ int main()
     I ima = duplicate(ref);
     II ima_if = ima | fun::p2b::chess();
 
-    level::transform_inplace(ima_if, fun::v2v::inc<int>());
-    level::transform_inplace(ima_if, fun::v2v::dec<int>());
+    level::transform_inplace(ima_if, fun::v2v::inc<T>());
+    level::transform_inplace(ima_if, fun::v2v::dec<T>());
 
     mln_assertion(ima_if == ref_if);
   }
@@ -143,18 +147,19 @@ int main()
     mln_assertion(sub_ima == sub_ref);
   }
 
-   // extended image test
+  // extended image test
   {
-    typedef image2d<int> I;
-    typedef extension_val< image2d<int> > II;
+    typedef int T;
+    typedef image2d<T> I;
+    typedef extension_val< image2d<T> > II;
 
     I ref(size, size);
 
     I ima = duplicate(ref);
     II extend_ima(ima, 5);
 
-    level::transform_inplace(extend_ima, fun::v2v::inc<int>());
-    level::transform_inplace(extend_ima, fun::v2v::dec<int>());
+    level::transform_inplace(extend_ima, fun::v2v::inc<T>());
+    level::transform_inplace(extend_ima, fun::v2v::dec<T>());
 
     mln_assertion(extend_ima == ref);
 

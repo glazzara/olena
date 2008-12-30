@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/norm/l2.cc
- *
- *  \brief Test the L2-norm.
- */
+/// \file tests/norm/l2.cc
+///
+///  \brief Test the L2-norm.
 
 #include <cmath>
 #include <cassert>
@@ -59,14 +59,15 @@ namespace test
   }
 }
 
+
 int main()
 {
   typedef mln::algebra::vec<3, int> vec_t;
 
   // Reference value.
-  float d = std::sqrt((4 - 2) * (4 - 2) +
-		      (1 + 2) * (1 + 2) +
-		      (0 - 3) * (0 - 3));
+  float d = float(std::sqrt((4 - 2) * (4 - 2) +
+			    (1 + 2) * (1 + 2) +
+			    (0 - 3) * (0 - 3)));
 
   // Tests using mln::algebra::vec.
   vec_t t, u;

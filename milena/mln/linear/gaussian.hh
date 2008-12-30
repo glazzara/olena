@@ -33,26 +33,21 @@
 ///
 /// Gaussian filter.
 ///
-/// \todo Add a clean reference David Deriche
+/// \todo Add a clean reference Rachid Deriche
 ///	 Recursively implementing the gaussian and its derivatives (1993)
-
-# include <mln/core/concept/image.hh>
-# include <mln/core/alias/point2d.hh>
-# include <mln/data/paste.hh>
-# include <mln/geom/ncols.hh>
-# include <mln/geom/nrows.hh>
-
-# include <mln/trait/image/props.hh>
-
-# include <mln/extension/adjust_fill.hh>
-# include <mln/level/stretch.hh>
-
-# include <mln/algebra/vec.hh>
 
 # include <vector>
 # include <cmath>
 
-# include <mln/debug/println.hh>
+# include <mln/core/concept/image.hh>
+# include <mln/core/alias/point2d.hh>
+# include <mln/extension/adjust_fill.hh>
+# include <mln/geom/ncols.hh>
+# include <mln/geom/nrows.hh>
+# include <mln/data/paste.hh>
+# include <mln/level/stretch.hh>
+# include <mln/algebra/vec.hh>
+
 
 namespace mln
 {
@@ -111,10 +106,10 @@ namespace mln
 	w0 /= s;
 	w1 /= s;
 
-	float sin0 = sin(w0);
-	float sin1 = sin(w1);
-	float cos0 = cos(w0);
-	float cos1 = cos(w1);
+	float sin0 = std::sin(w0);
+	float sin1 = std::sin(w1);
+	float cos0 = std::cos(w0);
+	float cos1 = std::cos(w1);
 
 	int sign = 1;
 	float n_ = norm(a0, a1, b0, b1, c0, c1, cos0, sin0, cos1, sin1, sign);
@@ -125,37 +120,37 @@ namespace mln
 	c1 /= n_;
 
 	n[3] =
-	  exp(-b1 - 2*b0) * (c1 * sin1 - cos1 * c0) +
-	  exp(-b0 - 2*b1) * (a1 * sin0 - cos0 * a0);
+	  std::exp(-b1 - 2*b0) * (c1 * sin1 - cos1 * c0) +
+	  std::exp(-b0 - 2*b1) * (a1 * sin0 - cos0 * a0);
 	n[2] =
-	  2 * exp(-b0 - b1) * ((a0 + c0) * cos1 * cos0 -
+	  2 * std::exp(-b0 - b1) * ((a0 + c0) * cos1 * cos0 -
 			       cos1 * a1 * sin0 -
 			       cos0 * c1 * sin1) +
-	  c0 * exp(-2*b0) + a0 * exp(-2*b1);
+	  c0 * std::exp(-2*b0) + a0 * std::exp(-2*b1);
 	n[1] =
-	  exp(-b1) * (c1 * sin1 - (c0 + 2 * a0) * cos1) +
-	  exp(-b0) * (a1 * sin0 - (2 * c0 + a0) * cos0);
+	  std::exp(-b1) * (c1 * sin1 - (c0 + 2 * a0) * cos1) +
+	  std::exp(-b0) * (a1 * sin0 - (2 * c0 + a0) * cos0);
 	n[0] =
 	  a0 + c0;
 
 	d[4] =
-	  exp(-2 * b0 - 2 * b1);
+	  std::exp(-2 * b0 - 2 * b1);
 	d[3] =
-	  -2 * cos0 * exp(-b0 - 2*b1) -
-	  2 * cos1 * exp(-b1 - 2*b0);
+	  -2 * cos0 * std::exp(-b0 - 2*b1) -
+	  2 * cos1 * std::exp(-b1 - 2*b0);
 	d[2] =
-	  4 * cos1 * cos0 * exp(-b0 - b1) +
-	  exp(-2*b1) + exp(-2*b0);
+	  4 * cos1 * cos0 * std::exp(-b0 - b1) +
+	  std::exp(-2*b1) + std::exp(-2*b0);
 	d[1] =
-	  -2 * exp(-b1) * cos1 - 2 * exp(-b0) * cos0;
+	  -2 * std::exp(-b1) * cos1 - 2 * std::exp(-b0) * cos0;
 
 	for (unsigned i = 1; i <= 3; ++i)
 	{
 	    dm[i] = d[i];
-	    nm[i] = sign * (n[i] - d[i] * n[0]);
+	    nm[i] = float(sign) * (n[i] - d[i] * n[0]);
 	}
 	dm[4] = d[4];
-	nm[4] = sign * (-d[4] * n[0]);
+	nm[4] = float(sign) * (-d[4] * n[0]);
       }
 
 
@@ -267,14 +262,14 @@ namespace mln
 				float cos1, float sin1,
 				int& sign)
       {
-	float expb0 = exp(b0);
-	float exp2b0 = exp(2.0 * b0);
+	float expb0 = std::exp(b0);
+	float exp2b0 = std::exp(2.f * b0);
 
 	float scale0 = 1 + exp2b0 - 2 * cos0 * expb0;
 	float scaleA = 2 * a1 * sin0 * expb0 - a0 * (1 - exp2b0);
 
-	float expb1 = exp(b1);
-	float exp2b1 = exp(2.0 * b1);
+	float expb1 = std::exp(b1);
+	float exp2b1 = std::exp(2.f * b1);
 
 	float scale1 = 1 + exp2b1 - 2 * cos1 * expb1;
 	float scaleC = 2 * c1 * sin1 * expb1 - c0 * (1 - exp2b1);
@@ -295,16 +290,16 @@ namespace mln
 					  float cos1, float sin1,
 					  int& sign)
       {
-	float expb0 = exp(b0);
-	float exp2b0 = exp(2.0 * b0);
+	float expb0 = std::exp(b0);
+	float exp2b0 = std::exp(2.f * b0);
 
 	float scale0 = 1 + exp2b0 - 2 * cos0 * expb0;
 	scale0 *= scale0;
 	float scaleA = - 2 * a1 * sin0 * expb0 * (1 - exp2b0) +
 			 2 * a0 * expb0 * (2 * expb0 - cos0 * (1 + exp2b0));
 
-	float expb1 = exp(b1);
-	float exp2b1 = exp(2.0 * b1);
+	float expb1 = std::exp(b1);
+	float exp2b1 = std::exp(2.f * b1);
 
 	float scale1 = 1 + exp2b1 - 2 * cos1 * expb1;
 	scale1 *= scale1;
@@ -327,8 +322,8 @@ namespace mln
 					  float cos1, float sin1,
 					  int& sign)
       {
-	float expb0 = exp(b0);
-	float exp2b0 = exp(2.0 * b0);
+	float expb0 = std::exp(b0);
+	float exp2b0 = std::exp(2.f * b0);
 
 	float scale0 = 1 + exp2b0 - 2 * cos0 * expb0;
 	scale0 *= scale0 * scale0;
@@ -338,8 +333,8 @@ namespace mln
           a0 * expb0 * (2 * expb0 * (2 - cos0 * cos0) *
                         (1 - exp2b0) - cos0 * (1 - exp2b0 * exp2b0));
 
-	float expb1 = exp(b1);
-	float exp2b1 = exp(2.0 * b1);
+	float expb1 = std::exp(b1);
+	float exp2b1 = std::exp(2.f * b1);
 
 	float scale1 = 1 + exp2b1 - 2 * cos1 * expb1;
 	scale1 *= scale1 * scale1;
@@ -368,9 +363,9 @@ namespace mln
 
 
         recursivefilter_<mln_value(I)>(img, coef,
-                                       point1d(-img.border()),
-                                       point1d(geom::ninds(img) - 1 +
-                                               img.border()),
+                                       point1d(static_cast<def::coord>(-img.border())),
+                                       point1d(static_cast<def::coord>(geom::ninds(img) - 1 +
+								       img.border())),
                                        geom::ninds(img) + 2 * img.border(),
                                        dpoint1d(1));
       }
@@ -391,9 +386,11 @@ namespace mln
           // Apply on rows.
           for (unsigned j = 0; j < geom::ncols(img); ++j)
             recursivefilter_<mln_value(I)>(img, coef,
-                                           point2d(-img.border(), j),
-                                           point2d(geom::nrows(img) - 1 +
-                                                   img.border(), j),
+                                           point2d(static_cast<def::coord>(-img.border()),
+						   static_cast<def::coord>(j)),
+                                           point2d(static_cast<def::coord>(geom::nrows(img) - 1 +
+									   img.border()),
+						   static_cast<def::coord>(j)),
                                            geom::nrows(img) + 2 * img.border(),
                                            dpoint2d(1, 0));
         }
@@ -403,9 +400,11 @@ namespace mln
           // Apply on columns.
           for (unsigned i = 0; i < geom::nrows(img); ++i)
             recursivefilter_<mln_value(I)>(img, coef,
-                                           point2d(i, -img.border()),
-                                           point2d(i, geom::ncols(img) - 1 +
-                                                   img.border()),
+                                           point2d(static_cast<def::coord>(i),
+						   static_cast<def::coord>(-img.border())),
+                                           point2d(static_cast<def::coord>(i),
+						   static_cast<def::coord>(geom::ncols(img) - 1 +
+									   img.border())),
                                            geom::ncols(img) + 2 * img.border(),
                                            dpoint2d(0, 1));
         }
@@ -426,9 +425,13 @@ namespace mln
           for (unsigned j = 0; j < geom::nrows(img); ++j)
             for (unsigned k = 0; k < geom::ncols(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
-                                             point3d(-img.border(), j , k),
-                                             point3d(geom::nslis(img) - 1 +
-                                                     img.border(), j, k),
+                                             point3d(static_cast<def::coord>(-img.border()),
+						     static_cast<def::coord>(j),
+						     static_cast<def::coord>(k)),
+                                             point3d(static_cast<def::coord>(geom::nslis(img) - 1 +
+									     img.border()),
+						     static_cast<def::coord>(j),
+						     static_cast<def::coord>(k)),
                                              geom::nslis(img) + 2 *
                                              img.border(),
                                              dpoint3d(1, 0, 0));
@@ -441,9 +444,13 @@ namespace mln
           for (unsigned i = 0; i < geom::nslis(img); ++i)
             for (unsigned k = 0; k < geom::ncols(img); ++k)
               recursivefilter_<mln_value(I)>(img, coef,
-                                             point3d(i, -img.border(), k),
-                                             point3d(i, geom::nrows(img) - 1 +
-                                                     img.border(), k),
+                                             point3d(static_cast<def::coord>(i),
+						     static_cast<def::coord>(-img.border()),
+						     static_cast<def::coord>(k)),
+                                             point3d(static_cast<def::coord>(i),
+						     static_cast<def::coord>(geom::nrows(img) - 1 +
+									     img.border()), 
+						     static_cast<def::coord>(k)),
                                              geom::nrows(img) + 2 *
                                              img.border(),
                                              dpoint3d(0, 1, 0));
@@ -455,9 +462,13 @@ namespace mln
           for (unsigned i = 0; i < geom::nslis(img); ++i)
             for (unsigned j = 0; j < geom::nrows(img); ++i)
               recursivefilter_<mln_value(I)>(img, coef,
-                                             point3d(i, j, -img.border()),
-                                             point3d(i, j, geom::ncols(img) -
-                                                     1 + img.border()),
+                                             point3d(static_cast<def::coord>(i),
+						     static_cast<def::coord>(j),
+						     static_cast<def::coord>(-img.border())),
+					     point3d(static_cast<def::coord>(i),
+						     static_cast<def::coord>(j),
+						     static_cast<def::coord>(geom::ncols(img) -
+									     1 + img.border())),
                                              geom::ncols(img) + 2 *
                                              img.border(),
                                              dpoint3d(0, 0, 1));

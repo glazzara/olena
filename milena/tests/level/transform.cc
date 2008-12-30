@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +28,7 @@
 
 /// \file tests/level/transform.cc
 ///
-/// Tests on mln::level::transform
+/// Tests on mln::level::transform.
 
 #include <cmath>
 
@@ -54,12 +55,14 @@
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
 
+
 struct mysqrt : mln::Function_v2v<mysqrt>
 {
   typedef unsigned short result;
-  result operator()(unsigned short c) const
+  template <typename T>
+  result operator()(T c) const
   {
-    return result( std::sqrt(float(c)) );
+    return static_cast<result>( std::sqrt(float(c)) );
   }
 };
 
@@ -121,12 +124,11 @@ int main()
 
   /// pw image test
   {
-
     const pw::image<fun::p2v::iota, box2d> ima(fun::p2v::iota(),
                                                  make::box2d(2,2, 5,5));
     image2d<short unsigned int> out(8, 8);
 
-    data::fill(out, 0);
+    data::fill(out, (short unsigned int)0);
     out = level::transform(ima, mysqrt());
   }
 
@@ -171,8 +173,8 @@ int main()
     II cast(in);
     III out(size, size);
 
-    data::fill(in, 51);
-    data::fill(out, 42);
+    data::fill(in, (unsigned short)51);
+    data::fill(out, (unsigned short)42);
 
     out = level::transform(cast, mysqrt());
 

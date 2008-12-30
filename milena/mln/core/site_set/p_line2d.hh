@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -35,7 +36,11 @@
 
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/alias/box2d.hh>
-# include <mln/math/all.hh>
+
+# include <mln/math/sign.hh>
+# include <mln/math/abs.hh>
+# include <mln/math/min.hh>
+# include <mln/math/max.hh>
 
 
 namespace mln
@@ -187,7 +192,8 @@ namespace mln
 	int e = ddrow - dcol;
 	for (int i = 0; i < dcol; ++i)
 	  {
-	    arr_.append(point2d(row, col));
+	    arr_.append(point2d(static_cast<def::coord>(row),
+				static_cast<def::coord>(col)));
 	    while (e >= 0)
 	      {
 		row += srow;
@@ -202,7 +208,8 @@ namespace mln
 	int e = ddcol - drow;
 	for (int i = 0; i < drow; ++i)
 	  {
-	    arr_.append(point2d(row, col));
+	    arr_.append(point2d(static_cast<def::coord>(row),
+				static_cast<def::coord>(col)));
 	    while (e >= 0)
 	      {
 		col += scol;
@@ -213,14 +220,15 @@ namespace mln
 	  }
       }
     if (! is_end_excluded)
-      arr_.append(point2d(row, col));
+      arr_.append(point2d(static_cast<def::coord>(row),
+			  static_cast<def::coord>(col)));
 
     // Compute bb_.
     point2d end_ = arr_[arr_.nsites() - 1];
     bb_.pmin() = point2d(math::min(beg.row(), end_.row()),
-			       math::min(beg.col(), end_.col()));
+			 math::min(beg.col(), end_.col()));
     bb_.pmax() = point2d(math::max(beg.row(), end_.row()),
-			       math::max(beg.col(), end_.col()));
+			 math::max(beg.col(), end_.col()));
 
     mln_postcondition(this->begin() == beg);
     mln_postcondition(is_end_excluded == (this->end() != end));
@@ -280,8 +288,8 @@ namespace mln
   p_line2d::to_vec() const
   {
     algebra::vec<2, float> res;
-    res[0] = end().row() - begin().row();
-    res[1] = end().col() - begin().col();
+    res[0] = float(end().row() - begin().row());
+    res[1] = float(end().col() - begin().col());
     return res;
   }
 

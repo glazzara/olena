@@ -1,5 +1,65 @@
 2008-12-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix warnings due to g++ -Wconversion option.
+
+	* mln/core/site_set/box.hh,
+	* mln/core/site_set/p_line2d.hh,
+	* mln/core/image/extension_val.hh,
+	* mln/math/jacobi.hh,
+	* mln/level/transform.hh,
+	* mln/data/paste.spe.hh,
+	* mln/data/fill_with_image.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/fill.hh,
+	* mln/data/paste.hh,
+	* mln/data/fill_with_value.hh,
+	* mln/linear/gaussian.hh,
+	* mln/accu/convolve.hh,
+	* mln/value/ops.hh,
+	* mln/value/int_u_sat.hh,
+	* mln/border/mirror.hh,
+	* mln/convert/to_image.hh,
+	* mln/geom/essential.hh,
+	* mln/fun/v2v/inc.hh,
+	* mln/fun/v2v/cast.hh,
+	* mln/fun/v2v/linear.hh,
+	* mln/fun/v2v/dec.hh,
+	* mln/win/cuboid3d.hh,
+	* mln/win/cube3d.hh,
+	* mln/algebra/quat.hh,
+	* mln/algebra/vec.hh,
+	* mln/io/pbm/load.hh,
+	* mln/norm/linfty.hh,
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh,
+	* mln/canvas/browsing/snake_fwd.hh,
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh,
+	* tests/opt/at.cc,
+	* tests/level/transform_inplace.cc,
+	* tests/level/transform.cc,
+	* tests/level/sort_psites.cc,
+	* tests/level/Makefile.am,
+	* tests/data/paste.cc,
+	* tests/data/fill_with_image.cc,
+	* tests/linear/convolve.cc,
+	* tests/linear/convolve_directional.cc,
+	* tests/linear/gaussian.cc,
+	* tests/norm/l2.cc,
+	* tests/norm/common.hh,
+	* tests/norm/linfty.cc: Fix warning with Wconversion.
+	Upgrade file doc style.
+	Layout.
+
+	Remove a couple of (full of crap) files.
+
+	* mln/geom/resize.hh: Remove.
+	* mln/geom/all.hh: Update.
+	* tests/geom/resize.cc: Remove.
+	* tests/geom/Makefile.am: Update.
+	* tests/level/sort_psites_full.cc: Remove.
+
+2008-12-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix warnings due to g++ Wconversion option.
 
 	* mln/debug/iota.spe.hh,
