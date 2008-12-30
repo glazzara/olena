@@ -25,7 +25,7 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file apps/statues/mesh-segm.cc
+/// \file apps/statues/mesh-skel.cc
 /// \brief A program computing a skeleton of the surface of the
 /// (triangle) mesh of a statue.
 
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "usage: " << argv[0] << " input.off lambda output.off"
 		<< std::endl;
-      exit(1);
+      std::exit(1);
     }
 
   std::string input_filename = argv[1];
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
   // object.
   TriMesh* mesh_ptr = TriMesh::read(input_filename.c_str());
   if (!mesh_ptr)
-    exit(2);
+    std::exit(2);
   TriMesh& mesh = *mesh_ptr;
 
   // Computes faces (triangles).
@@ -201,7 +201,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "Error opening " << output_filename.c_str()
 		<< " for writing." << std::endl;
-      exit(2);
+      std::exit(2);
     }
   write_off_binary(mesh_ptr, face_value, f_out);
   fclose(f_out);

@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "usage: " << argv[0] << " input.off lambda output.off"
 		<< std::endl;
-      exit(1);
+      std::exit(1);
     }
 
   std::string input_filename = argv[1];
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
   // object.
   TriMesh* mesh_ptr = TriMesh::read(input_filename.c_str());
   if (!mesh_ptr)
-    exit(2);
+    std::exit(2);
   TriMesh& mesh = *mesh_ptr;
 
   // Computes faces (triangles).
@@ -224,7 +224,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "Error opening " << output_filename.c_str()
 		<< " for writing." << std::endl;
-      exit(2);
+      std::exit(2);
     }
   write_off_colored(mesh_ptr, face_color, f_out);
   fclose(f_out);

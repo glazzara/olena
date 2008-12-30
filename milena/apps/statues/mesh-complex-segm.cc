@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "usage: " << argv[0] << " input.off lambda output.off"
 		<< std::endl;
-      exit(1);
+      std::exit(1);
     }
 
   std::string input_filename = argv[1];
@@ -77,23 +77,18 @@ int main(int argc, char* argv[])
   mln::io::off::load(input, input_filename);
 
   // Values on edges.
-
-  /* FIXME: To be improved: instead of computing the curvature on
-     edges from a mean of the curvature on adjacent polygons, compute
-     it directly from the curvature on vertices.  We should probably
-     integrate Trimesh's curvature computation into Milena.  */
   mln::p_n_faces_fwd_piter<D, G> e(input.domain(), 1);
   typedef mln::complex_higher_neighborhood<D, G> adj_polygons_nbh_t;
   adj_polygons_nbh_t adj_polygons_nbh;
-  mln_niter_(adj_polygons_nbh_t) p(adj_polygons_nbh, e);
+  mln_niter_(adj_polygons_nbh_t) adj_p(adj_polygons_nbh, e);
   // Iterate on edges (1-faces).
   for_all(e)
   {
     float s = 0.0f;
     unsigned n = 0;
-    for_all(p)
+    for_all(adj_p)
     {
-      s += input(p);
+      s += input(adj_p);
       ++n;
     }
     input(e) = s / n;
@@ -118,14 +113,13 @@ int main(int argc, char* argv[])
   | WST.  |
   `------*/
 
-  /* FIXME: Note that the WST is either doing too much work, since we
-     have not constrained the domain of the image to 1-faces only.
-
+  /* FIXME: Note that the WST is doing too much work, since we have
+     not constrained the domain of the image to 1-faces only.
      It would be great if we could use something like this:
 
-         closed_input | mln::p_faces<1, D, G>(closed_input.domain())
+       closed_input | mln::p_faces<1, D, G>(closed_input.domain())
 
-      as input of the WST.  */
+     as input of the WST.  */
 
   // Compute the WST on edges.
   typedef unsigned wst_val_t;
@@ -138,8 +132,8 @@ int main(int argc, char* argv[])
   // Label polygons (i.e., propagate labels from edges to polygons).
   for_all(e)
     if (wshed(e) != 0)
-      for_all(p)
-	wshed(p) = wshed(e);
+      for_all(adj_p)
+	wshed(adj_p) = wshed(e);
 
   /*---------.
   | Output.  |

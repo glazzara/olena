@@ -30,7 +30,6 @@
 /// a mesh.
 
 #include <cstdlib>
-#include <cmath>
 
 #include <algorithm>
 #include <vector>
@@ -47,17 +46,13 @@
 #include "io.hh"
 
 
-// Doesn't C++ have a better way to express Pi?
-const float pi = 4 * atanf(1);
-
-
 int main(int argc, char* argv[])
 {
   if (argc != 3)
     {
       std::cerr << "usage: " << argv[0] << " input.off output.off"
 		<< std::endl;
-      exit(1);
+      std::exit(1);
     }
 
   std::string input_filename = argv[1];
@@ -69,13 +64,14 @@ int main(int argc, char* argv[])
   // object.
   TriMesh* mesh_ptr = TriMesh::read(input_filename.c_str());
   if (!mesh_ptr)
-    exit(2);
+    std::exit(2);
   TriMesh& mesh = *mesh_ptr;
 
   // Computes faces (triangles).
   mesh.need_faces();
   // Computation of the curvature on each vertex of the mesh.
   mesh.need_curvatures();
+
   std::vector<float> vertex_m(mesh.vertices.size(), 0.f);
   for (unsigned v = 0; v < mesh.vertices.size(); ++v)
     // Max curvature.
@@ -84,7 +80,7 @@ int main(int argc, char* argv[])
 
   // For each face of the mesh, computean an average curvature value
   // from the mean curvature at its vertices.
-  std::vector<float> face_m(mesh.faces.size(), 42.f);
+  std::vector<float> face_m(mesh.faces.size(), 0.f);
   mln::accu::min_max<float> acc;
   for (unsigned f = 0; f < mesh.faces.size(); ++f)
     {
@@ -103,7 +99,7 @@ int main(int argc, char* argv[])
   // FIXME: Taken from mln/level/stretch.hh (this should be factored).
   float min = min_max.first;
   float max = min_max.second;
-  // Don't normalize actually if the curvature is constants (i.e.,
+  // Don't normalize actually if the curvature is constant (i.e.,
   // if min == max).
   if (min != max)
     {
@@ -122,7 +118,7 @@ int main(int argc, char* argv[])
     {
       std::cerr << "Error opening " << output_filename.c_str()
 		<< " for writing." << std::endl;
-      exit(2);
+      std::exit(2);
     }
   write_off_float(mesh_ptr, normalized_face_m, f_out);
   fclose(f_out);

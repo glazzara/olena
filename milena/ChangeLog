@@ -1,5 +1,19 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Clean up apps/statues/ a bit.
+
+	* apps/statues/mesh-max-curv.cc, apps/statues/mesh-pinv-curv.cc,
+	* apps/statues/mesh-segm.cc, apps/statues/mesh-skel.cc:
+	s/exit/std::exit/.
+	* apps/statues/mesh-pinv-curv.cc (pi): Make it a constant.
+	* apps/statues/mesh-max-curv.cc (pi): Remove useless constant.
+	Remove useless #include directives.
+	Typo in comment.
+	* apps/statues/mesh-skel.cc: Fix Doxygen headers.
+	* apps/statues/mesh-complex-segm.cc: Aesthetic changes.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Disable graph-based applications depending on Trimesh.
 
 	* apps/statues/Makefile.am (bin_PROGRAMS)
