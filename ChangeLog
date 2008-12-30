@@ -1,5 +1,12 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Configure segmentation tests in milena/apps/statues/.
+
+	* configure.ac: Configure milena/apps/statues/test-mesh-segm and
+	milena/apps/statues/test-mesh-complex-segm.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	* COPYING: Fix indentation.
 
 2008-12-22  Guillaume Lazzara  <z@lrde.epita.fr>

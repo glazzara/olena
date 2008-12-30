@@ -266,8 +266,11 @@ AC_CONFIG_FILES([
 #])
 
 # Configure tests.
-AC_CONFIG_FILES([milena/apps/statues/test],
-		[chmod +x milena/apps/statues/test])
+# FIXME: Consider using `sed' instead of `configure' to create these tests.
+AC_CONFIG_FILES([milena/apps/statues/test-mesh-segm],
+		[chmod +x milena/apps/statues/test-mesh-segm])
+AC_CONFIG_FILES([milena/apps/statues/test-mesh-complex-segm],
+		[chmod +x milena/apps/statues/test-mesh-complex-segm])
 
 
 AC_OUTPUT
