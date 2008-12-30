@@ -30,6 +30,8 @@ check_PROGRAMS =				\
 ##  tr_image					
 ##  value_enc_image
 
+noinst_HEADERS = complex_image.hh
+
 ##bgraph_image_SOURCES = bgraph_image.cc
 cast_image_SOURCES = cast_image.cc
 complex_image_SOURCES = complex_image.cc

@@ -1,5 +1,13 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Start to factor code among tests on complex-based images.
+
+	* tests/core/image/complex_image.hh: New.
+	* tests/core/image/Makefile.am (noinst_HEADERS): New.
+	Set to complex_image.hh.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a test for apps/statues/test-mesh-max-curv.
 
 	* apps/statues/test-mesh-max-curv.in: New.
