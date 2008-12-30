@@ -1,5 +1,10 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	* configure.ac: Configure
+	milena/apps/statues/test-mesh-complex-max-curv.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Configure segmentation tests in milena/apps/statues/.
 
 	* configure.ac: Configure milena/apps/statues/test-mesh-segm and
