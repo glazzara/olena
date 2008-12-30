@@ -77,3 +77,17 @@ TESTS += test-mesh-complex-max-curv
 bin_PROGRAMS += mesh-complex-segm
 mesh_complex_segm_SOURCES = mesh-complex-segm.cc
 TESTS += test-mesh-complex-segm
+
+# Program computing the max curvature from a mesh, then segmenting it.
+# The advantage of this program over `mesh-complex-segm' is that the
+# curvature information is much more precise, as data is computed on
+# vertices, then average values are computed on edges (in the case of
+# `mesh-complex-segm', data are read from polygons, which implies an
+# extra averaging step).
+bin_PROGRAMS += mesh-complex-max-curv-segm
+mesh_complex_max_curv_segm_SOURCES = mesh-complex-max-curv-segm.cc
+TESTS += test-mesh-complex-max-curv-segm
+
+# FIXME: Implement `mesh-complex-pinv-curv-segm' (factor as much
+# code as possible with `mesh-complex-max-curv-segm'.
+# ...

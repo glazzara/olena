@@ -1,5 +1,16 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a (non Trimesh-based) curvature computation + segmentation app.
+
+	* apps/statues/mesh-complex-max-curv-segm.cc: New.
+	* apps/statues/test-mesh-complex-max-curv-segm.in: New.
+	* apps/statues/Makefile.am
+	(bin_PROGRAMS): Add mesh-complex-max-curv-segm.
+	(mesh-complex-max-curv-segm.cc): New.
+	(TESTS): Add test-mesh-complex-max-curv-segm.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Exercise the curvature computation routines ported from Trimesh.
 
 	* apps/statues/mesh-complex-max-curv.cc: New.
