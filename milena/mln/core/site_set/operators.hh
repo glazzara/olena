@@ -37,7 +37,6 @@
 
 
 # include <algorithm>
-# include <mln/convert/from_to.hh>
 # include <mln/core/concept/site_set.hh>
 
 
@@ -125,8 +124,8 @@ namespace mln
       typedef mln_site(Sl) P;
       mlc_converts_to(mln_psite(Sr), P)::check();
       std::set< P, util::ord<P> > sl, sr, sd;
-      convert::from_to(lhs, sl);
-      convert::from_to(rhs, sr);
+      convert::over_load::from_to_(lhs, sl);
+      convert::over_load::from_to_(rhs, sr);
       std::set_symmetric_difference(sl.begin(), sl.end(),
 				    sr.begin(), sr.end(),
 				    std::inserter(sd, sd.begin()),
@@ -140,7 +139,7 @@ namespace mln
     to_std_set(const Site_Set<S>& s)
     {
       std::set< mln_site(S), util::ord<mln_site(S)> > std_s;
-      convert::from_to(s, std_s);
+      convert::over_load::from_to_(s, std_s);
       return std_s;
     }
 
@@ -152,8 +151,8 @@ namespace mln
       typedef mln_site(Sl) P;
       mlc_converts_to(mln_psite(Sr), P)::check();
       std::set< P, util::ord<P> > sl, sr;
-      convert::from_to(lhs, sl);
-      convert::from_to(rhs, sr);
+      convert::over_load::from_to_(lhs, sl);
+      convert::over_load::from_to_(rhs, sr);
       return std::includes(sr.begin(), sr.end(),
 			   sl.begin(), sl.end(),
 			   util::ord<P>());

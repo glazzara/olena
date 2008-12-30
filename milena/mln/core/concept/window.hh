@@ -317,7 +317,7 @@ namespace mln
 
       template <typename W, typename I>
       void
-      from_to(const Window<W>& win_, Image<I>& ima_)
+      from_to_(const Window<W>& win_, Image<I>& ima_)
       {
 	mln_is_simple_window(W)::check();
 	typedef mln_psite(I) P;
