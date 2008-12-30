@@ -1,5 +1,16 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	More complex-related aliases.
+
+	* mln/core/alias/complex_geometry.hh
+	(mln::discrete_plane_2complex_geometry)
+	* mln/core/alias/complex_image.hh
+	(mln::int_u8_2complex_image2d):
+	New typedefs.
+	Typos & aesthetic changes.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Clean up apps/statues/ a bit.
 
 	* apps/statues/mesh-max-curv.cc, apps/statues/mesh-pinv-curv.cc,

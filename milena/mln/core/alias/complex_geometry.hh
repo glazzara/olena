@@ -40,8 +40,13 @@ namespace mln
 {
 
   /// \brief Type alias for the geometry of a 2-complex located in a
+  /// discrete 2-dimensional plane (with integer coordinates).
+  typedef mln::geom::complex_geometry<2, point2d>
+  discrete_plane_2complex_geometry;
+
+  /// \brief Type alias for the geometry of a 2-complex located in a
   /// 3-dimensional space (with floating-point coordinates).
-  typedef mln::geom::complex_geometry<2,point3df> space_2complex_geometry;
+  typedef mln::geom::complex_geometry<2, point3df> space_2complex_geometry;
 
 } // end of namespace mln
 

@@ -40,6 +40,22 @@
 
 namespace mln
 {
+  /*------------------------------.
+  | 2-d plane 2-complex aliases.  |
+  `------------------------------*/
+
+  /// \brief Type alias for an 8-bit gray-level image based on a
+  /// 2-complex, where 0-faces are located at discrete (integer)
+  /// 2-dimensional points.
+  typedef
+  mln::complex_image<2, mln::discrete_plane_2complex_geometry,
+		     mln::value::int_u8>
+  int_u8_2complex_image2d;
+
+
+  /*------------------------------.
+  | 3-d space 2-complex aliases.  |
+  `------------------------------*/
 
   /// \brief Type alias for a binary image based on a 2-complex, where
   /// 0-faces are located at floating-point 3-dimensional points.
@@ -47,14 +63,14 @@ namespace mln
   mln::complex_image<2, mln::space_2complex_geometry, bool>
   bin_2complex_image3df;
 
-  /// \brief Type alias for an 8-bit grey-level image based on a
+  /// \brief Type alias for an 8-bit gray-level image based on a
   /// 2-complex, where 0-faces are located at floating-point
   /// 3-dimensional points.
   typedef
   mln::complex_image<2, mln::space_2complex_geometry, mln::value::int_u8>
   int_u8_2complex_image3df;
 
-  /// \brief Type alias for a grey-level image based on a 2-complex,
+  /// \brief Type alias for a gray-level image based on a 2-complex,
   /// where 0-faces are located at floating-point 3-dimensional
   /// points.
   typedef
