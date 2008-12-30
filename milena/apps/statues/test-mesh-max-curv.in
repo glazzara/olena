@@ -1,0 +1,7 @@
+#! /bin/sh
+
+set -ex
+
+mesh_dir=@top_srcdir@/milena/mesh
+
+time ./mesh-max-curv $mesh_dir/teapot.off teapot-max-curv.off

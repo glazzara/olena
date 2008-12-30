@@ -59,6 +59,7 @@ mesh_max_curv_SOURCES = mesh-max-curv.cc io.hh
 mesh_max_curv_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
 mesh_max_curv_LDFLAGS = $(LDFLAGS_trimesh)
 mesh_max_curv_LDADD = $(LDADD_trimesh)
+TESTS += test-mesh-max-curv
 
 ## ---------------------------------------------------- ##
 ## Complex-based applications, independent of Trimesh.  ##

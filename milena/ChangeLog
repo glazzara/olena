@@ -1,5 +1,12 @@
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
+	Add a test for apps/statues/test-mesh-max-curv.
+
+	* apps/statues/test-mesh-max-curv.in: New.
+	* apps/statues/Makefile.am (TESTS): Add test-mesh-max-curv.
+
+2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a (non Trimesh-based) curvature computation + segmentation app.
 
 	* apps/statues/mesh-complex-max-curv-segm.cc: New.
