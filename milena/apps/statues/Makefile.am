@@ -21,6 +21,11 @@ LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 # FIXME: Have program names embed the type of structure used (either
 # graph or complex).
 
+bin_PROGRAMS =
+TESTS = 
+
+## FIXME: Programs' names should reflect a dependency on Trimesh, if any.
+
 ## ------------------------------------------------ ##
 ## Graph-based applications, depending on Trimesh.  ##
 ## ------------------------------------------------ ##
@@ -31,6 +36,8 @@ LDADD_trimesh = -L$(top_builddir)/external/trimesh/libsrc -ltrimesh $(GLLIBS)
 # mesh_segm_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
 # mesh_segm_LDFLAGS = $(LDFLAGS_trimesh)
 # mesh_segm_LDADD = $(LDADD_trimesh)
+#
+# TESTS += test-mesh-segm
 
 # mesh_skel_SOURCES = mesh-skel.cc io.hh
 # mesh_skel_CPPFLAGS = $(AM_CPPFLAGS) $(CPPFLAGS_trimesh)
@@ -60,8 +67,13 @@ mesh_max_curv_LDADD = $(LDADD_trimesh)
 noinst_HEADERS = trimesh/misc.hh
 EXTRA_DIST = trimesh/README
 
+# A small test exercising the curvature computation routines ported
+# from Trimesh to Milena.
+bin_PROGRAMS += mesh-complex-max-curv
+mesh_complex_max_curv_SOURCES = mesh-complex-max-curv.cc
+TESTS += test-mesh-complex-max-curv
+
+# Segmentation program working on precomputed meshes with curvatures data.
 bin_PROGRAMS += mesh-complex-segm
 mesh_complex_segm_SOURCES = mesh-complex-segm.cc
-
-
-TESTS = test-mesh-segm test-mesh-complex-segm
+TESTS += test-mesh-complex-segm
