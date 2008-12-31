@@ -64,14 +64,14 @@ namespace mln
 		typename I, typename W>
       struct ch_convolve_helper
       {
-	typedef mln_sum_x(mln_value(I), mln_weight(W)) V;
+	typedef mln_sum_product(mln_value(I), mln_weight(W)) V;
 	typedef mln_ch_value(I, V) ret;
       };
 
       template <typename I, typename W>
       struct ch_convolve_helper<false, I, W>
       {
-	typedef mln_sum_x(mln_value(I), W) V;
+	typedef mln_sum_product(mln_value(I), W) V;
 	typedef mln_ch_value(I, V) ret;
       };
 

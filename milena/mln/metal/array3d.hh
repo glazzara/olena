@@ -176,7 +176,7 @@ namespace mln
     struct set_precise_binary_< op::times,
 				metal::array3d<T, s, r, c>, metal::array3d<U, s, r, c> >
     {
-      typedef mln_sum_x(T,U) ret;
+      typedef mln_sum_product(T,U) ret;
     };
 
     template < template <class, class> class Name,

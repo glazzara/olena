@@ -44,11 +44,11 @@
 # include <mln/metal/ret.hh>
 
 /// Type trait for value sum.
-# define mln_trait_value_sum_x(T, U)				\
+# define mln_trait_value_sum_product(T, U)			\
    typename mln::trait::value_< mln_trait_op_times(T,U) >::sum
 
 /// Shortcut for type trait for value sum.
-# define mln_sum_x(T, U)  mln_trait_value_sum_x(T, U)
+# define mln_sum_product(T, U)  mln_trait_value_sum_product(T, U)
 
 
 // FIXME: In the definitions below, is that equiv or interop?

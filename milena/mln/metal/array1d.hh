@@ -164,7 +164,7 @@ namespace mln
     struct set_precise_binary_< op::times,
 				metal::array1d<T, n>, metal::array1d<U, n> >
     {
-      typedef mln_sum_x(T,U) ret;
+      typedef mln_sum_product(T,U) ret;
     };
 
     template < template <class, class> class Name,

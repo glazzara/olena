@@ -31,14 +31,11 @@
 
 /// \file mln/norm/l1.hh
 ///
-///  \brief Define some L1-norm related routines.
-///  \see http://mathworld.wolfram.com/L1-Norm.html for more information.
+/// Define some L1-norm related routines.
+/// \see http://mathworld.wolfram.com/L1-Norm.html for more information.
 
 # include <mln/math/abs.hh>
 # include <mln/algebra/vec.hh>
-
-// FIXME: Use mln_sum_x (to be renamed as mln_sum_product) instead of
-// mln_sum.
 
 
 namespace mln
@@ -50,19 +47,19 @@ namespace mln
     /// L1-norm of a vector \a vec.
     /// \{
     template <unsigned n, typename C>
-    mln_sum(C) l1(const C (&vec)[n]);
+    mln_sum_product(C,C) l1(const C (&vec)[n]);
 
     template <unsigned n, typename C>
-    mln_sum(C) l1(const algebra::vec<n,C>& vec);
+    mln_sum_product(C,C) l1(const algebra::vec<n,C>& vec);
     /// \}
 
     /// L1-norm distance between vectors \a vec1 and \a vec2.
     /// \{
     template <unsigned n, typename C>
-    mln_sum(C) l1_distance(const C (&vec1)[n], const C (&vec2)[n]);
+    mln_sum_product(C,C) l1_distance(const C (&vec1)[n], const C (&vec2)[n]);
 
     template <unsigned n, typename C>
-    mln_sum(C) l1_distance(const algebra::vec<n,C>& vec1,
+    mln_sum_product(C,C) l1_distance(const algebra::vec<n,C>& vec1,
 			   const algebra::vec<n,C>& vec2);
     /// \}
 
@@ -73,10 +70,10 @@ namespace mln
     {
       template <unsigned n, typename C, typename V>
       inline
-      mln_sum(C)
+      mln_sum_product(C,C)
       l1_(const V& vec)
       {
-	typedef mln_sum(C) M;
+	typedef mln_sum_product(C,C) M;
 	M m = 0;
 	for (unsigned i = 0; i < n; ++i)
 	  {
@@ -88,10 +85,10 @@ namespace mln
 
       template <unsigned n, typename C, typename V>
       inline
-      mln_sum(C)
+      mln_sum_product(C,C)
       l1_distance_(const V& vec1, const V& vec2)
       {
-	typedef mln_sum(C) D;
+	typedef mln_sum_product(C,C) D;
 	D d = 0;
 	for (unsigned i = 0; i < n; ++i)
 	  {
@@ -110,7 +107,7 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    mln_sum(C)
+    mln_sum_product(C,C)
     l1(const C (&vec)[n])
     {
       return impl::l1_<n, C>(vec);
@@ -118,7 +115,7 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    mln_sum(C)
+    mln_sum_product(C,C)
     l1(const algebra::vec<n,C>& vec)
     {
       return impl::l1_<n, C>(vec);
@@ -126,7 +123,7 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    mln_sum(C)
+    mln_sum_product(C,C)
     l1_distance(const C (&vec1)[n], const C (&vec2)[n])
     {
       return impl::l1_distance_<n, C>(vec1, vec2);
@@ -134,7 +131,7 @@ namespace mln
 
     template <unsigned n, typename C>
     inline
-    mln_sum(C)
+    mln_sum_product(C,C)
     l1_distance(const algebra::vec<n,C>& vec1, const algebra::vec<n,C>& vec2)
     {
       return impl::l1_distance_<n, C>(vec1, vec2);

@@ -1,3 +1,23 @@
+2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename mln_sum_x to mln_sum_product.
+
+	* mln/accu/convolve.hh,
+	* mln/algebra/mat.hh,
+	* mln/algebra/vec.hh,
+	* mln/fun/v2v/norm.hh,
+	* mln/linear/ch_convolve.hh,
+	* mln/metal/array1d.hh,
+	* mln/metal/array2d.hh,
+	* mln/metal/array3d.hh,
+	* mln/metal/mat.hh,
+	* mln/metal/vec.hh,
+	* mln/value/ops.hh: rename mln_sum_x to mln_sum_product.
+
+	* mln/norm/l1.hh,
+	* mln/norm/l2.hh: use mln_sum_product instead of mln_sum according to
+	the fixme.
+
 2008-12-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix warnings due to g++ -Wconversion option.

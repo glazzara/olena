@@ -48,7 +48,6 @@
 # include <mln/value/ops.hh>
 
 
-
 // FIXME: Document.
 
 
@@ -67,7 +66,7 @@ namespace mln
 
   namespace norm {
     template <unsigned n, typename C>
-    mln_sum(C) l2(const algebra::vec<n,C>& vec);
+    mln_sum_product(C,C) l2(const algebra::vec<n,C>& vec);
   }
 
 
@@ -273,7 +272,7 @@ namespace mln
     struct set_precise_binary_< op::times,
 				algebra::vec<n, T>, algebra::vec<n, U> >
     {
-      typedef mln_sum_x(T,U) ret;
+      typedef mln_sum_product(T,U) ret;
     };
 
     template < template <class, class> class Name,
@@ -325,7 +324,7 @@ namespace mln
     
     /// Scalar product (dot product).
     template <unsigned n, typename T, typename U>
-    mln_sum_x(T,U)
+    mln_sum_product(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
     // vec * s
@@ -400,6 +399,7 @@ namespace mln
     vec<n,T>::vec(const vec<n, U>& rhs)
       : super_()
     {
+      mlc_converts_to(U, T)::check();
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = static_cast<T>(rhs[i]);
     }
@@ -409,6 +409,7 @@ namespace mln
     inline
     vec<n,T>& vec<n,T>::operator=(const vec<n, U>& rhs)
     {
+      mlc_converts_to(U, T)::check();
       for (unsigned i = 0; i < n; ++i)
 	data_[i] = static_cast<T>(rhs[i]);
       return *this;
@@ -515,11 +516,11 @@ namespace mln
 
     template <unsigned n, typename T, typename U>
     inline
-    mln_sum_x(T,U)
+    mln_sum_product(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      typedef mln_sum_x(T,U) R;
-      mln_sum_x(T,U) tmp(literal::zero);
+      typedef mln_sum_product(T,U) R;
+      mln_sum_product(T,U) tmp(literal::zero);
       for (unsigned i = 0; i < n; ++i)
 	tmp += lhs[i] * rhs[i];
       return tmp;

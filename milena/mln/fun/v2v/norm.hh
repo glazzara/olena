@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,17 +29,15 @@
 #ifndef MLN_FUN_V2V_NORM_HH
 # define MLN_FUN_V2V_NORM_HH
 
-/*! \file mln/fun/v2v/norm.hh
- *
- *  \brief Norm functors.
- *
- *  \see mln/norm/.
- */
+/// \file mln/fun/v2v/norm.hh
+///
+/// Norm functors.
+///
+/// \see mln/norm/.
 
 // FIXME: Move to mln/fun/x2v/?
 
 # include <mln/core/concept/function.hh>
-# include <mln/trait/value_.hh>
 
 # include <mln/norm/all.hh>
 
@@ -52,12 +51,11 @@ namespace mln
     namespace v2v
     {
 
-      /*! \brief L1-norm.
-       *
-       *  \c V is the type of input values; \c R is the result type.
-       *
-       *  \see mln::norm::l1.
-       */
+      /// L1-norm.
+      ///
+      /// \c V is the type of input values; \c R is the result type.
+      ///
+      /// \see mln::norm::l1.
       template <typename V, typename R>
       struct l1_norm : public Function_v2v< l1_norm<V, R> >
       {
@@ -65,12 +63,11 @@ namespace mln
 	R operator()(const V& v) const;
       };
 
-      /*! \brief L2-norm.
-       *
-       *  \c V is the type of input values; \c R is the result type.
-       *
-       *  \see mln::norm::l2.
-       */
+      /// L2-norm.
+      ///
+      /// \c V is the type of input values; \c R is the result type.
+      ///
+      /// \see mln::norm::l2.
       template <typename V, typename R>
       struct l2_norm : public Function_v2v< l2_norm<V, R> >
       {
@@ -78,12 +75,11 @@ namespace mln
 	R operator()(const V& v) const;
       };
 
-      /*! \brief L-infty norm.
-       *
-       *  \c V is the type of input values; \c R is the result type.
-       *
-       *  \see mln::norm::linfty.
-       */
+      /// L-infty norm.
+      ///
+      /// \c V is the type of input values; \c R is the result type.
+      ///
+      /// \see mln::norm::linfty.
       template <typename V, typename R>
       struct linfty_norm : public Function_v2v< linfty_norm<V, R> >
       {

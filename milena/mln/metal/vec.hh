@@ -248,7 +248,7 @@ namespace mln
     struct set_precise_binary_< op::times,
 				metal::vec<n, T>, metal::vec<n, U> >
     {
-      typedef mln_sum_x(T,U) ret;
+      typedef mln_sum_product(T,U) ret;
     };
 
     template < template <class, class> class Name,
@@ -299,7 +299,7 @@ namespace mln
     // vec * vec
 
     template <unsigned n, typename T, typename U>
-    mln_sum_x(T,U)
+    mln_sum_product(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs);
 
     // vec * s
@@ -481,10 +481,10 @@ namespace mln
 
     template <unsigned n, typename T, typename U>
     inline
-    mln_sum_x(T,U)
+    mln_sum_product(T,U)
     operator*(const vec<n,T>& lhs, const vec<n,U>& rhs)
     {
-      mln_sum_x(T,U) tmp(literal::zero);
+      mln_sum_product(T,U) tmp(literal::zero);
       for (unsigned i = 0; i < n; ++i)
 	tmp += lhs[i] * rhs[i];
       return tmp;

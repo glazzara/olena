@@ -153,13 +153,13 @@ namespace mln
 	       unsigned m, typename U >
     struct set_precise_binary_< op::times, metal::mat<n,o,T>, metal::mat<o,m,U> >
     {
-      typedef metal::mat<n, m, mln_sum_x(T, U)> ret;
+      typedef metal::mat<n, m, mln_sum_product(T, U)> ret;
     };
 
     template < unsigned n, typename T, typename U >
     struct set_precise_binary_< op::times, metal::mat<n,n,T>, metal::mat<n,n,U> >
     { // Disambiguate between both previous defs.
-      typedef metal::mat<n, n, mln_sum_x(T, U)> ret;
+      typedef metal::mat<n, n, mln_sum_product(T, U)> ret;
     };
 
     // mat * vec
@@ -168,7 +168,7 @@ namespace mln
 	       typename U >
     struct set_precise_binary_< op::times, metal::mat<n,m,T>, metal::vec<m,U> >
     {
-      typedef metal::vec<n, mln_sum_x(T, U)> ret;
+      typedef metal::vec<n, mln_sum_product(T, U)> ret;
     };
 
     // mat * s
@@ -226,14 +226,14 @@ namespace mln
 
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
-    mat<n, m, mln_sum_x(T,U)>
+    mat<n, m, mln_sum_product(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs);
 
     // mat * vec
 
     template <unsigned n, unsigned m, typename T,
 	      typename U>
-    vec<n, mln_sum_x(T,U)>
+    vec<n, mln_sum_product(T,U)>
     operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs);
 
     // mat * s
@@ -401,10 +401,10 @@ namespace mln
     template <unsigned n, unsigned o, typename T,
 	      unsigned m, typename U>
     inline
-    mat<n, m, mln_sum_x(T,U)>
+    mat<n, m, mln_sum_product(T,U)>
     operator*(const mat<n,o,T>& lhs, const mat<o,m,U>& rhs)
     {
-      mat<n,m, mln_sum_x(T,U)> tmp;
+      mat<n,m, mln_sum_product(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	for (unsigned j = 0; j < m; ++j)
 	  {
@@ -418,13 +418,13 @@ namespace mln
     template <unsigned n, unsigned m, typename T,
 	      typename U>
     inline
-    vec<n, mln_sum_x(T,U)>
+    vec<n, mln_sum_product(T,U)>
     operator*(const mat<n,m,T>& lhs, const vec<m,U>& rhs)
     {
-      vec<n, mln_sum_x(T,U)> tmp;
+      vec<n, mln_sum_product(T,U)> tmp;
       for (unsigned i = 0; i < n; ++i)
 	{
-	  mln_sum_x(T,U) sum(literal::zero);
+	  mln_sum_product(T,U) sum(literal::zero);
 	  for (unsigned j = 0; j < m; ++j)
 	    sum += lhs(i, j) * rhs[j];
 	  tmp[i] = sum;
