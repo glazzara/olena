@@ -1,5 +1,21 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename at() to at_().
+
+	* mln/core/image/image1d.hh,
+	* mln/core/image/image2d.hh,
+	* mln/core/image/image3d.hh,
+	* mln/opt/at.hh: rename at() to at_().
+
+	* doc/tutorial/images_tour.txt,
+	* doc/tutorial/outputs/ima2d-3.txt,
+	* doc/tutorial/samples/ima2d-3.cc,
+	* doc/tutorial/tutorial.tex: use opt::at(ima,...) instead of ima.at()
+	
+        * doc/tutorial/outputs/ima2d-3-output.txt: remove useless file.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename Image::has_data() to Image::is_valid().
 
 	* mln/accu/compute.hh,

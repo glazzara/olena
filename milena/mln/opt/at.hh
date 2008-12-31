@@ -101,7 +101,7 @@ namespace mln
       mln_rvalue(I) at_1d_impl(trait::image::category::primary,
                                const Image<I>& ima, def::coord ind)
       {
-        return exact(ima).at(ind);
+        return exact(ima).at_(ind);
       }
 
 
@@ -132,7 +132,7 @@ namespace mln
       mln_lvalue(I) at_1d_impl(trait::image::category::primary,
                                Image<I>& ima, def::coord ind)
       {
-        return exact(ima).at(ind);
+        return exact(ima).at_(ind);
       }
 
     } // end of namespace mln::opt::impl
@@ -186,7 +186,7 @@ namespace mln
       mln_rvalue(I) at_2d_impl(trait::image::category::primary,
                                const Image<I>& ima, def::coord row, def::coord col)
       {
-        return exact(ima).at(row, col);
+        return exact(ima).at_(row, col);
       }
 
 
@@ -217,7 +217,7 @@ namespace mln
       mln_lvalue(I) at_2d_impl(trait::image::category::primary,
                                Image<I>& ima, def::coord row, def::coord col)
       {
-        return exact(ima).at(row, col);
+        return exact(ima).at_(row, col);
       }
 
     } // end of namespace mln::opt::impl
@@ -270,7 +270,7 @@ namespace mln
       mln_rvalue(I) at_3d_impl(trait::image::category::primary,
                                const Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
-        return exact(ima).at(sli, row, col);
+        return exact(ima).at_(sli, row, col);
       }
 
 
@@ -301,7 +301,7 @@ namespace mln
       mln_lvalue(I) at_3d_impl(trait::image::category::primary,
                                Image<I>& ima, def::coord sli, def::coord row, def::coord col)
       {
-        return exact(ima).at(sli, row, col);
+        return exact(ima).at_(sli, row, col);
       }
 
     } // end of namespace mln::opt::impl

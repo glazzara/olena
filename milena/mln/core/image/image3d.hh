@@ -52,7 +52,7 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename T> struct image3d;
 
 
@@ -201,11 +201,11 @@ namespace mln
 
     /// Read-only access to the image value located at (\p sli, \p
     /// row, \p col).
-    const T& at(def::coord sli, def::coord row, def::coord col) const;
+    const T& at_(def::coord sli, def::coord row, def::coord col) const;
 
     /// Read-write access to the image value located at (\p sli, \p
     /// row, \p col).
-    T& at(def::coord sli, def::coord row, def::coord col);
+    T& at_(def::coord sli, def::coord row, def::coord col);
 
 
     /// Fast Image method
@@ -484,7 +484,7 @@ namespace mln
   template <typename T>
   inline
   const T&
-  image3d<T>::at(def::coord sli, def::coord row, def::coord col) const
+  image3d<T>::at_(def::coord sli, def::coord row, def::coord col) const
   {
     mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
@@ -493,7 +493,7 @@ namespace mln
   template <typename T>
   inline
   T&
-  image3d<T>::at(def::coord sli, def::coord row, def::coord col)
+  image3d<T>::at_(def::coord sli, def::coord row, def::coord col)
   {
     mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];

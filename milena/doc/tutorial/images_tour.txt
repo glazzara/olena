@@ -338,8 +338,8 @@ retrieve v from (the key) p; testing that this image has p is costly.
 
 *** example
 
-ima.at(0,0) := 5
-ima.at(1,1) := 7
+opt::at(ima, 0,0) := 5
+opt::at(ima, 1,1) := 7
 ima =
  5 .
  . 7

@@ -1040,7 +1040,7 @@ the default one, e.g 0. By using \code{initialize} \var{img2b} is initialized
 
 There are several ways to access/modify an image ``\var{ima}'':
 \begin{itemize}
-\item \code{ima.at(x, y, \dots)}
+\item \code{opt::at(ima, x, y, \dots)}
 \item \code{ima(Site)}
 \end{itemize}
 
@@ -1048,7 +1048,7 @@ Most of the time, images can be modified and these two methods can be used both
 to read a value and modify it. Both methods are equivalent. 
 \doxycode{ima2d-3}
 Output:
-\doxyoutput{ima2d-3-output}
+\doxyoutput{ima2d-3}
 
 Usually, you will want to use the functional way, ``\code{ima(Site)}'', more
 particularly while iterating over all the sites through an iterator. This use

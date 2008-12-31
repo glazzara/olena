@@ -16,7 +16,7 @@ int main()
   // Associate '9' as value for the site/point2d (1,2).
   // The value is returned by reference and can be changed.
   opt::at(ima, 1,2) = 9;
-  std::cout << "ima.at(1,2) = " << opt::at(ima, 1,2)
+  std::cout << "opt::at(ima, 1,2) = " << opt::at(ima, 1,2)
 	    << std::endl;
   std::cout << "ima(p) = " << ima(p) << std::endl;
 
@@ -27,7 +27,7 @@ int main()
   // The value is returned by reference
   // and can be changed as well.
   ima(p) = 2;
-  std::cout << "ima.at(1,2) = " << opt::at(ima, 1,2)
+  std::cout << "opt::at(ima, 1,2) = " << opt::at(ima, 1,2)
 	    << std::endl;
   std::cout << "ima(p) = " << ima(p) << std::endl;
   // \}
