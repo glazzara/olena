@@ -79,7 +79,7 @@ namespace mln
 	if (border::get(ima) == thickness)
 	  return; // No-op.
 
-	mln_concrete(I) memo = duplicate(ima);
+	mln_concrete(I) memo = mln::duplicate(ima);
 	ima.resize_(thickness);
 	data::fill(ima, memo);
 

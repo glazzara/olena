@@ -29,7 +29,7 @@
 # define MLN_GEOM_COMPLEX_GEOMETRY_HH
 
 /// \file mln/geom/complex_geometry.hh
-/// \brief A functor associating geometry (location) data to the faces
+/// A functor associating geometry (location) data to the faces
 /// of a complex.
 ///
 /// \see mln::topo::complex.
@@ -68,7 +68,7 @@ namespace mln
     }
 
 
-    /** \brief A functor returning the sites of the faces of a complex
+    /** A functor returning the sites of the faces of a complex
         where the locations of each 0-face is stored.  Faces of higher
         dimensions are computed.
 
@@ -94,18 +94,18 @@ namespace mln
       typedef util::multi_site<P> site;
 
     public:
-      /// \brief Build a complex geometry object.
+      /// Build a complex geometry object.
       complex_geometry();
 
     public:
-      /// \brief Populate the set of locations.
+      /// Populate the set of locations.
       ///
       /// Append a new location \a p.  Return the index of the newly
       /// created location (which should semantically match the id of
       /// the corresonding 0-face in the complex).
       unsigned add_location(const P& p);
 
-      /// \brief Retrieve the site associated to \a f.
+      /// Retrieve the site associated to \a f.
       site operator()(const mln::topo::face<D>& f) const;
 
     private:
@@ -115,7 +115,7 @@ namespace mln
 
     namespace internal
     {
-      /// \brief The data stored in a complex_geometry object.
+      /// The data stored in a complex_geometry object.
       ///
       /// \arg \p P The type of the location of a 0-face.  
       template <typename P>

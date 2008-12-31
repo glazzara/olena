@@ -107,11 +107,8 @@ namespace mln
 	  {
 	    g.add_edge(vpsite(p), vpsite(q));
 	    // The computed value is a norm of the gradient between P and Q.
-	    unsigned edge_id = edge_values.size();
-	    edge_values.resize(edge_values.size() + 1);
-	    edge_sites.resize(edge_sites.size() + 1);
-	    edge_values(edge_id) = math::abs(ima(p) - ima(q));
-	    edge_sites(edge_id) = util::site_pair<point2d>(p, q);
+	    edge_values.append(math::abs(ima(p) - ima(q)));
+	    edge_sites.append(util::site_pair<point2d>(p, q));
 	  }
 
       // Line graph point set.

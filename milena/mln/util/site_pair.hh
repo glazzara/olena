@@ -83,6 +83,10 @@ namespace mln
     template <typename P>
     bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
 
+    template <typename P>
+    std::ostream&
+    operator<<(std::ostream& ostr, const site_pair<P>& p);
+
   } // end of namespace mln::util
 
 
@@ -179,6 +183,15 @@ namespace mln
     operator<=(const site_pair<P>& lhs, const site_pair<P>& rhs)
     {
       return lhs.pair() <= rhs.pair();
+    }
+
+    template <typename P>
+    inline
+    std::ostream&
+    operator<<(std::ostream& ostr, const site_pair<P>& p)
+    {
+      ostr << "(" << p.first() << ", " << p.second() << ")";
+      return ostr;
     }
 
   } // end of mln::util

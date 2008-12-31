@@ -1,5 +1,23 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Few small fixes.
+
+	* mln/border/resize.hh: precise mln:: in order to avoir ambiguity.
+
+	* mln/fun/internal/array_base.hh: add append().
+
+	* mln/geom/complex_geometry.hh: cleanup comments.
+
+	* mln/util/site_pair.hh: add operator<<.
+
+	* mln/morpho/line_gradient.hh,
+	* tests/morpho/lena_line_graph_image_wst1.cc: use i2v::array::append().
+
+	* tests/morpho/line_graph_image_wst.cc: Fix test. Associate edges to
+	the proper sites.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Propagate renaming has_data as is_valid.
 
 	* doc/tutorial/image_types.txt,

@@ -62,6 +62,10 @@ namespace mln
 	/// Set the function size to \p n and initialize the value with
 	/// \p val.
 	void resize(unsigned n, const T& val);
+
+	/// Append a new value in the function.
+	void append(const T& val);
+
 	/// Return the number of values.
 	unsigned size() const;
 
@@ -155,6 +159,14 @@ namespace mln
       array_base<T>::resize(unsigned n)
       {
 	v_.resize(n);
+      }
+
+      template <typename T>
+      inline
+      void
+      array_base<T>::append(const T& val)
+      {
+	v_.push_back(val);
       }
 
       template <typename T>

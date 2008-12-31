@@ -139,11 +139,9 @@ int main()
     for_all(q)
       if (work.domain().has(q))
       {
-        unsigned edge_id = g.add_edge(equiv_vertex(p), equiv_vertex(q));
-        edge_values.resize(edge_values.size() + 1);
-        edge_sites.resize(edge_sites.size() + 1);
-	edge_values(edge_id) = math::max(work(p), work(q));
-	edge_sites(edge_id) = util::site_pair<point2d>(p, q);
+        g.add_edge(equiv_vertex(p), equiv_vertex(q));
+	edge_values.append(math::max(work(p), work(q)));
+	edge_sites.append(util::site_pair<point2d>(p, q));
       }
 
   // Line graph point set.

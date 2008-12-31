@@ -39,6 +39,7 @@
 #include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
 #include <mln/util/graph.hh>
+#include <mln/util/site_pair.hh>
 
 #include <mln/morpho/meyer_wst.hh>
 
@@ -70,7 +71,7 @@ int main()
 
   // Sites associated to vertices.
   typedef fun::i2v::array<point2d> fsite_t;
-  fsite_t sites(5);
+  fsite_t sites(8);
   sites(0) = point2d(0,0); // Point associated to vertex 0.
   sites(1) = point2d(0,1); // Point associated to vertex 1.
   sites(2) = point2d(0,2); // Point associated to vertex 2.
@@ -97,8 +98,15 @@ int main()
   g.add_edge(5, 6);
   g.add_edge(6, 7);
 
-  typedef p_edges<util::graph, fsite_t> pe_t;
-  pe_t pe(g, sites);
+  // Associate edges to sites.
+  typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
+  edge_sites_t edge_sites(g.e_nmax());
+  mln_edge_iter_(util::graph) e(g);
+  for_all(e)
+    edge_sites(e) = util::site_pair<point2d>(sites(e.v1()), sites(e.v2()));
+
+  typedef p_edges<util::graph, edge_sites_t> pe_t;
+  pe_t pe(g, edge_sites);
 
   // Edge values.
   typedef fun::i2v::array<int> edge_values_t;
@@ -122,7 +130,7 @@ int main()
     std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
   std::cout << std::endl;
 
-  typedef line_graph_elt_window<util::graph, fsite_t> win_t;
+  typedef line_graph_elt_window<util::graph, edge_sites_t> win_t;
   win_t win;
   neighb<win_t> nbh(win);
 
