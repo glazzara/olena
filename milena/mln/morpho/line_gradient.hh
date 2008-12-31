@@ -50,6 +50,7 @@
 # include <mln/util/graph.hh>
 # include <mln/util/site_pair.hh>
 
+
 // FIXME: Generalize to other (input) images as well (image1d,
 // image3d, etc.).
 
@@ -63,33 +64,31 @@ namespace mln
     /// norm of a mln::image2d.
     /* FIXME: Currently, the adjacency is set to 4-c and cannot be
        changed.  */
-    template <typename F, typename S>
-    mln::pw::image<F, S>
-    line_gradient(const mln::image2d<mln_result(F)>& ima);
+    template <typename V>
+    pw::image<fun::i2v::array<V>, p_edges<util::graph, fun::i2v::array< util::site_pair<point2d> > > >
+    line_gradient(const mln::image2d<V>& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename F, typename S>
-    mln::pw::image<F, S>
-    line_gradient(const mln::image2d<mln_result(F)>& ima)
+    template <typename V>
+    pw::image<fun::i2v::array<V>, p_edges<util::graph, fun::i2v::array< util::site_pair<point2d> > > >
+    line_gradient(const mln::image2d<V>& ima)
     {
       // FIXME: Precondition: Ensure the image is scalar.
-      typedef mln_result(F) value_t;
-
       util::graph g;
 
       // Vertices.
       image2d<unsigned> vpsite(ima.domain());
       fun::i2v::array<mln::point2d> fv2p(ima.domain().nsites());
-      fun::i2v::array<value_t> vertex_values(ima.domain().nsites());
+      fun::i2v::array<V> vertex_values(ima.domain().nsites());
 
-      mln_fwd_piter(image2d<value_t>) p(ima.domain());
+      mln_fwd_piter(image2d<V>) p(ima.domain());
       for_all (p)
       {
 	g.add_vertex();
 	unsigned id = g.v_nmax() - 1;
-	vpsite[p] = id;
+	vpsite(p) = id;
 	fv2p(id) = p;
       }
 
@@ -97,7 +96,7 @@ namespace mln
       // FIXME: The creation of this window should be generic.
       window2d next_c4_win;
       next_c4_win.insert(0, 1).insert(1, 0);
-      typedef fun::i2v::array<value_t> edge_values_t;
+      typedef fun::i2v::array<V> edge_values_t;
       typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
       edge_values_t edge_values;
       edge_sites_t edge_sites;
@@ -110,13 +109,14 @@ namespace mln
 	    // The computed value is a norm of the gradient between P and Q.
 	    unsigned edge_id = edge_values.size();
 	    edge_values.resize(edge_values.size() + 1);
+	    edge_sites.resize(edge_sites.size() + 1);
 	    edge_values(edge_id) = math::abs(ima(p) - ima(q));
+	    edge_sites(edge_id) = util::site_pair<point2d>(p, q);
 	  }
 
       // Line graph point set.
       typedef p_edges<util::graph, edge_sites_t> pe_t;
       pe_t plg(g, edge_sites);
-
       // Line graph image.
       typedef pw::image<edge_values_t, pe_t> ima_t;
       ima_t lg_ima = (edge_values | plg);

@@ -1,5 +1,11 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix line_gradient.
+
+	* morpho/line_gradient.hh: update according the new graph structure.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Handle ch_value on graph images and introduce ch_function_value.
 
 	* mln/fun/v2v/ch_function_value.hh: new. Wrap a function and
