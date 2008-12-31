@@ -1,5 +1,22 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Handle ch_value on graph images and introduce ch_function_value.
+
+	* mln/fun/v2v/ch_function_value.hh: new. Wrap a function and
+	convert that function results to another type thanks to from_to.
+
+	* mln/fun/internal/ch_function_value_impl.hh: new. Allow extensions to
+	ch_function_value according to the function it wraps.
+
+	* mln/trait/ch_function_value.hh: Dispatch to the proper way to change
+	the function return type.
+
+	* mln/trait/ch_value.hh: handle ch_value on graph images here.
+
+	* headers.mk: add new headers to distribution.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix/improve graph related classes.
 
 	* mln/core/image/graph_window_piter.hh: update comments.

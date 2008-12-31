@@ -29,13 +29,13 @@
 #ifndef MLN_TRAIT_CH_VALUE_HH
 # define MLN_TRAIT_CH_VALUE_HH
 
-/*! \file mln/trait/ch_value.hh
- *
- * \brief Definition of the "change value" image trait.
- */
+/// \file mln/trait/ch_value.hh
+///
+/// Definition of the "change value" image trait.
 
 # include <mln/tag/skeleton.hh>
 # include <mln/trait/image_from_grid.hh>
+# include <mln/trait/ch_function_value.hh>
 
 
 # define mln_ch_value(I, V)  typename mln::trait::ch_value< I, V >::ret
@@ -46,16 +46,18 @@
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declarations.
   namespace algebra { template <unsigned n, typename T> class vec; }
-
+  template <typename G, typename F> class p_edges;
+  template <typename G, typename F> class p_vertices;
+  namespace pw { template <typename F, typename S> class image; }
 
 
 
   namespace trait
   {
 
-    // Fwd decl.
+    // Forward declaration.
     template <typename I, typename V> struct ch_value;
 
 
@@ -162,6 +164,25 @@ namespace mln
         typedef mln_deduce(S, site, grid) grid;
         typedef typename image_from_grid< grid, V >::ret ret;
       };
+
+      // line_graph image
+      template < typename F,
+	         typename G, typename FP,
+		 typename V >
+      struct ch_value_<  pw::image< tag::function_<F>, tag::pset_<p_edges<G, FP> > >,  V  >
+      {
+	typedef pw::image< mln_ch_function_value(F, V), p_edges<G, FP> > ret;
+      };
+
+      // graph image
+      template < typename F,
+	         typename G, typename FP,
+		 typename V >
+      struct ch_value_<  pw::image< tag::function_<F>, tag::pset_<p_vertices<G, FP> > >,  V  >
+      {
+	typedef pw::image< mln_ch_function_value(F, V), p_vertices<G, FP> > ret;
+      };
+
 
       template < template <class, class> class M, typename T, typename S,
 		 typename V >
