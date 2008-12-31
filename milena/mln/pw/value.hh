@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_PW_VALUE_HH
 # define MLN_PW_VALUE_HH
 
-/*! \file mln/pw/value.hh
- *
- * \brief FIXME.
- */
+/// \file mln/pw/value.hh
+///
+/// FIXME.
 
 # include <mln/fun/internal/selector.hh>
 # include <mln/core/concept/image.hh>
@@ -52,10 +52,12 @@ namespace mln
       : fun::internal::selector_p2_< mln_value(I), value_<I> >::ret
     {
       typedef mln_value(I) result;
+
+      value_();
       value_(const I& ima);
+
       mln_rvalue(I) operator()(const mln_psite(I)& p) const;
 
-      value_(); // A function should have a ctor without arg so that "initialize" can work.
     protected:
       const I* ima_;
     };
@@ -63,7 +65,7 @@ namespace mln
 
 
     // FIXME: Doc!
-  
+
     template <typename I>
     value_<I> value(const Image<I>& ima);
 
@@ -75,15 +77,15 @@ namespace mln
 
     template <typename I>
     inline
-    value_<I>::value_(const I& ima)
-      : ima_(&ima)
+    value_<I>::value_()
+      : ima_(0)
     {
     }
 
     template <typename I>
     inline
-    value_<I>::value_()
-      : ima_(0)
+    value_<I>::value_(const I& ima)
+      : ima_(&ima)
     {
     }
 
@@ -97,8 +99,9 @@ namespace mln
       return (*ima_)(p);
     }
 
+
     // pw::value(ima)
-     
+
     template <typename I>
     inline
     value_<I>

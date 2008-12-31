@@ -28,10 +28,9 @@
 #ifndef MLN_REGISTRATION_REGISTRATION_HH
 # define MLN_REGISTRATION_REGISTRATION_HH
 
-/*! \file mln/registration/registration.hh
- *
- * \brief image registration
- */
+/// \file mln/registration/registration.hh
+///
+/// image registration
 
 # include <mln/registration/icp.hh>
 # include <mln/fun/x2x/all.hh>
@@ -47,8 +46,7 @@ namespace mln
 
     using namespace mln::fun::x2x;
 
-    /*! Register an image \p cloud over the image \p surface.
-     */
+    /// Register an image \p cloud over the image \p surface.
     template <typename I, typename J>
     inline
     composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> >

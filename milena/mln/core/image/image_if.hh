@@ -115,26 +115,6 @@ namespace mln
     operator image_if<const I, F>() const;
   };
 
-
-  // init_.
-
-  template <typename I, typename F>
-  void init_(tag::function_t, F& f, const image_if<I,F>& model)
-  {
-    f = model.domain().predicate();
-  }
-
-  template <typename I, typename F, typename J>
-  void init_(tag::image_t, image_if<I,F>& target, const J& model)
-  {
-    I ima;
-    init_(tag::image, ima, exact(model));
-    F f;
-    init_(tag::function, f, exact(model));
-    target.init_(ima, f);
-  }
-
-
   // Operators.
 
   // Image | Function_p2b.
@@ -164,6 +144,24 @@ namespace mln
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  // init_.
+
+  template <typename I, typename F>
+  void init_(tag::function_t, F& f, const image_if<I,F>& model)
+  {
+    f = model.domain().predicate();
+  }
+
+  template <typename I, typename F, typename J>
+  void init_(tag::image_t, image_if<I,F>& target, const J& model)
+  {
+    I ima;
+    init_(tag::image, ima, exact(model));
+    F f;
+    init_(tag::function, f, exact(model));
+    target.init_(ima, f);
+  }
 
   // internal::data< image_if<I,F> >
 

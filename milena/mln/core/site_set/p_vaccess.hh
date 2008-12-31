@@ -34,12 +34,12 @@
 /// \todo Fix the FIXMEs.
 
 # include <utility>
+# include <mln/core/concept/site_set.hh>
 # include <mln/core/site_set/p_double.hh>
 # include <mln/core/internal/site_set_base.hh>
 # include <mln/core/internal/pseudo_site_base.hh>
 # include <mln/core/internal/site_set_impl.hh>
 # include <mln/value/set.hh>
-
 
 
 namespace mln
@@ -66,8 +66,7 @@ namespace mln
 
 
 
-  /*! \brief FIXME
-   */
+  /// FIXME
   template <typename V, typename S>
   class p_vaccess : public internal::site_set_base_< mln_site(S),
 						     p_vaccess<V,S> >,
@@ -111,14 +110,14 @@ namespace mln
     /// site set.
     bool has(const V& v, const mln_psite(S)& p) const;
 
-    /// Test if this site set is valid. 
+    /// Test if this site set is valid.
     bool is_valid() const;
 
 
     /// Element associated type.
     typedef mln_element(S) element;
 
-    /// Insertion element associated type. 
+    /// Insertion element associated type.
     typedef std::pair<V, element> i_element;
 
     /// Insert a pair \p v_e (value v, element e).
@@ -145,7 +144,7 @@ namespace mln
     // Required by p_double-related classes.
     const mln::value::set<V>& set_1_() const;
     const S& set_2_(const V& v) const;
-    
+
   protected:
 
     mln::value::set<V> vs_;

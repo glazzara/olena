@@ -21,7 +21,6 @@ mln_geom_size3d \
 mln_geom_ninds \
 mln_geom_nslis \
 mln_geom_delta \
-mln_geom_resize \
 mln_geom_nsites \
 mln_geom_min_col \
 mln_geom_complex_geometry \
@@ -1028,7 +1027,6 @@ mln_geom_size3d_SOURCES = mln_geom_size3d.cc
 mln_geom_ninds_SOURCES = mln_geom_ninds.cc
 mln_geom_nslis_SOURCES = mln_geom_nslis.cc
 mln_geom_delta_SOURCES = mln_geom_delta.cc
-mln_geom_resize_SOURCES = mln_geom_resize.cc
 mln_geom_nsites_SOURCES = mln_geom_nsites.cc
 mln_geom_min_col_SOURCES = mln_geom_min_col.cc
 mln_geom_complex_geometry_SOURCES = mln_geom_complex_geometry.cc

@@ -30,7 +30,8 @@
 # define MLN_UTIL_ORD_PAIR_HH
 
 /// \file mln/util/ord_pair.hh
-/// \brief Definition of an ordered pair.
+///
+/// Definition of an ordered pair.
 
 # include <mln/core/concept/object.hh>
 # include <mln/util/ord.hh>
@@ -44,13 +45,14 @@ namespace mln
 
     // FIXME: Rename as ord_pair.
 
-    /// \brief  Ordered pair structure s.a. this->first <= this->second;
+    ///  Ordered pair structure s.a. this->first <= this->second;
     /// ordered pairs are partially ordered using lexicographical
     /// ordering.
     template <typename T>
     struct ord_pair : public mln::Object< ord_pair<T> >
     {
     public:
+      ord_pair();
       ord_pair(const T& val1, const T& val2);
 
     public:
@@ -66,21 +68,21 @@ namespace mln
       T& second();
       /// \}
 
-      /// \brief Replace the first member of the pair by \a val, while
+      /// Replace the first member of the pair by \a val, while
       /// keeping the relative order.
       ///
       /// \post \a first_ <= \a second_ (with <= being the
       /// mln::util::ord_weak relationship).
       void change_first(const T& val);
 
-      /// \brief Replace the second member of the pair by \a val,
+      /// Replace the second member of the pair by \a val,
       /// while keeping the relative order.
       ///
       /// \post \a first_ <= \a second_ (with <= being the
       /// mln::util::ord_weak relationship).
       void change_second(const T& val);
 
-      /// \brief Replace both members of the pair by \a val, while
+      /// Replace both members of the pair by \a val, while
       /// keeping the relative order.
       ///
       /// \post \a first_ <= \a second_ (with <= being the
@@ -125,6 +127,12 @@ namespace mln
     /*---------------.
     | Construction.  |
     `---------------*/
+
+    template <typename T>
+    inline
+    ord_pair<T>::ord_pair()
+    {
+    }
 
     template <typename T>
     inline

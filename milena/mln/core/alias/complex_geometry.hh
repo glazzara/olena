@@ -33,6 +33,7 @@
 /// Definition of mln::geom::complex_geometry aliases.
 
 # include <mln/geom/complex_geometry.hh>
+# include <mln/core/alias/point2d.hh>
 # include <mln/core/alias/point3df.hh>
 
 

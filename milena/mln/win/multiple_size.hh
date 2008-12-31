@@ -130,7 +130,7 @@ namespace mln
 
 
     template <unsigned n, typename W, typename F>
-    class multiple_size_qiter 
+    class multiple_size_qiter
       : public internal::site_relative_iterator_base< multiple_size<n,W,F>,
 						      multiple_size_qiter<n,W,F> >
     {
@@ -154,6 +154,10 @@ namespace mln
 
       /// Go to the next point.
       void do_next_();
+
+      /// Do some work while setting the reference site.
+      template <typename Pref>
+      void center_at_(const Pref&);
 
       /// Compute the current psite.
       mln_psite(W) compute_p_() const;
@@ -346,6 +350,14 @@ namespace mln
     multiple_size_qiter<n,W,F>::do_next_()
     {
       ++i_;
+    }
+
+    template <unsigned n, typename W, typename F>
+    template <typename Pref>
+    inline
+    void
+    multiple_size_qiter<n,W,F>::center_at_(const Pref&)
+    {
     }
 
     template <unsigned n, typename W, typename F>

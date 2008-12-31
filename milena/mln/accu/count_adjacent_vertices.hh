@@ -76,6 +76,9 @@ namespace mln
       /// Get the value of the accumulator.
       unsigned to_result() const;
 
+      /// Return whether this accu can return a result.
+      bool is_valid() const;
+
     protected:
       /// Update the value of the counter.
       void update_ ();
@@ -166,6 +169,14 @@ namespace mln
     count_adjacent_vertices<F,S>::update_()
     {
       count__ = vertices_.size();
+    }
+
+    template <typename F, typename S>
+    inline
+    bool
+    count_adjacent_vertices<F,S>::is_valid() const
+    {
+      return true;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

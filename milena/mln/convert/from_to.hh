@@ -67,22 +67,6 @@ namespace mln
     namespace internal
     {
 
-
-      // Default dispatch if the two arguments are objects.
-
-      // Object -> Object
-      template <typename F, typename T>
-      inline
-      void
-      from_to_dispatch(const Object<F>& from, Object<T>& to)
-      {
-	typedef mlc_converts_to(F, T) F_converts_to_T;
-	internal::from_to_dispatch(F_converts_to_T(),
-				   exact(from), exact(to));
-      }
-
-
-
       // Dispatch to specific implementation.
 
       // Image -> Site_Set.
@@ -129,6 +113,21 @@ namespace mln
       from_to_dispatch(const metal::false_&, const Object<F>& from, Object<T>& to)
       {
 	over_load::from_to_(exact(from), exact(to));
+      }
+
+
+
+      // Default dispatch if the two arguments are objects.
+
+      // Object -> Object
+      template <typename F, typename T>
+      inline
+      void
+      from_to_dispatch(const Object<F>& from, Object<T>& to)
+      {
+	typedef mlc_converts_to(F, T) F_converts_to_T;
+	internal::from_to_dispatch(F_converts_to_T(),
+				   exact(from), exact(to));
       }
 
 

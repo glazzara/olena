@@ -196,7 +196,7 @@ namespace mln
 	  trace::exiting("canvas::impl::generic::labeling");
 	  return output;
 	}
-	
+
       } // end of namespace mln::canvas::impl::generic
 
     } // end of namespace mln::canvas::impl
@@ -385,12 +385,12 @@ namespace mln
 	     F& functor, L& nlabels)
     {
       trace::entering("canvas::labeling");
-      
+
       internal::labeling_tests(input, nbh, functor, nlabels);
-      
+
       mln_ch_value(I, L) output;
       output = internal::labeling_dispatch(input, nbh, functor, nlabels);
-      
+
       trace::exiting("canvas::labeling");
       return output;
     }

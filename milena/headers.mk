@@ -21,7 +21,6 @@ mln/geom/size3d.hh \
 mln/geom/ninds.hh \
 mln/geom/nslis.hh \
 mln/geom/delta.hh \
-mln/geom/resize.hh \
 mln/geom/nsites.hh \
 mln/geom/min_col.hh \
 mln/geom/complex_geometry.hh \

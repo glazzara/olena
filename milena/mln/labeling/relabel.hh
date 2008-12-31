@@ -148,28 +148,6 @@ namespace mln
     relabel(const Image<I>&	    label,
 	    const mln_value(I)&	    nlabels,
 	    mln_value(I)&	    new_nlabels,
-	    const Function_l2b<F>&  fl2b)
-    {
-      trace::entering("labeling::relabel");
-
-      internal::relabel_tests(label, nlabels, new_nlabels, fl2b);
-
-      typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
-      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, new_nlabels);
-      mln_concrete(I) output = labeling::relabel(label, nlabels, new_nlabels, fl2l);
-
-      trace::exiting("labeling::relabel");
-      return output;
-    }
-
-
-
-    template <typename I, typename F>
-    inline
-    mln_concrete(I)
-    relabel(const Image<I>&	    label,
-	    const mln_value(I)&	    nlabels,
-	    mln_value(I)&	    new_nlabels,
 	    const Function_l2l<F>&  fl2l)
     {
       trace::entering("labeling::relabel");
@@ -186,20 +164,22 @@ namespace mln
 
     template <typename I, typename F>
     inline
-    void
-    relabel_inplace(Image<I>&		    label,
-		    mln_value(I)&	    nlabels,
-		    const Function_l2b<F>&  fl2b)
+    mln_concrete(I)
+    relabel(const Image<I>&	    label,
+	    const mln_value(I)&	    nlabels,
+	    mln_value(I)&	    new_nlabels,
+	    const Function_l2b<F>&  fl2b)
     {
-      trace::entering("labeling::relabel_inplace");
+      trace::entering("labeling::relabel");
 
-      internal::relabel_inplace_tests(label, nlabels, fl2b);
+      internal::relabel_tests(label, nlabels, new_nlabels, fl2b);
 
       typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
-      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, nlabels);
-      relabel_inplace(label, nlabels, fl2l);
+      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, new_nlabels);
+      mln_concrete(I) output = labeling::relabel(label, nlabels, new_nlabels, fl2l);
 
-      trace::exiting("labeling::relabel_inplace");
+      trace::exiting("labeling::relabel");
+      return output;
     }
 
 
@@ -220,6 +200,25 @@ namespace mln
       trace::exiting("labeling::relabel_inplace");
     }
 
+
+
+    template <typename I, typename F>
+    inline
+    void
+    relabel_inplace(Image<I>&		    label,
+		    mln_value(I)&	    nlabels,
+		    const Function_l2b<F>&  fl2b)
+    {
+      trace::entering("labeling::relabel_inplace");
+
+      internal::relabel_inplace_tests(label, nlabels, fl2b);
+
+      typedef fun::l2l::relabel<mln_value(I)> fl2l_t;
+      fl2l_t fl2l = make::relabelfun(fl2b, nlabels, nlabels);
+      labeling::relabel_inplace(label, nlabels, fl2l);
+
+      trace::exiting("labeling::relabel_inplace");
+    }
 
 # endif // ! MLN_INCLUDE_ONLY
 

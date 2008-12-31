@@ -1,4 +1,57 @@
-2008-12-30  Guillaume Lazzara  <z@lrde.epita.fr>
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Various small fixes.
+
+        * mln/accu/count_adjacent_vertices.hh: add missing is_valid().
+
+	* mln/canvas/labeling.hh: cleanup.
+
+	* mln/labeling/relabel.hh,
+	* mln/convert/from_to.hh: reorder declarations.
+
+	* mln/linear/gaussian.hh,
+	* mln/core/site_set/p_vaccess.hh,
+	* mln/core/alias/complex_geometry.hh: add missing includes.
+
+	* mln/registration/registration.hh,
+	* mln/pw/cst.hh,
+	* mln/pw/value.hh,
+	* mln/geom/ninds.hh,
+	* mln/fun/p2b/chess.hh,
+	* mln/core/image/complex_neighborhood_piter.hh
+	* mln/core/dpsites_piter.hh: update comments.
+
+	* mln/win/multiple_size.hh,
+	* mln/core/image/complex_window_piter.hh: add center_at_().
+
+	* mln/core/image/image_if.hh: move init_() implementation between
+	MLN_INCLUDE_ONLY guards.
+
+	* mln/core/internal/graph_psite_base.hh: be sure to not return a
+	temporary object. The psite holds a site.
+
+	* mln/core/routine/duplicate.hh: rename guards.
+
+	* mln/fun/i2v/array.hh
+	* mln/fun/internal/array_base.hh
+	* mln/fun/l2l/relabel.hh: make array and relabel inherit from the
+	proper function concept. The mutable result must be typedef-ed again
+	in that classes.
+
+	* mln/morpho/opening_area_on_vertices.hh: fix wrong prototype.
+
+	* mln/registration/get_rot.hh: get rid of warnings.
+
+	* mln/util/ord_pair.hh: add default constructor.
+
+	* mln/util/site_pair.hh: add accessors.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_geom_resize.cc: update unit tests.
+
+        * mln/accu/count_adjacent_vertices.hh: add missing is_valid().
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename mln_sum_x to mln_sum_product.
 

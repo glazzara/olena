@@ -153,7 +153,7 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Set the reference psite.
+    /// Do some work while setting the reference site.
     template <typename Pref>
     void center_at_(const Pref&);
 

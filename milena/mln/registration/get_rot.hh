@@ -61,6 +61,11 @@ namespace mln
             const M& map,
             const algebra::vec<2u,float>& mu_xk)
     {
+      (void) c;
+      (void) mu_c;
+      (void) ck;
+      (void) map;
+      (void) mu_xk;
       //FIXME: Write 2d version of rotation computation betwenn two p_array
       return fun::x2x::rotation<2u, float>();
     }

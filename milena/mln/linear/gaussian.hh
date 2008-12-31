@@ -41,9 +41,13 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/alias/point2d.hh>
+# include <mln/core/alias/dpoint1d.hh>
+# include <mln/core/alias/dpoint3d.hh>
 # include <mln/extension/adjust_fill.hh>
 # include <mln/geom/ncols.hh>
 # include <mln/geom/nrows.hh>
+# include <mln/geom/ninds.hh>
+# include <mln/geom/nslis.hh>
 # include <mln/data/paste.hh>
 # include <mln/level/stretch.hh>
 # include <mln/algebra/vec.hh>
@@ -449,7 +453,7 @@ namespace mln
 						     static_cast<def::coord>(k)),
                                              point3d(static_cast<def::coord>(i),
 						     static_cast<def::coord>(geom::nrows(img) - 1 +
-									     img.border()), 
+									     img.border()),
 						     static_cast<def::coord>(k)),
                                              geom::nrows(img) + 2 *
                                              img.border(),

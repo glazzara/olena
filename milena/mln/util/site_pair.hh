@@ -28,10 +28,12 @@
 #ifndef MLN_UTIL_SITE_PAIR_HH
 # define MLN_UTIL_SITE_PAIR_HH
 
+# include <mln/core/concept/proxy.hh>
 # include <mln/util/ord_pair.hh>
 
 /// \file mln/util/site_pair.hh
-/// \brief Definition of a site pair type.
+///
+/// Definition of a site pair type.
 
 namespace mln
 {
@@ -44,8 +46,9 @@ namespace mln
        Hence this small workaround.  Use ord_pair directly as soon as
        image_base is refurbished.  */
     template <typename P>
-    struct site_pair : public mln::Object< site_pair<P> >
+    class site_pair : public mln::Object< site_pair<P> >
     {
+    public:
       /* FIXME: We should not need to define this typedef
 	 (see. mln::internal::image_base's site `coord' typedef).  */
       typedef mln_coord(P) coord;
@@ -53,6 +56,15 @@ namespace mln
       site_pair();
       site_pair(const P& first, const P& second);
 
+      /// Return the first site.
+      const P& first() const;
+      /// Return the second site.
+      const P& second() const;
+
+      /// Return the underlying pair.
+      const util::ord_pair<P>& pair() const;
+
+    private:
       util::ord_pair<P> pair_;
     };
 
@@ -71,9 +83,36 @@ namespace mln
     template <typename P>
     bool operator< (const site_pair<P>& lhs, const site_pair<P>& rhs);
 
+  } // end of namespace mln::util
+
+
+  namespace internal
+  {
+
+    /// \{
+    /// subject_impl specialization (Proxy)
+
+    template <typename P, typename E>
+    struct subject_impl< const util::site_pair<P>, E >
+    {
+      const P& first() const;
+      const P& second() const;
+      const util::ord_pair<P>& pair() const;
+
+    private:
+      const E& exact_() const;
+    };
+
+    /// \}
+
+  } // end of namespace mln::internal
+
 
 
 # ifndef MLN_INCLUDE_ONLY
+
+  namespace util
+  {
 
     /*---------------.
     | Construction.  |
@@ -81,7 +120,6 @@ namespace mln
 
     template <typename P>
     site_pair<P>::site_pair()
-      : pair_(P(), P())
     {
     }
 
@@ -89,6 +127,30 @@ namespace mln
     site_pair<P>::site_pair(const P& first, const P& second)
       : pair_(first, second)
     {
+    }
+
+    template <typename P>
+    inline
+    const P&
+    site_pair<P>::first() const
+    {
+      return pair_.first();
+    }
+
+    template <typename P>
+    inline
+    const P&
+    site_pair<P>::second() const
+    {
+      return pair_.second();
+    }
+
+    template <typename P>
+    inline
+    const util::ord_pair<P>&
+    site_pair<P>::pair() const
+    {
+      return pair_;
     }
 
     /*-------------.
@@ -100,7 +162,7 @@ namespace mln
     bool
     operator==(const site_pair<P>& lhs, const site_pair<P>& rhs)
     {
-      return lhs.pair_ == rhs.pair_;
+      return lhs.pair() == rhs.pair();
     }
 
     template <typename P>
@@ -108,7 +170,7 @@ namespace mln
     bool
     operator< (const site_pair<P>& lhs, const site_pair<P>& rhs)
     {
-      return lhs.pair_ < rhs.pair_;
+      return lhs.pair() < rhs.pair();
     }
 
     template <typename P>
@@ -116,12 +178,41 @@ namespace mln
     bool
     operator<=(const site_pair<P>& lhs, const site_pair<P>& rhs)
     {
-      return lhs.pair_ <= rhs.pair_;
+      return lhs.pair() <= rhs.pair();
     }
 
-# endif // ! MLN_INCLUDE_ONLY
-
   } // end of mln::util
+
+  namespace internal
+  {
+
+    template <typename P, typename E>
+    inline
+    const E&
+    subject_impl< const util::site_pair<P>, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    template <typename P, typename E>
+    inline
+    const P&
+    subject_impl< const util::site_pair<P>, E >::first() const
+    {
+      return exact_().get_subject().first();
+    }
+
+    template <typename P, typename E>
+    inline
+    const P&
+    subject_impl< const util::site_pair<P>, E >::second() const
+    {
+      return exact_().get_subject().second();
+    }
+
+  } // end of namespace mln::internal
+
+# endif // ! MLN_INCLUDE_ONLY
 
 } // end of mln
 

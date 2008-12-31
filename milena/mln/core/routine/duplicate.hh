@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_ROUTINE_CLONE_HH
-# define MLN_CORE_ROUTINE_CLONE_HH
+#ifndef MLN_CORE_ROUTINE_DUPLICATE_HH
+# define MLN_CORE_ROUTINE_DUPLICATE_HH
 
-/*! \file mln/core/routine/duplicate.hh
- *
- * \brief Clone an image, that is, get an effective copy.
- */
+/// \file mln/core/routine/duplicate.hh
+///
+/// Clone an image, that is, get an effective copy.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/routine/init.hh>
@@ -41,14 +41,13 @@
 namespace mln
 {
 
-  /*! \brief Clone the image \p model with the values of the image \p
-   *  data.
-   *
-   * \param[in] model The image to be duplicateed.
-   * \result The duplicate.
-   *
-   * \pre model.has_data
-   */
+  /// Duplicate the image \p model with the values of the image \p
+  /// data.
+  ///
+  /// \param[in] model The image to be duplicated.
+  /// \result The duplicate.
+  ///
+  /// \pre model.has_data
   template <typename I>
   mln_concrete(I) duplicate(const Image<I>& model);
 
@@ -75,4 +74,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_ROUTINE_CLONE_HH
+#endif // ! MLN_CORE_ROUTINE_DUPLICATE_HH

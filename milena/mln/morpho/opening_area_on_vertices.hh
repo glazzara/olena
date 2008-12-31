@@ -52,7 +52,7 @@ namespace mln
     template <typename P2V, typename G, typename V2P, typename N>
     pw::image<P2V, p_edges<G, V2P> >
     opening_area_on_vertices(const pw::image<P2V, p_edges<G, V2P> >& input,
-			     const Neighborhood<N>& nbh);
+			     const Neighborhood<N>& nbh, unsigned lambda);
 
 
 # ifndef MLN_INCLUDE_ONLY

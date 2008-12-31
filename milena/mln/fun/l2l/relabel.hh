@@ -35,6 +35,7 @@
 
 # include <vector>
 # include <algorithm>
+# include <mln/core/concept/function.hh>
 # include <mln/fun/internal/array_base.hh>
 # include <mln/util/array.hh>
 # include <mln/metal/converts_to.hh>
@@ -89,11 +90,15 @@ namespace mln
     {
 
       template <typename L>
-      class relabel : public internal::array_base< L, relabel<L> >
+      class relabel : public Function_l2l< relabel<L> >,
+		      public internal::array_base<L>
       {
-	typedef internal::array_base< L, relabel<L> > super_base_;
+	typedef internal::array_base<L> super_base_;
 
       public:
+
+	/// Mutable result type. The function results can be modified.
+	typedef typename super_base_::mutable_result mutable_result;
 
 	/// Constructors
 	/// \{

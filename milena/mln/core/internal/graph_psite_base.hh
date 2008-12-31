@@ -100,7 +100,7 @@ namespace mln
       const typename S::graph_element& element() const;
 
       /// Return the underlying element.
-      const typename S::graph_element& hook_elt_() const;
+      const typename S::graph_element& p_hook_() const;
 
     protected:
 
@@ -118,6 +118,7 @@ namespace mln
       /// \}
 
       const S* s_;
+      mln_site(S) site_;
       typename S::graph_element elt_;
     };
 
@@ -152,6 +153,39 @@ namespace mln
   template <typename S, typename E>
   bool
   operator< (const graph_psite_base<S,E>& lhs, const graph_psite_base<S,E>& rhs);
+  /// \}
+
+
+  /// \{
+  /// subject_impl specialization (Proxy)
+  template <typename S, typename P, typename E>
+  struct subject_impl< const graph_psite_base<S,P>&, E >
+  {
+    const S* target_() const;
+    const S& site_set() const;
+    const typename S::graph_t& graph() const;
+    unsigned id() const;
+    bool is_valid() const;
+    operator unsigned() const;
+    operator const typename S::graph_element&() const;
+    const typename S::graph_element& element() const;
+    const typename S::graph_element& p_hook_() const;
+
+    private:
+    const E& exact_() const;
+  };
+
+  template <typename S, typename P, typename E>
+  struct subject_impl<       graph_psite_base<S,P>&, E > :
+  subject_impl< const graph_psite_base<S,P>&, E >
+  {
+    void change_target(const S& new_target);
+    void update_id(unsigned elt_id);
+    void invalidate();
+
+    private:
+    E& exact_();
+  };
   /// \}
 
 
@@ -195,7 +229,9 @@ namespace mln
   void
   graph_psite_base<S,E>::update_id(unsigned id)
   {
+    mln_precondition(s_ != 0);
     elt_.update_id(id);
+    site_ = s_->function()(elt_.id());
   }
 
   template <typename S, typename E>
@@ -254,8 +290,12 @@ namespace mln
   const mln_site(S)&
   graph_psite_base<S,E>::subj_()
   {
-    mln_precondition(s_ != 0);
-    return s_->function()(elt_.id());
+    /*FIXME: we may like to enable the following precondition, however, we
+    ** can't do that since neighb_*_niters update the psite target after having
+    ** taken the adress of the subject.
+    */
+    // mln_precondition(is_valid());
+    return site_;
   }
 
   template <typename S, typename E>
@@ -270,7 +310,7 @@ namespace mln
   inline
   graph_psite_base<S,E>::operator const typename S::graph_element&() const
   {
-    mln_precondition(is_valid());
+    //mln_precondition(is_valid());
     return elt_;
   }
 
@@ -279,20 +319,23 @@ namespace mln
   const typename S::graph_element&
   graph_psite_base<S,E>::element() const
   {
-    mln_precondition(is_valid());
+    /*FIXME: we may like to enable the following precondition, however, we
+    ** can't do that since neighb_*_niters update the psite target after having
+    ** taken the adress of the subject.
+    */
+    // mln_precondition(is_valid());
     return elt_;
   }
 
   template <typename S, typename E>
   inline
   const typename S::graph_element&
-  graph_psite_base<S,E>::hook_elt_() const
+  graph_psite_base<S,E>::p_hook_() const
   {
     return elt_;
   }
 
-
-  /*--------------.
+    /*--------------.
     | Comparisons.  |
     `--------------*/
 
@@ -318,6 +361,105 @@ namespace mln
   {
     mln_assertion(lhs.target_() == rhs.target_());
     return lhs.id() < rhs.id();
+  }
+
+
+  template <typename S, typename P, typename E>
+  inline
+  const E&
+  subject_impl< const graph_psite_base<S,P>&, E >::exact_() const
+  {
+    return internal::force_exact<const E>(*this);
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  const S*
+  subject_impl< const graph_psite_base<S,P>&, E >::target_() const
+  {
+    return exact_().get_subject().target();
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  const S&
+  subject_impl< const graph_psite_base<S,P>&, E >::site_set() const
+  {
+    return exact_().get_subject().site_set();
+  }
+
+
+  template <typename S, typename P, typename E>
+  inline
+  const typename S::graph_t&
+  subject_impl< const graph_psite_base<S,P>&, E >::graph() const
+  {
+    return exact_().get_subject().graph();
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  unsigned
+  subject_impl< const graph_psite_base<S,P>&, E >::id() const
+  {
+    return exact_().get_subject().id();
+  };
+
+  template <typename S, typename P, typename E>
+  inline
+  bool
+  subject_impl< const graph_psite_base<S,P>&, E >::is_valid() const
+  {
+    return exact_().get_subject().is_valid();
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  const typename S::graph_element&
+  subject_impl< const graph_psite_base<S,P>&, E >::element() const
+  {
+    return exact_().get_subject().element();
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  const typename S::graph_element&
+  subject_impl< const graph_psite_base<S,P>&, E >::p_hook_() const
+  {
+    return exact_().get_subject().p_hook_();
+  }
+
+
+  template <typename S, typename P, typename E>
+  inline
+  E&
+  subject_impl<	graph_psite_base<S,P>&, E >::exact_()
+  {
+    return internal::force_exact<E>(*this);
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  void
+  subject_impl<       graph_psite_base<S,P>&, E >::change_target(const S& new_target)
+  {
+    exact_().get_subject().change_target(new_target);
+  }
+
+  template <typename S, typename P, typename E>
+  inline
+  void
+  subject_impl<       graph_psite_base<S,P>&, E >::update_id(unsigned id)
+  {
+    exact_().get_subject().update_id(id);
+  };
+
+  template <typename S, typename P, typename E>
+  inline
+  void
+  subject_impl<	graph_psite_base<S,P>&, E >::invalidate()
+  {
+    exact_().get_subject().invalidate();
   }
 
 # endif // ! MLN_INCLUDE_ONLY

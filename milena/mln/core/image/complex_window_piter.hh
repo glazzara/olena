@@ -86,12 +86,10 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Set the reference psite.
-    /* FIXME: Careful, this method overrides the (non virtual) method
-       internal::site_relative_iterator_base<S, E>::center_at.  See
-       FIXME above.  */
+    /// Do some work while setting the reference site.
     template <typename Pref>
-    void center_at(const Pref& c);
+    void center_at_(const Pref& c);
+
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
@@ -154,12 +152,10 @@ namespace mln
     /// Go to the next site.
     void do_next_();
 
-    /// Set the reference psite.
-    /* FIXME: Careful, this method overrides the (non virtual) method
-       internal::site_relative_iterator_base<S, E>::center_at.  See
-       FIXME above.  */
+    /// Do some work while setting the reference site.
     template <typename Pref>
-    void center_at(const Pref& c);
+    void center_at_(const Pref& c);
+
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}
@@ -243,9 +239,8 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_window_fwd_piter<I, G, W>::center_at(const Pref& c)
+  complex_window_fwd_piter<I, G, W>::center_at_(const Pref&)
   {
-    super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 
@@ -341,9 +336,8 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_window_bkd_piter<I, G, W>::center_at(const Pref& c)
+  complex_window_bkd_piter<I, G, W>::center_at_(const Pref& c)
   {
-    super_::center_at(c);
     iter_.center_at(this->center().face());
   }
 

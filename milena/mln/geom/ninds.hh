@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_GEOM_NINDS_HH
 # define MLN_GEOM_NINDS_HH
 
-/*! \file mln/geom/ninds.hh
- *
- * \brief Give the number of inds of an image.
- */
+/// \file mln/geom/ninds.hh
+///
+/// Give the number of inds of an image.
 
 # include <mln/geom/min_ind.hh>
 # include <mln/geom/max_ind.hh>
