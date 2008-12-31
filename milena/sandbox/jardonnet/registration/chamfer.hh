@@ -115,7 +115,7 @@ namespace mln
       typedef w_window<mln_dpsite(I), T> W;
 
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
 
       mln_ch_value(I, T) outputDistance;
       initialize(outputDistance, input);

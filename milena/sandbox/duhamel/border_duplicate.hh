@@ -71,7 +71,7 @@ namespace mln
       void duplicate_1d_(const Fast_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -90,7 +90,7 @@ namespace mln
       void duplicate_2d_(const Fast_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -129,7 +129,7 @@ namespace mln
       void duplicate_3d_(const Fast_Image<I>& ima_)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	typename I::line_piter pl(ima.domain());
@@ -198,7 +198,7 @@ namespace mln
     {
       typedef mln_psite(I) P;
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
 
       if (!ima.border ())
 	return;

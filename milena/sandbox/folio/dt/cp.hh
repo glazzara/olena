@@ -102,7 +102,7 @@ namespace mln
     cp(const Image<I>& input, const N& nbh, unsigned max)
     {
       trace::entering("dt::cp");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef impl::cp_functor<I, N> F;
       F f(exact(input), nbh, max);

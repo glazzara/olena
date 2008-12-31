@@ -62,7 +62,7 @@ namespace mln
     binarization(const Image<I>& input, const Window<W>& win, int strength)
     {
       trace::entering("binarisation");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), exact(win), strength);

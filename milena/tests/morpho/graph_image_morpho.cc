@@ -83,8 +83,7 @@ int main()
   util::graph g;
 
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < sites.size(); ++i)
-    g.add_vertex();
+  g.add_vertices(sites.size());
 
   // Populate the graph with edges.
   g.add_edge(0, 1);

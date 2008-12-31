@@ -82,7 +82,7 @@ namespace mln
     dt(const Image<I>& input, const N& nbh, unsigned max)
     {
       trace::entering("dt::dt");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, L) output =
 	impl::dt_(mln_trait_image_speed(I)(),

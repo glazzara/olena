@@ -300,7 +300,7 @@ namespace mln
   void
   tiled_image2d<T>::init_(const box2d& b)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data_< tiled_image2d<T> >(b);
   }
 
@@ -317,7 +317,7 @@ namespace mln
   const box2d&
   tiled_image2d<T>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -326,7 +326,7 @@ namespace mln
   std::size_t
   tiled_image2d<T>::nelements() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_.nsites();
   }
 
@@ -335,7 +335,7 @@ namespace mln
   bool
   tiled_image2d<T>::has(const point2d& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_.has(p);
   }
 

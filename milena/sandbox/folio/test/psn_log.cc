@@ -148,7 +148,7 @@ namespace mln
     psn(const Image<I>& input_, const N& nbh)
     {
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
 
       mln_ch_value(I, unsigned) D;
       initialize(D, input);

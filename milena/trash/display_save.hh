@@ -124,7 +124,7 @@ namespace mln
       trace::entering("display::save");
 
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
       impl::save(mln_trait_value_kind(mln_value(I)) (), input);
 
       trace::exiting("display::save");

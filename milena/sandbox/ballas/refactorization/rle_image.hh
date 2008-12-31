@@ -33,7 +33,7 @@ namespace mln
     void insert(const p_run<P>& pr, T value);
     rvalue operator() (const rle_psite<P>& psite) const;
     lvalue operator() (const rle_psite<P>& psite);
-    bool has_data() const;
+    bool is_valid() const;
 
     bool has(const rle_psite<P>& ps) const;
     const pset& domain() const;
@@ -55,7 +55,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  rle_image<P, T>::has_data() const
+  rle_image<P, T>::is_valid() const
   {
     return this->values_.size() != 0;
   }
@@ -101,7 +101,7 @@ namespace mln
   bool
   rle_image<P, T>::has(const rle_psite<P>& ps) const
   {
-    if (!this->has_data())
+    if (!this->is_valid())
       return false;
     else
       return (ps.p_of_run() < this->domain_.nruns() &&

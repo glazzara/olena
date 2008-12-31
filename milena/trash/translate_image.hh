@@ -106,7 +106,7 @@ namespace mln
     typedef translate_image< tag::image_<I> > skeleton;
 
     /// Test if a pixel value is accessible at \p p.
-    using super_::has_data;
+    using super_::is_valid;
 
     /// Constructors.
     translate_image(I& ima, const mln_site(I)::dpsite dp);
@@ -156,7 +156,7 @@ namespace mln
   inline
   translate_image<I>::translate_image(I& ima, const mln_site(I)::dpsite dp)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< translate_image<I> >(ima, dp);
   }
 

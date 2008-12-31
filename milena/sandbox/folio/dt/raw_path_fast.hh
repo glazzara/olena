@@ -78,7 +78,7 @@ namespace mln
     {
       // Preconditions.
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
 
       // Types.
       typedef mln_point(I) point;

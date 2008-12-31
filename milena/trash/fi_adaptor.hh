@@ -302,7 +302,7 @@ namespace mln
   const box2d&
   fi_adaptor<I>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -310,7 +310,7 @@ namespace mln
   unsigned
   fi_adaptor<I>::nelements() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_.nsites();
   }
 
@@ -374,7 +374,7 @@ namespace mln
   const mln_value(I)*
   fi_adaptor<I>::buffer() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -382,7 +382,7 @@ namespace mln
   mln_value(I)*
   fi_adaptor<I>::buffer()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -390,7 +390,7 @@ namespace mln
   int
   fi_adaptor<I>::delta_index(const dpoint2d& dp) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     int o = dp[0] * this->data_->b_.len(1) + dp[1];
     return o;
   }
@@ -411,7 +411,7 @@ namespace mln
   fipImage&
   fi_adaptor<I>::adaptee()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->fi_ima_;
   }
 
@@ -419,7 +419,7 @@ namespace mln
   const fipImage&
   fi_adaptor<I>::adaptee() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->fi_ima_;
   }
 

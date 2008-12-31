@@ -105,12 +105,12 @@ namespace mln
 
       //      p_image2d_fwd_pixter<point2d> qa(A);
       image_sub_if_value ima(r_a_n.image() | SET_A);
-      mln_assertion(ima.has_data());
+      mln_assertion(ima.is_valid());
       image_sub_if_value::fwd_piter qa(ima.domain());
-      mln_assertion(ima.has_data());
+      mln_assertion(ima.is_valid());
       for_all(qa)
 	{
-      mln_assertion(ima.has_data());
+      mln_assertion(ima.is_valid());
 	  mln_niter(neighb2d) n(F::reg_nbh(), qa);
 	  for_all (n)
 	    if (u.has(n) && !r_a_n.belongs_to<SET_R>(n) &&

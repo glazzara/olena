@@ -61,7 +61,7 @@ namespace mln
       template <typename I>
       I minimun(const I& ima1, const I& ima2)
       {
-	mln_precondition(ima1.has_data() && ima2.has_data());
+	mln_precondition(ima1.is_valid() && ima2.is_valid());
 	mln_precondition(ima1.domain() == ima2.domain());
 	I out(ima1.domain());
 	mln_piter(I) p(ima1.domain());

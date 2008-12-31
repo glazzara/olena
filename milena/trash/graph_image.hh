@@ -233,7 +233,7 @@ namespace mln
   void
   graph_image<P, V>::init_(const p_graph<P>& pg, const std::vector<V>& val)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< graph_image<P, V> > (pg, val);
   }
 
@@ -274,7 +274,7 @@ namespace mln
   const p_graph<P>&
   graph_image<P, V>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->pg_;
   }
 

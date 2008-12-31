@@ -110,7 +110,7 @@ namespace mln
     vector_median(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::vector_median");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = impl::vector_median(input, win);

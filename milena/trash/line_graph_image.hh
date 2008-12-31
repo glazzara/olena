@@ -262,7 +262,7 @@ namespace mln
 				const std::vector<V>& vertex_val,
 				const std::vector<V>& edge_val)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ =
       new internal::data< line_graph_image<P, V> >(plg, vertex_val, edge_val);
   }
@@ -312,7 +312,7 @@ namespace mln
   const p_line_graph<P>&
   line_graph_image<P, V>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->plg_;
   }
 

@@ -77,9 +77,10 @@ int main()
   // Edges.
   typedef mln::util::graph G;
   G g;
+
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex ();
+  g.add_vertices(points.size());
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);

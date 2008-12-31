@@ -56,7 +56,7 @@ namespace mln
     void
     gaussian_2nd_derivative(const Image<I>& input, float sigma, Image<O>& output)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       impl::recursivefilter_coef_
         coef(-1.331f, 3.661f,
@@ -73,7 +73,7 @@ namespace mln
     void
     gaussian_1st_derivative(const Image<I>& input, float sigma, Image<O>& output)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       impl::recursivefilter_coef_
         coef(-0.6472f, -4.531f,

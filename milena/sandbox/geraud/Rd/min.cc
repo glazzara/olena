@@ -15,7 +15,7 @@ void usage(char* argv[])
 template <typename I>
 I min(const I& ima1, const I& ima2)
 {
-  mln_precondition(ima1.has_data() and ima2.has_data());
+  mln_precondition(ima1.is_valid() and ima2.is_valid());
   mln_precondition(ima1.domain() == ima2.domain());
   I out(ima1.domain());
   mln_piter(I) p(ima1.domain());

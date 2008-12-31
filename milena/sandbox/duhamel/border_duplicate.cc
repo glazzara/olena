@@ -46,7 +46,7 @@ template <typename I>
 void print_3d_with_border (const Fast_Image<I>& input_)
 {
   const I& ima = exact(input_);
-  mln_precondition(ima.has_data());
+  mln_precondition(ima.is_valid());
 
   typedef mln_point(I) P;
 

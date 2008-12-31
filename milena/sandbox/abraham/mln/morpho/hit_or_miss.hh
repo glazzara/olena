@@ -61,7 +61,7 @@ namespace mln
     mln_concrete(I) hit_or_miss(const Image<I>& input, const Window<Wout>& win_out, const Window<Win>& win_in)
     {
       trace::entering("morpho::hit_or_miss");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win_out).is_empty());
       mln_precondition(! exact(win_in).is_empty());
 

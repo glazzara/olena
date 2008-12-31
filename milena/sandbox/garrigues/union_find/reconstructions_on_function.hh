@@ -132,8 +132,8 @@ namespace mln
     const J& mask   = exact(mask_);
     const N& nbh    = exact(nbh_);
 
-    mln_precondition(marker.has_data());
-    mln_precondition(mask.has_data());
+    mln_precondition(marker.is_valid());
+    mln_precondition(mask.is_valid());
     mln_precondition(mask.domain() == marker.domain());
     mln_precondition(marker <= mask);
 
@@ -164,8 +164,8 @@ namespace mln
     const J& mask   = exact(mask_);
     const N& nbh    = exact(nbh_);
 
-    mln_precondition(marker.has_data());
-    mln_precondition(mask.has_data());
+    mln_precondition(marker.is_valid());
+    mln_precondition(mask.is_valid());
     mln_precondition(mask.domain() == marker.domain());
     mln_precondition(marker >= mask);
 
@@ -197,8 +197,8 @@ namespace mln
     const J& mask   = exact(mask_);
     const N& nbh    = exact(nbh_);
 
-    mln_precondition(marker.has_data());
-    mln_precondition(mask.has_data());
+    mln_precondition(marker.is_valid());
+    mln_precondition(mask.is_valid());
     mln_precondition(mask.domain() == marker.domain());
     mln_precondition(marker <= mask);
 

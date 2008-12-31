@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 
   orig_ima_t input;
   io::pgm::load(input, argv[2]);
-  if (!input.has_data())
+  if (!input.is_valid())
   {
     std::cerr << "Error reading input " << argv[2] << std::endl;
     std::exit(2);

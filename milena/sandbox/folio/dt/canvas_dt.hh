@@ -90,7 +90,7 @@ namespace mln
     dt<F>::init()
     {
       // Preconditions.
-      mln_precondition(f.input.has_data());
+      mln_precondition(f.input.is_valid());
 
       f.init(); //< f call.
 

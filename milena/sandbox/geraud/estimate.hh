@@ -70,7 +70,7 @@ namespace mln
     {
       trace::entering("labeling::estimate");
       mlc_equal(mln_trait_image_kind(I), mln::trait::image::kind::binary)::check();
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       std::cerr << "Sorry: mln::labeling::estimate is not yet implemented!" << std::endl;
 

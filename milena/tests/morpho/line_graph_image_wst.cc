@@ -81,8 +81,7 @@ int main()
   sites(7) = point2d(1,3); // Point associated to vertex 7.
 
   // Populate the graph with vertices.
-  for(unsigned i = 0; i < sites.size(); ++i)
-    g.add_vertex();
+  g.add_vertices(sites.size());
 
   // Populate the graph with edges.
   g.add_edge(0, 1);

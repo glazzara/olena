@@ -135,8 +135,8 @@ namespace mln
   {
     trace::entering("morpho::reconstruction_on_set_by_dilation");
 
-    mln_precondition(exact(marker).has_data());
-    mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker).is_valid());
+    mln_precondition(exact(mask).is_valid());
     mln_precondition(exact(marker) <= exact(mask));
     image2d<bool> output;
     initialize(output, marker);
@@ -157,8 +157,8 @@ namespace mln
   {
     trace::entering("morpho::reconstruction_on_set_by_dilation_alt");
 
-    mln_precondition(exact(marker).has_data());
-    mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker).is_valid());
+    mln_precondition(exact(mask).is_valid());
     mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;
@@ -180,8 +180,8 @@ namespace mln
   {
     trace::entering("morpho::reconstruction_on_set_by_erosion");
 
-    mln_precondition(exact(marker).has_data());
-    mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker).is_valid());
+    mln_precondition(exact(mask).is_valid());
     mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;
@@ -203,8 +203,8 @@ namespace mln
   {
     trace::entering("morpho::reconstruction_on_set_by_erosion_alt");
 
-    mln_precondition(exact(marker).has_data());
-    mln_precondition(exact(mask).has_data());
+    mln_precondition(exact(marker).is_valid());
+    mln_precondition(exact(mask).is_valid());
     mln_precondition(exact(marker) <= exact(mask));
 
     image2d<bool> output;

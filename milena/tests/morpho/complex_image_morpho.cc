@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/morpho/complex_image_morpho.cc
-/// \brief Test of mln::complex_image with morphological filters.
+///
+/// Test of mln::complex_image with morphological filters.
 
 #include <iostream>
 
@@ -178,7 +179,7 @@ test_morpho(const mln::Image<I>& ima_, const mln::Window<W> win,
 	    const std::string& comment)
 {
   const I& ima = exact(ima_);
-  mln_assertion(ima.has_data());
+  mln_assertion(ima.is_valid());
   mln_piter(I) p(ima.domain());
 
   mln_concrete(I) ima_dil = mln::morpho::dilation(ima, win);

@@ -128,7 +128,7 @@ namespace mln
   inline
   instant_<I>::instant_(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->init_(ima);
     this->data_ = new internal::data< instant_<I> >(ima);
   }
@@ -138,7 +138,7 @@ namespace mln
   void
   instant_<I>::init_(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< instant_<I> >(ima);
   }
 
@@ -147,7 +147,7 @@ namespace mln
   I&
   instant_<I>::un_instant_()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->ima_;
   }
 
@@ -156,7 +156,7 @@ namespace mln
   I&
   instant_<I>::un_instant_() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return const_cast<I&>(this->data_->ima_);
   }
 

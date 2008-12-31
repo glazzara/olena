@@ -114,7 +114,7 @@ namespace mln
       /// \}
 
       /// Test if this image has been initialized.
-      bool has_data() const;
+      bool is_valid() const;
 
       /// Accessors.
       /// \{
@@ -208,7 +208,7 @@ namespace mln
     void
     image<I, N>::init_(Image<I>& ima, const Neighborhood<N>& nbh)
     {
-      mln_precondition(! this->has_data());
+      mln_precondition(! this->is_valid());
       this->data_ =
 	new mln::internal::data< mln::neighb::image<I, N> >(exact(ima),
 							     exact(nbh));
@@ -217,9 +217,9 @@ namespace mln
     template <typename I, typename N>
     inline
     bool
-    image<I, N>::has_data() const
+    image<I, N>::is_valid() const
     {
-      return this->delegatee_() && this->delegatee_()->has_data();
+      return this->delegatee_() && this->delegatee_()->is_valid();
     }
 
     template <typename I, typename N>

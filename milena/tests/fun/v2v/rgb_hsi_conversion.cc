@@ -26,7 +26,8 @@
 // Public License.
 
 /// \file tests/fun/v2v/rgb_hsi_conversion.cc
-/// \brief Test RGB-to-HSI conversion.
+///
+/// Test RGB-to-HSI conversion.
 
 #include <cmath>
 
@@ -50,7 +51,7 @@ float rms(const mln::Image<I1>& ima1_, const mln::Image<I2>& ima2_)
   const I1& ima1 = exact(ima1_);
   const I2& ima2 = exact(ima2_);
 
-  mln_precondition(ima1.has_data() && ima2.has_data());
+  mln_precondition(ima1.is_valid() && ima2.is_valid());
 
   double sum = 0, nb = 0;
 

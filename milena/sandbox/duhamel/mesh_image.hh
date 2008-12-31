@@ -178,7 +178,7 @@ namespace mln
   const mesh_p<P>&
   mesh_image<P, V>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->mesh_;
   }
 

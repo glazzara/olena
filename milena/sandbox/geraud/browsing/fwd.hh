@@ -13,7 +13,7 @@ namespace mln
       void fwd(F& f)
       {
  	trace::entering("canvas::browsing::fwd");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
 	f.init();
@@ -31,7 +31,7 @@ namespace mln
       void row_fwd(F& f)
       {
  	trace::entering("canvas::browsing::row_fwd");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 	box2d b = f.input.domain();
 	unsigned nrows = b.nrows(), ncols = b.ncols();
 	def::coord& row = f.p.row();
@@ -58,7 +58,7 @@ namespace mln
       void col_fwd(F& f)
       {
  	trace::entering("canvas::browsing::col_fwd");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 	box2d b = f.input.domain();
 	unsigned nrows = b.nrows(), ncols = b.ncols();
 	def::coord& row = f.p.row();

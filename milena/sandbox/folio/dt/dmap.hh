@@ -100,7 +100,7 @@ namespace mln
     dmap(const Image<I>& input, const N& nbh, unsigned max)
     {
       trace::entering("dt::dmap");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef impl::dmap_functor<I, N> F;
       F f(exact(input), nbh, max);

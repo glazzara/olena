@@ -69,7 +69,7 @@ namespace mln
     void mirror(const Fast_Image<I>& ima_)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
       // internal::fixme();
       // FIX
       std::size_t border = ima.border ();

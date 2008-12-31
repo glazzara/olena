@@ -351,7 +351,7 @@ namespace mln
   void
   gimp_image<t>::init_(GimpPixelRgn* rgn)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data_< gimp_image<t> >(rgn);
   }
 
@@ -359,7 +359,7 @@ namespace mln
   void
   gimp_image<t>::init_(box2d box)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data_< gimp_image<t> >(box);
   }
   
@@ -375,7 +375,7 @@ namespace mln
   const box2d&
   gimp_image<t>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -392,7 +392,7 @@ namespace mln
   std::size_t
   gimp_image<t>::nelements() const
   {
-     mln_precondition(this->has_data());
+     mln_precondition(this->is_valid());
      return this->data_->b_.nsites();
   }
 
@@ -401,7 +401,7 @@ namespace mln
   bool
   gimp_image<t>::has(const point2d& p) const
   {
-     mln_precondition(this->has_data());
+     mln_precondition(this->is_valid());
      return this->data_->b_.has(p);
   }
 
@@ -474,7 +474,7 @@ namespace mln
   const mln_value(gimp_image<t>)*
   gimp_image<t>::buffer() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -483,7 +483,7 @@ namespace mln
   mln_value(gimp_image<t>)*
   gimp_image<t>::buffer()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -492,7 +492,7 @@ namespace mln
 //   int
 //   gimp_image<t>::delta_index(const dpoint2d& dp) const
 //   {
-//     mln_precondition(this->has_data());
+//     mln_precondition(this->is_valid());
 //     int o = dp[0] * this->data_->b_.len(1) + dp[1];
 //     return o;
 //   }

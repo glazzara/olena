@@ -98,7 +98,7 @@ namespace mln
     const box_<mln_psite(I)>& domain() const;
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Test if a pixel value is accessible at \p p.
     bool has(const mln_psite(I)& p) const;
@@ -157,7 +157,7 @@ namespace mln
   const box_<mln_psite(I)>&
   sub_sampled_image<I>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->box_;
   }
 
@@ -174,9 +174,9 @@ namespace mln
   
   template <typename I>
   inline
-  bool sub_sampled_image<I>::has_data() const
+  bool sub_sampled_image<I>::is_valid() const
   {
-    mln_invariant(this->delegatee_()->has_data());
+    mln_invariant(this->delegatee_()->is_valid());
     return true;
   }
 
@@ -186,7 +186,7 @@ namespace mln
   bool
   sub_sampled_image<I>::has(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->delegatee_()->has(translate_coords_(p));
   }
   

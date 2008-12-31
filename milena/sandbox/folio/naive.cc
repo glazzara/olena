@@ -72,7 +72,7 @@ namespace mln
     {
       const I& input = exact(input_);
       const F& fun   = exact(fun_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
 
       mln_ch_value(I, mln_result(F)) output;
       initialize(output, input);

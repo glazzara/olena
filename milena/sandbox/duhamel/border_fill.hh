@@ -66,7 +66,7 @@ namespace mln
       void fill_1d_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	std::size_t border = ima.border ();
@@ -85,7 +85,7 @@ namespace mln
       void fill_1d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	std::size_t border = ima.border ();
@@ -104,7 +104,7 @@ namespace mln
       void fill_2d_size_1_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 
@@ -137,7 +137,7 @@ namespace mln
       void fill_2d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
       {
 	const I& ima = exact(ima_);
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 
@@ -167,7 +167,7 @@ namespace mln
 //       void fill_3d_size_n_(const Fast_Image<I>& ima_, const mln_value(I)& v)
 //       {
 // 	const I& ima = exact(ima_);
-// 	mln_precondition(ima.has_data());
+// 	mln_precondition(ima.is_valid());
 
 //  	typedef mln_psite(I) P;
 
@@ -272,7 +272,7 @@ namespace mln
     {
       typedef mln_psite(I) P;
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
 
       if (!ima.border ())
 	return;

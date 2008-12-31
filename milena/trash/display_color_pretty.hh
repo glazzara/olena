@@ -191,7 +191,7 @@ namespace mln
       trace::entering("display::color_pretty");
 
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
 
       mlc_is_not(mln_trait_value_kind(mln_value(I)) (),
 		 trait::value::kind::color)::check();

@@ -176,7 +176,7 @@ namespace mln
     {
       trace::entering("neighb::get");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       typename neighb::get_helper<I>::type res =
 	neighb::get_helper<I>::run(exact(ima));
 

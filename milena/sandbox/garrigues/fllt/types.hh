@@ -196,7 +196,7 @@ namespace mln
     ran_domains::image()
     {
       mln_precondition(nsites_ > 0);
-      mln_assertion(ima_.has_data());
+      mln_assertion(ima_.is_valid());
       return ima_ | bb_.to_result();
     }
 

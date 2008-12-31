@@ -406,10 +406,10 @@ used to define ::location.
 
 *** about the image variable
 
-**** has_data
+**** is_valid
 
 sig is:
-bool has_data() const
+bool is_valid() const
 
 is "is_allocated" / "is_ready" a better name?
 
