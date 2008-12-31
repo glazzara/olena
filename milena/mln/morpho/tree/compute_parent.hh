@@ -91,7 +91,7 @@ namespace mln
 	  const N& nbh = exact(nbh_);
 	  const S& s   = exact(s_);
 
-	  mln_precondition(f.has_data());
+	  mln_precondition(f.is_valid());
 	  // mln_precondition(nbh.is_valid());
 	  mln_precondition(s == f.domain());
 

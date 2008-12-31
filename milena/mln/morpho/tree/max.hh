@@ -68,7 +68,7 @@ namespace mln
 	const I& f   = exact(f_);
 	const N& nbh = exact(nbh_);
 
-	mln_precondition(f.has_data());
+	mln_precondition(f.is_valid());
 	// mln_precondition(nbh.is_valid());
 
 	// For the max-tree, childhood maps "increasing level":

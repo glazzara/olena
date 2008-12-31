@@ -205,7 +205,7 @@ namespace mln
   void
   hexa<I>::init_(I& ima)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     box2d b_in = ima.bbox();
     box2d_h b = make::box2d_h(b_in.pmin()[0] * 2, b_in.pmin()[1],
 			      b_in.pmax()[0] * 2, (b_in.pmax()[1] + 1) * 2 - 1);
@@ -232,7 +232,7 @@ namespace mln
   typename hexa<I>::rvalue
   hexa<I>::operator()(const point2d_h& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     mln_precondition(this->has(p));
     return this->data_->ima_(point2d(p[0] / 2, p[1] / 2));
   }
@@ -242,7 +242,7 @@ namespace mln
   typename hexa<I>::lvalue
   hexa<I>::operator()(const point2d_h& p)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     mln_precondition(this->has(p));
     return this->data_->ima_(point2d(p[0] / 2, p[1] / 2));
   }
@@ -252,7 +252,7 @@ namespace mln
   const box2d_h&
   hexa<I>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -261,7 +261,7 @@ namespace mln
   bool
   hexa<I>::has(const psite& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->ima_.has(point2d(p[0] / 2, p[1] / 2));
   }
 

@@ -131,7 +131,7 @@ namespace mln
       std::size_t nsites() const;
 
       /// Test if this image has been initialized; default impl.
-      bool has_data() const;
+      bool is_valid() const;
 
       // FIXME: Add void init_data(..);
 
@@ -178,7 +178,7 @@ namespace mln
     image_base<T, S, E>::image_base(const image_base& rhs)
       : image_checked_<E>()
     {
-      mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
+      mln_precondition(exact(rhs).is_valid()); // FIXME: Is-it too restrictive?
       this->data_ = rhs.data_;
     }
 
@@ -187,8 +187,8 @@ namespace mln
     image_base<T, S, E>&
     image_base<T, S, E>::operator=(const image_base<T, S, E>& rhs)
     {
-      mln_precondition(exact(rhs).has_data()); // FIXME: Is-it too restrictive?
-      if (& rhs == this) // || ! exact(rhs).has_data())
+      mln_precondition(exact(rhs).is_valid()); // FIXME: Is-it too restrictive?
+      if (& rhs == this) // || ! exact(rhs).is_valid())
 	return *this;
       this->data_ = rhs.data_;
       return *this;
@@ -205,7 +205,7 @@ namespace mln
     template <typename T, typename S, typename E>
     inline
     bool
-    image_base<T, S, E>::has_data() const
+    image_base<T, S, E>::is_valid() const
     {
       return data_ != 0;
     }
@@ -215,7 +215,7 @@ namespace mln
     bool
     image_base<T, S, E>::has(const psite& p) const
     {
-      mln_precondition(exact(this)->has_data());
+      mln_precondition(exact(this)->is_valid());
       return exact(this)->domain().has(p);
     }
 
@@ -226,7 +226,7 @@ namespace mln
     {
       mlc_equal(mln_trait_site_set_nsites(S),
 		mln::trait::site_set::nsites::known)::check();
-      mln_precondition(exact(this)->has_data());
+      mln_precondition(exact(this)->is_valid());
       return exact(this)->domain().nsites();
     }
 

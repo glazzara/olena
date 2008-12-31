@@ -70,7 +70,7 @@ namespace mln
       inline
       void fill_tests(const Image<I>& ima, const mln_value(I)&)
       {
-	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(ima).is_valid());
 	(void) ima;
       }
 

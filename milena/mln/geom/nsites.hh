@@ -56,7 +56,7 @@ namespace mln
       trace::entering("geom::nsites");
       const I& input = exact(input_);
 
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
       mln_precondition(input.domain().is_valid());
 
       // Relies on the card routine on a site set.

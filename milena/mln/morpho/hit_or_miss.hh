@@ -122,7 +122,7 @@ namespace mln
 	const Wm& win_miss = exact(win_miss_);
 
 	// Tests.
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	mln_precondition((win_hit && win_miss).is_empty());
 
 	// Avoid warnings.

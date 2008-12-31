@@ -408,7 +408,7 @@ namespace mln
   void
   image2d<T>::init_(const box2d& b, unsigned bdr)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< image2d<T> >(b, bdr);
   }
 
@@ -417,7 +417,7 @@ namespace mln
   const box2d&
   image2d<T>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -426,7 +426,7 @@ namespace mln
   const box2d&
   image2d<T>::bbox() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_;
   }
 
@@ -435,7 +435,7 @@ namespace mln
   bool
   image2d<T>::has(const point2d& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->vb_.has(p);
   }
 
@@ -483,7 +483,7 @@ namespace mln
   unsigned
   image2d<T>::nrows() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_.len(0);
   }
 
@@ -492,7 +492,7 @@ namespace mln
   unsigned
   image2d<T>::ncols() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->b_.len(1);
   }
 
@@ -504,7 +504,7 @@ namespace mln
   unsigned
   image2d<T>::border() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->bdr_;
   }
 
@@ -513,7 +513,7 @@ namespace mln
   unsigned
   image2d<T>::nelements() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->vb_.nsites();
   }
 
@@ -540,7 +540,7 @@ namespace mln
   const T*
   image2d<T>::buffer() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -549,7 +549,7 @@ namespace mln
   T*
   image2d<T>::buffer()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->buffer_;
   }
 
@@ -558,7 +558,7 @@ namespace mln
   int
   image2d<T>::delta_index(const dpoint2d& dp) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     int o = dp[0] * this->data_->vb_.len(1) + dp[1];
     return o;
   }
@@ -584,7 +584,7 @@ namespace mln
   void
   image2d<T>::resize_(unsigned new_border)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     this->data_->reallocate_(new_border);
   }
 

@@ -174,7 +174,7 @@ namespace mln
   inline
   p_image<I>::p_image(const I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     ima_ = ima;
     clear();
   }
@@ -193,7 +193,7 @@ namespace mln
   bool
   p_image<I>::is_valid() const
   {
-    return ima_.has_data();
+    return ima_.is_valid();
   }
 
   template <typename I>

@@ -328,7 +328,7 @@ namespace mln
 	I& ima = exact(ima_);
 
 	// mln_precondition(win.is_valid());
-	mln_precondition(! ima.has_data());
+	mln_precondition(! ima.is_valid());
 
 	// Hack (below) to avoid circular dependency.
 	ima.init_(mln::internal::geom_bbox(win));

@@ -69,7 +69,7 @@ namespace mln
     inline
     mln_sum(mln_value(I)) sum(const Image<I>& input)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       return level::compute(accu::meta::sum(), input);
     }
 
@@ -77,7 +77,7 @@ namespace mln
     inline
     void sum(const Image<I>& input, S& result)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       accu::sum<mln_value(I), S> a;
       result = level::compute(a, input);
     }

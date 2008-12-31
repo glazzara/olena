@@ -104,7 +104,7 @@ namespace mln
 //	mlc_equal(mln_trait_image_dimension(I)(),
 //		  trait::image::dimension::two_d)::check();
 	trace::entering("canvas::browsing::snake_vert");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 	int
 	  min_row = geom::min_row(f.input), max_row = geom::max_row(f.input),
 	  min_col = geom::min_col(f.input), max_col = geom::max_col(f.input);

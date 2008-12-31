@@ -132,7 +132,7 @@ namespace mln
     {
       trace::entering("geom::seed2tiling_roundness");
 
-      mln_precondition(exact(ima_).has_data());
+      mln_precondition(exact(ima_).is_valid());
       I output = impl::seeds2tiling_roundness(ima_, w_win, max, nbh);
 
       trace::exiting("geom::seed2tiling_roundness");

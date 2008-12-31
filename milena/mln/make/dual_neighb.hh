@@ -70,7 +70,7 @@ namespace mln
       const I& ima = exact(ima_);
       const N& nbh_true = exact(nbh_true_);
       const N& nbh_false = exact(nbh_false_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
 
       typedef win::multiple_size< 2, mln_window(N), pw::value_<I> > W;
       W win(pw::value(ima));

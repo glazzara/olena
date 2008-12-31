@@ -130,7 +130,7 @@ namespace mln
       metal::is_not_const<I>::check();
 
       P& pix = mln::internal::force_exact<P>(pix_);
-      mln_precondition(pix.ima().has_data());
+      mln_precondition(pix.ima().is_valid());
       mln_precondition(& pix.val() >= & pix.ima()[0]);
       mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().nelements());
       mln_precondition(& pix.val() + n <= & pix.ima()[0] + pix.ima().nelements());
@@ -149,7 +149,7 @@ namespace mln
 
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
       mln_precondition(input.has(p));
       mln_precondition(input.index_of_point(p) + n <= input.nelements());
 

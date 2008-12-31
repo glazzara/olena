@@ -120,7 +120,7 @@ namespace mln
       row_offset_(image.bbox().ncols() + border_x2_),
       eor_(& opt::at(image, geom::min_row(image), geom::max_col(image)) + 1)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
   }
 
   template <typename I>
@@ -149,7 +149,7 @@ namespace mln
       row_offset_(image.bbox().ncols() + border_x2_),
       bor_(& opt::at(image, geom::max_row(image), geom::min_col(image)) - 1)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
   }
 
   template <typename I>

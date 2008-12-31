@@ -134,7 +134,7 @@ namespace mln
   inline
   ch_piter_image<I,Fwd>::ch_piter_image(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     init_(ima);
   }
 
@@ -143,7 +143,7 @@ namespace mln
   void
   ch_piter_image<I,Fwd>::init_(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< ch_piter_image<I,Fwd> >(ima);
   }
 

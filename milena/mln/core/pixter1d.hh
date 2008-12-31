@@ -99,7 +99,7 @@ namespace mln
   fwd_pixter1d<I>::fwd_pixter1d(I& image)
     : super_(image)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
   }
 
   template <typename I>
@@ -120,7 +120,7 @@ namespace mln
   bkd_pixter1d<I>::bkd_pixter1d(I& image)
     : super_(image)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
   }
 
   template <typename I>

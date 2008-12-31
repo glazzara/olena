@@ -113,7 +113,7 @@ namespace mln
 
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Test if a pixel value is accessible at \p p.
     using super_::has;
@@ -154,7 +154,7 @@ namespace mln
   interpolated<I,F>::interpolated(I& ima)
     : fun_(ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     init_(ima);
   }
 
@@ -169,15 +169,15 @@ namespace mln
   void
   interpolated<I, F >::init_(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< interpolated<I,F> >(ima);
   }
 
   template <typename I, template <class> class F>
   inline
-  bool interpolated<I,F>::has_data() const
+  bool interpolated<I,F>::is_valid() const
   {
-    mln_invariant(this->data_->ima_.has_data());
+    mln_invariant(this->data_->ima_.is_valid());
     return true;
   }
 

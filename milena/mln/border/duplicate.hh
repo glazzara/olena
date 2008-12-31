@@ -131,7 +131,7 @@ namespace mln
       {
 	trace::entering("border::impl::duplicate_3D");
 
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 
 	typedef mln_psite(I) P;
 	mln_box_runstart_piter(I) pl(ima.domain());
@@ -252,7 +252,7 @@ namespace mln
     void duplicate(const Image<I>& ima)
     {
       trace::entering("border::duplicate");
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
 
       if (border::get(ima) != 0)
 	internal::duplicate_dispatch(ima);

@@ -145,7 +145,7 @@ namespace mln
   inline
   safe_image<I>::safe_image(I& ima, const mln_value(I)& default_value)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     init_(ima, default_value);
   }
 
@@ -153,7 +153,7 @@ namespace mln
   inline
   safe_image<I>::safe_image(I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     init_(ima, mln_value(I)());
   }
 
@@ -162,8 +162,8 @@ namespace mln
   void
   safe_image<I>::init_(I& ima, const mln_value(I)& default_value)
   {
-    mln_precondition(! this->has_data());
-    mln_precondition(ima.has_data());
+    mln_precondition(! this->is_valid());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< safe_image<I> >(ima, default_value);
   }
 
@@ -172,7 +172,7 @@ namespace mln
   mln_rvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     if (! this->has(p))
       return this->data_->default_value_;
     return this->data_->ima_(p);
@@ -183,7 +183,7 @@ namespace mln
   mln_morpher_lvalue(I)
   safe_image<I>::operator()(const mln_psite(I)& p)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     static mln_value(I) forget_it_;
     if (this->has(p))
       return this->data_->ima_(p);

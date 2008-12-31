@@ -58,7 +58,7 @@ namespace mln
     inline
     unsigned nrows(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return geom::max_row(ima) - geom::min_row(ima) + 1;
     }
 

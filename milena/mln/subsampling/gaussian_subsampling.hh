@@ -67,7 +67,7 @@ namespace mln
                          const mln_deduce(I, site, coord)& gap)
     {
       trace::entering("subsampling::gaussian_subsampling");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) temp(exact(input).domain());
       mln_concrete(I) output(geom::nrows(input) / gap,

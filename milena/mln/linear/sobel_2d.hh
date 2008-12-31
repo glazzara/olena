@@ -91,7 +91,7 @@ namespace mln
     sobel_2d_h(const Image<I>& input)
     {
       trace::entering("linear::sobel_2d_h");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       int wh[] = { -1, 0, 1 };
       int wv[] = { 1,
@@ -110,7 +110,7 @@ namespace mln
     sobel_2d_v(const Image<I>& input)
     {
       trace::entering("linear::sobel_2d_v");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       int wh[] = { 1, 2, 1 };
       int wv[] = { -1,
@@ -128,7 +128,7 @@ namespace mln
     sobel_2d(const Image<I>& input)
     {
       trace::entering("linear::sobel_2d");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef mln_ch_convolve(I, int) J;
       J h = sobel_2d_h(input),
@@ -146,7 +146,7 @@ namespace mln
     sobel_2d_l1_norm(const Image<I>& input)
     {
       trace::entering("linear::sobel_2d_norm_l1");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef mln_ch_convolve_grad(I, int) G;
       G grad = sobel_2d(input);

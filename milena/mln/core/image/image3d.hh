@@ -396,7 +396,7 @@ namespace mln
   void
   image3d<T>::init_(const box3d& b, unsigned bdr)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< image3d<T> >(b, bdr);
   }
 
@@ -405,7 +405,7 @@ namespace mln
   const box3d&
   image3d<T>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->b_;
   }
 
@@ -414,7 +414,7 @@ namespace mln
   const box3d&
   image3d<T>::bbox() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->b_;
   }
 
@@ -423,7 +423,7 @@ namespace mln
   unsigned
   image3d<T>::border() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->bdr_;
   }
 
@@ -432,7 +432,7 @@ namespace mln
   unsigned
   image3d<T>::nelements() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->vb_.nsites();
   }
 
@@ -441,7 +441,7 @@ namespace mln
   bool
   image3d<T>::has(const point3d& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->vb_.has(p);
   }
 
@@ -504,7 +504,7 @@ namespace mln
   const T*
   image3d<T>::buffer() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->buffer_;
   }
 
@@ -513,7 +513,7 @@ namespace mln
   T*
   image3d<T>::buffer()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return data_->buffer_;
   }
 
@@ -522,7 +522,7 @@ namespace mln
   int
   image3d<T>::delta_index(const dpoint3d& dp) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     int o = dp[0];
     return o;
   }

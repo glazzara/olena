@@ -88,7 +88,7 @@ namespace mln
 		    const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_white");
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(input,
@@ -106,7 +106,7 @@ namespace mln
 		    const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_black");
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(closing(input, nbh),
@@ -124,7 +124,7 @@ namespace mln
 				 const Neighborhood<N>& nbh)
       {
 	trace::entering("morpho::elementary::top_hat_self_complementary");
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = morpho::minus(closing(input, nbh),

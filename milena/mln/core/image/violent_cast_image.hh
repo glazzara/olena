@@ -145,7 +145,7 @@ namespace mln
   violent_cast_image<T,I>
   violent_cast_image_(const Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     violent_cast_image<T,I> tmp(ima);
     return tmp;
   }
@@ -175,7 +175,7 @@ namespace mln
   violent_cast_image<T,I>::violent_cast_image(const Image<I>& ima)
   {
     metal::bool_<sizeof(T) == sizeof(typename I::value)>::check();
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data< violent_cast_image<T,I> >(exact(ima));
   }
 
@@ -184,7 +184,7 @@ namespace mln
   void
   violent_cast_image<T,I>::init_(const Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data<violent_cast_image<T,I> >(exact(ima));
   }
 

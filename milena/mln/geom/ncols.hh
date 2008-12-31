@@ -58,7 +58,7 @@ namespace mln
     inline
     unsigned ncols(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return geom::max_col(ima) - geom::min_col(ima) + 1;
     }
 

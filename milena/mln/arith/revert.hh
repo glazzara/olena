@@ -57,7 +57,7 @@ namespace mln
      * \param[in] input the input image.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      *
      * It performs: \n
      *   for all p of input.domain \n
@@ -71,7 +71,7 @@ namespace mln
     /*!
      * \param[in,out] input The target image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      *
      * It performs: \n
      *   for all p of input.domain \n
@@ -116,7 +116,7 @@ namespace mln
     {
       trace::entering("arith::revert");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       initialize(output, input);
@@ -132,7 +132,7 @@ namespace mln
     {
       trace::entering("arith::revert_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       impl::revert_(mln_trait_image_speed(I)(), exact(input), exact(input));
 

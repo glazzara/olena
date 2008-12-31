@@ -87,7 +87,7 @@ namespace mln
     inline
     void take(const Image<I>& input, Accumulator<A>& a)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       impl::take(exact(input), exact(a));
     }
 

@@ -95,7 +95,7 @@ namespace mln
       snake_generic_t::operator()(F& f) const
       {
 	trace::entering("canvas::browsing::snake_generic");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 
 	// p init
 	f.p = f.input.bbox().pmin();// - f.dps[0];

@@ -99,7 +99,7 @@ namespace mln
       {
 	trace::entering("morpho::elementary::erosion");
 
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	mln_concrete(I) output = internal::erosion_dispatch(input, nbh);

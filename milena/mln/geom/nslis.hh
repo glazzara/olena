@@ -54,7 +54,7 @@ namespace mln
     inline
     unsigned nslis(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return geom::max_sli(ima) - geom::min_sli(ima) + 1;
     }
 

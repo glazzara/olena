@@ -60,7 +60,7 @@ namespace mln
     {
       trace::entering("morpho::closing_volume");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       output = closing_attribute< accu::volume<I> >(input, nbh, lambda);

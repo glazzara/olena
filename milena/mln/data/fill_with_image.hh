@@ -81,8 +81,8 @@ namespace mln
 	mlc_is(mln_trait_image_pw_io(I),
 	       mln::trait::image::pw_io::read_write)::check();
 	mlc_converts_to(mln_value(J), mln_value(I))::check();
-	mln_precondition(exact(ima).has_data());
-	mln_precondition(exact(data).has_data());
+	mln_precondition(exact(ima).is_valid());
+	mln_precondition(exact(data).is_valid());
 	mln_precondition(exact(ima).domain() <= exact(data).domain());
       }
 

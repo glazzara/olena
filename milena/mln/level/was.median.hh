@@ -66,8 +66,8 @@ namespace mln
 			       const W& win,
 			       O& output)
       {
-	mln_precondition(input.has_data());
-	mln_precondition(output.has_data());
+	mln_precondition(input.is_valid());
+	mln_precondition(output.is_valid());
 
 	int
 	  min_row = geom::min_row(input), max_row = geom::max_row(input),

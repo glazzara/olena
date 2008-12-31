@@ -54,7 +54,7 @@ namespace mln
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <typename I, typename W>
     mln_ch_convolve(I, W)
@@ -74,7 +74,7 @@ namespace mln
       convolve_tests(const Image<I>& input,
 		     const Weighted_Window<W>& w_win)
       {
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(w_win).is_valid());
 	(void) input;
 	(void) w_win;

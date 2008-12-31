@@ -67,7 +67,7 @@ namespace mln
     {
       trace::entering("binarization::threshold");
   
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
 

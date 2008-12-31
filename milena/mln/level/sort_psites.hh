@@ -54,7 +54,7 @@ namespace mln
      *
      * \param[in] input The input image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I>
     p_array<mln_psite(I)> sort_psites_increasing(const Image<I>& input);
@@ -64,7 +64,7 @@ namespace mln
      *
      * \param[in] input The input image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I>
     p_array<mln_psite(I)> sort_psites_decreasing(const Image<I>& input);
@@ -220,7 +220,7 @@ namespace mln
     p_array<mln_psite(I)>
     sort_psites_increasing(const Image<I>& input)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       return impl::sort_psites_increasing_(mln_trait_image_quant(I)(),
 					   exact(input));
     }
@@ -230,7 +230,7 @@ namespace mln
     p_array<mln_psite(I)>
     sort_psites_decreasing(const Image<I>& input)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       return impl::sort_psites_decreasing_(mln_trait_image_quant(I)(),
 					   exact(input));
     }

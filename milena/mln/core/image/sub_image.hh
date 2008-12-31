@@ -195,7 +195,7 @@ namespace mln
   void
   sub_image<I,S>::init_(I& ima, const S& pset)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< sub_image<I,S> >(ima, pset);
   }
 

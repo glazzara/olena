@@ -78,7 +78,7 @@ namespace mln
        * image_base because it also tests that the morphed image is
        * also initialized.
        */
-      bool has_data() const;
+      bool is_valid() const;
 
       /// Conversion to the underlying (morphed) image.
       operator I() const; // FIXME: Very dangerous? Remove?
@@ -170,19 +170,19 @@ namespace mln
     inline
     image_morpher<I, T, S, E>::operator I() const
     {
-      mln_precondition(exact(this)->has_data());
+      mln_precondition(exact(this)->is_valid());
       return * this->delegatee_();
     }
 
     template <typename I, typename T, typename S, typename E>
     inline
     bool
-    image_morpher<I, T, S, E>::has_data() const
+    image_morpher<I, T, S, E>::is_valid() const
     {
       return
 	this->data_ != 0 &&
 	this->delegatee_() != 0 &&
-	this->delegatee_()->has_data();
+	this->delegatee_()->is_valid();
     }
 
     template <typename I, typename T, typename S, typename E>

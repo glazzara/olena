@@ -97,7 +97,7 @@ namespace mln
     window<mln_site(I)::dpsite> to_window(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
       // FIXME: Check that ima is binary!
       typedef mln_site(I) P;
       typedef mln_dpsite(P) D;

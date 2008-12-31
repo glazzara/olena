@@ -154,7 +154,7 @@ namespace mln
 		    const Weighted_Window<W>& w_win,
 		    R&			      result)
       {
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	impl::convolve(mln_trait_image_speed(I)(), exact(input),
 		       p, exact(w_win), result);
       }

@@ -169,7 +169,7 @@ namespace mln
   inline
   decorated_image<I,D>::decorated_image(I& ima, const D& deco)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data< decorated_image<I,D> >(ima, deco);
   }
 
@@ -178,7 +178,7 @@ namespace mln
   void
   decorated_image<I,D>::init_(I& ima, const D& deco)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data<decorated_image<I,D> >(ima, deco);
   }
 

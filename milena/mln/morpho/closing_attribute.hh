@@ -108,7 +108,7 @@ namespace mln
     {
       trace::entering("morpho::closing_attribute");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       initialize(output, input);

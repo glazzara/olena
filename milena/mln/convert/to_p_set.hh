@@ -100,7 +100,7 @@ namespace mln
     to_p_set(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
 
       // FIXME: Check that ima is binary!
 //       mln::metal::templated_by<mln_value(I), bool >::check();

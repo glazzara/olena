@@ -70,7 +70,7 @@ namespace mln
 	      const mln_psite(I)& p,
 	      const mln_value(I)& v)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       mln_precondition(exact(ima).has(p));
 
       for (unsigned i = 0; i < I::point::dim; i++)

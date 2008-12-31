@@ -88,7 +88,7 @@ namespace mln
       bool has(const psite& p) const;
       unsigned nsites() const; // If relevant.
 
-      bool has_data() const;
+      bool is_valid() const;
 
       // to be provided in concrete image classes:
 
@@ -202,7 +202,7 @@ namespace mln
 //     unsigned (E::*m2)() const = & E::nsites;
 //     m2 = 0;
 
-    bool (E::*m3)() const = & E::has_data;
+    bool (E::*m3)() const = & E::is_valid;
     m3 = 0;
 
     // to be provided in concrete image classes:
@@ -263,7 +263,7 @@ namespace mln
 	metal::bool_<(mlc_pow_int(s, d) == S)>::check();
 
 	I& to = exact(to_);
-	mln_precondition(! to.has_data());
+	mln_precondition(! to.is_valid());
 
 	box<P> b(all_to(0), all_to(s - 1));
 	to.init_(b);

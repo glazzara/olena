@@ -53,7 +53,7 @@ namespace mln
     inline
     mln_deduce(I, site, coord) min_ind(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return exact(ima).bbox().pmin().ind();
     }
 

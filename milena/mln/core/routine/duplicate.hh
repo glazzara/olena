@@ -47,7 +47,7 @@ namespace mln
   /// \param[in] model The image to be duplicated.
   /// \result The duplicate.
   ///
-  /// \pre model.has_data
+  /// \pre model.is_valid
   template <typename I>
   mln_concrete(I) duplicate(const Image<I>& model);
 

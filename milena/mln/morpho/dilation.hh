@@ -165,7 +165,7 @@ namespace mln
     dilation(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::dilation");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = general(dilation_op(), input, win);

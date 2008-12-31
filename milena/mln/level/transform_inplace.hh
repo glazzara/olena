@@ -98,7 +98,7 @@ namespace mln
 	mlc_converts_to(mln_result(F), mln_value(I))::check();
 
         // Dynamic test.
-	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(ima).is_valid());
 
 	// Avoid a warning.
 	(void) ima;
@@ -119,8 +119,8 @@ namespace mln
 	mlc_converts_to(mln_result(F), mln_value(I1))::check();
 
         // Dynamic test.
-	mln_precondition(exact(ima).has_data());
-	mln_precondition(exact(aux).has_data());
+	mln_precondition(exact(ima).is_valid());
+	mln_precondition(exact(aux).is_valid());
 	mln_precondition(exact(aux).domain() == exact(ima).domain());
 
 	// Avoid warnings.

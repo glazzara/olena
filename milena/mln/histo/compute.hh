@@ -82,7 +82,7 @@ namespace mln
     {
       trace::entering("histo::compute");
       mlc_equal(mln_trait_image_quant(I), mln::trait::image::quant::low)::check();
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       data<mln_value(I)> h = impl::compute_(mln_trait_image_speed(I)(),
 				 exact(input));

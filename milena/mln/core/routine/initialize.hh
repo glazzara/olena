@@ -44,7 +44,7 @@ namespace mln
    * \param[in, out] target The image to be initialized.
    * \param[in] model The image to provide data for the initialization.
    *
-   * \pre (not target.has_data) and model.has_data
+   * \pre (not target.is_valid) and model.is_valid
    */
   template <typename I, typename J>
   void initialize(Image<I>& target, const Image<J>& model);
@@ -58,14 +58,14 @@ namespace mln
   void initialize(Image<I>& target, const Image<J>& model)
   {
     trace::entering("core::initialize");
-    mln_precondition(! exact(target).has_data());
-    mln_precondition(exact(model).has_data());
+    mln_precondition(! exact(target).is_valid());
+    mln_precondition(exact(model).is_valid());
 
     trace::stop();
     init_(tag::image, exact(target), exact(model));
     trace::resume();
 
-    mln_postcondition(exact(target).has_data());
+    mln_postcondition(exact(target).is_valid());
     trace::exiting("core::initialize");
   }
 

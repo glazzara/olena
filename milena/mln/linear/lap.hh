@@ -74,7 +74,7 @@ namespace mln
     lap_4(const Image<I>& input)
     {
       trace::entering("linear::lap_4");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { 0,  1,  0,
 		   1, -4,  1,
 		   0,  1,  0 };
@@ -89,7 +89,7 @@ namespace mln
     lap_8(const Image<I>& input)
     {
       trace::entering("linear::lap_8");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { 1,  1,  1,
 		   1, -8,  1,
 		   1,  1,  1 };
@@ -104,7 +104,7 @@ namespace mln
     lap_x(const Image<I>& input)
     {
       trace::entering("linear::lap_x");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { +2, -1, +2,
 		   -1, -4, -1,
 		   +2, -1, +2 };
@@ -119,7 +119,7 @@ namespace mln
     lap_o(const Image<I>& input)
     {
       trace::entering("linear::lap_o");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { -1, +2, -1,
 		   +2, -4, +2,
 		   -1, +2, -1 };

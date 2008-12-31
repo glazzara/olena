@@ -88,7 +88,7 @@ namespace mln
 
 	bool is_valid() const
 	{
-	  return parent_.has_data(); // FIXME: and... (?)
+	  return parent_.is_valid(); // FIXME: and... (?)
 	}
 
 	bool is_root(const mln_psite(I)& p) const

@@ -72,7 +72,7 @@ namespace mln
     LoG_5x5(const Image<I>& input)
     {
       trace::entering("linear::LoG_5x5");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0, -1,  0,  0,
 		   +0, -1, -2, -1,  0,
 		   -1, -2, 16, -2, -1,
@@ -91,7 +91,7 @@ namespace mln
     LoG_7x7(const Image<I>& input)
     {
       trace::entering("linear::LoG_7x7");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0, -1, -1, -1,  0,  0, 
 		   +0, -1, -3, -3, -3, -1,  0,
 		   -1, -3,  0,  7,  0, -3, -1,
@@ -112,7 +112,7 @@ namespace mln
     LoG_13x13(const Image<I>& input)
     {
       trace::entering("linear::LoG_13x13");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { +0,  0,  0,  0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
 		   +0,  0,  0, -1, -1, -2, -2, -2, -1, -1,  0,  0,  0,
 		   +0,  0, -2, -2, -3, -3, -4, -3, -3, -2, -2,  0,  0,
@@ -139,7 +139,7 @@ namespace mln
     LoG_17x17(const Image<I>& input)
     {
       trace::entering("linear::LoG_17x17");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       int ws[] = { +0, 0, 0, 0, 0, 0,-1,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0,
 		   +0, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0, 0,
 		   +0, 0,-1,-1,-1,-2,-3,-3,-3,-3,-3,-2,-1,-1,-1, 0, 0,

@@ -93,7 +93,7 @@ namespace mln
     {
       trace::entering("level::replace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       impl::generic::replace_<I>(exact(input), old_value, new_value);
 

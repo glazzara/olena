@@ -99,7 +99,7 @@ namespace mln
   bool
   pixel<I>::is_valid() const
   {
-    if (this->value_ptr_ == 0 || ! this->image_.has_data())
+    if (this->value_ptr_ == 0 || ! this->image_.is_valid())
       return false;
     int o = this->value_ptr_ - this->image_.buffer();
     mln_psite(I) p = this->image_.point_at_index(o);

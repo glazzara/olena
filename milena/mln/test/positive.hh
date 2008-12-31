@@ -57,7 +57,7 @@ namespace mln
     bool positive(const Image<I>& input_)
     {
       const I& input = exact(input_);
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
       // FIXME: Below the '>=' op should properly work with signed/unsigned without
       // FIXME: warnings; so we really need to overload ops for functions when literals
       // FIXME: are involved.

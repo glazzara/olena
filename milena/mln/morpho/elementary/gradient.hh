@@ -61,7 +61,7 @@ namespace mln
 	void
 	gradient_tests(const Image<I>& input, const Neighborhood<N>& nbh)
 	{
-	  mln_precondition(exact(input).has_data());
+	  mln_precondition(exact(input).is_valid());
 	  // mln_precondition(exact(nbh).is_valid());
 	  (void) input;
 	  (void) nbh;

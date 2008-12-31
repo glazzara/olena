@@ -71,7 +71,7 @@ namespace mln
       {
 	A& a = exact(a_);
 	const I& input = exact(input_);
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	// sizeof(a.take(mln_value(I)()));
 
 	(void) a;

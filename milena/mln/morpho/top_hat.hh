@@ -82,7 +82,7 @@ namespace mln
     mln_concrete(I) top_hat_white(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_white");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(input,
@@ -98,7 +98,7 @@ namespace mln
     mln_concrete(I) top_hat_black(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_black");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(closing(input, win),
@@ -114,7 +114,7 @@ namespace mln
     mln_concrete(I) top_hat_self_complementary(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::top_hat_self_complementary");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(closing(input, win),

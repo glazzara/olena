@@ -134,7 +134,7 @@ namespace mln
       image_fastest_<E,B>::index_of_point(const P& p) const
       {
 	const E* this_ = & internal::force_exact<E>(*this);
-	mln_precondition(this_->has_data());
+	mln_precondition(this_->is_valid());
 	mln_precondition(this_->has(p));
 
 	unsigned i = & this_->operator()(p) - this_->buffer();

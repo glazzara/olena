@@ -62,7 +62,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win = exact(win_);
 
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	mln_precondition(! win.is_empty());
 	(void) input;
 	(void) win;
@@ -168,7 +168,7 @@ namespace mln
     rank_filter(const Image<I>& input, const Window<W>& win, unsigned k)
     {
       trace::entering("morpho::rank_filter");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = internal::rank_filter_dispatch(exact(input), exact(win), k);

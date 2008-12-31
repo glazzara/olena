@@ -77,7 +77,7 @@ namespace mln
 	(void) ima;
 
 	mlc_is(mln_trait_image_value_io(I), trait::image::value_io::read_write)::check();
-	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(ima).is_valid());
 	// FIXME: check for ambiguities...
       }
 

@@ -129,7 +129,7 @@ namespace mln
     lvalue operator() (const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Give the definition domain.
     const pset& domain() const;
@@ -178,7 +178,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  rle_image<P, T>::has_data() const
+  rle_image<P, T>::is_valid() const
   {
     return this->data_->values_.size() != 0;
   }
@@ -188,7 +188,7 @@ namespace mln
   void
   rle_image<P, T>::insert(const p_run<P>& pr, T value)
   {
-    if (!this->has_data())
+    if (!this->is_valid())
       this->data_ = new internal::data< rle_image<P,T> >();
     mln_assertion(this->data_->values_.size() == 0 ||
 		  pr[0] > this->data_->domain_[this->data_->domain_.nsites() - 1].start());

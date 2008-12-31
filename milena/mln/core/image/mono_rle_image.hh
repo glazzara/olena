@@ -137,7 +137,7 @@ namespace mln
     lvalue operator() (const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Give the uniq value of the image.
     rvalue get_value() const;
@@ -198,7 +198,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  mono_rle_image<P, T>::has_data() const
+  mono_rle_image<P, T>::is_valid() const
   {
     return true;
   }

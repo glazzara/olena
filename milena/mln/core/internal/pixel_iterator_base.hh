@@ -130,7 +130,7 @@ namespace mln
     pixel_iterator_base_<I, E>::pixel_iterator_base_(I& image)
       : super_(image)
     {
-      mln_precondition(image.has_data());
+      mln_precondition(image.is_valid());
       I& ima = this->image_;
       boi_ = & ima( ima.domain().pmin() ) - 1;
       eoi_ = & ima( ima.domain().pmax() ) + 1;

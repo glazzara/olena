@@ -116,7 +116,7 @@ namespace mln
       {
         // FIXME: we may want to check that it is exactly a label.
         mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-        mln_precondition(exact(label).has_data());
+        mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) nlabels;
 	(void) new_nlabels;
@@ -132,7 +132,7 @@ namespace mln
       {
         // FIXME: we may want to check that it is exactly a label.
         mlc_is_a(mln_value(I), mln::value::Symbolic)::check();
-        mln_precondition(exact(label).has_data());
+        mln_precondition(exact(label).is_valid());
 	(void) label;
 	(void) nlabels;
 	(void) f;

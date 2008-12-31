@@ -83,7 +83,7 @@ namespace mln
     {
       trace::entering("level::abs_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       level::apply(input, fun::v2v::abs<mln_value(I)>());
 
       trace::exiting("level::abs_inplace");

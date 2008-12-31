@@ -121,7 +121,7 @@ namespace mln
       //mlc_is(mln_trait_image_border(J), trait::image::border::some)::check();
       const I& ima1 = exact(ima1_);
       const J& ima2 = exact(ima2_);
-      mln_precondition(ima1.has_data() && ima2.has_data());
+      mln_precondition(ima1.is_valid() && ima2.is_valid());
 
       impl::equalize_(ima1, ima2, min_thickness);
 

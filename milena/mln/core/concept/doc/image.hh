@@ -73,7 +73,7 @@ namespace mln
 
       /*! \brief Test if the image have been initialized.
        */
-      bool has_data() const;
+      bool is_valid() const;
 
       /*! \brief Test if the image owns the point site \p p.
        *

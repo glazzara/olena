@@ -202,7 +202,7 @@ namespace mln
 
       const I& ima = exact(ima_);
 
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
       mlc_is(mln_trait_image_speed(I), trait::image::speed::fastest)::check();
 
       typedef mln_psite(I) P;

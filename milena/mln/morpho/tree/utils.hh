@@ -79,8 +79,8 @@ namespace mln
 	const T& parent = exact(parent_);
 	const I& f = exact(f_);
 
-	mln_precondition(parent.has_data());
-	mln_precondition(f.has_data());
+	mln_precondition(parent.is_valid());
+	mln_precondition(f.is_valid());
 	mln_precondition(parent.domain() == f.domain());
 
 	return parent(p) == p;
@@ -98,8 +98,8 @@ namespace mln
 	const T& parent = exact(parent_);
 	const I& f = exact(f_);
 
-	mln_precondition(parent.has_data());
-	mln_precondition(f.has_data());
+	mln_precondition(parent.is_valid());
+	mln_precondition(f.is_valid());
 	mln_precondition(parent.domain() == f.domain());
 
 	return parent(p) == p || f(parent(p)) != f(p);
@@ -117,8 +117,8 @@ namespace mln
 	const I& f = exact(f_);
 	const S& s = exact(s_);
 
-	mln_precondition(parent.has_data());
-	mln_precondition(f.has_data());
+	mln_precondition(parent.is_valid());
+	mln_precondition(f.is_valid());
 	mln_precondition(f.domain() == parent.domain());
 	mln_precondition(s == f.domain());
 

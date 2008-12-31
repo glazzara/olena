@@ -259,7 +259,7 @@ namespace mln
   const p_bgraph<P>&
   bgraph_image<P, V>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->pg_;
   }
 

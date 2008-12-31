@@ -48,7 +48,7 @@ namespace mln
      * \param[in] input the input image.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I>
     mln_concrete(I) not_(const Image<I>& input);
@@ -62,7 +62,7 @@ namespace mln
      *   for all p of input.domain \n
      *     input(p) = not input(p)
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I>
     void not_inplace(Image<I>& input);
@@ -77,7 +77,7 @@ namespace mln
     {
       trace::entering("logical::not_");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
       mln_concrete(I) output = level::transform(input, f);
@@ -92,7 +92,7 @@ namespace mln
     {
       trace::entering("logical::not_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       fun::v2b::lnot<mln_value(I)> f;
       level::transform_inplace(input, f);

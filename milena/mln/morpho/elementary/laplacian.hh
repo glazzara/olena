@@ -65,7 +65,7 @@ namespace mln
       {
 	trace::entering("morpho::elementary::laplacian");
 
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	mln_trait_op_minus_twice(mln_concrete(I)) output;

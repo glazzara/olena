@@ -130,7 +130,7 @@ namespace mln
     run_image_<T, P, E>::has(const mln_psite(p_set_of< p_run<P> >)& ps) const
     {
       const E* ima = exact(this);
-      if (!ima->has_data())
+      if (!ima->is_valid())
 	return false;
       else
 	return (ps.index() < ima->data_->domain_.nsites()

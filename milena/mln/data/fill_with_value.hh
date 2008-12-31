@@ -78,7 +78,7 @@ namespace mln
       void fill_with_value_tests(Image<I>& ima, const V&)
       {
 	mlc_converts_to(mln_exact(V), mln_value(I))::check();
-	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(ima).is_valid());
 
 	// Avoid a warning about an undefined variable when NDEBUG
 	(void) ima;

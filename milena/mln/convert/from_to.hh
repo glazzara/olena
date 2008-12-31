@@ -77,7 +77,7 @@ namespace mln
       {
 	mlc_is(mln_trait_site_set_contents(S),
 	    mln::trait::site_set::contents::dynamic)::check();
-	mln_precondition(exact(from).has_data());
+	mln_precondition(exact(from).is_valid());
 	mln::convert::impl::from_image_to_site_set(from, to);
       }
 

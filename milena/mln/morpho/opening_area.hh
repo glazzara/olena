@@ -61,7 +61,7 @@ namespace mln
       trace::entering("morpho::opening_area");
       typedef util::pix<I> pix_t;
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       output= opening_attribute< accu::count<pix_t> >(input, nbh, lambda);

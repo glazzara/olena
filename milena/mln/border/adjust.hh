@@ -66,7 +66,7 @@ namespace mln
     {
       trace::entering("border::adjust");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
 
       if (border::get(ima) < min_thickness)
 	border::resize(ima, min_thickness);

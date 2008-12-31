@@ -79,7 +79,7 @@ namespace mln
     mln_concrete(I) gradient(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(dilation(input, win),
@@ -96,7 +96,7 @@ namespace mln
     mln_concrete(I) gradient_internal(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient_internal");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(input,
@@ -113,7 +113,7 @@ namespace mln
     mln_concrete(I) gradient_external(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::gradient_external");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = morpho::minus(dilation(input, win),

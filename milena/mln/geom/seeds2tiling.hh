@@ -128,7 +128,7 @@ namespace mln
     {
       trace::entering("geom::seed2tiling");
 
-      mln_precondition(exact(ima_).has_data());
+      mln_precondition(exact(ima_).is_valid());
       I output = impl::seeds2tiling(ima_, nbh);
 
       trace::exiting("geom::seed2tiling");

@@ -54,7 +54,7 @@ namespace mln
     inline
     unsigned ninds(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return geom::max_ind(ima) - geom::min_ind(ima) + 1;
     }
 

@@ -90,7 +90,7 @@ namespace mln
       fwd_t::operator()(F& f) const
       {
 	trace::entering("canvas::browsing::fwd");
-	mln_precondition(f.input.has_data());
+	mln_precondition(f.input.is_valid());
 	typedef typename F::I I;
 	mln_fwd_piter(I) p(f.input.domain());
 	f.init();

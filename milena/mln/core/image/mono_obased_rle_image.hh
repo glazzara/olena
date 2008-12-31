@@ -138,7 +138,7 @@ namespace mln
     T& operator()(const mln_psite(pset)& site);
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Give the definition domain.
     const pset& domain() const;
@@ -202,7 +202,7 @@ namespace mln
   template <typename P, typename T>
   inline
   bool
-  mono_obased_rle_image<P, T>::has_data() const
+  mono_obased_rle_image<P, T>::is_valid() const
   {
     return this->data_->ima_.size() != 0;
   }

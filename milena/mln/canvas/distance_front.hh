@@ -74,7 +74,7 @@ namespace mln
       const N& nbh   = exact(nbh_);
       const W& w_win = exact(w_win_);
 
-      mln_precondition(input.has_data());
+      mln_precondition(input.is_valid());
       // mln_precondition(w_win.is_valid());
 
       typedef mln_site(I) P;

@@ -227,7 +227,7 @@ namespace mln
 					    const Pref& p_ref)
     : super_(image)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
 
     mlc_converts_to(Pref, const mln_psite(I)&)::check();
     p_ref_ = & static_cast< const mln_psite(I)& >(p_ref);
@@ -244,7 +244,7 @@ namespace mln
     : super_(internal::force_exact<Pref>(pxl_ref_).ima())
   {
     const Pref& pxl_ref = internal::force_exact<Pref>(pxl_ref_);
-    mln_precondition(pxl_ref.ima().has_data());
+    mln_precondition(pxl_ref.ima().is_valid());
     p_ref_ = 0;
     // Potential promotion from (T**) to (const T**) shall be forced.
     value_ref_ = const_cast<mln_qlf_value(I)**>(pxl_ref.address_());
@@ -341,7 +341,7 @@ namespace mln
 					    const Pref& p_ref)
     : super_(image)
   {
-    mln_precondition(image.has_data());
+    mln_precondition(image.is_valid());
     internal::get_adr(p_ref_, p_ref);
     value_ref_ = 0;
     init_(dps);
@@ -355,7 +355,7 @@ namespace mln
     : super_(internal::force_exact<Pref>(pxl_ref_).ima())
   {
     const Pref& pxl_ref = internal::force_exact<Pref>(pxl_ref_);
-    mln_precondition(pxl_ref.ima().has_data());
+    mln_precondition(pxl_ref.ima().is_valid());
     p_ref_ = 0;
     // Potential promotion from (T**) to (const T**) shall be forced.
     value_ref_ = const_cast<mln_qlf_value(I)**>(pxl_ref.address_());

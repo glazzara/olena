@@ -80,7 +80,7 @@ namespace mln
 	const I& input = exact(input_);
 	const W& win   = exact(win_);
 
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	mln_precondition(! win.is_empty());
 	// mln_precondition(win.is_valid());
 
@@ -171,7 +171,7 @@ namespace mln
     general(const Op& op, const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::general");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       internal::general_tests(op, input, win);

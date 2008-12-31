@@ -63,7 +63,7 @@ namespace mln
     void min_max(const Image<I>& input,
 		 mln_value(I)& min, mln_value(I)& max)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       typedef mln_value(I) V;
       std::pair<V, V> mm = level::compute(accu::meta::min_max(), input);
       min = mm.first;

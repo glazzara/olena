@@ -66,7 +66,7 @@ namespace mln
       {
 	trace::entering("mln::io::txt::save");
 
-	mln_precondition(ima.has_data());
+	mln_precondition(ima.is_valid());
 	std::ofstream ostr(filename.c_str());
 	unsigned col = 0;
 	typedef image2d<char> I;

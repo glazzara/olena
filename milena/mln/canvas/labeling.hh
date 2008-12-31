@@ -69,7 +69,7 @@ namespace mln
 	const I& input = exact(input_);
 	const N& nbh   = exact(nbh_);
 
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	// mln_precondition(nbh.is_valid());
 
 	(void) input;

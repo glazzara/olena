@@ -91,7 +91,7 @@ namespace mln
     {
       trace::entering("level::saturate");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f;
       mln_ch_value(I, V) output = level::transform(input, f);
@@ -108,7 +108,7 @@ namespace mln
     {
       trace::entering("level::saturate");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<V> f(min, max);
       mln_ch_value(I, V) output = level::transform(input, f);
@@ -124,7 +124,7 @@ namespace mln
     {
       trace::entering("level::saturate_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       fun::v2v::saturate<mln_value(I)> f(min, max);
       level::apply(input, f);

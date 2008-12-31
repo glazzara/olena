@@ -151,7 +151,7 @@ namespace mln
      * \param[in] val The value.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V>
     mln_trait_op_minus(I, V)
@@ -165,7 +165,7 @@ namespace mln
      * \param[in] f   Function.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V, typename F>
     mln_ch_value(I, mln_result(F))
@@ -177,7 +177,7 @@ namespace mln
      * \param[in,out] input The image.
      * \param[in] val The value.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V>
     I&
@@ -228,7 +228,7 @@ namespace mln
   {
     trace::entering("operator::minus");
 
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     mln_trait_op_minus(I,S) output = arith::minus_cst(ima, exact(s));
 
     trace::exiting("operator::minus");
@@ -242,7 +242,7 @@ namespace mln
   {
     trace::entering("operator::minus_eq");
 
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     arith::minus_cst_inplace(ima, exact(s));
 
     trace::exiting("operator::minus_eq");
@@ -391,7 +391,7 @@ namespace mln
     {
       trace::entering("arith::minus_cst");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       mln_trait_op_minus(I, V) output = minus(input,
@@ -409,7 +409,7 @@ namespace mln
     {
       trace::entering("arith::minus_cst");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       mln_ch_value(I, mln_result(F)) output = minus(input,
@@ -444,7 +444,7 @@ namespace mln
     {
       trace::entering("arith::minus_cst_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       minus_inplace(input,

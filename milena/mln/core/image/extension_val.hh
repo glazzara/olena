@@ -204,7 +204,7 @@ namespace mln
   mln_value(I)
   extension_val<I>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     // if-else is preferred to the ternary op to allow conversions.
     if (this->data_->ima_.domain().has(p))
       return this->data_->ima_(p);
@@ -218,7 +218,7 @@ namespace mln
   extension_val<I>::operator()(const mln_psite(I)& p)
   {
     static mln_value(I) cpy;
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     // See the above comment about if-else v. ternary.
     if (this->data_->ima_.domain().has(p))
       return this->data_->ima_(p);
@@ -235,7 +235,7 @@ namespace mln
   const mln_value(I)&
   extension_val<I>::extension() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->val_;
   }
 
@@ -244,7 +244,7 @@ namespace mln
   void
   extension_val<I>::change_extension(const mln_value(I)& val)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     this->data_->val_ = val;
   }
 

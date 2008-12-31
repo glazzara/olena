@@ -260,7 +260,7 @@ namespace mln
   complex_image<D, G, V>::init_(const p_complex<D, G>& pc,
 				const metal::vec< D + 1, std::vector<V> >& values)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ =
       new internal::data< complex_image<D, G, V> >(pc, values);
   }
@@ -300,7 +300,7 @@ namespace mln
   const p_complex<D, G>&
   complex_image<D, G, V>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->pc_;
   }
 

@@ -146,7 +146,7 @@ namespace mln
   plain<I>::plain(const plain<I>& rhs)
     : super_()
   {
-    mln_precondition(rhs.has_data());
+    mln_precondition(rhs.is_valid());
     init_(rhs.data_->ima_);
   }
 
@@ -154,7 +154,7 @@ namespace mln
   inline
   plain<I>::plain(const I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     init_(ima);
   }
 
@@ -163,7 +163,7 @@ namespace mln
   void
   plain<I>::init_(const I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< plain<I> >(ima);
   }
 
@@ -172,7 +172,7 @@ namespace mln
   plain<I>&
   plain<I>::operator=(const plain<I>& rhs)
   {
-    mln_precondition(rhs.has_data());
+    mln_precondition(rhs.is_valid());
     if (&rhs == this)
       return *this;
     this->destroy();
@@ -185,7 +185,7 @@ namespace mln
   plain<I>&
   plain<I>::operator=(const I& ima)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->destroy();
     init_(ima);
     return *this;
@@ -195,7 +195,7 @@ namespace mln
   inline
   plain<I>::operator I () const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return duplicate(this->data_->ima_);
   }
 

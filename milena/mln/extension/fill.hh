@@ -177,7 +177,7 @@ namespace mln
     {
       trace::entering("extension::fill");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       internal::fill_dispatch(ima, val);
 
       trace::exiting("extension::fill");

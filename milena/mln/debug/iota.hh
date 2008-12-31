@@ -79,7 +79,7 @@ namespace mln
     iota(Image<I>& input)
     {
       trace::entering("debug::iota");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       impl::iota(mln_trait_image_speed(I)(), exact(input));
       trace::exiting("debug::iota");
     }

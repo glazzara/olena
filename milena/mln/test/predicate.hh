@@ -148,7 +148,7 @@ namespace mln
     inline
     bool predicate(const Image<I>& ima, const Function_v2b<F>& f)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       return impl::predicate_(mln_trait_image_speed(I)(), exact(ima),
 			      exact(f));
     }
@@ -161,8 +161,8 @@ namespace mln
       const I& lhs = exact(lhs_);
       const J& rhs = exact(rhs_);
 
-      mln_precondition(lhs.has_data());
-      mln_precondition(rhs.has_data());
+      mln_precondition(lhs.is_valid());
+      mln_precondition(rhs.is_valid());
       mln_precondition(lhs.domain() == rhs.domain());
 
       return impl::predicate_(mln_trait_image_speed(I)(),

@@ -105,7 +105,7 @@ namespace mln
 	     const mln_value(L)& nlabels)
     {
       trace::entering("debug::colorize");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       // FIXME: check that V is a color type.
       // FIXME: we want to be sure that this is a label.
       mlc_is_a(mln_value(L), mln::value::Symbolic)::check();

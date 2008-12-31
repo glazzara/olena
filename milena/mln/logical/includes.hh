@@ -57,8 +57,8 @@ namespace mln
 	const L& lhs = exact(lhs_);
 	const R& rhs = exact(rhs_);
 
-	mln_precondition(lhs.has_data());
-	mln_precondition(rhs.has_data());
+	mln_precondition(lhs.is_valid());
+	mln_precondition(rhs.is_valid());
 	mln_precondition(rhs.domain() == lhs.domain());
 
 	(void) lhs;

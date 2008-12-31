@@ -199,7 +199,7 @@ namespace mln
   void
   image_if<I,F>::init_(I& ima, const F& f)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< image_if<I,F> >(ima, f);
   }
 
@@ -208,7 +208,7 @@ namespace mln
   const p_if<mln_pset(I), F>&
   image_if<I,F>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->pset_;
   }
 
@@ -216,7 +216,7 @@ namespace mln
   inline
   image_if<I,F>::operator image_if<const I,F>() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     image_if<const I,F> tmp(this->data_->ima_,
 			    this->data_->pset_.predicate());
     return tmp;

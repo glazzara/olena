@@ -72,7 +72,7 @@ namespace mln
 	     const Box<B>& b,
 	     const mln_value(I)& v)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
 
       mln_psite(I) pmin = exact(b).pmin();
       mln_psite(I) pmax = exact(b).pmax();

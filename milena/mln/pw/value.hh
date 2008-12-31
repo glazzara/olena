@@ -107,7 +107,7 @@ namespace mln
     value_<I>
     value(const Image<I>& ima)
     {
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       value_<I> tmp(exact(ima));
       return tmp;
     }

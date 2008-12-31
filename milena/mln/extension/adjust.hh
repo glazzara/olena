@@ -77,7 +77,7 @@ namespace mln
       template <typename I>
       void adjust(const I& ima, unsigned delta)
       {
-	mln_precondition(exact(ima).has_data());
+	mln_precondition(exact(ima).is_valid());
 	// FIXME: Is-it right?
 	border::adjust(ima, delta);
       }

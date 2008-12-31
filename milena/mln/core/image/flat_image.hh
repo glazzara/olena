@@ -207,7 +207,7 @@ namespace mln
   void
   flat_image<T,S>::init_(const T& val, const S& pset)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< flat_image<T,S> >(val, pset);
   }
 
@@ -232,7 +232,7 @@ namespace mln
   const T&
   flat_image<T,S>::operator()(const mln_psite(S)&) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->val_;
   }
 
@@ -241,7 +241,7 @@ namespace mln
   const T&
   flat_image<T,S>::operator()(const mln_psite(S)&)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->val_;
   }
 
@@ -250,7 +250,7 @@ namespace mln
   void
   flat_image<T,S>::change_value(const T& old_val, const T& new_val)
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     mln_precondition(old_val == this->data_->val_);
     this->data_->val_ = new_val;
 
@@ -263,7 +263,7 @@ namespace mln
   const T&
   flat_image<T,S>::val() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->val_;
   }
 
@@ -272,7 +272,7 @@ namespace mln
   T&
   flat_image<T,S>::val()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->val_;
   }
 

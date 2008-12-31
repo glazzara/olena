@@ -163,7 +163,7 @@ namespace mln
   mln_trait_op_times(I,S)
   operator*(const Image<I>& ima, const value::Scalar<S>& s)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     mln_trait_op_times(I,S) tmp;
     initialize(tmp, ima);
     arith::times_cst(ima, exact(s), tmp);
@@ -175,7 +175,7 @@ namespace mln
   I&
   operator*=(Image<I>& ima, const value::Scalar<S>& s)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     arith::times_cst(ima, exact(s), ima);
     return exact(ima);
   }
@@ -271,7 +271,7 @@ namespace mln
     {
       trace::entering("arith::times_cst_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       times_inplace(input, pw::cst(val) | exact(input).domain());
       // Calls the previous version.
 

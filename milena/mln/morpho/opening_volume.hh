@@ -59,7 +59,7 @@ namespace mln
 		   unsigned lambda)
     {
       trace::entering("morpho::opening_volume");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       output = opening_attribute< accu::volume<I> >(input, nbh, lambda);

@@ -634,7 +634,7 @@ namespace mln
      * if \p dir = 1, the filter is applied on the second image dimension.
      * And so on...
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      * \pre dir < dimension(input)
      */
     template <class I>
@@ -642,7 +642,7 @@ namespace mln
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma, int dir)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(dir < I::site::dim);
 
       mln_concrete(I) output;
@@ -666,7 +666,7 @@ namespace mln
      * if \p dir = 1, the filter is applied on the second image dimension.
      * And so on...
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      * \pre dir < dimension(input)
      */
     template <class I>
@@ -674,7 +674,7 @@ namespace mln
     mln_concrete(I)
     gaussian_1st_derivative(const Image<I>& input, float sigma, int dir)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(dir < I::site::dim);
 
       mln_concrete(I) output;
@@ -699,7 +699,7 @@ namespace mln
      * if \p dir = 1, the filter is applied on the second image dimension.
      * And so on...
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      * \pre dir < dimension(input)
      */
     template <class I>
@@ -707,7 +707,7 @@ namespace mln
     mln_concrete(I)
     gaussian_2nd_derivative(const Image<I>& input, float sigma, int dir)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(dir < I::site::dim);
 
       mln_concrete(I) output;
@@ -732,14 +732,14 @@ namespace mln
     /*! Apply an approximated gaussian filter of \p sigma on \p input.
      * This filter is applied in all the input image direction.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <class I>
     inline
     mln_concrete(I)
     gaussian(const Image<I>& input, float sigma)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       initialize(output, input);
@@ -761,14 +761,14 @@ namespace mln
      * \p input
      * This filter is applied in all the input image direction.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <class I>
     inline
     mln_concrete(I)
     gaussian_1st_derivative(const Image<I>& input, float sigma)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       initialize(output, input);
@@ -789,14 +789,14 @@ namespace mln
      * \p input
      * This filter is applied in all the input image direction.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <class I>
     inline
     mln_concrete(I)
     gaussian_2nd_derivative(const Image<I>& input, float sigma)
     {
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       initialize(output, input);

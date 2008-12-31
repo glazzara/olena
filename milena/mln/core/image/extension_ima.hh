@@ -210,8 +210,8 @@ namespace mln
   bool
   extension_ima<I, J>::has(const P& p) const
   {
-    mln_precondition(this->has_data());
-    mln_precondition(this->data_->ext_.has_data());
+    mln_precondition(this->is_valid());
+    mln_precondition(this->data_->ext_.is_valid());
     return
       this->data_->ima_.domain().has(p)
       || this->data_->ext_.has(p);
@@ -222,7 +222,7 @@ namespace mln
   mln_value(I)
   extension_ima<I, J>::operator()(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     mln_precondition(has(p));
     // if-else is preferred to the ternary op to allow for the
     // function result to convert towards the expected return type.
@@ -238,7 +238,7 @@ namespace mln
   extension_ima<I, J>::operator()(const mln_psite(I)& p)
   {
     static mln_value(I) cpy;
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     mln_precondition(has(p));
     // See the above comment about if-else v. ternary.
     if (this->data_->ima_.domain().has(p))
@@ -258,7 +258,7 @@ namespace mln
   mlc_const(J)&
   extension_ima<I, J>::extension() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->ext_;
   }
 
@@ -267,7 +267,7 @@ namespace mln
   J&
   extension_ima<I, J>::extension()
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->ext_;
   }
 

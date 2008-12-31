@@ -92,7 +92,7 @@ namespace mln
                            const Function_v2v<F>& f)
       {
         // Dynamic test.
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 
 	// Avoid a warning about an undefined variable when NDEBUG
 	// is not defined.
@@ -105,8 +105,8 @@ namespace mln
                            const Function_vv2v<F>& f)
       {
         // Dynamic tests.
-	mln_precondition(exact(input1).has_data());
-	mln_precondition(exact(input2).has_data());
+	mln_precondition(exact(input1).is_valid());
+	mln_precondition(exact(input2).is_valid());
 	mln_precondition(exact(input2).domain() == exact(input1).domain());
 
 	// Avoid a warning about an undefined variable when NDEBUG

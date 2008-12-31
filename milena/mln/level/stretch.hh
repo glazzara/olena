@@ -57,7 +57,7 @@ namespace mln
      * \param[in] input   The input image.
      * \param[out] output The result image.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <typename V, typename I>
     mln_ch_value(I, V)
@@ -115,7 +115,7 @@ namespace mln
     {
       trace::entering("level::stretch");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_ch_value(I, V) output = impl::stretch(V(), input);
 

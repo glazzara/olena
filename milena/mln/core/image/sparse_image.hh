@@ -212,7 +212,7 @@ namespace mln
   sparse_image<P,T>::insert(const p_run<P>& r, const std::vector<T>& vals)
   {
     mln_precondition(r.nsites() == vals.size());
-    if (! this->has_data())
+    if (! this->is_valid())
       this->data_ = new internal::data< sparse_image<P,T> >();
     this->data_->domain_.insert(r);
     this->data_->values_.push_back(vals);
@@ -223,7 +223,7 @@ namespace mln
   bool
   sparse_image<P,T>::has(const psite& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->domain_.has(p);
   }
 
@@ -250,7 +250,7 @@ namespace mln
   const p_set_of< p_run<P> >&
   sparse_image<P,T>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->domain_;
   }
 

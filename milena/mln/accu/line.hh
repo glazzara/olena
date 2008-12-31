@@ -97,8 +97,8 @@ namespace mln
 
 	const I& input = exact(input_);
 	O& output = exact(output_);
-	mln_precondition(input.has_data());
-	mln_precondition(output.has_data());
+	mln_precondition(input.is_valid());
+	mln_precondition(output.is_valid());
       }
       
     } // end of namespace mln::accu::internal

@@ -65,7 +65,7 @@ namespace mln
     {
       trace::entering("transform::influence_zone_geodesic");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       // mln_precondition(exact(nbh).is_valid());
 
       internal::influence_zone_functor<I> f;

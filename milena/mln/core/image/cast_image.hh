@@ -150,7 +150,7 @@ namespace mln
   cast_image_<T,I>
   cast_image(const Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     cast_image_<T,I> tmp(ima);
     return tmp;
   }
@@ -179,7 +179,7 @@ namespace mln
   inline
   cast_image_<T,I>::cast_image_(const Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data< cast_image_<T,I> >(exact(ima));
   }
 
@@ -188,7 +188,7 @@ namespace mln
   void
   cast_image_<T,I>::init_(const Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data<cast_image_<T,I> >(exact(ima));
   }
 

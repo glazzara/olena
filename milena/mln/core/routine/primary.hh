@@ -130,7 +130,7 @@ namespace mln
   const typename internal::primary_type<I>::ret&
   primary(const Image<I>& input)
   {
-    mln_precondition(exact(input).has_data());
+    mln_precondition(exact(input).is_valid());
     return internal::primary_(input);
   }
 

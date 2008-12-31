@@ -62,7 +62,7 @@ namespace mln
     {
       trace::entering("morpho::closing_height");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output;
       output = closing_attribute< accu::height<I> >(input, nbh, lambda);

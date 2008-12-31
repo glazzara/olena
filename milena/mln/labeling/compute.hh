@@ -126,7 +126,7 @@ namespace mln
 		    const Image<L>& label,
 		    const mln_value(L)& nlabels)
       {
-	mln_precondition(exact(label).has_data());
+	mln_precondition(exact(label).is_valid());
 	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) label;
@@ -142,8 +142,8 @@ namespace mln
 		    const Image<L>& label,
 		    const mln_value(L)& nlabels)
       {
-	mln_precondition(exact(input).has_data());
-	mln_precondition(exact(label).has_data());
+	mln_precondition(exact(input).is_valid());
+	mln_precondition(exact(label).is_valid());
 	mlc_is_a(mln_value(L), mln::value::Symbolic)::check();
 	(void) a;
 	(void) input;

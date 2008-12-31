@@ -147,7 +147,7 @@ namespace mln
   inline
   fun_image<F,I>::fun_image(Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data< fun_image<F,I> >(exact(ima));
   }
 
@@ -157,7 +157,7 @@ namespace mln
   void
   fun_image<F,I>::init_(Image<I>& ima)
   {
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     this->data_ = new internal::data<fun_image<F,I> >(exact(ima));
   }
 

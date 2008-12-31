@@ -130,7 +130,7 @@ namespace mln
     {
       trace::entering("border::resize");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
 
       // Try to resize the primary image behind ima.
       internal::resize_dispatch(primary(ima), thickness);

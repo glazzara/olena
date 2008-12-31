@@ -94,7 +94,7 @@ namespace mln
     {
       trace::entering("border::get");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       unsigned res = border::impl::get_(mln_trait_image_ext_domain(I)(),
 					mln_trait_image_category(I)(),
 					exact(ima));

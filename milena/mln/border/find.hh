@@ -98,7 +98,7 @@ namespace mln
     {
       trace::entering("border::find");
 
-      mln_precondition(exact(ima).has_data());
+      mln_precondition(exact(ima).is_valid());
       unsigned res = border::impl::find_(mln_trait_image_speed(I)(), exact(ima));
 
       trace::exiting("border::find");

@@ -98,7 +98,7 @@ namespace mln
     {
       trace::entering("level::apply");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       impl::apply_(mln_trait_image_speed(I)(), exact(input),
 		   exact(f));
 

@@ -94,7 +94,7 @@ namespace mln
 	  trace::entering("accu::impl::generic::compute");
 
 	  const I& input = exact(input_);
-	  mln_precondition(input.has_data());
+	  mln_precondition(input.is_valid());
 
 	  A a;
 	  mln_piter(I) p(input.domain());
@@ -132,7 +132,7 @@ namespace mln
     {
       trace::entering("accu::compute");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_result(A) output = internal::compute_dispatch(a, input);
 
       trace::exiting("accu::compute");
@@ -146,7 +146,7 @@ namespace mln
     {
       trace::entering("accu::compute");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef mln_accu_with(A, util::pix<I>) A_;
       util::pix<I>* pix_; // So we can pass a pixel below (pixel has

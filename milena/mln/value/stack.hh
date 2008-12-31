@@ -182,7 +182,7 @@ namespace mln
       void init_(const algebra::vec<n,I>& imas);
 
       /// Test if this image has been initialized.
-      bool has_data() const;
+      bool is_valid() const;
 
       /// Read-only access of pixel value at point site \p p.
       rvalue operator()(const psite& p) const;
@@ -248,16 +248,16 @@ namespace mln
       this->data_ = new mln::internal::data< stack_image<n, I> >(imas);
       for (unsigned i = 0; i < n; ++i)
       {
-	mln_precondition(imas[i].has_data());
+	mln_precondition(imas[i].is_valid());
       }
     }
 
     template <unsigned n, typename I>
     inline
-    bool stack_image<n,I>::has_data() const
+    bool stack_image<n,I>::is_valid() const
     {
       for (unsigned i = 0; i < n; ++i)
-	mln_invariant(this->data_->imas_[i].has_data());
+	mln_invariant(this->data_->imas_[i].is_valid());
       return true;
     }
 

@@ -57,7 +57,7 @@ namespace mln
     mln_concrete(I) closing(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::closing");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_concrete(I) output = erosion(dilation(input, win), win::sym(win));

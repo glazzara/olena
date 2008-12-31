@@ -125,7 +125,7 @@ namespace mln
 
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Test if a pixel value is accessible at \p p.
     bool has(const mln_psite(I)& p) const;
@@ -195,7 +195,7 @@ namespace mln
   void
   t_image<I>::init_(I& ima, unsigned dim1, unsigned dim2)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     /* FIXME: Add a precondition on the fact that the domain of ima is
        a box.  */
     // We don't use mln::t_image::transpose here, since one its
@@ -209,9 +209,9 @@ namespace mln
 
   template <typename I>
   inline
-  bool t_image<I>::has_data() const
+  bool t_image<I>::is_valid() const
   {
-    mln_invariant(this->delegatee_()->has_data());
+    mln_invariant(this->delegatee_()->is_valid());
     return true;
   }
 
@@ -220,7 +220,7 @@ namespace mln
   bool
   t_image<I>::has(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->delegatee_()->has(transpose_(p));
   }
 
@@ -229,7 +229,7 @@ namespace mln
   mln_psite(I)
   t_image<I>::transpose_(const mln_psite(I)& p) const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return exchange_coords_(p, this->data_->dim1_, this->data_->dim2_);
   }
 
@@ -250,7 +250,7 @@ namespace mln
   const box<mln_psite(I)>&
   t_image<I>::domain() const
   {
-    mln_precondition(this->has_data());
+    mln_precondition(this->is_valid());
     return this->data_->box_;
   }
 

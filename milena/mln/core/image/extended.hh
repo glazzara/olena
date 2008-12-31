@@ -179,7 +179,7 @@ namespace mln
   void
   extended<I>::init_(I& ima, const box<mln_site(I)>& b)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< extended<I> >(ima, b);
   }
 
@@ -200,7 +200,7 @@ namespace mln
   {
     mlc_not_equal(mln_trait_image_ext_domain(I),
 		  trait::image::ext_domain::none)::check();
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     extended<const I> tmp(exact(ima), exact(b));
     return tmp;
   }
@@ -211,7 +211,7 @@ namespace mln
   {
     mlc_not_equal(mln_trait_image_ext_domain(I),
 		  trait::image::ext_domain::none)::check();
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
     extended<I> tmp(exact(ima), exact(b));
     return tmp;
   }

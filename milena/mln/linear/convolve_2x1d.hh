@@ -51,7 +51,7 @@ namespace mln
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <typename I,
 	      typename W, unsigned Sh, unsigned Sv>
@@ -75,7 +75,7 @@ namespace mln
       mlc_bool(Sh % 2 == 1)::check();
       mlc_bool(Sv % 2 == 1)::check();
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       extension::adjust(input, util::max(Sh / 2, Sv / 2));
 

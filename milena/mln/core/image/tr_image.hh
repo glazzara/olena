@@ -121,7 +121,7 @@ namespace mln
     void init_(const S& s, I& ima, const T& tr);
 
     /// Test if this image has been initialized.
-    bool has_data() const;
+    bool is_valid() const;
 
     /// Test if a pixel value is accessible at \p p.
     using super_::has;
@@ -171,16 +171,16 @@ namespace mln
   void
   tr_image<S,I,T>::init_(const S& s, I& ima, const T& tr)
   {
-    mln_precondition(ima.has_data());
+    mln_precondition(ima.is_valid());
     this->data_ = new internal::data< tr_image<S,I,T> >(s, ima, tr);
   }
 
   template <typename S, typename I, typename T>
   inline
   bool
-  tr_image<S,I,T>::has_data() const
+  tr_image<S,I,T>::is_valid() const
   {
-    mln_invariant(this->delegatee_()->has_data());
+    mln_invariant(this->delegatee_()->is_valid());
     return true;
   }
 

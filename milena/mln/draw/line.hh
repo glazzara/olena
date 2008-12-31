@@ -75,7 +75,7 @@ namespace mln
 	      const mln_value(I)& v)
     {
       I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
       // if (! ima.has(beg) ||  ! ima.has(end)) trace::warning("out");
       data::paste(pw::cst(v) | p_line2d(beg, end),
 		   safe(ima).rw());

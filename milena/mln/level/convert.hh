@@ -67,7 +67,7 @@ namespace mln
     {
       trace::entering("level::convert");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       fun::v2v::convert<V> f;
       mln_ch_value(I, V) output = level::transform(input, f);
 

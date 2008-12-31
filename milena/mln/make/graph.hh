@@ -63,7 +63,7 @@ namespace mln
       void
       graph_tests(const Image<I>& iz, mln_value(I))
       {
-	mln_precondition(exact(iz).has_data());
+	mln_precondition(exact(iz).is_valid());
 
 	(void) iz;
       }

@@ -80,7 +80,7 @@ namespace mln
           check();
 	mlc_converts_to(mln_value(I), mln_value(J))::check();
 
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	mln_precondition(exact(input).domain() <= exact(output).domain());
 
         // Avoid warning when compiling with NDEBUG

@@ -92,7 +92,7 @@ namespace mln
                 const mln_deduce(I, site, coord)& gap)
     {
       trace::entering("subsampling::subsampling");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       mln_concrete(I) output(geom::nrows(input) / gap,
                              geom::ncols(input) / gap); // FIXME: only 2d here

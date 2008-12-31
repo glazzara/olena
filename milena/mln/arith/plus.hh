@@ -151,7 +151,7 @@ namespace mln
      * \param[in] val The value.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V>
     mln_trait_op_plus(I, V)
@@ -165,7 +165,7 @@ namespace mln
      * \param[in] f   Function.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V, typename F>
     mln_ch_value(I, mln_result(F))
@@ -178,7 +178,7 @@ namespace mln
      * \param[in] val The value.
      * \result The result image.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename W, typename I, typename V>
     mln_ch_value(I, W)
@@ -190,7 +190,7 @@ namespace mln
      * \param[in,out] input The image.
      * \param[in] val The value.
      *
-     * \pre \p input.has_data
+     * \pre \p input.is_valid
      */
     template <typename I, typename V>
     I&
@@ -243,7 +243,7 @@ namespace mln
   {
     trace::entering("operator::plus");
 
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
 
     mln_trait_op_plus(I,S) output = arith::plus_cst(ima, exact(s));
 
@@ -258,7 +258,7 @@ namespace mln
   {
     trace::entering("operator::plus_eq");
 
-    mln_precondition(exact(ima).has_data());
+    mln_precondition(exact(ima).is_valid());
 
     arith::plus_cst_inplace(ima, exact(s));
 
@@ -408,7 +408,7 @@ namespace mln
     {
       trace::entering("arith::plus_cst");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       mln_trait_op_plus(I, V) output = plus(input,
@@ -426,7 +426,7 @@ namespace mln
     {
       trace::entering("arith::plus_cst");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       mln_ch_value(I, mln_result(F)) output = plus(input,
@@ -445,7 +445,7 @@ namespace mln
     {
       trace::entering("arith::plus_cst");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       mln_ch_value(I, W) output = plus_cst(input, val,
@@ -479,7 +479,7 @@ namespace mln
     {
       trace::entering("arith::plus_cst_inplace");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       // Calls the previous version.
       plus_inplace(input,

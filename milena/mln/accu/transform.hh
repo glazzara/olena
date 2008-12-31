@@ -82,7 +82,7 @@ namespace mln
 	  const W& win   = exact(win_);
 	  A a = exact(a_);
 
-	  mln_precondition(input.has_data());
+	  mln_precondition(input.is_valid());
 	  // mln_precondition(win.is_valid());
 
 	  extension::adjust(input, win);
@@ -119,7 +119,7 @@ namespace mln
 	const W& win   = exact(win_);
 	A a = exact(a_);
 
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	// mln_precondition(win.is_valid());
 
 	extension::adjust(input, win);
@@ -188,7 +188,7 @@ namespace mln
     {
       trace::entering("accu::transform");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       // mln_precondition(exact(win).is_valid());
 
       mln_ch_value(I, mln_result(A)) output;
@@ -204,7 +204,7 @@ namespace mln
     {
       trace::entering("accu::transform");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       // mln_precondition(exact(win).is_valid());
 
       typedef mln_accu_with(A, mln_value(I)) A_;

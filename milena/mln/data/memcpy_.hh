@@ -123,8 +123,8 @@ namespace mln
       Ps& src  = mln::internal::force_exact<Ps>(src_);
 
       mln_precondition(sizeof(mln_value(Id)) == sizeof(mln_value(Is)));
-      mln_precondition(dest.ima().has_data());
-      mln_precondition(src.ima().has_data());
+      mln_precondition(dest.ima().is_valid());
+      mln_precondition(src.ima().is_valid());
 
       mln_precondition(&dest.val() >= &dest.ima().element(0));
       mln_precondition(&dest.val() < &dest.ima().element(0) +

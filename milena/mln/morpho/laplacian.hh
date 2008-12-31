@@ -82,7 +82,7 @@ namespace mln
       laplacian(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("morpho::laplacian");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mln_precondition(! exact(win).is_empty());
 
       mln_trait_op_minus_twice(mln_concrete(I)) output;

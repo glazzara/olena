@@ -108,7 +108,7 @@ namespace mln
     typedef lazy_image< tag::image_<I>, F, B > skeleton;
 
     /// Test if a pixel value is accessible at \p p.
-    using super_::has_data;
+    using super_::is_valid;
 
     /// Constructors.
     lazy_image();

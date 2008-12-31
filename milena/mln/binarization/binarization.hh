@@ -85,7 +85,7 @@ namespace mln
     binarization(const Image<I>& input, const Function_v2b<F>& fun)
     {
       trace::entering("binarization::binarization");
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
 

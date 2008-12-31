@@ -55,7 +55,7 @@ namespace mln
      * \warning The weighted window is used as-is, considering that
      * its symmetrization is handled by the client.
      *
-     * \pre input.has_data
+     * \pre input.is_valid
      */
     template <typename I, typename W, unsigned S>
     mln_ch_convolve(I, W)
@@ -73,7 +73,7 @@ namespace mln
 
       mlc_bool(S % 2 == 1)::check();
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
       typedef mln_site(I) P;
       mln_precondition(dir < P::dim);
 

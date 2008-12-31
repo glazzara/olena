@@ -78,7 +78,7 @@ namespace mln
       level_tests(const Image<I>& input, const mln_value(I)& val, const Neighborhood<N>& nbh,
 		  L& nlabels)
       {
-	mln_precondition(exact(input).has_data());
+	mln_precondition(exact(input).is_valid());
 	// mln_precondition(exact(nbh).is_valid());
 
 	(void) input;

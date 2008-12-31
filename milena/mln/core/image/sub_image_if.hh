@@ -194,7 +194,7 @@ namespace mln
   void
   sub_image_if<I,S>::init_(I& ima, const S& s)
   {
-    mln_precondition(! this->has_data());
+    mln_precondition(! this->is_valid());
     this->data_ = new internal::data< sub_image_if<I,S> >(ima, s);
   }
 

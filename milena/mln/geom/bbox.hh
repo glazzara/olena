@@ -136,7 +136,7 @@ namespace mln
     box<mln_site(I)> bbox(const Image<I>& ima_)
     {
       const I& ima = exact(ima_);
-      mln_precondition(ima.has_data());
+      mln_precondition(ima.is_valid());
       return geom::bbox(ima.domain());
     }
 

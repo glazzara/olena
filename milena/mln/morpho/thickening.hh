@@ -70,7 +70,7 @@ namespace mln
 	const Wbg& win_bg = exact(win_bg_);
 
 	// Tests.
-	mln_precondition(input.has_data());
+	mln_precondition(input.is_valid());
 	mln_precondition(win_bg.is_centered());
 	mln_precondition(! win_fg.is_empty());
 	mln_precondition((win_fg && win_bg).is_empty());

@@ -65,7 +65,7 @@ namespace mln
     {
       trace::entering("morpho::opening_area_on_vertices");
 
-      mln_precondition(exact(input).has_data());
+      mln_precondition(exact(input).is_valid());
 
       typedef p_edges<G, V2P> pe_t;
       typedef accu::count_adjacent_vertices<P2V, pe_t> attribute_t;
