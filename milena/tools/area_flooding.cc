@@ -25,10 +25,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/** \file tests/morpho/lena_line_graph_image_wst2.cc
-    \brief More tests on the Watershed Transform (WST) on a
-    mln::line_graph_image.
-   
+/// \file tests/morpho/lena_line_graph_image_wst2.cc
+///
+/// More tests on the Watershed Transform (WST) on a
+/// an image base on a p_edges (line_graph_image).
+/*!
     The scenario is as follows:
     \li load a 2-D, gray-level image from a PGM file;
     \li convert this 2-D image into a line graph-based one, where values
@@ -42,6 +43,8 @@
     \li create a 2D image of this watershed image, where each basin has
         an average grey level of the corresponding region in the input
         image.
+
+  FIXME: do not use mln_VAR.
 */
 
 #include <cstdlib>
@@ -55,10 +58,8 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-
-#include <mln/core/image/line_graph_image.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/core/image/line_graph_neighborhood_piter.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/var.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>
@@ -92,18 +93,19 @@ int main(int argc, char* argv[])
   orig_ima_t input;
   io::pgm::load(input, argv[2]);
   if (!input.has_data())
-    {
-      std::cerr << "Error reading input " << argv[2] << std::endl;
-      std::exit(2);
-    }
+  {
+    std::cerr << "Error reading input " << argv[2] << std::endl;
+    std::exit(2);
+  }
 
   /*----------------.
   | Line gradient.  |
   `----------------*/
 
   // Line graph image.
-  typedef line_graph_image<point2d, val_t> ima_t;
-  ima_t lg_ima = morpho::line_gradient(input);
+  typedef fun::i2v::array<val_t> fval_t;
+  fval_t values;
+  mln_VAR(lg_ima, morpho::line_gradient(input));
 
   /*-----------.
   | Flooding.  |
@@ -112,7 +114,7 @@ int main(int argc, char* argv[])
   /* FIXME: I'm not sure this is the way it should be done.  Anyway,
      we should implement this as a canvas.  */
 
-  typedef line_graph_elt_neighborhood<point2d> nbh_t;
+  typedef neighb< line_graph_elt_window<util::graph, lg_ima_t::pset::fun_t> > nbh_t;
   nbh_t nbh;
 
   unsigned area = 0;
@@ -120,15 +122,15 @@ int main(int argc, char* argv[])
   unsigned nregions = mln_max(unsigned);
   unsigned max_nregions = atoi(argv[1]);
 
-  ima_t result = duplicate(lg_ima);
+  lg_ima_t result = duplicate(lg_ima);
   while (area < max_area && nregions > max_nregions)
     {
       ++area;
       std::cerr << "area = " << area << " \t"
 		<< "nregions = " << nregions << std::endl;
-      ima_t work = duplicate(result);
+      lg_ima_t work = duplicate(result);
       // Compute the closing.
-      morpho::closing_area_on_vertices(work, nbh, area, result);
+      result = morpho::closing_area_on_vertices(work, nbh, area);
       // Compute the number of local minima (but get rid of the image,
       // as we don't need it).
       labeling::regional_minima(result, nbh, nregions);
@@ -141,8 +143,7 @@ int main(int argc, char* argv[])
   // Perform a Watershed Transform.
   typedef int_u16 wst_val_t;
   wst_val_t nbasins;
-  typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(result, nbh, nbasins);
+  mln_VAR(wshed, morpho::meyer_wst(result, nbh, nbasins));
   std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.
@@ -153,21 +154,21 @@ int main(int argc, char* argv[])
 
   // Create a 2D-equivalent of WSHED.
   image2d<wst_val_t> wshed2d(input.domain());
-  
+
   /* FIXME: It'd better if we could iterate over the *vertices* of a
      line graph image.  We could avoid all this lengthy code.  */
   // Iterate over each edge of the watershed image, and propagate the
   // label of an edge to its adjacent vertices when this edge is not
   // part of the watershed.
-  mln_piter_(wst_ima_t) p(wshed.domain());
+  mln_piter_(wshed_t) p(wshed.domain());
   for_all(p)
     if (wshed(p) != wshed_label)
-      {
-	// FIXME: Equip the iterator with first() and second()
-	// accessors?
-	wshed2d(p.unproxy_().first()) = wshed(p);
-	wshed2d(p.unproxy_().second()) = wshed(p);
-      }
+    {
+      // FIXME: Equip the iterator with first() and second()
+      // accessors?
+      wshed2d(p.first()) = wshed(p);
+      wshed2d(p.second()) = wshed(p);
+    }
 
   // For each basin, compute the average gray level.
   std::vector<mln_sum_(val_t)> sum(nbasins + 1, 0);

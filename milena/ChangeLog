@@ -1,5 +1,13 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Re-enable tools/area_flooding.
+
+	* tools/Makefile.am: enable the target.
+
+	* tools/area_flooding.cc: update according the new graph structure.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix line_gradient.
 
 	* morpho/line_gradient.hh: update according the new graph structure.
