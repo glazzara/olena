@@ -240,7 +240,7 @@ namespace mln
   template <typename Pref>
   inline
   void
-  complex_neighborhood_fwd_piter<I, G, N>::center_at_(const Pref& c)
+  complex_neighborhood_fwd_piter<I, G, N>::center_at_(const Pref&)
   {
     iter_.center_at(this->center().face());
   }

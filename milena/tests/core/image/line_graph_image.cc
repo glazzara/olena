@@ -29,20 +29,17 @@
 ///
 /// Tests on mln::graph_image.
 
-#include <vector>
-
 #include <mln/core/alias/point2d.hh>
-#include <mln/pw/all.hh>
 
-#include <mln/core/image/line_graph_elt_window.hh>
+/// Required for line graph images.
 #include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
 #include <mln/core/neighb.hh>
-
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
-
 #include <mln/util/graph.hh>
 
-#include <mln/core/var.hh>
 
 /* The graph and its corresponding line graph are as follows:
 

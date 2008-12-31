@@ -164,8 +164,6 @@ int main(int argc, char* argv[])
   for_all(p)
     if (wshed(p) != wshed_label)
     {
-      // FIXME: Equip the iterator with first() and second()
-      // accessors?
       wshed2d(p.first()) = wshed(p);
       wshed2d(p.second()) = wshed(p);
     }
@@ -186,7 +184,7 @@ int main(int argc, char* argv[])
   // Create an output image using the average gray levels of the basins.
   orig_ima_t output(input.domain());
   for_all(q)
-    output(q) = average[wshed2d(q)];
+    output(q) = convert::to<mln_value_(orig_ima_t)>(average[wshed2d(q)]);
 
   std::cout << "area = " << area << " \t"
 	    << "nregions = " << nregions << std::endl;

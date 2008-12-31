@@ -1,5 +1,40 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes (again).
+
+	* mln/core/image/complex_image.hh: update comments.
+
+	* mln/core/image/complex_neighborhood_piter.hh: avoid a warning.
+	
+	* mln/core/internal/site_relative_iterator_base.hh: call center_at_()
+	earlier.
+
+	* mln/core/site_set/p_vertices.hh: call the proper graph() method.
+
+	* mln/fun/v2v/ch_function_value.hh,
+	* mln/trait/ch_function_value.hh: fix a recursive inclusion.
+
+	* tests/core/image/graph_image.cc: fix layout.
+
+	* tests/core/image/line_graph_image.cc: cleanup includes.
+
+	* tests/level/paste_full.cc: move to...
+	* tests/data/paste_full.cc: ... this file.
+
+	* tests/level/Makefile.am: remove obsolete entries.
+
+	* tests/histo/to_image1d.cc: Fix compilation issue. An incorrect image
+	type was expected.
+
+	* tools/area_flooding.cc: fix a warning.
+
+	* tests/core/site_set/p_vertices.cc: The function mapping vertices to
+	sites was not large enough to hold all the values.
+
+	* mln/fun/x2v/bilinear.hh: avoid warnings using static_cast.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Re-enable tests in morpho and make them work again.
 
 	* tests/morpho/Makefile.am: re-enable all tests.

@@ -44,12 +44,13 @@ mln::trait::ch_functionvalue< I, V >::ret
 namespace mln
 {
 
+  // Forward declarations.
+  namespace trait { template <typename F, typename V> struct ch_function_value; }
+  namespace fun { namespace i2v { template <typename T> class array; } }
+
+
   namespace trait
   {
-
-    // Forward declaration.
-    template <typename F, typename V> struct ch_function_value;
-
 
     namespace impl
     {

@@ -320,7 +320,7 @@ namespace mln
   bool
   operator==(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs)
   {
-    return (lhs.g_) == (rhs.g_);
+    return (lhs.graph()) == (rhs.graph());
   }
 
   template <typename G, typename F>

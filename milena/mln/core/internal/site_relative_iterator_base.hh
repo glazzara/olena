@@ -141,8 +141,8 @@ namespace mln
     {
       mlc_converts_to(P, const mln_psite(S)&)::check();
       c_ = & static_cast< const mln_psite(S)& >(c);
-      this->invalidate();
       exact(this)->center_at_(c);
+      this->invalidate();
     }
 
     template <typename S, typename E>

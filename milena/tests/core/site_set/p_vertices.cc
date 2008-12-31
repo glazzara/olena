@@ -57,8 +57,8 @@ int main()
 
   // Map vertices to sites.
   typedef fun::i2v::array<point2d> F;
-  F f(5);
-  for (unsigned i = 0; i < 5; ++i)
+  F f(6);
+  for (unsigned i = 0; i < 6; ++i)
     f(i) = point2d(i, 0);
 
   typedef p_vertices<util::graph, F> p_vertices;

@@ -29,7 +29,8 @@
 # define MLN_CORE_IMAGE_COMPLEX_IMAGE_HH
 
 /// \file mln/core/image/complex_image.hh
-/// \brief Definition of a line complex-based image.
+///
+/// Definition of a line complex-based image.
 
 # include <vector>
 
@@ -113,7 +114,7 @@ namespace mln
   } // end of namespace mln::trait
 
 
-  /// \brief Image based on a complex.
+  /// Image based on a complex.
   ///
   /// Values attached to each face of the complex.
   ///
@@ -133,7 +134,7 @@ namespace mln
     /// Value associated type.
     typedef V value;
 
-    /// \brief Return type of read-write access.
+    /// Return type of read-write access.
     ///
     /// We use the associated type \c reference instead of a plain
     /// reference on th value type (\tparam V), because it's the only way

@@ -34,13 +34,15 @@
 /// Wrap a function v2v and convert its result to another type.
 
 # include <mln/core/concept/function.hh>
-# include <mln/convert/to.hh>
 # include <mln/fun/internal/ch_function_value_impl.hh>
 
 
 
 namespace mln
 {
+
+  // Forward declaration.
+  namespace convert { template <typename T, typename O> T to(const O& from); }
 
   namespace fun
   {

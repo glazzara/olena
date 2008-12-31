@@ -95,7 +95,7 @@ int main()
   // Edges.
   util::graph g;
   // Populate the graph with vertices.
-  for(unsigned i = 0; i < sites.size(); ++i)
+  for (unsigned i = 0; i < sites.size(); ++i)
     g.add_vertex();
   // Populate the graph with edges.
   g.add_edge(0, 1);
@@ -120,11 +120,11 @@ int main()
   // Graph values.
   typedef fun::i2v::array<unsigned> viota_t;
   viota_t iota(pv.nsites());
-  for(unsigned i = 0; i < iota.size(); ++i)
+  for (unsigned i = 0; i < iota.size(); ++i)
     iota(i) = 10 + i;
 
   // Create graph image.
-  mln_const_VAR(ima,(iota | pv));
+  mln_const_VAR(ima, (iota | pv));
 
   {
     // FIXME: Move this part to a special test case.

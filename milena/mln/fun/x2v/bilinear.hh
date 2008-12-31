@@ -98,10 +98,10 @@ namespace mln
         double y2 = std::floor(v[1]) + 1;
 
         //if (not ima.has(point2d(x1, y1))) return mln_value(I)();
-        vsum q11 = ima(point2d(x1, y1));
-        vsum q12 = ima(point2d(x1, y2));
-        vsum q21 = ima(point2d(x2, y1));
-        vsum q22 = ima(point2d(x2, y2));
+        vsum q11 = ima(point2d(static_cast<unsigned>(x1), static_cast<unsigned>(y1)));
+        vsum q12 = ima(point2d(static_cast<unsigned>(x1), static_cast<unsigned>(y2)));
+        vsum q21 = ima(point2d(static_cast<unsigned>(x2), static_cast<unsigned>(y1)));
+        vsum q22 = ima(point2d(static_cast<unsigned>(x2), static_cast<unsigned>(y2)));
 
         double x2_x1 = x2 - x1;
         double y2_y1 = y2 - y1;
