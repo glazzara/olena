@@ -76,6 +76,9 @@ namespace mln
       /// Set id_ with \p id;
       void update_id(unsigned id);
 
+      /// Conversion to the edge id.
+      operator unsigned() const;
+
       /// Return a reference to the graph holding this edge.
       const G& graph() const;
 
@@ -215,6 +218,13 @@ namespace mln
     edge<G>::update_id(unsigned id)
     {
       id_ = id;
+    }
+
+    template <typename G>
+    inline
+    edge<G>::operator unsigned() const
+    {
+      return id_;
     }
 
     template <typename G>

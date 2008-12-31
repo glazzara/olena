@@ -1,5 +1,34 @@
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix/improve graph related classes.
+
+	* mln/core/image/graph_window_piter.hh: update comments.
+
+	* mln/core/internal/graph_window_base.hh: fix the site typedef.
+
+	* mln/core/site_set/p_vertices.hh,
+	* mln/core/site_set/p_edges.hh: add a default constructor. Holds the
+	graph and not a pointer anymore.
+
+	* mln/core/site_set/p_vertices_psite.hh,
+	* mln/core/site_set/p_edges_psite.hh: add new accessors and a
+	specialization of subject_impl.
+
+	* mln/debug/draw_graph.hh: add a new prototype to draw a graph from a
+	p_edges.
+
+	* mln/util/vertex.hh,
+	* mln/util/edge.hh: add a new conversion operator towards a graph
+	element id.
+
+	* mln/util/internal/graph_nbh_iter.hh,
+	* mln/util/internal/graph_iter.hh: some renaming.
+
+	* mln/util/internal/graph_nbh_iter_base.hh,
+	* mln/util/internal/graph_iter_base.hh: add new accessors.
+
+2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Various small fixes.
 
         * mln/accu/count_adjacent_vertices.hh: add missing is_valid().

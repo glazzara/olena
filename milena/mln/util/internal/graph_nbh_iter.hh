@@ -331,7 +331,7 @@ namespace mln
     void
     vertex_nbh_vertex_fwd_iterator<G>::update_()
     {
-      this->p_.update_id(this->c_->ith_nbh_vertex(this->i_));
+      this->elt_.update_id(this->c_->ith_nbh_vertex(this->i_));
     }
 
     /*-------------------------------`
@@ -381,7 +381,7 @@ namespace mln
     void
     vertex_nbh_vertex_bkd_iterator<G>::update_()
     {
-      this->p_.update_id(this->c_->ith_nbh_vertex(this->i_));
+      this->elt_.update_id(this->c_->ith_nbh_vertex(this->i_));
     }
 
 
@@ -432,7 +432,7 @@ namespace mln
     void
     vertex_nbh_edge_fwd_iterator<G>::update_()
     {
-      this->p_.update_id(this->c_->ith_nbh_edge(this->i_));
+      this->elt_.update_id(this->c_->ith_nbh_edge(this->i_));
     }
 
     /*-----------------------------`
@@ -482,7 +482,7 @@ namespace mln
     void
     vertex_nbh_edge_bkd_iterator<G>::update_()
     {
-      this->p_.update_id(this->c_->ith_nbh_edge(this->i_));
+      this->elt_.update_id(this->c_->ith_nbh_edge(this->i_));
     }
 
 
@@ -545,7 +545,7 @@ namespace mln
 	e_id = this->c_->ith_nbh_edge(this->i_);
       }
 
-      this->p_.update_id(e_id);
+      this->elt_.update_id(e_id);
     }
 
     /*-----------------------------`
@@ -605,7 +605,7 @@ namespace mln
 	e_id = this->c_->ith_nbh_edge(this->i_);
       }
 
-      this->p_.update_id(e_id);
+      this->elt_.update_id(e_id);
     }
 
 # endif // !MLN_INCLUDE_ONLY

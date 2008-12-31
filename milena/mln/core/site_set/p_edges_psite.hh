@@ -41,6 +41,8 @@ namespace mln
 
   // Forward declaration.
   template <typename G, typename F> class p_edges;
+  namespace util { template <typename G> class vertex; }
+  namespace internal { template <typename T, typename E> struct subject_impl; }
 
 
   template <typename G, typename F>
@@ -63,11 +65,39 @@ namespace mln
     /// \{
     /// Return the underlying edge.
     const util::edge<G>& e() const;
+    util::vertex<G> v1() const;
+    util::vertex<G> v2() const;
     /// \}
   };
 
 
+  namespace internal
+  {
 
+    /// Subject_impl (Proxy)
+
+    template <typename G, typename F, typename E>
+    struct subject_impl< const p_edges_psite<G,F>&, E >
+      :	   subject_impl< const graph_psite_base< p_edges<G,F>,
+						 p_edges_psite<G,F> >&, E >
+    {
+      const util::edge<G>& e() const;
+      util::vertex<G> v1() const;
+      util::vertex<G> v2() const;
+
+    private:
+      const E& exact_() const;
+    };
+
+    template <typename G, typename F, typename E>
+    struct subject_impl<       p_edges_psite<G,F>&, E >
+      :	   subject_impl< const p_edges_psite<G,F>&, E >,
+	   subject_impl<       graph_psite_base< p_edges<G,F>,
+						 p_edges_psite<G,F> >&, E >
+    {
+    };
+
+  } // end of namespace mln::internal
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -76,21 +106,21 @@ namespace mln
   p_edges_psite<G, F>::p_edges_psite()
   {
   }
-  
+
   template <typename G, typename F>
   inline
   p_edges_psite<G, F>::p_edges_psite(const p_edges<G,F>& s)
     : super_(s)
   {
   }
-  
+
   template <typename G, typename F>
   inline
   p_edges_psite<G, F>::p_edges_psite(const p_edges<G,F>& s, unsigned id)
     : super_(s, id)
   {
   }
-  
+
   template <typename G, typename F>
   inline
   const util::edge<G>&
@@ -98,6 +128,62 @@ namespace mln
   {
     return this->elt_;
   }
+
+  template <typename G, typename F>
+  inline
+  util::vertex<G>
+  p_edges_psite<G, F>::v1() const
+  {
+    return this->elt_.graph().vertex(this->elt_.v1());
+  }
+
+  template <typename G, typename F>
+  inline
+  util::vertex<G>
+  p_edges_psite<G, F>::v2() const
+  {
+    return this->elt_.graph().vertex(this->elt_.v2());
+  }
+
+
+  namespace internal
+  {
+
+    /// subject_impl (Proxy)
+
+    template <typename G, typename F, typename E>
+    inline
+    const E&
+    subject_impl< const p_edges_psite<G,F>&, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    template <typename G, typename F, typename E>
+    inline
+    const util::edge<G>&
+    subject_impl< const p_edges_psite<G,F>&, E >::e() const
+    {
+      return exact_().get_subject().e();
+    }
+
+    template <typename G, typename F, typename E>
+    inline
+    util::vertex<G>
+    subject_impl< const p_edges_psite<G,F>&, E >::v1() const
+    {
+      return exact_().get_subject().v1();
+    }
+
+    template <typename G, typename F, typename E>
+    inline
+    util::vertex<G>
+    subject_impl< const p_edges_psite<G,F>&, E >::v2() const
+    {
+      return exact_().get_subject().v2();
+    }
+
+  } // end of namespace mln::internal
 
 # endif // ! MLN_INCLUDE_ONLY
 

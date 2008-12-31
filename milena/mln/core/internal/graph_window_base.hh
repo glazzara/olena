@@ -37,6 +37,7 @@
 namespace mln
 {
 
+  /// \tparam P Site type.
   template <typename P, typename E>
   class graph_window_base : public Window<E>
   {
@@ -46,7 +47,7 @@ namespace mln
     /// Associated types.
     /// \{
     /// The type of site corresponding to the window.
-    typedef mln_site(P) site;
+    typedef P site;
 
     // FIXME: This is a dummy value.
     typedef void dpsite;

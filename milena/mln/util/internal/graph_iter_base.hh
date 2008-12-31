@@ -69,10 +69,16 @@ namespace mln
 
 	/// Conversion operator. Returns the element id.
 	operator unsigned() const;
+
+	/// Conversion operator. Returns the graph element.
+	operator const Elt&() const;
 	/// \}
 
 	/// Proxy subject
 	const Elt& subj_();
+
+	/// Return the element pointed by this iterator.
+	const Elt& p_hook_() const;
 
       protected:
 	graph_iter_base(const G& g);
@@ -143,8 +149,23 @@ namespace mln
 
     template <typename G, typename Elt, typename E>
     inline
+    graph_iter_base<G, Elt, E>::operator const Elt&() const
+    {
+      return p_;
+    }
+
+    template <typename G, typename Elt, typename E>
+    inline
     const Elt&
     graph_iter_base<G, Elt, E>::subj_()
+    {
+      return p_;
+    }
+
+    template <typename G, typename Elt, typename E>
+    inline
+    const Elt&
+    graph_iter_base<G, Elt, E>::p_hook_() const
     {
       return p_;
     }

@@ -42,12 +42,11 @@ namespace mln
 
   // Forward declaration.
   template <typename G, typename F> class p_vertices;
-
+  namespace internal { template <typename Subject, typename E> struct subject_impl; }
 
 
   template <typename G, typename F>
   class p_vertices_psite :
-
     public internal::graph_psite_base< p_vertices<G,F>, p_vertices_psite<G,F> >
   {
     typedef p_vertices_psite<G,F> self_;
@@ -63,6 +62,31 @@ namespace mln
   };
 
 
+  namespace internal
+  {
+
+    /// Subject_impl (Proxy)
+
+    template <typename G, typename F, typename E>
+    struct subject_impl< const p_vertices_psite<G,F>&, E >
+	 : subject_impl< const graph_psite_base< p_vertices<G,F>,
+					         p_vertices_psite<G,F> >&, E >
+    {
+      const util::vertex<G>& v() const;
+
+    private:
+      const E& exact_() const;
+    };
+
+    template <typename G, typename F, typename E>
+    struct subject_impl<       p_vertices_psite<G,F>&, E >
+      :	   subject_impl< const p_vertices_psite<G,F>&, E >,
+	   subject_impl<       graph_psite_base< p_vertices<G,F>,
+						 p_vertices_psite<G,F> >&, E >
+    {
+    };
+
+  } // end of namespace mln::internal
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -93,6 +117,30 @@ namespace mln
   {
     return this->elt_;
   }
+
+
+  namespace internal
+  {
+
+    /// subject_impl (Proxy)
+
+    template <typename G, typename F, typename E>
+    inline
+    const E&
+    subject_impl< const p_vertices_psite<G,F>&, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    template <typename G, typename F, typename E>
+    inline
+    const util::vertex<G>&
+    subject_impl< const p_vertices_psite<G,F>&, E >::v() const
+    {
+      return exact_().get_subject().v();
+    }
+
+  } // end of namespace mln::internal
 
 # endif // ! MLN_INCLUDE_ONLY
 

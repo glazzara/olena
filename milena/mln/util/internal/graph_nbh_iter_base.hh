@@ -31,18 +31,22 @@
 # include <mln/core/concept/proxy.hh>
 
 /// \file   mln/util/internal/graph_nbh_iter_base.hh
+///
 /// Base implementation for graph edge and vertex neighborhood iterator.
 
 namespace mln
 {
 
+  // Forward declaration.
+  template <typename S> class p_indexed_psite;
+
   namespace internal
   {
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     class nbh_iterator_base
       : public Proxy< E >,
-	public internal::proxy_impl< const P&, E >
+	public internal::proxy_impl< const Elt&, E >
     {
       public:
 
@@ -65,16 +69,28 @@ namespace mln
 	/// Conversion operator. Returns the element ID.
 	operator unsigned() const;
 
+        /// The psite around which this iterator moves.
+	const C& center() const;
+
 	/// Make \p c the center of this iterator.
+        template <typename S>
+        void center_at(const p_indexed_psite<S>& c);
+
 	template <typename C2>
 	void center_at(const C2& c);
+
+	/// Change the graph targeted by this iterator.
+	void change_target(const G& g);
+
+	/// Hook to the current location.
+        const Elt& elt_hook_() const;
 
 	/// \}
 
 	/// Proxy.
 	/// \{
 	/// Proxy subject
-	const P& subj_();
+	const Elt& subj_();
 	/// \}
 
       protected:
@@ -86,58 +102,58 @@ namespace mln
 	/// \}
 
 	const C* c_; // Center
-	P p_;
+	Elt elt_;
 	unsigned i_;
     };
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
-    nbh_iterator_base<G, C, P, E>::nbh_iterator_base()
+    nbh_iterator_base<G,C,Elt,E>::nbh_iterator_base()
     {
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     template <typename C2>
     inline
-    nbh_iterator_base<G, C, P, E>::nbh_iterator_base(const C2& c)
-      : p_(c.graph()), i_(0)
+    nbh_iterator_base<G,C,Elt,E>::nbh_iterator_base(const C2& c)
+      : elt_(c.graph()), i_(0)
     {
       //FIXME: Check if typeof(c.graph()) == G
       center_at(c);
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
     bool
-    nbh_iterator_base<G, C, P, E>::is_valid() const
+    nbh_iterator_base<G,C,Elt,E>::is_valid() const
     {
       return exact(this)->is_valid_();
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
     void
-    nbh_iterator_base<G, C, P, E>::invalidate()
+    nbh_iterator_base<G,C,Elt,E>::invalidate()
     {
       i_ = mln_max(unsigned);
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
     void
-    nbh_iterator_base<G, C, P, E>::start()
+    nbh_iterator_base<G,C,Elt,E>::start()
     {
       i_ = exact(this)->start_id_();
       if (is_valid())
 	exact(this)->update_();
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
     void
-    nbh_iterator_base<G, C, P, E>::next()
+    nbh_iterator_base<G,C,Elt,E>::next()
     {
       mln_precondition(is_valid());
       mln_precondition(c_->is_valid());
@@ -147,40 +163,87 @@ namespace mln
 	exact(this)->update_();
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
     unsigned
-    nbh_iterator_base<G, C, P, E>::index() const
+    nbh_iterator_base<G,C,Elt,E>::index() const
     {
       return i_;
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
-    nbh_iterator_base<G, C, P, E>::operator unsigned() const
+    nbh_iterator_base<G,C,Elt,E>::operator unsigned() const
     {
-      return p_.id();
+      return elt_.id();
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
     inline
-    const P&
-    nbh_iterator_base<G, C, P, E>::subj_()
+    const C&
+    nbh_iterator_base<G,C,Elt,E>::center() const
     {
-      return p_;
+      mln_precondition(c_ != 0);
+      return *c_;
     }
 
-    template <typename G, typename C, typename P, typename E>
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    const Elt&
+    nbh_iterator_base<G,C,Elt,E>::subj_()
+    {
+      return elt_;
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    template <typename S>
+    inline
+    void
+    nbh_iterator_base<G,C,Elt,E>::center_at(const p_indexed_psite<S>& c)
+    {
+      //FIXME: p_indexed_psite does not have a conversion operator towards a
+      // p_edges/vertices_psite or a vertex/edge.
+      c_ = & static_cast< const C& >(c.unproxy_());
+
+      //FIXME: c_->graph() may not be the right graph!
+      // The target may not be initialized before this call...
+      // See core/neighb.hh in center_at(), i.center_at().
+      elt_.change_graph(c_->graph());
+
+      invalidate();
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
     template <typename C2>
     inline
     void
-    nbh_iterator_base<G, C, P, E>::center_at(const C2& c)
+    nbh_iterator_base<G,C,Elt,E>::center_at(const C2& c)
     {
-      internal::get_adr(c_, c);
-      mln_postcondition(c_ != 0);
-      p_.change_graph(c.graph());
+      mlc_converts_to(C2, const C&)::check();
+      c_ = & static_cast< const C& >(exact(c));
+
+      //FIXME: c_->graph() may not be the right graph!
+      // The target may not be initialized before this call...
+      // See core/neighb.hh in center_at(), i.center_at().
+      elt_.change_graph(c_->graph());
 
       invalidate();
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    void
+    nbh_iterator_base<G,C,Elt,E>::change_target(const G& g)
+    {
+      elt_.change_graph(g);
+    }
+
+    template <typename G, typename C, typename Elt, typename E>
+    inline
+    const Elt&
+    nbh_iterator_base<G,C,Elt,E>::elt_hook_() const
+    {
+      return elt_;
     }
 
 # endif // !MLN_INCLUDE_ONLY

@@ -94,6 +94,9 @@ namespace mln
       /// Returns the vertex id.
       unsigned id() const;
 
+      /// Conversion to the vertex id.
+      operator unsigned() const;
+
     protected:
       G g_;
       unsigned id_;
@@ -288,6 +291,13 @@ namespace mln
     inline
     unsigned
     vertex<G>::id() const
+    {
+      return id_;
+    }
+
+    template<typename G>
+    inline
+    vertex<G>::operator unsigned() const
     {
       return id_;
     }

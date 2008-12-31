@@ -87,6 +87,8 @@ namespace mln
     /// \param gr The graph upon which the graph edge psite set is built.
     /// \param f the function mapping edges and sites.
     p_edges(const G& gr, const F& f);
+    /// Default constructor.
+    p_edges();
 
     /// Associated types.
     /// \{
@@ -106,7 +108,7 @@ namespace mln
     typedef fwd_piter piter;
     /// \}
 
-    /// \brief Return The number of points (sites) of the set, i.e.,
+    /// Return The number of points (sites) of the set, i.e.,
     /// the number of \em edges.
     unsigned nsites() const;
 
@@ -138,12 +140,12 @@ namespace mln
 
   private:
 
-    const G* g_;
+    G g_;
     F f_;
   };
 
 
-  /// \brief Comparison between two mln::p_edges's.
+  /// Comparison between two mln::p_edges's.
   ///
   /// Two mln::p_edges's are considered equal if they share the
   /// same graph.
@@ -152,7 +154,7 @@ namespace mln
   operator==(const p_edges<G, F>& lhs, const p_edges<G, F>& rhs);
 
 
-  /// \brief Inclusion of a mln::p_edges in another one.
+  /// Inclusion of a mln::p_edges in another one.
   ///
   /// \todo Refine this later, when we are able to express subgraph
   /// relations.
@@ -171,7 +173,13 @@ namespace mln
   template <typename G, typename F>
   inline
   p_edges<G, F>::p_edges(const G& g, const F& f)
-    : g_ (&g), f_(f)
+    : g_ (g), f_(f)
+  {
+  }
+
+  template <typename G, typename F>
+  inline
+  p_edges<G, F>::p_edges()
   {
   }
 
@@ -188,7 +196,7 @@ namespace mln
   unsigned
   p_edges<G, F>::nedges() const
   {
-    return this->g_->e_nmax();
+    return this->g_.e_nmax();
   }
 
   template <typename G, typename F>
@@ -196,7 +204,7 @@ namespace mln
   bool
   p_edges<G, F>::is_valid() const
   {
-    return g_ != 0;
+    return true;/* FIXME: g.is_valid(); */
   }
 
   template <typename G, typename F>
@@ -204,7 +212,7 @@ namespace mln
   void
   p_edges<G, F>::invalidate()
   {
-    g_ = 0;
+    /* FIXME: g.invalidate(); */
   }
 
   template <typename G, typename F>
@@ -223,7 +231,7 @@ namespace mln
   p_edges<G, F>::has(const util::edge<G2>& e) const
   {
     mln_precondition(is_valid());
-    return e.graph().is_subgraph_of(*g_) && g_->has(e) && e.is_valid();
+    return e.graph().is_subgraph_of(g_) && g_.has(e) && e.is_valid();
   }
 
   template <typename G, typename F>
@@ -242,7 +250,7 @@ namespace mln
   p_edges<G, F>::graph() const
   {
     mln_precondition(is_valid());
-    return *g_;
+    return g_;
   }
 
   template <typename G, typename F>

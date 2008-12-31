@@ -145,9 +145,9 @@ namespace mln
 
     /// Return the value associated to an element of this site set.
     /// \{
-    const mln_result(F)& operator()(const psite& p) const;
-    const mln_result(F)& operator()(const util::vertex<G>& p) const;
-    const mln_result(F)& operator()(unsigned id_v) const;
+    mln_result(F) operator()(const psite& p) const;
+    mln_result(F) operator()(const util::vertex<G>& p) const;
+    mln_result(F) operator()(unsigned id_v) const;
     /// \}
 
     /// Accessors.
@@ -159,7 +159,7 @@ namespace mln
     /// \}
 
   private:
-    const G* g_;
+    G g_;
     F f_;
   };
 
@@ -202,7 +202,7 @@ namespace mln
   template <typename G, typename F>
   inline
   p_vertices<G,F>::p_vertices(const G& g, const F& f)
-    : g_ (&g), f_(f)
+    : g_ (g), f_(f)
   {
   }
 
@@ -219,7 +219,7 @@ namespace mln
   unsigned
   p_vertices<G,F>::nvertices() const
   {
-    return this->g_->v_nmax();
+    return this->g_.v_nmax();
   }
 
   template <typename G, typename F>
@@ -227,7 +227,7 @@ namespace mln
   bool
   p_vertices<G,F>::is_valid() const
   {
-    return g_ != 0;
+    return true; /* FIXME: g_.is_valid() */;
   }
 
   template <typename G, typename F>
@@ -235,7 +235,7 @@ namespace mln
   void
   p_vertices<G,F>::invalidate()
   {
-    g_ = 0;
+    /* FIXME: g_.invalidate() ;*/
   }
 
   template <typename G, typename F>
@@ -256,7 +256,7 @@ namespace mln
     mln_precondition(is_valid());
     return
       // Check whether P is compatible with this psite set.
-      (p.graph() == *g_) &&
+      (p.graph() == g_) &&
       // Check that the vertex id of P belongs to the range of valid
       // vertex ids.
       (p.is_valid());
@@ -274,7 +274,7 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  const mln_result(F)&
+  mln_result(F)
   p_vertices<G,F>::operator()(const psite& p) const
   {
     mln_precondition(g_.has(p.v()));
@@ -283,19 +283,19 @@ namespace mln
 
   template <typename G, typename F>
   inline
-  const mln_result(F)&
+  mln_result(F)
   p_vertices<G,F>::operator()(const util::vertex<G>& v) const
   {
-    mln_precondition(g_->has_v(v));
+    mln_precondition(g_.has_v(v));
     return (*this)(v.id());
   }
 
   template <typename G, typename F>
   inline
-  const mln_result(F)&
+  mln_result(F)
   p_vertices<G,F>::operator()(unsigned id_v) const
   {
-    mln_precondition(g_->has_v(id_v));
+    mln_precondition(g_.has_v(id_v));
     return f_(id_v);
   }
 
@@ -305,7 +305,7 @@ namespace mln
   p_vertices<G,F>::graph() const
   {
     mln_precondition(is_valid());
-    return *g_;
+    return g_;
   }
 
   template <typename G, typename F>
@@ -320,7 +320,7 @@ namespace mln
   bool
   operator==(const p_vertices<G,F>& lhs, const p_vertices<G,F>& rhs)
   {
-    return (*lhs.g_) == (*rhs.g_);
+    return (lhs.g_) == (rhs.g_);
   }
 
   template <typename G, typename F>

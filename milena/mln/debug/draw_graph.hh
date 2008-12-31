@@ -88,6 +88,30 @@ namespace mln
     inline
     void
     draw_graph(Image<I>& ima,
+	       const p_edges<G, F>& pe,
+	       mln_value(I) vertex_v,
+	       mln_value(I) edge_v)
+    {
+      // Draw edges.
+      typedef p_edges<G, F> pe_t;
+      mln_piter(pe_t) p(pe);
+      for_all(p)
+      {
+	if (exact(ima).has(p.first()) && exact(ima).has(p.second()))
+	  draw::line(exact(ima), p.first(), p.second(), edge_v);
+	if (exact(ima).has(p.first()))
+	  exact(ima)(p.first()) = vertex_v;
+	if (exact(ima).has(p.second()))
+	  exact(ima)(p.second()) = vertex_v;
+      }
+
+    }
+
+
+    template <typename I, typename G, typename F>
+    inline
+    void
+    draw_graph(Image<I>& ima,
 	       const p_vertices<G, F>& pv,
 	       mln_value(I) vertex_v,
 	       mln_value(I) edge_v)
