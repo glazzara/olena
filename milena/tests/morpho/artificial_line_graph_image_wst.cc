@@ -47,16 +47,18 @@
         in it, interpolating inter-pixel points;
     \li print the watershed on lines into that same image, and save it.  */
 
-#include <vector>
-
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/point2d.hh>
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/core/image/line_graph_image.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/core/image/line_graph_neighborhood_piter.hh>
+/// Required for line graph images.
+#include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/morpho/line_gradient.hh>
 #include <mln/morpho/closing_area_on_vertices.hh>
@@ -114,27 +116,25 @@ int main()
   `----------------*/
 
   // Line graph image.
-  typedef line_graph_image<point2d, input_val_t> ima_t;
-  ima_t lg_ima = morpho::line_gradient(input);
+  mln_VAR(lg_ima, morpho::line_gradient(input));
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef line_graph_elt_neighborhood<point2d> nbh_t;
-  nbh_t nbh;
+  typedef line_graph_elt_window<util::graph, lg_ima_t::pset::fun_t> win_t;
+  win_t win;
+  neighb<win_t> nbh(win);
 
   // Perform a Watershed Transform.
-  typedef unsigned wst_val_t;
-  wst_val_t nbasins;
-  typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
+  unsigned nbasins;
+  mln_VAR(wshed, morpho::meyer_wst(lg_ima, nbh, nbasins));
   std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.
   | Output.  |
   `---------*/
-  
+
   // FIXME: Inlined conversion, to be reifed into a routine.
 
   // Save the result in gray levels (data) + color (wshed).
@@ -179,12 +179,12 @@ int main()
   /* FIXME: We should draw the watershed on another image and
      superimpose it on OUTPUT instead of drawing it directly into
      OUTPUT.  */
-  mln_piter_(wst_ima_t) pw(wshed.domain());
+  mln_piter_(wshed_t) pw(wshed.domain());
   for_all(pw)
   {
     if (wshed(pw) == 0)
       {
-	mln_psite_(wst_ima_t) pp(pw);
+	mln_psite_(lg_ima_t) pp(pw);
 	// Equivalent of the line (edge) PP in OUTPUT.
 	int row1 = pp.first()[0] * 2;
 	int col1 = pp.first()[1] * 2;
@@ -192,7 +192,7 @@ int main()
 	int col2 = pp.second()[1] * 2;
 	point2d q((row1 + row2) / 2, (col1 + col2) / 2);
 	// Print the watershed in red.
- 	output(q) = literal::red;
+	output(q) = literal::red;
       }
   }
   // Fill the holes, so that the watershed looks connected.
@@ -212,13 +212,13 @@ int main()
     // two or more, consider, create a watershed point.
     /* FIXME: Iterating over a c4 window would be more elegant, of
        course.  */
-    unsigned nwsheds = 
-      (output.has(p_out + up   ) && output(p_out + up   ) == literal::red) +
+    unsigned nwsheds =
+      (output.has(p_out + up   ) && output(p_out + up	) == literal::red) +
       (output.has(p_out + down ) && output(p_out + down ) == literal::red) +
       (output.has(p_out + left ) && output(p_out + right) == literal::red) +
       (output.has(p_out + right) && output(p_out + left ) == literal::red);
     if (nwsheds >= 2)
-      output(p_out) = literal::red;      
+      output(p_out) = literal::red;
   }
   io::ppm::save(output, "out.ppm");
 }

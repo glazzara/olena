@@ -31,9 +31,15 @@
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/graph_image.hh>
-#include <mln/core/image/graph_elt_neighborhood.hh>
-#include <mln/core/image/graph_neighborhood_piter.hh>
+
+/// Required for graph images.
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/core/image/graph_elt_window.hh>
+#include <mln/core/neighb.hh>
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/morpho/meyer_wst.hh>
 
@@ -60,18 +66,21 @@ int main()
   */
 
   // Points associated to vertices.
-  std::vector<point2d> points;
-  points.push_back(point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(point2d(4,4)); // Point associated to vertex 4.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to vertex 0.
+  sites(1) = point2d(2,2); // Point associated to vertex 1.
+  sites(2) = point2d(0,4); // Point associated to vertex 2.
+  sites(3) = point2d(4,3); // Point associated to vertex 3.
+  sites(4) = point2d(4,4); // Point associated to vertex 4.
 
-  // Edges.
-  util::graph<point2d> g;
+  // Graph.
+  util::graph g;
+
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex (points[i]);
+  for (unsigned i = 0; i < sites.size(); ++i)
+    g.add_vertex();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -79,42 +88,41 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
-  /*-------.
-  | Graph.  |
-  `-------*/
 
-  p_graph<point2d> pg(g);
+  /*----------------------.
+  | Graph image support.  |
+  `----------------------*/
+
+  typedef p_vertices<util::graph, fsite_t> pv_t;
+  pv_t pv(g, sites);
 
   /*-------------.
   | Graph image.  |
   `-------------*/
 
-  // Values.
-  std::vector<int> values(5);
-  values[0] = 0; // Value associated to vertex 0.
-  values[1] = 1; // Value associated to vertex 1.
-  values[2] = 2; // Value associated to vertex 2.
-  values[3] = 3; // Value associated to vertex 3.
-  values[4] = 0; // Value associated to vertex 4.
-  // Graph image.
-  typedef graph_image<point2d, int> ima_t;
-  ima_t ima(pg, values);
+  // Graph values.
+  typedef fun::i2v::array<unsigned> viota_t;
+  viota_t iota(pv.nsites());
+  for (unsigned i = 0; i < iota.size(); ++i)
+    iota(i) = 10 + i;
+
+  // Create graph image.
+  mln_const_VAR(ima, (iota | pv));
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef graph_elt_neighborhood<point2d> nbh_t;
-  nbh_t nbh;
+  typedef graph_elt_window<util::graph, fsite_t> win_t;
+  win_t win;
+  neighb<win_t> nbh(win);
 
-  typedef unsigned wst_val_t;
-  wst_val_t nbasins;
-  typedef graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(ima, nbh, nbasins);
+  unsigned nbasins;
+  mln_const_VAR(wshed, morpho::meyer_wst(ima, nbh, nbasins));
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Manual iteration over the domain of WSHED.
-  mln_piter_(wst_ima_t) pw(wshed.domain());
+  mln_piter_(wshed_t) pw(wshed.domain());
   for_all (pw)
     std::cout << "wshed (" << pw << ") = " << wshed(pw) << std::endl;
 }

@@ -26,43 +26,27 @@
 // Public License.
 
 /// \file tests/morpho/graph_image_morpho.cc
-/// \brief Tests on mln::graph_image with morphological filters.
-
-#include <vector>
+///
+/// Tests on mln::graph_image with morphological filters.
 
 #include <mln/accu/bbox.hh>
 #include <mln/core/alias/box2d.hh>
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/graph_elt_window.hh>
-#include <mln/core/image/graph_window_piter.hh>
-#include <mln/core/var.hh>
 
 #include <mln/morpho/dilation.hh>
 #include <mln/morpho/erosion.hh>
 
-#include <mln/util/graph.hh>
-
+/// Required for graph images.
+#include <mln/core/site_set/p_vertices.hh>
+#include <mln/core/image/graph_elt_window.hh>
+#include <mln/core/var.hh>
 #include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/debug/draw_graph.hh>
 #include <mln/debug/iota.hh>
 #include <mln/debug/println.hh>
-
-
-template <typename S>
-struct vertex_site_value_t : public mln::Function_p2v< vertex_site_value_t<S> >
-{
-  typedef unsigned result;
-
-  unsigned
-  operator()(const mln_psite(S)& p) const
-  {
-    return v_[p.v().id()];
-  }
-
-  protected:
-    std::vector<result> v_;
-};
 
 
 int main()
@@ -87,20 +71,21 @@ int main()
   */
 
   // Points associated to vertices.
-  typedef fun::i2v::array<point2d> F;
-  F points(5);
-  points(0) = point2d(0,0); // Point associated to vertex 0.
-  points(1) = point2d(2,2); // Point associated to vertex 1.
-  points(2) = point2d(0,4); // Point associated to vertex 2.
-  points(3) = point2d(4,3); // Point associated to vertex 3.
-  points(4) = point2d(4,4); // Point associated to vertex 4.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to vertex 0.
+  sites(1) = point2d(2,2); // Point associated to vertex 1.
+  sites(2) = point2d(0,4); // Point associated to vertex 2.
+  sites(3) = point2d(4,3); // Point associated to vertex 3.
+  sites(4) = point2d(4,4); // Point associated to vertex 4.
 
-  // Edges.
-  typedef mln::util::graph G;
-  G g;
+  // Graph.
+  util::graph g;
+
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex ();
+  for (unsigned i = 0; i < sites.size(); ++i)
+    g.add_vertex();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -108,21 +93,26 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
+
   /*----------------------.
   | Graph image support.  |
   `----------------------*/
 
-  p_vertices<G, F> pg(g, points);
+  typedef p_vertices<util::graph, fsite_t> pv_t;
+  pv_t pv(g, sites);
 
   /*--------------.
   | Graph image.  |
   `--------------*/
 
-  vertex_site_value_t< p_vertices<G, F> > values;
-  // Graph image.
-  mln_VAR(ima, (values | pg));
-  // Initialize values.
-  debug::iota(ima);
+  // Graph values.
+  typedef fun::i2v::array<unsigned> viota_t;
+  viota_t iota(pv.nsites());
+  for (unsigned i = 0; i < iota.size(); ++i)
+    iota(i) = 10 + i;
+
+  // Create graph image.
+  mln_const_VAR(ima, (iota | pv));
 
   /*-------------------------------------.
   | Image representation/visualization.  |
@@ -132,12 +122,12 @@ int main()
   /* FIXME: mln::graph_image should automatically feature a bbox when
      its parameter P is akin to a point.  */
   accu::bbox<point2d> a;
-  for (unsigned i = 0; i < points.size(); ++i)
-    a.take(points(i));
+  for (unsigned i = 0; i < sites.size(); ++i)
+    a.take(sites(i));
   box2d bbox = a.to_result();
   // Print the image.
   /* FIXME: Unfortunately, displaying graph images is not easy right
-     now (2008-02-05).  We could use 
+     now (2008-02-05).  We could use
 
        debug::println(ima);
 
@@ -146,7 +136,7 @@ int main()
      interface of graph_image to work with points (not psites).
      Moreover, this implementation only shows *values*, not the graph
      itslef.
- 
+
      An alternative is to use draw::graph (which, again, is misnamed),
      but it doesn't show the values, only the vertices and edges of the
      graph.
@@ -159,14 +149,13 @@ int main()
   | Processing graph images.  |
   `--------------------------*/
 
-  typedef graph_elt_window<G, F> win_t;
-  win_t win;
+  graph_elt_window<util::graph, fsite_t> win;
 
-  image2d<unsigned> ima_dil = morpho::dilation(ima, win);
-//  debug::draw_graph(ima_rep, ima_dil, 9);
-//  debug::println(ima_rep);
+  mln_const_VAR(ima_dil, morpho::dilation(ima, win));
+  debug::draw_graph(ima_rep, ima_dil.domain(), pw::cst(9), pw::cst(2));
+  debug::println(ima_rep);
 
-  image2d<unsigned> ima_ero = morpho::erosion(ima, win);
-//  draw::graph(ima_rep, ima_ero, 9);
-//  debug::println(ima_rep);
+  mln_const_VAR(ima_ero, morpho::erosion(ima, win));
+  debug::draw_graph(ima_rep, ima_ero.domain(), pw::cst(9), pw::cst(2));
+  debug::println(ima_rep);
 }

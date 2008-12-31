@@ -56,9 +56,15 @@
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
 
-#include <mln/core/image/line_graph_image.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/core/image/line_graph_neighborhood_piter.hh>
+#include <mln/convert/to_window.hh>
+
+/// Required for line graph images.
+#include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/morpho/gradient.hh>
 #include <mln/morpho/closing_area.hh>
@@ -74,6 +80,8 @@
 
 #include <mln/math/max.hh>
 #include <mln/math/abs.hh>
+
+#include <mln/util/site_pair.hh>
 
 #include "tests/data.hh"
 
@@ -100,7 +108,7 @@ int main()
 
   // Simplify the input image.
   image2d<input_val_t> work(input.domain());
-  morpho::closing_area(gradient, c4(), 10, work);
+  work = morpho::closing_area(gradient, c4(), 10);
 
   /*-------------.
   | Line graph.  |
@@ -108,70 +116,61 @@ int main()
 
   // FIXME: Inlined conversion, to be reifed into a routine.
 
-  util::graph<point2d> g;
+  util::graph g;
 
   // Points.
-  /* FIXME: The need for such a structure during the conversion
-     exhibits the lack of a service from util::graph (or a another,
-     missing tool) regarding the retrieval of vertex ids from
-     points.  */
-  std::map<point2d, util::vertex_id, util::ord<point2d> > points;
-  util::vertex_id id = 0;
+  image2d<unsigned> equiv_vertex;
+  initialize(equiv_vertex, work);
 
   // Vertices.
-  std::vector<int> vertex_values;
   mln_fwd_piter_(image2d<input_val_t>) p(work.domain());
-  for_all (p)
-  {
-    g.add_vertex (p);
-    vertex_values.push_back (work(p));
-    /* FIXME: ``Guessing'' the id of the point just being inserted
-       is bad.  util:graph<N,E>::add_vertex should return this
-       id.  */
-    points[p] = id;
-    ++id.to_equiv();
-  }
+  for_all(p)
+    equiv_vertex(p) = g.add_vertex();
 
   // Edges.
   window2d next_c4_win;
   next_c4_win.insert(0, 1).insert(1, 0);
-  std::vector<int> edge_values;
-  mln_fwd_qiter_(window2d) q(next_c4_win, p); 
+  typedef fun::i2v::array<int> edge_values_t;
+  typedef fun::i2v::array< util::site_pair<point2d> > edge_sites_t;
+  edge_values_t edge_values;
+  edge_sites_t edge_sites;
+  mln_fwd_qiter_(window2d) q(next_c4_win, p);
   for_all (p)
-    for_all (q)
-    if (work.domain().has(q))
+    for_all(q)
+      if (work.domain().has(q))
       {
-	g.add_edge(points[p], points[q]);
-	edge_values.push_back(math::max(work(p), work(q)));
+        unsigned edge_id = g.add_edge(equiv_vertex(p), equiv_vertex(q));
+        edge_values.resize(edge_values.size() + 1);
+        edge_sites.resize(edge_sites.size() + 1);
+	edge_values(edge_id) = math::max(work(p), work(q));
+	edge_sites(edge_id) = util::site_pair<point2d>(p, q);
       }
 
   // Line graph point set.
-  p_line_graph<point2d> plg(g);
-  
-  // Line graph image.
-  /* FIXME: Shouldn't we use `input_val_t' instead of plain `int' as value
-     type here?  */
-  typedef line_graph_image<point2d, int> ima_t;
-  ima_t lg_ima(plg, vertex_values, edge_values);
+  typedef p_edges<util::graph, edge_sites_t> pe_t;
+  pe_t pe(g, edge_sites);
+
+  // Line graph image
+  typedef pw::image<edge_values_t, pe_t> ima_t;
+  mln_VAR(lg_ima, (edge_values | pe));
 
   /*------.
   | WST.  |
   `------*/
 
-  typedef line_graph_elt_neighborhood<point2d> nbh_t;
-  nbh_t nbh;
+  typedef line_graph_elt_window<util::graph, edge_sites_t> win_t;
+  win_t win;
+  neighb<win_t> nbh;
 
   // Perform a Watershed Transform.
-  typedef int_u8 wst_val_t;
-  wst_val_t nbasins;
-  typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(lg_ima, nbh, nbasins);
+  int_u8 nbasins;
+  mln_VAR(wshed, morpho::meyer_wst(lg_ima, nbh, nbasins));
   std::cout << "nbasins = " << nbasins << std::endl;
 
   /*---------.
   | Output.  |
   `---------*/
-  
+
   // FIXME: Inlined conversion, to be reifed into a routine.
 
   // Save the result in gray levels (data) + color (wshed).
@@ -216,12 +215,12 @@ int main()
   /* FIXME: We should draw the watershed on another image and
      superimpose it on OUTPUT instead of drawing it directly into
      OUTPUT.  */
-  mln_piter_(wst_ima_t) pw(wshed.domain());
+  mln_piter_(wshed_t) pw(wshed.domain());
   for_all(pw)
   {
-    if (wshed(pw) == 0)
+    if (wshed(pw) == 0u)
       {
-	mln_psite_(wst_ima_t) pp(pw);
+	mln_psite_(lg_ima_t) pp(pw);
 	// Equivalent of the line (edge) PP in OUTPUT.
 	int row1 = pp.first()[0] * 2;
 	int col1 = pp.first()[1] * 2;

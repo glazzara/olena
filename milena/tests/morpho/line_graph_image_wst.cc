@@ -26,14 +26,19 @@
 // Public License.
 
 /// \file tests/morpho/line_graph_image_wst.cc
-/// \brief Tests on the Watershed Transform on a mln::line_graph_image.
-
-#include <vector>
+///
+/// Tests on the Watershed Transform on a mln::line_graph_image.
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/line_graph_image.hh>
-#include <mln/core/image/line_graph_elt_neighborhood.hh>
-#include <mln/core/image/line_graph_neighborhood_piter.hh>
+
+/// Required for line graph images.
+#include <mln/core/site_set/p_edges.hh>
+#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/neighb.hh>
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/morpho/meyer_wst.hh>
 
@@ -61,45 +66,52 @@ int main()
 
     In G, vertices and egdes are numbered following in the classical
     foward order.  */
-  util::graph<point2d> g;
+  util::graph g;
 
-  // Vertices.
-  std::vector<int> vertex_values;
-  // We don't really care about values on vertices, because the algorithm
-  // won't see them.  So all are set to 0.
-  g.add_vertex (point2d(0, 0)); vertex_values.push_back (0); // Vertex 0.
-  g.add_vertex (point2d(0, 1)); vertex_values.push_back (0); // Vertex 1.
-  g.add_vertex (point2d(0, 2)); vertex_values.push_back (0); // Vertex 2.
-  g.add_vertex (point2d(0, 3)); vertex_values.push_back (0); // Vertex 3.
+  // Sites associated to vertices.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to vertex 0.
+  sites(1) = point2d(0,1); // Point associated to vertex 1.
+  sites(2) = point2d(0,2); // Point associated to vertex 2.
+  sites(3) = point2d(0,3); // Point associated to vertex 3.
+  sites(4) = point2d(1,0); // Point associated to vertex 4.
+  sites(5) = point2d(1,1); // Point associated to vertex 5.
+  sites(6) = point2d(1,2); // Point associated to vertex 6.
+  sites(7) = point2d(1,3); // Point associated to vertex 7.
 
-  g.add_vertex (point2d(1, 0)); vertex_values.push_back (0); // Vertex 4.
-  g.add_vertex (point2d(1, 1)); vertex_values.push_back (0); // Vertex 5.
-  g.add_vertex (point2d(1, 2)); vertex_values.push_back (0); // Vertex 6.
-  g.add_vertex (point2d(1, 3)); vertex_values.push_back (0); // Vertex 7.
+  // Populate the graph with vertices.
+  for(unsigned i = 0; i < sites.size(); ++i)
+    g.add_vertex();
 
-  // Edges.
-  std::vector<int> edge_values;
-  g.add_edge (0, 1); edge_values.push_back (0);
-  g.add_edge (1, 2); edge_values.push_back (10);
-  g.add_edge (2, 3); edge_values.push_back (5);
+  // Populate the graph with edges.
+  g.add_edge(0, 1);
+  g.add_edge(1, 2);
+  g.add_edge(2, 3);
 
-  g.add_edge (0, 4); edge_values.push_back (2);
-  g.add_edge (1, 5); edge_values.push_back (4);
-  g.add_edge (2, 6); edge_values.push_back (6);
-  g.add_edge (3, 7); edge_values.push_back (0);
+  g.add_edge(0, 4);
+  g.add_edge(1, 5);
+  g.add_edge(2, 6);
+  g.add_edge(3, 7);
 
-  g.add_edge (4, 5); edge_values.push_back (3);
-  g.add_edge (5, 6); edge_values.push_back (5);
-  g.add_edge (6, 7); edge_values.push_back (2);
+  g.add_edge(4, 5);
+  g.add_edge(5, 6);
+  g.add_edge(6, 7);
 
-  // Line graph point set.
-  p_line_graph<point2d> plg(g);
+  typedef p_edges<util::graph, fsite_t> pe_t;
+  pe_t pe(g, sites);
 
-  // Line graph image.
-  /* FIXME: We probably don't want to build line_graph_images by hand;
-     provide helpers and/or conversion functions.  */
-  typedef line_graph_image<point2d, int> ima_t;
-  ima_t ima(plg, vertex_values, edge_values);
+  // Edge values.
+  typedef fun::i2v::array<int> edge_values_t;
+  edge_values_t edge_values(pe.nsites());
+
+  static const int values[] = { 0, 10, 5, 2, 4, 6, 0, 3, 5, 2 };
+  for (unsigned i = 0; i < edge_values.size(); ++i)
+    edge_values(i) = values[i];
+
+  // Create line graph image.
+  mln_const_VAR(ima,(edge_values | pe));
+
 
   /*------------.
   | Iterators.  |
@@ -111,17 +123,16 @@ int main()
     std::cout << "ima (" << p << ") = " << ima(p) << std::endl;
   std::cout << std::endl;
 
-  typedef line_graph_elt_neighborhood<point2d> nbh_t;
-  nbh_t nbh;
+  typedef line_graph_elt_window<util::graph, fsite_t> win_t;
+  win_t win;
+  neighb<win_t> nbh(win);
 
-  typedef unsigned wst_val_t;
-  wst_val_t nbasins;
-  typedef line_graph_image<point2d, wst_val_t> wst_ima_t;
-  wst_ima_t wshed = morpho::meyer_wst(ima, nbh, nbasins);
+  unsigned nbasins;
+  mln_const_VAR(wshed, morpho::meyer_wst(ima, nbh, nbasins));
   std::cout << "nbasins = " << nbasins << std::endl;
 
   // Manual iteration over the domain of WSHED.
-  mln_piter_(wst_ima_t) pw(wshed.domain());
+  mln_piter_(wshed_t) pw(wshed.domain());
   for_all (pw)
     std::cout << "wshed (" << pw << ") = " << wshed(pw) << std::endl;
 }

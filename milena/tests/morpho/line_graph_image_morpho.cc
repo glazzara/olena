@@ -26,14 +26,18 @@
 // Public License.
 
 /// \file tests/morpho/line_graph_image_morpho.cc
-/// \brief Tests on mln::line_graph_image with morphological filters.
-
-#include <vector>
+///
+/// Tests on mln::line_graph_image with morphological filters.
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/image/line_graph_image.hh>
+
+/// Required for line graph images.
+#include <mln/core/site_set/p_edges.hh>
 #include <mln/core/image/line_graph_elt_window.hh>
-#include <mln/core/image/line_graph_window_piter.hh>
+#include <mln/core/var.hh>
+#include <mln/pw/all.hh>
+#include <mln/fun/i2v/array.hh>
+#include <mln/util/graph.hh>
 
 #include <mln/morpho/erosion.hh>
 #include <mln/morpho/dilation.hh>
@@ -51,7 +55,7 @@ int main()
 
             0 1 2 3 4               0 1 2 3 4
          .-----------	         .-----------
-         |		         |	     
+         |		         |
        0 |  0       2	       0 |  *       *
        1 |    \   / |	       1 |    0   1 |
        2 |      1   |	       2 |      *   4
@@ -60,19 +64,22 @@ int main()
 
   */
 
-  // Points associated to vertices.
-  std::vector<point2d> points;
-  points.push_back(point2d(0,0)); // Point associated to vertex 0.
-  points.push_back(point2d(2,2)); // Point associated to vertex 1.
-  points.push_back(point2d(0,4)); // Point associated to vertex 2.
-  points.push_back(point2d(4,3)); // Point associated to vertex 3.
-  points.push_back(point2d(4,4)); // Point associated to vertex 4.
+  // Graph.
+  util::graph g;
 
-  // Edges.
-  util::graph<point2d> g;
+  // Points associated to vertices.
+  typedef fun::i2v::array<point2d> fsite_t;
+  fsite_t sites(5);
+  sites(0) = point2d(0,0); // Point associated to vertex 0.
+  sites(1) = point2d(2,2); // Point associated to vertex 1.
+  sites(2) = point2d(0,4); // Point associated to vertex 2.
+  sites(3) = point2d(4,3); // Point associated to vertex 3.
+  sites(4) = point2d(4,4); // Point associated to vertex 4.
+
   // Populate the graph with vertices.
-  for (unsigned i = 0; i < points.size(); ++i)
-    g.add_vertex (points[i]);
+  for (unsigned i = 0; i < sites.size(); ++i)
+    g.add_vertex();
+
   // Populate the graph with edges.
   g.add_edge(0, 1);
   g.add_edge(1, 2);
@@ -80,48 +87,44 @@ int main()
   g.add_edge(3, 4);
   g.add_edge(4, 2);
 
+
   /*---------------------------.
   | Line graph image support.  |
   `---------------------------*/
 
-  p_line_graph<point2d> plg(g);
+  typedef p_edges<util::graph, fsite_t> pe_t;
+  pe_t pe(g, sites);
 
   /*-------------------.
   | Line graph image.  |
   `-------------------*/
 
-  // Values ("empty" vectors).
-  std::vector<int> vertex_values(5);
-  std::vector<int> edge_values(5);
-  // FIXME: hand-made iota's.
-  for (unsigned i = 0; i < vertex_values.size(); ++i)
-    vertex_values[i] = i;
-  for (unsigned i = 0; i < edge_values.size(); ++i)
-    edge_values[i] = i;
+  // Line graph values.
+  typedef fun::i2v::array<unsigned> viota_t;
+  viota_t iota(pe.nsites());
+  for (unsigned i = 0; i < iota.size(); ++i)
+    iota(i) = 10 + i;
 
-  // Line graph image.
-  /* FIXME: We probably don't want to build line_graph_images by hand;
-     provide helpers and/or conversion functions.  */
-  typedef line_graph_image<point2d, int> ima_t;
-  ima_t ima(plg, vertex_values, edge_values);
+  // Create line graph image.
+  mln_const_VAR(ima, (iota | pe));
 
-  /*--------------------------.
-  | Processing graph images.  |
-  `--------------------------*/
 
-  typedef line_graph_elt_window<point2d> win_t;
-  win_t win;
+  /*-------------------------------.
+  | Processing line graph images.  |
+  `-------------------------------*/
 
-  line_graph_image<point2d, int> ima_dil = morpho::dilation(ima, win);
+  line_graph_elt_window<util::graph, fsite_t> win;
+
+  mln_const_VAR(ima_dil, morpho::dilation(ima, win));
   // Manual iteration over the domain of IMA_DIL.
-  mln_piter_(ima_t) p_dil(ima_dil.domain());
+  mln_piter_(ima_dil_t) p_dil(ima_dil.domain());
   for_all (p_dil)
     std::cout << "ima_dil (" << p_dil << ") = " << ima_dil(p_dil) << std::endl;
   std::cout << std::endl;
 
-  line_graph_image<point2d, int> ima_ero = morpho::erosion(ima, win);
+  mln_const_VAR(ima_ero, morpho::erosion(ima, win));
   // Manual iteration over the domain of IMA_ERO.
-  mln_piter_(ima_t) p_ero(ima_ero.domain());
+  mln_piter_(ima_ero_t) p_ero(ima_ero.domain());
   for_all (p_ero)
     std::cout << "ima_ero (" << p_ero << ") = " << ima_ero(p_ero) << std::endl;
 }
