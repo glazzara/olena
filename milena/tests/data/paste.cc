@@ -131,17 +131,19 @@ int main()
   // image if test
   {
     typedef image2d<unsigned short> I;
-    typedef image_if<I, fun::p2b::chess> II;
+    typedef fun::p2b::chess F;
+    F f;
+    typedef image_if<I, F> II;
 
     I ima(size, size);
     I out(size, size);
-    II ima_if = ima | fun::p2b::chess();
+    II ima_if = ima | f;
 
     data::fill_with_value(ima, 0);
     debug::iota(ima);
     data::paste(ima_if, out);
 
-    mln_assertion(ima_if == out);
+    mln_assertion(ima_if == (out | f));
   }
 
   // cast image test

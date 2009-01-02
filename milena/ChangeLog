@@ -1,5 +1,11 @@
 2009-01-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix data::paste test.
+
+	* tests/data/paste.cc (main): Fix test.
+
+2009-01-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Replace dynamic dispatch in data::paste by static dispatch.
 
 	* mln/metal/bool.hh: Upgrade file doc style.
