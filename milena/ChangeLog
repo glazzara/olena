@@ -1,3 +1,16 @@
+2009-01-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Replace dynamic dispatch in data::paste by static dispatch.
+
+	* mln/metal/bool.hh: Upgrade file doc style.
+	* mln/data/paste.spe.hh (paste_): Rename as...
+	(paste_dispatch): ...this.
+	Replace dynamic dispatch by static dispatch:
+	(paste_direct_ext_dispatch): New.
+	(paste_direct_noext_dispatch): New.
+	(paste_one_block_dispatch): New.
+	* mln/data/paste.hh: Update.
+
 2008-12-31  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Few small fixes.

@@ -130,7 +130,7 @@ namespace mln
       trace::entering("data::paste");
 
       internal::paste_tests(input, output);
-      internal::paste_(input, output);
+      internal::paste_dispatch(input, output);
 
       trace::exiting("data::paste");
     }

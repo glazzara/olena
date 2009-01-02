@@ -67,6 +67,7 @@ namespace mln
 
       namespace generic
       {
+	// Forward declaration.
 	template <typename I, typename J>
 	void paste(const Image<I>& input, Image<J>& output);
       }
@@ -151,86 +152,112 @@ namespace mln
 
 
     // Dispatch.
+
     namespace internal
     {
 
       template <typename I, typename J>
-      inline
-      void paste_(mln::trait::image::value_access::direct,
-                  mln::trait::image::value_access::direct,
-                  mln::trait::image::ext_domain::some,
-                  mln::trait::image::ext_domain::some,
-                  const Image<I>& input_,
-                  Image<J>& output_)
+      inline // Direct access and extension.
+      void paste_direct_ext_dispatch(metal::true_, // Same value size.
+				     const I& input,
+				     J& output)
       {
-        const I& input = exact(input_);
-        J& output      = exact(output_);
+	if (input.domain() == output.domain()
+	    && border::get(input) == border::get(output))
+	  impl::paste_fastest(input, output);
+	else
+	  impl::paste_lines(input, output);
+      }
 
-        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-        {
-          if (border::get(input) == border::get(output) &&
-              input.domain() == output.domain())
-            impl::paste_fastest(input, output);
-          else
-            impl::paste_lines(input, output);
-        }
-        else
-          impl::paste_fast(input, output);
+      template <typename I, typename J>
+      inline // Direct access and extension.
+      void paste_direct_ext_dispatch(metal::false_, // Different value size.
+				     const I& input,
+				     J& output)
+      {
+	impl::paste_fast(input, output);
       }
 
       template <typename I, typename J>
       inline
-      void paste_(mln::trait::image::value_access::direct,
-                  mln::trait::image::value_access::direct,
-                  mln::trait::image::ext_domain::none,
-                  mln::trait::image::ext_domain::none,
-                  const Image<I>& input_,
-                  Image<J>& output_)
+      void paste_dispatch(trait::image::value_access::direct,
+			  trait::image::value_access::direct,
+			  trait::image::ext_domain::some,
+			  trait::image::ext_domain::some,
+			  const Image<I>& input,
+			  Image<J>& output)
       {
-        const I& input = exact(input_);
-        J& output      = exact(output_);
-
-
-        if (sizeof(mln_value(I)) == sizeof(mln_value(J)))
-        {
-          if (input.domain() == output.domain())
-            impl::paste_fastest(input, output);
-          else
-            impl::paste_lines(input, output);
-        }
-        else
-          impl::paste_fast(input, output);
+	enum { same_size = sizeof(mln_value(I)) == sizeof(mln_value(J)) };
+	paste_direct_ext_dispatch(metal::bool_<same_size>(),
+				  exact(input), exact(output));
       }
 
+      template <typename I, typename J>
+      inline // Direct access and no extension.
+      void paste_direct_noext_dispatch(metal::true_, // Same value size.
+				       const I& input,
+				       J& output)
+      {
+	if (input.domain() == output.domain())
+	  impl::paste_fastest(input, output);
+	else
+	  impl::paste_lines(input, output);
+      }
+
+      template <typename I, typename J>
+      inline // Direct access and no extension.
+      void paste_direct_noext_dispatch(metal::false_, // Different value size.
+				       const I& input,
+				       J& output)
+      {
+	impl::paste_fast(input, output);
+      }
 
       template <typename I, typename J>
       inline
-      void paste_(mln::trait::image::value_access::any,
-                  mln::trait::image::value_access::any,
-                  mln::trait::image::ext_domain::any,
-                  mln::trait::image::ext_domain::any,
-                  const Image<I>& input,
-                  Image<J>& output)
+      void paste_dispatch(trait::image::value_access::direct,
+			  trait::image::value_access::direct,
+			  trait::image::ext_domain::none,
+			  trait::image::ext_domain::none,
+			  const Image<I>& input,
+			  Image<J>& output)
+      {
+	enum { same_size = sizeof(mln_value(I)) == sizeof(mln_value(J)) };
+	paste_direct_noext_dispatch(metal::bool_<same_size>(),
+				    exact(input), exact(output));
+      }
+
+      template <typename I, typename J>
+      inline
+      void paste_dispatch(trait::image::value_access::any,
+			  trait::image::value_access::any,
+			  trait::image::ext_domain::any,
+			  trait::image::ext_domain::any,
+			  const Image<I>& input,
+			  Image<J>& output)
+      {
+        impl::generic::paste(input, output);
+      }
+
+
+      // Dispatch w.r.t. "value storage".
+
+      template <typename I, typename J>
+      inline
+      void paste_dispatch(trait::image::value_storage::any,
+			  trait::image::value_storage::any,
+			  const Image<I>& input,
+			  Image<J>& output)
       {
         impl::generic::paste(input, output);
       }
 
       template <typename I, typename J>
       inline
-      void paste_(trait::image::value_storage::any,
-                  trait::image::value_storage::any,
-                  const Image<I>& input,
-                  Image<J>& output)
-      {
-        impl::generic::paste(input, output);
-      }
-
-      template <typename I, typename J>
-      inline
-      void paste_(trait::image::value_storage::singleton,
-                  trait::image::value_storage::any,
-                  const Image<I>& input,
-                  Image<J>& output)
+      void paste_dispatch(trait::image::value_storage::singleton,
+			  trait::image::value_storage::any,
+			  const Image<I>& input,
+			  Image<J>& output)
       {
         impl::paste_singleton(input, output);
       }
@@ -238,40 +265,51 @@ namespace mln
 
       template <typename I, typename J>
       inline
-      void paste_(mln::trait::image::value_storage::one_block,
-                  mln::trait::image::value_storage::one_block,
-                  const Image<I>& input_,
-                  Image<J>& output_)
+      void paste_one_block_dispatch(metal::true_, // One-block values and "grid-aligned".
+				    const Image<I>& input,
+				    Image<J>& output)
       {
-        const I& input  = exact(input_);
-        J& output       = exact(output_);
-
-
-        /// Check basic properties
-        if (mlc_is(mln_trait_image_value_alignement(I),
-                   trait::image::value_alignement::with_grid)::value &&
-            mlc_is(mln_trait_image_value_alignement(J),
-                   trait::image::value_alignement::with_grid)::value)
-          {
-            paste_(mln_trait_image_value_access(I)(),
-                   mln_trait_image_value_access(J)(),
-                   mln_trait_image_ext_domain(I)(),
-                   mln_trait_image_ext_domain(J)(),
-                   input, output);
-          }
-        else
-          impl::generic::paste(input, output);
+	paste_dispatch(mln_trait_image_value_access(I)(),
+		       mln_trait_image_value_access(J)(),
+		       mln_trait_image_ext_domain(I)(),
+		       mln_trait_image_ext_domain(J)(),
+		       input, output);
       }
-
 
       template <typename I, typename J>
       inline
-      void paste_(const Image<I>& input, Image<J>& output)
+      void paste_one_block_dispatch(metal::false_, // One-block values but not "grid-aligned".
+				    const Image<I>& input,
+				    Image<J>& output)
+      {
+	impl::generic::paste(input, output);
+      }
+
+      template <typename I, typename J>
+      inline
+      void paste_dispatch(trait::image::value_storage::one_block,
+			  trait::image::value_storage::one_block,
+			  const Image<I>& input,
+			  Image<J>& output)
+      {
+	enum { alignments = mlc_is(mln_trait_image_value_alignement(I),
+				   trait::image::value_alignement::with_grid)::value
+	       && mlc_is(mln_trait_image_value_alignement(J),
+			 trait::image::value_alignement::with_grid)::value };
+	paste_one_block_dispatch(metal::bool_<alignments>(), input, output);
+      }
+
+
+      // Dispatch entry.
+
+      template <typename I, typename J>
+      inline
+      void paste_dispatch(const Image<I>& input, Image<J>& output)
       {
 
-        paste_(mln_trait_image_value_storage(I)(),
-               mln_trait_image_value_storage(J)(),
-               input, output);
+        paste_dispatch(mln_trait_image_value_storage(I)(),
+		       mln_trait_image_value_storage(J)(),
+		       input, output);
       }
 
     } // end of namespace mln::data::internal
@@ -283,4 +321,4 @@ namespace mln
 # endif // ! MLN_INCLUDE_ONLY
 
 
-#endif // ! MLN_DATA_PASTE_HH
+#endif // ! MLN_DATA_PASTE_SPE_HH
