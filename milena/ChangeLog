@@ -1,5 +1,32 @@
 2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add step 3 in tutorial.
+
+	* doc/tutorial/figures/tuto3_rw_image-1.ppm
+	* doc/tutorial/figures/tuto3_rw_image-2.ppm
+	* doc/tutorial/figures/tuto3_rw_image-3.ppm
+	* doc/tutorial/outputs/tuto3_rw_image.txt: add new reference files.
+
+	* doc/tutorial/samples/ima-load.cc.raw: rename as...
+	* doc/tutorial/samples/ima-load.cc: ... this.
+
+	* doc/tutorial/samples/ima-save.cc: extract less lines of code.
+
+	* doc/tutorial/samples/Makefile.am,
+	* doc/tutorial/samples/tuto3_rw_image.cc: add a new tutorial example.
+
+	* doc/tutorial/tutorial.tex: write step 3.
+
+	* Makefile.am,
+	* img/small-enlarged.png,
+	* img/small.png,
+	* img/small.ppm: add new useful images and make them part of the
+	distribution.
+
+	* tests/data/Makefile.am: comment non activated test.
+
+2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add is_valid and invalidate to util::graph
 
 	* milena/mln/util/graph.hh: add is_valid and invalidate. These methods

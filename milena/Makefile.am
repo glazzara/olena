@@ -35,6 +35,9 @@ img/picasso.pbm \
 img/space_debris.pgm \
 img/picasso.pgm \
 img/small.pbm \
+img/small-enlarged.png \
+img/small.png \
+img/small.ppm \
 img/lena.ppm \
 img/small.pgm
 

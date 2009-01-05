@@ -18,6 +18,7 @@ memset__SOURCES = memset_.cc
 paste_SOURCES = paste.cc
 
 # Lengthy tests.
-fill_full_SOURCES = fill_full.cc
+# FIXME: enable it when make full-check is enabled.
+#fill_full_SOURCES = fill_full.cc
 
 TESTS = $(check_PROGRAMS)

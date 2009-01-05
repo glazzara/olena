@@ -51,7 +51,7 @@
 \label{#1}
 \backslash endhtmlonly%
 \backslash page #1 #2%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 % #1 : section name
@@ -60,13 +60,13 @@
 \label{#1}
 \backslash endhtmlonly%
 \backslash section #1 #2%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 \newcommand{\doxysubsection}[2]{%
 \label{#1}
 \backslash endhtmlonly%
 \backslash subsection #1 #2%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 % #1 - part number (Optional)
@@ -74,19 +74,19 @@
 \newcommand{\doxycode}[2][1]{
 \backslash endhtmlonly%
 \backslash include #2-#1.cc%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 \newcommand{\doxyrawcode}[1]{
 \backslash endhtmlonly%
 \backslash include #1.cc.raw%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 \newcommand{\doxyoutput}[1]{
 \backslash endhtmlonly%
 \backslash include #1.txt%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 % Include file '#1' from a splitted output.
@@ -95,25 +95,31 @@
 \newcommand{\doxymoutput}[2][1]{
 \backslash endhtmlonly%
 \backslash include #2-#1.txt%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 \newcommand{\doxyfigure}[3][1]{
 \backslash endhtmlonly%
 \backslash image html #2-#1.png%
-\backslash htmlonly%
+\backslash htmlonly %
+}
+
+\newcommand{\doxyimg}[1]{
+\backslash endhtmlonly%
+\backslash image html #1.png%
+\backslash htmlonly %
 }
 
 \newcommand{\doxyref}[1]{
 \backslash endhtmlonly%
 \backslash ref #1%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 \newcommand{\doxysee}[1]{
 \backslash endhtmlonly%
 \backslash see #1%
-\backslash htmlonly%
+\backslash htmlonly %
 }
 
 \newcommand{\tutotoc}[2]{%
@@ -146,6 +152,10 @@ $$
 \renewcommand{\doxymoutput}[2][1]{\lstinputlisting[frame=single]{outputs/splitted/#2-#1.txt}}
 \renewcommand{\doxyfigure}[3][1]{%
 \pgfimage[width=#3]{figures/#2-#1}%
+\label{#1}%
+}
+\renewcommand{\doxyimg}[2]{%
+\pgfimage[width=#2]{../../img/#1.png}%
 \label{#1}%
 }
 \renewcommand{\doxyref}[1]{\ref{#1}}
@@ -292,10 +302,11 @@ $$
 
 \backslash page tutorial Tutorial
 - \backslash subpage tutoforeword
+- \backslash subpage loadnsave
 - \backslash subpage tutofirstimage
 - \backslash subpage tutochangeimage
+- \backslash subpage tutogenericity
 - \backslash subpage tutoconvimage
-- \backslash subpage tutodataimage
 - \backslash subpage tutowinneighb
 - \backslash subpage tutograph
 
@@ -313,6 +324,7 @@ $$
 - \backslash subpage graphandima
 - \backslash subpage arithmops
 - \backslash subpage mathtools
+- \backslash subpage debugtools
 - \backslash subpage globalvars
 - \backslash subpage macros
 \backslash htmlonly
@@ -342,19 +354,64 @@ A copy of the license is provided in the file COPYING.DOC.
 - image2d
 - typical use case
 
-%====================================
-\doxychapter{tutofirstimage}{Step 1: Your first image}
+\begin{center}%
+  \hspace{1cm} Go to \doxyref{loadnsave}~ \longrightarrow%
+\end{center}%
 
-After this step you should know how to:
+
+
+%====================================
+\doxychapter{loadnsave}{Step 1: Load and save images}
+
+After this step you shoud know how to:
 \begin{itemize}
-\item create an image,
-\item display an image in console mode,
+\item load an image,
 \item save an image.
 \end{itemize}
+
+\vspace{2cm}
+Currently, Olena supports the following input image formats:
+\begin{itemize}
+  \item PBM
+  \item PFM
+  \item PGM
+  \item PNM
+  \item PPM 
+\end{itemize}
+
+This support is provided through two headers for each type, \header{save.hh} and
+\header{load.hh}.
+They are located in \hpath{mln/io/$<$image-format$>$/}.
+
+Once the right header is included, the image can be loaded:
+
+\doxycode{ima-load}
+
+If you wan to save an image, simply call the save routine in the proper namespace:
+\doxycode{ima-save}
+
+According to the image value type, the proper file format must be chosen.
+The supported file formats and their associated image value types are listed
+in section \doxyref{imaio}.
+
+\vspace{2cm}
+\tutotoc{tutoforeword}{tutofirstimage}
+
+
+
+%====================================
+\doxychapter{tutofirstimage}{Step 2: Create your first image}
+
+After this step you should know how to:
+  \begin{itemize}
+    \item create an image,
+    \item display an image in console mode.
+  \end{itemize}
 
 The full example can be found in \doxyref{tuto1_first_image.cc}.
 
 
+\vspace{2cm}
 First, declare an array of bool which will represent the image grid. Each each
 cell in this grid is a site and each cell contains a value, \val{true} or
 \val{false}.
@@ -370,6 +427,8 @@ several other ways described in section \doxyref{imacreate}.
 To be sure that the data is correctly initialized, it is possible to display the
 image in the standard output using debug::println.
 \doxycode[3]{tuto1_first_image}
+Output:
+\doxyoutput{tuto1_first_image}
 
 Finally, you may want to save the image. Since we use bool as image value, the
 PBM format is the best choice. Therefore, we use io::pbm::save.
@@ -381,25 +440,82 @@ The output image looks like the following:
 In this first step we used a boolean image. Many other value types are available
 though. A more detailed description can be found in section
 \doxyref{imapossvalues}.
-Likewise, according to the value type, the proper file format must be chosen.
-The supported file formats are listed in section \doxyref{imaio}.
 
-\tutotoc{tutoforeword}{tutochangeimage}
+\vspace{2cm}
+\begin{center}
+  \tutotoc{loadnsave}{tutochangeimage}
+\end{center}
 
-%====================================
-\doxychapter{tutochangeimage}{Step 2: Read and write images}
-
-%====================================
-\doxychapter{tutoconvimage}{Step 3: Conversion between image values}
 
 %====================================
-\doxychapter{tutodataimage}{Step 4: Fill and paste data}
+\doxychapter{tutochangeimage}{Step 3: Read and write images}
+
+After this step you should know how to:
+  \begin{itemize}
+    \item modify/initialize image values,
+    \item copy and paste data to an image.
+  \end{itemize}
+
+
+The full example can be found in \doxyref{tuto3_rw_image.cc}.
+
+\vspace{2cm}
+First create an empty color image with a \var{box2d} of 40x40 as domain.
+\doxycode[1]{tuto3_rw_image}
+
+If you want to initialize the image with the color red, simply call data::fill as follows:
+\doxycode[2]{tuto3_rw_image}
+
+Updating a site value is also possible using \code{operator()} or the
+\code{opt::at()} routine. Here we create a blue square of 10x10 pixels from site
+(20, 20) to (30, 30).
+\doxycode[3]{tuto3_rw_image}
+\doxycode[4]{tuto3_rw_image}
+
+The corresponding image:
+\doxyfigure[1]{tuto3_rw_image}
+
+An image can also be initialized/modified thanks to another image.
+Let's load a new image.
+\doxycode[5]{tuto3_rw_image}
+\var{lena} looks like:
+\doxyimg{small-enlarged}
+
+If we want to initialize \var{ima} with \var{lena}, we can use \code{data::fill}:
+\doxycode[6]{tuto3_rw_image}
+Output:
+\doxyfigure[2]{tuto3_rw_image}
+Note that to fill an image with some data, the image domain \must be smaller
+or equal to the data.
+
+Likewise, it is possible to paste data from an image to another:
+\doxycode[7]{tuto3_rw_image}
+Output:
+\doxyfigure[3]{tuto3_rw_image}
+
+More details can be found in section \doxyref{fillop} and \doxyref{pasteop} in
+the reference guide.
+
+\vspace{2cm}
+\begin{center}
+  \tutotoc{tutofirstimage}{tutogenericity}
+\end{center}
+
 
 %====================================
-\doxychapter{tutowinneighb}{Step 5: Using structural elements with algorithms}
+\doxychapter{tutogenericity}{Step 4: Genericity and algorithms}
+
 
 %====================================
-\doxychapter{tutograph}{Step 6: Handle graphes with an image}
+\doxychapter{tutoconvimage}{Step 5: Conversion between image values}
+
+
+%====================================
+\doxychapter{tutowinneighb}{Step 6: Using structural elements with algorithms}
+
+
+%====================================
+\doxychapter{tutograph}{Step 7: Handle graphes with an image}
 
 \end{htmlonly}
 
@@ -996,10 +1112,18 @@ They are located in \hpath{mln/io/$<$image-format$>$/}.
 
 Once the right header is included, the image can be loaded:
 
-\doxyrawcode{ima-load}
+\doxycode{ima-load}
 
-Note that for the PBM format, you \textbf{MUST} use ``\type{bool}'' as value type. 
-No special value type is required for other formats though.
+Note that each format is associated to specific image value types:
+\begin{tabular}{|l|l|}
+\\hline
+Format & Value type \\ \hline
+PBM & bool \\
+PFM & float, double, float01\_* \\
+PGM & unsigned, long, int, int\_u*, gl* \\
+PNM & See PGM, PBM and PPM \\
+PPM & rgb* \\
+\end{tabular}
 
 \doxycode{ima-save}
 %
@@ -2145,5 +2269,17 @@ mln\_vertex\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjac
 mln\_vertex\_nbh\_vertex\_iter(G) & G : graph type & Iterator on the vertices adjacent to a vertex. \\
 mln\_edge\_nbh\_edge\_iter(G)	  & G : graph type & Iterator on the edges adjacent to an edge. \\
 \end{tabular}
+
+
+%====================================
+\newpage
+\clearpage
+%Ugly workaround to avoid missing chapter references in doxygen.
+\begin{htmlonly}
+\doxychapter{2}{}
+\end{htmlonly}
+\doxychapter{debugtools}{Debugging tools}
+
+FIXME write it
 
 \end{document}
