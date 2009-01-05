@@ -1,5 +1,17 @@
 2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add is_valid and invalidate to util::graph
+
+	* milena/mln/util/graph.hh: add is_valid and invalidate. These methods
+	should be fixed later.
+
+	* milena/mln/core/site_set/p_edges.hh,
+	* milena/mln/core/site_set/p_vertices.hh,
+	* milena/mln/util/edge.hh,
+	* milena/mln/util/vertex.hh: make use of the new graph methods.
+
+2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add graph_elt_neighborhood and line_graph_elt_neighborhood aliases.
 
 	* milena/headers.mk: add new headers to distribution.

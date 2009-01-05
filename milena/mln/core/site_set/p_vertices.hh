@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -227,7 +228,7 @@ namespace mln
   bool
   p_vertices<G,F>::is_valid() const
   {
-    return true; /* FIXME: g_.is_valid() */;
+    return g_.is_valid();
   }
 
   template <typename G, typename F>
@@ -235,7 +236,7 @@ namespace mln
   void
   p_vertices<G,F>::invalidate()
   {
-    /* FIXME: g_.invalidate() ;*/
+    g_.invalidate();
   }
 
   template <typename G, typename F>

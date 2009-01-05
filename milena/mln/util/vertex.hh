@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -205,7 +206,7 @@ namespace mln
     bool
     vertex<G>::is_valid() const
     {
-      return /* FIXME: g_.is_valid() && */ g_.has_v(id_);
+      return g_.is_valid() && g_.has_v(id_);
     }
 
     template<typename G>

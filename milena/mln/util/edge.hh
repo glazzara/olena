@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -201,7 +202,7 @@ namespace mln
     edge<G>::edge(const G& g, unsigned id)
       : g_(g), id_(id)
     {
-      mln_precondition(/* FIXME: g_.is_valid() && */ g.has_e(id));
+      mln_precondition(g_.is_valid() && g.has_e(id));
     }
 
     template <typename G>
@@ -248,7 +249,7 @@ namespace mln
     bool
     edge<G>::is_valid() const
     {
-      return /* FIXME: g_.is_valid() && */ g_.has_e(id_);
+      return g_.is_valid() && g_.has_e(id_);
     }
 
     template <typename G>
