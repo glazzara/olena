@@ -57,8 +57,7 @@
 #include <mln/core/routine/duplicate.hh>
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/alias/neighb2d.hh>
-#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/core/var.hh>
 
 #include <mln/morpho/line_gradient.hh>
@@ -114,7 +113,7 @@ int main(int argc, char* argv[])
   /* FIXME: I'm not sure this is the way it should be done.  Anyway,
      we should implement this as a canvas.  */
 
-  typedef neighb< line_graph_elt_window<util::graph, lg_ima_t::pset::fun_t> > nbh_t;
+  typedef line_graph_elt_neighborhood<util::graph, lg_ima_t::pset::fun_t> nbh_t;
   nbh_t nbh;
 
   unsigned area = 0;

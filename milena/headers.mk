@@ -885,6 +885,7 @@ mln/core/image/t_image.hh \
 mln/core/image/hexa_piter.hh \
 mln/core/image/value_enc_image.hh \
 mln/core/image/fun_image.hh \
+mln/core/image/graph_elt_neighborhood.hh \
 mln/core/image/sub_image_if.hh \
 mln/core/image/all.hh \
 mln/core/image/mono_rle_image.hh \
@@ -909,6 +910,7 @@ mln/core/image/image1d.hh \
 mln/core/image/extension_val.hh \
 mln/core/image/image_if.hh \
 mln/core/image/hexa.hh \
+mln/core/image/line_graph_elt_neighborhood.hh \
 mln/core/image/extended.hh \
 mln/core/image/image2d_h.hh \
 mln/core/image/image2d.hh \

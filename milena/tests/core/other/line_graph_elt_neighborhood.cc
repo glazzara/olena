@@ -32,11 +32,11 @@
 #include <vector>
 
 #include <mln/core/alias/point2d.hh>
-#include <mln/core/neighb.hh>
 #include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_window.hh>
 
 #include <mln/util/graph.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
+
 
 unsigned fwd_neighb[] = { 0, 2, 4 };
 unsigned bkd_neighb[] = { 4, 2, 0 };
@@ -100,7 +100,7 @@ int main()
   mln_psite_(pe_t) p(pe, 1);
 
   // ``Sliding'' neighborhood of a psite of PLG.
-  typedef neighb< line_graph_elt_window<G, F> > nbh_t;
+  typedef line_graph_elt_neighborhood<G, F> nbh_t;
   nbh_t nbh;
 
   unsigned i = 0;

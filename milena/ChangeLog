@@ -1,3 +1,27 @@
+2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add graph_elt_neighborhood and line_graph_elt_neighborhood aliases.
+
+	* milena/headers.mk: add new headers to distribution.
+
+	* milena/mln/core/image/graph_elt_neighborhood.hh,
+	* milena/mln/core/image/line_graph_elt_neighborhood.hh: new files. Add
+	new aliases for graph based neighborhoods.
+
+	* milena/mln/core/image/graph_elt_window.hh,
+	* milena/mln/core/image/line_graph_elt_window.hh,
+	* milena/mln/core/internal/neighborhood_base.hh,
+	* milena/tests/core/image/graph_image.cc,
+	* milena/tests/core/image/line_graph_image.cc,
+	* milena/tests/core/other/graph_elt_neighborhood.cc,
+	* milena/tests/core/other/line_graph_elt_neighborhood.cc,
+	* milena/tools/area_flooding.cc: make use of these new aliases.
+
+	* milena/tests/unit_test/Makefile.am,
+	* milena/tests/unit_test/mln_core_image_graph_elt_neighborhood.cc,
+	* milena/tests/unit_test/mln_core_image_line_graph_elt_neighborhood.cc:
+	Add new unit tests.
+
 2009-01-05  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Update documentation on properties.

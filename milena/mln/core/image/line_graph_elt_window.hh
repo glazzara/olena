@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -45,17 +45,6 @@ namespace mln
 
   /// Forward declaration
   template <typename G, typename F> class line_graph_elt_window;
-
-  namespace internal
-  {
-
-    template <typename G, typename F, typename E>
-    struct neighborhood_impl<line_graph_elt_window<G,F>,E>
-      : public neighborhood_extra_impl<line_graph_elt_window<G,F>,E>
-    {
-    };
-
-  } // end of namespace mln::internal
 
   namespace trait
   {

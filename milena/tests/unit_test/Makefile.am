@@ -856,6 +856,7 @@ mln_core_image_t_image \
 mln_core_image_hexa_piter \
 mln_core_image_value_enc_image \
 mln_core_image_fun_image \
+mln_core_image_graph_elt_neighborhood \
 mln_core_image_sub_image_if \
 mln_core_image_all \
 mln_core_image_mono_rle_image \
@@ -880,6 +881,7 @@ mln_core_image_image1d \
 mln_core_image_extension_val \
 mln_core_image_image_if \
 mln_core_image_hexa \
+mln_core_image_line_graph_elt_neighborhood \
 mln_core_image_extended \
 mln_core_image_image2d_h \
 mln_core_image_image2d \
@@ -1862,6 +1864,7 @@ mln_core_image_t_image_SOURCES = mln_core_image_t_image.cc
 mln_core_image_hexa_piter_SOURCES = mln_core_image_hexa_piter.cc
 mln_core_image_value_enc_image_SOURCES = mln_core_image_value_enc_image.cc
 mln_core_image_fun_image_SOURCES = mln_core_image_fun_image.cc
+mln_core_image_graph_elt_neighborhood_SOURCES = mln_core_image_graph_elt_neighborhood.cc
 mln_core_image_sub_image_if_SOURCES = mln_core_image_sub_image_if.cc
 mln_core_image_all_SOURCES = mln_core_image_all.cc
 mln_core_image_mono_rle_image_SOURCES = mln_core_image_mono_rle_image.cc
@@ -1886,6 +1889,7 @@ mln_core_image_image1d_SOURCES = mln_core_image_image1d.cc
 mln_core_image_extension_val_SOURCES = mln_core_image_extension_val.cc
 mln_core_image_image_if_SOURCES = mln_core_image_image_if.cc
 mln_core_image_hexa_SOURCES = mln_core_image_hexa.cc
+mln_core_image_line_graph_elt_neighborhood_SOURCES = mln_core_image_line_graph_elt_neighborhood.cc
 mln_core_image_extended_SOURCES = mln_core_image_extended.cc
 mln_core_image_image2d_h_SOURCES = mln_core_image_image2d_h.cc
 mln_core_image_image2d_SOURCES = mln_core_image_image2d.cc

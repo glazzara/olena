@@ -34,6 +34,7 @@
 /// Required for line graph images.
 #include <mln/core/site_set/p_edges.hh>
 #include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/core/neighb.hh>
 #include <mln/core/var.hh>
 #include <mln/pw/all.hh>
@@ -163,8 +164,8 @@ int main()
   }
 
 
-  typedef neighb<win_t> neighb_t;
-  neighb_t neigh(win);
+  typedef line_graph_elt_neighborhood<util::graph, fsite_t> neighb_t;
+  neighb_t neigh;
 
   {
     // Neighborhood - Forward iteration

@@ -33,6 +33,7 @@
 
 #include <mln/core/site_set/p_vertices.hh>
 #include <mln/core/image/graph_elt_window.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/core/concept/function.hh>
 #include <mln/core/neighb.hh>
 #include <mln/core/var.hh>
@@ -204,8 +205,8 @@ int main()
     }
   }
 
-  typedef neighb<win_t> neighb_t;
-  neighb_t neigh(win);
+  typedef graph_elt_neighborhood<util::graph, fsite_t> neighb_t;
+  neighb_t neigh;
   {
     // Neighborhood - Forward iteration
     mln_niter_(neighb_t) n(neigh, p);
