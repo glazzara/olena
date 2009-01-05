@@ -59,6 +59,29 @@
 //                        + -- value_morpher
 //                        |
 //                        + -- identity_morpher
+//
+// Interface related to the category property:
+// morpher
+//  => .delegatee_(): returns a pointer on the reference image.
+//  => .unmorph()  : returns the reference image.
+//  => .rw()       : States that the morpher is writable.
+
+
+
+
+
+// * value access
+
+// pw_io:  /any/
+//           |
+//           +-- read
+//           |
+//           +-- read_write
+//
+// Interface related to the pw_io property
+// read_write
+//   => .operator(p : psite) : lvalue, writes access to the value localized at
+//                             p.
 
 // speed:        /any/
 //                 |
@@ -67,20 +90,43 @@
 //                 + -- fast
 //                       |
 //                       + -- fastest
+//
+// Note that:
+//  fastest value implies value_storage::oneblock and  ext_domain::some
 
-// size:         /any/
-//                 |
-//                 + -- regular
-//                 |
-//                 + -- huge
-
-// * value
-
-// pw_io:  /any/
+// vw_io:  /any/
 //           |
 //           +-- read
 //           |
 //           +-- read_write
+
+// vw_set: /any/
+//          |
+//          +-- /some/
+//          |     |
+//          |     +-- uni
+//          |     |
+//          |     +-- multi
+//          |
+//          +-- none
+//
+// Interface related to vw_io and vw_set properties
+// multi and vw_io::read
+//  =>  .cells_() : const vset, returns the image cell lists.
+// multi and vw_io::read_write
+//  =>  .cells_() : vset,         returns the image cell lists.
+// uni and vw_io::read
+//  =>  .values_taken_() : const vset, returns the value_taken set.
+//  =>  .cells_(): const vset, same as .values_taken_().
+// uni (and vw_io::read_write)
+//  => .values_taken() : vset, returns the value_taken set.
+//  => .cells_() : vset, same as .values_taken_().
+
+
+
+
+
+// * organization in memory
 
 // value_access: /any/
 //                 |
@@ -101,22 +147,41 @@
 //                 |      + -- piecewise
 //                 |
 //                 + -- disrupted
+//
+// Interface related to the value_storage and value_access properties
+// singleton and value_access::direct
+//  => .value_() : lvalue, returns the flat value
+//  => .value_() : rvalue, returns the flat value
+// one_block
+//  => .nelements_() : unsigned, number of buffer elements
+//  => .point_at_index_(unsigned index) : point,
+//     point corresponding to the index index
+//  =>  .delta_index_(deltapoint dp) : unsigned
+//      Return the delta index associated to dp
+// one_block and value_access::direct
+//  =>  element_(unsigned index) : rvalue, returns the element at index.
+//  =>  element_(unsigned index) : lvalue, returns the element at index.
+//  =>  buffer_() : const value*: Give a hook to the value buffer
+//  =>  buffer_() : value*:       Give a hook to the value buffer
+// piecewise
+//  =>  npieces_() const : unsigned, returns the number of memory pieces
+// piecewise and value_access::direct
+//  => piece_size_(i) : unsigned, returns the size of piece memory i
+//  => piece_(i) : value*:         Give a hook to the i memory piece
+//  => piece_(i) : const value*:   Give a hook to the i memory piece
 
-// value_browsing:/any/
+// size:         /any/
 //                 |
-//                 + -- site_wise_only
+//                 + -- regular
 //                 |
-//                 + -------- cell_wise
-//                 |                 |
-//                 + -- value_wise   |
-//                              \    |
-//                                -- + -- cell_and_value_wise
+//                 + -- huge
 
-// value_io:     /any/
-//                 |
-//                 + -- read_only
-//                 |
-//                 + -- read_write
+
+
+
+
+
+// * image geometry
 
 // value_alignement:/any/
 //                   |
@@ -125,24 +190,6 @@
 //                   +-- not_aligned
 //                   |
 //                   +-- irrelevant
-
-// vw_io:  /any/
-//           |
-//           +-- read
-//           |
-//           +-- read_write
-
-// vw_set: /any/
-//          |
-//          +-- /some/
-//          |     |
-//          |     +-- uni
-//          |     |
-//          |     +-- multi
-//          |
-//          +-- none
-
-// * site localization
 
 // localization: /any/
 //                 |
@@ -169,6 +216,24 @@
 //                         + -- two_d
 //                         |
 //                         + -- three_d
+//
+// Interface related to the dimension and pw_iw properties
+// one_d
+//  => .at_(unsigned index) : rvalue
+// one_d and pw_io::read_write
+//  => .at_(unsigned index) : lvalue
+// two_d
+//  => .at_(unsigned row, unsigned col) : rvalue
+// two_d and pw_io::read_write
+//  => .at_(unsigned row, unsigned col) : lvalue
+// three_d
+//  => .at_(unsigned slice, unsigned row, unsigned col) : rvalue
+// three_d and pw_io::read_write
+//  => .at_(unsigned slice, unsigned row, unsigned col) : lvalue
+
+
+
+
 
 // *  extended domain
 
@@ -183,16 +248,9 @@
 //                        |     + -- infinite
 //                        |
 //                        + -- extendable
-
-// * extension values
-
-// ext_value:    /any/
-//                 |
-//                 + -- irrelevant
-//                 |
-//                 + -- single
-//                 |
-//                 + -- multiple
+// Interface related to the border property:
+// some
+//   => .border_() : unsigned, returns the border thickness.
 
 // ext_io:       /any/
 //                 |
@@ -201,6 +259,24 @@
 //                 + -- read_only
 //                 |
 //                 + -- read_write
+
+// ext_value:    /any/
+//                 |
+//                 + -- irrelevant
+//                 |
+//                 + -- single
+//                 |
+//                 + -- multiple
+// Interface related to ext_io and ext_value properties:
+// single
+//  => extension() : const mln_value(I)&
+// single and ext_io::read_write
+//  => extension() : const mln_value(I)&
+//  => extension() : mln_value(I)&
+
+
+
+
 
 // * data (related to I::value)
 
@@ -245,6 +321,29 @@
 //                 + -- low
 //                 |
 //                 + -- high
+
+
+
+
+
+
+// DEPRECATED
+// value_browsing:/any/
+//                 |
+//                 + -- site_wise_only
+//                 |
+//                 + -------- cell_wise
+//                 |                 |
+//                 + -- value_wise   |
+//                              \    |
+//                                -- + -- cell_and_value_wise
+
+// DEPRECATED
+// value_io:     /any/
+//                 |
+//                 + -- read_only
+//                 |
+//                 + -- read_write
 
 
 namespace mln
