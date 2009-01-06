@@ -69,6 +69,8 @@ namespace mln
           const float u = axis_[0];
           const float v = axis_[1];
           const float w = axis_[2];
+          //test axis is valid
+          assert(u != 0 && v != 0 && w != 0);
           const float u2 = u * u;
           const float v2 = v * v;
           const float w2 = w * w;
