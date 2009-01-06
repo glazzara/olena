@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -70,16 +70,21 @@
  * <UL>
  * <LI> \ref mln
  * <LI> \ref mln::accu
+ * <LI> \ref mln::algebra
  * <LI> \ref mln::arith
+ * <LI> \ref mln::binarization
  * <LI> \ref mln::border
  * <LI> \ref mln::canvas
  * <LI> \ref mln::convert
+ * <LI> \ref mln::data
  * <LI> \ref mln::debug
  * <LI> \ref mln::display
  * <LI> \ref mln::draw
  * <LI> \ref mln::estim
+ * <LI> \ref mln::extension
  * <LI> \ref mln::fun
  * <LI> \ref mln::geom
+ * <LI> \ref mln::graph
  * <LI> \ref mln::histo
  * <LI> \ref mln::io
  * <LI> \ref mln::labeling
@@ -92,12 +97,16 @@
  * <LI> \ref mln::metal
  * <LI> \ref mln::morpho
  * <LI> \ref mln::norm
+ * <LI> \ref mln::opt
  * <LI> \ref mln::pw
+ * <LI> \ref mln::registration
  * <LI> \ref mln::set
  * <LI> \ref mln::tag
  * <LI> \ref mln::test
+ * <LI> \ref mln::topo
  * <LI> \ref mln::trace
  * <LI> \ref mln::trait
+ * <LI> \ref mln::transform
  * <LI> \ref mln::util
  * <LI> \ref mln::value
  * <LI> \ref mln::win

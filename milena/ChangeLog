@@ -1,3 +1,30 @@
+2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update tutorial.
+
+	* doc/Doxyfile.in: Add a new IMAGE_PATH and a new macro expansion in
+	PREDEFINED.
+
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-1.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-2.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-3.pbm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-4.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-5.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-6.ppm,
+	* doc/tutorial/outputs/tuto2_first_image.txt,
+	* doc/tutorial/outputs/tuto4_genericity_and_algorithms.txt: Add new
+	reference files.
+
+	* doc/tutorial/samples/Makefile.am,
+	* doc/tutorial/samples/tuto4_genericity_and_algorithms.cc,
+	* doc/tutorial/tutorial.tex: Add step 4
+	in tutorial.
+
+	* doc/tutorial/samples/tuto1_first_image.cc: Rename as...
+	* doc/tutorial/samples/tuto2_first_image.cc: ... this.
+
+	* mln/core/concept/object.hh: update namespace indexes.
+
 2009-01-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update rotation.

@@ -96,7 +96,8 @@ EXAMPLE_PATH           = @top_srcdir@/milena/doc/tutorial/samples   \
 			 @top_srcdir@/milena/doc/tutorial/outputs 
 EXAMPLE_PATTERNS       = 
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             = @top_srcdir@/milena/doc/tutorial/figures   \
+IMAGE_PATH             = @top_srcdir@/milena/img		    \
+			 @top_srcdir@/milena/doc/tutorial/figures   \
 			 @top_builddir@/milena/doc/tutorial/figures
 INPUT_FILTER           = 
 FILTER_PATTERNS        = 
@@ -282,7 +283,9 @@ PREDEFINED             = "mlc_unqualif(T)=typename mln::metal::unqualif<T>::ret"
 			 "mln_point(T)=typename T::point" \
 			 "mln_point_(T)=T::point" \
 			 "mln_gradient_component(I)=typename mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret" \
-			 "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >"
+			 "mln_gradient(I)=mln::value::stack_image< I::point::dim, mln::trait::ch_value< I, mln::value::props< typename I::value >::sum >::ret >" \
+			 "mln_trait_value_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" \
+			 "mln_sum_product(T, U)=typename mln::trait::value_< mln_trait_op_times(T,U) >::sum" 
 
 
 

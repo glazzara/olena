@@ -44,9 +44,10 @@ noinst_PROGRAMS =		\
   win-create-1 			\
   win-create-2
 
-noinst_PROGRAMS += 	\
-tuto1_first_image 	\
-tuto3_rw_image
+noinst_PROGRAMS += 		\
+tuto2_first_image 		\
+tuto3_rw_image 			\
+tuto4_genericity_and_algorithms
 
 accu_right_instanciation_SOURCES = accu-right-instanciation.cc
 borderthickness_SOURCES = borderthickness.cc
@@ -88,8 +89,9 @@ predicate_1_SOURCES = predicate-1.cc
 win_create_1_SOURCES = win-create-1.cc
 win_create_2_SOURCES = win-create-2.cc
 
-tuto1_first_image_SOURCES = tuto1_first_image.cc
+tuto2_first_image_SOURCES = tuto2_first_image.cc
 tuto3_rw_image_SOURCES = tuto3_rw_image.cc
+tuto4_genericity_and_algorithms_SOURCES = tuto4_genericity_and_algorithms.cc
 
 all: clean-figures 
 	mkdir -p $(OUTPUTS_BUILDDIR) 

@@ -1,4 +1,5 @@
 \documentclass{report}
+\usepackage{hevea}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{makeidx}
@@ -408,7 +409,7 @@ After this step you should know how to:
     \item display an image in console mode.
   \end{itemize}
 
-The full example can be found in \doxyref{tuto1_first_image.cc}.
+\doxysee{tuto2_first_image.cc}.
 
 
 \vspace{2cm}
@@ -457,7 +458,7 @@ After this step you should know how to:
   \end{itemize}
 
 
-The full example can be found in \doxyref{tuto3_rw_image.cc}.
+\doxysee{tuto3_rw_image.cc}.
 
 \vspace{2cm}
 First create an empty color image with a \var{box2d} of 40x40 as domain.
@@ -493,7 +494,7 @@ Likewise, it is possible to paste data from an image to another:
 Output:
 \doxyfigure[3]{tuto3_rw_image}
 
-More details can be found in section \doxyref{fillop} and \doxyref{pasteop} in
+More details can be found in sections \doxyref{imaaccessmodval}, \doxyref{fillop} and \doxyref{pasteop} in
 the reference guide.
 
 \vspace{2cm}
@@ -505,6 +506,73 @@ the reference guide.
 %====================================
 \doxychapter{tutogenericity}{Step 4: Genericity and algorithms}
 
+After this step you should know how to:
+  \begin{itemize}
+    \item take benefit of Olena's genericity,
+    \item work only on a region of interest in an image.
+  \end{itemize}
+
+\doxysee{tuto4_genericity_and_algorithms.cc}.
+\vspace{2cm}
+
+\doxycode[1]{tuto4_genericity_and_algorithms}
+\doxyimg{small-enlarged}
+
+\doxycode[2]{tuto4_genericity_and_algorithms}
+\doxycode[3]{tuto4_genericity_and_algorithms}
+
+\begin{center}
+  \begin{tabular}{c c c}
+    \doxyimg{small-enlarged} & ~\huge{\rightarrow}~ & \doxyfigure[1]{tuto4_genericity_and_algorithms}{3cm} \\
+    \multicolumn{3}{c}{Fill with green a region of interest defined by a
+      \type{box2d}.} \\
+  \end{tabular}
+\end{center}
+
+
+\doxycode[4]{tuto4_genericity_and_algorithms}
+\begin{center}
+  \begin{tabular}{c c c}
+    \doxyimg{small-enlarged} & ~\huge{\rightarrow}~ & \doxyfigure[2]{tuto4_genericity_and_algorithms}{3cm} \\
+    \multicolumn{3}{c}{Fill with green a region of interest defined by a
+      \type{Function}.} \\
+  \end{tabular}
+\end{center}
+
+
+\doxycode[5]{tuto4_genericity_and_algorithms}
+\doxycode[6]{tuto4_genericity_and_algorithms}
+\begin{center}
+  \begin{tabular}{c c c c}
+    \doxyimg{small-enlarged}  &
+    \doxyfigure[3]{tuto4_genericity_and_algorithms}{3cm} &
+    ~\huge{\rightarrow}~ &
+    \doxyfigure[4]{tuto4_genericity_and_algorithms}{3cm}  \\
+    \multicolumn{4}{c}{Fill with green a region of interest defined by a mask
+      image.} \\
+  \end{tabular}
+\end{center}
+
+\doxycode[7]{tuto4_genericity_and_algorithms}
+\doxycode[8]{tuto4_genericity_and_algorithms}
+
+\begin{center}
+  \begin{tabular}{c c c c}
+    \doxyimg{small-enlarged}  &
+    \doxyfigure[5]{tuto4_genericity_and_algorithms}{3cm} &
+    ~\huge{\rightarrow}~ &
+    \doxyfigure[6]{tuto4_genericity_and_algorithms}{3cm}  \\
+    \multicolumn{4}{c}{Fill with green a region of interest defined by its
+      label.} \\
+  \end{tabular}
+\end{center}
+
+
+
+\vspace{2cm}
+\begin{center}
+  \tutotoc{tutochangeimage}{tutoconvimage}
+\end{center}
 
 %====================================
 \doxychapter{tutoconvimage}{Step 5: Conversion between image values}
@@ -526,11 +594,64 @@ the reference guide.
 %**************************
 \doxysection{requirements}{Requirements}
 
+
+\doxysubsection{compexample}{To compile the user examples}
+
+\begin{itemize}
+  \item a POSIX shell, like Bash
+  \item a decent C++ compiler, like GNU C++
+  \item a `make' utility, like GNU or BSD `make'
+\end{itemize}
+
+
+
+\doxysubsection{compdoc}{To compile the documentation (Optional)}
+
+\begin{itemize}
+  \item a LaTeX distribution
+  \item the `listings' TeX package
+  \item the utility `convert' from ImageMagick
+  \item GNU Autogen
+  \item `hevea', a TeX to HTML conversion tool
+  \item the `texinfo' utilities from GNU
+\end{itemize}
+
+\doxysubsection{devolena}{To develop in Olena}
+\begin{itemize}
+  \item GNU Autotools (Autoconf 2.54, Automake 1.10)
+\end{itemize}
+
 %**************************
 \doxysection{getolena}{Getting Olena}
 
+The latest version of Olena is available at the following addresses:
+
+\begin{itemize}
+  \item http://www.lrde.epita.fr/dload/olena/olena.tar.gz
+  \item http://www.lrde.epita.fr/dload/olena/olena.tar.bz2
+\end{itemize}
+
+
 %**************************
 \doxysection{buildingolena}{Building Olena}
+
+First uncompress the archive. According to the downloaded archive, the options
+are different.
+\begin{verbatim}
+$tar zxvf olena.tar.gz
+\end{verbatim}
+Or
+\begin{verbatim}
+$tar jxvf olena.tar.bz2
+\end{verbatim}
+
+Then follow these steps:
+\begin{verbatim}
+$mkdir olena-build
+$cd olena-build
+$../olena-1.0/configure && make
+$sudo make install
+\end{verbatim}
 
 
 
@@ -2259,7 +2380,7 @@ mln\_bkd\_nixter(I, N)	& I : image type,		    & \\
 \end{tabular}
 
 
-\doxysubsection{macrosbkdit}{Graph iterators}
+\doxysubsection{macrosgraphit}{Graph iterators}
 \begin{tabular}{l|p{4cm}|p{6cm}}
 Name & Arguments & Description \\
 \hline
