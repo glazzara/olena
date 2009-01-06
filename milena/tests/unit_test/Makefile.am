@@ -236,7 +236,9 @@ mln_fun_x2x_rotation \
 mln_fun_x2x_essential \
 mln_fun_meta_red \
 mln_fun_meta_hue \
+mln_fun_meta_green \
 mln_fun_meta_inty \
+mln_fun_meta_blue \
 mln_fun_meta_sat \
 mln_fun_meta_to_enc \
 mln_fun_x2v_linear \
@@ -1244,7 +1246,9 @@ mln_fun_x2x_rotation_SOURCES = mln_fun_x2x_rotation.cc
 mln_fun_x2x_essential_SOURCES = mln_fun_x2x_essential.cc
 mln_fun_meta_red_SOURCES = mln_fun_meta_red.cc
 mln_fun_meta_hue_SOURCES = mln_fun_meta_hue.cc
+mln_fun_meta_green_SOURCES = mln_fun_meta_green.cc
 mln_fun_meta_inty_SOURCES = mln_fun_meta_inty.cc
+mln_fun_meta_blue_SOURCES = mln_fun_meta_blue.cc
 mln_fun_meta_sat_SOURCES = mln_fun_meta_sat.cc
 mln_fun_meta_to_enc_SOURCES = mln_fun_meta_to_enc.cc
 mln_fun_x2v_linear_SOURCES = mln_fun_x2v_linear.cc

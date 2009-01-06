@@ -239,7 +239,9 @@ mln/fun/x2x/rotation.hh \
 mln/fun/x2x/essential.hh \
 mln/fun/meta/red.hh \
 mln/fun/meta/hue.hh \
+mln/fun/meta/green.hh \
 mln/fun/meta/inty.hh \
+mln/fun/meta/blue.hh \
 mln/fun/meta/sat.hh \
 mln/fun/meta/to_enc.hh \
 mln/fun/x2v/linear.hh \

@@ -1,5 +1,18 @@
 2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add fun::meta::green and fun::meta::blue.
+
+	* mln/fun/meta/blue.hh,
+	* mln/fun/meta/green.hh: Add new meta functions to use with fun_image.
+	
+	* headers.mk: Add new headers to distribution.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_fun_meta_blue.cc,
+	* tests/unit_test/mln_fun_meta_green.cc: Add new unit tests.
+
+2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Small fixes.
 
 	* mln/binarization/binarization.hh: remove a non-valid static test.
