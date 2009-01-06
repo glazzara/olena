@@ -86,13 +86,13 @@ namespace mln
 
           m_(2,0) = (u*w * (1 - cos_a) - v * std::sqrt(uvw2) * sin_a) / uvw2;
           m_(2,1) = (v*w * (1 - cos_a) + u * std::sqrt(uvw2) * sin_a) / uvw2;
-          m_(2,1) = (u2 + (u2 + v2) * cos_a) / uvw2;
+          m_(2,2) = (u2 + (u2 + v2) * cos_a) / uvw2;
           m_(2,3) = 0;
 
-          m_(2,0) = 0;
-          m_(2,1) = 0;
-          m_(2,1) = 0;
-          m_(2,3) = 1;
+          m_(3,0) = 0;
+          m_(3,1) = 0;
+          m_(3,2) = 0;
+          m_(3,3) = 1;
 
           return m_;
         }

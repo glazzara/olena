@@ -1,3 +1,9 @@
+2009-01-06  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix rotation.
+
+	* mln/fun/x2x/rotation.hh: Fix 3d rotation Matrix.
+
 2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix graph related tests.
