@@ -40,18 +40,6 @@
 namespace mln
 {
 
-  namespace internal
-  {
-
-    template <typename G, typename F, typename E>
-    struct neighborhood_impl<graph_elt_window<G,F>,E>
-      : public neighborhood_extra_impl<graph_elt_window<G,F>,E>
-    {
-    };
-
-  } // end of namespace mln::internal
-
-
   /// Elementary neighborhood on graph class.
   template <typename G, typename F>
   struct graph_elt_neighborhood

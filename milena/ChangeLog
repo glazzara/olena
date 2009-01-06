@@ -1,3 +1,25 @@
+2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix graph related tests.
+
+	* mln/util/graph.hh: move is_valid and invalidate to...
+	* mln/core/concept/graph.hh: ... here. Currently, these methods have
+	a default implementation.
+
+	* tests/morpho/artificial_line_graph_image_wst.cc,
+	* tests/morpho/graph_image_wst.cc,
+	* tests/morpho/lena_line_graph_image_wst1.cc,
+	* tests/morpho/lena_line_graph_image_wst2.cc,
+	* tests/morpho/line_graph_image_wst.cc: use the new
+	graph_elt_neighborhood and line_graph_elt_neighborhood aliases.
+
+	* mln/core/image/graph_elt_neighborhood.hh
+	* mln/core/image/graph_elt_window.hh
+	* mln/core/image/line_graph_elt_neighborhood.hh
+	* mln/core/image/line_graph_elt_window.hh: move back definition of
+	neighborhood_impl specialization from *_elt_neighborhood to
+	*_elt_window.
+
 2009-01-05  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add step 3 in tutorial.

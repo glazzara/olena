@@ -60,7 +60,7 @@
 
 /// Required for line graph images.
 #include <mln/core/site_set/p_edges.hh>
-#include <mln/core/image/line_graph_elt_window.hh>
+#include <mln/core/image/line_graph_elt_neighborhood.hh>
 #include <mln/core/var.hh>
 #include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
@@ -156,9 +156,8 @@ int main()
   | WST.  |
   `------*/
 
-  typedef line_graph_elt_window<util::graph, edge_sites_t> win_t;
-  win_t win;
-  neighb<win_t> nbh;
+  typedef line_graph_elt_neighborhood<util::graph, edge_sites_t> nbh_t;
+  nbh_t nbh;
 
   // Perform a Watershed Transform.
   int_u8 nbasins;

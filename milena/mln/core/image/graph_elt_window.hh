@@ -46,6 +46,19 @@ namespace mln
   /// Forward declaration
   template <typename G, typename F> class graph_elt_window;
 
+
+  namespace internal
+  {
+
+    template <typename G, typename F, typename E>
+    struct neighborhood_impl<graph_elt_window<G,F>,E>
+      : public neighborhood_extra_impl<graph_elt_window<G,F>,E>
+    {
+    };
+
+  } // end of namespace mln::internal
+
+
   namespace trait
   {
 

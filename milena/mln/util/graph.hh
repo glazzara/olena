@@ -142,14 +142,6 @@ namespace mln
       /// Construct a graph with \p nvertices vertices.
       graph(unsigned nvertices);
 
-
-      /// Return true if this graph is valid.
-      /// FIXME: currently it always returns true.
-      bool is_valid() const;
-      /// Invalidate the graph.
-      /// FIXME: does nothing!
-      void invalidate();
-
       /// Vertex oriented.
       /// \{
 
@@ -286,21 +278,6 @@ namespace mln
     graph::graph(unsigned nvertices)
     {
       this->data_ = new mln::internal::data<util::graph>(nvertices);
-    }
-
-    inline
-    bool
-    graph::is_valid() const
-    {
-      //FIXME: should not always return true!
-      return true;
-    }
-
-    inline
-    void
-    graph::invalidate()
-    {
-      //FIXME: No op! Should do something.
     }
 
     /*---------------.

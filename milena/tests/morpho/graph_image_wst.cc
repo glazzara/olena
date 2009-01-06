@@ -34,8 +34,7 @@
 
 /// Required for graph images.
 #include <mln/core/site_set/p_vertices.hh>
-#include <mln/core/image/graph_elt_window.hh>
-#include <mln/core/neighb.hh>
+#include <mln/core/image/graph_elt_neighborhood.hh>
 #include <mln/core/var.hh>
 #include <mln/pw/all.hh>
 #include <mln/fun/i2v/array.hh>
@@ -112,9 +111,8 @@ int main()
   | WST.  |
   `------*/
 
-  typedef graph_elt_window<util::graph, fsite_t> win_t;
-  win_t win;
-  neighb<win_t> nbh(win);
+  typedef graph_elt_neighborhood<util::graph, fsite_t> nbh_t;
+  nbh_t nbh;
 
   unsigned nbasins;
   mln_const_VAR(wshed, morpho::meyer_wst(ima, nbh, nbasins));

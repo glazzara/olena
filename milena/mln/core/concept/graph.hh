@@ -72,7 +72,14 @@ namespace mln
       const E& id() const;
       template<typename G2>
       bool is_subgraph_of(const G2& gr) const;
-
+    */
+      /// Return true if this graph is valid.
+      /// FIXME: currently it always returns true.
+      bool is_valid() const;
+      /// Invalidate the graph.
+      /// FIXME: does nothing!
+      void invalidate();
+    /*
       // Vertex and edges oriented.
       unsigned v_other(unsigned id_e, unsigned id_v) const;
 
@@ -140,7 +147,25 @@ namespace mln
     // a templated method.
     //bool (E::*m14)(...) = & E::is_subgraph_of;
     //m14 = 0;
-}
+  }
+
+  template <typename E>
+  inline
+  bool
+  Graph<E>::is_valid() const
+  {
+    //FIXME: should not always return true!
+    return true;
+  }
+
+  template <typename E>
+  inline
+  void
+  Graph<E>::invalidate()
+  {
+    //FIXME: No op! Should do something.
+  }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
