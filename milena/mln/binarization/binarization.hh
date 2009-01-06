@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_BINARIZATION_BINARIZATION_HH
 # define MLN_BINARIZATION_BINARIZATION_HH
 
-/*! \file mln/binarization/threshold.hh
- *
- * \brief Threshold the contents of an image into another binary one.
- */
+/// \file mln/binarization/threshold.hh
+///
+/// Threshold the contents of an image into another binary one.
 
 # include <mln/core/concept/function.hh>
 # include <mln/level/transform.hh>
@@ -43,19 +43,18 @@ namespace mln
   namespace binarization
   {
 
-    /*! Thresholds the values of \p input so that they can be stored in
-     *  the \p output binary image.
-     *
-     * \param[in] input The input image.
-     * \param[in] fun The thresholding function, from value(I) to bool.
-     *
-     * for_all(p), output(p) = fun(p)
-     *
-     */
+    /// Thresholds the values of \p input so that they can be stored in
+    ///  the \p output binary image.
+    ///
+    /// \param[in] input The input image.
+    /// \param[in] fun The thresholding function, from value(I) to bool.
+    ///
+    /// for_all(p), output(p) = fun(p)
     template <typename I, typename F>
     inline
     mln_concrete_ch_value(I, bool)
     binarization(const Image<I>& input, const Function_v2b<F>& fun);
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -79,6 +78,9 @@ namespace mln
     } // end of namespace mln::binarization::impl
 
 
+
+    // Facade
+
     template <typename I, typename F>
     inline
     mln_concrete_ch_value(I, bool)
@@ -86,8 +88,6 @@ namespace mln
     {
       trace::entering("binarization::binarization");
       mln_precondition(exact(input).is_valid());
-      mlc_is(mln_trait_value_nature(mln_value(I)),
-	     trait::value::nature::scalar)::check();
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
       output = impl::binarization_(exact(input), fun);

@@ -1,5 +1,23 @@
 2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* mln/binarization/binarization.hh: remove a non-valid static test.
+
+	* mln/value/rgb16.hh,
+	* mln/fun/v2b/threshold.hh,
+	* mln/binarization/threshold.hh: update comments.
+
+	* mln/debug/colorize.hh: make it work with rgb16.
+
+	* mln/value/rgb8.hh: remove useless include.
+
+	* tests/core/image/Makefile.am,
+	* tests/core/image/tr_image.cc: re-enable tr_image test and make it
+	work.
+
+2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update tutorial.
 
 	* doc/Doxyfile.in: Add a new IMAGE_PATH and a new macro expansion in

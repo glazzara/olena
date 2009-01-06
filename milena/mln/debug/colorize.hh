@@ -85,14 +85,15 @@ namespace mln
     {
 
       template <typename V>
-      V random_color();
+      V random_color(const V&);
 
-      mln::value::rgb8
-      random_color()
+      template <unsigned n>
+      mln::value::rgb<n>
+      random_color(const mln::value::rgb<n>&)
       {
-	return mln::value::rgb8(colorize_::min_value + (rand() % colorize_::max_value),
-				colorize_::min_value + (rand() % colorize_::max_value),
-				colorize_::min_value + (rand() % colorize_::max_value));
+	return mln::value::rgb<n>(colorize_::min_value + (rand() % colorize_::max_value),
+				  colorize_::min_value + (rand() % colorize_::max_value),
+				  colorize_::min_value + (rand() % colorize_::max_value));
       }
 
     }
@@ -125,7 +126,7 @@ namespace mln
 	  f(0) = literal::black;
 	}
 	for (; i < f.size(); ++i)
-	  f(i) = internal::random_color();
+	  f(i) = internal::random_color(value);
       }
       mln_assertion(f.size() >= (label_count));
       mln_ch_value(L, V) output = level::transform(input, f);

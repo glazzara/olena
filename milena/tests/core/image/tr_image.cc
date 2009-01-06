@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,10 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/core/image/tr_image.cc
- *
- * \brief Tests on mln::tr_image.
- */
+/// \file tests/core/image/tr_image.cc
+///
+/// Tests on mln::tr_image.
+/// FIXME: write a real test!
 
 
 #include <iostream>
@@ -44,28 +45,42 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  image3d<int_u8> in(3, 3, 3);
-  image3d<int_u8> out(in.domain());
+  {
+    image2d<int_u8> in(3, 3);
 
-  debug::iota(in);
-  debug::println(in);
+    debug::iota(in);
+    debug::println(in);
 
-  fun::x2x::rotation<3, float> rot1(1.67, literal::zero);
+    algebra::vec<2, float> v;
+    v[0] = 0;
+    v[1] = 1;
+    fun::x2x::rotation<2, float> rot1(1.67, v);
 
-  tr_image<mln_pset_(image3d<int_u8>),
-	  image3d<int_u8>,
-	  fun::x2x::rotation<3, float> >
-      inter(out.domain(), in, rot1);
+    tr_image<mln_pset_(image2d<int_u8>),
+      image2d<int_u8>,
+      fun::x2x::rotation<2, float> >
+	inter(in.domain(), in, rot1);
 
-  image3d<int_u8>::fwd_piter p(out.domain());
+    debug::println(inter);
+  }
 
-  for_all(p)
-    {
-      algebra::vec<3, int> vec = p.to_site().to_vec();
-      if (inter.has(p))
-	out(p) = inter(vec);
-      else
-	out(p) = 255;
-    }
-  debug::println(out);
+  {
+    image3d<int_u8> in(3, 3, 3);
+
+    debug::iota(in);
+    debug::println(in);
+
+    algebra::vec<3, float> v;
+    v[0] = 0;
+    v[1] = 0;
+    v[2] = 1;
+    fun::x2x::rotation<3, float> rot1(1.67, v);
+
+    tr_image<mln_pset_(image3d<int_u8>),
+      image3d<int_u8>,
+      fun::x2x::rotation<3, float> >
+	inter(in.domain(), in, rot1);
+
+    debug::println(inter);
+  }
 }

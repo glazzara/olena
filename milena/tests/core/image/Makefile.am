@@ -26,8 +26,8 @@ check_PROGRAMS =				\
   safe_image					\
 ##  sparse_image					\
   sub_image					\
-  t_image					
-##  tr_image					
+  t_image					\
+  tr_image					
 ##  value_enc_image
 
 noinst_HEADERS = complex_image.hh
@@ -55,7 +55,7 @@ safe_image_SOURCES = safe_image.cc
 ##sparse_image_SOURCES = sparse_image.cc
 sub_image_SOURCES = sub_image.cc
 t_image_SOURCES = t_image.cc
-##tr_image_SOURCES = tr_image.cc
+tr_image_SOURCES = tr_image.cc
 ##value_enc_image_SOURCES = value_enc_image.cc
 
 # Tests depending on the FreeImagePlus library.

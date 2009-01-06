@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_FUN_V2B_THRESHOLD_HH
 # define MLN_FUN_V2B_THRESHOLD_HH
 
-/*! \file mln/fun/v2b/threshold.hh
- *
- * \brief FIXME.
- */
+/// \file mln/fun/v2b/threshold.hh
+///
+/// FIXME.
 
 # include <mln/core/concept/function.hh>
 
@@ -45,11 +45,8 @@ namespace mln
     namespace v2b
     {
 
-      /*!
-       *\brief Threshold function.
-       * f(v) = (v >= threshold).
-       *
-       */
+      /// Threshold function.
+      /// f(v) = (v >= threshold).
       template <typename V>
       struct threshold : public Function_v2b< threshold<V> >
       {
@@ -75,7 +72,7 @@ namespace mln
       bool
       threshold<V>::operator()(const V& v) const
       {
-	return (v >= a);
+	return v >= a;
       }
 
 # endif // ! MLN_INCLUDE_ONLY

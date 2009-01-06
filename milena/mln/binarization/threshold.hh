@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_BINARIZATION_THRESHOLD_HH
 # define MLN_BINARIZATION_THRESHOLD_HH
 
-/*! \file mln/binarization/threshold.hh
- *
- * \brief Threshold the contents of an image into another binary one.
- */
+/// \file mln/binarization/threshold.hh
+///
+/// Threshold the contents of an image into another binary one.
 
 # include <mln/binarization/binarization.hh>
 # include <mln/fun/v2b/threshold.hh>
@@ -43,21 +43,19 @@ namespace mln
   namespace binarization
   {
 
-    /*! Thresholds the values of \p input so that they can be stored in
-     *  the \p output binary image.
-     *
-     * \param[in] input The input image.
-     * \param[in] threshold The threshold.
-     *
-     * If input(p) is greater or equal than the threshold, the
-     * value in the output image in the same point will be TRUE, else FALSE.
-     *
-     */
+    /// Thresholds the values of \p input so that they can be stored in
+    ///  the \p output binary image.
+    ///
+    /// \param[in] input The input image.
+    /// \param[in] threshold The threshold.
+    ///
+    /// If input(p) is greater or equal than the threshold, the
+    /// value in the output image in the same point will be TRUE, else FALSE.
     template <typename I>
     mln_concrete_ch_value(I, bool)
     threshold(const Image<I>& input, const mln_value(I) threshold);
 
-    
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
@@ -66,18 +64,18 @@ namespace mln
     threshold(const Image<I>& input, const mln_value(I) threshold_value)
     {
       trace::entering("binarization::threshold");
-  
+
       mln_precondition(exact(input).is_valid());
       mlc_is(mln_trait_value_nature(mln_value(I)),
 	     trait::value::nature::scalar)::check();
 
       mln_concrete_ch_value(I, bool) output(exact(input).domain());
-      
+
       // FIXME : threshold value should be a percentage.
       fun::v2b::threshold< mln_value(I) > f(threshold_value);
-      
+
       output = binarization::binarization(exact(input), f);
-     
+
       trace::exiting("binarization::threshold");
       return output;
     }

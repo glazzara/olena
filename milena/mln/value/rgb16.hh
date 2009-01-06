@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,11 +29,10 @@
 #ifndef MLN_VALUE_RGB16_HH
 # define MLN_VALUE_RGB16_HH
 
-/*! \file mln/value/rgb16.hh
- *
- * \brief Color class for red-green-blue where every component is
- * 16-bit encoded.
- */
+/// \file mln/value/rgb16.hh
+///
+/// Color class for red-green-blue where every component is
+/// 16-bit encoded.
 
 # include <mln/value/rgb.hh>
 
@@ -43,10 +43,10 @@ namespace mln
   namespace value
   {
 
-    /*! \brief Color class for red-green-blue where every component is
-     * 16-bit encoded.
-     */
+    /// Color class for red-green-blue where every component is
+    /// 16-bit encoded.
     typedef rgb<16> rgb16;
+
   } // end of namespace mln::value
 
 } // end of namespace mln
