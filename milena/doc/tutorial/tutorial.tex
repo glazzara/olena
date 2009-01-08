@@ -58,6 +58,7 @@
 % #1 : section name
 % #2 : section title
 \newcommand{\doxysection}[2]{%
+\vspace{1cm}
 \label{#1}
 \backslash endhtmlonly%
 \backslash section #1 #2%
@@ -302,14 +303,14 @@ $$
 \backslash endhtmlonly
 
 \backslash page tutorial Tutorial
-- \backslash subpage tutoforeword
-- \backslash subpage loadnsave
-- \backslash subpage tutofirstimage
-- \backslash subpage tutochangeimage
-- \backslash subpage tutogenericity
-- \backslash subpage tutoconvimage
-- \backslash subpage tutowinneighb
-- \backslash subpage tutograph
+- \backslash subpage tuto0
+- \backslash subpage tuto1
+- \backslash subpage tuto2
+- \backslash subpage tuto3
+- \backslash subpage tuto4
+- \backslash subpage tuto5
+- \backslash subpage tuto6
+- \backslash subpage tuto7
 
 \backslash page quickref Quick Reference Guide
 - \backslash subpage installation
@@ -323,6 +324,7 @@ $$
 - \backslash subpage imamemmgmt
 - \backslash subpage basicops
 - \backslash subpage graphandima
+- \backslash subpage functions
 - \backslash subpage arithmops
 - \backslash subpage mathtools
 - \backslash subpage debugtools
@@ -350,19 +352,19 @@ A copy of the license is provided in the file COPYING.DOC.
 
 \begin{htmlonly}
 %====================================
-\doxychapter{tutoforeword}{Step 0: Foreword}
+\doxychapter{tuto0}{Step 0: Foreword}
 
 - image2d
 - typical use case
 
 \begin{center}%
-  \hspace{1cm} Go to \doxyref{loadnsave}~ \longrightarrow%
+  \hspace{1cm} Go to \doxyref{tuto1}~ \longrightarrow%
 \end{center}%
 
 
 
 %====================================
-\doxychapter{loadnsave}{Step 1: Load and save images}
+\doxychapter{tuto1}{Step 1: Load and save images}
 
 After this step you shoud know how to:
 \begin{itemize}
@@ -396,12 +398,12 @@ The supported file formats and their associated image value types are listed
 in section \doxyref{imaio}.
 
 \vspace{2cm}
-\tutotoc{tutoforeword}{tutofirstimage}
+\tutotoc{tuto0}{tuto2}
 
 
 
 %====================================
-\doxychapter{tutofirstimage}{Step 2: Create your first image}
+\doxychapter{tuto2}{Step 2: Create your first image}
 
 After this step you should know how to:
   \begin{itemize}
@@ -409,7 +411,7 @@ After this step you should know how to:
     \item display an image in console mode.
   \end{itemize}
 
-\doxysee{tuto2_first_image.cc}.
+\doxysee{tuto2_first_image.cc}
 
 
 \vspace{2cm}
@@ -444,12 +446,12 @@ though. A more detailed description can be found in section
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{loadnsave}{tutochangeimage}
+  \tutotoc{tuto1}{tuto3}
 \end{center}
 
 
 %====================================
-\doxychapter{tutochangeimage}{Step 3: Read and write images}
+\doxychapter{tuto3}{Step 3: Read and write images}
 
 After this step you should know how to:
   \begin{itemize}
@@ -458,7 +460,7 @@ After this step you should know how to:
   \end{itemize}
 
 
-\doxysee{tuto3_rw_image.cc}.
+\doxysee{tuto3_rw_image.cc}
 
 \vspace{2cm}
 First create an empty color image with a \var{box2d} of 40x40 as domain.
@@ -499,12 +501,12 @@ the reference guide.
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tutofirstimage}{tutogenericity}
+  \tutotoc{tuto2}{tuto4}
 \end{center}
 
 
 %====================================
-\doxychapter{tutogenericity}{Step 4: Genericity and algorithms}
+\doxychapter{tuto4}{Step 4: Regions of interest}
 
 After this step you should know how to:
   \begin{itemize}
@@ -512,14 +514,55 @@ After this step you should know how to:
     \item work only on a region of interest in an image.
   \end{itemize}
 
-\doxysee{tuto4_genericity_and_algorithms.cc}.
+\doxysee{tuto4_genericity_and_algorithms.cc}
 \vspace{2cm}
+
+In the previous step, we used the routine \code{data::fill} in order to change
+the values of an image. It was convenient since we did not need to write any
+loop by hand. The problem was that we could not specificy which region to fill
+with data. This point leads us to talk about the genericity in Olena.
+All along this example we will use the routine \code{data::fill} to illustrate
+the possibilities in Olena but note that every image types passed to the
+routine in this example could be passed to any algorithm in the library
+expecting an image.
+
+One main feature of Olena is to be able to easily work on regions of interest in
+images. According to the way a region of interest is defined, a specific image
+type is associated. Therefore, each algorithm knows exactly what it is working
+on and can behave differently in order to be the most efficient as possible.
+
+
+All along this step, we will use the following image \var{lena} declared as
+follow:
 
 \doxycode[1]{tuto4_genericity_and_algorithms}
 \doxyimg{small-enlarged}
 
+\code{data::fill} has the following prototype:
+\doxyrawcode{fill-proto}
+So keep in mind that the first argument we will try to construct in each
+example is an image. Note that this image \must be writable, e.g. non-const.
+
+
+%**************************
+\doxysection{tuto4imadomainsiteset}{Image domain restricted by a site set}
+
+Here, we would like to fill a small square with green in \var{lena}. We want
+this square to be of size 20x20 and to be located at (20,20).
+First, we just need to declare this square which is actually a site set, a
+\type{box2d}.
 \doxycode[2]{tuto4_genericity_and_algorithms}
+
+Then, we just need to tell \code{data::fill} that we would like to fill the
+image \var{lena} but only in this restricted part of the image domain. 
 \doxycode[3]{tuto4_genericity_and_algorithms}
+Operator '|' can be read 'restricted to'. So below, we wrote 'image \var{lena}
+restricted to the region of interest \var{roi}'. Actually this is not directly
+\var{lena} which is restricted but its domain.
+
+Note the use of \code{rw()} which is mandatory due to C++ limitations. In C++,
+the image created by \code{lena | roi} is \code{const}, e.g. read-only, though
+\code{data::fill} expect a \code{non-const} image, e.g. read-write.
 
 \begin{center}
   \begin{tabular}{c c c}
@@ -530,7 +573,21 @@ After this step you should know how to:
 \end{center}
 
 
+%**************************
+\doxysection{tuto4imadomainfun}{Image domain restricted by a function}
+
+Sometimes it may not be easy to construct a site set to restrict an image. For
+instance, if we would like to fill with green one point out of two in the whole
+image, we \textbf{do not want} to write anyloop or construct any site set by hand:
 \doxycode[4]{tuto4_genericity_and_algorithms}
+\doxycode[5]{tuto4_genericity_and_algorithms}
+
+A shorter way to get exactly the same result, is to define that behavior by a
+function. In Milena, a function \code{fun::p2v::chess} is available and does
+exactly what we want. Like if it was a site set, simply restrict the image with
+the function.
+
+\doxycode[6]{tuto4_genericity_and_algorithms}
 \begin{center}
   \begin{tabular}{c c c}
     \doxyimg{small-enlarged} & ~\huge{\rightarrow}~ & \doxyfigure[2]{tuto4_genericity_and_algorithms}{3cm} \\
@@ -539,9 +596,41 @@ After this step you should know how to:
   \end{tabular}
 \end{center}
 
+Note that the functions provided by default in Olena are actually functors.
+Thus, they must be constructed like any object which why it is written
+\code{lena | fun::p2v::chess()} and not \code{lena | fun::p2v::chess}.
 
-\doxycode[5]{tuto4_genericity_and_algorithms}
-\doxycode[6]{tuto4_genericity_and_algorithms}
+
+FIXME: Talk about C functions once it is possible in Milena.
+
+
+%**************************
+\doxysection{tuto4imadomainmask}{Image domain restricted by a mask}
+
+Sometimes instead of having a site site or a function defining the regions of
+interest we want to work on, we may have a binary image, e.g. a mask. When a
+site has its value set to true, it means it will be considered as part of the
+masked image domain. Otherwise, it will not.
+
+We construct a mask, \var{mask}. It is initialized with the same geometry properties as
+\var{lena}
+(domain, extension...).
+\doxycode[7]{tuto4_genericity_and_algorithms}
+
+Then, we cannot restrict directly \var{lena} with \var{mask}. These two images
+have the same domain, so \code{lena | mask.domain()} would not do anything.
+\var{mask} is a classical image, there is not specific type for mask images.
+Therefore, we need to express that we want that binary image to be considered as
+a mask.
+\doxycode[8]{tuto4_genericity_and_algorithms}
+\code{pw::value(mask)} makes explicit the fact that \var{mask} is actually a
+mask. It means, that for each site of \var{mask}, if its value is set to
+\val{true}, then the value associated to this site in \var{lena} must be set
+to green.
+In this example, we use two images for two different use case: \var{lena} store
+the result and the modifications make by the algorithm and \var{mask} allows the
+algorithm to know whether it must treat a site or not.
+
 \begin{center}
   \begin{tabular}{c c c c}
     \doxyimg{small-enlarged}  &
@@ -553,8 +642,34 @@ After this step you should know how to:
   \end{tabular}
 \end{center}
 
-\doxycode[7]{tuto4_genericity_and_algorithms}
-\doxycode[8]{tuto4_genericity_and_algorithms}
+
+%**************************
+\doxysection{tuto4imadomainpredicate}{Image domain restricted by a predicate}
+
+Restricting by a predicate is exactly like restricting with a function. We want
+to talk about that separately in order to present the small routines available.
+They enable the user to write quick and efficient predicate/function.
+
+The two routines are :
+\begin{itemize}
+  \item pw::value(Image), as seen in a previous section, it is a way to express
+  'for each site value in Image'.
+  \item pw::cst(Value), it is a way to specify a value to which a site value can
+  be compared.
+\end{itemize}
+
+Let's see a common use case. 
+First, we binarize lena according to specific criterions, only site values with
+specific colors are set to true in \var{lena_bw}. Others are set to false. This
+image will be used in order to label the components.
+Let's consider a labeled image \var{label}. Each component of \var{lena} is labeled with a unique index.
+Now, we consider that that our region of interest is a component with id 16.
+Then we want to express 'for each site \var{fill} its value in \var{lena} if its
+value in \var{label} is equal to 16'.
+\doxycode[9]{tuto4_genericity_and_algorithms}
+
+
+\doxycode[10]{tuto4_genericity_and_algorithms}
 
 \begin{center}
   \begin{tabular}{c c c c}
@@ -571,19 +686,19 @@ After this step you should know how to:
 
 \vspace{2cm}
 \begin{center}
-  \tutotoc{tutochangeimage}{tutoconvimage}
+  \tutotoc{tuto3}{tuto5}
 \end{center}
 
 %====================================
-\doxychapter{tutoconvimage}{Step 5: Conversion between image values}
+\doxychapter{tuto5}{Step 5: Conversion between image values}
 
 
 %====================================
-\doxychapter{tutowinneighb}{Step 6: Using structural elements with algorithms}
+\doxychapter{tuto6}{Step 6: Using structural elements with algorithms}
 
 
 %====================================
-\doxychapter{tutograph}{Step 7: Handle graphes with an image}
+\doxychapter{tuto7}{Step 7: Handle graphes with an image}
 
 \end{htmlonly}
 
@@ -595,6 +710,7 @@ After this step you should know how to:
 \doxysection{requirements}{Requirements}
 
 
+%----------------
 \doxysubsection{compexample}{To compile the user examples}
 
 \begin{itemize}
@@ -605,6 +721,7 @@ After this step you should know how to:
 
 
 
+%----------------
 \doxysubsection{compdoc}{To compile the documentation (Optional)}
 
 \begin{itemize}
@@ -616,6 +733,7 @@ After this step you should know how to:
   \item the `texinfo' utilities from GNU
 \end{itemize}
 
+%----------------
 \doxysubsection{devolena}{To develop in Olena}
 \begin{itemize}
   \item GNU Autotools (Autoconf 2.54, Automake 1.10)
@@ -2224,6 +2342,13 @@ Output:
 \doxymoutput[4]{graph-iter}
 
 //FIXME talk about p\_vertices and p\_edges.
+
+%====================================
+\newpage
+\clearpage
+\doxychapter{functions}{Functions}
+
+FIXME write it
 
 %====================================
 \newpage

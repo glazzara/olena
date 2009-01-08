@@ -1,3 +1,13 @@
+2009-01-08  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add more details in step 4 in tutorial.
+
+	* samples/fill-proto.cc.raw: new file. Inline code inserted in tutorial.
+
+	* samples/tuto4_genericity_and_algorithms.cc: Add more code.
+
+	* tutorial.tex: add more details. Explain the code.
+
 2009-01-06  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add fun::meta::green and fun::meta::blue.
