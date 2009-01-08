@@ -129,7 +129,7 @@ namespace mln
 	  do
 	    {
 
-	      // Start the run.
+	      // Start the line.
 	      // ---------------
 
 	      qt = p;
@@ -139,24 +139,24 @@ namespace mln
 
 	      for (unsigned i = 0; i < length; ++i)
 		{
-		  if (input.has(qt))
+ 		  if (input.has(qt))
 		    a.take(input(qt));
 		  qt_dir++;
 		}
-	      if (input.has(p))
+ 	      if (input.has(p))
 		output(p) = a.to_result();
 
-	      // Browse the run.
-	      // ---------------
+	      // Browse the line.
+	      // ----------------
 
 	      while (p_dir < pmax_dir)
 		{
 		  ++p_dir;
-		  if (input.has(qt))
+ 		  if (input.has(qt))
 		    a.take(input(qt));
-		  if (input.has(qu))
+ 		  if (input.has(qu))
 		    a.untake(input(qu));
-		  if (input.has(p))
+ 		  if (input.has(p))
 		    output(p) = a.to_result();
 		  qt_dir++;
 		  qu_dir++;
@@ -165,8 +165,8 @@ namespace mln
 	      p_dir = pmin_dir;
 
 
-	      // Go to the next run.
-	      // -------------------
+	      // Go to the next line.
+	      // --------------------
 
 	      for (int c = P::dim - 1; c >= 0; --c)
 		{
@@ -203,7 +203,7 @@ namespace mln
 
       internal::transform_line_tests(a, input);
 
-      extension::adjust(input, length);
+      extension::adjust(input, length / 2);
       mln_ch_value(I, mln_result(A)) output;
       output = impl::generic::transform_line(a, input, length, dir);
 
@@ -226,7 +226,7 @@ namespace mln
 
       internal::transform_line_tests(a_, input);
 
-      extension::adjust(input, length);
+      extension::adjust(input, length / 2);
       mln_ch_value(I, mln_result(A_)) output;
       output = impl::generic::transform_line(a_, input, length, dir);
 

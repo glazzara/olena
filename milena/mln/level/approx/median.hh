@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_LEVEL_APPROX_MEDIAN_HH
 # define MLN_LEVEL_APPROX_MEDIAN_HH
 
-/*! \file mln/level/approx/median.hh
- *
- * \brief Approximates of some median filters of an image.
- */
+/// \file mln/level/approx/median.hh
+///
+/// Approximates of some median filters of an image.
 
 # include <mln/level/median.hh>
 # include <mln/win/rectangle2d.hh>
@@ -43,6 +43,7 @@
 # include <mln/win/backdiag2d.hh>
 
 #include <time.h>
+
 
 namespace mln
 {
@@ -58,125 +59,109 @@ namespace mln
        *
        * \param[in] input The image to be filtered.
        * \param[in] win The rectangle.
-       * \param[in,out] output The output image.
        *
        * The approximation is based on a vertical median ran after
        * an horizontal median.
        *
        * \pre \p input and \p output have to be initialized.
        */
-      template <typename I, typename O>
-      void median(const Image<I>& input, const win::rectangle2d& win,
-		  Image<O>& output);
+      template <typename I>
+      mln_concrete(I)
+      median(const Image<I>& input, const win::rectangle2d& win);
+
 
       /*! Compute in \p output an approximate of the median filter of
        *  image \p input by the 2D disk \p win.
        *
        * \param[in] input The image to be filtered.
        * \param[in] win The disk.
-       * \param[in,out] output The output image.
        *
        * The approximation is based on a vertical median and
        * an horizontal median an two diagonal median.
        *
        * \pre \p input and \p output have to be initialized.
        */
-      template <typename I, typename O>
-      void median(const Image<I>& input, const win::disk2d& win,
-		  Image<O>& output);
+      template <typename I>
+      mln_concrete(I)
+      median(const Image<I>& input, const win::disk2d& win);
+
 
       /*! Compute in \p output an approximate of the median filter of
        *  image \p input by the 2D octagon \p win.
        *
        * \param[in] input The image to be filtered.
        * \param[in] win The octagon.
-       * \param[in,out] output The output image.
        *
        * The approximation is based on a vertical median and
        * an horizontal median an two diagonal median.
        *
        * \pre \p input and \p output have to be initialized.
        */
-      template <typename I, typename O>
-      void median(const Image<I>& input, const win::octagon2d& win,
-		  Image<O>& output);
+      template <typename I>
+      mln_concrete(I)
+      median(const Image<I>& input, const win::octagon2d& win);
+
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-      namespace impl
-      {
-
-	template <typename I, typename O>
-	inline
-	void median_(const I& input, const unsigned length,
-		     O& output)
-	{
-	  const unsigned len = length / 3 + 1;
-
-	  O
-	    tmp1(output.domain()),
-	    tmp2(output.domain());
-	  {
-	    clock_t c = clock();
-	    level::median(input, win::diag2d(len),  tmp1);
-	    std::cout << "diag " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
-	  }
-	  {
-	    clock_t c = clock();
-	    level::median(tmp1, win::backdiag2d(len),  tmp2);
-	    std::cout << "back " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
-	  }
-	  {
-	    clock_t c = clock();
-	    level::median(tmp2, win::hline2d(len),  tmp1);
-	    std::cout << "hlin " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
-	  }
-	  {
-	    clock_t c = clock();
-	    level::median(tmp1, win::vline2d(len),  output);
-	    std::cout << "vlin " << float(clock() - c) / CLOCKS_PER_SEC << std::endl;
-	  }
-
-	}
-
-      } // end of namespace mln::level::approx::impl
-
 
       // Facades.
 
-      template <typename I, typename O>
-      inline
-      void median(const Image<I>& input_, const win::rectangle2d& win,
-		  Image<O>& output_)
-      {
-	const I& input = exact(input_);
-	O& output = exact(output_);
-	mln_assertion(output.domain() == input.domain());
 
-	O tmp(output.domain());
-	level::median(input, win::hline2d(win.width()),  tmp);
-	level::median(tmp,   win::vline2d(win.height()), output);
+      template <typename I>
+      inline
+      mln_concrete(I)
+      median(const Image<I>& input, const win::rectangle2d& win)
+      {
+	trace::entering("level::approx::median");
+
+	mln_concrete(I) output;
+
+	win::hline2d win1(win.width());
+	output = level::median(input, win1);
+
+	win::vline2d win2(win.height());
+	output = level::median(output, win2);
+
+	trace::exiting("level::approx::median");
+	return output;
       }
 
-      template <typename I, typename O>
-      inline
-      void median(const Image<I>& input, const win::disk2d& win,
-		  Image<O>& output)
-      {
-	mln_assertion(exact(output).domain() == exact(input).domain());
 
-	impl::median_(exact(input), win.length(), exact(output));
+      template <typename I>
+      inline
+      mln_concrete(I)
+      median(const Image<I>& input, const win::disk2d& win)
+      {
+	trace::entering("level::approx::median");
+
+	const unsigned len = win.length() / 3 + 1;
+	mln_concrete(I) output;
+
+	win::diag2d win1(len);
+	output = level::median(input, win1);
+
+	win::backdiag2d win2(len);
+	output = level::median(output, win2);
+
+	win::hline2d win3(len);
+	output = level::median(input, win3);
+
+	win::vline2d win4(len);
+	output = level::median(output, win4);
+
+	trace::exiting("level::approx::median");
+	return output;
       }
 
-      template <typename I, typename O>
-      inline
-      void median(const Image<I>& input, const win::octagon2d& win,
-		  Image<O>& output)
-      {
-	mln_assertion(exact(output).domain() == exact(input).domain());
 
-	impl::median_(exact(input), win.length(), exact(output));
+      template <typename I>
+      inline
+      mln_concrete(I)
+      median(const Image<I>& input, const win::octagon2d& win)
+      {
+	return median(input, win::disk2d(win.length()));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

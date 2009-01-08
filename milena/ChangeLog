@@ -1,5 +1,22 @@
 2009-01-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Cleanup level approx median.
+
+	* mln/level/approx/median.hh: Upgrade file doc style.
+	(median): Return output.
+	Revamp.
+	(median_): Remove; awkward.
+	* mln/accu/transform_line.hh (comment): Fix.
+	We deal with lines not runs.
+	(transform_line): Fix extension adjust.
+	* mln/morpho/general.spe.hh (general_line): New impl.
+	(general_dispatch_line): Use it.
+	* tests/level/approx/median.cc: Upgrade file doc style.
+	Augment tests.
+	* tests/morpho/general.cc: Augment tests with hline and vline.
+
+2009-01-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix accu::histo_h and cleanup level::median.
 
 	* mln/level/median.hh (internal::median_tests): New.

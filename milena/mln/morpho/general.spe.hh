@@ -40,6 +40,7 @@
 # include <mln/win/rectangle2d.hh>
 
 # include <mln/accu/transform_directional.hh>
+# include <mln/accu/transform_line.hh>
 # include <mln/accu/transform_snake.hh>
 # include <mln/accu/transform_stop.hh>
 # include <mln/accu/transform_diagonal.hh>
@@ -238,9 +239,28 @@ namespace mln
 
 	extension::adjust_fill(input, geom::delta(win) + 1, op.neutral(input));
 	mln_concrete(I) output;
-	output = accu::transform_directional(op.accu_incr(input), input, win, dir);
+	output = accu::transform_directional(op.accu_incr(input), input, win, dir); // FIXME: Use _line.
 
 	trace::exiting("morpho::impl:general_directional");
+	return output;
+      }
+
+
+      template <typename Op, typename I, typename W>
+      inline
+      mln_concrete(I)
+      general_line(const Op& op, const Image<I>& input, const Window<W>& win_)
+      {
+	trace::entering("morpho::impl:general_line");
+
+	const W& win = exact(win_);
+
+	extension::adjust_fill(input, geom::delta(win), op.neutral(input));
+	mln_concrete(I) output;
+	output = accu::transform_line(op.accu_incr(input), input,
+				      win.length(), win.dir);
+
+	trace::exiting("morpho::impl:general_line");
 	return output;
       }
 
@@ -398,7 +418,7 @@ namespace mln
       general_dispatch_line(metal::true_,
 			    const Op& op, const I& input, const W& win)
       {
-	return impl::general_directional(op, input, win, W::dir);
+	return impl::general_line(op, input, win);
       }
 
       template <typename Op, typename I, typename W>

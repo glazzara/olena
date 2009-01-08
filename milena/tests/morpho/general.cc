@@ -97,13 +97,27 @@ int main()
     out = morpho::impl::general_directional(dil, lena, rec, 1);
     mln_assertion(out == ref);
 
-    /*
 
     // Hline.
     ref = morpho::impl::generic::general_on_function(ero, lena, hline);
 
+    out = morpho::impl::general_directional(ero, lena, hline, 1);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_line(ero, lena, hline);
+    mln_assertion(out == ref);
+
+
     // Vline.
     ref = morpho::impl::generic::general_on_function(ero, lena, vline);
+
+    out = morpho::impl::general_directional(ero, lena, vline, 0);
+    mln_assertion(out == ref);
+
+    out = morpho::impl::general_line(ero, lena, vline);
+    mln_assertion(out == ref);
+
+    /*
 
     // Diag2d.
     ref = morpho::impl::generic::erosion_on_function(lena, diag2d);
