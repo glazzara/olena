@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/median.cc
- *
- * \brief Test on mln::level::median.
- */
+/// \file tests/level/median.cc
+///
+/// Test on mln::level::median.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/win/rectangle2d.hh>
@@ -47,13 +47,20 @@ int main()
   using namespace mln;
   using value::int_u8;
 
-  win::rectangle2d rect(5, 5);
-  border::thickness = 6;
-
   image2d<int_u8> lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
-
-  level::median(lena, rect, out);
-  io::pgm::save(out, "out.pgm");
+  {
+    win::rectangle2d rect(51, 51);
+    image2d<int_u8> out = level::median(lena, rect);
+    io::pgm::save(out, "out_rect.pgm");
+  }
+  {
+    win::rectangle2d rect(1, 51);
+    win::hline2d line(51);
+    image2d<int_u8>
+      ref = level::median(lena, rect),
+      out = level::median(lena, line);
+    mln_assertion(out == ref);
+    io::pgm::save(out, "out_line.pgm");
+  }
 }

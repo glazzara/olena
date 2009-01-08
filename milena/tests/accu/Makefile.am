@@ -22,6 +22,7 @@ check_PROGRAMS =				\
   transform					\
   transform_diagonal				\
   transform_directional				\
+  transform_line				\
   transform_snake				\
   tuple
 
@@ -44,6 +45,7 @@ rank_SOURCES = rank.cc
 transform_SOURCES = transform.cc
 transform_diagonal_SOURCES = transform_diagonal.cc
 transform_directional_SOURCES = transform_directional.cc
+transform_line_SOURCES = transform_line.cc
 transform_snake_SOURCES = transform_snake.cc
 tuple_SOURCES = tuple.cc
 

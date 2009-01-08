@@ -41,10 +41,11 @@
 
 # include <mln/win/shift.hh>
 # include <mln/win/diff.hh>
+# include <mln/win/line.hh>
 
 # include <mln/canvas/browsing/snake_fwd.hh>
-# include <mln/canvas/browsing/dir_struct_elt_incr_update.hh>
 # include <mln/accu/median_h.hh>
+# include <mln/accu/transform_line.hh>
 
 
 namespace mln
@@ -62,35 +63,32 @@ namespace mln
      *
      * \pre \p input and \p output have to be initialized.
      */
-    template <typename I, typename W, typename O>
-    void median(const Image<I>& input, const Window<W>& win,
-		Image<O>& output);
-
-
-
-    /*! Compute in \p output the median filter of image \p input in
-     *  the direction \p dir with strength \p length.
-     *
-     * \param[in] input The image to be filtered.
-     * \param[in] dir The filtering direction.
-     * \param[in] length The filtering strength.
-     * \param[out] output The output image.
-     *
-     * \pre \p input and \p output have to be initialized.
-     * \pre \p dir is between 0 and less than the image dimension.
-     * \pre \p length has to be odd.
-     */
-    template <typename I, typename O>
-    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
-		    Image<O>& output);
+    template <typename I, typename W>
+    mln_concrete(I)
+    median(const Image<I>& input, const Window<W>& win);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    namespace impl
+    namespace internal
     {
 
+      template <typename I, typename W>
+      void
+      median_tests(const Image<I>& input, const Window<W>& win)
+      {
+	mln_precondition(exact(input).is_valid());
+	// mln_precondition(exact(win).is_valid());
+	(void) input;
+	(void) win;
+      }
+
+    } // end of namespace level::internal
+
+
+    namespace impl
+    {
 
       // Functors.
 
@@ -184,140 +182,108 @@ namespace mln
 
 
 
-      template <typename I_, typename O>
-      struct median_dir_t
+      namespace generic
       {
-	typedef I_ I;
-	enum { dim = I::site::dim };
 
-	// i/o
-	const I& input;
-	const unsigned dir;
-	const unsigned length;
-	O& output;
-
-	// aux data
-	mln_psite(I) p;
-	accu::median_h<mln_value(I)> med;
-
-	// ctor
+	template <typename I, typename W>
 	inline
-	median_dir_t(const I& input, unsigned dir, unsigned length, O& output)
-	  : // i/o
-	    input(input),
-	    dir(dir),
-	    length(length),
-	    output(exact(output)),
-	    // aux data
-	    p(),
-	    med()
+	mln_concrete(I)
+	median(const Image<I>& input, const Window<W>& win)
 	{
+	  trace::entering("level::impl::generic::median");
+
+	  mlc_equal(mln_trait_image_quant(I),
+		    trait::image::quant::low)::check();
+	  internal::median_tests(input, win);
+
+	  extension::adjust(input, win);
+
+	  typedef mln_concrete(I) O;
+	  O output;
+	  initialize(output, input);
+	  median_t<I,W,O> f(exact(input), exact(win), output);
+	  canvas::browsing::snake_fwd(f);
+
+	  trace::exiting("level::impl::generic::median");
+	  return output;
 	}
 
-	inline
-	void init()
-	{
-	}
-
-	inline
-	void init_line()
-	{
-	  med.init();
-	}
-
-	inline
-	void add_point(mln_psite(I) pt)
-	{
-	  med.take(input(pt));
-	}
-
-	inline
-	void remove_point(mln_psite(I) pu)
-	{
-	  med.untake(input(pu));
-	}
-
-	inline
-	void next()
-	{
-	  if (output.has(p))
-	    output(p) = med.to_result();
-	}
-
-	inline
-	void final()
-	{
-	}
-
-      }; // end of median_dir_t
+      } // end of namespace mln::level::impl::generic
 
 
-
-      template <typename I, typename O>
+      template <typename I,
+		typename M, unsigned i, typename C>
       inline
-      void median_dir_(const Image<I>& input, unsigned dir, unsigned length, O& output)
+      mln_concrete(I)
+      median_line(const Image<I>& input, const win::line<M,i,C>& win)
       {
-	median_dir_t<I,O> f(exact(input), dir, length, output);
-	canvas::browsing::dir_struct_elt_incr_update(f);
+	trace::entering("level::impl::median_line");
+
+	mlc_equal(mln_trait_image_quant(I),
+		  trait::image::quant::low)::check();
+	internal::median_tests(input, win);
+
+	accu::median_h<mln_value(I)> a;
+	mln_concrete(I) output = accu::transform_line(a, input, win.length(), i);
+
+	trace::exiting("level::impl::median_line");
+	return output;
       }
 
-
-      template <typename I, typename W, typename O>
-      inline
-      void median_(const Image<I>& input, const Window<W>& win, O& output)
-      {
-	// FIXME: resize border!
-	median_t<I,W,O> f(exact(input), exact(win), output);
-	canvas::browsing::snake_fwd(f);
-      }
-
-
-#  ifdef MLN_CORE_WIN_LINE_HH
-      template <typename I, typename M, unsigned i, typename C, typename O>
-      inline
-      void median_(const Image<I>& input, const win::line<M,i,C>& win, O& output)
-      {
-	median_dir(input, i, win.length(), output); // FIXME: Make 1 explicit!
-      }
-#  endif // ! MLN_CORE_WIN_LINE_HH
 
     } // end of namespace mln::level::impl
 
 
 
-    // Facades.
+    namespace internal
+    {
 
-    template <typename I, typename W, typename O>
-    void median(const Image<I>& input, const Window<W>& win,
-		Image<O>& output)
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      median_dispatch_wrt_win(const Image<I>& input, const Window<W>& win)
+      {
+	return impl::generic::median(input, win);
+      }
+
+      template <typename I,
+		typename M, unsigned i, typename C>
+      inline
+      mln_concrete(I)
+      median_dispatch_wrt_win(const Image<I>& input, const win::line<M,i,C>& win)
+      {
+	return impl::median_line(input, win);
+      }
+
+
+      template <typename I, typename W>
+      inline
+      mln_concrete(I)
+      median_dispatch(const Image<I>& input, const Window<W>& win)
+      {
+	return median_dispatch_wrt_win(input, exact(win));
+      }
+
+    } // end of namespace level::internal
+
+
+    // Facade.
+
+    template <typename I, typename W>
+    mln_concrete(I)
+    median(const Image<I>& input, const Window<W>& win)
     {
       trace::entering("level::median");
 
-      mln_assertion(exact(output).domain() == exact(input).domain());
-      impl::median_(exact(input), exact(win), exact(output));
+      mlc_equal(mln_trait_image_quant(I),
+		trait::image::quant::low)::check();
+
+      internal::median_tests(input, win);
+      mln_concrete(I) output;
+      output = internal::median_dispatch(input, win);
 
       trace::exiting("level::median");
-    }
-
-    template <typename I, typename O>
-    void median_dir(const Image<I>& input, unsigned dir, unsigned length,
-		    Image<O>& output)
-    {
-      trace::entering("level::median_dir");
-
-      mlc_is(mln_trait_image_value_io(O), trait::image::value_io::read_write)::check();
-      mlc_is(mln_trait_image_localization(I),
-	     trait::image::localization::basic_grid)::check();
-      mlc_converts_to(mln_value(I), mln_value(O))::check();
-
-      mln_precondition(exact(output).domain() == exact(input).domain());
-      typedef mln_psite(I) P;
-      mln_precondition(dir < P::dim);
-      mln_precondition(length % 2 == 1);
-
-      impl::median_dir_(exact(input), dir, length, exact(output));
-
-      trace::exiting("level::median_dir");
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

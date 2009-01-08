@@ -89,6 +89,7 @@ namespace mln
 
 # include <mln/accu/transform_directional.hh>
 # include <mln/accu/transform_diagonal.hh>
+# include <mln/accu/transform_line.hh>
 # include <mln/accu/transform_snake.hh>
 
 

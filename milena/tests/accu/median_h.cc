@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,15 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/accu/median_h.cc
- *
- * \brief Tests on mln::accu::median_h.
- */
+/// \file tests/accu/median_h.cc
+///
+/// Tests on mln::accu::median_h.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/value/int_u8.hh>
 
 #include <mln/accu/median_h.hh>
+
 
 int main()
 {
@@ -66,4 +67,5 @@ int main()
 
     mln_assertion(med.to_result() == 7u);
   }
+
 }

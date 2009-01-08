@@ -44,9 +44,6 @@ int main()
   image2d<int> ima(4, 5);
   win::rectangle2d rec(3, 3);
 
-  image2d<unsigned>
-    out = accu::transform_snake(accu::meta::count(), ima, rec),
-    ref(ima.domain());
-
+  image2d<unsigned> out = accu::transform_snake(accu::meta::count(), ima, rec);
   mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
 }

@@ -13,9 +13,7 @@ check_PROGRAMS =				\
   convert					\
   median					\
   median_					\
-  median_dir					\
   median_fast					\
-  median_hline2d				\
   saturate					\
   sort_psites					\
   stretch					\
@@ -31,9 +29,7 @@ compute_SOURCES = compute.cc
 convert_SOURCES = convert.cc
 median_SOURCES = median.cc
 median__SOURCES = median_.cc
-median_dir_SOURCES = median_dir.cc
 median_fast_SOURCES = median_fast.cc
-median_hline2d_SOURCES = median_hline2d.cc
 saturate_SOURCES = saturate.cc
 sort_psites_SOURCES = sort_psites.cc
 stretch_SOURCES = stretch.cc

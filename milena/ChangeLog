@@ -1,3 +1,39 @@
+2009-01-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix accu::histo_h and cleanup level::median.
+
+	* mln/level/median.hh (internal::median_tests): New.
+	(median_dir): Remove; useless, better replace by handling
+	win::line!
+	(impl::median): Rename as...
+	(impl::generic::median): ...this.
+	Update.
+	(impl::median_line): New.
+	(internal::mediant_dispatch): New.
+	(include): Update.
+	* mln/accu/transform_line.hh: New.
+	* mln/accu/all.hh: Update.
+	* tests/level/median_dir.cc: Remove.
+	There is no median_dir.hh file so having this test is dull!
+	* tests/level/median_hline2d.cc: Likewise.
+	* tests/level/median.cc: Merge tests from removed files.
+	* tests/level/Makefile.am: Update.
+
+	* mln/accu/histo.hh (init): Fix.
+	Forgetting to set sum_ to 0 leads to errors in median
+	filtering...
+
+	* mln/accu/median_h.hh: Upgrade file doc style.
+	* mln/canvas/browsing/dir_struct_elt_incr_update.hh:
+	Add some debug information; I think that this code is bugged...
+	* tests/accu/transform_snake.cc,
+	* tests/accu/transform_diagonal.cc,
+	* tests/accu/transform_directional.cc
+	(ref): Remove unused object.
+	* tests/accu/median_h.cc: Upgrade file doc style.
+	* tests/accu/transform_line.cc: New.
+	* tests/accu/Makefile.am: Update.
+
 2009-01-08  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add more details in step 4 in tutorial.

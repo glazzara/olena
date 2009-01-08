@@ -44,17 +44,13 @@ int main()
 
   {
     win::diag2d w(3);
-    image2d<unsigned>
-      out = accu::transform_diagonal(accu::meta::count(), ima, w),
-      ref(ima.domain());
+    image2d<unsigned> out = accu::transform_diagonal(accu::meta::count(), ima, w);
     mln_assertion(out == (pw::cst(w.size()) | ima.domain()));
   }
 
   {
     win::backdiag2d w(3);
-    image2d<unsigned>
-      out = accu::transform_diagonal(accu::meta::count(), ima, w),
-      ref(ima.domain());
+    image2d<unsigned> out = accu::transform_diagonal(accu::meta::count(), ima, w);
     mln_assertion(out == (pw::cst(w.size()) | ima.domain()));
   }
 

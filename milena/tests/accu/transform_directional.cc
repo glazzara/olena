@@ -46,9 +46,7 @@ int main()
 
   for (unsigned dir = 0; dir < 2; ++dir)
   {
-    image2d<unsigned>
-      out = accu::transform_directional(accu::meta::count(), ima, rec, dir),
-      ref(ima.domain());
+    image2d<unsigned> out = accu::transform_directional(accu::meta::count(), ima, rec, dir);
     mln_assertion(out == (pw::cst(rec.size()) | ima.domain()));
   }
 }

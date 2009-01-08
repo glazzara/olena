@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -34,7 +35,6 @@
 ///
 /// \todo Use histo::data instead of std::vector!
 
-
 # include <vector>
 # include <algorithm>
 
@@ -43,6 +43,7 @@
 # include <mln/accu/internal/base.hh>
 # include <mln/value/set.hh>
 # include <mln/histo/data.hh>
+
 
 namespace mln
 {
@@ -161,6 +162,7 @@ namespace mln
     histo<V>::init()
     {
       h_.clear();
+      sum_ = 0;
     }
 
     template <typename V>

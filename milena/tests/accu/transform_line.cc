@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,33 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/level/median_dir.cc
- *
- * \brief Test on mln::level::median.
- */
+/// \file tests/accu/transform_line.cc
+///
+/// Tests on mln::accu::transform_line.
 
 #include <mln/core/image/image2d.hh>
-
-#include <mln/io/pgm/load.hh>
-#include <mln/io/pgm/save.hh>
-
-#include <mln/value/int_u8.hh>
-#include <mln/level/median.hh>
-
-#include "tests/data.hh"
+#include <mln/accu/transform_line.hh>
+#include <mln/accu/count.hh>
+#include <mln/pw/all.hh>
+#include <mln/level/compare.hh>
 
 
 int main()
 {
   using namespace mln;
-  using value::int_u8;
 
-  border::thickness = 7;
+  image2d<unsigned> ima(4, 5);
+  unsigned len = 3;
+  for (unsigned dir = 0; dir < 2; ++dir)
+  {
+    image2d<unsigned> out = accu::transform_line(accu::meta::count(), ima, len, dir);
+    mln_assertion(out == (pw::cst(3) | ima.domain()));
+  }
 
-  image2d<int_u8> lena;
-  io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
-
-  level::median_dir(lena, 1, 15, out);
-  io::pgm::save(out, "out.pgm");
 }
