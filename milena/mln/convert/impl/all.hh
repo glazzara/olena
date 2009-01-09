@@ -33,6 +33,7 @@
 /// File that includes all from-to conversion routines.
 
 
+# include <mln/convert/impl/from_double_to_value.hh>
 # include <mln/convert/impl/from_float_to_value.hh>
 # include <mln/convert/impl/from_image_to_site_set.hh>
 # include <mln/convert/impl/from_int_to_value.hh>

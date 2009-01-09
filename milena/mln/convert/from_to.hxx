@@ -194,6 +194,19 @@ namespace mln
       void
       from_to_(const Value<F>& from, Value<T>& to);
 
+      // double-> Value
+      template <typename V>
+      void
+      from_to_(const double& from, Value<V>& to);
+
+      // double-> unsigned
+      void
+      from_to_(const double& from, unsigned& to);
+
+      // double-> int
+      void
+      from_to_(const double& from, int&	to);
+
       // float -> Value
       template <typename V>
       void

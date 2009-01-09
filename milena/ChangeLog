@@ -1,5 +1,16 @@
 2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add from_double_to_value dispatch in from_to.
+
+	* mln/convert/from_to.hxx: add more forward declarations.
+
+	* mln/convert/impl/all.hh: include from_double_to_value.hh.
+
+	* mln/convert/impl/from_double_to_value.hh: new file. Add a new
+	dispatch for double conversion.
+
+2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Remove a useless test in level/median.
 	
 	* tests/level/Makefile.am,
