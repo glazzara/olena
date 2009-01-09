@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -74,10 +74,6 @@ namespace mln
     /// Go to the next point.
     void do_next_();
 
-    /// Set the reference psite.
-    template <typename Pref>
-    void center_at_(const Pref&);
-
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
 
@@ -119,10 +115,6 @@ namespace mln
 
     /// Go to the next point.
     void do_next_();
-
-    /// Do some work while setting the reference site.
-    template <typename Pref>
-    void center_at_(const Pref&);
 
     /// Compute the current psite.
     mln_psite(V) compute_p_() const;
@@ -187,14 +179,6 @@ namespace mln
   }
 
   template <typename V>
-  template <typename Pref>
-  inline
-  void
-  dpsites_fwd_piter<V>::center_at_(const Pref&)
-  {
-  }
-
-  template <typename V>
   inline
   mln_psite(V)
   dpsites_fwd_piter<V>::compute_p_() const
@@ -250,14 +234,6 @@ namespace mln
   dpsites_bkd_piter<V>::do_next_()
   {
     --i_;
-  }
-
-  template <typename V>
-  template <typename Pref>
-  inline
-  void
-  dpsites_bkd_piter<V>::center_at_(const Pref&)
-  {
   }
 
   template <typename V>

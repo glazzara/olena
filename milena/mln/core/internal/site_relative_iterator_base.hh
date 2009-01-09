@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -111,6 +112,11 @@ namespace mln
       const mln_psite(S)* c_;
 
     private:
+
+      // Allows inherited classes to do extra work while centering.
+      // Default implementation.
+      template <typename P>
+      void center_at_(const P& c);
 
       /// The psite designated by this iterator.
       mln_psite(S) p_;
@@ -226,6 +232,14 @@ namespace mln
       p_ = exact(this)->compute_p_();
       mln_postcondition(this->is_valid());
       return exact(*this);
+    }
+
+    template <typename S, typename E>
+    template <typename P>
+    inline
+    void
+    site_relative_iterator_base<S,E>::center_at_(const P& c)
+    {
     }
 
 # endif // ! MLN_INCLUDE_ONLY

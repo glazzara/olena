@@ -1,3 +1,17 @@
+2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Provide a default implementation of center_at_() in
+	site_relative_iterator_base.
+
+	* mln/core/dpsites_piter.hh,
+	* mln/core/neighb.hh,
+	* mln/win/multiple_size.hh: remove empty implementation of center_at_().
+	
+	* mln/core/image/complex_neighborhood_piter.hh: add a new line.
+	
+	* mln/core/internal/site_relative_iterator_base.hh: add default
+	implementation of center_at_().
+
 2009-01-08  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup level approx median.

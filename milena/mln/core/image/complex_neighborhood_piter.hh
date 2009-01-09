@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -90,6 +91,7 @@ namespace mln
     /// Set the reference psite.
     template <typename Pref>
     void center_at_(const Pref& c);
+
     /// Compute the current psite.
     psite compute_p_() const;
     /// \}

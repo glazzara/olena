@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -140,10 +140,6 @@ namespace mln
     /// Go to the next point.
     void do_next_();
 
-    /// Do some work while centering the iterator.
-    template <typename Pref>
-    void center_at_(const Pref&);
-
     /// Compute the current psite.
     mln_psite(W) compute_p_() const;
 
@@ -181,10 +177,6 @@ public:
 
   /// Go to the next point.
   void do_next_();
-
-  /// Do some work while centering the iterator.
-  template <typename Pref>
-  void center_at_(const Pref&);
 
   /// Compute the current psite.
   mln_psite(W) compute_p_() const;
@@ -318,14 +310,6 @@ protected:
   }
 
   template <typename W>
-  template <typename Pref>
-  inline
-  void
-  neighb_fwd_niter<W>::center_at_(const Pref&)
-  {
-  }
-
-  template <typename W>
   inline
   mln_psite(W)
   neighb_fwd_niter<W>::compute_p_() const
@@ -383,14 +367,6 @@ protected:
   neighb_bkd_niter<W>::do_next_()
   {
     i_.next();
-  }
-
-  template <typename W>
-  template <typename Pref>
-  inline
-  void
-  neighb_bkd_niter<W>::center_at_(const Pref&)
-  {
   }
 
   template <typename W>
