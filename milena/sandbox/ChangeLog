@@ -1,3 +1,12 @@
+2009-01-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start a code to segment color images.
+
+	* geraud/color: New directory.
+	* geraud/color/segment.cc: New.
+	* geraud/wst_edge.cc: Move...
+	* geraud/laurent/wst_edge.cc: ...here.
+
 2008-12-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Propagate renaming clone as duplicate.
