@@ -239,7 +239,7 @@ namespace mln
 
 	extension::adjust_fill(input, geom::delta(win) + 1, op.neutral(input));
 	mln_concrete(I) output;
-	output = accu::transform_directional(op.accu_incr(input), input, win, dir); // FIXME: Use _line.
+	output = accu::transform_directional(op.accu_incr(input), input, win, dir);
 
 	trace::exiting("morpho::impl:general_directional");
 	return output;

@@ -147,7 +147,7 @@ namespace mln
     {
       mlc_converts_to(P, const mln_psite(S)&)::check();
       c_ = & static_cast< const mln_psite(S)& >(c);
-      exact(this)->center_at_(c);
+      exact(this)->center_at_(c); // May call some extra code.
       this->invalidate();
     }
 
@@ -240,6 +240,7 @@ namespace mln
     void
     site_relative_iterator_base<S,E>::center_at_(const P& c)
     {
+      // Default is no-op, meaning "no extra code".
     }
 
 # endif // ! MLN_INCLUDE_ONLY
