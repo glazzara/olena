@@ -1,5 +1,17 @@
 2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Remove a useless test in level/median.
+	
+	* tests/level/Makefile.am,
+	* tests/level/median_.cc: remove this test. It is already tested by
+	level/median/approx/median.cc.
+
+	* mln/level/approx/median.hh,
+	* tests/level/approx/median.cc,
+	* tests/level/median.cc: fix copyright.
+
+2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Provide a default implementation of center_at_() in
 	site_relative_iterator_base.
 

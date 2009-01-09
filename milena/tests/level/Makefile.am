@@ -12,7 +12,6 @@ check_PROGRAMS =				\
   compute					\
   convert					\
   median					\
-  median_					\
   median_fast					\
   saturate					\
   sort_psites					\
@@ -28,7 +27,6 @@ compare_SOURCES = compare.cc
 compute_SOURCES = compute.cc
 convert_SOURCES = convert.cc
 median_SOURCES = median.cc
-median__SOURCES = median_.cc
 median_fast_SOURCES = median_fast.cc
 saturate_SOURCES = saturate.cc
 sort_psites_SOURCES = sort_psites.cc
