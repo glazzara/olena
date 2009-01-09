@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -44,6 +44,8 @@
 # include <mln/level/transform.hh>
 
 
+# include <mln/value/internal/encoding.hh>
+# include <iomanip>
 namespace mln
 {
 
@@ -84,21 +86,23 @@ namespace mln
 	estim::min_max(input, min_, max_);
 	if (max_ != min_)
 	  {
-	    float
+	    //FIXME: we would like to use float instead of double but we
+	    //can't for precision reasons. See ticket #179.
+	    double
 	      min = float(min_),
 	      max = float(max_),
 	      epsilon = mln_epsilon(float),
-	      m = 0.0f - 0.5f + epsilon,
 	      M = mln_max(V) + 0.5f - epsilon,
+	      m = 0.0f - 0.5f + epsilon,
 	      a = (M - m) / (max - min),
 	      b = (m * max - M * min) / (max - min);
-	    fun::v2v::linear<float, float, V> f(a, b);
+	    fun::v2v::linear<double, double, V> f(a, b);
 	    output = level::transform(input, f);
 	  }
 	else
 	  {
 	    initialize(output, input);
-	    // trace::warning("output has no significative data!");
+	    trace::warning("output has no significative data!");
 	  }
 
 	trace::exiting("level::impl::stretch");

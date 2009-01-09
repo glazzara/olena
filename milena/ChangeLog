@@ -1,5 +1,12 @@
 2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix level::stretch.
+
+	* mln/level/stretch.hh: Use double variables instead of float because
+	of precision issues. See ticket #179.
+
+2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add from_double_to_value dispatch in from_to.
 
 	* mln/convert/from_to.hxx: add more forward declarations.
