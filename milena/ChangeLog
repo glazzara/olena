@@ -1,5 +1,15 @@
 2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix fun::x2x::rotation test.
+
+	* tests/fun/x2x/rotation.cc: Check if the sites which are part of the
+	rotated image are part of the original image _domain_. Call
+	domain().has() instead of has().
+	Interpolated sites which were part of the domain needed a larger
+	extension in order to be computed correctly.
+
+2009-01-09  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix level::stretch.
 
 	* mln/level/stretch.hh: Use double variables instead of float because

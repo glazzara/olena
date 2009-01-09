@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -39,6 +40,7 @@
 #include <mln/core/image/interpolated.hh>
 #include <mln/make/vec.hh>
 #include <mln/fun/x2v/bilinear.hh>
+#include <mln/extension/adjust.hh>
 
 #include "tests/data.hh"
 
@@ -51,21 +53,22 @@ int main()
   algebra::vec<2,float> axis;
   axis[0] = 0;
   axis[1] = 1;
-
-  image2d<int_u8> lena;
+  typedef image2d<int_u8> ima_t;
+  ima_t lena;
   io::pgm::load(lena, MLN_IMG_DIR "/lena.pgm");
-  image2d<int_u8> out(lena.domain());
 
-  interpolated<image2d<int_u8>, fun::x2v::bilinear> inter(lena);
+  ima_t out;
+  initialize(out, lena);
+
+  interpolated<ima_t, fun::x2v::bilinear> inter(lena);
 
   fun::x2x::rotation<2,float> rot1(0.1, axis);
 
-  mln_piter_(image2d<int_u8>) p(out.domain());
-
+  mln_piter_(ima_t) p(out.domain());
   for_all(p)
     {
       algebra::vec<2,float> v = rot1.inv()(p.to_site().to_vec());
-      if (inter.has(v))
+      if (inter.domain().has(v))
 	out(p) = inter(v);
       else
 	out(p) = 255;
