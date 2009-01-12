@@ -52,7 +52,7 @@ namespace mln
     class sign : public internal::Integer<sign>
     {
     public:
-      /// FIXME is these typedefs correct?
+      /// FIXME Are these typedefs correct?
 
       /// Define the encoding type
       typedef int enc;

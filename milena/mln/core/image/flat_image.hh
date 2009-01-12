@@ -117,7 +117,7 @@ namespace mln
     typedef const T& rvalue;
 
     /// Return type of read-write access.
-    typedef const T& lvalue;
+    typedef T& lvalue;
 
 
     /// Constructor without argument.
@@ -140,13 +140,12 @@ namespace mln
     const T& operator()(const mln_psite(S)& p) const;
 
     /// Read-write access to the image value located at point \p p.
-    const T& operator()(const mln_psite(S)& p);
+    T& operator()(const mln_psite(S)& p);
 
 
-    /// Change the image value.
-    void change_value(const T& old_val, const T& new_val);
-    const T& val() const;
-    T& val();
+    /// Specific methods.
+    const T& value_() const;
+    T& value_();
   };
 
 
@@ -238,7 +237,7 @@ namespace mln
 
   template <typename T, typename S>
   inline
-  const T&
+  T&
   flat_image<T,S>::operator()(const mln_psite(S)&)
   {
     mln_precondition(this->is_valid());
@@ -247,21 +246,8 @@ namespace mln
 
   template <typename T, typename S>
   inline
-  void
-  flat_image<T,S>::change_value(const T& old_val, const T& new_val)
-  {
-    mln_precondition(this->is_valid());
-    mln_precondition(old_val == this->data_->val_);
-    this->data_->val_ = new_val;
-
-    /// Avoid warning when NDEBUG is set
-    (void) old_val;
-  }
-
-  template <typename T, typename S>
-  inline
   const T&
-  flat_image<T,S>::val() const
+  flat_image<T,S>::value_() const
   {
     mln_precondition(this->is_valid());
     return this->data_->val_;
@@ -270,7 +256,7 @@ namespace mln
   template <typename T, typename S>
   inline
   T&
-  flat_image<T,S>::val()
+  flat_image<T,S>::value_()
   {
     mln_precondition(this->is_valid());
     return this->data_->val_;

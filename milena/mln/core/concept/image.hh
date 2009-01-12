@@ -148,9 +148,6 @@ namespace mln
     {
       static void run()
       {
-	void (E::*m)(const typename E::value& old_val,
-		     const typename E::value& new_val) = & E::change_value;
-	m = 0;
       }
     };
 

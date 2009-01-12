@@ -31,7 +31,7 @@
 
 /// \file mln/opt/at.hh
 ///
-/// FIXME
+/// Define the optional routine at.
 
 # include <mln/core/concept/image.hh>
 # include <mln/trait/images.hh>
@@ -48,26 +48,38 @@ namespace mln
   {
 
     /// One dimension
+    /// Read-only access to the \p ima value located at (\p ind).
     template <typename I>
     mln_rvalue(I) at(const Image<I>& ima, def::coord ind);
 
+    /// Read-write access to the \p ima value located at (\p ind).
     template <typename I>
     mln_lvalue(I) at(Image<I>& ima, def::coord ind);
 
 
     /// Two dimensions
+    /// Read-only access to the \p ima value located at (\p row, \p col).
     template <typename I>
     mln_rvalue(I) at(const Image<I>& ima, def::coord row, def::coord col);
 
+    /// Read-write access to the \p ima value located at (\p row, \p col).
     template <typename I>
     mln_lvalue(I) at(Image<I>& ima, def::coord row, def::coord col);
 
     /// Three dimensions
+    /// Read-only access to the \p ima value located at
+    /// (\p sli, \p row, \p col).
     template <typename I>
-    mln_rvalue(I) at(const Image<I>& ima, def::coord sli, def::coord row, def::coord col);
+    mln_rvalue(I) at(const Image<I>& ima,
+                     def::coord sli, def::coord row, def::coord col);
 
+
+
+    /// Read-write access to the \p ima value located at
+    /// (\p sli, \p row, \p col).
     template <typename I>
-    mln_lvalue(I) at(Image<I>& ima, def::coord sli, def::coord row, def::coord col);
+    mln_lvalue(I) at(Image<I>& ima,
+                     def::coord sli, def::coord row, def::coord col);
 
 
 # ifndef MLN_INCLUDE_ONLY

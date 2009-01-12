@@ -1,3 +1,15 @@
+2009-01-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Add opt::value routine.
+
+	* mln/core/image/flat_image.hh: Update specific method ands typedefs.
+	* mln/core/concept/image.hh: Remove check of a deprecated spe method.
+	* mln/opt/at.hh: Add documentation.
+	* mln/opt/value.hh: New, opt::value routine.
+	* mln/value/sign.hh: Update documentation.
+	* tests/core/image/flat_image.cc: Update tests.
+	* tests/opt/value.cc: New tests.
+
 2009-01-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add some commentary.
