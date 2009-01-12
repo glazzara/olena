@@ -164,7 +164,7 @@ namespace mln
 	if (! t.is_root(p))
 	  {
 	    acc(t.parent(p)).take(acc(p));
-	    if (t.f()(t.parent(p)) != t.f()(p)) // not within a flat zone
+	    if (t.is_a_node(p))
 	      ++nchildren(t.parent(p)); // so parent(p) is a node
 	  }
       // Back-propagate attribute from a node to sites of its

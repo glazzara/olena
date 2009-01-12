@@ -1,3 +1,12 @@
+2009-01-12  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment color segmentation algorithm.
+
+	* geraud/tufa_2008/filter_n.cc: Simplify a test.
+	* geraud/color/sum_pix.hh: New.
+	* geraud/color/blen_pix.hh: New.
+	* geraud/color/segment.cc: Augment.
+
 2009-01-09  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start a code to segment color images.
