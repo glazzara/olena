@@ -37,6 +37,7 @@
 # endif // ! MLN_DATA_FILL_WITH_VALUE_HH
 
 # include <mln/data/memset_.hh>
+# include <mln/opt/value.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -124,7 +125,7 @@ namespace mln
                mlc_is(mln_trait_image_vw_io(I),
                       trait::image::vw_io::read_write))::check();
 
-	ima.val() = static_cast<mln_value(I)>(val);
+        opt::value(ima) = static_cast<mln_value(I)>(val);
 
 	trace::exiting("data::impl::fill_with_value_singleton");
       }

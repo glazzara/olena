@@ -38,6 +38,7 @@
 # include <mln/core/concept/function.hh>
 # include <mln/value/set.hh>
 # include <mln/value/lut_vec.hh>
+# include <mln/opt/value.hh>
 
 
 namespace mln
@@ -251,7 +252,7 @@ namespace mln
 
         level::internal::transform_inplace_tests(input, f);
 
-        input.val() = f(input.val());
+        opt::value(input) = f(opt::value(input));
 
 	trace::exiting("level::impl::transform_inplace_singleton");
       }

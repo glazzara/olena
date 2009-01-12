@@ -42,6 +42,7 @@
 # include <mln/data/memcpy_.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
+# include <mln/opt/value.hh>
 
 
 
@@ -143,7 +144,8 @@ namespace mln
 
         const I& input  = exact(input_);
 
-        data::fill_with_value((output_ | input.domain()).rw(), input.val());
+        data::fill_with_value((output_ | input.domain()).rw(),
+                              opt::value(input));
 
         trace::exiting("data::impl::paste_singleton");
       }

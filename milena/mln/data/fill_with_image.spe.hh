@@ -43,6 +43,7 @@
 # include <mln/core/pixel.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
+# include <mln/opt/value.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -145,7 +146,7 @@ namespace mln
         const J& data  = exact(data_);
         data::internal::fill_with_image_tests(ima_, data);
 
-        data::fill_with_value(ima_, data.val());
+        data::fill_with_value(ima_, opt::value(data));
 
         trace::exiting("data::impl::fill_with_image_singleton");
       }

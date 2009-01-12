@@ -1,5 +1,15 @@
 2009-01-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
+	Uses opt::value instead .val() method in low level routines.
+
+	* mln/level/transform.spe.hh,
+	* mln/level/transform_inplace.hh,
+	* mln/data/paste.spe.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/fill_with_image.spe.hh: Update.
+
+2009-01-12  Nicolas Ballas  <ballas@lrde.epita.fr>
+
 	Add opt::value routine.
 
 	* mln/core/image/flat_image.hh: Update specific method ands typedefs.

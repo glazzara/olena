@@ -44,6 +44,7 @@
 
 # include <mln/value/set.hh>
 # include <mln/value/lut_vec.hh>
+# include <mln/opt/value.hh>
 
 
 
@@ -214,7 +215,7 @@ namespace mln
         mln_ch_value(I, mln_result(F)) output;
         initialize(output, input);
 
-        mln_result(F) val = f(input.val());
+        mln_result(F) val = f(opt::value(input));
 	data::fill_with_value(output, val);
 
 	trace::exiting("level::impl::transform_singleton");
