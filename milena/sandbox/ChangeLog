@@ -1,3 +1,9 @@
+2009-01-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Start Laurent's ISMM 2009 code.
+
+	* laurent/ismm2009.cc: New.
+
 2009-01-13  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Rename theo's sandbox.
