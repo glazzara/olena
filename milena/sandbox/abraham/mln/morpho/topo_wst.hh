@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -52,6 +52,42 @@ namespace mln
   namespace morpho
   {
 
+    template <class I>
+    mln_site(I) min (const Image<I> &ima_, p_set<mln_site(I)>& components)
+    {
+      const I& ima = exact(ima_);
+
+      if (components.nsites() == 0)
+	return mln_site(I)(-1, -1); // FIXME
+
+      typename p_set<mln_site(I)>::fwd_piter it(components);
+      mln_site(I) min = components[0];
+
+      for_all(it)
+	if (ima(it) < ima(min))
+	  min = it;
+
+      return min;
+    }
+
+    template <class I>
+    mln_site(I) max (p_set<mln_site(I)>& components)
+    {
+      if (components.nsites() == 0)
+	return mln_site(I)(-1, -1); // FIXME
+
+      typename p_set<mln_site(I)>::fwd_piter it(components);
+      mln_site(I) max = components[0];
+
+      for_all(it)
+	if (ima(it) > ima(max))
+	  max = it;
+
+      return max;
+    }
+
+
+
     template <class I, class N>
     struct topo_wst
     {
@@ -59,6 +95,8 @@ namespace mln
       // Typedefs
       // --------
       typedef mln_site(I) site;
+      typedef I image_t;
+      typedef N neighborhood_t;
 
       // Component tree management
       // -------------------------
@@ -88,14 +126,10 @@ namespace mln
 	  // children.append(n);
 	  children.push_back(p);
 	}
-
-	mln_value(I) min() { return mln_min(mln_value(I)); }
-	mln_value(I) max() { return mln_max(mln_value(I)); }
-	void revert () { level = max() - level + min(); }
-
       }; // struct node
 
-      const mln_exact(N)& nbh;
+      public:
+
       mln_ch_value(I, site) Par_node;
       mln_ch_value(I, site) Par_tree;
 
@@ -105,10 +139,11 @@ namespace mln
       mln_ch_value(I, node) nodes;
       site Root;
 
+      private:
+
       void MakeSet_tree(site x);
       void MakeSet_node(site x);
       site Find_tree(site x);
-      void swap(site& x, site& y);
       site Find_node(site x);
       void BuildComponentTree();
       site MergeNode(site& node1, site& node2);
@@ -116,22 +151,17 @@ namespace mln
       site Link_node(site x, site y);
       node MakeNode(int level);
 
-
-      // Watershed algorithm
-      // -------------------
-
     private:
       mln_ch_value(I, bool) isproc;
 
       // Ctor
     public:
       topo_wst(const Image<I>& i,
-		 const Neighborhood<N>& n);
+	       const Neighborhood<N>& n);
 
-
-      // Result
     public:
-      mln_exact(I) pima;
+      const I &ima;
+      const N &nbh;
 
     public:
       void go();
@@ -141,12 +171,12 @@ namespace mln
       site max (p_set<site>& components);
       bool highest_fork (p_set<site>& components);
       bool highest_fork (p_set<site>& components, site &r);
-      bool w_constructible(site p, site &r);
-      bool w_constructible(site p);
-      void topo_watershed();
-
 
       // Optimized LCA Algorithm
+
+    public:
+      site lca (site a, site b);
+
     private:
       int *euler;
       int *depth;
@@ -161,7 +191,6 @@ namespace mln
       void build_euler_tour_rec(site p, int &position, int d);
       void build_euler_tour();
       void build_minim ();
-      site lca (site a, site b);
       void removeOneSonNodes(site *p, mln_ch_value(I, site) &newPar_node);
       void compressTree();
     }; // struct topo_wst
@@ -172,15 +201,15 @@ namespace mln
     template <class I, class N>
     topo_wst<I, N>::topo_wst(const Image<I>& i,
 			   const Neighborhood<N>& n)
-      : nbh(exact(n)),
-	Par_node(exact(i).domain(), exact(i).border()),
+      : Par_node(exact(i).domain(), exact(i).border()),
 	Par_tree(exact(i).domain(), exact(i).border()),
 	Rnk_tree(exact(i).domain(), exact(i).border()),
 	Rnk_node(exact(i).domain(), exact(i).border()),
 	subtreeRoot(exact(i).domain(), exact(i).border()),
 	nodes(exact(i).domain(), exact(i).border()),
 	isproc(exact(i).domain(), exact(i).border()),
-	pima(exact(i))
+	ima(exact(i)),
+	nbh(exact(n))
     {
     }
 
@@ -207,14 +236,6 @@ namespace mln
     }
 
     template <class I, class N>
-    void topo_wst<I, N>::swap(site& x, site& y)
-    {
-      site memo = x;
-      x = y;
-      y = memo;
-    }
-
-    template <class I, class N>
     typename topo_wst<I, N>::site topo_wst<I, N>::Find_node(site x)
     {
       if (Par_node(x) != x)
@@ -227,16 +248,9 @@ namespace mln
     {
       BuildComponentTree();
       compressTree();
-      arith::revert_inplace(pima);
-      // arith::revert_inplace(nodes);
-      mln_piter(image2d<node>) p (nodes.domain());
-      for_all(p)
-	nodes(p).revert();
 
       build_euler_tour();
       build_minim();
-      topo_watershed();
-      arith::revert_inplace(pima);
     }
 
     template <class I, class N>
@@ -246,7 +260,7 @@ namespace mln
 
       // Sort the sites in increasing order
       p_array<mln_site(I)> S;
-      S = level::sort_psites_increasing(pima);
+      S = level::sort_psites_increasing(ima);
 
       // Clear the marker map
       data::fill(isproc, false);
@@ -258,7 +272,7 @@ namespace mln
 	  //	      if (subtreeRoot.hold(p))
 	  subtreeRoot(p) = p;
 	  //	      if (nodes.hold(p))
-	  nodes(p) = MakeNode(pima(p));
+	  nodes(p) = MakeNode(ima(p));
 	}
 
 
@@ -273,7 +287,7 @@ namespace mln
 
 	mln_niter(N) q(nbh, ip);
 	for_all(q)
-	  if (pima.has(q) and isproc(q) and pima(q) <= pima(p))
+	  if (ima.has(q) and isproc(q) and ima(q) <= ima(p))
 	    {
 	      site adjCanonicalElt = Find_tree(q);
 	      site adjNode = Find_node(subtreeRoot(adjCanonicalElt));
@@ -333,7 +347,7 @@ namespace mln
     typename topo_wst<I, N>::site topo_wst<I, N>::Link_tree(site x, site y)
     {
       if (Rnk_tree(x) > Rnk_tree(y))
-	swap(x, y);
+	std::swap(x, y);
       else
 	if (Rnk_tree(x) == Rnk_tree(y))
 	  Rnk_tree(y) += 1;
@@ -345,7 +359,7 @@ namespace mln
     typename topo_wst<I, N>::site topo_wst<I, N>::Link_node(site x, site y)
     {
       if (Rnk_node(x) > Rnk_node(y))
-	swap(x, y);
+	std::swap(x, y);
       else
 	if (Rnk_node(x) == Rnk_node(y))
 	  Rnk_node(y) += 1;
@@ -361,38 +375,6 @@ namespace mln
       n.area = 1;
       n.highest = level;
       return n;
-    }
-
-    template <class I, class N>
-    typename topo_wst<I, N>::site topo_wst<I, N>::min (p_set<site>& components)
-    {
-      if (components.nsites() == 0)
-	return site(-1, -1);
-
-      typename p_set<site>::fwd_piter it(components);
-      site min = components[0];
-
-      for_all(it)
-	if (pima(it.to_site()) < pima(min))
-	  min = it.to_site();
-
-      return min;
-    }
-
-    template <class I, class N>
-    typename topo_wst<I, N>::site topo_wst<I, N>::max (p_set<site>& components)
-    {
-      if (components.nsites() == 0)
-	return site(-1, -1);
-
-      typename p_set<site>::fwd_piter it(components);
-      site max = components[0];
-
-      for_all(it)
-	if (pima(it.to_site()) > pima(max))
-	  max = it.to_site();
-
-      return max;
     }
 
 
@@ -433,140 +415,6 @@ namespace mln
       site i;
       return highest_fork(components, i);
     }
-
-    template <class I, class N>
-    bool topo_wst<I, N>::w_constructible(site p) {
-      site i;
-      return w_constructible(p, i);
-    }
-
-    template <class I, class N>
-    bool topo_wst<I, N>::w_constructible(site p, site &r)
-    {
-      mln_niter(N) q(nbh, p);
-      p_set<site> v;
-
-      for_all(q)
-	if (pima.has(q) && pima(q) > pima(p))
-	  v.insert(Par_node(q));
-
-      if (v.nsites() == 0)
-	return false;
-
-      if (v.nsites() == 1) {
-	r = v[0];
-	return true;
-      }
-
-      site
-	c = max(v),
-	cmax = c;
-
-      typename p_set<site>::fwd_piter it(v);
-      for_all(it)
-      {
-	// Can't remove the site from the set
-	if (it.to_site() == cmax)
-	  continue;
-
-	site c1 = lca(c, it.to_site());
-
-	if (c1 != it.to_site())
-	  c = c1;
-      }
-
-      if (nodes(c).level <= pima(p))
-	return false;
-
-      r = c;
-      return true;
-    }
-
-
-    template <class I, class N>
-    void topo_wst<I, N>::topo_watershed()
-    {
-      // Maxima components
-      mln_ch_value(I, bool) cmax(pima.domain(), pima.border());
-
-      // Mark enqueued sites
-      mln_ch_value(I, bool) enqueued(pima.domain(), pima.border());
-
-      p_priority< mln_value(I), p_queue_fast<site> > l;
-      // p_queue < site > m;
-      std::queue<site> m;
-      mln_value(I) max = mln_max(mln_value(I));
-
-      std::cout << "Init" << std::endl;
-
-      // Flag C-maxima
-      data::fill(cmax, false);
-      data::fill(enqueued, false);
-
-      mln_piter(I) it(Par_node.domain());
-      for_all(it)
-	// if (nodes(Par_node(it.to_site())).children.nsites() == 0)
-	if (nodes(Par_node(it.to_site())).children.size() == 0)
-	  {
-	    cmax(it.to_site()) = true;
-	    m.push(it.to_site());
-	  }
-
-      while (!m.empty())
-	{
-	  mln_niter(N) q(nbh, m.front());
-	  for_all(q)
-	    if (cmax.has(q) && !cmax(q) && !enqueued(q))
-	      {
-		enqueued(q) = true;
-		l.push(pima(q), q);
-	      }
-	  m.pop();
-	}
-
-
-      std::cout << "end" << std::endl;
-
-      // Main loop
-      while (!l.is_empty())
-	{
-	  site x = l.front();
-	  l.pop();
-	  enqueued(x) = false;
-
-	  site c;
-	  bool is_w = w_constructible(x, c);
-
-	  if (is_w)
-	    {
-	      pima(x) = nodes(c).level;
-	      Par_node(x) = c;
-
-	      // if (nodes(c).children.nsites() == 0)
-	      if (nodes(c).children.size() == 0)
-		cmax(x) = true;
-	      else
-		// if (nodes(c).children.nsites() > 1)
-		if (nodes(c).children.size() == 1)
-		  std::cerr << "ERREUR COMPOSANTE BRANCHE " << nodes(c).children.size() << std::endl;
-
-
-	      mln_niter(N) q(nbh, x);
-	      for_all(q)
-		if (pima.has(q) && !cmax(q) && !enqueued(q))
-		  {
-		    enqueued(q) = true;
-
-		    l.push(pima(q), q);
-		  }
-	    } // if (c != site(-1, -1))
-	} // while(!l.empty())
-
-      for_all(it)
-	  pima(it.to_site()) = nodes(Par_node(it.to_site())).level;
-    }
-
-
 
     template <class I, class N>
     void topo_wst<I, N>::compute_ctree_size (site p)
@@ -738,6 +586,157 @@ namespace mln
 	while (nodes(Par_node(p)).area == -1)
 	  Par_node(p) = newPar_node(Par_node(p));
     }
+
+   template <class T>
+    bool w_constructible(T &tree, typename T::site p, typename T::site &r)
+    {
+
+      typedef typename T::image_t I;
+      typedef typename T::neighborhood_t N;
+
+      const I &ima = exact(tree.ima);
+      const N &nbh = exact(tree.nbh);
+
+      mln_niter(N) q(nbh, p);
+      p_set<mln_site(I)> v;
+
+      for_all(q)
+	if (ima.domain().has(q) && ima(q) < ima(p))
+	  v.insert(tree.Par_node(q));
+
+      if (v.nsites() == 0)
+	return false;
+
+      if (v.nsites() == 1) {
+	r = v[0];
+	return true;
+      }
+
+      mln_site(I)
+	c = min(ima, v),
+	cmin = c;
+
+      typename p_set<mln_site(I)>::fwd_piter it(v);
+      for_all(it)
+      {
+	// Can't remove the site from the set
+	if (it.to_site() == cmin)
+	  continue;
+
+	mln_site(I) c1 = tree.lca(c, it);
+
+	if (c1 != it)
+	  c = c1;
+      }
+
+      if (tree.nodes(c).level >= ima(p))
+	return false;
+
+      r = c;
+      return true;
+    }
+
+    template <class T>
+    bool w_constructible(T &tree, typename T::site p) {
+      typename T::site r;
+      return w_constructible(tree, p, r);
+    }
+
+ 
+
+    template <class T>
+    typename T::image_t topo_watershed(T &tree)
+    {
+
+      typedef typename T::image_t I;
+      typedef typename T::neighborhood_t N;
+
+      I ima = exact(tree.ima);
+      const N &nbh = exact(tree.nbh);
+
+      // Maxima components
+      mln_ch_value(I, bool) cmax(ima.domain(), ima.border());
+
+      // Mark enqueued sites
+      mln_ch_value(I, bool) enqueued(ima.domain(), ima.border());
+
+      p_priority< mln_value(I), p_queue_fast<mln_site(I)> > l;
+      // p_queue < site > m;
+      std::queue<mln_site(I)> m;
+      mln_value(I) min = mln_min(mln_value(I));
+
+      std::cout << "Init" << std::endl;
+
+      // Flag C-maxima
+      data::fill(cmax, false);
+      data::fill(enqueued, false);
+
+      mln_piter(I) it(tree.Par_node.domain());
+      for_all(it)
+	// if (nodes(Par_node(it.to_site())).children.nsites() == 0)
+	if (tree.nodes(tree.Par_node(it)).children.size() == 0)
+	  {
+	    cmax(it) = true;
+	    m.push(it);
+	  }
+
+      while (!m.empty())
+	{
+	  mln_niter(N) q(nbh, m.front());
+	  for_all(q)
+	    if (cmax.domain().has(q) && !cmax(q) && !enqueued(q))
+	      {
+		enqueued(q) = true;
+		l.push(mln_max(mln_value(I)) - ima(q), q);
+	      }
+	  m.pop();
+	}
+
+
+      std::cout << "end" << std::endl;
+
+      // Main loop
+      while (!l.is_empty())
+	{
+	  mln_site(I) x = l.front();
+	  l.pop();
+	  enqueued(x) = false;
+
+	  mln_site(I) c;
+	  bool is_w = w_constructible(tree, x, c);
+
+	  if (is_w)
+	    {
+	      ima(x) = tree.nodes(c).level;
+	      tree.Par_node(x) = c;
+
+	      // if (nodes(c).children.nsites() == 0)
+	      if (tree.nodes(c).children.size() == 0)
+		cmax(x) = true;
+	      else
+		// if (nodes(c).children.nsites() > 1)
+		if (tree.nodes(c).children.size() == 1)
+		  std::cerr << "ERREUR COMPOSANTE BRANCHE " << tree.nodes(c).children.size() << std::endl;
+
+
+	      mln_niter(N) q(nbh, x);
+	      for_all(q)
+		if (ima.domain().has(q) && !cmax(q) && !enqueued(q))
+		  {
+		    enqueued(q) = true;
+		    l.push(mln_max(mln_value(I)) - ima(q), q); // FIXME : just invert the priority
+		  }
+	    } 
+	} // while(!l.empty())
+
+      for_all(it)
+	  ima(it) = tree.nodes(tree.Par_node(it)).level;
+
+      return ima;
+    }
+
+
+
 
 # endif // MLN_INCLUDE_ONLY
 

@@ -1,3 +1,15 @@
+2009-01-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Make the topological Watershed a standalon function.
+
+	* abraham/tests/morpho/test_watershed_topo.cc: Updated.
+	* abraham/tests/morpho/levelings.cc: Updated.
+	* abraham/tests/morpho/Makefile: Add dependencies.
+	* abraham/tests/fun/meta/red.cc: Updated.
+	* abraham/mln/morpho/vector_median.hh: Add 2009 year.
+	* abraham/mln/morpho/topo_wst.hh: Extract watershed method
+	    from the big structure.
+
 2009-01-14  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Start Laurent's ISMM 2009 code.

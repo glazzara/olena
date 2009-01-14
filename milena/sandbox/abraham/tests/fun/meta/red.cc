@@ -57,7 +57,10 @@ int main ()
   mln_piter_(mln::image2d<C>) p(i.domain());
 
   for_all (p)
+  {
+    out(p) = 2;
     std::cout << out(p) << std::endl;
+  }
 
 
 }

@@ -3,37 +3,13 @@
 #include <mln/io/ppm/load.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/morpho/vector_median.hh>
+#include <mln/morpho/vmt.hh>
 #include <mln/morpho/autarkical_leveling.hh>
 #include <mln/fun/meta/red.hh>
 #include <mln/value/rgb8.hh>
 #include <mln/value/mixin.hh>
 #include <mln/core/image/fun_image.hh>
 #include <mln/core/image/violent_cast_image.hh>
-
-namespace mln
-{
-  struct red_only
-  {
-    template <unsigned n>
-    value::rgb<n> max_() const
-    {
-      return value::rgb<n>(mln_max(typename value::rgb<n>::red_t), 0, 0);
-    }
-
-    value::rgb8 max () const
-    {
-      return value::rgb8(255, 0, 0);
-    }
-
-    template <unsigned n>
-    bool less(const value::rgb<n>& a, const value::rgb<n>& b)
-    {
-      return a.red() < b.red();
-    }
-  };
-
-}
-
 
 int main (int argc, const char * argv[])
 {
@@ -45,8 +21,6 @@ int main (int argc, const char * argv[])
     return 1;
   }
 
-  typedef value::mixin<value::rgb8,red_only> Rgb;
-
   for (int i = 1; i < argc; ++i)
     {
       border::thickness = 2;
@@ -57,9 +31,18 @@ int main (int argc, const char * argv[])
       std::string name(argv[i]);
       name.erase(name.length() - 4);
 
-      win::rectangle2d rect(8, 8);
+      win::rectangle2d smallrect(13, 13);
+      win::rectangle2d bigrect(25, 25);
 
-      io::ppm::save(morpho::autarkical_leveling(ima, morpho::vector_median(ima, rect), rect), name.append("_autarkical_leveled.ppm"));
+      image2d<rgb8> ima_vm = morpho::vector_median(ima, bigrect);
+
+      io::ppm::save(ima_vm, name.append("_vector_medianed.ppm"));
+
+      name = argv[i];
+      name.erase(name.length() - 4);
+
+
+      io::ppm::save(morpho::autarkical_leveling(ima, ima_vm, smallrect), name.append("_autarkical_leveled.ppm"));
 
     }
   return 0;

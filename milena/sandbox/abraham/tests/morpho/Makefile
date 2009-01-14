@@ -16,6 +16,7 @@ distclean: clean
 .PHONY: clean distclean
 
 ## Depedencies
-test_watershed_topo.cc: ../../mln/morpho/basic_najman.hh
+test_watershed_topo_new.cc: ../../mln/morpho/topo_wst_new.hh
+test_watershed_topo.cc: ../../mln/morpho/topo_wst.hh
 test_watershed.cc: ../../mln/morpho/basic_najman.hh
-test_componenet_tree.cc: ../../mln/morpho/basic_najman.hh
+test_component_tree.cc: ../../mln/morpho/basic_najman.hh

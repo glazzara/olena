@@ -25,9 +25,7 @@ int main (int argc, const char * argv[])
     return 1;
   }
 
-  for (int i = 1; i < argc; ++i)
-    {
-
+  for (int i = 1; i < argc; ++i) {
       image2dint ima;
       io::pgm::load(ima, argv[i]);
 
@@ -38,8 +36,7 @@ int main (int argc, const char * argv[])
       std::string name(argv[i]);
       name.erase(name.length() - 4);
 
-      io::pgm::save(n.pima, name.append("_wsd.pgm"));
-
+      io::pgm::save(morpho::topo_watershed(n), name.append("_wsd.pgm"));
     }
   return 0;
 }
