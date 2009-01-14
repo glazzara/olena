@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -162,7 +162,7 @@ namespace mln
       template <typename F, typename I>
       mln_value(I) shell_<F, I, Function_v2w_w2v<void> >::set_ (I &ima, const mln_site(I) &s, const typename F::result &v)
       {
-	ima(s) = F().f_1(ima(s), v);
+	ima(s) = F().f_1(v, ima(s));
 	return ima(s);
       }
 

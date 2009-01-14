@@ -1,3 +1,9 @@
+2009-01-14  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix for two ways functions.
+
+	* mln/value/shell.hh: Little fix for v2w_w2v functions.
+
 2009-01-12  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Uses opt::value instead .val() method in low level routines.
