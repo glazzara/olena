@@ -1,3 +1,37 @@
+2009-01-15  Dalila Benboudjema  <dalila@lrde.epita.fr>
+
+	Add images for Dalila and create IGR directories .
+
+	* igr,
+	* igr/images,
+	* igr/images/s7.ppm,
+	* igr/out,
+	* igr/code: Add IGR directories.
+
+	* scribo/10_00000002.pbm_text2cell.ppm,
+	* scribo/8_00000002.pbm_lbl-grouped-boxes.pgm,
+	* scribo/2_00000002.pbm_horizontal-erosion.pbm,
+	* scribo/11_00000002.pbm_out.ppm,
+	* scribo/6_00000002.pbm_lbl-small-comps-removed.pgm,
+	* scribo/5_00000002.pbm_table.ppm,
+	* scribo/demat.hh: .
+	* scribo/00000002.pbm,
+	* scribo/demat_v2.hh,
+	* scribo/facture2-neg.pbm,
+	* scribo/+out.txt,
+	* scribo/1_00000002.pbm_vertical-erosion.pbm,
+	* scribo/9_00000002.pbm_cells-labels.ppm,
+	* scribo/00000002-neg.pbm,
+	* scribo/3_00000002.pbm_vertical-and-horizontal-erosion.ppm,
+	* scribo/4_00000002.pbm_after-alignment.ppm,
+	* scribo/7_00000002.pbm_character-bboxes.ppm,
+	* scribo/demat31Oct2008.hh,
+	* scribo/facture-neg.pbm,
+	* scribo/Makefile,
+	* dalila/images,
+	* dalila/dematOld.hh,
+	* dalila/plop.cc: Add scribo stuff.
+
 2009-01-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Split ismm2009 into routines and main.

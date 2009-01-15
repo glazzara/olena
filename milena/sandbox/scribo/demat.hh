@@ -370,6 +370,15 @@ namespace scribo
       util::array<int> cols = align_lines(in.ncols(), geom::min_col(in),
 					  geom::max_col(in), tblboxes.first,
 					  1);
+# ifndef NOUT
+      image2d<rgb8> out2(in.domain());
+      level::fill(out2, literal::black);
+      for_all_components(i, tblboxes.first)
+	draw::box(out2, tblboxes.first[i], literal::red);
+      for_all_components(i, tblboxes.second)
+	draw::box(out2, tblboxes.second[i], literal::red);
+      io::ppm::save(out2, output_file("after-alignment.ppm"));
+# endif
 
       connect_lines(rows, tblboxes.first, 0, in.nrows());
       connect_lines(cols, tblboxes.second, 1, in.ncols());
