@@ -1,5 +1,11 @@
 2009-01-15  Dalila Benboudjema  <dalila@lrde.epita.fr>
 
+	Commit test.
+
+	* igr/code/test.cc: New test.
+
+2009-01-15  Dalila Benboudjema  <dalila@lrde.epita.fr>
+
 	Add images for Dalila and create IGR directories .
 
 	* igr,
