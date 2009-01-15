@@ -1,3 +1,13 @@
+2009-01-15  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Split ismm2009 into routines and main.
+
+	* laurent/ismm2009.cc: Copy to...
+	* laurent/ismm2009.v0.cc: ...this new file (memorization).
+	* laurent/ismm2009.cc: Copy routines to...
+	* laurent/ismm2009.hh: ...this new file.
+	* laurent/ismm2009.cc: Remove routines.
+
 2009-01-14  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Make the topological Watershed a standalon function.
