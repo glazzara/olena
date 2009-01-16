@@ -1,4 +1,5 @@
-// Copyright (C) 2006 EPITA Research and Development Laboratory
+// Copyright (C) 2006, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,11 @@
 #ifndef MLN_UTIL_TRACKED_PTR_HH
 # define MLN_UTIL_TRACKED_PTR_HH
 
-/*! \file mln/util/tracked_ptr.hh
- *
- * \brief Definition of a smart pointer for shared data with tracking.
- *
- * \todo Split defs from decls.
- */
+/// \file mln/util/tracked_ptr.hh
+///
+/// Definition of a smart pointer for shared data with tracking.
+///
+/// \todo Split defs from decls.
 
 # include <set>
 # include <iostream>
@@ -63,16 +63,14 @@ namespace mln
       /// Negation (for arithmetical tests).
       bool operator !() const;
 
-      /*! \brief Mimics the behavior of op-> for a pointer in the const case.
-      **
-      ** \invariant Pointer proxy exists.
-      */
+      /// Mimics the behavior of op-> for a pointer in the const case.
+      ///
+      /// \invariant Pointer proxy exists.
       const T* operator->() const;
 
-      /*! \brief Mimics the behavior of op-> for a pointer in the mutable case.
-      **
-      ** \invariant Pointer proxy exists.
-      */
+      /// Mimics the behavior of op-> for a pointer in the mutable case.
+      ///
+      /// \invariant Pointer proxy exists.
       T* operator->();
 
       /// Ctor.
@@ -122,10 +120,9 @@ namespace mln
     }
 
     template <typename T>
-    /*! \brief Mimics the behavior of op-> for a pointer in the const case.
-    **
-    ** \invariant Pointer proxy exists.
-    */
+    /// Mimics the behavior of op-> for a pointer in the const case.
+    ///
+    /// \invariant Pointer proxy exists.
     inline
     const T* tracked_ptr<T>::operator->() const
     {
@@ -135,10 +132,9 @@ namespace mln
     }
 
     template <typename T>
-    /*! \brief Mimics the behavior of op-> for a pointer in the mutable case.
-    **
-    ** \invariant Pointer proxy exists.
-    */
+    /// \brief Mimics the behavior of op-> for a pointer in the mutable case.
+    ///
+    /// \invariant Pointer proxy exists.
     inline
     T* tracked_ptr<T>::operator->()
     {
@@ -201,7 +197,9 @@ namespace mln
       clean_();
       ptr_ = rhs.ptr_;
       holders_ = rhs.holders_;
-      holders_->insert(this);
+      // If ptr == 0, holders_ == 0 so we cannot insert anything in it.
+      if (holders_ != 0)
+        holders_->insert(this);
       return *this;
     }
 

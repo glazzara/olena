@@ -64,6 +64,7 @@ mln/registration/icp.hh \
 mln/util/graph.hh \
 mln/util/max.hh \
 mln/util/lazy_set.hh \
+mln/util/soft_heap.hh \
 mln/util/set.hh \
 mln/util/tree_to_image.hh \
 mln/util/lemmings.hh \

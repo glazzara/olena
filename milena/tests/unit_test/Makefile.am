@@ -64,6 +64,7 @@ mln_registration_icp \
 mln_util_graph \
 mln_util_max \
 mln_util_lazy_set \
+mln_util_soft_heap \
 mln_util_set \
 mln_util_tree_to_image \
 mln_util_lemmings \
@@ -1074,6 +1075,7 @@ mln_registration_icp_SOURCES = mln_registration_icp.cc
 mln_util_graph_SOURCES = mln_util_graph.cc
 mln_util_max_SOURCES = mln_util_max.cc
 mln_util_lazy_set_SOURCES = mln_util_lazy_set.cc
+mln_util_soft_heap_SOURCES = mln_util_soft_heap.cc
 mln_util_set_SOURCES = mln_util_set.cc
 mln_util_tree_to_image_SOURCES = mln_util_tree_to_image.cc
 mln_util_lemmings_SOURCES = mln_util_lemmings.cc

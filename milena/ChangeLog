@@ -1,5 +1,24 @@
 2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add soft heap implementation.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/util/soft_heap.hh: new file. New implementation. New members may
+	be added later.
+
+	* mln/util/tracked_ptr.hh: Fix an issue while assigning a null
+	tracked_ptr to another tracked_ptr. An internal pointer was not
+	initialized but dereferenced and led to a segfault.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_util_soft_heap.cc: add a new unit test.
+
+	* tests/util/Makefile.am,
+	* tests/util/soft_heap.cc: add a new test.
+
+2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Rename histo::data as histo::array.
 
 	* mln/histo/data.hh: rename file as...
