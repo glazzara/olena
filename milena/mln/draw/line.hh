@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_DRAW_LINE_HH
 # define MLN_DRAW_LINE_HH
 
-/*! \file mln/draw/line.hh
- *
- * \brief Draw a line in an image.
- */
+/// \file mln/draw/line.hh
+///
+/// Draw a line in an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/site_set/p_line2d.hh>
@@ -76,7 +76,8 @@ namespace mln
     {
       I& ima = exact(ima_);
       mln_precondition(ima.is_valid());
-      // if (! ima.has(beg) ||  ! ima.has(end)) trace::warning("out");
+      if (! ima.has(beg) ||  ! ima.has(end))
+	trace::warning("Begin or end site is not part of the given image.");
       data::paste(pw::cst(v) | p_line2d(beg, end),
 		   safe(ima).rw());
     }

@@ -31,6 +31,7 @@
 /// Test on mln::level::median.
 
 #include <mln/core/image/image2d.hh>
+#include <mln/level/compare.hh>
 #include <mln/win/rectangle2d.hh>
 
 #include <mln/io/pgm/load.hh>

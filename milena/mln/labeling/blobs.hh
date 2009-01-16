@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -101,7 +101,7 @@ namespace mln
 		// Label this point component.
 		if (nlabels == mln_max(L))
 		  {
-		    std::cerr << "FIXME: labeling aborted!" << std::endl;
+		    trace::warning("labeling aborted!");
 		    return output;
 		  }
 		++nlabels;

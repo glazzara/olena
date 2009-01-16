@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -29,6 +30,7 @@
 # define MLN_TRACE_WARNING_HH
 
 /// \file mln/trace/warning.hh
+///
 /// Display warning message in trace output.
 
 # include <string>
@@ -50,10 +52,9 @@ namespace mln
     inline
     void warning(const std::string& message)
     {
-      if (!quiet)
-	std::cout << "Warning: "
-		  << message
-		  << std::endl;
+      std::cout << "Warning: "
+		<< message
+		<< std::endl;
     }
 
 # endif // ! MLN_INCLUDE_ONLY

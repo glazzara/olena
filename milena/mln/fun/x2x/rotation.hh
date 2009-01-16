@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,28 +53,31 @@ namespace mln
       {
         template < unsigned n, typename C >
         algebra::h_mat<n, C>
-        get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
+        get_rot_h_mat(const float alpha_, const algebra::vec<n,C>& axis_)
         {
-          assert(!"get_h_mat : n not implemented");
+          mln_assertion(!"get_h_mat : n not implemented");
         }
 
         template <typename C >
         algebra::h_mat<3, C>
         get_rot_h_mat(const float alpha_, const algebra::vec<3,C>& axis_)
         {
-          algebra::h_mat<3, C> m_;
+	  //test axis is valid
+	  typedef algebra::vec<3,C> vec_t;
+	  //FIXME: cannot use '!=' operator.
+          mln_precondition(!(axis_ == vec_t(literal::zero)));
 
           const float cos_a = cos(alpha_);
           const float sin_a = sin(alpha_);
           const float u = axis_[0];
           const float v = axis_[1];
           const float w = axis_[2];
-          //test axis is valid
-          assert(u != 0 && v != 0 && w != 0);
           const float u2 = u * u;
           const float v2 = v * v;
           const float w2 = w * w;
           const float uvw2 = u2 + v2 + w2;
+
+          algebra::h_mat<3, C> m_;
 
           m_(0,0) = (u2 + (v2 + w2) * cos_a) / uvw2;
           m_(0,1) = (u*v * (1 - cos_a) - u * std::sqrt(uvw2) * sin_a) / uvw2;
@@ -103,10 +106,10 @@ namespace mln
         algebra::h_mat<2, C>
         get_rot_h_mat(const float alpha_, const algebra::vec<2,C>&)
         {
-          algebra::h_mat<2, C> m_;
-
           const float cos_a = cos(alpha_);
           const float sin_a = sin(alpha_);
+
+          algebra::h_mat<2, C> m_;
 
           m_(0,0) = cos_a; m_(0,1) = -sin_a; m_(0,2) = 0;
           m_(1,0) = sin_a; m_(1,1) = cos_a;  m_(1,2) = 0;

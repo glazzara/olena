@@ -3,7 +3,7 @@
 nobase_include_HEADERS = \
 mln/version.hh \
 mln/histo/all.hh \
-mln/histo/data.hh \
+mln/histo/array.hh \
 mln/histo/compute.hh \
 mln/histo/compute.spe.hh \
 mln/histo/essential.hh \
@@ -263,6 +263,7 @@ mln/convert/to_window.hh \
 mln/convert/from_to.hh \
 mln/convert/impl/from_value_to_value.hh \
 mln/convert/impl/all.hh \
+mln/convert/impl/from_double_to_value.hh \
 mln/convert/impl/from_image_to_site_set.hh \
 mln/convert/impl/from_float_to_value.hh \
 mln/convert/impl/from_int_to_value.hh \
@@ -372,6 +373,7 @@ mln/accu/count_adjacent_vertices.hh \
 mln/accu/convolve.hh \
 mln/accu/v.hh \
 mln/accu/rank_bool.hh \
+mln/accu/transform_line.hh \
 mln/accu/min.hh \
 mln/accu/transform_directional.hh \
 mln/accu/compute.hh \
@@ -425,6 +427,7 @@ mln/math/essential.hh \
 mln/math/acos.hh \
 mln/math/round_sat.hh \
 mln/opt/at.hh \
+mln/opt/value.hh \
 mln/binarization/includes.hh \
 mln/binarization/all.hh \
 mln/binarization/binarization.hh \

@@ -105,6 +105,13 @@ namespace mln
 	  return parent_(p) == p || f_(parent_(p)) != f_(p);
 	}
 
+	bool is_a_non_root_node(const mln_psite(I)& p) const
+	{
+	  mln_precondition(is_valid());
+	  mln_precondition(parent_.domain().has(p));
+	  return f_(parent_(p)) != f_(p);
+	}
+
 	/// \}
 
 

@@ -4,7 +4,7 @@ include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =  \
 mln_histo_all \
-mln_histo_data \
+mln_histo_array \
 mln_histo_compute \
 mln_histo_essential \
 mln_geom_pmin_pmax \
@@ -260,6 +260,7 @@ mln_convert_to_window \
 mln_convert_from_to \
 mln_convert_impl_from_value_to_value \
 mln_convert_impl_all \
+mln_convert_impl_from_double_to_value \
 mln_convert_impl_from_image_to_site_set \
 mln_convert_impl_from_float_to_value \
 mln_convert_impl_from_int_to_value \
@@ -368,6 +369,7 @@ mln_accu_count_adjacent_vertices \
 mln_accu_convolve \
 mln_accu_v \
 mln_accu_rank_bool \
+mln_accu_transform_line \
 mln_accu_min \
 mln_accu_transform_directional \
 mln_accu_compute \
@@ -419,6 +421,7 @@ mln_math_essential \
 mln_math_acos \
 mln_math_round_sat \
 mln_opt_at \
+mln_opt_value \
 mln_binarization_includes \
 mln_binarization_all \
 mln_binarization_binarization \
@@ -1015,7 +1018,7 @@ mln_subsampling_subsampling \
 mln_subsampling_essential
 
 mln_histo_all_SOURCES = mln_histo_all.cc
-mln_histo_data_SOURCES = mln_histo_data.cc
+mln_histo_array_SOURCES = mln_histo_array.cc
 mln_histo_compute_SOURCES = mln_histo_compute.cc
 mln_histo_essential_SOURCES = mln_histo_essential.cc
 mln_geom_pmin_pmax_SOURCES = mln_geom_pmin_pmax.cc
@@ -1271,6 +1274,7 @@ mln_convert_to_window_SOURCES = mln_convert_to_window.cc
 mln_convert_from_to_SOURCES = mln_convert_from_to.cc
 mln_convert_impl_from_value_to_value_SOURCES = mln_convert_impl_from_value_to_value.cc
 mln_convert_impl_all_SOURCES = mln_convert_impl_all.cc
+mln_convert_impl_from_double_to_value_SOURCES = mln_convert_impl_from_double_to_value.cc
 mln_convert_impl_from_image_to_site_set_SOURCES = mln_convert_impl_from_image_to_site_set.cc
 mln_convert_impl_from_float_to_value_SOURCES = mln_convert_impl_from_float_to_value.cc
 mln_convert_impl_from_int_to_value_SOURCES = mln_convert_impl_from_int_to_value.cc
@@ -1379,6 +1383,7 @@ mln_accu_count_adjacent_vertices_SOURCES = mln_accu_count_adjacent_vertices.cc
 mln_accu_convolve_SOURCES = mln_accu_convolve.cc
 mln_accu_v_SOURCES = mln_accu_v.cc
 mln_accu_rank_bool_SOURCES = mln_accu_rank_bool.cc
+mln_accu_transform_line_SOURCES = mln_accu_transform_line.cc
 mln_accu_min_SOURCES = mln_accu_min.cc
 mln_accu_transform_directional_SOURCES = mln_accu_transform_directional.cc
 mln_accu_compute_SOURCES = mln_accu_compute.cc
@@ -1430,6 +1435,7 @@ mln_math_essential_SOURCES = mln_math_essential.cc
 mln_math_acos_SOURCES = mln_math_acos.cc
 mln_math_round_sat_SOURCES = mln_math_round_sat.cc
 mln_opt_at_SOURCES = mln_opt_at.cc
+mln_opt_value_SOURCES = mln_opt_value.cc
 mln_binarization_includes_SOURCES = mln_binarization_includes.cc
 mln_binarization_all_SOURCES = mln_binarization_all.cc
 mln_binarization_binarization_SOURCES = mln_binarization_binarization.cc

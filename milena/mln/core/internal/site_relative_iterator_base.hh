@@ -238,7 +238,7 @@ namespace mln
     template <typename P>
     inline
     void
-    site_relative_iterator_base<S,E>::center_at_(const P& c)
+    site_relative_iterator_base<S,E>::center_at_(const P&)
     {
       // Default is no-op, meaning "no extra code".
     }

@@ -1,5 +1,32 @@
 2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Small fixes.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/core/internal/site_relative_iterator_base.hh: avoid a warning.
+
+	* mln/labeling/blobs.hh,
+	* mln/draw/line.hh: use trace::warning.
+
+	* mln/trace/warning.hh: always print warnings.
+
+	* mln/fun/x2x/rotation.hh: fix a precondition.
+
+	* mln/morpho/tree/data.hh: add a missing method.
+
+	* tests/level/median.cc: add a missing include.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_accu_transform_line.cc,
+	* tests/unit_test/mln_convert_impl_from_double_to_value.cc,
+	* tests/unit_test/mln_opt_value.cc: add missing unit_tests.
+
+	* tests/unit_test/mln_histo_data.cc: rename as...
+	* tests/unit_test/mln_histo_array.cc: ... this.
+
+2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add soft heap implementation.
 
 	* headers.mk: add new headers to distribution.
