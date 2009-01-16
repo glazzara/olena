@@ -147,8 +147,7 @@ namespace mln
 		  f.merge(r, p);
 		}
 		else
-		  f.escape(p);
-
+		  f.output(p) = f.mask(p);
 	    }
 	    deja_vu(p) = true;
 	  }
@@ -159,13 +158,8 @@ namespace mln
 	  mln_bkd_piter(S) p(f.s);
 	  for_all(p)
 	  {
-	    if (parent(p) == p) // if p is a root.
-	    {
-	      if (f.output(p) == f.escape_value)
-		f.output(p) = f.mask(p);
-	    }
-	    else
-	      f.output(p) = f.output(parent(p));
+ 	    if (parent(p) != p) // if p is not a root.
+  	      f.output(p) = f.output(parent(p));
 
 	  }
 	}
@@ -173,6 +167,78 @@ namespace mln
 	trace::exiting("canvas::morpho::reconstruction_on_function");
       }
 
+      /*
+      template <typename N, typename F>
+      void
+      reconstruction_on_function_old(const Neighborhood<N>& nbh_,
+				 F& f)
+      {
+	trace::entering("canvas::morpho::reconstruction_on_function");
+
+	// Tests.
+	reconstruction_on_function_tests(nbh_, f);
+
+	const N& nbh = exact(nbh_);
+
+	// Local type.
+	typedef typename F::I I;
+	typedef typename F::S S;
+	typedef mln_site(I) P;
+	typedef mln_value(I) V;
+
+	// Auxiliary data.
+	mln_ch_value(I, bool)  deja_vu;
+	mln_ch_value(I, P)     parent;
+
+	// init
+	{
+	  initialize(deja_vu, f.mask);
+	  initialize(parent, f.mask);
+
+	  mln::data::fill(deja_vu, false);
+	  data::fill(f.output, f.marker);
+	}
+
+	// first pass
+	{
+	  mln_fwd_piter(S) p(f.s);
+	  mln_niter(N) n(nbh, p);
+	  for_all(p)
+	  {
+	    // Make set.
+	    parent(p) = p;
+
+	    for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
+	    {
+	      //do_union(n, p);
+	      P r = find_root(parent, n);
+	      if (r != p)
+		if (f.is_active(r, p))
+		{
+		  parent(r) = p;
+		  f.merge(r, p);
+		}
+		else
+		  f.output(p) = f.mask(p);
+	    }
+	    deja_vu(p) = true;
+	  }
+	}
+
+	// second pass
+	{
+	  mln_bkd_piter(S) p(f.s);
+	  for_all(p)
+	  {
+	    if (parent(p) != p) // if p is not a root.
+ 	      f.output(p) = f.output(parent(p));
+
+	  }
+	}
+
+	trace::exiting("canvas::morpho::reconstruction_on_function");
+      }
+      */
 
     } // end of namespace mln::canvas::morpho
 

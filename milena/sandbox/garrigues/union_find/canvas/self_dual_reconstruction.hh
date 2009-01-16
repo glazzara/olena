@@ -69,6 +69,8 @@ namespace mln
       self_dual_reconstruction_tests(const Neighborhood<N>& nbh_,
 				     F& f)
       {
+	(void) nbh_;
+
 	// Static tests.
 
 	// Types of f required.
@@ -121,7 +123,7 @@ namespace mln
 	// Auxiliary data.
 	mln_ch_value(I, bool)  deja_vu;
 	mln_ch_value(I, P)     parent;
-
+	I output1, output2;
 	// init
 	{
 	  initialize(deja_vu, f.mask);
@@ -131,9 +133,9 @@ namespace mln
 	  data::fill(f.output, f.marker);
 	}
 
-	// first pass
+	// D1
 	{
-	  // Body of D1.
+	  // First Pass.
 	  {
 	    mln_fwd_piter(S) p(f.d1_s);
 	    mln_niter(N) n(nbh, p);
@@ -145,25 +147,38 @@ namespace mln
 	      for_all(n) if (f.mask.domain().has(n) && deja_vu(n))
 	      {
 		mln_assertion(f.is_in_d1(n));
+
 		//do_union(n, p);
 		P r = find_root(parent, n);
 		if (r != p)
+		{
 		  if (f.d1_is_active(r, p))
 		  {
 		    parent(r) = p;
 		    f.d1_merge(r, p);
 		  }
-		  else
-		    f.d1_escape(p);
+ 		  else
+ 		    f.output(p) = f.mask(p);
+		}
 	      }
 
 	      deja_vu(p) = true;
 	    }
 	  }
 
-	  mln::data::fill(deja_vu, false);
+	  // Second Pass.
+	  {
+	    mln_bkd_piter(S) p(f.d1_s);
+	    for_all(p)
+	      if (parent(p) != p) // if p is not a root.
+		f.output(p) = f.output(parent(p));
+	  }
+ 	  mln::data::fill(deja_vu, false);
+	}
 
-	  // Body of D2.
+	// D2
+	{
+	  // First Pass.
 	  {
 	    mln_fwd_piter(S) p(f.d2_s);
 	    mln_niter(N) n(nbh, p);
@@ -178,52 +193,28 @@ namespace mln
 		//do_union(n, p);
 		P r = find_root(parent, n);
 		if (r != p)
+		{
 		  if (f.d2_is_active(r, p))
 		  {
 		    parent(r) = p;
 		    f.d2_merge(r, p);
 		  }
-		  else
-		    f.d2_escape(p);
+ 		  else
+ 		    f.output(p) = f.mask(p);
+		}
 	      }
 
 	      deja_vu(p) = true;
 	    }
 	  }
-	}
-
-	// second pass
-	{
-	  {
-	    mln_bkd_piter(S) p(f.d1_s);
-	    for_all(p)
-	    {
-	      if (parent(p) == p) // if p is a root.
-	      {
-		if (f.output(p) == f.d1_escape_value)
-		  f.output(p) = f.mask(p);
-	      }
-	      else
-		f.output(p) = f.output(parent(p));
-
-	    }
-	  }
+	  // Second pass.
 	  {
 	    mln_bkd_piter(S) p(f.d2_s);
 	    for_all(p)
-	    {
-	      if (parent(p) == p) // if p is a root.
-	      {
-		if (f.output(p) == f.d2_escape_value)
-		  f.output(p) = f.mask(p);
-	      }
-	      else
- 		f.output(p) = f.output(parent(p));
-
-	    }
+	      if (parent(p) != p) // if p is not a root.
+		f.output(p) = f.output(parent(p));
 	  }
 	}
-
 	trace::exiting("canvas::morpho::self_dual_reconstruction");
       }
 

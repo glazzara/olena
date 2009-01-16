@@ -1,3 +1,18 @@
+2009-01-16  Matthieu Garrigues  <matthieu.garrigues@gmail.com>
+
+	Work on reconstruction.
+
+	* garrigues/union_find/canvas/reconstruction_on_function.hh: Remove
+          useless escape value.
+	* garrigues/union_find/canvas/reconstruction_on_set.hh: Optimizations.
+	* garrigues/union_find/canvas/self_dual_reconstruction.hh: .
+	* garrigues/union_find/images/marker_to_dilate.pbm: Fix it.
+	* garrigues/union_find/reconstructions_on_function.hh: .
+	* garrigues/union_find/reconstructions_on_set.cc: Add bench.
+	* garrigues/union_find/reconstructions_on_set.hh: .
+	* garrigues/union_find/self_dual_reconstruction.cc: Add bench.
+	* garrigues/union_find/self_dual_reconstruction.hh: Likewise.
+
 2009-01-15  Dalila Benboudjema  <dalila@lrde.epita.fr>
 
 	Commit test.

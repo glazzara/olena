@@ -32,6 +32,8 @@
 # include <mln/io/pbm/load.hh>
 # include <mln/io/pbm/save.hh>
 
+# include <tests/timer.hh>
+
 void usage(char** argv)
 {
   std::cerr << "Usage: " << argv[0] << " (-dilation|-erosion) marker.pbm mask.pbm" << std::endl;
@@ -46,6 +48,8 @@ int main(int argc, char** argv)
   image2d<bool> marker;
   image2d<bool> mask;
   image2d<bool> output;
+  image2d<bool> tmp;
+
 
   if (argc < 3)
     usage(argv);
@@ -53,15 +57,33 @@ int main(int argc, char** argv)
   io::pbm::load(marker, argv[2]);
   io::pbm::load(mask,   argv[3]);
 
+  trace::quiet = false;
+
   if (std::string(argv[1]) == "-dilation")
   {
-    io::pbm::save(reconstruction_on_set_by_dilation    (marker, mask, c4()), "r_dilation.pbm");
-    io::pbm::save(reconstruction_on_set_by_dilation_alt(marker, mask, c4()), "r_dilation_alt.pbm");
+    timer t;
+    t.start();
+    tmp = reconstruction_on_set_by_dilation    (marker, mask, c4());
+    std::cout << "====================> reconstruction " << t << std::endl;
+    io::pbm::save(tmp, "r_dilation.pbm");
+
+    t.start();
+    tmp = reconstruction_on_set_by_dilation_alt(marker, mask, c4());
+    std::cout << "====================> reconstruction alt " << t << std::endl;
+    io::pbm::save(tmp, "r_dilation_alt.pbm");
   }
   else if (std::string(argv[1]) == "-erosion")
   {
-    io::pbm::save(reconstruction_on_set_by_erosion     (marker, mask, c4()), "r_erosion.pbm");
-    io::pbm::save(reconstruction_on_set_by_erosion_alt (marker, mask, c4()), "r_erosion_alt.pbm");
+    timer t;
+    t.start();
+    tmp = reconstruction_on_set_by_erosion     (marker, mask, c4());
+    std::cout << "====================> reconstruction " << t << std::endl;
+    io::pbm::save(tmp, "r_erosion.pbm");
+
+    t.start();
+    tmp = reconstruction_on_set_by_erosion_alt (marker, mask, c4());
+    std::cout << "====================> reconstruction alt " << t << std::endl;
+    io::pbm::save(tmp, "r_erosion_alt.pbm");
   }
   else
     usage(argv);

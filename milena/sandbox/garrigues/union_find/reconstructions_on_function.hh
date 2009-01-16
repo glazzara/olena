@@ -62,13 +62,11 @@ namespace mln
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  s(level::sort_psites_decreasing(mask)),
-	  escape_value(mln_max(V))
+	  s(level::sort_psites_decreasing(mask))
       {
       }
 
       bool is_active(const P& r, const P& p) { return output(r) <= mask(p); }
-      void escape(const P& p) { output(p) = escape_value; }
       void merge(const P& r, const P& p)
       {
 	if (output(r) > output(p))
@@ -80,7 +78,6 @@ namespace mln
       const J& mask; // G
       mln_concrete(I)& output; // O
       S s;
-      const V escape_value;
     };
 
 
@@ -97,13 +94,11 @@ namespace mln
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  s(level::sort_psites_increasing(mask)),
-	  escape_value(mln_min(V))
+	  s(level::sort_psites_increasing(mask))
       {
       }
 
       bool is_active(const P& r, const P& p) { return output(r) >= mask(p); }
-      void escape(const P& p) { output(p) = escape_value; }
       void merge(const P& r, const P& p)
       {
 	if (output(r) < output(p))
@@ -114,7 +109,6 @@ namespace mln
       const J& mask; // G
       mln_concrete(I)& output; // O
       S s;
-      const V escape_value;
     };
 
 

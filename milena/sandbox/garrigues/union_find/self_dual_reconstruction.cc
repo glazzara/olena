@@ -32,6 +32,7 @@
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/linear/gaussian.hh>
+# include <tests/timer.hh>
 
 # include "self_dual_reconstruction.hh"
 
@@ -51,12 +52,29 @@ int main(int argc, char** argv)
   typedef image2d<value::int_u8> I;
   typedef mln_value_(I) V;
 
+  timer t;
+
+  t.start();
   I input = io::pgm::load<V>(argv[1]);
+  std::cout << "load: " << t << std::endl;
+
   I output;
 
+  t.start();
   output = linear::gaussian(input, atoi(argv[2]));
   io::pgm::save(output, "gaussian.pgm");
+  std::cout << "gaussian: " << t << std::endl;
 
+
+  trace::quiet = false;
+
+  t.start();
   output = self_dual_reconstruction(output, input, c8());
+  std::cout << "reconstruction: " << t << std::endl;
+
+  trace::quiet = true;
+
+  t.start();
   io::pgm::save(output, "reconstruction.pgm");
+  std::cout << "save: " << t << std::endl;
 }

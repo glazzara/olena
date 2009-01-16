@@ -94,7 +94,9 @@ namespace mln
 	// first pass
 	{
 	  mln_fwd_piter(I) p(f.mask.domain());
-	  mln_niter(N) n(nbh, p);
+	  const std::vector<mln_deduce(I, site, delta)> & n_win(const_cast<N*>(&nbh)->hook_win_().std_vector());
+ 	  unsigned n_size = n_win.size();
+	  //	  mln_niter(N) n(nbh, p);
 	  for_all(p)
 	  {
 	    if (f.is_in_D(p))
@@ -103,21 +105,30 @@ namespace mln
 	      parent(p) = p;
 	      f.init(p);
 
-	      for_all(n) if (f.mask.domain().has(n))
-	      {
-		if (deja_vu(n) && f.is_in_D(n))
+//	      for_all(n)
+ 	      for(unsigned i = 0; i < n_size; i++)
+ 	      {
+ 		mln_site(I) n = p + n_win[i];
+
+		if (f.mask.domain().has(n))
 		{
-		  //do_union(n, p);
-		  P r = find_root(parent, n);
-		  if (r != p)
+		  if (f.is_in_D(n))
 		  {
-		    f.merge(r, p);
-		    parent(r) = p;
+		    if (deja_vu(n))
+		    {
+		      //do_union(n, p);
+		      P r = find_root(parent, n);
+		      if (r != p)
+		      {
+			f.merge(r, p);
+			parent(r) = p;
+		      }
+		    }
 		  }
+		  else
+		    // Visit boundaries of D.
+		    f.visit_ext_border(n, p);
 		}
-		else
-		  // Visit boundaries of D.
-		  f.visit_ext_border(n, p);
 	      }
 	      deja_vu(p) = true;
 	    }

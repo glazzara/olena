@@ -41,6 +41,8 @@
 # include <mln/math/min.hh>
 # include <mln/accu/max.hh>
 
+# include <tests/timer.hh>
+
 # include <mln/pw/value.hh>
 # include <mln/core/image/image_if.hh>
 
@@ -141,7 +143,11 @@ namespace mln
     initialize(output, marker);
 
     typedef impl::self_dual_reconstruction_t<I, J> F;
+    timer t;
+    t.start();
     F f(marker, mask, output);
+    std::cout << "Functor construction: " << t << std::endl;
+
     canvas::morpho::self_dual_reconstruction(nbh, f);
 
     trace::exiting("morpho::self_dual_reconstruction");

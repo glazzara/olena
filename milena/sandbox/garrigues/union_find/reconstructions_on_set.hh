@@ -53,8 +53,8 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return mask(p); }
-      void set_default_output() { data::fill(output, false); }
-      void init(P p) { output(p) = marker(p); }
+      void set_default_output() { data::paste(marker, output); }
+      void init(P p) { (void) p; }
       void merge(P r, P p) { output(p) = output(p) || output(r); }
       void visit_ext_border(P n, P p) {	(void) n; (void) p; }
 
@@ -95,8 +95,8 @@ namespace mln
       {}
 
       bool is_in_D(P p) { return !mask(p); }
-      void set_default_output() { data::fill(output, true); }
-      void init(P p) { output(p) = marker(p); }
+      void set_default_output() { data::paste(marker, output); }
+      void init(P p) { (void) p; }
       void merge(P r, P p) { output(p) = output(p) && output(r); }
       void visit_ext_border(P n, P p) { (void) n; (void) p; }
 
@@ -116,7 +116,7 @@ namespace mln
 
       bool is_in_D(P p) { return !mask(p) && marker(p); }
       void set_default_output() { data::paste(mask, output); }
-      void init(P p) { output(p) = true; }
+      void init(P p) {  output(p) = true; }
       void merge(P r, P p) { output(p) = output(p) && output(r); }
       void visit_ext_border(P n, P p) {	if (!marker(n)) output(p) = false; }
 
@@ -182,7 +182,7 @@ namespace mln
 
     mln_precondition(exact(marker).is_valid());
     mln_precondition(exact(mask).is_valid());
-    mln_precondition(exact(marker) <= exact(mask));
+    mln_precondition(exact(marker) >= exact(mask));
 
     image2d<bool> output;
     initialize(output, marker);
@@ -205,7 +205,7 @@ namespace mln
 
     mln_precondition(exact(marker).is_valid());
     mln_precondition(exact(mask).is_valid());
-    mln_precondition(exact(marker) <= exact(mask));
+    mln_precondition(exact(marker) >= exact(mask));
 
     image2d<bool> output;
     initialize(output, marker);
