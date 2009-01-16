@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -42,7 +42,7 @@
 
 # include <mln/geom/bbox.hh>
 # include <mln/data/fill.hh>
-# include <mln/histo/data.hh>
+# include <mln/histo/array.hh>
 
 # include <mln/core/image/image1d.hh>
 # include <mln/core/image/image2d.hh>
@@ -81,7 +81,7 @@ namespace mln
     /// Convert an histo \p h into an image1d<unsigned>.
     template <typename T>
     image1d<unsigned>
-    to_image(const histo::data<T>& h);
+    to_image(const histo::array<T>& h);
 
 
 
@@ -138,7 +138,7 @@ namespace mln
     template <typename T>
     inline
     image1d<unsigned>
-    to_image(const histo::data<T>& h)
+    to_image(const histo::array<T>& h)
     {
       def::coord
 	n = static_cast<def::coord>(h.vset().nvalues()),

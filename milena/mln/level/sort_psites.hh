@@ -147,7 +147,7 @@ namespace mln
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<mln_value(I)> h = histo::compute(input);
+	histo::array<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());
@@ -191,7 +191,7 @@ namespace mln
 	const unsigned n = vset.nvalues();
 
 	// h
-	histo::data<mln_value(I)> h = histo::compute(input);
+	histo::array<mln_value(I)> h = histo::compute(input);
 
 	// preparing output data
 	std::vector<unsigned> loc(vset.nvalues());

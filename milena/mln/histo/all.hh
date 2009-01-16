@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_HISTO_ALL_HH
 # define MLN_HISTO_ALL_HH
 
-/*! \file mln/histo/all.hh
- *
- * \brief File that includes histogram files.
- */
+/// \file mln/histo/all.hh
+///
+/// File that includes histogram files.
 
 
 namespace mln
@@ -53,6 +53,6 @@ namespace mln
 }
 
 # include <mln/histo/compute.hh>
-# include <mln/histo/data.hh>
+# include <mln/histo/array.hh>
 
 #endif // ! MLN_HISTO_ALL_HH

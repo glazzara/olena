@@ -52,12 +52,12 @@ namespace mln
       namespace generic
       {
 	template <typename I>
-	data<mln_value(I)> compute_(const I& input);
+	array<mln_value(I)> compute_(const I& input);
       }
 
       template <typename I>
       inline
-      data<mln_value(I)>
+      array<mln_value(I)>
       compute_(trait::image::speed::any, const I& input)
       {
 	return generic::compute_(input);
@@ -65,10 +65,10 @@ namespace mln
 
       template <typename I>
       inline
-      data<mln_value(I)>
+      array<mln_value(I)>
       compute_(trait::image::speed::fastest, const I& input)
       {
-	data<mln_value(I)> h;
+	array<mln_value(I)> h;
 	mln_pixter(const I) p(input);
 	for_all(p)
 	  ++h(p.val());

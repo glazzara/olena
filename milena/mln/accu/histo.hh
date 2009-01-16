@@ -33,7 +33,7 @@
 ///
 /// Define a generic histogram accumulator class.
 ///
-/// \todo Use histo::data instead of std::vector!
+/// \todo Use histo::array instead of std::vector!
 
 # include <vector>
 # include <algorithm>
@@ -42,7 +42,7 @@
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
 # include <mln/value/set.hh>
-# include <mln/histo/data.hh>
+# include <mln/histo/array.hh>
 
 
 namespace mln
@@ -91,7 +91,7 @@ namespace mln
 
     protected:
 
-      mln::histo::data<V> h_;
+      mln::histo::array<V> h_;
       unsigned sum_;
     };
 

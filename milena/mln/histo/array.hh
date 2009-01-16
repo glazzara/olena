@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +26,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_HISTO_DATA_HH
-# define MLN_HISTO_DATA_HH
+#ifndef MLN_HISTO_ARRAY_HH
+# define MLN_HISTO_ARRAY_HH
 
-/*! \file mln/histo/data.hh
- *
- * \brief Define a generic histogram class.
- */
+/// \file mln/histo/array.hh
+///
+/// Define a generic histogram class.
 
 # include <vector>
 # include <algorithm>
@@ -46,14 +46,13 @@ namespace mln
   {
 
 
-    /*! Generic histogram class over a value set with type \c T.
-     */
+    /// Generic histogram class over a value set with type \c T.
     template <typename T>
-    struct data
+    struct array
     {
       typedef T value;
 
-      data();
+      array();
 
       void clear();
 
@@ -75,7 +74,7 @@ namespace mln
 
 
     template <typename T>
-    std::ostream& operator<<(std::ostream& ostr, const data<T>& h);
+    std::ostream& operator<<(std::ostream& ostr, const array<T>& h);
 
 
 
@@ -83,7 +82,7 @@ namespace mln
 
     template <typename T>
     inline
-    data<T>::data()
+    array<T>::array()
       : s_(mln::value::set<T>::the()),
 	h_(s_.nvalues(), 0)
     {
@@ -93,7 +92,7 @@ namespace mln
     template <typename T>
     inline
     void
-    data<T>::clear()
+    array<T>::clear()
     {
       std::fill(h_.begin(), h_.end(), 0);
     }
@@ -101,7 +100,7 @@ namespace mln
     template <typename T>
     inline
     unsigned
-    data<T>::operator()(const T& v) const
+    array<T>::operator()(const T& v) const
     {
       return h_[s_.index_of(v)];
     }
@@ -109,7 +108,7 @@ namespace mln
     template <typename T>
     inline
     unsigned&
-    data<T>::operator()(const T& v)
+    array<T>::operator()(const T& v)
     {
       return h_[s_.index_of(v)];
     }
@@ -117,7 +116,7 @@ namespace mln
     template <typename T>
     inline
     const mln::value::set<T>&
-    data<T>::vset() const
+    array<T>::vset() const
     {
       return s_;
     }
@@ -125,7 +124,7 @@ namespace mln
     template <typename T>
     inline
     unsigned
-    data<T>::operator[](unsigned i) const
+    array<T>::operator[](unsigned i) const
     {
       mln_precondition(i < s_.nvalues());
       return h_[i];
@@ -134,7 +133,7 @@ namespace mln
     template <typename T>
     inline
     unsigned&
-    data<T>::operator[](unsigned i)
+    array<T>::operator[](unsigned i)
     {
       mln_precondition(i < s_.nvalues());
       return h_[i];
@@ -143,21 +142,21 @@ namespace mln
     template <typename T>
     inline
     const std::vector<unsigned>&
-    data<T>::vect() const
+    array<T>::vect() const
     {
       return h_;
     }
 
     template <typename T>
     inline
-    unsigned data<T>::nvalues() const
+    unsigned array<T>::nvalues() const
     {
       return h_.size();
     }
 
     template <typename T>
     inline
-    std::ostream& operator<<(std::ostream& ostr, const data<T>& h)
+    std::ostream& operator<<(std::ostream& ostr, const array<T>& h)
     {
       mln_viter(mln::value::set<T>) v(h.vset());
       for_all(v)
@@ -173,4 +172,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_HISTO_DATA_HH
+#endif // ! MLN_HISTO_ARRAY_HH

@@ -1,3 +1,17 @@
+2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Rename histo::data as histo::array.
+
+	* mln/histo/data.hh: rename file as...
+	* mln/histo/array.hh: ... this.
+
+	* mln/accu/histo.hh,
+	* mln/convert/to_image.hh,
+	* mln/histo/all.hh,
+	* mln/histo/compute.hh,
+	* mln/histo/compute.spe.hh,
+	* mln/level/sort_psites.hh: update use of histo::array.
+
 2009-01-14  Alexandre Abraham  <abraham@lrde.epita.fr>
 
 	Fix for two ways functions.
