@@ -1,5 +1,13 @@
 2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename histo::data as histo::array.
+
+	* tests/core/other/var.cc,
+	* tests/histo/compute.cc,
+	* tests/histo/to_image1d.cc: rename here.
+
+2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve soft heap interface.
 
 	* mln/util/soft_heap.hh: rename take() as push().

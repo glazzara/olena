@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/histo/compute.cc
- *
- * \brief Tests on mln::accu::histo and mln::histo::data.
- */
+/// \file tests/histo/compute.cc
+///
+/// Tests on mln::accu::histo and mln::histo::array.
 
 #include <iterator>
 #include <sstream>
@@ -70,7 +70,7 @@ int main()
     debug::iota(ima);
     opt::at(ima, 0,0) = 2;
 
-    histo::data<int_u8> h = histo::compute(ima);
+    histo::array<int_u8> h = histo::compute(ima);
     std::ostringstream oss;
     oss << h;
     mln_assertion(oss.str() == "2:2 3:1 4:1 5:1 6:1 7:1 8:1 9:1 ");
@@ -86,7 +86,7 @@ int main()
     image2d<int_s5> ima(3, 3);
     debug::iota(ima);
 
-    histo::data<int_s5> h = histo::compute(ima);
+    histo::array<int_s5> h = histo::compute(ima);
     mln_assertion(h.vset().nvalues() == 31);
 
     for (unsigned i = 0; i <= 15; ++i)  // values from -15 to  0

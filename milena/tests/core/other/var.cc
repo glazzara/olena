@@ -33,7 +33,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/alias/window2d.hh>
 #include <mln/core/alias/neighb2d.hh>
-#include <mln/histo/data.hh>
+#include <mln/histo/array.hh>
 #include <mln/util/array.hh>
 
 #include <mln/core/var.hh>
@@ -73,7 +73,7 @@ void test_template()
     mln_BKD_EITER(e, arr);
   }
 
-  histo::data<bool> d;
+  histo::array<bool> d;
   {
     mln_VITER(v, d.vset());
   }
@@ -120,7 +120,7 @@ void test()
     mln_BKD_EITER_(e, arr);
   }
 
-  histo::data<bool> d;
+  histo::array<bool> d;
   {
     mln_VITER_(v, d.vset());
   }

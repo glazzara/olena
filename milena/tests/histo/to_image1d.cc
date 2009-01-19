@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,7 +28,7 @@
 
 /// \file tests/histo/to_image1d.cc
 ///
-/// Tests on mln::accu::histo and mln::histo::data.
+/// Tests on mln::accu::histo and mln::histo::array.
 
 #include <iterator>
 
@@ -68,7 +68,7 @@ int main()
     debug::iota(ima);
     ima(point2d(0,1)) = 255;
     debug::println(ima);
-    histo::data<int_u8> h = histo::compute(ima);
+    histo::array<int_u8> h = histo::compute(ima);
     std::cout << h << std::endl;
 
     image1d<unsigned> ima2 = convert::to_image(h);
