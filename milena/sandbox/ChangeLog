@@ -1,3 +1,15 @@
+2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment code for Laurent.
+
+	* theo/color/sum_pix.hh (take): Remove useless +1.
+	* theo/color/segment.cc: Add unactivated code.
+	* theo/color/blen_pix.hh (sum_len): New.
+	(take): Use it.
+	* laurent/ismm2009.cc: UPdate.
+	* laurent/ismm2009.v0.cc: Fix utf8.
+	* laurent/playing_with_attributes.cc: New.
+
 2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Remove images from repository.

@@ -459,7 +459,6 @@ namespace mln
     if (echo)
       debug::println("nchildren =", nchildren | t.nodes());
 
-
     // Filtering.
     mln_concrete(I) g;
     {
@@ -497,14 +496,22 @@ namespace mln
 
     unsigned n_regmins_g_ref;
     mln_ch_value(I, unsigned) regmin_g = labeling::regional_minima(g_ref, nbh, n_regmins_g_ref);
-    if (echo)
+//     if (echo)
       std::cout << "n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
 		<< std::endl;
       
     if (g != g_ref)
-      std::cerr << "OOPS: g DIFFERS FROM ref!" << std::endl
-		<< std::endl;
-      
+      {
+	std::cerr << "OOPS: g DIFFERS FROM ref!" << std::endl
+		  << std::endl;
+
+// 	debug::println("diff", (pw::value(g_ref) == pw::value(g)) | g.domain());
+
+// 	debug::println("g_ref", g_ref);
+// 	debug::println("g", g);
+// 	debug::println("regmin_g", regmin_g);
+      }
+
 //     bool consistency = (n_regmins_g_ref + less == n_objects);
 //     if (consistency == false)
 //       std::cerr << "OOPS: INCONSISTENCY (BUG...)!" << std::endl
@@ -568,12 +575,12 @@ int main(int argc, char* argv[])
     typedef morpho::tree::data<I,S> tree_t;
     tree_t t(f, s, e2e());
 
-//  accu::count< util::pix<I> > a_;
-//  accu::volume<I> a_;
-    accu::sum_pix< util::pix<I> > a_;
+    //  accu::count< util::pix<I> > a_;
+    //  accu::volume<I> a_;
+    //  accu::sum_pix< util::pix<I> > a_;
 
-//     blen_image = input_;
-//     accu::blen_pix<I> a_;
+    blen_image = input_;
+    accu::blen_pix<I> a_;
 
     mln_VAR(a, compute_attribute_on_nodes(a_, t));
 
@@ -605,7 +612,6 @@ int main(int argc, char* argv[])
     }
 
     io::pgm::save(w_all, "temp_w_all.pgm");
-
   }
 
 

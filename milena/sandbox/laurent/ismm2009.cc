@@ -71,24 +71,35 @@ namespace mln
   }
 
 
+
+
+  // Test emptiness of the queue of a set of regions.
+
+  template <typename Qs, typename L>
+  bool test_q_emptiness(Qs& qs, L l, std::vector<L>& lpar)
+  {
+    L l_ = l;
+    while (lpar[l_] != l_)
+      {
+	if (! qs[l_].is_empty())
+	  return false;
+	l_ = lpar[l_];
+      }
+    return true;
+  }
+
+
   // Get smallest edge.
 
   template <typename Qs, typename L, typename W>
   mln_deduce(Qs, element, element)
-  get_smallest_edge(Qs& qs, L l, const W& wst, std::vector<L>& lpar, bool& found)
+  get_smallest_edge(Qs& qs, L l, const W& wst, std::vector<L>& lpar)
   {
     typedef mln_element(Qs) Q; // qs is an array of queues with type Q.
 
-    {
-      // Test that, when a region has merged, its edge queue has been
-      // emptied.
-      L l_ = l;
-      while (lpar[l_] != l_)
-	{
-	  mln_invariant(qs[l_].is_empty());
-	  l_ = lpar[l_];
-	}
-    }
+    // Test that, when a region has merged, its edge queue has been
+    // emptied.
+    mln_invariant(test_q_emptiness(qs, l, lpar));
 
     L lr = find_root_l(lpar, l);
     Q& q = qs[lr];
@@ -97,7 +108,8 @@ namespace mln
 
     while (! q.is_empty())
       {
-	const E& e = q.front();
+	E e = q.pop_front();
+
 	L l1 = wst(p1_from_e(e)),
 	  l2 = wst(p2_from_e(e));
 	mln_invariant(l1 != l2);
@@ -108,16 +120,13 @@ namespace mln
 
 	if (l1r == l2r)
 	  // 'e' is an internal edge => forget it.
-	  {
-	    q.pop();
-	    continue;
-	  }
+	  continue;
 
-	found = true;
 	return e;
       }
 
-    found = false;
+    mln_invariant(0); // We should not be here!
+
     return E(0,0); // FIXME: null edge.
   }
 
@@ -208,6 +217,115 @@ namespace mln
   }
 
 
+
+
+  // Transform attributes so that they are all different!
+ 
+
+  template <typename A, typename L>
+  void
+  make_unique_attribute(util::array<A>& a,
+			std::vector< std::pair<A,L> >& v,
+			L l_max,
+			bool echo)
+  {
+    // Display attributes.
+    if (echo)
+      {
+	std::cout << "(attribute, label)  =  { ";
+	for (unsigned i = 1; i <= l_max; ++i)
+	  std::cout << '(' << v[i].first   // Attribute (increasing).
+		    << ','
+		    << v[i].second  // Region label.
+		    << ") ";
+	std::cout << '}' << std::endl
+		  << std::endl;
+      }
+
+    std::map<A,A> lut; // old value -> new value
+    for (unsigned l = 1; l <= l_max; ++l)
+      {
+	A old_a = v[l].first,
+	  new_a = old_a + l - 1;
+	lut[old_a] = new_a;
+	v[l].first = new_a; // new value
+      }
+    for (unsigned l = 1; l <= l_max; ++l)
+      a[l] = lut[ a[l] ];
+  }
+
+
+
+  // Compute g from f; then transform g into g' so that all values are
+  // different; last return the watershed of g'.
+
+
+  template < typename F,
+	     typename G,
+	     typename N_e2p,
+	     typename N_e2e,
+	     typename L >
+  mln_ch_value(G, L)
+  f_to_wst_unique_g(F& f, // On pixels.
+		    G& g, // On edges.
+		    const N_e2p& e2p,
+		    const N_e2e& e2e,
+		    L& n_basins,
+		    bool echo)
+  {
+    data::paste(morpho::gradient(extend(g, f),
+				 e2p.win()),
+		g);
+
+    // FIXME: Here, we want a unique value per edge!
+
+    if (echo)
+      debug::println("g (before):", g);
+
+    {
+
+      typedef std::pair<short, short> edge_t;
+      typedef std::pair<mln_value(G), edge_t> ve_t;
+      std::vector<ve_t> tmp;
+      {
+	mln_piter(G) e(g.domain());
+	for_all(e)
+	{
+	  ve_t ve;
+	  ve.first  = g(e);
+	  ve.second = edge_t(e.row(), e.col());
+	  tmp.push_back(ve);
+	}
+      }
+      std::sort(tmp.begin(), tmp.end());
+      {
+	mln_value(G) v;
+	mln_site(G) e;
+	for (unsigned i = 0; i < tmp.size(); ++i)
+	  {
+	    v = tmp[i].first + i;
+	    e.row() = tmp[i].second.first;
+	    e.col() = tmp[i].second.second;
+	    g(e) = v;
+	  }
+      }
+    }
+
+    mln_VAR( wst_g,
+	     morpho::meyer_wst(g, e2e, n_basins) );
+
+//     // Test the consistency with regional minima.
+//     {
+//       L n_regmins;
+//       mln_VAR( regmin_g,
+// 	       labeling::regional_minima(g, e2e, n_regmins) );
+//       mln_invariant(n_basins == n_regmins);
+//     }
+
+    return wst_g;
+  }
+
+
 } // mln
 
 
@@ -229,6 +347,8 @@ int main(int argc, char* argv[])
   using value::int_u8;
   using value::label_16;
 
+  bool echo = true;
+
   if (argc != 2)
     usage(argv);
 
@@ -241,7 +361,8 @@ int main(int argc, char* argv[])
   Complex f_ = add_edges(raw_f);
 
   mln_VAR(f, f_ | is_pixel);
-  // debug::println("f:", f);
+  if (echo)
+    debug::println("f:", f);
 
   mln_VAR(g, f_ | is_edge);
 
@@ -250,22 +371,35 @@ int main(int argc, char* argv[])
   typedef label_16 L;        // Type of labels.
 
   L n_basins;
+
   mln_VAR( wst_g,
 	   f_to_wst_g(f, g, e2p(), e2e(), n_basins) );
 
-  std::cout << "n basins = " << n_basins << std::endl;
+  /*
+    UNIQUE:
 
-  debug::println("g:", g);
-  debug::println("wst(g):", wst_g);
+  mln_VAR( wst_g,
+	   f_to_wst_unique_g(f, g, e2p(), e2e(), n_basins, echo) );
+  */
 
+
+  if (echo)
+    {
+      std::cout << "n basins = " << n_basins << std::endl;
+      debug::println("g:", g);
+      debug::println("wst(g):", wst_g);
+    }
 
 
   // Just to see things.
-  //
+
   mln_VAR(adj, adjacency(wst_g, e2e()));
-  debug::println("adj:", adj);
+  if (echo)
+    debug::println("adj:", adj);
+
   mln_VAR(adj_line, adj | (pw::value(wst_g) == pw::cst(0)));
-  debug::println("adjacency:", adj_line);
+  if (echo)
+    debug::println("adjacency:", adj_line);
 
 
 
@@ -286,10 +420,12 @@ int main(int argc, char* argv[])
 
   // Depict the watershed line.
   mln_VAR(is_line, pw::value(wst_g_full) == pw::cst(0));
-  // --- debug::println("wst(g) line:", wst_g | is_line);
+  if (echo)
+    debug::println("wst(g) line:", wst_g | is_line);
 
   mln_VAR(g_line, g | is_line);
-  debug::println("g | wst(g) line:", g_line);
+  if (echo)
+    debug::println("g | wst(g) line:", g_line);
 
 
 
@@ -336,17 +472,6 @@ int main(int argc, char* argv[])
   // if l1r = l2r.
 
 
-//   // Test the 'get_smallest_edge' routine.
-//   {
-//     bool found;
-//     for (L l = 1; l <= n_basins; ++l)
-//       {
-// 	E e = get_smallest_edge(q, l, wst_g_full, lpar, found);
-// 	std::cout << l << ": e = " << e
-// 		  << " -- g(e) = " << g(e) << std::endl;
-//       }
-//   }
-
   
   E null = E(0,0);  // Impossible value.
 
@@ -376,17 +501,25 @@ int main(int argc, char* argv[])
   std::vector<pair_t> v = sort_attributes(a, n_basins); // Sort regions.
 
 
+
+  // Maybe activate to test purpose:
+  /*
+    make_unique_attribute(a, v, n_basins, echo);
+  */
+
+
   // Display attributes.
-  {
-    std::cout << "(attribute, label)  =  { ";
-    for (unsigned i = 1; i <= n_basins; ++i)
-      std::cout << '(' << v[i].first   // Attribute (increasing).
-		<< ','
-		<< v[i].second  // Region label.
-		<< ") ";
-    std::cout << '}' << std::endl
-	      << std::endl;
-  }
+  if (echo)
+    {
+      std::cout << "(attribute, label)  =  { ";
+      for (unsigned i = 1; i <= n_basins; ++i)
+	std::cout << '(' << v[i].first   // Attribute (increasing).
+		  << ','
+		  << v[i].second  // Region label.
+		  << ") ";
+      std::cout << '}' << std::endl
+		<< std::endl;
+    }
 
 
 
@@ -408,7 +541,8 @@ int main(int argc, char* argv[])
       epar(e) = e;
       z_epar(e) = e;
     }
-    debug::println("all edges:", epar); // epar(e) == e so we depict the edges!
+    if (echo)
+      debug::println("all edges:", epar); // epar(e) == e so we depict the edges!
   }
 
 
@@ -421,19 +555,13 @@ int main(int argc, char* argv[])
   data::fill(aa, 0); // Safety iff 0 is an invalidate attribute value!
 
 
-  for (unsigned i = 1; i <= n_basins; ++i)
+  // The last iteration (i == n_basins) is useless: all regions have
+  // already merged.
+
+  for (unsigned i = 1; i < n_basins; ++i)
     {
       L l = v[i].second; // Region label.
-      bool found;
-      E e = get_smallest_edge(q, l, wst_g_full, lpar, found);
-
-      if (! found)
-	{
-	  // The last iteration is useless: all regions have already
-	  // merged.  We could have written: "for i = 1 to n_basins - 1".
-	  mln_invariant(i == n_basins);
-	  break;
-	}
+      E e = get_smallest_edge(q, l, wst_g_full, lpar);
 
       L l1 = wst_g_full(p1_from_e(e)),
 	l2 = wst_g_full(p2_from_e(e)),
@@ -568,65 +696,70 @@ int main(int argc, char* argv[])
 
 
 
-  // Displaying the "edge tree".
+  // About the "edge tree" and attributes.
 
   {
-    p_set<E> leaves;
-
-
     // Region l -> edge e.
-
-    std::cout << "region:(edge)  =  ";
+    p_set<E> leaves;
     for (L l = 1; l <= n_basins; ++l)
       {
 	mln_invariant(edge[l] != null);
 	leaves.insert(edge[l]);
-	std::cout << l << ':' << edge[l] << " ";
       }
-    std::cout << std::endl
-	      << std::endl;
 
+    // Tests.
     mln_piter_(p_set<E>) e(leaves);
-
-
-    // Tree "e -> epar(e)".
-
-    std::cout << "edge tree: " << std::endl;
     for_all(e)
     {
       E e_ = e;
       do
 	{
-	  std::cout << e_ << " -> ";
 	  mln_invariant(aa(e_) != 0 && aa(epar(e_)) != 0); // aa is valid
-	  mln_invariant(aa(epar(e_)) >= aa(e_));
+	  mln_invariant(aa(epar(e_)) >= aa(e_)); // edge parenthood goes with 'a' increasing
 	  e_ = epar(e_);
 	}
       while (epar(e_) != e_);
-      std::cout << e_ << std::endl;
     }
-    std::cout << std::endl;
 
-
-    // Edge parenthood goes with 'a' increasing:
-
-    std::cout << "edge tree new attributes: " << std::endl;
-    for_all(e)
-    {
-      E e_ = e;
-      do
+    // Display.
+    if (echo)
+      {
+	std::cout << "region:(edge)  =  ";
+	for (L l = 1; l <= n_basins; ++l)
+	  std::cout << l << ':' << edge[l] << " ";
+	std::cout << std::endl
+		  << std::endl;
+	
+	std::cout << "edge tree: " << std::endl;
+	for_all(e) {
+	  E e_ = e;
+	  do {
+	    std::cout << e_ << " -> ";
+	    e_ = epar(e_);
+	  }
+	  while (epar(e_) != e_);
+	  std::cout << e_ << std::endl;
+	}
+	std::cout << std::endl;
+	
+	std::cout << "edge tree new attributes: " << std::endl;
+	for_all(e)
 	{
-	  std::cout << aa(e_) << " -> ";
-	  // Edge parenthood goes with a increasing:
-	  mln_invariant(aa(epar(e_)) >= aa(e_));
-	  e_ = epar(e_);
+	  E e_ = e;
+	  do
+	    {
+	      std::cout << aa(e_) << " -> ";
+	      e_ = epar(e_);
+	    }
+	  while (epar(e_) != e_);
+	  std::cout << aa(e_) << std::endl;
 	}
-      while (epar(e_) != e_);
-      std::cout << aa(e_) << std::endl;
-    }
-    std::cout << std::endl;
-
-  } // end of tree display.
+	std::cout << std::endl;
+	
+      } // end of Display.
+    
+    
+  } // end of About the "edge tree" and attributes.
 
 
 
@@ -649,8 +782,11 @@ int main(int argc, char* argv[])
 
 
   // Reminders:
-  debug::println("wst(g) fully valuated:", wst_g_full);
-  debug::println("g_line:", g_line);
+  if (echo)
+    {
+      debug::println("wst(g) fully valuated:", wst_g_full);
+      debug::println("g_line:", g_line);
+    }
 
 
 
@@ -687,7 +823,8 @@ int main(int argc, char* argv[])
 	aa(e) = aa(e_);
       }
 
-      debug::println("aa | wst(g) line:", (aa | is_edge) | is_line);
+      if (echo)
+	debug::println("aa | wst(g) line:", (aa | is_edge) | is_line);
 
       // Second, processing the 0D-faces (points) of the watershed line.
 
@@ -730,7 +867,8 @@ int main(int argc, char* argv[])
 
     }
 
-    debug::println("aa | line:", aa_line);
+    if (echo)
+      debug::println("aa | line:", aa_line);
 
 
     // Now dealing with all elements of basins:
@@ -747,14 +885,15 @@ int main(int argc, char* argv[])
 	aa(p) = a[wst_g_full(p)];
     }
 
-    debug::println("aa | basins", aa_basins);
+    if (echo)
+      debug::println("aa | basins", aa_basins);
 
   }
 
 
 
-  debug::println("aa:", aa);
-
+  if (echo)
+    debug::println("aa:", aa);
 
 
 } // end of main

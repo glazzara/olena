@@ -125,7 +125,7 @@ namespace mln
     inline
     void sum_pix<P,S>::take(const argument& p)
     {
-      s_ += 1 + p.v();
+      s_ += /* 1 + */ p.v();
     }
 
     template <typename P, typename S>

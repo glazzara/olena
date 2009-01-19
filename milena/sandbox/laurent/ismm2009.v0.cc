@@ -387,7 +387,7 @@ int main(int argc, char* argv[])
   debug::println("adjacency:", adj | (pw::value(wst_g) == pw::cst(0)));
 
 
-  /* // Délire!
+  /* // De'lire!
   {
     box2d b = make::box2d(1,1, n_basins, n_basins);
     point2d null(0, 0);

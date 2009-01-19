@@ -112,6 +112,19 @@ namespace mln
     }
 
 
+    template <typename B>
+    unsigned sum_len(const Box<B>& b_)
+    {
+      const B& b = exact(b_);
+      typedef mln_site(B) P;
+      enum { n = P::dim };
+      unsigned len = 0;
+      for (unsigned i = 0; i < n; ++i)
+	len += b.len(i);
+      return len;
+    }
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     template <typename I>
@@ -136,7 +149,7 @@ namespace mln
     {
       const mln_site(I)& p = pxl.p();
       accu_blen_take(b_, p);
-      len_ = max_len(b_.to_result());
+      len_ = sum_len(b_.to_result());
     }
 
     template <typename I>
@@ -145,7 +158,7 @@ namespace mln
     blen_pix<I>::take(const blen_pix<I>& other)
     {
       b_.take(other.b());
-      len_ = max_len(b_.to_result());
+      len_ = sum_len(b_.to_result());
     }
 
     template <typename I>
