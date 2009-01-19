@@ -1,3 +1,24 @@
+2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleanup extension with image, forcing it to be const.
+
+	* mln/core/image/extension_ima.hh (todo): Remove; obsolete.
+	(ctor): Add const for extension.
+	(change_extension): Remove.
+	(extension): Remove the mutable version.
+	(init_): Remove the mutable version.
+	(init_): Make it robust to constness.
+	* mln/core/routine/extend.hh: Upgrade file doc style.
+	(extend): Remove overload for mutable extension.
+
+	Misc.
+
+	* mln/core/site_set/p_priority.hh: Upgrade file doc style.
+	(insert): New overload for a priority queue.
+	* mln/make/double_neighb2d.hh: Upgrade file doc style.
+	* mln/make/box2d.hh (todo): New.
+	* mln/labeling/compute.hh: Fix commentary.
+
 2009-01-16  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Small fixes.

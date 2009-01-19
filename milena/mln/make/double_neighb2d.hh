@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +28,11 @@
 #ifndef MLN_MAKE_DOUBLE_NEIGHB2D_HH
 # define MLN_MAKE_DOUBLE_NEIGHB2D_HH
 
-/*! \file mln/make/double_neighb2d.hh
- *
- * \brief Routine to create a double neighborhood.
- *
- * \todo Add overload with 'when_*' being Neighborhood<N>...
- */
+/// \file mln/make/double_neighb2d.hh
+///
+/// Routine to create a double neighborhood.
+///
+/// \todo Add overload with 'when_*' being Neighborhood<N>...
 
 # include <mln/convert/to.hh>
 # include <mln/core/alias/window2d.hh>

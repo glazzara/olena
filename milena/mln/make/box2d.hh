@@ -32,6 +32,9 @@
 /// \file mln/make/box2d.hh
 ///
 /// Routines to construct an mln::box2d.
+///
+/// \todo Accept long int as args and test overflow (out of def::coord
+/// bounds).
 
 # include <mln/core/alias/box2d.hh>
 

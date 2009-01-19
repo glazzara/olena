@@ -210,7 +210,7 @@ namespace mln
 	  return convert::to< util::array<mln_result(A)> >(accus);
 	}
 
-      } // end of namespace mln::labeling::impl::internal
+      } // end of namespace mln::labeling::impl::generic
 
     } // end of namespace mln::labeling::impl
 

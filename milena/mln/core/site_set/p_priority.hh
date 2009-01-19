@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,9 @@
 #ifndef MLN_CORE_P_PRIORITY_HH
 # define MLN_CORE_P_PRIORITY_HH
 
-/*! \file mln/core/site_set/p_priority.hh
- *
- * \brief Definition of a priority queue of sites.
- *
- * \todo Rename file as p_priority.hh
- */
+/// \file mln/core/site_set/p_priority.hh
+///
+/// Definition of a priority queue of sites.
 
 # include <map>
 # include <mln/core/site_set/p_double.hh>
@@ -126,6 +124,9 @@ namespace mln
     /// Insert a pair \p p_e (priority p, element e).
     void insert(const i_element& p_e);
 
+    /// Insert elements from another priority queue.
+    void insert(const p_priority<P,Q>& other);
+
 
     /// Pop (remove) from the queue an element with highest priority.
     /// If several elements have this priority, the least recently
@@ -174,6 +175,7 @@ namespace mln
 
     /// Return the size of this site set in memory.
     std::size_t memory_size() const;
+
 
   protected:
 
@@ -250,6 +252,24 @@ namespace mln
   p_priority<P,Q>::insert(const i_element& p_e)
   {
     this->push(p_e.first, p_e.second); // Also test invariants.
+  }
+
+  template <typename P, typename Q>
+  inline
+  void
+  p_priority<P,Q>::insert(const p_priority<P,Q>& other)
+  {
+    mln_invariant(run_());
+    typename q_type_::const_iterator i;
+    for (i = other.q_.begin(); i != other.q_.end(); ++i)
+      {
+	P priority = i->first;
+	p_.insert(priority);
+	const Q& q_p = i->second;
+	q_[priority] += q_p;
+      }
+    n_ += other.n_;
+    mln_invariant(run_());
   }
 
   template <typename P, typename Q>

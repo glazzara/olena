@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +28,13 @@
 #ifndef MLN_CORE_ROUTINE_EXTEND_HH
 # define MLN_CORE_ROUTINE_EXTEND_HH
 
-/*!
- * \file mln/core/routine/extend.hh
- *
- * \brief Definition of a morpher that extends the extended domain of an image.
- *
- * \todo Use the 'instant' mechanism.
- * \todo Deal with ambiguities.
- * \todo Check that there is no extension yet (except "extendable").
- */
+/// \file mln/core/routine/extend.hh
+///
+/// Definition of a morpher that extends the extended domain of an image.
+///
+/// \todo Use the 'instant' mechanism.
+/// \todo Deal with ambiguities.
+/// \todo Check that there is no extension yet (except "extendable").
 
 # include <mln/core/image/extension_ima.hh>
 # include <mln/core/image/extension_fun.hh>
@@ -64,10 +62,6 @@ namespace mln
   template <typename I, typename J>
   extension_ima<const I, const J>
   extend(const Image<I>& ima, const Image<J>& ext);
-
-  template <typename I, typename J>
-  extension_ima<I, J>
-  extend(Image<I>& ima, Image<J>& ext);
 
 
   /// Routines for domain extension with a value.
@@ -116,15 +110,6 @@ namespace mln
   {
     mlc_converts_to(mln_value(J), mln_value(I))::check();
     extension_ima<const I, const J> tmp(exact(ima), exact(ext));
-    return tmp;
-  }
-
-  template <typename I, typename J>
-  extension_ima<I, J>
-  extend(Image<I>& ima, Image<J>& ext)
-  {
-    mlc_converts_to(mln_value(J), mln_value(I))::check();
-    extension_ima<I, J> tmp(exact(ima), exact(ext));
     return tmp;
   }
 

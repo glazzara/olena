@@ -31,15 +31,9 @@
 /// \file mln/core/image/extension_ima.hh
 ///
 /// Definition of a morpher that extends the domain of an image
-/// with a function.
-///
-/// \todo Use an envelop as lvalue to test extension writing.
-///
-/// \todo Handle the couple of cases: either J is value_io::read_write
-/// or value_io::read_only; then ext_io can be read_write...
+/// with an image.
 
 # include <mln/core/internal/image_identity.hh>
-# include <mln/data/fill_with_value.hh>
 
 
 
@@ -57,7 +51,7 @@ namespace mln
     template <typename I, typename J>
     struct data< extension_ima<I, J> >
     {
-      data(I& ima, J& ext);
+      data(I& ima, const J& ext);
 
       I ima_;
       J ext_;
@@ -80,7 +74,7 @@ namespace mln
       // extended domain
       typedef trait::image::ext_domain::extendable ext_domain;
       typedef trait::image::ext_value::multiple    ext_value;
-      typedef trait::image::ext_io::read_only      ext_io; // FIXME: Too restrictive?
+      typedef trait::image::ext_io::read_only      ext_io;
     };
 
     template <typename I, typename J, typename V>
@@ -118,11 +112,11 @@ namespace mln
     extension_ima();
 
     /// Constructor from an image \p ima and a function \p ext.
-    extension_ima(I& ima, J& ext);
+    extension_ima(I& ima, const J& ext);
 
     /// Deferred initialization from an image \p ima and a function \p
     /// ext.
-    void init_(I& ima, J& ext);
+    void init_(I& ima, const J& ext);
 
 
     /// Test if \p p is valid.
@@ -139,14 +133,7 @@ namespace mln
 
 
     /// Read-only access to the extension domain (image).
-    mlc_const(J)& extension() const;
-
-    /// Mutable access to the extension domain (image).  This domain
-    /// can be modified if J a read-write image type.
-    J& extension();
-
-    /// Change the value in the extension domain (image).
-    void change_extension(const mln_value(I)& v);
+    const J& extension() const;
   };
 
 
@@ -157,10 +144,6 @@ namespace mln
 
   template <typename J, typename I>
   void init_(tag::extension_t, J& target, const extension_ima<I,J>& model);
-
-  template <typename J, typename I>
-  void init_(tag::extension_t, J& target, const extension_ima<I,const J>& model);
-
 
 
 
@@ -173,9 +156,9 @@ namespace mln
 
     template <typename I, typename J>
     inline
-    data< extension_ima<I, J> >::data(I& ima, J& ext)
+    data< extension_ima<I, J> >::data(I& ima, const J& ext)
       : ima_(ima),
-	ext_(ext)
+	ext_(const_cast<J&>(ext))
     {
     }
 
@@ -191,7 +174,7 @@ namespace mln
 
   template <typename I, typename J>
   inline
-  extension_ima<I, J>::extension_ima(I& ima, J& ext)
+  extension_ima<I, J>::extension_ima(I& ima, const J& ext)
   {
     init_(ima, ext);
   }
@@ -199,7 +182,7 @@ namespace mln
   template <typename I, typename J>
   inline
   void
-  extension_ima<I, J>::init_(I& ima, J& ext)
+  extension_ima<I, J>::init_(I& ima, const J& ext)
   {
     this->data_ = new internal::data< extension_ima<I, J> >(ima, ext);
   }
@@ -255,35 +238,17 @@ namespace mln
 
   template <typename I, typename J>
   inline
-  mlc_const(J)&
+  const J&
   extension_ima<I, J>::extension() const
   {
     mln_precondition(this->is_valid());
     return this->data_->ext_;
   }
 
-  template <typename I, typename J>
-  inline
-  J&
-  extension_ima<I, J>::extension()
-  {
-    mln_precondition(this->is_valid());
-    return this->data_->ext_;
-  }
-
-  template <typename I, typename J>
-  inline
-  void
-  extension_ima<I, J>::change_extension(const mln_value(I)& v)
-  {
-    mlc_equal(mln_trait_image_value_io(J),
-	      trait::image::value_io::read_write)::check();
-    data::fill_with_value(v);
-  }
-
   // init_
 
   template <typename I, typename J, typename M>
+  inline
   void init_(tag::image_t, extension_ima<I,J>& target, const M& model)
   {
     I ima;
@@ -294,15 +259,13 @@ namespace mln
   }
 
   template <typename J, typename I>
+  inline
   void init_(tag::extension_t, J& target, const extension_ima<I,J>& model)
   {
-    target = model.extension();
-  }
-
-  template <typename J, typename I>
-  void init_(tag::extension_t, J& target, const extension_ima<I,const J>& model)
-  {
-    target = model.extension();
+    typedef mlc_unconst(J) J_;
+    J_& ext_ = const_cast<J_&>(model.extension());
+    J_& target_ = const_cast<J_&>(target);
+    target_ = ext_;
   }
 
 # endif // ! MLN_INCLUDE_ONLY
