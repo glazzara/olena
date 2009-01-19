@@ -1,5 +1,13 @@
 2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve soft heap interface.
+
+	* mln/util/soft_heap.hh: rename take() as push().
+
+	* tests/util/soft_heap.cc: update test.
+
+2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add implementation of Fibonacci heap.
 
 	* headers.mk: add a new header to distribution.

@@ -60,7 +60,7 @@ int main()
     fh2.push(p[i]);
 
   // Merge fh in fh2.
-  fh2.take(fh);
+  fh2.push(fh);
 
   // fh2 now holds both its elements and fh's.
   unsigned i = 0;

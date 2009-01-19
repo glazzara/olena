@@ -197,13 +197,11 @@ namespace mln
 
       /// Add a new element \p element.
       void push(const T& element);
-      /// Insert a site \p p (equivalent as 'push').
-      void insert(const T& p);
 
       /// Merge \p sh with this heap.
       /// Be ware that after this call, \p sh will be empty. This heap will
       /// hold the elements which were part of \p sh.
-      void take(soft_heap<T,R>& sh);
+      void push(soft_heap<T,R>& sh);
 
       /// Returns the element with the lowest priority and remove it from the
       /// heap.
@@ -227,14 +225,14 @@ namespace mln
 
       /// Reset the heap to an empty heap. Do *NOT* delete element which may
       /// have been inserted.
-      /// \sa take
+      /// \sa push
       void soft_clear_();
 
 
 
     private:
       /// Merge a node \p q to this heap.
-      /// \sa take
+      /// \sa push
       void meld(node<T,R> *q);
 
       /// Update suffix_min pointer according to the new values inserted in
@@ -655,7 +653,7 @@ namespace mln
     template <typename T, typename R>
     inline
     void
-    soft_heap<T,R>::take(soft_heap<T,R>& psh)
+    soft_heap<T,R>::push(soft_heap<T,R>& psh)
     {
       head<T,R> *head = psh.head_hook_();
       while (head != 0)
