@@ -1,3 +1,12 @@
+2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update Laurent's ISMM code.
+
+	* laurent/ismm2009.cc: Update.
+	* laurent/ismm2009.v1.cc: New.
+	* laurent/ismm2009.hh (is_not_point): New.
+	(find_root): Remove.
+
 2009-01-16  Matthieu Garrigues  <matthieu.garrigues@gmail.com>
 
 	Work on reconstruction.

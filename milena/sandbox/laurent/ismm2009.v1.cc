@@ -17,17 +17,6 @@
 #include <mln/accu/count.hh>
 
 
-/*
-
-   TO-DO list:
-   -----------
-
-   - having a heap for every lr (support merge)
-
-   - handling adjacency on the fly (instead of having an image)
-
- */
-
 
 namespace mln
 {
@@ -73,62 +62,44 @@ namespace mln
 
   // Get smallest edge.
 
-  template <typename Qs, typename L, typename W>
-  mln_deduce(Qs, element, element)
-  get_smallest_edge(Qs& qs, L l, const W& wst, std::vector<L>& lpar, bool& found)
+  template <typename Q, typename L, typename W>
+  mln_element(Q)
+  get_smallest_edge(Q& q, L l, const W& wst, std::vector<L>& lpar, bool& found)
   {
-    typedef mln_element(Qs) Q; // qs is an array of queues with type Q.
+    L lr = find_root_l(lpar, l);
+    typedef mln_element(Q) E;
 
+    mln_fwd_piter(Q) e(q);
+    for_all(e)
     {
-      // Test that, when a region has merged, its edge queue has been
-      // emptied.
-      L l_ = l;
-      while (lpar[l_] != l_)
+      L l1 = wst(p1_from_e(e)),
+	l2 = wst(p2_from_e(e));
+      mln_invariant(l1 != l2);
+      L l1r = find_root_l(lpar, l1),
+	l2r = find_root_l(lpar, l2);
+      
+      if (l1r == l2r)
+	// 'e' is an internal edge => forget it.
+	continue;
+      
+      if (l1r == lr || l2r == lr)
 	{
-	  mln_invariant(qs[l_].is_empty());
-	  l_ = lpar[l_];
+	  found = true;
+	  return e;
 	}
     }
 
-    L lr = find_root_l(lpar, l);
-    Q& q = qs[lr];
-
-    typedef mln_element(Q) E;
-
-    while (! q.is_empty())
-      {
-	const E& e = q.front();
-	L l1 = wst(p1_from_e(e)),
-	  l2 = wst(p2_from_e(e));
-	mln_invariant(l1 != l2);
-	L l1r = find_root_l(lpar, l1),
-	  l2r = find_root_l(lpar, l2);
-      
-	mln_invariant(l1r == lr || l2r == lr);
-
-	if (l1r == l2r)
-	  // 'e' is an internal edge => forget it.
-	  {
-	    q.pop();
-	    continue;
-	  }
-
-	found = true;
-	return e;
-      }
-
     found = false;
-    return E(0,0); // FIXME: null edge.
+    return E();
   }
 
 
   // Compute an LCA; reference(?) code.
 
   template <typename L, typename E, typename Epar>
-  std::vector< std::vector<E> >
-  compute_lca(const L& l_max,
-	      const std::vector<E>& edge,
-	      const Epar& epar)
+  image2d<E> compute_lca(const L& l_max,
+			 const std::vector<E>& edge,
+			 const Epar& epar)
   {
     mln_ch_value(Epar, std::vector<L>) chl_; // Children (known as array).
     {
@@ -184,25 +155,24 @@ namespace mln
 	  chl(e).insert(chl_(e).begin(), chl_(e).end());
     }
 
-    unsigned size = l_max.next();
 
-    std::vector< std::vector<E> > lca(size);
-    for (L l = 1; l <= l_max; ++l)
-      {
-	lca[l].resize(size);
-
-	// Diagonal.
-	lca[l][l] = edge[l]; // Itself.
-
-	// Superior right.
-	for (L l2 = l.next(); l2 <= l_max; ++l2)
-	  {
-	    E e = edge[l];
-	    while (chl(e).find(l2) == chl(e).end())
-	      e = epar(e);
-	    lca[l][l2] = e;
+    box2d b = make::box2d(1, 1, l_max, l_max);
+    image2d<E> lca(b);
+    data::fill(lca, E(0,0));
+    // Superior right.
+    for (int l1 = 1; l1 <= l_max; ++l1)
+      for (int l2 = l1 + 1; l2 <= l_max; ++l2)
+	{
+	  E e = edge[l1];
+	  while (chl(e).find(l2) == chl(e).end())
+	    e = epar(e);
+	  lca.at_(l1, l2) = e;
 	}
-      }
+    // Diagonal.
+    for (int l = 1; l <= l_max; ++l)
+      lca.at_(l, l) = edge[l]; // Itself.
+
+    // debug::println(lca);
 
     return lca;
   }
@@ -298,35 +268,21 @@ int main(int argc, char* argv[])
   // Priority queue -> edge.
 
   typedef p_priority< T, p_queue<E> > Q;
-  util::array<Q> q(n_basins.next());
+  Q q;
 
   {
     mln_piter_(g_t) e(g.domain());
     for_all(e)
       if (wst_g(e) == 0)
-	{
-	  L l1 = wst_g_full(p1_from_e(e)),
-	    l2 = wst_g_full(p2_from_e(e));
-	  if (l1 > l2)
-	    std::swap(l1, l2);
-	  mln_invariant(l1 < l2);
-	  q[l1].push(mln_max(T) - g(e), e);
-	  q[l2].push(mln_max(T) - g(e), e);
-	}
-    // --- for (L l = 1; l <= n_basins; ++l)
-    // ---   std::cout << "q["<< l << "] = " << q[l] << std::endl;
+	q.push(mln_max(T) - g(e), e);
+    // --- std::cout << "q = " << q << std::endl;
   }
-
-
-
-
 
   // To know if an edge is out of a given region (label l), we
   // maintain the information about region merging using
   // an union-find structure.
   std::vector<L> lpar(n_basins.next());
   make_sets(lpar, n_basins);
-
 
   // Given a region R with label l and an edge e = (l1, l2) from the
   // priority queue, we get know if that edge is out of the set of
@@ -463,27 +419,12 @@ int main(int argc, char* argv[])
 		<< std::endl;
       */
 
-
       // Merging both regions.
       {
 	if (l2r < l1r)
 	  std::swap(l1r, l2r);
 	mln_invariant(l2r > l1r);
 	lpar[l1r] = l2r;
-
-	/*
-	std::cout << "q[l1r] = " << q[l1r] << std::endl;
-	std::cout << "q[l2r] = " << q[l2r] << std::endl;
-	*/
-
-	q[l2r].insert(q[l1r]);
-	q[l1r].clear();
-
-	/*
-	std::cout << "q[l2r] = " << q[l2r] << std::endl
-		  << std::endl;
-	*/
-
 
 	/*
 	// Displaying lpar.
@@ -669,16 +610,12 @@ int main(int argc, char* argv[])
     {
       // First, processing the 1D-faces (edges) of the watershed line.
 
-      std::vector< std::vector<E> > lca;
-      lca = compute_lca(n_basins, edge, epar); // lca is auxiliary data.
+      image2d<E> lca = compute_lca(n_basins, edge, epar); // lca is auxiliary data.
 
       mln_piter_(g_line_t) e(g_line.domain());
       for_all(e)
       {
-	L l1 = adj_line(e).first(),
-	  l2 = adj_line(e).second();
-	mln_invariant(l1 != 0 && l2 > l1);
-	E e_ = lca[l1][l2];
+	E e_ = lca.at_(adj_line(e).first(), adj_line(e).second());
 	mln_invariant(is_line(e_));
 	mln_invariant(aa(e_) != 0); // aa is valid at e_.
 
@@ -690,16 +627,6 @@ int main(int argc, char* argv[])
       debug::println("aa | wst(g) line:", (aa | is_edge) | is_line);
 
       // Second, processing the 0D-faces (points) of the watershed line.
-
-      data::paste(morpho::dilation(extend(aa_line | (pw::value(aa_line) == pw::cst(0)),
-					  aa_line),
-				   c4().win()),
-		  aa_line);
-
-      /*
-
-	// Version with "aa(x) = 0" to separate sheds (a shed =
-	// adjacency between a couple of basins).
 
       mln_piter_(aa_line_t) pxl(aa_line.domain());
       mln_niter_(neighb2d) ne(c4(), pxl); // FIXME: "pxl -> nbhoring edges" is explictly c4()...
@@ -725,8 +652,6 @@ int main(int argc, char* argv[])
 	    aa(pxl) = na;
 	  }
       }
-      */
-
 
     }
 

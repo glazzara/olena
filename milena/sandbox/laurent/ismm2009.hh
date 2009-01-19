@@ -48,6 +48,12 @@ namespace mln
   {
     return p.row() % 2 && p.col() % 2;
   }
+
+  inline
+  bool is_not_point(const point2d& p)
+  {
+    return ! is_point(p);
+  }
   
 
   // Neighborhoods.
@@ -268,19 +274,6 @@ namespace mln
   }
 
 
-  // Find root.
-
-  template <typename L>
-  inline
-  L find_root(std::vector<L>& par, L l)
-  {
-    if (par[l] == l)
-      return l;
-    else
-      return par[l] = find_root(par, par[l]);
-  }
-
-
 
   // Display.
 
@@ -334,13 +327,13 @@ namespace mln
     mln_VAR( wst_g,
 	     morpho::meyer_wst(g, e2e, n_basins) );
 
-    // Test the consistency with regional minima.
-    {
-      L n_regmins;
-      mln_VAR( regmin_g,
-	       labeling::regional_minima(g, e2e, n_regmins) );
-      mln_invariant(n_basins == n_regmins);
-    }
+//     // Test the consistency with regional minima.
+//     {
+//       L n_regmins;
+//       mln_VAR( regmin_g,
+// 	       labeling::regional_minima(g, e2e, n_regmins) );
+//       mln_invariant(n_basins == n_regmins);
+//     }
 
     return wst_g;
   }
