@@ -1,3 +1,23 @@
+2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Remove images from repository.
+
+	* scribo/00000002-neg.pbm,
+	* scribo/00000002.pbm,
+	* scribo/10_00000002.pbm_text2cell.ppm,
+	* scribo/11_00000002.pbm_out.ppm,
+	* scribo/1_00000002.pbm_vertical-erosion.pbm,
+	* scribo/2_00000002.pbm_horizontal-erosion.pbm,
+	* scribo/3_00000002.pbm_vertical-and-horizontal-erosion.ppm,
+	* scribo/4_00000002.pbm_after-alignment.ppm,
+	* scribo/5_00000002.pbm_table.ppm,
+	* scribo/6_00000002.pbm_lbl-small-comps-removed.pgm,
+	* scribo/7_00000002.pbm_character-bboxes.ppm,
+	* scribo/8_00000002.pbm_lbl-grouped-boxes.pgm,
+	* scribo/9_00000002.pbm_cells-labels.ppm,
+	* scribo/facture-neg.pbm,
+	* scribo/facture2-neg.pbm: delete. Should not be there.
+
 2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update Laurent's ISMM code.
