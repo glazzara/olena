@@ -1,3 +1,17 @@
+2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add implementation of Fibonacci heap.
+
+	* headers.mk: add a new header to distribution.
+	
+	* mln/util/fibonacci_heap.hh: new file. The implementation.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_util_fibonacci_heap.cc: new unit test.
+
+	* tests/util/Makefile.am,
+	* tests/util/fibonacci_heap.cc: new test.
+
 2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup extension with image, forcing it to be const.

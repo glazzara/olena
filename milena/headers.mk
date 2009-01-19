@@ -62,6 +62,7 @@ mln/registration/registration.hh \
 mln/registration/essential.hh \
 mln/registration/icp.hh \
 mln/util/graph.hh \
+mln/util/fibonacci_heap.hh \
 mln/util/max.hh \
 mln/util/lazy_set.hh \
 mln/util/soft_heap.hh \
