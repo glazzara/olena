@@ -68,7 +68,7 @@ namespace mln
       | Fibonacci Heap node Class |
       `--------------------------*/
 
-      template <typename T>
+      template <typename P, typename T>
       class fibonacci_heap_node
       {
 
@@ -77,17 +77,19 @@ namespace mln
 	fibonacci_heap_node();
 
 	/// Construct a new node with \p value as value.
-	fibonacci_heap_node(const T& value);
+	fibonacci_heap_node(const P& priority, const T& value);
 
 	~fibonacci_heap_node();
 
 	/// Return the node value.
 	const T& value() const;
 
-	fibonacci_heap_node<T> *left() const;
-	fibonacci_heap_node<T> *right() const;
-	fibonacci_heap_node<T> *parent() const;
-	fibonacci_heap_node<T> *child() const;
+	const P& priority() const;
+
+	fibonacci_heap_node<P,T> *left() const;
+	fibonacci_heap_node<P,T> *right() const;
+	fibonacci_heap_node<P,T> *parent() const;
+	fibonacci_heap_node<P,T> *child() const;
 
 	short degree() const;
 
@@ -95,30 +97,29 @@ namespace mln
 
 
 	void set_value(const T&);
-	void set_left(fibonacci_heap_node<T> *node);
-	void set_right(fibonacci_heap_node<T> *node);
-	void set_parent(fibonacci_heap_node<T> *node);
-	void set_child(fibonacci_heap_node<T> *node);
+	void set_left(fibonacci_heap_node<P,T> *node);
+	void set_right(fibonacci_heap_node<P,T> *node);
+	void set_parent(fibonacci_heap_node<P,T> *node);
+	void set_child(fibonacci_heap_node<P,T> *node);
 	void set_degree(short degree);
 	void set_mark(short mark);
 
-	void operator=(const T& val);
+	void operator=(fibonacci_heap_node<P,T>& rhs);
+	bool operator==(fibonacci_heap_node<P,T>& rhs);
+	bool operator<(fibonacci_heap_node<P,T>& rhs);
 
-	void operator=(fibonacci_heap_node<T>& rhs);
-	int  operator==(fibonacci_heap_node<T>& rhs);
-	int  operator<(fibonacci_heap_node<T>& rhs);
-
-	void print_();
+	void print_() const;
 
 
       private:
 
-	fibonacci_heap_node<T> *left_;
-	fibonacci_heap_node<T> *right_;
-	fibonacci_heap_node<T> *parent_;
-	fibonacci_heap_node<T> *child_;
+	fibonacci_heap_node<P,T> *left_;
+	fibonacci_heap_node<P,T> *right_;
+	fibonacci_heap_node<P,T> *parent_;
+	fibonacci_heap_node<P,T> *child_;
 	short degree_;
 	short mark_;
+	P priority_;
 	T value_;
       };
 
@@ -130,23 +131,30 @@ namespace mln
     | Fibonacci Heap Class |
     `---------------------*/
 
-    template <typename T>
-    class fibonacci_heap : public Object< fibonacci_heap<T> >
+    template <typename P, typename T>
+    class fibonacci_heap : public Object< fibonacci_heap<P,T> >
     {
     public:
 
+      typedef T element;
+
       /// Default constructor
       fibonacci_heap();
+
+      /// Copy constructor
+      /// Be ware that once this heap is constructed, the argument \p node
+      /// is cleared and all its elements are part of this new heap.
+      fibonacci_heap(const fibonacci_heap<P,T>& node);
 
       ~fibonacci_heap();
 
       /// Push a new element in the heap.
       /// \sa insert
-      void push(const T& value);
+      void push(const P& priority, const T& value);
 
       /// Take \p other_heap's elements and insert them in this heap.
       /// After this call \p other_heap is cleared.
-      void push(fibonacci_heap<T>& other_heap);
+      void push(fibonacci_heap<P,T>& other_heap);
 
       /// Return the minimum value in the heap.
       const T& front() const;
@@ -166,10 +174,17 @@ namespace mln
       /// Clear all elements in the heap and make the heap empty.
       void clear();
 
+      /// Assignment operator.
+      /// Be ware that this operator do *not* copy the data from \p rhs to this heap.
+      /// It moves all elements which means that afterwards, \p rhs is
+      /// is cleared and all its elements are part of this new heap.
+      fibonacci_heap<P,T>& operator=(fibonacci_heap<P,T>& rhs);
 
-      void print_(internal::fibonacci_heap_node<T> *tree   = 0,
-		  internal::fibonacci_heap_node<T> *parent = 0);
 
+
+      std::ostream& print_(std::ostream& cout,
+			   internal::fibonacci_heap_node<P,T> *tree   = 0,
+			   internal::fibonacci_heap_node<P,T> *parent = 0) const;
 
     private:
 
@@ -180,20 +195,21 @@ namespace mln
       /// FIXME: cannot use that function efficiently except by passing the
       /// node pointer. Any idea?
       /// FIXME: may be part of the public interface.
-      int decrease_key(internal::fibonacci_heap_node<T> *node,
-		       internal::fibonacci_heap_node<T>& key);
+      int decrease_key(internal::fibonacci_heap_node<P,T> *node,
+		       internal::fibonacci_heap_node<P,T>& key);
 
       /// Remove node \p node from the child list of its parent node.
       /// FIXME: cannot use that function efficiently except by passing the
       /// node pointer. Any idea?
       /// FIXME: may be part of the public interface.
-      int remove(internal::fibonacci_heap_node<T> *node);
+      int remove(internal::fibonacci_heap_node<P,T> *node);
 
       /// Insert a new node \p node in the heap.
-      void insert(internal::fibonacci_heap_node<T> *node);
+      void insert(internal::fibonacci_heap_node<P,T> *node);
 
-      void exchange(internal::fibonacci_heap_node<T>*&,
-		    internal::fibonacci_heap_node<T>*&);
+      /// Swap the two given nodes.
+      void exchange(internal::fibonacci_heap_node<P,T>*& lhs,
+		    internal::fibonacci_heap_node<P,T>*& rhs);
 
       /// Internal function that reorganizes heap as part of an pop_front().
       /// We must find new minimum in heap, which could be anywhere along the
@@ -214,14 +230,14 @@ namespace mln
 
       /// The node \p lhs is removed from the root list and becomes a subtree
       /// of node \p rhs.
-      void link(internal::fibonacci_heap_node<T> *lhs,
-		internal::fibonacci_heap_node<T> *rhs);
+      void link(internal::fibonacci_heap_node<P,T> *lhs,
+		internal::fibonacci_heap_node<P,T> *rhs);
 
-      void add_to_root_list(internal::fibonacci_heap_node<T> *);
+      void add_to_root_list(internal::fibonacci_heap_node<P,T> *);
 
       /// Remove node \p lhs from the child list of its parent node \p rhs.
-      void cut(internal::fibonacci_heap_node<T> *lhs,
-	       internal::fibonacci_heap_node<T> *rhs);
+      void cut(internal::fibonacci_heap_node<P,T> *lhs,
+	       internal::fibonacci_heap_node<P,T> *rhs);
 
       /// Cuts each node in parent list, putting successive ancestor nodes on
       /// the root list until we either arrive at the root list or until we
@@ -230,17 +246,24 @@ namespace mln
       /// been lost; if a second subtree is lost later during another
       /// cascading cut, then we move the node to the root list so that it
       /// can be re-balanced on the next consolidate.
-      void cascading_cut(internal::fibonacci_heap_node<T> *);
+      void cascading_cut(internal::fibonacci_heap_node<P,T> *);
 
       /// Clear the heap but do *NOT* delete elements.
-      void soft_clear();
+      void soft_clear_();
 
-      internal::fibonacci_heap_node<T> *min_root;
-      long num_nodes;
-      long num_trees;
-      long num_marked_nodes;
+      /// FIXME: ugly but we need to be able to soft_clear() the heap in the
+      /// copy constructor... Any idea how to do without that?
+      mutable internal::fibonacci_heap_node<P,T> *min_root;
+      mutable long num_nodes;
+      mutable long num_trees;
+      mutable long num_marked_nodes;
 
     };
+
+
+    template <typename P, typename T>
+    std::ostream&
+    operator<<(std::ostream& cout, const fibonacci_heap<P,T>& heap);
 
 
 
@@ -251,202 +274,206 @@ namespace mln
     {
 
 
-      /*---------------\
+      /*--------------------\
       | fibonacci_heap_node |
-      `---------------*/
+      `--------------------*/
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T>::fibonacci_heap_node()
+      fibonacci_heap_node<P,T>::fibonacci_heap_node()
 	: left_(0), right_(0), parent_(0), child_(0),
-	  degree_(0), mark_(0)
+	  degree_(0), mark_(0), priority_(0)
+      // FIXME: don't we want to initialize priority with literal::zero?
       {
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T>::fibonacci_heap_node(const T& new_value)
+      fibonacci_heap_node<P,T>::fibonacci_heap_node(const P& priority,
+						    const T& new_value)
         : left_(0), right_(0), parent_(0), child_(0),
-	  degree_(0), mark_(0), value_(new_value)
+	  degree_(0), mark_(0), priority_(priority), value_(new_value)
       {
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T>::~fibonacci_heap_node()
+      fibonacci_heap_node<P,T>::~fibonacci_heap_node()
       {
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       const T&
-      fibonacci_heap_node<T>::value() const
+      fibonacci_heap_node<P,T>::value() const
       {
         return value_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T> *
-      fibonacci_heap_node<T>::left() const
+      const P&
+      fibonacci_heap_node<P,T>::priority() const
+      {
+	return priority_;
+      }
+
+
+      template <typename P, typename T>
+      inline
+      fibonacci_heap_node<P,T> *
+      fibonacci_heap_node<P,T>::left() const
       {
         return left_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T> *
-      fibonacci_heap_node<T>::right() const
+      fibonacci_heap_node<P,T> *
+      fibonacci_heap_node<P,T>::right() const
       {
         return right_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T> *
-      fibonacci_heap_node<T>::parent() const
+      fibonacci_heap_node<P,T> *
+      fibonacci_heap_node<P,T>::parent() const
       {
 	return parent_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      fibonacci_heap_node<T> *
-      fibonacci_heap_node<T>::child() const
+      fibonacci_heap_node<P,T> *
+      fibonacci_heap_node<P,T>::child() const
       {
 	return child_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       short
-      fibonacci_heap_node<T>::degree() const
+      fibonacci_heap_node<P,T>::degree() const
       {
 	return degree_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       short
-      fibonacci_heap_node<T>::mark() const
+      fibonacci_heap_node<P,T>::mark() const
       {
 	return mark_;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_value(const T& value)
+      fibonacci_heap_node<P,T>::set_value(const T& value)
       {
 	value_ = value;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_left(fibonacci_heap_node<T> *node)
+      fibonacci_heap_node<P,T>::set_left(fibonacci_heap_node<P,T> *node)
       {
 	left_ = node;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_right(fibonacci_heap_node<T> *node)
+      fibonacci_heap_node<P,T>::set_right(fibonacci_heap_node<P,T> *node)
       {
 	right_ = node;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_parent(fibonacci_heap_node<T> *node)
+      fibonacci_heap_node<P,T>::set_parent(fibonacci_heap_node<P,T> *node)
       {
 	parent_ = node;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_child(fibonacci_heap_node<T> *node)
+      fibonacci_heap_node<P,T>::set_child(fibonacci_heap_node<P,T> *node)
       {
 	child_ = node;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_degree(short degree)
+      fibonacci_heap_node<P,T>::set_degree(short degree)
       {
 	degree_ = degree;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
       void
-      fibonacci_heap_node<T>::set_mark(short mark)
+      fibonacci_heap_node<P,T>::set_mark(short mark)
       {
 	mark_ = mark;
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      void
-      fibonacci_heap_node<T>::operator=(const T& value)
+      void fibonacci_heap_node<P,T>::operator=(fibonacci_heap_node<P,T>& rhs)
       {
-	value_ = value;
-      }
-
-
-      template <typename T>
-      inline
-      void fibonacci_heap_node<T>::operator=(fibonacci_heap_node<T>& rhs)
-      {
+	priority_ = rhs.priority();
 	value_ = rhs.value();
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      int
-      fibonacci_heap_node<T>::operator==(fibonacci_heap_node<T>& rhs)
+      bool
+      fibonacci_heap_node<P,T>::operator==(fibonacci_heap_node<P,T>& rhs)
       {
-	return value_ == rhs.value() ? 1 : 0;
+	return priority_ == rhs.priority() && value_ == rhs.value();
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      int
-      fibonacci_heap_node<T>::operator<(fibonacci_heap_node<T>& rhs)
+      bool
+      fibonacci_heap_node<P,T>::operator<(fibonacci_heap_node<P,T>& rhs)
       {
-	return util::ord_strict(value_, rhs.value()) ? 1 : 0;
+	return util::ord_strict(priority_, rhs.priority())
+	    || (priority_ == rhs.priority() && util::ord_strict(value_, rhs.value()));
       }
 
 
-      template <typename T>
+      template <typename P, typename T>
       inline
-      void fibonacci_heap_node<T>::print_()
+      void fibonacci_heap_node<P,T>::print_() const
       {
-	std::cout << value_;
+	std::cout << value_ << " (" << priority_ << ")";
       }
 
 
@@ -454,53 +481,69 @@ namespace mln
 
 
 
-    /*----------\
+    /*---------------\
     | fibonacci_heap |
-    `----------*/
+    `---------------*/
 
-    template <typename T>
+    template <typename P, typename T>
     inline
-    fibonacci_heap<T>::fibonacci_heap()
+    fibonacci_heap<P,T>::fibonacci_heap()
     {
-      min_root = 0;
-      num_nodes = 0;
-      num_trees = 0;
-      num_marked_nodes = 0;
+      soft_clear_();
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
-    fibonacci_heap<T>::~fibonacci_heap()
+    fibonacci_heap<P,T>::fibonacci_heap(const fibonacci_heap<P,T>& rhs)
+      : Object< fibonacci_heap<P,T> >()
+    {
+      min_root = rhs.min_root;
+      num_nodes = rhs.num_nodes;
+      num_trees = rhs.num_trees;
+      num_marked_nodes = rhs.num_marked_nodes;
+
+//    rhs is const, we cannot call that method.
+//    rhs.soft_clear_();
+      rhs.min_root  = 0;
+      rhs.num_nodes = 0;
+      rhs.num_trees = 0;
+      rhs.num_marked_nodes = 0;
+    }
+
+
+    template <typename P, typename T>
+    inline
+    fibonacci_heap<P,T>::~fibonacci_heap()
     {
       clear();
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::push(const T& value)
+    fibonacci_heap<P,T>::push(const P& priority, const T& value)
     {
-      typedef internal::fibonacci_heap_node<T> node_t;
-      node_t *new_node = new node_t(value);
+      typedef internal::fibonacci_heap_node<P,T> node_t;
+      node_t *new_node = new node_t(priority, value);
 
       insert(new_node);
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::push(fibonacci_heap<T>& other_heap)
+    fibonacci_heap<P,T>::push(fibonacci_heap<P,T>& other_heap)
     {
-      internal::fibonacci_heap_node<T> *min1, *min2, *next1, *next2;
-
-      if (other_heap.is_empty())
+      if (other_heap.is_empty() || &other_heap == this)
 	return;
 
       if (min_root != 0)
       {
+	internal::fibonacci_heap_node<P,T> *min1, *min2, *next1, *next2;
+
 	// We join the two circular lists by cutting each list between its
 	// min node and the node after the min.  This code just pulls those
 	// nodes into temporary variables so we don't get lost as changes
@@ -522,7 +565,8 @@ namespace mln
 	// Choose the new minimum for the heap
 	if (*min2 < *min1)
 	  min_root = min2;
-      } else
+      }
+      else
 	min_root = other_heap.min_root;
 
       // Set the amortized analysis statistics and size of the new heap
@@ -531,32 +575,31 @@ namespace mln
       num_trees += other_heap.num_trees;
 
       // Complete the union by setting the other heap to emptiness
-      other_heap.min_root  = 0;
-      other_heap.num_nodes = 0;
-      other_heap.num_trees = 0;
-      other_heap.num_marked_nodes = 0;
+      other_heap.soft_clear_();
+
+      mln_postcondition(other_heap.is_empty());
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     const T&
-    fibonacci_heap<T>::front() const
+    fibonacci_heap<P,T>::front() const
     {
       return min_root->value();
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     T
-    fibonacci_heap<T>::pop_front()
+    fibonacci_heap<P,T>::pop_front()
     {
       mln_precondition(is_valid());
       mln_precondition(!is_empty());
 
-      internal::fibonacci_heap_node<T> *result = min_root;
-      fibonacci_heap<T> *child_heap = 0;
+      internal::fibonacci_heap_node<P,T> *result = min_root;
+      fibonacci_heap<P,T> *child_heap = 0;
 
       // Remove minimum node and set min_root to next node
       min_root = result->right();
@@ -565,7 +608,7 @@ namespace mln
       result->set_left(0);
       result->set_right(0);
 
-      num_nodes --;
+      --num_nodes;
       if (result->mark())
       {
 	--num_marked_nodes;
@@ -592,7 +635,7 @@ namespace mln
       // root list of this heap.
       else
       {
-	child_heap = new fibonacci_heap<T>();
+	child_heap = new fibonacci_heap<P,T>();
 	child_heap->min_root = result->child();
       }
 
@@ -623,13 +666,13 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     int
-    fibonacci_heap<T>::decrease_key(internal::fibonacci_heap_node<T> *node,
-				    internal::fibonacci_heap_node<T>& key)
+    fibonacci_heap<P,T>::decrease_key(internal::fibonacci_heap_node<P,T> *node,
+				      internal::fibonacci_heap_node<P,T>& key)
     {
-      internal::fibonacci_heap_node<T> *parent;
+      internal::fibonacci_heap_node<P,T> *parent;
 
       if (node == 0 || *node < key)
 	return -1;
@@ -650,12 +693,12 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     int
-    fibonacci_heap<T>::remove(internal::fibonacci_heap_node<T> *node)
+    fibonacci_heap<P,T>::remove(internal::fibonacci_heap_node<P,T> *node)
     {
-      internal::fibonacci_heap_node<T> temp;
+      internal::fibonacci_heap_node<P,T> temp;
       int result;
 
       if (node == 0)
@@ -674,46 +717,38 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     bool
-    fibonacci_heap<T>::is_empty() const
+    fibonacci_heap<P,T>::is_empty() const
     {
       return min_root == 0;
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     bool
-    fibonacci_heap<T>::is_valid() const
+    fibonacci_heap<P,T>::is_valid() const
     {
       return min_root != 0;
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::clear()
+    fibonacci_heap<P,T>::clear()
     {
-      internal::fibonacci_heap_node<T> *temp;
-
-      for (int i = 0; i < num_nodes; ++i)
-      {
-	temp = min_root->right();
-	delete min_root;
-	min_root = temp;
-      }
-
-      soft_clear();
+      while (min_root != 0)
+	pop_front();
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::soft_clear()
+    fibonacci_heap<P,T>::soft_clear_()
     {
       min_root  = 0;
       num_nodes = 0;
@@ -722,22 +757,39 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     unsigned
-    fibonacci_heap<T>::nelements() const
+    fibonacci_heap<P,T>::nelements() const
     {
       return num_nodes;
     };
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
-    void
-    fibonacci_heap<T>::print_(internal::fibonacci_heap_node<T> *tree,
-			      internal::fibonacci_heap_node<T> *parent)
+    fibonacci_heap<P,T>&
+    fibonacci_heap<P,T>::operator=(fibonacci_heap<P,T>& rhs)
     {
-      internal::fibonacci_heap_node<T>* temp = 0;
+      if (&rhs != this)
+      {
+        min_root = rhs.min_root;
+        num_nodes = rhs.num_nodes;
+        num_trees = rhs.num_trees;
+	num_marked_nodes = rhs.num_marked_nodes;
+	rhs.soft_clear_();
+      }
+      return *this;
+    }
+
+
+    template <typename P, typename T>
+    std::ostream&
+    fibonacci_heap<P,T>::print_(std::ostream& cout,
+				internal::fibonacci_heap_node<P,T> *tree,
+				internal::fibonacci_heap_node<P,T> *parent) const
+    {
+      internal::fibonacci_heap_node<P,T>* temp = 0;
 
       if (tree == 0)
 	tree = min_root;
@@ -747,51 +799,51 @@ namespace mln
       {
 	do {
 	  if (temp->left() == 0)
-	    std::cout << "(left is 0)";
+	    cout << "(left is 0)";
 	  temp->print_();
 	  if (temp->parent() != parent)
-	    std::cout << "(parent is incorrect)";
+	    cout << "(parent is incorrect)";
 	  if (temp->right() == 0)
-	    std::cout << "(right is 0)";
+	    cout << "(right is 0)";
 	  else if (temp->right()->left() != temp)
-	    std::cout << "(Error in left link left) ->";
+	    cout << "(Error in left link left) ->";
 	  else
-	    std::cout << " <-> ";
+	    cout << " <-> ";
 
 	  temp = temp->right();
 
 	} while (temp != 0 && temp != tree);
       }
       else
-	std::cout << "  <empty>" << std::endl;
-      std::cout << std::endl;
+	cout << "  <empty>" << std::endl;
+      cout << std::endl;
 
       temp = tree;
       if (temp != 0)
       {
 	do {
-	  std::cout << "children of ";
-	  temp->print_();
-	  std::cout << ": ";
+	  cout << "children of " << temp->value() << ": ";
 	  if (temp->child() == 0)
-	    std::cout << "NONE" << std::endl;
-	  else print_(temp->child(), temp);
+	    cout << "NONE" << std::endl;
+	  else print_(cout, temp->child(), temp);
 	  temp = temp->right();
 	} while (temp!=0 && temp != tree);
       }
+
+      return cout;
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
-    void fibonacci_heap<T>::consolidate()
+    void fibonacci_heap<P,T>::consolidate()
     {
-      internal::fibonacci_heap_node<T> *x, *y, *w;
-      internal::fibonacci_heap_node<T> *a[1 + 8 * sizeof (long)]; // 1+lg(n)
+      internal::fibonacci_heap_node<P,T> *x, *y, *w;
+      internal::fibonacci_heap_node<P,T> *a[1 + 8 * sizeof (long)]; // 1+lg(n)
       short dn = 1 + 8 * sizeof (long);
 
       // Initialize the consolidation detection array
-      for (int i = 0; i < dn; i++)
+      for (int i = 0; i < dn; ++i)
 	a[i] = 0;
 
       // We need to loop through all elements on root list.
@@ -822,7 +874,7 @@ namespace mln
 	  if (w == y) w = y->right();
 	  link(y, x);
 	  a[d] = 0;
-	  d++;
+	  ++d;
 	}
 	a[d] = x;
 
@@ -833,24 +885,24 @@ namespace mln
       // count the number of subtrees.
       min_root = 0;
       num_trees = 0;
-      for (int i = 0; i < dn; i++)
+      for (int i = 0; i < dn; ++i)
 	if (a[i] != 0)
 	  add_to_root_list(a[i]);
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::link(internal::fibonacci_heap_node<T> *y,
-			    internal::fibonacci_heap_node<T> *x)
+    fibonacci_heap<P,T>::link(internal::fibonacci_heap_node<P,T> *y,
+			      internal::fibonacci_heap_node<P,T> *x)
     {
       // Remove node y from root list
       if (y->right() != 0)
 	y->right()->set_left(y->left());
       if (y->left() != 0)
 	y->left()->set_right(y->right());
-      num_trees--;
+      --num_trees;
 
       // Make node y a singleton circular list with a parent of x
       y->set_left(y);
@@ -874,37 +926,38 @@ namespace mln
       x->set_degree(x->degree() + 1);
 
       // node y has just been made a child, so clear its mark
-      if (y->mark()) num_marked_nodes--;
+      if (y->mark())
+	--num_marked_nodes;
       y->set_mark(0);
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::add_to_root_list(internal::fibonacci_heap_node<T> *x)
+    fibonacci_heap<P,T>::add_to_root_list(internal::fibonacci_heap_node<P,T> *x)
     {
       if (x->mark())
 	--num_marked_nodes;
       x->set_mark(0);
 
-      num_nodes--;
+      --num_nodes;
       insert(x);
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::cut(internal::fibonacci_heap_node<T> *x,
-			   internal::fibonacci_heap_node<T> *y)
+    fibonacci_heap<P,T>::cut(internal::fibonacci_heap_node<P,T> *x,
+			   internal::fibonacci_heap_node<P,T> *y)
     {
       if (y->child() == x)
 	y->child() = x->right();
       if (y->child() == x)
 	y->child() = 0;
 
-      y->degree --;
+      y->set_degree(y->degree() - 1);
 
       x->left()->right() = x->right();
       x->right()->left() = x->left();
@@ -913,19 +966,19 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::cascading_cut(internal::fibonacci_heap_node<T> *y)
+    fibonacci_heap<P,T>::cascading_cut(internal::fibonacci_heap_node<P,T> *y)
     {
-      internal::fibonacci_heap_node<T> *z = y->parent();
+      internal::fibonacci_heap_node<P,T> *z = y->parent();
 
       while (z != 0)
       {
 	if (y->mark() == 0)
 	{
 	  y->mark() = 1;
-	  num_marked_nodes++;
+	  ++num_marked_nodes;
 	  z = 0;
 	}
 	else
@@ -938,10 +991,10 @@ namespace mln
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
     void
-    fibonacci_heap<T>::insert(internal::fibonacci_heap_node<T> *node)
+    fibonacci_heap<P,T>::insert(internal::fibonacci_heap_node<P,T> *node)
     {
       if (node == 0)
 	return;
@@ -972,22 +1025,31 @@ namespace mln
       }
 
       // We have one more node in the heap, and it is a tree on the root list
-      num_nodes++;
-      num_trees++;
+      ++num_nodes;
+      ++num_trees;
       node->set_parent(0);
     }
 
 
-    template <typename T>
+    template <typename P, typename T>
     inline
-    void fibonacci_heap<T>::exchange(internal::fibonacci_heap_node<T>*& n1,
-				     internal::fibonacci_heap_node<T>*& n2)
+    void
+    fibonacci_heap<P,T>::exchange(internal::fibonacci_heap_node<P,T>*& n1,
+				  internal::fibonacci_heap_node<P,T>*& n2)
     {
-      internal::fibonacci_heap_node<T> *temp;
+      internal::fibonacci_heap_node<P,T> *temp;
 
       temp = n1;
       n1 = n2;
       n2 = temp;
+    }
+
+
+    template <typename P, typename T>
+    std::ostream&
+    operator<<(std::ostream& cout, const fibonacci_heap<P,T>& heap)
+    {
+      return heap.print_(cout);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

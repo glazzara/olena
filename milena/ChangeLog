@@ -1,3 +1,13 @@
+2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix a double free in fibonacci heap and add support for priority.
+
+	* mln/util/fibonacci_heap.hh: Fix the destructor and add an attribute
+	"priority" to the heap nodes. The fibonacci heap now behaves like a
+	priority queue.
+
+	* tests/util/fibonacci_heap.cc: add more tests.
+
 2009-01-19  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Rename histo::data as histo::array.
