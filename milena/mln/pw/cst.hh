@@ -39,6 +39,40 @@
 namespace mln
 {
 
+  // Forward declaration
+  namespace pw
+  {
+
+    template <typename T>
+    struct cst_;
+
+    template <typename T>
+    cst_<T> cst(const T& t);
+
+  } // end of namespace mln::pw
+
+
+  namespace trait
+  {
+
+    template <typename F, typename S>
+    struct set_binary_< op::eq,  mln::Function_v2v, F,  mln::value::Scalar, S >
+    {
+      typedef mln_trait_op_eq(F, pw::cst_<mln_value_equiv(S)>) ret;
+    };
+
+  } // end of namespace mln::trait
+
+
+  template <typename F, typename S>
+  mln_trait_op_eq(F,S)
+    operator == (const Function_v2v<F>& fun, const value::Scalar<S>& s)
+  {
+    return exact(fun) == pw::cst( value::equiv(s) );
+  }
+
+
+
   namespace pw
   {
 

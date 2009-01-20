@@ -1,5 +1,13 @@
 2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make the use of pw::cst() optional in predicates.
+
+	* mln/pw/cst.hh: add the proper traits.
+
+	* tests/pw/value.cc: add one more test.
+
+2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix a double free in fibonacci heap and add support for priority.
 
 	* mln/util/fibonacci_heap.hh: Fix the destructor and add an attribute

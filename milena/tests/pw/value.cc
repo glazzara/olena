@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,9 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/pw/value.cc
- *
- * \brief Test on mln::pw::value_.
- */
+/// \file tests/pw/value.cc
+///
+/// Test on mln::pw::value_.
 
 #include <mln/core/image/image2d.hh>
 #include <mln/data/fill.hh>
@@ -45,6 +45,7 @@ int main()
   point2d p(1, 1);
   ima(p) = 51;
   mln_assertion( (pw::value(ima) == pw::cst(51))(p) == true );
+  mln_assertion( (pw::value(ima) == 51)(p) == true );
 
 //   {
 //     image2d<float> imaf(3,3);
