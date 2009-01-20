@@ -1,5 +1,22 @@
 2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce debug::quiet.
+
+	* headers.mk: add new header to distribution.
+
+	* mln/debug/all.hh,
+	* mln/debug/essential.hh: include quiet.hh
+
+	* mln/debug/println.hh: use debug::quiet. Println prints nothing if
+	debug::quiet is set to true.
+
+	* mln/debug/quiet.hh: the new global variable.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_debug_quiet.cc: new unit test.
+
+2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Make the use of pw::cst() optional in predicates.
 
 	* mln/pw/cst.hh: add the proper traits.

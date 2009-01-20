@@ -1,5 +1,4 @@
-// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,13 +25,33 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_ESSENTIAL_HH
-# define MLN_DEBUG_ESSENTIAL_HH
+#ifndef MLN_DEBUG_QUIET_HH
+# define MLN_DEBUG_QUIET_HH
 
-/// \file mln/debug/essential.hh
+/// \file mln/debug/quiet.hh
 ///
-/// File that includes essential debug-related routines.
+/// global variable telling whether the debug should be printed or not.
 
-# include <mln/debug/all.hh>
 
-#endif // ! MLN_DEBUG_ESSENTIAL_HH
+namespace mln
+{
+
+  namespace debug
+  {
+
+    extern bool quiet;
+
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    bool quiet = false;
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+  } // end of namespace mln::debug
+
+} // end of namespace mln
+
+#endif // ! MLN_DEBUG_QUIET_HH

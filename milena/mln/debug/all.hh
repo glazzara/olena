@@ -53,6 +53,6 @@ namespace mln
 # include <mln/debug/println.hh>
 # include <mln/debug/println_with_border.hh>
 # include <mln/debug/put_word.hh>
-
+# include <mln/debug/quiet.hh>
 
 #endif // ! MLN_DEBUG_ALL_HH

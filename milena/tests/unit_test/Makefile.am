@@ -983,6 +983,7 @@ mln_debug_println_with_border \
 mln_debug_colorize \
 mln_debug_draw_graph \
 mln_debug_put_word \
+mln_debug_quiet \
 mln_debug_format \
 mln_debug_println \
 mln_debug_essential \
@@ -1998,6 +1999,7 @@ mln_debug_println_with_border_SOURCES = mln_debug_println_with_border.cc
 mln_debug_colorize_SOURCES = mln_debug_colorize.cc
 mln_debug_draw_graph_SOURCES = mln_debug_draw_graph.cc
 mln_debug_put_word_SOURCES = mln_debug_put_word.cc
+mln_debug_quiet_SOURCES = mln_debug_quiet.cc
 mln_debug_format_SOURCES = mln_debug_format.cc
 mln_debug_println_SOURCES = mln_debug_println.cc
 mln_debug_essential_SOURCES = mln_debug_essential.cc

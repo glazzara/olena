@@ -1019,6 +1019,7 @@ mln/debug/println.spe.hh \
 mln/debug/colorize.hh \
 mln/debug/draw_graph.hh \
 mln/debug/put_word.hh \
+mln/debug/quiet.hh \
 mln/debug/println_with_border.spe.hh \
 mln/debug/format.hh \
 mln/debug/println.hh \

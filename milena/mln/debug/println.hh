@@ -38,6 +38,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/geom/bbox.hh>
+# include <mln/debug/quiet.hh>
 # include <mln/debug/format.hh>
 
 // Specializations are in:
@@ -89,16 +90,21 @@ namespace mln
     println(const Image<I>& input)
     {
       trace::entering("debug::println");
-      impl::println(geom::bbox(exact(input).domain()),
-		    exact(input));
+
+      if (!quiet)
+        impl::println(geom::bbox(exact(input).domain()),
+		      exact(input));
       trace::exiting("debug::println");
     }
 
     template <typename I>
     void println(const std::string& msg, const Image<I>& input)
     {
-      std::cout << msg << std::endl;
-      println(input);
+      if (!quiet)
+      {
+        std::cout << msg << std::endl;
+        println(input);
+      }
     }
 
 # endif // ! MLN_INCLUDE_ONLY
