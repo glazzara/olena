@@ -19,6 +19,10 @@
 #include <mln/labeling/compute.hh>
 #include <mln/accu/count.hh>
 
+#include <mln/util/timer.hh>
+#include <mln/util/fibonacci_heap.hh>
+
+
 
 /*
    TO-DO list:
@@ -137,59 +141,11 @@ namespace mln
 	      const std::vector<E>& edge,
 	      const Epar& epar)
   {
-    mln_ch_value(Epar, std::vector<L>) chl_; // Children (known as array).
-    {
-      initialize(chl_, epar);
-      E e;
-      for (L l = 1; l <= l_max; ++l)
-	{
-	  e = edge[l];
-	  do
-	    {
-	      chl_(e).push_back(l);
-	      e = epar(e);
-	    }
-	  while (e != epar(e));
-	  chl_(e).push_back(l);
-	}
-      // e is the root edge.
-      mln_invariant(chl_(e).size() == l_max); // All labels are children.
-    }
+    std::cout << "LCA computing...";
+    std::cout.flush();
 
-    /*
-    // Display children tree.
-    {
-      std::cout << "chl_ tree: " << std::endl;
-      for (L l = 1; l <= l_max; ++l)
-	{
-	  E e_ = edge[l];
-	  std::cout << "l = " << l << "  =>  ";
-	  do
-	    {
-	      std::cout << e_ << " : ";
-	      for (unsigned i = 0; i < chl_(e_).size(); ++i)
-		std::cout << chl_(e_)[i] << ' ';
-	      std::cout << " ->  ";
-	      e_ = epar(e_);
-	    }
-	  while (epar(e_) != e_);
-	  std::cout << e_ << " : ";
-	  for (unsigned i = 0; i < chl_(e_).size(); ++i)
-	    std::cout << chl_(e_)[i] << ' ';
-	  std::cout << std::endl;
-	}
-    }
-    */
-
-    mln_ch_value(Epar, std::set<L>) chl; // Children (as a set).
-    {
-      initialize(chl, epar);
-    
-      mln_piter(Epar) e(chl.domain());
-      for_all(e)
-	if (chl_(e).size() != 0)
-	  chl(e).insert(chl_(e).begin(), chl_(e).end());
-    }
+    mln_ch_value(Epar, std::vector<L>) chl; // Children (known as array).
+    initialize(chl, epar);
 
     unsigned size = l_max.next();
 
@@ -197,19 +153,102 @@ namespace mln
     for (L l = 1; l <= l_max; ++l)
       {
 	lca[l].resize(size);
-
-	// Diagonal.
-	lca[l][l] = edge[l]; // Itself.
-
-	// Superior right.
-	for (L l2 = l.next(); l2 <= l_max; ++l2)
-	  {
-	    E e = edge[l];
-	    while (chl(e).find(l2) == chl(e).end())
-	      e = epar(e);
-	    lca[l][l2] = e;
-	}
+	lca[l][l] = edge[l]; // Diagonal => itself.
       }
+    std::vector<bool> deja_vu(size);
+
+    E e;
+
+    // The 1st label (l = 1) is a special case since
+    // we cannot have lca[1][i] with i < 1!
+    {
+      e = edge[1];
+      do
+	{
+	  chl(e).push_back(1);
+	  e = epar(e);
+	}
+      while (e != epar(e));
+      chl(e).push_back(1);
+    }
+
+
+    for (L l = 2; l <= l_max; ++l)
+      {
+	std::fill(deja_vu.begin(), deja_vu.end(), false);
+	e = edge[l];
+	for (;;)
+	  {
+	    std::vector<L>& chl_e = chl(e);
+	    unsigned n = chl_e.size();
+
+	    // Compute lca[l_][l] with l_ = 1..l-1
+	    for (unsigned i = 0; i < n; ++i)
+	      {
+		if (deja_vu[chl_e[i]])
+		  continue;
+		L l_ = chl_e[i];
+		mln_invariant(l_ < l);
+		lca[l_][l] = e;
+		deja_vu[l_] = true;
+	      }
+
+	    // Update 'chl' with l;
+	    chl(e).push_back(l);
+
+	    if (e == epar(e)) // Root so stop.
+	      break;
+	    e = epar(e); // Otherwise go to parent.
+	  }
+      }
+
+    // e is the root node; we have processed all labels
+    // so they are stored as the children of e:
+    mln_invariant(chl(e).size() == l_max); // All labels are children.
+
+
+//     // Save the LCA into a file.
+//     {
+//     std::ofstream out("lca.txt");
+
+//     for (L l = 1; l <= l_max; ++l)
+//       {
+// 	out << "l = " << l << ": ";
+// 	for (L l2 = l; l2 <= l_max; ++l2)
+// 	  {
+// 	    out << lca[l][l2] << ' ';
+// 	  }
+// 	out << std::endl;
+//       }
+//     out.close();
+
+
+
+//     // Display children tree.
+//     {
+//       std::cout << "chl tree: " << std::endl;
+//       for (L l = 1; l <= l_max; ++l)
+// 	{
+// 	  E e_ = edge[l];
+// 	  std::cout << "l = " << l << "  =>  ";
+// 	  do
+// 	    {
+// 	      std::cout << e_ << " : ";
+// 	      for (unsigned i = 0; i < chl(e_).size(); ++i)
+// 		std::cout << chl(e_)[i] << ' ';
+// 	      std::cout << " ->  ";
+// 	      e_ = epar(e_);
+// 	    }
+// 	  while (epar(e_) != e_);
+// 	  std::cout << e_ << " : ";
+// 	  for (unsigned i = 0; i < chl(e_).size(); ++i)
+// 	    std::cout << chl(e_)[i] << ' ';
+// 	  std::cout << std::endl;
+// 	}
+//     }
+
+
+    std::cout << "done!" << std::endl;
 
     return lca;
   }
@@ -352,6 +391,17 @@ int main(int argc, char* argv[])
   if (argc != 4)
     usage(argv);
 
+  util::timer timer;
+
+
+
+  // Step 1.  From f to wst_g.
+  // ------------------------------------------------------------------------------
+
+
+  timer.start();
+
+
   image2d<int_u8> raw_f;
   io::pgm::load(raw_f, argv[1]);
 
@@ -432,61 +482,15 @@ int main(int argc, char* argv[])
 
 
 
-
-  // Priority queue -> edge.
-
-  typedef p_priority< T, p_queue<E> > Q;
-  util::array<Q> q(n_basins.next());
-
-  {
-    mln_piter_(g_t) e(g.domain());
-    for_all(e)
-      if (wst_g(e) == 0)
-	{
-	  L l1 = wst_g_full(p1_from_e(e)),
-	    l2 = wst_g_full(p2_from_e(e));
-	  if (l1 > l2)
-	    std::swap(l1, l2);
-	  mln_invariant(l1 < l2);
-	  q[l1].push(mln_max(T) - g(e), e);
-	  q[l2].push(mln_max(T) - g(e), e);
-	}
-    // --- for (L l = 1; l <= n_basins; ++l)
-    // ---   std::cout << "q["<< l << "] = " << q[l] << std::endl;
-  }
+  std::cout << "Computing wst(g) from f: " << timer << " s" << std::endl;
 
 
 
 
+  // Step 2.   From wst(g) -> a.
+  // ------------------------------------------------------------------------------
 
-  // To know if an edge is out of a given region (label l), we
-  // maintain the information about region merging using
-  // an union-find structure.
-  std::vector<L> lpar(n_basins.next());
-  make_sets(lpar, n_basins);
-
-
-  // Given a region R with label l and an edge e = (l1, l2) from the
-  // priority queue, we get know if that edge is out of the set of
-  // regions containing l:  we shall have l1r = lr or l2r = lr.
-
-  // Please note that an edge (l1, l2) is internal to a set of regions
-  // if l1r = l2r.
-
-
-  
-  E null = E(0,0);  // Impossible value.
-
-
-  // Information "label l -> edge e".
-
-  std::vector<E> edge(n_basins.next());
-  for (L l = 1; l <= n_basins; ++l)
-    edge[l] = null;
-
-
-
-
+  timer.restart();
 
 
 
@@ -525,15 +529,57 @@ int main(int argc, char* argv[])
     }
 
 
+  std::cout << "Computing region attributes: " << timer << " s" << std::endl;
 
 
-  // Go!
-  // --------------------------------
+
+
+  // Step 3.  wst(g) + a  --->  tree "e->e" + array "l->e" + aa.
+  // ------------------------------------------------------------------------------
+
+
+  timer.restart();
+
+
+
+  // Edges -> Priority queue.
+
+  typedef p_priority< T, p_queue<E> > Q;
+  // typedef util::fibonacci_heap<T, E> Q;
+
+  util::array<Q> q(n_basins.next());
+
+  {
+    mln_piter_(g_t) e(g.domain());
+    for_all(e)
+      if (wst_g(e) == 0)
+	{
+	  L l1 = wst_g_full(p1_from_e(e)),
+	    l2 = wst_g_full(p2_from_e(e));
+	  if (l1 > l2)
+	    std::swap(l1, l2);
+	  mln_invariant(l1 < l2);
+	  q[l1].push(mln_max(T) - g(e), e);
+	  q[l2].push(mln_max(T) - g(e), e);
+	}
+    // --- for (L l = 1; l <= n_basins; ++l)
+    // ---   std::cout << "q["<< l << "] = " << q[l] << std::endl;
+  }
+
+
+  // Information "label l -> edge e".
+
+  E null = E(0,0);  // Impossible value.
+
+  std::vector<E> edge(n_basins.next());
+  for (L l = 1; l <= n_basins; ++l)
+    edge[l] = null;
 
 
   mln_ch_value_(g_line_t, E)
     epar,   // Edge forest.
     z_epar; // Auxiliary data: edge forest with compression and balancing.
+
   {
     initialize(epar, g_line);
     initialize(z_epar, g_line);
@@ -547,6 +593,20 @@ int main(int argc, char* argv[])
     if (echo)
       debug::println("all edges:", epar); // epar(e) == e so we depict the edges!
   }
+
+
+  // To know if an edge is out of a given region (label l), we
+  // maintain the information about region merging using
+  // an union-find structure.
+  std::vector<L> lpar(n_basins.next());
+  make_sets(lpar, n_basins);
+
+  // Given a region R with label l and an edge e = (l1, l2) from the
+  // priority queue, we get know if that edge is out of the set of
+  // regions containing l:  we shall have l1r = lr or l2r = lr.
+
+  // Please note that an edge (l1, l2) is internal to a set of regions
+  // if l1r = l2r.
 
 
 
@@ -607,8 +667,13 @@ int main(int argc, char* argv[])
 	std::cout << "q[l2r] = " << q[l2r] << std::endl;
 	*/
 
-	q[l2r].insert(q[l1r]);
-	q[l1r].clear();
+
+	q[l2r].insert(q[l1r]);  // With p_priority<Q>.
+	q[l1r].clear();         //
+
+	// q[l2r].push(q[l1r]); // With Fib-Heap.
+
+
 
 	/*
 	std::cout << "q[l2r] = " << q[l2r] << std::endl
@@ -699,8 +764,23 @@ int main(int argc, char* argv[])
 
 
 
-  // About the "edge tree" and attributes.
+  std::cout << "Computing tree (loop over regions): " << timer << " s" << std::endl;
 
+
+
+
+  // Step 4.  Final.
+  // ------------------------------------------------------------------------------
+
+
+  timer.restart();
+
+
+
+# ifndef NDEBUG
+
+  // About the "edge tree" and attributes.
+ 
   {
     // Region l -> edge e.
     p_set<E> leaves;
@@ -783,13 +863,15 @@ int main(int argc, char* argv[])
      }
   }
 
-
   // Reminders:
   if (echo)
     {
       debug::println("wst(g) fully valuated:", wst_g_full);
       debug::println("g_line:", g_line);
     }
+
+# endif // ndef NDEBUG
+
 
 
 
@@ -809,6 +891,7 @@ int main(int argc, char* argv[])
       // First, processing the 1D-faces (edges) of the watershed line.
 
       std::vector< std::vector<E> > lca;
+
       lca = compute_lca(n_basins, edge, epar); // lca is auxiliary data.
 
       mln_piter_(g_line_t) e(g_line.domain());
@@ -896,6 +979,9 @@ int main(int argc, char* argv[])
 
   if (echo)
     debug::println("aa:", aa);
+
+
+  std::cout << "Final: " << timer << " s" << std::endl;
 
 
 

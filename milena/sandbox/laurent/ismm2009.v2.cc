@@ -19,6 +19,8 @@
 #include <mln/labeling/compute.hh>
 #include <mln/accu/count.hh>
 
+#include <mln/util/timer.hh>
+
 
 /*
    TO-DO list:
@@ -561,6 +563,9 @@ int main(int argc, char* argv[])
   // The last iteration (i == n_basins) is useless: all regions have
   // already merged.
 
+  util::timer timer;
+  timer.start();
+
   for (unsigned i = 1; i < n_basins; ++i)
     {
       L l = v[i].second; // Region label.
@@ -697,6 +702,7 @@ int main(int argc, char* argv[])
 
     } // end of "for every region with increasing attribute"
 
+  std::cout << "loop over regions: " << timer << " s" << std::endl;
 
 
   // About the "edge tree" and attributes.

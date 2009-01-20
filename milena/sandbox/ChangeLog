@@ -1,5 +1,12 @@
 2009-01-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Improve LCA in Laurent's code.
+
+	* laurent/ismm2009.cc: Improve LCA.
+	* laurent/ismm2009.v2.cc: Add a timer.
+
+2009-01-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Augment Laurent's ISMM code.
 
 	* laurent/playing_with_attributes.cc: Augment.
