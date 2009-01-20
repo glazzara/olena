@@ -1,3 +1,12 @@
+2009-01-20  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Augment Laurent's ISMM code.
+
+	* laurent/playing_with_attributes.cc: Augment.
+	* laurent/ismm2009.cc: Memorize as...
+	* laurent/ismm2009.v2.cc: ...this new file.
+	* laurent/ismm2009.cc: Augment.
+
 2009-01-19  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Augment code for Laurent.
