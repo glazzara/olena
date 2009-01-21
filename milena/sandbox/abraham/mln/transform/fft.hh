@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -442,7 +442,7 @@ namespace mln {
 	    }
 	for (unsigned row = 0; row < this->trans_im.nrows(); ++row)
 	  for (unsigned col = this->trans_im.ncols() - 1; col > this->trans_im.ncols() / 2; --col)
-	    at(this->trans_im, row, col) = opt::at(this->trans_im, this->trans_im.nrows() - row - 1,
+	    opt::at(this->trans_im, row, col) = opt::at(this->trans_im, this->trans_im.nrows() - row - 1,
 							    this->trans_im.ncols() - col - 1);
 	return this->trans_im;
       }

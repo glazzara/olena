@@ -1,5 +1,11 @@
 2009-01-21  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Fix call to 'at'.
+
+	* abraham/mln/transform/fft.hh: Add forgotten opt:: before at.
+
+2009-01-21  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Fix some constants.
 
 	* nature/nature.cc: Fix constants.
