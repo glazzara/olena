@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -27,7 +27,7 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/cast_image.hh>
-#include <mln/core/image/fun_image.hh>
+#include <mln/core/image/thru.hh>
 #include <mln/core/alias/neighb2d.hh>
 
 #include <mln/io/ppm/load.hh>
@@ -80,7 +80,7 @@ enum doctype
   };
 
 template <typename T>
-unsigned nb_peaks (histo::array<T> &h)
+unsigned nb_peaks (histo::data<T> &h)
 {
   // First, we compute the maximum, ignoring the first column because it
   // contains nonsense points
@@ -126,17 +126,17 @@ int main (int argc, const char * argv [])
 
   image2d<hsi_f> hsi = level::transform(input, fun::v2v::f_rgb_to_hsi_f);
 
-  fun_image<mln::meta::hue<hsi_f>, image2d<hsi_f> > hue(hsi);
-  fun_image<mln::meta::sat<hsi_f>, image2d<hsi_f> > sat(hsi);
-  fun_image<mln::meta::inty<hsi_f>, image2d<hsi_f> > inty(hsi);
+  thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > hue(hsi);
+  thru<mln::meta::sat<hsi_f>, image2d<hsi_f> > sat(hsi);
+  thru<mln::meta::inty<hsi_f>, image2d<hsi_f> > inty(hsi);
 
-  cast_image_<float01_8, fun_image<mln::meta::hue<hsi_f>, image2d<hsi_f> > > qhue(hue); // quantified hue
-  cast_image_<float01_8, fun_image<mln::meta::sat<hsi_f>, image2d<hsi_f> > > qsat(sat); // quantified sat
-  cast_image_<float01_8, fun_image<mln::meta::inty<hsi_f>, image2d<hsi_f> > > qinty(inty); // quantified inty
+  cast_image_<float01_8, thru<mln::meta::hue<hsi_f>, image2d<hsi_f> > > qhue(hue); // quantified hue
+  cast_image_<float01_8, thru<mln::meta::sat<hsi_f>, image2d<hsi_f> > > qsat(sat); // quantified sat
+  cast_image_<float01_8, thru<mln::meta::inty<hsi_f>, image2d<hsi_f> > > qinty(inty); // quantified inty
 
-  histo::array<float01_8> hhue = histo::compute(qhue);
-  histo::array<float01_8> hsat = histo::compute(qsat);
-  histo::array<float01_8> hinty = histo::compute(qinty);
+  histo::data<float01_8> hhue = histo::compute(qhue);
+  histo::data<float01_8> hsat = histo::compute(qsat);
+  histo::data<float01_8> hinty = histo::compute(qinty);
 
 
   // Compute the number of peaks in the histogram to give a first intuition
@@ -191,17 +191,17 @@ int main (int argc, const char * argv [])
   score[PHOTO] += 100 - max;
   score[TEXT] += max * 2;
 
-  score[SCREENSHOT] += 80 + max / 2;
+  score[SCREENSHOT] += 50 + max / 2;
   score[DRAWING] += 50 + max / 2;
 
   std::cout << "Test 2 : co-occurence matrix diag_max[" << max << "]" << std::endl
 	    << "Photo : +" << 100 - max << std::endl;
 
-  std::cout << "Screenshot : +" << 80 + max / 2 << std::endl;
+  std::cout << "Screenshot : +" << 50 + max / 2 << std::endl;
 
   std::cout << "Text : +" << max * 2 << std::endl;
 
-  std::cout << "Drawing : +" << 80 + max / 2 << std::endl << std::endl;
+  std::cout << "Drawing : +" << 50 + max / 2 << std::endl << std::endl;
 
 
 
@@ -385,15 +385,15 @@ int main (int argc, const char * argv [])
     cpt = 50;
 
   score[PHOTO] += 50 - cpt;
-  score[SCREENSHOT] += cpt * 8;
-  score[TEXT] += 50 + cpt * max / 3;
-  score[DRAWING] += 2 * (60 - cpt);
+  score[SCREENSHOT] += cpt * 5;
+  score[TEXT] += 50 + cpt * max / 10;
+  score[DRAWING] += 2 * (50 - cpt);
 
   std::cout << "Test 3 : rectangle detection[" << cpt << "]" << std::endl
 	    << "Photo : +" << 50 - cpt << std::endl
 	    << "Screenshot : +" << cpt * 8 << std::endl
-	    << "Text : +" << 50 + cpt * max / 3 << std::endl
-	    << "Drawing : +" << 2 * (60 - cpt) << std::endl << std::endl;
+	    << "Text : +" << 50 + cpt * max / 10 << std::endl
+	    << "Drawing : +" << 2 * (50 - cpt) << std::endl << std::endl;
 
 
   // Last but not least : text detection thanks to FFT
@@ -464,15 +464,15 @@ int main (int argc, const char * argv [])
   dist = dist / (log(fftb.nelements()) / log(10));
 
   score[PHOTO] += dist * 25;
-  score[SCREENSHOT] += dist * 50;
-  score[TEXT] += (1 + abs(cos(arg))) * (4 - dist) * 40;
-  score[DRAWING] += dist * 50;
+  score[SCREENSHOT] += dist * 25;
+  score[TEXT] += (1 + cos(arg)) * 2 * (4 - dist) * 50;
+  score[DRAWING] += dist * 25;
 
   std::cout << "Test 4 : Fourier distance[" << dist << "]" << std::endl
 	    << "Photo : +" << dist * 25 << std::endl
-	    << "Screenshot : +" << dist * 50 << std::endl
-	    << "Text : +" << (1 + abs(cos(arg))) * (4 - dist) * 40 << std::endl
-	    << "Drawing : +" << dist * 50 << std::endl << std::endl;
+	    << "Screenshot : +" << dist * 25 << std::endl
+	    << "Text : +" << (1 + cos(arg)) * (4 - dist) * 25 << std::endl
+	    << "Drawing : +" << dist * 25 << std::endl << std::endl;
 
 
   // io::pbm::save(binarization::threshold(fft, max * 4 / 10), name.append("_fft.pbm"));
