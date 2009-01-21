@@ -98,6 +98,7 @@ namespace mln
 
 	// Auxiliary data.
 	mln_ch_value(O, bool)  deja_vu;
+ 	mln_ch_value(I, bool)  activity;
 	mln_ch_value(O, P)     parent;
 	mln_ch_value(O, A)     data;
 
@@ -105,6 +106,8 @@ namespace mln
 	{
 	  initialize(deja_vu, input);
 	  mln::data::fill(deja_vu, false);
+	  initialize(activity, input);
+	  mln::data::fill(activity, true);
 	  initialize(parent, input);
 	  initialize(data, input);
 	  f.init(); // init required.
@@ -151,7 +154,7 @@ namespace mln
 		P r = find_root(parent, n);
 		if (r != p)
 		{
-		  if (input(r) == input(p) || f.is_active(data(r))) // Equiv(r, p)
+		  if (input(r) == input(p) || (activity(r) && f.is_active(data(r)))) // Equiv(r, p)
 		    // Either a flat zone or the component of r is still growing.
 		  {
 		    /* FIXME: Same remark as above concerning the
@@ -168,9 +171,14 @@ namespace mln
 		       template parameter A is not bound).  */
 		    data(p).take(data(r));
 		    parent(r) = p;
+		    if (activity(r) == false)
+		      activity(p) = false;
 		  }
-		  else
-		    f.inactivate(data(p));
+		    else
+		      {
+			activity(p) = false;
+			f.inactivate(data(p));
+		      }
 		}
 	      }
 	    deja_vu(p) = true;

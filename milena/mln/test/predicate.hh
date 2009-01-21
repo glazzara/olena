@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,9 @@
 #ifndef MLN_TEST_PREDICATE_HH
 # define MLN_TEST_PREDICATE_HH
 
-/*! \file mln/test/predicate.hh
- *
- * \brief Test a predicate on the pixel values of an image.
- */
+/// \file mln/test/predicate.hh
+///
+/// Test a predicate on the pixel values of an image.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/function.hh>
@@ -62,7 +62,7 @@ namespace mln
      * \param[in] f The predicate.
      */
     template <typename I, typename J, typename F>
-    bool predicate(const Image<I>& lhs, const Image<J>& rhs, const Function_v2b<F>& f);
+    bool predicate(const Image<I>& lhs, const Image<J>& rhs, const Function_vv2b<F>& f);
 
 
     /*! Test if all points of \p pset verify the predicate \p f.
