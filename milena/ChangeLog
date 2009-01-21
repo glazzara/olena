@@ -1,3 +1,14 @@
+2009-01-21  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
+
+	Add some images.
+	
+	* img/space_debris.pgm: Remove; unused.
+	* img/small.ppm: Fix file format.
+	* img/fly.ppm,
+	* img/medium.pgm,
+	* img/medium.ppm,
+	* img/tiny.ppm: New.
+
 2009-01-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Add important comment to bilinear.hh.
