@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,12 @@
 #ifndef MLN_CONVERT_IMPL_FROM_VALUE_TO_VALUE_HH
 # define MLN_CONVERT_IMPL_FROM_VALUE_TO_VALUE_HH
 
-/*! \file mln/convert/from_to.hh
- *
- * \brief General conversion procedure from a value to a value.
- *
- * \todo Augment code + add checks.
- */
+/// \file mln/convert/from_to.hh
+///
+/// General conversion procedure from a value to a value.
+///
+/// \todo Augment code + add checks.
+
 
 # include <utility>
 # include <mln/core/concept/image.hh>
@@ -43,7 +44,7 @@
 # include <mln/core/site_set/p_run.hh>
 # include <mln/metal/converts_to.hh>
 
-
+# include <mln/convert/from_to.hxx>
 
 namespace mln
 {
@@ -86,6 +87,16 @@ namespace mln
 			         mln::value::Scalar<W>&  to)
       {
 	exact(to) = exact(from).to_equiv();
+      }
+
+      template <typename V, typename W>
+      inline
+      void
+      from_value_to_value_(const Value<V>& from, Value<W>& to)
+      {
+	// No concept based conversion. Trying to find more specific
+	// conversion with other from_to overloads.
+	convert::over_load::from_to_(exact(from), exact(to));
       }
 
 

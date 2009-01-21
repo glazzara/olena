@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,66 +26,29 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_TO_RGB_HH
-# define MLN_CONVERT_TO_RGB_HH
+/// \file tests/convert/to_rgb.cc
+///
+/// Tests on mln::convert::from_to_ for rgb<n>.
 
-/*! \file mln/convert/to_rgb.hh
- *
- * \brief Conversions to mln::value::rgb.
- *
- * \todo Re-write.
- */
+#include <mln/core/image/image2d.hh>
+#include <mln/value/int_u8.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/convert/to.hh>
 
-# include <mln/value/rgb.hh>
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace convert
-  {
+  value::rgb8 c1(3,3,3);
+  value::rgb8 c2 = convert::to<value::rgb8>(c1);
+  mln_assertion(c1 == c2);
 
-    using namespace value;
+  const value::rgb8 c3(3,3,3);
+  c2 = convert::to<value::rgb8>(c3);
+  mln_assertion(c2 == c3);
 
-    /// Convert a int_u \p val into rgb value.
-    template <unsigned int n>
-    rgb<n> to_rgb(const int_u<n>& i);
-
-    template <unsigned int n>
-    rgb<n>& to_rgb(rgb<n>& i);
-
-    template <unsigned int n>
-    const rgb<n>& to_rgb(const rgb<n>& i);
-
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <unsigned int n>
-    inline
-    rgb<n> to_rgb(const int_u<n>& i)
-    {
-      rgb<n> c(i, i, i);
-      return c;
-    }
-
-    template <unsigned int n>
-    inline
-    rgb<n>& to_rgb(rgb<n>& i)
-    {
-      return i;
-    }
-
-    template <unsigned int n>
-    inline
-    const rgb<n>& to_rgb(const rgb<n>& i)
-    {
-      return i;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::convert
-
-} // end of namespace mln
-
-
-#endif // ! MLN_CONVERT_TO_WINDOW_HH
+  value::int_u8 i = 3;
+  c2 = convert::to<value::rgb8>(i);
+  mln_assertion(c2 == value::rgb8(3,3,3));
+}

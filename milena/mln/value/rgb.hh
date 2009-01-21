@@ -25,9 +25,6 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_VALUE_RGB_HH
-# define MLN_VALUE_RGB_HH
-
 /// \file mln/value/rgb.hh
 ///
 /// Color class for red-green-blue where every component is
@@ -38,15 +35,41 @@
 /// \todo Introduce the concept of Color, then generalize from_to_ to
 /// colors.
 
+#ifndef MLN_VALUE_RGB_HH
+# define MLN_VALUE_RGB_HH
+
+
 # include <mln/value/ops.hh>
 
 # include <mln/value/concept/vectorial.hh>
 # include <mln/value/int_u.hh>
 # include <mln/algebra/vec.hh>
 
+// Needed by from_to_.
+# include <mln/fun/v2v/rgb_to_hsl.hh>
 
 namespace mln
 {
+
+  namespace fun
+  {
+
+    namespace v2v
+    {
+
+      template <typename T_rgb>
+      struct f_hsl_to_rgb_;
+
+      typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
+      typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
+
+      extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
+      extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
+
+    }
+
+  }
+
 
   namespace literal
   {
@@ -77,8 +100,11 @@ namespace mln
 
 
   // Forward declaration.
-  namespace value {
+  namespace value
+  {
     template <unsigned n> struct rgb;
+    template <typename H, typename S, typename L> class hsl_;
+    template <unsigned n> struct int_u;
   }
 
 
@@ -95,6 +121,18 @@ namespace mln
       // bool -> rgb.
       template <unsigned m>
       void from_to_(bool from, value::rgb<m>& to);
+
+      // int_u -> rgb.
+      template <unsigned m>
+      void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
+
+      // hsl -> rgb8.
+      template <typename H, typename S, typename L>
+      void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
+
+      // hsl -> rgb16.
+      template <typename H, typename S, typename L>
+      void from_to_(const value::hsl_<H,S,L>&, value::rgb<16>& to);
 
     } // end of namespace mln::convert::over_load
 
@@ -709,6 +747,27 @@ namespace mln
 	  to = *white_;
 	else
 	  to = *black_;
+      }
+
+      template <unsigned m>
+      void
+      from_to_(const value::int_u<m>& from, value::rgb<m>& to)
+      {
+	to = value::rgb<m>(from, from, from);
+      }
+
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::hsl_<H,S,L>& from, value::rgb<8>& to)
+      {
+	to = fun::v2v::f_hsl_to_rgb_3x8(from);
+      }
+
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::hsl_<H,S,L>& from, value::rgb<16>& to)
+      {
+	to = fun::v2v::f_hsl_to_rgb_3x16(from);
       }
 
     } // end of namespace mln::convert::over_load

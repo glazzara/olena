@@ -267,7 +267,6 @@ mln_convert_impl_from_float_to_value \
 mln_convert_impl_from_int_to_value \
 mln_convert_to_dpoint \
 mln_convert_to_p_array \
-mln_convert_to_rgb \
 mln_convert_essential \
 mln_value_shell \
 mln_value_float01_f \
@@ -1283,7 +1282,6 @@ mln_convert_impl_from_float_to_value_SOURCES = mln_convert_impl_from_float_to_va
 mln_convert_impl_from_int_to_value_SOURCES = mln_convert_impl_from_int_to_value.cc
 mln_convert_to_dpoint_SOURCES = mln_convert_to_dpoint.cc
 mln_convert_to_p_array_SOURCES = mln_convert_to_p_array.cc
-mln_convert_to_rgb_SOURCES = mln_convert_to_rgb.cc
 mln_convert_essential_SOURCES = mln_convert_essential.cc
 mln_value_shell_SOURCES = mln_value_shell.cc
 mln_value_float01_f_SOURCES = mln_value_float01_f.cc

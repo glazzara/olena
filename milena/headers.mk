@@ -271,7 +271,6 @@ mln/convert/impl/from_int_to_value.hh \
 mln/convert/to_dpoint.hh \
 mln/convert/to_p_array.hh \
 mln/convert/from_to.hxx \
-mln/convert/to_rgb.hh \
 mln/convert/essential.hh \
 mln/value/shell.hh \
 mln/value/float01_f.hh \

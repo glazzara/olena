@@ -1,3 +1,36 @@
+2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Handle rgb and hsl conversions in from_to and remove to_rgb.
+
+	* headers.mk: remove to_rgb.hh from distribution.
+
+	* mln/convert/all.hh: remove to_rgb.hh.
+	
+	* mln/convert/from_to.hxx: add more predeclarations.
+
+	* mln/convert/impl/from_value_to_value.hh: if no value concept is
+	caught in the dispatch, try to call a from_to_ overload.
+
+	* mln/fun/v2v/rgb_to_hsl.hh: add new global variables of function
+	converting rgb16 to hsl.
+
+	* mln/value/hsl.hh,
+	* mln/value/rgb.hh: add new from_to_ overloads.
+
+	* tests/convert/Makefile.am,
+	* tests/convert/to_hsl.cc,
+	* tests/convert/to_rgb.cc: new tests. Test conversions with rgb<n> and
+	hsl<h,s,l> using from_to.
+
+	* mln/convert/to_rgb.hh: remove. Useless since conversions are now done
+	thanks to from_to.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_convert_to_rgb.cc: remove unit_test related to
+	to_rgb.hh.
+
+	* mln/fun/v2v/rgb_to_hsl.hh: do not include hsl.hh anymore.
+
 2009-01-21  Nicolas Ballas  <ballas@lrde.epita.fr>
 
 	Externalize element and nelement method in fastest images.

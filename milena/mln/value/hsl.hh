@@ -25,6 +25,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
+/// \file mln/value/hsl.hh
+///
+/// Color class.
+///
+/// \todo write a better doc.
+
+#ifndef MLN_VALUE_HSL_HH
+# define MLN_VALUE_HSL_HH
+
 #include <mln/value/ops.hh>
 
 #include <mln/value/concept/vectorial.hh>
@@ -33,12 +42,44 @@
 
 #include <mln/value/float01_8.hh>
 
-#ifndef MLN_VALUE_HSL_HH
-# define MLN_VALUE_HSL_HH
+// Used in from_to
+#include <mln/fun/v2v/rgb_to_hsl.hh>
 
 
 namespace mln
 {
+
+  // Forward declarations.
+  namespace value
+  {
+
+    template <typename H, typename S, typename L>
+    class hsl_;
+
+  }
+
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      // rgb to hsl
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to);
+
+      // rgb to hsl
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
 
   namespace value
   {
@@ -71,32 +112,14 @@ namespace mln
       }
 
       /// Read-only access to the hue component.
-      const H& hue() const
-      {
-	return this->hue_;
-      }
-      const S& sat() const
-      {
-	return this->sat_;
-      }
-      const L& lum() const
-      {
-	return this->lum_;
-      }
+      const H& hue() const;
+      const S& sat() const;
+      const L& lum() const;
 
       /// Read-write access to the hue component.
-      H& hue()
-      {
-	return this->hue_;
-      }
-      S& sat()
-      {
-	return this->sat_;
-      }
-      L& lum()
-      {
-	return this->lum_;
-      }
+      H& hue();
+      S& sat();
+      L& lum();
 
     private:
       H hue_;
@@ -108,7 +131,127 @@ namespace mln
 
     typedef hsl_<double, double, double> hsl_d;
 
+
+    /// Print an hsl \p c into the output stream \p ostr.
+    ///
+    /// \param[in,out] ostr An output stream.
+    /// \param[in] c An rgb.
+    ///
+    /// \return The modified output stream \p ostr.
+    template <typename H, typename S, typename L>
+    std::ostream& operator<<(std::ostream& ostr, const hsl_<H,S,L>& c);
+
   } // end of namespace mln::value
+
+
+
+  // More forward declarations
+  namespace fun
+  {
+    namespace v2v
+    {
+
+      template <typename T_hsl>
+      struct f_rgb_to_hsl_;
+
+      typedef f_rgb_to_hsl_<value::hsl_f> f_rgb_to_hsl_f_t;
+
+      extern f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
+
+    }
+
+  }
+
+# ifndef MLN_INCLUDE_ONLY
+
+
+  namespace value
+  {
+
+    template <typename H, typename S, typename L>
+    const H&
+    hsl_<H,S,L>::hue() const
+    {
+      return this->hue_;
+    }
+
+    template <typename H, typename S, typename L>
+    const S&
+    hsl_<H,S,L>::sat() const
+    {
+      return this->sat_;
+    }
+
+    template <typename H, typename S, typename L>
+    const L&
+    hsl_<H,S,L>::lum() const
+    {
+      return this->lum_;
+    }
+
+    template <typename H, typename S, typename L>
+    H&
+    hsl_<H,S,L>::hue()
+    {
+      return this->hue_;
+    }
+
+    template <typename H, typename S, typename L>
+    S&
+    hsl_<H,S,L>::sat()
+    {
+      return this->sat_;
+    }
+
+    template <typename H, typename S, typename L>
+    L&
+    hsl_<H,S,L>::lum()
+    {
+      return this->lum_;
+    }
+
+
+    template <typename H, typename S, typename L>
+    inline
+    std::ostream& operator<<(std::ostream& ostr, const hsl_<H,S,L>& v)
+    {
+      return ostr << '(' << debug::format(v.hue())
+		  << ',' << debug::format(v.sat())
+		  << ',' << debug::format(v.lum())
+		  << ')';
+    }
+
+  } // end of namespace mln::value
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to)
+      {
+	to = fun::v2v::f_rgb_to_hsl_f(from);
+      }
+
+
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to)
+      {
+	to = fun::v2v::f_rgb_to_hsl_f(from);
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
 
 } // end of namespace mln
 

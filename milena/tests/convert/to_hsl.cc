@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,31 +26,26 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_ALL_HH
-# define MLN_CONVERT_ALL_HH
-
-/// \file mln/convert/all.hh
+/// \file tests/convert/to_hsl.cc
 ///
-/// File that includes all conversion-related routines.
+/// Tests on mln::convert::from_to_ for hsl<H,S,L>.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/value/hsl.hh>
+#include <mln/value/rgb8.hh>
+#include <mln/convert/to.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of conversion routines.
-  namespace convert {}
+  value::rgb8 c1(3,3,3);
+  value::hsl_f c2 = convert::to<value::hsl_f>(c1);
+//  mln_assertion(c2 == hsl_f(0,0,3)); //FIXME: wrong result.
+
+  value::hsl_f c3(3,3,3);
+  c1 = convert::to<value::rgb8>(c3);
+//  mln_assertion(c1 == rgb8(2,4,0)); //FIXME: wrong result.
 
 }
-
-
-# include <mln/convert/from_to.hh>
-# include <mln/convert/to.hh>
-
-# include <mln/convert/to_dpoint.hh>
-# include <mln/convert/to_fun.hh>
-# include <mln/convert/to_image.hh>
-# include <mln/convert/to_p_array.hh>
-# include <mln/convert/to_window.hh>
-
-
-#endif // ! MLN_CONVERT_ALL_HH

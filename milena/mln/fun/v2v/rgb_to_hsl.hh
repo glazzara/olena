@@ -30,17 +30,21 @@
 
 #include <cmath>
 
-#include <mln/value/rgb8.hh>
 #include <mln/math/round.hh>
 #include <mln/math/max.hh>
 #include <mln/math/min.hh>
-
-#include <mln/value/hsl.hh>
 
 
 namespace mln
 {
 
+  // Forward declaration
+  namespace value
+  {
+    template <unsigned n> struct rgb;
+    template <typename H, typename S, typename L> class hsl_;
+    typedef hsl_<float, float, float> hsl_f;
+  }
 
   namespace fun
   {
@@ -73,9 +77,11 @@ namespace mln
 
       };
 
-      typedef f_hsl_to_rgb_<value::rgb8> f_hsl_to_rgb_3x8_t;
+      typedef f_hsl_to_rgb_< value::rgb<8> > f_hsl_to_rgb_3x8_t;
+      typedef f_hsl_to_rgb_< value::rgb<16> > f_hsl_to_rgb_3x16_t;
 
       extern f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
+      extern f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -85,6 +91,7 @@ namespace mln
       f_rgb_to_hsl_f_t f_rgb_to_hsl_f;
 
       f_hsl_to_rgb_3x8_t f_hsl_to_rgb_3x8;
+      f_hsl_to_rgb_3x16_t f_hsl_to_rgb_3x16;
       /// \}
 
 

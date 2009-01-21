@@ -82,6 +82,8 @@ namespace mln
 
   namespace value {
     template <unsigned n> struct rgb;
+    template <typename H, typename S, typename L> class hsl_;
+    template <unsigned n> struct int_u;
   }
 
   // end of Forward declarations.
@@ -148,6 +150,29 @@ namespace mln
       template <unsigned m>
       void
       from_to_(bool from, value::rgb<m>& to);
+
+      // int_u -> rgb.
+      template <unsigned m>
+      void from_to_(const value::int_u<m>& from, value::rgb<m>& to);
+
+      // hsl -> rgb8.
+      template <typename H, typename S, typename L>
+      void from_to_(const value::hsl_<H,S,L>&, value::rgb<8>& to);
+
+      // hsl -> rgb16.
+      template <typename H, typename S, typename L>
+      void from_to_(const value::hsl_<H,S,L>&, value::rgb<16>& to);
+
+
+      // rgb to hsl
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<16>& from, value::hsl_<H,S,L>& to);
+
+      // rgb to hsl
+      template <typename H, typename S, typename L>
+      void
+      from_to_(const value::rgb<8>& from, value::hsl_<H,S,L>& to);
 
 
       // C-array -> Image.
