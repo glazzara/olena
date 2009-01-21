@@ -84,13 +84,9 @@ int main()
   mln_VAR(rt,  compose(r,t));
   mln_VAR(tr_ima, transposed_image(interp.domain(), interp, rt));
 
-  //  data::fill(output, tr_ima);
-
-
-  //border::adjust(interp, 20);
-
   //test1<interpolation::bilinear>(input, output, compose(r,t));
   test2(interp, output, compose(r,t));
   //test3(tr_ima, output);
+
   mln::io::ppm::save(output,"./out.ppm");
 }

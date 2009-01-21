@@ -72,13 +72,13 @@ namespace mln
   struct my_less_
   {
     const I& ima_;
-    
+
     inline
     my_less_(const I& ima)
       : ima_(ima)
     {
     }
-    
+
     inline
     bool operator()(const mln_site(I)& lhs,
 		    const mln_site(I)& rhs) const
@@ -272,11 +272,11 @@ namespace mln
       if (echo)
 	std::cout << "n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
 		  << std::endl;
-      
+
       if (g != g_ref)
 	std::cerr << "OOPS: g DIFFERS FROM ref!" << std::endl
 		  << std::endl;
-      
+
       bool consistency = (n_regmins_g_ref + less == n_objects);
       if (consistency == false)
 	std::cerr << "OOPS: INCONSISTENCY (BUG...)!" << std::endl
@@ -330,7 +330,7 @@ int main(int argc, char* argv[])
   S s = level::sort_psites_decreasing(f);
 
   // Children go towards lower levels so leafs are regional minima.
-  // We get a min-tree so that we can perform morphological closings. 
+  // We get a min-tree so that we can perform morphological closings.
 
   typedef morpho::tree::data<I,S> tree_t;
   tree_t t(f, s, nbh);

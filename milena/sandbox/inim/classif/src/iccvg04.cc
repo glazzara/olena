@@ -2,7 +2,6 @@
 
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/histo/data.hh>
 #include <mln/value/all.hh>
 
 #include <mln/data/fill.hh>
@@ -158,8 +157,8 @@ int main(int argc, char **argv)
   image3d<unsigned> histo = fill_histo(ima,div_factor);
 
   //compute opening_volume of histo
-  image3d<unsigned> histo_filtered(histo.domain());
-  morpho::opening_volume(histo, c6(), lambda, histo_filtered);
+  image3d<unsigned> histo_filtered;
+  histo_filtered = morpho::opening_volume(histo, c6(), lambda);
 
   //watershed over histo_closure
   unsigned nbasins = 0;

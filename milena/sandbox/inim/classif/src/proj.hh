@@ -35,7 +35,7 @@
 #include <mln/accu/maj_h.hh>
 #include <mln/literal/white.hh>
 #include <mln/literal/colors.hh>
-#include <mln/make/vec.hh
+#include <mln/make/vec.hh>
 #include <mln/opt/at.hh>
 
 namespace mln

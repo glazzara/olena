@@ -1,3 +1,13 @@
+2009-01-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Update INIM.
+
+	* jardonnet/virtual/access.cc: Update.
+	* inim/classif/src/iccvg04.cc: Fix signature.
+	* inim/classif/src/proj.hh: Fix include.
+	* inim/classif/src/v2.cc: Fix include.
+	* inim/classif/Makefile: Make all.
+
 2009-01-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add children computation to Laurent's code.

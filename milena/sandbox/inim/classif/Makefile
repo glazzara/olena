@@ -19,6 +19,7 @@ V2_DBG=v2_dbg
 
 LOG=> stdout.log 2> stderr.log
 
+all: $(ICCVG) $(V2)
 
 $(ICCVG): $(ICCVG_SRC)
 	g++ $(ICCVG_INCLUDES) -O1 -DNDEBUG $(ICCVG_SRC) -o $(ICCVG)

@@ -1,6 +1,5 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
-#include <mln/histo/data.hh>
 
 #include <mln/value/all.hh>
 
@@ -65,7 +64,7 @@ process_max_tree(const I& ima, const J& histo, const N& nbh,
 
   // FIXME: write a compute() method with functor argument
   image3d<unsigned> nb_represent		  = run.compute_nb_represent();
-  image3d<unsigned> volume			  = run.compute_volume();
+  image3d<unsigned> volume			  = run.compute_volume(); // surface (area)
   image3d< algebra::vec<3, double> > mean_color	  = run.compute_mean_color();
   image3d<double> density			  = compute_density(nb_represent, volume);
 
