@@ -16,6 +16,7 @@
 # include <mln/core/site_set/p_queue.hh>
 # include <mln/core/site_set/p_priority.hh>
 
+#include <mln/level/stretch.hh>
 #include <mln/labeling/compute.hh>
 #include <mln/accu/count.hh>
 
@@ -478,9 +479,10 @@ int main(int argc, char* argv[])
 	   compute_wst_g_from_f(f, g, e2p(), e2e(), n_basins, echo) );
 
 
+  std::cout << "n basins = " << n_basins << std::endl;
+
   if (echo)
     {
-      std::cout << "n basins = " << n_basins << std::endl;
       debug::println("g:", g);
       debug::println("wst(g):", wst_g);
     }
@@ -970,6 +972,8 @@ int main(int argc, char* argv[])
 
   mln_VAR(aa_line, aa | is_line);
 
+  A aa_max = 0;
+
   {
 
     {
@@ -990,6 +994,8 @@ int main(int argc, char* argv[])
 	// The attribute value propagates from the lca to the current edge
 	// of the line:
 	aa(e) = aa(e_);
+	if (aa(e) > aa_max)
+	  aa_max = aa(e);
       }
 
       if (echo)
@@ -1069,14 +1075,38 @@ int main(int argc, char* argv[])
 
 
   // Output is salency map.
-  {
 
-    image2d<int_u8> output(f_.domain());
-    data::fill(output, 0);
-    data::paste(aa_line, output);
-    io::pgm::save(output, argv[3]);
-  }
+  {
   
+    if (aa_max < 256)
+      {
+	image2d<int_u8> output(f_.domain());
+	data::fill(output, 0);
+	data::paste(aa_line, output);
+	io::pgm::save(output, argv[3]);
+      }
+    else
+      {
+	std::cerr << "warning: stretching [0," << aa_max << "] to int_u8" << std::endl;
+
+	image2d<A> output(f_.domain());
+	data::fill(output, 0);
+	data::paste(aa_line, output);
+ 	io::pgm::save(level::stretch(int_u8(), output),
+ 		      argv[3]);
+
+// 	image2d<int_u8> output(f_.domain());
+// 	data::fill(output, 0);
+// 	A threshold = aa_max - 255;
+// 	mln_piter(aa_line_t) e(aa_line.domain());
+// 	for_all(e)
+// 	  if (aa_line(e) <= threshold)
+// 	    output(e) = 1;
+// 	  else
+// 	    output(e) = aa_line(e) - threshold;
+//  	io::pgm::save(output, argv[3]);
+      }
+  }
 
 } // end of main
 

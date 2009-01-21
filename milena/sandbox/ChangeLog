@@ -1,5 +1,11 @@
 2009-01-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Handle properly output in Laurent's method.
+
+	* laurent/ismm2009.cc: Sic.
+
+2009-01-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Move INIM related projects into the appropriate directory.
 
 	* garrigues/ocr: Move directory...
