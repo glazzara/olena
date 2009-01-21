@@ -150,7 +150,7 @@ namespace mln
     M
     mean<T,S,M>::to_result() const
     {
-      S n = static_cast<S>(count_.to_result());
+      unsigned n = count_.to_result();
       return static_cast<M>(sum_.to_result() / n);
     }
 
