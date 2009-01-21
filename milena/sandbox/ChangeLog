@@ -1,3 +1,10 @@
+2009-01-21  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add a new LCA implementation to Laurent's code.
+	
+	* laurent/ismm2009.cc: Use the implementation written by Alexandre
+	Abraham for one of its previous seminar (#0821).
+
 2009-01-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Update INIM.

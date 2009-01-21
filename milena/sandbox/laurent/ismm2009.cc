@@ -22,13 +22,13 @@
 #include <mln/util/timer.hh>
 #include <mln/util/fibonacci_heap.hh>
 
-
+#include <stack>
 
 /*
    TO-DO list:
 
    - handling adjacency on the fly (instead of having an image)
- */
+*/
 
 
 namespace mln
@@ -109,23 +109,23 @@ namespace mln
     typedef mln_element(Q) E;
 
     while (! q.is_empty())
-      {
-	E e = q.pop_front();
+    {
+      E e = q.pop_front();
 
-	L l1 = wst(p1_from_e(e)),
-	  l2 = wst(p2_from_e(e));
-	mln_invariant(l1 != l2);
-	L l1r = find_root_l(lpar, l1),
-	  l2r = find_root_l(lpar, l2);
-      
-	mln_invariant(l1r == lr || l2r == lr);
+      L l1 = wst(p1_from_e(e)),
+	l2 = wst(p2_from_e(e));
+      mln_invariant(l1 != l2);
+      L l1r = find_root_l(lpar, l1),
+	l2r = find_root_l(lpar, l2);
 
-	if (l1r == l2r)
-	  // 'e' is an internal edge => forget it.
-	  continue;
+      mln_invariant(l1r == lr || l2r == lr);
 
-	return e;
-      }
+      if (l1r == l2r)
+	// 'e' is an internal edge => forget it.
+	continue;
+
+      return e;
+    }
 
     mln_invariant(0); // We should not be here!
 
@@ -133,160 +133,168 @@ namespace mln
   }
 
 
-  // Compute an LCA; reference(?) code.
-
-  template <typename L, typename E, typename Epar>
-  std::vector< std::vector<E> >
-  compute_lca(const L& l_max,
-	      const std::vector<E>& edge,
-	      const Epar& epar)
+  /// Compute an LCA
+  /// Reference article: The LCA Problem Revisited, M. A. Bender and M.
+  /// Farach-Colton, May 2000
+  ///
+  /// See also Topological Watershed, Alexandre Abraham, LRDE CSI report
+  /// 0821, June 2008
+  template <typename L, typename I, typename E>
+  class lca_t
   {
-    std::cout << "LCA computing...";
-    std::cout.flush();
 
-    mln_ch_value(Epar, std::vector<L>) chl; // Children (known as array).
-    initialize(chl, epar);
+  public:
 
-    unsigned size = l_max.next();
-
-    std::vector< std::vector<E> > lca(size);
-    for (L l = 1; l <= l_max; ++l)
-      {
-	lca[l].resize(size);
-	lca[l][l] = edge[l]; // Diagonal => itself.
-      }
-    std::vector<bool> deja_vu(size);
-
-    E e;
-
-    // The 1st label (l = 1) is a special case since
-    // we cannot have lca[1][i] with i < 1!
+    /// Constructor
+    lca_t(const L& l_max_,
+	const I& edge_children,
+	const std::vector<E>& roots)
     {
-      e = edge[1];
-      do
+      unsigned l_max = l_max_.next();
+      euler_tour_edge_.resize(2 * l_max + 1);
+      euler_tour_depth_.resize(2 * l_max + 1);
+      initialize (euler_position_, edge_children);
+
+      // BUILD EULER TOUR
+      std::stack<E> to_treat;
+      for (unsigned i = 0; i < roots.size(); ++i)
+	to_treat.push(roots[i]);
+
+      unsigned euler_edge = 0;
+      mln_ch_value(I, bool) deja_vu;
+      initialize(deja_vu, edge_children);
+      data::fill(deja_vu, false);
+
+      while (!to_treat.empty())
+      {
+	E e = to_treat.top();
+	to_treat.pop();
+
+	euler_tour_edge_[euler_edge] = e;
+	if (deja_vu(e))
+	  euler_tour_depth_[euler_edge] = euler_tour_depth_[euler_edge - 1] - 1;
+	else
+	  euler_tour_depth_[euler_edge] = euler_tour_depth_[euler_edge - 1] + 1;
+
+	if (!deja_vu(e))
 	{
-	  chl(e).push_back(1);
-	  e = epar(e);
+	  for (int j = edge_children(e).size() - 1; j >= 0; --j)
+	  {
+	    to_treat.push(e);
+	    to_treat.push(edge_children(e)[j]);
+	  }
+	  deja_vu(e) = true;
+	  euler_position_(e) = euler_edge;
 	}
-      while (e != epar(e));
-      chl(e).push_back(1);
+
+	++euler_edge;
+      }
+
+      // BUILD MINIMAS
+      int size = 2 * l_max - 1;
+      int logn = (int)(ceil(log((double)(size))/log(2.0)));
+
+      minim_ = new int [logn * size]; // FIXME : Think about freeing this
+      Minim_ = new int* [logn];
+
+      Minim_[0] = minim_;
+
+      // Init
+      for (unsigned i = 0; i < size - 1; ++i)
+	if (euler_tour_depth_[i] < euler_tour_depth_[i+1])
+	{
+	  Minim_[0][i] = i;
+	} else {
+	  Minim_[0][i] = i+1;
+	}
+
+      int k;
+      for (int j = 1; j < logn; j++)
+      {
+	k = 1 << (j - 1);
+	Minim_[j] = &minim_[j * size];
+	for (int i = 0; i < size; i++)
+	{
+	  if ((i + (k << 1)) < size)
+	  {
+	    if (euler_tour_depth_[Minim_[j - 1][i]] <= euler_tour_depth_[Minim_[j - 1][i + k]])
+	      Minim_[j][i] = Minim_[j - 1][i];
+	    else
+	      Minim_[j][i] = Minim_[j - 1][i + k];
+	  }
+	}
+      }
     }
 
 
-    for (L l = 2; l <= l_max; ++l)
-      {
-	std::fill(deja_vu.begin(), deja_vu.end(), false);
-	e = edge[l];
-	for (;;)
-	  {
-	    std::vector<L>& chl_e = chl(e);
-	    unsigned n = chl_e.size();
-
-	    // Compute lca[l_][l] with l_ = 1..l-1
-	    for (unsigned i = 0; i < n; ++i)
-	      {
-		if (deja_vu[chl_e[i]])
-		  continue;
-		L l_ = chl_e[i];
-		mln_invariant(l_ < l);
-		lca[l_][l] = e;
-		deja_vu[l_] = true;
-	      }
-
-	    // Update 'chl' with l;
-	    chl(e).push_back(l);
-
-	    if (e == epar(e)) // Root so stop.
-	      break;
-	    e = epar(e); // Otherwise go to parent.
-	  }
-      }
-
-    // e is the root node; we have processed all labels
-    // so they are stored as the children of e:
-    mln_invariant(chl(e).size() == l_max); // All labels are children.
+    /// Destructor
+    ~lca_t()
+    {
+      delete[] Minim_;
+      delete[] minim_;
+    }
 
 
-//     // Save the LCA into a file.
-//     {
-//     std::ofstream out("lca.txt");
+    const E& operator() (const E& a, const E& b)
+    {
+      if (a == b)
+	return a;
 
-//     for (L l = 1; l <= l_max; ++l)
-//       {
-// 	out << "l = " << l << ": ";
-// 	for (L l2 = l; l2 <= l_max; ++l2)
-// 	  {
-// 	    out << lca[l][l2] << ' ';
-// 	  }
-// 	out << std::endl;
-//       }
-//     out.close();
+      int m = euler_position_(a),
+	  n = euler_position_(b),
+	  k;
 
+      if (m > n)
+	std::swap(m, n);
 
+      k = (int)(log((double)(n - m))/log(2.));
 
-//     // Display children tree.
-//     {
-//       std::cout << "chl tree: " << std::endl;
-//       for (L l = 1; l <= l_max; ++l)
-// 	{
-// 	  E e_ = edge[l];
-// 	  std::cout << "l = " << l << "  =>  ";
-// 	  do
-// 	    {
-// 	      std::cout << e_ << " : ";
-// 	      for (unsigned i = 0; i < chl(e_).size(); ++i)
-// 		std::cout << chl(e_)[i] << ' ';
-// 	      std::cout << " ->  ";
-// 	      e_ = epar(e_);
-// 	    }
-// 	  while (epar(e_) != e_);
-// 	  std::cout << e_ << " : ";
-// 	  for (unsigned i = 0; i < chl(e_).size(); ++i)
-// 	    std::cout << chl(e_)[i] << ' ';
-// 	  std::cout << std::endl;
-// 	}
-//     }
+      if (euler_tour_depth_[Minim_[k][m]]
+	    < euler_tour_depth_[Minim_[k][n - (1 << k)]])
+	return euler_tour_edge_[Minim_[k][m]];
+      else
+	return euler_tour_edge_[Minim_[k][n - (1 << k)]];
+    }
 
+  private:
+    int *minim_;
+    int **Minim_;
+    std::vector<E> euler_tour_edge_;
+    std::vector<unsigned> euler_tour_depth_;
+    mln_ch_value(I, unsigned) euler_position_;
+  };
 
-    std::cout << "done!" << std::endl;
+    // Transform attributes so that they are all different!
 
-    return lca;
-  }
-
-
-
-
-  // Transform attributes so that they are all different!
- 
 
   template <typename A, typename L>
   void
   make_unique_attribute(util::array<A>& a,
-			std::vector< std::pair<A,L> >& v,
-			L l_max,
-			bool echo)
+      std::vector< std::pair<A,L> >& v,
+      L l_max,
+      bool echo)
   {
     // Display attributes.
     if (echo)
-      {
-	std::cout << "(attribute, label)  =  { ";
-	for (unsigned i = 1; i <= l_max; ++i)
-	  std::cout << '(' << v[i].first   // Attribute (increasing).
-		    << ','
-		    << v[i].second  // Region label.
-		    << ") ";
-	std::cout << '}' << std::endl
-		  << std::endl;
-      }
+    {
+      std::cout << "(attribute, label)  =  { ";
+      for (unsigned i = 1; i <= l_max; ++i)
+	std::cout << '(' << v[i].first   // Attribute (increasing).
+		  << ','
+		  << v[i].second  // Region label.
+		  << ") ";
+      std::cout << '}' << std::endl
+		<< std::endl;
+    }
 
     std::map<A,A> lut; // old value -> new value
     for (unsigned l = 1; l <= l_max; ++l)
-      {
-	A old_a = v[l].first,
-	  new_a = old_a + l - 1;
-	lut[old_a] = new_a;
-	v[l].first = new_a; // new value
-      }
+    {
+      A old_a = v[l].first,
+	new_a = old_a + l - 1;
+      lut[old_a] = new_a;
+      v[l].first = new_a; // new value
+    }
     for (unsigned l = 1; l <= l_max; ++l)
       a[l] = lut[ a[l] ];
   }
@@ -967,9 +975,7 @@ int main(int argc, char* argv[])
     {
       // First, processing the 1D-faces (edges) of the watershed line.
 
-      std::vector< std::vector<E> > lca;
-
-      lca = compute_lca(n_basins, edge, epar); // lca is auxiliary data.
+      lca_t<L,chl_t,E> lca(n_basins, chl, roots);
 
       mln_piter_(g_line_t) e(g_line.domain());
       for_all(e)
@@ -977,7 +983,7 @@ int main(int argc, char* argv[])
 	L l1 = adj_line(e).first(),
 	  l2 = adj_line(e).second();
 	mln_invariant(l1 != 0 && l2 > l1);
-	E e_ = lca[l1][l2];
+	E e_ = lca(edge[l1],edge[l2]);
 	mln_invariant(is_line(e_));
 	mln_invariant(aa(e_) != 0); // aa is valid at e_.
 
