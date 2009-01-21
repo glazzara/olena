@@ -366,6 +366,41 @@ namespace mln
   }
 
 
+
+  // From parent image to children image.
+
+  template <typename I, typename E, typename L>
+  mln_ch_value(I, std::vector<mln_psite(I)>)
+    compute_children(const I& epar, const std::vector<E>& edge, L l_max, std::vector<E>& roots)
+  {
+    typedef std::vector<mln_psite(I)> C; // Children.
+    mln_ch_value(I,C) chl;
+    initialize(chl, epar);
+
+    mln_ch_value(I,bool) deja_vu;
+    initialize(deja_vu, epar);
+    data::fill(deja_vu, false);
+
+    for (L l = 1; l <= l_max; ++l)
+      {
+	E e = edge[l];
+	while (deja_vu(e) == false)
+	  {
+	    deja_vu(e) = true;
+	    if (epar(e) != e)
+	      {
+		chl(epar(e)).push_back(e);
+		e = epar(e);
+	      }
+	    else
+	      roots.push_back(e);
+	  }
+      }
+
+    return chl;
+  }
+
+
 } // mln
 
 
@@ -762,6 +797,48 @@ int main(int argc, char* argv[])
 
     } // end of "for every region with increasing attribute"
 
+  std::vector<E> roots;
+  mln_VAR(chl, compute_children(epar, edge, n_basins, roots));
+
+  // Connected domain so:
+  mln_invariant(roots.size() == 1);
+
+  E root = roots[0]; // THE root.
+
+
+  if (echo)
+  {
+    std::cout << "root: " << root << std::endl;
+
+    // Display edge tree.
+    mln_ch_value_(chl_t, bool) deja_vu;
+    initialize(deja_vu, chl);
+    data::fill(deja_vu, false);
+    std::cout << "edge tree: " << std::endl;
+    for (L l = 1; l <= n_basins; ++l)
+      {
+	std::cout << l << ": ";
+	E e = edge[l];
+	while (! deja_vu(e))
+	  {
+	    std::cout << e << " -> ";
+	    deja_vu(e) = true;
+	    e = epar(e);
+	  }
+	std::cout << e << std::endl;
+      }
+
+    // Display children.
+    mln_piter_(chl_t) e(chl.domain());
+    for_all(e)
+      if (chl(e).size() != 0)
+	{
+	  std::cout << e << " children:  ";
+	  for (unsigned i = 0; i < chl(e).size(); ++i)
+	    std::cout << chl(e)[i] << "  ";
+	  std::cout << std::endl;
+	}
+  }
 
 
   std::cout << "Computing tree (loop over regions): " << timer << " s" << std::endl;
