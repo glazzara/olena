@@ -97,7 +97,7 @@ namespace mln
         double y1 = std::floor(v[1]);
         double y2 = std::floor(v[1]) + 1;
 
-        //if (not ima.has(point2d(x1, y1))) return mln_value(I)();
+        //Following access are supposed valid.
         vsum q11 = ima(point2d(static_cast<unsigned>(x1), static_cast<unsigned>(y1)));
         vsum q12 = ima(point2d(static_cast<unsigned>(x1), static_cast<unsigned>(y2)));
         vsum q21 = ima(point2d(static_cast<unsigned>(x2), static_cast<unsigned>(y1)));

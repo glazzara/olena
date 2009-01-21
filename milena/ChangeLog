@@ -1,3 +1,9 @@
+2009-01-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Add important comment to bilinear.hh.
+
+	* mln/fun/x2v/bilinear.hh: Add comment.
+
 2009-01-20  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Handle rgb and hsl conversions in from_to and remove to_rgb.
