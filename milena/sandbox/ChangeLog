@@ -1,5 +1,11 @@
 2009-01-21  Alexandre Abraham  <abraham@lrde.epita.fr>
 
+	Fix coeff.
+
+	* nature/nature.cc: Fix coeff.
+
+2009-01-21  Alexandre Abraham  <abraham@lrde.epita.fr>
+
 	Fix call to 'at'.
 
 	* abraham/mln/transform/fft.hh: Add forgotten opt:: before at.
