@@ -1,3 +1,11 @@
+2009-01-21  Alexandre Abraham  <abraham@lrde.epita.fr>
+
+	Fix some constants.
+
+	* nature/nature.cc: Fix constants.
+	* nature/hsi.cc: New.
+	* nature/hom.cc: .
+
 2009-01-21  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add a new LCA implementation to Laurent's code.
