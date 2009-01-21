@@ -34,6 +34,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/duplicate.hh>
+#include <mln/opt/element.hh>
 
 
 using namespace mln;
@@ -46,30 +47,30 @@ main (void)
   debug::iota(ima);
   border::duplicate(ima);
 
-  mln_assertion(ima.element( 0) == 1);
-  mln_assertion(ima.element( 1) == 1);
-  mln_assertion(ima.element( 2) == 2);
-  mln_assertion(ima.element( 3) == 3);
-  mln_assertion(ima.element( 4) == 3);
-  mln_assertion(ima.element( 5) == 1);
-  mln_assertion(ima.element( 6) == 1);
-  mln_assertion(ima.element( 7) == 2);
-  mln_assertion(ima.element( 8) == 3);
-  mln_assertion(ima.element( 9) == 3);
-  mln_assertion(ima.element(10) == 4);
-  mln_assertion(ima.element(11) == 4);
-  mln_assertion(ima.element(12) == 5);
-  mln_assertion(ima.element(13) == 6);
-  mln_assertion(ima.element(14) == 6);
-  mln_assertion(ima.element(15) == 7);
-  mln_assertion(ima.element(16) == 7);
-  mln_assertion(ima.element(17) == 8);
-  mln_assertion(ima.element(18) == 9);
-  mln_assertion(ima.element(19) == 9);
-  mln_assertion(ima.element(20) == 7);
-  mln_assertion(ima.element(21) == 7);
-  mln_assertion(ima.element(22) == 8);
-  mln_assertion(ima.element(23) == 9);
-  mln_assertion(ima.element(24) == 9);
+  mln_assertion(opt::element(ima, 0) == 1);
+  mln_assertion(opt::element(ima, 1) == 1);
+  mln_assertion(opt::element(ima, 2) == 2);
+  mln_assertion(opt::element(ima, 3) == 3);
+  mln_assertion(opt::element(ima, 4) == 3);
+  mln_assertion(opt::element(ima, 5) == 1);
+  mln_assertion(opt::element(ima, 6) == 1);
+  mln_assertion(opt::element(ima, 7) == 2);
+  mln_assertion(opt::element(ima, 8) == 3);
+  mln_assertion(opt::element(ima, 9) == 3);
+  mln_assertion(opt::element(ima, 10) == 4);
+  mln_assertion(opt::element(ima, 11) == 4);
+  mln_assertion(opt::element(ima, 12) == 5);
+  mln_assertion(opt::element(ima, 13) == 6);
+  mln_assertion(opt::element(ima, 14) == 6);
+  mln_assertion(opt::element(ima, 15) == 7);
+  mln_assertion(opt::element(ima, 16) == 7);
+  mln_assertion(opt::element(ima, 17) == 8);
+  mln_assertion(opt::element(ima, 18) == 9);
+  mln_assertion(opt::element(ima, 19) == 9);
+  mln_assertion(opt::element(ima, 20) == 7);
+  mln_assertion(opt::element(ima, 21) == 7);
+  mln_assertion(opt::element(ima, 22) == 8);
+  mln_assertion(opt::element(ima, 23) == 9);
+  mln_assertion(opt::element(ima, 24) == 9);
 }
 

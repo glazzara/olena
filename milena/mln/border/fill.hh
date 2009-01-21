@@ -38,6 +38,7 @@
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/box_runstart_piter.hh>
+# include <mln/opt/element.hh>
 
 
 namespace mln
@@ -85,7 +86,7 @@ namespace mln
       void fill_size_1(const Image<I>& ima_, const mln_value(I)& v)
       {
 	trace::entering("border::impl::fill_size_1");
-	
+
 	const I& ima = exact(ima_);
 	internal::fill_tests(ima, v);
 
@@ -99,14 +100,14 @@ namespace mln
 	for_all (pl)
 	  {
 	    unsigned end = ima.index_of_point (pl);
-	    std::memset((void*)&ima.element(st),
+	    std::memset((void*)&opt::element(ima, st),
 			*(const int*)(&v),
 			end - st);
 	    st = end + len_r;
 	  }
-	std::memset((void*)&ima.element(st),
+	std::memset((void*)&opt::element(ima, st),
 		    *(const int*)(&v),
-		    ima.nelements () - st);
+		    opt::nelements(ima) - st);
 
 	trace::exiting("border::impl::fill_size_1");
       }
@@ -130,11 +131,11 @@ namespace mln
 	  {
 	    unsigned end = ima.index_of_point (pl);
 	    for (unsigned i = st; i < end; ++i)
-	      ima.element(i) = v;
+              opt::element(ima, i) = v;
 	    st = end + len_r;
 	  }
-	for (unsigned i = st; i < ima.nelements (); ++i)
-	  ima.element(i) = v;
+	for (unsigned i = st; i < opt::nelements(ima); ++i)
+          opt::element(ima, i) = v;
 
 	trace::exiting("border::impl::fill_size_n");
       }
@@ -145,7 +146,7 @@ namespace mln
 
     namespace internal
     {
-    
+
       // Dispatch.
 
       template <typename I>

@@ -32,8 +32,10 @@
 ///
 /// \todo Rewrite this non-sense test file!!!
 
+
 #include <mln/border/fill.hh>
 #include <mln/data/fill.hh>
+#include <mln/opt/element.hh>
 #include <mln/core/image/image1d.hh>
 #include <mln/core/image/image2d.hh>
 #include <mln/core/image/image3d.hh>
@@ -46,6 +48,7 @@
 #include <mln/value/float01_8.hh>
 #include <mln/value/float01_16.hh>
 #include <mln/debug/println_with_border.hh>
+
 
 using namespace mln;
 
@@ -60,13 +63,13 @@ check1d(unsigned row, unsigned border, T& value, T& v)
 
   unsigned i = 0;
   for(i = 0; i < border; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
   unsigned bo = border + row;
   for(; i < bo; ++i)
-    mln_assertion (ima.element(i) == v);
+    mln_assertion (opt::element(ima, i) == v);
   bo += border;
   for(; i < bo; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
 }
 
 template <typename T>
@@ -85,18 +88,18 @@ check2d(unsigned row, unsigned col, unsigned border, T& value, T& v)
   unsigned ww = r * c;
 
   for(i = 0; i < bo; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
   bo += c * row;
   for(; i < bo; ++i)
     {
       unsigned cur = i % c;
       if (cur < border || cur >= u)
-	mln_assertion (ima.element(i) == value);
+	mln_assertion (opt::element(ima, i) == value);
       else
-	mln_assertion (ima.element(i) == v);
+	mln_assertion (opt::element(ima, i) == v);
     }
   for(; i < ww; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
 }
 
 template <typename T>
@@ -115,18 +118,18 @@ check3d(unsigned sli, unsigned row, unsigned col, unsigned border, T& value, T& 
   unsigned ww = r * c;
 
   for(i = 0; i < bo; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
   bo += c * row;
   for(; i < bo; ++i)
     {
       unsigned cur = i % c;
       if (cur < border || cur >= u)
-	mln_assertion (ima.element(i) == value);
+	mln_assertion (opt::element(ima, i) == value);
       else
-	mln_assertion (ima.element(i) == v);
+	mln_assertion (opt::element(ima, i) == v);
     }
   for(; i < ww; ++i)
-    mln_assertion (ima.element(i) == value);
+    mln_assertion (opt::element(ima, i) == value);
 }
 
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory
 // (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
@@ -28,12 +28,10 @@
 
 /// \file tests/opt/value.cc
 ///
-/// Tests on mln::opt::value.
+/// Tests on mln::opt::at.
 
-#include <mln/opt/value.hh>
-#include <mln/core/image/flat_image.hh>
-#include <mln/core/alias/box2d.hh>
-
+#include <mln/opt/element.hh>
+#include <mln/core/image/image2d.hh>
 #include <mln/trace/all.hh>
 
 
@@ -41,12 +39,9 @@ int main()
 {
   using namespace mln;
 
-  short val = 6;
-  typedef flat_image<short, box2d> I;
-  I ima(val, box2d(3, 4));
+  image2d<short> ima(12, 12);
 
-  opt::value(ima) = 51;
-  mln_precondition(opt::value(ima) == 51);
-
-
+  opt::element(ima, 2) = 51;
+  mln_precondition(opt::element(ima, 2) == 51);
+  mln_precondition(opt::nelements(ima) == 324);
 }

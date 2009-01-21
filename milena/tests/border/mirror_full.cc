@@ -36,6 +36,7 @@
 #include <mln/border/mirror.hh>
 #include <mln/value/int_u8.hh>
 #include <mln/value/int_s8.hh>
+#include <mln/opt/element.hh>
 
 
 namespace mln
@@ -51,7 +52,7 @@ namespace mln
     border::mirror(ima);
 
     for (int i = 0; i < c; ++i)
-      mln_assertion(ima.element(i) == ref[i]);
+      mln_assertion(opt::element(ima, i) == ref[i]);
   }
 
   template <typename T>
@@ -65,7 +66,7 @@ namespace mln
     border::mirror(ima);
 
     for (int i = 0; i < c * r; ++i)
-      mln_assertion(ima.element(i) == ref[i]);
+      mln_assertion(opt::element(ima, i) == ref[i]);
   }
 
 }

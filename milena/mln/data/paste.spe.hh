@@ -43,6 +43,7 @@
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
 # include <mln/opt/value.hh>
+# include <mln/opt/element.hh>
 
 
 
@@ -111,7 +112,7 @@ namespace mln
         *(src.address_()) = input.buffer();
         *(dst.address_()) = output.buffer();
 
-        memcpy_(dst, src, input.nelements());
+        memcpy_(dst, src, opt::nelements(input));
 
         trace::exiting("data::impl::paste_fastest");
       }

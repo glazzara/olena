@@ -37,6 +37,7 @@
 # include <mln/core/routine/primary.hh>
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
+# include <mln/opt/element.hh>
 
 
 namespace mln
@@ -75,11 +76,11 @@ namespace mln
  	unsigned border = ima.border();
 
 	for (unsigned i = 0; i < border; ++i)
-	  ima.element(i) = ima.element(border);
+          opt::element(ima, i) = opt::element(ima, border);
 
 	unsigned st = border + len_c - 1;
-	for (unsigned i = st + 1; i < ima.nelements(); ++i)
-	  ima.element(i) = ima.element(st);
+	for (unsigned i = st + 1; i < opt::nelements(ima); ++i)
+          opt::element(ima, i) = opt::element(ima, st);
 
 	trace::exiting("border::impl::duplicate_1D");
       }
@@ -104,23 +105,23 @@ namespace mln
 	  {
  	    st = ima.index_of_point (pl);
 	    for (unsigned i = 1; i <= border; ++i)
-	      ima.element(st - i) = ima.element(st);
+              opt::element(ima, st - i) = opt::element(ima, st);
 	    st = st + len_c - 1;
 	    for (unsigned i = 1; i <= border; ++i)
-	      ima.element(st + i) = ima.element(st);
+              opt::element(ima, st + i) = opt::element(ima, st);
  	  }
 
 	// Duplicate n first * border line
 	st = real_len_c * border;
 	for (unsigned k = 0; k < border; ++k)
 	  for (unsigned i = 0; i < real_len_c; ++i)
-	    ima.element(k * real_len_c + i) = ima.element(st + i);
+            opt::element(ima, k * real_len_c + i) = opt::element(ima, st + i);
 
 	// Duplicate n last * border line
 	st = real_len_c * (border + len_r - 1);
 	for (unsigned k = 1; k <= border; ++k)
 	  for (unsigned i = st; i < st + real_len_c; ++i)
-	    ima.element(k * real_len_c + i) = ima.element(i);
+            opt::element(ima, k * real_len_c + i) = opt::element(ima, i);
 
 	trace::exiting("border::impl::duplicate_2D");
       }
@@ -155,10 +156,10 @@ namespace mln
 	      {
 		st = ima.index_of_point (pl);
 		for (unsigned i = 1; i <= border; ++i)
-		  ima.element(st - i) = ima.element(st);
+                  opt::element(ima, st - i) = opt::element(ima, st);
 		st = st + len_c - 1;
 		for (unsigned i = 1; i <= border; ++i)
-		  ima.element(st + i) = ima.element(st);
+                  opt::element(ima, st + i) = opt::element(ima, st);
 		pl.next();
 	      }
 
@@ -166,26 +167,28 @@ namespace mln
 	    st = border * face + k * face + border * real_len_c ;
 	    for (unsigned j = 1; j <= border; ++j)
 	      for (unsigned i = 0; i < real_len_c; ++i)
-		ima.element(st - j * real_len_c + i) = ima.element(st + i);
+                opt::element(ima, st - j * real_len_c + i) =
+                  opt::element(ima, st + i);
 
 	    // Duplicate n last * border line
 	    st = border * face + k * face + (len_r + border - 1) * real_len_c ;
 	    for (unsigned j = 1; j <= border; ++j)
 	      for (unsigned i = 0; i < real_len_c; ++i)
-		ima.element(st + j * real_len_c + i) = ima.element(st + i);
+                opt::element(ima, st + j * real_len_c + i) =
+                  opt::element(ima, st + i);
 	  }
 
 	// Duplicate n first * border face
 	st = border * face;
 	for (unsigned k = 0; k < border; ++k)
 	  for (unsigned i = 0; i < face; ++i)
-	    ima.element(k * face + i) = ima.element(st + i);
+            opt::element(ima, k * face + i) = opt::element(ima, st + i);
 
 	// Duplicate n last * border face
 	st = (len_s + border - 1) * face;
 	for (unsigned k = 1; k <= border; ++k)
 	  for (unsigned i = 0; i < face; ++i)
-	    ima.element(st + k * face + i) = ima.element(st + i);
+            opt::element(ima, st + k * face + i) = opt::element(ima, st + i);
 
 	trace::exiting("border::impl::duplicate_3D");
       }

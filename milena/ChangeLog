@@ -1,3 +1,28 @@
+2009-01-21  Nicolas Ballas  <ballas@lrde.epita.fr>
+
+	Externalize element and nelement method in fastest images.
+
+	* mln/opt/element.hh: New, define opt::element and opt::nelements.
+	* mln/debug/println_with_border.spe.hh,
+	* mln/debug/println_with_border.hh,
+	* mln/data/paste.spe.hh,
+	* mln/data/fill_with_value.spe.hh,
+	* mln/data/fill_with_image.spe.hh,
+	* mln/data/memcpy_.hh,
+	* mln/data/memset_.hh,
+	* mln/border/fill.hh,
+	* mln/border/duplicate.hh,
+	* mln/border/mirror.hh,
+	* tests/opt/value.cc,
+	* tests/border/duplicate_full.cc,
+	* tests/border/mirror_full.cc,
+	* tests/border/fill_full.cc,
+	* tests/border/duplicate.cc,
+	* tests/border/mirror.cc,
+	* tests/border/fill.cc: Use now opt::element and opt::nelements.
+	* mln/opt/value.hh: Update Copyright.
+	* tests/opt/element.cc: New tests.
+
 2009-01-21  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix mln mean. mln_sum(T) MUST be divisible by unsigned.

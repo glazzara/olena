@@ -38,6 +38,7 @@
 
 # include <mln/data/memset_.hh>
 # include <mln/opt/value.hh>
+# include <mln/opt/element.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -89,7 +90,7 @@ namespace mln
                        trait::image::value_access::direct))::check();
 
 	mln_value(I) v = static_cast<mln_value(I)>(val);
-        data::memset_(ima, ima.point_at_index(0), v, ima.nelements());
+        data::memset_(ima, ima.point_at_index(0), v, opt::nelements(ima));
 
 	trace::exiting("data::impl::fill_with_value_one_block");
       }

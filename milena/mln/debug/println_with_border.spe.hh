@@ -40,6 +40,7 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/window.hh>
 # include <mln/debug/format.hh>
+# include <mln/opt/element.hh>
 
 namespace mln
 {
@@ -61,7 +62,7 @@ namespace mln
       println_with_border(const box2d& b, const I& input)
       {
 	const unsigned ncols = b.ncols() + 2 * input.border();
- 	for (size_t i = 0; i < input.nelements(); i++)
+ 	for (size_t i = 0; i < opt::nelements(input); i++)
 	{
 	  std::cout << format(input.buffer()[i]) << ' ';
 	  if (((i + 1) % ncols) == 0)

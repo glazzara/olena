@@ -44,6 +44,7 @@
 # include <mln/core/box_runstart_piter.hh>
 # include <mln/border/get.hh>
 # include <mln/opt/value.hh>
+# include <mln/opt/element.hh>
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -89,7 +90,7 @@ namespace mln
         *(src.address_()) = data.buffer();
         *(dst.address_()) = ima.buffer();
 
-        memcpy_(dst, src, ima.nelements());
+        memcpy_(dst, src, opt::nelements(ima));
 
         trace::exiting("data::impl::fill_with_image_fastest");
       }

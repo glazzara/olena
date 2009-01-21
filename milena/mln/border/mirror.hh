@@ -49,6 +49,8 @@
 # include <mln/geom/max_col.hh>
 # include <mln/geom/ninds.hh>
 
+# include <mln/opt/element.hh>
+
 
 namespace mln
 {
@@ -95,10 +97,10 @@ namespace mln
 	{
 	  def::coord i = 0;
 	  for (; i < min; ++i)
-	    ima.element(border - 1 - i) = ima(point1d(i));
+            opt::element(ima, border - 1 - i) = ima(point1d(i));
 
 	  for (; i < border; ++i)
-	    ima.element(border - 1 - i) = ima(point1d(static_cast<def::coord>(min - 1)));
+            opt::element(ima, border - 1 - i) = ima(point1d(static_cast<def::coord>(min - 1)));
 	}
 
 	/// right border
@@ -109,12 +111,12 @@ namespace mln
 	  for (;
 	       i < min;
 	       ++i, --j)
-	    ima.element(border + nbinds + i) = ima(point1d(j));
+            opt::element(ima, border + nbinds + i) = ima(point1d(j));
 	  ++j;
 	  for (;
 	       i < border;
 	       ++i)
-	    ima.element(border + nbinds + i) = ima(point1d(j));
+            opt::element(ima, border + nbinds + i) = ima(point1d(j));
 	}
 	trace::exiting("border::impl::mirror_");
       }
@@ -136,49 +138,56 @@ namespace mln
 	// mirror top left corner
 	for (unsigned i = 0; i < border; ++i)
 	  for (unsigned j = 0; j < border; ++j)
-	  ima.element(i * ((nbcols + 1) + 2 * border) + j) = ima.element(s);
+            opt::element(ima, i * ((nbcols + 1) + 2 * border) + j) =
+              opt::element(ima, s);
 
 	// mirror top left corner
 	s = start + nbcols;
 	for (unsigned i = 0; i < border; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)) = ima.element(s);
+            opt::element(ima, i * ((nbcols + 1) + 2 * border) + (nbcols + border + j)) = opt::element(ima, s);
 
 	// mirror bottom left corner
 	s = start + (nbrows * real_nbcols);
 	for (unsigned i = 1; i <= border; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(s - i + (j * (real_nbcols))) = ima.element(s);
+            opt::element(ima, s - i + (j * (real_nbcols))) =
+              opt::element(ima, s);
 
 	// mirror bottom right corner
 	s = start + (nbrows * real_nbcols) + nbcols;
 	for (unsigned i = 1; i <= border; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(s + i + (j * real_nbcols)) = ima.element(s);
+            opt::element(ima, s + i + (j * real_nbcols)) =
+              opt::element(ima, s);
 
 	// mirror top border
 	s = start;
 	for (unsigned i = 0; i <= nbcols; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(s + i - (j * real_nbcols)) = ima.element(s + i + ((j - 1)* real_nbcols));
+            opt::element(ima, s + i - (j * real_nbcols)) =
+              opt::element(ima, s + i + ((j - 1)* real_nbcols));
 
 	// mirror left border
 	s = start;
 	for (unsigned i = 0; i <= nbrows; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
- 	  ima.element(s + (i * real_nbcols) - j) = ima.element(s + (i * real_nbcols) + (j - 1));
+            opt::element(ima, s + (i * real_nbcols) - j) =
+              opt::element(ima, s + (i * real_nbcols) + (j - 1));
 
 	// mirror right border
 	s = start;
 	for (unsigned i = 0; i <= nbrows; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(s + (i * real_nbcols + nbcols) + j) = ima.element(s + (i * real_nbcols + nbcols) - (j - 1));
+            opt::element(ima, s + (i * real_nbcols + nbcols) + j) =
+              opt::element(ima, s + (i * real_nbcols + nbcols) - (j - 1));
 
 	// mirror bottom border
 	s = start + (nbrows * real_nbcols);
 	for (unsigned i = 0; i <= nbcols; ++i)
 	  for (unsigned j = 1; j <= border; ++j)
-	    ima.element(s + i + (j * real_nbcols)) = ima.element(s + i - ((j - 1)* real_nbcols));
+            opt::element(ima, s + i + (j * real_nbcols)) =
+              opt::element(ima, s + i - ((j - 1)* real_nbcols));
 
 	trace::exiting("border::impl::mirror_");
       }

@@ -43,6 +43,7 @@
 # include <mln/debug/format.hh>
 // Specializations are in:
 # include <mln/debug/println_with_border.spe.hh>
+# include <mln/opt/element.hh>
 
 namespace mln
 {
@@ -66,7 +67,7 @@ namespace mln
       void
       println_with_border(const S&, const I& input)
       {
-	for (size_t i = 0; i < input.nelements(); i++)
+	for (size_t i = 0; i < opt::nelements(input); i++)
 	  std::cout << format(input.buffer()[i]) << ' ';
 	std::cout << std::endl;
       }

@@ -34,6 +34,7 @@
 #include <mln/core/image/image2d.hh>
 #include <mln/debug/iota.hh>
 #include <mln/border/mirror.hh>
+#include <mln/opt/element.hh>
 
 #include <mln/debug/println_with_border.hh>
 
@@ -46,14 +47,14 @@ main (void)
     image1d<int> ima(2, 3);
     debug::iota(ima);
     border::mirror(ima);
-    mln_assertion(ima.element(0) == 2);
-    mln_assertion(ima.element(1) == 2);
-    mln_assertion(ima.element(2) == 1);
-    mln_assertion(ima.element(3) == 1);
-    mln_assertion(ima.element(4) == 2);
-    mln_assertion(ima.element(5) == 2);
-    mln_assertion(ima.element(6) == 1);
-    mln_assertion(ima.element(7) == 1);
+    mln_assertion(opt::element(ima, 0) == 2);
+    mln_assertion(opt::element(ima, 1) == 2);
+    mln_assertion(opt::element(ima, 2) == 1);
+    mln_assertion(opt::element(ima, 3) == 1);
+    mln_assertion(opt::element(ima, 4) == 2);
+    mln_assertion(opt::element(ima, 5) == 2);
+    mln_assertion(opt::element(ima, 6) == 1);
+    mln_assertion(opt::element(ima, 7) == 1);
   }
 
 
@@ -62,47 +63,47 @@ main (void)
   debug::iota(ima);
   border::mirror(ima);
 
-  mln_assertion(ima.element( 0) == 1);
-  mln_assertion(ima.element( 1) == 1);
-  mln_assertion(ima.element( 2) == 4);
-  mln_assertion(ima.element( 3) == 5);
-  mln_assertion(ima.element( 4) == 6);
-  mln_assertion(ima.element( 5) == 3);
-  mln_assertion(ima.element( 6) == 3);
-  mln_assertion(ima.element( 7) == 1);
-  mln_assertion(ima.element( 8) == 1);
-  mln_assertion(ima.element( 9) == 1);
-  mln_assertion(ima.element(10) == 2);
-  mln_assertion(ima.element(11) == 3);
-  mln_assertion(ima.element(12) == 3);
-  mln_assertion(ima.element(13) == 3);
-  mln_assertion(ima.element(14) == 2);
-  mln_assertion(ima.element(15) == 1);
-  mln_assertion(ima.element(16) == 1);
-  mln_assertion(ima.element(17) == 2);
-  mln_assertion(ima.element(18) == 3);
-  mln_assertion(ima.element(19) == 3);
-  mln_assertion(ima.element(20) == 2);
-  mln_assertion(ima.element(21) == 5);
-  mln_assertion(ima.element(22) == 4);
-  mln_assertion(ima.element(23) == 4);
-  mln_assertion(ima.element(24) == 5);
-  mln_assertion(ima.element(25) == 6);
-  mln_assertion(ima.element(26) == 6);
-  mln_assertion(ima.element(27) == 5);
-  mln_assertion(ima.element(28) == 4);
-  mln_assertion(ima.element(29) == 4);
-  mln_assertion(ima.element(30) == 4);
-  mln_assertion(ima.element(31) == 5);
-  mln_assertion(ima.element(32) == 6);
-  mln_assertion(ima.element(33) == 6);
-  mln_assertion(ima.element(34) == 6);
-  mln_assertion(ima.element(35) == 4);
-  mln_assertion(ima.element(36) == 4);
-  mln_assertion(ima.element(37) == 1);
-  mln_assertion(ima.element(38) == 2);
-  mln_assertion(ima.element(39) == 3);
-  mln_assertion(ima.element(40) == 6);
-  mln_assertion(ima.element(41) == 6);
+  mln_assertion(opt::element(ima, 0) == 1);
+  mln_assertion(opt::element(ima, 1) == 1);
+  mln_assertion(opt::element(ima, 2) == 4);
+  mln_assertion(opt::element(ima, 3) == 5);
+  mln_assertion(opt::element(ima, 4) == 6);
+  mln_assertion(opt::element(ima, 5) == 3);
+  mln_assertion(opt::element(ima, 6) == 3);
+  mln_assertion(opt::element(ima, 7) == 1);
+  mln_assertion(opt::element(ima, 8) == 1);
+  mln_assertion(opt::element(ima, 9) == 1);
+  mln_assertion(opt::element(ima, 10) == 2);
+  mln_assertion(opt::element(ima, 11) == 3);
+  mln_assertion(opt::element(ima, 12) == 3);
+  mln_assertion(opt::element(ima, 13) == 3);
+  mln_assertion(opt::element(ima, 14) == 2);
+  mln_assertion(opt::element(ima, 15) == 1);
+  mln_assertion(opt::element(ima, 16) == 1);
+  mln_assertion(opt::element(ima, 17) == 2);
+  mln_assertion(opt::element(ima, 18) == 3);
+  mln_assertion(opt::element(ima, 19) == 3);
+  mln_assertion(opt::element(ima, 20) == 2);
+  mln_assertion(opt::element(ima, 21) == 5);
+  mln_assertion(opt::element(ima, 22) == 4);
+  mln_assertion(opt::element(ima, 23) == 4);
+  mln_assertion(opt::element(ima, 24) == 5);
+  mln_assertion(opt::element(ima, 25) == 6);
+  mln_assertion(opt::element(ima, 26) == 6);
+  mln_assertion(opt::element(ima, 27) == 5);
+  mln_assertion(opt::element(ima, 28) == 4);
+  mln_assertion(opt::element(ima, 29) == 4);
+  mln_assertion(opt::element(ima, 30) == 4);
+  mln_assertion(opt::element(ima, 31) == 5);
+  mln_assertion(opt::element(ima, 32) == 6);
+  mln_assertion(opt::element(ima, 33) == 6);
+  mln_assertion(opt::element(ima, 34) == 6);
+  mln_assertion(opt::element(ima, 35) == 4);
+  mln_assertion(opt::element(ima, 36) == 4);
+  mln_assertion(opt::element(ima, 37) == 1);
+  mln_assertion(opt::element(ima, 38) == 2);
+  mln_assertion(opt::element(ima, 39) == 3);
+  mln_assertion(opt::element(ima, 40) == 6);
+  mln_assertion(opt::element(ima, 41) == 6);
 }
 

@@ -39,6 +39,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 # include <mln/metal/is_not_const.hh>
+# include <mln/opt/element.hh>
+
 
 
 namespace mln
@@ -126,18 +128,18 @@ namespace mln
       mln_precondition(dest.ima().is_valid());
       mln_precondition(src.ima().is_valid());
 
-      mln_precondition(&dest.val() >= &dest.ima().element(0));
-      mln_precondition(&dest.val() < &dest.ima().element(0) +
-                       dest.ima().nelements());
+      mln_precondition(&dest.val() >= &opt::element(dest.ima(), 0));
+      mln_precondition(&dest.val() < &opt::element(dest.ima(), 0) +
+                       opt::nelements(dest.ima()));
 
-      mln_precondition(&dest.val() + n <= &dest.ima().element(0) +
-                       dest.ima().nelements());
+      mln_precondition(&dest.val() + n <= &opt::element(dest.ima(), 0) +
+                       opt::nelements(dest.ima()));
 
-      mln_precondition(&src.val() >= &src.ima().element(0));
-      mln_precondition(&src.val() < &src.ima().element(0) +
-                       src.ima().nelements());
-      mln_precondition(&src.val() + n <= &src.ima().element(0) +
-                       src.ima().nelements());
+      mln_precondition(&src.val() >= &opt::element(src.ima(), 0));
+      mln_precondition(&src.val() < &opt::element(src.ima(), 0) +
+                       opt::nelements(src.ima()));
+      mln_precondition(&src.val() + n <= &opt::element(src.ima(), 0) +
+                       opt::nelements(src.ima()));
 
       impl::memcpy__(dest, src, n);
 

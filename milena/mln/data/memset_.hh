@@ -38,6 +38,8 @@
 # include <mln/core/concept/image.hh>
 # include <mln/core/pixel.hh>
 # include <mln/metal/is_not_const.hh>
+# include <mln/opt/element.hh>
+
 
 
 namespace mln
@@ -132,8 +134,10 @@ namespace mln
       P& pix = mln::internal::force_exact<P>(pix_);
       mln_precondition(pix.ima().is_valid());
       mln_precondition(& pix.val() >= & pix.ima()[0]);
-      mln_precondition(& pix.val() < & pix.ima()[0] + pix.ima().nelements());
-      mln_precondition(& pix.val() + n <= & pix.ima()[0] + pix.ima().nelements());
+      mln_precondition(& pix.val() < & pix.ima()[0] +
+                       opt::nelements(pix.ima()));
+      mln_precondition(& pix.val() + n <= & pix.ima()[0] +
+                       opt::nelements(pix.ima()));
 
       impl::memset__(pix, v, n);
 
@@ -151,7 +155,7 @@ namespace mln
 
       mln_precondition(input.is_valid());
       mln_precondition(input.has(p));
-      mln_precondition(input.index_of_point(p) + n <= input.nelements());
+      mln_precondition(input.index_of_point(p) + n <= opt::nelements(input));
 
       pixel<I> pix(input, p);
       impl::memset__(pix, v, n);
