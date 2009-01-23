@@ -1,5 +1,11 @@
 2009-01-23  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
+	Fix Fix connectivity number values for c4.
+
+	* inim/ocr/simple_point.hh: Report change due to the patch 2900.
+
+2009-01-23  Matthieu Garrigues  <garrigues@lrde.epita.fr>
+
 	Add another version of self dual reconstruction.
 
 	* garrigues/union_find/self_dual_reconstruction.hh,
