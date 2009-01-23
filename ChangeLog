@@ -1,3 +1,7 @@
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* configure.ac: Configure milena/tests/extract.
+
 2008-12-30  Roland Levillain  <roland@lrde.epita.fr>
 
 	* configure.ac: Configure milena/apps/statues/test-mesh-max-curv.

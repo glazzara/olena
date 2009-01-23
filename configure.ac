@@ -197,6 +197,7 @@ AC_CONFIG_FILES([
     milena/tests/draw/Makefile
     milena/tests/estim/Makefile
     milena/tests/extension/Makefile
+    milena/tests/extract/Makefile
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
       milena/tests/fun/p2b/Makefile
