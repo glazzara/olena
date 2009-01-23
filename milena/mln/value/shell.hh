@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,72 +29,72 @@
 #ifndef MLN_CORE_VALUE_SHELL_HH
 # define MLN_CORE_VALUE_SHELL_HH
 
+# include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/function.hh>
 # include <mln/core/concept/image.hh>
-# include <mln/value/internal/value_like.hh>
 
 namespace mln
 {
 
+  // Forward declaration.
   namespace value
   {
     template <typename F, typename I>
     struct shell;
-  }
-
-
-
-  namespace trait
-  {
-
-    template <typename F, typename I>
-    struct value_< mln::value::shell<F, I> >
-      : value_< mln_result(F) >
-    {
-    };
-
-  } // end of namespace trait
+  } // end of namespace mln::value
 
   namespace value
   {
+
     namespace impl
     {
+
       template <typename F, typename I, class C>
       struct shell_ { };
+
 
       template <typename F, typename I>
       struct shell_<F, I, Function_v2w2v<void> >
       {
-	mln_value(I) set_ (I &ima, const mln_site(I) &s, const typename F::result &v);
+	const mln_value(I)&
+	set_(I& ima, const mln_site(I)& s, mln_result(F) v);
       };
+
 
       template <typename F, typename I>
       struct shell_<F, I, Function_v2w_w2v<void> >
       {
-	mln_value(I) set_ (I &ima, const mln_site(I) &s, const typename F::result &v);
+	const mln_value(I)&
+	set_(I& ima, const mln_site(I)& s, mln_result(F) v);
       };
-    }
+
+    } // end of namespace mln::value::impl
 
 
     template <typename F, typename I>
-    struct shell : public impl::shell_<F, I, typename F::category>, Value < shell<F, I> > // FIXME : should it be value_like ?
+    struct shell
+      : public Proxy< shell<F,I> >,
+	public mln::internal::proxy_impl< mln_result(F), shell<F,I> >,
+	public impl::shell_<F, I, typename F::category>
     {
-      typedef typename F::result value;
+      typedef mln_result(F) value;
 
       // Ctor
       shell(Image<I> &ima, const mln_site(I) &s);
 
       // Read
-      operator value ();
+      operator value () const;
 
       // Write
-      value operator= (value);
+      value operator=(value);
 
       // Enc
       typedef void enc; // FIXME
 
       // Equiv
       typedef value equiv;
+
+      mln_result(F) subj_();
 
       // <<
       // std::ostream& operator<<(std::ostream& ostr);
@@ -102,88 +103,79 @@ namespace mln
       // std::istream& operator>>(std::istream& istr);
 
 
-    protected :
-      I &ima;
-      mln_site(I) s;
+    protected:
+      I& ima_;
+      mln_site(I) s_;
+      mln_result(F) v_;
     };
-  }
+
 
 # ifndef MLN_INCLUDE_ONLY
-
-  namespace value
-  {
 
     // Ctor
 
     template <typename F, typename I>
-    shell<F, I>::shell(Image<I> &ima, const mln_site(I) &s)
-      : ima(exact(ima)), s(s)
-    { }
+    shell<F,I>::shell(Image<I> &ima, const mln_site(I) &s)
+      : ima_(exact(ima)), s_(s), v_(F()(exact(ima)(s)))
+    {
+    }
 
 
     // Read for everyone
     template <typename F, typename I>
-    shell<F, I>::operator value ()
+    shell<F,I>::operator value() const
     {
-      return F()(ima(s));
+      return v_;
     }
 
     // Write for everyone
     template <typename F, typename I>
-    typename F::result shell<F, I>::operator= (typename F::result v)
+    typename F::result
+    shell<F,I>::operator=(mln_result(F) v)
     {
-      set_(ima, s, v);
-      return v;
+      v_ = F()(set_(ima_, s_, v));
+      return v_;
     }
 
-    //   template <typename F, typename I>
-    //   std::ostream& shell<F, I>::operator<<(std::ostream& ostr)
-    //   {
-    //     ostr << ima(s);
-    //     return ostr;
-    //   }
+    template <typename F, typename I>
+    mln_result(F)
+    shell<F,I>::subj_()
+    {
+      return v_;
+    }
 
-    //   template <typename F, typename I>
-    //   std::istream& shell<F, I>::operator>>(std::istream& istr)
-    //   {
-    //     ima(s) >> istr;
-    //     return istr;
-    //   }
 
     namespace impl
     {
+
       template <typename F, typename I>
-      mln_value(I) shell_<F, I, Function_v2w2v<void> >::set_ (I &ima, const mln_site(I) &s, const typename F::result &v)
+      const mln_value(I)&
+      shell_<F, I, Function_v2w2v<void> >::set_(I& ima,
+						const mln_site(I)& s,
+						mln_result(F) v)
       {
 	ima(s) = F().f_1(v);
 	return ima(s);
       }
 
+
       template <typename F, typename I>
-      mln_value(I) shell_<F, I, Function_v2w_w2v<void> >::set_ (I &ima, const mln_site(I) &s, const typename F::result &v)
+      const mln_value(I)&
+      shell_<F, I, Function_v2w_w2v<void> >::set_(I& ima,
+						  const mln_site(I)& s,
+						  mln_result(F) v)
       {
 	ima(s) = F().f_1(v, ima(s));
 	return ima(s);
       }
 
-    }
-  }
+    } // end of namespace mln::value::impl
 
-  template <typename F, typename I>
-  std::ostream& operator<<(std::ostream& ostr, value::shell<F, I> &s)
-  {
-    ostr << (typename value::shell<F, I>::value) s;
-    return ostr;
-  }
-
-  template <typename F, typename I>
-  std::istream& operator>>(std::istream& istr, value::shell<F, I> &s)
-  {
-    (typename value::shell<F, I>::value) s >> istr;
-    return istr;
-  }
 
 # endif // MLN_INCLUDE_ONLY
+
+
+  } // end of namespace mln::value
 
 } // end of namespace mln
 

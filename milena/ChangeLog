@@ -1,5 +1,11 @@
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix various operator issues with value::shell.
+
+	* mln/value/shell.hh: make it inherit from Proxy.
+
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add routines to work on a specific color component.
 
 	* headers.mk: add new headers to distribution.
