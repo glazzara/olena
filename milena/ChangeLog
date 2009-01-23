@@ -1,5 +1,24 @@
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Use extract::* routines in tutorial examples.
+
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-10.ppm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-7.pgm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-7.ppm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-8.pgm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-8.ppm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-9.pgm
+	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-9.ppm:
+	new reference files.
+
+	* milena/doc/tutorial/samples/tuto4_genericity_and_algorithms.cc:
+	uncomment code using extract::* routines.
+
+	* milena/doc/tutorial/tutorial.tex: include code and images related to
+	extract::* routines. More explanations need to be written.
+
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Introduce literal::min and literal::max.
 
 	* milena/headers.mk: add new headers to distribution.

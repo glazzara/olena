@@ -1,5 +1,7 @@
 \documentclass{report}
-\usepackage{hevea}
+
+%\usepackage{hevea}
+
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{makeidx}
@@ -683,13 +685,46 @@ value in \var{label} is equal to 16'.
 \end{center}
 
 
+%**************************
+\doxysection{tuto4component}{Image component restricted to a domain}
+
+\doxycode[11]{tuto4_genericity_and_algorithms}
+
+\begin{center}
+  \begin{tabular}{c c c c}
+    \doxyimg{small-enlarged}  &
+%   \doxyfigure[7]{tuto4_genericity_and_algorithms}{3cm} &
+    ~\huge{\rightarrow}~ &
+    \doxyfigure[8]{tuto4_genericity_and_algorithms}{3cm}  \\
+    \multicolumn{4}{c}{Fill with green a region of interest defined by its
+      label.} \\
+  \end{tabular}
+\end{center}
+
+
+
+\doxycode[12]{tuto4_genericity_and_algorithms}
+
+\begin{center}
+  \begin{tabular}{c c c c}
+    \doxyimg{small-enlarged}  &
+%    \doxyfigure[9]{tuto4_genericity_and_algorithms}{3cm} &
+    ~\huge{\rightarrow}~ &
+    \doxyfigure[10]{tuto4_genericity_and_algorithms}{3cm}  \\
+    \multicolumn{4}{c}{Fill with green a region of interest defined by its
+      label.} \\
+  \end{tabular}
+\end{center}
+
 
 \vspace{2cm}
 \begin{center}
   \tutotoc{tuto3}{tuto5}
 \end{center}
 
-%====================================
+%====================================%
+%Ugly workaround to avoid missing chapter references in doxygen.
+\doxychapter{1}{}
 \doxychapter{tuto5}{Step 5: Conversion between image values}
 
 
@@ -1317,10 +1352,6 @@ Return Type & Name & Arguments & Const & Comments \\ \hline
 I::pvset & domain & - & X - &  \\ \hline
 const Value\& & operator() & const point\& p & X & Used for reading. \\ \hline
 Value\& & operator() & const point\& p & - & Used for writing. \\ \hline
-const P\& & at & unsigned x,
-         unsigned y & X & Used for reading. \\ \hline
-P\& & at & unsigned x,
-         unsigned y & - & Used for writing. \\ \hline
 bool & has & const Point\& p & X & \\ \hline
 bool & has\_data & - & X & Returns true if the domain is defined. \\ \hline
 site\_id & id & - & X & Return the Id of the underlying shared data. \\ \hline

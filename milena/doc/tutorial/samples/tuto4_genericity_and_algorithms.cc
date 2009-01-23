@@ -89,11 +89,13 @@ int main()
 
 
 
-/*
+
   lena = duplicate(lena_bak);
   // \{
-  data::fill(fun::green(lena), literal::max);
+  data::fill(extract::green(lena).rw(), literal::max);
   // \}
+  //FIXME: we would like to save the green component in rgb8.
+  doc::pgmsave(extract::green(lena), "tuto4_genericity_and_algorithms");
   doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
 
 
@@ -101,10 +103,10 @@ int main()
 
   lena = duplicate(lena_bak);
   // \{
-  mln_VAR(object, pw::value(label) == pw::cst(3));
-  data::fill((fun::green(lena) | object).rw(), literal::max);
+  mln_VAR(object, pw::value(label) == pw::cst(3u));
+  data::fill((extract::green(lena).rw() | object).rw(), literal::max);
   // \}
-  doc::pgmsave(object, "tuto4_genericity_and_algorithms");
-  doc::ppmsave(label, "tuto4_genericity_and_algorithms");
-*/
+  doc::pgmsave(lena | object, "tuto4_genericity_and_algorithms");
+  doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
+
 }
