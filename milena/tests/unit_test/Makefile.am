@@ -44,6 +44,7 @@ mln_pw_cst \
 mln_pw_var \
 mln_pw_essential \
 mln_literal_zero \
+mln_literal_max \
 mln_literal_ops \
 mln_literal_origin \
 mln_literal_grays \
@@ -51,6 +52,7 @@ mln_literal_all \
 mln_literal_colors \
 mln_literal_black \
 mln_literal_one \
+mln_literal_min \
 mln_literal_white \
 mln_literal_essential \
 mln_registration_get_rtransf \
@@ -1065,6 +1067,7 @@ mln_pw_cst_SOURCES = mln_pw_cst.cc
 mln_pw_var_SOURCES = mln_pw_var.cc
 mln_pw_essential_SOURCES = mln_pw_essential.cc
 mln_literal_zero_SOURCES = mln_literal_zero.cc
+mln_literal_max_SOURCES = mln_literal_max.cc
 mln_literal_ops_SOURCES = mln_literal_ops.cc
 mln_literal_origin_SOURCES = mln_literal_origin.cc
 mln_literal_grays_SOURCES = mln_literal_grays.cc
@@ -1072,6 +1075,7 @@ mln_literal_all_SOURCES = mln_literal_all.cc
 mln_literal_colors_SOURCES = mln_literal_colors.cc
 mln_literal_black_SOURCES = mln_literal_black.cc
 mln_literal_one_SOURCES = mln_literal_one.cc
+mln_literal_min_SOURCES = mln_literal_min.cc
 mln_literal_white_SOURCES = mln_literal_white.cc
 mln_literal_essential_SOURCES = mln_literal_essential.cc
 mln_registration_get_rtransf_SOURCES = mln_registration_get_rtransf.cc

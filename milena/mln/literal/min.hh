@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
-// Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,48 +25,53 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_LITERAL_ALL_HH
-# define MLN_LITERAL_ALL_HH
+#ifndef MLN_LITERAL_MIN_HH
+# define MLN_LITERAL_MIN_HH
 
-/// \file mln/literal/all.hh
+/// \file mln/literal/min.hh
 ///
-/// File that includes all literals.
+/// Definition of the literal of mln::min.
 
-// Technical note:
-//
-// With some recent g++ versions, we have a warning due to literal
-// conversions (namely: "type qualifiers ignored on function return
-// type").  This warning comes from the "operator T()" method
-// instantiated with T being a const type, for instance, when
-// literal::zero is given to a procedure expecting a "const int&"
-// object.   This warning will be avoided in very recent versions
-// of C++ thanks to the new compiling option -Wignore_qualifiers.
+# include <mln/core/concept/literal.hh>
+# include <mln/trait/value_.hh>
 
 
 namespace mln
 {
 
-  /// Namespace of literals.
-  namespace literal {}
+  namespace literal
+  {
 
-}
+    /// Type of literal min.
+    struct min_t : public Literal<min_t>
+    {
 
-
-# include <mln/literal/zero.hh>
-# include <mln/literal/one.hh>
-
-# include <mln/literal/origin.hh>
-
-# include <mln/literal/white.hh>
-# include <mln/literal/black.hh>
-
-# include <mln/literal/grays.hh>
-# include <mln/literal/colors.hh>
-
-# include <mln/literal/max.hh>
-# include <mln/literal/min.hh>
-
-# include <mln/literal/ops.hh>
+      template <typename T>
+      operator T () const;
+    };
 
 
-#endif // ! MLN_LITERAL_ALL_HH
+    /// Literal min.
+    extern const min_t& min;
+
+
+# ifndef MLN_INCLUDE_ONLY
+
+    template <typename T>
+    inline
+    min_t::operator T () const
+    {
+      return mln_min(T);
+    }
+
+
+    const min_t& min = min_t();
+
+# endif // ! MLN_INCLUDE_ONLY
+
+  } // end of namespace mln::literal
+
+} // end of namespace mln
+
+
+#endif // ! MLN_LITERAL_MIN_HH

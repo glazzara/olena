@@ -1,5 +1,21 @@
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Introduce literal::min and literal::max.
+
+	* milena/headers.mk: add new headers to distribution.
+
+	* milena/mln/literal/all.hh: include new headers.
+
+	* milena/mln/literal/max.hh,
+	* milena/mln/literal/min.hh: New literals. They use mln_{max,min}
+	internaly.
+
+	* milena/tests/unit_test/Makefile.am,
+	* milena/tests/unit_test/mln_literal_max.cc,
+	* milena/tests/unit_test/mln_literal_min.cc: new unit tests.
+
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix various operator issues with value::shell.
 
 	* mln/value/shell.hh: make it inherit from Proxy.

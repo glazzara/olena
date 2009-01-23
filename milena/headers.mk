@@ -44,6 +44,7 @@ mln/pw/cst.hh \
 mln/pw/var.hh \
 mln/pw/essential.hh \
 mln/literal/zero.hh \
+mln/literal/max.hh \
 mln/literal/ops.hh \
 mln/literal/origin.hh \
 mln/literal/grays.hh \
@@ -51,6 +52,7 @@ mln/literal/all.hh \
 mln/literal/colors.hh \
 mln/literal/black.hh \
 mln/literal/one.hh \
+mln/literal/min.hh \
 mln/literal/white.hh \
 mln/literal/essential.hh \
 mln/registration/get_rtransf.hh \
