@@ -2,12 +2,9 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
-SUBDIRS =					\
-  fits						\
-  off						\
-  pbm						\
-  pfm						\
-  pgm						\
-  pnm						\
-  ppm 						\
-  raw
+check_PROGRAMS =				\
+   raw
+
+raw_SOURCES = raw.cc
+
+TESTS = $(check_PROGRAMS)

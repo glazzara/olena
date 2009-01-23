@@ -1,5 +1,27 @@
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add io::raw::save and io::raw::load routines.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/io/raw/all.hh: include new headers.
+
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh: new io routines. Dump/load Olena images into a
+	file.
+
+	* tests/io/Makefile.am,
+	* tests/io/raw/Makefile.am,
+	* tests/io/raw/pbm.cc,
+	* tests/io/raw/raw.cc: add new tests.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_io_raw_all.cc,
+	* tests/unit_test/mln_io_raw_load.cc,
+	* tests/unit_test/mln_io_raw_save.cc: add new unit tests.
+
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Use extract::* routines in tutorial examples.
 
 	* milena/doc/tutorial/figures/tuto4_genericity_and_algorithms-10.ppm

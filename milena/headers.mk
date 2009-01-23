@@ -985,6 +985,9 @@ mln/io/ppm/save.hh \
 mln/io/pfm/load.hh \
 mln/io/pfm/all.hh \
 mln/io/pfm/save.hh \
+mln/io/raw/load.hh \
+mln/io/raw/all.hh \
+mln/io/raw/save.hh \
 mln/io/all.hh \
 mln/io/pbm/load.hh \
 mln/io/pbm/all.hh \
