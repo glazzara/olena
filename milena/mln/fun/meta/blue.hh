@@ -28,37 +28,65 @@
 #ifndef MLN_FUN_META_BLUE_HH
 # define MLN_FUN_META_BLUE_HH
 
+/// \file mln/fun/meta/blue.hh
+///
+/// Meta function to retrieve/modify the blue component.
+
 # include <mln/core/concept/meta_fun.hh>
 # include <mln/value/rgb.hh>
 
-namespace mln {
+namespace mln
+{
 
-  namespace meta {
+  namespace meta
+  {
 
     template <class T>
-    struct blue : impl< blue<T> > { typedef T value; };
+    struct blue : impl< blue<T> >
+    {
+      typedef T value;
+    };
 
-  }
+  } // end of namespace mln::meta
+
 
   template <unsigned n>
-  struct function< meta::blue< value::rgb<n> > > : public Function_v2w_w2v<function< meta::blue < value::rgb<n> > > >
+  struct function< meta::blue< value::rgb<n> > >
+    : public Function_v2w_w2v<function< meta::blue < value::rgb<n> > > >
   {
     typedef value::rgb<n> value;
 
     typedef typename value::blue_t result;
-    result read(const value& c)
-    {
-      return c.blue();
-    }
+    result read(const value& c);
 
     typedef result& lresult;
-    lresult write(value& c)
-    {
-      return c.blue();
-    }
+    lresult write(value& c);
   };
 
 
-}
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <unsigned n>
+  inline
+  typename function< meta::blue< value::rgb<n> > >::result
+  function< meta::blue< value::rgb<n> > >::read(const value& c)
+  {
+    return c.blue();
+  }
+
+  template <unsigned n>
+  inline
+  typename function< meta::blue< value::rgb<n> > >::lresult
+  function< meta::blue< value::rgb<n> > >::write(value& c)
+  {
+    return c.blue();
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+} // end of namespace mln
 
 #endif // MLN_FUN_META_BLUE_HH

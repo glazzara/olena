@@ -28,37 +28,65 @@
 #ifndef MLN_FUN_META_GREEN_HH
 # define MLN_FUN_META_GREEN_HH
 
+/// \file mln/fun/meta/green.hh
+///
+/// Meta function to retrieve/modify the green component.
+
 # include <mln/core/concept/meta_fun.hh>
 # include <mln/value/rgb.hh>
 
-namespace mln {
+namespace mln
+{
 
-  namespace meta {
+  namespace meta
+  {
 
     template <class T>
-    struct green : impl< green<T> > { typedef T value; };
+    struct green : impl< green<T> >
+    {
+      typedef T value;
+    };
 
-  }
+  } // end of namespace mln::meta
+
 
   template <unsigned n>
-  struct function< meta::green< value::rgb<n> > > : public Function_v2w_w2v<function< meta::green < value::rgb<n> > > >
+  struct function< meta::green< value::rgb<n> > >
+    : public Function_v2w_w2v<function< meta::green < value::rgb<n> > > >
   {
     typedef value::rgb<n> value;
 
     typedef typename value::green_t result;
-    result read(const value& c)
-    {
-      return c.green();
-    }
+    result read(const value& c);
 
     typedef result& lresult;
-    lresult write(value& c)
-    {
-      return c.green();
-    }
+    lresult write(value& c);
   };
 
 
-}
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <unsigned n>
+  inline
+  typename function< meta::green< value::rgb<n> > >::result
+  function< meta::green< value::rgb<n> > >::read(const value& c)
+  {
+    return c.green();
+  }
+
+  template <unsigned n>
+  inline
+  typename function< meta::green< value::rgb<n> > >::lresult
+  function< meta::green< value::rgb<n> > >::write(value& c)
+  {
+    return c.green();
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+} // end of namespace mln
 
 #endif // MLN_FUN_META_GREEN_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,38 +29,63 @@
 #ifndef MLN_FUN_META_INTY_HH
 # define MLN_FUN_META_INTY_HH
 
+/// \file mln/fun/meta/infy.hh
+///
+/// Meta function to retrieve/modify the color intensity.
+
 # include <mln/value/hsi.hh>
 # include <mln/core/concept/meta_fun.hh>
 
-namespace mln {
+namespace mln
+{
 
-  namespace meta {
+  namespace meta
+  {
 
     template <class H>
-    struct inty : impl< inty<H> > { typedef H value; };
+    struct inty : impl< inty<H> >
+    {
+      typedef H value;
+    };
 
-  }
+  } // end of namespace mln::meta
+
 
   template <class H, class S, class I>
-  struct function< meta::inty< value::hsi_<H, S, I> > > :
-    public Function_v2w_w2v<function< meta::inty < value::hsi_<H, S, I> > > >
+  struct function< meta::inty< value::hsi_<H, S, I> > >
+    : public Function_v2w_w2v<function< meta::inty < value::hsi_<H, S, I> > > >
   {
     typedef value::hsi_<H, S, I> value;
 
     typedef H result;
-    H read(const value& h)
-    {
-      return h.inty();
-    }
+    H read(const value& h);
 
     typedef H& lresult;
-    H& write(value& h)
-    {
-      return h.inty();
-    }
+    H& write(value& h);
   };
 
 
-}
+# ifndef MLN_INCLUDE_ONLY
+
+  template <class H, class S, class I>
+  inline
+  H
+  function< meta::inty< value::hsi_<H, S, I> > >::read(const value& h)
+  {
+    return h.inty();
+  }
+
+  template <class H, class S, class I>
+  inline
+  H&
+  function< meta::inty< value::hsi_<H, S, I> > >::write(value& h)
+  {
+    return h.inty();
+  }
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+} // end of namespace mln
 
 #endif // MLN_FUN_META_INTY_HH

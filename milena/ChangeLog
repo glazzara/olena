@@ -1,5 +1,18 @@
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Revamp fun::meta::*
+
+	* mln/fun/meta/blue.hh,
+	* mln/fun/meta/green.hh,
+	* mln/fun/meta/hue.hh,
+	* mln/fun/meta/inty.hh,
+	* mln/fun/meta/red.hh,
+	* mln/fun/meta/sat.hh,
+	* mln/fun/meta/to_enc.hh: Split declaration and implementation and
+	improve code layout.
+
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tutorial ref files.
 
 	* doc/tutorial/figures/tuto3_rw_image-1.ppm,

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,30 +29,52 @@
 #ifndef MLN_FUN_META_RED_HH
 # define MLN_FUN_META_RED_HH
 
+/// \file mln/fun/meta/to_enc.hh
+///
+/// FIXME: doc
+
 # include <mln/core/concept/meta_fun.hh>
 
-namespace mln {
+namespace mln
+{
 
-  namespace meta {
+  namespace meta
+  {
 
     template <class T>
-    struct to_enc : impl< to_enc<T> > { typedef typename T::enc value; };
+    struct to_enc : impl< to_enc<T> >
+    {
+      typedef typename T::enc value;
+    };
 
-  }
+  } // end of namespace mln::meta
+
 
   template <typename T>
-  struct function< meta::to_enc<T> > : public Function_v2v<function< meta::to_enc<T> > >
+  struct function< meta::to_enc<T> >
+    : public Function_v2v<function< meta::to_enc<T> > >
   {
     typedef typename T::enc value;
 
-    value read(const T& t)
-    {
-      return t.to_enc();
-    }
-
+    value read(const T& t);
   };
 
 
-}
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <typename T>
+  inline
+  typename T::enc
+  function< meta::to_enc<T> >::read(const T& t)
+  {
+    return t.to_enc();
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+} // end of namespace mln
 
 #endif // MLN_FUN_META_RED_HH

@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,20 +29,30 @@
 #ifndef MLN_FUN_META_HUE_HH
 # define MLN_FUN_META_HUE_HH
 
+/// \file mln/fun/meta/hue.hh
+///
+/// Meta function to retrieve/modify the color hue.
+
 # include <mln/value/hsi.hh>
 # include <mln/core/concept/meta_fun.hh>
 
-namespace mln {
+namespace mln
+{
 
-  namespace meta {
+  namespace meta
+  {
 
     template <class H>
-    struct hue : impl< hue<H> > { typedef H value; };
+    struct hue : impl< hue<H> >
+    {
+      typedef H value;
+    };
 
-  }
+  } // end of namespace mln::meta
 
   template <class H, class S, class I>
-  struct function< meta::hue< value::hsi_<H, S, I> > > : public Function_v2w_w2v<function< meta::hue < value::hsi_<H, S, I> > > >
+  struct function< meta::hue< value::hsi_<H, S, I> > >
+    : public Function_v2w_w2v<function< meta::hue < value::hsi_<H, S, I> > > >
   {
     typedef value::hsi_<H, S, I> value;
 
@@ -59,6 +70,29 @@ namespace mln {
   };
 
 
-}
+# ifndef MLN_INCLUDE_ONLY
+
+
+  template <class H, class S, class I>
+  inline
+  H
+  function< meta::hue< value::hsi_<H, S, I> > >::read(const value& h)
+  {
+    return h.hue();
+  }
+
+  template <class H, class S, class I>
+  inline
+  H&
+  function< meta::hue< value::hsi_<H, S, I> > >::write(value& h)
+  {
+    return h.hue();
+  }
+
+
+# endif // ! MLN_INCLUDE_ONLY
+
+
+} // end of namespace mln
 
 #endif // MLN_FUN_META_HUE_HH
