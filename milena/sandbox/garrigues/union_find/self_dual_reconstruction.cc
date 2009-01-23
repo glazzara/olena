@@ -32,13 +32,14 @@
 # include <mln/io/pgm/load.hh>
 # include <mln/io/pgm/save.hh>
 # include <mln/linear/gaussian.hh>
+# include <mln/arith/diff_abs.hh>
 # include <tests/timer.hh>
 
 # include "self_dual_reconstruction.hh"
 
 void usage(char** argv)
 {
-  std::cerr << "Usage: " << argv[0] << " input.pgm blur" << std::endl;
+  std::cerr << "Usage: " << argv[0] << " input.pgm blur output" << std::endl;
   exit(1);
 }
 
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
 {
   using namespace mln;
 
-  if (argc < 2)
+  if (argc < 3)
     usage(argv);
 
   typedef image2d<value::int_u8> I;
@@ -58,23 +59,47 @@ int main(int argc, char** argv)
   I input = io::pgm::load<V>(argv[1]);
   std::cout << "load: " << t << std::endl;
 
-  I output;
+    I output;
 
-  t.start();
-  output = linear::gaussian(input, atoi(argv[2]));
-  io::pgm::save(output, "gaussian.pgm");
-  std::cout << "gaussian: " << t << std::endl;
+    t.start();
+    output = linear::gaussian(input, atoi(argv[2]));
+    io::pgm::save(output, "gaussian.pgm");
+    std::cout << "gaussian: " << t << std::endl;
 
 
-  trace::quiet = false;
+    trace::quiet = false;
 
-  t.start();
-  output = self_dual_reconstruction(output, input, c8());
-  std::cout << "reconstruction: " << t << std::endl;
+    t.start();
+    output = self_dual_reconstruction_ref(output, input, c8());
+    std::cout << "reconstruction: " << t << std::endl;
 
-  trace::quiet = true;
+    trace::quiet = true;
 
-  t.start();
-  io::pgm::save(output, "reconstruction.pgm");
-  std::cout << "save: " << t << std::endl;
+    t.start();
+    io::pgm::save(output, argv[3]);
+    std::cout << "save: " << t << std::endl;
+
+    I output_test;
+
+    t.start();
+    output_test = linear::gaussian(input, atoi(argv[2]));
+    io::pgm::save(output_test, "gaussian.pgm");
+    std::cout << "gaussian: " << t << std::endl;
+
+
+    trace::quiet = false;
+
+    t.start();
+    output_test = self_dual_reconstruction(output_test, input, c8());
+    std::cout << "reconstruction: " << t << std::endl;
+
+    trace::quiet = true;
+
+    t.start();
+    io::pgm::save(output_test, "sd_test.pgm");
+    std::cout << "save: " << t << std::endl;
+
+
+    io::pgm::save(arith::diff_abs(output_test, output), "diff_abs.pgm");
+
 }

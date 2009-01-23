@@ -41,6 +41,8 @@
 # include <mln/io/pbm/save.hh>
 # include <mln/io/pbm/load.hh>
 
+# include <canvas/find_root.hh>
+
 namespace mln
 {
 
@@ -50,18 +52,6 @@ namespace mln
 
     namespace morpho
     {
-
-      template <typename I>
-      static inline
-      mln_psite(I)
-      find_root(I& parent,
-		const mln_psite(I)& x)
-      {
-	if (parent(x) == x)
-	  return x;
-	else
-	  return parent(x) = find_root(parent, parent(x));
-      }
 
       template <typename N, typename F>
       void
@@ -94,9 +84,9 @@ namespace mln
 	// first pass
 	{
 	  mln_fwd_piter(I) p(f.mask.domain());
-	  const std::vector<mln_deduce(I, site, delta)> & n_win(const_cast<N*>(&nbh)->hook_win_().std_vector());
- 	  unsigned n_size = n_win.size();
-	  //	  mln_niter(N) n(nbh, p);
+// 	  const std::vector<mln_deduce(I, site, delta)> & n_win(const_cast<N*>(&nbh)->hook_win_().std_vector());
+//  	  unsigned n_size = n_win.size();
+ 	  mln_niter(N) n(nbh, p);
 	  for_all(p)
 	  {
 	    if (f.is_in_D(p))
@@ -105,10 +95,11 @@ namespace mln
 	      parent(p) = p;
 	      f.init(p);
 
-//	      for_all(n)
- 	      for(unsigned i = 0; i < n_size; i++)
- 	      {
- 		mln_site(I) n = p + n_win[i];
+ 	      for_all(n)
+	      {
+//   	      for(unsigned i = 0; i < n_size; i++)
+//   	      {
+//   		mln_site(I) n = p + n_win[i];
 
 		if (f.mask.domain().has(n))
 		{

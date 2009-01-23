@@ -47,6 +47,7 @@
 # include <mln/core/image/image_if.hh>
 
 # include "canvas/self_dual_reconstruction.hh"
+# include "reconstructions_on_function.hh"
 
 namespace mln
 {
@@ -70,14 +71,12 @@ namespace mln
 	: marker(marker),
 	  mask(mask),
 	  output(output),
-	  d1_s(level::sort_psites_decreasing(mask | (pw::value(marker) < pw::value(mask)))),
-	  d2_s(level::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask)))),
-	  d1_escape_value(mln_max(V)),
-	  d2_escape_value(mln_min(V))
+	  d1_s(level::sort_psites_decreasing(mask | (pw::value(marker) <= pw::value(mask)))),
+	  d2_s(level::sort_psites_increasing(mask | (pw::value(marker) > pw::value(mask))))
       {
       }
 
-      bool is_in_d1(const P& p) { return marker(p) < mask(p); }
+      bool is_in_d1(const P& p) { return marker(p) <= mask(p); }
       bool is_in_d2(const P& p) { return marker(p) > mask(p); }
 
 
@@ -95,8 +94,6 @@ namespace mln
 	  output(p) = output(r);
       }
 
-      void d1_escape(const P& p) { output(p) = d1_escape_value; }
-
 
       bool d2_is_active(const P& r, const P& p)
       {
@@ -111,14 +108,11 @@ namespace mln
 	  output(p) = output(r);
       }
 
-      void d2_escape(const P& p) { output(p) = d2_escape_value; }
-
       const I& marker; // F
       const J& mask; // G
       mln_concrete(I)& output; // O
 
       S d1_s, d2_s;
-      const V d1_escape_value, d2_escape_value;
     };
 
   } // end of namespace mln::impl.
@@ -153,6 +147,58 @@ namespace mln
     trace::exiting("morpho::self_dual_reconstruction");
     return output;
   }
+
+
+  template <typename I, typename J, typename N>
+  mln_concrete(I)
+  self_dual_reconstruction_ref(const Image<I>& marker_,
+			       const Image<J>& mask_,
+			       const Neighborhood<N>& nbh_)
+  {
+    trace::entering("morpho::self_dual_reconstruction_ref");
+
+    const I& marker = exact(marker_);
+    const J& mask   = exact(mask_);
+    const N& nbh    = exact(nbh_);
+
+    mln_precondition(marker.is_valid());
+    mln_precondition(mask.is_valid());
+    mln_precondition(mask.domain() == marker.domain());
+
+    mln_concrete(I) output;
+    initialize(output, marker);
+
+    mln_concrete(I) by_dilation =
+      reconstruction_on_function_by_dilation
+      (marker | (pw::value(marker) < pw::value(mask)),
+       mask   | (pw::value(marker) < pw::value(mask)),
+       nbh);
+
+    io::pgm::save(by_dilation, "sd_by_dilation.pgm");
+
+    mln_concrete(I) by_erosion =
+      reconstruction_on_function_by_erosion
+      (marker | (pw::value(marker) > pw::value(mask)),
+       mask   | (pw::value(marker) > pw::value(mask)),
+       nbh);
+
+    io::pgm::save(by_erosion, "sd_by_erosion.pgm");
+
+    mln_piter(I) p(output.domain());
+    for_all(p)
+    {
+      if (marker(p) > mask(p))
+	output(p) = by_erosion(p);
+      else if (marker(p) < mask(p))
+	output(p) = by_dilation(p);
+	else
+	output(p) = mask(p);
+    }
+
+    trace::exiting("morpho::self_dual_reconstruction_ref");
+    return output;
+  }
+
 
 } // end of namespace mln.
 

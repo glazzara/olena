@@ -42,6 +42,8 @@
 # include <mln/io/pgm/save.hh>
 # include <mln/io/pbm/load.hh>
 
+# include <canvas/find_root.hh>
+
 namespace mln
 {
 
@@ -50,18 +52,6 @@ namespace mln
 
     namespace morpho
     {
-
-      template <typename I>
-      static inline
-      mln_psite(I)
-      find_root(I& parent,
-		const mln_psite(I)& x)
-      {
-	if (parent(x) == x)
-	  return x;
-	else
-	  return parent(x) = find_root(parent, parent(x));
-      }
 
       template <typename N, typename F>
       inline
@@ -157,8 +147,8 @@ namespace mln
 		    parent(r) = p;
 		    f.d1_merge(r, p);
 		  }
- 		  else
- 		    f.output(p) = f.mask(p);
+		  else
+  		    f.output(p) = f.mask(p);
 		}
 	      }
 
@@ -199,8 +189,8 @@ namespace mln
 		    parent(r) = p;
 		    f.d2_merge(r, p);
 		  }
- 		  else
- 		    f.output(p) = f.mask(p);
+  		  else
+  		    f.output(p) = f.mask(p);
 		}
 	      }
 
@@ -217,7 +207,6 @@ namespace mln
 	}
 	trace::exiting("canvas::morpho::self_dual_reconstruction");
       }
-
 
     } // end of namespace mln::canvas::morpho
 
