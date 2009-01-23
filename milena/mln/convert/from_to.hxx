@@ -197,6 +197,14 @@ namespace mln
       from_to_(const bool (&values)[R][C],
 	       window< dpoint<grid::square, def::coord> >& win);
 
+
+      // C-array -> window3d
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S],
+	       window< dpoint<grid::cube, def::coord> >& win);
+
+
       // C-array -> neighb2d
       template <unsigned S>
       void
@@ -207,6 +215,15 @@ namespace mln
       void
       from_to_(bool const (&values)[R][C],
 	       neighb< window< dpoint<grid::square, def::coord> > >& nbh);
+
+
+      // C-array -> neighb3d
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S],
+	       neighb< window< dpoint<grid::cube, def::coord> > >& nbh);
+
+
 
       // Gdpoint -> point
       template <typename D>

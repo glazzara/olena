@@ -32,6 +32,8 @@
 /// \file mln/make/box3d.hh
 ///
 /// Routines to construct an mln::box3d.
+///
+/// \todo Not consistent with box2d!!!
 
 # include <mln/core/alias/box3d.hh>
 

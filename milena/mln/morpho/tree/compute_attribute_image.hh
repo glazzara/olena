@@ -102,7 +102,7 @@ namespace mln
 	    acc(p).take_as_init(make::pix(t.f(), p));
 	}
 	{
-	  mln_piter(T) p(t.domain());
+	  mln_fwd_piter(T) p(t.domain());
 	  // Propagate attribute from a site to its parent.
 	  for_all(p)
 	    if (! t.is_root(p))

@@ -1,4 +1,5 @@
 // Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,16 +29,17 @@
 #ifndef MLN_CORE_ALIAS_NEIGHB3D_HH
 # define MLN_CORE_ALIAS_NEIGHB3D_HH
 
-/*! \file mln/core/alias/neighb3d.hh
- *
- * \brief Definition of the mln::neighb3d alias and of some classical
- * 3D neighborhoods.
- */
+/// \file mln/core/alias/neighb3d.hh
+///
+/// Definition of the mln::neighb3d alias and of some classical
+/// 3D neighborhoods.
+
 
 # include <cmath>
 # include <mln/core/neighb.hh>
 # include <mln/core/alias/window3d.hh>
 # include <mln/win/sym.hh>
+# include <mln/convert/from_to.hh>
 
 
 namespace mln
@@ -105,6 +107,22 @@ namespace mln
 
 
 
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <unsigned S>
+      void from_to_(const bool (&values)[S], neighb3d& nbh);
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
   inline
@@ -163,6 +181,29 @@ namespace mln
       }
     return it;
   }
+
+
+  namespace convert
+  {
+
+    namespace over_load
+    {
+
+      template <unsigned S>
+      void
+      from_to_(const bool (&values)[S], neighb3d& nbh)
+      {
+	const int h = unsigned(std::pow(float(S), float(1. / 3.))) / 2;
+	mln_precondition((2 * h + 1) * (2 * h + 1) * (2 * h + 1) == S);
+	window3d win;
+	from_to_(values, win);
+	mln_precondition(win.is_neighbable_());
+	nbh.change_window(win);
+      }
+
+    } // end of namespace mln::convert::over_load
+
+  } // end of namespace mln::convert
 
 # endif // ! MLN_INCLUDE_ONLY
 

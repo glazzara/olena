@@ -1,3 +1,14 @@
+2009-01-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Allow to construct 3D neighborhoods from C arrays.
+
+	* mln/core/alias/neighb3d.hh: Upgrade file doc style.
+	(from_to_): New overload.
+	* mln/convert/from_to.hxx (from_to_): New fwd decl.
+	* mln/make/box3d.hh (todo): New.
+	Warning: FIX the unconsistency!!!
+	* mln/morpho/tree/compute_attribute_image.hh: Disambiguate.
+
 2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Add io::raw::save and io::raw::load routines.
