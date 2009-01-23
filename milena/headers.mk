@@ -158,6 +158,11 @@ mln/make/w_window3d_int.hh \
 mln/make/essential.hh \
 mln/make/w_window1d_int.hh \
 mln/make/point2d_h.hh \
+mln/extract/red.hh \
+mln/extract/all.hh \
+mln/extract/green.hh \
+mln/extract/blue.hh \
+mln/extract/essential.hh \
 mln/display/all.hh \
 mln/display/essential.hh \
 mln/extension/adjust.hh \
@@ -427,6 +432,7 @@ mln/math/essential.hh \
 mln/math/acos.hh \
 mln/math/round_sat.hh \
 mln/opt/at.hh \
+mln/opt/element.hh \
 mln/opt/value.hh \
 mln/binarization/includes.hh \
 mln/binarization/all.hh \

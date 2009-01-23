@@ -155,6 +155,11 @@ mln_make_w_window3d_int \
 mln_make_essential \
 mln_make_w_window1d_int \
 mln_make_point2d_h \
+mln_extract_red \
+mln_extract_all \
+mln_extract_green \
+mln_extract_blue \
+mln_extract_essential \
 mln_display_all \
 mln_display_essential \
 mln_extension_adjust \
@@ -421,6 +426,7 @@ mln_math_essential \
 mln_math_acos \
 mln_math_round_sat \
 mln_opt_at \
+mln_opt_element \
 mln_opt_value \
 mln_binarization_includes \
 mln_binarization_all \
@@ -1170,6 +1176,11 @@ mln_make_w_window3d_int_SOURCES = mln_make_w_window3d_int.cc
 mln_make_essential_SOURCES = mln_make_essential.cc
 mln_make_w_window1d_int_SOURCES = mln_make_w_window1d_int.cc
 mln_make_point2d_h_SOURCES = mln_make_point2d_h.cc
+mln_extract_red_SOURCES = mln_extract_red.cc
+mln_extract_all_SOURCES = mln_extract_all.cc
+mln_extract_green_SOURCES = mln_extract_green.cc
+mln_extract_blue_SOURCES = mln_extract_blue.cc
+mln_extract_essential_SOURCES = mln_extract_essential.cc
 mln_display_all_SOURCES = mln_display_all.cc
 mln_display_essential_SOURCES = mln_display_essential.cc
 mln_extension_adjust_SOURCES = mln_extension_adjust.cc
@@ -1436,6 +1447,7 @@ mln_math_essential_SOURCES = mln_math_essential.cc
 mln_math_acos_SOURCES = mln_math_acos.cc
 mln_math_round_sat_SOURCES = mln_math_round_sat.cc
 mln_opt_at_SOURCES = mln_opt_at.cc
+mln_opt_element_SOURCES = mln_opt_element.cc
 mln_opt_value_SOURCES = mln_opt_value.cc
 mln_binarization_includes_SOURCES = mln_binarization_includes.cc
 mln_binarization_all_SOURCES = mln_binarization_all.cc

@@ -1,3 +1,33 @@
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add routines to work on a specific color component.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/all.hh,
+	* mln/essential/routine.hh,
+	* mln/extract/all.hh,
+	* mln/extract/essential.hh: include the new headers.
+
+	* mln/extract/blue.hh,
+	* mln/extract/green.hh,
+	* mln/extract/red.hh: new routines. Create a fun_image to work on a
+	specific color component.
+
+
+	* tests/extract/Makefile.am,
+	* tests/extract/blue.cc,
+	* tests/extract/green.cc,
+	* tests/extract/red.cc: add new tests.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_extract_all.cc,
+	* tests/unit_test/mln_extract_blue.cc,
+	* tests/unit_test/mln_extract_essential.cc,
+	* tests/unit_test/mln_extract_green.cc,
+	* tests/unit_test/mln_extract_red.cc,
+	* tests/unit_test/mln_opt_element.cc: add unit tests.
+
 2009-01-21  Thierry GERAUD  <thierry.geraud@lrde.epita.fr>
 
 	Add some images.

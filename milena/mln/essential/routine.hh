@@ -42,6 +42,7 @@
 # include <mln/draw/essential.hh>
 # include <mln/estim/essential.hh>
 # include <mln/extension/essential.hh>
+# include <mln/extract/essential.hh>
 # include <mln/fun/essential.hh>
 # include <mln/geom/essential.hh>
 # include <mln/histo/essential.hh>
