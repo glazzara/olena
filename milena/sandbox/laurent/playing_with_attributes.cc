@@ -49,6 +49,29 @@ namespace mln
   };
 
 
+  // FIXME: HERE
+
+
+  template <typename T, typename I>
+  bool
+  test_attribute_growing_property(const T& t, // Tree.
+				  const I& a) // Attribute image.
+  {
+    typedef mln_site(I) P;
+    typedef mln_value(I) A; // Type of attributes.
+
+    // Test that attributes increase with parenthood.
+    mln_fwd_piter(T) p(t.domain());
+    for_all(p)
+      if (t.is_a_non_root_node(p))
+	{
+	  mln_invariant(t.is_a_node(t.parent(p)));
+	  if (a(t.parent(p)) < a(p))
+	    return false;
+	}
+    return true;
+  }
+
 
   template <typename T, typename I>
   void depict_tree_attributes(const T& t, // Tree.
@@ -81,28 +104,24 @@ namespace mln
   }
 
 
+
+  //  Attribute extinction (reference code).
+  //  --------------------------------------
+
+
   template <typename T, typename I>
   mln_concrete(I)
-    change_tree_attributes(const T& t, // Tree.
-			   const I& a, // Attribute image.
-			   bool echo = false)
+    attribute_extinction(const T& t, // Tree.
+			 const I& a, // Attribute image.
+			 bool echo = false)
   {
     typedef mln_site(I) P;
     typedef mln_value(I) A; // Type of attributes.
 
-    // Test that attributes increase with parenthood.
-    mln_fwd_piter(T) p(t.domain());
-    for_all(p)
-      if (t.is_a_non_root_node(p))
-	{
-	  mln_assertion(t.is_a_node(t.parent(p)));
-	  mln_invariant(a(t.parent(p)) >= a(p));
-	}
-
+    mln_assertion( test_attribute_growing_property(t, a) );
 
     if (echo)
       depict_tree_attributes(t, a);
-
     
     node_pred<T> node_only;
     node_only.t = &t;
@@ -220,7 +239,63 @@ namespace mln
 
 
 
-} // mln
+
+
+
+  //  N E W   C O D E   = =   Attribute extinction (reference code).
+  //  --------------------------------------
+  
+  template <typename T, typename I, typename M>
+  mln_value(I)  rec(const T& t, // tree
+		    I& a,       // attribute image
+		    M& mark,
+		    const mln_psite(I)& p)
+  {
+    mln_invariant(mark(p) == false);
+    mark(p) = true;
+    if (t.parent(p) == p || mark(t.parent(p)) == true) // Stop.
+      return a(p);
+    return a(p) = rec(t, a, mark, t.parent(p));
+  }
+
+
+  template <typename T, typename I>
+  void
+    NEW___extinct_attributes(const T& t, // Tree.
+			     I& a, // Attribute image.
+			     bool echo = false)
+  {
+    typedef mln_site(I) P;
+    typedef mln_value(I) A; // Type of attributes.
+
+    if (echo)
+      depict_tree_attributes(t, a);
+
+
+    mln_ch_value(I, bool) mark;
+    initialize(mark, a);
+    data::fill(mark, false);
+    
+    node_pred<T> node_only;
+    node_only.t = &t;
+
+    typedef p_array<P> S;
+    S s = level::sort_psites_increasing(a | node_only);
+    mln_invariant(geom::nsites(a | t.nodes()) == s.nsites());
+
+    mln_fwd_piter(S) p(s);
+    for_all(p)
+      {
+	if (mark(p) == true)
+	  continue;
+	rec(t, a, mark, p);
+      }
+
+    debug::println(mark | t.nodes());
+  }
+
+
+} // mln  ------------------------------------------------------------
 
 
 
@@ -255,7 +330,14 @@ void do_it(const I& g, const N& nbh, L& n_labels)
     mln_ch_value(I,unsigned) a = morpho::tree::compute_attribute_image(a_, t);
     debug::println("a | nodes:", a | t.nodes());
 
-    mln_ch_value(I,unsigned) aa = change_tree_attributes(t, a);
+
+    // Reference version.
+//     mln_ch_value(I,unsigned) aa = attribute_extinction(t, a);
+
+    // NEW version.
+    NEW___extinct_attributes(t, a);
+    mln_VAR(aa, a);
+
     debug::println("aa | nodes:", aa | t.nodes());
 
     // Back-propagation from nodes to components.
@@ -269,8 +351,8 @@ void do_it(const I& g, const N& nbh, L& n_labels)
 	  }
     }
 
-    debug::println("a | w line:", a | (pw::value(w) == pw::cst(0)));
-    debug::println("aa | w line:", aa | (pw::value(w) == pw::cst(0)));
+//     debug::println("a | w line:", a | (pw::value(w) == pw::cst(0)));
+//     debug::println("aa | w line:", aa | (pw::value(w) == pw::cst(0)));
 
 //     debug::println("a | w basins:", a | (pw::value(w) != pw::cst(0)));
 //     debug::println("a | regmin:", a | (pw::value(regmin) != pw::cst(0)));
@@ -301,13 +383,13 @@ int main(int argc, char* argv[])
 
   I f_ = add_edges(raw_f);
   mln_VAR(f, f_ | is_pixel);
-  debug::println("f:", f);
+  // debug::println("f:", f);
 
   mln_VAR(g, f_ | is_edge);
   data::paste( morpho::gradient(extend(g, f_),
 				e2p().win()),
 	       g );
-  debug::println("g:", g);
+  // debug::println("g:", g);
 
   L n;
   do_it(g, e2e(), n);

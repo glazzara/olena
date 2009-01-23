@@ -1,3 +1,32 @@
+2009-01-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Cleanup organization related to ISMM code.
+
+	* theo/esiee/laurent: New directory.
+
+	* theo/laurent/wst_edge.cc,
+	* theo/laurent/wst2d.cc,
+	* theo/laurent/classif.cc,
+	* theo/laurent/wst3d.cc: Move into...
+	* theo/esiee/laurent/presentation: ...this new directory.
+	* theo/laurent: Remove.
+
+	* laurent/ismm2009.v0.cc,
+	* laurent/ismm2009.v1.cc,
+	* laurent/ismm2009.v2.cc: Move into...
+	* laurent/memo: ...this new directory.
+
+	* laurent/ismm2009.cc (n_basins): Move log.
+	(FIXME): New.
+	* laurent/playing_with_attributes.cc
+	(test_attribute_growing_property): New.
+	(change_tree_attributes): Rename as..
+	(attribute_extinction): ...this.
+	(rec, NEW___extinct_attributes): New.
+
+	* theo/esiee/laurent/ismm09: New directory.
+	* theo/esiee/laurent/ismm09/main.cc: New.
+
 2009-01-23  Matthieu Garrigues  <garrigues@lrde.epita.fr>
 
 	Fix Fix connectivity number values for c4.

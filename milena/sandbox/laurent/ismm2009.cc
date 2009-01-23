@@ -18,7 +18,9 @@
 
 #include <mln/level/stretch.hh>
 #include <mln/labeling/compute.hh>
+
 #include <mln/accu/count.hh>
+#include <mln/accu/height.hh>
 
 #include <mln/util/timer.hh>
 #include <mln/util/fibonacci_heap.hh>
@@ -479,13 +481,13 @@ int main(int argc, char* argv[])
 	   compute_wst_g_from_f(f, g, e2p(), e2e(), n_basins, echo) );
 
 
-  std::cout << "n basins = " << n_basins << std::endl;
-
   if (echo)
     {
       debug::println("g:", g);
       debug::println("wst(g):", wst_g);
     }
+
+  std::cout << "n basins = " << n_basins << std::endl;
 
 
   // Just to see things.
@@ -541,6 +543,11 @@ int main(int argc, char* argv[])
 
   // Compute an attribute per region.
   // --------------------------------
+
+  {
+    // Height.
+    // FIXME: HERE...
+  }
 
   typedef unsigned A;
   util::array<A> a = labeling::compute(accu::meta::count(),
