@@ -1,3 +1,26 @@
+2009-01-23  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix tutorial ref files.
+
+	* doc/tutorial/figures/tuto3_rw_image-1.ppm,
+	* doc/tutorial/figures/tuto3_rw_image-2.ppm,
+	* doc/tutorial/figures/tuto3_rw_image-3.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-1.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-2.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-4.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-5.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-6.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-7.pgm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-8.ppm,
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-9.ppm: update.
+	
+	* doc/tutorial/figures/tuto4_genericity_and_algorithms-10.ppm: delete,
+	not needed anymore.
+
+	* doc/tutorial/samples/tuto3_rw_image.cc,
+	* doc/tutorial/samples/tuto4_genericity_and_algorithms.cc: Use rgb8
+	instead of rgb16.
+
 2009-01-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Allow to construct 3D neighborhoods from C arrays.

@@ -6,7 +6,7 @@
 
 struct keep_specific_colors : public mln::Function_v2b<keep_specific_colors>
 {
-  bool operator()(const mln::value::rgb16& v) const
+  bool operator()(const mln::value::rgb8& v) const
   {
     return v.green() < 20000 && v.blue() > 10000;
   }
@@ -17,12 +17,12 @@ int main()
   using namespace mln;
 
   // \{
-  image2d<value::rgb16> lena;
+  image2d<value::rgb8> lena;
   io::ppm::load(lena, MLN_IMG_DIR "/small.ppm");
   // \}
 
 
-  image2d<value::rgb16> lena_bak = duplicate(lena);
+  image2d<value::rgb8> lena_bak = duplicate(lena);
   // \{
   box2d roi = make::box2d(20, 20, 40, 40);
   // \}
@@ -77,10 +77,10 @@ int main()
   lena = duplicate(lena_bak);
   // \{
   image2d<bool> lena_bw = binarization::binarization(lena, keep_specific_colors());
-  value::label_16 nlabels;
-  image2d<value::label_16> label = labeling::blobs(lena_bw, c8(), nlabels);
+  value::label_8 nlabels;
+  image2d<value::label_8> label = labeling::blobs(lena_bw, c8(), nlabels);
   // \}
-  doc::ppmsave(debug::colorize(value::rgb16(), label, nlabels), "tuto4_genericity_and_algorithms");
+  doc::ppmsave(debug::colorize(value::rgb8(), label, nlabels), "tuto4_genericity_and_algorithms");
 
   // \{
   data::fill((lena | (pw::value(label) == pw::cst(16u))).rw(), literal::green);
@@ -103,10 +103,11 @@ int main()
 
   lena = duplicate(lena_bak);
   // \{
-  mln_VAR(object, pw::value(label) == pw::cst(3u));
+  mln_VAR(object, pw::value(label) == pw::cst(16u));
   data::fill((extract::green(lena).rw() | object).rw(), literal::max);
   // \}
-  doc::pgmsave(lena | object, "tuto4_genericity_and_algorithms");
+  //FIXME: how to display an image which is not defined on a box!?
+//  doc::ppmsave(lena | object, "tuto4_genericity_and_algorithms");
   doc::ppmsave(lena, "tuto4_genericity_and_algorithms");
 
 }

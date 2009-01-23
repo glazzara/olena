@@ -6,7 +6,7 @@ int main()
   using namespace mln;
 
   // \{
-  image2d<value::rgb16> ima(40, 40);
+  image2d<value::rgb8> ima(40, 40);
   // \}
 
   // \{
@@ -26,10 +26,10 @@ int main()
   // \}
   doc::ppmsave(ima, "tuto3_rw_image");
 
-  image2d<value::rgb16> ima2 = duplicate(ima);
+  image2d<value::rgb8> ima2 = duplicate(ima);
 
   // \{
-  image2d<value::rgb16> lena;
+  image2d<value::rgb8> lena;
   io::ppm::load(lena, MLN_IMG_DIR "/small.ppm");
   // \}
 
