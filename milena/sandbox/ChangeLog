@@ -1,3 +1,12 @@
+2009-01-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add perfect fusion grid neighborhoods from 2D and 3D.
+
+	* theo/esiee: New directory.
+	* theo/esiee/jean: New directory.
+	* theo/esiee/jean/pfg2d.cc: New.
+	* theo/esiee/jean/pfg3d.cc: New.
+
 2009-01-21  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Handle properly output in Laurent's method.
