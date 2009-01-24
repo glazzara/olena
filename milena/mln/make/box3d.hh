@@ -32,8 +32,6 @@
 /// \file mln/make/box3d.hh
 ///
 /// Routines to construct an mln::box3d.
-///
-/// \todo Not consistent with box2d!!!
 
 # include <mln/core/alias/box3d.hh>
 
@@ -62,10 +60,10 @@ namespace mln
      * \overload
      *
      * \param[in] min_sli Index of the lowest slice.
-     * \param[in] max_sli Index of the highest slice.
      * \param[in] min_row Index of the top most row.
-     * \param[in] max_row Index of the botton most row.
      * \param[in] min_col Index of the left most column.
+     * \param[in] max_sli Index of the highest slice.
+     * \param[in] max_row Index of the botton most row.
      * \param[in] max_col Index of the right most column.
      *
      * \pre \p max_sli >= \p min_sli.
@@ -74,10 +72,9 @@ namespace mln
      *
      * \return A 3D box.
      */
-    mln::box3d box3d(def::coord min_sli, def::coord max_sli,
-		     def::coord min_row, def::coord max_row,
-		     def::coord min_col, def::coord max_col);
-
+    mln::box3d box3d(def::coord min_sli, def::coord min_row, def::coord min_col, 
+		     def::coord max_sli, def::coord max_row, def::coord max_col);
+    
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -92,10 +89,10 @@ namespace mln
       return tmp;
     }
 
+    mln::box3d
     inline
-    mln::box3d box3d(def::coord min_sli, def::coord max_sli,
-		     def::coord min_row, def::coord max_row,
-		     def::coord min_col, def::coord max_col)
+    box3d(def::coord min_sli, def::coord min_row, def::coord min_col, 
+	  def::coord max_sli, def::coord max_row, def::coord max_col)
     {
       mln_precondition(max_row >= min_row && max_sli >= min_sli && max_col >= min_col);
       mln::box3d tmp(point3d(min_sli, min_row, min_col),
