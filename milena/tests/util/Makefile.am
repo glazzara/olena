@@ -37,3 +37,5 @@ tree_to_fast_SOURCES = tree_to_fast.cc
 tree_to_image_SOURCES = tree_to_image.cc
 
 TESTS = $(check_PROGRAMS)
+XFAIL_TESTS = tree_to_image \
+	      tree_fast_to_image

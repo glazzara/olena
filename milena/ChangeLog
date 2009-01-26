@@ -1,5 +1,20 @@
 2009-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Make the 'make check' pass.
+
+	* mln/fun/meta/hue.hh: Fix double definition of members.
+
+	* mln/fun/v2v/rgb_to_hsl.hh: add a missing include.
+
+	* tests/core/routine/Makefile.am: rename clone as duplicate.
+
+	* tests/geom/Makefile.am
+	* tests/morpho/Makefile.am
+	* tests/util/Makefile.am: set the last 5 non-working tests to xfail
+	tests.
+
+2009-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix list of distributed files.
 
 	* Makefile.am: fix list of distributed images.

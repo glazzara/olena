@@ -3,13 +3,13 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  clone						\
+  duplicate						\
   exact						\
   extend					\
   initialize					\
   primary
 
-clone_SOURCES = clone.cc
+duplicate_SOURCES = duplicate.cc
 exact_SOURCES = exact.cc
 extend_SOURCES = extend.cc
 initialize_SOURCES = initialize.cc

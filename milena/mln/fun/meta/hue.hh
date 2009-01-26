@@ -57,16 +57,10 @@ namespace mln
     typedef value::hsi_<H, S, I> value;
 
     typedef H result;
-    H read(const value& h)
-    {
-      return h.hue();
-    }
+    H read(const value& h);
 
     typedef H& lresult;
-    H& write(value& h)
-    {
-      return h.hue();
-    }
+    H& write(value& h);
   };
 
 

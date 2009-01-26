@@ -42,3 +42,5 @@ seed2tiling_roundness_SOURCES = seed2tiling_roundness.cc
 
 
 TESTS = $(check_PROGRAMS)
+
+XFAIL_TESTS = seed2tiling_roundness

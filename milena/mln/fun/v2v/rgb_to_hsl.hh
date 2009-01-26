@@ -28,11 +28,13 @@
 #ifndef MLN_FUN_V2V_RGB_TO_HSL_HH
 # define MLN_FUN_V2V_RGB_TO_HSL_HH
 
-#include <cmath>
+# include <cmath>
 
-#include <mln/math/round.hh>
-#include <mln/math/max.hh>
-#include <mln/math/min.hh>
+# include <mln/math/round.hh>
+# include <mln/math/max.hh>
+# include <mln/math/min.hh>
+
+# include <mln/trait/value_.hh>
 
 
 namespace mln
