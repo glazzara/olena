@@ -17,29 +17,32 @@ tutorial:
 
 include $(top_srcdir)/milena/headers.mk
 
-EXTRA_DIST = \
-img/lena.pbm \
-img/fly.pbm \
-img/squares-lc.pgm \
-img/lena_16.ppm \
-img/squares.pgm \
-img/fly.pgm \
-img/toto.pbm \
-img/README \
-img/quite-small.pgm \
-img/test.fits \
-img/lena.pgm \
-img/tiny.pbm \
-img/tiny.pgm \
-img/picasso.pbm \
-img/space_debris.pgm \
-img/picasso.pgm \
-img/small.pbm \
-img/small-enlarged.png \
-img/small.png \
-img/small.ppm \
-img/lena.ppm \
-img/small.pgm
+EXTRA_DIST = 		\
+img/README 		\
+img/fly.pbm 		\
+img/fly.pgm 		\
+img/fly.ppm 		\
+img/lena.pbm 		\
+img/lena.pgm 		\
+img/lena.ppm 		\
+img/lena_16.ppm 	\
+img/medium.pgm 		\
+img/medium.ppm 		\
+img/picasso.pbm 	\
+img/picasso.pgm 	\
+img/quite-small.pgm 	\
+img/small-enlarged.png 	\
+img/small.pbm 		\
+img/small.pgm 		\
+img/small.png 		\
+img/small.ppm 		\
+img/squares-lc.pgm 	\
+img/squares.pgm 	\
+img/test.fits 		\
+img/tiny.pbm 		\
+img/tiny.pgm 		\
+img/tiny.ppm 		\
+img/toto.pbm
 
 EXTRA_DIST += 		\
 generate_dist_headers.sh

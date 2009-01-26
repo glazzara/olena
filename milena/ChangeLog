@@ -1,3 +1,19 @@
+2009-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix list of distributed files.
+
+	* Makefile.am: fix list of distributed images.
+
+	* doc/tutorial/Makefile.am: include new mk files.
+	
+	* doc/tutorial/generate_dist_files.sh: new script to generate the following
+	list of files.
+
+	* doc/tutorial/examples/examples.mk,
+	* doc/tutorial/figures/figures.mk,
+	* doc/tutorial/outputs/outputs.mk,
+	* doc/tutorial/samples/samples.mk: generated files.
+
 2009-01-24  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix consistency of make::box3d arguments.
