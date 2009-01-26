@@ -122,6 +122,10 @@ run milena/tests/unit_test ./build_unit_test.sh $PWD/milena/mln
 # Generate milena/dist_headers.mk
 run milena ./generate_dist_headers.sh
 
+# Generate lists of files to be part of the distribution
+# for the tutorial.
+run milena/doc/tutorial ./generate_dist_files.sh
+
 # Tell what's going on.
 set -x
 
