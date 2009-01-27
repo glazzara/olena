@@ -1,3 +1,9 @@
+2009-01-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix igr registration.
+
+	* lazzara/igr.cc: Fix registration call.
+
 2009-01-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update segmentation scheme.

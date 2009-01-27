@@ -5,6 +5,7 @@
 #include <mln/debug/colorize.hh>
 
 #include <mln/registration/registration.hh>
+#include <mln/registration/multiscale.hh>
 
 struct threshold : mln::Function_p2b<threshold>
 {
@@ -61,7 +62,7 @@ keep_largest_component(const mln::Image<I>& ima)
   return in_bw_cleaned_full;
 }
 
-int main(int argc, char* argv[])
+int main(int, char* argv[])
 {
   using namespace mln;
   using value::rgb8;
@@ -88,18 +89,28 @@ int main(int argc, char* argv[])
   I ref;
   io::ppm::load(ref, argv[2]);
   J ref_bw = binarization::binarization(ref, f);
+
+  io::pbm::save(ref_bw, "ref_bw.pbm");
+
+  J surf = keep_largest_component(ref_bw);
+  J surf_grad = morpho::gradient(surf, win_c4p());
+
   std::cout << "Computing registration..." << std::endl;
-  J cloud = ima_grad | pw::value(ima_grad) == true;
-  mln_VAR(registration, registration::registration(cloud, ref_bw));
-  mln_VAR(icp, registration::icp(convert::to_p_array(cloud), ref_bw));
+  J cloud = ima_grad | pw::value(ima_grad) == true; //FIXME: cannot use pw::image with registration.
+  //  mln_VAR(surface, (surf_grad | pw::value(surf_grad) == true));
+  mln_VAR(registration, registration::multiscale(cloud, surf_grad, 5, 3));
 
   std::cout << "Build result image" << std::endl;
   J res;
   initialize(res, ima_grad);
-  mln_piter_(J) p(ima_grad.domain());
+
+  data::fill(res, false);
+
+  mln_VAR(ig, (ima_grad | pw::value(ima_grad) == true));
+  mln_piter_(ig_t) p(ig.domain());
   for_all(p)
-    if (res.has(registration(p.to_site().to_vec())))
-      res(registration(p.to_site().to_vec())) = ima_grad(p);
+    res(registration(p.to_site().to_vec())) = true;
+
 
   io::pbm::save(res, "04_registered.pbm");
 
