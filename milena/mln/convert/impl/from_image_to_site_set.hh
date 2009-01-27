@@ -65,18 +65,20 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-
-      // Case: binary image -> set of point runs.
-
-      template <typename I, typename P, typename S>
-      void
-      from_image_to_site_set_(const I& input, const Gpoint<P>&,
-			      S& s,           const mln::p_run<P>&)
+      namespace internal
       {
-	s.clear();
-	mln_fwd_piter(I) p(input.domain());
-	p.start();
-	for (;;)
+
+	// Case: binary image -> set of point runs.
+
+	template <typename I, typename P, typename S>
+	void
+	from_image_to_site_set(const I& input, const Gpoint<P>&,
+			       S& s,           const mln::p_run<P>&)
+	{
+	  s.clear();
+	  mln_fwd_piter(I) p(input.domain());
+	  p.start();
+	  for (;;)
 	  {
 	    // Skip background.
 	    while (p.is_valid() && input(p) == false)
@@ -87,28 +89,29 @@ namespace mln
 	    P start = p, q;
 	    // Go to run end.
 	    do
-	      {
-		q = p;
-		p.next();
-	      }
+	    {
+	      q = p;
+	      p.next();
+	    }
 	    while (p.is_valid() && input(p) == true &&
-		   // p follows q in a run, i.e., "p == q + right":
- 		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
+		// p follows q in a run, i.e., "p == q + right":
+		cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(p_run<P>(start, q));
 	  }
-      }
+	}
 
 
-      template <typename I, typename P, typename S>
-      void
-      from_image_to_site_set_(const I& input, const Gpoint<P>&,
-			      S& s,           const std::pair< mln_value(I), p_run<P> >&)
-      {
-	s.clear();
-	mln_value(I) O = literal::zero;
-	mln_fwd_piter(I) p(input.domain());
-	p.start();
-	for (;;)
+	template <typename I, typename P, typename S>
+	void
+	from_image_to_site_set(const I& input, const Gpoint<P>&,
+			       S& s,
+			       const std::pair< mln_value(I), p_run<P> >&)
+	{
+	  s.clear();
+	  mln_value(I) O = literal::zero;
+	  mln_fwd_piter(I) p(input.domain());
+	  p.start();
+	  for (;;)
 	  {
 	    if (! p.is_valid()) // The end.
 	      break;
@@ -116,27 +119,54 @@ namespace mln
 	    P start = p, q;
 	    // Go to run end.
 	    do
-	      {
-		q = p;
-		p.next();
-	      }
+	    {
+	      q = p;
+	      p.next();
+	    }
 	    while (p.is_valid() && input(p) == v &&
- 		   cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
+		cut_(p.to_site()) == cut_(q) && p.last_coord() == q.last_coord() + 1);
 	    s.insert(v, p_run<P>(start, q));
 	  }
-      }
+	}
 
 
-      template <typename I, typename P, typename S>
-      void
-      from_image_to_site_set_(const I& input, const Gpoint<P>&,
-			      S& s,           const std::pair< mln_value(I), P >&)
-      {
-	s.clear();
-	mln_fwd_piter(I) p(input.domain());
-	for_all(p)
-	  s.insert(input(p), p);
-      }
+	template <typename I, typename P, typename S>
+	void
+	from_image_to_site_set(const I& input, const Gpoint<P>&,
+			       S& s,
+			       const std::pair< mln_value(I), P >&)
+	{
+	  s.clear();
+	  mln_fwd_piter(I) p(input.domain());
+	  for_all(p)
+	    s.insert(input(p), p);
+	}
+
+
+	template <typename I, typename S>
+        inline
+        void
+        from_image_to_site_set(const Image<I>& from, Site_Set<S>& to)
+        {
+	  from_image_to_site_set(exact(from), mln_deduce(I, pset, element)(),
+				 exact(to),   mln_i_element(S)());
+	}
+
+	template <typename I>
+        inline
+        void
+        from_image_to_site_set(const Image<I>& from_, p_array<mln_psite(I)>& to)
+        {
+	  const I& from = exact(from_);
+
+	  mln_piter(I) p(from.domain());
+	  for_all(p)
+	    if (from(p))
+	      to.append(p);
+	}
+
+
+      } // end of namespace mln::convert::impl::internal
 
 
       // Facade.
@@ -146,8 +176,7 @@ namespace mln
       void
       from_image_to_site_set(const Image<I>& from, Site_Set<S>& to)
       {
-	from_image_to_site_set_(exact(from), mln_deduce(I, pset, element)(),
-				exact(to),   mln_i_element(S)());
+	internal::from_image_to_site_set(exact(from), exact(to));
       }
 
 # endif // ! MLN_INCLUDE_ONLY

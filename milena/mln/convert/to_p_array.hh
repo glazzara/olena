@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -30,7 +30,10 @@
 # define MLN_CONVERT_TO_P_ARRAY_HH
 
 /// \file mln/convert/to_p_array.hh
-/// \brief Conversions to mln::p_array.
+///
+/// Conversions to mln::p_array.
+///
+/// \todo Move these conversion in from_to related mechanisms.
 
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/concept/image.hh>
@@ -91,6 +94,7 @@ namespace mln
       return v;
     }
 
+    //FIXME: to remove, already added to from_image_to_site_set.hh.
     template <typename I>
     inline
     p_array<mln_psite(I)>

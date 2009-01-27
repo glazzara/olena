@@ -1,4 +1,5 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,10 +26,11 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/*! \file tests/registration/registration.cc
- *
- * \brief Test on mln::registration::registration.cc
- */
+/// \file tests/registration/multiscale.cc
+///
+/// Test on mln::registration::multiscale.cc
+///
+/// FIXME: write a test!
 
 #include "tests/data.hh"
 #include <mln/io/pbm/all.hh>
@@ -43,8 +45,8 @@ int main()
   image2d< bool > img2;
 
   //load images
-  io::pbm::load(img1, MLN_IMG_DIR "/lena.pbm");
-  io::pbm::load(img2, MLN_IMG_DIR "/lena.pbm");
+  io::pbm::load(img1, MLN_IMG_DIR "/fly.pbm");
+  io::pbm::load(img2, MLN_IMG_DIR "/fly.pbm");
 
   //FIXME: Auto test result
   //FIXME: Make it pass

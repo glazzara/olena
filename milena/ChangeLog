@@ -1,3 +1,13 @@
+2009-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix conversion from Image to p_array.
+
+	* mln/convert/to_p_array.hh: move conversion from here...
+	* mln/convert/impl/from_image_to_site_set.hh: to here... And update
+	dispatch accordingly.
+
+	* tests/registration/multiscale.cc: use a smaller image.
+
 2009-01-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
 
 	Fix mln::registration::multiscale test.
