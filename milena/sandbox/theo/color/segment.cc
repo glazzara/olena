@@ -8,6 +8,8 @@
 #include <mln/core/alias/neighb2d.hh>
 #include <mln/make/double_neighb2d.hh>
 
+#include <mln/value/label_8.hh>
+
 #include <mln/core/image/image_if.hh>
 #include <mln/pw/all.hh>
 #include <mln/core/routine/extend.hh>
@@ -38,6 +40,8 @@
 #include <mln/accu/volume.hh>
 
 #include "sum_pix.hh"
+#include "change_attributes.hh"
+
 
 
 namespace mln
@@ -327,34 +331,6 @@ namespace mln
   } 
 
 
-  template <typename A, typename T>
-  inline
-  mln_ch_value(typename T::function, mln_result(A))
-    compute_rand_attribute_on_nodes(const A& a, const T& t)
-  {
-    typedef typename T::function I;
-
-    mln_ch_value(I, mln_result(A)) attr;
-    initialize(attr, t.f());
-
-    // Initialize every attribute with the corresponding pixel.
-    {
-      mln_piter(I) p(t.f().domain());
-      for_all(p)
-	attr(p) = float(std::rand() % 10000) / 1000.f;
-    }
-
-    // Propagate attribute from a site to its parent.
-    {
-      mln_fwd_piter(T) p(t.domain());
-      for_all(p)
-	if (! t.is_root(p))
-	  attr(t.parent(p)) += attr(p);
-    }
-
-    return attr;
-  } 
-
 
 
   // Tree -> nchildren (on nodes).
@@ -393,6 +369,7 @@ namespace mln
   mln_concrete(typename T::function)
   filter(const A& a, const T& t, const N& nbh,
 	 unsigned n_objects,
+	 unsigned& less,
 	 mln_value(A)& lambda,
 	 bool echo = false)
   {
@@ -411,28 +388,38 @@ namespace mln
     if (n_objects >= n_regmins_f)
       {
 	std::cout << "warning: number of expected objects is greater than number of regmins!" << std::endl;
-	std::cout << "aborting..." << std::endl;
-	return duplicate(t.f());
+	std::cout << "aborting!" << std::endl;
+	std::abort();
       }
 
     lambda = mln_max(mln_value(A));
 
-    mln_ch_value(typename T::function, unsigned) nchildren = compute_nchildren(t);
+    mln_ch_value(I, unsigned) nchildren = compute_nchildren(t);
+    if (echo)
+      debug::println("nchildren (before) =", nchildren | t.nodes());
 
     typedef p_array<mln_site(I)> S;
     S s = my_sort_increasing(a, t.nodes());
 
     const typename T::parent_t& par = t.parent_image();
 
-    unsigned
-      count = n_regmins_f,
-      less  = 0;
+    unsigned count = n_regmins_f;
+    less = 0;
+
+    // For display only.
+    mln_ch_value(I, bool) filtered;
+    initialize(filtered, t.f());
+    data::fill(filtered, false);
+
     mln_fwd_piter(S) p(s);
     for_all(p)
     {
       if (a(p) < lambda && par(p) != p)
 	{
 	  mln_assertion(nchildren(par(p)) > 0);
+
+	  filtered(p) = true; // For display only.
+
 	  --nchildren(par(p));
 	  if (nchildren(par(p)) != 0)
 	    {
@@ -446,18 +433,26 @@ namespace mln
 		  lambda = a(p) + 1;
 		  std::cout << "lambda = " << lambda << std::endl
 			    << std::endl;
-		  // break; // Stop iterations.
+		  break; // Stop iterations.
 		}
 	    }
 	}
     }
+
+    if (echo)
+      {
+	back_propagate(filtered, t);
+	debug::println("filtered =", filtered);
+	debug::println("a < lambda = ", (pw::value(a) < pw::cst(lambda)) | a.domain());
+      }
+
 
     if (less != 0)
       std::cerr << "WARNING: less objects (" << less << ") than expected..." << std::endl
 		<< std::endl;
 
     if (echo)
-      debug::println("nchildren =", nchildren | t.nodes());
+      debug::println("nchildren (after) =", nchildren | t.nodes());
 
     // Filtering.
     mln_concrete(I) g;
@@ -477,45 +472,107 @@ namespace mln
     if (echo)
       {
 	unsigned n_regmins_g;
-	debug::println( "regmin(g)", labeling::regional_minima(g, nbh, n_regmins_g) );
+	mln_VAR(regmin_g, labeling::regional_minima(g, nbh, n_regmins_g));
+	debug::println( "regmin(g)", regmin_g);
+	debug::println("a | regmin(g) = ", a | (pw::value(regmin_g) != 0));
+
       }
 
     return g;
   }
 
 
+
   template <typename A, typename I, typename N>
   void
   test_filter(A a, mln_result(A) lambda,
 	      const I& f, const I& g, const N& nbh,
+	      unsigned n_objects, unsigned less,
 	      bool echo = false)
   {
     mln_concrete(I) g_ref = morpho::closing_attribute<A>(f, nbh, lambda);
-    if (echo)
-      debug::println("g_ref =", g_ref);
 
     unsigned n_regmins_g_ref;
-    mln_ch_value(I, unsigned) regmin_g = labeling::regional_minima(g_ref, nbh, n_regmins_g_ref);
-//     if (echo)
-      std::cout << "n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
-		<< std::endl;
+    mln_ch_value(I, unsigned) regmin_g_ref = labeling::regional_minima(g_ref, nbh, n_regmins_g_ref);
+    bool consistency = (n_regmins_g_ref + less == n_objects);
       
     if (g != g_ref)
       {
 	std::cerr << "OOPS: g DIFFERS FROM ref!" << std::endl
 		  << std::endl;
 
-// 	debug::println("diff", (pw::value(g_ref) == pw::value(g)) | g.domain());
+	debug::println("diff = ", (pw::value(g_ref) == pw::value(g)) | g.domain());
 
-// 	debug::println("g_ref", g_ref);
-// 	debug::println("g", g);
-// 	debug::println("regmin_g", regmin_g);
+	debug::println("g_ref =", g_ref);
+	debug::println("regmin(g_ref) =", regmin_g_ref);
+	std::cout << "n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
+		  << std::endl;
       }
 
-//     bool consistency = (n_regmins_g_ref + less == n_objects);
-//     if (consistency == false)
-//       std::cerr << "OOPS: INCONSISTENCY (BUG...)!" << std::endl
-// 		<< std::endl;
+    if (consistency == false)
+      {
+	std::cerr << "OOPS: INCONSISTENCY (BUG...)!" << std::endl
+		  << "      n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
+		  << "      n_less = "           << less << std::endl
+		  << "      n_objects = "        << n_objects << std::endl
+		  << std::endl;
+
+	debug::println("diff = ", (pw::value(g_ref) == pw::value(g)) | g.domain());
+
+	debug::println("g_ref =", g_ref);
+	debug::println("regmin(g_ref) =", regmin_g_ref);
+	std::cout << "n_regmins(g_ref) = " << n_regmins_g_ref << std::endl
+		  << std::endl;
+
+      }
+  }
+
+
+
+  // Filter facade.
+
+  template <typename F, typename N, typename A>
+  inline
+  mln_concrete(F)
+  filter_color(const F& f,  // a "gradient" of color image
+	       const N& nbh,
+	       const A& a_, // an attribute
+	       bool do_extinction,
+	       unsigned n_objects,
+	       bool echo = false)
+  {
+    typedef p_array<mln_psite(F)> S;
+    S s = level::sort_psites_decreasing(f);
+
+    typedef morpho::tree::data<F,S> tree_t;
+    tree_t t(f, s, nbh);
+
+    mln_VAR(a, compute_attribute_on_nodes(a_, t));
+    back_propagate(a, t);
+
+    if (echo)
+      {
+	debug::println("par =", t.parent_image() | t.nodes());
+	debug::println("a =", a | t.nodes());
+	debug::println("a = ", a);
+      }
+    if (do_extinction)
+      extinct_attributes(t, a);
+    if (echo)
+      debug::println("a' =", a | t.nodes());
+
+
+    mln_value(a_t) lambda;
+    unsigned less;
+    mln_concrete(F) g = filter(a, t, nbh, n_objects, // input
+			       less, lambda,         // output
+			       echo);
+
+    test_filter(a_, lambda, f, g, nbh,
+		n_objects, less,
+		echo);
+
+    return g;
   }
 
 
@@ -526,8 +583,10 @@ namespace mln
 
 void usage(char* argv[])
 {
-  std::cerr << "usage: " << argv[0] << " input.ppm n output.ppm" << std::endl;
+  std::cerr << "usage: " << argv[0] << " input.ppm n extinction output.ppm echo" << std::endl;
   std::cerr << "  n >= 2" << std::endl;
+  std::cerr << "  extinction = 0 (none) or 1 (effective)" << std::endl;
+  std::cerr << "  echo = 0 (mute) or 1 (verbose)" << std::endl;
   abort();
 }
 
@@ -539,7 +598,7 @@ int main(int argc, char* argv[])
   using value::int_u8;
   using value::rgb8;
 
-  if (argc != 4)
+  if (argc != 6)
     usage(argv);
 
 
@@ -554,6 +613,9 @@ int main(int argc, char* argv[])
 
     unsigned n_objects = atoi(argv[2]);
 
+    bool do_extinction = atoi(argv[3]);
+    bool echo = atoi(argv[5]);
+
 
     // Changing input into 'f on edges'.
 
@@ -567,37 +629,43 @@ int main(int argc, char* argv[])
     typedef f_t I;
 
 
-    // Filtering f -> g.
-
-    typedef p_array<point2d> S;
-    S s = level::sort_psites_decreasing(f);
-
-    typedef morpho::tree::data<I,S> tree_t;
-    tree_t t(f, s, e2e());
-
-    //  accu::count< util::pix<I> > a_;
-    //  accu::volume<I> a_;
-    //  accu::sum_pix< util::pix<I> > a_;
+    // accu::count< util::pix<I> > a_;
+    // accu::volume<I> a_;
+    // accu::sum_pix< util::pix<I> > a_;
 
     blen_image = input_;
     accu::blen_pix<I> a_;
 
-    mln_VAR(a, compute_attribute_on_nodes(a_, t));
+    f_t g = filter_color(f, e2e(),
+			 a_, do_extinction,
+			 n_objects,
+			 echo);
 
-    mln_value_(a_t) lambda;
-    f_t g = filter(a, t, e2e(), n_objects, lambda);
-
-    test_filter(a_, lambda, f, g, e2e());
-
+    if (echo)
+      debug::println("activity (g != f) = ", (pw::value(g) != pw::value(f)) | f.domain());
 
     // Watershed transform.
 
-    int_u8 nbasins;
-    mln_ch_value_(f_t, int_u8) w_edges = morpho::meyer_wst(g, e2e(), nbasins);
+    typedef value::label_8 L;
+    L nbasins;
+    mln_ch_value_(f_t, L) w = morpho::meyer_wst(g, e2e(), nbasins);
 
-    // io::pgm::save(display_edge(w_edges.unmorph_(), 0, 3), "temp_w_edges.pgm");
+    // io::pgm::save(display_edge(w.unmorph_(), 0, 3), "temp_w.pgm");
 
-    image2d<int_u8> w_all = w_edges.unmorph_();
+    if (echo)
+      {
+	image2d<int_u8> g_(f_.domain());
+
+	data::fill(g_, 0);
+	data::paste(g | (pw::value(w) != 0), g_);
+	debug::println("g | basins = ", g_ | is_edge);
+
+	data::fill(g_, 0);
+	data::paste(g | (pw::value(w) == 0), g_);
+	debug::println("g | w line = ", g_ | is_edge);
+      }
+
+    image2d<L> w_all = w.unmorph_();
     {
       // edges -> squares
       mln_VAR(w_squares, w_all | is_square);

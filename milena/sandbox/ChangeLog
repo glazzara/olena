@@ -1,3 +1,10 @@
+2009-01-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update color segmentation.
+
+	* theo/color/segment.cc: Update.
+	* theo/color/change_attributes.hh: New.
+
 2009-01-23  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Cleanup organization related to ISMM code.
