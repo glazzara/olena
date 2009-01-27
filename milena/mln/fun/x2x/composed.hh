@@ -87,7 +87,7 @@ namespace mln
           /// Return the inverse function.
           invert inv() const;
 
-        protected:
+          //protected:
 
           F f_;
           G g_;
@@ -115,7 +115,7 @@ namespace mln
           /// Set the new second transformation.
           void set_second(const G& g);
 
-        protected:
+          //protected:
 
           F f_;
           G g_;
@@ -132,9 +132,9 @@ namespace mln
         : public internal::helper_composed_<F, G, composed<F,G>,
                                             mlc_is(F, Bijection_x2x<F>)::value &&
                                             mlc_is(G, Bijection_x2x<G>)::value>,
-                                                                               private metal::and_< metal::bool_<(F::dim == G::dim)>,
-                                                                                                    metal::is<mln_argument(F), mln_result(G)>
-                                                                                                    >::check_t
+          private metal::and_< metal::bool_<(F::dim == G::dim)>,
+                               metal::is<mln_argument(F), mln_result(G)>
+                               >::check_t
       {
         /// Constructor without argument.
         composed() {}

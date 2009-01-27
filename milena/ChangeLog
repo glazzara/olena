@@ -1,3 +1,11 @@
+2009-01-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix regsitration.
+
+	* mln/registration/multiscale.hh: Fix error.
+	* mln/registration/icp.hh: Fix call.
+	* mln/registration/get_rtransf.hh: Fix minor error.
+
 2009-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Fix conversion from Image to p_array.

@@ -40,6 +40,17 @@ namespace mln
   namespace registration
   {
 
+    /*! Register point in \p c using a multiscale icp algorithm
+     *
+     * \param[in] cloud Image to register
+     * \param[in] surface Image using to register onto
+     * \param[in] q Subsampling quotient
+     * \param[in] nb_it Number of registrations
+     * \param[out] The rigid transformation obtained.
+     *
+     * \pre \p cloud has to be initialized.
+     * \pre \p surface has to be initialized.
+     */
     template <typename I, typename J>
     inline
     composed< rotation<I::psite::dim, float>, translation<I::Psite::dim, float> >
@@ -113,7 +124,7 @@ namespace mln
 
         //working box
         const box<mln_psite(I)> working_box =
-          enlarge(bigger(geom::bbox(c), geom::bbox(x)), 100);
+          enlarge(bigger(geom::bbox(c), geom::bbox(x)), 1000); //warning 100 could be insufficient
 
         //make a lazy_image map via function closest_point
         fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
@@ -121,12 +132,13 @@ namespace mln
           map(fun, fun.domain());
 
         //init rigid transform qk
+        // FIXME: check qk initialisation.
         composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> > qk;
 
         //run registration
         for (int e = nb_it-1; e >= 0; e--)
         {
-          unsigned int l = cloud.nsites() / std::pow(q, e);
+          unsigned int l = c.nsites() / std::pow(q, e);
           l = (l < 1) ? 1 : l;
           icp_subset(c, l, map, qk);
         }

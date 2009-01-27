@@ -169,7 +169,17 @@ namespace mln
 
         //work on a reduced version of c_
         p_array<P> c = c_;
+
+        std::cout << "c_length" << c_length << std::endl;
+        std::cout << "-nsites" << c_.nsites() << std::endl;
+
+        std::cout << "bad point" << c[9100] << std::endl;
+
+        //FIXME: Use c_ and specify c_length to function using c_
         c.hook_std_vector_().resize(c_length);
+
+        std::cout << "+nsites" << c.nsites() << std::endl;
+        std::cout << "bad point" << c[9100] << std::endl;
 
         p_array<P>    ck(c);
         algebra::vec<P::dim,float> mu_c = center(c);
@@ -180,6 +190,7 @@ namespace mln
 
         unsigned int k = 0;
         do {
+          std::cout << "*------" << std::endl;
           buf_dk.store(d_k);
 
           //compute qk
@@ -196,13 +207,15 @@ namespace mln
           k++;
           //FIXME: Add matrix norm
           //} while ((qk - buf_qk[1]).sqr_norm() / qk.sqr_norm() > epsilon);
-        } while (d_k > epsilon);
+
+          std::cout << d_k << std::endl;
+
+        } while (d_k > 9.2);
 
         trace::exiting("registration::impl::icp_");
       }
 
     } // end of namespace mln::registration::impl
-
 
     template <typename P, typename M>
     inline
@@ -211,6 +224,9 @@ namespace mln
         const float epsilon = 1e-3)
     {
       composed<rotation<P::dim, float>, translation<P::dim, float> > qk;
+
+      std::cout << " icp "  << std::endl;
+
       impl::icp_(c, c.nsites(), map, qk, epsilon);
       return qk;
     }
