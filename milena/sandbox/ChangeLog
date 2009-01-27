@@ -1,3 +1,11 @@
+2009-01-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update segmentation scheme.
+
+	* theo/color/segment.cc: Move some contents into...
+	* theo/color/segment.hh: ...this new file.
+	* theo/color/segment_debase.cc: New.
+
 2009-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	First draft of a program for IGR's images.
