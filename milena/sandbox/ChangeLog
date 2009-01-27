@@ -1,3 +1,9 @@
+2009-01-27  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First draft of a program for IGR's images.
+
+	* lazzara/igr.cc: new file.
+
 2009-01-27  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update color segmentation.
