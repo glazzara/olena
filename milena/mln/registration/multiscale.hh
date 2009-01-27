@@ -106,7 +106,7 @@ namespace mln
                   const unsigned nb_it)
       {
         p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
-        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(I)> >(surface);
+        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(J)> >(surface);
 
         // Shuffle cloud
         shuffle(c);
@@ -117,7 +117,7 @@ namespace mln
 
         //make a lazy_image map via function closest_point
         fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
-        lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d >
+        const lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d >
           map(fun, fun.domain());
 
         //init rigid transform qk
@@ -126,9 +126,9 @@ namespace mln
         //run registration
         for (int e = nb_it-1; e >= 0; e--)
         {
-          unsigned l = cloud.nsites() / std::pow(q, e);
+          unsigned int l = cloud.nsites() / std::pow(q, e);
           l = (l < 1) ? 1 : l;
-          registration::impl::icp_(cloud, l, map, qk, 1e-3);
+          icp_subset(c, l, map, qk);
         }
         return qk;
       }

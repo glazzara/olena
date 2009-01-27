@@ -30,8 +30,8 @@
  * \brief Test on mln::registration::registration.cc
  */
 
+#include "tests/data.hh"
 #include <mln/io/pbm/all.hh>
-
 #include <mln/registration/multiscale.hh>
 
 

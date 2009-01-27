@@ -1,3 +1,15 @@
+2009-01-27  Ugo Jardonnet  <jardonnet@lrde.epita.fr>
+
+	Fix mln::registration::multiscale test.
+
+	* tests/registration/Makefile.am: Add missing multiscale.
+
+	* tests/registration/multiscale.cc: Add missing inclusion.
+	* tests/registration/registration.cc: Use lena for tests (bof).
+
+	* mln/registration/multiscale.hh: Fix wrong function call.
+	* mln/registration/icp.hh: Fix documentation.
+
 2009-01-26  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Make the 'make check' pass.

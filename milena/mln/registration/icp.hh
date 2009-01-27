@@ -101,17 +101,27 @@ namespace mln
     icp(const p_array<P>& c, const M& map,
         const float epsilon = 1e-3);
 
-    /*!
-     * \fixme
+
+    /*! Register point in \p c using a map of closest points \p map
+     *
+     * \param[in] c The cloud of points.
+     * \param[in] c_length points from cloud to use.
+     * \param[in] map The map of closest points.
+     * \param[in] qk The initial rigid transformation applied.
+     * \param[in] epsilon ICP stops if sqr_norm(qk - qk-1) /
+     * sqr_norm(qk) > epsilon
+     * \param[out] qk The rigid transformation obtained.
+     *
+     * \pre \p ima has to be initialized.
      */
     template <typename P, typename M, typename T>
     inline
     void
     icp_subset(const p_array<P>& c,
+               const unsigned int c_length,
                const M& map,
                T& qk,
-               const unsigned c_length,
-               const float epsilon = 1e-3);
+               float epsilon = 1e-3);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -140,7 +150,6 @@ namespace mln
         for (unsigned i = 0; i < a.nsites(); i++)
           b[i] = f(convert::to< algebra::vec<P::dim,float> >(a[i]));
       }
-
 
       template <typename P, typename M, typename T>
       inline
@@ -202,7 +211,7 @@ namespace mln
         const float epsilon = 1e-3)
     {
       composed<rotation<P::dim, float>, translation<P::dim, float> > qk;
-      impl::icp_(c, c.nsites(),map, qk, epsilon);
+      impl::icp_(c, c.nsites(), map, qk, epsilon);
       return qk;
     }
 
@@ -210,10 +219,10 @@ namespace mln
     inline
     void
     icp_subset(const p_array<P>& c,
-               const unsigned c_length,
+               const unsigned int c_length,
                const M& map,
                T& qk,
-               const float epsilon = 1e-3)
+               float epsilon = 1e-3)
     {
       impl::icp_(c, c_length, map, qk, epsilon);
     }

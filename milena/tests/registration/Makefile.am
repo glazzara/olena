@@ -3,8 +3,10 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 check_PROGRAMS =				\
-  registration
+  registration 					\
+  multiscale
 
 registration_SOURCES = registration.cc
+multiscale_SOURCES = multiscale.cc
 
 TESTS = $(check_PROGRAMS)

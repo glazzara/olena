@@ -42,8 +42,8 @@ int main()
   image2d< bool > img2;
 
   //load images
-  io::pbm::load(img1, MLN_IMG_DIR "/tiny.pbm");
-  io::pbm::load(img2, MLN_IMG_DIR "/tiny.pbm");
+  io::pbm::load(img1, MLN_IMG_DIR "/lena.pbm");
+  io::pbm::load(img2, MLN_IMG_DIR "/lena.pbm");
 
   registration::registration(img1,img2);
   //FIXME: Auto test result
