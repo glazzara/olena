@@ -1,3 +1,10 @@
+2009-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	First revamp of ICP.
+
+	* mln/registration/icp2.hh: temporary version. Should be more cleaned
+	up in a near future.
+
 2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add a maker of image3d from an array of 2D images.
