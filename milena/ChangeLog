@@ -1,5 +1,15 @@
 2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a slice morpher.
+
+	* mln/core/image/slice_image.hh: New.
+	* mln/core/image/all.hh: Update.
+	* tests/core/image/slice_image.cc: New.
+	* tests/core/image/Makefile.am: Update.
+	* tests/core/image/p2p_image.cc: Fix file doc.
+
+2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add fun p2p translation and p2p_image morpher.
 
 	* mln/core/image/p2p_image.hh: New.

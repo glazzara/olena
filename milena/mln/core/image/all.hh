@@ -78,6 +78,7 @@
 //# include <mln/core/image/rle_encode.hh>
 //# include <mln/core/image/rle_image.hh>
 # include <mln/core/image/safe.hh>
+# include <mln/core/image/slice_image.hh>
 # include <mln/core/image/sparse_encode.hh>
 # include <mln/core/image/sparse_image.hh>
 # include <mln/core/image/sub_image.hh>

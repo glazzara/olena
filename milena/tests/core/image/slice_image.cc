@@ -25,36 +25,27 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-/// \file tests/core/image/p2p_image.cc
+/// \file tests/core/image/slice_image.cc
 ///
-/// Tests on mln::p2p_image.
+/// Tests on mln::slice_image.
 
 #include <mln/core/image/image2d.hh>
-#include <mln/core/image/p2p_image.hh>
-#include <mln/fun/p2p/translation.hh>
+#include <mln/core/image/image3d.hh>
+#include <mln/core/image/slice_image.hh>
 
 #include <mln/debug/iota.hh>
-
-
-
-# define ima_  apply_p2p(ima, fun::p2p::translation(dp))
-
+#include <mln/level/compare.hh>
 
 
 int main()
 {
   using namespace mln;
 
-  box2d b = make::box2d(0,0, 2,2);
-  image2d<int> ima(b, 0); // No border.
+  image3d<int> ima(3, 2, 4);
 
-  debug::iota(ima);
+  for (def::coord s = 0; s < 3; ++s)
+    debug::iota(slice(ima, s).rw());
 
-  dpoint2d dp(-1,+1);
-  box2d b_ = make::box2d(-1,+1, 1,3);
-
-  mln_assertion( ima_.domain() == b_ );
-
-  mln_assertion( ima_(point2d(-1,+1)) == 1 );
-  mln_assertion( ima_(point2d( 1, 3)) == 9 );
+  mln_assertion( slice(ima, 1) == slice(ima, 0) );
+  mln_assertion( slice(ima, 2) == slice(ima, 0) );
 }

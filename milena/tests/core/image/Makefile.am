@@ -25,6 +25,7 @@ check_PROGRAMS =				\
   plain						\
 ##  rle_image					\
   safe_image					\
+  slice_image					\
 ##  sparse_image					\
   sub_image					\
   t_image					\
@@ -54,6 +55,7 @@ p2p_image_SOURCES = p2p_image.cc
 plain_SOURCES = plain.cc
 ##rle_image_SOURCES = rle_image.cc
 safe_image_SOURCES = safe_image.cc
+slice_image_SOURCES = slice_image.cc
 ##sparse_image_SOURCES = sparse_image.cc
 sub_image_SOURCES = sub_image.cc
 t_image_SOURCES = t_image.cc
