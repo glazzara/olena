@@ -118,6 +118,10 @@ namespace mln
 
     /// Read-write access to the image value located at point \p p.
     mln_morpher_lvalue(I) operator()(const point2d& p);
+
+
+    /// Const promotion via conversion.
+    operator slice_image<const I>() const;
   };
 
 
@@ -245,6 +249,16 @@ namespace mln
     return this->data_->ima_(p_);
   }
 
+  template <typename I>
+  inline
+  slice_image<I>::operator slice_image<const I>() const
+  {
+    mln_precondition(this->is_valid());
+    slice_image<const I> tmp(this->data_->ima_,
+			     this->data_->sli_);
+    return tmp;
+  }
+
 
   // Routines.
 
@@ -271,12 +285,12 @@ namespace mln
   {
     mlc_equal(mln_pset(I), box3d)::check();
 
-    I& ima = exact(ima_);
+    const I& ima = exact(ima_);
     mln_precondition(ima.is_valid());
     mln_precondition(sli >= ima.domain().pmin().sli() &&
 		     sli <= ima.domain().pmax().sli());
 
-    slice_image<I> tmp(ima, sli);
+    slice_image<const I> tmp(ima, sli);
     return tmp;
   }
 

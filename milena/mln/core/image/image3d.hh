@@ -208,6 +208,16 @@ namespace mln
     T& at_(def::coord sli, def::coord row, def::coord col);
 
 
+    /// Give the number of slices.
+    unsigned nslices() const;
+
+    /// Give the number of rows.
+    unsigned nrows() const;
+
+    /// Give the number of columns.
+    unsigned ncols() const;
+
+
     /// Fast Image method
 
     /// Give the offset corresponding to the delta-point \p dp.
@@ -497,6 +507,33 @@ namespace mln
   {
     mln_precondition(this->has(point3d(sli, row, col)));
     return data_->array_[sli][row][col];
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image3d<T>::nslices() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->b_.len(0);
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image3d<T>::nrows() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->b_.len(1);
+  }
+
+  template <typename T>
+  inline
+  unsigned
+  image3d<T>::ncols() const
+  {
+    mln_precondition(this->is_valid());
+    return this->data_->b_.len(2);
   }
 
   template <typename T>

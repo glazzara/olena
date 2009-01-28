@@ -1,5 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,36 +25,48 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_DEBUG_ALL_HH
-# define MLN_DEBUG_ALL_HH
-
-/// \file mln/debug/all.hh
+/// \file tests/debug/slices_2d.cc
 ///
-/// File that includes all debug-related routines.
+/// Tests on mln::debug::slices_2d.
+
+#include <mln/debug/slices_2d.hh>
+#include <mln/debug/iota.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  /// Namespace of routines that help to debug.
-  namespace debug
-  {
-    /// Implementation namespace of debug namespace.
-    namespace impl {}
-  }
+  image3d<int> vol(5, 2, 3);
+  debug::iota(vol);
+
+  //   1  2  3 
+  //  4  5  6 
+  //
+  //   7  8  9 
+  //  10 11 12 
+  //
+  //   13 14 15 
+  //  16 17 18 
+  //
+  //   19 20 21 
+  //  22 23 24 
+  //
+  //   25 26 27 
+  //  28 29 30 
+
+  image2d<int> ima = debug::slices_2d(vol, 2, 3,
+				      -1);
+
+  // 1  2  3  7  8  9  
+  // 4  5  6  10 11 12 
+  // 13 14 15 19 20 21 
+  // 16 17 18 22 23 24 
+  // 25 26 27 -1 -1 -1 
+  // 28 29 30 -1 -1 -1 
+
+  mln_assertion(ima.at_(0,0) ==  1);
+  mln_assertion(ima.at_(5,2) == 30);
+  mln_assertion(ima.at_(5,5) == -1);
 
 }
-
-
-# include <mln/debug/colorize.hh>
-# include <mln/debug/format.hh>
-# include <mln/debug/draw_graph.hh>
-# include <mln/debug/iota.hh>
-# include <mln/debug/println.hh>
-# include <mln/debug/println_with_border.hh>
-# include <mln/debug/put_word.hh>
-# include <mln/debug/quiet.hh>
-# include <mln/debug/slices_2d.hh>
-
-
-#endif // ! MLN_DEBUG_ALL_HH

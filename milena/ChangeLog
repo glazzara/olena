@@ -1,3 +1,15 @@
+2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add debug conversion from 3D image to 2D mozaic image.
+
+	* mln/debug/slices_2d.hh: New.
+	* mln/debug/all.hh: Update.
+	* mln/core/image/slice_image.hh (operator): New conversion.
+	* mln/core/image/image3d.hh
+	(nslices, nrows, ncols): New methods.
+	* tests/debug/slices_2d.cc: New.
+	* tests/debug/Makefile.am: Update.
+
 2009-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	First revamp of ICP.
