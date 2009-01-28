@@ -25,17 +25,22 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_IMAGE2D_HH
-# define MLN_MAKE_IMAGE2D_HH
+#ifndef MLN_MAKE_IMAGE3D_HH
+# define MLN_MAKE_IMAGE3D_HH
 
-/// \file mln/make/image2d.hh
+/// \file mln/make/image3d.hh
 ///
-/// Routine to create a 2D image from a 1D array.
+/// Routine to create a 3D image from an array of 2D images.
 ///
-/// \todo Think about removing make::image2d since it is redundant
+/// \todo Think about removing make::image3d since it is redundant
 /// with convert::to and convert::from_to.
 
+# include <mln/core/image/image3d.hh>
 # include <mln/core/image/image2d.hh>
+# include <mln/core/image/slice_image.hh>
+# include <mln/data/paste.hh>
+# include <mln/util/array.hh>
+
 
 
 namespace mln
@@ -44,30 +49,35 @@ namespace mln
   namespace make
   {
 
-    /// Create an image2d from an 2D array of values.
+    /// Create an image3d from an array of 2D images.
     ///
-    /// \param[in] values 2D array.
-    ///
-    /// \return A 2D image.
-    ///
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S]);
+    template <typename I>
+    mln::image3d<mln_value(I)>
+    image3d(const util::array<I>& ima);
 
 
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S])
+    template <typename I>
+    inline
+    mln::image3d<mln_value(I)>
+    image3d(const util::array<I>& ima)
     {
-      mlc_bool(S != 0)::check();
-      enum { s = mlc_sqrt_int(S) };
-      metal::bool_<(s * s == S)>::check();
-      mln::image2d<V> tmp;
-      convert::from_to(values, tmp);
-      return tmp;
+      mlc_is_a(mln_pset(I), Box)::check();
+      mln_precondition(! ima.is_empty());
+
+      def::coord n_slices = ima.nelements();
+      mln::box2d b = ima[0].domain();
+      mln::box3d b_ = make::box3d(0,            b.pmin().row(), b.pmin().col(),
+				  n_slices - 1, b.pmax().row(), b.pmax().col());
+      mln::image3d<mln_value(I)> output(b_);
+      for (def::coord sli = 0; sli < n_slices; ++sli)
+	{
+	  mln_assertion(ima[sli].domain() == b);
+	  data::paste(ima[sli], slice(output, sli).rw());
+	}
+      return output;
     }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -77,4 +87,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_MAKE_IMAGE2D_HH
+#endif // ! MLN_MAKE_IMAGE3D_HH

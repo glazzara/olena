@@ -132,6 +132,20 @@ namespace mln
 
 
 
+
+  namespace trait
+  {
+
+    template <typename I, typename V>
+    struct ch_value< slice_image<I>, V >
+    {
+      typedef image2d<V> ret;
+    };
+
+  } // end of namespace mln::trait
+
+
+
 # ifndef MLN_INCLUDE_ONLY
 
 

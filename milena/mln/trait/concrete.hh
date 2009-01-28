@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,15 +29,16 @@
 #ifndef MLN_TRAIT_CONCRETE_HH
 # define MLN_TRAIT_CONCRETE_HH
 
-/*! \file mln/trait/concrete.hh
- *
- * \brief Definition of the concrete image trait.
- */
+/// \file mln/trait/concrete.hh
+///
+/// Definition of the concrete image trait.
 
 # include <mln/trait/ch_value.hh>
 
 
 # define mln_concrete(I)  typename mln::trait::concrete< I >::ret
+# define mln_concrete_(I)          mln::trait::concrete< I >::ret
+
 # define mln_concrete_ch_value(I, V) mln_ch_value(mln_concrete(I), V)
 
 

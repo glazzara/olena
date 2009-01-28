@@ -1,5 +1,18 @@
 2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add a maker of image3d from an array of 2D images.
+
+	* mln/trait/concrete.hh: Upgrade file doc style.
+	(mon_concrete_): New macro.
+	* mln/core/image/slice_image.hh (ch_value): New specialization.
+	* mln/make/image2d.hh (todo): New.
+	* mln/make/image3d.hh: New.
+	* mln/make/all.hh: Update.
+	* tests/make/image3d.cc: New.
+	* tests/make/Makefile.am: Update.
+
+2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add a slice morpher.
 
 	* mln/core/image/slice_image.hh: New.

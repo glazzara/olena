@@ -51,6 +51,7 @@ namespace mln
 # include <mln/make/graph.hh>
 # include <mln/make/image.hh>
 # include <mln/make/image2d.hh>
+# include <mln/make/image3d.hh>
 # include <mln/make/mat.hh>
 # include <mln/make/pix.hh>
 # include <mln/make/pixel.hh>

@@ -25,56 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_MAKE_IMAGE2D_HH
-# define MLN_MAKE_IMAGE2D_HH
-
-/// \file mln/make/image2d.hh
+/// \file tests/make/image3d.cc
 ///
-/// Routine to create a 2D image from a 1D array.
-///
-/// \todo Think about removing make::image2d since it is redundant
-/// with convert::to and convert::from_to.
+/// Tests on mln::make::image3d.
 
-# include <mln/core/image/image2d.hh>
+#include <mln/make/image3d.hh>
+#include <mln/debug/iota.hh>
+#include <mln/core/routine/duplicate.hh>
+#include <mln/level/compare.hh>
 
 
-namespace mln
+int main()
 {
+  using namespace mln;
 
-  namespace make
-  {
+  unsigned n_slices = 3;
 
-    /// Create an image2d from an 2D array of values.
-    ///
-    /// \param[in] values 2D array.
-    ///
-    /// \return A 2D image.
-    ///
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S]);
+  image3d<int> vol(n_slices, 2, 4);
+  debug::iota(vol);
 
+  typedef image2d<int> I;
+  util::array<I> ima;
+  for (unsigned i = 0; i < n_slices; ++i)
+    ima.append( duplicate(slice(vol, i)) );
 
-
-# ifndef MLN_INCLUDE_ONLY
-
-    template <typename V, unsigned S>
-    mln::image2d<V>
-    image2d(V (&values)[S])
-    {
-      mlc_bool(S != 0)::check();
-      enum { s = mlc_sqrt_int(S) };
-      metal::bool_<(s * s == S)>::check();
-      mln::image2d<V> tmp;
-      convert::from_to(values, tmp);
-      return tmp;
-    }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-  } // end of namespace mln::make
-
-} // end of namespace mln
-
-
-#endif // ! MLN_MAKE_IMAGE2D_HH
+  image3d<int> vol_ = make::image3d(ima);
+  mln_assertion(vol_ == vol);
+}
