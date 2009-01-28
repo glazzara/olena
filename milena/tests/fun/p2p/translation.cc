@@ -1,5 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,66 +25,20 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_P2P_MIRROR_HH
-# define MLN_FUN_P2P_MIRROR_HH
-
-/// \file mln/fun/p2p/mirror.hh
+/// \file tests/fun/p2p/translation.cc
 ///
-/// FIXME: doc
+/// Tests on mln::fun::p2p::translation.
 
-# include <mln/core/concept/function.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/fun/p2p/translation.hh>
 
-namespace mln
+
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  point2d p(0,0);
+  dpoint2d dp(-1,+1);
 
-    namespace p2p
-    {
-
-      template <typename B>
-      struct mirror : public Function_p2p< mirror<B> >
-      {
-        typedef mln_psite(B) result;
-
-        mirror(const B& box);
-
-        mln_psite(B)
-        operator()(const mln_psite(B)&) const;
-
-        const B& box_;
-      };
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename B>
-      inline
-      mirror<B>::mirror(const B& box)
-        : box_(box)
-      {
-      }
-
-      template <typename B>
-      inline
-      mln_psite(B)
-      mirror<B>::operator()(const mln_psite(B)& p) const
-      {
-        mln_precondition(box_.has(p));
-
-        mln_psite(B) r(p);
-        r[0] = box_.max()[0] - p[0];
-
-        return r;
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::p2p
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-#endif // ! MLN_FUN_P2P_MIRROR_HH
-
+  mln_invariant(fun::p2p::translation(dp)(p) == point2d(-1,+1));
+}

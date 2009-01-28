@@ -73,6 +73,7 @@
 //# include <mln/core/image/mono_rle_image.hh>
 //# include <mln/core/image/obased_rle_encode.hh>
 //# include <mln/core/image/obased_rle_image.hh>
+# include <mln/core/image/p2p_image.hh>
 # include <mln/core/image/plain.hh>
 //# include <mln/core/image/rle_encode.hh>
 //# include <mln/core/image/rle_image.hh>

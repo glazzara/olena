@@ -1,4 +1,4 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,41 +25,37 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CORE_IMAGE_IMAGE_IF_HH
-# define MLN_CORE_IMAGE_IMAGE_IF_HH
+#ifndef MLN_CORE_IMAGE_P2P_IMAGE_HH
+# define MLN_CORE_IMAGE_P2P_IMAGE_HH
 
-/*! \file mln/core/image/image_if.hh
- *
- * \brief Definition of a image which domain is restricted by a
- * function.
- *
- * \todo Relax Function_p2b into Function_v2b.
- */
+/// \file mln/core/image/p2p_image.hh
+///
+/// Definition of a image FIXME: Doc!
 
 # include <mln/core/internal/image_domain_morpher.hh>
-# include <mln/core/site_set/p_if.hh>
-# include <mln/pw/all.hh>
-# include <mln/convert/to_fun.hh>
+# include <mln/core/concept/function.hh>
+# include <mln/accu/bbox.hh>
 
 
 namespace mln
 {
 
-  // Fwd decl.
-  template <typename I, typename F> struct image_if;
+  // Forward declaration.
+  template <typename I, typename F> struct p2p_image;
 
 
   namespace internal
   {
 
-    /// Data structure for \c mln::image_if<I,F>.
+    /// Data structure for \c mln::p2p_image<I,F>.
     template <typename I, typename F>
-    struct data< image_if<I,F> >
+    struct data< p2p_image<I,F> >
     {
       data(I& ima, const F& f);
 
       I ima_;
-      p_if<mln_pset(I), F> pset_;
+      F f_;
+      mln_pset(I) b_;
     };
 
   } // end of namespace mln::internal
@@ -69,9 +65,9 @@ namespace mln
   {
 
     template <typename I, typename F>
-    struct image_< image_if<I,F> > : default_image_morpher< I,
+    struct image_< p2p_image<I,F> > : default_image_morpher< I,
 							     mln_value(I),
-							     image_if<I,F> >
+							     p2p_image<I,F> >
     {
       typedef trait::image::category::domain_morpher category;
 
@@ -89,57 +85,47 @@ namespace mln
 
 
 
-  /*! \brief Image which domain is restricted by a function.
-   *
-   */
+  /// FIXME: Doc!
   template <typename I, typename F>
-  struct image_if : public internal::image_domain_morpher< I,
-							   p_if<mln_pset(I), F>,
-							   image_if<I, F> >
+  struct p2p_image : public internal::image_domain_morpher< I,
+							    mln_pset(I),
+							    p2p_image<I, F> >
   {
     /// Skeleton.
-    typedef image_if< tag::image_<I>, tag::function_<F> > skeleton;
+    typedef p2p_image< tag::image_<I>, tag::function_<F> > skeleton;
 
     /// Constructor without argument.
-    image_if();
+    p2p_image();
 
     /// Constructor from an image \p ima and a predicate \p f.
-    image_if(I& ima, const F& f);
+    p2p_image(I& ima, const F& f);
 
     void init_(I& ima, const F& f);
 
     /// Give the definition domain.
-    const p_if<mln_pset(I), F>& domain() const;
+    const mln_pset(I)& domain() const;
 
-    /// Const promotion via conversion.
-    operator image_if<const I, F>() const;
+    /// Give the p2p function.
+    const F& fun() const;
+
+    /// Read-only access to the image value located at point \p p.
+    mln_rvalue(I) operator()(const mln_psite(I)& p) const;
+
+    /// Read-write access to the image value located at point \p p.
+    mln_morpher_lvalue(I) operator()(const mln_psite(I)& p);
   };
 
-  // Operators.
 
-  // Image | Function_p2b.
 
-  /// ima | f creates an image_if with the image ima and the function
-  /// f.
+  /// FIXME: Doc!
   template <typename I, typename F>
-  image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f);
+  p2p_image<I,F>
+  apply_p2p(Image<I>& ima, const Function_p2p<F>& f);
 
-  /// ima | f creates an image_if with the image ima and the function
-  /// f.
+  /// FIXME: Doc!
   template <typename I, typename F>
-  image_if<const I,F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f);
-
-
-
-  template <typename I, typename A>
-  image_if< const I, fun::C<bool(*)(A)> >
-  operator | (const Image<I>& ima, bool (*f)(A) );
-
-  template <typename I, typename A>
-  image_if< I, fun::C<bool(*)(A)> >
-  operator | (Image<I>& ima, bool (*f)(A) );
+  p2p_image<const I,F>
+  apply_p2p(const Image<I>& ima, const Function_p2p<F>& f);
 
 
 
@@ -148,13 +134,13 @@ namespace mln
   // init_.
 
   template <typename I, typename F>
-  void init_(tag::function_t, F& f, const image_if<I,F>& model)
+  void init_(tag::function_t, F& f, const p2p_image<I,F>& model)
   {
-    f = model.domain().predicate();
+    f = model.fun();
   }
 
   template <typename I, typename F, typename J>
-  void init_(tag::image_t, image_if<I,F>& target, const J& model)
+  void init_(tag::image_t, p2p_image<I,F>& target, const J& model)
   {
     I ima;
     init_(tag::image, ima, exact(model));
@@ -163,33 +149,39 @@ namespace mln
     target.init_(ima, f);
   }
 
-  // internal::data< image_if<I,F> >
+  // internal::data< p2p_image<I,F> >
 
   namespace internal
   {
 
     template <typename I, typename F>
     inline
-    data< image_if<I,F> >::data(I& ima, const F& f)
+    data< p2p_image<I,F> >::data(I& ima, const F& f)
       : ima_(ima),
-	pset_(ima.domain() | f)
+	f_(f)
     {
+      accu::bbox<mln_site(I)> a;
+      mln_pset(I) b = ima.domain();
+      a.take(f(b.pmin()));
+      a.take(f(b.pmax()));
+      b_ = a.to_result();
+      mln_invariant(b_.nsites() == b.nsites());
     }
 
   }
 
 
-  // image_if<I,F>
+  // p2p_image<I,F>
 
   template <typename I, typename F>
   inline
-  image_if<I,F>::image_if()
+  p2p_image<I,F>::p2p_image()
   {
   }
 
   template <typename I, typename F>
   inline
-  image_if<I,F>::image_if(I& ima, const F& f)
+  p2p_image<I,F>::p2p_image(I& ima, const F& f)
   {
     init_(ima, f);
   }
@@ -197,65 +189,79 @@ namespace mln
   template <typename I, typename F>
   inline
   void
-  image_if<I,F>::init_(I& ima, const F& f)
+  p2p_image<I,F>::init_(I& ima, const F& f)
   {
     mln_precondition(! this->is_valid());
-    this->data_ = new internal::data< image_if<I,F> >(ima, f);
+    this->data_ = new internal::data< p2p_image<I,F> >(ima, f);
   }
 
   template <typename I, typename F>
   inline
-  const p_if<mln_pset(I), F>&
-  image_if<I,F>::domain() const
+  const mln_pset(I)&
+  p2p_image<I,F>::domain() const
   {
     mln_precondition(this->is_valid());
-    return this->data_->pset_;
+    return this->data_->b_;
   }
 
   template <typename I, typename F>
   inline
-  image_if<I,F>::operator image_if<const I,F>() const
+  const F&
+  p2p_image<I,F>::fun() const
   {
     mln_precondition(this->is_valid());
-    image_if<const I,F> tmp(this->data_->ima_,
-			    this->data_->pset_.predicate());
-    return tmp;
-  }
-
-
-  // Operators.
-
-  template <typename I, typename F>
-  inline
-  image_if<I,F>
-  operator | (Image<I>& ima, const Function_p2b<F>& f)
-  {
-    image_if<I,F> tmp(exact(ima), exact(f));
-    return tmp;
+    return this->data_->f_;
   }
 
   template <typename I, typename F>
   inline
-  image_if<const I, F>
-  operator | (const Image<I>& ima, const Function_p2b<F>& f)
+  mln_rvalue(I)
+  p2p_image<I,F>::operator()(const mln_psite(I)& p) const
   {
-    image_if<const I, F> tmp(exact(ima), exact(f));
+    mln_precondition(this->has(p));
+    mln_invariant(this->data_->ima_.has(this->data_->f_.inverse(p)));
+    return this->data_->ima_(this->data_->f_.inverse(p));
+  }
+
+  template <typename I, typename F>
+  inline
+  mln_morpher_lvalue(I)
+  p2p_image<I,F>::operator()(const mln_psite(I)& p)
+  {
+    mln_precondition(this->has(p));
+    mln_invariant(this->data_->ima_.has(this->data_->f_.inverse(p)));
+    return this->data_->ima_(this->data_->f_.inverse(p));
+  }
+
+
+  // Routines.
+
+  template <typename I, typename F>
+  inline
+  p2p_image<I,F>
+  apply_p2p(Image<I>& ima_, const Function_p2p<F>& f)
+  {
+    mlc_is_a(mln_pset(I), Box)::check();
+
+    I& ima = exact(ima_);
+    mln_precondition(ima.is_valid());
+
+    p2p_image<I,F> tmp(ima, exact(f));
     return tmp;
   }
 
-
-  template <typename I, typename A>
-  image_if< const I, fun::C<bool(*)(A)> >
-  operator | (const Image<I>& ima, bool (*f)(A) )
+  template <typename I, typename F>
+  inline
+  p2p_image<const I, F>
+  apply_p2p(const Image<I>& ima_, const Function_p2p<F>& f)
   {
-    return exact(ima) | convert::to_fun(f);
-  }
+    mlc_is_a(mln_pset(I), Box)::check();
 
-  template <typename I, typename A>
-  image_if< I, fun::C<bool(*)(A)> >
-  operator | (Image<I>& ima, bool (*f)(A) )
-  {
-    return exact(ima) | convert::to_fun(f);
+    const I& ima = exact(ima_);
+    mln_precondition(ima.is_valid());
+
+    p2p_image<const I, F> tmp(ima, exact(f));
+    return tmp;
   }
 
 
@@ -264,4 +270,5 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_CORE_IMAGE_IMAGE_IF_HH
+
+#endif // ! MLN_CORE_IMAGE_P2P_IMAGE_HH

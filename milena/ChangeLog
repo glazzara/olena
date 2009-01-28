@@ -1,3 +1,20 @@
+2009-01-28  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add fun p2p translation and p2p_image morpher.
+
+	* mln/core/image/p2p_image.hh: New.
+	* mln/core/image/all.hh: Update.
+	* mln/fun/p2p/all.hh: New.
+	* mln/fun/p2p/mirror.hh (endif): Fix comment style.
+	* mln/fun/p2p/translation.hh: New.
+	* tests/core/image/p2p_image.cc: New.
+	* tests/core/image/Makefile.am: Update.
+	* tests/fun/p2p: New.
+	* tests/fun/p2p/translation.cc: New.
+	* tests/fun/p2p/Makefile.am: New.
+	* tests/fun/Makefile.am: Update.
+	* mln/core/image/image_if.hh (undef): Fix, i.e., remove.
+
 2009-01-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix regsitration.

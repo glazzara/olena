@@ -1,5 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -26,66 +25,36 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_P2P_MIRROR_HH
-# define MLN_FUN_P2P_MIRROR_HH
-
-/// \file mln/fun/p2p/mirror.hh
+/// \file tests/core/image/image2d.cc
 ///
-/// FIXME: doc
+/// Tests on mln::p2p_image.
 
-# include <mln/core/concept/function.hh>
+#include <mln/core/image/image2d.hh>
+#include <mln/core/image/p2p_image.hh>
+#include <mln/fun/p2p/translation.hh>
 
-namespace mln
+#include <mln/debug/iota.hh>
+
+
+
+# define ima_  apply_p2p(ima, fun::p2p::translation(dp))
+
+
+
+int main()
 {
+  using namespace mln;
 
-  namespace fun
-  {
+  box2d b = make::box2d(0,0, 2,2);
+  image2d<int> ima(b, 0); // No border.
 
-    namespace p2p
-    {
+  debug::iota(ima);
 
-      template <typename B>
-      struct mirror : public Function_p2p< mirror<B> >
-      {
-        typedef mln_psite(B) result;
+  dpoint2d dp(-1,+1);
+  box2d b_ = make::box2d(-1,+1, 1,3);
 
-        mirror(const B& box);
+  mln_assertion( ima_.domain() == b_ );
 
-        mln_psite(B)
-        operator()(const mln_psite(B)&) const;
-
-        const B& box_;
-      };
-
-# ifndef MLN_INCLUDE_ONLY
-
-      template <typename B>
-      inline
-      mirror<B>::mirror(const B& box)
-        : box_(box)
-      {
-      }
-
-      template <typename B>
-      inline
-      mln_psite(B)
-      mirror<B>::operator()(const mln_psite(B)& p) const
-      {
-        mln_precondition(box_.has(p));
-
-        mln_psite(B) r(p);
-        r[0] = box_.max()[0] - p[0];
-
-        return r;
-      }
-
-# endif // ! MLN_INCLUDE_ONLY
-
-    } // end of namespace mln::fun::p2p
-
-  } // end of namespace mln::fun
-
-} // end of namespace mln
-
-#endif // ! MLN_FUN_P2P_MIRROR_HH
-
+  mln_assertion( ima_(point2d(-1,+1)) == 1 );
+  mln_assertion( ima_(point2d( 1, 3)) == 9 );
+}

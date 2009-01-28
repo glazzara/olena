@@ -26,14 +26,15 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_FUN_P2P_MIRROR_HH
-# define MLN_FUN_P2P_MIRROR_HH
+#ifndef MLN_FUN_P2P_TRANSLATION_HH
+# define MLN_FUN_P2P_TRANSLATION_HH
 
-/// \file mln/fun/p2p/mirror.hh
+/// \file mln/fun/p2p/translation.hh
 ///
 /// FIXME: doc
 
 # include <mln/core/concept/function.hh>
+
 
 namespace mln
 {
@@ -44,40 +45,62 @@ namespace mln
     namespace p2p
     {
 
-      template <typename B>
-      struct mirror : public Function_p2p< mirror<B> >
+      template <typename P>
+      struct translation_t : public Function_p2p< translation_t<P> >
       {
-        typedef mln_psite(B) result;
+        typedef P result;
 
-        mirror(const B& box);
+        translation_t(const mln_delta(P)& dp);
 
-        mln_psite(B)
-        operator()(const mln_psite(B)&) const;
+        P operator()(const P& p) const;
+        P inverse(const P& p) const;
 
-        const B& box_;
+      protected:
+        mln_delta(P) dp_;
       };
+
+
+      template <typename D>
+      translation_t<mln_site(D)>
+      translation(const Gdpoint<D>& dp);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
-      template <typename B>
+      template <typename P>
       inline
-      mirror<B>::mirror(const B& box)
-        : box_(box)
+      translation_t<P>::translation_t(const mln_delta(P)& dp)
+	: dp_(dp)
       {
       }
 
-      template <typename B>
+      template <typename P>
       inline
-      mln_psite(B)
-      mirror<B>::operator()(const mln_psite(B)& p) const
+      P
+      translation_t<P>::operator()(const P& p) const
       {
-        mln_precondition(box_.has(p));
-
-        mln_psite(B) r(p);
-        r[0] = box_.max()[0] - p[0];
-
-        return r;
+        return p + dp_;
       }
+
+      template <typename P>
+      inline
+      P
+      translation_t<P>::inverse(const P& p) const
+      {
+        return p - dp_;
+      }
+
+
+      template <typename D>
+      inline
+      translation_t<mln_site(D)>
+      translation(const Gdpoint<D>& dp)
+      {
+	translation_t<mln_site(D)> tmp(exact(dp));
+	return tmp;
+      }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
@@ -87,5 +110,7 @@ namespace mln
 
 } // end of namespace mln
 
-#endif // ! MLN_FUN_P2P_MIRROR_HH
+
+#endif // ! MLN_FUN_P2P_TRANSLATION_HH
+
 
