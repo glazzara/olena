@@ -102,6 +102,8 @@ namespace mln
     } // end of namespace mln::morpho::impl
 
 
+    // Facade.
+
     template <typename A, typename I, typename N>
     inline
     mln_concrete(I)
@@ -112,100 +114,15 @@ namespace mln
 
       mln_precondition(exact(input).is_valid());
 
-      mln_concrete(I) output;
-      initialize(output, input);
-
       typedef impl::opening_attribute_t<I, A> F;
       F f(input, lambda);
-      canvas::morpho::algebraic_union_find(input, nbh, f, output);
+      mln_concrete(I) output = canvas::morpho::algebraic_union_find(input, nbh, f);
 
       mln_postcondition(output <= input);
+
       trace::exiting("morpho::opening_attribute");
       return output;
     }
-
-
-    // -----------------------------------------------------------
-    // Old code below.
-
-
-    namespace impl
-    {
-
-      template <typename A_,
-		typename I_, typename N_, typename O_>
-      struct opening_attribute_t_f
-      {
-	typedef mln_psite(I_) P;
-
-	// requirements from mln::canvas::morpho::algebraic_union_find
-
-	typedef A_ A;
-	typedef I_ I;
-	typedef N_ N;
-	typedef O_ O;
-	typedef p_array<P> S;
-	typedef util::pix<I> pix_t;
-
-	const I& input;
-	const N& nbh;
-	mln_result(A) lambda;
-	O& output;
-
-	const S s;
-
-	inline
-	void init()
-	{
-	  // FIXME: border::fill(input, mln_max(mln_value(I)));
-	}
-
-	inline
-	bool is_active(const A& attr) const
-	{
-	  return attr.to_result() < lambda;
-	}
-
-	inline
-	void inactivate(A& attr)
-	{
-	  attr.set_value(lambda);
-	}
-
-	// end of requirements
-
-	inline
-	opening_attribute_t_f(const I_& input, const N_& nbh,
-			    mln_result(A) lambda, O_& output)
-	  : input(input), nbh(nbh), lambda(lambda), output(output),
-	    s(level::sort_psites_decreasing(input))
-	{
-	}
-
-      };
-
-    } // end of namespace mln::morpho::impl
-
-
-    template <typename A,
-	      typename I, typename N, typename O>
-    inline
-    void opening_attribute_f(const Image<I>& input_,
-			     const Neighborhood<N>& nbh_, mln_result(A) lambda,
-			     Image<O>& output_)
-    {
-      const I& input = exact(input_);
-      const N& nbh = exact(nbh_);
-      O& output = exact(output_);
-      mln_precondition(output.domain() == input.domain());
-
-      typedef impl::opening_attribute_t_f<A,I,N,O> F;
-      F f(input, nbh, lambda, output);
-      canvas::morpho::algebraic_union_find_f<F> run(f);
-
-      mln_postcondition(output <= input);
-    }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 

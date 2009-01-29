@@ -2,6 +2,8 @@
 
 include $(top_srcdir)/milena/tests/tests.mk
 
+SUBDIRS = impl
+
 ##FIXME: re-enable all tests
 check_PROGRAMS =				\
   to_hsl 					\

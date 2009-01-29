@@ -1,3 +1,23 @@
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Prepare to fastest the morpho canvas of algebraic union find.
+
+	* mln/canvas/morpho/algebraic_union_find.hh
+	(opening_attribute_functor_base): Remove; useless.
+	(impl): New sub-namespace.
+	(find_root, algebraic_union_find): Move into impl.
+	(dispatch): New sub-namespace.
+	(algebraic_union_find_dispatch): New.
+	(algebraic_union_find): New facade.
+	* mln/morpho/closing_attribute.hh
+	(closing_attribute_t_f, closing_attribute_f): Remove dead code.
+	(closing_attribute): Update.
+	* mln/morpho/opening_attribute.hh
+	(opening_attribute_t_f, opening_attribute_f): Remove dead code.
+	(opening_attribute): Update.
+	* tests/convert/impl/Makefile.am: New.
+	* tests/convert/Makefile.am: Update.
+
 2009-01-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix stuff for registration.
