@@ -4,8 +4,12 @@
 
 #include <mln/debug/colorize.hh>
 
-#include <mln/registration/registration.hh>
-#include <mln/registration/multiscale.hh>
+//#include <mln/registration/registration.hh>
+//#include <mln/registration/multiscale.hh>
+
+#include <mln/essential/3d.hh>
+#include <mln/registration/icp2.hh>
+#include <mln/core/image/slice_image.hh>
 
 struct threshold : mln::Function_p2b<threshold>
 {
@@ -62,18 +66,13 @@ keep_largest_component(const mln::Image<I>& ima)
   return in_bw_cleaned_full;
 }
 
-int main(int, char* argv[])
+template <typename I>
+mln_ch_value(I,bool)
+get_main_object_shape(const mln::Image<I>& in)
 {
   using namespace mln;
-  using value::rgb8;
-  using value::int_u8;
-  using value::label_16;
 
-  //Load image
-  typedef image2d<rgb8> I;
   typedef image2d<bool> J;
-  I in;
-  io::ppm::load(in, argv[1]);
 
   threshold f;
   J in_bw = binarization::binarization(in, f);
@@ -86,32 +85,54 @@ int main(int, char* argv[])
   J ima_grad = morpho::gradient(ima, win_c4p());
   io::pbm::save(ima_grad, "03_ima_grad.pbm");
 
+  return ima_grad;
+}
+
+
+int main(int, char* argv[])
+{
+  using namespace mln;
+  using namespace fun::x2x;
+  using value::rgb8;
+  using value::int_u8;
+  using value::label_16;
+
+  //Load image
+  typedef image2d<rgb8> I;
+  typedef image2d<bool> J;
+
+  I in;
+  io::ppm::load(in, argv[1]);
+  J in_grad = get_main_object_shape(in);
+
   I ref;
   io::ppm::load(ref, argv[2]);
-  J ref_bw = binarization::binarization(ref, f);
-
-  io::pbm::save(ref_bw, "ref_bw.pbm");
-
-  J surf = keep_largest_component(ref_bw);
-  J surf_grad = morpho::gradient(surf, win_c4p());
+  J ref_grad = get_main_object_shape(ref);
 
   std::cout << "Computing registration..." << std::endl;
-  J cloud = ima_grad | pw::value(ima_grad) == true; //FIXME: cannot use pw::image with registration.
-  //  mln_VAR(surface, (surf_grad | pw::value(surf_grad) == true));
-  mln_VAR(registration, registration::multiscale(cloud, surf_grad, 5, 3));
+  J cloud = in_grad | pw::value(in_grad) == true; //FIXME: cannot use pw::image with registration.
+  //  mln_VAR(surface, (ref_grad | pw::value(ref_grad) == true));
+
+
+  //mln_VAR(registration, registration::multiscale(cloud, ref_grad, 5, 3));
+  typedef image3d<bool> K;
+  K in_3d = make::image3d(in_grad);
+  K ref_3d = make::image3d(ref_grad);
+  composed< rotation<K::psite::dim, float>, translation<K::psite::dim, float> > qk;
+  registration::icp(in_3d, ref_3d, qk);
+
 
   std::cout << "Build result image" << std::endl;
-  J res;
-  initialize(res, ima_grad);
-
+  K res;
+  initialize(res, in_3d);
   data::fill(res, false);
 
-  mln_VAR(ig, (ima_grad | pw::value(ima_grad) == true));
+  mln_VAR(ig, (in_3d | pw::value(in_3d) == true));
   mln_piter_(ig_t) p(ig.domain());
   for_all(p)
-    res(registration(p.to_site().to_vec())) = true;
+    res(qk(p.to_site().to_vec())) = true;
 
 
-  io::pbm::save(res, "04_registered.pbm");
+  io::pbm::save(slice(res,0), "04_registered.pbm");
 
 }

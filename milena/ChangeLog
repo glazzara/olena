@@ -1,3 +1,7 @@
+2009-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	* sandbox/lazzara/igr.cc: use image3d for registration.
+
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Add conversion from site set to image.
