@@ -32,8 +32,6 @@
 /// \file mln/morpho/elementary/gradient.hh
 ///
 /// \todo Add fastest version for sets.
-///
-/// \todo Replace .domain().has() by .has()!
 
 # include <mln/morpho/includes.hh>
 # include <mln/accu/min_max.hh>
@@ -87,6 +85,8 @@ namespace mln
 
 	  accu::min_max<mln_value(I)> a;
 
+ 	  extension::adjust_duplicate(input, nbh);
+
 	  mln_concrete(I) output;
 	  initialize(output, input);
 
@@ -95,7 +95,7 @@ namespace mln
 	  for_all(p)
 	    {
 	      a.take_as_init(input(p));
-	      for_all(n) if (input.domain().has(n))
+	      for_all(n) if (input.has(n))
 		a.take(input(n));
 	      output(p) = a.second() - a.first();
 	    }
@@ -114,6 +114,8 @@ namespace mln
 	  const N& nbh   = exact(nbh_);
 	  internal::gradient_tests(input, nbh);
 
+ 	  extension::adjust_duplicate(input, nbh);
+
 	  mln_concrete(I) output;
 	  initialize(output, input);
 	  data::fill(output, false);
@@ -123,7 +125,7 @@ namespace mln
 	  for_all(p)
 	    if (input(p) == true)
 	      {
-		for_all(n) if (input.domain().has(n))
+		for_all(n) if (input.has(n))
 		  if (input(n) == false)
 		    {
 		      output(p) = true;
@@ -132,7 +134,7 @@ namespace mln
 	      }
 	    else // input(p) == false
 	      {
-		for_all(n) if (input.domain().has(n))
+		for_all(n) if (input.has(n))
 		  if (input(n) == true)
 		    {
 		      output(p) = true;
@@ -156,7 +158,7 @@ namespace mln
 	  internal::gradient_tests(input, nbh);
 
 	  accu::min_max<mln_value(I)> a;
-	  extension::adjust_duplicate(input, nbh);
+ 	  extension::adjust_duplicate(input, nbh);
 
 	  mln_concrete(I) output;
 	  initialize(output, input);

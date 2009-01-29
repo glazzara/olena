@@ -560,7 +560,8 @@ namespace mln
   image3d<T>::delta_index(const dpoint3d& dp) const
   {
     mln_precondition(this->is_valid());
-    int o = dp[0];
+    int o = (dp[0] * this->data_->vb_.len(1)
+	     + dp[1]) * this->data_->vb_.len(2) + dp[2];
     return o;
   }
 

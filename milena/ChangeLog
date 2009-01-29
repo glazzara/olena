@@ -1,5 +1,14 @@
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix delta_index in image3d.
+
+	* mln/core/image/image3d.hh (delta_index): Fix.
+	* mln/morpho/elementary/gradient.hh
+	(gradient_on_function): Handle extension.
+	(todo): Remove; done.
+
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Prepare to fastest the morpho canvas of algebraic union find.
 
 	* mln/canvas/morpho/algebraic_union_find.hh
