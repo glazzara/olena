@@ -49,7 +49,9 @@ int main(int argc, char* argv[])
 
   accu::mean<int_u8, float, int_u8> a_;
   util::array<int_u8> a = labeling::compute(a_, vol, wst, n_basins);
-  std::cout << a << std::endl;
+  for (L l = 1; l <= n_basins; ++l)
+    if (a[l] == 0)
+      a[l] = 1;
   a[0] = 0;
 
   fun::i2v::array<int_u8> f;

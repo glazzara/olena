@@ -1,5 +1,12 @@
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Better display anat segmentation results.
+
+	* theo/igr/irm_anat_segm.cc (main): Ensure that no basin mean
+	is 0-valued.
+
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add segmentation scheme for volumes.
 
 	* theo/igr: New directory.
