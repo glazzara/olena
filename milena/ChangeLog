@@ -1,5 +1,13 @@
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add morpho elementary gradient fastest impl for functions.
+
+	* mln/morpho/elementary/gradient.hh (todo): New.
+	(gradient_on_function_fastest): New impl.
+	(gradient_dispatch): New overload.
+
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix timer in trace entering/exiting.
 
 	* mln/trace/quiet.hh: Layout.

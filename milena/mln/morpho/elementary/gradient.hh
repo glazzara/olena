@@ -31,7 +31,9 @@
 
 /// \file mln/morpho/elementary/gradient.hh
 ///
-/// \todo Add fastest versions (be careful about extension values...)
+/// \todo Add fastest version for sets.
+///
+/// \todo Replace .domain().has() by .has()!
 
 # include <mln/morpho/includes.hh>
 # include <mln/accu/min_max.hh>
@@ -92,7 +94,7 @@ namespace mln
 	  mln_niter(N) n(nbh, p);
 	  for_all(p)
 	    {
-	      a.init();
+	      a.take_as_init(input(p));
 	      for_all(n) if (input.domain().has(n))
 		a.take(input(n));
 	      output(p) = a.second() - a.first();
@@ -142,6 +144,38 @@ namespace mln
 	  return output;
 	}
 
+
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_on_function_fastest(const Image<I>& input_, const Neighborhood<N>& nbh_)
+	{
+	  trace::entering("morpho::elementary::impl::gradient_on_function_fastest");
+
+	  const I& input = exact(input_);
+	  const N& nbh   = exact(nbh_);
+	  internal::gradient_tests(input, nbh);
+
+	  accu::min_max<mln_value(I)> a;
+	  extension::adjust_duplicate(input, nbh);
+
+	  mln_concrete(I) output;
+	  initialize(output, input);
+
+	  mln_pixter(const I) p_in(input);
+	  mln_pixter(I) p_out(output);
+	  mln_nixter(const I, N) n(p_in, nbh);
+	  for_all_2(p_in, p_out)
+	    {
+	      a.take_as_init(p_in.val());
+	      for_all(n)
+		a.take(n.val());
+	      p_out.val() = a.second() - a.first();
+	    }
+
+	  trace::exiting("morpho::elementary::impl::gradient_on_function_fastest");
+	  return output;
+	}
+
       } // end of namespace mln::morpho::elementary::impl
 
 
@@ -157,6 +191,15 @@ namespace mln
 			  const Image<I>& input, const Neighborhood<N>& nbh)
 	{
 	  return impl::gradient_on_function(input, nbh);
+	}
+
+	template <typename I, typename N>
+	mln_concrete(I)
+	gradient_dispatch(trait::image::kind::any,
+			  trait::image::speed::fastest,
+			  const Image<I>& input, const Neighborhood<N>& nbh)
+	{
+	  return impl::gradient_on_function_fastest(input, nbh);
 	}
 
 	template <typename I, typename N>
