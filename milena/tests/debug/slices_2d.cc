@@ -28,6 +28,8 @@
 /// \file tests/debug/slices_2d.cc
 ///
 /// Tests on mln::debug::slices_2d.
+///
+/// \todo Add extra tests...
 
 #include <mln/debug/slices_2d.hh>
 #include <mln/debug/iota.hh>
@@ -37,36 +39,62 @@ int main()
 {
   using namespace mln;
 
-  image3d<int> vol(5, 2, 3);
-  debug::iota(vol);
+  {
+    point3d p_orig(-1, -2, -3);
+    box3d b(p_orig, p_orig + dpoint3d(4, 1, 2));
+    image3d<int> vol(b); // 5 x 2 x 3
+    debug::iota(vol);
 
-  //   1  2  3 
-  //  4  5  6 
-  //
-  //   7  8  9 
-  //  10 11 12 
-  //
-  //   13 14 15 
-  //  16 17 18 
-  //
-  //   19 20 21 
-  //  22 23 24 
-  //
-  //   25 26 27 
-  //  28 29 30 
+    //   1  2  3 
+    //  4  5  6 
+    //
+    //   7  8  9 
+    //  10 11 12 
+    //
+    //   13 14 15 
+    //  16 17 18 
+    //
+    //   19 20 21 
+    //  22 23 24 
+    //
+    //   25 26 27 
+    //  28 29 30 
 
-  image2d<int> ima = debug::slices_2d(vol, 2, 3,
-				      -1);
+    image2d<int> ima = debug::slices_2d(vol, 2, 3,
+					-1);
 
-  // 1  2  3  7  8  9  
-  // 4  5  6  10 11 12 
-  // 13 14 15 19 20 21 
-  // 16 17 18 22 23 24 
-  // 25 26 27 -1 -1 -1 
-  // 28 29 30 -1 -1 -1 
+    // 1  2  3  7  8  9  
+    // 4  5  6  10 11 12 
+    // 13 14 15 19 20 21 
+    // 16 17 18 22 23 24 
+    // 25 26 27 -1 -1 -1 
+    // 28 29 30 -1 -1 -1 
 
-  mln_assertion(ima.at_(0,0) ==  1);
-  mln_assertion(ima.at_(5,2) == 30);
-  mln_assertion(ima.at_(5,5) == -1);
+    mln_assertion(ima(ima.domain().pmin()) ==  1);
+    mln_assertion(ima(ima.domain().pmax()) == -1);
+
+  }
+
+
+  // Tests with ratio.
+
+  {
+    int bg = 0;
+    image3d<int> vol(1, 1, 1);
+    image2d<int> ima;
+    float ratio;
+
+    ratio = 1.f;
+    ima = debug::slices_2d(vol, ratio, bg);
+    mln_assertion(ima.nrows() == 1 && ima.ncols() == 1);
+
+    ratio = 0.00001f;
+    ima = debug::slices_2d(vol, ratio, bg);
+    mln_assertion(ima.nrows() == 1 && ima.ncols() == 1);
+
+    ratio = 100000.f;
+    ima = debug::slices_2d(vol, ratio, bg);
+    mln_assertion(ima.nrows() == 1 && ima.ncols() == 1);
+  }
 
 }

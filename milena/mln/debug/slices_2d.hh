@@ -32,6 +32,8 @@
 ///
 /// Create a 2D image of the slices of the 3D image \p input.
 
+# include <cmath>
+
 # include <mln/core/image/image2d.hh>
 
 # include <mln/core/image/image3d.hh>
@@ -60,6 +62,15 @@ namespace mln
 	      const mln_value(I)& bg);
 
 
+    /// Create a 2D image of the slices of the 3D image \p input.
+    ///
+    template <typename I>
+    image2d<mln_value(I)>
+    slices_2d(const Image<I>& input,
+	      float ratio_hv,           // horizontal / vertical
+	      const mln_value(I)& bg);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -84,25 +95,95 @@ namespace mln
       if (input.nslices() != n_horizontal * n_vertical)
 	data::fill(output, bg);
 
+      const point3d& p_min = input.domain().pmin();
+      def::coord
+	sli = p_min.sli(),
+	last_sli = input.domain().pmax().sli();
       for (unsigned i = 0; i < n_vertical; ++i)
 	for (unsigned j = 0; j < n_horizontal; ++j)
 	  {
-	    unsigned sli = i * n_horizontal + j;
-	    if (sli == input.nslices())
+	    dpoint2d dp(i * input.nrows() - p_min.row(),
+			j * input.ncols() - p_min.col());
+	    data::paste(apply_p2p(slice(input, sli),
+				  fun::p2p::translation(dp)),
+			output);
+	    if (++sli > last_sli)
 	      {
+		// Go out of loops.
 		i = n_vertical;
 		j = n_horizontal;
 		break;
 	      }
-	    dpoint2d dp(i * input.nrows(), j * input.ncols());
-	    data::paste(apply_p2p(slice(input, sli),
-				  fun::p2p::translation(dp)),
-			output);
 	  }
 
       trace::exiting("debug::slices_2d");
       return output;
     }
+
+
+    namespace internal
+    {
+
+      unsigned round_up(float f)
+      {
+	unsigned n = static_cast<unsigned>(f + 0.499999f);
+	int i;
+	if (n == 0u)
+	  ++n;
+	if (float(n) < f)
+	  ++n;
+	return n;
+      }
+
+      void slices2d_helper(float nslis, float nrows, float ncols,
+			   float ratio_hv,
+			   unsigned& n_horizontal,
+			   unsigned& n_vertical)
+      {
+	if (ratio_hv > 1.f)
+	  {
+	    float n_v = std::sqrt(nslis * ncols / ratio_hv / nrows);
+	    n_vertical = internal::round_up(n_v);
+	    float n_h = nslis / float(n_vertical);
+	    n_horizontal = internal::round_up(n_h);
+	  }
+	else
+	  {
+	    float n_h = std::sqrt(nrows * nslis * ratio_hv / ncols);
+	    n_horizontal = internal::round_up(n_h);
+	    float n_v = nslis / float(n_horizontal);
+	    n_vertical = internal::round_up(n_v);
+	  }
+      }
+      
+    } // end of namespace mln::debug::internal
+
+
+    template <typename I>
+    image2d<mln_value(I)>
+    slices_2d(const Image<I>& input_,
+	      float ratio_hv,           // horizontal / vertical
+	      const mln_value(I)& bg)
+    {
+      trace::entering("debug::slices_2d");
+      mlc_equal(mln_pset(I), box3d)::check();
+
+      const I& input = exact(input_);
+      mln_precondition(input.is_valid());
+      mln_precondition(ratio_hv > 0.f);
+
+      unsigned n_horizontal, n_vertical;
+      internal::slices2d_helper(input.nslices(), input.nrows(), input.ncols(),
+				ratio_hv,
+				n_horizontal, n_vertical);
+      mln_assertion(n_horizontal * n_vertical >= input.nslices());
+
+      image2d<mln_value(I)> output = slices_2d(input, n_horizontal, n_vertical, bg);
+
+      trace::exiting("debug::slices_2d");
+      return output;
+    }
+
 
 # endif // ! MLN_INCLUDE_ONLY
 
