@@ -61,12 +61,22 @@ namespace mln
             const M& map,
             const algebra::vec<2u,float>& mu_xk)
     {
-      (void) c;
-      (void) mu_c;
-      (void) ck;
-      (void) map;
-      (void) mu_xk;
-      //FIXME: Write 2d version of rotation computation betwenn two p_array
+      assert(0 && "TODO");
+
+      //////SLOW VERSION
+
+      //// V1
+      // M1 := c covariance
+      // V1 := greatest eigen vector of M1
+
+      //// V2
+      // M2 := c covariance
+      // V2 := greatest eigen vector of M2
+
+      //// alpha
+      // cos(alpha) = (V1.V2) / (|V1|.|V2|)
+
+      //FIXME: Write 2d version of rotation computation between two p_arrays
       return fun::x2x::rotation<2u, float>();
     }
 
@@ -85,8 +95,8 @@ namespace mln
       algebra::mat<3u,3u,float> Mk(literal::zero);
       for (unsigned i = 0; i < c.nsites(); ++i)
         {
-          algebra::vec<3u,float> ci  = c[i];
-          algebra::vec<3u,float> xki = map(ck[i]);
+          algebra::vec<3u,float> ci  = convert::to< algebra::vec<3u,float> >(c[i]);
+          algebra::vec<3u,float> xki = convert::to< algebra::vec<3u,float> >(map(ck[i]));
           Mk += make::mat(ci - mu_c) * trans(make::mat(xki - mu_xk));
         }
       Mk /= c.nsites();
@@ -120,6 +130,8 @@ namespace mln
 
       algebra::quat qR(literal::zero);
       qR = math::jacobi(Qk);
+
+      std::cout << qR << std::endl;
 
       return fun::x2x::rotation<3u, float>(qR);
     }

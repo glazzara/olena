@@ -1,4 +1,5 @@
 #include <mln/essential/2d.hh>
+#include <mln/core/image/image3d.hh>
 #include <mln/binarization/binarization.hh>
 #include <mln/labeling/background.hh>
 
@@ -21,7 +22,38 @@ struct threshold : mln::Function_p2b<threshold>
 };
 
 
+template <typename T>
+inline
+mln::image3d<T>
+to_image3d(const mln::image2d<T>& img)
+{
+  mln::point3d pmin(img.domain().pmin()[0], img.domain().pmin()[1], 0);
+  mln::point3d pmax(img.domain().pmax()[0], img.domain().pmax()[1], 0);
+  mln::image3d<T> img3d(mln::box3d(pmin,pmax));
 
+  mln_piter(mln::image3d<T>) p(img3d.domain());
+  for_all(p)
+    img3d(p) = exact(img)(mln::point2d(p[0],p[1]));
+
+  return img3d;
+}
+
+template <typename T>
+inline
+mln::point<mln::grid::square, T>
+to_point2d(const mln::point<mln::grid::cube, T>& p)
+{
+  return mln::point<mln::grid::square, T>(p[0], p[1]);
+}
+
+//point2d -> point3d
+template <typename T>
+inline
+mln::point<mln::grid::cube, T>
+to_point3d(const mln::point<mln::grid::square, T>& p)
+{
+  return mln::point<mln::grid::cube, T>(p[0], p[1], 0);
+}
 
 template <typename I>
 mln_concrete(I)
@@ -132,7 +164,5 @@ int main(int, char* argv[])
   for_all(p)
     res(qk(p.to_site().to_vec())) = true;
 
-
   io::pbm::save(slice(res,0), "04_registered.pbm");
-
 }

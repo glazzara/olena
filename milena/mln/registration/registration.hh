@@ -66,8 +66,8 @@ namespace mln
                     const J& surface)
       {
         //FIXME: Use convert::to< p_array<mln_psite(I)> >()
-        p_array<mln_psite(I)> c = convert::to_p_array(cloud);
-        p_array<mln_psite(J)> x = convert::to_p_array(surface);
+        p_array<mln_psite(I)> c = convert::to< p_array<mln_psite(I)> >(cloud);
+        p_array<mln_psite(J)> x = convert::to< p_array<mln_psite(J)> >(surface);
 
         //init rigid transform qk
         composed< rotation<I::psite::dim, float>, translation<I::psite::dim, float> > qk;
@@ -78,7 +78,7 @@ namespace mln
 
         //make a lazy_image map via function closest_point
         fun::x2p::closest_point<mln_psite(I)> fun(x, working_box);
-        lazy_image<I, fun::x2p::closest_point<mln_psite(I)>, box2d>
+        lazy_image< I, fun::x2p::closest_point<mln_psite(I)>, box<mln_psite(I)> >
           map(fun, fun.domain());
 
         //run registration

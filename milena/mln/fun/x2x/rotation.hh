@@ -192,7 +192,7 @@ namespace mln
                        xy + zw,  1.f - x2 - z2,  yz - xw, 0,
                        xz - yw,  yz + xw,  1.f - x2 - y2, 0,
                        0,              0,              0, 1};
-        this->m_(make::mat<4,4>(t));
+        this->m_ = make::mat<4,4>(t);
       }
 
       template <unsigned n, typename C>

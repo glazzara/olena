@@ -120,7 +120,7 @@ namespace mln
     void init_(const F& fun, const B& box);
 
     /// Return domain of lazyd_image.
-    const box2d& domain() const;
+    const box<mln_psite(I)>& domain() const;
 
     /// Test if a pixel value is accessible at \p p.
     bool has(const mln_psite(I)&) const;
@@ -223,7 +223,7 @@ namespace mln
 
   template <typename I, typename F, typename B>
   inline
-  const box2d&
+  const box<mln_psite(I)>&
   lazy_image<I,F,B>::domain() const
   {
     return this->data_->bb_;

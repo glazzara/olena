@@ -1,3 +1,14 @@
+2009-01-29  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
+
+	Fix stuff for registration.
+
+	* mln/core/image/lazy_image.hh: Fix box type.
+	* mln/fun/x2x/rotation.hh: Fix matrix creation.
+	* mln/registration/get_rot.hh: Assert 3d.
+	* mln/registration/registration.hh: p_array convertion.
+	* mln/registration/icp.hh: Remove debug print.
+	* sandbox/lazzara/igr.cc: Add useless things.
+
 2009-01-28  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* sandbox/lazzara/igr.cc: use image3d for registration.
