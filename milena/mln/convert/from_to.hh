@@ -82,6 +82,18 @@ namespace mln
       }
 
 
+      // Site_Set -> Image.
+      template <typename S, typename I>
+      inline
+      void
+      from_to_dispatch(const Site_Set<S>& from, Image<I>& to)
+      {
+	mlc_converts_to(mln_site(S), mln_site(I))::check(); // FIXME: Is it too restrictive?
+	mln_precondition(exact(from).is_valid());
+	mln::convert::impl::from_site_set_to_image(from, to);
+      }
+
+
       // Value -> Value
       template <typename F, typename T>
       inline

@@ -25,20 +25,30 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_CONVERT_IMPL_ALL_HH
-# define MLN_CONVERT_IMPL_ALL_HH
-
-/// \file mln/convert/impl/all.hh
+/// \file tests/convert/impl/from_site_set_to_image.cc
 ///
-/// File that includes all from-to conversion routines.
+/// Tests on mln::convert::impl::from_site_set_to_image.
+
+#include <mln/core/image/image2d.hh>
+#include <mln/core/site_set/p_array.hh>
+#include <mln/convert/from_to.hh>
+
+#include <mln/debug/println.hh>
 
 
-# include <mln/convert/impl/from_double_to_value.hh>
-# include <mln/convert/impl/from_float_to_value.hh>
-# include <mln/convert/impl/from_image_to_site_set.hh>
-# include <mln/convert/impl/from_int_to_value.hh>
-# include <mln/convert/impl/from_site_set_to_image.hh>
-# include <mln/convert/impl/from_value_to_value.hh>
+int main()
+{
+  using namespace mln;
 
+  p_array<point2d> arr;
+  point2d p(1,1);
+  arr.append(p);
+  dpoint2d dp[] = { right, right, down, down, left, left, up };
+  for (unsigned i = 0; i < 7;  ++i)
+    p += dp[i], arr.append(p);
 
-#endif // ! MLN_CONVERT_IMPL_ALL_HH
+  image2d<bool> ima;
+  convert::impl::from_site_set_to_image(arr, ima);
+
+  // debug::println(ima);
+}

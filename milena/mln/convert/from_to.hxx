@@ -341,6 +341,12 @@ namespace mln
       from_to_(const Accumulator<A>& from, mln_result(A)& to);
 
 
+
+      // Site_Set -> Image.
+      template <typename S, typename I>
+      void
+      from_to_(const Site_Set<S>& from, Image<I>& to);
+
       // Site_Set -> std::set
       template <typename S, typename P, typename _C>
       void

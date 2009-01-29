@@ -1,5 +1,17 @@
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Add conversion from site set to image.
+
+	* mln/convert/impl/from_image_to_site_set.hh: Fix file doc.
+	* mln/convert/impl/from_site_set_to_image.hh: New.
+	* mln/convert/impl/all.hh: Update.
+	* mln/convert/from_to.hh (from_to_dispatch): New overload.
+	* mln/convert/from_to.hxx (from_to_): New fwd declaration.
+	* tests/convert/impl: New directory.
+	* tests/convert/impl/from_site_set_to_image.cc: New.
+
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Add morpho elementary gradient fastest impl for functions.
 
 	* mln/morpho/elementary/gradient.hh (todo): New.
