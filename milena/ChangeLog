@@ -1,5 +1,14 @@
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Fix timer in trace entering/exiting.
+
+	* mln/trace/quiet.hh: Layout.
+	* mln/trace/exiting.hh: Rely on clock.
+	* mln/trace/entering.hh (start_times, scopes): New.
+	(entering): Use clock instead of gettimeofday.
+
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	New overload for debug slices_2d with a h/v ratio.
 
 	* mln/debug/slices_2d.hh: New overload.

@@ -47,6 +47,8 @@ namespace mln
 
     void exiting(const std::string& scope);
 
+
+
 # ifndef MLN_INCLUDE_ONLY
 
     inline
@@ -55,8 +57,22 @@ namespace mln
       if (quiet)
 	return;
 
-      timeval after_time;
-      gettimeofday(&after_time, 0);
+      if (scopes.empty())
+	{
+	  std::cerr << "error: missing 'entering' scope (exiting is '" << scope << "')" << std::endl;
+	  quiet = true;
+	}
+      else
+	{
+	  if (scopes.top() != scope)
+	    {
+	      std::cerr << "error: bad matching scope (entering is '" << scopes.top()
+			<< "' v. exiting is '" << scope << "')" << std::endl;
+	      quiet = true;
+	    }
+	  scopes.pop();
+	}
+
       bool has_inner_trace = (internal::max_tab == tab);
       --tab;
 
@@ -69,9 +85,23 @@ namespace mln
       if (!has_inner_trace)
 	std::cout << scope << " ";
 
-      std::cout << "- "
-		<< (after_time.tv_usec - internal::start_time.tv_usec) / 1000.
-		<< "ms ";
+      mln_assertion(! start_times.empty());
+      std::clock_t now = std::clock();
+
+      if (start_times.top() > now)
+	{
+	  std::cerr << "warning: bad timer in trace handling" << std::endl;
+	  // FIXME: So what?
+	}
+
+      if (start_times.top() < now)
+	{
+	  std::cout << "- "
+		    << ((float(now) - float(start_times.top())) / CLOCKS_PER_SEC)
+		    << "s ";
+	}
+
+      start_times.pop();
 
       if (has_inner_trace || (internal::max_tab - tab > 1))
 	std::cout << std::endl;

@@ -35,6 +35,8 @@
 
 # include <string>
 # include <iostream>
+# include <stack>
+# include <ctime>
 
 # include <mln/trace/quiet.hh>
 
@@ -47,13 +49,25 @@ namespace mln
 
     void entering(const std::string& scope);
 
+    extern std::stack<std::clock_t> start_times;
+    extern std::stack<std::string>  scopes;      // For testing purpose
+                                                 // (entering/exiting scope matching).
+
+
 # ifndef MLN_INCLUDE_ONLY
+
+    std::stack<std::clock_t> start_times;
+    std::stack<std::string>  scopes;
+
 
     inline
     void entering(const std::string& scope)
     {
       if (quiet)
 	return;
+
+      start_times.push(std::clock());
+      scopes.push(scope);
 
       if ((tab != 0) && (internal::max_tab == tab))
 	std::cout << std::endl;
@@ -63,7 +77,6 @@ namespace mln
       std::cout << scope << " {";
 
       internal::max_tab = ++tab;
-      gettimeofday(&internal::start_time, 0);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

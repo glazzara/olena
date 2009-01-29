@@ -56,6 +56,7 @@ namespace mln
 
     } // end of namespace mln::trace::internal
 
+
 # ifndef MLN_INCLUDE_ONLY
 
     bool quiet = true;
