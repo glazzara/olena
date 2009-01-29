@@ -1,3 +1,14 @@
+2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Add segmentation scheme for volumes.
+
+	* theo/igr: New directory.
+	* theo/igr/pgms2pgm.cc: New.
+	* theo/igr/raw2pgm.cc: New.
+	* theo/igr/pgms2raw.cc: New.
+	* theo/igr/irm_anat_segm.cc: New.
+	* theo/igr/irm_anat_segm__2D_ONLY.cc: New.
+
 2009-01-27  Ugo Jardonnet  <ugo.jardonnet@lrde.epita.fr>
 
 	Fix igr registration.
