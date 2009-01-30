@@ -30,7 +30,8 @@
 # define MLN_CORE_PIXTER2D_HH
 
 /// \file mln/core/pixter2d.hh
-/// \brief Pixel iterators on a 2-D image with border.
+///
+/// Pixel iterators on a 2D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/alias/point2d.hh>
@@ -62,13 +63,21 @@ namespace mln
     /// Go to the next pixel.
     void next_();
 
+    /// Extra code for start().
+    void start_();
+
   private:
+
     /// Twice the size of the image border.
     unsigned border_x2_;
+
     /// Row offset.
     unsigned row_offset_;
+
     /// End of the current row.
     mln_qlf_value(I)* eor_;
+
+    using super_::image_;
   };
 
 
@@ -94,14 +103,21 @@ namespace mln
     /// Go to the next pixel.
     void next_();
 
+    /// Extra code for start().
+    void start_();
+
   private:
 
     /// Twice the size of the image border.
     unsigned border_x2_;
+
     /// Row offset.
     unsigned row_offset_;
+
     /// Beginning of the current row.
     mln_qlf_value(I)* bor_;
+
+    using super_::image_;
   };
 
 
@@ -117,8 +133,7 @@ namespace mln
   fwd_pixter2d<I>::fwd_pixter2d(I& image)
     : super_(image),
       border_x2_(2 * image.border()),
-      row_offset_(image.bbox().ncols() + border_x2_),
-      eor_(& opt::at(image, geom::min_row(image), geom::max_col(image)) + 1)
+      row_offset_(image.bbox().ncols() + border_x2_)
   {
     mln_precondition(image.is_valid());
   }
@@ -136,6 +151,14 @@ namespace mln
     }
   }
 
+  template <typename I>
+  inline
+  void
+  fwd_pixter2d<I>::start_()
+  {
+    eor_ = & opt::at(image_, geom::min_row(image_), geom::max_col(image_)) + 1;
+  }
+
 
   /*------------------.
   | fwd_pixter2d<I>.  |
@@ -146,8 +169,7 @@ namespace mln
   bkd_pixter2d<I>::bkd_pixter2d(I& image)
     : super_(image),
       border_x2_(2 * image.border()),
-      row_offset_(image.bbox().ncols() + border_x2_),
-      bor_(& opt::at(image, geom::max_row(image), geom::min_col(image)) - 1)
+      row_offset_(image.bbox().ncols() + border_x2_)
   {
     mln_precondition(image.is_valid());
   }
@@ -163,6 +185,14 @@ namespace mln
       this->value_ptr_ -= border_x2_;
       bor_ -= row_offset_;
     }
+  }
+
+  template <typename I>
+  inline
+  void
+  bkd_pixter2d<I>::start_()
+  {
+    bor_ = & opt::at(image_, geom::max_row(image_), geom::min_col(image_)) - 1;
   }
 
 #endif // ! MLN_INCLUDE_ONLY

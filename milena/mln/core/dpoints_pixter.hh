@@ -33,6 +33,8 @@
 /// 
 /// \brief Definition of forward and backward mln::dpoint-based
 /// iterators for pixels iterations.
+///
+/// \todo In ::init_ use offsets_wrt (defined in concept/window.hh).
 
 # include <cassert>
 # include <vector>

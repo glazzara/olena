@@ -33,14 +33,21 @@
 ///
 /// Definition of the concept of mln::Neighborhood.
 
-# include <mln/core/concept/object.hh>
+# include <mln/core/concept/window.hh>
 # include <mln/trait/windows.hh>
+
+
+
+# define mln_is_simple_neighborhood(N)  mln_is_simple_window(mln_window(N))
+
+
 
 
 namespace mln
 {
 
-  // Fwd decl.
+
+  // Forward declaration.
   template <typename E> struct Neighborhood;
 
 
@@ -90,6 +97,12 @@ namespace mln
   operator<<(std::ostream&ostr, const Neighborhood<N>& nbh);
 
 
+  // FIXME: Move as a method of Image?
+  template <typename I, typename N>
+  util::array<int>
+  offsets_wrt(const Image<I>& ima, const Neighborhood<N>& nbh);
+
+
 
 # ifndef MLN_INCLUDE_ONLY
 
@@ -127,6 +140,21 @@ namespace mln
   operator<<(std::ostream&ostr, const Neighborhood<N>& nbh)
   {
     return ostr << exact(nbh).win();
+  }
+
+  template <typename I, typename N>
+  inline
+  util::array<int>
+  offsets_wrt(const Image<I>& ima_, const Neighborhood<N>& nbh_)
+  {
+    mln_is_simple_neighborhood(N)::check();
+
+    const I& ima = exact(ima_);
+    const N& nbh = exact(nbh_);
+    mln_precondition(ima.is_valid());
+    // mln_precondition(nbh.is_valid());
+
+    return offsets_wrt(ima, nbh.win());
   }
 
 # endif // ! MLN_INCLUDE_ONLY

@@ -30,12 +30,14 @@
 # define MLN_CORE_PIXTER3D_HH
 
 /// \file mln/core/pixter3d.hh
-/// \brief Pixel iterators on a 3-D image with border.
+///
+/// Pixel iterators on a 3D image with border.
 
 # include <mln/core/internal/pixel_iterator_base.hh>
 # include <mln/core/alias/point3d.hh>
 # include <mln/geom/size3d.hh>
 # include <mln/opt/at.hh>
+
 
 namespace mln
 {
@@ -62,22 +64,33 @@ namespace mln
     /// Go to the next pixel.
     void next_();
 
+    /// Extra code for start().
+    void start_();
+
   private:
+
     /// Twice the size of the image border.
     const unsigned border_x2_;
+
     /// Row offset.
     const unsigned row_offset_;
+
     /// End of the current row.
     mln_qlf_value(I)* eor_;
 
     /// Next slice offset.
     const unsigned next_sli_offset_;
+
     /// Next slice offset for row.
     const unsigned next_srow_offset_;
+
     /// Slice offset.
     const unsigned sli_offset_;
+
     /// End of the current slice.
     mln_qlf_value(I)* eos_;
+
+    using super_::image_;
   };
 
 
@@ -103,22 +116,33 @@ namespace mln
     /// Go to the next pixel.
     void next_();
 
+    /// Extra code for start().
+    void start_();
+
   private:
+
     /// Twice the size of the image border.
     const unsigned border_x2_;
+
     /// Row offset.
     const unsigned row_offset_;
+
     /// Beginning of the current row.
     mln_qlf_value(I)* bor_;
 
     /// Next slice offset.
     const unsigned next_sli_offset_;
+
     /// Next slice offset for row.
     const unsigned next_srow_offset_;
+
     /// Slice offset.
     const unsigned sli_offset_;
+
     /// Beginning of the current slice.
     mln_qlf_value(I)* bos_;
+
+    using super_::image_;
   };
 
 
@@ -134,18 +158,27 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      eor_(& opt::at(image, geom::min_sli(image),
-		      geom::min_row(image),
-		      geom::max_col(image)) + 1),
       next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
       next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
       sli_offset_((image.bbox().ncols() + border_x2_) *
-		  (image.bbox().nrows() + border_x2_)),
-      eos_(& opt::at(image, geom::min_sli(image),
-		      geom::max_row(image),
-		      geom::max_col(image)) + 1)
+		  (image.bbox().nrows() + border_x2_))
   {
     mln_precondition(image.is_valid());
+  }
+
+  template <typename I>
+  inline
+  void
+  fwd_pixter3d<I>::start_()
+  {
+    eor_ = & opt::at(image_,
+		     geom::min_sli(image_),
+		     geom::min_row(image_),
+		     geom::max_col(image_)) + 1;
+    eos_ = & opt::at(image_,
+		     geom::min_sli(image_),
+		     geom::max_row(image_),
+		     geom::max_col(image_)) + 1;
   }
 
   template <typename I>
@@ -178,18 +211,27 @@ namespace mln
     : super_(image),
       border_x2_(2 * image.border()),
       row_offset_(image.bbox().ncols() + border_x2_),
-      bor_(& opt::at(image, geom::max_sli(image),
-		      geom::max_row(image),
-		      geom::min_col(image)) - 1),
       next_sli_offset_(row_offset_ * border_x2_ + border_x2_),
       next_srow_offset_(next_sli_offset_ + image.bbox().ncols()),
       sli_offset_((image.bbox().ncols() + border_x2_) *
-		  (image.bbox().nrows() + border_x2_)),
-      bos_(& opt::at(image, geom::max_sli(image),
-		      geom::min_row(image),
-		      geom::min_col(image)) - 1)
+		  (image.bbox().nrows() + border_x2_))
   {
     mln_precondition(image.is_valid());
+  }
+
+  template <typename I>
+  inline
+  void
+  bkd_pixter3d<I>::start_()
+  {
+    bor_ = & opt::at(image_,
+		     geom::max_sli(image_),
+		     geom::max_row(image_),
+		     geom::min_col(image_)) - 1;
+    bos_ = & opt::at(image_,
+		     geom::max_sli(image_),
+		     geom::min_row(image_),
+		     geom::min_col(image_)) - 1;
   }
 
   template <typename I>
@@ -214,5 +256,6 @@ namespace mln
 #endif // ! MLN_INCLUDE_ONLY
 
 } // end of namespace mln
+
 
 #endif // ! MLN_CORE_PIXTER3D_HH

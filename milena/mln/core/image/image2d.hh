@@ -33,6 +33,9 @@
 /// Definition of the basic mln::image2d class.
 ///
 /// \todo Re-activate include at EOF when make::image2d is up again.
+///
+/// \todo Rename delta_index and point_at_index as offset and
+/// point_at_offset.
 
 # include <mln/core/internal/image_primary.hh>
 # include <mln/core/internal/fixme.hh>

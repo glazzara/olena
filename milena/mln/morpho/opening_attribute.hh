@@ -32,6 +32,8 @@
 /// \file mln/morpho/opening_attribute.hh
 ///
 /// Morphological attribute opening.
+///
+/// \todo Add extension::adjust_fill.
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>

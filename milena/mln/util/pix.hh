@@ -32,6 +32,13 @@
 /// \file mln/util/pix.hh
 ///
 /// Definition of an instant pix.
+///
+/// \todo Rename as util::pixel.
+///
+/// \todo Think about separating this class between
+/// util::pixel<"mutable" I> and util::pixel<const I>.
+///
+/// \todo Look at the todo entry of mln/core/pixel.hh.
 
 # include <mln/core/concept/image.hh>
 

@@ -1,3 +1,33 @@
+2009-01-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Fix repeated loops with pixel iterators.
+
+	* mln/core/image/image2d.hh (todo): New.
+	* mln/core/pixter2d.hh (start_): New.
+	Upgrade file doc style.
+	Layout.
+	* mln/core/pixter3d.hh: Likewise.
+	* mln/core/dpoints_pixter.hh (todo): New.
+	* mln/core/internal/pixel_iterator_base.hh:
+	Upgrade file doc style.
+	(start_): New; default impl is no-op.
+	(start): Call start_.
+	* mln/core/internal/pixel_impl.hh (todo): New.
+	(pixel_impl_base_): New.
+	(image_, value_ptr_): Move from pixel_impl_ to
+	pixel_impl_base_.
+	* mln/core/pixel.hh: Upgrade file doc style.
+	(todo): New.
+	* mln/util/pix.hh (todo): New.
+
+	Misc.
+
+	* mln/core/concept/window.hh (offsets_wrt): New.
+	* mln/core/concept/neighborhood.hh: Likewise.
+	* mln/morpho/closing_attribute.hh: Update.
+	* mln/morpho/opening_attribute.hh: Update.
+	* mln/canvas/morpho/algebraic_union_find.hh: Update.
+
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Fix delta_index in image3d.

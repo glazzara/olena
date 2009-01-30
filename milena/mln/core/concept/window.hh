@@ -46,6 +46,7 @@
 # include <mln/core/site_set/p_array.hh>
 # include <mln/core/internal/geom_bbox.hh> // For use in convert::from_to.
 # include <mln/convert/from_to.hxx>
+# include <mln/util/array.hh>
 
 
 
@@ -70,8 +71,9 @@ mlc_and(mlc_is(mln_trait_image_speed(I),	\
 namespace mln
 {
 
-  // Forward declaration.
+  // Forward declarations.
   template <typename E> struct Window;
+  template <typename E> struct Image;
 
 
   // Window category flag type.
@@ -113,6 +115,12 @@ namespace mln
   template <typename W>
   std::ostream& operator<<(std::ostream& ostr, const Window<W>& win);
 
+
+  // FIXME: Move as a method of Image?
+  template <typename I, typename W>
+  util::array<int>
+  offsets_wrt(const Image<I>& ima, const Window<W>& win);
+  
 
 
   namespace convert
@@ -306,6 +314,28 @@ namespace mln
     internal::print(mln_trait_window_definition(W)(),
 		    ostr, exact(win));
     return ostr;
+  }
+
+
+  template <typename I, typename W>
+  inline
+  util::array<int>
+  offsets_wrt(const Image<I>& ima_, const Window<W>& win_)
+  {
+    mln_is_simple_window(W)::check();
+
+    const I& ima = exact(ima_);
+    const W& win = exact(win_);
+    mln_precondition(ima.is_valid());
+    // mln_precondition(win.is_valid());
+
+    util::array<int> arr;
+    unsigned n = win.size();
+    
+    for (unsigned i = 0; i < n; ++i)
+      arr.append(ima.delta_index(win.dp(i)));
+
+    return arr;
   }
 
 

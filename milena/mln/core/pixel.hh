@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,10 +29,13 @@
 #ifndef MLN_CORE_PIXEL_HH
 # define MLN_CORE_PIXEL_HH
 
-/*! \file mln/core/pixel.hh
- *
- * \brief Definition of the generic pixel class mln::pixel.
- */
+/// \file mln/core/pixel.hh
+///
+/// Definition of the generic pixel class mln::pixel.
+///
+/// \todo Answer these questions:
+///  - why do we have 2 classes (mln::pixel and mln::util::pix)?
+///  - what about keeping only one of both?
 
 # include <mln/core/concept/generalized_pixel.hh>
 # include <mln/core/internal/pixel_impl.hh>

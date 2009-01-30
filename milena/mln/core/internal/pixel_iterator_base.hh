@@ -30,11 +30,13 @@
 # define MLN_CORE_INTERNAL_PIXEL_ITERATOR_BASE_HH
 
 /// \file mln/core/internal/pixel_iterator_base.hh
-/// \brief Base classes factoring code for pixel iterator classes.
+///
+/// Base classes factoring code for pixel iterator classes.
 
 # include <mln/core/concept/pixel_iterator.hh>
 # include <mln/core/internal/pixel_impl.hh>
 # include <mln/core/trait/qlf_value.hh>
+
 
 namespace mln
 {
@@ -58,10 +60,15 @@ namespace mln
       pixel_iterator_base_(I& image);
 
     protected:
+
       /// Beginning of the image.
       mln_qlf_value(I)* boi_;
+
       /// End of the image (past-the-end).
       mln_qlf_value(I)* eoi_;
+
+      /// Default impl is no-op.
+      void start_();
     };
 
 
@@ -76,6 +83,7 @@ namespace mln
       typedef pixel_iterator_base_<I, E> super_;
 
     public:
+
       /// Manipulation
       /// \{
       /// Start an iteration.
@@ -87,6 +95,7 @@ namespace mln
       /// \}
 
     protected:
+
       /// Constructor.
       forward_pixel_iterator_base_(I& image);
     };
@@ -114,12 +123,15 @@ namespace mln
       /// \}
 
     protected:
+
       /// Constructor.
       backward_pixel_iterator_base_(I& image);
     };
 
 
+
 #ifndef MLN_INCLUDE_ONLY
+
 
     /*---------------------------------------.
     | internal::pixel_iterator_base_<I, E>.  |
@@ -135,6 +147,14 @@ namespace mln
       boi_ = & ima( ima.domain().pmin() ) - 1;
       eoi_ = & ima( ima.domain().pmax() ) + 1;
       exact(*this).invalidate();
+    }
+
+    template <typename I, typename E>
+    inline
+    void
+    pixel_iterator_base_<I, E>::start_()
+    {
+      // Default impl is no-op.
     }
 
 
@@ -155,6 +175,7 @@ namespace mln
     forward_pixel_iterator_base_<I, E>::start()
     {
       this->value_ptr_ = this->boi_ + 1;
+      exact(this)->start_();
     }
 
     template <typename I, typename E>
@@ -191,6 +212,7 @@ namespace mln
     backward_pixel_iterator_base_<I, E>::start()
     {
       this->value_ptr_ = this->eoi_ - 1;
+      exact(this)->start_();
     }
 
     template <typename I, typename E>

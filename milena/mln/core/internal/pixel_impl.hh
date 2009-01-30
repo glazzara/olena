@@ -1,4 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,9 +33,13 @@
 ///
 /// Define a couple of implementation classes to provide methods
 /// to classes of generalized pixels.
+///
+/// \todo Clean-up code.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/internal/force_exact.hh>
+# include <mln/util/pix.hh>
+
 
 
 namespace mln
@@ -43,11 +48,83 @@ namespace mln
   namespace internal
   {
 
+    // We indeed have to handle the couple of cases when I is fastest
+    // or is not.  Justification: mln::pixel derives from pixel_impl_ 
+    // and is a general purpose pixel class; it can be used on any
+    // image whatever it is a fastest one or not.
+
+    template <bool is_fastest, typename I, typename E>
+    class pixel_impl_base_;
+
+
+    template <typename I, typename E>
+    struct pixel_impl_base_< false, I, E > // I is not fastest.
+    {
+      typedef mlc_if(mlc_is_const(I), const mln_value(I), mln_value(I)) value_ptr_t;
+
+      pixel_impl_base_(I& image, value_ptr_t* value_ptr)
+	: image_(image),
+	  value_ptr_(value_ptr)
+      {
+      }
+
+    protected:
+
+      /// Image associated to the iterator
+      I& image_;
+
+      /// Current pixel / value
+      value_ptr_t* value_ptr_;
+    };
+
+
+    template <typename I, typename E>
+    struct pixel_impl_base_< true, I, E > // I is fastest => extra interface.
+    {
+      typedef mlc_if(mlc_is_const(I), const mln_value(I), mln_value(I)) value_ptr_t;
+      typedef mlc_unconst(I) unconst_image_t;
+
+      pixel_impl_base_(I& image, value_ptr_t* value_ptr)
+	: image_(image),
+	  value_ptr_(value_ptr)
+      {
+      }
+
+      unsigned offset() const
+      {
+	return value_ptr_ - image_.buffer();
+      }
+
+      operator util::pix<unconst_image_t>() const
+      {
+	util::pix<unconst_image_t> tmp(image_, image_.point_at_index(offset()));
+	return tmp;
+      }
+
+    protected:
+
+      /// Image associated to the iterator.
+      I& image_;
+
+      /// Current pixel / value.
+      value_ptr_t* value_ptr_;
+    };
+
+
     /// Implementation class to equip generalized pixel
     /// classes based on mutable images.
+    ///
     template <typename I, typename E>
     class pixel_impl_
+
+      : public pixel_impl_base_< mlc_is(mln_trait_image_speed(I),
+					trait::image::speed::fastest)::value,
+				 I, E >
     {
+      typedef pixel_impl_base_< mlc_is(mln_trait_image_speed(I),
+						 trait::image::speed::fastest)::value,
+					  I, E > super_;
+
     public:
 
       /// Image type.
@@ -79,11 +156,11 @@ namespace mln
 
     protected:
 
-      /// Image associated to the iterator
-      I& image_;
+      /// Image associated to the iterator.
+      using super_::image_;
 
-      /// Current pixel / value
-      value* value_ptr_;
+      /// Current pixel / value.
+      using super_::value_ptr_;
 
       /// Constructor
       pixel_impl_(I& image);
@@ -95,9 +172,18 @@ namespace mln
 
     /// Implementation class to equip generalized pixel
     /// classes based on constant images.
+    ///
     template <typename I, typename E>
     class pixel_impl_< const I, E >
+
+      : public pixel_impl_base_< mlc_is(mln_trait_image_speed(I),
+					trait::image::speed::fastest)::value,
+			         const I, E >
     {
+      typedef pixel_impl_base_< mlc_is(mln_trait_image_speed(I),
+						 trait::image::speed::fastest)::value,
+				const I, E > super_;
+
     public:
 
       /// Image type.
@@ -121,13 +207,14 @@ namespace mln
       /// Address of the current iterator value/pixel.
       const value** address_() const;
 
+
     protected:
 
-      /// Image associated to the iterator
-      const I& image_;
+      /// Image associated to the iterator.
+      using super_::image_;
 
-      /// Current pixel / value
-      const value* value_ptr_;
+      /// Current pixel / value.
+      using super_::value_ptr_;
 
       /// Constructor
       pixel_impl_(const I& image);
@@ -152,8 +239,7 @@ namespace mln
     template <typename I, typename E>
     inline
     pixel_impl_<I, E>::pixel_impl_(I& image) :
-      image_(image),
-      value_ptr_(0)
+      super_(image, 0)
     {
     }
 
@@ -206,8 +292,7 @@ namespace mln
     template <typename I, typename E>
     inline
     pixel_impl_<const I, E>::pixel_impl_(const I& image) :
-      image_(image),
-      value_ptr_(0)
+      super_(image, 0)
     {
     }
 
