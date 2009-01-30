@@ -40,6 +40,7 @@
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
 # include <mln/level/sort_psites.hh>
+# include <mln/level/sort_offsets.hh>
 # include <mln/util/pix.hh>
 
 
@@ -144,7 +145,7 @@ namespace mln
 
 	typedef A_ A;
 	typedef mln_psite(I) P;
-	typedef p_array<P> S;
+	typedef util::array<unsigned> S;
 
 	mln_result(A) lambda;
 	const S s;
@@ -168,7 +169,7 @@ namespace mln
 
 	closing_attribute_fastest_functor_t(const Image<I>& input, mln_result(A) lambda)
 	  : lambda(lambda),
-	    s(level::sort_psites_increasing(exact(input)))
+	    s(level::sort_offsets_increasing(exact(input)))
 	{
 	}
 

@@ -66,6 +66,7 @@ namespace mln
 # include <mln/level/replace.hh>
 # include <mln/level/saturate.hh>
 # include <mln/level/sort_psites.hh>
+# include <mln/level/sort_offsets.hh>
 # include <mln/level/stretch.hh>
 # include <mln/level/to_enc.hh>
 # include <mln/level/transform.hh>

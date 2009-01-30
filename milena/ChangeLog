@@ -1,5 +1,16 @@
 2009-01-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
+	Make the fastest version for the algebraic morpho canvas work.
+
+	* mln/level/sort_offsets.hh: New.
+	* mln/level/all.hh: Update.
+	* mln/morpho/closing_attribute.hh
+	(closing_attribute_fastest_functor_t): Update.
+	* mln/canvas/morpho/algebraic_union_find.hh
+	(algebraic_union_find_fastest): Update.
+
+2009-01-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
 	Fix repeated loops with pixel iterators.
 
 	* mln/core/image/image2d.hh (todo): New.

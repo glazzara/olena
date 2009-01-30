@@ -214,7 +214,7 @@ namespace mln
 	  if (parent.element(x) == x)
 	    return x;
 	  else
-	    return parent.element(x) = find_root(parent, parent.element(x));
+	    return parent.element(x) = find_root_fastest(parent, parent.element(x));
 	}
 
 
@@ -260,63 +260,64 @@ namespace mln
 	  }
 
 	  util::array<int> dp = offsets_wrt(input, nbh);
-	  for (unsigned i = 0; i < dp.nelements(); ++i)
-	    std::cout << dp[i] << ' ';
-	  std::cout << std::endl;
+	  const unsigned n_nbhs = dp.nelements();
 
-	  /*
+	  const util::array<unsigned>& s = f.s;
+	  const unsigned n_points = s.nelements();
 
 	  // First pass.
 	  {
-	  for (unsigned p = 0; p < f.s.size(); ++p)
-	  mln_niter(N) n(nbh, p);
-	  for_all(p)
-	  {
-	  // Make set.
-	  {
-	  parent(p) = p;
-	  data(p).take_as_init(make::pix(input, p)); // FIXME: algebraic so p!
-	  }
 
-	  for_all(n)
-	  if (input.domain().has(n) && deja_vu(n))
-	  {
-	  P r = find_root(parent, n);
-	  if (r != p)
-	  {
-	  if (input(r) == input(p) || (activity(r) && f.is_active(data(r))))
-	  {
-	  data(p).take(data(r));
-	  parent(r) = p;
-	  if (activity(r) == false)
-	  activity(p) = false;
-	  }
-	  else
-	  {
-	  activity(p) = false;
-	  f.inactivate(data(p));
-	  }
-	  }
-	  }
-	  deja_vu(p) = true;
-	  }
-	  }
+	    for (unsigned i = 0; i < n_points; ++i)
+	      {
+		unsigned p = s[i]; // An offset.
 
-	  */
+		// Make set.
+		parent.element(p) = p;
+		data.element(p).take_as_init( input.element(p) ); // FIXME: Very bad!!!
 
-	  /*
+		for (unsigned j = 0; j < n_nbhs; ++j)
+		  {
+		    unsigned n = p + dp[j];
+		    if (! deja_vu.element(n))
+		      continue;
+
+		    unsigned r = find_root_fastest(parent, n);
+		    if (r != p)
+		      {
+			if (input.element(r) == input.element(p)
+			    || (activity.element(r)
+				&& f.is_active(data.element(r))))
+			  {
+			    data.element(p).take(data.element(r));
+			    parent.element(r) = p;
+			    if (activity.element(r) == false)
+			      activity.element(p) = false;
+			  }
+			else
+			  {
+			    activity.element(p) = false;
+			    f.inactivate(data.element(p));
+			  }
+		      }
+		  }
+
+		deja_vu.element(p) = true;
+	      }
+
+	  }
 
 	  // Second pass.
 	  {
-	  mln_bkd_piter(S) p(f.s);
-	  for_all(p)
-	  if (parent(p) == p) // p is root.
-	  output(p) = input(p);
-	  else
-	  output(p) = output(parent(p));
+	    for (int i = n_points - 1; i >= 0 ; --i)
+	      {
+		unsigned p = s[i];
+		if (parent.element(p) == p) // p is root.
+		  output.element(p) = input.element(p);
+		else
+		  output.element(p) = output.element(parent.element(p));
+	      }
 	  }
-
-	  */
 
 	  trace::exiting("canvas::morpho::impl::algebraic_union_find_fastest");
 	  return output;
@@ -343,16 +344,16 @@ namespace mln
 	  return impl::generic::algebraic_union_find(input, nbh, f);
 	}
 
-// 	template <typename I, typename N, typename F>
-// 	inline
-// 	mln_concrete(I)
-// 	algebraic_union_find_dispatch(trait::image::speed::fastest,
-// 				      const Image<I>& input,
-// 				      const Neighborhood<N>& nbh,
-// 				      F& f)
-// 	{
-// 	  return impl::algebraic_union_find_fastest(input, nbh, f);
-// 	}
+	// 	template <typename I, typename N, typename F>
+	// 	inline
+	// 	mln_concrete(I)
+	// 	algebraic_union_find_dispatch(trait::image::speed::fastest,
+	// 				      const Image<I>& input,
+	// 				      const Neighborhood<N>& nbh,
+	// 				      F& f)
+	// 	{
+	// 	  return impl::algebraic_union_find_fastest(input, nbh, f);
+	// 	}
 
 	template <typename I, typename N, typename F>
 	inline
