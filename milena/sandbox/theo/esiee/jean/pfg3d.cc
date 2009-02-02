@@ -70,7 +70,7 @@ int main()
 {
   using namespace mln;
 
-  box3d b = make::box3d(-1,1, -1,1, -1,1);
+  box3d b = make::box3d(-1,-1,-1, +1,+1,+1);
   image3d<unsigned> ima(b);
   debug::iota(ima);
   debug::println(ima);

@@ -1,3 +1,11 @@
+2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Update Laurent's cleanup code.
+
+	* theo/esiee/laurent/ismm09/main.cc: Update.
+	* theo/esiee/jean/pfg3d.cc: Update.
+	* igr/images/s7.ppm: Remove image.
+
 2009-01-29  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Better display anat segmentation results.
