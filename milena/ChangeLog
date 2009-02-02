@@ -1,3 +1,13 @@
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix tutorial generation.
+
+	* doc/tutorial/generate_dist_files.sh: dot not include current
+	directory...
+
+	* doc/tutorial/samples/borderthickness.cc: Fix a non initialized
+	border.
+
 2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Activate fastest version of algebraic union-find.
