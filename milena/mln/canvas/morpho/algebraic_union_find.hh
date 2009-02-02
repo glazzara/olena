@@ -336,7 +336,7 @@ namespace mln
 	template <typename I, typename N, typename F>
 	inline
 	mln_concrete(I)
-	algebraic_union_find_dispatch(trait::image::speed::any,
+	algebraic_union_find_dispatch(metal::false_,
 				      const Image<I>& input,
 				      const Neighborhood<N>& nbh,
 				      F& f)
@@ -344,16 +344,16 @@ namespace mln
 	  return impl::generic::algebraic_union_find(input, nbh, f);
 	}
 
-	// 	template <typename I, typename N, typename F>
-	// 	inline
-	// 	mln_concrete(I)
-	// 	algebraic_union_find_dispatch(trait::image::speed::fastest,
-	// 				      const Image<I>& input,
-	// 				      const Neighborhood<N>& nbh,
-	// 				      F& f)
-	// 	{
-	// 	  return impl::algebraic_union_find_fastest(input, nbh, f);
-	// 	}
+	template <typename I, typename N, typename F>
+	inline
+	mln_concrete(I)
+	algebraic_union_find_dispatch(metal::true_,
+				      const Image<I>& input,
+				      const Neighborhood<N>& nbh,
+				      F& f)
+	{
+	  return impl::algebraic_union_find_fastest(input, nbh, f);
+	}
 
 	template <typename I, typename N, typename F>
 	inline
@@ -362,7 +362,13 @@ namespace mln
 				      const Neighborhood<N>& nbh,
 				      F& f)
 	{
-	  return algebraic_union_find_dispatch(mln_trait_image_speed(I)(),
+	  enum {
+	    test = mlc_equal(mln_trait_image_speed(I),
+			     trait::image::speed::fastest)::value
+	    &&
+	    mln_is_simple_neighborhood(N)::value
+	  };
+	  return algebraic_union_find_dispatch(metal::bool_<test>(),
 					       input, nbh, f);
 	}
 

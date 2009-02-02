@@ -1,3 +1,12 @@
+2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
+
+	Activate fastest version of algebraic union-find.
+
+	* mln/morpho/closing_attribute.hh
+	(closing_attribute_dispatch): Activate for fastest images.
+	* mln/canvas/morpho/algebraic_union_find.hh: Likewise.
+	* mln/canvas/labeling.hh: Remove dead code.
+
 2009-01-30  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Make the fastest version for the algebraic morpho canvas work.

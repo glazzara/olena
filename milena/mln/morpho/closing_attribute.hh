@@ -209,22 +209,22 @@ namespace mln
       template <typename A, typename I, typename N>
       inline
       mln_concrete(I)
-      closing_attribute_dispatch(trait::image::speed::any,
+      closing_attribute_dispatch(metal::false_,
 				 const Image<I>& input, const Neighborhood<N>& nbh,
 				 mln_result(A) lambda)
       {
 	return impl::generic::closing_attribute<A>(input, nbh, lambda);
       }
 
-//       template <typename A, typename I, typename N>
-//       inline
-//       mln_concrete(I)
-//       closing_attribute_dispatch(trait::image::speed::fastest,
-// 				 const Image<I>& input, const Neighborhood<N>& nbh,
-// 				 mln_result(A) lambda)
-//       {
-// 	return impl::closing_attribute_fastest<A>(input, nbh, lambda);
-//       }
+      template <typename A, typename I, typename N>
+      inline
+      mln_concrete(I)
+      closing_attribute_dispatch(metal::true_,
+				 const Image<I>& input, const Neighborhood<N>& nbh,
+				 mln_result(A) lambda)
+      {
+	return impl::closing_attribute_fastest<A>(input, nbh, lambda);
+      }
 
       template <typename A, typename I, typename N>
       inline
@@ -232,7 +232,13 @@ namespace mln
       closing_attribute_dispatch(const Image<I>& input, const Neighborhood<N>& nbh,
 				 mln_result(A) lambda)
       {
-	return closing_attribute_dispatch<A>(mln_trait_image_speed(I)(),
+	  enum {
+	    test = mlc_equal(mln_trait_image_speed(I),
+			     trait::image::speed::fastest)::value
+	    &&
+	    mln_is_simple_neighborhood(N)::value
+	  };
+	  return closing_attribute_dispatch<A>(metal::bool_<test>(),
 					     input, nbh, lambda);
       }
 
