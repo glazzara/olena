@@ -1,3 +1,9 @@
+2009-02-02  Edwin Carlinet  <carlinet@lrde.epita.fr>
+
+	Add dispatch functions for accumulator.
+	* .: New.
+	* fredwin.cc: New.
+
 2009-02-02  Frederic Bour  <bour@lrde.epita.fr>
 
 	[sandbox] p2p morpher with translation, composition and flip.
