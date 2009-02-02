@@ -1,3 +1,15 @@
+2009-02-02  Frederic Bour  <bour@lrde.epita.fr>
+
+	[sandbox] p2p morpher with translation, composition and flip.
+	* .: New.
+	* p2p/Makefile: New.
+	* p2p/compose_p2p.hh: New.
+	* p2p/p2p_morpher.hh: New.
+	* p2p/symmetry_p2p.hh: New.
+	* p2p/test_morph_image.cc: New.
+	* p2p/translate_p2p.hh: New.
+	* p2p: New.
+
 2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update Laurent's cleanup code.
