@@ -32,93 +32,224 @@
 ///
 /// Register an image over an another using the ICP algorithm.
 
+# include <mln/core/alias/vec3d.hh>
+# include <mln/math/jacobi.hh>
 # include <mln/fun/x2x/all.hh>
 # include <mln/fun/x2v/all.hh>
 # include <mln/convert/to.hh>
-# include <mln/transform/internal/closest_point_functor.hh>
-# include <mln/canvas/distance_geodesic.hh>
 # include <mln/accu/compute.hh>
 # include <mln/accu/center.hh>
+# include <mln/accu/rms.hh>
+# include <mln/trait/image_from_grid.hh>
+# include <mln/set/compute.hh>
+
+//Should be removed when closest_point functors are moved.
+# include <mln/core/alias/neighb3d.hh>
+# include <mln/transform/internal/closest_point_functor.hh>
+# include <mln/canvas/distance_geodesic.hh>
+# include <mln/pw/all.hh>
 
 namespace mln
 {
+
 
   namespace registration
   {
 
     using namespace fun::x2x;
 
-    /*! Register point in \p c using a map of closest points \p map
+    /*! Register point in \p c using a function of closest points
+     * \p closest_point.
      *
-     * \param[in] c The cloud of points.
-     * \param[in] map The map of closest points.
-     * \param[in] epsilon ICP stops if sqr_norm(qk - qk-1) /
-     * sqr_norm(qk) > epsilon
+     * \param[in] data_P The cloud of points.
+     * \param[in] model_X the reference surface.
+     * \param[in] closest_point The function of closest points.
      * \param[out] qk The rigid transformation obtained.
      *
-     * \pre \p ima has to be initialized.
+     * \return the rigid transformation which may be use later to create
+     * a registered image.
+     *
+     * WARNING: the function \p closest_point *MUST* take float/double
+     * vector as arguments. Otherwise the resulting transformation may be
+     * wrong due to the truncation of the vector coordinate values.
+     *
+     * \pre \p data_p and \p model_X must not be empty.
+     *
+     * Reference article: "A Method for Registration of 3-D Shapes", Paul J.
+     * Besl and Neil D. McKay, IEEE, 2, February 1992.
+     *
      */
-    template <typename D, typename M, typename T>
-    void
-    icp(const Image<D>& data, const Image<M>& model, T& qk);
+    template <typename P, typename F>
+    composed< rotation<P::dim,float>,translation<P::dim,float> >
+    icp(const p_array<P>& data_P,
+	const p_array<P>& model_X,
+	const F& closest_point,
+	const algebra::quat& initial_rot,
+	const mln_vec(P)& initial_translation);
+
+    template <typename P, typename F>
+    composed< rotation<P::dim,float>,translation<P::dim,float> >
+    icp(const p_array<P>& data_P,
+	const p_array<P>& model_X,
+	const F& closest_point);
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P, typename C, typename T>
+    /// Closest point functor based on map distance.
+    template <typename P>
+    class cp_with_map_t
+    {
+      typedef mln_image_from_grid(mln_grid(P), P) I;
+      typedef mln_ch_value(I, P) cp_ima_t;
+
+    public:
+
+      cp_with_map_t(const p_array<P>& model_X)
+      {
+	box3d box = geom::bbox(model_X);
+	box.enlarge(50);
+
+	typedef mln_ch_value(I, bool) model_t;
+	model_t model(box);
+	data::fill(model, false);
+	data::fill((model | model_X).rw(), true);
+
+	transform::internal::closest_point_functor<I> f;
+	typedef mln_ch_value(I,value::int_u16) dmap_t;
+	dmap_t dmap_X = canvas::distance_geodesic(model, c6(),
+						  mln_max(value::int_u16),
+						  f);
+
+	cp_ima_ = f.cp_ima;
+      }
+
+      mln_site(I) operator()(const mln_site(I)& p) const
+      {
+	return cp_ima_(p);
+      }
+
+    private:
+      cp_ima_t cp_ima_;
+    };
+
+
+    /// Closest point functor based on map distance.
+    template <typename P>
+    class basic_closest_point
+    {
+      typedef mln_image_from_grid(mln_grid(P), P) I;
+      typedef p_array<P> X_t;
+
+    public:
+
+      basic_closest_point(const p_array<P>& X)
+	: X_(X)
+      {
+      }
+
+      float
+      l2_distance(const vec3d_f& vec1, const vec3d_f& vec2) const
+      {
+	typedef float D;
+	D d = 0;
+	for (unsigned i = 0; i < 3; ++i)
+	  {
+	    D sqr_v1_v2 = static_cast<D>(mln::math::sqr(vec1[i] - vec2[i]));
+	    d = static_cast<D>(d + sqr_v1_v2);
+	  }
+	return d;
+      }
+
+      mln_site(I) operator()(const vec3d_f& v) const
+      {
+	vec3d_f best_x = convert::to<vec3d_f>(X_[0].to_vec());
+
+	float best_d = l2_distance(v, best_x);
+	mln_piter(X_t) X_i(X_);
+	for_all(X_i)
+	{
+	  float d = l2_distance(v, convert::to<vec3d_f>(X_i));
+	  if (d < best_d)
+	  {
+	    best_d = d;
+	    best_x = X_i.to_vec();
+	  }
+	}
+	return best_x;
+      }
+
+    private:
+	const p_array<P>& X_;
+    };
+
+
+    template <typename P, typename F>
     inline
     float
     compute_d_k(const p_array<P>& data_P,
-		const C& cp_X,
-		const T& qk,
-		const T& qk_next)
+		const F& closest_point,
+		const algebra::quat& qR,
+		const algebra::quat& qR_old,
+		const vec3d_f& qT,
+		const vec3d_f& qT_old)
     {
-      float f = 0.f;
+      accu::rms<vec3d_f, float> accu;
       mln_piter(p_array<P>) p(data_P);
       for_all(p)
       {
 	// yk_i - pk+1_i
-        f += norm::l2(cp_X(qk(p.to_site().to_vec())).to_vec() - qk_next(p.to_site().to_vec()));
+	vec3d_f Pk_i = qR_old.rotate(p.to_vec()) + qT_old;
+	vec3d_f Pk_1_i = qR.rotate(p.to_vec()) + qT;
+        accu.take(closest_point(Pk_i).to_vec() - Pk_1_i);
       }
-      return f / data_P.nsites();
+      return accu.to_result();
     }
 
-    template <typename P, typename C, typename T>
+    template <typename P, typename F>
     inline
     float
     compute_e_k(const p_array<P>& data_P,
-		const C& cp_X,
-		const T& qk)
+		const F& closest_point,
+		const algebra::quat& qR,
+		const vec3d_f& qT)
     {
-      float f = 0.f;
+      accu::rms<vec3d_f, float> accu;
       mln_piter(p_array<P>) p(data_P);
       for_all(p)
       {
 	// yk_i - pk_i
-        f += norm::l2(cp_X(qk(p.to_site().to_vec())).to_vec() - qk(p.to_site().to_vec()));
+	vec3d_f Pk_i = qR.rotate(p.to_vec()) + qT;
+        accu.take(closest_point(Pk_i).to_vec() - Pk_i);
       }
-      return f / data_P.nsites();
+      return accu.to_result();
     }
 
 
-    template <typename P, typename T>
-    fun::x2x::rotation<3u, float>
+    /// FIXME: work only for 3d images.
+    template <typename P, typename F>
+    algebra::quat
     get_rot(const p_array<P>& data_P,
-            const algebra::vec<3u,float>& mu_P,
-            const algebra::vec<3u,float>& mu_Yk,
-	    const T& qk)
+            const vec3d_f& mu_P,
+            const vec3d_f& mu_Yk,
+	    const F& closest_point,
+	    const algebra::quat& qR,
+	    const vec3d_f& qT)
     {
-      // FIXME: Make use of a cross_covariance accu (maybe not because of map(ck[i]))
+      /// Mk: cross-covariance matrix.
       algebra::mat<3u,3u,float> Mk;
       mln_piter(p_array<P>) p(data_P);
+
+      // FIXME: could we use an accu?
       for_all(p)
       {
-	algebra::vec<3u,float> P_i  = p.to_site().to_vec();
-	algebra::vec<3u,float> Yk_i = qk(p.to_site().to_vec());
+	vec3d_f P_i  = p.to_vec();
+	vec3d_f Pk_i = qR.rotate(p.to_vec()) + qT;
+	vec3d_f Yk_i = closest_point(Pk_i).to_vec();
 	Mk += make::mat(P_i - mu_P) * trans(make::mat(Yk_i - mu_Yk));
       }
       Mk /= data_P.nsites();
 
-      algebra::vec<3u,float> A;
+      vec3d_f A;
       A[0] = Mk(1,2) - Mk(2,1);
       A[1] = Mk(2,0) - Mk(0,2);
       A[2] = Mk(0,1) - Mk(1,0);
@@ -127,11 +258,11 @@ namespace mln
       float t = tr(Mk);
 
       Qk(0,0) = t;
-      for (int i = 1; i < 4; i++)
+      for (int i = 1; i < 4; ++i)
       {
         Qk(i,0) = A[i - 1];
         Qk(0,i) = A[i - 1];
-        for (int j = 1; j < 4; j++)
+        for (int j = 1; j < 4; ++j)
           if (i == j)
             Qk(i,j) = 2 * Mk(i - 1,i - 1) - t;
       }
@@ -145,80 +276,115 @@ namespace mln
       Qk(2,3) = Mk(1,2) + Mk(2,1);
       Qk(3,2) = Mk(1,2) + Mk(2,1);
 
-      algebra::quat qR = math::jacobi(Qk);
-
-      return fun::x2x::rotation<3u, float>(qR);
+      return mln::math::jacobi(Qk);
     }
 
 
-
-    template <typename P, typename C, typename T>
-    T
-    get_transformation(const p_array<P>& data_P,
-		       const algebra::vec<P::dim,float>& mu_P,
-		       const C& cp_X,
-		       const T& qk)
+    // Compute mu_Yk, mass center of Yk.
+    template <typename P, typename F>
+    inline
+    vec3d_f
+    get_mu_yk(const p_array<P>& data_P,
+	      const F& closest_point,
+	      const algebra::quat& qR,
+	      const vec3d_f& qT)
     {
-      algebra::vec<P::dim,float> mu_Yk;
+      accu::center<P,vec3d_f> accu;
 
-      // Compute mu_Yk, mass center of Yk.
       mln_piter(p_array<P>) p(data_P);
       for_all(p)
-        mu_Yk += cp_X(qk(p.to_site().to_vec())).to_vec();
-      mu_Yk /= data_P.nsites();
-
-      // qR
-      rotation<P::dim, float> tqR = get_rot(data_P, mu_P, mu_Yk, qk);
-
-      // qT
-      const algebra::vec<P::dim,float> qT = mu_Yk - tqR(mu_P);
-      translation<P::dim, float> tqT(qT);
-
-      return compose(tqR, tqT);
+      {
+	vec3d_f Pk_i = qR.rotate(p.to_vec()) + qT;
+	accu.take(closest_point(Pk_i).to_vec());
+      }
+      return accu.to_result();
     }
 
 
-    template <typename D, typename M, typename T>
+    template <typename P, typename F>
     inline
-    void
-    icp(const Image<D>& data, const Image<M>& model_X, T& qk)
+    composed< rotation<P::dim,float>,translation<P::dim,float> >
+    icp(const p_array<P>& data_P,
+	const p_array<P>& model_X,
+	const F& closest_point,
+	const algebra::quat& initial_rot,
+	const mln_vec(P)& initial_translation)
     {
       trace::entering("registration::icp");
 
-      typedef mln_psite(M) P;
+      mln_precondition(P::dim == 3);
+      mln_precondition(!data_P.is_empty());
+      mln_precondition(!model_X.is_empty());
+      mln_precondition(!initial_rot.is_null());
+
       typedef p_array<P> cloud_t;
 
-      cloud_t data_P = convert::to<cloud_t>(exact(data));
+      vec3d_f mu_P = set::compute(accu::center<P,vec3d_f>(), data_P);
 
-      // Compute distance map and closest point image.
-      transform::internal::closest_point_functor<M> f;
-      typedef mln_ch_value(M,value::int_u16) I;
-      I dmap_X = canvas::distance_geodesic(model_X, c6(),
-					   mln_max(value::int_u16), f);
-
-      const mln_ch_value(M, P)& cp_X = f.cp_ima;
-
-      algebra::vec<P::dim,float> mu_P = set::compute(accu::meta::center(),
-						     exact(data).domain()).to_vec();
-
-      float d_k_prev = 0, d_k = mln_max(float);
-      float e_k_prev = 0, e_k = mln_max(float);
+      vec3d_f qT_old, qT = initial_translation;
+      algebra::quat qR_old, qR = initial_rot;
+      float ek, ek_old = mln_max(float);
+      float dk, dk_old = mln_max(float);
+      unsigned k = 0;
       do
       {
-	d_k_prev = d_k;
-	e_k_prev = e_k;
+	qT_old = qT;
+	qR_old = qR;
 
-	//compute qk
-	T qk_next = get_transformation(data_P, mu_P, cp_X, qk);
+	// Compute error ek = d(Pk,Yk)
+	ek = compute_e_k(data_P, closest_point, qR, qT);
 
-	d_k = compute_d_k(data_P, cp_X, qk, qk_next);
-	std::cout << d_k << std::endl;
-	e_k = compute_e_k(data_P, cp_X, qk);
+      /// Compute transformation
+      ///
+	// mu_Yk - Pk's mass center.
+	vec3d_f mu_Yk = get_mu_yk(data_P, closest_point, qR_old, qT_old);
 
-	qk = qk_next;
-      } while ((d_k_prev - d_k) >= 1e-3);
+	// quaternion qR - rotation
+	qR = get_rot(data_P, mu_P, mu_Yk, closest_point, qR_old, qT_old);
+	vec3d_f tmp = qR.v();
+
+	// vector qT - translation
+	qT = mu_Yk - qR.rotate(mu_P);
+      ///
+      /// End of "compute transformation"
+
+	// Distance dk = d(Pk+1, Yk)
+	dk = compute_d_k(data_P, closest_point, qR, qR_old, qT, qT_old);
+
+	// Check property according the related paper.
+	mln_assertion(0 <= dk);
+	mln_assertion(dk <= ek);
+	mln_assertion(ek <= dk_old);
+	mln_assertion(dk_old <= ek_old);
+
+	// Backing up results.
+	dk_old = dk;
+	ek_old = ek;
+
+	++k;
+
+      } while ((k < 3)
+	  || norm::l2((qT - qT_old)) + norm::l2((qR - qR_old).to_vec()) > 1e-5);
+
+      typedef rotation<3u,float> rot_t;
+      rot_t tqR(qR);
+      typedef translation<3u,float> trans_t;
+      trans_t tqT(qT);
+      composed<rot_t,trans_t> result(tqR, tqT);
 
       trace::exiting("registration::icp");
+      return result;
+    }
+
+    template <typename P, typename F>
+    inline
+    composed< rotation<P::dim,float>,translation<P::dim,float> >
+    icp(const p_array<P>& data_P,
+	const p_array<P>& model_X,
+	const F& closest_point)
+    {
+      return icp(data_P, model_X, closest_point,
+		 algebra::quat(1,0,0,0), literal::zero);
     }
 
 # endif // ! MLN_INCLUDE_ONLY

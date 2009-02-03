@@ -1,5 +1,11 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Update new version of ICP.
+
+	* mln/registration/icp2.hh: Make it work and make it more generic.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix distribution.
 
 	* headers.mk: add mln/io/cloud/all.hh.
