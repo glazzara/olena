@@ -3,11 +3,11 @@
 include $(top_srcdir)/milena/tests/tests.mk
 
 SUBDIRS =					\
+  dump						\
   fits						\
   off						\
   pbm						\
   pfm						\
   pgm						\
   pnm						\
-  ppm 						\
-  raw
+  ppm

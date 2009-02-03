@@ -53,7 +53,6 @@ namespace mln
 # include <mln/io/pgm/all.hh>
 # include <mln/io/pnm/all.hh>
 # include <mln/io/ppm/all.hh>
-# include <mln/io/raw/all.hh>
 # include <mln/io/txt/all.hh>
 //# include <mln/io/fits/all.hh>
 //# include <mln/io/off/all.hh>

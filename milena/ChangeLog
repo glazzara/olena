@@ -1,5 +1,13 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have I/O-related code compile again.
+
+	* mln/io/all.hh: Remove spurious inclusion of mln/io/raw/all.hh.
+	* tests/io/Makefile.am (SUBDIRS): Add dump.
+	Remove raw.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve the portability of the generation of the tutorial.
 
 	* doc/tutorial/Makefile.am (regen-dist): New (phony) target.
