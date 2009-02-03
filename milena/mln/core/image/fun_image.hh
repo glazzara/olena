@@ -1,5 +1,5 @@
-// Copyright (C) 2007, 2008 EPITA Research and Development Laboratory
-// (LRDE)
+// Copyright (C) 2007, 2008, 2009 EPITA Research and Development
+// Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -53,7 +53,7 @@ namespace mln
     template <typename F, typename I>
     struct data< fun_image<F,I> >
     {
-      data( I& ima);
+      data(I& ima);
       I& ima_;
     };
 
@@ -110,6 +110,9 @@ namespace mln
     typedef fun_image< tag::value_<mln_result(F)>, tag::image_<I> > skeleton;
 
     /// Constructor.
+    fun_image();
+
+    /// Constructor.
     fun_image(Image<I>& ima);
 
     /// Initialize an empty image.
@@ -145,10 +148,17 @@ namespace mln
 
   template <typename F, typename I>
   inline
+  fun_image<F,I>::fun_image()
+  {
+    this->data_ = 0;
+  }
+
+
+  template <typename F, typename I>
+  inline
   fun_image<F,I>::fun_image(Image<I>& ima)
   {
-    mln_precondition(exact(ima).is_valid());
-    this->data_ = new internal::data< fun_image<F,I> >(exact(ima));
+    init_(ima);
   }
 
 

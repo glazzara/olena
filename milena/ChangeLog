@@ -1,5 +1,12 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add default constructor to fun_image.
+
+	* mln/core/image/fun_image.hh: add default constructor and refactor
+	initialization.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix step2 in tutorial.
 
 	* doc/tutorial/figures/tuto1_first_image-1.pbm,
