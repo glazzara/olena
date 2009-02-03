@@ -171,8 +171,6 @@ namespace mln
 	  level_functor<I> f(input, val);
 	  mln_ch_value(I, L) output = canvas::labeling(input, nbh, f, nlabels);
 
-	  // FIXME: Handle canvas status.
-
 	  trace::exiting("labeling::impl::generic::level");
 	  return output;
 	}

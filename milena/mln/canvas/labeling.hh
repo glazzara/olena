@@ -124,7 +124,6 @@ namespace mln
 
 	  // Output.
 	  mln_ch_value(I, L) output;
-	  bool status;
 
 	  // Initialization.
 	  {
@@ -181,7 +180,7 @@ namespace mln
 		      {
 			if (nlabels == mln_max(L))
 			  {
-			    status = false;
+			    trace::warning("labeling aborted!");
 			    return output;
 			  }
 			output(p) = ++nlabels;
@@ -190,7 +189,6 @@ namespace mln
 		else
 		  output(p) = output(parent(p));
 	      }
-	    status = true;
 	  }
 
 	  trace::exiting("canvas::impl::generic::labeling");

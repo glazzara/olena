@@ -86,7 +86,7 @@ namespace mln
 
       namespace generic
       {
-	
+
 	template <typename A, typename I>
 	mln_result(A)
 	compute(const Accumulator<A>&, const Image<I>& input_)
@@ -106,7 +106,7 @@ namespace mln
 	}
 
       } // end of namespace mln::accu::impl::generic
-      
+
     } // end of namespace mln::accu::impl
 
 

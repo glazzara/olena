@@ -31,6 +31,7 @@
 /// \file mln/io/raw/save.hh
 ///
 /// Save a Milena image by dumping its data to a file.
+/// \todo handle endianness.
 
 # include <iostream>
 # include <fstream>
@@ -82,6 +83,7 @@ namespace mln
         inline
         void save_data(I& ima, std::ofstream& file)
 	{
+	  // Handle padding.
 	  unsigned data_size = sizeof (mln_value(I)) + sizeof (mln_value(I)) % 2;
 
 	  mln_box_runstart_piter(I) p(ima.domain());

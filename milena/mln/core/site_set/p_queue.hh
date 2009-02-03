@@ -114,7 +114,7 @@ namespace mln
     /// Push a site \p p in the queue.
     void push(const P& p);
 
-    /// Insertion element associated type. 
+    /// Insertion element associated type.
     typedef P i_element;
 
     /// Insert a site \p p (equivalent as 'push').

@@ -181,6 +181,8 @@ mln/fun/p2b/all.hh \
 mln/fun/p2b/has.hh \
 mln/fun/p2b/big_chess.hh \
 mln/fun/p2b/essential.hh \
+mln/fun/p2p/all.hh \
+mln/fun/p2p/translation.hh \
 mln/fun/p2p/mirror.hh \
 mln/fun/x2p/closest_point.hh \
 mln/fun/x2p/all.hh \
@@ -274,6 +276,7 @@ mln/convert/from_to.hh \
 mln/convert/impl/from_value_to_value.hh \
 mln/convert/impl/all.hh \
 mln/convert/impl/from_double_to_value.hh \
+mln/convert/impl/from_site_set_to_image.hh \
 mln/convert/impl/from_image_to_site_set.hh \
 mln/convert/impl/from_float_to_value.hh \
 mln/convert/impl/from_int_to_value.hh \
@@ -397,6 +400,7 @@ mln/accu/line.hh \
 mln/accu/essential.hh \
 mln/accu/max_h.hh \
 mln/level/compare.hh \
+mln/level/sort_offsets.hh \
 mln/level/transform_inplace.hh \
 mln/level/replace.hh \
 mln/level/apply.hh \
@@ -931,6 +935,8 @@ mln/core/image/image_if.hh \
 mln/core/image/hexa.hh \
 mln/core/image/line_graph_elt_neighborhood.hh \
 mln/core/image/extended.hh \
+mln/core/image/p2p_image.hh \
+mln/core/image/slice_image.hh \
 mln/core/image/image2d_h.hh \
 mln/core/image/image2d.hh \
 mln/core/image/ch_piter.hh \
@@ -1035,6 +1041,7 @@ mln/debug/all.hh \
 mln/debug/println_with_border.hh \
 mln/debug/println.spe.hh \
 mln/debug/colorize.hh \
+mln/debug/slices_2d.hh \
 mln/debug/draw_graph.hh \
 mln/debug/put_word.hh \
 mln/debug/quiet.hh \

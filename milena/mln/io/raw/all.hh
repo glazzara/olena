@@ -1,4 +1,4 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,13 +25,12 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_IO_PGM_ALL_HH
-# define MLN_IO_PGM_ALL_HH
+#ifndef MLN_IO_RAW_ALL_HH
+# define MLN_IO_RAW_ALL_HH
 
-/*! \file mln/io/pgm/all.hh
- *
- * \brief File that includes all pgm io materials.
- */
+/// \file mln/io/raw/all.hh
+///
+/// File that includes all raw io materials.
 
 
 namespace mln
@@ -39,13 +38,13 @@ namespace mln
 
   namespace io
   {
-    /// Namespace of pgm input/output handling.
-    namespace pgm {}
+    /// Namespace of raw input/output handling.
+    namespace raw {}
   }
 
 }
 
-# include <mln/io/pgm/load.hh>
-# include <mln/io/pgm/save.hh>
+# include <mln/io/raw/load.hh>
+# include <mln/io/raw/save.hh>
 
-#endif // ! MLN_IO_PGM_ALL_HH
+#endif // ! MLN_IO_RAW_ALL_HH

@@ -45,17 +45,19 @@ namespace mln
   namespace math
   {
 
-    algebra::quat jacobi(algebra::mat < 4, 4, float >a);
+    algebra::quat
+    jacobi(algebra::mat<4u,4u,float> a);
 
 
 # ifndef MLN_INCLUDE_ONLY
 
   // FIXME: nD ?
 #define rotateJacobi(a,i,j,k,l) g=a(i,j);h=a(k,l);a(i,j)=g-s*(h+g*tau); \
-    a(k,l)=h+s*(g-h*tau)
+    a(k,l)=h+s*(g-h*tau);
 
 
-    algebra::quat jacobi(algebra::mat < 4, 4, float >a)
+    algebra::quat
+    jacobi(algebra::mat<4u,4u,float> a)
     {
       float dd, d[4];
       algebra::mat < 4, 4, float >v(literal::zero);
@@ -106,13 +108,13 @@ namespace mln
               for (iq = ip + 1; iq < 4; iq++)
                 {
                   g = 100.0f * std::fabs(a(ip, iq));
-                  if (i > 4 && std::fabs(d[ip]) + g == std::fabs(d[ip])
-                      && std::fabs(d[iq]) + g == std::fabs(d[iq]))
+                  if (i > 4 && (float)(std::fabs(d[ip]) + g) == (float)std::fabs(d[ip])
+                      && (float)(std::fabs(d[iq]) + g) == (float)std::fabs(d[iq]))
                     a(ip, iq) = 0.0f;
                   else if (std::fabs(a(ip, iq)) > tresh)
                     {
                       h = d[iq] - d[ip];
-                      if (std::fabs(h) + g == std::fabs(h)) // unsafe?
+                      if ((float)(std::fabs(h) + g) == (float)std::fabs(h)) // unsafe?
                         t = (a(ip, iq)) / h;
                       else
                         {
@@ -131,14 +133,25 @@ namespace mln
                       d[ip] -= h;
                       d[iq] += h;
                       a(ip, iq) = 0.0;
+
+		      // DO *NOT* remove these semicolons!!
+		      // rotateJacobi is a macro with 4 function calls.
                       for (j = 0; j <= ip - 1; j++)
+		      {
                         rotateJacobi(a, j, ip, j, iq);
+		      }
                       for (j = ip + 1; j <= iq - 1; j++)
+		      {
                         rotateJacobi(a, ip, j, j, iq);
+		      }
                       for (j = iq + 1; j < 4; j++)
+		      {
                         rotateJacobi(a, ip, j, iq, j);
+		      }
                       for (j = 0; j < 4; j++)
+		      {
                         rotateJacobi(v, j, ip, j, iq);
+		      }
                     }
                 }
             }

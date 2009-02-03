@@ -55,6 +55,7 @@ namespace mln
 
     template <typename C, typename E>
     struct subject_impl< const point<grid::cube, C>, E >
+      : subject_point_impl< point<grid::cube, C>, E >
     {
       typedef C coord;
       enum { dim = 3 };

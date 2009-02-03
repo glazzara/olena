@@ -178,6 +178,8 @@ mln_fun_p2b_all \
 mln_fun_p2b_has \
 mln_fun_p2b_big_chess \
 mln_fun_p2b_essential \
+mln_fun_p2p_all \
+mln_fun_p2p_translation \
 mln_fun_p2p_mirror \
 mln_fun_x2p_closest_point \
 mln_fun_x2p_all \
@@ -271,6 +273,7 @@ mln_convert_from_to \
 mln_convert_impl_from_value_to_value \
 mln_convert_impl_all \
 mln_convert_impl_from_double_to_value \
+mln_convert_impl_from_site_set_to_image \
 mln_convert_impl_from_image_to_site_set \
 mln_convert_impl_from_float_to_value \
 mln_convert_impl_from_int_to_value \
@@ -393,6 +396,7 @@ mln_accu_line \
 mln_accu_essential \
 mln_accu_max_h \
 mln_level_compare \
+mln_level_sort_offsets \
 mln_level_transform_inplace \
 mln_level_replace \
 mln_level_apply \
@@ -902,6 +906,8 @@ mln_core_image_image_if \
 mln_core_image_hexa \
 mln_core_image_line_graph_elt_neighborhood \
 mln_core_image_extended \
+mln_core_image_p2p_image \
+mln_core_image_slice_image \
 mln_core_image_image2d_h \
 mln_core_image_image2d \
 mln_core_image_ch_piter \
@@ -999,6 +1005,7 @@ mln_debug_iota \
 mln_debug_all \
 mln_debug_println_with_border \
 mln_debug_colorize \
+mln_debug_slices_2d \
 mln_debug_draw_graph \
 mln_debug_put_word \
 mln_debug_quiet \
@@ -1212,6 +1219,8 @@ mln_fun_p2b_all_SOURCES = mln_fun_p2b_all.cc
 mln_fun_p2b_has_SOURCES = mln_fun_p2b_has.cc
 mln_fun_p2b_big_chess_SOURCES = mln_fun_p2b_big_chess.cc
 mln_fun_p2b_essential_SOURCES = mln_fun_p2b_essential.cc
+mln_fun_p2p_all_SOURCES = mln_fun_p2p_all.cc
+mln_fun_p2p_translation_SOURCES = mln_fun_p2p_translation.cc
 mln_fun_p2p_mirror_SOURCES = mln_fun_p2p_mirror.cc
 mln_fun_x2p_closest_point_SOURCES = mln_fun_x2p_closest_point.cc
 mln_fun_x2p_all_SOURCES = mln_fun_x2p_all.cc
@@ -1305,6 +1314,7 @@ mln_convert_from_to_SOURCES = mln_convert_from_to.cc
 mln_convert_impl_from_value_to_value_SOURCES = mln_convert_impl_from_value_to_value.cc
 mln_convert_impl_all_SOURCES = mln_convert_impl_all.cc
 mln_convert_impl_from_double_to_value_SOURCES = mln_convert_impl_from_double_to_value.cc
+mln_convert_impl_from_site_set_to_image_SOURCES = mln_convert_impl_from_site_set_to_image.cc
 mln_convert_impl_from_image_to_site_set_SOURCES = mln_convert_impl_from_image_to_site_set.cc
 mln_convert_impl_from_float_to_value_SOURCES = mln_convert_impl_from_float_to_value.cc
 mln_convert_impl_from_int_to_value_SOURCES = mln_convert_impl_from_int_to_value.cc
@@ -1427,6 +1437,7 @@ mln_accu_line_SOURCES = mln_accu_line.cc
 mln_accu_essential_SOURCES = mln_accu_essential.cc
 mln_accu_max_h_SOURCES = mln_accu_max_h.cc
 mln_level_compare_SOURCES = mln_level_compare.cc
+mln_level_sort_offsets_SOURCES = mln_level_sort_offsets.cc
 mln_level_transform_inplace_SOURCES = mln_level_transform_inplace.cc
 mln_level_replace_SOURCES = mln_level_replace.cc
 mln_level_apply_SOURCES = mln_level_apply.cc
@@ -1936,6 +1947,8 @@ mln_core_image_image_if_SOURCES = mln_core_image_image_if.cc
 mln_core_image_hexa_SOURCES = mln_core_image_hexa.cc
 mln_core_image_line_graph_elt_neighborhood_SOURCES = mln_core_image_line_graph_elt_neighborhood.cc
 mln_core_image_extended_SOURCES = mln_core_image_extended.cc
+mln_core_image_p2p_image_SOURCES = mln_core_image_p2p_image.cc
+mln_core_image_slice_image_SOURCES = mln_core_image_slice_image.cc
 mln_core_image_image2d_h_SOURCES = mln_core_image_image2d_h.cc
 mln_core_image_image2d_SOURCES = mln_core_image_image2d.cc
 mln_core_image_ch_piter_SOURCES = mln_core_image_ch_piter.cc
@@ -2033,6 +2046,7 @@ mln_debug_iota_SOURCES = mln_debug_iota.cc
 mln_debug_all_SOURCES = mln_debug_all.cc
 mln_debug_println_with_border_SOURCES = mln_debug_println_with_border.cc
 mln_debug_colorize_SOURCES = mln_debug_colorize.cc
+mln_debug_slices_2d_SOURCES = mln_debug_slices_2d.cc
 mln_debug_draw_graph_SOURCES = mln_debug_draw_graph.cc
 mln_debug_put_word_SOURCES = mln_debug_put_word.cc
 mln_debug_quiet_SOURCES = mln_debug_quiet.cc

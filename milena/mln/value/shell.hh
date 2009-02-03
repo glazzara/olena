@@ -115,7 +115,7 @@ namespace mln
     // Ctor
 
     template <typename F, typename I>
-    shell<F,I>::shell(Image<I> &ima, const mln_site(I) &s)
+    shell<F,I>::shell(Image<I>& ima, const mln_site(I)& s)
       : ima_(exact(ima)), s_(s), v_(F()(exact(ima)(s)))
     {
     }

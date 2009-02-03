@@ -1,5 +1,41 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Various small fixes.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/algebra/quat.hh: add a new overload of rotate().
+
+	* mln/canvas/labeling/level.hh,
+	* mln/canvas/labeling.hh: handle labeling abortion with
+	trace::warning.
+
+	* mln/core/internal/graph_psite_base.hh: remove a useless forward
+	declaration.
+	
+	* mln/io/raw/all.hh: Rewrite, completely wrong...
+
+	* mln/accu/compute.hh,
+	* mln/core/image/tr_image.hh,
+	* mln/core/site_set/p_queue.hh,
+	* mln/io/raw/load.hh,
+	* mln/io/raw/save.hh,
+	* mln/value/shell.hh: update doc.
+
+	* mln/math/jacobi.hh: add missing casts and fix a bug with macros and
+	missing semicolons in for loops.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_convert_impl_from_site_set_to_image.cc,
+	* tests/unit_test/mln_core_image_p2p_image.cc,
+	* tests/unit_test/mln_core_image_slice_image.cc,
+	* tests/unit_test/mln_debug_slices_2d.cc,
+	* tests/unit_test/mln_fun_p2p_all.cc,
+	* tests/unit_test/mln_fun_p2p_translation.cc,
+	* tests/unit_test/mln_level_sort_offsets.cc: add new unit tests.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add a new overload of make::image3d.
 
 	* mln/make/image3d.hh: create an image3d from a single image.

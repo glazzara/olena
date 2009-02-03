@@ -1,4 +1,5 @@
-// Copyright (C) 2007 EPITA Research and Development Laboratory
+// Copyright (C) 2007, 2009 EPITA Research and Development Laboratory
+// (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -28,12 +29,10 @@
 #ifndef MLN_CORE_IMAGE_TR_IMAGE_HH
 # define MLN_CORE_IMAGE_TR_IMAGE_HH
 
-/*! \file mln/core/image/tr_image.hh
- *
- *  \brief Definition of the morpher mln::tr_image presenting an image
- *  through a (bijective) transformation.
- *
- */
+/// \file mln/core/image/tr_image.hh
+///
+/// Definition of the morpher mln::tr_image presenting an image
+/// through a (bijective) transformation.
 
 # include <cmath>
 
@@ -41,11 +40,10 @@
 # include <mln/algebra/vec.hh>
 # include <mln/value/set.hh>
 
-
 namespace mln
 {
 
-  // Fwd decl.
+  // Forward declaration.
   template <typename S, typename I, typename T> struct tr_image;
 
   namespace internal
@@ -78,10 +76,8 @@ namespace mln
 
   } // end of namespace mln::trait
 
-  /*! \brief Morpher that makes an image become transformed by a given
-   *  transformation.
-   *
-   */
+  /// Morpher that makes an image become transformed by a given
+  /// transformation.
   template <typename S, typename I, typename T>
   struct tr_image :
     public mln::internal::image_identity< I, mln_pset(I), tr_image<S,I,T> >

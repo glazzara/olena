@@ -39,10 +39,6 @@
 namespace mln
 {
 
-  // Forward declaration.
-  template <typename G, typename F> class p_vertices;
-
-
   namespace internal
   {
 

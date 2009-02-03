@@ -32,6 +32,8 @@
 /// \file mln/algebra/quat.hh
 ///
 /// Define a class for quaternion algebra values.
+///
+/// \todo Inline computations in rotate routine.
 
 # include <cmath>
 
@@ -194,8 +196,10 @@ namespace mln
       quat& set_unit();
 
       /// Rotate using quaternion definition of a rotation
-      template <unsigned n>
-      algebra::vec<n,float> rotate(const algebra::vec<n,float>& v);
+      template <unsigned n, typename T>
+      algebra::vec<n,float> rotate(const algebra::vec<n,T>& v) const;
+
+      quat rotate(const quat& q) const;
 
       /// Transform into unit quaternion.
       template <typename T>
@@ -255,7 +259,6 @@ namespace mln
     quat slerp_4(const quat& p, const quat& q, float h);
 
     quat slerp_5(const quat& p, const quat& q, float h);
-
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -482,13 +485,23 @@ namespace mln
       set_unit(theta(), uv);
     }
 
-    template <unsigned n>
+    template <unsigned n, typename T>
     inline
     algebra::vec<n,float>
-    quat::rotate(const algebra::vec<n,float>& v)
+    quat::rotate(const algebra::vec<n,T>& v) const
     {
+      mln_precondition(is_unit());
       return ((*this) * quat(0. ,v) * (*this).inv()).v();
     }
+
+    inline
+    quat quat::rotate(const quat& q) const
+    {
+      mln_precondition(this->is_unit());
+      mln_precondition(q.is_pure());
+      return (*this) * q * this->inv();
+    }
+
 
     // Operators.
 
@@ -654,7 +667,6 @@ namespace mln
       assert(about_equal(tmp, slerp(p, q, h)));
       return tmp;
     }
-
 
 # endif // ! MLN_INCLUDE_ONLY
 
