@@ -1,3 +1,4 @@
+#include <mln/registration/icp2.hh>
 #include <mln/essential/2d.hh>
 #include <mln/core/image/image3d.hh>
 #include <mln/binarization/binarization.hh>
@@ -9,8 +10,9 @@
 //#include <mln/registration/multiscale.hh>
 
 #include <mln/essential/3d.hh>
-#include <mln/registration/icp2.hh>
 #include <mln/core/image/slice_image.hh>
+
+#include <mln/io/cloud/load.hh>
 
 struct threshold : mln::Function_p2b<threshold>
 {
@@ -21,6 +23,135 @@ struct threshold : mln::Function_p2b<threshold>
   }
 };
 
+namespace mln
+{
+
+  using namespace fun::x2x;
+
+    template <typename P>
+    struct transf_quat_t
+    {
+      transf_quat_t()
+	: q_(1,0,0,0), t_(literal::zero)
+      {
+      }
+
+
+      inline
+	float epsilon()
+	{
+	  static const float e = 1e-5;
+	  return e;
+	}
+
+      inline
+	bool about_equal(float val1, float val2)
+	{
+	  return fabs(val1 - val2) < epsilon();
+	}
+
+      template <unsigned n>
+	algebra::vec<n,float> rotate(const algebra::quat& q, const algebra::vec<n,float>& p)
+	{
+	  return (q * algebra::quat(0. ,p) * q.inv()).v();
+	}
+
+
+      bool check_rotation(const algebra::h_mat<3,float>& mat, const algebra::quat& q)
+      {
+	srand(time(0));
+	assert(q.is_unit());
+	rotation<3,float> rot(mat);
+
+	algebra::vec<3,float>
+	  tmp = make::vec(rand(), rand(), rand()),
+	      p = tmp / norm::l2(tmp),
+	      p_rot_1 = rotate(q, p),
+	      p_rot_2 = rot(p);
+	return about_equal(norm::l2(p_rot_1 - p_rot_2), 0.f);
+      }
+
+
+      transf_quat_t(const algebra::quat& q, const vec3d_f& t)
+	: q_(q), t_(t)
+      {
+	assert(q.is_unit());
+	float
+	  w = q.to_vec()[0],
+	    x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
+	    y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
+	    z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
+	float data[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+	  xy + zw,  1.f - x2 - z2,  yz - xw,
+	  xz - yw,  yz + xw,  1.f - x2 - y2};
+
+	algebra::h_mat<3,float> tmp = make::h_mat(data);
+	std::cout << tmp << std::endl;
+	// postcondition
+	assert(check_rotation(tmp, q));
+      }
+
+      void
+      set_quat(const algebra::quat& q)
+      {
+	q_ = q;
+      }
+
+
+      void
+      set_trans(const vec3d_f& t)
+      {
+	t_ = t;
+      }
+
+      algebra::vec<P::dim,float>
+      operator()(const algebra::vec<P::dim,float>& v) const
+      {
+	return (q_ * algebra::quat(0., v) * q_.inv()).v() + t_;
+      }
+
+      algebra::quat q_;
+      vec3d_f t_;
+    };
+
+
+    template <typename P>
+    struct transf_mat_t
+    {
+      typedef rotation<P::dim,float> rot_t;
+      typedef translation<P::dim,float> trans_t;
+
+      transf_mat_t() {}
+      transf_mat_t(const algebra::quat& q, const vec3d_f& t)
+	: r_(q), t_(t), c_(r_, t_)
+      {
+      }
+
+      void
+      set_quat(const algebra::quat& q)
+      {
+	r_ = rot_t(q);
+      }
+
+      void
+      set_trans_(const vec3d_f& t)
+      {
+	t_ = trans_t(t);
+      }
+
+      algebra::vec<P::dim,float>
+      operator()(const algebra::vec<P::dim,float>& v) const
+      {
+	return c_(v);
+      }
+
+      rot_t r_;
+      trans_t t_;
+      composed<rot_t, trans_t> c_;
+    };
+
+
+}
 
 template <typename T>
 inline
@@ -106,12 +237,14 @@ get_main_object_shape(const mln::Image<I>& in)
 
   typedef image2d<bool> J;
 
-  threshold f;
-  J in_bw = binarization::binarization(in, f);
-  io::pbm::save(in_bw, "01_in_bw.pbm");
+//  threshold f;
+//  J in_bw = binarization::binarization(in, f);
+//  io::pbm::save(in_bw, "01_in_bw.pbm");
 
-  J ima = keep_largest_component(in_bw);
-  io::pbm::save(in_bw, "02_ima.pbm");
+//  J ima = keep_largest_component(in_bw);
+  J ima = keep_largest_component(in);
+//  io::pbm::save(in_bw, "02_ima.pbm");
+  io::pbm::save(in, "02_ima.pbm");
 
   std::cout << "Compute gradient" << std::endl;
   J ima_grad = morpho::gradient(ima, win_c4p());
@@ -133,36 +266,43 @@ int main(int, char* argv[])
   typedef image2d<rgb8> I;
   typedef image2d<bool> J;
 
-  I in;
-  io::ppm::load(in, argv[1]);
-  J in_grad = get_main_object_shape(in);
+//  I in;
+//  J in;
+//  io::pbm::load(in, argv[1]);
+//  J in_grad = get_main_object_shape(in);
 
-  I ref;
-  io::ppm::load(ref, argv[2]);
-  J ref_grad = get_main_object_shape(ref);
+//  I ref;
+//  J ref;
+//  io::pbm::load(ref, argv[2]);
+//  J ref_grad = get_main_object_shape(ref);
 
-  std::cout << "Computing registration..." << std::endl;
-  J cloud = in_grad | pw::value(in_grad) == true; //FIXME: cannot use pw::image with registration.
-  //  mln_VAR(surface, (ref_grad | pw::value(ref_grad) == true));
-
-
-  //mln_VAR(registration, registration::multiscale(cloud, ref_grad, 5, 3));
   typedef image3d<bool> K;
-  K in_3d = make::image3d(in_grad);
-  K ref_3d = make::image3d(ref_grad);
-  composed< rotation<K::psite::dim, float>, translation<K::psite::dim, float> > qk;
-  registration::icp(in_3d, ref_3d, qk);
 
+  p_array<point3d> in_3d_, ref_3d_;
+  io::cloud::load(in_3d_, argv[1]);
+  io::cloud::load(ref_3d_, argv[2]);
 
-  std::cout << "Build result image" << std::endl;
-  K res;
-  initialize(res, in_3d);
+  std::cout << "* loading data" << std::endl;
+  std::cout << "    igr.cc - in_3d_.nsites = " << in_3d_.nsites() << std::endl;
+  std::cout << "    igr.cc - ref_3d_.nsites = " << ref_3d_.nsites() << std::endl;
+  K in_3d = convert::to<K>(in_3d_);
+  K ref_3d = convert::to<K>(ref_3d_);
+
+  registration::basic_closest_point<point3d> closest_point(ref_3d_);
+  typedef rotation<3u,float> rot_t;
+  typedef translation<3u,float> trans_t;
+  composed<rot_t,trans_t> qk = registration::icp(in_3d_, ref_3d_, closest_point);
+
+  std::cout << "* Build result image" << std::endl;
+  box3d box = geom::bbox(ref_3d);
+  box.enlarge(40);
+  K res(box);
   data::fill(res, false);
 
   mln_VAR(ig, (in_3d | pw::value(in_3d) == true));
   mln_piter_(ig_t) p(ig.domain());
   for_all(p)
-    res(qk(p.to_site().to_vec())) = true;
+    res(qk(p.to_vec())) = true;
 
   io::pbm::save(slice(res,0), "04_registered.pbm");
 }

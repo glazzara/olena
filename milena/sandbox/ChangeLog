@@ -1,3 +1,9 @@
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Update igr's code.
+
+	* lazzara/igr.cc: make use of registration::icp.
+
 2009-02-03  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Update Laurent's cleanup code.
