@@ -959,6 +959,8 @@ mln_io_pfm_save \
 mln_io_raw_load \
 mln_io_raw_all \
 mln_io_raw_save \
+mln_io_cloud_load \
+mln_io_cloud_save \
 mln_io_all \
 mln_io_pbm_load \
 mln_io_pbm_all \

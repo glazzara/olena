@@ -1,5 +1,21 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add io::cloud.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/io/all.hh: include new headers.
+
+	* mln/io/cloud/all.hh,
+	* mln/io/cloud/load.hh,
+	* mln/io/cloud/save.hh: load and save a cloud of points.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_io_cloud_load.cc,
+	* tests/unit_test/mln_io_cloud_save.cc: add new unit tests.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add accu::rms.
 
 	* headers.mk: add new header to distribution.
