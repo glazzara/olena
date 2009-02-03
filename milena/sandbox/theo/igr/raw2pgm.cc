@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     usage(argv);
 
   image3d<int_u8> vol;
-  io::raw::load(vol, argv[1]);
+  io::dump::load(vol, argv[1]);
 
   int_u8 bg = 0;
   image2d<int_u8> ima = debug::slices_2d(vol, 1.f, bg);

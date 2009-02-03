@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
   trace::quiet = false;
 
   image3d<int_u8> vol, grad, clo;
-  io::raw::load(vol, argv[1]);
+  io::dump::load(vol, argv[1]);
 
   grad = morpho::elementary::gradient(vol, c6());
   clo  = morpho::closing_volume(grad, c6(), 666);
@@ -58,5 +58,5 @@ int main(int argc, char* argv[])
   convert::from_to(a, f);
   image3d<int_u8> out = level::transform(wst, f);
 
-  io::raw::save(out, argv[2]);
+  io::dump::save(out, argv[2]);
 }

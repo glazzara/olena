@@ -1,5 +1,13 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Rename io::raw as io::dump in sandbox.
+
+	* sandbox/theo/igr/irm_anat_segm.cc,
+	* sandbox/theo/igr/pgms2raw.cc,
+	* sandbox/theo/igr/raw2pgm.cc: rename here.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Update igr's code.
 
 	* lazzara/igr.cc: make use of registration::icp.

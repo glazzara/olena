@@ -34,5 +34,5 @@ int main(int argc, char* argv[])
       arr.append(ima);
     }
   image3d<int_u8> vol = make::image3d(arr);
-  io::raw::save(vol, argv[1]);
+  io::save(vol, argv[1]);
 }
