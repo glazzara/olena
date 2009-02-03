@@ -1,5 +1,12 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Have I/O-related code compile again (cont.).
+
+	* configure.ac: Configure milena/tests/io/dump/Makefile.
+	Remove spurious configuration of milena/tests/io/raw/Makefile.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Improve bootstrap's portability and usability.
 
 	* bootstrap (run): `set -e' in the subshell.

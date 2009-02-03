@@ -212,6 +212,7 @@ AC_CONFIG_FILES([
     milena/tests/geom/Makefile
     milena/tests/histo/Makefile
     milena/tests/io/Makefile
+      milena/tests/io/dump/Makefile
       milena/tests/io/fits/Makefile
       milena/tests/io/off/Makefile
       milena/tests/io/pbm/Makefile
@@ -219,7 +220,6 @@ AC_CONFIG_FILES([
       milena/tests/io/pgm/Makefile
       milena/tests/io/pnm/Makefile
       milena/tests/io/ppm/Makefile
-      milena/tests/io/raw/Makefile
     milena/tests/labeling/Makefile
     milena/tests/level/Makefile
       milena/tests/level/approx/Makefile
