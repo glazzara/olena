@@ -33,8 +33,8 @@
 ///
 /// Definition of the generic point class mln::point.
 
-
 # include <mln/core/def/coord.hh>
+# include <mln/core/concept/proxy.hh>
 # include <mln/core/concept/gpoint.hh>
 # include <mln/core/internal/coord_impl.hh>
 # include <mln/fun/i2v/all_to.hh>
@@ -202,6 +202,27 @@ namespace mln
     algebra::vec<G::dim, C> coord_;
   };
 
+  namespace internal
+  {
+
+    /// subject_impl specialization (Proxy)
+    /// \{
+
+    template <typename P, typename E>
+    struct subject_point_impl;
+
+    template <typename G, typename C, typename E>
+    struct subject_point_impl< point<G,C>, E >
+    {
+      const typename point<G,C>::vec& to_vec() const;
+
+    private:
+      const E& exact_() const;
+    };
+
+    /// \}
+
+  } // end of namespace mln::internal
 
 
   /// FIXME...
@@ -442,6 +463,26 @@ namespace mln
     return the_;
   }
 
+  namespace internal
+  {
+
+    template <typename G, typename C, typename E>
+    inline
+    const E&
+    subject_point_impl< point<G,C>, E >::exact_() const
+    {
+      return internal::force_exact<const E>(*this);
+    }
+
+    template <typename G, typename C, typename E>
+    inline
+    const typename point<G,C>::vec&
+    subject_point_impl< point<G,C>, E >::to_vec() const
+    {
+      return exact_().get_subject().to_vec();
+    }
+
+  } // end of namespace mln::internal
 
   template <typename G, typename C>
   inline

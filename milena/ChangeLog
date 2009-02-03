@@ -1,4 +1,12 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+	
+	Introduce subject_point_impl.
+
+	* mln/core/point.hh: All Point proxies will inherit from that class
+	whatever the point type is. Subject_impl<point*> inherits from that
+	class too.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	Various small fixes.
 
