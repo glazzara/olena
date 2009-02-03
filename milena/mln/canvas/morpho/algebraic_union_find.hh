@@ -31,7 +31,10 @@
 
 /// \file mln/canvas/morpho/algebraic_union_find.hh
 ///
-/// FIXME: Doc!
+/// \todo: Doc!
+///
+/// \todo Re-activate the fastest version when accumulators are
+/// cleaned-up.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -352,7 +355,8 @@ namespace mln
 				      const Neighborhood<N>& nbh,
 				      F& f)
 	{
-	  return impl::algebraic_union_find_fastest(input, nbh, f);
+	  return impl::generic::algebraic_union_find(input, nbh, f);
+// 	  return impl::algebraic_union_find_fastest(input, nbh, f);
 	}
 
 	template <typename I, typename N, typename F>

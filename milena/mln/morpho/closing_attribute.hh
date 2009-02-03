@@ -36,6 +36,9 @@
 /// \todo How to pass dynamic data (e.g., k of accu::rank) to the routine?
 ///
 /// \todo Add extension::adjust_fill.
+///
+/// \todo Re-activate the fastest version when accumulators are
+/// cleaned-up.
 
 # include <mln/morpho/includes.hh>
 # include <mln/canvas/morpho/algebraic_union_find.hh>
@@ -223,7 +226,8 @@ namespace mln
 				 const Image<I>& input, const Neighborhood<N>& nbh,
 				 mln_result(A) lambda)
       {
-	return impl::closing_attribute_fastest<A>(input, nbh, lambda);
+	return impl::generic::closing_attribute<A>(input, nbh, lambda);
+// 	return impl::closing_attribute_fastest<A>(input, nbh, lambda);
       }
 
       template <typename A, typename I, typename N>

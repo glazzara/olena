@@ -160,11 +160,12 @@ namespace mln
 	  accu::min_max<mln_value(I)> a;
  	  extension::adjust_duplicate(input, nbh);
 
-	  mln_concrete(I) output;
+	  typedef mln_concrete(I) O;
+	  O output;
 	  initialize(output, input);
 
 	  mln_pixter(const I) p_in(input);
-	  mln_pixter(I) p_out(output);
+	  mln_pixter(O) p_out(output);
 	  mln_nixter(const I, N) n(p_in, nbh);
 	  for_all_2(p_in, p_out)
 	    {
