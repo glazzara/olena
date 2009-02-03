@@ -1,5 +1,15 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use Olena-related names in configure.ac.
+
+	* configure.ac: Catch unexpanded macros starting with `OLN_'.
+	s/OLN_PACKAGE_BUGREPORT/MLN_PACKAGE_BUGREPORT/.
+	s/OLN_PACKAGE_NAME/MLN_PACKAGE_NAME/.
+	s/OLN_PACKAGE_STRING/MLN_PACKAGE_STRING/.
+	s/OLN_PACKAGE_VERSION/MLN_PACKAGE_VERSION/.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Make the building of the bundled Trimesh library optional.
 
 	* build-aux/trimesh.m4: New.

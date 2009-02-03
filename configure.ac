@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-m4_pattern_forbid([^MLN_])
+m4_pattern_forbid([^OLN_])
 
 AC_PREREQ([2.61])
 
@@ -18,17 +18,17 @@ AC_CONFIG_FILES([build-aux/Makefile])
 
 # Automake.
 AM_INIT_AUTOMAKE([1.10 foreign check-news dist-bzip2 nostdinc -Wall])
-AC_CONFIG_HEADERS([config.h:config.hin] [milena/mln/version.hh])
 
-# Misc. variables.
-AC_DEFINE_UNQUOTED([MLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
+# Package metadata.
+AC_CONFIG_FILES([milena/mln/version.hh])
+AC_DEFINE_UNQUOTED([OLN_PACKAGE_NAME], ["$PACKAGE_NAME"],
 		   [Package Full name.])
-AC_DEFINE_UNQUOTED([MLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
-                   [Bug report address.])                           
-AC_DEFINE_UNQUOTED([MLN_PACKAGE_STRING], ["$PACKAGE_STRING"], 
-                   [Full name and version.])                        
-AC_DEFINE_UNQUOTED([MLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
-                   [Package Version.])
+AC_DEFINE_UNQUOTED([OLN_PACKAGE_BUGREPORT], ["$PACKAGE_BUGREPORT"],
+		   [Bug report address.])
+AC_DEFINE_UNQUOTED([OLN_PACKAGE_STRING], ["$PACKAGE_STRING"],
+		   [Full name and version.])
+AC_DEFINE_UNQUOTED([OLN_PACKAGE_VERSION], ["$PACKAGE_VERSION"],
+		   [Package Version.])
 
 
 ## --------------------- ##
@@ -152,8 +152,8 @@ AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
 ## Configuration.  ##
 ## --------------- ##
 
-# Ask for config.h.
-#AM_CONFIG_HEADER([config.h])
+# Ask for config.h creation.
+AC_CONFIG_HEADERS([config.h])
 
 # Ask for the Makefile creations.
 AC_CONFIG_FILES([
