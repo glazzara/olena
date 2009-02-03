@@ -1,3 +1,13 @@
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
+	Make the building of the bundled Trimesh library optional.
+
+	* build-aux/trimesh.m4: New.
+	* configure.ac: Invoke OLN_WITH_TRIMESH.
+	(WITH_TRIMESH): New conditional.
+	* external/Makefile.am (SUBDIRS) [!WITH_TRIMESH]: Empty.
+	(SUBDIRS) [WITH_TRIMESH]: Add trimesh.
+
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
 	* configure.ac: Configure milena/tests/convert/impl.

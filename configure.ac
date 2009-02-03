@@ -108,7 +108,11 @@ AM_CONDITIONAL([DARWIN], [echo "$host_os" | grep '^darwin'])
 
 
 # (Bundled) trimesh2 library.
-AC_CONFIG_SUBDIRS([external/trimesh])
+OLN_WITH_TRIMESH
+if test x$with_trimesh = xyes; then
+  AC_CONFIG_SUBDIRS([external/trimesh])
+fi
+AM_CONDITIONAL([WITH_TRIMESH], [test x$with_trimesh = xyes])
 
 # FreeImage library.
 OLN_WITH_FREEIMAGEPLUS
@@ -260,6 +264,7 @@ AC_CONFIG_FILES([
 ## Applications.  ##
 ## -------------- ##
 
+# FIXME: Don't build applications depending on Trimesh if Trimesh is not built.
 # Ask for the creation of applications' Makefiles.
 # FIXME: Should it be achieved through oln.m4 macros, as we did in Olena 0.11?
 # FIXME: ENABLE IT
