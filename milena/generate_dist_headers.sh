@@ -1,5 +1,5 @@
-#/bin/sh
-#
+#! /bin/sh
+
 # Generate milena/headers.mk
 # ------------------------------
 # List all the headers in order to make them part of distribution.
@@ -16,4 +16,3 @@ last_line=`tail -n 1 headers.mk | sed -e 's/\\\//g'` # remove '\' in last line
 sed '$d' < headers.mk > headers.mk.tmp # remove last line
 mv headers.mk.tmp headers.mk
 echo $last_line >> headers.mk # put the cleaned last line back.
-

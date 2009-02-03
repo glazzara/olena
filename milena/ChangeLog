@@ -1,5 +1,9 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* generate_dist_headers.sh (last_line): Fix shebang.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have I/O-related code compile again.
 
 	* mln/io/all.hh: Remove spurious inclusion of mln/io/raw/all.hh.
