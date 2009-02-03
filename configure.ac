@@ -10,7 +10,7 @@ AC_PREREQ([2.61])
 ## Package set up.  ##
 ## ---------------- ##
 
-AC_INIT([Olena], [1.0beta], [olena@lrde.epita.fr], [olena])
+AC_INIT([Olena], [1.0], [olena@lrde.epita.fr], [olena])
 
 # Auxiliary files.
 AC_CONFIG_AUX_DIR([build-aux])
@@ -56,7 +56,7 @@ fi
 
 # FIXME: We might want to write an Autoconf macro to factor this.
 
-# Standard flas for tests.
+# Standard flags for tests.
 AC_ARG_VAR([TESTS_CXXFLAGS])
 # We want no optimization for the tests (it slows down compiling
 # times), and debugging information.
@@ -133,19 +133,18 @@ AM_CONDITIONAL([ENABLE_SWILENA], [test x$with_swilena = xyes])
 # FIXME: Should we still configure these files if ENABLE_SWILENA is
 # false?
 AC_CONFIG_FILES([swilena/Makefile
-                 swilena/python/Makefile])
+		 swilena/python/Makefile])
 
 AC_CONFIG_FILES([swilena/run], [chmod +x swilena/run])
 
 AC_CONFIG_FILES(m4_do([swilena/python/sps],
-	              [:swilena/python/sps-common.in],
-                      [:swilena/python/sps.in]),
-                [chmod +x swilena/python/sps])
+		      [:swilena/python/sps-common.in],
+		      [:swilena/python/sps.in]),
+		[chmod +x swilena/python/sps])
 AC_CONFIG_FILES(m4_do([swilena/python/sps-local],
-                      [:swilena/python/sps-common.in],
-                      [:swilena/python/sps-local.in]),
-                [chmod +x swilena/python/sps-local])
-
+		      [:swilena/python/sps-common.in],
+		      [:swilena/python/sps-local.in]),
+		[chmod +x swilena/python/sps-local])
 
 
 ## --------------- ##
@@ -235,8 +234,8 @@ AC_CONFIG_FILES([
       milena/tests/metal/make/Makefile
       milena/tests/metal/math/Makefile
     milena/tests/morpho/Makefile
-    milena/tests/morpho/elementary/Makefile
-    milena/tests/morpho/tree/Makefile
+      milena/tests/morpho/elementary/Makefile
+      milena/tests/morpho/tree/Makefile
     milena/tests/norm/Makefile
     milena/tests/opt/Makefile
     milena/tests/pw/Makefile

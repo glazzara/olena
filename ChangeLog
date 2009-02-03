@@ -1,5 +1,13 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Aesthetic changes in configure.ac.
+
+	* configure.ac: Set version number to 1.0.
+	Reindent.
+	Typo in comment.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Use Olena-related names in configure.ac.
 
 	* configure.ac: Catch unexpanded macros starting with `OLN_'.
