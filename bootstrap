@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#! /bin/sh
 
 fatal ()
 {
@@ -94,10 +93,10 @@ require ()
 
 # run DIRECTORY COMMAND-LINE
 # --------------------------
-# "set -e" doesn't work for subshells!
 run ()
 {
     (
+        set -e
         stderr "$@"
         cd "$1"
         shift
@@ -113,13 +112,23 @@ run ()
 set -e
 
 # Requirements over bootstrap tools.
-require autoconf 2.59
-require automake 1.9.4
+require autoconf 2.61
+require automake 1.10
+libtoolize=libtoolize
+for l in "$LIBTOOLIZE" glibtoolize libtoolize;
+do
+  if ($l --version) >/dev/null 2>&1; then
+    libtoolize=$l
+    break
+  fi
+done
+export LIBTOOLIZE=$libtoolize
+require $libtoolize 1.5.22
 
 # Generate unit test files.
-run milena/tests/unit_test ./build_unit_test.sh $PWD/milena/mln
+run milena/tests/unit_test ./build_unit_test.sh `pwd`/milena/mln
 
-# Generate milena/dist_headers.mk
+# Generate milena/headers.mk
 run milena ./generate_dist_headers.sh
 
 # Generate lists of files to be part of the distribution

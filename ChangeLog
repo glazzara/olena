@@ -1,5 +1,14 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve bootstrap's portability and usability.
+
+	* bootstrap (run): `set -e' in the subshell.
+	Improve the detection of Libtool.
+	Update version numbers for Autotools.
+	Use `pwd` instead of $PWD.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Aesthetic changes in configure.ac.
 
 	* configure.ac: Set version number to 1.0.
