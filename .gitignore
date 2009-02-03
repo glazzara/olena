@@ -19,6 +19,7 @@ Makefile
 /config.cache*
 /config.h
 /config.h?in*
+/config.hin
 /config.log*
 /config.status*
 /configure
