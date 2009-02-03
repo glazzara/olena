@@ -1,4 +1,5 @@
 #include <mln/essential/2d.hh>
+#include <doc/tutorial/tools/sample_utils.hh>
 int main()
 {
   using namespace mln;
@@ -30,6 +31,6 @@ int main()
   // \}
 
   // \{
-  io::pbm::save(ima, "../figures/tuto1_first_image-1.pbm");
+  doc::pbmsave(ima, "tuto2_first_image");
   // \}
 }

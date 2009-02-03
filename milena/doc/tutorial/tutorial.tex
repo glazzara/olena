@@ -420,27 +420,27 @@ After this step you should know how to:
 First, declare an array of bool which will represent the image grid. Each each
 cell in this grid is a site and each cell contains a value, \val{true} or
 \val{false}.
-\doxycode[1]{tuto1_first_image}
+\doxycode[1]{tuto2_first_image}
 
 From that grid, simply call make::image to get an image initialized with that
 data.
-\doxycode[2]{tuto1_first_image}
+\doxycode[2]{tuto2_first_image}
 This way of initializing an image is the most common one. However, there are
 several other ways described in section \doxyref{imacreate}.
 
 
 To be sure that the data is correctly initialized, it is possible to display the
 image in the standard output using debug::println.
-\doxycode[3]{tuto1_first_image}
+\doxycode[3]{tuto2_first_image}
 Output:
-\doxyoutput{tuto1_first_image}
+\doxyoutput{tuto2_first_image}
 
 Finally, you may want to save the image. Since we use bool as image value, the
 PBM format is the best choice. Therefore, we use io::pbm::save.
-\doxycode[4]{tuto1_first_image}
+\doxycode[4]{tuto2_first_image}
 
 The output image looks like the following:
-\doxyfigure{tuto1_first_image}{3cm}
+\doxyfigure{tuto2_first_image}{3cm}
 
 In this first step we used a boolean image. Many other value types are available
 though. A more detailed description can be found in section

@@ -1,3 +1,15 @@
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Fix step2 in tutorial.
+
+	* doc/tutorial/figures/tuto1_first_image-1.pbm,
+	* doc/tutorial/outputs/tuto1_first_image.txt: remove. Not needed
+	anymore.
+
+	* doc/tutorial/samples/tuto2_first_image.cc: update image saving.
+
+	* doc/tutorial/tutorial.tex: include the right files.
+
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 	
 	Introduce subject_point_impl.
