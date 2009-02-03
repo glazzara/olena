@@ -1,5 +1,9 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	* headers.mk: Regen.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Add a target to regen milena/headers.mk.
 
 	* Makefile.am (regen-dist): New phony target.
