@@ -1,5 +1,11 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Complete the list of configured Makefiles.
+
+	* configure.ac: Configure milena/tests/fun/p2p/Makefile.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Have I/O-related code compile again (cont.).
 
 	* configure.ac: Configure milena/tests/io/dump/Makefile.

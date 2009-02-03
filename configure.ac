@@ -205,6 +205,7 @@ AC_CONFIG_FILES([
     milena/tests/fun/Makefile
       milena/tests/fun/i2v/Makefile
       milena/tests/fun/p2b/Makefile
+      milena/tests/fun/p2p/Makefile
       milena/tests/fun/p2v/Makefile
       milena/tests/fun/v2v/Makefile
       milena/tests/fun/vv2v/Makefile
