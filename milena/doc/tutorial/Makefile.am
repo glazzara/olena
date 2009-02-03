@@ -40,11 +40,25 @@ EXTRA_DIST = 		\
 tutorial.tex 		\
 tutorial.pdf
 
+.PHONY: regen-dist
+regen-dist: $(srcdir)/headers.stamp
 
-include $(top_srcdir)/milena/doc/tutorial/examples/examples.mk
-include $(top_srcdir)/milena/doc/tutorial/figures/figures.mk
-include $(top_srcdir)/milena/doc/tutorial/outputs/outputs.mk
-include $(top_srcdir)/milena/doc/tutorial/samples/samples.mk
+$(srcdir)/examples/examples.mk: $(srcdir)/headers.stamp
+$(srcdir)/figures/figures.mk: $(srcdir)/headers.stamp
+$(srcdir)/outputs/outputs.mk: $(srcdir)/headers.stamp
+$(srcdir)/samples/samples.mk: $(srcdir)/headers.stamp
+
+EXTRA_DIST += $(srcdir)/headers.stamp
+$(srcdir)/headers.stamp: $(srcdir)/generate_dist_files.sh
+	@rm -f $@.tmp
+	@touch $@.tmp
+	cd $(srcdir) && ./generate_dist_files.sh
+	@mv -f $@.tmp $@
+
+include $(srcdir)/examples/examples.mk
+include $(srcdir)/figures/figures.mk
+include $(srcdir)/outputs/outputs.mk
+include $(srcdir)/samples/samples.mk
 
 EXTRA_DIST += 		\
 tools/sample_utils.hh 	\

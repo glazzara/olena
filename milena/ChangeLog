@@ -1,5 +1,29 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve the portability of the generation of the tutorial.
+
+	* doc/tutorial/Makefile.am (regen-dist): New (phony) target.
+	Depend on $(srcdir)/headers.stamp.
+	($(srcdir)/examples/examples.mk)
+	($(srcdir)/figures/figures.mk)
+	($(srcdir)/outputs/outputs.mk)
+	($(srcdir)/samples/samples.mk):
+	New targets.
+	Depend on $(srcdir)/headers.stamp.
+	(EXTRA_DIST): Add $(srcdir)/headers.stamp.
+	($(srcdir)/headers.stamp): New target.
+	Simplify included file names.
+	* doc/tutorial/headers.stamp: New.
+	* doc/tutorial/generate_dist_files.sh (ECHO_N): New.
+	Set to printf.  Use it instead of `echo -n'.
+	* doc/tutorial/examples/examples.mk,
+	* doc/tutorial/figures/figures.mk,
+	* doc/tutorial/outputs/outputs.mk,
+	* doc/tutorial/samples/samples.mk:
+	Regen.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	* headers.mk: Regen.
 
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
