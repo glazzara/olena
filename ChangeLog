@@ -1,3 +1,8 @@
+2009-02-04  Frederic Bour  <bour@lrde.epita.fr>
+
+	[sandbox][fred] Mean morphological accumulator working with.
+	* milena/sandbox/fred/accuprops.cc: New.
+
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
 	Typo: s/splitted/split/.
