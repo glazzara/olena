@@ -185,6 +185,7 @@ AC_CONFIG_FILES([
       milena/tests/canvas/browsing/Makefile
       milena/tests/canvas/morpho/Makefile
     milena/tests/convert/Makefile
+    milena/tests/convert/impl/Makefile
     milena/tests/core/Makefile
       milena/tests/core/alias/Makefile
       milena/tests/core/image/Makefile
