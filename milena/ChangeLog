@@ -1,5 +1,43 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add make::h_mat.
+
+	* headers.mk: add new header to distribution.
+
+	* mln/make/h_mat.hh: create a h_mat from a C-style array.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_make_h_mat.cc: add unit test.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
+	Add core/alias/all.hh and alias/vec3d.hh.
+
+	* doc/tutorial/examples/examples.mk
+	* doc/tutorial/figures/figures.mk
+	* doc/tutorial/outputs/outputs.mk
+	* doc/tutorial/samples/samples.mk: Update generated files.
+
+	* headers.mk: add new header to distribution.
+
+	* mln/core/alias/all.hh: new header.
+
+	* mln/core/alias/vec3d.hh: new aliases for 3d algebra::vec.
+
+	* mln/core/alias/box2d.hh,
+	* mln/core/alias/box3d.hh: update comments.
+
+	* mln/core/all.hh: include alias/all.hh.
+
+	* mln/essential/3d.hh: add image3d.hh and vec3d.hh.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_core_alias_all.cc,
+	* tests/unit_test/mln_core_alias_vec3d.cc,
+	* tests/unit_test/mln_make_image3d.cc: add new unit test files.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Fix tutorial generation.
 
 	* doc/tutorial/generate_dist_files.sh: dot not include current

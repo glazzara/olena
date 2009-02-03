@@ -148,6 +148,7 @@ mln/make/w_window2d_int.hh \
 mln/make/box1d.hh \
 mln/make/voronoi.hh \
 mln/make/box2d.hh \
+mln/make/h_mat.hh \
 mln/make/w_window2d.hh \
 mln/make/box3d.hh \
 mln/make/relabelfun.hh \

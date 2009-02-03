@@ -145,6 +145,7 @@ mln_make_w_window2d_int \
 mln_make_box1d \
 mln_make_voronoi \
 mln_make_box2d \
+mln_make_h_mat \
 mln_make_w_window2d \
 mln_make_box3d \
 mln_make_relabelfun \
