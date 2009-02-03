@@ -366,6 +366,7 @@ mln/accu/transform_snake.hh \
 mln/accu/rank_high_quant.hh \
 mln/accu/count.hh \
 mln/accu/median_h.hh \
+mln/accu/rms.hh \
 mln/accu/all.hh \
 mln/accu/land_basic.hh \
 mln/accu/p.hh \

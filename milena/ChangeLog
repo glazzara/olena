@@ -1,5 +1,18 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add accu::rms.
+
+	* headers.mk: add new header to distribution.
+
+	* mln/accu/all.hh: include new header.
+
+	* mln/accu/rms.hh: Compute the root mean square.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_accu_rms.cc: add unit test.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add make::h_mat.
 
 	* headers.mk: add new header to distribution.
@@ -49,7 +62,7 @@
 2009-02-02  Thierry Geraud  <thierry.geraud@lrde.epita.fr>
 
 	Activate fastest version of algebraic union-find.
-
+	
 	* mln/morpho/closing_attribute.hh
 	(closing_attribute_dispatch): Activate for fastest images.
 	* mln/canvas/morpho/algebraic_union_find.hh: Likewise.

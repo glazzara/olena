@@ -362,6 +362,7 @@ mln_accu_transform_snake \
 mln_accu_rank_high_quant \
 mln_accu_count \
 mln_accu_median_h \
+mln_accu_rms \
 mln_accu_all \
 mln_accu_land_basic \
 mln_accu_p \
