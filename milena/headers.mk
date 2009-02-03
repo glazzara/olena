@@ -962,6 +962,7 @@ mln/test/positive.hh \
 mln/test/essential.hh \
 mln/transform/distance_geodesic.hh \
 mln/transform/internal/all.hh \
+mln/transform/internal/closest_point_functor.hh \
 mln/transform/internal/distance_functor.hh \
 mln/transform/internal/influence_zone_functor.hh \
 mln/transform/all.hh \

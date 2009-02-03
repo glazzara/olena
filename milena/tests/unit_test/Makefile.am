@@ -931,6 +931,7 @@ mln_test_positive \
 mln_test_essential \
 mln_transform_distance_geodesic \
 mln_transform_internal_all \
+mln_transform_internal_closest_point_functor \
 mln_transform_internal_distance_functor \
 mln_transform_internal_influence_zone_functor \
 mln_transform_all \
@@ -1164,6 +1165,7 @@ mln_trace_stop_SOURCES = mln_trace_stop.cc
 mln_trace_essential_SOURCES = mln_trace_essential.cc
 mln_make_graph_SOURCES = mln_make_graph.cc
 mln_make_double_neighb2d_SOURCES = mln_make_double_neighb2d.cc
+mln_make_image3d_SOURCES = mln_make_image3d.cc
 mln_make_dpoint2d_h_SOURCES = mln_make_dpoint2d_h.cc
 mln_make_w_window_SOURCES = mln_make_w_window.cc
 mln_make_image_SOURCES = mln_make_image.cc
@@ -1177,6 +1179,7 @@ mln_make_w_window2d_int_SOURCES = mln_make_w_window2d_int.cc
 mln_make_box1d_SOURCES = mln_make_box1d.cc
 mln_make_voronoi_SOURCES = mln_make_voronoi.cc
 mln_make_box2d_SOURCES = mln_make_box2d.cc
+mln_make_h_mat_SOURCES = mln_make_h_mat.cc
 mln_make_w_window2d_SOURCES = mln_make_w_window2d.cc
 mln_make_box3d_SOURCES = mln_make_box3d.cc
 mln_make_relabelfun_SOURCES = mln_make_relabelfun.cc
@@ -1393,6 +1396,7 @@ mln_accu_transform_snake_SOURCES = mln_accu_transform_snake.cc
 mln_accu_rank_high_quant_SOURCES = mln_accu_rank_high_quant.cc
 mln_accu_count_SOURCES = mln_accu_count.cc
 mln_accu_median_h_SOURCES = mln_accu_median_h.cc
+mln_accu_rms_SOURCES = mln_accu_rms.cc
 mln_accu_all_SOURCES = mln_accu_all.cc
 mln_accu_land_basic_SOURCES = mln_accu_land_basic.cc
 mln_accu_p_SOURCES = mln_accu_p.cc
@@ -1824,11 +1828,13 @@ mln_core_alias_p_run2d_SOURCES = mln_core_alias_p_run2d.cc
 mln_core_alias_point3d_SOURCES = mln_core_alias_point3d.cc
 mln_core_alias_neighb3d_SOURCES = mln_core_alias_neighb3d.cc
 mln_core_alias_window3d_SOURCES = mln_core_alias_window3d.cc
+mln_core_alias_all_SOURCES = mln_core_alias_all.cc
 mln_core_alias_neighb2d_SOURCES = mln_core_alias_neighb2d.cc
 mln_core_alias_complex_image_SOURCES = mln_core_alias_complex_image.cc
 mln_core_alias_w_window1d_float_SOURCES = mln_core_alias_w_window1d_float.cc
 mln_core_alias_neighb1d_SOURCES = mln_core_alias_neighb1d.cc
 mln_core_alias_w_window2d_float_SOURCES = mln_core_alias_w_window2d_float.cc
+mln_core_alias_vec3d_SOURCES = mln_core_alias_vec3d.cc
 mln_core_alias_w_window2d_int_SOURCES = mln_core_alias_w_window2d_int.cc
 mln_core_alias_box1d_SOURCES = mln_core_alias_box1d.cc
 mln_core_alias_box2d_SOURCES = mln_core_alias_box2d.cc
@@ -1959,6 +1965,7 @@ mln_test_positive_SOURCES = mln_test_positive.cc
 mln_test_essential_SOURCES = mln_test_essential.cc
 mln_transform_distance_geodesic_SOURCES = mln_transform_distance_geodesic.cc
 mln_transform_internal_all_SOURCES = mln_transform_internal_all.cc
+mln_transform_internal_closest_point_functor_SOURCES = mln_transform_internal_closest_point_functor.cc
 mln_transform_internal_distance_functor_SOURCES = mln_transform_internal_distance_functor.cc
 mln_transform_internal_influence_zone_functor_SOURCES = mln_transform_internal_influence_zone_functor.cc
 mln_transform_all_SOURCES = mln_transform_all.cc
@@ -1987,6 +1994,8 @@ mln_io_pfm_save_SOURCES = mln_io_pfm_save.cc
 mln_io_raw_load_SOURCES = mln_io_raw_load.cc
 mln_io_raw_all_SOURCES = mln_io_raw_all.cc
 mln_io_raw_save_SOURCES = mln_io_raw_save.cc
+mln_io_cloud_load_SOURCES = mln_io_cloud_load.cc
+mln_io_cloud_save_SOURCES = mln_io_cloud_save.cc
 mln_io_all_SOURCES = mln_io_all.cc
 mln_io_pbm_load_SOURCES = mln_io_pbm_load.cc
 mln_io_pbm_all_SOURCES = mln_io_pbm_all.cc

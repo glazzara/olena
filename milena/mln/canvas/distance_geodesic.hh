@@ -31,6 +31,8 @@
 /// \file mln/canvas/distance_geodesic.hh
 ///
 /// Discrete geodesic distance canvas.
+///
+/// \todo add fast version. Use extension(input) = true and extension(map) = 0.
 
 # include <mln/core/concept/image.hh>
 # include <mln/core/concept/neighborhood.hh>
@@ -85,6 +87,7 @@ namespace mln
 	for_all(p)
 	  if (functor.inqueue_p_wrt_input_p(input(p))) // <-- inqueue_p_wrt_input_p
 	    {
+	      functor.init_p(p);
 	      dmap(p) = 0;
 	      for_all(n)
 		if (input.domain().has(n) &&

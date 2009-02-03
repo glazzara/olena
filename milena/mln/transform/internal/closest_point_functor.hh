@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -25,16 +25,14 @@
 // reasons why the executable file might be covered by the GNU General
 // Public License.
 
-#ifndef MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
-# define MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
+#ifndef MLN_TRANSFORM_INTERNAL_CLOSEST_POINT_FUNCTOR_HH
+# define MLN_TRANSFORM_INTERNAL_CLOSEST_POINT_FUNCTOR_HH
 
-/// \file mln/transform/internal/distance_functor.hh
+/// \file mln/transform/internal/closest_point_functor.hh
 ///
-/// Distance functor.
+/// Closest point functor.
 
 # include <mln/core/macros.hh>
-
-
 
 namespace mln
 {
@@ -46,7 +44,7 @@ namespace mln
     {
 
       template <typename I>
-      struct distance_functor
+      struct closest_point_functor
       {
 	typedef mln_value(I) V;
 	typedef mln_site(I)  P;
@@ -56,6 +54,8 @@ namespace mln
 	void init_p(const P&);
 	bool inqueue_p_wrt_input_n(const V& input_n);
 	void process(const P&, const P&);
+
+	mln_ch_value(I,P) cp_ima;
       };
 
 
@@ -64,14 +64,15 @@ namespace mln
       template <typename I>
       inline
       void
-      distance_functor<I>::init(const I&)
+      closest_point_functor<I>::init(const I& input)
       {
+	initialize(cp_ima, input);
       }
 
       template <typename I>
       inline
       bool
-      distance_functor<I>::inqueue_p_wrt_input_p(const V& input_p)
+      closest_point_functor<I>::inqueue_p_wrt_input_p(const V& input_p)
       {
 	return input_p == true;
       }
@@ -79,22 +80,24 @@ namespace mln
       template <typename I>
       inline
       void
-      distance_functor<I>::init_p(const P&)
+      closest_point_functor<I>::init_p(const P& p)
       {
+	cp_ima(p) = p;
       }
 
       template <typename I>
       inline
       bool
-      distance_functor<I>::inqueue_p_wrt_input_n(const V& input_n)
+      closest_point_functor<I>::inqueue_p_wrt_input_n(const V& input_n)
       {
 	return input_n == false;
       }
 
       template <typename I>
       inline
-      void distance_functor<I>::process(const P&, const P&)
+      void closest_point_functor<I>::process(const P& p, const P& n)
       {
+	cp_ima(n) = p;
       }
 
 # endif // ! MLN_INCLUDE_ONLY
@@ -106,4 +109,4 @@ namespace mln
 } // end of namespace mln
 
 
-#endif // ! MLN_TRANSFORM_INTERNAL_DISTANCE_FUNCTOR_HH
+#endif // ! MLN_TRANSFORM_INTERNAL_CLOSEST_POINT_FUNCTOR_HH

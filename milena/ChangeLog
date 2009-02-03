@@ -1,5 +1,24 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add closest_point_functor.
+
+	* headers.mk: add new headers to distribution.
+
+	* mln/canvas/distance_geodesic.hh: add a call to init_p() in the
+	functor passed as argument.
+
+	* mln/transform/internal/distance_functor.hh: add missing init_p()
+	  member.
+
+	* mln/transform/internal/closest_point_functor.hh: New. Construct an
+	image of closest point.
+	
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_transform_internal_closest_point_functor.cc: add
+	new unit test.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add io::cloud.
 
 	* headers.mk: add new headers to distribution.
