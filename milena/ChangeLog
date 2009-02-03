@@ -1,5 +1,14 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Improve build_unit_test.sh's portability.
+
+	* tests/unit_test/build_unit_test.sh: Simplify argument checking.
+	(ECHO_N): New.  Set to printf.  Use it instead of `echo -n'.
+	Remove only `mln_*.cc' files.
+	Aesthetic changes.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Catch up with names in configure.ac.
 
 	* mln/version.hh.in: Add guards.
