@@ -127,7 +127,6 @@ namespace mln
       unsigned round_up(float f)
       {
 	unsigned n = static_cast<unsigned>(f + 0.499999f);
-	int i;
 	if (n == 0u)
 	  ++n;
 	if (float(n) < f)

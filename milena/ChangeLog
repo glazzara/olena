@@ -1,5 +1,24 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Fix distribution.
+
+	* headers.mk: add mln/io/cloud/all.hh.
+
+	* tests/unit_test/Makefile.am,
+	* tests/unit_test/mln_io_cloud_all.cc: add missing unit test.
+
+	* mln/accu/rms.hh,
+	* mln/convert/impl/from_image_to_site_set.hh,
+	* mln/core/alias/all.hh,
+	* mln/fun/p2p/translation.hh,
+	* mln/trace/exiting.hh,
+	* mln/transform/internal/closest_point_functor.hh: add missing
+	includes.
+	
+	* mln/debug/slices_2d.hh: remove an unused variable.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Improve accu::center.
 
 	* mln/accu/center.hh: Returns a vector instead of a site. The vector

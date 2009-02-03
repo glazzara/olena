@@ -33,6 +33,7 @@
 /// Closest point functor.
 
 # include <mln/core/macros.hh>
+# include <mln/trait/ch_value.hh>
 
 namespace mln
 {

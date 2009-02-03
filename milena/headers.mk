@@ -1001,6 +1001,7 @@ mln/io/raw/load.hh \
 mln/io/raw/all.hh \
 mln/io/raw/save.hh \
 mln/io/cloud/load.hh \
+mln/io/cloud/all.hh \
 mln/io/cloud/save.hh \
 mln/io/all.hh \
 mln/io/pbm/load.hh \

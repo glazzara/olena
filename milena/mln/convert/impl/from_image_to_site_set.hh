@@ -38,6 +38,7 @@
 
 # include <utility>
 # include <mln/core/site_set/p_run.hh>
+# include <mln/core/site_set/p_array.hh>
 # include <mln/metal/converts_to.hh>
 
 

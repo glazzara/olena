@@ -32,35 +32,35 @@
 ///
 /// File that includes all the aliases.
 
-#include <box1d.hh>
-#include <box2d.hh>
-#include <box2d_h.hh>
-#include <box3d.hh>
-#include <complex_geometry.hh>
-#include <complex_image.hh>
-#include <dpoint1d.hh>
-#include <dpoint2d.hh>
-#include <dpoint2d_h.hh>
-#include <dpoint3d.hh>
-#include <neighb1d.hh>
-#include <neighb2d.hh>
-#include <neighb3d.hh>
-#include <p_run2d.hh>
-#include <p_runs2d.hh>
-#include <point1d.hh>
-#include <point2d.hh>
-#include <point2d_h.hh>
-#include <point3d.hh>
-#include <point3df.hh>
-#include <vec3d.hh>
-#include <w_window1d_float.hh>
-#include <w_window1d_int.hh>
-#include <w_window2d_float.hh>
-#include <w_window2d_int.hh>
-#include <w_window3d_float.hh>
-#include <w_window3d_int.hh>
-#include <window1d.hh>
-#include <window2d.hh>
-#include <window3d.hh>
+#include <mln/core/alias/box1d.hh>
+#include <mln/core/alias/box2d.hh>
+#include <mln/core/alias/box2d_h.hh>
+#include <mln/core/alias/box3d.hh>
+#include <mln/core/alias/complex_geometry.hh>
+#include <mln/core/alias/complex_image.hh>
+#include <mln/core/alias/dpoint1d.hh>
+#include <mln/core/alias/dpoint2d.hh>
+#include <mln/core/alias/dpoint2d_h.hh>
+#include <mln/core/alias/dpoint3d.hh>
+#include <mln/core/alias/neighb1d.hh>
+#include <mln/core/alias/neighb2d.hh>
+#include <mln/core/alias/neighb3d.hh>
+#include <mln/core/alias/p_run2d.hh>
+#include <mln/core/alias/p_runs2d.hh>
+#include <mln/core/alias/point1d.hh>
+#include <mln/core/alias/point2d.hh>
+#include <mln/core/alias/point2d_h.hh>
+#include <mln/core/alias/point3d.hh>
+#include <mln/core/alias/point3df.hh>
+#include <mln/core/alias/vec3d.hh>
+#include <mln/core/alias/w_window1d_float.hh>
+#include <mln/core/alias/w_window1d_int.hh>
+#include <mln/core/alias/w_window2d_float.hh>
+#include <mln/core/alias/w_window2d_int.hh>
+#include <mln/core/alias/w_window3d_float.hh>
+#include <mln/core/alias/w_window3d_int.hh>
+#include <mln/core/alias/window1d.hh>
+#include <mln/core/alias/window2d.hh>
+#include <mln/core/alias/window3d.hh>
 
 #endif // ! MLN_CORE_ALIAS_ALL_HH

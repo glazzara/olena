@@ -35,9 +35,10 @@
 
 # include <string>
 # include <iostream>
+# include <stack>
 
+# include <mln/core/contract.hh>
 # include <mln/trace/quiet.hh>
-
 
 namespace mln
 {
@@ -48,6 +49,9 @@ namespace mln
     void exiting(const std::string& scope);
 
 
+    extern std::stack<std::clock_t> start_times;
+    extern std::stack<std::string>  scopes;      // For testing purpose
+                                                 // (entering/exiting scope matching).
 
 # ifndef MLN_INCLUDE_ONLY
 

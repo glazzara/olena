@@ -34,6 +34,7 @@
 
 # include <mln/core/concept/meta_accumulator.hh>
 # include <mln/accu/internal/base.hh>
+# include <mln/math/sqrt.hh>
 
 
 namespace mln

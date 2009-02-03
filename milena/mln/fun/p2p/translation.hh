@@ -34,6 +34,7 @@
 /// FIXME: doc
 
 # include <mln/core/concept/function.hh>
+# include <mln/core/concept/gdpoint.hh>
 
 
 namespace mln
