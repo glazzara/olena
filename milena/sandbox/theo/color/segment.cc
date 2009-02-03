@@ -227,6 +227,13 @@ namespace mln
   }
 
 
+  value::int_u8 L_to_int_u8(unsigned l)
+  {
+    return l == 0 ?
+      0 : // wshed line
+      1 + (l - 1) % 255; // basin
+  }
+
 
 } // mln
 
@@ -297,7 +304,7 @@ int main(int argc, char* argv[])
 
     // Watershed transform.
 
-    typedef value::label_8 L;
+    typedef value::label_16 L;
     L nbasins;
     mln_ch_value_(f_t, L) w = morpho::meyer_wst(g, e2e(), nbasins);
 
@@ -330,7 +337,8 @@ int main(int argc, char* argv[])
 		  w_all);
     }
 
-    io::pgm::save(w_all, "temp_w_all.pgm");
+    io::pgm::save( level::transform(w_all, convert::to_fun(L_to_int_u8)),
+		   "temp_w_all.pgm" );
   }
 
 
