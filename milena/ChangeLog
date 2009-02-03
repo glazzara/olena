@@ -1,5 +1,12 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Check if the rotation is correct.
+
+	* mln/fun/x2x/rotation.hh: add a new check while creating the rotation
+	matrix from a quaternion.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add closest_point_functor.
 
 	* headers.mk: add new headers to distribution.

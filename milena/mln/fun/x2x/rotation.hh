@@ -33,12 +33,15 @@
 ///
 /// Define a rotation function.
 
+# include <cmath>
 # include <mln/core/concept/function.hh>
 # include <mln/fun/internal/x2x_linear_impl.hh>
 # include <mln/algebra/vec.hh>
 # include <mln/algebra/mat.hh>
 # include <mln/algebra/quat.hh>
-# include <cmath>
+# include <mln/make/h_mat.hh>
+
+# include <mln/norm/l2.hh>
 
 namespace mln
 {
@@ -140,6 +143,8 @@ namespace mln
         rotation(float alpha, const algebra::vec<n,float>& axis);
         /// Constructor with quaternion
         rotation(const algebra::quat& q);
+	/// Constructor with h_mat.
+        rotation(const algebra::h_mat<n,C>& m);
 
         using super_::operator();
 	/// Perform the rotation of the given vector.
@@ -152,7 +157,10 @@ namespace mln
 
       protected:
         void update();
+	bool check_rotation(const algebra::quat& q);
 
+
+	/// FIXME: Is it useful?
         float alpha_;
         algebra::vec <n,float> axis_;
       };
@@ -188,12 +196,22 @@ namespace mln
           x = q.to_vec()[1],  x2 = 2*x*x,  xw = 2*x*w,
           y = q.to_vec()[2],  y2 = 2*y*y,  xy = 2*x*y,  yw = 2*y*w,
           z = q.to_vec()[3],  z2 = 2*z*z,  xz = 2*x*z,  yz = 2*y*z,  zw = 2*z*w;
-        float t[16] = {1.f - y2 - z2,  xy - zw,  xz + yw, 0,
-                       xy + zw,  1.f - x2 - z2,  yz - xw, 0,
-                       xz - yw,  yz + xw,  1.f - x2 - y2, 0,
-                       0,              0,              0, 1};
-        this->m_ = make::mat<4,4>(t);
+        float t[9] = {1.f - y2 - z2,  xy - zw,  xz + yw,
+                      xy + zw,  1.f - x2 - z2,  yz - xw,
+                      xz - yw,  yz + xw,  1.f - x2 - y2};
+
+        this->m_ = mln::make::h_mat(t);
+	mln_assertion(check_rotation(q));
       }
+
+
+      template <unsigned n, typename C>
+      inline
+      rotation<n,C>::rotation(const algebra::h_mat<n,C>& m)
+      {
+	this->m_ = m;
+      }
+
 
       template <unsigned n, typename C>
       inline
@@ -203,7 +221,6 @@ namespace mln
 	algebra::mat<n+1,1,C> hmg;
 	algebra::mat<n+1,1,C> tmp;
 	algebra::vec<n,C> res;
-
 	for (unsigned i = 0; i < n; ++i)
 	  hmg(i,0) = v[i];
 	hmg(n,0) = 1;
@@ -249,6 +266,22 @@ namespace mln
       rotation<n,C>::update()
       {
         this->m_ = internal::get_rot_h_mat(alpha_, axis_);
+      }
+
+      template <unsigned n, typename C>
+      inline
+      bool
+      rotation<n,C>::check_rotation(const algebra::quat& q)
+      {
+	srand(time(0));
+	assert(q.is_unit());
+
+	algebra::vec<n,C>
+	  tmp = make::vec(rand(), rand(), rand()),
+	      p = tmp / norm::l2(tmp),
+	      p_rot_1 = q.rotate(p),
+	      p_rot_2 = (*this)(p);
+	return norm::l2(p_rot_1 - p_rot_2) < mln_epsilon(float);
       }
 
 # endif // ! MLN_INCLUDE_ONLY
