@@ -1,4 +1,4 @@
-// Copyright (C) 2008 EPITA Research and Development Laboratory (LRDE)
+// Copyright (C) 2008, 2009 EPITA Research and Development Laboratory (LRDE)
 //
 // This file is part of the Olena Library.  This library is free
 // software; you can redistribute it and/or modify it under the terms
@@ -32,6 +32,7 @@
 ///
 /// Define an accumulator that computes the mass center of a site set.
 
+
 # include <mln/accu/internal/base.hh>
 # include <mln/accu/bbox.hh>
 
@@ -43,11 +44,16 @@ namespace mln
 
 
     /// Generic center accumulator class.
-    template <typename P>
-    struct center : public mln::accu::internal::base< P , center<P> >
+    ///
+    /// \tparam P the type of site.
+    /// \tparam V the type of vector to be used as result.
+    ///		  The default vector type is the one provided by P.
+    template <typename P, typename V = typename P::vec>
+    struct center
+      : public mln::accu::internal::base<V, center<P,V> >
     {
       typedef P argument;
-      typedef P result;
+      typedef V result;
 
       center();
 
@@ -55,18 +61,19 @@ namespace mln
       /// \{
       void init();
       void take(const argument& t);
-      void take(const center<P>& other);
+      void take(const center<P,V>& other);
       /// \}
 
       /// Get the value of the accumulator.
-      P to_result() const;
-      operator P () const;
+      V to_result() const;
+      operator V() const;
+      operator P() const;
 
       /// Check whether this accu is able to return a result.
       bool is_valid() const;
 
     protected:
-      algebra::vec<P::dim, float> center_;
+      V center_;
       unsigned nsites_;
     };
 
@@ -77,10 +84,10 @@ namespace mln
       struct center : public Meta_Accumulator< center >
       {
 
-	template <typename P>
+	template <typename P, typename V>
 	struct with
 	{
-	  typedef accu::center<P> ret;
+	  typedef accu::center<P,V> ret;
 	};
 
       };
@@ -91,58 +98,65 @@ namespace mln
 
 # ifndef MLN_INCLUDE_ONLY
 
-    template <typename P>
+    template <typename P, typename V>
     inline
-    center<P>::center()
+    center<P,V>::center()
     {
       init();
     }
 
-    template <typename P>
+    template <typename P, typename V>
     inline
     void
-    center<P>::init()
+    center<P,V>::init()
     {
       center_ = literal::zero;
       nsites_ = 0;
     }
 
-    template <typename P>
+    template <typename P, typename V>
     inline
-    void center<P>::take(const argument& t)
+    void center<P,V>::take(const argument& t)
     {
       center_ += t.to_vec();
       ++nsites_;
     }
 
-    template <typename P>
+    template <typename P, typename V>
     inline
     void
-    center<P>::take(const center<P>& other)
+    center<P,V>::take(const center<P,V>& other)
     {
       center_ += other.center_;
       nsites_ += other.nsites_;
     }
 
-    template <typename P>
+    template <typename P, typename V>
     inline
-    P
-    center<P>::to_result() const
+    V
+    center<P,V>::to_result() const
     {
-      return P(center_ / nsites_);
+      return center_ / nsites_;
     }
 
-    template <typename P>
+    template <typename P, typename V>
     inline
-    center<P>::operator P() const
+    center<P,V>::operator V() const
     {
       return to_result();
     }
 
-    template <typename P>
+    template <typename P, typename V>
+    inline
+    center<P,V>::operator P() const
+    {
+      return P(to_result());
+    }
+
+    template <typename P, typename V>
     inline
     bool
-    center<P>::is_valid() const
+    center<P,V>::is_valid() const
     {
       return nsites_ > 0;
     }

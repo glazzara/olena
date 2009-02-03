@@ -1,5 +1,12 @@
 2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Improve accu::center.
+
+	* mln/accu/center.hh: Returns a vector instead of a site. The vector
+	type can be passed as template parameter.
+
+2009-02-03  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Add default constructor to fun_image.
 
 	* mln/core/image/fun_image.hh: add default constructor and refactor
