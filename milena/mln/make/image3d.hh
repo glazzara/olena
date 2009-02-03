@@ -55,6 +55,11 @@ namespace mln
     mln::image3d<mln_value(I)>
     image3d(const util::array<I>& ima);
 
+    /// Create an image3d from a 2D images.
+    ///
+    template <typename I>
+    mln::image3d<mln_value(I)>
+    image3d(const I& ima);
 
 
 # ifndef MLN_INCLUDE_ONLY
@@ -77,6 +82,24 @@ namespace mln
 	  mln_assertion(ima[sli].domain() == b);
 	  data::paste(ima[sli], slice(output, sli).rw());
 	}
+      return output;
+    }
+
+
+    template <typename I>
+    inline
+    mln::image3d<mln_value(I)>
+    image3d(const I& ima)
+    {
+      mlc_is_a(mln_pset(I), Box)::check();
+      mln_precondition(ima.is_valid());
+
+      mln::box2d b = ima.domain();
+      mln::box3d b_ = make::box3d(0, b.pmin().row(), b.pmin().col(),
+				  0, b.pmax().row(), b.pmax().col());
+      mln::image3d<mln_value(I)> output(b_);
+      data::paste(ima, slice(output, 0).rw());
+
       return output;
     }
 

@@ -1,5 +1,11 @@
 2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
 
+	Add a new overload of make::image3d.
+
+	* mln/make/image3d.hh: create an image3d from a single image.
+
+2009-02-02  Guillaume Lazzara  <z@lrde.epita.fr>
+
 	Check if the rotation is correct.
 
 	* mln/fun/x2x/rotation.hh: add a new check while creating the rotation
