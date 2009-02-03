@@ -1,5 +1,11 @@
 2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
 
+	Use modern idioms of Libtool.
+
+	* configure.ac: Invoke LT_INIT instead of AC_PROG_LIBTOOL.
+
+2009-02-03  Roland Levillain  <roland@lrde.epita.fr>
+
 	Complete the list of configured Makefiles.
 
 	* configure.ac: Configure milena/tests/fun/p2p/Makefile.

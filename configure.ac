@@ -100,7 +100,7 @@ fi
 ## ------------------ ##
 
 # Use Libtool.
-AC_PROG_LIBTOOL
+LT_INIT
 
 # Check for Darwin.
 AC_CANONICAL_HOST
